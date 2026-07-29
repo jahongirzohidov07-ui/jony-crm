@@ -77,6 +77,17 @@ class Group(Base):
     room = Column(String, nullable=True)
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+
+    # Qaysi fan va qaysi daraja - ta'lim sifati hisoboti shu kesimda chiqadi.
+    subject = Column(String, nullable=True)   # roles.SUBJECTS
+    level = Column(String, nullable=True)     # roles.SUBJECT_LEVELS[subject]
+    # Guruh qachon boshlangan. Yoqlama shu sanadan oldin qo'yilmaydi.
+    start_date = Column(Date, nullable=True)
+    # Dars vaqti ("09:00 - 11:00") va kunlari ("mon,wed,fri") - ro'yxatda
+    # ko'rinadi, jadval tuzishda qo'l keladi.
+    lesson_time = Column(String, nullable=True)
+    lesson_days = Column(String, nullable=True)
+
     monthly_fee = Column(Float, default=0)  # standart oy narxi (= lesson_price * standard_lessons_per_month), asosan ko'rsatish uchun
 
     # Dars-asosidagi hisoblash: bir dars narxi, standart oyda nechta dars

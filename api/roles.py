@@ -262,3 +262,70 @@ DEFAULT_KPI_NEW_CLIENT_RULES = [
 # faqat asoschi.
 KPI_VIEW = FULL_ACCESS
 KPI_ADMIN = [FOUNDER]
+
+# ---- Fanlar va darajalar ----------------------------------------------
+# Guruh ochilganda fan va daraja tanlanadi. Ta'lim sifati hisoboti ham
+# shu kesimda chiqadi.
+
+SUBJECTS = [
+    ("english", "Ingliz tili"),
+    ("russian", "Rus tili"),
+    ("korean", "Koreys tili"),
+    ("turkish", "Turk tili"),
+    ("german", "Nemis tili"),
+]
+SUBJECT_LABELS = dict(SUBJECTS)
+
+# Ingliz tilida o'z bosqichlarimiz bor; qolgan tillarda xalqaro
+# CEFR shkalasi (A1-B2) ishlatiladi.
+CEFR_LEVELS = [
+    ("a1", "A1"),
+    ("a2", "A2"),
+    ("b1", "B1"),
+    ("b2", "B2"),
+]
+
+ENGLISH_LEVELS = [
+    ("step1", "Step 1"),
+    ("step2", "Step 2"),
+    ("step3", "Step 3"),
+    ("step4", "Step 4"),
+    ("ielts_intro", "IELTS Introduction"),
+    ("ielts_foundation", "IELTS Foundation"),
+    ("ielts_graduation", "IELTS Graduation"),
+    ("cefr", "CEFR"),
+]
+
+SUBJECT_LEVELS = {
+    "english": ENGLISH_LEVELS,
+    "russian": CEFR_LEVELS,
+    "korean": CEFR_LEVELS,
+    "turkish": CEFR_LEVELS,
+    "german": CEFR_LEVELS,
+}
+
+# Barcha daraja kalitlari - tekshirish uchun
+ALL_LEVELS = {k for levels in SUBJECT_LEVELS.values() for k, _ in levels}
+LEVEL_LABELS = {k: lbl for levels in SUBJECT_LEVELS.values() for k, lbl in levels}
+
+
+def level_valid(subject: str, level: str) -> bool:
+    """Daraja tanlangan fanga tegishlimi. Masalan rus tilida "Step 1"
+    bo'lishi mumkin emas."""
+    if not level:
+        return True
+    return level in {k for k, _ in SUBJECT_LEVELS.get(subject, [])}
+
+
+# ---- Dars kunlari -----------------------------------------------------
+WEEKDAYS = [
+    ("mon", "Dushanba", "Du"),
+    ("tue", "Seshanba", "Se"),
+    ("wed", "Chorshanba", "Ch"),
+    ("thu", "Payshanba", "Pa"),
+    ("fri", "Juma", "Ju"),
+    ("sat", "Shanba", "Sha"),
+    ("sun", "Yakshanba", "Ya"),
+]
+WEEKDAY_KEYS = [k for k, _, _ in WEEKDAYS]
+WEEKDAY_LABELS = {k: lbl for k, lbl, _ in WEEKDAYS}

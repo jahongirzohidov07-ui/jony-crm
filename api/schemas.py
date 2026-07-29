@@ -89,6 +89,11 @@ class GroupCreate(BaseModel):
     room: Optional[str] = None
     teacher_id: Optional[int] = None
     branch_id: Optional[int] = None
+    subject: Optional[str] = None
+    level: Optional[str] = None
+    start_date: Optional[date] = None
+    lesson_time: Optional[str] = None
+    lesson_days: Optional[str] = None
     monthly_fee: float = 0
     lesson_price: float = 40000
     standard_lessons_per_month: int = 12

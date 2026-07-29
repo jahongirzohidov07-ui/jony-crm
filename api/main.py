@@ -67,6 +67,12 @@ def _ensure_new_columns():
         "UPDATE teachers SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
         # Adminlar KPI'si uchun fiks oylik.
         "ALTER TABLE users ADD COLUMN fix_salary FLOAT",
+        # Guruh: fan, daraja va boshlanish sanasi.
+        "ALTER TABLE groups ADD COLUMN subject VARCHAR",
+        "ALTER TABLE groups ADD COLUMN level VARCHAR",
+        "ALTER TABLE groups ADD COLUMN start_date DATE",
+        "ALTER TABLE groups ADD COLUMN lesson_time VARCHAR",
+        "ALTER TABLE groups ADD COLUMN lesson_days VARCHAR",
     ]
     for stmt in statements:
         try:
@@ -1709,6 +1715,192 @@ def report_funnel(
     }
 
 
+# ------------------------------------------------------- Ta'lim sifati ----
+@app.get("/api/reports/quality")
+def report_quality(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Ta'lim sifati - imtihon natijalaridan chiqadi.
+
+    Guruh reytingi = shu oydagi imtihonlardagi o'rtacha foiz.
+    Ustoz reytingi = uning guruhlari o'rtachasi.
+    Filial reytingi = filialdagi guruhlar o'rtachasi.
+    Markaz reytingi = hamma guruhlar o'rtachasi.
+
+    Guruhlar teng vaznda olinadi (kattaligiga qarab emas) - aks holda
+    bitta katta guruh butun ko'rsatkichni belgilab qo'yardi."""
+    start, end = billing.month_bounds(year, month)
+
+    exams = db.query(models.Exam).filter(
+        models.Exam.date >= start, models.Exam.date <= end
+    ).all()
+    groups = {g.id: g for g in scope_to_branch(
+        db.query(models.Group), models.Group, user).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    branches = {b.id: b for b in db.query(models.Branch).all()}
+
+    # Guruh -> natijalar
+    per_group = {}
+    for e in exams:
+        g = groups.get(e.group_id)
+        if not g:
+            continue
+        scored = [r for r in e.results if r.percent is not None and not r.absent]
+        if not scored:
+            continue
+        row = per_group.setdefault(g.id, {
+            "group_id": g.id, "group": g.name,
+            "subject": g.subject, "level": g.level,
+            "teacher_id": g.teacher_id,
+            "teacher": teachers[g.teacher_id].full_name
+            if g.teacher_id in teachers else None,
+            "branch_id": g.branch_id,
+            "branch": branches[g.branch_id].name
+            if g.branch_id in branches else None,
+            "exams": 0, "results": 0, "sum": 0.0,
+        })
+        row["exams"] += 1
+        row["results"] += len(scored)
+        row["sum"] += sum(r.percent for r in scored)
+
+    group_rows = []
+    for r in per_group.values():
+        group_rows.append({**{k: v for k, v in r.items() if k != "sum"},
+                           "avg": round(r["sum"] / r["results"], 1)})
+    group_rows.sort(key=lambda r: -r["avg"])
+
+    def rollup(key_id, key_name):
+        acc = {}
+        for r in group_rows:
+            k = r[key_id]
+            if k is None:
+                continue
+            a = acc.setdefault(k, {"id": k, "name": r[key_name],
+                                   "groups": 0, "sum": 0.0, "exams": 0})
+            a["groups"] += 1
+            a["sum"] += r["avg"]
+            a["exams"] += r["exams"]
+        out = [{"id": a["id"], "name": a["name"], "groups": a["groups"],
+                "exams": a["exams"], "avg": round(a["sum"] / a["groups"], 1)}
+               for a in acc.values()]
+        out.sort(key=lambda x: -x["avg"])
+        return out
+
+    centre = (round(sum(r["avg"] for r in group_rows) / len(group_rows), 1)
+              if group_rows else None)
+
+    return {
+        "period": _period_key(year, month),
+        "centre": {
+            "avg": centre,
+            "groups": len(group_rows),
+            "exams": sum(r["exams"] for r in group_rows),
+            "results": sum(r["results"] for r in group_rows),
+        },
+        "branches": rollup("branch_id", "branch"),
+        "teachers": rollup("teacher_id", "teacher"),
+        "groups": group_rows,
+    }
+
+
+# ------------------------------------------------ Sotuv menejerlari ----
+@app.get("/api/reports/sales-managers")
+def report_sales_managers(
+    window: str = "month",
+    year: int = None,
+    month: int = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Har bir sotuv menejerining sotuv foizi.
+
+    Foiz = o'quvchiga aylangan lidlar / unga biriktirilgan lidlar.
+    Davr: oy / 3 oy / 6 oy / 1 yil / butun davr - lid yaratilgan
+    sanaga qarab."""
+    today = date.today()
+    if window == "month":
+        y = year or today.year
+        m = month or today.month
+        start, end = billing.month_bounds(y, m)
+        label = _period_key(y, m)
+    elif window in ("3m", "6m", "1y"):
+        back = {"3m": 3, "6m": 6, "1y": 12}[window]
+        sy, sm = _shift_month(today.year, today.month, -(back - 1))
+        start, _ = billing.month_bounds(sy, sm)
+        end = today
+        label = f"{_period_key(sy, sm)} … {_period_key(today.year, today.month)}"
+    elif window == "all":
+        start, end, label = date(2000, 1, 1), today, "Butun davr"
+    else:
+        raise HTTPException(400, "Noto'g'ri davr")
+
+    start_dt = datetime.combine(start, datetime.min.time())
+    end_dt = datetime.combine(end, datetime.max.time())
+
+    managers = db.query(models.User).filter(
+        models.User.role == roles.SALES_MANAGER)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        managers = managers.filter(models.User.branch_id == user.branch_id)
+    managers = managers.order_by(models.User.full_name).all()
+
+    leads = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
+        models.Lead.created_at >= start_dt,
+        models.Lead.created_at <= end_dt,
+    ).all()
+
+    by_user = {}
+    for l in leads:
+        row = by_user.setdefault(l.assigned_user_id, {
+            "total": 0, "converted": 0, "rejected": 0, "in_progress": 0})
+        row["total"] += 1
+        if l.converted_student_id or l.stage == "converted":
+            row["converted"] += 1
+        elif l.stage == "rejected":
+            row["rejected"] += 1
+        else:
+            row["in_progress"] += 1
+
+    rows = []
+    for m_ in managers:
+        st = by_user.get(m_.id, {"total": 0, "converted": 0,
+                                 "rejected": 0, "in_progress": 0})
+        rows.append({
+            "user_id": m_.id,
+            "full_name": m_.full_name,
+            "branch": m_.branch.name if m_.branch else None,
+            "active": bool(m_.is_active),
+            "leads": st["total"],
+            "converted": st["converted"],
+            "rejected": st["rejected"],
+            "in_progress": st["in_progress"],
+            "conversion": round(st["converted"] / st["total"] * 100, 1)
+            if st["total"] else 0,
+        })
+    rows.sort(key=lambda r: (-r["conversion"], -r["converted"]))
+
+    # Biriktirilmagan lidlar - ular hech kimning ko'rsatkichiga kirmaydi,
+    # lekin ko'rinib turishi kerak.
+    un = by_user.get(None, {"total": 0, "converted": 0})
+    total_leads = sum(r["leads"] for r in rows) + un["total"]
+    total_conv = sum(r["converted"] for r in rows) + un["converted"]
+
+    return {
+        "window": window,
+        "label": label,
+        "rows": rows,
+        "unassigned": un["total"],
+        "totals": {
+            "leads": total_leads,
+            "converted": total_conv,
+            "conversion": round(total_conv / total_leads * 100, 1)
+            if total_leads else 0,
+        },
+    }
+
+
 # ---------------------------------------------------------- Analitika ----
 @app.get("/api/analytics/summary")
 def analytics_summary(
@@ -2188,12 +2380,28 @@ def get_group(
     return item
 
 
+def _validate_group_fields(payload):
+    """Fan va daraja bir-biriga mos bo'lishi kerak - rus tilida
+    "Step 1" degan daraja yo'q."""
+    if payload.subject and payload.subject not in dict(roles.SUBJECTS):
+        raise HTTPException(400, "Noto'g'ri fan")
+    if payload.level and not roles.level_valid(payload.subject, payload.level):
+        raise HTTPException(
+            400, "Bu daraja tanlangan fanga tegishli emas")
+    if payload.lesson_days:
+        bad = [d for d in payload.lesson_days.split(",")
+               if d and d not in roles.WEEKDAY_KEYS]
+        if bad:
+            raise HTTPException(400, "Noto'g'ri dars kuni")
+
+
 @app.post("/api/groups", response_model=schemas.GroupOut)
 def create_group(
     payload: schemas.GroupCreate,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FULL_ACCESS)),
 ):
+    _validate_group_fields(payload)
     group = models.Group(**payload.model_dump())
     db.add(group)
     db.commit()
@@ -2213,6 +2421,7 @@ def update_group(
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
+    _validate_group_fields(payload)
     for k, v in payload.model_dump().items():
         setattr(group, k, v)
     db.commit()
@@ -2446,6 +2655,13 @@ def add_lesson(
     user: models.User = Depends(require_role(*roles.TEACHING_STAFF)),
 ):
     group = _get_group_in_scope(db, group_id, user)
+    # Guruh boshlanmagan kunga yoqlama qo'yib bo'lmaydi - aks holda
+    # hisob-kitob ham, davomat ham noto'g'ri chiqadi.
+    if group.start_date and payload.date < group.start_date:
+        raise HTTPException(
+            400,
+            f"Guruh {group.start_date.isoformat()} da boshlangan - "
+            "undan oldingi kunga yoqlama qo'yib bo'lmaydi")
     existing = (
         db.query(models.Lesson)
         .filter(models.Lesson.group_id == group.id, models.Lesson.date == payload.date)

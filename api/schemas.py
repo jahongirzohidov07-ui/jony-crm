@@ -66,12 +66,18 @@ class TeacherCreate(BaseModel):
     phone: Optional[str] = None
     subject: Optional[str] = None
     branch_id: Optional[int] = None
+    # Ishga kirgan sana - retention hisoboti shundan boshlab sanaydi.
+    hired_date: Optional[date] = None
+    # 1 = hozir ishlayapti, 0 = ishdan ketgan. left_date qo'lda emas,
+    # shu bayroqdan avtomatik chiqadi.
+    is_active: Optional[int] = 1
 
 
 class TeacherOut(TeacherCreate):
     model_config = ConfigDict(from_attributes=True)
     id: int
     branch: Optional[BranchOut] = None
+    left_date: Optional[date] = None
 
 
 # ---------- Group ----------
@@ -200,6 +206,7 @@ class StudentOut(BaseModel):
     parent_phone: Optional[str] = None
     birth_date: Optional[date] = None
     enrolled_date: Optional[date] = None
+    left_date: Optional[date] = None
     status: str
     note: Optional[str] = None
     group: Optional[GroupOut] = None

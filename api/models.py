@@ -51,6 +51,15 @@ class Teacher(Base):
     phone = Column(String, nullable=True)
     subject = Column(String, nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+
+    # Retention hisoboti uchun. hired_date - ishga kirgan sana (berilmasa
+    # yaratilgan kun), left_date - ishdan ketgan sana. left_date qo'lda
+    # kiritilmaydi: ustoz "ishdan ketgan" deb belgilanganda avtomatik
+    # qo'yiladi, qaytib kelsa avtomatik tozalanadi.
+    hired_date = Column(Date, nullable=True, default=date.today)
+    left_date = Column(Date, nullable=True)
+    is_active = Column(Integer, default=1)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch", back_populates="teachers")
@@ -93,6 +102,10 @@ class Student(Base):
     parent_phone = Column(String, nullable=True)
     birth_date = Column(Date, nullable=True)
     enrolled_date = Column(Date, default=date.today)
+    # O'quv markazni tark etgan sana. LTV ("mijoz qancha vaqt qoladi")
+    # hisobotining asosi. Qo'lda kiritilmaydi: status "archived" bo'lganda
+    # avtomatik qo'yiladi, o'quvchi qaytsa avtomatik tozalanadi.
+    left_date = Column(Date, nullable=True)
     group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     status = Column(String, default="active")  # active | trial | frozen | archived

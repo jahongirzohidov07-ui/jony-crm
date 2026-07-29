@@ -50,6 +50,21 @@ def _ensure_new_columns():
         "UPDATE users SET role = 'founder' WHERE role = 'administrator'",
         # To'lov qaysi kanal orqali kelgani (naqd/plastik/terminal).
         "ALTER TABLE payments ADD COLUMN method VARCHAR",
+        # LTV hisoboti uchun - o'quvchi qachon ketgani.
+        "ALTER TABLE students ADD COLUMN left_date DATE",
+        # Arxivdagi eski o'quvchilarda ketgan sana yo'q edi; ularni
+        # LTV'dan tushib qolmasligi uchun qo'shilgan sana bilan emas,
+        # oxirgi ma'lum sana - yaratilgan kun bilan to'ldiramiz.
+        "UPDATE students SET left_date = DATE(created_at) "
+        "WHERE status = 'archived' AND left_date IS NULL",
+        # Ustozlar retention hisoboti uchun.
+        "ALTER TABLE teachers ADD COLUMN hired_date DATE",
+        "ALTER TABLE teachers ADD COLUMN left_date DATE",
+        "ALTER TABLE teachers ADD COLUMN is_active INTEGER DEFAULT 1",
+        "UPDATE teachers SET is_active = 1 WHERE is_active IS NULL",
+        # Eski ustozlarda ishga kirgan sana yo'q - tizimga qo'shilgan
+        # kunni boshlanish nuqtasi deb olamiz.
+        "UPDATE teachers SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
     ]
     for stmt in statements:
         try:
@@ -107,6 +122,36 @@ def to_student_out(db: Session, s: models.Student) -> schemas.StudentOut:
     data = schemas.StudentOut.model_validate(s)
     data.balance = student_balance(db, s.id)
     return data
+
+
+def _sync_student_left_date(s: models.Student):
+    """Ketgan sanani statusdan avtomatik chiqaramiz - hech kim uni qo'lda
+    kiritmaydi, shuning uchun LTV hisoboti hech qachon "esdan chiqib"
+    qolmaydi. "archived" = markazni tark etgan."""
+    if s.status == "archived":
+        if not s.left_date:
+            s.left_date = date.today()
+    else:
+        # Qaytib keldi - hisobot uni yana faol mijoz deb ko'rsin.
+        s.left_date = None
+
+
+def _sync_teacher_left_date(t: models.Teacher):
+    """Ustoz ishdan ketgan/qaytgan sanasini is_active'dan avtomatik olamiz."""
+    if not t.hired_date:
+        t.hired_date = date.today()
+    if t.is_active:
+        t.left_date = None
+    elif not t.left_date:
+        t.left_date = date.today()
+
+
+def _months_between(start: date, end: date) -> float:
+    """Ikki sana orasidagi oylar soni (kasrli). LTV va retention shu
+    o'lchovda ko'rsatiladi - "3.5 oy" degani odamga tushunarli."""
+    if not start or not end or end < start:
+        return 0.0
+    return round((end - start).days / 30.44, 1)
 
 
 def scope_to_branch(query, model, user: models.User):
@@ -640,6 +685,275 @@ def delete_expense(
     return {"ok": True}
 
 
+# ------------------------------------------------------------ Hisobotlar ----
+# Barcha moliyaviy hisobotlar bitta manbadan oziqlanadi, shuning uchun
+# Dashboard'dagi "shu oy tushum" bilan P&L'dagi "kirim" har doim bir xil
+# chiqadi. Kirim = kind="payment" bo'lgan yozuvlar (hisoblangan charge
+# emas - u pul emas, qarz).
+
+
+def _period_key(year: int, month: int) -> str:
+    return f"{year:04d}-{month:02d}"
+
+
+def _shift_month(year: int, month: int, delta: int) -> tuple:
+    idx = (year * 12 + (month - 1)) + delta
+    return idx // 12, idx % 12 + 1
+
+
+def _income_by_method(db: Session, user, start: date, end: date) -> dict:
+    """Bir oraliqdagi haqiqiy tushumni to'lov usuli kesimida qaytaradi."""
+    q = db.query(models.Payment).join(models.Student).filter(
+        models.Payment.kind == "payment",
+        models.Payment.created_at >= datetime.combine(start, datetime.min.time()),
+        models.Payment.created_at <= datetime.combine(end, datetime.max.time()),
+    )
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.Student.branch_id == user.branch_id)
+
+    out = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    for p in q.all():
+        # Usul belgilanmasdan oldin kiritilgan eski to'lovlar naqd deb
+        # hisoblanadi - aks holda ular hisobotdan tushib qolardi.
+        out[p.method if p.method in out else "cash"] += p.amount
+    return out
+
+
+def _expenses_total(db: Session, user, start: date, end: date) -> tuple:
+    """(jami, tur bo'yicha lug'at) qaytaradi."""
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= start, models.Expense.date <= end
+    )
+    by_cat, total = {}, 0.0
+    for e in q.all():
+        by_cat[e.category] = by_cat.get(e.category, 0) + e.amount
+        total += e.amount
+    return total, by_cat
+
+
+def _payroll_total(db: Session, user, period: str) -> float:
+    """Ustozlar ish haqi - TeacherPayout jadvalidan AVTOMATIK olinadi.
+    Uni Xarajatlar bo'limiga qo'lda kiritish shart emas (va kiritilmasligi
+    ham kerak - aks holda ikki marta hisoblanadi)."""
+    q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
+    return sum(p.amount or 0 for p in q.all())
+
+
+@app.get("/api/reports/cashflow")
+def report_cashflow(
+    months: int = 6,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Oxirgi N oy uchun pul oqimi: qancha kirdi (naqd/plastik/terminal
+    kesimida), qancha chiqdi (xarajat + ustozlar ish haqi), sof qoldiq."""
+    months = max(1, min(months, 24))
+    today = date.today()
+    rows = []
+    for back in range(months - 1, -1, -1):
+        y, m = _shift_month(today.year, today.month, -back)
+        start, end = billing.month_bounds(y, m)
+        period = _period_key(y, m)
+
+        methods = _income_by_method(db, user, start, end)
+        income = sum(methods.values())
+        exp_total, _ = _expenses_total(db, user, start, end)
+        payroll = _payroll_total(db, user, period)
+
+        rows.append({
+            "period": period,
+            "cash": methods["cash"],
+            "card": methods["card"],
+            "terminal": methods["terminal"],
+            "other": methods["other"],
+            "income": income,
+            "expenses": exp_total,
+            "payroll": payroll,
+            "outflow": exp_total + payroll,
+            "net": income - exp_total - payroll,
+        })
+
+    keys = ["cash", "card", "terminal", "other", "income",
+            "expenses", "payroll", "outflow", "net"]
+    return {"rows": rows, "totals": {k: sum(r[k] for r in rows) for k in keys}}
+
+
+@app.get("/api/reports/pnl")
+def report_pnl(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Bir oylik foyda-zarar. Chiqim = qo'lda kiritilgan xarajatlar +
+    avtomatik hisoblangan ustozlar ish haqi."""
+    start, end = billing.month_bounds(year, month)
+    period = _period_key(year, month)
+
+    methods = _income_by_method(db, user, start, end)
+    income = sum(methods.values())
+    exp_total, by_cat = _expenses_total(db, user, start, end)
+    payroll = _payroll_total(db, user, period)
+    profit = income - exp_total - payroll
+
+    lines = [{"category": c, "amount": a, "auto": False}
+             for c, a in sorted(by_cat.items(), key=lambda kv: -kv[1])]
+    if payroll:
+        # "auto" - bu qatorni qo'lda kiritish shart emasligini bildiradi.
+        lines.append({"category": "teacher_payroll", "amount": payroll, "auto": True})
+
+    return {
+        "period": period,
+        "income": income,
+        "income_by_method": methods,
+        "expense_lines": lines,
+        "expenses_total": exp_total,
+        "payroll_total": payroll,
+        "outflow_total": exp_total + payroll,
+        "profit": profit,
+        "margin": round(profit / income * 100, 1) if income else 0,
+    }
+
+
+@app.get("/api/reports/ltv")
+def report_ltv(
+    dimension: str = "branch",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """LTV - bitta mijoz o'rtacha qancha vaqt qoladi va shu vaqt ichida
+    qancha pul olib keladi. Kesim: filial / ustoz / guruh.
+
+    Ustoz va guruh kesimi o'quvchining HOZIRGI guruhiga qarab bo'linadi -
+    guruh almashtirgan o'quvchi oxirgi guruhiga yoziladi."""
+    if dimension not in ("branch", "teacher", "group"):
+        raise HTTPException(400, "Noto'g'ri kesim")
+
+    students = scope_to_branch(
+        db.query(models.Student), models.Student, user
+    ).all()
+    if not students:
+        return {"dimension": dimension, "rows": [], "overall": None}
+
+    # Har bir o'quvchining haqiqiy to'lovlari (charge emas) bir so'rovda.
+    paid_rows = db.query(
+        models.Payment.student_id, func.sum(models.Payment.amount)
+    ).filter(models.Payment.kind == "payment").group_by(
+        models.Payment.student_id
+    ).all()
+    paid = {sid: amt or 0 for sid, amt in paid_rows}
+
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    branches = {b.id: b for b in db.query(models.Branch).all()}
+    today = date.today()
+
+    buckets = {}
+    for s in students:
+        if dimension == "branch":
+            key = s.branch_id
+            label = branches[key].name if key in branches else "Filialsiz"
+        elif dimension == "group":
+            key = s.group_id
+            label = groups[key].name if key in groups else "Guruhsiz"
+        else:
+            g = groups.get(s.group_id)
+            key = g.teacher_id if g else None
+            label = teachers[key].full_name if key in teachers else "Ustoz biriktirilmagan"
+
+        b = buckets.setdefault(str(key), {
+            "key": key, "label": label, "students": 0, "left": 0,
+            "total_revenue": 0.0, "total_months": 0.0,
+        })
+        b["students"] += 1
+        b["total_revenue"] += paid.get(s.id, 0)
+        b["total_months"] += _months_between(
+            s.enrolled_date or today, s.left_date or today
+        )
+        if s.left_date:
+            b["left"] += 1
+
+    rows = []
+    for b in buckets.values():
+        n = b["students"] or 1
+        rows.append({
+            "key": b["key"],
+            "label": b["label"],
+            "students": b["students"],
+            "left": b["left"],
+            "avg_months": round(b["total_months"] / n, 1),
+            "avg_revenue": round(b["total_revenue"] / n),
+            "total_revenue": b["total_revenue"],
+            # Ketganlar ulushi - qaysi filial/ustozda mijoz ko'proq
+            # to'xtab qolayotgani darrov ko'rinsin.
+            "churn": round(b["left"] / n * 100, 1),
+        })
+    rows.sort(key=lambda r: -r["avg_revenue"])
+
+    total_students = sum(r["students"] for r in rows) or 1
+    overall = {
+        "students": sum(r["students"] for r in rows),
+        "left": sum(r["left"] for r in rows),
+        "avg_months": round(
+            sum(r["avg_months"] * r["students"] for r in rows) / total_students, 1),
+        "avg_revenue": round(
+            sum(r["total_revenue"] for r in rows) / total_students),
+        "total_revenue": sum(r["total_revenue"] for r in rows),
+    }
+    return {"dimension": dimension, "rows": rows, "overall": overall}
+
+
+@app.get("/api/reports/teacher-retention")
+def report_teacher_retention(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Ustozlar qancha vaqt ishlab turadi. Ishga kirgan sana ustoz
+    yaratilganda avtomatik qo'yiladi, ketgan sana esa "ishlamaydi" deb
+    belgilanganda."""
+    teachers = scope_to_branch(
+        db.query(models.Teacher), models.Teacher, user
+    ).all()
+    today = date.today()
+    year_ago = today - timedelta(days=365)
+
+    rows = []
+    for t in teachers:
+        hired = t.hired_date or (t.created_at.date() if t.created_at else today)
+        rows.append({
+            "id": t.id,
+            "full_name": t.full_name,
+            "branch": t.branch.name if t.branch else None,
+            "hired_date": hired.isoformat(),
+            "left_date": t.left_date.isoformat() if t.left_date else None,
+            "active": bool(t.is_active),
+            "months": _months_between(hired, t.left_date or today),
+        })
+    rows.sort(key=lambda r: -r["months"])
+
+    active = [r for r in rows if r["active"]]
+    left = [r for r in rows if not r["active"]]
+    # Oxirgi 12 oyda ketganlar / davr boshidagi jamoa hajmi.
+    left_12m = [r for r in left if r["left_date"] and r["left_date"] >= year_ago.isoformat()]
+    base = len(active) + len(left_12m)
+
+    return {
+        "rows": rows,
+        "summary": {
+            "active": len(active),
+            "left": len(left),
+            "left_last_12m": len(left_12m),
+            "avg_tenure_active": round(
+                sum(r["months"] for r in active) / len(active), 1) if active else 0,
+            "avg_tenure_left": round(
+                sum(r["months"] for r in left) / len(left), 1) if left else 0,
+            "turnover_12m": round(len(left_12m) / base * 100, 1) if base else 0,
+        },
+    }
+
+
 # ------------------------------------------------------------ Teachers ----
 @app.get("/api/teachers", response_model=List[schemas.TeacherOut])
 def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user)):
@@ -654,6 +968,7 @@ def create_teacher(
     user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     teacher = models.Teacher(**payload.model_dump())
+    _sync_teacher_left_date(teacher)
     db.add(teacher)
     db.commit()
     db.refresh(teacher)
@@ -670,8 +985,9 @@ def update_teacher(
     teacher = db.query(models.Teacher).get(teacher_id)
     if not teacher:
         raise HTTPException(404, "O'qituvchi topilmadi")
-    for k, v in payload.model_dump().items():
+    for k, v in payload.model_dump(exclude_unset=True).items():
         setattr(teacher, k, v)
+    _sync_teacher_left_date(teacher)
     db.commit()
     db.refresh(teacher)
     return teacher
@@ -823,6 +1139,7 @@ def update_student(
         raise HTTPException(404, "Talaba topilmadi")
     for k, v in payload.model_dump(exclude_unset=True).items():
         setattr(s, k, v)
+    _sync_student_left_date(s)
     db.commit()
     db.refresh(s)
     return to_student_out(db, s)

@@ -11,6 +11,7 @@ import GroupDetail from "./pages/GroupDetail";
 import Teachers from "./pages/Teachers";
 import Expenses from "./pages/Expenses";
 import Reports from "./pages/Reports";
+import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
 
@@ -41,6 +42,7 @@ function AppRoutes() {
         <Route path="teachers" element={<Teachers />} />
         <Route path="expenses" element={<Expenses />} />
         <Route path="reports" element={<Reports />} />
+        <Route path="gamification" element={<Gamification />} />
         <Route path="branches" element={<Branches />} />
         <Route path="users" element={<Users />} />
       </Route>

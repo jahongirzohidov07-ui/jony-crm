@@ -12,6 +12,7 @@ import {
   KeyRound,
   Target,
   Wallet,
+  BarChart3,
   X,
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
@@ -156,7 +157,11 @@ export default function Layout() {
   }
   // Xarajatlar moliya bo'limi - o'quv jarayoni bo'limlaridan keyin turadi.
   if (can(user?.role, FINANCE_ACCESS)) {
-    items = [...items, { to: "/expenses", label: "Xarajatlar", icon: Wallet }];
+    items = [
+      ...items,
+      { to: "/expenses", label: "Xarajatlar", icon: Wallet },
+      { to: "/reports", label: "Hisobotlar", icon: BarChart3 },
+    ];
   }
   if (can(user?.role, STAFF_VIEWERS)) {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];

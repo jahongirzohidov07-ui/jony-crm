@@ -555,6 +555,91 @@ def convert_lead(
     return to_student_out(db, student)
 
 
+# ----------------------------------------------------------- Xarajatlar ----
+def _get_expense_in_scope(db: Session, expense_id: int, user: models.User) -> models.Expense:
+    exp = db.query(models.Expense).get(expense_id)
+    if not exp:
+        raise HTTPException(404, "Xarajat topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES):
+        if user.branch_id and exp.branch_id != user.branch_id:
+            raise HTTPException(403, "Bu xarajat boshqa filialga tegishli")
+    return exp
+
+
+@app.get("/api/expenses", response_model=List[schemas.ExpenseOut])
+def list_expenses(
+    year: Optional[int] = None,
+    month: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Xarajatlar ro'yxati. year/month berilsa - o'sha oy uchun."""
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user)
+    if year and month:
+        start, end = billing.month_bounds(year, month)
+        q = q.filter(models.Expense.date >= start, models.Expense.date <= end)
+    return q.order_by(models.Expense.date.desc(), models.Expense.id.desc()).all()
+
+
+@app.post("/api/expenses", response_model=schemas.ExpenseOut)
+def create_expense(
+    payload: schemas.ExpenseCreate,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    if payload.category not in roles.EXPENSE_CATEGORIES:
+        raise HTTPException(400, "Noto'g'ri xarajat turi")
+    if payload.amount <= 0:
+        raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
+
+    exp = models.Expense(
+        date=payload.date,
+        category=payload.category,
+        amount=abs(payload.amount),
+        note=payload.note,
+        branch_id=payload.branch_id if payload.branch_id is not None else user.branch_id,
+        created_by=user.full_name,
+    )
+    db.add(exp)
+    db.commit()
+    db.refresh(exp)
+    return exp
+
+
+@app.put("/api/expenses/{expense_id}", response_model=schemas.ExpenseOut)
+def update_expense(
+    expense_id: int,
+    payload: schemas.ExpenseUpdate,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    exp = _get_expense_in_scope(db, expense_id, user)
+    data = payload.model_dump(exclude_unset=True)
+    if "category" in data and data["category"] not in roles.EXPENSE_CATEGORIES:
+        raise HTTPException(400, "Noto'g'ri xarajat turi")
+    if "amount" in data:
+        if data["amount"] is None or data["amount"] <= 0:
+            raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
+        data["amount"] = abs(data["amount"])
+    for k, v in data.items():
+        setattr(exp, k, v)
+    db.commit()
+    db.refresh(exp)
+    return exp
+
+
+@app.delete("/api/expenses/{expense_id}")
+def delete_expense(
+    expense_id: int,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    exp = _get_expense_in_scope(db, expense_id, user)
+    db.delete(exp)
+    db.commit()
+    return {"ok": True}
+
+
 # ------------------------------------------------------------ Teachers ----
 @app.get("/api/teachers", response_model=List[schemas.TeacherOut])
 def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user)):

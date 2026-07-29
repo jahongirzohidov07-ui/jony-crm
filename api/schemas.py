@@ -274,6 +274,35 @@ class LeadConvertRequest(BaseModel):
     enrolled_date: Optional[date] = None
 
 
+class ExpenseCreate(BaseModel):
+    date: date
+    category: str = "other"
+    amount: float
+    note: Optional[str] = None
+    branch_id: Optional[int] = None
+
+
+class ExpenseUpdate(BaseModel):
+    date: Optional[date] = None
+    category: Optional[str] = None
+    amount: Optional[float] = None
+    note: Optional[str] = None
+    branch_id: Optional[int] = None
+
+
+class ExpenseOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    date: date
+    category: str
+    amount: float
+    note: Optional[str] = None
+    branch_id: Optional[int] = None
+    branch: Optional[BranchOut] = None
+    created_by: Optional[str] = None
+    created_at: datetime
+
+
 class DashboardStats(BaseModel):
     active_students: int
     trial_students: int

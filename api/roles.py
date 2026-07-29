@@ -86,6 +86,33 @@ PAYMENT_METHOD_LABELS = {
     "other": "Boshqa",
 }
 
+# ---- Xarajat turlari --------------------------------------------------
+# DIQQAT: ustozlar ish haqi bu ro'yxatda YO'Q - u TeacherPayout
+# jadvalidan avtomatik olinadi. Agar uni yana qo'lda kiritsangiz,
+# P&L'da ikki marta hisoblanib ketadi. "salary" - ustozlardan boshqa
+# xodimlar (administrator, farrosh, qorovul va h.k.) uchun.
+EXPENSE_CATEGORIES = [
+    "rent",       # Ijara
+    "utilities",  # Kommunal (svet, suv, gaz, internet)
+    "salary",     # Xodimlar oyligi (ustozlardan tashqari)
+    "ads",        # Reklama
+    "tax",        # Soliq
+    "repair",     # Ta'mir
+    "equipment",  # Jihoz / kanstovar
+    "other",      # Boshqa
+]
+
+EXPENSE_CATEGORY_LABELS = {
+    "rent": "Ijara",
+    "utilities": "Kommunal",
+    "salary": "Xodimlar oyligi",
+    "ads": "Reklama",
+    "tax": "Soliq",
+    "repair": "Ta'mir",
+    "equipment": "Jihoz / kanstovar",
+    "other": "Boshqa",
+}
+
 # ---- Lid voronkasi ----------------------------------------------------
 LEAD_STAGES = [
     "new",              # Yangi (so'rov keldi, hali bog'lanilmagan)

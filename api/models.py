@@ -185,6 +185,25 @@ class Lead(Base):
     converted_student = relationship("Student")
 
 
+class Expense(Base):
+    """Markaz xarajati - ijara, kommunal, reklama, soliq va h.k.
+
+    Ustozlar ish haqi bu yerga YOZILMAYDI: u TeacherPayout jadvalidan
+    avtomatik olinadi. Aks holda P&L'da ikki marta hisoblanadi."""
+    __tablename__ = "expenses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, nullable=False, default=date.today)
+    category = Column(String, nullable=False, default="other")
+    amount = Column(Float, nullable=False)
+    note = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
 class TeacherPayout(Base):
     """Bir ustozning bir guruhdagi bir oy ("period" = YYYY-MM) uchun
     hisoblangan ish haqi - billing.py'dagi payroll formulasi natijasi.

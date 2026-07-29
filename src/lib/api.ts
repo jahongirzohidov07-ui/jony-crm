@@ -72,6 +72,10 @@ export interface Teacher {
   subject?: string;
   branch_id?: number;
   branch?: Branch;
+  hired_date?: string | null;
+  left_date?: string | null;
+  /** 1 = hozir ishlayapti, 0 = ishdan ketgan. */
+  is_active?: number;
 }
 
 export interface Group {
@@ -215,6 +219,91 @@ export interface Expense {
   branch?: Branch | null;
   created_by?: string | null;
   created_at: string;
+}
+
+// ---------- Hisobotlar ----------
+export interface CashflowRow {
+  period: string; // "YYYY-MM"
+  cash: number;
+  card: number;
+  terminal: number;
+  other: number;
+  income: number;
+  expenses: number;
+  payroll: number;
+  outflow: number;
+  net: number;
+}
+
+export interface CashflowReport {
+  rows: CashflowRow[];
+  totals: Omit<CashflowRow, "period">;
+}
+
+export interface PnlLine {
+  category: string;
+  amount: number;
+  /** true = qo'lda kiritilmaydi, tizim o'zi hisoblaydi (ustozlar ish haqi). */
+  auto: boolean;
+}
+
+export interface PnlReport {
+  period: string;
+  income: number;
+  income_by_method: Record<string, number>;
+  expense_lines: PnlLine[];
+  expenses_total: number;
+  payroll_total: number;
+  outflow_total: number;
+  profit: number;
+  margin: number;
+}
+
+export type LtvDimension = "branch" | "teacher" | "group";
+
+export interface LtvRow {
+  key: number | null;
+  label: string;
+  students: number;
+  left: number;
+  avg_months: number;
+  avg_revenue: number;
+  total_revenue: number;
+  churn: number;
+}
+
+export interface LtvReport {
+  dimension: LtvDimension;
+  rows: LtvRow[];
+  overall: {
+    students: number;
+    left: number;
+    avg_months: number;
+    avg_revenue: number;
+    total_revenue: number;
+  } | null;
+}
+
+export interface RetentionRow {
+  id: number;
+  full_name: string;
+  branch?: string | null;
+  hired_date: string;
+  left_date?: string | null;
+  active: boolean;
+  months: number;
+}
+
+export interface RetentionReport {
+  rows: RetentionRow[];
+  summary: {
+    active: number;
+    left: number;
+    left_last_12m: number;
+    avg_tenure_active: number;
+    avg_tenure_left: number;
+    turnover_12m: number;
+  };
 }
 
 export type StudentGrowthWindow = "1m" | "6m" | "1y" | "all";

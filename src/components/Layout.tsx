@@ -15,8 +15,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
-  ADMINISTRATOR,
-  STAFF_MANAGERS,
+  FOUNDER,
+  STAFF_VIEWERS,
   LEAD_ACCESS,
   can,
   roleLabel,
@@ -152,10 +152,10 @@ export default function Layout() {
       ...items.slice(1),
     ];
   }
-  if (can(user?.role, STAFF_MANAGERS)) {
+  if (can(user?.role, STAFF_VIEWERS)) {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];
   }
-  if (user?.role === ADMINISTRATOR) {
+  if (user?.role === FOUNDER) {
     items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];
   }
 

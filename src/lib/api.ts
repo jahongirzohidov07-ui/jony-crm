@@ -221,6 +221,111 @@ export interface Expense {
   created_at: string;
 }
 
+// ---------- Davomat / Baholash ----------
+export interface GridStudent {
+  id: number;
+  full_name: string;
+  status: string;
+}
+
+export interface GridLesson {
+  id: number;
+  date: string; // YYYY-MM-DD
+}
+
+/** marks kaliti "lessonId:studentId". Davomat uchun qiymat boolean,
+ *  baholash uchun 1-5 son. */
+export interface AttendanceGrid {
+  students: GridStudent[];
+  lessons: GridLesson[];
+  marks: Record<string, boolean | number>;
+}
+
+// ---------- Imtihonlar ----------
+export type ExamKind = "unit" | "mid" | "end" | "mock";
+
+export interface Exam {
+  id: number;
+  group_id: number;
+  kind: ExamKind;
+  unit_no?: number | null;
+  title?: string | null;
+  date: string;
+  max_score?: number | null;
+  created_by?: string | null;
+  created_at: string;
+  result_count: number;
+  avg_percent?: number | null;
+}
+
+export interface ExamResult {
+  id: number;
+  exam_id: number;
+  student_id: number;
+  score?: number | null;
+  band?: number | null;
+  percent?: number | null;
+  coins: number;
+  absent: boolean;
+  note?: string | null;
+}
+
+export interface ExamDetail extends Exam {
+  results: ExamResult[];
+  students: GridStudent[];
+}
+
+// ---------- Coin / gamification ----------
+export interface CoinBalance {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  branch?: string | null;
+  balance: number;
+  earned: number;
+  spent: number;
+}
+
+export interface CoinEntry {
+  id: number;
+  student_id: number;
+  amount: number;
+  source: string;
+  ref_id?: number | null;
+  note?: string | null;
+  created_by?: string | null;
+  created_at: string;
+}
+
+export interface ExamCoinRule {
+  id?: number;
+  min_percent: number;
+  coins: number;
+  kind?: string | null;
+}
+
+export interface Reward {
+  id: number;
+  name: string;
+  cost: number;
+  value_som?: number | null;
+  stock?: number | null;
+  active: boolean;
+  branch_id?: number | null;
+  branch?: Branch | null;
+}
+
+export interface Redemption {
+  id: number;
+  student_id: number;
+  reward_id: number;
+  coins: number;
+  created_by?: string | null;
+  created_at: string;
+  student?: GridStudent | null;
+  reward?: Reward | null;
+}
+
 // ---------- Hisobotlar ----------
 export interface CashflowRow {
   period: string; // "YYYY-MM"

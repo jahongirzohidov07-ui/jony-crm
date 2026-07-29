@@ -3,7 +3,7 @@ import { Plus, X, Pencil } from "lucide-react";
 import { api, type User, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  STAFF_MANAGERS,
+  USER_ADMIN,
   BRANCH_MANAGER,
   can,
   roleLabel,
@@ -210,7 +210,7 @@ export default function Users() {
 
   useEffect(load, []);
 
-  const canManage = can(user?.role, STAFF_MANAGERS);
+  const canManage = can(user?.role, USER_ADMIN);
   const lockBranchId = user?.role === BRANCH_MANAGER ? user?.branch_id ?? null : null;
 
   async function toggleActive(u: User) {

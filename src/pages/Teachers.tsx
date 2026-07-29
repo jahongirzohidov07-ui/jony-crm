@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { api, type Teacher, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { STAFF_MANAGERS, can } from "../lib/roles";
+import { STAFF_VIEWERS, can } from "../lib/roles";
 
 function AddTeacherModal({
   branches,
@@ -127,7 +127,7 @@ export default function Teachers() {
   }
 
   useEffect(load, []);
-  const canEdit = can(user?.role, STAFF_MANAGERS);
+  const canEdit = can(user?.role, STAFF_VIEWERS);
 
   return (
     <div className="p-8">

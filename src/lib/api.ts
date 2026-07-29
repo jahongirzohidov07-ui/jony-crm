@@ -191,6 +191,9 @@ export interface Lead {
   phone?: string | null;
   source: string;
   stage: string;
+  address?: string | null;
+  school?: string | null;
+  grade?: string | null;
   note?: string | null;
   branch_id?: number | null;
   branch?: Branch | null;

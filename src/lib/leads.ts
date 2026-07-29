@@ -75,6 +75,12 @@ export const SOURCE_DEFAULT_STAGE: Record<LeadSource, LeadStage> = {
   other: "new",
 };
 
+/** Sinf tanlash ro'yxati. Matn sifatida saqlanadi, shuning uchun
+ * kelajakda "9-A" kabi qiymat ham qo'shish mumkin. */
+export const GRADES = [
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Kattalar",
+];
+
 export function stageLabel(stage: string): string {
   return LEAD_STAGES.find((s) => s.key === stage)?.label || stage;
 }

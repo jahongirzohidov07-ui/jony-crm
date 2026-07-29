@@ -1331,6 +1331,26 @@ def redeem_reward(
     return red
 
 
+@app.delete("/api/rewards/redemptions/{redemption_id}")
+def cancel_redemption(
+    redemption_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    """Xato berilgan sovg'ani bekor qilish - coin o'quvchiga qaytariladi
+    va zaxira tiklanadi."""
+    red = db.query(models.RewardRedemption).get(redemption_id)
+    if not red:
+        raise HTTPException(404, "Yozuv topilmadi")
+    _drop_coin_entry(db, "reward", red.id)
+    reward = db.query(models.Reward).get(red.reward_id)
+    if reward and reward.stock is not None:
+        reward.stock += 1
+    db.delete(red)
+    db.commit()
+    return {"ok": True}
+
+
 @app.get("/api/rewards/redemptions", response_model=List[schemas.RedemptionOut])
 def list_redemptions(
     db: Session = Depends(get_db),
@@ -1976,6 +1996,19 @@ def delete_lesson(
     if not lesson:
         raise HTTPException(404, "Dars topilmadi")
     _get_group_in_scope(db, lesson.group_id, user)  # branch guard
+
+    # Darsga bog'langan davomat va baholarni ham olib tashlaymiz, aks holda
+    # ular "yetim" qolib, bazada bog'liqlik xatosi chiqadi. Baho o'chgani
+    # uchun u bergan coin ham qaytariladi.
+    for gr in db.query(models.DailyGrade).filter(
+        models.DailyGrade.lesson_id == lesson_id
+    ).all():
+        _drop_coin_entry(db, "daily", gr.id)
+        db.delete(gr)
+    db.query(models.Attendance).filter(
+        models.Attendance.lesson_id == lesson_id
+    ).delete(synchronize_session=False)
+
     db.delete(lesson)
     db.commit()
     return {"ok": True}

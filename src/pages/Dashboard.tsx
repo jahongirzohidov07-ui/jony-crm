@@ -1,0 +1,371 @@
+import { useEffect, useState } from "react";
+import {
+  Users,
+  Layers,
+  GraduationCap,
+  Wallet,
+  AlertTriangle,
+  UserCheck,
+  Download,
+} from "lucide-react";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
+import {
+  api,
+  type DashboardStats,
+  type TrendPoint,
+  type Group,
+  type StudentGrowthWindow,
+  type StudentGrowthResponse,
+} from "../lib/api";
+import { formatSom, formatPeriodLabel, formatGrowthLabel } from "../lib/format";
+import { exportSheetsToExcel } from "../lib/exportXlsx";
+
+const BRAND = "#0d9488";
+const BRAND_LIGHT = "#5eead4";
+const AMBER = "#d97706";
+const SLATE = "#94a3b8";
+
+function KpiCard({
+  icon: Icon,
+  label,
+  value,
+  tone = "default",
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  tone?: "default" | "danger" | "brand";
+}) {
+  const toneClasses =
+    tone === "danger"
+      ? "bg-red-50 text-red-600"
+      : tone === "brand"
+      ? "bg-brand-50 text-brand-600"
+      : "bg-slate-100 text-slate-600";
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5">
+      <div className="flex items-center gap-3 mb-3">
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${toneClasses}`}>
+          <Icon size={18} />
+        </div>
+        <span className="text-sm text-slate-500">{label}</span>
+      </div>
+      <p className="text-2xl font-semibold text-slate-900">{value}</p>
+    </div>
+  );
+}
+
+function ChartCard({
+  title,
+  children,
+  actions,
+}: {
+  title: string;
+  children: React.ReactNode;
+  actions?: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <h2 className="font-semibold text-slate-900 text-sm">{title}</h2>
+        {actions}
+      </div>
+      <div className="h-64">{children}</div>
+    </div>
+  );
+}
+
+function tooltipFormatter(value: number) {
+  return formatSom(value);
+}
+
+const GROWTH_WINDOWS: { key: StudentGrowthWindow; label: string }[] = [
+  { key: "all", label: "Barcha vaqt" },
+  { key: "1y", label: "1 yillik" },
+  { key: "6m", label: "6 oylik" },
+  { key: "1m", label: "1 oylik" },
+];
+
+function WindowTabs({
+  value,
+  onChange,
+}: {
+  value: StudentGrowthWindow;
+  onChange: (w: StudentGrowthWindow) => void;
+}) {
+  return (
+    <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
+      {GROWTH_WINDOWS.map((w) => (
+        <button
+          key={w.key}
+          onClick={() => onChange(w.key)}
+          className={`px-2.5 py-1 rounded-md text-xs font-medium transition ${
+            value === w.key
+              ? "bg-white text-brand-700 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          {w.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default function Dashboard() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [trend, setTrend] = useState<TrendPoint[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState<string | null>(null);
+
+  const [growthWindow, setGrowthWindow] = useState<StudentGrowthWindow>("6m");
+  const [growth, setGrowth] = useState<StudentGrowthResponse | null>(null);
+  const [growthLoading, setGrowthLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      api.get<DashboardStats>("/dashboard"),
+      api.get<TrendPoint[]>("/dashboard/trend?months=6"),
+      api.get<Group[]>("/groups"),
+    ])
+      .then(([s, t, g]) => {
+        setStats(s);
+        setTrend(t);
+        setGroups(g);
+      })
+      .catch((e) => setErr(e.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    setGrowthLoading(true);
+    api
+      .get<StudentGrowthResponse>(`/dashboard/student-growth?window=${growthWindow}`)
+      .then(setGrowth)
+      .finally(() => setGrowthLoading(false));
+  }, [growthWindow]);
+
+  const statusBreakdown = stats
+    ? [
+        { name: "Faol", value: stats.active_students, fill: BRAND },
+        { name: "Sinovda", value: stats.trial_students, fill: AMBER },
+        { name: "Muzlatilgan", value: stats.frozen_students, fill: SLATE },
+      ]
+    : [];
+
+  const topGroups = [...groups]
+    .sort((a, b) => b.student_count - a.student_count)
+    .slice(0, 8)
+    .map((g) => ({ name: g.name, talabalar: g.student_count }));
+
+  function downloadReport() {
+    if (!stats) return;
+    exportSheetsToExcel(`Jony-CRM-hisobot-${new Date().toISOString().slice(0, 10)}`, [
+      {
+        name: "Umumiy",
+        rows: [
+          { "Ko'rsatkich": "Faol talabalar", Qiymat: stats.active_students },
+          { "Ko'rsatkich": "Sinovdagi talabalar", Qiymat: stats.trial_students },
+          { "Ko'rsatkich": "Muzlatilgan talabalar", Qiymat: stats.frozen_students },
+          { "Ko'rsatkich": "Guruhlar soni", Qiymat: stats.total_groups },
+          { "Ko'rsatkich": "O'qituvchilar soni", Qiymat: stats.total_teachers },
+          { "Ko'rsatkich": "Shu oy tushum (so'm)", Qiymat: Math.round(stats.month_income) },
+          { "Ko'rsatkich": "Umumiy qarzdorlik (so'm)", Qiymat: Math.round(stats.total_debt) },
+          { "Ko'rsatkich": "Qarzdorlar soni", Qiymat: stats.debtor_count },
+        ],
+      },
+      {
+        name: "Oylik daromad",
+        rows: trend.map((t) => ({
+          Davr: t.period,
+          Oy: formatPeriodLabel(t.period),
+          "Daromad (so'm)": Math.round(t.income),
+        })),
+      },
+      {
+        name: "Guruhlar",
+        rows: groups.map((g) => ({
+          Guruh: g.name,
+          Filial: g.branch?.name || "—",
+          "O'qituvchi": g.teacher?.full_name || "—",
+          "Talabalar soni": g.student_count,
+          "Oylik to'lov (so'm)": Math.round(g.monthly_fee),
+        })),
+      },
+    ]);
+  }
+
+  return (
+    <div className="p-8 max-w-6xl">
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-semibold text-slate-900 mb-1">Dashboard</h1>
+          <p className="text-sm text-slate-500">"Maktab" filiali bo'yicha umumiy holat</p>
+        </div>
+        {stats && (
+          <button
+            onClick={downloadReport}
+            className="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            <Download size={16} />
+            Hisobotni yuklab olish
+          </button>
+        )}
+      </div>
+
+      {loading && <p className="text-slate-400 text-sm">Yuklanmoqda...</p>}
+      {err && <p className="text-red-600 text-sm">{err}</p>}
+
+      {stats && (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />
+            <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} />
+            <KpiCard icon={Users} label="Muzlatilgan talabalar" value={String(stats.frozen_students)} />
+            <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} />
+            <KpiCard icon={GraduationCap} label="O'qituvchilar soni" value={String(stats.total_teachers)} />
+            <KpiCard icon={Wallet} label="Shu oy tushum" value={formatSom(stats.month_income)} tone="brand" />
+            <KpiCard
+              icon={AlertTriangle}
+              label="Umumiy qarzdorlik"
+              value={formatSom(stats.total_debt)}
+              tone="danger"
+            />
+            <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
+          </div>
+
+          <ChartCard
+            title="Talabalar soni statistikasi"
+            actions={<WindowTabs value={growthWindow} onChange={setGrowthWindow} />}
+          >
+            {growthLoading ? (
+              <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
+            ) : !growth || growth.points.length === 0 ? (
+              <p className="text-slate-400 text-sm">Ma'lumot yo'q</p>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={growth.points} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis
+                    dataKey="period"
+                    tickFormatter={(p: string) => formatGrowthLabel(p, growth.granularity)}
+                    tick={{ fontSize: 12, fill: "#64748b" }}
+                    interval={growth.granularity === "day" ? 3 : 0}
+                  />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#64748b" }} width={32} />
+                  <Tooltip
+                    labelFormatter={(p) => formatGrowthLabel(String(p), growth.granularity)}
+                    contentStyle={{ fontSize: 13, borderRadius: 8 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="count"
+                    name="Talabalar soni"
+                    stroke={BRAND}
+                    strokeWidth={2.5}
+                    dot={{ r: 3, fill: BRAND }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
+          </ChartCard>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 mt-4">
+            <ChartCard title="Oylik daromad trendi (so'nggi 6 oy)">
+              {trend.length === 0 ? (
+                <p className="text-slate-400 text-sm">Ma'lumot yo'q</p>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={trend} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis
+                      dataKey="period"
+                      tickFormatter={formatPeriodLabel}
+                      tick={{ fontSize: 12, fill: "#64748b" }}
+                    />
+                    <YAxis
+                      tickFormatter={(v) => `${Math.round(v / 1000)}k`}
+                      tick={{ fontSize: 12, fill: "#64748b" }}
+                      width={44}
+                    />
+                    <Tooltip
+                      formatter={tooltipFormatter}
+                      labelFormatter={formatPeriodLabel}
+                      contentStyle={{ fontSize: 13, borderRadius: 8 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="income"
+                      name="Daromad"
+                      stroke={BRAND}
+                      strokeWidth={2.5}
+                      dot={{ r: 3, fill: BRAND }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </ChartCard>
+
+            <ChartCard title="Talabalar holati bo'yicha taqsimot">
+              {statusBreakdown.every((s) => s.value === 0) ? (
+                <p className="text-slate-400 text-sm">Ma'lumot yo'q</p>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={statusBreakdown} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
+                    <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#64748b" }} width={32} />
+                    <Tooltip contentStyle={{ fontSize: 13, borderRadius: 8 }} />
+                    <Bar dataKey="value" name="Talabalar" radius={[6, 6, 0, 0]}>
+                      {statusBreakdown.map((entry, i) => (
+                        <Cell key={i} fill={entry.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </ChartCard>
+          </div>
+
+          <ChartCard title="Guruhlar bo'yicha talabalar soni (top 8)">
+            {topGroups.length === 0 ? (
+              <p className="text-slate-400 text-sm">Hali guruh yo'q</p>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={topGroups}
+                  layout="vertical"
+                  margin={{ top: 8, right: 24, left: 8, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: "#64748b" }} />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={140}
+                    tick={{ fontSize: 12, fill: "#64748b" }}
+                  />
+                  <Tooltip contentStyle={{ fontSize: 13, borderRadius: 8 }} />
+                  <Bar dataKey="talabalar" name="Talabalar" fill={BRAND_LIGHT} radius={[0, 6, 6, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </ChartCard>
+        </>
+      )}
+    </div>
+  );
+}

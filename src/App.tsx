@@ -9,8 +9,9 @@ import StudentDetail from "./pages/StudentDetail";
 import Groups from "./pages/Groups";
 import GroupDetail from "./pages/GroupDetail";
 import Teachers from "./pages/Teachers";
-import Expenses from "./pages/Expenses";
+import Moliya from "./pages/Moliya";
 import Reports from "./pages/Reports";
+import Analitika from "./pages/Analitika";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -40,8 +41,9 @@ function AppRoutes() {
         <Route path="groups" element={<Groups />} />
         <Route path="groups/:id" element={<GroupDetail />} />
         <Route path="teachers" element={<Teachers />} />
-        <Route path="expenses" element={<Expenses />} />
+        <Route path="finance" element={<Moliya />} />
         <Route path="reports" element={<Reports />} />
+        <Route path="analytics" element={<Analitika />} />
         <Route path="gamification" element={<Gamification />} />
         <Route path="branches" element={<Branches />} />
         <Route path="users" element={<Users />} />

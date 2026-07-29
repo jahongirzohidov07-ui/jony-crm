@@ -65,6 +65,8 @@ def _ensure_new_columns():
         # Eski ustozlarda ishga kirgan sana yo'q - tizimga qo'shilgan
         # kunni boshlanish nuqtasi deb olamiz.
         "UPDATE teachers SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
+        # Adminlar KPI'si uchun fiks oylik.
+        "ALTER TABLE users ADD COLUMN fix_salary FLOAT",
     ]
     for stmt in statements:
         try:
@@ -81,6 +83,19 @@ def _ensure_new_columns():
             if db.query(models.ExamCoinRule).count() == 0:
                 for pct, coins in roles.DEFAULT_EXAM_COIN_RULES:
                     db.add(models.ExamCoinRule(min_percent=pct, coins=coins))
+                db.commit()
+
+            # Adminlar KPI qoidalari ham xuddi shunday: bir marta
+            # seed qilinadi, keyin asoschi o'zgartiradi.
+            if db.query(models.KpiCollectionRule).count() == 0:
+                for mn, mx, pct, bonus in roles.DEFAULT_KPI_COLLECTION_RULES:
+                    db.add(models.KpiCollectionRule(
+                        min_students=mn, max_students=mx,
+                        min_percent=pct, bonus=bonus))
+                db.commit()
+            if db.query(models.KpiNewClientRule).count() == 0:
+                for cnt, bonus in roles.DEFAULT_KPI_NEW_CLIENT_RULES:
+                    db.add(models.KpiNewClientRule(min_clients=cnt, bonus=bonus))
                 db.commit()
     except Exception:
         pass
@@ -283,6 +298,7 @@ def create_user(
         full_name=payload.full_name,
         role=payload.role,
         branch_id=payload.branch_id,
+        fix_salary=payload.fix_salary,
     )
     db.add(new_user)
     db.commit()
@@ -321,6 +337,12 @@ def update_user(
         target.is_active = int(payload.is_active)
     if payload.password:
         target.password_hash = hash_password(payload.password)
+    # Fiks oylik - KPI hisobining asosi, shuning uchun uni faqat asoschi
+    # (roles.USER_ADMIN) o'zgartira oladi; endpoint allaqachon shu bilan
+    # himoyalangan. exclude_unset orqali "berilmagan" va "0 qilindi"
+    # holatlarini ajratamiz.
+    if "fix_salary" in payload.model_dump(exclude_unset=True):
+        target.fix_salary = payload.fix_salary
 
     db.commit()
     db.refresh(target)
@@ -1492,6 +1514,192 @@ def report_pnl(
         "profit": profit,
         "margin": round(profit / income * 100, 1) if income else 0,
     }
+
+
+# ------------------------------------------------------- Adminlar KPI ----
+# Admin ish haqi = fiks oylik + eski to'lovlarni yig'ish bonusi +
+# yangi mijoz bonusi. Bonuslar FILIAL ko'rsatkichi bo'yicha: bir filialda
+# ikkita admin bo'lsa, ikkalasi ham to'liq bonusni oladi.
+
+
+def _first_payment_dates(db: Session) -> dict:
+    """Har bir o'quvchining eng birinchi to'lov sanasi. Shu sana orqali
+    to'lov "yangi" (birinchi marta) yoki "eski" ekani aniqlanadi."""
+    rows = (
+        db.query(models.Payment.student_id,
+                 func.min(models.Payment.created_at))
+        .filter(models.Payment.kind == "payment")
+        .group_by(models.Payment.student_id)
+        .all()
+    )
+    return {sid: dt for sid, dt in rows}
+
+
+def _collection_bonus(db: Session, students: int, percent: float) -> float:
+    """Filialdagi FAOL o'quvchi soni va yig'ish foiziga mos eng katta
+    bonus. Hech qanday qator to'g'ri kelmasa - 0 (masalan 50 tagacha
+    o'quvchida bonus yo'q)."""
+    best = 0.0
+    for r in db.query(models.KpiCollectionRule).all():
+        if students < r.min_students:
+            continue
+        if r.max_students is not None and students > r.max_students:
+            continue
+        if percent + 1e-9 < r.min_percent:
+            continue
+        best = max(best, r.bonus)
+    return best
+
+
+def _new_client_bonus(db: Session, count: int) -> float:
+    """Yangi mijozlar soniga mos eng yuqori pog'ona bonusi."""
+    best = 0.0
+    for r in db.query(models.KpiNewClientRule).all():
+        if count >= r.min_clients:
+            best = max(best, r.bonus)
+    return best
+
+
+@app.get("/api/kpi/admins", response_model=schemas.AdminKpiResult)
+def admin_kpi(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.KPI_VIEW)),
+):
+    start, end = billing.month_bounds(year, month)
+    period = _period_key(year, month)
+    start_dt = datetime.combine(start, datetime.min.time())
+    end_dt = datetime.combine(end, datetime.max.time())
+
+    admins = db.query(models.User).filter(
+        models.User.role == roles.SALES_MANAGER,
+        models.User.is_active == 1,
+    )
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        admins = admins.filter(models.User.branch_id == user.branch_id)
+    admins = admins.order_by(models.User.full_name).all()
+    if not admins:
+        return schemas.AdminKpiResult(period=period, rows=[])
+
+    first_paid = _first_payment_dates(db)
+    students = db.query(models.Student).all()
+    student_branch = {s.id: s.branch_id for s in students}
+
+    # Filial ko'rsatkichlarini bir marta hisoblaymiz.
+    stats = {}
+    for a in admins:
+        if a.branch_id in stats:
+            continue
+        stats[a.branch_id] = {
+            "active_students": sum(
+                1 for s in students
+                if s.branch_id == a.branch_id and s.status == "active"),
+            "expected": 0.0, "collected": 0.0,
+            "new_clients": set(), "new_revenue": 0.0,
+        }
+
+    # "Tushishi kerak" bo'lgan pul - shu oyda hisoblangan summalar.
+    # Faqat ESKI o'quvchilar bo'yicha: yangi mijozning birinchi to'lovi
+    # yig'ish foiziga kirmaydi, u alohida bonus bilan baholanadi.
+    charges = db.query(models.Payment).filter(
+        models.Payment.kind == "charge",
+        models.Payment.created_at >= start_dt,
+        models.Payment.created_at <= end_dt,
+    ).all()
+    for c in charges:
+        st = stats.get(student_branch.get(c.student_id))
+        if st is None:
+            continue
+        first = first_paid.get(c.student_id)
+        if first is None or first >= start_dt:
+            continue  # hali to'lamagan yoki yangi mijoz
+        st["expected"] += abs(c.amount)
+
+    # Haqiqatda tushgan pul.
+    pays = db.query(models.Payment).filter(
+        models.Payment.kind == "payment",
+        models.Payment.created_at >= start_dt,
+        models.Payment.created_at <= end_dt,
+    ).all()
+    for p in pays:
+        st = stats.get(student_branch.get(p.student_id))
+        if st is None:
+            continue
+        first = first_paid.get(p.student_id)
+        if first is not None and first >= start_dt:
+            # Birinchi marta to'lagan - yangi mijoz
+            st["new_clients"].add(p.student_id)
+            st["new_revenue"] += p.amount
+        else:
+            st["collected"] += p.amount
+
+    rows = []
+    for a in admins:
+        st = stats[a.branch_id]
+        pct = (round(st["collected"] / st["expected"] * 100, 1)
+               if st["expected"] else 0.0)
+        col_bonus = _collection_bonus(db, st["active_students"], pct)
+        new_count = len(st["new_clients"])
+        new_bonus = _new_client_bonus(db, new_count)
+        fix = a.fix_salary or 0.0
+
+        rows.append(schemas.AdminKpi(
+            user_id=a.id, full_name=a.full_name, branch_id=a.branch_id,
+            branch=a.branch.name if a.branch else None,
+            fix_salary=fix,
+            active_students=st["active_students"],
+            expected=st["expected"], collected=st["collected"],
+            collection_percent=pct, collection_bonus=col_bonus,
+            new_clients=new_count, new_client_revenue=st["new_revenue"],
+            new_client_bonus=new_bonus,
+            total=fix + col_bonus + new_bonus,
+        ))
+    return schemas.AdminKpiResult(period=period, rows=rows)
+
+
+@app.get("/api/kpi/rules", response_model=schemas.KpiRules)
+def get_kpi_rules(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.KPI_VIEW)),
+):
+    return schemas.KpiRules(
+        collection=db.query(models.KpiCollectionRule).order_by(
+            models.KpiCollectionRule.min_students,
+            models.KpiCollectionRule.min_percent.desc()).all(),
+        new_clients=db.query(models.KpiNewClientRule).order_by(
+            models.KpiNewClientRule.min_clients).all(),
+    )
+
+
+@app.put("/api/kpi/rules", response_model=schemas.KpiRules)
+def replace_kpi_rules(
+    payload: schemas.KpiRulesIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.KPI_ADMIN)),
+):
+    """Qoidalar jadvalini almashtiradi. Faqat asoschi - bu bevosita
+    xodimlarning ish haqiga ta'sir qiladi."""
+    for r in payload.collection:
+        if r.bonus < 0 or not (0 <= r.min_percent <= 100):
+            raise HTTPException(400, "Noto'g'ri qiymat")
+        if r.max_students is not None and r.max_students < r.min_students:
+            raise HTTPException(
+                400, "Yuqori chegara quyi chegaradan kichik bo'lmasligi kerak")
+    for r in payload.new_clients:
+        if r.bonus < 0 or r.min_clients < 0:
+            raise HTTPException(400, "Noto'g'ri qiymat")
+
+    db.query(models.KpiCollectionRule).delete()
+    db.query(models.KpiNewClientRule).delete()
+    for r in payload.collection:
+        db.add(models.KpiCollectionRule(
+            min_students=r.min_students, max_students=r.max_students,
+            min_percent=r.min_percent, bonus=r.bonus))
+    for r in payload.new_clients:
+        db.add(models.KpiNewClientRule(min_clients=r.min_clients, bonus=r.bonus))
+    db.commit()
+    return get_kpi_rules(db, user)
 
 
 @app.get("/api/reports/ltv")

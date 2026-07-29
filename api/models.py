@@ -38,6 +38,9 @@ class User(Base):
     role = Column(String, nullable=False, default="teacher")
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     is_active = Column(Integer, default=1)
+    # Fiks oylik (so'm). Adminlar (sotuv menejeri) KPI'sida asos bo'ladi:
+    # jami ish haqi = fiks + bonuslar. Faqat asoschi o'zgartira oladi.
+    fix_salary = Column(Float, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch", back_populates="users")
@@ -394,3 +397,29 @@ class RewardRedemption(Base):
 
     student = relationship("Student")
     reward = relationship("Reward")
+
+
+class KpiCollectionRule(Base):
+    """Eski to'lovlarni yig'ish bonusi.
+
+    Filialdagi o'quvchi soni min_students..max_students oralig'ida bo'lsa
+    va yig'ish foizi min_percent'dan katta yoki teng bo'lsa - bonus
+    beriladi. Bir nechta qator to'g'ri kelsa, eng kattasi olinadi."""
+    __tablename__ = "kpi_collection_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    min_students = Column(Integer, nullable=False, default=0)
+    max_students = Column(Integer, nullable=True)   # None = cheklanmagan
+    min_percent = Column(Float, nullable=False)
+    bonus = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class KpiNewClientRule(Base):
+    """Yangi mijoz (birinchi marta to'lagan o'quvchi) soniga qarab bonus."""
+    __tablename__ = "kpi_new_client_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    min_clients = Column(Integer, nullable=False)
+    bonus = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -192,3 +192,45 @@ DEFAULT_EXAM_COIN_RULES = [
 TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
+
+# ---- Adminlar (sotuv menejeri) KPI ------------------------------------
+# Admin ish haqi = fiks oylik + eski to'lovlarni yig'ish bonusi +
+# yangi mijoz bonusi. Ikkala bonus ham FILIAL ko'rsatkichi bo'yicha
+# hisoblanadi: bir filialda ikkita admin bo'lsa, ikkalasi ham to'liq
+# bonusni oladi.
+
+# Eski to'lov = ilgari kamida bir marta to'lagan o'quvchining keyingi
+# to'lovi. Yangi to'lov = o'quvchining eng birinchi to'lovi.
+
+# Yig'ish foizi SUMMA bo'yicha: shu oyda eski o'quvchilarga hisoblangan
+# summadan qanchasi kassaga tushgani.
+
+# (min_students, max_students yoki None, min_percent, bonus)
+DEFAULT_KPI_COLLECTION_RULES = [
+    (51, 100, 95.0, 500_000),
+    (101, 150, 95.0, 1_000_000),
+    (101, 150, 90.0, 500_000),
+    (151, None, 98.0, 2_000_000),
+    (151, None, 90.0, 1_000_000),
+    (151, None, 80.0, 500_000),
+]
+# 50 tagacha o'quvchida bonus yo'q - shuning uchun jadvalda qator ham yo'q.
+
+# (yangi mijozlar soni, bonus)
+DEFAULT_KPI_NEW_CLIENT_RULES = [
+    (10, 50_000),
+    (20, 120_000),
+    (30, 300_000),
+    (40, 500_000),
+    (50, 750_000),
+    (60, 1_200_000),
+    (70, 1_800_000),
+    (80, 2_400_000),
+    (90, 3_150_000),
+    (100, 4_000_000),
+]
+
+# KPI'ni ko'rish - rahbariyat; qoidalar va fiks oylikni o'zgartirish -
+# faqat asoschi.
+KPI_VIEW = FULL_ACCESS
+KPI_ADMIN = [FOUNDER]

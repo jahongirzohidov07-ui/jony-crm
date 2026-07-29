@@ -42,6 +42,7 @@ class UserOut(BaseModel):
     branch_id: Optional[int] = None
     branch: Optional[BranchOut] = None
     is_active: bool = True
+    fix_salary: Optional[float] = None
 
 
 class UserCreate(BaseModel):
@@ -50,6 +51,7 @@ class UserCreate(BaseModel):
     full_name: str
     role: str
     branch_id: Optional[int] = None
+    fix_salary: Optional[float] = None
 
 
 class UserUpdate(BaseModel):
@@ -58,6 +60,7 @@ class UserUpdate(BaseModel):
     branch_id: Optional[int] = None
     is_active: Optional[bool] = None
     password: Optional[str] = None
+    fix_salary: Optional[float] = None
 
 
 # ---------- Teacher ----------
@@ -528,3 +531,67 @@ class RedemptionOut(BaseModel):
     created_at: datetime
     student: Optional[GridStudent] = None
     reward: Optional[RewardOut] = None
+
+
+# ---------- Adminlar KPI ----------
+class KpiCollectionRuleIn(BaseModel):
+    min_students: int
+    max_students: Optional[int] = None
+    min_percent: float
+    bonus: float
+
+
+class KpiCollectionRuleOut(KpiCollectionRuleIn):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+
+
+class KpiNewClientRuleIn(BaseModel):
+    min_clients: int
+    bonus: float
+
+
+class KpiNewClientRuleOut(KpiNewClientRuleIn):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+
+
+class KpiRules(BaseModel):
+    collection: List[KpiCollectionRuleOut] = []
+    new_clients: List[KpiNewClientRuleOut] = []
+
+
+class KpiRulesIn(BaseModel):
+    collection: List[KpiCollectionRuleIn] = []
+    new_clients: List[KpiNewClientRuleIn] = []
+
+
+class AdminKpi(BaseModel):
+    """Bitta adminning bir oylik ish haqi hisobi.
+
+    Bonuslar FILIAL ko'rsatkichi bo'yicha - bir filialda ikkita admin
+    bo'lsa, ikkalasi ham to'liq bonusni oladi."""
+    user_id: int
+    full_name: str
+    branch_id: Optional[int] = None
+    branch: Optional[str] = None
+
+    fix_salary: float = 0
+
+    # Filial ko'rsatkichlari
+    active_students: int = 0
+    expected: float = 0        # eski o'quvchilarga hisoblangan summa
+    collected: float = 0       # ulardan tushgan summa
+    collection_percent: float = 0
+    collection_bonus: float = 0
+
+    new_clients: int = 0       # birinchi marta to'lagan o'quvchilar
+    new_client_revenue: float = 0
+    new_client_bonus: float = 0
+
+    total: float = 0
+
+
+class AdminKpiResult(BaseModel):
+    period: str
+    rows: List[AdminKpi] = []

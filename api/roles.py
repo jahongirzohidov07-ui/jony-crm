@@ -1,11 +1,16 @@
-"""Jony Academy org-chart roles (not the Jony School kurator model - separate context).
+"""Jony Academy tashkiliy rollari.
 
-Internal keys are plain ASCII for safe DB/string comparisons; UZ_LABELS gives
-the human-readable Uzbek label for each, used by the frontend.
+Muhim atama farqi: bizning o'quv markazda "Administrator" deganda
+SOTUV MENEJERI tushuniladi (lidlar bilan ishlaydigan odam), tizimning
+egasi emas. Tizimning to'liq huquqli egasi - ASOSCHI.
+
+Ichki kalitlar (masalan "founder") bazada saqlanadi va hech qachon
+o'zgarmasligi kerak; ekranda ko'rinadigan nom UZ_LABELS'da turadi.
 """
 
-ADMINISTRATOR = "administrator"
+FOUNDER = "founder"                     # Asoschi - to'liq huquq
 BRANCH_MANAGER = "branch_manager"       # Filial menejeri
+SALES_MANAGER = "sales_manager"         # Administrator (sotuv menejeri)
 TEACHER = "teacher"                     # O'qituvchi
 SUPPORT_TEACHER = "support_teacher"
 EXAMINER = "examiner"
@@ -13,8 +18,9 @@ HR_MANAGER = "hr_manager"
 SMM_MANAGER = "smm_manager"
 
 ALL_ROLES = [
-    ADMINISTRATOR,
+    FOUNDER,
     BRANCH_MANAGER,
+    SALES_MANAGER,
     TEACHER,
     SUPPORT_TEACHER,
     EXAMINER,
@@ -23,8 +29,9 @@ ALL_ROLES = [
 ]
 
 UZ_LABELS = {
-    ADMINISTRATOR: "Administrator",
+    FOUNDER: "Asoschi",
     BRANCH_MANAGER: "Filial menejeri",
+    SALES_MANAGER: "Administrator (sotuv menejeri)",
     TEACHER: "O'qituvchi",
     SUPPORT_TEACHER: "Support teacher",
     EXAMINER: "Examiner",
@@ -32,32 +39,37 @@ UZ_LABELS = {
     SMM_MANAGER: "SMM manager",
 }
 
-# ---- Permission groups -----------------------------------------------
-# Full operational control (create/edit/delete students, groups, payments,
-# manage branches).
-FULL_ACCESS = [ADMINISTRATOR, BRANCH_MANAGER]
+# ---- Ruxsat guruhlari -------------------------------------------------
+# Kundalik operatsion to'liq huquq (talaba/guruh yaratish-o'chirish,
+# moliyaviy amallar). Asoschi + filial menejeri.
+FULL_ACCESS = [FOUNDER, BRANCH_MANAGER]
 
-# Can view/edit students & groups day-to-day, but not touch finance or delete.
-TEACHING_STAFF = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
+# Talaba yozuvlari bilan ishlaydiganlar. Sotuv menejeri ham kiradi -
+# lidni o'quvchiga aylantirish uning ishi.
+TEACHING_STAFF = FULL_ACCESS + [SALES_MANAGER, TEACHER, SUPPORT_TEACHER, EXAMINER]
 
-# Can manage teacher/staff records (HR's actual job) plus everything
-# TEACHING_STAFF can already do.
-STAFF_MANAGERS = FULL_ACCESS + [HR_MANAGER]
+# Xodimlar ro'yxatini KO'RA oladiganlar.
+STAFF_VIEWERS = FULL_ACCESS + [HR_MANAGER]
 
-# Finance (payments, balances, discounts) - kept to the smallest group since
-# mistakes here cost real money.
+# Xodim yaratish va ROL BERISH - faqat asoschi. Bu ataylab eng tor
+# guruh: rol berish tizimdagi eng xavfli amal.
+USER_ADMIN = [FOUNDER]
+
+# Moliya (to'lov, hisob-kitob, ish haqi).
 FINANCE_ACCESS = FULL_ACCESS
 
-# SMM manager gets read-only access to aggregate stats (for content
-# planning) but no access to individual student records or money.
+# Lidlar (sotuv voronkasi). Administrator/sotuv menejeri bu yerda
+# asosiy foydalanuvchi; SMM manager Instagram/Telegram lidlarini
+# kiritadi; support teacher qabulda tashrifchilarni yozadi.
+LEAD_ACCESS = FULL_ACCESS + [SALES_MANAGER, SMM_MANAGER, SUPPORT_TEACHER]
+
+# Faqat umumiy statistikani ko'radiganlar.
 DASHBOARD_ONLY = [SMM_MANAGER]
 
-# Lidlar (sales funnel). SMM manager is included on purpose - the Instagram
-# and Telegram leads are theirs, so they need to log and follow them up.
-# Support teacher handles walk-ins at reception.
-LEAD_ACCESS = FULL_ACCESS + [SMM_MANAGER, SUPPORT_TEACHER]
+# Butun tashkilot bo'yicha ko'radigan rollar (filialga bog'lanmagan).
+ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER]
 
-# ---- Lead funnel -----------------------------------------------------
+# ---- Lid voronkasi ----------------------------------------------------
 LEAD_STAGES = [
     "new",              # Yangi (so'rov keldi, hali bog'lanilmagan)
     "contacted",        # Bog'lanildi
@@ -77,10 +89,7 @@ LEAD_SOURCES = [
     "other",      # Boshqa
 ]
 
-# Manba lidni voronkaning qaysi nuqtasiga qo'yishini belgilaydi: o'zi kirib
-# kelgan odam bilan allaqachon yuzma-yuz gaplashilgan, o'zi qo'ng'iroq
-# qilgani esa "bog'lanildi" bosqichida. Onlayn so'rov qoldirganlar esa
-# hali kutmoqda - ularga qo'ng'iroq qilish kerak.
+# Manba lidni voronkaning qaysi nuqtasiga qo'yishini belgilaydi.
 LEAD_SOURCE_DEFAULT_STAGE = {
     "visit": "trial_scheduled",
     "phone": "contacted",

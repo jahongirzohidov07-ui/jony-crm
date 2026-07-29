@@ -44,6 +44,10 @@ def _ensure_new_columns():
         "ALTER TABLE leads ADD COLUMN address VARCHAR",
         "ALTER TABLE leads ADD COLUMN school VARCHAR",
         "ALTER TABLE leads ADD COLUMN grade VARCHAR",
+        # "administrator" roli "founder" (Asoschi) deb qayta nomlandi.
+        # Bizning markazda "Administrator" - bu sotuv menejeri, tizim
+        # egasi emas. Eski hisoblarni yangi kalitga ko'chiramiz.
+        "UPDATE users SET role = 'founder' WHERE role = 'administrator'",
     ]
     for stmt in statements:
         try:
@@ -80,7 +84,7 @@ def bootstrap(key: str, db: Session = Depends(get_db)):
         username="admin",
         password_hash=hash_password("ChangeMe123!"),
         full_name="Administrator",
-        role=roles.ADMINISTRATOR,
+        role=roles.FOUNDER,
         branch_id=None,
     )
     db.add(admin)
@@ -106,7 +110,7 @@ def to_student_out(db: Session, s: models.Student) -> schemas.StudentOut:
 def scope_to_branch(query, model, user: models.User):
     """Administrator/HR/SMM (branch_id is None on their account) see every
     branch. Everyone else only sees their own branch's records."""
-    if user.role in (roles.ADMINISTRATOR, roles.HR_MANAGER, roles.SMM_MANAGER):
+    if user.role in tuple(roles.ORG_WIDE_ROLES):
         return query
     if user.branch_id:
         return query.filter(model.branch_id == user.branch_id)
@@ -159,7 +163,7 @@ def list_branches(db: Session = Depends(get_db), user=Depends(get_current_user))
 def create_branch(
     payload: schemas.BranchCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(roles.ADMINISTRATOR)),
+    user=Depends(require_role(roles.FOUNDER)),
 ):
     branch = models.Branch(**payload.model_dump())
     db.add(branch)
@@ -172,28 +176,20 @@ def create_branch(
 def _guard_role_assignment(
     requester: models.User, target_role: str, target_branch_id: Optional[int]
 ):
-    """Prevents privilege escalation: only an administrator may create or
-    edit an administrator / hr_manager / smm_manager account. A branch
-    manager may only manage branch-scoped staff within their own branch."""
-    org_wide_roles = (roles.ADMINISTRATOR, roles.HR_MANAGER, roles.SMM_MANAGER)
-    if requester.role != roles.ADMINISTRATOR and target_role in org_wide_roles:
-        raise HTTPException(403, "Bu rolni faqat administrator belgilay oladi")
-    if requester.role == roles.BRANCH_MANAGER:
-        if target_role not in (
-            roles.TEACHER,
-            roles.SUPPORT_TEACHER,
-            roles.EXAMINER,
-            roles.BRANCH_MANAGER,
-        ):
-            raise HTTPException(403, "Bu rolni belgilash uchun ruxsatingiz yo'q")
-        if target_branch_id != requester.branch_id:
-            raise HTTPException(403, "Faqat o'z filialingiz uchun xodim qo'sha olasiz")
+    """Rol berish - tizimdagi eng xavfli amal, shuning uchun uni faqat
+    asoschi bajaradi (roles.USER_ADMIN). Bu yerda yana bir bor tekshiramiz:
+    endpoint himoyasi kelajakda kengaytirilib ketsa ham, huquqni oshirib
+    yuborishning oldi olinadi."""
+    if requester.role != roles.FOUNDER:
+        raise HTTPException(403, "Rol belgilash huquqi faqat asoschida")
+    if target_role not in roles.ALL_ROLES:
+        raise HTTPException(400, "Noto'g'ri rol")
 
 
 @app.get("/api/users", response_model=List[schemas.UserOut])
 def list_users(
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.STAFF_MANAGERS)),
+    user: models.User = Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     q = scope_to_branch(db.query(models.User), models.User, user)
     return q.order_by(models.User.full_name).all()
@@ -215,7 +211,7 @@ def list_assignable_staff(
 def create_user(
     payload: schemas.UserCreate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.STAFF_MANAGERS)),
+    user: models.User = Depends(require_role(*roles.USER_ADMIN)),
 ):
     if payload.role not in roles.ALL_ROLES:
         raise HTTPException(400, "Noto'g'ri rol")
@@ -241,7 +237,7 @@ def update_user(
     user_id: int,
     payload: schemas.UserUpdate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.STAFF_MANAGERS)),
+    user: models.User = Depends(require_role(*roles.USER_ADMIN)),
 ):
     target = db.query(models.User).get(user_id)
     if not target:
@@ -417,7 +413,7 @@ def _get_lead_in_scope(db: Session, lead_id: int, user: models.User) -> models.L
     lead = db.query(models.Lead).get(lead_id)
     if not lead:
         raise HTTPException(404, "Lid topilmadi")
-    if user.role not in (roles.ADMINISTRATOR, roles.HR_MANAGER, roles.SMM_MANAGER):
+    if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id and lead.branch_id != user.branch_id:
             raise HTTPException(403, "Bu lid boshqa filialga tegishli")
     return lead
@@ -568,7 +564,7 @@ def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user))
 def create_teacher(
     payload: schemas.TeacherCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.STAFF_MANAGERS)),
+    user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     teacher = models.Teacher(**payload.model_dump())
     db.add(teacher)
@@ -582,7 +578,7 @@ def update_teacher(
     teacher_id: int,
     payload: schemas.TeacherCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.STAFF_MANAGERS)),
+    user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     teacher = db.query(models.Teacher).get(teacher_id)
     if not teacher:
@@ -810,7 +806,7 @@ def _get_group_in_scope(db: Session, group_id: int, user: models.User) -> models
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
-    if user.role not in (roles.ADMINISTRATOR, roles.HR_MANAGER, roles.SMM_MANAGER):
+    if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id and group.branch_id != user.branch_id:
             raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
     return group
@@ -993,7 +989,7 @@ def list_payouts(
 ):
     period = f"{year:04d}-{month:02d}"
     q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
-    if user.role not in (roles.ADMINISTRATOR, roles.HR_MANAGER, roles.SMM_MANAGER):
+    if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id:
             q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
     return q.all()

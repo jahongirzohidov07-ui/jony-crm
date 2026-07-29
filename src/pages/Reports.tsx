@@ -94,12 +94,13 @@ function CashflowTab() {
   if (!data) return null;
 
   const t = data.totals;
+  // "Boshqa" grafikda ko'rsatilmaydi - u deyarli har doim nol bo'ladi va
+  // faqat shovqin qo'shadi; jadvalda esa jamiga kirib turadi.
   const chart = data.rows.map((r) => ({
     name: formatPeriodLabel(r.period),
     Naqd: r.cash,
     Plastik: r.card,
     Terminal: r.terminal,
-    Boshqa: r.other,
   }));
 
   function exportRows() {
@@ -162,10 +163,14 @@ function CashflowTab() {
             <YAxis tickFormatter={short} tick={{ fontSize: 12, fill: "#64748b" }} />
             <Tooltip formatter={(v: number) => formatSom(v)} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Bar dataKey="Naqd" stackId="a" fill="#0d9488" />
-            <Bar dataKey="Plastik" stackId="a" fill="#38bdf8" />
-            <Bar dataKey="Terminal" stackId="a" fill="#a78bfa" />
-            <Bar dataKey="Boshqa" stackId="a" fill="#cbd5e1" />
+            {/* Yonma-yon ustunlar - qaysi kanal o'sib, qaysi tushib
+                borayotgani bir qarashda ko'rinadi. */}
+            <Bar dataKey="Naqd" fill="#0d9488" radius={[4, 4, 0, 0]}
+                 isAnimationActive={false} />
+            <Bar dataKey="Plastik" fill="#38bdf8" radius={[4, 4, 0, 0]}
+                 isAnimationActive={false} />
+            <Bar dataKey="Terminal" fill="#a78bfa" radius={[4, 4, 0, 0]}
+                 isAnimationActive={false} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -297,7 +302,11 @@ function PnlTab() {
             <Stat
               label="Chiqim"
               value={formatSom(data.outflow_total)}
-              hint={`shundan ish haqi ${short(data.payroll_total)}`}
+              hint={
+                data.payroll_total > 0
+                  ? `shundan ish haqi ${short(data.payroll_total)}`
+                  : undefined
+              }
             />
             <Stat
               label="Foyda"

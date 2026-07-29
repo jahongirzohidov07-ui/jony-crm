@@ -13,6 +13,7 @@ import {
   Target,
   Wallet,
   BarChart3,
+  Trophy,
   X,
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
@@ -21,6 +22,7 @@ import {
   STAFF_VIEWERS,
   LEAD_ACCESS,
   FINANCE_ACCESS,
+  TEACHING_STAFF,
   can,
   roleLabel,
 } from "../lib/roles";
@@ -154,6 +156,10 @@ export default function Layout() {
       { to: "/leads", label: "Lidlar", icon: Target },
       ...items.slice(1),
     ];
+  }
+  // Coin tizimi o'quv jarayoniga tegishli - ustozlar ham ko'radi.
+  if (can(user?.role, TEACHING_STAFF)) {
+    items = [...items, { to: "/gamification", label: "Coin tizimi", icon: Trophy }];
   }
   // Xarajatlar moliya bo'limi - o'quv jarayoni bo'limlaridan keyin turadi.
   if (can(user?.role, FINANCE_ACCESS)) {

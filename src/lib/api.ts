@@ -205,6 +205,18 @@ export interface Lead {
   updated_at?: string | null;
 }
 
+export interface Expense {
+  id: number;
+  date: string; // YYYY-MM-DD
+  category: string;
+  amount: number;
+  note?: string | null;
+  branch_id?: number | null;
+  branch?: Branch | null;
+  created_by?: string | null;
+  created_at: string;
+}
+
 export type StudentGrowthWindow = "1m" | "6m" | "1y" | "all";
 
 export interface StudentGrowthPoint {

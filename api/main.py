@@ -31,6 +31,31 @@ from database import Base, engine, get_db
 
 Base.metadata.create_all(bind=engine)
 
+
+def _ensure_new_columns():
+    """create_all() faqat yo'q jadvalni yaratadi - mavjud jadvalga yangi
+    ustun qo'shmaydi. Shuning uchun keyin qo'shilgan ustunlarni shu yerda
+    qo'lda qo'shamiz. Har safar ishga tushganda bajariladi, lekin ustun
+    allaqachon bo'lsa xatolik e'tiborsiz qoldiriladi - ya'ni takror
+    ishlatish xavfsiz."""
+    from sqlalchemy import text
+
+    statements = [
+        "ALTER TABLE leads ADD COLUMN address VARCHAR",
+        "ALTER TABLE leads ADD COLUMN school VARCHAR",
+        "ALTER TABLE leads ADD COLUMN grade VARCHAR",
+    ]
+    for stmt in statements:
+        try:
+            with engine.begin() as conn:
+                conn.execute(text(stmt))
+        except Exception:
+            # Ustun allaqachon mavjud (yoki jadval hali yo'q) - muammo emas.
+            pass
+
+
+_ensure_new_columns()
+
 app = FastAPI(title="Jony Academy CRM API")
 
 app.add_middleware(
@@ -436,6 +461,9 @@ def create_lead(
         phone=payload.phone,
         source=payload.source,
         stage=stage,
+        address=payload.address,
+        school=payload.school,
+        grade=payload.grade,
         note=payload.note,
         branch_id=payload.branch_id if payload.branch_id is not None else user.branch_id,
         assigned_user_id=payload.assigned_user_id,
@@ -497,6 +525,19 @@ def convert_lead(
     if lead.converted_student_id:
         raise HTTPException(400, "Bu lid allaqachon o'quvchiga aylantirilgan")
 
+    # Lidda yig'ilgan qo'shimcha ma'lumot (manzil, maktab, sinf) yo'qolib
+    # ketmasligi uchun uni o'quvchining izohiga ko'chiramiz.
+    extra = []
+    if lead.address:
+        extra.append(f"Manzil: {lead.address}")
+    if lead.school:
+        extra.append(f"Maktab: {lead.school}")
+    if lead.grade:
+        extra.append(f"Sinf: {lead.grade}")
+    if lead.note:
+        extra.append(lead.note)
+    student_note = " · ".join(extra) if extra else None
+
     student = models.Student(
         full_name=lead.full_name,
         phone=lead.phone,
@@ -504,7 +545,7 @@ def convert_lead(
         branch_id=lead.branch_id,
         enrolled_date=payload.enrolled_date or date.today(),
         status="active",
-        note=lead.note,
+        note=student_note,
     )
     db.add(student)
     db.flush()

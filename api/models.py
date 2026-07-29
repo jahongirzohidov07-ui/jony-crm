@@ -161,6 +161,13 @@ class Lead(Base):
     phone = Column(String, nullable=True)
     source = Column(String, nullable=False, default="other")
     stage = Column(String, nullable=False, default="new")
+
+    # Qayerdan kelgani (mahalla/tuman), hozir o'qiyotgan maktabi va sinfi.
+    # Uchalasi ham ixtiyoriy - lid birinchi qo'ng'iroqda to'liq bo'lmasligi mumkin.
+    address = Column(String, nullable=True)
+    school = Column(String, nullable=True)
+    grade = Column(String, nullable=True)
+
     note = Column(Text, nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     assigned_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)

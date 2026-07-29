@@ -223,6 +223,9 @@ class LeadCreate(BaseModel):
     source: str = "other"
     # Berilmasa, manbaga qarab avtomatik tanlanadi.
     stage: Optional[str] = None
+    address: Optional[str] = None
+    school: Optional[str] = None
+    grade: Optional[str] = None
     note: Optional[str] = None
     branch_id: Optional[int] = None
     assigned_user_id: Optional[int] = None
@@ -233,6 +236,9 @@ class LeadUpdate(BaseModel):
     phone: Optional[str] = None
     source: Optional[str] = None
     stage: Optional[str] = None
+    address: Optional[str] = None
+    school: Optional[str] = None
+    grade: Optional[str] = None
     note: Optional[str] = None
     branch_id: Optional[int] = None
     assigned_user_id: Optional[int] = None
@@ -245,6 +251,9 @@ class LeadOut(BaseModel):
     phone: Optional[str] = None
     source: str
     stage: str
+    address: Optional[str] = None
+    school: Optional[str] = None
+    grade: Optional[str] = None
     note: Optional[str] = None
     branch_id: Optional[int] = None
     branch: Optional[BranchOut] = None

@@ -1,32 +1,51 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Search, X, Download } from "lucide-react";
+import { Plus, Search, X, Download, Pencil } from "lucide-react";
 import { api, type Student, type Group, type Branch } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 
-function AddStudentModal({
+const STATUSES = [
+  { key: "active", label: "Faol" },
+  { key: "trial", label: "Sinovda" },
+  { key: "frozen", label: "Muzlatilgan" },
+  { key: "archived", label: "Arxiv (ketgan)" },
+];
+
+function StudentModal({
   groups,
   branches,
   defaultBranchId,
+  initial,
   onClose,
-  onCreated,
+  onSaved,
 }: {
   groups: Group[];
   branches: Branch[];
   defaultBranchId: number | null;
+  initial?: Student;
   onClose: () => void;
-  onCreated: (s: Student) => void;
+  onSaved: (s: Student) => void;
 }) {
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [parentPhone, setParentPhone] = useState("");
-  const [groupId, setGroupId] = useState<string>("");
-  const [branchId, setBranchId] = useState(defaultBranchId ? String(defaultBranchId) : "");
+  const editing = !!initial;
+  const [fullName, setFullName] = useState(initial?.full_name ?? "");
+  const [phone, setPhone] = useState(initial?.phone ?? "");
+  const [parentPhone, setParentPhone] = useState(initial?.parent_phone ?? "");
+  const [groupId, setGroupId] = useState<string>(
+    initial?.group ? String(initial.group.id) : ""
+  );
+  const [branchId, setBranchId] = useState(
+    initial?.branch
+      ? String(initial.branch.id)
+      : defaultBranchId
+      ? String(defaultBranchId)
+      : ""
+  );
+  const [status, setStatus] = useState(initial?.status ?? "active");
   const [enrolledDate, setEnrolledDate] = useState(
-    () => new Date().toISOString().slice(0, 10)
+    initial?.enrolled_date ?? new Date().toISOString().slice(0, 10)
   );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,15 +58,19 @@ function AddStudentModal({
     setSaving(true);
     setError(null);
     try {
-      const s = await api.post<Student>("/students", {
+      const body = {
         full_name: fullName,
         phone: phone || null,
         parent_phone: parentPhone || null,
         group_id: groupId ? Number(groupId) : null,
         branch_id: branchId ? Number(branchId) : null,
         enrolled_date: enrolledDate || null,
-      });
-      onCreated(s);
+        status,
+      };
+      const s = editing
+        ? await api.put<Student>(`/students/${initial!.id}`, body)
+        : await api.post<Student>("/students", body);
+      onSaved(s);
       onClose();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
@@ -60,7 +83,9 @@ function AddStudentModal({
     <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-slate-900">Yangi talaba qo'shish</h2>
+          <h2 className="font-semibold text-slate-900">
+            {editing ? "Talabani tahrirlash" : "Yangi talaba qo'shish"}
+          </h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={18} />
           </button>
@@ -149,6 +174,29 @@ function AddStudentModal({
             </select>
           </div>
 
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Holat
+            </label>
+            <select
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              {STATUSES.map((s) => (
+                <option key={s.key} value={s.key}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+            {status === "archived" && (
+              <p className="text-xs text-slate-400 mt-1">
+                Ketgan sana avtomatik bugungi kun bilan qo'yiladi — LTV shundan
+                hisoblanadi.
+              </p>
+            )}
+          </div>
+
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
@@ -172,6 +220,7 @@ export default function Students() {
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [editing, setEditing] = useState<Student | null>(null);
 
   function load() {
     setLoading(true);
@@ -261,20 +310,22 @@ export default function Students() {
               {showBranchColumn && (
                 <th className="text-left px-4 py-3 font-medium">Filial</th>
               )}
+              <th className="text-left px-4 py-3 font-medium">Holat</th>
               <th className="text-right px-4 py-3 font-medium">Balans</th>
+              {canEdit && <th className="px-4 py-3"></th>}
             </tr>
           </thead>
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-6 text-center text-slate-400">
                   Yuklanmoqda...
                 </td>
               </tr>
             )}
             {!loading && students.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-6 text-center text-slate-400">
                   Talaba topilmadi
                 </td>
               </tr>
@@ -302,6 +353,19 @@ export default function Students() {
                 {showBranchColumn && (
                   <td className="px-4 py-3 text-slate-600">{s.branch?.name || "—"}</td>
                 )}
+                <td className="px-4 py-3">
+                  <span
+                    className={`rounded-md px-2 py-0.5 text-xs font-medium ${
+                      s.status === "active"
+                        ? "bg-green-50 text-green-700"
+                        : s.status === "archived"
+                        ? "bg-slate-100 text-slate-500"
+                        : "bg-amber-50 text-amber-700"
+                    }`}
+                  >
+                    {STATUSES.find((x) => x.key === s.status)?.label || s.status}
+                  </span>
+                </td>
                 <td
                   className={`px-4 py-3 text-right font-medium ${
                     s.balance < 0 ? "text-red-600" : "text-slate-700"
@@ -309,6 +373,17 @@ export default function Students() {
                 >
                   {formatSom(s.balance)}
                 </td>
+                {canEdit && (
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => setEditing(s)}
+                      title="Tahrirlash"
+                      className="text-slate-400 hover:text-brand-600"
+                    >
+                      <Pencil size={15} />
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -316,12 +391,25 @@ export default function Students() {
       </div>
 
       {showAdd && (
-        <AddStudentModal
+        <StudentModal
           groups={groups}
           branches={branches}
           defaultBranchId={user?.branch_id ?? null}
           onClose={() => setShowAdd(false)}
-          onCreated={() => load()}
+          onSaved={() => load()}
+        />
+      )}
+      {editing && (
+        <StudentModal
+          groups={groups}
+          branches={branches}
+          defaultBranchId={user?.branch_id ?? null}
+          initial={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => {
+            setEditing(null);
+            load();
+          }}
         />
       )}
     </div>

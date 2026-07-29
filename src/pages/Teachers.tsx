@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
-import { Plus, X, UserMinus, UserCheck } from "lucide-react";
+import { Plus, X, UserMinus, UserCheck, Pencil } from "lucide-react";
 import { api, type Teacher, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { STAFF_VIEWERS, can } from "../lib/roles";
 import { formatDate } from "../lib/format";
 
-function AddTeacherModal({
+function TeacherModal({
   branches,
   defaultBranchId,
+  initial,
   onClose,
-  onCreated,
+  onSaved,
 }: {
   branches: Branch[];
   defaultBranchId: number | null;
+  initial?: Teacher;
   onClose: () => void;
-  onCreated: () => void;
+  onSaved: () => void;
 }) {
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [subject, setSubject] = useState("");
-  const [branchId, setBranchId] = useState(defaultBranchId ? String(defaultBranchId) : "");
+  const editing = !!initial;
+  const [fullName, setFullName] = useState(initial?.full_name ?? "");
+  const [phone, setPhone] = useState(initial?.phone ?? "");
+  const [subject, setSubject] = useState(initial?.subject ?? "");
+  const [branchId, setBranchId] = useState(
+    initial?.branch_id
+      ? String(initial.branch_id)
+      : defaultBranchId
+      ? String(defaultBranchId)
+      : ""
+  );
+  const [hiredDate, setHiredDate] = useState(
+    initial?.hired_date ?? new Date().toISOString().slice(0, 10)
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,13 +43,17 @@ function AddTeacherModal({
     setSaving(true);
     setError(null);
     try {
-      await api.post("/teachers", {
+      const body = {
         full_name: fullName,
         phone: phone || null,
         subject: subject || null,
         branch_id: branchId ? Number(branchId) : null,
-      });
-      onCreated();
+        hired_date: hiredDate || null,
+        is_active: initial ? initial.is_active ?? 1 : 1,
+      };
+      if (editing) await api.put(`/teachers/${initial!.id}`, body);
+      else await api.post("/teachers", body);
+      onSaved();
       onClose();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
@@ -50,7 +66,9 @@ function AddTeacherModal({
     <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-slate-900">Yangi o'qituvchi</h2>
+          <h2 className="font-semibold text-slate-900">
+            {editing ? "O'qituvchini tahrirlash" : "Yangi o'qituvchi"}
+          </h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={18} />
           </button>
@@ -96,6 +114,20 @@ function AddTeacherModal({
               ))}
             </select>
           </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Ishga kirgan sana
+            </label>
+            <input
+              type="date"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={hiredDate}
+              onChange={(e) => setHiredDate(e.target.value)}
+            />
+            <p className="text-xs text-slate-400 mt-1">
+              Retention hisoboti shu sanadan boshlab stajni sanaydi.
+            </p>
+          </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
             onClick={submit}
@@ -116,6 +148,7 @@ export default function Teachers() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [editing, setEditing] = useState<Teacher | null>(null);
 
   function load() {
     setLoading(true);
@@ -218,6 +251,13 @@ export default function Teachers() {
                     {canEdit && (
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         <button
+                          onClick={() => setEditing(t)}
+                          title="Tahrirlash"
+                          className="text-slate-400 hover:text-brand-600 mr-2"
+                        >
+                          <Pencil size={15} />
+                        </button>
+                        <button
                           onClick={() => toggleActive(t)}
                           title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}
                           className="text-slate-400 hover:text-brand-600"
@@ -235,11 +275,23 @@ export default function Teachers() {
       )}
 
       {showAdd && (
-        <AddTeacherModal
+        <TeacherModal
           branches={branches}
           defaultBranchId={user?.branch_id ?? null}
           onClose={() => setShowAdd(false)}
-          onCreated={load}
+          onSaved={load}
+        />
+      )}
+      {editing && (
+        <TeacherModal
+          branches={branches}
+          defaultBranchId={user?.branch_id ?? null}
+          initial={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => {
+            setEditing(null);
+            load();
+          }}
         />
       )}
     </div>

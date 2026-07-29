@@ -1,38 +1,24 @@
 import { useEffect, useState } from "react";
-import { Download, Banknote, CreditCard, Smartphone, Wallet } from "lucide-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { Download, Users, TrendingDown, GraduationCap } from "lucide-react";
 import {
   api,
   type AdminKpiResult,
   type KpiRules,
-  type CashflowReport,
-  type PnlReport,
-  type LtvReport,
-  type LtvDimension,
-  type RetentionReport,
+  type TeacherPayrollReport,
+  type FunnelReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
-import { categoryLabel, MONTHS } from "../lib/expenses";
-import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
+import { MONTHS } from "../lib/expenses";
+import { stageLabel } from "../lib/leads";
+import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "cashflow" | "pnl" | "ltv" | "retention" | "kpi";
+type Tab = "payroll" | "funnel" | "kpi";
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: "cashflow", label: "Pul oqimi" },
-  { key: "pnl", label: "Foyda / zarar" },
-  { key: "ltv", label: "LTV" },
-  { key: "retention", label: "Ustozlar" },
+  { key: "payroll", label: "Ustozlar oyligi" },
+  { key: "funnel", label: "Sales funnel" },
   { key: "kpi", label: "Adminlar KPI" },
 ];
 
@@ -45,11 +31,7 @@ function short(n: number): string {
 }
 
 function Stat({
-  label,
-  value,
-  hint,
-  tone = "slate",
-  icon: Icon,
+  label, value, hint, tone = "slate", icon: Icon,
 }: {
   label: string;
   value: string;
@@ -58,10 +40,8 @@ function Stat({
   icon?: React.ComponentType<{ size?: number; className?: string }>;
 }) {
   const toneClass =
-    tone === "green"
-      ? "text-emerald-600"
-      : tone === "red"
-      ? "text-red-600"
+    tone === "green" ? "text-emerald-600"
+      : tone === "red" ? "text-red-600"
       : "text-slate-900";
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-4">
@@ -79,384 +59,78 @@ function Note({ children }: { children: React.ReactNode }) {
   return <p className="text-xs text-slate-400 mt-3 max-w-3xl">{children}</p>;
 }
 
-// ---------------------------------------------------------------- Cashflow
-function CashflowTab() {
-  const [months, setMonths] = useState(6);
-  const [data, setData] = useState<CashflowReport | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get<CashflowReport>(`/reports/cashflow?months=${months}`)
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, [months]);
-
-  if (loading) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
-  if (!data) return null;
-
-  const t = data.totals;
-  // "Boshqa" grafikda ko'rsatilmaydi - u deyarli har doim nol bo'ladi va
-  // faqat shovqin qo'shadi; jadvalda esa jamiga kirib turadi.
-  const chart = data.rows.map((r) => ({
-    name: formatPeriodLabel(r.period),
-    Naqd: r.cash,
-    Plastik: r.card,
-    Terminal: r.terminal,
-  }));
-
-  function exportRows() {
-    exportToExcel("pul-oqimi", "Pul oqimi",
-      data!.rows.map((r) => ({
-        Davr: r.period,
-        Naqd: r.cash,
-        Plastik: r.card,
-        Terminal: r.terminal,
-        Boshqa: r.other,
-        "Jami kirim": r.income,
-        Xarajat: r.expenses,
-        "Ustozlar ish haqi": r.payroll,
-        "Jami chiqim": r.outflow,
-        Sof: r.net,
-      })));
-  }
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex gap-1">
-          {[3, 6, 12].map((m) => (
-            <button
-              key={m}
-              onClick={() => setMonths(m)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
-                months === m
-                  ? "bg-brand-50 border-brand-400 text-brand-700"
-                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-              }`}
-            >
-              {m} oy
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={exportRows}
-          className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600"
-        >
-          <Download size={15} /> Excel
-        </button>
-      </div>
-
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        <Stat label="Naqd" value={formatSom(t.cash)} icon={Banknote} />
-        <Stat label="Plastik" value={formatSom(t.card)} icon={CreditCard} />
-        <Stat label="Terminal" value={formatSom(t.terminal)} icon={Smartphone} />
-        <Stat label="Jami kirim" value={formatSom(t.income)} icon={Wallet} tone="green" />
-      </div>
-
-      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
-        <p className="text-sm font-medium text-slate-700 mb-3">
-          To'lov usullari bo'yicha tushum
-        </p>
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={chart}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-            <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
-            <YAxis tickFormatter={short} tick={{ fontSize: 12, fill: "#64748b" }} />
-            <Tooltip formatter={(v: number) => formatSom(v)} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
-            {/* Yonma-yon ustunlar - qaysi kanal o'sib, qaysi tushib
-                borayotgani bir qarashda ko'rinadi. */}
-            <Bar dataKey="Naqd" fill="#0d9488" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-            <Bar dataKey="Plastik" fill="#38bdf8" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-            <Bar dataKey="Terminal" fill="#a78bfa" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Oy</th>
-              <th className="text-right px-4 py-3 font-medium">Naqd</th>
-              <th className="text-right px-4 py-3 font-medium">Plastik</th>
-              <th className="text-right px-4 py-3 font-medium">Terminal</th>
-              <th className="text-right px-4 py-3 font-medium">Kirim</th>
-              <th className="text-right px-4 py-3 font-medium">Xarajat</th>
-              <th className="text-right px-4 py-3 font-medium">Ish haqi</th>
-              <th className="text-right px-4 py-3 font-medium">Sof</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.rows.map((r) => (
-              <tr key={r.period} className="border-t border-slate-100">
-                <td className="px-4 py-3 text-slate-700">
-                  {formatPeriodLabel(r.period)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">{short(r.cash)}</td>
-                <td className="px-4 py-3 text-right text-slate-600">{short(r.card)}</td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.terminal)}
-                </td>
-                <td className="px-4 py-3 text-right font-medium text-emerald-600">
-                  {short(r.income)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.expenses)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.payroll)}
-                </td>
-                <td
-                  className={`px-4 py-3 text-right font-semibold ${
-                    r.net >= 0 ? "text-emerald-600" : "text-red-600"
-                  }`}
-                >
-                  {short(r.net)}
-                </td>
-              </tr>
-            ))}
-            <tr className="border-t-2 border-slate-200 bg-slate-50 font-semibold">
-              <td className="px-4 py-3 text-slate-700">Jami</td>
-              <td className="px-4 py-3 text-right">{short(t.cash)}</td>
-              <td className="px-4 py-3 text-right">{short(t.card)}</td>
-              <td className="px-4 py-3 text-right">{short(t.terminal)}</td>
-              <td className="px-4 py-3 text-right text-emerald-600">
-                {short(t.income)}
-              </td>
-              <td className="px-4 py-3 text-right">{short(t.expenses)}</td>
-              <td className="px-4 py-3 text-right">{short(t.payroll)}</td>
-              <td
-                className={`px-4 py-3 text-right ${
-                  t.net >= 0 ? "text-emerald-600" : "text-red-600"
-                }`}
-              >
-                {short(t.net)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <Note>
-        Kirim — haqiqatda kassaga tushgan pul. Hisoblangan oylik (qarz) bu
-        yerga kirmaydi. Ustozlar ish haqi yoqlamadan avtomatik olinadi.
-      </Note>
-    </div>
-  );
-}
-
-// --------------------------------------------------------------------- P&L
-function PnlTab() {
+// --------------------------------------------------------- Ustozlar oyligi
+function PayrollTab() {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
-  const [data, setData] = useState<PnlReport | null>(null);
+  const [data, setData] = useState<TeacherPayrollReport | null>(null);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  function load() {
     setLoading(true);
     api
-      .get<PnlReport>(`/reports/pnl?year=${year}&month=${month}`)
+      .get<TeacherPayrollReport>(`/reports/teacher-payroll?year=${year}&month=${month}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [year, month]);
+  }
+  useEffect(load, [year, month]);
+
+  /** To'landi belgisini shu yerdan ham qo'yish mumkin - har guruhga
+   *  alohida kirib yurish shart emas. */
+  async function togglePaid(payoutId: number | null, paid: boolean) {
+    if (!payoutId) return;
+    try {
+      await api.put(`/payouts/${payoutId}`, { paid: !paid });
+      load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
 
   const years = [now.getFullYear() - 1, now.getFullYear()];
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-5">
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-        >
-          {MONTHS.map((m, i) => (
-            <option key={m} value={i + 1}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-        >
-          {years.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {loading || !data ? (
-        <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
-      ) : (
-        <>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-            <Stat label="Kirim" value={formatSom(data.income)} tone="green" />
-            <Stat
-              label="Chiqim"
-              value={formatSom(data.outflow_total)}
-              hint={
-                data.payroll_total > 0
-                  ? `shundan ish haqi ${short(data.payroll_total)}`
-                  : undefined
-              }
-            />
-            <Stat
-              label="Foyda"
-              value={formatSom(data.profit)}
-              tone={data.profit >= 0 ? "green" : "red"}
-            />
-            <Stat
-              label="Rentabellik"
-              value={`${data.margin}%`}
-              hint="foyda / kirim"
-              tone={data.margin >= 0 ? "green" : "red"}
-            />
-          </div>
-
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <table className="w-full text-sm">
-              <tbody>
-                <tr className="bg-emerald-50/60">
-                  <td className="px-4 py-3 font-medium text-slate-700">Kirim</td>
-                  <td className="px-4 py-3 text-right font-semibold text-emerald-700">
-                    {formatSom(data.income)}
-                  </td>
-                </tr>
-                {(
-                  [
-                    ["cash", "Naqd"],
-                    ["card", "Plastik"],
-                    ["terminal", "Terminal"],
-                    ["other", "Boshqa"],
-                  ] as const
-                )
-                  .filter(([k]) => (data.income_by_method[k] || 0) > 0)
-                  .map(([k, label]) => (
-                    <tr key={k} className="border-t border-slate-100">
-                      <td className="px-4 py-2 pl-8 text-slate-500">{label}</td>
-                      <td className="px-4 py-2 text-right text-slate-600">
-                        {formatSom(data.income_by_method[k])}
-                      </td>
-                    </tr>
-                  ))}
-
-                <tr className="border-t-2 border-slate-200 bg-red-50/50">
-                  <td className="px-4 py-3 font-medium text-slate-700">Chiqim</td>
-                  <td className="px-4 py-3 text-right font-semibold text-red-700">
-                    {formatSom(data.outflow_total)}
-                  </td>
-                </tr>
-                {data.expense_lines.length === 0 && (
-                  <tr className="border-t border-slate-100">
-                    <td colSpan={2} className="px-4 py-3 text-center text-slate-400">
-                      Bu oyda chiqim kiritilmagan
-                    </td>
-                  </tr>
-                )}
-                {data.expense_lines.map((l) => (
-                  <tr key={l.category} className="border-t border-slate-100">
-                    <td className="px-4 py-2 pl-8 text-slate-500">
-                      {l.auto ? "Ustozlar ish haqi" : categoryLabel(l.category)}
-                      {l.auto && (
-                        <span className="ml-2 text-[10px] uppercase tracking-wide bg-brand-50 text-brand-700 px-1.5 py-0.5 rounded">
-                          avtomatik
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-2 text-right text-slate-600">
-                      {formatSom(l.amount)}
-                    </td>
-                  </tr>
-                ))}
-
-                <tr className="border-t-2 border-slate-300 bg-slate-50">
-                  <td className="px-4 py-3 font-semibold text-slate-800">
-                    Sof foyda
-                  </td>
-                  <td
-                    className={`px-4 py-3 text-right font-bold ${
-                      data.profit >= 0 ? "text-emerald-700" : "text-red-700"
-                    }`}
-                  >
-                    {formatSom(data.profit)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <Note>
-            "Avtomatik" belgisi qo'yilgan qator yoqlama asosida o'zi
-            hisoblanadi — uni Xarajatlar bo'limiga qayta kiritish kerak emas,
-            aks holda ikki marta ayiriladi.
-          </Note>
-        </>
-      )}
-    </div>
-  );
-}
-
-// --------------------------------------------------------------------- LTV
-const DIMENSIONS: { key: LtvDimension; label: string }[] = [
-  { key: "branch", label: "Filiallar" },
-  { key: "teacher", label: "Ustozlar" },
-  { key: "group", label: "Guruhlar" },
-];
-
-function LtvTab() {
-  const [dimension, setDimension] = useState<LtvDimension>("branch");
-  const [data, setData] = useState<LtvReport | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get<LtvReport>(`/reports/ltv?dimension=${dimension}`)
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, [dimension]);
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex gap-1">
-          {DIMENSIONS.map((d) => (
-            <button
-              key={d.key}
-              onClick={() => setDimension(d.key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
-                dimension === d.key
-                  ? "bg-brand-50 border-brand-400 text-brand-700"
-                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-              }`}
-            >
-              {d.label}
-            </button>
-          ))}
+      <div className="flex items-center justify-between mb-5 gap-2">
+        <div className="flex items-center gap-2">
+          <select
+            className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+            value={month}
+            onChange={(e) => setMonth(Number(e.target.value))}
+          >
+            {MONTHS.map((m, i) => (
+              <option key={m} value={i + 1}>
+                {m}
+              </option>
+            ))}
+          </select>
+          <select
+            className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
         </div>
         {data && data.rows.length > 0 && (
           <button
             onClick={() =>
-              exportToExcel("ltv", "LTV",
+              exportToExcel("ustozlar-oyligi", "Oylik",
                 data.rows.map((r) => ({
-                  Kesim: r.label,
-                  "O'quvchilar": r.students,
-                  "Ketganlar": r.left,
-                  "O'rtacha oy": r.avg_months,
-                  "O'rtacha daromad": r.avg_revenue,
-                  "Jami daromad": r.total_revenue,
-                  "Ketish %": r.churn,
+                  Ustoz: r.full_name,
+                  Filial: r.branch ?? "",
+                  Guruhlar: r.groups.length,
+                  "O'quvchi": r.students,
+                  Darslar: r.lessons,
+                  "Ish haqi": r.amount,
+                  "To'langan": r.paid_amount,
                 })))
             }
             className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600"
@@ -466,68 +140,265 @@ function LtvTab() {
         )}
       </div>
 
+      {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
+
       {loading || !data ? (
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
-      ) : !data.overall ? (
-        <p className="text-slate-400 text-sm">Hali ma'lumot yo'q.</p>
+      ) : data.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-6 text-center">
+          Bu oy uchun ish haqi hisoblanmagan. Guruh sahifasidan
+          "Ustozlar ish haqi → Hisoblash va saqlash" tugmasini bosing.
+        </p>
       ) : (
         <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-            <Stat label="O'quvchilar" value={String(data.overall.students)} />
+            <Stat label="Ustozlar" value={String(data.teacher_count)} icon={GraduationCap} />
+            <Stat label="Jami ish haqi" value={formatSom(data.total)} />
+            <Stat label="To'langan" value={formatSom(data.paid)} tone="green" />
             <Stat
-              label="O'rtacha qolish muddati"
-              value={`${data.overall.avg_months} oy`}
-              hint="qo'shilgandan bugungacha"
-            />
-            <Stat
-              label="O'rtacha LTV"
-              value={formatSom(data.overall.avg_revenue)}
-              hint="bitta o'quvchidan tushgan pul"
-              tone="green"
-            />
-            <Stat
-              label="Ketganlar"
-              value={String(data.overall.left)}
-              hint={`jami ${data.overall.students} tadan`}
+              label="To'lanmagan"
+              value={formatSom(data.unpaid)}
+              tone={data.unpaid > 0 ? "red" : "slate"}
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium">
-                    {DIMENSIONS.find((d) => d.key === dimension)?.label}
-                  </th>
+                  <th className="text-left px-4 py-3 font-medium">Ustoz</th>
+                  <th className="text-left px-4 py-3 font-medium">Filial</th>
+                  <th className="text-right px-4 py-3 font-medium">Guruh</th>
                   <th className="text-right px-4 py-3 font-medium">O'quvchi</th>
-                  <th className="text-right px-4 py-3 font-medium">O'rt. oy</th>
-                  <th className="text-right px-4 py-3 font-medium">O'rt. LTV</th>
-                  <th className="text-right px-4 py-3 font-medium">Jami</th>
-                  <th className="text-right px-4 py-3 font-medium">Ketish %</th>
+                  <th className="text-right px-4 py-3 font-medium">Dars</th>
+                  <th className="text-right px-4 py-3 font-medium">Ish haqi</th>
                 </tr>
               </thead>
               <tbody>
                 {data.rows.map((r) => (
-                  <tr key={String(r.key)} className="border-t border-slate-100">
-                    <td className="px-4 py-3 text-slate-800">{r.label}</td>
-                    <td className="px-4 py-3 text-right text-slate-600">
-                      {r.students}
+                  <>
+                    <tr
+                      key={r.teacher_id}
+                      onClick={() => setOpen(open === r.teacher_id ? null : r.teacher_id)}
+                      className="border-t border-slate-100 hover:bg-slate-50 cursor-pointer"
+                    >
+                      <td className="px-4 py-3 font-medium text-slate-800">
+                        {r.full_name}
+                        {r.paid_amount < r.amount && (
+                          <span className="ml-2 text-[10px] uppercase tracking-wide bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded">
+                            to'lanmagan
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-slate-500">{r.branch || "—"}</td>
+                      <td className="px-4 py-3 text-right text-slate-600">
+                        {r.groups.length}
+                      </td>
+                      <td className="px-4 py-3 text-right text-slate-600">{r.students}</td>
+                      <td className="px-4 py-3 text-right text-slate-600">{r.lessons}</td>
+                      <td className="px-4 py-3 text-right font-semibold text-slate-900">
+                        {formatSom(r.amount)}
+                      </td>
+                    </tr>
+                    {open === r.teacher_id &&
+                      r.groups.map((g) => (
+                        <tr key={`${r.teacher_id}-${g.group_id}`} className="bg-slate-50/60">
+                          <td className="px-4 py-2 pl-10 text-slate-500 text-xs">
+                            {g.group}
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td className="px-4 py-2 text-right text-slate-500 text-xs">
+                            {g.students}
+                          </td>
+                          <td className="px-4 py-2 text-right text-slate-500 text-xs">
+                            {g.taught_lessons}/{g.held_lessons}
+                          </td>
+                          <td className="px-4 py-2 text-right text-xs">
+                            <span className="text-slate-600 mr-2">
+                              {formatSom(g.amount)}
+                            </span>
+                            <button
+                              onClick={(ev) => {
+                                ev.stopPropagation();
+                                togglePaid(g.payout_id, g.paid);
+                              }}
+                              className={`rounded-md px-2 py-0.5 font-medium ${
+                                g.paid
+                                  ? "bg-green-50 text-green-700 hover:bg-green-100"
+                                  : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                              }`}
+                            >
+                              {g.paid ? "To'landi" : "To'lanmagan"}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </>
+                ))}
+                <tr className="border-t-2 border-slate-200 bg-slate-50 font-semibold">
+                  <td className="px-4 py-3 text-slate-700" colSpan={5}>
+                    Jami
+                  </td>
+                  <td className="px-4 py-3 text-right">{formatSom(data.total)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <Note>
+            Ustoz nomini bossangiz guruhlar bo'yicha taqsimoti ochiladi va o'sha
+            yerdan "To'landi" belgisini qo'yish mumkin. Bu summa foyda-zarar
+            hisobotiga avtomatik chiqim bo'lib tushadi.
+          </Note>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ------------------------------------------------------------ Sales funnel
+function FunnelTab() {
+  const [data, setData] = useState<FunnelReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .get<FunnelReport>("/reports/funnel")
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading || !data) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+
+  const lf = data.leads;
+  const sf = data.students;
+  const maxLost = Math.max(...sf.months.map((m) => m.lost), 1);
+
+  return (
+    <div>
+      {/* ---------------- Lid voronkasi ---------------- */}
+      <h3 className="font-medium text-slate-800 mb-1">
+        1-qism · So'rovdan o'quvchigacha
+      </h3>
+      <p className="text-xs text-slate-500 mb-4">
+        Qaysi bosqichda odam yo'qolayotgani
+      </p>
+
+      {lf.total === 0 ? (
+        <p className="text-sm text-slate-400 py-4">Hali lid kiritilmagan.</p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-8">
+          {lf.stages.map((s, i) => {
+            const prev = i > 0 ? lf.stages[i - 1].reached : lf.total;
+            const dropped = prev - s.reached;
+            const dropPct = prev ? Math.round((dropped / prev) * 100) : 0;
+            return (
+              <div key={s.stage} className="mb-3 last:mb-0">
+                <div className="flex items-center justify-between text-sm mb-1">
+                  <span className="text-slate-700">{stageLabel(s.stage)}</span>
+                  <span className="text-slate-500">
+                    <span className="font-semibold text-slate-800">{s.reached}</span> ta ·{" "}
+                    {s.percent}%
+                  </span>
+                </div>
+                <div className="h-7 bg-slate-100 rounded-lg overflow-hidden">
+                  <div
+                    className="h-full bg-brand-500 flex items-center px-2"
+                    style={{ width: `${Math.max(s.percent, 2)}%` }}
+                  />
+                </div>
+                {i > 0 && dropped > 0 && (
+                  <p className="text-xs text-red-500 mt-1">
+                    ↓ shu bosqichda {dropped} ta yo'qotildi ({dropPct}%)
+                  </p>
+                )}
+              </div>
+            );
+          })}
+          {lf.rejected > 0 && (
+            <p className="text-xs text-slate-400 mt-4">
+              Bundan tashqari {lf.rejected} ta lid "Rad etdi" deb belgilangan.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* ---------------- Oylik voronka ---------------- */}
+      <h3 className="font-medium text-slate-800 mb-1">
+        2-qism · To'lovdan keyin qaysi oyda ketyapti
+      </h3>
+      <p className="text-xs text-slate-500 mb-4">
+        Birinchi to'lovdan boshlab 12 oygacha
+      </p>
+
+      {sf.paying === 0 ? (
+        <p className="text-sm text-slate-400 py-4">
+          Hali to'lov qilgan o'quvchi yo'q.
+        </p>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+            <Stat label="To'lagan o'quvchilar" value={String(sf.paying)} icon={Users} />
+            <Stat
+              label="Ketganlar"
+              value={String(sf.churned)}
+              hint={`${Math.round((sf.churned / sf.paying) * 100)}%`}
+              tone={sf.churned > 0 ? "red" : "slate"}
+            />
+            <Stat
+              label="Eng ko'p yo'qotiladigan oy"
+              value={sf.worst_month ? `${sf.worst_month}-oy` : "—"}
+              hint={sf.worst_month ? `${sf.worst_month_lost} ta o'quvchi` : undefined}
+              icon={TrendingDown}
+              tone="red"
+            />
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-3 font-medium">Oy</th>
+                  <th className="text-right px-4 py-3 font-medium">Shu oyda ketgan</th>
+                  <th className="text-left px-4 py-3 font-medium w-1/3"></th>
+                  <th className="text-right px-4 py-3 font-medium">Qolgan</th>
+                  <th className="text-right px-4 py-3 font-medium">Retention</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sf.months.map((m) => (
+                  <tr
+                    key={m.month}
+                    className={`border-t border-slate-100 ${
+                      m.month === sf.worst_month ? "bg-red-50/50" : ""
+                    }`}
+                  >
+                    <td className="px-4 py-2.5 text-slate-700">{m.month}-oy</td>
+                    <td className="px-4 py-2.5 text-right font-medium text-slate-800">
+                      {m.lost || "—"}
                     </td>
-                    <td className="px-4 py-3 text-right text-slate-600">
-                      {r.avg_months}
+                    <td className="px-4 py-2.5">
+                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-red-400"
+                          style={{ width: `${(m.lost / maxLost) * 100}%` }}
+                        />
+                      </div>
                     </td>
-                    <td className="px-4 py-3 text-right font-medium text-slate-800">
-                      {formatSom(r.avg_revenue)}
-                    </td>
-                    <td className="px-4 py-3 text-right text-slate-600">
-                      {short(r.total_revenue)}
+                    <td className="px-4 py-2.5 text-right text-slate-600">
+                      {m.survived}/{m.eligible}
                     </td>
                     <td
-                      className={`px-4 py-3 text-right ${
-                        r.churn > 20 ? "text-red-600 font-medium" : "text-slate-500"
+                      className={`px-4 py-2.5 text-right font-medium ${
+                        m.retention >= 70
+                          ? "text-emerald-600"
+                          : m.retention >= 40
+                          ? "text-amber-600"
+                          : "text-red-600"
                       }`}
                     >
-                      {r.churn}%
+                      {m.eligible ? `${m.retention}%` : "—"}
                     </td>
                   </tr>
                 ))}
@@ -536,106 +407,16 @@ function LtvTab() {
           </div>
 
           <Note>
-            Qolish muddati o'quvchi qo'shilgan sanadan bugungacha (ketgan
-            bo'lsa — ketgan sanagacha) hisoblanadi. Ketgan sana o'quvchi
-            "Arxiv" holatiga o'tkazilganda avtomatik qo'yiladi. Ustoz va guruh
-            kesimida o'quvchi hozirgi guruhiga qarab bo'linadi.
+            "Qolgan" ustuni: shu oyga yetgan o'quvchilar / natijasi ma'lum
+            bo'lganlar. Yaqinda qo'shilgan o'quvchi keyingi oylarning hisobiga
+            kirmaydi — u hali o'sha oyga yetmagan, shuning uchun ko'rsatkichni
+            buzmaydi. Umr birinchi to'lovdan boshlab sanaladi.
           </Note>
         </>
       )}
     </div>
   );
 }
-
-// --------------------------------------------------------------- Retention
-function RetentionTab() {
-  const [data, setData] = useState<RetentionReport | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    api
-      .get<RetentionReport>("/reports/teacher-retention")
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading || !data) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
-  const s = data.summary;
-
-  return (
-    <div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        <Stat label="Hozir ishlayapti" value={String(s.active)} />
-        <Stat
-          label="O'rtacha staj"
-          value={`${s.avg_tenure_active} oy`}
-          hint="faol ustozlar"
-        />
-        <Stat
-          label="Ketganlar (12 oy)"
-          value={String(s.left_last_12m)}
-          hint={s.left ? `jami ketgan: ${s.left}` : undefined}
-        />
-        <Stat
-          label="Kadrlar almashuvi"
-          value={`${s.turnover_12m}%`}
-          hint="oxirgi 12 oy"
-          tone={s.turnover_12m > 25 ? "red" : "slate"}
-        />
-      </div>
-
-      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Ustoz</th>
-              <th className="text-left px-4 py-3 font-medium">Filial</th>
-              <th className="text-left px-4 py-3 font-medium">Ishga kirgan</th>
-              <th className="text-left px-4 py-3 font-medium">Ketgan</th>
-              <th className="text-right px-4 py-3 font-medium">Staj (oy)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.rows.length === 0 && (
-              <tr>
-                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
-                  Ustozlar qo'shilmagan
-                </td>
-              </tr>
-            )}
-            {data.rows.map((r) => (
-              <tr key={r.id} className="border-t border-slate-100">
-                <td className="px-4 py-3 text-slate-800">
-                  {r.full_name}
-                  {!r.active && (
-                    <span className="ml-2 text-[10px] uppercase tracking-wide bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
-                      ketgan
-                    </span>
-                  )}
-                </td>
-                <td className="px-4 py-3 text-slate-500">{r.branch || "—"}</td>
-                <td className="px-4 py-3 text-slate-600">{formatDate(r.hired_date)}</td>
-                <td className="px-4 py-3 text-slate-500">
-                  {r.left_date ? formatDate(r.left_date) : "—"}
-                </td>
-                <td className="px-4 py-3 text-right font-medium text-slate-800">
-                  {r.months}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <Note>
-        Ishga kirgan sana ustoz qo'shilganda avtomatik qo'yiladi, ketgan sana
-        esa O'qituvchilar bo'limida "ishdan ketgan" deb belgilanganda. Ustozni
-        o'chirib tashlash o'rniga shu belgini qo'ying — shunda tarix saqlanadi.
-      </Note>
-    </div>
-  );
-}
-
 
 // -------------------------------------------------------- Adminlar KPI ----
 function KpiRulesEditor({
@@ -1087,10 +868,11 @@ function KpiTab({ canAdmin }: { canAdmin: boolean }) {
   );
 }
 
+
 // -------------------------------------------------------------------- Page
 export default function Reports() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("cashflow");
+  const [tab, setTab] = useState<Tab>("payroll");
 
   if (!can(user?.role, FINANCE_ACCESS)) {
     return (
@@ -1106,7 +888,7 @@ export default function Reports() {
     <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1">Hisobotlar</h1>
       <p className="text-sm text-slate-500 mb-5">
-        Moliya va o'quvchi ko'rsatkichlari
+        Ustozlar ish haqi, sotuv voronkasi va adminlar KPI'si
       </p>
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">
@@ -1125,11 +907,9 @@ export default function Reports() {
         ))}
       </div>
 
+      {tab === "payroll" && <PayrollTab />}
+      {tab === "funnel" && <FunnelTab />}
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
-      {tab === "cashflow" && <CashflowTab />}
-      {tab === "pnl" && <PnlTab />}
-      {tab === "ltv" && <LtvTab />}
-      {tab === "retention" && <RetentionTab />}
     </div>
   );
 }

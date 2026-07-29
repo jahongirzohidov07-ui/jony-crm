@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, UserMinus, UserCheck } from "lucide-react";
 import { api, type Teacher, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { STAFF_VIEWERS, can } from "../lib/roles";
+import { formatDate } from "../lib/format";
 
 function AddTeacherModal({
   branches,
@@ -128,13 +129,44 @@ export default function Teachers() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, STAFF_VIEWERS);
+  const activeCount = teachers.filter((t) => t.is_active !== 0).length;
+
+  /** Ishdan ketgan deb belgilash - o'chirish o'rniga. Shunda ustozning
+   * tarixi (ish haqi, staj) saqlanadi va retention hisoboti to'g'ri chiqadi. */
+  async function toggleActive(t: Teacher) {
+    const leaving = t.is_active !== 0;
+    if (
+      leaving &&
+      !confirm(
+        `${t.full_name} ishdan ketgan deb belgilansinmi? Ketgan sana bugungi kun bilan qo'yiladi.`
+      )
+    )
+      return;
+    try {
+      await api.put(`/teachers/${t.id}`, {
+        full_name: t.full_name,
+        phone: t.phone ?? null,
+        subject: t.subject ?? null,
+        branch_id: t.branch_id ?? null,
+        hired_date: t.hired_date ?? null,
+        is_active: leaving ? 0 : 1,
+      });
+      load();
+    } catch {
+      /* xatolik bo'lsa ro'yxat o'zgarmaydi */
+    }
+  }
 
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">O'qituvchilar</h1>
-          <p className="text-sm text-slate-500">Jami: {teachers.length}</p>
+          <p className="text-sm text-slate-500">
+            Ishlayapti: {activeCount}
+            {teachers.length > activeCount &&
+              ` · ketgan: ${teachers.length - activeCount}`}
+          </p>
         </div>
         {canEdit && (
           <button
@@ -157,17 +189,46 @@ export default function Teachers() {
                 <th className="text-left px-4 py-3 font-medium">Telefon</th>
                 <th className="text-left px-4 py-3 font-medium">Fan</th>
                 <th className="text-left px-4 py-3 font-medium">Filial</th>
+                <th className="text-left px-4 py-3 font-medium">Ishga kirgan</th>
+                {canEdit && <th className="px-4 py-3"></th>}
               </tr>
             </thead>
             <tbody>
-              {teachers.map((t) => (
-                <tr key={t.id} className="border-t border-slate-100">
-                  <td className="px-4 py-3 font-medium text-slate-800">{t.full_name}</td>
-                  <td className="px-4 py-3 text-slate-600">{t.phone || "—"}</td>
-                  <td className="px-4 py-3 text-slate-600">{t.subject || "—"}</td>
-                  <td className="px-4 py-3 text-slate-600">{t.branch?.name || "—"}</td>
-                </tr>
-              ))}
+              {teachers.map((t) => {
+                const left = t.is_active === 0;
+                return (
+                  <tr
+                    key={t.id}
+                    className={`border-t border-slate-100 ${left ? "bg-slate-50/60" : ""}`}
+                  >
+                    <td className="px-4 py-3 font-medium text-slate-800">
+                      {t.full_name}
+                      {left && (
+                        <span className="ml-2 text-[10px] uppercase tracking-wide bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded">
+                          ketgan {t.left_date ? formatDate(t.left_date) : ""}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{t.phone || "—"}</td>
+                    <td className="px-4 py-3 text-slate-600">{t.subject || "—"}</td>
+                    <td className="px-4 py-3 text-slate-600">{t.branch?.name || "—"}</td>
+                    <td className="px-4 py-3 text-slate-500">
+                      {t.hired_date ? formatDate(t.hired_date) : "—"}
+                    </td>
+                    {canEdit && (
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
+                        <button
+                          onClick={() => toggleActive(t)}
+                          title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}
+                          className="text-slate-400 hover:text-brand-600"
+                        >
+                          {left ? <UserCheck size={16} /> : <UserMinus size={16} />}
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

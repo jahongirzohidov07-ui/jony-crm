@@ -1,7 +1,10 @@
-// Mirrors backend/roles.py - keep in sync.
+// Diqqat: bizning o'quv markazda "Administrator" deganda SOTUV MENEJERI
+// tushuniladi, tizim egasi emas. Tizim egasi - ASOSCHI (founder).
+// backend/roles.py bilan bir xil bo'lishi shart.
 
-export const ADMINISTRATOR = "administrator";
+export const FOUNDER = "founder";
 export const BRANCH_MANAGER = "branch_manager";
+export const SALES_MANAGER = "sales_manager";
 export const TEACHER = "teacher";
 export const SUPPORT_TEACHER = "support_teacher";
 export const EXAMINER = "examiner";
@@ -9,8 +12,9 @@ export const HR_MANAGER = "hr_manager";
 export const SMM_MANAGER = "smm_manager";
 
 export const UZ_LABELS: Record<string, string> = {
-  [ADMINISTRATOR]: "Administrator",
+  [FOUNDER]: "Asoschi",
   [BRANCH_MANAGER]: "Filial menejeri",
+  [SALES_MANAGER]: "Administrator (sotuv menejeri)",
   [TEACHER]: "O'qituvchi",
   [SUPPORT_TEACHER]: "Support teacher",
   [EXAMINER]: "Examiner",
@@ -19,8 +23,9 @@ export const UZ_LABELS: Record<string, string> = {
 };
 
 export const ALL_ROLES = [
-  ADMINISTRATOR,
+  FOUNDER,
   BRANCH_MANAGER,
+  SALES_MANAGER,
   TEACHER,
   SUPPORT_TEACHER,
   EXAMINER,
@@ -28,21 +33,32 @@ export const ALL_ROLES = [
   SMM_MANAGER,
 ];
 
-export const FULL_ACCESS = [ADMINISTRATOR, BRANCH_MANAGER];
-export const TEACHING_STAFF = [...FULL_ACCESS, TEACHER, SUPPORT_TEACHER, EXAMINER];
-export const STAFF_MANAGERS = [...FULL_ACCESS, HR_MANAGER];
+export const FULL_ACCESS = [FOUNDER, BRANCH_MANAGER];
+export const TEACHING_STAFF = [
+  ...FULL_ACCESS,
+  SALES_MANAGER,
+  TEACHER,
+  SUPPORT_TEACHER,
+  EXAMINER,
+];
+
+/** Xodimlar ro'yxatini ko'ra oladiganlar. */
+export const STAFF_VIEWERS = [...FULL_ACCESS, HR_MANAGER];
+
+/** Xodim yaratish va rol berish - faqat asoschi. */
+export const USER_ADMIN = [FOUNDER];
+
 export const FINANCE_ACCESS = FULL_ACCESS;
 
-// Lidlar bilan ishlaydiganlar. SMM manager ataylab kiritilgan - Instagram
-// va Telegram lidlari uniki. Support teacher qabulda tashrifchilar bilan
-// ishlaydi. backend/roles.py'dagi LEAD_ACCESS bilan bir xil.
-export const LEAD_ACCESS = [...FULL_ACCESS, SMM_MANAGER, SUPPORT_TEACHER];
+/** Lidlar bilan ishlaydiganlar. */
+export const LEAD_ACCESS = [
+  ...FULL_ACCESS,
+  SALES_MANAGER,
+  SMM_MANAGER,
+  SUPPORT_TEACHER,
+];
 
-// Roles that are org-wide (not tied to one branch) - only a real
-// administrator may create or edit accounts with these roles.
-// Mirrors backend main.py's _guard_role_assignment - keep in sync.
-const ORG_WIDE_ROLES = [ADMINISTRATOR, HR_MANAGER, SMM_MANAGER];
-const BRANCH_SCOPED_ROLES = [BRANCH_MANAGER, TEACHER, SUPPORT_TEACHER, EXAMINER];
+const ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER];
 
 export function roleLabel(role?: string): string {
   if (!role) return "";
@@ -53,15 +69,9 @@ export function can(role: string | undefined, group: string[]): boolean {
   return !!role && group.includes(role);
 }
 
-/** Which roles `requesterRole` is allowed to assign when creating/editing a
- * staff account. Administrator can assign anything; HR manager and branch
- * manager can only assign branch-scoped roles (not administrator/HR/SMM). */
+/** Asoschi istalgan rolni bera oladi; boshqalar umuman bera olmaydi. */
 export function assignableRoles(requesterRole?: string): string[] {
-  if (requesterRole === ADMINISTRATOR) return ALL_ROLES;
-  if (requesterRole === HR_MANAGER || requesterRole === BRANCH_MANAGER) {
-    return BRANCH_SCOPED_ROLES;
-  }
-  return [];
+  return requesterRole === FOUNDER ? ALL_ROLES : [];
 }
 
 export { ORG_WIDE_ROLES };

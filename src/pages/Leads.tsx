@@ -8,6 +8,7 @@ import {
   LEAD_STAGES,
   LEAD_SOURCES,
   SOURCE_DEFAULT_STAGE,
+  GRADES,
   sourceLabel,
 } from "../lib/leads";
 import type { LeadSource, LeadStage } from "../lib/leads";
@@ -40,6 +41,9 @@ function LeadForm({
   // Foydalanuvchi bosqichni qo'lda o'zgartirsa, manba almashganda uni
   // qayta bosib ketmaymiz.
   const [stageTouched, setStageTouched] = useState(editing);
+  const [address, setAddress] = useState(initial?.address ?? "");
+  const [school, setSchool] = useState(initial?.school ?? "");
+  const [grade, setGrade] = useState(initial?.grade ?? "");
   const [note, setNote] = useState(initial?.note ?? "");
   const [branchId, setBranchId] = useState(
     initial?.branch_id ? String(initial.branch_id) : defaultBranchId ? String(defaultBranchId) : ""
@@ -74,6 +78,9 @@ function LeadForm({
         phone: phone || null,
         source,
         stage,
+        address: address || null,
+        school: school || null,
+        grade: grade || null,
         note: note || null,
         branch_id: branchId ? Number(branchId) : null,
         assigned_user_id: assignedId ? Number(assignedId) : null,
@@ -124,6 +131,49 @@ function LeadForm({
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+998..."
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Qayerdan (mahalla / tuman)
+            </label>
+            <input
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={address ?? ""}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Masalan: Zafar shaharchasi"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Maktab
+              </label>
+              <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={school ?? ""}
+                onChange={(e) => setSchool(e.target.value)}
+                placeholder="12-maktab"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Sinf
+              </label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={grade ?? ""}
+                onChange={(e) => setGrade(e.target.value)}
+              >
+                <option value="">— tanlanmagan —</option>
+                {GRADES.map((g) => (
+                  <option key={g} value={g}>
+                    {g === "Kattalar" ? g : `${g}-sinf`}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div>
@@ -385,6 +435,22 @@ function LeadCard({
           )}
         </div>
       </div>
+
+      {(lead.school || lead.grade || lead.address) && (
+        <p className="text-xs text-slate-500 mt-1.5 truncate">
+          {[
+            lead.school,
+            lead.grade
+              ? lead.grade === "Kattalar"
+                ? lead.grade
+                : `${lead.grade}-sinf`
+              : null,
+            lead.address,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+      )}
 
       <div className="flex items-center flex-wrap gap-1 mt-2">
         <span className="inline-block bg-slate-100 text-slate-500 rounded px-1.5 py-0.5 text-[11px]">

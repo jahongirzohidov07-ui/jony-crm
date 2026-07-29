@@ -11,6 +11,7 @@ import {
   UserCog,
   KeyRound,
   Target,
+  Wallet,
   X,
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
@@ -18,6 +19,7 @@ import {
   FOUNDER,
   STAFF_VIEWERS,
   LEAD_ACCESS,
+  FINANCE_ACCESS,
   can,
   roleLabel,
 } from "../lib/roles";
@@ -151,6 +153,10 @@ export default function Layout() {
       { to: "/leads", label: "Lidlar", icon: Target },
       ...items.slice(1),
     ];
+  }
+  // Xarajatlar moliya bo'limi - o'quv jarayoni bo'limlaridan keyin turadi.
+  if (can(user?.role, FINANCE_ACCESS)) {
+    items = [...items, { to: "/expenses", label: "Xarajatlar", icon: Wallet }];
   }
   if (can(user?.role, STAFF_VIEWERS)) {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];

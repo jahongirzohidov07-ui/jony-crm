@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { api, type StudentDetail as StudentDetailType } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
@@ -37,6 +37,17 @@ export default function StudentDetail() {
   useEffect(load, [id]);
 
   const canEdit = can(user?.role, FINANCE_ACCESS);
+
+  /** Xato kiritilgan yozuvni o'chirish - balans darrov to'g'rilanadi. */
+  async function removePayment(p: { id: number; amount: number }) {
+    if (!confirm(`${formatSom(p.amount)} yozuvi o'chirilsinmi?`)) return;
+    try {
+      await api.delete(`/payments/${p.id}`);
+      load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
 
   async function submitPayment() {
     const value = Number(amount);
@@ -193,12 +204,13 @@ export default function StudentDetail() {
               <th className="text-left px-4 py-3 font-medium">Usul</th>
               <th className="text-left px-4 py-3 font-medium">Izoh</th>
               <th className="text-right px-4 py-3 font-medium">Summa</th>
+              {canEdit && <th className="px-4 py-3"></th>}
             </tr>
           </thead>
           <tbody>
             {student.payments.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={canEdit ? 6 : 5} className="px-4 py-6 text-center text-slate-400">
                   Hali yozuv yo'q
                 </td>
               </tr>
@@ -213,6 +225,21 @@ export default function StudentDetail() {
                   {p.amount > 0 ? "+" : ""}
                   {formatSom(p.amount)}
                 </td>
+                {canEdit && (
+                  <td className="px-4 py-3 text-right">
+                    {/* Avtomatik hisoblangan oylikni (period bor) o'chirib
+                        bo'lmaydi - u guruh sahifasidan qayta hisoblanadi. */}
+                    {!p.period && (
+                      <button
+                        onClick={() => removePayment(p)}
+                        title="Yozuvni o'chirish"
+                        className="text-slate-300 hover:text-red-500"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

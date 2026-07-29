@@ -328,6 +328,99 @@ export interface Redemption {
   reward?: Reward | null;
 }
 
+// ---------- Ustozlar oyligi ----------
+export interface PayrollGroupRow {
+  group_id: number;
+  group: string;
+  students: number;
+  held_lessons: number;
+  taught_lessons: number;
+  amount: number;
+  paid: boolean;
+  payout_id: number | null;
+}
+
+export interface TeacherPayrollRow {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  groups: PayrollGroupRow[];
+  students: number;
+  lessons: number;
+  amount: number;
+  paid_amount: number;
+}
+
+export interface TeacherPayrollReport {
+  period: string;
+  rows: TeacherPayrollRow[];
+  total: number;
+  paid: number;
+  unpaid: number;
+  teacher_count: number;
+}
+
+// ---------- Sotuv voronkasi ----------
+export interface FunnelStage {
+  stage: string;
+  reached: number;
+  here_now: number;
+  percent: number;
+  lost_here: number;
+}
+
+export interface FunnelMonth {
+  month: number;
+  eligible: number;
+  survived: number;
+  retention: number;
+  lost: number;
+}
+
+export interface FunnelReport {
+  leads: { total: number; stages: FunnelStage[]; rejected: number };
+  students: {
+    paying: number;
+    churned: number;
+    months: FunnelMonth[];
+    worst_month: number | null;
+    worst_month_lost: number;
+  };
+}
+
+// ---------- Analitika ----------
+export interface AnalyticsMonth {
+  period: string;
+  income: number;
+  expenses: number;
+  payroll: number;
+  outflow: number;
+  profit: number;
+  teacher_share: number;
+}
+
+export interface AnalyticsBreakdown {
+  key: string;
+  label: string;
+  group?: string;
+  amount: number;
+}
+
+export interface AnalyticsSummary {
+  months: AnalyticsMonth[];
+  expense_groups: AnalyticsBreakdown[];
+  expense_categories: AnalyticsBreakdown[];
+  totals: {
+    income: number;
+    expenses: number;
+    payroll: number;
+    outflow: number;
+    profit: number;
+    margin: number;
+    teacher_share: number;
+  };
+}
+
 // ---------- Adminlar KPI ----------
 export interface AdminKpi {
   user_id: number;

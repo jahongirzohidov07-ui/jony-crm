@@ -13,6 +13,7 @@ import {
   Target,
   Wallet,
   BarChart3,
+  PieChart,
   Trophy,
   X,
 } from "lucide-react";
@@ -161,12 +162,13 @@ export default function Layout() {
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/gamification", label: "Coin tizimi", icon: Trophy }];
   }
-  // Xarajatlar moliya bo'limi - o'quv jarayoni bo'limlaridan keyin turadi.
+  // Moliya, hisobotlar va analitika - o'quv jarayonidan keyin turadi.
   if (can(user?.role, FINANCE_ACCESS)) {
     items = [
       ...items,
-      { to: "/expenses", label: "Xarajatlar", icon: Wallet },
+      { to: "/finance", label: "Moliya", icon: Wallet },
       { to: "/reports", label: "Hisobotlar", icon: BarChart3 },
+      { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
   }
   if (can(user?.role, STAFF_VIEWERS)) {

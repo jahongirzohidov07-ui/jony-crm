@@ -6,6 +6,8 @@ import {
   type KpiRules,
   type TeacherPayrollReport,
   type FunnelReport,
+  type SalesManagerReport,
+  type SalesWindow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
@@ -14,11 +16,12 @@ import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "payroll" | "funnel" | "kpi";
+type Tab = "payroll" | "funnel" | "sales" | "kpi";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "payroll", label: "Ustozlar oyligi" },
   { key: "funnel", label: "Sales funnel" },
+  { key: "sales", label: "Sotuv menejerlari" },
   { key: "kpi", label: "Adminlar KPI" },
 ];
 
@@ -411,6 +414,210 @@ function FunnelTab() {
             bo'lganlar. Yaqinda qo'shilgan o'quvchi keyingi oylarning hisobiga
             kirmaydi — u hali o'sha oyga yetmagan, shuning uchun ko'rsatkichni
             buzmaydi. Umr birinchi to'lovdan boshlab sanaladi.
+          </Note>
+        </>
+      )}
+    </div>
+  );
+}
+
+// -------------------------------------------------- Sotuv menejerlari
+const SALES_WINDOWS: { key: SalesWindow; label: string }[] = [
+  { key: "month", label: "Oylik" },
+  { key: "3m", label: "3 oy" },
+  { key: "6m", label: "6 oy" },
+  { key: "1y", label: "1 yil" },
+  { key: "all", label: "Butun davr" },
+];
+
+function SalesTab() {
+  const now = new Date();
+  const [win, setWin] = useState<SalesWindow>("month");
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [data, setData] = useState<SalesManagerReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const q =
+      win === "month"
+        ? `window=month&year=${year}&month=${month}`
+        : `window=${win}`;
+    api
+      .get<SalesManagerReport>(`/reports/sales-managers?${q}`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [win, year, month]);
+
+  const years = [now.getFullYear() - 1, now.getFullYear()];
+  const best = data && data.rows.length ? data.rows[0] : null;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        {SALES_WINDOWS.map((w) => (
+          <button
+            key={w.key}
+            onClick={() => setWin(w.key)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
+              win === w.key
+                ? "bg-brand-50 border-brand-400 text-brand-700"
+                : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+            }`}
+          >
+            {w.label}
+          </button>
+        ))}
+
+        {win === "month" && (
+          <>
+            <select
+              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm bg-white ml-2"
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+            >
+              {MONTHS.map((m, i) => (
+                <option key={m} value={i + 1}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm bg-white"
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
+
+        {data && data.rows.length > 0 && (
+          <button
+            onClick={() =>
+              exportToExcel("sotuv-menejerlari", "Sotuv",
+                data.rows.map((r) => ({
+                  Menejer: r.full_name,
+                  Filial: r.branch ?? "",
+                  Lidlar: r.leads,
+                  "O'quvchiga aylandi": r.converted,
+                  "Rad etdi": r.rejected,
+                  Jarayonda: r.in_progress,
+                  "Sotuv %": r.conversion,
+                })))
+            }
+            className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 ml-auto"
+          >
+            <Download size={15} /> Excel
+          </button>
+        )}
+      </div>
+
+      {loading || !data ? (
+        <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
+      ) : data.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-6 text-center">
+          Hali administrator (sotuv menejeri) roli berilgan xodim yo'q.
+        </p>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+            <Stat label="Davr" value={data.label} />
+            <Stat label="Jami lid" value={String(data.totals.leads)} icon={Users} />
+            <Stat
+              label="O'quvchiga aylandi"
+              value={String(data.totals.converted)}
+              tone="green"
+            />
+            <Stat
+              label="Umumiy sotuv"
+              value={`${data.totals.conversion}%`}
+              hint={best ? `eng yaxshi: ${best.full_name} (${best.conversion}%)` : undefined}
+            />
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-3 font-medium">Menejer</th>
+                  <th className="text-left px-4 py-3 font-medium">Filial</th>
+                  <th className="text-right px-4 py-3 font-medium">Lidlar</th>
+                  <th className="text-right px-4 py-3 font-medium">Sotildi</th>
+                  <th className="text-right px-4 py-3 font-medium">Rad</th>
+                  <th className="text-right px-4 py-3 font-medium">Jarayonda</th>
+                  <th className="text-left px-4 py-3 font-medium w-48">Sotuv %</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.rows.map((r, i) => (
+                  <tr
+                    key={r.user_id}
+                    className={`border-t border-slate-100 ${
+                      !r.active ? "opacity-50" : ""
+                    }`}
+                  >
+                    <td className="px-4 py-3 font-medium text-slate-800">
+                      {i === 0 && r.conversion > 0 && "🥇 "}
+                      {r.full_name}
+                      {!r.active && (
+                        <span className="ml-2 text-[10px] uppercase bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
+                          faolsiz
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-slate-500">{r.branch || "—"}</td>
+                    <td className="px-4 py-3 text-right text-slate-600">{r.leads}</td>
+                    <td className="px-4 py-3 text-right font-medium text-emerald-600">
+                      {r.converted}
+                    </td>
+                    <td className="px-4 py-3 text-right text-slate-500">
+                      {r.rejected || "—"}
+                    </td>
+                    <td className="px-4 py-3 text-right text-slate-500">
+                      {r.in_progress || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              r.conversion >= 50
+                                ? "bg-emerald-500"
+                                : r.conversion >= 25
+                                ? "bg-amber-400"
+                                : "bg-red-400"
+                            }`}
+                            style={{ width: `${Math.min(r.conversion, 100)}%` }}
+                          />
+                        </div>
+                        <span className="text-sm font-semibold text-slate-800 w-12 text-right">
+                          {r.conversion}%
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {data.unassigned > 0 && (
+            <p className="text-xs text-amber-600 mt-3">
+              {data.unassigned} ta lid hech kimga biriktirilmagan — ular
+              hech kimning ko'rsatkichiga kirmayapti. Lidlar bo'limidan
+              mas'ul xodimni belgilang.
+            </p>
+          )}
+
+          <Note>
+            Sotuv foizi = o'quvchiga aylangan lidlar / menejerga biriktirilgan
+            lidlar. Davr lid yaratilgan sanaga qarab olinadi.
           </Note>
         </>
       )}
@@ -909,6 +1116,7 @@ export default function Reports() {
 
       {tab === "payroll" && <PayrollTab />}
       {tab === "funnel" && <FunnelTab />}
+      {tab === "sales" && <SalesTab />}
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
     </div>
   );

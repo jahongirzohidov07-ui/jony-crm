@@ -21,16 +21,19 @@ import {
   type LtvReport,
   type LtvDimension,
   type RetentionReport,
+  type QualityReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, can } from "../lib/roles";
-import { groupColor } from "../lib/expenses";
+import { groupColor, MONTHS } from "../lib/expenses";
+import { subjectLine } from "../lib/subjects";
 import { formatSom, formatPeriodLabel } from "../lib/format";
 
-type Tab = "biznes" | "xarajat" | "oquvchi" | "ustoz";
+type Tab = "biznes" | "sifat" | "xarajat" | "oquvchi" | "ustoz";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
+  { key: "sifat", label: "Ta'lim sifati" },
   { key: "xarajat", label: "Xarajatlar tahlili" },
   { key: "oquvchi", label: "O'quvchi qiymati (LTV)" },
   { key: "ustoz", label: "Ustozlar" },
@@ -593,6 +596,208 @@ function TeacherTab({ data }: { data: AnalyticsSummary }) {
   );
 }
 
+// ----------------------------------------------------------- Ta'lim sifati
+function qualityTone(avg: number): string {
+  if (avg >= 85) return "text-emerald-600";
+  if (avg >= 70) return "text-teal-600";
+  if (avg >= 55) return "text-amber-600";
+  return "text-red-600";
+}
+
+function qualityBar(avg: number): string {
+  if (avg >= 85) return "#10b981";
+  if (avg >= 70) return "#14b8a6";
+  if (avg >= 55) return "#f59e0b";
+  return "#ef4444";
+}
+
+function QualityTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [data, setData] = useState<QualityReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<QualityReport>(`/reports/quality?year=${year}&month=${month}`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [year, month]);
+
+  const years = [now.getFullYear() - 1, now.getFullYear()];
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-5">
+        <select
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={month}
+          onChange={(e) => setMonth(Number(e.target.value))}
+        >
+          {MONTHS.map((m, i) => (
+            <option key={m} value={i + 1}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+        >
+          {years.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {loading || !data ? (
+        <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
+      ) : data.centre.avg === null ? (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Bu oyda imtihon o'tkazilmagan. Guruh sahifasidagi "Imtihonlar"
+          bo'limidan test qo'shing va natijalarni kiriting — ta'lim sifati
+          shundan avtomat hisoblanadi.
+        </p>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+            <div className="bg-white rounded-xl border-2 border-brand-200 p-4">
+              <p className="text-xs text-slate-500 mb-1">O'quv markaz sifati</p>
+              <p className={`text-2xl font-bold ${qualityTone(data.centre.avg)}`}>
+                {data.centre.avg}%
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">
+                {data.centre.groups} guruh · {data.centre.exams} imtihon
+              </p>
+            </div>
+            <Stat
+              label="Baholangan natijalar"
+              value={String(data.centre.results)}
+              hint="kelmaganlar hisobga olinmagan"
+            />
+            <Stat
+              label="Eng yaxshi ustoz"
+              value={data.teachers[0]?.name || "—"}
+              hint={data.teachers[0] ? `${data.teachers[0].avg}%` : undefined}
+              tone="green"
+              icon={GraduationCap}
+            />
+            <Stat
+              label="Eng past guruh"
+              value={data.groups[data.groups.length - 1]?.group || "—"}
+              hint={
+                data.groups.length
+                  ? `${data.groups[data.groups.length - 1].avg}%`
+                  : undefined
+              }
+              tone="red"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+            <Card title="Filiallar" subtitle="Guruhlar o'rtachasi bo'yicha">
+              {data.branches.length === 0 ? (
+                <p className="text-sm text-slate-400">Ma'lumot yo'q</p>
+              ) : (
+                data.branches.map((b) => (
+                  <div key={b.id} className="mb-3 last:mb-0">
+                    <div className="flex items-center justify-between text-sm mb-1">
+                      <span className="text-slate-700">{b.name}</span>
+                      <span className={`font-semibold ${qualityTone(b.avg)}`}>
+                        {b.avg}%
+                      </span>
+                    </div>
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${b.avg}%`, background: qualityBar(b.avg) }}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {b.groups} guruh · {b.exams} imtihon
+                    </p>
+                  </div>
+                ))
+              )}
+            </Card>
+
+            <Card title="Ustozlar" subtitle="O'z guruhlarining o'rtachasi">
+              {data.teachers.length === 0 ? (
+                <p className="text-sm text-slate-400">Ma'lumot yo'q</p>
+              ) : (
+                data.teachers.map((t) => (
+                  <div key={t.id} className="mb-3 last:mb-0">
+                    <div className="flex items-center justify-between text-sm mb-1">
+                      <span className="text-slate-700">{t.name}</span>
+                      <span className={`font-semibold ${qualityTone(t.avg)}`}>
+                        {t.avg}%
+                      </span>
+                    </div>
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${t.avg}%`, background: qualityBar(t.avg) }}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {t.groups} guruh · {t.exams} imtihon
+                    </p>
+                  </div>
+                ))
+              )}
+            </Card>
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-3 font-medium">Guruh</th>
+                  <th className="text-left px-4 py-3 font-medium">Kurs</th>
+                  <th className="text-left px-4 py-3 font-medium">Ustoz</th>
+                  <th className="text-left px-4 py-3 font-medium">Filial</th>
+                  <th className="text-right px-4 py-3 font-medium">Imtihon</th>
+                  <th className="text-right px-4 py-3 font-medium">Sifat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.groups.map((g) => (
+                  <tr key={g.group_id} className="border-t border-slate-100">
+                    <td className="px-4 py-3 font-medium text-slate-800">{g.group}</td>
+                    <td className="px-4 py-3 text-slate-500">
+                      {subjectLine(g) || "—"}
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{g.teacher || "—"}</td>
+                    <td className="px-4 py-3 text-slate-500">{g.branch || "—"}</td>
+                    <td className="px-4 py-3 text-right text-slate-600">{g.exams}</td>
+                    <td
+                      className={`px-4 py-3 text-right font-semibold ${qualityTone(g.avg)}`}
+                    >
+                      {g.avg}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="text-xs text-slate-400 mt-3 max-w-3xl">
+            Sifat = shu oydagi imtihonlarda olingan o'rtacha foiz. Guruh →
+            ustoz → filial → markaz tartibida yig'iladi. Guruhlar teng vaznda
+            olinadi: bitta katta guruh butun ko'rsatkichni belgilab qo'ymaydi.
+            Imtihonga kelmagan o'quvchi o'rtachani pasaytirmaydi.
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
 // -------------------------------------------------------------------- Page
 export default function Analitika() {
   const { user } = useAuth();
@@ -644,13 +849,16 @@ export default function Analitika() {
         ))}
       </div>
 
-      {tab !== "oquvchi" && <RangePicker months={months} setMonths={setMonths} />}
+      {tab !== "oquvchi" && tab !== "sifat" && (
+        <RangePicker months={months} setMonths={setMonths} />
+      )}
 
       {loading || !data ? (
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
         <>
           {tab === "biznes" && <BusinessTab data={data} />}
+          {tab === "sifat" && <QualityTab />}
           {tab === "xarajat" && <ExpenseTab data={data} />}
           {tab === "oquvchi" && <LtvTab />}
           {tab === "ustoz" && <TeacherTab data={data} />}

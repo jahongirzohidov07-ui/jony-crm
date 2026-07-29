@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, X, Pencil } from "lucide-react";
+import { Plus, X, Pencil, Search } from "lucide-react";
 import { api, type Group, type Teacher, type Branch } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { FULL_ACCESS, can } from "../lib/roles";
+import {
+  SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
+} from "../lib/subjects";
 
 function GroupFormModal({
   teachers,
@@ -44,6 +47,13 @@ function GroupFormModal({
   const [teacherRate, setTeacherRate] = useState(
     String(initial?.teacher_rate_per_student ?? 0)
   );
+  const [subject, setSubject] = useState(initial?.subject ?? "english");
+  const [level, setLevel] = useState(initial?.level ?? "");
+  const [startDate, setStartDate] = useState(
+    initial?.start_date ?? new Date().toISOString().slice(0, 10)
+  );
+  const [lessonTime, setLessonTime] = useState(initial?.lesson_time ?? "");
+  const [days, setDays] = useState<string[]>(parseDays(initial?.lesson_days));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,6 +78,11 @@ function GroupFormModal({
         lesson_price: lessonPriceNum,
         standard_lessons_per_month: standardLessonsNum,
         teacher_rate_per_student: Number(teacherRate) || 0,
+        subject: subject || null,
+        level: level || null,
+        start_date: startDate || null,
+        lesson_time: lessonTime || null,
+        lesson_days: days.length ? days.join(",") : null,
       };
       if (initial) {
         await api.put(`/groups/${initial.id}`, payload);
@@ -105,6 +120,96 @@ function GroupFormModal({
               autoFocus
             />
           </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Fan</label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  // Fan o'zgarsa daraja tozalanadi - rus tilida "Step 1" yo'q.
+                  setLevel("");
+                }}
+              >
+                <option value="">— tanlanmagan —</option>
+                {SUBJECTS.map((x) => (
+                  <option key={x.key} value={x.key}>{x.label}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Daraja</label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white disabled:bg-slate-100"
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+                disabled={!subject}
+              >
+                <option value="">— tanlanmagan —</option>
+                {levelsFor(subject).map((l) => (
+                  <option key={l.key} value={l.key}>{l.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Boshlanish sanasi
+              </label>
+              <input
+                type="date"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Dars vaqti
+              </label>
+              <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={lessonTime}
+                onChange={(e) => setLessonTime(e.target.value)}
+                placeholder="09:00 - 11:00"
+              />
+            </div>
+          </div>
+          <p className="text-xs text-slate-400 -mt-1">
+            Yoqlama boshlanish sanasidan boshlanadi — undan oldingi kunga dars
+            belgilab bo'lmaydi.
+          </p>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Dars kunlari
+            </label>
+            <div className="flex flex-wrap gap-1.5">
+              {WEEKDAYS.map((d) => {
+                const on = days.includes(d.key);
+                return (
+                  <button
+                    key={d.key}
+                    type="button"
+                    onClick={() =>
+                      setDays(on ? days.filter((x) => x !== d.key) : [...days, d.key])
+                    }
+                    className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
+                      on
+                        ? "bg-brand-50 border-brand-400 text-brand-700"
+                        : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                    }`}
+                  >
+                    {d.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">Xona</label>
             <input
@@ -216,6 +321,11 @@ export default function Groups() {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<Group | null>(null);
 
+  // Filtrlar
+  const [q, setQ] = useState("");
+  const [teacherFilter, setTeacherFilter] = useState("");
+  const [subjectFilter, setSubjectFilter] = useState("");
+
   function load() {
     setLoading(true);
     Promise.all([
@@ -234,19 +344,83 @@ export default function Groups() {
   useEffect(load, []);
   const canEdit = can(user?.role, FULL_ACCESS);
 
+  const filtered = groups.filter((g) => {
+    if (q && !g.name.toLowerCase().includes(q.toLowerCase())) return false;
+    if (teacherFilter && String(g.teacher_id ?? "") !== teacherFilter) return false;
+    if (subjectFilter && g.subject !== subjectFilter) return false;
+    return true;
+  });
+
+  const hasFilter = q || teacherFilter || subjectFilter;
+
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Guruhlar</h1>
-          <p className="text-sm text-slate-500">Jami: {groups.length}</p>
+          <h1 className="text-xl font-semibold text-slate-900">Guruhlar ro'yxati</h1>
+          <p className="text-sm text-slate-500">
+            {hasFilter
+              ? `${filtered.length} ta topildi (jami ${groups.length})`
+              : `Jami: ${groups.length}`}
+          </p>
         </div>
         {canEdit && (
           <button
             onClick={() => setShowAdd(true)}
             className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
           >
-            <Plus size={16} /> Yangi guruh
+            <Plus size={16} /> Yangi guruh qo'shish
+          </button>
+        )}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        <div className="relative">
+          <Search
+            size={15}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+          />
+          <input
+            className="rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm w-56"
+            placeholder="Nomi bo'yicha qidirish"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
+        <select
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={subjectFilter}
+          onChange={(e) => setSubjectFilter(e.target.value)}
+        >
+          <option value="">Barcha fanlar</option>
+          {SUBJECTS.map((s) => (
+            <option key={s.key} value={s.key}>
+              {s.label}
+            </option>
+          ))}
+        </select>
+        <select
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={teacherFilter}
+          onChange={(e) => setTeacherFilter(e.target.value)}
+        >
+          <option value="">Barcha o'qituvchilar</option>
+          {teachers.map((t) => (
+            <option key={t.id} value={t.id}>
+              {t.full_name}
+            </option>
+          ))}
+        </select>
+        {hasFilter && (
+          <button
+            onClick={() => {
+              setQ("");
+              setTeacherFilter("");
+              setSubjectFilter("");
+            }}
+            className="text-sm text-slate-500 hover:text-slate-700"
+          >
+            Tozalash
           </button>
         )}
       </div>
@@ -254,47 +428,97 @@ export default function Groups() {
       {loading ? (
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {groups.map((g) => (
-            <div key={g.id} className="bg-white rounded-xl border border-slate-200 p-5">
-              <div className="flex items-start justify-between mb-1">
-                <Link
-                  to={`/groups/${g.id}`}
-                  className="font-semibold text-slate-900 hover:text-brand-700"
-                >
-                  {g.name}
-                </Link>
-                {canEdit && (
-                  <button
-                    onClick={() => setEditing(g)}
-                    className="text-slate-400 hover:text-brand-600"
-                  >
-                    <Pencil size={15} />
-                  </button>
-                )}
-              </div>
-              <p className="text-sm text-slate-500 mb-3">
-                {g.branch?.name || "Filial belgilanmagan"} · {g.room || "Xona belgilanmagan"}
-              </p>
-              <div className="text-sm space-y-1">
-                <p className="text-slate-600">
-                  O'qituvchi: <span className="font-medium">{g.teacher?.full_name || "—"}</span>
-                </p>
-                <p className="text-slate-600">
-                  Talabalar: <span className="font-medium">{g.student_count}</span>
-                </p>
-                <p className="text-slate-600">
-                  Oylik to'lov: <span className="font-medium">{formatSom(g.monthly_fee)}</span>
-                </p>
-              </div>
-              <Link
-                to={`/groups/${g.id}`}
-                className="inline-block mt-3 text-xs font-medium text-brand-600 hover:underline"
-              >
-                Darslar va hisob-kitob →
-              </Link>
-            </div>
-          ))}
+        <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+              <tr>
+                <th className="text-left px-4 py-3 font-medium w-12">T/R</th>
+                <th className="text-left px-4 py-3 font-medium">Nomi</th>
+                <th className="text-right px-4 py-3 font-medium">Narx</th>
+                <th className="text-left px-4 py-3 font-medium">Dars vaqti</th>
+                <th className="text-left px-4 py-3 font-medium">Kurs</th>
+                <th className="text-left px-4 py-3 font-medium">O'qituvchi</th>
+                <th className="text-left px-4 py-3 font-medium">Dars kunlari</th>
+                {canEdit && <th className="px-4 py-3"></th>}
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="px-4 py-8 text-center text-slate-400">
+                    {hasFilter ? "Guruh topilmadi" : "Hali guruh qo'shilmagan"}
+                  </td>
+                </tr>
+              )}
+              {filtered.map((g, i) => (
+                <tr key={g.id} className="border-t border-slate-100 hover:bg-slate-50">
+                  <td className="px-4 py-3 text-slate-400">{i + 1}.</td>
+                  <td className="px-4 py-3">
+                    <Link
+                      to={`/groups/${g.id}`}
+                      className="font-medium text-slate-800 hover:text-brand-700"
+                    >
+                      {g.name}
+                    </Link>
+                    <span className="text-slate-400 ml-1.5">[{g.student_count}]</span>
+                  </td>
+                  <td className="px-4 py-3 text-right text-slate-600 whitespace-nowrap">
+                    {formatSom(g.monthly_fee)}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
+                    {g.lesson_time || "—"}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="text-slate-700">
+                      {subjectLine(g) || "—"}
+                    </span>
+                    {g.room && (
+                      <span className="text-brand-600 ml-1.5">[{g.room}]</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="text-slate-700">
+                      {g.teacher?.full_name || "—"}
+                    </span>
+                    {g.teacher_rate_per_student > 0 && (
+                      <span className="block text-xs text-slate-400">
+                        {formatSom(g.teacher_rate_per_student)}/talaba
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap gap-1">
+                      {parseDays(g.lesson_days).length === 0 ? (
+                        <span className="text-slate-400">—</span>
+                      ) : (
+                        WEEKDAYS.filter((d) =>
+                          parseDays(g.lesson_days).includes(d.key)
+                        ).map((d) => (
+                          <span
+                            key={d.key}
+                            className="bg-brand-50 text-brand-700 rounded px-1.5 py-0.5 text-xs"
+                          >
+                            {d.label}
+                          </span>
+                        ))
+                      )}
+                    </div>
+                  </td>
+                  {canEdit && (
+                    <td className="px-4 py-3 text-right">
+                      <button
+                        onClick={() => setEditing(g)}
+                        title="Tahrirlash"
+                        className="text-slate-400 hover:text-brand-600"
+                      >
+                        <Pencil size={15} />
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
@@ -303,7 +527,7 @@ export default function Groups() {
           teachers={teachers}
           branches={branches}
           defaultBranchId={user?.branch_id ?? null}
-          submitLabel="Yaratish"
+          submitLabel="Qo'shish"
           onClose={() => setShowAdd(false)}
           onSaved={load}
         />

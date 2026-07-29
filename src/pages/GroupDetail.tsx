@@ -15,13 +15,14 @@ import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
+import { GroupSidebar } from "../components/GroupSidebar";
 
 type GroupTab = "lessons" | "attendance" | "grades" | "exams";
 
 const GROUP_TABS: { key: GroupTab; label: string }[] = [
-  { key: "lessons", label: "Darslar" },
   { key: "attendance", label: "Davomat" },
   { key: "grades", label: "Baholash" },
+  { key: "lessons", label: "Darslar" },
   { key: "exams", label: "Imtihonlar" },
 ];
 
@@ -45,7 +46,8 @@ export default function GroupDetail() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [lessonsLoading, setLessonsLoading] = useState(true);
-  const [tab, setTab] = useState<GroupTab>("lessons");
+  // Guruh ochilganda birinchi bo'lib o'quvchilar va davomat ko'rinadi.
+  const [tab, setTab] = useState<GroupTab>("attendance");
   const [selYear, setSelYear] = useState(t.year);
   const [selMonth, setSelMonth] = useState(t.month);
 
@@ -204,7 +206,7 @@ export default function GroupDetail() {
   const yearOptions = [t.year - 1, t.year, t.year + 1];
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-8">
       <Link
         to="/groups"
         className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-4"
@@ -212,61 +214,51 @@ export default function GroupDetail() {
         <ArrowLeft size={15} /> Guruhlarga qaytish
       </Link>
 
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">{group.name}</h1>
-          <p className="text-sm text-slate-500">
-            {group.branch?.name || "Filial belgilanmagan"} · O'qituvchi:{" "}
-            {group.teacher?.full_name || "—"} · {group.student_count} talaba
-          </p>
-          <p className="text-xs text-slate-400 mt-1">
-            1 dars = {formatSom(group.lesson_price)} · standart{" "}
-            {group.standard_lessons_per_month} dars/oy = {formatSom(group.monthly_fee)} ·
-            ustoz stavkasi: {formatSom(group.teacher_rate_per_student)}/talaba
-          </p>
-        </div>
-      </div>
+      {/* Chapda guruh ma'lumoti va o'quvchilar, o'ngda davomat jadvali */}
+      <div className="flex flex-col lg:flex-row gap-5 items-start">
+        <GroupSidebar group={group} />
 
-      <div className="flex items-center gap-2 mb-6">
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={selMonth}
-          onChange={(e) => setSelMonth(Number(e.target.value))}
-        >
-          {monthOptions.map((m) => (
-            <option key={m} value={m}>
-              {MONTH_NAMES[m - 1]}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={selYear}
-          onChange={(e) => setSelYear(Number(e.target.value))}
-        >
-          {yearOptions.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
+          <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
+            {GROUP_TABS.map((tb) => (
+              <button
+                key={tb.key}
+                onClick={() => setTab(tb.key)}
+                className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
+                  tab === tb.key
+                    ? "border-brand-600 text-brand-700"
+                    : "border-transparent text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                {tb.label}
+              </button>
+            ))}
+          </div>
 
-      <div className="flex gap-1 mb-6 border-b border-slate-200">
-        {GROUP_TABS.map((tb) => (
-          <button
-            key={tb.key}
-            onClick={() => setTab(tb.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
-              tab === tb.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
-          >
-            {tb.label}
-          </button>
-        ))}
-      </div>
+          <div className="flex items-center gap-2 mb-5">
+            <select
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              value={selMonth}
+              onChange={(e) => setSelMonth(Number(e.target.value))}
+            >
+              {monthOptions.map((m) => (
+                <option key={m} value={m}>
+                  {MONTH_NAMES[m - 1]}
+                </option>
+              ))}
+            </select>
+            <select
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              value={selYear}
+              onChange={(e) => setSelYear(Number(e.target.value))}
+            >
+              {yearOptions.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
 
       {tab === "attendance" && (
         <AttendanceTab
@@ -532,6 +524,8 @@ export default function GroupDetail() {
       )}
       </>
       )}
+        </div>
+      </div>
     </div>
   );
 }

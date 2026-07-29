@@ -63,6 +63,8 @@ export interface User {
   branch_id?: number | null;
   branch?: Branch;
   is_active: boolean;
+  /** Adminlar (sotuv menejeri) uchun fiks oylik. Faqat asoschi o'zgartiradi. */
+  fix_salary?: number | null;
 }
 
 export interface Teacher {
@@ -324,6 +326,48 @@ export interface Redemption {
   created_at: string;
   student?: GridStudent | null;
   reward?: Reward | null;
+}
+
+// ---------- Adminlar KPI ----------
+export interface AdminKpi {
+  user_id: number;
+  full_name: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  fix_salary: number;
+  active_students: number;
+  expected: number;
+  collected: number;
+  collection_percent: number;
+  collection_bonus: number;
+  new_clients: number;
+  new_client_revenue: number;
+  new_client_bonus: number;
+  total: number;
+}
+
+export interface AdminKpiResult {
+  period: string;
+  rows: AdminKpi[];
+}
+
+export interface KpiCollectionRule {
+  id?: number;
+  min_students: number;
+  max_students?: number | null;
+  min_percent: number;
+  bonus: number;
+}
+
+export interface KpiNewClientRule {
+  id?: number;
+  min_clients: number;
+  bonus: number;
+}
+
+export interface KpiRules {
+  collection: KpiCollectionRule[];
+  new_clients: KpiNewClientRule[];
 }
 
 // ---------- Hisobotlar ----------

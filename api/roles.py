@@ -143,3 +143,52 @@ LEAD_SOURCE_DEFAULT_STAGE = {
     "ads": "new",
     "other": "new",
 }
+
+# ---- Imtihonlar -------------------------------------------------------
+# Bizda asosan unit testlar (12 ta unit), ularga qo'shimcha kurs o'rtasi,
+# kurs oxiri va mock testlar bor.
+EXAM_KINDS = ["unit", "mid", "end", "mock"]
+EXAM_KIND_LABELS = {
+    "unit": "Unit test",
+    "mid": "Mid-course",
+    "end": "End of course",
+    "mock": "Mock test",
+}
+UNIT_COUNT = 12
+
+# Mock IELTS band'ni foizga o'tkazish uchun eng yuqori band. Coin qoidasi
+# hamma test turi uchun foizda ishlashi kerak, shuning uchun band -> foiz:
+# 7.0 band => 7/9*100 = 77.8%.
+MOCK_MAX_BAND = 9.0
+
+# ---- Coin (gamification) ---------------------------------------------
+# Coin qayerdan kelgani. Balans - shu yozuvlar yig'indisi, alohida
+# "balans" ustuni yo'q: shunda hech qachon haqiqatdan uzilib qolmaydi.
+COIN_SOURCES = ["daily", "exam", "manual", "reward"]
+COIN_SOURCE_LABELS = {
+    "daily": "Kunlik baho",
+    "exam": "Imtihon",
+    "manual": "Qo'lda",
+    "reward": "Sovg'a",
+}
+
+# Kunlik baho shkalasi: ustoz har dars uchun 1-5 qo'yadi va o'sha ball
+# aynan shuncha coinga teng (foydalanuvchi qoidasi).
+DAILY_GRADE_MIN = 1
+DAILY_GRADE_MAX = 5
+
+# Imtihon natijasidan coin: foiz shu qiymatdan katta yoki teng bo'lsa,
+# eng yuqori mos qator ishlaydi. Bu faqat BOSHLANG'ICH jadval - asoschi
+# uni Gamification bo'limidan o'zgartira oladi.
+DEFAULT_EXAM_COIN_RULES = [
+    (90.0, 50),
+    (80.0, 30),
+    (70.0, 15),
+    (60.0, 5),
+]
+
+# ---- Ruxsatlar --------------------------------------------------------
+# Davomat, baho va imtihon - o'quv jarayoni, ustozlar ishlaydi.
+TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
+# Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
+COIN_ADMIN = FULL_ACCESS

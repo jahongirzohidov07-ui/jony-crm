@@ -238,3 +238,159 @@ class TeacherPayout(Base):
 
     teacher = relationship("Teacher")
     group = relationship("Group")
+
+
+class Attendance(Base):
+    """Bitta o'quvchining bitta darsdagi davomati.
+
+    Diqqat: hisob-kitob (billing) bundan EMAS, guruh darajasidagi Lesson
+    yozuvlaridan hisoblanadi - o'quvchi kelmagan darsi ham to'lanadi.
+    Bu jadval faqat davomat ko'rsatkichi uchun."""
+    __tablename__ = "attendances"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    present = Column(Integer, default=1)  # 1 = keldi, 0 = kelmadi
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    lesson = relationship("Lesson")
+    student = relationship("Student")
+
+
+class DailyGrade(Base):
+    """Ustozning bir dars uchun o'quvchiga qo'ygan bahosi (1-5).
+
+    Ball aynan shuncha coinga teng: 5 baho = 5 coin. Coin qo'lda
+    qo'shilmaydi - baho saqlanishi bilan CoinEntry avtomat yaratiladi,
+    baho o'zgarsa coin ham o'zgaradi, baho o'chirilsa coin qaytariladi."""
+    __tablename__ = "daily_grades"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    score = Column(Integer, nullable=False)  # 1..5
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    lesson = relationship("Lesson")
+    student = relationship("Student")
+
+
+class Exam(Base):
+    """Bir guruh uchun o'tkazilgan test: unit (1-12), mid-course,
+    end of course yoki mock."""
+    __tablename__ = "exams"
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    kind = Column(String, nullable=False, default="unit")
+    unit_no = Column(Integer, nullable=True)   # faqat kind="unit" uchun 1..12
+    title = Column(String, nullable=True)
+    date = Column(Date, nullable=False, default=date.today)
+    # Unit/mid/end uchun maksimal ball. Mock uchun band ishlatiladi.
+    max_score = Column(Float, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    group = relationship("Group")
+    results = relationship(
+        "ExamResult", back_populates="exam", cascade="all, delete-orphan"
+    )
+
+
+class ExamResult(Base):
+    """Bitta o'quvchining bitta testdagi natijasi.
+
+    Ustoz faqat ball (yoki mock uchun band) kiritadi - foiz avtomat
+    hisoblanadi, coin ham avtomat beriladi."""
+    __tablename__ = "exam_results"
+
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    score = Column(Float, nullable=True)    # olgan bali
+    band = Column(Float, nullable=True)     # mock IELTS band (0-9)
+    percent = Column(Float, nullable=True)  # avtomat
+    coins = Column(Integer, default=0)      # avtomat
+    absent = Column(Integer, default=0)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    exam = relationship("Exam", back_populates="results")
+    student = relationship("Student")
+
+
+class ExamCoinRule(Base):
+    """Imtihon foizidan coinga o'tkazish qoidasi: foiz min_percent'dan
+    katta yoki teng bo'lsa, eng yuqori mos qatorning coini beriladi.
+    Asoschi bu jadvalni o'zgartirsa, keyingi natijalar yangi qoida
+    bo'yicha hisoblanadi."""
+    __tablename__ = "exam_coin_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    min_percent = Column(Float, nullable=False)
+    coins = Column(Integer, nullable=False)
+    # null = hamma test turlari uchun; aks holda faqat shu tur uchun.
+    kind = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class CoinEntry(Base):
+    """Coin harakati. O'quvchining balansi - shu jadvaldagi amountlar
+    yig'indisi (alohida "balans" ustuni yo'q, shuning uchun u hech qachon
+    haqiqatdan uzilib qolmaydi).
+
+    source + ref_id juftligi avtomatik yozuvlarni bir marta yaratilishini
+    ta'minlaydi: baho yoki natija o'zgarsa, o'sha yozuv yangilanadi."""
+    __tablename__ = "coin_entries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    amount = Column(Integer, nullable=False)  # + berildi, - yechildi
+    source = Column(String, nullable=False, default="manual")
+    ref_id = Column(Integer, nullable=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class Reward(Base):
+    """Coinga almashtiriladigan sovg'a."""
+    __tablename__ = "rewards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    cost = Column(Integer, nullable=False)          # necha coin
+    value_som = Column(Float, nullable=True)        # taxminiy so'mdagi qiymati
+    stock = Column(Integer, nullable=True)          # null = cheklanmagan
+    active = Column(Integer, default=1)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
+class RewardRedemption(Base):
+    """Sovg'a berilgani. coins - o'sha paytdagi narx: keyin sovg'a narxi
+    o'zgarsa ham tarix buzilmaydi."""
+    __tablename__ = "reward_redemptions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    reward_id = Column(Integer, ForeignKey("rewards.id"), nullable=False)
+    coins = Column(Integer, nullable=False)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+    reward = relationship("Reward")

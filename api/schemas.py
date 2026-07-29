@@ -319,3 +319,212 @@ class DashboardStats(BaseModel):
     month_income: float
     total_debt: float
     debtor_count: int
+
+
+# ---------- Davomat va kunlik baho ----------
+class AttendanceMark(BaseModel):
+    """Bitta o'quvchining bitta darsdagi holati."""
+    student_id: int
+    present: bool
+
+
+class AttendanceBulk(BaseModel):
+    """Butun ustunni bir so'rovda saqlash - jadvalda bitta dars kuni
+    to'liq belgilanadi."""
+    marks: List[AttendanceMark]
+
+
+class AttendanceOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    lesson_id: int
+    student_id: int
+    present: bool
+    note: Optional[str] = None
+
+
+class GradeMark(BaseModel):
+    student_id: int
+    # None = bahoni olib tashlash (coin ham qaytariladi)
+    score: Optional[int] = None
+
+
+class GradeBulk(BaseModel):
+    marks: List[GradeMark]
+
+
+class DailyGradeOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    lesson_id: int
+    student_id: int
+    score: int
+    note: Optional[str] = None
+
+
+class GridStudent(BaseModel):
+    id: int
+    full_name: str
+    status: str
+
+
+class GridLesson(BaseModel):
+    id: int
+    date: date
+
+
+class AttendanceGrid(BaseModel):
+    """Davomat/Baholash jadvali: chapda o'quvchilar, tepada dars kunlari.
+    marks - "lessonId:studentId" -> qiymat."""
+    students: List[GridStudent]
+    lessons: List[GridLesson]
+    marks: dict
+
+
+# ---------- Imtihonlar ----------
+class ExamCreate(BaseModel):
+    kind: str = "unit"
+    unit_no: Optional[int] = None
+    title: Optional[str] = None
+    date: date
+    max_score: Optional[float] = None
+
+
+class ExamUpdate(BaseModel):
+    kind: Optional[str] = None
+    unit_no: Optional[int] = None
+    title: Optional[str] = None
+    date: Optional[date] = None
+    max_score: Optional[float] = None
+
+
+class ExamResultOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    exam_id: int
+    student_id: int
+    score: Optional[float] = None
+    band: Optional[float] = None
+    percent: Optional[float] = None
+    coins: int = 0
+    absent: bool = False
+    note: Optional[str] = None
+
+
+class ExamOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    group_id: int
+    kind: str
+    unit_no: Optional[int] = None
+    title: Optional[str] = None
+    date: date
+    max_score: Optional[float] = None
+    created_by: Optional[str] = None
+    created_at: datetime
+    # Ro'yxatda ko'rsatish uchun qisqa xulosa
+    result_count: int = 0
+    avg_percent: Optional[float] = None
+
+
+class ExamDetail(ExamOut):
+    results: List[ExamResultOut] = []
+    students: List[GridStudent] = []
+
+
+class ExamScoreMark(BaseModel):
+    student_id: int
+    score: Optional[float] = None
+    band: Optional[float] = None
+    absent: bool = False
+    note: Optional[str] = None
+
+
+class ExamScoreBulk(BaseModel):
+    marks: List[ExamScoreMark]
+
+
+# ---------- Coin / gamification ----------
+class CoinEntryOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    student_id: int
+    amount: int
+    source: str
+    ref_id: Optional[int] = None
+    note: Optional[str] = None
+    created_by: Optional[str] = None
+    created_at: datetime
+
+
+class CoinManual(BaseModel):
+    amount: int
+    note: Optional[str] = None
+
+
+class CoinBalance(BaseModel):
+    student_id: int
+    full_name: str
+    group: Optional[str] = None
+    branch: Optional[str] = None
+    balance: int
+    earned: int
+    spent: int
+
+
+class ExamCoinRuleIn(BaseModel):
+    min_percent: float
+    coins: int
+    kind: Optional[str] = None
+
+
+class ExamCoinRuleOut(ExamCoinRuleIn):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+
+
+class RewardCreate(BaseModel):
+    name: str
+    cost: int
+    value_som: Optional[float] = None
+    stock: Optional[int] = None
+    active: Optional[bool] = True
+    branch_id: Optional[int] = None
+
+
+class RewardUpdate(BaseModel):
+    name: Optional[str] = None
+    cost: Optional[int] = None
+    value_som: Optional[float] = None
+    stock: Optional[int] = None
+    active: Optional[bool] = None
+    branch_id: Optional[int] = None
+
+
+class RewardOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
+    cost: int
+    value_som: Optional[float] = None
+    stock: Optional[int] = None
+    active: bool = True
+    branch_id: Optional[int] = None
+    branch: Optional[BranchOut] = None
+
+
+class RedeemRequest(BaseModel):
+    student_id: int
+    reward_id: int
+
+
+class RedemptionOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    student_id: int
+    reward_id: int
+    coins: int
+    created_by: Optional[str] = None
+    created_at: datetime
+    student: Optional[GridStudent] = None
+    reward: Optional[RewardOut] = None

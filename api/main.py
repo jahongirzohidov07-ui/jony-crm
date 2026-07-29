@@ -71,8 +71,19 @@ def _ensure_new_columns():
             with engine.begin() as conn:
                 conn.execute(text(stmt))
         except Exception:
-            # Ustun allaqachon mavjud (yoki jadval hali yo'q) - muammo emas.
             pass
+
+    # Imtihon coin qoidasi bo'sh bo'lsa, boshlang'ich jadvalni qo'yamiz -
+    # asoschi uni keyin Gamification bo'limidan o'zgartiradi.
+    try:
+        from sqlalchemy.orm import Session as _S
+        with _S(engine) as db:
+            if db.query(models.ExamCoinRule).count() == 0:
+                for pct, coins in roles.DEFAULT_EXAM_COIN_RULES:
+                    db.add(models.ExamCoinRule(min_percent=pct, coins=coins))
+                db.commit()
+    except Exception:
+        pass
 
 
 _ensure_new_columns()
@@ -683,6 +694,652 @@ def delete_expense(
     db.delete(exp)
     db.commit()
     return {"ok": True}
+
+
+# ------------------------------------------------- Coin (gamification) ----
+# Muhim tamoyil: coin hech qachon qo'lda "qo'shilmaydi". Baho yoki imtihon
+# natijasi saqlanishi bilan tegishli CoinEntry avtomat yaratiladi/yangilanadi,
+# natija o'chirilsa coin ham qaytariladi. Shuning uchun balans hech qachon
+# haqiqatdan uzilib qolmaydi.
+
+
+def _sync_coin_entry(db: Session, *, student_id: int, source: str, ref_id: int,
+                     amount: int, note: str = None, created_by: str = None):
+    """Bitta manba uchun bitta coin yozuvini saqlaydi (upsert).
+    amount = 0 bo'lsa yozuv butunlay o'chiriladi."""
+    entry = (
+        db.query(models.CoinEntry)
+        .filter(models.CoinEntry.source == source,
+                models.CoinEntry.ref_id == ref_id)
+        .first()
+    )
+    if amount == 0:
+        if entry:
+            db.delete(entry)
+        return None
+    if entry:
+        entry.student_id = student_id
+        entry.amount = amount
+        entry.note = note
+        return entry
+    entry = models.CoinEntry(student_id=student_id, amount=amount,
+                             source=source, ref_id=ref_id, note=note,
+                             created_by=created_by)
+    db.add(entry)
+    return entry
+
+
+def _drop_coin_entry(db: Session, source: str, ref_id: int):
+    db.query(models.CoinEntry).filter(
+        models.CoinEntry.source == source, models.CoinEntry.ref_id == ref_id
+    ).delete(synchronize_session=False)
+
+
+def _coins_for_percent(db: Session, percent: float, kind: str) -> int:
+    """Foizdan coin. Avval shu test turiga maxsus qoida qidiriladi,
+    topilmasa umumiy (kind=None) qoidalar ishlatiladi."""
+    if percent is None:
+        return 0
+    rules = db.query(models.ExamCoinRule).all()
+    scoped = [r for r in rules if r.kind == kind]
+    general = [r for r in rules if not r.kind]
+    for group in (scoped, general):
+        matching = [r for r in group if percent >= r.min_percent]
+        if matching:
+            # Bir nechta qoida to'g'ri kelsa, eng yuqori bosqichnikini olamiz.
+            return max(matching, key=lambda r: r.min_percent).coins
+    return 0
+
+
+def _student_coin_balance(db: Session, student_id: int) -> int:
+    total = (
+        db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+        .filter(models.CoinEntry.student_id == student_id)
+        .scalar()
+    )
+    return int(total or 0)
+
+
+# -------------------------------------------- Davomat va kunlik baho ----
+def _group_students(db: Session, group_id: int):
+    return (
+        db.query(models.Student)
+        .filter(models.Student.group_id == group_id)
+        .order_by(models.Student.full_name)
+        .all()
+    )
+
+
+def _group_lessons_in_month(db: Session, group_id: int, year: int, month: int):
+    start, end = billing.month_bounds(year, month)
+    return (
+        db.query(models.Lesson)
+        .filter(models.Lesson.group_id == group_id,
+                models.Lesson.date >= start, models.Lesson.date <= end)
+        .order_by(models.Lesson.date)
+        .all()
+    )
+
+
+@app.get("/api/groups/{group_id}/attendance", response_model=schemas.AttendanceGrid)
+def attendance_grid(
+    group_id: int,
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Davomat jadvali: chapda o'quvchilar, tepada shu oydagi dars kunlari."""
+    _get_group_in_scope(db, group_id, user)
+    students = _group_students(db, group_id)
+    lessons = _group_lessons_in_month(db, group_id, year, month)
+    lesson_ids = [ls.id for ls in lessons]
+
+    marks = {}
+    if lesson_ids:
+        rows = db.query(models.Attendance).filter(
+            models.Attendance.lesson_id.in_(lesson_ids)
+        ).all()
+        marks = {f"{a.lesson_id}:{a.student_id}": bool(a.present) for a in rows}
+
+    return schemas.AttendanceGrid(
+        students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
+                                      status=s.status) for s in students],
+        lessons=[schemas.GridLesson(id=ls.id, date=ls.date) for ls in lessons],
+        marks=marks,
+    )
+
+
+@app.put("/api/lessons/{lesson_id}/attendance")
+def save_attendance(
+    lesson_id: int,
+    payload: schemas.AttendanceBulk,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Bitta dars kunining butun ustunini saqlaydi."""
+    lesson = db.query(models.Lesson).get(lesson_id)
+    if not lesson:
+        raise HTTPException(404, "Dars topilmadi")
+    _get_group_in_scope(db, lesson.group_id, user)
+
+    existing = {
+        a.student_id: a
+        for a in db.query(models.Attendance).filter(
+            models.Attendance.lesson_id == lesson_id).all()
+    }
+    for m in payload.marks:
+        row = existing.get(m.student_id)
+        if row:
+            row.present = 1 if m.present else 0
+        else:
+            db.add(models.Attendance(
+                lesson_id=lesson_id, student_id=m.student_id,
+                present=1 if m.present else 0, created_by=user.full_name))
+    db.commit()
+    return {"ok": True, "saved": len(payload.marks)}
+
+
+@app.get("/api/groups/{group_id}/grades", response_model=schemas.AttendanceGrid)
+def grades_grid(
+    group_id: int,
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Baholash jadvali - davomat bilan bir xil ko'rinish, lekin
+    kataklarda 1-5 baho turadi."""
+    _get_group_in_scope(db, group_id, user)
+    students = _group_students(db, group_id)
+    lessons = _group_lessons_in_month(db, group_id, year, month)
+    lesson_ids = [ls.id for ls in lessons]
+
+    marks = {}
+    if lesson_ids:
+        rows = db.query(models.DailyGrade).filter(
+            models.DailyGrade.lesson_id.in_(lesson_ids)
+        ).all()
+        marks = {f"{g.lesson_id}:{g.student_id}": g.score for g in rows}
+
+    return schemas.AttendanceGrid(
+        students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
+                                      status=s.status) for s in students],
+        lessons=[schemas.GridLesson(id=ls.id, date=ls.date) for ls in lessons],
+        marks=marks,
+    )
+
+
+@app.put("/api/lessons/{lesson_id}/grades")
+def save_grades(
+    lesson_id: int,
+    payload: schemas.GradeBulk,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Bir darsning baholarini saqlaydi. Har bir baho uchun coin AVTOMAT
+    yoziladi: 5 baho = 5 coin. Baho o'zgarsa coin ham o'zgaradi, olib
+    tashlansa coin qaytariladi."""
+    lesson = db.query(models.Lesson).get(lesson_id)
+    if not lesson:
+        raise HTTPException(404, "Dars topilmadi")
+    _get_group_in_scope(db, lesson.group_id, user)
+
+    for m in payload.marks:
+        if m.score is not None and not (
+            roles.DAILY_GRADE_MIN <= m.score <= roles.DAILY_GRADE_MAX
+        ):
+            raise HTTPException(
+                400,
+                f"Baho {roles.DAILY_GRADE_MIN}-{roles.DAILY_GRADE_MAX} "
+                "oralig'ida bo'lishi kerak",
+            )
+
+    existing = {
+        g.student_id: g
+        for g in db.query(models.DailyGrade).filter(
+            models.DailyGrade.lesson_id == lesson_id).all()
+    }
+    for m in payload.marks:
+        row = existing.get(m.student_id)
+        if m.score is None:
+            if row:
+                _drop_coin_entry(db, "daily", row.id)
+                db.delete(row)
+            continue
+        if row:
+            row.score = m.score
+        else:
+            row = models.DailyGrade(
+                lesson_id=lesson_id, student_id=m.student_id,
+                score=m.score, created_by=user.full_name)
+            db.add(row)
+            db.flush()  # coin yozuvi uchun id kerak
+        _sync_coin_entry(
+            db, student_id=m.student_id, source="daily", ref_id=row.id,
+            amount=m.score,
+            note=f"Kunlik baho {lesson.date.isoformat()}",
+            created_by=user.full_name,
+        )
+    db.commit()
+    return {"ok": True, "saved": len(payload.marks)}
+
+
+# ------------------------------------------------------------ Imtihonlar ----
+def _exam_in_scope(db: Session, exam_id: int, user: models.User) -> models.Exam:
+    exam = db.query(models.Exam).get(exam_id)
+    if not exam:
+        raise HTTPException(404, "Imtihon topilmadi")
+    _get_group_in_scope(db, exam.group_id, user)
+    return exam
+
+
+def _exam_summary(db: Session, exam: models.Exam) -> schemas.ExamOut:
+    scored = [r for r in exam.results if r.percent is not None and not r.absent]
+    return schemas.ExamOut(
+        id=exam.id, group_id=exam.group_id, kind=exam.kind,
+        unit_no=exam.unit_no, title=exam.title, date=exam.date,
+        max_score=exam.max_score, created_by=exam.created_by,
+        created_at=exam.created_at,
+        result_count=len([r for r in exam.results if not r.absent]),
+        avg_percent=round(sum(r.percent for r in scored) / len(scored), 1)
+        if scored else None,
+    )
+
+
+@app.get("/api/groups/{group_id}/exams", response_model=List[schemas.ExamOut])
+def list_exams(
+    group_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    _get_group_in_scope(db, group_id, user)
+    exams = (
+        db.query(models.Exam)
+        .filter(models.Exam.group_id == group_id)
+        .order_by(models.Exam.date.desc(), models.Exam.id.desc())
+        .all()
+    )
+    return [_exam_summary(db, e) for e in exams]
+
+
+@app.post("/api/groups/{group_id}/exams", response_model=schemas.ExamOut)
+def create_exam(
+    group_id: int,
+    payload: schemas.ExamCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    _get_group_in_scope(db, group_id, user)
+    if payload.kind not in roles.EXAM_KINDS:
+        raise HTTPException(400, "Noto'g'ri test turi")
+    if payload.kind == "unit":
+        if not payload.unit_no or not (1 <= payload.unit_no <= roles.UNIT_COUNT):
+            raise HTTPException(
+                400, f"Unit raqami 1-{roles.UNIT_COUNT} oralig'ida bo'lishi kerak")
+    if payload.kind != "mock" and (not payload.max_score or payload.max_score <= 0):
+        raise HTTPException(400, "Maksimal ballni kiriting")
+
+    exam = models.Exam(
+        group_id=group_id, kind=payload.kind,
+        unit_no=payload.unit_no if payload.kind == "unit" else None,
+        title=payload.title, date=payload.date,
+        max_score=payload.max_score if payload.kind != "mock" else None,
+        created_by=user.full_name,
+    )
+    db.add(exam)
+    db.commit()
+    db.refresh(exam)
+    return _exam_summary(db, exam)
+
+
+@app.get("/api/exams/{exam_id}", response_model=schemas.ExamDetail)
+def get_exam(
+    exam_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    exam = _exam_in_scope(db, exam_id, user)
+    base = _exam_summary(db, exam)
+    students = _group_students(db, exam.group_id)
+    return schemas.ExamDetail(
+        **base.model_dump(),
+        results=[schemas.ExamResultOut.model_validate(r) for r in exam.results],
+        students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
+                                      status=s.status) for s in students],
+    )
+
+
+@app.delete("/api/exams/{exam_id}")
+def delete_exam(
+    exam_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS)),
+):
+    """Imtihon o'chirilsa, u bergan coinlar ham qaytariladi."""
+    exam = _exam_in_scope(db, exam_id, user)
+    for r in exam.results:
+        _drop_coin_entry(db, "exam", r.id)
+    db.delete(exam)
+    db.commit()
+    return {"ok": True}
+
+
+@app.put("/api/exams/{exam_id}/results", response_model=schemas.ExamDetail)
+def save_exam_results(
+    exam_id: int,
+    payload: schemas.ExamScoreBulk,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Ustoz faqat ball (mock uchun band) kiritadi. Foiz avtomat
+    hisoblanadi, coin ham qoidaga qarab avtomat beriladi."""
+    exam = _exam_in_scope(db, exam_id, user)
+    existing = {r.student_id: r for r in exam.results}
+
+    for m in payload.marks:
+        row = existing.get(m.student_id)
+        if row is None:
+            row = models.ExamResult(exam_id=exam.id, student_id=m.student_id,
+                                    created_by=user.full_name)
+            db.add(row)
+            db.flush()
+
+        row.absent = 1 if m.absent else 0
+        row.note = m.note
+
+        if m.absent:
+            row.score = None
+            row.band = None
+            row.percent = None
+            row.coins = 0
+            _drop_coin_entry(db, "exam", row.id)
+            continue
+
+        if exam.kind == "mock":
+            if m.band is None:
+                raise HTTPException(400, "Mock test uchun band kiriting (0-9)")
+            if not (0 <= m.band <= roles.MOCK_MAX_BAND):
+                raise HTTPException(400, "Band 0-9 oralig'ida bo'lishi kerak")
+            row.band = m.band
+            row.score = None
+            row.percent = round(m.band / roles.MOCK_MAX_BAND * 100, 1)
+        else:
+            if m.score is None:
+                raise HTTPException(400, "Ballni kiriting")
+            if m.score < 0 or m.score > (exam.max_score or 0):
+                raise HTTPException(
+                    400, f"Ball 0 va {exam.max_score} oralig'ida bo'lishi kerak")
+            row.score = m.score
+            row.band = None
+            row.percent = round(m.score / exam.max_score * 100, 1)
+
+        row.coins = _coins_for_percent(db, row.percent, exam.kind)
+        _sync_coin_entry(
+            db, student_id=m.student_id, source="exam", ref_id=row.id,
+            amount=row.coins,
+            note=f"{roles.EXAM_KIND_LABELS.get(exam.kind, exam.kind)}"
+                 f" - {row.percent}%",
+            created_by=user.full_name,
+        )
+
+    db.commit()
+    db.refresh(exam)
+    base = _exam_summary(db, exam)
+    students = _group_students(db, exam.group_id)
+    return schemas.ExamDetail(
+        **base.model_dump(),
+        results=[schemas.ExamResultOut.model_validate(r) for r in exam.results],
+        students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
+                                      status=s.status) for s in students],
+    )
+
+
+# ---------------------------------------------------------- Gamification ----
+@app.get("/api/coins", response_model=List[schemas.CoinBalance])
+def coin_leaderboard(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Coin reytingi - kim qancha yig'gan, qanchasini sarflagan."""
+    students = scope_to_branch(
+        db.query(models.Student), models.Student, user
+    ).filter(models.Student.status != "archived").all()
+    if not students:
+        return []
+    ids = [s.id for s in students]
+
+    earned, spent = {}, {}
+    rows = db.query(models.CoinEntry).filter(
+        models.CoinEntry.student_id.in_(ids)).all()
+    for e in rows:
+        if e.amount >= 0:
+            earned[e.student_id] = earned.get(e.student_id, 0) + e.amount
+        else:
+            spent[e.student_id] = spent.get(e.student_id, 0) - e.amount
+
+    out = [
+        schemas.CoinBalance(
+            student_id=s.id, full_name=s.full_name,
+            group=s.group.name if s.group else None,
+            branch=s.branch.name if s.branch else None,
+            earned=earned.get(s.id, 0), spent=spent.get(s.id, 0),
+            balance=earned.get(s.id, 0) - spent.get(s.id, 0),
+        )
+        for s in students
+    ]
+    out.sort(key=lambda b: -b.balance)
+    return out
+
+
+@app.get("/api/students/{student_id}/coins", response_model=List[schemas.CoinEntryOut])
+def student_coin_history(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    return (
+        db.query(models.CoinEntry)
+        .filter(models.CoinEntry.student_id == student_id)
+        .order_by(models.CoinEntry.created_at.desc(), models.CoinEntry.id.desc())
+        .all()
+    )
+
+
+@app.post("/api/students/{student_id}/coins", response_model=schemas.CoinEntryOut)
+def add_manual_coins(
+    student_id: int,
+    payload: schemas.CoinManual,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    """Qo'lda coin berish yoki yechish (tanlov, tadbir, jarima va h.k.)."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if payload.amount == 0:
+        raise HTTPException(400, "Miqdor 0 bo'lishi mumkin emas")
+    entry = models.CoinEntry(student_id=student_id, amount=payload.amount,
+                             source="manual", note=payload.note,
+                             created_by=user.full_name)
+    db.add(entry)
+    db.commit()
+    db.refresh(entry)
+    return entry
+
+
+@app.delete("/api/coins/{entry_id}")
+def delete_coin_entry(
+    entry_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    """Faqat qo'lda kiritilgan yozuvni o'chirish mumkin - avtomatik
+    yozuvlar o'z manbasidan (baho/imtihon) boshqariladi."""
+    e = db.query(models.CoinEntry).get(entry_id)
+    if not e:
+        raise HTTPException(404, "Yozuv topilmadi")
+    if e.source != "manual":
+        raise HTTPException(
+            400,
+            "Bu yozuv avtomatik - uni o'zgartirish uchun tegishli bahoni "
+            "yoki imtihon natijasini tahrirlang",
+        )
+    db.delete(e)
+    db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/exam-coin-rules", response_model=List[schemas.ExamCoinRuleOut])
+def list_coin_rules(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    return db.query(models.ExamCoinRule).order_by(
+        models.ExamCoinRule.min_percent.desc()).all()
+
+
+@app.put("/api/exam-coin-rules", response_model=List[schemas.ExamCoinRuleOut])
+def replace_coin_rules(
+    payload: List[schemas.ExamCoinRuleIn],
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    """Qoidalar jadvalini butunlay almashtiradi. Eski natijalarga
+    ta'sir qilmaydi - faqat bundan keyin kiritiladigan natijalar yangi
+    qoida bo'yicha hisoblanadi."""
+    for r in payload:
+        if r.kind and r.kind not in roles.EXAM_KINDS:
+            raise HTTPException(400, "Noto'g'ri test turi")
+        if r.coins < 0:
+            raise HTTPException(400, "Coin manfiy bo'lmasligi kerak")
+    db.query(models.ExamCoinRule).delete()
+    for r in payload:
+        db.add(models.ExamCoinRule(min_percent=r.min_percent, coins=r.coins,
+                                   kind=r.kind))
+    db.commit()
+    return db.query(models.ExamCoinRule).order_by(
+        models.ExamCoinRule.min_percent.desc()).all()
+
+
+# ------------------------------------------------------------ Sovg'alar ----
+@app.get("/api/rewards", response_model=List[schemas.RewardOut])
+def list_rewards(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    q = scope_to_branch(db.query(models.Reward), models.Reward, user)
+    return q.order_by(models.Reward.cost).all()
+
+
+@app.post("/api/rewards", response_model=schemas.RewardOut)
+def create_reward(
+    payload: schemas.RewardCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    if payload.cost <= 0:
+        raise HTTPException(400, "Coin narxi 0 dan katta bo'lishi kerak")
+    r = models.Reward(
+        name=payload.name.strip(), cost=payload.cost,
+        value_som=payload.value_som, stock=payload.stock,
+        active=1 if payload.active else 0,
+        branch_id=payload.branch_id if payload.branch_id is not None
+        else user.branch_id,
+    )
+    db.add(r)
+    db.commit()
+    db.refresh(r)
+    return r
+
+
+@app.put("/api/rewards/{reward_id}", response_model=schemas.RewardOut)
+def update_reward(
+    reward_id: int,
+    payload: schemas.RewardUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    r = db.query(models.Reward).get(reward_id)
+    if not r:
+        raise HTTPException(404, "Sovg'a topilmadi")
+    data = payload.model_dump(exclude_unset=True)
+    if "cost" in data and data["cost"] is not None and data["cost"] <= 0:
+        raise HTTPException(400, "Coin narxi 0 dan katta bo'lishi kerak")
+    if "active" in data and data["active"] is not None:
+        data["active"] = 1 if data["active"] else 0
+    for k, v in data.items():
+        setattr(r, k, v)
+    db.commit()
+    db.refresh(r)
+    return r
+
+
+@app.delete("/api/rewards/{reward_id}")
+def delete_reward(
+    reward_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    r = db.query(models.Reward).get(reward_id)
+    if not r:
+        raise HTTPException(404, "Sovg'a topilmadi")
+    used = db.query(models.RewardRedemption).filter(
+        models.RewardRedemption.reward_id == reward_id).count()
+    if used:
+        # Tarixni buzmaslik uchun o'chirmaymiz, faqat yashiramiz.
+        r.active = 0
+        db.commit()
+        return {"ok": True, "archived": True}
+    db.delete(r)
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/rewards/redeem", response_model=schemas.RedemptionOut)
+def redeem_reward(
+    payload: schemas.RedeemRequest,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """Coinni sovg'aga almashtirish. Balans yetmasa rad etiladi."""
+    s = db.query(models.Student).get(payload.student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    r = db.query(models.Reward).get(payload.reward_id)
+    if not r or not r.active:
+        raise HTTPException(404, "Sovg'a topilmadi")
+    if r.stock is not None and r.stock <= 0:
+        raise HTTPException(400, "Bu sovg'a tugagan")
+
+    balance = _student_coin_balance(db, s.id)
+    if balance < r.cost:
+        raise HTTPException(
+            400, f"Coin yetarli emas: balans {balance}, kerak {r.cost}")
+
+    red = models.RewardRedemption(student_id=s.id, reward_id=r.id,
+                                  coins=r.cost, created_by=user.full_name)
+    db.add(red)
+    db.flush()
+    db.add(models.CoinEntry(student_id=s.id, amount=-r.cost, source="reward",
+                            ref_id=red.id, note=r.name,
+                            created_by=user.full_name))
+    if r.stock is not None:
+        r.stock -= 1
+    db.commit()
+    db.refresh(red)
+    return red
+
+
+@app.get("/api/rewards/redemptions", response_model=List[schemas.RedemptionOut])
+def list_redemptions(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    q = db.query(models.RewardRedemption).join(models.Student)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.Student.branch_id == user.branch_id)
+    return q.order_by(models.RewardRedemption.created_at.desc()).limit(200).all()
 
 
 # ------------------------------------------------------------ Hisobotlar ----

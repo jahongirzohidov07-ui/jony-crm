@@ -167,6 +167,8 @@ export interface Student {
   parent_phone?: string;
   birth_date?: string;
   enrolled_date?: string;
+  /** Arxivga o'tkazilganda avtomatik qo'yiladi - LTV shundan hisoblanadi. */
+  left_date?: string | null;
   status: string;
   note?: string;
   group?: Group;
@@ -334,6 +336,44 @@ export interface Redemption {
   created_at: string;
   student?: GridStudent | null;
   reward?: Reward | null;
+}
+
+// ---------- O'quvchi sahifasi ----------
+export interface StudentExamRow {
+  exam_id: number;
+  kind: string;
+  unit_no?: number | null;
+  title?: string | null;
+  date: string;
+  max_score?: number | null;
+  group?: string | null;
+  score?: number | null;
+  band?: number | null;
+  percent?: number | null;
+  coins: number;
+  absent: boolean;
+}
+
+export interface StudentExams {
+  results: StudentExamRow[];
+  count: number;
+  avg_percent: number | null;
+  coins: number;
+}
+
+export interface StudentAttendanceRow {
+  date: string;
+  present: boolean;
+  grade?: number | null;
+}
+
+export interface StudentAttendance {
+  rows: StudentAttendanceRow[];
+  marked: number;
+  present: number;
+  absent: number;
+  percent: number;
+  avg_grade: number | null;
 }
 
 // ---------- Ta'lim sifati ----------

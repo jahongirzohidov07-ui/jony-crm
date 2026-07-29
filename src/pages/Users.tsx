@@ -4,11 +4,13 @@ import { api, type User, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
   USER_ADMIN,
+  SALES_MANAGER,
   BRANCH_MANAGER,
   can,
   roleLabel,
   assignableRoles,
 } from "../lib/roles";
+import { formatSom } from "../lib/format";
 
 function UserForm({
   branches,
@@ -25,6 +27,7 @@ function UserForm({
     full_name: string;
     role: string;
     branch_id: number | null;
+    fix_salary?: number | null;
     is_active: boolean;
   }>;
   onCancel: () => void;
@@ -35,6 +38,7 @@ function UserForm({
     role: string;
     branch_id: number | null;
     is_active?: boolean;
+    fix_salary?: number | null;
   }) => Promise<void>;
   submitLabel: string;
 }) {
@@ -50,6 +54,11 @@ function UserForm({
     lockBranchId ? String(lockBranchId) : initial?.branch_id ? String(initial.branch_id) : ""
   );
   const [isActive, setIsActive] = useState(initial?.is_active ?? true);
+  // Fiks oylik faqat administrator (sotuv menejeri) uchun ma'noga ega -
+  // KPI hisobi shundan boshlanadi.
+  const [fixSalary, setFixSalary] = useState(
+    initial?.fix_salary != null ? String(Math.round(initial.fix_salary)) : ""
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -76,6 +85,7 @@ function UserForm({
         role,
         branch_id: branchId ? Number(branchId) : null,
         is_active: isEdit ? isActive : undefined,
+        fix_salary: fixSalary === "" ? null : Number(fixSalary),
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
@@ -162,6 +172,24 @@ function UserForm({
               ))}
             </select>
           </div>
+
+          {role === SALES_MANAGER && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Fiks oylik (so'm)
+              </label>
+              <input
+                type="number"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={fixSalary}
+                onChange={(e) => setFixSalary(e.target.value)}
+                placeholder="1500000"
+              />
+              <p className="text-xs text-slate-400 mt-1">
+                KPI hisobi shundan boshlanadi: fiks + bonuslar.
+              </p>
+            </div>
+          )}
 
           {isEdit && (
             <label className="flex items-center gap-2 text-sm text-slate-700 pt-1">
@@ -259,6 +287,7 @@ export default function Users() {
                 <th className="text-left px-4 py-3 font-medium">Login</th>
                 <th className="text-left px-4 py-3 font-medium">Rol</th>
                 <th className="text-left px-4 py-3 font-medium">Filial</th>
+                <th className="text-right px-4 py-3 font-medium">Fiks oylik</th>
                 <th className="text-left px-4 py-3 font-medium">Holat</th>
                 <th className="text-right px-4 py-3 font-medium"></th>
               </tr>
@@ -270,6 +299,13 @@ export default function Users() {
                   <td className="px-4 py-3 text-slate-600">{u.username}</td>
                   <td className="px-4 py-3 text-slate-600">{roleLabel(u.role)}</td>
                   <td className="px-4 py-3 text-slate-600">{u.branch?.name || "—"}</td>
+                  <td className="px-4 py-3 text-right text-slate-600">
+                    {u.role === SALES_MANAGER
+                      ? u.fix_salary
+                        ? formatSom(u.fix_salary)
+                        : "—"
+                      : ""}
+                  </td>
                   <td className="px-4 py-3">
                     <button
                       onClick={() => toggleActive(u)}
@@ -321,6 +357,7 @@ export default function Users() {
             role: editing.role,
             branch_id: editing.branch_id ?? null,
             is_active: editing.is_active,
+            fix_salary: editing.fix_salary ?? null,
           }}
           submitLabel="Saqlash"
           onCancel={() => setEditing(null)}
@@ -330,6 +367,7 @@ export default function Users() {
               role: data.role,
               branch_id: data.branch_id,
               is_active: data.is_active,
+              fix_salary: data.fix_salary ?? null,
               ...(data.password ? { password: data.password } : {}),
             });
             setEditing(null);

@@ -12,6 +12,8 @@ import {
 } from "recharts";
 import {
   api,
+  type AdminKpiResult,
+  type KpiRules,
   type CashflowReport,
   type PnlReport,
   type LtvReport,
@@ -19,18 +21,19 @@ import {
   type RetentionReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, can } from "../lib/roles";
+import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
 import { categoryLabel, MONTHS } from "../lib/expenses";
 import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "cashflow" | "pnl" | "ltv" | "retention";
+type Tab = "cashflow" | "pnl" | "ltv" | "retention" | "kpi";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
   { key: "ltv", label: "LTV" },
   { key: "retention", label: "Ustozlar" },
+  { key: "kpi", label: "Adminlar KPI" },
 ];
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
@@ -633,6 +636,457 @@ function RetentionTab() {
   );
 }
 
+
+// -------------------------------------------------------- Adminlar KPI ----
+function KpiRulesEditor({
+  rules,
+  setRules,
+  canAdmin,
+  onSave,
+  saving,
+  saved,
+}: {
+  rules: KpiRules;
+  setRules: (r: KpiRules) => void;
+  canAdmin: boolean;
+  onSave: () => void;
+  saving: boolean;
+  saved: boolean;
+}) {
+  function upd<K extends "collection" | "new_clients">(
+    key: K,
+    i: number,
+    patch: Partial<KpiRules[K][number]>
+  ) {
+    setRules({
+      ...rules,
+      [key]: rules[key].map((r, idx) => (idx === i ? { ...r, ...patch } : r)),
+    });
+  }
+
+  const cell =
+    "w-24 rounded-lg border border-slate-300 px-2 py-1.5 text-sm disabled:bg-slate-50";
+
+  return (
+    <div className="mt-8">
+      <h3 className="font-medium text-slate-800 mb-1">Bonus qoidalari</h3>
+      <p className="text-xs text-slate-500 mb-4 max-w-3xl">
+        Bu jadvallar ish haqiga bevosita ta'sir qiladi, shuning uchun ularni
+        faqat asoschi o'zgartira oladi. O'zgartirish darrov keyingi hisobga
+        qo'llanadi.
+      </p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div>
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Eski to'lovlarni yig'ish
+          </p>
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-3 py-2.5 font-medium">O'quvchi</th>
+                  <th className="text-left px-3 py-2.5 font-medium">gacha</th>
+                  <th className="text-left px-3 py-2.5 font-medium">Foiz</th>
+                  <th className="text-left px-3 py-2.5 font-medium">Bonus</th>
+                  <th className="px-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {rules.collection.map((r, i) => (
+                  <tr key={i} className="border-t border-slate-100">
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className={cell}
+                        value={r.min_students}
+                        onChange={(e) =>
+                          upd("collection", i, {
+                            min_students: Number(e.target.value),
+                          })
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className={cell}
+                        placeholder="cheksiz"
+                        value={r.max_students ?? ""}
+                        onChange={(e) =>
+                          upd("collection", i, {
+                            max_students:
+                              e.target.value === "" ? null : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className={cell}
+                        value={r.min_percent}
+                        onChange={(e) =>
+                          upd("collection", i, { min_percent: Number(e.target.value) })
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className="w-32 rounded-lg border border-slate-300 px-2 py-1.5 text-sm disabled:bg-slate-50"
+                        value={r.bonus}
+                        onChange={(e) =>
+                          upd("collection", i, { bonus: Number(e.target.value) })
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2 text-right">
+                      {canAdmin && (
+                        <button
+                          onClick={() =>
+                            setRules({
+                              ...rules,
+                              collection: rules.collection.filter((_, x) => x !== i),
+                            })
+                          }
+                          className="text-slate-300 hover:text-red-500 text-xs"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {canAdmin && (
+            <button
+              onClick={() =>
+                setRules({
+                  ...rules,
+                  collection: [
+                    ...rules.collection,
+                    { min_students: 0, max_students: null, min_percent: 90, bonus: 0 },
+                  ],
+                })
+              }
+              className="text-sm text-slate-600 hover:text-brand-600 mt-2"
+            >
+              + Qator qo'shish
+            </button>
+          )}
+        </div>
+
+        <div>
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Yangi mijozlar
+          </p>
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-3 py-2.5 font-medium">Nechtadan</th>
+                  <th className="text-left px-3 py-2.5 font-medium">Bonus</th>
+                  <th className="px-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {rules.new_clients.map((r, i) => (
+                  <tr key={i} className="border-t border-slate-100">
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className={cell}
+                        value={r.min_clients}
+                        onChange={(e) =>
+                          upd("new_clients", i, { min_clients: Number(e.target.value) })
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-2">
+                      <input
+                        type="number"
+                        disabled={!canAdmin}
+                        className="w-32 rounded-lg border border-slate-300 px-2 py-1.5 text-sm disabled:bg-slate-50"
+                        value={r.bonus}
+                        onChange={(e) =>
+                          upd("new_clients", i, { bonus: Number(e.target.value) })
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2 text-right">
+                      {canAdmin && (
+                        <button
+                          onClick={() =>
+                            setRules({
+                              ...rules,
+                              new_clients: rules.new_clients.filter((_, x) => x !== i),
+                            })
+                          }
+                          className="text-slate-300 hover:text-red-500 text-xs"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {canAdmin && (
+            <button
+              onClick={() =>
+                setRules({
+                  ...rules,
+                  new_clients: [...rules.new_clients, { min_clients: 10, bonus: 0 }],
+                })
+              }
+              className="text-sm text-slate-600 hover:text-brand-600 mt-2"
+            >
+              + Pog'ona qo'shish
+            </button>
+          )}
+        </div>
+      </div>
+
+      {canAdmin && (
+        <div className="flex items-center gap-3 mt-4">
+          <button
+            onClick={onSave}
+            disabled={saving}
+            className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60"
+          >
+            {saving ? "Saqlanmoqda..." : "Qoidalarni saqlash"}
+          </button>
+          {saved && <span className="text-sm text-emerald-600">Saqlandi</span>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function KpiTab({ canAdmin }: { canAdmin: boolean }) {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [data, setData] = useState<AdminKpiResult | null>(null);
+  const [rules, setRules] = useState<KpiRules | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<AdminKpiResult>(`/kpi/admins?year=${year}&month=${month}`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [year, month]);
+
+  useEffect(() => {
+    api.get<KpiRules>("/kpi/rules").then(setRules);
+  }, []);
+
+  async function saveRules() {
+    if (!rules) return;
+    setSaving(true);
+    setError(null);
+    try {
+      const updated = await api.put<KpiRules>("/kpi/rules", {
+        collection: rules.collection.map((r) => ({
+          min_students: r.min_students,
+          max_students: r.max_students ?? null,
+          min_percent: r.min_percent,
+          bonus: r.bonus,
+        })),
+        new_clients: rules.new_clients.map((r) => ({
+          min_clients: r.min_clients,
+          bonus: r.bonus,
+        })),
+      });
+      setRules(updated);
+      setSaved(true);
+      const fresh = await api.get<AdminKpiResult>(
+        `/kpi/admins?year=${year}&month=${month}`
+      );
+      setData(fresh);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const years = [now.getFullYear() - 1, now.getFullYear()];
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-5 gap-2">
+        <div className="flex items-center gap-2">
+          <select
+            className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+            value={month}
+            onChange={(e) => setMonth(Number(e.target.value))}
+          >
+            {MONTHS.map((m, i) => (
+              <option key={m} value={i + 1}>
+                {m}
+              </option>
+            ))}
+          </select>
+          <select
+            className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+        </div>
+        {data && data.rows.length > 0 && (
+          <button
+            onClick={() =>
+              exportToExcel("adminlar-kpi", "KPI",
+                data.rows.map((r) => ({
+                  Admin: r.full_name,
+                  Filial: r.branch ?? "",
+                  "Fiks oylik": r.fix_salary,
+                  "Faol o'quvchi": r.active_students,
+                  "Tushishi kerak": r.expected,
+                  Tushgan: r.collected,
+                  "Foiz %": r.collection_percent,
+                  "Yig'ish bonusi": r.collection_bonus,
+                  "Yangi mijoz": r.new_clients,
+                  "Yangi mijoz bonusi": r.new_client_bonus,
+                  Jami: r.total,
+                })))
+            }
+            className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600"
+          >
+            <Download size={15} /> Excel
+          </button>
+        )}
+      </div>
+
+      {loading || !data ? (
+        <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
+      ) : data.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-6 text-center">
+          Hali administrator (sotuv menejeri) roli berilgan xodim yo'q.
+          Xodimlar bo'limidan qo'shing va fiks oyligini belgilang.
+        </p>
+      ) : (
+        <>
+          {data.rows.map((r) => (
+            <div
+              key={r.user_id}
+              className="bg-white rounded-xl border border-slate-200 p-5 mb-4"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <p className="font-semibold text-slate-900">{r.full_name}</p>
+                  <p className="text-xs text-slate-500">
+                    {r.branch || "Filial belgilanmagan"} · {r.active_students} faol
+                    o'quvchi
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-slate-500">Jami ish haqi</p>
+                  <p className="text-xl font-bold text-brand-700">
+                    {formatSom(r.total)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="bg-slate-50 rounded-lg p-3">
+                  <p className="text-xs text-slate-500">Fiks oylik</p>
+                  <p className="font-semibold text-slate-800">
+                    {formatSom(r.fix_salary)}
+                  </p>
+                  {!r.fix_salary && (
+                    <p className="text-xs text-amber-600 mt-1">
+                      Xodimlar bo'limidan belgilang
+                    </p>
+                  )}
+                </div>
+
+                <div className="bg-slate-50 rounded-lg p-3">
+                  <p className="text-xs text-slate-500">
+                    Eski to'lovlar · {r.collection_percent}%
+                  </p>
+                  <p
+                    className={`font-semibold ${
+                      r.collection_bonus > 0 ? "text-emerald-600" : "text-slate-400"
+                    }`}
+                  >
+                    {r.collection_bonus > 0 ? `+${formatSom(r.collection_bonus)}` : "bonus yo'q"}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {short(r.collected)} / {short(r.expected)} tushdi
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 rounded-lg p-3">
+                  <p className="text-xs text-slate-500">
+                    Yangi mijoz · {r.new_clients} ta
+                  </p>
+                  <p
+                    className={`font-semibold ${
+                      r.new_client_bonus > 0 ? "text-emerald-600" : "text-slate-400"
+                    }`}
+                  >
+                    {r.new_client_bonus > 0 ? `+${formatSom(r.new_client_bonus)}` : "bonus yo'q"}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {short(r.new_client_revenue)} tushum
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <Note>
+            Bonuslar filial ko'rsatkichi bo'yicha hisoblanadi — bitta filialda
+            ikkita admin bo'lsa, ikkalasi ham to'liq bonusni oladi. Foiz summa
+            bo'yicha: shu oyda eski o'quvchilarga hisoblangan summadan qanchasi
+            kassaga tushgani. Yangi mijoz — birinchi marta to'lov qilgan
+            o'quvchi; uning to'lovi yig'ish foiziga kirmaydi.
+          </Note>
+        </>
+      )}
+
+      {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
+
+      {rules && (
+        <KpiRulesEditor
+          rules={rules}
+          setRules={(r) => {
+            setRules(r);
+            setSaved(false);
+          }}
+          canAdmin={canAdmin}
+          onSave={saveRules}
+          saving={saving}
+          saved={saved}
+        />
+      )}
+    </div>
+  );
+}
+
 // -------------------------------------------------------------------- Page
 export default function Reports() {
   const { user } = useAuth();
@@ -671,6 +1125,7 @@ export default function Reports() {
         ))}
       </div>
 
+      {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
       {tab === "cashflow" && <CashflowTab />}
       {tab === "pnl" && <PnlTab />}
       {tab === "ltv" && <LtvTab />}

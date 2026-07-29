@@ -69,6 +69,23 @@ DASHBOARD_ONLY = [SMM_MANAGER]
 # Butun tashkilot bo'yicha ko'radigan rollar (filialga bog'lanmagan).
 ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER]
 
+# ---- To'lov usullari --------------------------------------------------
+# Cashflow hisoboti shu bo'yicha bo'linadi. Faqat kirim ("payment")
+# yozuvlarida ma'noga ega; hisoblangan to'lov va chegirmada bo'sh qoladi.
+PAYMENT_METHODS = [
+    "cash",      # Naqd
+    "card",      # Plastik - Click, Payme, karta o'tkazmasi
+    "terminal",  # Terminal - do'kondagi POS apparati
+    "other",     # Boshqa
+]
+
+PAYMENT_METHOD_LABELS = {
+    "cash": "Naqd",
+    "card": "Plastik",
+    "terminal": "Terminal",
+    "other": "Boshqa",
+}
+
 # ---- Lid voronkasi ----------------------------------------------------
 LEAD_STAGES = [
     "new",              # Yangi (so'rov keldi, hali bog'lanilmagan)

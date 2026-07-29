@@ -158,6 +158,8 @@ class PayoutUpdate(BaseModel):
 class PaymentCreate(BaseModel):
     amount: float
     kind: str = "payment"  # payment | charge | discount
+    # cash | card | terminal | other - faqat kind="payment" uchun
+    method: Optional[str] = None
     note: Optional[str] = None
 
 
@@ -166,6 +168,7 @@ class PaymentOut(BaseModel):
     id: int
     amount: float
     kind: str
+    method: Optional[str] = None
     note: Optional[str] = None
     created_by: Optional[str] = None
     period: Optional[str] = None

@@ -48,6 +48,8 @@ def _ensure_new_columns():
         # Bizning markazda "Administrator" - bu sotuv menejeri, tizim
         # egasi emas. Eski hisoblarni yangi kalitga ko'chiramiz.
         "UPDATE users SET role = 'founder' WHERE role = 'administrator'",
+        # To'lov qaysi kanal orqali kelgani (naqd/plastik/terminal).
+        "ALTER TABLE payments ADD COLUMN method VARCHAR",
     ]
     for stmt in statements:
         try:
@@ -786,10 +788,18 @@ def add_payment(
     elif payload.kind == "payment":
         amount = abs(amount)
 
+    # To'lov usuli faqat haqiqiy kirim uchun ma'noga ega.
+    method = None
+    if payload.kind == "payment":
+        method = payload.method or "cash"
+        if method not in roles.PAYMENT_METHODS:
+            raise HTTPException(400, "Noto'g'ri to'lov usuli")
+
     payment = models.Payment(
         student_id=student_id,
         amount=amount,
         kind=payload.kind,
+        method=method,
         note=payload.note,
         created_by=user.full_name,
     )

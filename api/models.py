@@ -116,6 +116,10 @@ class Payment(Base):
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
     amount = Column(Float, nullable=False)
     kind = Column(String, nullable=False, default="payment")  # payment | charge | discount
+    # Pul qaysi kanal orqali kelgani: cash | card | terminal | other.
+    # Faqat kind="payment" uchun to'ldiriladi (cashflow hisoboti shunga
+    # tayanadi); hisoblangan to'lov va chegirmada bo'sh qoladi.
+    method = Column(String, nullable=True)
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     # "YYYY-MM" - avtomatik dars-asosidagi hisoblash (billing engine) shu oy

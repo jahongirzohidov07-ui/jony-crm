@@ -245,6 +245,48 @@ def create_branch(
     return branch
 
 
+@app.put("/api/branches/{branch_id}", response_model=schemas.BranchOut)
+def update_branch(
+    branch_id: int,
+    payload: schemas.BranchCreate,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(roles.FOUNDER)),
+):
+    b = db.query(models.Branch).get(branch_id)
+    if not b:
+        raise HTTPException(404, "Filial topilmadi")
+    if not payload.name.strip():
+        raise HTTPException(400, "Filial nomini kiriting")
+    b.name = payload.name.strip()
+    b.address = payload.address
+    db.commit()
+    db.refresh(b)
+    return b
+
+
+@app.delete("/api/branches/{branch_id}")
+def delete_branch(
+    branch_id: int,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(roles.FOUNDER)),
+):
+    """Filialni faqat bo'sh bo'lsa o'chirish mumkin - aks holda
+    o'quvchi va guruhlar "yetim" qolib ketardi."""
+    b = db.query(models.Branch).get(branch_id)
+    if not b:
+        raise HTTPException(404, "Filial topilmadi")
+    for model, nomi in ((models.Student, "o'quvchi"), (models.Group, "guruh"),
+                        (models.Teacher, "ustoz"), (models.User, "xodim")):
+        n = db.query(model).filter(model.branch_id == branch_id).count()
+        if n:
+            raise HTTPException(
+                400, f"Bu filialda {n} ta {nomi} bor - avval ularni "
+                     "boshqa filialga o'tkazing")
+    db.delete(b)
+    db.commit()
+    return {"ok": True}
+
+
 # --------------------------------------------------------------- Users ----
 def _guard_role_assignment(
     requester: models.User, target_role: str, target_branch_id: Optional[int]
@@ -1513,6 +1555,237 @@ def report_pnl(
         "outflow_total": exp_total + payroll,
         "profit": profit,
         "margin": round(profit / income * 100, 1) if income else 0,
+    }
+
+
+# --------------------------------------------------- Ustozlar oyligi ----
+@app.get("/api/reports/teacher-payroll")
+def report_teacher_payroll(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Bir oylik ustozlar ish haqi - ustoz kesimida jamlangan.
+    Manba: guruhlarda hisoblangan TeacherPayout yozuvlari."""
+    period = _period_key(year, month)
+    q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
+    payouts = q.all()
+
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    groups = {g.id: g for g in db.query(models.Group).all()}
+
+    by_teacher = {}
+    for p in payouts:
+        row = by_teacher.setdefault(p.teacher_id, {
+            "teacher_id": p.teacher_id,
+            "full_name": teachers[p.teacher_id].full_name
+            if p.teacher_id in teachers else "—",
+            "branch": (teachers[p.teacher_id].branch.name
+                       if p.teacher_id in teachers and teachers[p.teacher_id].branch
+                       else None),
+            "groups": [], "students": 0, "lessons": 0,
+            "amount": 0.0, "paid_amount": 0.0,
+        })
+        row["groups"].append({
+            "group_id": p.group_id,
+            "group": groups[p.group_id].name if p.group_id in groups else "—",
+            "students": p.student_count,
+            "held_lessons": p.held_lessons,
+            "taught_lessons": p.taught_lessons,
+            "amount": p.amount,
+            "paid": bool(p.paid),
+            "payout_id": p.id,
+        })
+        row["students"] += p.student_count
+        row["lessons"] += p.taught_lessons
+        row["amount"] += p.amount or 0
+        if p.paid:
+            row["paid_amount"] += p.amount or 0
+
+    rows = sorted(by_teacher.values(), key=lambda r: -r["amount"])
+    total = sum(r["amount"] for r in rows)
+    paid = sum(r["paid_amount"] for r in rows)
+    return {
+        "period": period,
+        "rows": rows,
+        "total": total,
+        "paid": paid,
+        "unpaid": total - paid,
+        "teacher_count": len(rows),
+    }
+
+
+# -------------------------------------------------------- Sotuv voronkasi ----
+@app.get("/api/reports/funnel")
+def report_funnel(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Ikki qismli voronka:
+
+    1) Lid bosqichlari - so'rov kelganidan o'quvchiga aylangunicha qayerda
+       yo'qotilyapti.
+    2) To'lovdan keyingi oylar - 1-oy, 2-oy ... 12-oy. Qaysi oyda eng ko'p
+       o'quvchi ketayotgani shu yerda ko'rinadi.
+    """
+    # ---- 1. Lid voronkasi -------------------------------------------------
+    leads = scope_to_branch(db.query(models.Lead), models.Lead, user).all()
+    by_stage = {st: 0 for st in roles.LEAD_STAGES}
+    for l in leads:
+        if l.stage in by_stage:
+            by_stage[l.stage] += 1
+
+    total_leads = len(leads)
+    # Voronka kümülativ: keyingi bosqichga o'tganlar oldingisini ham bosib
+    # o'tgan hisoblanadi.
+    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    stages = []
+    remaining = total_leads
+    for i, st in enumerate(order):
+        reached = sum(by_stage[s] for s in order[i:])
+        stages.append({
+            "stage": st,
+            "reached": reached,
+            "here_now": by_stage[st],
+            "percent": round(reached / total_leads * 100, 1) if total_leads else 0,
+            "lost_here": by_stage[st] if st != "converted" else 0,
+        })
+        remaining = reached
+    rejected = by_stage.get("rejected", 0)
+
+    # ---- 2. To'lovdan keyingi oylar --------------------------------------
+    students = scope_to_branch(db.query(models.Student), models.Student, user).all()
+    first_paid = _first_payment_dates(db)
+    today = date.today()
+
+    lives = []
+    for s in students:
+        first = first_paid.get(s.id)
+        if not first:
+            continue  # hali to'lamagan - voronkaning bu qismiga kirmaydi
+        start = first.date()
+        end = s.left_date or today
+        lives.append({
+            "months": _months_between(start, end),
+            "churned": s.left_date is not None,
+        })
+
+    months = []
+    for n in range(1, 13):
+        # Natijasi ma'lum bo'lganlar: yo shu oyga yetgan, yo undan oldin ketgan
+        survived = sum(1 for l in lives if l["months"] >= n)
+        known_lost = sum(1 for l in lives if l["churned"] and l["months"] < n)
+        eligible = survived + known_lost
+        lost_here = sum(
+            1 for l in lives
+            if l["churned"] and (n - 1) <= l["months"] < n
+        )
+        months.append({
+            "month": n,
+            "eligible": eligible,
+            "survived": survived,
+            "retention": round(survived / eligible * 100, 1) if eligible else 0,
+            "lost": lost_here,
+        })
+
+    worst = max(months, key=lambda m: m["lost"]) if months else None
+    return {
+        "leads": {
+            "total": total_leads,
+            "stages": stages,
+            "rejected": rejected,
+        },
+        "students": {
+            "paying": len(lives),
+            "churned": sum(1 for l in lives if l["churned"]),
+            "months": months,
+            # Eng ko'p o'quvchi yo'qotiladigan oy - asosiy savolga javob
+            "worst_month": worst["month"] if worst and worst["lost"] else None,
+            "worst_month_lost": worst["lost"] if worst else 0,
+        },
+    }
+
+
+# ---------------------------------------------------------- Analitika ----
+@app.get("/api/analytics/summary")
+def analytics_summary(
+    months: int = 12,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Analitika sahifasi uchun bitta so'rovda hamma raqam:
+    oylik kirim/chiqim/foyda, xarajat guruhlari, ustozlar ulushi."""
+    months = max(1, min(months, 24))
+    today = date.today()
+
+    monthly = []
+    group_totals = {}
+    category_totals = {}
+
+    for back in range(months - 1, -1, -1):
+        y, m = _shift_month(today.year, today.month, -back)
+        start, end = billing.month_bounds(y, m)
+        period = _period_key(y, m)
+
+        income = sum(_income_by_method(db, user, start, end).values())
+        exp_total, by_cat = _expenses_total(db, user, start, end)
+        payroll = _payroll_total(db, user, period)
+
+        for cat, amt in by_cat.items():
+            category_totals[cat] = category_totals.get(cat, 0) + amt
+            grp = roles.EXPENSE_CATEGORY_GROUP.get(cat, "other")
+            group_totals[grp] = group_totals.get(grp, 0) + amt
+        if payroll:
+            group_totals["teacher_salary"] = (
+                group_totals.get("teacher_salary", 0) + payroll)
+
+        outflow = exp_total + payroll
+        monthly.append({
+            "period": period,
+            "income": income,
+            "expenses": exp_total,
+            "payroll": payroll,
+            "outflow": outflow,
+            "profit": income - outflow,
+            # Ustozlarning ulushi - kirimning necha foizi ish haqiga ketdi
+            "teacher_share": round(payroll / income * 100, 1) if income else 0,
+        })
+
+    total_income = sum(m["income"] for m in monthly)
+    total_payroll = sum(m["payroll"] for m in monthly)
+    total_expenses = sum(m["expenses"] for m in monthly)
+    total_profit = total_income - total_payroll - total_expenses
+
+    groups = sorted(
+        [{"key": k, "label": roles.EXPENSE_GROUP_LABELS.get(k, k), "amount": v}
+         for k, v in group_totals.items() if v > 0],
+        key=lambda g: -g["amount"],
+    )
+    categories = sorted(
+        [{"key": k, "label": roles.EXPENSE_CATEGORY_LABELS.get(k, k),
+          "group": roles.EXPENSE_CATEGORY_GROUP.get(k, "other"), "amount": v}
+         for k, v in category_totals.items() if v > 0],
+        key=lambda c: -c["amount"],
+    )
+
+    return {
+        "months": monthly,
+        "expense_groups": groups,
+        "expense_categories": categories,
+        "totals": {
+            "income": total_income,
+            "expenses": total_expenses,
+            "payroll": total_payroll,
+            "outflow": total_payroll + total_expenses,
+            "profit": total_profit,
+            "margin": round(total_profit / total_income * 100, 1)
+            if total_income else 0,
+            "teacher_share": round(total_payroll / total_income * 100, 1)
+            if total_income else 0,
+        },
     }
 
 

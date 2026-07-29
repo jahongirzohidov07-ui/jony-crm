@@ -86,32 +86,60 @@ PAYMENT_METHOD_LABELS = {
     "other": "Boshqa",
 }
 
-# ---- Xarajat turlari --------------------------------------------------
-# DIQQAT: ustozlar ish haqi bu ro'yxatda YO'Q - u TeacherPayout
-# jadvalidan avtomatik olinadi. Agar uni yana qo'lda kiritsangiz,
-# P&L'da ikki marta hisoblanib ketadi. "salary" - ustozlardan boshqa
-# xodimlar (administrator, farrosh, qorovul va h.k.) uchun.
-EXPENSE_CATEGORIES = [
-    "rent",       # Ijara
-    "utilities",  # Kommunal (svet, suv, gaz, internet)
-    "salary",     # Xodimlar oyligi (ustozlardan tashqari)
-    "ads",        # Reklama
-    "tax",        # Soliq
-    "repair",     # Ta'mir
-    "equipment",  # Jihoz / kanstovar
-    "other",      # Boshqa
+# ---- Xarajatlar: guruh (tur) va kategoriya -----------------------------
+# Xarajat ikki qavatli: har bir kategoriya bitta GURUHGA tegishli.
+# Hisobot va analitika guruh kesimida chiqadi, kiritish esa aniq
+# kategoriya bilan - shunda "kommunalga qancha ketdi" ham, "elektrga
+# qancha ketdi" ham bir xil ma'lumotdan chiqadi.
+
+EXPENSE_GROUPS = [
+    ("rent", "Ijara"),
+    ("communal", "Kommunal"),
+    ("office", "Ofis xarajatlari"),
+    ("admin_salary", "Ma'muriy xodim oyliklari"),
+    ("teacher_salary", "Ustozlar oyligi"),   # avtomatik - qo'lda kiritilmaydi
+    ("marketing", "Reklama"),
+    ("tax", "Soliq"),
+    ("other", "Boshqa"),
+]
+EXPENSE_GROUP_LABELS = dict(EXPENSE_GROUPS)
+
+# (kalit, nomi, guruh)
+EXPENSE_CATEGORY_DEFS = [
+    ("rent", "Ijara", "rent"),
+
+    ("electricity", "Elektr toki", "communal"),
+    ("gas", "Gaz", "communal"),
+    ("water_main", "Vodoprovod suv", "communal"),
+    ("internet", "Internet / aloqa", "communal"),
+    # Eski yozuvlar shu kalitda edi - yo'qotmaslik uchun qoldiramiz.
+    ("utilities", "Kommunal (umumiy)", "communal"),
+
+    ("cooler_water", "Kuler suvi", "office"),
+    ("printer_refill", "Printer zapravka", "office"),
+    ("paper", "List qog'oz", "office"),
+    ("marker", "Marker / doska", "office"),
+    ("stationery", "Boshqa kanstovar", "office"),
+    ("equipment", "Jihoz", "office"),
+
+    ("admin_salary", "Ma'muriy xodim oyligi", "admin_salary"),
+    ("support_salary", "Farrosh / qorovul", "admin_salary"),
+    # Eski "salary" kaliti ham ma'muriy xodimlarni bildirgan.
+    ("salary", "Xodimlar oyligi (eski)", "admin_salary"),
+
+    ("ads", "Reklama", "marketing"),
+    ("tax", "Soliq", "tax"),
+    ("repair", "Ta'mir", "other"),
+    ("other", "Boshqa", "other"),
 ]
 
-EXPENSE_CATEGORY_LABELS = {
-    "rent": "Ijara",
-    "utilities": "Kommunal",
-    "salary": "Xodimlar oyligi",
-    "ads": "Reklama",
-    "tax": "Soliq",
-    "repair": "Ta'mir",
-    "equipment": "Jihoz / kanstovar",
-    "other": "Boshqa",
-}
+EXPENSE_CATEGORIES = [c for c, _, _ in EXPENSE_CATEGORY_DEFS]
+EXPENSE_CATEGORY_LABELS = {c: lbl for c, lbl, _ in EXPENSE_CATEGORY_DEFS}
+EXPENSE_CATEGORY_GROUP = {c: g for c, _, g in EXPENSE_CATEGORY_DEFS}
+
+# DIQQAT: ustozlar ish haqi bu ro'yxatda YO'Q - u TeacherPayout
+# jadvalidan avtomatik olinadi. Agar uni qo'lda ham kiritsangiz,
+# P&L'da ikki marta hisoblanib ketadi.
 
 # ---- Lid voronkasi ----------------------------------------------------
 LEAD_STAGES = [

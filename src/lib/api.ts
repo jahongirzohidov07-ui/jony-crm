@@ -86,6 +86,14 @@ export interface Group {
   room?: string;
   teacher_id?: number;
   branch_id?: number;
+  subject?: string | null;
+  level?: string | null;
+  /** Guruh boshlangan sana - yoqlama shundan oldin qo'yilmaydi. */
+  start_date?: string | null;
+  /** "09:00 - 11:00" */
+  lesson_time?: string | null;
+  /** "mon,wed,fri" */
+  lesson_days?: string | null;
   monthly_fee: number;
   lesson_price: number;
   standard_lessons_per_month: number;
@@ -326,6 +334,60 @@ export interface Redemption {
   created_at: string;
   student?: GridStudent | null;
   reward?: Reward | null;
+}
+
+// ---------- Ta'lim sifati ----------
+export interface QualityGroup {
+  group_id: number;
+  group: string;
+  subject?: string | null;
+  level?: string | null;
+  teacher_id?: number | null;
+  teacher?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  exams: number;
+  results: number;
+  avg: number;
+}
+
+export interface QualityRollup {
+  id: number;
+  name: string;
+  groups: number;
+  exams: number;
+  avg: number;
+}
+
+export interface QualityReport {
+  period: string;
+  centre: { avg: number | null; groups: number; exams: number; results: number };
+  branches: QualityRollup[];
+  teachers: QualityRollup[];
+  groups: QualityGroup[];
+}
+
+// ---------- Sotuv menejerlari ----------
+export type SalesWindow = "month" | "3m" | "6m" | "1y" | "all";
+
+export interface SalesManagerRow {
+  user_id: number;
+  full_name: string;
+  branch?: string | null;
+  active: boolean;
+  leads: number;
+  converted: number;
+  rejected: number;
+  in_progress: number;
+  conversion: number;
+}
+
+export interface SalesManagerReport {
+  window: string;
+  label: string;
+  rows: SalesManagerRow[];
+  unassigned: number;
+  totals: { leads: number; converted: number; conversion: number };
 }
 
 // ---------- Ustozlar oyligi ----------

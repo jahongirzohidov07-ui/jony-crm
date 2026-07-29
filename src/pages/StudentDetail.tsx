@@ -5,6 +5,7 @@ import { api, type StudentDetail as StudentDetailType } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, can } from "../lib/roles";
+import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 
 const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
@@ -20,6 +21,7 @@ export default function StudentDetail() {
   const [showAddPayment, setShowAddPayment] = useState(false);
   const [amount, setAmount] = useState("");
   const [kind, setKind] = useState<"payment" | "charge" | "discount">("payment");
+  const [method, setMethod] = useState("cash");
   const [note, setNote] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +47,13 @@ export default function StudentDetail() {
     setSaving(true);
     setError(null);
     try {
-      await api.post(`/students/${id}/payments`, { amount: value, kind, note: note || null });
+      await api.post(`/students/${id}/payments`, {
+        amount: value,
+        kind,
+        // Usul faqat haqiqiy kirim uchun yuboriladi.
+        method: kind === "payment" ? method : null,
+        note: note || null,
+      });
       setAmount("");
       setNote("");
       setShowAddPayment(false);
@@ -131,6 +139,31 @@ export default function StudentDetail() {
               />
             </div>
           </div>
+
+          {kind === "payment" && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                To'lov usuli
+              </label>
+              <div className="flex flex-wrap gap-1.5">
+                {PAYMENT_METHODS.map((m) => (
+                  <button
+                    key={m.key}
+                    type="button"
+                    onClick={() => setMethod(m.key)}
+                    className={`px-3 py-1.5 rounded-md text-xs font-medium border transition ${
+                      method === m.key
+                        ? "bg-brand-50 border-brand-400 text-brand-700"
+                        : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">Izoh</label>
             <input
@@ -157,6 +190,7 @@ export default function StudentDetail() {
             <tr>
               <th className="text-left px-4 py-3 font-medium">Sana</th>
               <th className="text-left px-4 py-3 font-medium">Turi</th>
+              <th className="text-left px-4 py-3 font-medium">Usul</th>
               <th className="text-left px-4 py-3 font-medium">Izoh</th>
               <th className="text-right px-4 py-3 font-medium">Summa</th>
             </tr>
@@ -164,7 +198,7 @@ export default function StudentDetail() {
           <tbody>
             {student.payments.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
                   Hali yozuv yo'q
                 </td>
               </tr>
@@ -173,6 +207,7 @@ export default function StudentDetail() {
               <tr key={p.id} className="border-t border-slate-100">
                 <td className="px-4 py-3 text-slate-600">{formatDate(p.created_at)}</td>
                 <td className="px-4 py-3 text-slate-600">{KIND_LABEL[p.kind] || p.kind}</td>
+                <td className="px-4 py-3 text-slate-500">{methodLabel(p.method) || "—"}</td>
                 <td className="px-4 py-3 text-slate-600">{p.note || "—"}</td>
                 <td className={`px-4 py-3 text-right font-medium ${p.amount < 0 ? "text-red-600" : "text-emerald-600"}`}>
                   {p.amount > 0 ? "+" : ""}

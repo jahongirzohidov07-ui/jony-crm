@@ -14,6 +14,16 @@ import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
+import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
+
+type GroupTab = "lessons" | "attendance" | "grades" | "exams";
+
+const GROUP_TABS: { key: GroupTab; label: string }[] = [
+  { key: "lessons", label: "Darslar" },
+  { key: "attendance", label: "Davomat" },
+  { key: "grades", label: "Baholash" },
+  { key: "exams", label: "Imtihonlar" },
+];
 
 const MONTH_NAMES = [
   "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
@@ -35,6 +45,7 @@ export default function GroupDetail() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [lessonsLoading, setLessonsLoading] = useState(true);
+  const [tab, setTab] = useState<GroupTab>("lessons");
   const [selYear, setSelYear] = useState(t.year);
   const [selMonth, setSelMonth] = useState(t.month);
 
@@ -241,6 +252,48 @@ export default function GroupDetail() {
         </select>
       </div>
 
+      <div className="flex gap-1 mb-6 border-b border-slate-200">
+        {GROUP_TABS.map((tb) => (
+          <button
+            key={tb.key}
+            onClick={() => setTab(tb.key)}
+            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
+              tab === tb.key
+                ? "border-brand-600 text-brand-700"
+                : "border-transparent text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            {tb.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "attendance" && (
+        <AttendanceTab
+          groupId={group.id}
+          year={selYear}
+          month={selMonth}
+          canEdit={canMarkLesson}
+        />
+      )}
+      {tab === "grades" && (
+        <GradesTab
+          groupId={group.id}
+          year={selYear}
+          month={selMonth}
+          canEdit={canMarkLesson}
+        />
+      )}
+      {tab === "exams" && (
+        <ExamsTab
+          groupId={group.id}
+          canEdit={canMarkLesson}
+          canDelete={canFinance}
+        />
+      )}
+
+      {tab === "lessons" && (
+      <>
       {/* ---------------- Lesson log ("yoqlama") ---------------- */}
       <section className="bg-white rounded-xl border border-slate-200 p-5 mb-6">
         <h2 className="font-semibold text-slate-900 mb-3">
@@ -476,6 +529,8 @@ export default function GroupDetail() {
             )}
           </section>
         </>
+      )}
+      </>
       )}
     </div>
   );

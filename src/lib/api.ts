@@ -93,6 +93,7 @@ export interface Payment {
   id: number;
   amount: number;
   kind: "payment" | "charge" | "discount";
+  method?: string | null;
   note?: string;
   created_by?: string;
   period?: string;

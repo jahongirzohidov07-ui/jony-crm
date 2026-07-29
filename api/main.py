@@ -1202,6 +1202,87 @@ def coin_leaderboard(
     return out
 
 
+@app.get("/api/students/{student_id}/exams")
+def student_exams(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """O'quvchining barcha imtihon natijalari - eng yangisi tepada."""
+    rows = (
+        db.query(models.ExamResult, models.Exam)
+        .join(models.Exam, models.ExamResult.exam_id == models.Exam.id)
+        .filter(models.ExamResult.student_id == student_id)
+        .order_by(models.Exam.date.desc())
+        .all()
+    )
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    out = []
+    for r, e in rows:
+        g = groups.get(e.group_id)
+        out.append({
+            "exam_id": e.id, "kind": e.kind, "unit_no": e.unit_no,
+            "title": e.title, "date": e.date.isoformat(),
+            "max_score": e.max_score,
+            "group": g.name if g else None,
+            "score": r.score, "band": r.band, "percent": r.percent,
+            "coins": r.coins, "absent": bool(r.absent),
+        })
+    scored = [x for x in out if x["percent"] is not None]
+    return {
+        "results": out,
+        "count": len(scored),
+        "avg_percent": round(sum(x["percent"] for x in scored) / len(scored), 1)
+        if scored else None,
+        "coins": sum(x["coins"] or 0 for x in out),
+    }
+
+
+@app.get("/api/students/{student_id}/attendance")
+def student_attendance(
+    student_id: int,
+    months: int = 6,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """O'quvchining davomati va kunlik baholari - oxirgi N oy."""
+    months = max(1, min(months, 24))
+    today = date.today()
+    sy, sm = _shift_month(today.year, today.month, -(months - 1))
+    start, _ = billing.month_bounds(sy, sm)
+
+    att = (
+        db.query(models.Attendance, models.Lesson)
+        .join(models.Lesson, models.Attendance.lesson_id == models.Lesson.id)
+        .filter(models.Attendance.student_id == student_id,
+                models.Lesson.date >= start)
+        .order_by(models.Lesson.date.desc())
+        .all()
+    )
+    grades = {
+        g.lesson_id: g.score
+        for g in db.query(models.DailyGrade).filter(
+            models.DailyGrade.student_id == student_id).all()
+    }
+
+    rows = [{
+        "date": ls.date.isoformat(),
+        "present": bool(a.present),
+        "grade": grades.get(ls.id),
+    } for a, ls in att]
+
+    present = sum(1 for r in rows if r["present"])
+    scored = [r["grade"] for r in rows if r["grade"]]
+    return {
+        "rows": rows[:60],
+        "marked": len(rows),
+        "present": present,
+        "absent": len(rows) - present,
+        "percent": round(present / len(rows) * 100, 1) if rows else 0,
+        "avg_grade": round(sum(scored) / len(scored), 1) if scored else None,
+    }
+
+
 @app.get("/api/students/{student_id}/coins", response_model=List[schemas.CoinEntryOut])
 def student_coin_history(
     student_id: int,

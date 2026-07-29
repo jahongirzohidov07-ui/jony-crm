@@ -1211,6 +1211,44 @@ def add_payment(
     return payment
 
 
+@app.delete("/api/payments/{payment_id}")
+def delete_payment(
+    payment_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Xato kiritilgan yozuvni o'chirish. Balans va hisobotlar shu
+    jadvaldan hisoblanadi, shuning uchun o'chirilishi bilan hamma joyda
+    avtomatik to'g'rilanadi.
+
+    Avtomatik hisoblangan oylik ("period" belgisi bor) o'chirilmaydi -
+    uni Guruh sahifasidan qayta hisoblash kerak, aks holda o'sha oy
+    uchun yana hisoblanib, ikki marta tushib qolishi mumkin."""
+    p = db.query(models.Payment).get(payment_id)
+    if not p:
+        raise HTTPException(404, "Yozuv topilmadi")
+
+    s = db.query(models.Student).get(p.student_id)
+    if (
+        user.role not in tuple(roles.ORG_WIDE_ROLES)
+        and user.branch_id
+        and s
+        and s.branch_id != user.branch_id
+    ):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+
+    if p.period:
+        raise HTTPException(
+            400,
+            "Avtomatik hisoblangan oylikni o'chirib bo'lmaydi - "
+            "guruh sahifasidan qayta hisoblang",
+        )
+
+    db.delete(p)
+    db.commit()
+    return {"ok": True}
+
+
 # -------------------------------------------------------- Group access ----
 def _get_group_in_scope(db: Session, group_id: int, user: models.User) -> models.Group:
     """Fetch a group and 404/403 it the way every lesson/billing/payroll

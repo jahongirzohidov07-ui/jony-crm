@@ -1,3 +1,4 @@
+import datetime as _dt
 from datetime import date, datetime
 from typing import Optional, List
 from pydantic import BaseModel, ConfigDict
@@ -53,6 +54,13 @@ class UserCreate(BaseModel):
     role: str
     branch_id: Optional[int] = None
     fix_salary: Optional[float] = None
+    # ---- Xodim kartasi ----
+    phone: Optional[str] = None
+    birth_date: Optional[date] = None
+    position: Optional[str] = None
+    manager_id: Optional[int] = None
+    hired_date: Optional[date] = None
+    photo: Optional[str] = None
 
 
 class UserUpdate(BaseModel):
@@ -62,6 +70,12 @@ class UserUpdate(BaseModel):
     is_active: Optional[bool] = None
     password: Optional[str] = None
     fix_salary: Optional[float] = None
+    phone: Optional[str] = None
+    birth_date: Optional[date] = None
+    position: Optional[str] = None
+    manager_id: Optional[int] = None
+    hired_date: Optional[date] = None
+    photo: Optional[str] = None
 
 
 # ---------- Teacher ----------
@@ -75,6 +89,9 @@ class TeacherCreate(BaseModel):
     # 1 = hozir ishlayapti, 0 = ishdan ketgan. left_date qo'lda emas,
     # shu bayroqdan avtomatik chiqadi.
     is_active: Optional[int] = 1
+    # Maksimal yuklama. Bo'sh bo'lsa tizim standartini ishlatadi.
+    max_groups: Optional[int] = None
+    max_lessons_per_day: Optional[int] = None
 
 
 class TeacherOut(TeacherCreate):
@@ -231,6 +248,9 @@ class StudentCreate(BaseModel):
     # Yangi o'quvchi darrov "faol" bo'lmaydi - avval sinov darsida turadi.
     # Faollashtirish qo'lda, guruhdagi ro'yxatdan qilinadi.
     status: str = "trial"
+    # Hozirgi darajasi - guruhga qo'shishda moslik tekshiriladi.
+    subject: Optional[str] = None
+    level: Optional[str] = None
     note: Optional[str] = None
 
 
@@ -689,6 +709,19 @@ class CandidateUpdate(BaseModel):
     branch_id: Optional[int] = None
     note: Optional[str] = None
     reject_reason: Optional[str] = None
+    # ---- Nomzod kartasi ----
+    cv: Optional[str] = None
+    experience_years: Optional[float] = None
+    workplaces: Optional[str] = None
+    certificates: Optional[str] = None
+    language_level: Optional[str] = None
+    expected_salary: Optional[float] = None
+    trial_score: Optional[float] = None
+    interview_score: Optional[float] = None
+    strengths: Optional[str] = None
+    weaknesses: Optional[str] = None
+    reference_note: Optional[str] = None
+    decision: Optional[str] = None
 
 
 # ---------- Ijtimoiy tarmoq ----------
@@ -894,3 +927,170 @@ class AttachmentCreate(BaseModel):
 class ExitTypeUpdate(BaseModel):
     exit_type: str
     exit_reason: Optional[str] = None
+
+
+# ---------------------------------------------------- Avtomatik tekshiruv
+class ScheduleCheck(BaseModel):
+    group_id: Optional[int] = None
+    teacher_id: Optional[int] = None
+    room_id: Optional[int] = None
+    lesson_days: Optional[str] = None
+    lesson_time: Optional[str] = None
+
+
+class EnrolmentCheck(BaseModel):
+    student_id: int
+    group_id: int
+
+
+# ---------------------------------------------------------- Chegirmalar
+class DiscountCreate(BaseModel):
+    student_id: int
+    kind: str
+    percent: Optional[float] = None
+    amount: Optional[float] = None
+    reason: str
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    referrer_student_id: Optional[int] = None
+    staff_user_id: Optional[int] = None
+
+
+class DiscountDecision(BaseModel):
+    approve: bool = True
+    reason: Optional[str] = None
+
+
+# ------------------------------------------------------------------- HR
+class OnboardingUpdate(BaseModel):
+    step: str
+    done: bool = True
+    note: Optional[str] = None
+
+
+class StaffEventCreate(BaseModel):
+    kind: str
+    date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
+    title: Optional[str] = None
+    note: Optional[str] = None
+    score: Optional[float] = None
+    amount: Optional[float] = None
+    minutes: Optional[int] = None
+
+
+# -------------------------------------------------------------- Vazifalar
+class TaskCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    assignee_id: Optional[int] = None
+    watcher_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    deadline: Optional[date] = None
+    priority: str = "normal"
+    source: str = "manual"
+    meeting: Optional[str] = None
+    checklist: Optional[List[str]] = None
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    assignee_id: Optional[int] = None
+    watcher_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    deadline: Optional[date] = None
+    priority: Optional[str] = None
+    status: Optional[str] = None
+    result: Optional[str] = None
+    delay_reason: Optional[str] = None
+    meeting: Optional[str] = None
+    checklist: Optional[List[dict]] = None
+    attachment_id: Optional[int] = None
+
+
+class MeetingDecision(BaseModel):
+    title: str
+    description: Optional[str] = None
+    assignee_id: Optional[int] = None
+    deadline: Optional[date] = None
+    priority: Optional[str] = "normal"
+
+
+class MeetingDecisions(BaseModel):
+    meeting: str
+    decisions: List[MeetingDecision]
+    branch_id: Optional[int] = None
+    watcher_id: Optional[int] = None
+    deadline: Optional[date] = None
+
+
+# --------------------------------------------------------- Ombor/aktivlar
+class AssetCreate(BaseModel):
+    name: str
+    kind: str = "other"
+    inventory_no: Optional[str] = None
+    branch_id: Optional[int] = None
+    room_id: Optional[int] = None
+    responsible_id: Optional[int] = None
+    purchased_on: Optional[date] = None
+    price: Optional[float] = None
+    condition: str = "good"
+    warranty_until: Optional[date] = None
+    serial_no: Optional[str] = None
+    photo: Optional[str] = None
+    note: Optional[str] = None
+
+
+class AssetUpdate(BaseModel):
+    name: Optional[str] = None
+    kind: Optional[str] = None
+    branch_id: Optional[int] = None
+    room_id: Optional[int] = None
+    responsible_id: Optional[int] = None
+    purchased_on: Optional[date] = None
+    price: Optional[float] = None
+    condition: Optional[str] = None
+    warranty_until: Optional[date] = None
+    serial_no: Optional[str] = None
+    photo: Optional[str] = None
+    note: Optional[str] = None
+
+
+class RepairCreate(BaseModel):
+    date: Optional[_dt.date] = None
+    cost: Optional[float] = 0
+    vendor: Optional[str] = None
+    note: Optional[str] = None
+
+
+class ConsumableCreate(BaseModel):
+    name: str
+    kind: str = "other"
+    branch_id: Optional[int] = None
+    qty: float = 0
+    min_qty: float = 0
+    unit: Optional[str] = None
+    unit_price: Optional[float] = None
+    note: Optional[str] = None
+
+
+class ConsumableUpdate(BaseModel):
+    name: Optional[str] = None
+    kind: Optional[str] = None
+    branch_id: Optional[int] = None
+    min_qty: Optional[float] = None
+    unit: Optional[str] = None
+    unit_price: Optional[float] = None
+    note: Optional[str] = None
+
+
+class StockMoveCreate(BaseModel):
+    qty: float
+    reason: str = "out"
+    note: Optional[str] = None
+
+
+class PurchaseClose(BaseModel):
+    status: str = "done"          # done | ordered | cancelled
+    qty: Optional[float] = None

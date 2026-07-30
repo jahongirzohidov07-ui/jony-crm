@@ -14,6 +14,9 @@ class Branch(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False, unique=True)
     address = Column(String, nullable=True)
+    # Reyting og'irliklari (JSON). Bo'sh bo'lsa roles.BRANCH_RATING_DEFAULT.
+    # Strategiya o'zgarsa foizlar ham o'zgaradi.
+    rating_weights = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     teachers = relationship("Teacher", back_populates="branch")
@@ -49,9 +52,19 @@ class User(Base):
     # Fiks oylik (so'm). Adminlar (sotuv menejeri) KPI'sida asos bo'ladi:
     # jami ish haqi = fiks + bonuslar. Faqat asoschi o'zgartira oladi.
     fix_salary = Column(Float, nullable=True)
+
+    # ---- Xodim kartasi ----
+    phone = Column(String, nullable=True)
+    birth_date = Column(Date, nullable=True)
+    position = Column(String, nullable=True)     # lavozim nomi (roldan farqli)
+    manager_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    hired_date = Column(Date, nullable=True)
+    photo = Column(Text, nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch", back_populates="users")
+    manager = relationship("User", remote_side=[id])
 
 
 class Teacher(Base):
@@ -70,6 +83,11 @@ class Teacher(Base):
     hired_date = Column(Date, nullable=True, default=date.today)
     left_date = Column(Date, nullable=True)
     is_active = Column(Integer, default=1)
+
+    # Maksimal yuklama. Bo'sh bo'lsa roles.TEACHER_MAX_* ishlatiladi.
+    # Bundan oshirib guruh biriktirib bo'lmaydi.
+    max_groups = Column(Integer, nullable=True)
+    max_lessons_per_day = Column(Integer, nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -146,6 +164,11 @@ class Student(Base):
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     parent_id = Column(Integer, ForeignKey("parents.id"), nullable=True, index=True)
     status = Column(String, default="active")  # active | trial | frozen | archived
+    # Hozirgi darajasi. Guruhga qo'shishda mos kelishi tekshiriladi.
+    # Guruhga birinchi qo'shilganda avtomat to'ldiriladi, imtihondan
+    # o'tganda ko'tariladi.
+    subject = Column(String, nullable=True)
+    level = Column(String, nullable=True)
     note = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -525,6 +548,21 @@ class Candidate(Base):
     hired_date = Column(Date, nullable=True)
     closed_date = Column(Date, nullable=True)   # hired yoki rejected sanasi
     created_by = Column(String, nullable=True)
+
+    # ---- Nomzod kartasi ----
+    cv = Column(Text, nullable=True)                 # CV matni yoki havola
+    experience_years = Column(Float, nullable=True)  # umumiy tajriba (yil)
+    workplaces = Column(Text, nullable=True)         # oldingi ish joylari
+    certificates = Column(Text, nullable=True)       # sertifikatlar ro'yxati
+    language_level = Column(String, nullable=True)   # roles.LANGUAGE_LEVELS
+    expected_salary = Column(Float, nullable=True)
+    trial_score = Column(Float, nullable=True)       # probniy dars bahosi (0-10)
+    interview_score = Column(Float, nullable=True)   # intervyu bahosi (0-10)
+    strengths = Column(Text, nullable=True)
+    weaknesses = Column(Text, nullable=True)
+    reference_note = Column(Text, nullable=True)     # tavsiyanoma
+    decision = Column(String, nullable=True, default="pending")
+
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -826,3 +864,209 @@ class Attachment(Base):
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Discount(Base):
+    """Chegirma. Pul demak - shuning uchun har birida sabab, miqdor,
+    muddat va TASDIQLAGAN SHAXS bo'ladi. Tasdiqsiz chegirma ishlamaydi.
+
+    Oila chegirmasini tizim o'zi boshqaradi (kind="family"), qolganini
+    odam so'raydi va rahbar tasdiqlaydi."""
+    __tablename__ = "discounts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    kind = Column(String, nullable=False, default="individual")  # roles.DISCOUNT_TYPES
+    percent = Column(Float, nullable=True)      # foizda
+    amount = Column(Float, nullable=True)       # yoki qat'iy summa (so'm)
+    reason = Column(Text, nullable=False)
+    start_date = Column(Date, nullable=True)
+    end_date = Column(Date, nullable=True)      # bo'sh = muddatsiz
+    status = Column(String, nullable=False, default="pending")
+
+    # Referral: qaysi do'sti olib keldi
+    referrer_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    # Xodim farzandi: qaysi xodim. Xodim ketsa chegirma avtomat bekor.
+    staff_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    requested_by = Column(String, nullable=True)
+    approved_by = Column(String, nullable=True)
+    approved_at = Column(DateTime, nullable=True)
+    cancelled_reason = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    student = relationship("Student", foreign_keys=[student_id])
+    referrer = relationship("Student", foreign_keys=[referrer_student_id])
+    staff = relationship("User", foreign_keys=[staff_user_id])
+
+
+class StaffEvent(Base):
+    """Xodim kartasidagi voqealar: ta'til, kechikish, trening, baholash,
+    intizomiy holat, rag'batlantirish. Hammasi bir jadvalda - karta
+    ochilganda butun tarix bir joyda ko'rinadi."""
+    __tablename__ = "staff_events"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    kind = Column(String, nullable=False)       # roles.STAFF_EVENTS
+    happened_on = Column(Date, nullable=False, default=date.today)
+    end_date = Column(Date, nullable=True)      # ta'til uchun
+    title = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    score = Column(Float, nullable=True)        # baholash bali
+    amount = Column(Float, nullable=True)       # bonus summasi
+    minutes = Column(Integer, nullable=True)    # kechikish daqiqasi
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", foreign_keys=[user_id])
+
+
+class OnboardingStep(Base):
+    """Yangi xodim checklisti. Har bir qadam alohida yozuv - kim va
+    qachon bajarganini ko'rsatadi."""
+    __tablename__ = "onboarding_steps"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    step = Column(String, nullable=False)       # roles.ONBOARDING_STEPS
+    done = Column(Integer, default=0)
+    done_at = Column(DateTime, nullable=True)
+    done_by = Column(String, nullable=True)
+    note = Column(String, nullable=True)
+
+
+class Task(Base):
+    """Vazifa. Majlisdagi qaror shu yerga tushmasa - majlis choy
+    ichishga aylanadi."""
+    __tablename__ = "tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    assignee_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    watcher_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True, index=True)
+    deadline = Column(Date, nullable=True)
+    priority = Column(String, nullable=False, default="normal")
+    status = Column(String, nullable=False, default="new")
+    source = Column(String, nullable=False, default="manual")
+    # Majlis nomi/sanasi - qaror qaysi majlisdan chiqqani
+    meeting = Column(String, nullable=True)
+    # Checklist JSON: [{"text": "...", "done": true}, ...]
+    checklist = Column(Text, nullable=True)
+    attachment_id = Column(Integer, ForeignKey("attachments.id"), nullable=True)
+    result = Column(Text, nullable=True)
+    delay_reason = Column(Text, nullable=True)
+    done_at = Column(DateTime, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    assignee = relationship("User", foreign_keys=[assignee_id])
+    watcher = relationship("User", foreign_keys=[watcher_id])
+    branch = relationship("Branch")
+
+
+class Asset(Base):
+    """Aktiv: kompyuter, proyektor, konditsioner... Har birida inventar
+    raqami va mas'ul xodim bo'ladi - shunda "kim sindirdi" savoli
+    javobsiz qolmaydi."""
+    __tablename__ = "assets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    inventory_no = Column(String, unique=True, index=True)
+    name = Column(String, nullable=False)
+    kind = Column(String, nullable=False, default="other")   # roles.ASSET_TYPES
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True, index=True)
+    room_id = Column(Integer, ForeignKey("rooms.id"), nullable=True)
+    responsible_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    purchased_on = Column(Date, nullable=True)
+    price = Column(Float, nullable=True)
+    condition = Column(String, nullable=False, default="good")
+    warranty_until = Column(Date, nullable=True)
+    serial_no = Column(String, nullable=True)
+    photo = Column(Text, nullable=True)          # base64 data URL
+    note = Column(Text, nullable=True)
+    written_off_on = Column(Date, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    branch = relationship("Branch")
+    room = relationship("Room")
+    responsible = relationship("User", foreign_keys=[responsible_id])
+    repairs = relationship(
+        "AssetRepair", back_populates="asset", cascade="all, delete-orphan"
+    )
+
+
+class AssetRepair(Base):
+    """Ta'mirlash tarixi. Bir jihoz uch marta ta'mirlansa - uni
+    almashtirish arzonroq degan xulosa shundan chiqadi."""
+    __tablename__ = "asset_repairs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    asset_id = Column(Integer, ForeignKey("assets.id"), nullable=False, index=True)
+    happened_on = Column(Date, nullable=False, default=date.today)
+    cost = Column(Float, default=0)
+    vendor = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    asset = relationship("Asset", back_populates="repairs")
+
+
+class Consumable(Base):
+    """Sarflanadigan mahsulot: kitob, marker, sertifikat qog'ozi...
+    Minimal qoldiqdan pastga tushsa xarid so'rovi avtomat yaratiladi."""
+    __tablename__ = "consumables"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    kind = Column(String, nullable=False, default="other")   # roles.CONSUMABLE_TYPES
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True, index=True)
+    qty = Column(Float, default=0)
+    min_qty = Column(Float, default=0)
+    unit = Column(String, nullable=True)
+    unit_price = Column(Float, nullable=True)
+    note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
+class StockMove(Base):
+    """Ombor harakati. Qoldiq qo'lda tuzatilmaydi - faqat harakat
+    orqali o'zgaradi, shunda tarix buzilmaydi."""
+    __tablename__ = "stock_moves"
+
+    id = Column(Integer, primary_key=True, index=True)
+    consumable_id = Column(Integer, ForeignKey("consumables.id"), nullable=False, index=True)
+    delta = Column(Float, nullable=False)       # + kirim, - chiqim
+    reason = Column(String, nullable=False, default="out")
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    consumable = relationship("Consumable")
+
+
+class PurchaseRequest(Base):
+    """Xarid so'rovi. Qoldiq minimaldan pastga tushganda tizim o'zi
+    yaratadi - odam esdan chiqarsa ham marker tugab qolmaydi."""
+    __tablename__ = "purchase_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    consumable_id = Column(Integer, ForeignKey("consumables.id"), nullable=False, index=True)
+    qty = Column(Float, nullable=False)
+    status = Column(String, nullable=False, default="open")  # open | ordered | done | cancelled
+    auto = Column(Integer, default=1)
+    note = Column(String, nullable=True)
+    closed_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    consumable = relationship("Consumable")

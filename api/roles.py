@@ -675,3 +675,280 @@ WEEKDAYS = [
 ]
 WEEKDAY_KEYS = [k for k, _, _ in WEEKDAYS]
 WEEKDAY_LABELS = {k: lbl for k, lbl, _ in WEEKDAYS}
+
+
+# =====================================================================
+#  Avtomatik tekshiruvlar (guardrails)
+#  Xato odam qilmaydi - tizim yo'l qo'ymaydi. Har bir tekshiruv "block"
+#  (mumkin emas) yoki "warn" (mumkin, lekin ogohlantiriladi) bo'ladi.
+# =====================================================================
+
+# Bitta ustoz kuniga eng ko'pi bilan nechta dars bera oladi va haftasiga
+# nechta guruh olib bora oladi. Bundan oshsa sifat tushadi.
+TEACHER_MAX_LESSONS_PER_DAY = 4
+TEACHER_MAX_GROUPS = 8
+
+# Darslar orasidagi mantiqsiz bo'shliq. Ustoz 09:00 da dars berib,
+# keyingisi 19:00 da bo'lsa - kuni behuda ketadi.
+MAX_GAP_HOURS = 5
+
+CHECKS = [
+    ("teacher_clash", "Ustoz bir vaqtda ikki guruhda", "block"),
+    ("room_clash", "Xona bir vaqtda ikki guruhda", "block"),
+    ("over_capacity", "Sig'imdan ortiq o'quvchi", "block"),
+    ("teacher_overload", "Ustozning maksimal yuklamasidan oshish", "block"),
+    ("bad_gap", "Darslar orasida mantiqsiz bo'shliq", "warn"),
+    ("level_mismatch", "O'quvchi darajasiga mos bo'lmagan guruh", "warn"),
+]
+CHECK_LABELS = {k: lbl for k, lbl, _ in CHECKS}
+CHECK_SEVERITY = {k: sev for k, _, sev in CHECKS}
+
+
+def time_to_minutes(t: str) -> int | None:
+    """"09:00" -> 540. Noto'g'ri format bo'lsa None."""
+    try:
+        h, m = (t or "").strip().split(":")
+        return int(h) * 60 + int(m)
+    except Exception:
+        return None
+
+
+def ranges_overlap(a_start: str, a_end: str, b_start: str, b_end: str) -> bool:
+    """Ikki dars vaqti kesishadimi. Chegara tegib turishi (11:00 tugab
+    11:00 boshlanishi) kesishish emas."""
+    a0, a1 = time_to_minutes(a_start), time_to_minutes(a_end)
+    b0, b1 = time_to_minutes(b_start), time_to_minutes(b_end)
+    if None in (a0, a1, b0, b1):
+        return False
+    return a0 < b1 and b0 < a1
+
+
+# =====================================================================
+#  Chegirmalar
+#  Chegirma - pul. Shuning uchun uni xodim o'zboshimchalik bilan bera
+#  olmaydi: har birida sabab, miqdor, muddat va TASDIQLAGAN SHAXS bo'ladi.
+# =====================================================================
+
+DISCOUNT_TYPES = [
+    ("family", "Oila chegirmasi", "Bir oiladan ikki va undan ortiq farzand"),
+    ("referral", "Referral", "Do'sti olib kelgan - qaysi do'sti belgilanadi"),
+    ("staff_child", "Xodim farzandi", "Xodim ketsa chegirma avtomat bekor bo'ladi"),
+    ("grant", "Grant", "Bilimi yoki natijasi uchun"),
+    ("promo", "Aksiya", "Vaqtinchalik marketing aksiyasi"),
+    ("social", "Ijtimoiy yordam", "Oilaviy og'ir sharoit"),
+    ("individual", "Individual ruxsat", "Asoschi shaxsan ruxsat bergan"),
+]
+DISCOUNT_TYPE_LABELS = {k: lbl for k, lbl, _ in DISCOUNT_TYPES}
+DISCOUNT_TYPE_HINTS = {k: h for k, _, h in DISCOUNT_TYPES}
+
+# Qaysi chegirmani tizim o'zi boshqaradi - qo'lda tegilmaydi.
+AUTO_DISCOUNT_TYPES = ["family"]
+
+# Chegirmani kim tasdiqlay oladi. Administrator so'rov yubora oladi,
+# lekin tasdiqlash asoschi va filial rahbarida.
+DISCOUNT_REQUEST = FULL_ACCESS + [SALES_MANAGER]
+DISCOUNT_APPROVE = [FOUNDER, BRANCH_MANAGER]
+
+# Tasdiqsiz chegirma amal qilmaydi.
+DISCOUNT_STATUSES = [
+    ("pending", "Tasdiq kutilmoqda"),
+    ("active", "Amalda"),
+    ("expired", "Muddati tugagan"),
+    ("cancelled", "Bekor qilingan"),
+    ("rejected", "Rad etilgan"),
+]
+DISCOUNT_STATUS_LABELS = dict(DISCOUNT_STATUSES)
+
+# Bitta o'quvchida jami chegirma shundan oshmasin - aks holda o'qish
+# tekinga aylanadi.
+MAX_TOTAL_DISCOUNT_PERCENT = 50.0
+
+
+# =====================================================================
+#  HR: nomzod kartasi, onboarding, xodim kartasi
+# =====================================================================
+
+LANGUAGE_LEVELS = [
+    ("none", "Yo'q"),
+    ("a1", "A1"), ("a2", "A2"), ("b1", "B1"),
+    ("b2", "B2"), ("c1", "C1"), ("c2", "C2"),
+    ("ielts5", "IELTS 5.0-5.5"),
+    ("ielts6", "IELTS 6.0-6.5"),
+    ("ielts7", "IELTS 7.0+"),
+]
+LANGUAGE_LEVEL_LABELS = dict(LANGUAGE_LEVELS)
+
+# Yakuniy qaror - nomzod kartasining eng pastki qatori.
+HIRE_DECISIONS = [
+    ("pending", "Qaror qabul qilinmagan"),
+    ("hire", "Ishga olinsin"),
+    ("reserve", "Zaxiraga"),
+    ("reject", "Rad etilsin"),
+]
+HIRE_DECISION_LABELS = dict(HIRE_DECISIONS)
+
+# Yangi xodim uchun checklist. Birortasi bajarilmasa xodim ishga
+# to'liq kirishgan hisoblanmaydi.
+ONBOARDING_STEPS = [
+    ("docs", "Hujjatlar topshirildi"),
+    ("contract", "Shartnoma imzolandi"),
+    ("job_desc", "Lavozim yo'riqnomasi berildi"),
+    ("account", "Platformaga profil ochildi"),
+    ("branch_tour", "Filial bilan tanishtirildi"),
+    ("mentor", "Mentor biriktirildi"),
+    ("probation_goals", "Sinov muddati maqsadlari belgilandi"),
+    ("rules", "Ichki qoidalar o'rganildi"),
+    ("training", "Treningdan o'tdi"),
+    ("first_review", "Birinchi baholash o'tkazildi"),
+]
+ONBOARDING_STEP_LABELS = dict(ONBOARDING_STEPS)
+ONBOARDING_KEYS = [k for k, _ in ONBOARDING_STEPS]
+
+# Xodim kartasidagi voqealar tarixi. Hammasi bir jadvalda - shunda
+# kartani ochganda butun tarix bir joyda ko'rinadi.
+STAFF_EVENTS = [
+    ("vacation", "Ta'til", "neutral"),
+    ("absence", "Kelmadi", "bad"),
+    ("late", "Kechikish", "bad"),
+    ("training", "Trening", "good"),
+    ("review", "Baholash", "neutral"),
+    ("discipline", "Intizomiy holat", "bad"),
+    ("reward", "Rag'batlantirish", "good"),
+    ("bonus", "Bonus", "good"),
+    ("note", "Izoh", "neutral"),
+]
+STAFF_EVENT_LABELS = {k: lbl for k, lbl, _ in STAFF_EVENTS}
+STAFF_EVENT_TONE = {k: t for k, _, t in STAFF_EVENTS}
+
+
+# =====================================================================
+#  Filial reytingi
+#  Filialni faqat tushum bilan baholash - eng katta xato. Ko'p pul
+#  yig'ib, o'quvchini yo'qotayotgan filial "yaxshi" ko'rinib qoladi.
+# =====================================================================
+
+BRANCH_RATING_WEIGHTS = [
+    ("finance", "Moliyaviy natija", 25),
+    ("retention", "O'quvchi saqlanishi", 20),
+    ("sales", "Sotuv", 15),
+    ("academic", "Akademik natija", 15),
+    ("debt", "Qarzdorlik", 10),
+    ("parents", "Ota-onalar mamnunligi", 10),
+    ("discipline", "Operatsion intizom", 5),
+]
+BRANCH_RATING_LABELS = {k: lbl for k, lbl, _ in BRANCH_RATING_WEIGHTS}
+BRANCH_RATING_DEFAULT = {k: w for k, _, w in BRANCH_RATING_WEIGHTS}
+
+BRANCH_GRADES = [
+    (85, "a", "A - namuna"),
+    (70, "b", "B - barqaror"),
+    (55, "c", "C - e'tibor kerak"),
+    (0, "d", "D - aralashuv kerak"),
+]
+
+
+def branch_grade(score: float) -> tuple:
+    for limit, key, label in BRANCH_GRADES:
+        if score >= limit:
+            return key, label
+    return "d", "D - aralashuv kerak"
+
+
+# =====================================================================
+#  Vazifalar (ichki nazorat)
+#  Majlisdagi qaror vazifaga aylanmasa, majlis choy ichishga aylanadi.
+# =====================================================================
+
+TASK_STATUSES = [
+    ("new", "Yangi", "slate"),
+    ("in_progress", "Jarayonda", "sky"),
+    ("review", "Tekshiruvda", "violet"),
+    ("done", "Bajarildi", "emerald"),
+    ("rework", "Qayta ishlashga", "amber"),
+    ("cancelled", "Bekor qilindi", "slate"),
+    ("late", "Kechikdi", "red"),
+]
+TASK_STATUS_LABELS = {k: lbl for k, lbl, _ in TASK_STATUSES}
+TASK_STATUS_TONE = {k: t for k, _, t in TASK_STATUSES}
+# Yopilgan deb hisoblanadigan statuslar - kechikish shularga tegmaydi.
+TASK_CLOSED = ["done", "cancelled"]
+
+TASK_PRIORITIES = [
+    ("low", "Past", 1),
+    ("normal", "O'rta", 2),
+    ("high", "Yuqori", 3),
+    ("urgent", "Shoshilinch", 4),
+]
+TASK_PRIORITY_LABELS = {k: lbl for k, lbl, _ in TASK_PRIORITIES}
+TASK_PRIORITY_RANK = {k: r for k, _, r in TASK_PRIORITIES}
+
+TASK_SOURCES = [
+    ("manual", "Qo'lda qo'yilgan"),
+    ("meeting", "Majlis qarori"),
+    ("risk", "Akademik risk"),
+    ("complaint", "Shikoyat"),
+    ("stock", "Ombor - xarid so'rovi"),
+]
+TASK_SOURCE_LABELS = dict(TASK_SOURCES)
+
+TASK_ACCESS = FULL_ACCESS + [
+    HR_MANAGER, SMM_MANAGER, ACADEMIC_HEAD, SALES_MANAGER,
+    TEACHER, SUPPORT_TEACHER, EXAMINER,
+]
+TASK_MANAGE = FULL_ACCESS + [HR_MANAGER, ACADEMIC_HEAD]
+
+
+# =====================================================================
+#  Ombor va aktivlar
+# =====================================================================
+
+ASSET_TYPES = [
+    ("computer", "Kompyuter"),
+    ("laptop", "Noutbuk"),
+    ("tv", "Televizor"),
+    ("projector", "Proyektor"),
+    ("printer", "Printer"),
+    ("furniture", "Stol-stul"),
+    ("camera", "Kamera"),
+    ("phone", "Telefon"),
+    ("ac", "Konditsioner"),
+    ("router", "Router"),
+    ("other", "Boshqa"),
+]
+ASSET_TYPE_LABELS = dict(ASSET_TYPES)
+
+ASSET_CONDITIONS = [
+    ("new", "Yangi", "emerald"),
+    ("good", "Yaxshi", "emerald"),
+    ("worn", "Eskirgan", "amber"),
+    ("repair", "Ta'mirda", "amber"),
+    ("broken", "Buzilgan", "red"),
+    ("written_off", "Hisobdan chiqarilgan", "slate"),
+]
+ASSET_CONDITION_LABELS = {k: lbl for k, lbl, _ in ASSET_CONDITIONS}
+ASSET_CONDITION_TONE = {k: t for k, _, t in ASSET_CONDITIONS}
+
+CONSUMABLE_TYPES = [
+    ("book", "Kitob", "dona"),
+    ("notebook", "Daftar", "dona"),
+    ("marker", "Marker", "dona"),
+    ("paper", "Qog'oz", "pachka"),
+    ("pen", "Ruchka", "dona"),
+    ("ink", "Siyoh", "dona"),
+    ("welcome_pack", "Welcome pack", "dona"),
+    ("certificate", "Sertifikat qog'ozi", "dona"),
+    ("other", "Boshqa", "dona"),
+]
+CONSUMABLE_TYPE_LABELS = {k: lbl for k, lbl, _ in CONSUMABLE_TYPES}
+CONSUMABLE_UNITS = {k: u for k, _, u in CONSUMABLE_TYPES}
+
+STOCK_MOVE_REASONS = [
+    ("in", "Kirim"),
+    ("out", "Chiqim"),
+    ("write_off", "Hisobdan chiqarish"),
+    ("correction", "Tuzatish"),
+]
+STOCK_MOVE_LABELS = dict(STOCK_MOVE_REASONS)
+
+INVENTORY_ACCESS = FULL_ACCESS + [HR_MANAGER]
+INVENTORY_VIEW = INVENTORY_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER]

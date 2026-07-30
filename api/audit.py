@@ -30,6 +30,9 @@ ACTIONS = {
     "login": "Tizimga kirdi",
     "role_change": "Roli o'zgartirildi",
     "salary_change": "Oyligi o'zgartirildi",
+    "approve": "Tasdiqlandi",
+    "reject": "Rad etildi",
+    "cancel": "Bekor qilindi",
 }
 
 # Kuzatiladigan obyektlar.
@@ -47,6 +50,9 @@ ENTITIES = {
     "complaint": "Shikoyat",
     "reward": "Sovg'a",
     "exam": "Imtihon",
+    "discount": "Chegirma",
+    "task": "Vazifa",
+    "asset": "Aktiv",
 }
 
 

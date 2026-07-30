@@ -8,17 +8,22 @@ import {
 } from "recharts";
 import {
   api, type MarketingFunnel, type CacReport, type SocialStats,
+  type MarketingJourney, type AdStat,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { MARKETING_ACCESS, FINANCE_ACCESS, can } from "../lib/roles";
 import { formatSom, formatPeriodLabel } from "../lib/format";
+import { MARKETING_CHANNELS } from "../lib/payments";
+import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "funnel" | "channels" | "social";
+type Tab = "journey" | "funnel" | "channels" | "ads" | "social";
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: "funnel", label: "Marketing voronka" },
+  { key: "journey", label: "To'liq yo'l" },
+  { key: "funnel", label: "Lid voronkasi" },
   { key: "channels", label: "Kanallar va CAC" },
+  { key: "ads", label: "Reklama ko'rsatkichlari" },
   { key: "social", label: "Ijtimoiy tarmoqlar" },
 ];
 
@@ -564,10 +569,358 @@ function SocialTab() {
   );
 }
 
+// ---------------------------------------------------- To'liq yo'l tab
+const JOURNEY_COLORS = [
+  "#cbd5e1", "#94a3b8", "#38bdf8", "#60a5fa", "#818cf8",
+  "#10b981", "#059669", "#047857", "#f59e0b",
+];
+
+function JourneyTab({ months }: { months: number }) {
+  const [data, setData] = useState<MarketingJourney | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<MarketingJourney>(`/reports/marketing-journey?months=${months}`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [months]);
+
+  if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  // Eng keng bosqichga nisbatan kenglik - voronka shakli chiqishi uchun
+  const max = Math.max(...data.stages.map((s) => s.count), 1);
+
+  return (
+    <div>
+      {!data.has_ad_data && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5">
+          <p className="text-sm text-amber-900 font-medium mb-1">
+            Reklama ko'rsatkichlari kiritilmagan
+          </p>
+          <p className="text-xs text-amber-800">
+            "Reklama ko'rildi" va "Bosildi" bosqichlari Instagram/Facebook
+            reklama kabinetidan olinadi. "Reklama ko'rsatkichlari" bo'limidan
+            oyiga bir marta kiriting — shundan keyin butun yo'l to'liq
+            ko'rinadi.
+          </p>
+        </div>
+      )}
+
+      {data.worst_stage && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-5">
+          <p className="text-sm text-red-900 font-medium">
+            Eng katta yo'qotish: {data.worst_stage.label}
+          </p>
+          <p className="text-xs text-red-800 mt-0.5">
+            Bu bosqichda {data.worst_stage.lost} ta odam yo'qolyapti —
+            oldingi bosqichdan atigi {data.worst_stage.step_percent}% o'tgan.
+          </p>
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+        <p className="text-sm font-medium text-slate-700">
+          Reklamadan sertifikatgacha
+        </p>
+        <p className="text-xs text-slate-400 mb-4">
+          Har bir bosqichda oldingisidan qanchasi o'tgani
+        </p>
+        <div className="space-y-2">
+          {data.stages.map((st, i) => {
+            const w = Math.max(2, (st.count / max) * 100);
+            return (
+              <div key={st.key} className="flex items-center gap-3">
+                <div className="w-40 shrink-0 text-right">
+                  <p className="text-sm text-slate-700">{st.label}</p>
+                  {st.source === "ad" && (
+                    <p className="text-[10px] text-slate-400">reklama kabineti</p>
+                  )}
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <div
+                    className="h-8 rounded-md flex items-center px-2 min-w-[2%] transition-all"
+                    style={{
+                      width: `${w}%`,
+                      background: JOURNEY_COLORS[i] || "#cbd5e1",
+                    }}
+                  >
+                    <span className="text-xs font-medium text-white">
+                      {st.count.toLocaleString("uz-UZ")}
+                    </span>
+                  </div>
+                  {st.step_percent !== null && (
+                    <span
+                      className={`text-xs shrink-0 ${
+                        st.step_percent < 30 ? "text-red-600" : "text-slate-500"
+                      }`}
+                    >
+                      {st.step_percent}%
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <p className="text-sm font-medium text-slate-700 mb-3">
+          Kanal bo'yicha to'liq yo'l
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-xs text-slate-500 border-b border-slate-100">
+                <th className="text-left py-2">Kanal</th>
+                <th className="text-right">Ko'rildi</th>
+                <th className="text-right">Bosildi</th>
+                <th className="text-right">CTR</th>
+                <th className="text-right">Lid</th>
+                <th className="text-right">Sotildi</th>
+                <th className="text-right">1 oy</th>
+                <th className="text-right">3 oy</th>
+                <th className="text-right">Sertifikat</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.channels.map((c) => (
+                <tr key={c.channel} className="border-b border-slate-50">
+                  <td className="py-2 font-medium text-slate-700">{c.label}</td>
+                  <td className="text-right text-slate-500">
+                    {c.impressions ? c.impressions.toLocaleString("uz-UZ") : "—"}
+                  </td>
+                  <td className="text-right text-slate-500">
+                    {c.clicks ? c.clicks.toLocaleString("uz-UZ") : "—"}
+                  </td>
+                  <td className="text-right text-slate-500">
+                    {c.ctr !== null ? `${c.ctr}%` : "—"}
+                  </td>
+                  <td className="text-right">{c.leads}</td>
+                  <td className="text-right text-emerald-600 font-medium">
+                    {c.sold}
+                  </td>
+                  <td className="text-right text-slate-600">
+                    {c.month1}
+                    {c.retention_1m !== null && (
+                      <span className="text-xs text-slate-400">
+                        {" "}
+                        ({c.retention_1m}%)
+                      </span>
+                    )}
+                  </td>
+                  <td className="text-right text-slate-600">
+                    {c.month3}
+                    {c.retention_3m !== null && (
+                      <span className="text-xs text-slate-400">
+                        {" "}
+                        ({c.retention_3m}%)
+                      </span>
+                    )}
+                  </td>
+                  <td className="text-right text-emerald-700">{c.certificate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-slate-400 mt-3">
+          "1 oy" va "3 oy" — birinchi to'lovdan keyin shuncha vaqt qolgan
+          o'quvchilar. Bu raqam past bo'lsa muammo sotuvda emas, ta'lim
+          sifatida.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// -------------------------------------------- Reklama ko'rsatkichlari
+function AdsTab() {
+  const now = new Date();
+  const [rows, setRows] = useState<AdStat[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [channel, setChannel] = useState("instagram");
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [impressions, setImpressions] = useState("");
+  const [clicks, setClicks] = useState("");
+  const [err, setErr] = useState("");
+
+  function load() {
+    setLoading(true);
+    api.get<AdStat[]>("/ad-stats?months=12").then(setRows)
+      .finally(() => setLoading(false));
+  }
+  useEffect(load, []);
+
+  async function save() {
+    setErr("");
+    try {
+      await api.post("/ad-stats", {
+        channel,
+        period: `${year}-${String(month).padStart(2, "0")}`,
+        impressions: Number(impressions) || 0,
+        clicks: Number(clicks) || 0,
+      });
+      setImpressions("");
+      setClicks("");
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  async function remove(a: AdStat) {
+    if (!confirm(`${a.label} · ${a.period} o'chirilsinmi?`)) return;
+    await api.delete(`/ad-stats/${a.id}`);
+    load();
+  }
+
+  const years = [now.getFullYear(), now.getFullYear() - 1];
+
+  return (
+    <div>
+      <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+        <p className="text-sm font-medium text-slate-700">Ko'rsatkich kiritish</p>
+        <p className="text-xs text-slate-400 mb-3">
+          Instagram/Facebook reklama kabinetidagi raqamlarni oyiga bir marta
+          kiriting — voronkaning birinchi ikki bosqichi shundan chiqadi.
+        </p>
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
+            {err}
+          </p>
+        )}
+        <div className="flex flex-wrap gap-2 items-end">
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Kanal</label>
+            <select
+              value={channel}
+              onChange={(e) => setChannel(e.target.value)}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {MARKETING_CHANNELS.map((c) => (
+                <option key={c.key} value={c.key}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Oy</label>
+            <select
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {MONTHS.map((m, i) => (
+                <option key={m} value={i + 1}>
+                  {m}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Yil</label>
+            <select
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">
+              Ko'rildi (impressions)
+            </label>
+            <input
+              type="number"
+              value={impressions}
+              onChange={(e) => setImpressions(e.target.value)}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm w-36"
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">
+              Bosildi (clicks)
+            </label>
+            <input
+              type="number"
+              value={clicks}
+              onChange={(e) => setClicks(e.target.value)}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm w-36"
+            />
+          </div>
+          <button
+            onClick={save}
+            className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+          >
+            Saqlash
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>
+      ) : rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Hali ko'rsatkich kiritilmagan
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50">
+              <tr className="text-xs text-slate-500">
+                <th className="text-left px-4 py-2.5">Davr</th>
+                <th className="text-left">Kanal</th>
+                <th className="text-right">Ko'rildi</th>
+                <th className="text-right">Bosildi</th>
+                <th className="text-right">CTR</th>
+                <th className="w-12" />
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((a) => (
+                <tr key={a.id} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5">{formatPeriodLabel(a.period)}</td>
+                  <td className="text-slate-600">{a.label}</td>
+                  <td className="text-right tabular-nums">
+                    {a.impressions.toLocaleString("uz-UZ")}
+                  </td>
+                  <td className="text-right tabular-nums">
+                    {a.clicks.toLocaleString("uz-UZ")}
+                  </td>
+                  <td className="text-right text-slate-500">{a.ctr}%</td>
+                  <td className="pr-3 text-right">
+                    <button
+                      onClick={() => remove(a)}
+                      className="p-1.5 text-slate-400 hover:text-red-600"
+                    >
+                      ×
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------- Sahifa
 export default function Marketing() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("funnel");
+  const [tab, setTab] = useState<Tab>("journey");
   const [months, setMonths] = useState(6);
   const [data, setData] = useState<MarketingFunnel | null>(null);
   const [cac, setCac] = useState<CacReport | null>(null);
@@ -576,7 +929,7 @@ export default function Marketing() {
   const showCac = can(user?.role, FINANCE_ACCESS);
 
   useEffect(() => {
-    if (tab === "social") return;
+    if (tab === "social" || tab === "ads" || tab === "journey") return;
     setLoading(true);
     const jobs: Promise<unknown>[] = [
       api.get<MarketingFunnel>(`/reports/marketing-funnel?months=${months}`)
@@ -626,10 +979,16 @@ export default function Marketing() {
         ))}
       </div>
 
-      {tab !== "social" && <RangePicker months={months} setMonths={setMonths} />}
+      {tab !== "social" && tab !== "ads" && (
+        <RangePicker months={months} setMonths={setMonths} />
+      )}
 
       {tab === "social" ? (
         <SocialTab />
+      ) : tab === "ads" ? (
+        <AdsTab />
+      ) : tab === "journey" ? (
+        <JourneyTab months={months} />
       ) : loading ? (
         <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>
       ) : !data ? null : tab === "funnel" ? (

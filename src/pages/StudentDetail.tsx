@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  ArrowLeft, Plus, Trash2, Coins, Phone, X, Check,
+  ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle,
 } from "lucide-react";
 import {
   api,
@@ -9,6 +9,8 @@ import {
   type StudentExams,
   type StudentAttendance,
   type CoinEntry,
+  type StudentHistory,
+  type StudentPricing,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
@@ -16,6 +18,9 @@ import { FINANCE_ACCESS, TEACHING_STAFF, can } from "../lib/roles";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
 import { examTitle, coinSourceLabel, gradeTone } from "../lib/exams";
+import {
+  HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
+} from "../lib/academic";
 
 const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
@@ -30,13 +35,17 @@ const STATUS_LABEL: Record<string, string> = {
   archived: "Arxiv",
 };
 
-type Tab = "groups" | "payments" | "attendance" | "exams" | "coins" | "note";
+type Tab =
+  | "groups" | "payments" | "price" | "attendance" | "exams"
+  | "history" | "coins" | "note";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "groups", label: "Guruhlar" },
   { key: "payments", label: "To'lovlar" },
+  { key: "price", label: "Narx va chegirma" },
   { key: "attendance", label: "Davomat" },
   { key: "exams", label: "Imtihonlar" },
+  { key: "history", label: "Tarix" },
   { key: "coins", label: "Coin hisoboti" },
   { key: "note", label: "Eslatma" },
 ];
@@ -841,8 +850,424 @@ export default function StudentDetail() {
           {tab === "payments" && <PaymentsTab student={student} onChanged={load} />}
           {tab === "attendance" && <AttendanceTab studentId={student.id} />}
           {tab === "exams" && <ExamsTab studentId={student.id} />}
+          {tab === "price" && <PriceTab studentId={student.id} />}
+          {tab === "history" && <HistoryTab studentId={student.id} />}
           {tab === "coins" && <CoinsTab studentId={student.id} />}
           {tab === "note" && <NoteTab student={student} onSaved={load} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ------------------------------------------------- Narx va chegirma ----
+function PriceTab({ studentId }: { studentId: number }) {
+  const [data, setData] = useState<StudentPricing | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<StudentPricing>(`/students/${studentId}/pricing`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [studentId]);
+
+  if (loading) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="text-sm text-slate-500">Guruh narxi</span>
+          <span className="text-sm text-slate-800">{formatSom(data.base_fee)}</span>
+        </div>
+        {data.family_discount > 0 && (
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-sm text-slate-500">Oilaviy chegirma</span>
+            <span className="text-sm text-emerald-600">
+              −{data.family_discount}%
+            </span>
+          </div>
+        )}
+        {data.personal_discount > 0 && (
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-sm text-slate-500">Shaxsiy chegirma</span>
+            <span className="text-sm text-emerald-600">
+              −{data.personal_discount}%
+            </span>
+          </div>
+        )}
+        <div className="flex items-center justify-between px-4 py-3 bg-slate-50">
+          <span className="text-sm font-medium text-slate-700">To'lanadigan</span>
+          <span className="text-base font-semibold text-slate-900">
+            {formatSom(data.final_fee)}
+          </span>
+        </div>
+      </div>
+
+      <div
+        className={`rounded-xl border p-4 ${
+          data.family_discount > 0
+            ? "bg-emerald-50 border-emerald-200"
+            : "bg-slate-50 border-slate-200"
+        }`}
+      >
+        <p className="text-sm text-slate-700">{data.explanation}</p>
+      </div>
+
+      {data.siblings.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Oiladagi boshqa farzandlar
+          </p>
+          <div className="space-y-1">
+            {data.siblings.map((s) => (
+              <div key={s.id} className="flex items-center justify-between py-1">
+                <Link
+                  to={`/students/${s.id}`}
+                  className="text-sm text-slate-800 hover:text-brand-700"
+                >
+                  {s.full_name}
+                </Link>
+                <span
+                  className={`text-xs px-2 py-0.5 rounded-full ${
+                    s.status === "active"
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-slate-100 text-slate-500"
+                  }`}
+                >
+                  {STATUS_LABEL[s.status] || s.status}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-slate-400 mt-3">
+            Chegirma faqat kamida {data.family_min_children} ta farzand FAOL
+            bo'lganda amal qiladi va biri to'xtaganda o'zidan yo'qoladi.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// --------------------------------------------------------- Tarix tab ----
+function HistoryTab({ studentId }: { studentId: number }) {
+  const { user } = useAuth();
+  const [data, setData] = useState<StudentHistory | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [talkOpen, setTalkOpen] = useState(false);
+  const [certOpen, setCertOpen] = useState(false);
+
+  function load() {
+    setLoading(true);
+    api
+      .get<StudentHistory>(`/students/${studentId}/history`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }
+  useEffect(load, [studentId]);
+
+  if (loading) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  const s = data.summary;
+  const stats: { label: string; value: string; tone?: string }[] = [
+    { label: "Guruhlar", value: String(s.group_count) },
+    { label: "Guruh almashtirgan", value: String(s.group_changes),
+      tone: s.group_changes >= 2 ? "text-amber-600" : undefined },
+    { label: "Dars qoldirgan", value: String(s.absences),
+      tone: s.absences > 0 ? "text-red-600" : undefined },
+    { label: "Davomat",
+      value: s.attendance_percent !== null ? `${s.attendance_percent}%` : "—" },
+    { label: "Shikoyatlar", value: String(s.complaints),
+      tone: s.complaints > 0 ? "text-red-600" : undefined },
+    { label: "Ota-ona suhbati", value: String(s.talks) },
+    { label: "Muzlatish", value: String(s.freezes) },
+    { label: "Qayta tiklanish", value: String(s.returns) },
+  ];
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+        {stats.map((x) => (
+          <div key={x.label} className="bg-white rounded-lg border border-slate-200 p-3">
+            <p className="text-xs text-slate-500">{x.label}</p>
+            <p className={`text-base font-semibold ${x.tone || "text-slate-900"}`}>
+              {x.value}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {(s.teachers.length > 0 || s.groups.length > 0) && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4 text-sm">
+          {s.groups.length > 0 && (
+            <p className="text-slate-600">
+              <span className="text-slate-500">O'qigan guruhlari:</span>{" "}
+              {s.groups.join(", ")}
+            </p>
+          )}
+          {s.teachers.length > 0 && (
+            <p className="text-slate-600 mt-1">
+              <span className="text-slate-500">Ustozlari:</span>{" "}
+              {s.teachers.join(", ")}
+            </p>
+          )}
+        </div>
+      )}
+
+      <div className="flex items-center gap-2 mb-3">
+        <p className="text-sm font-medium text-slate-700">Voqealar tarixi</p>
+        <div className="flex-1" />
+        {can(user?.role, TEACHING_STAFF) && (
+          <>
+            <button
+              onClick={() => setTalkOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-slate-300"
+            >
+              <MessageCircle size={13} /> Suhbat qo'shish
+            </button>
+            <button
+              onClick={() => setCertOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-slate-300"
+            >
+              <Award size={13} /> Sertifikat
+            </button>
+          </>
+        )}
+      </div>
+
+      {data.timeline.length === 0 ? (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Hali voqea yo'q
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+          {data.timeline.map((e, i) => {
+            const K = HISTORY_KINDS[e.kind] || {
+              label: e.kind, dot: "bg-slate-300",
+            };
+            return (
+              <div key={i} className="flex items-start gap-3 px-4 py-3">
+                <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${K.dot}`} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-slate-800">{e.title}</p>
+                  {e.detail && (
+                    <p className="text-xs text-slate-500 mt-0.5">{e.detail}</p>
+                  )}
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-xs text-slate-500">
+                    {e.date ? formatDate(e.date.slice(0, 10)) : "—"}
+                  </p>
+                  {e.by && <p className="text-xs text-slate-400">{e.by}</p>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {data.absent_dates.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Qoldirilgan darslar
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {data.absent_dates.map((d) => (
+              <span
+                key={d}
+                className="text-xs px-2 py-0.5 rounded-md bg-red-50 text-red-700"
+              >
+                {formatDate(d)}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {talkOpen && (
+        <TalkModal
+          studentId={studentId}
+          onClose={() => setTalkOpen(false)}
+          onSaved={() => {
+            setTalkOpen(false);
+            load();
+          }}
+        />
+      )}
+      {certOpen && (
+        <CertModal
+          studentId={studentId}
+          onClose={() => setCertOpen(false)}
+          onSaved={() => {
+            setCertOpen(false);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function TalkModal({
+  studentId, onClose, onSaved,
+}: {
+  studentId: number;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [topic, setTopic] = useState("");
+  const [summary, setSummary] = useState("");
+  const [channel, setChannel] = useState("phone");
+  const [err, setErr] = useState("");
+
+  async function save() {
+    if (!topic.trim()) {
+      setErr("Mavzuni yozing");
+      return;
+    }
+    try {
+      await api.post(`/students/${studentId}/talks`, {
+        topic: topic.trim(), summary: summary || null, channel,
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-800">Ota-ona bilan suhbat</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
+            {err}
+          </p>
+        )}
+        <div className="space-y-3">
+          <input
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            placeholder="Nima haqida gaplashildi?"
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          />
+          <select
+            value={channel}
+            onChange={(e) => setChannel(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            {TALK_CHANNELS.map((c) => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+          <textarea
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            placeholder="Suhbat mazmuni va kelishuv"
+            rows={3}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          />
+        </div>
+        <div className="flex gap-2 mt-5">
+          <button
+            onClick={save}
+            className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CertModal({
+  studentId, onClose, onSaved,
+}: {
+  studentId: number;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [kind, setKind] = useState("ielts");
+  const [level, setLevel] = useState("");
+  const [err, setErr] = useState("");
+
+  async function save() {
+    try {
+      await api.post(`/students/${studentId}/certificates`, {
+        kind, level: level || null,
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-800">Sertifikat qo'shish</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
+            {err}
+          </p>
+        )}
+        <div className="space-y-3">
+          <select
+            value={kind}
+            onChange={(e) => setKind(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            {CERTIFICATE_KINDS.map((k) => (
+              <option key={k.key} value={k.key}>
+                {k.label}
+              </option>
+            ))}
+          </select>
+          <input
+            value={level}
+            onChange={(e) => setLevel(e.target.value)}
+            placeholder="Daraja yoki ball (masalan: 7.0, B2)"
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          />
+        </div>
+        <div className="flex gap-2 mt-5">
+          <button
+            onClick={save}
+            className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor
+          </button>
         </div>
       </div>
     </div>

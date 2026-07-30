@@ -17,6 +17,7 @@ import Marketing from "./pages/Marketing";
 import Ceo from "./pages/Ceo";
 import Audit from "./pages/Audit";
 import Complaints from "./pages/Complaints";
+import Academic from "./pages/Academic";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -52,6 +53,7 @@ function AppRoutes() {
         <Route path="ceo" element={<Ceo />} />
         <Route path="complaints" element={<Complaints />} />
         <Route path="audit" element={<Audit />} />
+        <Route path="academic" element={<Academic />} />
         <Route path="hr" element={<Hr />} />
         <Route path="marketing" element={<Marketing />} />
         <Route path="gamification" element={<Gamification />} />

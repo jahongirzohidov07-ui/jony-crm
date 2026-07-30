@@ -230,25 +230,34 @@ def _ensure_new_columns():
                     db.add(models.KpiNewClientRule(min_clients=cnt, bonus=bonus))
                 db.commit()
 
-            # Coin do'koni: plakatdagi sovg'alar bir marta bazaga
-            # tushadi. Keyin ro'yxatga qo'l tegmaydi — narx o'zgarsa
-            # Coin tizimi bo'limidan tahrirlanadi.
-            if db.query(models.Reward).count() == 0:
-                for name, cost, cat in roles.DEFAULT_REWARDS:
-                    db.add(models.Reward(name=name, cost=cost,
-                                         category=cat, active=1))
+            # Coin do'koni: plakatdagi sovg'alar bazaga tushadi.
+            # HAR BIR sovg'a alohida tekshiriladi - jadval bo'sh
+            # bo'lmasa ham yetishmayotgani qo'shiladi. Mavjud
+            # sovg'aning NARXIGA tegilmaydi: asoschi uni o'zgartirgan
+            # bo'lishi mumkin.
+            have = {(r.name or "").strip().lower()
+                    for r in db.query(models.Reward).all()}
+            added = False
+            for name, cost, cat in roles.DEFAULT_REWARDS:
+                if name.strip().lower() in have:
+                    continue
+                db.add(models.Reward(name=name, cost=cost,
+                                     category=cat, active=1))
+                added = True
+            if added:
                 db.commit()
-            else:
-                # Eski sovg'alarda kategoriya bo'lmasa - ro'yxatdan
-                # topib qo'yamiz, do'konda guruhlanib chiqsin.
-                by_name = {n.lower(): c for n, _, c in roles.DEFAULT_REWARDS}
-                changed = False
-                for r in db.query(models.Reward).filter(
-                        models.Reward.category.is_(None)).all():
-                    r.category = by_name.get((r.name or "").lower(), "special")
-                    changed = True
-                if changed:
-                    db.commit()
+
+            # Kategoriyasi yo'q sovg'alarga ro'yxatdan topib qo'yamiz -
+            # do'konda guruhlanib chiqsin.
+            by_name = {n.strip().lower(): c for n, _, c in roles.DEFAULT_REWARDS}
+            changed = False
+            for r in db.query(models.Reward).filter(
+                    models.Reward.category.is_(None)).all():
+                r.category = by_name.get((r.name or "").strip().lower(),
+                                         "special")
+                changed = True
+            if changed:
+                db.commit()
     except Exception:
         pass
 

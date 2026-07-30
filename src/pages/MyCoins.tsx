@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { api, type MyCoins as Data, type RewardItem } from "../lib/api";
 import { formatDate } from "../lib/format";
+import { XpCard } from "../components/XpCard";
 
 const TONE: Record<string, { chip: string; ring: string }> = {
   teal: { chip: "bg-teal-100 text-teal-700", ring: "border-teal-200" },
@@ -25,6 +26,9 @@ export default function MyCoins() {
   const [msg, setMsg] = useState("");
   const [err, setErr] = useState("");
   const [tab, setTab] = useState<"shop" | "history" | "orders">("shop");
+  // XP kartasi coin do'konidan yuqorida turadi: avval "men qanchaman",
+  // keyin "nima olsam bo'ladi".
+  const [view, setView] = useState<"xp" | "shop">("xp");
   const [loading, setLoading] = useState(true);
 
   function load() {
@@ -50,6 +54,37 @@ export default function MyCoins() {
   const rewards = cat
     ? d.rewards.filter((r) => r.category === cat)
     : d.rewards;
+
+  const switcher = (
+    <div className="flex gap-1 mb-5">
+      {(
+        [
+          ["xp", "Mening natijam"],
+          ["shop", "Coin do'koni"],
+        ] as const
+      ).map(([k, l]) => (
+        <button
+          key={k}
+          onClick={() => setView(k)}
+          className={`px-4 py-2 rounded-lg text-sm font-medium border transition ${
+            view === k
+              ? "bg-brand-600 border-brand-600 text-white"
+              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+
+  if (view === "xp")
+    return (
+      <div>
+        {switcher}
+        <XpCard self />
+      </div>
+    );
   const pending = d.orders.filter((o) => o.status === "requested");
 
   async function buy(r: RewardItem) {

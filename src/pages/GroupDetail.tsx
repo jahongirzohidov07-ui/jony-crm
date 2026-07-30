@@ -10,22 +10,25 @@ import {
   type PayrollRunResult,
   type TeacherPayout,
   type Branch,
+  type Student,
 } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
+import { QuickXp } from "../components/XpAdmin";
 import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
 import { GroupSidebar } from "../components/GroupSidebar";
 import { GroupFormModal } from "./Groups";
 
-type GroupTab = "lessons" | "attendance" | "grades" | "exams";
+type GroupTab = "lessons" | "attendance" | "grades" | "exams" | "xp";
 
 const GROUP_TABS: { key: GroupTab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
   { key: "grades", label: "Baholash" },
   { key: "lessons", label: "Darslar" },
   { key: "exams", label: "Imtihonlar" },
+  { key: "xp", label: "Tezkor XP" },
 ];
 
 const MONTH_NAMES = [
@@ -68,6 +71,17 @@ export default function GroupDetail() {
 
   const canMarkLesson = can(user?.role, TEACHING_STAFF);
   const canFinance = can(user?.role, FINANCE_ACCESS);
+
+  // Tezkor XP uchun guruhdagi o'quvchilar ro'yxati
+  const [groupStudents, setGroupStudents] = useState<Student[]>([]);
+  function loadStudents() {
+    api
+      .get<Student[]>(`/students?group_id=${groupId}`)
+      .then((rows) => setGroupStudents(rows.filter(
+        (s) => s.status === "active" || s.status === "trial")))
+      .catch(() => setGroupStudents([]));
+  }
+  useEffect(loadStudents, [groupId]);
 
   useEffect(() => {
     api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));
@@ -271,6 +285,9 @@ export default function GroupDetail() {
             </select>
           </div>
 
+      {tab === "xp" && (
+        <QuickXp students={groupStudents} onDone={loadStudents} />
+      )}
       {tab === "attendance" && (
         <AttendanceTab
           groupId={group.id}

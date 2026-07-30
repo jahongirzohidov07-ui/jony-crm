@@ -18,6 +18,7 @@ import {
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, TEACHING_STAFF, can } from "../lib/roles";
+import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
 import { examTitle, coinSourceLabel, gradeTone } from "../lib/exams";
@@ -44,7 +45,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 type Tab =
   | "groups" | "payments" | "price" | "attendance" | "exams"
-  | "history" | "coins" | "note";
+  | "history" | "gamification" | "coins" | "note";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "groups", label: "Guruhlar" },
@@ -53,6 +54,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
   { key: "exams", label: "Imtihonlar" },
   { key: "history", label: "Tarix" },
+  { key: "gamification", label: "XP va liga" },
   { key: "coins", label: "Coin hisoboti" },
   { key: "note", label: "Eslatma" },
 ];
@@ -888,6 +890,7 @@ export default function StudentDetail() {
           {tab === "exams" && <ExamsTab studentId={student.id} />}
           {tab === "price" && <PriceTab studentId={student.id} />}
           {tab === "history" && <HistoryTab studentId={student.id} />}
+          {tab === "gamification" && <XpCard studentId={student.id} />}
           {tab === "coins" && <CoinsTab studentId={student.id} />}
           {tab === "note" && <NoteTab student={student} onSaved={load} />}
         </div>

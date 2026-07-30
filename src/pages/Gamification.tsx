@@ -10,16 +10,31 @@ import {
   type Branch,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
+import { LeaderboardTab as XpLeaderboardTab } from "../components/XpCard";
+import {
+  XpOverviewTab, XpRulesTab, XpLeaguesTab, XpSeasonsTab,
+  XpTransactionsTab, XpFraudTab, XpAnalyticsTab,
+} from "../components/XpAdmin";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { coinSourceLabel, EXAM_KINDS } from "../lib/exams";
 import { formatSom, formatDate } from "../lib/format";
 
 import { RewardRequestsTab } from "./MyCoins";
 
-type Tab = "leaderboard" | "requests" | "rewards" | "rules";
+type Tab = "xp" | "xpboard" | "leagues" | "xprules" | "seasons"
+  | "transactions" | "fraud" | "xpanalytics"
+  | "leaderboard" | "requests" | "rewards" | "rules";
 
-const TABS: { key: Tab; label: string }[] = [
-  { key: "leaderboard", label: "Reyting" },
+const TABS: { key: Tab; label: string; admin?: boolean }[] = [
+  { key: "xp", label: "XP paneli", admin: true },
+  { key: "xpboard", label: "XP reytingi" },
+  { key: "leagues", label: "Ligalar" },
+  { key: "xprules", label: "XP qoidalari" },
+  { key: "seasons", label: "Mavsumlar", admin: true },
+  { key: "transactions", label: "XP tarixi", admin: true },
+  { key: "fraud", label: "Signal", admin: true },
+  { key: "xpanalytics", label: "XP analitikasi", admin: true },
+  { key: "leaderboard", label: "Coin reytingi" },
   { key: "requests", label: "Sovg'a so'rovlari" },
   { key: "rewards", label: "Sovg'alar" },
   { key: "rules", label: "Coin qoidasi" },
@@ -824,20 +839,21 @@ export default function Gamification() {
   const canAdmin = can(user?.role, FINANCE_ACCESS);
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1 flex items-center gap-2">
         <Trophy size={20} className="text-brand-600" /> Coin tizimi
       </h1>
       <p className="text-sm text-slate-500 mb-5">
-        Baho va imtihon natijalari coinga aylanadi, coin sovg'aga
+        XP — o'quvchining mehnati va intizomi (sarflanmaydi). Coin —
+        sovg'aga sarflanadigan hamyon.
       </p>
 
-      <div className="flex gap-1 mb-6 border-b border-slate-200">
-        {TABS.map((t) => (
+      <div className="flex gap-1 mb-6 border-b border-slate-200 overflow-x-auto">
+        {TABS.filter((t) => !t.admin || canAdmin).map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
+            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
               tab === t.key
                 ? "border-brand-600 text-brand-700"
                 : "border-transparent text-slate-500 hover:text-slate-700"
@@ -848,6 +864,14 @@ export default function Gamification() {
         ))}
       </div>
 
+      {tab === "xp" && <XpOverviewTab />}
+      {tab === "xpboard" && <XpLeaderboardTab />}
+      {tab === "leagues" && <XpLeaguesTab />}
+      {tab === "xprules" && <XpRulesTab />}
+      {tab === "seasons" && <XpSeasonsTab />}
+      {tab === "transactions" && <XpTransactionsTab />}
+      {tab === "fraud" && <XpFraudTab />}
+      {tab === "xpanalytics" && <XpAnalyticsTab />}
       {tab === "leaderboard" && <LeaderboardTab canAdmin={canAdmin} />}
       {tab === "requests" && <RewardRequestsTab />}
       {tab === "rewards" && <RewardsTab canAdmin={canAdmin} />}

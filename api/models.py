@@ -661,6 +661,33 @@ class Vacancy(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     closed_at = Column(Date, nullable=True)
 
+    # ---- HR moduli kengaytmasi ----
+    public_id = Column(String, unique=True, index=True)     # VAC-000007
+    department_id = Column(Integer, ForeignKey("departments.id"),
+                           nullable=True)
+    position_id = Column(Integer, ForeignKey("positions.id"),
+                         nullable=True, index=True)
+    request_id = Column(Integer, ForeignKey("staff_requests.id"),
+                        nullable=True)
+    hiring_manager_id = Column(Integer, ForeignKey("users.id"),
+                               nullable=True)
+    recruiter_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    employment_type = Column(String, nullable=True)
+    work_schedule = Column(String, nullable=True)
+    duties = Column(Text, nullable=True)
+    requirements = Column(Text, nullable=True)
+    experience_years = Column(Float, nullable=True)
+    education = Column(String, nullable=True)
+    language_level = Column(String, nullable=True)
+    certificates = Column(String, nullable=True)
+    probation_months = Column(Integer, nullable=True)
+    kpi_note = Column(Text, nullable=True)
+    priority = Column(String, default="normal", index=True)
+    opened_on = Column(Date, nullable=True)
+    target_close = Column(Date, nullable=True)
+    close_reason = Column(String, nullable=True)
+    hired_count = Column(Integer, default=0)
+
     branch = relationship("Branch")
 
 
@@ -2103,3 +2130,136 @@ class SmmReport(Base):
     kpi_score = Column(Float, nullable=True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR: BO'LIM VA LAVOZIM
+# =====================================================================
+class Department(Base):
+    """Bo'limlar. roles.DEPARTMENTS dan seed qilinadi, keyin asoschi
+    tahrirlaydi — seed qayta yozib yubormaydi."""
+    __tablename__ = "departments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True)
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    head_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    position = Column(Integer, default=0)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Position(Base):
+    """Lavozimlar. Har bir lavozim tizimdagi rolga bog'lanadi —
+    xodim yaratilganda roli shundan olinadi."""
+    __tablename__ = "positions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True)
+    name = Column(String, nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"),
+                           nullable=True, index=True)
+    system_role = Column(String, nullable=True)
+    probation_months = Column(Integer, default=2)
+    # Sinov darsi majburiymi (ustoz lavozimlarida)
+    trial_required = Column(Integer, default=0)
+    salary_from = Column(Float, nullable=True)
+    salary_to = Column(Float, nullable=True)
+    description = Column(Text, nullable=True)
+    requirements = Column(Text, nullable=True)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR: SHTAT REJASI
+# =====================================================================
+class WorkforcePlan(Base):
+    """Filial × bo'lim × lavozim kesimida nechta odam kerak."""
+    __tablename__ = "workforce_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(Integer, nullable=False, index=True)
+    month = Column(Integer, nullable=True)
+    quarter = Column(Integer, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    department_id = Column(Integer, ForeignKey("departments.id"),
+                           nullable=True)
+    position_id = Column(Integer, ForeignKey("positions.id"),
+                         nullable=True, index=True)
+
+    approved_headcount = Column(Integer, default=0)
+    planned_hires = Column(Integer, default=0)
+    expected_leaves = Column(Integer, default=0)
+    expected_groups = Column(Integer, default=0)
+    budgeted_salary = Column(Float, nullable=True)
+
+    note = Column(Text, nullable=True)
+    status = Column(String, default="draft", index=True)
+    approved_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    approved_at = Column(DateTime, nullable=True)
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+# =====================================================================
+#  HR: YANGI XODIM SO'ROVI
+# =====================================================================
+class StaffRequest(Base):
+    """Filial rahbari yangi xodim so'raydi. Tasdiqlanmagan so'rov
+    bo'yicha vakansiya ochilmaydi."""
+    __tablename__ = "staff_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)   # REQ-000012
+    requested_by = Column(Integer, ForeignKey("users.id"), index=True)
+    request_date = Column(Date, default=date.today)
+
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    department_id = Column(Integer, ForeignKey("departments.id"),
+                           nullable=True)
+    position_id = Column(Integer, ForeignKey("positions.id"),
+                         nullable=True, index=True)
+    headcount = Column(Integer, default=1)
+    employment_type = Column(String, default="full")
+    work_schedule = Column(String, nullable=True)
+    needed_from = Column(Date, nullable=True)
+
+    reason = Column(String, nullable=True)
+    replacing_user_id = Column(Integer, ForeignKey("users.id"),
+                               nullable=True)
+    salary_from = Column(Float, nullable=True)
+    salary_to = Column(Float, nullable=True)
+    requirements = Column(Text, nullable=True)
+    certificates = Column(String, nullable=True)
+    experience_years = Column(Float, nullable=True)
+    duties = Column(Text, nullable=True)
+    kpi_note = Column(Text, nullable=True)
+    priority = Column(String, default="normal", index=True)
+
+    status = Column(String, default="draft", index=True)
+    reject_reason = Column(Text, nullable=True)
+    vacancy_id = Column(Integer, ForeignKey("vacancies.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class RequestApproval(Base):
+    """Tasdiqlash zanjirining har bir qadami. O'chirilmaydi —
+    kim, qachon, nima uchun qaror qilgani tarixda qoladi."""
+    __tablename__ = "request_approvals"
+
+    id = Column(Integer, primary_key=True, index=True)
+    request_id = Column(Integer, ForeignKey("staff_requests.id"),
+                        index=True)
+    step = Column(String, nullable=False)        # hr_review, budget_review…
+    decision = Column(String, nullable=False)    # approved / rejected
+    decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decided_at = Column(DateTime, default=datetime.utcnow)
+    note = Column(Text, nullable=True)

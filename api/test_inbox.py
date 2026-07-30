@@ -33,6 +33,12 @@ def tok(u, p="x"):
 
 TODAY = date.today()
 NOW = datetime.utcnow()
+
+# Test sutkaning istalgan soatida bir xil natija berishi kerak.
+# Shuning uchun markaz vaqt mintaqasi shunday qo'yiladiki, HOZIRGI
+# payt mahalliy vaqt bo'yicha kunduz soat 14:00 ga to'g'ri kelsin.
+# Bu _is_off_hours ning haqiqiy kodini tekshirishga xalaqit bermaydi.
+roles.TIMEZONE_OFFSET_HOURS = (14 - NOW.hour) % 24
 db = SessionLocal()
 b = models.Branch(name="Zafar"); db.add(b); db.commit()
 BID = b.id
@@ -120,7 +126,8 @@ ck("kritik SLA", r.json()["sla_label"], "Kritik")
 
 print("\n=== 4. ISH VAQTIDAN TASHQARI ===")
 
-night = NOW.replace(hour=2, minute=30)
+# Mahalliy vaqt bo'yicha 02:00 — aniq ish vaqtidan tashqari
+night = NOW - timedelta(hours=12)
 r = client.post("/api/inbox", headers=HS, json={
     "channel": "instagram", "kind": "dm", "external_id": "ig-night",
     "author": "Tungi", "text": "Salom",

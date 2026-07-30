@@ -3166,3 +3166,229 @@ def compare_verdict(mine, avg, lower_is_better=False):
     if better:
         return "O'rtachadan yaxshi", "emerald", diff
     return "O'rtachadan past", "amber", diff
+
+
+# =====================================================================
+#  HR: BO'LIMLAR VA LAVOZIMLAR
+#
+#  Bular jadval sifatida saqlanadi (asoschi tahrirlashi kerak), lekin
+#  boshlang'ich ro'yxat shu yerdan seed qilinadi.
+# =====================================================================
+
+DEPARTMENTS = [
+    ("academic", "O'quv bo'limi", "Ustozlar, support, examiner"),
+    ("sales", "Sotuv", "Lidlar, sinov darsi, shartnoma"),
+    ("marketing", "Marketing", "SMM, reklama, kontent"),
+    ("hr", "HR", "Kadrlar va rivojlanish"),
+    ("finance", "Moliya", "Kassa, hisobot, oylik"),
+    ("operations", "Operatsiya", "Filial ishi, jadval, xona"),
+    ("admin", "Ma'muriyat", "Administratorlar, qabul"),
+    ("it", "IT", "Tizim va texnika"),
+]
+DEPARTMENT_LABELS = {k: lbl for k, lbl, _ in DEPARTMENTS}
+
+# (kalit, nom, bo'lim, tizimdagi rol, sinov muddati oyi, sinov darsi
+#  kerakmi)
+POSITIONS = [
+    ("teacher", "O'qituvchi", "academic", TEACHER, 2, True),
+    ("senior_teacher", "Katta o'qituvchi", "academic", TEACHER, 1, True),
+    ("support_teacher", "Support teacher", "academic", SUPPORT_TEACHER,
+     2, True),
+    ("examiner", "Examiner", "academic", EXAMINER, 2, True),
+    ("academic_head", "O'quv bo'limi rahbari", "academic", ACADEMIC_HEAD,
+     3, False),
+    ("administrator", "Administrator", "admin", ADMINISTRATOR, 2, False),
+    ("sales_manager", "Sotuv menejeri", "sales", SALES_MANAGER, 2, False),
+    ("sales_head", "Sotuv rahbari", "sales", SALES_HEAD, 3, False),
+    ("smm_manager", "SMM menejer", "marketing", SMM_MANAGER, 2, False),
+    ("hr_manager", "HR menejer", "hr", HR_MANAGER, 3, False),
+    ("recruiter", "Rekruter", "hr", HR_MANAGER, 2, False),
+    ("accountant", "Buxgalter", "finance", ACCOUNTANT, 3, False),
+    ("branch_manager", "Filial rahbari", "operations", BRANCH_MANAGER,
+     3, False),
+    ("videographer", "Videograf", "marketing", SMM_MANAGER, 2, False),
+    ("designer", "Dizayner", "marketing", SMM_MANAGER, 2, False),
+]
+POSITION_LABELS = {k: lbl for k, lbl, _d, _r, _p, _t in POSITIONS}
+# Qaysi lavozimda sinov darsi majburiy
+TRIAL_REQUIRED = [k for k, _l, _d, _r, _p, t in POSITIONS if t]
+DEFAULT_PROBATION_MONTHS = 2
+
+
+# =====================================================================
+#  HR: SHTAT REJASI (WORKFORCE PLANNING)
+#
+#  "Qaysi filialda nechta odam kerak?" degan savolga raqam bilan javob
+#  beradi. Bo'shliq = tasdiqlangan shtat − hozirgi faol xodim.
+# =====================================================================
+
+PLAN_STATUSES = [
+    ("draft", "Qoralama", "slate"),
+    ("review", "Ko'rib chiqilmoqda", "amber"),
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("active", "Amalda", "teal"),
+    ("closed", "Yopildi", "slate"),
+]
+PLAN_STATUS_LABELS = {k: lbl for k, lbl, _ in PLAN_STATUSES}
+PLAN_STATUS_TONE = {k: t for k, _, t in PLAN_STATUSES}
+
+# Ustoz yuklamasi darajalari (admin sozlashi mumkin)
+UTILIZATION_BANDS = [
+    (40, "low", "Bo'sh", "sky"),
+    (70, "normal", "Me'yorida", "emerald"),
+    (90, "high", "Band", "amber"),
+    (None, "over", "Ortiqcha yuklangan", "red"),
+]
+
+
+def utilization_band(percent):
+    """Yuklama foizidan daraja va rang."""
+    for ceiling, key, label, tone in UTILIZATION_BANDS:
+        if ceiling is None or percent <= ceiling:
+            return key, label, tone
+    return "over", "Ortiqcha yuklangan", "red"
+
+
+# =====================================================================
+#  HR: YANGI XODIM SO'ROVI
+#
+#  Filial rahbari og'zaki emas, tizim orqali so'raydi. Tasdiqlanmagan
+#  so'rov bo'yicha vakansiya ochilmaydi — bu byudjetni himoya qiladi.
+# =====================================================================
+
+REQUEST_REASONS = [
+    ("new_group", "Yangi guruh ochilyapti", False),
+    ("new_branch", "Yangi filial", False),
+    ("resigned", "Xodim ishdan bo'shadi", True),
+    ("terminated", "Xodim ishdan chiqarildi", True),
+    ("workload", "Yuklama oshdi", False),
+    ("new_position", "Yangi lavozim", False),
+    ("temporary", "Vaqtinchalik o'rinbosar", True),
+    ("performance", "Natijasi past xodim o'rniga", True),
+    ("seasonal", "Mavsumiy ehtiyoj", False),
+    ("other", "Boshqa", False),
+]
+REQUEST_REASON_LABELS = {k: lbl for k, lbl, _ in REQUEST_REASONS}
+# Shu sabablarda kimning o'rniga ekani ko'rsatilishi kerak
+REPLACEMENT_REASONS = [k for k, _l, r in REQUEST_REASONS if r]
+
+STAFF_REQUEST_FLOW = [
+    ("draft", "Qoralama", "slate"),
+    ("submitted", "Yuborildi", "sky"),
+    ("hr_review", "HR ko'rmoqda", "violet"),
+    ("budget_review", "Byudjet ko'rmoqda", "amber"),
+    ("director_review", "Rahbar ko'rmoqda", "orange"),
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("rejected", "Rad etildi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+    ("converted", "Vakansiya ochildi", "teal"),
+]
+REQUEST_STATE_LABELS = {k: lbl for k, lbl, _ in STAFF_REQUEST_FLOW}
+REQUEST_STATE_TONE = {k: t for k, _, t in STAFF_REQUEST_FLOW}
+
+# Tasdiqlash zanjiri: har bir bosqichda kim qaror qabul qiladi
+REQUEST_APPROVERS = {
+    "submitted": [HR_MANAGER] + FULL_ACCESS,
+    "hr_review": [ACCOUNTANT, FOUNDER],
+    "budget_review": [FOUNDER],
+}
+REQUEST_NEXT = {
+    "submitted": "hr_review",
+    "hr_review": "budget_review",
+    "budget_review": "approved",
+}
+# Bu bosqichdan keyin so'rovni tahrirlab bo'lmaydi
+REQUEST_LOCKED_AFTER = ["approved", "rejected", "cancelled", "converted"]
+
+REQUEST_PRIORITIES = [
+    ("low", "Past", "slate", 60),
+    ("normal", "Oddiy", "sky", 30),
+    ("high", "Yuqori", "amber", 14),
+    ("critical", "Kritik", "red", 7),
+]
+PRIORITY_LABELS = {k: lbl for k, lbl, _t, _d in REQUEST_PRIORITIES}
+PRIORITY_TONE = {k: t for k, _l, t, _d in REQUEST_PRIORITIES}
+# Vakansiya shuncha kundan ortiq ochiq qolsa ogohlantiriladi
+PRIORITY_SLA_DAYS = {k: d for k, _l, _t, d in REQUEST_PRIORITIES}
+
+EMPLOYMENT_TYPES = [
+    ("full", "To'liq stavka"),
+    ("part", "Yarim stavka"),
+    ("hourly", "Soatbay"),
+    ("contract", "Shartnoma asosida"),
+    ("intern", "Amaliyotchi"),
+]
+EMPLOYMENT_TYPE_LABELS = dict(EMPLOYMENT_TYPES)
+
+
+# =====================================================================
+#  HR: VAKANSIYA
+# =====================================================================
+
+VACANCY_STATES = [
+    ("draft", "Qoralama", "slate"),
+    ("pending", "Tasdiq kutilmoqda", "amber"),
+    ("open", "Ochiq", "emerald"),
+    ("sourcing", "Nomzod qidirilmoqda", "sky"),
+    ("screening", "Rezyumelar ko'rilmoqda", "sky"),
+    ("interviewing", "Suhbatlar", "violet"),
+    ("assessment", "Sinov bosqichi", "violet"),
+    ("offer", "Taklif bosqichi", "orange"),
+    ("partial", "Qisman to'ldirildi", "teal"),
+    ("filled", "To'ldirildi", "teal"),
+    ("hold", "To'xtatib turildi", "slate"),
+    ("cancelled", "Bekor qilindi", "slate"),
+    ("closed", "Yopildi", "slate"),
+]
+VACANCY_STATE_LABELS = {k: lbl for k, lbl, _ in VACANCY_STATES}
+VACANCY_STATE_TONE = {k: t for k, _, t in VACANCY_STATES}
+# Shu holatlarda vakansiya "ochiq" hisoblanadi
+VACANCY_OPEN_STATES = ["open", "sourcing", "screening", "interviewing",
+                       "assessment", "offer", "partial"]
+
+VACANCY_CLOSE_REASONS = [
+    ("filled", "Xodim topildi"),
+    ("no_need", "Ehtiyoj qolmadi"),
+    ("budget", "Byudjet yo'q"),
+    ("internal", "Ichki xodim bilan yopildi"),
+    ("postponed", "Keyinga qoldirildi"),
+    ("other", "Boshqa"),
+]
+CLOSE_REASON_LABELS = dict(VACANCY_CLOSE_REASONS)
+
+
+# ---- HR ruxsatlari ----
+HR_FULL = FULL_ACCESS + [HR_MANAGER]
+WORKFORCE_VIEW = HR_FULL + [ACCOUNTANT, ACADEMIC_HEAD]
+REQUEST_CREATE = FULL_ACCESS + [HR_MANAGER, ACADEMIC_HEAD, SALES_HEAD]
+VACANCY_MANAGE = HR_FULL
+
+
+# =====================================================================
+#  VAQT MINTAQASI
+#
+#  Server UTC'da ishlaydi, markaz esa Toshkent vaqtida. Ish vaqti,
+#  "bugun" va SLA hisobida shu farq hisobga olinmasa, soat 21:00 da
+#  kelgan xabar "ish vaqtida keldi" deb sanaladi va xodim aybdor
+#  bo'lib qoladi.
+#
+#  Boshqa mamlakatda filial ochilsa shu qiymat o'zgartiriladi.
+# =====================================================================
+TIMEZONE_OFFSET_HOURS = 5          # O'zbekiston: UTC+5
+
+
+def to_local(when):
+    """UTC vaqtni markaz vaqtiga o'giradi."""
+    from datetime import timedelta as _td
+    if when is None:
+        return None
+    return when + _td(hours=TIMEZONE_OFFSET_HOURS)
+
+
+def local_now():
+    from datetime import datetime as _dt
+    return to_local(_dt.utcnow())
+
+
+def local_today():
+    return local_now().date()

@@ -1628,3 +1628,138 @@ class ReportIn(BaseModel):
     end_date: Optional[date] = None
     branch_id: Optional[int] = None
     summary: Optional[str] = None
+
+
+# ---------- HR: bo'lim va lavozim ----------
+class DepartmentIn(BaseModel):
+    name: str
+    key: Optional[str] = None
+    description: Optional[str] = None
+    head_id: Optional[int] = None
+    position: Optional[int] = 0
+
+
+class DepartmentPatch(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    head_id: Optional[int] = None
+    position: Optional[int] = None
+    is_active: Optional[int] = None
+
+
+class PositionIn(BaseModel):
+    name: str
+    key: Optional[str] = None
+    department_id: Optional[int] = None
+    system_role: Optional[str] = None
+    probation_months: Optional[int] = 2
+    trial_required: Optional[int] = 0
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    description: Optional[str] = None
+    requirements: Optional[str] = None
+
+
+class PositionPatch(BaseModel):
+    name: Optional[str] = None
+    department_id: Optional[int] = None
+    system_role: Optional[str] = None
+    probation_months: Optional[int] = None
+    trial_required: Optional[int] = None
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    description: Optional[str] = None
+    requirements: Optional[str] = None
+    is_active: Optional[int] = None
+
+
+# ---------- HR: shtat rejasi ----------
+class PlanIn(BaseModel):
+    year: int
+    month: Optional[int] = None
+    quarter: Optional[int] = None
+    branch_id: Optional[int] = None
+    department_id: Optional[int] = None
+    position_id: Optional[int] = None
+    approved_headcount: Optional[int] = 0
+    planned_hires: Optional[int] = 0
+    expected_leaves: Optional[int] = 0
+    expected_groups: Optional[int] = 0
+    budgeted_salary: Optional[float] = None
+    note: Optional[str] = None
+
+
+class PlanPatch(BaseModel):
+    approved_headcount: Optional[int] = None
+    planned_hires: Optional[int] = None
+    expected_leaves: Optional[int] = None
+    expected_groups: Optional[int] = None
+    budgeted_salary: Optional[float] = None
+    note: Optional[str] = None
+    status: Optional[str] = None
+
+
+# ---------- HR: xodim so'rovi ----------
+class StaffRequestIn(BaseModel):
+    branch_id: Optional[int] = None
+    department_id: Optional[int] = None
+    position_id: Optional[int] = None
+    headcount: Optional[int] = 1
+    employment_type: Optional[str] = "full"
+    work_schedule: Optional[str] = None
+    needed_from: Optional[date] = None
+    reason: Optional[str] = None
+    replacing_user_id: Optional[int] = None
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    requirements: Optional[str] = None
+    certificates: Optional[str] = None
+    experience_years: Optional[float] = None
+    duties: Optional[str] = None
+    kpi_note: Optional[str] = None
+    priority: Optional[str] = "normal"
+
+
+class StaffRequestPatch(StaffRequestIn):
+    pass
+
+
+class RequestApprovalIn(BaseModel):
+    note: Optional[str] = None
+
+
+class RequestRejectIn(BaseModel):
+    reason: str
+    note: Optional[str] = None
+
+
+# ---------- HR: vakansiya ----------
+class VacancyHrIn(BaseModel):
+    title: Optional[str] = None
+    position_id: Optional[int] = None
+    department_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    headcount: Optional[int] = None
+    hiring_manager_id: Optional[int] = None
+    recruiter_id: Optional[int] = None
+    employment_type: Optional[str] = None
+    work_schedule: Optional[str] = None
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    description: Optional[str] = None
+    duties: Optional[str] = None
+    requirements: Optional[str] = None
+    experience_years: Optional[float] = None
+    education: Optional[str] = None
+    language_level: Optional[str] = None
+    certificates: Optional[str] = None
+    probation_months: Optional[int] = None
+    kpi_note: Optional[str] = None
+    priority: Optional[str] = None
+    target_close: Optional[date] = None
+
+
+class VacancyStatusIn(BaseModel):
+    status: str
+    close_reason: Optional[str] = None
+    note: Optional[str] = None

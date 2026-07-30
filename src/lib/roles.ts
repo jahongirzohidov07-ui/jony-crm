@@ -81,3 +81,9 @@ export const HR_ACCESS = [...FULL_ACCESS, HR_MANAGER];
 
 /** Marketing bo'limi. */
 export const MARKETING_ACCESS = [...FULL_ACCESS, SMM_MANAGER];
+
+/** Audit logni ko'radiganlar. */
+export const AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER];
+
+/** Asoschi paneli - umumiy foyda ko'rinadigan joy. */
+export const PROFIT_VIEW = FULL_ACCESS;

@@ -65,6 +65,7 @@ export interface User {
   is_active: boolean;
   /** Adminlar (sotuv menejeri) uchun fiks oylik. Faqat asoschi o'zgartiradi. */
   fix_salary?: number | null;
+  public_id?: string | null;
 }
 
 export interface Teacher {
@@ -113,6 +114,7 @@ export interface Payment {
   created_by?: string;
   period?: string;
   created_at: string;
+  public_id?: string | null;
 }
 
 export interface Lesson {
@@ -175,6 +177,8 @@ export interface Student {
   group?: Group;
   branch?: Branch;
   balance: number;
+  public_id?: string | null;
+  parent_id?: number | null;
 }
 
 export interface StudentDetail extends Student {
@@ -223,6 +227,7 @@ export interface Lead {
   converted_student_id?: number | null;
   created_at: string;
   updated_at?: string | null;
+  public_id?: string | null;
 }
 
 export interface Expense {
@@ -817,3 +822,156 @@ export interface SocialPlatform {
 }
 
 export type SocialStats = Record<string, SocialPlatform>;
+
+// ------------------------------------------------------ Ota-ona ----
+export interface ParentStudent {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  status: string;
+}
+
+export interface Parent {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  phone?: string | null;
+  phone2?: string | null;
+  relation?: string | null;
+  address?: string | null;
+  workplace?: string | null;
+  note?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  created_at?: string | null;
+  students: ParentStudent[];
+}
+
+// --------------------------------------------------- Shartnoma ----
+export interface Contract {
+  id: number;
+  public_id?: string | null;
+  student_id: number;
+  student?: string | null;
+  student_public_id?: string | null;
+  parent_id?: number | null;
+  parent?: string | null;
+  group_id?: number | null;
+  group?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  date?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
+  monthly_fee: number;
+  discount_percent: number;
+  status: string;
+  note?: string | null;
+  created_by?: string | null;
+  created_at?: string | null;
+}
+
+// --------------------------------------------------- Shikoyat ----
+export interface Complaint {
+  id: number;
+  student_id?: number | null;
+  student?: string | null;
+  group_id?: number | null;
+  group?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  source: string;
+  severity: string;
+  subject: string;
+  body?: string | null;
+  status: string;
+  resolution?: string | null;
+  assigned_user_id?: number | null;
+  assigned_user?: string | null;
+  closed_at?: string | null;
+  created_at?: string | null;
+  age_days: number;
+}
+
+// -------------------------------------------------- Audit log ----
+export interface AuditRow {
+  id: number;
+  user_name?: string | null;
+  user_role?: string | null;
+  entity: string;
+  entity_label_type: string;
+  entity_id?: number | null;
+  entity_label?: string | null;
+  action: string;
+  action_label: string;
+  field?: string | null;
+  old_value?: string | null;
+  new_value?: string | null;
+  note?: string | null;
+  created_at?: string | null;
+}
+
+export interface AuditResponse {
+  total: number;
+  rows: AuditRow[];
+}
+
+export interface AuditMeta {
+  actions: { key: string; label: string }[];
+  entities: { key: string; label: string }[];
+}
+
+// ------------------------------------------------ Asoschi paneli ----
+export interface CeoAlert {
+  level: "high" | "normal" | "low";
+  title: string;
+  detail: string;
+  link?: string | null;
+}
+
+export interface CeoDebtor {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  balance: number;
+  group?: string | null;
+}
+
+export interface CeoProblemGroup {
+  id: number;
+  name: string;
+  teacher?: string | null;
+  students: number;
+  attendance: number | null;
+  reasons: string[];
+}
+
+export interface CeoToday {
+  date: string;
+  scope: string;
+  money: {
+    income: number;
+    expense: number;
+    net: number;
+    payment_count: number;
+  };
+  sales: { new_leads: number; touched_leads: number; sales: number };
+  students: {
+    active: number;
+    debtors: number;
+    total_debt: number;
+    left_today: number;
+    left_list: { id: number; full_name: string; group?: string | null }[];
+    top_debtors: CeoDebtor[];
+  };
+  attendance: {
+    lessons_today: number;
+    unmarked: number;
+    present: number;
+    marked: number;
+    percent: number | null;
+  };
+  problem_groups: CeoProblemGroup[];
+  complaints: { open: number; overdue: number; list: Complaint[] };
+  alerts: CeoAlert[];
+}

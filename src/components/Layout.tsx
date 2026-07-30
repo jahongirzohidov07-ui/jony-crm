@@ -49,6 +49,8 @@ import {
   PARENT,
   TEACHER,
   SUPPORT_TEACHER,
+  CONTENT_REQUESTER,
+  IDEA_SUBMIT,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -237,7 +239,11 @@ export default function Layout() {
   if (can(user?.role, ACADEMIC_VIEW)) {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
   }
-  // Marketing - SMM manager uchun asosiy bo'lim.
+  // SMM - kontent quvuri: g'oyadan natijagacha.
+  if (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) {
+    items = [...items, { to: "/smm", label: "SMM", icon: Megaphone }];
+  }
+  // Marketing - reklama va voronka analitikasi.
   if (can(user?.role, MARKETING_ACCESS)) {
     items = [...items, { to: "/marketing", label: "Marketing", icon: Megaphone }];
   }

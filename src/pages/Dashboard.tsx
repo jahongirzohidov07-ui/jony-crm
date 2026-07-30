@@ -37,7 +37,10 @@ import {
   type CollectionReport,
 } from "../lib/api";
 import { formatSom, formatPeriodLabel, formatGrowthLabel } from "../lib/format";
-import { FINANCE_ACCESS, PROFIT_VIEW, can } from "../lib/roles";
+import {
+  CASH_ACCESS, DEBTOR_ACCESS, PROFIT_VIEW, SALES_MANAGER, can,
+} from "../lib/roles";
+import { SalesPanelCards } from "../components/SalesPanel";
 import { useAuth } from "../lib/AuthContext";
 import Ceo from "./Ceo";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
@@ -343,6 +346,9 @@ type DashTab = "overview" | "today";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  // Administratorning ekrani boshqacha: unga daromad grafigi va
+  // obunachilar soni emas, BUGUN nima qilish kerakligi kerak.
+  const isSales = user?.role === SALES_MANAGER;
   const [tab, setTab] = useState<DashTab>("overview");
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
@@ -464,7 +470,7 @@ export default function Dashboard() {
 
       {stats && (
         <>
-          {can(user?.role, FINANCE_ACCESS) && <CollectionCard />}
+          {can(user?.role, CASH_ACCESS) && <CollectionCard />}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />
@@ -486,8 +492,20 @@ export default function Dashboard() {
               value={formatSom(stats.total_debt)}
               tone="danger"
             />
-            <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
-            <SocialCards />
+            {can(user?.role, DEBTOR_ACCESS) ? (
+              <Link to="/finance" className="block">
+                <KpiCard
+                  icon={AlertTriangle}
+                  label="Qarzdorlar soni"
+                  value={String(stats.debtor_count)}
+                  hint="ro'yxatni ochish uchun bosing"
+                  tone="danger"
+                />
+              </Link>
+            ) : (
+              <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
+            )}
+            {!isSales && <SocialCards />}
           </div>
 
           <ChartCard
@@ -526,7 +544,12 @@ export default function Dashboard() {
             )}
           </ChartCard>
 
+          {/* Administratorga daromad grafigi emas, to'ldirilishi kerak
+              bo'lgan guruhlar va shu oy ketganlar kerak. */}
+          {isSales && <SalesPanelCards />}
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 mt-4">
+            {!isSales && (
             <ChartCard title="Oylik daromad trendi (so'nggi 6 oy)">
               {trend.length === 0 ? (
                 <p className="text-slate-400 text-sm">Ma'lumot yo'q</p>
@@ -561,6 +584,7 @@ export default function Dashboard() {
                 </ResponsiveContainer>
               )}
             </ChartCard>
+            )}
 
             <ChartCard title="Talabalar holati bo'yicha taqsimot">
               {statusBreakdown.every((s) => s.value === 0) ? (

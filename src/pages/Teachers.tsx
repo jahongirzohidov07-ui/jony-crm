@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { Plus, X, UserMinus, UserCheck, Pencil } from "lucide-react";
 import { api, type Teacher, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { STAFF_VIEWERS, can } from "../lib/roles";
+import {
+  STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER, can,
+} from "../lib/roles";
 import { formatDate } from "../lib/format";
+import { SalaryCard } from "../components/SalaryCard";
+import { TeacherScoreboard } from "../components/TeacherScoreboard";
+
+type TeachTab = "list" | "score" | "salary";
 
 function TeacherModal({
   branches,
@@ -149,6 +155,12 @@ export default function Teachers() {
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<Teacher | null>(null);
+  const [salary, setSalary] = useState<number | null>(null);
+  const [tab, setTab] = useState<TeachTab>(
+    user?.role === TEACHER || user?.role === SUPPORT_TEACHER
+      ? "salary"
+      : "list"
+  );
 
   function load() {
     setLoading(true);
@@ -162,6 +174,9 @@ export default function Teachers() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, STAFF_VIEWERS);
+  // Ustozning o'zi hamkasbining oyligini ochmaydi
+  const canSeeSalary =
+    can(user?.role, SALARY_SELF_VIEW) && !can(user?.role, [TEACHER, SUPPORT_TEACHER]);
   const activeCount = teachers.filter((t) => t.is_active !== 0).length;
 
   /** Ishdan ketgan deb belgilash - o'chirish o'rniga. Shunda ustozning
@@ -190,8 +205,47 @@ export default function Teachers() {
     }
   }
 
+  const isTeacher =
+    user?.role === TEACHER || user?.role === SUPPORT_TEACHER;
+
   return (
     <div className="p-8">
+      <div className="flex items-center gap-1 mb-5">
+        {[
+          ...(isTeacher ? [{ k: "salary", l: "Mening oyligim" }] : []),
+          { k: "list", l: "Ro'yxat" },
+          { k: "score", l: "Natijalar" },
+        ].map((t) => (
+          <button
+            key={t.k}
+            onClick={() => setTab(t.k as TeachTab)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition ${
+              tab === t.k
+                ? "bg-brand-50 border-brand-400 text-brand-700"
+                : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+            }`}
+          >
+            {t.l}
+          </button>
+        ))}
+      </div>
+
+      {tab === "salary" && (
+        <div className="max-w-4xl">
+          <h1 className="text-xl font-semibold text-slate-900 mb-1">
+            Mening oyligim
+          </h1>
+          <p className="text-sm text-slate-500 mb-5">
+            Yoqlama qo'yilishi bilan o'zi hisoblanadi
+          </p>
+          <SalaryCard self />
+        </div>
+      )}
+
+      {tab === "score" && <TeacherScoreboard />}
+
+      {tab === "list" && (
+      <>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">O'qituvchilar</h1>
@@ -235,7 +289,17 @@ export default function Teachers() {
                     className={`border-t border-slate-100 ${left ? "bg-slate-50/60" : ""}`}
                   >
                     <td className="px-4 py-3 font-medium text-slate-800">
-                      {t.full_name}
+                      {canSeeSalary ? (
+                        <button
+                          onClick={() => setSalary(t.id)}
+                          className="hover:text-brand-700"
+                          title="Ish haqi kartasi"
+                        >
+                          {t.full_name}
+                        </button>
+                      ) : (
+                        t.full_name
+                      )}
                       {left && (
                         <span className="ml-2 text-[10px] uppercase tracking-wide bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded">
                           ketgan {t.left_date ? formatDate(t.left_date) : ""}
@@ -274,6 +338,9 @@ export default function Teachers() {
         </div>
       )}
 
+      </>
+      )}
+
       {showAdd && (
         <TeacherModal
           branches={branches}
@@ -293,6 +360,9 @@ export default function Teachers() {
             load();
           }}
         />
+      )}
+      {salary !== null && (
+        <SalaryCard teacherId={salary} onClose={() => setSalary(null)} />
       )}
     </div>
   );

@@ -19,7 +19,8 @@ import {
   type Branch,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, can } from "../lib/roles";
+import { FINANCE_ACCESS, CASH_ACCESS, can } from "../lib/roles";
+import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
 } from "../lib/expenses";
@@ -27,9 +28,19 @@ import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "cashflow" | "pnl" | "expenses" | "billing";
+type Tab = "debtors" | "cashflow" | "pnl" | "expenses" | "billing";
 
-const TABS: { key: Tab; label: string }[] = [
+/**
+ * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
+ * oylik hisob-kitob. Foyda-zarar va xarajatlar unga ko'rinmaydi.
+ */
+const CASH_TABS: { key: Tab; label: string }[] = [
+  { key: "debtors", label: "Qarzdorlar" },
+  { key: "billing", label: "Oylik hisob-kitob" },
+];
+
+const FULL_TABS: { key: Tab; label: string }[] = [
+  { key: "debtors", label: "Qarzdorlar" },
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
   { key: "expenses", label: "Xarajatlar" },
@@ -962,9 +973,11 @@ function ExpensesTab() {
 // -------------------------------------------------------------------- Page
 export default function Moliya() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("cashflow");
+  const full = can(user?.role, FINANCE_ACCESS);
+  const TABS = full ? FULL_TABS : CASH_TABS;
+  const [tab, setTab] = useState<Tab>("debtors");
 
-  if (!can(user?.role, FINANCE_ACCESS)) {
+  if (!can(user?.role, CASH_ACCESS)) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -978,7 +991,9 @@ export default function Moliya() {
     <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1">Moliya</h1>
       <p className="text-sm text-slate-500 mb-5">
-        Pul oqimi, foyda-zarar va xarajatlar
+        {full
+          ? "Pul oqimi, foyda-zarar va xarajatlar"
+          : "Qarzdorlar va oylik hisob-kitob"}
       </p>
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">
@@ -997,6 +1012,7 @@ export default function Moliya() {
         ))}
       </div>
 
+      {tab === "debtors" && <Debtors />}
       {tab === "cashflow" && <CashflowTab />}
       {tab === "pnl" && <PnlTab />}
       {tab === "expenses" && <ExpensesTab />}

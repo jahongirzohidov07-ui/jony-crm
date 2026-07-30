@@ -26,6 +26,7 @@ import Permissions from "./pages/Permissions";
 import MyProfile from "./pages/MyProfile";
 import MyCoins from "./pages/MyCoins";
 import MyCareer from "./pages/MyCareer";
+import Smm from "./pages/Smm";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -75,6 +76,7 @@ function AppRoutes() {
         <Route path="profile" element={<MyProfile />} />
         <Route path="my-coins" element={<MyCoins />} />
         <Route path="my-career" element={<MyCareer />} />
+        <Route path="smm" element={<Smm />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

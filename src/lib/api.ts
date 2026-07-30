@@ -1226,12 +1226,20 @@ export interface BillingMonth {
 export interface CollectionReport {
   period: string;
   charged: number;
+  /** Shu oyning hisobiga qo'shilgan pul (ortiqchasi kirmaydi). */
   collected: number;
+  /** Kassaga haqiqatda tushgan pul - ortiqcha to'lov ham kiradi. */
+  cash_in: number;
   percent: number;
   debt: number;
+  carry_in: number;
+  carry_out: number;
   students: number;
   paid_students: number;
-  by_admin: { name: string; collected: number; percent: number }[];
+  partial_students: number;
+  unpaid_students: number;
+  rows: CollectionRow[];
+  by_admin: { name: string; collected: number }[];
 }
 
 export interface TrialStatus {
@@ -1427,4 +1435,125 @@ export interface AttachmentData {
   size: number;
   kind: string;
   data: string;
+}
+
+// ---------------------------------------------- Kollektsiya (yangi) ----
+export interface CollectionRow {
+  student_id: number;
+  public_id?: string | null;
+  full_name: string;
+  group?: string | null;
+  phone?: string | null;
+  charged: number;
+  paid: number;
+  carry_in: number;
+  covered: number;
+  left: number;
+  carry_out: number;
+  old_debt: number;
+  percent: number;
+  state: "paid" | "partial" | "unpaid";
+}
+
+// -------------------------------------------------- Ma'lumotnomalar ----
+export interface Reference {
+  areas: string[];
+  schools: string[];
+  lesson_times: { start: string; end: string; label: string }[];
+  lesson_minutes: number;
+  exit_types: { key: string; label: string; hint: string }[];
+  archive_groups: { key: string; label: string; hint: string }[];
+}
+
+// ------------------------------------------------------ Dars jadvali ----
+export interface TimetableItem {
+  group_id: number;
+  group: string;
+  public_id?: string | null;
+  subject?: string | null;
+  subject_label: string;
+  level?: string | null;
+  level_label: string;
+  teacher?: string | null;
+  branch?: string | null;
+  room?: string | null;
+  capacity: number | null;
+  students: number;
+  days: string[];
+  start?: string | null;
+  end: string;
+  time_label: string;
+  start_date?: string | null;
+  end_date?: string | null;
+}
+
+export interface Timetable {
+  days: { key: string; label: string; short: string }[];
+  by_day: Record<string, TimetableItem[]>;
+  items: TimetableItem[];
+  no_schedule: { id: number; name: string }[];
+  clashes: { day: string; room: string; time: string; groups: string[] }[];
+}
+
+// ------------------------------------------------------------ Arxiv ----
+export interface ArchiveStudent {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  phone?: string | null;
+  parent_phone?: string | null;
+  group?: string | null;
+  branch?: string | null;
+  enrolled_date?: string | null;
+  left_date?: string | null;
+  months: number | null;
+  balance: number;
+  amount: number;
+  group_key: string;
+}
+
+export interface ArchiveStudents {
+  groups: { key: string; label: string; hint: string; count: number; total: number }[];
+  rows: ArchiveStudent[];
+  total: number;
+}
+
+export interface ArchiveStaffRow {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  username: string;
+  role: string;
+  role_label: string;
+  branch?: string | null;
+  exit_type: string;
+  exit_label: string;
+  exit_reason?: string | null;
+  exit_date?: string | null;
+}
+
+export interface ArchiveStaff {
+  groups: { key: string; label: string; hint: string; count: number }[];
+  rows: ArchiveStaffRow[];
+  total: number;
+}
+
+// ------------------------------------------- Manzil / maktab statistikasi
+export interface GeoRow {
+  name: string;
+  leads: number;
+  converted: number;
+  conversion: number;
+  known: boolean;
+}
+
+export interface GeographyReport {
+  months: number;
+  total_leads: number;
+  areas: GeoRow[];
+  schools: GeoRow[];
+  top_area: GeoRow | null;
+  top_school: GeoRow | null;
+  free_text_areas: number;
+  free_text_schools: number;
 }

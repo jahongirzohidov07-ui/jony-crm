@@ -2117,3 +2117,143 @@ export interface TeacherScoreboard {
   dimensions: { key: string; label: string; weight: number }[];
   averages: Record<string, number | null>;
 }
+
+// ---------------------------------------------------------- Ruxsatlar
+export interface PermMatrix {
+  roles: { key: string; label: string; locked: boolean; external: boolean }[];
+  role_groups: { key: string; label: string; roles: string[] }[];
+  resources: { key: string; label: string; group: string;
+               secret_hint?: string | null }[];
+  actions: { key: string; label: string }[];
+  matrix: Record<string, Record<string, string[]>>;
+  changed: Record<string, Record<string, string[]>>;
+}
+
+export interface MyPermissions {
+  role: string;
+  role_label: string;
+  perms: Record<string, string[]>;
+}
+
+// ------------------------------------------------- Mening dashboardim
+export interface MyCard {
+  label: string;
+  value: number | string;
+  hint?: string | null;
+  tone: string;
+  link?: string | null;
+}
+
+export interface MyDashboard {
+  role: string;
+  role_label: string;
+  full_name: string;
+  branch?: string | null;
+  cards: MyCard[];
+  tasks: { open: number; overdue: number; rows: TaskRow[] };
+  show_company: boolean;
+}
+
+// ---------------------------------------------------- Mening profilim
+export interface PayPart {
+  key: string;
+  label: string;
+  amount: number;
+  hint?: string | null;
+}
+
+export interface MyProfile {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  username: string;
+  role: string;
+  role_label: string;
+  position: string;
+  branch?: string | null;
+  phone?: string | null;
+  photo?: string | null;
+  hired_date?: string | null;
+  period: string;
+  parts: PayPart[];
+  total: number;
+  fix_salary: number;
+  teacher?: {
+    teacher_id: number;
+    earned_month: number;
+    paid_month: number;
+    balance: number;
+    by_group: SalaryGroupRow[];
+  } | null;
+  kpi?: {
+    active_students: number;
+    expected: number;
+    collected: number;
+    collection_percent: number;
+    collection_bonus: number;
+    new_clients: number;
+    new_client_bonus: number;
+    total: number;
+  } | null;
+  late_count: number;
+  late_minutes: number;
+  onboarding_done: number;
+  onboarding_total: number;
+  onboarding: OnboardingRow[];
+}
+
+// ---------------------------------------------- Dars jadvali (to'r)
+export interface GridItem {
+  group_id: number;
+  group: string;
+  subject?: string | null;
+  subject_label?: string | null;
+  level?: string | null;
+  level_label?: string | null;
+  teacher_id?: number | null;
+  teacher?: string | null;
+  room_id?: number | null;
+  room?: string | null;
+  days: string[];
+  start?: string | null;
+  end?: string | null;
+  time_label?: string | null;
+  students: number;
+  capacity?: number | null;
+  fill?: number | null;
+  lessons_held: number;
+  avg_age?: number | null;
+  hue: string;
+  warn?: string | null;
+  col: number;
+  span: number;
+}
+
+export interface GridRoom {
+  id: number;
+  name: string;
+  capacity?: number | null;
+  branch?: string | null;
+  items: GridItem[];
+  busy_hours: number;
+  usage: number;
+}
+
+export interface TimetableGrid {
+  day: string;
+  day_label: string;
+  days: string[];
+  presets: { key: string; label: string; days: string[] }[];
+  weekdays: { key: string; label: string; short: string }[];
+  slots: string[];
+  start: string;
+  step: number;
+  rooms: GridRoom[];
+  no_room: GridItem[];
+  unplaced: GridItem[];
+  clashes: { room: string; time?: string | null; groups: string[] }[];
+  total_groups: number;
+  total_students: number;
+  can_edit: boolean;
+  can_export: boolean;
+}

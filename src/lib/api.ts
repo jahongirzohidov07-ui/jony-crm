@@ -113,6 +113,20 @@ export interface Teacher {
   left_date?: string | null;
   /** 1 = hozir ishlayapti, 0 = ishdan ketgan. */
   is_active?: number;
+  max_groups?: number | null;
+  max_lessons_per_day?: number | null;
+  /** junior / middle / senior / expert / head / metodist */
+  grade?: string | null;
+  grade_since?: string | null;
+  cert?: string | null;
+  cert_score?: number | null;
+  /** CELTA / TESOL / DELTA */
+  qualification?: string | null;
+  birth_date?: string | null;
+  skill_score?: number | null;
+  support_months?: number | null;
+  remediation_until?: string | null;
+  remediation_reason?: string | null;
 }
 
 export interface Group {
@@ -2668,4 +2682,131 @@ export interface RewardRequests {
   rows: RewardRequestRow[];
   count: number;
   statuses: { key: string; label: string; tone: string }[];
+}
+
+// ---------------------------------------------- Ustoz darajalari
+export interface GradeRow {
+  key: string;
+  label: string;
+  order_no: number;
+  rate_per_student: number;
+  min_months: number;
+  min_groups?: number | null;
+  max_groups?: number | null;
+  cert_label?: string | null;
+  cert_min?: number | null;
+  promote_pass_rate?: number | null;
+  demote_below?: number | null;
+  demote_to?: string | null;
+  needs_qualification: boolean;
+  min_results?: number | null;
+  result_band?: number | null;
+  min_age?: number | null;
+  min_skill?: number | null;
+  level_pass_percent?: number | null;
+  tone: string;
+  teachers: number;
+}
+
+export interface GradeMissing {
+  key: string;
+  text: string;
+}
+
+export interface GradeState {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  grade: string;
+  grade_label: string;
+  tone: string;
+  grade_since?: string | null;
+  rate_per_student: number;
+  next_grade?: string | null;
+  next_label?: string | null;
+  next_rate?: number | null;
+  months: number;
+  age?: number | null;
+  cert?: string | null;
+  cert_score?: number | null;
+  qualification?: string | null;
+  skill_score?: number | null;
+  groups: number;
+  min_groups?: number | null;
+  max_groups?: number | null;
+  pass_rate?: number | null;
+  pass_results: number;
+  pass_needed?: number | null;
+  pass_mark?: number | null;
+  test_avg?: number | null;
+  test_results: number;
+  demote_below?: number | null;
+  enough_data: boolean;
+  ready: boolean;
+  missing: GradeMissing[];
+  should_demote: boolean;
+  need_remediation: boolean;
+  in_remediation: boolean;
+  remediation_until?: string | null;
+  remediation_reason?: string | null;
+}
+
+export interface CareerMap {
+  rows: GradeState[];
+  grades: GradeRow[];
+  ready: GradeState[];
+  at_risk: GradeState[];
+  remediation: GradeState[];
+  applied: Record<string, number>;
+  pass_window_months: number;
+  test_window_days: number;
+  min_results: number;
+  remediation_below: number;
+  can_edit: boolean;
+  hint: string;
+}
+
+export interface GradeEvent {
+  id: number;
+  kind: string;
+  kind_label: string;
+  tone: string;
+  from_grade?: string | null;
+  from_label?: string | null;
+  to_grade?: string | null;
+  to_label?: string | null;
+  date?: string | null;
+  reason?: string | null;
+  pass_rate?: number | null;
+  test_avg?: number | null;
+  rate_before?: number | null;
+  rate_after?: number | null;
+  decided_by?: string | null;
+}
+
+export interface StudyItem {
+  id: number;
+  kind: string;
+  title: string;
+  done: boolean;
+  done_at?: string | null;
+  note?: string | null;
+}
+
+export interface StudyStage {
+  key: string;
+  label: string;
+  done: number;
+  total: number;
+  items: StudyItem[];
+}
+
+export interface TeacherCareer {
+  state: GradeState;
+  grades: GradeRow[];
+  history: GradeEvent[];
+  study: StudyStage[];
+  entry: { key: string; text: string }[];
+  can_edit: boolean;
+  is_me: boolean;
 }

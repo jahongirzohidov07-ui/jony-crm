@@ -2763,7 +2763,7 @@ QUICK_REPLY_LABELS = {k: lbl for k, lbl, _ in QUICK_REPLIES}
 
 # ---- Atributsiya voronkasi ----
 ATTRIBUTION_FUNNEL = [
-    ("reach", "Reach"),
+    ("reach", "Qamrov"),
     ("engagement", "Faol harakat"),
     ("profile", "Profil tashrifi"),
     ("click", "Havola bosilishi"),

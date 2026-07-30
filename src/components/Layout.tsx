@@ -42,6 +42,7 @@ import {
   roleLabel,
   TASK_ACCESS,
   INVENTORY_VIEW,
+  CASH_ACCESS,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -189,11 +190,14 @@ export default function Layout() {
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/gamification", label: "Coin tizimi", icon: Trophy }];
   }
-  // Moliya, hisobotlar va analitika - o'quv jarayonidan keyin turadi.
+  // Moliya - administratorda ham bor, lekin ichida faqat qarzdorlar
+  // va oylik hisob-kitob turadi (foyda-zarar unga ko'rinmaydi).
+  if (can(user?.role, CASH_ACCESS)) {
+    items = [...items, { to: "/finance", label: "Moliya", icon: Wallet }];
+  }
   if (can(user?.role, FINANCE_ACCESS)) {
     items = [
       ...items,
-      { to: "/finance", label: "Moliya", icon: Wallet },
       { to: "/reports", label: "Hisobotlar", icon: BarChart3 },
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
@@ -248,7 +252,7 @@ export default function Layout() {
 
         {/* Tez to'lov - administrator uchun eng ko'p bosiladigan tugma,
             shuning uchun menyuning eng tepasida turadi. */}
-        {can(user?.role, FINANCE_ACCESS) && (
+        {can(user?.role, CASH_ACCESS) && (
           <div className="px-3 pt-3">
             <QuickPayment />
           </div>

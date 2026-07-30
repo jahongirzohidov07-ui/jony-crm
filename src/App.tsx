@@ -30,6 +30,7 @@ import Smm from "./pages/Smm";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
+import MyResults from "./pages/MyResults";
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
@@ -72,6 +73,7 @@ function AppRoutes() {
         <Route path="gamification" element={<Gamification />} />
         <Route path="branches" element={<Branches />} />
         <Route path="users" element={<Users />} />
+        <Route path="my-results" element={<MyResults />} />
         <Route path="permissions" element={<Permissions />} />
         <Route path="profile" element={<MyProfile />} />
         <Route path="my-coins" element={<MyCoins />} />

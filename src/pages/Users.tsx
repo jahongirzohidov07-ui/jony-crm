@@ -218,7 +218,7 @@ function UserForm({
   );
 }
 
-export default function Users() {
+export function StaffTab() {
   const { user } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
@@ -395,4 +395,10 @@ export default function Users() {
       )}
     </div>
   );
+}
+
+
+/** Alohida sahifa sifatida ham ochiladi (asoschida HR ichida turadi). */
+export default function Users() {
+  return <StaffTab />;
 }

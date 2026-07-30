@@ -19,9 +19,15 @@ import { riskLevel, fillBand, MANUAL_SIGNALS } from "../lib/academic";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "risk" | "fill" | "tasks" | "support" | "rooms";
+import StudentsPage from "./Students";
+import GroupsPage from "./Groups";
+
+type Tab = "students" | "groups" | "risk" | "fill" | "tasks"
+  | "support" | "rooms";
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: "students", label: "Talabalar" },
+  { key: "groups", label: "Guruhlar" },
   { key: "risk", label: "Akademik risk" },
   { key: "fill", label: "Guruh to'lishi" },
   { key: "tasks", label: "Vazifalar" },
@@ -922,6 +928,8 @@ export default function Academic() {
         )}
       </div>
 
+      {tab === "students" && <StudentsPage />}
+      {tab === "groups" && <GroupsPage />}
       {tab === "risk" && <RiskTab />}
       {tab === "fill" && <FillTab branchId={branchId} />}
       {tab === "tasks" && <TasksTab />}

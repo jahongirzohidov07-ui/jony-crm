@@ -29,15 +29,22 @@ import { FINANCE_ACCESS, can } from "../lib/roles";
 import { groupColor, MONTHS } from "../lib/expenses";
 import { subjectLine } from "../lib/subjects";
 import { formatSom, formatPeriodLabel } from "../lib/format";
+import { LtvFullReport } from "../components/LtvReport";
+import { ChurnReport } from "../components/ChurnReport";
+import { CapacityTab } from "../components/MarketingExtras";
 
-type Tab = "biznes" | "sifat" | "xarajat" | "oquvchi" | "ustoz" | "geo";
+type Tab = "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "oquvchi"
+  | "ustoz" | "sigim" | "geo";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
+  { key: "ltv", label: "LTV" },
+  { key: "churn", label: "Ketish (churn)" },
   { key: "sifat", label: "Ta'lim sifati" },
   { key: "xarajat", label: "Xarajatlar tahlili" },
   { key: "oquvchi", label: "O'quvchi qiymati (LTV)" },
   { key: "ustoz", label: "Ustozlar" },
+  { key: "sigim", label: "Xonalar bandligi" },
   { key: "geo", label: "Manzil va maktab" },
 ];
 
@@ -870,6 +877,9 @@ export default function Analitika() {
           {tab === "xarajat" && <ExpenseTab data={data} />}
           {tab === "oquvchi" && <LtvTab />}
           {tab === "ustoz" && <TeacherTab data={data} />}
+          {tab === "ltv" && <LtvFullReport />}
+          {tab === "churn" && <ChurnReport />}
+          {tab === "sigim" && <CapacityTab />}
           {tab === "geo" && <GeoTab months={months} />}
         </>
       )}

@@ -17,16 +17,22 @@ import {
   vacancyStatusLabel,
 } from "../lib/hr";
 import { CandidateCard } from "../components/CandidateCard";
+import { AttendanceTab, NpsTab } from "../components/HrExtras";
+import { StaffTab } from "./Users";
 import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "funnel" | "candidates" | "vacancies";
+type Tab = "funnel" | "candidates" | "vacancies" | "staff"
+  | "attendance" | "nps";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "funnel", label: "HR voronka" },
   { key: "candidates", label: "Nomzodlar" },
   { key: "vacancies", label: "Vakansiyalar" },
+  { key: "staff", label: "Xodimlar" },
+  { key: "attendance", label: "Davomat" },
+  { key: "nps", label: "Ustozlar NPS" },
 ];
 
 function Stat({
@@ -905,6 +911,9 @@ export default function Hr() {
       {tab === "funnel" && <FunnelTab />}
       {tab === "candidates" && <CandidatesTab branches={branches} />}
       {tab === "vacancies" && <VacanciesTab branches={branches} />}
+      {tab === "staff" && <StaffTab />}
+      {tab === "attendance" && <AttendanceTab />}
+      {tab === "nps" && <NpsTab />}
     </div>
   );
 }

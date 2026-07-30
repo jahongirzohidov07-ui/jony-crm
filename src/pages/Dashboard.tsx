@@ -350,6 +350,9 @@ export default function Dashboard() {
   // Administratorning ekrani boshqacha: unga daromad grafigi va
   // obunachilar soni emas, BUGUN nima qilish kerakligi kerak.
   const isSales = user?.role === SALES_MANAGER;
+  // Butun markaz bo'yicha kartalar — Examiner, HR va SMM'ga kerak
+  // emas: ular faqat o'z ishini ko'radi.
+  const [showGeneral, setShowGeneral] = useState(true);
   const [tab, setTab] = useState<DashTab>("overview");
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
@@ -470,9 +473,9 @@ export default function Dashboard() {
       {err && <p className="text-red-600 text-sm">{err}</p>}
 
       {/* Har bir xodim avval O'Z ishini ko'radi */}
-      <MyPanel />
+      <MyPanel onLoaded={setShowGeneral} />
 
-      {stats && (
+      {stats && showGeneral && (
         <>
           {can(user?.role, CASH_ACCESS) && <CollectionCard />}
 

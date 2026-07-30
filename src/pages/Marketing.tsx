@@ -17,12 +17,21 @@ import { MARKETING_CHANNELS } from "../lib/payments";
 import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "journey" | "funnel" | "channels" | "ads" | "social";
+type Tab = "journey" | "funnel" | "channels" | "romi" | "rfm"
+  | "notify" | "referral" | "ads" | "social";
+
+import {
+  RomiTab, RfmTab, NotifyTab, ReferralTab,
+} from "../components/MarketingExtras";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "journey", label: "To'liq yo'l" },
   { key: "funnel", label: "Lid voronkasi" },
   { key: "channels", label: "Kanallar va CAC" },
+  { key: "romi", label: "ROMI" },
+  { key: "rfm", label: "RFM segmentlar" },
+  { key: "notify", label: "Xabarnomalar" },
+  { key: "referral", label: "Referral" },
   { key: "ads", label: "Reklama ko'rsatkichlari" },
   { key: "social", label: "Ijtimoiy tarmoqlar" },
 ];
@@ -991,6 +1000,14 @@ export default function Marketing() {
 
       {tab === "social" ? (
         <SocialTab />
+      ) : tab === "romi" ? (
+        <RomiTab />
+      ) : tab === "rfm" ? (
+        <RfmTab />
+      ) : tab === "notify" ? (
+        <NotifyTab />
+      ) : tab === "referral" ? (
+        <ReferralTab />
       ) : tab === "ads" ? (
         <AdsTab />
       ) : tab === "journey" ? (

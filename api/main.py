@@ -94,6 +94,8 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE groups ADD COLUMN room_id INTEGER",
+        "ALTER TABLE groups ADD COLUMN capacity INTEGER",
         "ALTER TABLE students ADD COLUMN public_id VARCHAR",
         "ALTER TABLE students ADD COLUMN parent_id INTEGER",
         "ALTER TABLE leads ADD COLUMN public_id VARCHAR",
@@ -4697,3 +4699,1007 @@ def formatless(v: float) -> str:
     if v >= 1_000:
         return f"{round(v / 1_000)} ming"
     return str(int(v))
+
+
+# =====================================================================
+#  O'QUV BO'LIMI  -  xonalar
+# =====================================================================
+def _room_out(r: models.Room, groups: list = None) -> dict:
+    return {
+        "id": r.id, "name": r.name, "capacity": r.capacity,
+        "branch_id": r.branch_id,
+        "branch": r.branch.name if r.branch else None,
+        "note": r.note, "active": bool(r.active),
+        "groups": [{"id": g.id, "name": g.name} for g in (groups or [])],
+    }
+
+
+@app.get("/api/rooms")
+def list_rooms(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    q = scope_to_branch(db.query(models.Room), models.Room, user)
+    rooms = q.order_by(models.Room.name).all()
+    by_room = {}
+    for g in db.query(models.Group).filter(models.Group.room_id.isnot(None)).all():
+        by_room.setdefault(g.room_id, []).append(g)
+    return [_room_out(r, by_room.get(r.id, [])) for r in rooms]
+
+
+@app.post("/api/rooms")
+def create_room(
+    payload: schemas.RoomCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    r = models.Room(**data)
+    db.add(r); db.commit(); db.refresh(r)
+    audit.log(db, user, entity="room", action="create", entity_id=r.id,
+              entity_label=r.name, new_value=r.capacity,
+              branch_id=r.branch_id, commit=True)
+    return _room_out(r)
+
+
+@app.put("/api/rooms/{room_id}")
+def update_room(
+    room_id: int,
+    payload: schemas.RoomUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    r = db.query(models.Room).get(room_id)
+    if not r:
+        raise HTTPException(404, "Xona topilmadi")
+    changes = payload.model_dump(exclude_unset=True)
+    audit.log_changes(db, user, entity="room", obj=r, changes=changes,
+                      label_attr="name")
+    for k, v in changes.items():
+        setattr(r, k, v)
+    db.commit(); db.refresh(r)
+    return _room_out(r)
+
+
+@app.delete("/api/rooms/{room_id}")
+def delete_room(
+    room_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    r = db.query(models.Room).get(room_id)
+    if not r:
+        raise HTTPException(404, "Xona topilmadi")
+    n = db.query(models.Group).filter(models.Group.room_id == room_id).count()
+    if n:
+        raise HTTPException(400, f"Bu xonada {n} ta guruh bor")
+    audit.log(db, user, entity="room", action="delete", entity_id=r.id,
+              entity_label=r.name, branch_id=r.branch_id)
+    db.delete(r); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  GURUH TO'LISH KOEFFITSIYENTI
+# =====================================================================
+def _group_capacity(g: models.Group, rooms: dict) -> int | None:
+    """Guruh sig'imi: avval o'zining chekloviga, keyin xona sig'imiga
+    qaraydi. Ikkalasi ham yo'q bo'lsa - hisoblab bo'lmaydi."""
+    if g.capacity:
+        return g.capacity
+    r = rooms.get(g.room_id)
+    return r.capacity if r else None
+
+
+@app.get("/api/academic/group-fill")
+def group_fill(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    """Guruh to'lishi = faol o'quvchi / sig'im x 100%.
+
+    Bu markazning eng muhim iqtisodiy ko'rsatkichi: yarim bo'sh guruh
+    ustoz vaqtini ham, xona ijarasini ham to'liq yeydi, lekin
+    daromadning yarmini beradi."""
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+    gq = scope_to_branch(db.query(models.Group), models.Group, user)
+    counts = {}
+    for s in scope_to_branch(db.query(models.Student), models.Student, user).all():
+        if s.status == "active" and s.group_id:
+            counts[s.group_id] = counts.get(s.group_id, 0) + 1
+
+    rows, no_capacity = [], []
+    for g in gq.all():
+        n = counts.get(g.id, 0)
+        cap = _group_capacity(g, rooms)
+        if not cap:
+            no_capacity.append({"id": g.id, "name": g.name})
+            continue
+        pct = round(n / cap * 100, 1)
+        band, band_label = roles.fill_band(pct)
+        rows.append({
+            "id": g.id, "name": g.name,
+            "teacher": g.teacher.full_name if g.teacher else None,
+            "branch": g.branch.name if g.branch else None,
+            "room": rooms[g.room_id].name if g.room_id in rooms else g.room,
+            "students": n, "capacity": cap,
+            "percent": pct, "band": band, "band_label": band_label,
+            "free_seats": max(0, cap - n),
+        })
+    rows.sort(key=lambda r: r["percent"])
+
+    total_students = sum(r["students"] for r in rows)
+    total_capacity = sum(r["capacity"] for r in rows)
+    by_band = {}
+    for r in rows:
+        by_band[r["band"]] = by_band.get(r["band"], 0) + 1
+
+    return {
+        "rows": rows,
+        "no_capacity": no_capacity,
+        "summary": {
+            "groups": len(rows),
+            "students": total_students,
+            "capacity": total_capacity,
+            "percent": round(total_students / total_capacity * 100, 1)
+                       if total_capacity else 0.0,
+            "free_seats": max(0, total_capacity - total_students),
+            "by_band": [
+                {"band": k, "label": lbl, "count": by_band.get(k, 0)}
+                for _m, k, lbl in roles.GROUP_FILL_BANDS
+            ],
+        },
+    }
+
+
+# =====================================================================
+#  AKADEMIK RISK
+# =====================================================================
+def _absent_streak(db: Session, student_id: int, group_id: int | None) -> int:
+    """Oxirgi darslardan boshlab ketma-ket nechta dars qoldirgan."""
+    if not group_id:
+        return 0
+    lessons = (db.query(models.Lesson)
+               .filter(models.Lesson.group_id == group_id,
+                       models.Lesson.held == 1)
+               .order_by(models.Lesson.date.desc()).limit(12).all())
+    if not lessons:
+        return 0
+    marks = {a.lesson_id: a.present for a in
+             db.query(models.Attendance).filter(
+                 models.Attendance.student_id == student_id,
+                 models.Attendance.lesson_id.in_([l.id for l in lessons])).all()}
+    streak = 0
+    for l in lessons:
+        v = marks.get(l.id)
+        if v is None:      # belgilanmagan - zanjir uzilmaydi, lekin sanalmaydi
+            continue
+        if v:
+            break
+        streak += 1
+    return streak
+
+
+def _score_trend(db: Session, student_id: int) -> float | None:
+    """Oxirgi ikki imtihon farqi (foizda). Manfiy - natija tushgan."""
+    rows = (db.query(models.ExamResult)
+            .join(models.Exam)
+            .filter(models.ExamResult.student_id == student_id,
+                    models.ExamResult.percent.isnot(None))
+            .order_by(models.Exam.date.desc()).limit(2).all())
+    if len(rows) < 2:
+        return None
+    return round((rows[0].percent or 0) - (rows[1].percent or 0), 1)
+
+
+def _student_risk(db: Session, s: models.Student, *, today: date,
+                  flags_by_student: dict, complaints_by_student: dict,
+                  moves_by_student: dict) -> dict:
+    """Bitta o'quvchining risk holati. Signallar ikki manbadan:
+    avtomat hisoblanadigan (davomat, to'lov, shikoyat, guruh almashish)
+    va qo'lda qo'yilgan (ustoz izohi, uy vazifasi)."""
+    signals = []
+
+    def add(key, detail=None):
+        signals.append({
+            "key": key,
+            "label": roles.RISK_SIGNAL_LABELS.get(key, key),
+            "weight": roles.RISK_SIGNAL_WEIGHT.get(key, 1),
+            "detail": detail,
+        })
+
+    streak = _absent_streak(db, s.id, s.group_id)
+    if streak >= 2:
+        add("absent_streak", f"ketma-ket {streak} ta dars")
+
+    bal = student_balance(db, s.id)
+    if bal < 0:
+        add("payment_late", f"{abs(int(bal)):,} so'm qarz".replace(",", " "))
+
+    n_comp = complaints_by_student.get(s.id, 0)
+    if n_comp:
+        add("complaint", f"{n_comp} ta shikoyat")
+
+    n_moves = moves_by_student.get(s.id, 0)
+    if n_moves >= 2:
+        add("group_hopping", f"{n_moves} marta guruh almashtirgan")
+
+    trend = _score_trend(db, s.id)
+    if trend is not None and trend <= -10:
+        add("score_drop", f"{trend} foiz")
+    elif trend is not None and -2 <= trend <= 2:
+        # O'sish yo'q - tushmayapti ham, ko'tarilmayapti ham
+        add("no_progress", "natija joyida turibdi")
+
+    for f in flags_by_student.get(s.id, []):
+        add(f.signal, f.note)
+
+    score = sum(x["weight"] for x in signals)
+    level = roles.risk_level(score)
+    return {
+        "student_id": s.id,
+        "public_id": s.public_id,
+        "full_name": s.full_name,
+        "group_id": s.group_id,
+        "group": s.group.name if s.group else None,
+        "teacher": s.group.teacher.full_name
+                   if s.group and s.group.teacher else None,
+        "branch": s.branch.name if s.branch else None,
+        "phone": s.phone,
+        "score": score,
+        "level": level,
+        "level_label": roles.RISK_LEVEL_LABELS[level],
+        "signals": signals,
+    }
+
+
+@app.get("/api/academic/risk")
+def academic_risk(
+    level: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    """Xavfdagi o'quvchilar. Ro'yxat avtomat hisoblanadi - hech kim
+    qo'lda 'bu bola ketib qoladi' deb belgilashi shart emas."""
+    today = date.today()
+    students = [s for s in
+                scope_to_branch(db.query(models.Student), models.Student, user).all()
+                if s.status in ("active", "trial")]
+    ids = [s.id for s in students]
+
+    flags_by_student = {}
+    complaints_by_student = {}
+    moves_by_student = {}
+    if ids:
+        for f in (db.query(models.RiskFlag)
+                  .filter(models.RiskFlag.student_id.in_(ids),
+                          models.RiskFlag.active == 1).all()):
+            flags_by_student.setdefault(f.student_id, []).append(f)
+        for c in (db.query(models.Complaint)
+                  .filter(models.Complaint.student_id.in_(ids),
+                          models.Complaint.status != "closed").all()):
+            complaints_by_student[c.student_id] = (
+                complaints_by_student.get(c.student_id, 0) + 1)
+        for a in (db.query(models.AuditLog)
+                  .filter(models.AuditLog.entity == "student",
+                          models.AuditLog.action == "group_move",
+                          models.AuditLog.entity_id.in_(ids)).all()):
+            moves_by_student[a.entity_id] = moves_by_student.get(a.entity_id, 0) + 1
+
+    rows = [_student_risk(db, s, today=today,
+                          flags_by_student=flags_by_student,
+                          complaints_by_student=complaints_by_student,
+                          moves_by_student=moves_by_student)
+            for s in students]
+    at_risk = [r for r in rows if r["level"] != "normal"]
+    at_risk.sort(key=lambda r: -r["score"])
+    if level:
+        at_risk = [r for r in at_risk if r["level"] == level]
+
+    counts = {k: 0 for k, _, _, _ in roles.RISK_LEVELS}
+    for r in rows:
+        counts[r["level"]] = counts.get(r["level"], 0) + 1
+
+    # Ochiq vazifalar - kimga biriktirilgani ko'rinib tursin
+    open_tasks = {}
+    if ids:
+        for t in (db.query(models.RiskTask)
+                  .filter(models.RiskTask.student_id.in_(ids),
+                          models.RiskTask.status == "open").all()):
+            open_tasks.setdefault(t.student_id, []).append({
+                "id": t.id, "title": t.title,
+                "assigned_user": t.assigned_user.full_name
+                                 if t.assigned_user else None,
+                "due_date": t.due_date.isoformat() if t.due_date else None,
+            })
+    for r in at_risk:
+        r["tasks"] = open_tasks.get(r["student_id"], [])
+
+    return {
+        "total": len(rows),
+        "at_risk": len(at_risk),
+        "levels": [{"key": k, "label": lbl, "color": color,
+                    "count": counts.get(k, 0)}
+                   for k, lbl, color, _ in roles.RISK_LEVELS],
+        "rows": at_risk,
+        "signals": [{"key": k, "label": lbl, "weight": w}
+                    for k, lbl, w in roles.RISK_SIGNALS],
+    }
+
+
+@app.post("/api/academic/risk-flags")
+def add_risk_flag(
+    payload: schemas.RiskFlagCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    if payload.signal not in roles.RISK_SIGNAL_LABELS:
+        raise HTTPException(400, "Noma'lum signal")
+    f = models.RiskFlag(**payload.model_dump(), created_by=user.full_name)
+    db.add(f); db.commit(); db.refresh(f)
+    audit.log(db, user, entity="student", action="update",
+              entity_id=f.student_id, field="risk",
+              new_value=roles.RISK_SIGNAL_LABELS[f.signal],
+              note=f.note, commit=True)
+    return {"id": f.id}
+
+
+@app.delete("/api/academic/risk-flags/{flag_id}")
+def resolve_risk_flag(
+    flag_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    f = db.query(models.RiskFlag).get(flag_id)
+    if not f:
+        raise HTTPException(404, "Topilmadi")
+    f.active = 0
+    f.resolved_at = date.today()
+    db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/academic/tasks")
+def list_risk_tasks(
+    status: str | None = "open",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    q = db.query(models.RiskTask).join(
+        models.Student, models.RiskTask.student_id == models.Student.id)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.Student.branch_id == user.branch_id)
+    if status:
+        q = q.filter(models.RiskTask.status == status)
+    today = date.today()
+    return [{
+        "id": t.id,
+        "student_id": t.student_id,
+        "student": t.student.full_name if t.student else None,
+        "level": t.level,
+        "level_label": roles.RISK_LEVEL_LABELS.get(t.level or "", ""),
+        "title": t.title,
+        "assigned_user_id": t.assigned_user_id,
+        "assigned_user": t.assigned_user.full_name if t.assigned_user else None,
+        "due_date": t.due_date.isoformat() if t.due_date else None,
+        "overdue": bool(t.due_date and t.status == "open" and t.due_date < today),
+        "status": t.status,
+        "result": t.result,
+        "created_at": t.created_at.isoformat() if t.created_at else None,
+    } for t in q.order_by(models.RiskTask.due_date).all()]
+
+
+@app.post("/api/academic/tasks")
+def create_risk_task(
+    payload: schemas.RiskTaskCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    t = models.RiskTask(**payload.model_dump(), created_by=user.full_name)
+    db.add(t); db.commit(); db.refresh(t)
+    audit.log(db, user, entity="student", action="update", entity_id=t.student_id,
+              field="risk_task", new_value=t.title,
+              note=f"Mas'ul: {t.assigned_user.full_name}" if t.assigned_user else None,
+              commit=True)
+    return {"id": t.id}
+
+
+@app.put("/api/academic/tasks/{task_id}")
+def update_risk_task(
+    task_id: int,
+    payload: schemas.RiskTaskUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    t = db.query(models.RiskTask).get(task_id)
+    if not t:
+        raise HTTPException(404, "Vazifa topilmadi")
+    for k, v in payload.model_dump(exclude_unset=True).items():
+        setattr(t, k, v)
+    t.done_at = date.today() if t.status == "done" else None
+    db.commit()
+    return {"ok": True}
+
+
+@app.delete("/api/academic/tasks/{task_id}")
+def delete_risk_task(
+    task_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    t = db.query(models.RiskTask).get(task_id)
+    if not t:
+        raise HTTPException(404, "Vazifa topilmadi")
+    db.delete(t); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  OTA-ONA SUHBATLARI VA SERTIFIKATLAR
+# =====================================================================
+@app.get("/api/students/{student_id}/talks")
+def list_talks(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    rows = (db.query(models.ParentTalk)
+            .filter(models.ParentTalk.student_id == student_id)
+            .order_by(models.ParentTalk.date.desc()).all())
+    return [{"id": t.id, "date": t.date.isoformat() if t.date else None,
+             "channel": t.channel, "topic": t.topic, "summary": t.summary,
+             "outcome": t.outcome, "created_by": t.created_by} for t in rows]
+
+
+@app.post("/api/students/{student_id}/talks")
+def add_talk(
+    student_id: int,
+    payload: schemas.ParentTalkCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    data = payload.model_dump()
+    data["date"] = data.get("date") or date.today()
+    t = models.ParentTalk(student_id=student_id, **data,
+                          created_by=user.full_name)
+    db.add(t); db.commit(); db.refresh(t)
+    audit.log(db, user, entity="student", action="update", entity_id=student_id,
+              field="parent_talk", new_value=t.topic, note=t.summary,
+              commit=True)
+    return {"id": t.id}
+
+
+@app.delete("/api/talks/{talk_id}")
+def delete_talk(
+    talk_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS)),
+):
+    t = db.query(models.ParentTalk).get(talk_id)
+    if not t:
+        raise HTTPException(404, "Topilmadi")
+    db.delete(t); db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/students/{student_id}/certificates")
+def list_certificates(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    rows = (db.query(models.Certificate)
+            .filter(models.Certificate.student_id == student_id)
+            .order_by(models.Certificate.date.desc()).all())
+    return [{"id": c.id, "kind": c.kind,
+             "kind_label": roles.CERTIFICATE_KIND_LABELS.get(c.kind, c.kind),
+             "level": c.level, "score": c.score,
+             "date": c.date.isoformat() if c.date else None,
+             "note": c.note} for c in rows]
+
+
+@app.post("/api/students/{student_id}/certificates")
+def add_certificate(
+    student_id: int,
+    payload: schemas.CertificateCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    data = payload.model_dump()
+    data["date"] = data.get("date") or date.today()
+    c = models.Certificate(student_id=student_id, **data,
+                           created_by=user.full_name)
+    db.add(c); db.commit(); db.refresh(c)
+    audit.log(db, user, entity="student", action="update", entity_id=student_id,
+              field="certificate",
+              new_value=f"{roles.CERTIFICATE_KIND_LABELS.get(c.kind, c.kind)} "
+                        f"{c.level or ''}".strip(), commit=True)
+    return {"id": c.id}
+
+
+@app.delete("/api/certificates/{cert_id}")
+def delete_certificate(
+    cert_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    c = db.query(models.Certificate).get(cert_id)
+    if not c:
+        raise HTTPException(404, "Topilmadi")
+    db.delete(c); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  O'QUVCHI TARIXI  -  bitta joyda butun yo'l
+# =====================================================================
+# Holat o'zgarishlarining o'zbekcha nomi.
+_STATUS_EVENT = {
+    "frozen": ("freeze", "O'qish muzlatildi"),
+    "archived": ("leave", "O'qishdan chiqdi"),
+    "active": ("return", "Qayta tiklandi"),
+    "trial": ("trial", "Sinov darsiga o'tdi"),
+}
+
+
+@app.get("/api/students/{student_id}/history")
+def student_history(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """O'quvchining butun yo'li: qaysi guruhlarda, qaysi ustozlarda
+    o'qigan, necha marta guruh almashtirgan, qancha dars qoldirgan,
+    shikoyatlar, ota-ona bilan suhbatlar, muzlatish va qaytish."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+
+    logs = (db.query(models.AuditLog)
+            .filter(models.AuditLog.entity == "student",
+                    models.AuditLog.entity_id == student_id)
+            .order_by(models.AuditLog.created_at).all())
+
+    # --- Guruh va ustoz tarixi ---
+    group_moves = [l for l in logs if l.action in ("group_move", "group_remove")]
+    groups_seen, teachers_seen, timeline = [], [], []
+
+    def seen(lst, name):
+        if name and name not in lst:
+            lst.append(name)
+
+    teacher_by_group = {g.name: (g.teacher.full_name if g.teacher else None)
+                        for g in db.query(models.Group).all()}
+
+    for l in group_moves:
+        seen(groups_seen, l.old_value)
+        seen(groups_seen, l.new_value)
+        seen(teachers_seen, teacher_by_group.get(l.old_value or ""))
+        seen(teachers_seen, teacher_by_group.get(l.new_value or ""))
+        timeline.append({
+            "date": l.created_at.isoformat() if l.created_at else None,
+            "kind": "group",
+            "title": "Guruhdan chiqarildi" if l.action == "group_remove"
+                     else "Guruh almashtirildi",
+            "detail": f"{l.old_value or '—'} → {l.new_value or '—'}",
+            "by": l.user_name,
+        })
+
+    if s.group:
+        seen(groups_seen, s.group.name)
+        seen(teachers_seen, s.group.teacher.full_name if s.group.teacher else None)
+
+    # --- Holat o'zgarishlari: muzlatish / chiqish / qaytish ---
+    freezes = leaves = returns = 0
+    for l in logs:
+        if l.field != "status" and l.action != "activate":
+            continue
+        new = l.new_value
+        if new not in _STATUS_EVENT:
+            continue
+        kind, title = _STATUS_EVENT[new]
+        # "active" ga qaytish - faqat oldin muzlatilgan/ketgan bo'lsa
+        if kind == "return":
+            if l.old_value not in ("frozen", "archived"):
+                continue
+            returns += 1
+        elif kind == "freeze":
+            freezes += 1
+        elif kind == "leave":
+            leaves += 1
+        timeline.append({
+            "date": l.created_at.isoformat() if l.created_at else None,
+            "kind": kind, "title": title,
+            "detail": f"{l.old_value or '—'} → {new}",
+            "by": l.user_name,
+        })
+
+    # --- Davomat ---
+    att = (db.query(models.Attendance, models.Lesson)
+           .join(models.Lesson, models.Attendance.lesson_id == models.Lesson.id)
+           .filter(models.Attendance.student_id == student_id).all())
+    marked = len(att)
+    absent = sum(1 for a, _l in att if not a.present)
+    absent_dates = sorted(
+        (l.date.isoformat() for a, l in att if not a.present), reverse=True)
+
+    # --- Shikoyatlar ---
+    comps = (db.query(models.Complaint)
+             .filter(models.Complaint.student_id == student_id)
+             .order_by(models.Complaint.created_at.desc()).all())
+    for c in comps:
+        timeline.append({
+            "date": c.created_at.isoformat() if c.created_at else None,
+            "kind": "complaint",
+            "title": "Shikoyat: " + c.subject,
+            "detail": c.resolution or c.body,
+            "by": c.created_by,
+        })
+
+    # --- Ota-ona suhbatlari ---
+    talks = (db.query(models.ParentTalk)
+             .filter(models.ParentTalk.student_id == student_id)
+             .order_by(models.ParentTalk.date.desc()).all())
+    for t in talks:
+        timeline.append({
+            "date": t.date.isoformat() if t.date else None,
+            "kind": "talk",
+            "title": "Ota-ona bilan suhbat: " + t.topic,
+            "detail": t.summary,
+            "by": t.created_by,
+        })
+
+    # --- Sertifikatlar ---
+    certs = (db.query(models.Certificate)
+             .filter(models.Certificate.student_id == student_id).all())
+    for c in certs:
+        timeline.append({
+            "date": c.date.isoformat() if c.date else None,
+            "kind": "certificate",
+            "title": "Sertifikat: "
+                     + roles.CERTIFICATE_KIND_LABELS.get(c.kind, c.kind),
+            "detail": c.level or (str(c.score) if c.score else None),
+            "by": c.created_by,
+        })
+
+    timeline.sort(key=lambda x: x["date"] or "", reverse=True)
+
+    return {
+        "summary": {
+            "groups": groups_seen,
+            "group_count": len(groups_seen),
+            "teachers": [t for t in teachers_seen if t],
+            "group_changes": len([l for l in group_moves
+                                  if l.action == "group_move"]),
+            "marked_lessons": marked,
+            "absences": absent,
+            "attendance_percent": round((marked - absent) / marked * 100, 1)
+                                  if marked else None,
+            "complaints": len(comps),
+            "talks": len(talks),
+            "certificates": len(certs),
+            "freezes": freezes,
+            "leaves": leaves,
+            "returns": returns,
+        },
+        "absent_dates": absent_dates[:30],
+        "timeline": timeline,
+    }
+
+
+# =====================================================================
+#  OILAVIY CHEGIRMA
+# =====================================================================
+def _family_discount_percent(db: Session, s: models.Student) -> float:
+    """Oilaviy chegirma foizi. AVTOMAT: bir ota-onaga bog'langan
+    FAOL farzandlar soni chegaradan oshsa - chegirma bor, kamaysa
+    o'zidan yo'qoladi. Hech kim qo'lda olib tashlashi shart emas."""
+    if not s.parent_id:
+        return 0.0
+    n = (db.query(models.Student)
+         .filter(models.Student.parent_id == s.parent_id,
+                 models.Student.status == "active").count())
+    if n >= roles.FAMILY_DISCOUNT_MIN_CHILDREN:
+        return roles.FAMILY_DISCOUNT_PERCENT
+    return 0.0
+
+
+@app.get("/api/students/{student_id}/pricing")
+def student_pricing(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """O'quvchining oylik narxi va unga tegishli chegirmalar."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+
+    base = s.group.monthly_fee if s.group else 0.0
+    fam = _family_discount_percent(db, s)
+
+    # Shartnomadagi shaxsiy chegirma (agar bo'lsa)
+    contract = (db.query(models.Contract)
+                .filter(models.Contract.student_id == student_id,
+                        models.Contract.status == "active")
+                .order_by(models.Contract.date.desc()).first())
+    personal = contract.discount_percent if contract else 0.0
+    if contract and contract.monthly_fee:
+        base = contract.monthly_fee
+
+    siblings = []
+    if s.parent_id:
+        siblings = [{"id": x.id, "full_name": x.full_name, "status": x.status}
+                    for x in db.query(models.Student).filter(
+                        models.Student.parent_id == s.parent_id,
+                        models.Student.id != s.id).all()]
+
+    total_pct = min(100.0, fam + personal)
+    return {
+        "base_fee": base,
+        "family_discount": fam,
+        "family_min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
+        "personal_discount": personal,
+        "total_discount": total_pct,
+        "final_fee": round(base * (100 - total_pct) / 100, 2),
+        "parent_id": s.parent_id,
+        "siblings": siblings,
+        "active_siblings": sum(1 for x in siblings if x["status"] == "active"),
+        # Chegirma qanday paydo bo'lgani va qachon yo'qolishi
+        "explanation": (
+            f"Oilada {sum(1 for x in siblings if x['status'] == 'active') + (1 if s.status == 'active' else 0)} "
+            f"ta faol farzand — {roles.FAMILY_DISCOUNT_PERCENT}% oilaviy chegirma. "
+            f"Biri o'qishni to'xtatsa chegirma avtomat yo'qoladi."
+            if fam else
+            (f"Oilaviy chegirma uchun kamida "
+             f"{roles.FAMILY_DISCOUNT_MIN_CHILDREN} ta faol farzand kerak."
+             if s.parent_id else
+             "Ota-ona biriktirilmagan — oilaviy chegirma hisoblanmaydi.")
+        ),
+    }
+
+
+@app.get("/api/reports/family-discounts")
+def family_discounts(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Oilaviy chegirma olayotgan oilalar. Chegirma avtomat
+    hisoblanadi, shuning uchun bu ro'yxat har doim haqiqatga mos."""
+    parents = scope_to_branch(db.query(models.Parent), models.Parent, user).all()
+    kids = {}
+    if parents:
+        for s in (db.query(models.Student)
+                  .filter(models.Student.parent_id.in_([p.id for p in parents]))
+                  .all()):
+            kids.setdefault(s.parent_id, []).append(s)
+
+    rows = []
+    for p in parents:
+        ch = kids.get(p.id, [])
+        active = [c for c in ch if c.status == "active"]
+        if len(active) < roles.FAMILY_DISCOUNT_MIN_CHILDREN:
+            continue
+        saved = 0.0
+        for c in active:
+            fee = c.group.monthly_fee if c.group else 0.0
+            saved += fee * roles.FAMILY_DISCOUNT_PERCENT / 100
+        rows.append({
+            "parent_id": p.id, "public_id": p.public_id,
+            "parent": p.full_name, "phone": p.phone,
+            "children": [{"id": c.id, "full_name": c.full_name,
+                          "status": c.status,
+                          "group": c.group.name if c.group else None}
+                         for c in ch],
+            "active_children": len(active),
+            "discount_percent": roles.FAMILY_DISCOUNT_PERCENT,
+            "monthly_saved": round(saved, 2),
+        })
+    rows.sort(key=lambda r: -r["active_children"])
+    return {
+        "percent": roles.FAMILY_DISCOUNT_PERCENT,
+        "min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
+        "families": len(rows),
+        "monthly_total": round(sum(r["monthly_saved"] for r in rows), 2),
+        "rows": rows,
+    }
+
+
+# =====================================================================
+#  MARKETING: REKLAMA KO'RSATKICHLARI VA TO'LIQ VORONKA
+# =====================================================================
+@app.get("/api/ad-stats")
+def list_ad_stats(
+    months: int = 12,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    today = date.today()
+    periods = []
+    for back in range(months - 1, -1, -1):
+        y, m = _shift_month(today.year, today.month, -back)
+        periods.append(_period_key(y, m))
+    q = scope_to_branch(db.query(models.AdStat), models.AdStat, user).filter(
+        models.AdStat.period.in_(periods))
+    return [{
+        "id": a.id, "channel": a.channel,
+        "label": roles.MARKETING_CHANNEL_LABELS.get(a.channel, a.channel),
+        "period": a.period, "impressions": a.impressions, "clicks": a.clicks,
+        "ctr": round(a.clicks / a.impressions * 100, 2) if a.impressions else 0.0,
+        "branch_id": a.branch_id, "note": a.note,
+    } for a in q.order_by(models.AdStat.period.desc()).all()]
+
+
+@app.post("/api/ad-stats")
+def upsert_ad_stat(
+    payload: schemas.AdStatCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    """Bir kanal + bir oy uchun bitta yozuv. Qayta yuborilsa
+    yangilanadi - takror qator paydo bo'lmaydi."""
+    if payload.channel not in roles.MARKETING_CHANNELS:
+        raise HTTPException(400, "Noma'lum kanal")
+    row = (db.query(models.AdStat)
+           .filter(models.AdStat.channel == payload.channel,
+                   models.AdStat.period == payload.period).first())
+    if row:
+        row.impressions = payload.impressions
+        row.clicks = payload.clicks
+        row.note = payload.note
+    else:
+        row = models.AdStat(**payload.model_dump(), created_by=user.full_name)
+        db.add(row)
+    db.commit(); db.refresh(row)
+    return {"id": row.id}
+
+
+@app.delete("/api/ad-stats/{stat_id}")
+def delete_ad_stat(
+    stat_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    a = db.query(models.AdStat).get(stat_id)
+    if not a:
+        raise HTTPException(404, "Topilmadi")
+    db.delete(a); db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/reports/marketing-journey")
+def marketing_journey(
+    months: int = 6,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    """To'liq yo'l: reklama ko'rildi -> bosildi -> murojaat -> bog'lanildi
+    -> testga keldi -> sotildi -> 1 oy qoldi -> 3 oy qoldi -> sertifikat.
+
+    Birinchi ikki bosqich reklama kabinetidan qo'lda kiritiladi
+    (Marketing -> Reklama ko'rsatkichlari), qolganlari tizimning o'z
+    ma'lumotidan avtomat hisoblanadi."""
+    months = max(1, min(months, 36))
+    today = date.today()
+    since = today - timedelta(days=int(months * 30.44))
+
+    periods = []
+    for back in range(months - 1, -1, -1):
+        y, m = _shift_month(today.year, today.month, -back)
+        periods.append(_period_key(y, m))
+    ads = scope_to_branch(db.query(models.AdStat), models.AdStat, user).filter(
+        models.AdStat.period.in_(periods)).all()
+
+    leads = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
+        models.Lead.created_at >= datetime.combine(since, datetime.min.time())
+    ).all()
+
+    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    idx = {k: i for i, k in enumerate(order)}
+
+    conv_ids = [l.converted_student_id for l in leads if l.converted_student_id]
+    firsts = _payment_first_dates(db)
+    students = {}
+    if conv_ids:
+        students = {s.id: s for s in db.query(models.Student)
+                    .filter(models.Student.id.in_(conv_ids)).all()}
+    certs = set()
+    if conv_ids:
+        certs = {c.student_id for c in db.query(models.Certificate)
+                 .filter(models.Certificate.student_id.in_(conv_ids)).all()}
+
+    def survived(sid: int, need_months: float) -> bool:
+        """Birinchi to'lovdan keyin shuncha oy qoldimi.
+        Hali o'qiyotgan bo'lsa - bugungi kungacha; ketgan bo'lsa -
+        ketgan kunigacha hisoblanadi."""
+        dt = firsts.get(sid)
+        st = students.get(sid)
+        if not dt or not st:
+            return False
+        end = st.left_date or today
+        return _months_between(dt.date(), end) >= need_months
+
+    def build(ch_leads, ch_ads):
+        imp = sum(a.impressions for a in ch_ads)
+        clk = sum(a.clicks for a in ch_ads)
+        n_leads = len(ch_leads)
+        contacted = sum(1 for l in ch_leads
+                        if l.stage != "rejected"
+                        and idx.get(l.stage, -1) >= idx["contacted"])
+        trial = sum(1 for l in ch_leads
+                    if l.stage != "rejected"
+                    and idx.get(l.stage, -1) >= idx["trial_attended"])
+        sold_ids = [l.converted_student_id for l in ch_leads
+                    if l.stage == "converted" and l.converted_student_id]
+        sold = len(sold_ids)
+        m1 = sum(1 for sid in sold_ids if survived(sid, 1))
+        m3 = sum(1 for sid in sold_ids if survived(sid, 3))
+        cert = sum(1 for sid in sold_ids if sid in certs)
+        return {"impressions": imp, "clicks": clk, "leads": n_leads,
+                "contacted": contacted, "trial": trial, "sold": sold,
+                "month1": m1, "month3": m3, "certificate": cert}
+
+    totals = build(leads, ads)
+
+    # Bosqichlar: har birida oldingisiga nisbatan o'tish foizi
+    stages = []
+    prev = None
+    for key, label, source in roles.MARKETING_JOURNEY:
+        v = totals[key]
+        stages.append({
+            "key": key, "label": label, "source": source,
+            "count": v,
+            # Oldingi bosqichdan qanchasi o'tdi - eng muhim raqam
+            "step_percent": round(v / prev * 100, 1) if prev else None,
+            "of_leads": round(v / totals["leads"] * 100, 1)
+                        if totals["leads"] else None,
+            "lost": max(0, prev - v) if prev is not None else 0,
+        })
+        prev = v if v else prev
+
+    # Kanal kesimida
+    by_channel = {}
+    for l in leads:
+        by_channel.setdefault(l.source or "other", {"leads": [], "ads": []})
+        by_channel[l.source or "other"]["leads"].append(l)
+    for a in ads:
+        by_channel.setdefault(a.channel, {"leads": [], "ads": []})
+        by_channel[a.channel]["ads"].append(a)
+
+    channels = []
+    for ch, d in by_channel.items():
+        b = build(d["leads"], d["ads"])
+        channels.append({
+            "channel": ch,
+            "label": roles.MARKETING_CHANNEL_LABELS.get(ch, ch),
+            **b,
+            "ctr": round(b["clicks"] / b["impressions"] * 100, 2)
+                   if b["impressions"] else None,
+            "click_to_lead": round(b["leads"] / b["clicks"] * 100, 1)
+                             if b["clicks"] else None,
+            "lead_to_sale": round(b["sold"] / b["leads"] * 100, 1)
+                            if b["leads"] else 0.0,
+            "retention_1m": round(b["month1"] / b["sold"] * 100, 1)
+                            if b["sold"] else None,
+            "retention_3m": round(b["month3"] / b["sold"] * 100, 1)
+                            if b["sold"] else None,
+        })
+    channels.sort(key=lambda c: -c["leads"])
+
+    # Eng katta yo'qotish qayerda
+    worst = None
+    for st in stages[1:]:
+        if st["step_percent"] is not None and st["lost"] > 0:
+            if worst is None or st["lost"] > worst["lost"]:
+                worst = st
+
+    return {
+        "months": months,
+        "stages": stages,
+        "channels": channels,
+        "totals": totals,
+        "worst_stage": worst,
+        "has_ad_data": totals["impressions"] > 0,
+    }

@@ -88,6 +88,8 @@ class TeacherOut(TeacherCreate):
 class GroupCreate(BaseModel):
     name: str
     room: Optional[str] = None
+    room_id: Optional[int] = None
+    capacity: Optional[int] = None
     teacher_id: Optional[int] = None
     branch_id: Optional[int] = None
     subject: Optional[str] = None
@@ -108,6 +110,8 @@ class GroupUpdate(BaseModel):
     shart emas: {"lesson_days": "mon,wed"} yetadi."""
     name: Optional[str] = None
     room: Optional[str] = None
+    room_id: Optional[int] = None
+    capacity: Optional[int] = None
     teacher_id: Optional[int] = None
     branch_id: Optional[int] = None
     subject: Optional[str] = None
@@ -772,3 +776,69 @@ class ComplaintUpdate(BaseModel):
     status: Optional[str] = None
     resolution: Optional[str] = None
     assigned_user_id: Optional[int] = None
+
+
+# ---------- O'quv bo'limi ----------
+class RoomCreate(BaseModel):
+    name: str
+    capacity: int = 12
+    branch_id: Optional[int] = None
+    note: Optional[str] = None
+    active: int = 1
+
+
+class RoomUpdate(BaseModel):
+    name: Optional[str] = None
+    capacity: Optional[int] = None
+    branch_id: Optional[int] = None
+    note: Optional[str] = None
+    active: Optional[int] = None
+
+
+class RiskFlagCreate(BaseModel):
+    student_id: int
+    signal: str
+    note: Optional[str] = None
+
+
+class RiskTaskCreate(BaseModel):
+    student_id: int
+    title: str
+    level: Optional[str] = None
+    assigned_user_id: Optional[int] = None
+    due_date: Optional[date] = None
+
+
+class RiskTaskUpdate(BaseModel):
+    title: Optional[str] = None
+    assigned_user_id: Optional[int] = None
+    due_date: Optional[date] = None
+    status: Optional[str] = None
+    result: Optional[str] = None
+
+
+# ---------- Ota-ona suhbati / sertifikat ----------
+class ParentTalkCreate(BaseModel):
+    date: Optional[date] = None
+    channel: str = "phone"
+    topic: str
+    summary: Optional[str] = None
+    outcome: Optional[str] = None
+
+
+class CertificateCreate(BaseModel):
+    kind: str = "internal"
+    level: Optional[str] = None
+    score: Optional[float] = None
+    date: Optional[date] = None
+    note: Optional[str] = None
+
+
+# ---------- Reklama ko'rsatkichi ----------
+class AdStatCreate(BaseModel):
+    channel: str
+    period: str          # "2026-07"
+    impressions: int = 0
+    clicks: int = 0
+    branch_id: Optional[int] = None
+    note: Optional[str] = None

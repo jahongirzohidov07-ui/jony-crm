@@ -80,7 +80,13 @@ class Group(Base):
     # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
     public_id = Column(String, unique=True, index=True)
     name = Column(String, nullable=False)
-    room = Column(String, nullable=True)
+    room = Column(String, nullable=True)          # eski matnli xona
+    # Xona ro'yxatidan tanlanadi - guruh to'lishi shu xona sig'imiga
+    # nisbatan hisoblanadi.
+    room_id = Column(Integer, ForeignKey("rooms.id"), nullable=True)
+    # Xona tanlanmagan bo'lsa yoki guruh chekloviga alohida ehtiyoj
+    # bo'lsa - o'z sig'imi.
+    capacity = Column(Integer, nullable=True)
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
 
@@ -633,3 +639,118 @@ class Complaint(Base):
     group = relationship("Group")
     branch = relationship("Branch")
     assigned_user = relationship("User")
+
+
+# =====================================================================
+#  O'quv bo'limi: xonalar, akademik risk
+# =====================================================================
+class Room(Base):
+    """Dars xonasi va uning sig'imi. Guruh to'lishi shu sig'imga
+    nisbatan hisoblanadi."""
+    __tablename__ = "rooms"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    capacity = Column(Integer, default=12)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    note = Column(String, nullable=True)
+    active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
+class RiskFlag(Base):
+    """Qo'lda qo'yiladigan risk signali (ustoz izohi, uy vazifasi va h.k.).
+
+    Avtomat aniqlanadigan signallar (dars qoldirish, to'lov kechikishi,
+    shikoyat, guruh almashtirish) bu jadvalga yozilmaydi - ular har safar
+    haqiqiy ma'lumotdan hisoblanadi. Bu yerda faqat odam ko'rgan narsa
+    turadi."""
+    __tablename__ = "risk_flags"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    signal = Column(String, nullable=False)   # roles.RISK_SIGNALS kaliti
+    note = Column(Text, nullable=True)
+    active = Column(Integer, default=1)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    resolved_at = Column(Date, nullable=True)
+
+    student = relationship("Student")
+
+
+class RiskTask(Base):
+    """Risk uchun mas'ul va vazifa. Har bir xavfdagi o'quvchi bo'yicha
+    kimdir nimadir qilishi kerak - shu yerda yoziladi."""
+    __tablename__ = "risk_tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    level = Column(String, nullable=True)      # yaratilgan paytdagi daraja
+    title = Column(String, nullable=False)
+    assigned_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    due_date = Column(Date, nullable=True)
+    status = Column(String, default="open")    # open | done | cancelled
+    result = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    done_at = Column(Date, nullable=True)
+
+    student = relationship("Student")
+    assigned_user = relationship("User")
+
+
+class ParentTalk(Base):
+    """Ota-ona bilan suhbat. O'quvchi kartasidagi tarixga tushadi."""
+    __tablename__ = "parent_talks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    date = Column(Date, default=date.today)
+    channel = Column(String, default="phone")   # phone | visit | telegram
+    topic = Column(String, nullable=False)
+    summary = Column(Text, nullable=True)
+    outcome = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class Certificate(Base):
+    """O'quvchi olgan sertifikat. Marketing voronkasining oxirgi
+    bosqichi shundan hisoblanadi."""
+    __tablename__ = "certificates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    kind = Column(String, default="internal")
+    level = Column(String, nullable=True)      # "7.0", "B2" ...
+    score = Column(Float, nullable=True)
+    date = Column(Date, default=date.today)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class AdStat(Base):
+    """Reklama platformasidan olinadigan ko'rsatkich: nechta odam
+    ko'rdi va nechtasi bosdi. Oyiga bir marta kanal bo'yicha
+    kiritiladi - voronkaning birinchi ikki bosqichi shundan."""
+    __tablename__ = "ad_stats"
+
+    id = Column(Integer, primary_key=True, index=True)
+    channel = Column(String, nullable=False, index=True)
+    period = Column(String, nullable=False, index=True)   # "2026-07"
+    impressions = Column(Integer, default=0)
+    clicks = Column(Integer, default=0)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    branch = relationship("Branch")

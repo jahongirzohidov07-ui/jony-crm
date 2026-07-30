@@ -16,6 +16,7 @@ SUPPORT_TEACHER = "support_teacher"
 EXAMINER = "examiner"
 HR_MANAGER = "hr_manager"
 SMM_MANAGER = "smm_manager"
+ACADEMIC_HEAD = "academic_head"         # O'quv bo'limi rahbari
 
 ALL_ROLES = [
     FOUNDER,
@@ -26,6 +27,7 @@ ALL_ROLES = [
     EXAMINER,
     HR_MANAGER,
     SMM_MANAGER,
+    ACADEMIC_HEAD,
 ]
 
 UZ_LABELS = {
@@ -37,6 +39,7 @@ UZ_LABELS = {
     EXAMINER: "Examiner",
     HR_MANAGER: "HR manager",
     SMM_MANAGER: "SMM manager",
+    ACADEMIC_HEAD: "O'quv bo'limi rahbari",
 }
 
 # ---- Ruxsat guruhlari -------------------------------------------------
@@ -46,7 +49,8 @@ FULL_ACCESS = [FOUNDER, BRANCH_MANAGER]
 
 # Talaba yozuvlari bilan ishlaydiganlar. Sotuv menejeri ham kiradi -
 # lidni o'quvchiga aylantirish uning ishi.
-TEACHING_STAFF = FULL_ACCESS + [SALES_MANAGER, TEACHER, SUPPORT_TEACHER, EXAMINER]
+TEACHING_STAFF = FULL_ACCESS + [SALES_MANAGER, TEACHER, SUPPORT_TEACHER,
+                                EXAMINER, ACADEMIC_HEAD]
 
 # Xodimlar ro'yxatini KO'RA oladiganlar.
 STAFF_VIEWERS = FULL_ACCESS + [HR_MANAGER]
@@ -67,7 +71,7 @@ LEAD_ACCESS = FULL_ACCESS + [SALES_MANAGER, SMM_MANAGER, SUPPORT_TEACHER]
 DASHBOARD_ONLY = [SMM_MANAGER]
 
 # Butun tashkilot bo'yicha ko'radigan rollar (filialga bog'lanmagan).
-ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER]
+ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER, ACADEMIC_HEAD]
 
 # ---- To'lov usullari --------------------------------------------------
 # Cashflow hisoboti shu bo'yicha bo'linadi. Faqat kirim ("payment")
@@ -201,7 +205,97 @@ PROFIT_VIEW = FULL_ACCESS
 
 # Akademik baho qo'yish - faqat o'qituvchilar tarkibi.
 # Kassir/sotuv menejeri bahoga tegmaydi.
-GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
+GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER, ACADEMIC_HEAD]
+
+# ---- O'quv bo'limi ----------------------------------------------------
+# Ta'lim sifatiga javob beradigan bo'lim: akademik risk, guruh to'lishi,
+# xonalar. O'quv bo'limi rahbari butun markaz bo'yicha ko'radi.
+ACADEMIC_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD]
+# Ustoz ham risk ro'yxatini ko'radi - o'z o'quvchisi haqida.
+ACADEMIC_VIEW = ACADEMIC_ACCESS + [TEACHER, SUPPORT_TEACHER, SALES_MANAGER]
+
+# Akademik risk signallari. Har biri ball beradi; ballar yig'indisi
+# risk darajasini belgilaydi.
+RISK_SIGNALS = [
+    ("absent_streak", "Ketma-ket dars qoldirgan", 3),
+    ("no_homework", "Uy vazifasini bajarmayapti", 2),
+    ("score_drop", "Natijasi tushgan", 3),
+    ("payment_late", "To'lovi kechikkan", 2),
+    ("complaint", "Ota-onasi shikoyat qilgan", 3),
+    ("group_hopping", "Guruhini ko'p almashtirgan", 2),
+    ("teacher_negative", "Ustoz salbiy izoh bergan", 2),
+    ("no_progress", "Bir necha haftadan beri o'sish yo'q", 2),
+]
+RISK_SIGNAL_LABELS = {k: lbl for k, lbl, _ in RISK_SIGNALS}
+RISK_SIGNAL_WEIGHT = {k: w for k, _, w in RISK_SIGNALS}
+
+# Ball -> daraja. Pastdan yuqoriga tekshiriladi.
+RISK_LEVELS = [
+    ("normal", "Normal", "green", 0),
+    ("watch", "E'tibor kerak", "yellow", 2),
+    ("high", "Yuqori xavf", "orange", 5),
+    ("critical", "Ketib qolish xavfi", "red", 8),
+]
+RISK_LEVEL_LABELS = {k: lbl for k, lbl, _, _ in RISK_LEVELS}
+
+
+def risk_level(score: int) -> str:
+    """Ball qaysi darajaga to'g'ri kelishini qaytaradi."""
+    out = "normal"
+    for key, _lbl, _color, minimum in RISK_LEVELS:
+        if score >= minimum:
+            out = key
+    return out
+
+
+# Guruh to'lishi (o'quvchi / xona sig'imi).
+GROUP_FILL_BANDS = [
+    (85, "good", "Yaxshi"),
+    (70, "ok", "Qoniqarli"),
+    (50, "problem", "Muammoli"),
+    (0, "critical", "Birlashtirish yoki yopish"),
+]
+
+
+def fill_band(percent: float) -> tuple:
+    for minimum, key, label in GROUP_FILL_BANDS:
+        if percent >= minimum:
+            return key, label
+    return "critical", "Birlashtirish yoki yopish"
+
+
+# ---- Marketing voronkasi (to'liq yo'l) --------------------------------
+# Reklama ko'rilishidan sertifikatgacha. Birinchi ikki bosqich reklama
+# platformasidan keladi (qo'lda yoki API orqali kiritiladi), qolganlari
+# tizimning o'z ma'lumotidan hisoblanadi.
+MARKETING_JOURNEY = [
+    ("impressions", "Reklama ko'rildi", "ad"),
+    ("clicks", "Bosildi", "ad"),
+    ("leads", "Murojaat qoldirildi", "crm"),
+    ("contacted", "Bog'lanildi", "crm"),
+    ("trial", "Testga keldi", "crm"),
+    ("sold", "Sotildi", "crm"),
+    ("month1", "1 oy qoldi", "crm"),
+    ("month3", "3 oy qoldi", "crm"),
+    ("certificate", "Sertifikat oldi", "crm"),
+]
+
+CERTIFICATE_KINDS = [
+    ("ielts", "IELTS"),
+    ("cefr", "CEFR"),
+    ("internal", "Ichki sertifikat"),
+    ("course", "Kurs tugatdi"),
+    ("olympiad", "Olimpiada"),
+    ("other", "Boshqa"),
+]
+CERTIFICATE_KIND_LABELS = dict(CERTIFICATE_KINDS)
+
+# ---- Oilaviy chegirma -------------------------------------------------
+# Bir oiladan bir nechta farzand o'qisa chegirma beriladi. Chegirma
+# AVTOMAT: biri ketsa ikkinchisiniki o'zidan yo'qoladi, hech kim qo'lda
+# olib tashlashi shart emas.
+FAMILY_DISCOUNT_MIN_CHILDREN = 2
+FAMILY_DISCOUNT_PERCENT = 10.0
 
 # ---- HR (kadrlar) -----------------------------------------------------
 # Ishga olish voronkasi. Lid voronkasi bilan bir xil mantiq: nomzod
@@ -312,7 +406,7 @@ DEFAULT_EXAM_COIN_RULES = [
 # DIQQAT: akademik BAHO bunga kirmaydi - u alohida GRADE_EDIT bilan
 # himoyalangan (yuqoriga qarang).
 TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER,
-                                 SALES_MANAGER]
+                                 SALES_MANAGER, ACADEMIC_HEAD]
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 

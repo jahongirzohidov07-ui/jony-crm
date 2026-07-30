@@ -32,11 +32,13 @@ import { formatSom, formatPeriodLabel } from "../lib/format";
 import { LtvFullReport } from "../components/LtvReport";
 import { ChurnReport } from "../components/ChurnReport";
 import { CapacityTab } from "../components/MarketingExtras";
+import { FillTab } from "../components/FillReport";
 
-type Tab = "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "oquvchi"
-  | "ustoz" | "sigim" | "geo";
+type Tab = "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat"
+  | "oquvchi" | "ustoz" | "sigim" | "geo";
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: "tolganlik", label: "Markaz to'lganligi" },
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
   { key: "ltv", label: "LTV" },
   { key: "churn", label: "Ketish (churn)" },
@@ -872,6 +874,7 @@ export default function Analitika() {
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
         <>
+          {tab === "tolganlik" && <FillTab />}
           {tab === "biznes" && <BusinessTab data={data} />}
           {tab === "sifat" && <QualityTab />}
           {tab === "xarajat" && <ExpenseTab data={data} />}

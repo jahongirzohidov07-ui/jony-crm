@@ -42,6 +42,7 @@ import {
 } from "../lib/roles";
 import { SalesPanelCards } from "../components/SalesPanel";
 import { MyPanel } from "../components/MyPanel";
+import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
 import Ceo from "./Ceo";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
@@ -478,6 +479,7 @@ export default function Dashboard() {
       {stats && showGeneral && (
         <>
           {can(user?.role, CASH_ACCESS) && <CollectionCard />}
+          <FillCard />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />

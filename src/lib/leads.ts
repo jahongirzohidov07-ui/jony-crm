@@ -5,6 +5,7 @@ export type LeadStage =
   | "contacted"
   | "trial_scheduled"
   | "trial_attended"
+  | "no_show"
   | "converted"
   | "rejected";
 
@@ -40,9 +41,9 @@ export const LEAD_STAGES: StageDef[] = [
     tone: "bg-violet-50 text-violet-700",
   },
   {
-    key: "converted",
-    label: "O'quvchiga aylandi",
-    tone: "bg-green-50 text-green-700",
+    key: "no_show",
+    label: "Sinov darsiga kelmadi",
+    tone: "bg-orange-50 text-orange-700",
     terminal: true,
   },
   {
@@ -52,6 +53,10 @@ export const LEAD_STAGES: StageDef[] = [
     terminal: true,
   },
 ];
+
+/** "O'quvchiga aylandi" doskada KO'RINMAYDI - u endi lid emas, Talabalar
+ * bo'limida turadi. Nomi faqat hisobotlarda kerak bo'ladi. */
+export const CONVERTED_LABEL = "O'quvchi bo'ldi";
 
 export const LEAD_SOURCES: { key: LeadSource; label: string }[] = [
   { key: "visit", label: "Tashrif" },
@@ -82,6 +87,7 @@ export const GRADES = [
 ];
 
 export function stageLabel(stage: string): string {
+  if (stage === "converted") return CONVERTED_LABEL;
   return LEAD_STAGES.find((s) => s.key === stage)?.label || stage;
 }
 

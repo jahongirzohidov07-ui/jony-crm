@@ -1201,3 +1201,44 @@ export interface AdStat {
   branch_id?: number | null;
   note?: string | null;
 }
+
+// ------------------------------------------- Oylik hisob-kitob ----
+export interface BillingRow {
+  student_id: number;
+  public_id?: string | null;
+  full_name: string;
+  group: string;
+  lessons: number;
+  discount: number;
+  amount: number;
+  already_charged: boolean;
+}
+
+export interface BillingMonth {
+  period: string;
+  committed: boolean;
+  students: number;
+  created: number;
+  expected_total: number;
+  rows: BillingRow[];
+}
+
+export interface CollectionReport {
+  period: string;
+  charged: number;
+  collected: number;
+  percent: number;
+  debt: number;
+  students: number;
+  paid_students: number;
+  by_admin: { name: string; collected: number; percent: number }[];
+}
+
+export interface TrialStatus {
+  status: string;
+  attended: number;
+  need: number;
+  left: number;
+  dates: string[];
+  first_date: string | null;
+}

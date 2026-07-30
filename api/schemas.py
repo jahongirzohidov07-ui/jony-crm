@@ -1307,3 +1307,36 @@ class ApprovalDecision(BaseModel):
 class FraudReview(BaseModel):
     status: str
     note: Optional[str] = None
+
+
+# ---------- Dars baholash ----------
+class ScoreItem(BaseModel):
+    criterion_id: int
+    fact: float = 0
+    note: Optional[str] = None
+
+
+class ObservationCreate(BaseModel):
+    rubric_key: str
+    target_type: str = "teacher"        # teacher | candidate
+    teacher_id: Optional[int] = None
+    candidate_id: Optional[int] = None
+    group_id: Optional[int] = None
+    date: Optional[_dt.date] = None
+    scores: List[ScoreItem] = []
+    strengths: Optional[str] = None
+    weaknesses: Optional[str] = None
+    note: Optional[str] = None
+
+
+class CriterionUpdate(BaseModel):
+    text: Optional[str] = None
+    points: Optional[float] = None
+    order_no: Optional[int] = None
+    is_active: Optional[bool] = None
+
+
+class CriterionCreate(BaseModel):
+    rubric_key: str
+    text: str
+    points: float = 1

@@ -110,6 +110,11 @@ class Teacher(Base):
     # guruh ochilmaydi, ustoz o'ta olmaganlarni qayta tayyorlaydi.
     remediation_until = Column(Date, nullable=True)
     remediation_reason = Column(String, nullable=True)
+    # Oy o'rtasida hamma shart bajarilsa daraja darrov o'zgarmaydi:
+    # bu yerga yoziladi va KEYINGI OYNING 1-sanasidan kuchga kiradi.
+    # Shunda oy bitta stavkada yopiladi.
+    pending_grade = Column(String, nullable=True)
+    pending_grade_from = Column(Date, nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -1603,3 +1608,82 @@ class SeasonRankSnapshot(Base):
     rank = Column(Integer, nullable=False)
     xp = Column(Float, default=0)
     taken_on = Column(Date, nullable=False, default=date.today, index=True)
+
+
+# =====================================================================
+#  DARS BAHOLASH (observation)
+#
+#  Nomzod ishga olinayotganda ham, ishlayotgan ustoz tekshirilganda ham
+#  bir xil mezon ishlatiladi. Natija ustozning skill_score'iga tushadi —
+#  ya'ni karyera darajasiga ta'sir qiladi.
+# =====================================================================
+class LessonRubric(Base):
+    """Baholash jadvali: birinchi dars yoki asosiy dars."""
+    __tablename__ = "lesson_rubrics"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class RubricCriterion(Base):
+    """Bitta mezon va uning bali."""
+    __tablename__ = "rubric_criteria"
+
+    id = Column(Integer, primary_key=True, index=True)
+    rubric_key = Column(String, nullable=False, index=True)
+    order_no = Column(Integer, default=0)
+    text = Column(Text, nullable=False)
+    points = Column(Float, default=0)
+    is_active = Column(Integer, default=1)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class LessonObservation(Base):
+    """Bitta baholash: kim, qachon, qaysi jadval bo'yicha, necha ball."""
+    __tablename__ = "lesson_observations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    rubric_key = Column(String, nullable=False, index=True)
+    target_type = Column(String, nullable=False, default="teacher")
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=True, index=True)
+    candidate_id = Column(Integer, ForeignKey("candidates.id"),
+                          nullable=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    date = Column(Date, nullable=False, default=date.today)
+    # Jami avtomat hisoblanadi — qo'lda yozilmaydi
+    total = Column(Float, default=0)
+    max_total = Column(Float, default=0)
+    percent = Column(Float, default=0)
+    band = Column(String, nullable=True)
+    strengths = Column(Text, nullable=True)
+    weaknesses = Column(Text, nullable=True)
+    note = Column(Text, nullable=True)
+    observer = Column(String, nullable=True)
+    observer_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    teacher = relationship("Teacher")
+    scores = relationship("ObservationScore", back_populates="observation",
+                          cascade="all, delete-orphan")
+
+
+class ObservationScore(Base):
+    """Bitta mezon bo'yicha qo'yilgan fakt bali."""
+    __tablename__ = "observation_scores"
+
+    id = Column(Integer, primary_key=True, index=True)
+    observation_id = Column(Integer, ForeignKey("lesson_observations.id"),
+                            nullable=False, index=True)
+    criterion_id = Column(Integer, ForeignKey("rubric_criteria.id"),
+                          nullable=False)
+    fact = Column(Float, default=0)
+    note = Column(String, nullable=True)
+
+    observation = relationship("LessonObservation", back_populates="scores")

@@ -220,6 +220,9 @@ def _ensure_new_columns():
         "ALTER TABLE teacher_grades ADD COLUMN min_age INTEGER",
         "ALTER TABLE teacher_grades ADD COLUMN min_skill FLOAT",
         "ALTER TABLE teacher_grades ADD COLUMN level_pass_percent FLOAT DEFAULT 60",
+        # Daraja keyingi oydan kuchga kirishi uchun
+        "ALTER TABLE teachers ADD COLUMN pending_grade VARCHAR",
+        "ALTER TABLE teachers ADD COLUMN pending_grade_from DATE",
     ]
     for stmt in statements:
         try:
@@ -9797,6 +9800,14 @@ def _grade_state(db: Session, t: models.Teacher,
         "remediation_until": (t.remediation_until.isoformat()
                               if t.remediation_until else None),
         "remediation_reason": t.remediation_reason,
+        # Oy o'rtasida ko'tarilgan bo'lsa - keyingi oydan kuchga kiradi
+        "pending_grade": t.pending_grade,
+        "pending_label": roles.GRADE_LABELS.get(t.pending_grade or ""),
+        "pending_from": (t.pending_grade_from.isoformat()
+                         if t.pending_grade_from else None),
+        "pending_rate": (gm[t.pending_grade].rate_per_student
+                         if t.pending_grade in gm else None),
+        "skill_score_from": "oxirgi dars baholash",
     }
 
 
@@ -9822,8 +9833,13 @@ def _set_grade(db: Session, t: models.Teacher, to_key: str, *,
     """Darajani o'zgartiradi va TARIXGA yozadi.
 
     Tarix shunchaki jurnal emas: oylik ham shundan hisoblanadi, ya'ni
-    o'tgan oyning darslari eski stavkada qolaveradi."""
+    o'tgan oyning darslari eski stavkada qolaveradi.
+
+    `on` kelajakdagi sana bo'lsa (masalan keyingi oyning 1-sanasi),
+    daraja hozir o'zgarmaydi — kutish holatiga yoziladi va o'sha kuni
+    o'zi almashadi."""
     on = on or date.today()
+    today = date.today()
     gm = _grade_map(db)
     before = gm.get(t.grade or "")
     after = gm.get(to_key)
@@ -9837,11 +9853,51 @@ def _set_grade(db: Session, t: models.Teacher, to_key: str, *,
         decided_by=by)
     db.add(ev)
 
+    if on > today:
+        # Keyingi oydan kuchga kiradi: bu oy eski stavkada yopiladi
+        t.pending_grade = to_key
+        t.pending_grade_from = on
+        return ev
+
     t.grade = to_key
     t.grade_since = on
+    t.pending_grade = None
+    t.pending_grade_from = None
     if after:
         _sync_group_rates(db, t, after.rate_per_student or 0)
     return ev
+
+
+def _next_month_start(on: date | None = None) -> date:
+    """Keyingi oyning 1-sanasi."""
+    on = on or date.today()
+    return (date(on.year + 1, 1, 1) if on.month == 12
+            else date(on.year, on.month + 1, 1))
+
+
+def _apply_pending_grades(db: Session) -> int:
+    """AVTOMAT: kutib turgan daraja sanasi kelganda o'zi almashadi.
+    Ustoz oy o'rtasida hamma shartni bajarsa ham, yangi daraja va yangi
+    stavka keyingi oyning 1-sanasidan boshlanadi."""
+    today = date.today()
+    n = 0
+    gm = _grade_map(db)
+    for t in (db.query(models.Teacher)
+              .filter(models.Teacher.pending_grade.isnot(None)).all()):
+        if not t.pending_grade_from or t.pending_grade_from > today:
+            continue
+        key = t.pending_grade
+        t.grade = key
+        t.grade_since = t.pending_grade_from
+        t.pending_grade = None
+        t.pending_grade_from = None
+        g = gm.get(key)
+        if g:
+            _sync_group_rates(db, t, g.rate_per_student or 0)
+        n += 1
+    if n:
+        db.commit()
+    return n
 
 
 def _career_task(db: Session, t: models.Teacher, *, title: str,
@@ -9893,7 +9949,10 @@ def _apply_grade_rules(db: Session) -> dict:
     va raqamlari bilan yoziladi hamda vazifa bo'lib chiqadi — kerak
     bo'lsa asoschi orqaga qaytara oladi."""
     today = date.today()
-    out = {"promoted": 0, "demoted": 0, "remediation": 0, "cleared": 0}
+    out = {"promoted": 0, "demoted": 0, "remediation": 0, "cleared": 0,
+           "activated": 0}
+    # Avval kutib turgan darajalar: sanasi kelgani kuchga kiradi
+    out["activated"] = _apply_pending_grades(db)
     teachers = (db.query(models.Teacher)
                 .filter(models.Teacher.is_active == 1).all())
     if not teachers or not _grade_rows(db):
@@ -9978,8 +10037,13 @@ def _apply_grade_rules(db: Session) -> dict:
                       f"{st['pass_rate']}% i bosqichdan o'tdi, tajriba "
                       f"{round(st['months'])} oy, sertifikat "
                       f"{t.cert or '—'}")
+            # Oy o'rtasida bajarilsa ham yangi daraja KEYINGI OYDAN
+            # kuchga kiradi - shunda oy bitta stavkada yopiladi.
+            eff = (_next_month_start() if roles.GRADE_EFFECTIVE_NEXT_MONTH
+                   else None)
             _set_grade(db, t, to_key, kind="promote", reason=reason,
-                       pass_rate=st["pass_rate"], test_avg=st["test_avg"])
+                       pass_rate=st["pass_rate"], test_avg=st["test_avg"],
+                       on=eff)
             _career_task(
                 db, t,
                 title=(f"Daraja ko'tarildi: {t.full_name} — "
@@ -10736,6 +10800,12 @@ def teacher_career(
         } for e in history],
         "study": stages,
         "entry": [{"key": k, "text": txt} for k, txt in roles.TEACHER_ENTRY],
+        "observations": [_observation_out(db, o) for o in
+                         (db.query(models.LessonObservation)
+                          .filter(models.LessonObservation.teacher_id == t.id)
+                          .order_by(models.LessonObservation.date.desc(),
+                                    models.LessonObservation.id.desc())
+                          .limit(20).all())],
         "can_edit": user.role in roles.GRADE_ADMIN,
         "is_me": bool(mine and mine.id == t.id),
     }
@@ -14803,6 +14873,309 @@ def gamification_analytics(
     }
 
 
+# =====================================================================
+#  DARS BAHOLASH
+#
+#  Ikkita jadval: birinchi dars va asosiy dars, ikkalasi ham 100 balldan.
+#  Baholovchi faqat "Fakt" ustunini to'ldiradi — jami va foiz o'zi
+#  hisoblanadi.
+#
+#  Natija bekorga qolmaydi: ustozning skill_score'iga tushadi, ya'ni
+#  karyera darajasining shartlariga bevosita ta'sir qiladi (ustozlikni
+#  boshlash uchun 50+, Head teacher uchun 70+ ball).
+# =====================================================================
+def _seed_rubrics(db: Session) -> None:
+    have = {r.key for r in db.query(models.LessonRubric).all()}
+    added = False
+    for key, name, desc in roles.RUBRICS:
+        if key in have:
+            continue
+        db.add(models.LessonRubric(key=key, name=name, description=desc,
+                                   is_active=1))
+        added = True
+    if added:
+        db.commit()
+
+    for key, items in roles.RUBRIC_ITEMS.items():
+        existing = (db.query(models.RubricCriterion)
+                    .filter(models.RubricCriterion.rubric_key == key).count())
+        if existing:
+            continue          # HR tahrirlagan bo'lishi mumkin — tegmaymiz
+        for no, text, points in items:
+            db.add(models.RubricCriterion(
+                rubric_key=key, order_no=no, text=text, points=points,
+                is_active=1))
+        db.commit()
+
+
+def _criteria(db: Session, key: str) -> list:
+    return (db.query(models.RubricCriterion)
+            .filter(models.RubricCriterion.rubric_key == key,
+                    models.RubricCriterion.is_active == 1)
+            .order_by(models.RubricCriterion.order_no,
+                      models.RubricCriterion.id).all())
+
+
+def _refresh_skill_score(db: Session, teacher_id: int) -> float | None:
+    """Ustozning mahorat balli — oxirgi ASOSIY dars baholashining foizi.
+
+    Nega oxirgisi: mahorat o'zgaradi, o'rtacha esa eski, allaqachon
+    tuzatilgan kamchilikni yillar davomida sudrab yuradi."""
+    last = (db.query(models.LessonObservation)
+            .filter(models.LessonObservation.teacher_id == teacher_id,
+                    models.LessonObservation.rubric_key == roles.RUBRIC_MAIN)
+            .order_by(models.LessonObservation.date.desc(),
+                      models.LessonObservation.id.desc()).first())
+    if not last:
+        return None
+    t = db.query(models.Teacher).get(teacher_id)
+    if t:
+        t.skill_score = last.percent
+    return last.percent
+
+
+@app.get("/api/rubrics")
+def list_rubrics(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.OBSERVATION_ACCESS)),
+):
+    """Baholash jadvallari va ularning mezonlari."""
+    _seed_rubrics(db)
+    out = []
+    for r in (db.query(models.LessonRubric)
+              .order_by(models.LessonRubric.id).all()):
+        items = _criteria(db, r.key)
+        out.append({
+            "key": r.key, "name": r.name, "description": r.description,
+            "is_active": bool(r.is_active),
+            "max_total": round(sum(c.points or 0 for c in items), 1),
+            "criteria": [{
+                "id": c.id, "no": c.order_no, "text": c.text,
+                "points": c.points or 0,
+            } for c in items],
+        })
+    return {
+        "rows": out,
+        "targets": [{"key": k, "label": lbl}
+                    for k, lbl in roles.OBSERVATION_TARGETS],
+        "pass_score": roles.TEACHER_MIN_SKILL,
+        "head_score": roles.HEAD_MIN_SKILL,
+        "can_edit": user.role in roles.GRADE_ADMIN,
+        "hint": ("Faqat \"Fakt\" ustunini to'ldirasiz — jami va foiz o'zi "
+                 f"hisoblanadi. Ustozlikni boshlash uchun "
+                 f"{round(roles.TEACHER_MIN_SKILL)}+ ball, Head teacher "
+                 f"uchun {round(roles.HEAD_MIN_SKILL)}+ ball kerak."),
+    }
+
+
+@app.put("/api/rubrics/criteria/{cid}")
+def update_criterion(
+    cid: int,
+    payload: schemas.CriterionUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    c = db.query(models.RubricCriterion).get(cid)
+    if not c:
+        raise HTTPException(404, "Mezon topilmadi")
+    given = payload.model_dump(exclude_unset=True)
+    for k, v in given.items():
+        setattr(c, k, 1 if k == "is_active" and v else
+                (0 if k == "is_active" else v))
+    db.commit()
+    audit.log(db, user, entity="rubric", action="update", entity_id=c.id,
+              entity_label=c.text[:60], new_value=str(given),
+              note="Baholash mezoni o'zgartirildi")
+    db.commit()
+    items = _criteria(db, c.rubric_key)
+    return {"ok": True,
+            "max_total": round(sum(x.points or 0 for x in items), 1)}
+
+
+@app.post("/api/rubrics/criteria")
+def add_criterion(
+    payload: schemas.CriterionCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    items = _criteria(db, payload.rubric_key)
+    c = models.RubricCriterion(
+        rubric_key=payload.rubric_key, text=payload.text,
+        points=payload.points,
+        order_no=(max([x.order_no or 0 for x in items], default=0) + 1),
+        is_active=1)
+    db.add(c)
+    db.commit()
+    return {"ok": True, "id": c.id}
+
+
+@app.post("/api/observations")
+def create_observation(
+    payload: schemas.ObservationCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.OBSERVATION_ACCESS)),
+):
+    """Baholashni saqlaydi. Jami va foiz SERVERDA hisoblanadi — qo'lda
+    yozib bo'lmaydi."""
+    if payload.rubric_key not in roles.RUBRIC_LABELS:
+        raise HTTPException(400, "Bunday baholash jadvali yo'q")
+    if payload.target_type == "teacher" and not payload.teacher_id:
+        raise HTTPException(400, "Ustozni tanlang")
+    if payload.target_type == "candidate" and not payload.candidate_id:
+        raise HTTPException(400, "Nomzodni tanlang")
+
+    items = {c.id: c for c in _criteria(db, payload.rubric_key)}
+    max_total = round(sum(c.points or 0 for c in items.values()), 1)
+
+    total = 0.0
+    clean = []
+    for s in payload.scores:
+        c = items.get(s.criterion_id)
+        if not c:
+            continue
+        # Fakt mezon balidan oshmaydi va manfiy bo'lmaydi
+        fact = max(0.0, min(float(s.fact or 0), float(c.points or 0)))
+        total += fact
+        clean.append((c.id, fact, s.note))
+
+    percent = round(total / max_total * 100, 1) if max_total else 0.0
+    band, _lbl, _tone = roles.rubric_band(percent)
+
+    t = db.query(models.Teacher).get(payload.teacher_id) \
+        if payload.teacher_id else None
+    obs = models.LessonObservation(
+        rubric_key=payload.rubric_key,
+        target_type=payload.target_type,
+        teacher_id=payload.teacher_id,
+        candidate_id=payload.candidate_id,
+        group_id=payload.group_id,
+        branch_id=t.branch_id if t else None,
+        date=payload.date or date.today(),
+        total=round(total, 1), max_total=max_total, percent=percent,
+        band=band, strengths=payload.strengths,
+        weaknesses=payload.weaknesses, note=payload.note,
+        observer=user.full_name, observer_id=user.id)
+    db.add(obs)
+    db.flush()
+    for cid, fact, note in clean:
+        db.add(models.ObservationScore(observation_id=obs.id,
+                                       criterion_id=cid, fact=fact,
+                                       note=note))
+    db.commit()
+
+    # Natija ishga tushadi: ustozning mahorat balli, nomzodning
+    # sinov darsi bali.
+    if payload.teacher_id:
+        _refresh_skill_score(db, payload.teacher_id)
+        db.commit()
+    if payload.candidate_id:
+        cand = db.query(models.Candidate).get(payload.candidate_id)
+        if cand:
+            cand.trial_score = percent
+            db.commit()
+
+    return {
+        "ok": True, "id": obs.id,
+        "total": obs.total, "max_total": max_total, "percent": percent,
+        "band": band, "band_label": roles.rubric_band(percent)[1],
+        "passed": percent >= roles.TEACHER_MIN_SKILL,
+    }
+
+
+def _observation_out(db: Session, o: models.LessonObservation,
+                     full: bool = False) -> dict:
+    _k, label, tone = roles.rubric_band(o.percent or 0)
+    row = {
+        "id": o.id, "rubric_key": o.rubric_key,
+        "rubric": roles.RUBRIC_LABELS.get(o.rubric_key, o.rubric_key),
+        "target_type": o.target_type,
+        "teacher_id": o.teacher_id, "candidate_id": o.candidate_id,
+        "teacher": o.teacher.full_name if o.teacher else None,
+        "date": o.date.isoformat() if o.date else None,
+        "total": o.total or 0, "max_total": o.max_total or 0,
+        "percent": o.percent or 0,
+        "band": o.band, "band_label": label, "tone": tone,
+        "observer": o.observer,
+        "strengths": o.strengths, "weaknesses": o.weaknesses,
+        "note": o.note,
+    }
+    if full:
+        crit = {c.id: c for c in db.query(models.RubricCriterion).all()}
+        row["scores"] = sorted([{
+            "criterion_id": s.criterion_id,
+            "no": crit[s.criterion_id].order_no if s.criterion_id in crit else 0,
+            "text": crit[s.criterion_id].text if s.criterion_id in crit else "—",
+            "points": crit[s.criterion_id].points if s.criterion_id in crit else 0,
+            "fact": s.fact or 0,
+            "note": s.note,
+        } for s in o.scores], key=lambda r: r["no"])
+    return row
+
+
+@app.get("/api/observations")
+def list_observations(
+    teacher_id: int | None = None,
+    candidate_id: int | None = None,
+    rubric_key: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Baholashlar ro'yxati. Ustoz o'zinikini ko'ra oladi."""
+    mine = _teacher_of_user(db, user)
+    if user.role not in roles.OBSERVATION_ACCESS:
+        if not mine or (teacher_id and teacher_id != mine.id):
+            raise HTTPException(403, "Bu ma'lumot sizga ko'rinmaydi")
+        teacher_id = mine.id
+
+    q = db.query(models.LessonObservation)
+    if teacher_id:
+        q = q.filter(models.LessonObservation.teacher_id == teacher_id)
+    if candidate_id:
+        q = q.filter(models.LessonObservation.candidate_id == candidate_id)
+    if rubric_key:
+        q = q.filter(models.LessonObservation.rubric_key == rubric_key)
+    rows = q.order_by(models.LessonObservation.date.desc(),
+                      models.LessonObservation.id.desc()).limit(100).all()
+    return {
+        "rows": [_observation_out(db, o) for o in rows],
+        "pass_score": roles.TEACHER_MIN_SKILL,
+    }
+
+
+@app.get("/api/observations/{oid}")
+def get_observation(
+    oid: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    o = db.query(models.LessonObservation).get(oid)
+    if not o:
+        raise HTTPException(404, "Topilmadi")
+    mine = _teacher_of_user(db, user)
+    if user.role not in roles.OBSERVATION_ACCESS and (
+            not mine or mine.id != o.teacher_id):
+        raise HTTPException(403, "Bu ma'lumot sizga ko'rinmaydi")
+    return _observation_out(db, o, full=True)
+
+
+@app.delete("/api/observations/{oid}")
+def delete_observation(
+    oid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    o = db.query(models.LessonObservation).get(oid)
+    if not o:
+        raise HTTPException(404, "Topilmadi")
+    tid = o.teacher_id
+    db.delete(o)
+    db.commit()
+    if tid:
+        _refresh_skill_score(db, tid)
+        db.commit()
+    return {"ok": True}
+
+
 # Ligalar va XP qoidalari fayl oxirida to'ldiriladi: _seed_gamification
 # shu yerda allaqachon aniqlangan bo'ladi. Har safar ishga tushganda
 # YETISHMAYOTGANI qo'shiladi, mavjudiga tegilmaydi.
@@ -14810,6 +15183,7 @@ try:
     from sqlalchemy.orm import Session as _GS
     with _GS(engine) as _db:
         _seed_gamification(_db)
+        _seed_rubrics(_db)
 except Exception:
     pass
 

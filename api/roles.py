@@ -2217,3 +2217,133 @@ XP_ADMIN = FULL_ACCESS + [ACADEMIC_HEAD]
 XP_VIEW = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER,
                          HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
                          ADMINISTRATOR, BRANCH_MANAGER, SALES_MANAGER]
+
+
+# =====================================================================
+#  DARS BAHOLASH MEZONLARI
+#
+#  Ikkita jadval: birinchi darsni o'tish va asosiy darsni o'tish.
+#  Ikkalasi ham 100 balldan. Nomzod ishga olinayotganda ham, ishlayotgan
+#  ustoz tekshirilganda ham shu mezon ishlatiladi.
+#
+#  Bu ro'yxat faqat BOSHLANG'ICH holat: bir marta bazaga tushadi,
+#  keyin HR bo'limidan tahrirlanadi.
+# =====================================================================
+RUBRIC_FIRST = "first_lesson"
+RUBRIC_MAIN = "main_lesson"
+
+RUBRICS = [
+    (RUBRIC_FIRST, "Birinchi darsni o'tish metodikasi",
+     "Yangi guruhdagi birinchi dars: tanishuv, qoidalar, ishonch"),
+    (RUBRIC_MAIN, "Asosiy darsni o'tish mezoni",
+     "Kundalik dars: reja, tushuntirish, faollik, yakun"),
+]
+RUBRIC_LABELS = {k: lbl for k, lbl, _ in RUBRICS}
+
+# (tartib raqami, mezon, ball)
+RUBRIC_MAIN_ITEMS = [
+    (1, "S.M.A.R.T dars reja asosida darsga kirish", 7),
+    (2, "BLOOM strategiyasi bilan darsga kirish", 5),
+    (3, "Kirish (oldingi mavzularga bog'lagan holda)", 2),
+    (4, "Tarqatma materialdan foydalangan holda o'tish", 2),
+    (5, "20 daqiqada har bir o'quvchining uyga vazifalarini tekshira olish "
+        "(kombinatsiyalar orqali) (online/offline)", 7),
+    (6, "Yangi mavzu nomini o'quvchilarning o'zlariga ayttirish", 2),
+    (7, "Yangi mavzuni savol bilan boshlash (e'tiborni tortish uchun)", 2),
+    (8, "Ustoz 90% savol, 10% darak gapdan foydalanishi", 8),
+    (9, "Darsda o'quvchining ingliz tili bo'yicha mindsetini shakllantirish", 2),
+    (10, "Ko'z qarash", 1),
+    (11, "Qo'l harakatlari", 1),
+    (12, "Ovoz toni o'zgaruvchan bo'lishi", 2),
+    (13, "Tezlik o'zgaruvchan bo'lishi", 2),
+    (14, "O'tilgan mavzuga amaliy mashg'ulotlar", 3),
+    (15, "O'quvchilarni ustozdan avval yangi \"detallarni\" aytishlari va "
+         "yozishlariga undash", 3),
+    (16, "Orqaga o'girilmaslik", 2),
+    (17, "Yangi mavzuni 15 daqiqada tushuntira olish", 8),
+    (18, "O'quvchi savol berganda — savollar berish orqali javobni "
+         "o'quvchining o'ziga topib ayttirish (tarqatma materiallardan "
+         "foydalangan holda)", 5),
+    (19, "Warm-up, ice breaker va energizerlardan foydalanish", 3),
+    (20, "Har bir o'quvchi e'tiborda bo'lishi, darsda hamma qatnashishi", 3),
+    (21, "Mavzuni 5 yoshlik bola tushunadigan tilda tushuntirish", 3),
+    (22, "Har darsda oldingi mavzularni takrorlab chiqish "
+         "(kombinatsiya shaklida)", 7),
+    (23, "Tarqatma materiallar har bitta o'quvchida bo'lishini ta'minlash", 1),
+    (24, "Sense of humor'ni darsda yetarli miqdorda ishlatish", 2),
+    (25, "Darsni qiziqarli o'tish, mavzuni qiziqarli tushuntirish", 5),
+    (26, "O'quvchilar uyga vazifani tushunganini isbotlashi uchun "
+         "qayta so'rash", 2),
+    (27, "Jahl chiqmasdan qattiqqo'l bo'lish", 1),
+    (28, "Gamifikatsiyadan foydalanish", 5),
+    (29, "O'quvchining kichik yutuqlarini maqtash", 2),
+    (30, "Dars yakunida darsni umumlashtirish va xulosalash", 2),
+]
+
+RUBRIC_FIRST_ITEMS = [
+    (1, "Professional tashqi ko'rinish", 2),
+    (2, "Qiyofadagi sokinlik, samimiylik, ochiqlik", 2),
+    (3, "Tanishuv: ism/familiya", 2),
+    (4, "Tanishuv: faoliyati, malakasi", 2),
+    (5, "Tanishuv: nega ular sizda o'qishi kerak "
+        "(competitive advantage)", 2),
+    (6, "Munosabat taklif qilish", 2),
+    (7, "O'quvchi bilan minimum 2-3 daqiqa suhbatlashish", 7),
+    (8, "Har bir o'quvchiga karta ochib to'ldirish (obsidian)", 7),
+    (9, "Bilim darajalarini aniqlab olish", 2),
+    (10, "Oldin borgan o'quvchilarni Chaos'ga tashlash", 5),
+    (11, "O'quvchilar bir-biri bilan tanishib tezda chiqishib ketishini "
+         "ta'minlash", 5),
+    (12, "Darsdagi tartib-qoidalarni hammasiga tuzdirish", 8),
+    (13, "Yangi mavzuni savol bilan boshlash (e'tiborni tortish uchun)", 2),
+    (14, "Ekspertligingizni ko'rsatib qo'yish — fan bo'yicha tushuncha "
+         "berish orqali", 5),
+    (15, "Nega sizning faningizni o'qishi kerakligini anglatish", 5),
+    (16, "Shu fanni o'rganishdan maqsad va kelajakdagi rejalari haqida "
+         "commitment letter yozdirish", 5),
+    (17, "Fanga kirishda eng sodda, eng atom darajadagi oson narsani "
+         "o'rgatish", 5),
+    (18, "\"O'rgandim\" degan narsani his qildirish", 5),
+    (19, "Telegram guruh ochish", 2),
+    (20, "Darsda o'quvchiga kerak bo'ladigan applarni o'rnatgizish, hamma "
+         "ishlatganini ko'rish", 5),
+    (21, "Har bir o'quvchi e'tiborda bo'lishi, darsda hamma qatnashishi", 3),
+    (22, "Guruhga umumiy nom berish", 2),
+    (23, "O'quvchiga ishonch berish", 3),
+    (24, "Sense of humor'ni darsda yetarli miqdorda ishlatish", 2),
+    (25, "O'quvchilar uyga vazifani tushunganini isbotlashi uchun "
+         "qayta so'rash", 2),
+    (26, "Darsdan keyin o'zingiz haqingizda to'liq ma'lumotni guruhga "
+         "joylash", 2),
+    (27, "Har bir o'quvchiga kamida 1 marta shaxsan murojaat qilish", 2),
+    (28, "O'quvchining kichik yutuqlarini maqtash", 2),
+    (29, "Dars yakunida darsni umumlashtirish va xulosalash", 2),
+]
+
+RUBRIC_ITEMS = {
+    RUBRIC_MAIN: RUBRIC_MAIN_ITEMS,
+    RUBRIC_FIRST: RUBRIC_FIRST_ITEMS,
+}
+
+# Baholanuvchi kim: nomzod yoki ishlayotgan ustoz
+OBSERVATION_TARGETS = [("candidate", "Nomzod"), ("teacher", "Ustoz")]
+
+# Natija darajalari — rangi va xulosasi
+def rubric_band(percent: float) -> tuple:
+    """Foizdan xulosa: (kalit, matn, rang)."""
+    if percent >= 85:
+        return ("excellent", "A'lo", "emerald")
+    if percent >= 70:
+        return ("good", "Yaxshi", "teal")
+    if percent >= TEACHER_MIN_SKILL:
+        return ("pass", "O'tdi", "amber")
+    return ("fail", "Yetarli emas", "red")
+
+
+OBSERVATION_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, HR_MANAGER,
+                                    BRANCH_MANAGER, HEAD_EXAMINER]
+
+# Daraja ko'tarilishi qachon kuchga kiradi. Ustoz oy o'rtasida hamma
+# reglamentni bajarsa ham, yangi daraja KEYINGI OYNING 1-sanasidan
+# boshlanadi: shunda oy bitta stavkada yopiladi va oylik chalkashmaydi.
+GRADE_EFFECTIVE_NEXT_MONTH = True

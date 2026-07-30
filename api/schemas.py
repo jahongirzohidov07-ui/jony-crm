@@ -91,6 +91,7 @@ class GroupCreate(BaseModel):
     branch_id: Optional[int] = None
     subject: Optional[str] = None
     level: Optional[str] = None
+    end_date: Optional[date] = None
     start_date: Optional[date] = None
     lesson_time: Optional[str] = None
     lesson_days: Optional[str] = None
@@ -98,6 +99,26 @@ class GroupCreate(BaseModel):
     lesson_price: float = 40000
     standard_lessons_per_month: int = 12
     teacher_rate_per_student: float = 0
+
+
+class GroupUpdate(BaseModel):
+    """Qisman tahrirlash - faqat yuborilgan maydonlar o'zgaradi.
+    Masalan jadvalni o'zgartirish uchun butun guruhni qayta yuborish
+    shart emas: {"lesson_days": "mon,wed"} yetadi."""
+    name: Optional[str] = None
+    room: Optional[str] = None
+    teacher_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    subject: Optional[str] = None
+    level: Optional[str] = None
+    end_date: Optional[date] = None
+    start_date: Optional[date] = None
+    lesson_time: Optional[str] = None
+    lesson_days: Optional[str] = None
+    monthly_fee: Optional[float] = None
+    lesson_price: Optional[float] = None
+    standard_lessons_per_month: Optional[int] = None
+    teacher_rate_per_student: Optional[float] = None
 
 
 class GroupOut(GroupCreate):
@@ -122,6 +143,7 @@ class LessonOut(BaseModel):
     teacher_id: Optional[int] = None
     teacher: Optional[TeacherOut] = None
     date: date
+    held: int = 1
     note: Optional[str] = None
     created_by: Optional[str] = None
     created_at: datetime
@@ -198,7 +220,9 @@ class StudentCreate(BaseModel):
     enrolled_date: Optional[date] = None
     group_id: Optional[int] = None
     branch_id: Optional[int] = None
-    status: str = "active"
+    # Yangi o'quvchi darrov "faol" bo'lmaydi - avval sinov darsida turadi.
+    # Faollashtirish qo'lda, guruhdagi ro'yxatdan qilinadi.
+    status: str = "trial"
     note: Optional[str] = None
 
 
@@ -389,6 +413,7 @@ class GridStudent(BaseModel):
 class GridLesson(BaseModel):
     id: int
     date: date
+    held: int = 1
 
 
 class AttendanceGrid(BaseModel):
@@ -660,3 +685,9 @@ class CandidateUpdate(BaseModel):
 class SocialManual(BaseModel):
     platform: str
     followers: int
+
+
+# ---------- Guruhdagi o'quvchi ustidagi amallar ----------
+class StudentGroupMove(BaseModel):
+    """Boshqa guruhga o'tkazish. group_id None bo'lsa - guruhdan chiqariladi."""
+    group_id: Optional[int] = None

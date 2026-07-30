@@ -83,6 +83,8 @@ class Group(Base):
     level = Column(String, nullable=True)     # roles.SUBJECT_LEVELS[subject]
     # Guruh qachon boshlangan. Yoqlama shu sanadan oldin qo'yilmaydi.
     start_date = Column(Date, nullable=True)
+    # Kurs tugash sanasi - undan keyin dars kunlari avtomat yaratilmaydi.
+    end_date = Column(Date, nullable=True)
     # Dars vaqti ("09:00 - 11:00") va kunlari ("mon,wed,fri") - ro'yxatda
     # ko'rinadi, jadval tuzishda qo'l keladi.
     lesson_time = Column(String, nullable=True)
@@ -171,6 +173,12 @@ class Lesson(Base):
     group_id = Column(Integer, ForeignKey("groups.id"), nullable=False)
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
     date = Column(Date, nullable=False, default=date.today)
+    # 1 - dars HAQIQATDA o'tilgan (yoqlama qo'yilgan), 0 - jadval bo'yicha
+    # REJALASHTIRILGAN. Guruh dars kunlari ("mon,wed,fri") bo'yicha butun
+    # oyning darslari avtomat yaratiladi, lekin ular held=0 turadi:
+    # o'quvchidan pul ham, ustozga ish haqi ham faqat held=1 darslar uchun
+    # hisoblanadi. Yoqlama yoki baho qo'yilishi bilan held=1 bo'ladi.
+    held = Column(Integer, default=1)
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

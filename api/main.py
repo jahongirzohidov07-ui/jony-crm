@@ -41,6 +41,10 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE lessons ADD COLUMN held INTEGER DEFAULT 1",
+        # Eski darslar qo'lda kiritilgan - demak ular o'tilgan.
+        "UPDATE lessons SET held = 1 WHERE held IS NULL",
+        "ALTER TABLE groups ADD COLUMN end_date DATE",
         "ALTER TABLE expenses ADD COLUMN channel VARCHAR",
         "ALTER TABLE expenses ADD COLUMN method VARCHAR",
         "UPDATE expenses SET method = 'cash' WHERE method IS NULL",
@@ -867,8 +871,80 @@ def _group_students(db: Session, group_id: int):
     )
 
 
+# Python'da hafta kuni: 0=Dushanba ... 6=Yakshanba
+_WEEKDAY_INDEX = {"mon": 0, "tue": 1, "wed": 2, "thu": 3,
+                  "fri": 4, "sat": 5, "sun": 6}
+
+
+def _sync_scheduled_lessons(db: Session, group: models.Group,
+                            start: date, end: date) -> None:
+    """Guruhning dars kunlari ("mon,wed,fri") bo'yicha shu oydagi barcha
+    dars kunlarini AVTOMAT yaratadi.
+
+    Har bir darsni qo'lda kiritish shart emas: kunlar tanlangan bo'lsa,
+    butun oy jadvali yoqlama qo'yishga tayyor holda chiqadi. Yangi
+    yaratilgan darslar held=0 ("rejalashtirilgan") bo'ladi - ular pulga
+    ham, ustoz ish haqiga ham kirmaydi, toki yoqlama qo'yilmaguncha.
+
+    Jadval o'zgarsa (masalan juma olib tashlansa) - endi mos kelmaydigan,
+    hali yoqlama ham baho ham qo'yilmagan darslar tozalanadi."""
+    days = [d.strip() for d in (group.lesson_days or "").split(",") if d.strip()]
+    wanted = {_WEEKDAY_INDEX[d] for d in days if d in _WEEKDAY_INDEX}
+
+    existing = (
+        db.query(models.Lesson)
+        .filter(models.Lesson.group_id == group.id,
+                models.Lesson.date >= start, models.Lesson.date <= end)
+        .all()
+    )
+    by_date = {ls.date: ls for ls in existing}
+
+    # Guruh boshlangunicha va tugagandan keyin dars bo'lmaydi.
+    lo = max(start, group.start_date) if group.start_date else start
+    hi = min(end, group.end_date) if group.end_date else end
+
+    changed = False
+    if wanted:
+        d = lo
+        while d <= hi:
+            if d.weekday() in wanted and d not in by_date:
+                db.add(models.Lesson(
+                    group_id=group.id, teacher_id=group.teacher_id,
+                    date=d, held=0, created_by="avtomat"))
+                changed = True
+            d += timedelta(days=1)
+
+    # Jadvalga mos kelmay qolgan bo'sh darslarni olib tashlaymiz.
+    stale = [ls for ls in existing
+             if not ls.held and (ls.date.weekday() not in wanted
+                                 or ls.date < lo or ls.date > hi)]
+    for ls in stale:
+        has_data = (
+            db.query(models.Attendance)
+            .filter(models.Attendance.lesson_id == ls.id).first()
+            or db.query(models.DailyGrade)
+            .filter(models.DailyGrade.lesson_id == ls.id).first()
+        )
+        if not has_data:
+            db.delete(ls)
+            changed = True
+
+    if changed:
+        db.commit()
+
+
+def _mark_lesson_held(db: Session, lesson: models.Lesson) -> None:
+    """Yoqlama yoki baho qo'yilgan dars - o'tilgan dars. Shundan keyingina
+    u pulga va ustoz ish haqiga kiradi."""
+    if not lesson.held:
+        lesson.held = 1
+
+
 def _group_lessons_in_month(db: Session, group_id: int, year: int, month: int):
     start, end = billing.month_bounds(year, month)
+    group = db.query(models.Group).get(group_id)
+    if group:
+        _sync_scheduled_lessons(db, group, start, end)
     return (
         db.query(models.Lesson)
         .filter(models.Lesson.group_id == group_id,
@@ -902,7 +978,8 @@ def attendance_grid(
     return schemas.AttendanceGrid(
         students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
                                       status=s.status) for s in students],
-        lessons=[schemas.GridLesson(id=ls.id, date=ls.date) for ls in lessons],
+        lessons=[schemas.GridLesson(id=ls.id, date=ls.date, held=ls.held or 0)
+                 for ls in lessons],
         marks=marks,
     )
 
@@ -933,6 +1010,7 @@ def save_attendance(
             db.add(models.Attendance(
                 lesson_id=lesson_id, student_id=m.student_id,
                 present=1 if m.present else 0, created_by=user.full_name))
+    _mark_lesson_held(db, lesson)
     db.commit()
     return {"ok": True, "saved": len(payload.marks)}
 
@@ -962,7 +1040,8 @@ def grades_grid(
     return schemas.AttendanceGrid(
         students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
                                       status=s.status) for s in students],
-        lessons=[schemas.GridLesson(id=ls.id, date=ls.date) for ls in lessons],
+        lessons=[schemas.GridLesson(id=ls.id, date=ls.date, held=ls.held or 0)
+                 for ls in lessons],
         marks=marks,
     )
 
@@ -991,6 +1070,8 @@ def save_grades(
                 f"Baho {roles.DAILY_GRADE_MIN}-{roles.DAILY_GRADE_MAX} "
                 "oralig'ida bo'lishi kerak",
             )
+
+    _mark_lesson_held(db, lesson)
 
     existing = {
         g.student_id: g
@@ -2552,15 +2633,27 @@ def create_group(
 @app.put("/api/groups/{group_id}", response_model=schemas.GroupOut)
 def update_group(
     group_id: int,
-    payload: schemas.GroupCreate,
+    payload: schemas.GroupUpdate,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FULL_ACCESS)),
 ):
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
-    _validate_group_fields(payload)
-    for k, v in payload.model_dump().items():
+
+    fields = payload.model_dump(exclude_unset=True)
+    # Fan va daraja mosligini TEKSHIRISHDAN OLDIN yangi qiymatlarni
+    # eskisi bilan qo'shib chiqamiz: faqat darajani yuborganda ham
+    # tekshiruv guruhning fanini bilishi kerak.
+    merged = schemas.GroupCreate(
+        name=fields.get("name", group.name),
+        subject=fields.get("subject", group.subject),
+        level=fields.get("level", group.level),
+        lesson_days=fields.get("lesson_days", group.lesson_days),
+    )
+    _validate_group_fields(merged)
+
+    for k, v in fields.items():
         setattr(group, k, v)
     db.commit()
     db.refresh(group)
@@ -2778,8 +2871,11 @@ def list_lessons(
 ):
     group = _get_group_in_scope(db, group_id, user)
     start, end = billing.month_bounds(year, month)
+    _sync_scheduled_lessons(db, group, start, end)
     return (
-        billing.held_lessons_query(db, group.id, start, end)
+        db.query(models.Lesson)
+        .filter(models.Lesson.group_id == group.id,
+                models.Lesson.date >= start, models.Lesson.date <= end)
         .order_by(models.Lesson.date)
         .all()
     )
@@ -2806,6 +2902,17 @@ def add_lesson(
         .first()
     )
     if existing:
+        # Jadval bo'yicha avtomat yaratilgan bo'sh kun bo'lsa - xato
+        # bermaymiz, shunchaki "o'tildi" deb belgilaymiz.
+        if not existing.held:
+            existing.held = 1
+            if payload.teacher_id is not None:
+                existing.teacher_id = payload.teacher_id
+            if payload.note:
+                existing.note = payload.note
+            db.commit()
+            db.refresh(existing)
+            return existing
         raise HTTPException(400, "Bu kun uchun allaqachon dars (yoqlama) belgilangan")
 
     lesson = models.Lesson(
@@ -3696,3 +3803,60 @@ def social_manual(
         raise HTTPException(400, "Noma'lum platforma")
     _save_social(db, payload.platform, payload.followers, "manual")
     return {"ok": True}
+
+
+# =====================================================================
+#  Guruhdagi o'quvchi ustidagi amallar (ro'yxatdagi 3 nuqta menyusi)
+# =====================================================================
+@app.post("/api/students/{student_id}/activate")
+def activate_student(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """Sinovdagi (yoki muzlatilgan) o'quvchini FAOL qiladi.
+
+    Guruhga qo'shilgan o'quvchi avtomat faol bo'lmaydi - avval sinov
+    darsida turadi. Faollashtirish shu tugma orqali, ongli ravishda
+    bo'ladi: shundan keyingina u hisob-kitobga to'liq kiradi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if s.status == "active":
+        raise HTTPException(400, "Bu o'quvchi allaqachon faol")
+    s.status = "active"
+    # Faollashgan kun - o'qish boshlangan kun deb hisoblanadi.
+    if not s.enrolled_date:
+        s.enrolled_date = date.today()
+    _sync_student_left_date(s)
+    db.commit()
+    return {"ok": True, "status": s.status}
+
+
+@app.post("/api/students/{student_id}/move-group")
+def move_student_group(
+    student_id: int,
+    payload: schemas.StudentGroupMove,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """Boshqa guruhga o'tkazadi. group_id bo'sh bo'lsa - guruhdan
+    chiqaradi, lekin o'quvchi bazada qoladi (to'lov tarixi saqlanadi)."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+
+    if payload.group_id is None:
+        s.group_id = None
+        db.commit()
+        return {"ok": True, "group_id": None}
+
+    g = _get_group_in_scope(db, payload.group_id, user)
+    if g.id == s.group_id:
+        raise HTTPException(400, "O'quvchi allaqachon shu guruhda")
+    s.group_id = g.id
+    # Filial guruh bilan birga o'zgaradi - aks holda hisobotlar chalkashadi.
+    if g.branch_id:
+        s.branch_id = g.branch_id
+    db.commit()
+    return {"ok": True, "group_id": g.id, "group": g.name}

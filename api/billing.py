@@ -34,10 +34,15 @@ def month_bounds(year: int, month: int) -> tuple[date, date]:
 
 
 def held_lessons_query(db: Session, group_id: int, start: date, end: date):
+    """Faqat HAQIQATDA o'tilgan darslar. Jadval bo'yicha avtomat
+    yaratilgan, lekin hali yoqlama qo'yilmagan darslar (held=0) bu yerga
+    kirmaydi - aks holda o'quvchidan bo'lmagan dars uchun pul olingan
+    bo'lardi."""
     return db.query(models.Lesson).filter(
         models.Lesson.group_id == group_id,
         models.Lesson.date >= start,
         models.Lesson.date <= end,
+        models.Lesson.held == 1,
     )
 
 

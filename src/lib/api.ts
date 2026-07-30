@@ -3472,3 +3472,197 @@ export interface CampaignRow {
   is_active: boolean;
   conclusion?: string | null;
 }
+
+// ------------------------------------------- SMM: brend, media, KB, hisobot
+export interface BrandRow {
+  id: number;
+  section: string;
+  key?: string | null;
+  title: string;
+  value?: string | null;
+  note?: string | null;
+  kind?: string | null;
+  source: string;
+  is_filled: boolean;
+  position: number;
+}
+
+export interface BrandBook {
+  sections: Record<string, BrandRow[]>;
+  source: string;
+  word: string;
+  primary: string;
+  secondary: string;
+  post_colors: string[];
+  checks: { key: string; label: string }[];
+  required: string[];
+  gaps: string[];
+  can_edit: boolean;
+  hint: string;
+}
+
+export interface BrandState {
+  items: {
+    key: string; label: string; ok: boolean; note?: string | null;
+    required: boolean; checked_at?: string | null;
+  }[];
+  done: number;
+  total: number;
+  blocked: string[];
+  can_publish: boolean;
+}
+
+export interface MediaRow {
+  id: number;
+  name: string;
+  kind: string;
+  kind_label: string;
+  kind_tone: string;
+  url?: string | null;
+  branch?: string | null;
+  branch_id?: number | null;
+  course?: string | null;
+  student?: string | null;
+  event?: string | null;
+  taken_on?: string | null;
+  author?: string | null;
+  tags?: string | null;
+  consent: string;
+  consent_label: string;
+  consent_tone: string;
+  consent_until?: string | null;
+  days_left?: number | null;
+  expired: boolean;
+  expiring: boolean;
+  can_publish: boolean;
+  can_download: boolean;
+}
+
+export interface MediaList {
+  rows: MediaRow[];
+  kinds: { key: string; label: string; tone: string }[];
+  consents: {
+    key: string; label: string; tone: string;
+    count: number; blocks: boolean;
+  }[];
+  total: number;
+  publishable: number;
+  expiring: number;
+  expired: number;
+  hint: string;
+}
+
+export interface KbRow {
+  id: number;
+  title: string;
+  category: string;
+  category_label: string;
+  category_tone: string;
+  body?: string | null;
+  tags?: string | null;
+  author?: string | null;
+  views: number;
+  is_pinned: boolean;
+  stale: boolean;
+  reviewed_at?: string | null;
+}
+
+export interface KbList {
+  rows: KbRow[];
+  categories: { key: string; label: string; tone: string; count: number }[];
+  stale: number;
+  can_edit: boolean;
+  review_months: number;
+}
+
+export interface AnalyticsRow {
+  key: string | number | null;
+  label: string;
+  count: number;
+  reach: number;
+  engagement: number;
+  messages: number;
+  leads: number;
+  qualified: number;
+  sales: number;
+  revenue: number;
+  per_content_leads: number;
+  per_content_revenue: number;
+  lead_rate: number;
+  cost_free_score: number;
+}
+
+export interface SmmAnalytics {
+  dim: string;
+  dim_label: string;
+  dims: { key: string; label: string }[];
+  rows: AnalyticsRow[];
+  months: number;
+  total_contents: number;
+  best?: AnalyticsRow | null;
+  trap?: {
+    label: string; reach: number; revenue: number; better: string;
+  } | null;
+  hint: string;
+}
+
+export interface KpiPart {
+  key: string;
+  label: string;
+  score: number;
+  max: number;
+  percent: number;
+  note: string;
+}
+
+export interface SmmKpi {
+  score: number;
+  label: string;
+  tone: string;
+  parts: KpiPart[];
+  plan_percent: number;
+  on_time: number;
+  published: number;
+  planned: number;
+  sla_percent: number;
+  start: string;
+  end: string;
+  weights: { key: string; label: string; weight: number }[];
+  hint: string;
+}
+
+export interface SmmReport {
+  id?: number;
+  period?: string;
+  start: string;
+  end: string;
+  days: number;
+  published: number;
+  planned: number;
+  plan_percent: number;
+  on_time: number;
+  totals: Record<string, number>;
+  funnel: FunnelStep[];
+  top: {
+    id: number; code?: string | null; title: string;
+    platform_label: string; pillar_label: string; date?: string | null;
+    reach: number; leads: number; sales: number; revenue: number;
+  }[];
+  weak: SmmReport["top"];
+  dims: Record<string, {
+    label: string; count: number; leads: number; revenue: number;
+  }[]>;
+  messages: number;
+  messages_to_lead: number;
+  sla_percent: number;
+  kpi: SmmKpi;
+  summary: string;
+  tips: { about: string; text: string }[];
+  sections: { key: string; label: string }[];
+  periods?: { key: string; label: string }[];
+  saved?: {
+    id: number; period: string; start: string; end: string;
+    score?: number | null; created_at?: string | null;
+  }[];
+  frozen?: boolean;
+}

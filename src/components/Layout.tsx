@@ -19,6 +19,8 @@ import {
   Briefcase,
   History,
   GraduationCap as AcademicIcon,
+  CalendarDays,
+  Archive as ArchiveIcon,
   MessageSquareWarning,
   X,
 } from "lucide-react";
@@ -38,6 +40,7 @@ import {
   roleLabel,
 } from "../lib/roles";
 import { api } from "../lib/api";
+import { QuickPayment } from "./QuickPayment";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -162,7 +165,15 @@ export default function Layout() {
   let items = navItems;
   // "Bugungi holat" endi Dashboard ICHIDA alohida bo'lim - menyuda
   // takrorlanmaydi.
-  // Lidlar Dashboard'dan keyin turadi - kun shu yerdan boshlanadi.
+  // Dars jadvali va Lidlar - administratorning kuni shulardan boshlanadi,
+  // shuning uchun eng tepada turadi.
+  if (can(user?.role, TEACHING_STAFF)) {
+    items = [
+      items[0],
+      { to: "/timetable", label: "Dars jadvali", icon: CalendarDays },
+      ...items.slice(1),
+    ];
+  }
   if (can(user?.role, LEAD_ACCESS)) {
     items = [
       items[0],
@@ -208,6 +219,9 @@ export default function Layout() {
   if (can(user?.role, AUDIT_VIEW) || can(user?.role, EXAM_VIEW)) {
     items = [...items, { to: "/audit", label: "Audit", icon: History }];
   }
+  if (can(user?.role, TEACHING_STAFF)) {
+    items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];
+  }
   if (user?.role === FOUNDER) {
     items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];
   }
@@ -221,6 +235,14 @@ export default function Layout() {
           </div>
           <span className="font-semibold text-slate-900">Jony CRM</span>
         </div>
+
+        {/* Tez to'lov - administrator uchun eng ko'p bosiladigan tugma,
+            shuning uchun menyuning eng tepasida turadi. */}
+        {can(user?.role, FINANCE_ACCESS) && (
+          <div className="px-3 pt-3">
+            <QuickPayment />
+          </div>
+        )}
 
         <nav className="flex-1 px-3 py-4 space-y-1">
           {items.map(({ to, label, icon: Icon, end }) => (

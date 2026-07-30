@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Download, Phone } from "lucide-react";
+import { Download, Phone, Pencil } from "lucide-react";
 import { api, type Group, type Student } from "../lib/api";
 import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
@@ -24,7 +24,13 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
-export function GroupSidebar({ group }: { group: Group }) {
+export function GroupSidebar({
+  group,
+  onEdit,
+}: {
+  group: Group;
+  onEdit?: () => void;
+}) {
   const [students, setStudents] = useState<Student[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +56,18 @@ export function GroupSidebar({ group }: { group: Group }) {
 
   return (
     <aside className="w-full lg:w-80 shrink-0 bg-white rounded-xl border border-slate-200 p-5">
-      <h1 className="text-lg font-semibold text-slate-900 mb-3">{group.name}</h1>
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <h1 className="text-lg font-semibold text-slate-900">{group.name}</h1>
+        {onEdit && (
+          <button
+            onClick={onEdit}
+            title="Guruhni tahrirlash"
+            className="p-1.5 rounded-md text-slate-400 hover:text-brand-600 hover:bg-slate-50 shrink-0"
+          >
+            <Pencil size={15} />
+          </button>
+        )}
+      </div>
 
       <div className="space-y-1 mb-4">
         <Row

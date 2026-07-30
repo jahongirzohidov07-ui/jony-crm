@@ -17,6 +17,7 @@ import {
   vacancyStatusLabel,
 } from "../lib/hr";
 import { formatSom, formatDate } from "../lib/format";
+import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "funnel" | "candidates" | "vacancies";
@@ -425,7 +426,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
 
       {modal && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl w-full max-w-md p-5">
+          <div className="bg-white rounded-xl w-full max-w-md p-5 max-h-[88vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-slate-800">
                 {editing ? "Nomzodni tahrirlash" : "Yangi nomzod"}
@@ -507,6 +508,30 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 rows={3}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+
+              {/* Fayllar faqat SAQLANGAN nomzodga biriktiriladi -
+                  yangi nomzodda hali ID yo'q. */}
+              {editing ? (
+                <div className="pt-3 border-t border-slate-100">
+                  <p className="text-sm font-medium text-slate-700 mb-2">
+                    Rasm va hujjatlar
+                  </p>
+                  <Attachments
+                    entity="candidate"
+                    entityId={editing.id}
+                    kinds={[
+                      { key: "photo", label: "Rasm" },
+                      { key: "certificate", label: "Sertifikat" },
+                      { key: "resume", label: "Rezyume" },
+                      { key: "document", label: "Hujjat" },
+                    ]}
+                  />
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400">
+                  Rasm va sertifikat nomzod saqlangandan keyin biriktiriladi.
+                </p>
+              )}
             </div>
             <div className="flex gap-2 mt-5">
               <button

@@ -8,6 +8,7 @@ import { api, type CeoToday } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { PROFIT_VIEW, can } from "../lib/roles";
 import { formatSom, formatDate } from "../lib/format";
+import { BranchCompare } from "../components/BranchCompare";
 
 /** Ogohlantirish darajasiga qarab rang. */
 const LEVEL: Record<string, { box: string; dot: string; label: string }> = {
@@ -345,6 +346,11 @@ export default function Ceo() {
             </table>
           )}
         </div>
+      </div>
+
+      {/* --- Filiallar solishtiruvi --- */}
+      <div className="mt-4">
+        <BranchCompare months={1} />
       </div>
 
       {/* --- Ochiq shikoyatlar --- */}

@@ -7,19 +7,25 @@ import {
 import {
   api, type RiskReport, type RiskRow, type RiskTask,
   type GroupFillReport, type Room, type Branch, type User,
+  type SupportPanel, type SupportPlanRow, type SupportAssignment,
+  type Group,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { ACADEMIC_VIEW, ACADEMIC_ACCESS, can } from "../lib/roles";
+import {
+  ACADEMIC_VIEW, ACADEMIC_ACCESS, SUPPORT_ACCESS, SUPPORT_TEACHER, can,
+} from "../lib/roles";
+import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { riskLevel, fillBand, MANUAL_SIGNALS } from "../lib/academic";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "risk" | "fill" | "tasks" | "rooms";
+type Tab = "risk" | "fill" | "tasks" | "support" | "rooms";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "risk", label: "Akademik risk" },
   { key: "fill", label: "Guruh to'lishi" },
   { key: "tasks", label: "Vazifalar" },
+  { key: "support", label: "Support teacher" },
   { key: "rooms", label: "Xonalar" },
 ];
 
@@ -389,17 +395,17 @@ function FlagModal({
 }
 
 // ------------------------------------------------------- To'lish tab
-function FillTab() {
+function FillTab({ branchId }: { branchId: number | null }) {
   const [data, setData] = useState<GroupFillReport | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     api
-      .get<GroupFillReport>("/academic/group-fill")
+      .get<GroupFillReport>(`/academic/group-fill?x=1${branchParam(branchId)}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, []);
+  }, [branchId]);
 
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
@@ -867,6 +873,7 @@ function RoomsTab({ canEdit, branches }: { canEdit: boolean; branches: Branch[] 
 export default function Academic() {
   const { user } = useAuth();
   const [tab, setTab] = useState<Tab>("risk");
+  const [branchId, setBranchId] = useState<number | null>(null);
   const [branches, setBranches] = useState<Branch[]>([]);
 
   useEffect(() => {
@@ -893,7 +900,8 @@ export default function Academic() {
         Ta'lim sifati: xavfdagi o'quvchilar, guruh to'lishi va xonalar
       </p>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-slate-200 mb-5">
+        <div className="flex gap-1 overflow-x-auto">
         {TABS.map((t) => (
           <button
             key={t.key}
@@ -907,12 +915,612 @@ export default function Academic() {
             {t.label}
           </button>
         ))}
+        </div>
+        <div className="flex-1" />
+        {tab === "fill" && (
+          <BranchPicker value={branchId} onChange={setBranchId} className="pb-2" />
+        )}
       </div>
 
       {tab === "risk" && <RiskTab />}
-      {tab === "fill" && <FillTab />}
+      {tab === "fill" && <FillTab branchId={branchId} />}
       {tab === "tasks" && <TasksTab />}
+      {tab === "support" && <SupportTab canAssign={canEdit} />}
       {tab === "rooms" && <RoomsTab canEdit={canEdit} branches={branches} />}
+    </div>
+  );
+}
+
+
+// ------------------------------------------------- Support teacher tab
+function SupportTab({ canAssign }: { canAssign: boolean }) {
+  const { user } = useAuth();
+  const [data, setData] = useState<SupportPanel | null>(null);
+  const [staff, setStaff] = useState<User[]>([]);
+  const [assigns, setAssigns] = useState<SupportAssignment[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [who, setWho] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [planFor, setPlanFor] = useState<{ id: number; name: string } | null>(null);
+  const [assignOpen, setAssignOpen] = useState(false);
+
+  const isSupport = user?.role === SUPPORT_TEACHER;
+
+  function load() {
+    setLoading(true);
+    const q = !isSupport && who ? `?user_id=${who}` : "";
+    Promise.all([
+      api.get<SupportPanel>(`/support/panel${q}`).then(setData),
+      api.get<SupportAssignment[]>(`/support/assignments${q}`)
+        .then(setAssigns).catch(() => setAssigns([])),
+    ]).finally(() => setLoading(false));
+  }
+  useEffect(load, [who]);
+
+  useEffect(() => {
+    if (isSupport) return;
+    api.get<User[]>("/users")
+      .then((u) => setStaff(u.filter((x) => x.role === SUPPORT_TEACHER)))
+      .catch(() => setStaff([]));
+    api.get<Group[]>("/groups").then(setGroups).catch(() => setGroups([]));
+  }, [isSupport]);
+
+  if (!can(user?.role, SUPPORT_ACCESS)) {
+    return (
+      <p className="text-sm text-slate-400 py-10 text-center">
+        Bu bo'limga ruxsatingiz yo'q.
+      </p>
+    );
+  }
+
+  if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  const s = data.summary;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        {!isSupport && (
+          <select
+            value={who}
+            onChange={(e) => setWho(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+          >
+            <option value="">Barcha support teacherlar</option>
+            {staff.map((u) => (
+              <option key={u.id} value={u.id}>
+                {u.full_name}
+              </option>
+            ))}
+          </select>
+        )}
+        <div className="flex-1" />
+        {canAssign && (
+          <button
+            onClick={() => setAssignOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
+          >
+            <Plus size={14} /> Guruh biriktirish
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">O'quvchilar</p>
+          <p className="text-lg font-semibold text-slate-900">{s.students}</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Davomat muammosi</p>
+          <p
+            className={`text-lg font-semibold ${
+              s.attendance_problem ? "text-red-600" : "text-slate-900"
+            }`}
+          >
+            {s.attendance_problem}
+          </p>
+          <p className="text-xs text-slate-400 mt-0.5">
+            {s.threshold}% dan past
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Uy vazifasi</p>
+          <p
+            className={`text-lg font-semibold ${
+              s.homework_problem ? "text-amber-600" : "text-slate-900"
+            }`}
+          >
+            {s.homework_problem}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Ochiq rejalar</p>
+          <p className="text-lg font-semibold text-slate-900">{s.open_plans}</p>
+          {s.plan_success !== null && (
+            <p className="text-xs text-slate-400 mt-0.5">
+              {s.plan_success}% bajarilgan
+            </p>
+          )}
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Retention</p>
+          <p
+            className={`text-lg font-semibold ${
+              (s.retention ?? 0) >= 80 ? "text-emerald-600" : "text-amber-600"
+            }`}
+          >
+            {s.retention !== null ? `${s.retention}%` : "—"}
+          </p>
+          <p className="text-xs text-slate-400 mt-0.5">
+            {s.stayed} qoldi · {s.left} ketdi
+          </p>
+        </div>
+      </div>
+
+      {data.groups.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4">
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Biriktirilgan guruhlar
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {data.groups.map((g) => (
+              <Link
+                key={g.id}
+                to={`/groups/${g.id}`}
+                className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm text-slate-700 hover:border-brand-300"
+              >
+                {g.name}
+                <span className="text-xs text-slate-400">
+                  {" "}
+                  · {g.students} o'quvchi
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.students.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Hali guruh biriktirilmagan. Yuqoridagi tugmadan biriktiring.
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50">
+              <tr className="text-xs text-slate-500">
+                <th className="text-left px-4 py-2.5">O'quvchi</th>
+                <th className="text-left">Guruh</th>
+                <th className="text-right w-28">Davomat</th>
+                <th className="text-left w-48">Muammo</th>
+                <th className="text-left">Reja</th>
+                <th className="w-28" />
+              </tr>
+            </thead>
+            <tbody>
+              {data.students.map((st) => (
+                <tr key={st.student_id} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5">
+                    <Link
+                      to={`/students/${st.student_id}`}
+                      className="text-slate-800 hover:text-brand-700"
+                    >
+                      {st.full_name}
+                    </Link>
+                    {st.parent_phone && (
+                      <span className="block text-xs text-slate-400">
+                        {st.parent_phone}
+                      </span>
+                    )}
+                  </td>
+                  <td className="text-slate-500">{st.group || "—"}</td>
+                  <td
+                    className={`text-right font-medium ${
+                      st.attendance_problem ? "text-red-600" : "text-slate-600"
+                    }`}
+                  >
+                    {st.attendance.percent !== null
+                      ? `${st.attendance.percent}%`
+                      : "—"}
+                    <span className="block text-xs text-slate-400 font-normal">
+                      {st.attendance.absent} qoldirgan
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex flex-wrap gap-1">
+                      {st.attendance_problem && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-700">
+                          Davomat
+                        </span>
+                      )}
+                      {st.homework_problem && (
+                        <span
+                          className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-700"
+                          title={st.homework_note || undefined}
+                        >
+                          Uy vazifasi
+                        </span>
+                      )}
+                      {!st.attendance_problem && !st.homework_problem && (
+                        <span className="text-xs text-slate-400">—</span>
+                      )}
+                    </div>
+                  </td>
+                  <td>
+                    {st.open_plans.length === 0 ? (
+                      <span className="text-xs text-slate-400">yo'q</span>
+                    ) : (
+                      st.open_plans.map((p) => (
+                        <p key={p.id} className="text-xs text-slate-600">
+                          {p.plan}
+                          {p.due_date && (
+                            <span className="text-slate-400">
+                              {" "}
+                              · {formatDate(p.due_date)}
+                            </span>
+                          )}
+                        </p>
+                      ))
+                    )}
+                  </td>
+                  <td className="pr-4 text-right">
+                    <button
+                      onClick={() =>
+                        setPlanFor({ id: st.student_id, name: st.full_name })
+                      }
+                      className="px-2.5 py-1 rounded-md text-xs font-medium border border-slate-200 text-slate-700 hover:border-brand-300"
+                    >
+                      Reja
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <PlansList onChanged={load} />
+
+      {planFor && (
+        <PlanModal
+          student={planFor}
+          onClose={() => setPlanFor(null)}
+          onSaved={() => {
+            setPlanFor(null);
+            load();
+          }}
+        />
+      )}
+      {assignOpen && (
+        <AssignModal
+          staff={staff}
+          groups={groups}
+          existing={assigns}
+          onClose={() => setAssignOpen(false)}
+          onSaved={() => {
+            setAssignOpen(false);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function PlansList({ onChanged }: { onChanged: () => void }) {
+  const [rows, setRows] = useState<SupportPlanRow[]>([]);
+  const [status, setStatus] = useState("open");
+
+  function load() {
+    api.get<SupportPlanRow[]>(`/support/plans?status=${status}`)
+      .then(setRows).catch(() => setRows([]));
+  }
+  useEffect(load, [status]);
+
+  async function done(p: SupportPlanRow) {
+    const result = prompt("Natija (ixtiyoriy):") ?? "";
+    await api.put(`/support/plans/${p.id}`, { status: "done", result });
+    load();
+    onChanged();
+  }
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5 mt-4">
+      <div className="flex items-center gap-2 mb-3">
+        <p className="text-sm font-medium text-slate-700">
+          O'quvchi bilan ishlash rejalari
+        </p>
+        <div className="flex gap-1">
+          {[
+            { k: "open", l: "Ochiq" },
+            { k: "done", l: "Bajarilgan" },
+          ].map((f) => (
+            <button
+              key={f.k}
+              onClick={() => setStatus(f.k)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition ${
+                status === f.k
+                  ? "bg-brand-50 border-brand-400 text-brand-700"
+                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+              }`}
+            >
+              {f.l}
+            </button>
+          ))}
+        </div>
+      </div>
+      {rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-4">Reja yo'q</p>
+      ) : (
+        <table className="w-full text-sm">
+          <tbody>
+            {rows.map((p) => (
+              <tr key={p.id} className="border-b border-slate-50 last:border-0">
+                <td className="py-2">
+                  <Link
+                    to={`/students/${p.student_id}`}
+                    className="text-slate-800 hover:text-brand-700"
+                  >
+                    {p.student}
+                  </Link>
+                  <span className="block text-xs text-slate-400">
+                    {p.issue_label}
+                  </span>
+                </td>
+                <td className="text-slate-600">
+                  {p.plan}
+                  {p.result && (
+                    <span className="block text-xs text-emerald-700">
+                      {p.result}
+                    </span>
+                  )}
+                </td>
+                <td
+                  className={`text-right w-28 text-xs ${
+                    p.overdue ? "text-red-600 font-medium" : "text-slate-500"
+                  }`}
+                >
+                  {p.due_date ? formatDate(p.due_date) : "—"}
+                </td>
+                <td className="text-right w-28">
+                  {p.status === "open" && (
+                    <button
+                      onClick={() => done(p)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium border border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                    >
+                      <CheckCircle2 size={12} /> Bajarildi
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+const SUPPORT_ISSUES = [
+  { key: "attendance", label: "Davomat muammosi" },
+  { key: "homework", label: "Uy vazifasi muammosi" },
+  { key: "behaviour", label: "Xulq" },
+  { key: "motivation", label: "Motivatsiya" },
+  { key: "other", label: "Boshqa" },
+];
+
+function PlanModal({
+  student, onClose, onSaved,
+}: {
+  student: { id: number; name: string };
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [issue, setIssue] = useState("attendance");
+  const [plan, setPlan] = useState("");
+  const [due, setDue] = useState(
+    new Date(Date.now() + 3 * 864e5).toISOString().slice(0, 10)
+  );
+  const [err, setErr] = useState("");
+
+  async function save() {
+    if (!plan.trim()) {
+      setErr("Nima qilishni yozing");
+      return;
+    }
+    try {
+      await api.post("/support/plans", {
+        student_id: student.id, issue, plan: plan.trim(),
+        due_date: due || null,
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-800">Ishlash rejasi</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-sm text-slate-500 mb-4">{student.name}</p>
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
+            {err}
+          </p>
+        )}
+        <div className="space-y-3">
+          <select
+            value={issue}
+            onChange={(e) => setIssue(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            {SUPPORT_ISSUES.map((i) => (
+              <option key={i.key} value={i.key}>
+                {i.label}
+              </option>
+            ))}
+          </select>
+          <textarea
+            value={plan}
+            onChange={(e) => setPlan(e.target.value)}
+            placeholder="Nima qilinadi? (masalan: ota-onasi bilan uchrashuv)"
+            rows={3}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          />
+          <div>
+            <label className="text-xs text-slate-500">Muddat</label>
+            <input
+              type="date"
+              value={due}
+              onChange={(e) => setDue(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            />
+          </div>
+        </div>
+        <div className="flex gap-2 mt-5">
+          <button
+            onClick={save}
+            className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AssignModal({
+  staff, groups, existing, onClose, onSaved,
+}: {
+  staff: User[];
+  groups: Group[];
+  existing: SupportAssignment[];
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [userId, setUserId] = useState<string>(staff[0] ? String(staff[0].id) : "");
+  const [groupId, setGroupId] = useState<string>("");
+  const [err, setErr] = useState("");
+
+  async function save() {
+    if (!userId || !groupId) {
+      setErr("Support teacher va guruhni tanlang");
+      return;
+    }
+    try {
+      await api.post("/support/assignments", {
+        user_id: Number(userId), group_id: Number(groupId),
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  async function remove(a: SupportAssignment) {
+    await api.delete(`/support/assignments/${a.id}`);
+    onSaved();
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-800">Guruh biriktirish</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
+            {err}
+          </p>
+        )}
+        {staff.length === 0 ? (
+          <p className="text-sm text-slate-500">
+            Support teacher rolidagi xodim yo'q. Avval Xodimlar bo'limidan
+            qo'shing.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            <select
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {staff.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.full_name}
+                </option>
+              ))}
+            </select>
+            <select
+              value={groupId}
+              onChange={(e) => setGroupId(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              <option value="">Guruhni tanlang</option>
+              {groups.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {existing.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-slate-100">
+            <p className="text-xs text-slate-500 mb-2">Biriktirilganlar</p>
+            <div className="space-y-1">
+              {existing.map((a) => (
+                <div key={a.id} className="flex items-center justify-between text-sm">
+                  <span className="text-slate-700">
+                    {a.user} — {a.group || a.student}
+                  </span>
+                  <button
+                    onClick={() => remove(a)}
+                    className="text-slate-400 hover:text-red-600"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex gap-2 mt-5">
+          <button
+            onClick={save}
+            disabled={staff.length === 0}
+            className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-40"
+          >
+            Biriktirish
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Yopish
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

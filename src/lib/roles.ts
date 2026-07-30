@@ -208,3 +208,9 @@ export const CONTENT_REQUESTER = [
 ];
 /** G'oyani har qanday xodim yubora oladi. */
 export const IDEA_SUBMIT = STAFF_ROLES;
+
+/** Ijtimoiy inbox va atributsiya. */
+export const INBOX_ACCESS = [
+  FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
+  ADMINISTRATOR,
+];

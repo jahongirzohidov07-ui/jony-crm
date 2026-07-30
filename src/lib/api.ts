@@ -3329,3 +3329,146 @@ export interface RequestRow {
   campaign_id?: number | null;
   date?: string | null;
 }
+
+// ------------------------------------------- SMM: inbox va atributsiya
+export interface InboxRow {
+  id: number;
+  channel: string;
+  channel_label: string;
+  channel_tone: string;
+  kind: string;
+  kind_label: string;
+  author: string;
+  username?: string | null;
+  phone?: string | null;
+  text?: string | null;
+  content_id?: number | null;
+  content?: string | null;
+  content_code?: string | null;
+  course?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  assigned?: string | null;
+  lead_id?: number | null;
+  received_at?: string | null;
+  first_reply_at?: string | null;
+  reply_minutes?: number | null;
+  waiting_minutes?: number | null;
+  off_hours: boolean;
+  sla: string;
+  sla_label: string;
+  sla_tone: string;
+  overdue: boolean;
+  reply_text?: string | null;
+  replied_by?: string | null;
+}
+
+export interface InboxList {
+  rows: InboxRow[];
+  counts: Record<string, number>;
+  open: number;
+  overdue: number;
+  sla_percent: number;
+  avg_minutes: number;
+  answered: number;
+  off_hours: number;
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  channels: { key: string; label: string; tone: string }[];
+  sla_alert: number;
+  work_hours: string;
+  templates: { id: number; key: string; label: string; text: string }[];
+  hint: string;
+}
+
+export interface FunnelStep {
+  key: string;
+  label: string;
+  value: number;
+  from_prev?: number | null;
+}
+
+export interface Attribution {
+  content: ContentRow;
+  metrics: Record<string, number>;
+  reach: number;
+  views: number;
+  engagement: number;
+  profile_visits: number;
+  link_clicks: number;
+  messages: number;
+  leads: number;
+  qualified: number;
+  trials: number;
+  sales: number;
+  revenue: number;
+  first_revenue: number;
+  retained_30: number;
+  retained_90: number;
+  funnel: FunnelStep[];
+  lead_rate: number;
+  qualified_rate: number;
+  sale_rate: number;
+  story: string;
+  goal_label: string;
+  goal_metric: string;
+  hint: string;
+}
+
+export interface AttributionRow {
+  id: number;
+  code?: string | null;
+  title: string;
+  platform_label: string;
+  pillar?: string | null;
+  pillar_label: string;
+  pillar_tone: string;
+  goal_label: string;
+  date?: string | null;
+  reach: number;
+  engagement: number;
+  messages: number;
+  leads: number;
+  qualified: number;
+  sales: number;
+  revenue: number;
+  retained_30: number;
+}
+
+export interface AttributionReport {
+  rows: AttributionRow[];
+  total: Attribution;
+  by_pillar: {
+    pillar?: string | null; label: string; tone: string;
+    count: number; reach: number; leads: number; sales: number;
+    revenue: number;
+  }[];
+  best: AttributionRow[];
+  weak: AttributionRow[];
+  months: number;
+  hint: string;
+}
+
+export interface CampaignRow {
+  id: number;
+  name: string;
+  goal?: string | null;
+  goal_label: string;
+  course?: string | null;
+  branch?: string | null;
+  offer?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
+  contents: number;
+  target_leads?: number | null;
+  target_sales?: number | null;
+  leads: number;
+  qualified: number;
+  sales: number;
+  revenue: number;
+  reach: number;
+  funnel: FunnelStep[];
+  lead_plan_percent?: number | null;
+  is_active: boolean;
+  conclusion?: string | null;
+}

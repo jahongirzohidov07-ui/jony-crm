@@ -101,6 +101,7 @@ export interface Group {
   teacher?: Teacher;
   branch?: Branch;
   student_count: number;
+  end_date?: string | null;
 }
 
 export interface Payment {
@@ -248,6 +249,8 @@ export interface GridStudent {
 export interface GridLesson {
   id: number;
   date: string; // YYYY-MM-DD
+  /** 1 - dars o'tilgan (yoqlama qo'yilgan), 0 - jadval bo'yicha reja. */
+  held: number;
 }
 
 /** marks kaliti "lessonId:studentId". Davomat uchun qiymat boolean,

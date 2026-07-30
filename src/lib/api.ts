@@ -2152,6 +2152,8 @@ export interface MyDashboard {
   cards: MyCard[];
   tasks: { open: number; overdue: number; rows: TaskRow[] };
   show_company: boolean;
+  /** Butun markaz bo'yicha kartalar — Examiner, HR va SMM'da yo'q. */
+  show_general: boolean;
 }
 
 // ---------------------------------------------------- Mening profilim
@@ -2256,4 +2258,302 @@ export interface TimetableGrid {
   total_students: number;
   can_edit: boolean;
   can_export: boolean;
+}
+
+// ---------------------------------------------------------------- LTV
+export interface LtvFullRow {
+  key: string;
+  label: string;
+  students: number;
+  active: number;
+  left: number;
+  avg_months: number;
+  finished_avg_months?: number | null;
+  longest_months?: number | null;
+  avg_revenue: number;
+  avg_profit: number;
+  total_revenue: number;
+  total_profit: number;
+  avg_payments: number;
+  revenue_per_month: number;
+  margin: number;
+  churn: number;
+}
+
+export interface LtvFull {
+  dimension: string;
+  dimension_label: string;
+  dimensions: { key: string; label: string }[];
+  rows: LtvFullRow[];
+  overall: {
+    students: number;
+    avg_months: number;
+    avg_revenue: number;
+    avg_profit: number;
+    total_revenue: number;
+    total_profit: number;
+    margin: number;
+    overhead_per_month: number;
+  } | null;
+  hint: string;
+}
+
+// -------------------------------------------------------------- Churn
+export interface ChurnReason {
+  key: string;
+  label: string;
+  group: string;
+  controllable: boolean;
+  count: number;
+  students: string[];
+}
+
+export interface ChurnBucket {
+  key: number | string | null;
+  label: string;
+  left: number;
+  active: number;
+  total: number;
+  churn: number;
+  top_reason?: string | null;
+  top_reason_label?: string | null;
+  reasons: { key: string; label: string; count: number }[];
+}
+
+export interface ChurnReport {
+  months: number;
+  period: string;
+  left: number;
+  active: number;
+  churn: number;
+  reasons: ChurnReason[];
+  by_teacher: ChurnBucket[];
+  by_group: ChurnBucket[];
+  controllable: number;
+  controllable_percent: number;
+  unknown: number;
+  reason_options: { key: string; label: string }[];
+  hint: string;
+}
+
+// -------------------------------------------------- Xodimlar davomati
+export interface AttendanceDay {
+  id: number;
+  user_id: number;
+  full_name?: string | null;
+  date?: string | null;
+  check_in?: string | null;
+  check_out?: string | null;
+  late_minutes: number;
+  early_minutes: number;
+  worked_minutes: number;
+  worked_hours: number;
+  note?: string | null;
+}
+
+export interface StaffAttendanceReport {
+  period: string;
+  work_start: string;
+  work_end: string;
+  tolerance: number;
+  rows: {
+    user_id: number;
+    full_name: string;
+    role_label: string;
+    branch?: string | null;
+    days: number;
+    late_days: number;
+    late_minutes: number;
+    early_minutes: number;
+    worked_hours: number;
+    rows: AttendanceDay[];
+  }[];
+  total_late_minutes: number;
+  staff_with_late: number;
+}
+
+// ---------------------------------------------------------------- NPS
+export interface NpsRow {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  answers: number;
+  avg: number;
+  nps: number;
+  promoters: number;
+  passives: number;
+  detractors: number;
+  by_student: number;
+  by_parent: number;
+  comments: { score: number; band: string; source: string;
+              comment?: string | null; date?: string | null }[];
+}
+
+export interface NpsReport {
+  months: number;
+  rows: NpsRow[];
+  overall_nps: number;
+  answers: number;
+  avg: number;
+  sources: { key: string; label: string }[];
+  bands: { key: string; label: string; tone: string; min: number }[];
+  hint: string;
+}
+
+// --------------------------------------------------------------- ROMI
+export interface RomiRow {
+  key: string;
+  label: string;
+  leads: number;
+  converted: number;
+  spend: number;
+  cac?: number | null;
+  cpl?: number | null;
+  conversion: number;
+  revenue: number;
+  profit: number;
+  romi?: number | null;
+  band: string;
+  band_label: string;
+  tone: string;
+}
+
+export interface RomiReport {
+  months: number;
+  period: string;
+  rows: RomiRow[];
+  total_spend: number;
+  total_revenue: number;
+  total_profit: number;
+  romi?: number | null;
+  no_spend: string[];
+  hint: string;
+}
+
+// --------------------------------------------------- Xonalar bandligi
+export interface CapacityReport {
+  rooms: {
+    room_id: number;
+    name: string;
+    branch?: string | null;
+    capacity?: number | null;
+    groups: number;
+    students: number;
+    seat_usage: number;
+    hours_week: number;
+    time_usage: number;
+    free_seats: number;
+  }[];
+  room_count: number;
+  total_capacity: number;
+  active_students: number;
+  seat_usage: number;
+  time_usage: number;
+  open_hours_week: number;
+  free_seats: number;
+  lost_income: number;
+  worst?: string | null;
+  hint: string;
+}
+
+// ---------------------------------------------------------------- RFM
+export interface RfmRow {
+  student_id: number;
+  full_name: string;
+  phone?: string | null;
+  group?: string | null;
+  status: string;
+  r: number;
+  f: number;
+  m: number;
+  days_since_payment: number;
+  payments: number;
+  total_paid: number;
+  balance: number;
+  segment: string;
+  segment_label: string;
+  tone: string;
+  action: string;
+}
+
+export interface RfmReport {
+  rows: RfmRow[];
+  segments: { key: string; label: string; hint: string; tone: string;
+              action: string; count: number; revenue: number;
+              percent: number }[];
+  total: number;
+  hint: string;
+}
+
+// -------------------------------------------------------- Xabarnomalar
+export interface NotifyTemplateRow {
+  id: number;
+  kind: string;
+  kind_label: string;
+  title?: string | null;
+  body: string;
+  channel: string;
+  active: boolean;
+  days_before: number;
+}
+
+export interface NotifyTemplates {
+  rows: NotifyTemplateRow[];
+  channels: { key: string; label: string }[];
+  placeholders: string[];
+  telegram_ready: boolean;
+}
+
+export interface NotifyRow {
+  id: number;
+  kind: string;
+  kind_label: string;
+  channel: string;
+  channel_label: string;
+  student_id?: number | null;
+  student?: string | null;
+  phone?: string | null;
+  title?: string | null;
+  body: string;
+  status: string;
+  status_label: string;
+  tone: string;
+  scheduled_for?: string | null;
+  sent_at?: string | null;
+  error?: string | null;
+}
+
+export interface NotifyList {
+  rows: NotifyRow[];
+  counts: Record<string, number>;
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  kinds: { key: string; label: string }[];
+  telegram_ready: boolean;
+}
+
+// ------------------------------------------------------------ Referral
+export interface ReferralRow {
+  student_id: number;
+  full_name: string;
+  invited: number;
+  active: number;
+  friends: { id: number; name: string; status: string; paid: number }[];
+  revenue_brought: number;
+  discount_given: number;
+  net: number;
+}
+
+export interface ReferralReport {
+  months: number;
+  rows: ReferralRow[];
+  inviters: number;
+  invited: number;
+  active: number;
+  pending: number;
+  revenue: number;
+  discount: number;
+  net: number;
+  percent: number;
+  months_valid: number;
+  hint: string;
 }

@@ -3125,3 +3125,44 @@ def make_password() -> str:
 
 # Kim akkaunt ocha oladi
 ACCOUNT_MANAGE = FULL_ACCESS + [HR_MANAGER]
+
+
+# =====================================================================
+#  USTOZNING O'Z NATIJALARI
+#
+#  Ustoz o'zining ko'rsatkichlarini ko'radi: nechta o'quvchi qoldi,
+#  nechtasi ketdi, o'rtacha qancha oy o'qidi va bu markaz o'rtachasidan
+#  baland yoki pastmi.
+#
+#  Boshqa ustozlarning ismi KO'RSATILMAYDI — faqat o'rtacha va o'rin.
+#  Aks holda bu tahlil emas, g'iybat manbaiga aylanadi.
+# =====================================================================
+
+SELF_STATS = [TEACHER, SUPPORT_TEACHER]
+
+# Ketganlar ro'yxati shu oynalar bo'yicha bo'linadi
+LEAVER_WINDOWS = [
+    ("month", "Shu oyda", 0),        # 0 = joriy oy boshidan
+    ("m2", "Oxirgi 2 oy", 60),
+    ("m6", "Oxirgi 6 oy", 180),
+    ("y1", "Oxirgi 1 yil", 365),
+]
+
+# Solishtirish uchun eng kam ustoz soni — bittada o'rtacha ma'nosiz
+MIN_PEERS_FOR_RANK = 3
+# Ko'rsatkich ishonchli bo'lishi uchun kamida shuncha o'quvchi kerak
+MIN_STUDENTS_FOR_STATS = 5
+
+
+def compare_verdict(mine, avg, lower_is_better=False):
+    """Ustozning ko'rsatkichi o'rtachaga nisbatan qanday.
+    Qaytaradi: (matn, rang, farq foizi)."""
+    if avg is None or mine is None or avg == 0:
+        return "Solishtirish uchun ma'lumot yetarli emas", "slate", None
+    diff = round((mine - avg) / avg * 100, 1)
+    better = (mine < avg) if lower_is_better else (mine > avg)
+    if abs(diff) < 5:
+        return "O'rtacha darajada", "slate", diff
+    if better:
+        return "O'rtachadan yaxshi", "emerald", diff
+    return "O'rtachadan past", "amber", diff

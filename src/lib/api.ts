@@ -3152,3 +3152,180 @@ export interface FillReport {
   by_teacher: FillTeacher[];
   hint: string;
 }
+
+// ------------------------------------------------- SMM: kontent
+export interface ContentWarning {
+  key: string;
+  severity: string;
+  text: string;
+}
+
+export interface ContentRow {
+  id: number;
+  code: string;
+  title: string;
+  platform?: string | null;
+  platform_label: string;
+  platform_tone: string;
+  format?: string | null;
+  format_label: string;
+  pillar?: string | null;
+  pillar_label: string;
+  pillar_tone: string;
+  goal?: string | null;
+  goal_label: string;
+  goal_metric: string;
+  funnel?: string | null;
+  funnel_label: string;
+  branch?: string | null;
+  branch_id?: number | null;
+  course?: string | null;
+  campaign_id?: number | null;
+  status: string;
+  status_label: string;
+  tone: string;
+  planned_date?: string | null;
+  planned_time?: string | null;
+  published_at?: string | null;
+  owner?: string | null;
+  owner_id?: number | null;
+  approver?: string | null;
+  approver_role?: string | null;
+  approver_role_label: string;
+  priority?: string | null;
+  deadline?: string | null;
+  needs_consent: boolean;
+  consent_ok: boolean;
+  post_url?: string | null;
+  warnings: ContentWarning[];
+  blocked: boolean;
+}
+
+export interface ContentFull extends ContentRow {
+  audience?: string | null;
+  problem?: string | null;
+  message?: string | null;
+  hook?: string | null;
+  location?: string | null;
+  participants?: string | null;
+  props?: string | null;
+  duration?: string | null;
+  music?: string | null;
+  design_format?: string | null;
+  cta?: string | null;
+  references?: string | null;
+  script?: string | null;
+  caption?: string | null;
+  caption_ru?: string | null;
+  caption_en?: string | null;
+  hashtags?: string | null;
+  story_text?: string | null;
+  on_video_text?: string | null;
+  utm?: string | null;
+  short_link?: string | null;
+  promo_code?: string | null;
+  post_external_id?: string | null;
+  note?: string | null;
+  team: {
+    copywriter?: string | null; designer?: string | null;
+    videographer?: string | null; editor?: string | null;
+  };
+  shots: { id: number; no: number; text: string; state: string;
+    note?: string | null }[];
+  approvals: {
+    id: number; role?: string | null; role_label: string;
+    decision?: string | null; decision_label: string; tone: string;
+    comment?: string | null; quote?: string | null;
+    by?: string | null; date?: string | null;
+  }[];
+  versions: {
+    id: number; field: string; old?: string | null;
+    new?: string | null; by?: string | null; date?: string | null;
+  }[];
+}
+
+export interface ContentMeta {
+  statuses: { key: string; label: string; tone: string }[];
+  flow: string[];
+  platforms: { key: string; label: string; tone: string }[];
+  formats: { key: string; label: string }[];
+  goals: { key: string; label: string; metric: string }[];
+  pillars: { key: string; label: string; tone: string; hint: string }[];
+  funnels: { key: string; label: string }[];
+  consent: { key: string; label: string; tone: string }[];
+  idea_statuses: { key: string; label: string; tone: string }[];
+  request_statuses: { key: string; label: string; tone: string }[];
+  decisions: { key: string; label: string; tone: string }[];
+  plan_target: number;
+  can_edit: boolean;
+}
+
+export interface ContentList {
+  rows: ContentRow[];
+  total: number;
+  plan_percent: number;
+  plan_ok: boolean;
+  by_status: { key: string; label: string; tone: string; count: number }[];
+  blocked: ContentRow[];
+}
+
+export interface SmmDashboard {
+  cards: { key: string; label: string; value: number | string;
+    tone: string; hint?: string }[];
+  today: ContentRow[];
+  late: ContentRow[];
+  waiting: ContentRow[];
+  alerts: {
+    content_id?: number | null; title: string; key: string;
+    severity: string; text: string; planned_date?: string | null;
+  }[];
+  plan_percent: number;
+  month_planned: number;
+  month_done: number;
+  hint: string;
+}
+
+export interface IdeaRow {
+  id: number;
+  title: string;
+  description?: string | null;
+  pillar?: string | null;
+  pillar_label: string;
+  platform?: string | null;
+  platform_label: string;
+  course?: string | null;
+  audience?: string | null;
+  reference?: string | null;
+  priority?: string | null;
+  status: string;
+  status_label: string;
+  tone: string;
+  author?: string | null;
+  content_id?: number | null;
+  date?: string | null;
+}
+
+export interface RequestRow {
+  id: number;
+  requester?: string | null;
+  department?: string | null;
+  branch?: string | null;
+  course?: string | null;
+  goal?: string | null;
+  goal_label: string;
+  offer?: string | null;
+  group_time?: string | null;
+  teacher?: string | null;
+  students_needed?: number | null;
+  start_date?: string | null;
+  deadline?: string | null;
+  platforms?: string | null;
+  approved_price?: number | null;
+  cta?: string | null;
+  status: string;
+  status_label: string;
+  tone: string;
+  smm_note?: string | null;
+  campaign_id?: number | null;
+  date?: string | null;
+}

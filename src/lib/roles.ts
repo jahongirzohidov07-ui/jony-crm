@@ -199,3 +199,12 @@ export function assignableRoles(myRole: string | undefined): string[] {
     return [TEACHER, SUPPORT_TEACHER, ADMINISTRATOR, SALES_MANAGER];
   return [];
 }
+
+// ---- SMM: kontent quvuri ----
+export const SMM_ACCESS = [FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD];
+export const CONTENT_REQUESTER = [
+  FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
+  ACADEMIC_HEAD, ADMINISTRATOR,
+];
+/** G'oyani har qanday xodim yubora oladi. */
+export const IDEA_SUBMIT = STAFF_ROLES;

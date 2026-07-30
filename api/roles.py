@@ -1152,6 +1152,7 @@ RESOURCES = [
     ("dashboard", "Dashboard", "Umumiy"),
     ("timetable", "Dars jadvali", "Umumiy"),
     ("tasks", "Vazifalar", "Umumiy"),
+    ("coins", "Coin va sovg'alar", "Umumiy"),
 
     ("leads", "Lidlar", "Sotuv"),
     ("students", "O'quvchilar", "Sotuv"),
@@ -1227,7 +1228,7 @@ DEFAULT_MATRIX: dict = {
         "inventory": VE, "reports": VE,
     },
     BRANCH_MANAGER: {
-        "dashboard": VE, "timetable": VCED, "tasks": VCED,
+        "dashboard": VE, "timetable": VCED, "tasks": VCED, "coins": ALL_P,
         "leads": VCEX, "students": ALL_P, "groups": ALL_P,
         "marketing": VE,
         "payments": ALL_P, "debtors": ALL_P, "expenses": VCEX,
@@ -1245,13 +1246,13 @@ DEFAULT_MATRIX: dict = {
         "teachers": V, "reports": VE,
     },
     SALES_MANAGER: {
-        "dashboard": V, "timetable": V, "tasks": VCE,
+        "dashboard": V, "timetable": V, "tasks": VCE, "coins": VCE,
         "leads": VCEX, "students": VCE, "groups": V,
         "payments": VC, "debtors": VCE, "discounts": VC,
         "teachers": V,
     },
     ADMINISTRATOR: {
-        "dashboard": V, "timetable": V, "tasks": VCE,
+        "dashboard": V, "timetable": V, "tasks": VCE, "coins": VCE,
         "leads": VCE, "students": VCE, "groups": V,
         "payments": VC, "debtors": VCE,
         "attendance": VCE,
@@ -1263,26 +1264,26 @@ DEFAULT_MATRIX: dict = {
         "reports": VE,
     },
     ACADEMIC_HEAD: {
-        "dashboard": VE, "timetable": VCED, "tasks": VCED,
+        "dashboard": VE, "timetable": VCED, "tasks": VCED, "coins": VCED,
         "students": VCE, "groups": VCE,
         "teachers": VCEX, "academic": ALL_P, "exams": VE,
         "attendance": VCED, "grades": VCED,
         "inventory": V, "reports": VE,
     },
     TEACHER: {
-        "dashboard": V, "timetable": V, "tasks": VCE,
+        "dashboard": V, "timetable": V, "tasks": VCE, "coins": V,
         "students": V, "groups": V,
         "attendance": VCE, "grades": VCE, "exams": VC,
         "academic": V,
     },
     SUPPORT_TEACHER: {
-        "dashboard": V, "timetable": V, "tasks": VCE,
+        "dashboard": V, "timetable": V, "tasks": VCE, "coins": VCE,
         "leads": VCE, "students": V, "groups": V,
         "attendance": VCE, "grades": VCE, "academic": VCE,
         "inventory": V,
     },
     HEAD_SUPPORT: {
-        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "dashboard": VE, "timetable": V, "tasks": VCED, "coins": VCED,
         "leads": VCE, "students": VCE, "groups": V,
         "attendance": VCED, "grades": VCE, "academic": VCED,
         "teachers": V, "inventory": V, "reports": VE,
@@ -1313,11 +1314,13 @@ DEFAULT_MATRIX: dict = {
     PARENT: {
         "dashboard": V, "timetable": V,
         "students": V, "payments": V, "attendance": V, "grades": V,
-        "exams": V,
+        "exams": V, "coins": V,
     },
     STUDENT: {
         "dashboard": V, "timetable": V,
         "attendance": V, "grades": V, "exams": V,
+        # Coin do'koni: ko'radi va sovg'a so'raydi (yaratish)
+        "coins": VC,
     },
 }
 
@@ -1591,3 +1594,82 @@ GENERAL_DASHBOARD = FULL_ACCESS + [
     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,
     ACADEMIC_HEAD,
 ]
+
+
+# =====================================================================
+#  COIN DO'KONI — o'quvchi coiniga oladigan sovg'alar
+#
+#  Ro'yxat rasmdagi plakatdan olingan. Narx o'zgarsa — Coin tizimi
+#  bo'limidan tahrirlanadi, bu yerdagi ro'yxat faqat BOSHLANG'ICH
+#  holat: bir marta bazaga tushadi va keyin qo'l tegmaydi.
+# =====================================================================
+REWARD_CATEGORIES = [
+    ("merch", "Jony Academy buyumlari", "teal"),
+    ("tech", "Texnika", "sky"),
+    ("sport", "Sport va o'yin", "emerald"),
+    ("special", "Maxsus sovg'alar", "violet"),
+]
+REWARD_CATEGORY_LABELS = {k: lbl for k, lbl, _ in REWARD_CATEGORIES}
+REWARD_CATEGORY_TONE = {k: t for k, _, t in REWARD_CATEGORIES}
+
+# (nomi, coin, kategoriya)
+DEFAULT_REWARDS = [
+    # --- 50-100 coin: kundalik buyumlar ---
+    ("Course book", 50, "merch"),
+    ("Kepka", 50, "merch"),
+    ("Krujka", 50, "merch"),
+    ("Essay daftar", 50, "merch"),
+    ("Kofe stakan", 70, "merch"),
+    ("33% chegirma kartasi", 100, "special"),
+    ("Jony bloknot va ruchka", 100, "merch"),
+    ("Futbolka", 100, "merch"),
+    ("Sviter", 150, "merch"),
+    ("Xudi", 200, "merch"),
+
+    # --- 200-400 coin ---
+    ("Smart soat", 200, "tech"),
+    ("Joynamoz va do'ppi", 200, "special"),
+    ("Flesh karta", 200, "tech"),
+    ("To'p (futbol yoki basketbol)", 300, "sport"),
+    ("Sumka", 300, "merch"),
+    ("Kolonka", 300, "tech"),
+    ("Portfel", 300, "merch"),
+    ("Quloqchin", 300, "tech"),
+    ("AirPods", 400, "tech"),
+
+    # --- 500-1000 coin ---
+    ("Tashakkurnoma", 500, "special"),
+    ("CEFR to'lovi", 500, "special"),
+    ("Qur'on kolonka", 700, "special"),
+    ("Shaxmat", 800, "sport"),
+    ("Karaoke klub", 1000, "sport"),
+    ("O'quvchi haqida video", 1000, "special"),
+
+    # --- Katta sovg'alar ---
+    ("IELTS to'lovi", 2000, "special"),
+    ("iPod", 3000, "tech"),
+    ("Telefon", 4000, "tech"),
+    ("Noutbuk", 5000, "tech"),
+    ("Jony bilan kechki ovqat", 5000, "special"),
+]
+
+
+# =====================================================================
+#  Sovg'a so'rovining holati
+#
+#  O'quvchi o'zi tanlaydi, lekin sovg'a qo'lma-qo'l beriladi. Shuning
+#  uchun ikki bosqich: SO'RALDI -> BERILDI. So'ralgan paytda coin
+#  BAND qilinadi — aks holda bir coinni ikki marta sarflash mumkin
+#  bo'lib qolardi.
+# =====================================================================
+REDEEM_STATUSES = [
+    ("requested", "So'raldi", "amber"),
+    ("given", "Berildi", "emerald"),
+    ("rejected", "Rad etildi", "red"),
+]
+REDEEM_STATUS_LABELS = {k: lbl for k, lbl, _ in REDEEM_STATUSES}
+REDEEM_STATUS_TONE = {k: t for k, _, t in REDEEM_STATUSES}
+
+# Sovg'ani kim beradi
+REWARD_GIVE = FULL_ACCESS + [ACADEMIC_HEAD, SALES_MANAGER, ADMINISTRATOR,
+                             SUPPORT_TEACHER, HEAD_SUPPORT]

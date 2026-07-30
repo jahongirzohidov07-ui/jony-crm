@@ -169,6 +169,9 @@ class Student(Base):
     # o'tganda ko'tariladi.
     subject = Column(String, nullable=True)
     level = Column(String, nullable=True)
+    # O'quvchining o'z hisobiga bog'lanish. Bo'lsa — u kirib coin
+    # balansini ko'radi va sovg'a so'ray oladi.
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
     note = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -460,6 +463,8 @@ class Reward(Base):
     value_som = Column(Float, nullable=True)        # taxminiy so'mdagi qiymati
     stock = Column(Integer, nullable=True)          # null = cheklanmagan
     active = Column(Integer, default=1)
+    # Do'konda guruhlab ko'rsatish uchun: merch / tech / sport / special
+    category = Column(String, nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -475,6 +480,13 @@ class RewardRedemption(Base):
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
     reward_id = Column(Integer, ForeignKey("rewards.id"), nullable=False)
     coins = Column(Integer, nullable=False)
+    # O'quvchi o'zi so'rasa "requested" bo'ladi va coin BAND qilinadi;
+    # sovg'a qo'lga berilganda "given" bo'ladi. Rad etilsa coin qaytadi.
+    status = Column(String, nullable=False, default="given")
+    requested_by_student = Column(Integer, default=0)
+    given_by = Column(String, nullable=True)
+    given_at = Column(DateTime, nullable=True)
+    note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

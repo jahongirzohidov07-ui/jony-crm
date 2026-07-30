@@ -1178,3 +1178,14 @@ class NotifyCreate(BaseModel):
 class ReferralCreate(BaseModel):
     student_id: int              # kim keldi (do'sti)
     referrer_student_id: int     # kim olib keldi
+
+
+# ------------------------------------------------------- Coin do'koni
+class RewardDecision(BaseModel):
+    give: bool = True
+    note: Optional[str] = None
+
+
+class LinkAccount(BaseModel):
+    username: str
+    password: str

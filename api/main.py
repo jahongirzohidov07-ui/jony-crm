@@ -155,6 +155,17 @@ def _ensure_new_columns():
         # Filial reytingi og'irliklari (JSON) - strategiya o'zgarsa
         # foizlar ham o'zgaradi.
         "ALTER TABLE branches ADD COLUMN rating_weights TEXT",
+        # Coin do'koni: sovg'a kategoriyasi va so'rov holati
+        "ALTER TABLE rewards ADD COLUMN category VARCHAR",
+        "ALTER TABLE reward_redemptions ADD COLUMN status VARCHAR DEFAULT 'given'",
+        "ALTER TABLE reward_redemptions ADD COLUMN requested_by_student INTEGER DEFAULT 0",
+        "ALTER TABLE reward_redemptions ADD COLUMN given_by VARCHAR",
+        "ALTER TABLE reward_redemptions ADD COLUMN given_at TIMESTAMP",
+        "ALTER TABLE reward_redemptions ADD COLUMN note VARCHAR",
+        # Eski yozuvlar allaqachon berilgan sovg'alar
+        "UPDATE reward_redemptions SET status = 'given' WHERE status IS NULL",
+        # O'quvchini o'z hisobiga bog'lash
+        "ALTER TABLE students ADD COLUMN user_id INTEGER",
         # "Administrator" endi alohida rol: sotuv menejeri sotuv bilan,
         # administrator qabul va kassa bilan shug'ullanadi. Eskisi
         # sotuv menejeri bo'lib qoladi - hech kim huquqini yo'qotmaydi.
@@ -218,6 +229,26 @@ def _ensure_new_columns():
                 for cnt, bonus in roles.DEFAULT_KPI_NEW_CLIENT_RULES:
                     db.add(models.KpiNewClientRule(min_clients=cnt, bonus=bonus))
                 db.commit()
+
+            # Coin do'koni: plakatdagi sovg'alar bir marta bazaga
+            # tushadi. Keyin ro'yxatga qo'l tegmaydi — narx o'zgarsa
+            # Coin tizimi bo'limidan tahrirlanadi.
+            if db.query(models.Reward).count() == 0:
+                for name, cost, cat in roles.DEFAULT_REWARDS:
+                    db.add(models.Reward(name=name, cost=cost,
+                                         category=cat, active=1))
+                db.commit()
+            else:
+                # Eski sovg'alarda kategoriya bo'lmasa - ro'yxatdan
+                # topib qo'yamiz, do'konda guruhlanib chiqsin.
+                by_name = {n.lower(): c for n, _, c in roles.DEFAULT_REWARDS}
+                changed = False
+                for r in db.query(models.Reward).filter(
+                        models.Reward.category.is_(None)).all():
+                    r.category = by_name.get((r.name or "").lower(), "special")
+                    changed = True
+                if changed:
+                    db.commit()
     except Exception:
         pass
 
@@ -11956,3 +11987,313 @@ def referral_report(
                  f"avtomat yoqiladi — shunchaki ro'yxatdan o'tgani "
                  f"yetarli emas."),
     }
+
+
+# =====================================================================
+#  COIN DO'KONI — O'QUVCHINING O'Z KABINETI
+#
+#  O'quvchi kirganda coin balansini ko'radi va sovg'a tanlaydi.
+#  Sovg'a qo'lma-qo'l beriladi, shuning uchun ikki bosqich:
+#  SO'RALDI -> BERILDI. So'ralgan paytda coin BAND qilinadi — aks
+#  holda bitta coinni ikki marta sarflash mumkin bo'lib qolardi.
+# =====================================================================
+def _student_of_user(db: Session, user: models.User) -> models.Student | None:
+    """Foydalanuvchi hisobiga bog'langan o'quvchi.
+
+    Avval to'g'ridan-to'g'ri bog'lanish, keyin ism bo'yicha — eski
+    hisoblarda bog'lanish yo'q bo'lishi mumkin."""
+    s = (db.query(models.Student)
+         .filter(models.Student.user_id == user.id).first())
+    if s:
+        return s
+    s = (db.query(models.Student)
+         .filter(models.Student.full_name == user.full_name).first())
+    if s and not s.user_id:
+        # Topilgan bo'lsa bog'lab qo'yamiz - keyingi safar tez topiladi
+        s.user_id = user.id
+        db.commit()
+    return s
+
+
+def _held_coins(db: Session, student_id: int) -> int:
+    """So'ralgan, lekin hali berilmagan sovg'alarga band qilingan coin."""
+    rows = (db.query(models.RewardRedemption)
+            .filter(models.RewardRedemption.student_id == student_id,
+                    models.RewardRedemption.status == "requested").all())
+    return sum(r.coins or 0 for r in rows)
+
+
+def _reward_out(r: models.Reward, balance: int = None) -> dict:
+    return {
+        "id": r.id,
+        "name": r.name,
+        "cost": r.cost,
+        "category": r.category or "special",
+        "category_label": roles.REWARD_CATEGORY_LABELS.get(
+            r.category or "special", "Sovg'a"),
+        "tone": roles.REWARD_CATEGORY_TONE.get(r.category or "special", "slate"),
+        "stock": r.stock,
+        "in_stock": r.stock is None or r.stock > 0,
+        "active": bool(r.active),
+        # O'quvchiga: yetadimi va yetmasa qancha kam
+        "affordable": (balance is not None and balance >= r.cost),
+        "need_more": (max(0, r.cost - balance) if balance is not None else None),
+    }
+
+
+@app.get("/api/me/coins")
+def my_coins(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """O'quvchining o'z kabineti: coin balansi, qanday yig'ilgani va
+    shu coinga olish mumkin bo'lgan sovg'alar."""
+    s = _student_of_user(db, user)
+    if not s:
+        raise HTTPException(
+            404, "Sizga bog'langan o'quvchi yozuvi topilmadi. "
+                 "Administratorga murojaat qiling.")
+
+    earned = int(db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+                 .filter(models.CoinEntry.student_id == s.id,
+                         models.CoinEntry.amount > 0).scalar() or 0)
+    spent = abs(int(db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+                    .filter(models.CoinEntry.student_id == s.id,
+                            models.CoinEntry.amount < 0).scalar() or 0))
+    balance = earned - spent
+    held = _held_coins(db, s.id)
+    available = balance - held
+
+    entries = (db.query(models.CoinEntry)
+               .filter(models.CoinEntry.student_id == s.id)
+               .order_by(models.CoinEntry.created_at.desc()).limit(50).all())
+
+    rewards = (db.query(models.Reward)
+               .filter(models.Reward.active == 1)
+               .order_by(models.Reward.cost).all())
+
+    my_orders = (db.query(models.RewardRedemption)
+                 .filter(models.RewardRedemption.student_id == s.id)
+                 .order_by(models.RewardRedemption.created_at.desc()).all())
+
+    # Keyingi maqsad: hozirgi balansdan qimmatroq eng arzon sovg'a
+    next_goal = next((r for r in rewards if r.cost > available), None)
+
+    return {
+        "student_id": s.id,
+        "full_name": s.full_name,
+        "group": s.group.name if s.group else None,
+        "balance": balance,
+        "earned": earned,
+        "spent": spent,
+        "held": held,
+        "available": available,
+        "next_goal": (_reward_out(next_goal, available) if next_goal else None),
+        "history": [{
+            "id": e.id,
+            "amount": e.amount,
+            "source": e.source,
+            "source_label": roles.COIN_SOURCE_LABELS.get(e.source, e.source),
+            "note": e.note,
+            "date": e.created_at.date().isoformat() if e.created_at else None,
+        } for e in entries],
+        "categories": [{"key": k, "label": lbl, "tone": t}
+                       for k, lbl, t in roles.REWARD_CATEGORIES],
+        "rewards": [_reward_out(r, available) for r in rewards],
+        "orders": [{
+            "id": o.id,
+            "reward": o.reward.name if o.reward else "—",
+            "coins": o.coins,
+            "status": o.status or "given",
+            "status_label": roles.REDEEM_STATUS_LABELS.get(
+                o.status or "given", o.status),
+            "tone": roles.REDEEM_STATUS_TONE.get(o.status or "given", "slate"),
+            "date": o.created_at.date().isoformat() if o.created_at else None,
+            "given_at": o.given_at.date().isoformat() if o.given_at else None,
+            "note": o.note,
+        } for o in my_orders],
+    }
+
+
+@app.post("/api/me/rewards/{reward_id}")
+def request_reward(
+    reward_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """O'quvchi sovg'ani o'zi tanlaydi. Coin darrov BAND qilinadi,
+    lekin sovg'a qo'lga berilganda hisobdan yechiladi."""
+    s = _student_of_user(db, user)
+    if not s:
+        raise HTTPException(404, "Sizga bog'langan o'quvchi yozuvi yo'q")
+
+    r = db.query(models.Reward).get(reward_id)
+    if not r or not r.active:
+        raise HTTPException(404, "Sovg'a topilmadi")
+    if r.stock is not None and r.stock <= 0:
+        raise HTTPException(400, "Bu sovg'a tugagan")
+
+    balance = _student_coin_balance(db, s.id)
+    available = balance - _held_coins(db, s.id)
+    if available < r.cost:
+        raise HTTPException(
+            400,
+            f"Coin yetarli emas. Sizda {available} coin bor, "
+            f"\"{r.name}\" uchun {r.cost} coin kerak — "
+            f"yana {r.cost - available} coin yig'ish kerak.")
+
+    red = models.RewardRedemption(
+        student_id=s.id, reward_id=r.id, coins=r.cost,
+        status="requested", requested_by_student=1,
+        created_by=user.full_name)
+    db.add(red); db.commit(); db.refresh(red)
+    return {
+        "id": red.id,
+        "status": "requested",
+        "message": (f"\"{r.name}\" so'raldi. {r.cost} coin band qilindi — "
+                    f"sovg'ani markazdan olib ketishingiz mumkin."),
+        "available": available - r.cost,
+    }
+
+
+@app.delete("/api/me/rewards/{redemption_id}")
+def cancel_my_request(
+    redemption_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """O'quvchi o'z so'rovini bekor qiladi — coin qaytadi."""
+    s = _student_of_user(db, user)
+    red = db.query(models.RewardRedemption).get(redemption_id)
+    if not red or not s or red.student_id != s.id:
+        raise HTTPException(404, "So'rov topilmadi")
+    if red.status != "requested":
+        raise HTTPException(400, "Bu sovg'a allaqachon berilgan")
+    db.delete(red); db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/rewards/requests")
+def reward_requests(
+    status_filter: str = "requested",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.REWARD_GIVE)),
+):
+    """O'quvchilar so'ragan sovg'alar — kimga nima berish kerak."""
+    q = db.query(models.RewardRedemption)
+    if status_filter:
+        q = q.filter(models.RewardRedemption.status == status_filter)
+    rows = q.order_by(models.RewardRedemption.created_at).all()
+
+    allowed = {x.id for x in scope_to_branch(
+        db.query(models.Student), models.Student, user).all()}
+    rows = [r for r in rows if r.student_id in allowed]
+
+    return {
+        "rows": [{
+            "id": r.id,
+            "student_id": r.student_id,
+            "student": r.student.full_name if r.student else "—",
+            "group": (r.student.group.name
+                      if r.student and r.student.group else None),
+            "reward": r.reward.name if r.reward else "—",
+            "coins": r.coins,
+            "status": r.status or "given",
+            "status_label": roles.REDEEM_STATUS_LABELS.get(
+                r.status or "given", r.status),
+            "tone": roles.REDEEM_STATUS_TONE.get(r.status or "given", "slate"),
+            "by_student": bool(r.requested_by_student),
+            "date": r.created_at.date().isoformat() if r.created_at else None,
+            "given_by": r.given_by,
+        } for r in rows],
+        "count": len(rows),
+        "statuses": [{"key": k, "label": lbl, "tone": t}
+                     for k, lbl, t in roles.REDEEM_STATUSES],
+    }
+
+
+@app.post("/api/rewards/requests/{rid}/give")
+def give_reward(
+    rid: int,
+    payload: schemas.RewardDecision,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.REWARD_GIVE)),
+):
+    """Sovg'ani qo'lga berish yoki rad etish.
+
+    BERILDI — coin hisobdan yechiladi (shu paytgacha faqat band edi).
+    RAD ETILDI — coin qaytadi."""
+    red = db.query(models.RewardRedemption).get(rid)
+    if not red:
+        raise HTTPException(404, "So'rov topilmadi")
+    if red.status != "requested":
+        raise HTTPException(400, "Bu so'rov allaqachon hal qilingan")
+
+    r = db.query(models.Reward).get(red.reward_id)
+    s = db.query(models.Student).get(red.student_id)
+
+    if not payload.give:
+        red.status = "rejected"
+        red.note = payload.note
+        red.given_by = user.full_name
+        red.given_at = datetime.utcnow()
+        db.commit()
+        return {"ok": True, "status": "rejected"}
+
+    # Berilganda coin yechiladi
+    balance = _student_coin_balance(db, red.student_id)
+    if balance < red.coins:
+        raise HTTPException(
+            400, f"Coin yetmayapti: balans {balance}, kerak {red.coins}")
+
+    db.add(models.CoinEntry(
+        student_id=red.student_id, amount=-red.coins, source="reward",
+        ref_id=red.id, note=r.name if r else "Sovg'a",
+        created_by=user.full_name))
+    red.status = "given"
+    red.given_by = user.full_name
+    red.given_at = datetime.utcnow()
+    red.note = payload.note
+    if r and r.stock is not None:
+        r.stock -= 1
+    db.commit()
+
+    audit.log(db, user, entity="reward", action="update", entity_id=red.id,
+              entity_label=s.full_name if s else "—",
+              field="Sovg'a berildi",
+              new_value=f"{r.name if r else ''} ({red.coins} coin)",
+              branch_id=s.branch_id if s else None, commit=True)
+    return {"ok": True, "status": "given",
+            "balance": _student_coin_balance(db, red.student_id)}
+
+
+@app.post("/api/students/{student_id}/link-account")
+def link_student_account(
+    student_id: int,
+    payload: schemas.LinkAccount,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.USER_ADMIN)),
+):
+    """O'quvchiga kirish hisobi ochish. Shundan keyin u kirib coin
+    balansini ko'radi va sovg'a so'ray oladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if db.query(models.User).filter(
+            models.User.username == payload.username).first():
+        raise HTTPException(400, "Bu login band")
+
+    u = models.User(
+        username=payload.username,
+        password_hash=hash_password(payload.password),
+        full_name=s.full_name,
+        role=roles.STUDENT,
+        branch_id=s.branch_id,
+    )
+    db.add(u); db.commit(); db.refresh(u)
+    s.user_id = u.id
+    db.commit()
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, branch_id=s.branch_id,
+              field="Kirish hisobi", new_value=payload.username, commit=True)
+    return {"user_id": u.id, "username": u.username}

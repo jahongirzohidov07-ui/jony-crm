@@ -106,7 +106,13 @@ function RangePicker({
 }) {
   return (
     <div className="flex gap-1 mb-5">
-      {[6, 12, 24].map((m) => (
+      {[
+        { m: 1, l: "1 oy" },
+        { m: 3, l: "3 oy" },
+        { m: 6, l: "6 oy" },
+        { m: 12, l: "1 yil" },
+        { m: 0, l: "Butun davr" },
+      ].map(({ m, l }) => (
         <button
           key={m}
           onClick={() => setMonths(m)}
@@ -116,7 +122,7 @@ function RangePicker({
               : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
           }`}
         >
-          {m} oy
+          {l}
         </button>
       ))}
     </div>

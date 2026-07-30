@@ -10,6 +10,8 @@ import {
   api,
   type CashflowReport,
   type CashflowLedger,
+  type BillingMonth,
+  type CollectionReport,
   type CashMethodBlock,
   type LedgerRow,
   type PnlReport,
@@ -25,12 +27,13 @@ import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "cashflow" | "pnl" | "expenses";
+type Tab = "cashflow" | "pnl" | "expenses" | "billing";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
   { key: "expenses", label: "Xarajatlar" },
+  { key: "billing", label: "Oylik hisob-kitob" },
 ];
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
@@ -997,6 +1000,194 @@ export default function Moliya() {
       {tab === "cashflow" && <CashflowTab />}
       {tab === "pnl" && <PnlTab />}
       {tab === "expenses" && <ExpensesTab />}
+      {tab === "billing" && <BillingTab />}
+    </div>
+  );
+}
+
+
+// ------------------------------------------- Oylik hisob-kitob ----
+function BillingTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [data, setData] = useState<BillingMonth | null>(null);
+  const [col, setCol] = useState<CollectionReport | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  function load() {
+    setLoading(true);
+    setMsg("");
+    Promise.all([
+      api
+        .post<BillingMonth>(
+          `/billing/month?year=${year}&month=${month}&commit=false`, {}
+        )
+        .then(setData),
+      api
+        .get<CollectionReport>(`/billing/collection?year=${year}&month=${month}`)
+        .then(setCol)
+        .catch(() => setCol(null)),
+    ]).finally(() => setLoading(false));
+  }
+  useEffect(load, [year, month]);
+
+  async function run() {
+    if (
+      !confirm(
+        `${year}-${String(month).padStart(2, "0")} oyi uchun barcha faol ` +
+          "o'quvchilardan pul hisoblansinmi?\n\n" +
+          "Allaqachon hisoblanganlar takrorlanmaydi."
+      )
+    )
+      return;
+    setBusy(true);
+    try {
+      const r = await api.post<BillingMonth>(
+        `/billing/month?year=${year}&month=${month}&commit=true`, {}
+      );
+      setMsg(`${r.created} ta o'quvchiga hisoblandi`);
+      load();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const years = [now.getFullYear(), now.getFullYear() - 1];
+  const pending = data?.rows.filter((r) => !r.already_charged).length ?? 0;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        <select
+          value={month}
+          onChange={(e) => setMonth(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          {MONTHS.map((m, i) => (
+            <option key={m} value={i + 1}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          {years.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+        {msg && <span className="text-sm text-slate-600">{msg}</span>}
+        <div className="flex-1" />
+        <button
+          onClick={run}
+          disabled={busy || pending === 0}
+          className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-40"
+        >
+          {pending > 0
+            ? `${pending} ta o'quvchiga hisoblash`
+            : "Hammasi hisoblangan"}
+        </button>
+      </div>
+
+      {loading ? (
+        <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>
+      ) : !data ? null : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <p className="text-xs text-slate-500 mb-1">Tushishi kerak</p>
+              <p className="text-lg font-semibold text-slate-900">
+                {formatSom(data.expected_total)}
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">
+                {data.students} ta o'quvchi
+              </p>
+            </div>
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <p className="text-xs text-slate-500 mb-1">Hisoblangan</p>
+              <p className="text-lg font-semibold text-slate-900">
+                {col ? formatSom(col.charged) : "—"}
+              </p>
+            </div>
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <p className="text-xs text-slate-500 mb-1">Yig'ilgan</p>
+              <p className="text-lg font-semibold text-emerald-600">
+                {col ? formatSom(col.collected) : "—"}
+              </p>
+              {col && (
+                <p className="text-xs text-slate-400 mt-0.5">{col.percent}%</p>
+              )}
+            </div>
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <p className="text-xs text-slate-500 mb-1">Qolgan qarz</p>
+              <p className="text-lg font-semibold text-red-600">
+                {col ? formatSom(col.debt) : "—"}
+              </p>
+            </div>
+          </div>
+
+          <Note>
+            Hisoblash o'quvchi balansidan pulni yechadi — balans manfiyga
+            ketsa, bu qarz degani va Talabalar ro'yxatida qizil ko'rinadi.
+            Bir oy uchun ikki marta hisoblanmaydi.
+          </Note>
+
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mt-4">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50">
+                <tr className="text-xs text-slate-500">
+                  <th className="text-left px-4 py-2.5">O'quvchi</th>
+                  <th className="text-left">Guruh</th>
+                  <th className="text-right w-20">Dars</th>
+                  <th className="text-right w-24">Chegirma</th>
+                  <th className="text-right w-32">Summa</th>
+                  <th className="text-right pr-4 w-28">Holat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.rows.map((r) => (
+                  <tr key={r.student_id} className="border-t border-slate-100">
+                    <td className="px-4 py-2.5">
+                      <Link
+                        to={`/students/${r.student_id}`}
+                        className="text-slate-800 hover:text-brand-700"
+                      >
+                        {r.full_name}
+                      </Link>
+                    </td>
+                    <td className="text-slate-500">{r.group}</td>
+                    <td className="text-right">{r.lessons}</td>
+                    <td className="text-right text-emerald-600">
+                      {r.discount ? `−${r.discount}%` : "—"}
+                    </td>
+                    <td className="text-right tabular-nums">
+                      {formatSom(r.amount)}
+                    </td>
+                    <td className="text-right pr-4">
+                      {r.already_charged ? (
+                        <span className="text-xs text-emerald-600">
+                          hisoblangan
+                        </span>
+                      ) : (
+                        <span className="text-xs text-slate-400">kutilmoqda</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 }

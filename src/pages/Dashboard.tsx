@@ -8,6 +8,8 @@ import {
   Download,
   Receipt,
   Briefcase,
+  Percent,
+  Play as Youtube,
   Camera as Instagram,
   Send,
 } from "lucide-react";
@@ -31,8 +33,12 @@ import {
   type StudentGrowthWindow,
   type StudentGrowthResponse,
   type SocialStats,
+  type CollectionReport,
 } from "../lib/api";
 import { formatSom, formatPeriodLabel, formatGrowthLabel } from "../lib/format";
+import { FINANCE_ACCESS, PROFIT_VIEW, can } from "../lib/roles";
+import { useAuth } from "../lib/AuthContext";
+import Ceo from "./Ceo";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
 
 const BRAND = "#0d9488";
@@ -89,6 +95,7 @@ function SocialCards() {
   const icons: Record<string, React.ElementType> = {
     instagram: Instagram,
     telegram: Send,
+    youtube: Youtube,
   };
 
   return (
@@ -169,7 +176,97 @@ function WindowTabs({
   );
 }
 
+/** Shu oyning to'lov yig'ish foizi. Administrator KPI'sining asosi:
+ *  hisoblangan pulning qanchasi haqiqatda tushdi. */
+function CollectionCard() {
+  const [data, setData] = useState<CollectionReport | null>(null);
+  const now = new Date();
+
+  useEffect(() => {
+    api
+      .get<CollectionReport>(
+        `/billing/collection?year=${now.getFullYear()}&month=${now.getMonth() + 1}`
+      )
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  if (!data || data.charged === 0) return null;
+
+  const tone =
+    data.percent >= 95 ? "text-emerald-600"
+      : data.percent >= 80 ? "text-amber-600"
+        : "text-red-600";
+  const bar =
+    data.percent >= 95 ? "bg-emerald-500"
+      : data.percent >= 80 ? "bg-amber-500"
+        : "bg-red-500";
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5 mb-6">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-9 h-9 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center">
+          <Percent size={18} />
+        </div>
+        <div>
+          <p className="text-sm text-slate-500">Shu oy to'lovlarni yig'ish</p>
+          <p className="text-xs text-slate-400">
+            Hisoblangan pulning qanchasi tushdi
+          </p>
+        </div>
+        <div className="flex-1" />
+        <p className={`text-2xl font-semibold ${tone}`}>{data.percent}%</p>
+      </div>
+
+      <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
+        <div
+          className={`h-full rounded-full ${bar}`}
+          style={{ width: `${Math.min(100, data.percent)}%` }}
+        />
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <p className="text-xs text-slate-500">Hisoblangan</p>
+          <p className="text-slate-900 font-medium">{formatSom(data.charged)}</p>
+        </div>
+        <div>
+          <p className="text-xs text-slate-500">Yig'ilgan</p>
+          <p className="text-emerald-600 font-medium">
+            {formatSom(data.collected)}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-slate-500">Qolgan</p>
+          <p className="text-red-600 font-medium">{formatSom(data.debt)}</p>
+        </div>
+      </div>
+
+      {data.by_admin.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <p className="text-xs text-slate-500 mb-1.5">Kim yig'di</p>
+          <div className="space-y-1">
+            {data.by_admin.map((a) => (
+              <div key={a.name} className="flex items-center justify-between text-sm">
+                <span className="text-slate-700">{a.name}</span>
+                <span className="text-slate-600">
+                  {formatSom(a.collected)}{" "}
+                  <span className="text-xs text-slate-400">({a.percent}%)</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+type DashTab = "overview" | "today";
+
 export default function Dashboard() {
+  const { user } = useAuth();
+  const [tab, setTab] = useState<DashTab>("overview");
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
@@ -255,8 +352,20 @@ export default function Dashboard() {
     ]);
   }
 
+  const showToday = can(user?.role, PROFIT_VIEW);
+
+  if (showToday && tab === "today") {
+    return (
+      <div className="p-8 max-w-6xl">
+        <DashTabs tab={tab} setTab={setTab} showToday={showToday} />
+        <Ceo />
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 max-w-6xl">
+      <DashTabs tab={tab} setTab={setTab} showToday={showToday} />
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900 mb-1">Dashboard</h1>
@@ -301,6 +410,8 @@ export default function Dashboard() {
             <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
             <SocialCards />
           </div>
+
+          {can(user?.role, FINANCE_ACCESS) && <CollectionCard />}
 
           <ChartCard
             title="Talabalar soni statistikasi"
@@ -421,6 +532,40 @@ export default function Dashboard() {
           </ChartCard>
         </>
       )}
+    </div>
+  );
+}
+
+
+/** Dashboard ichidagi bo'limlar. "Bugungi holat" alohida sahifa emas,
+ *  shu yerning ichida turadi. */
+function DashTabs({
+  tab, setTab, showToday,
+}: {
+  tab: DashTab;
+  setTab: (t: DashTab) => void;
+  showToday: boolean;
+}) {
+  if (!showToday) return null;
+  const items: { key: DashTab; label: string }[] = [
+    { key: "overview", label: "Umumiy" },
+    { key: "today", label: "Bugungi holat" },
+  ];
+  return (
+    <div className="flex gap-1 border-b border-slate-200 mb-6">
+      {items.map((t) => (
+        <button
+          key={t.key}
+          onClick={() => setTab(t.key)}
+          className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition ${
+            tab === t.key
+              ? "border-brand-600 text-brand-700"
+              : "border-transparent text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          {t.label}
+        </button>
+      ))}
     </div>
   );
 }

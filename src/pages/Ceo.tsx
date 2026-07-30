@@ -122,7 +122,6 @@ export default function Ceo() {
     <div className="max-w-6xl">
       <div className="flex items-start justify-between mb-5">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Bugungi holat</h1>
           <p className="text-sm text-slate-500">
             {formatDate(data.date)} · {data.scope}
           </p>

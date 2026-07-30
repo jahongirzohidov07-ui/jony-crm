@@ -842,3 +842,49 @@ class AdStatCreate(BaseModel):
     clicks: int = 0
     branch_id: Optional[int] = None
     note: Optional[str] = None
+
+
+# ---------- Examiner ----------
+class ExamStatusUpdate(BaseModel):
+    status: str
+    note: Optional[str] = None
+
+
+class RetakeCreate(BaseModel):
+    date: Optional[date] = None
+    note: Optional[str] = None
+
+
+# ---------- Support teacher ----------
+class SupportAssignmentCreate(BaseModel):
+    user_id: int
+    group_id: Optional[int] = None
+    student_id: Optional[int] = None
+    note: Optional[str] = None
+
+
+class SupportPlanCreate(BaseModel):
+    student_id: int
+    user_id: Optional[int] = None
+    issue: str = "attendance"
+    plan: str
+    due_date: Optional[date] = None
+
+
+class SupportPlanUpdate(BaseModel):
+    issue: Optional[str] = None
+    plan: Optional[str] = None
+    due_date: Optional[date] = None
+    status: Optional[str] = None
+    result: Optional[str] = None
+
+
+# ---------- Fayl ----------
+class AttachmentCreate(BaseModel):
+    entity: str
+    entity_id: int
+    kind: str = "document"
+    filename: Optional[str] = None
+    mime: Optional[str] = None
+    note: Optional[str] = None
+    data: str          # base64 yoki data URL

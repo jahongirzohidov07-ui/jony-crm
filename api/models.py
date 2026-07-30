@@ -345,6 +345,14 @@ class Exam(Base):
     date = Column(Date, nullable=False, default=date.today)
     # Unit/mid/end uchun maksimal ball. Mock uchun band ishlatiladi.
     max_score = Column(Float, nullable=True)
+    # Tasdiqlash: examiner test tuzadi, keyin tasdiqlaydi, keyin
+    # o'tkaziladi. Tasdiqlanmagan testga natija kiritib bo'lmaydi.
+    status = Column(String, default="draft")
+    approved_by = Column(String, nullable=True)
+    approved_at = Column(Date, nullable=True)
+    # Qayta imtihon bo'lsa - asl imtihonga bog'lanadi.
+    retake_of_id = Column(Integer, ForeignKey("exams.id"), nullable=True)
+    note = Column(Text, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -754,3 +762,62 @@ class AdStat(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch")
+
+
+# =====================================================================
+#  Examiner, support teacher va fayl biriktirish
+# =====================================================================
+class SupportAssignment(Base):
+    """Support teacher qaysi guruh yoki o'quvchiga biriktirilgani."""
+    __tablename__ = "support_assignments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User")
+    group = relationship("Group")
+    student = relationship("Student")
+
+
+class SupportPlan(Base):
+    """O'quvchi bilan ishlash rejasi: qanday muammo, nima qilinadi,
+    natija qanday bo'ldi."""
+    __tablename__ = "support_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    issue = Column(String, default="attendance")
+    plan = Column(Text, nullable=False)
+    due_date = Column(Date, nullable=True)
+    status = Column(String, default="open")     # open | done | failed
+    result = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    done_at = Column(Date, nullable=True)
+
+    student = relationship("Student")
+    user = relationship("User")
+
+
+class Attachment(Base):
+    """Fayl (rasm, sertifikat, hujjat). Bazada base64 ko'rinishida
+    saqlanadi - alohida fayl xizmati kerak emas."""
+    __tablename__ = "attachments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    entity = Column(String, nullable=False, index=True)    # candidate, student...
+    entity_id = Column(Integer, nullable=False, index=True)
+    kind = Column(String, default="document")
+    filename = Column(String, nullable=True)
+    mime = Column(String, nullable=True)
+    size = Column(Integer, default=0)
+    data = Column(Text, nullable=False)        # base64
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -94,6 +94,13 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE exams ADD COLUMN status VARCHAR DEFAULT 'done'",
+        "ALTER TABLE exams ADD COLUMN approved_by VARCHAR",
+        "ALTER TABLE exams ADD COLUMN approved_at DATE",
+        "ALTER TABLE exams ADD COLUMN retake_of_id INTEGER",
+        "ALTER TABLE exams ADD COLUMN note TEXT",
+        # Eski imtihonlar allaqachon o'tkazilgan - ular "done".
+        "UPDATE exams SET status = 'done' WHERE status IS NULL",
         "ALTER TABLE groups ADD COLUMN room_id INTEGER",
         "ALTER TABLE groups ADD COLUMN capacity INTEGER",
         "ALTER TABLE students ADD COLUMN public_id VARCHAR",
@@ -322,13 +329,21 @@ def _months_between(start: date, end: date) -> float:
     return round((end - start).days / 30.44, 1)
 
 
-def scope_to_branch(query, model, user: models.User):
-    """Administrator/HR/SMM (branch_id is None on their account) see every
-    branch. Everyone else only sees their own branch's records."""
-    if user.role in tuple(roles.ORG_WIDE_ROLES):
-        return query
-    if user.branch_id:
+def scope_to_branch(query, model, user: models.User, branch_id=None):
+    """Filialga bo'yicha cheklash.
+
+    Ikki xil cheklash bor va ular aralashmasligi kerak:
+      1) HUQUQ - filialga bog'langan xodim faqat o'z filialini ko'radi.
+         Buni hech kim aylanib o'ta olmaydi.
+      2) FILTR - butun tashkilotni ko'radigan odam (asoschi, HR, SMM)
+         istagan filialni alohida ko'rmoqchi bo'lsa, branch_id beradi.
+    """
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        # Huquq cheklovi: o'z filiali. So'ralgan filial boshqa bo'lsa ham
+        # baribir o'ziniki qaytadi.
         return query.filter(model.branch_id == user.branch_id)
+    if branch_id and hasattr(model, "branch_id"):
+        return query.filter(model.branch_id == branch_id)
     return query
 
 
@@ -1348,11 +1363,18 @@ def create_exam(
     if payload.kind != "mock" and (not payload.max_score or payload.max_score <= 0):
         raise HTTPException(400, "Maksimal ballni kiriting")
 
+    # Testni TASDIQLASH huquqi bor odam (examiner, asoschi) yaratsa -
+    # darrov tasdiqlangan bo'ladi: u baribir keyingi bosishda tasdiqlar
+    # edi. Ustoz yaratsa - qoralama bo'lib turadi va examiner ko'radi.
+    approver = user.role in tuple(roles.EXAM_APPROVE)
     exam = models.Exam(
         group_id=group_id, kind=payload.kind,
         unit_no=payload.unit_no if payload.kind == "unit" else None,
         title=payload.title, date=payload.date,
         max_score=payload.max_score if payload.kind != "mock" else None,
+        status="approved" if approver else "draft",
+        approved_by=user.full_name if approver else None,
+        approved_at=date.today() if approver else None,
         created_by=user.full_name,
     )
     db.add(exam)
@@ -1401,8 +1423,17 @@ def save_exam_results(
     user=Depends(require_role(*roles.TEACHING_ACCESS)),
 ):
     """Ustoz faqat ball (mock uchun band) kiritadi. Foiz avtomat
-    hisoblanadi, coin ham qoidaga qarab avtomat beriladi."""
+    hisoblanadi, coin ham qoidaga qarab avtomat beriladi.
+
+    Natija kiritilishi bilan test "o'tkazildi" holatiga o'tadi."""
     exam = _exam_in_scope(db, exam_id, user)
+    # Tasdiqlanmagan testga natija kiritilmaydi: aks holda kim nima
+    # bilan baholaganini nazorat qilib bo'lmaydi.
+    if (exam.status or "done") == "draft":
+        raise HTTPException(
+            400, "Bu test hali tasdiqlanmagan — avval Examiner tasdiqlashi kerak")
+    if exam.status == "cancelled":
+        raise HTTPException(400, "Bekor qilingan testga natija kiritilmaydi")
     existing = {r.student_id: r for r in exam.results}
 
     for m in payload.marks:
@@ -1451,6 +1482,8 @@ def save_exam_results(
             created_by=user.full_name,
         )
 
+    if exam.status == "approved":
+        exam.status = "done"
     db.commit()
     db.refresh(exam)
     base = _exam_summary(db, exam)
@@ -1857,7 +1890,8 @@ def _shift_month(year: int, month: int, delta: int) -> tuple:
     return idx // 12, idx % 12 + 1
 
 
-def _income_by_method(db: Session, user, start: date, end: date) -> dict:
+def _income_by_method(db: Session, user, start: date, end: date,
+                      branch_id=None) -> dict:
     """Bir oraliqdagi haqiqiy tushumni to'lov usuli kesimida qaytaradi."""
     q = db.query(models.Payment).join(models.Student).filter(
         models.Payment.kind == "payment",
@@ -1866,6 +1900,8 @@ def _income_by_method(db: Session, user, start: date, end: date) -> dict:
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.filter(models.Student.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.filter(models.Student.branch_id == branch_id)
 
     out = {m: 0.0 for m in roles.PAYMENT_METHODS}
     for p in q.all():
@@ -1875,9 +1911,11 @@ def _income_by_method(db: Session, user, start: date, end: date) -> dict:
     return out
 
 
-def _expenses_total(db: Session, user, start: date, end: date) -> tuple:
+def _expenses_total(db: Session, user, start: date, end: date,
+                    branch_id=None) -> tuple:
     """(jami, tur bo'yicha lug'at) qaytaradi."""
-    q = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user,
+                        branch_id).filter(
         models.Expense.date >= start, models.Expense.date <= end
     )
     by_cat, total = {}, 0.0
@@ -1887,13 +1925,15 @@ def _expenses_total(db: Session, user, start: date, end: date) -> tuple:
     return total, by_cat
 
 
-def _payroll_total(db: Session, user, period: str) -> float:
+def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
     """Ustozlar ish haqi - TeacherPayout jadvalidan AVTOMATIK olinadi.
     Uni Xarajatlar bo'limiga qo'lda kiritish shart emas (va kiritilmasligi
     ham kerak - aks holda ikki marta hisoblanadi)."""
     q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.join(models.Group).filter(models.Group.branch_id == branch_id)
     return sum(p.amount or 0 for p in q.all())
 
 
@@ -1940,6 +1980,7 @@ def report_cashflow(
 def report_pnl(
     year: int,
     month: int,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -1948,10 +1989,10 @@ def report_pnl(
     start, end = billing.month_bounds(year, month)
     period = _period_key(year, month)
 
-    methods = _income_by_method(db, user, start, end)
+    methods = _income_by_method(db, user, start, end, branch_id)
     income = sum(methods.values())
-    exp_total, by_cat = _expenses_total(db, user, start, end)
-    payroll = _payroll_total(db, user, period)
+    exp_total, by_cat = _expenses_total(db, user, start, end, branch_id)
+    payroll = _payroll_total(db, user, period, branch_id)
     profit = income - exp_total - payroll
 
     lines = [{"category": c, "amount": a, "auto": False}
@@ -1978,6 +2019,7 @@ def report_pnl(
 def report_teacher_payroll(
     year: int,
     month: int,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS, *roles.SALARY_VIEW_ALL,
                               roles.TEACHER)),
@@ -2051,6 +2093,7 @@ def report_teacher_payroll(
 # -------------------------------------------------------- Sotuv voronkasi ----
 @app.get("/api/reports/funnel")
 def report_funnel(
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -2062,7 +2105,7 @@ def report_funnel(
        o'quvchi ketayotgani shu yerda ko'rinadi.
     """
     # ---- 1. Lid voronkasi -------------------------------------------------
-    leads = scope_to_branch(db.query(models.Lead), models.Lead, user).all()
+    leads = scope_to_branch(db.query(models.Lead), models.Lead, user, branch_id).all()
     by_stage = {st: 0 for st in roles.LEAD_STAGES}
     for l in leads:
         if l.stage in by_stage:
@@ -2087,7 +2130,7 @@ def report_funnel(
     rejected = by_stage.get("rejected", 0)
 
     # ---- 2. To'lovdan keyingi oylar --------------------------------------
-    students = scope_to_branch(db.query(models.Student), models.Student, user).all()
+    students = scope_to_branch(db.query(models.Student), models.Student, user, branch_id).all()
     first_paid = _first_payment_dates(db)
     today = date.today()
 
@@ -2144,6 +2187,7 @@ def report_funnel(
 def report_quality(
     year: int,
     month: int,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -2162,7 +2206,7 @@ def report_quality(
         models.Exam.date >= start, models.Exam.date <= end
     ).all()
     groups = {g.id: g for g in scope_to_branch(
-        db.query(models.Group), models.Group, user).all()}
+        db.query(models.Group), models.Group, user, branch_id).all()}
     teachers = {t.id: t for t in db.query(models.Teacher).all()}
     branches = {b.id: b for b in db.query(models.Branch).all()}
 
@@ -2329,6 +2373,7 @@ def report_sales_managers(
 @app.get("/api/analytics/summary")
 def analytics_summary(
     months: int = 12,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -2355,9 +2400,9 @@ def analytics_summary(
         start, end = billing.month_bounds(y, m)
         period = _period_key(y, m)
 
-        income = sum(_income_by_method(db, user, start, end).values())
-        exp_total, by_cat = _expenses_total(db, user, start, end)
-        payroll = _payroll_total(db, user, period)
+        income = sum(_income_by_method(db, user, start, end, branch_id).values())
+        exp_total, by_cat = _expenses_total(db, user, start, end, branch_id)
+        payroll = _payroll_total(db, user, period, branch_id)
 
         for cat, amt in by_cat.items():
             category_totals[cat] = category_totals.get(cat, 0) + amt
@@ -2603,6 +2648,7 @@ def replace_kpi_rules(
 @app.get("/api/reports/ltv")
 def report_ltv(
     dimension: str = "branch",
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -3714,13 +3760,15 @@ def hr_funnel(
 # =====================================================================
 #  MARKETING  -  voronka va CAC
 # =====================================================================
-def _marketing_spend(db: Session, user, start: date, end: date) -> dict:
+def _marketing_spend(db: Session, user, start: date, end: date,
+                     branch_id=None) -> dict:
     """Kanal kesimida reklama xarajati. Kanal ko'rsatilmagan reklama
     xarajati "other"ga tushadi - shunda umumiy summa hech qachon
     yo'qolmaydi."""
     marketing_cats = [k for k, _, g in roles.EXPENSE_CATEGORY_DEFS
                       if g == "marketing"]
-    q = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user,
+                        branch_id).filter(
         models.Expense.date >= start,
         models.Expense.date <= end,
         models.Expense.category.in_(marketing_cats),
@@ -3735,6 +3783,7 @@ def _marketing_spend(db: Session, user, start: date, end: date) -> dict:
 @app.get("/api/reports/marketing-funnel")
 def marketing_funnel(
     months: int = 6,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.MARKETING_ACCESS)),
 ):
@@ -3749,9 +3798,9 @@ def marketing_funnel(
     start = since
     end = today
 
-    spend = _marketing_spend(db, user, start, end)
+    spend = _marketing_spend(db, user, start, end, branch_id)
 
-    lq = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
+    lq = scope_to_branch(db.query(models.Lead), models.Lead, user, branch_id).filter(
         models.Lead.created_at >= datetime.combine(since, datetime.min.time())
     )
     leads = lq.all()
@@ -3848,6 +3897,7 @@ def marketing_funnel(
 @app.get("/api/analytics/cac")
 def analytics_cac(
     months: int = 12,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -3865,13 +3915,13 @@ def analytics_cac(
     firsts = _payment_first_dates(db)
     # O'quvchi filiali - filialga bog'langan foydalanuvchi uchun filtr
     sb = {s.id: s.branch_id for s in
-          scope_to_branch(db.query(models.Student), models.Student, user).all()}
+          scope_to_branch(db.query(models.Student), models.Student, user, branch_id).all()}
 
     rows = []
     for back in range(months - 1, -1, -1):
         y, m = _shift_month(today.year, today.month, -back)
         start, end = billing.month_bounds(y, m)
-        spend = sum(_marketing_spend(db, user, start, end).values())
+        spend = sum(_marketing_spend(db, user, start, end, branch_id).values())
         new_clients = sum(1 for sid, dt in firsts.items()
                           if sid in sb and start <= dt.date() <= end)
         rows.append({
@@ -4900,6 +4950,7 @@ def _group_capacity(g: models.Group, rooms: dict) -> int | None:
 
 @app.get("/api/academic/group-fill")
 def group_fill(
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.ACADEMIC_VIEW)),
 ):
@@ -4909,9 +4960,9 @@ def group_fill(
     ustoz vaqtini ham, xona ijarasini ham to'liq yeydi, lekin
     daromadning yarmini beradi."""
     rooms = {r.id: r for r in db.query(models.Room).all()}
-    gq = scope_to_branch(db.query(models.Group), models.Group, user)
+    gq = scope_to_branch(db.query(models.Group), models.Group, user, branch_id)
     counts = {}
-    for s in scope_to_branch(db.query(models.Student), models.Student, user).all():
+    for s in scope_to_branch(db.query(models.Student), models.Student, user, branch_id).all():
         if s.status == "active" and s.group_id:
             counts[s.group_id] = counts.get(s.group_id, 0) + 1
 
@@ -5063,6 +5114,7 @@ def _student_risk(db: Session, s: models.Student, *, today: date,
 @app.get("/api/academic/risk")
 def academic_risk(
     level: str | None = None,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.ACADEMIC_VIEW)),
 ):
@@ -5070,7 +5122,7 @@ def academic_risk(
     qo'lda 'bu bola ketib qoladi' deb belgilashi shart emas."""
     today = date.today()
     students = [s for s in
-                scope_to_branch(db.query(models.Student), models.Student, user).all()
+                scope_to_branch(db.query(models.Student), models.Student, user, branch_id).all()
                 if s.status in ("active", "trial")]
     ids = [s.id for s in students]
 
@@ -5677,6 +5729,7 @@ def delete_ad_stat(
 @app.get("/api/reports/marketing-journey")
 def marketing_journey(
     months: int = 6,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.MARKETING_ACCESS)),
 ):
@@ -5691,7 +5744,7 @@ def marketing_journey(
     since = (date(2000, 1, 1) if months == 0
              else today - timedelta(days=int(months * 30.44)))
 
-    adq = scope_to_branch(db.query(models.AdStat), models.AdStat, user)
+    adq = scope_to_branch(db.query(models.AdStat), models.AdStat, user, branch_id)
     if months:
         periods = []
         for back in range(months - 1, -1, -1):
@@ -5700,7 +5753,7 @@ def marketing_journey(
         adq = adq.filter(models.AdStat.period.in_(periods))
     ads = adq.all()
 
-    leads = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
+    leads = scope_to_branch(db.query(models.Lead), models.Lead, user, branch_id).filter(
         models.Lead.created_at >= datetime.combine(since, datetime.min.time())
     ).all()
 
@@ -6096,3 +6149,751 @@ def billing_collection(
         "paid_students": paid_students,
         "by_admin": admins,
     }
+
+
+# =====================================================================
+#  FILIALLAR KESIMI  -  solishtirish
+# =====================================================================
+def _branch_scope_ids(db: Session, user, branch_id: int | None) -> list | None:
+    """Foydalanuvchi ko'ra oladigan filiallar. None - hammasi."""
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        return [user.branch_id]
+    if branch_id:
+        return [branch_id]
+    return None
+
+
+@app.get("/api/ceo/branches")
+def ceo_branches(
+    months: int = 1,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PROFIT_VIEW)),
+):
+    """Filiallarni yonma-yon solishtirish.
+
+    Asoschi uchun eng muhim ko'rinish: qaysi filial ko'proq pul
+    keltiryapti, qayerda o'quvchi ko'p ketyapti, qayerda guruhlar
+    bo'sh turibdi. Har bir ustun bo'yicha eng yaxshi va eng yomon
+    filial belgilanadi."""
+    months = max(1, min(months, 24))
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -(months - 1))
+    start, _e = billing.month_bounds(y, m)
+    _s, end = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(start, datetime.min.time())
+    d1 = datetime.combine(end, datetime.max.time())
+
+    allowed = _branch_scope_ids(db, user, None)
+    bq = db.query(models.Branch)
+    if allowed:
+        bq = bq.filter(models.Branch.id.in_(allowed))
+    branches = bq.order_by(models.Branch.name).all()
+
+    students = db.query(models.Student).all()
+    groups = db.query(models.Group).all()
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+    firsts = _payment_first_dates(db)
+
+    pays = (db.query(models.Payment, models.Student)
+            .join(models.Student, models.Payment.student_id == models.Student.id)
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.created_at >= d0,
+                    models.Payment.created_at <= d1).all())
+    exps = (db.query(models.Expense)
+            .filter(models.Expense.date >= start,
+                    models.Expense.date <= end).all())
+    leads = (db.query(models.Lead)
+             .filter(models.Lead.created_at >= d0).all())
+    payouts = {}
+    for p in db.query(models.TeacherPayout).all():
+        if p.period and start.isoformat()[:7] <= p.period <= end.isoformat()[:7]:
+            g = next((x for x in groups if x.id == p.group_id), None)
+            if g:
+                payouts[g.branch_id] = payouts.get(g.branch_id, 0.0) + (p.amount or 0)
+
+    rows = []
+    for b in branches:
+        bs = [s for s in students if s.branch_id == b.id]
+        active = [s for s in bs if s.status == "active"]
+        trial = [s for s in bs if s.status == "trial"]
+        left = [s for s in bs if s.left_date and start <= s.left_date <= end]
+        income = sum(p.amount for p, st in pays if st.branch_id == b.id)
+        expense = sum(e.amount for e in exps if e.branch_id == b.id)
+        payroll = payouts.get(b.id, 0.0)
+        outflow = expense + payroll
+        profit = income - outflow
+
+        bg = [g for g in groups if g.branch_id == b.id]
+        cap = seats = 0
+        for g in bg:
+            c = _group_capacity(g, rooms)
+            if c:
+                cap += c
+                seats += sum(1 for s in active if s.group_id == g.id)
+        fill = round(seats / cap * 100, 1) if cap else None
+
+        bl = [l for l in leads if l.branch_id == b.id]
+        conv = sum(1 for l in bl if l.stage == "converted")
+        new_clients = sum(1 for s in bs
+                          if s.id in firsts and start <= firsts[s.id].date() <= end)
+
+        debt = sum(min(0.0, student_balance(db, s.id)) for s in active)
+
+        rows.append({
+            "branch_id": b.id, "branch": b.name,
+            "active": len(active), "trial": len(trial), "left": len(left),
+            "groups": len(bg),
+            "income": round(income, 2),
+            "expense": round(outflow, 2),
+            "profit": round(profit, 2),
+            "margin": round(profit / income * 100, 1) if income else 0.0,
+            "arpu": round(income / len(active), 0) if active else 0.0,
+            "fill": fill,
+            "leads": len(bl), "converted": conv,
+            "conversion": round(conv / len(bl) * 100, 1) if bl else 0.0,
+            "new_clients": new_clients,
+            "debt": round(abs(debt), 2),
+            "churn": round(len(left) / (len(active) + len(left)) * 100, 1)
+                     if (active or left) else 0.0,
+        })
+
+    # Har bir ustunda eng yaxshi va eng yomon filial - solishtirish
+    # oson bo'lishi uchun.
+    def extremes(key, higher_is_better=True):
+        vals = [(r["branch_id"], r[key]) for r in rows if r[key] is not None]
+        if len(vals) < 2:
+            return None, None
+        best = (max if higher_is_better else min)(vals, key=lambda x: x[1])
+        worst = (min if higher_is_better else max)(vals, key=lambda x: x[1])
+        return best[0], worst[0]
+
+    highlight = {}
+    for key, better in [("income", True), ("profit", True), ("margin", True),
+                        ("fill", True), ("conversion", True), ("arpu", True),
+                        ("churn", False), ("debt", False), ("left", False)]:
+        b_, w_ = extremes(key, better)
+        highlight[key] = {"best": b_, "worst": w_}
+
+    totals = {
+        "active": sum(r["active"] for r in rows),
+        "trial": sum(r["trial"] for r in rows),
+        "left": sum(r["left"] for r in rows),
+        "groups": sum(r["groups"] for r in rows),
+        "income": round(sum(r["income"] for r in rows), 2),
+        "expense": round(sum(r["expense"] for r in rows), 2),
+        "profit": round(sum(r["profit"] for r in rows), 2),
+        "debt": round(sum(r["debt"] for r in rows), 2),
+        "leads": sum(r["leads"] for r in rows),
+        "converted": sum(r["converted"] for r in rows),
+        "new_clients": sum(r["new_clients"] for r in rows),
+    }
+    totals["margin"] = (round(totals["profit"] / totals["income"] * 100, 1)
+                        if totals["income"] else 0.0)
+
+    rows.sort(key=lambda r: -r["profit"])
+    return {"months": months, "period": f"{start.isoformat()} — {end.isoformat()}",
+            "rows": rows, "totals": totals, "highlight": highlight}
+
+
+# =====================================================================
+#  EXAMINER MODULI  -  imtihon nazorati
+# =====================================================================
+def _exam_out(e: models.Exam, results: list = None) -> dict:
+    done = [r for r in (results or []) if not r.absent and r.percent is not None]
+    return {
+        "id": e.id,
+        "group_id": e.group_id,
+        "group": e.group.name if e.group else None,
+        "teacher": e.group.teacher.full_name
+                   if e.group and e.group.teacher else None,
+        "branch_id": e.group.branch_id if e.group else None,
+        "branch": e.group.branch.name if e.group and e.group.branch else None,
+        "kind": e.kind,
+        "kind_label": roles.EXAM_KIND_LABELS.get(e.kind, e.kind),
+        "unit_no": e.unit_no,
+        "title": e.title or examTitleFallback(e),
+        "date": e.date.isoformat() if e.date else None,
+        "max_score": e.max_score,
+        "status": e.status or "draft",
+        "status_label": roles.EXAM_STATUS_LABELS.get(e.status or "draft",
+                                                     e.status or "draft"),
+        "approved_by": e.approved_by,
+        "approved_at": e.approved_at.isoformat() if e.approved_at else None,
+        "retake_of_id": e.retake_of_id,
+        "note": e.note,
+        "result_count": len(results or []),
+        "avg_percent": round(sum(r.percent for r in done) / len(done), 1)
+                       if done else None,
+        "absent": sum(1 for r in (results or []) if r.absent),
+    }
+
+
+def examTitleFallback(e: models.Exam) -> str:
+    if e.kind == "unit" and e.unit_no:
+        return f"Unit {e.unit_no}"
+    return roles.EXAM_KIND_LABELS.get(e.kind, e.kind)
+
+
+@app.get("/api/examiner/exams")
+def examiner_exams(
+    status: str | None = None,
+    branch_id: int | None = None,
+    group_id: int | None = None,
+    months: int = 6,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_VIEW)),
+):
+    """Imtihon jadvali. Examiner shu yerdan test yaratadi, tasdiqlaydi
+    va natijasini kiritadi."""
+    since = date.today() - timedelta(days=int(max(1, months) * 30.44))
+    q = (db.query(models.Exam).join(models.Group)
+         .filter(models.Exam.date >= since))
+    allowed = _branch_scope_ids(db, user, branch_id)
+    if allowed:
+        q = q.filter(models.Group.branch_id.in_(allowed))
+    if status:
+        q = q.filter(models.Exam.status == status)
+    if group_id:
+        q = q.filter(models.Exam.group_id == group_id)
+    exams = q.order_by(models.Exam.date.desc()).all()
+
+    res = {}
+    if exams:
+        for r in (db.query(models.ExamResult)
+                  .filter(models.ExamResult.exam_id.in_([e.id for e in exams]))
+                  .all()):
+            res.setdefault(r.exam_id, []).append(r)
+    return [_exam_out(e, res.get(e.id, [])) for e in exams]
+
+
+@app.post("/api/examiner/exams/{exam_id}/approve")
+def approve_exam(
+    exam_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_APPROVE)),
+):
+    """Testni tasdiqlash. Tasdiqlanmagan testga natija kiritilmaydi -
+    shunda o'zboshimchalik bilan qo'yilgan baho bo'lmaydi."""
+    e = db.query(models.Exam).get(exam_id)
+    if not e:
+        raise HTTPException(404, "Imtihon topilmadi")
+    if e.status == "approved":
+        raise HTTPException(400, "Bu test allaqachon tasdiqlangan")
+    e.status = "approved"
+    e.approved_by = user.full_name
+    e.approved_at = date.today()
+    audit.log(db, user, entity="exam", action="update", entity_id=e.id,
+              entity_label=e.title or examTitleFallback(e),
+              field="status", old_value="draft", new_value="approved",
+              commit=True)
+    return {"ok": True, "status": e.status}
+
+
+@app.put("/api/examiner/exams/{exam_id}/status")
+def set_exam_status(
+    exam_id: int,
+    payload: schemas.ExamStatusUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_APPROVE)),
+):
+    e = db.query(models.Exam).get(exam_id)
+    if not e:
+        raise HTTPException(404, "Imtihon topilmadi")
+    if payload.status not in roles.EXAM_STATUS_LABELS:
+        raise HTTPException(400, "Noma'lum holat")
+    old = e.status
+    e.status = payload.status
+    if payload.note is not None:
+        e.note = payload.note
+    audit.log(db, user, entity="exam", action="update", entity_id=e.id,
+              entity_label=e.title or examTitleFallback(e), field="status",
+              old_value=old, new_value=e.status, commit=True)
+    return {"ok": True}
+
+
+@app.post("/api/examiner/exams/{exam_id}/retake")
+def create_retake(
+    exam_id: int,
+    payload: schemas.RetakeCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_ACCESS)),
+):
+    """Qayta imtihon. Asl imtihonga bog'lanadi, shuning uchun
+    "qayta topshirdi va yaxshiladi" degan tarix ko'rinib turadi."""
+    src = db.query(models.Exam).get(exam_id)
+    if not src:
+        raise HTTPException(404, "Imtihon topilmadi")
+    e = models.Exam(
+        group_id=src.group_id, kind=src.kind, unit_no=src.unit_no,
+        title=(src.title or examTitleFallback(src)) + " (qayta)",
+        date=payload.date or date.today(),
+        max_score=src.max_score, status="approved",
+        approved_by=user.full_name, approved_at=date.today(),
+        retake_of_id=src.id, note=payload.note,
+        created_by=user.full_name)
+    db.add(e); db.commit(); db.refresh(e)
+    audit.log(db, user, entity="exam", action="create", entity_id=e.id,
+              entity_label=e.title, note=f"Qayta imtihon (asli #{src.id})",
+              commit=True)
+    return _exam_out(e, [])
+
+
+@app.get("/api/examiner/analysis")
+def examiner_analysis(
+    months: int = 6,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_VIEW)),
+):
+    """Imtihon natijalarining uch kesimda tahlili: ustoz, guruh, filial.
+    Pastda standartdan ortda qolgan guruhlar va sertifikatga tavsiya."""
+    since = date.today() - timedelta(days=int(max(1, months) * 30.44))
+    q = (db.query(models.ExamResult, models.Exam, models.Group)
+         .join(models.Exam, models.ExamResult.exam_id == models.Exam.id)
+         .join(models.Group, models.Exam.group_id == models.Group.id)
+         .filter(models.Exam.date >= since,
+                 models.ExamResult.absent == 0,
+                 models.ExamResult.percent.isnot(None)))
+    allowed = _branch_scope_ids(db, user, branch_id)
+    if allowed:
+        q = q.filter(models.Group.branch_id.in_(allowed))
+    rows = q.all()
+
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    branches = {b.id: b for b in db.query(models.Branch).all()}
+
+    def agg(key_fn, label_fn):
+        acc = {}
+        for r, e, g in rows:
+            k = key_fn(g)
+            if k is None:
+                continue
+            d = acc.setdefault(k, {"sum": 0.0, "n": 0, "exams": set(),
+                                   "students": set()})
+            d["sum"] += r.percent
+            d["n"] += 1
+            d["exams"].add(e.id)
+            d["students"].add(r.student_id)
+        out = []
+        for k, d in acc.items():
+            avg = round(d["sum"] / d["n"], 1)
+            band, band_label = ("good", "Standartga mos") \
+                if avg >= roles.EXAM_STANDARD_PERCENT else ("behind", "Ortda")
+            out.append({
+                "key": k, "label": label_fn(k), "avg": avg,
+                "results": d["n"], "exams": len(d["exams"]),
+                "students": len(d["students"]),
+                "band": band, "band_label": band_label,
+            })
+        out.sort(key=lambda x: -x["avg"])
+        return out
+
+    by_teacher = agg(lambda g: g.teacher_id,
+                     lambda k: teachers[k].full_name if k in teachers else "—")
+    by_group = agg(lambda g: g.id,
+                   lambda k: next((g.name for _r, _e, g in rows if g.id == k), "—"))
+    by_branch = agg(lambda g: g.branch_id,
+                    lambda k: branches[k].name if k in branches else "—")
+
+    behind = [g for g in by_group if g["band"] == "behind"]
+
+    # O'quvchi progressi: birinchi va oxirgi natija farqi
+    per_student = {}
+    for r, e, g in rows:
+        per_student.setdefault(r.student_id, []).append((e.date, r.percent))
+    progress = []
+    names = {s.id: s for s in db.query(models.Student).all()}
+    for sid, lst in per_student.items():
+        if len(lst) < 2:
+            continue
+        lst.sort(key=lambda x: x[0])
+        first, last = lst[0][1], lst[-1][1]
+        st = names.get(sid)
+        progress.append({
+            "student_id": sid,
+            "full_name": st.full_name if st else "—",
+            "group": st.group.name if st and st.group else None,
+            "first": round(first, 1), "last": round(last, 1),
+            "change": round(last - first, 1),
+            "exams": len(lst),
+            "avg": round(sum(x[1] for x in lst) / len(lst), 1),
+        })
+    progress.sort(key=lambda x: x["change"])
+
+    # Sertifikatga tavsiya: o'rtachasi yuqori va kamida 2 ta imtihon
+    recommend = [p for p in progress
+                 if p["avg"] >= roles.CERTIFICATE_RECOMMEND_PERCENT
+                 and p["exams"] >= 2]
+    recommend.sort(key=lambda x: -x["avg"])
+
+    # Qayta imtihon tavsiyasi: oxirgi natijasi past
+    retake = [{"student_id": sid,
+               "full_name": names[sid].full_name if sid in names else "—",
+               "group": names[sid].group.name
+                        if sid in names and names[sid].group else None,
+               "percent": round(sorted(lst, key=lambda x: x[0])[-1][1], 1)}
+              for sid, lst in per_student.items()
+              if sorted(lst, key=lambda x: x[0])[-1][1] < roles.EXAM_RETAKE_BELOW]
+    retake.sort(key=lambda x: x["percent"])
+
+    all_avg = (round(sum(r.percent for r, _e, _g in rows) / len(rows), 1)
+               if rows else None)
+    return {
+        "months": months,
+        "standard": roles.EXAM_STANDARD_PERCENT,
+        "total_results": len(rows),
+        "avg": all_avg,
+        "by_teacher": by_teacher,
+        "by_group": by_group,
+        "by_branch": by_branch,
+        "behind": behind,
+        "progress": progress,
+        "recommend_certificate": recommend[:50],
+        "recommend_retake": retake[:50],
+    }
+
+
+# =====================================================================
+#  SUPPORT TEACHER MODULI
+# =====================================================================
+@app.get("/api/support/assignments")
+def support_assignments(
+    user_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SUPPORT_ACCESS)),
+):
+    q = db.query(models.SupportAssignment)
+    # Support teacher faqat O'ZIGA biriktirilganini ko'radi.
+    if user.role == roles.SUPPORT_TEACHER:
+        q = q.filter(models.SupportAssignment.user_id == user.id)
+    elif user_id:
+        q = q.filter(models.SupportAssignment.user_id == user_id)
+    return [{
+        "id": a.id, "user_id": a.user_id,
+        "user": a.user.full_name if a.user else None,
+        "group_id": a.group_id,
+        "group": a.group.name if a.group else None,
+        "student_id": a.student_id,
+        "student": a.student.full_name if a.student else None,
+        "note": a.note,
+    } for a in q.all()]
+
+
+@app.post("/api/support/assignments")
+def add_assignment(
+    payload: schemas.SupportAssignmentCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    if not payload.group_id and not payload.student_id:
+        raise HTTPException(400, "Guruh yoki o'quvchi tanlang")
+    a = models.SupportAssignment(**payload.model_dump(),
+                                 created_by=user.full_name)
+    db.add(a); db.commit(); db.refresh(a)
+    return {"id": a.id}
+
+
+@app.delete("/api/support/assignments/{aid}")
+def delete_assignment(
+    aid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    a = db.query(models.SupportAssignment).get(aid)
+    if not a:
+        raise HTTPException(404, "Topilmadi")
+    db.delete(a); db.commit()
+    return {"ok": True}
+
+
+def _student_attendance_stats(db: Session, sid: int, since: date) -> dict:
+    rows = (db.query(models.Attendance, models.Lesson)
+            .join(models.Lesson, models.Attendance.lesson_id == models.Lesson.id)
+            .filter(models.Attendance.student_id == sid,
+                    models.Lesson.date >= since).all())
+    marked = len(rows)
+    present = sum(1 for a, _l in rows if a.present)
+    return {
+        "marked": marked, "present": present, "absent": marked - present,
+        "percent": round(present / marked * 100, 1) if marked else None,
+    }
+
+
+@app.get("/api/support/panel")
+def support_panel(
+    user_id: int | None = None,
+    months: int = 3,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SUPPORT_ACCESS)),
+):
+    """Support teacher paneli: biriktirilgan guruhlar va o'quvchilar,
+    davomat va uy vazifasi muammolari, ishlash rejasi va natija."""
+    since = date.today() - timedelta(days=int(max(1, months) * 30.44))
+
+    aq = db.query(models.SupportAssignment)
+    target_id = user.id if user.role == roles.SUPPORT_TEACHER else (user_id or None)
+    if target_id:
+        aq = aq.filter(models.SupportAssignment.user_id == target_id)
+    assigns = aq.all()
+
+    group_ids = {a.group_id for a in assigns if a.group_id}
+    direct_ids = {a.student_id for a in assigns if a.student_id}
+
+    sq = db.query(models.Student).filter(
+        models.Student.status.in_(["active", "trial"]))
+    if group_ids or direct_ids:
+        sq = sq.filter(
+            (models.Student.group_id.in_(group_ids or [-1]))
+            | (models.Student.id.in_(direct_ids or [-1])))
+    elif user.role == roles.SUPPORT_TEACHER:
+        sq = sq.filter(models.Student.id == -1)   # hech narsa biriktirilmagan
+    else:
+        sq = scope_to_branch(sq, models.Student, user)
+    students = sq.all()
+
+    # Uy vazifasi muammosi - qo'lda qo'yilgan risk signali
+    hw = {}
+    if students:
+        for f in (db.query(models.RiskFlag)
+                  .filter(models.RiskFlag.student_id.in_([s.id for s in students]),
+                          models.RiskFlag.signal == "no_homework",
+                          models.RiskFlag.active == 1).all()):
+            hw[f.student_id] = f.note or "belgilangan"
+
+    plans = {}
+    if students:
+        for p in (db.query(models.SupportPlan)
+                  .filter(models.SupportPlan.student_id.in_(
+                      [s.id for s in students])).all()):
+            plans.setdefault(p.student_id, []).append(p)
+
+    rows, att_problem, hw_problem = [], 0, 0
+    for s in students:
+        att = _student_attendance_stats(db, s.id, since)
+        bad_att = (att["percent"] is not None
+                   and att["percent"] < roles.SUPPORT_ATTENDANCE_THRESHOLD)
+        bad_hw = s.id in hw
+        if bad_att:
+            att_problem += 1
+        if bad_hw:
+            hw_problem += 1
+        open_plans = [p for p in plans.get(s.id, []) if p.status == "open"]
+        rows.append({
+            "student_id": s.id, "public_id": s.public_id,
+            "full_name": s.full_name, "status": s.status,
+            "group_id": s.group_id,
+            "group": s.group.name if s.group else None,
+            "phone": s.phone, "parent_phone": s.parent_phone,
+            "attendance": att,
+            "attendance_problem": bad_att,
+            "homework_problem": bad_hw,
+            "homework_note": hw.get(s.id),
+            "open_plans": [{"id": p.id, "issue": p.issue,
+                            "issue_label": roles.SUPPORT_ISSUE_LABELS.get(
+                                p.issue, p.issue),
+                            "plan": p.plan,
+                            "due_date": p.due_date.isoformat()
+                                        if p.due_date else None}
+                           for p in open_plans],
+        })
+    # Muammoliligi bo'yicha tartib: eng past davomat yuqorida
+    rows.sort(key=lambda r: (r["attendance"]["percent"] is None,
+                             r["attendance"]["percent"] or 0))
+
+    # Retention natijasi: biriktirilgan o'quvchilardan qanchasi qoldi
+    all_ever = list(students)
+    if group_ids:
+        all_ever = (db.query(models.Student)
+                    .filter(models.Student.group_id.in_(group_ids)).all())
+    left = [s for s in all_ever if s.status == "archived"]
+    stayed = [s for s in all_ever if s.status in ("active", "trial")]
+
+    done_plans = sum(1 for lst in plans.values()
+                     for p in lst if p.status == "done")
+    total_plans = sum(len(lst) for lst in plans.values())
+
+    return {
+        "user_id": target_id,
+        "groups": [{"id": g.id, "name": g.name,
+                    "teacher": g.teacher.full_name if g.teacher else None,
+                    "students": sum(1 for s in students if s.group_id == g.id)}
+                   for g in db.query(models.Group)
+                   .filter(models.Group.id.in_(group_ids or [-1])).all()],
+        "students": rows,
+        "summary": {
+            "students": len(rows),
+            "attendance_problem": att_problem,
+            "homework_problem": hw_problem,
+            "threshold": roles.SUPPORT_ATTENDANCE_THRESHOLD,
+            "open_plans": sum(len(r["open_plans"]) for r in rows),
+            "done_plans": done_plans,
+            "plan_success": round(done_plans / total_plans * 100, 1)
+                            if total_plans else None,
+            "retention": round(len(stayed) / len(all_ever) * 100, 1)
+                         if all_ever else None,
+            "stayed": len(stayed), "left": len(left),
+        },
+    }
+
+
+@app.get("/api/support/plans")
+def list_plans(
+    student_id: int | None = None,
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SUPPORT_ACCESS)),
+):
+    q = db.query(models.SupportPlan)
+    if student_id:
+        q = q.filter(models.SupportPlan.student_id == student_id)
+    if status:
+        q = q.filter(models.SupportPlan.status == status)
+    if user.role == roles.SUPPORT_TEACHER:
+        q = q.filter(models.SupportPlan.user_id == user.id)
+    today = date.today()
+    return [{
+        "id": p.id, "student_id": p.student_id,
+        "student": p.student.full_name if p.student else None,
+        "user": p.user.full_name if p.user else None,
+        "issue": p.issue,
+        "issue_label": roles.SUPPORT_ISSUE_LABELS.get(p.issue, p.issue),
+        "plan": p.plan,
+        "due_date": p.due_date.isoformat() if p.due_date else None,
+        "overdue": bool(p.due_date and p.status == "open" and p.due_date < today),
+        "status": p.status, "result": p.result,
+        "created_at": p.created_at.isoformat() if p.created_at else None,
+    } for p in q.order_by(models.SupportPlan.due_date).all()]
+
+
+@app.post("/api/support/plans")
+def create_plan(
+    payload: schemas.SupportPlanCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SUPPORT_ACCESS)),
+):
+    data = payload.model_dump()
+    data["user_id"] = data.get("user_id") or user.id
+    p = models.SupportPlan(**data, created_by=user.full_name)
+    db.add(p); db.commit(); db.refresh(p)
+    audit.log(db, user, entity="student", action="update",
+              entity_id=p.student_id, field="support_plan",
+              new_value=p.plan[:80], commit=True)
+    return {"id": p.id}
+
+
+@app.put("/api/support/plans/{pid}")
+def update_plan(
+    pid: int,
+    payload: schemas.SupportPlanUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SUPPORT_ACCESS)),
+):
+    p = db.query(models.SupportPlan).get(pid)
+    if not p:
+        raise HTTPException(404, "Reja topilmadi")
+    for k, v in payload.model_dump(exclude_unset=True).items():
+        setattr(p, k, v)
+    p.done_at = date.today() if p.status in ("done", "failed") else None
+    db.commit()
+    return {"ok": True}
+
+
+@app.delete("/api/support/plans/{pid}")
+def delete_plan(
+    pid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_ACCESS)),
+):
+    p = db.query(models.SupportPlan).get(pid)
+    if not p:
+        raise HTTPException(404, "Reja topilmadi")
+    db.delete(p); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  FAYL BIRIKTIRISH  (rasm, sertifikat, hujjat)
+# =====================================================================
+@app.get("/api/attachments")
+def list_attachments(
+    entity: str,
+    entity_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF, *roles.HR_ACCESS)),
+):
+    """Fayl ro'yxati. Ma'lumot og'ir bo'lgani uchun ro'yxatda faqat
+    metama'lumot qaytadi - faylning o'zi alohida so'raladi."""
+    rows = (db.query(models.Attachment)
+            .filter(models.Attachment.entity == entity,
+                    models.Attachment.entity_id == entity_id)
+            .order_by(models.Attachment.created_at.desc()).all())
+    return [{
+        "id": a.id, "kind": a.kind,
+        "kind_label": roles.ATTACHMENT_KIND_LABELS.get(a.kind, a.kind),
+        "filename": a.filename, "mime": a.mime, "size": a.size,
+        "note": a.note, "created_by": a.created_by,
+        "created_at": a.created_at.isoformat() if a.created_at else None,
+        "is_image": bool(a.mime and a.mime.startswith("image/")),
+    } for a in rows]
+
+
+@app.get("/api/attachments/{aid}")
+def get_attachment(
+    aid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF, *roles.HR_ACCESS)),
+):
+    """Faylning o'zi - base64 ko'rinishida."""
+    a = db.query(models.Attachment).get(aid)
+    if not a:
+        raise HTTPException(404, "Fayl topilmadi")
+    return {"id": a.id, "filename": a.filename, "mime": a.mime,
+            "size": a.size, "kind": a.kind, "data": a.data}
+
+
+@app.post("/api/attachments")
+def upload_attachment(
+    payload: schemas.AttachmentCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF, *roles.HR_ACCESS)),
+):
+    import base64
+    raw = payload.data
+    # "data:image/png;base64,...." ko'rinishida kelsa - kesib olamiz
+    if "," in raw and raw.strip().startswith("data:"):
+        raw = raw.split(",", 1)[1]
+    try:
+        size = len(base64.b64decode(raw, validate=False))
+    except Exception:
+        raise HTTPException(400, "Fayl o'qib bo'lmadi")
+    if size > roles.ATTACHMENT_MAX_BYTES:
+        mb = roles.ATTACHMENT_MAX_BYTES // (1024 * 1024)
+        raise HTTPException(400, f"Fayl juda katta — {mb} MB dan oshmasin")
+    if payload.kind not in roles.ATTACHMENT_KIND_LABELS:
+        raise HTTPException(400, "Noma'lum fayl turi")
+
+    a = models.Attachment(
+        entity=payload.entity, entity_id=payload.entity_id,
+        kind=payload.kind, filename=payload.filename, mime=payload.mime,
+        size=size, data=raw, note=payload.note, created_by=user.full_name)
+    db.add(a); db.commit(); db.refresh(a)
+    audit.log(db, user, entity=payload.entity, action="update",
+              entity_id=payload.entity_id, field="attachment",
+              new_value=payload.filename, commit=True)
+    return {"id": a.id, "size": size}
+
+
+@app.delete("/api/attachments/{aid}")
+def delete_attachment(
+    aid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF, *roles.HR_ACCESS)),
+):
+    a = db.query(models.Attachment).get(aid)
+    if not a:
+        raise HTTPException(404, "Fayl topilmadi")
+    audit.log(db, user, entity=a.entity, action="update", entity_id=a.entity_id,
+              field="attachment", old_value=a.filename,
+              note="Fayl o'chirildi")
+    db.delete(a); db.commit()
+    return {"ok": True}

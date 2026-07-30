@@ -232,6 +232,64 @@ GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER, ACADEMIC_HEAD]
 # Ta'lim sifatiga javob beradigan bo'lim: akademik risk, guruh to'lishi,
 # xonalar. O'quv bo'limi rahbari butun markaz bo'yicha ko'radi.
 ACADEMIC_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD]
+
+# ---- Examiner (imtihon nazorati) --------------------------------------
+# DIQQAT: Examiner o'quv bo'limiga EMAS, to'g'ridan-to'g'ri asoschiga
+# bo'ysunadi. Shuning uchun imtihon moduli Audit bo'limida turadi -
+# ta'lim sifatini o'lchayotgan odam o'lchanayotgan bo'limga qaram
+# bo'lmasligi kerak.
+EXAM_ACCESS = [FOUNDER, EXAMINER]
+# Natijani KO'RA oladiganlar (kiritish EXAM_ACCESS'da).
+EXAM_VIEW = EXAM_ACCESS + [BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER]
+
+# Testni TASDIQLASH - faqat examiner va asoschi.
+EXAM_APPROVE = EXAM_ACCESS
+
+# ---- Support teacher --------------------------------------------------
+SUPPORT_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER]
+
+# Imtihon tasdiqlash holati.
+EXAM_STATUSES = [
+    ("draft", "Qoralama"),
+    ("approved", "Tasdiqlangan"),
+    ("done", "O'tkazildi"),
+    ("cancelled", "Bekor qilindi"),
+]
+EXAM_STATUS_LABELS = dict(EXAM_STATUSES)
+
+# Guruh ta'lim sifati standarti (foizda). Shundan past bo'lgan guruh
+# "standartdan ortda" hisoblanadi.
+EXAM_STANDARD_PERCENT = 70.0
+# Shundan past ball olgan o'quvchiga qayta imtihon tavsiya etiladi.
+EXAM_RETAKE_BELOW = 60.0
+# Sertifikatga tavsiya uchun eng kam o'rtacha foiz.
+CERTIFICATE_RECOMMEND_PERCENT = 85.0
+
+# ---- Support teacher: o'quvchi bilan ishlash --------------------------
+SUPPORT_ISSUE_KINDS = [
+    ("attendance", "Davomat muammosi"),
+    ("homework", "Uy vazifasi muammosi"),
+    ("behaviour", "Xulq"),
+    ("motivation", "Motivatsiya"),
+    ("other", "Boshqa"),
+]
+SUPPORT_ISSUE_LABELS = dict(SUPPORT_ISSUE_KINDS)
+
+# Davomat shu foizdan past bo'lsa - muammo deb belgilanadi.
+SUPPORT_ATTENDANCE_THRESHOLD = 75.0
+
+# ---- Fayl biriktirish -------------------------------------------------
+# Fayllar bazada base64 ko'rinishida saqlanadi: alohida fayl xizmati
+# kerak emas, lekin shuning uchun hajm cheklangan.
+ATTACHMENT_MAX_BYTES = 3 * 1024 * 1024      # 3 MB
+ATTACHMENT_KINDS = [
+    ("photo", "Rasm"),
+    ("certificate", "Sertifikat"),
+    ("resume", "Rezyume"),
+    ("document", "Hujjat"),
+    ("other", "Boshqa"),
+]
+ATTACHMENT_KIND_LABELS = dict(ATTACHMENT_KINDS)
 # Ustoz ham risk ro'yxatini ko'radi - o'z o'quvchisi haqida.
 ACADEMIC_VIEW = ACADEMIC_ACCESS + [TEACHER, SUPPORT_TEACHER, SALES_MANAGER]
 

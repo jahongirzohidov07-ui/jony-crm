@@ -17,7 +17,6 @@ import {
   Trophy,
   Megaphone,
   Briefcase,
-  Gauge,
   History,
   GraduationCap as AcademicIcon,
   MessageSquareWarning,
@@ -33,7 +32,6 @@ import {
   HR_ACCESS,
   MARKETING_ACCESS,
   AUDIT_VIEW,
-  PROFIT_VIEW,
   ACADEMIC_VIEW,
   can,
   roleLabel,
@@ -161,11 +159,8 @@ export default function Layout() {
   }
 
   let items = navItems;
-  // Asoschi paneli eng tepada - kun shundan boshlanadi.
-  if (can(user?.role, PROFIT_VIEW)) {
-    items = [items[0], { to: "/ceo", label: "Bugungi holat", icon: Gauge },
-             ...items.slice(1)];
-  }
+  // "Bugungi holat" endi Dashboard ICHIDA alohida bo'lim - menyuda
+  // takrorlanmaydi.
   // Lidlar Dashboard'dan keyin turadi - kun shu yerdan boshlanadi.
   if (can(user?.role, LEAD_ACCESS)) {
     items = [

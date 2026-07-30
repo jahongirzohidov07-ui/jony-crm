@@ -13,7 +13,7 @@ from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 import audit
@@ -17051,3 +17051,961 @@ def _xp_for_exam(db: Session, exam: models.Exam,
 
     db.commit()
     return out
+
+
+# =====================================================================
+#  BREND KITOB
+#
+#  Brandbook PDF qog'ozda qolib ketmasin — qoidalar tizim ichida
+#  turadi, kontent nashrdan oldin shu qoidalar bo'yicha tekshiriladi.
+#  Seed bir marta: asoschi tahrirlagan qatorga qayta tegilmaydi.
+# =====================================================================
+def _seed_brand(db: Session) -> None:
+    """Brandbookdagi qoidalarni bazaga yozadi. Mavjudini o'zgartirmaydi."""
+    def add(section, key, title, value=None, note=None, kind=None,
+            source="PDF", pos=0):
+        row = db.query(models.BrandRule).filter(
+            models.BrandRule.section == section,
+            models.BrandRule.key == key).first()
+        if row:
+            return
+        db.add(models.BrandRule(
+            section=section, key=key, title=title, value=value, note=note,
+            kind=kind, source=source, position=pos))
+
+    for i, (k, name, hexv, kind, note) in enumerate(roles.BRAND_COLORS):
+        add("color", k, name, hexv, note, kind,
+            "TO'LDIRILDI" if note.startswith("TO'LDIRILDI") else "PDF", i)
+    for i, (name, label, note) in enumerate(roles.BRAND_FONTS):
+        add("font", name, name, label, note, None,
+            "TO'LDIRILDI" if note.startswith("TO'LDIRILDI") else "PDF", i)
+    for i, (title, src, note) in enumerate(roles.LOGO_RULES):
+        add("logo", f"logo{i}", title, None, note, "do", src, i)
+    for i, txt in enumerate(roles.LOGO_DONTS):
+        add("dont", f"dont{i}", txt, None, None, "dont", "TO'LDIRILDI", i)
+    for i, (title, kind, note) in enumerate(roles.TONE_RULES):
+        add("tone", f"tone{i}", title, None, note, kind, "TO'LDIRILDI", i)
+    for i, (name, size, note) in enumerate(roles.SOCIAL_SPECS):
+        add("spec", f"spec{i}", name, size, note, None, "TO'LDIRILDI", i)
+    for i, (label, value, note) in enumerate(roles.BRAND_CONTACTS):
+        add("contact", f"c{i}", label, value, note or None, None,
+            "TO'LDIRILDI" if note else "PDF", i)
+    add("word", "word", roles.BRAND_WORD, roles.BRAND_WORD,
+        roles.BRAND_WORD_NOTE, None, "TO'LDIRILDI", 0)
+    db.commit()
+
+
+def _brand_rows(db: Session, section: str | None = None) -> list[dict]:
+    q = db.query(models.BrandRule).filter(models.BrandRule.is_active == 1)
+    if section:
+        q = q.filter(models.BrandRule.section == section)
+    rows = q.order_by(models.BrandRule.section,
+                      models.BrandRule.position).all()
+    return [{
+        "id": r.id, "section": r.section, "key": r.key, "title": r.title,
+        "value": r.value, "note": r.note, "kind": r.kind,
+        "source": r.source,
+        "is_filled": (r.source or "") != "PDF",
+        "position": r.position,
+    } for r in rows]
+
+
+@app.get("/api/brand")
+def brand_book(section: str | None = None, db: Session = Depends(get_db),
+               user: models.User = Depends(get_current_user)):
+    """Brend kitob. Har bir xodim o'qiy oladi — brend hammaning ishi."""
+    rows = _brand_rows(db, section)
+    by = {}
+    for r in rows:
+        by.setdefault(r["section"], []).append(r)
+    return {
+        "sections": by,
+        "source": roles.BRAND_SOURCE,
+        "word": roles.BRAND_WORD,
+        "primary": roles.BRAND_PRIMARY,
+        "secondary": roles.BRAND_SECONDARY,
+        "post_colors": roles.BRAND_POST_COLORS,
+        "checks": [{"key": k, "label": l} for k, l in roles.BRAND_CHECKS],
+        "required": roles.BRAND_CHECK_REQUIRED,
+        "gaps": roles.BRAND_GAPS,
+        "can_edit": user.role in roles.BRAND_EDIT,
+        "hint": ("Brandbook 2023 asos qilib olindi. \"TO'LDIRILDI\" "
+                 "belgisi turgan qatorlar PDF'da yo'q edi — ular "
+                 "amaliyot uchun qo'shildi, tasdiqlashingiz kerak."),
+    }
+
+
+@app.post("/api/brand")
+def brand_add(payload: schemas.BrandRuleIn, db: Session = Depends(get_db),
+              user=Depends(require_role(*roles.BRAND_EDIT))):
+    row = models.BrandRule(
+        section=payload.section, key=payload.key or None,
+        title=payload.title, value=payload.value, note=payload.note,
+        kind=payload.kind, source="Qo'lda", position=payload.position or 0)
+    db.add(row); db.commit(); db.refresh(row)
+    audit.log(db, user, entity="brand_rule", action="create",
+              entity_id=row.id, entity_label=payload.title)
+    return _brand_rows(db, row.section)
+
+
+@app.put("/api/brand/{rid}")
+def brand_edit(rid: int, payload: schemas.BrandRulePatch,
+               db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.BRAND_EDIT))):
+    row = db.query(models.BrandRule).get(rid)
+    if not row:
+        raise HTTPException(404, "Topilmadi")
+    for f, v in payload.model_dump(exclude_unset=True).items():
+        setattr(row, f, v)
+    # Tahrirlangan qator endi "tasdiqlangan" hisoblanadi
+    if (row.source or "").startswith("TO'LDIRILDI"):
+        row.source = "Tasdiqlangan"
+    db.commit()
+    audit.log(db, user, entity="brand_rule", action="update",
+              entity_id=rid, entity_label=row.title)
+    return _brand_rows(db, row.section)
+
+
+def _brand_state(db: Session, cid: int) -> dict:
+    """Kontentning brend tekshiruvi holati."""
+    rows = db.query(models.BrandCheck).filter(
+        models.BrandCheck.content_id == cid).all()
+    done = {r.key: r for r in rows}
+    items = []
+    for k, label in roles.BRAND_CHECKS:
+        r = done.get(k)
+        items.append({
+            "key": k, "label": label,
+            "ok": bool(r and r.ok),
+            "note": r.note if r else None,
+            "required": k in roles.BRAND_CHECK_REQUIRED,
+            "checked_at": r.checked_at.isoformat() if r and r.checked_at
+                          else None,
+        })
+    missing = [i["label"] for i in items
+               if i["required"] and not i["ok"]]
+    return {
+        "items": items,
+        "done": sum(1 for i in items if i["ok"]),
+        "total": len(items),
+        "blocked": missing,
+        "can_publish": not missing,
+    }
+
+
+@app.get("/api/content/{cid}/brand")
+def content_brand(cid: int, db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.SMM_ACCESS))):
+    if not db.query(models.Content).get(cid):
+        raise HTTPException(404, "Topilmadi")
+    return _brand_state(db, cid)
+
+
+@app.post("/api/content/{cid}/brand")
+def content_brand_set(cid: int, payload: schemas.BrandCheckIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SMM_ACCESS))):
+    if not db.query(models.Content).get(cid):
+        raise HTTPException(404, "Topilmadi")
+    if payload.key not in roles.BRAND_CHECK_LABELS:
+        raise HTTPException(400, "Noma'lum tekshiruv")
+    row = db.query(models.BrandCheck).filter(
+        models.BrandCheck.content_id == cid,
+        models.BrandCheck.key == payload.key).first()
+    if not row:
+        row = models.BrandCheck(content_id=cid, key=payload.key)
+        db.add(row)
+    row.ok = 1 if payload.ok else 0
+    row.note = payload.note
+    row.checked_by = user.id
+    row.checked_at = datetime.utcnow()
+    db.commit()
+    return _brand_state(db, cid)
+
+
+# =====================================================================
+#  MEDIA KUTUBXONA
+#
+#  "O'sha videoni kim olgandi, qayerda?" degan savol yo'qoladi.
+#  Eng muhimi — rozilik holati: ota-ona ruxsat bermagan bolaning
+#  rasmi ijtimoiy tarmoqqa CHIQMAYDI, tizim to'sadi.
+# =====================================================================
+def _media_out(db: Session, m: models.MediaAsset,
+               today: date | None = None) -> dict:
+    today = today or date.today()
+    left = None
+    if m.consent_until:
+        left = (m.consent_until - today).days
+    expired = left is not None and left < 0
+    consent = "forbidden" if expired else (m.consent or "pending")
+    st = db.query(models.Student).get(m.student_id) if m.student_id else None
+    br = db.query(models.Branch).get(m.branch_id) if m.branch_id else None
+    return {
+        "id": m.id, "name": m.name,
+        "kind": m.kind or "photo",
+        "kind_label": roles.MEDIA_KIND_LABELS.get(m.kind or "photo", "—"),
+        "kind_tone": roles.MEDIA_KIND_TONE.get(m.kind or "photo", "slate"),
+        "url": m.url, "attachment_id": m.attachment_id,
+        "branch": br.name if br else None, "branch_id": m.branch_id,
+        "course": m.course,
+        "student": st.full_name if st else None,
+        "student_id": m.student_id,
+        "teacher_id": m.teacher_id,
+        "event": m.event,
+        "taken_on": m.taken_on.isoformat() if m.taken_on else None,
+        "author": m.author, "tags": m.tags,
+        "consent": consent,
+        "consent_label": roles.CONSENT_LABELS.get(consent, "—"),
+        "consent_tone": roles.CONSENT_TONE.get(consent, "slate"),
+        "consent_until": m.consent_until.isoformat()
+                         if m.consent_until else None,
+        "days_left": left,
+        "expired": expired,
+        "expiring": (left is not None and 0 <= left
+                     <= roles.CONSENT_EXPIRY_WARN_DAYS),
+        "can_publish": consent not in roles.CONSENT_BLOCKS_PUBLISH,
+        "can_download": bool(m.can_download),
+    }
+
+
+@app.get("/api/media")
+def media_list(kind: str | None = None, consent: str | None = None,
+               q: str | None = None, branch_id: int | None = None,
+               publishable: int = 0, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.SMM_ACCESS))):
+    query = db.query(models.MediaAsset)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        query = query.filter(models.MediaAsset.branch_id == user.branch_id)
+    elif branch_id:
+        query = query.filter(models.MediaAsset.branch_id == branch_id)
+    if kind:
+        query = query.filter(models.MediaAsset.kind == kind)
+    if consent:
+        query = query.filter(models.MediaAsset.consent == consent)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(or_(models.MediaAsset.name.ilike(like),
+                                 models.MediaAsset.tags.ilike(like),
+                                 models.MediaAsset.event.ilike(like)))
+    rows = [_media_out(db, m) for m in
+            query.order_by(models.MediaAsset.id.desc()).limit(400).all()]
+    if publishable:
+        rows = [r for r in rows if r["can_publish"]]
+    counts = {}
+    for r in rows:
+        counts[r["consent"]] = counts.get(r["consent"], 0) + 1
+    return {
+        "rows": rows,
+        "kinds": [{"key": k, "label": l, "tone": t}
+                  for k, l, t in roles.MEDIA_KINDS],
+        "consents": [{"key": k, "label": l, "tone": t,
+                      "count": counts.get(k, 0),
+                      "blocks": k in roles.CONSENT_BLOCKS_PUBLISH}
+                     for k, l, t in roles.CONSENT_STATUSES],
+        "total": len(rows),
+        "publishable": sum(1 for r in rows if r["can_publish"]),
+        "expiring": sum(1 for r in rows if r["expiring"]),
+        "expired": sum(1 for r in rows if r["expired"]),
+        "hint": ("Rozilik muddati tugagan material avtomat "
+                 "\"taqiqlangan\"ga o'tadi — eski rozilik bilan yangi "
+                 "post chiqmaydi."),
+    }
+
+
+@app.post("/api/media")
+def media_add(payload: schemas.MediaIn, db: Session = Depends(get_db),
+              user=Depends(require_role(*roles.SMM_ACCESS))):
+    if not (payload.name or "").strip():
+        raise HTTPException(400, "Nom kerak")
+    if payload.consent and payload.consent not in roles.CONSENT_LABELS:
+        raise HTTPException(400, "Noma'lum rozilik holati")
+    m = models.MediaAsset(**payload.model_dump())
+    if not m.author:
+        m.author = user.full_name
+    db.add(m); db.commit(); db.refresh(m)
+    audit.log(db, user, entity="media", action="create",
+              entity_id=m.id, entity_label=m.name)
+    return _media_out(db, m)
+
+
+@app.put("/api/media/{mid}")
+def media_edit(mid: int, payload: schemas.MediaPatch,
+               db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.SMM_ACCESS))):
+    m = db.query(models.MediaAsset).get(mid)
+    if not m:
+        raise HTTPException(404, "Topilmadi")
+    data = payload.model_dump(exclude_unset=True)
+    if data.get("consent") and data["consent"] not in roles.CONSENT_LABELS:
+        raise HTTPException(400, "Noma'lum rozilik holati")
+    old = m.consent
+    for f, v in data.items():
+        setattr(m, f, v)
+    db.commit()
+    if data.get("consent") and data["consent"] != old:
+        audit.log(db, user, entity="media", action="consent",
+                  entity_id=mid, entity_label=m.name,
+                  field="consent", old_value=old, new_value=m.consent)
+    return _media_out(db, m)
+
+
+@app.delete("/api/media/{mid}")
+def media_delete(mid: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.FULL_ACCESS + [roles.SMM_MANAGER]))):
+    m = db.query(models.MediaAsset).get(mid)
+    if not m:
+        raise HTTPException(404, "Topilmadi")
+    audit.log(db, user, entity="media", action="delete",
+              entity_id=mid, entity_label=m.name)
+    db.delete(m); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  BILIMLAR BAZASI
+#
+#  Yangi SMM kelganda noldan boshlamasin. Har bir maqola 6 oyda bir
+#  qayta ko'riladi — eskirgan reglament eskirgan ish demakdir.
+# =====================================================================
+def _kb_out(db: Session, a: models.KbArticle) -> dict:
+    au = db.query(models.User).get(a.author_id) if a.author_id else None
+    stale = False
+    ref = a.reviewed_at or (a.updated_at.date() if a.updated_at else None)
+    if ref:
+        stale = (date.today() - ref).days > roles.KB_REVIEW_MONTHS * 30
+    return {
+        "id": a.id, "title": a.title,
+        "category": a.category,
+        "category_label": roles.KB_CATEGORY_LABELS.get(a.category, "—"),
+        "category_tone": roles.KB_CATEGORY_TONE.get(a.category, "slate"),
+        "body": a.body, "tags": a.tags,
+        "author": au.full_name if au else None,
+        "views": a.views or 0,
+        "is_pinned": bool(a.is_pinned),
+        "stale": stale,
+        "reviewed_at": ref.isoformat() if ref else None,
+        "updated_at": a.updated_at.isoformat() if a.updated_at else None,
+    }
+
+
+def _seed_kb(db: Session) -> None:
+    """Boshlang'ich maqolalar — brandbookdan kelib chiqqan holda."""
+    seed = [
+        ("Post chiqarishdan oldingi tekshiruv", "process",
+         "Har bir post joylashdan oldin shu ro'yxat bo'yicha "
+         "tekshiriladi:\n\n"
+         "1. Matndagi har bir raqam va natija haqiqiymi? "
+         "O'ylab topilgan raqam bir marta ishlaydi, keyin ishonchni "
+         "butunlay yo'q qiladi.\n"
+         "2. Rasmdagi bolalarning roziligi bormi? Media "
+         "kutubxonada holati \"Ijtimoiy tarmoqqa mumkin\" bo'lsin.\n"
+         "3. Logotip to'g'ri variantdami, atrofida bo'sh joy bormi?\n"
+         "4. Faqat brend ranglari ishlatilganmi?\n"
+         "5. Birinchi jumla ushlab qoladimi? Ovoz chiqarib o'qing.\n"
+         "6. Aloqa ma'lumotlari to'g'rimi?\n"
+         "7. Narx yozilgan bo'lsa, hozirgi narxmi?"),
+        ("Brend so'zi: Muhit", "brand",
+         "Jony nomi eshitilganda odam ongida bitta so'z tiklanishi "
+         "kerak — \"muhit\".\n\n"
+         "Ya'ni gap faqat dastur, ustoz yoki narx haqida emas. Gap "
+         "bolani o'rab turgan butun muhit haqida: kim bilan o'tiradi, "
+         "qanday kayfiyatda keladi, xato qilganda nima bo'ladi.\n\n"
+         "Amalda: har postda \"muhit\" so'zini majburan tiqishtirish "
+         "shart emas — lekin postning MAZMUNI shu tushunchani aks "
+         "ettirsin. Yutuq haqida yozganda ham natijani muhitga bog'lang: "
+         "\"bunday natija tasodifan kelmaydi\"."),
+        ("Rozilik qanday olinadi", "crisis",
+         "Bolaning rasmi yoki videosi ijtimoiy tarmoqqa chiqishidan "
+         "oldin ota-onadan yozma rozilik olinadi.\n\n"
+         "Rozilik muddatli bo'ladi — odatda o'quv yili oxirigacha. "
+         "Muddat tugasa material avtomat \"taqiqlangan\"ga o'tadi.\n\n"
+         "Ota-ona keyin fikrini o'zgartirsa: material darhol "
+         "\"taqiqlangan\" qilinadi VA allaqachon joylangan postlar "
+         "o'chiriladi. Bahslashilmaydi."),
+        ("Salbiy izohga qanday javob beriladi", "crisis",
+         "1. Darhol javob berilmaydi — 15 daqiqa kutiladi, his-tuyg'u "
+         "bilan yozilgan javob vaziyatni yomonlashtiradi.\n"
+         "2. Ochiq javob qisqa va odamiy bo'ladi: eshitdik, "
+         "tushundik, shaxsan bog'lanamiz.\n"
+         "3. Batafsil muhokama DM'ga o'tkaziladi.\n"
+         "4. Izoh o'chirilmaydi — haqorat yoki spam bo'lmasa.\n"
+         "5. Agar shikoyat asosli bo'lsa, tizimda \"Shikoyat\" deb "
+         "belgilanadi va tegishli bo'limga yuboriladi.\n\n"
+         "Bitta yaxshi javob berilgan salbiy izoh — o'nta maqtovdan "
+         "kuchliroq ishonch beradi."),
+        ("Sifatli engagement nima", "process",
+         "Like eng arzon ko'rsatkich — barmoq bilan bosiladi, hech "
+         "narsa anglatmaydi.\n\n"
+         "Tizimda engagement shunday hisoblanadi:\n"
+         "like ×1 · izoh ×2 · saqlash ×3 · ulashish ×4 · DM ×5\n\n"
+         "Chunki DM yozgan odam sotuvga eng yaqin, saqlagan odam "
+         "keyin qaytadi. Shuning uchun hisobotda \"qancha like\" emas, "
+         "\"qancha DM va sotuv\" ko'riladi."),
+        ("Reels uchun texnik talablar", "tool",
+         "O'lcham: 1080×1920 (9:16).\n"
+         "Xavfsiz zona: pastdan 250 px, yuqoridan 150 px — bu joyni "
+         "Instagram interfeysi bosib qoladi, muhim matn qo'yilmaydi.\n"
+         "Birinchi 3 soniya — hal qiluvchi. Logotip bilan boshlanmaydi, "
+         "hikoya bilan boshlanadi.\n"
+         "Subtitr majburiy — ko'pchilik ovozsiz ko'radi."),
+    ]
+    for title, cat, body in seed:
+        if db.query(models.KbArticle).filter(
+                models.KbArticle.title == title).first():
+            continue
+        db.add(models.KbArticle(title=title, category=cat, body=body,
+                                reviewed_at=date.today()))
+    db.commit()
+
+
+@app.get("/api/kb")
+def kb_list(category: str | None = None, q: str | None = None,
+            db: Session = Depends(get_db),
+            user: models.User = Depends(get_current_user)):
+    """Bilimlar bazasi — har qanday xodim o'qiy oladi."""
+    query = db.query(models.KbArticle).filter(
+        models.KbArticle.is_active == 1)
+    if category:
+        query = query.filter(models.KbArticle.category == category)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(or_(models.KbArticle.title.ilike(like),
+                                 models.KbArticle.body.ilike(like),
+                                 models.KbArticle.tags.ilike(like)))
+    rows = query.order_by(models.KbArticle.is_pinned.desc(),
+                          models.KbArticle.id.desc()).all()
+    out = [_kb_out(db, a) for a in rows]
+    counts = {}
+    for a in db.query(models.KbArticle).filter(
+            models.KbArticle.is_active == 1).all():
+        counts[a.category] = counts.get(a.category, 0) + 1
+    return {
+        "rows": out,
+        "categories": [{"key": k, "label": l, "tone": t,
+                        "count": counts.get(k, 0)}
+                       for k, l, t in roles.KB_CATEGORIES],
+        "stale": sum(1 for r in out if r["stale"]),
+        "can_edit": user.role in roles.SMM_ACCESS,
+        "review_months": roles.KB_REVIEW_MONTHS,
+    }
+
+
+@app.post("/api/kb")
+def kb_add(payload: schemas.KbIn, db: Session = Depends(get_db),
+           user=Depends(require_role(*roles.SMM_ACCESS))):
+    if not (payload.title or "").strip():
+        raise HTTPException(400, "Sarlavha kerak")
+    a = models.KbArticle(**payload.model_dump(), author_id=user.id,
+                         reviewed_at=date.today())
+    db.add(a); db.commit(); db.refresh(a)
+    audit.log(db, user, entity="kb_article", action="create",
+              entity_id=a.id, entity_label=a.title)
+    return _kb_out(db, a)
+
+
+@app.put("/api/kb/{aid}")
+def kb_edit(aid: int, payload: schemas.KbPatch,
+            db: Session = Depends(get_db),
+            user=Depends(require_role(*roles.SMM_ACCESS))):
+    a = db.query(models.KbArticle).get(aid)
+    if not a:
+        raise HTTPException(404, "Topilmadi")
+    for f, v in payload.model_dump(exclude_unset=True).items():
+        setattr(a, f, v)
+    a.reviewed_at = date.today()
+    db.commit()
+    audit.log(db, user, entity="kb_article", action="update",
+              entity_id=aid, entity_label=a.title)
+    return _kb_out(db, a)
+
+
+@app.post("/api/kb/{aid}/view")
+def kb_view(aid: int, db: Session = Depends(get_db),
+            user: models.User = Depends(get_current_user)):
+    a = db.query(models.KbArticle).get(aid)
+    if not a:
+        raise HTTPException(404, "Topilmadi")
+    a.views = (a.views or 0) + 1
+    db.commit()
+    return _kb_out(db, a)
+
+
+# =====================================================================
+#  SMM ANALITIKA — kesimlar
+#
+#  "Qaysi platforma yaxshi?" degan savolga qamrov bilan emas, LEAD va
+#  SOTUV bilan javob beriladi. Ko'p ko'rilgan kontent ko'p pul olib
+#  kelmasligi mumkin.
+# =====================================================================
+def _dim_value(db: Session, c: models.Content, dim: str) -> tuple:
+    """Kontentdan kesim qiymatini oladi: (kalit, yorliq)."""
+    if dim == "platform":
+        return c.platform, roles.PLATFORM_LABELS.get(c.platform, c.platform
+                                                     or "—")
+    if dim == "format":
+        f = c.fmt or roles.format_of(c.platform)
+        return f, roles.CONTENT_FORMAT_LABELS.get(f, f or "—")
+    if dim == "pillar":
+        return c.pillar, roles.PILLAR_LABELS.get(c.pillar, c.pillar or "—")
+    if dim == "goal":
+        return c.goal, roles.GOAL_LABELS.get(c.goal, c.goal or "—")
+    if dim == "course":
+        return c.course, c.course or "Ko'rsatilmagan"
+    if dim == "branch":
+        b = db.query(models.Branch).get(c.branch_id) if c.branch_id else None
+        return c.branch_id, b.name if b else "Umumiy"
+    if dim == "author":
+        u = db.query(models.User).get(c.owner_id) if c.owner_id else None
+        return c.owner_id, u.full_name if u else "Biriktirilmagan"
+    if dim == "weekday":
+        d = c.published_at.date() if c.published_at else c.planned_date
+        if not d:
+            return None, "—"
+        return d.weekday(), roles.UZ_WEEKDAYS[d.weekday()]
+    return None, "—"
+
+
+@app.get("/api/smm/analytics")
+def smm_analytics(dim: str = "platform", months: int = 3,
+                  branch_id: int | None = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.SMM_ACCESS))):
+    if dim not in dict(roles.ANALYTICS_DIMENSIONS):
+        raise HTTPException(400, "Noma'lum kesim")
+    today = date.today()
+    since = today - timedelta(days=months * 30)
+
+    # "Joylangan" — status emas, published_at bo'yicha. Status keyin
+    # "natija o'lchanmoqda"ga o'tadi, lekin post joylangancha qoladi.
+    q = db.query(models.Content).filter(
+        models.Content.published_at.isnot(None),
+        models.Content.published_at >= datetime.combine(
+            since, datetime.min.time()))
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        q = q.filter(models.Content.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.filter(models.Content.branch_id == branch_id)
+    contents = q.all()
+
+    groups: dict = {}
+    for c in contents:
+        key, label = _dim_value(db, c, dim)
+        g = groups.setdefault(str(key), {
+            "key": key, "label": label, "ids": [], "count": 0,
+        })
+        g["ids"].append(c.id)
+        g["count"] += 1
+
+    rows = []
+    for g in groups.values():
+        f = _content_funnel(db, g["ids"])
+        row = {"key": g["key"], "label": g["label"], "count": g["count"]}
+        for k in ("reach", "engagement", "messages", "leads",
+                  "qualified", "sales"):
+            row[k] = f.get(k, 0)
+        row["revenue"] = f.get("revenue", 0.0)
+        rows.append(row)
+    for r in rows:
+        r["per_content_leads"] = round(r["leads"] / r["count"], 1) \
+            if r["count"] else 0
+        r["per_content_revenue"] = round(r["revenue"] / r["count"]) \
+            if r["count"] else 0
+        r["lead_rate"] = round(r["leads"] / r["messages"] * 100, 1) \
+            if r["messages"] else 0.0
+        r["cost_free_score"] = round(r["revenue"] / r["reach"] * 1000, 1) \
+            if r["reach"] else 0.0
+    rows.sort(key=lambda r: -r["revenue"])
+
+    best = rows[0] if rows else None
+    # Ko'p qamrov, kam natija — eng foydali xulosa shu
+    trap = None
+    if len(rows) > 1:
+        by_reach = sorted(rows, key=lambda r: -r["reach"])
+        if by_reach[0]["key"] != rows[0]["key"] and by_reach[0]["reach"]:
+            trap = {
+                "label": by_reach[0]["label"],
+                "reach": by_reach[0]["reach"],
+                "revenue": by_reach[0]["revenue"],
+                "better": rows[0]["label"],
+            }
+
+    return {
+        "dim": dim,
+        "dim_label": dict(roles.ANALYTICS_DIMENSIONS)[dim],
+        "dims": [{"key": k, "label": l}
+                 for k, l in roles.ANALYTICS_DIMENSIONS],
+        "rows": rows,
+        "months": months,
+        "total_contents": len(contents),
+        "best": best,
+        "trap": trap,
+        "hint": ("Saralash tushum bo'yicha. Qamrov bo'yicha birinchi "
+                 "bo'lgan kesim pul bo'yicha birinchi bo'lmasligi "
+                 "mumkin — shuni ko'rish uchun shu jadval kerak."),
+    }
+
+
+# =====================================================================
+#  SMM KPI
+#
+#  Yetti mezon, jami 100 ball. Har biri o'zi hisoblanadi — hech kim
+#  qo'lda baho qo'ymaydi.
+# =====================================================================
+def _smm_kpi(db: Session, start: date, end: date,
+             branch_id: int | None = None) -> dict:
+    q = db.query(models.Content)
+    if branch_id:
+        q = q.filter(models.Content.branch_id == branch_id)
+
+    planned = q.filter(models.Content.planned_date >= start,
+                       models.Content.planned_date <= end).all()
+    published = q.filter(
+        models.Content.published_at.isnot(None),
+        models.Content.published_at >= datetime.combine(
+            start, datetime.min.time()),
+        models.Content.published_at <= datetime.combine(
+            end, datetime.max.time())).all()
+
+    # 1. Reja va intizom
+    plan_pct = 0.0
+    on_time = 0
+    if planned:
+        done = [c for c in planned if c.published_at]
+        plan_pct = round(len(done) / len(planned) * 100, 1)
+        for c in done:
+            if c.published_at and c.planned_date and \
+                    c.published_at.date() <= c.planned_date:
+                on_time += 1
+    plan_score = min(plan_pct / roles.PLAN_TARGET_PERCENT, 1.0) * 20
+
+    # Voronka
+    pub_ids = [c.id for c in published]
+    f_all = _content_funnel(db, pub_ids)
+    tot = {k: f_all.get(k, 0) for k in
+           ("reach", "engagement", "messages", "leads",
+            "qualified", "sales", "revenue")}
+
+    # 2. Sifatli leadlar — oyiga 30 ta mo'ljal
+    lead_target = 30 * max((end - start).days / 30, 0.5)
+    lead_score = min(tot["qualified"] / lead_target, 1.0) * 25 \
+        if lead_target else 0
+
+    # 3. Engagement sifati — qamrovning 3% i mo'ljal
+    eng_rate = (tot["engagement"] / tot["reach"] * 100) if tot["reach"] else 0
+    eng_score = min(eng_rate / 3.0, 1.0) * 15
+
+    # 4. Sotuv
+    sale_rate = (tot["sales"] / tot["leads"] * 100) if tot["leads"] else 0
+    sale_score = min(sale_rate / 30.0, 1.0) * 15
+
+    # 5. Inbox — SLA
+    msgs = db.query(models.SocialMessage).filter(
+        models.SocialMessage.received_at >= datetime.combine(
+            start, datetime.min.time()),
+        models.SocialMessage.received_at <= datetime.combine(
+            end, datetime.max.time())).all()
+    answered = [m for m in msgs if m.first_reply_at and not m.off_hours]
+    good = 0
+    for m in answered:
+        mins = (m.first_reply_at - m.received_at).total_seconds() / 60
+        if mins <= roles.SLA_ALERT_MINUTES:
+            good += 1
+    sla_pct = round(good / len(answered) * 100, 1) if answered else 0.0
+    inbox_score = (sla_pct / 100) * 10
+
+    # 6. Brend standarti
+    ids = [c.id for c in published]
+    checks = db.query(models.BrandCheck).filter(
+        models.BrandCheck.content_id.in_(ids)).all() if ids else []
+    need = len(ids) * len(roles.BRAND_CHECK_REQUIRED)
+    have = sum(1 for c in checks
+               if c.ok and c.key in roles.BRAND_CHECK_REQUIRED)
+    brand_pct = round(have / need * 100, 1) if need else 100.0
+    brand_score = (brand_pct / 100) * 10
+
+    # 7. Yangi formatlar — nechta xil format sinaldi
+    fmts = {c.fmt or roles.format_of(c.platform) for c in published}
+    exp_score = min(len(fmts) / 4.0, 1.0) * 5
+
+    parts = [
+        ("plan", plan_score, 20, f"Reja {plan_pct}% bajarildi"),
+        ("leads", lead_score, 25,
+         f"{tot['qualified']} sifatli lead (mo'ljal {int(lead_target)})"),
+        ("engagement", eng_score, 15,
+         f"Engagement {round(eng_rate, 2)}% (mo'ljal 3%)"),
+        ("sales", sale_score, 15,
+         f"Leaddan sotuvga {round(sale_rate, 1)}% (mo'ljal 30%)"),
+        ("inbox", inbox_score, 10, f"SLA {sla_pct}%"),
+        ("brand", brand_score, 10, f"Brend tekshiruvi {brand_pct}%"),
+        ("experiment", exp_score, 5, f"{len(fmts)} xil format sinaldi"),
+    ]
+    total = round(sum(p[1] for p in parts), 1)
+    label, tone = roles.kpi_band(total)
+    return {
+        "score": total, "label": label, "tone": tone,
+        "parts": [{
+            "key": k, "label": roles.SMM_KPI_LABELS.get(k, k),
+            "score": round(s, 1), "max": mx,
+            "percent": round(s / mx * 100) if mx else 0,
+            "note": note,
+        } for k, s, mx, note in parts],
+        "plan_percent": plan_pct,
+        "on_time": on_time,
+        "published": len(published),
+        "planned": len(planned),
+        "sla_percent": sla_pct,
+        "funnel_totals": tot,
+    }
+
+
+@app.get("/api/smm/kpi")
+def smm_kpi(months: int = 1, branch_id: int | None = None,
+            db: Session = Depends(get_db),
+            user=Depends(require_role(*roles.SMM_ACCESS))):
+    end = date.today()
+    start = end - timedelta(days=months * 30)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        branch_id = user.branch_id
+    d = _smm_kpi(db, start, end, branch_id)
+    d["start"] = start.isoformat()
+    d["end"] = end.isoformat()
+    d["weights"] = [{"key": k, "label": l, "weight": w}
+                    for k, l, w in roles.SMM_KPI_WEIGHTS]
+    d["hint"] = ("Har bir mezon o'zi hisoblanadi — hech kim qo'lda "
+                 "baho qo'ymaydi. Raqamlar kontent, murojaat va "
+                 "sotuvdan kelib chiqadi.")
+    return d
+
+
+# =====================================================================
+#  HISOBOT YIG'UVCHI
+#
+#  Raqamlar hisobot ichida SAQLANADI. Keyin ma'lumot o'zgarsa ham
+#  o'tgan oy hisoboti o'zgarmaydi — aks holda hisobotga ishonib
+#  bo'lmaydi.
+# =====================================================================
+def _period_range(period: str, today: date | None = None):
+    today = today or date.today()
+    if period == "week":
+        start = today - timedelta(days=today.weekday() + 7)
+        return start, start + timedelta(days=6)
+    if period == "quarter":
+        qm = ((today.month - 1) // 3) * 3 + 1
+        start = date(today.year, qm, 1) - timedelta(days=1)
+        qs = ((start.month - 1) // 3) * 3 + 1
+        s = date(start.year, qs, 1)
+        e = date(s.year + (1 if qs + 3 > 12 else 0),
+                 (qs + 3 - 1) % 12 + 1, 1) - timedelta(days=1)
+        return s, e
+    first = today.replace(day=1)
+    end = first - timedelta(days=1)
+    return end.replace(day=1), end
+
+
+def _build_report(db: Session, start: date, end: date,
+                  branch_id: int | None = None) -> dict:
+    q = db.query(models.Content).filter(
+        models.Content.published_at.isnot(None),
+        models.Content.published_at >= datetime.combine(
+            start, datetime.min.time()),
+        models.Content.published_at <= datetime.combine(
+            end, datetime.max.time()))
+    if branch_id:
+        q = q.filter(models.Content.branch_id == branch_id)
+    published = q.all()
+
+    all_ids = [c.id for c in published]
+    f_all = _content_funnel(db, all_ids)
+    tot = {k: f_all.get(k, 0) for k in
+           ("reach", "engagement", "messages", "leads",
+            "qualified", "sales", "revenue")}
+    rows = []
+    for c in published:
+        f = _content_funnel(db, [c.id])
+        rows.append({
+            "id": c.id, "code": c.content_id, "title": c.title,
+            "platform_label": roles.PLATFORM_LABELS.get(c.platform,
+                                                        c.platform or "—"),
+            "pillar_label": roles.PILLAR_LABELS.get(c.pillar, "—"),
+            "date": c.published_at.date().isoformat()
+                    if c.published_at else None,
+            "reach": f.get("reach", 0), "leads": f.get("leads", 0),
+            "sales": f.get("sales", 0), "revenue": f.get("revenue", 0.0),
+        })
+    rows.sort(key=lambda r: -r["revenue"])
+
+    kpi = _smm_kpi(db, start, end, branch_id)
+
+    # Kesimlar
+    dims = {}
+    for dim in ("platform", "format", "pillar"):
+        g = {}
+        for c in published:
+            key, label = _dim_value(db, c, dim)
+            e = g.setdefault(str(key), {"label": label, "ids": [],
+                                        "count": 0})
+            e["ids"].append(c.id)
+            e["count"] += 1
+        out = []
+        for e in g.values():
+            f = _content_funnel(db, e["ids"])
+            out.append({"label": e["label"], "count": e["count"],
+                        "leads": f.get("leads", 0),
+                        "revenue": f.get("revenue", 0.0)})
+        dims[dim] = sorted(out, key=lambda r: -r["revenue"])
+
+    # Murojaatlar
+    msgs = db.query(models.SocialMessage).filter(
+        models.SocialMessage.received_at >= datetime.combine(
+            start, datetime.min.time()),
+        models.SocialMessage.received_at <= datetime.combine(
+            end, datetime.max.time())).all()
+    made_lead = sum(1 for m in msgs if m.lead_id)
+
+    funnel = f_all.get("funnel", [])
+
+    # Xulosa matni — odam o'qiydigan tilda
+    days = (end - start).days + 1
+    lines = []
+    lines.append(
+        f"{start.strftime('%d.%m')}–{end.strftime('%d.%m.%Y')} "
+        f"({days} kun): {len(published)} ta kontent joylandi, "
+        f"reja {kpi['plan_percent']}% bajarildi.")
+    if tot["reach"]:
+        lines.append(
+            f"Qamrov {tot['reach']:,}".replace(",", " ") +
+            f", {tot['messages']} murojaat, {tot['leads']} lead, "
+            f"{tot['sales']} sotuv.")
+    if tot["revenue"]:
+        lines.append(
+            f"Kontentdan kelgan tushum: "
+            f"{int(tot['revenue']):,}".replace(",", " ") + " so'm.")
+    if rows and rows[0]["revenue"]:
+        lines.append(
+            f"Eng ko'p pul olib kelgani — \"{rows[0]['title']}\" "
+            f"({int(rows[0]['revenue']):,}".replace(",", " ") + " so'm).")
+    if msgs:
+        lines.append(
+            f"{len(msgs)} murojaatdan {made_lead} tasi leadga aylandi, "
+            f"SLA {kpi['sla_percent']}%.")
+    lines.append(f"SMM KPI: {kpi['score']} ball — {kpi['label']}.")
+
+    weak = [r for r in rows if r["reach"] > 0 and r["leads"] == 0]
+
+    # Tavsiyalar — eng past ball olgan mezondan kelib chiqadi
+    tips = []
+    worst = sorted(kpi["parts"], key=lambda p: p["percent"])[:2]
+    for p in worst:
+        if p["percent"] >= 90:
+            continue
+        tips.append({"about": p["label"], "text": {
+            "plan": "Reja bajarilmayapti. Kamroq, lekin bajariladigan "
+                    "reja tuzing — bajarilmagan reja rejani o'ldiradi.",
+            "leads": "Sifatli lead kam. Har postda aniq bitta harakat "
+                     "so'ralganini tekshiring.",
+            "engagement": "Engagement past. Birinchi 3 soniya va "
+                          "birinchi jumlani kuchaytiring.",
+            "sales": "Lead ko'p, sotuv kam. Muammo kontentda emas, "
+                     "leadlar bilan ishlashda bo'lishi mumkin.",
+            "inbox": "Murojaatlarga kech javob berilyapti. Kuniga 3 "
+                     "marta belgilangan vaqt ajrating.",
+            "brand": "Kontentlar brend bo'yicha tekshirilmagan. "
+                     "Nashrdan oldin ro'yxatni to'ldiring.",
+            "experiment": "Bir xil format takrorlanyapti. Oyiga "
+                          "kamida bitta yangi format sinang.",
+        }.get(p["key"], "")})
+
+    return {
+        "start": start.isoformat(), "end": end.isoformat(),
+        "days": days,
+        "published": len(published),
+        "planned": kpi["planned"],
+        "plan_percent": kpi["plan_percent"],
+        "on_time": kpi["on_time"],
+        "totals": tot,
+        "funnel": funnel,
+        "top": rows[:5],
+        "weak": weak[:5],
+        "dims": dims,
+        "messages": len(msgs),
+        "messages_to_lead": made_lead,
+        "sla_percent": kpi["sla_percent"],
+        "kpi": kpi,
+        "summary": "\n".join(lines),
+        "tips": tips,
+        "sections": [{"key": k, "label": l}
+                     for k, l in roles.REPORT_SECTIONS],
+    }
+
+
+@app.get("/api/smm/report")
+def smm_report(period: str = "month", start: date | None = None,
+               end: date | None = None, branch_id: int | None = None,
+               db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Hisobotni ko'rib chiqish (hali saqlanmaydi)."""
+    if period not in dict(roles.REPORT_PERIODS):
+        raise HTTPException(400, "Noma'lum davr")
+    if not (start and end):
+        start, end = _period_range(period)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        branch_id = user.branch_id
+    d = _build_report(db, start, end, branch_id)
+    d["period"] = period
+    d["periods"] = [{"key": k, "label": l} for k, l in roles.REPORT_PERIODS]
+    d["saved"] = [{
+        "id": r.id, "period": r.period,
+        "start": r.start_date.isoformat(), "end": r.end_date.isoformat(),
+        "score": r.kpi_score,
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+    } for r in db.query(models.SmmReport).order_by(
+        models.SmmReport.id.desc()).limit(12).all()]
+    return d
+
+
+@app.post("/api/smm/report")
+def smm_report_save(payload: schemas.ReportIn, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Hisobotni saqlaydi — raqamlar muzlatiladi."""
+    period = payload.period or "month"
+    start, end = (payload.start_date, payload.end_date)
+    if not (start and end):
+        start, end = _period_range(period)
+    branch_id = payload.branch_id
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        branch_id = user.branch_id
+    d = _build_report(db, start, end, branch_id)
+    r = models.SmmReport(
+        period=period, start_date=start, end_date=end, branch_id=branch_id,
+        data=json.dumps(d, ensure_ascii=False, default=str),
+        summary=payload.summary or d["summary"],
+        kpi_score=d["kpi"]["score"], created_by=user.id)
+    db.add(r); db.commit(); db.refresh(r)
+    audit.log(db, user, entity="smm_report", action="create",
+              entity_id=r.id,
+              entity_label=f"{start}–{end} · {d['kpi']['score']} ball")
+    return {"id": r.id, "ok": True, **d}
+
+
+@app.get("/api/smm/report/{rid}")
+def smm_report_get(rid: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.SMM_ACCESS))):
+    r = db.query(models.SmmReport).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    d = json.loads(r.data) if r.data else {}
+    d["id"] = r.id
+    d["period"] = r.period
+    d["summary"] = r.summary or d.get("summary")
+    d["frozen"] = True
+    return d
+
+
+# Brend kitob va bilimlar bazasi — fayl oxirida seed qilinadi.
+try:
+    from sqlalchemy.orm import Session as _BS
+    with _BS(engine) as _db2:
+        _seed_brand(_db2)
+        _seed_kb(_db2)
+except Exception:
+    pass

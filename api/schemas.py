@@ -1536,3 +1536,92 @@ class ReplyTemplate(BaseModel):
     label: Optional[str] = None
     text: Optional[str] = None
     is_active: Optional[bool] = None
+
+
+# ---- Brend kitob ----
+class BrandRuleIn(BaseModel):
+    section: str
+    key: Optional[str] = None
+    title: str
+    value: Optional[str] = None
+    note: Optional[str] = None
+    kind: Optional[str] = None
+    position: Optional[int] = 0
+
+
+class BrandRulePatch(BaseModel):
+    title: Optional[str] = None
+    value: Optional[str] = None
+    note: Optional[str] = None
+    kind: Optional[str] = None
+    position: Optional[int] = None
+    is_active: Optional[int] = None
+
+
+class BrandCheckIn(BaseModel):
+    key: str
+    ok: bool
+    note: Optional[str] = None
+
+
+# ---- Bilimlar bazasi ----
+class KbIn(BaseModel):
+    title: str
+    category: Optional[str] = "process"
+    body: Optional[str] = None
+    tags: Optional[str] = None
+    is_pinned: Optional[int] = 0
+
+
+class KbPatch(BaseModel):
+    title: Optional[str] = None
+    category: Optional[str] = None
+    body: Optional[str] = None
+    tags: Optional[str] = None
+    is_pinned: Optional[int] = None
+    is_active: Optional[int] = None
+
+
+# ---- Media kutubxona ----
+class MediaIn(BaseModel):
+    name: str
+    kind: Optional[str] = "photo"
+    url: Optional[str] = None
+    attachment_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    student_id: Optional[int] = None
+    teacher_id: Optional[int] = None
+    event: Optional[str] = None
+    taken_on: Optional[date] = None
+    author: Optional[str] = None
+    tags: Optional[str] = None
+    consent: Optional[str] = "pending"
+    consent_until: Optional[date] = None
+    can_download: Optional[int] = 1
+
+
+class MediaPatch(BaseModel):
+    name: Optional[str] = None
+    kind: Optional[str] = None
+    url: Optional[str] = None
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    student_id: Optional[int] = None
+    teacher_id: Optional[int] = None
+    event: Optional[str] = None
+    taken_on: Optional[date] = None
+    author: Optional[str] = None
+    tags: Optional[str] = None
+    consent: Optional[str] = None
+    consent_until: Optional[date] = None
+    can_download: Optional[int] = None
+
+
+# ---- Hisobot ----
+class ReportIn(BaseModel):
+    period: Optional[str] = "month"
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    branch_id: Optional[int] = None
+    summary: Optional[str] = None

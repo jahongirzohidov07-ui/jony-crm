@@ -2784,3 +2784,287 @@ RETENTION_DAYS = [30, 90]
 
 INBOX_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
                               ADMINISTRATOR]
+
+
+# =====================================================================
+#  BREND KITOB
+#
+#  Manba: "Jony Academy brandbook 2023" (rasmiy PDF).
+#  PDF'da bo'lmagan, lekin amalda kerak bo'lgan qoidalar quyida
+#  "TO'LDIRILDI" izohi bilan berilgan — asoschi ularni tasdiqlashi
+#  yoki o'zgartirishi kerak.
+# =====================================================================
+
+BRAND_SOURCE = "Jony Academy brandbook 2023"
+
+# ---- Ranglar (PDF, 2-sahifa) ----
+BRAND_COLORS = [
+    # (kalit, nom, hex, turi, izoh)
+    ("primary", "Asosiy ko'k", "#1A6FE4", "primary",
+     "R 26 · G 111 · B 228. Logotip, tugmalar, asosiy urg'u."),
+    ("secondary", "Ikkilamchi ko'k", "#4375B9", "primary",
+     "C 82 · M 56 · Y 0 · K 0. Bosma va ikkinchi darajali elementlar."),
+    # TO'LDIRILDI: brandbookda faqat 2 ta ko'k bor. Interfeys va
+    # postlar uchun holat ranglari kerak — quyidagilar asosiy ko'k
+    # bilan uyg'un tanlandi.
+    ("ink", "Matn qorasi", "#111827", "neutral",
+     "TO'LDIRILDI. Asosiy matn. Sof qora (#000000) ekranda qattiq."),
+    ("paper", "Oq fon", "#FFFFFF", "neutral", "Asosiy fon."),
+    ("mist", "Och kulrang", "#F1F3F6", "neutral",
+     "TO'LDIRILDI. Blok fonlari, ajratgichlar."),
+    ("success", "Yashil", "#10B981", "state",
+     "TO'LDIRILDI. Faqat interfeysda: muvaffaqiyat, tasdiq."),
+    ("warning", "Sariq", "#F59E0B", "state",
+     "TO'LDIRILDI. Faqat interfeysda: ogohlantirish."),
+    ("danger", "Qizil", "#EF4444", "state",
+     "TO'LDIRILDI. Faqat interfeysda: xato, kechikish."),
+]
+BRAND_PRIMARY = "#1A6FE4"
+BRAND_SECONDARY = "#4375B9"
+# Postda faqat shu ranglar ishlatiladi (holat ranglari — interfeys uchun)
+BRAND_POST_COLORS = ["#1A6FE4", "#4375B9", "#FFFFFF", "#111827", "#F1F3F6"]
+
+# ---- Shriftlar (PDF, 3-sahifa) ----
+BRAND_FONTS = [
+    ("HelveticaNeueCyr", "Asosiy shrift",
+     "Brandbookda belgilangan. Bosma va dizayn ishlari uchun."),
+    # TO'LDIRILDI: HelveticaNeueCyr veb va telefonda yo'q.
+    ("Inter", "Veb uchun zaxira",
+     "TO'LDIRILDI. Brauzerda HelveticaNeueCyr topilmaydi — Inter eng "
+     "yaqin ko'rinishni beradi."),
+    ("Arial", "Hujjat uchun zaxira",
+     "TO'LDIRILDI. Word va Google Docs uchun."),
+]
+
+# ---- Logotip (PDF, 4–7-sahifalar) ----
+LOGO_RULES = [
+    ("Xavfsizlik maydoni", "PDF",
+     "Logotip atrofida bo'sh joy: yon tomonlarda X, yuqori va pastda "
+     "0.5X. X — belgi (kvadrat) balandligi. Bu maydonga hech narsa "
+     "kirmaydi."),
+    ("Ruxsat etilgan fonlar", "PDF",
+     "Ko'k (#1A6FE4), oq, och kulrang, qora. Har birida logotipning "
+     "mos varianti ishlatiladi."),
+    ("Oq fonda", "PDF", "Ko'k belgi + qora yozuv."),
+    ("Ko'k fonda", "PDF", "Oq belgi + oq yozuv."),
+    ("Qora fonda", "PDF", "Ko'k yoki oq belgi + oq yozuv."),
+    # TO'LDIRILDI
+    ("Eng kichik o'lcham", "TO'LDIRILDI",
+     "Ekranda 24 px balandlik, bosmada 10 mm. Bundan kichik bo'lsa "
+     "belgi o'qilmay qoladi."),
+    ("Rasm ustida", "TO'LDIRILDI",
+     "Faqat sokin, bir tekis joyda. Rasm band bo'lsa logotip ostiga "
+     "60% shaffof qatlam qo'yiladi."),
+]
+LOGO_DONTS = [
+    "Cho'zish yoki siqish — nisbat o'zgarmaydi.",
+    "Rangini o'zgartirish — brendbookdagi variantlardan boshqasi yo'q.",
+    "Burish yoki qiyalatish.",
+    "Soya, kontur, gradient yoki effekt qo'shish.",
+    "Yozuvni belgidan ajratib, boshqa joyga qo'yish.",
+    "Yozuvni boshqa shriftga almashtirish.",
+    "Band rasm ustiga to'g'ridan-to'g'ri qo'yish.",
+    "Xavfsizlik maydoniga matn yoki boshqa logotip kiritish.",
+]
+
+# ---- Rasmiy rekvizitlar (PDF, 14-sahifa: vizitka) ----
+BRAND_CONTACTS = [
+    ("Sayt", "www.jonyacademy.uz", ""),
+    ("Email", "jonyacademy@gmail.com",
+     "TO'LDIRILDI. Brandbookda 'jonyacademy.gmail.com' deb yozilgan — "
+     "@ belgisi tushib qolgan, ya'ni bu ishlamaydigan manzil. "
+     "Tasdiqlang."),
+]
+
+# ---- Brend so'zi (TO'LDIRILDI — brandbookda yo'q) ----
+BRAND_WORD = "Muhit"
+BRAND_WORD_NOTE = (
+    "TO'LDIRILDI. Brandbookda pozitsiyalash so'zi yo'q. Jony nomi "
+    "eshitilganda odam ongida bitta so'z tiklanishi kerak — 'muhit'. "
+    "Ya'ni faqat dastur yoki narx emas, bolani o'rab turgan butun "
+    "muhit: ustozlar, tengdoshlar, kayfiyat, munosabat."
+)
+
+# ---- Ovoz va uslub (TO'LDIRILDI — brandbookda yo'q) ----
+TONE_RULES = [
+    ("Odamga o'xshab yoz", "do",
+     "Birovga gapirayotgandek. 'Hurmatli ota-onalar, sizni xabardor "
+     "qilib o'tamizki…' — bunday yozilmaydi."),
+    ("Birinchi jumla ushlab qolsin", "do",
+     "Telegramda odam bir soniyada scroll qiladi. Birinchi qator "
+     "savol, kutilmagan gap yoki his bo'lsin."),
+    ("Xususiyat emas — foyda", "do",
+     "'Tajribali ustozlar' emas — 'farzandingiz uyda \"tushunmadim\" "
+     "demay, o'zi masala yechadi'."),
+    ("Aniq raqam", "do",
+     "'Ko'p natija' emas — '100+ IELTS sertifikati'. 'Muntazam' emas "
+     "— 'haftasiga 3 marta'."),
+    ("Ijobiy tasvir", "do",
+     "'Qo'rqmaydi' emas — 'ishonch bilan kiradi'. Miya inkorni ham "
+     "avval tasvir qilib ko'radi."),
+    ("Qisqa jumla", "do",
+     "Har vergul oldida so'ra: nuqta bo'lsa bo'ladimi? Ko'pincha ha."),
+    ("Yo'q narsani yozma", "dont",
+     "Berilmagan natija, kafolat yoki raqamni o'ylab topish "
+     "taqiqlanadi. Bitta bo'rttirilgan post uzoq muddatda ishonchni "
+     "yo'q qiladi."),
+    ("Mavhum maqtov", "dont",
+     "'Sifatli', 'zamonaviy', 'eng yaxshi' — hech qanday tasvir "
+     "chizmaydi, o'quvchi miyasi o'tkazib yuboradi."),
+    ("Narxda 'dan'", "dont",
+     "Narx qat'iy bo'lsa '480 000 so'mdan' emas, '480 000 so'm'. "
+     "'dan' manipulyatsiya bo'lib tuyuladi."),
+    ("Ortiqcha undov", "dont",
+     "Samimiylik — undov belgisi emas. Sotuvchi ohangda gapirma."),
+]
+
+# ---- Ijtimoiy tarmoq o'lchamlari (TO'LDIRILDI) ----
+SOCIAL_SPECS = [
+    ("Instagram post", "1080×1350", "4:5 eng ko'p joy egallaydi."),
+    ("Instagram Reels", "1080×1920", "9:16. Pastki 250 px va yuqori "
+     "150 px — interfeys bosib qoladi, muhim narsa qo'yilmaydi."),
+    ("Instagram Stories", "1080×1920", "9:16."),
+    ("Telegram post rasmi", "1280×720", "16:9."),
+    ("YouTube preview", "1280×720", "16:9."),
+    ("Profil rasmi", "512×512", "Doira ichida kesiladi — belgi "
+     "markazda, yozuvsiz."),
+]
+
+# ---- Kontentni brend bo'yicha tekshirish ----
+BRAND_CHECKS = [
+    ("logo", "Logotip to'g'ri variantda va xavfsizlik maydoni saqlangan"),
+    ("color", "Faqat brend ranglari ishlatilgan"),
+    ("font", "Shrift brendbookka mos"),
+    ("tone", "Matn brend ovoziga mos, mavhum maqtov yo'q"),
+    ("claim", "Har bir raqam va natija haqiqiy, tekshirilgan"),
+    ("consent", "Rasmdagi odamlarning roziligi bor"),
+    ("contact", "Aloqa ma'lumotlari to'g'ri"),
+]
+BRAND_CHECK_LABELS = {k: lbl for k, lbl in BRAND_CHECKS}
+# Nashrdan oldin majburiy
+BRAND_CHECK_REQUIRED = ["claim", "consent"]
+
+BRAND_GAPS = [
+    "Ovoz va uslub (tone of voice) — brandbookda umuman yo'q.",
+    "Logotipni ishlatmaslik qoidalari ('shunday qilma') yo'q.",
+    "Logotipning eng kichik o'lchami ko'rsatilmagan.",
+    "Ijtimoiy tarmoq o'lchamlari yo'q (2023-da hali dolzarb emas edi).",
+    "Veb uchun zaxira shrift yo'q — HelveticaNeueCyr brauzerda yo'q.",
+    "Holat ranglari (muvaffaqiyat/ogohlantirish/xato) yo'q.",
+    "Rasm uslubi (fotografiya qoidalari) yo'q.",
+    "Vizitkadagi email manzilida @ belgisi tushib qolgan.",
+    "Jony School uchun alohida bo'lim yo'q — brandbook 2023-yilda "
+    "faqat Academy uchun tuzilgan.",
+]
+
+BRAND_EDIT = FULL_ACCESS + [SMM_MANAGER]
+
+
+# =====================================================================
+#  BILIMLAR BAZASI
+# =====================================================================
+
+KB_CATEGORIES = [
+    ("brand", "Brend qoidalari", "sky"),
+    ("process", "Jarayon va reglament", "violet"),
+    ("template", "Shablon va namuna", "teal"),
+    ("faq", "Tez-tez so'raladigan savollar", "amber"),
+    ("crisis", "Inqiroz va nozik holatlar", "red"),
+    ("tool", "Dastur va texnika", "slate"),
+]
+KB_CATEGORY_LABELS = {k: lbl for k, lbl, _ in KB_CATEGORIES}
+KB_CATEGORY_TONE = {k: t for k, _, t in KB_CATEGORIES}
+KB_REVIEW_MONTHS = 6          # shundan keyin "eskirgan" deb belgilanadi
+
+
+# =====================================================================
+#  MEDIA KUTUBXONA
+# =====================================================================
+
+MEDIA_KINDS = [
+    ("photo", "Foto", "sky"),
+    ("video", "Video", "violet"),
+    ("raw", "Xom material", "slate"),
+    ("design", "Dizayn (Canva/PSD)", "teal"),
+    ("logo", "Logotip va brend fayl", "amber"),
+    ("doc", "Hujjat", "slate"),
+]
+MEDIA_KIND_LABELS = {k: lbl for k, lbl, _ in MEDIA_KINDS}
+MEDIA_KIND_TONE = {k: t for k, _, t in MEDIA_KINDS}
+CONSENT_EXPIRY_WARN_DAYS = 30     # rozilik tugashiga shuncha kun qolganda
+
+
+# =====================================================================
+#  SMM ANALITIKA VA HISOBOT
+# =====================================================================
+
+ANALYTICS_DIMENSIONS = [
+    ("platform", "Platforma"),
+    ("format", "Format"),
+    ("pillar", "Yo'nalish"),
+    ("branch", "Filial"),
+    ("course", "Kurs"),
+    ("author", "Muallif"),
+    ("goal", "Maqsad"),
+    ("weekday", "Hafta kuni"),
+]
+CONTENT_FORMATS = [
+    ("reels", "Reels / qisqa video"),
+    ("carousel", "Karusel"),
+    ("photo", "Bitta rasm"),
+    ("story", "Story"),
+    ("text", "Matn"),
+    ("live", "Jonli efir"),
+    ("long", "Uzun video"),
+]
+CONTENT_FORMAT_LABELS = {k: lbl for k, lbl in CONTENT_FORMATS}
+UZ_WEEKDAYS = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba",
+               "Juma", "Shanba", "Yakshanba"]
+
+REPORT_PERIODS = [
+    ("week", "Haftalik"),
+    ("month", "Oylik"),
+    ("quarter", "Choraklik"),
+]
+REPORT_SECTIONS = [
+    ("summary", "Qisqacha xulosa"),
+    ("plan", "Reja bajarilishi"),
+    ("funnel", "Qamrovdan sotuvgacha"),
+    ("top", "Eng yaxshi kontentlar"),
+    ("weak", "Ishlamagan kontentlar"),
+    ("inbox", "Murojaatlar va SLA"),
+    ("dimensions", "Kesimlar tahlili"),
+    ("kpi", "SMM KPI"),
+    ("next", "Keyingi davr uchun tavsiya"),
+]
+REPORT_SECTION_LABELS = {k: lbl for k, lbl in REPORT_SECTIONS}
+
+# KPI bahosi
+KPI_BANDS = [
+    (90, "Ajoyib", "emerald"),
+    (75, "Yaxshi", "teal"),
+    (60, "Qoniqarli", "amber"),
+    (0, "Past", "red"),
+]
+
+
+def kpi_band(score):
+    """KPI ballidan baho va rang."""
+    for floor, label, tone in KPI_BANDS:
+        if score >= floor:
+            return label, tone
+    return "Past", "red"
+
+
+def format_of(platform, kind=None):
+    """Platformadan formatni taxmin qiladi."""
+    p = (platform or "").lower()
+    if "reels" in p or "tiktok" in p or "shorts" in p:
+        return "reels"
+    if "story" in p or "stories" in p:
+        return "story"
+    if "youtube" in p:
+        return "long"
+    if "telegram" in p:
+        return "text"
+    return kind or "photo"

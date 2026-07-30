@@ -2030,3 +2030,71 @@ class InboxReply(Base):
     is_active = Column(Integer, default=1)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)
+
+
+class BrandRule(Base):
+    """Brend kitob yozuvi. Brandbook PDF'dan seed qilinadi, keyin
+    asoschi tahrirlashi mumkin — seed qayta yozib yubormaydi."""
+    __tablename__ = "brand_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    section = Column(String, nullable=False, index=True)   # color/font/logo/tone/spec/dont/contact
+    key = Column(String, nullable=True, index=True)
+    title = Column(String, nullable=False)
+    value = Column(String, nullable=True)          # hex, o'lcham va h.k.
+    note = Column(Text, nullable=True)
+    kind = Column(String, nullable=True)           # primary/neutral/state, do/dont
+    source = Column(String, nullable=True)         # "PDF" yoki "TO'LDIRILDI"
+    position = Column(Integer, default=0)
+    is_active = Column(Integer, default=1)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class BrandCheck(Base):
+    """Kontent nashrdan oldin brend bo'yicha tekshirilgani."""
+    __tablename__ = "brand_checks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"), index=True)
+    key = Column(String, nullable=False)
+    ok = Column(Integer, default=0)
+    note = Column(Text, nullable=True)
+    checked_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    checked_at = Column(DateTime, default=datetime.utcnow)
+
+
+class KbArticle(Base):
+    """Bilimlar bazasi. Yangi SMM kelganda nolga qaytmaslik uchun."""
+    __tablename__ = "kb_articles"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    category = Column(String, default="process", index=True)
+    body = Column(Text, nullable=True)
+    tags = Column(String, nullable=True)
+    author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    views = Column(Integer, default=0)
+    is_pinned = Column(Integer, default=0)
+    is_active = Column(Integer, default=1)
+    reviewed_at = Column(Date, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class SmmReport(Base):
+    """Yig'ilgan haftalik/oylik hisobot. Raqamlar saqlanadi —
+    keyin ma'lumot o'zgarsa ham hisobot o'zgarmaydi."""
+    __tablename__ = "smm_reports"
+
+    id = Column(Integer, primary_key=True, index=True)
+    period = Column(String, default="month")
+    start_date = Column(Date, nullable=False)
+    end_date = Column(Date, nullable=False)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    data = Column(Text, nullable=True)          # JSON
+    summary = Column(Text, nullable=True)
+    kpi_score = Column(Float, nullable=True)
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

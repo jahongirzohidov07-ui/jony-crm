@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Download, Phone } from "lucide-react";
 import { api, type Group, type Student } from "../lib/api";
+import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
 import { exportToExcel } from "../lib/exportXlsx";
@@ -25,18 +26,27 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 
 export function GroupSidebar({ group }: { group: Group }) {
   const [students, setStudents] = useState<Student[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  function load() {
     setLoading(true);
     api
       .get<Student[]>(`/students?group_id=${group.id}`)
       .then(setStudents)
       .finally(() => setLoading(false));
-  }, [group.id]);
+  }
+
+  useEffect(load, [group.id]);
+
+  // "Boshqa guruhga o'tkazish" ro'yxati uchun.
+  useEffect(() => {
+    api.get<Group[]>("/groups").then(setGroups).catch(() => setGroups([]));
+  }, []);
 
   const days = parseDays(group.lesson_days);
   const debtors = students.filter((s) => s.balance < 0).length;
+  const trials = students.filter((s) => s.status === "trial").length;
 
   return (
     <aside className="w-full lg:w-80 shrink-0 bg-white rounded-xl border border-slate-200 p-5">
@@ -92,26 +102,29 @@ export function GroupSidebar({ group }: { group: Group }) {
             {students.map((s, i) => {
               const dot = statusDot(s.status, s.balance);
               return (
-                <Link
+                <div
                   key={s.id}
-                  to={`/students/${s.id}`}
-                  className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50"
+                  className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 group"
                 >
                   <span className="text-xs text-slate-400 w-4 shrink-0">{i + 1}</span>
                   <span
                     className={`w-2.5 h-2.5 rounded-full shrink-0 ${dot.color}`}
                     title={dot.title}
                   />
-                  <span className="text-sm text-slate-800 truncate flex-1">
+                  <Link
+                    to={`/students/${s.id}`}
+                    className="text-sm text-slate-800 truncate flex-1 hover:text-brand-700"
+                  >
                     {s.full_name}
-                  </span>
+                  </Link>
                   {s.phone && (
-                    <span className="text-xs text-slate-400 shrink-0 flex items-center gap-1">
+                    <span className="text-xs text-slate-400 shrink-0 hidden sm:flex items-center gap-1">
                       <Phone size={11} />
                       {s.phone}
                     </span>
                   )}
-                </Link>
+                  <StudentRowMenu student={s} groups={groups} onChanged={load} />
+                </div>
               );
             })}
           </div>
@@ -119,6 +132,9 @@ export function GroupSidebar({ group }: { group: Group }) {
           <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
             <p className="text-xs text-slate-500">
               {students.length} o'quvchi
+              {trials > 0 && (
+                <span className="text-sky-600"> · {trials} sinovda</span>
+              )}
               {debtors > 0 && (
                 <span className="text-red-600"> · {debtors} qarzdor</span>
               )}

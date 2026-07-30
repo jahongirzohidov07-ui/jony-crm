@@ -93,18 +93,22 @@ export function AttendanceTab({
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (!grid) return null;
   if (grid.lessons.length === 0)
-    return <EmptyState text="Bu oyda hali dars belgilanmagan" />;
+    return (
+      <EmptyState text="Bu oyda dars kuni yo'q. Guruhni tahrirlab dars kunlarini (masalan Dushanba, Chorshanba, Juma) tanlang — butun oy jadvali avtomat chiqadi." />
+    );
   if (grid.students.length === 0)
     return <EmptyState text="Guruhda o'quvchi yo'q" />;
 
   const total = grid.lessons.length * grid.students.length;
   const present = Object.values(grid.marks).filter((v) => v === true).length;
   const marked = Object.keys(grid.marks).length;
+  const heldCount = grid.lessons.filter((l) => l.held).length;
 
   return (
     <div>
       <p className="text-xs text-slate-500 mb-3">
-        {grid.lessons.length} dars · {grid.students.length} o'quvchi
+        {grid.lessons.length} dars kuni ({heldCount} o'tilgan) ·{" "}
+        {grid.students.length} o'quvchi
         {marked > 0 && (
           <>
             {" "}
@@ -126,7 +130,16 @@ export function AttendanceTab({
               </th>
               {grid.lessons.map((ls) => (
                 <th key={ls.id} className="px-2 py-2 font-medium min-w-[70px]">
-                  <div className="text-xs text-slate-600 whitespace-nowrap">
+                  <div
+                    className={`text-xs whitespace-nowrap ${
+                      ls.held ? "text-slate-700" : "text-slate-400"
+                    }`}
+                    title={
+                      ls.held
+                        ? "Dars o'tilgan"
+                        : "Jadval bo'yicha reja — yoqlama qo'yilsa o'tilgan bo'ladi"
+                    }
+                  >
                     {dayLabel(ls.date)}
                   </div>
                   {canEdit && (
@@ -181,8 +194,10 @@ export function AttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Katakni bosing: ✓ keldi, ✗ kelmadi. Davomat to'lovga ta'sir qilmaydi —
-        hisob-kitob o'tilgan darslar soniga qarab yuritiladi.
+        Katakni bosing: ✓ keldi, ✗ kelmadi. Kunlar guruhning dars kunlaridan
+        avtomat chiqadi — har birini alohida kiritish shart emas. Kulrang sana —
+        hali yoqlama qo'yilmagan reja; u pulga ham, ustoz ish haqiga ham
+        kirmaydi. Yoqlama qo'yilishi bilan dars "o'tilgan" bo'ladi.
       </p>
     </div>
   );

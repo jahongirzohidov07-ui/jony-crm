@@ -1070,3 +1070,47 @@ class PurchaseRequest(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     consumable = relationship("Consumable")
+
+
+class TeacherPayment(Base):
+    """Ustozga HAQIQATDA berilgan pul: avans, oylik yoki tuzatish.
+
+    Ishlab topilgan summa (earned) yoqlamadan avtomat hisoblanadi va
+    hech qayerda saqlanmaydi. Bu jadval esa faqat qo'ldan chiqqan pulni
+    yozadi. Balans = ishlab topgan - berilgan.
+
+    Shu sababli "o'tgan oyda ko'proq berilgan" holat o'zidan keyingi
+    oyga o'tadi: balans manfiy bo'lib qoladi."""
+    __tablename__ = "teacher_payments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=False, index=True)
+    amount = Column(Float, nullable=False)
+    kind = Column(String, nullable=False, default="salary")  # advance|salary|correction
+    period = Column(String, nullable=True)      # "YYYY-MM"
+    paid_on = Column(Date, nullable=False, default=date.today)
+    method = Column(String, nullable=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    teacher = relationship("Teacher")
+
+
+class DebtorContact(Base):
+    """Qarzdor bilan bog'lanish yozuvi. Administrator "bog'lanildi"
+    tugmasini bosadi va qachon to'layman deganini yozib qo'yadi -
+    keyingi kuni kimga qo'ng'iroq qilish kerakligi shundan ko'rinadi."""
+    __tablename__ = "debtor_contacts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    contacted_on = Column(Date, nullable=False, default=date.today)
+    promised_date = Column(Date, nullable=True)
+    promised_amount = Column(Float, nullable=True)
+    result = Column(String, nullable=True)   # promised|no_answer|refused|paid
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")

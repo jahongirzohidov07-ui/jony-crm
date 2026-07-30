@@ -62,6 +62,11 @@ USER_ADMIN = [FOUNDER]
 # Moliya (to'lov, hisob-kitob, ish haqi).
 FINANCE_ACCESS = FULL_ACCESS
 
+# Kassa: pul qabul qilish, qarzdorlar bilan ishlash, to'lov foizi.
+# Administrator (sotuv menejeri) shu ishni qiladi — lekin FOYDANI
+# ko'rmaydi. Shuning uchun bu FINANCE_ACCESS dan alohida turadi.
+CASH_ACCESS = FINANCE_ACCESS + [SALES_MANAGER]
+
 # Lidlar (sotuv voronkasi). Administrator/sotuv menejeri bu yerda
 # asosiy foydalanuvchi; SMM manager Instagram/Telegram lidlarini
 # kiritadi; support teacher qabulda tashrifchilarni yozadi.
@@ -952,3 +957,80 @@ STOCK_MOVE_LABELS = dict(STOCK_MOVE_REASONS)
 
 INVENTORY_ACCESS = FULL_ACCESS + [HR_MANAGER]
 INVENTORY_VIEW = INVENTORY_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER]
+
+
+# =====================================================================
+#  Ustoz ish haqi
+# =====================================================================
+TEACHER_PAYMENT_KINDS = [
+    ("advance", "Avans", "Oy o'rtasida berilgan pul"),
+    ("salary", "Oylik", "Oylik hisob-kitobi"),
+    ("correction", "Tuzatish", "Kam yoki ko'p berilganini to'g'rilash"),
+]
+TEACHER_PAYMENT_LABELS = {k: lbl for k, lbl, _ in TEACHER_PAYMENT_KINDS}
+
+# Avans - ishlab topilgan puldan ortiq berilmaydi. Bu qoidani hech kim
+# aylanib o'tolmaydi: aks holda ustoz ketib qolsa pul qaytmaydi.
+ADVANCE_LIMIT_OF_EARNED = 1.0
+
+SALARY_PAY = FULL_ACCESS
+# O'zining oyligini har bir ustoz ko'radi
+SALARY_SELF_VIEW = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, HR_MANAGER]
+
+
+# =====================================================================
+#  Qarzdorlar bilan ishlash
+# =====================================================================
+DEBTOR_ACCESS = FULL_ACCESS + [SALES_MANAGER]
+
+DEBT_CONTACT_RESULTS = [
+    ("promised", "To'lashga va'da berdi", "emerald"),
+    ("no_answer", "Javob bermadi", "slate"),
+    ("refused", "To'lay olmasligini aytdi", "red"),
+    ("paid", "To'lab yubordi", "emerald"),
+]
+DEBT_CONTACT_LABELS = {k: lbl for k, lbl, _ in DEBT_CONTACT_RESULTS}
+DEBT_CONTACT_TONE = {k: t for k, _, t in DEBT_CONTACT_RESULTS}
+
+# Qarzdorni qanchalik tez ushlash kerak
+DEBT_URGENCY = [
+    (7, "fresh", "Yangi qarz", "slate"),
+    (14, "watch", "E'tibor kerak", "amber"),
+    (30, "hot", "Kechikkan", "orange"),
+    (0, "critical", "Kritik", "red"),
+]
+
+
+def debt_urgency(days: int) -> tuple:
+    """Qarz necha kundan beri turibdi - shunga qarab shoshilinchligi."""
+    for limit, key, label, tone in DEBT_URGENCY:
+        if limit and days <= limit:
+            return key, label, tone
+    return "critical", "Kritik", "red"
+
+
+# =====================================================================
+#  SMM avtomat vazifalari
+#  Yangi xodim kelsa yoki o'quvchi natija qilsa - SMM eslab qolishi
+#  shart emas, vazifa o'zi paydo bo'ladi.
+# =====================================================================
+SMM_AUTO_TASKS = [
+    ("new_staff", "Yangi xodimni suratga va videoga olish", 7),
+    ("achievement", "O'quvchi natijasi haqida video olish", 5),
+]
+SMM_TASK_DEADLINE_DAYS = {k: d for k, _, d in SMM_AUTO_TASKS}
+
+
+# =====================================================================
+#  Ustozlar reytingi
+#  Ustoz o'z natijasini va hamkasblari orasidagi o'rnini ko'radi -
+#  lekin ularning MAOSHINI ko'rmaydi.
+# =====================================================================
+TEACHER_SCORE_WEIGHTS = [
+    ("quality", "Dars sifati", 40),
+    ("retention", "O'quvchi saqlanishi", 30),
+    ("ltv", "O'quvchi qiymati (LTV)", 20),
+    ("attendance", "Davomat", 10),
+]
+TEACHER_SCORE_LABELS = {k: lbl for k, lbl, _ in TEACHER_SCORE_WEIGHTS}
+TEACHER_SCORE_DEFAULT = {k: w for k, _, w in TEACHER_SCORE_WEIGHTS}

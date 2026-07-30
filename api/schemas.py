@@ -1094,3 +1094,22 @@ class StockMoveCreate(BaseModel):
 class PurchaseClose(BaseModel):
     status: str = "done"          # done | ordered | cancelled
     qty: Optional[float] = None
+
+
+# --------------------------------------------------- Ustoz ish haqi
+class TeacherPaymentCreate(BaseModel):
+    amount: float
+    kind: str = "salary"          # advance | salary | correction
+    period: Optional[str] = None  # "YYYY-MM"
+    date: Optional[_dt.date] = None
+    method: Optional[str] = None
+    note: Optional[str] = None
+
+
+# ------------------------------------------------------- Qarzdorlar
+class DebtorContactCreate(BaseModel):
+    student_id: int
+    result: str = "promised"
+    promised_date: Optional[_dt.date] = None
+    promised_amount: Optional[float] = None
+    note: Optional[str] = None

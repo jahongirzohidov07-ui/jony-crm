@@ -344,6 +344,7 @@ def _ensure_new_columns():
                 changed = True
             if changed:
                 db.commit()
+
     except Exception:
         pass
 
@@ -1491,6 +1492,13 @@ def save_attendance(
     _mark_lesson_held(db, lesson)
     db.commit()
 
+    # AVTOMAT XP: kelgani uchun ball va davomat ketma-ketligi.
+    # Ustoz hech narsa bosmaydi.
+    try:
+        _xp_for_attendance(db, lesson, by_user=user)
+    except Exception:
+        db.rollback()
+
     # Sinovdagi o'quvchilar: yoqlama qo'yilishi bilan lid "sinovga keldi"
     # bo'ladi, uchinchi darsdan keyin esa o'quvchi AVTOMAT faollashadi.
     activated, touched = [], False
@@ -1791,6 +1799,13 @@ def save_exam_results(
     if exam.status == "approved":
         exam.status = "done"
     db.commit()
+
+    # AVTOMAT XP: natija bandi, o'sish bonusi, unit/imtihon va mock.
+    # Bitta natijaga faqat bitta band qoidasi ishlaydi.
+    try:
+        _xp_for_exam(db, exam, by_user=user)
+    except Exception:
+        db.rollback()
 
     # AVTOMAT: yuqori natija - SMM'ga video olish vazifasi.
     # Ustoz alohida hech kimga aytishi shart emas.
@@ -13435,3 +13450,1591 @@ def link_student_account(
               entity_label=s.full_name, branch_id=s.branch_id,
               field="Kirish hisobi", new_value=payload.username, commit=True)
     return {"user_id": u.id, "username": u.username}
+
+
+# =====================================================================
+#  GAMIFICATION: XP, LEVEL, LIGA, SEASON
+#
+#  Asosiy qoida: XP balansi ustunni o'zgartirish orqali emas, APPEND-ONLY
+#  jurnal orqali yuritiladi. Xato yozuvni o'chirmaymiz — manfiy reversal
+#  yozamiz. Shunda "nima bo'lgani" har doim ko'rinib turadi.
+#
+#  Coin va XP aralashmaydi: XP sarflanmaydi va jarima uchun
+#  kamaytirilmaydi; coin esa sovg'aga sarflanadi.
+# =====================================================================
+def _seed_gamification(db: Session) -> None:
+    """Ligalar va qoidalar bazaga bir marta tushadi. Admin o'zgartirsa
+    — qayta yozilmaydi, faqat YETISHMAYOTGANI qo'shiladi."""
+    have = {r.key for r in db.query(models.XpLeague).all()}
+    added = False
+    for rank, key, name, lo, hi, color, icon, coin in roles.XP_LEAGUES:
+        if key in have:
+            continue
+        db.add(models.XpLeague(
+            key=key, name=name, rank=rank, minimum_xp=lo, maximum_xp=hi,
+            color=color, icon=icon, reward_coin=coin, is_active=1))
+        added = True
+    if added:
+        db.commit()
+
+    have = {r.event_code for r in db.query(models.XpRule).all()}
+    added = False
+    for (code, name, cat, xp, coin, per_lesson, per_day, per_week,
+         per_month, mode, approval) in roles.XP_RULES:
+        if code in have:
+            continue
+        db.add(models.XpRule(
+            event_code=code, name=name, category=cat, default_xp=xp,
+            default_coin=coin, maximum_per_lesson=per_lesson,
+            maximum_per_day=per_day, maximum_per_week=per_week,
+            maximum_per_month=per_month, mode=mode,
+            requires_approval=1 if approval else 0, is_active=1))
+        added = True
+    if added:
+        db.commit()
+
+
+def _active_season(db: Session) -> models.XpSeason | None:
+    today = date.today()
+    return (db.query(models.XpSeason)
+            .filter(models.XpSeason.is_active == 1,
+                    models.XpSeason.start_date <= today)
+            .filter((models.XpSeason.end_date.is_(None))
+                    | (models.XpSeason.end_date >= today))
+            .order_by(models.XpSeason.start_date.desc()).first())
+
+
+def _leagues(db: Session) -> list:
+    return (db.query(models.XpLeague)
+            .filter(models.XpLeague.is_active == 1)
+            .order_by(models.XpLeague.rank).all())
+
+
+def _league_for(db: Session, xp: float) -> models.XpLeague | None:
+    """Lifetime XP qaysi ligaga to'g'ri keladi."""
+    best = None
+    for lg in _leagues(db):
+        if xp >= (lg.minimum_xp or 0):
+            best = lg
+    return best
+
+
+def _xp_rule(db: Session, code: str) -> models.XpRule | None:
+    return (db.query(models.XpRule)
+            .filter(models.XpRule.event_code == code).first())
+
+
+def _period_bounds(kind: str, on: date) -> tuple:
+    if kind == "day":
+        return on, on
+    if kind == "week":
+        start = on - timedelta(days=on.weekday())
+        return start, start + timedelta(days=6)
+    s, e = billing.month_bounds(on.year, on.month)
+    return s, e
+
+
+def _rule_cap_hit(db: Session, student_id: int, rule: models.XpRule,
+                  on: date, lesson_id: int | None) -> str | None:
+    """Chegara tekshiruvi. Chegaraga yetgan bo'lsa sababi qaytadi."""
+    def count(start: date, end: date) -> int:
+        return (db.query(models.XpTransaction)
+                .filter(models.XpTransaction.student_id == student_id,
+                        models.XpTransaction.event_code == rule.event_code,
+                        models.XpTransaction.is_reversal == 0,
+                        models.XpTransaction.created_at
+                        >= datetime.combine(start, datetime.min.time()),
+                        models.XpTransaction.created_at
+                        <= datetime.combine(end, datetime.max.time()))
+                .count())
+
+    if rule.maximum_per_lesson and lesson_id:
+        n = (db.query(models.XpTransaction)
+             .filter(models.XpTransaction.student_id == student_id,
+                     models.XpTransaction.event_code == rule.event_code,
+                     models.XpTransaction.lesson_id == lesson_id,
+                     models.XpTransaction.is_reversal == 0).count())
+        if n >= rule.maximum_per_lesson:
+            return f"Bu darsda \"{rule.name}\" allaqachon berilgan"
+    for cap, kind, word in ((rule.maximum_per_day, "day", "kunlik"),
+                            (rule.maximum_per_week, "week", "haftalik"),
+                            (rule.maximum_per_month, "month", "oylik")):
+        if not cap:
+            continue
+        s, e = _period_bounds(kind, on)
+        if count(s, e) >= cap:
+            return (f"\"{rule.name}\" bo'yicha {word} chegara "
+                    f"({cap} marta) to'ldi")
+    return None
+
+
+def _recalc_gamification(db: Session, student_id: int,
+                         *, commit: bool = True) -> models.StudentGamification:
+    """Jamlanmani JURNALDAN qayta hisoblaydi. Jamlanma buzilsa ham
+    haqiqat jurnalda qoladi."""
+    season = _active_season(db)
+    rows = (db.query(models.XpTransaction)
+            .filter(models.XpTransaction.student_id == student_id).all())
+
+    lifetime = sum(r.amount or 0 for r in rows)
+    # XP hech qachon manfiy bo'lmaydi: reversal 0 dan pastga tushirsa
+    # 0 da qoladi (va admin uchun signal yaratiladi).
+    below_zero = lifetime < 0
+    lifetime = max(0.0, lifetime)
+
+    season_xp = 0.0
+    if season:
+        season_xp = max(0.0, sum(r.amount or 0 for r in rows
+                                 if r.season_id == season.id))
+
+    by_cat: dict = {}
+    for r in rows:
+        k = r.category or "academic"
+        by_cat[k] = round(by_cat.get(k, 0) + (r.amount or 0), 1)
+
+    g = (db.query(models.StudentGamification)
+         .filter(models.StudentGamification.student_id == student_id).first())
+    if not g:
+        g = models.StudentGamification(student_id=student_id)
+        db.add(g)
+
+    g.lifetime_xp = round(lifetime, 1)
+    g.season_xp = round(season_xp, 1)
+    g.season_id = season.id if season else None
+    g.current_level = roles.level_for(lifetime)
+    g.by_category = json.dumps(by_cat)
+    last = max((r.created_at for r in rows), default=None)
+    g.last_xp_at = last
+
+    lg = _league_for(db, lifetime)
+    old_id = g.current_league_id
+    if lg and lg.id != old_id:
+        old = db.query(models.XpLeague).get(old_id) if old_id else None
+        # Liga faqat YUQORIGA ko'tariladi
+        if not old or (lg.rank or 0) > (old.rank or 0):
+            g.current_league_id = lg.id
+            db.add(models.StudentLeagueHistory(
+                student_id=student_id,
+                from_league_id=old.id if old else None,
+                to_league_id=lg.id, xp_at_promotion=lifetime,
+                reward_coin=lg.reward_coin or 0))
+            _league_promotion_effects(db, student_id, old, lg)
+        elif old_id is None:
+            g.current_league_id = lg.id
+
+    if below_zero:
+        _fraud_alert(db, "many_reversals", student_id=student_id,
+                     description=("Bekor qilishlar XP'ni 0 dan pastga "
+                                  "tushirdi — 0 da qoldirildi"))
+    if commit:
+        db.commit()
+    return g
+
+
+def _league_promotion_effects(db: Session, student_id: int,
+                              old, new) -> None:
+    """Ligaga ko'tarilganda: bonus coin (bir marta), xabarnoma va
+    yutuq."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        return
+    # Bonus coin BIR MARTA: shu ligaga avval ko'tarilganmi
+    given = (db.query(models.StudentLeagueHistory)
+             .filter(models.StudentLeagueHistory.student_id == student_id,
+                     models.StudentLeagueHistory.to_league_id == new.id)
+             .count())
+    if (new.reward_coin or 0) > 0 and given <= 1:
+        db.add(models.CoinEntry(
+            student_id=student_id, amount=new.reward_coin,
+            source="league", note=f"{new.name} ligasiga ko'tarildi",
+            created_by="Tizim"))
+
+    ach = (db.query(models.GamificationAchievement)
+           .filter(models.GamificationAchievement.key
+                   == f"league_{new.key}").first())
+    if not ach:
+        ach = models.GamificationAchievement(
+            key=f"league_{new.key}", name=f"{new.name} ligasi",
+            description=f"{new.minimum_xp}+ XP to'plandi",
+            icon=new.icon, tone="amber", is_active=1)
+        db.add(ach)
+        db.flush()
+    exists = (db.query(models.StudentAchievement)
+              .filter(models.StudentAchievement.student_id == student_id,
+                      models.StudentAchievement.achievement_id == ach.id)
+              .first())
+    if not exists:
+        db.add(models.StudentAchievement(
+            student_id=student_id, achievement_id=ach.id))
+
+    db.add(models.Notification(
+        kind="certificate", channel="telegram", student_id=student_id,
+        phone=s.phone or s.parent_phone,
+        title="Tabriklaymiz!",
+        body=(f"{s.full_name}, siz {new.name} ligasiga ko'tarildingiz!"
+              + (f" Sizga {new.reward_coin} coin berildi."
+                 if (new.reward_coin or 0) > 0 else "")),
+        scheduled_for=date.today(), created_by="Tizim"))
+
+
+def _fraud_alert(db: Session, alert_type: str, *, student_id=None,
+                 user_id=None, transaction_id=None, description="",
+                 meta=None) -> None:
+    db.add(models.XpFraudAlert(
+        alert_type=alert_type,
+        severity=roles.FRAUD_SEVERITY.get(alert_type, "LOW"),
+        user_id=user_id, student_id=student_id,
+        transaction_id=transaction_id,
+        description=description or roles.FRAUD_LABELS.get(alert_type,
+                                                          alert_type),
+        meta=json.dumps(meta) if meta else None, status="open"))
+
+
+def award_xp(db: Session, *, student_id: int, event_code: str,
+             amount: float | None = None, by_user: models.User | None = None,
+             reason: str | None = None, lesson_id: int | None = None,
+             exam_id: int | None = None, source_type: str | None = None,
+             source_id: int | None = None,
+             idempotency_key: str | None = None,
+             on: date | None = None,
+             force: bool = False) -> dict:
+    """XP beradi. Bitta joydan o'tadi — shuning uchun chegara, takror
+    va jurnal qoidalari hamma yerda bir xil ishlaydi.
+
+    Qaytadi: {"ok", "skipped", "reason", "transaction_id", "amount"}
+    """
+    on = on or date.today()
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        return {"ok": False, "skipped": True, "reason": "O'quvchi topilmadi"}
+    # Faol bo'lmagan o'quvchiga yangi XP berilmaydi
+    if s.status in ("archived", "left") and not force:
+        return {"ok": False, "skipped": True,
+                "reason": "Faol bo'lmagan o'quvchiga XP berilmaydi"}
+
+    rule = _xp_rule(db, event_code)
+    if rule and not rule.is_active and not force:
+        return {"ok": False, "skipped": True,
+                "reason": f"\"{rule.name}\" qoidasi o'chirilgan"}
+
+    value = amount if amount is not None else (rule.default_xp if rule else 0)
+    if not value:
+        return {"ok": False, "skipped": True, "reason": "XP miqdori nol"}
+
+    # Takror yozuv — idempotentlik kaliti bo'yicha
+    if idempotency_key:
+        dup = (db.query(models.XpTransaction)
+               .filter(models.XpTransaction.idempotency_key
+                       == idempotency_key).first())
+        if dup:
+            return {"ok": False, "skipped": True,
+                    "reason": "Bu XP allaqachon berilgan",
+                    "transaction_id": dup.id}
+
+    if rule and not force:
+        hit = _rule_cap_hit(db, student_id, rule, on, lesson_id)
+        if hit:
+            return {"ok": False, "skipped": True, "reason": hit}
+
+    season = _active_season(db)
+    tx = models.XpTransaction(
+        student_id=student_id, amount=float(value),
+        category=(rule.category if rule else "academic"),
+        event_code=event_code,
+        xp_rule_id=rule.id if rule else None,
+        source_type=source_type or ("manual" if by_user else "system"),
+        source_id=source_id,
+        group_id=s.group_id, branch_id=s.branch_id,
+        lesson_id=lesson_id, exam_id=exam_id,
+        season_id=season.id if season else None,
+        awarded_by_user_id=by_user.id if by_user else None,
+        reason=reason, idempotency_key=idempotency_key)
+    db.add(tx)
+    db.flush()
+
+    # Qoidada coin ham bo'lsa — birga beriladi
+    if rule and (rule.default_coin or 0) > 0:
+        db.add(models.CoinEntry(
+            student_id=student_id, amount=rule.default_coin,
+            source="xp", note=rule.name,
+            created_by=by_user.full_name if by_user else "Tizim"))
+
+    _recalc_gamification(db, student_id, commit=False)
+    db.commit()
+    return {"ok": True, "skipped": False, "transaction_id": tx.id,
+            "amount": float(value),
+            "label": rule.name if rule else event_code}
+
+
+def reverse_xp(db: Session, tx_id: int, *, by_user: models.User,
+               reason: str) -> dict:
+    """Xato XP'ni qaytaradi. Asl yozuv O'CHIRILMAYDI — manfiy yozuv
+    qo'shiladi, shunda tarix to'liq qoladi."""
+    tx = db.query(models.XpTransaction).get(tx_id)
+    if not tx:
+        raise HTTPException(404, "Tranzaksiya topilmadi")
+    if tx.is_reversal:
+        raise HTTPException(400, "Bekor qilingan yozuvni qayta bekor "
+                                 "qilib bo'lmaydi")
+    already = (db.query(models.XpTransaction)
+               .filter(models.XpTransaction.reversed_transaction_id == tx.id)
+               .first())
+    if already:
+        raise HTTPException(400, "Bu yozuv allaqachon bekor qilingan")
+
+    rev = models.XpTransaction(
+        student_id=tx.student_id, amount=-(tx.amount or 0),
+        category=tx.category, event_code="REVERSAL",
+        source_type="reversal", group_id=tx.group_id,
+        branch_id=tx.branch_id, lesson_id=tx.lesson_id,
+        exam_id=tx.exam_id, season_id=tx.season_id,
+        awarded_by_user_id=by_user.id, reason=reason,
+        reversed_transaction_id=tx.id, is_reversal=1)
+    db.add(rev)
+    db.flush()
+    _recalc_gamification(db, tx.student_id, commit=False)
+    audit.log(db, by_user, entity="xp", action="update", entity_id=tx.id,
+              entity_label=f"{tx.event_code} {tx.amount}",
+              note=f"Bekor qilindi: {reason}", branch_id=tx.branch_id)
+    db.commit()
+    return {"ok": True, "reversal_id": rev.id, "amount": -(tx.amount or 0)}
+
+
+# ------------------------------------------------- Gamification API ----
+def _league_out(lg, count: int = 0) -> dict:
+    return {
+        "id": lg.id, "key": lg.key, "name": lg.name, "rank": lg.rank,
+        "minimum_xp": lg.minimum_xp, "maximum_xp": lg.maximum_xp,
+        "color": lg.color, "icon": lg.icon,
+        "description": lg.description,
+        "reward_coin": lg.reward_coin or 0,
+        "is_active": bool(lg.is_active), "students": count,
+    }
+
+
+def _rule_out(r) -> dict:
+    return {
+        "id": r.id, "event_code": r.event_code, "name": r.name,
+        "description": r.description, "category": r.category,
+        "category_label": roles.XP_CATEGORY_LABELS.get(r.category,
+                                                       r.category),
+        "tone": roles.XP_CATEGORY_TONE.get(r.category, "slate"),
+        "default_xp": r.default_xp or 0, "default_coin": r.default_coin or 0,
+        "maximum_per_lesson": r.maximum_per_lesson,
+        "maximum_per_day": r.maximum_per_day,
+        "maximum_per_week": r.maximum_per_week,
+        "maximum_per_month": r.maximum_per_month,
+        "mode": r.mode, "requires_approval": bool(r.requires_approval),
+        "allowed_roles": r.allowed_roles,
+        "is_active": bool(r.is_active),
+    }
+
+
+def _gam_card(db: Session, s: models.Student) -> dict:
+    """O'quvchining gamification kartasi: liga, level, XP va progress."""
+    g = (db.query(models.StudentGamification)
+         .filter(models.StudentGamification.student_id == s.id).first())
+    if not g:
+        g = _recalc_gamification(db, s.id)
+
+    lifetime = g.lifetime_xp or 0
+    lg = db.query(models.XpLeague).get(g.current_league_id) \
+        if g.current_league_id else _league_for(db, lifetime)
+    all_lg = _leagues(db)
+    nxt = None
+    if lg:
+        after = [x for x in all_lg if (x.rank or 0) > (lg.rank or 0)]
+        nxt = after[0] if after else None
+
+    if nxt:
+        lo = lg.minimum_xp or 0
+        hi = nxt.minimum_xp or 0
+        span = max(1, hi - lo)
+        pct = round(min(100.0, max(0.0, (lifetime - lo) / span * 100)), 1)
+        to_next = max(0, hi - lifetime)
+    else:
+        pct, to_next = 100.0, 0
+
+    lvl = roles.level_progress(lifetime)
+    by_cat = json.loads(g.by_category) if g.by_category else {}
+    season = _active_season(db)
+
+    return {
+        "student_id": s.id,
+        "full_name": s.full_name,
+        "lifetime_xp": round(lifetime, 1),
+        "season_xp": round(g.season_xp or 0, 1),
+        "season": season.name if season else None,
+        "level": lvl["level"],
+        "level_percent": lvl["percent"],
+        "level_to_next": lvl["to_next"],
+        "league": _league_out(lg) if lg else None,
+        "next_league": _league_out(nxt) if nxt else None,
+        "league_percent": pct,
+        "league_to_next": round(to_next, 1),
+        "max_league": nxt is None,
+        "by_category": [{
+            "key": k, "label": roles.XP_CATEGORY_LABELS.get(k, k),
+            "tone": roles.XP_CATEGORY_TONE.get(k, "slate"),
+            "xp": round(v, 1),
+        } for k, v in sorted(by_cat.items(), key=lambda x: -x[1]) if v],
+        "coins": _coin_balance(db, s.id),
+        "last_xp_at": g.last_xp_at.isoformat() if g.last_xp_at else None,
+    }
+
+
+def _coin_balance(db: Session, student_id: int) -> int:
+    return int(db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+               .filter(models.CoinEntry.student_id == student_id).scalar() or 0)
+
+
+@app.get("/api/gamification/leagues")
+def list_leagues(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_VIEW)),
+):
+    _seed_gamification(db)
+    counts: dict = {}
+    for g in db.query(models.StudentGamification).all():
+        if g.current_league_id:
+            counts[g.current_league_id] = counts.get(g.current_league_id, 0) + 1
+    return {
+        "rows": [_league_out(lg, counts.get(lg.id, 0))
+                 for lg in db.query(models.XpLeague)
+                 .order_by(models.XpLeague.rank).all()],
+        "xp_per_level": roles.XP_PER_LEVEL,
+        "can_edit": user.role in roles.XP_ADMIN,
+    }
+
+
+@app.put("/api/gamification/leagues/{lid}")
+def update_league(
+    lid: int,
+    payload: schemas.LeagueUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    lg = db.query(models.XpLeague).get(lid)
+    if not lg:
+        raise HTTPException(404, "Liga topilmadi")
+    given = payload.model_dump(exclude_unset=True)
+    before = {k: getattr(lg, k) for k in given}
+    for k, v in given.items():
+        setattr(lg, k, int(v) if k == "is_active" and v is not None else v)
+    db.commit()
+    audit.log(db, user, entity="league", action="update", entity_id=lg.id,
+              entity_label=lg.name, old_value=str(before),
+              new_value=str(given), note="Liga o'zgartirildi")
+
+    # Chegara o'zgarsa hamma o'quvchining ligasi qayta hisoblanadi
+    touched = 0
+    if "minimum_xp" in given or "maximum_xp" in given:
+        for g in db.query(models.StudentGamification).all():
+            _recalc_gamification(db, g.student_id, commit=False)
+            touched += 1
+        db.commit()
+    return {"ok": True, "recalculated": touched}
+
+
+@app.get("/api/gamification/rules")
+def list_xp_rules(
+    category: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_VIEW)),
+):
+    _seed_gamification(db)
+    q = db.query(models.XpRule)
+    if category:
+        q = q.filter(models.XpRule.category == category)
+    rows = q.order_by(models.XpRule.category, models.XpRule.id).all()
+    return {
+        "rows": [_rule_out(r) for r in rows],
+        "categories": [{"key": k, "label": lbl, "tone": t}
+                       for k, lbl, t in roles.XP_CATEGORIES],
+        "quick": roles.TEACHER_QUICK_XP,
+        "teacher_week_limit": roles.TEACHER_XP_PER_WEEK,
+        "teacher_lesson_limit": roles.TEACHER_XP_PER_LESSON,
+        "approval_above": roles.APPROVAL_ABOVE_XP,
+        "can_edit": user.role in roles.XP_ADMIN,
+    }
+
+
+@app.put("/api/gamification/rules/{rid}")
+def update_xp_rule(
+    rid: int,
+    payload: schemas.XpRuleUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    """Qoidani tahrirlash. Qiymat o'zgarsa ESKI tranzaksiyalar
+    o'zgarmaydi — ular o'sha paytdagi qiymat bilan yozilgan."""
+    r = db.query(models.XpRule).get(rid)
+    if not r:
+        raise HTTPException(404, "Qoida topilmadi")
+    given = payload.model_dump(exclude_unset=True)
+    before = {k: getattr(r, k) for k in given}
+    for k, v in given.items():
+        if k in ("requires_approval", "is_active"):
+            v = 1 if v else 0
+        setattr(r, k, v)
+    db.commit()
+    audit.log(db, user, entity="xp_rule", action="update", entity_id=r.id,
+              entity_label=r.event_code, old_value=str(before),
+              new_value=str(given), note="XP qoidasi o'zgartirildi")
+    db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/gamification/seasons")
+def list_seasons(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_VIEW)),
+):
+    rows = (db.query(models.XpSeason)
+            .order_by(models.XpSeason.start_date.desc()).all())
+    cur = _active_season(db)
+    return {
+        "rows": [{
+            "id": s.id, "name": s.name,
+            "start_date": s.start_date.isoformat() if s.start_date else None,
+            "end_date": s.end_date.isoformat() if s.end_date else None,
+            "is_active": bool(s.is_active),
+            "current": bool(cur and cur.id == s.id),
+            "note": s.note,
+        } for s in rows],
+        "current": cur.name if cur else None,
+        "hint": ("Mavsum XP yangi mavsumda 0 dan boshlanadi. "
+                 "Umumiy XP hech qachon reset qilinmaydi."),
+        "can_edit": user.role in roles.XP_ADMIN,
+    }
+
+
+@app.post("/api/gamification/seasons")
+def create_season(
+    payload: schemas.SeasonCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    for s in db.query(models.XpSeason).filter(
+            models.XpSeason.is_active == 1).all():
+        s.is_active = 0
+        if not s.end_date:
+            s.end_date = date.today()
+    row = models.XpSeason(
+        name=payload.name, start_date=payload.start_date or date.today(),
+        end_date=payload.end_date, note=payload.note, is_active=1,
+        created_by=user.full_name)
+    db.add(row)
+    db.commit()
+    for g in db.query(models.StudentGamification).all():
+        _recalc_gamification(db, g.student_id, commit=False)
+    db.commit()
+    audit.log(db, user, entity="season", action="create", entity_id=row.id,
+              entity_label=row.name, note="Yangi mavsum ochildi")
+    db.commit()
+    return {"ok": True, "id": row.id}
+
+
+# ---- XP berish ------------------------------------------------------
+def _teacher_manual_used(db: Session, student_id: int, by_user_id: int,
+                         since: date, lesson_id: int | None = None) -> float:
+    q = (db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
+         .filter(models.XpTransaction.student_id == student_id,
+                 models.XpTransaction.awarded_by_user_id == by_user_id,
+                 models.XpTransaction.source_type == "manual",
+                 models.XpTransaction.is_reversal == 0,
+                 models.XpTransaction.created_at
+                 >= datetime.combine(since, datetime.min.time())))
+    if lesson_id:
+        q = q.filter(models.XpTransaction.lesson_id == lesson_id)
+    return float(q.scalar() or 0)
+
+
+def _can_award(db: Session, user: models.User, student: models.Student,
+               rule: models.XpRule, amount: float,
+               lesson_id: int | None) -> str | None:
+    """Ustoz chegaradan chiqmaganini tekshiradi. Sabab qaytsa — bermaymiz."""
+    if user.role in roles.XP_ADMIN:
+        return None
+    if user.role not in (roles.TEACHER, roles.SUPPORT_TEACHER,
+                         roles.HEAD_SUPPORT):
+        return None
+
+    # Faqat o'z guruhidagi o'quvchiga
+    mine = _teacher_of_user(db, user)
+    gids = {g.id for g in db.query(models.Group)
+            .filter(models.Group.teacher_id == mine.id).all()} if mine else set()
+    if student.group_id not in gids:
+        _fraud_alert(db, "foreign_group", student_id=student.id,
+                     user_id=user.id,
+                     description=(f"{user.full_name} o'ziga biriktirilmagan "
+                                  f"guruhga XP berishga urindi"))
+        db.commit()
+        return "Faqat o'z guruhingizdagi o'quvchiga XP bera olasiz"
+
+    if rule.event_code not in roles.TEACHER_QUICK_XP:
+        return "Bu qoidadan XP berish sizga ochiq emas"
+
+    week_start = date.today() - timedelta(days=date.today().weekday())
+    used_week = _teacher_manual_used(db, student.id, user.id, week_start)
+    if used_week + amount > roles.TEACHER_XP_PER_WEEK:
+        return (f"Haftalik chegara: bitta o'quvchiga {roles.TEACHER_XP_PER_WEEK} "
+                f"XP (bu hafta {round(used_week)} berilgan)")
+    if lesson_id:
+        used_lesson = _teacher_manual_used(db, student.id, user.id,
+                                           date.today(), lesson_id)
+        if used_lesson + amount > roles.TEACHER_XP_PER_LESSON:
+            return (f"Bir darsda ko'pi bilan {roles.TEACHER_XP_PER_LESSON} XP "
+                    f"berish mumkin (bu darsda {round(used_lesson)} berilgan)")
+    return None
+
+
+@app.post("/api/gamification/award")
+def give_xp(
+    payload: schemas.XpAward,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_AWARD)),
+):
+    """Qo'lda XP berish. Ustoz o'zi miqdor yozolmaydi — faqat mavjud
+    qoidadan va chegara doirasida."""
+    s = db.query(models.Student).get(payload.student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    rule = _xp_rule(db, payload.event_code)
+    if not rule:
+        raise HTTPException(400, "Bunday XP qoidasi yo'q")
+
+    # Ustoz miqdorni o'zgartira olmaydi
+    amount = rule.default_xp or 0
+    if payload.amount is not None and user.role in roles.XP_ADMIN:
+        amount = payload.amount
+
+    blocked = _can_award(db, user, s, rule, amount, payload.lesson_id)
+    if blocked:
+        raise HTTPException(400, blocked)
+
+    # Katta miqdor — tasdiqqa
+    if (rule.requires_approval or amount > roles.APPROVAL_ABOVE_XP) \
+            and user.role not in roles.FULL_ACCESS:
+        if not (payload.reason or "").strip():
+            raise HTTPException(400, "Sabab yozing")
+        req = models.XpApprovalRequest(
+            student_id=s.id, event_code=payload.event_code, amount=amount,
+            reason=payload.reason, requested_by=user.id, status="pending")
+        db.add(req)
+        db.commit()
+        return {"ok": True, "pending": True, "request_id": req.id,
+                "message": "Tasdiqqa yuborildi"}
+
+    if user.role in roles.XP_ADMIN and not (payload.reason or "").strip() \
+            and amount > roles.APPROVAL_ABOVE_XP:
+        raise HTTPException(400, "Katta XP uchun sabab yozish shart")
+
+    res = award_xp(db, student_id=s.id, event_code=payload.event_code,
+                   amount=amount, by_user=user, reason=payload.reason,
+                   lesson_id=payload.lesson_id, source_type="manual")
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("reason", "XP berilmadi"))
+
+    if amount > roles.APPROVAL_ABOVE_XP:
+        _fraud_alert(db, "big_manual", student_id=s.id, user_id=user.id,
+                     transaction_id=res["transaction_id"],
+                     description=(f"{user.full_name} {amount} XP berdi: "
+                                  f"{payload.reason or 'sababsiz'}"))
+        db.commit()
+    return res
+
+
+@app.post("/api/gamification/award-bulk")
+def give_xp_bulk(
+    payload: schemas.XpBulkAward,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_AWARD)),
+):
+    """Butun guruhga bir vaqtda XP. Kimga berilgani va kimga
+    berilmagani aniq qaytadi."""
+    rule = _xp_rule(db, payload.event_code)
+    if not rule:
+        raise HTTPException(400, "Bunday XP qoidasi yo'q")
+    amount = rule.default_xp or 0
+
+    given, skipped = [], []
+    for sid in payload.student_ids:
+        s = db.query(models.Student).get(sid)
+        if not s:
+            continue
+        blocked = _can_award(db, user, s, rule, amount, payload.lesson_id)
+        if blocked:
+            skipped.append({"student_id": sid, "full_name": s.full_name,
+                            "reason": blocked})
+            continue
+        res = award_xp(db, student_id=sid, event_code=payload.event_code,
+                       amount=amount, by_user=user, reason=payload.reason,
+                       lesson_id=payload.lesson_id, source_type="manual")
+        if res.get("ok"):
+            given.append({"student_id": sid, "full_name": s.full_name})
+        else:
+            skipped.append({"student_id": sid, "full_name": s.full_name,
+                            "reason": res.get("reason", "—")})
+
+    if len(given) >= roles.MASS_AWARD_STUDENTS and amount > 20:
+        _fraud_alert(db, "mass_award", user_id=user.id,
+                     description=(f"{user.full_name} {len(given)} o'quvchiga "
+                                  f"{amount} XP dan berdi"))
+        db.commit()
+    return {"given": given, "skipped": skipped,
+            "total_xp": round(len(given) * amount, 1),
+            "rule": rule.name, "amount": amount}
+
+
+@app.post("/api/gamification/transactions/{tx_id}/reverse")
+def reverse_transaction(
+    tx_id: int,
+    payload: schemas.XpReverse,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Bekor qilish sababini yozing")
+    return reverse_xp(db, tx_id, by_user=user, reason=payload.reason)
+
+
+@app.post("/api/gamification/certificate")
+def award_certificate(
+    payload: schemas.CertAward,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    """Sertifikat XP'si. Bir raqamga ikki marta berilmaydi; yangi
+    yuqoriroq natijada standart holatda faqat FARQI beriladi."""
+    res = _xp_for_certificate(
+        db, payload.student_id, kind=payload.kind,
+        code=payload.event_code, cert_no=payload.cert_no, by_user=user,
+        mode=payload.mode or roles.CERT_MODE_DIFF, reason=payload.reason)
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("reason", "XP berilmadi"))
+    return res
+
+
+@app.get("/api/gamification/approvals")
+def list_approvals(
+    status_filter: str = "pending",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    q = db.query(models.XpApprovalRequest)
+    if status_filter:
+        q = q.filter(models.XpApprovalRequest.status == status_filter)
+    rows = q.order_by(models.XpApprovalRequest.created_at.desc()).limit(200).all()
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    return {"rows": [{
+        "id": r.id, "student_id": r.student_id,
+        "student": r.student.full_name if r.student else None,
+        "event_code": r.event_code, "amount": r.amount,
+        "reason": r.reason, "status": r.status,
+        "requested_by": users.get(r.requested_by),
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+    } for r in rows]}
+
+
+@app.post("/api/gamification/approvals/{rid}")
+def decide_approval(
+    rid: int,
+    payload: schemas.ApprovalDecision,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    r = db.query(models.XpApprovalRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov allaqachon hal qilingan")
+    r.status = "approved" if payload.approve else "rejected"
+    r.decided_by = user.id
+    r.decided_at = datetime.utcnow()
+    r.decision_note = payload.note
+    db.commit()
+    if payload.approve:
+        res = award_xp(db, student_id=r.student_id, event_code=r.event_code,
+                       amount=r.amount, by_user=user, reason=r.reason,
+                       source_type="manual")
+        return {"ok": True, "awarded": res}
+    return {"ok": True, "awarded": None}
+
+
+# ---- O'quvchi profili va leaderboard --------------------------------
+def _xp_history(db: Session, student_id: int, limit: int = 100) -> list:
+    rows = (db.query(models.XpTransaction)
+            .filter(models.XpTransaction.student_id == student_id)
+            .order_by(models.XpTransaction.created_at.desc())
+            .limit(limit).all())
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    rules = {r.event_code: r.name for r in db.query(models.XpRule).all()}
+    return [{
+        "id": t.id,
+        "date": t.created_at.isoformat() if t.created_at else None,
+        "amount": round(t.amount or 0, 1),
+        "event_code": t.event_code,
+        "label": (rules.get(t.event_code or "")
+                  or ("Bekor qilindi" if t.is_reversal else t.event_code)),
+        "category": t.category,
+        "category_label": roles.XP_CATEGORY_LABELS.get(t.category or "", "—"),
+        "tone": roles.XP_CATEGORY_TONE.get(t.category or "", "slate"),
+        "source_type": t.source_type,
+        "source_label": roles.XP_SOURCE_LABELS.get(t.source_type or "", "—"),
+        "by": users.get(t.awarded_by_user_id) or "Tizim",
+        "reason": t.reason,
+        "is_reversal": bool(t.is_reversal),
+        "lesson_id": t.lesson_id,
+        "exam_id": t.exam_id,
+    } for t in rows]
+
+
+def _student_ranks(db: Session, student_id: int) -> dict:
+    """Guruh, filial va mavsum kesimidagi o'rin."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        return {}
+    rows = (db.query(models.StudentGamification,
+                     models.Student)
+            .join(models.Student,
+                  models.Student.id == models.StudentGamification.student_id)
+            .all())
+
+    def place(items, key):
+        items = sorted(items, key=lambda r: -(getattr(r[0], key) or 0))
+        for i, r in enumerate(items, 1):
+            if r[1].id == student_id:
+                return i, len(items)
+        return None, len(items)
+
+    grp = [r for r in rows if r[1].group_id == s.group_id]
+    br = [r for r in rows if r[1].branch_id == s.branch_id]
+    g_rank, g_n = place(grp, "lifetime_xp")
+    b_rank, b_n = place(br, "lifetime_xp")
+    s_rank, s_n = place(rows, "season_xp")
+    return {
+        "group_rank": g_rank, "group_total": g_n,
+        "branch_rank": b_rank, "branch_total": b_n,
+        "season_rank": s_rank, "season_total": s_n,
+    }
+
+
+def _student_gamification(db: Session, s: models.Student) -> dict:
+    card = _gam_card(db, s)
+    streaks = (db.query(models.XpStreak)
+               .filter(models.XpStreak.student_id == s.id).all())
+    today = date.today()
+    w_start = today - timedelta(days=today.weekday())
+    m_start, _e = billing.month_bounds(today.year, today.month)
+
+    def total_since(d):
+        return round(float(
+            db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
+            .filter(models.XpTransaction.student_id == s.id,
+                    models.XpTransaction.created_at
+                    >= datetime.combine(d, datetime.min.time()))
+            .scalar() or 0), 1)
+
+    hist = (db.query(models.StudentLeagueHistory)
+            .filter(models.StudentLeagueHistory.student_id == s.id)
+            .order_by(models.StudentLeagueHistory.created_at.desc()).all())
+    lgs = {l.id: l for l in db.query(models.XpLeague).all()}
+
+    ach = (db.query(models.StudentAchievement, models.GamificationAchievement)
+           .join(models.GamificationAchievement,
+                 models.GamificationAchievement.id
+                 == models.StudentAchievement.achievement_id)
+           .filter(models.StudentAchievement.student_id == s.id)
+           .order_by(models.StudentAchievement.created_at.desc()).all())
+
+    card.update({
+        "group": s.group.name if s.group else None,
+        "branch": s.branch.name if s.branch else None,
+        "ranks": _student_ranks(db, s.id),
+        "streaks": [{
+            "kind": st.kind,
+            "label": roles.STREAK_LABELS.get(st.kind, st.kind),
+            "tone": roles.STREAK_TONE.get(st.kind, "slate"),
+            "current": st.current or 0, "longest": st.longest or 0,
+        } for st in streaks],
+        "xp_week": total_since(w_start),
+        "xp_month": total_since(m_start),
+        "history": _xp_history(db, s.id),
+        "league_history": [{
+            "id": h.id,
+            "from": lgs[h.from_league_id].name if h.from_league_id in lgs else None,
+            "to": lgs[h.to_league_id].name if h.to_league_id in lgs else None,
+            "icon": lgs[h.to_league_id].icon if h.to_league_id in lgs else None,
+            "xp": round(h.xp_at_promotion or 0, 1),
+            "reward_coin": h.reward_coin or 0,
+            "date": h.created_at.isoformat() if h.created_at else None,
+        } for h in hist],
+        "achievements": [{
+            "id": a.id, "key": g.key, "name": g.name,
+            "description": g.description, "icon": g.icon,
+            "tone": g.tone or "amber",
+            "date": a.created_at.isoformat() if a.created_at else None,
+        } for a, g in ach],
+        "empty_hint": ("Hali XP yig'ilmagan. Birinchi XP darsga "
+                       "qatnashish orqali olinadi."),
+    })
+    return card
+
+
+@app.get("/api/students/{student_id}/gamification")
+def student_gamification(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    mine = _student_of_user(db, user)
+    if user.role in (roles.STUDENT, roles.PARENT):
+        if not mine or mine.id != s.id:
+            raise HTTPException(403, "Bu ma'lumot sizga ko'rinmaydi")
+    elif user.role not in roles.XP_VIEW:
+        raise HTTPException(403, "Ruxsat yo'q")
+    return _student_gamification(db, s)
+
+
+@app.get("/api/me/gamification")
+def my_gamification(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    s = _student_of_user(db, user)
+    if not s:
+        raise HTTPException(404, "Sizning o'quvchi kartangiz topilmadi")
+    return _student_gamification(db, s)
+
+
+def _mask_name(full: str) -> str:
+    """Ommaviy leaderboardda maxfiylik: Jahongir Z."""
+    parts = (full or "").split()
+    if len(parts) < 2:
+        return full
+    return f"{parts[0]} {parts[1][0]}."
+
+
+@app.get("/api/gamification/leaderboard")
+def leaderboard(
+    scope: str = "lifetime",
+    branch_id: int | None = None,
+    group_id: int | None = None,
+    league: str | None = None,
+    limit: int = 50,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Reyting. O'quvchi va ota-ona ismlarni qisqartirilgan ko'radi."""
+    today = date.today()
+    since = None
+    if scope == "week":
+        since = today - timedelta(days=today.weekday())
+    elif scope == "month":
+        since, _e = billing.month_bounds(today.year, today.month)
+
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).filter(
+        models.Student.status.in_(["active", "trial"])).all()
+    if group_id:
+        students = [s for s in students if s.group_id == group_id]
+    ids = [s.id for s in students]
+    if not ids:
+        return {"rows": [], "scope": scope, "scopes": [
+            {"key": k, "label": lbl} for k, lbl in roles.LEADERBOARD_SCOPES]}
+
+    gam = {g.student_id: g for g in db.query(models.StudentGamification)
+           .filter(models.StudentGamification.student_id.in_(ids)).all()}
+    lgs = {l.id: l for l in db.query(models.XpLeague).all()}
+
+    period_xp: dict = {}
+    if since:
+        for t in (db.query(models.XpTransaction)
+                  .filter(models.XpTransaction.student_id.in_(ids),
+                          models.XpTransaction.created_at
+                          >= datetime.combine(since, datetime.min.time()))
+                  .all()):
+            period_xp[t.student_id] = period_xp.get(t.student_id, 0) + (t.amount or 0)
+
+    by_cat_cache: dict = {}
+    rows = []
+    for s in students:
+        g = gam.get(s.id)
+        lg = lgs.get(g.current_league_id) if g and g.current_league_id else None
+        if league and (not lg or lg.key != league):
+            continue
+        if scope == "season":
+            xp = g.season_xp if g else 0
+        elif since:
+            xp = period_xp.get(s.id, 0)
+        else:
+            xp = g.lifetime_xp if g else 0
+        cats = json.loads(g.by_category) if g and g.by_category else {}
+        by_cat_cache[s.id] = cats
+        rows.append({
+            "student_id": s.id,
+            "full_name": s.full_name,
+            "group": s.group.name if s.group else None,
+            "branch": s.branch.name if s.branch else None,
+            "league": lg.name if lg else None,
+            "league_icon": lg.icon if lg else None,
+            "league_color": lg.color if lg else None,
+            "level": g.current_level if g else 1,
+            "xp": round(xp or 0, 1),
+            "lifetime_xp": round((g.lifetime_xp if g else 0) or 0, 1),
+            "academic_xp": round(cats.get("academic", 0), 1),
+        })
+
+    # Tie-breaker: XP -> akademik XP -> ismi
+    rows.sort(key=lambda r: (-r["xp"], -r["academic_xp"], r["full_name"]))
+    rows = rows[:max(1, min(limit, 300))]
+
+    # Oldingi kunning snapshoti bilan solishtiramiz
+    prev = {sn.student_id: sn.rank for sn in
+            db.query(models.SeasonRankSnapshot)
+            .filter(models.SeasonRankSnapshot.scope == scope,
+                    models.SeasonRankSnapshot.taken_on < today)
+            .order_by(models.SeasonRankSnapshot.taken_on.desc())
+            .limit(500).all()}
+
+    public = user.role in (roles.STUDENT, roles.PARENT)
+    for i, r in enumerate(rows, 1):
+        r["rank"] = i
+        old = prev.get(r["student_id"])
+        r["change"] = (None if old is None else old - i)
+        r["is_new"] = old is None
+        if public:
+            r["full_name"] = _mask_name(r["full_name"])
+
+    # Bugungi snapshotni saqlaymiz - ertaga o'zgarish ko'rinsin
+    if not db.query(models.SeasonRankSnapshot).filter(
+            models.SeasonRankSnapshot.scope == scope,
+            models.SeasonRankSnapshot.taken_on == today).first():
+        for r in rows:
+            db.add(models.SeasonRankSnapshot(
+                scope=scope, student_id=r["student_id"], rank=r["rank"],
+                xp=r["xp"], taken_on=today))
+        db.commit()
+
+    return {
+        "rows": rows, "scope": scope,
+        "scopes": [{"key": k, "label": lbl}
+                   for k, lbl in roles.LEADERBOARD_SCOPES],
+        "leagues": [{"key": l.key, "name": l.name, "icon": l.icon}
+                    for l in _leagues(db)],
+        "masked": public,
+    }
+
+
+# ---- Admin paneli, fraud va analitika -------------------------------
+@app.get("/api/gamification/overview")
+def gamification_overview(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    today = date.today()
+    w_start = today - timedelta(days=today.weekday())
+
+    def total(since=None, manual=None):
+        q = db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
+        if since:
+            q = q.filter(models.XpTransaction.created_at
+                         >= datetime.combine(since, datetime.min.time()))
+        if manual is not None:
+            q = (q.filter(models.XpTransaction.source_type == "manual")
+                 if manual else
+                 q.filter(models.XpTransaction.source_type != "manual"))
+        return round(float(q.scalar() or 0), 1)
+
+    all_tx = db.query(models.XpTransaction).all()
+    manual = sum(t.amount or 0 for t in all_tx if t.source_type == "manual")
+    auto = sum(t.amount or 0 for t in all_tx if t.source_type != "manual")
+    grand = manual + auto
+
+    codes: dict = {}
+    for t in all_tx:
+        if t.event_code:
+            codes[t.event_code] = codes.get(t.event_code, 0) + 1
+    top_code = max(codes.items(), key=lambda x: x[1])[0] if codes else None
+    rules = {r.event_code: r.name for r in db.query(models.XpRule).all()}
+
+    gam = db.query(models.StudentGamification).all()
+    active = [g for g in gam if (g.lifetime_xp or 0) > 0]
+    lgs = {l.id: l for l in db.query(models.XpLeague).all()}
+    dist: dict = {}
+    for g in gam:
+        if g.current_league_id in lgs:
+            k = lgs[g.current_league_id].name
+            dist[k] = dist.get(k, 0) + 1
+
+    # Haftada kamida 1 XP olganlar
+    got_week = {t.student_id for t in all_tx
+                if t.created_at and t.created_at.date() >= w_start}
+    students = db.query(models.Student).filter(
+        models.Student.status.in_(["active", "trial"])).all()
+    silent = []
+    for s in students:
+        last = max((t.created_at for t in all_tx if t.student_id == s.id),
+                   default=None)
+        if not last or (datetime.utcnow() - last).days >= 14:
+            silent.append(s.full_name)
+
+    season = _active_season(db)
+    open_alerts = db.query(models.XpFraudAlert).filter(
+        models.XpFraudAlert.status == "open").count()
+
+    return {
+        "today": total(today),
+        "week": total(w_start),
+        "total": round(grand, 1),
+        "active_students": len(active),
+        "avg_per_student": (round(sum(g.lifetime_xp or 0 for g in active)
+                                  / len(active), 1) if active else 0),
+        "top_event": rules.get(top_code or "", top_code),
+        "manual_percent": (round(manual / grand * 100, 1) if grand else 0),
+        "auto_percent": (round(auto / grand * 100, 1) if grand else 0),
+        "season": season.name if season else None,
+        "season_participants": len([g for g in gam if (g.season_xp or 0) > 0]),
+        "league_distribution": [{"league": k, "students": v}
+                                for k, v in sorted(dist.items(),
+                                                   key=lambda x: -x[1])],
+        "weekly_active_percent": (round(len(got_week) / len(students) * 100, 1)
+                                  if students else 0),
+        "silent_14d": len(silent),
+        "silent_names": silent[:15],
+        "open_alerts": open_alerts,
+    }
+
+
+@app.get("/api/gamification/transactions")
+def list_transactions(
+    student_id: int | None = None,
+    event_code: str | None = None,
+    source_type: str | None = None,
+    branch_id: int | None = None,
+    limit: int = 200,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_VIEW)),
+):
+    q = db.query(models.XpTransaction)
+    if student_id:
+        q = q.filter(models.XpTransaction.student_id == student_id)
+    if event_code:
+        q = q.filter(models.XpTransaction.event_code == event_code)
+    if source_type:
+        q = q.filter(models.XpTransaction.source_type == source_type)
+    if branch_id:
+        q = q.filter(models.XpTransaction.branch_id == branch_id)
+    rows = (q.order_by(models.XpTransaction.created_at.desc())
+            .limit(max(1, min(limit, 1000))).all())
+
+    names = {s.id: s.full_name for s in db.query(models.Student).all()}
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    rules = {r.event_code: r.name for r in db.query(models.XpRule).all()}
+    return {"rows": [{
+        "id": t.id, "student_id": t.student_id,
+        "student": names.get(t.student_id),
+        "amount": round(t.amount or 0, 1),
+        "event_code": t.event_code,
+        "label": rules.get(t.event_code or "",
+                           "Bekor qilindi" if t.is_reversal else t.event_code),
+        "category": t.category,
+        "category_label": roles.XP_CATEGORY_LABELS.get(t.category or "", "—"),
+        "source_type": t.source_type,
+        "source_label": roles.XP_SOURCE_LABELS.get(t.source_type or "", "—"),
+        "by": users.get(t.awarded_by_user_id) or "Tizim",
+        "reason": t.reason,
+        "is_reversal": bool(t.is_reversal),
+        "reversed_id": t.reversed_transaction_id,
+        "date": t.created_at.isoformat() if t.created_at else None,
+    } for t in rows],
+        "can_reverse": user.role in roles.XP_ADMIN}
+
+
+@app.post("/api/gamification/recalculate")
+def recalculate_all(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    """Jamlanmani jurnaldan qayta hisoblaydi. Jurnal — haqiqat manbai,
+    shuning uchun bu amal hech qachon ma'lumot yo'qotmaydi."""
+    ids = {t.student_id for t in db.query(models.XpTransaction).all()}
+    for sid in ids:
+        _recalc_gamification(db, sid, commit=False)
+    db.commit()
+    audit.log(db, user, entity="xp", action="update",
+              note=f"{len(ids)} o'quvchining XP jamlanmasi qayta hisoblandi")
+    db.commit()
+    return {"ok": True, "students": len(ids)}
+
+
+@app.get("/api/gamification/fraud")
+def list_fraud(
+    status_filter: str = "open",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    q = db.query(models.XpFraudAlert)
+    if status_filter:
+        q = q.filter(models.XpFraudAlert.status == status_filter)
+    rows = q.order_by(models.XpFraudAlert.created_at.desc()).limit(200).all()
+    names = {s.id: s.full_name for s in db.query(models.Student).all()}
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    counts: dict = {}
+    for a in db.query(models.XpFraudAlert).all():
+        counts[a.status] = counts.get(a.status, 0) + 1
+    return {"rows": [{
+        "id": a.id, "alert_type": a.alert_type,
+        "label": roles.FRAUD_LABELS.get(a.alert_type, a.alert_type),
+        "severity": a.severity,
+        "tone": roles.FRAUD_TONE.get(a.severity, "slate"),
+        "student": names.get(a.student_id),
+        "user": users.get(a.user_id),
+        "description": a.description, "status": a.status,
+        "transaction_id": a.transaction_id,
+        "date": a.created_at.isoformat() if a.created_at else None,
+    } for a in rows],
+        "counts": counts,
+        "statuses": [{"key": k, "label": lbl}
+                     for k, lbl in roles.FRAUD_STATUSES]}
+
+
+@app.post("/api/gamification/fraud/{aid}")
+def review_fraud(
+    aid: int,
+    payload: schemas.FraudReview,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN)),
+):
+    a = db.query(models.XpFraudAlert).get(aid)
+    if not a:
+        raise HTTPException(404, "Topilmadi")
+    a.status = payload.status
+    a.review_note = payload.note
+    a.reviewed_by = user.id
+    a.resolved_at = datetime.utcnow()
+    db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/gamification/analytics")
+def gamification_analytics(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.XP_ADMIN, *roles.FINANCE_ACCESS)),
+):
+    """CEO uchun: filial, guruh va ustoz kesimida XP, hamda XP bilan
+    davomat va natija o'rtasidagi bog'liqlik."""
+    gam = {g.student_id: g for g in db.query(models.StudentGamification).all()}
+    students = db.query(models.Student).filter(
+        models.Student.status.in_(["active", "trial"])).all()
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    teachers = {t.id: t.full_name for t in db.query(models.Teacher).all()}
+
+    def agg(key_fn, label_fn):
+        out: dict = {}
+        for s in students:
+            k = key_fn(s)
+            if k is None:
+                continue
+            row = out.setdefault(k, {"students": 0, "xp": 0.0})
+            row["students"] += 1
+            row["xp"] += (gam[s.id].lifetime_xp or 0) if s.id in gam else 0
+        return sorted([{
+            "key": k, "label": label_fn(k),
+            "students": v["students"],
+            "total_xp": round(v["xp"], 1),
+            "avg_xp": round(v["xp"] / v["students"], 1) if v["students"] else 0,
+        } for k, v in out.items()], key=lambda r: -r["avg_xp"])
+
+    by_branch = agg(lambda s: s.branch_id, lambda k: branches.get(k, "—"))
+    by_group = agg(lambda s: s.group_id,
+                   lambda k: groups[k].name if k in groups else "—")
+    by_teacher = agg(
+        lambda s: groups[s.group_id].teacher_id if s.group_id in groups else None,
+        lambda k: teachers.get(k, "—"))
+
+    # XP va davomat bog'liqligi
+    pairs = []
+    for s in students:
+        g = gam.get(s.id)
+        if not g:
+            continue
+        att = (db.query(models.Attendance)
+               .filter(models.Attendance.student_id == s.id).all())
+        if not att:
+            continue
+        rate = sum(1 for a in att if a.present) / len(att) * 100
+        pairs.append((g.lifetime_xp or 0, rate))
+    corr = None
+    if len(pairs) >= 3:
+        n = len(pairs)
+        mx = sum(p[0] for p in pairs) / n
+        my = sum(p[1] for p in pairs) / n
+        num = sum((p[0] - mx) * (p[1] - my) for p in pairs)
+        dx = sum((p[0] - mx) ** 2 for p in pairs) ** 0.5
+        dy = sum((p[1] - my) ** 2 for p in pairs) ** 0.5
+        corr = round(num / (dx * dy), 2) if dx and dy else None
+
+    # Ustozlar qancha qo'lda XP berdi
+    manual: dict = {}
+    for t in (db.query(models.XpTransaction)
+              .filter(models.XpTransaction.source_type == "manual").all()):
+        if t.awarded_by_user_id:
+            manual[t.awarded_by_user_id] = manual.get(t.awarded_by_user_id, 0) \
+                + (t.amount or 0)
+    unames = {u.id: u.full_name for u in db.query(models.User).all()}
+
+    return {
+        "by_branch": by_branch,
+        "by_group": by_group[:20],
+        "weakest_groups": by_group[-5:][::-1] if len(by_group) > 5 else [],
+        "by_teacher": by_teacher,
+        "attendance_correlation": corr,
+        "correlation_hint": ("1 ga yaqin bo'lsa — XP ko'p bo'lgan o'quvchi "
+                             "darsga ham ko'p keladi."),
+        "manual_by_user": sorted([{
+            "user": unames.get(k, "—"), "xp": round(v, 1)
+        } for k, v in manual.items()], key=lambda r: -r["xp"])[:10],
+    }
+
+
+# Ligalar va XP qoidalari fayl oxirida to'ldiriladi: _seed_gamification
+# shu yerda allaqachon aniqlangan bo'ladi. Har safar ishga tushganda
+# YETISHMAYOTGANI qo'shiladi, mavjudiga tegilmaydi.
+try:
+    from sqlalchemy.orm import Session as _GS
+    with _GS(engine) as _db:
+        _seed_gamification(_db)
+except Exception:
+    pass
+
+
+# =====================================================================
+#  AVTOMAT XP — dars, test, streak
+#
+#  Ustoz hech narsa bosmaydi: yoqlama qo'yilsa XP o'zi qo'shiladi,
+#  test natijasi kiritilsa XP o'zi hisoblanadi.
+# =====================================================================
+def _xp_for_attendance(db: Session, lesson: models.Lesson,
+                       by_user: models.User | None = None) -> dict:
+    """Yoqlama qo'yilganda: kelgani uchun XP va streak."""
+    out = {"awarded": 0, "students": 0}
+    rows = (db.query(models.Attendance)
+            .filter(models.Attendance.lesson_id == lesson.id).all())
+    for a in rows:
+        if not a.present:
+            _break_streak(db, a.student_id, "attendance")
+            continue
+        r = award_xp(db, student_id=a.student_id,
+                     event_code="LESSON_PRESENT", by_user=by_user,
+                     lesson_id=lesson.id, source_type="lesson",
+                     source_id=lesson.id, on=lesson.date,
+                     idempotency_key=f"LESSON_PRESENT:{lesson.id}:{a.student_id}")
+        if r.get("ok"):
+            out["awarded"] += r["amount"]
+            out["students"] += 1
+        _bump_streak(db, a.student_id, "attendance", lesson.date,
+                     by_user=by_user)
+    db.commit()
+    return out
+
+
+def _bump_streak(db: Session, student_id: int, kind: str, on: date,
+                 by_user: models.User | None = None) -> int:
+    """Ketma-ketlikni oshiradi va bosqich bonusini BIR MARTA beradi."""
+    st = (db.query(models.XpStreak)
+          .filter(models.XpStreak.student_id == student_id,
+                  models.XpStreak.kind == kind).first())
+    if not st:
+        st = models.XpStreak(student_id=student_id, kind=kind,
+                             current=0, longest=0)
+        db.add(st)
+    if st.last_event_date == on:
+        return st.current                # bir kunda ikki marta sanamaymiz
+    st.current = (st.current or 0) + 1
+    st.longest = max(st.longest or 0, st.current)
+    st.last_event_date = on
+    db.flush()
+
+    table = (roles.ATTENDANCE_STREAKS if kind == "attendance"
+             else roles.HOMEWORK_STREAKS if kind == "homework" else [])
+    for need, code in table:
+        if st.current != need:
+            continue
+        seen = (db.query(models.XpStreakMilestone)
+                .filter(models.XpStreakMilestone.student_id == student_id,
+                        models.XpStreakMilestone.kind == kind,
+                        models.XpStreakMilestone.milestone == need).first())
+        if seen:
+            break
+        db.add(models.XpStreakMilestone(
+            student_id=student_id, kind=kind, milestone=need))
+        award_xp(db, student_id=student_id, event_code=code,
+                 by_user=by_user, source_type="streak", on=on,
+                 reason=f"Ketma-ket {need} ta",
+                 idempotency_key=f"{code}:{student_id}")
+        break
+    return st.current
+
+
+def _break_streak(db: Session, student_id: int, kind: str) -> None:
+    """Sababsiz qoldirilsa ketma-ketlik uziladi. XP KAMAYTIRILMAYDI —
+    shunchaki berilmaydi."""
+    st = (db.query(models.XpStreak)
+          .filter(models.XpStreak.student_id == student_id,
+                  models.XpStreak.kind == kind).first())
+    if st and st.current:
+        st.current = 0
+
+
+def _xp_for_exam(db: Session, exam: models.Exam,
+                 by_user: models.User | None = None) -> dict:
+    """Test natijasidan XP. Bitta natijaga FAQAT BITTA band qoidasi
+    ishlaydi: 92% olgan o'quvchiga +5, +10, +20 va +30 birga
+    berilmaydi, faqat +30 beriladi."""
+    out = {"awarded": 0.0, "students": 0}
+    results = (db.query(models.ExamResult)
+               .filter(models.ExamResult.exam_id == exam.id).all())
+
+    for r in results:
+        if r.absent or r.percent is None:
+            continue
+        pct = r.percent
+
+        # 1) Natija bandi — eng yuqorisi
+        code = None
+        for need, c in roles.TEST_XP_BANDS:
+            if pct >= need:
+                code = c
+                break
+        if code:
+            res = award_xp(db, student_id=r.student_id, event_code=code,
+                           by_user=by_user, exam_id=exam.id,
+                           source_type="exam", source_id=r.id, on=exam.date,
+                           idempotency_key=f"TESTBAND:{exam.id}:{r.student_id}")
+            if res.get("ok"):
+                out["awarded"] += res["amount"]
+                out["students"] += 1
+
+        # 2) O'sish bonusi — oldingi testga nisbatan, ham faqat bittasi
+        prev = (db.query(models.ExamResult)
+                .join(models.Exam, models.Exam.id == models.ExamResult.exam_id)
+                .filter(models.ExamResult.student_id == r.student_id,
+                        models.ExamResult.exam_id != exam.id,
+                        models.ExamResult.percent.isnot(None),
+                        models.Exam.date <= exam.date)
+                .order_by(models.Exam.date.desc()).first())
+        if prev and prev.percent is not None:
+            gain = pct - prev.percent
+            gcode = None
+            for need, c in roles.TEST_IMPROVEMENT_BANDS:
+                if gain >= need:
+                    gcode = c
+                    break
+            if gcode:
+                res = award_xp(
+                    db, student_id=r.student_id, event_code=gcode,
+                    by_user=by_user, exam_id=exam.id, source_type="exam",
+                    source_id=r.id, on=exam.date,
+                    reason=f"{prev.percent}% dan {pct}% ga",
+                    idempotency_key=f"TESTGAIN:{exam.id}:{r.student_id}")
+                if res.get("ok"):
+                    out["awarded"] += res["amount"]
+
+        # 3) Mock: qatnashgani uchun
+        if exam.kind == "mock":
+            award_xp(db, student_id=r.student_id,
+                     event_code="MOCK_EXAM_PARTICIPATION", by_user=by_user,
+                     exam_id=exam.id, source_type="exam", source_id=r.id,
+                     on=exam.date,
+                     idempotency_key=f"MOCKPART:{exam.id}:{r.student_id}")
+
+        # 4) Ichki yakuniy imtihon
+        if exam.kind == "end":
+            award_xp(db, student_id=r.student_id,
+                     event_code="INTERNAL_EXAM_PASSED", by_user=by_user,
+                     exam_id=exam.id, source_type="exam", source_id=r.id,
+                     on=exam.date,
+                     idempotency_key=f"ENDPASS:{exam.id}:{r.student_id}")
+            if pct >= 90:
+                award_xp(db, student_id=r.student_id,
+                         event_code="INTERNAL_EXAM_EXCELLENT",
+                         by_user=by_user, exam_id=exam.id,
+                         source_type="exam", source_id=r.id, on=exam.date,
+                         idempotency_key=f"ENDEXC:{exam.id}:{r.student_id}")
+
+        # 5) Unit tugatildi
+        if exam.kind == "unit" and pct >= 60:
+            award_xp(db, student_id=r.student_id,
+                     event_code="UNIT_COMPLETED", by_user=by_user,
+                     exam_id=exam.id, source_type="exam", source_id=r.id,
+                     on=exam.date,
+                     reason=f"Unit {exam.unit_no or ''}".strip(),
+                     idempotency_key=f"UNIT:{exam.id}:{r.student_id}")
+
+    # 6) Mock uchun Top 3
+    if exam.kind == "mock":
+        ranked = sorted([r for r in results
+                         if not r.absent and r.band is not None],
+                        key=lambda r: -(r.band or 0))
+        for i, r in enumerate(ranked[:3], 1):
+            award_xp(db, student_id=r.student_id,
+                     event_code=f"MOCK_EXAM_TOP_{i}", by_user=by_user,
+                     exam_id=exam.id, source_type="exam", source_id=r.id,
+                     on=exam.date, reason=f"Mock bo'yicha {i}-o'rin",
+                     idempotency_key=f"MOCKTOP:{exam.id}:{r.student_id}")
+
+    db.commit()
+    return out
+
+
+def _xp_for_certificate(db: Session, student_id: int, *, kind: str,
+                        code: str, cert_no: str | None,
+                        by_user: models.User, mode: str = roles.CERT_MODE_DIFF,
+                        reason: str | None = None) -> dict:
+    """Sertifikat XP'si. Bir sertifikat raqamiga qayta XP berilmaydi.
+    Yangi va yuqoriroq natija olinsa — standart holatda faqat FARQI
+    beriladi."""
+    if cert_no:
+        used = (db.query(models.XpTransaction)
+                .filter(models.XpTransaction.idempotency_key
+                        == f"CERT:{cert_no}").first())
+        if used:
+            _fraud_alert(db, "cert_reuse", student_id=student_id,
+                         user_id=by_user.id, transaction_id=used.id,
+                         description=f"Sertifikat raqami qayta ishlatildi: {cert_no}")
+            db.commit()
+            return {"ok": False, "skipped": True,
+                    "reason": "Bu sertifikat raqamiga XP allaqachon berilgan"}
+
+    ladder = roles.CERT_RULES.get(kind, [])
+    rule = _xp_rule(db, code)
+    if not rule:
+        raise HTTPException(400, "Bunday sertifikat qoidasi yo'q")
+    value = rule.default_xp or 0
+
+    if mode == roles.CERT_MODE_DIFF and ladder:
+        # Shu turdagi eng yuqori oldingi natija
+        prev_best = 0
+        for old in (db.query(models.XpTransaction)
+                    .filter(models.XpTransaction.student_id == student_id,
+                            models.XpTransaction.event_code.in_(ladder),
+                            models.XpTransaction.is_reversal == 0).all()):
+            prev_best = max(prev_best, old.amount or 0)
+        if prev_best:
+            value = max(0, value - prev_best)
+            if value == 0:
+                return {"ok": False, "skipped": True,
+                        "reason": ("Oldingi sertifikat XP'si bundan yuqori "
+                                   "yoki teng — qo'shimcha XP berilmaydi")}
+
+    return award_xp(db, student_id=student_id, event_code=code,
+                    amount=value, by_user=by_user,
+                    source_type="certificate", reason=reason,
+                    idempotency_key=(f"CERT:{cert_no}" if cert_no else None),
+                    force=True)

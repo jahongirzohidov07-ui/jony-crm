@@ -1349,3 +1349,257 @@ class NotifyTemplate(Base):
     active = Column(Integer, default=1)
     days_before = Column(Integer, default=0)   # to'lov eslatmasi uchun
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+# =====================================================================
+#  GAMIFICATION: XP, LIGA, SEASON
+#
+#  XP balansi bitta ustunni o'zgartirish orqali yuritilmaydi. Asosiy
+#  manba — append-only tranzaksiya jurnali. Summary jadvali faqat
+#  tezlik uchun: uni har doim jurnaldan qayta hisoblash mumkin.
+# =====================================================================
+class XpLeague(Base):
+    """Liga. Chegara, rang va mukofot admin panelidan boshqariladi —
+    kodda qattiq yozilmagan."""
+    __tablename__ = "xp_leagues"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String, nullable=False)
+    rank = Column(Integer, nullable=False, default=1)
+    minimum_xp = Column(Integer, nullable=False, default=0)
+    maximum_xp = Column(Integer, nullable=True)      # None = cheklanmagan
+    color = Column(String, nullable=True)
+    icon = Column(String, nullable=True)
+    background_image = Column(Text, nullable=True)
+    description = Column(Text, nullable=True)
+    reward_coin = Column(Integer, default=0)
+    reward_badge_id = Column(Integer, nullable=True)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class XpSeason(Base):
+    """Mavsum. Season XP yangi mavsumda 0 dan boshlanadi, Lifetime XP
+    esa hech qachon reset qilinmaydi."""
+    __tablename__ = "xp_seasons"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    start_date = Column(Date, nullable=False, default=date.today)
+    end_date = Column(Date, nullable=True)
+    is_active = Column(Integer, default=1)
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class XpRule(Base):
+    """XP berish qoidasi. Qiymati o'zgarsa ESKI tranzaksiyalar
+    o'zgarmaydi — ular o'sha paytdagi qiymat bilan yozilgan."""
+    __tablename__ = "xp_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_code = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    category = Column(String, nullable=False, default="academic")
+    default_xp = Column(Integer, default=0)
+    default_coin = Column(Integer, default=0)
+    maximum_per_lesson = Column(Integer, nullable=True)
+    maximum_per_day = Column(Integer, nullable=True)
+    maximum_per_week = Column(Integer, nullable=True)
+    maximum_per_month = Column(Integer, nullable=True)
+    mode = Column(String, default="automatic")       # automatic | manual
+    requires_approval = Column(Integer, default=0)
+    allowed_roles = Column(Text, nullable=True)      # vergul bilan
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class XpTransaction(Base):
+    """Append-only XP jurnali. Yozuv O'CHIRILMAYDI — xato bo'lsa
+    manfiy reversal yoziladi. Shunda to'liq tarix saqlanadi."""
+    __tablename__ = "xp_transactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    amount = Column(Float, nullable=False, default=0)   # musbat yoki manfiy
+    category = Column(String, nullable=True, index=True)
+    event_code = Column(String, nullable=True, index=True)
+    xp_rule_id = Column(Integer, ForeignKey("xp_rules.id"), nullable=True)
+    source_type = Column(String, nullable=True)
+    source_id = Column(Integer, nullable=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=True)
+    season_id = Column(Integer, ForeignKey("xp_seasons.id"),
+                       nullable=True, index=True)
+    awarded_by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    approved_by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    reason = Column(Text, nullable=True)
+    meta = Column(Text, nullable=True)                 # JSON
+    # Takror yozuvni to'xtatadi: bir xil kalit bilan ikkinchi marta
+    # yozib bo'lmaydi (masalan bitta darsga ikki marta XP).
+    idempotency_key = Column(String, unique=True, index=True, nullable=True)
+    reversed_transaction_id = Column(Integer,
+                                     ForeignKey("xp_transactions.id"),
+                                     nullable=True)
+    is_reversal = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class StudentGamification(Base):
+    """Tezlik uchun jamlanma. Har doim jurnaldan qayta hisoblanishi
+    mumkin — haqiqat manbai jurnalda."""
+    __tablename__ = "student_gamification"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        unique=True, index=True, nullable=False)
+    lifetime_xp = Column(Float, default=0, index=True)
+    season_xp = Column(Float, default=0, index=True)
+    season_id = Column(Integer, ForeignKey("xp_seasons.id"), nullable=True)
+    current_league_id = Column(Integer, ForeignKey("xp_leagues.id"),
+                               nullable=True, index=True)
+    current_level = Column(Integer, default=1)
+    # Kategoriya kesimidagi XP (JSON)
+    by_category = Column(Text, nullable=True)
+    last_xp_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class StudentLeagueHistory(Base):
+    """Ligaga ko'tarilish tarixi. Liga tushmaydi — Lifetime XP
+    kamaymaydi."""
+    __tablename__ = "student_league_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    from_league_id = Column(Integer, ForeignKey("xp_leagues.id"), nullable=True)
+    to_league_id = Column(Integer, ForeignKey("xp_leagues.id"), nullable=True)
+    xp_at_promotion = Column(Float, default=0)
+    reward_coin = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class XpStreak(Base):
+    """O'quvchining ketma-ketligi: davomat, homework, test."""
+    __tablename__ = "xp_streaks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    kind = Column(String, nullable=False)          # attendance|homework|test
+    current = Column(Integer, default=0)
+    longest = Column(Integer, default=0)
+    last_event_date = Column(Date, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class XpStreakMilestone(Base):
+    """Bosqich bonusi bir marta beriladi: 10 ga yetganda 5 lik bonus
+    qaytadan berilmaydi."""
+    __tablename__ = "xp_streak_milestones"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    kind = Column(String, nullable=False)
+    milestone = Column(Integer, nullable=False)
+    awarded_at = Column(DateTime, default=datetime.utcnow)
+
+
+class GamificationAchievement(Base):
+    """Yutuq turi (badge)."""
+    __tablename__ = "gamification_achievements"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    icon = Column(String, nullable=True)
+    tone = Column(String, nullable=True)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class StudentAchievement(Base):
+    __tablename__ = "student_achievements"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    achievement_id = Column(Integer,
+                            ForeignKey("gamification_achievements.id"),
+                            nullable=False)
+    note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class XpApprovalRequest(Base):
+    """Katta qo'lda XP tasdiqdan o'tadi."""
+    __tablename__ = "xp_approval_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
+    event_code = Column(String, nullable=True)
+    amount = Column(Float, default=0)
+    reason = Column(Text, nullable=True)
+    attachment_id = Column(Integer, ForeignKey("attachments.id"), nullable=True)
+    requested_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    status = Column(String, default="pending")     # pending|approved|rejected
+    decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decided_at = Column(DateTime, nullable=True)
+    decision_note = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class XpFraudAlert(Base):
+    """Shubhali XP harakati."""
+    __tablename__ = "xp_fraud_alerts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    alert_type = Column(String, nullable=False)
+    severity = Column(String, nullable=False, default="LOW")
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    transaction_id = Column(Integer, ForeignKey("xp_transactions.id"),
+                            nullable=True)
+    description = Column(Text, nullable=True)
+    meta = Column(Text, nullable=True)
+    status = Column(String, default="open")
+    reviewed_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    review_note = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    resolved_at = Column(DateTime, nullable=True)
+
+
+class SeasonRankSnapshot(Base):
+    """Leaderboarddagi o'rin o'zgarishini ko'rsatish uchun."""
+    __tablename__ = "season_rank_snapshots"
+
+    id = Column(Integer, primary_key=True, index=True)
+    scope = Column(String, nullable=False)          # lifetime|season|week|month
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    rank = Column(Integer, nullable=False)
+    xp = Column(Float, default=0)
+    taken_on = Column(Date, nullable=False, default=date.today, index=True)

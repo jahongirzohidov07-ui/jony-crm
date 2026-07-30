@@ -1234,3 +1234,76 @@ class RewardDecision(BaseModel):
 class LinkAccount(BaseModel):
     username: str
     password: str
+
+
+# ---------- Gamification ----------
+class XpAward(BaseModel):
+    student_id: int
+    event_code: str
+    amount: Optional[float] = None
+    reason: Optional[str] = None
+    lesson_id: Optional[int] = None
+
+
+class XpBulkAward(BaseModel):
+    student_ids: List[int]
+    event_code: str
+    reason: Optional[str] = None
+    lesson_id: Optional[int] = None
+
+
+class XpReverse(BaseModel):
+    reason: str
+
+
+class XpRuleUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+    default_xp: Optional[int] = None
+    default_coin: Optional[int] = None
+    maximum_per_lesson: Optional[int] = None
+    maximum_per_day: Optional[int] = None
+    maximum_per_week: Optional[int] = None
+    maximum_per_month: Optional[int] = None
+    mode: Optional[str] = None
+    requires_approval: Optional[bool] = None
+    allowed_roles: Optional[str] = None
+    is_active: Optional[bool] = None
+
+
+class LeagueUpdate(BaseModel):
+    name: Optional[str] = None
+    minimum_xp: Optional[int] = None
+    maximum_xp: Optional[int] = None
+    color: Optional[str] = None
+    icon: Optional[str] = None
+    description: Optional[str] = None
+    reward_coin: Optional[int] = None
+    is_active: Optional[bool] = None
+
+
+class SeasonCreate(BaseModel):
+    name: str
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    note: Optional[str] = None
+
+
+class CertAward(BaseModel):
+    student_id: int
+    kind: str                      # cefr | ielts
+    event_code: str
+    cert_no: Optional[str] = None
+    reason: Optional[str] = None
+    mode: Optional[str] = None     # diff | full
+
+
+class ApprovalDecision(BaseModel):
+    approve: bool
+    note: Optional[str] = None
+
+
+class FraudReview(BaseModel):
+    status: str
+    note: Optional[str] = None

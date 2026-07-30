@@ -1902,3 +1902,318 @@ REDEEM_STATUS_TONE = {k: t for k, _, t in REDEEM_STATUSES}
 # Sovg'ani kim beradi
 REWARD_GIVE = FULL_ACCESS + [ACADEMIC_HEAD, SALES_MANAGER, ADMINISTRATOR,
                              SUPPORT_TEACHER, HEAD_SUPPORT]
+
+
+# =====================================================================
+#  GAMIFICATION: XP, LEVEL, LIGA, SEASON
+#
+#  Coin va XP bir xil narsa emas:
+#    COIN — sarflanadigan ichki valuta, kamayishi mumkin.
+#    XP   — o'quvchining mehnati va intizomi. Sarflanmaydi, jarima
+#           uchun kamaytirilmaydi. Faqat xato yozuv reversal orqali
+#           qaytariladi.
+#
+#  Bu yerdagi ro'yxatlar faqat BOSHLANG'ICH holat: bir marta bazaga
+#  tushadi, keyin admin panelidan boshqariladi.
+# =====================================================================
+XP_CATEGORIES = [
+    ("academic", "Akademik", "sky"),
+    ("attendance", "Davomat", "emerald"),
+    ("activity", "Faollik", "amber"),
+    ("consistency", "Muntazamlik", "violet"),
+    ("community", "Jamoa", "teal"),
+    ("achievement", "Yutuqlar", "rose"),
+]
+XP_CATEGORY_LABELS = {k: lbl for k, lbl, _ in XP_CATEGORIES}
+XP_CATEGORY_TONE = {k: t for k, _, t in XP_CATEGORIES}
+
+# ---- Ligalar --------------------------------------------------------
+# rank, kalit, nom, min XP, max XP (None = cheklanmagan), rang,
+# ikonka, mukofot coin
+XP_LEAGUES = [
+    (1, "newcomer", "Newcomer", 0, 99, "#f1f5f9", "🌱", 0),
+    (2, "amateur", "Amateur", 100, 199, "#d4d4d8", "🔰", 1),
+    (3, "wood", "Wood", 200, 399, "#a8a29e", "🪵", 2),
+    (4, "stone", "Stone", 400, 599, "#78716c", "🪨", 4),
+    (5, "bronze", "Bronze", 600, 999, "#d97706", "🥉", 6),
+    (6, "silver", "Silver", 1000, 1499, "#94a3b8", "🥈", 10),
+    (7, "gold", "Gold", 1500, 1999, "#f59e0b", "🥇", 15),
+    (8, "crystal", "Crystal", 2000, 2999, "#8b5cf6", "💎", 20),
+    (9, "elite", "Elite", 3000, 4999, "#ef4444", "⚔️", 25),
+    (10, "master", "Master", 5000, 7999, "#22c55e", "🎓", 30),
+    (11, "titan", "Titan", 8000, 11999, "#0ea5e9", "🗿", 50),
+    (12, "champion", "Champion", 12000, 19999, "#eab308", "🏆", 60),
+    (13, "legendary", "Legendary", 20000, 49999, "#991b1b", "🔥", 80),
+    (14, "goat", "G.O.A.T", 50000, None, "#0f172a", "🐐", 100),
+]
+LEAGUE_LABELS = {k: lbl for _r, k, lbl, _a, _b, _c, _i, _co in XP_LEAGUES}
+
+# Level = floor(Lifetime XP / XP_PER_LEVEL) + 1
+XP_PER_LEVEL = 100
+
+
+def level_for(xp: float) -> int:
+    return int(max(0, xp) // XP_PER_LEVEL) + 1
+
+
+def level_progress(xp: float) -> dict:
+    """Joriy levelning ichidagi progress va keyingi levelgacha qolgan XP."""
+    xp = max(0, xp)
+    lvl = level_for(xp)
+    into = xp - (lvl - 1) * XP_PER_LEVEL
+    return {
+        "level": lvl,
+        "into_level": round(into, 1),
+        "need": XP_PER_LEVEL,
+        "to_next": round(XP_PER_LEVEL - into, 1),
+        "percent": round(into / XP_PER_LEVEL * 100, 1),
+    }
+
+
+# ---- Manba turlari --------------------------------------------------
+XP_SOURCE_TYPES = [
+    ("lesson", "Dars"),
+    ("exam", "Imtihon"),
+    ("homework", "Uyga vazifa"),
+    ("certificate", "Sertifikat"),
+    ("competition", "Musobaqa"),
+    ("event", "Tadbir"),
+    ("streak", "Streak"),
+    ("manual", "Qo'lda"),
+    ("system", "Tizim"),
+    ("reversal", "Bekor qilish"),
+]
+XP_SOURCE_LABELS = dict(XP_SOURCE_TYPES)
+
+XP_MODES = [("automatic", "Avtomat"), ("manual", "Qo'lda")]
+
+# ---- Qoidalar katalogi ---------------------------------------------
+# event_code, nom, kategoriya, XP, coin, dars/kun/hafta/oy chegarasi,
+# rejim, tasdiq kerakmi
+XP_RULES = [
+    # --- Dars va davomat ---
+    ("LESSON_PRESENT", "Darsga qatnashdi", "attendance", 10, 0,
+     1, None, None, None, "automatic", False),
+    ("LESSON_ON_TIME", "Darsga vaqtida keldi", "attendance", 2, 0,
+     1, None, None, None, "automatic", False),
+    # --- Uyga vazifa ---
+    ("HOMEWORK_COMPLETE", "Uyga vazifa to'liq bajarildi", "academic", 8, 0,
+     1, None, None, None, "automatic", False),
+    ("HOMEWORK_PARTIAL", "Uyga vazifa qisman bajarildi", "academic", 3, 0,
+     1, None, None, None, "automatic", False),
+    ("HOMEWORK_EXCELLENT", "Uyga vazifa juda sifatli", "academic", 3, 0,
+     1, None, None, None, "manual", False),
+    # --- Darsda faollik ---
+    ("ACTIVE_PARTICIPATION", "Darsda faol qatnashdi", "activity", 3, 0,
+     1, None, None, None, "manual", False),
+    ("CLASS_CHALLENGE_WINNER", "Dars challenge g'olibi", "activity", 5, 0,
+     1, None, None, None, "manual", False),
+    ("HELPED_CLASSMATE", "Boshqa o'quvchiga yordam berdi", "community", 2, 0,
+     1, None, 2, None, "manual", False),
+    ("PRESENTATION_COMPLETED", "Presentation yoki loyiha topshirdi",
+     "activity", 10, 0, 1, None, None, None, "manual", False),
+    # --- Haftalik test ---
+    ("WEEKLY_TEST_60_69", "Test natijasi 60-69%", "academic", 5, 0,
+     None, None, None, None, "automatic", False),
+    ("WEEKLY_TEST_70_79", "Test natijasi 70-79%", "academic", 10, 0,
+     None, None, None, None, "automatic", False),
+    ("WEEKLY_TEST_80_89", "Test natijasi 80-89%", "academic", 20, 0,
+     None, None, None, None, "automatic", False),
+    ("WEEKLY_TEST_90_100", "Test natijasi 90-100%", "academic", 30, 0,
+     None, None, None, None, "automatic", False),
+    # --- O'sish ---
+    ("WEEKLY_MOST_IMPROVED", "Haftaning eng ko'p o'sgan o'quvchisi",
+     "academic", 20, 0, None, None, 1, None, "automatic", False),
+    ("MONTHLY_MOST_IMPROVED", "Oyning eng ko'p o'sgan o'quvchisi",
+     "academic", 60, 0, None, None, None, 1, "automatic", False),
+    ("TEST_IMPROVEMENT_SMALL", "Testda 5-9% o'sish", "academic", 5, 0,
+     None, None, None, None, "automatic", False),
+    ("TEST_IMPROVEMENT_MEDIUM", "Testda 10-19% o'sish", "academic", 15, 0,
+     None, None, None, None, "automatic", False),
+    ("TEST_IMPROVEMENT_HIGH", "Testda 20%+ o'sish", "academic", 30, 0,
+     None, None, None, None, "automatic", False),
+    # --- Davomiylik ---
+    ("FULL_ATTENDANCE_WEEK", "Hafta davomida barcha darslarda",
+     "consistency", 20, 0, None, None, 1, None, "automatic", False),
+    ("PERFECT_ATTENDANCE_MONTH", "Oy davomida sababsiz qoldirmadi",
+     "consistency", 50, 0, None, None, None, 1, "automatic", False),
+    ("HOMEWORK_FULL_WEEK", "Hafta davomida barcha uyga vazifalar",
+     "consistency", 15, 0, None, None, 1, None, "automatic", False),
+    ("CONSISTENT_STUDENT_MONTH", "Oyda davomat va homework 90%+",
+     "consistency", 50, 0, None, None, None, 1, "automatic", False),
+    # --- Streak ---
+    ("ATTENDANCE_STREAK_5", "Ketma-ket 5 ta dars", "consistency", 15, 0,
+     None, None, None, None, "automatic", False),
+    ("ATTENDANCE_STREAK_10", "Ketma-ket 10 ta dars", "consistency", 30, 0,
+     None, None, None, None, "automatic", False),
+    ("ATTENDANCE_STREAK_20", "Ketma-ket 20 ta dars", "consistency", 75, 0,
+     None, None, None, None, "automatic", False),
+    ("ATTENDANCE_STREAK_40", "Ketma-ket 40 ta dars", "consistency", 150, 0,
+     None, None, None, None, "automatic", False),
+    ("HOMEWORK_STREAK_5", "Ketma-ket 5 ta homework", "consistency", 15, 0,
+     None, None, None, None, "automatic", False),
+    ("HOMEWORK_STREAK_10", "Ketma-ket 10 ta homework", "consistency", 30, 0,
+     None, None, None, None, "automatic", False),
+    ("HOMEWORK_STREAK_20", "Ketma-ket 20 ta homework", "consistency", 75, 0,
+     None, None, None, None, "automatic", False),
+    # --- Kurs progressi ---
+    ("UNIT_COMPLETED", "Unit tugatildi", "academic", 25, 0,
+     None, None, None, None, "automatic", False),
+    ("MODULE_COMPLETED", "Modul tugatildi", "academic", 50, 0,
+     None, None, None, None, "automatic", False),
+    ("LEVEL_COMPLETED", "Til darajasi tugatildi", "academic", 150, 0,
+     None, None, None, None, "automatic", False),
+    ("INTERNAL_EXAM_PASSED", "Ichki yakuniy imtihondan o'tdi",
+     "academic", 80, 0, None, None, None, None, "automatic", False),
+    ("INTERNAL_EXAM_EXCELLENT", "Ichki imtihondan 90%+", "academic", 50, 0,
+     None, None, None, None, "automatic", False),
+    # --- Mock ---
+    ("MOCK_EXAM_PARTICIPATION", "Mock examda qatnashdi", "academic", 10, 0,
+     None, None, None, None, "automatic", False),
+    ("MOCK_EXAM_GOOD_RESULT", "Mock natijasi minimumdan yuqori",
+     "academic", 30, 0, None, None, None, None, "automatic", False),
+    ("MOCK_EXAM_IMPROVEMENT", "Mock natijasida sezilarli o'sish",
+     "academic", 50, 0, None, None, None, None, "automatic", False),
+    ("MOCK_EXAM_TOP_1", "Mock bo'yicha 1-o'rin", "achievement", 100, 0,
+     None, None, None, None, "automatic", False),
+    ("MOCK_EXAM_TOP_2", "Mock bo'yicha 2-o'rin", "achievement", 70, 0,
+     None, None, None, None, "automatic", False),
+    ("MOCK_EXAM_TOP_3", "Mock bo'yicha 3-o'rin", "achievement", 50, 0,
+     None, None, None, None, "automatic", False),
+    # --- CEFR ---
+    ("CEFR_A2", "CEFR A2", "achievement", 150, 0,
+     None, None, None, None, "manual", True),
+    ("CEFR_B1", "CEFR B1", "achievement", 250, 0,
+     None, None, None, None, "manual", True),
+    ("CEFR_B2", "CEFR B2", "achievement", 400, 0,
+     None, None, None, None, "manual", True),
+    ("CEFR_C1", "CEFR C1", "achievement", 600, 0,
+     None, None, None, None, "manual", True),
+    # --- IELTS ---
+    ("IELTS_5_0", "IELTS 5.0", "achievement", 150, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_5_5", "IELTS 5.5", "achievement", 250, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_6_0", "IELTS 6.0", "achievement", 350, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_6_5", "IELTS 6.5", "achievement", 500, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_7_0", "IELTS 7.0", "achievement", 700, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_7_5", "IELTS 7.5", "achievement", 900, 0,
+     None, None, None, None, "manual", True),
+    ("IELTS_8_0_PLUS", "IELTS 8.0+", "achievement", 1200, 0,
+     None, None, None, None, "manual", True),
+    # --- Musobaqa ---
+    ("BRANCH_COMPETITION_WINNER", "Filial musobaqasi g'olibi",
+     "achievement", 50, 0, None, None, None, None, "manual", False),
+    ("CITY_COMPETITION_WINNER", "Shahar musobaqasi g'olibi",
+     "achievement", 100, 0, None, None, None, None, "manual", False),
+    ("REGIONAL_COMPETITION_WINNER", "Viloyat musobaqasi g'olibi",
+     "achievement", 200, 0, None, None, None, None, "manual", True),
+    ("NATIONAL_COMPETITION_WINNER", "Respublika musobaqasi g'olibi",
+     "achievement", 500, 0, None, None, None, None, "manual", True),
+    ("INTERNATIONAL_COMPETITION_WINNER", "Xalqaro musobaqa g'olibi",
+     "achievement", 1000, 0, None, None, None, None, "manual", True),
+    # --- Tadbir va jamoa ---
+    ("EVENT_PARTICIPATION", "Tadbirda qatnashdi", "community", 5, 0,
+     None, None, None, None, "manual", False),
+    ("EVENT_VOLUNTEER", "Tadbirda volontyor bo'ldi", "community", 20, 0,
+     None, None, None, None, "manual", False),
+    ("TEAM_PROJECT_COMPLETED", "Jamoaviy loyihani tugatdi",
+     "community", 15, 0, None, None, None, None, "manual", False),
+]
+
+# Test natijasidan XP: faqat BITTA qoida ishlaydi (eng yuqorisi)
+TEST_XP_BANDS = [
+    (90, "WEEKLY_TEST_90_100"),
+    (80, "WEEKLY_TEST_80_89"),
+    (70, "WEEKLY_TEST_70_79"),
+    (60, "WEEKLY_TEST_60_69"),
+]
+# O'sish bonusi: ham faqat bittasi
+TEST_IMPROVEMENT_BANDS = [
+    (20, "TEST_IMPROVEMENT_HIGH"),
+    (10, "TEST_IMPROVEMENT_MEDIUM"),
+    (5, "TEST_IMPROVEMENT_SMALL"),
+]
+# Streak milestone: bosqichga yetganda bir marta
+ATTENDANCE_STREAKS = [(40, "ATTENDANCE_STREAK_40"), (20, "ATTENDANCE_STREAK_20"),
+                      (10, "ATTENDANCE_STREAK_10"), (5, "ATTENDANCE_STREAK_5")]
+HOMEWORK_STREAKS = [(20, "HOMEWORK_STREAK_20"), (10, "HOMEWORK_STREAK_10"),
+                    (5, "HOMEWORK_STREAK_5")]
+
+# Sertifikat XP: yangi natija olinganda faqat FARQI beriladi
+CERT_RULES = {
+    "cefr": ["CEFR_A2", "CEFR_B1", "CEFR_B2", "CEFR_C1"],
+    "ielts": ["IELTS_5_0", "IELTS_5_5", "IELTS_6_0", "IELTS_6_5",
+              "IELTS_7_0", "IELTS_7_5", "IELTS_8_0_PLUS"],
+}
+CERT_MODE_DIFF = "diff"       # default: faqat farqi
+CERT_MODE_FULL = "full"
+
+# Musobaqada o'rin bo'yicha koeffitsiyent
+PLACE_MULTIPLIER = {1: 1.0, 2: 0.75, 3: 0.5}
+
+# ---- Ustoz chegaralari ---------------------------------------------
+TEACHER_XP_PER_WEEK = 20      # bitta o'quvchiga haftasiga
+TEACHER_XP_PER_LESSON = 10    # bitta darsda
+APPROVAL_ABOVE_XP = 100       # bundan katta qo'lda XP tasdiq talab qiladi
+
+# Ustoz qaysi qoidalardan XP bera oladi (Quick XP tugmalari)
+TEACHER_QUICK_XP = [
+    "ACTIVE_PARTICIPATION", "HOMEWORK_EXCELLENT",
+    "CLASS_CHALLENGE_WINNER", "HELPED_CLASSMATE",
+    "PRESENTATION_COMPLETED",
+]
+
+# ---- Streaklar ------------------------------------------------------
+STREAK_KINDS = [
+    ("attendance", "Davomat streak", "emerald"),
+    ("homework", "Homework streak", "sky"),
+    ("test", "Test streak", "violet"),
+]
+STREAK_LABELS = {k: lbl for k, lbl, _ in STREAK_KINDS}
+STREAK_TONE = {k: t for k, _, t in STREAK_KINDS}
+
+# ---- Fraud ----------------------------------------------------------
+FRAUD_TYPES = [
+    ("teacher_spike", "Ustoz odatdagidan ko'p XP berdi", "MEDIUM"),
+    ("daily_limit", "O'quvchi kunlik chegaradan oshdi", "MEDIUM"),
+    ("duplicate", "Takroriy tranzaksiya urinishi", "LOW"),
+    ("big_manual", "Katta XP hujjatsiz berildi", "HIGH"),
+    ("mass_award", "Qisqa vaqtda ko'p o'quvchiga katta XP", "HIGH"),
+    ("inactive_student", "Faol bo'lmagan o'quvchiga XP", "MEDIUM"),
+    ("no_lesson", "Dars bo'lmagan kunda dars XP'si", "MEDIUM"),
+    ("foreign_group", "O'ziga biriktirilmagan guruhga XP", "HIGH"),
+    ("cert_reuse", "Sertifikat raqami qayta ishlatildi", "CRITICAL"),
+    ("many_reversals", "Ko'p marta bekor qilingan", "HIGH"),
+]
+FRAUD_LABELS = {k: lbl for k, lbl, _ in FRAUD_TYPES}
+FRAUD_SEVERITY = {k: s for k, _, s in FRAUD_TYPES}
+FRAUD_TONE = {"LOW": "slate", "MEDIUM": "amber", "HIGH": "orange",
+              "CRITICAL": "red"}
+FRAUD_STATUSES = [("open", "Ochiq"), ("reviewed", "Ko'rildi"),
+                  ("dismissed", "Rad etildi")]
+
+# Ustozning manual XP'si o'rtachasidan necha barobar oshsa - signal
+TEACHER_SPIKE_FACTOR = 3.0
+MASS_AWARD_MINUTES = 5
+MASS_AWARD_STUDENTS = 10
+
+# ---- Leaderboard ----------------------------------------------------
+LEADERBOARD_SCOPES = [
+    ("lifetime", "Umumiy XP"),
+    ("season", "Mavsum XP"),
+    ("week", "Haftalik"),
+    ("month", "Oylik"),
+]
+LEADERBOARD_LABELS = dict(LEADERBOARD_SCOPES)
+
+# ---- Ruxsatlar ------------------------------------------------------
+XP_AWARD = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER,
+                          HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER]
+XP_ADMIN = FULL_ACCESS + [ACADEMIC_HEAD]
+XP_VIEW = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER,
+                         HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
+                         ADMINISTRATOR, BRANCH_MANAGER, SALES_MANAGER]

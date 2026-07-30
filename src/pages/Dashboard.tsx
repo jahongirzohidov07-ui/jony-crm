@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import {
   Users,
   Layers,
-  GraduationCap,
   Wallet,
   AlertTriangle,
   UserCheck,
   Download,
+  Receipt,
+  Briefcase,
+  Camera as Instagram,
+  Send,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -27,6 +30,7 @@ import {
   type Group,
   type StudentGrowthWindow,
   type StudentGrowthResponse,
+  type SocialStats,
 } from "../lib/api";
 import { formatSom, formatPeriodLabel, formatGrowthLabel } from "../lib/format";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
@@ -40,11 +44,13 @@ function KpiCard({
   icon: Icon,
   label,
   value,
+  hint,
   tone = "default",
 }: {
   icon: React.ElementType;
   label: string;
   value: string;
+  hint?: string;
   tone?: "default" | "danger" | "brand";
 }) {
   const toneClasses =
@@ -63,7 +69,46 @@ function KpiCard({
         <span className="text-sm text-slate-500">{label}</span>
       </div>
       <p className="text-2xl font-semibold text-slate-900">{value}</p>
+      {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
     </div>
+  );
+}
+
+/** Instagram / Telegram obunachilar - Marketing bo'limidan olinadi. */
+function SocialCards() {
+  const [data, setData] = useState<SocialStats | null>(null);
+
+  useEffect(() => {
+    api.get<SocialStats>("/social").then(setData).catch(() => setData(null));
+  }, []);
+
+  if (!data) return null;
+  const items = Object.values(data).filter((p) => p.followers !== null);
+  if (items.length === 0) return null;
+
+  const icons: Record<string, React.ElementType> = {
+    instagram: Instagram,
+    telegram: Send,
+  };
+
+  return (
+    <>
+      {items.map((p) => (
+        <KpiCard
+          key={p.platform}
+          icon={icons[p.platform] || Users}
+          label={`${p.label} obunachilar`}
+          value={(p.followers as number).toLocaleString("uz-UZ")}
+          hint={
+            p.growth && p.growth !== 0
+              ? `${p.growth > 0 ? "+" : ""}${p.growth} oxirgi davrda`
+              : p.date
+                ? `${p.date} holatiga`
+                : undefined
+          }
+        />
+      ))}
+    </>
   );
 }
 
@@ -181,7 +226,9 @@ export default function Dashboard() {
           { "Ko'rsatkich": "Sinovdagi talabalar", Qiymat: stats.trial_students },
           { "Ko'rsatkich": "Muzlatilgan talabalar", Qiymat: stats.frozen_students },
           { "Ko'rsatkich": "Guruhlar soni", Qiymat: stats.total_groups },
-          { "Ko'rsatkich": "O'qituvchilar soni", Qiymat: stats.total_teachers },
+          { "Ko'rsatkich": "Shu oy yangi to'lovlar", Qiymat: stats.month_new_payment_count },
+          { "Ko'rsatkich": "Shu oy jami to'lovlar", Qiymat: stats.month_payment_count },
+          { "Ko'rsatkich": "Xodimlar soni", Qiymat: stats.staff_count },
           { "Ko'rsatkich": "Shu oy tushum (so'm)", Qiymat: Math.round(stats.month_income) },
           { "Ko'rsatkich": "Umumiy qarzdorlik (so'm)", Qiymat: Math.round(stats.total_debt) },
           { "Ko'rsatkich": "Qarzdorlar soni", Qiymat: stats.debtor_count },
@@ -236,7 +283,14 @@ export default function Dashboard() {
             <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} />
             <KpiCard icon={Users} label="Muzlatilgan talabalar" value={String(stats.frozen_students)} />
             <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} />
-            <KpiCard icon={GraduationCap} label="O'qituvchilar soni" value={String(stats.total_teachers)} />
+            <KpiCard
+              icon={Receipt}
+              label="Shu oy yangi to'lovlar"
+              value={String(stats.month_new_payment_count)}
+              hint={`jami ${stats.month_payment_count} ta to'lov`}
+              tone="brand"
+            />
+            <KpiCard icon={Briefcase} label="Xodimlar soni" value={String(stats.staff_count)} />
             <KpiCard icon={Wallet} label="Shu oy tushum" value={formatSom(stats.month_income)} tone="brand" />
             <KpiCard
               icon={AlertTriangle}
@@ -245,6 +299,7 @@ export default function Dashboard() {
               tone="danger"
             />
             <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
+            <SocialCards />
           </div>
 
           <ChartCard

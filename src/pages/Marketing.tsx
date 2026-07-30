@@ -1,0 +1,642 @@
+import { useEffect, useState } from "react";
+import {
+  Megaphone, TrendingUp, Users, Target, RefreshCw, Camera as Instagram, Send,
+} from "lucide-react";
+import {
+  ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis,
+  CartesianGrid, Tooltip, Legend, Cell,
+} from "recharts";
+import {
+  api, type MarketingFunnel, type CacReport, type SocialStats,
+} from "../lib/api";
+import { useAuth } from "../lib/AuthContext";
+import { MARKETING_ACCESS, FINANCE_ACCESS, can } from "../lib/roles";
+import { formatSom, formatPeriodLabel } from "../lib/format";
+import { exportToExcel } from "../lib/exportXlsx";
+
+type Tab = "funnel" | "channels" | "social";
+
+const TABS: { key: Tab; label: string }[] = [
+  { key: "funnel", label: "Marketing voronka" },
+  { key: "channels", label: "Kanallar va CAC" },
+  { key: "social", label: "Ijtimoiy tarmoqlar" },
+];
+
+const STAGE_COLORS = ["#94a3b8", "#38bdf8", "#818cf8", "#a78bfa", "#10b981"];
+
+function short(n: number): string {
+  const a = Math.abs(n);
+  if (a >= 1_000_000) return `${(n / 1_000_000).toFixed(1)} mln`;
+  if (a >= 1_000) return `${Math.round(n / 1_000)} ming`;
+  return String(Math.round(n));
+}
+
+function Stat({
+  label, value, hint, tone = "slate", icon: Icon,
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  tone?: "slate" | "green" | "red" | "amber";
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+}) {
+  const cls =
+    tone === "green" ? "text-emerald-600"
+      : tone === "red" ? "text-red-600"
+        : tone === "amber" ? "text-amber-600"
+          : "text-slate-900";
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="flex items-center gap-2 mb-1">
+        {Icon && <Icon size={14} className="text-slate-400" />}
+        <p className="text-xs text-slate-500">{label}</p>
+      </div>
+      <p className={`text-lg font-semibold ${cls}`}>{value}</p>
+      {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
+    </div>
+  );
+}
+
+function RangePicker({
+  months, setMonths,
+}: {
+  months: number;
+  setMonths: (n: number) => void;
+}) {
+  return (
+    <div className="flex gap-1 mb-5">
+      {[3, 6, 12, 24].map((m) => (
+        <button
+          key={m}
+          onClick={() => setMonths(m)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
+            months === m
+              ? "bg-brand-50 border-brand-400 text-brand-700"
+              : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+          }`}
+        >
+          {m} oy
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// -------------------------------------------------------- Voronka tab
+function FunnelTab({ data }: { data: MarketingFunnel }) {
+  const t = data.totals;
+  const chart = data.stages.map((s, i) => ({
+    name: s.label,
+    Yetgan: s.reached,
+    color: STAGE_COLORS[i] || "#cbd5e1",
+  }));
+
+  if (t.leads === 0) {
+    return (
+      <p className="text-sm text-slate-400 py-10 text-center">
+        Bu davrda lid kiritilmagan. Lidlar bo'limidan qo'shing — voronka
+        shundan keyin chiqadi.
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+        <Stat label="Jami lid" value={String(t.leads)} icon={Users} />
+        <Stat
+          label="O'quvchiga aylandi"
+          value={String(t.converted)}
+          hint={`${t.conversion}% konversiya`}
+          tone="green"
+          icon={Target}
+        />
+        <Stat label="Reklama xarajati" value={formatSom(t.spend)} tone="red" />
+        <Stat
+          label="Bitta mijoz narxi (CAC)"
+          value={t.cac ? formatSom(t.cac) : "—"}
+          hint={t.cpl ? `bitta lid ${formatSom(t.cpl)}` : undefined}
+          tone="amber"
+        />
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+        <p className="text-sm font-medium text-slate-700">Voronka bosqichlari</p>
+        <p className="text-xs text-slate-400 mb-3">
+          Odam qaysi bosqichda yo'qolyapti
+        </p>
+        <ResponsiveContainer width="100%" height={260}>
+          <BarChart data={chart} layout="vertical" margin={{ left: 40 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
+            <XAxis type="number" tick={{ fontSize: 12, fill: "#64748b" }} />
+            <YAxis
+              type="category"
+              dataKey="name"
+              width={130}
+              tick={{ fontSize: 11, fill: "#64748b" }}
+            />
+            <Tooltip />
+            <Bar dataKey="Yetgan" radius={[0, 4, 4, 0]} isAnimationActive={false}>
+              {chart.map((c, i) => (
+                <Cell key={i} fill={c.color} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+
+        <table className="w-full text-sm mt-4">
+          <thead>
+            <tr className="text-xs text-slate-500 border-b border-slate-100">
+              <th className="text-left py-2">Bosqich</th>
+              <th className="text-right">Yetgan</th>
+              <th className="text-right">Shu yerda qolgan</th>
+              <th className="text-right">Foiz</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.stages.map((s, i) => (
+              <tr key={s.stage} className="border-b border-slate-50">
+                <td className="py-2 flex items-center gap-2">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ background: STAGE_COLORS[i] || "#cbd5e1" }}
+                  />
+                  {s.label}
+                </td>
+                <td className="text-right font-medium">{s.reached}</td>
+                <td className="text-right text-slate-500">
+                  {s.stuck_here || "—"}
+                </td>
+                <td className="text-right text-slate-500">{s.percent}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <p className="text-sm font-medium text-slate-700">Kanal bo'yicha lid</p>
+        <p className="text-xs text-slate-400 mb-3">
+          Qaysi kanal ko'proq odam olib kelyapti
+        </p>
+        <ResponsiveContainer width="100%" height={260}>
+          <BarChart data={data.channels.map((c) => ({
+            name: c.label,
+            Lid: c.leads,
+            "O'quvchi": c.converted,
+          }))}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+            <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#64748b" }} />
+            <YAxis tick={{ fontSize: 12, fill: "#64748b" }} />
+            <Tooltip />
+            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Bar dataKey="Lid" fill="#38bdf8" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+            <Bar dataKey="O'quvchi" fill="#10b981" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------------------------- Kanallar tab
+function ChannelsTab({
+  data, cac,
+}: {
+  data: MarketingFunnel;
+  cac: CacReport | null;
+}) {
+  const rows = data.channels;
+
+  return (
+    <div>
+      {cac && (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+          <Stat
+            label="O'rtacha CAC"
+            value={cac.totals.cac ? formatSom(cac.totals.cac) : "—"}
+            hint="bitta yangi mijoz qancha turdi"
+            tone="amber"
+          />
+          <Stat
+            label="O'rtacha LTV"
+            value={cac.totals.ltv ? formatSom(cac.totals.ltv) : "—"}
+            hint="mijoz umri davomida to'lagani"
+            tone="green"
+          />
+          <Stat
+            label="LTV / CAC"
+            value={cac.totals.ratio ? `${cac.totals.ratio}x` : "—"}
+            hint={
+              cac.totals.ratio >= 3
+                ? "sog'lom — 3x dan yuqori"
+                : cac.totals.ratio > 0
+                  ? "past — 3x dan oshirish kerak"
+                  : undefined
+            }
+            tone={cac.totals.ratio >= 3 ? "green" : cac.totals.ratio > 0 ? "red" : "slate"}
+          />
+          <Stat
+            label="Yangi mijozlar"
+            value={String(cac.totals.new_clients)}
+            hint={`${formatSom(cac.totals.spend)} reklama`}
+            icon={TrendingUp}
+          />
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <p className="text-sm font-medium text-slate-700">Kanallar taqqoslamasi</p>
+            <p className="text-xs text-slate-400">
+              CAC — bitta o'quvchi qancha turdi. ROI — sarflangan pulga nisbatan
+              qaytgan daromad.
+            </p>
+          </div>
+          <button
+            onClick={() =>
+              exportToExcel("marketing-kanallar", "Kanallar",
+                rows.map((c) => ({
+                  Kanal: c.label,
+                  Xarajat: c.spend,
+                  Lid: c.leads,
+                  Sinovda: c.trial,
+                  "O'quvchi": c.converted,
+                  "Konversiya %": c.conversion,
+                  CPL: c.cpl,
+                  CAC: c.cac,
+                  Daromad: c.revenue,
+                  "ROI %": c.roi,
+                })))
+            }
+            className="px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-slate-300"
+          >
+            Excel
+          </button>
+        </div>
+
+        {rows.length === 0 ? (
+          <p className="text-sm text-slate-400 py-6 text-center">
+            Hali ma'lumot yo'q
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-xs text-slate-500 border-b border-slate-100">
+                  <th className="text-left py-2">Kanal</th>
+                  <th className="text-right">Xarajat</th>
+                  <th className="text-right">Lid</th>
+                  <th className="text-right">O'quvchi</th>
+                  <th className="text-right">Konv.</th>
+                  <th className="text-right">CPL</th>
+                  <th className="text-right">CAC</th>
+                  <th className="text-right">Daromad</th>
+                  <th className="text-right">ROI</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((c) => (
+                  <tr key={c.channel} className="border-b border-slate-50">
+                    <td className="py-2 font-medium text-slate-700">{c.label}</td>
+                    <td className="text-right text-red-600">
+                      {c.spend ? formatSom(c.spend) : "—"}
+                    </td>
+                    <td className="text-right">{c.leads}</td>
+                    <td className="text-right text-emerald-600 font-medium">
+                      {c.converted}
+                    </td>
+                    <td className="text-right text-slate-500">{c.conversion}%</td>
+                    <td className="text-right text-slate-500">
+                      {c.cpl ? formatSom(c.cpl) : "—"}
+                    </td>
+                    <td className="text-right font-medium text-amber-600">
+                      {c.cac ? formatSom(c.cac) : "—"}
+                    </td>
+                    <td className="text-right text-emerald-600">
+                      {c.revenue ? formatSom(c.revenue) : "—"}
+                    </td>
+                    <td
+                      className={`text-right font-medium ${
+                        c.spend === 0
+                          ? "text-slate-400"
+                          : c.roi >= 0
+                            ? "text-emerald-600"
+                            : "text-red-600"
+                      }`}
+                    >
+                      {c.spend ? `${c.roi}%` : "—"}
+                    </td>
+                  </tr>
+                ))}
+                <tr className="border-t-2 border-slate-200 font-medium">
+                  <td className="py-2">Jami</td>
+                  <td className="text-right text-red-600">
+                    {formatSom(data.totals.spend)}
+                  </td>
+                  <td className="text-right">{data.totals.leads}</td>
+                  <td className="text-right text-emerald-600">
+                    {data.totals.converted}
+                  </td>
+                  <td className="text-right">{data.totals.conversion}%</td>
+                  <td className="text-right">
+                    {data.totals.cpl ? formatSom(data.totals.cpl) : "—"}
+                  </td>
+                  <td className="text-right text-amber-600">
+                    {data.totals.cac ? formatSom(data.totals.cac) : "—"}
+                  </td>
+                  <td className="text-right text-emerald-600">
+                    {formatSom(data.totals.revenue)}
+                  </td>
+                  <td className="text-right">
+                    {data.totals.spend ? `${data.totals.roi}%` : "—"}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="text-xs text-slate-400 mt-3">
+          Kanal bo'yicha xarajat Moliya → Xarajatlar bo'limida "Reklama"
+          kategoriyasini tanlab, kanalni ko'rsatganda chiqadi.
+        </p>
+      </div>
+
+      {cac && cac.rows.some((r) => r.spend > 0 || r.new_clients > 0) && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <p className="text-sm font-medium text-slate-700">CAC dinamikasi</p>
+          <p className="text-xs text-slate-400 mb-3">
+            Bitta mijozni jalb qilish oydan oyga qimmatlashyaptimi
+          </p>
+          <ResponsiveContainer width="100%" height={260}>
+            <LineChart data={cac.rows.map((r) => ({
+              name: formatPeriodLabel(r.period),
+              CAC: r.cac,
+              "Yangi mijoz": r.new_clients,
+            }))}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#64748b" }} />
+              <YAxis yAxisId="l" tickFormatter={short} tick={{ fontSize: 12, fill: "#64748b" }} />
+              <YAxis yAxisId="r" orientation="right" tick={{ fontSize: 12, fill: "#64748b" }} />
+              <Tooltip
+                formatter={(v: number, n: string) =>
+                  n === "CAC" ? formatSom(v) : v
+                }
+              />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Line
+                yAxisId="l"
+                type="monotone"
+                dataKey="CAC"
+                stroke="#f59e0b"
+                strokeWidth={2}
+                dot={false}
+                isAnimationActive={false}
+              />
+              <Line
+                yAxisId="r"
+                type="monotone"
+                dataKey="Yangi mijoz"
+                stroke="#10b981"
+                strokeWidth={2}
+                dot={false}
+                isAnimationActive={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// -------------------------------------------------------- Ijtimoiy tab
+function SocialTab() {
+  const [data, setData] = useState<SocialStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [manual, setManual] = useState<Record<string, string>>({});
+
+  const load = () => {
+    setLoading(true);
+    api.get<SocialStats>("/social").then(setData).finally(() => setLoading(false));
+  };
+  useEffect(load, []);
+
+  const refresh = async () => {
+    setBusy(true);
+    setMsg("");
+    try {
+      const r = await api.post<{ instagram_note?: string | null }>(
+        "/social/refresh", {}
+      );
+      setMsg(r.instagram_note || "Yangilandi");
+      load();
+    } catch {
+      setMsg("Yangilab bo'lmadi");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const saveManual = async (platform: string) => {
+    const v = Number(manual[platform]);
+    if (!v || v < 0) return;
+    await api.post("/social/manual", { platform, followers: v });
+    setManual({ ...manual, [platform]: "" });
+    load();
+  };
+
+  if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  const icons: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+    instagram: Instagram,
+    telegram: Send,
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <button
+          onClick={refresh}
+          disabled={busy}
+          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-50"
+        >
+          <RefreshCw size={14} className={busy ? "animate-spin" : ""} />
+          Yangilash
+        </button>
+        {msg && <span className="text-xs text-slate-500">{msg}</span>}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {Object.values(data).map((p) => {
+          const Icon = icons[p.platform];
+          return (
+            <div
+              key={p.platform}
+              className="bg-white rounded-xl border border-slate-200 p-5"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                {Icon && <Icon size={18} className="text-slate-400" />}
+                <p className="font-medium text-slate-800">{p.label}</p>
+                <span className="text-xs text-slate-400">@{p.handle}</span>
+              </div>
+
+              <p className="text-3xl font-semibold text-slate-900">
+                {p.followers !== null ? p.followers.toLocaleString("uz-UZ") : "—"}
+              </p>
+              <div className="flex items-center gap-2 mt-1 text-xs">
+                <span className="text-slate-400">obunachi</span>
+                {p.growth !== null && p.growth !== 0 && (
+                  <span
+                    className={p.growth > 0 ? "text-emerald-600" : "text-red-600"}
+                  >
+                    {p.growth > 0 ? "+" : ""}
+                    {p.growth} shu davrda
+                  </span>
+                )}
+              </div>
+              {p.date && (
+                <p className="text-xs text-slate-400 mt-1">
+                  {p.date} · {p.source === "auto" ? "avtomatik" : "qo'lda"}
+                </p>
+              )}
+
+              {p.history.length > 1 && (
+                <ResponsiveContainer width="100%" height={120}>
+                  <LineChart data={p.history}>
+                    <XAxis dataKey="date" hide />
+                    <YAxis hide domain={["dataMin", "dataMax"]} />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="followers"
+                      stroke="#0d9488"
+                      strokeWidth={2}
+                      dot={false}
+                      isAnimationActive={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+
+              <div className="flex gap-2 mt-4 pt-3 border-t border-slate-100">
+                <input
+                  type="number"
+                  value={manual[p.platform] ?? ""}
+                  onChange={(e) =>
+                    setManual({ ...manual, [p.platform]: e.target.value })
+                  }
+                  placeholder="Qo'lda kiritish"
+                  className="flex-1 px-3 py-1.5 rounded-lg border border-slate-200 text-sm"
+                />
+                <button
+                  onClick={() => saveManual(p.platform)}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
+                >
+                  Saqlash
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-5">
+        <p className="text-sm text-amber-900 font-medium mb-1">
+          Avtomatik yangilanish haqida
+        </p>
+        <p className="text-xs text-amber-800 leading-relaxed">
+          <b>Telegram</b> — kanal ochiq bo'lgani uchun obunachilar soni
+          "Yangilash" tugmasida avtomat o'qiladi, hech narsa sozlash shart emas.
+          <br />
+          <b>Instagram</b> — Instagram raqamni faqat rasmiy API orqali beradi.
+          Buning uchun akkaunt Business yoki Creator bo'lishi va Facebook
+          sahifaga ulanishi kerak, keyin Vercel'ga <code>INSTAGRAM_TOKEN</code>{" "}
+          va <code>INSTAGRAM_USER_ID</code> qo'shiladi. Token qo'shilmaguncha
+          raqamni qo'lda kiritib turasiz.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------- Sahifa
+export default function Marketing() {
+  const { user } = useAuth();
+  const [tab, setTab] = useState<Tab>("funnel");
+  const [months, setMonths] = useState(6);
+  const [data, setData] = useState<MarketingFunnel | null>(null);
+  const [cac, setCac] = useState<CacReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const showCac = can(user?.role, FINANCE_ACCESS);
+
+  useEffect(() => {
+    if (tab === "social") return;
+    setLoading(true);
+    const jobs: Promise<unknown>[] = [
+      api.get<MarketingFunnel>(`/reports/marketing-funnel?months=${months}`)
+        .then(setData),
+    ];
+    if (showCac) {
+      jobs.push(
+        api.get<CacReport>(`/analytics/cac?months=${months}`)
+          .then(setCac)
+          .catch(() => setCac(null))
+      );
+    }
+    Promise.all(jobs).finally(() => setLoading(false));
+  }, [months, tab, showCac]);
+
+  if (!can(user?.role, MARKETING_ACCESS)) {
+    return (
+      <p className="text-sm text-slate-500 py-10 text-center">
+        Bu bo'limga ruxsatingiz yo'q.
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-1">
+        <Megaphone size={18} className="text-slate-400" />
+        <h1 className="text-xl font-semibold text-slate-900">Marketing</h1>
+      </div>
+      <p className="text-sm text-slate-500 mb-5">
+        Voronka, kanallar samaradorligi va ijtimoiy tarmoqlar
+      </p>
+
+      <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
+              tab === t.key
+                ? "border-brand-600 text-brand-700"
+                : "border-transparent text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab !== "social" && <RangePicker months={months} setMonths={setMonths} />}
+
+      {tab === "social" ? (
+        <SocialTab />
+      ) : loading ? (
+        <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>
+      ) : !data ? null : tab === "funnel" ? (
+        <FunnelTab data={data} />
+      ) : (
+        <ChannelsTab data={data} cac={cac} />
+      )}
+    </div>
+  );
+}

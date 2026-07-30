@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import {
-  Download, Banknote, CreditCard, Smartphone, Wallet, Plus, X, Trash2, Pencil,
+  Download, Plus, X, Trash2, Pencil,
 } from "lucide-react";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from "recharts";
+import { Link } from "react-router-dom";
 import {
   api,
   type CashflowReport,
+  type CashflowLedger,
+  type CashMethodBlock,
+  type LedgerRow,
   type PnlReport,
   type Expense,
   type Branch,
@@ -18,6 +22,7 @@ import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
 } from "../lib/expenses";
 import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
+import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "cashflow" | "pnl" | "expenses";
@@ -66,178 +71,326 @@ function Note({ children }: { children: React.ReactNode }) {
 }
 
 // ---------------------------------------------------------------- Cashflow
+// Google Sheet'dagi kassa daftari ko'rinishi: tepada Kirim / Chiqim / Kassa
+// jadvali usullar kesimida, pastda har bir yozuv alohida qator - kirim
+// yashil, chiqim qizil.
+const METHOD_COLS: { key: keyof CashMethodBlock; label: string }[] = [
+  { key: "total", label: "Jami" },
+  { key: "cash", label: "Naqd" },
+  { key: "card", label: "Click" },
+  { key: "terminal", label: "Terminal" },
+];
+
+function SummaryTable({ data }: { data: CashflowLedger }) {
+  const rows: {
+    label: string;
+    block: CashMethodBlock;
+    cls: string;
+  }[] = [
+    { label: "Kirim", block: data.kirim, cls: "bg-emerald-100 text-emerald-900" },
+    { label: "Chiqim", block: data.chiqim, cls: "bg-red-100 text-red-900" },
+    { label: "Kassa", block: data.kassa, cls: "bg-amber-100 text-amber-900" },
+  ];
+  return (
+    <div className="overflow-x-auto">
+      <table className="text-sm border-separate" style={{ borderSpacing: 2 }}>
+        <thead>
+          <tr>
+            <th className="w-28" />
+            {METHOD_COLS.map((c) => (
+              <th
+                key={c.key}
+                className="px-3 py-1.5 text-xs font-medium text-slate-500 text-center min-w-[110px]"
+              >
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.label}>
+              <td
+                className={`px-3 py-2 rounded-md text-sm font-medium text-center ${r.cls}`}
+              >
+                {r.label}
+              </td>
+              {METHOD_COLS.map((c) => (
+                <td
+                  key={c.key}
+                  className={`px-3 py-2 rounded-md text-right tabular-nums ${r.cls}`}
+                >
+                  {formatSom(r.block[c.key])}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function PaymentKindTable({ data }: { data: CashflowLedger }) {
+  return (
+    <table className="text-sm border-separate" style={{ borderSpacing: 2 }}>
+      <thead>
+        <tr>
+          <th className="w-24" />
+          <th className="px-3 py-1.5 text-xs font-medium text-slate-500 min-w-[110px]">
+            Yangi to'lov
+          </th>
+          <th className="px-3 py-1.5 text-xs font-medium text-slate-500 min-w-[110px]">
+            Eski to'lov
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="px-2 py-2 text-xs text-slate-500 text-right">Soni</td>
+          <td className="px-3 py-2 rounded-md bg-emerald-100 text-emerald-900 text-center font-medium">
+            {data.new_payments.count}
+          </td>
+          <td className="px-3 py-2 rounded-md bg-emerald-100 text-emerald-900 text-center font-medium">
+            {data.old_payments.count}
+          </td>
+        </tr>
+        <tr>
+          <td className="px-2 py-2 text-xs text-slate-500 text-right">Summasi</td>
+          <td className="px-3 py-2 rounded-md bg-emerald-100 text-emerald-900 text-right tabular-nums">
+            {formatSom(data.new_payments.amount)}
+          </td>
+          <td className="px-3 py-2 rounded-md bg-emerald-100 text-emerald-900 text-right tabular-nums">
+            {formatSom(data.old_payments.amount)}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
+
+function ledgerCategoryLabel(r: LedgerRow): string {
+  if (r.direction === "in") {
+    return r.category === "new_payment" ? "Yangi to'lov" : "Eski to'lov";
+  }
+  if (r.category === "teacher_salary") return "Ustozlar oyligi";
+  return "Xarajat";
+}
+
 function CashflowTab() {
-  const [months, setMonths] = useState(6);
-  const [data, setData] = useState<CashflowReport | null>(null);
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [filter, setFilter] = useState<"all" | "in" | "out">("all");
+  const [data, setData] = useState<CashflowLedger | null>(null);
+  const [trend, setTrend] = useState<CashflowReport | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     api
-      .get<CashflowReport>(`/reports/cashflow?months=${months}`)
+      .get<CashflowLedger>(`/reports/cashflow-ledger?year=${year}&month=${month}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [months]);
+  }, [year, month]);
+
+  useEffect(() => {
+    api
+      .get<CashflowReport>("/reports/cashflow?months=6")
+      .then(setTrend)
+      .catch(() => setTrend(null));
+  }, []);
 
   if (loading) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
   if (!data) return null;
 
-  const t = data.totals;
-  // "Boshqa" grafikda ko'rsatilmaydi - u deyarli har doim nol bo'ladi va
-  // faqat shovqin qo'shadi; jadvalda esa jamiga kirib turadi.
-  const chart = data.rows.map((r) => ({
-    name: formatPeriodLabel(r.period),
-    Naqd: r.cash,
-    Plastik: r.card,
-    Terminal: r.terminal,
-  }));
+  const rows =
+    filter === "all" ? data.rows : data.rows.filter((r) => r.direction === filter);
 
   function exportRows() {
-    exportToExcel("pul-oqimi", "Pul oqimi",
+    exportToExcel(`kassa-${year}-${String(month).padStart(2, "0")}`, "Kassa",
       data!.rows.map((r) => ({
-        Davr: r.period,
-        Naqd: r.cash,
-        Plastik: r.card,
-        Terminal: r.terminal,
-        Boshqa: r.other,
-        "Jami kirim": r.income,
-        Xarajat: r.expenses,
-        "Ustozlar ish haqi": r.payroll,
-        "Jami chiqim": r.outflow,
-        Sof: r.net,
+        Sana: r.date,
+        Summa: r.amount,
+        Izoh: r.title,
+        Usul: methodLabel(r.method),
+        Turi: r.direction === "in" ? "Kirim" : "Chiqim",
+        Filial: r.branch,
+        Kategoriya: ledgerCategoryLabel(r),
       })));
   }
 
+  const years = [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2];
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex gap-1">
-          {[3, 6, 12].map((m) => (
-            <button
-              key={m}
-              onClick={() => setMonths(m)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
-                months === m
-                  ? "bg-brand-50 border-brand-400 text-brand-700"
-                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-              }`}
-            >
-              {m} oy
-            </button>
+      {/* --- Sana tanlash --- */}
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        <select
+          value={month}
+          onChange={(e) => setMonth(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          {MONTHS.map((m, i) => (
+            <option key={m} value={i + 1}>
+              {m}
+            </option>
           ))}
-        </div>
+        </select>
+        <select
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          {years.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+        <div className="flex-1" />
         <button
           onClick={exportRows}
-          className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600"
+          className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
         >
-          <Download size={15} /> Excel
+          <Download size={14} /> Excel
         </button>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        <Stat label="Naqd" value={formatSom(t.cash)} icon={Banknote} />
-        <Stat label="Plastik" value={formatSom(t.card)} icon={CreditCard} />
-        <Stat label="Terminal" value={formatSom(t.terminal)} icon={Smartphone} />
-        <Stat label="Jami kirim" value={formatSom(t.income)} icon={Wallet} tone="green" />
+      {/* --- Tepadagi statistika --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+        <div className="flex flex-wrap gap-8">
+          <SummaryTable data={data} />
+          <PaymentKindTable data={data} />
+        </div>
+        <Note>
+          Kassa = kirim − chiqim, har bir usul bo'yicha alohida. Ustozlar
+          oyligi yoqlamadan avtomat hisoblanib, chiqimga qo'shilgan.
+        </Note>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
-        <p className="text-sm font-medium text-slate-700 mb-3">
-          To'lov usullari bo'yicha tushum
-        </p>
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={chart}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-            <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
-            <YAxis tickFormatter={short} tick={{ fontSize: 12, fill: "#64748b" }} />
-            <Tooltip formatter={(v: number) => formatSom(v)} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
-            {/* Yonma-yon ustunlar - qaysi kanal o'sib, qaysi tushib
-                borayotgani bir qarashda ko'rinadi. */}
-            <Bar dataKey="Naqd" fill="#0d9488" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-            <Bar dataKey="Plastik" fill="#38bdf8" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-            <Bar dataKey="Terminal" fill="#a78bfa" radius={[4, 4, 0, 0]}
-                 isAnimationActive={false} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Oy</th>
-              <th className="text-right px-4 py-3 font-medium">Naqd</th>
-              <th className="text-right px-4 py-3 font-medium">Plastik</th>
-              <th className="text-right px-4 py-3 font-medium">Terminal</th>
-              <th className="text-right px-4 py-3 font-medium">Kirim</th>
-              <th className="text-right px-4 py-3 font-medium">Xarajat</th>
-              <th className="text-right px-4 py-3 font-medium">Ish haqi</th>
-              <th className="text-right px-4 py-3 font-medium">Sof</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.rows.map((r) => (
-              <tr key={r.period} className="border-t border-slate-100">
-                <td className="px-4 py-3 text-slate-700">
-                  {formatPeriodLabel(r.period)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">{short(r.cash)}</td>
-                <td className="px-4 py-3 text-right text-slate-600">{short(r.card)}</td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.terminal)}
-                </td>
-                <td className="px-4 py-3 text-right font-medium text-emerald-600">
-                  {short(r.income)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.expenses)}
-                </td>
-                <td className="px-4 py-3 text-right text-slate-600">
-                  {short(r.payroll)}
-                </td>
-                <td
-                  className={`px-4 py-3 text-right font-semibold ${
-                    r.net >= 0 ? "text-emerald-600" : "text-red-600"
-                  }`}
-                >
-                  {short(r.net)}
-                </td>
-              </tr>
-            ))}
-            <tr className="border-t-2 border-slate-200 bg-slate-50 font-semibold">
-              <td className="px-4 py-3 text-slate-700">Jami</td>
-              <td className="px-4 py-3 text-right">{short(t.cash)}</td>
-              <td className="px-4 py-3 text-right">{short(t.card)}</td>
-              <td className="px-4 py-3 text-right">{short(t.terminal)}</td>
-              <td className="px-4 py-3 text-right text-emerald-600">
-                {short(t.income)}
-              </td>
-              <td className="px-4 py-3 text-right">{short(t.expenses)}</td>
-              <td className="px-4 py-3 text-right">{short(t.payroll)}</td>
-              <td
-                className={`px-4 py-3 text-right ${
-                  t.net >= 0 ? "text-emerald-600" : "text-red-600"
+      {/* --- Kassa daftari --- */}
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
+          <p className="text-sm font-medium text-slate-700">Kassa daftari</p>
+          <span className="text-xs text-slate-400">{rows.length} ta yozuv</span>
+          <div className="flex-1" />
+          <div className="flex gap-1">
+            {([
+              { k: "all", l: "Hammasi" },
+              { k: "in", l: "Kirim" },
+              { k: "out", l: "Chiqim" },
+            ] as const).map((f) => (
+              <button
+                key={f.k}
+                onClick={() => setFilter(f.k)}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
+                  filter === f.k
+                    ? "bg-brand-50 border-brand-400 text-brand-700"
+                    : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
                 }`}
               >
-                {short(t.net)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                {f.l}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {rows.length === 0 ? (
+          <p className="text-sm text-slate-400 py-10 text-center">
+            Bu oyda yozuv yo'q
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50">
+                <tr className="text-xs text-slate-500">
+                  <th className="text-left px-4 py-2 w-28">Sana</th>
+                  <th className="text-right w-36">Summa</th>
+                  <th className="text-left">Izoh</th>
+                  <th className="text-left w-28">Usul</th>
+                  <th className="text-left w-24">Turi</th>
+                  <th className="text-left w-32">Filial</th>
+                  <th className="text-left w-32">Kategoriya</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  const inRow = r.direction === "in";
+                  const bg = inRow
+                    ? "bg-emerald-50 hover:bg-emerald-100"
+                    : "bg-red-50 hover:bg-red-100";
+                  const fg = inRow ? "text-emerald-900" : "text-red-900";
+                  return (
+                    <tr
+                      key={r.id}
+                      className={`border-t border-white ${bg} ${fg} transition`}
+                    >
+                      <td className="px-4 py-2">{formatDate(r.date)}</td>
+                      <td className="text-right font-medium tabular-nums pr-2">
+                        {inRow ? "+" : "−"}
+                        {formatSom(r.amount)}
+                      </td>
+                      <td className="py-2">
+                        {r.student_id ? (
+                          <Link
+                            to={`/students/${r.student_id}`}
+                            className="hover:underline"
+                          >
+                            {r.title}
+                          </Link>
+                        ) : (
+                          r.title
+                        )}
+                      </td>
+                      <td>{methodLabel(r.method)}</td>
+                      <td className="font-medium">{inRow ? "Kirim" : "Chiqim"}</td>
+                      <td>{r.branch}</td>
+                      <td>{ledgerCategoryLabel(r)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
-      <Note>
-        Kirim — haqiqatda kassaga tushgan pul. Hisoblangan oylik (qarz) bu
-        yerga kirmaydi. Ustozlar ish haqi yoqlamadan avtomatik olinadi.
-      </Note>
+      {/* --- Oylar bo'yicha dinamika --- */}
+      {trend && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mt-5">
+          <p className="text-sm font-medium text-slate-700">Oylar bo'yicha tushum</p>
+          <p className="text-xs text-slate-400 mb-3">Usullar kesimida, oxirgi 6 oy</p>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart
+              data={trend.rows.map((r) => ({
+                name: formatPeriodLabel(r.period),
+                Naqd: r.cash,
+                Click: r.card,
+                Terminal: r.terminal,
+              }))}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
+              <YAxis
+                tickFormatter={(v) =>
+                  v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}mln` : String(v / 1000)
+                }
+                tick={{ fontSize: 12, fill: "#64748b" }}
+              />
+              <Tooltip formatter={(v: number) => formatSom(v)} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Bar dataKey="Naqd" fill="#0d9488" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Click" fill="#38bdf8" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="Terminal" fill="#a78bfa" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 }
 
-// --------------------------------------------------------------------- P&L
 function PnlTab() {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
@@ -416,6 +569,8 @@ function ExpenseForm({
     initial ? String(Math.round(initial.amount)) : ""
   );
   const [note, setNote] = useState(initial?.note ?? "");
+  const [method, setMethod] = useState(initial?.method ?? "cash");
+  const [channel, setChannel] = useState(initial?.channel ?? "");
   const [branchId, setBranchId] = useState(
     initial?.branch_id
       ? String(initial.branch_id)
@@ -440,6 +595,10 @@ function ExpenseForm({
         category,
         amount: value,
         note: note || null,
+        method,
+        // Kanal faqat reklama xarajatida ma'noga ega - CAC shundan
+        // hisoblanadi. Boshqa turda tozalab yuboramiz.
+        channel: categoryGroup(category) === "marketing" ? channel || null : null,
         branch_id: branchId ? Number(branchId) : null,
       };
       if (editing) await api.put(`/expenses/${initial!.id}`, body);
@@ -518,6 +677,52 @@ function ExpenseForm({
               />
             </div>
           </div>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              To'lov usuli
+            </label>
+            <div className="flex gap-1.5">
+              {PAYMENT_METHODS.map((m) => (
+                <button
+                  key={m.key}
+                  type="button"
+                  onClick={() => setMethod(m.key)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium border transition ${
+                    method === m.key
+                      ? "bg-brand-50 border-brand-400 text-brand-700"
+                      : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {categoryGroup(category) === "marketing" && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Reklama kanali
+              </label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={channel}
+                onChange={(e) => setChannel(e.target.value)}
+              >
+                <option value="">— kanal ko'rsatilmagan —</option>
+                {MARKETING_CHANNELS.map((c) => (
+                  <option key={c.key} value={c.key}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-slate-400 mt-1">
+                Kanalni ko'rsatsangiz, Marketing bo'limida shu kanalning CAC'i
+                avtomat hisoblanadi.
+              </p>
+            </div>
+          )}
 
           {branches.length > 1 && (
             <div>

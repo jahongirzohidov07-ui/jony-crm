@@ -24,6 +24,7 @@ import Tasks from "./pages/Tasks";
 import Inventory from "./pages/Inventory";
 import Permissions from "./pages/Permissions";
 import MyProfile from "./pages/MyProfile";
+import MyCoins from "./pages/MyCoins";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -71,6 +72,7 @@ function AppRoutes() {
         <Route path="users" element={<Users />} />
         <Route path="permissions" element={<Permissions />} />
         <Route path="profile" element={<MyProfile />} />
+        <Route path="my-coins" element={<MyCoins />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

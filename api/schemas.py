@@ -93,9 +93,18 @@ class TeacherCreate(BaseModel):
     # 1 = hozir ishlayapti, 0 = ishdan ketgan. left_date qo'lda emas,
     # shu bayroqdan avtomatik chiqadi.
     is_active: Optional[int] = 1
-    # Maksimal yuklama. Bo'sh bo'lsa tizim standartini ishlatadi.
+    # Maksimal yuklama. Bo'sh bo'lsa daraja, u ham bo'lmasa tizim
+    # standarti ishlatiladi.
     max_groups: Optional[int] = None
     max_lessons_per_day: Optional[int] = None
+    # ---- Daraja va karyera ----
+    grade: Optional[str] = None
+    cert: Optional[str] = None
+    cert_score: Optional[float] = None
+    qualification: Optional[str] = None
+    birth_date: Optional[date] = None
+    skill_score: Optional[float] = None
+    support_months: Optional[float] = None
 
 
 class TeacherOut(TeacherCreate):
@@ -103,6 +112,38 @@ class TeacherOut(TeacherCreate):
     id: int
     branch: Optional[BranchOut] = None
     left_date: Optional[date] = None
+    grade_since: Optional[date] = None
+    remediation_until: Optional[date] = None
+    remediation_reason: Optional[str] = None
+
+
+# ---------- Ustoz darajasi ----------
+class GradeUpdate(BaseModel):
+    label: Optional[str] = None
+    rate_per_student: Optional[float] = None
+    min_months: Optional[int] = None
+    min_groups: Optional[int] = None
+    max_groups: Optional[int] = None
+    cert_label: Optional[str] = None
+    cert_min: Optional[float] = None
+    promote_pass_rate: Optional[float] = None
+    demote_below: Optional[float] = None
+    min_results: Optional[int] = None
+    result_band: Optional[float] = None
+    min_age: Optional[int] = None
+    min_skill: Optional[float] = None
+    level_pass_percent: Optional[float] = None
+
+
+class GradeSet(BaseModel):
+    """Asoschi darajani qo'lda qo'yadi (yoki avtomat qarorni qaytaradi)."""
+    grade: str
+    reason: Optional[str] = None
+
+
+class StudyDone(BaseModel):
+    done: bool
+    note: Optional[str] = None
 
 
 # ---------- Group ----------

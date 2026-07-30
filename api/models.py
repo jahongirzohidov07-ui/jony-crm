@@ -84,15 +84,116 @@ class Teacher(Base):
     left_date = Column(Date, nullable=True)
     is_active = Column(Integer, default=1)
 
-    # Maksimal yuklama. Bo'sh bo'lsa roles.TEACHER_MAX_* ishlatiladi.
-    # Bundan oshirib guruh biriktirib bo'lmaydi.
+    # Maksimal yuklama. Bo'sh bo'lsa DARAJADAN olinadi, u ham bo'lmasa
+    # roles.TEACHER_MAX_*. Bundan oshirib guruh biriktirib bo'lmaydi.
     max_groups = Column(Integer, nullable=True)
     max_lessons_per_day = Column(Integer, nullable=True)
+
+    # ---- Daraja va karyera ----
+    # junior / middle / senior / expert / head. Bir o'quvchidan qancha
+    # olishi ham, nechta guruh olib bora olishi ham shundan chiqadi.
+    grade = Column(String, nullable=True)
+    grade_since = Column(Date, nullable=True)
+    # Sertifikat: "IELTS 7.0", "CEFR B2". cert_score - solishtirish
+    # uchun raqam (IELTS balli yoki CEFR foizi).
+    cert = Column(String, nullable=True)
+    cert_score = Column(Float, nullable=True)
+    # Metodika sertifikati: CELTA / TESOL / DELTA. Metodist darajasi
+    # uchun shart.
+    qualification = Column(String, nullable=True)
+    birth_date = Column(Date, nullable=True)         # 18+ / 22+ sharti
+    # Dars berish mahorati mezonidan olgan bali (0-100)
+    skill_score = Column(Float, nullable=True)
+    # Ustozlikdan oldingi support/volontyor tajribasi (oy)
+    support_months = Column(Float, nullable=True)
+    # Natija 50% dan past chiqqanda qo'yiladi: shu sanagacha yangi
+    # guruh ochilmaydi, ustoz o'ta olmaganlarni qayta tayyorlaydi.
+    remediation_until = Column(Date, nullable=True)
+    remediation_reason = Column(String, nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch", back_populates="teachers")
     groups = relationship("Group", back_populates="teacher")
+
+
+class TeacherGrade(Base):
+    """Daraja jadvali. Hujjatdagi raqamlar bir marta shu yerga tushadi,
+    keyin asoschi o'zgartiradi - kod ularga tegmaydi."""
+    __tablename__ = "teacher_grades"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    label = Column(String, nullable=False)
+    order_no = Column(Integer, default=0)
+    rate_per_student = Column(Float, default=0)
+    min_months = Column(Integer, default=0)          # eng kam tajriba
+    min_groups = Column(Integer, default=1)
+    max_groups = Column(Integer, default=1)
+    cert_label = Column(String, nullable=True)
+    cert_min = Column(Float, nullable=True)
+    # Keyingi darajaga o'tish uchun necha foiz o'quvchi o'tishi kerak
+    promote_pass_rate = Column(Float, nullable=True)
+    # Oylik test o'rtachasi shundan past bo'lsa - tushiriladi
+    demote_below = Column(Float, nullable=True)
+    demote_to = Column(String, nullable=True)
+    # Metodika sertifikati (CELTA/TESOL/DELTA) shart bo'lgan daraja
+    needs_qualification = Column(Integer, default=0)
+    # Necha ta yuqori natija talab qilinadi va qaysi balldan
+    min_results = Column(Integer, nullable=True)
+    result_band = Column(Float, nullable=True)
+    min_age = Column(Integer, nullable=True)
+    min_skill = Column(Float, nullable=True)
+    # O'quvchi "bosqichdan o'tdi" deb hisoblanishi uchun testda kamida
+    # necha foiz olishi kerak. Hujjatda alohida aytilmagan - 60% dan
+    # boshlanadi, asoschi o'zgartiradi.
+    level_pass_percent = Column(Float, default=60.0)
+    active = Column(Integer, default=1)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class TeacherGradeEvent(Base):
+    """Daraja tarixi. Faqat "kim qachon ko'tarildi" uchun emas: OYLIK
+    ham shu tarixdan hisoblanadi. Ustoz bugun ko'tarilsa, o'tgan oyning
+    darslari eski stavkada qolishi kerak - aks holda tarix qayta
+    yozilib, o'tgan oyning oyligi o'zgarib ketardi."""
+    __tablename__ = "teacher_grade_events"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    from_grade = Column(String, nullable=True)
+    to_grade = Column(String, nullable=True)
+    kind = Column(String, nullable=False, default="set")   # roles.GRADE_EVENT_KINDS
+    # Qaysi sanadan boshlab kuchga kiradi
+    effective_from = Column(Date, nullable=False, default=date.today)
+    reason = Column(Text, nullable=True)
+    pass_rate = Column(Float, nullable=True)
+    test_avg = Column(Float, nullable=True)
+    rate_before = Column(Float, nullable=True)
+    rate_after = Column(Float, nullable=True)
+    decided_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    teacher = relationship("Teacher")
+
+
+class TeacherStudyItem(Base):
+    """O'qish rejasi: kitob va podkast. Ustoz o'zi belgilaydi,
+    darajaga o'tishda tekshiriladi."""
+    __tablename__ = "teacher_study_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    stage = Column(String, nullable=False)        # teacher | head
+    kind = Column(String, nullable=False)         # book | podcast
+    title = Column(String, nullable=False)
+    done = Column(Integer, default=0)
+    done_at = Column(Date, nullable=True)
+    note = Column(String, nullable=True)
+    # Bosqich imtihoni topshirilganmi (kitob+podkastdan keyin)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
 class Group(Base):
@@ -132,7 +233,11 @@ class Group(Base):
     # ustozning bitta o'quvchidan oyiga (to'liq yoqlama qo'ysa) olishi.
     lesson_price = Column(Float, default=40000)
     standard_lessons_per_month = Column(Integer, default=12)
+    # Odatda bu USTOZNING DARAJASIDAN olinadi (Junior 80 000, Middle
+    # 100 000...). rate_manual=1 bo'lsa - kimdir bu guruhga ataylab
+    # boshqa narx qo'ygan, daraja o'zgarganda unga tegilmaydi.
     teacher_rate_per_student = Column(Float, default=0)
+    rate_manual = Column(Integer, default=0)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

@@ -199,6 +199,27 @@ def _ensure_new_columns():
         "ALTER TABLE groups ADD COLUMN start_date DATE",
         "ALTER TABLE groups ADD COLUMN lesson_time VARCHAR",
         "ALTER TABLE groups ADD COLUMN lesson_days VARCHAR",
+        # Ustoz darajasi va karyera xaritasi.
+        "ALTER TABLE teachers ADD COLUMN grade VARCHAR",
+        "ALTER TABLE teachers ADD COLUMN grade_since DATE",
+        "ALTER TABLE teachers ADD COLUMN cert VARCHAR",
+        "ALTER TABLE teachers ADD COLUMN cert_score FLOAT",
+        "ALTER TABLE teachers ADD COLUMN qualification VARCHAR",
+        "ALTER TABLE teachers ADD COLUMN birth_date DATE",
+        "ALTER TABLE teachers ADD COLUMN skill_score FLOAT",
+        "ALTER TABLE teachers ADD COLUMN support_months FLOAT",
+        "ALTER TABLE teachers ADD COLUMN remediation_until DATE",
+        "ALTER TABLE teachers ADD COLUMN remediation_reason VARCHAR",
+        # Guruh stavkasi qo'lda kiritilganmi (daraja o'zgarganda
+        # tegilmasligi uchun). NULL qolganini keyingi blok to'ldiradi.
+        "ALTER TABLE groups ADD COLUMN rate_manual INTEGER",
+        # Daraja jadvaliga keyin qo'shilgan ustunlar.
+        "ALTER TABLE teacher_grades ADD COLUMN needs_qualification INTEGER DEFAULT 0",
+        "ALTER TABLE teacher_grades ADD COLUMN min_results INTEGER",
+        "ALTER TABLE teacher_grades ADD COLUMN result_band FLOAT",
+        "ALTER TABLE teacher_grades ADD COLUMN min_age INTEGER",
+        "ALTER TABLE teacher_grades ADD COLUMN min_skill FLOAT",
+        "ALTER TABLE teacher_grades ADD COLUMN level_pass_percent FLOAT DEFAULT 60",
     ]
     for stmt in statements:
         try:
@@ -255,6 +276,71 @@ def _ensure_new_columns():
                     models.Reward.category.is_(None)).all():
                 r.category = by_name.get((r.name or "").strip().lower(),
                                          "special")
+                changed = True
+            if changed:
+                db.commit()
+
+            # Ustoz darajalari jadvali. Hujjatdagi raqamlar bir marta
+            # tushadi; asoschi keyin o'zgartirsa - qayta yozilmaydi.
+            # Hujjatning o'zida ham "talablar o'zgarib turishi mumkin"
+            # deb yozilgan, shuning uchun manba - baza, kod emas.
+            have_g = {g.key for g in db.query(models.TeacherGrade).all()}
+            added = False
+            for i, row in enumerate(roles.TEACHER_GRADES):
+                (key, label, rate, months, mn, mx, cert_lbl, cert_min,
+                 promote, demote, demote_to) = row
+                if key in have_g:
+                    continue
+                db.add(models.TeacherGrade(
+                    key=key, label=label, order_no=i,
+                    rate_per_student=rate, min_months=months,
+                    min_groups=mn, max_groups=mx,
+                    cert_label=cert_lbl, cert_min=cert_min,
+                    promote_pass_rate=promote,
+                    demote_below=demote, demote_to=demote_to,
+                    needs_qualification=1 if key in
+                    roles.QUALIFICATION_REQUIRED_FOR else 0,
+                    min_results=(roles.HEAD_MIN_RESULTS if key == "head"
+                                 else roles.METODIST_MIN_RESULTS
+                                 if key == "metodist" else None),
+                    result_band=(roles.HEAD_RESULT_BAND if key == "head"
+                                 else roles.METODIST_RESULT_BAND
+                                 if key == "metodist" else None),
+                    min_age=(roles.HEAD_MIN_AGE if key in ("head", "metodist")
+                             else roles.TEACHER_MIN_AGE),
+                    min_skill=(roles.HEAD_MIN_SKILL if key in ("head", "metodist")
+                               else roles.TEACHER_MIN_SKILL),
+                    level_pass_percent=roles.LEVEL_PASS_PERCENT,
+                    active=1))
+                added = True
+            if added:
+                db.commit()
+
+            # Darajasi belgilanmagan ustozlar birinchi darajada
+            # boshlanadi - stavkasi bo'sh qolib ketmasin.
+            changed = False
+            for t in db.query(models.Teacher).filter(
+                    models.Teacher.grade.is_(None)).all():
+                t.grade = roles.FIRST_GRADE
+                t.grade_since = t.hired_date or date.today()
+                changed = True
+            if changed:
+                db.commit()
+
+            # Eski guruhlarda stavka qo'lda kiritilgan bo'lishi mumkin.
+            # Darajaning narxiga to'g'ri kelmasa - "qo'lda" deb
+            # belgilaymiz, aks holda birinchi avtomat yangilanish
+            # kiritilgan narxni o'chirib yuborardi.
+            rates = {g.key: g.rate_per_student
+                     for g in db.query(models.TeacherGrade).all()}
+            teachers = {t.id: t for t in db.query(models.Teacher).all()}
+            changed = False
+            for g in db.query(models.Group).filter(
+                    models.Group.rate_manual.is_(None)).all():
+                t = teachers.get(g.teacher_id)
+                want = rates.get(t.grade if t else None)
+                cur = g.teacher_rate_per_student or 0
+                g.rate_manual = 1 if (cur and want and cur != want) else 0
                 changed = True
             if changed:
                 db.commit()
@@ -2192,12 +2278,13 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
                        models.Lesson.date >= start,
                        models.Lesson.date <= end).all())
     total = 0.0
+    rates = billing.grade_rates(db)
     for l in lessons:
         g = groups.get(l.group_id)
         if not g or l.teacher_id is None:
             continue
-        total += (billing.lesson_student_count(db, l)
-                  * billing.per_attendance_rate(g))
+        rate, _ = billing.lesson_rate(db, g, l, rates)
+        total += billing.lesson_student_count(db, l) * rate
     return round(total, 2)
 
 
@@ -3076,10 +3163,20 @@ def create_teacher(
     user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     teacher = models.Teacher(**payload.model_dump())
+    # Daraja tanlanmagan bo'lsa - birinchisidan boshlaydi. Stavkasi
+    # shu darajadan chiqadi, ya'ni guruh ochishda hech narsa
+    # kiritilmasa ham to'g'ri hisoblanadi.
+    teacher.grade = teacher.grade or roles.FIRST_GRADE
+    teacher.grade_since = teacher.hired_date or date.today()
     _sync_teacher_left_date(teacher)
     db.add(teacher)
     db.commit()
     db.refresh(teacher)
+    db.add(models.TeacherGradeEvent(
+        teacher_id=teacher.id, from_grade=None, to_grade=teacher.grade,
+        kind="set", effective_from=teacher.grade_since,
+        reason="Ishga qabul qilindi", decided_by=user.full_name))
+    db.commit()
     return teacher
 
 
@@ -3093,9 +3190,18 @@ def update_teacher(
     teacher = db.query(models.Teacher).get(teacher_id)
     if not teacher:
         raise HTTPException(404, "O'qituvchi topilmadi")
-    for k, v in payload.model_dump(exclude_unset=True).items():
+    given = payload.model_dump(exclude_unset=True)
+    new_grade = given.pop("grade", None)
+    for k, v in given.items():
         setattr(teacher, k, v)
     _sync_teacher_left_date(teacher)
+
+    # Daraja o'zgarsa - tarixga yoziladi va guruh stavkalari yangilanadi.
+    if new_grade and new_grade != teacher.grade:
+        if new_grade not in _grade_map(db):
+            raise HTTPException(400, "Bunday daraja yo'q")
+        _set_grade(db, teacher, new_grade, kind="set",
+                   reason="Qo'lda o'zgartirildi", by=user.full_name)
     db.commit()
     db.refresh(teacher)
     return teacher
@@ -3171,6 +3277,51 @@ def _group_days(g) -> list:
     return [d for d in (getattr(g, "lesson_days", None) or "").split(",") if d]
 
 
+def _check_teacher_load(db: Session, teacher_id: int,
+                        group_id: int | None) -> list:
+    """Ustoz nechta guruh olib bora oladi va hozir yangi guruh olishi
+    mumkinmi. Dars jadvaliga bog'liq emas — shuning uchun alohida."""
+    problems = []
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        return problems
+
+    # Chegara DARAJADAN chiqadi: Junior 1 ta, Middle 2-3 ta,
+    # Senior 4-5 ta, Expert 6-7 ta. Ustozga alohida chegara
+    # qo'yilgan bo'lsa - o'sha ustun.
+    grade_max = None
+    if t.grade:
+        gr = db.query(models.TeacherGrade).filter(
+            models.TeacherGrade.key == t.grade).first()
+        grade_max = gr.max_groups if gr else None
+    max_groups = (t.max_groups or grade_max or roles.TEACHER_MAX_GROUPS)
+
+    # Natijasi 50% dan past chiqqan ustozga muddat tugagunicha YANGI
+    # guruh ochilmaydi — hujjatdagi qoida shunday.
+    if (t.remediation_until and t.remediation_until >= date.today()
+            and not group_id):
+        problems.append(_problem(
+            "teacher_overload",
+            f"{t.full_name} qayta tayyorlash bosqichida — "
+            f"{t.remediation_until.isoformat()} gacha yangi guruh "
+            f"ochilmaydi. Sabab: {t.remediation_reason or '—'}"))
+
+    total = db.query(models.Group).filter(
+        models.Group.teacher_id == teacher_id)
+    if group_id:
+        total = total.filter(models.Group.id != group_id)
+    n_groups = total.count() + 1
+    if n_groups > max_groups:
+        gl = roles.GRADE_LABELS.get(t.grade or "")
+        problems.append(_problem(
+            "teacher_overload",
+            f"Ustozda {n_groups} ta guruh bo'ladi — chegara "
+            f"{max_groups} ta"
+            + (f" ({gl} darajasi uchun)." if gl and grade_max
+               and max_groups == grade_max else ".")))
+    return problems
+
+
 def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
                     lesson_days, lesson_time, branch_id=None) -> list:
     """Jadval to'qnashuvlarini topadi. group_id berilsa o'sha guruhning
@@ -3178,6 +3329,13 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
     problems = []
     days = [d for d in (lesson_days or "").split(",") if d]
     start, end = _group_slot(type("T", (), {"lesson_time": lesson_time})())
+
+    # Guruh soni va qayta tayyorlash - dars jadvaliga bog'liq emas.
+    # Vaqt kiritilmagan bo'lsa ham tekshiriladi, aks holda jadvalsiz
+    # guruh ochib chegaradan chiqib ketish mumkin bo'lardi.
+    if teacher_id:
+        problems += _check_teacher_load(db, teacher_id, group_id)
+
     if not days or not start:
         return problems
 
@@ -3214,13 +3372,11 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
                 f"\"{room.name if room else 'Xona'}\" xonasi shu vaqtda "
                 f"\"{o.name}\" guruhi tomonidan band."))
 
-    # Ustozning yuklamasi
+    # Ustozning kunlik yuklamasi (jadvalga bog'liq)
     if teacher_id:
         t = db.query(models.Teacher).get(teacher_id)
         max_day = (t.max_lessons_per_day if t and t.max_lessons_per_day
                    else roles.TEACHER_MAX_LESSONS_PER_DAY)
-        max_groups = (t.max_groups if t and t.max_groups
-                      else roles.TEACHER_MAX_GROUPS)
         for d in days:
             n = day_counts.get(d, 0) + 1
             if n > max_day:
@@ -3229,16 +3385,6 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
                     f"{roles.WEEKDAY_LABELS.get(d, d)} kuni ustozda {n} ta "
                     f"dars bo'ladi — chegara {max_day} ta."))
                 break
-        total = db.query(models.Group).filter(
-            models.Group.teacher_id == teacher_id)
-        if group_id:
-            total = total.filter(models.Group.id != group_id)
-        n_groups = total.count() + 1
-        if n_groups > max_groups:
-            problems.append(_problem(
-                "teacher_overload",
-                f"Ustozda {n_groups} ta guruh bo'ladi — chegara "
-                f"{max_groups} ta."))
 
         # Darslar orasidagi bo'shliq
         for d in days:
@@ -9282,6 +9428,7 @@ def _teacher_earned(db: Session, teacher_id: int, *,
     lessons = q.order_by(models.Lesson.date).all()
 
     groups = {g.id: g for g in db.query(models.Group).all()}
+    rates = billing.grade_rates(db)
     total = 0.0
     attendances = 0
     by_group: dict[int, dict] = {}
@@ -9291,7 +9438,9 @@ def _teacher_earned(db: Session, teacher_id: int, *,
         g = groups.get(l.group_id)
         if not g:
             continue
-        rate = billing.per_attendance_rate(g)
+        # Stavka dars SANASIGA qarab olinadi: ustoz keyin ko'tarilgan
+        # bo'lsa ham o'tgan oyning darslari eski narxda qoladi.
+        rate, per_student = billing.lesson_rate(db, g, l, rates)
         n = billing.lesson_student_count(db, l)
         amount = n * rate
         total += amount
@@ -9299,13 +9448,15 @@ def _teacher_earned(db: Session, teacher_id: int, *,
 
         gr = by_group.setdefault(l.group_id, {
             "group_id": l.group_id, "group": g.name,
-            "rate_per_student_month": g.teacher_rate_per_student or 0,
+            "rate_per_student_month": per_student,
             "standard_lessons": g.standard_lessons_per_month or 12,
             "rate": rate, "lessons": 0, "attendances": 0, "amount": 0.0,
         })
         gr["lessons"] += 1
         gr["attendances"] += n
         gr["amount"] += amount
+        gr["rate"] = rate
+        gr["rate_per_student_month"] = per_student
 
         per = l.date.isoformat()[:7]
         pr = by_period.setdefault(per, {
@@ -9322,6 +9473,513 @@ def _teacher_earned(db: Session, teacher_id: int, *,
         "by_group": sorted(by_group.values(), key=lambda r: -r["amount"]),
         "by_period": sorted(by_period.values(), key=lambda r: r["period"]),
     }
+
+
+# =====================================================================
+#  USTOZ KARYERA XARITASI
+#
+#  Junior -> Middle -> Senior -> Expert -> Head -> Metodist.
+#  Har bir darajaning o'z narxi, o'z guruh soni va o'z o'tish sharti
+#  bor. Tizim mezonlarni o'zi hisoblaydi va darajani o'zi o'zgartiradi
+#  — lekin har bir o'zgarish tarixga sababi bilan yoziladi va
+#  asoschiga vazifa bo'lib boradi, ya'ni jimgina bo'lmaydi.
+# =====================================================================
+def _grade_rows(db: Session) -> list:
+    return (db.query(models.TeacherGrade)
+            .order_by(models.TeacherGrade.order_no).all())
+
+
+def _grade_map(db: Session) -> dict:
+    return {g.key: g for g in db.query(models.TeacherGrade).all()}
+
+
+def _grade_after(db: Session, key: str) -> models.TeacherGrade | None:
+    rows = _grade_rows(db)
+    keys = [g.key for g in rows]
+    if key not in keys:
+        return rows[0] if rows else None
+    i = keys.index(key)
+    return rows[i + 1] if i + 1 < len(rows) else None
+
+
+def _teacher_months(t: models.Teacher, today: date) -> float:
+    """Umumiy tajriba (oy): ustozlik + undan oldingi support/volontyor."""
+    base = float(t.support_months or 0)
+    if t.hired_date:
+        days = (today - t.hired_date).days
+        base += max(0.0, days / 30.4)
+    return round(base, 1)
+
+
+def _teacher_age(t: models.Teacher, today: date) -> int | None:
+    if not t.birth_date:
+        return None
+    y = today.year - t.birth_date.year
+    if (today.month, today.day) < (t.birth_date.month, t.birth_date.day):
+        y -= 1
+    return y
+
+
+def _teacher_exam_results(db: Session, teacher_id: int, *,
+                          since: date, kinds: list[str] | None = None) -> list:
+    """Ustozning guruhlaridagi imtihon natijalari. Kelmagan o'quvchi
+    hisobga olinmaydi — u bilmagani uchun emas, kelmagani uchun 0."""
+    gids = [g.id for g in db.query(models.Group)
+            .filter(models.Group.teacher_id == teacher_id).all()]
+    if not gids:
+        return []
+    q = (db.query(models.Exam)
+         .filter(models.Exam.group_id.in_(gids), models.Exam.date >= since))
+    if kinds:
+        q = q.filter(models.Exam.kind.in_(kinds))
+    exams = q.all()
+    if not exams:
+        return []
+    rows = (db.query(models.ExamResult)
+            .filter(models.ExamResult.exam_id.in_([e.id for e in exams]))
+            .all())
+    return [(e, r) for e in exams for r in rows
+            if r.exam_id == e.id and not r.absent and r.percent is not None]
+
+
+def _teacher_pass_rate(db: Session, t: models.Teacher,
+                       pass_mark: float, today: date) -> dict:
+    """Necha foiz o'quvchi bosqichdan MUVAFFAQIYATLI o'tdi.
+
+    O'lchov — kurs yakuni (end of course) testi: aynan shu test
+    o'quvchining keyingi bosqichga tayyorligini ko'rsatadi."""
+    since = today - timedelta(days=30 * roles.PASS_WINDOW_MONTHS)
+    rows = _teacher_exam_results(db, t.id, since=since, kinds=["end", "mid"])
+    if not rows:
+        return {"rate": None, "results": 0, "exams": 0, "passed": 0}
+    passed = sum(1 for _e, r in rows if (r.percent or 0) >= pass_mark)
+    exams = len({e.id for e, _r in rows})
+    return {
+        "rate": round(passed / len(rows) * 100, 1),
+        "results": len(rows), "exams": exams, "passed": passed,
+    }
+
+
+def _teacher_test_avg(db: Session, t: models.Teacher, today: date) -> dict:
+    """Oylik test o'rtachasi — barcha test turlari bo'yicha."""
+    since = today - timedelta(days=roles.TEST_WINDOW_DAYS)
+    rows = _teacher_exam_results(db, t.id, since=since)
+    if not rows:
+        return {"avg": None, "results": 0, "exams": 0}
+    vals = [r.percent or 0 for _e, r in rows]
+    return {
+        "avg": round(sum(vals) / len(vals), 1),
+        "results": len(vals),
+        "exams": len({e.id for e, _r in rows}),
+    }
+
+
+def _teacher_high_results(db: Session, t: models.Teacher,
+                          band: float) -> int:
+    """Nechta o'quvchisi yuqori natija (mock band) oldi. Head va
+    Metodist darajasi uchun shart."""
+    if not band:
+        return 0
+    gids = [g.id for g in db.query(models.Group)
+            .filter(models.Group.teacher_id == t.id).all()]
+    if not gids:
+        return 0
+    exams = (db.query(models.Exam)
+             .filter(models.Exam.group_id.in_(gids),
+                     models.Exam.kind == "mock").all())
+    if not exams:
+        return 0
+    rows = (db.query(models.ExamResult)
+            .filter(models.ExamResult.exam_id.in_([e.id for e in exams]),
+                    models.ExamResult.band.isnot(None)).all())
+    # Bir o'quvchi bir necha mock topshirgan bo'lishi mumkin — eng
+    # yaxshisi olinadi, aks holda bitta odam ro'yxatni to'ldirib
+    # yuborardi.
+    best: dict[int, float] = {}
+    for r in rows:
+        cur = best.get(r.student_id)
+        if cur is None or (r.band or 0) > cur:
+            best[r.student_id] = r.band or 0
+    return sum(1 for v in best.values() if v >= band)
+
+
+def _study_items(db: Session, t: models.Teacher, stage: str) -> list:
+    """O'qish rejasi. Birinchi so'raganda o'zi yaratiladi."""
+    rows = (db.query(models.TeacherStudyItem)
+            .filter(models.TeacherStudyItem.teacher_id == t.id,
+                    models.TeacherStudyItem.stage == stage).all())
+    want = None
+    for key, _lbl, books, casts in roles.STUDY_STAGES:
+        if key == stage:
+            want = [("book", b) for b in books] + \
+                   [("podcast", p) for p in casts]
+    if want is None:
+        return rows
+    have = {(r.kind, r.title) for r in rows}
+    added = False
+    for kind, title in want:
+        if (kind, title) in have:
+            continue
+        db.add(models.TeacherStudyItem(teacher_id=t.id, stage=stage,
+                                       kind=kind, title=title, done=0))
+        added = True
+    if added:
+        db.commit()
+        rows = (db.query(models.TeacherStudyItem)
+                .filter(models.TeacherStudyItem.teacher_id == t.id,
+                        models.TeacherStudyItem.stage == stage).all())
+    return rows
+
+
+def _study_progress(db: Session, t: models.Teacher, stage: str) -> dict:
+    rows = _study_items(db, t, stage)
+    done = sum(1 for r in rows if r.done)
+    return {"done": done, "total": len(rows),
+            "ok": bool(rows) and done == len(rows)}
+
+
+def _grade_state(db: Session, t: models.Teacher,
+                 today: date | None = None) -> dict:
+    """Ustozning hozirgi holati va keyingi darajaga nima yetishmayotgani.
+
+    Bu funksiya hech narsani o'zgartirmaydi — faqat hisoblaydi."""
+    today = today or date.today()
+    gm = _grade_map(db)
+    cur_key = t.grade or roles.FIRST_GRADE
+    cur = gm.get(cur_key)
+    nxt = _grade_after(db, cur_key)
+
+    months = _teacher_months(t, today)
+    age = _teacher_age(t, today)
+    pass_mark = (cur.level_pass_percent if cur else None) \
+        or roles.LEVEL_PASS_PERCENT
+    passing = _teacher_pass_rate(db, t, pass_mark, today)
+    testing = _teacher_test_avg(db, t, today)
+    group_count = (db.query(models.Group)
+                   .filter(models.Group.teacher_id == t.id).count())
+
+    enough = (testing["results"] >= roles.GRADE_MIN_RESULTS
+              and testing["exams"] >= roles.GRADE_MIN_EXAMS)
+    enough_pass = (passing["results"] >= roles.GRADE_MIN_RESULTS
+                   and passing["exams"] >= roles.GRADE_MIN_EXAMS)
+
+    # ---- Keyingi darajaga nima yetishmayapti ----
+    missing = []
+    ready = False
+    if nxt:
+        need_rate = cur.promote_pass_rate if cur else None
+        if need_rate is not None:
+            if not enough_pass:
+                missing.append({
+                    "key": "data",
+                    "text": (f"Yetarli natija yo'q — kamida "
+                             f"{roles.GRADE_MIN_RESULTS} ta natija va "
+                             f"{roles.GRADE_MIN_EXAMS} ta test kerak "
+                             f"(hozir {passing['results']} / "
+                             f"{passing['exams']})")})
+            elif (passing["rate"] or 0) < need_rate:
+                missing.append({
+                    "key": "pass_rate",
+                    "text": (f"O'quvchilarning {need_rate}% i bosqichdan "
+                             f"o'tishi kerak — hozir "
+                             f"{passing['rate']}%")})
+        if months < (nxt.min_months or 0):
+            missing.append({
+                "key": "months",
+                "text": (f"Tajriba {nxt.min_months} oy bo'lishi kerak — "
+                         f"hozir {round(months)} oy")})
+        if nxt.cert_min and (t.cert_score or 0) < nxt.cert_min:
+            missing.append({
+                "key": "cert",
+                "text": (f"Sertifikat: {nxt.cert_label} — hozir "
+                         f"{t.cert or 'yo’q'}")})
+        if nxt.min_age and (age is None or age < nxt.min_age):
+            missing.append({
+                "key": "age",
+                "text": (f"Yoshi {nxt.min_age}+ bo'lishi kerak — "
+                         + (f"hozir {age}" if age is not None
+                            else "tug'ilgan sana kiritilmagan"))})
+        if nxt.min_skill and (t.skill_score or 0) < nxt.min_skill:
+            missing.append({
+                "key": "skill",
+                "text": (f"Dars berish mahorati {round(nxt.min_skill)}+ "
+                         f"ball — hozir {t.skill_score or 0}")})
+        if nxt.needs_qualification and not t.qualification:
+            missing.append({
+                "key": "qualification",
+                "text": ("Metodika sertifikati kerak: "
+                         + " / ".join(roles.METODIST_QUALIFICATIONS))})
+        if nxt.min_results:
+            have = _teacher_high_results(db, t, nxt.result_band or 0)
+            if have < nxt.min_results:
+                missing.append({
+                    "key": "results",
+                    "text": (f"{nxt.min_results} ta o'quvchi IELTS "
+                             f"{nxt.result_band}+ olishi kerak — "
+                             f"hozir {have} ta")})
+        stage = roles.STUDY_REQUIRED_FOR.get(nxt.key)
+        if stage:
+            sp = _study_progress(db, t, stage)
+            if not sp["ok"]:
+                missing.append({
+                    "key": "study",
+                    "text": (f"O'qish rejasi tugallanmagan — "
+                             f"{sp['done']}/{sp['total']} "
+                             f"kitob va podkast")})
+        ready = not missing
+
+    # ---- Pastga tushish ----
+    floor = cur.demote_below if cur else None
+    should_demote = bool(
+        floor is not None and cur and cur.demote_to and enough
+        and testing["avg"] is not None and testing["avg"] < floor)
+
+    # ---- Qayta tayyorlash (50% dan past) ----
+    need_remediation = bool(
+        enough_pass and passing["rate"] is not None
+        and passing["rate"] < roles.REMEDIATION_BELOW)
+    in_remediation = bool(t.remediation_until
+                          and t.remediation_until >= today)
+
+    max_groups = t.max_groups or (cur.max_groups if cur else None) \
+        or roles.TEACHER_MAX_GROUPS
+
+    return {
+        "teacher_id": t.id,
+        "full_name": t.full_name,
+        "branch": t.branch.name if t.branch else None,
+        "grade": cur_key,
+        "grade_label": (cur.label if cur
+                        else roles.GRADE_LABELS.get(cur_key, cur_key)),
+        "tone": roles.GRADE_TONES.get(cur_key, "slate"),
+        "grade_since": t.grade_since.isoformat() if t.grade_since else None,
+        "rate_per_student": cur.rate_per_student if cur else 0,
+        "next_grade": nxt.key if nxt else None,
+        "next_label": nxt.label if nxt else None,
+        "next_rate": nxt.rate_per_student if nxt else None,
+        "months": round(months, 1),
+        "age": age,
+        "cert": t.cert,
+        "cert_score": t.cert_score,
+        "qualification": t.qualification,
+        "skill_score": t.skill_score,
+        "groups": group_count,
+        "min_groups": cur.min_groups if cur else None,
+        "max_groups": max_groups,
+        "pass_rate": passing["rate"],
+        "pass_results": passing["results"],
+        "pass_needed": cur.promote_pass_rate if cur else None,
+        "pass_mark": pass_mark,
+        "test_avg": testing["avg"],
+        "test_results": testing["results"],
+        "demote_below": floor,
+        "enough_data": enough,
+        "ready": ready,
+        "missing": missing,
+        "should_demote": should_demote,
+        "need_remediation": need_remediation,
+        "in_remediation": in_remediation,
+        "remediation_until": (t.remediation_until.isoformat()
+                              if t.remediation_until else None),
+        "remediation_reason": t.remediation_reason,
+    }
+
+
+def _sync_group_rates(db: Session, t: models.Teacher, rate: float) -> int:
+    """Darajaning narxini ustozning guruhlariga qo'yadi. Qo'lda narx
+    kiritilgan guruhga TEGILMAYDI — istisno holat shunday saqlanadi."""
+    n = 0
+    for g in (db.query(models.Group)
+              .filter(models.Group.teacher_id == t.id).all()):
+        if g.rate_manual:
+            continue
+        if (g.teacher_rate_per_student or 0) != rate:
+            g.teacher_rate_per_student = rate
+            n += 1
+    return n
+
+
+def _set_grade(db: Session, t: models.Teacher, to_key: str, *,
+               kind: str, reason: str, by: str = "Tizim",
+               pass_rate: float | None = None,
+               test_avg: float | None = None,
+               on: date | None = None) -> models.TeacherGradeEvent:
+    """Darajani o'zgartiradi va TARIXGA yozadi.
+
+    Tarix shunchaki jurnal emas: oylik ham shundan hisoblanadi, ya'ni
+    o'tgan oyning darslari eski stavkada qolaveradi."""
+    on = on or date.today()
+    gm = _grade_map(db)
+    before = gm.get(t.grade or "")
+    after = gm.get(to_key)
+
+    ev = models.TeacherGradeEvent(
+        teacher_id=t.id, from_grade=t.grade, to_grade=to_key, kind=kind,
+        effective_from=on, reason=reason, pass_rate=pass_rate,
+        test_avg=test_avg,
+        rate_before=before.rate_per_student if before else None,
+        rate_after=after.rate_per_student if after else None,
+        decided_by=by)
+    db.add(ev)
+
+    t.grade = to_key
+    t.grade_since = on
+    if after:
+        _sync_group_rates(db, t, after.rate_per_student or 0)
+    return ev
+
+
+def _career_task(db: Session, t: models.Teacher, *, title: str,
+                 body: str, priority: str = "normal") -> None:
+    """Daraja o'zgargani jimgina o'tib ketmasin — vazifa bo'lib
+    ko'rinadi."""
+    if db.query(models.Task).filter(models.Task.title == title).first():
+        return
+    who = (db.query(models.User)
+           .filter(models.User.role == roles.ACADEMIC_HEAD,
+                   models.User.is_active == 1).first()) or \
+          _hr_user(db, t.branch_id)
+    task = models.Task(
+        title=title, description=body,
+        assignee_id=who.id if who else None,
+        branch_id=t.branch_id,
+        deadline=date.today() + timedelta(days=3),
+        priority=priority, source="manual", created_by="Tizim")
+    db.add(task)
+    db.flush()
+    _ensure_public_id(db, "task", task)
+
+
+_GRADE_RUN_AT: list = [None]
+
+
+def _apply_grade_rules_throttled(db: Session, minutes: int = 30) -> dict:
+    """Har bir so'rovda emas, yarim soatda bir marta. Karyera bo'limi
+    ochilganda esa darrov ishlaydi (_apply_grade_rules to'g'ridan-
+    to'g'ri chaqiriladi)."""
+    now = datetime.utcnow()
+    last = _GRADE_RUN_AT[0]
+    if last and (now - last).total_seconds() < minutes * 60:
+        return {}
+    _GRADE_RUN_AT[0] = now
+    try:
+        return _apply_grade_rules(db)
+    except Exception:
+        db.rollback()
+        return {}
+
+
+def _apply_grade_rules(db: Session) -> dict:
+    """AVTOMAT: mezonlar bajarilgan bo'lsa darajani ko'taradi, oylik
+    test o'rtachasi pasaygan bo'lsa tushiradi, natija 50% dan past
+    bo'lsa qayta tayyorlashga qo'yadi.
+
+    Hech kim tugma bosmaydi. Lekin har bir o'zgarish tarixga sababi
+    va raqamlari bilan yoziladi hamda vazifa bo'lib chiqadi — kerak
+    bo'lsa asoschi orqaga qaytara oladi."""
+    today = date.today()
+    out = {"promoted": 0, "demoted": 0, "remediation": 0, "cleared": 0}
+    teachers = (db.query(models.Teacher)
+                .filter(models.Teacher.is_active == 1).all())
+    if not teachers or not _grade_rows(db):
+        return out
+
+    for t in teachers:
+        try:
+            st = _grade_state(db, t, today)
+        except Exception:
+            continue
+
+        # --- Qayta tayyorlash muddati tugadimi ---
+        if t.remediation_until and t.remediation_until < today:
+            t.remediation_until = None
+            t.remediation_reason = None
+            db.add(models.TeacherGradeEvent(
+                teacher_id=t.id, from_grade=t.grade, to_grade=t.grade,
+                kind="remediation_done", effective_from=today,
+                reason="Qayta tayyorlash muddati tugadi",
+                decided_by="Tizim"))
+            out["cleared"] += 1
+
+        # --- Natija 50% dan past: yangi guruh yo'q, qayta test ---
+        if st["need_remediation"] and not st["in_remediation"]:
+            until = today + timedelta(days=roles.REMEDIATION_DAYS)
+            t.remediation_until = until
+            t.remediation_reason = (
+                f"O'quvchilarning atigi {st['pass_rate']}% i bosqichdan "
+                f"o'tdi ({roles.REMEDIATION_BELOW}% dan past)")
+            db.add(models.TeacherGradeEvent(
+                teacher_id=t.id, from_grade=t.grade, to_grade=t.grade,
+                kind="remediation", effective_from=today,
+                reason=t.remediation_reason,
+                pass_rate=st["pass_rate"], decided_by="Tizim"))
+            _career_task(
+                db, t, priority="high",
+                title=(f"Qayta tayyorlash: {t.full_name} — "
+                       f"{until.isoformat()}"),
+                body=(f"O'quvchilarning {st['pass_rate']}% i bosqichdan "
+                      f"o'tdi ({st['pass_results']} ta natija bo'yicha).\n\n"
+                      "Hujjat bo'yicha tartib:\n"
+                      "1. O'tgan o'quvchilar boshqa ustozga beriladi.\n"
+                      "2. O'ta olmaganlarini ustozning o'zi qayta "
+                      "tayyorlaydi.\n"
+                      f"3. {until.isoformat()} da qayta test.\n"
+                      "4. Shundan keyingina yangi guruh ochiladi.\n\n"
+                      "Shu muddatgacha tizim bu ustozga yangi guruh "
+                      "biriktirishga yo'l qo'ymaydi."))
+            out["remediation"] += 1
+            continue      # tushirish bilan bir vaqtda bo'lmasin
+
+        # --- Pastga tushirish ---
+        if st["should_demote"]:
+            gm = _grade_map(db)
+            cur = gm.get(t.grade or "")
+            to_key = cur.demote_to if cur else None
+            if to_key and to_key in gm:
+                reason = (f"Oylik test o'rtachasi {st['test_avg']}% — "
+                          f"{st['demote_below']}% dan past "
+                          f"({st['test_results']} ta natija)")
+                _set_grade(db, t, to_key, kind="demote", reason=reason,
+                           test_avg=st["test_avg"])
+                _career_task(
+                    db, t, priority="high",
+                    title=(f"Daraja tushdi: {t.full_name} — "
+                           f"{gm[to_key].label} ({today.isoformat()})"),
+                    body=(f"{reason}\n\n"
+                          f"Yangi stavka: {gm[to_key].rate_per_student:,.0f} "
+                          "so'm (bir o'quvchidan).\n"
+                          "O'tgan oylarning oyligi o'zgarmaydi — eski "
+                          "stavkada qoladi.\n\n"
+                          "Xato bo'lsa Karyera bo'limidan darajani "
+                          "qaytarish mumkin.").replace(",", " "))
+                out["demoted"] += 1
+                continue
+
+        # --- Ko'tarish ---
+        if st["ready"] and st["next_grade"] and not st["in_remediation"]:
+            gm = _grade_map(db)
+            to_key = st["next_grade"]
+            reason = (f"Barcha shartlar bajarildi: o'quvchilarning "
+                      f"{st['pass_rate']}% i bosqichdan o'tdi, tajriba "
+                      f"{round(st['months'])} oy, sertifikat "
+                      f"{t.cert or '—'}")
+            _set_grade(db, t, to_key, kind="promote", reason=reason,
+                       pass_rate=st["pass_rate"], test_avg=st["test_avg"])
+            _career_task(
+                db, t,
+                title=(f"Daraja ko'tarildi: {t.full_name} — "
+                       f"{gm[to_key].label} ({today.isoformat()})"),
+                body=(f"{reason}\n\n"
+                      f"Yangi stavka: {gm[to_key].rate_per_student:,.0f} "
+                      "so'm (bir o'quvchidan).\n"
+                      f"Endi {gm[to_key].min_groups}-"
+                      f"{gm[to_key].max_groups} ta guruh olib bora "
+                      "oladi.\n\n"
+                      "Ustozni tabriklashni unutmang.").replace(",", " "))
+            out["promoted"] += 1
+
+    db.commit()
+    return out
 
 
 def _teacher_paid(db: Session, teacher_id: int, *,
@@ -9441,6 +10099,9 @@ def payroll_overview(
 ):
     """Barcha ustozlar bo'yicha oylik. Hech narsa "ishga tushirilmaydi" —
     ro'yxat har safar darslardan qayta hisoblanadi."""
+    # Daraja o'zgarishi oylikka ta'sir qiladi - avval qoidalarni
+    # yurgizamiz, keyin hisoblaymiz.
+    _apply_grade_rules_throttled(db)
     today = date.today()
     y, m = year or today.year, month or today.month
     start, end = billing.month_bounds(y, m)
@@ -9901,6 +10562,252 @@ def _teacher_stats(db: Session, months: int = 12,
     return rows
 
 
+# ---------------------------------------------------- Karyera xaritasi ----
+def _grade_row_out(g: models.TeacherGrade, counts: dict | None = None) -> dict:
+    return {
+        "key": g.key, "label": g.label, "order_no": g.order_no,
+        "rate_per_student": g.rate_per_student or 0,
+        "min_months": g.min_months or 0,
+        "min_groups": g.min_groups, "max_groups": g.max_groups,
+        "cert_label": g.cert_label, "cert_min": g.cert_min,
+        "promote_pass_rate": g.promote_pass_rate,
+        "demote_below": g.demote_below, "demote_to": g.demote_to,
+        "needs_qualification": bool(g.needs_qualification),
+        "min_results": g.min_results, "result_band": g.result_band,
+        "min_age": g.min_age, "min_skill": g.min_skill,
+        "level_pass_percent": g.level_pass_percent,
+        "tone": roles.GRADE_TONES.get(g.key, "slate"),
+        "teachers": (counts or {}).get(g.key, 0),
+    }
+
+
+@app.get("/api/career")
+def career_map(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CAREER_ACCESS)),
+):
+    """Ustozlarning daraja xaritasi. Ochilgan zahoti avtomat qoidalar
+    ham ishlaydi — hech kim tugma bosmaydi."""
+    try:
+        applied = _apply_grade_rules(db)
+    except Exception:
+        db.rollback()
+        applied = {}
+
+    q = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
+                        branch_id)
+    teachers = q.filter(models.Teacher.is_active == 1).order_by(
+        models.Teacher.full_name).all()
+
+    rows = []
+    counts: dict = {}
+    for t in teachers:
+        st = _grade_state(db, t)
+        rows.append(st)
+        counts[st["grade"]] = counts.get(st["grade"], 0) + 1
+
+    order = {g: i for i, g in enumerate(roles.GRADE_ORDER)}
+    rows.sort(key=lambda r: (-order.get(r["grade"], 0), r["full_name"]))
+
+    return {
+        "rows": rows,
+        "grades": [_grade_row_out(g, counts) for g in _grade_rows(db)],
+        "ready": [r for r in rows if r["ready"]],
+        "at_risk": [r for r in rows if r["should_demote"]],
+        "remediation": [r for r in rows if r["in_remediation"]],
+        "applied": applied,
+        "pass_window_months": roles.PASS_WINDOW_MONTHS,
+        "test_window_days": roles.TEST_WINDOW_DAYS,
+        "min_results": roles.GRADE_MIN_RESULTS,
+        "remediation_below": roles.REMEDIATION_BELOW,
+        "can_edit": user.role in roles.GRADE_ADMIN,
+        "hint": ("Daraja va stavka avtomat o'zgaradi. O'zgargan oyning "
+                 "o'zidan boshlab yangi stavka ishlaydi, o'tgan oylar "
+                 "eski stavkada qoladi — to'langan oylik qayta "
+                 "hisoblanmaydi."),
+    }
+
+
+@app.put("/api/career/grades/{key}")
+def update_grade(
+    key: str,
+    payload: schemas.GradeUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    """Daraja jadvalini tahrirlash. Hujjatning o'zida "talablar
+    o'zgarib turishi mumkin" deb yozilgan — shuning uchun raqamlar
+    kodda emas, shu yerda."""
+    g = db.query(models.TeacherGrade).filter(
+        models.TeacherGrade.key == key).first()
+    if not g:
+        raise HTTPException(404, "Daraja topilmadi")
+    given = payload.model_dump(exclude_unset=True)
+    rate_changed = ("rate_per_student" in given
+                    and given["rate_per_student"] != g.rate_per_student)
+    for k, v in given.items():
+        setattr(g, k, v)
+    db.commit()
+
+    # Narx o'zgargan bo'lsa - shu darajadagi ustozlarning guruhlariga
+    # ham qo'yiladi (qo'lda narx qo'yilganlaridan tashqari).
+    touched = 0
+    if rate_changed:
+        for t in db.query(models.Teacher).filter(
+                models.Teacher.grade == key).all():
+            touched += _sync_group_rates(db, t, g.rate_per_student or 0)
+        db.commit()
+    return {"ok": True, "groups_updated": touched}
+
+
+@app.get("/api/teachers/{teacher_id}/career")
+def teacher_career(
+    teacher_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Bitta ustozning karyera kartasi: hozirgi daraja, nima
+    yetishmayapti, tarix va o'qish rejasi."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    mine = _teacher_of_user(db, user)
+    if user.role not in roles.CAREER_ACCESS and (
+            not mine or mine.id != t.id):
+        raise HTTPException(403, "Bu ma'lumot sizga ko'rinmaydi")
+
+    st = _grade_state(db, t)
+    history = (db.query(models.TeacherGradeEvent)
+               .filter(models.TeacherGradeEvent.teacher_id == t.id)
+               .order_by(models.TeacherGradeEvent.effective_from.desc(),
+                         models.TeacherGradeEvent.id.desc()).all())
+
+    stages = []
+    for key, label, _b, _p in roles.STUDY_STAGES:
+        items = _study_items(db, t, key)
+        stages.append({
+            "key": key, "label": label,
+            "done": sum(1 for i in items if i.done),
+            "total": len(items),
+            "items": [{
+                "id": i.id, "kind": i.kind, "title": i.title,
+                "done": bool(i.done),
+                "done_at": i.done_at.isoformat() if i.done_at else None,
+                "note": i.note,
+            } for i in sorted(items, key=lambda x: (x.kind != "book",
+                                                    x.id))],
+        })
+
+    return {
+        "state": st,
+        "grades": [_grade_row_out(g) for g in _grade_rows(db)],
+        "history": [{
+            "id": e.id,
+            "kind": e.kind,
+            "kind_label": roles.GRADE_EVENT_LABELS.get(e.kind, e.kind),
+            "tone": roles.GRADE_EVENT_TONE.get(e.kind, "slate"),
+            "from_grade": e.from_grade,
+            "from_label": roles.GRADE_LABELS.get(e.from_grade or ""),
+            "to_grade": e.to_grade,
+            "to_label": roles.GRADE_LABELS.get(e.to_grade or ""),
+            "date": e.effective_from.isoformat() if e.effective_from else None,
+            "reason": e.reason,
+            "pass_rate": e.pass_rate,
+            "test_avg": e.test_avg,
+            "rate_before": e.rate_before,
+            "rate_after": e.rate_after,
+            "decided_by": e.decided_by,
+        } for e in history],
+        "study": stages,
+        "entry": [{"key": k, "text": txt} for k, txt in roles.TEACHER_ENTRY],
+        "can_edit": user.role in roles.GRADE_ADMIN,
+        "is_me": bool(mine and mine.id == t.id),
+    }
+
+
+@app.post("/api/teachers/{teacher_id}/grade")
+def set_teacher_grade(
+    teacher_id: int,
+    payload: schemas.GradeSet,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    """Darajani qo'lda qo'yish. Avtomat qaror noto'g'ri chiqqan bo'lsa
+    shu yerdan qaytariladi."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    if payload.grade not in _grade_map(db):
+        raise HTTPException(400, "Bunday daraja yo'q")
+    if payload.grade == t.grade:
+        return {"ok": True, "changed": False}
+    _set_grade(db, t, payload.grade, kind="set",
+               reason=payload.reason or "Qo'lda o'zgartirildi",
+               by=user.full_name)
+    db.commit()
+    return {"ok": True, "changed": True,
+            "grade": t.grade,
+            "label": roles.GRADE_LABELS.get(t.grade, t.grade)}
+
+
+@app.post("/api/teachers/{teacher_id}/remediation")
+def clear_remediation(
+    teacher_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.GRADE_ADMIN)),
+):
+    """Qayta test topshirildi — cheklovni olib tashlaymiz."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    t.remediation_until = None
+    t.remediation_reason = None
+    db.add(models.TeacherGradeEvent(
+        teacher_id=t.id, from_grade=t.grade, to_grade=t.grade,
+        kind="remediation_done", effective_from=date.today(),
+        reason="Qayta test topshirildi", decided_by=user.full_name))
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/teachers/{teacher_id}/study/{item_id}")
+def mark_study(
+    teacher_id: int,
+    item_id: int,
+    payload: schemas.StudyDone,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Kitob o'qildi / podkast ko'rildi. Ustoz o'zi belgilaydi."""
+    item = db.query(models.TeacherStudyItem).get(item_id)
+    if not item or item.teacher_id != teacher_id:
+        raise HTTPException(404, "Topilmadi")
+    mine = _teacher_of_user(db, user)
+    if user.role not in roles.CAREER_ACCESS and (
+            not mine or mine.id != teacher_id):
+        raise HTTPException(403, "Faqat o'zingiznikini belgilay olasiz")
+    item.done = 1 if payload.done else 0
+    item.done_at = date.today() if payload.done else None
+    if payload.note is not None:
+        item.note = payload.note
+    db.commit()
+    return {"ok": True, "done": bool(item.done)}
+
+
+@app.get("/api/me/career")
+def my_career(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Ustozning O'Z karyera xaritasi: qaysi darajada, keyingisiga
+    nima yetishmayapti, bir o'quvchidan qancha olyapti."""
+    t = _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(404, "Sizning ustoz kartangiz topilmadi")
+    return teacher_career(t.id, db=db, user=user)
+
+
 @app.get("/api/teachers/scoreboard")
 def teacher_scoreboard(
     months: int = 12,
@@ -10195,7 +11102,31 @@ def _my_teacher_cards(db: Session, user: models.User) -> list:
               f"{len(pending)} tasiga yo'qlama qo'yilmagan"
               if pending else "hammasi yopilgan",
               "bad" if pending else "good", "/timetable"),
+        _grade_card(db, t),
     ]
+
+
+def _grade_card(db: Session, t: models.Teacher) -> dict:
+    """Ustoz o'z darajasini va keyingisiga qancha qolganini ko'radi."""
+    try:
+        st = _grade_state(db, t)
+    except Exception:
+        return _card("Darajam", "—", None, "plain", "/my-career")
+    if st["in_remediation"]:
+        hint = f"Qayta test: {st['remediation_until']}"
+        tone = "bad"
+    elif st["ready"] and st["next_label"]:
+        hint = f"{st['next_label']} ga tayyorsiz"
+        tone = "good"
+    elif st["next_label"]:
+        n = len(st["missing"])
+        hint = (f"{st['next_label']} gacha {n} ta shart"
+                if n else f"Keyingisi: {st['next_label']}")
+        tone = "plain"
+    else:
+        hint = "Eng yuqori daraja"
+        tone = "brand"
+    return _card("Darajam", st["grade_label"], hint, tone, "/my-career")
 
 
 def _my_sales_cards(db: Session, user: models.User) -> list:

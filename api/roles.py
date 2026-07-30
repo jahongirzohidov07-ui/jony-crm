@@ -1105,6 +1105,165 @@ SMM_TASK_DEADLINE_DAYS = {k: d for k, _, d in SMM_AUTO_TASKS}
 
 
 # =====================================================================
+#  USTOZ DARAJALARI VA KARYERA XARITASI
+#
+#  Bu jadval - butun tizimning o'zagi: ustozning bir o'quvchidan
+#  qancha olishi, nechta guruh olib bora olishi, keyingi darajaga
+#  o'tish sharti va qaysi natijada pastga tushishi shu yerdan chiqadi.
+#
+#  Bu yerdagi raqamlar faqat BOSHLANG'ICH holat: bir marta bazaga
+#  tushadi, keyin asoschi UI'dan o'zgartiradi va bu ro'yxat ularga
+#  tegmaydi.
+# =====================================================================
+# key, nom, bir o'quvchidan (so'm), min tajriba (oy), min guruh,
+# max guruh, sertifikat nomi, sertifikat balli, keyingi darajaga
+# o'tish uchun necha foiz o'quvchi o'tishi kerak, oylik test
+# o'rtachasi shundan past bo'lsa tushiriladi, qaysi darajaga
+TEACHER_GRADES = [
+    ("junior", "Junior teacher", 80000,  5,  1, 1, "CEFR B2",   55.0, 75.0, None, None),
+    ("middle", "Middle teacher", 100000, 12, 2, 3, "CEFR B2",   55.0, 70.0, 55.0, "junior"),
+    ("senior", "Senior teacher", 120000, 18, 4, 5, "IELTS 6.0+", 6.0, 60.0, 55.0, "middle"),
+    ("expert", "Expert teacher", 140000, 24, 6, 7, "IELTS 6.5+", 6.5, 60.0, 60.0, "senior"),
+    # Head teacher uchun hujjatda tushirish chegarasi va guruh soni
+    # yozilmagan - Expert bilan bir xil qilib qo'yildi.
+    ("head",   "Head teacher",   160000, 24, 6, 8, "IELTS 7.0+", 7.0, None, 60.0, "expert"),
+    # Metodist: hujjatda talablari bor, lekin BIR O'QUVCHIDAN QANCHA
+    # olishi yozilmagan - vaqtincha Head bilan bir xil qo'yildi.
+    # Asoschi Karyera bo'limidan haqiqiy raqamni qo'yadi.
+    ("metodist", "Metodist teacher", 160000, 36, 6, 8, "IELTS 8.0+", 8.0,
+     None, 60.0, "head"),
+]
+GRADE_ORDER = [g[0] for g in TEACHER_GRADES]
+GRADE_LABELS = {g[0]: g[1] for g in TEACHER_GRADES}
+FIRST_GRADE = GRADE_ORDER[0]
+GRADE_TONES = {"junior": "slate", "middle": "sky", "senior": "teal",
+               "expert": "violet", "head": "amber", "metodist": "rose"}
+
+# Hujjatda ochiq aytilgan: "BU TALABLAR VA BOSHQA NARSALAR VAZIYATGA
+# VA TALABGA QARAB OZROQ O'ZGARIB TURISHI HAM MUMKIN". Shuning uchun
+# yuqoridagi jadval koddan emas, bazadan o'qiladi va UI'dan
+# tahrirlanadi - kod faqat birinchi marta to'ldirib beradi.
+
+
+def next_grade(key: str) -> str | None:
+    """Keyingi daraja. Eng yuqorisida bo'lsa - None."""
+    if key not in GRADE_ORDER:
+        return GRADE_ORDER[0]
+    i = GRADE_ORDER.index(key)
+    return GRADE_ORDER[i + 1] if i + 1 < len(GRADE_ORDER) else None
+
+
+# Ustozlikni boshlash sharti: bularsiz guruh ochilmaydi.
+TEACHER_ENTRY = [
+    ("cert", "IELTS 6.0 yoki CEFR B2 (55 dan yuqori)"),
+    ("age", "Yoshi 18+"),
+    ("support", "3 oy support teacher lavozimida ishlash tajribasi"),
+    ("skill", "Dars berish mahorati mezonidan 50+ ball"),
+]
+TEACHER_MIN_AGE = 18
+TEACHER_MIN_SUPPORT_MONTHS = 3
+TEACHER_MIN_SKILL = 50.0
+
+# Head teacher alohida talablar bilan qo'yiladi.
+HEAD_MIN_AGE = 22
+HEAD_MIN_SKILL = 70.0
+HEAD_MIN_RESULTS = 10          # 10 ta IELTS 6.0+ yoki Multilevel B2 natija
+HEAD_RESULT_BAND = 6.0
+
+# Metodist: eng yuqori daraja. Head'dan farqi - qo'shimcha xalqaro
+# metodika sertifikati va yuqoriroq natija talab qilinadi.
+METODIST_MIN_RESULTS = 10      # 10 ta IELTS 7.0+ natija
+METODIST_RESULT_BAND = 7.0
+METODIST_QUALIFICATIONS = ["CELTA", "TESOL", "DELTA"]
+# Qaysi darajaga o'tishda metodika sertifikati talab qilinadi
+QUALIFICATION_REQUIRED_FOR = ["metodist"]
+
+# Natija 50% dan past bo'lsa: o'tganlar boshqa ustozga beriladi,
+# o'ta olmaganlarini ustozning o'zi tayyorlaydi va bir oydan keyin
+# qayta test topshiradi. Shu vaqt ichida unga YANGI GURUH OCHILMAYDI.
+REMEDIATION_BELOW = 50.0
+REMEDIATION_DAYS = 30
+
+# Avtomat qaror uchun eng kam ma'lumot. Ikkita o'quvchining bitta
+# testiga qarab ustozni tushirib yuborish - natija emas, shovqin.
+GRADE_MIN_RESULTS = 8          # kamida shuncha natija bo'lsin
+GRADE_MIN_EXAMS = 2            # kamida shuncha test o'tkazilgan bo'lsin
+
+# O'quvchi "bosqichdan o'tdi" deb hisoblanishi uchun kerakli foiz.
+# Hujjatda alohida aytilmagan - shu qiymatdan boshlanadi va Karyera
+# bo'limidan o'zgartiriladi.
+LEVEL_PASS_PERCENT = 60.0
+# "Oylik test o'rtachasi" qancha kunlik oynada olinadi
+TEST_WINDOW_DAYS = 30
+# O'quvchilarning bosqichdan o'tishi qancha oy orqaga qarab hisoblanadi
+PASS_WINDOW_MONTHS = 12
+
+GRADE_EVENT_KINDS = [
+    ("promote", "Ko'tarildi", "emerald"),
+    ("demote", "Tushirildi", "red"),
+    ("set", "Qo'lda belgilandi", "slate"),
+    ("remediation", "Qayta tayyorlashga qo'yildi", "amber"),
+    ("remediation_done", "Qayta tayyorlash tugadi", "sky"),
+]
+GRADE_EVENT_LABELS = {k: lbl for k, lbl, _ in GRADE_EVENT_KINDS}
+GRADE_EVENT_TONE = {k: t for k, _, t in GRADE_EVENT_KINDS}
+
+# ---- O'qish rejasi: kitob va podkast --------------------------------
+# Support -> Teacher bosqichi uchun. Bularsiz va imtihonsiz
+# teacherlikka o'tilmaydi.
+TEACHER_BOOKS = [
+    "Learning Teaching",
+    "Teach Like a Champion",
+    "Teach Like a Pirate",
+    "What Works in Schools",
+]
+TEACHER_PODCASTS = [
+    "Isroil Bo'riyev (Everest)",
+    "Doniyor Aslanov (Everest)",
+    "Bekzod Mirahmedov (Everest)",
+    "Oysara Ravshanova (Everest)",
+    "Mohira Nabiyeva (Everest)",
+    "Intizor Urokova (Everest)",
+    "Farrukh Rustamov (Everest)",
+    "Xumoyunmirzo Xolmaxamatov (Everest)",
+    "Sirojiddin Malikov (Everest)",
+    "Nodirjon Egamberdiyev (Everest)",
+    "IELTS 8.5 PODCAST | SELF-STUDY (Everest)",
+    "O'zbekistonda ilk bora IELTS 8.5 Instruktorlar bilan Podcast (Everest)",
+]
+HEAD_BOOKS = [
+    "Why Don't Students Like School?",
+    "Visible Learning and the Science of How We Learn",
+    "Teach Like a Champion 2.0",
+    "Building a Better Teacher",
+]
+HEAD_PODCASTS = [
+    "Edu podcast 4-son",
+    "Edu podcast 5-son",
+    "Edu podcast 7-son",
+    "Edu podcast 10-son",
+    "Edu podcast 11-son",
+    "Edu podcast 12-son",
+    "Edu podcast 13-son",
+]
+
+STUDY_STAGES = [
+    ("teacher", "Teacherlik bosqichi", TEACHER_BOOKS, TEACHER_PODCASTS),
+    ("head", "Head teacherlik bosqichi", HEAD_BOOKS, HEAD_PODCASTS),
+]
+STUDY_STAGE_LABELS = {k: lbl for k, lbl, _, _ in STUDY_STAGES}
+
+# Hujjatda kitoblar "lavozimi PAYTIDA o'qilishi kerak" deb yozilgan.
+# Shuning uchun ro'yxat o'sha bosqichdan CHIQISHDA tekshiriladi:
+# teacherlik ro'yxati Junior'dan yuqoriga o'tishda, head ro'yxati esa
+# Head'dan Metodistga o'tishda.
+STUDY_REQUIRED_FOR = {"middle": "teacher", "metodist": "head"}
+
+CAREER_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, HR_MANAGER, BRANCH_MANAGER]
+GRADE_ADMIN = FULL_ACCESS + [ACADEMIC_HEAD]
+
+
+# =====================================================================
 #  Ustozlar reytingi
 #  Ustoz o'z natijasini va hamkasblari orasidagi o'rnini ko'radi -
 #  lekin ularning MAOSHINI ko'rmaydi.

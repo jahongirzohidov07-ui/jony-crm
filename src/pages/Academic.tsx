@@ -21,9 +21,10 @@ import { exportToExcel } from "../lib/exportXlsx";
 
 import StudentsPage from "./Students";
 import GroupsPage from "./Groups";
+import { CareerTab } from "../components/Career";
 
 type Tab = "students" | "groups" | "risk" | "fill" | "tasks"
-  | "support" | "rooms";
+  | "career" | "support" | "rooms";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "students", label: "Talabalar" },
@@ -31,6 +32,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "risk", label: "Akademik risk" },
   { key: "fill", label: "Guruh to'lishi" },
   { key: "tasks", label: "Vazifalar" },
+  { key: "career", label: "Ustozlar karyerasi" },
   { key: "support", label: "Support teacher" },
   { key: "rooms", label: "Xonalar" },
 ];
@@ -933,6 +935,7 @@ export default function Academic() {
       {tab === "risk" && <RiskTab />}
       {tab === "fill" && <FillTab branchId={branchId} />}
       {tab === "tasks" && <TasksTab />}
+      {tab === "career" && <CareerTab />}
       {tab === "support" && <SupportTab canAssign={canEdit} />}
       {tab === "rooms" && <RoomsTab canEdit={canEdit} branches={branches} />}
     </div>

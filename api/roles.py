@@ -1,82 +1,147 @@
-"""Jony Academy tashkiliy rollari.
-
-Muhim atama farqi: bizning o'quv markazda "Administrator" deganda
-SOTUV MENEJERI tushuniladi (lidlar bilan ishlaydigan odam), tizimning
-egasi emas. Tizimning to'liq huquqli egasi - ASOSCHI.
+"""Jony Academy tashkiliy rollari va ruxsatlar matritsasi.
 
 Ichki kalitlar (masalan "founder") bazada saqlanadi va hech qachon
 o'zgarmasligi kerak; ekranda ko'rinadigan nom UZ_LABELS'da turadi.
+
+Ruxsatlar ikki qavatli:
+  1) Bu fayldagi ro'yxatlar - STANDART holat, kod bilan keladi.
+  2) RolePermission jadvali - ASOSCHI o'zgartirgan holat, bazada turadi.
+Ikkinchisi birinchisini bosadi. Asoschining huquqini esa hech kim,
+hatto asoschining o'zi ham, olib tashlay olmaydi - aks holda tizimga
+kirish yo'li yopilib qolardi.
 """
 
+# ---- Rahbariyat -------------------------------------------------------
 FOUNDER = "founder"                     # Asoschi - to'liq huquq
-BRANCH_MANAGER = "branch_manager"       # Filial menejeri
-SALES_MANAGER = "sales_manager"         # Administrator (sotuv menejeri)
-TEACHER = "teacher"                     # O'qituvchi
-SUPPORT_TEACHER = "support_teacher"
-EXAMINER = "examiner"
-HR_MANAGER = "hr_manager"
-SMM_MANAGER = "smm_manager"
+FINANCE_DIRECTOR = "finance_director"   # Moliya direktori
+ACCOUNTANT = "accountant"               # Buxgalter
+BRANCH_MANAGER = "branch_manager"       # Filial rahbari
+
+# ---- Sotuv va marketing ----------------------------------------------
+SALES_HEAD = "sales_head"               # Sotuv rahbari
+SALES_MANAGER = "sales_manager"         # Sotuv menejeri
+ADMINISTRATOR = "administrator"         # Administrator (qabul, kassa)
+SMM_MANAGER = "smm_manager"             # Marketolog / SMM
+
+# ---- O'quv bo'limi ----------------------------------------------------
 ACADEMIC_HEAD = "academic_head"         # O'quv bo'limi rahbari
+TEACHER = "teacher"                     # O'qituvchi
+SUPPORT_TEACHER = "support_teacher"     # Support teacher
+HEAD_SUPPORT = "head_support"           # Support teacherlar boshlig'i
+EXAMINER = "examiner"                   # Examiner
+HEAD_EXAMINER = "head_examiner"         # Examinerlar boshlig'i
+
+# ---- Qo'llab-quvvatlash ----------------------------------------------
+HR_MANAGER = "hr_manager"               # HR menejer
+FACILITY_MANAGER = "facility_manager"   # Xo'jalik ishlari menejeri
+
+# ---- Tashqi foydalanuvchilar -----------------------------------------
+PARENT = "parent"                       # Ota-ona
+STUDENT = "student"                     # O'quvchi
 
 ALL_ROLES = [
     FOUNDER,
+    FINANCE_DIRECTOR,
+    ACCOUNTANT,
     BRANCH_MANAGER,
+    SALES_HEAD,
     SALES_MANAGER,
-    TEACHER,
-    SUPPORT_TEACHER,
-    EXAMINER,
-    HR_MANAGER,
+    ADMINISTRATOR,
     SMM_MANAGER,
     ACADEMIC_HEAD,
+    TEACHER,
+    SUPPORT_TEACHER,
+    HEAD_SUPPORT,
+    EXAMINER,
+    HEAD_EXAMINER,
+    HR_MANAGER,
+    FACILITY_MANAGER,
+    PARENT,
+    STUDENT,
 ]
 
 UZ_LABELS = {
     FOUNDER: "Asoschi",
-    BRANCH_MANAGER: "Filial menejeri",
-    SALES_MANAGER: "Administrator (sotuv menejeri)",
+    FINANCE_DIRECTOR: "Moliya direktori",
+    ACCOUNTANT: "Buxgalter",
+    BRANCH_MANAGER: "Filial rahbari",
+    SALES_HEAD: "Sotuv rahbari",
+    SALES_MANAGER: "Sotuv menejeri",
+    ADMINISTRATOR: "Administrator",
+    SMM_MANAGER: "Marketolog / SMM",
+    ACADEMIC_HEAD: "O'quv bo'limi rahbari",
     TEACHER: "O'qituvchi",
     SUPPORT_TEACHER: "Support teacher",
+    HEAD_SUPPORT: "Support teacherlar boshlig'i",
     EXAMINER: "Examiner",
-    HR_MANAGER: "HR manager",
-    SMM_MANAGER: "SMM manager",
-    ACADEMIC_HEAD: "O'quv bo'limi rahbari",
+    HEAD_EXAMINER: "Examinerlar boshlig'i",
+    HR_MANAGER: "HR menejer",
+    FACILITY_MANAGER: "Xo'jalik ishlari menejeri",
+    PARENT: "Ota-ona",
+    STUDENT: "O'quvchi",
 }
 
+# Rollarni guruhlab ko'rsatish - 18 ta rolni bir ro'yxatda ko'rsatish
+# o'qishga og'ir.
+ROLE_GROUPS = [
+    ("leadership", "Rahbariyat",
+     [FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, BRANCH_MANAGER]),
+    ("sales", "Sotuv va marketing",
+     [SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, SMM_MANAGER]),
+    ("academic", "O'quv bo'limi",
+     [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
+      EXAMINER, HEAD_EXAMINER]),
+    ("support", "Qo'llab-quvvatlash", [HR_MANAGER, FACILITY_MANAGER]),
+    ("external", "Tashqi", [PARENT, STUDENT]),
+]
+
+# Tashqi foydalanuvchilar - ular xodim emas, ish haqi ham yo'q,
+# xodimlar ro'yxatida ham chiqmaydi.
+EXTERNAL_ROLES = [PARENT, STUDENT]
+STAFF_ROLES = [r for r in ALL_ROLES if r not in EXTERNAL_ROLES]
+
 # ---- Ruxsat guruhlari -------------------------------------------------
-# Kundalik operatsion to'liq huquq (talaba/guruh yaratish-o'chirish,
-# moliyaviy amallar). Asoschi + filial menejeri.
+# Bular STANDART holat. Asoschi ruxsatlar matritsasidan o'zgartirsa,
+# baza jadvalidagi qiymat ustun turadi.
+
+# Kundalik operatsion to'liq huquq.
 FULL_ACCESS = [FOUNDER, BRANCH_MANAGER]
 
-# Talaba yozuvlari bilan ishlaydiganlar. Sotuv menejeri ham kiradi -
-# lidni o'quvchiga aylantirish uning ishi.
-TEACHING_STAFF = FULL_ACCESS + [SALES_MANAGER, TEACHER, SUPPORT_TEACHER,
-                                EXAMINER, ACADEMIC_HEAD]
+# Talaba yozuvlari bilan ishlaydiganlar.
+TEACHING_STAFF = FULL_ACCESS + [
+    SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
+    HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER, ACADEMIC_HEAD,
+]
 
 # Xodimlar ro'yxatini KO'RA oladiganlar.
-STAFF_VIEWERS = FULL_ACCESS + [HR_MANAGER]
+STAFF_VIEWERS = FULL_ACCESS + [HR_MANAGER, FINANCE_DIRECTOR]
 
 # Xodim yaratish va ROL BERISH - faqat asoschi. Bu ataylab eng tor
 # guruh: rol berish tizimdagi eng xavfli amal.
 USER_ADMIN = [FOUNDER]
 
-# Moliya (to'lov, hisob-kitob, ish haqi).
-FINANCE_ACCESS = FULL_ACCESS
+# Moliya (foyda-zarar, xarajat, ish haqi).
+FINANCE_ACCESS = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
 
 # Kassa: pul qabul qilish, qarzdorlar bilan ishlash, to'lov foizi.
-# Administrator (sotuv menejeri) shu ishni qiladi — lekin FOYDANI
+# Administrator va sotuv menejeri shu ishni qiladi — lekin FOYDANI
 # ko'rmaydi. Shuning uchun bu FINANCE_ACCESS dan alohida turadi.
-CASH_ACCESS = FINANCE_ACCESS + [SALES_MANAGER]
+CASH_ACCESS = FINANCE_ACCESS + [SALES_HEAD, SALES_MANAGER, ADMINISTRATOR]
 
-# Lidlar (sotuv voronkasi). Administrator/sotuv menejeri bu yerda
-# asosiy foydalanuvchi; SMM manager Instagram/Telegram lidlarini
-# kiritadi; support teacher qabulda tashrifchilarni yozadi.
-LEAD_ACCESS = FULL_ACCESS + [SALES_MANAGER, SMM_MANAGER, SUPPORT_TEACHER]
+# Lidlar (sotuv voronkasi).
+LEAD_ACCESS = FULL_ACCESS + [
+    SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, SMM_MANAGER, SUPPORT_TEACHER,
+]
 
 # Faqat umumiy statistikani ko'radiganlar.
 DASHBOARD_ONLY = [SMM_MANAGER]
 
 # Butun tashkilot bo'yicha ko'radigan rollar (filialga bog'lanmagan).
-ORG_WIDE_ROLES = [FOUNDER, HR_MANAGER, SMM_MANAGER, ACADEMIC_HEAD]
+ORG_WIDE_ROLES = [
+    FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, HR_MANAGER, SMM_MANAGER,
+    ACADEMIC_HEAD, SALES_HEAD, HEAD_EXAMINER, HEAD_SUPPORT,
+    FACILITY_MANAGER,
+]
 
 # ---- To'lov usullari --------------------------------------------------
 # Cashflow hisoboti shu bo'yicha bo'linadi. Faqat kirim ("payment")
@@ -214,36 +279,38 @@ LEAD_SOURCE_DEFAULT_STAGE = {
 # ---- Audit log --------------------------------------------------------
 # Kim nimani o'zgartirgani. Filial rahbari faqat o'z filialining
 # tarixini ko'radi (filtr endpointda), asoschi hammasini.
-AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER]
+AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER, FINANCE_DIRECTOR]
 
 # ---- Nozik ma'lumotlar ------------------------------------------------
 # Support teacher va o'qituvchi to'lov tafsilotlarini ko'rmaydi:
 # ularga o'quvchi qarzdor yoki yo'qligi yetarli, summa emas.
-PAYMENT_DETAIL_VIEW = FULL_ACCESS + [SALES_MANAGER]
+PAYMENT_DETAIL_VIEW = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT,
+                                     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR]
 
 # Boshqa xodimning oyligini ko'rish - faqat asoschi va HR.
 # O'qituvchi faqat O'ZINING oyligini ko'radi.
-SALARY_VIEW_ALL = [FOUNDER, HR_MANAGER]
+SALARY_VIEW_ALL = [FOUNDER, HR_MANAGER, FINANCE_DIRECTOR]
 
 # Umumiy kompaniya foydasi - faqat asoschi va filial rahbari
 # (rahbar o'z filiali bo'yicha). Sotuv menejeri ko'rmaydi.
-PROFIT_VIEW = FULL_ACCESS
+PROFIT_VIEW = FULL_ACCESS + [FINANCE_DIRECTOR]
 
 # Akademik baho qo'yish - faqat o'qituvchilar tarkibi.
 # Kassir/sotuv menejeri bahoga tegmaydi.
-GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER, ACADEMIC_HEAD]
+GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
+                            EXAMINER, HEAD_EXAMINER, ACADEMIC_HEAD]
 
 # ---- O'quv bo'limi ----------------------------------------------------
 # Ta'lim sifatiga javob beradigan bo'lim: akademik risk, guruh to'lishi,
 # xonalar. O'quv bo'limi rahbari butun markaz bo'yicha ko'radi.
-ACADEMIC_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD]
+ACADEMIC_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, HEAD_SUPPORT]
 
 # ---- Examiner (imtihon nazorati) --------------------------------------
 # DIQQAT: Examiner o'quv bo'limiga EMAS, to'g'ridan-to'g'ri asoschiga
 # bo'ysunadi. Shuning uchun imtihon moduli Audit bo'limida turadi -
 # ta'lim sifatini o'lchayotgan odam o'lchanayotgan bo'limga qaram
 # bo'lmasligi kerak.
-EXAM_ACCESS = [FOUNDER, EXAMINER]
+EXAM_ACCESS = [FOUNDER, EXAMINER, HEAD_EXAMINER]
 # Natijani KO'RA oladiganlar (kiritish EXAM_ACCESS'da).
 EXAM_VIEW = EXAM_ACCESS + [BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER]
 
@@ -251,7 +318,8 @@ EXAM_VIEW = EXAM_ACCESS + [BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER]
 EXAM_APPROVE = EXAM_ACCESS
 
 # ---- Support teacher --------------------------------------------------
-SUPPORT_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER]
+SUPPORT_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER,
+                                HEAD_SUPPORT]
 
 # Imtihon tasdiqlash holati.
 EXAM_STATUSES = [
@@ -372,7 +440,8 @@ ATTACHMENT_KINDS = [
 ]
 ATTACHMENT_KIND_LABELS = dict(ATTACHMENT_KINDS)
 # Ustoz ham risk ro'yxatini ko'radi - o'z o'quvchisi haqida.
-ACADEMIC_VIEW = ACADEMIC_ACCESS + [TEACHER, SUPPORT_TEACHER, SALES_MANAGER]
+ACADEMIC_VIEW = ACADEMIC_ACCESS + [TEACHER, SUPPORT_TEACHER,
+                                   SALES_HEAD, SALES_MANAGER]
 
 # Akademik risk signallari. Har biri ball beradi; ballar yig'indisi
 # risk darajasini belgilaydi.
@@ -496,7 +565,7 @@ CANDIDATE_SOURCE_LABELS = dict(CANDIDATE_SOURCES)
 # Reklama kanallari LID MANBALARI bilan bir xil kalitda: shunda
 # "shu kanalga qancha pul ketdi" va "shu kanaldan qancha lid keldi"
 # bir joyda taqqoslanadi - CAC shundan chiqadi.
-MARKETING_ACCESS = FULL_ACCESS + [SMM_MANAGER]
+MARKETING_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD]
 MARKETING_CHANNELS = LEAD_SOURCES
 MARKETING_CHANNEL_LABELS = {
     "visit": "Tashrif",
@@ -567,8 +636,10 @@ DEFAULT_EXAM_COIN_RULES = [
 # ko'pincha qabuldagi administrator qo'yadi.
 # DIQQAT: akademik BAHO bunga kirmaydi - u alohida GRADE_EDIT bilan
 # himoyalangan (yuqoriga qarang).
-TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER,
-                                 SALES_MANAGER, ACADEMIC_HEAD]
+TEACHING_ACCESS = FULL_ACCESS + [
+    TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
+    SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, ACADEMIC_HEAD,
+]
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 
@@ -611,7 +682,8 @@ DEFAULT_KPI_NEW_CLIENT_RULES = [
 
 # KPI'ni ko'rish - rahbariyat; qoidalar va fiks oylikni o'zgartirish -
 # faqat asoschi.
-KPI_VIEW = FULL_ACCESS
+KPI_VIEW = FULL_ACCESS + [FINANCE_DIRECTOR, SALES_HEAD,
+                          SALES_MANAGER, ADMINISTRATOR]
 KPI_ADMIN = [FOUNDER]
 
 # ---- Fanlar va darajalar ----------------------------------------------
@@ -751,8 +823,9 @@ AUTO_DISCOUNT_TYPES = ["family"]
 
 # Chegirmani kim tasdiqlay oladi. Administrator so'rov yubora oladi,
 # lekin tasdiqlash asoschi va filial rahbarida.
-DISCOUNT_REQUEST = FULL_ACCESS + [SALES_MANAGER]
-DISCOUNT_APPROVE = [FOUNDER, BRANCH_MANAGER]
+DISCOUNT_REQUEST = FULL_ACCESS + [SALES_HEAD, SALES_MANAGER,
+                                  ADMINISTRATOR, FINANCE_DIRECTOR]
+DISCOUNT_APPROVE = [FOUNDER, BRANCH_MANAGER, FINANCE_DIRECTOR]
 
 # Tasdiqsiz chegirma amal qilmaydi.
 DISCOUNT_STATUSES = [
@@ -896,11 +969,9 @@ TASK_SOURCES = [
 ]
 TASK_SOURCE_LABELS = dict(TASK_SOURCES)
 
-TASK_ACCESS = FULL_ACCESS + [
-    HR_MANAGER, SMM_MANAGER, ACADEMIC_HEAD, SALES_MANAGER,
-    TEACHER, SUPPORT_TEACHER, EXAMINER,
-]
-TASK_MANAGE = FULL_ACCESS + [HR_MANAGER, ACADEMIC_HEAD]
+TASK_ACCESS = [r for r in STAFF_ROLES]   # har bir xodimning vazifasi bor
+TASK_MANAGE = FULL_ACCESS + [HR_MANAGER, ACADEMIC_HEAD, SALES_HEAD,
+                             HEAD_EXAMINER, HEAD_SUPPORT]
 
 
 # =====================================================================
@@ -955,8 +1026,9 @@ STOCK_MOVE_REASONS = [
 ]
 STOCK_MOVE_LABELS = dict(STOCK_MOVE_REASONS)
 
-INVENTORY_ACCESS = FULL_ACCESS + [HR_MANAGER]
-INVENTORY_VIEW = INVENTORY_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER]
+INVENTORY_ACCESS = FULL_ACCESS + [HR_MANAGER, FACILITY_MANAGER]
+INVENTORY_VIEW = INVENTORY_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER,
+                                     ACCOUNTANT]
 
 
 # =====================================================================
@@ -973,15 +1045,16 @@ TEACHER_PAYMENT_LABELS = {k: lbl for k, lbl, _ in TEACHER_PAYMENT_KINDS}
 # aylanib o'tolmaydi: aks holda ustoz ketib qolsa pul qaytmaydi.
 ADVANCE_LIMIT_OF_EARNED = 1.0
 
-SALARY_PAY = FULL_ACCESS
+SALARY_PAY = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
 # O'zining oyligini har bir ustoz ko'radi
-SALARY_SELF_VIEW = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, HR_MANAGER]
+SALARY_SELF_VIEW = STAFF_ROLES
 
 
 # =====================================================================
 #  Qarzdorlar bilan ishlash
 # =====================================================================
-DEBTOR_ACCESS = FULL_ACCESS + [SALES_MANAGER]
+DEBTOR_ACCESS = FULL_ACCESS + [SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,
+                               FINANCE_DIRECTOR, ACCOUNTANT]
 
 DEBT_CONTACT_RESULTS = [
     ("promised", "To'lashga va'da berdi", "emerald"),
@@ -1034,3 +1107,218 @@ TEACHER_SCORE_WEIGHTS = [
 ]
 TEACHER_SCORE_LABELS = {k: lbl for k, lbl, _ in TEACHER_SCORE_WEIGHTS}
 TEACHER_SCORE_DEFAULT = {k: w for k, _, w in TEACHER_SCORE_WEIGHTS}
+
+
+# =====================================================================
+#  RUXSATLAR MATRITSASI
+#
+#  Har bir ROL uchun har bir BO'LIMDA nima qila olishi belgilanadi.
+#  Buni faqat ASOSCHI o'zgartiradi.
+#
+#  Amallar:
+#    view    - ko'rish
+#    create  - yaratish
+#    edit    - tahrirlash
+#    delete  - o'chirish
+#    approve - tasdiqlash
+#    export  - eksport qilish
+#    secret  - maxfiy maydonlarni ko'rish (maosh, foyda, karta raqami)
+# =====================================================================
+
+PERM_ACTIONS = [
+    ("view", "Ko'rish"),
+    ("create", "Yaratish"),
+    ("edit", "Tahrirlash"),
+    ("delete", "O'chirish"),
+    ("approve", "Tasdiqlash"),
+    ("export", "Eksport"),
+    ("secret", "Maxfiy maydonlar"),
+]
+PERM_ACTION_LABELS = dict(PERM_ACTIONS)
+PERM_ACTION_KEYS = [k for k, _ in PERM_ACTIONS]
+
+# Bo'limlar: (kalit, nomi, guruh)
+RESOURCES = [
+    ("dashboard", "Dashboard", "Umumiy"),
+    ("timetable", "Dars jadvali", "Umumiy"),
+    ("tasks", "Vazifalar", "Umumiy"),
+
+    ("leads", "Lidlar", "Sotuv"),
+    ("students", "O'quvchilar", "Sotuv"),
+    ("groups", "Guruhlar", "Sotuv"),
+    ("marketing", "Marketing", "Sotuv"),
+
+    ("payments", "To'lovlar", "Moliya"),
+    ("debtors", "Qarzdorlar", "Moliya"),
+    ("expenses", "Xarajatlar", "Moliya"),
+    ("pnl", "Foyda / zarar", "Moliya"),
+    ("salary", "Ish haqi", "Moliya"),
+    ("discounts", "Chegirmalar", "Moliya"),
+
+    ("teachers", "O'qituvchilar", "O'quv"),
+    ("academic", "O'quv bo'limi", "O'quv"),
+    ("exams", "Imtihonlar", "O'quv"),
+    ("attendance", "Yo'qlama", "O'quv"),
+    ("grades", "Baholar", "O'quv"),
+
+    ("staff", "Xodimlar", "Boshqaruv"),
+    ("hr", "HR", "Boshqaruv"),
+    ("inventory", "Ombor va aktivlar", "Boshqaruv"),
+    ("branches", "Filiallar", "Boshqaruv"),
+    ("reports", "Hisobotlar", "Boshqaruv"),
+    ("audit", "Audit", "Boshqaruv"),
+    ("permissions", "Ruxsatlar", "Boshqaruv"),
+]
+RESOURCE_LABELS = {k: lbl for k, lbl, _ in RESOURCES}
+RESOURCE_KEYS = [k for k, _, _ in RESOURCES]
+RESOURCE_GROUPS = {k: g for k, _, g in RESOURCES}
+
+# Maxfiy maydon nima ekanini odam tushunishi uchun
+SECRET_HINTS = {
+    "salary": "Boshqa xodimlarning maoshi",
+    "pnl": "Sof foyda va rentabellik",
+    "payments": "To'lov kartasi ma'lumotlari",
+    "students": "Ota-ona telefoni va manzili",
+    "staff": "Shaxsiy hujjat ma'lumotlari",
+    "hr": "Nomzodning kutilayotgan maoshi",
+}
+
+
+def _p(*actions) -> set:
+    return set(actions)
+
+
+V = _p("view")
+VE = _p("view", "export")
+VC = _p("view", "create")
+VCE = _p("view", "create", "edit")
+VCEX = _p("view", "create", "edit", "export")
+VCED = _p("view", "create", "edit", "delete")
+ALL_P = set(PERM_ACTION_KEYS)
+
+
+# Standart matritsa. Asoschi bu yerda YO'Q - unga hamma narsa ochiq
+# va uni o'zgartirib bo'lmaydi.
+DEFAULT_MATRIX: dict = {
+    FINANCE_DIRECTOR: {
+        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "leads": VE, "students": VE, "groups": V, "marketing": VE,
+        "payments": ALL_P, "debtors": ALL_P, "expenses": ALL_P,
+        "pnl": ALL_P, "salary": ALL_P, "discounts": ALL_P,
+        "teachers": VE, "academic": V, "exams": V,
+        "staff": VE, "hr": V, "inventory": VE, "branches": VE,
+        "reports": VE, "audit": VE,
+    },
+    ACCOUNTANT: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "students": V, "groups": V,
+        "payments": VCEX, "debtors": VCEX, "expenses": VCEX,
+        "salary": VCEX, "discounts": V,
+        "inventory": VE, "reports": VE,
+    },
+    BRANCH_MANAGER: {
+        "dashboard": VE, "timetable": VCED, "tasks": VCED,
+        "leads": VCEX, "students": ALL_P, "groups": ALL_P,
+        "marketing": VE,
+        "payments": ALL_P, "debtors": ALL_P, "expenses": VCEX,
+        "pnl": VE, "salary": VCEX, "discounts": ALL_P,
+        "teachers": VCEX, "academic": VCED, "exams": VE,
+        "attendance": VCE, "grades": VCE,
+        "staff": VE, "hr": V, "inventory": VCED, "branches": V,
+        "reports": VE, "audit": VE,
+    },
+    SALES_HEAD: {
+        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "leads": ALL_P, "students": VCEX, "groups": VE,
+        "marketing": VCEX,
+        "payments": VC, "debtors": VCEX, "discounts": VC,
+        "teachers": V, "reports": VE,
+    },
+    SALES_MANAGER: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "leads": VCEX, "students": VCE, "groups": V,
+        "payments": VC, "debtors": VCE, "discounts": VC,
+        "teachers": V,
+    },
+    ADMINISTRATOR: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "leads": VCE, "students": VCE, "groups": V,
+        "payments": VC, "debtors": VCE,
+        "attendance": VCE,
+        "teachers": V, "inventory": V,
+    },
+    SMM_MANAGER: {
+        "dashboard": V, "tasks": VCE,
+        "leads": VCE, "marketing": ALL_P, "students": V,
+        "reports": VE,
+    },
+    ACADEMIC_HEAD: {
+        "dashboard": VE, "timetable": VCED, "tasks": VCED,
+        "students": VCE, "groups": VCE,
+        "teachers": VCEX, "academic": ALL_P, "exams": VE,
+        "attendance": VCED, "grades": VCED,
+        "inventory": V, "reports": VE,
+    },
+    TEACHER: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "students": V, "groups": V,
+        "attendance": VCE, "grades": VCE, "exams": VC,
+        "academic": V,
+    },
+    SUPPORT_TEACHER: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "leads": VCE, "students": V, "groups": V,
+        "attendance": VCE, "grades": VCE, "academic": VCE,
+        "inventory": V,
+    },
+    HEAD_SUPPORT: {
+        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "leads": VCE, "students": VCE, "groups": V,
+        "attendance": VCED, "grades": VCE, "academic": VCED,
+        "teachers": V, "inventory": V, "reports": VE,
+    },
+    EXAMINER: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "students": V, "groups": V,
+        "exams": VCED, "grades": VCE, "academic": V,
+    },
+    HEAD_EXAMINER: {
+        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "students": V, "groups": V, "teachers": V,
+        "exams": ALL_P, "grades": VCED, "academic": VE,
+        "reports": VE, "audit": V,
+    },
+    HR_MANAGER: {
+        "dashboard": VE, "timetable": V, "tasks": VCED,
+        "staff": ALL_P, "hr": ALL_P, "salary": VE,
+        "teachers": VE, "inventory": VCED, "reports": VE,
+    },
+    FACILITY_MANAGER: {
+        "dashboard": V, "timetable": V, "tasks": VCE,
+        "inventory": ALL_P, "expenses": VC, "branches": V,
+    },
+    # Ota-ona va o'quvchi - faqat o'ziga tegishlini ko'radi.
+    # Bu chegara kodda ham qattiq turadi: matritsani ochib qo'yish
+    # ularga BOSHQA odamning ma'lumotini ko'rsatmaydi.
+    PARENT: {
+        "dashboard": V, "timetable": V,
+        "students": V, "payments": V, "attendance": V, "grades": V,
+        "exams": V,
+    },
+    STUDENT: {
+        "dashboard": V, "timetable": V,
+        "attendance": V, "grades": V, "exams": V,
+    },
+}
+
+
+def default_perms(role: str, resource: str) -> set:
+    """Kod bilan keladigan standart ruxsat."""
+    if role == FOUNDER:
+        return set(ALL_P)
+    return set(DEFAULT_MATRIX.get(role, {}).get(resource, set()))
+
+
+# Asoschidan olib bo'lmaydigan ruxsatlar - aks holda tizimga kirish
+# yo'li yopilib qolishi mumkin.
+LOCKED_ROLE = FOUNDER

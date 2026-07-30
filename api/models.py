@@ -1114,3 +1114,20 @@ class DebtorContact(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     student = relationship("Student")
+
+
+class RolePermission(Base):
+    """Asoschi o'zgartirgan ruxsat. Kod bilan keladigan standart holat
+    roles.DEFAULT_MATRIX'da turadi; bu jadval faqat FARQNI saqlaydi.
+
+    Shunday qilingani uchun yangi bo'lim qo'shilganda eski rollarga
+    avtomat mos ruxsat beriladi — bazani qo'lda to'ldirish kerak emas."""
+    __tablename__ = "role_permissions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    role = Column(String, nullable=False, index=True)
+    resource = Column(String, nullable=False, index=True)
+    action = Column(String, nullable=False)
+    allowed = Column(Integer, default=0)
+    changed_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

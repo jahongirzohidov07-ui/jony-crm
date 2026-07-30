@@ -1113,3 +1113,15 @@ class DebtorContactCreate(BaseModel):
     promised_date: Optional[_dt.date] = None
     promised_amount: Optional[float] = None
     note: Optional[str] = None
+
+
+# ------------------------------------------------------- Ruxsatlar
+class PermissionUpdate(BaseModel):
+    role: str
+    resource: str
+    action: str
+    allowed: bool
+
+
+class PermissionReset(BaseModel):
+    role: Optional[str] = None

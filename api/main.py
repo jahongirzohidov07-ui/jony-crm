@@ -155,6 +155,10 @@ def _ensure_new_columns():
         # Filial reytingi og'irliklari (JSON) - strategiya o'zgarsa
         # foizlar ham o'zgaradi.
         "ALTER TABLE branches ADD COLUMN rating_weights TEXT",
+        # "Administrator" endi alohida rol: sotuv menejeri sotuv bilan,
+        # administrator qabul va kassa bilan shug'ullanadi. Eskisi
+        # sotuv menejeri bo'lib qoladi - hech kim huquqini yo'qotmaydi.
+        "ALTER TABLE users ADD COLUMN photo TEXT",
         # "administrator" roli "founder" (Asoschi) deb qayta nomlandi.
         # Bizning markazda "Administrator" - bu sotuv menejeri, tizim
         # egasi emas. Eski hisoblarni yangi kalitga ko'chiramiz.
@@ -2795,6 +2799,11 @@ def admin_kpi(
         new_bonus = _new_client_bonus(db, new_count)
         fix = a.fix_salary or 0.0
 
+        # Sotuv menejeri va administrator FAQAT o'zining KPI'sini
+        # ko'radi - hamkasbining bonusi unga ko'rinmaydi.
+        if (user.role not in tuple(roles.FULL_ACCESS + [roles.FINANCE_DIRECTOR])
+                and a.id != user.id):
+            continue
         rows.append(schemas.AdminKpi(
             user_id=a.id, full_name=a.full_name, branch_id=a.branch_id,
             branch=a.branch.name if a.branch else None,
@@ -9862,4 +9871,820 @@ def teacher_scoreboard(
             "avg_months": avg("avg_months"),
             "score": avg("score"),
         },
+    }
+
+
+# =====================================================================
+#  RUXSATLAR MATRITSASI
+#
+#  Ikki qavat: kod bilan keladigan standart (roles.DEFAULT_MATRIX) va
+#  asoschi o'zgartirgan farq (RolePermission jadvali). Ikkinchisi
+#  birinchisini bosadi.
+#
+#  Asoschining huquqini hech kim olib tashlay olmaydi - aks holda
+#  tizimga kirish yo'li yopilib qolardi.
+# =====================================================================
+_PERM_CACHE: dict = {"data": None}
+
+
+def _perm_overrides(db: Session) -> dict:
+    """Bazadagi farqlar. Har o'zgarishda kesh tozalanadi."""
+    if _PERM_CACHE["data"] is None:
+        out: dict = {}
+        try:
+            for r in db.query(models.RolePermission).all():
+                out.setdefault(r.role, {}).setdefault(r.resource, {})[r.action] = \
+                    bool(r.allowed)
+        except Exception:
+            out = {}
+        _PERM_CACHE["data"] = out
+    return _PERM_CACHE["data"]
+
+
+def perms_for(db: Session, role: str, resource: str) -> set:
+    """Shu rol shu bo'limda nima qila oladi."""
+    if role == roles.LOCKED_ROLE:
+        return set(roles.PERM_ACTION_KEYS)
+    allowed = roles.default_perms(role, resource)
+    over = _perm_overrides(db).get(role, {}).get(resource, {})
+    for action, ok in over.items():
+        if ok:
+            allowed.add(action)
+        else:
+            allowed.discard(action)
+    return allowed
+
+
+def has_perm(db: Session, user: models.User, resource: str,
+             action: str = "view") -> bool:
+    return action in perms_for(db, user.role, resource)
+
+
+def require_perm(resource: str, action: str = "view"):
+    """Endpoint himoyasi. Rol ro'yxatlari o'rniga ishlatiladi -
+    shunda asoschi ruxsatni ekrandan o'zgartira oladi."""
+    def dep(db: Session = Depends(get_db),
+            user: models.User = Depends(get_current_user)):
+        if not has_perm(db, user, resource, action):
+            raise HTTPException(
+                403,
+                f"\"{roles.RESOURCE_LABELS.get(resource, resource)}\" bo'limida "
+                f"\"{roles.PERM_ACTION_LABELS.get(action, action)}\" "
+                f"ruxsatingiz yo'q")
+        return user
+    return dep
+
+
+@app.get("/api/permissions")
+def get_permissions(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """To'liq matritsa: rol x bo'lim x amal."""
+    matrix = {}
+    for role in roles.ALL_ROLES:
+        matrix[role] = {
+            res: sorted(perms_for(db, role, res))
+            for res in roles.RESOURCE_KEYS
+        }
+    changed = {}
+    for r in db.query(models.RolePermission).all():
+        changed.setdefault(r.role, {}).setdefault(r.resource, []).append(r.action)
+
+    return {
+        "roles": [{
+            "key": r,
+            "label": roles.UZ_LABELS.get(r, r),
+            "locked": r == roles.LOCKED_ROLE,
+            "external": r in roles.EXTERNAL_ROLES,
+        } for r in roles.ALL_ROLES],
+        "role_groups": [{"key": k, "label": lbl, "roles": rs}
+                        for k, lbl, rs in roles.ROLE_GROUPS],
+        "resources": [{"key": k, "label": lbl, "group": g,
+                       "secret_hint": roles.SECRET_HINTS.get(k)}
+                      for k, lbl, g in roles.RESOURCES],
+        "actions": [{"key": k, "label": lbl}
+                    for k, lbl in roles.PERM_ACTIONS],
+        "matrix": matrix,
+        "changed": changed,
+    }
+
+
+@app.put("/api/permissions")
+def set_permissions(
+    payload: schemas.PermissionUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """Bitta katakni o'zgartirish. Asoschining huquqiga tegib
+    bo'lmaydi."""
+    if payload.role == roles.LOCKED_ROLE:
+        raise HTTPException(
+            400, "Asoschining huquqini o'zgartirib bo'lmaydi — "
+                 "aks holda tizimga kirish yo'li yopilib qoladi")
+    if payload.role not in roles.ALL_ROLES:
+        raise HTTPException(400, "Noto'g'ri rol")
+    if payload.resource not in roles.RESOURCE_KEYS:
+        raise HTTPException(400, "Noto'g'ri bo'lim")
+    if payload.action not in roles.PERM_ACTION_KEYS:
+        raise HTTPException(400, "Noto'g'ri amal")
+
+    # "view" olib tashlansa qolgan amallar ham ma'nosiz qoladi
+    row = (db.query(models.RolePermission)
+           .filter(models.RolePermission.role == payload.role,
+                   models.RolePermission.resource == payload.resource,
+                   models.RolePermission.action == payload.action).first())
+    if not row:
+        row = models.RolePermission(
+            role=payload.role, resource=payload.resource,
+            action=payload.action)
+        db.add(row)
+    row.allowed = 1 if payload.allowed else 0
+    row.changed_by = user.full_name
+
+    if payload.action == "view" and not payload.allowed:
+        # Ko'rish yopilsa — boshqa amallar ham yopiladi
+        for a in roles.PERM_ACTION_KEYS:
+            if a == "view":
+                continue
+            other = (db.query(models.RolePermission)
+                     .filter(models.RolePermission.role == payload.role,
+                             models.RolePermission.resource == payload.resource,
+                             models.RolePermission.action == a).first())
+            if not other:
+                other = models.RolePermission(
+                    role=payload.role, resource=payload.resource, action=a)
+                db.add(other)
+            other.allowed = 0
+            other.changed_by = user.full_name
+    elif payload.allowed and payload.action != "view":
+        # Boshqa amal berilsa — ko'rish avtomat ochiladi
+        v = (db.query(models.RolePermission)
+             .filter(models.RolePermission.role == payload.role,
+                     models.RolePermission.resource == payload.resource,
+                     models.RolePermission.action == "view").first())
+        if v:
+            v.allowed = 1
+        elif "view" not in roles.default_perms(payload.role, payload.resource):
+            db.add(models.RolePermission(
+                role=payload.role, resource=payload.resource,
+                action="view", allowed=1, changed_by=user.full_name))
+
+    db.commit()
+    _PERM_CACHE["data"] = None
+    audit.log(db, user, entity="user", action="role_change", entity_id=0,
+              entity_label=roles.UZ_LABELS.get(payload.role, payload.role),
+              field=f"{roles.RESOURCE_LABELS[payload.resource]} — "
+                    f"{roles.PERM_ACTION_LABELS[payload.action]}",
+              new_value="ruxsat berildi" if payload.allowed else "olib tashlandi")
+    db.commit()
+    return {"perms": sorted(perms_for(db, payload.role, payload.resource))}
+
+
+@app.post("/api/permissions/reset")
+def reset_permissions(
+    payload: schemas.PermissionReset,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """Standart holatga qaytarish."""
+    q = db.query(models.RolePermission)
+    if payload.role:
+        q = q.filter(models.RolePermission.role == payload.role)
+    n = q.delete()
+    db.commit()
+    _PERM_CACHE["data"] = None
+    audit.log(db, user, entity="user", action="role_change", entity_id=0,
+              entity_label=roles.UZ_LABELS.get(payload.role or "", "Barcha rollar"),
+              field="Ruxsatlar", new_value="standart holatga qaytarildi",
+              commit=True)
+    return {"reset": n}
+
+
+@app.get("/api/me/permissions")
+def my_permissions(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Foydalanuvchining o'z ruxsatlari. Frontend menyuni shunga
+    qarab quradi — ko'rmaydigan bo'lim menyuda ham chiqmaydi."""
+    return {
+        "role": user.role,
+        "role_label": roles.UZ_LABELS.get(user.role, user.role),
+        "perms": {res: sorted(perms_for(db, user.role, res))
+                  for res in roles.RESOURCE_KEYS},
+    }
+
+
+# =====================================================================
+#  HAR BIR XODIMGA O'Z DASHBOARDI
+#
+#  Xodim kirganda BOSHQANING raqamini emas, O'ZINING ishini ko'radi.
+#  Ustozga darslari va oyligi, administratorga qarzdorlari, HR'ga
+#  nomzodlari. Umumiy raqamlar faqat rahbariyatda.
+# =====================================================================
+def _card(label: str, value, hint: str = None, tone: str = "plain",
+          link: str = None) -> dict:
+    return {"label": label, "value": value, "hint": hint,
+            "tone": tone, "link": link}
+
+
+def _my_teacher_cards(db: Session, user: models.User) -> list:
+    t = _teacher_of_user(db, user)
+    if not t:
+        return []
+    today = date.today()
+    m_start, _e = billing.month_bounds(today.year, today.month)
+    earned = _teacher_earned(db, t.id, since=m_start)
+    paid = _teacher_paid(db, t.id, since=m_start)
+    balance = round(_teacher_earned(db, t.id)["amount"]
+                    - _teacher_paid(db, t.id), 2)
+
+    gids = [g.id for g in db.query(models.Group).filter(
+        models.Group.teacher_id == t.id).all()]
+    students = (db.query(models.Student).filter(
+        models.Student.group_id.in_(gids or [-1]),
+        models.Student.status == "active").count() if gids else 0)
+
+    # Bugungi darslar
+    todays = (db.query(models.Lesson).filter(
+        models.Lesson.group_id.in_(gids or [-1]),
+        models.Lesson.date == today).all() if gids else [])
+    pending = [l for l in todays if not l.held]
+
+    return [
+        _card("Shu oy ishlab topgan", earned["amount"], 
+              f"{earned['lessons']} dars · {earned['attendances']} yoqlama",
+              "brand", "/teachers"),
+        _card("Olgan puli", paid, "avans va oylik"),
+        _card("Balans", balance,
+              "sizga berilishi kerak" if balance > 0
+              else "ortiqcha olingan" if balance < 0 else "hisob yopilgan",
+              "good" if balance > 0 else "bad" if balance < 0 else "plain"),
+        _card("Guruhlarim", len(gids), f"{students} ta o'quvchi", "plain",
+              "/groups"),
+        _card("Bugungi darslar", len(todays),
+              f"{len(pending)} tasiga yo'qlama qo'yilmagan"
+              if pending else "hammasi yopilgan",
+              "bad" if pending else "good", "/timetable"),
+    ]
+
+
+def _my_sales_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    m_start, m_end = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(m_start, datetime.min.time())
+
+    mine = db.query(models.Lead).filter(
+        models.Lead.created_at >= d0)
+    if user.branch_id:
+        mine = mine.filter(models.Lead.branch_id == user.branch_id)
+    leads = mine.all()
+    converted = [l for l in leads if l.stage == "converted"]
+
+    # O'zi qabul qilgan pul
+    pays = db.query(models.Payment).filter(
+        models.Payment.kind == "payment",
+        models.Payment.created_by == user.full_name,
+        models.Payment.created_at >= d0).all()
+
+    debt_q = scope_to_branch(db.query(models.Student), models.Student, user)
+    debtors = [s for s in debt_q.filter(
+        models.Student.status.in_(["active", "trial"])).all()
+        if student_balance(db, s.id) < 0]
+
+    return [
+        _card("Shu oy lidlarim", len(leads),
+              f"{len(converted)} tasi o'quvchi bo'ldi", "brand", "/leads"),
+        _card("Konversiya",
+              round(len(converted) / len(leads) * 100, 1) if leads else 0.0,
+              "foizda"),
+        _card("Men qabul qilgan pul", round(sum(p.amount for p in pays), 2),
+              f"{len(pays)} ta to'lov", "good", "/finance"),
+        _card("Qarzdorlarim", len(debtors),
+              f"{round(sum(abs(student_balance(db, s.id)) for s in debtors)):,}"
+              .replace(",", " ") + " so'm", "bad", "/finance"),
+    ]
+
+
+def _my_hr_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    m_start, _e = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(m_start, datetime.min.time())
+
+    cands = db.query(models.Candidate).filter(
+        models.Candidate.created_at >= d0).all()
+    hired = [c for c in cands if c.stage == "hired"]
+    open_vac = db.query(models.Vacancy).filter(
+        models.Vacancy.status == "open").count()
+    staff = db.query(models.User).filter(models.User.is_active == 1).count()
+
+    # Onboardingi tugamagan xodimlar
+    unfinished = 0
+    for u in db.query(models.User).filter(models.User.is_active == 1).all():
+        rows = _onboarding_rows(db, u.id)
+        if any(r["done"] for r in rows) and not all(r["done"] for r in rows):
+            unfinished += 1
+
+    return [
+        _card("Ochiq vakansiyalar", open_vac, None, "brand", "/hr"),
+        _card("Shu oy nomzodlar", len(cands),
+              f"{len(hired)} tasi ishga olindi", "plain", "/hr"),
+        _card("Xodimlar", staff, None, "plain", "/users"),
+        _card("Onboarding tugamagan", unfinished,
+              "checklist yopilmagan", "bad" if unfinished else "good", "/users"),
+    ]
+
+
+def _my_academic_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    groups = scope_to_branch(db.query(models.Group), models.Group, user).all()
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user).all()
+
+    weak = 0
+    for g in groups:
+        n = sum(1 for s in students
+                if s.group_id == g.id and s.status == "active")
+        cap = _group_capacity(g, rooms)
+        if cap and n / cap * 100 < 50:
+            weak += 1
+
+    risky = db.query(models.RiskFlag).filter(
+        models.RiskFlag.active == 1).count()
+    no_att = sum(1 for l in db.query(models.Lesson).filter(
+        models.Lesson.date == today, models.Lesson.held == 0).all())
+
+    return [
+        _card("Guruhlar", len(groups), None, "brand", "/groups"),
+        _card("Bugun yo'qlama qo'yilmagan", no_att,
+              "ustozlarga eslatish kerak" if no_att else "hammasi yopilgan",
+              "bad" if no_att else "good", "/timetable"),
+        _card("Xavf ostidagi o'quvchilar", risky, None,
+              "bad" if risky else "good", "/academic"),
+        _card("Bo'sh qolayotgan guruhlar", weak, "50% dan kam to'lgan",
+              "bad" if weak else "good", "/academic"),
+    ]
+
+
+def _my_exam_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    m_start, _e = billing.month_bounds(today.year, today.month)
+    exams = db.query(models.Exam).filter(models.Exam.date >= m_start).all()
+    draft = [e for e in exams if (e.status or "done") == "draft"]
+    done = [e for e in exams if e.status == "done"]
+    return [
+        _card("Shu oy imtihonlar", len(exams), None, "brand", "/audit"),
+        _card("Tasdiq kutayotgan", len(draft), None,
+              "bad" if draft else "good", "/audit"),
+        _card("O'tkazilgan", len(done), None, "good", "/audit"),
+    ]
+
+
+def _my_facility_cards(db: Session, user: models.User) -> list:
+    assets = scope_to_branch(db.query(models.Asset), models.Asset, user).all()
+    broken = [a for a in assets if a.condition in ("repair", "broken")]
+    low = [c for c in scope_to_branch(
+        db.query(models.Consumable), models.Consumable, user).all()
+        if c.min_qty is not None and c.qty <= c.min_qty]
+    reqs = db.query(models.PurchaseRequest).filter(
+        models.PurchaseRequest.status == "open").count()
+    return [
+        _card("Aktivlar", len(assets), None, "brand", "/inventory"),
+        _card("Ta'mir kerak", len(broken), None,
+              "bad" if broken else "good", "/inventory"),
+        _card("Kam qolgan mahsulot", len(low), None,
+              "bad" if low else "good", "/inventory"),
+        _card("Ochiq xarid so'rovi", reqs, None,
+              "amber" if reqs else "good", "/inventory"),
+    ]
+
+
+def _my_marketing_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    m_start, _e = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(m_start, datetime.min.time())
+    leads = db.query(models.Lead).filter(models.Lead.created_at >= d0).all()
+    conv = [l for l in leads if l.stage == "converted"]
+    spend = sum(e.amount for e in db.query(models.Expense).filter(
+        models.Expense.category == "ads",
+        models.Expense.date >= m_start).all())
+    return [
+        _card("Shu oy lidlar", len(leads), None, "brand", "/marketing"),
+        _card("O'quvchiga aylandi", len(conv), None, "good", "/marketing"),
+        _card("Reklama xarajati", round(spend, 2), None, "plain", "/marketing"),
+        _card("Bitta lid narxi",
+              round(spend / len(leads)) if leads else 0,
+              "CAC", "plain", "/analytics"),
+    ]
+
+
+def _my_finance_cards(db: Session, user: models.User) -> list:
+    today = date.today()
+    period = today.isoformat()[:7]
+    m_start, m_end = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(m_start, datetime.min.time())
+    d1 = datetime.combine(m_end, datetime.max.time())
+
+    income = sum(p.amount for p, _s in (
+        db.query(models.Payment, models.Student)
+        .join(models.Student, models.Payment.student_id == models.Student.id)
+        .filter(models.Payment.kind == "payment",
+                models.Payment.created_at >= d0,
+                models.Payment.created_at <= d1).all()))
+    exp, _c = _expenses_total(db, user, m_start, m_end, None)
+    payroll = _payroll_total(db, user, period, None)
+    profit = income - exp - payroll
+
+    pending = db.query(models.Discount).filter(
+        models.Discount.status == "pending").count()
+
+    return [
+        _card("Shu oy tushum", round(income, 2), None, "brand", "/finance"),
+        _card("Chiqim", round(exp + payroll, 2),
+              f"shundan ish haqi {payroll:,.0f}".replace(",", " "),
+              "plain", "/finance"),
+        _card("Sof foyda", round(profit, 2),
+              f"rentabellik {round(profit / income * 100, 1)}%" if income
+              else None,
+              "good" if profit > 0 else "bad", "/finance"),
+        _card("Tasdiq kutayotgan chegirma", pending, None,
+              "amber" if pending else "good", "/finance"),
+    ]
+
+
+# Rol -> qaysi kartalar
+_MY_CARDS = {
+    roles.TEACHER: _my_teacher_cards,
+    roles.SUPPORT_TEACHER: _my_teacher_cards,
+    roles.HEAD_SUPPORT: _my_academic_cards,
+    roles.SALES_MANAGER: _my_sales_cards,
+    roles.ADMINISTRATOR: _my_sales_cards,
+    roles.SALES_HEAD: _my_sales_cards,
+    roles.HR_MANAGER: _my_hr_cards,
+    roles.ACADEMIC_HEAD: _my_academic_cards,
+    roles.EXAMINER: _my_exam_cards,
+    roles.HEAD_EXAMINER: _my_exam_cards,
+    roles.FACILITY_MANAGER: _my_facility_cards,
+    roles.SMM_MANAGER: _my_marketing_cards,
+    roles.FINANCE_DIRECTOR: _my_finance_cards,
+    roles.ACCOUNTANT: _my_finance_cards,
+}
+
+
+@app.get("/api/me/dashboard")
+def my_dashboard(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Xodimning O'Z dashboardi. Har bir rol o'ziga tegishli raqamni
+    ko'radi — birovning ishi uni chalg'itmaydi."""
+    builder = _MY_CARDS.get(user.role)
+    cards = builder(db, user) if builder else []
+
+    # Vazifalar — hammada bor
+    my_tasks = (db.query(models.Task)
+                .filter((models.Task.assignee_id == user.id)
+                        | (models.Task.watcher_id == user.id))
+                .all())
+    open_tasks = [t for t in my_tasks if t.status not in roles.TASK_CLOSED]
+    overdue = [t for t in open_tasks
+               if t.deadline and t.deadline < date.today()]
+
+    return {
+        "role": user.role,
+        "role_label": roles.UZ_LABELS.get(user.role, user.role),
+        "full_name": user.full_name,
+        "branch": user.branch.name if user.branch else None,
+        "cards": cards,
+        "tasks": {
+            "open": len(open_tasks),
+            "overdue": len(overdue),
+            "rows": [_task_out(db, t) for t in sorted(
+                open_tasks,
+                key=lambda t: (t.deadline or date.max))[:5]],
+        },
+        # Umumiy raqamlarni faqat rahbariyat ko'radi
+        "show_company": has_perm(db, user, "pnl", "view"),
+    }
+
+
+# =====================================================================
+#  MENING PROFILIM
+#  Har bir xodim o'z ish haqi holatini ko'radi: fiks, KPI, bonus.
+# =====================================================================
+@app.get("/api/me/profile")
+def my_profile(
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    today = date.today()
+    m_start, m_end = billing.month_bounds(today.year, today.month)
+    period = today.isoformat()[:7]
+
+    fix = user.fix_salary or 0.0
+    parts = []
+    total = fix
+    if fix:
+        parts.append({"key": "fix", "label": "Fiks oylik", "amount": fix,
+                      "hint": "har oy o'zgarmas"})
+
+    # --- Ustoz bo'lsa: yoqlamadan hisoblangan ish haqi ---
+    t = _teacher_of_user(db, user)
+    teacher_block = None
+    if t:
+        e = _teacher_earned(db, t.id, since=m_start, until=m_end)
+        paid_m = _teacher_paid(db, t.id, since=m_start, until=m_end)
+        balance = round(_teacher_earned(db, t.id)["amount"]
+                        - _teacher_paid(db, t.id), 2)
+        total += e["amount"]
+        parts.append({
+            "key": "lessons", "label": "Yo'qlamadan",
+            "amount": e["amount"],
+            "hint": f"{e['lessons']} dars · {e['attendances']} yo'qlama",
+        })
+        teacher_block = {
+            "teacher_id": t.id,
+            "earned_month": e["amount"],
+            "paid_month": paid_m,
+            "balance": balance,
+            "by_group": e["by_group"],
+        }
+
+    # --- KPI va bonus ---
+    kpi = None
+    if user.role in (roles.SALES_MANAGER, roles.ADMINISTRATOR,
+                     roles.SALES_HEAD):
+        try:
+            k = admin_kpi(year=today.year, month=today.month, db=db, user=user)
+            row = next((r for r in k.rows if r.user_id == user.id), None)
+            if row:
+                kpi = {
+                    "active_students": row.active_students,
+                    "expected": row.expected,
+                    "collected": row.collected,
+                    "collection_percent": row.collection_percent,
+                    "collection_bonus": row.collection_bonus,
+                    "new_clients": row.new_clients,
+                    "new_client_bonus": row.new_client_bonus,
+                    "total": row.total,
+                }
+                bonus = (row.collection_bonus or 0) + (row.new_client_bonus or 0)
+                if row.collection_bonus:
+                    total += row.collection_bonus
+                    parts.append({
+                        "key": "collection",
+                        "label": "To'lov yig'ish bonusi",
+                        "amount": row.collection_bonus,
+                        "hint": f"{row.collection_percent}% yig'ildi",
+                    })
+                if row.new_client_bonus:
+                    total += row.new_client_bonus
+                    parts.append({
+                        "key": "new_clients",
+                        "label": "Yangi mijoz bonusi",
+                        "amount": row.new_client_bonus,
+                        "hint": f"{row.new_clients} ta yangi o'quvchi",
+                    })
+        except Exception:
+            kpi = None
+
+    # --- Qo'lda berilgan bonuslar (xodim kartasidagi voqealar) ---
+    manual = [e for e in db.query(models.StaffEvent).filter(
+        models.StaffEvent.user_id == user.id,
+        models.StaffEvent.kind == "bonus").all()
+        if e.happened_on and m_start <= e.happened_on <= m_end]
+    if manual:
+        amt = sum(e.amount or 0 for e in manual)
+        total += amt
+        parts.append({"key": "bonus", "label": "Qo'shimcha bonus",
+                      "amount": amt,
+                      "hint": f"{len(manual)} ta"})
+
+    # --- Jarimalar / ushlab qolishlar: kechikish va intizom ---
+    late = [e for e in db.query(models.StaffEvent).filter(
+        models.StaffEvent.user_id == user.id,
+        models.StaffEvent.kind == "late").all()
+        if e.happened_on and m_start <= e.happened_on <= m_end]
+
+    onb = _onboarding_rows(db, user.id)
+    onb_done = sum(1 for r in onb if r["done"])
+
+    return {
+        "id": user.id,
+        "public_id": user.public_id,
+        "full_name": user.full_name,
+        "username": user.username,
+        "role": user.role,
+        "role_label": roles.UZ_LABELS.get(user.role, user.role),
+        "position": user.position or roles.UZ_LABELS.get(user.role, user.role),
+        "branch": user.branch.name if user.branch else None,
+        "phone": user.phone,
+        "photo": user.photo,
+        "hired_date": (user.hired_date or
+                       (user.created_at.date() if user.created_at else None)
+                       ).isoformat() if (user.hired_date or user.created_at)
+                      else None,
+        "period": period,
+        # Ish haqi holati
+        "parts": parts,
+        "total": round(total, 2),
+        "fix_salary": fix,
+        "teacher": teacher_block,
+        "kpi": kpi,
+        "late_count": len(late),
+        "late_minutes": sum(e.minutes or 0 for e in late),
+        "onboarding_done": onb_done,
+        "onboarding_total": len(onb),
+        "onboarding": onb,
+    }
+
+
+# =====================================================================
+#  DARS JADVALI — XONA x VAQT TO'RI
+#
+#  Qatorlar - xonalar, ustunlar - 30 daqiqalik oraliqlar. Har bir
+#  guruh o'z vaqtida to'g'ridan-to'g'ri turadi, shuning uchun bo'sh
+#  xona va bo'sh soat bir qarashda ko'rinadi.
+# =====================================================================
+GRID_START_MIN = 6 * 60      # 06:00
+GRID_END_MIN = 22 * 60       # 22:00
+GRID_STEP = 30
+
+
+def _grid_slots() -> list:
+    out = []
+    t = GRID_START_MIN
+    while t < GRID_END_MIN:
+        out.append(f"{t // 60:02d}:{t % 60:02d}")
+        t += GRID_STEP
+    return out
+
+
+# Fan bo'yicha rang - jadvalda ko'z bilan ajratish uchun
+SUBJECT_HUE = {
+    "english": "teal",
+    "russian": "violet",
+    "korean": "emerald",
+    "turkish": "amber",
+    "german": "rose",
+}
+
+DAY_PRESETS = [
+    ("odd", "Toq kunlar", ["mon", "wed", "fri"]),
+    ("even", "Juft kunlar", ["tue", "thu", "sat"]),
+]
+
+
+@app.get("/api/timetable/grid")
+def timetable_grid(
+    day: str = "mon",
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_perm("timetable", "view")),
+):
+    """Xona x vaqt to'ri. day - hafta kuni yoki "odd"/"even"."""
+    preset = next((p for p in DAY_PRESETS if p[0] == day), None)
+    days = preset[2] if preset else [day]
+    if not preset and day not in roles.WEEKDAY_KEYS:
+        raise HTTPException(400, "Noto'g'ri kun")
+
+    rooms = scope_to_branch(db.query(models.Room), models.Room,
+                            user, branch_id).filter(
+        models.Room.active == 1).order_by(models.Room.name).all()
+    groups = scope_to_branch(db.query(models.Group), models.Group,
+                             user, branch_id).all()
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).all()
+    today = date.today()
+
+    # Guruh bo'yicha: o'quvchilar, o'tilgan darslar, o'rtacha yosh
+    held = {}
+    for gid, cnt in (db.query(models.Lesson.group_id,
+                              func.count(models.Lesson.id))
+                     .filter(models.Lesson.held == 1)
+                     .group_by(models.Lesson.group_id).all()):
+        held[gid] = cnt
+
+    items, unplaced = [], []
+    for g in groups:
+        g_days = [d for d in (g.lesson_days or "").split(",") if d]
+        start, end = _group_slot(g)
+        mine = [s for s in students
+                if s.group_id == g.id and s.status in ("active", "trial")]
+        cap = _group_capacity(g, rooms={r.id: r for r in
+                                        db.query(models.Room).all()})
+        ages = [round((today - s.birth_date).days / 365.25, 1)
+                for s in mine if s.birth_date]
+        avg_age = round(sum(ages) / len(ages), 1) if ages else None
+
+        row = {
+            "group_id": g.id,
+            "group": g.name,
+            "subject": g.subject,
+            "subject_label": roles.SUBJECT_LABELS.get(g.subject or "", None),
+            "level": g.level,
+            "level_label": roles.LEVEL_LABELS.get(g.level or "", None),
+            "teacher_id": g.teacher_id,
+            "teacher": g.teacher.full_name if g.teacher else None,
+            "room_id": g.room_id,
+            "room": g.room.name if g.room else (g.room or None),
+            "days": g_days,
+            "start": start,
+            "end": end,
+            "time_label": f"{start} - {end}" if start else None,
+            "students": len(mine),
+            "capacity": cap,
+            "fill": round(len(mine) / cap * 100, 1) if cap else None,
+            "lessons_held": held.get(g.id, 0),
+            "avg_age": avg_age,
+            "hue": SUBJECT_HUE.get(g.subject or "", "slate"),
+            # To'la yoki juda bo'sh guruhni ko'z ilg'ashi kerak
+            "warn": ("full" if cap and len(mine) >= cap
+                     else "empty" if cap and len(mine) / cap < 0.5
+                     else None),
+        }
+        if not g_days or not start:
+            unplaced.append(row)
+            continue
+        if not any(d in days for d in g_days):
+            continue
+        items.append(row)
+
+    slots = _grid_slots()
+
+    def slot_index(t: str) -> int:
+        m = roles.time_to_minutes(t)
+        if m is None:
+            return 0
+        return max(0, (m - GRID_START_MIN) // GRID_STEP)
+
+    # Xona bo'yicha joylashtiramiz
+    by_room = {r.id: [] for r in rooms}
+    no_room = []
+    for it in items:
+        it["col"] = slot_index(it["start"])
+        e = roles.time_to_minutes(it["end"]) or 0
+        s0 = roles.time_to_minutes(it["start"]) or 0
+        it["span"] = max(1, (e - s0) // GRID_STEP)
+        if it["room_id"] in by_room:
+            by_room[it["room_id"]].append(it)
+        else:
+            no_room.append(it)
+
+    # To'qnashuv: bir xonada vaqti kesishgan ikki guruh
+    clashes = []
+    for rid, rows in by_room.items():
+        rows.sort(key=lambda x: x["col"])
+        for i in range(len(rows)):
+            for j in range(i + 1, len(rows)):
+                if roles.ranges_overlap(rows[i]["start"], rows[i]["end"],
+                                        rows[j]["start"], rows[j]["end"]):
+                    room = next((r for r in rooms if r.id == rid), None)
+                    clashes.append({
+                        "room": room.name if room else "—",
+                        "time": rows[i]["time_label"],
+                        "groups": [rows[i]["group"], rows[j]["group"]],
+                    })
+
+    # Xona samaradorligi: shu kunda necha soat band
+    def busy_hours(rows):
+        mins = 0
+        for x in rows:
+            a = roles.time_to_minutes(x["start"]) or 0
+            b = roles.time_to_minutes(x["end"]) or 0
+            mins += max(0, b - a)
+        return round(mins / 60, 1)
+
+    window = (GRID_END_MIN - GRID_START_MIN) / 60
+
+    return {
+        "day": day,
+        "day_label": (preset[1] if preset
+                      else roles.WEEKDAY_LABELS.get(day, day)),
+        "days": days,
+        "presets": [{"key": k, "label": lbl, "days": ds}
+                    for k, lbl, ds in DAY_PRESETS],
+        "weekdays": [{"key": k, "label": lbl, "short": sh}
+                     for k, lbl, sh in roles.WEEKDAYS],
+        "slots": slots,
+        "start": slots[0],
+        "step": GRID_STEP,
+        "rooms": [{
+            "id": r.id,
+            "name": r.name,
+            "capacity": r.capacity,
+            "branch": r.branch.name if r.branch else None,
+            "items": by_room.get(r.id, []),
+            "busy_hours": busy_hours(by_room.get(r.id, [])),
+            "usage": round(busy_hours(by_room.get(r.id, [])) / window * 100, 1),
+        } for r in rooms],
+        "no_room": no_room,
+        "unplaced": unplaced,
+        "clashes": clashes,
+        "total_groups": len(items),
+        "total_students": sum(i["students"] for i in items),
+        "can_edit": has_perm(db, user, "timetable", "edit"),
+        "can_export": has_perm(db, user, "timetable", "export"),
     }

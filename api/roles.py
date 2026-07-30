@@ -149,9 +149,10 @@ EXPENSE_CATEGORY_GROUP = {c: g for c, _, g in EXPENSE_CATEGORY_DEFS}
 LEAD_STAGES = [
     "new",              # Yangi (so'rov keldi, hali bog'lanilmagan)
     "contacted",        # Bog'lanildi
-    "trial_scheduled",  # Sinov darsiga yozildi
-    "trial_attended",   # Sinovga keldi
-    "converted",        # O'quvchiga aylandi  (yutuq)
+    "trial_scheduled",  # Sinov darsiga yozildi - GURUHGA qo'shiladi
+    "trial_attended",   # Sinovga keldi - ustoz yoqlama qo'ygan
+    "no_show",          # Sinovga kelmadi     (yo'qotish)
+    "converted",        # O'quvchiga aylandi  (yutuq - doskadan chiqadi)
     "rejected",         # Rad etdi            (yo'qotish)
 ]
 
@@ -160,9 +161,29 @@ LEAD_STAGE_LABELS = {
     "contacted": "Bog'lanildi",
     "trial_scheduled": "Sinovga yozildi",
     "trial_attended": "Sinovga keldi",
+    "no_show": "Sinov darsiga kelmadi",
     "converted": "O'quvchi bo'ldi",
     "rejected": "Rad etdi",
 }
+
+# Kanban doskasida ko'rinadigan ustunlar. "converted" YO'Q: o'quvchiga
+# aylangan odam endi lid emas, u Talabalar bo'limida turadi.
+LEAD_BOARD_STAGES = [
+    "new", "contacted", "trial_scheduled", "trial_attended",
+    "no_show", "rejected",
+]
+
+# Voronka hisobida ketma-ketlik (yo'qotish bosqichlari kirmaydi).
+LEAD_FUNNEL_ORDER = [
+    "new", "contacted", "trial_scheduled", "trial_attended", "converted",
+]
+
+# ---- Sinovdan faol o'quvchiga o'tish ----------------------------------
+# Sinov darsiga shuncha marta kelgan o'quvchi AVTOMAT faollashadi.
+# Yoki shundan oldin to'lov qilsa - to'lov kuni faollashadi.
+# Ikkala holatda ham faollashish sanasi - BIRINCHI kelgan kuni: shundan
+# hisob-kitob boshlanadi, aks holda bepul o'qigan kunlar yo'qoladi.
+TRIAL_LESSONS_TO_ACTIVATE = 3
 
 LEAD_SOURCES = [
     "visit",      # Tashrif - o'zi kirib kelgan
@@ -349,11 +370,13 @@ MARKETING_CHANNEL_LABELS = {
 }
 
 # ---- Ijtimoiy tarmoqlar ----------------------------------------------
-SOCIAL_PLATFORMS = [("instagram", "Instagram"), ("telegram", "Telegram")]
+SOCIAL_PLATFORMS = [("instagram", "Instagram"), ("telegram", "Telegram"),
+                    ("youtube", "YouTube")]
 # Sahifalarimiz. Telegram ochiq kanal - obunachilar soni avtomat olinadi.
 # Instagram uchun rasmiy Graph API tokeni kerak (INSTAGRAM_TOKEN va
 # INSTAGRAM_USER_ID muhit o'zgaruvchilari); tokensiz qo'lda kiritiladi.
-SOCIAL_HANDLES = {"instagram": "jony_academy", "telegram": "JonyAcademy"}
+SOCIAL_HANDLES = {"instagram": "jony_academy", "telegram": "JonyAcademy",
+                  "youtube": "jonyacademy"}
 
 
 # ---- Imtihonlar -------------------------------------------------------

@@ -735,6 +735,11 @@ def list_leads(
     q = scope_to_branch(db.query(models.Lead), models.Lead, user)
     if stage:
         q = q.filter(models.Lead.stage == stage)
+    else:
+        # O'quvchiga aylangan lid doskada turmaydi - u endi Talabalar
+        # bo'limida. Voronka hisobotlari to'g'ridan-to'g'ri bazadan
+        # o'qiydi, shuning uchun statistika buzilmaydi.
+        q = q.filter(models.Lead.stage != "converted")
     return q.order_by(models.Lead.updated_at.desc(), models.Lead.id.desc()).all()
 
 
@@ -1164,7 +1169,38 @@ def save_attendance(
                 present=1 if m.present else 0, created_by=user.full_name))
     _mark_lesson_held(db, lesson)
     db.commit()
-    return {"ok": True, "saved": len(payload.marks)}
+
+    # Sinovdagi o'quvchilar: yoqlama qo'yilishi bilan lid "sinovga keldi"
+    # bo'ladi, uchinchi darsdan keyin esa o'quvchi AVTOMAT faollashadi.
+    activated, touched = [], False
+    for m in payload.marks:
+        if not m.present:
+            continue
+        st = db.query(models.Student).get(m.student_id)
+        if not st or st.status != "trial":
+            continue
+        lead = (db.query(models.Lead)
+                .filter(models.Lead.converted_student_id == st.id).first())
+        if not lead:
+            lead = (db.query(models.Lead)
+                    .filter(models.Lead.full_name == st.full_name,
+                            models.Lead.stage.in_(["trial_scheduled", "no_show",
+                                                   "contacted", "new"]))
+                    .first())
+        if lead and lead.stage != "trial_attended":
+            lead.stage = "trial_attended"
+            touched = True
+        res = _maybe_auto_activate(db, st, user=user)
+        if res:
+            touched = True
+            activated.append({"student_id": st.id, "full_name": st.full_name,
+                              **res})
+    # Lid bosqichi o'zgargan bo'lsa ham saqlaymiz - faollashish bo'lmasa
+    # ham "sinovga keldi" belgisi yo'qolib qolmasligi kerak.
+    if touched:
+        db.commit()
+
+    return {"ok": True, "saved": len(payload.marks), "activated": activated}
 
 
 @app.get("/api/groups/{group_id}/grades", response_model=schemas.AttendanceGrid)
@@ -2035,7 +2071,7 @@ def report_funnel(
     total_leads = len(leads)
     # Voronka kümülativ: keyingi bosqichga o'tganlar oldingisini ham bosib
     # o'tgan hisoblanadi.
-    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    order = roles.LEAD_FUNNEL_ORDER
     stages = []
     remaining = total_leads
     for i, st in enumerate(order):
@@ -2298,7 +2334,16 @@ def analytics_summary(
 ):
     """Analitika sahifasi uchun bitta so'rovda hamma raqam:
     oylik kirim/chiqim/foyda, xarajat guruhlari, ustozlar ulushi."""
-    months = max(1, min(months, 24))
+    # 0 -> butun davr (eng eski yozuvdan bugungacha)
+    if months == 0:
+        oldest = db.query(func.min(models.Payment.created_at)).scalar()
+        oldest_e = db.query(func.min(models.Expense.date)).scalar()
+        t = date.today()
+        cands = [x.date() if hasattr(x, "date") else x
+                 for x in [oldest, oldest_e] if x]
+        first = min(cands) if cands else t
+        months = max(1, (t.year - first.year) * 12 + (t.month - first.month) + 1)
+    months = max(1, min(months, 120))
     today = date.today()
 
     monthly = []
@@ -2998,6 +3043,13 @@ def add_payment(
               entity_label=s.full_name, field=payload.kind,
               new_value=amount, note=payload.note, branch_id=s.branch_id)
     db.commit()
+
+    # Sinovdagi o'quvchi to'lov qilsa - 3 ta darsni kutmasdan darrov
+    # faollashadi, hisob-kitob birinchi kelgan kunidan boshlanadi.
+    if payload.kind == "payment" and s.status == "trial":
+        if _maybe_auto_activate(db, s, user=user, paid=True):
+            db.commit()
+
     db.refresh(payment)
     return payment
 
@@ -3689,9 +3741,11 @@ def marketing_funnel(
     """Kanal bo'yicha voronka: qancha pul ketdi -> qancha lid keldi ->
     qanchasi sinovga keldi -> qanchasi to'lovchi o'quvchiga aylandi.
     Oxirida har bir kanal uchun CAC (bitta mijoz qancha turdi)."""
-    months = max(1, min(months, 36))
+    # months=0 -> butun davr
+    months = 0 if months == 0 else max(1, min(months, 120))
     today = date.today()
-    since = today - timedelta(days=int(months * 30.44))
+    since = (date(2000, 1, 1) if months == 0
+             else today - timedelta(days=int(months * 30.44)))
     start = since
     end = today
 
@@ -3702,7 +3756,7 @@ def marketing_funnel(
     )
     leads = lq.all()
 
-    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    order = roles.LEAD_FUNNEL_ORDER
     idx = {k: i for i, k in enumerate(order)}
 
     # Aylangan lidlarning daromadi - LTV emas, shu paytgacha to'lagani
@@ -3800,7 +3854,12 @@ def analytics_cac(
     """Oylar bo'yicha CAC: reklamaga ketgan pul / o'sha oyda BIRINCHI
     marta to'lagan o'quvchilar soni. Pastda LTV/CAC nisbati - 3 dan
     yuqori bo'lsa biznes sog'lom hisoblanadi."""
-    months = max(1, min(months, 36))
+    if months == 0:
+        oldest = db.query(func.min(models.Payment.created_at)).scalar()
+        t = date.today()
+        first = oldest.date() if oldest else t
+        months = max(1, (t.year - first.year) * 12 + (t.month - first.month) + 1)
+    months = max(1, min(months, 120))
     today = date.today()
 
     firsts = _payment_first_dates(db)
@@ -3876,6 +3935,42 @@ def _fetch_telegram_followers(handle: str) -> int | None:
     return int(digits) if digits else None
 
 
+def _fetch_youtube_subscribers(handle: str) -> int | None:
+    """YouTube kanalining obunachilar sonini ochiq sahifadan o'qiydi.
+    Kanal @handle bilan ochiq bo'lsa token kerak emas."""
+    import re as _re
+    import urllib.request
+    try:
+        req = urllib.request.Request(
+            f"https://www.youtube.com/@{handle}",
+            headers={"User-Agent": "Mozilla/5.0 (compatible; JonyCRM/1.0)",
+                     "Accept-Language": "en-US,en;q=0.9"},
+        )
+        with urllib.request.urlopen(req, timeout=12) as r:
+            html = r.read().decode("utf-8", "ignore")
+    except Exception:
+        return None
+    # "subscriberCountText":{"simpleText":"1.2K subscribers"} ko'rinishida
+    m = _re.search(r'"subscriberCountText"\s*:\s*\{[^}]*?"(?:simpleText|content)"'
+                   r'\s*:\s*"([^"]+)"', html)
+    if not m:
+        m = _re.search(r'([\d.,]+\s*[KMB]?)\s*subscribers', html, _re.I)
+    if not m:
+        return None
+    txt = m.group(1).strip()
+    num = _re.match(r"([\d.,]+)\s*([KMB])?", txt, _re.I)
+    if not num:
+        return None
+    try:
+        val = float(num.group(1).replace(",", ""))
+    except ValueError:
+        return None
+    mult = {"K": 1_000, "M": 1_000_000, "B": 1_000_000_000}
+    if num.group(2):
+        val *= mult.get(num.group(2).upper(), 1)
+    return int(val)
+
+
 def _fetch_instagram_followers() -> int | None:
     """Instagram Graph API. Ishlashi uchun INSTAGRAM_TOKEN va
     INSTAGRAM_USER_ID muhit o'zgaruvchilari kerak (Business/Creator
@@ -3937,6 +4032,11 @@ def social_stats(
             tg = _fetch_telegram_followers(roles.SOCIAL_HANDLES["telegram"])
             if tg:
                 _save_social(db, "telegram", tg, "auto")
+        yt_last = _latest_social(db, "youtube")
+        if not yt_last or yt_last.date != date.today():
+            yt = _fetch_youtube_subscribers(roles.SOCIAL_HANDLES["youtube"])
+            if yt:
+                _save_social(db, "youtube", yt, "auto")
         ig_last = _latest_social(db, "instagram")
         if os.getenv("INSTAGRAM_TOKEN") and (
             not ig_last or ig_last.date != date.today()
@@ -3980,6 +4080,11 @@ def social_refresh(
     if tg:
         _save_social(db, "telegram", tg, "auto")
     result["telegram"] = tg
+
+    yt = _fetch_youtube_subscribers(roles.SOCIAL_HANDLES["youtube"])
+    if yt:
+        _save_social(db, "youtube", yt, "auto")
+    result["youtube"] = yt
 
     ig = _fetch_instagram_followers()
     if ig:
@@ -5581,22 +5686,25 @@ def marketing_journey(
     Birinchi ikki bosqich reklama kabinetidan qo'lda kiritiladi
     (Marketing -> Reklama ko'rsatkichlari), qolganlari tizimning o'z
     ma'lumotidan avtomat hisoblanadi."""
-    months = max(1, min(months, 36))
+    months = 0 if months == 0 else max(1, min(months, 120))
     today = date.today()
-    since = today - timedelta(days=int(months * 30.44))
+    since = (date(2000, 1, 1) if months == 0
+             else today - timedelta(days=int(months * 30.44)))
 
-    periods = []
-    for back in range(months - 1, -1, -1):
-        y, m = _shift_month(today.year, today.month, -back)
-        periods.append(_period_key(y, m))
-    ads = scope_to_branch(db.query(models.AdStat), models.AdStat, user).filter(
-        models.AdStat.period.in_(periods)).all()
+    adq = scope_to_branch(db.query(models.AdStat), models.AdStat, user)
+    if months:
+        periods = []
+        for back in range(months - 1, -1, -1):
+            y, m = _shift_month(today.year, today.month, -back)
+            periods.append(_period_key(y, m))
+        adq = adq.filter(models.AdStat.period.in_(periods))
+    ads = adq.all()
 
     leads = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
         models.Lead.created_at >= datetime.combine(since, datetime.min.time())
     ).all()
 
-    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    order = roles.LEAD_FUNNEL_ORDER
     idx = {k: i for i, k in enumerate(order)}
 
     conv_ids = [l.converted_student_id for l in leads if l.converted_student_id]
@@ -5702,4 +5810,289 @@ def marketing_journey(
         "totals": totals,
         "worst_stage": worst,
         "has_ad_data": totals["impressions"] > 0,
+    }
+
+
+# =====================================================================
+#  SINOVDAN FAOL O'QUVCHIGA  -  avtomat o'tish va hisob-kitob
+# =====================================================================
+def _trial_attendance(db: Session, student_id: int) -> list:
+    """Sinovda bo'lgan o'quvchining KELGAN darslari, sana bo'yicha."""
+    rows = (db.query(models.Attendance, models.Lesson)
+            .join(models.Lesson, models.Attendance.lesson_id == models.Lesson.id)
+            .filter(models.Attendance.student_id == student_id,
+                    models.Attendance.present == 1)
+            .all())
+    return sorted((l.date for _a, l in rows))
+
+
+def _lessons_left_in_month(db: Session, group_id: int, since: date) -> list:
+    """Shu kundan (shu kun ham kiradi) oy oxirigacha guruhning dars
+    kunlari. Reja ham, o'tilgan ham kiradi: o'quvchi faollashgan kundan
+    oy oxirigacha necha darsga pul to'lashi shundan chiqadi."""
+    _start, end = billing.month_bounds(since.year, since.month)
+    return (db.query(models.Lesson)
+            .filter(models.Lesson.group_id == group_id,
+                    models.Lesson.date >= since,
+                    models.Lesson.date <= end)
+            .order_by(models.Lesson.date).all())
+
+
+def _charge_from_activation(db: Session, s: models.Student, since: date,
+                            user=None) -> dict | None:
+    """Faollashgan kundan oy oxirigacha nechta dars bo'lsa - shuncha
+    pul hisoblanadi va o'quvchi hisobidan yechiladi.
+
+    Balans manfiyga ketishi mumkin - bu ataylab: qarz ko'rinib turishi
+    kerak, aks holda administrator kimdan qancha olishini bilmaydi."""
+    if not s.group_id or not s.group:
+        return None
+    period = _period_key(since.year, since.month)
+    # Shu oy uchun allaqachon hisoblangan bo'lsa takrorlamaymiz
+    exists = (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.period == period,
+                      models.Payment.kind == "charge").first())
+    if exists:
+        return None
+
+    lessons = _lessons_left_in_month(db, s.group_id, since)
+    n = len(lessons)
+    if n <= 0:
+        return None
+
+    price = s.group.lesson_price or 0
+    # Oylik chegirmasi bor bo'lsa - bir darsning narxi ham kamayadi
+    disc = _family_discount_percent(db, s)
+    amount = n * price * (100 - disc) / 100
+    if amount <= 0:
+        return None
+
+    db.add(models.Payment(
+        student_id=s.id,
+        amount=-abs(amount),
+        kind="charge",
+        note=f"{s.group.name} — {period}: faollashgan kundan {n} dars"
+             + (f" (oilaviy chegirma {disc}%)" if disc else ""),
+        created_by=(user.full_name if user else "avtomat"),
+        period=period,
+    ))
+    return {"lessons": n, "amount": amount, "discount": disc}
+
+
+def _activate_student(db: Session, s: models.Student, *, on: date,
+                      reason: str, user=None) -> dict:
+    """O'quvchini FAOL qiladi va shu kundan oy oxirigacha pul hisoblaydi.
+
+    "on" - faollashish sanasi. Bu odatda o'quvchi BIRINCHI kelgan kuni:
+    3 ta sinov darsiga kelgan bo'lsa ham, oldin to'lov qilgan bo'lsa ham
+    hisob-kitob birinchi kelgan kunidan boshlanadi."""
+    old = s.status
+    s.status = "active"
+    if not s.enrolled_date or s.enrolled_date > on:
+        s.enrolled_date = on
+    _sync_student_left_date(s)
+
+    charge = _charge_from_activation(db, s, on, user)
+
+    # Lid ham yopiladi - u endi o'quvchi, doskada turishi shart emas
+    lead = (db.query(models.Lead)
+            .filter(models.Lead.converted_student_id == s.id).first())
+    if not lead:
+        lead = (db.query(models.Lead)
+                .filter(models.Lead.full_name == s.full_name,
+                        models.Lead.stage.notin_(["converted", "rejected"]))
+                .first())
+    if lead:
+        lead.stage = "converted"
+        lead.converted_student_id = s.id
+
+    audit.log(db, user, entity="student", action="activate", entity_id=s.id,
+              entity_label=s.full_name, field="status",
+              old_value=old, new_value="active",
+              note=f"{reason}. Faollashish sanasi: {on.isoformat()}"
+                   + (f", {charge['lessons']} dars uchun "
+                      f"{int(charge['amount'])} so'm hisoblandi" if charge else ""),
+              branch_id=s.branch_id)
+    return {"activated_on": on.isoformat(), "reason": reason, "charge": charge}
+
+
+def _maybe_auto_activate(db: Session, s: models.Student, *, user=None,
+                         paid: bool = False) -> dict | None:
+    """Sinovdagi o'quvchi faollashish shartiga yetdimi.
+
+    Ikki yo'l bor:
+      1) sinov darsiga TRIAL_LESSONS_TO_ACTIVATE marta kelgan;
+      2) shundan oldin to'lov qilgan.
+    Ikkalasida ham faollashish sanasi - BIRINCHI kelgan kun."""
+    if s.status != "trial":
+        return None
+    days = _trial_attendance(db, s.id)
+    if paid and days:
+        return _activate_student(db, s, on=days[0],
+                                 reason="Sinov davrida to'lov qildi", user=user)
+    if paid and not days:
+        return _activate_student(db, s, on=date.today(),
+                                 reason="To'lov qildi", user=user)
+    if len(days) >= roles.TRIAL_LESSONS_TO_ACTIVATE:
+        return _activate_student(
+            db, s, on=days[0],
+            reason=f"{roles.TRIAL_LESSONS_TO_ACTIVATE} ta sinov darsiga keldi",
+            user=user)
+    return None
+
+
+@app.get("/api/students/{student_id}/trial")
+def student_trial_status(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """Sinov holati: nechta darsga keldi, faollashishga qancha qoldi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    days = _trial_attendance(db, s.id)
+    need = roles.TRIAL_LESSONS_TO_ACTIVATE
+    return {
+        "status": s.status,
+        "attended": len(days),
+        "need": need,
+        "left": max(0, need - len(days)),
+        "dates": [d.isoformat() for d in days],
+        "first_date": days[0].isoformat() if days else None,
+    }
+
+
+# =====================================================================
+#  OYLIK HISOB-KITOB  -  butun markaz bo'yicha
+# =====================================================================
+@app.post("/api/billing/month")
+def billing_month(
+    year: int,
+    month: int,
+    commit: bool = False,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Oy boshida barcha FAOL o'quvchilardan shu oy uchun to'liq pul
+    hisoblaydi (balansdan yechadi).
+
+    Shundan keyin "bu oyda qancha pul tushishi kerak" degan savolga
+    javob bor, va administrator qancha yig'ganini foizda ko'rish mumkin.
+
+    commit=False - faqat hisoblab ko'rsatadi, hech narsa yozmaydi."""
+    period = _period_key(year, month)
+    start, end = billing.month_bounds(year, month)
+
+    students = [s for s in
+                scope_to_branch(db.query(models.Student), models.Student, user).all()
+                if s.status == "active" and s.group_id]
+
+    rows, created = [], 0
+    for s in students:
+        g = s.group
+        if not g:
+            continue
+        already = (db.query(models.Payment)
+                   .filter(models.Payment.student_id == s.id,
+                           models.Payment.period == period,
+                           models.Payment.kind == "charge").first())
+        # O'quvchi oy o'rtasida qo'shilgan bo'lsa - faqat qolgan darslar
+        since = start
+        if s.enrolled_date and s.enrolled_date > start:
+            since = s.enrolled_date
+        lessons = len(_lessons_left_in_month(db, g.id, since)) if since <= end else 0
+        disc = _family_discount_percent(db, s)
+        amount = lessons * (g.lesson_price or 0) * (100 - disc) / 100
+
+        if commit and not already and amount > 0:
+            db.add(models.Payment(
+                student_id=s.id, amount=-abs(amount), kind="charge",
+                note=f"{g.name} — {period} oyi uchun {lessons} dars"
+                     + (f" (oilaviy chegirma {disc}%)" if disc else ""),
+                created_by=user.full_name, period=period))
+            created += 1
+        rows.append({
+            "student_id": s.id, "public_id": s.public_id,
+            "full_name": s.full_name, "group": g.name,
+            "lessons": lessons, "discount": disc, "amount": round(amount, 2),
+            "already_charged": already is not None,
+        })
+
+    if commit:
+        audit.log(db, user, entity="payment", action="create",
+                  entity_label=f"{period} oylik hisob-kitob",
+                  new_value=created,
+                  note=f"{created} ta o'quvchiga hisoblandi", commit=True)
+        db.commit()
+
+    return {
+        "period": period,
+        "committed": commit,
+        "students": len(rows),
+        "created": created,
+        "expected_total": round(sum(r["amount"] for r in rows), 2),
+        "rows": sorted(rows, key=lambda r: r["full_name"]),
+    }
+
+
+@app.get("/api/billing/collection")
+def billing_collection(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """To'lovlarni yig'ish foizi: shu oyda qancha hisoblangan va
+    qanchasi haqiqatda tushgan. Administrator KPI'sining asosi."""
+    period = _period_key(year, month)
+    start, end = billing.month_bounds(year, month)
+    d0 = datetime.combine(start, datetime.min.time())
+    d1 = datetime.combine(end, datetime.max.time())
+
+    sq = scope_to_branch(db.query(models.Student), models.Student, user)
+    ids = [s.id for s in sq.all()]
+    if not ids:
+        return {"period": period, "charged": 0.0, "collected": 0.0,
+                "percent": 0.0, "debt": 0.0, "students": 0, "paid_students": 0,
+                "by_admin": []}
+
+    charged = -(db.query(func.coalesce(func.sum(models.Payment.amount), 0.0))
+                .filter(models.Payment.kind == "charge",
+                        models.Payment.period == period,
+                        models.Payment.student_id.in_(ids)).scalar() or 0.0)
+
+    pays = (db.query(models.Payment)
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.created_at >= d0,
+                    models.Payment.created_at <= d1,
+                    models.Payment.student_id.in_(ids)).all())
+    collected = sum(p.amount for p in pays)
+    paid_students = len({p.student_id for p in pays})
+
+    charged_students = {r[0] for r in
+                        db.query(models.Payment.student_id)
+                        .filter(models.Payment.kind == "charge",
+                                models.Payment.period == period,
+                                models.Payment.student_id.in_(ids)).all()}
+
+    # Kim yig'di - administrator kesimida
+    by_admin = {}
+    for p in pays:
+        who = p.created_by or "—"
+        by_admin[who] = by_admin.get(who, 0.0) + p.amount
+    admins = [{"name": k, "collected": round(v, 2),
+               "percent": round(v / charged * 100, 1) if charged else 0.0}
+              for k, v in sorted(by_admin.items(), key=lambda kv: -kv[1])]
+
+    return {
+        "period": period,
+        "charged": round(charged, 2),
+        "collected": round(collected, 2),
+        "percent": round(collected / charged * 100, 1) if charged else 0.0,
+        "debt": round(max(0.0, charged - collected), 2),
+        "students": len(charged_students),
+        "paid_students": paid_students,
+        "by_admin": admins,
     }

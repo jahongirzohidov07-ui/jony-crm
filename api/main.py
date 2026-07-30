@@ -41,6 +41,9 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE expenses ADD COLUMN channel VARCHAR",
+        "ALTER TABLE expenses ADD COLUMN method VARCHAR",
+        "UPDATE expenses SET method = 'cash' WHERE method IS NULL",
         "ALTER TABLE leads ADD COLUMN address VARCHAR",
         "ALTER TABLE leads ADD COLUMN school VARCHAR",
         "ALTER TABLE leads ADD COLUMN grade VARCHAR",
@@ -424,6 +427,27 @@ def dashboard(
             or 0.0
         )
 
+    # Shu oydagi to'lovlar soni va shundan nechtasi YANGI mijoz
+    month_pay_count = 0
+    month_new_count = 0
+    if student_ids:
+        pays = (
+            db.query(models.Payment)
+            .filter(models.Payment.kind == "payment")
+            .filter(models.Payment.created_at >= month_start)
+            .filter(models.Payment.student_id.in_(student_ids))
+            .all()
+        )
+        month_pay_count = len(pays)
+        firsts = _payment_first_dates(db)
+        month_new_count = sum(
+            1 for p in pays if firsts.get(p.student_id) == p.created_at
+        )
+
+    staff_count = scope_to_branch(
+        db.query(models.User), models.User, user
+    ).filter(models.User.is_active == 1).count()
+
     balances = [(s.id, student_balance(db, s.id)) for s in all_students]
     total_debt = sum(b for _, b in balances if b < 0)
     debtor_count = sum(1 for _, b in balances if b < 0)
@@ -434,6 +458,9 @@ def dashboard(
         frozen_students=frozen,
         total_groups=groups,
         total_teachers=teachers,
+        month_payment_count=month_pay_count,
+        month_new_payment_count=month_new_count,
+        staff_count=staff_count,
         month_income=float(month_income),
         total_debt=float(total_debt),
         debtor_count=debtor_count,
@@ -1200,6 +1227,36 @@ def coin_leaderboard(
     ]
     out.sort(key=lambda b: -b.balance)
     return out
+
+
+@app.get("/api/students/{student_id}/lead")
+def student_lead(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """O'quvchi lidan aylangan bo'lsa - o'sha lidning tarixi.
+    Qayerdan kelgani, kim olib kelgani shu yerda ko'rinadi."""
+    lead = (
+        db.query(models.Lead)
+        .filter(models.Lead.converted_student_id == student_id)
+        .first()
+    )
+    if not lead:
+        return {"lead": None}
+    return {"lead": {
+        "id": lead.id,
+        "source": lead.source,
+        "stage": lead.stage,
+        "address": lead.address,
+        "school": lead.school,
+        "grade": lead.grade,
+        "note": lead.note,
+        "assigned_user": lead.assigned_user.full_name if lead.assigned_user else None,
+        "created_by": lead.created_by,
+        "created_at": lead.created_at.isoformat() if lead.created_at else None,
+        "updated_at": lead.updated_at.isoformat() if lead.updated_at else None,
+    }}
 
 
 @app.get("/api/students/{student_id}/exams")
@@ -2932,3 +2989,689 @@ def update_payout(
 @app.get("/api/health")
 def health():
     return {"status": "ok", "time": datetime.utcnow().isoformat()}
+
+
+# =====================================================================
+#  PUL OQIMI (kassa daftari)  -  Google Sheet ko'rinishida
+# =====================================================================
+def _payment_first_dates(db: Session) -> dict:
+    """Har bir o'quvchining ENG BIRINCHI to'lov sanasi (id bilan).
+    Shu sana bilan mos tushgan to'lov "yangi to'lov", qolganlari "eski"."""
+    rows = (
+        db.query(models.Payment.student_id,
+                 func.min(models.Payment.created_at))
+        .filter(models.Payment.kind == "payment")
+        .group_by(models.Payment.student_id)
+        .all()
+    )
+    return {sid: dt for sid, dt in rows}
+
+
+@app.get("/api/reports/cashflow-ledger")
+def cashflow_ledger(
+    year: int,
+    month: int,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Bir oylik kassa daftari: har bir kirim va chiqim alohida qator.
+    Tepasida - Kirim / Chiqim / Kassa jadvali usullar kesimida, va
+    yangi/eski to'lovlar soni bilan summasi."""
+    start, end = billing.month_bounds(year, month)
+    d0 = datetime.combine(start, datetime.min.time())
+    d1 = datetime.combine(end, datetime.max.time())
+
+    # --- Kirimlar ---
+    pq = (
+        db.query(models.Payment, models.Student)
+        .join(models.Student, models.Payment.student_id == models.Student.id)
+        .filter(models.Payment.kind == "payment",
+                models.Payment.created_at >= d0,
+                models.Payment.created_at <= d1)
+    )
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        pq = pq.filter(models.Student.branch_id == user.branch_id)
+    elif branch_id:
+        pq = pq.filter(models.Student.branch_id == branch_id)
+
+    first_dates = _payment_first_dates(db)
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+
+    rows = []
+    new_cnt = new_sum = old_cnt = old_sum = 0
+    kirim = {m: 0.0 for m in roles.PAYMENT_METHODS}
+
+    for p, st in pq.all():
+        method = p.method if p.method in kirim else "cash"
+        kirim[method] += p.amount
+        is_new = first_dates.get(st.id) == p.created_at
+        if is_new:
+            new_cnt += 1
+            new_sum += p.amount
+        else:
+            old_cnt += 1
+            old_sum += p.amount
+        rows.append({
+            "id": f"p{p.id}",
+            "date": p.created_at.date().isoformat(),
+            "amount": p.amount,
+            "title": st.full_name,
+            "student_id": st.id,
+            "method": method,
+            "direction": "in",
+            "branch": branches.get(st.branch_id) or "—",
+            "category": "new_payment" if is_new else "old_payment",
+            "note": p.note,
+        })
+
+    # --- Chiqimlar ---
+    eq = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= start, models.Expense.date <= end
+    )
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+
+    chiqim = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    cat_labels = {k: lbl for k, lbl, _ in roles.EXPENSE_CATEGORY_DEFS}
+    for e in eq.all():
+        method = getattr(e, "method", None) or "cash"
+        if method not in chiqim:
+            method = "cash"
+        chiqim[method] += e.amount
+        rows.append({
+            "id": f"e{e.id}",
+            "date": e.date.isoformat(),
+            "amount": e.amount,
+            "title": e.note or cat_labels.get(e.category, e.category),
+            "student_id": None,
+            "method": method,
+            "direction": "out",
+            "branch": branches.get(e.branch_id) or "—",
+            "category": e.category,
+            "note": e.note,
+        })
+
+    # Ustozlar ish haqi - avtomatik chiqim, alohida qator sifatida
+    period = _period_key(year, month)
+    payroll = _payroll_total(db, user, period)
+    if payroll:
+        chiqim["cash"] += payroll
+        rows.append({
+            "id": f"payroll-{period}",
+            "date": end.isoformat(),
+            "amount": payroll,
+            "title": "Ustozlar oyligi (avtomatik)",
+            "student_id": None,
+            "method": "cash",
+            "direction": "out",
+            "branch": "—",
+            "category": "teacher_salary",
+            "note": None,
+        })
+
+    rows.sort(key=lambda r: (r["date"], r["id"]))
+
+    def block(d):
+        return {**d, "total": sum(d.values())}
+
+    kassa = {m: kirim[m] - chiqim[m] for m in roles.PAYMENT_METHODS}
+
+    return {
+        "period": period,
+        "kirim": block(kirim),
+        "chiqim": block(chiqim),
+        "kassa": block(kassa),
+        "new_payments": {"count": new_cnt, "amount": new_sum},
+        "old_payments": {"count": old_cnt, "amount": old_sum},
+        "rows": rows,
+    }
+
+
+# =====================================================================
+#  HR  -  vakansiya va nomzodlar
+# =====================================================================
+@app.get("/api/vacancies")
+def list_vacancies(
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    q = scope_to_branch(db.query(models.Vacancy), models.Vacancy, user)
+    if status:
+        q = q.filter(models.Vacancy.status == status)
+    out = []
+    for v in q.order_by(models.Vacancy.created_at.desc()).all():
+        cands = db.query(models.Candidate).filter(
+            models.Candidate.vacancy_id == v.id).all()
+        out.append({
+            "id": v.id, "title": v.title, "role": v.role,
+            "branch_id": v.branch_id,
+            "branch": v.branch.name if v.branch else None,
+            "headcount": v.headcount, "status": v.status,
+            "salary_from": v.salary_from, "salary_to": v.salary_to,
+            "description": v.description,
+            "created_at": v.created_at.isoformat() if v.created_at else None,
+            "candidate_count": len(cands),
+            "hired_count": sum(1 for c in cands if c.stage == "hired"),
+        })
+    return out
+
+
+@app.post("/api/vacancies")
+def create_vacancy(
+    payload: schemas.VacancyCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    v = models.Vacancy(**data, created_by=user.username)
+    db.add(v); db.commit(); db.refresh(v)
+    return {"id": v.id}
+
+
+@app.put("/api/vacancies/{vid}")
+def update_vacancy(
+    vid: int,
+    payload: schemas.VacancyUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    v = db.query(models.Vacancy).get(vid)
+    if not v:
+        raise HTTPException(404, "Vakansiya topilmadi")
+    for k, val in payload.model_dump(exclude_unset=True).items():
+        setattr(v, k, val)
+    # Yopilgan sanani avtomat qo'yamiz - qo'lda eslab qolish shart emas.
+    v.closed_at = date.today() if v.status == "closed" else None
+    db.commit()
+    return {"ok": True}
+
+
+@app.delete("/api/vacancies/{vid}")
+def delete_vacancy(
+    vid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    v = db.query(models.Vacancy).get(vid)
+    if not v:
+        raise HTTPException(404, "Vakansiya topilmadi")
+    n = db.query(models.Candidate).filter(models.Candidate.vacancy_id == vid).count()
+    if n:
+        raise HTTPException(400, f"Bu vakansiyada {n} ta nomzod bor. Avval ularni o'chiring.")
+    db.delete(v); db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/candidates")
+def list_candidates(
+    vacancy_id: int | None = None,
+    stage: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    q = scope_to_branch(db.query(models.Candidate), models.Candidate, user)
+    if vacancy_id:
+        q = q.filter(models.Candidate.vacancy_id == vacancy_id)
+    if stage:
+        q = q.filter(models.Candidate.stage == stage)
+    return [{
+        "id": c.id, "full_name": c.full_name, "phone": c.phone,
+        "vacancy_id": c.vacancy_id,
+        "vacancy": c.vacancy.title if c.vacancy else None,
+        "stage": c.stage, "source": c.source,
+        "branch_id": c.branch_id,
+        "branch": c.branch.name if c.branch else None,
+        "note": c.note, "reject_reason": c.reject_reason,
+        "hired_date": c.hired_date.isoformat() if c.hired_date else None,
+        "created_at": c.created_at.isoformat() if c.created_at else None,
+    } for c in q.order_by(models.Candidate.created_at.desc()).all()]
+
+
+def _sync_candidate_dates(c: models.Candidate):
+    """Bosqichga qarab sanalarni avtomat to'ldiradi/tozalaydi."""
+    if c.stage == "hired":
+        c.hired_date = c.hired_date or date.today()
+        c.closed_date = c.closed_date or date.today()
+    elif c.stage == "rejected":
+        c.hired_date = None
+        c.closed_date = c.closed_date or date.today()
+    else:
+        c.hired_date = None
+        c.closed_date = None
+
+
+@app.post("/api/candidates")
+def create_candidate(
+    payload: schemas.CandidateCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    c = models.Candidate(**data, created_by=user.username)
+    _sync_candidate_dates(c)
+    db.add(c); db.commit(); db.refresh(c)
+    return {"id": c.id}
+
+
+@app.put("/api/candidates/{cid}")
+def update_candidate(
+    cid: int,
+    payload: schemas.CandidateUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    c = db.query(models.Candidate).get(cid)
+    if not c:
+        raise HTTPException(404, "Nomzod topilmadi")
+    for k, val in payload.model_dump(exclude_unset=True).items():
+        setattr(c, k, val)
+    _sync_candidate_dates(c)
+    db.commit()
+    return {"ok": True}
+
+
+@app.delete("/api/candidates/{cid}")
+def delete_candidate(
+    cid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    c = db.query(models.Candidate).get(cid)
+    if not c:
+        raise HTTPException(404, "Nomzod topilmadi")
+    db.delete(c); db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/reports/hr-funnel")
+def hr_funnel(
+    months: int = 12,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    """Ishga olish voronkasi: nomzodlar qaysi bosqichda to'xtab qolyapti."""
+    months = max(1, min(months, 36))
+    since = date.today() - timedelta(days=int(months * 30.44))
+    q = scope_to_branch(db.query(models.Candidate), models.Candidate, user).filter(
+        models.Candidate.created_at >= datetime.combine(since, datetime.min.time())
+    )
+    cands = q.all()
+    total = len(cands)
+    order = roles.CANDIDATE_FUNNEL
+    idx = {k: i for i, k in enumerate(order)}
+
+    rejected = [c for c in cands if c.stage == "rejected"]
+    stages = []
+    for i, key in enumerate(order):
+        # Bu bosqichga YETGANLAR = hozir shu yerda yoki undan oldinga o'tgan
+        reached = sum(1 for c in cands
+                      if c.stage != "rejected" and idx.get(c.stage, -1) >= i)
+        here = sum(1 for c in cands if c.stage == key)
+        stages.append({
+            "stage": key,
+            "label": roles.CANDIDATE_STAGE_LABELS[key],
+            "reached": reached,
+            "stuck_here": here if key != "hired" else 0,
+            "percent": round(reached / total * 100, 1) if total else 0.0,
+        })
+
+    # Manba kesimida
+    by_source = {}
+    for c in cands:
+        d = by_source.setdefault(c.source, {"total": 0, "hired": 0})
+        d["total"] += 1
+        if c.stage == "hired":
+            d["hired"] += 1
+    sources = [{
+        "key": k,
+        "label": roles.CANDIDATE_SOURCE_LABELS.get(k, k),
+        "total": v["total"], "hired": v["hired"],
+        "percent": round(v["hired"] / v["total"] * 100, 1) if v["total"] else 0.0,
+    } for k, v in sorted(by_source.items(), key=lambda kv: -kv[1]["total"])]
+
+    hired = [c for c in cands if c.stage == "hired" and c.hired_date and c.created_at]
+    avg_days = (round(sum((c.hired_date - c.created_at.date()).days
+                          for c in hired) / len(hired), 1) if hired else 0.0)
+
+    vq = scope_to_branch(db.query(models.Vacancy), models.Vacancy, user)
+    return {
+        "total": total,
+        "hired": len(hired),
+        "rejected": len(rejected),
+        "hire_rate": round(len(hired) / total * 100, 1) if total else 0.0,
+        "avg_days_to_hire": avg_days,
+        "open_vacancies": vq.filter(models.Vacancy.status == "open").count(),
+        "stages": stages,
+        "sources": sources,
+    }
+
+
+# =====================================================================
+#  MARKETING  -  voronka va CAC
+# =====================================================================
+def _marketing_spend(db: Session, user, start: date, end: date) -> dict:
+    """Kanal kesimida reklama xarajati. Kanal ko'rsatilmagan reklama
+    xarajati "other"ga tushadi - shunda umumiy summa hech qachon
+    yo'qolmaydi."""
+    marketing_cats = [k for k, _, g in roles.EXPENSE_CATEGORY_DEFS
+                      if g == "marketing"]
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= start,
+        models.Expense.date <= end,
+        models.Expense.category.in_(marketing_cats),
+    )
+    out = {}
+    for e in q.all():
+        ch = getattr(e, "channel", None) or "other"
+        out[ch] = out.get(ch, 0.0) + e.amount
+    return out
+
+
+@app.get("/api/reports/marketing-funnel")
+def marketing_funnel(
+    months: int = 6,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    """Kanal bo'yicha voronka: qancha pul ketdi -> qancha lid keldi ->
+    qanchasi sinovga keldi -> qanchasi to'lovchi o'quvchiga aylandi.
+    Oxirida har bir kanal uchun CAC (bitta mijoz qancha turdi)."""
+    months = max(1, min(months, 36))
+    today = date.today()
+    since = today - timedelta(days=int(months * 30.44))
+    start = since
+    end = today
+
+    spend = _marketing_spend(db, user, start, end)
+
+    lq = scope_to_branch(db.query(models.Lead), models.Lead, user).filter(
+        models.Lead.created_at >= datetime.combine(since, datetime.min.time())
+    )
+    leads = lq.all()
+
+    order = ["new", "contacted", "trial_scheduled", "trial_attended", "converted"]
+    idx = {k: i for i, k in enumerate(order)}
+
+    # Aylangan lidlarning daromadi - LTV emas, shu paytgacha to'lagani
+    conv_ids = [l.converted_student_id for l in leads if l.converted_student_id]
+    revenue_by_student = {}
+    if conv_ids:
+        for sid, total in (db.query(models.Payment.student_id,
+                                    func.coalesce(func.sum(models.Payment.amount), 0.0))
+                           .filter(models.Payment.kind == "payment",
+                                   models.Payment.student_id.in_(conv_ids))
+                           .group_by(models.Payment.student_id).all()):
+            revenue_by_student[sid] = float(total)
+
+    channels = {}
+    for l in leads:
+        ch = l.source or "other"
+        d = channels.setdefault(ch, {"leads": 0, "trial": 0, "converted": 0,
+                                     "rejected": 0, "revenue": 0.0})
+        d["leads"] += 1
+        pos = idx.get(l.stage, -1)
+        if l.stage == "rejected":
+            d["rejected"] += 1
+        else:
+            if pos >= idx["trial_attended"]:
+                d["trial"] += 1
+            if l.stage == "converted":
+                d["converted"] += 1
+                d["revenue"] += revenue_by_student.get(l.converted_student_id, 0.0)
+
+    for ch in spend:
+        channels.setdefault(ch, {"leads": 0, "trial": 0, "converted": 0,
+                                 "rejected": 0, "revenue": 0.0})
+
+    rows = []
+    for ch, d in channels.items():
+        s = spend.get(ch, 0.0)
+        rows.append({
+            "channel": ch,
+            "label": roles.MARKETING_CHANNEL_LABELS.get(ch, ch),
+            "spend": s,
+            "leads": d["leads"],
+            "trial": d["trial"],
+            "converted": d["converted"],
+            "rejected": d["rejected"],
+            "revenue": round(d["revenue"], 2),
+            "conversion": round(d["converted"] / d["leads"] * 100, 1) if d["leads"] else 0.0,
+            # CPL - bitta lid qancha turdi, CAC - bitta MIJOZ qancha turdi
+            "cpl": round(s / d["leads"], 0) if d["leads"] and s else 0.0,
+            "cac": round(s / d["converted"], 0) if d["converted"] and s else 0.0,
+            "roi": round((d["revenue"] - s) / s * 100, 1) if s else 0.0,
+        })
+    rows.sort(key=lambda r: -r["leads"])
+
+    total_spend = sum(spend.values())
+    total_leads = sum(d["leads"] for d in channels.values())
+    total_conv = sum(d["converted"] for d in channels.values())
+    total_rev = sum(d["revenue"] for d in channels.values())
+
+    # Umumiy voronka bosqichlari
+    stages = []
+    for i, key in enumerate(order):
+        reached = sum(1 for l in leads
+                      if l.stage != "rejected" and idx.get(l.stage, -1) >= i)
+        stages.append({
+            "stage": key,
+            "label": roles.LEAD_STAGE_LABELS.get(key, key),
+            "reached": reached,
+            "stuck_here": sum(1 for l in leads if l.stage == key),
+            "percent": round(reached / total_leads * 100, 1) if total_leads else 0.0,
+        })
+
+    return {
+        "months": months,
+        "channels": rows,
+        "stages": stages,
+        "totals": {
+            "spend": total_spend,
+            "leads": total_leads,
+            "converted": total_conv,
+            "revenue": round(total_rev, 2),
+            "conversion": round(total_conv / total_leads * 100, 1) if total_leads else 0.0,
+            "cpl": round(total_spend / total_leads, 0) if total_leads and total_spend else 0.0,
+            "cac": round(total_spend / total_conv, 0) if total_conv and total_spend else 0.0,
+            "roi": round((total_rev - total_spend) / total_spend * 100, 1) if total_spend else 0.0,
+        },
+    }
+
+
+@app.get("/api/analytics/cac")
+def analytics_cac(
+    months: int = 12,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Oylar bo'yicha CAC: reklamaga ketgan pul / o'sha oyda BIRINCHI
+    marta to'lagan o'quvchilar soni. Pastda LTV/CAC nisbati - 3 dan
+    yuqori bo'lsa biznes sog'lom hisoblanadi."""
+    months = max(1, min(months, 36))
+    today = date.today()
+
+    firsts = _payment_first_dates(db)
+    # O'quvchi filiali - filialga bog'langan foydalanuvchi uchun filtr
+    sb = {s.id: s.branch_id for s in
+          scope_to_branch(db.query(models.Student), models.Student, user).all()}
+
+    rows = []
+    for back in range(months - 1, -1, -1):
+        y, m = _shift_month(today.year, today.month, -back)
+        start, end = billing.month_bounds(y, m)
+        spend = sum(_marketing_spend(db, user, start, end).values())
+        new_clients = sum(1 for sid, dt in firsts.items()
+                          if sid in sb and start <= dt.date() <= end)
+        rows.append({
+            "period": _period_key(y, m),
+            "spend": spend,
+            "new_clients": new_clients,
+            "cac": round(spend / new_clients, 0) if new_clients and spend else 0.0,
+        })
+
+    total_spend = sum(r["spend"] for r in rows)
+    total_new = sum(r["new_clients"] for r in rows)
+    cac = round(total_spend / total_new, 0) if total_new and total_spend else 0.0
+
+    # LTV - shu davrda birinchi to'lovini qilganlarning o'rtacha jami to'lovi
+    first_start = billing.month_bounds(*[int(x) for x in rows[0]["period"].split("-")])[0]
+    cohort = [sid for sid, dt in firsts.items()
+              if sid in sb and dt.date() >= first_start]
+    ltv = 0.0
+    if cohort:
+        total = (db.query(func.coalesce(func.sum(models.Payment.amount), 0.0))
+                 .filter(models.Payment.kind == "payment",
+                         models.Payment.student_id.in_(cohort)).scalar() or 0.0)
+        ltv = round(float(total) / len(cohort), 0)
+
+    return {
+        "rows": rows,
+        "totals": {
+            "spend": total_spend,
+            "new_clients": total_new,
+            "cac": cac,
+            "ltv": ltv,
+            "ratio": round(ltv / cac, 2) if cac else 0.0,
+        },
+    }
+
+
+# =====================================================================
+#  IJTIMOIY TARMOQLAR  -  obunachilar soni
+# =====================================================================
+def _fetch_telegram_followers(handle: str) -> int | None:
+    """Ochiq Telegram kanalining obunachilar sonini t.me sahifasidan
+    o'qiydi. Token kerak emas - sahifa hammaga ochiq."""
+    import re as _re
+    import urllib.request
+    try:
+        req = urllib.request.Request(
+            f"https://t.me/{handle}",
+            headers={"User-Agent": "Mozilla/5.0 (compatible; JonyCRM/1.0)"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as r:
+            html = r.read().decode("utf-8", "ignore")
+    except Exception:
+        return None
+    m = _re.search(r'tgme_page_extra">([\d\s \xa0,]+)\s*(?:subscribers|members|obuna)',
+                   html, _re.I)
+    if not m:
+        m = _re.search(r'([\d\s \xa0,]{2,})\s*subscribers', html, _re.I)
+    if not m:
+        return None
+    digits = _re.sub(r"\D", "", m.group(1))
+    return int(digits) if digits else None
+
+
+def _fetch_instagram_followers() -> int | None:
+    """Instagram Graph API. Ishlashi uchun INSTAGRAM_TOKEN va
+    INSTAGRAM_USER_ID muhit o'zgaruvchilari kerak (Business/Creator
+    akkaunt + Facebook sahifa). Ular bo'lmasa None qaytaradi va
+    oxirgi qo'lda kiritilgan qiymat saqlanib qoladi."""
+    import json as _json
+    import urllib.request
+    token = os.getenv("INSTAGRAM_TOKEN")
+    uid = os.getenv("INSTAGRAM_USER_ID")
+    if not token or not uid:
+        return None
+    try:
+        url = (f"https://graph.facebook.com/v19.0/{uid}"
+               f"?fields=followers_count&access_token={token}")
+        with urllib.request.urlopen(url, timeout=10) as r:
+            data = _json.loads(r.read().decode())
+        return int(data.get("followers_count"))
+    except Exception:
+        return None
+
+
+def _latest_social(db: Session, platform: str):
+    return (db.query(models.SocialStat)
+            .filter(models.SocialStat.platform == platform)
+            .order_by(models.SocialStat.date.desc(),
+                      models.SocialStat.id.desc()).first())
+
+
+def _save_social(db: Session, platform: str, followers: int, source: str):
+    """Kunига bitta yozuv - shu kun uchun bo'lsa yangilanadi."""
+    today = date.today()
+    row = (db.query(models.SocialStat)
+           .filter(models.SocialStat.platform == platform,
+                   models.SocialStat.date == today).first())
+    if row:
+        row.followers = followers
+        row.source = source
+    else:
+        db.add(models.SocialStat(platform=platform, followers=followers,
+                                 source=source, date=today))
+    db.commit()
+
+
+@app.get("/api/social")
+def social_stats(
+    days: int = 90,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user),
+):
+    since = date.today() - timedelta(days=max(7, min(days, 730)))
+    out = {}
+    for key, label in roles.SOCIAL_PLATFORMS:
+        last = _latest_social(db, key)
+        hist = (db.query(models.SocialStat)
+                .filter(models.SocialStat.platform == key,
+                        models.SocialStat.date >= since)
+                .order_by(models.SocialStat.date).all())
+        prev = hist[0].followers if len(hist) > 1 else None
+        out[key] = {
+            "platform": key,
+            "label": label,
+            "handle": roles.SOCIAL_HANDLES.get(key),
+            "followers": last.followers if last else None,
+            "source": last.source if last else None,
+            "date": last.date.isoformat() if last and last.date else None,
+            "growth": (last.followers - prev) if last and prev is not None else None,
+            "history": [{"date": h.date.isoformat(), "followers": h.followers}
+                        for h in hist],
+        }
+    return out
+
+
+@app.post("/api/social/refresh")
+def social_refresh(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    """Telegram - avtomat o'qiydi. Instagram - token bo'lsa o'qiydi."""
+    result = {}
+    tg = _fetch_telegram_followers(roles.SOCIAL_HANDLES["telegram"])
+    if tg:
+        _save_social(db, "telegram", tg, "auto")
+    result["telegram"] = tg
+
+    ig = _fetch_instagram_followers()
+    if ig:
+        _save_social(db, "instagram", ig, "auto")
+    result["instagram"] = ig
+    result["instagram_note"] = (
+        None if ig else
+        "Instagram uchun rasmiy token kerak (INSTAGRAM_TOKEN + "
+        "INSTAGRAM_USER_ID). Hozircha qo'lda kiriting."
+    )
+    return result
+
+
+@app.post("/api/social/manual")
+def social_manual(
+    payload: schemas.SocialManual,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ACCESS)),
+):
+    if payload.platform not in dict(roles.SOCIAL_PLATFORMS):
+        raise HTTPException(400, "Noma'lum platforma")
+    _save_social(db, payload.platform, payload.followers, "manual")
+    return {"ok": True}

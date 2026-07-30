@@ -81,7 +81,7 @@ PAYMENT_METHODS = [
 
 PAYMENT_METHOD_LABELS = {
     "cash": "Naqd",
-    "card": "Plastik",
+    "card": "Click",
     "terminal": "Terminal",
     "other": "Boshqa",
 }
@@ -151,6 +151,15 @@ LEAD_STAGES = [
     "rejected",         # Rad etdi            (yo'qotish)
 ]
 
+LEAD_STAGE_LABELS = {
+    "new": "Yangi so'rov",
+    "contacted": "Bog'lanildi",
+    "trial_scheduled": "Sinovga yozildi",
+    "trial_attended": "Sinovga keldi",
+    "converted": "O'quvchi bo'ldi",
+    "rejected": "Rad etdi",
+}
+
 LEAD_SOURCES = [
     "visit",      # Tashrif - o'zi kirib kelgan
     "phone",      # Telefon - o'zi qo'ng'iroq qilgan
@@ -171,6 +180,65 @@ LEAD_SOURCE_DEFAULT_STAGE = {
     "ads": "new",
     "other": "new",
 }
+
+# ---- HR (kadrlar) -----------------------------------------------------
+# Ishga olish voronkasi. Lid voronkasi bilan bir xil mantiq: nomzod
+# bosqichma-bosqich o'tadi, qaysi bosqichda ko'p yo'qotayotganimiz
+# ko'rinib turadi.
+HR_ACCESS = FULL_ACCESS + [HR_MANAGER]
+
+VACANCY_STATUSES = [
+    ("open", "Ochiq"),
+    ("paused", "To'xtatilgan"),
+    ("closed", "Yopilgan"),
+]
+
+CANDIDATE_STAGES = [
+    ("applied", "Ariza topshirdi"),
+    ("screening", "Rezyume ko'rildi"),
+    ("interview", "Suhbatga chaqirildi"),
+    ("demo", "Sinov darsi / vazifa"),
+    ("offer", "Taklif berildi"),
+    ("hired", "Ishga olindi"),      # yutuq
+    ("rejected", "Rad etildi"),     # yo'qotish
+]
+CANDIDATE_STAGE_LABELS = dict(CANDIDATE_STAGES)
+CANDIDATE_FUNNEL = [k for k, _ in CANDIDATE_STAGES if k != "rejected"]
+
+CANDIDATE_SOURCES = [
+    ("instagram", "Instagram"),
+    ("telegram", "Telegram"),
+    ("referral", "Tanish orqali"),
+    ("job_site", "Ish e'lonlari sayti"),
+    ("walk_in", "O'zi keldi"),
+    ("alumni", "O'z bitiruvchimiz"),
+    ("other", "Boshqa"),
+]
+CANDIDATE_SOURCE_LABELS = dict(CANDIDATE_SOURCES)
+
+# ---- Marketing --------------------------------------------------------
+# Reklama kanallari LID MANBALARI bilan bir xil kalitda: shunda
+# "shu kanalga qancha pul ketdi" va "shu kanaldan qancha lid keldi"
+# bir joyda taqqoslanadi - CAC shundan chiqadi.
+MARKETING_ACCESS = FULL_ACCESS + [SMM_MANAGER]
+MARKETING_CHANNELS = LEAD_SOURCES
+MARKETING_CHANNEL_LABELS = {
+    "visit": "Tashrif",
+    "phone": "Telefon",
+    "instagram": "Instagram",
+    "telegram": "Telegram",
+    "referral": "Tanish orqali",
+    "ads": "Reklama (boshqa)",
+    "other": "Boshqa",
+}
+
+# ---- Ijtimoiy tarmoqlar ----------------------------------------------
+SOCIAL_PLATFORMS = [("instagram", "Instagram"), ("telegram", "Telegram")]
+# Sahifalarimiz. Telegram ochiq kanal - obunachilar soni avtomat olinadi.
+# Instagram uchun rasmiy Graph API tokeni kerak (INSTAGRAM_TOKEN va
+# INSTAGRAM_USER_ID muhit o'zgaruvchilari); tokensiz qo'lda kiritiladi.
+SOCIAL_HANDLES = {"instagram": "jony_academy", "telegram": "JonyAcademy"}
+
 
 # ---- Imtihonlar -------------------------------------------------------
 # Bizda asosan unit testlar (12 ta unit), ularga qo'shimcha kurs o'rtasi,

@@ -295,6 +295,8 @@ class ExpenseCreate(BaseModel):
     amount: float
     note: Optional[str] = None
     branch_id: Optional[int] = None
+    channel: Optional[str] = None
+    method: Optional[str] = "cash"
 
 
 class ExpenseUpdate(BaseModel):
@@ -303,6 +305,8 @@ class ExpenseUpdate(BaseModel):
     amount: Optional[float] = None
     note: Optional[str] = None
     branch_id: Optional[int] = None
+    channel: Optional[str] = None
+    method: Optional[str] = None
 
 
 class ExpenseOut(BaseModel):
@@ -314,6 +318,8 @@ class ExpenseOut(BaseModel):
     note: Optional[str] = None
     branch_id: Optional[int] = None
     branch: Optional[BranchOut] = None
+    channel: Optional[str] = None
+    method: Optional[str] = None
     created_by: Optional[str] = None
     created_at: datetime
 
@@ -324,6 +330,10 @@ class DashboardStats(BaseModel):
     frozen_students: int
     total_groups: int
     total_teachers: int
+    # Shu oy nechta to'lov qabul qilindi va shundan nechtasi yangi mijoz
+    month_payment_count: int = 0
+    month_new_payment_count: int = 0
+    staff_count: int = 0
     month_income: float
     total_debt: float
     debtor_count: int
@@ -600,3 +610,53 @@ class AdminKpi(BaseModel):
 class AdminKpiResult(BaseModel):
     period: str
     rows: List[AdminKpi] = []
+
+
+# ---------- HR ----------
+class VacancyCreate(BaseModel):
+    title: str
+    role: Optional[str] = None
+    branch_id: Optional[int] = None
+    headcount: int = 1
+    status: str = "open"
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    description: Optional[str] = None
+
+
+class VacancyUpdate(BaseModel):
+    title: Optional[str] = None
+    role: Optional[str] = None
+    branch_id: Optional[int] = None
+    headcount: Optional[int] = None
+    status: Optional[str] = None
+    salary_from: Optional[float] = None
+    salary_to: Optional[float] = None
+    description: Optional[str] = None
+
+
+class CandidateCreate(BaseModel):
+    full_name: str
+    phone: Optional[str] = None
+    vacancy_id: Optional[int] = None
+    stage: str = "applied"
+    source: str = "other"
+    branch_id: Optional[int] = None
+    note: Optional[str] = None
+
+
+class CandidateUpdate(BaseModel):
+    full_name: Optional[str] = None
+    phone: Optional[str] = None
+    vacancy_id: Optional[int] = None
+    stage: Optional[str] = None
+    source: Optional[str] = None
+    branch_id: Optional[int] = None
+    note: Optional[str] = None
+    reject_reason: Optional[str] = None
+
+
+# ---------- Ijtimoiy tarmoq ----------
+class SocialManual(BaseModel):
+    platform: str
+    followers: int

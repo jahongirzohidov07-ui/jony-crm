@@ -226,6 +226,12 @@ class Expense(Base):
     note = Column(String, nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     created_by = Column(String, nullable=True)
+    # Reklama xarajati bo'lsa - qaysi kanal (instagram/telegram/...).
+    # CAC shu ustun orqali kanal kesimida hisoblanadi.
+    channel = Column(String, nullable=True)
+    # Qaysi usulda to'landi - naqd/click/terminal. Kassa qoldig'i usul
+    # kesimida to'g'ri chiqishi uchun kerak.
+    method = Column(String, nullable=True, default="cash")
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch")
@@ -433,4 +439,64 @@ class KpiNewClientRule(Base):
     id = Column(Integer, primary_key=True, index=True)
     min_clients = Column(Integer, nullable=False)
     bonus = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR - ishga olish voronkasi
+# =====================================================================
+class Vacancy(Base):
+    """Ochiq ish o'rni. HR voronkasi shu bo'yicha bo'linadi."""
+    __tablename__ = "vacancies"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    role = Column(String, nullable=True)        # tizimdagi rol kaliti
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    headcount = Column(Integer, default=1)      # nechta odam kerak
+    status = Column(String, default="open")
+    salary_from = Column(Float, nullable=True)
+    salary_to = Column(Float, nullable=True)
+    description = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    closed_at = Column(Date, nullable=True)
+
+    branch = relationship("Branch")
+
+
+class Candidate(Base):
+    """Ishga nomzod. Lidga o'xshab bosqichma-bosqich yuradi."""
+    __tablename__ = "candidates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String, nullable=False)
+    phone = Column(String, nullable=True)
+    vacancy_id = Column(Integer, ForeignKey("vacancies.id"), nullable=True, index=True)
+    stage = Column(String, nullable=False, default="applied")
+    source = Column(String, nullable=False, default="other")
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    note = Column(Text, nullable=True)
+    reject_reason = Column(String, nullable=True)
+    # Ishga olingan sana - "qancha kunda yopdik" shundan hisoblanadi.
+    hired_date = Column(Date, nullable=True)
+    closed_date = Column(Date, nullable=True)   # hired yoki rejected sanasi
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    vacancy = relationship("Vacancy")
+    branch = relationship("Branch")
+
+
+class SocialStat(Base):
+    """Instagram / Telegram obunachilar soni. Har o'lchov alohida qator -
+    shunda o'sish grafigi ham chiqadi."""
+    __tablename__ = "social_stats"
+
+    id = Column(Integer, primary_key=True, index=True)
+    platform = Column(String, nullable=False, index=True)
+    followers = Column(Integer, nullable=False)
+    source = Column(String, default="auto")     # auto | manual
+    date = Column(Date, default=date.today, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)

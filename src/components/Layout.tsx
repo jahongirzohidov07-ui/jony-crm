@@ -23,6 +23,7 @@ import {
   Archive as ArchiveIcon,
   ClipboardList,
   Package,
+  ShieldCheck,
   MessageSquareWarning,
   X,
 } from "lucide-react";
@@ -237,7 +238,11 @@ export default function Layout() {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];
   }
   if (user?.role === FOUNDER) {
-    items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];
+    items = [
+      ...items,
+      { to: "/branches", label: "Filiallar", icon: Building2 },
+      { to: "/permissions", label: "Ruxsatlar", icon: ShieldCheck },
+    ];
   }
 
   return (
@@ -279,12 +284,21 @@ export default function Layout() {
         </nav>
 
         <div className="p-3 border-t border-slate-100">
-          <div className="px-3 py-2 mb-1">
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `block px-3 py-2 mb-1 rounded-lg transition ${
+                isActive ? "bg-brand-50" : "hover:bg-slate-100"
+              }`
+            }
+          >
             <p className="text-sm font-medium text-slate-800 truncate">
               {user?.full_name}
             </p>
-            <p className="text-xs text-slate-400">{roleLabel(user?.role)}</p>
-          </div>
+            <p className="text-xs text-slate-400">
+              {roleLabel(user?.role)} · profilim
+            </p>
+          </NavLink>
           <button
             onClick={() => setShowPasswordModal(true)}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-100"

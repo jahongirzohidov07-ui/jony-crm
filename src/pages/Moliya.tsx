@@ -306,8 +306,8 @@ function CashflowTab() {
               <thead className="bg-slate-50">
                 <tr className="text-xs text-slate-500">
                   <th className="text-left px-4 py-2 w-28">Sana</th>
-                  <th className="text-right w-36">Summa</th>
-                  <th className="text-left">Izoh</th>
+                  <th className="text-right w-36 pr-6">Summa</th>
+                  <th className="text-left pl-2">Izoh</th>
                   <th className="text-left w-28">Usul</th>
                   <th className="text-left w-24">Turi</th>
                   <th className="text-left w-32">Filial</th>
@@ -327,11 +327,11 @@ function CashflowTab() {
                       className={`border-t border-white ${bg} ${fg} transition`}
                     >
                       <td className="px-4 py-2">{formatDate(r.date)}</td>
-                      <td className="text-right font-medium tabular-nums pr-2">
+                      <td className="text-right font-medium tabular-nums pr-6">
                         {inRow ? "+" : "−"}
                         {formatSom(r.amount)}
                       </td>
-                      <td className="py-2">
+                      <td className="py-2 pl-2">
                         {r.student_id ? (
                           <Link
                             to={`/students/${r.student_id}`}

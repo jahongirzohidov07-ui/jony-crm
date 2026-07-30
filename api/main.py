@@ -17720,7 +17720,9 @@ def _smm_kpi(db: Session, start: date, end: date,
     need = len(ids) * len(roles.BRAND_CHECK_REQUIRED)
     have = sum(1 for c in checks
                if c.ok and c.key in roles.BRAND_CHECK_REQUIRED)
-    brand_pct = round(have / need * 100, 1) if need else 100.0
+    # Kontent joylanmagan bo'lsa 100% berilmaydi — bo'sh oy uchun
+    # to'liq ball berish ishlamaganni mukofotlash bo'lardi.
+    brand_pct = round(have / need * 100, 1) if need else 0.0
     brand_score = (brand_pct / 100) * 10
 
     # 7. Yangi formatlar — nechta xil format sinaldi
@@ -17736,7 +17738,9 @@ def _smm_kpi(db: Session, start: date, end: date,
         ("sales", sale_score, 15,
          f"Leaddan sotuvga {round(sale_rate, 1)}% (mo'ljal 30%)"),
         ("inbox", inbox_score, 10, f"SLA {sla_pct}%"),
-        ("brand", brand_score, 10, f"Brend tekshiruvi {brand_pct}%"),
+        ("brand", brand_score, 10,
+         f"Brend tekshiruvi {brand_pct}%" if need
+         else "Tekshiriladigan kontent yo'q"),
         ("experiment", exp_score, 5, f"{len(fmts)} xil format sinaldi"),
     ]
     total = round(sum(p[1] for p in parts), 1)

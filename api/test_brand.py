@@ -306,6 +306,16 @@ ck("inbox ballari to'liq", inbox["score"], 10.0)
 leads = next(p for p in d["parts"] if p["key"] == "leads")
 ck("lead mezonida izoh bor", "mo'ljal" in leads["note"], True)
 
+# Kontent joylanmagan davrda brend uchun to'liq ball berilmaydi
+import main as _m
+from database import SessionLocal as _S
+_db = _S()
+_empty = _m._smm_kpi(_db, date(2020, 1, 1), date(2020, 1, 31))
+_db.close()
+_b = next(p for p in _empty["parts"] if p["key"] == "brand")
+ck("bo'sh oyda brend ball bermaydi", _b["score"], 0.0)
+ck("sababi aytilgan", _b["note"], "Tekshiriladigan kontent yo'q")
+
 print("\n=== 9. HISOBOT YIG'UVCHI ===")
 
 d = client.get("/api/smm/report?period=month"

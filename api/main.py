@@ -10567,14 +10567,17 @@ def timetable_grid(
                      .group_by(models.Lesson.group_id).all()):
         held[gid] = cnt
 
+    # DIQQAT: Group.room - bu ESKI matnli ustun, bog'lanish emas.
+    # Xona nomini har doim room_id orqali topamiz.
+    room_by_id = {r.id: r for r in db.query(models.Room).all()}
+
     items, unplaced = [], []
     for g in groups:
         g_days = [d for d in (g.lesson_days or "").split(",") if d]
         start, end = _group_slot(g)
         mine = [s for s in students
                 if s.group_id == g.id and s.status in ("active", "trial")]
-        cap = _group_capacity(g, rooms={r.id: r for r in
-                                        db.query(models.Room).all()})
+        cap = _group_capacity(g, room_by_id)
         ages = [round((today - s.birth_date).days / 365.25, 1)
                 for s in mine if s.birth_date]
         avg_age = round(sum(ages) / len(ages), 1) if ages else None
@@ -10589,7 +10592,8 @@ def timetable_grid(
             "teacher_id": g.teacher_id,
             "teacher": g.teacher.full_name if g.teacher else None,
             "room_id": g.room_id,
-            "room": g.room.name if g.room else (g.room or None),
+            "room": (room_by_id[g.room_id].name if g.room_id in room_by_id
+                     else (g.room or None)),
             "days": g_days,
             "start": start,
             "end": end,

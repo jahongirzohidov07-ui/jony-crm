@@ -2557,3 +2557,76 @@ export interface ReferralReport {
   months_valid: number;
   hint: string;
 }
+
+// ---------------------------------------------------------- Coin do'koni
+export interface RewardItem {
+  id: number;
+  name: string;
+  cost: number;
+  category: string;
+  category_label: string;
+  tone: string;
+  stock?: number | null;
+  in_stock: boolean;
+  active: boolean;
+  affordable: boolean;
+  need_more?: number | null;
+}
+
+export interface CoinHistoryRow {
+  id: number;
+  amount: number;
+  source: string;
+  source_label: string;
+  note?: string | null;
+  date?: string | null;
+}
+
+export interface MyOrder {
+  id: number;
+  reward: string;
+  coins: number;
+  status: string;
+  status_label: string;
+  tone: string;
+  date?: string | null;
+  given_at?: string | null;
+  note?: string | null;
+}
+
+export interface MyCoins {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  balance: number;
+  earned: number;
+  spent: number;
+  held: number;
+  available: number;
+  next_goal?: RewardItem | null;
+  history: CoinHistoryRow[];
+  categories: { key: string; label: string; tone: string }[];
+  rewards: RewardItem[];
+  orders: MyOrder[];
+}
+
+export interface RewardRequestRow {
+  id: number;
+  student_id: number;
+  student: string;
+  group?: string | null;
+  reward: string;
+  coins: number;
+  status: string;
+  status_label: string;
+  tone: string;
+  by_student: boolean;
+  date?: string | null;
+  given_by?: string | null;
+}
+
+export interface RewardRequests {
+  rows: RewardRequestRow[];
+  count: number;
+  statuses: { key: string; label: string; tone: string }[];
+}

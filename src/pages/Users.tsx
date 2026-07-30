@@ -29,6 +29,9 @@ function UserForm({
     role: string;
     branch_id: number | null;
     fix_salary?: number | null;
+    phone?: string | null;
+    birth_date?: string | null;
+    hired_date?: string | null;
     is_active: boolean;
   }>;
   onCancel: () => void;
@@ -40,6 +43,9 @@ function UserForm({
     branch_id: number | null;
     is_active?: boolean;
     fix_salary?: number | null;
+    phone?: string | null;
+    birth_date?: string | null;
+    hired_date?: string | null;
   }) => Promise<void>;
   submitLabel: string;
 }) {
@@ -55,10 +61,17 @@ function UserForm({
     lockBranchId ? String(lockBranchId) : initial?.branch_id ? String(initial.branch_id) : ""
   );
   const [isActive, setIsActive] = useState(initial?.is_active ?? true);
-  // Fiks oylik faqat administrator (sotuv menejeri) uchun ma'noga ega -
+  // Fiks oylik HAR BIR xodimda bo'ladi: profilidagi maosh holati va
   // KPI hisobi shundan boshlanadi.
   const [fixSalary, setFixSalary] = useState(
     initial?.fix_salary != null ? String(Math.round(initial.fix_salary)) : ""
+  );
+  const [phone, setPhone] = useState(initial?.phone ?? "");
+  // Tug'ilgan sana va ishga kirgan sana - eslatmalarning asosi. Bo'sh
+  // qolsa, o'sha xodim tug'ilgan kuni eslatilmay ketadi.
+  const [birthDate, setBirthDate] = useState(initial?.birth_date ?? "");
+  const [hiredDate, setHiredDate] = useState(
+    initial?.hired_date ?? (initial ? "" : new Date().toISOString().slice(0, 10))
   );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -87,6 +100,9 @@ function UserForm({
         branch_id: branchId ? Number(branchId) : null,
         is_active: isEdit ? isActive : undefined,
         fix_salary: fixSalary === "" ? null : Number(fixSalary),
+        phone: phone.trim() || null,
+        birth_date: birthDate || null,
+        hired_date: hiredDate || null,
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
@@ -174,23 +190,64 @@ function UserForm({
             </select>
           </div>
 
-          {role === SALES_MANAGER && (
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Fiks oylik (so'm)
+            </label>
+            <input
+              type="number"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={fixSalary}
+              onChange={(e) => setFixSalary(e.target.value)}
+              placeholder="3000000"
+            />
+            <p className="text-xs text-slate-400 mt-1">
+              {role === SALES_MANAGER
+                ? "KPI hisobi shundan boshlanadi: fiks + bonuslar."
+                : "Xodimning profilida maosh holati shundan ko'rinadi."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Fiks oylik (so'm)
+                Tug'ilgan sana
               </label>
               <input
-                type="number"
+                type="date"
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-                value={fixSalary}
-                onChange={(e) => setFixSalary(e.target.value)}
-                placeholder="1500000"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
               />
-              <p className="text-xs text-slate-400 mt-1">
-                KPI hisobi shundan boshlanadi: fiks + bonuslar.
-              </p>
             </div>
-          )}
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Ishga kirgan sana
+              </label>
+              <input
+                type="date"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={hiredDate}
+                onChange={(e) => setHiredDate(e.target.value)}
+              />
+            </div>
+          </div>
+          <p className="text-xs text-slate-400 -mt-1">
+            Bu ikki sana kiritilsa, tug'ilgan kun va ish yubileyi HR'ga
+            bir necha kun oldin eslatiladi.
+          </p>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Telefon
+            </label>
+            <input
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+998 90 123 45 67"
+            />
+          </div>
 
           {isEdit && (
             <label className="flex items-center gap-2 text-sm text-slate-700 pt-1">
@@ -368,6 +425,9 @@ export function StaffTab() {
             branch_id: editing.branch_id ?? null,
             is_active: editing.is_active,
             fix_salary: editing.fix_salary ?? null,
+            phone: editing.phone ?? null,
+            birth_date: editing.birth_date ?? null,
+            hired_date: editing.hired_date ?? null,
           }}
           submitLabel="Saqlash"
           onCancel={() => setEditing(null)}
@@ -378,6 +438,9 @@ export function StaffTab() {
               branch_id: data.branch_id,
               is_active: data.is_active,
               fix_salary: data.fix_salary ?? null,
+              phone: data.phone ?? null,
+              birth_date: data.birth_date ?? null,
+              hired_date: data.hired_date ?? null,
               ...(data.password ? { password: data.password } : {}),
             });
             setEditing(null);

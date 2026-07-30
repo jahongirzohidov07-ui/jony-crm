@@ -92,8 +92,13 @@ export interface User {
   branch_id?: number | null;
   branch?: Branch;
   is_active: boolean;
-  /** Adminlar (sotuv menejeri) uchun fiks oylik. Faqat asoschi o'zgartiradi. */
+  /** Fiks oylik. Faqat asoschi o'zgartiradi. */
   fix_salary?: number | null;
+  phone?: string | null;
+  /** Tug'ilgan kun eslatmasi shu sanaga tayanadi. */
+  birth_date?: string | null;
+  /** Ish yubileyi eslatmasi shu sanaga tayanadi. */
+  hired_date?: string | null;
   public_id?: string | null;
 }
 
@@ -2397,6 +2402,40 @@ export interface NpsReport {
   avg: number;
   sources: { key: string; label: string }[];
   bands: { key: string; label: string; tone: string; min: number }[];
+  hint: string;
+}
+
+// ------------------------------------------- Xodimlarning sanalari
+export interface StaffDateRow {
+  user_id: number;
+  full_name: string;
+  role_label: string;
+  branch?: string | null;
+  phone?: string | null;
+  kind: string;
+  kind_label: string;
+  tone: string;
+  date: string;
+  date_label: string;
+  days_left: number;
+  today: boolean;
+  soon: boolean;
+  years: number;
+  age?: number | null;
+  tenure: string;
+  source_date: string;
+}
+
+export interface StaffDates {
+  rows: StaffDateRow[];
+  soon: StaffDateRow[];
+  lead_days: number;
+  days: number;
+  birthdays: number;
+  anniversaries: number;
+  missing_birth_date: string[];
+  missing_hired_date: string[];
+  kinds: { key: string; label: string; tone: string }[];
   hint: string;
 }
 

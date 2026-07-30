@@ -181,6 +181,28 @@ LEAD_SOURCE_DEFAULT_STAGE = {
     "other": "new",
 }
 
+# ---- Audit log --------------------------------------------------------
+# Kim nimani o'zgartirgani. Filial rahbari faqat o'z filialining
+# tarixini ko'radi (filtr endpointda), asoschi hammasini.
+AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER]
+
+# ---- Nozik ma'lumotlar ------------------------------------------------
+# Support teacher va o'qituvchi to'lov tafsilotlarini ko'rmaydi:
+# ularga o'quvchi qarzdor yoki yo'qligi yetarli, summa emas.
+PAYMENT_DETAIL_VIEW = FULL_ACCESS + [SALES_MANAGER]
+
+# Boshqa xodimning oyligini ko'rish - faqat asoschi va HR.
+# O'qituvchi faqat O'ZINING oyligini ko'radi.
+SALARY_VIEW_ALL = [FOUNDER, HR_MANAGER]
+
+# Umumiy kompaniya foydasi - faqat asoschi va filial rahbari
+# (rahbar o'z filiali bo'yicha). Sotuv menejeri ko'rmaydi.
+PROFIT_VIEW = FULL_ACCESS
+
+# Akademik baho qo'yish - faqat o'qituvchilar tarkibi.
+# Kassir/sotuv menejeri bahoga tegmaydi.
+GRADE_EDIT = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
+
 # ---- HR (kadrlar) -----------------------------------------------------
 # Ishga olish voronkasi. Lid voronkasi bilan bir xil mantiq: nomzod
 # bosqichma-bosqich o'tadi, qaysi bosqichda ko'p yo'qotayotganimiz
@@ -284,8 +306,13 @@ DEFAULT_EXAM_COIN_RULES = [
 ]
 
 # ---- Ruxsatlar --------------------------------------------------------
-# Davomat, baho va imtihon - o'quv jarayoni, ustozlar ishlaydi.
-TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER]
+# Davomat va imtihon jadvalini ko'rish/yuritish. Administrator (sotuv
+# menejeri) ham kiradi: yoqlama hisob-kitobga ta'sir qiladi va uni
+# ko'pincha qabuldagi administrator qo'yadi.
+# DIQQAT: akademik BAHO bunga kirmaydi - u alohida GRADE_EDIT bilan
+# himoyalangan (yuqoriga qarang).
+TEACHING_ACCESS = FULL_ACCESS + [TEACHER, SUPPORT_TEACHER, EXAMINER,
+                                 SALES_MANAGER]
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 

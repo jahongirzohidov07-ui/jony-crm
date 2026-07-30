@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
+import audit
 import billing
 import models
 import roles
@@ -32,6 +33,58 @@ from database import Base, engine, get_db
 Base.metadata.create_all(bind=engine)
 
 
+# ---- Ommaviy ID (STU-000123) ----------------------------------------
+# Har bir shaxs va hujjatga bitta o'zgarmas raqam. Telefon yoki ism
+# o'zgarsa ham bu qoladi: tarix, shartnoma va to'lov shunga bog'lanadi.
+PUBLIC_ID_PREFIX = {
+    "student": "STU",
+    "parent": "PAR",
+    "user": "EMP",
+    "lead": "LID",
+    "group": "GRP",
+    "payment": "PAY",
+    "contract": "SHT",
+}
+
+
+def _make_public_id(kind: str, row_id: int) -> str:
+    return f"{PUBLIC_ID_PREFIX[kind]}-{row_id:06d}"
+
+
+def _ensure_public_id(db, kind: str, obj) -> str:
+    """Obyektga ommaviy ID beradi (agar hali bo'lmasa). ID ichki
+    raqamdan hosil qilinadi - shuning uchun hech qachon takrorlanmaydi."""
+    if not getattr(obj, "public_id", None):
+        obj.public_id = _make_public_id(kind, obj.id)
+    return obj.public_id
+
+
+def _backfill_public_ids():
+    """Ilova ishga tushganda ID'siz qolgan eski yozuvlarni to'ldiradi."""
+    from database import SessionLocal
+    pairs = [
+        ("student", models.Student), ("parent", models.Parent),
+        ("user", models.User), ("lead", models.Lead),
+        ("group", models.Group), ("payment", models.Payment),
+        ("contract", models.Contract),
+    ]
+    db = SessionLocal()
+    try:
+        for kind, model in pairs:
+            try:
+                rows = db.query(model).filter(model.public_id.is_(None)).all()
+            except Exception:
+                continue
+            for r in rows:
+                r.public_id = _make_public_id(kind, r.id)
+            if rows:
+                db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
+
+
 def _ensure_new_columns():
     """create_all() faqat yo'q jadvalni yaratadi - mavjud jadvalga yangi
     ustun qo'shmaydi. Shuning uchun keyin qo'shilgan ustunlarni shu yerda
@@ -41,6 +94,12 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE students ADD COLUMN public_id VARCHAR",
+        "ALTER TABLE students ADD COLUMN parent_id INTEGER",
+        "ALTER TABLE leads ADD COLUMN public_id VARCHAR",
+        "ALTER TABLE groups ADD COLUMN public_id VARCHAR",
+        "ALTER TABLE payments ADD COLUMN public_id VARCHAR",
+        "ALTER TABLE users ADD COLUMN public_id VARCHAR",
         "ALTER TABLE lessons ADD COLUMN held INTEGER DEFAULT 1",
         # Eski darslar qo'lda kiritilgan - demak ular o'tilgan.
         "UPDATE lessons SET held = 1 WHERE held IS NULL",
@@ -114,7 +173,75 @@ def _ensure_new_columns():
         pass
 
 
+# ---- Ommaviy ID (STU-000123) ----------------------------------------
+# Har bir shaxs va hujjatga bitta o'zgarmas raqam. Telefon yoki ism
+# o'zgarsa ham bu qoladi: tarix, shartnoma va to'lov shunga bog'lanadi.
+PUBLIC_ID_PREFIX = {
+    "student": "STU",
+    "parent": "PAR",
+    "user": "EMP",
+    "lead": "LID",
+    "group": "GRP",
+    "payment": "PAY",
+    "contract": "SHT",
+}
+
+
+def _make_public_id(kind: str, row_id: int) -> str:
+    return f"{PUBLIC_ID_PREFIX[kind]}-{row_id:06d}"
+
+
+def _ensure_public_id(db, kind: str, obj) -> str:
+    """Obyektga ommaviy ID beradi (agar hali bo'lmasa). ID ichki
+    raqamdan hosil qilinadi - shuning uchun hech qachon takrorlanmaydi."""
+    if not getattr(obj, "public_id", None):
+        obj.public_id = _make_public_id(kind, obj.id)
+    return obj.public_id
+
+
+def backfill_missing_ids(db, kind: str, model) -> None:
+    """ID'siz qolgan yozuvlarga ID beradi. Ro'yxat ochilganda
+    chaqiriladi: odatda hech nima topmaydi (indeksli bitta so'rov),
+    lekin bazaga tashqaridan qo'shilgan yozuv ham ID'siz qolmaydi."""
+    try:
+        rows = db.query(model).filter(model.public_id.is_(None)).all()
+        if not rows:
+            return
+        for r in rows:
+            r.public_id = _make_public_id(kind, r.id)
+        db.commit()
+    except Exception:
+        db.rollback()
+
+
+def _backfill_public_ids():
+    """Ilova ishga tushganda ID'siz qolgan eski yozuvlarni to'ldiradi."""
+    from database import SessionLocal
+    pairs = [
+        ("student", models.Student), ("parent", models.Parent),
+        ("user", models.User), ("lead", models.Lead),
+        ("group", models.Group), ("payment", models.Payment),
+        ("contract", models.Contract),
+    ]
+    db = SessionLocal()
+    try:
+        for kind, model in pairs:
+            try:
+                rows = db.query(model).filter(model.public_id.is_(None)).all()
+            except Exception:
+                continue
+            for r in rows:
+                r.public_id = _make_public_id(kind, r.id)
+            if rows:
+                db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
+
+
 _ensure_new_columns()
+_backfill_public_ids()
 
 app = FastAPI(title="Jony Academy CRM API")
 
@@ -319,6 +446,7 @@ def list_users(
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
+    backfill_missing_ids(db, "user", models.User)
     q = scope_to_branch(db.query(models.User), models.User, user)
     return q.order_by(models.User.full_name).all()
 
@@ -381,6 +509,16 @@ def update_user(
         raise HTTPException(403, "Faqat o'z filialingiz xodimlarini tahrirlay olasiz")
     if target.id == user.id and payload.is_active is False:
         raise HTTPException(400, "O'zingizni faolsizlantira olmaysiz")
+
+    # O'zgarishlarni qo'llashdan OLDIN yozib olamiz.
+    audit.log_changes(
+        db, user, entity="user", obj=target,
+        changes={k: v for k, v in payload.model_dump(exclude_unset=True).items()
+                 if k != "password"})
+    if payload.password:
+        audit.log(db, user, entity="user", action="update", entity_id=target.id,
+                  entity_label=target.full_name, field="password",
+                  note="Parol o'zgartirildi", branch_id=target.branch_id)
 
     if payload.full_name is not None:
         target.full_name = payload.full_name
@@ -591,6 +729,7 @@ def list_leads(
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.LEAD_ACCESS)),
 ):
+    backfill_missing_ids(db, "lead", models.Lead)
     q = scope_to_branch(db.query(models.Lead), models.Lead, user)
     if stage:
         q = q.filter(models.Lead.stage == stage)
@@ -755,11 +894,17 @@ def create_expense(
         amount=abs(payload.amount),
         note=payload.note,
         branch_id=payload.branch_id if payload.branch_id is not None else user.branch_id,
+        # Kanal faqat reklama xarajatida ma'noga ega - CAC shundan chiqadi.
+        channel=payload.channel,
+        method=payload.method or "cash",
         created_by=user.full_name,
     )
     db.add(exp)
     db.commit()
     db.refresh(exp)
+    audit.log(db, user, entity="expense", action="create", entity_id=exp.id,
+              entity_label=exp.note or exp.category, field=exp.category,
+              new_value=exp.amount, branch_id=exp.branch_id, commit=True)
     return exp
 
 
@@ -778,6 +923,8 @@ def update_expense(
         if data["amount"] is None or data["amount"] <= 0:
             raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
         data["amount"] = abs(data["amount"])
+    audit.log_changes(db, user, entity="expense", obj=exp, changes=data,
+                      label_attr="note")
     for k, v in data.items():
         setattr(exp, k, v)
     db.commit()
@@ -792,6 +939,9 @@ def delete_expense(
     user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
+    audit.log(db, user, entity="expense", action="delete", entity_id=exp.id,
+              entity_label=exp.note or exp.category, field=exp.category,
+              old_value=exp.amount, branch_id=exp.branch_id)
     db.delete(exp)
     db.commit()
     return {"ok": True}
@@ -1051,7 +1201,9 @@ def save_grades(
     lesson_id: int,
     payload: schemas.GradeBulk,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    # Akademik baho - faqat o'qituvchilar tarkibi. Kassir yoki sotuv
+    # menejeri davomatni ko'rishi mumkin, lekin bahoga tegmaydi.
+    user=Depends(require_role(*roles.GRADE_EDIT)),
 ):
     """Bir darsning baholarini saqlaydi. Har bir baho uchun coin AVTOMAT
     yoziladi: 5 baho = 5 coin. Baho o'zgarsa coin ham o'zgaradi, olib
@@ -1789,7 +1941,8 @@ def report_teacher_payroll(
     year: int,
     month: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.FINANCE_ACCESS, *roles.SALARY_VIEW_ALL,
+                              roles.TEACHER)),
 ):
     """Bir oylik ustozlar ish haqi - ustoz kesimida jamlangan.
     Manba: guruhlarda hisoblangan TeacherPayout yozuvlari."""
@@ -1797,6 +1950,19 @@ def report_teacher_payroll(
     q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
+
+    # O'qituvchi faqat O'ZINING oyligini ko'radi - hamkasbining maoshi
+    # unga ko'rinmaydi.
+    own_only = user.role not in tuple(roles.FINANCE_ACCESS + roles.SALARY_VIEW_ALL)
+    if own_only:
+        me = (db.query(models.Teacher)
+              .filter(models.Teacher.full_name == user.full_name).first())
+        if not me:
+            return {"period": period, "rows": [], "teacher_count": 0,
+                    "total": 0.0, "paid": 0.0, "unpaid": 0.0,
+                    "own_only": True}
+        q = q.filter(models.TeacherPayout.teacher_id == me.id)
+
     payouts = q.all()
 
     teachers = {t.id: t for t in db.query(models.Teacher).all()}
@@ -1839,6 +2005,7 @@ def report_teacher_payroll(
         "total": total,
         "paid": paid,
         "unpaid": total - paid,
+        "own_only": own_only,
         "teacher_count": len(rows),
     }
 
@@ -2579,6 +2746,7 @@ def delete_teacher(
 # -------------------------------------------------------------- Groups ----
 @app.get("/api/groups", response_model=List[schemas.GroupOut])
 def list_groups(db: Session = Depends(get_db), user=Depends(get_current_user)):
+    backfill_missing_ids(db, "group", models.Group)
     q = scope_to_branch(db.query(models.Group), models.Group, user)
     groups = q.order_by(models.Group.name).all()
     out = []
@@ -2685,6 +2853,7 @@ def list_students(
     db: Session = Depends(get_db),
     user=Depends(get_current_user),
 ):
+    backfill_missing_ids(db, "student", models.Student)
     query = scope_to_branch(db.query(models.Student), models.Student, user)
     if q:
         query = query.filter(models.Student.full_name.ilike(f"%{q}%"))
@@ -2722,6 +2891,12 @@ def create_student(
     db.add(s)
     db.commit()
     db.refresh(s)
+    _ensure_public_id(db, "student", s)
+    audit.log(db, user, entity="student", action="create", entity_id=s.id,
+              entity_label=s.full_name, branch_id=s.branch_id,
+              new_value=s.full_name)
+    db.commit()
+    db.refresh(s)
     return to_student_out(db, s)
 
 
@@ -2735,7 +2910,10 @@ def update_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
-    for k, v in payload.model_dump(exclude_unset=True).items():
+    changes = payload.model_dump(exclude_unset=True)
+    # Eski qiymatlar hali joyida turganda yozib olamiz.
+    audit.log_changes(db, user, entity="student", obj=s, changes=changes)
+    for k, v in changes.items():
         setattr(s, k, v)
     _sync_student_left_date(s)
     db.commit()
@@ -2752,6 +2930,9 @@ def delete_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
+    audit.log(db, user, entity="student", action="delete", entity_id=s.id,
+              entity_label=s.full_name, branch_id=s.branch_id,
+              old_value=s.full_name)
     db.delete(s)
     db.commit()
     return {"ok": True}
@@ -2806,6 +2987,16 @@ def add_payment(
     db.add(payment)
     db.commit()
     db.refresh(payment)
+    _ensure_public_id(db, "payment", payment)
+
+    # Chegirma alohida amal sifatida yoziladi - "kim chegirma berdi"
+    # degan savolga javob shu yerdan chiqadi.
+    act = "discount" if payload.kind == "discount" else "create"
+    audit.log(db, user, entity="payment", action=act, entity_id=payment.id,
+              entity_label=s.full_name, field=payload.kind,
+              new_value=amount, note=payload.note, branch_id=s.branch_id)
+    db.commit()
+    db.refresh(payment)
     return payment
 
 
@@ -2842,6 +3033,13 @@ def delete_payment(
             "guruh sahifasidan qayta hisoblang",
         )
 
+    # Qarzdorlikni o'chirish ("charge" yozuvini olib tashlash) alohida
+    # amal - kim qildi, qachon, qancha summani - hammasi yoziladi.
+    act = "debt_write_off" if p.kind == "charge" else "payment_cancel"
+    audit.log(db, user, entity="payment", action=act, entity_id=p.id,
+              entity_label=s.full_name if s else None, field=p.kind,
+              old_value=p.amount, new_value=None, note=p.note,
+              branch_id=s.branch_id if s else None)
     db.delete(p)
     db.commit()
     return {"ok": True}
@@ -3824,11 +4022,15 @@ def activate_student(
         raise HTTPException(404, "O'quvchi topilmadi")
     if s.status == "active":
         raise HTTPException(400, "Bu o'quvchi allaqachon faol")
+    old = s.status
     s.status = "active"
     # Faollashgan kun - o'qish boshlangan kun deb hisoblanadi.
     if not s.enrolled_date:
         s.enrolled_date = date.today()
     _sync_student_left_date(s)
+    audit.log(db, user, entity="student", action="activate", entity_id=s.id,
+              entity_label=s.full_name, field="status",
+              old_value=old, new_value="active", branch_id=s.branch_id)
     db.commit()
     return {"ok": True, "status": s.status}
 
@@ -3847,6 +4049,10 @@ def move_student_group(
         raise HTTPException(404, "O'quvchi topilmadi")
 
     if payload.group_id is None:
+        old = s.group.name if s.group else None
+        audit.log(db, user, entity="student", action="group_remove",
+                  entity_id=s.id, entity_label=s.full_name, field="group",
+                  old_value=old, new_value=None, branch_id=s.branch_id)
         s.group_id = None
         db.commit()
         return {"ok": True, "group_id": None}
@@ -3854,9 +4060,640 @@ def move_student_group(
     g = _get_group_in_scope(db, payload.group_id, user)
     if g.id == s.group_id:
         raise HTTPException(400, "O'quvchi allaqachon shu guruhda")
+    audit.log(db, user, entity="student", action="group_move", entity_id=s.id,
+              entity_label=s.full_name, field="group",
+              old_value=s.group.name if s.group else None, new_value=g.name,
+              branch_id=s.branch_id)
     s.group_id = g.id
     # Filial guruh bilan birga o'zgaradi - aks holda hisobotlar chalkashadi.
     if g.branch_id:
         s.branch_id = g.branch_id
     db.commit()
     return {"ok": True, "group_id": g.id, "group": g.name}
+
+
+# =====================================================================
+#  OTA-ONALAR
+# =====================================================================
+def _parent_out(p: models.Parent, students: list = None) -> dict:
+    return {
+        "id": p.id,
+        "public_id": p.public_id,
+        "full_name": p.full_name,
+        "phone": p.phone,
+        "phone2": p.phone2,
+        "relation": p.relation,
+        "address": p.address,
+        "workplace": p.workplace,
+        "note": p.note,
+        "branch_id": p.branch_id,
+        "branch": p.branch.name if p.branch else None,
+        "created_at": p.created_at.isoformat() if p.created_at else None,
+        "students": [{"id": s.id, "public_id": s.public_id,
+                      "full_name": s.full_name, "status": s.status}
+                     for s in (students or [])],
+    }
+
+
+@app.get("/api/parents")
+def list_parents(
+    q: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    query = scope_to_branch(db.query(models.Parent), models.Parent, user)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(
+            (models.Parent.full_name.ilike(like))
+            | (models.Parent.phone.ilike(like))
+            | (models.Parent.public_id.ilike(like))
+        )
+    rows = query.order_by(models.Parent.full_name).all()
+    kids = {}
+    if rows:
+        for st in (db.query(models.Student)
+                   .filter(models.Student.parent_id.in_([r.id for r in rows]))
+                   .all()):
+            kids.setdefault(st.parent_id, []).append(st)
+    return [_parent_out(p, kids.get(p.id, [])) for p in rows]
+
+
+@app.get("/api/parents/{parent_id}")
+def get_parent(
+    parent_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    p = db.query(models.Parent).get(parent_id)
+    if not p:
+        raise HTTPException(404, "Ota-ona topilmadi")
+    kids = db.query(models.Student).filter(
+        models.Student.parent_id == p.id).all()
+    return _parent_out(p, kids)
+
+
+@app.post("/api/parents")
+def create_parent(
+    payload: schemas.ParentCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    p = models.Parent(**data, created_by=user.username)
+    db.add(p); db.commit(); db.refresh(p)
+    _ensure_public_id(db, "parent", p)
+    audit.log(db, user, entity="parent", action="create", entity_id=p.id,
+              entity_label=p.full_name, new_value=p.full_name,
+              branch_id=p.branch_id)
+    db.commit(); db.refresh(p)
+    return _parent_out(p)
+
+
+@app.put("/api/parents/{parent_id}")
+def update_parent(
+    parent_id: int,
+    payload: schemas.ParentUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    p = db.query(models.Parent).get(parent_id)
+    if not p:
+        raise HTTPException(404, "Ota-ona topilmadi")
+    changes = payload.model_dump(exclude_unset=True)
+    # Telefon o'zgarishi alohida amal sifatida yoziladi - eski raqam
+    # tarixda qolishi kerak.
+    audit.log_changes(db, user, entity="parent", obj=p, changes=changes)
+    for k, v in changes.items():
+        setattr(p, k, v)
+    db.commit(); db.refresh(p)
+    return _parent_out(p)
+
+
+@app.delete("/api/parents/{parent_id}")
+def delete_parent(
+    parent_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS)),
+):
+    p = db.query(models.Parent).get(parent_id)
+    if not p:
+        raise HTTPException(404, "Ota-ona topilmadi")
+    n = db.query(models.Student).filter(models.Student.parent_id == p.id).count()
+    if n:
+        raise HTTPException(400, f"Bu ota-onaga {n} ta o'quvchi bog'langan")
+    audit.log(db, user, entity="parent", action="delete", entity_id=p.id,
+              entity_label=p.full_name, old_value=p.full_name,
+              branch_id=p.branch_id)
+    db.delete(p); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  SHARTNOMALAR
+# =====================================================================
+def _contract_out(c: models.Contract) -> dict:
+    return {
+        "id": c.id,
+        "public_id": c.public_id,
+        "student_id": c.student_id,
+        "student": c.student.full_name if c.student else None,
+        "student_public_id": c.student.public_id if c.student else None,
+        "parent_id": c.parent_id,
+        "parent": c.parent.full_name if c.parent else None,
+        "group_id": c.group_id,
+        "group": c.group.name if c.group else None,
+        "branch_id": c.branch_id,
+        "branch": c.branch.name if c.branch else None,
+        "date": c.date.isoformat() if c.date else None,
+        "start_date": c.start_date.isoformat() if c.start_date else None,
+        "end_date": c.end_date.isoformat() if c.end_date else None,
+        "monthly_fee": c.monthly_fee,
+        "discount_percent": c.discount_percent,
+        "status": c.status,
+        "note": c.note,
+        "created_by": c.created_by,
+        "created_at": c.created_at.isoformat() if c.created_at else None,
+    }
+
+
+@app.get("/api/contracts")
+def list_contracts(
+    student_id: int | None = None,
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    q = scope_to_branch(db.query(models.Contract), models.Contract, user)
+    if student_id:
+        q = q.filter(models.Contract.student_id == student_id)
+    if status:
+        q = q.filter(models.Contract.status == status)
+    return [_contract_out(c)
+            for c in q.order_by(models.Contract.date.desc()).all()]
+
+
+@app.post("/api/contracts")
+def create_contract(
+    payload: schemas.ContractCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    st = db.query(models.Student).get(payload.student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    data = payload.model_dump()
+    # Bo'sh qoldirilgan maydonlarni o'quvchidan avtomat to'ldiramiz.
+    data["branch_id"] = data.get("branch_id") or st.branch_id
+    data["parent_id"] = data.get("parent_id") or st.parent_id
+    data["group_id"] = data.get("group_id") or st.group_id
+    if not data.get("monthly_fee") and st.group:
+        data["monthly_fee"] = st.group.monthly_fee
+    c = models.Contract(**data, created_by=user.full_name)
+    db.add(c); db.commit(); db.refresh(c)
+    _ensure_public_id(db, "contract", c)
+    audit.log(db, user, entity="contract", action="create", entity_id=c.id,
+              entity_label=st.full_name, new_value=c.monthly_fee,
+              branch_id=c.branch_id)
+    db.commit(); db.refresh(c)
+    return _contract_out(c)
+
+
+@app.put("/api/contracts/{contract_id}")
+def update_contract(
+    contract_id: int,
+    payload: schemas.ContractUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    c = db.query(models.Contract).get(contract_id)
+    if not c:
+        raise HTTPException(404, "Shartnoma topilmadi")
+    changes = payload.model_dump(exclude_unset=True)
+    audit.log_changes(db, user, entity="contract", obj=c, changes=changes,
+                      label_attr="public_id")
+    for k, v in changes.items():
+        setattr(c, k, v)
+    db.commit(); db.refresh(c)
+    return _contract_out(c)
+
+
+@app.delete("/api/contracts/{contract_id}")
+def delete_contract(
+    contract_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS)),
+):
+    c = db.query(models.Contract).get(contract_id)
+    if not c:
+        raise HTTPException(404, "Shartnoma topilmadi")
+    audit.log(db, user, entity="contract", action="delete", entity_id=c.id,
+              entity_label=c.public_id, branch_id=c.branch_id)
+    db.delete(c); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  SHIKOYATLAR
+# =====================================================================
+def _complaint_out(c: models.Complaint) -> dict:
+    return {
+        "id": c.id,
+        "student_id": c.student_id,
+        "student": c.student.full_name if c.student else None,
+        "group_id": c.group_id,
+        "group": c.group.name if c.group else None,
+        "branch_id": c.branch_id,
+        "branch": c.branch.name if c.branch else None,
+        "source": c.source,
+        "severity": c.severity,
+        "subject": c.subject,
+        "body": c.body,
+        "status": c.status,
+        "resolution": c.resolution,
+        "assigned_user_id": c.assigned_user_id,
+        "assigned_user": c.assigned_user.full_name if c.assigned_user else None,
+        "closed_at": c.closed_at.isoformat() if c.closed_at else None,
+        "created_at": c.created_at.isoformat() if c.created_at else None,
+        # Necha kundan beri ochiq - asoschi panelida shu muhim
+        "age_days": (date.today() - c.created_at.date()).days
+                    if c.created_at and c.status != "closed" else 0,
+    }
+
+
+@app.get("/api/complaints")
+def list_complaints(
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    q = scope_to_branch(db.query(models.Complaint), models.Complaint, user)
+    if status:
+        q = q.filter(models.Complaint.status == status)
+    return [_complaint_out(c)
+            for c in q.order_by(models.Complaint.created_at.desc()).all()]
+
+
+@app.post("/api/complaints")
+def create_complaint(
+    payload: schemas.ComplaintCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    c = models.Complaint(**data, created_by=user.full_name)
+    db.add(c); db.commit(); db.refresh(c)
+    audit.log(db, user, entity="complaint", action="create", entity_id=c.id,
+              entity_label=c.subject, new_value=c.severity,
+              branch_id=c.branch_id, commit=True)
+    return _complaint_out(c)
+
+
+@app.put("/api/complaints/{complaint_id}")
+def update_complaint(
+    complaint_id: int,
+    payload: schemas.ComplaintUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    c = db.query(models.Complaint).get(complaint_id)
+    if not c:
+        raise HTTPException(404, "Shikoyat topilmadi")
+    changes = payload.model_dump(exclude_unset=True)
+    audit.log_changes(db, user, entity="complaint", obj=c, changes=changes,
+                      label_attr="subject")
+    for k, v in changes.items():
+        setattr(c, k, v)
+    # Yopilgan sana avtomat - qo'lda eslab qolish shart emas.
+    c.closed_at = date.today() if c.status == "closed" else None
+    db.commit()
+    return _complaint_out(c)
+
+
+@app.delete("/api/complaints/{complaint_id}")
+def delete_complaint(
+    complaint_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS)),
+):
+    c = db.query(models.Complaint).get(complaint_id)
+    if not c:
+        raise HTTPException(404, "Shikoyat topilmadi")
+    audit.log(db, user, entity="complaint", action="delete", entity_id=c.id,
+              entity_label=c.subject, branch_id=c.branch_id)
+    db.delete(c); db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  AUDIT LOG
+# =====================================================================
+@app.get("/api/audit")
+def audit_list(
+    entity: str | None = None,
+    entity_id: int | None = None,
+    action: str | None = None,
+    user_id: int | None = None,
+    days: int = 90,
+    limit: int = 200,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.AUDIT_VIEW)),
+):
+    """O'zgarishlar tarixi. Faqat o'qish uchun - hech kim tahrirlay
+    yoki o'chira olmaydi."""
+    since = datetime.combine(
+        date.today() - timedelta(days=max(1, min(days, 730))),
+        datetime.min.time())
+    q = db.query(models.AuditLog).filter(models.AuditLog.created_at >= since)
+
+    # Filial rahbari faqat o'z filialining tarixini ko'radi.
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(
+            (models.AuditLog.branch_id == user.branch_id)
+            | (models.AuditLog.branch_id.is_(None))
+        )
+    if entity:
+        q = q.filter(models.AuditLog.entity == entity)
+    if entity_id:
+        q = q.filter(models.AuditLog.entity_id == entity_id)
+    if action:
+        q = q.filter(models.AuditLog.action == action)
+    if user_id:
+        q = q.filter(models.AuditLog.user_id == user_id)
+
+    rows = (q.order_by(models.AuditLog.created_at.desc(),
+                       models.AuditLog.id.desc())
+            .limit(max(1, min(limit, 1000))).all())
+    return {
+        "total": q.count(),
+        "rows": [{
+            "id": r.id,
+            "user_name": r.user_name or r.username,
+            "user_role": r.user_role,
+            "entity": r.entity,
+            "entity_label_type": audit.ENTITIES.get(r.entity, r.entity),
+            "entity_id": r.entity_id,
+            "entity_label": r.entity_label,
+            "action": r.action,
+            "action_label": audit.ACTIONS.get(r.action, r.action),
+            "field": r.field,
+            "old_value": r.old_value,
+            "new_value": r.new_value,
+            "note": r.note,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        } for r in rows],
+    }
+
+
+@app.get("/api/audit/meta")
+def audit_meta(user=Depends(require_role(*roles.AUDIT_VIEW))):
+    return {
+        "actions": [{"key": k, "label": v} for k, v in audit.ACTIONS.items()],
+        "entities": [{"key": k, "label": v} for k, v in audit.ENTITIES.items()],
+    }
+
+
+# =====================================================================
+#  ASOSCHI PANELI  -  qaror qabul qilish oynasi
+# =====================================================================
+def _today_bounds():
+    t = date.today()
+    return (datetime.combine(t, datetime.min.time()),
+            datetime.combine(t, datetime.max.time()))
+
+
+@app.get("/api/ceo/today")
+def ceo_today(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PROFIT_VIEW)),
+):
+    """Bugungi kun bir ekranda: pul kirdimi, chiqdimi, kim keldi, kim
+    ketdi, nima e'tibor talab qiladi.
+
+    Maqsad - raqamlarni sanab chiqish emas, balki bugun nima qilish
+    kerakligini ko'rsatish. Shuning uchun oxirida "kritik
+    ogohlantirishlar" bo'limi bor."""
+    today = date.today()
+    d0, d1 = _today_bounds()
+    org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
+    my_branch = None if org_wide else user.branch_id
+
+    def scope_students(q):
+        return q.filter(models.Student.branch_id == my_branch) if my_branch else q
+
+    # ---- Pul ----
+    pq = (db.query(models.Payment)
+          .join(models.Student, models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= d0,
+                  models.Payment.created_at <= d1))
+    pq = scope_students(pq)
+    payments = pq.all()
+    income = sum(p.amount for p in payments)
+
+    eq = db.query(models.Expense).filter(models.Expense.date == today)
+    if my_branch:
+        eq = eq.filter(models.Expense.branch_id == my_branch)
+    expense = sum(e.amount for e in eq.all())
+
+    # ---- Lidlar va sotuv ----
+    lq = db.query(models.Lead).filter(models.Lead.created_at >= d0,
+                                      models.Lead.created_at <= d1)
+    if my_branch:
+        lq = lq.filter(models.Lead.branch_id == my_branch)
+    new_leads = lq.count()
+
+    tq = db.query(models.Lead).filter(models.Lead.updated_at >= d0,
+                                      models.Lead.updated_at <= d1,
+                                      models.Lead.stage != "new")
+    if my_branch:
+        tq = tq.filter(models.Lead.branch_id == my_branch)
+    touched_leads = tq.count()
+
+    # Bugun BIRINCHI marta to'lagan o'quvchilar - haqiqiy sotuv
+    firsts = _payment_first_dates(db)
+    scoped_ids = {s.id for s in scope_students(db.query(models.Student)).all()}
+    sales = sum(1 for sid, dt in firsts.items()
+                if sid in scoped_ids and dt.date() == today)
+
+    # ---- O'quvchilar ----
+    all_students = scope_students(db.query(models.Student)).all()
+    active = [s for s in all_students if s.status == "active"]
+    debtors = []
+    for s in active:
+        bal = student_balance(db, s.id)
+        if bal < 0:
+            debtors.append({"id": s.id, "public_id": s.public_id,
+                            "full_name": s.full_name, "balance": bal,
+                            "group": s.group.name if s.group else None})
+    debtors.sort(key=lambda d: d["balance"])
+    total_debt = sum(d["balance"] for d in debtors)
+
+    left_today = [{"id": s.id, "full_name": s.full_name,
+                   "group": s.group.name if s.group else None}
+                  for s in all_students if s.left_date == today]
+
+    # ---- Davomat (bugungi darslar) ----
+    lessons_today = (db.query(models.Lesson)
+                     .join(models.Group)
+                     .filter(models.Lesson.date == today))
+    if my_branch:
+        lessons_today = lessons_today.filter(models.Group.branch_id == my_branch)
+    lessons_today = lessons_today.all()
+    lesson_ids = [l.id for l in lessons_today]
+    att_present = att_total = 0
+    if lesson_ids:
+        for a in (db.query(models.Attendance)
+                  .filter(models.Attendance.lesson_id.in_(lesson_ids)).all()):
+            att_total += 1
+            att_present += 1 if a.present else 0
+    unmarked = sum(1 for l in lessons_today if not l.held)
+
+    # ---- Muammoli guruhlar ----
+    # To'lishi past (o'quvchi kam) yoki davomat past guruhlar.
+    gq = db.query(models.Group)
+    if my_branch:
+        gq = gq.filter(models.Group.branch_id == my_branch)
+    problem_groups = []
+    month_start, month_end = billing.month_bounds(today.year, today.month)
+    for g in gq.all():
+        n = sum(1 for s in all_students
+                if s.group_id == g.id and s.status == "active")
+        gl = [l for l in db.query(models.Lesson).filter(
+            models.Lesson.group_id == g.id,
+            models.Lesson.date >= month_start,
+            models.Lesson.date <= month_end,
+            models.Lesson.held == 1).all()]
+        pres = tot = 0
+        if gl:
+            for a in (db.query(models.Attendance)
+                      .filter(models.Attendance.lesson_id.in_([x.id for x in gl]))
+                      .all()):
+                tot += 1
+                pres += 1 if a.present else 0
+        att_pct = round(pres / tot * 100, 1) if tot else None
+        reasons = []
+        if n and n < 6:
+            reasons.append(f"atigi {n} o'quvchi")
+        if att_pct is not None and att_pct < 70:
+            reasons.append(f"davomat {att_pct}%")
+        if reasons:
+            problem_groups.append({
+                "id": g.id, "name": g.name,
+                "teacher": g.teacher.full_name if g.teacher else None,
+                "students": n, "attendance": att_pct,
+                "reasons": reasons,
+            })
+    problem_groups.sort(key=lambda g: (g["students"], g["attendance"] or 0))
+
+    # ---- Shikoyatlar ----
+    cq = db.query(models.Complaint).filter(models.Complaint.status != "closed")
+    if my_branch:
+        cq = cq.filter(models.Complaint.branch_id == my_branch)
+    open_complaints = cq.all()
+
+    # ---- KRITIK OGOHLANTIRISHLAR ----
+    # Bu ro'yxat - panelning eng muhim qismi. Har bir qator "bugun
+    # nimadir qilish kerak" degani.
+    alerts = []
+
+    def alert(level, title, detail, link=None):
+        alerts.append({"level": level, "title": title,
+                       "detail": detail, "link": link})
+
+    if total_debt < 0:
+        big = [d for d in debtors if d["balance"] <= -500_000]
+        if big:
+            alert("high", f"{len(big)} ta o'quvchida katta qarz",
+                  f"Jami {formatless(total_debt)} so'm. Eng kattasi: "
+                  f"{big[0]['full_name']} ({formatless(big[0]['balance'])} so'm)",
+                  "/students")
+        elif debtors:
+            alert("normal", f"{len(debtors)} ta qarzdor",
+                  f"Jami {formatless(total_debt)} so'm", "/students")
+
+    old_complaints = [c for c in open_complaints
+                      if c.created_at
+                      and (today - c.created_at.date()).days >= 3]
+    if old_complaints:
+        alert("high", f"{len(old_complaints)} ta shikoyat 3 kundan beri ochiq",
+              old_complaints[0].subject, "/complaints")
+    elif open_complaints:
+        alert("normal", f"{len(open_complaints)} ta ochiq shikoyat",
+              open_complaints[0].subject, "/complaints")
+
+    if unmarked:
+        alert("normal", f"{unmarked} ta guruhda bugungi yoqlama qo'yilmagan",
+              "Yoqlama qo'yilmasa dars pulga ham, ustoz ish haqiga ham "
+              "kirmaydi", "/groups")
+
+    if left_today:
+        alert("high", f"Bugun {len(left_today)} o'quvchi ketdi",
+              ", ".join(x["full_name"] for x in left_today[:3]), "/students")
+
+    if problem_groups:
+        g = problem_groups[0]
+        alert("normal", f"{len(problem_groups)} ta muammoli guruh",
+              f"{g['name']} — {', '.join(g['reasons'])}", "/groups")
+
+    if new_leads and touched_leads == 0:
+        alert("high", f"{new_leads} ta yangi lid, hech biriga bog'lanilmagan",
+              "Birinchi soatda bog'lanish konversiyani keskin oshiradi",
+              "/leads")
+
+    order = {"high": 0, "normal": 1, "low": 2}
+    alerts.sort(key=lambda a: order.get(a["level"], 3))
+
+    return {
+        "date": today.isoformat(),
+        "scope": "Barcha filiallar" if org_wide else (
+            db.query(models.Branch).get(my_branch).name
+            if my_branch and db.query(models.Branch).get(my_branch) else "Filial"),
+        "money": {
+            "income": income,
+            "expense": expense,
+            "net": income - expense,
+            "payment_count": len(payments),
+        },
+        "sales": {
+            "new_leads": new_leads,
+            "touched_leads": touched_leads,
+            "sales": sales,
+        },
+        "students": {
+            "active": len(active),
+            "debtors": len(debtors),
+            "total_debt": total_debt,
+            "left_today": len(left_today),
+            "left_list": left_today[:10],
+            "top_debtors": debtors[:10],
+        },
+        "attendance": {
+            "lessons_today": len(lessons_today),
+            "unmarked": unmarked,
+            "present": att_present,
+            "marked": att_total,
+            "percent": round(att_present / att_total * 100, 1) if att_total else None,
+        },
+        "problem_groups": problem_groups[:10],
+        "complaints": {
+            "open": len(open_complaints),
+            "overdue": len(old_complaints),
+            "list": [_complaint_out(c) for c in open_complaints[:5]],
+        },
+        "alerts": alerts,
+    }
+
+
+def formatless(v: float) -> str:
+    """Ogohlantirish matni uchun qisqa son: 1 234 567 -> "1.2 mln"."""
+    v = abs(v)
+    if v >= 1_000_000:
+        return f"{v / 1_000_000:.1f} mln"
+    if v >= 1_000:
+        return f"{round(v / 1_000)} ming"
+    return str(int(v))

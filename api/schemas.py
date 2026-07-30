@@ -36,6 +36,7 @@ class Token(BaseModel):
 class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    public_id: Optional[str] = None
     username: str
     full_name: str
     role: str
@@ -124,6 +125,7 @@ class GroupUpdate(BaseModel):
 class GroupOut(GroupCreate):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    public_id: Optional[str] = None
     teacher: Optional[TeacherOut] = None
     branch: Optional[BranchOut] = None
     student_count: int = 0
@@ -202,6 +204,7 @@ class PaymentCreate(BaseModel):
 class PaymentOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    public_id: Optional[str] = None
     amount: float
     kind: str
     method: Optional[str] = None
@@ -220,6 +223,7 @@ class StudentCreate(BaseModel):
     enrolled_date: Optional[date] = None
     group_id: Optional[int] = None
     branch_id: Optional[int] = None
+    parent_id: Optional[int] = None
     # Yangi o'quvchi darrov "faol" bo'lmaydi - avval sinov darsida turadi.
     # Faollashtirish qo'lda, guruhdagi ro'yxatdan qilinadi.
     status: str = "trial"
@@ -233,6 +237,7 @@ class StudentUpdate(StudentCreate):
 class StudentOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    public_id: Optional[str] = None
     full_name: str
     phone: Optional[str] = None
     parent_phone: Optional[str] = None
@@ -289,6 +294,7 @@ class LeadUpdate(BaseModel):
 class LeadOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    public_id: Optional[str] = None
     full_name: str
     phone: Optional[str] = None
     source: str
@@ -691,3 +697,78 @@ class SocialManual(BaseModel):
 class StudentGroupMove(BaseModel):
     """Boshqa guruhga o'tkazish. group_id None bo'lsa - guruhdan chiqariladi."""
     group_id: Optional[int] = None
+
+
+# ---------- Ota-ona ----------
+class ParentCreate(BaseModel):
+    full_name: str
+    phone: Optional[str] = None
+    phone2: Optional[str] = None
+    relation: Optional[str] = None
+    address: Optional[str] = None
+    workplace: Optional[str] = None
+    note: Optional[str] = None
+    branch_id: Optional[int] = None
+
+
+class ParentUpdate(BaseModel):
+    full_name: Optional[str] = None
+    phone: Optional[str] = None
+    phone2: Optional[str] = None
+    relation: Optional[str] = None
+    address: Optional[str] = None
+    workplace: Optional[str] = None
+    note: Optional[str] = None
+    branch_id: Optional[int] = None
+
+
+# ---------- Shartnoma ----------
+class ContractCreate(BaseModel):
+    student_id: int
+    parent_id: Optional[int] = None
+    group_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    date: Optional[date] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    monthly_fee: float = 0
+    discount_percent: float = 0
+    status: str = "active"
+    note: Optional[str] = None
+
+
+class ContractUpdate(BaseModel):
+    parent_id: Optional[int] = None
+    group_id: Optional[int] = None
+    date: Optional[date] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    monthly_fee: Optional[float] = None
+    discount_percent: Optional[float] = None
+    status: Optional[str] = None
+    note: Optional[str] = None
+
+
+# ---------- Shikoyat ----------
+class ComplaintCreate(BaseModel):
+    subject: str
+    body: Optional[str] = None
+    student_id: Optional[int] = None
+    group_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    source: str = "phone"
+    severity: str = "normal"
+    status: str = "open"
+    assigned_user_id: Optional[int] = None
+
+
+class ComplaintUpdate(BaseModel):
+    subject: Optional[str] = None
+    body: Optional[str] = None
+    student_id: Optional[int] = None
+    group_id: Optional[int] = None
+    source: Optional[str] = None
+    severity: Optional[str] = None
+    status: Optional[str] = None
+    resolution: Optional[str] = None
+    assigned_user_id: Optional[int] = None

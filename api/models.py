@@ -32,6 +32,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
+    # Odam o'qiy oladigan yagona raqam (EMP-000123). Telefon yoki ism
+    # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
+    public_id = Column(String, unique=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     full_name = Column(String, nullable=False)
@@ -73,6 +76,9 @@ class Group(Base):
     __tablename__ = "groups"
 
     id = Column(Integer, primary_key=True, index=True)
+    # Odam o'qiy oladigan yagona raqam (GRP-000123). Telefon yoki ism
+    # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
+    public_id = Column(String, unique=True, index=True)
     name = Column(String, nullable=False)
     room = Column(String, nullable=True)
     teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
@@ -113,6 +119,9 @@ class Student(Base):
     __tablename__ = "students"
 
     id = Column(Integer, primary_key=True, index=True)
+    # Odam o'qiy oladigan yagona raqam (STU-000123). Telefon yoki ism
+    # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
+    public_id = Column(String, unique=True, index=True)
     full_name = Column(String, nullable=False)
     phone = Column(String, nullable=True)
     parent_phone = Column(String, nullable=True)
@@ -124,6 +133,7 @@ class Student(Base):
     left_date = Column(Date, nullable=True)
     group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    parent_id = Column(Integer, ForeignKey("parents.id"), nullable=True, index=True)
     status = Column(String, default="active")  # active | trial | frozen | archived
     note = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -142,6 +152,9 @@ class Payment(Base):
     __tablename__ = "payments"
 
     id = Column(Integer, primary_key=True, index=True)
+    # Odam o'qiy oladigan yagona raqam (PAY-000123). Telefon yoki ism
+    # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
+    public_id = Column(String, unique=True, index=True)
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
     amount = Column(Float, nullable=False)
     kind = Column(String, nullable=False, default="payment")  # payment | charge | discount
@@ -196,6 +209,9 @@ class Lead(Base):
     __tablename__ = "leads"
 
     id = Column(Integer, primary_key=True, index=True)
+    # Odam o'qiy oladigan yagona raqam (LID-000123). Telefon yoki ism
+    # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
+    public_id = Column(String, unique=True, index=True)
     full_name = Column(String, nullable=False)
     phone = Column(String, nullable=True)
     source = Column(String, nullable=False, default="other")
@@ -508,3 +524,112 @@ class SocialStat(Base):
     source = Column(String, default="auto")     # auto | manual
     date = Column(Date, default=date.today, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  Ota-ona, shartnoma, audit log, shikoyat
+# =====================================================================
+class Parent(Base):
+    """Ota-ona alohida shaxs - o'zining ID'si bilan.
+
+    Aka-uka/opa-singil bir ota-onaga bog'lanadi: shunda "bu oila bizga
+    qancha to'lagan" degan savolga javob bor, va telefon o'zgarsa bitta
+    joyda o'zgaradi."""
+    __tablename__ = "parents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)   # PAR-000123
+    full_name = Column(String, nullable=False)
+    phone = Column(String, nullable=True, index=True)
+    phone2 = Column(String, nullable=True)
+    relation = Column(String, nullable=True)   # ota / ona / vasiy
+    address = Column(String, nullable=True)
+    workplace = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
+class Contract(Base):
+    """O'quvchi bilan tuzilgan shartnoma."""
+    __tablename__ = "contracts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)   # SHT-000123
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    parent_id = Column(Integer, ForeignKey("parents.id"), nullable=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+
+    date = Column(Date, default=date.today)
+    start_date = Column(Date, nullable=True)
+    end_date = Column(Date, nullable=True)
+    monthly_fee = Column(Float, default=0)
+    discount_percent = Column(Float, default=0)
+    status = Column(String, default="active")   # active | finished | cancelled
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+    parent = relationship("Parent")
+    group = relationship("Group")
+    branch = relationship("Branch")
+
+
+class AuditLog(Base):
+    """Har bir o'zgarish shu yerga yoziladi: kim, qachon, nimani,
+    eskisi qanday edi, yangisi qanday bo'ldi.
+
+    Yozuvlar hech qachon o'chirilmaydi va tahrirlanmaydi - shuning
+    uchun ular haqiqatning yagona manbai bo'lib qoladi."""
+    __tablename__ = "audit_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # Kim
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    username = Column(String, nullable=True)
+    user_name = Column(String, nullable=True)     # to'liq ism, o'sha paytdagi
+    user_role = Column(String, nullable=True)
+    # Nima ustida
+    entity = Column(String, nullable=False, index=True)   # student, payment...
+    entity_id = Column(Integer, nullable=True, index=True)
+    entity_label = Column(String, nullable=True)          # "Abdulqodir F."
+    action = Column(String, nullable=False, index=True)   # create/update/delete/...
+    field = Column(String, nullable=True)                 # qaysi maydon
+    old_value = Column(Text, nullable=True)
+    new_value = Column(Text, nullable=True)
+    note = Column(Text, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    branch = relationship("Branch")
+
+
+class Complaint(Base):
+    """Ota-ona yoki o'quvchi shikoyati. Asoschi panelida ochiq
+    shikoyatlar soni ko'rinib turadi."""
+    __tablename__ = "complaints"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    source = Column(String, default="phone")    # phone/visit/telegram/...
+    severity = Column(String, default="normal")  # low | normal | high
+    subject = Column(String, nullable=False)
+    body = Column(Text, nullable=True)
+    status = Column(String, default="open")      # open | in_progress | closed
+    resolution = Column(Text, nullable=True)
+    assigned_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    closed_at = Column(Date, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    student = relationship("Student")
+    group = relationship("Group")
+    branch = relationship("Branch")
+    assigned_user = relationship("User")

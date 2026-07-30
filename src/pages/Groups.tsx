@@ -52,6 +52,7 @@ function GroupFormModal({
   const [startDate, setStartDate] = useState(
     initial?.start_date ?? new Date().toISOString().slice(0, 10)
   );
+  const [endDate, setEndDate] = useState(initial?.end_date ?? "");
   const [lessonTime, setLessonTime] = useState(initial?.lesson_time ?? "");
   const [days, setDays] = useState<string[]>(parseDays(initial?.lesson_days));
   const [saving, setSaving] = useState(false);
@@ -81,6 +82,7 @@ function GroupFormModal({
         subject: subject || null,
         level: level || null,
         start_date: startDate || null,
+        end_date: endDate || null,
         lesson_time: lessonTime || null,
         lesson_days: days.length ? days.join(",") : null,
       };
@@ -168,6 +170,21 @@ function GroupFormModal({
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
+                Tugash sanasi
+              </label>
+              <input
+                type="date"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+              <p className="text-xs text-slate-400 mt-1">
+                Ixtiyoriy — ko'rsatilsa, shundan keyin dars kunlari
+                yaratilmaydi.
+              </p>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
                 Dars vaqti
               </label>
               <input
@@ -208,6 +225,10 @@ function GroupFormModal({
                 );
               })}
             </div>
+            <p className="text-xs text-slate-400 mt-1.5">
+              Tanlangan kunlar butun oy bo'yicha yoqlama jadvaliga avtomat
+              chiqadi — har bir darsni alohida kiritish shart emas.
+            </p>
           </div>
 
           <div>

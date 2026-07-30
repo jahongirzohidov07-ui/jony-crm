@@ -43,7 +43,10 @@ function StudentModal({
       ? String(defaultBranchId)
       : ""
   );
-  const [status, setStatus] = useState(initial?.status ?? "active");
+  // Yangi o'quvchi "sinov darsida" boshlanadi - guruhga qo'shilishi bilan
+  // avtomat faol bo'lib qolmasligi kerak. Faollashtirish guruh ro'yxatidagi
+  // uch nuqta menyusidan qilinadi.
+  const [status, setStatus] = useState(initial?.status ?? "trial");
   const [enrolledDate, setEnrolledDate] = useState(
     initial?.enrolled_date ?? new Date().toISOString().slice(0, 10)
   );
@@ -193,6 +196,12 @@ function StudentModal({
               <p className="text-xs text-slate-400 mt-1">
                 Ketgan sana avtomatik bugungi kun bilan qo'yiladi — LTV shundan
                 hisoblanadi.
+              </p>
+            )}
+            {!initial && status === "trial" && (
+              <p className="text-xs text-slate-400 mt-1">
+                Yangi o'quvchi sinov darsida boshlanadi. Guruh ro'yxatidagi uch
+                nuqta menyusidan "Faollashtirish" bosilganda faol bo'ladi.
               </p>
             )}
           </div>

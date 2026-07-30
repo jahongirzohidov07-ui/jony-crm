@@ -3739,3 +3739,219 @@ export interface MyResults {
   min_students: number;
   hint: string;
 }
+
+// ------------------------------------------- HR: tuzilma va shtat
+export interface HrDepartment {
+  id: number;
+  key?: string | null;
+  name: string;
+  description?: string | null;
+  head_id?: number | null;
+  head?: string | null;
+  position: number;
+  is_active: boolean;
+  positions: number;
+  employees: number;
+}
+
+export interface HrPosition {
+  id: number;
+  key?: string | null;
+  name: string;
+  department_id?: number | null;
+  department?: string | null;
+  system_role?: string | null;
+  role_label?: string | null;
+  probation_months?: number | null;
+  trial_required: boolean;
+  salary_from?: number | null;
+  salary_to?: number | null;
+  description?: string | null;
+  requirements?: string | null;
+  is_active: boolean;
+  employees: number;
+}
+
+export interface HrStructure {
+  departments: HrDepartment[];
+  positions: HrPosition[];
+  roles: { key: string; label: string }[];
+  employment_types: { key: string; label: string }[];
+  can_edit: boolean;
+  hint: string;
+}
+
+export interface PlanRow {
+  id: number;
+  year: number;
+  month?: number | null;
+  branch_id?: number | null;
+  branch: string;
+  department?: string | null;
+  position_id?: number | null;
+  position?: string | null;
+  approved_headcount: number;
+  current_headcount: number;
+  gap: number;
+  over_staffed: boolean;
+  planned_hires: number;
+  expected_leaves: number;
+  expected_groups: number;
+  budgeted_salary?: number | null;
+  note?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  approved_at?: string | null;
+}
+
+export interface TeacherLoad {
+  teacher_id: number;
+  name: string;
+  branch?: string | null;
+  grade?: string | null;
+  grade_label: string;
+  groups: number;
+  max_groups: number;
+  free_slots: number;
+  percent: number;
+  band: string;
+  band_label: string;
+  tone: string;
+}
+
+export interface Workforce {
+  year: number;
+  rows: PlanRow[];
+  totals: {
+    approved: number; current: number; gap: number;
+    planned_hires: number; expected_leaves: number; budget: number;
+  };
+  teacher_load: TeacherLoad[];
+  load_summary: { key: string; label: string; tone: string; count: number }[];
+  free_group_slots: number;
+  overloaded: TeacherLoad[];
+  statuses: { key: string; label: string; tone: string }[];
+  can_edit: boolean;
+  hint: string;
+}
+
+// ------------------------------------------- HR: xodim so'rovi
+export interface RequestApprovalRow {
+  step: string;
+  step_label: string;
+  decision: string;
+  by?: string | null;
+  at?: string | null;
+  note?: string | null;
+}
+
+export interface StaffRequestRow {
+  id: number;
+  public_id?: string | null;
+  requested_by?: string | null;
+  request_date?: string | null;
+  branch_id?: number | null;
+  branch: string;
+  department?: string | null;
+  position_id?: number | null;
+  position?: string | null;
+  headcount: number;
+  employment_type?: string | null;
+  employment_label: string;
+  work_schedule?: string | null;
+  needed_from?: string | null;
+  days_left?: number | null;
+  reason?: string | null;
+  reason_label: string;
+  replacing?: string | null;
+  salary_from?: number | null;
+  salary_to?: number | null;
+  requirements?: string | null;
+  certificates?: string | null;
+  experience_years?: number | null;
+  duties?: string | null;
+  kpi_note?: string | null;
+  priority: string;
+  priority_label: string;
+  priority_tone: string;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  reject_reason?: string | null;
+  vacancy_id?: number | null;
+  locked: boolean;
+  waiting_for?: string[] | null;
+  approvals: RequestApprovalRow[];
+  created_at?: string | null;
+}
+
+export interface StaffRequestList {
+  rows: StaffRequestRow[];
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  reasons: { key: string; label: string; needs_replacement: boolean }[];
+  priorities: { key: string; label: string; tone: string; sla_days: number }[];
+  employment_types: { key: string; label: string }[];
+  waiting_my_decision: number;
+  hint: string;
+}
+
+// ------------------------------------------- HR: vakansiya
+export interface HrVacancy {
+  id: number;
+  public_id?: string | null;
+  title: string;
+  position?: string | null;
+  trial_required: boolean;
+  department?: string | null;
+  branch: string;
+  branch_id?: number | null;
+  hiring_manager?: string | null;
+  recruiter?: string | null;
+  headcount: number;
+  hired_count: number;
+  employment_label: string;
+  work_schedule?: string | null;
+  salary_from?: number | null;
+  salary_to?: number | null;
+  description?: string | null;
+  duties?: string | null;
+  requirements?: string | null;
+  priority: string;
+  priority_label: string;
+  priority_tone: string;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  is_open: boolean;
+  opened_on: string;
+  target_close?: string | null;
+  closed_at?: string | null;
+  close_reason?: string | null;
+  close_reason_label?: string | null;
+  days_open: number;
+  sla_days: number;
+  overdue: boolean;
+  request_id?: number | null;
+  applications: number;
+  by_stage: { key: string; label: string; count: number }[];
+  in_progress: number;
+  hired: number;
+  rejected: number;
+  interviewed: number;
+  offered: number;
+  hire_rate: number;
+  offer_rate: number;
+}
+
+export interface HrVacancyList {
+  rows: HrVacancy[];
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  close_reasons: { key: string; label: string }[];
+  summary: {
+    open: number; critical: number; overdue: number; seats: number;
+    applications: number; avg_days_open: number;
+  };
+  can_edit: boolean;
+  hint: string;
+}

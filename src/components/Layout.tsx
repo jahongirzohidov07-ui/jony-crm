@@ -51,6 +51,7 @@ import {
   SUPPORT_TEACHER,
   CONTENT_REQUESTER,
   IDEA_SUBMIT,
+  TEACHER_MENU,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -280,6 +281,17 @@ export default function Layout() {
       { to: "/branches", label: "Filiallar", icon: Building2 },
       { to: "/permissions", label: "Ruxsatlar", icon: ShieldCheck },
     ];
+  }
+  // Ustozda menyu ochiq ro'yxat bo'yicha kesiladi: dars berishga
+  // aloqasi yo'q bo'lim ko'rinmaydi.
+  if (user?.role === TEACHER || user?.role === SUPPORT_TEACHER) {
+    items = [
+      ...items,
+      { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
+    ];
+    items = TEACHER_MENU
+      .map((to) => items.find((i) => i.to === to))
+      .filter((i): i is (typeof items)[number] => !!i);
   }
 
   return (

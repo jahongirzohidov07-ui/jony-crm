@@ -25,6 +25,7 @@ import {
   HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
 } from "../lib/academic";
 import { StudentPayButton } from "../components/QuickPayment";
+import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
 import { StudentModal } from "./Students";
 
@@ -928,6 +929,11 @@ function PriceTab({ studentId }: { studentId: number }) {
 
   return (
     <div className="space-y-4">
+      {/* Chegirmalar — sabab, muddat va tasdiqlagan shaxs bilan */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <Discounts studentId={studentId} />
+      </div>
+
       <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
         <div className="flex items-center justify-between px-4 py-3">
           <span className="text-sm text-slate-500">Guruh narxi</span>

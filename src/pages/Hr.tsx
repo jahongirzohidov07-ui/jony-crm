@@ -16,6 +16,7 @@ import {
   VACANCY_STATUSES, stageLabel, stageColor, candidateSourceLabel,
   vacancyStatusLabel,
 } from "../lib/hr";
+import { CandidateCard } from "../components/CandidateCard";
 import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
@@ -238,6 +239,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState<Candidate | null>(null);
+  const [card, setCard] = useState<number | null>(null);
   const [form, setForm] = useState({ ...emptyCand });
   const [stageFilter, setStageFilter] = useState("");
   const [err, setErr] = useState("");
@@ -378,8 +380,14 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             <tbody>
               {shown.map((c) => (
                 <tr key={c.id} className="border-t border-slate-100 hover:bg-slate-50">
-                  <td className="px-4 py-2.5 font-medium text-slate-800">
-                    {c.full_name}
+                  <td className="px-4 py-2.5">
+                    <button
+                      onClick={() => setCard(c.id)}
+                      className="font-medium text-slate-800 hover:text-brand-700"
+                      title="Nomzod kartasi"
+                    >
+                      {c.full_name}
+                    </button>
                   </td>
                   <td className="text-slate-500">{c.phone || "—"}</td>
                   <td className="text-slate-500">{c.vacancy || "—"}</td>
@@ -422,6 +430,15 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             </tbody>
           </table>
         </div>
+      )}
+
+      {card !== null && (
+        <CandidateCard
+          id={card}
+          canEdit
+          onClose={() => setCard(null)}
+          onSaved={load}
+        />
       )}
 
       {modal && (

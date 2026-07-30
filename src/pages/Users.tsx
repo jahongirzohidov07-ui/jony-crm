@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Pencil } from "lucide-react";
 import { api, type User, type Branch } from "../lib/api";
+import { StaffCard } from "../components/StaffCard";
 import { useAuth } from "../lib/AuthContext";
 import {
   USER_ADMIN,
@@ -224,6 +225,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<User | null>(null);
+  const [card, setCard] = useState<number | null>(null);
   const [rowError, setRowError] = useState<string | null>(null);
 
   function load() {
@@ -295,7 +297,15 @@ export default function Users() {
             <tbody>
               {users.map((u) => (
                 <tr key={u.id} className="border-t border-slate-100 hover:bg-slate-50">
-                  <td className="px-4 py-3 font-medium text-slate-800">{u.full_name}</td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => setCard(u.id)}
+                      className="font-medium text-slate-800 hover:text-brand-700"
+                      title="Xodim kartasi"
+                    >
+                      {u.full_name}
+                    </button>
+                  </td>
                   <td className="px-4 py-3 text-slate-600">{u.username}</td>
                   <td className="px-4 py-3 text-slate-600">{roleLabel(u.role)}</td>
                   <td className="px-4 py-3 text-slate-600">{u.branch?.name || "—"}</td>
@@ -373,6 +383,14 @@ export default function Users() {
             setEditing(null);
             load();
           }}
+        />
+      )}
+
+      {card !== null && (
+        <StaffCard
+          userId={card}
+          canEdit={canManage}
+          onClose={() => setCard(null)}
         />
       )}
     </div>

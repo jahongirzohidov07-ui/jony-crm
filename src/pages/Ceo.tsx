@@ -9,6 +9,7 @@ import { useAuth } from "../lib/AuthContext";
 import { PROFIT_VIEW, can } from "../lib/roles";
 import { formatSom, formatDate } from "../lib/format";
 import { BranchCompare } from "../components/BranchCompare";
+import { BranchRating } from "../components/BranchRating";
 
 /** Ogohlantirish darajasiga qarab rang. */
 const LEVEL: Record<string, { box: string; dot: string; label: string }> = {
@@ -346,6 +347,11 @@ export default function Ceo() {
             </table>
           )}
         </div>
+      </div>
+
+      {/* --- Filial reytingi: tushum yagona o'lchov emas --- */}
+      <div className="mt-4">
+        <BranchRating months={3} />
       </div>
 
       {/* --- Filiallar solishtiruvi --- */}

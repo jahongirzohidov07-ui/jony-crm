@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, X, Pencil, Search } from "lucide-react";
 import {
-  api, type Group, type Teacher, type Branch, type Room,
+  api, ApiError, type Group, type Teacher, type Branch, type Room,
+  type CheckProblem,
 } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
@@ -11,6 +12,7 @@ import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
 import { useReference } from "../components/PickList";
+import { ScheduleProblems } from "../components/ScheduleProblems";
 
 export function GroupFormModal({
   teachers,
@@ -64,6 +66,9 @@ export function GroupFormModal({
   const [days, setDays] = useState<string[]>(parseDays(initial?.lesson_days));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Avtomatik tekshiruvlar: ustoz/xona to'qnashuvi, yuklama, bo'shliq
+  const [problems, setProblems] = useState<CheckProblem[]>([]);
+  const [canForce, setCanForce] = useState(false);
 
   const ref = useReference();
 
@@ -75,13 +80,14 @@ export function GroupFormModal({
   const standardLessonsNum = Number(standardLessons) || 0;
   const computedMonthlyFee = lessonPriceNum * standardLessonsNum;
 
-  async function submit() {
+  async function submit(force = false) {
     if (!name.trim()) {
       setError("Guruh nomini kiriting");
       return;
     }
     setSaving(true);
     setError(null);
+    if (!force) setProblems([]);
     try {
       const payload = {
         name,
@@ -100,15 +106,22 @@ export function GroupFormModal({
         lesson_time: lessonTime || null,
         lesson_days: days.length ? days.join(",") : null,
       };
+      const q = force ? "?force=true" : "";
       if (initial) {
-        await api.put(`/groups/${initial.id}`, payload);
+        await api.put(`/groups/${initial.id}${q}`, payload);
       } else {
-        await api.post("/groups", payload);
+        await api.post(`/groups${q}`, payload);
       }
       onSaved();
       onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Xatolik");
+      if (e instanceof ApiError && e.problems.length) {
+        setProblems(e.problems);
+        setCanForce(e.canForce);
+        setError(null);
+      } else {
+        setError(e instanceof Error ? e.message : "Xatolik");
+      }
     } finally {
       setSaving(false);
     }
@@ -362,9 +375,15 @@ export function GroupFormModal({
             </div>
           </div>
 
+          <ScheduleProblems
+            problems={problems}
+            canForce={canForce}
+            saving={saving}
+            onForce={() => submit(true)}
+          />
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
-            onClick={submit}
+            onClick={() => submit()}
             disabled={saving}
             className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium mt-2 disabled:opacity-60"
           >

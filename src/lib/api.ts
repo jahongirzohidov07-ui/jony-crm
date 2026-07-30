@@ -1933,3 +1933,187 @@ export interface StockMoveRow {
   by?: string | null;
   created_at?: string | null;
 }
+
+// ------------------------------------------------------- Ustoz ish haqi
+export interface SalaryGroupRow {
+  group_id: number;
+  group: string;
+  rate_per_student_month: number;
+  standard_lessons: number;
+  rate: number;
+  lessons: number;
+  attendances: number;
+  amount: number;
+}
+
+export interface SalaryPaymentRow {
+  id: number;
+  amount: number;
+  kind: string;
+  kind_label: string;
+  date?: string | null;
+  period?: string | null;
+  note?: string | null;
+  by?: string | null;
+}
+
+export interface SalaryCard {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  month: string;
+  earned_month: number;
+  paid_month: number;
+  lessons_month: number;
+  attendances_month: number;
+  earned_total: number;
+  paid_total: number;
+  balance: number;
+  carry: number;
+  carry_label: string;
+  advance_available: number;
+  by_group: SalaryGroupRow[];
+  by_period: { period: string; lessons: number; attendances: number;
+               amount: number }[];
+  payments: SalaryPaymentRow[];
+  can_pay: boolean;
+}
+
+export interface PayrollRow {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  lessons: number;
+  attendances: number;
+  earned: number;
+  paid: number;
+  left: number;
+  balance: number;
+  groups: SalaryGroupRow[];
+}
+
+export interface PayrollOverview {
+  period: string;
+  rows: PayrollRow[];
+  teacher_count: number;
+  earned: number;
+  paid: number;
+  left: number;
+  kinds: { key: string; label: string; hint: string }[];
+  can_pay: boolean;
+}
+
+// ---------------------------------------------------------- Qarzdorlar
+export interface DebtorRow {
+  student_id: number;
+  public_id?: string | null;
+  full_name: string;
+  phone?: string | null;
+  parent_phone?: string | null;
+  group_id?: number | null;
+  group?: string | null;
+  branch?: string | null;
+  status: string;
+  debt: number;
+  days: number;
+  urgency: string;
+  urgency_label: string;
+  urgency_tone: string;
+  last_contact?: string | null;
+  last_result?: string | null;
+  last_result_label?: string | null;
+  last_note?: string | null;
+  promised_date?: string | null;
+  promised_amount?: number | null;
+  promise_broken: boolean;
+  days_since_contact?: number | null;
+}
+
+export interface DebtorList {
+  rows: DebtorRow[];
+  total_debt: number;
+  count: number;
+  broken_promises: number;
+  due_today: number;
+  never_contacted: number;
+  results: { key: string; label: string; tone: string }[];
+}
+
+export interface DebtContactRow {
+  id: number;
+  date?: string | null;
+  result: string;
+  result_label: string;
+  tone: string;
+  promised_date?: string | null;
+  promised_amount?: number | null;
+  note?: string | null;
+  by?: string | null;
+}
+
+// ------------------------------------------------ Administrator paneli
+export interface FillRow {
+  group_id: number;
+  group: string;
+  teacher?: string | null;
+  subject_label?: string | null;
+  level_label?: string | null;
+  days: string[];
+  time?: string | null;
+  students: number;
+  capacity: number;
+  free: number;
+  fill: number;
+  band: string;
+  band_label: string;
+}
+
+export interface LeftRow {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  teacher?: string | null;
+  left_date: string;
+  months?: number | null;
+  balance: number;
+}
+
+export interface SalesPanel {
+  month: string;
+  fill: {
+    rows: FillRow[];
+    count: number;
+    free_seats: number;
+    lost_income: number;
+  };
+  left: { rows: LeftRow[]; count: number };
+}
+
+// ------------------------------------------------- Ustozlar reytingi
+export interface TeacherScoreRow {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  branch_id?: number | null;
+  is_active: boolean;
+  groups: number;
+  students: number;
+  left: number;
+  quality?: number | null;
+  retention: number;
+  ltv: number;
+  avg_months: number;
+  attendance?: number | null;
+  parts: Record<string, number>;
+  score: number;
+  rank: number;
+}
+
+export interface TeacherScoreboard {
+  months: number;
+  rows: TeacherScoreRow[];
+  me?: number | null;
+  count: number;
+  dimensions: { key: string; label: string; weight: number }[];
+  averages: Record<string, number | null>;
+}

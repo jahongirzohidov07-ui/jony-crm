@@ -54,6 +54,12 @@ export const USER_ADMIN = [FOUNDER];
 
 export const FINANCE_ACCESS = FULL_ACCESS;
 
+/**
+ * Kassa: pul qabul qilish, qarzdorlar, to'lov foizi.
+ * Administrator shu ishni qiladi — lekin FOYDANI ko'rmaydi.
+ */
+export const CASH_ACCESS = [...FINANCE_ACCESS, SALES_MANAGER];
+
 /** Lidlar bilan ishlaydiganlar. */
 export const LEAD_ACCESS = [
   ...FULL_ACCESS,
@@ -144,3 +150,15 @@ export const INVENTORY_VIEW = [
   ACADEMIC_HEAD,
   SUPPORT_TEACHER,
 ];
+
+/** Ustoz o'z oyligini ko'radi; boshqaning oyligi ko'rinmaydi. */
+export const SALARY_SELF_VIEW = [
+  ...FULL_ACCESS,
+  TEACHER,
+  SUPPORT_TEACHER,
+  HR_MANAGER,
+];
+export const SALARY_PAY = FULL_ACCESS;
+
+/** Qarzdorlar bilan ishlaydiganlar. */
+export const DEBTOR_ACCESS = [...FULL_ACCESS, SALES_MANAGER];

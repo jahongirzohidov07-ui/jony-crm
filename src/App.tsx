@@ -14,6 +14,9 @@ import Reports from "./pages/Reports";
 import Analitika from "./pages/Analitika";
 import Hr from "./pages/Hr";
 import Marketing from "./pages/Marketing";
+import Ceo from "./pages/Ceo";
+import Audit from "./pages/Audit";
+import Complaints from "./pages/Complaints";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -46,6 +49,9 @@ function AppRoutes() {
         <Route path="finance" element={<Moliya />} />
         <Route path="reports" element={<Reports />} />
         <Route path="analytics" element={<Analitika />} />
+        <Route path="ceo" element={<Ceo />} />
+        <Route path="complaints" element={<Complaints />} />
+        <Route path="audit" element={<Audit />} />
         <Route path="hr" element={<Hr />} />
         <Route path="marketing" element={<Marketing />} />
         <Route path="gamification" element={<Gamification />} />

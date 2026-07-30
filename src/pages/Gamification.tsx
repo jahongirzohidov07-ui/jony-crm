@@ -14,10 +14,13 @@ import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { coinSourceLabel, EXAM_KINDS } from "../lib/exams";
 import { formatSom, formatDate } from "../lib/format";
 
-type Tab = "leaderboard" | "rewards" | "rules";
+import { RewardRequestsTab } from "./MyCoins";
+
+type Tab = "leaderboard" | "requests" | "rewards" | "rules";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "leaderboard", label: "Reyting" },
+  { key: "requests", label: "Sovg'a so'rovlari" },
   { key: "rewards", label: "Sovg'alar" },
   { key: "rules", label: "Coin qoidasi" },
 ];
@@ -846,6 +849,7 @@ export default function Gamification() {
       </div>
 
       {tab === "leaderboard" && <LeaderboardTab canAdmin={canAdmin} />}
+      {tab === "requests" && <RewardRequestsTab />}
       {tab === "rewards" && <RewardsTab canAdmin={canAdmin} />}
       {tab === "rules" && <RulesTab canAdmin={canAdmin} />}
     </div>

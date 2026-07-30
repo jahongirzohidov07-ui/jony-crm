@@ -2810,3 +2810,213 @@ export interface TeacherCareer {
   can_edit: boolean;
   is_me: boolean;
 }
+
+// ------------------------------------------------- Gamification: XP
+export interface XpLeagueRow {
+  id: number;
+  key: string;
+  name: string;
+  rank: number;
+  minimum_xp: number;
+  maximum_xp?: number | null;
+  color?: string | null;
+  icon?: string | null;
+  description?: string | null;
+  reward_coin: number;
+  is_active: boolean;
+  students: number;
+}
+
+export interface XpRuleRow {
+  id: number;
+  event_code: string;
+  name: string;
+  description?: string | null;
+  category: string;
+  category_label: string;
+  tone: string;
+  default_xp: number;
+  default_coin: number;
+  maximum_per_lesson?: number | null;
+  maximum_per_day?: number | null;
+  maximum_per_week?: number | null;
+  maximum_per_month?: number | null;
+  mode: string;
+  requires_approval: boolean;
+  allowed_roles?: string | null;
+  is_active: boolean;
+}
+
+export interface XpRuleList {
+  rows: XpRuleRow[];
+  categories: { key: string; label: string; tone: string }[];
+  quick: string[];
+  teacher_week_limit: number;
+  teacher_lesson_limit: number;
+  approval_above: number;
+  can_edit: boolean;
+}
+
+export interface XpHistoryRow {
+  id: number;
+  date?: string | null;
+  amount: number;
+  event_code?: string | null;
+  label?: string | null;
+  category?: string | null;
+  category_label: string;
+  tone: string;
+  source_type?: string | null;
+  source_label: string;
+  by: string;
+  reason?: string | null;
+  is_reversal: boolean;
+  lesson_id?: number | null;
+  exam_id?: number | null;
+}
+
+export interface StudentGamification {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  branch?: string | null;
+  lifetime_xp: number;
+  season_xp: number;
+  season?: string | null;
+  level: number;
+  level_percent: number;
+  level_to_next: number;
+  league?: XpLeagueRow | null;
+  next_league?: XpLeagueRow | null;
+  league_percent: number;
+  league_to_next: number;
+  max_league: boolean;
+  by_category: { key: string; label: string; tone: string; xp: number }[];
+  coins: number;
+  last_xp_at?: string | null;
+  ranks: {
+    group_rank?: number | null;
+    group_total?: number;
+    branch_rank?: number | null;
+    branch_total?: number;
+    season_rank?: number | null;
+    season_total?: number;
+  };
+  streaks: {
+    kind: string; label: string; tone: string;
+    current: number; longest: number;
+  }[];
+  xp_week: number;
+  xp_month: number;
+  history: XpHistoryRow[];
+  league_history: {
+    id: number; from?: string | null; to?: string | null;
+    icon?: string | null; xp: number; reward_coin: number;
+    date?: string | null;
+  }[];
+  achievements: {
+    id: number; key: string; name: string;
+    description?: string | null; icon?: string | null;
+    tone: string; date?: string | null;
+  }[];
+  empty_hint: string;
+}
+
+export interface LeaderboardRow {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  branch?: string | null;
+  league?: string | null;
+  league_icon?: string | null;
+  league_color?: string | null;
+  level: number;
+  xp: number;
+  lifetime_xp: number;
+  academic_xp: number;
+  rank: number;
+  change?: number | null;
+  is_new: boolean;
+}
+
+export interface Leaderboard {
+  rows: LeaderboardRow[];
+  scope: string;
+  scopes: { key: string; label: string }[];
+  leagues: { key: string; name: string; icon?: string | null }[];
+  masked: boolean;
+}
+
+export interface XpOverview {
+  today: number;
+  week: number;
+  total: number;
+  active_students: number;
+  avg_per_student: number;
+  top_event?: string | null;
+  manual_percent: number;
+  auto_percent: number;
+  season?: string | null;
+  season_participants: number;
+  league_distribution: { league: string; students: number }[];
+  weekly_active_percent: number;
+  silent_14d: number;
+  silent_names: string[];
+  open_alerts: number;
+}
+
+export interface XpTransactionRow {
+  id: number;
+  student_id: number;
+  student?: string | null;
+  amount: number;
+  event_code?: string | null;
+  label?: string | null;
+  category?: string | null;
+  category_label: string;
+  source_type?: string | null;
+  source_label: string;
+  by: string;
+  reason?: string | null;
+  is_reversal: boolean;
+  reversed_id?: number | null;
+  date?: string | null;
+}
+
+export interface XpSeasonRow {
+  id: number;
+  name: string;
+  start_date?: string | null;
+  end_date?: string | null;
+  is_active: boolean;
+  current: boolean;
+  note?: string | null;
+}
+
+export interface FraudRow {
+  id: number;
+  alert_type: string;
+  label: string;
+  severity: string;
+  tone: string;
+  student?: string | null;
+  user?: string | null;
+  description?: string | null;
+  status: string;
+  transaction_id?: number | null;
+  date?: string | null;
+}
+
+export interface XpAnalytics {
+  by_branch: { key: number; label: string; students: number;
+    total_xp: number; avg_xp: number }[];
+  by_group: { key: number; label: string; students: number;
+    total_xp: number; avg_xp: number }[];
+  weakest_groups: { key: number; label: string; students: number;
+    total_xp: number; avg_xp: number }[];
+  by_teacher: { key: number; label: string; students: number;
+    total_xp: number; avg_xp: number }[];
+  attendance_correlation?: number | null;
+  correlation_hint: string;
+  manual_by_user: { user: string; xp: number }[];
+}

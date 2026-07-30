@@ -18,10 +18,12 @@ import Ceo from "./pages/Ceo";
 import Audit from "./pages/Audit";
 import Complaints from "./pages/Complaints";
 import Academic from "./pages/Academic";
-import Timetable from "./pages/Timetable";
+import TimetableGrid from "./pages/TimetableGrid";
 import Archive from "./pages/Archive";
 import Tasks from "./pages/Tasks";
 import Inventory from "./pages/Inventory";
+import Permissions from "./pages/Permissions";
+import MyProfile from "./pages/MyProfile";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -57,7 +59,7 @@ function AppRoutes() {
         <Route path="ceo" element={<Ceo />} />
         <Route path="complaints" element={<Complaints />} />
         <Route path="audit" element={<Audit />} />
-        <Route path="timetable" element={<Timetable />} />
+        <Route path="timetable" element={<TimetableGrid />} />
         <Route path="archive" element={<Archive />} />
         <Route path="tasks" element={<Tasks />} />
         <Route path="inventory" element={<Inventory />} />
@@ -67,6 +69,8 @@ function AppRoutes() {
         <Route path="gamification" element={<Gamification />} />
         <Route path="branches" element={<Branches />} />
         <Route path="users" element={<Users />} />
+        <Route path="permissions" element={<Permissions />} />
+        <Route path="profile" element={<MyProfile />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

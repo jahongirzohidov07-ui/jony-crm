@@ -47,6 +47,8 @@ import {
   CASH_ACCESS,
   STUDENT,
   PARENT,
+  TEACHER,
+  SUPPORT_TEACHER,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -204,6 +206,13 @@ export default function Layout() {
   // Coin tizimi o'quv jarayoniga tegishli - ustozlar ham ko'radi.
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/gamification", label: "Coin tizimi", icon: Trophy }];
+  }
+  // Ustoz o'z karyera yo'lini ko'radi: daraja, stavka, keyingi bosqich.
+  if (user?.role === TEACHER || user?.role === SUPPORT_TEACHER) {
+    items = [
+      ...items,
+      { to: "/my-career", label: "Mening yo'lim", icon: TeacherIcon },
+    ];
   }
   // O'quvchi va ota-ona uchun - o'z coin kabineti
   if (user?.role === STUDENT || user?.role === PARENT) {

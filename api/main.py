@@ -18193,3 +18193,204 @@ def teacher_account_reset(tid: int, db: Session = Depends(get_db),
                     "bering — bu oyna yopilgach qayta ko'rinmaydi."),
         **_account_state(db, t),
     }
+
+
+# =====================================================================
+#  USTOZNING O'Z NATIJALARI
+#
+#  Formulalar asoschining hisobotidagi bilan BIR XIL:
+#    churn  = ketgan / (ketgan + faol) × 100
+#    LTV    = ketganlarning o'rtacha necha oy o'qigani
+#  Ikki joyda ikki xil raqam chiqsa, hisobotga ishonch qolmaydi.
+#
+#  Boshqa ustozlarning ismi ko'rsatilmaydi — faqat o'rtacha va o'rin.
+# =====================================================================
+def _teacher_student_stats(db: Session) -> dict:
+    """Har bir ustoz bo'yicha o'quvchi ko'rsatkichlari. Bir marta
+    hisoblanadi, ham ustozning o'ziga, ham o'rtachaga ishlatiladi."""
+    today = date.today()
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    out: dict = {}
+
+    for s in db.query(models.Student).all():
+        g = groups.get(s.group_id)
+        tid = g.teacher_id if g else None
+        if tid is None:
+            continue
+        row = out.setdefault(tid, {
+            "active": 0, "left": 0, "months": [], "left_students": [],
+        })
+        if s.left_date:
+            row["left"] += 1
+            row["months"].append(
+                _months_between(s.enrolled_date or s.left_date, s.left_date))
+            row["left_students"].append(s)
+        elif s.status == "active":
+            row["active"] += 1
+
+    for tid, r in out.items():
+        base = r["left"] + r["active"]
+        r["total"] = base
+        r["churn"] = round(r["left"] / base * 100, 1) if base else 0.0
+        r["retention"] = round(100 - r["churn"], 1) if base else 0.0
+        r["avg_months"] = (round(sum(r["months"]) / len(r["months"]), 1)
+                           if r["months"] else None)
+    return out
+
+
+def _rank_of(value, others, higher_is_better=True):
+    """Nechanchi o'rin. Qiymati yo'qlar hisobga olinmaydi."""
+    vals = [v for v in others if v is not None]
+    if value is None or len(vals) < roles.MIN_PEERS_FOR_RANK:
+        return None, len(vals)
+    better = sum(1 for v in vals
+                 if (v > value if higher_is_better else v < value))
+    return better + 1, len(vals)
+
+
+@app.get("/api/me/results")
+def my_results(db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.SELF_STATS))):
+    """Ustozning o'z natijalari: qolganlar, ketganlar, o'rtacha muddat
+    va markaz o'rtachasi bilan solishtirish."""
+    t = _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(
+            404, "Sizning ustoz yozuvingiz topilmadi. HR bilan "
+                 "bog'laning — akkaunt ustoz kartasiga ulanmagan.")
+
+    today = date.today()
+    stats = _teacher_student_stats(db)
+    mine = stats.get(t.id, {"active": 0, "left": 0, "total": 0,
+                            "churn": 0.0, "retention": 0.0,
+                            "avg_months": None, "left_students": []})
+
+    # --- Markaz o'rtachasi (o'zidan tashqari) ---
+    peers = {k: v for k, v in stats.items()
+             if k != t.id and v["total"] >= roles.MIN_STUDENTS_FOR_STATS}
+    churn_vals = [v["churn"] for v in peers.values()]
+    month_vals = [v["avg_months"] for v in peers.values()
+                  if v["avg_months"] is not None]
+    avg_churn = round(sum(churn_vals) / len(churn_vals), 1) \
+        if churn_vals else None
+    avg_months = round(sum(month_vals) / len(month_vals), 1) \
+        if month_vals else None
+
+    enough = mine["total"] >= roles.MIN_STUDENTS_FOR_STATS
+    # Ketish kam bo'lgani yaxshi
+    churn_txt, churn_tone, churn_diff = roles.compare_verdict(
+        mine["churn"] if enough else None, avg_churn, lower_is_better=True)
+    ltv_txt, ltv_tone, ltv_diff = roles.compare_verdict(
+        mine["avg_months"] if enough else None, avg_months)
+
+    all_churn = [v["churn"] for v in stats.values()
+                 if v["total"] >= roles.MIN_STUDENTS_FOR_STATS]
+    all_months = [v["avg_months"] for v in stats.values()
+                  if v["avg_months"] is not None
+                  and v["total"] >= roles.MIN_STUDENTS_FOR_STATS]
+    churn_rank, churn_peers = _rank_of(
+        mine["churn"] if enough else None, all_churn,
+        higher_is_better=False)
+    ltv_rank, ltv_peers = _rank_of(
+        mine["avg_months"] if enough else None, all_months)
+
+    # --- Ketganlar ro'yxati, oynalar bo'yicha ---
+    reasons = {r.student_id: r for r in db.query(models.LeaveReason).all()}
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    month_start = today.replace(day=1)
+
+    def leaver_row(s):
+        r = reasons.get(s.id)
+        key = r.reason if r else None
+        g = groups.get(s.group_id)
+        return {
+            "id": s.id, "name": s.full_name,
+            "group": g.name if g else None,
+            "left_date": s.left_date.isoformat(),
+            "enrolled_date": (s.enrolled_date.isoformat()
+                              if s.enrolled_date else None),
+            "months": round(_months_between(
+                s.enrolled_date or s.left_date, s.left_date), 1),
+            "reason": key,
+            "reason_label": (roles.LEAVE_REASON_LABELS.get(key)
+                             if key else "Sabab yozilmagan"),
+            "controllable": key in roles.CONTROLLABLE_REASONS if key else None,
+            "note": r.note if r else None,
+        }
+
+    all_left = sorted(mine.get("left_students", []),
+                      key=lambda s: s.left_date, reverse=True)
+    windows = []
+    for key, label, days in roles.LEAVER_WINDOWS:
+        since = month_start if days == 0 else today - timedelta(days=days)
+        rows = [leaver_row(s) for s in all_left if s.left_date >= since]
+        ctrl = sum(1 for r in rows if r["controllable"])
+        windows.append({
+            "key": key, "label": label,
+            "since": since.isoformat(),
+            "count": len(rows),
+            "controllable": ctrl,
+            "not_controllable": sum(1 for r in rows
+                                    if r["controllable"] is False),
+            "unknown": sum(1 for r in rows if r["controllable"] is None),
+            "rows": rows[:60],
+        })
+
+    # Sabablar kesimi — oxirgi 1 yil
+    year_rows = [leaver_row(s) for s in all_left
+                 if s.left_date >= today - timedelta(days=365)]
+    by_reason: dict = {}
+    for r in year_rows:
+        k = r["reason"] or "unknown"
+        e = by_reason.setdefault(k, {
+            "key": k, "label": r["reason_label"],
+            "controllable": r["controllable"], "count": 0,
+        })
+        e["count"] += 1
+    reason_rows = sorted(by_reason.values(), key=lambda r: -r["count"])
+
+    hint = ("Ketish sabablarining hammasi ustozga bog'liq emas — "
+            "ko'chib ketish yoki oilaviy sabab boshqa gap. Shuning "
+            "uchun ro'yxat \"bizga bog'liq\" va \"bog'liq emas\" deb "
+            "ajratilgan.")
+    if not enough:
+        hint = (f"Solishtirish uchun kamida "
+                f"{roles.MIN_STUDENTS_FOR_STATS} ta o'quvchi kerak. "
+                f"Sizda hozir {mine['total']} ta — raqamlar chiqadi, "
+                f"lekin o'rtacha bilan solishtirish ishonchli emas.")
+
+    return {
+        "teacher": {"id": t.id, "name": t.full_name,
+                    "grade": t.grade,
+                    "grade_label": roles.GRADE_LABELS.get(t.grade or "", "—")},
+        "students": {
+            "active": mine["active"],
+            "left": mine["left"],
+            "total": mine["total"],
+        },
+        "retention": {
+            "value": mine["retention"],
+            "centre_avg": (round(100 - avg_churn, 1)
+                           if avg_churn is not None else None),
+        },
+        "churn": {
+            "value": mine["churn"],
+            "centre_avg": avg_churn,
+            "verdict": churn_txt, "tone": churn_tone, "diff": churn_diff,
+            "rank": churn_rank, "peers": churn_peers,
+        },
+        "ltv": {
+            "value": mine["avg_months"],
+            "centre_avg": avg_months,
+            "verdict": ltv_txt, "tone": ltv_tone, "diff": ltv_diff,
+            "rank": ltv_rank, "peers": ltv_peers,
+            "note": ("O'quvchi o'rtacha necha oy o'qigani. Faqat "
+                     "ketganlar bo'yicha — hali o'qiyotganlar bu "
+                     "raqamni sun'iy pasaytirmaydi."),
+        },
+        "windows": windows,
+        "reasons": reason_rows,
+        "enough_data": enough,
+        "min_students": roles.MIN_STUDENTS_FOR_STATS,
+        "hint": hint,
+    }

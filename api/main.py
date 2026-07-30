@@ -94,6 +94,9 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        "ALTER TABLE users ADD COLUMN exit_type VARCHAR",
+        "ALTER TABLE users ADD COLUMN exit_reason VARCHAR",
+        "ALTER TABLE users ADD COLUMN exit_date DATE",
         "ALTER TABLE exams ADD COLUMN status VARCHAR DEFAULT 'done'",
         "ALTER TABLE exams ADD COLUMN approved_by VARCHAR",
         "ALTER TABLE exams ADD COLUMN approved_at DATE",
@@ -544,7 +547,18 @@ def update_user(
     if payload.branch_id is not None:
         target.branch_id = payload.branch_id
     if payload.is_active is not None:
+        was = target.is_active
         target.is_active = int(payload.is_active)
+        # Ishdan bo'shatilganda sana avtomat qo'yiladi va toifasi
+        # belgilanmagan bo'lsa "neytral" bo'lib turadi - keyin HR
+        # arxivdan o'zgartiradi.
+        if was and not target.is_active:
+            target.exit_date = target.exit_date or date.today()
+            target.exit_type = target.exit_type or "neutral"
+        elif not was and target.is_active:
+            target.exit_date = None
+            target.exit_type = None
+            target.exit_reason = None
     if payload.password:
         target.password_hash = hash_password(payload.password)
     # Fiks oylik - KPI hisobining asosi, shuning uchun uni faqat asoschi
@@ -6094,59 +6108,138 @@ def billing_month(
 def billing_collection(
     year: int,
     month: int,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
-    """To'lovlarni yig'ish foizi: shu oyda qancha hisoblangan va
-    qanchasi haqiqatda tushgan. Administrator KPI'sining asosi."""
+    """To'lovlarni yig'ish foizi - HAR BIR O'QUVCHI bo'yicha alohida.
+
+    Muhim nuqta: bir o'quvchi ortiqcha to'lasa, bu boshqasining qarzini
+    yopmaydi. Shuning uchun har bir o'quvchida "qopланgan summa" shu
+    oyning hisobidan oshmaydi, ortig'i esa KEYINGI OYGA o'tadi.
+
+    Aks holda "225% bajarildi" degan raqam chiqib, to'lamagan ikki
+    o'quvchi ko'rinmay qolardi."""
     period = _period_key(year, month)
     start, end = billing.month_bounds(year, month)
     d0 = datetime.combine(start, datetime.min.time())
     d1 = datetime.combine(end, datetime.max.time())
 
-    sq = scope_to_branch(db.query(models.Student), models.Student, user)
-    ids = [s.id for s in sq.all()]
+    sq = scope_to_branch(db.query(models.Student), models.Student, user,
+                         branch_id)
+    students = sq.all()
+    ids = [s.id for s in students]
     if not ids:
         return {"period": period, "charged": 0.0, "collected": 0.0,
-                "percent": 0.0, "debt": 0.0, "students": 0, "paid_students": 0,
-                "by_admin": []}
+                "percent": 0.0, "debt": 0.0, "students": 0,
+                "paid_students": 0, "partial_students": 0,
+                "unpaid_students": 0, "carry_in": 0.0, "carry_out": 0.0,
+                "rows": [], "by_admin": []}
 
-    charged = -(db.query(func.coalesce(func.sum(models.Payment.amount), 0.0))
-                .filter(models.Payment.kind == "charge",
-                        models.Payment.period == period,
-                        models.Payment.student_id.in_(ids)).scalar() or 0.0)
+    # DIQQAT: hisoblangan pul qaysi oyga tegishli ekani "period" bilan
+    # belgilanadi, yozuv qachon yaratilgani bilan emas. Aprel hisobini
+    # may oyida yuritish mumkin - u baribir aprelniki bo'lib qoladi.
+    # Haqiqiy pul esa aksincha: qachon kelgani muhim.
+    charges, payments, opening = {}, {}, {}
+    pay_rows = []
 
-    pays = (db.query(models.Payment)
-            .filter(models.Payment.kind == "payment",
-                    models.Payment.created_at >= d0,
-                    models.Payment.created_at <= d1,
-                    models.Payment.student_id.in_(ids)).all())
-    collected = sum(p.amount for p in pays)
-    paid_students = len({p.student_id for p in pays})
+    for p in (db.query(models.Payment)
+              .filter(models.Payment.student_id.in_(ids)).all()):
+        sid = p.student_id
+        if p.kind in ("charge", "discount"):
+            per = p.period or (p.created_at.date().isoformat()[:7]
+                               if p.created_at else period)
+            if per == period:
+                sign = 1 if p.kind == "charge" else -1
+                charges[sid] = charges.get(sid, 0.0) + sign * abs(p.amount)
+            elif per < period:
+                # O'tgan davrlarning hisobi - ochilish balansiga kiradi
+                opening[sid] = opening.get(sid, 0.0) - abs(p.amount)
+        elif p.kind == "payment":
+            if d0 <= p.created_at <= d1:
+                payments[sid] = payments.get(sid, 0.0) + p.amount
+                pay_rows.append(p)
+            elif p.created_at < d0:
+                opening[sid] = opening.get(sid, 0.0) + p.amount
 
-    charged_students = {r[0] for r in
-                        db.query(models.Payment.student_id)
-                        .filter(models.Payment.kind == "charge",
-                                models.Payment.period == period,
-                                models.Payment.student_id.in_(ids)).all()}
+    by_id = {s.id: s for s in students}
+    rows = []
+    tot_charged = tot_covered = tot_carry_in = tot_carry_out = 0.0
+    paid_n = partial_n = unpaid_n = 0
+
+    for sid in set(list(charges.keys()) + list(payments.keys())):
+        ch = max(0.0, charges.get(sid, 0.0))
+        pay = payments.get(sid, 0.0)
+        carry_in = max(0.0, opening.get(sid, 0.0))     # o'tgan oydan qolgan pul
+        old_debt = min(0.0, opening.get(sid, 0.0))     # o'tgan oydan qarz
+
+        available = carry_in + pay
+        covered = min(ch, available)                   # shu oyni qoplagani
+        left = max(0.0, ch - covered)                  # shu oyda qolgan qarz
+        carry_out = max(0.0, available - ch)           # keyingi oyga o'tadi
+
+        if ch <= 0:
+            continue
+        tot_charged += ch
+        tot_covered += covered
+        tot_carry_in += carry_in
+        tot_carry_out += carry_out
+
+        if left <= 0.01:
+            paid_n += 1
+            state = "paid"
+        elif covered > 0:
+            partial_n += 1
+            state = "partial"
+        else:
+            unpaid_n += 1
+            state = "unpaid"
+
+        st = by_id.get(sid)
+        rows.append({
+            "student_id": sid,
+            "public_id": st.public_id if st else None,
+            "full_name": st.full_name if st else "—",
+            "group": st.group.name if st and st.group else None,
+            "phone": st.phone if st else None,
+            "charged": round(ch, 2),
+            "paid": round(pay, 2),
+            "carry_in": round(carry_in, 2),
+            "covered": round(covered, 2),
+            "left": round(left, 2),
+            "carry_out": round(carry_out, 2),
+            "old_debt": round(abs(old_debt), 2),
+            "percent": round(covered / ch * 100, 1) if ch else 0.0,
+            "state": state,
+        })
+
+    # To'lamaganlar tepada tursin - ular bilan ishlash kerak
+    order = {"unpaid": 0, "partial": 1, "paid": 2}
+    rows.sort(key=lambda r: (order[r["state"]], -r["left"]))
 
     # Kim yig'di - administrator kesimida
     by_admin = {}
-    for p in pays:
+    for p in pay_rows:
         who = p.created_by or "—"
         by_admin[who] = by_admin.get(who, 0.0) + p.amount
-    admins = [{"name": k, "collected": round(v, 2),
-               "percent": round(v / charged * 100, 1) if charged else 0.0}
+    admins = [{"name": k, "collected": round(v, 2)}
               for k, v in sorted(by_admin.items(), key=lambda kv: -kv[1])]
 
     return {
         "period": period,
-        "charged": round(charged, 2),
-        "collected": round(collected, 2),
-        "percent": round(collected / charged * 100, 1) if charged else 0.0,
-        "debt": round(max(0.0, charged - collected), 2),
-        "students": len(charged_students),
-        "paid_students": paid_students,
+        "charged": round(tot_charged, 2),
+        # "collected" - shu oyning hisobiga QO'SHILGAN pul (ortiqchasi emas)
+        "collected": round(tot_covered, 2),
+        "cash_in": round(sum(p.amount for p in pay_rows), 2),
+        "percent": round(tot_covered / tot_charged * 100, 1) if tot_charged else 0.0,
+        "debt": round(tot_charged - tot_covered, 2),
+        "carry_in": round(tot_carry_in, 2),
+        "carry_out": round(tot_carry_out, 2),
+        "students": len(rows),
+        "paid_students": paid_n,
+        "partial_students": partial_n,
+        "unpaid_students": unpaid_n,
+        "rows": rows,
         "by_admin": admins,
     }
 
@@ -6897,3 +6990,288 @@ def delete_attachment(
               note="Fayl o'chirildi")
     db.delete(a); db.commit()
     return {"ok": True}
+
+
+# =====================================================================
+#  MA'LUMOTNOMALAR  -  tanlanadigan ro'yxatlar
+# =====================================================================
+@app.get("/api/reference")
+def reference_lists(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user),
+):
+    """Formalarda tanlanadigan ro'yxatlar: mahallalar, maktablar,
+    dars vaqtlari. Qo'lda yozish o'rniga tanlash - shundagina
+    statistika chiqadi."""
+    bname = None
+    bid = branch_id or user.branch_id
+    if bid:
+        b = db.query(models.Branch).get(bid)
+        bname = b.name if b else None
+    return {
+        "areas": roles.areas_for_branch(bname),
+        "schools": roles.SCHOOLS,
+        "lesson_times": [
+            {"start": t, "end": roles.lesson_end_time(t),
+             "label": roles.lesson_time_range(t)}
+            for t in roles.LESSON_START_TIMES
+        ],
+        "lesson_minutes": roles.LESSON_DURATION_MINUTES,
+        "exit_types": [{"key": k, "label": lbl, "hint": h}
+                       for k, lbl, h in roles.EXIT_TYPES],
+        "archive_groups": [{"key": k, "label": lbl, "hint": h}
+                           for k, lbl, h in roles.ARCHIVE_GROUPS],
+    }
+
+
+# =====================================================================
+#  DARS JADVALI
+# =====================================================================
+@app.get("/api/timetable")
+def timetable(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """Haftalik dars jadvali: qaysi kun, qaysi vaqt, qaysi guruh,
+    qaysi ustoz, qaysi xona. Administrator uchun kunlik ish shu
+    jadvaldan boshlanadi."""
+    gq = scope_to_branch(db.query(models.Group), models.Group, user, branch_id)
+    groups = gq.all()
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+
+    counts = {}
+    for st in scope_to_branch(db.query(models.Student), models.Student,
+                              user, branch_id).all():
+        if st.status == "active" and st.group_id:
+            counts[st.group_id] = counts.get(st.group_id, 0) + 1
+
+    items = []
+    for g in groups:
+        days = [d.strip() for d in (g.lesson_days or "").split(",") if d.strip()]
+        if not days:
+            continue
+        room = rooms.get(g.room_id)
+        items.append({
+            "group_id": g.id, "group": g.name,
+            "public_id": g.public_id,
+            "subject": g.subject,
+            "subject_label": dict(roles.SUBJECTS).get(g.subject or "", ""),
+            "level": g.level,
+            "level_label": dict(roles.SUBJECT_LEVELS.get(g.subject or "", []))
+                           .get(g.level or "", g.level or ""),
+            "teacher": g.teacher.full_name if g.teacher else None,
+            "branch": g.branch.name if g.branch else None,
+            "room": room.name if room else g.room,
+            "capacity": _group_capacity(g, rooms),
+            "students": counts.get(g.id, 0),
+            "days": days,
+            "start": g.lesson_time,
+            "end": roles.lesson_end_time(g.lesson_time or ""),
+            "time_label": roles.lesson_time_range(g.lesson_time),
+            "start_date": g.start_date.isoformat() if g.start_date else None,
+            "end_date": g.end_date.isoformat() if g.end_date else None,
+        })
+
+    # Kun -> vaqt bo'yicha guruhlangan ko'rinish
+    by_day = {}
+    for it in items:
+        for d in it["days"]:
+            by_day.setdefault(d, []).append(it)
+    for d in by_day:
+        by_day[d].sort(key=lambda x: (x["start"] or "99:99", x["group"]))
+
+    # Xona bandligi: bir vaqtda bir xonada ikki guruh bo'lsa - to'qnashuv
+    clashes = []
+    seen = {}
+    for it in items:
+        if not it["room"] or not it["start"]:
+            continue
+        for d in it["days"]:
+            key = (d, it["room"], it["start"])
+            if key in seen:
+                clashes.append({
+                    "day": d, "room": it["room"], "time": it["time_label"],
+                    "groups": [seen[key], it["group"]],
+                })
+            else:
+                seen[key] = it["group"]
+
+    return {
+        "days": [{"key": k, "label": lbl, "short": sh}
+                 for k, lbl, sh in roles.WEEKDAYS],
+        "by_day": by_day,
+        "items": sorted(items, key=lambda x: (x["start"] or "99:99", x["group"])),
+        "no_schedule": [{"id": g.id, "name": g.name} for g in groups
+                        if not (g.lesson_days or "").strip()],
+        "clashes": clashes,
+    }
+
+
+# =====================================================================
+#  ARXIV
+# =====================================================================
+@app.get("/api/archive/students")
+def archive_students(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    """Ketgan o'quvchilar - pul munosabati bo'yicha uch guruhda.
+
+    Bu shunchaki ro'yxat emas: kimdan pul olish kerakligi va kimga
+    qaytarish kerakligi ko'rinib turishi kerak, aks holda ketgan
+    o'quvchining qarzi unutilib ketadi."""
+    sq = scope_to_branch(db.query(models.Student), models.Student, user,
+                         branch_id).filter(models.Student.status == "archived")
+    rows = []
+    for s in sq.all():
+        bal = student_balance(db, s.id)
+        if bal < -0.01:
+            grp = "debtor"
+        elif bal > 0.01:
+            grp = "credit"
+        else:
+            grp = "clear"
+        rows.append({
+            "id": s.id, "public_id": s.public_id, "full_name": s.full_name,
+            "phone": s.phone, "parent_phone": s.parent_phone,
+            "group": s.group.name if s.group else None,
+            "branch": s.branch.name if s.branch else None,
+            "enrolled_date": s.enrolled_date.isoformat() if s.enrolled_date else None,
+            "left_date": s.left_date.isoformat() if s.left_date else None,
+            "months": (_months_between(s.enrolled_date, s.left_date or date.today())
+                       if s.enrolled_date else None),
+            "balance": round(bal, 2),
+            "amount": round(abs(bal), 2),
+            "group_key": grp,
+        })
+    rows.sort(key=lambda r: (-r["amount"], r["full_name"]))
+
+    groups = []
+    for key, label, hint in roles.ARCHIVE_GROUPS:
+        part = [r for r in rows if r["group_key"] == key]
+        groups.append({
+            "key": key, "label": label, "hint": hint,
+            "count": len(part),
+            "total": round(sum(r["amount"] for r in part), 2),
+        })
+    return {"groups": groups, "rows": rows, "total": len(rows)}
+
+
+@app.get("/api/archive/staff")
+def archive_staff(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.STAFF_VIEWERS)),
+):
+    """Ishdan bo'shagan xodimlar - qanday ajrashilgani bo'yicha.
+    Qayta ishga olish masalasida shu ro'yxat hal qiluvchi."""
+    q = scope_to_branch(db.query(models.User), models.User, user).filter(
+        models.User.is_active == 0)
+    rows = [{
+        "id": u.id, "public_id": u.public_id, "full_name": u.full_name,
+        "username": u.username, "role": u.role,
+        "role_label": roles.UZ_LABELS.get(u.role, u.role),
+        "branch": u.branch.name if u.branch else None,
+        "exit_type": u.exit_type or "neutral",
+        "exit_label": roles.EXIT_TYPE_LABELS.get(u.exit_type or "neutral",
+                                                 "Neytral"),
+        "exit_reason": u.exit_reason,
+        "exit_date": u.exit_date.isoformat() if u.exit_date else None,
+    } for u in q.all()]
+    rows.sort(key=lambda r: (r["exit_date"] or "", r["full_name"]), reverse=True)
+
+    groups = []
+    for key, label, hint in roles.EXIT_TYPES:
+        groups.append({
+            "key": key, "label": label, "hint": hint,
+            "count": sum(1 for r in rows if r["exit_type"] == key),
+        })
+    return {"groups": groups, "rows": rows, "total": len(rows)}
+
+
+@app.put("/api/archive/staff/{user_id}")
+def set_exit_type(
+    user_id: int,
+    payload: schemas.ExitTypeUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    u = db.query(models.User).get(user_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    if payload.exit_type not in roles.EXIT_TYPE_LABELS:
+        raise HTTPException(400, "Noma'lum toifa")
+    old = u.exit_type
+    u.exit_type = payload.exit_type
+    u.exit_reason = payload.exit_reason
+    if not u.exit_date:
+        u.exit_date = date.today()
+    audit.log(db, user, entity="user", action="update", entity_id=u.id,
+              entity_label=u.full_name, field="exit_type",
+              old_value=old, new_value=u.exit_type, note=payload.exit_reason,
+              branch_id=u.branch_id, commit=True)
+    return {"ok": True}
+
+
+# =====================================================================
+#  MANZIL VA MAKTAB KESIMIDA STATISTIKA
+# =====================================================================
+@app.get("/api/analytics/geography")
+def analytics_geography(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.LEAD_ACCESS)),
+):
+    """Qaysi mahalladan va qaysi maktabdan ko'proq o'quvchi kelyapti.
+
+    Reklamani qayerga qo'yish kerakligini shu ko'rsatadi: eng ko'p
+    lid keladigan mahalla emas, eng ko'p O'QUVCHIGA aylanadigan
+    mahalla muhim."""
+    since = (date(2000, 1, 1) if months == 0
+             else date.today() - timedelta(days=int(max(1, months) * 30.44)))
+    lq = scope_to_branch(db.query(models.Lead), models.Lead, user,
+                         branch_id).filter(
+        models.Lead.created_at >= datetime.combine(since, datetime.min.time()))
+    leads = lq.all()
+
+    def agg(attr: str, known: list):
+        acc = {}
+        for l in leads:
+            v = (getattr(l, attr) or "").strip()
+            key = v if v else "—"
+            d = acc.setdefault(key, {"leads": 0, "converted": 0})
+            d["leads"] += 1
+            if l.stage == "converted":
+                d["converted"] += 1
+        rows = [{
+            "name": k, "leads": v["leads"], "converted": v["converted"],
+            "conversion": round(v["converted"] / v["leads"] * 100, 1)
+                          if v["leads"] else 0.0,
+            "known": k in known,
+        } for k, v in acc.items()]
+        rows.sort(key=lambda r: (-r["converted"], -r["leads"]))
+        return rows
+
+    bname = None
+    bid = branch_id or user.branch_id
+    if bid:
+        b = db.query(models.Branch).get(bid)
+        bname = b.name if b else None
+
+    areas = agg("address", roles.areas_for_branch(bname))
+    schools = agg("school", roles.SCHOOLS)
+
+    return {
+        "months": months,
+        "total_leads": len(leads),
+        "areas": areas,
+        "schools": schools,
+        "top_area": areas[0] if areas and areas[0]["name"] != "—" else None,
+        "top_school": schools[0] if schools and schools[0]["name"] != "—" else None,
+        # Ro'yxatdan tanlanmagan, qo'lda yozilgan qiymatlar soni
+        "free_text_areas": sum(1 for a in areas if not a["known"] and a["name"] != "—"),
+        "free_text_schools": sum(1 for s in schools if not s["known"] and s["name"] != "—"),
+    }

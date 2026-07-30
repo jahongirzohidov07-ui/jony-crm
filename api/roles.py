@@ -278,6 +278,82 @@ SUPPORT_ISSUE_LABELS = dict(SUPPORT_ISSUE_KINDS)
 # Davomat shu foizdan past bo'lsa - muammo deb belgilanadi.
 SUPPORT_ATTENDANCE_THRESHOLD = 75.0
 
+# ---- Manzillar va maktablar -------------------------------------------
+# Zafar filialiga tegishli mahallalar. Qo'lda yozish o'rniga ro'yxatdan
+# tanlanadi: shundagina "qaysi mahalladan ko'p o'quvchi kelyapti" degan
+# savolga javob bor. Erkin matn bo'lsa statistika chiqmaydi.
+ZAFAR_AREAS = [
+    "Zafar", "1-savxoz", "Juma", "Qushchi", "Mallaboy", "Nazarboy",
+    "Mavlonov", "Avangard", "Oybek", "Agrouchastka", "2-savxoz",
+    "Hamza", "Namuna", "To'la", "3-savxoz", "4-savxoz", "5-savxoz",
+    "Oxunboboyev",
+]
+
+# Filial -> mahallalar. Boshqa filiallarga ro'yxat qo'shilsa shu yerga.
+BRANCH_AREAS = {"Zafar": ZAFAR_AREAS}
+
+
+def areas_for_branch(name: str | None) -> list:
+    if name and name in BRANCH_AREAS:
+        return BRANCH_AREAS[name]
+    # Filial tanlanmagan bo'lsa - hamma mahalla
+    out = []
+    for lst in BRANCH_AREAS.values():
+        for a in lst:
+            if a not in out:
+                out.append(a)
+    return out
+
+
+# Tumandagi maktablar: 1-60 va bitta ixtisoslashgan.
+SCHOOLS = [f"{i}-maktab" for i in range(1, 61)] + ["Ixtisoslashgan maktab"]
+
+# ---- Xodim ishdan bo'shash toifasi ------------------------------------
+# "Yashil yo'lak" - yaxshi ajrashildi, qaytarib olish mumkin.
+# "Qizil yo'lak" - qayta ishga olinmaydi.
+EXIT_TYPES = [
+    ("green", "Yashil yo'lak", "Yaxshi ajrashdik — qaytarib olsa bo'ladi"),
+    ("neutral", "Neytral", "Oddiy ketish"),
+    ("red", "Qizil yo'lak", "Qayta ishga olinmaydi"),
+]
+EXIT_TYPE_LABELS = {k: lbl for k, lbl, _ in EXIT_TYPES}
+
+# ---- Arxiv toifalari ---------------------------------------------------
+# Ketgan o'quvchini pul munosabati bo'yicha uch guruhga ajratamiz -
+# kimdan pul olish kerak, kimga qaytarish kerak, kim bilan hisob toza.
+ARCHIVE_GROUPS = [
+    ("debtor", "Bizdan qarzi bor", "Ular bizga qarzdor"),
+    ("credit", "Bizning qarzimiz bor", "Biz ularga qaytarishimiz kerak"),
+    ("clear", "Hisob toza", "Hech kimning qarzi yo'q"),
+]
+ARCHIVE_GROUP_LABELS = {k: lbl for k, lbl, _ in ARCHIVE_GROUPS}
+
+# ---- Dars vaqti --------------------------------------------------------
+# Har bir dars 2 soat. Boshlanish vaqti tanlansa tugash avtomat.
+LESSON_DURATION_MINUTES = 120
+LESSON_START_TIMES = [
+    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00",
+    "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+]
+
+
+def lesson_end_time(start: str) -> str:
+    """"09:00" -> "11:00". Noto'g'ri qiymatda bo'sh qaytaradi."""
+    try:
+        h, m = (int(x) for x in start.split(":")[:2])
+    except Exception:
+        return ""
+    total = h * 60 + m + LESSON_DURATION_MINUTES
+    return f"{(total // 60) % 24:02d}:{total % 60:02d}"
+
+
+def lesson_time_range(start: str | None) -> str:
+    if not start:
+        return ""
+    end = lesson_end_time(start)
+    return f"{start} - {end}" if end else start
+
+
 # ---- Fayl biriktirish -------------------------------------------------
 # Fayllar bazada base64 ko'rinishida saqlanadi: alohida fayl xizmati
 # kerak emas, lekin shuning uchun hajm cheklangan.

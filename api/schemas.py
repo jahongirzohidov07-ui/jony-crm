@@ -888,3 +888,9 @@ class AttachmentCreate(BaseModel):
     mime: Optional[str] = None
     note: Optional[str] = None
     data: str          # base64 yoki data URL
+
+
+# ---------- Xodim ishdan bo'shashi ----------
+class ExitTypeUpdate(BaseModel):
+    exit_type: str
+    exit_reason: Optional[str] = None

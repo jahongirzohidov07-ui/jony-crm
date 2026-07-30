@@ -41,6 +41,11 @@ class User(Base):
     role = Column(String, nullable=False, default="teacher")
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     is_active = Column(Integer, default=1)
+    # Ishdan bo'shaganda qanday ajrashildi: yashil / neytral / qizil
+    # yo'lak. Qayta ishga olish masalasi shu bilan hal bo'ladi.
+    exit_type = Column(String, nullable=True)
+    exit_reason = Column(String, nullable=True)
+    exit_date = Column(Date, nullable=True)
     # Fiks oylik (so'm). Adminlar (sotuv menejeri) KPI'sida asos bo'ladi:
     # jami ish haqi = fiks + bonuslar. Faqat asoschi o'zgartira oladi.
     fix_salary = Column(Float, nullable=True)

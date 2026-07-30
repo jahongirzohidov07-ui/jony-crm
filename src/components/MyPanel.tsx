@@ -25,11 +25,21 @@ function show(label: string, v: number | string): string {
  * Xodimning O'Z paneli. Har bir rol o'ziga tegishli raqamni ko'radi —
  * birovning ishi uni chalg'itmaydi.
  */
-export function MyPanel() {
+export function MyPanel({
+  onLoaded,
+}: {
+  onLoaded?: (showGeneral: boolean) => void;
+} = {}) {
   const [d, setD] = useState<MyDashboard | null>(null);
 
   useEffect(() => {
-    api.get<MyDashboard>("/me/dashboard").then(setD).catch(() => setD(null));
+    api
+      .get<MyDashboard>("/me/dashboard")
+      .then((x) => {
+        setD(x);
+        onLoaded?.(x.show_general);
+      })
+      .catch(() => setD(null));
   }, []);
 
   if (!d || (d.cards.length === 0 && d.tasks.open === 0)) return null;

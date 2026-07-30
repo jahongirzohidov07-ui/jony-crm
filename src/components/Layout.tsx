@@ -55,6 +55,13 @@ const navItems = [
   { to: "/teachers", label: "O'qituvchilar", icon: TeacherIcon },
 ];
 
+/**
+ * Asoschida menyu qisqaroq: Talabalar va Guruhlar O'quv bo'limi
+ * ichida, Xodimlar esa HR ichida turadi. Menyuda 20 ta qator
+ * bo'lgandan ko'ra, o'z joyida turgani yaxshi.
+ */
+const FOUNDER_MOVED = ["/students", "/groups", "/users"];
+
 function ChangePasswordModal({ onClose }: { onClose: () => void }) {
   const [current, setCurrent] = useState("");
   const [next, setNext] = useState("");
@@ -169,6 +176,10 @@ export default function Layout() {
   }
 
   let items = navItems;
+  // Asoschida bu bo'limlar o'z bo'limi ichiga ko'chirilgan
+  if (user?.role === FOUNDER) {
+    items = items.filter((i) => !FOUNDER_MOVED.includes(i.to));
+  }
   // "Bugungi holat" endi Dashboard ICHIDA alohida bo'lim - menyuda
   // takrorlanmaydi.
   // Dars jadvali va Lidlar - administratorning kuni shulardan boshlanadi,
@@ -211,7 +222,8 @@ export default function Layout() {
   if (can(user?.role, MARKETING_ACCESS)) {
     items = [...items, { to: "/marketing", label: "Marketing", icon: Megaphone }];
   }
-  if (can(user?.role, STAFF_VIEWERS)) {
+  // Asoschida Xodimlar HR ichida turadi — menyuda takrorlanmaydi.
+  if (can(user?.role, STAFF_VIEWERS) && user?.role !== FOUNDER) {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];
   }
   // HR - xodimlar ro'yxatidan keyin, chunki u kadr ishining davomi.

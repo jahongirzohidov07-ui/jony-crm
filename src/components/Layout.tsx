@@ -15,6 +15,8 @@ import {
   BarChart3,
   PieChart,
   Trophy,
+  Megaphone,
+  Briefcase,
   X,
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
@@ -24,6 +26,8 @@ import {
   LEAD_ACCESS,
   FINANCE_ACCESS,
   TEACHING_STAFF,
+  HR_ACCESS,
+  MARKETING_ACCESS,
   can,
   roleLabel,
 } from "../lib/roles";
@@ -171,8 +175,16 @@ export default function Layout() {
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
   }
+  // Marketing - SMM manager uchun asosiy bo'lim.
+  if (can(user?.role, MARKETING_ACCESS)) {
+    items = [...items, { to: "/marketing", label: "Marketing", icon: Megaphone }];
+  }
   if (can(user?.role, STAFF_VIEWERS)) {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];
+  }
+  // HR - xodimlar ro'yxatidan keyin, chunki u kadr ishining davomi.
+  if (can(user?.role, HR_ACCESS)) {
+    items = [...items, { to: "/hr", label: "HR", icon: Briefcase }];
   }
   if (user?.role === FOUNDER) {
     items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];

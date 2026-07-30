@@ -3077,3 +3077,78 @@ export interface ObservationRow {
     points: number; fact: number; note?: string | null;
   }[];
 }
+
+// ------------------------------------- O'quv markaz to'lganligi
+export interface FillRoom {
+  room_id: number;
+  name: string;
+  branch?: string | null;
+  branch_id?: number | null;
+  seats: number;
+  capacity: number;
+  groups: number;
+  group_slots: number;
+  odd_groups: number;
+  even_groups: number;
+  students: number;
+  free: number;
+  percent: number;
+  label: string;
+  tone: string;
+}
+
+export interface FillBranch {
+  branch_id?: number | null;
+  name: string;
+  rooms: number;
+  capacity: number;
+  students: number;
+  groups: number;
+  group_slots: number;
+  free: number;
+  percent: number;
+  label: string;
+  tone: string;
+}
+
+export interface FillTeacher {
+  teacher_id: number;
+  name: string;
+  branch?: string | null;
+  grade?: string | null;
+  grade_label: string;
+  groups: number;
+  max_groups: number;
+  seats: number;
+  capacity: number;
+  students: number;
+  free: number;
+  percent: number;
+  label: string;
+  tone: string;
+}
+
+export interface FillReport {
+  level: string;
+  level_label: string;
+  groups_per_room: number;
+  rooms: number;
+  capacity: number;
+  students: number;
+  students_without_room: number;
+  percent: number;
+  label: string;
+  tone: string;
+  free: number;
+  group_slots: number;
+  groups_now: number;
+  levels: {
+    key: string; label: string; groups_per_room: number;
+    description: string; capacity: number; percent: number;
+    free: number; current: boolean;
+  }[];
+  by_room: FillRoom[];
+  by_branch: FillBranch[];
+  by_teacher: FillTeacher[];
+  hint: string;
+}

@@ -75,3 +75,9 @@ export function assignableRoles(requesterRole?: string): string[] {
 }
 
 export { ORG_WIDE_ROLES };
+
+/** HR bo'limi - kadrlar bilan ishlaydiganlar. */
+export const HR_ACCESS = [...FULL_ACCESS, HR_MANAGER];
+
+/** Marketing bo'limi. */
+export const MARKETING_ACCESS = [...FULL_ACCESS, SMM_MANAGER];

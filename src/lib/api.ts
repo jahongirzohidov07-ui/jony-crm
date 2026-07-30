@@ -186,6 +186,9 @@ export interface DashboardStats {
   frozen_students: number;
   total_groups: number;
   total_teachers: number;
+  month_payment_count: number;
+  month_new_payment_count: number;
+  staff_count: number;
   month_income: number;
   total_debt: number;
   debtor_count: number;
@@ -231,6 +234,8 @@ export interface Expense {
   branch?: Branch | null;
   created_by?: string | null;
   created_at: string;
+  channel?: string | null;
+  method?: string | null;
 }
 
 // ---------- Davomat / Baholash ----------
@@ -661,3 +666,151 @@ export interface StudentGrowthResponse {
   granularity: "day" | "month";
   points: StudentGrowthPoint[];
 }
+
+// ---------------------------------------------------- Kassa daftari ----
+export interface CashMethodBlock {
+  cash: number;
+  card: number;
+  terminal: number;
+  other: number;
+  total: number;
+}
+
+export interface LedgerRow {
+  id: string;
+  date: string;
+  amount: number;
+  title: string;
+  student_id: number | null;
+  method: string;
+  direction: "in" | "out";
+  branch: string;
+  category: string;
+  note?: string | null;
+}
+
+export interface CashflowLedger {
+  period: string;
+  kirim: CashMethodBlock;
+  chiqim: CashMethodBlock;
+  kassa: CashMethodBlock;
+  new_payments: { count: number; amount: number };
+  old_payments: { count: number; amount: number };
+  rows: LedgerRow[];
+}
+
+// ------------------------------------------------------------- HR ----
+export interface Vacancy {
+  id: number;
+  title: string;
+  role?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  headcount: number;
+  status: string;
+  salary_from?: number | null;
+  salary_to?: number | null;
+  description?: string | null;
+  created_at?: string | null;
+  candidate_count: number;
+  hired_count: number;
+}
+
+export interface Candidate {
+  id: number;
+  full_name: string;
+  phone?: string | null;
+  vacancy_id?: number | null;
+  vacancy?: string | null;
+  stage: string;
+  source: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  note?: string | null;
+  reject_reason?: string | null;
+  hired_date?: string | null;
+  created_at?: string | null;
+}
+
+export interface FunnelStage {
+  stage: string;
+  label: string;
+  reached: number;
+  stuck_here: number;
+  percent: number;
+}
+
+export interface HrFunnel {
+  total: number;
+  hired: number;
+  rejected: number;
+  hire_rate: number;
+  avg_days_to_hire: number;
+  open_vacancies: number;
+  stages: FunnelStage[];
+  sources: { key: string; label: string; total: number; hired: number; percent: number }[];
+}
+
+// ------------------------------------------------------ Marketing ----
+export interface MarketingChannel {
+  channel: string;
+  label: string;
+  spend: number;
+  leads: number;
+  trial: number;
+  converted: number;
+  rejected: number;
+  revenue: number;
+  conversion: number;
+  cpl: number;
+  cac: number;
+  roi: number;
+}
+
+export interface MarketingFunnel {
+  months: number;
+  channels: MarketingChannel[];
+  stages: FunnelStage[];
+  totals: {
+    spend: number;
+    leads: number;
+    converted: number;
+    revenue: number;
+    conversion: number;
+    cpl: number;
+    cac: number;
+    roi: number;
+  };
+}
+
+export interface CacRow {
+  period: string;
+  spend: number;
+  new_clients: number;
+  cac: number;
+}
+
+export interface CacReport {
+  rows: CacRow[];
+  totals: {
+    spend: number;
+    new_clients: number;
+    cac: number;
+    ltv: number;
+    ratio: number;
+  };
+}
+
+// ------------------------------------------- Ijtimoiy tarmoqlar ----
+export interface SocialPlatform {
+  platform: string;
+  label: string;
+  handle?: string | null;
+  followers: number | null;
+  source?: string | null;
+  date?: string | null;
+  growth: number | null;
+  history: { date: string; followers: number }[];
+}
+
+export type SocialStats = Record<string, SocialPlatform>;

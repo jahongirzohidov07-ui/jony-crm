@@ -19,6 +19,7 @@ import {
   Briefcase,
   Gauge,
   History,
+  GraduationCap as AcademicIcon,
   MessageSquareWarning,
   X,
 } from "lucide-react";
@@ -33,6 +34,7 @@ import {
   MARKETING_ACCESS,
   AUDIT_VIEW,
   PROFIT_VIEW,
+  ACADEMIC_VIEW,
   can,
   roleLabel,
 } from "../lib/roles";
@@ -184,6 +186,10 @@ export default function Layout() {
       { to: "/reports", label: "Hisobotlar", icon: BarChart3 },
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
+  }
+  // O'quv bo'limi - ta'lim sifati. Guruhlardan keyin turadi.
+  if (can(user?.role, ACADEMIC_VIEW)) {
+    items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
   }
   // Marketing - SMM manager uchun asosiy bo'lim.
   if (can(user?.role, MARKETING_ACCESS)) {

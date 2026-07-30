@@ -2328,6 +2328,40 @@ RUBRIC_ITEMS = {
 # Baholanuvchi kim: nomzod yoki ishlayotgan ustoz
 OBSERVATION_TARGETS = [("candidate", "Nomzod"), ("teacher", "Ustoz")]
 
+# Nomzodni sinash bosqichlari.
+#
+# Mantiq shunday: avval nomzod O'Z HOLICHA dars beradi — bu uning
+# boshlang'ich darajasi. Keyin unga mezonlar tushuntiriladi va u
+# QAYTA baholanadi. Ikkinchi natija emas, IKKALASI ORASIDAGI FARQ
+# eng muhim signal: odam aytilganini qabul qilib o'zgara oladimi?
+# Sust boshlab keskin o'sgan odam, yaxshi boshlab qimirlamagandan
+# ko'ra ko'proq narsa va'da qiladi.
+OBSERVATION_STAGES = [
+    ("before", "1-baholash: o'z holicha", "slate"),
+    ("coached", "2-baholash: tushuntirilgandan keyin", "sky"),
+    ("extra", "Qo'shimcha baholash", "violet"),
+]
+STAGE_LABELS = {k: lbl for k, lbl, _ in OBSERVATION_STAGES}
+STAGE_TONE = {k: t for k, _, t in OBSERVATION_STAGES}
+
+# O'sish qanchalik yaxshi ekanini baholash (foiz punktida)
+def growth_band(delta: float) -> tuple:
+    """O'sishdan xulosa: (matn, rang, tavsiya)."""
+    if delta >= 20:
+        return ("Juda tez o'rganadi", "emerald",
+                "Aytilganini darrov qabul qildi — o'sish salohiyati yuqori")
+    if delta >= 10:
+        return ("Yaxshi o'sdi", "teal",
+                "Fikrni qabul qiladi, o'rgatsa bo'ladi")
+    if delta >= 3:
+        return ("Sal o'sdi", "amber",
+                "O'zgarish bor, lekin sekin — ko'proq mashq kerak")
+    if delta > -3:
+        return ("O'zgarmadi", "orange",
+                "Tushuntirilgandan keyin ham o'zgarmadi — bu jiddiy signal")
+    return ("Pastladi", "red",
+            "Ikkinchi urinishda yomonlashdi — bosim ostida ishlay oladimi?")
+
 # Natija darajalari — rangi va xulosasi
 def rubric_band(percent: float) -> tuple:
     """Foizdan xulosa: (kalit, matn, rang)."""
@@ -2347,3 +2381,64 @@ OBSERVATION_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, HR_MANAGER,
 # reglamentni bajarsa ham, yangi daraja KEYINGI OYNING 1-sanasidan
 # boshlanadi: shunda oy bitta stavkada yopiladi va oylik chalkashmaydi.
 GRADE_EFFECTIVE_NEXT_MONTH = True
+
+
+# =====================================================================
+#  O'QUV MARKAZ TO'LGANLIGI (fill)
+#
+#  Asoschi uchun eng muhim raqamlardan biri: markaz o'z sig'imining
+#  necha foizini ishlatyapti.
+#
+#  Hisob mantiqi:
+#    Bitta xonaga TOQ kunlari (du/chor/ju) 2 ta guruh, JUFT kunlari
+#    (se/pay/sha) 2 ta guruh sig'adi — jami 4 ta guruh.
+#    Xona sig'imi 25 kishi bo'lsa: 4 x 25 = 100 o'quvchi.
+#    Hamma xonalar shunday qo'shilib, markazning sig'imi chiqadi.
+#
+#  4 ta guruh — O'RTACHA holat. Zo'r ishlaganda 5 ta, ajoyib
+#  ishlaganda 6 ta guruh sig'diriladi.
+# =====================================================================
+FILL_LEVELS = [
+    ("normal", "O'rtacha", 4, "Toq kunlari 2 + juft kunlari 2 guruh"),
+    ("good", "Zo'r", 5, "Bitta xonaga 5 ta guruh"),
+    ("great", "Ajoyib", 6, "Bitta xonaga 6 ta guruh"),
+]
+FILL_LEVEL_LABELS = {k: lbl for k, lbl, _g, _d in FILL_LEVELS}
+FILL_GROUPS = {k: g for k, _lbl, g, _d in FILL_LEVELS}
+FILL_DEFAULT_LEVEL = "normal"
+
+# Xona sig'imi kiritilmagan bo'lsa shu ishlatiladi
+DEFAULT_ROOM_SEATS = 25
+
+# Toq va juft kunlar
+ODD_DAYS = ["mon", "wed", "fri"]
+EVEN_DAYS = ["tue", "thu", "sat"]
+
+
+def day_side(days) -> str:
+    """Guruh toq kunlarimi, juft kunlarimi yoki aralashmi."""
+    ds = set(days or [])
+    if not ds:
+        return "unknown"
+    odd = bool(ds & set(ODD_DAYS))
+    even = bool(ds & set(EVEN_DAYS))
+    if odd and even:
+        return "mixed"
+    return "odd" if odd else "even" if even else "unknown"
+
+
+def fill_grade(percent: float) -> tuple:
+    """To'lganlik foizidan xulosa: (matn, rang)."""
+    if percent >= 90:
+        return ("To'lgan", "emerald")
+    if percent >= 70:
+        return ("Yaxshi", "teal")
+    if percent >= 50:
+        return ("O'rtacha", "amber")
+    if percent >= 30:
+        return ("Bo'sh", "orange")
+    return ("Juda bo'sh", "red")
+
+
+FILL_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, BRANCH_MANAGER,
+                             FINANCE_DIRECTOR, SALES_HEAD, SALES_MANAGER]

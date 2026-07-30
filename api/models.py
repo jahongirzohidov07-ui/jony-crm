@@ -1650,6 +1650,11 @@ class LessonObservation(Base):
     id = Column(Integer, primary_key=True, index=True)
     rubric_key = Column(String, nullable=False, index=True)
     target_type = Column(String, nullable=False, default="teacher")
+    # Nomzodni sinash bosqichi: before (o'z holicha) -> coached
+    # (tushuntirilgandan keyin). Ikkalasi orasidagi FARQ eng muhim
+    # signal bo'ladi.
+    stage = Column(String, nullable=True, default="before")
+    attempt = Column(Integer, default=1)
     teacher_id = Column(Integer, ForeignKey("teachers.id"),
                         nullable=True, index=True)
     candidate_id = Column(Integer, ForeignKey("candidates.id"),

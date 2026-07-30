@@ -1319,6 +1319,8 @@ class ScoreItem(BaseModel):
 class ObservationCreate(BaseModel):
     rubric_key: str
     target_type: str = "teacher"        # teacher | candidate
+    # before = o'z holicha, coached = tushuntirilgandan keyin
+    stage: Optional[str] = None
     teacher_id: Optional[int] = None
     candidate_id: Optional[int] = None
     group_id: Optional[int] = None

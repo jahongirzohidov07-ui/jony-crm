@@ -223,6 +223,9 @@ def _ensure_new_columns():
         # Daraja keyingi oydan kuchga kirishi uchun
         "ALTER TABLE teachers ADD COLUMN pending_grade VARCHAR",
         "ALTER TABLE teachers ADD COLUMN pending_grade_from DATE",
+        # Nomzodni ikki bosqichda sinash
+        "ALTER TABLE lesson_observations ADD COLUMN stage VARCHAR DEFAULT 'before'",
+        "ALTER TABLE lesson_observations ADD COLUMN attempt INTEGER DEFAULT 1",
     ]
     for stmt in statements:
         try:
@@ -15043,9 +15046,25 @@ def create_observation(
 
     t = db.query(models.Teacher).get(payload.teacher_id) \
         if payload.teacher_id else None
+
+    # Bosqich: berilmagan bo'lsa o'zi aniqlanadi. Nomzodning birinchi
+    # baholashi "o'z holicha", ikkinchisi "tushuntirilgandan keyin".
+    prev = (db.query(models.LessonObservation)
+            .filter(models.LessonObservation.candidate_id
+                    == payload.candidate_id)
+            .count() if payload.candidate_id else 0)
+    stage = payload.stage
+    if not stage:
+        if payload.candidate_id:
+            stage = ("before" if prev == 0
+                     else "coached" if prev == 1 else "extra")
+        else:
+            stage = "extra"
+
     obs = models.LessonObservation(
         rubric_key=payload.rubric_key,
         target_type=payload.target_type,
+        stage=stage, attempt=prev + 1,
         teacher_id=payload.teacher_id,
         candidate_id=payload.candidate_id,
         group_id=payload.group_id,
@@ -15089,6 +15108,10 @@ def _observation_out(db: Session, o: models.LessonObservation,
         "id": o.id, "rubric_key": o.rubric_key,
         "rubric": roles.RUBRIC_LABELS.get(o.rubric_key, o.rubric_key),
         "target_type": o.target_type,
+        "stage": o.stage,
+        "stage_label": roles.STAGE_LABELS.get(o.stage or "", "Baholash"),
+        "stage_tone": roles.STAGE_TONE.get(o.stage or "", "slate"),
+        "attempt": o.attempt or 1,
         "teacher_id": o.teacher_id, "candidate_id": o.candidate_id,
         "teacher": o.teacher.full_name if o.teacher else None,
         "date": o.date.isoformat() if o.date else None,
@@ -15174,6 +15197,324 @@ def delete_observation(
         _refresh_skill_score(db, tid)
         db.commit()
     return {"ok": True}
+
+
+# ---------------------------------------------- Nomzodni sinash ----
+@app.get("/api/candidates/{cid}/evaluation")
+def candidate_evaluation(
+    cid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.OBSERVATION_ACCESS)),
+):
+    """Nomzodni sinash natijasi: o'z holicha bergan darsi va
+    tushuntirilgandan keyingi darsi yonma-yon.
+
+    Eng muhim raqam — IKKALASI ORASIDAGI FARQ. Sust boshlab keskin
+    o'sgan odam, yaxshi boshlab qimirlamagandan ko'ra ko'proq narsa
+    va'da qiladi: birinchisini o'rgatsa bo'ladi, ikkinchisini yo'q."""
+    cand = db.query(models.Candidate).get(cid)
+    if not cand:
+        raise HTTPException(404, "Nomzod topilmadi")
+
+    rows = (db.query(models.LessonObservation)
+            .filter(models.LessonObservation.candidate_id == cid)
+            .order_by(models.LessonObservation.attempt,
+                      models.LessonObservation.id).all())
+
+    before = next((o for o in rows if o.stage == "before"), None)
+    after = next((o for o in rows if o.stage == "coached"), None)
+
+    def brief(o):
+        if not o:
+            return None
+        return _observation_out(db, o)
+
+    delta = None
+    band = None
+    if before and after:
+        delta = round((after.percent or 0) - (before.percent or 0), 1)
+        label, tone, advice = roles.growth_band(delta)
+        band = {"label": label, "tone": tone, "advice": advice}
+
+    # Mezon-mezon solishtirish: nimani o'rgandi, nima o'zgarmadi
+    compare = []
+    if before and after:
+        crit = {c.id: c for c in db.query(models.RubricCriterion).all()}
+        b = {s.criterion_id: s.fact or 0 for s in before.scores}
+        a = {s.criterion_id: s.fact or 0 for s in after.scores}
+        for cidx in set(list(b) + list(a)):
+            c = crit.get(cidx)
+            if not c:
+                continue
+            bv, av = b.get(cidx, 0), a.get(cidx, 0)
+            compare.append({
+                "criterion_id": cidx, "no": c.order_no, "text": c.text,
+                "points": c.points or 0,
+                "before": bv, "after": av,
+                "delta": round(av - bv, 1),
+            })
+        compare.sort(key=lambda r: (-r["delta"], r["no"]))
+
+    improved = [r for r in compare if r["delta"] > 0]
+    stuck = [r for r in compare
+             if r["delta"] <= 0 and r["after"] < (r["points"] or 0)]
+
+    return {
+        "candidate_id": cid,
+        "full_name": cand.full_name,
+        "before": brief(before),
+        "after": brief(after),
+        "extra": [brief(o) for o in rows if o.stage == "extra"],
+        "delta": delta,
+        "growth": band,
+        "compare": compare,
+        "improved": improved[:10],
+        "stuck": stuck[:10],
+        "pass_score": roles.TEACHER_MIN_SKILL,
+        "passed": bool(after and (after.percent or 0)
+                       >= roles.TEACHER_MIN_SKILL),
+        "stages": [{"key": k, "label": lbl, "tone": t}
+                   for k, lbl, t in roles.OBSERVATION_STAGES],
+        "next_stage": ("before" if not before
+                       else "coached" if not after else "extra"),
+        "hint": ("Avval nomzod o'z holicha dars beradi. Keyin mezonlar "
+                 "tushuntirilib, qayta baholanadi. Ikkinchi ball emas, "
+                 "ORASIDAGI FARQ ko'proq narsani aytadi: odam "
+                 "aytilganini qabul qilib o'zgara oladimi."),
+    }
+
+
+def _xp_for_certificate(db: Session, student_id: int, *, kind: str,
+                        code: str, cert_no: str | None,
+                        by_user: models.User, mode: str = roles.CERT_MODE_DIFF,
+                        reason: str | None = None) -> dict:
+    """Sertifikat XP'si. Bir sertifikat raqamiga qayta XP berilmaydi.
+    Yangi va yuqoriroq natija olinsa — standart holatda faqat FARQI
+    beriladi."""
+    if cert_no:
+        used = (db.query(models.XpTransaction)
+                .filter(models.XpTransaction.idempotency_key
+                        == f"CERT:{cert_no}").first())
+        if used:
+            _fraud_alert(db, "cert_reuse", student_id=student_id,
+                         user_id=by_user.id, transaction_id=used.id,
+                         description=f"Sertifikat raqami qayta ishlatildi: {cert_no}")
+            db.commit()
+            return {"ok": False, "skipped": True,
+                    "reason": "Bu sertifikat raqamiga XP allaqachon berilgan"}
+
+    ladder = roles.CERT_RULES.get(kind, [])
+    rule = _xp_rule(db, code)
+    if not rule:
+        raise HTTPException(400, "Bunday sertifikat qoidasi yo'q")
+    value = rule.default_xp or 0
+
+    if mode == roles.CERT_MODE_DIFF and ladder:
+        # Shu turdagi eng yuqori oldingi natija
+        prev_best = 0
+        for old in (db.query(models.XpTransaction)
+                    .filter(models.XpTransaction.student_id == student_id,
+                            models.XpTransaction.event_code.in_(ladder),
+                            models.XpTransaction.is_reversal == 0).all()):
+            prev_best = max(prev_best, old.amount or 0)
+        if prev_best:
+            value = max(0, value - prev_best)
+            if value == 0:
+                return {"ok": False, "skipped": True,
+                        "reason": ("Oldingi sertifikat XP'si bundan yuqori "
+                                   "yoki teng — qo'shimcha XP berilmaydi")}
+
+    return award_xp(db, student_id=student_id, event_code=code,
+                    amount=value, by_user=by_user,
+                    source_type="certificate", reason=reason,
+                    idempotency_key=(f"CERT:{cert_no}" if cert_no else None),
+                    force=True)
+
+
+# =====================================================================
+#  O'QUV MARKAZ TO'LGANLIGI
+#
+#  Asoschining eng muhim raqami: markaz o'z sig'imining necha foizini
+#  ishlatyapti.
+#
+#  Sig'im shunday chiqadi: bitta xonaga toq kunlari 2 ta guruh, juft
+#  kunlari 2 ta guruh — jami 4 ta. Xona 25 kishilik bo'lsa, bitta xona
+#  100 o'quvchi sig'diradi. Hamma xonalar qo'shilib markazning sig'imi
+#  bo'ladi.
+# =====================================================================
+def _room_seats(r: models.Room) -> int:
+    return int(r.capacity or roles.DEFAULT_ROOM_SEATS)
+
+
+def _fill_rows(db: Session, user: models.User, *, branch_id=None,
+               level: str = roles.FILL_DEFAULT_LEVEL) -> dict:
+    per_room = roles.FILL_GROUPS.get(level, 4)
+
+    rooms = scope_to_branch(db.query(models.Room), models.Room,
+                            user, branch_id).filter(
+        models.Room.active == 1).all()
+    groups = scope_to_branch(db.query(models.Group), models.Group,
+                             user, branch_id).all()
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).filter(
+        models.Student.status.in_(["active", "trial"])).all()
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    grades = {g.key: g for g in db.query(models.TeacherGrade).all()}
+
+    # O'quvchilar guruh kesimida
+    per_group: dict = {}
+    for s in students:
+        if s.group_id:
+            per_group[s.group_id] = per_group.get(s.group_id, 0) + 1
+
+    # ---- Xonalar kesimida ----
+    room_rows = []
+    for r in rooms:
+        seats = _room_seats(r)
+        cap = seats * per_room
+        in_room = [g for g in groups if g.room_id == r.id]
+        odd = sum(1 for g in in_room
+                  if roles.day_side(_group_days(g)) in ("odd", "mixed"))
+        even = sum(1 for g in in_room
+                   if roles.day_side(_group_days(g)) in ("even", "mixed"))
+        st = sum(per_group.get(g.id, 0) for g in in_room)
+        pct = round(st / cap * 100, 1) if cap else 0.0
+        label, tone = roles.fill_grade(pct)
+        room_rows.append({
+            "room_id": r.id, "name": r.name,
+            "branch": branches.get(r.branch_id, "—"),
+            "branch_id": r.branch_id,
+            "seats": seats,
+            "capacity": cap,
+            "groups": len(in_room),
+            "group_slots": per_room,
+            "odd_groups": odd, "even_groups": even,
+            "students": st,
+            "free": max(0, cap - st),
+            "percent": pct,
+            "label": label, "tone": tone,
+        })
+    room_rows.sort(key=lambda r: -r["percent"])
+
+    total_cap = sum(r["capacity"] for r in room_rows)
+    total_st = sum(r["students"] for r in room_rows)
+    # Xonasi biriktirilmagan guruhlardagi o'quvchilar ham bor —
+    # ular sig'imga kirmaydi, lekin markazda o'qiyapti. Buni yashirmay
+    # alohida ko'rsatamiz, aks holda foiz yolg'on chiqadi.
+    no_room = sum(per_group.get(g.id, 0) for g in groups if not g.room_id)
+
+    # ---- Filiallar kesimida ----
+    by_branch: dict = {}
+    for r in room_rows:
+        b = by_branch.setdefault(r["branch_id"], {
+            "branch_id": r["branch_id"],
+            "name": branches.get(r["branch_id"], "—"),
+            "rooms": 0, "capacity": 0, "students": 0, "groups": 0,
+        })
+        b["rooms"] += 1
+        b["capacity"] += r["capacity"]
+        b["students"] += r["students"]
+        b["groups"] += r["groups"]
+    branch_rows = []
+    for b in by_branch.values():
+        pct = round(b["students"] / b["capacity"] * 100, 1) \
+            if b["capacity"] else 0.0
+        label, tone = roles.fill_grade(pct)
+        branch_rows.append({**b, "percent": pct, "free":
+                            max(0, b["capacity"] - b["students"]),
+                            "label": label, "tone": tone,
+                            "group_slots": b["rooms"] * per_room})
+    branch_rows.sort(key=lambda r: -r["percent"])
+
+    # ---- Ustozlar kesimida ----
+    # Ustozning sig'imi: darajasi bo'yicha nechta guruh olib bora oladi,
+    # har biri o'zi dars beradigan xonaning sig'imicha.
+    room_by_id = {r.id: r for r in rooms}
+    teacher_rows = []
+    for t in teachers.values():
+        if t.is_active == 0:
+            continue
+        mine = [g for g in groups if g.teacher_id == t.id]
+        if not mine and branch_id and t.branch_id != branch_id:
+            continue
+        gr = grades.get(t.grade or "")
+        max_groups = (t.max_groups or (gr.max_groups if gr else None)
+                      or roles.TEACHER_MAX_GROUPS)
+        # O'rtacha xona sig'imi: o'zi ishlaydigan xonalar bo'yicha
+        seats_list = [_room_seats(room_by_id[g.room_id])
+                      for g in mine if g.room_id in room_by_id]
+        seats = (round(sum(seats_list) / len(seats_list)) if seats_list
+                 else roles.DEFAULT_ROOM_SEATS)
+        cap = max_groups * seats
+        st = sum(per_group.get(g.id, 0) for g in mine)
+        pct = round(st / cap * 100, 1) if cap else 0.0
+        label, tone = roles.fill_grade(pct)
+        teacher_rows.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": branches.get(t.branch_id, "—"),
+            "grade": t.grade,
+            "grade_label": roles.GRADE_LABELS.get(t.grade or "", "—"),
+            "groups": len(mine), "max_groups": max_groups,
+            "seats": seats, "capacity": cap, "students": st,
+            "free": max(0, cap - st),
+            "percent": pct, "label": label, "tone": tone,
+        })
+    teacher_rows.sort(key=lambda r: -r["percent"])
+
+    percent = round(total_st / total_cap * 100, 1) if total_cap else 0.0
+    label, tone = roles.fill_grade(percent)
+
+    # Boshqa darajalarda qanday ko'rinishi
+    levels = []
+    for key, lbl, g, desc in roles.FILL_LEVELS:
+        cap = sum(r["seats"] * g for r in room_rows)
+        levels.append({
+            "key": key, "label": lbl, "groups_per_room": g,
+            "description": desc,
+            "capacity": cap,
+            "percent": round(total_st / cap * 100, 1) if cap else 0.0,
+            "free": max(0, cap - total_st),
+            "current": key == level,
+        })
+
+    return {
+        "level": level,
+        "level_label": roles.FILL_LEVEL_LABELS.get(level, level),
+        "groups_per_room": per_room,
+        "rooms": len(room_rows),
+        "capacity": total_cap,
+        "students": total_st,
+        "students_without_room": no_room,
+        "percent": percent,
+        "label": label, "tone": tone,
+        "free": max(0, total_cap - total_st),
+        "group_slots": len(room_rows) * per_room,
+        "groups_now": sum(r["groups"] for r in room_rows),
+        "levels": levels,
+        "by_room": room_rows,
+        "by_branch": branch_rows,
+        "by_teacher": teacher_rows,
+        "hint": ("Sig'im shunday hisoblanadi: bitta xonaga toq kunlari "
+                 "2 ta guruh, juft kunlari 2 ta guruh — jami "
+                 f"{per_room} ta. Xona {roles.DEFAULT_ROOM_SEATS} "
+                 "kishilik bo'lsa, bitta xona "
+                 f"{roles.DEFAULT_ROOM_SEATS * per_room} o'quvchi "
+                 "sig'diradi."),
+    }
+
+
+@app.get("/api/analytics/fill")
+def analytics_fill(
+    level: str = roles.FILL_DEFAULT_LEVEL,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FILL_ACCESS)),
+):
+    """O'quv markaz qanchaga to'lgan — filial, xona va ustoz kesimida."""
+    if level not in roles.FILL_GROUPS:
+        level = roles.FILL_DEFAULT_LEVEL
+    return _fill_rows(db, user, branch_id=branch_id, level=level)
 
 
 # Ligalar va XP qoidalari fayl oxirida to'ldiriladi: _seed_gamification
@@ -15365,50 +15706,3 @@ def _xp_for_exam(db: Session, exam: models.Exam,
 
     db.commit()
     return out
-
-
-def _xp_for_certificate(db: Session, student_id: int, *, kind: str,
-                        code: str, cert_no: str | None,
-                        by_user: models.User, mode: str = roles.CERT_MODE_DIFF,
-                        reason: str | None = None) -> dict:
-    """Sertifikat XP'si. Bir sertifikat raqamiga qayta XP berilmaydi.
-    Yangi va yuqoriroq natija olinsa — standart holatda faqat FARQI
-    beriladi."""
-    if cert_no:
-        used = (db.query(models.XpTransaction)
-                .filter(models.XpTransaction.idempotency_key
-                        == f"CERT:{cert_no}").first())
-        if used:
-            _fraud_alert(db, "cert_reuse", student_id=student_id,
-                         user_id=by_user.id, transaction_id=used.id,
-                         description=f"Sertifikat raqami qayta ishlatildi: {cert_no}")
-            db.commit()
-            return {"ok": False, "skipped": True,
-                    "reason": "Bu sertifikat raqamiga XP allaqachon berilgan"}
-
-    ladder = roles.CERT_RULES.get(kind, [])
-    rule = _xp_rule(db, code)
-    if not rule:
-        raise HTTPException(400, "Bunday sertifikat qoidasi yo'q")
-    value = rule.default_xp or 0
-
-    if mode == roles.CERT_MODE_DIFF and ladder:
-        # Shu turdagi eng yuqori oldingi natija
-        prev_best = 0
-        for old in (db.query(models.XpTransaction)
-                    .filter(models.XpTransaction.student_id == student_id,
-                            models.XpTransaction.event_code.in_(ladder),
-                            models.XpTransaction.is_reversal == 0).all()):
-            prev_best = max(prev_best, old.amount or 0)
-        if prev_best:
-            value = max(0, value - prev_best)
-            if value == 0:
-                return {"ok": False, "skipped": True,
-                        "reason": ("Oldingi sertifikat XP'si bundan yuqori "
-                                   "yoki teng — qo'shimcha XP berilmaydi")}
-
-    return award_xp(db, student_id=student_id, event_code=code,
-                    amount=value, by_user=by_user,
-                    source_type="certificate", reason=reason,
-                    idempotency_key=(f"CERT:{cert_no}" if cert_no else None),
-                    force=True)

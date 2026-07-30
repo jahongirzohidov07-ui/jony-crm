@@ -103,3 +103,19 @@ export const ACADEMIC_VIEW = [
   SUPPORT_TEACHER,
   SALES_MANAGER,
 ];
+
+/** Imtihon moduli — Examiner asoschiga bo'ysunadi, o'quv bo'limiga emas. */
+export const EXAM_ACCESS = [FOUNDER, EXAMINER];
+export const EXAM_VIEW = [
+  ...EXAM_ACCESS,
+  BRANCH_MANAGER,
+  ACADEMIC_HEAD,
+  TEACHER,
+];
+
+/** Support teacher paneli. */
+export const SUPPORT_ACCESS = [
+  ...FULL_ACCESS,
+  ACADEMIC_HEAD,
+  SUPPORT_TEACHER,
+];

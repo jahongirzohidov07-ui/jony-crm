@@ -1242,3 +1242,189 @@ export interface TrialStatus {
   dates: string[];
   first_date: string | null;
 }
+
+// ------------------------------------------- Filiallar solishtiruvi ----
+export interface BranchRow {
+  branch_id: number;
+  branch: string;
+  active: number;
+  trial: number;
+  left: number;
+  groups: number;
+  income: number;
+  expense: number;
+  profit: number;
+  margin: number;
+  arpu: number;
+  fill: number | null;
+  leads: number;
+  converted: number;
+  conversion: number;
+  new_clients: number;
+  debt: number;
+  churn: number;
+}
+
+export interface BranchCompare {
+  months: number;
+  period: string;
+  rows: BranchRow[];
+  totals: Record<string, number>;
+  highlight: Record<string, { best: number | null; worst: number | null }>;
+}
+
+// -------------------------------------------------------- Examiner ----
+export interface ExamRow {
+  id: number;
+  group_id: number;
+  group?: string | null;
+  teacher?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  kind: string;
+  kind_label: string;
+  unit_no?: number | null;
+  title: string;
+  date?: string | null;
+  max_score?: number | null;
+  status: string;
+  status_label: string;
+  approved_by?: string | null;
+  approved_at?: string | null;
+  retake_of_id?: number | null;
+  note?: string | null;
+  result_count: number;
+  avg_percent: number | null;
+  absent: number;
+}
+
+export interface AnalysisRow {
+  key: number;
+  label: string;
+  avg: number;
+  results: number;
+  exams: number;
+  students: number;
+  band: string;
+  band_label: string;
+}
+
+export interface ProgressRow {
+  student_id: number;
+  full_name: string;
+  group?: string | null;
+  first: number;
+  last: number;
+  change: number;
+  exams: number;
+  avg: number;
+}
+
+export interface ExaminerAnalysis {
+  months: number;
+  standard: number;
+  total_results: number;
+  avg: number | null;
+  by_teacher: AnalysisRow[];
+  by_group: AnalysisRow[];
+  by_branch: AnalysisRow[];
+  behind: AnalysisRow[];
+  progress: ProgressRow[];
+  recommend_certificate: ProgressRow[];
+  recommend_retake: { student_id: number; full_name: string; group?: string | null; percent: number }[];
+}
+
+// ------------------------------------------------- Support teacher ----
+export interface SupportStudent {
+  student_id: number;
+  public_id?: string | null;
+  full_name: string;
+  status: string;
+  group_id?: number | null;
+  group?: string | null;
+  phone?: string | null;
+  parent_phone?: string | null;
+  attendance: {
+    marked: number;
+    present: number;
+    absent: number;
+    percent: number | null;
+  };
+  attendance_problem: boolean;
+  homework_problem: boolean;
+  homework_note?: string | null;
+  open_plans: {
+    id: number;
+    issue: string;
+    issue_label: string;
+    plan: string;
+    due_date?: string | null;
+  }[];
+}
+
+export interface SupportPanel {
+  user_id: number | null;
+  groups: { id: number; name: string; teacher?: string | null; students: number }[];
+  students: SupportStudent[];
+  summary: {
+    students: number;
+    attendance_problem: number;
+    homework_problem: number;
+    threshold: number;
+    open_plans: number;
+    done_plans: number;
+    plan_success: number | null;
+    retention: number | null;
+    stayed: number;
+    left: number;
+  };
+}
+
+export interface SupportPlanRow {
+  id: number;
+  student_id: number;
+  student?: string | null;
+  user?: string | null;
+  issue: string;
+  issue_label: string;
+  plan: string;
+  due_date?: string | null;
+  overdue: boolean;
+  status: string;
+  result?: string | null;
+  created_at?: string | null;
+}
+
+export interface SupportAssignment {
+  id: number;
+  user_id: number;
+  user?: string | null;
+  group_id?: number | null;
+  group?: string | null;
+  student_id?: number | null;
+  student?: string | null;
+  note?: string | null;
+}
+
+// ------------------------------------------------------- Fayllar ----
+export interface AttachmentMeta {
+  id: number;
+  kind: string;
+  kind_label: string;
+  filename?: string | null;
+  mime?: string | null;
+  size: number;
+  note?: string | null;
+  created_by?: string | null;
+  created_at?: string | null;
+  is_image: boolean;
+}
+
+export interface AttachmentData {
+  id: number;
+  filename?: string | null;
+  mime?: string | null;
+  size: number;
+  kind: string;
+  data: string;
+}

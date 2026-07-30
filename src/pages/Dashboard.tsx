@@ -41,6 +41,7 @@ import {
   CASH_ACCESS, DEBTOR_ACCESS, PROFIT_VIEW, SALES_MANAGER, can,
 } from "../lib/roles";
 import { SalesPanelCards } from "../components/SalesPanel";
+import { MyPanel } from "../components/MyPanel";
 import { useAuth } from "../lib/AuthContext";
 import Ceo from "./Ceo";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
@@ -467,6 +468,9 @@ export default function Dashboard() {
 
       {loading && <p className="text-slate-400 text-sm">Yuklanmoqda...</p>}
       {err && <p className="text-red-600 text-sm">{err}</p>}
+
+      {/* Har bir xodim avval O'Z ishini ko'radi */}
+      <MyPanel />
 
       {stats && (
         <>

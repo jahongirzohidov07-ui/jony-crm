@@ -47,6 +47,8 @@ PUBLIC_ID_PREFIX = {
     "contract": "SHT",
     "task": "TSK",
     "content": "CNT",
+    "staff_request": "REQ",
+    "vacancy": "VAC",
 }
 
 
@@ -148,6 +150,28 @@ def _ensure_new_columns():
         "ALTER TABLE users ADD COLUMN photo TEXT",
         "UPDATE users SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
         # Ustozning maksimal yuklamasi - undan oshsa tizim yo'l qo'ymaydi.
+        # ---- HR moduli ----
+        "ALTER TABLE vacancies ADD COLUMN public_id VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN department_id INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN position_id INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN request_id INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN hiring_manager_id INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN recruiter_id INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN employment_type VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN work_schedule VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN duties TEXT",
+        "ALTER TABLE vacancies ADD COLUMN requirements TEXT",
+        "ALTER TABLE vacancies ADD COLUMN experience_years FLOAT",
+        "ALTER TABLE vacancies ADD COLUMN education VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN language_level VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN certificates VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN probation_months INTEGER",
+        "ALTER TABLE vacancies ADD COLUMN kpi_note TEXT",
+        "ALTER TABLE vacancies ADD COLUMN priority VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN opened_on DATE",
+        "ALTER TABLE vacancies ADD COLUMN target_close DATE",
+        "ALTER TABLE vacancies ADD COLUMN close_reason VARCHAR",
+        "ALTER TABLE vacancies ADD COLUMN hired_count INTEGER DEFAULT 0",
         "ALTER TABLE teachers ADD COLUMN user_id INTEGER",
         "ALTER TABLE teachers ADD COLUMN max_groups INTEGER",
         "ALTER TABLE teachers ADD COLUMN max_lessons_per_day INTEGER",
@@ -374,6 +398,8 @@ PUBLIC_ID_PREFIX = {
     "contract": "SHT",
     "task": "TSK",
     "content": "CNT",
+    "staff_request": "REQ",
+    "vacancy": "VAC",
 }
 
 
@@ -5670,9 +5696,16 @@ def audit_meta(user=Depends(require_role(*roles.AUDIT_VIEW))):
 #  ASOSCHI PANELI  -  qaror qabul qilish oynasi
 # =====================================================================
 def _today_bounds():
-    t = date.today()
-    return (datetime.combine(t, datetime.min.time()),
-            datetime.combine(t, datetime.max.time()))
+    """Bugungi kunning UTC chegaralari.
+
+    Yozuvlar bazaga UTC vaqtida tushadi, kun esa Toshkent vaqtida
+    boshlanadi. Shu farq hisobga olinmasa, tunda (mahalliy 00:00–05:00)
+    qabul qilingan to'lov "bugungi tushum"ga tushmay qoladi — asoschi
+    ertalab panelni ochib nol ko'radi."""
+    t = roles.local_today()
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+    return (datetime.combine(t, datetime.min.time()) - off,
+            datetime.combine(t, datetime.max.time()) - off)
 
 
 @app.get("/api/ceo/today")
@@ -16383,9 +16416,15 @@ def _seed_replies(db: Session) -> None:
 
 
 def _is_off_hours(when: datetime) -> bool:
+    """Xabar ish vaqtidan tashqari keldimi.
+
+    MUHIM: server UTC'da, markaz esa Toshkent vaqtida ishlaydi. Shu
+    farq hisobga olinmasa, soat 21:00 da kelgan xabar "ish vaqtida
+    keldi" deb sanaladi va xodim yo'q aybi uchun javob beradi."""
     start = roles.time_to_minutes(roles.INBOX_WORK_START) or 0
     end = roles.time_to_minutes(roles.INBOX_WORK_END) or 1440
-    mins = when.hour * 60 + when.minute
+    local = roles.to_local(when)
+    mins = local.hour * 60 + local.minute
     return mins < start or mins > end
 
 
@@ -18394,3 +18433,922 @@ def my_results(db: Session = Depends(get_db),
         "min_students": roles.MIN_STUDENTS_FOR_STATS,
         "hint": hint,
     }
+
+
+
+def _hr_task(db: Session, *, title: str, body: str,
+             to_roles: list, branch_id=None, days: int = 2,
+             priority: str = "normal") -> None:
+    """HR jarayonidagi qarorlar jimgina o'tib ketmasin — tizimda
+    vazifa bo'lib ko'rinadi. Bir xil sarlavhali vazifa ikki marta
+    yaratilmaydi."""
+    if db.query(models.Task).filter(models.Task.title == title).first():
+        return
+    q = db.query(models.User).filter(models.User.role.in_(to_roles),
+                                     models.User.is_active == 1)
+    who = None
+    if branch_id:
+        who = q.filter(models.User.branch_id == branch_id).first()
+    who = who or q.first()
+    task = models.Task(
+        title=title, description=body,
+        assignee_id=who.id if who else None,
+        branch_id=branch_id,
+        deadline=date.today() + timedelta(days=days),
+        priority=priority, source="manual", created_by="Tizim")
+    db.add(task)
+    db.flush()
+    _ensure_public_id(db, "task", task)
+
+
+def _hr_task_for(db: Session, user_id: int, *, title: str, body: str,
+                 branch_id=None, days: int = 2) -> None:
+    """Aniq bir xodimga vazifa."""
+    if db.query(models.Task).filter(models.Task.title == title).first():
+        return
+    task = models.Task(
+        title=title, description=body, assignee_id=user_id,
+        branch_id=branch_id,
+        deadline=date.today() + timedelta(days=days),
+        priority="normal", source="manual", created_by="Tizim")
+    db.add(task)
+    db.flush()
+    _ensure_public_id(db, "task", task)
+
+
+# =====================================================================
+#  HR MODULI — BO'LIMLAR VA LAVOZIMLAR
+#
+#  Bular butun HR tizimining tayanchi: shtat rejasi, xodim so'rovi,
+#  vakansiya va xodim kartasi shu ikkiga bog'lanadi.
+#
+#  Seed bir marta: asoschi tahrirlagan qatorga qayta tegilmaydi.
+# =====================================================================
+def _seed_hr_structure(db: Session) -> None:
+    for i, (key, name, desc) in enumerate(roles.DEPARTMENTS):
+        if not db.query(models.Department).filter(
+                models.Department.key == key).first():
+            db.add(models.Department(key=key, name=name, description=desc,
+                                     position=i))
+    db.commit()
+
+    deps = {d.key: d.id for d in db.query(models.Department).all()}
+    for key, name, dep, role, months, trial in roles.POSITIONS:
+        if db.query(models.Position).filter(
+                models.Position.key == key).first():
+            continue
+        db.add(models.Position(
+            key=key, name=name, department_id=deps.get(dep),
+            system_role=role, probation_months=months,
+            trial_required=1 if trial else 0))
+    db.commit()
+
+
+def _dep_out(db: Session, d: models.Department) -> dict:
+    head = db.query(models.User).get(d.head_id) if d.head_id else None
+    return {
+        "id": d.id, "key": d.key, "name": d.name,
+        "description": d.description,
+        "head_id": d.head_id, "head": head.full_name if head else None,
+        "position": d.position, "is_active": bool(d.is_active),
+        "positions": db.query(models.Position).filter(
+            models.Position.department_id == d.id,
+            models.Position.is_active == 1).count(),
+        "employees": db.query(models.User).join(
+            models.Position, models.User.position == models.Position.key,
+            isouter=True).filter(
+            models.Position.department_id == d.id,
+            models.User.is_active == 1).count(),
+    }
+
+
+def _pos_out(db: Session, p: models.Position) -> dict:
+    d = db.query(models.Department).get(p.department_id) \
+        if p.department_id else None
+    return {
+        "id": p.id, "key": p.key, "name": p.name,
+        "department_id": p.department_id,
+        "department": d.name if d else None,
+        "system_role": p.system_role,
+        "role_label": roles.UZ_LABELS.get(p.system_role or "", None),
+        "probation_months": p.probation_months,
+        "trial_required": bool(p.trial_required),
+        "salary_from": p.salary_from, "salary_to": p.salary_to,
+        "description": p.description, "requirements": p.requirements,
+        "is_active": bool(p.is_active),
+        "employees": db.query(models.User).filter(
+            models.User.position == p.key,
+            models.User.is_active == 1).count(),
+    }
+
+
+@app.get("/api/hr/structure")
+def hr_structure(db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.WORKFORCE_VIEW))):
+    """Bo'limlar va lavozimlar — HR tizimining tayanchi."""
+    deps = db.query(models.Department).order_by(
+        models.Department.position, models.Department.id).all()
+    poss = db.query(models.Position).order_by(models.Position.id).all()
+    return {
+        "departments": [_dep_out(db, d) for d in deps],
+        "positions": [_pos_out(db, p) for p in poss],
+        "roles": [{"key": k, "label": l} for k, l in
+                  roles.UZ_LABELS.items()],
+        "employment_types": [{"key": k, "label": l}
+                             for k, l in roles.EMPLOYMENT_TYPES],
+        "can_edit": user.role in roles.HR_FULL,
+        "hint": ("Lavozim tizimdagi rolga bog'lanadi — xodim yaratilganda "
+                 "roli shundan olinadi, qo'lda tanlanmaydi."),
+    }
+
+
+@app.post("/api/hr/departments")
+def hr_dep_add(payload: schemas.DepartmentIn, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.HR_FULL))):
+    if not (payload.name or "").strip():
+        raise HTTPException(400, "Nom kerak")
+    key = payload.key or roles.translit(payload.name).replace(" ", "_")[:30]
+    if db.query(models.Department).filter(
+            models.Department.key == key).first():
+        raise HTTPException(400, "Bu kalit band")
+    d = models.Department(**{**payload.model_dump(), "key": key})
+    db.add(d); db.commit(); db.refresh(d)
+    audit.log(db, user, entity="department", action="create",
+              entity_id=d.id, entity_label=d.name, commit=True)
+    return _dep_out(db, d)
+
+
+@app.put("/api/hr/departments/{did}")
+def hr_dep_edit(did: int, payload: schemas.DepartmentPatch,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.HR_FULL))):
+    d = db.query(models.Department).get(did)
+    if not d:
+        raise HTTPException(404, "Topilmadi")
+    for f, v in payload.model_dump(exclude_unset=True).items():
+        setattr(d, f, v)
+    db.commit()
+    audit.log(db, user, entity="department", action="update",
+              entity_id=did, entity_label=d.name, commit=True)
+    return _dep_out(db, d)
+
+
+@app.post("/api/hr/positions")
+def hr_pos_add(payload: schemas.PositionIn, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.HR_FULL))):
+    if not (payload.name or "").strip():
+        raise HTTPException(400, "Nom kerak")
+    if payload.system_role and payload.system_role not in roles.ALL_ROLES:
+        raise HTTPException(400, "Noma'lum rol")
+    key = payload.key or roles.translit(payload.name).replace(" ", "_")[:30]
+    if db.query(models.Position).filter(models.Position.key == key).first():
+        raise HTTPException(400, "Bu kalit band")
+    p = models.Position(**{**payload.model_dump(), "key": key})
+    db.add(p); db.commit(); db.refresh(p)
+    audit.log(db, user, entity="position", action="create",
+              entity_id=p.id, entity_label=p.name, commit=True)
+    return _pos_out(db, p)
+
+
+@app.put("/api/hr/positions/{pid}")
+def hr_pos_edit(pid: int, payload: schemas.PositionPatch,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.HR_FULL))):
+    p = db.query(models.Position).get(pid)
+    if not p:
+        raise HTTPException(404, "Topilmadi")
+    data = payload.model_dump(exclude_unset=True)
+    if data.get("system_role") and data["system_role"] not in roles.ALL_ROLES:
+        raise HTTPException(400, "Noma'lum rol")
+    for f, v in data.items():
+        setattr(p, f, v)
+    db.commit()
+    audit.log(db, user, entity="position", action="update",
+              entity_id=pid, entity_label=p.name, commit=True)
+    return _pos_out(db, p)
+
+
+# =====================================================================
+#  HR: SHTAT REJASI
+#
+#  Bo'shliq = tasdiqlangan shtat − hozirgi faol xodim. Bu raqam
+#  qo'lda kiritilmaydi, har safar qayta hisoblanadi.
+# =====================================================================
+def _headcount(db: Session, branch_id, position_key) -> int:
+    q = db.query(models.User).filter(models.User.is_active == 1)
+    if position_key:
+        q = q.filter(models.User.position == position_key)
+    if branch_id:
+        q = q.filter(models.User.branch_id == branch_id)
+    return q.count()
+
+
+def _teacher_load(db: Session, branch_id=None) -> list[dict]:
+    """Ustozlarning yuklamasi: nechta guruh olib boryapti va yana
+    nechtasini olishi mumkin."""
+    q = db.query(models.Teacher).filter(models.Teacher.is_active == 1)
+    if branch_id:
+        q = q.filter(models.Teacher.branch_id == branch_id)
+    teachers = q.all()
+    if not teachers:
+        return []
+
+    groups = db.query(models.Group).filter(
+        models.Group.teacher_id.isnot(None)).all()
+    per_teacher: dict = {}
+    for g in groups:
+        if getattr(g, "is_active", 1) == 0:
+            continue
+        per_teacher.setdefault(g.teacher_id, []).append(g)
+
+    grades = {g.key: g for g in db.query(models.TeacherGrade).all()}
+    out = []
+    for t in teachers:
+        mine = per_teacher.get(t.id, [])
+        gr = grades.get(t.grade or "")
+        limit = t.max_groups or (gr.max_groups if gr else None) \
+            or roles.TEACHER_MAX_GROUPS
+        pct = round(len(mine) / limit * 100, 1) if limit else 0.0
+        key, label, tone = roles.utilization_band(pct)
+        br = db.query(models.Branch).get(t.branch_id) if t.branch_id else None
+        out.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": br.name if br else None,
+            "branch_id": t.branch_id,
+            "grade": t.grade,
+            "grade_label": roles.GRADE_LABELS.get(t.grade or "", "—"),
+            "groups": len(mine), "max_groups": limit,
+            "free_slots": max(0, limit - len(mine)) if limit else 0,
+            "percent": pct, "band": key, "band_label": label, "tone": tone,
+        })
+    out.sort(key=lambda r: -r["percent"])
+    return out
+
+
+def _plan_out(db: Session, p: models.WorkforcePlan) -> dict:
+    br = db.query(models.Branch).get(p.branch_id) if p.branch_id else None
+    dep = db.query(models.Department).get(p.department_id) \
+        if p.department_id else None
+    pos = db.query(models.Position).get(p.position_id) \
+        if p.position_id else None
+    current = _headcount(db, p.branch_id, pos.key if pos else None)
+    approved = p.approved_headcount or 0
+    gap = approved - current
+    return {
+        "id": p.id, "year": p.year, "month": p.month, "quarter": p.quarter,
+        "branch_id": p.branch_id, "branch": br.name if br else "Umumiy",
+        "department_id": p.department_id,
+        "department": dep.name if dep else None,
+        "position_id": p.position_id, "position": pos.name if pos else None,
+        "approved_headcount": approved,
+        "current_headcount": current,
+        # Bo'shliq har safar qayta hisoblanadi — qo'lda kiritilmaydi
+        "gap": gap,
+        "over_staffed": gap < 0,
+        "planned_hires": p.planned_hires or 0,
+        "expected_leaves": p.expected_leaves or 0,
+        "expected_groups": p.expected_groups or 0,
+        "budgeted_salary": p.budgeted_salary,
+        "note": p.note,
+        "status": p.status,
+        "status_label": roles.PLAN_STATUS_LABELS.get(p.status, "—"),
+        "status_tone": roles.PLAN_STATUS_TONE.get(p.status, "slate"),
+        "approved_at": p.approved_at.isoformat() if p.approved_at else None,
+    }
+
+
+@app.get("/api/hr/workforce")
+def hr_workforce(year: int | None = None, branch_id: int | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.WORKFORCE_VIEW))):
+    """Shtat rejasi va ustoz yuklamasi."""
+    year = year or date.today().year
+    q = db.query(models.WorkforcePlan).filter(
+        models.WorkforcePlan.year == year)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        branch_id = user.branch_id
+    if branch_id:
+        q = q.filter(models.WorkforcePlan.branch_id == branch_id)
+    rows = [_plan_out(db, p) for p in
+            q.order_by(models.WorkforcePlan.id).all()]
+
+    load = _teacher_load(db, branch_id)
+    bands: dict = {}
+    for r in load:
+        bands[r["band"]] = bands.get(r["band"], 0) + 1
+
+    gap_total = sum(r["gap"] for r in rows if r["gap"] > 0)
+    return {
+        "year": year,
+        "rows": rows,
+        "totals": {
+            "approved": sum(r["approved_headcount"] for r in rows),
+            "current": sum(r["current_headcount"] for r in rows),
+            "gap": gap_total,
+            "planned_hires": sum(r["planned_hires"] for r in rows),
+            "expected_leaves": sum(r["expected_leaves"] for r in rows),
+            "budget": sum(r["budgeted_salary"] or 0 for r in rows),
+        },
+        "teacher_load": load,
+        "load_summary": [
+            {"key": k, "label": lbl, "tone": tone,
+             "count": bands.get(k, 0)}
+            for _c, k, lbl, tone in roles.UTILIZATION_BANDS],
+        "free_group_slots": sum(r["free_slots"] for r in load),
+        "overloaded": [r for r in load if r["band"] == "over"],
+        "statuses": [{"key": k, "label": l, "tone": t}
+                     for k, l, t in roles.PLAN_STATUSES],
+        "can_edit": user.role in roles.HR_FULL,
+        "hint": ("Bo'shliq har safar qayta hisoblanadi: tasdiqlangan "
+                 "shtat minus hozirgi faol xodim. Qo'lda kiritilmaydi."),
+    }
+
+
+@app.post("/api/hr/workforce")
+def hr_plan_add(payload: schemas.PlanIn, db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.HR_FULL))):
+    p = models.WorkforcePlan(**payload.model_dump(), created_by=user.id)
+    db.add(p); db.commit(); db.refresh(p)
+    audit.log(db, user, entity="workforce_plan", action="create",
+              entity_id=p.id,
+              entity_label=f"{p.year} · {p.approved_headcount} o'rin", commit=True)
+    return _plan_out(db, p)
+
+
+@app.put("/api/hr/workforce/{pid}")
+def hr_plan_edit(pid: int, payload: schemas.PlanPatch,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.HR_FULL))):
+    p = db.query(models.WorkforcePlan).get(pid)
+    if not p:
+        raise HTTPException(404, "Topilmadi")
+    data = payload.model_dump(exclude_unset=True)
+    new_status = data.get("status")
+    if new_status and new_status not in roles.PLAN_STATUS_LABELS:
+        raise HTTPException(400, "Noma'lum holat")
+    if new_status == "approved" and user.role not in roles.FULL_ACCESS:
+        raise HTTPException(403, "Shtat rejasini faqat rahbar tasdiqlaydi")
+    for f, v in data.items():
+        setattr(p, f, v)
+    if new_status == "approved":
+        p.approved_by = user.id
+        p.approved_at = datetime.utcnow()
+    db.commit()
+    audit.log(db, user, entity="workforce_plan", action="update",
+              entity_id=pid, entity_label=str(p.year), commit=True)
+    return _plan_out(db, p)
+
+
+# =====================================================================
+#  HR: YANGI XODIM SO'ROVI
+#
+#  Zanjir: yuborildi → HR → byudjet → rahbar → tasdiqlandi → vakansiya.
+#  Tasdiqlanmagan so'rov bo'yicha vakansiya ochilmaydi (asoschidan
+#  tashqari) — bu byudjetni og'zaki kelishuvdan himoya qiladi.
+# =====================================================================
+def _request_out(db: Session, r: models.StaffRequest) -> dict:
+    by = db.query(models.User).get(r.requested_by) if r.requested_by else None
+    br = db.query(models.Branch).get(r.branch_id) if r.branch_id else None
+    dep = db.query(models.Department).get(r.department_id) \
+        if r.department_id else None
+    pos = db.query(models.Position).get(r.position_id) \
+        if r.position_id else None
+    repl = db.query(models.User).get(r.replacing_user_id) \
+        if r.replacing_user_id else None
+    steps = db.query(models.RequestApproval).filter(
+        models.RequestApproval.request_id == r.id).order_by(
+        models.RequestApproval.id).all()
+    today = date.today()
+    waiting = None
+    if r.status in roles.REQUEST_APPROVERS:
+        waiting = [roles.UZ_LABELS.get(x, x)
+                   for x in roles.REQUEST_APPROVERS[r.status]]
+    return {
+        "id": r.id, "public_id": r.public_id,
+        "requested_by": by.full_name if by else None,
+        "request_date": r.request_date.isoformat() if r.request_date else None,
+        "branch_id": r.branch_id, "branch": br.name if br else "Umumiy",
+        "department_id": r.department_id,
+        "department": dep.name if dep else None,
+        "position_id": r.position_id, "position": pos.name if pos else None,
+        "headcount": r.headcount or 1,
+        "employment_type": r.employment_type,
+        "employment_label": roles.EMPLOYMENT_TYPE_LABELS.get(
+            r.employment_type or "", "—"),
+        "work_schedule": r.work_schedule,
+        "needed_from": r.needed_from.isoformat() if r.needed_from else None,
+        "days_left": ((r.needed_from - today).days
+                      if r.needed_from else None),
+        "reason": r.reason,
+        "reason_label": roles.REQUEST_REASON_LABELS.get(r.reason or "", "—"),
+        "replacing": repl.full_name if repl else None,
+        "salary_from": r.salary_from, "salary_to": r.salary_to,
+        "requirements": r.requirements, "certificates": r.certificates,
+        "experience_years": r.experience_years,
+        "duties": r.duties, "kpi_note": r.kpi_note,
+        "priority": r.priority,
+        "priority_label": roles.PRIORITY_LABELS.get(r.priority or "", "—"),
+        "priority_tone": roles.PRIORITY_TONE.get(r.priority or "", "slate"),
+        "status": r.status,
+        "status_label": roles.REQUEST_STATE_LABELS.get(r.status, "—"),
+        "status_tone": roles.REQUEST_STATE_TONE.get(r.status, "slate"),
+        "reject_reason": r.reject_reason,
+        "vacancy_id": r.vacancy_id,
+        "locked": r.status in roles.REQUEST_LOCKED_AFTER,
+        "waiting_for": waiting,
+        "approvals": [{
+            "step": s.step,
+            "step_label": roles.REQUEST_STATE_LABELS.get(s.step, s.step),
+            "decision": s.decision,
+            "by": (db.query(models.User).get(s.decided_by).full_name
+                   if s.decided_by else None),
+            "at": s.decided_at.isoformat() if s.decided_at else None,
+            "note": s.note,
+        } for s in steps],
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+    }
+
+
+def _can_decide(user, status: str) -> bool:
+    allowed = roles.REQUEST_APPROVERS.get(status, [])
+    return user.role in allowed
+
+
+@app.get("/api/hr/staff-requests")
+def hr_requests(status: str | None = None, branch_id: int | None = None,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.REQUEST_CREATE))):
+    q = db.query(models.StaffRequest)
+    # Filial rahbari faqat o'z filialining so'rovlarini ko'radi
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        q = q.filter(models.StaffRequest.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.filter(models.StaffRequest.branch_id == branch_id)
+    if status:
+        q = q.filter(models.StaffRequest.status == status)
+    rows = [_request_out(db, r) for r in
+            q.order_by(models.StaffRequest.id.desc()).limit(300).all()]
+
+    counts: dict = {}
+    for r in rows:
+        counts[r["status"]] = counts.get(r["status"], 0) + 1
+    return {
+        "rows": rows,
+        "statuses": [{"key": k, "label": l, "tone": t,
+                      "count": counts.get(k, 0)}
+                     for k, l, t in roles.STAFF_REQUEST_FLOW],
+        "reasons": [{"key": k, "label": l,
+                     "needs_replacement": k in roles.REPLACEMENT_REASONS}
+                    for k, l, _ in roles.REQUEST_REASONS],
+        "priorities": [{"key": k, "label": l, "tone": t, "sla_days": d}
+                       for k, l, t, d in roles.REQUEST_PRIORITIES],
+        "employment_types": [{"key": k, "label": l}
+                             for k, l in roles.EMPLOYMENT_TYPES],
+        "waiting_my_decision": sum(
+            1 for r in rows if _can_decide(user, r["status"])),
+        "hint": ("Tasdiqlanmagan so'rov bo'yicha vakansiya ochilmaydi — "
+                 "byudjet og'zaki kelishuvdan himoyalangan."),
+    }
+
+
+@app.post("/api/hr/staff-requests")
+def hr_request_add(payload: schemas.StaffRequestIn,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.REQUEST_CREATE))):
+    data = payload.model_dump()
+    if data.get("reason") and data["reason"] not in \
+            roles.REQUEST_REASON_LABELS:
+        raise HTTPException(400, "Noma'lum sabab")
+    if data.get("priority") and data["priority"] not in roles.PRIORITY_LABELS:
+        raise HTTPException(400, "Noma'lum muhimlik darajasi")
+    # O'rinbosar sabablarida kimning o'rniga ekani ko'rsatilishi kerak
+    if data.get("reason") in roles.REPLACEMENT_REASONS and \
+            not data.get("replacing_user_id"):
+        raise HTTPException(
+            400, "Bu sababda kimning o'rniga kerakligini ko'rsating")
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        data["branch_id"] = user.branch_id
+    r = models.StaffRequest(**data, requested_by=user.id, status="draft")
+    db.add(r); db.commit(); db.refresh(r)
+    _ensure_public_id(db, "staff_request", r)
+    db.commit()
+    audit.log(db, user, entity="staff_request", action="create",
+              entity_id=r.id, entity_label=r.public_id, commit=True)
+    return _request_out(db, r)
+
+
+@app.put("/api/hr/staff-requests/{rid}")
+def hr_request_edit(rid: int, payload: schemas.StaffRequestPatch,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.REQUEST_CREATE))):
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status in roles.REQUEST_LOCKED_AFTER:
+        raise HTTPException(
+            400, "Bu so'rov yopilgan — tahrirlab bo'lmaydi")
+    if r.requested_by != user.id and user.role not in roles.HR_FULL:
+        raise HTTPException(403, "Faqat o'z so'rovingizni tahrirlaysiz")
+    for f, v in payload.model_dump(exclude_unset=True).items():
+        setattr(r, f, v)
+    db.commit()
+    audit.log(db, user, entity="staff_request", action="update",
+              entity_id=rid, entity_label=r.public_id, commit=True)
+    return _request_out(db, r)
+
+
+@app.post("/api/hr/staff-requests/{rid}/submit")
+def hr_request_submit(rid: int, db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.REQUEST_CREATE))):
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status != "draft":
+        raise HTTPException(400, "Faqat qoralamani yuborish mumkin")
+    if not r.position_id:
+        raise HTTPException(400, "Lavozimni tanlang")
+    if not r.reason:
+        raise HTTPException(400, "Sababni ko'rsating")
+    r.status = "submitted"
+    db.commit()
+    out = _request_out(db, r)
+    _hr_task(db, title=f"Xodim so'rovi: {r.public_id}",
+             body=f"{out['position']} · {out['branch']} · "
+                  f"{r.headcount} ta. Sabab: {out['reason_label']}.",
+             to_roles=roles.REQUEST_APPROVERS["submitted"],
+             branch_id=r.branch_id,
+             priority="high" if r.priority in ("high", "critical")
+                      else "normal")
+    db.commit()
+    audit.log(db, user, entity="staff_request", action="submit",
+              entity_id=rid, entity_label=r.public_id, commit=True)
+    return _request_out(db, r)
+
+
+@app.post("/api/hr/staff-requests/{rid}/approve")
+def hr_request_approve(rid: int, payload: schemas.RequestApprovalIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(get_current_user)):
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status not in roles.REQUEST_NEXT:
+        raise HTTPException(400, "Bu bosqichda tasdiqlash mumkin emas")
+    if not _can_decide(user, r.status):
+        raise HTTPException(403, "Bu bosqichni siz tasdiqlay olmaysiz")
+
+    step = r.status
+    r.status = roles.REQUEST_NEXT[step]
+    db.add(models.RequestApproval(
+        request_id=r.id, step=step, decision="approved",
+        decided_by=user.id, note=payload.note))
+    db.commit()
+
+    if r.status == "approved":
+        _hr_task(db, title=f"Vakansiya oching: {r.public_id}",
+                 body="Xodim so'rovi tasdiqlandi — endi vakansiya "
+                      "ochish mumkin.",
+                 to_roles=roles.HR_FULL, branch_id=r.branch_id)
+    else:
+        _hr_task(db, title=f"Tasdiq kerak: {r.public_id}",
+                 body=f"So'rov {roles.REQUEST_STATE_LABELS[r.status]} "
+                      f"bosqichida sizni kutmoqda.",
+                 to_roles=roles.REQUEST_APPROVERS.get(r.status, []),
+                 branch_id=r.branch_id)
+    db.commit()
+    audit.log(db, user, entity="staff_request", action="approve",
+              entity_id=rid, entity_label=r.public_id,
+              field="status", old_value=step, new_value=r.status, commit=True)
+    return _request_out(db, r)
+
+
+@app.post("/api/hr/staff-requests/{rid}/reject")
+def hr_request_reject(rid: int, payload: schemas.RequestRejectIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(get_current_user)):
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status in roles.REQUEST_LOCKED_AFTER:
+        raise HTTPException(400, "Bu so'rov allaqachon yopilgan")
+    if not _can_decide(user, r.status) and user.role not in roles.FULL_ACCESS:
+        raise HTTPException(403, "Bu bosqichni siz rad eta olmaysiz")
+    # Rad etishda sabab MAJBURIY — aks holda so'ragan odam nima
+    # qilishini bilmaydi
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Rad etish sababini yozing")
+
+    step = r.status
+    r.status = "rejected"
+    r.reject_reason = payload.reason
+    db.add(models.RequestApproval(
+        request_id=r.id, step=step, decision="rejected",
+        decided_by=user.id, note=payload.reason))
+    db.commit()
+    if r.requested_by:
+        _hr_task_for(db, r.requested_by,
+                     title=f"So'rov rad etildi: {r.public_id}",
+                     body=payload.reason, branch_id=r.branch_id)
+        db.commit()
+    audit.log(db, user, entity="staff_request", action="reject",
+              entity_id=rid, entity_label=r.public_id,
+              note=payload.reason, commit=True)
+    return _request_out(db, r)
+
+
+@app.post("/api/hr/staff-requests/{rid}/cancel")
+def hr_request_cancel(rid: int, db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.REQUEST_CREATE))):
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status in roles.REQUEST_LOCKED_AFTER:
+        raise HTTPException(400, "Bu so'rov allaqachon yopilgan")
+    if r.requested_by != user.id and user.role not in roles.HR_FULL:
+        raise HTTPException(403, "Faqat o'z so'rovingizni bekor qilasiz")
+    r.status = "cancelled"
+    db.commit()
+    audit.log(db, user, entity="staff_request", action="cancel",
+              entity_id=rid, entity_label=r.public_id, commit=True)
+    return _request_out(db, r)
+
+
+# =====================================================================
+#  HR: VAKANSIYA
+#
+#  Vakansiya tasdiqlangan so'rovdan ochiladi. Uzoq ochiq qolgani
+#  muhimlik darajasiga qarab ogohlantiriladi: kritik — 7 kun,
+#  yuqori — 14, oddiy — 30.
+# =====================================================================
+def _vacancy_stats(db: Session, vid: int) -> dict:
+    """Vakansiya bo'yicha nomzod voronkasi."""
+    cands = db.query(models.Candidate).filter(
+        models.Candidate.vacancy_id == vid).all()
+    by_stage: dict = {}
+    for c in cands:
+        by_stage[c.stage] = by_stage.get(c.stage, 0) + 1
+    hired = by_stage.get("hired", 0)
+    rejected = by_stage.get("rejected", 0)
+    total = len(cands)
+    reached = lambda keys: sum(by_stage.get(k, 0) for k in keys)
+    return {
+        "applications": total,
+        "by_stage": [{"key": k, "label": lbl, "count": by_stage.get(k, 0)}
+                     for k, lbl in roles.CANDIDATE_STAGES],
+        "in_progress": total - hired - rejected,
+        "hired": hired,
+        "rejected": rejected,
+        "interviewed": reached(["interview", "demo", "offer", "hired"]),
+        "offered": reached(["offer", "hired"]),
+        "hire_rate": round(hired / total * 100, 1) if total else 0.0,
+        "offer_rate": (round(reached(["offer", "hired"]) / total * 100, 1)
+                       if total else 0.0),
+    }
+
+
+def _vacancy_out(db: Session, v: models.Vacancy,
+                 with_stats: bool = True) -> dict:
+    br = db.query(models.Branch).get(v.branch_id) if v.branch_id else None
+    pos = db.query(models.Position).get(v.position_id) \
+        if v.position_id else None
+    dep = db.query(models.Department).get(v.department_id) \
+        if v.department_id else None
+    hm = db.query(models.User).get(v.hiring_manager_id) \
+        if v.hiring_manager_id else None
+    rec = db.query(models.User).get(v.recruiter_id) \
+        if v.recruiter_id else None
+    today = date.today()
+    opened = v.opened_on or (v.created_at.date() if v.created_at else today)
+    is_open = v.status in roles.VACANCY_OPEN_STATES
+    days_open = (today - opened).days if is_open else (
+        ((v.closed_at or today) - opened).days)
+    sla = roles.PRIORITY_SLA_DAYS.get(v.priority or "normal", 30)
+    out = {
+        "id": v.id, "public_id": v.public_id, "title": v.title,
+        "role": v.role,
+        "position_id": v.position_id, "position": pos.name if pos else None,
+        "trial_required": bool(pos.trial_required) if pos else False,
+        "department_id": v.department_id,
+        "department": dep.name if dep else None,
+        "branch_id": v.branch_id, "branch": br.name if br else "Umumiy",
+        "hiring_manager": hm.full_name if hm else None,
+        "recruiter": rec.full_name if rec else None,
+        "headcount": v.headcount or 1,
+        "hired_count": v.hired_count or 0,
+        "employment_type": v.employment_type,
+        "employment_label": roles.EMPLOYMENT_TYPE_LABELS.get(
+            v.employment_type or "", "—"),
+        "work_schedule": v.work_schedule,
+        "salary_from": v.salary_from, "salary_to": v.salary_to,
+        "description": v.description, "duties": v.duties,
+        "requirements": v.requirements,
+        "experience_years": v.experience_years,
+        "education": v.education, "language_level": v.language_level,
+        "certificates": v.certificates,
+        "probation_months": v.probation_months,
+        "kpi_note": v.kpi_note,
+        "priority": v.priority or "normal",
+        "priority_label": roles.PRIORITY_LABELS.get(v.priority or "normal"),
+        "priority_tone": roles.PRIORITY_TONE.get(v.priority or "normal",
+                                                 "slate"),
+        "status": v.status,
+        "status_label": roles.VACANCY_STATE_LABELS.get(v.status, v.status),
+        "status_tone": roles.VACANCY_STATE_TONE.get(v.status, "slate"),
+        "is_open": is_open,
+        "opened_on": opened.isoformat(),
+        "target_close": v.target_close.isoformat() if v.target_close else None,
+        "closed_at": v.closed_at.isoformat() if v.closed_at else None,
+        "close_reason": v.close_reason,
+        "close_reason_label": roles.CLOSE_REASON_LABELS.get(
+            v.close_reason or "", None),
+        "days_open": days_open,
+        "sla_days": sla,
+        # Uzoq ochiq qolgan vakansiya — filial ishlamayotgan degani
+        "overdue": is_open and days_open > sla,
+        "request_id": v.request_id,
+    }
+    if with_stats:
+        out.update(_vacancy_stats(db, v.id))
+    return out
+
+
+@app.post("/api/hr/staff-requests/{rid}/convert")
+def hr_request_convert(rid: int, db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.VACANCY_MANAGE))):
+    """Tasdiqlangan so'rovdan vakansiya ochadi."""
+    r = db.query(models.StaffRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status == "converted":
+        raise HTTPException(400, "Bu so'rov bo'yicha vakansiya ochilgan")
+    # Asoschi shoshilinch holatda tasdiqsiz ham ocha oladi, lekin bu
+    # audit logda ko'rinadi
+    if r.status != "approved" and user.role not in roles.FULL_ACCESS:
+        raise HTTPException(
+            400, "So'rov hali tasdiqlanmagan — vakansiya ochib bo'lmaydi")
+
+    pos = db.query(models.Position).get(r.position_id) \
+        if r.position_id else None
+    v = models.Vacancy(
+        title=pos.name if pos else "Yangi lavozim",
+        role=pos.system_role if pos else None,
+        position_id=r.position_id,
+        department_id=r.department_id,
+        branch_id=r.branch_id,
+        request_id=r.id,
+        headcount=r.headcount or 1,
+        employment_type=r.employment_type,
+        work_schedule=r.work_schedule,
+        salary_from=r.salary_from, salary_to=r.salary_to,
+        requirements=r.requirements,
+        certificates=r.certificates,
+        experience_years=r.experience_years,
+        duties=r.duties, kpi_note=r.kpi_note,
+        probation_months=pos.probation_months if pos else None,
+        priority=r.priority or "normal",
+        status="open", opened_on=date.today(),
+        target_close=r.needed_from,
+        hiring_manager_id=r.requested_by,
+        recruiter_id=user.id,
+        created_by=user.full_name)
+    db.add(v); db.commit(); db.refresh(v)
+    _ensure_public_id(db, "vacancy", v)
+    r.status = "converted"
+    r.vacancy_id = v.id
+    db.commit()
+    audit.log(db, user, entity="vacancy", action="create",
+              entity_id=v.id, entity_label=v.public_id,
+              note=f"{r.public_id} so'rovidan"
+                   + ("" if r.status == "approved" else " (tasdiqsiz)"))
+    return _vacancy_out(db, v)
+
+
+@app.get("/api/hr/vacancies")
+def hr_vacancies(status: str | None = None, branch_id: int | None = None,
+                 only_open: int = 0, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.WORKFORCE_VIEW))):
+    q = db.query(models.Vacancy)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        q = q.filter(models.Vacancy.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.filter(models.Vacancy.branch_id == branch_id)
+    if status:
+        q = q.filter(models.Vacancy.status == status)
+    rows = [_vacancy_out(db, v) for v in
+            q.order_by(models.Vacancy.id.desc()).limit(300).all()]
+    if only_open:
+        rows = [r for r in rows if r["is_open"]]
+
+    counts: dict = {}
+    for r in rows:
+        counts[r["status"]] = counts.get(r["status"], 0) + 1
+    open_rows = [r for r in rows if r["is_open"]]
+    return {
+        "rows": rows,
+        "statuses": [{"key": k, "label": l, "tone": t,
+                      "count": counts.get(k, 0)}
+                     for k, l, t in roles.VACANCY_STATES],
+        "close_reasons": [{"key": k, "label": l}
+                          for k, l in roles.VACANCY_CLOSE_REASONS],
+        "summary": {
+            "open": len(open_rows),
+            "critical": sum(1 for r in open_rows
+                            if r["priority"] == "critical"),
+            "overdue": sum(1 for r in open_rows if r["overdue"]),
+            "seats": sum(r["headcount"] - r["hired_count"]
+                         for r in open_rows),
+            "applications": sum(r["applications"] for r in open_rows),
+            "avg_days_open": (round(sum(r["days_open"] for r in open_rows)
+                                    / len(open_rows), 1)
+                              if open_rows else 0.0),
+        },
+        "can_edit": user.role in roles.VACANCY_MANAGE,
+        "hint": ("Vakansiya belgilangan muddatdan uzoq ochiq qolsa "
+                 "ogohlantiriladi: kritik — 7 kun, yuqori — 14, "
+                 "oddiy — 30."),
+    }
+
+
+@app.get("/api/hr/vacancies/{vid}")
+def hr_vacancy_one(vid: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.WORKFORCE_VIEW))):
+    v = db.query(models.Vacancy).get(vid)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    if user.role == roles.BRANCH_MANAGER and user.branch_id \
+            and v.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu boshqa filialning vakansiyasi")
+    return _vacancy_out(db, v)
+
+
+@app.put("/api/hr/vacancies/{vid}")
+def hr_vacancy_edit(vid: int, payload: schemas.VacancyHrIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.VACANCY_MANAGE))):
+    v = db.query(models.Vacancy).get(vid)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    data = payload.model_dump(exclude_unset=True)
+    if data.get("priority") and data["priority"] not in roles.PRIORITY_LABELS:
+        raise HTTPException(400, "Noma'lum muhimlik darajasi")
+    for f, val in data.items():
+        setattr(v, f, val)
+    if data.get("position_id"):
+        pos = db.query(models.Position).get(data["position_id"])
+        if pos:
+            v.role = pos.system_role
+            if not v.title:
+                v.title = pos.name
+    db.commit()
+    audit.log(db, user, entity="vacancy", action="update",
+              entity_id=vid, entity_label=v.public_id or v.title, commit=True)
+    return _vacancy_out(db, v)
+
+
+@app.post("/api/hr/vacancies/{vid}/status")
+def hr_vacancy_status(vid: int, payload: schemas.VacancyStatusIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.VACANCY_MANAGE))):
+    v = db.query(models.Vacancy).get(vid)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    if payload.status not in roles.VACANCY_STATE_LABELS:
+        raise HTTPException(400, "Noma'lum holat")
+    closing = payload.status in ("closed", "cancelled", "filled")
+    # Yopishda sabab majburiy — "nega yopildi?" savoli keyin
+    # javobsiz qolmasin
+    if closing and payload.status != "filled" and not payload.close_reason:
+        raise HTTPException(400, "Yopish sababini ko'rsating")
+    if payload.close_reason and payload.close_reason not in \
+            roles.CLOSE_REASON_LABELS:
+        raise HTTPException(400, "Noma'lum sabab")
+
+    old = v.status
+    v.status = payload.status
+    if closing:
+        v.closed_at = date.today()
+        v.close_reason = payload.close_reason or "filled"
+    elif old in ("closed", "cancelled", "filled"):
+        # Qayta ochilsa yopilish belgilari tozalanadi
+        v.closed_at = None
+        v.close_reason = None
+        if not v.opened_on:
+            v.opened_on = date.today()
+    db.commit()
+    audit.log(db, user, entity="vacancy", action="status",
+              entity_id=vid, entity_label=v.public_id or v.title,
+              field="status", old_value=old, new_value=v.status,
+              note=payload.note, commit=True)
+    return _vacancy_out(db, v)
+
+
+# HR tuzilmasi (bo'lim va lavozim) — funksiya shu fayldan keyinroq
+# aniqlangani uchun seed ENG OXIRIDA chaqiriladi. Yuqoridagi blokka
+# qo'shilsa NameError try/except ichida yutilib ketadi va jadval
+# bo'sh qoladi.
+try:
+    from sqlalchemy.orm import Session as _HS
+    with _HS(engine) as _db3:
+        _seed_hr_structure(_db3)
+except Exception:
+    pass

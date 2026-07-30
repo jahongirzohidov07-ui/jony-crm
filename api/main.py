@@ -3619,6 +3619,27 @@ def social_stats(
     user: models.User = Depends(get_current_user),
 ):
     since = date.today() - timedelta(days=max(7, min(days, 730)))
+
+    # HAQIQIY AVTOMATIKA: bugungi o'lchov yo'q bo'lsa - o'zi olib keladi.
+    # Ya'ni kuniga bir marta, birinchi ochgan odam uchun yangilanadi va
+    # hech kim "Yangilash" tugmasini bosib yurishi shart emas.
+    # Xatolik bo'lsa jim o'tadi - dashboard baribir ochilishi kerak.
+    try:
+        if not _latest_social(db, "telegram") or \
+           _latest_social(db, "telegram").date != date.today():
+            tg = _fetch_telegram_followers(roles.SOCIAL_HANDLES["telegram"])
+            if tg:
+                _save_social(db, "telegram", tg, "auto")
+        ig_last = _latest_social(db, "instagram")
+        if os.getenv("INSTAGRAM_TOKEN") and (
+            not ig_last or ig_last.date != date.today()
+        ):
+            ig = _fetch_instagram_followers()
+            if ig:
+                _save_social(db, "instagram", ig, "auto")
+    except Exception:
+        pass
+
     out = {}
     for key, label in roles.SOCIAL_PLATFORMS:
         last = _latest_social(db, key)

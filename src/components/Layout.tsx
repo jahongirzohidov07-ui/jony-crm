@@ -17,6 +17,9 @@ import {
   Trophy,
   Megaphone,
   Briefcase,
+  Gauge,
+  History,
+  MessageSquareWarning,
   X,
 } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
@@ -28,6 +31,8 @@ import {
   TEACHING_STAFF,
   HR_ACCESS,
   MARKETING_ACCESS,
+  AUDIT_VIEW,
+  PROFIT_VIEW,
   can,
   roleLabel,
 } from "../lib/roles";
@@ -154,6 +159,11 @@ export default function Layout() {
   }
 
   let items = navItems;
+  // Asoschi paneli eng tepada - kun shundan boshlanadi.
+  if (can(user?.role, PROFIT_VIEW)) {
+    items = [items[0], { to: "/ceo", label: "Bugungi holat", icon: Gauge },
+             ...items.slice(1)];
+  }
   // Lidlar Dashboard'dan keyin turadi - kun shu yerdan boshlanadi.
   if (can(user?.role, LEAD_ACCESS)) {
     items = [
@@ -185,6 +195,14 @@ export default function Layout() {
   // HR - xodimlar ro'yxatidan keyin, chunki u kadr ishining davomi.
   if (can(user?.role, HR_ACCESS)) {
     items = [...items, { to: "/hr", label: "HR", icon: Briefcase }];
+  }
+  if (can(user?.role, TEACHING_STAFF)) {
+    items = [...items,
+             { to: "/complaints", label: "Shikoyatlar", icon: MessageSquareWarning }];
+  }
+  // O'zgarishlar tarixi - eng oxirida, kamdan-kam ochiladi.
+  if (can(user?.role, AUDIT_VIEW)) {
+    items = [...items, { to: "/audit", label: "Tarix", icon: History }];
   }
   if (user?.role === FOUNDER) {
     items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];

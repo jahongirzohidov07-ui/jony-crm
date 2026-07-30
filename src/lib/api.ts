@@ -2749,6 +2749,11 @@ export interface GradeState {
   in_remediation: boolean;
   remediation_until?: string | null;
   remediation_reason?: string | null;
+  /** Oy o'rtasida ko'tarilgan bo'lsa - keyingi oydan kuchga kiradi. */
+  pending_grade?: string | null;
+  pending_label?: string | null;
+  pending_from?: string | null;
+  pending_rate?: number | null;
 }
 
 export interface CareerMap {
@@ -2807,6 +2812,7 @@ export interface TeacherCareer {
   history: GradeEvent[];
   study: StudyStage[];
   entry: { key: string; text: string }[];
+  observations?: ObservationRow[];
   can_edit: boolean;
   is_me: boolean;
 }
@@ -3019,4 +3025,55 @@ export interface XpAnalytics {
   attendance_correlation?: number | null;
   correlation_hint: string;
   manual_by_user: { user: string; xp: number }[];
+}
+
+// ------------------------------------------------ Dars baholash
+export interface RubricCriterion {
+  id: number;
+  no: number;
+  text: string;
+  points: number;
+}
+
+export interface RubricRow {
+  key: string;
+  name: string;
+  description?: string | null;
+  is_active: boolean;
+  max_total: number;
+  criteria: RubricCriterion[];
+}
+
+export interface RubricList {
+  rows: RubricRow[];
+  targets: { key: string; label: string }[];
+  pass_score: number;
+  head_score: number;
+  can_edit: boolean;
+  hint: string;
+}
+
+export interface ObservationRow {
+  id: number;
+  rubric_key: string;
+  rubric: string;
+  target_type: string;
+  teacher_id?: number | null;
+  candidate_id?: number | null;
+  teacher?: string | null;
+  date?: string | null;
+  total: number;
+  max_total: number;
+  percent: number;
+  band?: string | null;
+  band_label: string;
+  tone: string;
+  observer?: string | null;
+  strengths?: string | null;
+  weaknesses?: string | null;
+  note?: string | null;
+  scores?: {
+    criterion_id: number; no: number; text: string;
+    points: number; fact: number; note?: string | null;
+  }[];
 }

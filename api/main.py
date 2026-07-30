@@ -148,6 +148,7 @@ def _ensure_new_columns():
         "ALTER TABLE users ADD COLUMN photo TEXT",
         "UPDATE users SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
         # Ustozning maksimal yuklamasi - undan oshsa tizim yo'l qo'ymaydi.
+        "ALTER TABLE teachers ADD COLUMN user_id INTEGER",
         "ALTER TABLE teachers ADD COLUMN max_groups INTEGER",
         "ALTER TABLE teachers ADD COLUMN max_lessons_per_day INTEGER",
         # O'quvchining hozirgi darajasi - guruhga qo'shishda tekshiriladi.
@@ -3180,7 +3181,15 @@ def report_teacher_retention(
 @app.get("/api/teachers", response_model=List[schemas.TeacherOut])
 def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user)):
     q = scope_to_branch(db.query(models.Teacher), models.Teacher, user)
-    return q.order_by(models.Teacher.full_name).all()
+    rows = q.order_by(models.Teacher.full_name).all()
+    # Loginni ko'rsatish uchun bitta so'rov — har bir ustoz uchun alohida
+    # so'rov yubormaymiz.
+    ids = [t.user_id for t in rows if t.user_id]
+    logins = {u.id: u.username for u in db.query(models.User)
+              .filter(models.User.id.in_(ids or [-1])).all()}
+    for t in rows:
+        t.login = logins.get(t.user_id)
+    return rows
 
 
 @app.post("/api/teachers", response_model=schemas.TeacherOut)
@@ -10084,6 +10093,12 @@ def _teacher_paid(db: Session, teacher_id: int, *,
 def _teacher_of_user(db: Session, user: models.User) -> models.Teacher | None:
     """Foydalanuvchi hisobiga bog'langan ustoz yozuvi. Ism bo'yicha
     topiladi — ustozlar ro'yxati va xodimlar ro'yxati alohida."""
+    # Avval aniq bog'lanish (akkaunt ochilganda yoziladi), keyingina
+    # ism bo'yicha — eski yozuvlar uchun.
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.user_id == user.id).first())
+    if t:
+        return t
     return (db.query(models.Teacher)
             .filter(models.Teacher.full_name == user.full_name).first())
 
@@ -18006,10 +18021,172 @@ def smm_report_get(rid: int, db: Session = Depends(get_db),
 
 
 # Brend kitob va bilimlar bazasi — fayl oxirida seed qilinadi.
+def _link_teacher_accounts(db: Session) -> None:
+    """Ism bo'yicha bog'langan eski akkauntlarni ID'ga o'tkazadi.
+    Bir marta ishlaydi — keyin user_id to'lgan bo'ladi."""
+    loose = db.query(models.Teacher).filter(
+        models.Teacher.user_id.is_(None)).all()
+    if not loose:
+        return
+    taken = {tid for (tid,) in db.query(models.Teacher.user_id)
+             .filter(models.Teacher.user_id.isnot(None)).all()}
+    by_name: dict = {}
+    for u in (db.query(models.User)
+              .filter(models.User.role == roles.TEACHER).all()):
+        by_name.setdefault(u.full_name, []).append(u)
+    changed = False
+    for t in loose:
+        # Bir xil ismli bir nechta akkaunt bo'lsa — band bo'lmaganini
+        # olamiz, ya'ni bitta login ikki ustozga tegmaydi.
+        free = [u for u in by_name.get(t.full_name, [])
+                if u.id not in taken]
+        if free:
+            t.user_id = free[0].id
+            taken.add(free[0].id)
+            changed = True
+    if changed:
+        db.commit()
+
+
 try:
     from sqlalchemy.orm import Session as _BS
     with _BS(engine) as _db2:
         _seed_brand(_db2)
         _seed_kb(_db2)
+        _link_teacher_accounts(_db2)
 except Exception:
     pass
+
+
+# =====================================================================
+#  USTOZ AKKAUNTI — bir tugma bilan
+#
+#  Login ismdan yasaladi, parol tasodifiy. Parol shifrlanadi va faqat
+#  BIR MARTA ko'rsatiladi — keyin bazadan ham o'qib bo'lmaydi. Unutilsa
+#  yangisi yasaladi.
+#
+#  Bog'lanish user_id orqali: ustozning ismi keyin o'zgarsa ham
+#  guruhlari va oyligi yo'qolmaydi.
+# =====================================================================
+def _free_login(db: Session, base: str) -> str:
+    """Band bo'lmagan login. Takrorlansa oxiriga raqam qo'shiladi."""
+    base = (base or "xodim")[:40]
+    login = base
+    n = 1
+    while db.query(models.User).filter(
+            models.User.username == login).first():
+        n += 1
+        login = f"{base}{n}"
+    return login
+
+
+def _account_state(db: Session, t: models.Teacher) -> dict:
+    u = db.query(models.User).get(t.user_id) if t.user_id else None
+    if not u:
+        # Eski yozuvlar: ism bo'yicha topilsa bog'lab qo'yiladi. Lekin
+        # o'sha akkaunt BOSHQA ustozga biriktirilgan bo'lsa tegilmaydi
+        # — ikki xil odam bitta login bilan kirib, birining oyligini
+        # ikkinchisi ko'rib qolishi mumkin.
+        cand = (db.query(models.User)
+                .filter(models.User.full_name == t.full_name,
+                        models.User.role == roles.TEACHER).all())
+        taken = {tid for (tid,) in db.query(models.Teacher.user_id)
+                 .filter(models.Teacher.user_id.isnot(None)).all()}
+        u = next((x for x in cand if x.id not in taken), None)
+        if u:
+            t.user_id = u.id
+            db.commit()
+    return {
+        "has_account": bool(u),
+        "user_id": u.id if u else None,
+        "login": u.username if u else None,
+        "is_active": bool(u.is_active) if u else False,
+        "role": u.role if u else None,
+    }
+
+
+@app.get("/api/teachers/{tid}/account")
+def teacher_account(tid: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+    t = db.query(models.Teacher).get(tid)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    return _account_state(db, t)
+
+
+@app.post("/api/teachers/{tid}/account")
+def teacher_account_create(tid: int, db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+    """Akkaunt ochadi va login/parolni BIR MARTA qaytaradi."""
+    t = db.query(models.Teacher).get(tid)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+
+    st = _account_state(db, t)
+    if st["has_account"]:
+        raise HTTPException(400, "Bu ustozda akkaunt bor. Parolni "
+                                 "yangilash uchun \"Yangi parol\" bosing.")
+    if not t.is_active:
+        raise HTTPException(400, "Ishdan ketgan ustozga akkaunt "
+                                 "ochilmaydi")
+
+    login = _free_login(db, roles.login_from_name(t.full_name))
+    password = roles.make_password()
+    u = models.User(
+        username=login,
+        password_hash=hash_password(password),
+        full_name=t.full_name,        # ustoz yozuvi bilan bir xil
+        role=roles.TEACHER,
+        branch_id=t.branch_id,
+        phone=t.phone,
+        hired_date=t.hired_date,
+        is_active=True,
+    )
+    db.add(u); db.commit(); db.refresh(u)
+    t.user_id = u.id
+    db.commit()
+
+    audit.log(db, user, entity="user", action="create", entity_id=u.id,
+              entity_label=f"{t.full_name} — ustoz akkaunti",
+              note="Avtomat ochildi")
+    return {
+        "created": True,
+        "login": login,
+        "password": password,
+        "full_name": t.full_name,
+        "url": "https://jony-crm.vercel.app",
+        "warning": ("Parol shu yerda bir marta ko'rsatiladi. Yopilgach "
+                    "uni hech kim — hatto asoschi ham — qayta ko'ra "
+                    "olmaydi. Nusxalab ustozga bering."),
+        **_account_state(db, t),
+    }
+
+
+@app.post("/api/teachers/{tid}/account/reset")
+def teacher_account_reset(tid: int, db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+    """Parolni unutgan bo'lsa — yangisi yasaladi. Login o'zgarmaydi."""
+    t = db.query(models.Teacher).get(tid)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    st = _account_state(db, t)
+    if not st["has_account"]:
+        raise HTTPException(400, "Avval akkaunt oching")
+    u = db.query(models.User).get(st["user_id"])
+    password = roles.make_password()
+    u.password_hash = hash_password(password)
+    u.is_active = True
+    db.commit()
+    audit.log(db, user, entity="user", action="password_reset",
+              entity_id=u.id, entity_label=t.full_name,
+              note="Yangi parol yasaldi")
+    return {
+        "created": False,
+        "login": u.username,
+        "password": password,
+        "full_name": t.full_name,
+        "url": "https://jony-crm.vercel.app",
+        "warning": ("Eski parol endi ishlamaydi. Yangisini ustozga "
+                    "bering — bu oyna yopilgach qayta ko'rinmaydi."),
+        **_account_state(db, t),
+    }

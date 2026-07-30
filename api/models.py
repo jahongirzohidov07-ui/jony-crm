@@ -84,6 +84,11 @@ class Teacher(Base):
     left_date = Column(Date, nullable=True)
     is_active = Column(Integer, default=1)
 
+    # Tizimga kirish hisobi. Ism bo'yicha emas, ID bo'yicha bog'lanadi —
+    # ustozning ismi keyin o'zgarsa ham aloqa uzilmaydi.
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True,
+                     index=True)
+
     # Maksimal yuklama. Bo'sh bo'lsa DARAJADAN olinadi, u ham bo'lmasa
     # roles.TEACHER_MAX_*. Bundan oshirib guruh biriktirib bo'lmaydi.
     max_groups = Column(Integer, nullable=True)

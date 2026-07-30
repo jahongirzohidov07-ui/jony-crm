@@ -115,6 +115,9 @@ class TeacherOut(TeacherCreate):
     grade_since: Optional[date] = None
     remediation_until: Optional[date] = None
     remediation_reason: Optional[str] = None
+    # Tizimga kirish hisobi bor-yo'qligi ro'yxatda ko'rinishi uchun
+    user_id: Optional[int] = None
+    login: Optional[str] = None
 
 
 # ---------- Ustoz darajasi ----------

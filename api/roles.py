@@ -3068,3 +3068,60 @@ def format_of(platform, kind=None):
     if "telegram" in p:
         return "text"
     return kind or "photo"
+
+
+# =====================================================================
+#  AVTOMAT AKKAUNT — login va parol
+#
+#  Ustoz uchun akkaunt bir tugma bilan ochiladi. Login ismdan
+#  yasaladi, parol tasodifiy. Parol bazada faqat shifrlangan holda
+#  saqlanadi — bir marta ko'rsatiladi, keyin qayta o'qib bo'lmaydi.
+# =====================================================================
+
+# O'zbek harflarini lotin login uchun soddalashtirish
+TRANSLIT = {
+    "o'": "o", "g'": "g", "O'": "o", "G'": "g",
+    "ʻ": "", "ʼ": "", "'": "", "`": "", "’": "", "‘": "",
+    "ў": "o", "ғ": "g", "қ": "q", "ҳ": "h",
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e",
+    "ё": "yo", "ж": "j", "з": "z", "и": "i", "й": "y", "к": "k",
+    "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r",
+    "с": "s", "т": "t", "у": "u", "ф": "f", "х": "x", "ц": "ts",
+    "ч": "ch", "ш": "sh", "щ": "sh", "ъ": "", "ы": "i", "ь": "",
+    "э": "e", "ю": "yu", "я": "ya",
+}
+
+
+def translit(text: str) -> str:
+    """Ismni loginga yaroqli lotin harflariga o'giradi."""
+    s = (text or "").strip().lower()
+    for a, b in TRANSLIT.items():
+        s = s.replace(a.lower(), b)
+    return "".join(ch for ch in s if ch.isalnum() or ch in " -")
+
+
+def login_from_name(full_name: str) -> str:
+    """'Bekzod Nabijonov' -> 'bekzod.nabijonov'. Takrorlanish
+    tekshiruvi chaqiruvchi tomonda."""
+    parts = [p for p in translit(full_name).replace("-", " ").split() if p]
+    if not parts:
+        return "xodim"
+    if len(parts) == 1:
+        return parts[0]
+    return f"{parts[0]}.{parts[-1]}"
+
+
+# Chalkashtiradigan belgilar yo'q: i, l, I, 1, o, O, 0 ishlatilmaydi
+PWD_ALPHABET = "abcdefghjkmnpqrstuvwxyz23456789"
+PWD_LENGTH = 8
+
+
+def make_password() -> str:
+    """Telefonda aytib berish oson bo'lsin uchun 4+4 ko'rinishida."""
+    import secrets
+    raw = "".join(secrets.choice(PWD_ALPHABET) for _ in range(PWD_LENGTH))
+    return raw[:4] + "-" + raw[4:]
+
+
+# Kim akkaunt ocha oladi
+ACCOUNT_MANAGE = FULL_ACCESS + [HR_MANAGER]

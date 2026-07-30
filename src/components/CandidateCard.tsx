@@ -1,0 +1,378 @@
+import { useEffect, useState } from "react";
+import { X, Save, FileText } from "lucide-react";
+import { api, type CandidateCard as Card } from "../lib/api";
+import { formatSom } from "../lib/format";
+import { Attachments } from "./Attachments";
+
+/**
+ * Nomzod kartasi. Qaror qabul qilish uchun kerak bo'lgan hammasi bitta
+ * ekranda: CV, tajriba, ballar, kuchli va zaif tomonlari, tavsiyanoma.
+ */
+export function CandidateCard({
+  id,
+  canEdit,
+  onClose,
+  onSaved,
+}: {
+  id: number;
+  canEdit: boolean;
+  onClose: () => void;
+  onSaved?: () => void;
+}) {
+  const [c, setC] = useState<Card | null>(null);
+  const [f, setF] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState(false);
+  const [ok, setOk] = useState(false);
+
+  function load() {
+    api.get<Card>(`/candidates/${id}`).then((d) => {
+      setC(d);
+      setF({
+        cv: d.cv ?? "",
+        experience_years: d.experience_years?.toString() ?? "",
+        workplaces: d.workplaces ?? "",
+        certificates: d.certificates ?? "",
+        language_level: d.language_level ?? "",
+        expected_salary: d.expected_salary?.toString() ?? "",
+        trial_score: d.trial_score?.toString() ?? "",
+        interview_score: d.interview_score?.toString() ?? "",
+        strengths: d.strengths ?? "",
+        weaknesses: d.weaknesses ?? "",
+        reference_note: d.reference_note ?? "",
+        decision: d.decision ?? "pending",
+      });
+    });
+  }
+  useEffect(load, [id]);
+
+  function set(k: string, v: string) {
+    setF({ ...f, [k]: v });
+    setOk(false);
+  }
+
+  async function save() {
+    setSaving(true);
+    await api.put(`/candidates/${id}`, {
+      cv: f.cv || null,
+      experience_years: f.experience_years ? Number(f.experience_years) : null,
+      workplaces: f.workplaces || null,
+      certificates: f.certificates || null,
+      language_level: f.language_level || null,
+      expected_salary: f.expected_salary ? Number(f.expected_salary) : null,
+      trial_score: f.trial_score ? Number(f.trial_score) : null,
+      interview_score: f.interview_score ? Number(f.interview_score) : null,
+      strengths: f.strengths || null,
+      weaknesses: f.weaknesses || null,
+      reference_note: f.reference_note || null,
+      decision: f.decision || "pending",
+    });
+    setSaving(false);
+    setOk(true);
+    load();
+    onSaved?.();
+  }
+
+  const overall =
+    f.trial_score || f.interview_score
+      ? (
+          ([f.trial_score, f.interview_score]
+            .filter(Boolean)
+            .reduce((a, b) => a + Number(b), 0) as number) /
+          [f.trial_score, f.interview_score].filter(Boolean).length
+        ).toFixed(1)
+      : null;
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-start justify-center z-50 p-4 pt-12 overflow-y-auto">
+      <div className="bg-white rounded-xl w-full max-w-3xl shadow-xl">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+          <div>
+            <h3 className="font-semibold text-slate-900">
+              {c?.full_name ?? "Nomzod"}
+            </h3>
+            <p className="text-xs text-slate-500">
+              {[c?.vacancy, c?.branch, c?.phone].filter(Boolean).join(" · ")}
+            </p>
+          </div>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+
+        {!c ? (
+          <p className="text-sm text-slate-400 p-8">Yuklanmoqda...</p>
+        ) : (
+          <div className="p-5 space-y-5">
+            {/* Ballar - eng muhimi tepada */}
+            <div className="grid grid-cols-3 gap-3">
+              <Score
+                label="Probniy dars"
+                value={f.trial_score}
+                onChange={(v) => set("trial_score", v)}
+                canEdit={canEdit}
+              />
+              <Score
+                label="Intervyu"
+                value={f.interview_score}
+                onChange={(v) => set("interview_score", v)}
+                canEdit={canEdit}
+              />
+              <div className="bg-brand-50 rounded-xl border border-brand-200 p-3 text-center">
+                <p className="text-xs text-brand-700 mb-1">Umumiy</p>
+                <p className="text-2xl font-semibold text-brand-800">
+                  {overall ?? "—"}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <Text
+                label="Tajriba (yil)"
+                value={f.experience_years}
+                onChange={(v) => set("experience_years", v)}
+                canEdit={canEdit}
+                type="number"
+              />
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">
+                  Til darajasi
+                </label>
+                {canEdit ? (
+                  <select
+                    value={f.language_level}
+                    onChange={(e) => set("language_level", e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+                  >
+                    <option value="">— tanlang —</option>
+                    {c.language_levels.map((l) => (
+                      <option key={l.key} value={l.key}>
+                        {l.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p className="text-sm text-slate-800 py-2">
+                    {c.language_level_label || "—"}
+                  </p>
+                )}
+              </div>
+              <Text
+                label="Kutilayotgan maosh"
+                value={f.expected_salary}
+                onChange={(v) => set("expected_salary", v)}
+                canEdit={canEdit}
+                type="number"
+                hint={
+                  f.expected_salary
+                    ? formatSom(Number(f.expected_salary))
+                    : undefined
+                }
+              />
+              <div>
+                <label className="block text-xs text-slate-500 mb-1">
+                  Yakuniy qaror
+                </label>
+                {canEdit ? (
+                  <select
+                    value={f.decision}
+                    onChange={(e) => set("decision", e.target.value)}
+                    className={`w-full px-3 py-2 rounded-lg border text-sm font-medium ${
+                      f.decision === "hire"
+                        ? "bg-emerald-50 border-emerald-300 text-emerald-800"
+                        : f.decision === "reject"
+                          ? "bg-red-50 border-red-300 text-red-800"
+                          : "bg-white border-slate-200 text-slate-700"
+                    }`}
+                  >
+                    {c.decisions.map((d) => (
+                      <option key={d.key} value={d.key}>
+                        {d.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p className="text-sm text-slate-800 py-2">
+                    {c.decision_label}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <Area
+              label="CV"
+              value={f.cv}
+              onChange={(v) => set("cv", v)}
+              canEdit={canEdit}
+              rows={3}
+            />
+            <Area
+              label="Ish joylari"
+              value={f.workplaces}
+              onChange={(v) => set("workplaces", v)}
+              canEdit={canEdit}
+              rows={2}
+              placeholder="Bright School (2021-2023), Free English (2023-2026)"
+            />
+            <Area
+              label="Sertifikatlar"
+              value={f.certificates}
+              onChange={(v) => set("certificates", v)}
+              canEdit={canEdit}
+              rows={2}
+              placeholder="CELTA, IELTS 7.5"
+            />
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <Area
+                label="Kuchli tomonlari"
+                value={f.strengths}
+                onChange={(v) => set("strengths", v)}
+                canEdit={canEdit}
+                rows={3}
+              />
+              <Area
+                label="Zaif tomonlari"
+                value={f.weaknesses}
+                onChange={(v) => set("weaknesses", v)}
+                canEdit={canEdit}
+                rows={3}
+              />
+            </div>
+
+            <Area
+              label="Tavsiyanoma"
+              value={f.reference_note}
+              onChange={(v) => set("reference_note", v)}
+              canEdit={canEdit}
+              rows={2}
+              placeholder="Oldingi rahbari nima dedi"
+            />
+
+            <div>
+              <p className="text-xs font-medium text-slate-700 mb-2 flex items-center gap-1.5">
+                <FileText size={13} /> Fayllar — rasm, sertifikat, CV
+              </p>
+              <Attachments entity="candidate" entityId={id} />
+            </div>
+
+            {canEdit && (
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={save}
+                  disabled={saving}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-50"
+                >
+                  <Save size={15} />
+                  {saving ? "Saqlanmoqda..." : "Saqlash"}
+                </button>
+                {ok && (
+                  <span className="text-sm text-emerald-600">Saqlandi</span>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Score({
+  label,
+  value,
+  onChange,
+  canEdit,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  canEdit: boolean;
+}) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-3 text-center">
+      <p className="text-xs text-slate-500 mb-1">{label}</p>
+      {canEdit ? (
+        <input
+          type="number"
+          step="0.5"
+          min="0"
+          max="10"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="—"
+          className="w-full text-2xl font-semibold text-slate-900 text-center outline-none"
+        />
+      ) : (
+        <p className="text-2xl font-semibold text-slate-900">{value || "—"}</p>
+      )}
+    </div>
+  );
+}
+
+function Text({
+  label,
+  value,
+  onChange,
+  canEdit,
+  type = "text",
+  hint,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  canEdit: boolean;
+  type?: string;
+  hint?: string;
+}) {
+  return (
+    <div>
+      <label className="block text-xs text-slate-500 mb-1">{label}</label>
+      {canEdit ? (
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        />
+      ) : (
+        <p className="text-sm text-slate-800 py-2">{value || "—"}</p>
+      )}
+      {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
+    </div>
+  );
+}
+
+function Area({
+  label,
+  value,
+  onChange,
+  canEdit,
+  rows = 2,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  canEdit: boolean;
+  rows?: number;
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label className="block text-xs text-slate-500 mb-1">{label}</label>
+      {canEdit ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          rows={rows}
+          placeholder={placeholder}
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        />
+      ) : (
+        <p className="text-sm text-slate-700 whitespace-pre-wrap">
+          {value || "—"}
+        </p>
+      )}
+    </div>
+  );
+}

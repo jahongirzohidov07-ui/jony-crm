@@ -21,6 +21,8 @@ import {
   GraduationCap as AcademicIcon,
   CalendarDays,
   Archive as ArchiveIcon,
+  ClipboardList,
+  Package,
   MessageSquareWarning,
   X,
 } from "lucide-react";
@@ -38,6 +40,8 @@ import {
   ACADEMIC_VIEW,
   can,
   roleLabel,
+  TASK_ACCESS,
+  INVENTORY_VIEW,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -218,6 +222,12 @@ export default function Layout() {
   // Examiner ham shu yerga kiradi (u asoschiga bo'ysunadi).
   if (can(user?.role, AUDIT_VIEW) || can(user?.role, EXAM_VIEW)) {
     items = [...items, { to: "/audit", label: "Audit", icon: History }];
+  }
+  if (can(user?.role, TASK_ACCESS)) {
+    items = [...items, { to: "/tasks", label: "Vazifalar", icon: ClipboardList }];
+  }
+  if (can(user?.role, INVENTORY_VIEW)) {
+    items = [...items, { to: "/inventory", label: "Ombor", icon: Package }];
   }
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];

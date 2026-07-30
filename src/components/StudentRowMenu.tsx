@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { MoreVertical, Play, RefreshCw, Trash2, X } from "lucide-react";
-import { api, type Student, type Group } from "../lib/api";
+import { api, ApiError, type Student, type Group, type CheckProblem }
+  from "../lib/api";
+import { ScheduleProblems } from "./ScheduleProblems";
 
 /**
  * Guruh ro'yxatidagi o'quvchi yonidagi uch nuqta menyusi:
@@ -22,6 +24,9 @@ export function StudentRowMenu({
   const [moving, setMoving] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  // Sig'im va daraja tekshiruvi natijasi
+  const [problems, setProblems] = useState<CheckProblem[]>([]);
+  const [pendingGroup, setPendingGroup] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   // Tashqariga bosilganda yopiladi.
@@ -41,9 +46,16 @@ export function StudentRowMenu({
       await fn();
       setOpen(false);
       setMoving(false);
+      setProblems([]);
+      setPendingGroup(null);
       onChanged();
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Xatolik");
+      if (e instanceof ApiError && e.problems.length) {
+        setProblems(e.problems);
+        setErr("");
+      } else {
+        setErr(e instanceof Error ? e.message : "Xatolik");
+      }
     } finally {
       setBusy(false);
     }
@@ -52,10 +64,16 @@ export function StudentRowMenu({
   const activate = () =>
     run(() => api.post(`/students/${student.id}/activate`, {}));
 
-  const moveTo = (groupId: number) =>
-    run(() =>
-      api.post(`/students/${student.id}/move-group`, { group_id: groupId })
+  const moveTo = (groupId: number, force = false) => {
+    setPendingGroup(groupId);
+    if (!force) setProblems([]);
+    return run(() =>
+      api.post(
+        `/students/${student.id}/move-group${force ? "?force=true" : ""}`,
+        { group_id: groupId }
+      )
     );
+  };
 
   const removeFromGroup = () => {
     if (
@@ -91,6 +109,19 @@ export function StudentRowMenu({
         <div className="absolute right-0 top-7 z-30 w-60 bg-white rounded-xl border border-slate-200 shadow-lg py-1.5">
           {err && (
             <p className="text-xs text-red-600 px-3 py-1.5">{err}</p>
+          )}
+
+          {problems.length > 0 && (
+            <div className="px-2 pb-1">
+              <ScheduleProblems
+                problems={problems}
+                canForce={problems.every((p) => p.severity !== "block")}
+                saving={busy}
+                onForce={() =>
+                  pendingGroup !== null && moveTo(pendingGroup, true)
+                }
+              />
+            </div>
           )}
 
           {!moving ? (

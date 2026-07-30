@@ -24,6 +24,7 @@ import {
   ClipboardList,
   Package,
   ShieldCheck,
+  Coins,
   MessageSquareWarning,
   X,
 } from "lucide-react";
@@ -44,6 +45,8 @@ import {
   TASK_ACCESS,
   INVENTORY_VIEW,
   CASH_ACCESS,
+  STUDENT,
+  PARENT,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -201,6 +204,13 @@ export default function Layout() {
   // Coin tizimi o'quv jarayoniga tegishli - ustozlar ham ko'radi.
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/gamification", label: "Coin tizimi", icon: Trophy }];
+  }
+  // O'quvchi va ota-ona uchun - o'z coin kabineti
+  if (user?.role === STUDENT || user?.role === PARENT) {
+    items = [
+      ...items,
+      { to: "/my-coins", label: "Mening coinlarim", icon: Coins },
+    ];
   }
   // Moliya - administratorda ham bor, lekin ichida faqat qarzdorlar
   // va oylik hisob-kitob turadi (foyda-zarar unga ko'rinmaydi).

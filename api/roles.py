@@ -2656,3 +2656,131 @@ CONTENT_REQUESTER = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
                                    BRANCH_MANAGER, ACADEMIC_HEAD,
                                    ADMINISTRATOR]
 IDEA_SUBMIT = STAFF_ROLES        # g'oyani har qanday xodim yuboradi
+
+
+# =====================================================================
+#  SMM: SOCIAL INBOX VA ATRIBUTSIYA
+#
+#  Ikkita savolga javob beradi:
+#    1. Kimga javob berilmagan va qancha vaqt kutdi?
+#    2. Qaysi kontent qancha sotuv olib keldi?
+#
+#  Ikkinchisi eng muhimi: "bu video 200 000 ko'rildi" degan gap
+#  o'zicha hech narsani anglatmaydi. "200 000 ko'rishdan 430 murojaat,
+#  118 sifatli lead, 37 sotuv va 15,5 mln so'm tushum" — mana bu gap.
+# =====================================================================
+INBOX_CHANNELS = [
+    ("instagram", "Instagram", "rose"),
+    ("telegram", "Telegram", "sky"),
+    ("tiktok", "TikTok", "slate"),
+    ("youtube", "YouTube", "red"),
+    ("facebook", "Facebook", "sky"),
+    ("website", "Sayt chati", "teal"),
+    ("form", "Formadan", "emerald"),
+]
+CHANNEL_LABELS = {k: lbl for k, lbl, _ in INBOX_CHANNELS}
+CHANNEL_TONE = {k: t for k, _, t in INBOX_CHANNELS}
+
+MESSAGE_KINDS = [
+    ("dm", "Shaxsiy xabar"),
+    ("comment", "Izoh"),
+    ("mention", "Mention"),
+    ("story_reply", "Story javobi"),
+    ("form", "Forma"),
+    ("chat", "Sayt chati"),
+]
+MESSAGE_KIND_LABELS = dict(MESSAGE_KINDS)
+
+INBOX_STATUSES = [
+    ("new", "Yangi", "sky"),
+    ("answered", "Javob berildi", "teal"),
+    ("lead", "Leadga aylantirildi", "emerald"),
+    ("sent_sales", "Sotuvchiga yuborildi", "violet"),
+    ("complaint", "Shikoyat", "red"),
+    ("spam", "Spam", "slate"),
+    ("waiting", "Javob kutilmoqda", "amber"),
+    ("done", "Yakunlandi", "slate"),
+]
+INBOX_STATUS_LABELS = {k: lbl for k, lbl, _ in INBOX_STATUSES}
+INBOX_STATUS_TONE = {k: t for k, _, t in INBOX_STATUSES}
+INBOX_OPEN = ["new", "waiting"]
+
+# ---- Javob vaqti (SLA) ----
+# Ish vaqtidan tashqari kelgan murojaatlar alohida hisoblanadi —
+# aks holda tunda kelgan xabar uchun SMM aybdor bo'lib qolardi.
+SLA_BANDS = [
+    (15, "good", "Yaxshi", "emerald"),
+    (30, "ok", "Qoniqarli", "teal"),
+    (60, "late", "Kechikish", "amber"),
+    (None, "critical", "Kritik", "red"),
+]
+SLA_ALERT_MINUTES = 30       # bundan ko'p javobsiz qolsa dashboardda chiqadi
+INBOX_WORK_START = "09:00"
+INBOX_WORK_END = "20:00"
+
+
+def sla_band(minutes: float | None) -> tuple:
+    """Javob vaqtidan xulosa: (kalit, matn, rang)."""
+    if minutes is None:
+        return ("pending", "Javob kutilmoqda", "slate")
+    for limit, key, label, tone in SLA_BANDS:
+        if limit is None or minutes <= limit:
+            return (key, label, tone)
+    return ("critical", "Kritik", "red")
+
+
+# ---- Tezkor javob shablonlari ----
+QUICK_REPLIES = [
+    ("price", "Kurs narxi",
+     "Assalomu alaykum! Oylik to'lov {narx} so'm. Ichida kitob, "
+     "qo'shimcha darslar va yakshanba tadbirlari bor. Qaysi filial "
+     "sizga qulay?"),
+    ("address", "Filial manzili",
+     "Filiallarimiz: {manzil}. Sizga qaysi biri yaqin?"),
+    ("time", "Dars vaqti",
+     "Guruhlar ertalab va kechqurun bor. Sizga qaysi vaqt qulay?"),
+    ("ielts", "IELTS guruhi",
+     "IELTS guruhimiz bor. Hozirgi darajangizni bilish uchun bepul "
+     "test topshirasiz, keyin mos guruhga qo'yamiz."),
+    ("cefr", "CEFR guruhi",
+     "CEFR guruhimiz bor. Bepul daraja aniqlash testidan boshlaymiz."),
+    ("trial", "Sinov darsi",
+     "Bepul sinov darsiga yozilishingiz mumkin. Ism-familiyangiz va "
+     "telefon raqamingizni yozib qoldiring."),
+    ("phone", "Telefon raqami",
+     "Bog'lanish uchun: {telefon}"),
+    ("signup", "Ro'yxatdan o'tish",
+     "Ro'yxatdan o'tish uchun ism-familiya va telefon raqamingizni "
+     "yozing — administratorimiz bog'lanadi."),
+    ("grant", "Grant",
+     "Grant va chegirmalar haqida batafsil ma'lumot beramiz. "
+     "Telefon raqamingizni qoldiring."),
+    ("mock", "Mock exam",
+     "Mock IELTS testimiz bor — haqiqiy imtihondagidek. Qatnashish "
+     "uchun oldindan yozilish kerak."),
+]
+QUICK_REPLY_LABELS = {k: lbl for k, lbl, _ in QUICK_REPLIES}
+
+# ---- Atributsiya voronkasi ----
+ATTRIBUTION_FUNNEL = [
+    ("reach", "Reach"),
+    ("engagement", "Faol harakat"),
+    ("profile", "Profil tashrifi"),
+    ("click", "Havola bosilishi"),
+    ("dm", "Murojaat"),
+    ("lead", "Lead"),
+    ("qualified", "Sifatli lead"),
+    ("trial", "Sinov darsi"),
+    ("sale", "Sotuv"),
+    ("retained", "30 kun qoldi"),
+]
+FUNNEL_ORDER = [k for k, _ in ATTRIBUTION_FUNNEL]
+ATTR_FUNNEL_LABELS = dict(ATTRIBUTION_FUNNEL)
+
+# Sifatli lead: telefon raqami bor va kursga aniq qiziqqan
+QUALIFIED_STAGES = ["contacted", "trial_scheduled", "trial_done",
+                    "negotiation", "won"]
+RETENTION_DAYS = [30, 90]
+
+INBOX_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
+                              ADMINISTRATOR]

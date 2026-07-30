@@ -1495,3 +1495,44 @@ class MetricIn(BaseModel):
     profile_visits: Optional[int] = None
     link_clicks: Optional[int] = None
     dms: Optional[int] = None
+
+
+# ---------- Social inbox ----------
+class MessageCreate(BaseModel):
+    channel: str = "instagram"
+    kind: str = "dm"
+    external_id: Optional[str] = None
+    author: Optional[str] = None
+    username: Optional[str] = None
+    phone: Optional[str] = None
+    text: Optional[str] = None
+    content_id: Optional[int] = None
+    campaign_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    received_at: Optional[_dt.datetime] = None
+
+
+class MessageReply(BaseModel):
+    text: str
+    status: Optional[str] = None
+
+
+class MessageStatus(BaseModel):
+    status: str
+    note: Optional[str] = None
+
+
+class MessageToLead(BaseModel):
+    full_name: Optional[str] = None
+    phone: Optional[str] = None
+    course: Optional[str] = None
+    branch_id: Optional[int] = None
+    assigned_user_id: Optional[int] = None
+    note: Optional[str] = None
+
+
+class ReplyTemplate(BaseModel):
+    label: Optional[str] = None
+    text: Optional[str] = None
+    is_active: Optional[bool] = None

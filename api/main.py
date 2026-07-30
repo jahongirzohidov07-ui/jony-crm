@@ -227,6 +227,10 @@ def _ensure_new_columns():
         # Nomzodni ikki bosqichda sinash
         "ALTER TABLE lesson_observations ADD COLUMN stage VARCHAR DEFAULT 'before'",
         "ALTER TABLE lesson_observations ADD COLUMN attempt INTEGER DEFAULT 1",
+        # Lead atributsiyasi: qaysi kontentdan kelgani
+        "ALTER TABLE leads ADD COLUMN content_id INTEGER",
+        "ALTER TABLE leads ADD COLUMN campaign_id INTEGER",
+        "ALTER TABLE leads ADD COLUMN social_message_id INTEGER",
     ]
     for stmt in statements:
         try:
@@ -16343,6 +16347,520 @@ def smm_dashboard(
     }
 
 
+# =====================================================================
+#  SOCIAL INBOX
+#
+#  Hamma murojaat bitta oynada. Javob vaqti o'lchanadi va ish vaqtidan
+#  tashqari kelganlari alohida hisoblanadi — tunda kelgan xabar uchun
+#  SMM aybdor bo'lmasligi kerak.
+# =====================================================================
+def _seed_replies(db: Session) -> None:
+    have = {r.key for r in db.query(models.InboxReply).all()}
+    added = False
+    for key, label, text in roles.QUICK_REPLIES:
+        if key in have:
+            continue
+        db.add(models.InboxReply(key=key, label=label, text=text,
+                                 is_active=1))
+        added = True
+    if added:
+        db.commit()
+
+
+def _is_off_hours(when: datetime) -> bool:
+    start = roles.time_to_minutes(roles.INBOX_WORK_START) or 0
+    end = roles.time_to_minutes(roles.INBOX_WORK_END) or 1440
+    mins = when.hour * 60 + when.minute
+    return mins < start or mins > end
+
+
+def _msg_out(db: Session, m: models.SocialMessage,
+             users: dict | None = None) -> dict:
+    users = users if users is not None else {
+        u.id: u.full_name for u in db.query(models.User).all()}
+    waiting = None
+    if not m.first_reply_at and m.received_at:
+        waiting = round(
+            (datetime.utcnow() - m.received_at).total_seconds() / 60, 1)
+    band, band_label, tone = roles.sla_band(
+        m.reply_minutes if m.first_reply_at else None)
+    return {
+        "id": m.id,
+        "channel": m.channel,
+        "channel_label": roles.CHANNEL_LABELS.get(m.channel, m.channel),
+        "channel_tone": roles.CHANNEL_TONE.get(m.channel, "slate"),
+        "kind": m.kind,
+        "kind_label": roles.MESSAGE_KIND_LABELS.get(m.kind, m.kind),
+        "author": m.author or m.username or "—",
+        "username": m.username,
+        "phone": m.phone,
+        "text": m.text,
+        "content_id": m.content_id,
+        "content": m.content.title if m.content else None,
+        "content_code": m.content.content_id if m.content else None,
+        "course": m.course,
+        "status": m.status,
+        "status_label": roles.INBOX_STATUS_LABELS.get(m.status, m.status),
+        "status_tone": roles.INBOX_STATUS_TONE.get(m.status, "slate"),
+        "assigned": users.get(m.assigned_to),
+        "lead_id": m.lead_id,
+        "received_at": m.received_at.isoformat() if m.received_at else None,
+        "first_reply_at": (m.first_reply_at.isoformat()
+                           if m.first_reply_at else None),
+        "reply_minutes": m.reply_minutes,
+        "waiting_minutes": waiting,
+        "off_hours": bool(m.off_hours),
+        "sla": band, "sla_label": band_label, "sla_tone": tone,
+        "overdue": bool(waiting and waiting > roles.SLA_ALERT_MINUTES),
+        "reply_text": m.reply_text,
+        "replied_by": m.replied_by,
+    }
+
+
+@app.get("/api/inbox")
+def list_inbox(
+    status: str | None = None,
+    channel: str | None = None,
+    content_id: int | None = None,
+    only_open: bool = False,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INBOX_ACCESS)),
+):
+    """Barcha murojaatlar bitta oynada."""
+    _seed_replies(db)
+    q = db.query(models.SocialMessage)
+    if status:
+        q = q.filter(models.SocialMessage.status == status)
+    if only_open:
+        q = q.filter(models.SocialMessage.status.in_(roles.INBOX_OPEN))
+    if channel:
+        q = q.filter(models.SocialMessage.channel == channel)
+    if content_id:
+        q = q.filter(models.SocialMessage.content_id == content_id)
+    rows = (q.order_by(models.SocialMessage.received_at.desc())
+            .limit(300).all())
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    out = [_msg_out(db, m, users) for m in rows]
+
+    everything = db.query(models.SocialMessage).all()
+    counts: dict = {}
+    for m in everything:
+        counts[m.status] = counts.get(m.status, 0) + 1
+
+    # SLA: faqat ish vaqtida kelganlar bo'yicha
+    answered = [m for m in everything if m.first_reply_at and not m.off_hours]
+    in_time = [m for m in answered
+               if (m.reply_minutes or 0) <= roles.SLA_ALERT_MINUTES]
+    sla_pct = round(len(in_time) / len(answered) * 100, 1) if answered else 0.0
+    avg = (round(sum(m.reply_minutes or 0 for m in answered) / len(answered), 1)
+           if answered else 0.0)
+
+    return {
+        "rows": out,
+        "counts": counts,
+        "open": len([m for m in everything if m.status in roles.INBOX_OPEN]),
+        "overdue": len([r for r in out if r["overdue"]]),
+        "sla_percent": sla_pct,
+        "avg_minutes": avg,
+        "answered": len(answered),
+        "off_hours": len([m for m in everything if m.off_hours]),
+        "statuses": [{"key": k, "label": lbl, "tone": t,
+                      "count": counts.get(k, 0)}
+                     for k, lbl, t in roles.INBOX_STATUSES],
+        "channels": [{"key": k, "label": lbl, "tone": t}
+                     for k, lbl, t in roles.INBOX_CHANNELS],
+        "sla_alert": roles.SLA_ALERT_MINUTES,
+        "work_hours": f"{roles.INBOX_WORK_START}–{roles.INBOX_WORK_END}",
+        "templates": [{"id": r.id, "key": r.key, "label": r.label,
+                       "text": r.text}
+                      for r in db.query(models.InboxReply)
+                      .filter(models.InboxReply.is_active == 1).all()],
+        "hint": ("Ish vaqtidan tashqari kelgan murojaatlar SLA hisobiga "
+                 "kirmaydi — tunda kelgan xabar uchun aybdor bo'lmaysiz."),
+    }
+
+
+@app.post("/api/inbox")
+def add_message(
+    payload: schemas.MessageCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INBOX_ACCESS)),
+):
+    """Murojaatni qo'lda kiritish. Integratsiya ulanganda tizim
+    o'zi tortadi."""
+    if payload.external_id:
+        dup = (db.query(models.SocialMessage)
+               .filter(models.SocialMessage.external_id
+                       == payload.external_id).first())
+        if dup:
+            return _msg_out(db, dup)
+    when = payload.received_at or datetime.utcnow()
+    m = models.SocialMessage(
+        **payload.model_dump(exclude={"received_at"}),
+        received_at=when, status="new",
+        off_hours=1 if _is_off_hours(when) else 0)
+    db.add(m)
+    db.commit()
+    return _msg_out(db, m)
+
+
+@app.post("/api/inbox/{mid}/reply")
+def reply_message(
+    mid: int,
+    payload: schemas.MessageReply,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INBOX_ACCESS)),
+):
+    """Javob berildi deb belgilash. Birinchi javob vaqti bir marta
+    yoziladi — keyingi javoblar SLA'ni o'zgartirmaydi."""
+    m = db.query(models.SocialMessage).get(mid)
+    if not m:
+        raise HTTPException(404, "Murojaat topilmadi")
+    now = datetime.utcnow()
+    if not m.first_reply_at:
+        m.first_reply_at = now
+        if m.received_at:
+            m.reply_minutes = round(
+                (now - m.received_at).total_seconds() / 60, 1)
+    m.reply_text = payload.text
+    m.replied_by = user.full_name
+    m.status = payload.status or "answered"
+    db.commit()
+    return _msg_out(db, m)
+
+
+@app.post("/api/inbox/{mid}/status")
+def set_message_status(
+    mid: int,
+    payload: schemas.MessageStatus,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INBOX_ACCESS)),
+):
+    m = db.query(models.SocialMessage).get(mid)
+    if not m:
+        raise HTTPException(404, "Murojaat topilmadi")
+    if payload.status not in roles.INBOX_STATUS_LABELS:
+        raise HTTPException(400, "Bunday holat yo'q")
+    m.status = payload.status
+    if payload.note:
+        m.note = payload.note
+    db.commit()
+    return _msg_out(db, m)
+
+
+@app.post("/api/inbox/{mid}/lead")
+def message_to_lead(
+    mid: int,
+    payload: schemas.MessageToLead,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INBOX_ACCESS)),
+):
+    """Murojaatni bir tugma bilan leadga aylantiradi. Kontent va
+    kampaniya ham ko'chadi — shundan keyin "qaysi kontent sotuv olib
+    keldi" savoliga javob bo'ladi."""
+    m = db.query(models.SocialMessage).get(mid)
+    if not m:
+        raise HTTPException(404, "Murojaat topilmadi")
+    if m.lead_id:
+        raise HTTPException(400, "Bu murojaat allaqachon leadga "
+                                 "aylantirilgan")
+
+    name = (payload.full_name or m.author or m.username or "").strip()
+    if not name:
+        raise HTTPException(400, "Ism yozing")
+
+    lead = models.Lead(
+        full_name=name,
+        phone=payload.phone or m.phone,
+        source="instagram" if m.channel == "instagram" else "telegram"
+        if m.channel == "telegram" else "other",
+        stage="new",
+        note=(payload.note or m.text),
+        branch_id=payload.branch_id or m.branch_id,
+        assigned_user_id=payload.assigned_user_id,
+        content_id=m.content_id,
+        campaign_id=m.campaign_id,
+        social_message_id=m.id,
+    )
+    db.add(lead)
+    db.commit()
+    db.refresh(lead)
+    _ensure_public_id(db, "lead", lead)
+    m.lead_id = lead.id
+    m.status = "lead"
+    db.commit()
+    return {"ok": True, "lead_id": lead.id,
+            "public_id": lead.public_id,
+            "message": "Lead yaratildi va sotuv bo'limiga tushdi"}
+
+
+@app.put("/api/inbox/templates/{tid}")
+def update_template(
+    tid: int,
+    payload: schemas.ReplyTemplate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    t = db.query(models.InboxReply).get(tid)
+    if not t:
+        raise HTTPException(404, "Shablon topilmadi")
+    for k, v in payload.model_dump(exclude_unset=True).items():
+        setattr(t, k, 1 if k == "is_active" and v else
+                (0 if k == "is_active" else v))
+    db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  CONTENT ATTRIBUTION
+#
+#  "Bu video 200 000 ko'rildi" degan gap o'zicha hech narsani
+#  anglatmaydi. Tizim butun yo'lni ko'rsatadi:
+#
+#    kontent -> profil tashrifi -> havola -> murojaat -> lead ->
+#    sifatli lead -> sinov darsi -> to'lov -> 30/90 kun retention
+# =====================================================================
+def _content_funnel(db: Session, content_ids: list, *,
+                    metrics: dict | None = None) -> dict:
+    """Bir yoki bir nechta kontent bo'yicha butun voronka."""
+    if metrics is None:
+        metrics = {m.content_id: m for m in db.query(models.ContentMetric)
+                   .filter(models.ContentMetric.content_id.in_(
+                       content_ids or [-1])).all()}
+
+    reach = sum((metrics[c].reach or 0) for c in content_ids if c in metrics)
+    views = sum((metrics[c].views or 0) for c in content_ids if c in metrics)
+    profile = sum((metrics[c].profile_visits or 0)
+                  for c in content_ids if c in metrics)
+    clicks = sum((metrics[c].link_clicks or 0)
+                 for c in content_ids if c in metrics)
+    w = roles.ENGAGEMENT_WEIGHT_MAP
+    eng = 0
+    for c in content_ids:
+        m = metrics.get(c)
+        if not m:
+            continue
+        eng += ((m.likes or 0) * w["like"] + (m.comments or 0) * w["comment"]
+                + (m.saves or 0) * w["save"] + (m.shares or 0) * w["share"]
+                + (m.dms or 0) * w["dm"])
+
+    msgs = (db.query(models.SocialMessage)
+            .filter(models.SocialMessage.content_id.in_(content_ids or [-1]))
+            .all())
+    leads = (db.query(models.Lead)
+             .filter(models.Lead.content_id.in_(content_ids or [-1])).all())
+
+    qualified = [l for l in leads
+                 if l.stage in roles.QUALIFIED_STAGES or l.phone]
+    trial = [l for l in leads if l.stage in ("trial_scheduled", "trial_done",
+                                             "negotiation", "won")]
+    won = [l for l in leads if l.converted_student_id]
+
+    # Sotuv va tushum: leaddan chiqqan o'quvchining to'lovlari
+    sids = [l.converted_student_id for l in won if l.converted_student_id]
+    revenue = 0.0
+    first_revenue = 0.0
+    retained = {d: 0 for d in roles.RETENTION_DAYS}
+    today = date.today()
+    for sid in sids:
+        pays = (db.query(models.Payment)
+                .filter(models.Payment.student_id == sid,
+                        models.Payment.kind == "payment")
+                .order_by(models.Payment.created_at).all())
+        revenue += sum(p.amount or 0 for p in pays)
+        if pays:
+            first_revenue += pays[0].amount or 0
+        s = db.query(models.Student).get(sid)
+        if not s or not s.enrolled_date:
+            continue
+        for d in roles.RETENTION_DAYS:
+            end = s.left_date or today
+            if (end - s.enrolled_date).days >= d:
+                retained[d] += 1
+
+    steps = [
+        ("reach", reach), ("engagement", eng), ("profile", profile),
+        ("click", clicks), ("dm", len(msgs)), ("lead", len(leads)),
+        ("qualified", len(qualified)), ("trial", len(trial)),
+        ("sale", len(won)), ("retained", retained.get(30, 0)),
+    ]
+    out_steps = []
+    prev = None
+    for key, val in steps:
+        conv = (round(val / prev * 100, 1) if prev else None)
+        out_steps.append({
+            "key": key, "label": roles.ATTR_FUNNEL_LABELS[key],
+            "value": val, "from_prev": conv,
+        })
+        prev = val if val else prev
+
+    return {
+        "reach": reach, "views": views, "engagement": eng,
+        "profile_visits": profile, "link_clicks": clicks,
+        "messages": len(msgs), "leads": len(leads),
+        "qualified": len(qualified), "trials": len(trial),
+        "sales": len(won),
+        "revenue": round(revenue, 2),
+        "first_revenue": round(first_revenue, 2),
+        "retained_30": retained.get(30, 0),
+        "retained_90": retained.get(90, 0),
+        "funnel": out_steps,
+        "lead_rate": (round(len(leads) / len(msgs) * 100, 1)
+                      if msgs else 0.0),
+        "qualified_rate": (round(len(qualified) / len(leads) * 100, 1)
+                           if leads else 0.0),
+        "sale_rate": (round(len(won) / len(qualified) * 100, 1)
+                      if qualified else 0.0),
+    }
+
+
+@app.get("/api/content/{cid}/attribution")
+def content_attribution(
+    cid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Bitta kontentning biznes natijasi."""
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    f = _content_funnel(db, [cid])
+    m = (db.query(models.ContentMetric)
+         .filter(models.ContentMetric.content_id == cid).first())
+
+    story = (f"{f['reach']:,} ko'rishdan {f['messages']} murojaat, "
+             f"{f['qualified']} sifatli lead, {f['sales']} sotuv va "
+             f"{round(f['revenue']):,} so'm tushum keldi").replace(",", " ")
+
+    return {
+        "content": _content_out(db, c),
+        "metrics": {
+            "reach": m.reach if m else 0,
+            "impressions": m.impressions if m else 0,
+            "views": m.views if m else 0,
+            "watch_time": m.watch_time if m else 0,
+            "completion": m.completion if m else 0,
+            "likes": m.likes if m else 0,
+            "comments": m.comments if m else 0,
+            "saves": m.saves if m else 0,
+            "shares": m.shares if m else 0,
+            "profile_visits": m.profile_visits if m else 0,
+            "link_clicks": m.link_clicks if m else 0,
+            "dms": m.dms if m else 0,
+        },
+        **f,
+        "story": story,
+        "goal": c.goal,
+        "goal_label": roles.GOAL_LABELS.get(c.goal or "", "—"),
+        "goal_metric": roles.GOAL_METRIC_LABELS.get(
+            roles.GOAL_METRIC.get(c.goal or "", ""), "—"),
+        "hint": ("Maqsad qanday bo'lsa, natija ham shunga qarab "
+                 "baholanadi. Awareness kontentini sotuv bilan "
+                 "o'lchash — noto'g'ri."),
+    }
+
+
+@app.get("/api/smm/attribution")
+def smm_attribution(
+    months: int = 3,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Qaysi kontent ishladi, qaysi biri yo'q — sotuv bo'yicha."""
+    since = date.today() - timedelta(days=30 * max(1, months))
+    rows = (db.query(models.Content)
+            .filter(models.Content.status.in_(roles.CONTENT_LIVE))
+            .filter((models.Content.planned_date >= since)
+                    | (models.Content.planned_date.is_(None))).all())
+    metrics = {m.content_id: m for m in db.query(models.ContentMetric).all()}
+
+    out = []
+    for c in rows:
+        f = _content_funnel(db, [c.id], metrics=metrics)
+        out.append({
+            "id": c.id, "code": c.content_id, "title": c.title,
+            "platform_label": roles.PLATFORM_LABELS.get(c.platform or "", "—"),
+            "pillar": c.pillar,
+            "pillar_label": roles.PILLAR_LABELS.get(c.pillar or "", "—"),
+            "pillar_tone": roles.PILLAR_TONE.get(c.pillar or "", "slate"),
+            "goal_label": roles.GOAL_LABELS.get(c.goal or "", "—"),
+            "date": c.planned_date.isoformat() if c.planned_date else None,
+            "reach": f["reach"], "engagement": f["engagement"],
+            "messages": f["messages"], "leads": f["leads"],
+            "qualified": f["qualified"], "sales": f["sales"],
+            "revenue": f["revenue"], "retained_30": f["retained_30"],
+        })
+
+    total = _content_funnel(db, [c.id for c in rows], metrics=metrics)
+
+    # Yo'nalish kesimida
+    by_pillar: dict = {}
+    for r in out:
+        p = by_pillar.setdefault(r["pillar"] or "—", {
+            "pillar": r["pillar"], "label": r["pillar_label"],
+            "tone": r["pillar_tone"], "count": 0, "reach": 0,
+            "leads": 0, "sales": 0, "revenue": 0.0,
+        })
+        p["count"] += 1
+        p["reach"] += r["reach"]
+        p["leads"] += r["leads"]
+        p["sales"] += r["sales"]
+        p["revenue"] += r["revenue"]
+
+    out.sort(key=lambda r: (-r["revenue"], -r["sales"], -r["leads"]))
+    return {
+        "rows": out,
+        "total": total,
+        "by_pillar": sorted(by_pillar.values(),
+                            key=lambda r: -r["revenue"]),
+        "best": out[:5],
+        "weak": [r for r in out if r["reach"] > 0 and r["leads"] == 0][:5],
+        "months": months,
+        "hint": ("Eng ko'p ko'rilgan kontent eng ko'p pul olib kelmasligi "
+                 "mumkin. Shuning uchun ro'yxat tushum bo'yicha "
+                 "saralangan."),
+    }
+
+
+@app.get("/api/campaigns")
+def list_campaigns(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Kampaniyalar va ularning voronkasi."""
+    rows = (db.query(models.Campaign)
+            .order_by(models.Campaign.start_date.desc()).limit(100).all())
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    out = []
+    for c in rows:
+        cids = [x.id for x in db.query(models.Content)
+                .filter(models.Content.campaign_id == c.id).all()]
+        f = _content_funnel(db, cids)
+        out.append({
+            "id": c.id, "name": c.name,
+            "goal": c.goal,
+            "goal_label": roles.GOAL_LABELS.get(c.goal or "", "—"),
+            "course": c.course,
+            "branch": branches.get(c.branch_id, "—"),
+            "offer": c.offer,
+            "start_date": c.start_date.isoformat() if c.start_date else None,
+            "end_date": c.end_date.isoformat() if c.end_date else None,
+            "contents": len(cids),
+            "target_leads": c.target_leads,
+            "target_sales": c.target_sales,
+            "leads": f["leads"], "qualified": f["qualified"],
+            "sales": f["sales"], "revenue": f["revenue"],
+            "reach": f["reach"],
+            "funnel": f["funnel"],
+            "lead_plan_percent": (
+                round(f["leads"] / c.target_leads * 100, 1)
+                if c.target_leads else None),
+            "is_active": bool(c.is_active),
+            "conclusion": c.conclusion,
+        })
+    return {"rows": out}
+
+
 # Ligalar va XP qoidalari fayl oxirida to'ldiriladi: _seed_gamification
 # shu yerda allaqachon aniqlangan bo'ladi. Har safar ishga tushganda
 # YETISHMAYOTGANI qo'shiladi, mavjudiga tegilmaydi.
@@ -16351,6 +16869,7 @@ try:
     with _GS(engine) as _db:
         _seed_gamification(_db)
         _seed_rubrics(_db)
+        _seed_replies(_db)
 except Exception:
     pass
 

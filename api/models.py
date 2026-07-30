@@ -373,6 +373,12 @@ class Lead(Base):
     note = Column(Text, nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     assigned_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    # Qaysi kontentdan kelgani. Sotuvgacha bo'lgan yo'l shu orqali
+    # kuzatiladi: kontent -> murojaat -> lead -> to'lov.
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=True, index=True)
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=True)
+    social_message_id = Column(Integer, nullable=True)
     converted_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -1969,3 +1975,58 @@ class MediaAsset(Base):
     consent_until = Column(Date, nullable=True)
     can_download = Column(Integer, default=1)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  SOCIAL INBOX
+#
+#  DM, izoh, mention va story javoblari bitta oynaga tushadi. Har bir
+#  murojaatning javob vaqti o'lchanadi — kim qancha kutgani ko'rinib
+#  turadi.
+# =====================================================================
+class SocialMessage(Base):
+    __tablename__ = "social_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    channel = Column(String, nullable=False, default="instagram", index=True)
+    kind = Column(String, nullable=False, default="dm")
+    external_id = Column(String, unique=True, index=True, nullable=True)
+    author = Column(String, nullable=True)
+    username = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    text = Column(Text, nullable=True)
+    # Qaysi kontentdan kelgani — atributsiyaning boshlanishi
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=True, index=True)
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    course = Column(String, nullable=True)
+
+    status = Column(String, nullable=False, default="new", index=True)
+    assigned_to = Column(Integer, ForeignKey("users.id"), nullable=True)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=True)
+
+    received_at = Column(DateTime, default=datetime.utcnow, index=True)
+    first_reply_at = Column(DateTime, nullable=True)
+    reply_minutes = Column(Float, nullable=True)
+    # Ish vaqtidan tashqari kelganmi — SLA'da alohida hisoblanadi
+    off_hours = Column(Integer, default=0)
+    reply_text = Column(Text, nullable=True)
+    replied_by = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    content = relationship("Content")
+
+
+class InboxReply(Base):
+    """Tezkor javob shabloni. SMM tanlaydi, kerak bo'lsa o'zgartiradi."""
+    __tablename__ = "inbox_replies"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    label = Column(String, nullable=False)
+    text = Column(Text, nullable=False)
+    is_active = Column(Integer, default=1)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)

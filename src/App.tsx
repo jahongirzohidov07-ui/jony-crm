@@ -20,6 +20,8 @@ import Complaints from "./pages/Complaints";
 import Academic from "./pages/Academic";
 import Timetable from "./pages/Timetable";
 import Archive from "./pages/Archive";
+import Tasks from "./pages/Tasks";
+import Inventory from "./pages/Inventory";
 import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
@@ -57,6 +59,8 @@ function AppRoutes() {
         <Route path="audit" element={<Audit />} />
         <Route path="timetable" element={<Timetable />} />
         <Route path="archive" element={<Archive />} />
+        <Route path="tasks" element={<Tasks />} />
+        <Route path="inventory" element={<Inventory />} />
         <Route path="academic" element={<Academic />} />
         <Route path="hr" element={<Hr />} />
         <Route path="marketing" element={<Marketing />} />

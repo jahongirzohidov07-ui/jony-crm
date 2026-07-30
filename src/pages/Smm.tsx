@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import {
   Megaphone, AlertTriangle, Plus, X, Info, Calendar,
-  Lightbulb, Inbox, ExternalLink,
+  Lightbulb, Inbox, ExternalLink, MessageSquare, TrendingUp,
 } from "lucide-react";
 import {
   api, type ContentMeta, type ContentList, type ContentRow,
   type ContentFull, type SmmDashboard, type IdeaRow,
-  type RequestRow, type Branch,
+  type RequestRow, type Branch, type InboxList, type InboxRow,
+  type AttributionReport, type Attribution, type CampaignRow,
+  type FunnelStep,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, can } from "../lib/roles";
+import {
+  SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, INBOX_ACCESS, can,
+} from "../lib/roles";
 import { formatDate } from "../lib/format";
 
 const TONE: Record<string, string> = {
@@ -26,30 +30,37 @@ const TONE: Record<string, string> = {
   brown: "bg-yellow-800/20 text-yellow-900",
 };
 
-type Tab = "dashboard" | "calendar" | "ideas" | "requests";
+type Tab = "dashboard" | "calendar" | "inbox" | "attribution"
+  | "ideas" | "requests";
 
 const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "dashboard", label: "Bugun", icon: Megaphone },
   { key: "calendar", label: "Kontent taqvimi", icon: Calendar },
+  { key: "inbox", label: "Murojaatlar", icon: MessageSquare },
+  { key: "attribution", label: "Natija", icon: TrendingUp },
   { key: "ideas", label: "G'oyalar", icon: Lightbulb },
   { key: "requests", label: "So'rovlar", icon: Inbox },
 ];
 
 export default function Smm() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("dashboard");
   const isSmm = can(user?.role, SMM_ACCESS);
+  const seesInbox = can(user?.role, INBOX_ACCESS);
+  const [tab, setTab] = useState<Tab>(
+    isSmm ? "dashboard" : seesInbox ? "inbox" : "ideas");
 
-  if (!can(user?.role, CONTENT_REQUESTER) && !can(user?.role, IDEA_SUBMIT))
+  if (!can(user?.role, CONTENT_REQUESTER) && !can(user?.role, IDEA_SUBMIT)
+      && !seesInbox)
     return (
       <p className="text-sm text-slate-500 py-10 text-center">
         Bu bo'limga ruxsatingiz yo'q.
       </p>
     );
 
-  const shown = TABS.filter(
-    (t) => isSmm || t.key === "ideas" || t.key === "requests"
-  );
+  const shown = TABS.filter((t) => {
+    if (t.key === "inbox" || t.key === "attribution") return seesInbox;
+    return isSmm || t.key === "ideas" || t.key === "requests";
+  });
 
   return (
     <div>
@@ -79,6 +90,8 @@ export default function Smm() {
 
       {tab === "dashboard" && <DashboardTab />}
       {tab === "calendar" && <CalendarTab />}
+      {tab === "inbox" && <InboxTab />}
+      {tab === "attribution" && <AttributionTab />}
       {tab === "ideas" && <IdeasTab isSmm={isSmm} />}
       {tab === "requests" && <RequestsTab isSmm={isSmm} />}
     </div>
@@ -1706,6 +1719,616 @@ function NewRequest({
             {saving ? "Yuborilmoqda..." : "Yuborish"}
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================ Inbox
+function InboxTab() {
+  const [d, setD] = useState<InboxList | null>(null);
+  const [status, setStatus] = useState("");
+  const [channel, setChannel] = useState("");
+  const [open, setOpen] = useState<InboxRow | null>(null);
+
+  const load = () => {
+    const q = new URLSearchParams();
+    if (status) q.set("status", status);
+    if (channel) q.set("channel", channel);
+    api.get<InboxList>("/inbox?" + q.toString()).then(setD);
+  };
+  useEffect(load, [status, channel]);
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  const cards = [
+    { label: "Javob kutmoqda", value: d.open, tone: d.open ? "amber" : "emerald" },
+    { label: "Kechikkan", value: d.overdue, tone: d.overdue ? "red" : "emerald" },
+    { label: "SLA bajarildi", value: d.sla_percent + "%", tone: d.sla_percent >= 80 ? "emerald" : d.sla_percent >= 50 ? "amber" : "red" },
+    { label: "O'rtacha javob", value: d.avg_minutes ? d.avg_minutes + " daq" : "—", tone: "slate" },
+    { label: "Ish vaqtidan tashqari", value: d.off_hours, tone: "violet" },
+  ];
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+        {cards.map((c) => (
+          <div key={c.label} className="bg-white border border-slate-200 rounded-xl p-3">
+            <p className="text-xs text-slate-500 mb-1">{c.label}</p>
+            <p className={`text-xl font-semibold ${
+              c.tone === "red" ? "text-red-600"
+              : c.tone === "amber" ? "text-amber-600"
+              : c.tone === "emerald" ? "text-emerald-600"
+              : c.tone === "violet" ? "text-violet-600" : "text-slate-900"
+            }`}>{c.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <button
+          onClick={() => setStatus("")}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+            !status ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600"
+          }`}
+        >
+          Hammasi
+        </button>
+        {d.statuses.filter((s) => s.count > 0).map((s) => (
+          <button
+            key={s.key}
+            onClick={() => setStatus(s.key === status ? "" : s.key)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+              status === s.key ? "bg-slate-800 text-white" : TONE[s.tone] || TONE.slate
+            }`}
+          >
+            {s.label} {s.count}
+          </button>
+        ))}
+        <select
+          value={channel}
+          onChange={(e) => setChannel(e.target.value)}
+          className="ml-auto border border-slate-200 rounded-lg px-2 py-1.5 text-xs"
+        >
+          <option value="">Barcha kanallar</option>
+          {d.channels.map((c) => (
+            <option key={c.key} value={c.key}>{c.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <p className="text-xs text-slate-500 mb-3 flex items-center gap-1.5">
+        <Info size={13} className="text-slate-400 shrink-0" />
+        {d.hint}
+      </p>
+
+      {d.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Murojaat yo'q.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {d.rows.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setOpen(m)}
+              className={`w-full text-left bg-white border rounded-xl p-3.5 hover:border-slate-300 transition ${
+                m.overdue ? "border-red-200 bg-red-50/40" : "border-slate-200"
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${TONE[m.channel_tone] || TONE.slate}`}>
+                      {m.channel_label}
+                    </span>
+                    <span className="text-xs text-slate-400">{m.kind_label}</span>
+                    <span className="text-sm font-medium text-slate-900">
+                      {m.author}
+                    </span>
+                    {m.username && (
+                      <span className="text-xs text-slate-400">{m.username}</span>
+                    )}
+                    {m.off_hours && (
+                      <span className="text-[10px] text-violet-600">tunda keldi</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-slate-600 line-clamp-2">
+                    {m.text || "—"}
+                  </p>
+                  {m.content && (
+                    <p className="text-xs text-slate-400 mt-1 truncate">
+                      Kontent: {m.content_code} {m.content}
+                    </p>
+                  )}
+                </div>
+                <div className="text-right shrink-0">
+                  <span className={`px-2 py-0.5 rounded text-[11px] font-medium ${TONE[m.status_tone] || TONE.slate}`}>
+                    {m.status_label}
+                  </span>
+                  <p className={`text-xs mt-1.5 ${
+                    m.sla_tone === "red" ? "text-red-600"
+                    : m.sla_tone === "amber" ? "text-amber-600"
+                    : m.sla_tone === "emerald" ? "text-emerald-600" : "text-slate-400"
+                  }`}>
+                    {m.sla_label}
+                  </p>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {open && (
+        <MessageDrawer
+          row={open}
+          templates={d.templates}
+          statuses={d.statuses}
+          onClose={() => setOpen(null)}
+          onDone={() => { setOpen(null); load(); }}
+        />
+      )}
+    </div>
+  );
+}
+
+function MessageDrawer({
+  row, templates, statuses, onClose, onDone,
+}: {
+  row: InboxRow;
+  templates: { id: number; key: string; label: string; text: string }[];
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const [text, setText] = useState(row.reply_text || "");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [phone, setPhone] = useState(row.phone || "");
+  const [course, setCourse] = useState(row.course || "");
+
+  const reply = async () => {
+    if (!text.trim()) return;
+    setBusy(true); setErr("");
+    try {
+      await api.post(`/inbox/${row.id}/reply`, { text: text.trim() });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+
+  const setStatus = async (s: string) => {
+    setBusy(true); setErr("");
+    try {
+      await api.post(`/inbox/${row.id}/status`, { status: s });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+
+  const makeLead = async () => {
+    setBusy(true); setErr("");
+    try {
+      await api.post(`/inbox/${row.id}/lead`, {
+        phone: phone.trim() || undefined,
+        course: course.trim() || undefined,
+      });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex justify-end" onClick={onClose}>
+      <div
+        className="bg-white w-full max-w-md h-full overflow-y-auto p-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${TONE[row.channel_tone] || TONE.slate}`}>
+                {row.channel_label}
+              </span>
+              <span className="text-xs text-slate-400">{row.kind_label}</span>
+            </div>
+            <h3 className="text-base font-semibold text-slate-900">{row.author}</h3>
+            {row.username && (
+              <p className="text-xs text-slate-400">{row.username}</p>
+            )}
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="bg-slate-50 rounded-xl p-3 mb-4">
+          <p className="text-sm text-slate-700 whitespace-pre-wrap">{row.text || "—"}</p>
+          <p className="text-xs text-slate-400 mt-2">
+            {row.received_at ? formatDate(row.received_at) : ""}
+            {row.waiting_minutes != null && ` · ${row.waiting_minutes} daqiqa kutmoqda`}
+            {row.reply_minutes != null && ` · ${row.reply_minutes} daqiqada javob berildi`}
+          </p>
+        </div>
+
+        {row.content && (
+          <p className="text-xs text-slate-500 mb-4">
+            Bu murojaat <b>{row.content}</b> kontentidan keldi.
+          </p>
+        )}
+
+        {row.reply_text && (
+          <div className="border-l-2 border-emerald-300 pl-3 mb-4">
+            <p className="text-xs text-emerald-700 mb-0.5">
+              {row.replied_by} javob berdi
+            </p>
+            <p className="text-sm text-slate-600">{row.reply_text}</p>
+          </div>
+        )}
+
+        <p className="text-xs font-medium text-slate-600 mb-1.5">Tayyor javoblar</p>
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {templates.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setText(t.text)}
+              className="px-2 py-1 rounded-lg bg-slate-100 text-slate-600 text-[11px] hover:bg-slate-200"
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={4}
+          placeholder="Javob matni…"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2"
+        />
+        <button
+          onClick={reply}
+          disabled={busy || !text.trim()}
+          className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40 mb-4"
+        >
+          Javobni yozib qo'yish
+        </button>
+
+        {!row.lead_id ? (
+          leadOpen ? (
+            <div className="border border-slate-200 rounded-xl p-3 mb-4">
+              <p className="text-sm font-medium text-slate-700 mb-2">Leadga aylantirish</p>
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Telefon"
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2"
+              />
+              <input
+                value={course}
+                onChange={(e) => setCourse(e.target.value)}
+                placeholder="Yo'nalish"
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2"
+              />
+              <button
+                onClick={makeLead}
+                disabled={busy}
+                className="w-full bg-emerald-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+              >
+                Lead yaratish
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setLeadOpen(true)}
+              className="w-full border border-emerald-300 text-emerald-700 rounded-lg py-2 text-sm font-medium mb-4"
+            >
+              Leadga aylantirish
+            </button>
+          )
+        ) : (
+          <p className="text-sm text-emerald-700 mb-4">
+            Lead yaratilgan (#{row.lead_id}).
+          </p>
+        )}
+
+        <p className="text-xs font-medium text-slate-600 mb-1.5">Holatni o'zgartirish</p>
+        <div className="flex flex-wrap gap-1.5">
+          {statuses.filter((s) => s.key !== row.status).map((s) => (
+            <button
+              key={s.key}
+              onClick={() => setStatus(s.key)}
+              disabled={busy}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-medium ${TONE[s.tone] || TONE.slate}`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
+        {err && <p className="text-sm text-red-600 mt-3">{err}</p>}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================ Natija
+function AttributionTab() {
+  const [d, setD] = useState<AttributionReport | null>(null);
+  const [camps, setCamps] = useState<CampaignRow[] | null>(null);
+  const [months, setMonths] = useState(3);
+  const [open, setOpen] = useState<number | null>(null);
+  const [view, setView] = useState<"content" | "campaign">("content");
+
+  useEffect(() => {
+    api.get<AttributionReport>(`/smm/attribution?months=${months}`).then(setD);
+  }, [months]);
+  useEffect(() => {
+    api.get<{ rows: CampaignRow[] }>("/campaigns")
+      .then((r) => setCamps(r.rows)).catch(() => setCamps([]));
+  }, []);
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  const t = d.total;
+  const cards = [
+    { label: "Qamrov", value: t.reach.toLocaleString("ru-RU") },
+    { label: "Murojaat", value: t.messages },
+    { label: "Lead", value: t.leads },
+    { label: "Sotuv", value: t.sales },
+    { label: "Tushum", value: (t.revenue / 1000).toLocaleString("ru-RU") + " ming" },
+  ];
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        {(["content", "campaign"] as const).map((v) => (
+          <button
+            key={v}
+            onClick={() => setView(v)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+              view === v ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600"
+            }`}
+          >
+            {v === "content" ? "Kontent kesimi" : "Kampaniyalar"}
+          </button>
+        ))}
+        <select
+          value={months}
+          onChange={(e) => setMonths(Number(e.target.value))}
+          className="ml-auto border border-slate-200 rounded-lg px-2 py-1.5 text-xs"
+        >
+          {[1, 3, 6, 12].map((m) => (
+            <option key={m} value={m}>Oxirgi {m} oy</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+        {cards.map((c) => (
+          <div key={c.label} className="bg-white border border-slate-200 rounded-xl p-3">
+            <p className="text-xs text-slate-500 mb-1">{c.label}</p>
+            <p className="text-xl font-semibold text-slate-900">{c.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-xs text-slate-500 mb-4 flex items-start gap-1.5">
+        <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
+        {d.hint}
+      </p>
+
+      {view === "content" ? (
+        <>
+          <Funnel steps={t.funnel} />
+
+          {d.by_pillar.length > 0 && (
+            <div className="bg-white border border-slate-200 rounded-xl p-4 mb-5">
+              <p className="text-sm font-medium text-slate-700 mb-3">
+                Yo'nalishlar bo'yicha
+              </p>
+              <div className="space-y-2">
+                {d.by_pillar.map((p) => (
+                  <div key={p.label} className="flex items-center gap-3 text-sm">
+                    <span className={`px-2 py-0.5 rounded text-[11px] font-medium ${TONE[p.tone] || TONE.slate}`}>
+                      {p.label}
+                    </span>
+                    <span className="text-xs text-slate-400">{p.count} ta</span>
+                    <span className="ml-auto text-xs text-slate-500">
+                      {p.leads} lead · {p.sales} sotuv
+                    </span>
+                    <span className="text-sm font-medium text-slate-900 w-28 text-right">
+                      {p.revenue.toLocaleString("ru-RU")}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs">
+                <tr>
+                  <th className="text-left px-4 py-2.5 font-medium">Kontent</th>
+                  <th className="text-right px-3 py-2.5 font-medium">Qamrov</th>
+                  <th className="text-right px-3 py-2.5 font-medium">Murojaat</th>
+                  <th className="text-right px-3 py-2.5 font-medium">Lead</th>
+                  <th className="text-right px-3 py-2.5 font-medium">Sotuv</th>
+                  <th className="text-right px-4 py-2.5 font-medium">Tushum</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {d.rows.map((r) => (
+                  <tr
+                    key={r.id}
+                    onClick={() => setOpen(r.id)}
+                    className="hover:bg-slate-50 cursor-pointer"
+                  >
+                    <td className="px-4 py-2.5">
+                      <p className="font-medium text-slate-900 truncate max-w-xs">
+                        {r.title}
+                      </p>
+                      <p className="text-xs text-slate-400">
+                        {r.code} · {r.platform_label}
+                        {r.date ? " · " + formatDate(r.date) : ""}
+                      </p>
+                    </td>
+                    <td className="text-right px-3 py-2.5 text-slate-600">
+                      {r.reach.toLocaleString("ru-RU")}
+                    </td>
+                    <td className="text-right px-3 py-2.5 text-slate-600">{r.messages}</td>
+                    <td className="text-right px-3 py-2.5 text-slate-600">{r.leads}</td>
+                    <td className="text-right px-3 py-2.5 text-slate-600">{r.sales}</td>
+                    <td className="text-right px-4 py-2.5 font-medium text-slate-900">
+                      {r.revenue.toLocaleString("ru-RU")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {d.rows.length === 0 && (
+              <p className="text-sm text-slate-400 py-10 text-center">
+                Joylangan kontent yo'q.
+              </p>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="space-y-3">
+          {(camps || []).map((c) => (
+            <div key={c.id} className="bg-white border border-slate-200 rounded-xl p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="font-medium text-slate-900">{c.name}</p>
+                  <p className="text-xs text-slate-400">
+                    {c.goal_label}
+                    {c.course ? " · " + c.course : ""}
+                    {c.start_date ? " · " + formatDate(c.start_date) : ""}
+                    {" · "}{c.contents} ta kontent
+                  </p>
+                </div>
+                {c.lead_plan_percent != null && (
+                  <span className={`px-2 py-0.5 rounded text-[11px] font-medium ${
+                    c.lead_plan_percent >= 80 ? TONE.emerald
+                    : c.lead_plan_percent >= 50 ? TONE.amber : TONE.red
+                  }`}>
+                    Reja {c.lead_plan_percent}%
+                  </span>
+                )}
+              </div>
+              <Funnel steps={c.funnel} compact />
+            </div>
+          ))}
+          {camps && camps.length === 0 && (
+            <p className="text-sm text-slate-400 py-10 text-center">
+              Kampaniya yo'q.
+            </p>
+          )}
+        </div>
+      )}
+
+      {open != null && (
+        <AttributionDrawer id={open} onClose={() => setOpen(null)} />
+      )}
+    </div>
+  );
+}
+
+function Funnel({ steps, compact }: { steps: FunnelStep[]; compact?: boolean }) {
+  const top = Math.max(...steps.map((s) => s.value), 1);
+  return (
+    <div className={`bg-white border border-slate-200 rounded-xl ${compact ? "p-0 border-0" : "p-4 mb-5"}`}>
+      {!compact && (
+        <p className="text-sm font-medium text-slate-700 mb-3">
+          Qamrovdan sotuvgacha
+        </p>
+      )}
+      <div className="space-y-1.5">
+        {steps.map((s) => (
+          <div key={s.key} className="flex items-center gap-2 text-xs">
+            <span className="w-24 shrink-0 text-slate-500">{s.label}</span>
+            <div className="flex-1 bg-slate-100 rounded h-5 relative overflow-hidden">
+              <div
+                className="bg-brand-500/70 h-full rounded"
+                style={{ width: Math.max((s.value / top) * 100, s.value ? 2 : 0) + "%" }}
+              />
+              <span className="absolute left-2 top-0 leading-5 text-[11px] font-medium text-slate-700">
+                {s.value.toLocaleString("ru-RU")}
+              </span>
+            </div>
+            <span className="w-12 text-right text-slate-400">
+              {s.from_prev != null ? s.from_prev + "%" : ""}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AttributionDrawer({ id, onClose }: { id: number; onClose: () => void }) {
+  const [d, setD] = useState<Attribution | null>(null);
+  useEffect(() => {
+    api.get<Attribution>(`/content/${id}/attribution`).then(setD);
+  }, [id]);
+
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex justify-end" onClick={onClose}>
+      <div
+        className="bg-white w-full max-w-md h-full overflow-y-auto p-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between mb-4">
+          <h3 className="text-base font-semibold text-slate-900 pr-4">
+            {d ? d.content.title : "Yuklanmoqda…"}
+          </h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+
+        {d && (
+          <>
+            <p className="text-sm text-slate-600 bg-slate-50 rounded-xl p-3 mb-4">
+              {d.story}
+            </p>
+
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {[
+                ["Maqsad", d.goal_label],
+                ["Asosiy o'lchov", d.goal_metric],
+                ["Qamrov", d.reach.toLocaleString("ru-RU")],
+                ["Sifatli engagement", d.engagement.toLocaleString("ru-RU")],
+                ["Profil ochilishi", d.profile_visits.toLocaleString("ru-RU")],
+                ["Havola bosilishi", d.link_clicks.toLocaleString("ru-RU")],
+                ["Murojaat → lead", d.lead_rate + "%"],
+                ["Lead → sotuv", d.sale_rate + "%"],
+                ["Birinchi to'lov", d.first_revenue.toLocaleString("ru-RU")],
+                ["Umumiy tushum", d.revenue.toLocaleString("ru-RU")],
+                ["30 kun qoldi", String(d.retained_30)],
+                ["90 kun qoldi", String(d.retained_90)],
+              ].map(([k, v]) => (
+                <div key={k} className="bg-slate-50 rounded-lg p-2.5">
+                  <p className="text-[11px] text-slate-500">{k}</p>
+                  <p className="text-sm font-medium text-slate-900">{v}</p>
+                </div>
+              ))}
+            </div>
+
+            <Funnel steps={d.funnel} />
+
+            <p className="text-xs text-slate-500 flex items-start gap-1.5">
+              <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
+              {d.hint}
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

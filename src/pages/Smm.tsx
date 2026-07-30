@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import {
   Megaphone, AlertTriangle, Plus, X, Info, Calendar,
   Lightbulb, Inbox, ExternalLink, MessageSquare, TrendingUp,
+  Palette, Image, BookOpen, BarChart3,
 } from "lucide-react";
 import {
   api, type ContentMeta, type ContentList, type ContentRow,
   type ContentFull, type SmmDashboard, type IdeaRow,
   type RequestRow, type Branch, type InboxList, type InboxRow,
   type AttributionReport, type Attribution, type CampaignRow,
-  type FunnelStep,
+  type FunnelStep, type BrandBook, type BrandRow, type MediaList,
+  type KbList, type KbRow, type SmmAnalytics, type SmmKpi,
+  type SmmReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
@@ -31,7 +34,7 @@ const TONE: Record<string, string> = {
 };
 
 type Tab = "dashboard" | "calendar" | "inbox" | "attribution"
-  | "ideas" | "requests";
+  | "ideas" | "requests" | "brand" | "media" | "kb" | "report";
 
 const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "dashboard", label: "Bugun", icon: Megaphone },
@@ -40,6 +43,10 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "attribution", label: "Natija", icon: TrendingUp },
   { key: "ideas", label: "G'oyalar", icon: Lightbulb },
   { key: "requests", label: "So'rovlar", icon: Inbox },
+  { key: "report", label: "Hisobot", icon: BarChart3 },
+  { key: "media", label: "Media", icon: Image },
+  { key: "brand", label: "Brend kitob", icon: Palette },
+  { key: "kb", label: "Bilimlar bazasi", icon: BookOpen },
 ];
 
 export default function Smm() {
@@ -47,7 +54,7 @@ export default function Smm() {
   const isSmm = can(user?.role, SMM_ACCESS);
   const seesInbox = can(user?.role, INBOX_ACCESS);
   const [tab, setTab] = useState<Tab>(
-    isSmm ? "dashboard" : seesInbox ? "inbox" : "ideas");
+    isSmm ? "dashboard" : seesInbox ? "inbox" : "brand");
 
   if (!can(user?.role, CONTENT_REQUESTER) && !can(user?.role, IDEA_SUBMIT)
       && !seesInbox)
@@ -58,6 +65,9 @@ export default function Smm() {
     );
 
   const shown = TABS.filter((t) => {
+    // Brend kitob va bilimlar bazasini har qanday xodim o'qiy oladi —
+    // brend hammaning ishi.
+    if (t.key === "brand" || t.key === "kb") return true;
     if (t.key === "inbox" || t.key === "attribution") return seesInbox;
     return isSmm || t.key === "ideas" || t.key === "requests";
   });
@@ -92,6 +102,10 @@ export default function Smm() {
       {tab === "calendar" && <CalendarTab />}
       {tab === "inbox" && <InboxTab />}
       {tab === "attribution" && <AttributionTab />}
+      {tab === "report" && <ReportTab />}
+      {tab === "media" && <MediaTab />}
+      {tab === "brand" && <BrandTab />}
+      {tab === "kb" && <KbTab />}
       {tab === "ideas" && <IdeasTab isSmm={isSmm} />}
       {tab === "requests" && <RequestsTab isSmm={isSmm} />}
     </div>
@@ -2336,6 +2350,840 @@ function AttributionDrawer({ id, onClose }: { id: number; onClose: () => void })
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+// ============================================================ Brend kitob
+function BrandTab() {
+  const [d, setD] = useState<BrandBook | null>(null);
+  const [edit, setEdit] = useState<BrandRow | null>(null);
+  const [copied, setCopied] = useState("");
+
+  const load = () => { api.get<BrandBook>("/brand").then(setD); };
+  useEffect(load, []);
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  const copy = (v: string) => {
+    navigator.clipboard?.writeText(v);
+    setCopied(v);
+    setTimeout(() => setCopied(""), 1200);
+  };
+
+  const S = (k: string) => d.sections[k] || [];
+
+  return (
+    <div className="space-y-5">
+      <div className="bg-white border border-slate-200 rounded-xl p-4">
+        <div className="flex items-start gap-4 flex-wrap">
+          <div className="flex-1 min-w-[220px]">
+            <p className="text-xs text-slate-500 mb-1">Brend so'zi</p>
+            <p className="text-2xl font-semibold text-slate-900 mb-1">
+              {d.word}
+            </p>
+            <p className="text-sm text-slate-600">
+              {S("word")[0]?.note?.replace("TO'LDIRILDI. ", "")}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-xs text-slate-400">Manba</p>
+            <p className="text-sm text-slate-600">{d.source}</p>
+          </div>
+        </div>
+      </div>
+
+      {d.gaps.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <p className="text-sm font-medium text-amber-900 mb-2">
+            Brandbookda yo'q edi — to'ldirildi, tasdiqlashingiz kerak
+          </p>
+          <ul className="space-y-1">
+            {d.gaps.map((g, i) => (
+              <li key={i} className="text-sm text-amber-800 flex gap-2">
+                <span className="text-amber-500">·</span>{g}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Ranglar */}
+      <div className="bg-white border border-slate-200 rounded-xl p-4">
+        <p className="text-sm font-medium text-slate-700 mb-3">Ranglar</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {S("color").map((c) => (
+            <button
+              key={c.id}
+              onClick={() => copy(c.value || "")}
+              className="text-left border border-slate-200 rounded-lg overflow-hidden hover:border-slate-300"
+            >
+              <div className="h-14" style={{ background: c.value || "#fff" }} />
+              <div className="p-2.5">
+                <p className="text-sm font-medium text-slate-900">{c.title}</p>
+                <p className="text-xs text-slate-500 font-mono">
+                  {copied === c.value ? "nusxalandi" : c.value}
+                </p>
+                {c.is_filled && (
+                  <span className="inline-block mt-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                    {c.source}
+                  </span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-slate-500 mt-3">
+          Postda faqat: {d.post_colors.join(" · ")}. Yashil, sariq va
+          qizil — faqat tizim ichida holat ko'rsatish uchun.
+        </p>
+      </div>
+
+      {/* Shrift */}
+      <div className="bg-white border border-slate-200 rounded-xl p-4">
+        <p className="text-sm font-medium text-slate-700 mb-3">Shriftlar</p>
+        <div className="space-y-2">
+          {S("font").map((f) => (
+            <div key={f.id} className="flex items-start gap-3">
+              <span className="text-sm font-medium text-slate-900 w-40 shrink-0">
+                {f.title}
+              </span>
+              <span className="text-xs text-slate-500 flex-1">{f.note}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Logotip */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <p className="text-sm font-medium text-slate-700 mb-3">
+            Logotip qoidalari
+          </p>
+          <div className="space-y-2.5">
+            {S("logo").map((r) => (
+              <div key={r.id}>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium text-slate-800">
+                    {r.title}
+                  </p>
+                  {r.is_filled && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                      {r.source}
+                    </span>
+                  )}
+                  {d.can_edit && (
+                    <button
+                      onClick={() => setEdit(r)}
+                      className="ml-auto text-xs text-brand-600 hover:underline"
+                    >
+                      tahrirlash
+                    </button>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500">{r.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white border border-red-200 rounded-xl p-4">
+          <p className="text-sm font-medium text-red-700 mb-3">
+            Logotip bilan shunday qilinmaydi
+          </p>
+          <ul className="space-y-1.5">
+            {S("dont").map((r) => (
+              <li key={r.id} className="text-sm text-slate-700 flex gap-2">
+                <X size={14} className="text-red-500 shrink-0 mt-0.5" />
+                {r.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Ovoz */}
+      <div className="bg-white border border-slate-200 rounded-xl p-4">
+        <p className="text-sm font-medium text-slate-700 mb-3">
+          Qanday yoziladi
+        </p>
+        <div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
+          {S("tone").map((r) => (
+            <div key={r.id} className="flex gap-2.5">
+              <span
+                className={`shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
+                  r.kind === "dont"
+                    ? "bg-red-100 text-red-600"
+                    : "bg-emerald-100 text-emerald-600"
+                }`}
+              >
+                {r.kind === "dont" ? "—" : "+"}
+              </span>
+              <div>
+                <p className="text-sm font-medium text-slate-800">{r.title}</p>
+                <p className="text-xs text-slate-500">{r.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* O'lchamlar va aloqa */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <p className="text-sm font-medium text-slate-700 mb-3">
+            Ijtimoiy tarmoq o'lchamlari
+          </p>
+          <div className="space-y-2">
+            {S("spec").map((r) => (
+              <div key={r.id}>
+                <div className="flex justify-between gap-3">
+                  <span className="text-sm text-slate-800">{r.title}</span>
+                  <span className="text-sm font-mono text-slate-600">
+                    {r.value}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500">{r.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <p className="text-sm font-medium text-slate-700 mb-3">
+            Rasmiy rekvizitlar
+          </p>
+          <div className="space-y-2">
+            {S("contact").map((r) => (
+              <div key={r.id}>
+                <div className="flex justify-between gap-3">
+                  <span className="text-sm text-slate-500">{r.title}</span>
+                  <span className="text-sm text-slate-900">{r.value}</span>
+                </div>
+                {r.note && (
+                  <p className="text-xs text-amber-700 mt-0.5">{r.note}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {edit && (
+        <BrandEdit row={edit} onClose={() => setEdit(null)}
+                   onDone={() => { setEdit(null); load(); }} />
+      )}
+    </div>
+  );
+}
+
+function BrandEdit({ row, onClose, onDone }: {
+  row: BrandRow; onClose: () => void; onDone: () => void;
+}) {
+  const [title, setTitle] = useState(row.title);
+  const [value, setValue] = useState(row.value || "");
+  const [note, setNote] = useState(row.note || "");
+  const [busy, setBusy] = useState(false);
+
+  const save = async () => {
+    setBusy(true);
+    try {
+      await api.put(`/brand/${row.id}`, { title, value: value || null, note });
+      onDone();
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4"
+         onClick={onClose}>
+      <div className="bg-white rounded-xl p-5 w-full max-w-md"
+           onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-900">Qoidani tahrirlash</h3>
+          <button onClick={onClose} className="text-slate-400"><X size={18} /></button>
+        </div>
+        <input value={title} onChange={(e) => setTitle(e.target.value)}
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <input value={value} onChange={(e) => setValue(e.target.value)}
+               placeholder="Qiymat (ixtiyoriy)"
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <textarea value={note} onChange={(e) => setNote(e.target.value)}
+                  rows={3} placeholder="Izoh"
+                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-3" />
+        <p className="text-xs text-slate-500 mb-3">
+          Saqlangach bu qoida "Tasdiqlangan" deb belgilanadi.
+        </p>
+        <button onClick={save} disabled={busy}
+                className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40">
+          Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================ Media
+function MediaTab() {
+  const [d, setD] = useState<MediaList | null>(null);
+  const [consent, setConsent] = useState("");
+  const [q, setQ] = useState("");
+  const [adding, setAdding] = useState(false);
+
+  const load = () => {
+    const p = new URLSearchParams();
+    if (consent) p.set("consent", consent);
+    if (q) p.set("q", q);
+    api.get<MediaList>("/media?" + p.toString()).then(setD);
+  };
+  useEffect(load, [consent, q]);
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        {[
+          { l: "Jami", v: d.total, t: "slate" },
+          { l: "Joylash mumkin", v: d.publishable, t: "emerald" },
+          { l: "Muddati tugayapti", v: d.expiring, t: "amber" },
+          { l: "Muddati tugagan", v: d.expired, t: "red" },
+        ].map((c) => (
+          <div key={c.l} className="bg-white border border-slate-200 rounded-xl p-3">
+            <p className="text-xs text-slate-500 mb-1">{c.l}</p>
+            <p className={`text-xl font-semibold ${
+              c.t === "emerald" ? "text-emerald-600"
+              : c.t === "amber" ? "text-amber-600"
+              : c.t === "red" ? "text-red-600" : "text-slate-900"
+            }`}>{c.v}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <button onClick={() => setConsent("")}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+            !consent ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600"}`}>
+          Hammasi
+        </button>
+        {d.consents.map((c) => (
+          <button key={c.key}
+            onClick={() => setConsent(c.key === consent ? "" : c.key)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+              consent === c.key ? "bg-slate-800 text-white"
+              : TONE[c.tone] || TONE.slate}`}>
+            {c.label} {c.count}
+          </button>
+        ))}
+        <input value={q} onChange={(e) => setQ(e.target.value)}
+               placeholder="Qidirish…"
+               className="ml-auto border border-slate-200 rounded-lg px-3 py-1.5 text-xs w-44" />
+        <button onClick={() => setAdding(true)}
+          className="bg-brand-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium flex items-center gap-1">
+          <Plus size={14} /> Qo'shish
+        </button>
+      </div>
+
+      <p className="text-xs text-slate-500 mb-3 flex items-start gap-1.5">
+        <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
+        {d.hint}
+      </p>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {d.rows.map((m) => (
+          <div key={m.id}
+            className={`bg-white border rounded-xl p-3.5 ${
+              m.can_publish ? "border-slate-200" : "border-red-200 bg-red-50/30"}`}>
+            <div className="flex items-start gap-2 mb-2">
+              <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                TONE[m.kind_tone] || TONE.slate}`}>
+                {m.kind_label}
+              </span>
+              <span className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                TONE[m.consent_tone] || TONE.slate}`}>
+                {m.consent_label}
+              </span>
+            </div>
+            <p className="text-sm font-medium text-slate-900 mb-1">{m.name}</p>
+            <p className="text-xs text-slate-500">
+              {[m.event, m.branch, m.taken_on ? formatDate(m.taken_on) : null]
+                .filter(Boolean).join(" · ") || "—"}
+            </p>
+            {m.days_left != null && (
+              <p className={`text-xs mt-1.5 ${
+                m.expired ? "text-red-600"
+                : m.expiring ? "text-amber-600" : "text-slate-400"}`}>
+                {m.expired
+                  ? "Rozilik muddati tugagan"
+                  : `Rozilik ${m.days_left} kundan keyin tugaydi`}
+              </p>
+            )}
+            {!m.can_publish && (
+              <p className="text-xs text-red-600 mt-1.5">
+                Ijtimoiy tarmoqqa joylash mumkin emas
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+      {d.rows.length === 0 && (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Material yo'q.
+        </p>
+      )}
+
+      {adding && (
+        <MediaAdd kinds={d.kinds} consents={d.consents}
+                  onClose={() => setAdding(false)}
+                  onDone={() => { setAdding(false); load(); }} />
+      )}
+    </div>
+  );
+}
+
+function MediaAdd({ kinds, consents, onClose, onDone }: {
+  kinds: { key: string; label: string }[];
+  consents: { key: string; label: string }[];
+  onClose: () => void; onDone: () => void;
+}) {
+  const [f, setF] = useState({
+    name: "", kind: "photo", event: "", url: "",
+    consent: "pending", consent_until: "", taken_on: "",
+  });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const save = async () => {
+    if (!f.name.trim()) return;
+    setBusy(true); setErr("");
+    try {
+      await api.post("/media", {
+        ...f,
+        consent_until: f.consent_until || null,
+        taken_on: f.taken_on || null,
+        url: f.url || null,
+      });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4"
+         onClick={onClose}>
+      <div className="bg-white rounded-xl p-5 w-full max-w-md"
+           onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-900">Material qo'shish</h3>
+          <button onClick={onClose} className="text-slate-400"><X size={18} /></button>
+        </div>
+        <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })}
+               placeholder="Nomi"
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          <select value={f.kind} onChange={(e) => setF({ ...f, kind: e.target.value })}
+                  className="border border-slate-200 rounded-lg px-2 py-2 text-sm">
+            {kinds.map((k) => <option key={k.key} value={k.key}>{k.label}</option>)}
+          </select>
+          <input type="date" value={f.taken_on}
+                 onChange={(e) => setF({ ...f, taken_on: e.target.value })}
+                 className="border border-slate-200 rounded-lg px-2 py-2 text-sm" />
+        </div>
+        <input value={f.event} onChange={(e) => setF({ ...f, event: e.target.value })}
+               placeholder="Tadbir yoki joy"
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <input value={f.url} onChange={(e) => setF({ ...f, url: e.target.value })}
+               placeholder="Havola (Drive, Dropbox…)"
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-3" />
+
+        <p className="text-xs font-medium text-slate-600 mb-1.5">Rozilik</p>
+        <select value={f.consent}
+                onChange={(e) => setF({ ...f, consent: e.target.value })}
+                className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mb-2">
+          {consents.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
+        </select>
+        <input type="date" value={f.consent_until}
+               onChange={(e) => setF({ ...f, consent_until: e.target.value })}
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <p className="text-xs text-slate-500 mb-3">
+          Muddat tugagach material avtomat "taqiqlangan"ga o'tadi.
+        </p>
+
+        {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
+        <button onClick={save} disabled={busy || !f.name.trim()}
+                className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40">
+          Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================ Bilimlar bazasi
+function KbTab() {
+  const [d, setD] = useState<KbList | null>(null);
+  const [cat, setCat] = useState("");
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState<KbRow | null>(null);
+  const [adding, setAdding] = useState(false);
+
+  const load = () => {
+    const p = new URLSearchParams();
+    if (cat) p.set("category", cat);
+    if (q) p.set("q", q);
+    api.get<KbList>("/kb?" + p.toString()).then(setD);
+  };
+  useEffect(load, [cat, q]);
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <button onClick={() => setCat("")}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+            !cat ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600"}`}>
+          Hammasi
+        </button>
+        {d.categories.map((c) => (
+          <button key={c.key} onClick={() => setCat(c.key === cat ? "" : c.key)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+              cat === c.key ? "bg-slate-800 text-white"
+              : TONE[c.tone] || TONE.slate}`}>
+            {c.label} {c.count}
+          </button>
+        ))}
+        <input value={q} onChange={(e) => setQ(e.target.value)}
+               placeholder="Qidirish…"
+               className="ml-auto border border-slate-200 rounded-lg px-3 py-1.5 text-xs w-44" />
+        {d.can_edit && (
+          <button onClick={() => setAdding(true)}
+            className="bg-brand-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium flex items-center gap-1">
+            <Plus size={14} /> Maqola
+          </button>
+        )}
+      </div>
+
+      {d.stale > 0 && (
+        <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+          {d.stale} ta maqola {d.review_months} oydan beri yangilanmagan —
+          eskirgan reglament eskirgan ish demakdir.
+        </p>
+      )}
+
+      <div className="space-y-2">
+        {d.rows.map((a) => (
+          <button key={a.id} onClick={() => setOpen(a)}
+            className="w-full text-left bg-white border border-slate-200 rounded-xl p-3.5 hover:border-slate-300">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                TONE[a.category_tone] || TONE.slate}`}>
+                {a.category_label}
+              </span>
+              <span className="text-sm font-medium text-slate-900">{a.title}</span>
+              {a.stale && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                  eskirgan
+                </span>
+              )}
+              <span className="ml-auto text-xs text-slate-400">
+                {a.views} marta o'qilgan
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 line-clamp-2">
+              {(a.body || "").slice(0, 160)}
+            </p>
+          </button>
+        ))}
+      </div>
+      {d.rows.length === 0 && (
+        <p className="text-sm text-slate-400 py-10 text-center">Maqola yo'q.</p>
+      )}
+
+      {open && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex justify-end"
+             onClick={() => setOpen(null)}>
+          <div className="bg-white w-full max-w-lg h-full overflow-y-auto p-5"
+               onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                  TONE[open.category_tone] || TONE.slate}`}>
+                  {open.category_label}
+                </span>
+                <h3 className="text-lg font-semibold text-slate-900 mt-1.5">
+                  {open.title}
+                </h3>
+              </div>
+              <button onClick={() => setOpen(null)} className="text-slate-400">
+                <X size={18} />
+              </button>
+            </div>
+            <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
+              {open.body}
+            </p>
+            <p className="text-xs text-slate-400 mt-5">
+              {open.author ? open.author + " · " : ""}
+              {open.reviewed_at
+                ? "oxirgi ko'rilgan " + formatDate(open.reviewed_at) : ""}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {adding && (
+        <KbAdd categories={d.categories} onClose={() => setAdding(false)}
+               onDone={() => { setAdding(false); load(); }} />
+      )}
+    </div>
+  );
+}
+
+function KbAdd({ categories, onClose, onDone }: {
+  categories: { key: string; label: string }[];
+  onClose: () => void; onDone: () => void;
+}) {
+  const [f, setF] = useState({ title: "", category: "process", body: "" });
+  const [busy, setBusy] = useState(false);
+
+  const save = async () => {
+    if (!f.title.trim()) return;
+    setBusy(true);
+    try { await api.post("/kb", f); onDone(); }
+    finally { setBusy(false); }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4"
+         onClick={onClose}>
+      <div className="bg-white rounded-xl p-5 w-full max-w-lg"
+           onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-slate-900">Yangi maqola</h3>
+          <button onClick={onClose} className="text-slate-400"><X size={18} /></button>
+        </div>
+        <input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })}
+               placeholder="Sarlavha"
+               className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" />
+        <select value={f.category}
+                onChange={(e) => setF({ ...f, category: e.target.value })}
+                className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mb-2">
+          {categories.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
+        </select>
+        <textarea value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })}
+                  rows={10} placeholder="Matn…"
+                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mb-3" />
+        <button onClick={save} disabled={busy || !f.title.trim()}
+                className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40">
+          Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================ Hisobot
+function ReportTab() {
+  const [dim, setDim] = useState("platform");
+  const [a, setA] = useState<SmmAnalytics | null>(null);
+  const [k, setK] = useState<SmmKpi | null>(null);
+  const [r, setR] = useState<SmmReport | null>(null);
+  const [period, setPeriod] = useState("month");
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState("");
+
+  useEffect(() => {
+    api.get<SmmAnalytics>(`/smm/analytics?dim=${dim}&months=3`).then(setA);
+  }, [dim]);
+  useEffect(() => { api.get<SmmKpi>("/smm/kpi?months=1").then(setK); }, []);
+  useEffect(() => {
+    api.get<SmmReport>(`/smm/report?period=${period}`).then(setR);
+  }, [period]);
+
+  const save = async () => {
+    setBusy(true);
+    try {
+      await api.post("/smm/report", { period });
+      setSaved("Hisobot saqlandi — raqamlar muzlatildi.");
+      setTimeout(() => setSaved(""), 3000);
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* KPI */}
+      {k && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            <p className="text-sm font-medium text-slate-700">SMM KPI</p>
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+              TONE[k.tone] || TONE.slate}`}>
+              {k.score} ball · {k.label}
+            </span>
+            <span className="ml-auto text-xs text-slate-400">
+              {k.published} kontent · reja {k.plan_percent}%
+            </span>
+          </div>
+          <div className="space-y-2">
+            {k.parts.map((p) => (
+              <div key={p.key} className="flex items-center gap-3">
+                <span className="text-xs text-slate-600 w-44 shrink-0">
+                  {p.label}
+                </span>
+                <div className="flex-1 bg-slate-100 rounded h-4 overflow-hidden">
+                  <div className={`h-full rounded ${
+                    p.percent >= 80 ? "bg-emerald-400"
+                    : p.percent >= 50 ? "bg-amber-400" : "bg-red-400"}`}
+                    style={{ width: Math.max(p.percent, 2) + "%" }} />
+                </div>
+                <span className="text-xs text-slate-500 w-16 text-right">
+                  {p.score}/{p.max}
+                </span>
+                <span className="text-xs text-slate-400 w-56 truncate hidden lg:block">
+                  {p.note}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-slate-500 mt-3 flex items-start gap-1.5">
+            <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
+            {k.hint}
+          </p>
+        </div>
+      )}
+
+      {/* Kesimlar */}
+      {a && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <p className="text-sm font-medium text-slate-700">Kesimlar</p>
+            <select value={dim} onChange={(e) => setDim(e.target.value)}
+                    className="ml-auto border border-slate-200 rounded-lg px-2 py-1.5 text-xs">
+              {a.dims.map((x) => (
+                <option key={x.key} value={x.key}>{x.label}</option>
+              ))}
+            </select>
+          </div>
+
+          {a.trap && (
+            <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3">
+              <b>{a.trap.label}</b> eng ko'p ko'rilgan
+              ({a.trap.reach.toLocaleString("ru-RU")} qamrov), lekin
+              {a.trap.revenue ? "" : " undan bironta sotuv chiqmagan"}.
+              Pul <b>{a.trap.better}</b> orqali kelyapti.
+            </p>
+          )}
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="text-slate-500 text-xs">
+                <tr>
+                  <th className="text-left py-2 font-medium">{a.dim_label}</th>
+                  <th className="text-right py-2 px-2 font-medium">Soni</th>
+                  <th className="text-right py-2 px-2 font-medium">Qamrov</th>
+                  <th className="text-right py-2 px-2 font-medium">Lead</th>
+                  <th className="text-right py-2 px-2 font-medium">Sotuv</th>
+                  <th className="text-right py-2 font-medium">Tushum</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {a.rows.map((row, i) => (
+                  <tr key={i}>
+                    <td className="py-2 text-slate-900">{row.label}</td>
+                    <td className="text-right px-2 text-slate-600">{row.count}</td>
+                    <td className="text-right px-2 text-slate-600">
+                      {row.reach.toLocaleString("ru-RU")}
+                    </td>
+                    <td className="text-right px-2 text-slate-600">{row.leads}</td>
+                    <td className="text-right px-2 text-slate-600">{row.sales}</td>
+                    <td className="text-right font-medium text-slate-900">
+                      {row.revenue.toLocaleString("ru-RU")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {a.rows.length === 0 && (
+            <p className="text-sm text-slate-400 py-6 text-center">
+              Joylangan kontent yo'q.
+            </p>
+          )}
+          <p className="text-xs text-slate-500 mt-3">{a.hint}</p>
+        </div>
+      )}
+
+      {/* Hisobot */}
+      {r && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <p className="text-sm font-medium text-slate-700">Hisobot</p>
+            <select value={period} onChange={(e) => setPeriod(e.target.value)}
+                    className="border border-slate-200 rounded-lg px-2 py-1.5 text-xs">
+              {(r.periods || []).map((p) => (
+                <option key={p.key} value={p.key}>{p.label}</option>
+              ))}
+            </select>
+            <span className="text-xs text-slate-400">
+              {formatDate(r.start)} — {formatDate(r.end)}
+            </span>
+            <button onClick={save} disabled={busy}
+              className="ml-auto bg-brand-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-40">
+              Saqlash
+            </button>
+          </div>
+
+          {saved && (
+            <p className="text-sm text-emerald-700 mb-3">{saved}</p>
+          )}
+
+          <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 whitespace-pre-line mb-4">
+            {r.summary}
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs font-medium text-slate-600 mb-2">
+                Eng ko'p pul olib kelganlar
+              </p>
+              {r.top.length ? r.top.map((t) => (
+                <div key={t.id} className="flex justify-between gap-3 py-1 text-sm">
+                  <span className="text-slate-700 truncate">{t.title}</span>
+                  <span className="text-slate-900 font-medium shrink-0">
+                    {t.revenue.toLocaleString("ru-RU")}
+                  </span>
+                </div>
+              )) : <p className="text-sm text-slate-400">—</p>}
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-600 mb-2">
+                Ko'rildi, lekin natija bermadi
+              </p>
+              {r.weak.length ? r.weak.map((t) => (
+                <div key={t.id} className="flex justify-between gap-3 py-1 text-sm">
+                  <span className="text-slate-700 truncate">{t.title}</span>
+                  <span className="text-slate-400 shrink-0">
+                    {t.reach.toLocaleString("ru-RU")}
+                  </span>
+                </div>
+              )) : <p className="text-sm text-slate-400">—</p>}
+            </div>
+          </div>
+
+          {r.tips.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-slate-100">
+              <p className="text-xs font-medium text-slate-600 mb-2">
+                Keyingi davr uchun
+              </p>
+              {r.tips.map((t, i) => (
+                <p key={i} className="text-sm text-slate-700 mb-1.5">
+                  <b>{t.about}.</b> {t.text}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

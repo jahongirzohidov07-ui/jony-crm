@@ -8,6 +8,7 @@ import {
   type TeacherCareer,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { ObservationList } from "./LessonRubric";
 
 const TONE: Record<string, string> = {
   slate: "bg-slate-100 text-slate-700",
@@ -476,7 +477,9 @@ export function CareerCard({
   onClose: () => void;
 }) {
   const [d, setD] = useState<TeacherCareer | null>(null);
-  const [tab, setTab] = useState<"holat" | "oqish" | "tarix">("holat");
+  const [tab, setTab] = useState<"holat" | "baho" | "oqish" | "tarix">(
+    "holat"
+  );
   const [busy, setBusy] = useState(false);
 
   function load() {
@@ -543,6 +546,7 @@ export function CareerCard({
               {(
                 [
                   ["holat", "Holat"],
+                  ["baho", `Dars baholash (${d.observations?.length ?? 0})`],
                   ["oqish", "O'qish rejasi"],
                   ["tarix", `Tarix (${d.history.length})`],
                 ] as const
@@ -569,6 +573,9 @@ export function CareerCard({
                   onSetGrade={setGrade}
                   onClearRem={clearRem}
                 />
+              )}
+              {tab === "baho" && (
+                <ObservationList teacherId={teacherId} canAdd={d.can_edit} />
               )}
               {tab === "oqish" && (
                 <StudyTab d={d} teacherId={teacherId} onDone={load} />
@@ -619,6 +626,22 @@ function StateTab({
               Qayta test topshirildi
             </button>
           )}
+        </div>
+      )}
+
+      {s.pending_label && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 mb-4">
+          <div className="flex items-center gap-1.5 mb-1">
+            <TrendingUp size={13} className="text-emerald-600" />
+            <p className="text-sm font-medium text-emerald-800">
+              {s.pending_label} darajasiga ko'tarildi
+            </p>
+          </div>
+          <p className="text-xs text-emerald-700">
+            {s.pending_from} dan kuchga kiradi — yangi stavka{" "}
+            {formatSom(s.pending_rate || 0)}. Bu oy eski stavkada
+            yopiladi, oylik chalkashmaydi.
+          </p>
         </div>
       )}
 

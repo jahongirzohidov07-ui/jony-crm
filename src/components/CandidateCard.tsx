@@ -3,6 +3,7 @@ import { X, Save, FileText } from "lucide-react";
 import { api, type CandidateCard as Card } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { Attachments } from "./Attachments";
+import { ObservationList } from "./LessonRubric";
 
 /**
  * Nomzod kartasi. Qaror qabul qilish uchun kerak bo'lgan hammasi bitta
@@ -123,6 +124,15 @@ export function CandidateCard({
                   {overall ?? "—"}
                 </p>
               </div>
+            </div>
+
+            {/* Sinov darsini mezon bo'yicha baholash — natija
+                "Probniy dars" balliga o'zi tushadi */}
+            <div>
+              <p className="text-xs font-medium text-slate-700 mb-2">
+                Sinov darsi baholashi
+              </p>
+              <ObservationList candidateId={id} canAdd={canEdit} />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">

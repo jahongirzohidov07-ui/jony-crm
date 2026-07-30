@@ -214,3 +214,6 @@ export const INBOX_ACCESS = [
   FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
   ADMINISTRATOR,
 ];
+
+/** Kim ustozga akkaunt ocha oladi. */
+export const ACCOUNT_MANAGE = [FOUNDER, BRANCH_MANAGER, HR_MANAGER];

@@ -127,6 +127,21 @@ export interface Teacher {
   support_months?: number | null;
   remediation_until?: string | null;
   remediation_reason?: string | null;
+  /** Tizimga kirish hisobi. Bo'sh bo'lsa akkaunt ochilmagan. */
+  user_id?: number | null;
+  login?: string | null;
+}
+
+export interface TeacherAccount {
+  created: boolean;
+  login: string;
+  /** Faqat SHU javobda keladi — keyin bazadan o'qib bo'lmaydi. */
+  password: string;
+  full_name: string;
+  url: string;
+  warning: string;
+  has_account: boolean;
+  user_id: number | null;
 }
 
 export interface Group {

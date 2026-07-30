@@ -21,15 +21,22 @@ import { AttendanceTab, NpsTab } from "../components/HrExtras";
 import { StaffDatesTab } from "../components/StaffDates";
 import { ObservationsTab } from "../components/LessonRubric";
 import { StaffTab } from "./Users";
+import {
+  WorkforceTab, StaffRequestsTab, HrVacanciesTab,
+} from "../components/HrCore";
 import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "funnel" | "candidates" | "vacancies" | "staff"
-  | "rubric" | "dates" | "attendance" | "nps";
+  | "rubric" | "dates" | "attendance" | "nps"
+  | "workforce" | "requests" | "hrvacancies";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "funnel", label: "HR voronka" },
+  { key: "workforce", label: "Shtat rejasi" },
+  { key: "requests", label: "Xodim so'rovlari" },
+  { key: "hrvacancies", label: "Vakansiyalar (yangi)" },
   { key: "candidates", label: "Nomzodlar" },
   { key: "vacancies", label: "Vakansiyalar" },
   { key: "staff", label: "Xodimlar" },
@@ -913,6 +920,9 @@ export default function Hr() {
       </div>
 
       {tab === "funnel" && <FunnelTab />}
+      {tab === "workforce" && <WorkforceTab />}
+      {tab === "requests" && <StaffRequestsTab />}
+      {tab === "hrvacancies" && <HrVacanciesTab />}
       {tab === "candidates" && <CandidatesTab branches={branches} />}
       {tab === "vacancies" && <VacanciesTab branches={branches} />}
       {tab === "staff" && <StaffTab />}

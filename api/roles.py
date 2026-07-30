@@ -567,6 +567,16 @@ CANDIDATE_SOURCE_LABELS = dict(CANDIDATE_SOURCES)
 # bir joyda taqqoslanadi - CAC shundan chiqadi.
 MARKETING_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD]
 MARKETING_CHANNELS = LEAD_SOURCES
+
+LEAD_SOURCE_LABELS = {
+    "visit": "Tashrif",
+    "phone": "Telefon",
+    "instagram": "Instagram",
+    "telegram": "Telegram",
+    "referral": "Tanish orqali",
+    "ads": "Reklama",
+    "other": "Boshqa",
+}
 MARKETING_CHANNEL_LABELS = {
     "visit": "Tashrif",
     "phone": "Telefon",
@@ -1322,3 +1332,262 @@ def default_perms(role: str, resource: str) -> set:
 # Asoschidan olib bo'lmaydigan ruxsatlar - aks holda tizimga kirish
 # yo'li yopilib qolishi mumkin.
 LOCKED_ROLE = FOUNDER
+
+
+# =====================================================================
+#  LTV — mijoz qancha vaqt qoladi va qancha pul keltiradi
+#
+#  Ikki xil LTV bor va ular chalkashmasligi kerak:
+#    VAQT LTV  - o'quvchi o'rtacha necha oy qoladi
+#    PUL LTV   - shu vaqt ichida qancha to'laydi va qancha SOF FOYDA
+#                qoldiradi (ustoz haqi va boshqa xarajatlar chiqarilgach)
+# =====================================================================
+LTV_DIMENSIONS = [
+    ("overall", "Butun markaz"),
+    ("branch", "Filiallar"),
+    ("teacher", "Ustozlar"),
+    ("subject", "Fanlar"),
+    ("group", "Guruhlar"),
+]
+LTV_DIMENSION_LABELS = dict(LTV_DIMENSIONS)
+
+# Sof foydani hisoblash uchun: umumiy xarajatning necha foizi bitta
+# o'quvchiga to'g'ri keladi. Ustoz haqi alohida hisoblanadi, qolgan
+# xarajat (ijara, kommunal, reklama) o'quvchilar soniga bo'linadi.
+LTV_ACCESS = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT, ACADEMIC_HEAD,
+                            SALES_HEAD]
+
+
+# =====================================================================
+#  Xodimlar davomati
+# =====================================================================
+WORK_START = "09:00"     # standart ish boshlanishi
+WORK_END = "18:00"       # standart ish tugashi
+LATE_TOLERANCE_MIN = 5   # 5 daqiqagacha kechikish - kechikish emas
+
+ATTENDANCE_ACCESS = FULL_ACCESS + [HR_MANAGER]
+
+
+# =====================================================================
+#  NPS — ustozga berilgan baho
+#  0-10 shkala. 9-10 tarafdor, 7-8 betaraf, 0-6 tanqidchi.
+#  NPS = tarafdorlar% - tanqidchilar%
+# =====================================================================
+NPS_SOURCES = [
+    ("student", "O'quvchi"),
+    ("parent", "Ota-ona"),
+]
+NPS_SOURCE_LABELS = dict(NPS_SOURCES)
+
+NPS_BANDS = [
+    (9, "promoter", "Tarafdor", "emerald"),
+    (7, "passive", "Betaraf", "amber"),
+    (0, "detractor", "Tanqidchi", "red"),
+]
+
+
+def nps_band(score: int) -> tuple:
+    for minimum, key, label, tone in NPS_BANDS:
+        if score >= minimum:
+            return key, label, tone
+    return "detractor", "Tanqidchi", "red"
+
+
+def nps_value(scores: list) -> float:
+    """NPS = tarafdorlar foizi - tanqidchilar foizi. -100 dan +100 gacha."""
+    if not scores:
+        return 0.0
+    pro = sum(1 for s in scores if s >= 9)
+    det = sum(1 for s in scores if s <= 6)
+    return round((pro - det) / len(scores) * 100, 1)
+
+
+NPS_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, HR_MANAGER, HEAD_SUPPORT]
+
+
+# =====================================================================
+#  Ketish sabablari (churn)
+#  Sababsiz raqam hech narsani o'zgartirmaydi: "10 kishi ketdi" emas,
+#  "10 kishi ustoz almashgani uchun ketdi" degani qaror keltiradi.
+# =====================================================================
+LEAVE_REASONS = [
+    ("price", "Narx qimmat", "money"),
+    ("teacher", "Ustozdan norozi", "quality"),
+    ("schedule", "Vaqti to'g'ri kelmadi", "logistics"),
+    ("distance", "Uzoq", "logistics"),
+    ("result", "Natija ko'rmadi", "quality"),
+    ("moved", "Ko'chib ketdi", "external"),
+    ("finished", "Kursni tugatdi", "good"),
+    ("competitor", "Boshqa markazga ketdi", "quality"),
+    ("family", "Oilaviy sabab", "external"),
+    ("unknown", "Sababi noma'lum", "unknown"),
+]
+LEAVE_REASON_LABELS = {k: lbl for k, lbl, _ in LEAVE_REASONS}
+LEAVE_REASON_GROUP = {k: g for k, _, g in LEAVE_REASONS}
+
+# Bizga bog'liq sabablar - shularni kamaytirish mumkin
+CONTROLLABLE_REASONS = ["teacher", "result", "competitor", "schedule"]
+
+
+# =====================================================================
+#  ROMI — reklama samaradorligi
+#  ROMI = (kanal keltirgan foyda - kanal xarajati) / kanal xarajati x 100
+# =====================================================================
+ROMI_BANDS = [
+    (200, "great", "Zo'r", "emerald"),
+    (100, "good", "Yaxshi", "sky"),
+    (0, "weak", "Zaif", "amber"),
+    (-10000, "loss", "Zarar", "red"),
+]
+
+
+def romi_band(value: float) -> tuple:
+    for minimum, key, label, tone in ROMI_BANDS:
+        if value >= minimum:
+            return key, label, tone
+    return "loss", "Zarar", "red"
+
+
+# =====================================================================
+#  RFM segmentatsiya
+#  R (Recency)   - oxirgi to'lovdan beri qancha vaqt o'tdi
+#  F (Frequency) - nechta to'lov qilgan
+#  M (Monetary)  - jami qancha to'lagan
+#  Har biri 1-3 ball. Segment - shu uch balldan chiqadi.
+# =====================================================================
+RFM_SEGMENTS = [
+    ("champion", "Eng yaxshi mijoz", "Yaqinda to'lagan, ko'p to'lagan",
+     "emerald", "Sovg'a va referral taklifi"),
+    ("loyal", "Sodiq mijoz", "Muntazam to'laydi",
+     "sky", "Uzoq muddatli chegirma taklif qiling"),
+    ("potential", "Istiqbolli", "Yangi, lekin faol",
+     "violet", "Qo'shimcha kursga taklif qiling"),
+    ("attention", "E'tibor kerak", "To'lovi kechikyapti",
+     "amber", "Qo'ng'iroq qiling"),
+    ("sleeping", "Uxlab qolgan", "Uzoq vaqt to'lov yo'q",
+     "orange", "Qaytarish taklifi yuboring"),
+    ("lost", "Ketgan", "Ancha vaqtdan beri yo'q",
+     "red", "Nega ketganini so'rang"),
+]
+RFM_SEGMENT_LABELS = {k: lbl for k, lbl, _, _, _ in RFM_SEGMENTS}
+RFM_SEGMENT_INFO = {k: {"label": lbl, "hint": h, "tone": t, "action": a}
+                    for k, lbl, h, t, a in RFM_SEGMENTS}
+
+
+def rfm_score(days_since: int, count: int, total: float,
+              money_step: float = 1_000_000) -> tuple:
+    """R, F, M ballari (1-3) va segment."""
+    r = 3 if days_since <= 30 else 2 if days_since <= 60 else 1
+    f = 3 if count >= 6 else 2 if count >= 3 else 1
+    m = 3 if total >= money_step * 3 else 2 if total >= money_step else 1
+
+    if r == 3 and f >= 2 and m >= 2:
+        seg = "champion"
+    elif r >= 2 and f >= 2:
+        seg = "loyal"
+    elif r == 3:
+        seg = "potential"
+    elif r == 2:
+        seg = "attention"
+    elif days_since <= 120:
+        seg = "sleeping"
+    else:
+        seg = "lost"
+    return r, f, m, seg
+
+
+# =====================================================================
+#  Avtomatik xabarnomalar
+#  Tizim xabarni o'zi yaratadi va navbatga qo'yadi. Yuborish uchun
+#  Telegram bot tokeni yoki SMS xizmati kerak.
+# =====================================================================
+NOTIFY_KINDS = [
+    ("birthday", "Tug'ilgan kun tabrigi", 0),
+    ("payment_due", "To'lov eslatmasi", 3),
+    ("debt", "Qarzdorlik haqida", 0),
+    ("new_course", "Yangi kurs haqida", 0),
+    ("absence", "Darsga kelmadi", 0),
+    ("certificate", "Sertifikat tabrigi", 0),
+    ("comeback", "Qaytishga taklif", 0),
+]
+NOTIFY_KIND_LABELS = {k: lbl for k, lbl, _ in NOTIFY_KINDS}
+NOTIFY_DEFAULT_DAYS = {k: d for k, _, d in NOTIFY_KINDS}
+
+NOTIFY_CHANNELS = [
+    ("telegram", "Telegram"),
+    ("sms", "SMS"),
+]
+NOTIFY_CHANNEL_LABELS = dict(NOTIFY_CHANNELS)
+
+NOTIFY_STATUSES = [
+    ("queued", "Navbatda", "amber"),
+    ("sent", "Yuborildi", "emerald"),
+    ("failed", "Yuborilmadi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+NOTIFY_STATUS_LABELS = {k: lbl for k, lbl, _ in NOTIFY_STATUSES}
+NOTIFY_STATUS_TONE = {k: t for k, _, t in NOTIFY_STATUSES}
+
+# Standart shablonlar. {ism}, {summa}, {sana}, {guruh}, {kurs}
+DEFAULT_TEMPLATES = {
+    "birthday": (
+        "Tug'ilgan kun muborak!",
+        "{ism}, tug'ilgan kuningiz muborak bo'lsin! Jony Academy "
+        "jamoasi sizga sog'lik va katta yutuqlar tilaydi."),
+    "payment_due": (
+        "To'lov eslatmasi",
+        "Assalomu alaykum. {ism} uchun {sana} gacha {summa} so'm "
+        "to'lov kutilmoqda. Rahmat!"),
+    "debt": (
+        "Qarzdorlik",
+        "Assalomu alaykum. {ism} bo'yicha {summa} so'm qarzdorlik "
+        "bor. Iltimos, qulay vaqtda to'lab qo'ying."),
+    "new_course": (
+        "Yangi kurs",
+        "{ism}, {kurs} kursi ochildi. Qiziqsangiz — biz bilan "
+        "bog'laning."),
+    "absence": (
+        "Darsga kelmadi",
+        "Assalomu alaykum. {ism} bugungi darsga kelmadi. "
+        "Hammasi joyidami?"),
+    "certificate": (
+        "Tabriklaymiz!",
+        "{ism}, natijangiz bilan tabriklaymiz! Sertifikatingiz "
+        "tayyor — markazdan olib ketishingiz mumkin."),
+    "comeback": (
+        "Sizni sog'indik",
+        "{ism}, ancha vaqtdan beri ko'rinmaysiz. Qaytib kelsangiz "
+        "— birinchi oyga chegirma bor."),
+}
+
+NOTIFY_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
+                               ADMINISTRATOR]
+
+
+# =====================================================================
+#  Referral tizimi
+#  "Do'stingni olib kel va chegirma ol"
+# =====================================================================
+REFERRAL_PERCENT = 10.0          # olib kelganga beriladigan chegirma
+REFERRAL_MONTHS = 1              # necha oy amal qiladi
+# Do'sti kelgani hisoblanishi uchun u qancha to'lashi kerak — aks holda
+# faqat ro'yxatdan o'tib, keyin ketib qolgan odam uchun ham chegirma
+# berilib ketardi.
+REFERRAL_MIN_PAYMENT = 1
+
+MARKETING_ANALYTICS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD,
+                                     FINANCE_DIRECTOR]
+
+
+# =====================================================================
+#  Umumiy dashboard raqamlari
+#
+#  Butun markaz bo'yicha raqamlar (o'quvchilar soni, tushum, qarzdorlar,
+#  xodimlar soni) HAMMAGA kerak emas. Examinerga imtihon, HR'ga xodim,
+#  SMM'ga marketing kerak — birovning raqami ularni chalg'itadi.
+# =====================================================================
+GENERAL_DASHBOARD = FULL_ACCESS + [
+    FINANCE_DIRECTOR, ACCOUNTANT,
+    SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,
+    ACADEMIC_HEAD,
+]

@@ -2874,7 +2874,7 @@ def report_ltv(
 
     Ustoz va guruh kesimi o'quvchining HOZIRGI guruhiga qarab bo'linadi -
     guruh almashtirgan o'quvchi oxirgi guruhiga yoziladi."""
-    if dimension not in ("branch", "teacher", "group"):
+    if dimension not in ("branch", "teacher", "group", "subject"):
         raise HTTPException(400, "Noto'g'ri kesim")
 
     students = scope_to_branch(
@@ -2904,6 +2904,11 @@ def report_ltv(
         elif dimension == "group":
             key = s.group_id
             label = groups[key].name if key in groups else "Guruhsiz"
+        elif dimension == "subject":
+            g = groups.get(s.group_id)
+            key = g.subject if g else None
+            label = (roles.SUBJECT_LABELS.get(key or "", None)
+                     or "Fan belgilanmagan")
         else:
             g = groups.get(s.group_id)
             key = g.teacher_id if g else None
@@ -3564,6 +3569,12 @@ def add_payment(
               entity_label=s.full_name, field=payload.kind,
               new_value=amount, note=payload.note, branch_id=s.branch_id)
     db.commit()
+
+    # AVTOMAT: bu o'quvchini kimdir olib kelgan bo'lsa, o'sha odamning
+    # referral chegirmasi shu to'lov bilan yoqiladi.
+    if payload.kind == "payment":
+        if _activate_referrals(db, student_id):
+            db.commit()
 
     # Sinovdagi o'quvchi to'lov qilsa - 3 ta darsni kutmasdan darrov
     # faollashadi, hisob-kitob birinchi kelgan kunidan boshlanadi.
@@ -10367,6 +10378,10 @@ def my_dashboard(
         },
         # Umumiy raqamlarni faqat rahbariyat ko'radi
         "show_company": has_perm(db, user, "pnl", "view"),
+        # Butun markaz bo'yicha kartalar (o'quvchilar soni, tushum,
+        # qarzdorlar, xodimlar soni) — Examiner, HR va SMM'ga kerak
+        # emas: ular faqat o'z ishini ko'radi.
+        "show_general": user.role in tuple(roles.GENERAL_DASHBOARD),
     }
 
 
@@ -10691,4 +10706,1253 @@ def timetable_grid(
         "total_students": sum(i["students"] for i in items),
         "can_edit": has_perm(db, user, "timetable", "edit"),
         "can_export": has_perm(db, user, "timetable", "export"),
+    }
+
+
+# =====================================================================
+#  LTV — MIJOZ QANCHA VAQT QOLADI VA QANCHA PUL KELTIRADI
+#
+#  Ikki xil LTV bor va ular chalkashmasligi kerak:
+#    VAQT LTV - o'quvchi o'rtacha necha oy qoladi
+#    PUL LTV  - shu vaqt ichida qancha to'laydi va qancha SOF FOYDA
+#               qoldiradi
+#
+#  Sof foyda: to'lagan puli - ustoz haqi - unga to'g'ri keladigan
+#  boshqa xarajat (ijara, kommunal, reklama o'quvchilar soniga bo'linadi).
+# =====================================================================
+def _student_payments(db: Session) -> dict:
+    rows = (db.query(models.Payment.student_id,
+                     func.sum(models.Payment.amount),
+                     func.count(models.Payment.id))
+            .filter(models.Payment.kind == "payment")
+            .group_by(models.Payment.student_id).all())
+    return {sid: {"total": amt or 0.0, "count": cnt or 0}
+            for sid, amt, cnt in rows}
+
+
+def _overhead_per_student_month(db: Session, user, branch_id=None) -> float:
+    """Bitta o'quvchining bir oyiga to'g'ri keladigan umumiy xarajat
+    (ustoz haqidan tashqari). Oxirgi 12 oyning o'rtachasi."""
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -11)
+    start, _e = billing.month_bounds(y, m)
+    _s, end = billing.month_bounds(today.year, today.month)
+
+    eq = db.query(models.Expense).filter(models.Expense.date >= start,
+                                         models.Expense.date <= end)
+    if branch_id:
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    elif user and user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        eq = eq.filter(models.Expense.branch_id == user.branch_id)
+    total = sum(e.amount or 0 for e in eq.all())
+
+    sq = scope_to_branch(db.query(models.Student), models.Student,
+                         user, branch_id) if user else db.query(models.Student)
+    active = sq.filter(models.Student.status == "active").count() or 1
+    months = 12
+    return round(total / months / active, 2)
+
+
+def _teacher_cost_for_student(db: Session, s: models.Student,
+                              groups: dict) -> float:
+    """Shu o'quvchi uchun ustozga to'langan pul. Guruhning stavkasi
+    va o'quvchi necha oy o'qiganidan chiqadi."""
+    g = groups.get(s.group_id)
+    if not g:
+        return 0.0
+    rate = g.teacher_rate_per_student or 0
+    months = _months_between(s.enrolled_date or date.today(),
+                             s.left_date or date.today())
+    return round(rate * months, 2)
+
+
+@app.get("/api/analytics/ltv")
+def analytics_ltv(
+    dimension: str = "overall",
+    months: int = 24,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.LTV_ACCESS)),
+):
+    """LTV to'liq tahlili.
+
+    VAQT LTV: o'quvchi o'rtacha necha oy qoladi.
+    PUL LTV:  o'rtacha qancha to'laydi va qancha sof foyda qoldiradi.
+
+    Kesim: butun markaz / filial / ustoz / fan / guruh."""
+    if dimension not in roles.LTV_DIMENSION_LABELS:
+        raise HTTPException(400, "Noto'g'ri kesim")
+
+    today = date.today()
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).all()
+    if not students:
+        return {"dimension": dimension, "rows": [], "overall": None,
+                "dimensions": [{"key": k, "label": l}
+                               for k, l in roles.LTV_DIMENSIONS]}
+
+    paid = _student_payments(db)
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    branches = {b.id: b for b in db.query(models.Branch).all()}
+    overhead = _overhead_per_student_month(db, user, branch_id)
+
+    def bucket_for(s):
+        if dimension == "overall":
+            return "all", "Butun o'quv markaz"
+        if dimension == "branch":
+            k = s.branch_id
+            return str(k), (branches[k].name if k in branches
+                            else "Filialsiz")
+        if dimension == "group":
+            k = s.group_id
+            return str(k), (groups[k].name if k in groups else "Guruhsiz")
+        if dimension == "subject":
+            g = groups.get(s.group_id)
+            k = g.subject if g else None
+            return str(k), (roles.SUBJECT_LABELS.get(k or "", None)
+                            or "Fan belgilanmagan")
+        g = groups.get(s.group_id)
+        k = g.teacher_id if g else None
+        return str(k), (teachers[k].full_name if k in teachers
+                        else "Ustoz biriktirilmagan")
+
+    buckets: dict = {}
+    for s in students:
+        key, label = bucket_for(s)
+        b = buckets.setdefault(key, {
+            "key": key, "label": label,
+            "students": 0, "active": 0, "left": 0,
+            "months_sum": 0.0, "revenue": 0.0, "profit": 0.0,
+            "payments": 0, "finished_months": [],
+        })
+        span = _months_between(s.enrolled_date or today,
+                               s.left_date or today)
+        rev = paid.get(s.id, {}).get("total", 0.0)
+        t_cost = _teacher_cost_for_student(db, s, groups)
+        profit = rev - t_cost - overhead * span
+
+        b["students"] += 1
+        b["months_sum"] += span
+        b["revenue"] += rev
+        b["profit"] += profit
+        b["payments"] += paid.get(s.id, {}).get("count", 0)
+        if s.left_date:
+            b["left"] += 1
+            b["finished_months"].append(span)
+        elif s.status == "active":
+            b["active"] += 1
+
+    rows = []
+    for b in buckets.values():
+        n = b["students"] or 1
+        fin = b["finished_months"]
+        rows.append({
+            "key": b["key"],
+            "label": b["label"],
+            "students": b["students"],
+            "active": b["active"],
+            "left": b["left"],
+            # --- VAQT LTV ---
+            "avg_months": round(b["months_sum"] / n, 1),
+            # Faqat KETGANLAR bo'yicha - bu haqiqiy "umr", hali
+            # o'qiyotganlar buni pasaytirmaydi
+            "finished_avg_months": (round(sum(fin) / len(fin), 1)
+                                    if fin else None),
+            "longest_months": round(max(fin), 1) if fin else None,
+            # --- PUL LTV ---
+            "avg_revenue": round(b["revenue"] / n, 0),
+            "avg_profit": round(b["profit"] / n, 0),
+            "total_revenue": round(b["revenue"], 2),
+            "total_profit": round(b["profit"], 2),
+            "avg_payments": round(b["payments"] / n, 1),
+            # Bir oyda o'rtacha qancha keltiradi
+            "revenue_per_month": (round(b["revenue"] / b["months_sum"], 0)
+                                  if b["months_sum"] else 0),
+            "margin": (round(b["profit"] / b["revenue"] * 100, 1)
+                       if b["revenue"] else 0.0),
+            "churn": (round(b["left"] / n * 100, 1)),
+        })
+    rows.sort(key=lambda r: -r["avg_profit"])
+
+    # Umumiy
+    tot_students = sum(r["students"] for r in rows) or 1
+    tot_months = sum(r["avg_months"] * r["students"] for r in rows)
+    tot_rev = sum(r["total_revenue"] for r in rows)
+    tot_profit = sum(r["total_profit"] for r in rows)
+    overall = {
+        "students": tot_students,
+        "avg_months": round(tot_months / tot_students, 1),
+        "avg_revenue": round(tot_rev / tot_students, 0),
+        "avg_profit": round(tot_profit / tot_students, 0),
+        "total_revenue": round(tot_rev, 2),
+        "total_profit": round(tot_profit, 2),
+        "margin": round(tot_profit / tot_rev * 100, 1) if tot_rev else 0.0,
+        "overhead_per_month": overhead,
+    }
+
+    return {
+        "dimension": dimension,
+        "dimension_label": roles.LTV_DIMENSION_LABELS[dimension],
+        "dimensions": [{"key": k, "label": l}
+                       for k, l in roles.LTV_DIMENSIONS],
+        "rows": rows,
+        "overall": overall,
+        "hint": ("Vaqt LTV — o'quvchi o'rtacha necha oy qoladi. "
+                 "Pul LTV — shu vaqt ichida qancha to'laydi va "
+                 "qancha sof foyda qoldiradi (ustoz haqi va "
+                 "xarajat chiqarilgach)."),
+    }
+
+
+# =====================================================================
+#  CHURN — kim, qayerdan va NEGA ketyapti
+# =====================================================================
+@app.post("/api/students/{student_id}/leave-reason")
+def set_leave_reason(
+    student_id: int,
+    payload: schemas.LeaveReasonCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if payload.reason not in roles.LEAVE_REASON_LABELS:
+        raise HTTPException(400, "Noto'g'ri sabab")
+    g = db.query(models.Group).get(s.group_id) if s.group_id else None
+    row = models.LeaveReason(
+        student_id=s.id, reason=payload.reason, note=payload.note,
+        group_id=s.group_id, teacher_id=g.teacher_id if g else None,
+        left_date=s.left_date or date.today(),
+        created_by=user.full_name)
+    db.add(row); db.commit()
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, branch_id=s.branch_id,
+              field="Ketish sababi",
+              new_value=roles.LEAVE_REASON_LABELS[payload.reason],
+              commit=True)
+    return {"ok": True}
+
+
+@app.get("/api/analytics/churn")
+def analytics_churn(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.LTV_ACCESS)),
+):
+    """Qaysi guruhdan va qaysi ustozdan ko'p ketyapti — va NEGA."""
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
+    start, _e = billing.month_bounds(y, m)
+
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).all()
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+
+    reasons = {}
+    for r in db.query(models.LeaveReason).all():
+        reasons[r.student_id] = r
+
+    left = [s for s in students if s.left_date and s.left_date >= start]
+    active = [s for s in students if s.status == "active"]
+
+    # --- Sabablar ---
+    by_reason = {}
+    for s in left:
+        r = reasons.get(s.id)
+        key = r.reason if r else "unknown"
+        row = by_reason.setdefault(key, {
+            "key": key,
+            "label": roles.LEAVE_REASON_LABELS.get(key, key),
+            "group": roles.LEAVE_REASON_GROUP.get(key, "unknown"),
+            "controllable": key in roles.CONTROLLABLE_REASONS,
+            "count": 0, "students": [],
+        })
+        row["count"] += 1
+        if len(row["students"]) < 10:
+            row["students"].append(s.full_name)
+    reason_rows = sorted(by_reason.values(), key=lambda r: -r["count"])
+
+    # --- Ustoz kesimi ---
+    def bucket(items, key_fn, label_fn):
+        out = {}
+        for s in items:
+            k = key_fn(s)
+            row = out.setdefault(str(k), {
+                "key": k, "label": label_fn(k),
+                "left": 0, "active": 0, "reasons": {},
+            })
+            if s.left_date and s.left_date >= start:
+                row["left"] += 1
+                r = reasons.get(s.id)
+                rk = r.reason if r else "unknown"
+                row["reasons"][rk] = row["reasons"].get(rk, 0) + 1
+            elif s.status == "active":
+                row["active"] += 1
+        rows = []
+        for r in out.values():
+            base = r["left"] + r["active"]
+            top = max(r["reasons"].items(), key=lambda x: x[1])[0] \
+                if r["reasons"] else None
+            rows.append({
+                **r,
+                "total": base,
+                "churn": round(r["left"] / base * 100, 1) if base else 0.0,
+                "top_reason": top,
+                "top_reason_label": (roles.LEAVE_REASON_LABELS.get(top, None)
+                                     if top else None),
+                "reasons": [{"key": k, "label": roles.LEAVE_REASON_LABELS.get(k, k),
+                             "count": v}
+                            for k, v in sorted(r["reasons"].items(),
+                                               key=lambda x: -x[1])],
+            })
+        rows.sort(key=lambda r: (-r["churn"], -r["left"]))
+        return [r for r in rows if r["total"] > 0]
+
+    by_teacher = bucket(
+        students,
+        lambda s: (groups[s.group_id].teacher_id
+                   if s.group_id in groups else None),
+        lambda k: teachers[k].full_name if k in teachers else "Biriktirilmagan")
+    by_group = bucket(
+        students,
+        lambda s: s.group_id,
+        lambda k: groups[k].name if k in groups else "Guruhsiz")
+
+    total_base = len(left) + len(active)
+    controllable = sum(r["count"] for r in reason_rows if r["controllable"])
+    unknown = sum(r["count"] for r in reason_rows if r["key"] == "unknown")
+
+    return {
+        "months": months,
+        "period": f"{start.isoformat()} — {today.isoformat()}",
+        "left": len(left),
+        "active": len(active),
+        "churn": round(len(left) / total_base * 100, 1) if total_base else 0.0,
+        "reasons": reason_rows,
+        "by_teacher": by_teacher,
+        "by_group": by_group,
+        "controllable": controllable,
+        "controllable_percent": (round(controllable / len(left) * 100, 1)
+                                 if left else 0.0),
+        "unknown": unknown,
+        "reason_options": [{"key": k, "label": lbl}
+                           for k, lbl, _ in roles.LEAVE_REASONS],
+        "hint": ("Bizga bog'liq sabablar — ustoz, natija, raqobatchi, "
+                 "jadval. Shularni kamaytirish mumkin."),
+    }
+
+
+# =====================================================================
+#  XODIMLAR DAVOMATI
+#  Kechikish daqiqasi AVTOMAT hisoblanadi — qo'lda yozilmaydi, aks
+#  holda hech kim o'zini kechikkan deb yozmaydi.
+# =====================================================================
+def _minutes(t: str) -> int | None:
+    return roles.time_to_minutes(t)
+
+
+@app.post("/api/hr/attendance")
+def mark_staff_attendance(
+    payload: schemas.StaffAttendanceCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ATTENDANCE_ACCESS)),
+):
+    emp = db.query(models.User).get(payload.user_id)
+    if not emp:
+        raise HTTPException(404, "Xodim topilmadi")
+    on = payload.date or date.today()
+
+    row = (db.query(models.StaffAttendance)
+           .filter(models.StaffAttendance.user_id == emp.id,
+                   models.StaffAttendance.work_date == on).first())
+    if not row:
+        row = models.StaffAttendance(user_id=emp.id, work_date=on,
+                                     created_by=user.full_name)
+        db.add(row)
+
+    if payload.check_in is not None:
+        row.check_in = payload.check_in
+    if payload.check_out is not None:
+        row.check_out = payload.check_out
+    if payload.note is not None:
+        row.note = payload.note
+
+    # Kechikish va erta ketish — avtomat
+    start = _minutes(roles.WORK_START) or 0
+    end = _minutes(roles.WORK_END) or 0
+    ci = _minutes(row.check_in or "")
+    co = _minutes(row.check_out or "")
+
+    row.late_minutes = (max(0, ci - start - roles.LATE_TOLERANCE_MIN)
+                        if ci is not None else 0)
+    row.early_minutes = (max(0, end - co) if co is not None else 0)
+    row.worked_minutes = (max(0, co - ci) if ci is not None and co is not None
+                          else 0)
+    db.commit(); db.refresh(row)
+    return _attendance_out(row, emp)
+
+
+def _attendance_out(r: models.StaffAttendance, emp=None) -> dict:
+    return {
+        "id": r.id,
+        "user_id": r.user_id,
+        "full_name": emp.full_name if emp else None,
+        "date": r.work_date.isoformat() if r.work_date else None,
+        "check_in": r.check_in,
+        "check_out": r.check_out,
+        "late_minutes": r.late_minutes or 0,
+        "early_minutes": r.early_minutes or 0,
+        "worked_minutes": r.worked_minutes or 0,
+        "worked_hours": round((r.worked_minutes or 0) / 60, 1),
+        "note": r.note,
+    }
+
+
+@app.get("/api/hr/attendance")
+def staff_attendance(
+    year: int | None = None,
+    month: int | None = None,
+    user_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ATTENDANCE_ACCESS)),
+):
+    today = date.today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+
+    staff = db.query(models.User).filter(
+        models.User.is_active == 1,
+        ~models.User.role.in_(roles.EXTERNAL_ROLES)).all()
+    if user_id:
+        staff = [u for u in staff if u.id == user_id]
+    ids = [u.id for u in staff]
+
+    rows = (db.query(models.StaffAttendance)
+            .filter(models.StaffAttendance.user_id.in_(ids or [-1]),
+                    models.StaffAttendance.work_date >= start,
+                    models.StaffAttendance.work_date <= end).all())
+
+    by_user = {}
+    for r in rows:
+        by_user.setdefault(r.user_id, []).append(r)
+
+    summary = []
+    for u in staff:
+        mine = by_user.get(u.id, [])
+        late = [r for r in mine if (r.late_minutes or 0) > 0]
+        summary.append({
+            "user_id": u.id,
+            "full_name": u.full_name,
+            "role_label": roles.UZ_LABELS.get(u.role, u.role),
+            "branch": u.branch.name if u.branch else None,
+            "days": len(mine),
+            "late_days": len(late),
+            "late_minutes": sum(r.late_minutes or 0 for r in mine),
+            "early_minutes": sum(r.early_minutes or 0 for r in mine),
+            "worked_hours": round(
+                sum(r.worked_minutes or 0 for r in mine) / 60, 1),
+            "rows": [_attendance_out(r) for r in
+                     sorted(mine, key=lambda x: x.work_date or date.min,
+                            reverse=True)],
+        })
+    summary.sort(key=lambda r: -r["late_minutes"])
+
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "work_start": roles.WORK_START,
+        "work_end": roles.WORK_END,
+        "tolerance": roles.LATE_TOLERANCE_MIN,
+        "rows": summary,
+        "total_late_minutes": sum(r["late_minutes"] for r in summary),
+        "staff_with_late": sum(1 for r in summary if r["late_days"] > 0),
+    }
+
+
+# =====================================================================
+#  USTOZLAR NPS
+#  O'quvchi va ota-ona ustozga 0-10 baho beradi.
+#  NPS = tarafdorlar% - tanqidchilar%
+# =====================================================================
+@app.post("/api/nps")
+def add_rating(
+    payload: schemas.RatingCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF)),
+):
+    t = db.query(models.Teacher).get(payload.teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    if not (0 <= payload.score <= 10):
+        raise HTTPException(400, "Baho 0 dan 10 gacha bo'lishi kerak")
+    if payload.source not in roles.NPS_SOURCE_LABELS:
+        raise HTTPException(400, "Noto'g'ri manba")
+
+    s = (db.query(models.Student).get(payload.student_id)
+         if payload.student_id else None)
+    r = models.TeacherRating(
+        teacher_id=t.id, student_id=payload.student_id,
+        group_id=s.group_id if s else None,
+        source=payload.source, score=payload.score,
+        comment=payload.comment,
+        period=date.today().isoformat()[:7],
+        created_by=user.full_name)
+    db.add(r); db.commit()
+    return {"id": r.id, "band": roles.nps_band(payload.score)[1]}
+
+
+@app.get("/api/nps")
+def nps_report(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NPS_ACCESS)),
+):
+    """Ustozlar NPS'i. Ustozning o'ziga ham ochiq — lekin o'zining
+    bahosi, hamkasbining emas."""
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
+    start, _e = billing.month_bounds(y, m)
+    d0 = datetime.combine(start, datetime.min.time())
+
+    teachers = scope_to_branch(db.query(models.Teacher), models.Teacher,
+                               user, branch_id).all()
+    ids = [t.id for t in teachers]
+    rows = (db.query(models.TeacherRating)
+            .filter(models.TeacherRating.teacher_id.in_(ids or [-1]),
+                    models.TeacherRating.created_at >= d0).all())
+
+    by_t = {}
+    for r in rows:
+        by_t.setdefault(r.teacher_id, []).append(r)
+
+    out = []
+    for t in teachers:
+        mine = by_t.get(t.id, [])
+        if not mine:
+            continue
+        scores = [r.score for r in mine]
+        pro = sum(1 for s in scores if s >= 9)
+        pas = sum(1 for s in scores if 7 <= s <= 8)
+        det = sum(1 for s in scores if s <= 6)
+        out.append({
+            "teacher_id": t.id,
+            "full_name": t.full_name,
+            "branch": t.branch.name if t.branch else None,
+            "answers": len(scores),
+            "avg": round(sum(scores) / len(scores), 1),
+            "nps": roles.nps_value(scores),
+            "promoters": pro,
+            "passives": pas,
+            "detractors": det,
+            "by_student": roles.nps_value(
+                [r.score for r in mine if r.source == "student"]),
+            "by_parent": roles.nps_value(
+                [r.score for r in mine if r.source == "parent"]),
+            "comments": [{
+                "score": r.score,
+                "band": roles.nps_band(r.score)[0],
+                "source": roles.NPS_SOURCE_LABELS.get(r.source, r.source),
+                "comment": r.comment,
+                "date": r.created_at.date().isoformat() if r.created_at else None,
+            } for r in sorted(mine, key=lambda x: x.created_at or datetime.min,
+                              reverse=True)[:10] if r.comment],
+        })
+    out.sort(key=lambda r: -r["nps"])
+
+    all_scores = [r.score for r in rows]
+    return {
+        "months": months,
+        "rows": out,
+        "overall_nps": roles.nps_value(all_scores),
+        "answers": len(all_scores),
+        "avg": round(sum(all_scores) / len(all_scores), 1) if all_scores else 0,
+        "sources": [{"key": k, "label": lbl} for k, lbl in roles.NPS_SOURCES],
+        "bands": [{"key": k, "label": lbl, "tone": t, "min": mn}
+                  for mn, k, lbl, t in roles.NPS_BANDS],
+        "hint": ("NPS = tarafdorlar foizi − tanqidchilar foizi. "
+                 "0 dan yuqori — yaxshi, 50 dan yuqori — a'lo."),
+    }
+
+
+# =====================================================================
+#  ROMI — REKLAMA SAMARADORLIGI
+#  ROMI = (kanal keltirgan foyda − kanal xarajati) / kanal xarajati × 100
+#  100% dan yuqori — pul ishlayapti. 0 dan past — zarar.
+# =====================================================================
+@app.get("/api/analytics/romi")
+def analytics_romi(
+    months: int = 6,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ANALYTICS)),
+):
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
+    start, _e = billing.month_bounds(y, m)
+    _s, end = billing.month_bounds(today.year, today.month)
+    d0 = datetime.combine(start, datetime.min.time())
+
+    leads = db.query(models.Lead).filter(models.Lead.created_at >= d0)
+    if branch_id:
+        leads = leads.filter(models.Lead.branch_id == branch_id)
+    elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        leads = leads.filter(models.Lead.branch_id == user.branch_id)
+    leads = leads.all()
+
+    # Kanal xarajati: reklama xarajatlari channel bo'yicha
+    spend = {}
+    eq = db.query(models.Expense).filter(
+        models.Expense.date >= start, models.Expense.date <= end,
+        models.Expense.category == "ads")
+    if branch_id:
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    for e in eq.all():
+        ch = e.channel or "other"
+        spend[ch] = spend.get(ch, 0.0) + (e.amount or 0)
+
+    paid = _student_payments(db)
+    students = {s.id: s for s in db.query(models.Student).all()}
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    overhead = _overhead_per_student_month(db, user, branch_id)
+
+    # Lidni o'quvchiga bog'lash - ism bo'yicha (converted lidlar)
+    by_name = {}
+    for s in students.values():
+        by_name.setdefault(s.full_name.strip().lower(), s)
+
+    by_channel = {}
+    for l in leads:
+        ch = l.source or "other"
+        row = by_channel.setdefault(ch, {
+            "key": ch,
+            "label": roles.LEAD_SOURCE_LABELS.get(ch, ch)
+                     if hasattr(roles, "LEAD_SOURCE_LABELS") else ch,
+            "leads": 0, "converted": 0, "revenue": 0.0, "profit": 0.0,
+        })
+        row["leads"] += 1
+        if l.stage == "converted":
+            row["converted"] += 1
+            s = by_name.get((l.full_name or "").strip().lower())
+            if s:
+                rev = paid.get(s.id, {}).get("total", 0.0)
+                span = _months_between(s.enrolled_date or today,
+                                       s.left_date or today)
+                cost = _teacher_cost_for_student(db, s, groups) + overhead * span
+                row["revenue"] += rev
+                row["profit"] += rev - cost
+
+    rows = []
+    for r in by_channel.values():
+        cost = spend.get(r["key"], 0.0)
+        romi = (round((r["profit"] - cost) / cost * 100, 1)
+                if cost else (None if r["profit"] == 0 else 9999.0))
+        band, band_label, tone = roles.romi_band(romi if romi is not None else 0)
+        rows.append({
+            **r,
+            "spend": round(cost, 2),
+            "cac": round(cost / r["converted"], 0) if r["converted"] else None,
+            "cpl": round(cost / r["leads"], 0) if r["leads"] else None,
+            "conversion": (round(r["converted"] / r["leads"] * 100, 1)
+                           if r["leads"] else 0.0),
+            "revenue": round(r["revenue"], 2),
+            "profit": round(r["profit"], 2),
+            "romi": romi,
+            "band": band if cost else "unknown",
+            "band_label": band_label if cost else "Xarajat kiritilmagan",
+            "tone": tone if cost else "slate",
+        })
+    rows.sort(key=lambda r: -(r["romi"] if r["romi"] is not None else -99999))
+
+    total_spend = sum(r["spend"] for r in rows)
+    total_profit = sum(r["profit"] for r in rows)
+    return {
+        "months": months,
+        "period": f"{start.isoformat()} — {end.isoformat()}",
+        "rows": rows,
+        "total_spend": round(total_spend, 2),
+        "total_revenue": round(sum(r["revenue"] for r in rows), 2),
+        "total_profit": round(total_profit, 2),
+        "romi": (round((total_profit - total_spend) / total_spend * 100, 1)
+                 if total_spend else None),
+        "no_spend": [r["label"] for r in rows if not r["spend"]],
+        "hint": ("ROMI 100% dan yuqori bo'lsa — kanal o'z pulini "
+                 "qaytarib, ustiga foyda keltiryapti. Xarajat "
+                 "kiritilmagan kanallarda ROMI hisoblanmaydi."),
+    }
+
+
+# =====================================================================
+#  XONALAR BANDLIGI — SIG'IMDAN NECHA FOIZ FOYDALANILYAPTI
+#  Ikki xil bandlik bor:
+#    O'RIN bandligi - xonadagi joylarning nechtasi to'lgan
+#    VAQT bandligi  - xona haftada necha soat ishlatilyapti
+# =====================================================================
+@app.get("/api/analytics/capacity")
+def analytics_capacity(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.ACADEMIC_VIEW)),
+):
+    rooms = scope_to_branch(db.query(models.Room), models.Room,
+                            user, branch_id).filter(
+        models.Room.active == 1).all()
+    groups = scope_to_branch(db.query(models.Group), models.Group,
+                             user, branch_id).all()
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).all()
+    room_by_id = {r.id: r for r in rooms}
+
+    # Haftada nechа soat ochiq: 6 kun x (22:00 - 06:00)
+    open_hours_week = 6 * (GRID_END_MIN - GRID_START_MIN) / 60
+
+    rows = []
+    for r in rooms:
+        mine = [g for g in groups if g.room_id == r.id]
+        hours = 0.0
+        seats_used = 0
+        slots = 0
+        for g in mine:
+            days = len([d for d in (g.lesson_days or "").split(",") if d])
+            a, b = _group_slot(g)
+            if a and b:
+                dur = ((roles.time_to_minutes(b) or 0)
+                       - (roles.time_to_minutes(a) or 0)) / 60
+                hours += dur * days
+            n = sum(1 for s in students
+                    if s.group_id == g.id and s.status in ("active", "trial"))
+            seats_used += n
+            slots += (r.capacity or 0)
+        rows.append({
+            "room_id": r.id,
+            "name": r.name,
+            "branch": r.branch.name if r.branch else None,
+            "capacity": r.capacity,
+            "groups": len(mine),
+            "students": seats_used,
+            # O'rin bandligi: guruhlar bo'yicha o'rtacha to'lish
+            "seat_usage": round(seats_used / slots * 100, 1) if slots else 0.0,
+            # Vaqt bandligi: haftada necha soat band
+            "hours_week": round(hours, 1),
+            "time_usage": round(hours / open_hours_week * 100, 1),
+            "free_seats": max(0, slots - seats_used),
+        })
+    rows.sort(key=lambda r: r["time_usage"])
+
+    total_cap = sum(r.capacity or 0 for r in rooms)
+    total_students = sum(1 for s in students if s.status == "active")
+    total_hours = sum(r["hours_week"] for r in rows)
+    open_total = open_hours_week * len(rooms) if rooms else 1
+
+    # Bo'sh joyning pul qiymati
+    avg_fee = 0.0
+    fees = [g.monthly_fee or 0 for g in groups if g.monthly_fee]
+    if fees:
+        avg_fee = sum(fees) / len(fees)
+    lost = sum(r["free_seats"] for r in rows) * avg_fee
+
+    return {
+        "rooms": rows,
+        "room_count": len(rooms),
+        "total_capacity": total_cap,
+        "active_students": total_students,
+        # Umumiy sig'imdan necha foiz ishlatilyapti
+        "seat_usage": (round(total_students / total_cap * 100, 1)
+                       if total_cap else 0.0),
+        "time_usage": round(total_hours / open_total * 100, 1) if rooms else 0.0,
+        "open_hours_week": open_hours_week,
+        "free_seats": sum(r["free_seats"] for r in rows),
+        "lost_income": round(lost, 2),
+        "worst": rows[0]["name"] if rows else None,
+        "hint": ("Bo'sh turgan xona — bu ijara puli. Vaqt bandligi "
+                 "past xonalarga yangi guruh qo'yish mumkin."),
+    }
+
+
+# =====================================================================
+#  RFM SEGMENTATSIYA
+#  R - oxirgi to'lovdan beri qancha vaqt o'tdi
+#  F - nechta to'lov qilgan
+#  M - jami qancha to'lagan
+#  Har bir segment uchun ANIQ harakat taklif qilinadi — segment
+#  o'zi hech narsani o'zgartirmaydi, harakat o'zgartiradi.
+# =====================================================================
+@app.get("/api/marketing/rfm")
+def marketing_rfm(
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ANALYTICS)),
+):
+    today = date.today()
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).filter(
+        models.Student.status != "archived").all()
+    if not students:
+        return {"rows": [], "segments": [], "total": 0}
+
+    ids = [s.id for s in students]
+    last = {}
+    agg = {}
+    for sid, mx, cnt, total in (
+            db.query(models.Payment.student_id,
+                     func.max(models.Payment.created_at),
+                     func.count(models.Payment.id),
+                     func.sum(models.Payment.amount))
+            .filter(models.Payment.student_id.in_(ids),
+                    models.Payment.kind == "payment")
+            .group_by(models.Payment.student_id).all()):
+        last[sid] = mx
+        agg[sid] = (cnt or 0, total or 0.0)
+
+    rows = []
+    for s in students:
+        cnt, total = agg.get(s.id, (0, 0.0))
+        lastp = last.get(s.id)
+        days = ((today - lastp.date()).days if lastp
+                else (today - (s.enrolled_date or today)).days)
+        r, f, m, seg = roles.rfm_score(days, cnt, total)
+        info = roles.RFM_SEGMENT_INFO[seg]
+        rows.append({
+            "student_id": s.id,
+            "full_name": s.full_name,
+            "phone": s.phone or s.parent_phone,
+            "group": s.group.name if s.group else None,
+            "status": s.status,
+            "r": r, "f": f, "m": m,
+            "days_since_payment": days,
+            "payments": cnt,
+            "total_paid": round(total, 2),
+            "balance": round(student_balance(db, s.id), 2),
+            "segment": seg,
+            "segment_label": info["label"],
+            "tone": info["tone"],
+            "action": info["action"],
+        })
+
+    by_seg = {}
+    for r in rows:
+        b = by_seg.setdefault(r["segment"], {"count": 0, "revenue": 0.0})
+        b["count"] += 1
+        b["revenue"] += r["total_paid"]
+
+    segments = []
+    for key, label, hint, tone, action in roles.RFM_SEGMENTS:
+        b = by_seg.get(key, {"count": 0, "revenue": 0.0})
+        segments.append({
+            "key": key, "label": label, "hint": hint, "tone": tone,
+            "action": action,
+            "count": b["count"],
+            "revenue": round(b["revenue"], 2),
+            "percent": round(b["count"] / len(rows) * 100, 1) if rows else 0.0,
+        })
+
+    rows.sort(key=lambda r: (-r["m"], -r["f"], -r["r"]))
+    return {
+        "rows": rows,
+        "segments": segments,
+        "total": len(rows),
+        "hint": ("R — oxirgi to'lovdan beri o'tgan vaqt, "
+                 "F — to'lovlar soni, M — jami summa. "
+                 "Har bir segment uchun aniq harakat taklif qilingan."),
+    }
+
+
+# =====================================================================
+#  AVTOMATIK XABARNOMALAR
+#  Tizim xabarni O'ZI yaratadi va navbatga qo'yadi: tug'ilgan kun,
+#  to'lov eslatmasi, qarzdorlik, darsga kelmagan.
+#
+#  Yuborish uchun Telegram bot tokeni (TELEGRAM_BOT_TOKEN) yoki SMS
+#  xizmati kerak. U bo'lmasa xabarlar navbatda turadi va qo'lda
+#  ko'chirib yuborish mumkin.
+# =====================================================================
+def _ensure_templates(db: Session) -> None:
+    have = {t.kind for t in db.query(models.NotifyTemplate).all()}
+    for kind, (title, body) in roles.DEFAULT_TEMPLATES.items():
+        if kind in have:
+            continue
+        db.add(models.NotifyTemplate(
+            kind=kind, title=title, body=body,
+            days_before=roles.NOTIFY_DEFAULT_DAYS.get(kind, 0)))
+    db.commit()
+
+
+def _fill(body: str, **kw) -> str:
+    out = body
+    for k, v in kw.items():
+        out = out.replace("{" + k + "}", str(v if v is not None else ""))
+    return out
+
+
+def _money(v) -> str:
+    return f"{round(v or 0):,}".replace(",", " ")
+
+
+@app.get("/api/notifications/templates")
+def notify_templates(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    _ensure_templates(db)
+    rows = db.query(models.NotifyTemplate).all()
+    order = [k for k, _, _ in roles.NOTIFY_KINDS]
+    rows.sort(key=lambda t: order.index(t.kind) if t.kind in order else 99)
+    return {
+        "rows": [{
+            "id": t.id, "kind": t.kind,
+            "kind_label": roles.NOTIFY_KIND_LABELS.get(t.kind, t.kind),
+            "title": t.title, "body": t.body,
+            "channel": t.channel, "active": bool(t.active),
+            "days_before": t.days_before or 0,
+        } for t in rows],
+        "channels": [{"key": k, "label": lbl}
+                     for k, lbl in roles.NOTIFY_CHANNELS],
+        "placeholders": ["{ism}", "{summa}", "{sana}", "{guruh}", "{kurs}"],
+        "telegram_ready": bool(os.environ.get("TELEGRAM_BOT_TOKEN")),
+    }
+
+
+@app.put("/api/notifications/templates/{tid}")
+def update_template(
+    tid: int,
+    payload: schemas.TemplateUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    t = db.query(models.NotifyTemplate).get(tid)
+    if not t:
+        raise HTTPException(404, "Shablon topilmadi")
+    for k, v in payload.model_dump(exclude_unset=True).items():
+        setattr(t, k, 1 if k == "active" and v else (0 if k == "active" else v))
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/notifications/generate")
+def generate_notifications(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    """AVTOMAT: bugungi tug'ilgan kunlar, to'lov eslatmalari va
+    qarzdorlik xabarlarini navbatga qo'yadi. Takror yaratilmaydi."""
+    _ensure_templates(db)
+    today = date.today()
+    tpl = {t.kind: t for t in db.query(models.NotifyTemplate).all()
+           if t.active}
+
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user).filter(
+        models.Student.status.in_(["active", "trial"])).all()
+
+    made = {k: 0 for k in roles.NOTIFY_KIND_LABELS}
+
+    def already(kind, sid, on):
+        return (db.query(models.Notification)
+                .filter(models.Notification.kind == kind,
+                        models.Notification.student_id == sid,
+                        models.Notification.scheduled_for == on).first())
+
+    for s in students:
+        phone = s.phone or s.parent_phone
+
+        # --- Tug'ilgan kun ---
+        t = tpl.get("birthday")
+        if t and s.birth_date and (s.birth_date.month, s.birth_date.day) == \
+                (today.month, today.day) and not already("birthday", s.id, today):
+            db.add(models.Notification(
+                kind="birthday", channel=t.channel, student_id=s.id,
+                phone=phone, title=t.title,
+                body=_fill(t.body, ism=s.full_name),
+                scheduled_for=today, created_by="Tizim"))
+            made["birthday"] += 1
+
+        bal = student_balance(db, s.id)
+
+        # --- Qarzdorlik ---
+        t = tpl.get("debt")
+        if t and bal < 0 and not already("debt", s.id, today):
+            db.add(models.Notification(
+                kind="debt", channel=t.channel, student_id=s.id,
+                phone=phone, title=t.title,
+                body=_fill(t.body, ism=s.full_name, summa=_money(abs(bal))),
+                scheduled_for=today, created_by="Tizim"))
+            made["debt"] += 1
+
+        # --- To'lov eslatmasi: oy oxiriga N kun qolganda ---
+        t = tpl.get("payment_due")
+        if t and bal >= 0:
+            _s0, m_end = billing.month_bounds(today.year, today.month)
+            days_left = (m_end - today).days
+            if days_left == (t.days_before or 3) and s.group:
+                if not already("payment_due", s.id, today):
+                    db.add(models.Notification(
+                        kind="payment_due", channel=t.channel,
+                        student_id=s.id, phone=phone, title=t.title,
+                        body=_fill(t.body, ism=s.full_name,
+                                   sana=m_end.isoformat(),
+                                   summa=_money(s.group.monthly_fee)),
+                        scheduled_for=today, created_by="Tizim"))
+                    made["payment_due"] += 1
+
+    db.commit()
+    total = sum(made.values())
+    return {
+        "created": total,
+        "by_kind": [{"key": k, "label": roles.NOTIFY_KIND_LABELS[k],
+                     "count": v} for k, v in made.items() if v],
+        "date": today.isoformat(),
+    }
+
+
+@app.get("/api/notifications")
+def list_notifications(
+    status_filter: str | None = None,
+    kind: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    q = db.query(models.Notification)
+    if status_filter:
+        q = q.filter(models.Notification.status == status_filter)
+    if kind:
+        q = q.filter(models.Notification.kind == kind)
+    rows = q.order_by(models.Notification.created_at.desc()).limit(300).all()
+
+    counts = {}
+    for n in db.query(models.Notification).all():
+        counts[n.status] = counts.get(n.status, 0) + 1
+
+    return {
+        "rows": [{
+            "id": n.id,
+            "kind": n.kind,
+            "kind_label": roles.NOTIFY_KIND_LABELS.get(n.kind, n.kind),
+            "channel": n.channel,
+            "channel_label": roles.NOTIFY_CHANNEL_LABELS.get(n.channel, n.channel),
+            "student_id": n.student_id,
+            "student": n.student.full_name if n.student else None,
+            "phone": n.phone,
+            "title": n.title,
+            "body": n.body,
+            "status": n.status,
+            "status_label": roles.NOTIFY_STATUS_LABELS.get(n.status, n.status),
+            "tone": roles.NOTIFY_STATUS_TONE.get(n.status, "slate"),
+            "scheduled_for": (n.scheduled_for.isoformat()
+                              if n.scheduled_for else None),
+            "sent_at": n.sent_at.isoformat() if n.sent_at else None,
+            "error": n.error,
+        } for n in rows],
+        "counts": counts,
+        "statuses": [{"key": k, "label": lbl, "tone": t,
+                      "count": counts.get(k, 0)}
+                     for k, lbl, t in roles.NOTIFY_STATUSES],
+        "kinds": [{"key": k, "label": lbl}
+                  for k, lbl, _ in roles.NOTIFY_KINDS],
+        "telegram_ready": bool(os.environ.get("TELEGRAM_BOT_TOKEN")),
+    }
+
+
+@app.post("/api/notifications/{nid}/status")
+def set_notification_status(
+    nid: int,
+    payload: schemas.NotifyStatus,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    n = db.query(models.Notification).get(nid)
+    if not n:
+        raise HTTPException(404, "Topilmadi")
+    if payload.status not in roles.NOTIFY_STATUS_LABELS:
+        raise HTTPException(400, "Noto'g'ri holat")
+    n.status = payload.status
+    if payload.status == "sent":
+        n.sent_at = datetime.utcnow()
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/notifications/custom")
+def custom_notification(
+    payload: schemas.NotifyCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.NOTIFY_ACCESS)),
+):
+    """Qo'lda xabar: yangi kurs, taklif va h.k. Segment bo'yicha
+    bir vaqtda yuborish mumkin."""
+    if not payload.body.strip():
+        raise HTTPException(400, "Xabar matnini yozing")
+
+    targets = []
+    if payload.student_ids:
+        targets = (db.query(models.Student)
+                   .filter(models.Student.id.in_(payload.student_ids)).all())
+    elif payload.segment:
+        rfm = marketing_rfm(branch_id=None, db=db, user=user)
+        ids = [r["student_id"] for r in rfm["rows"]
+               if r["segment"] == payload.segment]
+        targets = (db.query(models.Student)
+                   .filter(models.Student.id.in_(ids or [-1])).all())
+    if not targets:
+        raise HTTPException(400, "Kimga yuborishni tanlang")
+
+    for s in targets:
+        db.add(models.Notification(
+            kind=payload.kind or "new_course",
+            channel=payload.channel,
+            student_id=s.id, phone=s.phone or s.parent_phone,
+            title=payload.title,
+            body=_fill(payload.body, ism=s.full_name,
+                       guruh=s.group.name if s.group else "",
+                       kurs=payload.course or ""),
+            scheduled_for=date.today(), created_by=user.full_name))
+    db.commit()
+    return {"created": len(targets)}
+
+
+# =====================================================================
+#  REFERRAL TIZIMI
+#  "Do'stingni olib kel va chegirma ol"
+#
+#  Chegirma AVTOMAT beriladi: do'sti to'lov qilgan zahoti olib
+#  kelganning chegirmasi paydo bo'ladi. Faqat ro'yxatdan o'tib keyin
+#  ketib qolgan odam uchun chegirma berilmaydi.
+# =====================================================================
+@app.post("/api/referrals")
+def add_referral(
+    payload: schemas.ReferralCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
+):
+    """Kim kimni olib kelganini yozadi. Chegirma keyin — do'sti
+    to'lov qilganda — avtomat beriladi."""
+    friend = db.query(models.Student).get(payload.student_id)
+    inviter = db.query(models.Student).get(payload.referrer_student_id)
+    if not friend or not inviter:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if friend.id == inviter.id:
+        raise HTTPException(400, "O'zini o'zi olib kela olmaydi")
+
+    exists = (db.query(models.Discount)
+              .filter(models.Discount.kind == "referral",
+                      models.Discount.student_id == inviter.id,
+                      models.Discount.referrer_student_id == friend.id)
+              .first())
+    if exists:
+        raise HTTPException(400, "Bu referral allaqachon yozilgan")
+
+    # Do'sti allaqachon to'lov qilganmi
+    paid = (db.query(func.sum(models.Payment.amount))
+            .filter(models.Payment.student_id == friend.id,
+                    models.Payment.kind == "payment").scalar() or 0)
+
+    d = models.Discount(
+        student_id=inviter.id,
+        kind="referral",
+        percent=roles.REFERRAL_PERCENT,
+        reason=f"{friend.full_name} ni olib keldi",
+        start_date=date.today(),
+        end_date=date.today() + timedelta(days=30 * roles.REFERRAL_MONTHS),
+        referrer_student_id=friend.id,
+        requested_by=user.full_name,
+        status="active" if paid >= roles.REFERRAL_MIN_PAYMENT else "pending",
+    )
+    if d.status == "active":
+        d.approved_by = "Tizim (do'sti to'lov qildi)"
+        d.approved_at = datetime.utcnow()
+    db.add(d); db.commit(); db.refresh(d)
+    return {
+        "id": d.id,
+        "status": d.status,
+        "message": ("Chegirma darrov berildi — do'sti allaqachon to'lagan"
+                    if d.status == "active"
+                    else "Do'sti to'lov qilgach chegirma avtomat beriladi"),
+    }
+
+
+def _activate_referrals(db: Session, student_id: int) -> int:
+    """AVTOMAT: bu o'quvchi to'lov qilgan bo'lsa, uni olib kelgan
+    odamning chegirmasini yoqadi."""
+    rows = (db.query(models.Discount)
+            .filter(models.Discount.kind == "referral",
+                    models.Discount.referrer_student_id == student_id,
+                    models.Discount.status == "pending").all())
+    n = 0
+    for d in rows:
+        d.status = "active"
+        d.approved_by = "Tizim (do'sti to'lov qildi)"
+        d.approved_at = datetime.utcnow()
+        n += 1
+    return n
+
+
+@app.get("/api/referrals")
+def referral_report(
+    months: int = 12,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MARKETING_ANALYTICS)),
+):
+    """Referral dasturi qancha ishlayapti: kim ko'p olib kelgan,
+    qancha chegirma berildi va bu qancha pul keltirdi."""
+    today = date.today()
+    y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
+    start, _e = billing.month_bounds(y, m)
+
+    rows = (db.query(models.Discount)
+            .filter(models.Discount.kind == "referral",
+                    models.Discount.created_at >= datetime.combine(
+                        start, datetime.min.time())).all())
+    students = {s.id: s for s in db.query(models.Student).all()}
+    paid = _student_payments(db)
+
+    by_inviter = {}
+    for d in rows:
+        inv = students.get(d.student_id)
+        fr = students.get(d.referrer_student_id) if d.referrer_student_id else None
+        if not inv:
+            continue
+        r = by_inviter.setdefault(inv.id, {
+            "student_id": inv.id, "full_name": inv.full_name,
+            "invited": 0, "active": 0, "friends": [],
+            "revenue_brought": 0.0, "discount_given": 0.0,
+        })
+        r["invited"] += 1
+        if d.status == "active":
+            r["active"] += 1
+            fee = inv.group.monthly_fee if inv.group else 0
+            r["discount_given"] += (fee or 0) * (d.percent or 0) / 100
+        if fr:
+            r["friends"].append({
+                "id": fr.id, "name": fr.full_name,
+                "status": fr.status,
+                "paid": round(paid.get(fr.id, {}).get("total", 0.0), 2),
+            })
+            r["revenue_brought"] += paid.get(fr.id, {}).get("total", 0.0)
+
+    out = sorted(by_inviter.values(), key=lambda r: -r["revenue_brought"])
+    for r in out:
+        r["revenue_brought"] = round(r["revenue_brought"], 2)
+        r["discount_given"] = round(r["discount_given"], 2)
+        r["net"] = round(r["revenue_brought"] - r["discount_given"], 2)
+
+    total_rev = sum(r["revenue_brought"] for r in out)
+    total_disc = sum(r["discount_given"] for r in out)
+    return {
+        "months": months,
+        "rows": out,
+        "inviters": len(out),
+        "invited": sum(r["invited"] for r in out),
+        "active": sum(r["active"] for r in out),
+        "pending": sum(1 for d in rows if d.status == "pending"),
+        "revenue": round(total_rev, 2),
+        "discount": round(total_disc, 2),
+        "net": round(total_rev - total_disc, 2),
+        "percent": roles.REFERRAL_PERCENT,
+        "months_valid": roles.REFERRAL_MONTHS,
+        "hint": (f"Do'stini olib kelgan o'quvchi {roles.REFERRAL_PERCENT}% "
+                 f"chegirma oladi. Chegirma do'sti TO'LOV QILGANDA "
+                 f"avtomat yoqiladi — shunchaki ro'yxatdan o'tgani "
+                 f"yetarli emas."),
     }

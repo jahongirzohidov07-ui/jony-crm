@@ -1125,3 +1125,56 @@ class PermissionUpdate(BaseModel):
 
 class PermissionReset(BaseModel):
     role: Optional[str] = None
+
+
+# ---------------------------------------------------- Ketish sababi
+class LeaveReasonCreate(BaseModel):
+    reason: str
+    note: Optional[str] = None
+
+
+# ----------------------------------------------- Xodimlar davomati
+class StaffAttendanceCreate(BaseModel):
+    user_id: int
+    date: Optional[_dt.date] = None
+    check_in: Optional[str] = None
+    check_out: Optional[str] = None
+    note: Optional[str] = None
+
+
+# --------------------------------------------------------- NPS
+class RatingCreate(BaseModel):
+    teacher_id: int
+    score: int
+    source: str = "student"
+    student_id: Optional[int] = None
+    comment: Optional[str] = None
+
+
+# ------------------------------------------------------ Xabarnomalar
+class TemplateUpdate(BaseModel):
+    title: Optional[str] = None
+    body: Optional[str] = None
+    channel: Optional[str] = None
+    active: Optional[bool] = None
+    days_before: Optional[int] = None
+
+
+class NotifyStatus(BaseModel):
+    status: str
+
+
+class NotifyCreate(BaseModel):
+    body: str
+    title: Optional[str] = None
+    kind: Optional[str] = "new_course"
+    channel: str = "telegram"
+    course: Optional[str] = None
+    student_ids: Optional[List[int]] = None
+    segment: Optional[str] = None
+
+
+# --------------------------------------------------------- Referral
+class ReferralCreate(BaseModel):
+    student_id: int              # kim keldi (do'sti)
+    referrer_student_id: int     # kim olib keldi

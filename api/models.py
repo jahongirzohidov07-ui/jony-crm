@@ -1131,3 +1131,104 @@ class RolePermission(Base):
     allowed = Column(Integer, default=0)
     changed_by = Column(String, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class StaffAttendance(Base):
+    """Xodimning kelib-ketish vaqti. Kechikish daqiqasi avtomat
+    hisoblanadi — qo'lda yozilmaydi, aks holda hech kim o'zini
+    kechikkan deb yozmaydi."""
+    __tablename__ = "staff_attendance"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    work_date = Column(Date, nullable=False, default=date.today, index=True)
+    check_in = Column(String, nullable=True)     # "09:05"
+    check_out = Column(String, nullable=True)    # "18:00"
+    late_minutes = Column(Integer, default=0)
+    early_minutes = Column(Integer, default=0)   # erta ketgan
+    worked_minutes = Column(Integer, default=0)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User")
+
+
+class TeacherRating(Base):
+    """O'quvchi yoki ota-ona ustozga bergan baho (NPS).
+
+    0-10 shkala: 9-10 tarafdor, 7-8 betaraf, 0-6 tanqidchi.
+    NPS = tarafdorlar% - tanqidchilar%."""
+    __tablename__ = "teacher_ratings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+    source = Column(String, nullable=False, default="student")  # student|parent
+    score = Column(Integer, nullable=False)       # 0-10
+    comment = Column(Text, nullable=True)
+    period = Column(String, nullable=True)        # "YYYY-MM"
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    teacher = relationship("Teacher")
+    student = relationship("Student")
+
+
+class LeaveReason(Base):
+    """O'quvchi nega ketdi. Churn tahlilining asosi — sababsiz raqam
+    hech narsani o'zgartirmaydi."""
+    __tablename__ = "leave_reasons"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    reason = Column(String, nullable=False)      # roles.LEAVE_REASONS
+    note = Column(Text, nullable=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
+    left_date = Column(Date, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class Notification(Base):
+    """Yuboriladigan xabar. Tug'ilgan kun, to'lov eslatmasi, yangi kurs.
+
+    Tizim xabarni O'ZI yaratadi va navbatga qo'yadi; yuborish esa
+    Telegram bot tokeni yoki SMS xizmati ulanganda ishlaydi."""
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, nullable=False)         # roles.NOTIFY_KINDS
+    channel = Column(String, nullable=False, default="telegram")  # telegram|sms
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    phone = Column(String, nullable=True)
+    title = Column(String, nullable=True)
+    body = Column(Text, nullable=False)
+    status = Column(String, nullable=False, default="queued")  # queued|sent|failed|cancelled
+    scheduled_for = Column(Date, nullable=True, index=True)
+    sent_at = Column(DateTime, nullable=True)
+    error = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+
+
+class NotifyTemplate(Base):
+    """Xabar shabloni. {ism}, {summa}, {sana} kabi o'rinbosarlar
+    matn ichida turadi."""
+    __tablename__ = "notify_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, nullable=False, unique=True)
+    title = Column(String, nullable=True)
+    body = Column(Text, nullable=False)
+    channel = Column(String, nullable=False, default="telegram")
+    active = Column(Integer, default=1)
+    days_before = Column(Integer, default=0)   # to'lov eslatmasi uchun
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

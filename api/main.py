@@ -688,6 +688,14 @@ def create_user(
         role=payload.role,
         branch_id=payload.branch_id,
         fix_salary=payload.fix_salary,
+        # Xodim kartasi. Tug'ilgan sana va ishga kirgan sana — tabrik
+        # eslatmalarining asosi, shuning uchun boshidanoq yoziladi.
+        phone=payload.phone,
+        birth_date=payload.birth_date,
+        position=payload.position,
+        manager_id=payload.manager_id,
+        hired_date=payload.hired_date or date.today(),
+        photo=payload.photo,
     )
     db.add(new_user)
     db.commit()
@@ -754,8 +762,17 @@ def update_user(
     # (roles.USER_ADMIN) o'zgartira oladi; endpoint allaqachon shu bilan
     # himoyalangan. exclude_unset orqali "berilmagan" va "0 qilindi"
     # holatlarini ajratamiz.
-    if "fix_salary" in payload.model_dump(exclude_unset=True):
+    given = payload.model_dump(exclude_unset=True)
+    if "fix_salary" in given:
         target.fix_salary = payload.fix_salary
+
+    # Xodim kartasi maydonlari. exclude_unset — "berilmagan" va
+    # "bo'shatildi" holatlarini ajratadi, aks holda tahrirlash oynasida
+    # tegilmagan maydon ham tozalanib ketardi.
+    for f in ("phone", "birth_date", "position", "manager_id",
+              "hired_date", "photo"):
+        if f in given:
+            setattr(target, f, given[f])
 
     db.commit()
     db.refresh(target)
@@ -10237,6 +10254,11 @@ def _my_hr_cards(db: Session, user: models.User) -> list:
         if any(r["done"] for r in rows) and not all(r["done"] for r in rows):
             unfinished += 1
 
+    # Yaqinlashayotgan tug'ilgan kun va yubileylar
+    dates = _staff_dates(db, user, days=roles.STAFF_DATE_HORIZON)
+    soon = [r for r in dates if r["soon"]]
+    nearest = dates[0] if dates else None
+
     return [
         _card("Ochiq vakansiyalar", open_vac, None, "brand", "/hr"),
         _card("Shu oy nomzodlar", len(cands),
@@ -10244,6 +10266,12 @@ def _my_hr_cards(db: Session, user: models.User) -> list:
         _card("Xodimlar", staff, None, "plain", "/users"),
         _card("Onboarding tugamagan", unfinished,
               "checklist yopilmagan", "bad" if unfinished else "good", "/users"),
+        _card("Yaqin sanalar", len(soon),
+              (f"{nearest['full_name']} — {nearest['kind_label'].lower()}, "
+               + ("bugun" if nearest["today"]
+                  else f"{nearest['days_left']} kundan keyin"))
+              if nearest else "yaqin kunlarda yo'q",
+              "amber" if soon else "plain", "/hr"),
     ]
 
 
@@ -10391,6 +10419,14 @@ def my_dashboard(
 ):
     """Xodimning O'Z dashboardi. Har bir rol o'ziga tegishli raqamni
     ko'radi — birovning ishi uni chalg'itmaydi."""
+    # AVTOMAT: tug'ilgan kun va yubiley eslatmalari. HR hisobiga kirgan
+    # zahoti vazifa paydo bo'ladi — hech kim tugma bosmaydi.
+    if user.role in roles.STAFF_DATES_ACCESS:
+        try:
+            _ensure_staff_date_tasks(db, user)
+        except Exception:
+            db.rollback()
+
     builder = _MY_CARDS.get(user.role)
     cards = builder(db, user) if builder else []
 
@@ -11850,6 +11886,168 @@ def custom_notification(
             scheduled_for=date.today(), created_by=user.full_name))
     db.commit()
     return {"created": len(targets)}
+
+
+# =====================================================================
+#  XODIMLARNING SANALARI — tug'ilgan kun va ish yubileyi
+#
+#  Odam esdan chiqaradi, tizim chiqarmaydi. Sana yaqinlashganda HR'ga
+#  vazifa O'ZI paydo bo'ladi — bir necha kun oldindan, ulgurish uchun.
+#  Vazifa ichida tayyor tabrik matni ham turadi.
+# =====================================================================
+def _hr_user(db: Session, branch_id: int | None = None) -> models.User | None:
+    """Eslatma kimga tushadi. HR bo'lmasa — asoschiga."""
+    q = db.query(models.User).filter(models.User.role == roles.HR_MANAGER,
+                                     models.User.is_active == 1)
+    if branch_id:
+        row = q.filter(models.User.branch_id == branch_id).first()
+        if row:
+            return row
+    return q.first() or (db.query(models.User)
+                         .filter(models.User.role == roles.FOUNDER,
+                                 models.User.is_active == 1).first())
+
+
+def _staff_dates(db: Session, user: models.User, *,
+                 days: int = roles.STAFF_DATE_HORIZON) -> list:
+    """Yaqinlashayotgan tug'ilgan kunlar va ish yubileylari.
+    Bugundan boshlab `days` kun ichidagilari, eng yaqini birinchi."""
+    today = date.today()
+    staff = scope_to_branch(db.query(models.User), models.User, user).filter(
+        models.User.is_active == 1).all()
+
+    rows = []
+    for u in staff:
+        for kind, src in (("birthday", u.birth_date),
+                          ("anniversary", u.hired_date)):
+            nxt = roles.next_occurrence(src, today)
+            if not nxt:
+                continue
+            left = (nxt - today).days
+            if left > days:
+                continue
+            # Yubiley 0 yil bo'lsa — hali bir yil to'lmagan, tabrik erta
+            years = nxt.year - src.year
+            if kind == "anniversary" and years < 1:
+                continue
+            rows.append({
+                "user_id": u.id,
+                "full_name": u.full_name,
+                "role_label": roles.UZ_LABELS.get(u.role, u.role),
+                "branch": u.branch.name if u.branch else None,
+                "phone": u.phone,
+                "kind": kind,
+                "kind_label": roles.STAFF_DATE_LABELS[kind],
+                "tone": roles.STAFF_DATE_TONE[kind],
+                "date": nxt.isoformat(),
+                "date_label": roles.uz_date(nxt),
+                "days_left": left,
+                "today": left == 0,
+                "soon": left <= roles.STAFF_DATE_LEAD_DAYS,
+                "years": years,
+                "age": years if kind == "birthday" else None,
+                "tenure": roles.tenure_text(u.hired_date, today),
+                "source_date": src.isoformat(),
+            })
+    rows.sort(key=lambda r: r["days_left"])
+    return rows
+
+
+def _staff_date_task(db: Session, row: dict) -> models.Task | None:
+    """Bitta sana uchun HR vazifasi. Takror yaratilmaydi: sarlavha
+    ichida yil turadi, shuning uchun har yili bir marta chiqadi."""
+    on = date.fromisoformat(row["date"])
+    if row["kind"] == "birthday":
+        title = (f"Tug'ilgan kun: {row['full_name']} — "
+                 f"{row['date_label']} ({on.year})")
+        greet = (f"{row['full_name']}, tug'ilgan kuningiz muborak bo'lsin! "
+                 "Jony Academy jamoasi sizga sog'lik, tinchlik va katta "
+                 "yutuqlar tilaydi.")
+        body = (f"Xodim: {row['full_name']} ({row['role_label']})\n"
+                f"Filial: {row['branch'] or '—'}\n"
+                f"Sana: {row['date_label']}\n"
+                f"Yoshi: {row['years']} ga to'ladi\n"
+                f"Telefon: {row['phone'] or '—'}\n\n"
+                f"Tayyor tabrik:\n{greet}")
+    else:
+        title = (f"Ish yubileyi: {row['full_name']} — "
+                 f"{row['years']} yil ({on.year})")
+        greet = (f"{row['full_name']}, jamoamizda {row['years']} yil "
+                 "bo'ldingiz! Mehnatingiz va sabringiz uchun rahmat — "
+                 "shu muhitni siz ham qurdingiz.")
+        body = (f"Xodim: {row['full_name']} ({row['role_label']})\n"
+                f"Filial: {row['branch'] or '—'}\n"
+                f"Ishga kirgan: {row['source_date']}\n"
+                f"Necha yil bo'ladi: {row['years']}\n"
+                f"Telefon: {row['phone'] or '—'}\n\n"
+                f"Tayyor tabrik:\n{greet}")
+
+    exists = (db.query(models.Task)
+              .filter(models.Task.title == title).first())
+    if exists:
+        return None                 # allaqachon bor — takror chiqmaydi
+
+    u = db.query(models.User).get(row["user_id"])
+    assignee = _hr_user(db, u.branch_id if u else None)
+    t = models.Task(
+        title=title,
+        description=body,
+        assignee_id=assignee.id if assignee else None,
+        branch_id=u.branch_id if u else None,
+        deadline=on,
+        priority="normal",
+        source="manual",
+        created_by="Tizim",
+    )
+    db.add(t)
+    db.flush()
+    _ensure_public_id(db, "task", t)
+    return t
+
+
+def _ensure_staff_date_tasks(db: Session, user: models.User) -> int:
+    """AVTOMAT: bir necha kun qolgan sanalar uchun vazifa yaratadi.
+    Hech kim tugma bosmaydi — ro'yxat ochilgan zahoti ishlaydi."""
+    made = 0
+    for row in _staff_dates(db, user, days=roles.STAFF_DATE_LEAD_DAYS):
+        if _staff_date_task(db, row) is not None:
+            made += 1
+    db.commit()
+    return made
+
+
+@app.get("/api/hr/dates")
+def hr_dates(
+    days: int = roles.STAFF_DATE_HORIZON,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.STAFF_DATES_ACCESS)),
+):
+    """Yaqinlashayotgan tug'ilgan kunlar va ish yubileylari.
+    Ochilgan zahoti yaqin sanalar uchun vazifa ham yaratiladi."""
+    _ensure_staff_date_tasks(db, user)
+    rows = _staff_dates(db, user, days=max(1, min(days, 366)))
+
+    staff = scope_to_branch(db.query(models.User), models.User, user).filter(
+        models.User.is_active == 1).all()
+    no_birth = [u.full_name for u in staff if not u.birth_date]
+    no_hired = [u.full_name for u in staff if not u.hired_date]
+
+    return {
+        "rows": rows,
+        "soon": [r for r in rows if r["soon"]],
+        "lead_days": roles.STAFF_DATE_LEAD_DAYS,
+        "days": days,
+        "birthdays": sum(1 for r in rows if r["kind"] == "birthday"),
+        "anniversaries": sum(1 for r in rows if r["kind"] == "anniversary"),
+        "missing_birth_date": no_birth,
+        "missing_hired_date": no_hired,
+        "kinds": [{"key": k, "label": lbl, "tone": t}
+                  for k, lbl, t in roles.STAFF_DATE_KINDS],
+        "hint": (f"Sanaga {roles.STAFF_DATE_LEAD_DAYS} kun qolganda "
+                 "HR'ga vazifa avtomat tushadi — tayyor tabrik matni "
+                 "bilan. Sana kiritilmagan xodimning tug'ilgan kuni "
+                 "eslatilmaydi."),
+    }
 
 
 # =====================================================================

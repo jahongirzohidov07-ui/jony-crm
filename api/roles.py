@@ -1583,6 +1583,76 @@ MARKETING_ANALYTICS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD,
 
 
 # =====================================================================
+#  XODIMLARNING SANALARI — tug'ilgan kun va ish yubileyi
+#
+#  Odam esdan chiqarishi mumkin, tizim esdan chiqarmaydi. Sana
+#  yaqinlashganda HR'ga vazifa o'zi paydo bo'ladi — bir necha kun
+#  oldindan, ulgurish uchun. Tayyor tabrik matni ham vazifa ichida
+#  turadi: HR ko'chirib yuboradi, o'ylab o'tirmaydi.
+# =====================================================================
+STAFF_DATE_LEAD_DAYS = 5          # necha kun oldin eslatiladi
+STAFF_DATE_HORIZON = 60           # ro'yxatda necha kunlik oldinni ko'rsatamiz
+
+STAFF_DATE_KINDS = [
+    ("birthday", "Tug'ilgan kun", "violet"),
+    ("anniversary", "Ish yubileyi", "sky"),
+]
+STAFF_DATE_LABELS = {k: lbl for k, lbl, _ in STAFF_DATE_KINDS}
+STAFF_DATE_TONE = {k: t for k, _, t in STAFF_DATE_KINDS}
+
+# Sanalarni HR ko'radi. Filial rahbari o'z filialidagilarni ko'radi.
+STAFF_DATES_ACCESS = FULL_ACCESS + [HR_MANAGER, BRANCH_MANAGER]
+
+UZ_MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul",
+             "avgust", "sentabr", "oktabr", "noyabr", "dekabr"]
+
+
+def uz_date(d) -> str:
+    """12-avgust. Yil yozilmaydi — har yili takrorlanadigan sana."""
+    if not d:
+        return "—"
+    return f"{d.day}-{UZ_MONTHS[d.month - 1]}"
+
+
+def next_occurrence(d, today):
+    """Sananing keyingi kelishi. 29-fevral bo'lsa — 28-fevralga
+    suriladi, aks holda kabisa bo'lmagan yili eslatma umuman
+    chiqmay ketardi."""
+    if not d:
+        return None
+
+    def _try(year):
+        try:
+            return d.replace(year=year)
+        except ValueError:          # 29-fevral, kabisa emas yil
+            return d.replace(year=year, day=28)
+
+    nxt = _try(today.year)
+    if nxt < today:
+        nxt = _try(today.year + 1)
+    return nxt
+
+
+def tenure_text(hired, on) -> str:
+    """Ishga kirganidan beri qancha vaqt o'tgani — odam tilida."""
+    if not hired or not on:
+        return "—"
+    months = (on.year - hired.year) * 12 + (on.month - hired.month)
+    if on.day < hired.day:
+        months -= 1
+    if months < 0:
+        months = 0
+    y, m = divmod(months, 12)
+    if y and m:
+        return f"{y} yil {m} oy"
+    if y:
+        return f"{y} yil"
+    if m:
+        return f"{m} oy"
+    return "endi keldi"
+
+
+# =====================================================================
 #  Umumiy dashboard raqamlari
 #
 #  Butun markaz bo'yicha raqamlar (o'quvchilar soni, tushum, qarzdorlar,

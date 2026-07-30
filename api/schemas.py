@@ -45,6 +45,10 @@ class UserOut(BaseModel):
     branch: Optional[BranchOut] = None
     is_active: bool = True
     fix_salary: Optional[float] = None
+    # Eslatmalar shu ikki sanaga tayanadi - ro'yxatda ham ko'rinsin
+    phone: Optional[str] = None
+    birth_date: Optional[date] = None
+    hired_date: Optional[date] = None
 
 
 class UserCreate(BaseModel):

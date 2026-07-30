@@ -119,3 +119,28 @@ export const SUPPORT_ACCESS = [
   ACADEMIC_HEAD,
   SUPPORT_TEACHER,
 ];
+
+/** Chegirma: kim so'ray oladi, kim tasdiqlaydi. */
+export const DISCOUNT_REQUEST = [...FULL_ACCESS, SALES_MANAGER];
+export const DISCOUNT_APPROVE = [FOUNDER, BRANCH_MANAGER];
+
+/** Vazifalar. */
+export const TASK_ACCESS = [
+  ...FULL_ACCESS,
+  HR_MANAGER,
+  SMM_MANAGER,
+  ACADEMIC_HEAD,
+  SALES_MANAGER,
+  TEACHER,
+  SUPPORT_TEACHER,
+  EXAMINER,
+];
+export const TASK_MANAGE = [...FULL_ACCESS, HR_MANAGER, ACADEMIC_HEAD];
+
+/** Ombor va aktivlar. */
+export const INVENTORY_ACCESS = [...FULL_ACCESS, HR_MANAGER];
+export const INVENTORY_VIEW = [
+  ...INVENTORY_ACCESS,
+  ACADEMIC_HEAD,
+  SUPPORT_TEACHER,
+];

@@ -12,6 +12,21 @@ export function clearToken() {
   sessionStorage.removeItem(TOKEN_KEY);
 }
 
+/** Avtomatik tekshiruv topgan muammo. */
+export interface CheckProblem {
+  key: string;
+  label: string;
+  severity: "block" | "warn";
+  message: string;
+}
+
+/** Tekshiruv muammolarini ham olib yuradigan xato. */
+export class ApiError extends Error {
+  problems: CheckProblem[] = [];
+  canForce = false;
+  status = 0;
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {}
@@ -32,7 +47,21 @@ async function request<T>(
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `Xatolik: ${res.status}`);
+    const d = body.detail;
+    // Avtomatik tekshiruvlar xatoni obyekt sifatida qaytaradi:
+    // {message, problems, can_force}. Oddiy xatolarda esa matn keladi.
+    if (d && typeof d === "object" && !Array.isArray(d)) {
+      const err = new ApiError(d.message || `Xatolik: ${res.status}`);
+      err.problems = d.problems ?? [];
+      err.canForce = Boolean(d.can_force);
+      err.status = res.status;
+      throw err;
+    }
+    const err = new ApiError(
+      typeof d === "string" ? d : `Xatolik: ${res.status}`
+    );
+    err.status = res.status;
+    throw err;
   }
 
   if (res.status === 204) return undefined as T;
@@ -1556,4 +1585,351 @@ export interface GeographyReport {
   top_school: GeoRow | null;
   free_text_areas: number;
   free_text_schools: number;
+}
+
+// ------------------------------------------------ Avtomatik tekshiruvlar
+export interface CheckResult {
+  problems: CheckProblem[];
+  ok: boolean;
+  blocking: boolean;
+}
+
+// ------------------------------------------------------------ Chegirmalar
+export interface DiscountRow {
+  id: number;
+  student_id: number;
+  student_name?: string;
+  kind: string;
+  kind_label: string;
+  percent?: number | null;
+  amount?: number | null;
+  reason: string;
+  start_date?: string | null;
+  end_date?: string | null;
+  status: string;
+  status_label: string;
+  alive: boolean;
+  referrer_student_id?: number | null;
+  referrer_name?: string | null;
+  staff_user_id?: number | null;
+  staff_name?: string | null;
+  requested_by?: string | null;
+  approved_by?: string | null;
+  approved_at?: string | null;
+  cancelled_reason?: string | null;
+  created_at?: string | null;
+}
+
+export interface DiscountType {
+  key: string;
+  label: string;
+  hint: string;
+}
+
+export interface StudentDiscounts {
+  rows: DiscountRow[];
+  family_percent: number;
+  total_percent: number;
+  max_percent: number;
+  can_approve: boolean;
+  types: DiscountType[];
+}
+
+export interface DiscountList {
+  rows: DiscountRow[];
+  types: DiscountType[];
+  statuses: { key: string; label: string }[];
+  max_percent: number;
+  can_approve: boolean;
+  pending: number;
+}
+
+// -------------------------------------------------------- Nomzod kartasi
+export interface CandidateCard {
+  id: number;
+  full_name: string;
+  phone?: string | null;
+  vacancy?: string | null;
+  stage: string;
+  stage_label: string;
+  source: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  note?: string | null;
+  reject_reason?: string | null;
+  hired_date?: string | null;
+  created_at?: string | null;
+  cv?: string | null;
+  experience_years?: number | null;
+  workplaces?: string | null;
+  certificates?: string | null;
+  language_level?: string | null;
+  language_level_label?: string | null;
+  expected_salary?: number | null;
+  trial_score?: number | null;
+  interview_score?: number | null;
+  overall_score?: number | null;
+  strengths?: string | null;
+  weaknesses?: string | null;
+  reference_note?: string | null;
+  decision: string;
+  decision_label: string;
+  files: { id: number; name?: string | null; kind: string; size: number;
+           created_at?: string | null }[];
+  language_levels: { key: string; label: string }[];
+  decisions: { key: string; label: string }[];
+}
+
+// ----------------------------------------------------------- Onboarding
+export interface OnboardingRow {
+  step: string;
+  label: string;
+  done: boolean;
+  done_at?: string | null;
+  done_by?: string | null;
+  note?: string | null;
+}
+
+export interface Onboarding {
+  user_id: number;
+  full_name: string;
+  rows: OnboardingRow[];
+  done: number;
+  total: number;
+  percent: number;
+  complete: boolean;
+}
+
+// --------------------------------------------------------- Xodim kartasi
+export interface StaffEventRow {
+  id: number;
+  kind: string;
+  kind_label: string;
+  tone: "good" | "bad" | "neutral";
+  date?: string | null;
+  end_date?: string | null;
+  title?: string | null;
+  note?: string | null;
+  score?: number | null;
+  amount?: number | null;
+  minutes?: number | null;
+  by?: string | null;
+}
+
+export interface StaffEvents {
+  rows: StaffEventRow[];
+  kinds: { key: string; label: string; tone: string }[];
+}
+
+export interface StaffCard {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  username: string;
+  phone?: string | null;
+  birth_date?: string | null;
+  photo?: string | null;
+  role: string;
+  role_label: string;
+  position: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  manager_id?: number | null;
+  manager?: string | null;
+  hired_date?: string | null;
+  is_active: boolean;
+  exit_type?: string | null;
+  exit_type_label?: string | null;
+  exit_reason?: string | null;
+  exit_date?: string | null;
+  salary?: number | null;
+  salary_hidden: boolean;
+  bonus_total?: number | null;
+  groups: { id: number; name: string; students: number }[];
+  students: number;
+  vacation_days: number;
+  absences: number;
+  late_count: number;
+  late_minutes: number;
+  trainings: number;
+  reviews: number;
+  avg_review?: number | null;
+  disciplines: number;
+  rewards: number;
+  onboarding: OnboardingRow[];
+  onboarding_done: number;
+  onboarding_total: number;
+  onboarding_percent: number;
+}
+
+// ------------------------------------------------------ Filial reytingi
+export interface RatingRow {
+  branch_id: number;
+  branch: string;
+  score: number;
+  grade: string;
+  grade_label: string;
+  rank: number;
+  scores: Record<string, number>;
+  raw: {
+    margin: number;
+    churn: number;
+    conversion: number;
+    academic?: number | null;
+    debt_per_student: number;
+    complaints: number;
+    issues: number;
+    active: number;
+    income: number;
+    profit: number;
+  };
+}
+
+export interface BranchRating {
+  months: number;
+  period: string;
+  rows: RatingRow[];
+  weights: Record<string, number>;
+  dimensions: { key: string; label: string; weight: number }[];
+  grades: { key: string; label: string; min: number }[];
+}
+
+// ------------------------------------------------------------- Vazifalar
+export interface TaskRow {
+  id: number;
+  public_id?: string | null;
+  title: string;
+  description?: string | null;
+  assignee_id?: number | null;
+  assignee?: string | null;
+  watcher_id?: number | null;
+  watcher?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  deadline?: string | null;
+  days_left?: number | null;
+  overdue: boolean;
+  priority: string;
+  priority_label: string;
+  priority_rank: number;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  stored_status: string;
+  source: string;
+  source_label: string;
+  meeting?: string | null;
+  checklist: { text: string; done: boolean }[];
+  checklist_done: number;
+  checklist_total: number;
+  result?: string | null;
+  delay_reason?: string | null;
+  done_at?: string | null;
+  created_by?: string | null;
+  created_at?: string | null;
+}
+
+export interface TaskList {
+  rows: TaskRow[];
+  counts: Record<string, number>;
+  statuses: { key: string; label: string; tone: string; count: number }[];
+  priorities: { key: string; label: string }[];
+  sources: { key: string; label: string }[];
+  can_manage: boolean;
+  overdue: number;
+  open: number;
+}
+
+// -------------------------------------------------------- Ombor/aktivlar
+export interface AssetRepairRow {
+  id: number;
+  date?: string | null;
+  cost?: number | null;
+  vendor?: string | null;
+  note?: string | null;
+}
+
+export interface AssetRow {
+  id: number;
+  inventory_no: string;
+  name: string;
+  kind: string;
+  kind_label: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  room_id?: number | null;
+  room?: string | null;
+  responsible_id?: number | null;
+  responsible?: string | null;
+  purchased_on?: string | null;
+  price?: number | null;
+  condition: string;
+  condition_label: string;
+  condition_tone: string;
+  warranty_until?: string | null;
+  warranty_active: boolean;
+  serial_no?: string | null;
+  photo?: string | null;
+  note?: string | null;
+  written_off_on?: string | null;
+  repairs: AssetRepairRow[];
+  repair_count: number;
+  repair_cost: number;
+  replace_hint: boolean;
+}
+
+export interface AssetList {
+  rows: AssetRow[];
+  total_value: number;
+  count: number;
+  needs_attention: number;
+  kinds: { key: string; label: string; count: number }[];
+  conditions: { key: string; label: string; tone: string; count: number }[];
+  can_edit: boolean;
+}
+
+export interface ConsumableRow {
+  id: number;
+  name: string;
+  kind: string;
+  kind_label: string;
+  branch_id?: number | null;
+  branch?: string | null;
+  qty: number;
+  min_qty: number;
+  unit: string;
+  unit_price?: number | null;
+  value: number;
+  low: boolean;
+  note?: string | null;
+  request_id?: number | null;
+  request_qty?: number | null;
+}
+
+export interface ConsumableList {
+  rows: ConsumableRow[];
+  low_count: number;
+  total_value: number;
+  kinds: { key: string; label: string; unit: string }[];
+  reasons: { key: string; label: string }[];
+  requests: {
+    id: number;
+    consumable_id: number;
+    name: string;
+    qty: number;
+    auto: boolean;
+    note?: string | null;
+    created_at?: string | null;
+  }[];
+  can_edit: boolean;
+}
+
+export interface StockMoveRow {
+  id: number;
+  delta: number;
+  reason: string;
+  reason_label: string;
+  note?: string | null;
+  by?: string | null;
+  created_at?: string | null;
 }

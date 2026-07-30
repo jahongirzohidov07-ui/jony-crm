@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle,
+  Pencil,
 } from "lucide-react";
 import {
   api,
@@ -9,6 +10,8 @@ import {
   type StudentExams,
   type StudentAttendance,
   type CoinEntry,
+  type Branch,
+  type Group,
   type StudentHistory,
   type StudentPricing,
 } from "../lib/api";
@@ -21,6 +24,9 @@ import { examTitle, coinSourceLabel, gradeTone } from "../lib/exams";
 import {
   HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
 } from "../lib/academic";
+import { StudentPayButton } from "../components/QuickPayment";
+import { formatPhone } from "../components/PhoneInput";
+import { StudentModal } from "./Students";
 
 const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
@@ -63,10 +69,17 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 function ProfileCard({
   student,
   coins,
+  onEdit,
+  onChanged,
 }: {
   student: StudentDetailType;
   coins: number;
+  onEdit: () => void;
+  onChanged: () => void;
 }) {
+  const { user } = useAuth();
+  const canEdit = can(user?.role, TEACHING_STAFF);
+  const canFinance = can(user?.role, FINANCE_ACCESS);
   const initial = student.full_name.trim().charAt(0).toUpperCase();
 
   return (
@@ -119,7 +132,7 @@ function ProfileCard({
             student.phone ? (
               <span className="flex items-center gap-1.5 justify-end">
                 <Phone size={12} className="text-slate-400" />
-                {student.phone}
+                {formatPhone(student.phone)}
               </span>
             ) : (
               <span className="text-slate-400">Mavjud emas</span>
@@ -129,7 +142,9 @@ function ProfileCard({
         <Row
           label="Ota-ona telefoni"
           value={
-            student.parent_phone || <span className="text-slate-400">Mavjud emas</span>
+            formatPhone(student.parent_phone) || (
+              <span className="text-slate-400">Mavjud emas</span>
+            )
           }
         />
         <Row
@@ -155,10 +170,17 @@ function ProfileCard({
         <Row label="Filial" value={student.branch?.name || "—"} />
       </div>
 
-      <p className="text-xs text-slate-400 mt-4 pt-3 border-t border-slate-100">
-        Ma'lumotlarni o'zgartirish uchun Talabalar ro'yxatidagi qalam
-        tugmasidan foydalaning.
-      </p>
+      <div className="flex gap-2 mt-4 pt-3 border-t border-slate-100">
+        {canFinance && <StudentPayButton student={student} onDone={onChanged} />}
+        {canEdit && (
+          <button
+            onClick={onEdit}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-brand-300"
+          >
+            <Pencil size={14} /> Tahrirlash
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -788,6 +810,14 @@ export default function StudentDetail() {
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("groups");
+  const [editOpen, setEditOpen] = useState(false);
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  useEffect(() => {
+    api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));
+    api.get<Group[]>("/groups").then(setGroups).catch(() => setGroups([]));
+  }, []);
 
   function load() {
     api
@@ -826,7 +856,12 @@ export default function StudentDetail() {
 
       <div className="flex flex-col lg:flex-row gap-5 items-start">
         <div className="w-full lg:w-80 shrink-0">
-          <ProfileCard student={student} coins={coins} />
+          <ProfileCard
+            student={student}
+            coins={coins}
+            onEdit={() => setEditOpen(true)}
+            onChanged={load}
+          />
         </div>
 
         <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
@@ -856,6 +891,20 @@ export default function StudentDetail() {
           {tab === "note" && <NoteTab student={student} onSaved={load} />}
         </div>
       </div>
+
+      {editOpen && (
+        <StudentModal
+          groups={groups}
+          branches={branches}
+          defaultBranchId={student.branch?.id ?? null}
+          initial={student}
+          onClose={() => setEditOpen(false)}
+          onSaved={() => {
+            setEditOpen(false);
+            load();
+          }}
+        />
+      )}
     </div>
   );
 }

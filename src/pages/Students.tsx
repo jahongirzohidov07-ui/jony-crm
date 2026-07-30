@@ -6,6 +6,7 @@ import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
+import { PhoneInput, formatPhone } from "../components/PhoneInput";
 
 const STATUSES = [
   { key: "active", label: "Faol" },
@@ -110,23 +111,13 @@ function StudentModal({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Talaba telefoni
             </label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+998..."
-            />
+            <PhoneInput value={phone} onChange={setPhone} />
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Ota-ona telefoni
             </label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              value={parentPhone}
-              onChange={(e) => setParentPhone(e.target.value)}
-              placeholder="+998..."
-            />
+            <PhoneInput value={parentPhone} onChange={setParentPhone} />
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
@@ -220,6 +211,8 @@ function StudentModal({
     </div>
   );
 }
+
+export { StudentModal };
 
 export default function Students() {
   const { user } = useAuth();
@@ -349,7 +342,9 @@ export default function Students() {
                     {s.full_name}
                   </Link>
                 </td>
-                <td className="px-4 py-3 text-slate-600">{s.phone || "—"}</td>
+                <td className="px-4 py-3 text-slate-600 text-xs">
+                  {formatPhone(s.phone) || "—"}
+                </td>
                 <td className="px-4 py-3">
                   {s.group ? (
                     <span className="inline-block bg-brand-50 text-brand-700 rounded-md px-2 py-0.5 text-xs">

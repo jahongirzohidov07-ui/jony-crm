@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, X, Pencil, Search } from "lucide-react";
-import { api, type Group, type Teacher, type Branch } from "../lib/api";
+import {
+  api, type Group, type Teacher, type Branch, type Room,
+} from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { FULL_ACCESS, can } from "../lib/roles";
 import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
+import { useReference } from "../components/PickList";
 
-function GroupFormModal({
+export function GroupFormModal({
   teachers,
   branches,
   defaultBranchId,
@@ -28,6 +31,10 @@ function GroupFormModal({
 }) {
   const [name, setName] = useState(initial?.name ?? "");
   const [room, setRoom] = useState(initial?.room ?? "");
+  const [roomId, setRoomId] = useState<string>(
+    initial?.room_id ? String(initial.room_id) : ""
+  );
+  const [rooms, setRooms] = useState<Room[]>([]);
   const [teacherId, setTeacherId] = useState(
     initial?.teacher_id ? String(initial.teacher_id) : ""
   );
@@ -58,6 +65,12 @@ function GroupFormModal({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const ref = useReference();
+
+  useEffect(() => {
+    api.get<Room[]>("/rooms").then(setRooms).catch(() => setRooms([]));
+  }, []);
+
   const lessonPriceNum = Number(lessonPrice) || 0;
   const standardLessonsNum = Number(standardLessons) || 0;
   const computedMonthlyFee = lessonPriceNum * standardLessonsNum;
@@ -73,6 +86,7 @@ function GroupFormModal({
       const payload = {
         name,
         room: room || null,
+        room_id: roomId ? Number(roomId) : null,
         teacher_id: teacherId ? Number(teacherId) : null,
         branch_id: branchId ? Number(branchId) : null,
         monthly_fee: computedMonthlyFee,
@@ -185,14 +199,26 @@ function GroupFormModal({
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Dars vaqti
+                Dars boshlanish vaqti
               </label>
-              <input
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
                 value={lessonTime}
                 onChange={(e) => setLessonTime(e.target.value)}
-                placeholder="09:00 - 11:00"
-              />
+              >
+                <option value="">— tanlanmagan —</option>
+                {(ref?.lesson_times ?? []).map((t) => (
+                  <option key={t.start} value={t.start}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+              {lessonTime && (
+                <p className="text-xs text-slate-400 mt-1">
+                  Har dars {ref?.lesson_minutes ?? 120} daqiqa — tugash vaqti
+                  avtomat hisoblandi.
+                </p>
+              )}
             </div>
           </div>
           <p className="text-xs text-slate-400 -mt-1">
@@ -232,12 +258,29 @@ function GroupFormModal({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Xona</label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              value={room}
-              onChange={(e) => setRoom(e.target.value)}
-            />
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Xona
+            </label>
+            <select
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              value={roomId}
+              onChange={(e) => {
+                setRoomId(e.target.value);
+                const r = rooms.find((x) => String(x.id) === e.target.value);
+                setRoom(r ? r.name : "");
+              }}
+            >
+              <option value="">— tanlanmagan —</option>
+              {rooms.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name} ({r.capacity} o'rin)
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-slate-400 mt-1">
+              Xona sig'imi guruh to'lishi koeffitsiyentini hisoblashda
+              ishlatiladi. Xona ro'yxati — O'quv bo'limi → Xonalar.
+            </p>
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">Filial</label>

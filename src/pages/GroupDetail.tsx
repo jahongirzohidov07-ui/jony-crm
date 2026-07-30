@@ -9,6 +9,7 @@ import {
   type BillingRunResult,
   type PayrollRunResult,
   type TeacherPayout,
+  type Branch,
 } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
@@ -16,6 +17,7 @@ import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
 import { GroupSidebar } from "../components/GroupSidebar";
+import { GroupFormModal } from "./Groups";
 
 type GroupTab = "lessons" | "attendance" | "grades" | "exams";
 
@@ -40,6 +42,8 @@ export default function GroupDetail() {
   const { id } = useParams();
   const groupId = Number(id);
   const { user } = useAuth();
+  const [editOpen, setEditOpen] = useState(false);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const t = today();
 
   const [group, setGroup] = useState<Group | null>(null);
@@ -64,6 +68,10 @@ export default function GroupDetail() {
 
   const canMarkLesson = can(user?.role, TEACHING_STAFF);
   const canFinance = can(user?.role, FINANCE_ACCESS);
+
+  useEffect(() => {
+    api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));
+  }, []);
 
   function teacherName(id?: number | null): string {
     if (!id) return "—";
@@ -216,7 +224,10 @@ export default function GroupDetail() {
 
       {/* Chapda guruh ma'lumoti va o'quvchilar, o'ngda davomat jadvali */}
       <div className="flex flex-col lg:flex-row gap-5 items-start">
-        <GroupSidebar group={group} />
+        <GroupSidebar
+          group={group}
+          onEdit={canFinance ? () => setEditOpen(true) : undefined}
+        />
 
         <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
           <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
@@ -526,6 +537,21 @@ export default function GroupDetail() {
       )}
         </div>
       </div>
+
+      {editOpen && group && (
+        <GroupFormModal
+          teachers={teachers}
+          branches={branches}
+          defaultBranchId={group.branch_id ?? null}
+          initial={group}
+          submitLabel="Saqlash"
+          onClose={() => setEditOpen(false)}
+          onSaved={() => {
+            setEditOpen(false);
+            loadGroup();
+          }}
+        />
+      )}
     </div>
   );
 }

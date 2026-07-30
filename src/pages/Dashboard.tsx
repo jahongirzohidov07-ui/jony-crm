@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Users,
   Layers,
@@ -176,10 +177,15 @@ function WindowTabs({
   );
 }
 
-/** Shu oyning to'lov yig'ish foizi. Administrator KPI'sining asosi:
- *  hisoblangan pulning qanchasi haqiqatda tushdi. */
+/** Shu oyning to'lov yig'ish foizi — administratorlar uchun eng muhim
+ *  raqam, shuning uchun Dashboard'da eng tepada va eng katta turadi.
+ *
+ *  Muhim nuqta: ortiqcha to'lov foizni oshirmaydi. Bir o'quvchi ikki
+ *  oylik to'lasa, ortig'i keyingi oyga o'tadi va to'lamagan o'quvchi
+ *  baribir ko'rinib turadi. */
 function CollectionCard() {
   const [data, setData] = useState<CollectionReport | null>(null);
+  const [open, setOpen] = useState(false);
   const now = new Date();
 
   useEffect(() => {
@@ -193,67 +199,138 @@ function CollectionCard() {
 
   if (!data || data.charged === 0) return null;
 
+  const pct = data.percent;
   const tone =
-    data.percent >= 95 ? "text-emerald-600"
-      : data.percent >= 80 ? "text-amber-600"
+    pct >= 95 ? "text-emerald-600"
+      : pct >= 80 ? "text-amber-600"
         : "text-red-600";
   const bar =
-    data.percent >= 95 ? "bg-emerald-500"
-      : data.percent >= 80 ? "bg-amber-500"
+    pct >= 95 ? "bg-emerald-500"
+      : pct >= 80 ? "bg-amber-500"
         : "bg-red-500";
+  const ring =
+    pct >= 95 ? "#10b981" : pct >= 80 ? "#f59e0b" : "#ef4444";
+
+  const owing = data.rows.filter((r) => r.state !== "paid");
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 mb-6">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-9 h-9 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center">
-          <Percent size={18} />
+    <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+      <div className="flex flex-col sm:flex-row items-center gap-6">
+        {/* Katta doira - eng ko'zga tashlanadigan raqam */}
+        <div className="relative w-32 h-32 shrink-0">
+          <svg viewBox="0 0 120 120" className="w-32 h-32 -rotate-90">
+            <circle
+              cx="60" cy="60" r="52" fill="none"
+              stroke="#f1f5f9" strokeWidth="14"
+            />
+            <circle
+              cx="60" cy="60" r="52" fill="none"
+              stroke={ring} strokeWidth="14" strokeLinecap="round"
+              strokeDasharray={`${Math.min(100, pct) * 3.267} 1000`}
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className={`text-2xl font-semibold ${tone}`}>{pct}%</span>
+            <span className="text-xs text-slate-400">yig'ildi</span>
+          </div>
         </div>
-        <div>
-          <p className="text-sm text-slate-500">Shu oy to'lovlarni yig'ish</p>
-          <p className="text-xs text-slate-400">
-            Hisoblangan pulning qanchasi tushdi
+
+        <div className="flex-1 w-full">
+          <div className="flex items-center gap-2 mb-1">
+            <Percent size={15} className="text-slate-400" />
+            <p className="text-sm font-medium text-slate-700">
+              Shu oy to'lovlarni yig'ish
+            </p>
+          </div>
+          <p className="text-xs text-slate-400 mb-3">
+            {data.students} ta o'quvchidan {data.paid_students} tasi to'liq
+            to'ladi
+            {data.unpaid_students > 0 &&
+              `, ${data.unpaid_students} tasi umuman to'lamadi`}
           </p>
+
+          <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
+            <div
+              className={`h-full rounded-full ${bar}`}
+              style={{ width: `${Math.min(100, pct)}%` }}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+            <div>
+              <p className="text-xs text-slate-500">Hisoblangan</p>
+              <p className="text-slate-900 font-medium">
+                {formatSom(data.charged)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Yig'ilgan</p>
+              <p className="text-emerald-600 font-medium">
+                {formatSom(data.collected)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Qolgan qarz</p>
+              <p className="text-red-600 font-medium">{formatSom(data.debt)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500">Keyingi oyga</p>
+              <p className="text-sky-600 font-medium">
+                {formatSom(data.carry_out)}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex-1" />
-        <p className={`text-2xl font-semibold ${tone}`}>{data.percent}%</p>
       </div>
 
-      <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
-        <div
-          className={`h-full rounded-full ${bar}`}
-          style={{ width: `${Math.min(100, data.percent)}%` }}
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-3 text-sm">
-        <div>
-          <p className="text-xs text-slate-500">Hisoblangan</p>
-          <p className="text-slate-900 font-medium">{formatSom(data.charged)}</p>
+      {owing.length > 0 && (
+        <div className="mt-4 pt-4 border-t border-slate-100">
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-sm text-slate-700 hover:text-brand-700"
+          >
+            {owing.length} ta o'quvchi to'lovni yopmadi{" "}
+            <span className="text-slate-400">{open ? "▾" : "▸"}</span>
+          </button>
+          {open && (
+            <table className="w-full text-sm mt-2">
+              <tbody>
+                {owing.slice(0, 20).map((r) => (
+                  <tr key={r.student_id} className="border-b border-slate-50">
+                    <td className="py-1.5">
+                      <Link
+                        to={`/students/${r.student_id}`}
+                        className="text-slate-800 hover:text-brand-700"
+                      >
+                        {r.full_name}
+                      </Link>
+                      <span className="block text-xs text-slate-400">
+                        {r.group}
+                      </span>
+                    </td>
+                    <td className="text-right text-red-600 font-medium">
+                      {formatSom(r.left)}
+                    </td>
+                    <td className="text-right w-16 text-xs text-slate-400">
+                      {r.percent}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
-        <div>
-          <p className="text-xs text-slate-500">Yig'ilgan</p>
-          <p className="text-emerald-600 font-medium">
-            {formatSom(data.collected)}
-          </p>
-        </div>
-        <div>
-          <p className="text-xs text-slate-500">Qolgan</p>
-          <p className="text-red-600 font-medium">{formatSom(data.debt)}</p>
-        </div>
-      </div>
+      )}
 
       {data.by_admin.length > 0 && (
         <div className="mt-3 pt-3 border-t border-slate-100">
-          <p className="text-xs text-slate-500 mb-1.5">Kim yig'di</p>
-          <div className="space-y-1">
+          <p className="text-xs text-slate-500 mb-1.5">Kassaga kim yig'di</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-1">
             {data.by_admin.map((a) => (
-              <div key={a.name} className="flex items-center justify-between text-sm">
-                <span className="text-slate-700">{a.name}</span>
-                <span className="text-slate-600">
-                  {formatSom(a.collected)}{" "}
-                  <span className="text-xs text-slate-400">({a.percent}%)</span>
-                </span>
-              </div>
+              <span key={a.name} className="text-sm text-slate-700">
+                {a.name}{" "}
+                <span className="text-slate-500">{formatSom(a.collected)}</span>
+              </span>
             ))}
           </div>
         </div>
@@ -387,6 +464,8 @@ export default function Dashboard() {
 
       {stats && (
         <>
+          {can(user?.role, FINANCE_ACCESS) && <CollectionCard />}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />
             <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} />
@@ -410,8 +489,6 @@ export default function Dashboard() {
             <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
             <SocialCards />
           </div>
-
-          {can(user?.role, FINANCE_ACCESS) && <CollectionCard />}
 
           <ChartCard
             title="Talabalar soni statistikasi"

@@ -22,6 +22,7 @@ import {
   type LtvDimension,
   type RetentionReport,
   type QualityReport,
+  type GeographyReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { FINANCE_ACCESS, can } from "../lib/roles";
@@ -29,7 +30,7 @@ import { groupColor, MONTHS } from "../lib/expenses";
 import { subjectLine } from "../lib/subjects";
 import { formatSom, formatPeriodLabel } from "../lib/format";
 
-type Tab = "biznes" | "sifat" | "xarajat" | "oquvchi" | "ustoz";
+type Tab = "biznes" | "sifat" | "xarajat" | "oquvchi" | "ustoz" | "geo";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
@@ -37,6 +38,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "xarajat", label: "Xarajatlar tahlili" },
   { key: "oquvchi", label: "O'quvchi qiymati (LTV)" },
   { key: "ustoz", label: "Ustozlar" },
+  { key: "geo", label: "Manzil va maktab" },
 ];
 
 function short(n: number): string {
@@ -868,8 +870,162 @@ export default function Analitika() {
           {tab === "xarajat" && <ExpenseTab data={data} />}
           {tab === "oquvchi" && <LtvTab />}
           {tab === "ustoz" && <TeacherTab data={data} />}
+          {tab === "geo" && <GeoTab months={months} />}
         </>
       )}
+    </div>
+  );
+}
+
+
+// ---------------------------------------------- Manzil va maktab tab
+function GeoTable({
+  title, subtitle, rows,
+}: {
+  title: string;
+  subtitle: string;
+  rows: { name: string; leads: number; converted: number; conversion: number; known: boolean }[];
+}) {
+  const max = Math.max(...rows.map((r) => r.leads), 1);
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5">
+      <p className="text-sm font-medium text-slate-700">{title}</p>
+      <p className="text-xs text-slate-400 mb-3">{subtitle}</p>
+      {rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-4">Ma'lumot yo'q</p>
+      ) : (
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-xs text-slate-500 border-b border-slate-100">
+              <th className="text-left py-2">Nomi</th>
+              <th className="w-32" />
+              <th className="text-right w-16">Lid</th>
+              <th className="text-right w-20">O'quvchi</th>
+              <th className="text-right w-20">Konv.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.slice(0, 25).map((r) => (
+              <tr key={r.name} className="border-b border-slate-50">
+                <td className="py-2 text-slate-700">
+                  {r.name}
+                  {!r.known && r.name !== "—" && (
+                    <span
+                      className="ml-1.5 text-xs text-amber-600"
+                      title="Ro'yxatdan tanlanmagan — qo'lda yozilgan"
+                    >
+                      ?
+                    </span>
+                  )}
+                </td>
+                <td>
+                  <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-sky-400"
+                      style={{ width: `${(r.leads / max) * 100}%` }}
+                    />
+                  </div>
+                </td>
+                <td className="text-right text-slate-600">{r.leads}</td>
+                <td className="text-right text-emerald-600 font-medium">
+                  {r.converted}
+                </td>
+                <td className="text-right text-slate-500">{r.conversion}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+function GeoTab({ months }: { months: number }) {
+  const [data, setData] = useState<GeographyReport | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<GeographyReport>(`/analytics/geography?months=${months}`)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [months]);
+
+  if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (!data) return null;
+
+  if (data.total_leads === 0) {
+    return (
+      <p className="text-sm text-slate-400 py-10 text-center">
+        Bu davrda lid kiritilmagan.
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Jami lid</p>
+          <p className="text-lg font-semibold text-slate-900">
+            {data.total_leads}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Eng yaxshi mahalla</p>
+          <p className="text-lg font-semibold text-emerald-600">
+            {data.top_area?.name ?? "—"}
+          </p>
+          {data.top_area && (
+            <p className="text-xs text-slate-400 mt-0.5">
+              {data.top_area.converted} o'quvchi
+            </p>
+          )}
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Eng yaxshi maktab</p>
+          <p className="text-lg font-semibold text-emerald-600">
+            {data.top_school?.name ?? "—"}
+          </p>
+          {data.top_school && (
+            <p className="text-xs text-slate-400 mt-0.5">
+              {data.top_school.converted} o'quvchi
+            </p>
+          )}
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Ro'yxatdan tashqari</p>
+          <p
+            className={`text-lg font-semibold ${
+              data.free_text_areas + data.free_text_schools > 0
+                ? "text-amber-600"
+                : "text-slate-900"
+            }`}
+          >
+            {data.free_text_areas + data.free_text_schools}
+          </p>
+          <p className="text-xs text-slate-400 mt-0.5">qo'lda yozilgan</p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <GeoTable
+          title="Mahallalar"
+          subtitle="Qayerdan ko'proq o'quvchi kelyapti"
+          rows={data.areas}
+        />
+        <GeoTable
+          title="Maktablar"
+          subtitle="Qaysi maktabdan ko'proq o'quvchi kelyapti"
+          rows={data.schools}
+        />
+      </div>
+
+      <p className="text-xs text-slate-400 mt-4">
+        Reklamani qayerga qo'yish kerakligini shu jadval ko'rsatadi: eng ko'p
+        lid keladigan joy emas, eng ko'p O'QUVCHIGA aylanadigan joy muhim.
+      </p>
     </div>
   );
 }

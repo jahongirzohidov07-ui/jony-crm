@@ -12,6 +12,8 @@ import {
   sourceLabel,
 } from "../lib/leads";
 import type { LeadSource, LeadStage } from "../lib/leads";
+import { PhoneInput, formatPhone } from "../components/PhoneInput";
+import { PickList, useReference } from "../components/PickList";
 
 // ---------------------------------------------------------------- modal ----
 function LeadForm({
@@ -42,6 +44,7 @@ function LeadForm({
   // qayta bosib ketmaymiz.
   const [stageTouched, setStageTouched] = useState(editing);
   const [address, setAddress] = useState(initial?.address ?? "");
+  const ref = useReference();
   const [school, setSchool] = useState(initial?.school ?? "");
   const [grade, setGrade] = useState(initial?.grade ?? "");
   const [note, setNote] = useState(initial?.note ?? "");
@@ -125,24 +128,23 @@ function LeadForm({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Telefon
             </label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              value={phone ?? ""}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+998..."
-            />
+            <PhoneInput value={phone ?? ""} onChange={setPhone} />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Qayerdan (mahalla / tuman)
             </label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            <PickList
               value={address ?? ""}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Masalan: Zafar shaharchasi"
+              onChange={setAddress}
+              options={ref?.areas ?? []}
+              placeholder="— mahallani tanlang —"
             />
+            <p className="text-xs text-slate-400 mt-1">
+              Ro'yxatdan tanlang — shundagina qaysi mahalladan ko'p o'quvchi
+              kelayotgani ko'rinadi.
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -150,11 +152,11 @@ function LeadForm({
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Maktab
               </label>
-              <input
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              <PickList
                 value={school ?? ""}
-                onChange={(e) => setSchool(e.target.value)}
-                placeholder="12-maktab"
+                onChange={setSchool}
+                options={ref?.schools ?? []}
+                placeholder="— tanlang —"
               />
             </div>
             <div>
@@ -430,7 +432,7 @@ function LeadCard({
               className="flex items-center gap-1 text-xs text-slate-500 hover:text-brand-600 mt-0.5"
             >
               <Phone size={11} />
-              {lead.phone}
+              {formatPhone(lead.phone)}
             </a>
           )}
         </div>

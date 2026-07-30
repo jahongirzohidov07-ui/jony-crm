@@ -1342,3 +1342,156 @@ class CriterionCreate(BaseModel):
     rubric_key: str
     text: str
     points: float = 1
+
+
+# ---------- SMM: kontent ----------
+class ContentCreate(BaseModel):
+    title: str
+    platform: Optional[str] = None
+    fmt: Optional[str] = None
+    pillar: Optional[str] = None
+    goal: Optional[str] = None
+    funnel: Optional[str] = None
+    audience: Optional[str] = None
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    campaign_id: Optional[int] = None
+    parent_id: Optional[int] = None
+    planned_date: Optional[_dt.date] = None
+    planned_time: Optional[str] = None
+    deadline: Optional[_dt.date] = None
+    owner_id: Optional[int] = None
+    priority: Optional[str] = None
+    needs_consent: Optional[bool] = None
+    note: Optional[str] = None
+
+
+class ContentUpdate(BaseModel):
+    title: Optional[str] = None
+    platform: Optional[str] = None
+    fmt: Optional[str] = None
+    pillar: Optional[str] = None
+    goal: Optional[str] = None
+    funnel: Optional[str] = None
+    audience: Optional[str] = None
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    campaign_id: Optional[int] = None
+    planned_time: Optional[str] = None
+    deadline: Optional[_dt.date] = None
+    owner_id: Optional[int] = None
+    copywriter_id: Optional[int] = None
+    designer_id: Optional[int] = None
+    videographer_id: Optional[int] = None
+    editor_id: Optional[int] = None
+    priority: Optional[str] = None
+    problem: Optional[str] = None
+    message: Optional[str] = None
+    hook: Optional[str] = None
+    location: Optional[str] = None
+    participants: Optional[str] = None
+    props: Optional[str] = None
+    duration: Optional[str] = None
+    music: Optional[str] = None
+    design_format: Optional[str] = None
+    cta: Optional[str] = None
+    references: Optional[str] = None
+    script: Optional[str] = None
+    caption: Optional[str] = None
+    caption_ru: Optional[str] = None
+    caption_en: Optional[str] = None
+    hashtags: Optional[str] = None
+    story_text: Optional[str] = None
+    on_video_text: Optional[str] = None
+    utm: Optional[str] = None
+    short_link: Optional[str] = None
+    promo_code: Optional[str] = None
+    needs_consent: Optional[bool] = None
+    consent_ok: Optional[bool] = None
+    note: Optional[str] = None
+
+
+class ContentStatus(BaseModel):
+    status: str
+    note: Optional[str] = None
+
+
+class ContentMoveIn(BaseModel):
+    planned_date: _dt.date
+    reason: str
+
+
+class ContentPublish(BaseModel):
+    post_url: str
+    post_external_id: Optional[str] = None
+    screenshot: Optional[str] = None
+    published_at: Optional[_dt.datetime] = None
+
+
+class ApprovalIn(BaseModel):
+    decision: str
+    comment: Optional[str] = None
+    quote: Optional[str] = None
+
+
+class ShotIn(BaseModel):
+    text: str
+
+
+class ShotState(BaseModel):
+    state: str
+    note: Optional[str] = None
+
+
+class IdeaCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    pillar: Optional[str] = None
+    platform: Optional[str] = None
+    fmt: Optional[str] = None
+    course: Optional[str] = None
+    branch_id: Optional[int] = None
+    audience: Optional[str] = None
+    reference: Optional[str] = None
+    priority: Optional[str] = None
+
+
+class IdeaStatus(BaseModel):
+    status: str
+    note: Optional[str] = None
+
+
+class RequestCreate(BaseModel):
+    branch_id: Optional[int] = None
+    course: Optional[str] = None
+    goal: Optional[str] = None
+    offer: Optional[str] = None
+    group_time: Optional[str] = None
+    teacher_id: Optional[int] = None
+    students_needed: Optional[int] = None
+    start_date: Optional[_dt.date] = None
+    deadline: Optional[_dt.date] = None
+    platforms: Optional[str] = None
+    approved_price: Optional[float] = None
+    cta: Optional[str] = None
+    sales_user_id: Optional[int] = None
+
+
+class RequestDecision(BaseModel):
+    status: str
+    smm_note: Optional[str] = None
+
+
+class MetricIn(BaseModel):
+    reach: Optional[int] = None
+    impressions: Optional[int] = None
+    views: Optional[int] = None
+    watch_time: Optional[float] = None
+    completion: Optional[float] = None
+    likes: Optional[int] = None
+    comments: Optional[int] = None
+    saves: Optional[int] = None
+    shares: Optional[int] = None
+    profile_visits: Optional[int] = None
+    link_clicks: Optional[int] = None
+    dms: Optional[int] = None

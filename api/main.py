@@ -46,6 +46,7 @@ PUBLIC_ID_PREFIX = {
     "payment": "PAY",
     "contract": "SHT",
     "task": "TSK",
+    "content": "CNT",
 }
 
 
@@ -367,6 +368,7 @@ PUBLIC_ID_PREFIX = {
     "payment": "PAY",
     "contract": "SHT",
     "task": "TSK",
+    "content": "CNT",
 }
 
 
@@ -15515,6 +15517,830 @@ def analytics_fill(
     if level not in roles.FILL_GROUPS:
         level = roles.FILL_DEFAULT_LEVEL
     return _fill_rows(db, user, branch_id=branch_id, level=level)
+
+
+# =====================================================================
+#  SMM: KONTENT QUVURI
+#
+#  Har bir kontent g'oyadan natijagacha bitta yo'ldan o'tadi.
+#  Tasdiqlovchi kontent yo'nalishiga qarab O'ZI aniqlanadi — SMM
+#  kimga yuborishni o'ylab o'tirmaydi.
+# =====================================================================
+def _content_code(c: models.Content) -> str:
+    """CONTENT-JA-2026-0048 — atributsiya shu raqamga bog'lanadi."""
+    year = (c.planned_date or c.created_at or datetime.utcnow()).year \
+        if not isinstance(c.created_at, type(None)) else date.today().year
+    return f"CONTENT-JA-{year}-{c.id:04d}"
+
+
+def _approver_role(c: models.Content) -> str | None:
+    """Kontentni kim tasdiqlashi kerak. Narx yoki aksiya bo'lsa —
+    sotuv rahbari, rasmiy bayonot bo'lsa — asoschi."""
+    if c.goal == "sales" and (c.promo_code or "aksiya" in (c.message or "").lower()):
+        return roles.SALES_HEAD
+    return roles.APPROVAL_BY_PILLAR.get(c.pillar or "", roles.SMM_MANAGER)
+
+
+def _content_warnings(db: Session, c: models.Content,
+                      today: date | None = None) -> list:
+    """Kontentdagi muammolar. Tizim ularni o'zi topadi — SMM
+    eslab qolishi shart emas."""
+    today = today or date.today()
+    out = []
+    if c.status in roles.CONTENT_LIVE or c.status == "cancelled":
+        if c.status == "published" and not c.post_url:
+            out.append({"key": "no_link", "severity": "warn",
+                        "text": "Joylandi, lekin havolasi kiritilmagan"})
+        return out
+
+    near = c.planned_date and (c.planned_date - today).days <= 1
+    if c.planned_date and c.planned_date < today:
+        out.append({"key": "late", "severity": "block",
+                    "text": f"Muddat o'tdi ({c.planned_date.isoformat()})"})
+    if near and c.status in ("idea", "script") and not (c.script or "").strip():
+        out.append({"key": "no_script", "severity": "block",
+                    "text": "Chiqish vaqti yaqin, ssenariy tayyor emas"})
+    if near and c.status in ("shooting", "editing"):
+        out.append({"key": "no_design", "severity": "block",
+                    "text": "Bugun chiqishi kerak, material hali tayyor emas"})
+    if c.needs_consent and not c.consent_ok:
+        out.append({"key": "consent", "severity": "block",
+                    "text": "O'quvchi rasmi bor — ota-ona roziligi "
+                            "belgilanmagan"})
+    if c.status == "ready" and not (c.cta or "").strip():
+        out.append({"key": "no_cta", "severity": "warn",
+                    "text": "CTA yozilmagan"})
+    return out
+
+
+def _content_out(db: Session, c: models.Content, *, full: bool = False,
+                 users: dict | None = None) -> dict:
+    users = users if users is not None else {
+        u.id: u.full_name for u in db.query(models.User).all()}
+    warn = _content_warnings(db, c)
+    row = {
+        "id": c.id,
+        "code": c.content_id or _content_code(c),
+        "title": c.title,
+        "platform": c.platform,
+        "platform_label": roles.PLATFORM_LABELS.get(c.platform or "", "—"),
+        "platform_tone": roles.PLATFORM_TONE.get(c.platform or "", "slate"),
+        "format": c.fmt,
+        "format_label": roles.FORMAT_LABELS.get(c.fmt or "", "—"),
+        "pillar": c.pillar,
+        "pillar_label": roles.PILLAR_LABELS.get(c.pillar or "", "—"),
+        "pillar_tone": roles.PILLAR_TONE.get(c.pillar or "", "slate"),
+        "goal": c.goal,
+        "goal_label": roles.GOAL_LABELS.get(c.goal or "", "—"),
+        "goal_metric": roles.GOAL_METRIC_LABELS.get(
+            roles.GOAL_METRIC.get(c.goal or "", ""), "—"),
+        "funnel": c.funnel,
+        "funnel_label": roles.FUNNEL_LABELS.get(c.funnel or "", "—"),
+        "branch": c.branch.name if c.branch else None,
+        "branch_id": c.branch_id,
+        "course": c.course,
+        "campaign_id": c.campaign_id,
+        "status": c.status,
+        "status_label": roles.CONTENT_STATUS_LABELS.get(c.status, c.status),
+        "tone": roles.CONTENT_STATUS_TONE.get(c.status, "slate"),
+        "planned_date": (c.planned_date.isoformat()
+                         if c.planned_date else None),
+        "planned_time": c.planned_time,
+        "published_at": (c.published_at.isoformat()
+                         if c.published_at else None),
+        "owner": users.get(c.owner_id),
+        "owner_id": c.owner_id,
+        "approver": users.get(c.approver_id),
+        "approver_role": _approver_role(c),
+        "approver_role_label": roles.UZ_LABELS.get(_approver_role(c) or "", "—"),
+        "priority": c.priority,
+        "deadline": c.deadline.isoformat() if c.deadline else None,
+        "needs_consent": bool(c.needs_consent),
+        "consent_ok": bool(c.consent_ok),
+        "post_url": c.post_url,
+        "warnings": warn,
+        "blocked": any(w["severity"] == "block" for w in warn),
+    }
+    if not full:
+        return row
+
+    row.update({
+        "audience": c.audience,
+        "problem": c.problem, "message": c.message, "hook": c.hook,
+        "location": c.location, "participants": c.participants,
+        "props": c.props, "duration": c.duration, "music": c.music,
+        "design_format": c.design_format, "cta": c.cta,
+        "references": c.references,
+        "script": c.script, "caption": c.caption,
+        "caption_ru": c.caption_ru, "caption_en": c.caption_en,
+        "hashtags": c.hashtags, "story_text": c.story_text,
+        "on_video_text": c.on_video_text,
+        "utm": c.utm, "short_link": c.short_link,
+        "promo_code": c.promo_code,
+        "post_external_id": c.post_external_id,
+        "note": c.note,
+        "team": {
+            "copywriter": users.get(c.copywriter_id),
+            "designer": users.get(c.designer_id),
+            "videographer": users.get(c.videographer_id),
+            "editor": users.get(c.editor_id),
+        },
+        "shots": [{
+            "id": s.id, "no": s.order_no, "text": s.text,
+            "state": s.state, "note": s.note,
+        } for s in sorted(c.shots, key=lambda x: x.order_no)],
+        "approvals": [{
+            "id": a.id, "role": a.role,
+            "role_label": roles.UZ_LABELS.get(a.role or "", "—"),
+            "decision": a.decision,
+            "decision_label": roles.APPROVAL_LABELS.get(a.decision or "", "—"),
+            "tone": roles.APPROVAL_TONE.get(a.decision or "", "slate"),
+            "comment": a.comment, "quote": a.quote,
+            "by": users.get(a.decided_by),
+            "date": a.decided_at.isoformat() if a.decided_at else None,
+        } for a in sorted(c.approvals, key=lambda x: -x.id)],
+        "versions": [{
+            "id": v.id, "field": v.field,
+            "old": v.old_value, "new": v.new_value,
+            "by": v.changed_by,
+            "date": v.created_at.isoformat() if v.created_at else None,
+        } for v in sorted(c.versions, key=lambda x: -x.id)[:40]],
+    })
+    return row
+
+
+def _content_scope(db: Session, user: models.User, branch_id=None):
+    q = db.query(models.Content)
+    if branch_id:
+        q = q.filter(models.Content.branch_id == branch_id)
+    elif user.branch_id and user.role not in roles.ORG_WIDE_ROLES:
+        q = q.filter((models.Content.branch_id == user.branch_id)
+                     | (models.Content.branch_id.is_(None)))
+    return q
+
+
+@app.get("/api/content-meta")
+def content_meta(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Kontent uchun barcha ro'yxatlar: status, platforma, maqsad,
+    yo'nalish. Frontend ularni qattiq yozib qo'ymaydi."""
+    return {
+        "statuses": [{"key": k, "label": lbl, "tone": t}
+                     for k, lbl, t in roles.CONTENT_STATUSES],
+        "flow": roles.CONTENT_FLOW,
+        "platforms": [{"key": k, "label": lbl, "tone": t}
+                      for k, lbl, t in roles.CONTENT_PLATFORMS],
+        "formats": [{"key": k, "label": lbl}
+                    for k, lbl in roles.CONTENT_FORMATS],
+        "goals": [{"key": k, "label": lbl,
+                   "metric": roles.GOAL_METRIC_LABELS.get(m, m)}
+                  for k, lbl, m in roles.CONTENT_GOALS],
+        "pillars": [{"key": k, "label": lbl, "tone": t, "hint": d}
+                    for k, lbl, t, d in roles.CONTENT_PILLARS],
+        "funnels": [{"key": k, "label": lbl}
+                    for k, lbl in roles.FUNNEL_STAGES],
+        "consent": [{"key": k, "label": lbl, "tone": t}
+                    for k, lbl, t in roles.CONSENT_STATUSES],
+        "idea_statuses": [{"key": k, "label": lbl, "tone": t}
+                          for k, lbl, t in roles.IDEA_STATUSES],
+        "request_statuses": [{"key": k, "label": lbl, "tone": t}
+                             for k, lbl, t in roles.REQUEST_STATUSES],
+        "decisions": [{"key": k, "label": lbl, "tone": t}
+                      for k, lbl, t in roles.APPROVAL_DECISIONS],
+        "plan_target": roles.PLAN_TARGET_PERCENT,
+        "can_edit": user.role in roles.SMM_ACCESS,
+    }
+
+
+@app.get("/api/content")
+def list_content(
+    date_from: str | None = None,
+    date_to: str | None = None,
+    status: str | None = None,
+    platform: str | None = None,
+    pillar: str | None = None,
+    campaign_id: int | None = None,
+    owner_id: int | None = None,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Kontent taqvimi. Sana oralig'i berilsa — o'sha oyning ro'yxati."""
+    q = _content_scope(db, user, branch_id)
+    if date_from:
+        q = q.filter(models.Content.planned_date >= date.fromisoformat(date_from))
+    if date_to:
+        q = q.filter(models.Content.planned_date <= date.fromisoformat(date_to))
+    if status:
+        q = q.filter(models.Content.status == status)
+    if platform:
+        q = q.filter(models.Content.platform == platform)
+    if pillar:
+        q = q.filter(models.Content.pillar == pillar)
+    if campaign_id:
+        q = q.filter(models.Content.campaign_id == campaign_id)
+    if owner_id:
+        q = q.filter(models.Content.owner_id == owner_id)
+
+    rows = q.order_by(models.Content.planned_date,
+                      models.Content.planned_time).limit(500).all()
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+    out = [_content_out(db, c, users=users) for c in rows]
+
+    # Reja bajarilishi: rejalashtirilganidan nechtasi chiqdi
+    planned = [r for r in out if r["planned_date"]]
+    published = [r for r in planned if r["status"] in roles.CONTENT_LIVE]
+    pct = round(len(published) / len(planned) * 100, 1) if planned else 0.0
+
+    by_status: dict = {}
+    for r in out:
+        by_status[r["status"]] = by_status.get(r["status"], 0) + 1
+
+    return {
+        "rows": out,
+        "total": len(out),
+        "plan_percent": pct,
+        "plan_ok": pct >= roles.PLAN_TARGET_PERCENT,
+        "by_status": [{"key": k, "label": roles.CONTENT_STATUS_LABELS.get(k, k),
+                       "tone": roles.CONTENT_STATUS_TONE.get(k, "slate"),
+                       "count": v}
+                      for k, v in sorted(by_status.items(),
+                                         key=lambda x: -x[1])],
+        "blocked": [r for r in out if r["blocked"]],
+    }
+
+
+@app.post("/api/content")
+def create_content(
+    payload: schemas.ContentCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    data = payload.model_dump()
+    data["needs_consent"] = 1 if data.pop("needs_consent", None) else 0
+    c = models.Content(**data, status="idea", created_by=user.full_name)
+    c.owner_id = c.owner_id or user.id
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    c.content_id = _content_code(c)
+    db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.get("/api/content/{cid}")
+def get_content(
+    cid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    return _content_out(db, c, full=True)
+
+
+# Matn maydonlari — o'zgarsa versiyasi saqlanadi
+_TEXT_FIELDS = ["script", "caption", "caption_ru", "caption_en",
+                "hashtags", "story_text", "on_video_text", "hook",
+                "message", "cta"]
+
+
+@app.put("/api/content/{cid}")
+def update_content(
+    cid: int,
+    payload: schemas.ContentUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    given = payload.model_dump(exclude_unset=True)
+
+    for k, v in given.items():
+        if k in ("needs_consent", "consent_ok"):
+            v = 1 if v else 0
+        old = getattr(c, k, None)
+        # Matn o'zgarsa eski variant yo'qolmaydi
+        if k in _TEXT_FIELDS and (old or "") != (v or ""):
+            db.add(models.ContentVersion(
+                content_id=c.id, field=k, old_value=old, new_value=v,
+                changed_by=user.full_name))
+        setattr(c, k, v)
+    db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.post("/api/content/{cid}/status")
+def set_content_status(
+    cid: int,
+    payload: schemas.ContentStatus,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    """Quvurdagi keyingi bosqichga o'tkazish. Tasdiqqa yuborilganda
+    tasdiqlovchi O'ZI aniqlanadi."""
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    if payload.status not in roles.CONTENT_STATUS_LABELS:
+        raise HTTPException(400, "Bunday holat yo'q")
+
+    # Roziligi yo'q kontentni joylashga qo'ymaymiz
+    if payload.status in ("ready", "published") and c.needs_consent \
+            and not c.consent_ok:
+        raise HTTPException(400, "O'quvchi roziligi belgilanmagan — "
+                                 "joylashga ruxsat yo'q")
+
+    old = c.status
+    c.status = payload.status
+    if payload.note:
+        c.note = payload.note
+
+    if payload.status == "approval":
+        role = _approver_role(c)
+        exists = (db.query(models.ContentApproval)
+                  .filter(models.ContentApproval.content_id == c.id,
+                          models.ContentApproval.decision.is_(None)).first())
+        if not exists:
+            db.add(models.ContentApproval(content_id=c.id, role=role))
+        who = (db.query(models.User)
+               .filter(models.User.role == role,
+                       models.User.is_active == 1).first())
+        c.approver_id = who.id if who else None
+    db.commit()
+    audit.log(db, user, entity="content", action="update", entity_id=c.id,
+              entity_label=c.title, old_value=old, new_value=payload.status,
+              note="Kontent holati o'zgardi", branch_id=c.branch_id)
+    db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.post("/api/content/{cid}/move")
+def move_content(
+    cid: int,
+    payload: schemas.ContentMoveIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    """Taqvimda boshqa kunga ko'chirish. Sababsiz ko'chirilmaydi va
+    eski sana tarixda qoladi."""
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Ko'chirish sababini yozing")
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    old = c.planned_date
+    db.add(models.ContentMove(content_id=c.id, from_date=old,
+                              to_date=payload.planned_date,
+                              reason=payload.reason,
+                              moved_by=user.full_name))
+    c.planned_date = payload.planned_date
+    db.commit()
+
+    # Tasdiqlangan kontent sanasi o'zgarsa rahbar bilishi kerak
+    if c.status in ("ready", "approval"):
+        role = _approver_role(c)
+        who = (db.query(models.User)
+               .filter(models.User.role == role,
+                       models.User.is_active == 1).first())
+        if who:
+            t = models.Task(
+                title=f"Kontent sanasi o'zgardi: {c.title}",
+                description=(f"{old} -> {payload.planned_date}\n"
+                             f"Sabab: {payload.reason}\n"
+                             f"O'zgartirdi: {user.full_name}"),
+                assignee_id=who.id, branch_id=c.branch_id,
+                deadline=payload.planned_date, priority="normal",
+                source="manual", created_by="Tizim")
+            db.add(t)
+            db.flush()
+            _ensure_public_id(db, "task", t)
+            db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.post("/api/content/{cid}/approve")
+def approve_content(
+    cid: int,
+    payload: schemas.ApprovalIn,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+):
+    """Tasdiqlash qarori. Faqat tasdiqlovchi rol yoki asoschi."""
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    role = _approver_role(c)
+    if user.role not in roles.FULL_ACCESS and user.role != role:
+        raise HTTPException(403, "Bu kontentni siz tasdiqlamaysiz")
+    if payload.decision not in roles.APPROVAL_LABELS:
+        raise HTTPException(400, "Noto'g'ri qaror")
+
+    a = (db.query(models.ContentApproval)
+         .filter(models.ContentApproval.content_id == c.id,
+                 models.ContentApproval.decision.is_(None)).first())
+    if not a:
+        a = models.ContentApproval(content_id=c.id, role=role)
+        db.add(a)
+    a.decision = payload.decision
+    a.comment = payload.comment
+    a.quote = payload.quote
+    a.decided_by = user.id
+    a.decided_at = datetime.utcnow()
+
+    if payload.decision == "approved":
+        c.status = "ready"
+    elif payload.decision in ("changes", "info"):
+        c.status = "rework"
+    elif payload.decision == "rejected":
+        c.status = "cancelled"
+    db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.post("/api/content/{cid}/publish")
+def publish_content(
+    cid: int,
+    payload: schemas.ContentPublish,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    """Joylandi deb belgilash. Havolasiz belgilanmaydi — aks holda
+    natijani hech qachon o'lchab bo'lmaydi."""
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    if not (payload.post_url or "").strip():
+        raise HTTPException(400, "Post havolasini kiriting")
+    if c.needs_consent and not c.consent_ok:
+        raise HTTPException(400, "O'quvchi roziligi belgilanmagan")
+    c.post_url = payload.post_url
+    c.post_external_id = payload.post_external_id
+    c.screenshot = payload.screenshot
+    c.published_at = payload.published_at or datetime.utcnow()
+    c.status = "measuring"
+    db.commit()
+    return _content_out(db, c, full=True)
+
+
+@app.post("/api/content/{cid}/shots")
+def add_shot(
+    cid: int,
+    payload: schemas.ShotIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    n = (db.query(models.ContentShot)
+         .filter(models.ContentShot.content_id == cid).count())
+    s = models.ContentShot(content_id=cid, order_no=n + 1,
+                           text=payload.text, state="todo")
+    db.add(s)
+    db.commit()
+    return {"ok": True, "id": s.id}
+
+
+@app.post("/api/content-shots/{sid}")
+def set_shot_state(
+    sid: int,
+    payload: schemas.ShotState,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    s = db.query(models.ContentShot).get(sid)
+    if not s:
+        raise HTTPException(404, "Topilmadi")
+    s.state = payload.state
+    s.note = payload.note
+    db.commit()
+    return {"ok": True}
+
+
+@app.put("/api/content/{cid}/metrics")
+def set_metrics(
+    cid: int,
+    payload: schemas.MetricIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    m = (db.query(models.ContentMetric)
+         .filter(models.ContentMetric.content_id == cid).first())
+    if not m:
+        m = models.ContentMetric(content_id=cid)
+        db.add(m)
+    for k, v in payload.model_dump(exclude_unset=True).items():
+        setattr(m, k, v)
+    m.updated_by = user.full_name
+    db.commit()
+
+    # Sifatli engagement: like emas, foydali harakatlar
+    w = roles.ENGAGEMENT_WEIGHT_MAP
+    score = ((m.likes or 0) * w["like"] + (m.comments or 0) * w["comment"]
+             + (m.saves or 0) * w["save"] + (m.shares or 0) * w["share"]
+             + (m.dms or 0) * w["dm"])
+    er = round(score / m.reach * 100, 2) if m.reach else 0.0
+    return {"ok": True, "quality_score": score, "engagement_rate": er}
+
+
+# ---- G'oyalar bazasi -------------------------------------------------
+@app.get("/api/content-ideas")
+def list_ideas(
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.IDEA_SUBMIT)),
+):
+    q = db.query(models.ContentIdea)
+    if status:
+        q = q.filter(models.ContentIdea.status == status)
+    rows = q.order_by(models.ContentIdea.created_at.desc()).limit(300).all()
+    counts: dict = {}
+    for i in db.query(models.ContentIdea).all():
+        counts[i.status] = counts.get(i.status, 0) + 1
+    return {
+        "rows": [{
+            "id": i.id, "title": i.title, "description": i.description,
+            "pillar": i.pillar,
+            "pillar_label": roles.PILLAR_LABELS.get(i.pillar or "", "—"),
+            "platform": i.platform,
+            "platform_label": roles.PLATFORM_LABELS.get(i.platform or "", "—"),
+            "course": i.course, "audience": i.audience,
+            "reference": i.reference, "priority": i.priority,
+            "status": i.status,
+            "status_label": roles.IDEA_STATUS_LABELS.get(i.status, i.status),
+            "tone": roles.IDEA_STATUS_TONE.get(i.status, "slate"),
+            "author": i.author, "content_id": i.content_id,
+            "date": i.created_at.isoformat() if i.created_at else None,
+        } for i in rows],
+        "counts": counts,
+        "can_triage": user.role in roles.SMM_ACCESS,
+    }
+
+
+@app.post("/api/content-ideas")
+def add_idea(
+    payload: schemas.IdeaCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.IDEA_SUBMIT)),
+):
+    """G'oyani har qanday xodim yubora oladi. Lekin SMM
+    tasdiqlamaguncha kontent rejaga tushmaydi."""
+    i = models.ContentIdea(**payload.model_dump(), status="new",
+                           author_id=user.id, author=user.full_name)
+    db.add(i)
+    db.commit()
+    return {"ok": True, "id": i.id}
+
+
+@app.post("/api/content-ideas/{iid}")
+def triage_idea(
+    iid: int,
+    payload: schemas.IdeaStatus,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    i = db.query(models.ContentIdea).get(iid)
+    if not i:
+        raise HTTPException(404, "G'oya topilmadi")
+    if payload.status not in roles.IDEA_STATUS_LABELS:
+        raise HTTPException(400, "Bunday holat yo'q")
+    i.status = payload.status
+    if payload.note:
+        i.note = payload.note
+
+    # Qabul qilingan g'oya kontentga aylanadi
+    made = None
+    if payload.status == "converted" and not i.content_id:
+        c = models.Content(
+            title=i.title, platform=i.platform, fmt=i.fmt,
+            pillar=i.pillar, branch_id=i.branch_id, course=i.course,
+            audience=i.audience, references=i.reference,
+            message=i.description, status="idea",
+            owner_id=user.id, created_by=user.full_name)
+        db.add(c)
+        db.commit()
+        db.refresh(c)
+        c.content_id = _content_code(c)
+        i.content_id = c.id
+        db.commit()
+        made = c.id
+    db.commit()
+    return {"ok": True, "content_id": made}
+
+
+# ---- Ichki so'rovlar -------------------------------------------------
+@app.get("/api/content-requests")
+def list_requests(
+    status: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    q = db.query(models.ContentRequest)
+    if status:
+        q = q.filter(models.ContentRequest.status == status)
+    rows = q.order_by(models.ContentRequest.created_at.desc()).limit(200).all()
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    teachers = {t.id: t.full_name for t in db.query(models.Teacher).all()}
+    counts: dict = {}
+    for r in db.query(models.ContentRequest).all():
+        counts[r.status] = counts.get(r.status, 0) + 1
+    return {
+        "rows": [{
+            "id": r.id, "requester": r.requester,
+            "department": r.from_department,
+            "branch": branches.get(r.branch_id, "—"),
+            "course": r.course, "goal": r.goal,
+            "goal_label": roles.GOAL_LABELS.get(r.goal or "", "—"),
+            "offer": r.offer, "group_time": r.group_time,
+            "teacher": teachers.get(r.teacher_id),
+            "students_needed": r.students_needed,
+            "start_date": r.start_date.isoformat() if r.start_date else None,
+            "deadline": r.deadline.isoformat() if r.deadline else None,
+            "platforms": r.platforms, "approved_price": r.approved_price,
+            "cta": r.cta, "status": r.status,
+            "status_label": roles.REQUEST_STATUS_LABELS.get(r.status, r.status),
+            "tone": roles.REQUEST_STATUS_TONE.get(r.status, "slate"),
+            "smm_note": r.smm_note, "campaign_id": r.campaign_id,
+            "date": r.created_at.isoformat() if r.created_at else None,
+        } for r in rows],
+        "counts": counts,
+        "can_decide": user.role in roles.SMM_ACCESS,
+    }
+
+
+@app.post("/api/content-requests")
+def add_request(
+    payload: schemas.RequestCreate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CONTENT_REQUESTER)),
+):
+    """Boshqa bo'lim SMMga tartibli so'rov yuboradi — Telegramdagi
+    tartibsiz topshiriq o'rniga."""
+    r = models.ContentRequest(
+        **payload.model_dump(), status="new",
+        from_department=roles.UZ_LABELS.get(user.role, user.role),
+        requested_by=user.id, requester=user.full_name)
+    db.add(r)
+    db.commit()
+
+    smm = _smm_user(db, r.branch_id)
+    if smm:
+        t = models.Task(
+            title=f"SMM so'rovi: {r.course or 'kontent'} — "
+                  f"{branch_name(db, r.branch_id)}",
+            description=(f"So'ragan: {user.full_name}\n"
+                         f"Maqsad: {roles.GOAL_LABELS.get(r.goal or '', '—')}\n"
+                         f"Kerak: {r.students_needed or '—'} o'quvchi\n"
+                         f"Boshlanish: {r.start_date or '—'}\n"
+                         f"Taklif: {r.offer or '—'}"),
+            assignee_id=smm.id, branch_id=r.branch_id,
+            deadline=r.deadline, priority="high",
+            source="manual", created_by="Tizim")
+        db.add(t)
+        db.flush()
+        _ensure_public_id(db, "task", t)
+        db.commit()
+    return {"ok": True, "id": r.id}
+
+
+def branch_name(db: Session, bid) -> str:
+    if not bid:
+        return "—"
+    b = db.query(models.Branch).get(bid)
+    return b.name if b else "—"
+
+
+@app.post("/api/content-requests/{rid}")
+def decide_request(
+    rid: int,
+    payload: schemas.RequestDecision,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    r = db.query(models.ContentRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    r.status = payload.status
+    r.smm_note = payload.smm_note
+
+    # Qabul qilingan so'rov kampaniyaga aylanadi
+    if payload.status == "accepted" and not r.campaign_id:
+        c = models.Campaign(
+            name=f"{r.course or 'Kontent'} — {branch_name(db, r.branch_id)}",
+            goal=r.goal, course=r.course, branch_id=r.branch_id,
+            offer=r.offer, start_date=r.start_date or date.today(),
+            end_date=r.deadline, target_leads=r.students_needed,
+            owner_id=user.id, is_active=1)
+        db.add(c)
+        db.commit()
+        r.campaign_id = c.id
+    db.commit()
+    return {"ok": True, "campaign_id": r.campaign_id}
+
+
+# ---- SMM dashboardi --------------------------------------------------
+@app.get("/api/smm/dashboard")
+def smm_dashboard(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    """SMM tizimga kirganda bugungi vaziyat: nima chiqishi kerak, nima
+    kechikdi, kimning tasdig'i kutilmoqda va nima xato ketyapti."""
+    today = date.today()
+    m_start, m_end = billing.month_bounds(today.year, today.month)
+    users = {u.id: u.full_name for u in db.query(models.User).all()}
+
+    all_rows = db.query(models.Content).all()
+    open_rows = [c for c in all_rows if c.status in roles.CONTENT_OPEN]
+
+    todays = [c for c in open_rows if c.planned_date == today]
+    late = [c for c in open_rows
+            if c.planned_date and c.planned_date < today]
+    waiting = [c for c in all_rows if c.status == "approval"]
+
+    month = [c for c in all_rows
+             if c.planned_date and m_start <= c.planned_date <= m_end]
+    done = [c for c in month if c.status in roles.CONTENT_LIVE]
+    plan_pct = round(len(done) / len(month) * 100, 1) if month else 0.0
+
+    metrics = {m.content_id: m for m in db.query(models.ContentMetric).all()}
+    reach = sum((metrics[c.id].reach or 0) for c in month if c.id in metrics)
+    eng = 0
+    w = roles.ENGAGEMENT_WEIGHT_MAP
+    for c in month:
+        m = metrics.get(c.id)
+        if not m:
+            continue
+        eng += ((m.likes or 0) * w["like"] + (m.comments or 0) * w["comment"]
+                + (m.saves or 0) * w["save"] + (m.shares or 0) * w["share"]
+                + (m.dms or 0) * w["dm"])
+
+    # Ogohlantirishlar — tizim o'zi topadi
+    alerts = []
+    for c in open_rows:
+        for wr in _content_warnings(db, c, today):
+            alerts.append({
+                "content_id": c.id, "title": c.title,
+                "key": wr["key"], "severity": wr["severity"],
+                "text": wr["text"],
+                "planned_date": (c.planned_date.isoformat()
+                                 if c.planned_date else None),
+            })
+    for c in all_rows:
+        if c.status == "published" and not c.post_url:
+            alerts.append({"content_id": c.id, "title": c.title,
+                           "key": "no_link", "severity": "warn",
+                           "text": "Joylandi, lekin havolasi kiritilmagan",
+                           "planned_date": None})
+    if month and plan_pct < roles.PLAN_TARGET_PERCENT:
+        alerts.append({"content_id": None, "title": "Kontent rejasi",
+                       "key": "plan", "severity": "warn",
+                       "text": (f"Reja bajarilishi {plan_pct}% — "
+                                f"{roles.PLAN_TARGET_PERCENT}% dan past"),
+                       "planned_date": None})
+
+    new_ideas = db.query(models.ContentIdea).filter(
+        models.ContentIdea.status == "new").count()
+    new_reqs = db.query(models.ContentRequest).filter(
+        models.ContentRequest.status == "new").count()
+
+    return {
+        "cards": [
+            {"key": "today", "label": "Bugungi kontentlar",
+             "value": len(todays), "tone": "brand"},
+            {"key": "late", "label": "Kechikkan kontentlar",
+             "value": len(late), "tone": "bad" if late else "good"},
+            {"key": "approval", "label": "Tasdiq kutilayotganlar",
+             "value": len(waiting), "tone": "amber" if waiting else "plain"},
+            {"key": "ideas", "label": "Yangi g'oyalar",
+             "value": new_ideas, "tone": "plain"},
+            {"key": "requests", "label": "Yangi so'rovlar",
+             "value": new_reqs, "tone": "amber" if new_reqs else "plain"},
+            {"key": "reach", "label": "Shu oydagi reach",
+             "value": reach, "tone": "plain"},
+            {"key": "engagement", "label": "Sifatli engagement",
+             "value": eng, "tone": "plain",
+             "hint": "like x1, izoh x2, saqlash x3, ulashish x4, DM x5"},
+            {"key": "plan", "label": "Kontent reja bajarilishi",
+             "value": f"{plan_pct}%",
+             "tone": "good" if plan_pct >= roles.PLAN_TARGET_PERCENT
+             else "bad"},
+        ],
+        "today": sorted(
+            [_content_out(db, c, users=users) for c in todays],
+            key=lambda r: (r["planned_time"] or "99:99")),
+        "late": [_content_out(db, c, users=users) for c in late][:20],
+        "waiting": [_content_out(db, c, users=users) for c in waiting],
+        "alerts": sorted(alerts,
+                         key=lambda a: 0 if a["severity"] == "block" else 1),
+        "plan_percent": plan_pct,
+        "month_planned": len(month),
+        "month_done": len(done),
+        "hint": ("SMM bo'limi post ishlab chiqaradigan bo'lim emas — "
+                 "e'tibor, ishonch, murojaat va sotuv yaratadigan bo'lim."),
+    }
 
 
 # Ligalar va XP qoidalari fayl oxirida to'ldiriladi: _seed_gamification

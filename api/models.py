@@ -1692,3 +1692,280 @@ class ObservationScore(Base):
     note = Column(String, nullable=True)
 
     observation = relationship("LessonObservation", back_populates="scores")
+
+
+# =====================================================================
+#  SMM: KONTENT QUVURI
+#
+#  Har bir kontent g'oyadan natijagacha bitta yo'ldan o'tadi. Shuning
+#  uchun "bugun nima post qilamiz?" degan savol yo'qoladi: tizim
+#  vazifani, muddatni va tasdiqlovchini o'zi ko'rsatib turadi.
+# =====================================================================
+class Content(Base):
+    __tablename__ = "contents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # CONTENT-JA-2026-0048 — atributsiya shu raqamga bog'lanadi
+    content_id = Column(String, unique=True, index=True)
+    title = Column(String, nullable=False)
+    platform = Column(String, nullable=True)
+    fmt = Column(String, nullable=True)              # format
+    pillar = Column(String, nullable=True, index=True)
+    goal = Column(String, nullable=True)
+    funnel = Column(String, nullable=True)
+    audience = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True, index=True)
+    course = Column(String, nullable=True)
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"),
+                         nullable=True, index=True)
+    # Bitta asosiy kontentdan boshqa platformalar uchun variant
+    parent_id = Column(Integer, ForeignKey("contents.id"), nullable=True)
+
+    status = Column(String, nullable=False, default="idea", index=True)
+    planned_date = Column(Date, nullable=True, index=True)
+    planned_time = Column(String, nullable=True)
+    published_at = Column(DateTime, nullable=True)
+
+    # Mas'ullar
+    owner_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    copywriter_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    designer_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    videographer_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    editor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    approver_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    # ---- Brief ----
+    problem = Column(Text, nullable=True)            # asosiy muammo
+    message = Column(Text, nullable=True)            # asosiy xabar
+    hook = Column(Text, nullable=True)
+    location = Column(String, nullable=True)
+    participants = Column(Text, nullable=True)
+    props = Column(Text, nullable=True)
+    duration = Column(String, nullable=True)
+    music = Column(String, nullable=True)
+    design_format = Column(String, nullable=True)
+    cta = Column(Text, nullable=True)
+    references = Column(Text, nullable=True)
+    deadline = Column(Date, nullable=True)
+
+    # ---- Matn (joriy versiya) ----
+    script = Column(Text, nullable=True)
+    caption = Column(Text, nullable=True)
+    caption_ru = Column(Text, nullable=True)
+    caption_en = Column(Text, nullable=True)
+    hashtags = Column(Text, nullable=True)
+    story_text = Column(Text, nullable=True)
+    on_video_text = Column(Text, nullable=True)
+
+    # ---- Joylash ----
+    post_url = Column(String, nullable=True)
+    post_external_id = Column(String, nullable=True)
+    utm = Column(String, nullable=True)
+    short_link = Column(String, nullable=True)
+    promo_code = Column(String, nullable=True)
+    screenshot = Column(Text, nullable=True)
+
+    # ---- Rozilik ----
+    needs_consent = Column(Integer, default=0)       # o'quvchi rasmi bormi
+    consent_ok = Column(Integer, default=0)
+
+    priority = Column(String, default="normal")
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    branch = relationship("Branch")
+    versions = relationship("ContentVersion", back_populates="content",
+                            cascade="all, delete-orphan")
+    shots = relationship("ContentShot", back_populates="content",
+                         cascade="all, delete-orphan")
+    approvals = relationship("ContentApproval", back_populates="content",
+                             cascade="all, delete-orphan")
+
+
+class ContentVersion(Base):
+    """Matn versiyalari. Kimdir o'zgartirsa eski variant yo'qolmaydi."""
+    __tablename__ = "content_versions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=False, index=True)
+    field = Column(String, nullable=False)           # script | caption ...
+    old_value = Column(Text, nullable=True)
+    new_value = Column(Text, nullable=True)
+    changed_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    content = relationship("Content", back_populates="versions")
+
+
+class ContentShot(Base):
+    """Video uchun kadrlar ro'yxati. Videograf har birini belgilaydi."""
+    __tablename__ = "content_shots"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=False, index=True)
+    order_no = Column(Integer, default=0)
+    text = Column(Text, nullable=False)
+    state = Column(String, default="todo")    # todo | done | retake
+    note = Column(String, nullable=True)
+
+    content = relationship("Content", back_populates="shots")
+
+
+class ContentApproval(Base):
+    """Tasdiqlash qadami. Kontent tasdiqsiz chiqib ketmaydi."""
+    __tablename__ = "content_approvals"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=False, index=True)
+    role = Column(String, nullable=True)             # kim tasdiqlashi kerak
+    decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decision = Column(String, nullable=True)         # approved | changes ...
+    comment = Column(Text, nullable=True)
+    quote = Column(Text, nullable=True)              # matnning belgilangan qismi
+    created_at = Column(DateTime, default=datetime.utcnow)
+    decided_at = Column(DateTime, nullable=True)
+
+    content = relationship("Content", back_populates="approvals")
+
+
+class ContentMove(Base):
+    """Taqvimda sana ko'chirilishi. Sabab yozilmasa ko'chirilmaydi."""
+    __tablename__ = "content_moves"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        nullable=False, index=True)
+    from_date = Column(Date, nullable=True)
+    to_date = Column(Date, nullable=True)
+    reason = Column(Text, nullable=True)
+    moved_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ContentIdea(Base):
+    """G'oyalar bazasi. Har qanday xodim g'oya yubora oladi, lekin
+    SMM tasdiqlamaguncha rejaga tushmaydi."""
+    __tablename__ = "content_ideas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    pillar = Column(String, nullable=True)
+    platform = Column(String, nullable=True)
+    fmt = Column(String, nullable=True)
+    course = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    audience = Column(String, nullable=True)
+    reference = Column(Text, nullable=True)
+    priority = Column(String, default="normal")
+    status = Column(String, default="new", index=True)
+    author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    author = Column(String, nullable=True)
+    content_id = Column(Integer, ForeignKey("contents.id"), nullable=True)
+    note = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ContentRequest(Base):
+    """Boshqa bo'limdan SMMga so'rov. Masalan: "yangi Elementary
+    guruhiga 6 ta o'quvchi kerak"."""
+    __tablename__ = "content_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    from_department = Column(String, nullable=True)
+    requested_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    requester = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    course = Column(String, nullable=True)
+    goal = Column(String, nullable=True)
+    offer = Column(Text, nullable=True)
+    group_time = Column(String, nullable=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
+    students_needed = Column(Integer, nullable=True)
+    start_date = Column(Date, nullable=True)
+    deadline = Column(Date, nullable=True)
+    platforms = Column(String, nullable=True)        # vergul bilan
+    approved_price = Column(Float, nullable=True)
+    cta = Column(Text, nullable=True)
+    sales_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    status = Column(String, default="new", index=True)
+    smm_note = Column(Text, nullable=True)
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class Campaign(Base):
+    """Bir nechta kontent bitta kampaniya ichida boshqariladi."""
+    __tablename__ = "campaigns"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    goal = Column(String, nullable=True)
+    course = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    audience = Column(String, nullable=True)
+    offer = Column(Text, nullable=True)
+    start_date = Column(Date, nullable=True)
+    end_date = Column(Date, nullable=True)
+    target_leads = Column(Integer, nullable=True)
+    target_sales = Column(Integer, nullable=True)
+    owner_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    conclusion = Column(Text, nullable=True)
+    is_active = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ContentMetric(Base):
+    """Kontentning natijasi. Integratsiya bo'lmasa SMM qo'lda kiritadi."""
+    __tablename__ = "content_metrics"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"),
+                        unique=True, index=True, nullable=False)
+    reach = Column(Integer, default=0)
+    impressions = Column(Integer, default=0)
+    views = Column(Integer, default=0)
+    watch_time = Column(Float, default=0)
+    completion = Column(Float, default=0)
+    likes = Column(Integer, default=0)
+    comments = Column(Integer, default=0)
+    saves = Column(Integer, default=0)
+    shares = Column(Integer, default=0)
+    profile_visits = Column(Integer, default=0)
+    link_clicks = Column(Integer, default=0)
+    dms = Column(Integer, default=0)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class MediaAsset(Base):
+    """Media kutubxonasi. "O'sha videoni kim olgandi?" degan savol
+    yo'qoladi."""
+    __tablename__ = "media_assets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    kind = Column(String, nullable=True)
+    url = Column(Text, nullable=True)
+    attachment_id = Column(Integer, ForeignKey("attachments.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    course = Column(String, nullable=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
+    event = Column(String, nullable=True)
+    taken_on = Column(Date, nullable=True)
+    author = Column(String, nullable=True)
+    tags = Column(String, nullable=True)
+    consent = Column(String, default="pending", index=True)
+    consent_until = Column(Date, nullable=True)
+    can_download = Column(Integer, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)

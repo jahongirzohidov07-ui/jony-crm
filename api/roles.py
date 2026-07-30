@@ -2442,3 +2442,217 @@ def fill_grade(percent: float) -> tuple:
 
 FILL_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, BRANCH_MANAGER,
                              FINANCE_DIRECTOR, SALES_HEAD, SALES_MANAGER]
+
+
+# =====================================================================
+#  SMM: KONTENT QUVURI
+#
+#  SMM bo'limi post ishlab chiqaradigan bo'lim emas — e'tibor, ishonch,
+#  murojaat va sotuv yaratadigan bo'lim. Shuning uchun har bir kontent
+#  g'oyadan natijagacha bitta quvurdan o'tadi:
+#
+#    G'oya -> brief -> ssenariy -> ishlab chiqarish -> montaj ->
+#    SMM tekshiruvi -> tasdiq -> rejalashtirildi -> joylandi ->
+#    natija o'lchanmoqda -> yakunlandi
+# =====================================================================
+CONTENT_STATUSES = [
+    ("idea", "G'oya", "slate"),
+    ("script", "Ssenariy tayyorlanmoqda", "sky"),
+    ("shooting", "Tasvirga olinmoqda", "violet"),
+    ("editing", "Montaj / dizayn", "amber"),
+    ("review", "SMM tekshiruvi", "amber"),
+    ("approval", "Tasdiq kutilmoqda", "orange"),
+    ("ready", "Tayyor / rejalashtirilgan", "emerald"),
+    ("published", "Joylandi", "slate900"),
+    ("measuring", "Natija o'lchanmoqda", "teal"),
+    ("done", "Yakunlandi", "teal"),
+    ("late", "Kechikdi", "red"),
+    ("rework", "Qayta ishlashga qaytarildi", "brown"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+CONTENT_STATUS_LABELS = {k: lbl for k, lbl, _ in CONTENT_STATUSES}
+CONTENT_STATUS_TONE = {k: t for k, _, t in CONTENT_STATUSES}
+# Quvurning tabiiy tartibi (kechikdi/bekor bundan tashqarida)
+CONTENT_FLOW = ["idea", "script", "shooting", "editing", "review",
+                "approval", "ready", "published", "measuring", "done"]
+CONTENT_OPEN = ["idea", "script", "shooting", "editing", "review",
+                "approval", "ready", "rework"]
+CONTENT_LIVE = ["published", "measuring", "done"]
+
+CONTENT_PLATFORMS = [
+    ("ig_post", "Instagram post", "rose"),
+    ("ig_reels", "Instagram Reels", "rose"),
+    ("ig_story", "Instagram Story", "rose"),
+    ("telegram", "Telegram post", "sky"),
+    ("tiktok", "TikTok video", "slate"),
+    ("yt_shorts", "YouTube Shorts", "red"),
+    ("youtube", "YouTube video", "red"),
+    ("facebook", "Facebook post", "sky"),
+    ("website", "Sayt maqolasi", "teal"),
+    ("broadcast", "SMS / Telegram broadcast", "amber"),
+]
+PLATFORM_LABELS = {k: lbl for k, lbl, _ in CONTENT_PLATFORMS}
+PLATFORM_TONE = {k: t for k, _, t in CONTENT_PLATFORMS}
+
+CONTENT_FORMATS = [
+    ("reels", "Reels"), ("story", "Story"), ("carousel", "Carousel"),
+    ("static", "Statik post"), ("long_video", "Uzun video"),
+    ("short_video", "Qisqa video"), ("live", "Live"),
+    ("testimonial", "Testimonial"), ("article", "Maqola"),
+]
+FORMAT_LABELS = dict(CONTENT_FORMATS)
+
+# ---- Kontent maqsadi: majburiy ----
+# "Shunchaki joylash" uchun kontent yaratilmaydi. Maqsad tanlanadi va
+# natija AYNAN SHU maqsadga qarab o'lchanadi.
+CONTENT_GOALS = [
+    ("awareness", "Brand awareness", "reach"),
+    ("trust", "Ishonch oshirish", "engagement"),
+    ("lead", "Lead yig'ish", "leads"),
+    ("sales", "Sotuv", "sales"),
+    ("retention", "Retention", "engagement"),
+    ("parents", "Ota-onalarni xabardor qilish", "reach"),
+    ("result", "O'quvchi natijasini ko'rsatish", "engagement"),
+    ("teacher", "Ustoz brendini rivojlantirish", "engagement"),
+    ("event", "Tadbirga odam yig'ish", "leads"),
+    ("vacancy", "Vakansiya", "leads"),
+    ("community", "Community", "engagement"),
+    ("objection", "Objection handling", "leads"),
+    ("referral", "Referral", "leads"),
+    ("reengage", "Re-engagement", "engagement"),
+]
+GOAL_LABELS = {k: lbl for k, lbl, _ in CONTENT_GOALS}
+GOAL_METRIC = {k: m for k, _, m in CONTENT_GOALS}
+GOAL_METRIC_LABELS = {
+    "reach": "Reach va yangi auditoriya",
+    "engagement": "Faol harakatlar",
+    "leads": "Murojaat va sifatli lead",
+    "sales": "Sotuv va tushum",
+}
+
+# ---- Kontent yo'nalishlari (pillars) ----
+CONTENT_PILLARS = [
+    ("results", "Student Results", "emerald",
+     "IELTS, CEFR, TOPIK, olimpiada, progress, oldin va keyin"),
+    ("teacher", "Teacher Branding", "violet",
+     "Ustoz tanishtiruvi, metodi, dars jarayoni, natijalari"),
+    ("education", "Educational Content", "sky",
+     "Qoidalar, IELTS maslahat, so'zlar, xatolar, mini testlar"),
+    ("trust", "Trust Content", "teal",
+     "Ota-ona fikri, dars jarayoni, examiner nazorati, support"),
+    ("sales", "Sales Content", "amber",
+     "Yangi guruh, joylar soni, taklif, narxga qiymat, CTA"),
+    ("life", "Jony Life", "rose",
+     "Tadbirlar, Sunday events, Day X, coin va XP"),
+    ("objection", "Objection Handling", "orange",
+     "Narxi qimmat, vaqtim yo'q, natija qachon bo'ladi"),
+    ("culture", "Brand Culture", "slate",
+     "Tarix, qadriyat, jamoa, missiya, muhit"),
+]
+PILLAR_LABELS = {k: lbl for k, lbl, _t, _d in CONTENT_PILLARS}
+PILLAR_TONE = {k: t for k, _l, t, _d in CONTENT_PILLARS}
+
+FUNNEL_STAGES = [
+    ("tofu", "Tanishtirish (TOFU)"),
+    ("mofu", "Qiziqtirish (MOFU)"),
+    ("bofu", "Qaror (BOFU)"),
+    ("retention", "Saqlab qolish"),
+]
+FUNNEL_LABELS = dict(FUNNEL_STAGES)
+
+# ---- Kim tasdiqlaydi ----
+# Kontent turiga qarab tasdiqlovchi o'zi aniqlanadi — SMM kimga
+# yuborishni o'ylab o'tirmaydi.
+APPROVAL_BY_PILLAR = {
+    "education": SMM_MANAGER,
+    "life": SMM_MANAGER,
+    "culture": SMM_MANAGER,
+    "trust": SMM_MANAGER,
+    "objection": SALES_HEAD,
+    "sales": SALES_HEAD,
+    "results": ACADEMIC_HEAD,
+    "teacher": ACADEMIC_HEAD,
+}
+# Narx yoki aksiya bo'lsa — sotuv rahbari + direktor
+APPROVAL_PRICE = [SALES_HEAD, FOUNDER]
+APPROVAL_OFFICIAL = FOUNDER
+
+APPROVAL_DECISIONS = [
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("changes", "O'zgartirish kerak", "amber"),
+    ("rejected", "Rad etildi", "red"),
+    ("info", "Qo'shimcha ma'lumot kerak", "sky"),
+]
+APPROVAL_LABELS = {k: lbl for k, lbl, _ in APPROVAL_DECISIONS}
+APPROVAL_TONE = {k: t for k, _, t in APPROVAL_DECISIONS}
+
+# ---- G'oyalar bazasi ----
+IDEA_STATUSES = [
+    ("new", "Yangi", "sky"),
+    ("review", "Ko'rib chiqilmoqda", "amber"),
+    ("accepted", "Qabul qilindi", "emerald"),
+    ("converted", "Kontentga aylantirildi", "teal"),
+    ("later", "Keyinga qoldirildi", "slate"),
+    ("rejected", "Rad etildi", "red"),
+    ("used", "Ishlatildi", "violet"),
+]
+IDEA_STATUS_LABELS = {k: lbl for k, lbl, _ in IDEA_STATUSES}
+IDEA_STATUS_TONE = {k: t for k, _, t in IDEA_STATUSES}
+
+# ---- Ichki so'rovlar ----
+REQUEST_STATUSES = [
+    ("new", "Yangi", "sky"),
+    ("clarify", "Aniqlashtirish kerak", "amber"),
+    ("accepted", "Qabul qilindi", "emerald"),
+    ("in_work", "Ishda", "teal"),
+    ("done", "Bajarildi", "slate"),
+    ("rejected", "Rad etildi", "red"),
+]
+REQUEST_STATUS_LABELS = {k: lbl for k, lbl, _ in REQUEST_STATUSES}
+REQUEST_STATUS_TONE = {k: t for k, _, t in REQUEST_STATUSES}
+
+# ---- Media roziligi ----
+CONSENT_STATUSES = [
+    ("ok", "Rozilik mavjud", "emerald"),
+    ("internal", "Faqat ichki foydalanish", "amber"),
+    ("social", "Ijtimoiy tarmoqqa mumkin", "teal"),
+    ("no_face", "Yuzini ko'rsatish mumkin emas", "orange"),
+    ("pending", "Ota-ona tasdig'i kutilmoqda", "sky"),
+    ("forbidden", "Foydalanish taqiqlangan", "red"),
+]
+CONSENT_LABELS = {k: lbl for k, lbl, _ in CONSENT_STATUSES}
+CONSENT_TONE = {k: t for k, _, t in CONSENT_STATUSES}
+# Shu holatlarda ijtimoiy tarmoqqa joylashga RUXSAT BERILMAYDI
+CONSENT_BLOCKS_PUBLISH = ["internal", "pending", "forbidden"]
+
+# ---- Kontent reja bajarilishi ----
+PLAN_TARGET_PERCENT = 80.0     # bundan past bo'lsa ogohlantiriladi
+
+# ---- Sifatli engagement ballari (admin sozlashi mumkin) ----
+ENGAGEMENT_WEIGHTS = [
+    ("like", "Like", 1),
+    ("comment", "Izoh", 2),
+    ("save", "Saqlash", 3),
+    ("share", "Ulashish", 4),
+    ("dm", "DM", 5),
+]
+ENGAGEMENT_WEIGHT_MAP = {k: w for k, _l, w in ENGAGEMENT_WEIGHTS}
+
+# ---- SMM KPI modeli ----
+SMM_KPI_WEIGHTS = [
+    ("plan", "Kontent reja va intizom", 20),
+    ("leads", "Sifatli leadlar", 25),
+    ("engagement", "Engagement sifati", 15),
+    ("sales", "Sotuvga ta'siri", 15),
+    ("inbox", "DM va community", 10),
+    ("brand", "Brand standartiga rioya", 10),
+    ("experiment", "Yangi formatlar", 5),
+]
+SMM_KPI_LABELS = {k: lbl for k, lbl, _ in SMM_KPI_WEIGHTS}
+
+# ---- Ruxsatlar ----
+SMM_ACCESS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD]
+CONTENT_REQUESTER = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
+                                   BRANCH_MANAGER, ACADEMIC_HEAD,
+                                   ADMINISTRATOR]
+IDEA_SUBMIT = STAFF_ROLES        # g'oyani har qanday xodim yuboradi

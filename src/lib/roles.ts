@@ -217,3 +217,27 @@ export const INBOX_ACCESS = [
 
 /** Kim ustozga akkaunt ocha oladi. */
 export const ACCOUNT_MANAGE = [FOUNDER, BRANCH_MANAGER, HR_MANAGER];
+
+/** Ustoz o'z natijalarini ko'radi (boshqa ustozniki emas). */
+export const SELF_STATS = [TEACHER, SUPPORT_TEACHER];
+
+/**
+ * Ustoz menyusi — ochiq ro'yxat.
+ *
+ * Boshqa rollarda menyu "kimga ruxsat bor" degan qoidadan chiqadi,
+ * lekin ustozda buning teskarisi kerak: dars berishga aloqasi
+ * bo'lmagan hech narsa turmasin. SMM, audit, ombor, boshqa
+ * ustozlarning ro'yxati — bularning hech biri ustozning ishiga
+ * kerak emas va faqat e'tiborni bo'ladi.
+ */
+export const TEACHER_MENU = [
+  "/",
+  "/timetable",
+  "/groups",
+  "/students",
+  "/my-results",
+  "/my-career",
+  "/gamification",
+  "/complaints",
+  "/tasks",
+];

@@ -3681,3 +3681,61 @@ export interface SmmReport {
   }[];
   frozen?: boolean;
 }
+
+// ------------------------------------------- Ustozning o'z natijalari
+export interface LeaverRow {
+  id: number;
+  name: string;
+  group?: string | null;
+  left_date: string;
+  enrolled_date?: string | null;
+  months: number;
+  reason?: string | null;
+  reason_label: string;
+  /** true = bizga bog'liq sabab, false = bog'liq emas, null = yozilmagan */
+  controllable?: boolean | null;
+  note?: string | null;
+}
+
+export interface LeaverWindow {
+  key: string;
+  label: string;
+  since: string;
+  count: number;
+  controllable: number;
+  not_controllable: number;
+  unknown: number;
+  rows: LeaverRow[];
+}
+
+export interface MyResults {
+  teacher: { id: number; name: string; grade?: string | null; grade_label: string };
+  students: { active: number; left: number; total: number };
+  retention: { value: number; centre_avg?: number | null };
+  churn: {
+    value: number;
+    centre_avg?: number | null;
+    verdict: string;
+    tone: string;
+    diff?: number | null;
+    rank?: number | null;
+    peers: number;
+  };
+  ltv: {
+    value?: number | null;
+    centre_avg?: number | null;
+    verdict: string;
+    tone: string;
+    diff?: number | null;
+    rank?: number | null;
+    peers: number;
+    note: string;
+  };
+  windows: LeaverWindow[];
+  reasons: {
+    key: string; label: string; controllable?: boolean | null; count: number;
+  }[];
+  enough_data: boolean;
+  min_students: number;
+  hint: string;
+}

@@ -213,6 +213,29 @@ ck("avtomat bog'landi",
    db.query(models.Teacher).get(OLD_T).user_id, OLD_U)
 db.close()
 
+print("\n=== 11. POSTGRES MOSLIGI ===")
+
+# SQLite mantiqiy qiymatni butun sonli ustunga qabul qiladi, Postgres
+# esa rad etadi. Ya'ni bunday xato faqat JONLI bazada chiqadi va
+# testdan o'tib ketadi. Shuning uchun matnning o'zini tekshiramiz.
+import re
+_src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         "models.py")).read()
+_int_cols = set(re.findall(r"^\s{4}(\w+)\s*=\s*Column\(Integer",
+                           _src, re.M))
+_main = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "main.py")).read()
+_bad = []
+for _m in re.finditer(r"(\w+)\s*=\s*(True|False)\b", _main):
+    if _m.group(1) in _int_cols:
+        _line = _main[:_m.start()].count("\n") + 1
+        # Funksiya argumenti bo'lsa hisobga olinmaydi
+        _ctx = _main[max(0, _m.start() - 60):_m.start()]
+        if "(" in _ctx.split("\n")[-1]:
+            continue
+        _bad.append(f"main.py:{_line} {_m.group(1)}")
+ck("butun sonli ustunga True berilmagan", _bad, [])
+
 print()
 if fails:
     print(f"XATOLAR ({len(fails)}): " + ", ".join(fails))

@@ -18140,7 +18140,10 @@ def teacher_account_create(tid: int, db: Session = Depends(get_db),
         branch_id=t.branch_id,
         phone=t.phone,
         hired_date=t.hired_date,
-        is_active=True,
+        # 1, True emas: Postgres'da bu ustun INTEGER — mantiqiy qiymat
+        # qabul qilmaydi. SQLite qabul qiladi, shuning uchun xato faqat
+        # jonli bazada chiqadi.
+        is_active=1,
     )
     db.add(u); db.commit(); db.refresh(u)
     t.user_id = u.id
@@ -18175,7 +18178,7 @@ def teacher_account_reset(tid: int, db: Session = Depends(get_db),
     u = db.query(models.User).get(st["user_id"])
     password = roles.make_password()
     u.password_hash = hash_password(password)
-    u.is_active = True
+    u.is_active = 1
     db.commit()
     audit.log(db, user, entity="user", action="password_reset",
               entity_id=u.id, entity_label=t.full_name,

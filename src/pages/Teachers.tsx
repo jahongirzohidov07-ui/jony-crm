@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { Plus, X, UserMinus, UserCheck, Pencil } from "lucide-react";
+import {
+  Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
+} from "lucide-react";
 import {
   api, type Teacher, type Branch, type GradeRow, type CareerMap,
+  type TeacherAccount,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER, can,
+  STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER,
+  ACCOUNT_MANAGE, can,
 } from "../lib/roles";
 import { formatDate } from "../lib/format";
 import { SalaryCard } from "../components/SalaryCard";
@@ -289,6 +293,7 @@ export default function Teachers() {
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<Teacher | null>(null);
+  const [accountFor, setAccountFor] = useState<Teacher | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
   const [career, setCareer] = useState<number | null>(null);
   // Daraja nomlarini bir marta olamiz - har bir qatorda so'ramaslik uchun
@@ -321,6 +326,7 @@ export default function Teachers() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, STAFF_VIEWERS);
+  const canAccount = can(user?.role, ACCOUNT_MANAGE);
   // Ustozning o'zi hamkasbining oyligini ochmaydi
   const canSeeSalary =
     can(user?.role, SALARY_SELF_VIEW) && !can(user?.role, [TEACHER, SUPPORT_TEACHER]);
@@ -486,6 +492,23 @@ export default function Teachers() {
                         >
                           <Pencil size={15} />
                         </button>
+                        {canAccount && !left && (
+                          <button
+                            onClick={() => setAccountFor(t)}
+                            title={
+                              t.login
+                                ? `Login: ${t.login} — yangi parol berish`
+                                : "Akkaunt ochish (login va parol)"
+                            }
+                            className={`mr-2 ${
+                              t.login
+                                ? "text-emerald-500 hover:text-emerald-600"
+                                : "text-slate-400 hover:text-brand-600"
+                            }`}
+                          >
+                            <KeyRound size={15} />
+                          </button>
+                        )}
                         <button
                           onClick={() => toggleActive(t)}
                           title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}
@@ -538,6 +561,161 @@ export default function Teachers() {
           }}
         />
       )}
+      {accountFor && (
+        <AccountModal
+          teacher={accountFor}
+          onClose={() => {
+            setAccountFor(null);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+/** Ustozga akkaunt ochish. Login ismdan yasaladi, parol tasodifiy —
+ *  ikkalasini ham tizim o'zi beradi. Parol FAQAT shu oynada
+ *  ko'rinadi: bazada shifrlangan holda saqlanadi, keyin uni hech kim
+ *  qayta ocha olmaydi. */
+function AccountModal({
+  teacher,
+  onClose,
+}: {
+  teacher: Teacher;
+  onClose: () => void;
+}) {
+  const [data, setData] = useState<TeacherAccount | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const hasAccount = !!teacher.login;
+
+  async function run(reset: boolean) {
+    setBusy(true);
+    setError(null);
+    try {
+      const path = reset
+        ? `/teachers/${teacher.id}/account/reset`
+        : `/teachers/${teacher.id}/account`;
+      setData(await api.post<TeacherAccount>(path, {}));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function copyAll() {
+    if (!data) return;
+    navigator.clipboard?.writeText(
+      `${data.full_name}\nManzil: ${data.url}\n` +
+        `Login: ${data.login}\nParol: ${data.password}`
+    );
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-slate-900">
+            {teacher.full_name}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {!data && (
+          <>
+            {hasAccount ? (
+              <>
+                <div className="bg-slate-50 rounded-lg p-3 mb-3">
+                  <p className="text-xs text-slate-500 mb-0.5">Login</p>
+                  <p className="font-mono text-sm text-slate-900">
+                    {teacher.login}
+                  </p>
+                </div>
+                <p className="text-sm text-slate-600 mb-4">
+                  Bu ustozda akkaunt bor. Parol shifrlangan — uni ko'rish
+                  imkoni yo'q. Ustoz parolni unutgan bo'lsa, yangisini
+                  yasang: eskisi darhol ishlamay qoladi.
+                </p>
+                <button
+                  onClick={() => run(true)}
+                  disabled={busy}
+                  className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+                >
+                  {busy ? "..." : "Yangi parol yasash"}
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-slate-600 mb-4">
+                  Login ismdan yasaladi, parol tasodifiy tanlanadi.
+                  Ikkalasi ham shu yerda bir marta ko'rsatiladi.
+                </p>
+                <button
+                  onClick={() => run(false)}
+                  disabled={busy}
+                  className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+                >
+                  {busy ? "..." : "Akkaunt ochish"}
+                </button>
+              </>
+            )}
+            {error && (
+              <p className="text-sm text-red-600 mt-3">{error}</p>
+            )}
+          </>
+        )}
+
+        {data && (
+          <>
+            <div className="space-y-2 mb-4">
+              <div className="bg-slate-50 rounded-lg p-3">
+                <p className="text-xs text-slate-500 mb-0.5">Manzil</p>
+                <p className="text-sm text-slate-900">{data.url}</p>
+              </div>
+              <div className="bg-slate-50 rounded-lg p-3">
+                <p className="text-xs text-slate-500 mb-0.5">Login</p>
+                <p className="font-mono text-base text-slate-900">
+                  {data.login}
+                </p>
+              </div>
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                <p className="text-xs text-emerald-700 mb-0.5">Parol</p>
+                <p className="font-mono text-base text-slate-900 tracking-wide">
+                  {data.password}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+              {data.warning}
+            </p>
+
+            <button
+              onClick={copyAll}
+              className="w-full border border-slate-300 rounded-lg py-2 text-sm font-medium text-slate-700 mb-2 flex items-center justify-center gap-2"
+            >
+              {copied ? <Check size={15} /> : <Copy size={15} />}
+              {copied ? "Nusxalandi" : "Hammasini nusxalash"}
+            </button>
+            <button
+              onClick={onClose}
+              className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium"
+            >
+              Yozib oldim, yopish
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

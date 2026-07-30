@@ -1744,7 +1744,13 @@ function InboxTab() {
   const cards = [
     { label: "Javob kutmoqda", value: d.open, tone: d.open ? "amber" : "emerald" },
     { label: "Kechikkan", value: d.overdue, tone: d.overdue ? "red" : "emerald" },
-    { label: "SLA bajarildi", value: d.sla_percent + "%", tone: d.sla_percent >= 80 ? "emerald" : d.sla_percent >= 50 ? "amber" : "red" },
+    {
+      label: "SLA bajarildi",
+      value: d.answered ? d.sla_percent + "%" : "—",
+      tone: !d.answered ? "slate"
+        : d.sla_percent >= 80 ? "emerald"
+        : d.sla_percent >= 50 ? "amber" : "red",
+    },
     { label: "O'rtacha javob", value: d.avg_minutes ? d.avg_minutes + " daq" : "—", tone: "slate" },
     { label: "Ish vaqtidan tashqari", value: d.off_hours, tone: "violet" },
   ];

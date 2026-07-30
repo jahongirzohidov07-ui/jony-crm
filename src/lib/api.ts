@@ -103,6 +103,8 @@ export interface Group {
   branch?: Branch;
   student_count: number;
   end_date?: string | null;
+  room_id?: number | null;
+  capacity?: number | null;
 }
 
 export interface Payment {
@@ -974,4 +976,228 @@ export interface CeoToday {
   problem_groups: CeoProblemGroup[];
   complaints: { open: number; overdue: number; list: Complaint[] };
   alerts: CeoAlert[];
+}
+
+// ---------------------------------------------------- O'quv bo'limi ----
+export interface Room {
+  id: number;
+  name: string;
+  capacity: number;
+  branch_id?: number | null;
+  branch?: string | null;
+  note?: string | null;
+  active: boolean;
+  groups: { id: number; name: string }[];
+}
+
+export interface GroupFillRow {
+  id: number;
+  name: string;
+  teacher?: string | null;
+  branch?: string | null;
+  room?: string | null;
+  students: number;
+  capacity: number;
+  percent: number;
+  band: string;
+  band_label: string;
+  free_seats: number;
+}
+
+export interface GroupFillReport {
+  rows: GroupFillRow[];
+  no_capacity: { id: number; name: string }[];
+  summary: {
+    groups: number;
+    students: number;
+    capacity: number;
+    percent: number;
+    free_seats: number;
+    by_band: { band: string; label: string; count: number }[];
+  };
+}
+
+export interface RiskSignal {
+  key: string;
+  label: string;
+  weight: number;
+  detail?: string | null;
+}
+
+export interface RiskTaskBrief {
+  id: number;
+  title: string;
+  assigned_user?: string | null;
+  due_date?: string | null;
+}
+
+export interface RiskRow {
+  student_id: number;
+  public_id?: string | null;
+  full_name: string;
+  group_id?: number | null;
+  group?: string | null;
+  teacher?: string | null;
+  branch?: string | null;
+  phone?: string | null;
+  score: number;
+  level: string;
+  level_label: string;
+  signals: RiskSignal[];
+  tasks: RiskTaskBrief[];
+}
+
+export interface RiskReport {
+  total: number;
+  at_risk: number;
+  levels: { key: string; label: string; color: string; count: number }[];
+  rows: RiskRow[];
+  signals: { key: string; label: string; weight: number }[];
+}
+
+export interface RiskTask {
+  id: number;
+  student_id: number;
+  student?: string | null;
+  level?: string | null;
+  level_label: string;
+  title: string;
+  assigned_user_id?: number | null;
+  assigned_user?: string | null;
+  due_date?: string | null;
+  overdue: boolean;
+  status: string;
+  result?: string | null;
+  created_at?: string | null;
+}
+
+// ------------------------------------------------- O'quvchi tarixi ----
+export interface HistoryEvent {
+  date?: string | null;
+  kind: string;
+  title: string;
+  detail?: string | null;
+  by?: string | null;
+}
+
+export interface StudentHistory {
+  summary: {
+    groups: string[];
+    group_count: number;
+    teachers: string[];
+    group_changes: number;
+    marked_lessons: number;
+    absences: number;
+    attendance_percent: number | null;
+    complaints: number;
+    talks: number;
+    certificates: number;
+    freezes: number;
+    leaves: number;
+    returns: number;
+  };
+  absent_dates: string[];
+  timeline: HistoryEvent[];
+}
+
+export interface ParentTalk {
+  id: number;
+  date?: string | null;
+  channel: string;
+  topic: string;
+  summary?: string | null;
+  outcome?: string | null;
+  created_by?: string | null;
+}
+
+export interface Certificate {
+  id: number;
+  kind: string;
+  kind_label: string;
+  level?: string | null;
+  score?: number | null;
+  date?: string | null;
+  note?: string | null;
+}
+
+// ------------------------------------------------ Oilaviy chegirma ----
+export interface StudentPricing {
+  base_fee: number;
+  family_discount: number;
+  family_min_children: number;
+  personal_discount: number;
+  total_discount: number;
+  final_fee: number;
+  parent_id?: number | null;
+  siblings: { id: number; full_name: string; status: string }[];
+  active_siblings: number;
+  explanation: string;
+}
+
+export interface FamilyDiscountReport {
+  percent: number;
+  min_children: number;
+  families: number;
+  monthly_total: number;
+  rows: {
+    parent_id: number;
+    public_id?: string | null;
+    parent: string;
+    phone?: string | null;
+    children: { id: number; full_name: string; status: string; group?: string | null }[];
+    active_children: number;
+    discount_percent: number;
+    monthly_saved: number;
+  }[];
+}
+
+// ------------------------------------------- Marketing to'liq yo'li ----
+export interface JourneyStage {
+  key: string;
+  label: string;
+  source: "ad" | "crm";
+  count: number;
+  step_percent: number | null;
+  of_leads: number | null;
+  lost: number;
+}
+
+export interface JourneyChannel {
+  channel: string;
+  label: string;
+  impressions: number;
+  clicks: number;
+  leads: number;
+  contacted: number;
+  trial: number;
+  sold: number;
+  month1: number;
+  month3: number;
+  certificate: number;
+  ctr: number | null;
+  click_to_lead: number | null;
+  lead_to_sale: number;
+  retention_1m: number | null;
+  retention_3m: number | null;
+}
+
+export interface MarketingJourney {
+  months: number;
+  stages: JourneyStage[];
+  channels: JourneyChannel[];
+  totals: Record<string, number>;
+  worst_stage: JourneyStage | null;
+  has_ad_data: boolean;
+}
+
+export interface AdStat {
+  id: number;
+  channel: string;
+  label: string;
+  period: string;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  branch_id?: number | null;
+  note?: string | null;
 }

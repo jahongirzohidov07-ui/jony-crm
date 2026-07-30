@@ -10,6 +10,7 @@ export const SUPPORT_TEACHER = "support_teacher";
 export const EXAMINER = "examiner";
 export const HR_MANAGER = "hr_manager";
 export const SMM_MANAGER = "smm_manager";
+export const ACADEMIC_HEAD = "academic_head";
 
 export const UZ_LABELS: Record<string, string> = {
   [FOUNDER]: "Asoschi",
@@ -20,6 +21,7 @@ export const UZ_LABELS: Record<string, string> = {
   [EXAMINER]: "Examiner",
   [HR_MANAGER]: "HR manager",
   [SMM_MANAGER]: "SMM manager",
+  [ACADEMIC_HEAD]: "O'quv bo'limi rahbari",
 };
 
 export const ALL_ROLES = [
@@ -31,6 +33,7 @@ export const ALL_ROLES = [
   EXAMINER,
   HR_MANAGER,
   SMM_MANAGER,
+  ACADEMIC_HEAD,
 ];
 
 export const FULL_ACCESS = [FOUNDER, BRANCH_MANAGER];
@@ -40,6 +43,7 @@ export const TEACHING_STAFF = [
   TEACHER,
   SUPPORT_TEACHER,
   EXAMINER,
+  ACADEMIC_HEAD,
 ];
 
 /** Xodimlar ro'yxatini ko'ra oladiganlar. */
@@ -87,3 +91,15 @@ export const AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER];
 
 /** Asoschi paneli - umumiy foyda ko'rinadigan joy. */
 export const PROFIT_VIEW = FULL_ACCESS;
+
+
+/** O'quv bo'limini boshqaradiganlar. */
+export const ACADEMIC_ACCESS = [...FULL_ACCESS, ACADEMIC_HEAD];
+
+/** Risk ro'yxatini ko'radiganlar - ustoz ham o'z o'quvchisini ko'radi. */
+export const ACADEMIC_VIEW = [
+  ...ACADEMIC_ACCESS,
+  TEACHER,
+  SUPPORT_TEACHER,
+  SALES_MANAGER,
+];

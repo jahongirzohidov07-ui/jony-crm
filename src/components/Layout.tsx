@@ -32,6 +32,7 @@ import {
   HR_ACCESS,
   MARKETING_ACCESS,
   AUDIT_VIEW,
+  EXAM_VIEW,
   ACADEMIC_VIEW,
   can,
   roleLabel,
@@ -202,8 +203,10 @@ export default function Layout() {
              { to: "/complaints", label: "Shikoyatlar", icon: MessageSquareWarning }];
   }
   // O'zgarishlar tarixi - eng oxirida, kamdan-kam ochiladi.
-  if (can(user?.role, AUDIT_VIEW)) {
-    items = [...items, { to: "/audit", label: "Tarix", icon: History }];
+  // Audit - nazorat bo'limi: o'zgarishlar tarixi va imtihonlar.
+  // Examiner ham shu yerga kiradi (u asoschiga bo'ysunadi).
+  if (can(user?.role, AUDIT_VIEW) || can(user?.role, EXAM_VIEW)) {
+    items = [...items, { to: "/audit", label: "Audit", icon: History }];
   }
   if (user?.role === FOUNDER) {
     items = [...items, { to: "/branches", label: "Filiallar", icon: Building2 }];

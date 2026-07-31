@@ -4354,3 +4354,54 @@ def examiner_salary(points: float) -> dict:
         "clamped_min": raw < EXAMINER_PAY_MIN,
         "clamped_max": raw > EXAMINER_PAY_MAX,
     }
+
+
+# ------------------------------------------------- Yillik Reja / Fakt ----
+# Rahbarning bosh jadvali. O'quv yili SENTABRdan boshlanadi.
+# Reja oy kesimida kiritiladi; hafta/kun rejasi oydan avtomat
+# taqsimlanadi (ish kunlariga bo'lib; yakshanba dam). Fakt platforma
+# ma'lumotlaridan o'zi to'ladi.
+PLAN_METRICS = [
+    # (kalit, nomi, bo'lim, tur: flow|stock|money, fakt avtomatmi)
+    ("leads", "Lid", "online", "flow", True),
+    ("online_visits", "Onlinedan tashriflar soni", "online", "flow", False),
+    ("online_payments", "Yangi to'lovlar soni (online)", "online", "flow",
+     False),
+    ("visits", "Tashrif", "sotuv", "flow", True),
+    ("new_payments", "Yangi to'lovlar soni", "sotuv", "flow", True),
+    ("old_payments", "Eski to'lovlar soni", "sotuv", "flow", True),
+    ("students", "O'qiyotgan o'quvchilar soni", "sotuv", "stock", True),
+    ("revenue", "Yalpi tushum", "moliya", "money", True),
+    ("expenses", "Xarajatlar", "moliya", "money", True),
+    ("profit", "Foyda", "moliya", "money", True),
+]
+PLAN_METRIC_KEYS = [k for k, *_ in PLAN_METRICS]
+PLAN_SECTION_LABELS = {"online": "Online", "sotuv": "Sotuv",
+                       "moliya": "Moliya"}
+# Bo'lim kimga ko'rinadi — "kerakli qism kerakli xodimga"
+PLAN_SECTION_ROLES = {
+    "online": [FOUNDER, SMM_MANAGER],
+    "sotuv": [FOUNDER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER],
+    "moliya": [FOUNDER, FINANCE_DIRECTOR],
+}
+PLAN_EDIT = [FOUNDER]
+PLAN_VIEW = list(dict.fromkeys(
+    r for rs in PLAN_SECTION_ROLES.values() for r in rs))
+# O'quv yili oylari tartibi va choraklar
+PLAN_MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]
+PLAN_QUARTERS = [PLAN_MONTHS[0:3], PLAN_MONTHS[3:6],
+                 PLAN_MONTHS[6:9], PLAN_MONTHS[9:12]]
+PLAN_DEFAULT_GROWTH = 15   # o'tgan yil faktiga +15% taklif
+
+
+def plan_year_label(y: int) -> str:
+    return f"{y}-{y + 1} o'quv yili"
+
+
+def plan_month_year(start_year: int, month: int) -> int:
+    """Sentabr-dekabr — boshlanish yili, yanvar-avgust — keyingi yil."""
+    return start_year if month >= 9 else start_year + 1
+
+
+def plan_sections_for(role: str):
+    return [s for s, rs in PLAN_SECTION_ROLES.items() if role in rs]

@@ -2042,3 +2042,13 @@ class ExaminerAdjustIn(BaseModel):
     points: float
     reason: str
     date: Optional[_dt.date] = None
+
+
+class PlanItemIn(BaseModel):
+    metric: str
+    month: int
+    value: float
+
+
+class PlanSaveIn(BaseModel):
+    items: List[PlanItemIn]

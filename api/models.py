@@ -2802,3 +2802,22 @@ class ExaminerAdjustment(Base):
     reason = Column(Text, nullable=False)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class PlanTarget(Base):
+    """Yillik reja — bitta ko'rsatkichning bitta oydagi Reja qiymati.
+
+    year — o'quv yili BOSHLANGAN kalendar yil (sentabr). Fakt saqlanmaydi:
+    u har safar tirik ma'lumotdan hisoblanadi, shuning uchun hech qachon
+    eskirmaydi."""
+    __tablename__ = "plan_targets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(Integer, nullable=False, index=True)
+    metric = Column(String, nullable=False, index=True)
+    month = Column(Integer, nullable=False)      # 1..12
+    value = Column(Float, nullable=False, default=0)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)

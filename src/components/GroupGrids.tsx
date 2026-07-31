@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, X, Plus, Trash2, Coins } from "lucide-react";
+import { Check, X, Plus, Trash2, Coins, CalendarClock } from "lucide-react";
 import {
   api,
   type AttendanceGrid,
@@ -33,6 +33,158 @@ function EmptyState({ text }: { text: string }) {
 }
 
 // ------------------------------------------------------------- Davomat ----
+
+/** Bitta katak uchun tanlov oynasi.
+ *
+ *  Ilgari katak bosilganda holat aylanardi: bo'sh → keldi → kelmadi →
+ *  keldi. Bu tez, lekin xato ham tez bo'ladi — noto'g'ri holatga
+ *  o'tib ketilsa yana ikki marta bosish kerak. Endi ustoz nimani
+ *  qo'yayotganini KO'RIB tanlaydi. */
+function MarkPicker({
+  present,
+  homework,
+  onPresent,
+  onHomework,
+  onClose,
+}: {
+  present?: boolean;
+  homework?: number;
+  onPresent: (v: boolean) => void;
+  onHomework: (v: number) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className="absolute z-30 left-1/2 -translate-x-1/2 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg p-2 w-40"
+      onMouseLeave={onClose}
+    >
+      <p className="text-[10px] uppercase text-slate-400 px-1 mb-1">
+        Davomat
+      </p>
+      <div className="flex gap-1 mb-2">
+        <button
+          onClick={() => onPresent(true)}
+          className={`flex-1 rounded-lg py-1.5 text-xs font-medium border transition ${
+            present === true
+              ? "bg-brand-500 border-brand-500 text-white"
+              : "border-slate-200 text-slate-600 hover:bg-brand-50"
+          }`}
+        >
+          Bor
+        </button>
+        <button
+          onClick={() => onPresent(false)}
+          className={`flex-1 rounded-lg py-1.5 text-xs font-medium border transition ${
+            present === false
+              ? "bg-red-500 border-red-500 text-white"
+              : "border-slate-200 text-slate-600 hover:bg-red-50"
+          }`}
+        >
+          Yo'q
+        </button>
+      </div>
+
+      <p className="text-[10px] uppercase text-slate-400 px-1 mb-1">
+        Uy vazifasi
+      </p>
+      <div className="flex gap-1">
+        {[
+          { v: 1, label: "✓", title: "Bajardi", on: "bg-emerald-500" },
+          { v: 2, label: "±", title: "Qisman", on: "bg-amber-500" },
+          { v: 0, label: "✗", title: "Bajarmadi", on: "bg-red-500" },
+        ].map((h) => (
+          <button
+            key={h.v}
+            title={h.title}
+            onClick={() => onHomework(h.v)}
+            className={`flex-1 rounded-lg py-1.5 text-xs font-bold border transition ${
+              homework === h.v
+                ? `${h.on} border-transparent text-white`
+                : "border-slate-200 text-slate-500 hover:bg-slate-50"
+            }`}
+          >
+            {h.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Sana sarlavhasi menyusi: dars holati va "Dars ko'chirish". */
+function DateMenu({
+  date,
+  held,
+  box,
+  moved,
+  onMove,
+  onClose,
+}: {
+  date: string;
+  held: number;
+  box: NonNullable<AttendanceGrid["reschedule"]>;
+  moved?: { status_label: string; to_date: string };
+  onMove: () => void;
+  onClose: () => void;
+}) {
+  const past = date < new Date().toISOString().slice(0, 10);
+  const q = box.quota;
+  return (
+    <div className="absolute z-40 left-1/2 -translate-x-1/2 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg p-3 w-60 text-left">
+      <p className="text-sm font-medium text-slate-900">
+        {formatDate(date)}
+      </p>
+      <p className="text-xs text-slate-500 mb-2">
+        {held ? "Dars o'tilgan" : "Jadval bo'yicha reja"}
+      </p>
+
+      {moved ? (
+        <div className="rounded-lg bg-slate-50 border border-slate-200 p-2 mb-2">
+          <p className="text-xs text-slate-700">
+            {formatDate(moved.to_date)} ga ko'chirilgan
+          </p>
+          <p className="text-[11px] text-slate-400">{moved.status_label}</p>
+        </div>
+      ) : !box.can ? (
+        <p className="text-xs text-slate-400 mb-2">
+          Dars ko'chirish huquqingiz yo'q.
+        </p>
+      ) : held ? (
+        <p className="text-xs text-slate-400 mb-2">
+          O'tilgan darsni ko'chirib bo'lmaydi — u ish haqi asosi.
+        </p>
+      ) : past ? (
+        <p className="text-xs text-slate-400 mb-2">
+          O'tib ketgan darsni ko'chirib bo'lmaydi.
+        </p>
+      ) : (
+        <button
+          onClick={onMove}
+          className="w-full flex items-center justify-center gap-1.5 bg-brand-600 text-white rounded-lg py-2 text-sm font-medium mb-2"
+        >
+          <CalendarClock size={14} />
+          Dars ko'chirish
+        </button>
+      )}
+
+      {q && (
+        <p className="text-[11px] text-slate-500">
+          Shu oyda {q.used_month}/{q.per_month} ishlatilgan
+          {q.left != null ? ` · ${q.left} ta qoldi` : ""}
+        </p>
+      )}
+      <p className="text-[11px] text-slate-400 mt-1">{box.cannot_cancel}</p>
+
+      <button
+        onClick={onClose}
+        className="w-full text-xs text-slate-400 mt-2 hover:text-slate-600"
+      >
+        Yopish
+      </button>
+    </div>
+  );
+}
+
 export function AttendanceTab({
   groupId,
   year,
@@ -47,8 +199,13 @@ export function AttendanceTab({
   const [grid, setGrid] = useState<AttendanceGrid | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
+  const [open, setOpen] = useState<string | null>(null); // ochiq katak
+  const [menu, setMenu] = useState<number | null>(null); // ochiq sana
+  const [moving, setMoving] = useState<{ id: number; date: string } | null>(
+    null
+  );
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
     api
       .get<AttendanceGrid>(
@@ -56,17 +213,18 @@ export function AttendanceTab({
       )
       .then(setGrid)
       .finally(() => setLoading(false));
-  }, [groupId, year, month]);
+  };
+  useEffect(load, [groupId, year, month]);
 
-  /** Katakni bosganda uch holat aylanadi: belgilanmagan -> keldi ->
-   *  kelmadi -> belgilanmagan emas, balki keldi (chunki "belgilanmagan"
-   *  holatni backend saqlamaydi, u shunchaki yozuv yo'qligi). */
-  async function toggle(lessonId: number, studentId: number) {
+  /** Davomat — aniq qiymat bilan saqlanadi, aylanma emas. */
+  async function setPresent(
+    lessonId: number,
+    studentId: number,
+    next: boolean
+  ) {
     if (!canEdit || !grid) return;
     const key = `${lessonId}:${studentId}`;
-    const current = grid.marks[key];
-    const next = current === undefined ? true : current === true ? false : true;
-
+    const before = grid.marks[key];
     setGrid({ ...grid, marks: { ...grid.marks, [key]: next } });
     setSaving(key);
     try {
@@ -74,39 +232,27 @@ export function AttendanceTab({
         marks: [{ student_id: studentId, present: next }],
       });
     } catch {
-      setGrid({ ...grid, marks: { ...grid.marks, [key]: current } });
+      setGrid({ ...grid, marks: { ...grid.marks, [key]: before } });
     } finally {
       setSaving(null);
     }
   }
 
-  /** Butun ustunni "hamma keldi" qilish - eng ko'p uchraydigan holat. */
-  async function markAllPresent(lessonId: number) {
-    if (!canEdit || !grid) return;
-    const marks = grid.students.map((s) => ({ student_id: s.id, present: true }));
-    const next = { ...grid.marks };
-    for (const s of grid.students) next[`${lessonId}:${s.id}`] = true;
-    setGrid({ ...grid, marks: next });
-    await api.put(`/lessons/${lessonId}/attendance`, { marks });
-  }
-
-  /** Uy vazifasi: bajardi -> qisman -> bajarmadi -> bajardi.
-   *  Davomat bilan bitta jadvalda turadi, chunki alohida ekran
-   *  bo'lsa hech kim to'ldirmaydi. Belgilangan baho o'chirilmaydi —
-   *  faqat boshqasiga almashtiriladi. */
-  async function toggleHw(lessonId: number, studentId: number) {
+  /** Uy vazifasi davomat bilan bitta oynada — alohida ekran bo'lsa
+   *  hech kim to'ldirmaydi. */
+  async function setHomework(
+    lessonId: number,
+    studentId: number,
+    next: number
+  ) {
     if (!canEdit || !grid) return;
     const key = `${lessonId}:${studentId}`;
-    const cur = grid.homework?.[key];
-    const cycle = [1, 2, 0];
-    const next = cur === undefined ? 1 : cycle[(cycle.indexOf(cur) + 1) % 3];
-
     const hw = { ...(grid.homework || {}), [key]: next };
-    // Uy vazifasi belgilansa bola darsda bo'lgan — davomat ham qo'yiladi
     const marks = { ...grid.marks };
+    // Uy vazifasi belgilandi — demak bola darsda bo'lgan
     if (marks[key] === undefined) marks[key] = true;
     setGrid({ ...grid, homework: hw, marks });
-    setSaving("hw" + key);
+    setSaving(key);
     try {
       await api.put(`/lessons/${lessonId}/attendance`, {
         marks: [
@@ -118,7 +264,7 @@ export function AttendanceTab({
         ],
       });
     } catch {
-      setGrid(grid);
+      load();
     } finally {
       setSaving(null);
     }
@@ -137,6 +283,7 @@ export function AttendanceTab({
   const present = Object.values(grid.marks).filter((v) => v === true).length;
   const marked = Object.keys(grid.marks).length;
   const heldCount = grid.lessons.filter((l) => l.held).length;
+  const box = grid.reschedule;
 
   return (
     <div>
@@ -162,31 +309,38 @@ export function AttendanceTab({
               <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">
                 Talabalar
               </th>
-              {grid.lessons.map((ls) => (
-                <th key={ls.id} className="px-2 py-2 font-medium min-w-[70px]">
-                  <div
-                    className={`text-xs whitespace-nowrap ${
-                      ls.held ? "text-slate-700" : "text-slate-400"
-                    }`}
-                    title={
-                      ls.held
-                        ? "Dars o'tilgan"
-                        : "Jadval bo'yicha reja — yoqlama qo'yilsa o'tilgan bo'ladi"
-                    }
+              {grid.lessons.map((ls) => {
+                const mv = box?.moved?.[ls.date];
+                return (
+                  <th
+                    key={ls.id}
+                    className="px-2 py-2 font-medium min-w-[76px] relative"
                   >
-                    {dayLabel(ls.date)}
-                  </div>
-                  {canEdit && (
                     <button
-                      onClick={() => markAllPresent(ls.id)}
-                      title="Hammasini 'keldi' qilish"
-                      className="text-[10px] text-slate-400 hover:text-brand-600"
+                      onClick={() => setMenu(menu === ls.id ? null : ls.id)}
+                      className={`text-xs whitespace-nowrap px-1.5 py-1 rounded-lg hover:bg-slate-200 transition ${
+                        ls.held ? "text-slate-700" : "text-slate-400"
+                      } ${mv ? "line-through" : ""}`}
+                      title="Menyu: dars ko'chirish"
                     >
-                      hammasi ✓
+                      {dayLabel(ls.date)}
                     </button>
-                  )}
-                </th>
-              ))}
+                    {menu === ls.id && box && (
+                      <DateMenu
+                        date={ls.date}
+                        held={ls.held}
+                        box={box}
+                        moved={mv}
+                        onMove={() => {
+                          setMenu(null);
+                          setMoving({ id: ls.id, date: ls.date });
+                        }}
+                        onClose={() => setMenu(null)}
+                      />
+                    )}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
@@ -201,50 +355,58 @@ export function AttendanceTab({
                   const v = grid.marks[key];
                   const h = grid.homework?.[key];
                   return (
-                    <td key={ls.id} className="px-2 py-2 text-center">
-                      <div className="inline-flex items-center gap-1">
-                        <button
-                          onClick={() => toggle(ls.id, s.id)}
-                          disabled={!canEdit || saving === key}
-                          className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
-                            v === true
-                              ? "bg-brand-500 text-white"
-                              : v === false
-                              ? "bg-red-500 text-white"
-                              : "bg-slate-100 hover:bg-slate-200"
-                          } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
-                        >
-                          {v === true ? (
-                            <Check size={15} />
-                          ) : v === false ? (
-                            <X size={15} />
-                          ) : null}
-                        </button>
-                        <button
-                          onClick={() => toggleHw(ls.id, s.id)}
-                          disabled={!canEdit || saving === "hw" + key}
-                          title={
-                            h === 1
-                              ? "Uy vazifasi: bajardi"
-                              : h === 2
-                              ? "Uy vazifasi: qisman"
-                              : h === 0
-                              ? "Uy vazifasi: bajarmadi"
-                              : "Uy vazifasi belgilanmagan — bosing"
-                          }
-                          className={`w-5 h-8 rounded text-[10px] font-bold inline-flex items-center justify-center transition ${
-                            h === 1
-                              ? "bg-emerald-100 text-emerald-700"
-                              : h === 2
-                              ? "bg-amber-100 text-amber-700"
-                              : h === 0
-                              ? "bg-red-100 text-red-700"
-                              : "bg-slate-50 text-slate-300 hover:bg-slate-200"
-                          } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
-                        >
-                          {h === 1 ? "✓" : h === 2 ? "±" : h === 0 ? "✗" : "·"}
-                        </button>
-                      </div>
+                    <td
+                      key={ls.id}
+                      className="px-2 py-2 text-center relative"
+                      onMouseEnter={() => canEdit && setOpen(key)}
+                      onMouseLeave={() =>
+                        setOpen((k) => (k === key ? null : k))
+                      }
+                    >
+                      <button
+                        onClick={() => setOpen(open === key ? null : key)}
+                        disabled={!canEdit || saving === key}
+                        className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition relative ${
+                          v === true
+                            ? "bg-brand-500 text-white"
+                            : v === false
+                            ? "bg-red-500 text-white"
+                            : "bg-slate-100 hover:bg-slate-200"
+                        } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
+                      >
+                        {v === true ? (
+                          <Check size={15} />
+                        ) : v === false ? (
+                          <X size={15} />
+                        ) : null}
+                        {h !== undefined && (
+                          <span
+                            title={
+                              h === 1
+                                ? "Uy vazifasi: bajardi"
+                                : h === 2
+                                ? "Uy vazifasi: qisman"
+                                : "Uy vazifasi: bajarmadi"
+                            }
+                            className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${
+                              h === 1
+                                ? "bg-emerald-500"
+                                : h === 2
+                                ? "bg-amber-500"
+                                : "bg-red-500"
+                            }`}
+                          />
+                        )}
+                      </button>
+                      {open === key && canEdit && (
+                        <MarkPicker
+                          present={v as boolean | undefined}
+                          homework={h}
+                          onPresent={(x) => setPresent(ls.id, s.id, x)}
+                          onHomework={(x) => setHomework(ls.id, s.id, x)}
+                          onClose={() => setOpen(null)}
+                        />
+                      )}
                     </td>
                   );
                 })}
@@ -255,12 +417,159 @@ export function AttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Katta katakni bosing: ✓ keldi, ✗ kelmadi. Yonidagi tor katak — uy
-        vazifasi: ✓ bajardi, ± qisman, ✗ bajarmadi. Kunlar guruhning dars
-        kunlaridan avtomat chiqadi — har birini alohida kiritish shart emas.
-        Kulrang sana — hali yoqlama qo'yilmagan reja; u pulga ham, ustoz ish
-        haqiga ham kirmaydi. Yoqlama qo'yilishi bilan dars "o'tilgan" bo'ladi.
+        Katak ustiga sichqonchani olib boring — <b>Bor</b> yoki{" "}
+        <b>Yo'q</b> ni tanlang. Shu yerda uy vazifasi ham belgilanadi
+        (burchakdagi nuqta): yashil bajardi, sariq qisman, qizil bajarmadi.
+        Har bir o'quvchi alohida belgilanadi — ommaviy belgilash yo'q,
+        chunki u yoqlamani rasmiyatchilikka aylantiradi. Sana ustiga
+        bosilsa dars ko'chirish menyusi chiqadi. Kulrang sana — hali
+        yoqlama qo'yilmagan reja; u pulga ham, ustoz ish haqiga ham
+        kirmaydi.
       </p>
+
+      {moving && box && (
+        <MoveLessonModal
+          groupId={groupId}
+          fromDate={moving.date}
+          box={box}
+          onClose={() => setMoving(null)}
+          onDone={() => {
+            setMoving(null);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+/** Dars ko'chirish oynasi. Bekor qilish tugmasi ATAYLAB yo'q. */
+function MoveLessonModal({
+  groupId,
+  fromDate,
+  box,
+  onClose,
+  onDone,
+}: {
+  groupId: number;
+  fromDate: string;
+  box: NonNullable<AttendanceGrid["reschedule"]>;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const [to, setTo] = useState("");
+  const [reason, setReason] = useState(box.reasons[0]?.key || "");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [ok, setOk] = useState("");
+
+  const min = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  const max = new Date(
+    new Date(fromDate).getTime() + box.max_shift_days * 86400000
+  )
+    .toISOString()
+    .slice(0, 10);
+
+  const save = async () => {
+    setBusy(true);
+    setErr("");
+    try {
+      const r = await api.post<{ message: string; applied: boolean }>(
+        `/groups/${groupId}/reschedule`,
+        { from_date: fromDate, to_date: to, reason, note: note || null }
+      );
+      setOk(r.message);
+      setTimeout(onDone, 1200);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl p-5 w-full max-w-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-900">Darsni ko'chirish</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-sm text-slate-500 mb-4">
+          {formatDate(fromDate)} darsi
+        </p>
+
+        {ok ? (
+          <p className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+            {ok}
+          </p>
+        ) : (
+          <>
+            <label className="block text-xs text-slate-500 mb-1">
+              Yangi sana
+            </label>
+            <input
+              type="date"
+              value={to}
+              min={min}
+              max={max}
+              onChange={(e) => setTo(e.target.value)}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+            />
+
+            <label className="block text-xs text-slate-500 mb-1">Sabab</label>
+            <select
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+            >
+              {box.reasons.map((r) => (
+                <option key={r.key} value={r.key}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              rows={2}
+              placeholder="Izoh (ixtiyoriy)"
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+            />
+
+            {box.quota && (
+              <p className="text-xs text-slate-500 mb-2">
+                Shu oyda {box.quota.used_month}/{box.quota.per_month}{" "}
+                ishlatilgan.
+                {box.quota.auto_ok
+                  ? " Bu so'rov avtomat tasdiqlanadi."
+                  : " Kvota tugagan — so'rov o'quv bo'limiga boradi."}
+              </p>
+            )}
+            {box.hint && (
+              <p className="text-xs text-slate-400 mb-3">{box.hint}</p>
+            )}
+
+            {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
+            <button
+              onClick={save}
+              disabled={busy || !to}
+              className="w-full bg-brand-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+            >
+              Ko'chirish
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

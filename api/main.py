@@ -50,6 +50,7 @@ PUBLIC_ID_PREFIX = {
     "staff_request": "REQ",
     "vacancy": "VAC",
     "book_order": "BOOK",
+    "exam_order": "EXM",
 }
 
 
@@ -403,6 +404,7 @@ PUBLIC_ID_PREFIX = {
     "staff_request": "REQ",
     "vacancy": "VAC",
     "book_order": "BOOK",
+    "exam_order": "EXM",
 }
 
 
@@ -2073,6 +2075,9 @@ def student_attendance(
         "date": ls.date.isoformat(),
         "present": bool(a.present),
         "grade": grades.get(ls.id),
+        "homework": a.homework,
+        "homework_label": roles.HOMEWORK_LABELS.get(a.homework),
+        "homework_tone": roles.HOMEWORK_TONE.get(a.homework),
     } for a, ls in att]
 
     present = sum(1 for r in rows if r["present"])
@@ -2084,6 +2089,7 @@ def student_attendance(
         "absent": len(rows) - present,
         "percent": round(present / len(rows) * 100, 1) if rows else 0,
         "avg_grade": round(sum(scored) / len(scored), 1) if scored else None,
+        "homework": _homework_stats(db, student_id, since=start),
     }
 
 
@@ -3752,8 +3758,22 @@ def list_students(
         query = query.filter(models.Student.group_id == group_id)
     if status_filter:
         query = query.filter(models.Student.status == status_filter)
+
+    # Ustoz faqat O'Z guruhlarining o'quvchilarini ko'radi va balans
+    # unga umuman ko'rsatilmaydi: bolaga qarzdorligi orqali emas,
+    # o'qishi orqali qaraydi. Pul masalasi — administrator ishi.
+    own_only = user.role in tuple(roles.OWN_GROUPS_ONLY)
+    if own_only:
+        t = _teacher_of_user(db, user)
+        gids = [g.id for g in _my_groups(db, t.id)] if t else []
+        query = query.filter(models.Student.group_id.in_(gids or [-1]))
+
     students = query.order_by(models.Student.full_name).all()
-    return [to_student_out(db, s) for s in students]
+    rows = [to_student_out(db, s) for s in students]
+    if own_only:
+        for r in rows:
+            r.balance = 0.0
+    return rows
 
 
 @app.get("/api/students/{student_id}", response_model=schemas.StudentDetail)
@@ -3764,6 +3784,15 @@ def get_student(
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
     out = schemas.StudentDetail.model_validate(s)
+    if user.role in tuple(roles.OWN_GROUPS_ONLY):
+        # Ustozga: o'z o'quvchisi bo'lsagina, pulsiz
+        if s.group_id:
+            _get_group_in_scope(db, s.group_id, user)
+        else:
+            raise HTTPException(403, "Bu o'quvchi sizga biriktirilmagan")
+        out.balance = 0.0
+        out.payments = []
+        return out
     out.balance = student_balance(db, s.id)
     out.payments = [schemas.PaymentOut.model_validate(p) for p in s.payments]
     return out
@@ -3961,15 +3990,91 @@ def delete_payment(
 
 
 # -------------------------------------------------------- Group access ----
+def _teacher_owns(db: Session, group: models.Group,
+                  user: models.User) -> bool:
+    """Ustoz shu guruhga tegishlimi: o'z guruhi yoki o'rniga o'tayotgan."""
+    t = _teacher_of_user(db, user)
+    if not t:
+        return False
+    if group.teacher_id == t.id:
+        return True
+    # O'rinbosarlik davrida boshqa ustozning guruhi ham ochiladi
+    return db.query(models.Substitution).filter(
+        models.Substitution.group_id == group.id,
+        models.Substitution.substitute_teacher_id == t.id,
+        models.Substitution.status.in_(["accepted", "done"])).first() is not None
+
+
+def _homework_stats(db: Session, student_id: int,
+                    since: date | None = None) -> dict:
+    """Bitta o'quvchining uy vazifasi holati.
+
+    Bitta joydan o'tadi — shuning uchun risk, ustoz ro'yxati, o'quvchi
+    kartasi va bolaning o'z kabineti bir xil raqamni ko'rsatadi."""
+    q = (db.query(models.Attendance, models.Lesson)
+         .join(models.Lesson,
+               models.Attendance.lesson_id == models.Lesson.id)
+         .filter(models.Attendance.student_id == student_id,
+                 models.Attendance.homework.isnot(None)))
+    if since:
+        q = q.filter(models.Lesson.date >= since)
+    rows = q.all()
+    done = sum(1 for a, _ in rows if a.homework == 1)
+    partial = sum(1 for a, _ in rows if a.homework == 2)
+    missed = sum(1 for a, _ in rows if a.homework == 0)
+    n = len(rows)
+    pct = round(done / n * 100, 1) if n else None
+    label, tone = roles.homework_band(
+        pct if n >= roles.HOMEWORK_MIN_CHECKED else None)
+    return {
+        "checked": n, "done": done, "partial": partial, "missed": missed,
+        "percent": pct,
+        "label": label, "tone": tone,
+        "enough": n >= roles.HOMEWORK_MIN_CHECKED,
+    }
+
+
+def _group_homework(db: Session, group_id: int,
+                    since: date | None = None) -> dict:
+    """Guruhning uy vazifasi foizi."""
+    q = (db.query(models.Attendance, models.Lesson)
+         .join(models.Lesson,
+               models.Attendance.lesson_id == models.Lesson.id)
+         .filter(models.Lesson.group_id == group_id,
+                 models.Attendance.homework.isnot(None)))
+    if since:
+        q = q.filter(models.Lesson.date >= since)
+    rows = q.all()
+    done = sum(1 for a, _ in rows if a.homework == 1)
+    n = len(rows)
+    pct = round(done / n * 100, 1) if n else None
+    label, tone = roles.homework_band(
+        pct if n >= roles.HOMEWORK_MIN_CHECKED else None)
+    return {"checked": n, "done": done, "percent": pct,
+            "label": label, "tone": tone}
+
+
 def _get_group_in_scope(db: Session, group_id: int, user: models.User) -> models.Group:
     """Fetch a group and 404/403 it the way every lesson/billing/payroll
-    endpoint below needs: not found, or outside the caller's branch."""
+    endpoint below needs: not found, or outside the caller's branch.
+
+    Ustoz uchun bundan ham tor: faqat O'Z guruhi. Aks holda ustoz
+    manzil qatoriga boshqa guruh raqamini yozib, hamkasbining guruhini
+    va o'quvchilarini ochib ko'rardi."""
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
     if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id and group.branch_id != user.branch_id:
             raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+    if user.role in tuple(roles.OWN_GROUPS_ONLY) and not _teacher_owns(
+            db, group, user):
+        if not _teacher_of_user(db, user):
+            raise HTTPException(
+                403, "Hisobingiz ustoz kartasiga bog'lanmagan. HR yoki "
+                     "asoschi Xodimlar bo'limidan hisobni ustozga "
+                     "biriktirishi kerak.")
+        raise HTTPException(403, "Bu guruh sizga biriktirilmagan")
     return group
 
 
@@ -6230,6 +6335,15 @@ def _student_risk(db: Session, s: models.Student, *, today: date,
     n_moves = moves_by_student.get(s.id, 0)
     if n_moves >= 2:
         add("group_hopping", f"{n_moves} marta guruh almashtirgan")
+
+    # AVTOMAT: uy vazifasi endi haqiqiy ma'lumot. Ilgari bu signal
+    # faqat qo'lda qo'yilardi va shuning uchun deyarli hech qachon
+    # qo'yilmasdi.
+    hw = _homework_stats(db, s.id, since=today - timedelta(days=60))
+    if hw["enough"] and hw["percent"] is not None \
+            and hw["percent"] < roles.HOMEWORK_RISK_PERCENT:
+        add("no_homework",
+            f"{hw['checked']} tadan {hw['done']} tasi ({hw['percent']}%)")
 
     trend = _score_trend(db, s.id)
     if trend is not None and trend <= -10:
@@ -13094,7 +13208,7 @@ def _staff_dates(db: Session, user: models.User, *,
                 "kind_label": roles.STAFF_DATE_LABELS[kind],
                 "tone": roles.STAFF_DATE_TONE[kind],
                 "date": nxt.isoformat(),
-                "date_label": roles.uz_date(nxt),
+                "date_label": roles.uz_date_full(nxt),
                 "days_left": left,
                 "today": left == 0,
                 "soon": left <= roles.STAFF_DATE_LEAD_DAYS,
@@ -14586,6 +14700,10 @@ def _student_gamification(db: Session, s: models.Student) -> dict:
         } for a, g in ach],
         "empty_hint": ("Hali XP yig'ilmagan. Birinchi XP darsga "
                        "qatnashish orqali olinadi."),
+        # Uy vazifasi bolaning o'ziga ham ko'rinsin — XP shundan
+        # keladi, demak u nimadan kelayotganini bilishi kerak
+        "homework": _homework_stats(db, s.id,
+                                    since=today - timedelta(days=90)),
     })
     return card
 
@@ -19492,13 +19610,16 @@ def my_groups(db: Session = Depends(get_db),
                            if g.start_date else None),
             "last_lesson": last.date.isoformat() if last else None,
             "next_lesson": nxt.date.isoformat() if nxt else None,
+            "homework": _group_homework(
+                db, g.id, since=today - timedelta(days=60)),
         })
     return {
         "rows": out,
         "total_groups": len(out),
         "total_students": sum(r["students"] for r in out),
-        "hint": ("Bu yerda faqat sizning guruhlaringiz. Boshqa "
-                 "ustozlarning guruhlari ko'rinmaydi."),
+        "hint": ("Guruh ustiga bosing — davomat, baholash va "
+                 "imtihonlar ochiladi. Boshqa ustozlarning guruhlari "
+                 "bu yerda ham, manzil qatoridan ham ochilmaydi."),
     }
 
 
@@ -19573,6 +19694,7 @@ def my_students(group_id: int | None = None, q: str | None = None,
         el = exams.get(s.id, [])
         g = gid_map.get(s.group_id)
         gm = gam.get(s.id)
+        hw = _homework_stats(db, s.id)
         rows.append({
             "id": s.id, "public_id": s.public_id, "full_name": s.full_name,
             "group_id": s.group_id, "group": g.name if g else None,
@@ -19591,6 +19713,13 @@ def my_students(group_id: int | None = None, q: str | None = None,
             "best_exam": max(el) if el else None,
             "xp": gm.total_xp if gm else 0,
             "level": gm.level if gm else 1,
+            # ---- Uy vazifasi ----
+            "homework_percent": hw["percent"],
+            "homework_checked": hw["checked"],
+            "homework_label": hw["label"],
+            "homework_tone": hw["tone"],
+            "homework_low": (hw["enough"] and hw["percent"] is not None
+                             and hw["percent"] < roles.HOMEWORK_RISK_PERCENT),
             # Davomat past bo'lsa ustoz ko'rsin
             "at_risk": pct is not None and pct < 70 and a["total"] >= 4,
         })
@@ -19599,6 +19728,8 @@ def my_students(group_id: int | None = None, q: str | None = None,
         "groups": [{"id": g.id, "name": g.name} for g in groups],
         "total": len(rows),
         "at_risk": sum(1 for r in rows if r["at_risk"]),
+        "homework_low": sum(1 for r in rows if r["homework_low"]),
+        "homework_threshold": roles.HOMEWORK_RISK_PERCENT,
         "hint": _my_students_hint(),
     }
 
@@ -20776,3 +20907,342 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         "message": ("Dars ko'chirildi." if applied else
                     "Kvotadan oshdi — so'rov o'quv bo'limiga yuborildi."),
     }
+
+
+# =====================================================================
+#  IMTIHON BUYURTMASI
+#
+#  Ustoz "imtihon kerak" deydi → so'rov filialdagi examinerlarga
+#  vazifa bo'lib boradi → examiner qabul qiladi → haqiqiy imtihon
+#  avtomat yaratiladi va ustozga kim qabul qilgani ko'rinadi.
+#
+#  Muhim: so'rov FILIALGA qarab yo'naltiriladi. Shirin filialining
+#  imtihoni Bekobod examineriga bormaydi.
+# =====================================================================
+def _exam_order_out(db: Session, o: models.ExamOrder) -> dict:
+    g = db.query(models.Group).get(o.group_id) if o.group_id else None
+    t = db.query(models.Teacher).get(o.teacher_id) if o.teacher_id else None
+    br = db.query(models.Branch).get(o.branch_id) if o.branch_id else None
+    who = db.query(models.User).get(o.accepted_by) if o.accepted_by else None
+    kind_label = roles.EXAM_KIND_LABELS.get(o.kind, o.kind)
+    return {
+        "id": o.id,
+        "public_id": o.public_id,
+        "group_id": o.group_id,
+        "group": g.name if g else None,
+        "level": g.level if g else None,
+        "teacher_id": o.teacher_id,
+        "teacher": t.full_name if t else None,
+        "branch_id": o.branch_id,
+        "branch": br.name if br else None,
+        "date": o.date.isoformat() if o.date else None,
+        "date_text": roles.uz_date_full(o.date),
+        "time": o.time,
+        "kind": o.kind,
+        "kind_label": kind_label,
+        "unit_no": o.unit_no,
+        "students_count": o.students_count or 0,
+        "note": o.note,
+        "status": o.status,
+        "status_label": roles.EXAM_ORDER_LABELS.get(o.status, o.status),
+        "status_tone": roles.EXAM_ORDER_TONE.get(o.status, "slate"),
+        "accepted_by": who.full_name if who else None,
+        "accepted_at": o.accepted_at.isoformat() if o.accepted_at else None,
+        "decision_note": o.decision_note,
+        "reject_reason": o.reject_reason,
+        "reject_reason_label": dict(
+            roles.EXAM_ORDER_REJECT_REASONS).get(o.reject_reason),
+        "exam_id": o.exam_id,
+        "created_at": o.created_at.isoformat() if o.created_at else None,
+        # Ustoz ham, examiner ham AYNAN shu matnni ko'radi
+        "message": roles.exam_order_message(
+            teacher=t.full_name if t else "—",
+            branch=br.name if br else "—",
+            date_text=roles.uz_date_full(o.date),
+            time_text=o.time or (g.lesson_time if g else None) or "—",
+            kind=(kind_label or "").upper(),
+            group=g.name if g else "—",
+            students=o.students_count or 0,
+            accepted_by=who.full_name if who else None,
+            status=o.status),
+    }
+
+
+def _active_count(db: Session, group_id: int) -> int:
+    return db.query(models.Student).filter(
+        models.Student.group_id == group_id,
+        models.Student.status == "active").count()
+
+
+def _exam_order_form(db: Session, user: models.User) -> dict:
+    return {
+        "kinds": [{"key": k, "label": roles.EXAM_KIND_LABELS.get(k, k)}
+                  for k in roles.EXAM_KINDS],
+        "unit_count": roles.UNIT_COUNT,
+        "min_notice_days": roles.EXAM_ORDER_MIN_NOTICE_DAYS,
+        "max_ahead_days": roles.EXAM_ORDER_MAX_AHEAD_DAYS,
+        "reject_reasons": [{"key": k, "label": l}
+                           for k, l in roles.EXAM_ORDER_REJECT_REASONS],
+        "statuses": [{"key": k, "label": l, "tone": t}
+                     for k, l, t in roles.EXAM_ORDER_STATUSES],
+    }
+
+
+@app.get("/api/me/exam-orders")
+def my_exam_orders(db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.EXAM_ORDER_CREATE))):
+    """Ustozning o'z buyurtmalari va yangi buyurtma uchun ma'lumot."""
+    t = _teacher_of_user(db, user)
+    q = db.query(models.ExamOrder)
+    if t:
+        q = q.filter(models.ExamOrder.teacher_id == t.id)
+        groups = _my_groups(db, t.id)
+    else:
+        # O'quv bo'limi / rahbariyat: filial bo'yicha
+        q = scope_to_branch(q, models.ExamOrder, user)
+        gq = scope_to_branch(db.query(models.Group), models.Group, user)
+        groups = gq.order_by(models.Group.name).all()
+
+    rows = q.order_by(models.ExamOrder.id.desc()).limit(100).all()
+    return {
+        "rows": [_exam_order_out(db, o) for o in rows],
+        "groups": [{"id": g.id, "name": g.name, "level": g.level,
+                    "time": g.lesson_time,
+                    "students": _active_count(db, g.id)} for g in groups],
+        **_exam_order_form(db, user),
+        "hint": ("Buyurtma yuborilgach filialingizdagi examinerlarga "
+                 "vazifa bo'lib boradi. Kim qabul qilgani shu yerda "
+                 "ko'rinadi."),
+    }
+
+
+@app.post("/api/me/exam-orders")
+def my_exam_order_add(payload: schemas.ExamOrderIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.EXAM_ORDER_CREATE))):
+    g = _get_group_in_scope(db, payload.group_id, user)
+    t = _teacher_of_user(db, user)
+
+    today = roles.local_today()
+    notice = (payload.date - today).days
+    if notice < roles.EXAM_ORDER_MIN_NOTICE_DAYS:
+        raise HTTPException(
+            400, f"Imtihon kamida {roles.EXAM_ORDER_MIN_NOTICE_DAYS} kun "
+                 f"oldin so'ralishi kerak — examinerning ham jadvali bor")
+    if notice > roles.EXAM_ORDER_MAX_AHEAD_DAYS:
+        raise HTTPException(
+            400, f"Ko'pi bilan {roles.EXAM_ORDER_MAX_AHEAD_DAYS} kun "
+                 f"oldin buyurtma qilinadi")
+    if payload.kind not in roles.EXAM_KINDS:
+        raise HTTPException(400, "Test turi noto'g'ri")
+    if payload.kind == "unit" and payload.unit_no and not (
+            1 <= payload.unit_no <= roles.UNIT_COUNT):
+        raise HTTPException(400, f"Unit 1 dan {roles.UNIT_COUNT} gacha")
+
+    dup = db.query(models.ExamOrder).filter(
+        models.ExamOrder.group_id == g.id,
+        models.ExamOrder.date == payload.date,
+        models.ExamOrder.status.in_(roles.EXAM_ORDER_OPEN)).first()
+    if dup:
+        raise HTTPException(
+            400, "Bu guruhga shu kunga buyurtma allaqachon yuborilgan")
+
+    o = models.ExamOrder(
+        group_id=g.id,
+        teacher_id=t.id if t else g.teacher_id,
+        branch_id=g.branch_id,
+        date=payload.date,
+        time=payload.time or g.lesson_time,
+        kind=payload.kind,
+        unit_no=payload.unit_no,
+        # AVTOMAT: ustoz o'quvchi sonini qo'lda yozmaydi
+        students_count=_active_count(db, g.id),
+        note=payload.note,
+        status="new",
+        requested_by=user.id)
+    db.add(o); db.commit(); db.refresh(o)
+    _ensure_public_id(db, "exam_order", o)
+    db.commit(); db.refresh(o)
+
+    out = _exam_order_out(db, o)
+    # So'rov FILIALDAGI examinerlarga boradi
+    _hr_task(db, title=f"Imtihon buyurtmasi {o.public_id}",
+             body=out["message"],
+             to_roles=roles.EXAM_ORDER_ACCEPT,
+             branch_id=g.branch_id,
+             days=max(1, (payload.date - today).days),
+             priority="high")
+    db.commit()
+
+    audit.log(db, user, entity="exam_order", action="create",
+              entity_id=o.id, entity_label=g.name,
+              branch_id=g.branch_id,
+              new_value=f"{roles.uz_date_full(o.date)} {o.time or ''}".strip(),
+              commit=True)
+    return out
+
+
+@app.post("/api/me/exam-orders/{oid}/cancel")
+def my_exam_order_cancel(oid: int, payload: schemas.ExamOrderDecision,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.EXAM_ORDER_CREATE))):
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    t = _teacher_of_user(db, user)
+    if t and o.teacher_id != t.id:
+        raise HTTPException(403, "Bu buyurtma sizniki emas")
+    if o.status not in roles.EXAM_ORDER_OPEN:
+        raise HTTPException(400, "Bu buyurtmani endi bekor qilib bo'lmaydi")
+    o.status = "cancelled"
+    o.decision_note = payload.note
+    db.commit()
+    audit.log(db, user, entity="exam_order", action="cancel",
+              entity_id=o.id, note=payload.note, commit=True)
+    return _exam_order_out(db, o)
+
+
+@app.get("/api/exam-orders")
+def exam_orders_queue(status: str | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.EXAM_ORDER_ACCEPT))):
+    """Examiner navbati — FAQAT o'z filialidagi so'rovlar.
+
+    Examiner boshlig'i va asoschi hammasini ko'radi."""
+    q = db.query(models.ExamOrder)
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.ExamOrder.branch_id == user.branch_id)
+    if status:
+        q = q.filter(models.ExamOrder.status == status)
+    rows = q.order_by(models.ExamOrder.date, models.ExamOrder.id).limit(
+        200).all()
+    out = [_exam_order_out(db, o) for o in rows]
+    today = roles.local_today()
+    return {
+        "rows": out,
+        "new": sum(1 for r in out if r["status"] == "new"),
+        "accepted": sum(1 for r in out if r["status"] == "accepted"),
+        # Bugun va ertaga bo'ladigan, hali qabul qilinmaganlar
+        "urgent": [r for r in out if r["status"] == "new" and r["date"]
+                   and r["date"] <= (today + timedelta(days=1)).isoformat()],
+        **_exam_order_form(db, user),
+        "hint": ("Qabul qilinganda imtihon avtomat yaratiladi va "
+                 "ustozga sizning ismingiz ko'rinadi."),
+    }
+
+
+@app.post("/api/exam-orders/{oid}/accept")
+def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.EXAM_ORDER_ACCEPT))):
+    """Examiner buyurtmani o'ziga oladi va imtihon yaratiladi."""
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and o.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
+    if o.status == "accepted":
+        who = db.query(models.User).get(o.accepted_by)
+        raise HTTPException(
+            400, f"Buyurtmani allaqachon "
+                 f"{who.full_name if who else 'boshqa examiner'} qabul qilgan")
+    if o.status != "new":
+        raise HTTPException(400, "Bu buyurtma yopilgan")
+
+    g = db.query(models.Group).get(o.group_id)
+    o.status = "accepted"
+    o.accepted_by = user.id
+    o.accepted_at = datetime.utcnow()
+    o.decision_note = payload.note
+
+    # AVTOMAT: qabul qilinishi bilan imtihon tayyor bo'ladi —
+    # examiner alohida "imtihon yarat" tugmasini bosmaydi
+    ex = models.Exam(
+        group_id=o.group_id, kind=o.kind, unit_no=o.unit_no,
+        title=roles.exam_title(o.kind, o.unit_no),
+        date=o.date, status="approved",
+        approved_by=user.full_name, approved_at=roles.local_today(),
+        note=f"Buyurtma {o.public_id}",
+        created_by=user.full_name)
+    db.add(ex); db.flush()
+    o.exam_id = ex.id
+    db.commit(); db.refresh(o)
+
+    # Ustozga xabar — kim qabul qilgani ko'rinsin
+    out = _exam_order_out(db, o)
+    if o.requested_by:
+        _hr_task_for(db, o.requested_by,
+                     title=f"Imtihon tasdiqlandi {o.public_id}",
+                     body=out["message"],
+                     branch_id=o.branch_id,
+                     days=max(1, (o.date - roles.local_today()).days))
+        db.commit()
+
+    audit.log(db, user, entity="exam_order", action="accept",
+              entity_id=o.id, entity_label=g.name if g else None,
+              branch_id=o.branch_id, new_value=user.full_name,
+              note=payload.note, commit=True)
+    return out
+
+
+@app.post("/api/exam-orders/{oid}/reject")
+def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.EXAM_ORDER_ACCEPT))):
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and o.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
+    if o.status not in ("new", "accepted"):
+        raise HTTPException(400, "Bu buyurtma yopilgan")
+    # Rad etish sababsiz bo'lmaydi: ustoz nima qilishini bilishi kerak
+    if roles.EXAM_ORDER_REJECT_NEEDS_NOTE and not (payload.note
+                                                   or payload.reason):
+        raise HTTPException(400, "Rad etish sababini yozing")
+
+    o.status = "rejected"
+    o.reject_reason = payload.reason
+    o.decision_note = payload.note
+    o.accepted_by = user.id
+    o.accepted_at = datetime.utcnow()
+    db.commit(); db.refresh(o)
+
+    out = _exam_order_out(db, o)
+    if o.requested_by:
+        why = out["reject_reason_label"] or payload.note or "sabab ko'rsatilmagan"
+        _hr_task_for(db, o.requested_by,
+                     title=f"Imtihon buyurtmasi rad etildi {o.public_id}",
+                     body=out["message"] + f"\n\nSabab: {why}"
+                          + (f"\nIzoh: {payload.note}" if payload.note else ""),
+                     branch_id=o.branch_id, days=1)
+        db.commit()
+
+    audit.log(db, user, entity="exam_order", action="reject",
+              entity_id=o.id, branch_id=o.branch_id,
+              new_value=payload.reason, note=payload.note, commit=True)
+    return out
+
+
+@app.post("/api/exam-orders/{oid}/done")
+def exam_order_done(oid: int, payload: schemas.ExamOrderDecision,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.EXAM_ORDER_ACCEPT))):
+    """Imtihon o'tkazildi."""
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    if o.status != "accepted":
+        raise HTTPException(400, "Avval buyurtma qabul qilinishi kerak")
+    o.status = "done"
+    if payload.note:
+        o.decision_note = payload.note
+    ex = db.query(models.Exam).get(o.exam_id) if o.exam_id else None
+    if ex and ex.status == "approved":
+        ex.status = "done"
+    db.commit()
+    audit.log(db, user, entity="exam_order", action="done",
+              entity_id=o.id, branch_id=o.branch_id, commit=True)
+    return _exam_order_out(db, o)

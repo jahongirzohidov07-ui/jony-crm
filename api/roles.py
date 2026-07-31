@@ -4405,3 +4405,16 @@ def plan_month_year(start_year: int, month: int) -> int:
 
 def plan_sections_for(role: str):
     return [s for s, rs in PLAN_SECTION_ROLES.items() if role in rs]
+
+
+# --------------------------------------------- Zararsizlik nuqtasi ----
+# Xarajat guruhi tasnifi:
+#   o'zgarmas  — markaz umuman ishlamasa ham to'lanadi
+#   o'zgaruvchan — o'quvchi soniga qarab o'sadi (+ ustozlar ish haqi,
+#                  u har doim o'zgaruvchan: dars bo'lmasa to'lanmaydi)
+EXPENSE_FIXED_GROUPS = ["rent", "communal", "admin_salary", "tax"]
+
+
+def expense_is_fixed(category: str) -> bool:
+    return EXPENSE_CATEGORY_GROUP.get(category, "other") in \
+        EXPENSE_FIXED_GROUPS

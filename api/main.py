@@ -23352,3 +23352,372 @@ def examiner_salary_list(year: int | None = None, month: int | None = None,
         "min": roles.EXAMINER_PAY_MIN, "max": roles.EXAMINER_PAY_MAX,
         "can_penalize": user.role in tuple(roles.EXAMINER_PENALTY_SET),
     }
+
+
+# ------------------------------------------------- Yillik Reja / Fakt ----
+def _work_days(start: date, end: date) -> int:
+    """[start, end) oralig'idagi ish kunlari (yakshanba dam)."""
+    n, d = 0, start
+    while d < end:
+        if d.weekday() != 6:
+            n += 1
+        d += timedelta(days=1)
+    return n
+
+
+def _plan_fakt(db: Session, metric: str, start: date, end: date):
+    """Ko'rsatkich fakti [start, end) oralig'ida — tirik ma'lumotdan."""
+    if metric == "leads":
+        d0, d1 = _utc_window(start, end)
+        return db.query(models.Lead).filter(
+            models.Lead.created_at >= d0,
+            models.Lead.created_at < d1).count()
+    if metric == "visits":
+        d0, d1 = _utc_window(start, end)
+        return db.query(models.Lead).filter(
+            models.Lead.created_at >= d0, models.Lead.created_at < d1,
+            models.Lead.stage.in_(("trial_attended", "converted"))).count()
+    if metric in ("new_payments", "old_payments"):
+        d0, d1 = _utc_window(start, end)
+        pays = db.query(models.Payment).filter(
+            models.Payment.kind == "payment", models.Payment.amount > 0,
+            models.Payment.created_at >= d0,
+            models.Payment.created_at < d1).all()
+        if not pays:
+            return 0
+        sids = {p.student_id for p in pays}
+        firsts = dict(
+            db.query(models.Payment.student_id,
+                     func.min(models.Payment.created_at))
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.amount > 0,
+                    models.Payment.student_id.in_(sids))
+            .group_by(models.Payment.student_id).all())
+        new_ids = {sid for sid, first in firsts.items() if first >= d0}
+        # Yangi = birinchi to'lovi shu oraliqda; eski = qolgan to'lovlar
+        if metric == "new_payments":
+            return len(new_ids)
+        return len([p for p in pays if p.student_id not in new_ids])
+    if metric == "students":
+        today = roles.local_today()
+        if start <= today < end or (start.year, start.month) == (
+                today.year, today.month):
+            return db.query(models.Student).filter(
+                models.Student.status == "active").count()
+        m0 = date(start.year, start.month, 1)
+        m1 = date(m0.year + 1, 1, 1) if m0.month == 12 else \
+            date(m0.year, m0.month + 1, 1)
+        return (db.query(models.Attendance.student_id)
+                .join(models.Lesson,
+                      models.Lesson.id == models.Attendance.lesson_id)
+                .filter(models.Lesson.date >= m0, models.Lesson.date < m1)
+                .distinct().count())
+    if metric == "revenue":
+        d0, d1 = _utc_window(start, end)
+        return round(db.query(func.coalesce(
+            func.sum(models.Payment.amount), 0)).filter(
+            models.Payment.kind == "payment", models.Payment.amount > 0,
+            models.Payment.created_at >= d0,
+            models.Payment.created_at < d1).scalar() or 0, 0)
+    if metric == "expenses":
+        return round(db.query(func.coalesce(
+            func.sum(models.Expense.amount), 0)).filter(
+            models.Expense.date >= start,
+            models.Expense.date < end).scalar() or 0, 0)
+    if metric == "profit":
+        rev = _plan_fakt(db, "revenue", start, end)
+        exp = _plan_fakt(db, "expenses", start, end)
+        return round((rev or 0) - (exp or 0), 0)
+    return None   # online_visits / online_payments — qo'lda ham emas, hozircha yo'q
+
+
+def _plan_windows(year: int, granularity: str, month: int | None):
+    """Davr ustunlari: (label, start, end, oy_kaliti)."""
+    wins = []
+    if granularity == "month":
+        for m in roles.PLAN_MONTHS:
+            y = roles.plan_month_year(year, m)
+            s = date(y, m, 1)
+            e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+            wins.append((roles.UZ_MONTHS[m - 1], s, e, m))
+    elif granularity == "week":
+        y0 = date(year, 9, 1)
+        y1 = date(year + 1, 9, 1)
+        s = y0
+        i = 1
+        while s < y1:
+            e = min(s + timedelta(days=7 - s.weekday() if i == 1 else 7), y1)
+            wins.append((f"Hafta {i}", s, e, s.month))
+            s = e
+            i += 1
+    else:  # day — bitta oy ichida
+        m = month or roles.PLAN_MONTHS[0]
+        y = roles.plan_month_year(year, m)
+        s0 = date(y, m, 1)
+        e0 = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+        d = s0
+        while d < e0:
+            wins.append((f"{d.day:02d}/{d.month:02d}", d,
+                         d + timedelta(days=1), m))
+            d += timedelta(days=1)
+    return wins
+
+
+def _plan_distribute(kind: str, plans: dict, year: int, win) -> float | None:
+    """Oylik rejadan davr rejasini chiqarish.
+
+    flow/money — oy rejasi ish kunlariga teng bo'linadi;
+    stock — o'tgan oy darajasidan shu oy maqsadigacha tekis o'sadi."""
+    label, s, e, m = win
+    if plans.get(m) is None:
+        return None
+    mv = plans[m]
+    y = roles.plan_month_year(year, m)
+    m0 = date(y, m, 1)
+    m1 = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+    if s <= m0 and e >= m1:      # butun oy
+        return mv
+    if kind == "stock":
+        pm = 8 if m == 9 else (m - 1 if m != 1 else 12)
+        prev = plans.get(pm, mv)
+        total = (m1 - m0).days
+        done = min((e - m0).days, total)
+        return round(prev + (mv - prev) * done / total, 1)
+    wd_total = _work_days(m0, m1) or 1
+    wd = _work_days(max(s, m0), min(e, m1))
+    return round(mv * wd / wd_total, 1)
+
+
+@app.get("/api/plan")
+def get_plan(year: int | None = None, granularity: str = "month",
+             month: int | None = None,
+             db: Session = Depends(get_db),
+             user=Depends(require_role(*roles.PLAN_VIEW))):
+    """Reja va fakt — rahbarning bosh jadvali. Har rol o'z bo'limini
+    ko'radi, asoschi hammasini."""
+    today = roles.local_today()
+    year = year or (today.year if today.month >= 9 else today.year - 1)
+    if granularity not in ("month", "week", "day"):
+        granularity = "month"
+    secs = (list(roles.PLAN_SECTION_LABELS)
+            if user.role == roles.FOUNDER
+            else roles.plan_sections_for(user.role))
+    wins = _plan_windows(year, granularity, month)
+    targets = db.query(models.PlanTarget).filter(
+        models.PlanTarget.year == year).all()
+    plan_map = {}
+    for t in targets:
+        plan_map.setdefault(t.metric, {})[t.month] = t.value
+    rows = []
+    for key, label, sec, kind, auto in roles.PLAN_METRICS:
+        if sec not in secs:
+            continue
+        plans = plan_map.get(key, {})
+        cells = []
+        for w in wins:
+            wl, s, e, m = w
+            fakt = None
+            if auto and s <= today:
+                fakt = _plan_fakt(db, key, s, min(e, today + timedelta(
+                    days=1)) if granularity == "day" else e)
+            cells.append({
+                "label": wl,
+                "plan": _plan_distribute(kind, plans, year, w),
+                "fakt": fakt,
+                "future": s > today,
+            })
+        p_vals = [c["plan"] for c in cells if c["plan"] is not None]
+        f_vals = [c["fakt"] for c in cells if c["fakt"] is not None]
+        if kind == "stock":
+            sum_plan = p_vals[-1] if p_vals else None
+            sum_fakt = f_vals[-1] if f_vals else None
+        else:
+            sum_plan = round(sum(p_vals), 0) if p_vals else None
+            sum_fakt = round(sum(f_vals), 0) if f_vals else None
+        rows.append({"metric": key, "label": label, "section": sec,
+                     "kind": kind, "auto": auto, "cells": cells,
+                     "sum_plan": sum_plan, "sum_fakt": sum_fakt})
+    return {
+        "year": year, "year_label": roles.plan_year_label(year),
+        "granularity": granularity, "month": month,
+        "months": roles.PLAN_MONTHS,
+        "sections": {s: roles.PLAN_SECTION_LABELS[s] for s in secs},
+        "columns": [w[0] for w in wins],
+        "sundays": [i for i, w in enumerate(wins)
+                    if granularity == "day" and w[1].weekday() == 6],
+        "rows": rows,
+        "can_edit": user.role in tuple(roles.PLAN_EDIT),
+        "plan_raw": plan_map,
+        "hint": ("Reja yil boshida oy kesimida tuziladi; hafta va kun "
+                 "rejasi oydan avtomat taqsimlanadi (yakshanba dam). "
+                 "Fakt platformadan o'zi to'ladi."),
+    }
+
+
+@app.get("/api/plan/suggest")
+def plan_suggest(year: int, growth: int = roles.PLAN_DEFAULT_GROWTH,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.PLAN_EDIT))):
+    """O'tgan yil fakti + o'sish foizi — yangi reja uchun taklif."""
+    growth = max(0, min(100, growth))
+    out = {}
+    for key, label, sec, kind, auto in roles.PLAN_METRICS:
+        if not auto:
+            out[key] = {}
+            continue
+        vals = {}
+        for m in roles.PLAN_MONTHS:
+            y = roles.plan_month_year(year - 1, m)
+            s = date(y, m, 1)
+            e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+            f = _plan_fakt(db, key, s, e)
+            if f:
+                vals[m] = round(f * (1 + growth / 100),
+                                -3 if kind == "money" else 0)
+        out[key] = vals
+    return {"year": year, "growth": growth, "suggest": out}
+
+
+@app.put("/api/plan/{year}")
+def save_plan(year: int, payload: schemas.PlanSaveIn,
+              db: Session = Depends(get_db),
+              user=Depends(require_role(*roles.PLAN_EDIT))):
+    """Yillik rejani saqlash (bor oylar ustidan yoziladi)."""
+    n = 0
+    for it in payload.items:
+        if it.metric not in roles.PLAN_METRIC_KEYS or not (
+                1 <= it.month <= 12):
+            raise HTTPException(400, f"Noto'g'ri ko'rsatkich: {it.metric}")
+        row = db.query(models.PlanTarget).filter_by(
+            year=year, metric=it.metric, month=it.month).first()
+        if row:
+            row.value = it.value
+        else:
+            db.add(models.PlanTarget(year=year, metric=it.metric,
+                                     month=it.month, value=it.value,
+                                     created_by=user.full_name))
+        n += 1
+    db.commit()
+    audit.log(db, user, entity="plan", action="save", entity_id=year,
+              entity_label=roles.plan_year_label(year),
+              new_value=f"{n} ta katak", commit=True)
+    return {"ok": True, "saved": n}
+
+
+# --------------------------------------------- Ustoz umumiy kartasi ----
+@app.get("/api/teachers/{teacher_id}/overview")
+def teacher_overview(teacher_id: int,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(
+                         roles.FOUNDER, roles.ACADEMIC_HEAD))):
+    """Asoschi va o'quv bo'limi rahbari ko'radigan umumiy karta:
+    oylik va o'sishi, o'quvchilar soni, shartnoma/sertifikat muddati,
+    tug'ilgan kun, guruhlar to'lganligi, dars sifati, daraja."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    today = roles.local_today()
+
+    # Oxirgi 6 oy: oylik va o'quvchilar soni
+    months = []
+    for i in range(5, -1, -1):
+        y, m = today.year, today.month - i
+        while m <= 0:
+            y, m = y - 1, m + 12
+        s = date(y, m, 1)
+        e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+        earned = _teacher_earned(db, t.id, since=s,
+                                 until=min(e, today + timedelta(days=1)))
+        cnt = (db.query(models.Attendance.student_id)
+               .join(models.Lesson,
+                     models.Lesson.id == models.Attendance.lesson_id)
+               .filter(models.Lesson.teacher_id == t.id,
+                       models.Lesson.date >= s, models.Lesson.date < e)
+               .distinct().count())
+        months.append({"label": f"{roles.UZ_MONTHS[m - 1][:3]} {y}",
+                       "salary": round(earned.get("amount", 0), 0),
+                       "students": cnt})
+
+    # Guruhlar va to'lganlik
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+    groups = db.query(models.Group).filter(
+        models.Group.teacher_id == t.id).all()
+    g_rows, total_cap, total_st = [], 0, 0
+    for g in groups:
+        cap = _group_capacity(g, rooms)
+        st = db.query(models.Student).filter(
+            models.Student.group_id == g.id,
+            models.Student.status == "active").count()
+        g_rows.append({"id": g.id, "name": g.name, "students": st,
+                       "capacity": cap,
+                       "free": (cap - st) if cap else None,
+                       "fill": round(st / cap * 100, 0) if cap else None})
+        total_st += st
+        if cap:
+            total_cap += cap
+
+    # Hujjatlar: shartnoma va sertifikat muddati
+    def _doc_left(kind):
+        if not t.user_id:
+            return None
+        d = (db.query(models.EmployeeDocument)
+             .filter(models.EmployeeDocument.user_id == t.user_id,
+                     models.EmployeeDocument.kind == kind,
+                     models.EmployeeDocument.expires_on.isnot(None))
+             .order_by(models.EmployeeDocument.expires_on.desc()).first())
+        if not d:
+            return None
+        return {"title": d.title or roles.DOCUMENT_LABELS.get(kind, kind),
+                "expires_on": d.expires_on.isoformat(),
+                "days_left": (d.expires_on - today).days}
+
+    # Tug'ilgan kun
+    bday = None
+    if t.birth_date:
+        try:
+            this = t.birth_date.replace(year=today.year)
+        except ValueError:
+            this = date(today.year, 3, 1)   # 29-fevral
+        passed = this < today
+        bday = {"date": t.birth_date.isoformat(),
+                "this_year": this.isoformat(),
+                "passed": passed,
+                "days": (today - this).days if passed
+                else (this - today).days}
+
+    # Dars sifati — kuzatuvlar o'rtachasi
+    obs = db.query(models.LessonObservation).filter(
+        models.LessonObservation.teacher_id == t.id,
+        models.LessonObservation.max_total > 0).all()
+    quality = round(sum(o.total / o.max_total for o in obs)
+                    / len(obs) * 100, 1) if obs else None
+
+    grade_label = None
+    if t.grade:
+        try:
+            grade_label = roles.GRADE_LABELS.get(t.grade, t.grade)
+        except AttributeError:
+            grade_label = t.grade
+
+    return {
+        "id": t.id, "name": t.full_name,
+        "months": months,
+        "salary_now": months[-1]["salary"] if months else 0,
+        "salary_growth": (months[-1]["salary"] - months[-2]["salary"])
+        if len(months) >= 2 else 0,
+        "students_now": total_st,
+        "groups_count": len(groups),
+        "groups": g_rows,
+        "total_capacity": total_cap or None,
+        "total_free": (total_cap - total_st) if total_cap else None,
+        "fill_percent": round(total_st / total_cap * 100, 0)
+        if total_cap else None,
+        "contract": _doc_left("contract"),
+        "certificate": _doc_left("certificate") or (
+            {"title": t.cert, "expires_on": None, "days_left": None}
+            if t.cert else None),
+        "birthday": bday,
+        "quality_percent": quality,
+        "grade": t.grade, "grade_label": grade_label,
+        "grade_since": t.grade_since.isoformat() if t.grade_since else None,
+    }

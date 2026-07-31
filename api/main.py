@@ -22917,3 +22917,230 @@ def hr_overview(db: Session = Depends(get_db),
         "hint": ("Bitta ekran: yollash, hujjatlar, ta'til, performance "
                  "va ketish signallari. Qizil — bugun qilinadigan ish."),
     }
+
+
+# =====================================================================
+#  SUPPORT TEACHER OYLIGI
+#
+#  Support teacher har darsini o'zi kiritadi (guruh, boshlanish va
+#  tugash vaqti, o'quvchilar soni). Oylik asoschi formulasi bilan
+#  AVTOMAT chiqadi:
+#     (soat x 0.30 + o'quvchi x 0.20 + test koef x 0.50) x 10 000,
+#  400 000 dan kam bo'lmaydi, 1 500 000 dan oshmaydi.
+# =====================================================================
+def _support_session_out(db: Session, r: models.SupportSession) -> dict:
+    g = db.query(models.Group).get(r.group_id) if r.group_id else None
+    return {
+        "id": r.id, "teacher_id": r.teacher_id,
+        "group_id": r.group_id, "group": g.name if g else None,
+        "date": r.date.isoformat() if r.date else None,
+        "start_time": r.start_time, "end_time": r.end_time,
+        "minutes": r.minutes,
+        "hours": round((r.minutes or 0) / 60, 2),
+        "students_count": r.students_count,
+        "note": r.note,
+    }
+
+
+def _support_group_percent(db: Session, group_ids: list,
+                           start: date, end: date):
+    """Shu oyda o'tilgan guruhlarning o'rtacha test foizi.
+
+    Har bir natija alohida sanaladi (guruh o'rtachasining o'rtachasi
+    emas) — ko'p o'quvchili guruh ko'proq vazn oladi."""
+    if not group_ids:
+        return None
+    rows = (db.query(models.ExamResult)
+            .join(models.Exam,
+                  models.ExamResult.exam_id == models.Exam.id)
+            .filter(models.Exam.group_id.in_(group_ids),
+                    models.Exam.date >= start,
+                    models.Exam.date <= end,
+                    models.ExamResult.percent.isnot(None),
+                    models.ExamResult.absent == 0).all())
+    vals = [r.percent for r in rows if r.percent is not None]
+    return round(sum(vals) / len(vals), 1) if vals else None
+
+
+def _support_month(db: Session, teacher_id: int, year: int,
+                   month: int) -> dict:
+    start, end = billing.month_bounds(year, month)
+    rows = (db.query(models.SupportSession)
+            .filter(models.SupportSession.teacher_id == teacher_id,
+                    models.SupportSession.date >= start,
+                    models.SupportSession.date <= end)
+            .order_by(models.SupportSession.date,
+                      models.SupportSession.id).all())
+    hours = round(sum(r.minutes or 0 for r in rows) / 60, 2)
+    students = sum(r.students_count or 0 for r in rows)
+    gids = sorted({r.group_id for r in rows if r.group_id})
+    pct = _support_group_percent(db, gids, start, end)
+    calc = roles.support_salary(hours, students, pct)
+    gnames = {g.id: g.name for g in db.query(models.Group)
+              .filter(models.Group.id.in_(gids or [-1])).all()}
+    return {
+        "period": f"{year:04d}-{month:02d}",
+        "sessions": [_support_session_out(db, r) for r in rows],
+        "session_count": len(rows),
+        "groups": [{"id": i, "name": gnames.get(i)} for i in gids],
+        **calc,
+        "formula": (f"({calc['hours']} soat x "
+                    f"{roles.SUPPORT_HOURS_W} + {calc['students']} "
+                    f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
+                    f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}) "
+                    f"x {roles.SUPPORT_PAY_UNIT:,}".replace(",", " ")),
+        "min": roles.SUPPORT_PAY_MIN,
+        "max": roles.SUPPORT_PAY_MAX,
+    }
+
+
+@app.get("/api/me/support-sessions")
+def my_support_sessions(year: int | None = None, month: int | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(
+                            roles.SUPPORT_TEACHER, *roles.FULL_ACCESS,
+                            roles.ACADEMIC_HEAD))):
+    """Support teacherning o'z seanslari va shu oy oyligi hisobi."""
+    t = _my_teacher_or_404(db, user) if user.role == roles.SUPPORT_TEACHER \
+        else _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(404, "Ustoz kartasi topilmadi")
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    out = _support_month(db, t.id, y, m)
+    gq = scope_to_branch(db.query(models.Group), models.Group, user)
+    out["all_groups"] = [{"id": g.id, "name": g.name}
+                         for g in gq.order_by(models.Group.name).all()]
+    out["max_hours"] = roles.SUPPORT_SESSION_MAX_HOURS
+    out["max_students"] = roles.SUPPORT_SESSION_MAX_STUDENTS
+    out["hint"] = (
+        "Har darsni o'sha kuni kiriting: guruh, boshlanish-tugash "
+        "vaqti, o'quvchilar soni. Oylik avtomat hisoblanadi: "
+        "(soat x 0.30 + o'quvchi x 0.20 + test koeffitsiyenti x 0.50) "
+        "x 10 000. Kamida 400 000, ko'pi bilan 1 500 000.")
+    return out
+
+
+@app.post("/api/me/support-sessions")
+def my_support_session_add(payload: schemas.SupportSessionIn,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               roles.SUPPORT_TEACHER,
+                               *roles.PAST_ATTENDANCE))):
+    """Seans kiritish. Sana qoidalari yoqlamadagidek: kelajakka hech
+    kim, o'tgan kunga faqat asoschi va o'quv bo'limi rahbari."""
+    t = _my_teacher_or_404(db, user) if user.role == roles.SUPPORT_TEACHER \
+        else _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(404, "Ustoz kartasi topilmadi")
+
+    g = db.query(models.Group).get(payload.group_id)
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+
+    today = roles.local_today()
+    d = payload.date or today
+    if d > today:
+        raise HTTPException(400, "Hali kelmagan kunga seans kiritilmaydi")
+    if d < today and user.role not in tuple(roles.PAST_ATTENDANCE):
+        raise HTTPException(
+            403, "O'tib ketgan kunga faqat asoschi va o'quv bo'limi "
+                 "rahbari kirita oladi — darsni o'sha kuni kiriting")
+
+    s_min = roles.hhmm_minutes(payload.start_time)
+    e_min = roles.hhmm_minutes(payload.end_time)
+    if s_min is None or e_min is None:
+        raise HTTPException(400, "Vaqt SS:DD ko'rinishida bo'lsin, "
+                                 "masalan 14:30")
+    if e_min <= s_min:
+        raise HTTPException(400, "Tugash vaqti boshlanishdan keyin "
+                                 "bo'lishi kerak")
+    minutes = e_min - s_min
+    if minutes > roles.SUPPORT_SESSION_MAX_HOURS * 60:
+        raise HTTPException(
+            400, f"Bitta seans {roles.SUPPORT_SESSION_MAX_HOURS} "
+                 f"soatdan oshmaydi — xato kiritmadingizmi?")
+    if not (1 <= payload.students_count
+            <= roles.SUPPORT_SESSION_MAX_STUDENTS):
+        raise HTTPException(
+            400, f"O'quvchilar soni 1 dan "
+                 f"{roles.SUPPORT_SESSION_MAX_STUDENTS} gacha")
+
+    # Bir kunda bitta guruhga ikki marta kiritilmaydi — oylik
+    # ikkilanmasin
+    dup = db.query(models.SupportSession).filter(
+        models.SupportSession.teacher_id == t.id,
+        models.SupportSession.group_id == g.id,
+        models.SupportSession.date == d).first()
+    if dup:
+        raise HTTPException(400, "Bu guruh uchun bugun seans allaqachon "
+                                 "kiritilgan")
+
+    r = models.SupportSession(
+        teacher_id=t.id, group_id=g.id, branch_id=g.branch_id,
+        date=d, start_time=payload.start_time,
+        end_time=payload.end_time, minutes=minutes,
+        students_count=payload.students_count, note=payload.note,
+        created_by=user.id)
+    db.add(r); db.commit(); db.refresh(r)
+    audit.log(db, user, entity="support_session", action="create",
+              entity_id=r.id, entity_label=g.name,
+              branch_id=g.branch_id,
+              new_value=f"{payload.start_time}-{payload.end_time} · "
+                        f"{payload.students_count} o'quvchi",
+              commit=True)
+    return _support_session_out(db, r)
+
+
+@app.delete("/api/me/support-sessions/{sid}")
+def my_support_session_delete(sid: int, db: Session = Depends(get_db),
+                              user=Depends(require_role(
+                                  roles.SUPPORT_TEACHER,
+                                  *roles.PAST_ATTENDANCE))):
+    r = db.query(models.SupportSession).get(sid)
+    if not r:
+        raise HTTPException(404, "Seans topilmadi")
+    t = _teacher_of_user(db, user)
+    if user.role == roles.SUPPORT_TEACHER and (not t or r.teacher_id != t.id):
+        raise HTTPException(403, "Bu seans sizniki emas")
+    # O'z seansini faqat o'sha kuni o'chiradi — o'tgan kun pul hujjati
+    if user.role == roles.SUPPORT_TEACHER and r.date != roles.local_today():
+        raise HTTPException(403, "O'tgan kunning seansini faqat asoschi "
+                                 "yoki o'quv bo'limi rahbari o'chiradi")
+    db.delete(r); db.commit()
+    audit.log(db, user, entity="support_session", action="delete",
+              entity_id=sid, commit=True)
+    return {"ok": True}
+
+
+@app.get("/api/support/salary")
+def support_salary_list(year: int | None = None, month: int | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(
+                            *roles.SALARY_VIEW_ALL, roles.ACADEMIC_HEAD))):
+    """Rahbariyat uchun: barcha support teacherlar oyligi bir joyda."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    su_users = db.query(models.User).filter(
+        models.User.role == roles.SUPPORT_TEACHER,
+        models.User.is_active == 1).all()
+    rows = []
+    for u in su_users:
+        t = _teacher_of_user(db, u)
+        if not t:
+            continue
+        d = _support_month(db, t.id, y, m)
+        d.pop("sessions", None)
+        d["teacher_id"] = t.id
+        d["name"] = u.full_name
+        rows.append(d)
+    rows.sort(key=lambda r: -r["salary"])
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "total": round(sum(r["salary"] for r in rows), 0),
+        "min": roles.SUPPORT_PAY_MIN, "max": roles.SUPPORT_PAY_MAX,
+        "hint": ("Oylik seanslardan avtomat: (soat x 0.30 + o'quvchi "
+                 "x 0.20 + test koef x 0.50) x 10 000, "
+                 "chegara 400 000 — 1 500 000."),
+    }

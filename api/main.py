@@ -23721,3 +23721,99 @@ def teacher_overview(teacher_id: int,
         "grade": t.grade, "grade_label": grade_label,
         "grade_since": t.grade_since.isoformat() if t.grade_since else None,
     }
+
+
+# --------------------------------------------- Zararsizlik nuqtasi ----
+@app.get("/api/finance/break-even")
+def finance_break_even(year: int | None = None, month: int | None = None,
+                       branch_id: int | None = None,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """Zararsizlik nuqtasi: nechta o'quvchida markaz o'zini oqlaydi.
+
+    O'zgarmas xarajatlar (ijara, kommunal, ma'muriy oylik, soliq) —
+    o'quvchi bo'lmasa ham to'lanadi. O'zgaruvchan (ustozlar ish haqi,
+    reklama, kanstovar va h.k.) — o'quvchi soniga qarab o'sadi.
+    Kirim chizig'i umumiy xarajat chizig'ini kesgan joy — zararsizlik."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+    period = f"{y:04d}-{m:02d}"
+
+    _tot, by_cat = _expenses_total(db, user, start, end, branch_id)
+    fixed = round(sum(a for c, a in by_cat.items()
+                      if roles.expense_is_fixed(c)), 0)
+    var_exp = round(sum(a for c, a in by_cat.items()
+                        if not roles.expense_is_fixed(c)), 0)
+    payroll = round(_payroll_total(db, user, period, branch_id) or 0, 0)
+
+    d0, d1 = _utc_window(start, end)
+    revenue = round(db.query(func.coalesce(
+        func.sum(models.Payment.amount), 0)).filter(
+        models.Payment.kind == "payment", models.Payment.amount > 0,
+        models.Payment.created_at >= d0,
+        models.Payment.created_at < d1).scalar() or 0, 0)
+
+    sq = db.query(models.Student).filter(models.Student.status == "active")
+    if branch_id:
+        sq = sq.filter(models.Student.branch_id == branch_id)
+    students = sq.count()
+
+    # Bir o'quvchidan o'rtacha oylik kirim va o'zgaruvchan xarajat
+    if students and revenue:
+        price = round(revenue / students, 0)
+    else:
+        avg_fee = db.query(func.avg(
+            models.Group.lesson_price *
+            models.Group.standard_lessons_per_month)).scalar()
+        price = round(avg_fee or 480000, 0)
+    var_per = round((var_exp + payroll) / students, 0) if students else 0
+
+    margin = price - var_per
+    breakeven = None
+    if margin > 0 and fixed > 0:
+        import math
+        breakeven = math.ceil(fixed / margin)
+
+    # Grafik nuqtalari: 0 dan (zararsizlikning ~1.6 barobari yoki
+    # hozirgi soni + 50) gacha
+    n_max = max(200, students + 50,
+                int((breakeven or 0) * 1.6) if breakeven else 0)
+    step = max(5, round(n_max / 40 / 5) * 5)
+    points = []
+    n = 0
+    while n <= n_max:
+        points.append({"n": n,
+                       "revenue": round(price * n, 0),
+                       "fixed": fixed,
+                       "total_cost": round(fixed + var_per * n, 0)})
+        n += step
+
+    return {
+        "period": period,
+        "fixed": fixed,
+        "variable_expenses": var_exp,
+        "teacher_payroll": payroll,
+        "variable_per_student": var_per,
+        "price_per_student": price,
+        "unit_margin": margin,
+        "students": students,
+        "revenue": revenue,
+        "breakeven_students": breakeven,
+        "safety": round((students - breakeven) / breakeven * 100, 0)
+        if breakeven and breakeven > 0 else None,
+        "points": points,
+        "categories": sorted(
+            [{"category": c,
+              "label": roles.EXPENSE_CATEGORY_LABELS.get(c, c),
+              "amount": round(a, 0),
+              "fixed": roles.expense_is_fixed(c)}
+             for c, a in by_cat.items() if a],
+            key=lambda r: -r["amount"])
+        + ([{"category": "teacher_payroll", "label": "Ustozlar ish haqi",
+             "amount": payroll, "fixed": False}] if payroll else []),
+        "hint": ("O'zgarmas: ijara, kommunal, ma'muriy oylik, soliq. "
+                 "O'zgaruvchan: ustozlar ish haqi, reklama, kanstovar va "
+                 "boshqalar. Zararsizlik = o'zgarmas / (bir o'quvchi "
+                 "narxi - bir o'quvchiga o'zgaruvchan xarajat)."),
+    }

@@ -446,6 +446,10 @@ class AttendanceMark(BaseModel):
     """Bitta o'quvchining bitta darsdagi holati."""
     student_id: int
     present: bool
+    # Kech keldi: present=True bilan birga yuboriladi. Bazada
+    # present=2 bo'lib saqlanadi — davomat foizida "kelgan" sanaladi,
+    # jadvalda esa alohida (soat belgisi) ko'rinadi.
+    late: Optional[bool] = None
     # 0 = bajarmadi, 1 = bajardi, 2 = qisman, None = tekshirilmadi
     homework: Optional[int] = None
 

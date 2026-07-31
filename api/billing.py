@@ -218,21 +218,14 @@ def lesson_student_count(db: Session, lesson: models.Lesson) -> int:
     bo'lsa ham sanaladi — chunki u shu dars uchun baribir to'laydi,
     demak ustoz ham haqini oladi.
 
-    Yoqlama umuman qo'yilmagan bo'lsa (masalan faqat baho qo'yilgan),
-    O'SHA KUNI guruhda kim bo'lgani sanaladi — bugungi ro'yxat emas.
-    Aks holda keyin bir o'quvchi ketsa, o'tgan oyning oyligi ham
-    o'zgarib ketardi."""
-    n = (db.query(models.Attendance)
-         .filter(models.Attendance.lesson_id == lesson.id).count())
-    if n:
-        return n
-    rows = (db.query(models.Student)
-            .filter(models.Student.group_id == lesson.group_id).all())
-    return sum(
-        1 for s in rows
-        if (not s.enrolled_date or s.enrolled_date <= lesson.date)
-        and (not s.left_date or s.left_date >= lesson.date)
-    )
+    Yoqlama qo'yilmagan bo'lsa — NOL. Bu ataylab: ustoz
+    dashboardidagi ogohlantirish "Davomat belgilanmasa ish haqi ham
+    hisoblanmaydi" deb va'da beradi, hisob shu va'daga mos bo'lishi
+    shart. Keldi (1), kech keldi (2) va kelmadi (0) — hammasi
+    BELGILANGAN yoqlama, hammasi sanaladi: o'quvchi kelmasa ham shu
+    dars uchun to'laydi, demak ustoz ham haqini oladi."""
+    return (db.query(models.Attendance)
+            .filter(models.Attendance.lesson_id == lesson.id).count())
 
 
 def compute_teacher_payroll(

@@ -505,6 +505,9 @@ class AttendanceGrid(BaseModel):
     # Uy vazifasi: "lessonId:studentId" -> 0/1/2. Davomat bilan bir
     # jadvalda belgilanadi, aks holda hech qachon to'ldirilmaydi.
     homework: dict = {}
+    # Dars ko'chirish: kvota, ruxsat va allaqachon ko'chirilganlar.
+    # Sana sarlavhasidagi menyu shu ma'lumot bilan chiziladi.
+    reschedule: Optional[dict] = None
 
 
 # ---------- Imtihonlar ----------
@@ -1771,6 +1774,14 @@ class VacancyStatusIn(BaseModel):
 
 
 # ---------- Dars ko'chirish ----------
+class GroupRescheduleIn(BaseModel):
+    """Davomat jadvalidan to'g'ridan-to'g'ri ko'chirish."""
+    from_date: date
+    to_date: date
+    reason: Optional[str] = None
+    note: Optional[str] = None
+
+
 class RescheduleIn(BaseModel):
     group_id: int
     from_date: date

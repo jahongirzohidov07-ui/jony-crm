@@ -27,8 +27,9 @@ import {
 import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { exportToExcel } from "../lib/exportXlsx";
+import { BreakEvenTab } from "../components/BreakEven";
 
-type Tab = "debtors" | "cashflow" | "pnl" | "expenses" | "billing";
+type Tab = "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
@@ -43,6 +44,7 @@ const FULL_TABS: { key: Tab; label: string }[] = [
   { key: "debtors", label: "Qarzdorlar" },
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
+  { key: "breakeven", label: "Zararsizlik" },
   { key: "expenses", label: "Xarajatlar" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
@@ -1017,6 +1019,7 @@ export default function Moliya() {
       {tab === "pnl" && <PnlTab />}
       {tab === "expenses" && <ExpensesTab />}
       {tab === "billing" && <BillingTab />}
+      {tab === "breakeven" && <BreakEvenTab />}
     </div>
   );
 }

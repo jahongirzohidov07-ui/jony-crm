@@ -446,6 +446,8 @@ class AttendanceMark(BaseModel):
     """Bitta o'quvchining bitta darsdagi holati."""
     student_id: int
     present: bool
+    # 0 = bajarmadi, 1 = bajardi, 2 = qisman, None = tekshirilmadi
+    homework: Optional[int] = None
 
 
 class AttendanceBulk(BaseModel):
@@ -500,6 +502,9 @@ class AttendanceGrid(BaseModel):
     students: List[GridStudent]
     lessons: List[GridLesson]
     marks: dict
+    # Uy vazifasi: "lessonId:studentId" -> 0/1/2. Davomat bilan bir
+    # jadvalda belgilanadi, aks holda hech qachon to'ldirilmaydi.
+    homework: dict = {}
 
 
 # ---------- Imtihonlar ----------

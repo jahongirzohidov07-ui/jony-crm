@@ -454,6 +454,10 @@ class Attendance(Base):
     lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=False, index=True)
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
     present = Column(Integer, default=1)  # 1 = keldi, 0 = kelmadi
+    # Uy vazifasi: null = tekshirilmagan, 0 = bajarmadi, 1 = bajardi,
+    # 2 = qisman. Davomat bilan BIR VAQTDA belgilanadi — ustoz alohida
+    # oyna ochib yurmasin, aks holda hech qachon to'ldirilmaydi.
+    homework = Column(Integer, nullable=True)
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

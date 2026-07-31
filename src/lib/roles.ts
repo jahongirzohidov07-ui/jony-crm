@@ -264,3 +264,9 @@ export const TEACHER_MENU = [
 export const STAFF_EDIT = STAFF_VIEWERS;
 
 
+
+// Examiner oyligi: o'zi ko'radi; ro'yxatni rahbariyat ko'radi
+export const EXAMINER_PAY_OWN = [EXAMINER, HEAD_EXAMINER];
+export const EXAMINER_SALARY_VIEW = [
+  FOUNDER, HR_MANAGER, FINANCE_DIRECTOR, ACADEMIC_HEAD, HEAD_EXAMINER,
+];

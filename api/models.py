@@ -2263,3 +2263,113 @@ class RequestApproval(Base):
     decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
     decided_at = Column(DateTime, default=datetime.utcnow)
     note = Column(Text, nullable=True)
+
+
+# =====================================================================
+#  DARS KO'CHIRISH
+# =====================================================================
+class LessonReschedule(Base):
+    """Dars boshqa kunga ko'chirildi. Yozuv O'CHIRILMAYDI — kvota shu
+    tarixdan hisoblanadi va "kim qancha surgan" savoli javobsiz
+    qolmaydi."""
+    __tablename__ = "lesson_reschedules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False,
+                      index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True,
+                        index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=True)
+
+    from_date = Column(Date, nullable=False, index=True)
+    to_date = Column(Date, nullable=False)
+    from_time = Column(String, nullable=True)
+    to_time = Column(String, nullable=True)
+
+    reason = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    # auto | pending | approved | rejected | cancelled
+    status = Column(String, default="pending", index=True)
+    # Kvota ichida bo'lgani uchun avtomat ruxsat berildimi
+    auto_approved = Column(Integer, default=0)
+    decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decided_at = Column(DateTime, nullable=True)
+    decision_note = Column(Text, nullable=True)
+
+    requested_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  O'RINBOSAR USTOZ
+# =====================================================================
+class Substitution(Base):
+    """Bir ustoz boshqasining darsini o'tib beradi. Ish haqi darsni
+    HAQIQATDA o'tgan ustozga yoziladi (Lesson.teacher_id)."""
+    __tablename__ = "substitutions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False,
+                      index=True)
+    lesson_date = Column(Date, nullable=False, index=True)
+    lesson_time = Column(String, nullable=True)
+    original_teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                                 nullable=True, index=True)
+    substitute_teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                                   nullable=True, index=True)
+    reason = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
+    status = Column(String, default="offered", index=True)
+    reschedule_id = Column(Integer, ForeignKey("lesson_reschedules.id"),
+                           nullable=True)
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    decided_at = Column(DateTime, nullable=True)
+
+
+# =====================================================================
+#  KITOB BUYURTMASI
+# =====================================================================
+class BookOrder(Base):
+    """Ustoz kitob so'raydi. So'rov filial rahbariga vazifa bo'lib
+    boradi — og'zaki iltimos yo'qoladi, vazifa yo'qolmaydi."""
+    __tablename__ = "book_orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)      # BOOK-000042
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True,
+                        index=True)
+    requested_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True)
+
+    needed_by = Column(Date, nullable=True)
+    urgency = Column(String, default="normal")
+    note = Column(Text, nullable=True)
+    status = Column(String, default="new", index=True)
+    task_id = Column(Integer, ForeignKey("tasks.id"), nullable=True)
+
+    decided_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decided_at = Column(DateTime, nullable=True)
+    decision_note = Column(Text, nullable=True)
+    delivered_at = Column(Date, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class BookOrderItem(Base):
+    """Buyurtmadagi bitta kitob: qaysi kitob va nechta."""
+    __tablename__ = "book_order_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, ForeignKey("book_orders.id"), index=True)
+    # Omborda bor kitob bo'lsa bog'lanadi, bo'lmasa nomi qo'lda yoziladi
+    consumable_id = Column(Integer, ForeignKey("consumables.id"),
+                           nullable=True)
+    title = Column(String, nullable=False)
+    level = Column(String, nullable=True)
+    qty = Column(Integer, nullable=False, default=1)
+    delivered_qty = Column(Integer, default=0)
+    note = Column(String, nullable=True)

@@ -3444,3 +3444,143 @@ def can_assign_role(requester_role: str, target_role: str) -> bool:
     if requester_role == BRANCH_MANAGER:
         return target_role in BRANCH_ASSIGNABLE_ROLES
     return False
+
+
+# =====================================================================
+#  DARS KO'CHIRISH (RESCHEDULE)
+#
+#  Nega cheklov bor: dars tez-tez surilsa o'quvchining kayfiyati
+#  tushadi, darsga qiziqishi yo'qoladi va ishonch pasayadi — oxir-oqibat
+#  markazdan chiqib ketish ko'payadi. Shuning uchun surish imkoni bor,
+#  lekin sanoqli.
+#
+#  Ustoz darsni BEKOR QILA OLMAYDI — faqat boshqa kunga ko'chiradi.
+#  Yangi sana ko'rsatilmasa so'rov qabul qilinmaydi.
+# =====================================================================
+
+RESCHEDULE_PER_MONTH = 2        # oyiga avtomat ruxsat beriladigan soni
+RESCHEDULE_PER_WINDOW = 12      # uzoq oynadagi umumiy chegara
+RESCHEDULE_WINDOW_DAYS = 180    # 6 oy
+
+# Foydalanilmagan surishlar keyingi oyga O'TMAYDI. Har oy nolga
+# qaytadi — aks holda ustoz 6 oy yig'ib, bir oyda hammasini
+# ishlatishi mumkin bo'lardi va o'quvchi uchun bu eng yomoni.
+RESCHEDULE_CARRY_OVER = False
+
+RESCHEDULE_REASONS = [
+    ("sick", "Kasal bo'lib qoldim"),
+    ("family", "Oilaviy sabab"),
+    ("exam", "O'zimning imtihonim / o'qishim"),
+    ("transport", "Yo'l / transport"),
+    ("event", "Markaz tadbiri"),
+    ("holiday", "Bayram / dam olish"),
+    ("other", "Boshqa"),
+]
+RESCHEDULE_REASON_LABELS = dict(RESCHEDULE_REASONS)
+
+RESCHEDULE_STATUSES = [
+    ("auto", "Avtomat ruxsat berildi", "emerald"),
+    ("pending", "Tasdiq kutilmoqda", "amber"),
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("rejected", "Rad etildi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+RESCHEDULE_STATUS_LABELS = {k: l for k, l, _ in RESCHEDULE_STATUSES}
+RESCHEDULE_STATUS_TONE = {k: t for k, _, t in RESCHEDULE_STATUSES}
+RESCHEDULE_DONE = ["auto", "approved"]
+
+# Kamida shuncha kun oldin so'ralsin — ertaga deb bugun aytish
+# o'quvchi va ota-onani ogohlantirishga vaqt qoldirmaydi
+RESCHEDULE_MIN_NOTICE_DAYS = 1
+# Bundan uzoqqa surib bo'lmaydi
+RESCHEDULE_MAX_SHIFT_DAYS = 14
+
+RESCHEDULE_APPROVE = FULL_ACCESS + [ACADEMIC_HEAD]
+
+
+def reschedule_quota(used_month: int, used_window: int) -> dict:
+    """Qolgan surish imkoni. Ikkita chegara ham tekshiriladi."""
+    left_month = max(0, RESCHEDULE_PER_MONTH - used_month)
+    left_window = max(0, RESCHEDULE_PER_WINDOW - used_window)
+    return {
+        "used_month": used_month,
+        "used_window": used_window,
+        "per_month": RESCHEDULE_PER_MONTH,
+        "per_window": RESCHEDULE_PER_WINDOW,
+        "window_days": RESCHEDULE_WINDOW_DAYS,
+        "left_month": left_month,
+        "left_window": left_window,
+        # Ikkalasidan kichigi — haqiqiy qolgan imkon
+        "left": min(left_month, left_window),
+        "auto_ok": left_month > 0 and left_window > 0,
+    }
+
+
+# =====================================================================
+#  BOSHQA USTOZ O'RNIGA O'TISH (SUBSTITUTION)
+# =====================================================================
+
+SUBSTITUTION_STATUSES = [
+    ("offered", "Taklif qilindi", "sky"),
+    ("accepted", "Qabul qilindi", "emerald"),
+    ("declined", "Rad etildi", "slate"),
+    ("done", "O'tildi", "teal"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+SUB_STATUS_LABELS = {k: l for k, l, _ in SUBSTITUTION_STATUSES}
+SUB_STATUS_TONE = {k: t for k, _, t in SUBSTITUTION_STATUSES}
+
+# O'rinbosar darsi kimning ish haqiga tushadi: darsni HAQIQATDA
+# o'tgan ustozga. Lesson.teacher_id shuning uchun bor.
+SUBSTITUTION_MANAGE = FULL_ACCESS + [ACADEMIC_HEAD]
+
+
+# =====================================================================
+#  KITOB BUYURTMASI
+#
+#  Ustoz kitob so'raydi → so'rov filial rahbariga VAZIFA bo'lib boradi.
+#  Og'zaki aytilgan iltimos yo'qoladi, vazifa yo'qolmaydi.
+# =====================================================================
+
+BOOK_ORDER_STATUSES = [
+    ("new", "Yangi so'rov", "sky"),
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("ordered", "Buyurtma berildi", "violet"),
+    ("delivered", "Yetkazildi", "teal"),
+    ("rejected", "Rad etildi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+BOOK_STATUS_LABELS = {k: l for k, l, _ in BOOK_ORDER_STATUSES}
+BOOK_STATUS_TONE = {k: t for k, _, t in BOOK_ORDER_STATUSES}
+BOOK_OPEN_STATUSES = ["new", "approved", "ordered"]
+
+BOOK_URGENCY = [
+    ("normal", "Oddiy", "slate", 7),
+    ("soon", "Tez orada kerak", "amber", 3),
+    ("urgent", "Shoshilinch", "red", 1),
+]
+BOOK_URGENCY_LABELS = {k: l for k, l, _t, _d in BOOK_URGENCY}
+BOOK_URGENCY_TONE = {k: t for k, _l, t, _d in BOOK_URGENCY}
+BOOK_URGENCY_DAYS = {k: d for k, _l, _t, d in BOOK_URGENCY}
+
+BOOK_ORDER_MANAGE = FULL_ACCESS + [ACADEMIC_HEAD, FACILITY_MANAGER]
+
+
+# =====================================================================
+#  TAJRIBA — YILDA KO'RSATISH
+# =====================================================================
+
+def tenure_years(months: float) -> float:
+    """Oydan yilga. 42 oy -> 3.5 yil."""
+    return round((months or 0) / 12, 1)
+
+
+def tenure_years_text(months: float) -> str:
+    """Odam o'qiydigan ko'rinish. Bir yildan kam bo'lsa oyda qoladi —
+    "0.3 yil" degani hech narsa anglatmaydi."""
+    m = months or 0
+    if m < 12:
+        n = int(round(m))
+        return f"{n} oy" if n else "yangi"
+    y = tenure_years(m)
+    return f"{y:g} yil"

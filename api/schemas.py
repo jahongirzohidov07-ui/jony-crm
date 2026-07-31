@@ -1763,3 +1763,56 @@ class VacancyStatusIn(BaseModel):
     status: str
     close_reason: Optional[str] = None
     note: Optional[str] = None
+
+
+# ---------- Dars ko'chirish ----------
+class RescheduleIn(BaseModel):
+    group_id: int
+    from_date: date
+    to_date: date
+    from_time: Optional[str] = None
+    to_time: Optional[str] = None
+    reason: Optional[str] = None
+    note: Optional[str] = None
+
+
+class RescheduleDecision(BaseModel):
+    decision: str            # approved | rejected
+    note: Optional[str] = None
+
+
+# ---------- O'rinbosar ustoz ----------
+class SubstitutionIn(BaseModel):
+    group_id: int
+    lesson_date: date
+    lesson_time: Optional[str] = None
+    substitute_teacher_id: Optional[int] = None
+    reason: Optional[str] = None
+    note: Optional[str] = None
+
+
+class SubstitutionDecision(BaseModel):
+    decision: str            # accepted | declined | cancelled
+    note: Optional[str] = None
+
+
+# ---------- Kitob buyurtmasi ----------
+class BookItemIn(BaseModel):
+    title: str
+    qty: int = 1
+    level: Optional[str] = None
+    consumable_id: Optional[int] = None
+    note: Optional[str] = None
+
+
+class BookOrderIn(BaseModel):
+    items: List[BookItemIn]
+    group_id: Optional[int] = None
+    needed_by: Optional[date] = None
+    urgency: Optional[str] = "normal"
+    note: Optional[str] = None
+
+
+class BookOrderDecision(BaseModel):
+    status: str
+    note: Optional[str] = None

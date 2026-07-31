@@ -31,6 +31,10 @@ import Gamification from "./pages/Gamification";
 import Branches from "./pages/Branches";
 import Users from "./pages/Users";
 import MyResults from "./pages/MyResults";
+import MyGroups from "./pages/MyGroups";
+import MyStudents from "./pages/MyStudents";
+import MySchedule from "./pages/MySchedule";
+import MyBooks from "./pages/MyBooks";
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
@@ -74,6 +78,10 @@ function AppRoutes() {
         <Route path="branches" element={<Branches />} />
         <Route path="users" element={<Users />} />
         <Route path="my-results" element={<MyResults />} />
+        <Route path="my-groups" element={<MyGroups />} />
+        <Route path="my-students" element={<MyStudents />} />
+        <Route path="my-schedule" element={<MySchedule />} />
+        <Route path="my-books" element={<MyBooks />} />
         <Route path="permissions" element={<Permissions />} />
         <Route path="profile" element={<MyProfile />} />
         <Route path="my-coins" element={<MyCoins />} />

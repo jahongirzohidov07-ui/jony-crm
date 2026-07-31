@@ -24,6 +24,7 @@ import {
   Archive as ArchiveIcon,
   ClipboardList,
   ClipboardCheck,
+  Timer,
   Package,
   ShieldCheck,
   Coins,
@@ -300,6 +301,11 @@ export default function Layout() {
       { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
       { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck },
+      // Faqat support teacher: seans kiritish va avtomat oylik
+      ...(user?.role === "support_teacher"
+        ? [{ to: "/my-sessions", label: "Darslarim va oyligim",
+             icon: Timer }]
+        : []),
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
     items = TEACHER_MENU

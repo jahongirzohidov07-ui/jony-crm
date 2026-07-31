@@ -4,7 +4,8 @@ import { api, type User, type Branch } from "../lib/api";
 import { StaffCard } from "../components/StaffCard";
 import { useAuth } from "../lib/AuthContext";
 import {
-  USER_ADMIN,
+  STAFF_VIEWERS,
+  STAFF_EDIT,
   SALES_MANAGER,
   BRANCH_MANAGER,
   can,
@@ -297,7 +298,11 @@ export function StaffTab() {
 
   useEffect(load, []);
 
-  const canManage = can(user?.role, USER_ADMIN);
+  // Ko'rish va boshqarish alohida huquq: HR menejer ro'yxatni ko'radi
+  // va kartani tahrirlaydi, lekin asoschi/filial rahbari rolini
+  // tayinlay olmaydi (buni backend ham alohida tekshiradi).
+  const canView = can(user?.role, STAFF_VIEWERS);
+  const canManage = can(user?.role, STAFF_EDIT);
   const lockBranchId = user?.role === BRANCH_MANAGER ? user?.branch_id ?? null : null;
 
   async function toggleActive(u: User) {
@@ -310,7 +315,7 @@ export function StaffTab() {
     }
   }
 
-  if (!canManage) {
+  if (!canView) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">Bu sahifani ko'rish uchun ruxsatingiz yo'q.</p>
@@ -325,12 +330,14 @@ export function StaffTab() {
           <h1 className="text-xl font-semibold text-slate-900">Xodimlar</h1>
           <p className="text-sm text-slate-500">Jami: {users.length}</p>
         </div>
-        <button
-          onClick={() => setShowAdd(true)}
-          className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
-        >
-          <Plus size={16} /> Yangi xodim
-        </button>
+        {canManage && (
+          <button
+            onClick={() => setShowAdd(true)}
+            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            <Plus size={16} /> Yangi xodim
+          </button>
+        )}
       </div>
 
       {rowError && <p className="text-sm text-red-600 mb-3">{rowError}</p>}

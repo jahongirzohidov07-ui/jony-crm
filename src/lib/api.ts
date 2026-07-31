@@ -329,6 +329,8 @@ export interface AttendanceGrid {
   students: GridStudent[];
   lessons: GridLesson[];
   marks: Record<string, boolean | number>;
+  /** Uy vazifasi: 1 bajardi, 2 qisman, 0 bajarmadi. */
+  homework?: Record<string, number>;
 }
 
 // ---------- Imtihonlar ----------
@@ -2188,6 +2190,93 @@ export interface MyDashboard {
   show_company: boolean;
   /** Butun markaz bo'yicha kartalar — Examiner, HR va SMM'da yo'q. */
   show_general: boolean;
+  /** Faqat ustoz va yordamchi ustozda to'ladi. */
+  teacher?: TeacherDashboard | null;
+}
+
+// --------------------------------------------------- Ustoz dashboardi
+export interface TeacherAlert {
+  kind: string;
+  label: string;
+  tone: string;
+  advice: string;
+  detail: string;
+  student_id?: number;
+  student?: string | null;
+  group_id?: number;
+  group?: string | null;
+  lesson_id?: number;
+  date?: string | null;
+  since?: string | null;
+}
+
+export interface RiskStudent {
+  student_id: number;
+  student: string;
+  group?: string | null;
+  attendance_percent: number;
+  missed: number;
+  absent_streak: number;
+}
+
+export interface StudyRow {
+  id: number;
+  stage: number;
+  kind: string;
+  kind_label: string;
+  title: string;
+  done: boolean;
+  done_at?: string | null;
+}
+
+export interface TeacherDashboard {
+  teacher: { id: number; name: string };
+  attendance: {
+    percent: number | null;
+    last_month: number | null;
+    change: number | null;
+    marks: number;
+    present: number;
+    homework_percent: number | null;
+    homework_last_month: number | null;
+    homework_checked: number;
+    month: string;
+  };
+  groups: {
+    id: number;
+    name: string;
+    percent: number | null;
+    homework_percent: number | null;
+    low: boolean;
+  }[];
+  risk_students: RiskStudent[];
+  risk_count: number;
+  alerts: TeacherAlert[];
+  alert_count: number;
+  alerts_by_kind: { key: string; label: string; tone: string; count: number }[];
+  development: {
+    study: StudyRow[];
+    study_left: number;
+    study_total: number;
+    tasks: {
+      id: number;
+      public_id?: string | null;
+      title: string;
+      deadline?: string | null;
+      overdue: boolean;
+      priority?: string | null;
+    }[];
+    tasks_overdue: number;
+    observations: unknown[];
+  };
+  thresholds: {
+    absent_streak: number;
+    group_attendance: number;
+    student_attendance: number;
+    homework_drop: number;
+    no_growth_days: number;
+  };
+  hint: string;
 }
 
 // ---------------------------------------------------- Mening profilim

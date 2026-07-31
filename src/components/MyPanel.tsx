@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ClipboardList, AlertTriangle } from "lucide-react";
 import { api, type MyDashboard } from "../lib/api";
 import { formatSom } from "../lib/format";
+import { TeacherDash } from "./TeacherDash";
 
 const TONE: Record<string, string> = {
   plain: "bg-white border-slate-200 text-slate-900",
@@ -42,10 +43,14 @@ export function MyPanel({
       .catch(() => setD(null));
   }, []);
 
-  if (!d || (d.cards.length === 0 && d.tasks.open === 0)) return null;
+  if (!d) return null;
+  if (d.cards.length === 0 && d.tasks.open === 0 && !d.teacher) return null;
 
   return (
     <div className="mb-6">
+      {/* Ustozda ogohlantirishlar eng tepada — ular bugungi ish. */}
+      {d.teacher && <TeacherDash d={d.teacher} />}
+
       {d.cards.length > 0 && (
         <>
           <p className="text-sm font-medium text-slate-700 mb-1">

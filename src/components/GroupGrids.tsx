@@ -90,6 +90,40 @@ export function AttendanceTab({
     await api.put(`/lessons/${lessonId}/attendance`, { marks });
   }
 
+  /** Uy vazifasi: bajardi -> qisman -> bajarmadi -> bajardi.
+   *  Davomat bilan bitta jadvalda turadi, chunki alohida ekran
+   *  bo'lsa hech kim to'ldirmaydi. Belgilangan baho o'chirilmaydi —
+   *  faqat boshqasiga almashtiriladi. */
+  async function toggleHw(lessonId: number, studentId: number) {
+    if (!canEdit || !grid) return;
+    const key = `${lessonId}:${studentId}`;
+    const cur = grid.homework?.[key];
+    const cycle = [1, 2, 0];
+    const next = cur === undefined ? 1 : cycle[(cycle.indexOf(cur) + 1) % 3];
+
+    const hw = { ...(grid.homework || {}), [key]: next };
+    // Uy vazifasi belgilansa bola darsda bo'lgan — davomat ham qo'yiladi
+    const marks = { ...grid.marks };
+    if (marks[key] === undefined) marks[key] = true;
+    setGrid({ ...grid, homework: hw, marks });
+    setSaving("hw" + key);
+    try {
+      await api.put(`/lessons/${lessonId}/attendance`, {
+        marks: [
+          {
+            student_id: studentId,
+            present: marks[key] === true,
+            homework: next,
+          },
+        ],
+      });
+    } catch {
+      setGrid(grid);
+    } finally {
+      setSaving(null);
+    }
+  }
+
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (!grid) return null;
   if (grid.lessons.length === 0)
@@ -165,25 +199,52 @@ export function AttendanceTab({
                 {grid.lessons.map((ls) => {
                   const key = `${ls.id}:${s.id}`;
                   const v = grid.marks[key];
+                  const h = grid.homework?.[key];
                   return (
                     <td key={ls.id} className="px-2 py-2 text-center">
-                      <button
-                        onClick={() => toggle(ls.id, s.id)}
-                        disabled={!canEdit || saving === key}
-                        className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
-                          v === true
-                            ? "bg-brand-500 text-white"
-                            : v === false
-                            ? "bg-red-500 text-white"
-                            : "bg-slate-100 hover:bg-slate-200"
-                        } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
-                      >
-                        {v === true ? (
-                          <Check size={15} />
-                        ) : v === false ? (
-                          <X size={15} />
-                        ) : null}
-                      </button>
+                      <div className="inline-flex items-center gap-1">
+                        <button
+                          onClick={() => toggle(ls.id, s.id)}
+                          disabled={!canEdit || saving === key}
+                          className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
+                            v === true
+                              ? "bg-brand-500 text-white"
+                              : v === false
+                              ? "bg-red-500 text-white"
+                              : "bg-slate-100 hover:bg-slate-200"
+                          } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
+                        >
+                          {v === true ? (
+                            <Check size={15} />
+                          ) : v === false ? (
+                            <X size={15} />
+                          ) : null}
+                        </button>
+                        <button
+                          onClick={() => toggleHw(ls.id, s.id)}
+                          disabled={!canEdit || saving === "hw" + key}
+                          title={
+                            h === 1
+                              ? "Uy vazifasi: bajardi"
+                              : h === 2
+                              ? "Uy vazifasi: qisman"
+                              : h === 0
+                              ? "Uy vazifasi: bajarmadi"
+                              : "Uy vazifasi belgilanmagan — bosing"
+                          }
+                          className={`w-5 h-8 rounded text-[10px] font-bold inline-flex items-center justify-center transition ${
+                            h === 1
+                              ? "bg-emerald-100 text-emerald-700"
+                              : h === 2
+                              ? "bg-amber-100 text-amber-700"
+                              : h === 0
+                              ? "bg-red-100 text-red-700"
+                              : "bg-slate-50 text-slate-300 hover:bg-slate-200"
+                          } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
+                        >
+                          {h === 1 ? "✓" : h === 2 ? "±" : h === 0 ? "✗" : "·"}
+                        </button>
+                      </div>
                     </td>
                   );
                 })}
@@ -194,10 +255,11 @@ export function AttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Katakni bosing: ✓ keldi, ✗ kelmadi. Kunlar guruhning dars kunlaridan
-        avtomat chiqadi — har birini alohida kiritish shart emas. Kulrang sana —
-        hali yoqlama qo'yilmagan reja; u pulga ham, ustoz ish haqiga ham
-        kirmaydi. Yoqlama qo'yilishi bilan dars "o'tilgan" bo'ladi.
+        Katta katakni bosing: ✓ keldi, ✗ kelmadi. Yonidagi tor katak — uy
+        vazifasi: ✓ bajardi, ± qisman, ✗ bajarmadi. Kunlar guruhning dars
+        kunlaridan avtomat chiqadi — har birini alohida kiritish shart emas.
+        Kulrang sana — hali yoqlama qo'yilmagan reja; u pulga ham, ustoz ish
+        haqiga ham kirmaydi. Yoqlama qo'yilishi bilan dars "o'tilgan" bo'ladi.
       </p>
     </div>
   );

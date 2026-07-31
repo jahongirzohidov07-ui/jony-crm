@@ -44,6 +44,8 @@ import { SalesPanelCards } from "../components/SalesPanel";
 import { MyPanel } from "../components/MyPanel";
 import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
+import Plan from "./Plan";
+import { PLAN_VIEW } from "../lib/roles";
 import Ceo from "./Ceo";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
 
@@ -344,7 +346,7 @@ function CollectionCard() {
   );
 }
 
-type DashTab = "overview" | "today";
+type DashTab = "overview" | "today" | "plan";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -441,11 +443,23 @@ export default function Dashboard() {
   }
 
   const showToday = can(user?.role, PROFIT_VIEW);
+  const showPlan = can(user?.role, PLAN_VIEW);
+
+  if (showPlan && tab === "plan") {
+    return (
+      <div className="p-8">
+        <DashTabs tab={tab} setTab={setTab} showToday={showToday}
+                  showPlan={showPlan} />
+        <Plan />
+      </div>
+    );
+  }
 
   if (showToday && tab === "today") {
     return (
       <div className="p-8 max-w-6xl">
-        <DashTabs tab={tab} setTab={setTab} showToday={showToday} />
+        <DashTabs tab={tab} setTab={setTab} showToday={showToday}
+                  showPlan={showPlan} />
         <Ceo />
       </div>
     );
@@ -453,7 +467,8 @@ export default function Dashboard() {
 
   return (
     <div className="p-8 max-w-6xl">
-      <DashTabs tab={tab} setTab={setTab} showToday={showToday} />
+      <DashTabs tab={tab} setTab={setTab} showToday={showToday}
+                showPlan={showPlan} />
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900 mb-1">Dashboard</h1>
@@ -655,11 +670,13 @@ function DashTabs({
   tab: DashTab;
   setTab: (t: DashTab) => void;
   showToday: boolean;
+  showPlan?: boolean;
 }) {
-  if (!showToday) return null;
+  if (!showToday && !showPlan) return null;
   const items: { key: DashTab; label: string }[] = [
     { key: "overview", label: "Umumiy" },
-    { key: "today", label: "Bugungi holat" },
+    ...(showToday ? [{ key: "today" as DashTab, label: "Bugungi holat" }] : []),
+    ...(showPlan ? [{ key: "plan" as DashTab, label: "Reja va Fakt" }] : []),
   ];
   return (
     <div className="flex gap-1 border-b border-slate-200 mb-6">

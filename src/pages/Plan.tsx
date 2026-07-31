@@ -153,6 +153,12 @@ export default function Plan() {
               <th className="px-3 py-2 font-semibold text-right bg-rose-50">
                 SUM
               </th>
+              <th className="px-3 py-2 font-semibold text-right">
+                Bajarilish
+              </th>
+              <th className="px-3 py-2 font-semibold text-right">
+                Shu ketishda
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -160,7 +166,7 @@ export default function Plan() {
               <>
                 <tr key={`h-${sec}`}>
                   <td
-                    colSpan={d.columns.length + 3}
+                    colSpan={d.columns.length + 5}
                     className={`px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide ${SEC_TONE[sec]}`}
                   >
                     {d.sections[sec]}
@@ -204,6 +210,24 @@ export default function Plan() {
                           <td className="px-3 py-1 text-right bg-rose-50 font-medium text-slate-700">
                             {fmt(r.sum_plan, money)}
                           </td>
+                          <td rowSpan={2} className="px-3 py-1 text-right align-middle border-t border-slate-100">
+                            <span className={
+                              r.percent === null ? "text-slate-300"
+                              : r.percent >= 100 ? "text-emerald-700 font-semibold"
+                              : r.percent >= 80 ? "text-amber-600 font-medium"
+                              : "text-red-600 font-medium"}>
+                              {r.percent !== null ? `${r.percent}%` : "—"}
+                            </span>
+                          </td>
+                          <td rowSpan={2} className="px-3 py-1 text-right align-middle border-t border-slate-100">
+                            <span className={
+                              r.pace === null ? "text-slate-300"
+                              : r.pace >= 100 ? "text-emerald-700 font-semibold"
+                              : r.pace >= 80 ? "text-amber-600 font-medium"
+                              : "text-red-600 font-medium"}>
+                              {r.pace !== null ? `${r.pace}%` : "—"}
+                            </span>
+                          </td>
                         </tr>
                         <tr key={`${r.metric}-f`}>
                           <td className="px-2 py-1 text-slate-400">Fakt</td>
@@ -233,7 +257,9 @@ export default function Plan() {
       </div>
       <p className="text-xs text-slate-400 mt-2">
         Fakt rangi: yashil — reja bajarildi, sariq — 80%+, qizil — 80% dan
-        past. * — fakt hozircha avtomat yig'ilmaydi.
+        past. "Bajarilish" — yillik rejaga nisbatan; "Shu ketishda" — shu
+        kungacha bo'lishi kerak bo'lgan rejaga nisbatan (100% dan past
+        bo'lsa, shu sur'atda reja bajarilmaydi). * — fakt hozircha avtomat yig'ilmaydi.
       </p>
 
       {edit && (

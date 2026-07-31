@@ -1546,7 +1546,9 @@ def attendance_grid(
         rows = db.query(models.Attendance).filter(
             models.Attendance.lesson_id.in_(lesson_ids)
         ).all()
-        marks = {f"{a.lesson_id}:{a.student_id}": bool(a.present) for a in rows}
+        # true = keldi, false = kelmadi, 2 = kech keldi
+        marks = {f"{a.lesson_id}:{a.student_id}":
+                 (2 if a.present == 2 else bool(a.present)) for a in rows}
         hw = {f"{a.lesson_id}:{a.student_id}": a.homework
               for a in rows if a.homework is not None}
 
@@ -1582,9 +1584,13 @@ def save_attendance(
     }
     for m in payload.marks:
         hw = m.homework if m.homework in (0, 1, 2) else None
+        # 1 = keldi, 2 = kech keldi, 0 = kelmadi. Kech kelgan ham
+        # KELGAN: davomat foizida sanaladi, faqat jadvalda alohida
+        # (soat belgisi bilan) ko'rinadi.
+        val = (2 if m.late else 1) if m.present else 0
         row = existing.get(m.student_id)
         if row:
-            row.present = 1 if m.present else 0
+            row.present = val
             # Tekshirilmagan bo'lsa eskisiga tegilmaydi — ustoz
             # davomatni tuzatganda homework belgisi yo'qolib qolmasin
             if hw is not None:
@@ -1592,7 +1598,7 @@ def save_attendance(
         else:
             db.add(models.Attendance(
                 lesson_id=lesson_id, student_id=m.student_id,
-                present=1 if m.present else 0, homework=hw,
+                present=val, homework=hw,
                 created_by=user.full_name))
     _mark_lesson_held(db, lesson)
     db.commit()
@@ -2082,6 +2088,7 @@ def student_attendance(
     rows = [{
         "date": ls.date.isoformat(),
         "present": bool(a.present),
+        "late": a.present == 2,
         "grade": grades.get(ls.id),
         "homework": a.homework,
         "homework_label": roles.HOMEWORK_LABELS.get(a.homework),
@@ -7421,7 +7428,8 @@ def _trial_attendance(db: Session, student_id: int) -> list:
     rows = (db.query(models.Attendance, models.Lesson)
             .join(models.Lesson, models.Attendance.lesson_id == models.Lesson.id)
             .filter(models.Attendance.student_id == student_id,
-                    models.Attendance.present == 1)
+                    # 1 = keldi, 2 = kech keldi — ikkalasi ham kelgan
+                    models.Attendance.present.in_((1, 2)))
             .all())
     return sorted((l.date for _a, l in rows))
 
@@ -19722,8 +19730,8 @@ def my_students(group_id: int | None = None, q: str | None = None,
             "grades_count": len(gl),
             "last_exam": el[-1] if el else None,
             "best_exam": max(el) if el else None,
-            "xp": gm.total_xp if gm else 0,
-            "level": gm.level if gm else 1,
+            "xp": round(gm.lifetime_xp or 0, 1) if gm else 0,
+            "level": gm.current_level if gm else 1,
             # ---- Uy vazifasi ----
             "homework_percent": hw["percent"],
             "homework_checked": hw["checked"],

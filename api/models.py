@@ -512,6 +512,18 @@ class Exam(Base):
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    # Kim o'tkazgani — examiner oyligi shu ustunga bog'lanadi.
+    # Buyurtmani qabul qilganda yoki natija kiritganda avtomat to'ladi.
+    examiner_id = Column(Integer, ForeignKey("users.id"), nullable=True,
+                         index=True)
+    # Bajarilmagan ish jarimalari (bo'lim boshliqlari belgilaydi):
+    # LC UP kiritilmagan, coin berilmagan, jadvaldan necha soat kechikkan.
+    penalty_lc_up = Column(Integer, default=0)
+    penalty_coin = Column(Integer, default=0)
+    penalty_delay_hours = Column(Float, default=0)
+    penalty_note = Column(Text, nullable=True)
+    penalty_by = Column(String, nullable=True)
+
     group = relationship("Group")
     results = relationship(
         "ExamResult", back_populates="exam", cascade="all, delete-orphan"
@@ -2771,4 +2783,22 @@ class SupportSession(Base):
     note = Column(Text)
 
     created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ExaminerAdjustment(Base):
+    """Examinerdan qo'lda ball ayirish (ESLATMA qoidasi).
+
+    Bo'lim boshliqlari (Exam, HR, O'quv bo'limi) kamchilik aniqlasa,
+    holatga ko'ra munosib ball ayirib tashlashi mumkin. Sabab majburiy —
+    oylik hujjatida "nega kam" degan savol qolmasligi kerak."""
+    __tablename__ = "examiner_adjustments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    date = Column(Date, nullable=False, default=date.today, index=True)
+    points = Column(Float, nullable=False)      # ayiriladigan ball (musbat)
+    reason = Column(Text, nullable=False)
+    created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

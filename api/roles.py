@@ -4245,3 +4245,112 @@ def hhmm_minutes(t: str):
         return h * 60 + m
     except (ValueError, AttributeError):
         return None
+
+
+# ------------------------------------------------------- Examiner oyligi ----
+# Asoschi jadvali — "Examlar kesimida oylik chiqarish tartibi".
+# Har o'tkazilgan imtihon ball beradi: imtihonning o'zi uchun +
+# har qatnashgan o'quvchi uchun. Oy yakunida:
+#     oylik = jami ball x 1 000 so'm   (600 ball -> 600 000 so'm)
+# kamida 400 000, ko'pi bilan 1 500 000 so'm.
+EXAMINER_PAY_MIN = 400_000
+EXAMINER_PAY_MAX = 1_500_000
+EXAMINER_PAY_UNIT = 1_000
+
+# daraja -> (imtihon balli, har o'quvchi balli)
+EXAMINER_EXAM_POINTS = {
+    "step1": (11.0, 1.5),
+    "step2": (13.0, 2.5),
+    "step3": (15.0, 3.0),
+    "mid":   (20.0, 3.5),
+    "end":   (25.0, 3.5),
+}
+
+# Bajarilmagan ish uchun jarima ballari:
+# daraja -> (LC UP, Coin, jadval kechikishi HAR SOATIGA)
+EXAMINER_PENALTIES = {
+    "step1": (3.0, 4.0, 5.0),
+    "step2": (5.0, 6.0, 7.0),
+    "step3": (7.0, 8.0, 9.0),
+    "mid":   (10.0, 13.0, 15.0),
+    "end":   (10.0, 13.0, 15.0),
+}
+
+EXAMINER_TIER_LABELS = {
+    "step1": "Step 1.0",
+    "step2": "Step 2.0",
+    "step3": "Step 3.0",
+    "mid": "Mid-course / Retake",
+    "end": "End of course / Retake",
+}
+
+# Jarima qo'yish va qo'lda ball ayirish — bo'lim boshliqlari
+# (Exam, HR, O'quv bo'limi) va asoschi. ESLATMAdagi qoida.
+EXAMINER_PENALTY_SET = [FOUNDER, HEAD_EXAMINER, HR_MANAGER, ACADEMIC_HEAD]
+# Barcha examinerlar ro'yxatini kim ko'radi
+EXAMINER_SALARY_VIEW = list(dict.fromkeys(
+    SALARY_VIEW_ALL + [ACADEMIC_HEAD, HEAD_EXAMINER]))
+
+
+def examiner_tier(kind, level):
+    """Imtihon jadvalning qaysi qatoriga tushadi.
+
+    Unit test — guruh darajasiga qarab (Step 1/2/3). Jadvalda
+    bo'lmagan yuqori daraja (Step 4, IELTS, CEFR) unit testlari
+    eng yaqin qator — Step 3.0 bo'yicha to'lanadi. Mid/End (retake
+    ham) darajadan qat'i nazar o'z qatori bo'yicha. Mock jadvalda
+    yo'q — ball bermaydi."""
+    if kind in ("mid", "end"):
+        return kind
+    if kind == "unit":
+        return level if level in ("step1", "step2", "step3") else "step3"
+    return None
+
+
+def examiner_exam_points(kind, level, students: int):
+    """Bitta imtihon uchun ball: baza + o'quvchi soni x koeffitsiyent."""
+    tier = examiner_tier(kind, level)
+    if tier is None:
+        return None
+    base, per = EXAMINER_EXAM_POINTS[tier]
+    return {
+        "tier": tier,
+        "tier_label": EXAMINER_TIER_LABELS[tier],
+        "base": base,
+        "per_student": per,
+        "students": int(students or 0),
+        "points": round(base + per * int(students or 0), 2),
+    }
+
+
+def examiner_penalty_points(kind, level, lc_up: bool, coin: bool,
+                            delay_hours: float = 0.0) -> float:
+    """Bitta imtihon uchun jarima ballari (musbat son qaytadi)."""
+    tier = examiner_tier(kind, level)
+    if tier is None:
+        return 0.0
+    p_lc, p_coin, p_hour = EXAMINER_PENALTIES[tier]
+    total = 0.0
+    if lc_up:
+        total += p_lc
+    if coin:
+        total += p_coin
+    total += p_hour * max(0.0, float(delay_hours or 0))
+    return round(total, 2)
+
+
+def examiner_salary(points: float) -> dict:
+    """Oy yakuni: ball x 1 000 so'm, 400 000 — 1 500 000 chegarada."""
+    pts = round(float(points or 0), 2)
+    raw = round(pts * EXAMINER_PAY_UNIT, 0)
+    salary = min(max(raw, EXAMINER_PAY_MIN), EXAMINER_PAY_MAX)
+    return {
+        "points": pts,
+        "raw": raw,
+        "salary": salary,
+        "min": EXAMINER_PAY_MIN,
+        "max": EXAMINER_PAY_MAX,
+        "unit": EXAMINER_PAY_UNIT,
+        "clamped_min": raw < EXAMINER_PAY_MIN,
+        "clamped_max": raw > EXAMINER_PAY_MAX,
+    }

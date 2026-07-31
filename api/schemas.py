@@ -2026,3 +2026,19 @@ class SupportSessionIn(BaseModel):
     end_time: str                      # "15:30"
     students_count: int
     note: Optional[str] = None
+
+
+class ExamPenaltyIn(BaseModel):
+    """Imtihonga jarima belgilash — bo'lim boshliqlari uchun."""
+    lc_up: bool = False
+    coin: bool = False
+    delay_hours: float = 0
+    note: Optional[str] = None
+
+
+class ExaminerAdjustIn(BaseModel):
+    """Examinerdan qo'lda ball ayirish."""
+    user_id: int
+    points: float
+    reason: str
+    date: Optional[_dt.date] = None

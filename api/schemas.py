@@ -450,6 +450,9 @@ class AttendanceMark(BaseModel):
     # present=2 bo'lib saqlanadi — davomat foizida "kelgan" sanaladi,
     # jadvalda esa alohida (soat belgisi) ko'rinadi.
     late: Optional[bool] = None
+    # Belgini butunlay olib tashlash. Olib tashlangan o'quvchi
+    # oylikka kirmaydi — "belgilanmagan" holatga qaytadi.
+    remove: Optional[bool] = None
     # 0 = bajarmadi, 1 = bajardi, 2 = qisman, None = tekshirilmadi
     homework: Optional[int] = None
 

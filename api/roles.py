@@ -651,6 +651,13 @@ DEFAULT_EXAM_COIN_RULES = [
 # 403 qaytaradi.
 OWN_GROUPS_ONLY = [TEACHER, SUPPORT_TEACHER]
 
+# O'tib ketgan kunning yoqlamasini kim o'zgartira oladi. Ataylab juda
+# tor: yoqlama — pul hujjati (ustoz oyligi shundan chiqadi), o'tgan
+# kunni istagan odam o'zgartira olsa, oylik ham "o'zgaruvchan" bo'lib
+# qoladi. Kelajak kunga esa HECH KIM yoqlama qo'ya olmaydi — bo'lib
+# o'tmagan darsni belgilab bo'lmaydi.
+PAST_ATTENDANCE = [FOUNDER, ACADEMIC_HEAD]
+
 TEACHING_ACCESS = FULL_ACCESS + [
     TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, ACADEMIC_HEAD,

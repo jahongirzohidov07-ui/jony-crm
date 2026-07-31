@@ -55,7 +55,6 @@ import {
   CONTENT_REQUESTER,
   IDEA_SUBMIT,
   TEACHER_MENU,
-  PLAN_VIEW,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";

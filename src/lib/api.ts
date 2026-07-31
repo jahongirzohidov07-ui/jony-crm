@@ -4083,6 +4083,18 @@ export interface MyGroup {
   started_on?: string | null;
   last_lesson?: string | null;
   next_lesson?: string | null;
+  homework?: HomeworkStat;
+}
+
+export interface HomeworkStat {
+  checked: number;
+  done?: number;
+  partial?: number;
+  missed?: number;
+  percent: number | null;
+  label: string;
+  tone: string;
+  enough?: boolean;
 }
 
 export interface MyGroupList {
@@ -4112,6 +4124,11 @@ export interface MyStudent {
   xp: number;
   level: number;
   at_risk: boolean;
+  homework_percent?: number | null;
+  homework_checked?: number;
+  homework_label?: string;
+  homework_tone?: string;
+  homework_low?: boolean;
 }
 
 export interface MyStudentList {
@@ -4120,6 +4137,8 @@ export interface MyStudentList {
   total: number;
   at_risk: number;
   hint: string;
+  homework_low?: number;
+  homework_threshold?: number;
 }
 
 export interface RescheduleQuota {
@@ -4243,4 +4262,66 @@ export interface MyBookOrders {
 
 export interface BookCatalogue {
   rows: { id: number; name: string; qty: number; in_stock: boolean }[];
+}
+
+
+// ------------------------------------------------ Imtihon buyurtmasi
+export interface ExamOrder {
+  id: number;
+  public_id?: string | null;
+  group_id: number;
+  group?: string | null;
+  level?: string | null;
+  teacher_id?: number | null;
+  teacher?: string | null;
+  branch_id?: number | null;
+  branch?: string | null;
+  date?: string | null;
+  date_text: string;
+  time?: string | null;
+  kind: string;
+  kind_label: string;
+  unit_no?: number | null;
+  students_count: number;
+  note?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  accepted_by?: string | null;
+  accepted_at?: string | null;
+  decision_note?: string | null;
+  reject_reason?: string | null;
+  reject_reason_label?: string | null;
+  exam_id?: number | null;
+  created_at?: string | null;
+  /** Ustoz va examiner ko'radigan bir xil xabar matni. */
+  message: string;
+}
+
+interface ExamOrderForm {
+  kinds: { key: string; label: string }[];
+  unit_count: number;
+  min_notice_days: number;
+  max_ahead_days: number;
+  reject_reasons: { key: string; label: string }[];
+  statuses: { key: string; label: string; tone: string }[];
+  hint: string;
+}
+
+export interface MyExamOrders extends ExamOrderForm {
+  rows: ExamOrder[];
+  groups: {
+    id: number;
+    name: string;
+    level?: string | null;
+    time?: string | null;
+    students: number;
+  }[];
+}
+
+export interface ExamOrderQueue extends ExamOrderForm {
+  rows: ExamOrder[];
+  new: number;
+  accepted: number;
+  urgent: ExamOrder[];
 }

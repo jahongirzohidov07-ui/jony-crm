@@ -122,6 +122,8 @@ export const ACADEMIC_VIEW = [
 
 /** Imtihon moduli — Examiner asoschiga bo'ysunadi. */
 export const EXAM_ACCESS = [FOUNDER, EXAMINER, HEAD_EXAMINER];
+/** Imtihon buyurtmasini kim qabul qiladi. */
+export const EXAM_ORDER_ACCEPT = EXAM_ACCESS;
 export const EXAM_VIEW = [
   ...EXAM_ACCESS,
   BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER,
@@ -244,6 +246,7 @@ export const TEACHER_MENU = [
   "/my-students",
   "/my-schedule",
   "/my-books",
+  "/my-exams",
   "/my-results",
   "/my-career",
   "/gamification",

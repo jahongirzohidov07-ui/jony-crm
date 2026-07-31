@@ -665,7 +665,7 @@ export default function Dashboard() {
 /** Dashboard ichidagi bo'limlar. "Bugungi holat" alohida sahifa emas,
  *  shu yerning ichida turadi. */
 function DashTabs({
-  tab, setTab, showToday,
+  tab, setTab, showToday, showPlan,
 }: {
   tab: DashTab;
   setTab: (t: DashTab) => void;

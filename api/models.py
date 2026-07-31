@@ -2418,3 +2418,334 @@ class ExamOrder(Base):
 
     requested_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR FAZA 2B — ATS
+# =====================================================================
+class CandidateApplication(Base):
+    """Bitta odamning bitta vakansiyaga arizasi.
+
+    Bosqich AYNAN SHU YERDA saqlanadi, nomzodning o'zida emas: bir
+    odam ustozlikka rad etilib, administratorlikka olinishi mumkin.
+    Bosqich odamda tursa, u ikkinchi vakansiyada ham "rad etilgan"
+    bo'lib qolardi va yaxshi nomzod behuda yo'qolardi.
+    """
+    __tablename__ = "candidate_applications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+
+    candidate_id = Column(Integer, ForeignKey("candidates.id"),
+                          nullable=False, index=True)
+    vacancy_id = Column(Integer, ForeignKey("vacancies.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    stage = Column(String, default="new", index=True)
+    # Bosqich qachon o'zgargani — SLA shu bo'yicha hisoblanadi
+    stage_since = Column(Date)
+    source = Column(String)
+
+    reject_reason = Column(String)
+    reject_note = Column(Text)
+    # Rad etilgan, lekin sababi nomzodda emas — keyin qaytarish mumkin
+    pool = Column(Integer, default=0)
+    pool_note = Column(Text)
+
+    owner_id = Column(Integer, ForeignKey("users.id"))
+    note = Column(Text)
+    closed_at = Column(Date)
+
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class ApplicationStageLog(Base):
+    """Bosqich tarixi. Kim, qachon, qayerdan qayerga ko'chirgan.
+
+    Bu voronka analitikasining yagona ishonchli manbai: "suhbatdan
+    keyin qancha odam yo'qoladi" degan savolga faqat shu jadval
+    javob bera oladi."""
+    __tablename__ = "application_stage_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    application_id = Column(Integer,
+                            ForeignKey("candidate_applications.id"),
+                            nullable=False, index=True)
+    from_stage = Column(String)
+    to_stage = Column(String, index=True)
+    # Oldingi bosqichda necha kun turgan
+    days_in_stage = Column(Integer)
+    reason = Column(String)
+    note = Column(Text)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Interview(Base):
+    """Suhbat: qachon, kim bilan, qanday o'tdi."""
+    __tablename__ = "interviews"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+
+    application_id = Column(Integer,
+                            ForeignKey("candidate_applications.id"),
+                            nullable=False, index=True)
+    candidate_id = Column(Integer, ForeignKey("candidates.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    kind = Column(String, default="hr")
+    date = Column(Date, index=True)
+    time = Column(String)
+    minutes = Column(Integer)
+    place = Column(String)
+    room_id = Column(Integer, ForeignKey("rooms.id"))
+
+    interviewer_id = Column(Integer, ForeignKey("users.id"), index=True)
+    status = Column(String, default="planned", index=True)
+    note = Column(Text)
+
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Scorecard(Base):
+    """Suhbatdan keyingi baholash varaqasi.
+
+    Foiz SERVERDA og'irlikli o'rtacha bilan hisoblanadi — qo'lda
+    yozib bo'lmaydi, aks holda har kim o'zicha hisoblab, taqqoslash
+    ma'nosini yo'qotardi."""
+    __tablename__ = "scorecards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    application_id = Column(Integer,
+                            ForeignKey("candidate_applications.id"),
+                            nullable=False, index=True)
+    interview_id = Column(Integer, ForeignKey("interviews.id"), index=True)
+
+    author_id = Column(Integer, ForeignKey("users.id"), index=True)
+    # {"subject": 4, "method": 5, ...}
+    scores = Column(Text)
+    percent = Column(Float)
+    recommendation = Column(String)
+    strengths = Column(Text)
+    concerns = Column(Text)
+    note = Column(Text)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class Offer(Base):
+    """Nomzodga yozma taklif. Har o'zgartirish yangi VERSIYA bo'lib
+    saqlanadi — muzokara tarixi hech qachon yo'qolmaydi."""
+    __tablename__ = "offers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+
+    application_id = Column(Integer,
+                            ForeignKey("candidate_applications.id"),
+                            nullable=False, index=True)
+    candidate_id = Column(Integer, ForeignKey("candidates.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    version = Column(Integer, default=1)
+    # Oldingi versiya — zanjir shu orqali o'qiladi
+    previous_id = Column(Integer, ForeignKey("offers.id"))
+
+    position = Column(String)
+    salary = Column(Float)
+    salary_note = Column(String)          # "oyiga, qo'lga tegadi"
+    start_date = Column(Date)
+    probation_months = Column(Integer)
+    terms = Column(Text)
+
+    status = Column(String, default="draft", index=True)
+    valid_until = Column(Date)
+    decline_reason = Column(Text)
+
+    approved_by = Column(Integer, ForeignKey("users.id"))
+    approved_at = Column(DateTime)
+    sent_at = Column(DateTime)
+    answered_at = Column(DateTime)
+
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR FAZA 3 — XODIM HAYOTIY SIKLI
+# =====================================================================
+class EmployeeDocument(Base):
+    """Xodim hujjati. Muddati tugaydiganlari (pasport, sertifikat,
+    shartnoma) tugashidan oldin HRga ogohlantirish chiqaradi."""
+    __tablename__ = "employee_documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    kind = Column(String, nullable=False)
+    title = Column(String)
+    number = Column(String)
+    issued_on = Column(Date)
+    expires_on = Column(Date, index=True)
+    file = Column(Text)                      # base64 yoki yo'l
+    note = Column(Text)
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ProbationCheck(Base):
+    """Sinov muddati nazorati: har oy alohida xulosa. Yakuniy qaror
+    (passed/failed) qo'yilgach boshqa yozib bo'lmaydi."""
+    __tablename__ = "probation_checks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    month_no = Column(Integer, default=1)     # sinovning nechanchi oyi
+    decision = Column(String, nullable=False)
+    strengths = Column(Text)
+    concerns = Column(Text)
+    note = Column(Text)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class LeaveRequest(Base):
+    """Ta'til so'rovi. Ustoz bo'lsa — guruhlariga o'rinbosar
+    ko'rsatilishi shart, aks holda darslar egasiz qoladi."""
+    __tablename__ = "leave_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+    kind = Column(String, nullable=False)
+    date_from = Column(Date, nullable=False, index=True)
+    date_to = Column(Date, nullable=False)
+    days = Column(Integer)
+    reason = Column(Text)
+    # Ustoz uchun: darslarni kim olib turadi
+    replacement_teacher_id = Column(Integer, ForeignKey("teachers.id"))
+    replacement_note = Column(Text)
+    status = Column(String, default="pending", index=True)
+    decided_by = Column(Integer, ForeignKey("users.id"))
+    decided_at = Column(DateTime)
+    decision_note = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR FAZA 4 — PERFORMANCE
+# =====================================================================
+class PerformanceReview(Base):
+    """Davriy baholash. YAKUNLANGACH QULFLANADI — tarix qayta
+    yozilmaydi, aks holda baholashning qadri qolmaydi."""
+    __tablename__ = "performance_reviews"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    period = Column(String, index=True)       # "2026-H1"
+    scores = Column(Text)                     # {"results": 4, ...}
+    percent = Column(Float)
+    strengths = Column(Text)
+    to_improve = Column(Text)
+    goals = Column(Text)
+    status = Column(String, default="draft")  # draft | final
+    finalized_at = Column(DateTime)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class OneOnOne(Base):
+    """1:1 suhbat. Maxfiy bo'lsa — faqat ikkala ishtirokchi o'qiydi,
+    HR ham ko'rmaydi. Ishonch shu bilan quriladi."""
+    __tablename__ = "one_on_ones"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    manager_id = Column(Integer, ForeignKey("users.id"), index=True)
+    date = Column(Date)
+    privacy = Column(String, default="open")  # open | private
+    notes = Column(Text)
+    agreements = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Pip(Base):
+    """Natijani yaxshilash rejasi. Jazo emas — oxirgi imkoniyat:
+    aniq maqsad, aniq muddat, aniq yakun."""
+    __tablename__ = "pips"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    reason = Column(Text)
+    goals = Column(Text)
+    date_from = Column(Date)
+    date_to = Column(Date)
+    status = Column(String, default="active")
+    outcome_note = Column(Text)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  HR FAZA 5 — MUNOSABATLAR VA KETISH
+# =====================================================================
+class DisciplinaryCase(Base):
+    __tablename__ = "disciplinary_cases"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    kind = Column(String, nullable=False)
+    reason = Column(Text, nullable=False)
+    date = Column(Date)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Recognition(Base):
+    __tablename__ = "recognitions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    kind = Column(String, nullable=False)
+    reason = Column(Text)
+    amount = Column(Float)
+    date = Column(Date)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Offboarding(Base):
+    """Ketish jarayoni: bandlar ro'yxati + chiqish suhbati.
+
+    Chiqish suhbatining maqsadi — TIZIMNI tuzatish: sabab "bizga
+    bog'liq" bo'lsa (ish haqi, rahbariyat, yuk) bu ustidan ishlash
+    mumkin bo'lgan signal."""
+    __tablename__ = "offboardings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+    last_day = Column(Date)
+    reason = Column(String)
+    steps = Column(Text)                      # {"notice": 1, ...}
+    exit_notes = Column(Text)                 # chiqish suhbati
+    would_return = Column(Integer)            # 1/0 — qaytarmidi
+    completed = Column(Integer, default=0)
+    by_user_id = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)

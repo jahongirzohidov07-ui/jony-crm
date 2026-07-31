@@ -1847,3 +1847,163 @@ class ExamOrderIn(BaseModel):
 class ExamOrderDecision(BaseModel):
     note: Optional[str] = None
     reason: Optional[str] = None
+
+
+# ---------- HR Faza 2B: ATS ----------
+class ApplicationIn(BaseModel):
+    """Yangi ariza. Nomzod mavjud bo'lsa candidate_id, yangi bo'lsa
+    ismi va telefoni."""
+    candidate_id: Optional[int] = None
+    full_name: Optional[str] = None
+    phone: Optional[str] = None
+    vacancy_id: Optional[int] = None
+    branch_id: Optional[int] = None
+    source: Optional[str] = None
+    note: Optional[str] = None
+    # Dublikat topilsa ham baribir ochish
+    force: bool = False
+
+
+class ApplicationMove(BaseModel):
+    stage: str
+    reason: Optional[str] = None
+    note: Optional[str] = None
+    pool: Optional[bool] = None
+
+
+class InterviewIn(BaseModel):
+    application_id: int
+    kind: str = "hr"
+    date: date
+    time: Optional[str] = None
+    minutes: Optional[int] = None
+    place: Optional[str] = None
+    room_id: Optional[int] = None
+    interviewer_id: Optional[int] = None
+    note: Optional[str] = None
+
+
+class InterviewStatusIn(BaseModel):
+    status: str
+    note: Optional[str] = None
+
+
+class ScorecardIn(BaseModel):
+    application_id: int
+    interview_id: Optional[int] = None
+    scores: dict = {}
+    recommendation: Optional[str] = None
+    strengths: Optional[str] = None
+    concerns: Optional[str] = None
+    note: Optional[str] = None
+
+
+class OfferIn(BaseModel):
+    application_id: int
+    position: Optional[str] = None
+    salary: Optional[float] = None
+    salary_note: Optional[str] = None
+    start_date: Optional[date] = None
+    probation_months: Optional[int] = None
+    terms: Optional[str] = None
+
+
+class OfferAction(BaseModel):
+    action: str          # submit | approve | reject | send | accept |
+    #                      decline | withdraw
+    note: Optional[str] = None
+
+
+# ---------- HR Faza 3-5 ----------
+class DocumentIn(BaseModel):
+    user_id: int
+    kind: str
+    title: Optional[str] = None
+    number: Optional[str] = None
+    issued_on: Optional[date] = None
+    expires_on: Optional[date] = None
+    note: Optional[str] = None
+
+
+class ProbationIn(BaseModel):
+    user_id: int
+    month_no: int = 1
+    decision: str
+    strengths: Optional[str] = None
+    concerns: Optional[str] = None
+    note: Optional[str] = None
+
+
+class LeaveIn(BaseModel):
+    user_id: Optional[int] = None      # bo'sh bo'lsa — o'zi uchun
+    kind: str
+    date_from: date
+    date_to: date
+    reason: Optional[str] = None
+    replacement_teacher_id: Optional[int] = None
+    replacement_note: Optional[str] = None
+
+
+class LeaveDecision(BaseModel):
+    decision: str                      # approved | rejected
+    note: Optional[str] = None
+
+
+class ReviewIn(BaseModel):
+    user_id: int
+    period: str
+    scores: dict = {}
+    strengths: Optional[str] = None
+    to_improve: Optional[str] = None
+    goals: Optional[str] = None
+    finalize: bool = False
+
+
+class OneOnOneIn(BaseModel):
+    user_id: int
+    date: Optional[date] = None
+    privacy: str = "open"
+    notes: Optional[str] = None
+    agreements: Optional[str] = None
+
+
+class PipIn(BaseModel):
+    user_id: int
+    reason: str
+    goals: str
+    date_from: Optional[date] = None
+    date_to: Optional[date] = None
+
+
+class PipClose(BaseModel):
+    status: str                        # passed | failed
+    note: Optional[str] = None
+
+
+class DisciplineIn(BaseModel):
+    user_id: int
+    kind: str
+    reason: str
+    date: Optional[date] = None
+
+
+class RecognitionIn(BaseModel):
+    user_id: int
+    kind: str
+    reason: Optional[str] = None
+    amount: Optional[float] = None
+    date: Optional[date] = None
+
+
+class OffboardIn(BaseModel):
+    user_id: int
+    last_day: Optional[date] = None
+    reason: Optional[str] = None
+
+
+class OffboardUpdate(BaseModel):
+    step: Optional[str] = None
+    done: Optional[bool] = None
+    exit_notes: Optional[str] = None
+    would_return: Optional[bool] = None
+    reason: Optional[str] = None

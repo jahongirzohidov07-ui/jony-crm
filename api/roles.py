@@ -3020,7 +3020,10 @@ ANALYTICS_DIMENSIONS = [
     ("goal", "Maqsad"),
     ("weekday", "Hafta kuni"),
 ]
-CONTENT_FORMATS = [
+# Analitika kesimi uchun soddalashtirilgan formatlar ro'yxati.
+# DIQQAT: nomi ataylab boshqa — CONTENT_FORMATS kontent-quvurniki,
+# ikkinchi marta e'lon qilinsa uni jimgina almashtirib yuborardi.
+ANALYTICS_FORMATS = [
     ("reels", "Reels / qisqa video"),
     ("carousel", "Karusel"),
     ("photo", "Bitta rasm"),
@@ -3029,7 +3032,10 @@ CONTENT_FORMATS = [
     ("live", "Jonli efir"),
     ("long", "Uzun video"),
 ]
-CONTENT_FORMAT_LABELS = {k: lbl for k, lbl in CONTENT_FORMATS}
+# Quvur kalitlari ham yorliq topsin, lekin umumiy kalitlarda
+# analitika yorlig'i ustun — avvalgi xatti-harakat saqlanadi
+CONTENT_FORMAT_LABELS = {**FORMAT_LABELS,
+                         **{k: lbl for k, lbl in ANALYTICS_FORMATS}}
 UZ_WEEKDAYS = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba",
                "Juma", "Shanba", "Yakshanba"]
 
@@ -3737,3 +3743,408 @@ def uz_date_full(d) -> str:
     Imtihon buyurtmasida yil kerak: "12-avgust" degan sana kelasi
     yilnikimi yoki shu yilnikimi — noaniq qoladi."""
     return d.strftime("%d.%m.%Y") if d else "—"
+
+
+# =====================================================================
+#  HR FAZA 2B — ATS QUVURI, SUHBAT VA BAHOLASH VARAQASI
+#
+#  Nima uchun alohida "ariza" tushunchasi kerak: bitta odam ikkita
+#  vakansiyaga topshirishi mumkin (masalan ustoz va administrator).
+#  Agar bosqich odamning O'ZIDA saqlansa, u ikkinchi vakansiyada ham
+#  "rad etilgan" bo'lib qoladi va yaxshi nomzod behuda yo'qoladi.
+# =====================================================================
+APPLICATION_STAGES = [
+    # (kalit, nom, rang, yopiqmi, SLA kun)
+    ("new",        "Yangi ariza",            "slate",   False, 2),
+    ("screening",  "Rezyume ko'rilmoqda",    "sky",     False, 3),
+    ("phone",      "Telefon suhbati",        "sky",     False, 3),
+    ("interview",  "Suhbat",                 "violet",  False, 5),
+    ("task",       "Topshiriq berildi",      "violet",  False, 5),
+    ("demo",       "Sinov darsi",            "amber",   False, 5),
+    ("reference",  "Tavsiyanoma tekshiruvi", "amber",   False, 3),
+    ("offer",      "Taklif berildi",         "teal",    False, 3),
+    ("hired",      "Ishga olindi",           "emerald", True,  None),
+    ("rejected",   "Rad etildi",             "red",     True,  None),
+    ("withdrew",   "O'zi voz kechdi",        "slate",   True,  None),
+    ("pool",       "Talent pool",            "indigo",  True,  None),
+]
+APPLICATION_LABELS = {k: l for k, l, _t, _c, _s in APPLICATION_STAGES}
+APPLICATION_TONE = {k: t for k, _l, t, _c, _s in APPLICATION_STAGES}
+APPLICATION_SLA = {k: s for k, _l, _t, _c, s in APPLICATION_STAGES}
+APPLICATION_CLOSED = [k for k, _l, _t, c, _s in APPLICATION_STAGES if c]
+APPLICATION_OPEN = [k for k, _l, _t, c, _s in APPLICATION_STAGES if not c]
+
+# Quvur tartibi — kanban ustunlari shu ketma-ketlikda chiziladi
+APPLICATION_FLOW = ["new", "screening", "phone", "interview", "task",
+                    "demo", "reference", "offer", "hired"]
+
+
+def application_next(stage: str) -> str | None:
+    """Keyingi bosqich. Oxirgisida None."""
+    if stage not in APPLICATION_FLOW:
+        return None
+    i = APPLICATION_FLOW.index(stage)
+    return APPLICATION_FLOW[i + 1] if i + 1 < len(APPLICATION_FLOW) else None
+
+
+def application_progress(stage: str) -> int:
+    """Quvurning necha foizi bosib o'tilgan."""
+    if stage == "hired":
+        return 100
+    if stage in APPLICATION_CLOSED or stage not in APPLICATION_FLOW:
+        return 0
+    return round(APPLICATION_FLOW.index(stage)
+                 / (len(APPLICATION_FLOW) - 1) * 100)
+
+
+# Rad etish sabablari. "Boshqa sabab" ataylab oxirida: statistika
+# ma'noli bo'lishi uchun aniq sabab tanlanishi kerak.
+REJECT_REASONS = [
+    ("no_experience", "Tajribasi yetarli emas"),
+    ("weak_demo", "Sinov darsi kuchsiz"),
+    ("weak_language", "Til darajasi past"),
+    ("salary", "Ish haqi kelishilmadi"),
+    ("schedule", "Jadval to'g'ri kelmadi"),
+    ("culture", "Jamoaga mos kelmadi"),
+    ("no_show", "Suhbatga kelmadi"),
+    ("background", "Tavsiyanoma salbiy"),
+    ("other", "Boshqa sabab"),
+]
+REJECT_LABELS = dict(REJECT_REASONS)
+# Bularda nomzod aybdor emas — keyin qaytib kelishi mumkin
+POOL_WORTHY = ["salary", "schedule", "no_experience"]
+
+# ---- Suhbat turlari ----
+INTERVIEW_KINDS = [
+    ("phone", "Telefon suhbati", 20),
+    ("hr", "HR suhbati", 45),
+    ("tech", "Kasbiy suhbat", 60),
+    ("demo", "Sinov darsi", 45),
+    ("final", "Yakuniy suhbat", 30),
+]
+INTERVIEW_KIND_LABELS = {k: l for k, l, _m in INTERVIEW_KINDS}
+INTERVIEW_MINUTES = {k: m for k, _l, m in INTERVIEW_KINDS}
+
+INTERVIEW_STATUSES = [
+    ("planned", "Rejalashtirilgan", "sky"),
+    ("done", "O'tkazildi", "emerald"),
+    ("no_show", "Nomzod kelmadi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+INTERVIEW_STATUS_LABELS = {k: l for k, l, _t in INTERVIEW_STATUSES}
+INTERVIEW_STATUS_TONE = {k: t for k, _l, t in INTERVIEW_STATUSES}
+
+# ---- Baholash varaqasi: 15 kompetensiya, og'irlik bilan ----
+#      (kalit, nom, guruh, og'irlik)
+COMPETENCIES = [
+    ("subject",       "Fanni bilishi",              "kasbiy",    3),
+    ("method",        "Metodika va dars qurilishi", "kasbiy",    3),
+    ("language",      "Til darajasi",               "kasbiy",    3),
+    ("tech",          "Texnika bilan ishlashi",     "kasbiy",    1),
+    ("planning",      "Rejalashtirish",             "kasbiy",    2),
+    ("communication", "Muloqot",                    "shaxsiy",   3),
+    ("empathy",       "Bolani tushunishi",          "shaxsiy",   3),
+    ("discipline",    "Intizom va punktuallik",     "shaxsiy",   3),
+    ("teamwork",      "Jamoada ishlashi",           "shaxsiy",   2),
+    ("stress",        "Bosim ostida ishlashi",      "shaxsiy",   2),
+    ("learning",      "O'rganishga ochiqligi",      "salohiyat", 3),
+    ("feedback",      "Fikrni qabul qilishi",       "salohiyat", 3),
+    ("initiative",    "Tashabbuskorligi",           "salohiyat", 2),
+    ("growth",        "O'sish istagi",              "salohiyat", 2),
+    ("values",        "Qadriyatlarga mosligi",      "salohiyat", 3),
+]
+COMPETENCY_LABELS = {k: l for k, l, _g, _w in COMPETENCIES}
+COMPETENCY_GROUP = {k: g for k, _l, g, _w in COMPETENCIES}
+COMPETENCY_WEIGHT = {k: w for k, _l, _g, w in COMPETENCIES}
+COMPETENCY_GROUPS = [
+    ("kasbiy", "Kasbiy tayyorgarlik"),
+    ("shaxsiy", "Shaxsiy fazilatlar"),
+    ("salohiyat", "O'sish salohiyati"),
+]
+# Har kompetensiya 1-5 ball
+SCORE_MIN, SCORE_MAX = 1, 5
+SCORE_LABELS = {
+    1: "Umuman yo'q",
+    2: "Zaif",
+    3: "Yetarli",
+    4: "Yaxshi",
+    5: "A'lo",
+}
+
+# Yakuniy tavsiya
+RECOMMENDATIONS = [
+    ("strong_yes", "Albatta olamiz", "emerald", 2),
+    ("yes", "Olsa bo'ladi", "teal", 1),
+    ("maybe", "Ikkilanaman", "amber", 0),
+    ("no", "Olmaymiz", "orange", -1),
+    ("strong_no", "Umuman mos emas", "red", -2),
+]
+RECOMMENDATION_LABELS = {k: l for k, l, _t, _v in RECOMMENDATIONS}
+RECOMMENDATION_TONE = {k: t for k, _l, t, _v in RECOMMENDATIONS}
+RECOMMENDATION_VALUE = {k: v for k, _l, _t, v in RECOMMENDATIONS}
+
+SCORECARD_PASS = 70.0        # foizda
+
+
+def scorecard_percent(scores: dict) -> float | None:
+    """Og'irlikli o'rtacha.
+
+    Baholanmagan kompetensiya hisobga KIRMAYDI — aks holda yarim
+    to'ldirilgan varaqa past foiz ko'rsatib, yaxshi nomzodni behuda
+    yo'qotardi."""
+    num = den = 0.0
+    for k, v in (scores or {}).items():
+        w = COMPETENCY_WEIGHT.get(k)
+        if not w or v is None:
+            continue
+        num += float(v) * w
+        den += SCORE_MAX * w
+    return round(num / den * 100, 1) if den else None
+
+
+def scorecard_band(percent) -> tuple:
+    if percent is None:
+        return ("To'ldirilmagan", "slate")
+    if percent >= 85:
+        return ("Kuchli nomzod", "emerald")
+    if percent >= SCORECARD_PASS:
+        return ("Mos keladi", "teal")
+    if percent >= 55:
+        return ("Chegarada", "amber")
+    return ("Mos emas", "red")
+
+
+# ---- Savollar bankisi: (kompetensiya, savol) ----
+QUESTION_BANK = [
+    ("method", "Bolalar darsni tushunmayotganini qanday bilasiz?"),
+    ("method", "Bitta mavzuni ikki xil usulda tushuntirib bering."),
+    ("subject", "Present Perfect va Past Simple farqini bolaga qanday "
+                "tushuntirasiz?"),
+    ("language", "O'zingizni qanday darajada baholaysiz va nima "
+                 "asosida?"),
+    ("empathy", "Darsda yig'lab yuborgan bola bilan nima qilasiz?"),
+    ("empathy", "Sekin o'zlashtiruvchi bolaga qanday yondashasiz?"),
+    ("discipline", "Kechikib qolgan holatingiz bo'lganmi? Nima "
+                   "qilgansiz?"),
+    ("discipline", "Guruhda tartib buzilsa nima qilasiz?"),
+    ("communication", "Norozi ota-ona bilan suhbatni qanday "
+                      "boshlaysiz?"),
+    ("teamwork", "Hamkasbingiz bilan kelisha olmasangiz nima qilasiz?"),
+    ("stress", "Bir vaqtda ikki muhim ish chiqsa qaysinisini tanlaysiz "
+               "va nega?"),
+    ("feedback", "Sizga oxirgi marta qachon tanqid aytilgan va siz nima "
+                 "qilgansiz?"),
+    ("learning", "Oxirgi yarim yilda nima yangi narsa o'rgandingiz?"),
+    ("initiative", "O'zingiz boshlab qilgan ishingizni ayting."),
+    ("growth", "Uch yildan keyin o'zingizni qayerda ko'rasiz?"),
+    ("values", "Sizningcha yaxshi ustoz nima bilan farq qiladi?"),
+    ("planning", "Bir oylik dars rejasini qanday tuzasiz?"),
+    ("tech", "Onlayn dars o'tganmisiz? Qanday vositalardan "
+             "foydalangansiz?"),
+]
+
+# Ruxsatlar
+ATS_VIEW = HR_FULL + [ACADEMIC_HEAD, BRANCH_MANAGER]
+ATS_MANAGE = HR_FULL + [ACADEMIC_HEAD]
+# Suhbat o'tkazuvchi kim bo'lishi mumkin
+INTERVIEWERS = ATS_MANAGE + [BRANCH_MANAGER, HEAD_EXAMINER, EXAMINER]
+
+# Dublikat nomzodni topish oynasi
+DUPLICATE_DAYS = 365
+
+
+def phone_key(phone) -> str:
+    """Telefonni solishtirish uchun raqamga keltiradi: +998 90 123-45-67
+    va 901234567 bir xil odam."""
+    return "".join(ch for ch in (phone or "") if ch.isdigit())[-9:]
+
+
+# =====================================================================
+#  HR FAZA 2C — TAKLIF (OFFER)
+#
+#  Taklif og'zaki emas, yozma bo'ladi va tasdiq zanjiridan o'tadi:
+#  HR tuzadi → rahbariyat tasdiqlaydi → nomzodga yuboriladi →
+#  nomzod javob beradi. Har o'zgartirish yangi VERSIYA — kim qachon
+#  qancha taklif qilgani hech qachon yo'qolmaydi.
+# =====================================================================
+OFFER_STATUSES = [
+    ("draft",    "Qoralama",             "slate"),
+    ("approval", "Tasdiq kutmoqda",      "amber"),
+    ("approved", "Tasdiqlandi",          "sky"),
+    ("sent",     "Nomzodga yuborildi",   "violet"),
+    ("accepted", "Nomzod qabul qildi",   "emerald"),
+    ("declined", "Nomzod rad etdi",      "red"),
+    ("expired",  "Muddati o'tdi",        "slate"),
+    ("withdrawn", "Qaytarib olindi",     "slate"),
+]
+OFFER_LABELS = {k: l for k, l, _t in OFFER_STATUSES}
+OFFER_TONE = {k: t for k, _l, t in OFFER_STATUSES}
+OFFER_OPEN = ["draft", "approval", "approved", "sent"]
+OFFER_FINAL = ["accepted", "declined", "expired", "withdrawn"]
+
+# Kim tuzadi, kim tasdiqlaydi. Taklifda PUL bor — tasdiqsiz chiqmaydi.
+OFFER_CREATE = HR_FULL
+OFFER_APPROVE = [FOUNDER, FINANCE_DIRECTOR]
+# Nomzod javobini kutish muddati
+OFFER_VALID_DAYS = 5
+
+
+def offer_next(status: str, action: str) -> str | None:
+    """Ruxsat etilgan o'tishlar. Chetlab o'tish yo'q: qoralama
+    to'g'ridan-to'g'ri "qabul qilindi" bo'la olmaydi."""
+    allowed = {
+        ("draft", "submit"): "approval",
+        ("approval", "approve"): "approved",
+        ("approval", "reject"): "draft",
+        ("approved", "send"): "sent",
+        ("sent", "accept"): "accepted",
+        ("sent", "decline"): "declined",
+        ("sent", "expire"): "expired",
+        ("draft", "withdraw"): "withdrawn",
+        ("approval", "withdraw"): "withdrawn",
+        ("approved", "withdraw"): "withdrawn",
+        ("sent", "withdraw"): "withdrawn",
+    }
+    return allowed.get((status, action))
+
+
+# =====================================================================
+#  HR FAZA 3 — XODIM HAYOTIY SIKLI
+#  Hujjatlar (muddati bilan), onboarding, sinov muddati, ta'til.
+# =====================================================================
+DOCUMENT_KINDS = [
+    ("passport", "Pasport / ID karta", True),
+    ("diploma", "Diplom", False),
+    ("certificate", "Sertifikat (IELTS, CEFR...)", True),
+    ("contract", "Mehnat shartnomasi", True),
+    ("medical", "Tibbiy ma'lumotnoma", True),
+    ("photo", "3x4 surat", False),
+    ("reference", "Tavsiyanoma", False),
+    ("other", "Boshqa", False),
+]
+DOCUMENT_LABELS = {k: l for k, l, _e in DOCUMENT_KINDS}
+# Muddati bo'ladigan hujjatlar — tugashidan oldin ogohlantiriladi
+DOCUMENT_EXPIRES = [k for k, _l, e in DOCUMENT_KINDS if e]
+DOCUMENT_WARN_DAYS = 30
+
+# Onboarding allaqachon mavjud (ONBOARDING_STEPS yuqorida, 26-partiyada qurilgan).
+
+# Sinov muddati nazorati: har oy alohida xulosa
+PROBATION_DECISIONS = [
+    ("on_track", "Yaxshi ketmoqda", "emerald"),
+    ("watch", "E'tibor kerak", "amber"),
+    ("risk", "Xavf ostida", "red"),
+    ("passed", "Sinovdan o'tdi", "teal"),
+    ("failed", "Sinovdan o'tmadi", "red"),
+]
+PROBATION_LABELS = {k: l for k, l, _t in PROBATION_DECISIONS}
+PROBATION_TONE = {k: t for k, _l, t in PROBATION_DECISIONS}
+PROBATION_FINAL = ["passed", "failed"]
+
+# Ta'til turlari: (kalit, nom, haqlimi, yillik chegara kun)
+LEAVE_KINDS = [
+    ("annual", "Yillik ta'til", True, 21),
+    ("sick", "Kasallik", True, None),
+    ("unpaid", "Ta'tilsiz (o'z hisobidan)", False, 30),
+    ("family", "Oilaviy sabab", False, 5),
+    ("study", "O'qish / imtihon", False, 10),
+]
+LEAVE_LABELS = {k: l for k, l, _p, _d in LEAVE_KINDS}
+LEAVE_PAID = {k: p for k, _l, p, _d in LEAVE_KINDS}
+LEAVE_LIMIT = {k: d for k, _l, _p, d in LEAVE_KINDS}
+
+LEAVE_STATUSES = [
+    ("pending", "Kutilmoqda", "amber"),
+    ("approved", "Tasdiqlandi", "emerald"),
+    ("rejected", "Rad etildi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+LEAVE_STATUS_LABELS = {k: l for k, l, _t in LEAVE_STATUSES}
+LEAVE_STATUS_TONE = {k: t for k, _l, t in LEAVE_STATUSES}
+LEAVE_MIN_NOTICE_DAYS = 3          # kasallikdan tashqari
+LEAVE_APPROVE = HR_FULL + [BRANCH_MANAGER]
+
+LIFECYCLE_VIEW = HR_FULL + [BRANCH_MANAGER]
+
+# =====================================================================
+#  HR FAZA 4 — PERFORMANCE
+#  Baholash yakunlangach QULFLANADI: tarix qayta yozilmaydi.
+# =====================================================================
+REVIEW_CRITERIA = [
+    ("results", "Ish natijalari", 3),
+    ("quality", "Sifat va mas'uliyat", 3),
+    ("discipline", "Intizom", 2),
+    ("teamwork", "Jamoa bilan ishlash", 2),
+    ("growth", "O'sish va tashabbus", 2),
+]
+REVIEW_LABELS = {k: l for k, l, _w in REVIEW_CRITERIA}
+REVIEW_WEIGHT = {k: w for k, _l, w in REVIEW_CRITERIA}
+
+
+def review_percent(scores: dict):
+    """1-5 balldan og'irlikli foiz. Baholanmagani hisobga kirmaydi."""
+    num = den = 0.0
+    for k, v in (scores or {}).items():
+        w = REVIEW_WEIGHT.get(k)
+        if not w or v is None:
+            continue
+        num += float(v) * w
+        den += 5 * w
+    return round(num / den * 100, 1) if den else None
+
+
+ONE_ON_ONE_PRIVACY = [
+    ("open", "Ochiq — HR ko'radi"),
+    ("private", "Maxfiy — faqat ikkalasi"),
+]
+PIP_STATUSES = [
+    ("active", "Faol", "amber"),
+    ("passed", "Muvaffaqiyatli yakunlandi", "emerald"),
+    ("failed", "Natija bermadi", "red"),
+]
+PIP_LABELS = {k: l for k, l, _t in PIP_STATUSES}
+
+# =====================================================================
+#  HR FAZA 5 — MUNOSABATLAR VA KETISH
+# =====================================================================
+DISCIPLINE_KINDS = [
+    ("verbal", "Og'zaki ogohlantirish"),
+    ("written", "Yozma ogohlantirish"),
+    ("final", "Oxirgi ogohlantirish"),
+]
+DISCIPLINE_LABELS = dict(DISCIPLINE_KINDS)
+
+RECOGNITION_KINDS = [
+    ("thanks", "Rahmatnoma"),
+    ("bonus", "Mukofot"),
+    ("star", "Oy xodimi"),
+]
+RECOGNITION_LABELS = dict(RECOGNITION_KINDS)
+
+# Ketish sabablari — "biznesga bog'liq"lari alohida: ular ustidan
+# ishlash mumkin, qolganlari ustidan yo'q
+EXIT_REASONS = [
+    ("salary", "Ish haqidan norozi", True),
+    ("management", "Rahbariyatdan norozi", True),
+    ("workload", "Ish yuki og'ir", True),
+    ("growth", "O'sish imkoni yo'q deb bildi", True),
+    ("relocation", "Ko'chib ketdi", False),
+    ("family", "Oilaviy sabab", False),
+    ("study", "O'qishga ketdi", False),
+    ("competitor", "Boshqa markazga o'tdi", True),
+    ("dismissed", "Ishdan bo'shatildi", False),
+    ("other", "Boshqa", False),
+]
+EXIT_LABELS = {k: l for k, l, _o in EXIT_REASONS}
+EXIT_OURS = [k for k, _l, o in EXIT_REASONS if o]
+
+OFFBOARD_STEPS = [
+    ("notice", "Ariza qabul qilindi"),
+    ("handover", "Ishlarni topshirish"),
+    ("groups", "Guruhlarni boshqa ustozga o'tkazish"),
+    ("assets", "Mulk va kitoblarni qaytarish"),
+    ("account", "Hisobni o'chirish"),
+    ("exit_interview", "Chiqish suhbati"),
+    ("final_pay", "Yakuniy hisob-kitob"),
+]
+OFFBOARD_LABELS = dict(OFFBOARD_STEPS)

@@ -1446,6 +1446,19 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     )
     by_date = {ls.date: ls for ls in existing}
 
+    # KO'CHIRILGAN DARSLAR. Ko'chirilgan dars ataylab jadval kunidan
+    # tashqariga tushadi (masalan chorshanbadan payshanbaga). Agar shu
+    # yerda himoyalanmasa, sahifa qayta ochilganda "jadvalga mos
+    # kelmaydi" deb O'CHIRIB yuboriladi, eski kunida esa yangisi
+    # paydo bo'ladi — ya'ni ko'chirish bekor bo'lib qoladi.
+    moves = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.group_id == group.id,
+        models.LessonReschedule.status.in_(roles.RESCHEDULE_DONE)).all()
+    protected = {m.lesson_id for m in moves if m.lesson_id}
+    vacated = {m.from_date for m in moves}      # bu kunlarda dars yo'q
+    landed = {m.to_date for m in moves}
+    protected |= {ls.id for ls in existing if ls.date in landed}
+
     # Guruh boshlangunicha va tugagandan keyin dars bo'lmaydi.
     lo = max(start, group.start_date) if group.start_date else start
     hi = min(end, group.end_date) if group.end_date else end
@@ -1454,7 +1467,9 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     if wanted:
         d = lo
         while d <= hi:
-            if d.weekday() in wanted and d not in by_date:
+            # Bo'shatilgan kunga yangi dars qo'yilmaydi — dars u yerdan
+            # ko'chirilgan
+            if d.weekday() in wanted and d not in by_date and d not in vacated:
                 db.add(models.Lesson(
                     group_id=group.id, teacher_id=group.teacher_id,
                     date=d, held=0, created_by="avtomat"))
@@ -1463,8 +1478,9 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
 
     # Jadvalga mos kelmay qolgan bo'sh darslarni olib tashlaymiz.
     stale = [ls for ls in existing
-             if not ls.held and (ls.date.weekday() not in wanted
-                                 or ls.date < lo or ls.date > hi)]
+             if not ls.held and ls.id not in protected
+             and (ls.date.weekday() not in wanted
+                  or ls.date < lo or ls.date > hi)]
     for ls in stale:
         has_data = (
             db.query(models.Attendance)
@@ -1531,6 +1547,8 @@ def attendance_grid(
                  for ls in lessons],
         marks=marks,
         homework=hw,
+        reschedule=_reschedule_box(db, group_id, user,
+                                   for_month=date(year, month, 1)),
     )
 
 
@@ -19617,6 +19635,13 @@ def _reschedule_usage(db: Session, teacher_id: int,
     q = db.query(models.LessonReschedule).filter(
         models.LessonReschedule.teacher_id == teacher_id,
         models.LessonReschedule.status.in_(roles.RESCHEDULE_DONE))
+    # Kvota — USTOZNING o'z surishlari uchun. Rahbariyat bayram yoki
+    # boshqa sabab bilan darsni ko'chirsa, ustoz buning uchun
+    # javobgar emas va imkoni yeyilmasligi kerak.
+    t = db.query(models.Teacher).get(teacher_id)
+    if t and t.user_id:
+        q = q.filter(or_(models.LessonReschedule.requested_by.is_(None),
+                         models.LessonReschedule.requested_by == t.user_id))
     # Hisob SO'RALGAN dars sanasi bo'yicha — ustoz kelasi oyning
     # darsini bugun surib, oylik kvotani aylanib o'tolmasin
     used_month = q.filter(
@@ -20583,4 +20608,171 @@ def _teacher_dashboard(db: Session, user: models.User):
         },
         "hint": ("Har bir ogohlantirish — bugun qilinadigan ish. "
                  "Yonida nima qilish kerakligi yozilgan."),
+    }
+
+
+# =====================================================================
+#  DAVOMAT JADVALIDAN DARS KO'CHIRISH
+#
+#  Sana sarlavhasiga bosilganda menyu chiqadi va o'sha yerdan dars
+#  ko'chiriladi — ustoz alohida bo'limga o'tib yurmaydi. Bekor qilish
+#  yo'q: dars faqat boshqa kunga ko'chadi.
+# =====================================================================
+def _reschedule_box(db: Session, group_id: int, user: models.User,
+                    for_month: date | None = None) -> dict:
+    """Sana menyusi uchun: kim ko'chira oladi, qancha imkon qolgan va
+    qaysi darslar allaqachon ko'chirilgan."""
+    g = db.query(models.Group).get(group_id)
+    t = _teacher_of_user(db, user)
+    mine = bool(g and t and g.teacher_id == t.id)
+    manager = user.role in tuple(roles.RESCHEDULE_APPROVE)
+
+    rows = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.group_id == group_id,
+        models.LessonReschedule.status.in_(
+            roles.RESCHEDULE_DONE + ["pending"])).all()
+    by_date = {}
+    for r in rows:
+        by_date[r.from_date.isoformat()] = {
+            "id": r.id, "status": r.status,
+            "status_label": dict(
+                (k, l) for k, l, _t in roles.RESCHEDULE_STATUSES
+            ).get(r.status, r.status),
+            "to_date": r.to_date.isoformat(),
+        }
+
+    box = {
+        "can": mine or manager,
+        "as_manager": manager and not mine,
+        "moved": by_date,
+        "reasons": [{"key": k, "label": l}
+                    for k, l in roles.RESCHEDULE_REASONS],
+        "min_notice_days": roles.RESCHEDULE_MIN_NOTICE_DAYS,
+        "max_shift_days": roles.RESCHEDULE_MAX_SHIFT_DAYS,
+        "cannot_cancel": ("Darsni bekor qilib bo'lmaydi — faqat boshqa "
+                          "kunga ko'chiriladi."),
+        "quota": None,
+    }
+    if mine:
+        # Kvota KO'RILAYOTGAN oy bo'yicha: ustoz avgust jadvalini
+        # ochganda avgustning imkonini ko'rishi kerak. Kvota dars oyi
+        # bo'yicha sanaladi, shuning uchun bu ikkalasi mos keladi.
+        m = for_month or roles.local_today()
+        box["quota"] = _reschedule_usage(db, t.id, m)
+        box["month"] = m.replace(day=1).isoformat()
+        box["hint"] = (
+            f"Oyiga {roles.RESCHEDULE_PER_MONTH} marta avtomat ruxsat "
+            f"beriladi. Chegaradan oshsa so'rov tasdiqqa ketadi. "
+            f"Dars ko'p surilsa o'quvchining qiziqishi tushadi.")
+    elif manager:
+        box["hint"] = ("Rahbariyat ko'chirishi kvotaga kirmaydi va "
+                       "darrov kuchga kiradi.")
+    return box
+
+
+@app.post("/api/groups/{gid}/reschedule")
+def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """Jadvaldagi sana menyusidan dars ko'chirish.
+
+    Ustoz o'z guruhida kvota bilan, rahbariyat kvotasiz ko'chiradi.
+    Ikkalasi ham bitta yozuvga tushadi — kim ko'chirgani ko'rinib
+    turadi va tarix bir joyda qoladi.
+    """
+    g = _get_group_in_scope(db, gid, user)
+    t = _teacher_of_user(db, user)
+    mine = bool(t and g.teacher_id == t.id)
+    manager = user.role in tuple(roles.RESCHEDULE_APPROVE)
+    if not (mine or manager):
+        raise HTTPException(403, "Bu guruhning darsini ko'chira olmaysiz")
+
+    today = roles.local_today()
+    if payload.to_date <= today:
+        raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
+    if payload.to_date == payload.from_date:
+        raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
+    if payload.from_date < today:
+        raise HTTPException(400, "O'tib ketgan darsni ko'chirib bo'lmaydi")
+
+    ls = db.query(models.Lesson).filter(
+        models.Lesson.group_id == gid,
+        models.Lesson.date == payload.from_date).first()
+    if ls and ls.held:
+        raise HTTPException(
+            400, "O'tilgan darsni ko'chirib bo'lmaydi — u tarix va "
+                 "ish haqi asosi")
+
+    dup = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.group_id == gid,
+        models.LessonReschedule.from_date == payload.from_date,
+        models.LessonReschedule.status.in_(
+            roles.RESCHEDULE_DONE + ["pending"])).first()
+    if dup:
+        raise HTTPException(400, "Bu dars allaqachon ko'chirilgan yoki "
+                                 "so'rov yuborilgan")
+
+    shift = abs((payload.to_date - payload.from_date).days)
+    if shift > roles.RESCHEDULE_MAX_SHIFT_DAYS:
+        raise HTTPException(
+            400, f"Dars ko'pi bilan {roles.RESCHEDULE_MAX_SHIFT_DAYS} "
+                 f"kunga ko'chiriladi")
+
+    # Ustoz uchun: ogohlantirish muddati va kvota. Rahbariyatga bu
+    # cheklovlar qo'llanmaydi — ular allaqachon tasdiqlovchi.
+    within_quota = True
+    if mine and not manager:
+        notice = (payload.from_date - today).days
+        if notice < roles.RESCHEDULE_MIN_NOTICE_DAYS:
+            raise HTTPException(
+                400, f"Kamida {roles.RESCHEDULE_MIN_NOTICE_DAYS} kun "
+                     f"oldin so'ralishi kerak — o'quvchi va ota-onani "
+                     f"ogohlantirishga vaqt kerak")
+        within_quota = _reschedule_usage(
+            db, t.id, payload.from_date)["auto_ok"]
+
+    r = models.LessonReschedule(
+        group_id=gid, teacher_id=g.teacher_id or (t.id if t else None),
+        from_date=payload.from_date, to_date=payload.to_date,
+        from_time=g.lesson_time, to_time=g.lesson_time,
+        reason=payload.reason, note=payload.note,
+        status="approved" if (manager and not mine) else
+               ("auto" if within_quota else "pending"),
+        auto_approved=1 if within_quota and not manager else 0,
+        requested_by=user.id)
+    if manager and not mine:
+        r.decided_by = user.id
+        r.decided_at = datetime.utcnow()
+    db.add(r); db.commit(); db.refresh(r)
+
+    applied = r.status in roles.RESCHEDULE_DONE
+    if applied:
+        _apply_reschedule(db, r)
+        db.commit()
+    else:
+        # Tasdiq kerak bo'lsa — o'quv bo'limiga vazifa bo'lib boradi
+        _hr_task(db, title=f"Dars ko'chirish so'rovi #{r.id}",
+                 body=(f"{t.full_name if t else '—'} — {g.name}. "
+                       f"{payload.from_date} → {payload.to_date}. "
+                       f"Kvota tugagan (oyiga "
+                       f"{roles.RESCHEDULE_PER_MONTH} marta), shuning "
+                       f"uchun tasdiq kerak."),
+                 to_roles=roles.RESCHEDULE_APPROVE,
+                 branch_id=g.branch_id, days=1, priority="high")
+        db.commit()
+
+    audit.log(db, user, entity="lesson_reschedule", action="create",
+              entity_id=r.id, entity_label=g.name,
+              new_value=f"{payload.from_date} → {payload.to_date}",
+              note=("rahbariyat" if manager and not mine else
+                    ("avtomat" if within_quota else "tasdiq kutmoqda")),
+              commit=True)
+
+    return {
+        "ok": True,
+        "id": r.id,
+        "status": r.status,
+        "applied": applied,
+        "message": ("Dars ko'chirildi." if applied else
+                    "Kvotadan oshdi — so'rov o'quv bo'limiga yuborildi."),
     }

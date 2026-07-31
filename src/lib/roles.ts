@@ -240,8 +240,10 @@ export const SELF_STATS = [TEACHER, SUPPORT_TEACHER];
 export const TEACHER_MENU = [
   "/",
   "/timetable",
-  "/groups",
-  "/students",
+  "/my-groups",
+  "/my-students",
+  "/my-schedule",
+  "/my-books",
   "/my-results",
   "/my-career",
   "/gamification",

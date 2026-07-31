@@ -2741,6 +2741,9 @@ export interface GradeState {
   next_label?: string | null;
   next_rate?: number | null;
   months: number;
+  /** Tajriba yilda: 3.5. Ustozga oyda emas yilda ko'rsatiladi. */
+  years?: number;
+  tenure_text?: string;
   age?: number | null;
   cert?: string | null;
   cert_score?: number | null;
@@ -3954,4 +3957,181 @@ export interface HrVacancyList {
   };
   can_edit: boolean;
   hint: string;
+}
+
+// ------------------------------------------- Ustoz kabineti
+export interface MyGroup {
+  id: number;
+  public_id?: string | null;
+  name: string;
+  subject?: string | null;
+  subject_label?: string | null;
+  level?: string | null;
+  days?: string | null;
+  time?: string | null;
+  room?: string | null;
+  students: number;
+  started_on?: string | null;
+  last_lesson?: string | null;
+  next_lesson?: string | null;
+}
+
+export interface MyGroupList {
+  rows: MyGroup[];
+  total_groups: number;
+  total_students: number;
+  hint: string;
+}
+
+/** Diqqat: bu yerda BALANS yo'q va bo'lmaydi. */
+export interface MyStudent {
+  id: number;
+  public_id?: string | null;
+  full_name: string;
+  group_id?: number | null;
+  group?: string | null;
+  status: string;
+  enrolled_date?: string | null;
+  months?: number | null;
+  attendance_percent?: number | null;
+  lessons_counted: number;
+  missed: number;
+  avg_grade?: number | null;
+  grades_count: number;
+  last_exam?: number | null;
+  best_exam?: number | null;
+  xp: number;
+  level: number;
+  at_risk: boolean;
+}
+
+export interface MyStudentList {
+  rows: MyStudent[];
+  groups: { id: number; name: string }[];
+  total: number;
+  at_risk: number;
+  hint: string;
+}
+
+export interface RescheduleQuota {
+  used_month: number;
+  used_window: number;
+  per_month: number;
+  per_window: number;
+  window_days: number;
+  left_month: number;
+  left_window: number;
+  left: number;
+  auto_ok: boolean;
+}
+
+export interface RescheduleRow {
+  id: number;
+  group_id: number;
+  group?: string | null;
+  teacher?: string | null;
+  from_date: string;
+  to_date: string;
+  from_time?: string | null;
+  to_time?: string | null;
+  shift_days: number;
+  reason?: string | null;
+  reason_label: string;
+  note?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  auto_approved: boolean;
+  decided_by?: string | null;
+  decision_note?: string | null;
+  created_at?: string | null;
+}
+
+export interface MyReschedules {
+  quota: RescheduleQuota;
+  quota_next: RescheduleQuota;
+  next_month: string;
+  rows: RescheduleRow[];
+  reasons: { key: string; label: string }[];
+  min_notice_days: number;
+  max_shift_days: number;
+  carry_over: boolean;
+  hint: string;
+  cannot_cancel: string;
+}
+
+export interface SubstitutionRow {
+  id: number;
+  group_id: number;
+  group?: string | null;
+  subject?: string | null;
+  lesson_date: string;
+  lesson_time?: string | null;
+  original_teacher?: string | null;
+  substitute_teacher?: string | null;
+  substitute_teacher_id?: number | null;
+  reason?: string | null;
+  reason_label: string;
+  note?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  open: boolean;
+  created_at?: string | null;
+}
+
+export interface MySubstitutions {
+  my_requests: SubstitutionRow[];
+  assigned_to_me: SubstitutionRow[];
+  open_offers: SubstitutionRow[];
+  my_groups: { id: number; name: string }[];
+  reasons: { key: string; label: string }[];
+  hint: string;
+}
+
+export interface BookOrderItemRow {
+  id: number;
+  title: string;
+  level?: string | null;
+  qty: number;
+  delivered_qty: number;
+  note?: string | null;
+  consumable_id?: number | null;
+}
+
+export interface BookOrderRow {
+  id: number;
+  public_id?: string | null;
+  teacher?: string | null;
+  branch?: string | null;
+  group?: string | null;
+  needed_by?: string | null;
+  days_left?: number | null;
+  urgency: string;
+  urgency_label: string;
+  urgency_tone: string;
+  note?: string | null;
+  status: string;
+  status_label: string;
+  status_tone: string;
+  is_open: boolean;
+  decided_by?: string | null;
+  decision_note?: string | null;
+  delivered_at?: string | null;
+  task_id?: number | null;
+  items: BookOrderItemRow[];
+  total_qty: number;
+  titles: number;
+  created_at?: string | null;
+}
+
+export interface MyBookOrders {
+  rows: BookOrderRow[];
+  groups: { id: number; name: string }[];
+  urgencies: { key: string; label: string; tone: string; days: number }[];
+  hint: string;
+}
+
+export interface BookCatalogue {
+  rows: { id: number; name: string; qty: number; in_stock: boolean }[];
 }

@@ -51,6 +51,10 @@ PUBLIC_ID_PREFIX = {
     "vacancy": "VAC",
     "book_order": "BOOK",
     "exam_order": "EXM",
+    "application": "ARZ",
+    "interview": "SUH",
+    "offer": "OFR",
+    "leave": "TTL",
 }
 
 
@@ -405,6 +409,10 @@ PUBLIC_ID_PREFIX = {
     "vacancy": "VAC",
     "book_order": "BOOK",
     "exam_order": "EXM",
+    "application": "ARZ",
+    "interview": "SUH",
+    "offer": "OFR",
+    "leave": "TTL",
 }
 
 
@@ -15351,6 +15359,9 @@ def create_observation(
         "total": obs.total, "max_total": max_total, "percent": percent,
         "band": band, "band_label": roles.rubric_band(percent)[1],
         "passed": percent >= roles.TEACHER_MIN_SKILL,
+        "stage": obs.stage,
+        "stage_label": roles.STAGE_LABELS.get(obs.stage or "", "Baholash"),
+        "attempt": obs.attempt,
     }
 
 
@@ -21246,3 +21257,1609 @@ def exam_order_done(oid: int, payload: schemas.ExamOrderDecision,
     audit.log(db, user, entity="exam_order", action="done",
               entity_id=o.id, branch_id=o.branch_id, commit=True)
     return _exam_order_out(db, o)
+
+
+# =====================================================================
+#  HR FAZA 2B — ATS QUVURI, SUHBAT VA BAHOLASH VARAQASI
+#
+#  Bosqich ARIZADA saqlanadi, nomzodda emas. Bir odam ustozlikka rad
+#  etilib, administratorlikka olinishi mumkin — bu ikki alohida yo'l.
+# =====================================================================
+def _app_out(db: Session, a: models.CandidateApplication,
+             full: bool = False) -> dict:
+    c = db.query(models.Candidate).get(a.candidate_id)
+    v = db.query(models.Vacancy).get(a.vacancy_id) if a.vacancy_id else None
+    br = db.query(models.Branch).get(a.branch_id) if a.branch_id else None
+    owner = db.query(models.User).get(a.owner_id) if a.owner_id else None
+    today = roles.local_today()
+
+    since = a.stage_since or (a.created_at.date() if a.created_at else today)
+    days = (today - since).days
+    sla = roles.APPLICATION_SLA.get(a.stage)
+    row = {
+        "id": a.id,
+        "public_id": a.public_id,
+        "candidate_id": a.candidate_id,
+        "candidate": c.full_name if c else None,
+        "phone": c.phone if c else None,
+        "vacancy_id": a.vacancy_id,
+        "vacancy": v.title if v else None,
+        "branch_id": a.branch_id,
+        "branch": br.name if br else None,
+        "stage": a.stage,
+        "stage_label": roles.APPLICATION_LABELS.get(a.stage, a.stage),
+        "stage_tone": roles.APPLICATION_TONE.get(a.stage, "slate"),
+        "progress": roles.application_progress(a.stage),
+        "closed": a.stage in roles.APPLICATION_CLOSED,
+        "days_in_stage": days,
+        "sla_days": sla,
+        # SLA buzilgani — kim uzoq kutib qolganini ko'rsatadi.
+        # Nomzod javob kutib charchasa boshqa joyga ketadi.
+        "overdue": bool(sla and days > sla
+                        and a.stage not in roles.APPLICATION_CLOSED),
+        "source": a.source,
+        "owner_id": a.owner_id,
+        "owner": owner.full_name if owner else None,
+        "reject_reason": a.reject_reason,
+        "reject_reason_label": roles.REJECT_LABELS.get(a.reject_reason),
+        "reject_note": a.reject_note,
+        "pool": bool(a.pool),
+        "note": a.note,
+        "created_at": a.created_at.isoformat() if a.created_at else None,
+        "closed_at": a.closed_at.isoformat() if a.closed_at else None,
+    }
+    if full:
+        row["history"] = [{
+            "id": h.id,
+            "from": h.from_stage,
+            "from_label": roles.APPLICATION_LABELS.get(h.from_stage or ""),
+            "to": h.to_stage,
+            "to_label": roles.APPLICATION_LABELS.get(h.to_stage or ""),
+            "days": h.days_in_stage,
+            "reason": h.reason,
+            "reason_label": roles.REJECT_LABELS.get(h.reason or ""),
+            "note": h.note,
+            "by": (db.query(models.User).get(h.by_user_id).full_name
+                   if h.by_user_id
+                   and db.query(models.User).get(h.by_user_id) else None),
+            "at": h.created_at.isoformat() if h.created_at else None,
+        } for h in db.query(models.ApplicationStageLog).filter(
+            models.ApplicationStageLog.application_id == a.id
+        ).order_by(models.ApplicationStageLog.id).all()]
+
+        row["interviews"] = [_interview_out(db, i) for i in
+                             db.query(models.Interview).filter(
+                                 models.Interview.application_id == a.id
+                             ).order_by(models.Interview.date).all()]
+
+        cards = db.query(models.Scorecard).filter(
+            models.Scorecard.application_id == a.id).all()
+        row["scorecards"] = [_scorecard_out(db, s) for s in cards]
+        vals = [s.percent for s in cards if s.percent is not None]
+        row["avg_percent"] = round(sum(vals) / len(vals), 1) if vals else None
+        lbl, tone = roles.scorecard_band(row["avg_percent"])
+        row["avg_label"], row["avg_tone"] = lbl, tone
+        # Baholovchilar bir xil fikrdami? Tarqoq bo'lsa — muhokama kerak
+        recs = [roles.RECOMMENDATION_VALUE.get(s.recommendation)
+                for s in cards if s.recommendation]
+        row["agreement"] = (
+            "bir xil" if recs and max(recs) == min(recs)
+            else "tarqoq" if recs and (max(recs) - min(recs)) >= 2
+            else "yaqin" if recs else None)
+        if c:
+            row["candidate_card"] = {
+                "experience_years": c.experience_years,
+                "language_level": c.language_level,
+                "expected_salary": c.expected_salary,
+                "cv": c.cv,
+                "trial_score": c.trial_score,
+                "strengths": c.strengths,
+                "weaknesses": c.weaknesses,
+            }
+    return row
+
+
+def _interview_out(db: Session, i: models.Interview) -> dict:
+    who = (db.query(models.User).get(i.interviewer_id)
+           if i.interviewer_id else None)
+    return {
+        "id": i.id, "public_id": i.public_id,
+        "application_id": i.application_id,
+        "candidate_id": i.candidate_id,
+        "kind": i.kind,
+        "kind_label": roles.INTERVIEW_KIND_LABELS.get(i.kind, i.kind),
+        "date": i.date.isoformat() if i.date else None,
+        "date_text": roles.uz_date_full(i.date),
+        "time": i.time,
+        "minutes": i.minutes or roles.INTERVIEW_MINUTES.get(i.kind, 30),
+        "place": i.place,
+        "interviewer_id": i.interviewer_id,
+        "interviewer": who.full_name if who else None,
+        "status": i.status,
+        "status_label": roles.INTERVIEW_STATUS_LABELS.get(i.status,
+                                                          i.status),
+        "status_tone": roles.INTERVIEW_STATUS_TONE.get(i.status, "slate"),
+        "note": i.note,
+        "has_scorecard": db.query(models.Scorecard).filter(
+            models.Scorecard.interview_id == i.id).first() is not None,
+    }
+
+
+def _scorecard_out(db: Session, s: models.Scorecard) -> dict:
+    who = db.query(models.User).get(s.author_id) if s.author_id else None
+    try:
+        scores = json.loads(s.scores) if s.scores else {}
+    except Exception:
+        scores = {}
+    lbl, tone = roles.scorecard_band(s.percent)
+    return {
+        "id": s.id,
+        "application_id": s.application_id,
+        "interview_id": s.interview_id,
+        "author_id": s.author_id,
+        "author": who.full_name if who else None,
+        "scores": scores,
+        "percent": s.percent,
+        "label": lbl, "tone": tone,
+        "recommendation": s.recommendation,
+        "recommendation_label": roles.RECOMMENDATION_LABELS.get(
+            s.recommendation or ""),
+        "recommendation_tone": roles.RECOMMENDATION_TONE.get(
+            s.recommendation or "", "slate"),
+        "strengths": s.strengths,
+        "concerns": s.concerns,
+        "note": s.note,
+        "filled": len([v for v in scores.values() if v]),
+        "total_competencies": len(roles.COMPETENCIES),
+        "created_at": s.created_at.isoformat() if s.created_at else None,
+    }
+
+
+def _ats_form(db: Session) -> dict:
+    """Formalar uchun barcha ro'yxatlar — frontend ularni qattiq
+    yozib qo'ymaydi."""
+    return {
+        "stages": [{"key": k, "label": l, "tone": t, "closed": c,
+                    "sla": s}
+                   for k, l, t, c, s in roles.APPLICATION_STAGES],
+        "flow": roles.APPLICATION_FLOW,
+        "reject_reasons": [{"key": k, "label": l,
+                            "pool": k in roles.POOL_WORTHY}
+                           for k, l in roles.REJECT_REASONS],
+        "interview_kinds": [{"key": k, "label": l, "minutes": m}
+                            for k, l, m in roles.INTERVIEW_KINDS],
+        "interview_statuses": [{"key": k, "label": l, "tone": t}
+                               for k, l, t in roles.INTERVIEW_STATUSES],
+        "competencies": [{"key": k, "label": l, "group": g, "weight": w}
+                         for k, l, g, w in roles.COMPETENCIES],
+        "competency_groups": [{"key": k, "label": l}
+                              for k, l in roles.COMPETENCY_GROUPS],
+        "score_labels": roles.SCORE_LABELS,
+        "score_min": roles.SCORE_MIN, "score_max": roles.SCORE_MAX,
+        "recommendations": [{"key": k, "label": l, "tone": t}
+                            for k, l, t, _v in roles.RECOMMENDATIONS],
+        "pass_percent": roles.SCORECARD_PASS,
+        "questions": [{"competency": c, "label":
+                       roles.COMPETENCY_LABELS.get(c, c), "text": q}
+                      for c, q in roles.QUESTION_BANK],
+    }
+
+
+def _find_duplicates(db: Session, name: str | None,
+                     phone: str | None) -> list:
+    """Bir xil odam ikki marta kiritilmasin. Telefon bo'yicha —
+    ismning yozilishi har xil bo'lishi mumkin."""
+    key = roles.phone_key(phone)
+    since = roles.local_today() - timedelta(days=roles.DUPLICATE_DAYS)
+    out = []
+    for c in db.query(models.Candidate).all():
+        if c.created_at and c.created_at.date() < since:
+            continue
+        same_phone = key and roles.phone_key(c.phone) == key
+        same_name = (name and c.full_name
+                     and c.full_name.strip().lower() == name.strip().lower())
+        if same_phone or same_name:
+            out.append({
+                "candidate_id": c.id, "full_name": c.full_name,
+                "phone": c.phone, "stage": c.stage,
+                "why": "telefon" if same_phone else "ism",
+                "applications": db.query(models.CandidateApplication).filter(
+                    models.CandidateApplication.candidate_id == c.id).count(),
+            })
+    return out
+
+
+@app.get("/api/ats/pipeline")
+def ats_pipeline(vacancy_id: int | None = None,
+                 branch_id: int | None = None,
+                 stage: str | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.ATS_VIEW))):
+    """Kanban: har bosqichda kim turibdi va kim uzoq kutib qoldi."""
+    q = scope_to_branch(db.query(models.CandidateApplication),
+                        models.CandidateApplication, user, branch_id)
+    if vacancy_id:
+        q = q.filter(models.CandidateApplication.vacancy_id == vacancy_id)
+    if stage:
+        q = q.filter(models.CandidateApplication.stage == stage)
+    rows = [_app_out(db, a) for a in
+            q.order_by(models.CandidateApplication.id.desc()).limit(500).all()]
+
+    columns = []
+    for k in roles.APPLICATION_FLOW:
+        items = [r for r in rows if r["stage"] == k]
+        columns.append({
+            "key": k,
+            "label": roles.APPLICATION_LABELS.get(k, k),
+            "tone": roles.APPLICATION_TONE.get(k, "slate"),
+            "count": len(items),
+            "overdue": sum(1 for r in items if r["overdue"]),
+            "rows": items[:50],
+        })
+
+    closed = [r for r in rows if r["closed"]]
+    hired = [r for r in rows if r["stage"] == "hired"]
+    # Voronka: har bosqichga yetib kelganlar soni
+    seen = {}
+    for lg in db.query(models.ApplicationStageLog).all():
+        seen.setdefault(lg.to_stage, set()).add(lg.application_id)
+    funnel = []
+    first = None
+    for k in roles.APPLICATION_FLOW:
+        n = len(seen.get(k, set())) or sum(
+            1 for r in rows if r["stage"] == k)
+        if first is None and n:
+            first = n
+        funnel.append({
+            "key": k, "label": roles.APPLICATION_LABELS.get(k, k),
+            "count": n,
+            "percent": round(n / first * 100, 1) if first else None,
+        })
+
+    return {
+        "columns": columns,
+        "rows": rows,
+        "total": len(rows),
+        "open": len(rows) - len(closed),
+        "hired": len(hired),
+        "overdue": sum(1 for r in rows if r["overdue"]),
+        "pool": sum(1 for r in rows if r["pool"]),
+        "funnel": funnel,
+        "vacancies": [{"id": v.id, "title": v.title,
+                       "branch_id": v.branch_id}
+                      for v in scope_to_branch(
+                          db.query(models.Vacancy), models.Vacancy,
+                          user).all()],
+        **_ats_form(db),
+        "hint": ("Bosqich ARIZAGA yoziladi, nomzodga emas — bir odam "
+                 "ikki vakansiyaga topshirishi mumkin. Muddati "
+                 "o'tganlar qizil: nomzod javob kutib charchasa "
+                 "boshqa joyga ketadi."),
+    }
+
+
+@app.get("/api/ats/applications/{aid}")
+def ats_application(aid: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.ATS_VIEW))):
+    a = db.query(models.CandidateApplication).get(aid)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    return {**_app_out(db, a, full=True), **_ats_form(db)}
+
+
+@app.post("/api/ats/applications")
+def ats_application_add(payload: schemas.ApplicationIn,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.ATS_MANAGE))):
+    """Yangi ariza. Dublikat topilsa OGOHLANTIRADI, lekin bloklamaydi
+    — haqiqatan boshqa odam bo'lishi ham mumkin."""
+    cand = None
+    if payload.candidate_id:
+        cand = db.query(models.Candidate).get(payload.candidate_id)
+        if not cand:
+            raise HTTPException(404, "Nomzod topilmadi")
+    else:
+        if not payload.full_name:
+            raise HTTPException(400, "Nomzod ismini yozing")
+        dups = _find_duplicates(db, payload.full_name, payload.phone)
+        if dups and not payload.force:
+            return {"duplicate": True, "candidates": dups,
+                    "message": ("Shunday nomzod allaqachon bor. "
+                                "Uni tanlang yoki baribir yangisini "
+                                "oching.")}
+        cand = models.Candidate(
+            full_name=payload.full_name.strip(),
+            phone=payload.phone,
+            branch_id=payload.branch_id or user.branch_id,
+            stage="applied", source=payload.source,
+            created_by=user.full_name)
+        db.add(cand); db.commit(); db.refresh(cand)
+
+    v = db.query(models.Vacancy).get(payload.vacancy_id) \
+        if payload.vacancy_id else None
+    exists = db.query(models.CandidateApplication).filter(
+        models.CandidateApplication.candidate_id == cand.id,
+        models.CandidateApplication.vacancy_id == payload.vacancy_id,
+        models.CandidateApplication.stage.notin_(
+            roles.APPLICATION_CLOSED)).first()
+    if exists:
+        raise HTTPException(
+            400, "Bu nomzodning shu vakansiyaga ochiq arizasi bor")
+
+    today = roles.local_today()
+    a = models.CandidateApplication(
+        candidate_id=cand.id,
+        vacancy_id=payload.vacancy_id,
+        branch_id=(payload.branch_id or (v.branch_id if v else None)
+                   or cand.branch_id or user.branch_id),
+        stage="new", stage_since=today,
+        source=payload.source or cand.source,
+        owner_id=user.id, note=payload.note,
+        created_by=user.id)
+    db.add(a); db.commit(); db.refresh(a)
+    _ensure_public_id(db, "application", a)
+    db.add(models.ApplicationStageLog(
+        application_id=a.id, from_stage=None, to_stage="new",
+        days_in_stage=0, by_user_id=user.id))
+    db.commit(); db.refresh(a)
+
+    audit.log(db, user, entity="application", action="create",
+              entity_id=a.id, entity_label=cand.full_name,
+              branch_id=a.branch_id,
+              new_value=v.title if v else None, commit=True)
+    return _app_out(db, a, full=True)
+
+
+@app.post("/api/ats/applications/{aid}/move")
+def ats_application_move(aid: int, payload: schemas.ApplicationMove,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.ATS_MANAGE))):
+    """Bosqichni o'zgartirish. Har o'zgarish TARIXGA yoziladi —
+    voronka tahlili faqat shu tarixdan chiqadi."""
+    a = db.query(models.CandidateApplication).get(aid)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    if payload.stage not in roles.APPLICATION_LABELS:
+        raise HTTPException(400, "Bunday bosqich yo'q")
+    if a.stage == payload.stage:
+        return _app_out(db, a, full=True)
+    if a.stage in roles.APPLICATION_CLOSED \
+            and payload.stage in roles.APPLICATION_CLOSED:
+        raise HTTPException(400, "Ariza allaqachon yopilgan")
+
+    # Rad etish sababsiz bo'lmaydi: statistika shundan yig'iladi va
+    # "nega odam topilmayapti" degan savolga javob beradi
+    if payload.stage == "rejected" and not payload.reason:
+        raise HTTPException(400, "Rad etish sababini tanlang")
+
+    today = roles.local_today()
+    since = a.stage_since or (a.created_at.date() if a.created_at else today)
+    old = a.stage
+
+    a.stage = payload.stage
+    a.stage_since = today
+    if payload.note:
+        a.note = payload.note
+    if payload.stage == "rejected":
+        a.reject_reason = payload.reason
+        a.reject_note = payload.note
+        # Sabab nomzodda bo'lmasa — talent poolga
+        auto_pool = payload.reason in roles.POOL_WORTHY
+        a.pool = 1 if (payload.pool
+                       if payload.pool is not None else auto_pool) else 0
+    if payload.stage in roles.APPLICATION_CLOSED:
+        a.closed_at = today
+
+    db.add(models.ApplicationStageLog(
+        application_id=a.id, from_stage=old, to_stage=payload.stage,
+        days_in_stage=(today - since).days,
+        reason=payload.reason, note=payload.note, by_user_id=user.id))
+
+    # Nomzod kartasidagi bosqich ham yangilansin — eski ekranlar
+    # ishlashda davom etsin
+    cand = db.query(models.Candidate).get(a.candidate_id)
+    if cand:
+        mapping = {"new": "applied", "screening": "screening",
+                   "phone": "interview", "interview": "interview",
+                   "task": "demo", "demo": "demo",
+                   "reference": "offer", "offer": "offer",
+                   "hired": "hired", "rejected": "rejected"}
+        if payload.stage in mapping:
+            cand.stage = mapping[payload.stage]
+        if payload.stage == "hired":
+            cand.hired_date = today
+        if payload.stage in roles.APPLICATION_CLOSED:
+            cand.closed_date = today
+    db.commit(); db.refresh(a)
+
+    audit.log(db, user, entity="application", action="move",
+              entity_id=a.id,
+              entity_label=cand.full_name if cand else None,
+              branch_id=a.branch_id,
+              old_value=roles.APPLICATION_LABELS.get(old, old),
+              new_value=roles.APPLICATION_LABELS.get(payload.stage),
+              note=payload.reason, commit=True)
+    return _app_out(db, a, full=True)
+
+
+@app.post("/api/ats/applications/{aid}/pool")
+def ats_application_pool(aid: int, payload: schemas.ExamOrderDecision,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.ATS_MANAGE))):
+    """Talent poolga qo'shish yoki chiqarish."""
+    a = db.query(models.CandidateApplication).get(aid)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    a.pool = 0 if a.pool else 1
+    a.pool_note = payload.note
+    db.commit()
+    audit.log(db, user, entity="application", action="pool",
+              entity_id=a.id, new_value="qo'shildi" if a.pool else "chiqarildi",
+              commit=True)
+    return _app_out(db, a, full=True)
+
+
+@app.get("/api/ats/interviews")
+def ats_interviews(days: int = 14, mine: bool = False,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.ATS_VIEW))):
+    """Yaqin kunlardagi suhbatlar."""
+    today = roles.local_today()
+    q = db.query(models.Interview).filter(
+        models.Interview.date >= today - timedelta(days=2),
+        models.Interview.date <= today + timedelta(days=days))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.Interview.branch_id == user.branch_id)
+    if mine:
+        q = q.filter(models.Interview.interviewer_id == user.id)
+    rows = [_interview_out(db, i) for i in
+            q.order_by(models.Interview.date, models.Interview.time).all()]
+    return {
+        "rows": rows,
+        "today": [r for r in rows if r["date"] == today.isoformat()],
+        # Suhbat bo'lib o'tgan, lekin baholash varaqasi yo'q —
+        # eng ko'p unutiladigan qadam
+        "missing_scorecard": [r for r in rows if r["status"] == "done"
+                              and not r["has_scorecard"]],
+        **_ats_form(db),
+    }
+
+
+@app.post("/api/ats/interviews")
+def ats_interview_add(payload: schemas.InterviewIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.ATS_MANAGE))):
+    a = db.query(models.CandidateApplication).get(payload.application_id)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    if a.stage in roles.APPLICATION_CLOSED:
+        raise HTTPException(400, "Yopilgan arizaga suhbat qo'yilmaydi")
+    if payload.kind not in roles.INTERVIEW_KIND_LABELS:
+        raise HTTPException(400, "Suhbat turi noto'g'ri")
+    if payload.date < roles.local_today():
+        raise HTTPException(400, "O'tib ketgan sanaga suhbat qo'yilmaydi")
+
+    i = models.Interview(
+        application_id=a.id, candidate_id=a.candidate_id,
+        branch_id=a.branch_id, kind=payload.kind,
+        date=payload.date, time=payload.time,
+        minutes=payload.minutes or roles.INTERVIEW_MINUTES.get(payload.kind),
+        place=payload.place, room_id=payload.room_id,
+        interviewer_id=payload.interviewer_id or user.id,
+        status="planned", note=payload.note, created_by=user.id)
+    db.add(i); db.commit(); db.refresh(i)
+    _ensure_public_id(db, "interview", i)
+    db.commit(); db.refresh(i)
+
+    # Suhbat o'tkazuvchiga vazifa — kalendarga qarab yurmasin
+    cand = db.query(models.Candidate).get(a.candidate_id)
+    if i.interviewer_id and i.interviewer_id != user.id:
+        _hr_task_for(db, i.interviewer_id,
+                     title=f"Suhbat {i.public_id}",
+                     body=(f"{cand.full_name if cand else '—'} — "
+                           f"{roles.INTERVIEW_KIND_LABELS.get(i.kind)}. "
+                           f"{roles.uz_date_full(i.date)} {i.time or ''}"),
+                     branch_id=a.branch_id,
+                     days=max(1, (i.date - roles.local_today()).days))
+        db.commit()
+
+    audit.log(db, user, entity="interview", action="create",
+              entity_id=i.id,
+              entity_label=cand.full_name if cand else None,
+              branch_id=a.branch_id,
+              new_value=f"{roles.uz_date_full(i.date)} {i.time or ''}".strip(),
+              commit=True)
+    return _interview_out(db, i)
+
+
+@app.post("/api/ats/interviews/{iid}/status")
+def ats_interview_status(iid: int, payload: schemas.InterviewStatusIn,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.ATS_MANAGE))):
+    i = db.query(models.Interview).get(iid)
+    if not i:
+        raise HTTPException(404, "Suhbat topilmadi")
+    if payload.status not in roles.INTERVIEW_STATUS_LABELS:
+        raise HTTPException(400, "Holat noto'g'ri")
+    i.status = payload.status
+    if payload.note:
+        i.note = payload.note
+
+    # Nomzod kelmagan bo'lsa — bu ham ma'lumot, arizaga yoziladi
+    if payload.status == "no_show":
+        a = db.query(models.CandidateApplication).get(i.application_id)
+        if a and a.stage not in roles.APPLICATION_CLOSED:
+            db.add(models.ApplicationStageLog(
+                application_id=a.id, from_stage=a.stage, to_stage=a.stage,
+                days_in_stage=0, reason="no_show",
+                note="Suhbatga kelmadi", by_user_id=user.id))
+    db.commit()
+    audit.log(db, user, entity="interview", action="status",
+              entity_id=i.id, new_value=payload.status, commit=True)
+    return _interview_out(db, i)
+
+
+@app.get("/api/ats/scorecards/{aid}")
+def ats_scorecards(aid: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.ATS_VIEW))):
+    a = db.query(models.CandidateApplication).get(aid)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    cards = db.query(models.Scorecard).filter(
+        models.Scorecard.application_id == aid).all()
+    rows = [_scorecard_out(db, s) for s in cards]
+    vals = [r["percent"] for r in rows if r["percent"] is not None]
+    avg = round(sum(vals) / len(vals), 1) if vals else None
+    lbl, tone = roles.scorecard_band(avg)
+
+    # Kompetensiya kesimida o'rtacha — nimada kuchli, nimada zaif
+    by_comp = []
+    for k, label, grp, w in roles.COMPETENCIES:
+        vs = [r["scores"].get(k) for r in rows if r["scores"].get(k)]
+        by_comp.append({
+            "key": k, "label": label, "group": grp, "weight": w,
+            "avg": round(sum(vs) / len(vs), 1) if vs else None,
+            "votes": len(vs),
+        })
+    return {
+        "application_id": aid,
+        "rows": rows,
+        "avg_percent": avg, "avg_label": lbl, "avg_tone": tone,
+        "by_competency": by_comp,
+        "mine": next((r for r in rows if r["author_id"] == user.id), None),
+        **_ats_form(db),
+        "hint": ("Har bir suhbatdosh o'z varaqasini alohida "
+                 "to'ldiradi. Ballar o'rtachasi emas, FIKRLAR "
+                 "TARQOQLIGI muhim: hamma bir xil deganda qaror "
+                 "oson, tarqoq bo'lsa muhokama kerak."),
+    }
+
+
+@app.post("/api/ats/scorecards")
+def ats_scorecard_save(payload: schemas.ScorecardIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.INTERVIEWERS))):
+    """Baholash varaqasi. Har suhbatdoshning O'Z varaqasi bo'ladi va
+    boshqasinikini o'zgartira olmaydi — aks holda kuchli ovoz
+    boshqalarnikini bosib ketardi."""
+    a = db.query(models.CandidateApplication).get(payload.application_id)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+
+    clean = {}
+    for k, v in (payload.scores or {}).items():
+        if k not in roles.COMPETENCY_LABELS:
+            continue
+        if v is None or v == "":
+            continue
+        try:
+            iv = int(v)
+        except (TypeError, ValueError):
+            raise HTTPException(400, f"{k}: baho butun son bo'lishi kerak")
+        if not (roles.SCORE_MIN <= iv <= roles.SCORE_MAX):
+            raise HTTPException(
+                400, f"Baho {roles.SCORE_MIN} dan {roles.SCORE_MAX} gacha")
+        clean[k] = iv
+    if payload.recommendation and \
+            payload.recommendation not in roles.RECOMMENDATION_LABELS:
+        raise HTTPException(400, "Tavsiya noto'g'ri")
+
+    s = db.query(models.Scorecard).filter(
+        models.Scorecard.application_id == a.id,
+        models.Scorecard.author_id == user.id,
+        models.Scorecard.interview_id == payload.interview_id).first()
+    if not s:
+        s = models.Scorecard(application_id=a.id, author_id=user.id,
+                             interview_id=payload.interview_id)
+        db.add(s)
+    s.scores = json.dumps(clean, ensure_ascii=False)
+    # Foiz SERVERDA hisoblanadi — qo'lda yozib bo'lmaydi
+    s.percent = roles.scorecard_percent(clean)
+    s.recommendation = payload.recommendation
+    s.strengths = payload.strengths
+    s.concerns = payload.concerns
+    s.note = payload.note
+    db.commit(); db.refresh(s)
+
+    audit.log(db, user, entity="scorecard", action="save",
+              entity_id=s.id, branch_id=a.branch_id,
+              new_value=f"{s.percent}% · {payload.recommendation or '—'}",
+              commit=True)
+    return _scorecard_out(db, s)
+
+
+@app.get("/api/ats/questions")
+def ats_questions(competency: str | None = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.ATS_VIEW))):
+    """Savollar bankisi — suhbatdosh nimani so'rashni o'ylab
+    o'tirmasin va har nomzodga bir xil savol berilsin."""
+    rows = [{"competency": c, "label": roles.COMPETENCY_LABELS.get(c, c),
+             "group": roles.COMPETENCY_GROUP.get(c), "text": q}
+            for c, q in roles.QUESTION_BANK
+            if not competency or c == competency]
+    return {
+        "rows": rows,
+        "competencies": [{"key": k, "label": l, "group": g}
+                         for k, l, g, _w in roles.COMPETENCIES],
+        "hint": ("Har nomzodga bir xil savol berilsa, javoblarni "
+                 "solishtirish mumkin bo'ladi."),
+    }
+
+
+# =====================================================================
+#  HR FAZA 2C — TAKLIF (OFFER)
+#
+#  Taklifda PUL bor, shuning uchun tasdiqsiz chiqmaydi:
+#  HR tuzadi → asoschi/moliya tasdiqlaydi → yuboriladi → nomzod
+#  javob beradi. Muzokara bo'lsa YANGI VERSIYA ochiladi — eski raqam
+#  o'chirilmaydi.
+# =====================================================================
+def _offer_out(db: Session, o: models.Offer) -> dict:
+    cand = (db.query(models.Candidate).get(o.candidate_id)
+            if o.candidate_id else None)
+    who = (db.query(models.User).get(o.approved_by)
+           if o.approved_by else None)
+    return {
+        "id": o.id, "public_id": o.public_id,
+        "application_id": o.application_id,
+        "candidate_id": o.candidate_id,
+        "candidate": cand.full_name if cand else None,
+        "version": o.version or 1,
+        "previous_id": o.previous_id,
+        "position": o.position,
+        "salary": o.salary,
+        "salary_note": o.salary_note,
+        "start_date": o.start_date.isoformat() if o.start_date else None,
+        "probation_months": o.probation_months,
+        "terms": o.terms,
+        "status": o.status,
+        "status_label": roles.OFFER_LABELS.get(o.status, o.status),
+        "status_tone": roles.OFFER_TONE.get(o.status, "slate"),
+        "open": o.status in roles.OFFER_OPEN,
+        "valid_until": o.valid_until.isoformat() if o.valid_until else None,
+        "decline_reason": o.decline_reason,
+        "approved_by": who.full_name if who else None,
+        "sent_at": o.sent_at.isoformat() if o.sent_at else None,
+        "answered_at": o.answered_at.isoformat() if o.answered_at else None,
+        "created_at": o.created_at.isoformat() if o.created_at else None,
+    }
+
+
+@app.get("/api/ats/offers")
+def offers_list(application_id: int | None = None,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.ATS_VIEW))):
+    q = scope_to_branch(db.query(models.Offer), models.Offer, user)
+    if application_id:
+        q = q.filter(models.Offer.application_id == application_id)
+    rows = [_offer_out(db, o) for o in
+            q.order_by(models.Offer.id.desc()).limit(200).all()]
+    return {
+        "rows": rows,
+        "pending_approval": [r for r in rows if r["status"] == "approval"],
+        "statuses": [{"key": k, "label": l, "tone": t}
+                     for k, l, t in roles.OFFER_STATUSES],
+        "valid_days": roles.OFFER_VALID_DAYS,
+        "can_approve": user.role in tuple(roles.OFFER_APPROVE),
+        "hint": ("Taklif tasdiqsiz yuborilmaydi — unda pul bor. "
+                 "Muzokarada eski taklif o'chirilmaydi, yangi versiya "
+                 "ochiladi."),
+    }
+
+
+@app.post("/api/ats/offers")
+def offer_create(payload: schemas.OfferIn,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.OFFER_CREATE))):
+    a = db.query(models.CandidateApplication).get(payload.application_id)
+    if not a:
+        raise HTTPException(404, "Ariza topilmadi")
+    if a.stage in roles.APPLICATION_CLOSED and a.stage != "hired":
+        raise HTTPException(400, "Yopilgan arizaga taklif berilmaydi")
+    if not payload.salary or payload.salary <= 0:
+        raise HTTPException(400, "Ish haqini kiriting")
+
+    # Ochiq taklif borligida yangisi ochilmaydi — avval eskisini yoping
+    prev = db.query(models.Offer).filter(
+        models.Offer.application_id == a.id,
+        models.Offer.status.in_(roles.OFFER_OPEN)).first()
+    if prev:
+        raise HTTPException(
+            400, f"Bu arizada ochiq taklif bor ({prev.public_id}). "
+                 f"Avval uni yakunlang yoki qaytarib oling.")
+
+    last = (db.query(models.Offer)
+            .filter(models.Offer.application_id == a.id)
+            .order_by(models.Offer.version.desc()).first())
+    o = models.Offer(
+        application_id=a.id, candidate_id=a.candidate_id,
+        branch_id=a.branch_id,
+        version=(last.version + 1) if last else 1,
+        previous_id=last.id if last else None,
+        position=payload.position, salary=payload.salary,
+        salary_note=payload.salary_note,
+        start_date=payload.start_date,
+        probation_months=payload.probation_months,
+        terms=payload.terms,
+        status="draft", created_by=user.id)
+    db.add(o); db.commit(); db.refresh(o)
+    _ensure_public_id(db, "offer", o)
+    db.commit(); db.refresh(o)
+    audit.log(db, user, entity="offer", action="create",
+              entity_id=o.id, branch_id=o.branch_id,
+              new_value=f"v{o.version} · {o.salary:,.0f}".replace(",", " "),
+              commit=True)
+    return _offer_out(db, o)
+
+
+@app.post("/api/ats/offers/{oid}/action")
+def offer_action(oid: int, payload: schemas.OfferAction,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(
+                     *(roles.ATS_VIEW + roles.OFFER_APPROVE)))):
+    """Taklif holat mashinasi. Chetlab o'tish yo'q: qoralama birdan
+    "qabul qilindi" bo'la olmaydi."""
+    o = db.query(models.Offer).get(oid)
+    if not o:
+        raise HTTPException(404, "Taklif topilmadi")
+
+    nxt = roles.offer_next(o.status, payload.action)
+    if not nxt:
+        raise HTTPException(
+            400, f"'{roles.OFFER_LABELS.get(o.status)}' holatidan bu "
+                 f"amal bajarilmaydi")
+
+    # Tasdiqlash faqat asoschi/moliya — taklifda pul bor
+    if payload.action in ("approve", "reject") and \
+            user.role not in tuple(roles.OFFER_APPROVE):
+        raise HTTPException(403, "Taklifni faqat rahbariyat tasdiqlaydi")
+    if payload.action in ("submit", "send", "withdraw", "accept",
+                          "decline", "expire") and \
+            user.role not in tuple(roles.OFFER_CREATE):
+        raise HTTPException(403, "Ruxsat yo'q")
+
+    o.status = nxt
+    now = datetime.utcnow()
+    today = roles.local_today()
+    if payload.action == "approve":
+        o.approved_by = user.id
+        o.approved_at = now
+    elif payload.action == "send":
+        o.sent_at = now
+        o.valid_until = today + timedelta(days=roles.OFFER_VALID_DAYS)
+    elif payload.action in ("accept", "decline"):
+        o.answered_at = now
+        if payload.action == "decline":
+            o.decline_reason = payload.note
+    db.commit(); db.refresh(o)
+
+    # Nomzod qabul qilsa — ariza va nomzod ham "olindi" bo'ladi
+    if payload.action == "accept":
+        a = db.query(models.CandidateApplication).get(o.application_id)
+        if a and a.stage not in roles.APPLICATION_CLOSED:
+            since = a.stage_since or today
+            db.add(models.ApplicationStageLog(
+                application_id=a.id, from_stage=a.stage, to_stage="hired",
+                days_in_stage=(today - since).days,
+                note=f"Taklif {o.public_id} qabul qilindi",
+                by_user_id=user.id))
+            a.stage = "hired"
+            a.stage_since = today
+            a.closed_at = today
+            cand = db.query(models.Candidate).get(a.candidate_id)
+            if cand:
+                cand.stage = "hired"
+                cand.hired_date = today
+            db.commit()
+
+    audit.log(db, user, entity="offer", action=payload.action,
+              entity_id=o.id, branch_id=o.branch_id,
+              new_value=roles.OFFER_LABELS.get(nxt),
+              note=payload.note, commit=True)
+    return _offer_out(db, o)
+
+
+# =====================================================================
+#  HR FAZA 3 — XODIM HAYOTIY SIKLI
+#  Hujjatlar (muddat nazorati), sinov muddati, ta'til.
+#  Onboarding allaqachon bor (26-partiya) — takrorlamaymiz.
+# =====================================================================
+def _doc_out(db: Session, d: models.EmployeeDocument) -> dict:
+    today = roles.local_today()
+    left = (d.expires_on - today).days if d.expires_on else None
+    return {
+        "id": d.id, "user_id": d.user_id,
+        "kind": d.kind,
+        "kind_label": roles.DOCUMENT_LABELS.get(d.kind, d.kind),
+        "title": d.title, "number": d.number,
+        "issued_on": d.issued_on.isoformat() if d.issued_on else None,
+        "expires_on": d.expires_on.isoformat() if d.expires_on else None,
+        "days_left": left,
+        "expired": bool(left is not None and left < 0),
+        "expiring": bool(left is not None
+                         and 0 <= left <= roles.DOCUMENT_WARN_DAYS),
+        "note": d.note,
+    }
+
+
+@app.get("/api/hr/documents")
+def hr_documents(user_id: int | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.LIFECYCLE_VIEW))):
+    """Hujjatlar. Muddati tugayotganlar alohida — HR ularni quvib
+    yurmasin, ro'yxat o'zi aytsin."""
+    q = db.query(models.EmployeeDocument)
+    if user_id:
+        q = q.filter(models.EmployeeDocument.user_id == user_id)
+    rows = [_doc_out(db, d) for d in
+            q.order_by(models.EmployeeDocument.id.desc()).limit(500).all()]
+    names = {u.id: u.full_name for u in db.query(models.User).all()}
+    for r in rows:
+        r["user"] = names.get(r["user_id"])
+    return {
+        "rows": rows,
+        "expiring": [r for r in rows if r["expiring"]],
+        "expired": [r for r in rows if r["expired"]],
+        "kinds": [{"key": k, "label": l, "expires": k in
+                   roles.DOCUMENT_EXPIRES}
+                  for k, l, _e in roles.DOCUMENT_KINDS],
+        "warn_days": roles.DOCUMENT_WARN_DAYS,
+    }
+
+
+@app.post("/api/hr/documents")
+def hr_document_add(payload: schemas.DocumentIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.HR_FULL))):
+    if payload.kind not in roles.DOCUMENT_LABELS:
+        raise HTTPException(400, "Hujjat turi noto'g'ri")
+    if not db.query(models.User).get(payload.user_id):
+        raise HTTPException(404, "Xodim topilmadi")
+    if payload.kind in roles.DOCUMENT_EXPIRES and not payload.expires_on:
+        raise HTTPException(
+            400, f"'{roles.DOCUMENT_LABELS[payload.kind]}' uchun amal "
+                 f"qilish muddati kiritilishi shart")
+    d = models.EmployeeDocument(
+        user_id=payload.user_id, kind=payload.kind,
+        title=payload.title, number=payload.number,
+        issued_on=payload.issued_on, expires_on=payload.expires_on,
+        note=payload.note, created_by=user.id)
+    db.add(d); db.commit(); db.refresh(d)
+    audit.log(db, user, entity="employee_document", action="create",
+              entity_id=d.id, new_value=payload.kind, commit=True)
+    return _doc_out(db, d)
+
+
+@app.delete("/api/hr/documents/{did}")
+def hr_document_delete(did: int, db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.HR_FULL))):
+    d = db.query(models.EmployeeDocument).get(did)
+    if not d:
+        raise HTTPException(404, "Hujjat topilmadi")
+    db.delete(d); db.commit()
+    audit.log(db, user, entity="employee_document", action="delete",
+              entity_id=did, commit=True)
+    return {"ok": True}
+
+
+def _probation_out(db: Session, p: models.ProbationCheck) -> dict:
+    who = db.query(models.User).get(p.by_user_id) if p.by_user_id else None
+    return {
+        "id": p.id, "user_id": p.user_id, "month_no": p.month_no,
+        "decision": p.decision,
+        "decision_label": roles.PROBATION_LABELS.get(p.decision),
+        "decision_tone": roles.PROBATION_TONE.get(p.decision, "slate"),
+        "final": p.decision in roles.PROBATION_FINAL,
+        "strengths": p.strengths, "concerns": p.concerns, "note": p.note,
+        "by": who.full_name if who else None,
+        "at": p.created_at.isoformat() if p.created_at else None,
+    }
+
+
+@app.get("/api/hr/probation/{user_id}")
+def hr_probation(user_id: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.LIFECYCLE_VIEW))):
+    rows = (db.query(models.ProbationCheck)
+            .filter(models.ProbationCheck.user_id == user_id)
+            .order_by(models.ProbationCheck.month_no).all())
+    out = [_probation_out(db, p) for p in rows]
+    return {
+        "rows": out,
+        "closed": any(r["final"] for r in out),
+        "decisions": [{"key": k, "label": l, "tone": t}
+                      for k, l, t in roles.PROBATION_DECISIONS],
+        "hint": ("Har oy alohida xulosa. Yakuniy qaror (o'tdi/o'tmadi) "
+                 "qo'yilgach yozuvlar qulflanadi."),
+    }
+
+
+@app.post("/api/hr/probation")
+def hr_probation_add(payload: schemas.ProbationIn,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.LIFECYCLE_VIEW))):
+    if payload.decision not in roles.PROBATION_LABELS:
+        raise HTTPException(400, "Qaror noto'g'ri")
+    if not db.query(models.User).get(payload.user_id):
+        raise HTTPException(404, "Xodim topilmadi")
+    done = db.query(models.ProbationCheck).filter(
+        models.ProbationCheck.user_id == payload.user_id,
+        models.ProbationCheck.decision.in_(roles.PROBATION_FINAL)).first()
+    if done:
+        raise HTTPException(
+            400, "Sinov muddati allaqachon yakunlangan — tarix qayta "
+                 "yozilmaydi")
+    p = models.ProbationCheck(
+        user_id=payload.user_id, month_no=payload.month_no,
+        decision=payload.decision, strengths=payload.strengths,
+        concerns=payload.concerns, note=payload.note, by_user_id=user.id)
+    db.add(p); db.commit(); db.refresh(p)
+    audit.log(db, user, entity="probation", action="check",
+              entity_id=p.id, new_value=payload.decision, commit=True)
+    return _probation_out(db, p)
+
+
+def _leave_out(db: Session, l: models.LeaveRequest) -> dict:
+    u = db.query(models.User).get(l.user_id)
+    rep = (db.query(models.Teacher).get(l.replacement_teacher_id)
+           if l.replacement_teacher_id else None)
+    who = db.query(models.User).get(l.decided_by) if l.decided_by else None
+    return {
+        "id": l.id, "public_id": l.public_id,
+        "user_id": l.user_id, "user": u.full_name if u else None,
+        "branch_id": l.branch_id,
+        "kind": l.kind, "kind_label": roles.LEAVE_LABELS.get(l.kind),
+        "paid": roles.LEAVE_PAID.get(l.kind, False),
+        "date_from": l.date_from.isoformat() if l.date_from else None,
+        "date_to": l.date_to.isoformat() if l.date_to else None,
+        "days": l.days,
+        "reason": l.reason,
+        "replacement_teacher_id": l.replacement_teacher_id,
+        "replacement": rep.full_name if rep else None,
+        "replacement_note": l.replacement_note,
+        "status": l.status,
+        "status_label": roles.LEAVE_STATUS_LABELS.get(l.status),
+        "status_tone": roles.LEAVE_STATUS_TONE.get(l.status, "slate"),
+        "decided_by": who.full_name if who else None,
+        "decision_note": l.decision_note,
+        "created_at": l.created_at.isoformat() if l.created_at else None,
+    }
+
+
+@app.get("/api/hr/leaves")
+def hr_leaves(status: str | None = None, user_id: int | None = None,
+              db: Session = Depends(get_db),
+              user=Depends(get_current_user)):
+    """Ta'til so'rovlari. Oddiy xodim faqat o'zinikini ko'radi."""
+    q = db.query(models.LeaveRequest)
+    if user.role not in tuple(roles.LEAVE_APPROVE):
+        q = q.filter(models.LeaveRequest.user_id == user.id)
+    elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.LeaveRequest.branch_id == user.branch_id)
+    if status:
+        q = q.filter(models.LeaveRequest.status == status)
+    if user_id and user.role in tuple(roles.LEAVE_APPROVE):
+        q = q.filter(models.LeaveRequest.user_id == user_id)
+    rows = [_leave_out(db, l) for l in
+            q.order_by(models.LeaveRequest.id.desc()).limit(200).all()]
+
+    today = roles.local_today()
+    return {
+        "rows": rows,
+        "pending": [r for r in rows if r["status"] == "pending"],
+        "today": [r for r in rows if r["status"] == "approved"
+                  and r["date_from"] <= today.isoformat()
+                  <= r["date_to"]],
+        "kinds": [{"key": k, "label": l, "paid": p, "limit_days": d}
+                  for k, l, p, d in roles.LEAVE_KINDS],
+        "can_approve": user.role in tuple(roles.LEAVE_APPROVE),
+        "min_notice_days": roles.LEAVE_MIN_NOTICE_DAYS,
+        "hint": ("Ustoz ta'tilga chiqsa darslari egasiz qolmasin — "
+                 "o'rinbosar ko'rsatiladi. Kasallikdan tashqari "
+                 f"kamida {roles.LEAVE_MIN_NOTICE_DAYS} kun oldin "
+                 "so'raladi."),
+    }
+
+
+@app.post("/api/hr/leaves")
+def hr_leave_add(payload: schemas.LeaveIn,
+                 db: Session = Depends(get_db),
+                 user=Depends(get_current_user)):
+    target_id = payload.user_id or user.id
+    # Birovga so'rov ochish faqat HR/rahbariyatga
+    if target_id != user.id and user.role not in tuple(roles.LEAVE_APPROVE):
+        raise HTTPException(403, "Faqat o'zingiz uchun so'rov ochasiz")
+    target = db.query(models.User).get(target_id)
+    if not target:
+        raise HTTPException(404, "Xodim topilmadi")
+    if payload.kind not in roles.LEAVE_LABELS:
+        raise HTTPException(400, "Ta'til turi noto'g'ri")
+    if payload.date_to < payload.date_from:
+        raise HTTPException(400, "Tugash sanasi boshlanishidan oldin")
+
+    today = roles.local_today()
+    days = (payload.date_to - payload.date_from).days + 1
+    # Kasallik oldindan rejalashtirimaydi — unga muhlat talabi yo'q
+    if payload.kind != "sick":
+        if (payload.date_from - today).days < roles.LEAVE_MIN_NOTICE_DAYS:
+            raise HTTPException(
+                400, f"Kamida {roles.LEAVE_MIN_NOTICE_DAYS} kun oldin "
+                     f"so'raladi — o'rinbosar topishga vaqt kerak")
+
+    # Yillik chegara
+    limit = roles.LEAVE_LIMIT.get(payload.kind)
+    if limit:
+        year_start = today.replace(month=1, day=1)
+        used = sum((l.days or 0) for l in db.query(models.LeaveRequest)
+                   .filter(models.LeaveRequest.user_id == target_id,
+                           models.LeaveRequest.kind == payload.kind,
+                           models.LeaveRequest.status == "approved",
+                           models.LeaveRequest.date_from >= year_start)
+                   .all())
+        if used + days > limit:
+            raise HTTPException(
+                400, f"Yillik chegara: {limit} kun. Ishlatilgan: {used}, "
+                     f"so'ralayotgan: {days}")
+
+    # Ustoz bo'lsa — o'rinbosarsiz so'rov qabul qilinmaydi
+    t = _teacher_of_user(db, target)
+    if t and _my_groups(db, t.id) and not payload.replacement_teacher_id:
+        raise HTTPException(
+            400, "Sizda guruhlar bor — darslarni kim olib turishini "
+                 "ko'rsating, aks holda darslar egasiz qoladi")
+    if payload.replacement_teacher_id:
+        rep = db.query(models.Teacher).get(payload.replacement_teacher_id)
+        if not rep or not rep.is_active:
+            raise HTTPException(400, "O'rinbosar ustoz topilmadi")
+        if t and rep.id == t.id:
+            raise HTTPException(400, "O'zingizni o'rinbosar qilib "
+                                     "bo'lmaydi")
+
+    l = models.LeaveRequest(
+        user_id=target_id, branch_id=target.branch_id,
+        kind=payload.kind, date_from=payload.date_from,
+        date_to=payload.date_to, days=days, reason=payload.reason,
+        replacement_teacher_id=payload.replacement_teacher_id,
+        replacement_note=payload.replacement_note,
+        status="pending")
+    db.add(l); db.commit(); db.refresh(l)
+    _ensure_public_id(db, "leave", l)
+    db.commit(); db.refresh(l)
+
+    _hr_task(db, title=f"Ta'til so'rovi {l.public_id}",
+             body=(f"{target.full_name} — "
+                   f"{roles.LEAVE_LABELS.get(payload.kind)}. "
+                   f"{roles.uz_date_full(payload.date_from)} — "
+                   f"{roles.uz_date_full(payload.date_to)} ({days} kun)."),
+             to_roles=roles.LEAVE_APPROVE, branch_id=target.branch_id,
+             days=2, priority="high")
+    db.commit()
+    audit.log(db, user, entity="leave", action="create", entity_id=l.id,
+              entity_label=target.full_name,
+              new_value=f"{payload.kind} {days} kun", commit=True)
+    return _leave_out(db, l)
+
+
+@app.post("/api/hr/leaves/{lid}/decide")
+def hr_leave_decide(lid: int, payload: schemas.LeaveDecision,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.LEAVE_APPROVE))):
+    l = db.query(models.LeaveRequest).get(lid)
+    if not l:
+        raise HTTPException(404, "So'rov topilmadi")
+    if l.status != "pending":
+        raise HTTPException(400, "So'rov allaqachon ko'rilgan")
+    if payload.decision not in ("approved", "rejected"):
+        raise HTTPException(400, "Qaror noto'g'ri")
+    # O'z so'rovini o'zi tasdiqlamaydi
+    if l.user_id == user.id:
+        raise HTTPException(403, "O'z so'rovingizni o'zingiz "
+                                 "tasdiqlay olmaysiz")
+    l.status = payload.decision
+    l.decided_by = user.id
+    l.decided_at = datetime.utcnow()
+    l.decision_note = payload.note
+    db.commit(); db.refresh(l)
+
+    # Tasdiqlangach ta'til davridagi darslar o'rinbosarga o'tadi
+    if payload.decision == "approved" and l.replacement_teacher_id:
+        target = db.query(models.User).get(l.user_id)
+        t = _teacher_of_user(db, target) if target else None
+        if t:
+            moved = 0
+            for ls in db.query(models.Lesson).filter(
+                    models.Lesson.teacher_id == t.id,
+                    models.Lesson.held == 0,
+                    models.Lesson.date >= l.date_from,
+                    models.Lesson.date <= l.date_to).all():
+                ls.teacher_id = l.replacement_teacher_id
+                ls.note = ((ls.note or "")
+                           + f" · o'rinbosar (ta'til {l.public_id})").strip()
+                moved += 1
+            db.commit()
+    audit.log(db, user, entity="leave", action=payload.decision,
+              entity_id=l.id, note=payload.note, commit=True)
+    return _leave_out(db, l)
+
+
+# =====================================================================
+#  HR FAZA 4 — PERFORMANCE
+# =====================================================================
+@app.get("/api/hr/reviews/{user_id}")
+def hr_reviews(user_id: int, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.LIFECYCLE_VIEW))):
+    rows = (db.query(models.PerformanceReview)
+            .filter(models.PerformanceReview.user_id == user_id)
+            .order_by(models.PerformanceReview.id.desc()).all())
+    out = []
+    for r in rows:
+        try:
+            scores = json.loads(r.scores) if r.scores else {}
+        except Exception:
+            scores = {}
+        out.append({
+            "id": r.id, "period": r.period, "scores": scores,
+            "percent": r.percent, "status": r.status,
+            "locked": r.status == "final",
+            "strengths": r.strengths, "to_improve": r.to_improve,
+            "goals": r.goals,
+            "finalized_at": (r.finalized_at.isoformat()
+                             if r.finalized_at else None),
+        })
+    return {
+        "rows": out,
+        "criteria": [{"key": k, "label": l, "weight": w}
+                     for k, l, w in roles.REVIEW_CRITERIA],
+        "hint": ("Baholash yakunlangach QULFLANADI — tarix qayta "
+                 "yozilmaydi."),
+    }
+
+
+@app.post("/api/hr/reviews")
+def hr_review_save(payload: schemas.ReviewIn,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.LIFECYCLE_VIEW))):
+    if not db.query(models.User).get(payload.user_id):
+        raise HTTPException(404, "Xodim topilmadi")
+    clean = {}
+    for k, v in (payload.scores or {}).items():
+        if k not in roles.REVIEW_LABELS or v is None:
+            continue
+        iv = int(v)
+        if not (1 <= iv <= 5):
+            raise HTTPException(400, "Baho 1 dan 5 gacha")
+        clean[k] = iv
+
+    r = db.query(models.PerformanceReview).filter(
+        models.PerformanceReview.user_id == payload.user_id,
+        models.PerformanceReview.period == payload.period).first()
+    if r and r.status == "final":
+        raise HTTPException(400, "Bu davr yakunlangan — qulflangan "
+                                 "baholash o'zgartirilmaydi")
+    if not r:
+        r = models.PerformanceReview(user_id=payload.user_id,
+                                     period=payload.period)
+        db.add(r)
+    r.scores = json.dumps(clean, ensure_ascii=False)
+    r.percent = roles.review_percent(clean)
+    r.strengths = payload.strengths
+    r.to_improve = payload.to_improve
+    r.goals = payload.goals
+    r.by_user_id = user.id
+    if payload.finalize:
+        r.status = "final"
+        r.finalized_at = datetime.utcnow()
+    db.commit(); db.refresh(r)
+    audit.log(db, user, entity="review", action="save", entity_id=r.id,
+              new_value=f"{payload.period} · {r.percent}%"
+                        + (" · yakunlandi" if payload.finalize else ""),
+              commit=True)
+    return {"id": r.id, "percent": r.percent, "status": r.status}
+
+
+@app.get("/api/hr/one-on-ones/{user_id}")
+def hr_one_on_ones(user_id: int, db: Session = Depends(get_db),
+                   user=Depends(get_current_user)):
+    rows = (db.query(models.OneOnOne)
+            .filter(models.OneOnOne.user_id == user_id)
+            .order_by(models.OneOnOne.id.desc()).all())
+    out = []
+    for o in rows:
+        # MAXFIY 1:1 ni faqat ikkala ishtirokchi o'qiydi — HR ham emas.
+        # Ishonch shu bilan quriladi.
+        if o.privacy == "private" and user.id not in (o.user_id,
+                                                      o.manager_id):
+            continue
+        mgr = (db.query(models.User).get(o.manager_id)
+               if o.manager_id else None)
+        out.append({
+            "id": o.id, "date": o.date.isoformat() if o.date else None,
+            "privacy": o.privacy,
+            "manager": mgr.full_name if mgr else None,
+            "notes": o.notes, "agreements": o.agreements,
+        })
+    return {"rows": out,
+            "privacy_options": [{"key": k, "label": l}
+                                for k, l in roles.ONE_ON_ONE_PRIVACY]}
+
+
+@app.post("/api/hr/one-on-ones")
+def hr_one_on_one_add(payload: schemas.OneOnOneIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(get_current_user)):
+    if not db.query(models.User).get(payload.user_id):
+        raise HTTPException(404, "Xodim topilmadi")
+    o = models.OneOnOne(
+        user_id=payload.user_id, manager_id=user.id,
+        date=payload.date or roles.local_today(),
+        privacy=payload.privacy if payload.privacy in ("open", "private")
+        else "open",
+        notes=payload.notes, agreements=payload.agreements)
+    db.add(o); db.commit(); db.refresh(o)
+    return {"ok": True, "id": o.id}
+
+
+@app.get("/api/hr/pips")
+def hr_pips(db: Session = Depends(get_db),
+            user=Depends(require_role(*roles.HR_FULL))):
+    rows = db.query(models.Pip).order_by(models.Pip.id.desc()).all()
+    names = {u.id: u.full_name for u in db.query(models.User).all()}
+    return {"rows": [{
+        "id": p.id, "user_id": p.user_id, "user": names.get(p.user_id),
+        "reason": p.reason, "goals": p.goals,
+        "date_from": p.date_from.isoformat() if p.date_from else None,
+        "date_to": p.date_to.isoformat() if p.date_to else None,
+        "status": p.status,
+        "status_label": roles.PIP_LABELS.get(p.status),
+        "outcome_note": p.outcome_note,
+    } for p in rows]}
+
+
+@app.post("/api/hr/pips")
+def hr_pip_add(payload: schemas.PipIn, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.HR_FULL))):
+    if not db.query(models.User).get(payload.user_id):
+        raise HTTPException(404, "Xodim topilmadi")
+    open_pip = db.query(models.Pip).filter(
+        models.Pip.user_id == payload.user_id,
+        models.Pip.status == "active").first()
+    if open_pip:
+        raise HTTPException(400, "Bu xodimda faol PIP allaqachon bor")
+    p = models.Pip(user_id=payload.user_id, reason=payload.reason,
+                   goals=payload.goals, date_from=payload.date_from,
+                   date_to=payload.date_to, by_user_id=user.id)
+    db.add(p); db.commit(); db.refresh(p)
+    audit.log(db, user, entity="pip", action="create", entity_id=p.id,
+              commit=True)
+    return {"ok": True, "id": p.id}
+
+
+@app.post("/api/hr/pips/{pid}/close")
+def hr_pip_close(pid: int, payload: schemas.PipClose,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.HR_FULL))):
+    p = db.query(models.Pip).get(pid)
+    if not p:
+        raise HTTPException(404, "PIP topilmadi")
+    if p.status != "active":
+        raise HTTPException(400, "PIP allaqachon yopilgan")
+    if payload.status not in ("passed", "failed"):
+        raise HTTPException(400, "Yakun noto'g'ri")
+    p.status = payload.status
+    p.outcome_note = payload.note
+    db.commit()
+    audit.log(db, user, entity="pip", action=payload.status,
+              entity_id=p.id, note=payload.note, commit=True)
+    return {"ok": True, "status": p.status}
+
+
+# =====================================================================
+#  HR FAZA 5 — INTIZOM, RAG'BAT, KETISH
+# =====================================================================
+@app.get("/api/hr/relations/{user_id}")
+def hr_relations(user_id: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.HR_FULL))):
+    disc = db.query(models.DisciplinaryCase).filter(
+        models.DisciplinaryCase.user_id == user_id).order_by(
+        models.DisciplinaryCase.id.desc()).all()
+    rec = db.query(models.Recognition).filter(
+        models.Recognition.user_id == user_id).order_by(
+        models.Recognition.id.desc()).all()
+    return {
+        "discipline": [{
+            "id": d.id, "kind": d.kind,
+            "kind_label": roles.DISCIPLINE_LABELS.get(d.kind),
+            "reason": d.reason,
+            "date": d.date.isoformat() if d.date else None,
+        } for d in disc],
+        "recognition": [{
+            "id": r.id, "kind": r.kind,
+            "kind_label": roles.RECOGNITION_LABELS.get(r.kind),
+            "reason": r.reason, "amount": r.amount,
+            "date": r.date.isoformat() if r.date else None,
+        } for r in rec],
+        "discipline_kinds": [{"key": k, "label": l}
+                             for k, l in roles.DISCIPLINE_KINDS],
+        "recognition_kinds": [{"key": k, "label": l}
+                              for k, l in roles.RECOGNITION_KINDS],
+    }
+
+
+@app.post("/api/hr/discipline")
+def hr_discipline_add(payload: schemas.DisciplineIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.HR_FULL))):
+    if payload.kind not in roles.DISCIPLINE_LABELS:
+        raise HTTPException(400, "Turi noto'g'ri")
+    d = models.DisciplinaryCase(
+        user_id=payload.user_id, kind=payload.kind,
+        reason=payload.reason,
+        date=payload.date or roles.local_today(), by_user_id=user.id)
+    db.add(d); db.commit()
+    audit.log(db, user, entity="discipline", action="create",
+              entity_id=d.id, new_value=payload.kind, commit=True)
+    return {"ok": True, "id": d.id}
+
+
+@app.post("/api/hr/recognition")
+def hr_recognition_add(payload: schemas.RecognitionIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.HR_FULL))):
+    if payload.kind not in roles.RECOGNITION_LABELS:
+        raise HTTPException(400, "Turi noto'g'ri")
+    r = models.Recognition(
+        user_id=payload.user_id, kind=payload.kind,
+        reason=payload.reason, amount=payload.amount,
+        date=payload.date or roles.local_today(), by_user_id=user.id)
+    db.add(r); db.commit()
+    audit.log(db, user, entity="recognition", action="create",
+              entity_id=r.id, new_value=payload.kind, commit=True)
+    return {"ok": True, "id": r.id}
+
+
+def _offboard_out(db: Session, o: models.Offboarding) -> dict:
+    u = db.query(models.User).get(o.user_id)
+    try:
+        steps = json.loads(o.steps) if o.steps else {}
+    except Exception:
+        steps = {}
+    step_rows = [{"key": k, "label": l, "done": bool(steps.get(k))}
+                 for k, l in roles.OFFBOARD_STEPS]
+    return {
+        "id": o.id, "user_id": o.user_id,
+        "user": u.full_name if u else None,
+        "last_day": o.last_day.isoformat() if o.last_day else None,
+        "reason": o.reason,
+        "reason_label": roles.EXIT_LABELS.get(o.reason or ""),
+        "ours": (o.reason in roles.EXIT_OURS) if o.reason else None,
+        "steps": step_rows,
+        "done_count": sum(1 for s in step_rows if s["done"]),
+        "total_steps": len(step_rows),
+        "exit_notes": o.exit_notes,
+        "would_return": (bool(o.would_return)
+                         if o.would_return is not None else None),
+        "completed": bool(o.completed),
+    }
+
+
+@app.get("/api/hr/offboarding")
+def hr_offboarding_list(db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.HR_FULL))):
+    rows = [_offboard_out(db, o) for o in
+            db.query(models.Offboarding).order_by(
+                models.Offboarding.id.desc()).limit(100).all()]
+    ours = [r for r in rows if r["ours"]]
+    return {
+        "rows": rows,
+        "active": [r for r in rows if not r["completed"]],
+        # Ketishlarning qanchasi BIZGA bog'liq — ishlash mumkin
+        # bo'lgan yagona qism shu
+        "ours_percent": (round(len(ours) / len(rows) * 100, 1)
+                         if rows else None),
+        "reasons": [{"key": k, "label": l, "ours": o}
+                    for k, l, o in roles.EXIT_REASONS],
+        "hint": ("Chiqish suhbatining maqsadi — ayblash emas, TIZIMNI "
+                 "tuzatish. Sabab bizga bog'liq bo'lsa (ish haqi, "
+                 "rahbariyat, yuk) bu keyingi ketishning oldini olish "
+                 "imkoni."),
+    }
+
+
+@app.post("/api/hr/offboarding")
+def hr_offboard_start(payload: schemas.OffboardIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.HR_FULL))):
+    target = db.query(models.User).get(payload.user_id)
+    if not target:
+        raise HTTPException(404, "Xodim topilmadi")
+    if db.query(models.Offboarding).filter(
+            models.Offboarding.user_id == payload.user_id,
+            models.Offboarding.completed == 0).first():
+        raise HTTPException(400, "Bu xodim uchun jarayon allaqachon "
+                                 "boshlangan")
+    o = models.Offboarding(
+        user_id=payload.user_id, branch_id=target.branch_id,
+        last_day=payload.last_day, reason=payload.reason,
+        steps=json.dumps({"notice": 1}), by_user_id=user.id)
+    db.add(o); db.commit(); db.refresh(o)
+    audit.log(db, user, entity="offboarding", action="start",
+              entity_id=o.id, entity_label=target.full_name,
+              new_value=payload.reason, commit=True)
+    return _offboard_out(db, o)
+
+
+@app.post("/api/hr/offboarding/{oid}/update")
+def hr_offboard_update(oid: int, payload: schemas.OffboardUpdate,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.HR_FULL))):
+    o = db.query(models.Offboarding).get(oid)
+    if not o:
+        raise HTTPException(404, "Jarayon topilmadi")
+    if o.completed:
+        raise HTTPException(400, "Jarayon yakunlangan")
+    try:
+        steps = json.loads(o.steps) if o.steps else {}
+    except Exception:
+        steps = {}
+    if payload.step:
+        if payload.step not in roles.OFFBOARD_LABELS:
+            raise HTTPException(400, "Bunday band yo'q")
+        steps[payload.step] = 1 if payload.done in (None, True) else 0
+        o.steps = json.dumps(steps)
+    if payload.exit_notes is not None:
+        o.exit_notes = payload.exit_notes
+    if payload.would_return is not None:
+        o.would_return = 1 if payload.would_return else 0
+    if payload.reason is not None:
+        o.reason = payload.reason
+
+    # Hammasi bajarilgach jarayon yopiladi va HISOB O'CHIRILADI —
+    # ketgan odamning kirishi ochiq qolmasin
+    if all(steps.get(k) for k, _l in roles.OFFBOARD_STEPS):
+        o.completed = 1
+        target = db.query(models.User).get(o.user_id)
+        if target and target.role != roles.FOUNDER:
+            target.is_active = 0
+        t = _teacher_of_user(db, target) if target else None
+        if t:
+            t.is_active = 0
+            t.left_date = o.last_day or roles.local_today()
+    db.commit(); db.refresh(o)
+    audit.log(db, user, entity="offboarding", action="update",
+              entity_id=o.id, new_value=payload.step, commit=True)
+    return _offboard_out(db, o)
+
+
+# =====================================================================
+#  HR FAZA 6 — YAGONA HR DASHBOARD
+#  Barcha fazalarning signallari bitta ekranda.
+# =====================================================================
+@app.get("/api/hr/overview")
+def hr_overview(db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.HR_FULL))):
+    today = roles.local_today()
+    soon = today + timedelta(days=roles.DOCUMENT_WARN_DAYS)
+
+    staff = db.query(models.User).filter(
+        models.User.is_active == 1).count()
+    open_vac = db.query(models.Vacancy).filter(
+        models.Vacancy.status.in_(tuple(roles.VACANCY_OPEN_STATES))
+    ).count() if hasattr(roles, "VACANCY_OPEN_STATES") else 0
+
+    apps = db.query(models.CandidateApplication).all()
+    open_apps = [a for a in apps
+                 if a.stage not in roles.APPLICATION_CLOSED]
+    overdue = 0
+    for a in open_apps:
+        sla = roles.APPLICATION_SLA.get(a.stage)
+        since = a.stage_since or (a.created_at.date()
+                                  if a.created_at else today)
+        if sla and (today - since).days > sla:
+            overdue += 1
+
+    docs_expiring = db.query(models.EmployeeDocument).filter(
+        models.EmployeeDocument.expires_on.isnot(None),
+        models.EmployeeDocument.expires_on >= today,
+        models.EmployeeDocument.expires_on <= soon).count()
+    docs_expired = db.query(models.EmployeeDocument).filter(
+        models.EmployeeDocument.expires_on.isnot(None),
+        models.EmployeeDocument.expires_on < today).count()
+
+    leaves_pending = db.query(models.LeaveRequest).filter(
+        models.LeaveRequest.status == "pending").count()
+    on_leave = db.query(models.LeaveRequest).filter(
+        models.LeaveRequest.status == "approved",
+        models.LeaveRequest.date_from <= today,
+        models.LeaveRequest.date_to >= today).count()
+
+    interviews_today = db.query(models.Interview).filter(
+        models.Interview.date == today,
+        models.Interview.status == "planned").count()
+    offers_pending = db.query(models.Offer).filter(
+        models.Offer.status == "approval").count()
+    pips_active = db.query(models.Pip).filter(
+        models.Pip.status == "active").count()
+    offboardings = db.query(models.Offboarding).filter(
+        models.Offboarding.completed == 0).count()
+
+    # Voronka samaradorligi: yollash qancha vaqt oladi
+    hired_logs = db.query(models.ApplicationStageLog).filter(
+        models.ApplicationStageLog.to_stage == "hired").all()
+    tth = []
+    for lg in hired_logs:
+        a = db.query(models.CandidateApplication).get(lg.application_id)
+        if a and a.created_at and lg.created_at:
+            tth.append((lg.created_at - a.created_at).days)
+    time_to_hire = round(sum(tth) / len(tth), 1) if tth else None
+
+    # Rad sabablari — "nega odam topolmayapmiz"ga javob
+    reasons = {}
+    for a in apps:
+        if a.stage == "rejected" and a.reject_reason:
+            reasons[a.reject_reason] = reasons.get(a.reject_reason, 0) + 1
+
+    alerts = []
+    if overdue:
+        alerts.append({"tone": "red", "text":
+                       f"{overdue} ariza SLA muddatidan o'tib ketdi — "
+                       f"nomzod kutib charchaydi"})
+    if docs_expired:
+        alerts.append({"tone": "red", "text":
+                       f"{docs_expired} hujjatning muddati O'TGAN"})
+    if docs_expiring:
+        alerts.append({"tone": "amber", "text":
+                       f"{docs_expiring} hujjat muddati "
+                       f"{roles.DOCUMENT_WARN_DAYS} kun ichida tugaydi"})
+    if leaves_pending:
+        alerts.append({"tone": "amber", "text":
+                       f"{leaves_pending} ta'til so'rovi javob kutmoqda"})
+    if offers_pending:
+        alerts.append({"tone": "amber", "text":
+                       f"{offers_pending} taklif rahbariyat tasdig'ini "
+                       f"kutmoqda"})
+
+    return {
+        "cards": [
+            {"key": "staff", "label": "Faol xodimlar", "value": staff},
+            {"key": "vacancies", "label": "Ochiq vakansiyalar",
+             "value": open_vac},
+            {"key": "pipeline", "label": "Ochiq arizalar",
+             "value": len(open_apps)},
+            {"key": "interviews", "label": "Bugungi suhbatlar",
+             "value": interviews_today},
+            {"key": "on_leave", "label": "Bugun ta'tilda",
+             "value": on_leave},
+            {"key": "pips", "label": "Faol PIP", "value": pips_active},
+            {"key": "offboarding", "label": "Ketish jarayonida",
+             "value": offboardings},
+            {"key": "tth", "label": "O'rtacha yollash (kun)",
+             "value": time_to_hire if time_to_hire is not None else "—"},
+        ],
+        "alerts": alerts,
+        "reject_reasons": [
+            {"key": k, "label": roles.REJECT_LABELS.get(k, k),
+             "count": v}
+            for k, v in sorted(reasons.items(), key=lambda x: -x[1])],
+        "hint": ("Bitta ekran: yollash, hujjatlar, ta'til, performance "
+                 "va ketish signallari. Qizil — bugun qilinadigan ish."),
+    }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, X, Plus, Trash2, Coins, CalendarClock, Clock } from "lucide-react";
+import { Check, X, Plus, Trash2, Coins, CalendarClock, Clock, Minus } from "lucide-react";
 import {
   api,
   type AttendanceGrid,
@@ -16,6 +16,7 @@ import {
   gradeTone,
 } from "../lib/exams";
 import { formatDate } from "../lib/format";
+import { useAuth } from "../lib/AuthContext";
 
 /** Sana ustuni sarlavhasi: "01 iyul" ko'rinishida qisqa. */
 const SHORT_MONTHS = [
@@ -42,85 +43,62 @@ function EmptyState({ text }: { text: string }) {
  *  qo'yayotganini KO'RIB tanlaydi. */
 function MarkPicker({
   present,
-  homework,
-  onPresent,
-  onHomework,
+  onPick,
   onClose,
 }: {
   present?: boolean | number;
-  homework?: number;
-  onPresent: (v: boolean, late?: boolean) => void;
-  onHomework: (v: number) => void;
+  onPick: (v: "present" | "late" | "absent" | "remove") => void;
   onClose: () => void;
 }) {
+  const marked = present !== undefined;
+  // Belgilanmagan: uchala holat. Belgilangan: qolgan ikkitasi +
+  // o'ngda olib tashlash (rasmdagidek).
+  const options: {
+    key: "present" | "late" | "absent" | "remove";
+    title: string;
+    icon: "check" | "clock" | "x" | "minus";
+    on: string;
+    hover: string;
+  }[] = [];
+  if (present !== true)
+    options.push({ key: "present", title: "Keldi", icon: "check",
+                   on: "bg-brand-500 border-brand-500 text-white",
+                   hover: "hover:bg-brand-50" });
+  if (present !== 2)
+    options.push({ key: "late", title: "Kech keldi", icon: "clock",
+                   on: "bg-amber-500 border-amber-500 text-white",
+                   hover: "hover:bg-amber-50" });
+  if (present !== false)
+    options.push({ key: "absent", title: "Kelmadi", icon: "x",
+                   on: "bg-red-500 border-red-500 text-white",
+                   hover: "hover:bg-red-50" });
+  if (marked)
+    options.push({ key: "remove", title: "Belgini olib tashlash",
+                   icon: "minus", on: "",
+                   hover: "hover:bg-slate-100" });
+
+  const ICONS = {
+    check: <Check size={14} />,
+    clock: <Clock size={14} />,
+    x: <X size={14} />,
+    minus: <Minus size={14} />,
+  };
+
   return (
     <div
-      className="absolute z-30 left-1/2 -translate-x-1/2 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg p-2 w-40"
+      className="absolute z-30 left-1/2 -translate-x-1/2 top-full mt-1 bg-white border border-slate-200 rounded-full shadow-lg p-1 flex gap-1"
       onMouseLeave={onClose}
     >
-      <p className="text-[10px] uppercase text-slate-400 px-1 mb-1">
-        Davomat
-      </p>
-      {/* Chapda keldi, o'rtada kech keldi, o'ngda kelmadi */}
-      <div className="flex gap-1 mb-2">
+      {options.map((o) => (
         <button
-          title="Keldi"
-          onClick={() => onPresent(true)}
-          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
-            present === true
-              ? "bg-brand-500 border-brand-500 text-white"
-              : "border-slate-200 text-slate-500 hover:bg-brand-50"
-          }`}
+          key={o.key}
+          title={o.title}
+          onClick={() => onPick(o.key)}
+          className={`w-8 h-8 rounded-full inline-flex items-center justify-center border border-slate-200 text-slate-500 transition ${o.hover}`}
         >
-          <Check size={14} />
+          {ICONS[o.icon]}
         </button>
-        <button
-          title="Kech keldi"
-          onClick={() => onPresent(true, true)}
-          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
-            present === 2
-              ? "bg-amber-500 border-amber-500 text-white"
-              : "border-slate-200 text-slate-500 hover:bg-amber-50"
-          }`}
-        >
-          <Clock size={14} />
-        </button>
-        <button
-          title="Kelmadi"
-          onClick={() => onPresent(false)}
-          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
-            present === false
-              ? "bg-red-500 border-red-500 text-white"
-              : "border-slate-200 text-slate-500 hover:bg-red-50"
-          }`}
-        >
-          <X size={14} />
-        </button>
-      </div>
-
-      <p className="text-[10px] uppercase text-slate-400 px-1 mb-1">
-        Uy vazifasi
-      </p>
-      <div className="flex gap-1">
-        {[
-          { v: 1, label: "✓", title: "Bajardi", on: "bg-emerald-500" },
-          { v: 2, label: "±", title: "Qisman", on: "bg-amber-500" },
-          { v: 0, label: "✗", title: "Bajarmadi", on: "bg-red-500" },
-        ].map((h) => (
-          <button
-            key={h.v}
-            title={h.title}
-            onClick={() => onHomework(h.v)}
-            className={`flex-1 rounded-lg py-1.5 text-xs font-bold border transition ${
-              homework === h.v
-                ? `${h.on} border-transparent text-white`
-                : "border-slate-200 text-slate-500 hover:bg-slate-50"
-            }`}
-          >
-            {h.label}
-          </button>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
@@ -210,11 +188,29 @@ export function AttendanceTab({
   month: number;
   canEdit: boolean;
 }) {
+  const { user } = useAuth();
   const [grid, setGrid] = useState<AttendanceGrid | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null); // ochiq katak
   const [menu, setMenu] = useState<number | null>(null); // ochiq sana
+
+  // SANA QOIDALARI: kelajak — hech kimga; o'tgan kun — faqat
+  // asoschi va o'quv bo'limi rahbariga; bugun — odatdagidek.
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const canPast =
+    user?.role === "founder" || user?.role === "academic_head";
+  const cellEditable = (lsDate: string) =>
+    canEdit &&
+    (lsDate === todayIso || (lsDate < todayIso && canPast));
+  const cellHint = (lsDate: string) => {
+    if (lsDate > todayIso)
+      return "Hali kelmagan kun — yoqlama qo'yilmaydi";
+    if (lsDate < todayIso && !canPast)
+      return "O'tib ketgan kun — faqat asoschi va o'quv bo'limi " +
+             "rahbari o'zgartiradi";
+    return undefined;
+  };
   const [moving, setMoving] = useState<{ id: number; date: string } | null>(
     null
   );
@@ -230,57 +226,41 @@ export function AttendanceTab({
   };
   useEffect(load, [groupId, year, month]);
 
-  /** Davomat — aniq qiymat bilan saqlanadi, aylanma emas. */
-  async function setPresent(
+  /** Bitta amal: keldi / kech keldi / kelmadi / olib tashlash.
+   *  Olib tashlangan o'quvchi "belgilanmagan"ga qaytadi va shu dars
+   *  uchun oylikka kirmaydi. */
+  async function pick(
     lessonId: number,
     studentId: number,
-    next: boolean,
-    late?: boolean
+    what: "present" | "late" | "absent" | "remove"
   ) {
-    if (!canEdit || !grid) return;
+    if (!grid) return;
     const key = `${lessonId}:${studentId}`;
     const before = grid.marks[key];
-    // late = "kech keldi": kelgan sanaladi, jadvalda soat bilan
-    setGrid({ ...grid, marks: { ...grid.marks, [key]: late ? 2 : next } });
-    setSaving(key);
-    try {
-      await api.put(`/lessons/${lessonId}/attendance`, {
-        marks: [{ student_id: studentId, present: next, late: !!late }],
-      });
-    } catch {
-      setGrid({ ...grid, marks: { ...grid.marks, [key]: before } });
-    } finally {
-      setSaving(null);
-    }
-  }
-
-  /** Uy vazifasi davomat bilan bitta oynada — alohida ekran bo'lsa
-   *  hech kim to'ldirmaydi. */
-  async function setHomework(
-    lessonId: number,
-    studentId: number,
-    next: number
-  ) {
-    if (!canEdit || !grid) return;
-    const key = `${lessonId}:${studentId}`;
-    const hw = { ...(grid.homework || {}), [key]: next };
     const marks = { ...grid.marks };
-    // Uy vazifasi belgilandi — demak bola darsda bo'lgan
-    if (marks[key] === undefined) marks[key] = true;
-    setGrid({ ...grid, homework: hw, marks });
+    if (what === "remove") delete marks[key];
+    else marks[key] = what === "late" ? 2 : what === "present";
+    setGrid({ ...grid, marks });
     setSaving(key);
+    setOpen(null);
     try {
       await api.put(`/lessons/${lessonId}/attendance`, {
         marks: [
-          {
-            student_id: studentId,
-            present: marks[key] === true,
-            homework: next,
-          },
+          what === "remove"
+            ? { student_id: studentId, present: false, remove: true }
+            : {
+                student_id: studentId,
+                present: what !== "absent",
+                late: what === "late",
+              },
         ],
       });
-    } catch {
-      load();
+    } catch (e) {
+      const back = { ...grid.marks };
+      if (before === undefined) delete back[key];
+      else back[key] = before;
+      setGrid({ ...grid, marks: back });
+      alert(e instanceof Error ? e.message : "Xatolik");
     } finally {
       setSaving(null);
     }
@@ -371,28 +351,35 @@ export function AttendanceTab({
                 {grid.lessons.map((ls) => {
                   const key = `${ls.id}:${s.id}`;
                   const v = grid.marks[key];
-                  const h = grid.homework?.[key];
+                  const editable = cellEditable(ls.date);
                   return (
                     <td
                       key={ls.id}
                       className="px-2 py-2 text-center relative"
-                      onMouseEnter={() => canEdit && setOpen(key)}
+                      onMouseEnter={() => editable && setOpen(key)}
                       onMouseLeave={() =>
                         setOpen((k) => (k === key ? null : k))
                       }
                     >
                       <button
-                        onClick={() => setOpen(open === key ? null : key)}
-                        disabled={!canEdit || saving === key}
-                        className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition relative ${
+                        onClick={() =>
+                          editable && setOpen(open === key ? null : key)
+                        }
+                        disabled={!editable || saving === key}
+                        title={cellHint(ls.date)}
+                        className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
                           v === true
                             ? "bg-brand-500 text-white"
                             : v === 2
                             ? "bg-amber-500 text-white"
                             : v === false
                             ? "bg-red-500 text-white"
+                            : ls.date > todayIso
+                            ? "bg-slate-50"
                             : "bg-slate-100 hover:bg-slate-200"
-                        } ${canEdit ? "cursor-pointer" : "cursor-default"}`}
+                        } ${
+                          editable ? "cursor-pointer" : "cursor-not-allowed"
+                        } ${!editable && v === undefined ? "opacity-50" : ""}`}
                       >
                         {v === true ? (
                           <Check size={15} />
@@ -401,33 +388,11 @@ export function AttendanceTab({
                         ) : v === false ? (
                           <X size={15} />
                         ) : null}
-                        {h !== undefined && (
-                          <span
-                            title={
-                              h === 1
-                                ? "Uy vazifasi: bajardi"
-                                : h === 2
-                                ? "Uy vazifasi: qisman"
-                                : "Uy vazifasi: bajarmadi"
-                            }
-                            className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${
-                              h === 1
-                                ? "bg-emerald-500"
-                                : h === 2
-                                ? "bg-amber-500"
-                                : "bg-red-500"
-                            }`}
-                          />
-                        )}
                       </button>
-                      {open === key && canEdit && (
+                      {open === key && editable && (
                         <MarkPicker
                           present={v as boolean | number | undefined}
-                          homework={h}
-                          onPresent={(x, late) =>
-                            setPresent(ls.id, s.id, x, late)
-                          }
-                          onHomework={(x) => setHomework(ls.id, s.id, x)}
+                          onPick={(what) => pick(ls.id, s.id, what)}
                           onClose={() => setOpen(null)}
                         />
                       )}
@@ -441,12 +406,14 @@ export function AttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Katak ustiga sichqonchani olib boring: chapda <b>keldi</b> (✓),
-        o'rtada <b>kech keldi</b> (soat), o'ngda <b>kelmadi</b> (✗).
-        Keldi ham, kelmadi ham — belgilangan yoqlama, ikkalasida ham
-        ustoz oyligi yoziladi; faqat belgilanmaganda yozilmaydi.
-        Shu yerda uy vazifasi ham belgilanadi
-        (burchakdagi nuqta): yashil bajardi, sariq qisman, qizil bajarmadi.
+        Katak ustiga sichqonchani olib boring: ✓ keldi, soat — kech
+        keldi, ✗ kelmadi; belgilangan katakda esa qolgan holatlar va
+        <b> – belgini olib tashlash</b> chiqadi. Keldi ham, kelmadi
+        ham — belgilangan yoqlama, ikkalasida ham ustoz oyligi
+        yoziladi; faqat belgilanmaganda (yoki belgi olib
+        tashlanganda) yozilmaydi. Hali kelmagan kunga hech kim
+        yoqlama qo'ya olmaydi; o'tib ketgan kunni faqat asoschi va
+        o'quv bo'limi rahbari o'zgartiradi.
         Har bir o'quvchi alohida belgilanadi — ommaviy belgilash yo'q,
         chunki u yoqlamani rasmiyatchilikka aylantiradi. Sana ustiga
         bosilsa dars ko'chirish menyusi chiqadi. Kulrang sana — hali

@@ -242,8 +242,12 @@ export default function Layout() {
   if (can(user?.role, ACADEMIC_VIEW)) {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
   }
-  // SMM - kontent quvuri: g'oyadan natijagacha.
-  if (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) {
+  // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
+  // bo'lim kerak emas — uning ishi odamlar, kontent emas.
+  if (
+    (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
+    user?.role !== "hr_manager"
+  ) {
     items = [...items, { to: "/smm", label: "SMM", icon: Megaphone }];
   }
   // Marketing - reklama va voronka analitikasi.

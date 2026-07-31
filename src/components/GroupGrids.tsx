@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, X, Plus, Trash2, Coins, CalendarClock } from "lucide-react";
+import { Check, X, Plus, Trash2, Coins, CalendarClock, Clock } from "lucide-react";
 import {
   api,
   type AttendanceGrid,
@@ -47,9 +47,9 @@ function MarkPicker({
   onHomework,
   onClose,
 }: {
-  present?: boolean;
+  present?: boolean | number;
   homework?: number;
-  onPresent: (v: boolean) => void;
+  onPresent: (v: boolean, late?: boolean) => void;
   onHomework: (v: number) => void;
   onClose: () => void;
 }) {
@@ -61,26 +61,40 @@ function MarkPicker({
       <p className="text-[10px] uppercase text-slate-400 px-1 mb-1">
         Davomat
       </p>
+      {/* Chapda keldi, o'rtada kech keldi, o'ngda kelmadi */}
       <div className="flex gap-1 mb-2">
         <button
+          title="Keldi"
           onClick={() => onPresent(true)}
-          className={`flex-1 rounded-lg py-1.5 text-xs font-medium border transition ${
+          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
             present === true
               ? "bg-brand-500 border-brand-500 text-white"
-              : "border-slate-200 text-slate-600 hover:bg-brand-50"
+              : "border-slate-200 text-slate-500 hover:bg-brand-50"
           }`}
         >
-          Bor
+          <Check size={14} />
         </button>
         <button
-          onClick={() => onPresent(false)}
-          className={`flex-1 rounded-lg py-1.5 text-xs font-medium border transition ${
-            present === false
-              ? "bg-red-500 border-red-500 text-white"
-              : "border-slate-200 text-slate-600 hover:bg-red-50"
+          title="Kech keldi"
+          onClick={() => onPresent(true, true)}
+          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
+            present === 2
+              ? "bg-amber-500 border-amber-500 text-white"
+              : "border-slate-200 text-slate-500 hover:bg-amber-50"
           }`}
         >
-          Yo'q
+          <Clock size={14} />
+        </button>
+        <button
+          title="Kelmadi"
+          onClick={() => onPresent(false)}
+          className={`flex-1 rounded-full py-1.5 inline-flex items-center justify-center border transition ${
+            present === false
+              ? "bg-red-500 border-red-500 text-white"
+              : "border-slate-200 text-slate-500 hover:bg-red-50"
+          }`}
+        >
+          <X size={14} />
         </button>
       </div>
 
@@ -220,16 +234,18 @@ export function AttendanceTab({
   async function setPresent(
     lessonId: number,
     studentId: number,
-    next: boolean
+    next: boolean,
+    late?: boolean
   ) {
     if (!canEdit || !grid) return;
     const key = `${lessonId}:${studentId}`;
     const before = grid.marks[key];
-    setGrid({ ...grid, marks: { ...grid.marks, [key]: next } });
+    // late = "kech keldi": kelgan sanaladi, jadvalda soat bilan
+    setGrid({ ...grid, marks: { ...grid.marks, [key]: late ? 2 : next } });
     setSaving(key);
     try {
       await api.put(`/lessons/${lessonId}/attendance`, {
-        marks: [{ student_id: studentId, present: next }],
+        marks: [{ student_id: studentId, present: next, late: !!late }],
       });
     } catch {
       setGrid({ ...grid, marks: { ...grid.marks, [key]: before } });
@@ -280,7 +296,9 @@ export function AttendanceTab({
     return <EmptyState text="Guruhda o'quvchi yo'q" />;
 
   const total = grid.lessons.length * grid.students.length;
-  const present = Object.values(grid.marks).filter((v) => v === true).length;
+  const present = Object.values(grid.marks).filter(
+    (v) => v === true || v === 2
+  ).length;
   const marked = Object.keys(grid.marks).length;
   const heldCount = grid.lessons.filter((l) => l.held).length;
   const box = grid.reschedule;
@@ -369,6 +387,8 @@ export function AttendanceTab({
                         className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition relative ${
                           v === true
                             ? "bg-brand-500 text-white"
+                            : v === 2
+                            ? "bg-amber-500 text-white"
                             : v === false
                             ? "bg-red-500 text-white"
                             : "bg-slate-100 hover:bg-slate-200"
@@ -376,6 +396,8 @@ export function AttendanceTab({
                       >
                         {v === true ? (
                           <Check size={15} />
+                        ) : v === 2 ? (
+                          <Clock size={15} />
                         ) : v === false ? (
                           <X size={15} />
                         ) : null}
@@ -400,9 +422,11 @@ export function AttendanceTab({
                       </button>
                       {open === key && canEdit && (
                         <MarkPicker
-                          present={v as boolean | undefined}
+                          present={v as boolean | number | undefined}
                           homework={h}
-                          onPresent={(x) => setPresent(ls.id, s.id, x)}
+                          onPresent={(x, late) =>
+                            setPresent(ls.id, s.id, x, late)
+                          }
                           onHomework={(x) => setHomework(ls.id, s.id, x)}
                           onClose={() => setOpen(null)}
                         />
@@ -417,8 +441,11 @@ export function AttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Katak ustiga sichqonchani olib boring — <b>Bor</b> yoki{" "}
-        <b>Yo'q</b> ni tanlang. Shu yerda uy vazifasi ham belgilanadi
+        Katak ustiga sichqonchani olib boring: chapda <b>keldi</b> (✓),
+        o'rtada <b>kech keldi</b> (soat), o'ngda <b>kelmadi</b> (✗).
+        Keldi ham, kelmadi ham — belgilangan yoqlama, ikkalasida ham
+        ustoz oyligi yoziladi; faqat belgilanmaganda yozilmaydi.
+        Shu yerda uy vazifasi ham belgilanadi
         (burchakdagi nuqta): yashil bajardi, sariq qisman, qizil bajarmadi.
         Har bir o'quvchi alohida belgilanadi — ommaviy belgilash yo'q,
         chunki u yoqlamani rasmiyatchilikka aylantiradi. Sana ustiga

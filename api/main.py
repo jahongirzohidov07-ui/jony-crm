@@ -1577,12 +1577,37 @@ def save_attendance(
         raise HTTPException(404, "Dars topilmadi")
     _get_group_in_scope(db, lesson.group_id, user)
 
+    # SANA QOIDALARI. Yoqlama — pul hujjati (ustoz oyligi shundan
+    # chiqadi), shuning uchun qat'iy:
+    #   kelajak — hech kimga: bo'lib o'tmagan darsni belgilab
+    #             bo'lmaydi;
+    #   o'tgan  — faqat asoschi va o'quv bo'limi rahbari: ustoz ham
+    #             o'z o'tgan darsini o'zgartira olmaydi;
+    #   bugun   — odatdagi tartibda.
+    _today = roles.local_today()
+    if lesson.date > _today:
+        raise HTTPException(
+            400, "Hali kelmagan kunga yoqlama qo'yilmaydi — dars "
+                 "bo'lib o'tmagan")
+    if lesson.date < _today and user.role not in tuple(
+            roles.PAST_ATTENDANCE):
+        raise HTTPException(
+            403, "O'tib ketgan kunning yoqlamasini faqat asoschi va "
+                 "o'quv bo'limi rahbari o'zgartira oladi")
+
     existing = {
         a.student_id: a
         for a in db.query(models.Attendance).filter(
             models.Attendance.lesson_id == lesson_id).all()
     }
     for m in payload.marks:
+        # Belgini olib tashlash: o'quvchi "belgilanmagan"ga qaytadi
+        # va shu dars uchun oylikka kirmaydi
+        if m.remove:
+            row = existing.pop(m.student_id, None)
+            if row:
+                db.delete(row)
+            continue
         hw = m.homework if m.homework in (0, 1, 2) else None
         # 1 = keldi, 2 = kech keldi, 0 = kelmadi. Kech kelgan ham
         # KELGAN: davomat foizida sanaladi, faqat jadvalda alohida
@@ -1596,11 +1621,24 @@ def save_attendance(
             if hw is not None:
                 row.homework = hw
         else:
-            db.add(models.Attendance(
+            new_row = models.Attendance(
                 lesson_id=lesson_id, student_id=m.student_id,
                 present=val, homework=hw,
-                created_by=user.full_name))
-    _mark_lesson_held(db, lesson)
+                created_by=user.full_name)
+            db.add(new_row)
+            existing[m.student_id] = new_row
+    db.flush()
+
+    # Hamma belgi olib tashlangan bo'lsa dars "reja"ga qaytadi —
+    # yoqlamasiz dars o'tilgan hisoblanmaydi va pul keltirmaydi
+    left = db.query(models.Attendance).filter(
+        models.Attendance.lesson_id == lesson_id).count()
+    grades_left = db.query(models.DailyGrade).filter(
+        models.DailyGrade.lesson_id == lesson_id).count()
+    if left or grades_left:
+        _mark_lesson_held(db, lesson)
+    else:
+        lesson.held = 0
     db.commit()
 
     # AVTOMAT XP: kelgani uchun ball va davomat ketma-ketligi.
@@ -2354,13 +2392,25 @@ def _shift_month(year: int, month: int, delta: int) -> tuple:
     return idx // 12, idx % 12 + 1
 
 
+def _utc_window(start: date, end: date):
+    """Mahalliy sana oralig'ini UTC datetime oynasiga aylantiradi.
+
+    created_at UTC'da saqlanadi, hisobot esa Toshkent oyi bo'yicha
+    so'raladi. Chegaralar surilmasa, har oyning 1-kuni 00:00-05:00
+    orasidagi to'lovlar yangi oy hisobotidan YO'QOLIB, eski oyga
+    tushib qolardi — "bugungi tushum"dagi xatoning oylik varianti."""
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+    return (datetime.combine(start, datetime.min.time()) - off,
+            datetime.combine(end, datetime.max.time()) - off)
+
+
 def _income_by_method(db: Session, user, start: date, end: date,
                       branch_id=None) -> dict:
     """Bir oraliqdagi haqiqiy tushumni to'lov usuli kesimida qaytaradi."""
     q = db.query(models.Payment).join(models.Student).filter(
         models.Payment.kind == "payment",
-        models.Payment.created_at >= datetime.combine(start, datetime.min.time()),
-        models.Payment.created_at <= datetime.combine(end, datetime.max.time()),
+        models.Payment.created_at >= _utc_window(start, end)[0],
+        models.Payment.created_at <= _utc_window(start, end)[1],
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.filter(models.Student.branch_id == user.branch_id)
@@ -2800,8 +2850,7 @@ def report_sales_managers(
     else:
         raise HTTPException(400, "Noto'g'ri davr")
 
-    start_dt = datetime.combine(start, datetime.min.time())
-    end_dt = datetime.combine(end, datetime.max.time())
+    start_dt, end_dt = _utc_window(start, end)
 
     managers = db.query(models.User).filter(
         models.User.role == roles.SALES_MANAGER)
@@ -3007,8 +3056,7 @@ def admin_kpi(
 ):
     start, end = billing.month_bounds(year, month)
     period = _period_key(year, month)
-    start_dt = datetime.combine(start, datetime.min.time())
-    end_dt = datetime.combine(end, datetime.max.time())
+    start_dt, end_dt = _utc_window(start, end)
 
     admins = db.query(models.User).filter(
         models.User.role == roles.SALES_MANAGER,
@@ -4359,8 +4407,7 @@ def cashflow_ledger(
     Tepasida - Kirim / Chiqim / Kassa jadvali usullar kesimida, va
     yangi/eski to'lovlar soni bilan summasi."""
     start, end = billing.month_bounds(year, month)
-    d0 = datetime.combine(start, datetime.min.time())
-    d1 = datetime.combine(end, datetime.max.time())
+    d0, d1 = _utc_window(start, end)
 
     # --- Kirimlar ---
     pq = (
@@ -7664,8 +7711,7 @@ def billing_collection(
     o'quvchi ko'rinmay qolardi."""
     period = _period_key(year, month)
     start, end = billing.month_bounds(year, month)
-    d0 = datetime.combine(start, datetime.min.time())
-    d1 = datetime.combine(end, datetime.max.time())
+    d0, d1 = _utc_window(start, end)
 
     sq = scope_to_branch(db.query(models.Student), models.Student, user,
                          branch_id)
@@ -7815,8 +7861,7 @@ def ceo_branches(
     y, m = _shift_month(today.year, today.month, -(months - 1))
     start, _e = billing.month_bounds(y, m)
     _s, end = billing.month_bounds(today.year, today.month)
-    d0 = datetime.combine(start, datetime.min.time())
-    d1 = datetime.combine(end, datetime.max.time())
+    d0, d1 = _utc_window(start, end)
 
     allowed = _branch_scope_ids(db, user, None)
     bq = db.query(models.Branch)
@@ -12576,7 +12621,7 @@ def nps_report(
     today = date.today()
     y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
     start, _e = billing.month_bounds(y, m)
-    d0 = datetime.combine(start, datetime.min.time())
+    d0 = _utc_window(start, start)[0]
 
     teachers = scope_to_branch(db.query(models.Teacher), models.Teacher,
                                user, branch_id).all()
@@ -12654,7 +12699,7 @@ def analytics_romi(
     y, m = _shift_month(today.year, today.month, -(max(1, months) - 1))
     start, _e = billing.month_bounds(y, m)
     _s, end = billing.month_bounds(today.year, today.month)
-    d0 = datetime.combine(start, datetime.min.time())
+    d0 = _utc_window(start, start)[0]
 
     leads = db.query(models.Lead).filter(models.Lead.created_at >= d0)
     if branch_id:
@@ -13881,9 +13926,9 @@ def _rule_cap_hit(db: Session, student_id: int, rule: models.XpRule,
                         models.XpTransaction.event_code == rule.event_code,
                         models.XpTransaction.is_reversal == 0,
                         models.XpTransaction.created_at
-                        >= datetime.combine(start, datetime.min.time()),
+                        >= _utc_window(start, end)[0],
                         models.XpTransaction.created_at
-                        <= datetime.combine(end, datetime.max.time()))
+                        <= _utc_window(start, end)[1])
                 .count())
 
     if rule.maximum_per_lesson and lesson_id:
@@ -20538,7 +20583,7 @@ def _teacher_dashboard(db: Session, user: models.User):
                        models.Attendance.lesson_id == models.Lesson.id)
                  .filter(models.Attendance.student_id.in_(sids or [-1]),
                          models.Lesson.held == 1)
-                 .order_by(models.Lesson.date).all())
+                 .order_by(models.Lesson.date, models.Lesson.id).all())
     by_student: dict = {}
     for a, ls in all_marks:
         by_student.setdefault(a.student_id, []).append((ls.date, a))
@@ -20568,7 +20613,8 @@ def _teacher_dashboard(db: Session, user: models.User):
                   .join(models.Lesson,
                         models.DailyGrade.lesson_id == models.Lesson.id)
                   .filter(models.DailyGrade.student_id == sid)
-                  .order_by(models.Lesson.date).all() if g.score is not None]
+                  .order_by(models.Lesson.date,
+                            models.Lesson.id).all() if g.score is not None]
         w = roles.SCORE_DROP_WINDOW
         if len(grades) >= w * 2:
             new_avg = sum(grades[-w:]) / w

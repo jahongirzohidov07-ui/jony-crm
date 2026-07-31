@@ -23,6 +23,7 @@ import {
   CalendarDays,
   Archive as ArchiveIcon,
   ClipboardList,
+  ClipboardCheck,
   Package,
   ShieldCheck,
   Coins,
@@ -294,6 +295,7 @@ export default function Layout() {
       { to: "/my-students", label: "O'quvchilarim", icon: AcademicIcon },
       { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
       { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
+      { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
     items = TEACHER_MENU

@@ -263,6 +263,13 @@ def _ensure_new_columns():
         "ALTER TABLE leads ADD COLUMN content_id INTEGER",
         "ALTER TABLE leads ADD COLUMN campaign_id INTEGER",
         "ALTER TABLE leads ADD COLUMN social_message_id INTEGER",
+        # Examiner oyligi: kim o'tkazgani + jarima maydonlari
+        "ALTER TABLE exams ADD COLUMN examiner_id INTEGER",
+        "ALTER TABLE exams ADD COLUMN penalty_lc_up INTEGER DEFAULT 0",
+        "ALTER TABLE exams ADD COLUMN penalty_coin INTEGER DEFAULT 0",
+        "ALTER TABLE exams ADD COLUMN penalty_delay_hours FLOAT DEFAULT 0",
+        "ALTER TABLE exams ADD COLUMN penalty_note TEXT",
+        "ALTER TABLE exams ADD COLUMN penalty_by VARCHAR",
     ]
     for stmt in statements:
         try:
@@ -1847,6 +1854,8 @@ def create_exam(
         approved_by=user.full_name if approver else None,
         approved_at=date.today() if approver else None,
         created_by=user.full_name,
+        examiner_id=user.id if user.role in (
+            roles.EXAMINER, roles.HEAD_EXAMINER) else None,
     )
     db.add(exam)
     db.commit()
@@ -1905,6 +1914,11 @@ def save_exam_results(
             400, "Bu test hali tasdiqlanmagan — avval Examiner tasdiqlashi kerak")
     if exam.status == "cancelled":
         raise HTTPException(400, "Bekor qilingan testga natija kiritilmaydi")
+    # Oylik uchun: kim o'tkazgani hali yozilmagan bo'lsa, natijani
+    # kiritayotgan examiner o'tkazgan hisoblanadi.
+    if not exam.examiner_id and user.role in (
+            roles.EXAMINER, roles.HEAD_EXAMINER):
+        exam.examiner_id = user.id
     existing = {r.student_id: r for r in exam.results}
 
     for m in payload.marks:
@@ -21229,7 +21243,8 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
         date=o.date, status="approved",
         approved_by=user.full_name, approved_at=roles.local_today(),
         note=f"Buyurtma {o.public_id}",
-        created_by=user.full_name)
+        created_by=user.full_name,
+        examiner_id=user.id)
     db.add(ex); db.flush()
     o.exam_id = ex.id
     db.commit(); db.refresh(o)
@@ -23143,4 +23158,197 @@ def support_salary_list(year: int | None = None, month: int | None = None,
         "hint": ("Oylik seanslardan avtomat: (soat x 0.30 + o'quvchi "
                  "x 0.20 + test koef x 0.50) x 10 000, "
                  "chegara 400 000 — 1 500 000."),
+    }
+
+
+# ------------------------------------------------------- Examiner oyligi ----
+def _month_range(y: int, m: int):
+    start = date(y, m, 1)
+    end = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+    return start, end
+
+
+def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
+    """Bitta examinerning bir oylik ball hisobi.
+
+    Faqat O'TKAZILGAN (done) imtihonlar sanaladi — natijasi kiritilmagan
+    imtihon hali ish emas. Ball: daraja bo'yicha baza + qatnashgan
+    o'quvchi soni x koeffitsiyent. Jarimalar va qo'lda ayirilgan ballar
+    ayirib tashlanadi, so'ng ball x 1 000 so'm (chegara 400k — 1.5M)."""
+    start, end = _month_range(y, m)
+    exams = (
+        db.query(models.Exam)
+        .filter(models.Exam.examiner_id == user_id,
+                models.Exam.status == "done",
+                models.Exam.date >= start, models.Exam.date < end)
+        .order_by(models.Exam.date, models.Exam.id)
+        .all()
+    )
+    rows, base_total, pen_total = [], 0.0, 0.0
+    for e in exams:
+        g = db.query(models.Group).get(e.group_id)
+        students = len([r for r in e.results if not r.absent])
+        pts = roles.examiner_exam_points(e.kind, g.level if g else None,
+                                         students)
+        pen = roles.examiner_penalty_points(
+            e.kind, g.level if g else None,
+            bool(e.penalty_lc_up), bool(e.penalty_coin),
+            e.penalty_delay_hours or 0)
+        row = {
+            "exam_id": e.id,
+            "date": e.date.isoformat(),
+            "group": g.name if g else "—",
+            "kind": roles.EXAM_KIND_LABELS.get(e.kind, e.kind),
+            "retake": bool(e.retake_of_id),
+            "students": students,
+            "penalty_lc_up": bool(e.penalty_lc_up),
+            "penalty_coin": bool(e.penalty_coin),
+            "penalty_delay_hours": e.penalty_delay_hours or 0,
+            "penalty_note": e.penalty_note,
+            "penalty_points": pen,
+        }
+        if pts is None:
+            # Mock jadvalda yo'q — ball bermaydi, lekin ro'yxatda
+            # ko'rinadi (odam "qani mock'im" deb qidirmasin).
+            row.update({"tier_label": "Jadvalda yo'q (mock)",
+                        "base": 0, "per_student": 0, "points": 0.0})
+        else:
+            row.update({"tier_label": pts["tier_label"],
+                        "base": pts["base"],
+                        "per_student": pts["per_student"],
+                        "points": pts["points"]})
+            base_total += pts["points"]
+        pen_total += pen
+        rows.append(row)
+
+    adjs = (
+        db.query(models.ExaminerAdjustment)
+        .filter(models.ExaminerAdjustment.user_id == user_id,
+                models.ExaminerAdjustment.date >= start,
+                models.ExaminerAdjustment.date < end)
+        .order_by(models.ExaminerAdjustment.date,
+                  models.ExaminerAdjustment.id)
+        .all()
+    )
+    adj_total = round(sum(a.points or 0 for a in adjs), 2)
+    net = round(base_total - pen_total - adj_total, 2)
+    pay = roles.examiner_salary(net)
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "exams": rows,
+        "exam_count": len(rows),
+        "base_points": round(base_total, 2),
+        "penalty_points": round(pen_total, 2),
+        "adjustments": [
+            {"id": a.id, "date": a.date.isoformat(), "points": a.points,
+             "reason": a.reason, "created_by": a.created_by}
+            for a in adjs],
+        "adjustment_points": adj_total,
+        **pay,
+        "table": [
+            {"tier": k, "label": roles.EXAMINER_TIER_LABELS[k],
+             "base": v[0], "per_student": v[1],
+             "pen_lc_up": roles.EXAMINER_PENALTIES[k][0],
+             "pen_coin": roles.EXAMINER_PENALTIES[k][1],
+             "pen_hour": roles.EXAMINER_PENALTIES[k][2]}
+            for k, v in roles.EXAMINER_EXAM_POINTS.items()],
+        "hint": ("Har imtihon: daraja balli + o'quvchi soni x koeffitsiyent. "
+                 "Jami ball x 1 000 so'm. Kamida 400 000, ko'pi bilan "
+                 "1 500 000 so'm. Kamchilik uchun bo'lim boshliqlari ball "
+                 "ayirishi mumkin."),
+    }
+
+
+@app.get("/api/me/examiner-salary")
+def my_examiner_salary(year: int | None = None, month: int | None = None,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(
+                           roles.EXAMINER, roles.HEAD_EXAMINER))):
+    """Examinerning o'z oyligi — imtihonlari kesimida, avtomat."""
+    today = roles.local_today()
+    return _examiner_month(db, user.id, year or today.year,
+                           month or today.month)
+
+
+@app.post("/api/exams/{exam_id}/penalty")
+def set_exam_penalty(exam_id: int, payload: schemas.ExamPenaltyIn,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(
+                         *roles.EXAMINER_PENALTY_SET))):
+    """Bo'lim boshlig'i imtihonga jarima belgilaydi: LC UP, coin,
+    jadvaldan kechikish (soat). Qayta bosilsa - eski qiymat almashadi."""
+    exam = db.query(models.Exam).get(exam_id)
+    if not exam:
+        raise HTTPException(404, "Imtihon topilmadi")
+    if payload.delay_hours < 0 or payload.delay_hours > 24:
+        raise HTTPException(400, "Kechikish 0-24 soat oralig'ida bo'lsin")
+    exam.penalty_lc_up = 1 if payload.lc_up else 0
+    exam.penalty_coin = 1 if payload.coin else 0
+    exam.penalty_delay_hours = payload.delay_hours or 0
+    exam.penalty_note = payload.note
+    exam.penalty_by = user.full_name
+    db.commit()
+    g = db.query(models.Group).get(exam.group_id)
+    audit.log(db, user, entity="exam", action="penalty",
+              entity_id=exam.id, entity_label=g.name if g else None,
+              new_value=(f"LC UP: {'ha' if payload.lc_up else 'yo`q'}, "
+                         f"Coin: {'ha' if payload.coin else 'yo`q'}, "
+                         f"kechikish: {payload.delay_hours or 0} soat"),
+              note=payload.note, commit=True)
+    return {"ok": True}
+
+
+@app.post("/api/examiner-adjustments")
+def add_examiner_adjustment(payload: schemas.ExaminerAdjustIn,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(
+                                *roles.EXAMINER_PENALTY_SET))):
+    """Qo'lda ball ayirish (ESLATMA): sabab majburiy."""
+    target = db.query(models.User).get(payload.user_id)
+    if not target or target.role not in (roles.EXAMINER,
+                                         roles.HEAD_EXAMINER):
+        raise HTTPException(404, "Examiner topilmadi")
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Sababni yozing — ball sababsiz ayirilmaydi")
+    if payload.points <= 0 or payload.points > 500:
+        raise HTTPException(400, "Ball 0 dan katta va 500 dan kichik bo'lsin")
+    a = models.ExaminerAdjustment(
+        user_id=target.id, points=round(payload.points, 2),
+        reason=payload.reason.strip(),
+        date=payload.date or roles.local_today(),
+        created_by=user.full_name)
+    db.add(a)
+    db.commit()
+    audit.log(db, user, entity="examiner_adjustment", action="create",
+              entity_id=a.id, entity_label=target.full_name,
+              new_value=f"-{a.points} ball", note=a.reason, commit=True)
+    return {"ok": True, "id": a.id}
+
+
+@app.get("/api/examiners/salary")
+def examiner_salary_list(year: int | None = None, month: int | None = None,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(
+                             *roles.EXAMINER_SALARY_VIEW))):
+    """Rahbariyat uchun: barcha examinerlar oyligi bir joyda,
+    imtihonlari bilan — jarima ham shu yerdan belgilanadi."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    ex_users = db.query(models.User).filter(
+        models.User.role.in_((roles.EXAMINER, roles.HEAD_EXAMINER)),
+        models.User.is_active == 1).order_by(models.User.full_name).all()
+    rows = []
+    for u in ex_users:
+        d = _examiner_month(db, u.id, y, m)
+        d["user_id"] = u.id
+        d["name"] = u.full_name
+        d["role"] = roles.UZ_LABELS.get(u.role, u.role)
+        rows.append(d)
+    rows.sort(key=lambda r: -r["salary"])
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "total": round(sum(r["salary"] for r in rows), 0),
+        "min": roles.EXAMINER_PAY_MIN, "max": roles.EXAMINER_PAY_MAX,
+        "can_penalize": user.role in tuple(roles.EXAMINER_PENALTY_SET),
     }

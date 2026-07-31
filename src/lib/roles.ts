@@ -188,6 +188,14 @@ export function roleLabel(role: string | undefined): string {
  * Kim kimga qanday rol bera oladi. Rol berish tizimdagi eng xavfli
  * amal, shuning uchun faqat asoschi barcha rollarni bera oladi.
  */
+/** HR shu rollarda xodim ocha oladi. Asoschi va filial rahbari yo'q —
+ *  ular to'liq huquqqa ega, ularni faqat asoschi tayinlaydi. */
+export const HR_ASSIGNABLE_ROLES = [
+  TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
+  SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
+  PARENT, STUDENT,
+];
+
 export function assignableRoles(myRole: string | undefined): string[] {
   if (myRole === FOUNDER) return ALL_ROLES;
   if (myRole === BRANCH_MANAGER)
@@ -195,8 +203,7 @@ export function assignableRoles(myRole: string | undefined): string[] {
       SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
       EXAMINER, PARENT, STUDENT,
     ];
-  if (myRole === HR_MANAGER)
-    return [TEACHER, SUPPORT_TEACHER, ADMINISTRATOR, SALES_MANAGER];
+  if (myRole === HR_MANAGER) return HR_ASSIGNABLE_ROLES;
   return [];
 }
 
@@ -241,3 +248,13 @@ export const TEACHER_MENU = [
   "/complaints",
   "/tasks",
 ];
+
+/**
+ * Xodim kartasi: ko'rish, tahrirlash va rol berish — uch xil huquq.
+ *
+ * Ilgari uchalasi ham USER_ADMIN (faqat asoschi) ostida edi, shuning
+ * uchun HR menejer xodimlar ro'yxatini umuman ocholmasdi.
+ */
+export const STAFF_EDIT = STAFF_VIEWERS;
+
+

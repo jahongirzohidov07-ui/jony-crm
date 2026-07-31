@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { TeacherOverviewModal } from "../components/TeacherOverview";
 import {
   Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
 } from "lucide-react";
@@ -9,7 +10,7 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import {
   STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER,
-  ACCOUNT_MANAGE, can,
+  ACCOUNT_MANAGE, can, FOUNDER, ACADEMIC_HEAD,
 } from "../lib/roles";
 import { formatDate } from "../lib/format";
 import { SalaryCard } from "../components/SalaryCard";
@@ -294,6 +295,7 @@ export default function Teachers() {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<Teacher | null>(null);
   const [accountFor, setAccountFor] = useState<Teacher | null>(null);
+  const [overviewFor, setOverviewFor] = useState<Teacher | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
   const [career, setCareer] = useState<number | null>(null);
   // Daraja nomlarini bir marta olamiz - har bir qatorda so'ramaslik uchun
@@ -443,7 +445,15 @@ export default function Teachers() {
                     className={`border-t border-slate-100 ${left ? "bg-slate-50/60" : ""}`}
                   >
                     <td className="px-4 py-3 font-medium text-slate-800">
-                      {canSeeSalary ? (
+                      {user?.role === FOUNDER || user?.role === ACADEMIC_HEAD ? (
+                        <button
+                          onClick={() => setOverviewFor(t)}
+                          className="hover:text-brand-700"
+                          title="Umumiy ko'rinish"
+                        >
+                          {t.full_name}
+                        </button>
+                      ) : canSeeSalary ? (
                         <button
                           onClick={() => setSalary(t.id)}
                           className="hover:text-brand-700"
@@ -559,6 +569,12 @@ export default function Teachers() {
             setCareer(null);
             load();
           }}
+        />
+      )}
+      {overviewFor && (
+        <TeacherOverviewModal
+          teacherId={overviewFor.id}
+          onClose={() => setOverviewFor(null)}
         />
       )}
       {accountFor && (

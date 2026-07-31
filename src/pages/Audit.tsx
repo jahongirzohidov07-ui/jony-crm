@@ -10,12 +10,16 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { ExamOrderQueueTab } from "./MyExams";
-import { AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel , EXAM_ORDER_ACCEPT } from "../lib/roles";
+import { ExaminerPayTab, ExaminerPayAdminTab } from "./ExaminerPay";
+import {
+  AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel, EXAM_ORDER_ACCEPT,
+  EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW,
+} from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "log" | "orders" | "exams" | "analysis";
+type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -720,6 +724,8 @@ export default function Audit() {
   const showExams = can(user?.role, EXAM_VIEW);
   // Buyurtmani faqat qabul qila oladiganlar ko'radi
   const showOrders = can(user?.role, EXAM_ORDER_ACCEPT);
+  const showPay = can(user?.role, EXAMINER_PAY_OWN);
+  const showPayList = can(user?.role, EXAMINER_SALARY_VIEW);
 
   useEffect(() => {
     // Examiner kirganda birinchi ko'radigan narsa — kutayotgan
@@ -741,6 +747,8 @@ export default function Audit() {
     { key: "orders", label: "Imtihon buyurtmalari", show: showOrders },
     { key: "exams", label: "Imtihonlar", show: showExams },
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
+    { key: "pay", label: "Oyligim", show: showPay },
+    { key: "paylist", label: "Examiner oyliklari", show: showPayList },
   ];
 
   return (
@@ -780,6 +788,8 @@ export default function Audit() {
       {tab === "orders" && <ExamOrderQueueTab />}
       {tab === "exams" && <ExamsTab branchId={branchId} />}
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
+      {tab === "pay" && <ExaminerPayTab />}
+      {tab === "paylist" && <ExaminerPayAdminTab />}
     </div>
   );
 }

@@ -247,6 +247,7 @@ export const TEACHER_MENU = [
   "/my-schedule",
   "/my-books",
   "/my-exams",
+  "/my-sessions",
   "/my-results",
   "/my-career",
   "/gamification",

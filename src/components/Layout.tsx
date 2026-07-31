@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   Users,
   Layers,
+  BookMarked,
   GraduationCap as TeacherIcon,
   LogOut,
   School,
@@ -285,8 +286,14 @@ export default function Layout() {
   // Ustozda menyu ochiq ro'yxat bo'yicha kesiladi: dars berishga
   // aloqasi yo'q bo'lim ko'rinmaydi.
   if (user?.role === TEACHER || user?.role === SUPPORT_TEACHER) {
+    // Ustozda "Guruhlar" va "Talabalar" o'rniga o'ziniki: butun
+    // markazning ro'yxati ustozning ishiga aloqador emas
     items = [
       ...items,
+      { to: "/my-groups", label: "Guruhlarim", icon: Layers },
+      { to: "/my-students", label: "O'quvchilarim", icon: AcademicIcon },
+      { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
+      { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
     items = TEACHER_MENU

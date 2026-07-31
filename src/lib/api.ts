@@ -331,6 +331,26 @@ export interface AttendanceGrid {
   marks: Record<string, boolean | number>;
   /** Uy vazifasi: 1 bajardi, 2 qisman, 0 bajarmadi. */
   homework?: Record<string, number>;
+  /** Sana menyusi uchun: kim ko'chira oladi va qancha imkon qolgan. */
+  reschedule?: {
+    can: boolean;
+    as_manager: boolean;
+    moved: Record<
+      string,
+      { id: number; status: string; status_label: string; to_date: string }
+    >;
+    reasons: { key: string; label: string }[];
+    min_notice_days: number;
+    max_shift_days: number;
+    cannot_cancel: string;
+    hint?: string;
+    quota: {
+      used_month: number;
+      per_month: number;
+      left: number | null;
+      auto_ok: boolean;
+    } | null;
+  } | null;
 }
 
 // ---------- Imtihonlar ----------

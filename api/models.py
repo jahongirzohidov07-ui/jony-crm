@@ -2377,3 +2377,44 @@ class BookOrderItem(Base):
     qty = Column(Integer, nullable=False, default=1)
     delivered_qty = Column(Integer, default=0)
     note = Column(String, nullable=True)
+
+
+class ExamOrder(Base):
+    """Ustozning imtihon buyurtmasi.
+
+    Ilgari ustoz imtihonni "qoralama" qilib yaratardi va u examiner
+    ro'yxatni ochgunicha kutib turardi. Endi buyurtma alohida yozuv:
+    kim so'ragani, qachonga so'ragani, kim qabul qilgani va nima uchun
+    rad etilgani — hammasi bir joyda va tarixda qoladi.
+    """
+    __tablename__ = "exam_orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False,
+                      index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    # So'ralgan vaqt
+    date = Column(Date, nullable=False, index=True)
+    time = Column(String)                      # "15:30"
+    kind = Column(String, default="unit")      # unit | mid | end | mock
+    unit_no = Column(Integer)
+    # Buyurtma paytidagi o'quvchilar soni — keyin o'zgarsa ham
+    # examiner nechta odamga tayyorlanganini biladi
+    students_count = Column(Integer, default=0)
+    note = Column(Text)
+
+    status = Column(String, default="new", index=True)
+    accepted_by = Column(Integer, ForeignKey("users.id"))
+    accepted_at = Column(DateTime)
+    decision_note = Column(Text)
+    reject_reason = Column(String)
+
+    # Qabul qilingach yaratiladigan haqiqiy imtihon
+    exam_id = Column(Integer, ForeignKey("exams.id"))
+
+    requested_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)

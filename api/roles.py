@@ -646,6 +646,11 @@ DEFAULT_EXAM_COIN_RULES = [
 # ko'pincha qabuldagi administrator qo'yadi.
 # DIQQAT: akademik BAHO bunga kirmaydi - u alohida GRADE_EDIT bilan
 # himoyalangan (yuqoriga qarang).
+# Faqat O'Z guruhini ko'radigan rollar. Bular uchun guruh, o'quvchi
+# va davomat manzil qatoridan ham ochilmaydi — biriktirilmagan guruh
+# 403 qaytaradi.
+OWN_GROUPS_ONLY = [TEACHER, SUPPORT_TEACHER]
+
 TEACHING_ACCESS = FULL_ACCESS + [
     TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, ACADEMIC_HEAD,
@@ -1764,6 +1769,13 @@ STAFF_DATES_ACCESS = FULL_ACCESS + [HR_MANAGER, BRANCH_MANAGER]
 
 UZ_MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul",
              "avgust", "sentabr", "oktabr", "noyabr", "dekabr"]
+
+
+def exam_title(kind: str, unit_no: int | None = None) -> str:
+    """Imtihon sarlavhasi — frontenddagi examTitle bilan bir xil."""
+    if kind == "unit" and unit_no:
+        return f"Unit {unit_no}"
+    return EXAM_KIND_LABELS.get(kind, kind)
 
 
 def uz_date(d) -> str:
@@ -3584,3 +3596,144 @@ def tenure_years_text(months: float) -> str:
         return f"{n} oy" if n else "yangi"
     y = tenure_years(m)
     return f"{y:g} yil"
+
+
+# =====================================================================
+#  USTOZ DASHBOARDI: KRITIK OGOHLANTIRISHLAR
+#
+#  Har bir ogohlantirish — bugun qilinadigan ish. Shuning uchun ular
+#  "ko'rsatkich" emas, "kimga, nima qilish kerak" ko'rinishida
+#  beriladi.
+# =====================================================================
+
+# Uy vazifasi holatlari
+HOMEWORK_STATES = [
+    (1, "Bajardi", "emerald"),
+    (2, "Qisman", "amber"),
+    (0, "Bajarmadi", "red"),
+]
+HOMEWORK_LABELS = {k: l for k, l, _ in HOMEWORK_STATES}
+HOMEWORK_TONE = {k: t for k, _, t in HOMEWORK_STATES}
+
+TEACHER_ALERTS = [
+    ("absent_streak", "Ketma-ket 2 dars kelmadi", "red",
+     "Ota-onasiga bugun qo'ng'iroq qiling — uchinchi darsdan keyin "
+     "qaytarish ancha qiyin bo'ladi."),
+    ("score_drop", "Natijasi keskin tushdi", "red",
+     "Nima o'zgarganini so'rang: uyda muammo yoki mavzu tushunarsizmi."),
+    ("group_attendance", "Guruh davomati 70% dan past", "amber",
+     "Bitta bola emas, butun guruh — dars formatini ko'rib chiqing."),
+    ("homework_drop", "Uy vazifasi topshirish foizi pasaydi", "amber",
+     "Vazifa hajmi yoki tushuntirish yetarli emasligi mumkin."),
+    ("no_growth", "30 kundan beri akademik o'sish yo'q", "amber",
+     "Baholar joyida turibdi — mavzu qiyinlashmayaptimi yoki "
+     "baholash bir xilmi?"),
+    ("attendance_missing", "Dars bo'ldi, davomat belgilanmagan", "red",
+     "Davomat belgilanmasa ish haqi ham hisoblanmaydi."),
+]
+ALERT_LABELS = {k: l for k, l, _t, _h in TEACHER_ALERTS}
+ALERT_TONE = {k: t for k, _l, t, _h in TEACHER_ALERTS}
+ALERT_ADVICE = {k: h for k, _l, _t, h in TEACHER_ALERTS}
+
+# ---- Chegaralar (asoschi sozlashi mumkin) ----
+ABSENT_STREAK_ALERT = 2          # ketma-ket nechta dars
+GROUP_ATTENDANCE_MIN = 70.0      # guruh davomati foizi
+SCORE_DROP_POINTS = 1.0          # o'rtacha baho shuncha tushsa
+SCORE_DROP_WINDOW = 3            # oxirgi nechta dars solishtiriladi
+HOMEWORK_DROP_PERCENT = 15.0     # foiz shuncha pasaysa
+NO_GROWTH_DAYS = 30              # shuncha kun o'sish bo'lmasa
+NO_GROWTH_MIN_LESSONS = 4        # xulosa uchun kamida shuncha dars
+ATTENDANCE_GRACE_HOURS = 4       # darsdan keyin shuncha soat kutiladi
+STUDENT_RISK_ATTENDANCE = 70.0
+
+# Uy vazifasi bo'yicha risk. Endi haqiqiy ma'lumot bor — signal
+# qo'lda emas, avtomat qo'yiladi.
+HOMEWORK_RISK_PERCENT = 50.0
+HOMEWORK_MIN_CHECKED = 4          # shundan kam tekshirilgan bo'lsa xulosa yo'q
+HOMEWORK_GOOD_PERCENT = 80.0
+
+
+def homework_band(percent: float | None) -> tuple[str, str]:
+    """Uy vazifasi foizi -> (yorliq, rang)."""
+    if percent is None:
+        return ("Ma'lumot yo'q", "slate")
+    if percent >= HOMEWORK_GOOD_PERCENT:
+        return ("Yaxshi", "emerald")
+    if percent >= HOMEWORK_RISK_PERCENT:
+        return ("O'rtacha", "amber")
+    return ("Past", "red")   # o'quvchi davomati foizi
+
+
+# =====================================================================
+#  IMTIHON BUYURTMASI
+#
+#  Ustoz imtihon o'tkazishni so'raydi, examiner qabul qiladi. Ilgari
+#  ustoz imtihonni o'zi "qoralama" qilib yaratardi va examiner uni
+#  ko'rishi uchun ro'yxatni ochib turishi kerak edi — ya'ni ish
+#  hech kimga BORMASDAN kutib turardi. Endi so'rov filialdagi
+#  examinerlarga vazifa bo'lib boradi va kim qabul qilgani ko'rinadi.
+# =====================================================================
+EXAM_ORDER_STATUSES = [
+    ("new", "Yangi so'rov", "amber"),
+    ("accepted", "Qabul qilindi", "emerald"),
+    ("done", "O'tkazildi", "teal"),
+    ("rejected", "Rad etildi", "red"),
+    ("cancelled", "Bekor qilindi", "slate"),
+]
+EXAM_ORDER_LABELS = {k: l for k, l, _t in EXAM_ORDER_STATUSES}
+EXAM_ORDER_TONE = {k: t for k, _l, t in EXAM_ORDER_STATUSES}
+# Examiner ko'radigan navbat
+EXAM_ORDER_OPEN = ["new", "accepted"]
+
+# Kim so'raydi, kim qabul qiladi
+EXAM_ORDER_CREATE = [TEACHER, SUPPORT_TEACHER, ACADEMIC_HEAD] + FULL_ACCESS
+EXAM_ORDER_ACCEPT = EXAM_ACCESS            # asoschi, examiner, boshliq
+
+# Imtihon kamida shuncha kun oldin so'ralsin: examiner ham odam,
+# uning ham jadvali bor
+EXAM_ORDER_MIN_NOTICE_DAYS = 1
+# Bundan uzoqqa buyurtma qilinmaydi — jadval o'zgarib ketadi
+EXAM_ORDER_MAX_AHEAD_DAYS = 60
+# Rad etish sababsiz bo'lmaydi
+EXAM_ORDER_REJECT_NEEDS_NOTE = True
+
+EXAM_ORDER_REJECT_REASONS = [
+    ("busy", "Shu vaqtda band"),
+    ("too_soon", "Juda kech so'ralgan"),
+    ("not_ready", "Guruh imtihonga tayyor emas"),
+    ("wrong_kind", "Test turi mos emas"),
+    ("other", "Boshqa sabab"),
+]
+
+
+def exam_order_message(*, teacher: str, branch: str, date_text: str,
+                       time_text: str, kind: str, group: str,
+                       students: int, accepted_by: str | None = None,
+                       status: str = "new") -> str:
+    """Buyurtma xabari. Ustoz ham, examiner ham AYNAN bir xil matnni
+    ko'radi — kim nimani ko'rgani haqida bahs chiqmaydi."""
+    lines = [
+        "\U0001F514 Yangi imtihon buyurtmasi",
+        "",
+        f"Ustoz: {teacher}",
+        f"Filial: {branch}",
+        f"Sana: {date_text}",
+        f"Vaqt: {time_text}",
+        f"Test turi: {kind}",
+        f"Guruh: {group}",
+        f"O'quvchilar soni: {students}",
+    ]
+    if accepted_by:
+        lines += ["", f"\u2705 Qabul qilindi: {accepted_by}"]
+    elif status == "rejected":
+        lines += ["", "\u274C Rad etildi"]
+    elif status == "cancelled":
+        lines += ["", "\U0001F6AB Bekor qilindi"]
+    return "\n".join(lines)
+
+
+def uz_date_full(d) -> str:
+    """01.08.2026 ko'rinishi. uz_date() dan farqi — YIL ham bor.
+    Imtihon buyurtmasida yil kerak: "12-avgust" degan sana kelasi
+    yilnikimi yoki shu yilnikimi — noaniq qoladi."""
+    return d.strftime("%d.%m.%Y") if d else "—"

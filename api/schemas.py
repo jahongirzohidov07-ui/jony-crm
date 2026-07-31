@@ -1832,3 +1832,18 @@ class BookOrderIn(BaseModel):
 class BookOrderDecision(BaseModel):
     status: str
     note: Optional[str] = None
+
+
+# ---------- Imtihon buyurtmasi ----------
+class ExamOrderIn(BaseModel):
+    group_id: int
+    date: date
+    time: Optional[str] = None
+    kind: str = "unit"
+    unit_no: Optional[int] = None
+    note: Optional[str] = None
+
+
+class ExamOrderDecision(BaseModel):
+    note: Optional[str] = None
+    reason: Optional[str] = None

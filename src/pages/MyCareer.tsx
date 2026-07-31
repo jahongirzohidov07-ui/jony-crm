@@ -77,7 +77,7 @@ export default function MyCareer() {
         <div className="flex flex-wrap gap-5 mt-4 text-sm">
           <div>
             <p className="opacity-70 text-xs">Tajriba</p>
-            <p>{Math.round(s.months)} oy</p>
+            <p>{s.tenure_text ?? `${Math.round(s.months)} oy`}</p>
           </div>
           <div>
             <p className="opacity-70 text-xs">Guruhlarim</p>

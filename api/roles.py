@@ -4155,3 +4155,93 @@ OFFBOARD_STEPS = [
     ("final_pay", "Yakuniy hisob-kitob"),
 ]
 OFFBOARD_LABELS = dict(OFFBOARD_STEPS)
+
+
+# =====================================================================
+#  SUPPORT TEACHER OYLIGI — asoschi formulasi
+#
+#  Support teacher har darsini o'zi kiritadi: qaysi guruh, soat
+#  nechida boshlab nechida tugatgani, nechta o'quvchi. Oy yakunida:
+#
+#    oylik = (soatlar x 0.30
+#             + o'quvchi-soni yig'indisi x 0.20
+#             + test koeffitsiyenti x 0.50) x 10 000
+#
+#  Test koeffitsiyenti — shu oyda dars o'tgan guruhlarining o'rtacha
+#  test foizidan jadval bo'yicha olinadi. Natija 400 000 dan kam
+#  bo'lsa 400 000, 1 500 000 dan ko'p bo'lsa 1 500 000 to'lanadi.
+# =====================================================================
+SUPPORT_PAY_MIN = 400_000
+SUPPORT_PAY_MAX = 1_500_000
+SUPPORT_PAY_UNIT = 10_000
+SUPPORT_HOURS_W = 0.30
+SUPPORT_STUDENTS_W = 0.20
+SUPPORT_RESULT_W = 0.50
+
+# (dan, gacha, koeffitsiyent) — foiz yuqori chegara KIRADI
+SUPPORT_RESULT_BANDS = [
+    (0, 65, 0.5),
+    (66, 70, 0.6),
+    (71, 76, 0.75),
+    (77, 82, 0.9),
+    (83, 87, 1.0),
+    (88, 93, 1.15),
+    (94, 97, 1.3),          # asoschi jadvalida 93 ikki qatorda edi —
+    #                         88-93 pastkisiga olindi
+    (98, 100, 1.5),
+]
+
+# Bitta seans uchun aql chegaralari — xato kiritishdan himoya
+SUPPORT_SESSION_MAX_HOURS = 6
+SUPPORT_SESSION_MAX_STUDENTS = 40
+
+
+def support_result_coef(percent) -> float:
+    """O'rtacha test foizi -> koeffitsiyent. Ma'lumot bo'lmasa eng
+    pastki koeffitsiyent — natija ko'rsatilmagan ish mukofotlanmaydi."""
+    if percent is None:
+        return SUPPORT_RESULT_BANDS[0][2]
+    p = round(float(percent))
+    for lo, hi, k in SUPPORT_RESULT_BANDS:
+        if lo <= p <= hi:
+            return k
+    return SUPPORT_RESULT_BANDS[0][2] if p < 0 \
+        else SUPPORT_RESULT_BANDS[-1][2]
+
+
+def support_salary(hours: float, students: int, percent) -> dict:
+    """Formula bitta joyda — kartada ham, ro'yxatda ham, testda ham
+    aynan shu hisob."""
+    coef = support_result_coef(percent)
+    h_part = round(hours * SUPPORT_HOURS_W, 2)
+    s_part = round(students * SUPPORT_STUDENTS_W, 2)
+    r_part = round(coef * SUPPORT_RESULT_W, 2)
+    raw = round((h_part + s_part + r_part) * SUPPORT_PAY_UNIT, 0)
+    clamped = min(max(raw, SUPPORT_PAY_MIN), SUPPORT_PAY_MAX)
+    return {
+        "hours": round(hours, 2),
+        "students": students,
+        "avg_percent": (round(float(percent), 1)
+                        if percent is not None else None),
+        "coef": coef,
+        "hours_part": h_part,
+        "students_part": s_part,
+        "result_part": r_part,
+        "points": round(h_part + s_part + r_part, 2),
+        "raw": raw,
+        "salary": clamped,
+        "clamped_min": raw < SUPPORT_PAY_MIN,
+        "clamped_max": raw > SUPPORT_PAY_MAX,
+    }
+
+
+def hhmm_minutes(t: str):
+    """"14:30" -> 870. Noto'g'ri format -> None."""
+    try:
+        h, m = str(t).strip().split(":")
+        h, m = int(h), int(m)
+        if not (0 <= h <= 23 and 0 <= m <= 59):
+            return None
+        return h * 60 + m
+    except (ValueError, AttributeError):
+        return None

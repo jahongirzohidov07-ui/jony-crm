@@ -2014,3 +2014,15 @@ class OffboardUpdate(BaseModel):
     exit_notes: Optional[str] = None
     would_return: Optional[bool] = None
     reason: Optional[str] = None
+
+
+# ---------- Support teacher seansi ----------
+class SupportSessionIn(BaseModel):
+    group_id: int
+    # DIQQAT: maydon nomi "date" tur nomi bilan to'qnashib pydantic'da
+    # NoneType bo'lib qolardi — shuning uchun _dt.date orqali yoziladi
+    date: Optional[_dt.date] = None    # bo'sh bo'lsa — bugun
+    start_time: str                    # "14:00"
+    end_time: str                      # "15:30"
+    students_count: int
+    note: Optional[str] = None

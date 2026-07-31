@@ -2749,3 +2749,26 @@ class Offboarding(Base):
     completed = Column(Integer, default=0)
     by_user_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class SupportSession(Base):
+    """Support teacherning bitta darsi: qaysi guruh, qachondan
+    qachongacha, nechta o'quvchi. Oylik shu yozuvlardan AVTOMAT
+    hisoblanadi — oy oxirida hech kim qo'lda sanamaydi."""
+    __tablename__ = "support_sessions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    date = Column(Date, nullable=False, index=True)
+    start_time = Column(String, nullable=False)   # "14:00"
+    end_time = Column(String, nullable=False)     # "15:30"
+    minutes = Column(Integer, nullable=False)     # serverda hisoblanadi
+    students_count = Column(Integer, nullable=False)
+    note = Column(Text)
+
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)

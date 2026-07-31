@@ -3,6 +3,13 @@ import { GraduationCap, Info, AlertTriangle } from "lucide-react";
 import { api, type MyStudentList } from "../lib/api";
 import { formatDate } from "../lib/format";
 
+const HW_TONE: Record<string, string> = {
+  emerald: "bg-emerald-100 text-emerald-700",
+  amber: "bg-amber-100 text-amber-700",
+  red: "bg-red-100 text-red-700",
+  slate: "bg-slate-100 text-slate-600",
+};
+
 /**
  * Ustozning o'z o'quvchilari.
  *
@@ -58,6 +65,13 @@ export default function MyStudents() {
         </button>
       )}
 
+      {(d.homework_low ?? 0) > 0 && (
+        <p className="text-sm rounded-lg px-3 py-2 mb-4 bg-red-50 border border-red-200 text-red-800">
+          {d.homework_low} o'quvchining uy vazifasi topshirish foizi{" "}
+          {d.homework_threshold}% dan past.
+        </p>
+      )}
+
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <select
           value={group}
@@ -88,6 +102,9 @@ export default function MyStudents() {
               <th className="text-right px-3 py-2.5 font-medium">Davomat</th>
               <th className="text-right px-3 py-2.5 font-medium">
                 O'rtacha baho
+              </th>
+              <th className="text-right px-3 py-2.5 font-medium">
+                Uy vazifasi
               </th>
               <th className="text-right px-3 py-2.5 font-medium">Imtihon</th>
               <th className="text-right px-4 py-2.5 font-medium">Qancha vaqt</th>
@@ -130,6 +147,20 @@ export default function MyStudents() {
                 </td>
                 <td className="px-3 py-2.5 text-right text-slate-700">
                   {s.avg_grade ?? <span className="text-slate-300">—</span>}
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  {s.homework_percent != null ? (
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                        HW_TONE[s.homework_tone || "slate"] || HW_TONE.slate
+                      }`}
+                      title={`${s.homework_checked} ta tekshirilgan`}
+                    >
+                      {s.homework_percent}%
+                    </span>
+                  ) : (
+                    <span className="text-slate-300">—</span>
+                  )}
                 </td>
                 <td className="px-3 py-2.5 text-right text-slate-700">
                   {s.last_exam ?? <span className="text-slate-300">—</span>}

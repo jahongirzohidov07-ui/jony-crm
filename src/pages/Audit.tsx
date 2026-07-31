@@ -9,12 +9,13 @@ import {
   type ExamRow, type ExaminerAnalysis,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel } from "../lib/roles";
+import { ExamOrderQueueTab } from "./MyExams";
+import { AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel , EXAM_ORDER_ACCEPT } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "log" | "exams" | "analysis";
+type Tab = "log" | "orders" | "exams" | "analysis";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -717,10 +718,15 @@ export default function Audit() {
 
   const showLog = can(user?.role, AUDIT_VIEW);
   const showExams = can(user?.role, EXAM_VIEW);
+  // Buyurtmani faqat qabul qila oladiganlar ko'radi
+  const showOrders = can(user?.role, EXAM_ORDER_ACCEPT);
 
   useEffect(() => {
-    if (!showLog && showExams) setTab("exams");
-  }, [showLog, showExams]);
+    // Examiner kirganda birinchi ko'radigan narsa — kutayotgan
+    // buyurtmalar. Ular ish, qolgani hisobot.
+    if (!showLog && showOrders) setTab("orders");
+    else if (!showLog && showExams) setTab("exams");
+  }, [showLog, showExams, showOrders]);
 
   if (!showLog && !showExams) {
     return (
@@ -732,6 +738,7 @@ export default function Audit() {
 
   const tabs: { key: Tab; label: string; show: boolean }[] = [
     { key: "log", label: "O'zgarishlar tarixi", show: showLog },
+    { key: "orders", label: "Imtihon buyurtmalari", show: showOrders },
     { key: "exams", label: "Imtihonlar", show: showExams },
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
   ];
@@ -770,6 +777,7 @@ export default function Audit() {
       </div>
 
       {tab === "log" && <LogTab />}
+      {tab === "orders" && <ExamOrderQueueTab />}
       {tab === "exams" && <ExamsTab branchId={branchId} />}
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
     </div>

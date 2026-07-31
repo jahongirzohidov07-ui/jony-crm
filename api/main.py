@@ -664,10 +664,12 @@ def _guard_role_assignment(
     asoschi bajaradi (roles.USER_ADMIN). Bu yerda yana bir bor tekshiramiz:
     endpoint himoyasi kelajakda kengaytirilib ketsa ham, huquqni oshirib
     yuborishning oldi olinadi."""
-    if requester.role != roles.FOUNDER:
-        raise HTTPException(403, "Rol belgilash huquqi faqat asoschida")
     if target_role not in roles.ALL_ROLES:
         raise HTTPException(400, "Noto'g'ri rol")
+    if not roles.can_assign_role(requester.role, target_role):
+        raise HTTPException(
+            403, "Bu rolni berish huquqi sizda yo'q. Asoschi va filial "
+                 "rahbari rollarini faqat asoschi tayinlaydi.")
 
 
 @app.get("/api/users", response_model=List[schemas.UserOut])
@@ -799,11 +801,16 @@ def _smm_achievement_task(db: Session, s: models.Student, *,
 def create_user(
     payload: schemas.UserCreate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.USER_ADMIN)),
+    user: models.User = Depends(require_role(*roles.STAFF_EDIT)),
 ):
     if payload.role not in roles.ALL_ROLES:
         raise HTTPException(400, "Noto'g'ri rol")
     _guard_role_assignment(user, payload.role, payload.branch_id)
+    # Filial rahbari faqat o'z filialiga xodim ochadi
+    if user.role == roles.BRANCH_MANAGER and user.branch_id \
+            and payload.branch_id != user.branch_id:
+        raise HTTPException(403, "Faqat o'z filialingizga xodim "
+                                 "qo'sha olasiz")
     if db.query(models.User).filter(models.User.username == payload.username).first():
         raise HTTPException(400, "Bu login band, boshqasini tanlang")
 
@@ -837,17 +844,36 @@ def update_user(
     user_id: int,
     payload: schemas.UserUpdate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.USER_ADMIN)),
+    user: models.User = Depends(require_role(*roles.STAFF_EDIT)),
 ):
     target = db.query(models.User).get(user_id)
     if not target:
         raise HTTPException(404, "Foydalanuvchi topilmadi")
 
+    # Asoschining kartasini faqat asoschining o'zi tahrirlaydi. Aks
+    # holda HR asoschining parolini almashtirib yoki uni o'chirib,
+    # butun tizimni egallab olishi mumkin bo'lardi.
+    if target.role == roles.FOUNDER and user.role != roles.FOUNDER:
+        raise HTTPException(403, "Asoschi kartasini faqat asoschi "
+                                 "tahrirlaydi")
+
     new_role = payload.role if payload.role is not None else target.role
     new_branch_id = (
         payload.branch_id if payload.branch_id is not None else target.branch_id
     )
-    _guard_role_assignment(user, new_role, new_branch_id)
+    # Rol yoki filial O'ZGARAYOTGAN bo'lsagina huquq tekshiriladi. Aks
+    # holda telefon raqamini tuzatish ham "rol berish" hisoblanib,
+    # HR bloklanib qolardi.
+    if new_role != target.role or new_branch_id != target.branch_id:
+        _guard_role_assignment(user, new_role, new_branch_id)
+
+    # Maosh alohida huquq: filial rahbari xodim kartasini tahrirlaydi,
+    # lekin oylik raqamiga tegmaydi.
+    if payload.fix_salary is not None \
+            and payload.fix_salary != target.fix_salary \
+            and user.role not in roles.SALARY_EDIT:
+        raise HTTPException(403, "Fiks oylikni o'zgartirish huquqi "
+                                 "sizda yo'q")
     if user.role == roles.BRANCH_MANAGER and target.branch_id != user.branch_id:
         raise HTTPException(403, "Faqat o'z filialingiz xodimlarini tahrirlay olasiz")
     if target.id == user.id and payload.is_active is False:

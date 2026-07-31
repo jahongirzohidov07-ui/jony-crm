@@ -3392,3 +3392,55 @@ def local_now():
 
 def local_today():
     return local_now().date()
+
+
+# =====================================================================
+#  XODIM KARTASI: KO'RISH, TAHRIRLASH, ROL BERISH
+#
+#  Bu uch narsa alohida huquq. Ilgari uchalasi ham USER_ADMIN
+#  (faqat asoschi) ostida edi — natijada HR menejer xodimlar
+#  ro'yxatini umuman ocholmasdi.
+#
+#  Endi:
+#    ko'rish     — STAFF_VIEWERS  (HR, filial rahbari, moliya direktori)
+#    tahrirlash  — STAFF_EDIT     (telefon, sana, lavozim, fiks oylik)
+#    rol berish  — USER_ADMIN     (faqat asoschi, o'zgarmadi)
+# =====================================================================
+
+STAFF_EDIT = STAFF_VIEWERS
+
+# Fiks oylikni kim o'zgartira oladi. Filial rahbari RO'YXATDA YO'Q:
+# u o'z filialida to'liq huquqqa ega, lekin maosh — bu pul, va o'z
+# jamoasining oyligini o'zi ko'tarib qo'yishi mumkin bo'lardi.
+SALARY_EDIT = SALARY_VIEW_ALL
+
+# HR shu rollarda yangi xodim ocha oladi. Ro'yxatda ASOSCHI va FILIAL
+# RAHBARI yo'q — ular tizimda to'liq huquqqa ega, ularni faqat asoschi
+# tayinlaydi. Aks holda HR o'ziga filial rahbari huquqini berib olishi
+# mumkin bo'lardi.
+HR_ASSIGNABLE_ROLES = [
+    TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
+    SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
+    PARENT, STUDENT,
+]
+
+
+# Filial rahbari o'z filialida shu rollarni tayinlay oladi
+BRANCH_ASSIGNABLE_ROLES = [
+    SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
+    EXAMINER, PARENT, STUDENT,
+]
+
+
+def can_assign_role(requester_role: str, target_role: str) -> bool:
+    """Shu rolli odam boshqasiga shu rolni bera oladimi.
+
+    Frontenddagi assignableRoles() bilan bir xil bo'lishi shart —
+    aks holda tugma ko'rinadi, lekin bosilganda 403 chiqadi."""
+    if requester_role == FOUNDER:
+        return True
+    if requester_role == HR_MANAGER:
+        return target_role in HR_ASSIGNABLE_ROLES
+    if requester_role == BRANCH_MANAGER:
+        return target_role in BRANCH_ASSIGNABLE_ROLES
+    return False

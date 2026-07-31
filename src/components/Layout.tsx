@@ -55,6 +55,7 @@ import {
   CONTENT_REQUESTER,
   IDEA_SUBMIT,
   TEACHER_MENU,
+  PLAN_VIEW,
 } from "../lib/roles";
 import { api } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
@@ -190,6 +191,14 @@ export default function Layout() {
   // Asoschida bu bo'limlar o'z bo'limi ichiga ko'chirilgan
   if (user?.role === FOUNDER) {
     items = items.filter((i) => !FOUNDER_MOVED.includes(i.to));
+  }
+  // Yillik Reja/Fakt — rahbar va bo'lim egalari uchun
+  if (can(user?.role, PLAN_VIEW)) {
+    items = [
+      items[0],
+      { to: "/plan", label: "Reja va Fakt", icon: Target },
+      ...items.slice(1),
+    ];
   }
   // "Bugungi holat" endi Dashboard ICHIDA alohida bo'lim - menyuda
   // takrorlanmaydi.

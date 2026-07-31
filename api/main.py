@@ -151,6 +151,7 @@ def _ensure_new_columns():
         "ALTER TABLE users ADD COLUMN photo TEXT",
         "UPDATE users SET hired_date = DATE(created_at) WHERE hired_date IS NULL",
         # Ustozning maksimal yuklamasi - undan oshsa tizim yo'l qo'ymaydi.
+        "ALTER TABLE attendances ADD COLUMN homework INTEGER",
         # ---- HR moduli ----
         "ALTER TABLE vacancies ADD COLUMN public_id VARCHAR",
         "ALTER TABLE vacancies ADD COLUMN department_id INTEGER",
@@ -1514,12 +1515,14 @@ def attendance_grid(
     lessons = _group_lessons_in_month(db, group_id, year, month)
     lesson_ids = [ls.id for ls in lessons]
 
-    marks = {}
+    marks, hw = {}, {}
     if lesson_ids:
         rows = db.query(models.Attendance).filter(
             models.Attendance.lesson_id.in_(lesson_ids)
         ).all()
         marks = {f"{a.lesson_id}:{a.student_id}": bool(a.present) for a in rows}
+        hw = {f"{a.lesson_id}:{a.student_id}": a.homework
+              for a in rows if a.homework is not None}
 
     return schemas.AttendanceGrid(
         students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
@@ -1527,6 +1530,7 @@ def attendance_grid(
         lessons=[schemas.GridLesson(id=ls.id, date=ls.date, held=ls.held or 0)
                  for ls in lessons],
         marks=marks,
+        homework=hw,
     )
 
 
@@ -1549,13 +1553,19 @@ def save_attendance(
             models.Attendance.lesson_id == lesson_id).all()
     }
     for m in payload.marks:
+        hw = m.homework if m.homework in (0, 1, 2) else None
         row = existing.get(m.student_id)
         if row:
             row.present = 1 if m.present else 0
+            # Tekshirilmagan bo'lsa eskisiga tegilmaydi — ustoz
+            # davomatni tuzatganda homework belgisi yo'qolib qolmasin
+            if hw is not None:
+                row.homework = hw
         else:
             db.add(models.Attendance(
                 lesson_id=lesson_id, student_id=m.student_id,
-                present=1 if m.present else 0, created_by=user.full_name))
+                present=1 if m.present else 0, homework=hw,
+                created_by=user.full_name))
     _mark_lesson_held(db, lesson)
     db.commit()
 
@@ -1563,6 +1573,14 @@ def save_attendance(
     # Ustoz hech narsa bosmaydi.
     try:
         _xp_for_attendance(db, lesson, by_user=user)
+    except Exception:
+        db.rollback()
+
+    # AVTOMAT XP: uy vazifasi uchun. Qoidalar allaqachon bor edi,
+    # lekin ularni yoqadigan joy yo'q edi — endi davomat bilan birga
+    # belgilanadi va o'zi hisoblanadi.
+    try:
+        _xp_for_homework(db, lesson, by_user=user)
     except Exception:
         db.rollback()
 
@@ -11563,7 +11581,20 @@ def my_dashboard(
         # qarzdorlar, xodimlar soni) — Examiner, HR va SMM'ga kerak
         # emas: ular faqat o'z ishini ko'radi.
         "show_general": user.role in tuple(roles.GENERAL_DASHBOARD),
+        # Ustoz uchun: davomat, riskdagi o'quvchilar, rivojlanish va
+        # kritik ogohlantirishlar. Boshqa rollarda None.
+        "teacher": (_safe_teacher_dashboard(db, user)
+                    if user.role in tuple(roles.SELF_STATS) else None),
     }
+
+
+def _safe_teacher_dashboard(db: Session, user: models.User):
+    """Ustoz bloki xato bersa butun dashboard qulab tushmasin."""
+    try:
+        return _teacher_dashboard(db, user)
+    except Exception:
+        db.rollback()
+        return None
 
 
 # =====================================================================
@@ -20221,3 +20252,335 @@ def book_order_status(oid: int, payload: schemas.BookOrderDecision,
               field="status", old_value=old, new_value=o.status,
               note=payload.note, commit=True)
     return _book_out(db, o)
+
+
+def _xp_for_homework(db: Session, lesson: models.Lesson,
+                     by_user: models.User | None = None) -> None:
+    """Uy vazifasi belgilanganda XP va ketma-ketlik.
+
+    Qoidalar (HOMEWORK_COMPLETE, HOMEWORK_PARTIAL va streaklar)
+    allaqachon katalogda bor edi — bu yerda ular ishga tushadi."""
+    rows = db.query(models.Attendance).filter(
+        models.Attendance.lesson_id == lesson.id,
+        models.Attendance.homework.isnot(None)).all()
+    for a in rows:
+        if a.homework == 1:
+            award_xp(db, student_id=a.student_id,
+                     event_code="HOMEWORK_COMPLETE", by_user=by_user,
+                     source_type="lesson", source_id=lesson.id,
+                     on=lesson.date, reason="Uy vazifasi bajarildi",
+                     idempotency_key=f"HW:{lesson.id}:{a.student_id}")
+            _bump_streak(db, a.student_id, "homework", lesson.date,
+                         by_user=by_user)
+        elif a.homework == 2:
+            award_xp(db, student_id=a.student_id,
+                     event_code="HOMEWORK_PARTIAL", by_user=by_user,
+                     source_type="lesson", source_id=lesson.id,
+                     on=lesson.date, reason="Uy vazifasi qisman",
+                     idempotency_key=f"HWP:{lesson.id}:{a.student_id}")
+        else:
+            _break_streak(db, a.student_id, "homework")
+    db.commit()
+
+
+# =====================================================================
+#  USTOZ DASHBOARDI
+#
+#  Uch narsa: bugungi holat, e'tibor talab qiladiganlar va rivojlanish.
+#  Ogohlantirishlar "ko'rsatkich" emas — har biri bugun qilinadigan
+#  ish, shuning uchun yoniga nima qilish kerakligi yozilgan.
+# =====================================================================
+def _month_attendance(db: Session, group_ids: list, start: date,
+                      end: date) -> dict:
+    """Davr ichidagi davomat va uy vazifasi foizi."""
+    rows = (db.query(models.Attendance, models.Lesson)
+            .join(models.Lesson,
+                  models.Attendance.lesson_id == models.Lesson.id)
+            .filter(models.Lesson.group_id.in_(group_ids or [-1]),
+                    models.Lesson.held == 1,
+                    models.Lesson.date >= start,
+                    models.Lesson.date <= end).all())
+    total = len(rows)
+    present = sum(1 for a, _ in rows if a.present)
+    hw_rows = [a for a, _ in rows if a.homework is not None]
+    hw_done = sum(1 for a in hw_rows if a.homework == 1)
+    hw_partial = sum(1 for a in hw_rows if a.homework == 2)
+    return {
+        "marks": total,
+        "present": present,
+        "percent": round(present / total * 100, 1) if total else None,
+        "homework_checked": len(hw_rows),
+        "homework_done": hw_done,
+        "homework_percent": (round(hw_done / len(hw_rows) * 100, 1)
+                             if hw_rows else None),
+        "homework_partial": hw_partial,
+    }
+
+
+def _streak_from_marks(marks: list) -> int:
+    """Oxiridan boshlab ketma-ket nechta dars qoldirgan."""
+    n = 0
+    for present in reversed(marks):
+        if present:
+            break
+        n += 1
+    return n
+
+
+def _teacher_dashboard(db: Session, user: models.User):
+    """Ustozning dashboard bloki. Mavjud /api/me/dashboard ichiga
+    qo'shiladi — ustoz uchun ikkinchi so'rov yuborilmaydi."""
+    t = _teacher_of_user(db, user)
+    if not t:
+        return None
+    groups = _my_groups(db, t.id)
+    gids = [g.id for g in groups]
+    gname = {g.id: g.name for g in groups}
+    today = date.today()
+    month_start = today.replace(day=1)
+    prev_end = month_start - timedelta(days=1)
+    prev_start = prev_end.replace(day=1)
+
+    # ---- 1. DAVOMAT ----
+    this_month = _month_attendance(db, gids, month_start, today)
+    last_month = _month_attendance(db, gids, prev_start, prev_end)
+
+    # ---- Guruh kesimi ----
+    per_group = {}
+    for gid in gids:
+        per_group[gid] = _month_attendance(db, [gid], month_start, today)
+
+    students = db.query(models.Student).filter(
+        models.Student.group_id.in_(gids or [-1]),
+        models.Student.status == "active").all()
+    sids = [s.id for s in students]
+    sname = {s.id: s.full_name for s in students}
+    sgroup = {s.id: s.group_id for s in students}
+
+    # O'quvchi bo'yicha barcha belgilar (sana bo'yicha tartibda)
+    all_marks = (db.query(models.Attendance, models.Lesson)
+                 .join(models.Lesson,
+                       models.Attendance.lesson_id == models.Lesson.id)
+                 .filter(models.Attendance.student_id.in_(sids or [-1]),
+                         models.Lesson.held == 1)
+                 .order_by(models.Lesson.date).all())
+    by_student: dict = {}
+    for a, ls in all_marks:
+        by_student.setdefault(a.student_id, []).append((ls.date, a))
+
+    alerts = []
+    risk_students = []
+
+    for sid, items in by_student.items():
+        recent = [x for x in items if x[0] >= today - timedelta(days=90)]
+        marks = [bool(a.present) for _d, a in recent]
+        pct = (round(sum(marks) / len(marks) * 100, 1) if marks else None)
+
+        # ---- Ogohlantirish: ketma-ket 2 dars ----
+        streak = _streak_from_marks(marks)
+        if streak >= roles.ABSENT_STREAK_ALERT:
+            alerts.append({
+                "kind": "absent_streak",
+                "student_id": sid, "student": sname.get(sid),
+                "group_id": sgroup.get(sid),
+                "group": gname.get(sgroup.get(sid)),
+                "detail": f"Ketma-ket {streak} dars kelmadi",
+                "since": recent[-streak][0].isoformat() if recent else None,
+            })
+
+        # ---- Ogohlantirish: natija keskin tushdi ----
+        grades = [g.score for g in db.query(models.DailyGrade)
+                  .join(models.Lesson,
+                        models.DailyGrade.lesson_id == models.Lesson.id)
+                  .filter(models.DailyGrade.student_id == sid)
+                  .order_by(models.Lesson.date).all() if g.score is not None]
+        w = roles.SCORE_DROP_WINDOW
+        if len(grades) >= w * 2:
+            new_avg = sum(grades[-w:]) / w
+            old_avg = sum(grades[-w * 2:-w]) / w
+            drop = round(old_avg - new_avg, 1)
+            if drop >= roles.SCORE_DROP_POINTS:
+                alerts.append({
+                    "kind": "score_drop",
+                    "student_id": sid, "student": sname.get(sid),
+                    "group_id": sgroup.get(sid),
+                    "group": gname.get(sgroup.get(sid)),
+                    "detail": (f"O'rtacha baho {round(old_avg, 1)} dan "
+                               f"{round(new_avg, 1)} ga tushdi"),
+                })
+
+        if pct is not None and pct < roles.STUDENT_RISK_ATTENDANCE \
+                and len(marks) >= 4:
+            risk_students.append({
+                "student_id": sid, "student": sname.get(sid),
+                "group": gname.get(sgroup.get(sid)),
+                "attendance_percent": pct,
+                "missed": len(marks) - sum(marks),
+                "absent_streak": streak,
+            })
+    risk_students.sort(key=lambda r: r["attendance_percent"])
+
+    # ---- Ogohlantirish: guruh davomati past ----
+    for gid, st in per_group.items():
+        if st["percent"] is not None and \
+                st["percent"] < roles.GROUP_ATTENDANCE_MIN:
+            alerts.append({
+                "kind": "group_attendance",
+                "group_id": gid, "group": gname.get(gid),
+                "detail": f"Shu oyda davomat {st['percent']}%",
+            })
+
+    # ---- Ogohlantirish: uy vazifasi pasaydi ----
+    if this_month["homework_percent"] is not None and \
+            last_month["homework_percent"] is not None:
+        drop = round(last_month["homework_percent"]
+                     - this_month["homework_percent"], 1)
+        if drop >= roles.HOMEWORK_DROP_PERCENT:
+            alerts.append({
+                "kind": "homework_drop",
+                "detail": (f"O'tgan oy {last_month['homework_percent']}%, "
+                           f"shu oyda {this_month['homework_percent']}%"),
+            })
+
+    # ---- Ogohlantirish: 30 kundan beri o'sish yo'q ----
+    for gid in gids:
+        recent = (db.query(models.DailyGrade, models.Lesson)
+                  .join(models.Lesson,
+                        models.DailyGrade.lesson_id == models.Lesson.id)
+                  .filter(models.Lesson.group_id == gid,
+                          models.Lesson.date >= today - timedelta(
+                              days=roles.NO_GROWTH_DAYS * 2))
+                  .order_by(models.Lesson.date).all())
+        cut = today - timedelta(days=roles.NO_GROWTH_DAYS)
+        older = [g.score for g, ls in recent
+                 if ls.date < cut and g.score is not None]
+        newer = [g.score for g, ls in recent
+                 if ls.date >= cut and g.score is not None]
+        if len(older) >= roles.NO_GROWTH_MIN_LESSONS and \
+                len(newer) >= roles.NO_GROWTH_MIN_LESSONS:
+            before = sum(older) / len(older)
+            after = sum(newer) / len(newer)
+            if after <= before:
+                alerts.append({
+                    "kind": "no_growth",
+                    "group_id": gid, "group": gname.get(gid),
+                    "detail": (f"O'rtacha baho {round(before, 1)} → "
+                               f"{round(after, 1)} — o'sish yo'q"),
+                })
+
+    # ---- Ogohlantirish: dars bo'ldi, davomat yo'q ----
+    past = (db.query(models.Lesson)
+            .filter(models.Lesson.group_id.in_(gids or [-1]),
+                    models.Lesson.date <= today,
+                    models.Lesson.date >= today - timedelta(days=30))
+            .order_by(models.Lesson.date.desc()).all())
+    marked = {r[0] for r in db.query(models.Attendance.lesson_id)
+              .filter(models.Attendance.lesson_id.in_(
+                  [l.id for l in past] or [-1])).distinct().all()}
+    for ls in past:
+        if ls.id in marked:
+            continue
+        # Bugungi dars uchun biroz vaqt beriladi — dars endi
+        # tugagan bo'lishi mumkin
+        if ls.date == today:
+            g = next((x for x in groups if x.id == ls.group_id), None)
+            mins = roles.time_to_minutes(g.lesson_time) if g else None
+            now_local = roles.local_now()
+            if mins is not None and (now_local.hour * 60 + now_local.minute) \
+                    < mins + roles.ATTENDANCE_GRACE_HOURS * 60:
+                continue
+        alerts.append({
+            "kind": "attendance_missing",
+            "group_id": ls.group_id, "group": gname.get(ls.group_id),
+            "lesson_id": ls.id,
+            "detail": f"{ls.date.isoformat()} darsi belgilanmagan",
+            "date": ls.date.isoformat(),
+        })
+
+    for a in alerts:
+        a["label"] = roles.ALERT_LABELS.get(a["kind"], a["kind"])
+        a["tone"] = roles.ALERT_TONE.get(a["kind"], "slate")
+        a["advice"] = roles.ALERT_ADVICE.get(a["kind"], "")
+    order = {k: i for i, (k, _l, _t, _h) in enumerate(roles.TEACHER_ALERTS)}
+    alerts.sort(key=lambda a: order.get(a["kind"], 99))
+
+    # ---- 3. RIVOJLANISH VAZIFALARI ----
+    study = db.query(models.TeacherStudyItem).filter(
+        models.TeacherStudyItem.teacher_id == t.id).all()
+    study_rows = [{
+        "id": i.id, "stage": i.stage, "kind": i.kind,
+        "kind_label": "Kitob" if i.kind == "book" else "Podkast",
+        "title": i.title, "done": bool(i.done),
+        "done_at": i.done_at.isoformat() if i.done_at else None,
+    } for i in study]
+    study_left = [r for r in study_rows if not r["done"]]
+
+    my_tasks = (db.query(models.Task)
+                .filter(models.Task.assignee_id == user.id,
+                        models.Task.status.notin_(["done", "cancelled"]))
+                .order_by(models.Task.deadline).limit(20).all())
+    task_rows = [{
+        "id": x.id, "public_id": x.public_id, "title": x.title,
+        "deadline": x.deadline.isoformat() if x.deadline else None,
+        "overdue": bool(x.deadline and x.deadline < today),
+        "priority": x.priority,
+    } for x in my_tasks]
+
+    # Dars kuzatuvlari — metodik topshiriq manbai
+    obs = (db.query(models.LessonObservation)
+           .filter(models.LessonObservation.teacher_id == t.id)
+           .order_by(models.LessonObservation.id.desc()).limit(3).all())
+
+    by_kind: dict = {}
+    for a in alerts:
+        by_kind[a["kind"]] = by_kind.get(a["kind"], 0) + 1
+
+    return {
+        "teacher": {"id": t.id, "name": t.full_name},
+        "attendance": {
+            "percent": this_month["percent"],
+            "last_month": last_month["percent"],
+            "change": (round(this_month["percent"] - last_month["percent"], 1)
+                       if this_month["percent"] is not None
+                       and last_month["percent"] is not None else None),
+            "marks": this_month["marks"],
+            "present": this_month["present"],
+            "homework_percent": this_month["homework_percent"],
+            "homework_last_month": last_month["homework_percent"],
+            "homework_checked": this_month["homework_checked"],
+            "month": month_start.isoformat(),
+        },
+        "groups": [{
+            "id": gid, "name": gname.get(gid),
+            "percent": per_group[gid]["percent"],
+            "homework_percent": per_group[gid]["homework_percent"],
+            "low": (per_group[gid]["percent"] is not None
+                    and per_group[gid]["percent"]
+                    < roles.GROUP_ATTENDANCE_MIN),
+        } for gid in gids],
+        "risk_students": risk_students[:20],
+        "risk_count": len(risk_students),
+        "alerts": alerts[:40],
+        "alert_count": len(alerts),
+        "alerts_by_kind": [{
+            "key": k, "label": lbl, "tone": tn,
+            "count": by_kind.get(k, 0),
+        } for k, lbl, tn, _h in roles.TEACHER_ALERTS],
+        "development": {
+            "study": study_rows,
+            "study_left": len(study_left),
+            "study_total": len(study_rows),
+            "tasks": task_rows,
+            "tasks_overdue": sum(1 for x in task_rows if x["overdue"]),
+            "observations": [_observation_out(db, o) for o in obs],
+        },
+        "thresholds": {
+            "absent_streak": roles.ABSENT_STREAK_ALERT,
+            "group_attendance": roles.GROUP_ATTENDANCE_MIN,
+            "student_attendance": roles.STUDENT_RISK_ATTENDANCE,
+            "homework_drop": roles.HOMEWORK_DROP_PERCENT,
+            "no_growth_days": roles.NO_GROWTH_DAYS,
+        },
+        "hint": ("Har bir ogohlantirish — bugun qilinadigan ish. "
+                 "Yonida nima qilish kerakligi yozilgan."),
+    }

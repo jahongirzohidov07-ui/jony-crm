@@ -49,6 +49,7 @@ PUBLIC_ID_PREFIX = {
     "content": "CNT",
     "staff_request": "REQ",
     "vacancy": "VAC",
+    "book_order": "BOOK",
 }
 
 
@@ -400,6 +401,7 @@ PUBLIC_ID_PREFIX = {
     "content": "CNT",
     "staff_request": "REQ",
     "vacancy": "VAC",
+    "book_order": "BOOK",
 }
 
 
@@ -9853,6 +9855,10 @@ def _grade_state(db: Session, t: models.Teacher,
         "next_label": nxt.label if nxt else None,
         "next_rate": nxt.rate_per_student if nxt else None,
         "months": round(months, 1),
+        # Ustozga tajriba OYDA emas YILDA ko'rsatiladi: "42 oy" degani
+        # odamga hech narsa anglatmaydi, "3.5 yil" anglatadi
+        "years": roles.tenure_years(months),
+        "tenure_text": roles.tenure_years_text(months),
         "age": age,
         "cert": t.cert,
         "cert_score": t.cert_score,
@@ -19378,3 +19384,840 @@ try:
         _seed_hr_structure(_db3)
 except Exception:
     pass
+
+
+# =====================================================================
+#  USTOZNING O'Z KABINETI
+#
+#  Ustoz butun markazning guruh va o'quvchilarini emas, FAQAT o'zinikini
+#  ko'radi. O'quvchining BALANSI umuman ko'rsatilmaydi — pul masalasi
+#  ustozning ishi emas va u bilan munosabatga soya soladi.
+# =====================================================================
+def _my_teacher_or_404(db: Session, user) -> models.Teacher:
+    t = _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(
+            404, "Sizning ustoz yozuvingiz topilmadi. HR bilan "
+                 "bog'laning — akkaunt ustoz kartasiga ulanmagan.")
+    return t
+
+
+def _my_groups(db: Session, teacher_id: int) -> list:
+    return (db.query(models.Group)
+            .filter(models.Group.teacher_id == teacher_id)
+            .order_by(models.Group.name).all())
+
+
+@app.get("/api/me/groups")
+def my_groups(db: Session = Depends(get_db),
+              user=Depends(require_role(*roles.SELF_STATS))):
+    """Faqat shu ustozning guruhlari."""
+    t = _my_teacher_or_404(db, user)
+    groups = _my_groups(db, t.id)
+    today = date.today()
+
+    rooms = {r.id: r.name for r in db.query(models.Room).all()}
+    out = []
+    for g in groups:
+        students = [s for s in g.students if s.status == "active"]
+        # Oxirgi va keyingi dars
+        last = (db.query(models.Lesson)
+                .filter(models.Lesson.group_id == g.id,
+                        models.Lesson.held == 1,
+                        models.Lesson.date <= today)
+                .order_by(models.Lesson.date.desc()).first())
+        nxt = (db.query(models.Lesson)
+               .filter(models.Lesson.group_id == g.id,
+                       models.Lesson.date > today)
+               .order_by(models.Lesson.date).first())
+        out.append({
+            "id": g.id, "public_id": g.public_id, "name": g.name,
+            "subject": g.subject,
+            "subject_label": roles.SUBJECT_LABELS.get(g.subject or "",
+                                                      g.subject),
+            "level": getattr(g, "level", None),
+            "days": g.lesson_days, "time": g.lesson_time,
+            "room": rooms.get(g.room_id) or g.room,
+            "students": len(students),
+            "started_on": (g.start_date.isoformat()
+                           if g.start_date else None),
+            "last_lesson": last.date.isoformat() if last else None,
+            "next_lesson": nxt.date.isoformat() if nxt else None,
+        })
+    return {
+        "rows": out,
+        "total_groups": len(out),
+        "total_students": sum(r["students"] for r in out),
+        "hint": ("Bu yerda faqat sizning guruhlaringiz. Boshqa "
+                 "ustozlarning guruhlari ko'rinmaydi."),
+    }
+
+
+@app.get("/api/me/students")
+def my_students(group_id: int | None = None, q: str | None = None,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.SELF_STATS))):
+    """Ustozning o'z o'quvchilari — akademik ko'rsatkichlar bilan.
+
+    BALANS QAYTARILMAYDI. Bu ataylab: ustoz bolaga qarzdorligi orqali
+    emas, o'qishi orqali qarashi kerak."""
+    t = _my_teacher_or_404(db, user)
+    groups = _my_groups(db, t.id)
+    gid_map = {g.id: g for g in groups}
+    if group_id and group_id not in gid_map:
+        raise HTTPException(403, "Bu guruh sizniki emas")
+
+    query = db.query(models.Student).filter(
+        models.Student.group_id.in_(list(gid_map.keys()) or [-1]))
+    if group_id:
+        query = query.filter(models.Student.group_id == group_id)
+    if q:
+        query = query.filter(models.Student.full_name.ilike(f"%{q}%"))
+    students = query.order_by(models.Student.full_name).all()
+    if not students:
+        return {"rows": [], "groups": [{"id": g.id, "name": g.name}
+                                       for g in groups],
+                "total": 0, "hint": _my_students_hint()}
+
+    sids = [s.id for s in students]
+    since = date.today() - timedelta(days=90)
+
+    # Davomat — oxirgi 3 oy
+    att_rows = (db.query(models.Attendance, models.Lesson)
+                .join(models.Lesson,
+                      models.Attendance.lesson_id == models.Lesson.id)
+                .filter(models.Attendance.student_id.in_(sids),
+                        models.Lesson.date >= since).all())
+    att: dict = {}
+    for a, ls in att_rows:
+        e = att.setdefault(a.student_id, {"total": 0, "present": 0})
+        e["total"] += 1
+        if a.present:
+            e["present"] += 1
+
+    # Kunlik baholar
+    gr_rows = db.query(models.DailyGrade).filter(
+        models.DailyGrade.student_id.in_(sids)).all()
+    grades: dict = {}
+    for g in gr_rows:
+        if g.score is not None:
+            grades.setdefault(g.student_id, []).append(g.score)
+
+    # Imtihon natijalari
+    ex_rows = db.query(models.ExamResult).filter(
+        models.ExamResult.student_id.in_(sids)).all()
+    exams: dict = {}
+    for e in ex_rows:
+        if e.band is not None:
+            exams.setdefault(e.student_id, []).append(e.band)
+
+    # Coin va XP — rag'batlantirish uchun
+    gam = {g.student_id: g for g in db.query(models.StudentGamification)
+           .filter(models.StudentGamification.student_id.in_(sids)).all()}
+
+    rows = []
+    for s in students:
+        a = att.get(s.id, {"total": 0, "present": 0})
+        pct = (round(a["present"] / a["total"] * 100, 1)
+               if a["total"] else None)
+        gl = grades.get(s.id, [])
+        el = exams.get(s.id, [])
+        g = gid_map.get(s.group_id)
+        gm = gam.get(s.id)
+        rows.append({
+            "id": s.id, "public_id": s.public_id, "full_name": s.full_name,
+            "group_id": s.group_id, "group": g.name if g else None,
+            "status": s.status,
+            "enrolled_date": (s.enrolled_date.isoformat()
+                              if s.enrolled_date else None),
+            "months": (round(_months_between(s.enrolled_date, date.today()), 1)
+                       if s.enrolled_date else None),
+            # ---- Akademik ko'rsatkichlar ----
+            "attendance_percent": pct,
+            "lessons_counted": a["total"],
+            "missed": a["total"] - a["present"],
+            "avg_grade": round(sum(gl) / len(gl), 1) if gl else None,
+            "grades_count": len(gl),
+            "last_exam": el[-1] if el else None,
+            "best_exam": max(el) if el else None,
+            "xp": gm.total_xp if gm else 0,
+            "level": gm.level if gm else 1,
+            # Davomat past bo'lsa ustoz ko'rsin
+            "at_risk": pct is not None and pct < 70 and a["total"] >= 4,
+        })
+    return {
+        "rows": rows,
+        "groups": [{"id": g.id, "name": g.name} for g in groups],
+        "total": len(rows),
+        "at_risk": sum(1 for r in rows if r["at_risk"]),
+        "hint": _my_students_hint(),
+    }
+
+
+def _my_students_hint() -> str:
+    return ("Faqat sizning o'quvchilaringiz. To'lov va balans "
+            "ko'rsatilmaydi — bu administrator va moliya bo'limining "
+            "ishi.")
+
+
+# =====================================================================
+#  DARS KO'CHIRISH
+#
+#  Qoida: oyiga 2 marta avtomat, 6 oyda jami 12 marta. Foydalanilmagan
+#  imkon keyingi oyga O'TMAYDI — aks holda ustoz yig'ib, bir oyda
+#  hammasini ishlatishi mumkin bo'lardi va o'quvchi uchun eng yomoni
+#  shu.
+#
+#  Ustoz darsni BEKOR QILA OLMAYDI. Faqat ko'chiradi va yangi sana
+#  majburiy.
+# =====================================================================
+def _reschedule_usage(db: Session, teacher_id: int,
+                      for_date: date | None = None) -> dict:
+    """Kvota KO'CHIRILAYOTGAN DARS oyi bo'yicha hisoblanadi.
+
+    "Bir oyda 2 marta" degani — o'sha oyning 2 ta darsi. Agar hisob
+    so'rov yuborilgan kun bo'yicha yuritilsa, ustoz oy oxirida kelasi
+    oyning darslarini surib, chegarani aylanib o'tardi."""
+    today = date.today()
+    for_date = for_date or today
+    month_start = for_date.replace(day=1)
+    window_start = today - timedelta(days=roles.RESCHEDULE_WINDOW_DAYS)
+
+    q = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.teacher_id == teacher_id,
+        models.LessonReschedule.status.in_(roles.RESCHEDULE_DONE))
+    # Hisob SO'RALGAN dars sanasi bo'yicha — ustoz kelasi oyning
+    # darsini bugun surib, oylik kvotani aylanib o'tolmasin
+    used_month = q.filter(
+        models.LessonReschedule.from_date >= month_start,
+        models.LessonReschedule.from_date <= _month_end(for_date)).count()
+    used_window = q.filter(
+        models.LessonReschedule.from_date >= window_start).count()
+    return roles.reschedule_quota(used_month, used_window)
+
+
+def _month_end(d: date) -> date:
+    if d.month == 12:
+        return date(d.year, 12, 31)
+    return date(d.year, d.month + 1, 1) - timedelta(days=1)
+
+
+def _resch_out(db: Session, r: models.LessonReschedule) -> dict:
+    g = db.query(models.Group).get(r.group_id)
+    t = db.query(models.Teacher).get(r.teacher_id) if r.teacher_id else None
+    by = db.query(models.User).get(r.decided_by) if r.decided_by else None
+    return {
+        "id": r.id,
+        "group_id": r.group_id, "group": g.name if g else None,
+        "teacher": t.full_name if t else None,
+        "from_date": r.from_date.isoformat(),
+        "to_date": r.to_date.isoformat(),
+        "from_time": r.from_time, "to_time": r.to_time,
+        "shift_days": (r.to_date - r.from_date).days,
+        "reason": r.reason,
+        "reason_label": roles.RESCHEDULE_REASON_LABELS.get(r.reason or "",
+                                                           "—"),
+        "note": r.note,
+        "status": r.status,
+        "status_label": roles.RESCHEDULE_STATUS_LABELS.get(r.status, "—"),
+        "status_tone": roles.RESCHEDULE_STATUS_TONE.get(r.status, "slate"),
+        "auto_approved": bool(r.auto_approved),
+        "decided_by": by.full_name if by else None,
+        "decision_note": r.decision_note,
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+    }
+
+
+@app.get("/api/me/reschedules")
+def my_reschedules(db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.SELF_STATS))):
+    """Kvota va surish tarixi."""
+    t = _my_teacher_or_404(db, user)
+    today = date.today()
+    nxt = _month_end(today) + timedelta(days=1)
+    quota = _reschedule_usage(db, t.id, today)
+    # Kelasi oy ham ko'rsatiladi: kvota DARS oyi bo'yicha sanaladi,
+    # shuning uchun oy oxirida ustoz "menda 2 ta bor" deb o'ylab
+    # adashmasin
+    quota_next = _reschedule_usage(db, t.id, nxt)
+    rows = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.teacher_id == t.id).order_by(
+        models.LessonReschedule.id.desc()).limit(60).all()
+    return {
+        "quota": quota,
+        "quota_next": quota_next,
+        "next_month": nxt.isoformat(),
+        "rows": [_resch_out(db, r) for r in rows],
+        "reasons": [{"key": k, "label": l}
+                    for k, l in roles.RESCHEDULE_REASONS],
+        "min_notice_days": roles.RESCHEDULE_MIN_NOTICE_DAYS,
+        "max_shift_days": roles.RESCHEDULE_MAX_SHIFT_DAYS,
+        "carry_over": roles.RESCHEDULE_CARRY_OVER,
+        "hint": (f"Oyiga {roles.RESCHEDULE_PER_MONTH} marta avtomat "
+                 f"ruxsat beriladi, 6 oyda jami "
+                 f"{roles.RESCHEDULE_PER_WINDOW} marta. Foydalanilmagan "
+                 f"imkon keyingi oyga o'tmaydi. Dars ko'p surilsa "
+                 f"o'quvchining qiziqishi tushadi — shuning uchun "
+                 f"chegara bor. Kvota DARS qaysi oyda bo'lsa, o'sha "
+                 f"oyga yoziladi."),
+        "cannot_cancel": ("Darsni bekor qilish mumkin emas — faqat "
+                          "boshqa kunga ko'chiriladi."),
+    }
+
+
+@app.post("/api/me/reschedules")
+def my_reschedule_add(payload: schemas.RescheduleIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SELF_STATS))):
+    t = _my_teacher_or_404(db, user)
+    g = db.query(models.Group).get(payload.group_id)
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if g.teacher_id != t.id:
+        raise HTTPException(403, "Bu guruh sizniki emas")
+
+    today = date.today()
+    # Yangi sana MAJBURIY va o'tmishga surib bo'lmaydi — bu "bekor
+    # qilish"ning yashirin yo'li bo'lib qolmasin
+    if payload.to_date <= today:
+        raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
+    if payload.to_date == payload.from_date:
+        raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
+    if payload.from_date < today:
+        raise HTTPException(400, "O'tib ketgan darsni ko'chirib bo'lmaydi")
+
+    notice = (payload.from_date - today).days
+    if notice < roles.RESCHEDULE_MIN_NOTICE_DAYS:
+        raise HTTPException(
+            400, f"Kamida {roles.RESCHEDULE_MIN_NOTICE_DAYS} kun oldin "
+                 f"so'ralishi kerak — o'quvchi va ota-onani "
+                 f"ogohlantirishga vaqt kerak")
+    shift = abs((payload.to_date - payload.from_date).days)
+    if shift > roles.RESCHEDULE_MAX_SHIFT_DAYS:
+        raise HTTPException(
+            400, f"Dars ko'pi bilan {roles.RESCHEDULE_MAX_SHIFT_DAYS} "
+                 f"kunga ko'chiriladi")
+
+    # Bir dars ikki marta ko'chirilmaydi
+    dup = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.group_id == g.id,
+        models.LessonReschedule.from_date == payload.from_date,
+        models.LessonReschedule.status.in_(
+            roles.RESCHEDULE_DONE + ["pending"])).first()
+    if dup:
+        raise HTTPException(400, "Bu dars allaqachon ko'chirilgan yoki "
+                                 "so'rov yuborilgan")
+
+    quota = _reschedule_usage(db, t.id, payload.from_date)
+    # Kvota ichida bo'lsa — avtomat. Tashqarisida bo'lsa tasdiqqa
+    # yuboriladi, lekin BLOKLANMAYDI: haqiqiy sabab bo'lishi mumkin.
+    auto = quota["auto_ok"]
+    r = models.LessonReschedule(
+        group_id=g.id, teacher_id=t.id,
+        from_date=payload.from_date, to_date=payload.to_date,
+        from_time=payload.from_time or g.lesson_time,
+        to_time=payload.to_time or g.lesson_time,
+        reason=payload.reason, note=payload.note,
+        status="auto" if auto else "pending",
+        auto_approved=1 if auto else 0,
+        requested_by=user.id)
+    db.add(r); db.commit(); db.refresh(r)
+
+    if auto:
+        _apply_reschedule(db, r)
+        db.commit()
+    else:
+        _hr_task(db, title=f"Dars ko'chirish so'rovi #{r.id}",
+                 body=(f"{t.full_name} — {g.name}. "
+                       f"{payload.from_date} → {payload.to_date}. "
+                       f"Kvota tugagan (oyiga "
+                       f"{roles.RESCHEDULE_PER_MONTH} marta), "
+                       f"shuning uchun tasdiq kerak."),
+                 to_roles=roles.RESCHEDULE_APPROVE,
+                 branch_id=g.branch_id, days=1, priority="high")
+        db.commit()
+
+    audit.log(db, user, entity="lesson_reschedule", action="create",
+              entity_id=r.id, entity_label=f"{g.name} {payload.from_date}",
+              note=("avtomat" if auto else "tasdiq kutmoqda"),
+              commit=True)
+    return {**_resch_out(db, r),
+            "quota": _reschedule_usage(db, t.id, payload.from_date)}
+
+
+def _apply_reschedule(db: Session, r: models.LessonReschedule) -> None:
+    """Jadvaldagi darsni yangi sanaga ko'chiradi. O'tilgan (held=1)
+    darsga TEGILMAYDI — u tarix va ish haqi asosi."""
+    ls = db.query(models.Lesson).filter(
+        models.Lesson.group_id == r.group_id,
+        models.Lesson.date == r.from_date).first()
+    if ls and not ls.held:
+        ls.date = r.to_date
+        ls.note = ((ls.note or "") + " · ko'chirildi").strip()
+        r.lesson_id = ls.id
+    elif not ls:
+        # Jadvalda hali yo'q bo'lsa yangi rejalashtirilgan dars ochamiz
+        ls = models.Lesson(group_id=r.group_id, teacher_id=r.teacher_id,
+                           date=r.to_date, held=0,
+                           note="ko'chirilgan dars", created_by="Tizim")
+        db.add(ls); db.flush()
+        r.lesson_id = ls.id
+
+
+@app.get("/api/reschedules")
+def reschedules_list(status: str | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.RESCHEDULE_APPROVE))):
+    """Rahbariyat uchun: kim qancha surgan va nimani tasdiqlash kerak."""
+    q = db.query(models.LessonReschedule)
+    if status:
+        q = q.filter(models.LessonReschedule.status == status)
+    rows = q.order_by(models.LessonReschedule.id.desc()).limit(200).all()
+    out = [_resch_out(db, r) for r in rows]
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        gids = {g.id for g in db.query(models.Group).filter(
+            models.Group.branch_id == user.branch_id).all()}
+        out = [r for r in out if r["group_id"] in gids]
+
+    # Ustoz kesimi — kim ko'p suryapti
+    by_teacher: dict = {}
+    for r in out:
+        if r["status"] not in roles.RESCHEDULE_DONE:
+            continue
+        by_teacher[r["teacher"]] = by_teacher.get(r["teacher"], 0) + 1
+    return {
+        "rows": out,
+        "pending": sum(1 for r in out if r["status"] == "pending"),
+        "by_teacher": sorted(
+            [{"teacher": k, "count": v} for k, v in by_teacher.items()],
+            key=lambda x: -x["count"]),
+        "statuses": [{"key": k, "label": l, "tone": t}
+                     for k, l, t in roles.RESCHEDULE_STATUSES],
+        "hint": ("Ko'p surish o'quvchining qiziqishini tushiradi. "
+                 "Ustoz kesimida qatorlar ko'payib borsa — bu "
+                 "suhbatlashadigan signal."),
+    }
+
+
+@app.post("/api/reschedules/{rid}/decide")
+def reschedule_decide(rid: int, payload: schemas.RescheduleDecision,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.RESCHEDULE_APPROVE))):
+    r = db.query(models.LessonReschedule).get(rid)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov bo'yicha qaror qabul qilingan")
+    if payload.decision not in ("approved", "rejected"):
+        raise HTTPException(400, "Noma'lum qaror")
+    if payload.decision == "rejected" and not (payload.note or "").strip():
+        raise HTTPException(400, "Rad etish sababini yozing")
+
+    r.status = payload.decision
+    r.decided_by = user.id
+    r.decided_at = datetime.utcnow()
+    r.decision_note = payload.note
+    if payload.decision == "approved":
+        _apply_reschedule(db, r)
+    db.commit()
+    audit.log(db, user, entity="lesson_reschedule", action=payload.decision,
+              entity_id=rid, note=payload.note, commit=True)
+    return _resch_out(db, r)
+
+
+# =====================================================================
+#  BOSHQA USTOZ O'RNIGA O'TISH
+#
+#  Ish haqi darsni HAQIQATDA o'tgan ustozga yoziladi — Lesson.teacher_id
+#  shuning uchun bor. O'rinbosar tasdiqlanganda o'sha maydon
+#  yangilanadi, aks holda pul noto'g'ri odamga ketardi.
+# =====================================================================
+def _sub_out(db: Session, s: models.Substitution) -> dict:
+    g = db.query(models.Group).get(s.group_id)
+    orig = (db.query(models.Teacher).get(s.original_teacher_id)
+            if s.original_teacher_id else None)
+    sub = (db.query(models.Teacher).get(s.substitute_teacher_id)
+           if s.substitute_teacher_id else None)
+    return {
+        "id": s.id,
+        "group_id": s.group_id, "group": g.name if g else None,
+        "subject": (roles.SUBJECT_LABELS.get(g.subject or "", g.subject)
+                    if g else None),
+        "lesson_date": s.lesson_date.isoformat(),
+        "lesson_time": s.lesson_time,
+        "original_teacher": orig.full_name if orig else None,
+        "original_teacher_id": s.original_teacher_id,
+        "substitute_teacher": sub.full_name if sub else None,
+        "substitute_teacher_id": s.substitute_teacher_id,
+        "reason": s.reason,
+        "reason_label": roles.RESCHEDULE_REASON_LABELS.get(s.reason or "",
+                                                           "—"),
+        "note": s.note,
+        "status": s.status,
+        "status_label": roles.SUB_STATUS_LABELS.get(s.status, "—"),
+        "status_tone": roles.SUB_STATUS_TONE.get(s.status, "slate"),
+        "open": s.status == "offered",
+        "created_at": s.created_at.isoformat() if s.created_at else None,
+    }
+
+
+@app.get("/api/me/substitutions")
+def my_substitutions(db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.SELF_STATS))):
+    """Menga taklif qilinganlar, men so'raganlarim va ochiq
+    takliflar."""
+    t = _my_teacher_or_404(db, user)
+    today = date.today()
+
+    mine = db.query(models.Substitution).filter(
+        models.Substitution.original_teacher_id == t.id).order_by(
+        models.Substitution.lesson_date.desc()).limit(40).all()
+    for_me = db.query(models.Substitution).filter(
+        models.Substitution.substitute_teacher_id == t.id).order_by(
+        models.Substitution.lesson_date.desc()).limit(40).all()
+    # Kimga biriktirilmagan ochiq takliflar — o'z filialida
+    my_group_ids = [g.id for g in _my_groups(db, t.id)]
+    open_q = db.query(models.Substitution).filter(
+        models.Substitution.substitute_teacher_id.is_(None),
+        models.Substitution.status == "offered",
+        models.Substitution.lesson_date >= today,
+        models.Substitution.original_teacher_id != t.id).all()
+    open_rows = []
+    for s in open_q:
+        g = db.query(models.Group).get(s.group_id)
+        if g and t.branch_id and g.branch_id != t.branch_id:
+            continue
+        open_rows.append(s)
+
+    return {
+        "my_requests": [_sub_out(db, s) for s in mine],
+        "assigned_to_me": [_sub_out(db, s) for s in for_me],
+        "open_offers": [_sub_out(db, s) for s in open_rows],
+        "my_groups": [{"id": g.id, "name": g.name}
+                      for g in _my_groups(db, t.id)],
+        "reasons": [{"key": k, "label": l}
+                    for k, l in roles.RESCHEDULE_REASONS],
+        "hint": ("O'rinbosar dars o'tsa, ish haqi darsni haqiqatda "
+                 "o'tgan ustozga yoziladi."),
+    }
+
+
+@app.post("/api/me/substitutions")
+def my_substitution_add(payload: schemas.SubstitutionIn,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.SELF_STATS))):
+    """O'rniga o'tishni so'rash. Kimni tanlamasa — ochiq taklif
+    bo'ladi, boshqa ustozlar ko'radi."""
+    t = _my_teacher_or_404(db, user)
+    g = db.query(models.Group).get(payload.group_id)
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if g.teacher_id != t.id:
+        raise HTTPException(403, "Bu guruh sizniki emas")
+    if payload.lesson_date < date.today():
+        raise HTTPException(400, "O'tib ketgan darsga o'rinbosar "
+                                 "so'ralmaydi")
+    if payload.substitute_teacher_id == t.id:
+        raise HTTPException(400, "O'zingizni o'rinbosar qila olmaysiz")
+
+    dup = db.query(models.Substitution).filter(
+        models.Substitution.group_id == g.id,
+        models.Substitution.lesson_date == payload.lesson_date,
+        models.Substitution.status.in_(["offered", "accepted"])).first()
+    if dup:
+        raise HTTPException(400, "Bu darsga so'rov allaqachon bor")
+
+    s = models.Substitution(
+        group_id=g.id, lesson_date=payload.lesson_date,
+        lesson_time=payload.lesson_time or g.lesson_time,
+        original_teacher_id=t.id,
+        substitute_teacher_id=payload.substitute_teacher_id,
+        reason=payload.reason, note=payload.note,
+        status="offered", created_by=user.id)
+    db.add(s); db.commit(); db.refresh(s)
+
+    _hr_task(db, title=f"O'rinbosar so'rovi #{s.id}",
+             body=(f"{t.full_name} — {g.name}, {payload.lesson_date}. "
+                   + ("Aniq ustoz taklif qilindi."
+                      if payload.substitute_teacher_id
+                      else "Ochiq taklif: hali hech kim olmagan.")),
+             to_roles=roles.SUBSTITUTION_MANAGE,
+             branch_id=g.branch_id, days=1)
+    db.commit()
+    audit.log(db, user, entity="substitution", action="create",
+              entity_id=s.id, entity_label=f"{g.name} {payload.lesson_date}",
+              commit=True)
+    return _sub_out(db, s)
+
+
+@app.post("/api/me/substitutions/{sid}/decide")
+def my_substitution_decide(sid: int, payload: schemas.SubstitutionDecision,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.SELF_STATS))):
+    """Ustoz taklifni qabul qiladi, rad etadi yoki o'z so'rovini
+    bekor qiladi."""
+    t = _my_teacher_or_404(db, user)
+    s = db.query(models.Substitution).get(sid)
+    if not s:
+        raise HTTPException(404, "Topilmadi")
+    if payload.decision not in ("accepted", "declined", "cancelled"):
+        raise HTTPException(400, "Noma'lum qaror")
+
+    if payload.decision == "cancelled":
+        if s.original_teacher_id != t.id:
+            raise HTTPException(403, "Faqat o'z so'rovingizni bekor "
+                                     "qilasiz")
+        if s.status not in ("offered", "accepted"):
+            raise HTTPException(400, "Bu so'rov yopilgan")
+        s.status = "cancelled"
+    else:
+        if s.status != "offered":
+            raise HTTPException(400, "Bu taklif allaqachon hal qilingan")
+        if s.original_teacher_id == t.id:
+            raise HTTPException(400, "O'z so'rovingizni o'zingiz qabul "
+                                     "qila olmaysiz")
+        # Ochiq taklif bo'lsa qabul qilgan odam o'rinbosar bo'ladi
+        if s.substitute_teacher_id and s.substitute_teacher_id != t.id:
+            raise HTTPException(403, "Bu taklif boshqa ustozga berilgan")
+        if payload.decision == "accepted":
+            s.substitute_teacher_id = t.id
+            s.status = "accepted"
+            # Ish haqi to'g'ri odamga tushishi uchun darsning ustozi
+            # almashtiriladi
+            ls = db.query(models.Lesson).filter(
+                models.Lesson.group_id == s.group_id,
+                models.Lesson.date == s.lesson_date).first()
+            if ls and not ls.held:
+                ls.teacher_id = t.id
+        else:
+            s.status = "declined"
+    s.decided_at = datetime.utcnow()
+    s.note = ((s.note or "") + (f" · {payload.note}" if payload.note
+                                else "")).strip() or None
+    db.commit()
+    audit.log(db, user, entity="substitution", action=payload.decision,
+              entity_id=sid, commit=True)
+    return _sub_out(db, s)
+
+
+# =====================================================================
+#  KITOB BUYURTMASI
+#
+#  So'rov yuborilgach filial rahbariga VAZIFA bo'lib boradi. Og'zaki
+#  aytilgan iltimos yo'qoladi, vazifa yo'qolmaydi.
+# =====================================================================
+def _book_out(db: Session, o: models.BookOrder) -> dict:
+    t = db.query(models.Teacher).get(o.teacher_id) if o.teacher_id else None
+    br = db.query(models.Branch).get(o.branch_id) if o.branch_id else None
+    g = db.query(models.Group).get(o.group_id) if o.group_id else None
+    by = db.query(models.User).get(o.decided_by) if o.decided_by else None
+    items = db.query(models.BookOrderItem).filter(
+        models.BookOrderItem.order_id == o.id).all()
+    today = date.today()
+    return {
+        "id": o.id, "public_id": o.public_id,
+        "teacher": t.full_name if t else None,
+        "teacher_id": o.teacher_id,
+        "branch": br.name if br else None, "branch_id": o.branch_id,
+        "group": g.name if g else None, "group_id": o.group_id,
+        "needed_by": o.needed_by.isoformat() if o.needed_by else None,
+        "days_left": (o.needed_by - today).days if o.needed_by else None,
+        "urgency": o.urgency or "normal",
+        "urgency_label": roles.BOOK_URGENCY_LABELS.get(o.urgency or "normal"),
+        "urgency_tone": roles.BOOK_URGENCY_TONE.get(o.urgency or "normal",
+                                                    "slate"),
+        "note": o.note,
+        "status": o.status,
+        "status_label": roles.BOOK_STATUS_LABELS.get(o.status, "—"),
+        "status_tone": roles.BOOK_STATUS_TONE.get(o.status, "slate"),
+        "is_open": o.status in roles.BOOK_OPEN_STATUSES,
+        "decided_by": by.full_name if by else None,
+        "decision_note": o.decision_note,
+        "delivered_at": (o.delivered_at.isoformat()
+                         if o.delivered_at else None),
+        "task_id": o.task_id,
+        "items": [{
+            "id": i.id, "title": i.title, "level": i.level,
+            "qty": i.qty, "delivered_qty": i.delivered_qty or 0,
+            "note": i.note, "consumable_id": i.consumable_id,
+        } for i in items],
+        "total_qty": sum(i.qty for i in items),
+        "titles": len(items),
+        "created_at": o.created_at.isoformat() if o.created_at else None,
+    }
+
+
+@app.get("/api/books/catalogue")
+def books_catalogue(db: Session = Depends(get_db),
+                    user=Depends(get_current_user)):
+    """Omborda turgan kitoblar — ustoz ro'yxatdan tanlaydi, nomini
+    qo'lda yozib xato qilmaydi."""
+    q = db.query(models.Consumable).filter(models.Consumable.kind == "book")
+    if getattr(user, "branch_id", None):
+        q = q.filter(or_(models.Consumable.branch_id == user.branch_id,
+                         models.Consumable.branch_id.is_(None)))
+    return {"rows": [{
+        "id": c.id, "name": c.name, "qty": c.qty,
+        "branch_id": c.branch_id,
+        "in_stock": (c.qty or 0) > 0,
+    } for c in q.order_by(models.Consumable.name).all()]}
+
+
+@app.get("/api/me/book-orders")
+def my_book_orders(db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.SELF_STATS))):
+    t = _my_teacher_or_404(db, user)
+    rows = db.query(models.BookOrder).filter(
+        models.BookOrder.teacher_id == t.id).order_by(
+        models.BookOrder.id.desc()).limit(60).all()
+    return {
+        "rows": [_book_out(db, o) for o in rows],
+        "groups": [{"id": g.id, "name": g.name}
+                   for g in _my_groups(db, t.id)],
+        "urgencies": [{"key": k, "label": l, "tone": tn, "days": d}
+                      for k, l, tn, d in roles.BOOK_URGENCY],
+        "hint": ("So'rov yuborilgach filial rahbariga vazifa bo'lib "
+                 "boradi — og'zaki aytilgan iltimos yo'qoladi, vazifa "
+                 "yo'qolmaydi."),
+    }
+
+
+@app.post("/api/me/book-orders")
+def my_book_order_add(payload: schemas.BookOrderIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SELF_STATS))):
+    t = _my_teacher_or_404(db, user)
+    items = [i for i in (payload.items or []) if (i.title or "").strip()]
+    if not items:
+        raise HTTPException(400, "Kamida bitta kitob kiriting")
+    if any(i.qty is None or i.qty < 1 for i in items):
+        raise HTTPException(400, "Har bir kitob uchun soni 1 dan kam "
+                                 "bo'lmasin")
+    if payload.urgency and payload.urgency not in roles.BOOK_URGENCY_LABELS:
+        raise HTTPException(400, "Noma'lum shoshilinchlik")
+
+    g = db.query(models.Group).get(payload.group_id) \
+        if payload.group_id else None
+    if g and g.teacher_id != t.id:
+        raise HTTPException(403, "Bu guruh sizniki emas")
+
+    o = models.BookOrder(
+        teacher_id=t.id, requested_by=user.id,
+        branch_id=t.branch_id, group_id=payload.group_id,
+        needed_by=payload.needed_by, urgency=payload.urgency or "normal",
+        note=payload.note, status="new")
+    db.add(o); db.commit(); db.refresh(o)
+    _ensure_public_id(db, "book_order", o)
+    for i in items:
+        db.add(models.BookOrderItem(
+            order_id=o.id, title=i.title.strip(), level=i.level,
+            qty=int(i.qty), consumable_id=i.consumable_id, note=i.note))
+    db.commit()
+
+    # Filial rahbariga vazifa
+    lines = "\n".join(f"· {i.title}"
+                      + (f" ({i.level})" if i.level else "")
+                      + f" — {int(i.qty)} dona" for i in items)
+    task = models.Task(
+        title=f"Kitob buyurtmasi {o.public_id}",
+        description=(f"{t.full_name} so'radi"
+                     + (f" · {g.name}" if g else "") + ".\n" + lines
+                     + (f"\nKerak: {payload.needed_by}"
+                        if payload.needed_by else "")
+                     + (f"\nIzoh: {payload.note}" if payload.note else "")),
+        assignee_id=_book_owner_id(db, t.branch_id),
+        branch_id=t.branch_id,
+        deadline=payload.needed_by or (
+            date.today() + timedelta(
+                days=roles.BOOK_URGENCY_DAYS.get(o.urgency, 7))),
+        priority="high" if o.urgency == "urgent" else "normal",
+        source="manual", created_by="Tizim")
+    db.add(task); db.flush()
+    _ensure_public_id(db, "task", task)
+    o.task_id = task.id
+    db.commit()
+
+    audit.log(db, user, entity="book_order", action="create",
+              entity_id=o.id, entity_label=o.public_id,
+              note=f"{sum(int(i.qty) for i in items)} dona kitob",
+              commit=True)
+    return _book_out(db, o)
+
+
+def _book_owner_id(db: Session, branch_id) -> int | None:
+    """Kitob buyurtmasi kimga tushadi: filial rahbari, bo'lmasa
+    xo'jalik menejeri, bo'lmasa asoschi."""
+    for role in (roles.BRANCH_MANAGER, roles.FACILITY_MANAGER,
+                 roles.FOUNDER):
+        q = db.query(models.User).filter(models.User.role == role,
+                                         models.User.is_active == 1)
+        if branch_id and role == roles.BRANCH_MANAGER:
+            u = q.filter(models.User.branch_id == branch_id).first()
+        else:
+            u = q.first()
+        if u:
+            return u.id
+    return None
+
+
+@app.get("/api/book-orders")
+def book_orders_list(status: str | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.BOOK_ORDER_MANAGE))):
+    q = db.query(models.BookOrder)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        q = q.filter(models.BookOrder.branch_id == user.branch_id)
+    if status:
+        q = q.filter(models.BookOrder.status == status)
+    rows = [_book_out(db, o) for o in
+            q.order_by(models.BookOrder.id.desc()).limit(200).all()]
+    counts: dict = {}
+    for r in rows:
+        counts[r["status"]] = counts.get(r["status"], 0) + 1
+    return {
+        "rows": rows,
+        "statuses": [{"key": k, "label": l, "tone": t,
+                      "count": counts.get(k, 0)}
+                     for k, l, t in roles.BOOK_ORDER_STATUSES],
+        "open": sum(1 for r in rows if r["is_open"]),
+        "urgent": sum(1 for r in rows
+                      if r["is_open"] and r["urgency"] == "urgent"),
+        "total_books": sum(r["total_qty"] for r in rows if r["is_open"]),
+    }
+
+
+@app.post("/api/book-orders/{oid}/status")
+def book_order_status(oid: int, payload: schemas.BookOrderDecision,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.BOOK_ORDER_MANAGE))):
+    o = db.query(models.BookOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Topilmadi")
+    if payload.status not in roles.BOOK_STATUS_LABELS:
+        raise HTTPException(400, "Noma'lum holat")
+    if payload.status == "rejected" and not (payload.note or "").strip():
+        raise HTTPException(400, "Rad etish sababini yozing")
+
+    old = o.status
+    o.status = payload.status
+    o.decided_by = user.id
+    o.decided_at = datetime.utcnow()
+    o.decision_note = payload.note
+    if payload.status == "delivered":
+        o.delivered_at = date.today()
+        for i in db.query(models.BookOrderItem).filter(
+                models.BookOrderItem.order_id == o.id).all():
+            i.delivered_qty = i.qty
+    # Vazifa ham yopiladi — ikki joyda ikki xil holat qolmasin
+    if o.task_id and payload.status in ("delivered", "rejected",
+                                        "cancelled"):
+        task = db.query(models.Task).get(o.task_id)
+        if task:
+            task.status = "done" if payload.status == "delivered" \
+                else "cancelled"
+    db.commit()
+    audit.log(db, user, entity="book_order", action="status",
+              entity_id=oid, entity_label=o.public_id,
+              field="status", old_value=old, new_value=o.status,
+              note=payload.note, commit=True)
+    return _book_out(db, o)

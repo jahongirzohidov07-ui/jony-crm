@@ -192,14 +192,6 @@ export default function Layout() {
   if (user?.role === FOUNDER) {
     items = items.filter((i) => !FOUNDER_MOVED.includes(i.to));
   }
-  // Yillik Reja/Fakt — rahbar va bo'lim egalari uchun
-  if (can(user?.role, PLAN_VIEW)) {
-    items = [
-      items[0],
-      { to: "/plan", label: "Reja va Fakt", icon: Target },
-      ...items.slice(1),
-    ];
-  }
   // "Bugungi holat" endi Dashboard ICHIDA alohida bo'lim - menyuda
   // takrorlanmaydi.
   // Dars jadvali va Lidlar - administratorning kuni shulardan boshlanadi,

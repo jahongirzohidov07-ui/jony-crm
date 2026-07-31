@@ -8,6 +8,7 @@ import Leads from "./pages/Leads";
 import StudentDetail from "./pages/StudentDetail";
 import Groups from "./pages/Groups";
 import GroupDetail from "./pages/GroupDetail";
+import MyExams from "./pages/MyExams";
 import Teachers from "./pages/Teachers";
 import Moliya from "./pages/Moliya";
 import Reports from "./pages/Reports";
@@ -60,6 +61,7 @@ function AppRoutes() {
         <Route path="students/:id" element={<StudentDetail />} />
         <Route path="groups" element={<Groups />} />
         <Route path="groups/:id" element={<GroupDetail />} />
+        <Route path="my-exams" element={<MyExams />} />
         <Route path="teachers" element={<Teachers />} />
         <Route path="finance" element={<Moliya />} />
         <Route path="reports" element={<Reports />} />

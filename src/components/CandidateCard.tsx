@@ -4,6 +4,7 @@ import { api, type CandidateCard as Card } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { Attachments } from "./Attachments";
 import { ObservationList } from "./LessonRubric";
+import { CandidateGrowth } from "./CandidateGrowth";
 
 /**
  * Nomzod kartasi. Qaror qabul qilish uchun kerak bo'lgan hammasi bitta
@@ -132,6 +133,8 @@ export function CandidateCard({
               <p className="text-xs font-medium text-slate-700 mb-2">
                 Sinov darsi baholashi
               </p>
+              <CandidateGrowth candidateId={id} />
+              <div className="h-4" />
               <ObservationList candidateId={id} canAdd={canEdit} />
             </div>
 

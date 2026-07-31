@@ -10,6 +10,8 @@ import {
   api, type Vacancy, type Candidate, type HrFunnel, type Branch,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
+import { AtsBoard } from "../components/AtsBoard";
+import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
 import { HR_ACCESS, can, ALL_ROLES, roleLabel } from "../lib/roles";
 import {
   CANDIDATE_STAGES, CANDIDATE_SOURCES,
@@ -28,11 +30,14 @@ import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "funnel" | "candidates" | "vacancies" | "staff"
+type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies";
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: "overview", label: "Umumiy holat" },
+  { key: "ats", label: "Ishga olish quvuri" },
+  { key: "lifecycle", label: "Hayotiy sikl" },
   { key: "funnel", label: "HR voronka" },
   { key: "workforce", label: "Shtat rejasi" },
   { key: "requests", label: "Xodim so'rovlari" },
@@ -878,7 +883,7 @@ function VacanciesTab({ branches }: { branches: Branch[] }) {
 // ---------------------------------------------------------------- Sahifa
 export default function Hr() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("funnel");
+  const [tab, setTab] = useState<Tab>("overview");
   const [branches, setBranches] = useState<Branch[]>([]);
 
   useEffect(() => {
@@ -919,6 +924,9 @@ export default function Hr() {
         ))}
       </div>
 
+      {tab === "overview" && <HrOverviewTab />}
+      {tab === "ats" && <AtsBoard />}
+      {tab === "lifecycle" && <HrLifecycleTab />}
       {tab === "funnel" && <FunnelTab />}
       {tab === "workforce" && <WorkforceTab />}
       {tab === "requests" && <StaffRequestsTab />}

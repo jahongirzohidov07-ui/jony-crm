@@ -588,6 +588,11 @@ def login(payload: schemas.LoginRequest, db: Session = Depends(get_db)):
     if not user.is_active:
         raise HTTPException(status_code=401, detail="Bu hisob faolsizlantirilgan")
     token = create_access_token({"sub": user.username})
+    # Oy boshida birinchi kirishda oylik to'lovlar avtomat yechiladi
+    try:
+        _ensure_month_charges(db)
+    except Exception:
+        pass
     return schemas.Token(
         access_token=token, role=user.role, full_name=user.full_name, branch_id=user.branch_id
     )
@@ -1461,7 +1466,37 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
                 models.Lesson.date >= start, models.Lesson.date <= end)
         .all()
     )
-    by_date = {ls.date: ls for ls in existing}
+    # DUBL HIMOYASI: ikki parallel so'rov bir kunga ikkita dars
+    # yaratib qo'ygan bo'lishi mumkin (3-avgust 2 ta kabi). Yoqlama va
+    # bahosi yo'q, o'tkazilmagan nusxa o'chiriladi; ikkalasi ham band
+    # bo'lsa - tegilmaydi (pul hujjati).
+    by_date = {}
+    dup_removed = False
+    for ls in sorted(existing, key=lambda l: l.id):
+        prev = by_date.get(ls.date)
+        if not prev:
+            by_date[ls.date] = ls
+            continue
+        def _busy(l):
+            if l.held:
+                return True
+            return db.query(models.Attendance).filter(
+                models.Attendance.lesson_id == l.id).count() > 0
+        loser = None
+        if not _busy(ls):
+            loser = ls
+        elif not _busy(prev):
+            loser = prev
+            by_date[ls.date] = ls
+        if loser is not None:
+            db.delete(loser)
+            dup_removed = True
+        else:
+            # ikkalasi ham band — qo'l bilan ko'rish kerak, tegmaymiz
+            pass
+    if dup_removed:
+        db.flush()
+    existing = list(by_date.values())
 
     # KO'CHIRILGAN DARSLAR. Ko'chirilgan dars ataylab jadval kunidan
     # tashqariga tushadi (masalan chorshanbadan payshanbaga). Agar shu
@@ -10389,8 +10424,24 @@ def _teacher_of_user(db: Session, user: models.User) -> models.Teacher | None:
          .filter(models.Teacher.user_id == user.id).first())
     if t:
         return t
-    return (db.query(models.Teacher)
-            .filter(models.Teacher.full_name == user.full_name).first())
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.full_name == user.full_name).first())
+    if t:
+        if not t.user_id:
+            t.user_id = user.id
+            db.commit()
+        return t
+    # Support teacher uchun karta avtomat ochiladi — "ulanmagan"
+    # degan yozuv bilan kabinet bo'sh turmasin.
+    if user.role == roles.SUPPORT_TEACHER:
+        t = models.Teacher(full_name=user.full_name,
+                           branch_id=user.branch_id, is_active=1,
+                           user_id=user.id)
+        db.add(t)
+        db.commit()
+        db.refresh(t)
+        return t
+    return None
 
 
 def _salary_card(db: Session, t: models.Teacher) -> dict:
@@ -23534,9 +23585,27 @@ def get_plan(year: int | None = None, granularity: str = "month",
         else:
             sum_plan = round(sum(p_vals), 0) if p_vals else None
             sum_fakt = round(sum(f_vals), 0) if f_vals else None
+        # Bugungacha bo'lgan reja — "shu ketishda" prognozi uchun
+        ptd = 0.0
+        for w, c in zip(wins, cells):
+            wl, ws, we, wm = w
+            if we <= today + timedelta(days=1):
+                if c["plan"] is not None:
+                    ptd = ptd + c["plan"] if kind != "stock" else c["plan"]
+            elif ws <= today:
+                part = _plan_distribute(kind, plan_map.get(key, {}), year,
+                                        (wl, ws, today + timedelta(days=1),
+                                         wm))
+                if part is not None:
+                    ptd = ptd + part if kind != "stock" else part
+        percent = round(sum_fakt / sum_plan * 100, 0) \
+            if sum_plan and sum_fakt is not None else None
+        pace = round(sum_fakt / ptd * 100, 0) \
+            if ptd and sum_fakt is not None else None
         rows.append({"metric": key, "label": label, "section": sec,
                      "kind": kind, "auto": auto, "cells": cells,
-                     "sum_plan": sum_plan, "sum_fakt": sum_fakt})
+                     "sum_plan": sum_plan, "sum_fakt": sum_fakt,
+                     "percent": percent, "pace": pace})
     return {
         "year": year, "year_label": roles.plan_year_label(year),
         "granularity": granularity, "month": month,
@@ -23721,6 +23790,67 @@ def teacher_overview(teacher_id: int,
         "grade": t.grade, "grade_label": grade_label,
         "grade_since": t.grade_since.isoformat() if t.grade_since else None,
     }
+
+
+# ----------------------------------- Oylik to'lovni avtomat yechish ----
+def _ensure_month_charges(db: Session):
+    """Har oyning 1-kuni ertalab 5:00 (Toshkent)dan boshlab faol
+    o'quvchilardan shu oy to'lovi avtomat yechiladi.
+
+    Server "uxlab" qolgan bo'lsa ham birinchi kirishda ishlaydi.
+    Idempotent: allaqachon yechilgan o'quvchidan qayta yechilmaydi."""
+    now = roles.local_now()
+    today = now.date()
+    if today.day == 1 and now.hour < 5:
+        return
+    period = f"{today.year:04d}-{today.month:02d}"
+    done = db.query(models.Payment).filter(
+        models.Payment.kind == "charge",
+        models.Payment.period == period,
+        models.Payment.created_by == "avtomat (oylik)").first()
+    if done:
+        return
+    group_ids = [gid for (gid,) in
+                 db.query(models.Student.group_id)
+                 .filter(models.Student.status == "active",
+                         models.Student.group_id.isnot(None))
+                 .distinct().all()]
+    n = 0
+    for gid in group_ids:
+        g = db.query(models.Group).get(gid)
+        if not g:
+            continue
+        try:
+            charges = billing.compute_student_charges(
+                db, g, today.year, today.month)
+        except Exception:
+            continue
+        for c in charges:
+            if c.get("already_charged") or (c.get("amount") or 0) <= 0:
+                continue
+            db.add(models.Payment(
+                student_id=c["student_id"],
+                amount=-abs(c["amount"]),
+                kind="charge",
+                note=f"{g.name} - {period} oyi uchun "
+                     f"{c.get('billable_lessons', '')} dars (avtomat)",
+                created_by="avtomat (oylik)",
+                period=period,
+            ))
+            n += 1
+    if n:
+        db.commit()
+
+
+@app.on_event("startup")
+def _charges_on_startup():
+    try:
+        from database import SessionLocal
+        db = SessionLocal()
+        _ensure_month_charges(db)
+        db.close()
+    except Exception:
+        pass
 
 
 # --------------------------------------------- Zararsizlik nuqtasi ----

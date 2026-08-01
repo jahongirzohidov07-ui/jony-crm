@@ -2094,3 +2094,8 @@ class SupportGroupsIn(BaseModel):
 class HomeworkIn(BaseModel):
     student_id: int
     homework: Optional[int] = None    # 2 a'lo, 1 qisman, 0 qilmadi, None o'chirish
+
+
+class ReminderIn(BaseModel):
+    text: str
+    remind_on: Optional[_dt.date] = None

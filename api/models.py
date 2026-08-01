@@ -2869,3 +2869,18 @@ class PaymentDue(Base):
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+
+
+class StudentReminder(Base):
+    """O'quvchi bo'yicha eslatma. remind_on to'lsa — o'sha kuni
+    adminlarga vazifa tushadi (masalan: 'to'lovni so'rang')."""
+    __tablename__ = "student_reminders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    text = Column(Text, nullable=False)
+    remind_on = Column(Date, nullable=True, index=True)
+    done = Column(Integer, default=0)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

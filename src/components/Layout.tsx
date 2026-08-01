@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -178,6 +178,17 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
 
 export default function Layout() {
   const { user, logout } = useAuth();
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const h = (e: MouseEvent) => {
+      if (profileRef.current &&
+          !profileRef.current.contains(e.target as Node))
+        setProfileOpen(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
   const navigate = useNavigate();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
@@ -351,40 +362,56 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="p-3 border-t border-slate-100">
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              `block px-3 py-2 mb-1 rounded-lg transition ${
-                isActive ? "bg-brand-50" : "hover:bg-slate-100"
-              }`
-            }
-          >
-            <p className="text-sm font-medium text-slate-800 truncate">
-              {user?.full_name}
-            </p>
-            <p className="text-xs text-slate-400">
-              {roleLabel(user?.role)} · profilim
-            </p>
-          </NavLink>
-          <button
-            onClick={() => setShowPasswordModal(true)}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-100"
-          >
-            <KeyRound size={16} />
-            Parolni almashtirish
-          </button>
-          <button
-            onClick={onLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-100"
-          >
-            <LogOut size={16} />
-            Chiqish
-          </button>
-        </div>
       </aside>
 
-      <main className="flex-1 min-w-0">
+      <main className="flex-1 min-w-0 relative">
+        {/* Profil — yuqori o'ng burchakda */}
+        <div className="absolute top-4 right-6 z-40" ref={profileRef}>
+          <button
+            onClick={() => setProfileOpen((v) => !v)}
+            className="flex items-center gap-2 bg-white border border-slate-200 rounded-full pl-1.5 pr-3 py-1.5 shadow-sm hover:shadow transition"
+          >
+            <span className="w-7 h-7 rounded-full bg-brand-600 text-white text-sm font-semibold flex items-center justify-center">
+              {(user?.full_name || "?").charAt(0)}
+            </span>
+            <span className="text-sm font-medium text-slate-700 max-w-[140px] truncate">
+              {user?.full_name}
+            </span>
+          </button>
+          {profileOpen && (
+            <div className="absolute right-0 mt-2 w-60 bg-white border border-slate-200 rounded-xl shadow-lg py-2">
+              <NavLink
+                to="/profile"
+                onClick={() => setProfileOpen(false)}
+                className="block px-4 py-2 hover:bg-slate-50"
+              >
+                <p className="text-sm font-medium text-slate-800 truncate">
+                  {user?.full_name}
+                </p>
+                <p className="text-xs text-slate-400">
+                  {roleLabel(user?.role)} · profilim
+                </p>
+              </NavLink>
+              <button
+                onClick={() => {
+                  setProfileOpen(false);
+                  setShowPasswordModal(true);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+              >
+                <KeyRound size={15} />
+                Parolni almashtirish
+              </button>
+              <button
+                onClick={onLogout}
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+              >
+                <LogOut size={15} />
+                Chiqish
+              </button>
+            </div>
+          )}
+        </div>
         <Outlet />
       </main>
 

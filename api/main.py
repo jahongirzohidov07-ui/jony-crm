@@ -23947,3 +23947,117 @@ def finance_break_even(year: int | None = None, month: int | None = None,
                  "boshqalar. Zararsizlik = o'zgarmas / (bir o'quvchi "
                  "narxi - bir o'quvchiga o'zgaruvchan xarajat)."),
     }
+
+
+# ------------------------------------------------ Akademik analitika ----
+@app.get("/api/analytics/academic")
+def analytics_academic(branch_id: int | None = None,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.FULL_ACCESS,
+                                                 roles.ACADEMIC_HEAD))):
+    """Fanlar/darajalar kesimi, top ustozlar va AKADEMIK VORONKA.
+
+    Voronka: Step 1da o'qigan bolalarning nechtasi Step 2, Step 3 va
+    IELTS/CEFR gacha yetdi, nechtasi sertifikat natija qildi. Yo'l
+    yoqlama tarixidan tiklanadi (qaysi darajadagi guruh darsida
+    qatnashgani), shuning uchun eski o'quvchilar ham hisobda."""
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    sq = db.query(models.Student)
+    if branch_id:
+        sq = sq.filter(models.Student.branch_id == branch_id)
+    students = sq.all()
+
+    active = [s for s in students if s.status == "active" and s.group_id]
+    total_a = len(active) or 1
+    subj, lvl, teach = {}, {}, {}
+    for s in active:
+        g = groups.get(s.group_id)
+        if not g:
+            continue
+        subj[g.subject or "boshqa"] = subj.get(g.subject or "boshqa", 0) + 1
+        lvl[g.level or "belgilanmagan"] = lvl.get(
+            g.level or "belgilanmagan", 0) + 1
+        if g.teacher_id:
+            teach[g.teacher_id] = teach.get(g.teacher_id, 0) + 1
+    t_names = {t.id: t.full_name for t in db.query(models.Teacher).all()}
+    subj_lbl = dict(roles.SUBJECTS)
+
+    # Har o'quvchining bosib o'tgan darajalari — yoqlama tarixidan
+    rows = (db.query(models.Attendance.student_id, models.Lesson.group_id)
+            .join(models.Lesson,
+                  models.Lesson.id == models.Attendance.lesson_id)
+            .distinct().all())
+    path = {}
+    for sid, gid in rows:
+        g = groups.get(gid)
+        if g and g.level:
+            path.setdefault(sid, set()).add(g.level)
+    for s in students:                      # hali darsi yo'qlar ham
+        g = groups.get(s.group_id) if s.group_id else None
+        if g and g.level:
+            path.setdefault(s.id, set()).add(g.level)
+
+    IELTS = {"step4", "ielts_intro", "ielts_foundation",
+             "ielts_graduation", "cefr"}
+    cohort = [sid for sid, lv in path.items() if "step1" in lv]
+    to2 = [sid for sid in cohort if "step2" in path[sid]]
+    to3 = [sid for sid in cohort if "step3" in path[sid]]
+    toI = [sid for sid in cohort if path[sid] & IELTS]
+    cert_ids = {c.student_id for c in db.query(models.Certificate).all()}
+    result = [sid for sid in cohort if sid in cert_ids]
+    n0 = len(cohort) or 1
+
+    # Ketish darajasi: arxivlangan o'quvchining OXIRGI darajasi
+    order = ["step1", "step2", "step3", "step4", "ielts_intro",
+             "ielts_foundation", "ielts_graduation", "cefr"]
+    churn = {}
+    left_students = [s for s in students if s.status == "archived"]
+    for s in left_students:
+        lv = path.get(s.id, set())
+        last = None
+        for k in order:
+            if k in lv:
+                last = k
+        g = groups.get(s.group_id) if s.group_id else None
+        last = last or (g.level if g else None) or "belgilanmagan"
+        churn[last] = churn.get(last, 0) + 1
+    total_left = sum(churn.values()) or 1
+    churn_rows = sorted(
+        [{"level": k, "label": roles.LEVEL_LABELS.get(k, k),
+          "count": v, "percent": round(v / total_left * 100, 1)}
+         for k, v in churn.items()], key=lambda r: -r["count"])
+
+    pct = lambda n: round(n / n0 * 100, 1)
+    return {
+        "subjects": sorted(
+            [{"key": k, "label": subj_lbl.get(k, k), "count": v,
+              "percent": round(v / total_a * 100, 1)}
+             for k, v in subj.items()], key=lambda r: -r["count"]),
+        "levels": sorted(
+            [{"key": k, "label": roles.LEVEL_LABELS.get(k, k), "count": v,
+              "percent": round(v / total_a * 100, 1)}
+             for k, v in lvl.items()], key=lambda r: -r["count"]),
+        "top_teachers": sorted(
+            [{"name": t_names.get(k, "—"), "students": v}
+             for k, v in teach.items()], key=lambda r: -r["students"])[:10],
+        "active_total": len(active),
+        "funnel": [
+            {"stage": "Step 1da boshladi", "count": len(cohort),
+             "percent": 100.0},
+            {"stage": "Step 2ga o'tdi", "count": len(to2),
+             "percent": pct(len(to2))},
+            {"stage": "Step 3ga o'tdi", "count": len(to3),
+             "percent": pct(len(to3))},
+            {"stage": "IELTS/CEFRga o'tdi", "count": len(toI),
+             "percent": pct(len(toI))},
+            {"stage": "Natija qildi (sertifikat)", "count": len(result),
+             "percent": pct(len(result))},
+        ],
+        "churn": churn_rows,
+        "churn_worst": churn_rows[0] if churn_rows else None,
+        "left_total": len(left_students),
+        "hint": ("Voronka yoqlama tarixidan tiklanadi: o'quvchi qaysi "
+                 "darajadagi guruh darslarida qatnashgan bo'lsa, o'sha "
+                 "bosqichdan o'tgan hisoblanadi. Ketish — arxivlangan "
+                 "o'quvchining oxirgi darajasi bo'yicha."),
+    }

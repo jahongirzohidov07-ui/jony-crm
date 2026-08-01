@@ -24966,3 +24966,51 @@ def _geo_stats(db: Session, branch_id=None) -> dict:
         "student_addresses": top(sq.all()),
         "student_schools": top(ssq.all()),
     }
+
+
+# ------------------------------------------------- Global qidiruv ----
+@app.get("/api/search/students")
+def global_student_search(q: str, db: Session = Depends(get_db),
+                          user=Depends(get_current_user)):
+    """Tepadagi qidiruv: 3 harfdan boshlab o'quvchilar va potensial
+    o'quvchilar (lidlar). Ustoz faqat o'z guruhlaridagilarini ko'radi,
+    lidlar unga chiqmaydi. Balans qaytarilmaydi."""
+    if user.role in ("student", "parent"):
+        raise HTTPException(403, "Ruxsat yo'q")
+    q = (q or "").strip()
+    if len(q) < 3:
+        return {"students": [], "leads": []}
+    like = f"%{q}%"
+    sq = db.query(models.Student).filter(
+        models.Student.status != "archived",
+        (models.Student.full_name.ilike(like)) |
+        (models.Student.phone.ilike(like)) |
+        (models.Student.public_id.ilike(like)))
+    own_only = user.role in tuple(roles.OWN_GROUPS_ONLY)
+    if own_only:
+        t = _teacher_of_user(db, user)
+        gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
+        sq = sq.filter(models.Student.group_id.in_(gids or [-1]))
+    elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        sq = sq.filter(models.Student.branch_id == user.branch_id)
+    groups = {g.id: g.name for g in db.query(models.Group).all()}
+    st_lbl = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan"}
+    students = [{
+        "id": s.id, "name": s.full_name,
+        "group": groups.get(s.group_id),
+        "status_label": st_lbl.get(s.status, s.status),
+    } for s in sq.order_by(models.Student.full_name).limit(8).all()]
+
+    leads = []
+    if not own_only:
+        lq = db.query(models.Lead).filter(
+            models.Lead.stage.notin_(("converted", "rejected")),
+            (models.Lead.full_name.ilike(like)) |
+            (models.Lead.phone.ilike(like)))
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            lq = lq.filter(models.Lead.branch_id == user.branch_id)
+        leads = [{
+            "id": l.id, "name": l.full_name, "group": None,
+            "status_label": roles.LEAD_STAGE_LABELS.get(l.stage, l.stage),
+        } for l in lq.order_by(models.Lead.full_name).limit(6).all()]
+    return {"students": students, "leads": leads}

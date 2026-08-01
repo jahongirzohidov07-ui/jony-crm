@@ -24399,3 +24399,296 @@ def _break_even_cards(db: Session, user, scope: str, y: int, m: int,
                      "taqsimlangan; guruhlarda — guruh boshiga teng. "
                      "Sariq — xavfsizlik zaxirasi 15% dan past, "
                      "qizil — zararda.")}
+
+
+# --------------------------------------------------------------- Budjet ----
+def _month_win(y: int, m: int):
+    s = date(y, m, 1)
+    e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+    return s, e
+
+
+@app.get("/api/finance/budget")
+def finance_budget(year: int | None = None, month: int | None = None,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """Budjet: yillik/oylik/filial/bo'lim kesimlari, reja-fakt va yil
+    oxiri prognozi. Reja BudgetLine'dan, fakt tirik ma'lumotdan."""
+    today = roles.local_today()
+    year = year or (today.year if today.month >= 9 else today.year - 1)
+    month = month or today.month
+    lines = db.query(models.BudgetLine).filter(
+        models.BudgetLine.year == year).all()
+
+    def plan_of(m, kind, cat=None, br=None):
+        return round(sum(
+            l.amount for l in lines
+            if l.month == m and l.kind == kind
+            and (cat is None or l.category == cat)
+            and (br is None or l.branch_id == br)), 0)
+
+    # ---- Yillik: oyma-oy reja va fakt ----
+    yearly, ytd_inc, ytd_exp = [], 0.0, 0.0
+    rest_inc, rest_exp = 0.0, 0.0
+    for m in roles.PLAN_MONTHS:
+        yy = roles.plan_month_year(year, m)
+        s, e = _month_win(yy, m)
+        p_inc = round(sum(l.amount for l in lines
+                          if l.month == m and l.kind == "income"), 0)
+        p_exp = round(sum(l.amount for l in lines
+                          if l.month == m and l.kind == "expense"), 0)
+        done = s <= today
+        f_inc = _plan_fakt(db, "revenue", s, e) if done else None
+        if done:
+            et, _bc = _expenses_total(db, user, s, e, None)
+            pr = _payroll_total(db, user, f"{yy:04d}-{m:02d}", None) or 0
+            f_exp = round(et + pr, 0)
+        else:
+            f_exp = None
+        if done:
+            ytd_inc += f_inc or 0
+            ytd_exp += f_exp or 0
+        else:
+            rest_inc += p_inc
+            rest_exp += p_exp
+        yearly.append({
+            "month": m, "label": roles.UZ_MONTHS[m - 1],
+            "plan_income": p_inc, "fakt_income": f_inc,
+            "plan_expense": p_exp, "fakt_expense": f_exp,
+            "plan_profit": round(p_inc - p_exp, 0),
+            "fakt_profit": round((f_inc or 0) - (f_exp or 0), 0)
+            if done else None,
+        })
+
+    # ---- Oylik: tanlangan oy kategoriyalar kesimida ----
+    yy = roles.plan_month_year(year, month)
+    s, e = _month_win(yy, month)
+    _t, by_cat = _expenses_total(db, user, s, e, None)
+    payroll = round(_payroll_total(db, user, f"{yy:04d}-{month:02d}",
+                                   None) or 0, 0)
+    cats = []
+    all_cats = set(roles.EXPENSE_CATEGORIES) | set(by_cat) | {
+        l.category for l in lines
+        if l.month == month and l.kind == "expense" and l.category}
+    for c in sorted(all_cats - {None}):
+        p = plan_of(month, "expense", cat=c)
+        f = round(by_cat.get(c, 0), 0)
+        if not p and not f:
+            continue
+        cats.append({"category": c,
+                     "label": roles.EXPENSE_CATEGORY_LABELS.get(c, c),
+                     "plan": p, "fakt": f,
+                     "pct": round(f / p * 100, 0) if p else None})
+    cats.append({"category": "teacher_payroll",
+                 "label": "Ustozlar ish haqi (avtomat)",
+                 "plan": plan_of(month, "expense", cat="teacher_payroll"),
+                 "fakt": payroll,
+                 "pct": None})
+    inc_fakt = _plan_fakt(db, "revenue", s, min(e, today + timedelta(
+        days=1))) if s <= today else 0
+    monthly = {
+        "month": month, "label": roles.UZ_MONTHS[month - 1],
+        "income_plan": plan_of(month, "income"),
+        "income_fakt": round(inc_fakt or 0, 0),
+        "categories": cats,
+    }
+
+    # ---- Filial kesimi (tanlangan oy) ----
+    d0, d1 = _utc_window(s, e)
+    br_rows = []
+    for b in db.query(models.Branch).all():
+        f_exp_b = round(db.query(func.coalesce(
+            func.sum(models.Expense.amount), 0)).filter(
+            models.Expense.branch_id == b.id,
+            models.Expense.date >= s, models.Expense.date < e
+        ).scalar() or 0, 0)
+        f_inc_b = round(db.query(func.coalesce(
+            func.sum(models.Payment.amount), 0))
+            .join(models.Student,
+                  models.Student.id == models.Payment.student_id)
+            .filter(models.Student.branch_id == b.id,
+                    models.Payment.kind == "payment",
+                    models.Payment.amount > 0,
+                    models.Payment.created_at >= d0,
+                    models.Payment.created_at < d1).scalar() or 0, 0)
+        br_rows.append({
+            "branch": b.name,
+            "plan_income": plan_of(month, "income", br=b.id),
+            "fakt_income": f_inc_b,
+            "plan_expense": plan_of(month, "expense", br=b.id),
+            "fakt_expense": f_exp_b,
+        })
+
+    # ---- Bo'lim kesimi (tanlangan oy, xarajat guruhlari) ----
+    dep_f = {}
+    for c, v in by_cat.items():
+        g = roles.EXPENSE_CATEGORY_GROUP.get(c, "other")
+        dep_f[g] = dep_f.get(g, 0) + v
+    dep_f["teacher_payroll"] = payroll
+    dep_rows = []
+    for g, lbl in roles.BUDGET_DEPARTMENT_LABELS.items():
+        p = round(sum(
+            l.amount for l in lines
+            if l.month == month and l.kind == "expense" and l.category
+            and (roles.EXPENSE_CATEGORY_GROUP.get(l.category, "other") == g
+                 or l.category == g)), 0)
+        f = round(dep_f.get(g, 0), 0)
+        if p or f:
+            dep_rows.append({"department": g, "label": lbl,
+                             "plan": p, "fakt": f})
+
+    # ---- Yil oxiri prognozi ----
+    plan_inc_total = round(sum(r["plan_income"] for r in yearly), 0)
+    plan_exp_total = round(sum(r["plan_expense"] for r in yearly), 0)
+    fc_inc = round(ytd_inc + rest_inc, 0)
+    fc_exp = round(ytd_exp + rest_exp, 0)
+    forecast = {
+        "ytd_income": round(ytd_inc, 0), "ytd_expense": round(ytd_exp, 0),
+        "forecast_income": fc_inc, "forecast_expense": fc_exp,
+        "forecast_profit": round(fc_inc - fc_exp, 0),
+        "budget_income": plan_inc_total, "budget_expense": plan_exp_total,
+        "budget_profit": round(plan_inc_total - plan_exp_total, 0),
+    }
+    return {
+        "year": year, "year_label": roles.plan_year_label(year),
+        "months": roles.PLAN_MONTHS, "yearly": yearly, "monthly": monthly,
+        "branches": br_rows, "departments": dep_rows,
+        "forecast": forecast,
+        "can_edit": user.role in tuple(roles.BUDGET_EDIT),
+        "expense_categories": [
+            {"key": c, "label": roles.EXPENSE_CATEGORY_LABELS[c]}
+            for c in roles.EXPENSE_CATEGORIES],
+        "hint": ("Reja — budjet qatorlaridan, fakt — tirik ma'lumotdan "
+                 "(to'lovlar, xarajatlar, ustozlar ish haqi avtomat). "
+                 "Prognoz: o'tgan oylar fakti + qolgan oylar rejasi."),
+    }
+
+
+@app.put("/api/finance/budget/{year}")
+def save_budget(year: int, payload: schemas.BudgetSaveIn,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.BUDGET_EDIT))):
+    n = 0
+    for it in payload.items:
+        if it.kind not in ("income", "expense") or not (1 <= it.month <= 12):
+            raise HTTPException(400, "Noto'g'ri budjet qatori")
+        row = db.query(models.BudgetLine).filter_by(
+            year=year, month=it.month, kind=it.kind,
+            category=it.category, branch_id=it.branch_id).first()
+        if row:
+            row.amount = it.amount
+        else:
+            db.add(models.BudgetLine(
+                year=year, month=it.month, kind=it.kind,
+                category=it.category, branch_id=it.branch_id,
+                amount=it.amount, created_by=user.full_name))
+        n += 1
+    db.commit()
+    audit.log(db, user, entity="budget", action="save", entity_id=year,
+              entity_label=roles.plan_year_label(year),
+              new_value=f"{n} ta qator", commit=True)
+    return {"ok": True, "saved": n}
+
+
+# ----------------------------------------------------- To'lov kalendari ----
+@app.get("/api/finance/payment-calendar")
+def payment_calendar(year: int | None = None, month: int | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """Oyning to'lov majburiyatlari sanasi bo'yicha + har sanada pul
+    yetarliligi. Prognoz: shu kungacha yig'ilgan pul va kunlik o'rtacha
+    tushum sur'ati bo'yicha."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    s, e = _month_win(y, m)
+    dues = db.query(models.PaymentDue).filter(
+        models.PaymentDue.active == 1).all()
+    items = []
+    for dd in dues:
+        if dd.recurring and dd.due_day:
+            try:
+                dt_ = date(y, m, min(dd.due_day, (e - timedelta(
+                    days=1)).day))
+            except ValueError:
+                continue
+        elif dd.date and s <= dd.date < e:
+            dt_ = dd.date
+        else:
+            continue
+        items.append({"id": dd.id, "date": dt_.isoformat(), "d": dt_,
+                      "title": dd.title, "kind": dd.kind,
+                      "kind_label": roles.PAYMENT_DUE_LABELS.get(
+                          dd.kind, dd.kind),
+                      "amount": round(dd.amount, 0),
+                      "recurring": bool(dd.recurring),
+                      "note": dd.note})
+    items.sort(key=lambda r: (r["d"], -r["amount"]))
+
+    # Pul oqimi prognozi
+    collected = _plan_fakt(db, "revenue", s, min(
+        e, today + timedelta(days=1))) or 0
+    exp_so_far, _bc = _expenses_total(db, user, s, min(e, today +
+                                                       timedelta(days=1)),
+                                      None)
+    cash = round(collected - exp_so_far, 0)
+    elapsed = max((min(today, e - timedelta(days=1)) - s).days + 1, 1)
+    daily = collected / elapsed
+    total_due = 0.0
+    for it in items:
+        d_ = it.pop("d")
+        inflow = daily * max((d_ - today).days, 0) if d_ > today else 0
+        total_due += it["amount"]
+        projected = round(cash + inflow - total_due, 0)
+        it["projected_cash"] = projected
+        it["enough"] = ("green" if projected >= it["amount"] * 0.5
+                        else "amber" if projected >= 0 else "red")
+        it["passed"] = d_ < today
+    return {
+        "period": f"{y:04d}-{m:02d}", "items": items,
+        "cash_now": cash, "daily_pace": round(daily, 0),
+        "total_due": round(total_due, 0),
+        "kinds": [{"key": k, "label": l}
+                  for k, l in roles.PAYMENT_DUE_KINDS],
+        "can_edit": user.role in tuple(roles.BUDGET_EDIT),
+        "hint": ("Har sanada: shu kungacha yig'ilgan pul + kutilayotgan "
+                 "tushum (kunlik o'rtacha sur'at) - undan oldingi "
+                 "majburiyatlar. Yashil - bemalol yetadi, sariq - zo'rg'a, "
+                 "qizil - yetmaydi."),
+    }
+
+
+@app.post("/api/finance/payment-calendar")
+def add_payment_due(payload: schemas.PaymentDueIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.BUDGET_EDIT))):
+    if not payload.due_day and not payload.date:
+        raise HTTPException(400, "Sana yoki har oy kunini kiriting")
+    if payload.due_day and not (1 <= payload.due_day <= 31):
+        raise HTTPException(400, "Kun 1-31 oralig'ida bo'lsin")
+    if payload.amount <= 0:
+        raise HTTPException(400, "Summani kiriting")
+    dd = models.PaymentDue(
+        title=payload.title.strip(), kind=payload.kind,
+        due_day=payload.due_day, date=payload.date,
+        amount=payload.amount, branch_id=payload.branch_id,
+        recurring=1 if (payload.recurring and payload.due_day) else 0,
+        note=payload.note, created_by=user.full_name)
+    db.add(dd)
+    db.commit()
+    audit.log(db, user, entity="payment_due", action="create",
+              entity_id=dd.id, entity_label=dd.title,
+              new_value=f"{dd.amount:,.0f}".replace(",", " "), commit=True)
+    return {"ok": True, "id": dd.id}
+
+
+@app.delete("/api/finance/payment-calendar/{due_id}")
+def del_payment_due(due_id: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.BUDGET_EDIT))):
+    dd = db.query(models.PaymentDue).get(due_id)
+    if not dd:
+        raise HTTPException(404, "Topilmadi")
+    dd.active = 0
+    db.commit()
+    audit.log(db, user, entity="payment_due", action="delete",
+              entity_id=dd.id, entity_label=dd.title, commit=True)
+    return {"ok": True}

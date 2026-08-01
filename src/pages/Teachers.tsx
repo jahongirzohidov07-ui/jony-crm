@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { TeacherOverviewModal } from "../components/TeacherOverview";
+import { TeacherOverviewModal, SupportGroupsModal } from "../components/TeacherOverview";
 import {
   Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
-} from "lucide-react";
+ Layers } from "lucide-react";
 import {
   api, type Teacher, type Branch, type GradeRow, type CareerMap,
   type TeacherAccount,
@@ -11,7 +11,7 @@ import { useAuth } from "../lib/AuthContext";
 import {
   STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER,
   ACCOUNT_MANAGE, can, FOUNDER, ACADEMIC_HEAD,
-} from "../lib/roles";
+ SUPPORT_ASSIGN } from "../lib/roles";
 import { formatDate } from "../lib/format";
 import { SalaryCard } from "../components/SalaryCard";
 import { TeacherScoreboard } from "../components/TeacherScoreboard";
@@ -296,6 +296,7 @@ export default function Teachers() {
   const [editing, setEditing] = useState<Teacher | null>(null);
   const [accountFor, setAccountFor] = useState<Teacher | null>(null);
   const [overviewFor, setOverviewFor] = useState<Teacher | null>(null);
+  const [supportFor, setSupportFor] = useState<Teacher | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
   const [career, setCareer] = useState<number | null>(null);
   // Daraja nomlarini bir marta olamiz - har bir qatorda so'ramaslik uchun
@@ -519,6 +520,15 @@ export default function Teachers() {
                             <KeyRound size={15} />
                           </button>
                         )}
+                        {can(user?.role, SUPPORT_ASSIGN) && (
+                          <button
+                            onClick={() => setSupportFor(t)}
+                            title="Support guruhlari (biriktirish)"
+                            className="mr-2 text-slate-400 hover:text-brand-600"
+                          >
+                            <Layers size={15} />
+                          </button>
+                        )}
                         <button
                           onClick={() => toggleActive(t)}
                           title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}
@@ -569,6 +579,13 @@ export default function Teachers() {
             setCareer(null);
             load();
           }}
+        />
+      )}
+      {supportFor && (
+        <SupportGroupsModal
+          teacherId={supportFor.id}
+          name={supportFor.full_name}
+          onClose={() => setSupportFor(null)}
         />
       )}
       {overviewFor && (

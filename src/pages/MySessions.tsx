@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Timer, Info, Trash2, Wallet } from "lucide-react";
+import { Timer, Info, Trash2, Wallet, GraduationCap, Check, X as XIcon } from "lucide-react";
 import { api } from "../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -15,6 +15,7 @@ type Any = any;
  */
 export default function MySessions() {
   const [d, setD] = useState<Any>(null);
+  const [jp, setJp] = useState<Any>(null);
   const [err, setErr] = useState("");
   const [f, setF] = useState({
     group_id: "",
@@ -30,7 +31,10 @@ export default function MySessions() {
       .then(setD)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   };
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+    api.get<Any>("/me/junior-path").then(setJp).catch(() => {});
+  }, []);
 
   const add = async () => {
     setBusy(true);
@@ -130,6 +134,41 @@ export default function MySessions() {
           {d.formula} = {Number(d.raw).toLocaleString().replace(/,/g, " ")}
         </p>
       </div>
+
+      {/* ---- Junior teacher yo'li ---- */}
+      {jp && (
+        <div className="bg-white border border-slate-200 rounded-xl p-5 mb-4">
+          <div className="flex items-center gap-2 mb-1">
+            <GraduationCap size={15} className="text-slate-400" />
+            <p className="text-sm font-medium text-slate-700">
+              Junior teacher bo'lish yo'li
+            </p>
+            <span className="text-xs text-slate-400 ml-auto">
+              {jp.done_count}/{jp.total} bajarildi
+            </span>
+          </div>
+          <div className="h-1.5 bg-slate-100 rounded-full mb-3">
+            <div className="h-1.5 bg-brand-600 rounded-full"
+                 style={{ width: `${(jp.done_count / jp.total) * 100}%` }} />
+          </div>
+          {jp.items.map((it: Any) => (
+            <div key={it.key}
+                 className="flex items-center gap-2 py-1.5 text-sm">
+              {it.done ? (
+                <Check size={15} className="text-emerald-600 shrink-0" />
+              ) : (
+                <XIcon size={15} className="text-slate-300 shrink-0" />
+              )}
+              <span className={it.done ? "text-slate-700"
+                : "text-slate-500"}>{it.label}</span>
+              <span className="ml-auto text-xs text-slate-400">
+                {it.value ?? "—"} / {it.target}
+              </span>
+            </div>
+          ))}
+          <p className="text-xs text-slate-400 mt-2">{jp.hint}</p>
+        </div>
+      )}
 
       {/* ---- Yangi seans ---- */}
       <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">

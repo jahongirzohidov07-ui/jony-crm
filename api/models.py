@@ -2821,3 +2821,43 @@ class PlanTarget(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)
+
+
+class BudgetLine(Base):
+    """Budjet qatori: yil-oy-kategoriya kesimida rejalashtirilgan summa.
+
+    kind="income" — daromad rejasi, kind="expense" — xarajat rejasi
+    (kategoriya bilan). branch_id bo'sh — butun kompaniya."""
+    __tablename__ = "budget_lines"
+
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(Integer, nullable=False, index=True)   # o'quv yili boshi
+    month = Column(Integer, nullable=False)              # 1..12
+    kind = Column(String, nullable=False, default="expense")
+    category = Column(String, nullable=True)             # xarajat kategoriyasi
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    amount = Column(Float, nullable=False, default=0)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class PaymentDue(Base):
+    """To'lov kalendari: qachon maosh, ijara, soliq, reklama va
+    yetkazib beruvchiga to'lov. recurring=1 — har oy shu kuni."""
+    __tablename__ = "payment_dues"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    kind = Column(String, nullable=False, default="other")
+    due_day = Column(Integer, nullable=True)     # har oyning kuni (1-31)
+    date = Column(Date, nullable=True)           # bir martalik sana
+    amount = Column(Float, nullable=False, default=0)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    recurring = Column(Integer, default=1)
+    active = Column(Integer, default=1)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

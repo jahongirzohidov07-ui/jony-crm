@@ -4418,3 +4418,23 @@ EXPENSE_FIXED_GROUPS = ["rent", "communal", "admin_salary", "tax"]
 def expense_is_fixed(category: str) -> bool:
     return EXPENSE_CATEGORY_GROUP.get(category, "other") in \
         EXPENSE_FIXED_GROUPS
+
+
+# ------------------------------------------------ Budjet va kalendar ----
+BUDGET_EDIT = [FOUNDER, FINANCE_DIRECTOR]
+PAYMENT_DUE_KINDS = [
+    ("salary", "Maosh"),
+    ("rent", "Ijara"),
+    ("tax", "Soliq"),
+    ("ads", "Reklama to'lovi"),
+    ("supplier", "Yetkazib beruvchi"),
+    ("other", "Boshqa"),
+]
+PAYMENT_DUE_LABELS = {k: l for k, l in PAYMENT_DUE_KINDS}
+# Bo'lim (departament) — xarajat guruhidan (budjet uchun)
+BUDGET_DEPARTMENT_LABELS = {
+    "rent": "Ijara", "communal": "Kommunal", "office": "Ofis",
+    "admin_salary": "Ma'muriyat", "marketing": "Marketing",
+    "tax": "Soliq", "other": "Boshqa",
+    "teacher_payroll": "O'quv bo'limi (ustozlar)",
+}

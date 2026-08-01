@@ -2052,3 +2052,26 @@ class PlanItemIn(BaseModel):
 
 class PlanSaveIn(BaseModel):
     items: List[PlanItemIn]
+
+
+class BudgetItemIn(BaseModel):
+    month: int
+    kind: str                      # income | expense
+    category: Optional[str] = None
+    branch_id: Optional[int] = None
+    amount: float
+
+
+class BudgetSaveIn(BaseModel):
+    items: List[BudgetItemIn]
+
+
+class PaymentDueIn(BaseModel):
+    title: str
+    kind: str = "other"
+    due_day: Optional[int] = None
+    date: Optional[_dt.date] = None
+    amount: float
+    branch_id: Optional[int] = None
+    recurring: bool = True
+    note: Optional[str] = None

@@ -29,8 +29,10 @@ import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payment
 import { exportToExcel } from "../lib/exportXlsx";
 import { BreakEvenTab } from "../components/BreakEven";
 import { FinanceOverviewTab } from "../components/FinanceOverview";
+import { BudgetTab } from "../components/Budget";
+import { PaymentCalendarTab } from "../components/PaymentCalendar";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
@@ -47,6 +49,8 @@ const FULL_TABS: { key: Tab; label: string }[] = [
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
   { key: "breakeven", label: "Zararsizlik" },
+  { key: "budget", label: "Budjet" },
+  { key: "calendar", label: "To'lov kalendari" },
   { key: "expenses", label: "Xarajatlar" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
@@ -1024,6 +1028,8 @@ export default function Moliya() {
       {tab === "billing" && <BillingTab />}
       {tab === "breakeven" && <BreakEvenTab />}
       {tab === "overview" && <FinanceOverviewTab />}
+      {tab === "budget" && <BudgetTab />}
+      {tab === "calendar" && <PaymentCalendarTab />}
     </div>
   );
 }

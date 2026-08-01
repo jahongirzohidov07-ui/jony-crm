@@ -28,8 +28,9 @@ import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { exportToExcel } from "../lib/exportXlsx";
 import { BreakEvenTab } from "../components/BreakEven";
+import { FinanceOverviewTab } from "../components/FinanceOverview";
 
-type Tab = "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
@@ -41,6 +42,7 @@ const CASH_TABS: { key: Tab; label: string }[] = [
 ];
 
 const FULL_TABS: { key: Tab; label: string }[] = [
+  { key: "overview", label: "Umumiy ko'rinish" },
   { key: "debtors", label: "Qarzdorlar" },
   { key: "cashflow", label: "Pul oqimi" },
   { key: "pnl", label: "Foyda / zarar" },
@@ -977,7 +979,8 @@ export default function Moliya() {
   const { user } = useAuth();
   const full = can(user?.role, FINANCE_ACCESS);
   const TABS = full ? FULL_TABS : CASH_TABS;
-  const [tab, setTab] = useState<Tab>("debtors");
+  // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish
+  const [tab, setTab] = useState<Tab>(full ? "overview" : "debtors");
 
   if (!can(user?.role, CASH_ACCESS)) {
     return (
@@ -1020,6 +1023,7 @@ export default function Moliya() {
       {tab === "expenses" && <ExpensesTab />}
       {tab === "billing" && <BillingTab />}
       {tab === "breakeven" && <BreakEvenTab />}
+      {tab === "overview" && <FinanceOverviewTab />}
     </div>
   );
 }

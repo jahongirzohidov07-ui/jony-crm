@@ -85,17 +85,17 @@ function MarkPicker({
   };
 
   const TONE: Record<string, string> = {
-    // Bor — yashil, kech — sariq, yo'q — qizil, olib tashlash — kulrang
-    present: "text-emerald-600 border-emerald-300 hover:bg-emerald-50",
-    late: "text-amber-500 border-amber-300 hover:bg-amber-50",
-    absent: "text-red-600 border-red-300 hover:bg-red-50",
-    remove: "text-slate-400 border-slate-200 hover:bg-slate-100",
+    // To'liq bo'yalgan: bor — yashil, kech — sariq, yo'q — qizil
+    present: "bg-emerald-500 text-white hover:bg-emerald-600",
+    late: "bg-amber-400 text-white hover:bg-amber-500",
+    absent: "bg-red-500 text-white hover:bg-red-600",
+    remove: "bg-slate-200 text-slate-600 hover:bg-slate-300",
   };
   return (
-    // Katakning USTIDA chiqadi (pastida sichqoncha yetib borguncha
-    // yo'qolib qolardi); pb-1 "ko'prik" — kursor uzilmasin
+    // Katakning AYNAN O'ZIDA (markazida) chiqadi — pastda ham,
+    // tepada ham emas: kursor hech qayoqqa "sayohat" qilmaydi
     <div
-      className="absolute z-30 left-1/2 -translate-x-1/2 bottom-full pb-1"
+      className="absolute z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
       onMouseLeave={onClose}
     >
       <div className="bg-white border border-slate-200 rounded-full shadow-lg p-1 flex gap-1">
@@ -104,7 +104,7 @@ function MarkPicker({
             key={o.key}
             title={o.title}
             onClick={() => onPick(o.key)}
-            className={`w-8 h-8 rounded-full inline-flex items-center justify-center border transition ${TONE[o.key]}`}
+            className={`w-8 h-8 rounded-full inline-flex items-center justify-center transition ${TONE[o.key]}`}
           >
             {ICONS[o.icon]}
           </button>

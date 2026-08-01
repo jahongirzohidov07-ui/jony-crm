@@ -308,6 +308,11 @@ class StudentUpdate(StudentCreate):
 
 class StudentOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
+    address: Optional[str] = None
+    school: Optional[str] = None
+    school_grade: Optional[str] = None
+    frozen_until: Optional[_dt.date] = None
+    frozen_note: Optional[str] = None
     id: int
     public_id: Optional[str] = None
     full_name: str
@@ -2075,3 +2080,12 @@ class PaymentDueIn(BaseModel):
     branch_id: Optional[int] = None
     recurring: bool = True
     note: Optional[str] = None
+
+
+class FreezeIn(BaseModel):
+    until: _dt.date                  # qachon qaytadi — majburiy
+    note: Optional[str] = None
+
+
+class SupportGroupsIn(BaseModel):
+    group_ids: List[int]

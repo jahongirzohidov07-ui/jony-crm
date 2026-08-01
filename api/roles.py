@@ -4438,3 +4438,19 @@ BUDGET_DEPARTMENT_LABELS = {
     "tax": "Soliq", "other": "Boshqa",
     "teacher_payroll": "O'quv bo'limi (ustozlar)",
 }
+
+
+# ------------------------------------------- Muzlatish va support yo'li ----
+# O'quvchini muzlatish/faollashtirish/ko'chirish — faqat shu rollar.
+# Ustoz va support teacher BUNDAY amallarni qila olmaydi.
+FREEZE_ROLES = [FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER]
+# Support teacherni guruhga biriktirish
+SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD]
+# Ketma-ket nechta darsga kelmasa avtomat muzlatiladi
+AUTO_FREEZE_ABSENCES = 3
+# Junior teacher bo'lish shartlari (support teacher yo'li)
+JUNIOR_PATH = [
+    ("cert", "Sertifikat: CEFR B2 (kamida 55%)", 55.0),
+    ("skill", "Dars berish mahorati balli (kamida 75)", 75.0),
+    ("months", "Support/volontyor tajriba (kamida 3 oy)", 3.0),
+]

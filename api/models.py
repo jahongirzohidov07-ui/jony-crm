@@ -279,6 +279,13 @@ class Student(Base):
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     parent_id = Column(Integer, ForeignKey("parents.id"), nullable=True, index=True)
     status = Column(String, default="active")  # active | trial | frozen | archived
+    # Lid kartasidan ko'chadi — analitika va o'quvchi kartasi uchun
+    address = Column(String, nullable=True)
+    school = Column(String, nullable=True)
+    school_grade = Column(String, nullable=True)
+    # Muzlatish: qachon qaytadi va nima uchun
+    frozen_until = Column(Date, nullable=True)
+    frozen_note = Column(String, nullable=True)
     # Hozirgi darajasi. Guruhga qo'shishda mos kelishi tekshiriladi.
     # Guruhga birinchi qo'shilganda avtomat to'ldiriladi, imtihondan
     # o'tganda ko'tariladi.
@@ -2861,3 +2868,4 @@ class PaymentDue(Base):
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+

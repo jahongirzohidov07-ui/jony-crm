@@ -276,3 +276,10 @@ export const PLAN_VIEW = [
   FOUNDER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER,
   FINANCE_DIRECTOR,
 ];
+
+// O'quvchini muzlatish/faollashtirish/ko'chirish — faqat shu rollar
+export const FREEZE_ROLES = [
+  FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER,
+];
+// Support teacherni guruhga biriktirish
+export const SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD];

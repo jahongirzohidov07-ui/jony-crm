@@ -81,9 +81,127 @@ function Chart({ d }: { d: Any }) {
   );
 }
 
+const ST_TONE: Record<string, string> = {
+  green: "border-emerald-200", amber: "border-amber-300",
+  red: "border-red-300",
+};
+const ST_LBL: Record<string, string> = {
+  green: "\u{1F7E2} barqaror", amber: "\u{1F7E1} xavfsizlik zaxirasi past",
+  red: "\u{1F534} zararda",
+};
+
+function ScopeCards({ scope }: { scope: string }) {
+  const [d, setD] = useState<Any>(null);
+  const [err, setErr] = useState("");
+  useEffect(() => {
+    setD(null);
+    api.get<Any>(`/finance/break-even?scope=${scope}`).then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, [scope]);
+  if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+  return (
+    <div>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
+        {d.cards.map((c: Any) => (
+          <div key={c.key}
+               className={`bg-white border rounded-xl p-4 ${ST_TONE[c.status]}`}>
+            <div className="flex items-start justify-between mb-2">
+              <div>
+                <p className="text-sm font-semibold text-slate-900">
+                  {c.label}
+                </p>
+                {c.sub && <p className="text-xs text-slate-400">{c.sub}</p>}
+              </div>
+              <span className="text-xs">{ST_LBL[c.status]}</span>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+              <span className="text-slate-500">Faol o'quvchilar</span>
+              <span className="text-right font-medium text-slate-900">
+                {c.students}
+              </span>
+              <span className="text-slate-500">Zararsizlik nuqtasi</span>
+              <span className="text-right font-medium text-slate-900">
+                {c.breakeven ?? "—"}
+              </span>
+              <span className="text-slate-500">Xavfsizlik zaxirasi</span>
+              <span className={`text-right font-medium ${
+                (c.safety ?? 0) < 0 ? "text-red-600" : "text-slate-900"}`}>
+                {c.safety !== null && c.safety !== undefined
+                  ? `${c.safety} o'quvchi` : "—"}
+              </span>
+              {c.revenue !== undefined && (
+                <>
+                  <span className="text-slate-500">Hozirgi tushum</span>
+                  <span className="text-right text-slate-900">
+                    {fmt(c.revenue)}
+                  </span>
+                </>
+              )}
+              {c.breakeven_revenue ? (
+                <>
+                  <span className="text-slate-500">Break-even tushum</span>
+                  <span className="text-right text-slate-900">
+                    {fmt(c.breakeven_revenue)}
+                  </span>
+                </>
+              ) : null}
+              {c.monthly_result !== undefined && (
+                <>
+                  <span className="text-slate-500">
+                    Oylik {c.monthly_result < 0 ? "zarar" : "foyda"}
+                  </span>
+                  <span className={`text-right font-medium ${
+                    c.monthly_result < 0 ? "text-red-600"
+                    : "text-emerald-600"}`}>
+                    {fmt(Math.abs(c.monthly_result))}
+                  </span>
+                </>
+              )}
+              {c.free !== undefined && c.free !== null && (
+                <>
+                  <span className="text-slate-500">Bo'sh joy</span>
+                  <span className="text-right text-slate-900">{c.free}</span>
+                  <span className="text-slate-500">Potensial tushum</span>
+                  <span className="text-right text-emerald-600">
+                    +{fmt(c.potential)}
+                  </span>
+                </>
+              )}
+            </div>
+            {c.recommendations && c.recommendations.length > 0 && (
+              <div className="mt-2.5 pt-2 border-t border-slate-100">
+                <p className="text-[11px] font-medium text-slate-500 mb-1">
+                  Tavsiyalar:
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  {c.recommendations.map((r: string, i: number) => (
+                    <span key={i}
+                          className="text-[11px] bg-slate-100 text-slate-700 rounded-full px-2 py-0.5">
+                      {r}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      {d.cards.length === 0 && (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Ma'lumot yo'q.
+        </p>
+      )}
+      <p className="text-xs text-slate-400 mt-3">{d.hint}</p>
+    </div>
+  );
+}
+
 export function BreakEvenTab({ branchId }: { branchId?: number | null }) {
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
+  const [scope, setScope] = useState<"company" | "branch" | "course" |
+    "group">("company");
   useEffect(() => {
     const q = branchId ? `?branch_id=${branchId}` : "";
     api
@@ -96,8 +214,27 @@ export function BreakEvenTab({ branchId }: { branchId?: number | null }) {
     return <p className="text-sm text-slate-500 py-10 text-center">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-10">Yuklanmoqda…</p>;
 
+  const scopes = [
+    ["company", "Kompaniya"], ["branch", "Filial"],
+    ["course", "Kurs"], ["group", "Guruh"],
+  ] as const;
+
   return (
     <div>
+      <div className="flex gap-1 bg-white border border-slate-200 rounded-lg p-1 w-fit mb-4">
+        {scopes.map(([k, lbl]) => (
+          <button key={k} onClick={() => setScope(k)}
+            className={`px-3 py-1 rounded-md text-sm ${
+              scope === k ? "bg-brand-600 text-white"
+              : "text-slate-600 hover:bg-slate-100"}`}>
+            {lbl}
+          </button>
+        ))}
+      </div>
+      {scope !== "company" ? (
+        <ScopeCards scope={scope} />
+      ) : (
+      <>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
         <div className="rounded-lg border border-slate-200 bg-white p-3">
           <p className="text-xs text-slate-500">O'zgarmas xarajat</p>
@@ -217,6 +354,8 @@ export function BreakEvenTab({ branchId }: { branchId?: number | null }) {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+      </>
+      )}
     </div>
   );
 }

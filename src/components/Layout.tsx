@@ -30,7 +30,7 @@ import {
   Coins,
   MessageSquareWarning,
   X,
-} from "lucide-react";
+ Search } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   FOUNDER,
@@ -251,14 +251,16 @@ export default function Layout() {
     ];
   }
   // O'quv bo'limi - ta'lim sifati. Guruhlardan keyin turadi.
-  if (can(user?.role, ACADEMIC_VIEW)) {
+  // Sotuv menejerining ishi sotuv — bu bo'lim unga ko'rinmaydi.
+  if (can(user?.role, ACADEMIC_VIEW) && user?.role !== "sales_manager") {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.
   if (
     (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
-    user?.role !== "hr_manager"
+    user?.role !== "hr_manager" &&
+    user?.role !== "sales_manager"
   ) {
     items = [...items, { to: "/smm", label: "SMM", icon: Megaphone }];
   }
@@ -372,6 +374,8 @@ export default function Layout() {
       </aside>
 
       <main className="flex-1 min-w-0 relative">
+        {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
+        <GlobalSearch />
         {/* Profil — yuqori o'ng burchakda */}
         <div className="absolute top-4 right-6 z-40" ref={profileRef}>
           <button
@@ -428,3 +432,95 @@ export default function Layout() {
     </div>
   );
 }
+
+
+/** Tepadagi global qidiruv: 3 harfdan boshlab o'quvchilar va
+ *  potensial o'quvchilar (lidlar) chiqadi. */
+function GlobalSearch() {
+  const navigate = useNavigate();
+  const [q, setQ] = useState("");
+  const [res, setRes] = useState<{ students: SearchRow[];
+    leads: SearchRow[] } | null>(null);
+  const [openS, setOpenS] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => {
+      if (boxRef.current && !boxRef.current.contains(e.target as Node))
+        setOpenS(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  useEffect(() => {
+    if (q.trim().length < 3) { setRes(null); return; }
+    const t = setTimeout(() => {
+      api.get<{ students: SearchRow[]; leads: SearchRow[] }>(
+        `/search/students?q=${encodeURIComponent(q.trim())}`)
+        .then((r) => { setRes(r); setOpenS(true); })
+        .catch(() => setRes(null));
+    }, 250);
+    return () => clearTimeout(t);
+  }, [q]);
+
+  return (
+    <div className="absolute top-4 right-56 z-40 w-72" ref={boxRef}>
+      <div className="relative">
+        <Search size={14}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          onFocus={() => res && setOpenS(true)}
+          placeholder="O'quvchi qidirish…"
+          className="w-full bg-white border border-slate-200 rounded-full pl-8 pr-3 py-2 text-sm shadow-sm focus:border-brand-400 focus:outline-none"
+        />
+      </div>
+      {openS && res && (
+        <div className="absolute mt-2 w-full bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 max-h-96 overflow-auto">
+          {res.students.length > 0 && (
+            <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+              O'quvchilar
+            </p>
+          )}
+          {res.students.map((s) => (
+            <button key={`s${s.id}`}
+              onClick={() => { setOpenS(false); setQ("");
+                navigate(`/students/${s.id}`); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50">
+              <p className="text-sm text-slate-800">{s.name}</p>
+              <p className="text-xs text-slate-400">
+                {s.group || "guruhsiz"} · {s.status_label}
+              </p>
+            </button>
+          ))}
+          {res.leads.length > 0 && (
+            <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400 border-t border-slate-100">
+              Potensial o'quvchilar (lidlar)
+            </p>
+          )}
+          {res.leads.map((l) => (
+            <button key={`l${l.id}`}
+              onClick={() => { setOpenS(false); setQ("");
+                navigate("/leads"); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50">
+              <p className="text-sm text-slate-800">{l.name}</p>
+              <p className="text-xs text-slate-400">{l.status_label}</p>
+            </button>
+          ))}
+          {res.students.length === 0 && res.leads.length === 0 && (
+            <p className="text-sm text-slate-400 px-3 py-2.5">
+              Topilmadi.
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type SearchRow = {
+  id: number; name: string; group?: string | null;
+  status_label: string;
+};

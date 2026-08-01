@@ -23856,7 +23856,7 @@ def _charges_on_startup():
 # --------------------------------------------- Zararsizlik nuqtasi ----
 @app.get("/api/finance/break-even")
 def finance_break_even(year: int | None = None, month: int | None = None,
-                       branch_id: int | None = None,
+                       branch_id: int | None = None, scope: str = "company",
                        db: Session = Depends(get_db),
                        user=Depends(require_role(*roles.FINANCE_ACCESS))):
     """Zararsizlik nuqtasi: nechta o'quvchida markaz o'zini oqlaydi.
@@ -23918,6 +23918,10 @@ def finance_break_even(year: int | None = None, month: int | None = None,
                        "fixed": fixed,
                        "total_cost": round(fixed + var_per * n, 0)})
         n += step
+
+    if scope in ("branch", "course", "group"):
+        return _break_even_cards(db, user, scope, y, m, fixed,
+                                 var_exp, payroll, students, price)
 
     return {
         "period": period,
@@ -24061,3 +24065,337 @@ def analytics_academic(branch_id: int | None = None,
                  "bosqichdan o'tgan hisoblanadi. Ketish — arxivlangan "
                  "o'quvchining oxirgi darajasi bo'yicha."),
     }
+
+
+# ------------------------------------------- Moliyaviy umumiy ko'rinish ----
+def _fin_month(db: Session, user, y: int, m: int) -> dict:
+    """Bir oyning asosiy moliyaviy raqamlari (overview uchun)."""
+    start, end = billing.month_bounds(y, m)
+    period = f"{y:04d}-{m:02d}"
+    methods = _income_by_method(db, user, start, end, None)
+    collected = round(sum(methods.values()), 0)
+    d0, d1 = _utc_window(start, end)
+    disc = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+               .filter(models.Payment.kind == "discount",
+                       models.Payment.created_at >= d0,
+                       models.Payment.created_at < d1).scalar() or 0)
+    refunds = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+                  .filter(models.Payment.kind == "payment",
+                          models.Payment.amount < 0,
+                          models.Payment.created_at >= d0,
+                          models.Payment.created_at < d1).scalar() or 0)
+    exp_total, by_cat = _expenses_total(db, user, start, end, None)
+    payroll = round(_payroll_total(db, user, period, None) or 0, 0)
+    tax = round(sum(a for c, a in by_cat.items()
+                    if roles.EXPENSE_CATEGORY_GROUP.get(c) == "tax"), 0)
+    fixed = round(sum(a for c, a in by_cat.items()
+                      if roles.expense_is_fixed(c)), 0)
+    charges = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+                  .filter(models.Payment.kind == "charge",
+                          models.Payment.period == period).scalar() or 0)
+    net_income = round(collected - refunds, 0)
+    total_exp = round(exp_total + payroll, 0)
+    return {
+        "methods": methods, "collected": collected,
+        "discounts": round(disc, 0), "refunds": round(refunds, 0),
+        "net_income": net_income,
+        "expenses": round(exp_total, 0), "payroll": payroll,
+        "total_expenses": total_exp, "tax": tax, "fixed": fixed,
+        "operating_profit": round(net_income - (total_exp - tax), 0),
+        "net_profit": round(net_income - total_exp, 0),
+        "charges": round(charges, 0), "by_cat": by_cat,
+    }
+
+
+@app.get("/api/finance/overview")
+def finance_overview(db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.FOUNDER,
+                                               roles.FINANCE_DIRECTOR))):
+    """Asoschi va moliya direktori uchun bosh sahifa: 10 karta, har
+    birida joriy summa, oylik reja, bajarilish %, o'tgan oyga farq,
+    holat rangi va bosilganda batafsil tarkib."""
+    today = roles.local_today()
+    y, m = today.year, today.month
+    py, pm = (y - 1, 12) if m == 1 else (y, m - 1)
+    cur = _fin_month(db, user, y, m)
+    prev = _fin_month(db, user, py, pm)
+
+    # Rejalar (Reja va Fakt bo'limidan)
+    plan_year = y if m >= 9 else y - 1
+    plans = {t.metric: t.value for t in db.query(models.PlanTarget).filter(
+        models.PlanTarget.year == plan_year,
+        models.PlanTarget.month == m).all()}
+    p_rev, p_exp, p_prof = (plans.get("revenue"), plans.get("expenses"),
+                            plans.get("profit"))
+
+    # Qarzdorlik: balansi manfiy o'quvchilar
+    bal = (db.query(models.Payment.student_id,
+                    func.sum(models.Payment.amount))
+           .group_by(models.Payment.student_id).all())
+    debtors = [(sid, b) for sid, b in bal if (b or 0) < -1000]
+    total_debt = round(sum(-b for _, b in debtors), 0)
+
+    # Oy oxiri prognozi
+    total_days = (billing.month_bounds(y, m)[1] - billing.month_bounds(
+        y, m)[0]).days
+    elapsed = max((today - billing.month_bounds(y, m)[0]).days + 1, 1)
+    frac = min(elapsed / total_days, 1.0)
+    f_rev = round(cur["collected"] / frac, 0)
+    f_prof = round(cur["net_profit"] / frac, 0)
+
+    commitment = round(cur["fixed"] + cur["payroll"] / max(frac, 0.2), 0)
+    coll_rate = round(cur["collected"] / cur["charges"] * 100, 1) \
+        if cur["charges"] else None
+
+    def state(value, plan, lower_better=False, prev_v=None):
+        if plan:
+            p = value / plan * 100
+            if lower_better:
+                return "green" if p <= 100 else ("amber" if p <= 110
+                                                 else "red")
+            return "green" if p >= 100 else ("amber" if p >= 80 else "red")
+        if prev_v is not None:
+            d = value - prev_v
+            if lower_better:
+                d = -d
+            return "green" if d >= 0 else "amber"
+        return "amber"
+
+    mlbl = roles.PAYMENT_METHOD_LABELS
+
+    def card(key, label, sub, value, plan, prev_v, lower=False,
+             details=None, unit="so'm"):
+        return {
+            "key": key, "label": label, "sub": sub,
+            "value": round(value, 1) if value is not None else None,
+            "plan": plan,
+            "plan_pct": round(value / plan * 100, 0)
+            if plan and value is not None else None,
+            "prev": prev_v,
+            "diff": round(value - prev_v, 1)
+            if value is not None and prev_v is not None else None,
+            "state": state(value or 0, plan, lower, prev_v),
+            "details": details or [], "unit": unit,
+        }
+
+    cards = [
+        card("cash", "Mavjud pul", "Kassa + bank + to'lov tizimlari",
+             cur["collected"], None, prev["collected"],
+             details=[{"label": mlbl.get(k, k), "value": round(v, 0)}
+                      for k, v in cur["methods"].items() if v]),
+        card("collected", "Shu oy yig'ilgan pul", "Real tushgan to'lov",
+             cur["collected"], p_rev, prev["collected"],
+             details=[{"label": "Hisoblangan (charge)",
+                       "value": cur["charges"]},
+                      {"label": "Yig'ilgan", "value": cur["collected"]}]),
+        card("net_income", "Shu oy sof daromad",
+             "Chegirma va refunddan keyin", cur["net_income"], p_rev,
+             prev["net_income"],
+             details=[{"label": "Tushum", "value": cur["collected"]},
+                      {"label": "Chegirmalar", "value": -cur["discounts"]},
+                      {"label": "Refundlar", "value": -cur["refunds"]}]),
+        card("expenses", "Shu oy xarajat", "Tasdiqlangan real xarajat",
+             cur["total_expenses"], p_exp, prev["total_expenses"],
+             lower=True,
+             details=[{"label": roles.EXPENSE_CATEGORY_LABELS.get(c, c),
+                       "value": round(v, 0)}
+                      for c, v in sorted(cur["by_cat"].items(),
+                                         key=lambda kv: -kv[1])[:8]]
+             + [{"label": "Ustozlar ish haqi", "value": cur["payroll"]}]),
+        card("op_profit", "Operatsion foyda",
+             "Asosiy faoliyatdan qolgan foyda", cur["operating_profit"],
+             p_prof, prev["operating_profit"],
+             details=[{"label": "Sof daromad", "value": cur["net_income"]},
+                      {"label": "Operatsion xarajat (soliqsiz)",
+                       "value": -(cur["total_expenses"] - cur["tax"])}]),
+        card("net_profit", "Sof foyda", "Barcha xarajatlardan keyin",
+             cur["net_profit"], p_prof, prev["net_profit"],
+             details=[{"label": "Sof daromad", "value": cur["net_income"]},
+                      {"label": "Barcha xarajatlar",
+                       "value": -cur["total_expenses"]}]),
+        card("debt", "Jami qarzdorlik", "Olinishi kerak bo'lgan pul",
+             total_debt, None, None, lower=True,
+             details=[{"label": "Qarzdor o'quvchilar",
+                       "value": len(debtors), "unit": "ta"}]),
+        card("collection", "Collection rate",
+             "To'lanishi kerak bo'lgan pulning yig'ilgan qismi",
+             coll_rate, None, None, unit="%",
+             details=[{"label": "Hisoblangan", "value": cur["charges"]},
+                      {"label": "Yig'ilgan", "value": cur["collected"]}]),
+        card("commitment", "30 kunlik majburiyat",
+             "Maosh, ijara, soliq va boshqalar", commitment, None, None,
+             lower=True,
+             details=[{"label": "O'zgarmas xarajatlar",
+                       "value": cur["fixed"]},
+                      {"label": "Ustozlar ish haqi (prognoz)",
+                       "value": round(cur["payroll"] / max(frac, 0.2), 0)}]),
+        card("forecast", "Oy oxiri prognozi",
+             "Kutilayotgan tushum va foyda", f_rev, p_rev, None,
+             details=[{"label": "Kutilayotgan tushum", "value": f_rev},
+                      {"label": "Kutilayotgan sof foyda",
+                       "value": f_prof},
+                      {"label": "Oy o'tdi",
+                       "value": round(frac * 100, 0), "unit": "%"}]),
+    ]
+    if coll_rate is not None:
+        for c in cards:
+            if c["key"] == "collection":
+                c["state"] = ("green" if coll_rate >= 90 else
+                              "amber" if coll_rate >= 70 else "red")
+    return {"period": f"{y:04d}-{m:02d}", "cards": cards,
+            "hint": ("Rejalar 'Reja va Fakt' bo'limidan olinadi. Rang: "
+                     "yashil — reja bajarilmoqda, sariq — 80-100%, "
+                     "qizil — orqada. Kartaga bosib tarkibini ko'ring.")}
+
+
+def _break_even_cards(db: Session, user, scope: str, y: int, m: int,
+                      fixed: float, var_exp: float, payroll: float,
+                      students_total: int, price_avg: float) -> dict:
+    """Filial / kurs / guruh kesimida zararsizlik kartalari.
+
+    O'zgarmas xarajatlar o'quvchi ulushiga qarab taqsimlanadi (filial va
+    kursda), guruhda esa guruhlar soniga teng bo'linadi — kichik guruh
+    ham o'z ulushini ko'tarishi kerak."""
+    start, end = billing.month_bounds(y, m)
+    d0, d1 = _utc_window(start, end)
+    groups = db.query(models.Group).all()
+    studs = db.query(models.Student).filter(
+        models.Student.status == "active",
+        models.Student.group_id.isnot(None)).all()
+    by_group = {}
+    for st in studs:
+        by_group.setdefault(st.group_id, []).append(st.id)
+    n_total = max(students_total, 1)
+    other_var_ps = round(var_exp / n_total, 0)      # payrollsiz
+    var_ps_full = round((var_exp + payroll) / n_total, 0)
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+
+    # O'quvchi bo'yicha tushum (filial/kurs uchun aniqroq)
+    pays = (db.query(models.Payment.student_id,
+                     func.sum(models.Payment.amount))
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.amount > 0,
+                    models.Payment.created_at >= d0,
+                    models.Payment.created_at < d1)
+            .group_by(models.Payment.student_id).all())
+    pay_by_student = {sid: v for sid, v in pays}
+    stud_group = {st.id: st.group_id for st in studs}
+
+    def agg_cards(key_of, label_of):
+        buckets = {}
+        for g in groups:
+            ids = by_group.get(g.id, [])
+            if not ids:
+                continue
+            k = key_of(g)
+            if k is None:
+                continue
+            b = buckets.setdefault(k, {"students": 0, "revenue": 0.0})
+            b["students"] += len(ids)
+            b["revenue"] += sum(pay_by_student.get(s, 0) for s in ids)
+        cards = []
+        for k, b in buckets.items():
+            n = b["students"]
+            share = n / n_total
+            fx = round(fixed * share, 0)
+            price = round(b["revenue"] / n, 0) if b["revenue"] and n \
+                else price_avg
+            margin = price - var_ps_full
+            be = None
+            if margin > 0 and fx > 0:
+                import math
+                be = math.ceil(fx / margin)
+            safety = (n - be) if be is not None else None
+            status = "green"
+            if be is None or n < (be or 0):
+                status = "red"
+            elif be and (n - be) / be * 100 < 15:
+                status = "amber"
+            cards.append({
+                "key": str(k), "label": label_of(k),
+                "students": n, "breakeven": be, "safety": safety,
+                "revenue": round(b["revenue"], 0),
+                "breakeven_revenue": round((be or 0) * price, 0)
+                if be else None,
+                "status": status,
+            })
+        return sorted(cards, key=lambda c: (
+            {"red": 0, "amber": 1, "green": 2}[c["status"]],
+            -(c["students"] or 0)))
+
+    if scope == "branch":
+        b_names = {b.id: b.name for b in db.query(models.Branch).all()}
+        cards = agg_cards(lambda g: g.branch_id,
+                          lambda k: b_names.get(k, "Filialsiz"))
+    elif scope == "course":
+        subj = dict(roles.SUBJECTS)
+        cards = agg_cards(
+            lambda g: (g.subject or "boshqa", g.level or "-"),
+            lambda k: f"{subj.get(k[0], k[0])} · "
+                      f"{roles.LEVEL_LABELS.get(k[1], k[1])}")
+    else:   # group
+        n_groups = max(len([g for g in groups if by_group.get(g.id)]), 1)
+        fx_per_group = round(fixed / n_groups, 0)
+        cards = []
+        # Parallel yarim bo'sh guruhlarni topish uchun
+        fill = {}
+        for g in groups:
+            cap = _group_capacity(g, rooms)
+            n = len(by_group.get(g.id, []))
+            fill[g.id] = (n / cap * 100) if cap else None
+        for g in groups:
+            n = len(by_group.get(g.id, []))
+            if not n:
+                continue
+            price = round((g.lesson_price or 40000) *
+                          (g.standard_lessons_per_month or 12), 0)
+            t_rate = g.teacher_rate_per_student or 0
+            margin = price - t_rate - other_var_ps
+            be = None
+            if margin > 0:
+                import math
+                be = math.ceil(fx_per_group / margin)
+            result = round(n * price - (fx_per_group +
+                                        n * (t_rate + other_var_ps)), 0)
+            cap = _group_capacity(g, rooms)
+            free = (cap - n) if cap else None
+            recs = []
+            if result < 0:
+                if free and free > 0:
+                    recs += ["Guruhni to'ldirish",
+                             "Reklama so'rovi yaratish"]
+                else:
+                    recs.append("Jadvalni o'zgartirish")
+                twin = [o for o in groups if o.id != g.id
+                        and o.branch_id == g.branch_id
+                        and o.subject == g.subject and o.level == g.level
+                        and by_group.get(o.id)
+                        and (fill.get(o.id) or 100) < 60]
+                if twin:
+                    recs.append(f"Parallel guruh bilan birlashtirish "
+                                f"({twin[0].name})")
+                if be and n < be / 2:
+                    recs.append("Yopish masalasini ko'rib chiqish")
+            status = ("red" if result < 0 else
+                      "amber" if be and (n - be) / be * 100 < 15
+                      else "green")
+            cards.append({
+                "key": str(g.id), "label": g.name,
+                "sub": f"{dict(roles.SUBJECTS).get(g.subject or '', '')} "
+                       f"{roles.LEVEL_LABELS.get(g.level or '', '')}".strip(),
+                "students": n, "breakeven": be,
+                "safety": (n - be) if be is not None else None,
+                "monthly_result": result,
+                "free": free,
+                "potential": round(free * price, 0) if free else 0,
+                "price": price, "status": status,
+                "recommendations": recs,
+            })
+        cards = sorted(cards, key=lambda c: (
+            {"red": 0, "amber": 1, "green": 2}[c["status"]],
+            c["monthly_result"]))
+    return {"period": f"{y:04d}-{m:02d}", "scope": scope, "cards": cards,
+            "hint": ("O'zgarmas xarajatlar o'quvchi ulushiga qarab "
+                     "taqsimlangan; guruhlarda — guruh boshiga teng. "
+                     "Sariq — xavfsizlik zaxirasi 15% dan past, "
+                     "qizil — zararda.")}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AcademicTab } from "../components/AcademicTab";
 import { TrendingUp, Users, GraduationCap, PieChart as PieIcon } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -34,10 +35,11 @@ import { ChurnReport } from "../components/ChurnReport";
 import { CapacityTab } from "../components/MarketingExtras";
 import { FillTab } from "../components/FillReport";
 
-type Tab = "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat"
+type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat"
   | "oquvchi" | "ustoz" | "sigim" | "geo";
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: "akademik", label: "Akademik" },
   { key: "tolganlik", label: "Markaz to'lganligi" },
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
   { key: "ltv", label: "LTV" },
@@ -874,6 +876,7 @@ export default function Analitika() {
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
         <>
+          {tab === "akademik" && <AcademicTab />}
           {tab === "tolganlik" && <FillTab />}
           {tab === "biznes" && <BusinessTab data={data} />}
           {tab === "sifat" && <QualityTab />}

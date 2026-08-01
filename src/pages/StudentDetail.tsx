@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PurchasesTab, RemindersTab } from "../components/StudentExtras";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle,
@@ -45,7 +46,8 @@ const STATUS_LABEL: Record<string, string> = {
 
 type Tab =
   | "groups" | "payments" | "price" | "attendance" | "exams"
-  | "history" | "gamification" | "coins" | "note";
+  | "history" | "gamification" | "coins" | "note"
+  | "purchases" | "reminders";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "groups", label: "Guruhlar" },
@@ -54,9 +56,11 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
   { key: "exams", label: "Imtihonlar" },
   { key: "history", label: "Tarix" },
+  { key: "purchases", label: "Xaridlar" },
+  { key: "reminders", label: "Eslatmalar" },
   { key: "gamification", label: "XP va liga" },
   { key: "coins", label: "Coin hisoboti" },
-  { key: "note", label: "Eslatma" },
+  { key: "note", label: "Izoh" },
 ];
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
@@ -893,6 +897,8 @@ export default function StudentDetail() {
           {tab === "gamification" && <XpCard studentId={student.id} />}
           {tab === "coins" && <CoinsTab studentId={student.id} />}
           {tab === "note" && <NoteTab student={student} onSaved={load} />}
+          {tab === "purchases" && <PurchasesTab studentId={student.id} />}
+          {tab === "reminders" && <RemindersTab studentId={student.id} />}
         </div>
       </div>
 

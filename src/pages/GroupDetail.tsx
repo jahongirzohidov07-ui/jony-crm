@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Plus, Trash2, Download } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import {
   api,
   type Group,
@@ -12,23 +12,25 @@ import {
   type Branch,
   type Student,
 } from "../lib/api";
-import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { QuickXp } from "../components/XpAdmin";
 import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
+import { GroupHomeworkTab, GroupHistoryTab, GroupNotesTab } from "../components/GroupExtras";
 import { GroupSidebar } from "../components/GroupSidebar";
 import { GroupFormModal } from "./Groups";
 
-type GroupTab = "lessons" | "attendance" | "grades" | "exams" | "xp";
+type GroupTab = "attendance" | "grades" | "exams" | "xp" | "homework" | "history" | "notes";
 
 const GROUP_TABS: { key: GroupTab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
+  { key: "homework", label: "Uyga vazifalar" },
   { key: "grades", label: "Baholash" },
-  { key: "lessons", label: "Darslar" },
   { key: "exams", label: "Imtihonlar" },
   { key: "xp", label: "Tezkor XP" },
+  { key: "history", label: "Tarix" },
+  { key: "notes", label: "Izoh: chegirma" },
 ];
 
 const MONTH_NAMES = [
@@ -217,7 +219,15 @@ export default function GroupDetail() {
   }
 
   if (!group) {
-    return (
+    // Darslar tabi olib tashlandi (platforma avtomat hisoblaydi).
+  // Eski yordamchilar keyin kerak bo'lishi mumkin — hozircha saqlanadi.
+  void lessons; void lessonsLoading; void setLessonDate;
+  void addingLesson; void lessonError; void billingLoading;
+  void payrollLoading; void addLesson; void deleteLesson;
+  void runBilling; void runPayroll; void togglePaid;
+  void exportBilling; void exportPayroll;
+
+  return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       </div>
@@ -312,246 +322,9 @@ export default function GroupDetail() {
         />
       )}
 
-      {tab === "lessons" && (
-      <>
-      {/* ---------------- Lesson log ("yoqlama") ---------------- */}
-      <section className="bg-white rounded-xl border border-slate-200 p-5 mb-6">
-        <h2 className="font-semibold text-slate-900 mb-3">
-          Darslar (yoqlama) — {lessons.length} ta o'tilgan
-        </h2>
-
-        {canMarkLesson && (
-          <div className="flex flex-wrap items-end gap-2 mb-4 bg-slate-50 rounded-lg p-3">
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Sana</label>
-              <input
-                type="date"
-                className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
-                value={lessonDate}
-                onChange={(e) => setLessonDate(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                Kim o'tdi
-              </label>
-              <select
-                className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white"
-                value={lessonTeacherId}
-                onChange={(e) => setLessonTeacherId(e.target.value)}
-              >
-                <option value="">— tanlanmagan —</option>
-                {teachers.map((tt) => (
-                  <option key={tt.id} value={tt.id}>
-                    {tt.full_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={addLesson}
-              disabled={addingLesson}
-              className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
-            >
-              <Plus size={14} /> Dars belgilash
-            </button>
-            {lessonError && <p className="text-sm text-red-600 w-full">{lessonError}</p>}
-          </div>
-        )}
-
-        {lessonsLoading ? (
-          <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
-        ) : lessons.length === 0 ? (
-          <p className="text-slate-400 text-sm">Bu oy uchun dars belgilanmagan.</p>
-        ) : (
-          <div className="space-y-1">
-            {lessons.map((l) => (
-              <div
-                key={l.id}
-                className="flex items-center justify-between text-sm border-b border-slate-50 py-1.5 last:border-0"
-              >
-                <span className="text-slate-700">{l.date}</span>
-                <span className="text-slate-500">{l.teacher?.full_name || teacherName(l.teacher_id)}</span>
-                {canMarkLesson && (
-                  <button
-                    onClick={() => deleteLesson(l.id)}
-                    className="text-slate-300 hover:text-red-500"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {canFinance && (
-        <>
-          {/* ---------------- Billing ---------------- */}
-          <section className="bg-white rounded-xl border border-slate-200 p-5 mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-semibold text-slate-900">Talabalar uchun hisob-kitob</h2>
-              <div className="flex items-center gap-2">
-                {billingResult && (
-                  <button
-                    onClick={exportBilling}
-                    className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-700"
-                    title="Excel'ga eksport"
-                  >
-                    <Download size={14} /> Excel
-                  </button>
-                )}
-                <button
-                  onClick={() => runBilling(false)}
-                  disabled={billingLoading}
-                  className="text-sm font-medium text-brand-700 hover:underline disabled:opacity-60"
-                >
-                  Ko'rish
-                </button>
-                <button
-                  onClick={() => runBilling(true)}
-                  disabled={billingLoading}
-                  className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
-                >
-                  Hisoblash va tasdiqlash
-                </button>
-              </div>
-            </div>
-
-            {billingResult ? (
-              <div>
-                <p className="text-xs text-slate-400 mb-2">
-                  {billingResult.period} · {billingResult.held_lessons} dars o'tilgan
-                  {billingResult.committed ? " · balansga yozildi" : " · faqat ko'rish (hali saqlanmagan)"}
-                </p>
-                <table className="w-full text-sm">
-                  <thead className="text-slate-400 text-xs uppercase">
-                    <tr>
-                      <th className="text-left py-1">Talaba</th>
-                      <th className="text-right py-1">Darslar</th>
-                      <th className="text-right py-1">Summa</th>
-                      <th className="text-right py-1">Holat</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {billingResult.results.map((r) => (
-                      <tr key={r.student_id} className="border-t border-slate-50">
-                        <td className="py-1.5">{r.student_name}</td>
-                        <td className="py-1.5 text-right">{r.billable_lessons}</td>
-                        <td className="py-1.5 text-right font-medium">{formatSom(r.amount)}</td>
-                        <td className="py-1.5 text-right text-xs">
-                          {r.created ? (
-                            <span className="text-green-600">yozildi</span>
-                          ) : r.already_charged ? (
-                            <span className="text-slate-400">allaqachon hisoblangan</span>
-                          ) : (
-                            <span className="text-slate-400">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="text-slate-400 text-sm">
-                Hisoblash uchun "Ko'rish" tugmasini bosing.
-              </p>
-            )}
-          </section>
-
-          {/* ---------------- Payroll ---------------- */}
-          <section className="bg-white rounded-xl border border-slate-200 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-semibold text-slate-900">Ustozlar ish haqi</h2>
-              <div className="flex items-center gap-2">
-                {(payrollResult || persistedPayouts.length > 0) && (
-                  <button
-                    onClick={exportPayroll}
-                    className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-700"
-                    title="Excel'ga eksport"
-                  >
-                    <Download size={14} /> Excel
-                  </button>
-                )}
-                <button
-                  onClick={() => runPayroll(false)}
-                  disabled={payrollLoading}
-                  className="text-sm font-medium text-brand-700 hover:underline disabled:opacity-60"
-                >
-                  Ko'rish
-                </button>
-                <button
-                  onClick={() => runPayroll(true)}
-                  disabled={payrollLoading}
-                  className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
-                >
-                  Hisoblash va saqlash
-                </button>
-              </div>
-            </div>
-
-            {payrollResult && (
-              <table className="w-full text-sm mb-4">
-                <thead className="text-slate-400 text-xs uppercase">
-                  <tr>
-                    <th className="text-left py-1">O'qituvchi</th>
-                    <th className="text-right py-1">O'tgan / jami dars</th>
-                    <th className="text-right py-1">Talaba</th>
-                    <th className="text-right py-1">Summa</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {payrollResult.results.map((r) => (
-                    <tr key={r.teacher_id} className="border-t border-slate-50">
-                      <td className="py-1.5">{r.teacher?.full_name || teacherName(r.teacher_id)}</td>
-                      <td className="py-1.5 text-right">
-                        {r.taught_lessons} / {r.held_lessons}
-                      </td>
-                      <td className="py-1.5 text-right">{r.student_count}</td>
-                      <td className="py-1.5 text-right font-medium">{formatSom(r.amount)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-
-            <p className="text-xs font-semibold text-slate-500 uppercase mb-2">
-              Saqlangan yozuvlar
-            </p>
-            {persistedPayouts.length === 0 ? (
-              <p className="text-slate-400 text-sm">
-                Bu oy uchun hali hisoblanib saqlanmagan.
-              </p>
-            ) : (
-              <div className="space-y-1">
-                {persistedPayouts.map((p) => (
-                  <div
-                    key={p.id}
-                    className="flex items-center justify-between text-sm border-t border-slate-50 py-1.5"
-                  >
-                    <span>{p.teacher?.full_name || teacherName(p.teacher_id)}</span>
-                    <span className="text-slate-500">{formatSom(p.amount)}</span>
-                    <button
-                      onClick={() => togglePaid(p)}
-                      className={`rounded-md px-2 py-0.5 text-xs font-medium ${
-                        p.paid
-                          ? "bg-green-50 text-green-700 hover:bg-green-100"
-                          : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                      }`}
-                    >
-                      {p.paid ? "To'landi" : "To'lanmagan"}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </>
-      )}
-      </>
-      )}
+      {tab === "homework" && <GroupHomeworkTab groupId={groupId} />}
+      {tab === "history" && <GroupHistoryTab groupId={groupId} />}
+      {tab === "notes" && <GroupNotesTab groupId={groupId} />}
         </div>
       </div>
 

@@ -270,6 +270,12 @@ def _ensure_new_columns():
         "ALTER TABLE exams ADD COLUMN penalty_delay_hours FLOAT DEFAULT 0",
         "ALTER TABLE exams ADD COLUMN penalty_note TEXT",
         "ALTER TABLE exams ADD COLUMN penalty_by VARCHAR",
+        # Muzlatish va lid geo-ma'lumotlari
+        "ALTER TABLE students ADD COLUMN address VARCHAR",
+        "ALTER TABLE students ADD COLUMN school VARCHAR",
+        "ALTER TABLE students ADD COLUMN school_grade VARCHAR",
+        "ALTER TABLE students ADD COLUMN frozen_until DATE",
+        "ALTER TABLE students ADD COLUMN frozen_note VARCHAR",
     ]
     for stmt in statements:
         try:
@@ -1259,6 +1265,10 @@ def convert_lead(
         enrolled_date=payload.enrolled_date or date.today(),
         status="active",
         note=student_note,
+        # Kartada ham ko'rinsin — faqat eslatmada qolib ketmasin
+        address=lead.address,
+        school=lead.school,
+        school_grade=lead.grade,
     )
     db.add(student)
     db.flush()
@@ -1727,6 +1737,49 @@ def save_attendance(
     # ham "sinovga keldi" belgisi yo'qolib qolmasligi kerak.
     if touched:
         db.commit()
+
+    # AVTOMUZLATISH: ketma-ket 3 darsga kelmagan o'quvchi muzlatiladi,
+    # o'sha 3 kungi yoqlamasi bekor bo'ladi (ustoz oyligidan ham chiqadi)
+    # va adminlarga "aloqaga chiqing" vazifasi tushadi.
+    try:
+        absent_ids = [m.student_id for m in payload.marks
+                      if m.present is False and not m.remove]
+        for sid in set(absent_ids):
+            st = db.query(models.Student).get(sid)
+            if not st or st.status != "active":
+                continue
+            last3 = (db.query(models.Attendance)
+                     .join(models.Lesson,
+                           models.Lesson.id == models.Attendance.lesson_id)
+                     .filter(models.Attendance.student_id == sid,
+                             models.Lesson.group_id == lesson.group_id)
+                     .order_by(models.Lesson.date.desc(),
+                               models.Lesson.id.desc())
+                     .limit(roles.AUTO_FREEZE_ABSENCES).all())
+            if len(last3) < roles.AUTO_FREEZE_ABSENCES:
+                continue
+            if any((a.present or 0) != 0 for a in last3):
+                continue
+            lesson_ids = [a.lesson_id for a in last3]
+            for a in last3:
+                db.delete(a)
+            db.flush()
+            for lid_ in lesson_ids:
+                ls_ = db.query(models.Lesson).get(lid_)
+                if ls_ and not db.query(models.Attendance).filter(
+                        models.Attendance.lesson_id == lid_).count():
+                    ls_.held = 0
+            st.status = "frozen"
+            st.frozen_until = None
+            st.frozen_note = (f"{roles.AUTO_FREEZE_ABSENCES} darsga "
+                              "ketma-ket kelmadi — avtomuzlatildi")
+            _freeze_task(db, st, None, st.frozen_note)
+            db.commit()
+            audit.log(db, None, entity="student", action="auto_freeze",
+                      entity_id=st.id, entity_label=st.full_name,
+                      note=st.frozen_note, commit=True)
+    except Exception:
+        db.rollback()
 
     return {"ok": True, "saved": len(payload.marks), "activated": activated}
 
@@ -3877,7 +3930,7 @@ def list_students(
     own_only = user.role in tuple(roles.OWN_GROUPS_ONLY)
     if own_only:
         t = _teacher_of_user(db, user)
-        gids = [g.id for g in _my_groups(db, t.id)] if t else []
+        gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
         query = query.filter(models.Student.group_id.in_(gids or [-1]))
 
     students = query.order_by(models.Student.full_name).all()
@@ -4109,6 +4162,12 @@ def _teacher_owns(db: Session, group: models.Group,
     if not t:
         return False
     if group.teacher_id == t.id:
+        return True
+    # Support teacher — biriktirilgan guruhiga kiradi
+    if user.role == roles.SUPPORT_TEACHER and db.query(
+            models.SupportAssignment).filter(
+            models.SupportAssignment.user_id == user.id,
+            models.SupportAssignment.group_id == group.id).first():
         return True
     # O'rinbosarlik davrida boshqa ustozning guruhi ham ochiladi
     return db.query(models.Substitution).filter(
@@ -5518,7 +5577,7 @@ def social_manual(
 def activate_student(
     student_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_STAFF)),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
 ):
     """Sinovdagi (yoki muzlatilgan) o'quvchini FAOL qiladi.
 
@@ -5549,7 +5608,7 @@ def move_student_group(
     payload: schemas.StudentGroupMove,
     force: bool = False,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_STAFF)),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
 ):
     """Boshqa guruhga o'tkazadi. group_id bo'sh bo'lsa - guruhdan
     chiqaradi, lekin o'quvchi bazada qoladi (to'lov tarixi saqlanadi)."""
@@ -19698,6 +19757,26 @@ def _my_teacher_or_404(db: Session, user) -> models.Teacher:
     return t
 
 
+def _support_assigned_groups(db: Session, user) -> list:
+    """Support teacherga biriktirilgan guruhlar (SupportAssignment,
+    user_id bo'yicha). Jadvali va o'quvchilari shu yerdan chiqadi."""
+    gids = [a.group_id for a in db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.user_id == user.id,
+                    models.SupportAssignment.group_id.isnot(None)).all()]
+    if not gids:
+        return []
+    return (db.query(models.Group).filter(models.Group.id.in_(gids))
+            .order_by(models.Group.name).all())
+
+
+def _cabinet_groups(db: Session, user, t) -> list:
+    """Kabinet guruhlari: ustozga o'z guruhlari, support teacherga —
+    biriktirilganlari."""
+    if user.role == roles.SUPPORT_TEACHER:
+        return _support_assigned_groups(db, user)
+    return _my_groups(db, t.id)
+
+
 def _my_groups(db: Session, teacher_id: int) -> list:
     return (db.query(models.Group)
             .filter(models.Group.teacher_id == teacher_id)
@@ -19709,7 +19788,7 @@ def my_groups(db: Session = Depends(get_db),
               user=Depends(require_role(*roles.SELF_STATS))):
     """Faqat shu ustozning guruhlari."""
     t = _my_teacher_or_404(db, user)
-    groups = _my_groups(db, t.id)
+    groups = _cabinet_groups(db, user, t)
     today = date.today()
 
     rooms = {r.id: r.name for r in db.query(models.Room).all()}
@@ -19761,7 +19840,7 @@ def my_students(group_id: int | None = None, q: str | None = None,
     BALANS QAYTARILMAYDI. Bu ataylab: ustoz bolaga qarzdorligi orqali
     emas, o'qishi orqali qarashi kerak."""
     t = _my_teacher_or_404(db, user)
-    groups = _my_groups(db, t.id)
+    groups = _cabinet_groups(db, user, t)
     gid_map = {g.id: g for g in groups}
     if group_id and group_id not in gid_map:
         raise HTTPException(403, "Bu guruh sizniki emas")
@@ -20618,7 +20697,7 @@ def _teacher_dashboard(db: Session, user: models.User):
     t = _teacher_of_user(db, user)
     if not t:
         return None
-    groups = _my_groups(db, t.id)
+    groups = _cabinet_groups(db, user, t)
     gids = [g.id for g in groups]
     gname = {g.id: g.name for g in groups}
     today = date.today()
@@ -24060,6 +24139,7 @@ def analytics_academic(branch_id: int | None = None,
         "churn": churn_rows,
         "churn_worst": churn_rows[0] if churn_rows else None,
         "left_total": len(left_students),
+        "geo": _geo_stats(db, branch_id),
         "hint": ("Voronka yoqlama tarixidan tiklanadi: o'quvchi qaysi "
                  "darajadagi guruh darslarida qatnashgan bo'lsa, o'sha "
                  "bosqichdan o'tgan hisoblanadi. Ketish — arxivlangan "
@@ -24692,3 +24772,197 @@ def del_payment_due(due_id: int, db: Session = Depends(get_db),
     audit.log(db, user, entity="payment_due", action="delete",
               entity_id=dd.id, entity_label=dd.title, commit=True)
     return {"ok": True}
+
+
+# --------------------------------- Support guruhlari, muzlatish, junior ----
+@app.get("/api/support-teachers/{teacher_id}/groups")
+def support_teacher_groups(teacher_id: int, db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *roles.SUPPORT_ASSIGN))):
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t or not t.user_id:
+        raise HTTPException(404, "Support teacher yoki akkaunti topilmadi")
+    gids = {a.group_id for a in db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.user_id == t.user_id,
+                    models.SupportAssignment.group_id.isnot(None)).all()}
+    gq = db.query(models.Group)
+    if t.branch_id:
+        gq = gq.filter(models.Group.branch_id == t.branch_id)
+    return {"assigned": sorted(gids),
+            "groups": [{"id": g.id, "name": g.name}
+                       for g in gq.order_by(models.Group.name).all()]}
+
+
+@app.put("/api/support-teachers/{teacher_id}/groups")
+def set_support_teacher_groups(teacher_id: int,
+                               payload: schemas.SupportGroupsIn,
+                               db: Session = Depends(get_db),
+                               user=Depends(require_role(
+                                   *roles.SUPPORT_ASSIGN))):
+    """Support teacherni guruhlarga biriktirish — jadvali va
+    o'quvchilari shundan chiqadi."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t or not t.user_id:
+        raise HTTPException(404, "Support teacher yoki akkaunti topilmadi")
+    db.query(models.SupportAssignment).filter(
+        models.SupportAssignment.user_id == t.user_id,
+        models.SupportAssignment.group_id.isnot(None)).delete()
+    for gid in set(payload.group_ids):
+        if db.query(models.Group).get(gid):
+            db.add(models.SupportAssignment(
+                user_id=t.user_id, group_id=gid,
+                created_by=user.full_name))
+    db.commit()
+    audit.log(db, user, entity="support_assignment", action="set",
+              entity_id=t.id, entity_label=t.full_name,
+              new_value=f"{len(set(payload.group_ids))} ta guruh",
+              commit=True)
+    return {"ok": True}
+
+
+@app.get("/api/me/junior-path")
+def my_junior_path(db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.SUPPORT_TEACHER))):
+    """Support teacher Junior teacher bo'lishi uchun nimalar kerak."""
+    t = _teacher_of_user(db, user)
+    months = t.support_months or 0
+    if not months and t and t.hired_date:
+        months = round((roles.local_today() - t.hired_date).days / 30, 1)
+    items = [
+        {"key": "cert",
+         "label": "Sertifikat: CEFR B2 (kamida 55%)",
+         "current": t.cert or "kiritilmagan",
+         "value": t.cert_score, "target": 55.0,
+         "done": bool(t.cert_score and t.cert_score >= 55)},
+        {"key": "skill",
+         "label": "Dars berish mahorati balli (kamida 75)",
+         "current": t.skill_score, "value": t.skill_score, "target": 75.0,
+         "done": bool(t.skill_score and t.skill_score >= 75)},
+        {"key": "months",
+         "label": "Support tajribasi (kamida 3 oy)",
+         "current": months, "value": months, "target": 3.0,
+         "done": months >= 3},
+    ]
+    return {
+        "grade_label": "Support teacher",
+        "target_label": "Junior teacher",
+        "items": items,
+        "done_count": len([i for i in items if i["done"]]),
+        "total": len(items),
+        "ready": all(i["done"] for i in items),
+        "hint": ("Hammasi bajarilganda o'quv bo'limi rahbari sinov darsi "
+                 "(kuzatuv) o'tkazadi va Junior teacher darajasiga "
+                 "o'tkazish masalasini hal qiladi."),
+    }
+
+
+def _freeze_task(db, st: models.Student, until, note):
+    days = max((until - roles.local_today()).days, 1) if until else 1
+    body = (f"{st.full_name} muzlatildi."
+            + (f" Qaytish sanasi: {until.isoformat()}." if until else "")
+            + (f" Izoh: {note}" if note else "")
+            + " Shu kuni o'quvchi bilan aloqaga chiqing.")
+    _hr_task(db, title=f"Muzlatilgan o'quvchi: {st.full_name}",
+             body=body, to_roles=[roles.ADMINISTRATOR, roles.SALES_MANAGER],
+             branch_id=st.branch_id, days=days, priority="high")
+
+
+@app.post("/api/students/{student_id}/freeze")
+def freeze_student(student_id: int, payload: schemas.FreezeIn,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """O'quvchini muzlatish. Qaytish sanasi MAJBURIY — shu sanada
+    adminlarga 'aloqaga chiqing' vazifasi tushadi."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if payload.until <= roles.local_today():
+        raise HTTPException(400, "Qaytish sanasi kelajakda bo'lishi kerak")
+    st.status = "frozen"
+    st.frozen_until = payload.until
+    st.frozen_note = payload.note
+    _freeze_task(db, st, payload.until, payload.note)
+    db.commit()
+    audit.log(db, user, entity="student", action="freeze",
+              entity_id=st.id, entity_label=st.full_name,
+              new_value=f"qaytishi: {payload.until.isoformat()}",
+              note=payload.note, commit=True)
+    return {"ok": True}
+
+
+@app.post("/api/students/{student_id}/to-trial")
+def student_to_trial(student_id: int, db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Faol o'quvchini sinov darsiga qaytarish."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if st.status != "active":
+        raise HTTPException(400, "Faqat faol o'quvchi sinovga qaytariladi")
+    st.status = "trial"
+    db.commit()
+    audit.log(db, user, entity="student", action="to_trial",
+              entity_id=st.id, entity_label=st.full_name, commit=True)
+    return {"ok": True}
+
+
+@app.post("/api/students/{student_id}/to-lead")
+def student_to_lead(student_id: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Faollashtirilmagan (sinovdagi) talabani lidlar doskasiga
+    qaytarish."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if st.status != "trial":
+        raise HTTPException(
+            400, "Faqat faollashtirilmagan (sinovdagi) talaba lidga "
+                 "qaytariladi")
+    lead = db.query(models.Lead).filter(
+        models.Lead.converted_student_id == st.id).first()
+    if lead:
+        lead.stage = "trial_scheduled"
+        lead.converted_student_id = None
+    else:
+        db.add(models.Lead(full_name=st.full_name, phone=st.phone,
+                           source="other", stage="trial_scheduled",
+                           branch_id=st.branch_id,
+                           note="O'quvchilar ro'yxatidan qaytarildi",
+                           created_by=user.full_name))
+    st.status = "archived"
+    st.note = ((st.note + " · ") if st.note else "") + "Lidga qaytarildi"
+    db.commit()
+    audit.log(db, user, entity="student", action="to_lead",
+              entity_id=st.id, entity_label=st.full_name, commit=True)
+    return {"ok": True}
+
+
+def _geo_stats(db: Session, branch_id=None) -> dict:
+    """Lidlar va o'quvchilar qayerdan (manzil) va qaysi maktabdan."""
+    def top(rows, n=10):
+        agg = {}
+        for (v,) in rows:
+            v = (v or "").strip()
+            if not v:
+                continue
+            agg[v] = agg.get(v, 0) + 1
+        return [{"name": k, "count": c} for k, c in
+                sorted(agg.items(), key=lambda kv: -kv[1])[:n]]
+
+    lq = db.query(models.Lead.address)
+    lsq = db.query(models.Lead.school)
+    sq = db.query(models.Student.address).filter(
+        models.Student.status == "active")
+    ssq = db.query(models.Student.school).filter(
+        models.Student.status == "active")
+    if branch_id:
+        lq = lq.filter(models.Lead.branch_id == branch_id)
+        lsq = lsq.filter(models.Lead.branch_id == branch_id)
+        sq = sq.filter(models.Student.branch_id == branch_id)
+        ssq = ssq.filter(models.Student.branch_id == branch_id)
+    return {
+        "lead_addresses": top(lq.all()),
+        "lead_schools": top(lsq.all()),
+        "student_addresses": top(sq.all()),
+        "student_schools": top(ssq.all()),
+    }

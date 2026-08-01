@@ -25014,3 +25014,124 @@ def global_student_search(q: str, db: Session = Depends(get_db),
             "status_label": roles.LEAD_STAGE_LABELS.get(l.stage, l.stage),
         } for l in lq.order_by(models.Lead.full_name).limit(6).all()]
     return {"students": students, "leads": leads}
+
+
+# ------------------------------------ Guruh: uy vazifasi, tarix, izoh ----
+@app.put("/api/lessons/{lesson_id}/homework")
+def set_homework(lesson_id: int, payload: schemas.HomeworkIn,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """Uy vazifasi belgisi — yoqlamadan ALOHIDA qo'yiladi.
+
+    Qoida: faqat yoqlama qilingan darsga qo'yiladi (yoqlamasiz dars
+    pulga kirmaydi, vazifasi ham bo'lmaydi). O'tgan darslarga qo'yish
+    MUMKIN — vazifa keyingi darsda tekshiriladi. Kelajakka bo'lmaydi."""
+    lesson = db.query(models.Lesson).get(lesson_id)
+    if not lesson:
+        raise HTTPException(404, "Dars topilmadi")
+    _get_group_in_scope(db, lesson.group_id, user)
+    if lesson.date > roles.local_today():
+        raise HTTPException(400, "Bo'lib o'tmagan darsga vazifa qo'yilmaydi")
+    if payload.homework is not None and payload.homework not in (0, 1, 2):
+        raise HTTPException(400, "Vazifa belgisi: 0, 1 yoki 2")
+    row = db.query(models.Attendance).filter(
+        models.Attendance.lesson_id == lesson_id,
+        models.Attendance.student_id == payload.student_id).first()
+    if not row:
+        raise HTTPException(
+            400, "Avval yoqlama belgilang — yoqlamasiz darsga vazifa "
+                 "qo'yilmaydi")
+    row.homework = payload.homework
+    db.commit()
+    return {"ok": True}
+
+
+@app.get("/api/groups/{group_id}/history")
+def group_history(group_id: int, db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """Guruh tarixi: qo'shilishlar, ko'chirilgan darslar,
+    o'rinbosarliklar, imtihonlar va boshqa o'zgarishlar."""
+    g = _get_group_in_scope(db, group_id, user)
+    events = []
+    for s in db.query(models.Student).filter(
+            models.Student.group_id == group_id).all():
+        if s.enrolled_date:
+            events.append({"date": s.enrolled_date.isoformat(),
+                           "kind": "join", "icon": "user",
+                           "text": f"{s.full_name} guruhga qo'shildi"})
+        if s.status == "frozen":
+            events.append({"date": (s.frozen_until or
+                                    roles.local_today()).isoformat(),
+                           "kind": "freeze", "icon": "snow",
+                           "text": f"{s.full_name} muzlatilgan"
+                           + (f" (qaytishi {s.frozen_until.isoformat()})"
+                              if s.frozen_until else "")})
+    for r in db.query(models.LessonReschedule).filter(
+            models.LessonReschedule.group_id == group_id).all():
+        events.append({
+            "date": (r.from_date or roles.local_today()).isoformat(),
+            "kind": "move", "icon": "move",
+            "text": f"Dars ko'chirildi: {r.from_date} → {r.to_date}"
+                    + (f" ({r.status})" if r.status else "")})
+    for sub in db.query(models.Substitution).filter(
+            models.Substitution.group_id == group_id).all():
+        t = db.query(models.Teacher).get(sub.substitute_teacher_id) \
+            if sub.substitute_teacher_id else None
+        events.append({
+            "date": sub.lesson_date.isoformat() if sub.lesson_date
+            else roles.local_today().isoformat(),
+            "kind": "sub", "icon": "swap",
+            "text": "O'rinbosarlik: "
+                    + (t.full_name if t else "ochiq taklif")
+                    + f" ({sub.status})"})
+    for e in db.query(models.Exam).filter(
+            models.Exam.group_id == group_id).all():
+        events.append({
+            "date": e.date.isoformat(), "kind": "exam", "icon": "exam",
+            "text": (e.title or roles.EXAM_KIND_LABELS.get(e.kind, e.kind))
+                    + f" — {e.status}"})
+    for a in (db.query(models.AuditLog)
+              .filter(models.AuditLog.entity == "group",
+                      models.AuditLog.entity_id == group_id)
+              .order_by(models.AuditLog.id.desc()).limit(40).all()):
+        events.append({
+            "date": a.created_at.date().isoformat() if a.created_at
+            else roles.local_today().isoformat(),
+            "kind": "audit", "icon": "edit",
+            "text": f"{a.action}: {a.field or ''} "
+                    f"{a.old_value or ''} → {a.new_value or ''}".strip()
+                    + (f" ({a.user_name})" if a.user_name else "")})
+    events.sort(key=lambda e: e["date"], reverse=True)
+    return {"group": g.name, "events": events[:120]}
+
+
+@app.get("/api/groups/{group_id}/notes")
+def group_notes(group_id: int, db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """Izoh va chegirma: guruh o'quvchilarining izohi va amaldagi
+    chegirmalari. Balans YO'Q — bu pul sahifasi emas."""
+    _get_group_in_scope(db, group_id, user)
+    rows = []
+    _dt_defs = getattr(roles, "DISCOUNT_TYPES", []) or []
+    dlbl = {t[0]: t[1] for t in _dt_defs}
+    for s in (db.query(models.Student)
+              .filter(models.Student.group_id == group_id,
+                      models.Student.status != "archived")
+              .order_by(models.Student.full_name).all()):
+        ds = (db.query(models.Discount)
+              .filter(models.Discount.student_id == s.id,
+                      models.Discount.status.in_(("approved", "active")))
+              .all())
+        rows.append({
+            "id": s.id, "name": s.full_name, "status": s.status,
+            "note": s.note,
+            "address": s.address, "school": s.school,
+            "school_grade": s.school_grade,
+            "discounts": [{
+                "kind": dlbl.get(d.kind, d.kind),
+                "percent": d.percent, "amount": d.amount,
+                "reason": d.reason,
+                "until": d.end_date.isoformat() if d.end_date else None,
+            } for d in ds],
+        })
+    return {"students": rows}

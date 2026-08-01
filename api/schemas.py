@@ -2089,3 +2089,8 @@ class FreezeIn(BaseModel):
 
 class SupportGroupsIn(BaseModel):
     group_ids: List[int]
+
+
+class HomeworkIn(BaseModel):
+    student_id: int
+    homework: Optional[int] = None    # 2 a'lo, 1 qisman, 0 qilmadi, None o'chirish

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Cake, FileText, Award, TrendingUp } from "lucide-react";
+import { X, Cake, FileText, Award, TrendingUp, Layers } from "lucide-react";
 import { api } from "../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -222,6 +222,83 @@ export function TeacherOverviewModal({
             </div>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+
+/** Support teacherni guruhlarga biriktirish (support manager /
+ *  o'quv bo'limi rahbari). Jadvali va o'quvchilari shundan chiqadi. */
+export function SupportGroupsModal({
+  teacherId, name, onClose,
+}: { teacherId: number; name: string; onClose: () => void }) {
+  const [groups, setGroups] = useState<Any[]>([]);
+  const [sel, setSel] = useState<Set<number>>(new Set());
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    api.get<Any>(`/support-teachers/${teacherId}/groups`)
+      .then((r) => { setGroups(r.groups); setSel(new Set(r.assigned)); })
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, [teacherId]);
+
+  const toggle = (id: number) => {
+    const n = new Set(sel);
+    if (n.has(id)) n.delete(id); else n.add(id);
+    setSel(n);
+  };
+  const save = async () => {
+    setBusy(true);
+    try {
+      await api.put(`/support-teachers/${teacherId}/groups`,
+        { group_ids: [...sel] });
+      onClose();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl w-full max-w-sm max-h-[85vh] overflow-auto p-5">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+            <Layers size={16} className="text-slate-400" />
+            Support guruhlari
+          </h2>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-3">
+          {name} — belgilangan guruhlar jadvali va o'quvchilari uning
+          kabinetida ko'rinadi.
+        </p>
+        {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
+        <div className="space-y-1 mb-4">
+          {groups.map((g) => (
+            <label key={g.id}
+              className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 text-sm text-slate-700 cursor-pointer">
+              <input type="checkbox" checked={sel.has(g.id)}
+                onChange={() => toggle(g.id)} />
+              {g.name}
+            </label>
+          ))}
+          {groups.length === 0 && !err && (
+            <p className="text-sm text-slate-400">Guruh topilmadi.</p>
+          )}
+        </div>
+        <div className="flex justify-end gap-2">
+          <button onClick={onClose}
+            className="px-4 py-2 text-sm text-slate-600">Bekor</button>
+          <button onClick={save} disabled={busy}
+            className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
+            Saqlash ({sel.size})
+          </button>
+        </div>
       </div>
     </div>
   );

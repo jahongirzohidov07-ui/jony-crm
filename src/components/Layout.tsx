@@ -302,7 +302,7 @@ export default function Layout() {
   }
   // Ustozda menyu ochiq ro'yxat bo'yicha kesiladi: dars berishga
   // aloqasi yo'q bo'lim ko'rinmaydi.
-  if (user?.role === TEACHER || user?.role === SUPPORT_TEACHER) {
+  if (user?.role === TEACHER) {
     // Ustozda "Guruhlar" va "Talabalar" o'rniga o'ziniki: butun
     // markazning ro'yxati ustozning ishiga aloqador emas
     items = [
@@ -312,16 +312,23 @@ export default function Layout() {
       { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
       { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck },
-      // Faqat support teacher: seans kiritish va avtomat oylik
-      ...(user?.role === "support_teacher"
-        ? [{ to: "/my-sessions", label: "Darslarim va oyligim",
-             icon: Timer }]
-        : []),
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
     items = TEACHER_MENU
       .map((to) => items.find((i) => i.to === to))
       .filter((i): i is (typeof items)[number] => !!i);
+  }
+  // Support teacher: qisqa menyu — coin, imtihon va kitob buyurtma YO'Q.
+  // Jadvali biriktirilgan guruhlardan chiqadi.
+  if (user?.role === SUPPORT_TEACHER) {
+    items = [
+      items[0],
+      { to: "/my-schedule", label: "Dars jadvalim", icon: CalendarDays },
+      { to: "/my-groups", label: "Guruhlarim", icon: Layers },
+      { to: "/my-students", label: "O'quvchilarim", icon: AcademicIcon },
+      { to: "/my-sessions", label: "Darslarim va oyligim", icon: Timer },
+      { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
+    ];
   }
 
   return (

@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { MoreVertical, Play, RefreshCw, Trash2, X } from "lucide-react";
+import {
+  MoreVertical, Play, RefreshCw, Trash2, X, Snowflake, Wallet,
+  Undo2, UserX,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../lib/AuthContext";
+import { FREEZE_ROLES, can } from "../lib/roles";
 import { api, ApiError, type Student, type Group, type CheckProblem }
   from "../lib/api";
 import { ScheduleProblems } from "./ScheduleProblems";
@@ -20,7 +26,13 @@ export function StudentRowMenu({
   groups: Group[];
   onChanged: () => void;
 }) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const canManage = can(user?.role, FREEZE_ROLES);
   const [open, setOpen] = useState(false);
+  const [freezing, setFreezing] = useState(false);
+  const [fUntil, setFUntil] = useState("");
+  const [fNote, setFNote] = useState("");
   const [moving, setMoving] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -64,6 +76,16 @@ export function StudentRowMenu({
   const activate = () =>
     run(() => api.post(`/students/${student.id}/activate`, {}));
 
+  const freeze = () => {
+    if (!fUntil) { setErr("Qaytish sanasini belgilang"); return; }
+    run(() => api.post(`/students/${student.id}/freeze`,
+      { until: fUntil, note: fNote || null }));
+  };
+  const toTrial = () =>
+    run(() => api.post(`/students/${student.id}/to-trial`, {}));
+  const toLead = () =>
+    run(() => api.post(`/students/${student.id}/to-lead`, {}));
+
   const moveTo = (groupId: number, force = false) => {
     setPendingGroup(groupId);
     if (!force) setProblems([]);
@@ -89,6 +111,8 @@ export function StudentRowMenu({
   };
 
   const others = groups.filter((g) => g.id !== student.group?.id);
+
+  if (!canManage) return null;
 
   return (
     <div className="relative" ref={ref}>
@@ -124,8 +148,45 @@ export function StudentRowMenu({
             </div>
           )}
 
-          {!moving ? (
+          {freezing ? (
+            <div className="px-3 py-2">
+              <p className="text-xs font-medium text-slate-600 mb-1.5">
+                Muzlatish — qachon qaytadi? *
+              </p>
+              <input type="date" value={fUntil}
+                onChange={(e) => setFUntil(e.target.value)}
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-1.5" />
+              <input value={fNote}
+                onChange={(e) => setFNote(e.target.value)}
+                placeholder="Sabab (ixtiyoriy)"
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2" />
+              <p className="text-[11px] text-slate-400 mb-2">
+                Shu sanada adminlarga "aloqaga chiqing" vazifasi tushadi.
+              </p>
+              <div className="flex gap-2">
+                <button onClick={() => setFreezing(false)}
+                  className="flex-1 text-sm text-slate-500 py-1.5">
+                  Bekor
+                </button>
+                <button onClick={freeze} disabled={busy || !fUntil}
+                  className="flex-1 bg-sky-600 text-white rounded-lg py-1.5 text-sm font-medium disabled:opacity-40">
+                  Muzlatish
+                </button>
+              </div>
+            </div>
+          ) : !moving ? (
             <>
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  navigate(`/students/${student.id}`);
+                }}
+                disabled={busy}
+                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                <Wallet size={15} className="text-emerald-600" />
+                To'lov qo'shish
+              </button>
               <button
                 onClick={activate}
                 disabled={busy || student.status === "active"}
@@ -134,6 +195,34 @@ export function StudentRowMenu({
                 <Play size={15} className="text-emerald-600" />
                 Faollashtirish
               </button>
+              <button
+                onClick={() => { setFreezing(true); setErr(""); }}
+                disabled={busy || student.status === "frozen"}
+                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 disabled:opacity-40"
+              >
+                <Snowflake size={15} className="text-sky-600" />
+                Muzlatish
+              </button>
+              {student.status === "active" && (
+                <button
+                  onClick={toTrial}
+                  disabled={busy}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <Undo2 size={15} className="text-amber-600" />
+                  Sinov darsiga qaytarish
+                </button>
+              )}
+              {student.status === "trial" && (
+                <button
+                  onClick={toLead}
+                  disabled={busy}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <UserX size={15} className="text-amber-600" />
+                  Lid bo'limiga qaytarish
+                </button>
+              )}
               <button
                 onClick={() => setMoving(true)}
                 disabled={busy}

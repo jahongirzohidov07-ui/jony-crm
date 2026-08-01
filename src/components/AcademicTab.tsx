@@ -134,6 +134,40 @@ export function AcademicTab({ branchId }: { branchId?: number | null }) {
           )}
         </div>
       </div>
+      {d.geo && (
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
+          {[
+            ["Lidlar qayerdan", d.geo.lead_addresses],
+            ["Lidlar qaysi maktabdan", d.geo.lead_schools],
+            ["O'quvchilar qayerdan", d.geo.student_addresses],
+            ["O'quvchilar qaysi maktabdan", d.geo.student_schools],
+          ].map(([title, rows]: Any) => (
+            <div key={title}
+                 className="bg-white border border-slate-200 rounded-xl p-4">
+              <p className="text-sm font-medium text-slate-700 mb-2">
+                {title}
+              </p>
+              {rows.map((r: Any, i: number) => (
+                <div key={i}
+                     className="flex justify-between text-sm py-1 border-b border-slate-50">
+                  <span className="text-slate-600 truncate mr-2">
+                    <span className="text-slate-300 mr-1.5">{i + 1}</span>
+                    {r.name}
+                  </span>
+                  <span className="font-medium text-slate-900">
+                    {r.count}
+                  </span>
+                </div>
+              ))}
+              {rows.length === 0 && (
+                <p className="text-xs text-slate-400">
+                  Ma'lumot kiritilmagan.
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
       <p className="text-xs text-slate-500 mt-3 flex items-start gap-1.5">
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}

@@ -6965,6 +6965,52 @@ def student_history(
 
     timeline.sort(key=lambda x: x["date"] or "", reverse=True)
 
+    # --- Platformadagi BOSHQA BARCHA amallar (audit) ---
+    # Yuqorida maxsus ko'rinishda chiqarilganlari takrorlanmaydi.
+    handled = {"group_move", "group_remove"}
+    ACTION_UZ = {
+        "create": "Yaratildi", "update": "Tahrirlandi",
+        "freeze": "Muzlatildi", "auto_freeze": "Avtomuzlatildi",
+        "activate": "Faollashtirildi", "to_trial": "Sinovga qaytarildi",
+        "to_lead": "Lidga qaytarildi", "archive": "Arxivlandi",
+        "delete": "O'chirildi",
+    }
+    for l in logs:
+        if l.action in handled:
+            continue
+        if l.field == "status" or l.action == "activate":
+            pass  # holat o'zgarishlari ham ko'rinsin
+        detail = ""
+        if l.old_value or l.new_value:
+            detail = f"{l.old_value or '—'} → {l.new_value or '—'}"
+        if l.note:
+            detail = (detail + " · " if detail else "") + l.note
+        timeline.append({
+            "date": l.created_at.isoformat() if l.created_at else None,
+            "kind": "audit",
+            "title": ACTION_UZ.get(l.action, l.action)
+                     + (f" ({l.field})" if l.field else ""),
+            "detail": detail or None,
+            "by": l.user_name,
+        })
+    # To'lov amallari ham shu bolaga tegishli bo'lsa — tarixga
+    pay_ids = [pid for (pid,) in db.query(models.Payment.id).filter(
+        models.Payment.student_id == student_id).all()]
+    if pay_ids:
+        for l in (db.query(models.AuditLog)
+                  .filter(models.AuditLog.entity == "payment",
+                          models.AuditLog.entity_id.in_(pay_ids))
+                  .order_by(models.AuditLog.created_at).all()):
+            timeline.append({
+                "date": l.created_at.isoformat() if l.created_at else None,
+                "kind": "payment",
+                "title": f"To'lov amali: {l.action}",
+                "detail": (l.new_value or "") + (
+                    f" · {l.note}" if l.note else "") or None,
+                "by": l.user_name,
+            })
+    timeline.sort(key=lambda e: e["date"] or "", reverse=True)
+
     return {
         "summary": {
             "groups": groups_seen,
@@ -25135,3 +25181,95 @@ def group_notes(group_id: int, db: Session = Depends(get_db),
             } for d in ds],
         })
     return {"students": rows}
+
+
+# ------------------------------- O'quvchi: xaridlar va eslatmalar ----
+@app.get("/api/students/{student_id}/purchases")
+def student_purchases(student_id: int, db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.TEACHING_STAFF))):
+    """Coin do'konidan qilingan xaridlar ro'yxati."""
+    if not db.query(models.Student).get(student_id):
+        raise HTTPException(404, "O'quvchi topilmadi")
+    rewards = {r.id: r for r in db.query(models.Reward).all()}
+    rows = (db.query(models.RewardRedemption)
+            .filter(models.RewardRedemption.student_id == student_id)
+            .order_by(models.RewardRedemption.id.desc()).all())
+    ST = {"given": "berildi", "pending": "kutilmoqda",
+          "approved": "tasdiqlandi", "rejected": "rad etildi",
+          "cancelled": "bekor"}
+    return {"purchases": [{
+        "id": r.id,
+        "reward": rewards[r.reward_id].name
+        if r.reward_id in rewards else "—",
+        "coins": r.coins,
+        "value_som": rewards[r.reward_id].value_som
+        if r.reward_id in rewards else None,
+        "status": ST.get(r.status, r.status),
+        "by_student": bool(r.requested_by_student),
+        "date": r.given_at.date().isoformat() if r.given_at else None,
+    } for r in rows],
+        "total_coins": sum(r.coins or 0 for r in rows
+                           if r.status != "rejected")}
+
+
+@app.get("/api/students/{student_id}/reminders")
+def student_reminders(student_id: int, db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.TEACHING_STAFF))):
+    rows = (db.query(models.StudentReminder)
+            .filter(models.StudentReminder.student_id == student_id)
+            .order_by(models.StudentReminder.done,
+                      models.StudentReminder.remind_on.is_(None),
+                      models.StudentReminder.remind_on,
+                      models.StudentReminder.id.desc()).all())
+    return {"reminders": [{
+        "id": r.id, "text": r.text,
+        "remind_on": r.remind_on.isoformat() if r.remind_on else None,
+        "done": bool(r.done), "created_by": r.created_by,
+        "date": r.created_at.date().isoformat() if r.created_at else None,
+        "overdue": bool(r.remind_on and not r.done
+                        and r.remind_on <= roles.local_today()),
+    } for r in rows]}
+
+
+@app.post("/api/students/{student_id}/reminders")
+def add_student_reminder(student_id: int, payload: schemas.ReminderIn,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.TEACHING_STAFF))):
+    """Eslatma qo'shish. Sana ko'rsatilsa — o'sha kuni admin va sotuv
+    menejeriga vazifa tushadi."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not (payload.text or "").strip():
+        raise HTTPException(400, "Eslatma matnini yozing")
+    r = models.StudentReminder(
+        student_id=student_id, text=payload.text.strip(),
+        remind_on=payload.remind_on, created_by=user.full_name)
+    db.add(r)
+    if payload.remind_on:
+        days = max((payload.remind_on - roles.local_today()).days, 1)
+        _hr_task(db, title=f"Eslatma: {st.full_name}",
+                 body=f"{payload.text.strip()} — {user.full_name} "
+                      f"qoldirgan eslatma.",
+                 to_roles=[roles.ADMINISTRATOR, roles.SALES_MANAGER],
+                 branch_id=st.branch_id, days=days, priority="normal")
+    db.commit()
+    audit.log(db, user, entity="student", action="reminder",
+              entity_id=st.id, entity_label=st.full_name,
+              new_value=payload.text.strip()[:80],
+              note=payload.remind_on.isoformat()
+              if payload.remind_on else None, commit=True)
+    return {"ok": True, "id": r.id}
+
+
+@app.post("/api/students/{student_id}/reminders/{rid}/toggle")
+def toggle_student_reminder(student_id: int, rid: int,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(
+                                *roles.TEACHING_STAFF))):
+    r = db.query(models.StudentReminder).get(rid)
+    if not r or r.student_id != student_id:
+        raise HTTPException(404, "Eslatma topilmadi")
+    r.done = 0 if r.done else 1
+    db.commit()
+    return {"ok": True, "done": bool(r.done)}

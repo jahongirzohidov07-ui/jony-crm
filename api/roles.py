@@ -4454,3 +4454,9 @@ JUNIOR_PATH = [
     ("skill", "Dars berish mahorati balli (kamida 75)", 75.0),
     ("months", "Support/volontyor tajriba (kamida 3 oy)", 3.0),
 ]
+
+
+# To'lov summasini tahrirlash — faqat asoschi, moliyachi va filial
+# rahbari. Pul hujjatiga tegish huquqi tor doirada bo'ladi, har bir
+# o'zgarish auditga yoziladi.
+PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER]

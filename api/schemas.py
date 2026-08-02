@@ -2099,3 +2099,8 @@ class HomeworkIn(BaseModel):
 class ReminderIn(BaseModel):
     text: str
     remind_on: Optional[_dt.date] = None
+
+
+class PaymentEditIn(BaseModel):
+    amount: float                     # yangi summa (musbat son kiritiladi)
+    note: Optional[str] = None

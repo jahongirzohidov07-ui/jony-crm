@@ -9,9 +9,12 @@ import { exportToExcel } from "../lib/exportXlsx";
 
 /** O'quvchi holatiga qarab rangli nuqta - ro'yxatda darrov ko'zga tashlanadi. */
 function statusDot(status: string, balance: number) {
+  // Muzlatilgan — KO'K va hamma narsadan ustun: qarzdor bo'lsa ham
+  // avval muzlatilgani ko'rinadi
+  if (status === "frozen") return { color: "bg-sky-500", title: "Muzlatilgan" };
   if (balance < 0) return { color: "bg-red-500", title: "Qarzdor" };
-  if (status === "trial") return { color: "bg-sky-400", title: "Sinov darsida" };
-  if (status === "frozen") return { color: "bg-amber-400", title: "Muzlatilgan" };
+  // Sinovdagi o'quvchi yonida chiroq bo'lmaydi
+  if (status === "trial") return null;
   if (status === "archived") return { color: "bg-slate-300", title: "Arxiv" };
   return { color: "bg-emerald-500", title: "Faol" };
 }
@@ -99,14 +102,12 @@ export function GroupSidebar({
           <span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> Qarzdor
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-sky-400 inline-block" /> Sinovda
-        </span>
-        <span className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" /> Faol
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Muzlatilgan
+          <span className="w-2 h-2 rounded-full bg-sky-500 inline-block" /> Muzlatilgan
         </span>
+        <span className="text-slate-400">Sinovda — chiroqsiz</span>
       </div>
 
       {loading ? (
@@ -118,21 +119,36 @@ export function GroupSidebar({
           <div className="space-y-0.5 -mx-2">
             {students.map((s, i) => {
               const dot = statusDot(s.status, s.balance);
+              const frozen = s.status === "frozen";
               return (
                 <div
                   key={s.id}
                   className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 group"
                 >
                   <span className="text-xs text-slate-400 w-4 shrink-0">{i + 1}</span>
-                  <span
-                    className={`w-2.5 h-2.5 rounded-full shrink-0 ${dot.color}`}
-                    title={dot.title}
-                  />
+                  {dot ? (
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full shrink-0 ${dot.color}`}
+                      title={dot.title}
+                    />
+                  ) : (
+                    <span className="w-2.5 h-2.5 shrink-0" title="Sinovda" />
+                  )}
                   <Link
                     to={`/students/${s.id}`}
-                    className="text-sm text-slate-800 truncate flex-1 hover:text-brand-700"
+                    className={`text-sm truncate flex-1 ${
+                      frozen
+                        ? "text-sky-600 font-medium hover:text-sky-700"
+                        : "text-slate-800 hover:text-brand-700"
+                    }`}
+                    title={frozen ? "Muzlatilgan" : undefined}
                   >
                     {s.full_name}
+                    {frozen && (
+                      <span className="ml-1.5 text-[10px] uppercase tracking-wide bg-sky-50 text-sky-600 px-1.5 py-0.5 rounded">
+                        muz
+                      </span>
+                    )}
                   </Link>
                   {s.phone && (
                     <span className="text-xs text-slate-400 shrink-0 hidden sm:flex items-center gap-1">

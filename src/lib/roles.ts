@@ -283,3 +283,6 @@ export const FREEZE_ROLES = [
 ];
 // Support teacherni guruhga biriktirish
 export const SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD];
+
+// To'lov summasini tahrirlash — asoschi, moliyachi, filial rahbari
+export const PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER];

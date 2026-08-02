@@ -25273,3 +25273,39 @@ def toggle_student_reminder(student_id: int, rid: int,
     r.done = 0 if r.done else 1
     db.commit()
     return {"ok": True, "done": bool(r.done)}
+
+
+# ------------------------------------------- To'lovni tahrirlash ----
+@app.put("/api/payments/{payment_id}")
+def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.PAYMENT_EDIT))):
+    """To'lov yoki hisoblangan (yechib olingan) summani tahrirlash.
+
+    Yozuv O'CHIRILMAYDI, faqat summasi o'zgaradi — eski qiymat auditda
+    qoladi. Ishora saqlanadi: hisoblangan (charge) minusligicha,
+    to'lov plusligicha qoladi."""
+    p = db.query(models.Payment).get(payment_id)
+    if not p:
+        raise HTTPException(404, "Yozuv topilmadi")
+    st = db.query(models.Student).get(p.student_id)
+    # Filial rahbari faqat o'z filialini tahrirlaydi
+    if (user.role == roles.BRANCH_MANAGER and user.branch_id
+            and st and st.branch_id != user.branch_id):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    if payload.amount <= 0:
+        raise HTTPException(400, "Summani musbat son bilan kiriting")
+    old = p.amount
+    sign = -1 if (p.amount or 0) < 0 or p.kind == "charge" else 1
+    p.amount = sign * abs(round(payload.amount, 0))
+    if payload.note is not None and payload.note.strip():
+        p.note = payload.note.strip()
+    db.commit()
+    audit.log(db, user, entity="payment", action="amount_edit",
+              entity_id=p.id,
+              entity_label=st.full_name if st else None,
+              field="amount",
+              old_value=f"{old:,.0f}".replace(",", " "),
+              new_value=f"{p.amount:,.0f}".replace(",", " "),
+              branch_id=st.branch_id if st else None, commit=True)
+    return {"ok": True, "amount": p.amount}

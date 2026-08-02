@@ -66,8 +66,9 @@ UZ_LABELS = {
     ACCOUNTANT: "Buxgalter",
     BRANCH_MANAGER: "Filial rahbari",
     SALES_HEAD: "Sotuv rahbari",
-    SALES_MANAGER: "Sotuv menejeri",
-    ADMINISTRATOR: "Administrator",
+    # Markaz tilida "Administrator" deganda SOTUV MENEJERI tushuniladi
+    SALES_MANAGER: "Administrator",
+    ADMINISTRATOR: "Administrator (qabul)",
     SMM_MANAGER: "Marketolog / SMM",
     ACADEMIC_HEAD: "O'quv bo'limi rahbari",
     TEACHER: "O'qituvchi",

@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { PurchasesTab, RemindersTab } from "../components/StudentExtras";
 import { useParams, Link } from "react-router-dom";
-import {
-  ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle,
-  Pencil,
-} from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil } from "lucide-react";
 import {
   api,
   type StudentDetail as StudentDetailType,
@@ -18,7 +15,7 @@ import {
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, TEACHING_STAFF, can } from "../lib/roles";
+import { FINANCE_ACCESS, TEACHING_STAFF, PAYMENT_EDIT, can } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -284,6 +281,19 @@ function PaymentsTab({
 }) {
   const { user } = useAuth();
   const canEdit = can(user?.role, FINANCE_ACCESS);
+  // Summani tahrirlash — faqat asoschi, moliyachi, filial rahbari
+  const canEditAmount = can(user?.role, PAYMENT_EDIT);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editVal, setEditVal] = useState("");
+  const saveAmount = async (pid: number) => {
+    try {
+      await api.put(`/payments/${pid}`, { amount: Number(editVal) });
+      setEditId(null);
+      onChanged();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  };
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
   const [kind, setKind] = useState("payment");
@@ -456,8 +466,48 @@ function PaymentsTab({
                     p.amount < 0 ? "text-red-600" : "text-emerald-600"
                   }`}
                 >
-                  {p.amount > 0 ? "+" : ""}
-                  {formatSom(p.amount)}
+                  {editId === p.id ? (
+                    <span className="inline-flex items-center gap-1">
+                      <input
+                        type="number"
+                        value={editVal}
+                        onChange={(e) => setEditVal(e.target.value)}
+                        className="w-28 border border-slate-300 rounded-lg px-2 py-1 text-sm text-right"
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => saveAmount(p.id)}
+                        className="text-emerald-600 hover:text-emerald-700"
+                        title="Saqlash"
+                      >
+                        <Check size={15} />
+                      </button>
+                      <button
+                        onClick={() => setEditId(null)}
+                        className="text-slate-400 hover:text-slate-600"
+                        title="Bekor"
+                      >
+                        <X size={15} />
+                      </button>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5">
+                      {p.amount > 0 ? "+" : ""}
+                      {formatSom(p.amount)}
+                      {canEditAmount && (
+                        <button
+                          onClick={() => {
+                            setEditId(p.id);
+                            setEditVal(String(Math.abs(p.amount)));
+                          }}
+                          className="text-slate-300 hover:text-brand-600"
+                          title="Summani tahrirlash"
+                        >
+                          <Pencil size={13} />
+                        </button>
+                      )}
+                    </span>
+                  )}
                 </td>
                 {canEdit && (
                   <td className="px-4 py-3 text-right">

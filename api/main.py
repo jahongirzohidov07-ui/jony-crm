@@ -23972,6 +23972,14 @@ def _charges_on_startup():
     try:
         from database import SessionLocal
         db = SessionLocal()
+        # Asoschi akkaunti "Administrator" deb nomlangan edi — markazda
+        # administrator deganda sotuv menejeri tushuniladi, chalkashadi.
+        f = db.query(models.User).filter(
+            models.User.role == roles.FOUNDER,
+            models.User.full_name == "Administrator").first()
+        if f:
+            f.full_name = "Asoschi"
+            db.commit()
         _ensure_month_charges(db)
         db.close()
     except Exception:

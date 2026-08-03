@@ -30,7 +30,7 @@ export default function Login() {
           <div className="w-12 h-12 rounded-xl bg-brand-500 flex items-center justify-center mb-3">
             <GraduationCap className="text-white" size={26} />
           </div>
-          <h1 className="text-lg font-semibold text-slate-900">Jony CRM</h1>
+          <h1 className="text-lg font-semibold text-slate-900">JonyOS</h1>
           <p className="text-sm text-slate-500">Boshqaruv paneliga kirish</p>
         </div>
 

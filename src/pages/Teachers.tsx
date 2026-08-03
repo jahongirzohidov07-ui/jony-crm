@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { TeacherOverviewModal, SupportGroupsModal } from "../components/TeacherOverview";
 import {
   Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
+  FileUp,
  Layers } from "lucide-react";
 import {
   api, type Teacher, type Branch, type GradeRow, type CareerMap,
@@ -293,6 +294,7 @@ export default function Teachers() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [editing, setEditing] = useState<Teacher | null>(null);
   const [accountFor, setAccountFor] = useState<Teacher | null>(null);
   const [overviewFor, setOverviewFor] = useState<Teacher | null>(null);
@@ -412,12 +414,20 @@ export default function Teachers() {
           </p>
         </div>
         {canEdit && (
-          <button
-            onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            <Plus size={16} /> Yangi o'qituvchi
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowImport(true)}
+              className="flex items-center gap-2 bg-white border border-slate-200 hover:border-brand-300 text-slate-600 rounded-lg px-4 py-2 text-sm font-medium"
+            >
+              <FileUp size={15} /> Excel'dan import
+            </button>
+            <button
+              onClick={() => setShowAdd(true)}
+              className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
+            >
+              <Plus size={16} /> Yangi o'qituvchi
+            </button>
+          </div>
         )}
       </div>
 
@@ -549,6 +559,16 @@ export default function Teachers() {
       </>
       )}
 
+      {showImport && (
+        <ImportTeachersModal
+          branches={branches}
+          onClose={() => setShowImport(false)}
+          onDone={() => {
+            setShowImport(false);
+            load();
+          }}
+        />
+      )}
       {showAdd && (
         <TeacherModal
           branches={branches}
@@ -747,6 +767,215 @@ function AccountModal({
               Yozib oldim, yopish
             </button>
           </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ==================== EXCEL'DAN IMPORT ==================== */
+/** Eski platformadan (LC UP va o'xshash) eksport qilingan .xlsx
+ *  faylni o'qib, ustozlarni bir bosishda qo'shadi. Ustunlar nomidan
+ *  o'zi topiladi: Name/Ism, Mobile/Phone/Telefon, Birth, Groups.
+ *  Dublikatlar (bir xil ism yoki telefon) o'zi o'tkazib yuboriladi. */
+type ImpRow = {
+  full_name: string; phone: string; birth_date: string; note: string;
+};
+
+function ImportTeachersModal({
+  branches, onClose, onDone,
+}: {
+  branches: Branch[]; onClose: () => void; onDone: () => void;
+}) {
+  const [rows, setRows] = useState<ImpRow[]>([]);
+  const [branchId, setBranchId] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [result, setResult] = useState<{
+    created: number;
+    results: { name: string; status: string; reason?: string }[];
+  } | null>(null);
+
+  async function readFile(f: File) {
+    setErr("");
+    setResult(null);
+    try {
+      const XLSX = await import("xlsx");
+      const wb = XLSX.read(await f.arrayBuffer());
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const raw: unknown[][] = XLSX.utils.sheet_to_json(ws, {
+        header: 1, raw: false,
+      });
+      if (raw.length < 2) throw new Error("Faylda ma'lumot topilmadi");
+      const head = (raw[0] as unknown[]).map((h) =>
+        String(h || "").toLowerCase());
+      const col = (...keys: string[]) =>
+        head.findIndex((h) => keys.some((k) => h.includes(k)));
+      const iName = col("name", "ism", "f.i");
+      const iPhone = col("mobile", "phone", "telefon", "raqam");
+      const iBirth = col("birth", "tug'ilgan", "tugilgan");
+      const iGroups = col("group", "guruh");
+      if (iName < 0)
+        throw new Error("Ism ustuni topilmadi (Name/Ism bo'lishi kerak)");
+      const out: ImpRow[] = [];
+      for (const r of raw.slice(1)) {
+        const name = String(r[iName] ?? "").trim();
+        if (!name) continue;
+        out.push({
+          full_name: name,
+          phone: iPhone >= 0 ? String(r[iPhone] ?? "").trim() : "",
+          birth_date: iBirth >= 0
+            ? String(r[iBirth] ?? "").trim().slice(0, 10) : "",
+          note: iGroups >= 0 ? String(r[iGroups] ?? "").trim() : "",
+        });
+      }
+      if (out.length === 0) throw new Error("Bironta ham qator o'qilmadi");
+      setRows(out);
+      setFileName(f.name);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Faylni o'qib bo'lmadi");
+    }
+  }
+
+  async function doImport() {
+    setBusy(true);
+    setErr("");
+    try {
+      const r = await api.post<{
+        created: number;
+        results: { name: string; status: string; reason?: string }[];
+      }>("/teachers/import", {
+        rows,
+        branch_id: branchId ? Number(branchId) : null,
+      });
+      setResult(r);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Import bo'lmadi");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-slate-900">
+            Ustozlarni Excel'dan import qilish
+          </h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+
+        {result ? (
+          <div>
+            <p className="text-sm font-medium text-emerald-700 mb-3">
+              ✓ {result.created} ta ustoz qo'shildi
+            </p>
+            <div className="border border-slate-200 rounded-lg divide-y divide-slate-100 mb-4 max-h-72 overflow-auto">
+              {result.results.map((r, i) => (
+                <div key={i} className="flex items-center gap-2 px-3 py-2 text-sm">
+                  <span>{r.status === "ok" ? "✅" : "⏭️"}</span>
+                  <span className="text-slate-800">{r.name}</span>
+                  {r.reason && (
+                    <span className="text-xs text-slate-400">— {r.reason}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={onDone}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium"
+            >
+              Tayyor
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div>
+              <input
+                type="file"
+                accept=".xlsx,.xls,.csv"
+                id="imp-file"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) readFile(f);
+                }}
+              />
+              <label
+                htmlFor="imp-file"
+                className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 rounded-xl py-6 text-sm text-slate-500 cursor-pointer hover:border-brand-400"
+              >
+                <FileUp size={16} />
+                {fileName || "Excel faylni tanlang (.xlsx)"}
+              </label>
+            </div>
+
+            {rows.length > 0 && (
+              <>
+                <div>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">
+                    Qaysi filialga qo'shilsin
+                  </label>
+                  <select
+                    value={branchId}
+                    onChange={(e) => setBranchId(e.target.value)}
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                  >
+                    <option value="">— filialsiz —</option>
+                    {branches.map((b) => (
+                      <option key={b.id} value={b.id}>{b.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="border border-slate-200 rounded-lg max-h-64 overflow-auto">
+                  <table className="w-full text-xs">
+                    <thead className="bg-slate-50 text-slate-500 sticky top-0">
+                      <tr>
+                        <th className="text-left px-3 py-2 font-medium">F.I.Sh.</th>
+                        <th className="text-left px-3 py-2 font-medium">Telefon</th>
+                        <th className="text-left px-3 py-2 font-medium">Tug'ilgan</th>
+                        <th className="text-left px-3 py-2 font-medium">Guruhlari (ma'lumot)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {rows.map((r, i) => (
+                        <tr key={i}>
+                          <td className="px-3 py-1.5 text-slate-800">{r.full_name}</td>
+                          <td className="px-3 py-1.5 text-slate-600">{r.phone}</td>
+                          <td className="px-3 py-1.5 text-slate-500">{r.birth_date}</td>
+                          <td className="px-3 py-1.5 text-slate-400 max-w-[16rem] truncate">
+                            {r.note}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-slate-400">
+                  {rows.length} ta qator o'qildi. Bir xil ism yoki telefon
+                  allaqachon bo'lsa, o'sha qator o'tkazib yuboriladi —
+                  ikki marta bosishdan qo'rqmang. Guruhlari ustuni faqat
+                  ma'lumot uchun: guruhlar keyin alohida biriktiriladi.
+                </p>
+              </>
+            )}
+
+            {err && (
+              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{err}</p>
+            )}
+
+            <button
+              onClick={doImport}
+              disabled={busy || rows.length === 0}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-50"
+            >
+              {busy ? "Qo'shilmoqda..." : `${rows.length} ta ustozni qo'shish`}
+            </button>
+          </div>
         )}
       </div>
     </div>

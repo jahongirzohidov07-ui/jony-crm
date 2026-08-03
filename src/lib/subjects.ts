@@ -7,6 +7,10 @@ export const SUBJECTS = [
   { key: "korean", label: "Koreys tili" },
   { key: "turkish", label: "Turk tili" },
   { key: "german", label: "Nemis tili" },
+  { key: "biology", label: "Biologiya" },
+  { key: "programming", label: "Dasturlash" },
+  { key: "mental_math", label: "Mental arifmetika" },
+  { key: "robotics", label: "Robototexnika" },
 ];
 
 const CEFR_LEVELS = [
@@ -27,12 +31,22 @@ const ENGLISH_LEVELS = [
   { key: "cefr", label: "CEFR" },
 ];
 
+const COURSE_LEVELS = [
+  { key: "basic", label: "Boshlang'ich" },
+  { key: "intermediate", label: "O'rta" },
+  { key: "advanced", label: "Yuqori" },
+];
+
 export const SUBJECT_LEVELS: Record<string, { key: string; label: string }[]> = {
   english: ENGLISH_LEVELS,
   russian: CEFR_LEVELS,
   korean: CEFR_LEVELS,
   turkish: CEFR_LEVELS,
   german: CEFR_LEVELS,
+  biology: COURSE_LEVELS,
+  programming: COURSE_LEVELS,
+  mental_math: COURSE_LEVELS,
+  robotics: COURSE_LEVELS,
 };
 
 export function subjectLabel(key?: string | null): string {

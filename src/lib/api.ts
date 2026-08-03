@@ -109,6 +109,9 @@ export interface Teacher {
   subject?: string;
   branch_id?: number;
   branch?: Branch;
+  /** Ustoz ishlaydigan barcha filiallar (2-3 bo'lishi mumkin). */
+  branch_ids?: number[];
+  branches_label?: string | null;
   hired_date?: string | null;
   left_date?: string | null;
   /** 1 = hozir ishlayapti, 0 = ishdan ketgan. */

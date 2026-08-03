@@ -244,6 +244,10 @@ export interface Student {
   balance: number;
   public_id?: string | null;
   parent_id?: number | null;
+  address?: string | null;
+  school?: string | null;
+  school_grade?: string | null;
+  updated_at?: string | null;
 }
 
 export interface StudentDetail extends Student {

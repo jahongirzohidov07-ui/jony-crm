@@ -53,12 +53,22 @@ export function Attachments({
     setBusy(true);
     setErr("");
     try {
-      const data: string = await new Promise((resolve, reject) => {
+      let data: string = await new Promise((resolve, reject) => {
         const r = new FileReader();
         r.onload = () => resolve(String(r.result));
         r.onerror = () => reject(new Error("Faylni o'qib bo'lmadi"));
         r.readAsDataURL(file);
       });
+      // Rasmlarni yuklashdan OLDIN siqamiz: telefon kamerasidan
+      // kelgan 5-10 MB rasm bazani shishirib, sahifani sekinlashtiradi.
+      // 1200px va JPEG 82% — hujjat/portret uchun bemalol yetadi.
+      if (file.type.startsWith("image/") && file.size > 300 * 1024) {
+        try {
+          data = await compressImage(data, 1200, 0.82);
+        } catch {
+          /* siqilmasa asl holicha ketadi */
+        }
+      }
       await api.post("/attachments", {
         entity, entity_id: entityId, kind,
         filename: file.name, mime: file.type, data,
@@ -213,4 +223,27 @@ export function Attachments({
       )}
     </div>
   );
+}
+
+/** Rasmni brauzerda kichraytirib JPEG'ga siqadi (eng uzun tomoni
+ *  maxSide px). Baza va trafik uchun 10 barobargacha tejaydi. */
+function compressImage(dataUrl: string, maxSide: number,
+                       quality: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("canvas yo'q")); return; }
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = () => reject(new Error("rasm o'qilmadi"));
+    img.src = dataUrl;
+  });
 }

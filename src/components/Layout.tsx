@@ -30,6 +30,8 @@ import {
   Coins,
   MessageSquareWarning,
   X,
+  Menu,
+  Bell,
  Search } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
@@ -82,8 +84,9 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
   const [done, setDone] = useState(false);
 
   async function submit() {
-    if (next.length < 6) {
-      setError("Yangi parol kamida 6 belgidan iborat bo'lishi kerak");
+    if (next.length < 8 || !/[a-zA-Z]/.test(next) || !/\d/.test(next)) {
+      setError("Parol kamida 8 belgi bo'lib, ichida harf ham, raqam "
+        + "ham bo'lishi kerak");
       return;
     }
     if (next !== confirm) {
@@ -179,6 +182,7 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
 export default function Layout() {
   const { user, logout } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const h = (e: MouseEvent) => {
@@ -191,6 +195,7 @@ export default function Layout() {
   }, []);
   const navigate = useNavigate();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showRecoveryModal, setShowRecoveryModal] = useState(false);
 
   function onLogout() {
     logout();
@@ -335,12 +340,33 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex bg-slate-50">
-      <aside className="w-60 shrink-0 bg-white border-r border-slate-200 flex flex-col">
-        <div className="h-16 flex items-center gap-2 px-5 border-b border-slate-100">
+      {/* Mobil parda — menyu ochiq bo'lsa orqa fonni qoraytiradi */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 z-40 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+      <aside
+        onClick={(e) => {
+          // Mobilda menyu bandi bosilganda panel yopiladi
+          if ((e.target as HTMLElement).closest("a")) setMobileOpen(false);
+        }}
+        className={`${
+          mobileOpen ? "fixed inset-y-0 left-0 z-50 flex" : "hidden"
+        } md:static md:flex md:z-auto w-60 shrink-0 bg-white border-r border-slate-200 flex-col overflow-y-auto`}
+      >
+        <div className="h-16 shrink-0 flex items-center gap-2 px-5 border-b border-slate-100">
           <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
             <School className="text-white" size={18} />
           </div>
           <span className="font-semibold text-slate-900">Jony CRM</span>
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="ml-auto md:hidden text-slate-400 p-1"
+          >
+            <X size={18} />
+          </button>
         </div>
 
         {/* Tez to'lov - administrator uchun eng ko'p bosiladigan tugma,
@@ -374,18 +400,28 @@ export default function Layout() {
       </aside>
 
       <main className="flex-1 min-w-0 relative">
+        {/* Yuqori panel: mobil menyu, qidiruv, qo'ng'iroqcha, profil */}
+        <div className="absolute top-4 left-3 z-40 md:hidden">
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 bg-white border border-slate-200 rounded-lg shadow-sm text-slate-600"
+          >
+            <Menu size={18} />
+          </button>
+        </div>
         {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
         <GlobalSearch />
+        <NotifBell />
         {/* Profil — yuqori o'ng burchakda */}
-        <div className="absolute top-4 right-6 z-40" ref={profileRef}>
+        <div className="absolute top-4 right-3 md:right-6 z-40" ref={profileRef}>
           <button
             onClick={() => setProfileOpen((v) => !v)}
-            className="flex items-center gap-2 bg-white border border-slate-200 rounded-full pl-1.5 pr-3 py-1.5 shadow-sm hover:shadow transition"
+            className="flex items-center gap-2 bg-white border border-slate-200 rounded-full pl-1.5 pr-1.5 sm:pr-3 py-1.5 shadow-sm hover:shadow transition"
           >
             <span className="w-7 h-7 rounded-full bg-brand-600 text-white text-sm font-semibold flex items-center justify-center">
               {(user?.full_name || "?").charAt(0)}
             </span>
-            <span className="text-sm font-medium text-slate-700 max-w-[140px] truncate">
+            <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[140px] truncate">
               {user?.full_name}
             </span>
           </button>
@@ -413,6 +449,18 @@ export default function Layout() {
                 <KeyRound size={15} />
                 Parolni almashtirish
               </button>
+              {user?.role === FOUNDER && (
+                <button
+                  onClick={() => {
+                    setProfileOpen(false);
+                    setShowRecoveryModal(true);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+                >
+                  <ShieldCheck size={15} />
+                  Tiklash kodini o'rnatish
+                </button>
+              )}
               <button
                 onClick={onLogout}
                 className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
@@ -429,9 +477,171 @@ export default function Layout() {
       {showPasswordModal && (
         <ChangePasswordModal onClose={() => setShowPasswordModal(false)} />
       )}
+      {showRecoveryModal && (
+        <RecoveryModal onClose={() => setShowRecoveryModal(false)} />
+      )}
     </div>
   );
 }
+
+
+/** Asoschi uchun favqulodda tiklash kodi: parol unutilsa, login
+ *  oynasidagi "Parolni unutdingizmi?" orqali shu kod bilan tiklanadi. */
+function RecoveryModal({ onClose }: { onClose: () => void }) {
+  const [current, setCurrent] = useState("");
+  const [code, setCode] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
+
+  async function submit() {
+    if (code.trim().length < 10) {
+      setError("Kod kamida 10 belgi bo'lsin (masalan, uzun ibora)");
+      return;
+    }
+    setSaving(true);
+    setError(null);
+    try {
+      await api.put("/auth/recovery-code", {
+        current_password: current,
+        recovery_code: code.trim(),
+      });
+      setDone(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-semibold text-slate-900">Tiklash kodi</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+        {done ? (
+          <div className="space-y-3">
+            <p className="text-sm text-green-700">
+              Kod o'rnatildi. Uni QOG'OZGA yozib, ishonchli joyda
+              saqlang — parolni unutsangiz faqat shu kod qutqaradi.
+            </p>
+            <button onClick={onClose}
+              className="w-full bg-slate-900 text-white rounded-lg py-2.5 text-sm">
+              Yopish
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-xs text-slate-500">
+              Parolni unutsangiz, login oynasida shu kod bilan yangi
+              parol o'rnatasiz. Kodni hech kimga bermang.
+            </p>
+            <input
+              type="password"
+              placeholder="Joriy parolingiz"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Yangi tiklash kodi (kamida 10 belgi)"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <button
+              onClick={submit}
+              disabled={saving}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-60"
+            >
+              {saving ? "Saqlanmoqda..." : "O'rnatish"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+/** Qo'ng'iroqcha: vazifalar, qaytadigan muzlatilganlar, qarzdorlar,
+ *  muddati yaqin hujjatlar — bo'limlarga kirmasdan bir joyda. */
+function NotifBell() {
+  const navigate = useNavigate();
+  const [d, setD] = useState<{ items: NotifItem[]; count: number } | null>(null);
+  const [openB, setOpenB] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const load = () =>
+      api.get<{ items: NotifItem[]; count: number }>("/my/alerts")
+        .then(setD)
+        .catch(() => {});
+    load();
+    const t = setInterval(load, 3 * 60 * 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpenB(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  const TONE: Record<string, string> = {
+    red: "bg-red-500", amber: "bg-amber-500",
+    sky: "bg-sky-500", emerald: "bg-emerald-500",
+  };
+
+  return (
+    <div className="absolute top-4 right-16 sm:right-56 z-40" ref={ref}>
+      <button
+        onClick={() => setOpenB((v) => !v)}
+        className="relative p-2 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
+      >
+        <Bell size={16} />
+        {(d?.count || 0) > 0 && (
+          <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-semibold flex items-center justify-center">
+            {d!.count > 9 ? "9+" : d!.count}
+          </span>
+        )}
+      </button>
+      {openB && (
+        <div className="absolute right-0 mt-2 w-80 max-w-[86vw] bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 max-h-96 overflow-auto">
+          {(d?.items || []).map((it, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setOpenB(false);
+                if (it.link) navigate(it.link);
+              }}
+              className="w-full text-left px-3 py-2.5 hover:bg-slate-50 flex items-start gap-2.5"
+            >
+              <span className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${TONE[it.tone] || "bg-slate-300"}`} />
+              <span className="text-sm text-slate-700">{it.text}</span>
+            </button>
+          ))}
+          {(!d || d.items.length === 0) && (
+            <p className="text-sm text-slate-400 px-3 py-3 text-center">
+              Hozircha yangilik yo'q 👌
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type NotifItem = { icon: string; text: string; link?: string; tone: string };
 
 
 /** Tepadagi global qidiruv: 3 harfdan boshlab o'quvchilar va
@@ -439,8 +649,7 @@ export default function Layout() {
 function GlobalSearch() {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
-  const [res, setRes] = useState<{ students: SearchRow[];
-    leads: SearchRow[] } | null>(null);
+  const [res, setRes] = useState<SearchRes | null>(null);
   const [openS, setOpenS] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -456,7 +665,7 @@ function GlobalSearch() {
   useEffect(() => {
     if (q.trim().length < 3) { setRes(null); return; }
     const t = setTimeout(() => {
-      api.get<{ students: SearchRow[]; leads: SearchRow[] }>(
+      api.get<SearchRes>(
         `/search/students?q=${encodeURIComponent(q.trim())}`)
         .then((r) => { setRes(r); setOpenS(true); })
         .catch(() => setRes(null));
@@ -465,7 +674,8 @@ function GlobalSearch() {
   }, [q]);
 
   return (
-    <div className="absolute top-4 right-56 z-40 w-72" ref={boxRef}>
+    <div className="absolute top-4 left-14 right-28 sm:left-auto sm:right-[17rem] z-40 sm:w-72"
+         ref={boxRef}>
       <div className="relative">
         <Search size={14}
           className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -509,7 +719,50 @@ function GlobalSearch() {
               <p className="text-xs text-slate-400">{l.status_label}</p>
             </button>
           ))}
-          {res.students.length === 0 && res.leads.length === 0 && (
+          {(res.groups || []).length > 0 && (
+            <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400 border-t border-slate-100">
+              Guruhlar
+            </p>
+          )}
+          {(res.groups || []).map((g) => (
+            <button key={`g${g.id}`}
+              onClick={() => { setOpenS(false); setQ("");
+                navigate(`/groups/${g.id}`); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50">
+              <p className="text-sm text-slate-800">{g.name}</p>
+            </button>
+          ))}
+          {(res.teachers || []).length > 0 && (
+            <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400 border-t border-slate-100">
+              Ustozlar
+            </p>
+          )}
+          {(res.teachers || []).map((t) => (
+            <button key={`t${t.id}`}
+              onClick={() => { setOpenS(false); setQ("");
+                navigate("/teachers"); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50">
+              <p className="text-sm text-slate-800">{t.name}</p>
+            </button>
+          ))}
+          {(res.staff || []).length > 0 && (
+            <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400 border-t border-slate-100">
+              Xodimlar
+            </p>
+          )}
+          {(res.staff || []).map((u) => (
+            <button key={`u${u.id}`}
+              onClick={() => { setOpenS(false); setQ("");
+                navigate("/users"); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50">
+              <p className="text-sm text-slate-800">{u.name}</p>
+              <p className="text-xs text-slate-400">{u.status_label}</p>
+            </button>
+          ))}
+          {res.students.length === 0 && res.leads.length === 0 &&
+            (res.groups || []).length === 0 &&
+            (res.teachers || []).length === 0 &&
+            (res.staff || []).length === 0 && (
             <p className="text-sm text-slate-400 px-3 py-2.5">
               Topilmadi.
             </p>
@@ -523,4 +776,10 @@ function GlobalSearch() {
 type SearchRow = {
   id: number; name: string; group?: string | null;
   status_label: string;
+};
+type SearchRes = {
+  students: SearchRow[]; leads: SearchRow[];
+  groups?: { id: number; name: string }[];
+  teachers?: { id: number; name: string }[];
+  staff?: SearchRow[];
 };

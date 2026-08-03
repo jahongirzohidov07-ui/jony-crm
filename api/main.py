@@ -596,6 +596,7 @@ def login(payload: schemas.LoginRequest, db: Session = Depends(get_db)):
     token = create_access_token({"sub": user.username})
     # Oy boshida birinchi kirishda oylik to'lovlar avtomat yechiladi
     try:
+        _founder_name_fix(db)
         _ensure_month_charges(db)
     except Exception:
         pass
@@ -11589,6 +11590,20 @@ def reset_permissions(
               field="Ruxsatlar", new_value="standart holatga qaytarildi",
               commit=True)
     return {"reset": n}
+
+
+@app.get("/api/me")
+def my_identity(user=Depends(get_current_user)):
+    """Kim ekanini yengil qaytaradi. Frontend login paytida keshlagan
+    ism/rolni har ochilishda shu yerdan yangilab oladi — ism serverda
+    o'zgarsa (masalan Administrator -> Asoschi) burchakdagi profil
+    chipida eskirib qolmasligi uchun."""
+    return {
+        "full_name": user.full_name,
+        "role": user.role,
+        "branch_id": user.branch_id,
+        "role_label": roles.UZ_LABELS.get(user.role, user.role),
+    }
 
 
 @app.get("/api/me/permissions")
@@ -23967,19 +23982,23 @@ def _ensure_month_charges(db: Session):
         db.commit()
 
 
+def _founder_name_fix(db: Session):
+    """Asoschi akkaunti "Administrator" deb nomlangan edi — markazda
+    administrator deganda sotuv menejeri tushuniladi, chalkashadi."""
+    f = db.query(models.User).filter(
+        models.User.role == roles.FOUNDER,
+        models.User.full_name == "Administrator").first()
+    if f:
+        f.full_name = "Asoschi"
+        db.commit()
+
+
 @app.on_event("startup")
 def _charges_on_startup():
     try:
         from database import SessionLocal
         db = SessionLocal()
-        # Asoschi akkaunti "Administrator" deb nomlangan edi — markazda
-        # administrator deganda sotuv menejeri tushuniladi, chalkashadi.
-        f = db.query(models.User).filter(
-            models.User.role == roles.FOUNDER,
-            models.User.full_name == "Administrator").first()
-        if f:
-            f.full_name = "Asoschi"
-            db.commit()
+        _founder_name_fix(db)
         _ensure_month_charges(db)
         db.close()
     except Exception:

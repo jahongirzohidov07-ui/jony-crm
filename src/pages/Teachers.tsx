@@ -14,6 +14,7 @@ import {
   ACCOUNT_MANAGE, can, FOUNDER, ACADEMIC_HEAD,
  SUPPORT_ASSIGN } from "../lib/roles";
 import { formatDate } from "../lib/format";
+import { SUBJECTS, subjectLabel } from "../lib/subjects";
 import { SalaryCard } from "../components/SalaryCard";
 import { TeacherScoreboard } from "../components/TeacherScoreboard";
 import { CareerCard } from "../components/Career";
@@ -37,12 +38,16 @@ function TeacherModal({
   const [fullName, setFullName] = useState(initial?.full_name ?? "");
   const [phone, setPhone] = useState(initial?.phone ?? "");
   const [subject, setSubject] = useState(initial?.subject ?? "");
-  const [branchId, setBranchId] = useState(
-    initial?.branch_id
-      ? String(initial.branch_id)
+  // Ustoz 2-3 filialda ishlashi mumkin — bir nechtasini belgilash mumkin.
+  // Birinchi belgilangani "asosiy" hisoblanadi.
+  const [branchIds, setBranchIds] = useState<number[]>(
+    initial?.branch_ids?.length
+      ? initial.branch_ids
+      : initial?.branch_id
+      ? [initial.branch_id]
       : defaultBranchId
-      ? String(defaultBranchId)
-      : ""
+      ? [defaultBranchId]
+      : []
   );
   const [hiredDate, setHiredDate] = useState(
     initial?.hired_date ?? new Date().toISOString().slice(0, 10)
@@ -87,7 +92,8 @@ function TeacherModal({
         full_name: fullName,
         phone: phone || null,
         subject: subject || null,
-        branch_id: branchId ? Number(branchId) : null,
+        branch_id: branchIds[0] ?? null,
+        branch_ids: branchIds,
         hired_date: hiredDate || null,
         is_active: initial ? initial.is_active ?? 1 : 1,
         grade: grade || null,
@@ -140,11 +146,19 @@ function TeacherModal({
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">Fan</label>
-            <input
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            <select
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-            />
+            >
+              <option value="">— tanlanmagan —</option>
+              {SUBJECTS.map((s) => (
+                <option key={s.key} value={s.key}>{s.label}</option>
+              ))}
+              {subject && !SUBJECTS.some((s) => s.key === subject) && (
+                <option value={subject}>{subject}</option>
+              )}
+            </select>
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
@@ -246,19 +260,35 @@ function TeacherModal({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Filial</label>
-            <select
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-              value={branchId}
-              onChange={(e) => setBranchId(e.target.value)}
-            >
-              <option value="">— tanlanmagan —</option>
-              {branches.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.name}
-                </option>
-              ))}
-            </select>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Filiallar (bir nechtasini belgilash mumkin)
+            </label>
+            <div className="flex flex-wrap gap-1.5">
+              {branches.map((b) => {
+                const on = branchIds.includes(b.id);
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() =>
+                      setBranchIds((prev) =>
+                        on ? prev.filter((x) => x !== b.id) : [...prev, b.id]
+                      )
+                    }
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
+                      on
+                        ? "bg-brand-50 border-brand-400 text-brand-700"
+                        : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                    }`}
+                  >
+                    {b.name}
+                    {on && branchIds[0] === b.id && branchIds.length > 1 && (
+                      <span className="ml-1 opacity-60">(asosiy)</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
@@ -482,7 +512,7 @@ export default function Teachers() {
                       )}
                     </td>
                     <td className="px-4 py-3 text-slate-600">{t.phone || "—"}</td>
-                    <td className="px-4 py-3 text-slate-600">{t.subject || "—"}</td>
+                    <td className="px-4 py-3 text-slate-600">{subjectLabel(t.subject) || "—"}</td>
                     <td className="px-4 py-3">
                       <button
                         onClick={() => setCareer(t.id)}
@@ -500,7 +530,7 @@ export default function Teachers() {
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{t.branch?.name || "—"}</td>
+                    <td className="px-4 py-3 text-slate-600">{t.branches_label || t.branch?.name || "—"}</td>
                     <td className="px-4 py-3 text-slate-500">
                       {t.hired_date ? formatDate(t.hired_date) : "—"}
                     </td>

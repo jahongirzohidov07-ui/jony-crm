@@ -497,7 +497,7 @@ try:
 except Exception:
     pass
 
-app = FastAPI(title="Jony Academy CRM API")
+app = FastAPI(title="JonyOS API — Jony Academy boshqaruv tizimi")
 
 
 @app.exception_handler(Exception)

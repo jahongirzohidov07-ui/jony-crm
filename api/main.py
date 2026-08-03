@@ -3608,18 +3608,59 @@ def report_teacher_retention(
 
 
 # ------------------------------------------------------------ Teachers ----
+def _sync_teacher_branches(db: Session, teacher, branch_ids: list):
+    """Ustozning filiallar ro'yxatini yangilaydi. Birinchisi asosiy
+    (Teacher.branch_id), qolganlari teacher_branches jadvalида."""
+    db.query(models.TeacherBranch).filter(
+        models.TeacherBranch.teacher_id == teacher.id).delete()
+    seen = set()
+    for bid in branch_ids:
+        if not bid or bid in seen:
+            continue
+        seen.add(bid)
+        if bid == teacher.branch_id:
+            continue
+        db.add(models.TeacherBranch(teacher_id=teacher.id, branch_id=bid))
+
+
+def _teacher_branch_map(db: Session) -> dict:
+    """teacher_id -> qo'shimcha filial idlari (teacher_branches dan)."""
+    out = {}
+    for tb in db.query(models.TeacherBranch).all():
+        out.setdefault(tb.teacher_id, []).append(tb.branch_id)
+    return out
+
+
 @app.get("/api/teachers", response_model=List[schemas.TeacherOut])
 def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user)):
-    q = scope_to_branch(db.query(models.Teacher), models.Teacher, user)
-    rows = q.order_by(models.Teacher.full_name).all()
+    extra = _teacher_branch_map(db)
+    # Filialga bog'langan xodim: asosiy filiali YOKI qo'shimcha
+    # filiallaridan biri unga tegishli ustozlarni ko'radi.
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        rows = [t for t in db.query(models.Teacher)
+                .order_by(models.Teacher.full_name).all()
+                if t.branch_id == user.branch_id
+                or user.branch_id in extra.get(t.id, [])]
+    else:
+        rows = (db.query(models.Teacher)
+                .order_by(models.Teacher.full_name).all())
     # Loginni ko'rsatish uchun bitta so'rov — har bir ustoz uchun alohida
     # so'rov yubormaymiz.
     ids = [t.user_id for t in rows if t.user_id]
     logins = {u.id: u.username for u in db.query(models.User)
               .filter(models.User.id.in_(ids or [-1])).all()}
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    out = []
     for t in rows:
         t.login = logins.get(t.user_id)
-    return rows
+        item = schemas.TeacherOut.model_validate(t)
+        all_ids = ([t.branch_id] if t.branch_id else []) + \
+            [b for b in extra.get(t.id, []) if b != t.branch_id]
+        item.branch_ids = all_ids
+        item.branches_label = ", ".join(
+            bnames.get(b, "?") for b in all_ids) or None
+        out.append(item)
+    return out
 
 
 @app.post("/api/teachers", response_model=schemas.TeacherOut)
@@ -3628,7 +3669,11 @@ def create_teacher(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
-    teacher = models.Teacher(**payload.model_dump())
+    data = payload.model_dump()
+    branch_ids = data.pop("branch_ids", None) or []
+    if branch_ids and not data.get("branch_id"):
+        data["branch_id"] = branch_ids[0]
+    teacher = models.Teacher(**data)
     # Daraja tanlanmagan bo'lsa - birinchisidan boshlaydi. Stavkasi
     # shu darajadan chiqadi, ya'ni guruh ochishda hech narsa
     # kiritilmasa ham to'g'ri hisoblanadi.
@@ -3642,6 +3687,7 @@ def create_teacher(
         teacher_id=teacher.id, from_grade=None, to_grade=teacher.grade,
         kind="set", effective_from=teacher.grade_since,
         reason="Ishga qabul qilindi", decided_by=user.full_name))
+    _sync_teacher_branches(db, teacher, branch_ids)
     db.commit()
     return teacher
 
@@ -3658,8 +3704,13 @@ def update_teacher(
         raise HTTPException(404, "O'qituvchi topilmadi")
     given = payload.model_dump(exclude_unset=True)
     new_grade = given.pop("grade", None)
+    branch_ids = given.pop("branch_ids", None)
+    if branch_ids:
+        given["branch_id"] = branch_ids[0]
     for k, v in given.items():
         setattr(teacher, k, v)
+    if branch_ids is not None:
+        _sync_teacher_branches(db, teacher, branch_ids or [])
     _sync_teacher_left_date(teacher)
 
     # Daraja o'zgarsa - tarixga yoziladi va guruh stavkalari yangilanadi.

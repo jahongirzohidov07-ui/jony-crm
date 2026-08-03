@@ -105,6 +105,9 @@ class TeacherCreate(BaseModel):
     birth_date: Optional[date] = None
     skill_score: Optional[float] = None
     support_months: Optional[float] = None
+    # Ustoz ishlaydigan BARCHA filiallar (2-3 filialda ishlashi mumkin).
+    # Berilsa: birinchisi asosiy (branch_id), qolgani teacher_branches da.
+    branch_ids: Optional[List[int]] = None
 
 
 class TeacherOut(TeacherCreate):
@@ -118,6 +121,8 @@ class TeacherOut(TeacherCreate):
     # Tizimga kirish hisobi bor-yo'qligi ro'yxatda ko'rinishi uchun
     user_id: Optional[int] = None
     login: Optional[str] = None
+    # Barcha filiallari nomlari ("Markaziy, Bekobod 2") — ro'yxat uchun
+    branches_label: Optional[str] = None
 
 
 # ---------- Ustoz darajasi ----------

@@ -719,6 +719,10 @@ SUBJECTS = [
     ("korean", "Koreys tili"),
     ("turkish", "Turk tili"),
     ("german", "Nemis tili"),
+    ("biology", "Biologiya"),
+    ("programming", "Dasturlash"),
+    ("mental_math", "Mental arifmetika"),
+    ("robotics", "Robototexnika"),
 ]
 SUBJECT_LABELS = dict(SUBJECTS)
 
@@ -742,12 +746,23 @@ ENGLISH_LEVELS = [
     ("cefr", "CEFR"),
 ]
 
+# Til bo'lmagan fanlar (masalan biologiya) uchun oddiy bosqichlar
+COURSE_LEVELS = [
+    ("basic", "Boshlang'ich"),
+    ("intermediate", "O'rta"),
+    ("advanced", "Yuqori"),
+]
+
 SUBJECT_LEVELS = {
     "english": ENGLISH_LEVELS,
     "russian": CEFR_LEVELS,
     "korean": CEFR_LEVELS,
     "turkish": CEFR_LEVELS,
     "german": CEFR_LEVELS,
+    "biology": COURSE_LEVELS,
+    "programming": COURSE_LEVELS,
+    "mental_math": COURSE_LEVELS,
+    "robotics": COURSE_LEVELS,
 }
 
 # Barcha daraja kalitlari - tekshirish uchun

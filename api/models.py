@@ -2932,3 +2932,16 @@ class SchemaMigration(Base):
     id = Column(Integer, primary_key=True, index=True)
     version = Column(String, unique=True, nullable=False)
     applied_at = Column(DateTime, default=datetime.utcnow)
+
+
+class TeacherBranch(Base):
+    """Ustoz ishlaydigan QO'SHIMCHA filiallar. Ba'zi ustozlar 2-3
+    filialda dars beradi — asosiysi Teacher.branch_id da, qolganlari
+    shu yerda. Filial rahbari ro'yxatida ikkalasi ham hisobga olinadi."""
+    __tablename__ = "teacher_branches"
+
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"),
+                       nullable=False, index=True)

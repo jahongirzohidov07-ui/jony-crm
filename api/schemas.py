@@ -2124,3 +2124,17 @@ class RecoverIn(BaseModel):
     username: str
     recovery_code: str
     new_password: str
+
+
+class TeacherImportRow(BaseModel):
+    """Excel'dan (masalan, LC UP eksporti) bitta ustoz qatori."""
+    full_name: str
+    phone: Optional[str] = None
+    birth_date: Optional[str] = None   # "YYYY-MM-DD" yoki bo'sh
+    note: Optional[str] = None         # guruhlari kabi qo'shimcha
+    per_student_rate: Optional[float] = None
+
+
+class TeacherImportIn(BaseModel):
+    rows: List[TeacherImportRow]
+    branch_id: Optional[int] = None

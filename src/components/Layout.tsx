@@ -360,7 +360,7 @@ export default function Layout() {
           <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
             <School className="text-white" size={18} />
           </div>
-          <span className="font-semibold text-slate-900">Jony CRM</span>
+          <span className="font-semibold text-slate-900">JonyOS</span>
           <button
             onClick={() => setMobileOpen(false)}
             className="ml-auto md:hidden text-slate-400 p-1"

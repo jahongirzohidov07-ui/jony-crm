@@ -236,6 +236,83 @@ for _m in re.finditer(r"(\w+)\s*=\s*(True|False)\b", _main):
         _bad.append(f"main.py:{_line} {_m.group(1)}")
 ck("butun sonli ustunga True berilmagan", _bad, [])
 
+print("\n=== 12. NOM TO'QNASHUVI ===")
+
+# main.py 19 mingdan ortiq qatorli. Bir xil nomli ikkinchi funksiya
+# yoki klass birinchisini JIMGINA almashtiradi va xato ancha keyin,
+# butunlay boshqa joyda chiqadi. Shuning uchun har safar tekshiramiz.
+# Ruxsat: bir xil manbali takror (zararsiz) va FastAPI yo'llari —
+# ular yo'l bo'yicha ro'yxatga olinadi, nom ahamiyatsiz.
+import ast, collections
+_here = os.path.dirname(os.path.abspath(__file__))
+
+
+def _clashes(_src):
+    """Bir xil nomli ikkinchi ta'rif birinchisini JIMGINA almashtiradi.
+    Ruxsat: aynan bir xil manba (zararsiz takror) va FastAPI yo'llari."""
+    _tree = ast.parse(_src)
+    _defs = collections.defaultdict(list)
+    for _n in _tree.body:
+        if isinstance(_n, (ast.FunctionDef, ast.AsyncFunctionDef,
+                           ast.ClassDef)):
+            _defs[_n.name].append(_n)
+    _out = []
+    for _name, _nodes in _defs.items():
+        if len(_nodes) < 2:
+            continue
+        if len({ast.get_source_segment(_src, _x) for _x in _nodes}) == 1:
+            continue
+        if all(getattr(_x, "decorator_list", None) for _x in _nodes):
+            continue
+        _out.append(f"{_name} ({', '.join(str(_x.lineno) for _x in _nodes)})")
+    return _out
+
+
+# roles.py ni ham tekshiramiz: u butun loyihaning umumiy lug'ati,
+# u yerdagi jimgina almashtirish eng uzoqqa ketadi.
+for _f in ("main.py", "roles.py", "models.py", "schemas.py"):
+    ck(f"{_f} da bir xil nomli ta'rif yo'q",
+       _clashes(open(os.path.join(_here, _f)).read()), [])
+
+
+def _const_clashes(_src):
+    """roles.py dagi modul darajasidagi takroriy KONSTANTA — xuddi
+    funksiya kabi jimgina almashtiradi (CONTENT_FORMATS bilan
+    bo'lgani kabi)."""
+    _tree = ast.parse(_src)
+    _names = collections.defaultdict(list)
+    for _n in _tree.body:
+        if isinstance(_n, ast.Assign):
+            for _t in _n.targets:
+                if isinstance(_t, ast.Name) and _t.id.isupper():
+                    _names[_t.id].append(_n.lineno)
+    return [f"{k} ({', '.join(map(str, v))})"
+            for k, v in _names.items() if len(v) > 1]
+
+
+ck("roles.py da takroriy konstanta yo'q",
+   _const_clashes(open(os.path.join(_here, "roles.py")).read()), [])
+
+print("\n=== 13. ANIQLANMAGAN NOM ===")
+
+# Funksiya ICHIDAGI mavjud bo'lmagan o'zgaruvchi import paytida
+# ko'rinmaydi — faqat o'sha satr ishga tushganda portlaydi. Katta
+# faylda regex bilan nom o'zgartirilsa aynan shu xato qoladi.
+import subprocess
+try:
+    _pf = subprocess.run(
+        [sys.executable, "-m", "pyflakes", "main.py", "roles.py",
+         "models.py", "schemas.py"],
+        cwd=os.path.dirname(os.path.abspath(__file__)),
+        capture_output=True, text=True, timeout=180)
+    _undef = [l for l in (_pf.stdout + _pf.stderr).splitlines()
+              if "undefined name" in l]
+    ck("aniqlanmagan nom yo'q", _undef, [])
+except FileNotFoundError:
+    print("O'TKAZILDI pyflakes o'rnatilmagan")
+except Exception as _e:
+    print(f"O'TKAZILDI pyflakes ishlamadi: {_e}")
+
 print()
 if fails:
     print(f"XATOLAR ({len(fails)}): " + ", ".join(fails))

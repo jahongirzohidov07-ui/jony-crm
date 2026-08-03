@@ -52,6 +52,9 @@ class User(Base):
     # Fiks oylik (so'm). Adminlar (sotuv menejeri) KPI'sida asos bo'ladi:
     # jami ish haqi = fiks + bonuslar. Faqat asoschi o'zgartira oladi.
     fix_salary = Column(Float, nullable=True)
+    # Favqulodda tiklash kodi (hash). Asoschi parolni unutsa, shu kod
+    # bilan yangi parol o'rnatadi — bazaga qo'l tiqishga hojat yo'q.
+    recovery_hash = Column(String, nullable=True)
 
     # ---- Xodim kartasi ----
     phone = Column(String, nullable=True)
@@ -295,6 +298,15 @@ class Student(Base):
     # balansini ko'radi va sovg'a so'ray oladi.
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
     note = Column(Text, nullable=True)
+    # Telegram: ota-ona botga /start KOD yozganda chat bog'lanadi va
+    # "darsga kelmadi", "to'lov qabul qilindi" xabarlari boradi.
+    tg_code = Column(String, nullable=True, index=True)
+    telegram_chat_id = Column(String, nullable=True)
+    # Ota-ona sahifasi: login-siz, taxmin qilib bo'lmaydigan havola.
+    parent_token = Column(String, nullable=True, index=True)
+    # Oxirgi tahrir vaqti — ikki xodim bir vaqtda tahrirlaganda
+    # "oxirgisi yutadi" o'rniga ogohlantirish berish uchun.
+    updated_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     group = relationship("Group", back_populates="students")
@@ -329,6 +341,8 @@ class Payment(Base):
     # qolmasligi (idempotentlik) shu maydon orqali tekshiriladi.
     period = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    # Summa tahrirlangan oxirgi vaqt — parallel tahrirda 409 uchun.
+    updated_at = Column(DateTime, nullable=True)
 
     student = relationship("Student", back_populates="payments")
 
@@ -2884,3 +2898,37 @@ class StudentReminder(Base):
     done = Column(Integer, default=0)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class LoginAttempt(Base):
+    """Kirish urinishlari — brute-force himoyasi. 15 daqiqada 5 marta
+    xato parol tersa, o'sha login vaqtincha bloklanadi."""
+    __tablename__ = "login_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, nullable=False, index=True)
+    ip = Column(String, nullable=True)
+    success = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+class ErrorLog(Base):
+    """Kutilmagan server xatolari. Foydalanuvchi aytishini kutmasdan
+    asoschi o'zi ko'rib turadi (Audit -> Tizim xatolari)."""
+    __tablename__ = "error_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    path = Column(String, nullable=True)
+    method = Column(String, nullable=True)
+    user_name = Column(String, nullable=True)
+    detail = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+class SchemaMigration(Base):
+    """Qo'llangan sxema o'zgarishlari ro'yxati. Har bir versiya bir
+    marta ishlaydi — 'except: pass' o'rniga tartibli migratsiya."""
+    __tablename__ = "schema_migrations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    version = Column(String, unique=True, nullable=False)
+    applied_at = Column(DateTime, default=datetime.utcnow)

@@ -281,6 +281,7 @@ class PaymentOut(BaseModel):
     created_by: Optional[str] = None
     period: Optional[str] = None
     created_at: datetime
+    updated_at: Optional[datetime] = None
 
 
 # ---------- Student ----------
@@ -304,6 +305,9 @@ class StudentCreate(BaseModel):
 
 class StudentUpdate(StudentCreate):
     full_name: Optional[str] = None
+    # Parallel tahrir himoyasi: klient o'zi ko'rgan versiya vaqtini
+    # yuboradi; serverdagisi boshqa bo'lsa 409 qaytadi.
+    expected_updated_at: Optional[str] = None
 
 
 class StudentOut(BaseModel):
@@ -353,6 +357,8 @@ class LeadCreate(BaseModel):
     note: Optional[str] = None
     branch_id: Optional[int] = None
     assigned_user_id: Optional[int] = None
+    # Telefon dublikat ogohlantirishidan keyin "baribir qo'shish"
+    force: Optional[bool] = False
 
 
 class LeadUpdate(BaseModel):
@@ -2104,3 +2110,17 @@ class ReminderIn(BaseModel):
 class PaymentEditIn(BaseModel):
     amount: float                     # yangi summa (musbat son kiritiladi)
     note: Optional[str] = None
+    expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
+
+
+class RecoverySetIn(BaseModel):
+    """Asoschi favqulodda tiklash kodini o'rnatadi."""
+    current_password: str
+    recovery_code: str
+
+
+class RecoverIn(BaseModel):
+    """Parol unutilganda: login + tiklash kodi + yangi parol."""
+    username: str
+    recovery_code: str
+    new_password: str

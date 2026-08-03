@@ -4461,3 +4461,30 @@ JUNIOR_PATH = [
 # rahbari. Pul hujjatiga tegish huquqi tor doirada bo'ladi, har bir
 # o'zgarish auditga yoziladi.
 PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER]
+
+# ---------------------------------------------------------------------------
+#  XAVFSIZLIK SIYOSATI
+# ---------------------------------------------------------------------------
+# Parol: kamida 8 belgi, ichida harf ham, raqam ham bo'lsin.
+PASSWORD_MIN = 8
+PASSWORD_RULE_TEXT = ("Parol kamida 8 belgi bo'lib, ichida harf ham, "
+                      "raqam ham bo'lishi kerak")
+
+
+def password_ok(pw: str) -> bool:
+    pw = pw or ""
+    return (len(pw) >= PASSWORD_MIN
+            and any(c.isalpha() for c in pw)
+            and any(c.isdigit() for c in pw))
+
+
+# Brute-force himoyasi: shu oynada shuncha xato — vaqtincha blok.
+LOGIN_MAX_FAILS = 5
+LOGIN_WINDOW_MIN = 15
+
+
+def money(x) -> float:
+    """Pul har doim butun so'mgacha yaxlitlanadi — Float ustunlarda
+    kasr qoldig'i yig'ilib ketmasligi uchun yozishdan oldin shu
+    yordamchidan o'tkaziladi."""
+    return float(round(x or 0))

@@ -11,14 +11,17 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func, or_
+from fastapi.responses import JSONResponse
+from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
 
 import audit
 import billing
+import migrations
 import models
+import notify
 import roles
 import schemas
 from auth import (
@@ -29,7 +32,7 @@ from auth import (
     verify_password,
     SECRET_KEY,
 )
-from database import Base, engine, get_db
+from database import Base, engine, get_db, SessionLocal
 
 Base.metadata.create_all(bind=engine)
 
@@ -485,7 +488,38 @@ def _backfill_public_ids():
 _ensure_new_columns()
 _backfill_public_ids()
 
+# Versiyalangan migratsiyalar — yangi ustunlar endi shu yerdan o'tadi
+# (backend/migrations.py), "except: pass" emas.
+try:
+    _mdb = SessionLocal()
+    migrations.run(_mdb)
+    _mdb.close()
+except Exception:
+    pass
+
 app = FastAPI(title="Jony Academy CRM API")
+
+
+@app.exception_handler(Exception)
+async def _unhandled_error(request: Request, exc: Exception):
+    """Kutilmagan xato: foydalanuvchi aytishini kutmasdan error_logs
+    jadvaliga yozamiz — asoschi Audit bo'limida ko'radi."""
+    try:
+        import traceback
+        edb = SessionLocal()
+        edb.add(models.ErrorLog(
+            path=str(request.url.path)[:200],
+            method=request.method,
+            detail="".join(traceback.format_exception(
+                type(exc), exc, exc.__traceback__))[-4000:],
+        ))
+        edb.commit()
+        edb.close()
+    except Exception:
+        pass
+    return JSONResponse(status_code=500, content={
+        "detail": "Serverda kutilmagan xato. Bu xato qayd etildi va "
+                  "tez orada ko'rib chiqiladi."})
 
 app.add_middleware(
     CORSMiddleware,
@@ -586,13 +620,47 @@ def can_see_all_branches(user: models.User) -> bool:
 
 
 # ---------------------------------------------------------------- Auth ----
+def _login_guard(db: Session, username: str, ip: str = ""):
+    """Brute-force himoyasi: 15 daqiqada 5 marta xato parol —
+    vaqtincha blok. Muvaffaqiyatli kirish hisoblagichni tozalaydi."""
+    since = datetime.utcnow() - timedelta(minutes=roles.LOGIN_WINDOW_MIN)
+    fails = db.query(models.LoginAttempt).filter(
+        models.LoginAttempt.username == username,
+        models.LoginAttempt.success == 0,
+        models.LoginAttempt.created_at >= since).count()
+    if fails >= roles.LOGIN_MAX_FAILS:
+        raise HTTPException(
+            429, f"Ko'p noto'g'ri urinish. {roles.LOGIN_WINDOW_MIN} "
+                 "daqiqadan keyin qayta urinib ko'ring.")
+
+
+def _login_record(db: Session, username: str, ip: str, success: bool):
+    try:
+        db.add(models.LoginAttempt(username=username, ip=ip or None,
+                                   success=1 if success else 0))
+        if success:
+            # Muvaffaqiyatdan keyin eski xatolar hisobga kirmasin
+            db.query(models.LoginAttempt).filter(
+                models.LoginAttempt.username == username,
+                models.LoginAttempt.success == 0).delete()
+        db.commit()
+    except Exception:
+        db.rollback()
+
+
 @app.post("/api/auth/login", response_model=schemas.Token)
-def login(payload: schemas.LoginRequest, db: Session = Depends(get_db)):
+def login(payload: schemas.LoginRequest, request: Request,
+          db: Session = Depends(get_db)):
+    ip = (request.headers.get("x-forwarded-for") or
+          (request.client.host if request.client else "") or "")[:64]
+    _login_guard(db, payload.username, ip)
     user = db.query(models.User).filter(models.User.username == payload.username).first()
     if not user or not verify_password(payload.password, user.password_hash):
+        _login_record(db, payload.username, ip, False)
         raise HTTPException(status_code=401, detail="Login yoki parol noto'g'ri")
     if not user.is_active:
         raise HTTPException(status_code=401, detail="Bu hisob faolsizlantirilgan")
+    _login_record(db, payload.username, ip, True)
     token = create_access_token({"sub": user.username})
     # Oy boshida birinchi kirishda oylik to'lovlar avtomat yechiladi
     try:
@@ -603,6 +671,52 @@ def login(payload: schemas.LoginRequest, db: Session = Depends(get_db)):
     return schemas.Token(
         access_token=token, role=user.role, full_name=user.full_name, branch_id=user.branch_id
     )
+
+
+@app.put("/api/auth/recovery-code")
+def set_recovery_code(payload: schemas.RecoverySetIn,
+                      db: Session = Depends(get_db),
+                      user: models.User = Depends(require_role(roles.FOUNDER))):
+    """Asoschi favqulodda tiklash kodini o'rnatadi. Parol unutilsa,
+    shu kod bilan tiklanadi — tizim egasiz qolib ketmaydi."""
+    if not verify_password(payload.current_password, user.password_hash):
+        raise HTTPException(400, "Joriy parol noto'g'ri")
+    code = (payload.recovery_code or "").strip()
+    if len(code) < 10:
+        raise HTTPException(400, "Tiklash kodi kamida 10 belgi bo'lsin")
+    user.recovery_hash = hash_password(code)
+    db.commit()
+    audit.log(db, user, entity="user", action="recovery_set",
+              entity_id=user.id, entity_label=user.full_name)
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/auth/recover")
+def recover_password(payload: schemas.RecoverIn, request: Request,
+                     db: Session = Depends(get_db)):
+    """Parolni tiklash kodi bilan almashtirish (faqat asoschi hisobi).
+    Login himoyasi bilan bir xil blok qoidasi amal qiladi."""
+    ip = (request.headers.get("x-forwarded-for") or
+          (request.client.host if request.client else "") or "")[:64]
+    _login_guard(db, payload.username, ip)
+    user = db.query(models.User).filter(
+        models.User.username == payload.username,
+        models.User.role == roles.FOUNDER).first()
+    if not user or not user.recovery_hash or \
+            not verify_password(payload.recovery_code, user.recovery_hash):
+        _login_record(db, payload.username, ip, False)
+        raise HTTPException(401, "Login yoki tiklash kodi noto'g'ri")
+    if not roles.password_ok(payload.new_password):
+        raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
+    user.password_hash = hash_password(payload.new_password)
+    db.commit()
+    _login_record(db, payload.username, ip, True)
+    audit.log(db, None, entity="user", action="recover",
+              entity_id=user.id, entity_label=user.full_name,
+              note="parol tiklash kodi bilan almashtirildi")
+    db.commit()
+    return {"ok": True}
 
 
 @app.get("/api/auth/me", response_model=schemas.UserOut)
@@ -618,10 +732,8 @@ def change_own_password(
 ):
     if not verify_password(payload.current_password, user.password_hash):
         raise HTTPException(status_code=400, detail="Joriy parol noto'g'ri")
-    if len(payload.new_password) < 6:
-        raise HTTPException(
-            status_code=400, detail="Yangi parol kamida 6 belgidan iborat bo'lishi kerak"
-        )
+    if not roles.password_ok(payload.new_password):
+        raise HTTPException(status_code=400, detail=roles.PASSWORD_RULE_TEXT)
     user.password_hash = hash_password(payload.new_password)
     db.commit()
     return {"ok": True}
@@ -845,6 +957,8 @@ def create_user(
                                  "qo'sha olasiz")
     if db.query(models.User).filter(models.User.username == payload.username).first():
         raise HTTPException(400, "Bu login band, boshqasini tanlang")
+    if not roles.password_ok(payload.password):
+        raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
 
     new_user = models.User(
         username=payload.username,
@@ -941,6 +1055,8 @@ def update_user(
             target.exit_type = None
             target.exit_reason = None
     if payload.password:
+        if not roles.password_ok(payload.password):
+            raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
         target.password_hash = hash_password(payload.password)
     # Fiks oylik - KPI hisobining asosi, shuning uchun uni faqat asoschi
     # (roles.USER_ADMIN) o'zgartira oladi; endpoint allaqachon shu bilan
@@ -1171,6 +1287,38 @@ def create_lead(
     if not payload.full_name.strip():
         raise HTTPException(400, "Ism-familiyani kiriting")
     _validate_lead_fields(payload.source, payload.stage)
+
+    # DUBLIKAT: shu telefon bilan lid yoki o'quvchi allaqachon bormi?
+    # Bitta odam ikki marta yozilib ketmasin. "force" bilan baribir
+    # qo'shish mumkin (masalan, aka-uka bitta raqamdan yozilsa).
+    digits = "".join(ch for ch in (payload.phone or "") if ch.isdigit())
+    if digits and len(digits) >= 7 and not payload.force:
+        tail = digits[-9:]
+        dup_lead = None
+        for l in db.query(models.Lead).filter(
+                models.Lead.phone.isnot(None),
+                models.Lead.stage.notin_(("rejected",))).all():
+            d = "".join(ch for ch in (l.phone or "") if ch.isdigit())
+            if d and d[-9:] == tail:
+                dup_lead = l
+                break
+        dup_student = None
+        if not dup_lead:
+            for s in db.query(models.Student).filter(
+                    models.Student.status != "archived").all():
+                for ph in (s.phone, s.parent_phone):
+                    d = "".join(ch for ch in (ph or "") if ch.isdigit())
+                    if d and d[-9:] == tail:
+                        dup_student = s
+                        break
+                if dup_student:
+                    break
+        if dup_lead or dup_student:
+            who = dup_lead.full_name if dup_lead else dup_student.full_name
+            kind = "lid" if dup_lead else "o'quvchi"
+            raise HTTPException(
+                409, f"Bu telefon raqami bilan {kind} allaqachon bor: "
+                     f"{who}. Baribir qo'shish uchun tasdiqlang.")
 
     # Bosqich berilmasa, manbaga qarab o'zi tanlanadi: tashrif bilan kelgan
     # odam "unga qo'ng'iroq qilish kerak" bosqichini o'tib bo'lgan.
@@ -1653,6 +1801,7 @@ def save_attendance(
         for a in db.query(models.Attendance).filter(
             models.Attendance.lesson_id == lesson_id).all()
     }
+    newly_absent = []  # Telegram: "darsga kelmadi" xabari uchun
     for m in payload.marks:
         # Belgini olib tashlash: o'quvchi "belgilanmagan"ga qaytadi
         # va shu dars uchun oylikka kirmaydi
@@ -1667,6 +1816,8 @@ def save_attendance(
         # (soat belgisi bilan) ko'rinadi.
         val = (2 if m.late else 1) if m.present else 0
         row = existing.get(m.student_id)
+        if val == 0 and (row is None or (row.present or 0) != 0):
+            newly_absent.append(m.student_id)
         if row:
             row.present = val
             # Tekshirilmagan bo'lsa eskisiga tegilmaydi — ustoz
@@ -1693,6 +1844,23 @@ def save_attendance(
     else:
         lesson.held = 0
     db.commit()
+
+    # Telegram: BUGUNGI darsga kelmagan bola haqida ota-onaga xabar.
+    # Faqat yangi belgilanganlarga — tuzatishlarda qayta ketmaydi.
+    if newly_absent and lesson.date == _today and notify.enabled():
+        try:
+            g_name = (db.query(models.Group).get(lesson.group_id).name
+                      if lesson.group_id else "")
+            for sid in newly_absent:
+                st = db.query(models.Student).get(sid)
+                if st is not None and st.telegram_chat_id:
+                    notify.send(
+                        st.telegram_chat_id,
+                        f"❗ {st.full_name} bugun ({lesson.date:%d.%m}) "
+                        f"{g_name} darsiga kelmadi.\nSababini bilsangiz, "
+                        "administratorga xabar bering.")
+        except Exception:
+            pass
 
     # AVTOMAT XP: kelgani uchun ball va davomat ketma-ketligi.
     # Ustoz hech narsa bosmaydi.
@@ -3935,10 +4103,17 @@ def list_students(
         query = query.filter(models.Student.group_id.in_(gids or [-1]))
 
     students = query.order_by(models.Student.full_name).all()
-    rows = [to_student_out(db, s) for s in students]
-    if own_only:
-        for r in rows:
-            r.balance = 0.0
+    # TEZLIK: balanslar bitta so'rovda (har o'quvchiga alohida so'rov —
+    # N+1 — 2-3 ming o'quvchida sahifani sekinlashtirib yuborardi).
+    balances = dict(
+        db.query(models.Payment.student_id,
+                 func.coalesce(func.sum(models.Payment.amount), 0.0))
+        .group_by(models.Payment.student_id).all())
+    rows = []
+    for s in students:
+        r = schemas.StudentOut.model_validate(s)
+        r.balance = 0.0 if own_only else float(balances.get(s.id, 0) or 0)
+        rows.append(r)
     return rows
 
 
@@ -3959,6 +4134,10 @@ def get_student(
         out.balance = 0.0
         out.payments = []
         return out
+    # FILIAL AUDITI: filialga bog'langan xodim faqat o'z filialini ko'radi
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and s.branch_id and s.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     out.balance = student_balance(db, s.id)
     out.payments = [schemas.PaymentOut.model_validate(p) for p in s.payments]
     return out
@@ -3997,7 +4176,21 @@ def update_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
+    # Filialga bog'langan xodim boshqa filial o'quvchisini tahrirlamaydi
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and s.branch_id and s.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     changes = payload.model_dump(exclude_unset=True)
+
+    # Parallel tahrir himoyasi: men ochgan versiyadan keyin boshqa
+    # xodim o'zgartirgan bo'lsa — ustidan yozmaymiz.
+    expected = changes.pop("expected_updated_at", None)
+    if expected is not None:
+        server_v = s.updated_at.isoformat() if s.updated_at else ""
+        if server_v != expected:
+            raise HTTPException(
+                409, "Bu kartani shu orada boshqa xodim o'zgartirdi. "
+                     "Sahifani yangilab, qaytadan urinib ko'ring.")
 
     # Yangi guruhga o'tkazilyaptimi - sig'im va daraja tekshiriladi.
     new_gid = changes.get("group_id")
@@ -4012,6 +4205,7 @@ def update_student(
     audit.log_changes(db, user, entity="student", obj=s, changes=changes)
     for k, v in changes.items():
         setattr(s, k, v)
+    s.updated_at = datetime.utcnow()
     _sync_student_left_date(s)
     db.commit()
     db.refresh(s)
@@ -4040,6 +4234,17 @@ def delete_student(
 def list_payments(
     student_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)
 ):
+    # FILIAL AUDITI: pul tarixi — eng nozik ma'lumot. Ustozga umuman
+    # ko'rinmaydi, filialga bog'langan xodimga faqat o'z filiali.
+    if user.role in tuple(roles.OWN_GROUPS_ONLY) or \
+            user.role in (roles.STUDENT, roles.PARENT):
+        raise HTTPException(403, "To'lov tarixi sizga ochiq emas")
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "Talaba topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and s.branch_id and s.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     return (
         db.query(models.Payment)
         .filter(models.Payment.student_id == student_id)
@@ -4059,7 +4264,8 @@ def add_payment(
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
 
-    amount = payload.amount
+    # Pul har doim butun so'm — kasr qoldiqlari yig'ilib ketmasin
+    amount = roles.money(payload.amount)
     if payload.kind in ("charge", "discount") and amount > 0:
         # charges/discounts reduce balance, so store as negative internally
         amount = -abs(amount)
@@ -4105,6 +4311,19 @@ def add_payment(
     if payload.kind == "payment" and s.status == "trial":
         if _maybe_auto_activate(db, s, user=user, paid=True):
             db.commit()
+
+    # Telegram: ota-onaga chek — to'lov qabul qilindi (bog'langan bo'lsa)
+    if payload.kind == "payment" and s.telegram_chat_id:
+        try:
+            bal = student_balance(db, s.id)
+            notify.send(
+                s.telegram_chat_id,
+                f"✅ To'lov qabul qilindi\n{s.full_name}\n"
+                f"Summa: {int(amount):,} so'm".replace(",", " ") +
+                f"\nQoldiq balans: {int(bal):,} so'm".replace(",", " ") +
+                f"\nQabul qildi: {user.full_name}")
+        except Exception:
+            pass
 
     db.refresh(payment)
     return payment
@@ -14003,6 +14222,8 @@ def link_student_account(
     if db.query(models.User).filter(
             models.User.username == payload.username).first():
         raise HTTPException(400, "Bu login band")
+    if not roles.password_ok(payload.password):
+        raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
 
     u = models.User(
         username=payload.username,
@@ -23944,6 +24165,15 @@ def _ensure_month_charges(db: Session):
     if today.day == 1 and now.hour < 5:
         return
     period = f"{today.year:04d}-{today.month:02d}"
+    # POYGA HIMOYASI: bir vaqtda ikki server nusxasi ishga tushsa,
+    # ikkalasi ham "hali yechilmagan" deb o'ylab QAYTA yechmasin.
+    # Postgres advisory lock tranzaksiya tugaguncha ushlab turadi;
+    # SQLite (test) bitta jarayon bo'lgani uchun kerak emas.
+    try:
+        if db.get_bind().dialect.name == "postgresql":
+            db.execute(text("SELECT pg_advisory_xact_lock(917201)"))
+    except Exception:
+        pass
     done = db.query(models.Payment).filter(
         models.Payment.kind == "charge",
         models.Payment.period == period,
@@ -23970,7 +24200,7 @@ def _ensure_month_charges(db: Session):
                 continue
             db.add(models.Payment(
                 student_id=c["student_id"],
-                amount=-abs(c["amount"]),
+                amount=-roles.money(abs(c["amount"])),
                 kind="charge",
                 note=f"{g.name} - {period} oyi uchun "
                      f"{c.get('billable_lessons', '')} dars (avtomat)",
@@ -23980,6 +24210,18 @@ def _ensure_month_charges(db: Session):
             n += 1
     if n:
         db.commit()
+    # Muzlatilganlardan bugun qaytishi kerak bo'lganlar bo'yicha
+    # adminlarga Telegram eslatma yuborilmaydi (vazifa allaqachon
+    # tushgan) — bu yerda faqat eski jurnal yozuvlarini tozalaymiz.
+    try:
+        old = datetime.utcnow() - timedelta(days=30)
+        db.query(models.LoginAttempt).filter(
+            models.LoginAttempt.created_at < old).delete()
+        db.query(models.ErrorLog).filter(
+            models.ErrorLog.created_at < old).delete()
+        db.commit()
+    except Exception:
+        db.rollback()
 
 
 def _founder_name_fix(db: Session):
@@ -23993,16 +24235,42 @@ def _founder_name_fix(db: Session):
         db.commit()
 
 
-@app.on_event("startup")
-def _charges_on_startup():
-    try:
-        from database import SessionLocal
-        db = SessionLocal()
-        _founder_name_fix(db)
-        _ensure_month_charges(db)
-        db.close()
-    except Exception:
-        pass
+# Eslatma: ilgari bu ish @app.on_event("startup") da ham bajarilardi.
+# Endi olib tashlandi — sovuq startni sekinlashtirmasin. Avtoyechim
+# ikki yo'ldan kafolatlanadi: (1) Vercel cron har kuni 05:05 (Toshkent)
+# da /api/cron/daily ni chaqiradi; (2) har login'da tekshiriladi.
+@app.get("/api/cron/daily")
+def cron_daily(request: Request, db: Session = Depends(get_db)):
+    """Kunlik avtomat ishlar. Vercel Cron chaqiradi (vercel.json).
+    CRON_SECRET o'rnatilgan bo'lsa Authorization tekshiriladi; bo'lmasa
+    faqat Vercel cron user-agent qabul qilinadi. Qo'lda ham asoschi
+    chaqirsa bo'ladi (token bilan)."""
+    secret = os.environ.get("CRON_SECRET", "").strip()
+    auth_hdr = request.headers.get("authorization", "")
+    ua = request.headers.get("user-agent", "")
+    ok_call = False
+    if secret and auth_hdr == f"Bearer {secret}":
+        ok_call = True
+    elif ua.startswith("vercel-cron/"):
+        ok_call = True
+    else:
+        # Tizimga kirgan asoschi qo'lda ham ishga tushira oladi
+        try:
+            tok = auth_hdr.replace("Bearer ", "")
+            if tok:
+                from jose import jwt as _jwt
+                from auth import ALGORITHM as _alg
+                payload = _jwt.decode(tok, SECRET_KEY, algorithms=[_alg])
+                u = db.query(models.User).filter(
+                    models.User.username == payload.get("sub")).first()
+                ok_call = bool(u and u.role == roles.FOUNDER)
+        except Exception:
+            ok_call = False
+    if not ok_call:
+        raise HTTPException(403, "Ruxsat yo'q")
+    _founder_name_fix(db)
+    _ensure_month_charges(db)
+    return {"ok": True, "ran_at": datetime.utcnow().isoformat()}
 
 
 # --------------------------------------------- Zararsizlik nuqtasi ----
@@ -25052,7 +25320,8 @@ def global_student_search(q: str, db: Session = Depends(get_db),
         raise HTTPException(403, "Ruxsat yo'q")
     q = (q or "").strip()
     if len(q) < 3:
-        return {"students": [], "leads": []}
+        return {"students": [], "leads": [], "groups": [],
+                "teachers": [], "staff": []}
     like = f"%{q}%"
     sq = db.query(models.Student).filter(
         models.Student.status != "archived",
@@ -25086,7 +25355,34 @@ def global_student_search(q: str, db: Session = Depends(get_db),
             "id": l.id, "name": l.full_name, "group": None,
             "status_label": roles.LEAD_STAGE_LABELS.get(l.stage, l.stage),
         } for l in lq.order_by(models.Lead.full_name).limit(6).all()]
-    return {"students": students, "leads": leads}
+
+    # Guruh, ustoz, xodim ham qidiruvdan topiladi (ustozlarga emas)
+    found_groups, found_teachers, found_staff = [], [], []
+    if not own_only:
+        gq = db.query(models.Group).filter(models.Group.name.ilike(like))
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            gq = gq.filter(models.Group.branch_id == user.branch_id)
+        found_groups = [{"id": g.id, "name": g.name}
+                        for g in gq.order_by(models.Group.name)
+                        .limit(5).all()]
+        tq = db.query(models.Teacher).filter(
+            models.Teacher.is_active == 1,
+            models.Teacher.full_name.ilike(like))
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            tq = tq.filter(models.Teacher.branch_id == user.branch_id)
+        found_teachers = [{"id": t.id, "name": t.full_name}
+                          for t in tq.order_by(models.Teacher.full_name)
+                          .limit(5).all()]
+        if user.role in tuple(roles.STAFF_VIEWERS):
+            uq = db.query(models.User).filter(
+                models.User.is_active == 1,
+                models.User.full_name.ilike(like))
+            found_staff = [{
+                "id": u.id, "name": u.full_name,
+                "status_label": roles.UZ_LABELS.get(u.role, u.role),
+            } for u in uq.order_by(models.User.full_name).limit(5).all()]
+    return {"students": students, "leads": leads, "groups": found_groups,
+            "teachers": found_teachers, "staff": found_staff}
 
 
 # ------------------------------------ Guruh: uy vazifasi, tarix, izoh ----
@@ -25322,11 +25618,20 @@ def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     if payload.amount <= 0:
         raise HTTPException(400, "Summani musbat son bilan kiriting")
+    # Parallel tahrir: boshqa xodim shu orada o'zgartirgan bo'lsa —
+    # jimgina ustidan yozmaymiz, 409 bilan ogohlantiramiz.
+    if payload.expected_updated_at is not None:
+        server_v = p.updated_at.isoformat() if p.updated_at else ""
+        if server_v != payload.expected_updated_at:
+            raise HTTPException(
+                409, "Bu yozuvni shu orada boshqa xodim o'zgartirdi. "
+                     "Sahifani yangilab, qaytadan urinib ko'ring.")
     old = p.amount
     sign = -1 if (p.amount or 0) < 0 or p.kind == "charge" else 1
     p.amount = sign * abs(round(payload.amount, 0))
     if payload.note is not None and payload.note.strip():
         p.note = payload.note.strip()
+    p.updated_at = datetime.utcnow()
     db.commit()
     audit.log(db, user, entity="payment", action="amount_edit",
               entity_id=p.id,
@@ -25336,3 +25641,353 @@ def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
               new_value=f"{p.amount:,.0f}".replace(",", " "),
               branch_id=st.branch_id if st else None, commit=True)
     return {"ok": True, "amount": p.amount}
+
+
+# =====================================================================
+#  BILDIRISHNOMALAR QO'NG'IROG'I
+#
+#  Yangi jadval yo'q — mavjud ma'lumotdan rolga mos qisqa xulosalar:
+#  ochiq vazifalarim, bugun qaytishi kerak muzlatilganlar, muddati
+#  yaqin shartnoma/sertifikatlar, qarzdorlar soni. Xodim bo'limlarga
+#  kirib qaramasdan qo'ng'iroqchada ko'radi.
+# =====================================================================
+@app.get("/api/my/alerts")
+def my_alerts(db: Session = Depends(get_db),
+                     user=Depends(get_current_user)):
+    today = roles.local_today()
+    items = []
+
+    # 1) Mening ochiq vazifalarim
+    try:
+        tq = db.query(models.Task).filter(
+            models.Task.assignee_id == user.id,
+            models.Task.status.notin_(("done", "cancelled")))
+        open_tasks = tq.count()
+        overdue = sum(1 for t in tq.all()
+                      if t.deadline and t.deadline < today)
+        if open_tasks:
+            items.append({
+                "icon": "task",
+                "text": f"{open_tasks} ta ochiq vazifangiz bor"
+                        + (f", {overdue} tasi muddati o'tgan" if overdue
+                           else ""),
+                "link": "/tasks",
+                "tone": "red" if overdue else "amber",
+            })
+    except Exception:
+        pass
+
+    # 2) Muzlatilganlardan bugungacha qaytishi kerak bo'lganlar
+    if user.role in tuple(roles.FREEZE_ROLES):
+        fq = db.query(models.Student).filter(
+            models.Student.status == "frozen",
+            models.Student.frozen_until.isnot(None),
+            models.Student.frozen_until <= today)
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            fq = fq.filter(models.Student.branch_id == user.branch_id)
+        back = fq.all()
+        for s in back[:5]:
+            items.append({
+                "icon": "freeze",
+                "text": f"{s.full_name} — muzlatish muddati tugadi, "
+                        "aloqaga chiqing",
+                "link": f"/students/{s.id}",
+                "tone": "sky",
+            })
+        if len(back) > 5:
+            items.append({"icon": "freeze",
+                          "text": f"...va yana {len(back) - 5} ta "
+                                  "qaytishi kerak bo'lgan o'quvchi",
+                          "link": "/students", "tone": "sky"})
+
+    # 3) Qarzdorlar (pul bilan ishlaydiganlarga)
+    if user.role in tuple(roles.CASH_ACCESS):
+        bal = dict(
+            db.query(models.Payment.student_id,
+                     func.coalesce(func.sum(models.Payment.amount), 0.0))
+            .group_by(models.Payment.student_id).all())
+        sq = db.query(models.Student).filter(
+            models.Student.status == "active")
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            sq = sq.filter(models.Student.branch_id == user.branch_id)
+        debtors = sum(1 for s in sq.all() if (bal.get(s.id, 0) or 0) < 0)
+        if debtors:
+            items.append({
+                "icon": "money",
+                "text": f"{debtors} ta qarzdor o'quvchi bor",
+                "link": "/finance",
+                "tone": "red",
+            })
+
+    # 4) Muddati yaqin hujjatlar (asoschi, o'quv rahbari, HR)
+    if user.role in (roles.FOUNDER, roles.ACADEMIC_HEAD, roles.HR_MANAGER):
+        try:
+            soon = today + timedelta(days=14)
+            dq = db.query(models.EmployeeDocument).filter(
+                models.EmployeeDocument.expires_on.isnot(None),
+                models.EmployeeDocument.expires_on <= soon).all()
+            expiring = [d for d in dq if d.expires_on >= today]
+            if expiring:
+                items.append({
+                    "icon": "doc",
+                    "text": f"{len(expiring)} ta hujjat (shartnoma/"
+                            "sertifikat) muddati 2 hafta ichida tugaydi",
+                    "link": "/hr",
+                    "tone": "amber",
+                })
+        except Exception:
+            pass
+
+    # 5) Bugun tug'ilgan kunlar (asoschi va HR ko'radi)
+    if user.role in (roles.FOUNDER, roles.HR_MANAGER):
+        try:
+            bd = [u2 for u2 in db.query(models.User).filter(
+                models.User.is_active == 1,
+                models.User.birth_date.isnot(None)).all()
+                if u2.birth_date.month == today.month
+                and u2.birth_date.day == today.day]
+            for u2 in bd[:3]:
+                items.append({
+                    "icon": "cake",
+                    "text": f"Bugun {u2.full_name}ning tug'ilgan kuni 🎉",
+                    "link": "/hr",
+                    "tone": "emerald",
+                })
+        except Exception:
+            pass
+
+    return {"items": items, "count": len(items)}
+
+
+# =====================================================================
+#  TIZIM XATOLARI (asoschi uchun)
+# =====================================================================
+@app.get("/api/errors")
+def list_errors(limit: int = 50, db: Session = Depends(get_db),
+                user=Depends(require_role(roles.FOUNDER))):
+    """Kutilmagan server xatolari jurnali. Foydalanuvchilar shikoyat
+    qilishini kutmasdan ko'rib turish uchun."""
+    rows = (db.query(models.ErrorLog)
+            .order_by(models.ErrorLog.created_at.desc())
+            .limit(max(1, min(limit, 200))).all())
+    return {"errors": [{
+        "id": e.id, "path": e.path, "method": e.method,
+        "user": e.user_name,
+        "detail": (e.detail or "")[-1200:],
+        "at": e.created_at.isoformat() if e.created_at else None,
+    } for e in rows]}
+
+
+# =====================================================================
+#  TELEGRAM XABARNOMALAR
+#
+#  TELEGRAM_BOT_TOKEN (Vercel env) o'rnatilsa ishlaydi. Ota-ona botga
+#  /start KOD yozadi — kod o'quvchi kartasida. Shundan keyin unga
+#  "darsga kelmadi", "to'lov qabul qilindi", "qarz eslatmasi" boradi.
+# =====================================================================
+def _tg_gen_code(db: Session, s: models.Student) -> str:
+    if not s.tg_code:
+        import secrets as _sec
+        s.tg_code = f"S{s.id}{_sec.token_hex(2).upper()}"
+        db.commit()
+    return s.tg_code
+
+
+@app.get("/api/telegram/status")
+def telegram_status(db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.FOUNDER))):
+    """Bot sozlanganmi, @username nima, webhook ulash tugmasi uchun."""
+    if not notify.enabled():
+        return {"enabled": False,
+                "hint": "Vercel'da TELEGRAM_BOT_TOKEN o'rnatilmagan"}
+    linked = db.query(models.Student).filter(
+        models.Student.telegram_chat_id.isnot(None)).count()
+    return {"enabled": True, "bot": notify.bot_info(), "linked": linked}
+
+
+@app.post("/api/telegram/setup-webhook")
+def telegram_setup(request: Request,
+                   user=Depends(require_role(roles.FOUNDER))):
+    """Botga webhook manzilini o'rnatadi — bir marta bosiladi."""
+    if not notify.enabled():
+        raise HTTPException(400, "TELEGRAM_BOT_TOKEN o'rnatilmagan")
+    base = os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app")
+    ok = notify.set_webhook(
+        f"{base}/api/telegram/webhook?secret={notify.webhook_secret()}")
+    if not ok:
+        raise HTTPException(502, "Telegram webhook o'rnatilmadi")
+    return {"ok": True}
+
+
+@app.post("/api/telegram/webhook")
+async def telegram_webhook(request: Request, secret: str = "",
+                           db: Session = Depends(get_db)):
+    """Telegram'dan keladigan xabarlar. Faqat /start KOD ni tushunadi."""
+    if not notify.enabled() or secret != notify.webhook_secret():
+        raise HTTPException(403, "Ruxsat yo'q")
+    try:
+        upd = await request.json()
+    except Exception:
+        return {"ok": True}
+    msg = (upd or {}).get("message") or {}
+    chat_id = str(((msg.get("chat") or {}).get("id")) or "")
+    text_in = (msg.get("text") or "").strip()
+    if not chat_id or not text_in:
+        return {"ok": True}
+    if text_in.startswith("/start"):
+        code = text_in.replace("/start", "").strip().upper()
+        if not code:
+            notify.send(chat_id,
+                        "Assalomu alaykum! Farzandingiz kartasidagi "
+                        "kodni yuboring: /start KOD")
+            return {"ok": True}
+        s = db.query(models.Student).filter(
+            models.Student.tg_code == code).first()
+        if not s:
+            notify.send(chat_id, "Kod topilmadi. Administratordan "
+                                 "qayta so'rang.")
+            return {"ok": True}
+        s.telegram_chat_id = chat_id
+        db.commit()
+        notify.send(chat_id,
+                    f"✅ Bog'landi: {s.full_name}.\nEndi davomat va "
+                    "to'lov xabarlari shu yerga keladi.")
+    return {"ok": True}
+
+
+@app.get("/api/students/{student_id}/telegram")
+def student_telegram(student_id: int, db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.CASH_ACCESS))):
+    """O'quvchi kartasidagi Telegram bo'lagi: ulanganmi, kod qanday."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not notify.enabled():
+        return {"enabled": False}
+    return {
+        "enabled": True,
+        "linked": bool(s.telegram_chat_id),
+        "code": _tg_gen_code(db, s),
+        "bot": notify.bot_info(),
+    }
+
+
+@app.post("/api/students/{student_id}/notify-debt")
+def notify_debt(student_id: int, db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.CASH_ACCESS))):
+    """Qarzdorlik eslatmasi — admin tugma bosganda ota-onaga boradi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not s.telegram_chat_id:
+        return {"sent": False, "reason": "Telegram ulanmagan"}
+    bal = student_balance(db, s.id)
+    if bal >= 0:
+        return {"sent": False, "reason": "Qarzdorlik yo'q"}
+    sent = notify.send(
+        s.telegram_chat_id,
+        f"💰 Eslatma: {s.full_name} bo'yicha "
+        f"{int(-bal):,} so'm to'lov qoldi.".replace(",", " ") +
+        "\nMarkazga to'lab ketishingizni so'raymiz. Rahmat!")
+    if sent:
+        audit.log(db, user, entity="student", action="notify_debt",
+                  entity_id=s.id, entity_label=s.full_name,
+                  branch_id=s.branch_id, commit=True)
+    return {"sent": sent}
+
+
+# =====================================================================
+#  OTA-ONA SAHIFASI (loginsiz, token havola)
+# =====================================================================
+@app.get("/api/students/{student_id}/parent-link")
+def parent_link(student_id: int, db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.CASH_ACCESS))):
+    """Ota-onaga beriladigan havola. Token taxmin qilib bo'lmaydigan
+    tasodifiy satr; kerak bo'lsa yangilash tugmasi bilan almashtiriladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not s.parent_token:
+        import secrets as _sec
+        s.parent_token = _sec.token_urlsafe(16)
+        db.commit()
+    base = os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app")
+    return {"url": f"{base}/parent/{s.parent_token}"}
+
+
+@app.get("/api/parent/{token}")
+def parent_view(token: str, db: Session = Depends(get_db)):
+    """Ota-ona ko'radigan ochiq sahifa ma'lumoti: davomat, vazifa,
+    balans. Faqat o'qish; token orqali bitta o'quvchi."""
+    if not token or len(token) < 10:
+        raise HTTPException(404, "Topilmadi")
+    s = db.query(models.Student).filter(
+        models.Student.parent_token == token).first()
+    if not s:
+        raise HTTPException(404, "Topilmadi")
+    g = db.query(models.Group).get(s.group_id) if s.group_id else None
+    today = roles.local_today()
+    start = today - timedelta(days=45)
+    rows = (db.query(models.Attendance, models.Lesson)
+            .join(models.Lesson,
+                  models.Attendance.lesson_id == models.Lesson.id)
+            .filter(models.Attendance.student_id == s.id,
+                    models.Lesson.date >= start,
+                    models.Lesson.date <= today)
+            .order_by(models.Lesson.date.desc()).limit(24).all())
+    att = [{
+        "date": ls.date.isoformat(),
+        "present": int(a.present or 0),   # 1 keldi, 2 kech, 0 kelmadi
+        "homework": a.homework,           # 2 bajardi, 1 qisman, 0 yo'q
+    } for a, ls in rows]
+    bal = student_balance(db, s.id)
+    st_lbl = {"active": "faol", "trial": "sinovda",
+              "frozen": "muzlatilgan", "archived": "arxivda"}
+    return {
+        "name": s.full_name,
+        "group": g.name if g else None,
+        "lesson_time": g.lesson_time if g else None,
+        "status": st_lbl.get(s.status, s.status),
+        "balance": bal,
+        "attendance": att,
+        "frozen_until": s.frozen_until.isoformat()
+        if s.frozen_until else None,
+    }
+
+
+# =====================================================================
+#  ONLAYN TO'LOV HAVOLASI (Payme / Click)
+#
+#  Merchant hisobi shartnomasi bo'lsa, Vercel'da PAYME_MERCHANT_ID
+#  va/yoki CLICK_MERCHANT_ID + CLICK_SERVICE_ID o'rnatiladi — shunda
+#  o'quvchi kartasida "To'lov havolasi" tugmasi paydo bo'ladi.
+#  Havola ota-onaga yuboriladi; tushum bankdan kelib tushadi va
+#  kassir uni odatdagidek "To'lov qo'shish" bilan qayd etadi.
+# =====================================================================
+@app.get("/api/students/{student_id}/pay-link")
+def pay_link(student_id: int, amount: float = 0,
+             db: Session = Depends(get_db),
+             user=Depends(require_role(*roles.CASH_ACCESS))):
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    payme_id = os.environ.get("PAYME_MERCHANT_ID", "").strip()
+    click_m = os.environ.get("CLICK_MERCHANT_ID", "").strip()
+    click_s = os.environ.get("CLICK_SERVICE_ID", "").strip()
+    if not payme_id and not (click_m and click_s):
+        return {"enabled": False}
+    amt = roles.money(amount) if amount and amount > 0 \
+        else roles.money(-student_balance(db, s.id)
+                         if student_balance(db, s.id) < 0 else 0)
+    links = {}
+    if payme_id and amt > 0:
+        import base64 as _b64
+        raw = f"m={payme_id};ac.student={s.public_id or s.id};a={int(amt * 100)}"
+        links["payme"] = ("https://checkout.paycom.uz/"
+                          + _b64.b64encode(raw.encode()).decode())
+    if click_m and click_s and amt > 0:
+        links["click"] = (
+            "https://my.click.uz/services/pay"
+            f"?service_id={click_s}&merchant_id={click_m}"
+            f"&amount={int(amt)}&transaction_param={s.public_id or s.id}")
+    return {"enabled": True, "amount": amt, "links": links}

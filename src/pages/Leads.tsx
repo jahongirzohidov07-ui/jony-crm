@@ -93,7 +93,35 @@ function LeadForm({
       onSaved();
       onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Xatolik");
+      const msg = e instanceof Error ? e.message : "Xatolik";
+      // Dublikat: shu telefon bilan lid/o'quvchi bor — tasdiq so'raymiz
+      if (!editing && msg.includes("allaqachon bor")) {
+        if (confirm(msg)) {
+          try {
+            await api.post("/leads", {
+              full_name: fullName,
+              phone: phone || null,
+              source,
+              stage,
+              address: address || null,
+              school: school || null,
+              grade: grade || null,
+              note: note || null,
+              branch_id: branchId ? Number(branchId) : null,
+              assigned_user_id: assignedId ? Number(assignedId) : null,
+              force: true,
+            });
+            onSaved();
+            onClose();
+          } catch (e2) {
+            setError(e2 instanceof Error ? e2.message : "Xatolik");
+          } finally {
+            setSaving(false);
+          }
+          return;
+        }
+      }
+      setError(msg);
     } finally {
       setSaving(false);
     }

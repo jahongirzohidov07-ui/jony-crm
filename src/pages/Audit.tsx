@@ -19,7 +19,8 @@ import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist";
+type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist"
+  | "errors";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -749,6 +750,7 @@ export default function Audit() {
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
     { key: "pay", label: "Oyligim", show: showPay },
     { key: "paylist", label: "Examiner oyliklari", show: showPayList },
+    { key: "errors", label: "Tizim xatolari", show: user?.role === "founder" },
   ];
 
   return (
@@ -790,6 +792,60 @@ export default function Audit() {
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "pay" && <ExaminerPayTab />}
       {tab === "paylist" && <ExaminerPayAdminTab />}
+      {tab === "errors" && <ErrorsTab />}
+    </div>
+  );
+}
+
+/** Kutilmagan server xatolari — foydalanuvchi shikoyat qilishini
+ *  kutmasdan asoschi o'zi ko'rib turadi. */
+function ErrorsTab() {
+  const [d, setD] = useState<{ errors: {
+    id: number; path: string | null; method: string | null;
+    user: string | null; detail: string; at: string | null;
+  }[] } | null>(null);
+  const [err, setErr] = useState("");
+  const [openId, setOpenId] = useState<number | null>(null);
+
+  useEffect(() => {
+    api.get<typeof d>("/errors").then((r) => setD(r))
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, []);
+
+  if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+  if (d.errors.length === 0)
+    return (
+      <p className="text-sm text-slate-400 py-10 text-center">
+        Oxirgi 30 kunda kutilmagan xato qayd etilmagan ✅
+      </p>
+    );
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100">
+      {d.errors.map((e) => (
+        <div key={e.id} className="px-4 py-3">
+          <button
+            onClick={() => setOpenId(openId === e.id ? null : e.id)}
+            className="w-full text-left flex items-center gap-3"
+          >
+            <span className="text-xs font-mono bg-red-50 text-red-700 rounded px-1.5 py-0.5 shrink-0">
+              {e.method}
+            </span>
+            <span className="text-sm text-slate-800 truncate flex-1">
+              {e.path}
+            </span>
+            <span className="text-xs text-slate-400 shrink-0">
+              {when(e.at)}
+            </span>
+          </button>
+          {openId === e.id && (
+            <pre className="mt-2 text-[11px] bg-slate-50 rounded-lg p-3 overflow-x-auto whitespace-pre-wrap text-slate-600">
+              {e.detail}
+            </pre>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PurchasesTab, RemindersTab } from "../components/StudentExtras";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil, Printer } from "lucide-react";
 import {
   api,
   type StudentDetail as StudentDetailType,
@@ -185,6 +185,107 @@ function ProfileCard({
           </button>
         )}
       </div>
+      {canFinance && <ParentTools student={student} />}
+    </div>
+  );
+}
+
+/** Ota-ona bilan aloqa vositalari: Telegram bog'lash kodi, ota-ona
+ *  sahifasi havolasi, onlayn to'lov havolasi, shartnoma chop etish. */
+function ParentTools({ student }: { student: StudentDetailType }) {
+  const [tg, setTg] = useState<{
+    enabled: boolean; linked?: boolean; code?: string; bot?: string | null;
+  } | null>(null);
+  const [pay, setPay] = useState<{
+    enabled: boolean; links?: Record<string, string>;
+  } | null>(null);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    api.get<{ enabled: boolean; linked?: boolean; code?: string;
+      bot?: string | null }>(`/students/${student.id}/telegram`)
+      .then(setTg).catch(() => {});
+    api.get<{ enabled: boolean; links?: Record<string, string> }>(
+      `/students/${student.id}/pay-link`)
+      .then(setPay).catch(() => {});
+  }, [student.id]);
+
+  const copy = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setMsg(`${label} nusxalandi — ota-onaga yuboring`);
+      setTimeout(() => setMsg(""), 3000);
+    } catch {
+      prompt("Nusxalash uchun:", text);
+    }
+  };
+
+  const parentLink = async () => {
+    const r = await api.get<{ url: string }>(
+      `/students/${student.id}/parent-link`);
+    copy(r.url, "Ota-ona sahifasi havolasi");
+  };
+
+  const notifyDebt = async () => {
+    const r = await api.post<{ sent: boolean; reason?: string }>(
+      `/students/${student.id}/notify-debt`, {});
+    setMsg(r.sent ? "Qarz eslatmasi Telegram'ga yuborildi ✓"
+      : `Yuborilmadi: ${r.reason}`);
+    setTimeout(() => setMsg(""), 3500);
+  };
+
+  return (
+    <div className="mt-3 pt-3 border-t border-slate-100 space-y-2">
+      <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wide">
+        Ota-ona bilan aloqa
+      </p>
+      {tg?.enabled && (
+        <div className="text-xs text-slate-600 bg-slate-50 rounded-lg px-2.5 py-2">
+          {tg.linked ? (
+            <span className="text-emerald-700">
+              ✓ Telegram ulangan — davomat va to'lov xabarlari boradi
+            </span>
+          ) : (
+            <span>
+              Telegram: ota-ona{" "}
+              <b>@{tg.bot || "bot"}</b> ga{" "}
+              <button
+                onClick={() => copy(`/start ${tg.code}`, "Bog'lash buyrug'i")}
+                className="text-brand-600 underline"
+              >
+                /start {tg.code}
+              </button>{" "}
+              deb yozsin
+            </span>
+          )}
+        </div>
+      )}
+      <div className="flex flex-wrap gap-1.5">
+        <button onClick={parentLink}
+          className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
+          Ota-ona sahifasi
+        </button>
+        {pay?.enabled && pay.links && Object.keys(pay.links).length > 0 &&
+          Object.entries(pay.links).map(([k, url]) => (
+            <button key={k}
+              onClick={() => copy(url, k === "payme" ? "Payme havolasi"
+                : "Click havolasi")}
+              className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
+              {k === "payme" ? "Payme havola" : "Click havola"}
+            </button>
+          ))}
+        {tg?.enabled && tg.linked && student.balance < 0 && (
+          <button onClick={notifyDebt}
+            className="text-xs px-2.5 py-1.5 rounded-lg border border-amber-200 bg-amber-50 text-amber-700 hover:border-amber-300">
+            Qarz eslatmasi yuborish
+          </button>
+        )}
+        <button onClick={() => printContract(student)}
+          className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
+          Shartnoma chop etish
+        </button>
+      </div>
+      {msg && <p className="text-xs text-emerald-600">{msg}</p>}
     </div>
   );
 }
@@ -285,13 +386,20 @@ function PaymentsTab({
   const canEditAmount = can(user?.role, PAYMENT_EDIT);
   const [editId, setEditId] = useState<number | null>(null);
   const [editVal, setEditVal] = useState("");
+  const [editVer, setEditVer] = useState<string>("");
   const saveAmount = async (pid: number) => {
     try {
-      await api.put(`/payments/${pid}`, { amount: Number(editVal) });
+      await api.put(`/payments/${pid}`, {
+        amount: Number(editVal),
+        // Parallel tahrir himoyasi: men ochgan versiyani yuboraman —
+        // boshqa xodim shu orada o'zgartirgan bo'lsa 409 keladi.
+        expected_updated_at: editVer,
+      });
       setEditId(null);
       onChanged();
     } catch (e) {
       alert(e instanceof Error ? e.message : "Xatolik");
+      onChanged();
     }
   };
   const [showForm, setShowForm] = useState(false);
@@ -499,11 +607,23 @@ function PaymentsTab({
                           onClick={() => {
                             setEditId(p.id);
                             setEditVal(String(Math.abs(p.amount)));
+                            setEditVer(
+                              ((p as unknown as { updated_at?: string })
+                                .updated_at) || "");
                           }}
                           className="text-slate-300 hover:text-brand-600"
                           title="Summani tahrirlash"
                         >
                           <Pencil size={13} />
+                        </button>
+                      )}
+                      {p.kind === "payment" && (
+                        <button
+                          onClick={() => printReceipt(p, student)}
+                          className="text-slate-300 hover:text-brand-600"
+                          title="Chek chop etish"
+                        >
+                          <Printer size={13} />
                         </button>
                       )}
                     </span>
@@ -1386,4 +1506,87 @@ function CertModal({
       </div>
     </div>
   );
+}
+
+/* ==================== CHOP ETISH: chek va shartnoma ==================== */
+function openPrint(html: string) {
+  const w = window.open("", "_blank", "width=480,height=640");
+  if (!w) { alert("Brauzer yangi oynani blokladi"); return; }
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(() => w.print(), 300);
+}
+
+const P_STYLE = `<style>
+  body{font-family:Arial,sans-serif;color:#111;margin:24px;font-size:13px}
+  h2{margin:0 0 2px;font-size:16px} .m{color:#666;font-size:11px}
+  table{width:100%;border-collapse:collapse;margin:12px 0}
+  td{padding:5px 0;vertical-align:top}
+  td:last-child{text-align:right;font-weight:600}
+  .line{border-top:1px dashed #999;margin:10px 0}
+  .sig{margin-top:28px;display:flex;justify-content:space-between;font-size:12px}
+  .sig span{border-top:1px solid #333;padding-top:4px;width:44%;text-align:center}
+  .big{font-size:18px;font-weight:700}
+  ol{padding-left:18px} li{margin-bottom:5px}
+</style>`;
+
+function printReceipt(p: { id: number; public_id?: string | null;
+  amount: number; created_at: string; note?: string | null;
+  created_by?: string | null; method?: string | null },
+  student: StudentDetailType) {
+  const d = new Date(p.created_at);
+  openPrint(`<!doctype html><html><head><meta charset="utf-8">
+  <title>Chek</title>${P_STYLE}</head><body>
+  <h2>Jony Academy</h2>
+  <p class="m">To'lov cheki № ${p.public_id || p.id} ·
+    ${d.toLocaleDateString("uz-UZ")} ${d.toLocaleTimeString("uz-UZ",
+      { hour: "2-digit", minute: "2-digit" })}</p>
+  <div class="line"></div>
+  <table>
+    <tr><td>O'quvchi</td><td>${student.full_name}</td></tr>
+    <tr><td>Guruh</td><td>${student.group?.name || "—"}</td></tr>
+    <tr><td>Izoh</td><td>${p.note || "oylik to'lov"}</td></tr>
+    <tr><td>Summa</td><td class="big">${formatSom(p.amount)}</td></tr>
+    <tr><td>Qabul qildi</td><td>${p.created_by || ""}</td></tr>
+  </table>
+  <div class="line"></div>
+  <p class="m">Rahmat! Savollar bo'lsa administratorga murojaat qiling.</p>
+  </body></html>`);
+}
+
+function printContract(student: StudentDetailType) {
+  const g = student.group;
+  const today = new Date().toLocaleDateString("uz-UZ");
+  openPrint(`<!doctype html><html><head><meta charset="utf-8">
+  <title>Shartnoma</title>${P_STYLE}</head><body>
+  <h2>Jony Academy — o'quv xizmatlari shartnomasi</h2>
+  <p class="m">Bekobod · ${today}</p>
+  <table>
+    <tr><td>O'quvchi</td><td>${student.full_name}</td></tr>
+    <tr><td>ID</td><td>${student.public_id || student.id}</td></tr>
+    <tr><td>Telefon</td><td>${student.phone || "____________"}</td></tr>
+    <tr><td>Ota-ona telefoni</td><td>${student.parent_phone || "____________"}</td></tr>
+    <tr><td>Manzil</td><td>${student.address || "____________"}</td></tr>
+    <tr><td>Guruh</td><td>${g?.name || "____________"}</td></tr>
+    <tr><td>Dars vaqti</td><td>${g?.lesson_time || "____________"}</td></tr>
+    <tr><td>Oylik to'lov</td><td>${g ? formatSom(g.monthly_fee) : "____________"}</td></tr>
+  </table>
+  <div class="line"></div>
+  <ol>
+    <li>O'quv markaz o'quvchini belgilangan jadval asosida sifatli
+        o'qitish majburiyatini oladi.</li>
+    <li>Oylik to'lov har oyning boshida to'lanadi. Darsga kelmaslik
+        to'lovdan ozod qilmaydi (muzlatish holati bundan mustasno).</li>
+    <li>O'quvchi 3 ta darsga sababsiz kelmasa, o'qish avtomatik
+        muzlatiladi va ota-ona bilan bog'laniladi.</li>
+    <li>Ota-ona farzandining davomati va natijalari haqida xabardor
+        qilib boriladi.</li>
+    <li>Tomonlar o'zaro hurmat va hamkorlik tamoyillariga amal qiladi.</li>
+  </ol>
+  <div class="sig">
+    <span>O'quv markaz (imzo)</span>
+    <span>Ota-ona (imzo)</span>
+  </div>
+  </body></html>`);
 }

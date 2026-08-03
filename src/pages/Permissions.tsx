@@ -92,6 +92,8 @@ export default function Permissions() {
         Har bir rol qaysi bo'limda nima qila olishini siz belgilaysiz
       </p>
 
+      <TelegramCard />
+
       {err && (
         <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-4">
           {err}
@@ -260,6 +262,62 @@ export default function Permissions() {
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+/** Telegram bot holati: sozlangan bo'lsa — @username va nechta
+ *  ota-ona ulangani; webhook'ni bir marta shu yerdan ulanadi. */
+function TelegramCard() {
+  const [d, setD] = useState<{
+    enabled: boolean; bot?: string | null; linked?: number; hint?: string;
+  } | null>(null);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    api.get<typeof d>("/telegram/status").then((r) => setD(r))
+      .catch(() => {});
+  }, []);
+
+  const setup = async () => {
+    try {
+      await api.post("/telegram/setup-webhook", {});
+      setMsg("Webhook ulandi ✓ — endi ota-onalar botga yozsa bog'lanadi");
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    }
+  };
+
+  if (!d) return null;
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-4 mb-5 max-w-xl">
+      <p className="text-sm font-semibold text-slate-800 mb-1">
+        Telegram xabarnomalar
+      </p>
+      {d.enabled ? (
+        <>
+          <p className="text-sm text-slate-600">
+            Bot: <b>@{d.bot || "—"}</b> · ulangan ota-onalar:{" "}
+            <b>{d.linked ?? 0}</b>
+          </p>
+          <p className="text-xs text-slate-400 mt-1">
+            O'quvchi kartasidagi kod bilan ota-ona botga /start KOD deb
+            yozadi — keyin davomat va to'lov xabarlari boradi.
+          </p>
+          <button onClick={setup}
+            className="mt-2 text-xs px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
+            Webhook'ni ulash / yangilash
+          </button>
+        </>
+      ) : (
+        <p className="text-sm text-slate-500">
+          Hozircha o'chiq. Yoqish uchun Vercel'da{" "}
+          <code className="bg-slate-100 px-1 rounded">TELEGRAM_BOT_TOKEN</code>{" "}
+          o'rnatiladi (@BotFather'dan olinadi) — keyin bu yerda webhook
+          ulanadi.
+        </p>
+      )}
+      {msg && <p className="text-xs text-emerald-600 mt-2">{msg}</p>}
     </div>
   );
 }

@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext, useContext, useEffect, useState, type ReactNode,
+} from "react";
 import { api, getToken, setToken, clearToken } from "./api";
 
 interface AuthUser {
@@ -24,6 +26,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Keshdagi ism/rol eskirib qolmasin: har ochilishda serverdan
+  // yangilab olamiz (masalan, ism serverda o'zgartirilgan bo'lsa).
+  useEffect(() => {
+    if (!getToken()) return;
+    api
+      .get<{ full_name: string; role: string; branch_id: number | null }>(
+        "/me",
+      )
+      .then((r) => {
+        const u = {
+          full_name: r.full_name,
+          role: r.role,
+          branch_id: r.branch_id,
+        };
+        sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
+        setUser((prev) =>
+          prev &&
+          prev.full_name === u.full_name &&
+          prev.role === u.role &&
+          prev.branch_id === u.branch_id
+            ? prev
+            : u,
+        );
+      })
+      .catch(() => {});
+  }, []);
 
   async function login(username: string, password: string) {
     setLoading(true);

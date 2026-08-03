@@ -1,0 +1,50 @@
+# Har push'da avtomatik tekshiruv: backend testlar + frontend build.
+# Bu yashil bo'lmasa — Vercel'dagi build ham katta ehtimol yiqiladi.
+name: CI
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Import smoke test (api/)
+        working-directory: api
+        env:
+          DATABASE_URL: "sqlite:////tmp/ci_smoke.db"
+        run: |
+          python -c "import main; print('main.py import OK')"
+          python -c "import roles, models, schemas, billing, audit, notify, migrations; print('modules OK')"
+      - name: Guard tests
+        working-directory: api
+        env:
+          DATABASE_URL: "sqlite:////tmp/ci_guard.db"
+        run: |
+          if [ -f test_account.py ]; then python test_account.py; fi
+      - name: Rolling suite
+        working-directory: api
+        env:
+          DATABASE_URL: "sqlite:////tmp/ci_plan.db"
+        run: |
+          if [ -f test_plan.py ]; then python test_plan.py; fi
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci || npm install
+      - name: Type check (Vercel bilan bir xil)
+        run: npx tsc -b
+      - name: Build
+        run: npx vite build

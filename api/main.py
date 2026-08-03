@@ -25991,3 +25991,80 @@ def pay_link(student_id: int, amount: float = 0,
             f"?service_id={click_s}&merchant_id={click_m}"
             f"&amount={int(amt)}&transaction_param={s.public_id or s.id}")
     return {"enabled": True, "amount": amt, "links": links}
+
+
+# =====================================================================
+#  USTOZLARNI EXCEL'DAN IMPORT QILISH
+#
+#  Eski platformadan (masalan LC UP) eksport qilingan ro'yxatni bir
+#  bosishda ko'chirish. Dublikat himoyasi: bir xil ism yoki bir xil
+#  telefon bo'lsa, qator o'tkazib yuboriladi — ikki marta bosilsa ham
+#  ro'yxat ikkilanmaydi.
+# =====================================================================
+@app.post("/api/teachers/import")
+def import_teachers(payload: schemas.TeacherImportIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.STAFF_VIEWERS))):
+    today = roles.local_today()
+    existing = db.query(models.Teacher).all()
+    names = {(t.full_name or "").strip().lower() for t in existing}
+    phones = set()
+    for t in existing:
+        d = "".join(ch for ch in (t.phone or "") if ch.isdigit())
+        if len(d) >= 9:
+            phones.add(d[-9:])
+
+    results, created = [], 0
+    for r in payload.rows:
+        name = (r.full_name or "").strip()
+        if not name:
+            continue
+        digits = "".join(ch for ch in (r.phone or "") if ch.isdigit())
+        tail = digits[-9:] if len(digits) >= 9 else None
+        if name.lower() in names:
+            results.append({"name": name, "status": "skip",
+                            "reason": "bu ism allaqachon bor"})
+            continue
+        if tail and tail in phones:
+            results.append({"name": name, "status": "skip",
+                            "reason": "bu telefon allaqachon bor"})
+            continue
+
+        # Tug'ilgan sana: LC UP bo'sh joyga eksport kunini yozadi —
+        # yosh 14 dan kichik chiqsa, sana yo'q deb hisoblaymiz.
+        bdate = None
+        if r.birth_date:
+            try:
+                bdate = date.fromisoformat(str(r.birth_date)[:10])
+                if bdate.year > today.year - 14:
+                    bdate = None
+            except ValueError:
+                bdate = None
+
+        t = models.Teacher(
+            full_name=name,
+            phone=r.phone or None,
+            branch_id=payload.branch_id,
+            birth_date=bdate,
+            hired_date=today,
+            is_active=1,
+            grade=roles.FIRST_GRADE,
+            grade_since=today,
+        )
+        db.add(t)
+        db.flush()
+        db.add(models.TeacherGradeEvent(
+            teacher_id=t.id, from_grade=None, to_grade=t.grade,
+            kind="set", effective_from=today,
+            reason="Excel'dan import", decided_by=user.full_name))
+        names.add(name.lower())
+        if tail:
+            phones.add(tail)
+        created += 1
+        results.append({"name": name, "status": "ok",
+                        "note": (r.note or "").strip() or None})
+    db.commit()
+    audit.log(db, user, entity="teacher", action="import",
+              entity_label=f"{created} ta ustoz",
+              new_value=created, commit=True)
+    return {"created": created, "results": results}

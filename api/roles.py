@@ -722,6 +722,7 @@ SUBJECTS = [
     ("korean", "Koreys tili"),
     ("turkish", "Turk tili"),
     ("german", "Nemis tili"),
+    ("kids_english", "Kids English"),
     ("biology", "Biologiya"),
     ("programming", "Dasturlash"),
     ("mental_math", "Mental arifmetika"),
@@ -756,12 +757,20 @@ COURSE_LEVELS = [
     ("advanced", "Yuqori"),
 ]
 
+# Kids English — Cambridge YLE bosqichlari
+KIDS_LEVELS = [
+    ("starters", "Starters"),
+    ("movers", "Movers"),
+    ("flyers", "Flyers"),
+]
+
 SUBJECT_LEVELS = {
     "english": ENGLISH_LEVELS,
     "russian": CEFR_LEVELS,
     "korean": CEFR_LEVELS,
     "turkish": CEFR_LEVELS,
     "german": CEFR_LEVELS,
+    "kids_english": KIDS_LEVELS,
     "biology": COURSE_LEVELS,
     "programming": COURSE_LEVELS,
     "mental_math": COURSE_LEVELS,
@@ -812,6 +821,8 @@ MAX_GAP_HOURS = 5
 
 CHECKS = [
     ("teacher_clash", "Ustoz bir vaqtda ikki guruhda", "block"),
+    ("age_limit", "Kurs yosh chegarasiga mos emas", "block"),
+    ("age_unknown", "Tug'ilgan sana kiritilmagan", "warn"),
     ("room_clash", "Xona bir vaqtda ikki guruhda", "block"),
     ("over_capacity", "Sig'imdan ortiq o'quvchi", "block"),
     ("teacher_overload", "Ustozning maksimal yuklamasidan oshish", "block"),
@@ -820,6 +831,12 @@ CHECKS = [
 ]
 CHECK_LABELS = {k: lbl for k, lbl, _ in CHECKS}
 CHECK_SEVERITY = {k: sev for k, _, sev in CHECKS}
+
+# Kurs bo'yicha yosh chegarasi: (min_yosh, max_yosh). Kids English —
+# faqat 7-12 yoshdagi bolalar.
+SUBJECT_AGE_LIMITS = {
+    "kids_english": (7, 12),
+}
 
 
 def time_to_minutes(t: str) -> int | None:

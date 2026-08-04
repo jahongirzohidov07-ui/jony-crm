@@ -4013,6 +4013,27 @@ def _check_enrolment(db: Session, s: models.Student, g: models.Group) -> list:
             f"\"{g.name}\" guruhida {n} ta o'quvchi bor, sig'im {cap} ta. "
             f"Yana bittasi sig'maydi."))
 
+    # YOSH CHEGARASI: Kids English kabi kurslarga faqat belgilangan
+    # yoshdagi o'quvchilar olinadi. Bu qat'iy qoida (block) — force
+    # bilan ham aylanib o'tib bo'lmaydi.
+    age_lim = roles.SUBJECT_AGE_LIMITS.get(g.subject or "")
+    if age_lim:
+        lo, hi = age_lim
+        if s.birth_date:
+            age = (date.today() - s.birth_date).days / 365.25
+            if not (lo <= age <= hi + 0.999):
+                problems.append(_problem(
+                    "age_limit",
+                    f"\"{roles.SUBJECT_LABELS.get(g.subject, g.subject)}\" "
+                    f"kursiga faqat {lo}-{hi} yoshdagi o'quvchilar "
+                    f"olinadi. {s.full_name} — {int(age)} yoshda."))
+        else:
+            problems.append(_problem(
+                "age_unknown",
+                f"Bu kursga {lo}-{hi} yosh chegarasi bor, lekin "
+                f"o'quvchining tug'ilgan sanasi kiritilmagan — yoshini "
+                "tekshirib bo'lmadi. Avval sanani kiriting."))
+
     # Daraja mosligi. O'quvchining darajasi hali yo'q bo'lsa - bu birinchi
     # guruhi, tekshiradigan narsa yo'q.
     if s.level and g.level and s.level != g.level:

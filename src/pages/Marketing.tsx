@@ -17,14 +17,16 @@ import { MARKETING_CHANNELS } from "../lib/payments";
 import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "journey" | "funnel" | "channels" | "romi" | "rfm"
+type Tab = "smm" | "journey" | "funnel" | "channels" | "romi" | "rfm"
   | "notify" | "referral" | "ads" | "social";
 
 import {
   RomiTab, RfmTab, NotifyTab, ReferralTab,
 } from "../components/MarketingExtras";
+import Smm from "./Smm";
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: "smm", label: "SMM (kontent)" },
   { key: "journey", label: "To'liq yo'l" },
   { key: "funnel", label: "Lid voronkasi" },
   { key: "channels", label: "Kanallar va CAC" },
@@ -935,7 +937,9 @@ function AdsTab() {
 // ---------------------------------------------------------------- Sahifa
 export default function Marketing() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("journey");
+  const [tab, setTab] = useState<Tab>(
+    user?.role === "smm_manager" ? "smm" : "journey"
+  );
   const [months, setMonths] = useState(6);
   const [data, setData] = useState<MarketingFunnel | null>(null);
   const [cac, setCac] = useState<CacReport | null>(null);
@@ -944,7 +948,8 @@ export default function Marketing() {
   const showCac = can(user?.role, FINANCE_ACCESS);
 
   useEffect(() => {
-    if (tab === "social" || tab === "ads" || tab === "journey") return;
+    if (tab === "social" || tab === "ads" || tab === "journey"
+        || tab === "smm") return;
     setLoading(true);
     const jobs: Promise<unknown>[] = [
       api.get<MarketingFunnel>(`/reports/marketing-funnel?months=${months}`)
@@ -1004,6 +1009,10 @@ export default function Marketing() {
         <RomiTab />
       ) : tab === "rfm" ? (
         <RfmTab />
+      ) : tab === "smm" ? (
+        <div className="-mx-8 -my-2">
+          <Smm />
+        </div>
       ) : tab === "notify" ? (
         <NotifyTab />
       ) : tab === "referral" ? (

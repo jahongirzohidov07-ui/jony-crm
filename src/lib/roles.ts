@@ -82,6 +82,10 @@ export const STAFF_ROLES = ALL_ROLES.filter(
 export const FULL_ACCESS = [FOUNDER, BRANCH_MANAGER];
 // Guruh ochish/tahrirlash — o'quv bo'limi rahbari ham qiladi
 export const GROUP_MANAGE = [...FULL_ACCESS, ACADEMIC_HEAD];
+// Tepadagi filial almashtirgich — butun tashkilotni ko'radiganlar
+export const BRANCH_SWITCH = [
+  FOUNDER, ACADEMIC_HEAD, SMM_MANAGER, HR_MANAGER, FINANCE_DIRECTOR,
+];
 export const TEACHING_STAFF = [
   ...FULL_ACCESS,
   SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,

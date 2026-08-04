@@ -27,10 +27,38 @@ export class ApiError extends Error {
   status = 0;
 }
 
+// GLOBAL FILIAL FILTRI. Rahbariyat tepadagi tanlagichdan filialni
+// tanlasa, har bir GET so'rovga branch_id o'zi qo'shiladi — sahifalar
+// alohida-alohida o'zgartirilmaydi. null = barcha filiallar.
+let globalBranchId: string | null =
+  typeof localStorage !== "undefined"
+    ? localStorage.getItem("jonyos_branch")
+    : null;
+
+export function setGlobalBranch(id: string | null) {
+  globalBranchId = id;
+  if (id) localStorage.setItem("jonyos_branch", id);
+  else localStorage.removeItem("jonyos_branch");
+}
+
+export function getGlobalBranch(): string | null {
+  return globalBranchId;
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {
+  // Faqat o'qish so'rovlariga filial filtri qo'shiladi; sahifa o'zi
+  // branch_id bergan bo'lsa yoki auth so'rovi bo'lsa — tegilmaydi.
+  if (
+    (!options.method || options.method === "GET") &&
+    globalBranchId &&
+    !path.includes("branch_id=") &&
+    !path.startsWith("/auth")
+  ) {
+    path += (path.includes("?") ? "&" : "?") + "branch_id=" + globalBranchId;
+  }
   const token = getToken();
   const headers: Record<string, string> = {
     ...(options.body ? { "Content-Type": "application/json" } : {}),

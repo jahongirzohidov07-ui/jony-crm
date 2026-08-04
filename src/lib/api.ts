@@ -128,6 +128,8 @@ export interface User {
   /** Ish yubileyi eslatmasi shu sanaga tayanadi. */
   hired_date?: string | null;
   public_id?: string | null;
+  branch_ids?: number[];
+  branches_label?: string | null;
 }
 
 export interface Teacher {

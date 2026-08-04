@@ -1350,6 +1350,29 @@ def create_lead(
                 409, f"Bu telefon raqami bilan {kind} allaqachon bor: "
                      f"{who}. Baribir qo'shish uchun tasdiqlang.")
 
+    # DUBLIKAT (ism bo'yicha): bir xil ism-familiyali lid yoki talaba
+    # bo'lsa — adashib qayta kiritishning oldini olamiz. Yangi odam
+    # bo'lsa, tasdiqlab kiritaveradi (force).
+    if not payload.force:
+        nm = " ".join(payload.full_name.split()).lower()
+        same_lead = next(
+            (l for l in db.query(models.Lead)
+             .filter(models.Lead.stage != "rejected").all()
+             if " ".join((l.full_name or "").split()).lower() == nm), None)
+        same_student = None
+        if not same_lead:
+            same_student = next(
+                (st for st in db.query(models.Student)
+                 .filter(models.Student.status != "archived").all()
+                 if " ".join((st.full_name or "").split()).lower() == nm),
+                None)
+        if same_lead or same_student:
+            kind = "lid" if same_lead else "talaba"
+            raise HTTPException(
+                409, f"Bunday ismli {kind} allaqachon bor — adashib "
+                     f"qayta kiritib qo'ymayapsizmi? Agar bu boshqa "
+                     f"(yangi) odam bo'lsa, tasdiqlang.")
+
     # Bosqich berilmasa, manbaga qarab o'zi tanlanadi: tashrif bilan kelgan
     # odam "unga qo'ng'iroq qilish kerak" bosqichini o'tib bo'lgan.
     stage = payload.stage or roles.LEAD_SOURCE_DEFAULT_STAGE.get(payload.source, "new")
@@ -4364,9 +4387,28 @@ def get_student(
 @app.post("/api/students", response_model=schemas.StudentOut)
 def create_student(
     payload: schemas.StudentCreate,
+    force: bool = False,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.TEACHING_STAFF)),
 ):
+    # DUBLIKAT: bir xil ism-familiyali talaba bo'lsa ogohlantiramiz —
+    # adashib ikkinchi karta ochib qo'ymaslik uchun. Yangi (boshqa)
+    # odam bo'lsa, tasdiqlab kiritaveradi.
+    if not force:
+        nm = " ".join((payload.full_name or "").split()).lower()
+        same = next(
+            (st for st in db.query(models.Student)
+             .filter(models.Student.status != "archived").all()
+             if " ".join((st.full_name or "").split()).lower() == nm),
+            None)
+        if same:
+            g = db.query(models.Group).get(same.group_id) \
+                if same.group_id else None
+            joy = f" ({g.name} guruhida)" if g else ""
+            raise HTTPException(
+                409, f"Bunday ismli talaba allaqachon bor{joy} — "
+                     "adashib qayta kiritib qo'ymayapsizmi? Agar bu "
+                     "boshqa (yangi) odam bo'lsa, tasdiqlang.")
     data = payload.model_dump()
     if not data.get("enrolled_date"):
         data["enrolled_date"] = date.today()

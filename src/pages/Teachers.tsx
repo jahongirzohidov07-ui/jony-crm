@@ -19,7 +19,7 @@ import { SalaryCard } from "../components/SalaryCard";
 import { TeacherScoreboard } from "../components/TeacherScoreboard";
 import { CareerCard } from "../components/Career";
 
-type TeachTab = "list" | "score" | "salary";
+type TeachTab = "list" | "support" | "score" | "salary";
 
 function TeacherModal({
   branches,
@@ -365,7 +365,15 @@ export default function Teachers() {
   // Ustozning o'zi hamkasbining oyligini ochmaydi
   const canSeeSalary =
     can(user?.role, SALARY_SELF_VIEW) && !can(user?.role, [TEACHER, SUPPORT_TEACHER]);
-  const activeCount = teachers.filter((t) => t.is_active !== 0).length;
+  // Yordamchi o'qituvchilar alohida bo'limda turadi (LC UP dagidek)
+  const isSupportTab = tab === "support";
+  const visibleTeachers = teachers.filter((t) =>
+    isSupportTab ? t.kind === "support" : t.kind !== "support"
+  );
+  const supportCount = teachers.filter((t) => t.kind === "support").length;
+  const activeCount = visibleTeachers.filter(
+    (t) => t.is_active !== 0
+  ).length;
 
   /** Ishdan ketgan deb belgilash - o'chirish o'rniga. Shunda ustozning
    * tarixi (ish haqi, staj) saqlanadi va retention hisoboti to'g'ri chiqadi. */
@@ -401,7 +409,8 @@ export default function Teachers() {
       <div className="flex items-center gap-1 mb-5">
         {[
           ...(isTeacher ? [{ k: "salary", l: "Mening oyligim" }] : []),
-          { k: "list", l: "Ro'yxat" },
+          { k: "list", l: "O'qituvchilar" },
+          { k: "support", l: `Yordamchi o'qituvchilar (${supportCount})` },
           { k: "score", l: "Natijalar" },
         ].map((t) => (
           <button
@@ -432,15 +441,17 @@ export default function Teachers() {
 
       {tab === "score" && <TeacherScoreboard />}
 
-      {tab === "list" && (
+      {(tab === "list" || tab === "support") && (
       <>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">O'qituvchilar</h1>
+          <h1 className="text-xl font-semibold text-slate-900">
+            {isSupportTab ? "Yordamchi o'qituvchilar" : "O'qituvchilar"}
+          </h1>
           <p className="text-sm text-slate-500">
             Ishlayapti: {activeCount}
-            {teachers.length > activeCount &&
-              ` · ketgan: ${teachers.length - activeCount}`}
+            {visibleTeachers.length > activeCount &&
+              ` · ketgan: ${visibleTeachers.length - activeCount}`}
           </p>
         </div>
         {canEdit && (
@@ -478,7 +489,7 @@ export default function Teachers() {
               </tr>
             </thead>
             <tbody>
-              {teachers.map((t) => {
+              {visibleTeachers.map((t) => {
                 const left = t.is_active === 0;
                 return (
                   <tr
@@ -514,6 +525,11 @@ export default function Teachers() {
                     <td className="px-4 py-3 text-slate-600">{t.phone || "—"}</td>
                     <td className="px-4 py-3 text-slate-600">{subjectLabel(t.subject) || "—"}</td>
                     <td className="px-4 py-3">
+                      {t.kind === "support" ? (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-sky-50 text-sky-700">
+                          Support teacher
+                        </span>
+                      ) : (
                       <button
                         onClick={() => setCareer(t.id)}
                         className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 hover:bg-brand-50 hover:text-brand-700"
@@ -521,6 +537,7 @@ export default function Teachers() {
                       >
                         {gradeLabels[t.grade || ""] || "—"}
                       </button>
+                      )}
                       {t.remediation_until && (
                         <span
                           className="ml-1.5 text-xs text-red-600"

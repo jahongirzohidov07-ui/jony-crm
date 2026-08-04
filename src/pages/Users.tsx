@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Pencil } from "lucide-react";
-import { api, type User, type Branch } from "../lib/api";
+import { api, type User, type Branch, type Teacher } from "../lib/api";
 import { StaffCard } from "../components/StaffCard";
 import { useAuth } from "../lib/AuthContext";
 import {
@@ -279,6 +279,7 @@ function UserForm({
 export function StaffTab() {
   const { user } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -288,10 +289,15 @@ export function StaffTab() {
 
   function load() {
     setLoading(true);
-    Promise.all([api.get<User[]>("/users"), api.get<Branch[]>("/branches")])
-      .then(([u, b]) => {
+    Promise.all([
+      api.get<User[]>("/users"),
+      api.get<Branch[]>("/branches"),
+      api.get<Teacher[]>("/teachers").catch(() => [] as Teacher[]),
+    ])
+      .then(([u, b, t]) => {
         setUsers(u);
         setBranches(b);
+        setTeachers(t);
       })
       .finally(() => setLoading(false));
   }
@@ -304,6 +310,12 @@ export function StaffTab() {
   const canView = can(user?.role, STAFF_VIEWERS);
   const canManage = can(user?.role, STAFF_EDIT);
   const lockBranchId = user?.role === BRANCH_MANAGER ? user?.branch_id ?? null : null;
+
+  // O'qituvchilar bo'limidagi hisob ochilmagan ustozlar ham shu
+  // ro'yxatda ko'rinadi — xodimlar ro'yxati TO'LIQ bo'lsin.
+  const accountlessTeachers = teachers.filter(
+    (t) => !t.user_id && t.is_active !== 0
+  );
 
   async function toggleActive(u: User) {
     setRowError(null);
@@ -328,7 +340,11 @@ export function StaffTab() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Xodimlar</h1>
-          <p className="text-sm text-slate-500">Jami: {users.length}</p>
+          <p className="text-sm text-slate-500">
+            Jami: {users.length + accountlessTeachers.length}
+            {accountlessTeachers.length > 0 &&
+              ` (${accountlessTeachers.length} tasi hisob ochilmagan ustoz)`}
+          </p>
         </div>
         {canManage && (
           <button
@@ -399,6 +415,32 @@ export function StaffTab() {
                     >
                       <Pencil size={16} />
                     </button>
+                  </td>
+                </tr>
+              ))}
+              {accountlessTeachers.map((t) => (
+                <tr key={`t${t.id}`}
+                    className="border-t border-slate-100 bg-slate-50/40">
+                  <td className="px-4 py-3 font-medium text-slate-700">
+                    {t.full_name}
+                  </td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">
+                    hisob ochilmagan
+                  </td>
+                  <td className="px-4 py-3 text-slate-600">
+                    {t.kind === "support" ? "Support teacher" : "O'qituvchi"}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600">
+                    {t.branches_label || t.branch?.name || "—"}
+                  </td>
+                  <td className="px-4 py-3"></td>
+                  <td className="px-4 py-3">
+                    <span className="inline-block rounded-md px-2 py-0.5 text-xs font-medium bg-green-50 text-green-700">
+                      Faol
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right text-xs text-slate-400">
+                    O'qituvchilar bo'limida
                   </td>
                 </tr>
               ))}

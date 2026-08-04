@@ -497,7 +497,7 @@ def _backfill_public_ids():
 #  narsa qo'shsangiz — SCHEMA_STAMP satrini ham yangilang, aks holda
 #  yangi ustunlar jonli bazaga yetib bormaydi.
 # =====================================================================
-SCHEMA_STAMP = "stamp_2026_08_04a"
+SCHEMA_STAMP = "stamp_2026_08_04b"
 
 
 def _schema_bootstrap():
@@ -3676,13 +3676,21 @@ def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user))
     # Loginni ko'rsatish uchun bitta so'rov — har bir ustoz uchun alohida
     # so'rov yubormaymiz.
     ids = [t.user_id for t in rows if t.user_id]
-    logins = {u.id: u.username for u in db.query(models.User)
+    linked = {u.id: u for u in db.query(models.User)
               .filter(models.User.id.in_(ids or [-1])).all()}
+    logins = {uid: u.username for uid, u in linked.items()}
     bnames = {b.id: b.name for b in db.query(models.Branch).all()}
     out = []
     for t in rows:
         t.login = logins.get(t.user_id)
         item = schemas.TeacherOut.model_validate(t)
+        lu = linked.get(t.user_id)
+        item.kind = ("support" if lu and lu.role == roles.SUPPORT_TEACHER
+                     else "teacher")
+        # Yordamchi o'qituvchi ustozlik darajasi zinasida emas —
+        # kartasida adashib daraja qolgan bo'lsa ham ko'rsatilmaydi.
+        if item.kind == "support":
+            item.grade = None
         all_ids = ([t.branch_id] if t.branch_id else []) + \
             [b for b in extra.get(t.id, []) if b != t.branch_id]
         item.branch_ids = all_ids

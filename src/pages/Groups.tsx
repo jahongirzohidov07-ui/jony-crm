@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, X, Pencil, Search } from "lucide-react";
+import { Plus, X, Pencil, Search , Trash2 } from "lucide-react";
 import {
   api, ApiError, type Group, type Teacher, type Branch, type Room,
   type CheckProblem,
@@ -479,6 +479,17 @@ export default function Groups() {
   useEffect(load, []);
   const canEdit = can(user?.role, GROUP_MANAGE);
 
+  async function removeGroup(g: Group) {
+    if (!confirm(`"${g.name}" guruhi o'chirilsinmi?\n\nIchida o'quvchi`
+      + ` yoki yoqlama tarixi bo'lsa, tizim o'zi to'xtatadi.`)) return;
+    try {
+      await api.delete(`/groups/${g.id}`);
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "O'chirib bo'lmadi");
+    }
+  }
+
   const filtered = groups.filter((g) => {
     if (q && !g.name.toLowerCase().includes(q.toLowerCase())) return false;
     if (teacherFilter && String(g.teacher_id ?? "") !== teacherFilter) return false;
@@ -640,13 +651,20 @@ export default function Groups() {
                     </div>
                   </td>
                   {canEdit && (
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
                       <button
                         onClick={() => setEditing(g)}
                         title="Tahrirlash"
                         className="text-slate-400 hover:text-brand-600"
                       >
                         <Pencil size={15} />
+                      </button>
+                      <button
+                        onClick={() => removeGroup(g)}
+                        title="O'chirish"
+                        className="text-slate-300 hover:text-red-600 ml-2"
+                      >
+                        <Trash2 size={15} />
                       </button>
                     </td>
                   )}

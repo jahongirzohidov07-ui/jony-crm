@@ -3475,13 +3475,15 @@ STAFF_EDIT = STAFF_VIEWERS
 # jamoasining oyligini o'zi ko'tarib qo'yishi mumkin bo'lardi.
 SALARY_EDIT = SALARY_VIEW_ALL
 
-# HR shu rollarda yangi xodim ocha oladi. Ro'yxatda ASOSCHI va FILIAL
-# RAHBARI yo'q — ular tizimda to'liq huquqqa ega, ularni faqat asoschi
-# tayinlaydi. Aks holda HR o'ziga filial rahbari huquqini berib olishi
-# mumkin bo'lardi.
+# HR shu rollarda yangi xodim ochadi va login/parol beradi — ya'ni
+# HAMMAGA, faqat ASOSCHI va FILIAL RAHBARI bundan mustasno: ular
+# tizimda to'liq huquqqa ega, ularni faqat asoschi tayinlaydi. Aks
+# holda HR o'ziga filial rahbari huquqini berib olishi mumkin bo'lardi.
 HR_ASSIGNABLE_ROLES = [
     TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
     SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
+    SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
+    HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
     PARENT, STUDENT,
 ]
 

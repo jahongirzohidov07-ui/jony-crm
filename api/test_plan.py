@@ -894,6 +894,64 @@ ck("ro'yxatda summa bor",
 ck("support o'zi ro'yxatni ocholmaydi", client.get(
     "/api/support-teachers/salaries", headers=tok("sup18")).status_code, 403)
 
+# ============ 19. HR: login/parol hammaga (asoschi va filial r. dan tashqari) ============
+print("\n--- 19: HR login/parol huquqlari ---")
+HR19 = tok("hr18")
+ck("HR o'quv rahbariga login ochadi", client.post(
+    "/api/users", headers=HR19,
+    json={"username": "u19ah", "password": "parol1234",
+          "full_name": "U19 AH", "role": "academic_head"}).status_code, 200)
+ck("HR moliya rahbariga login ochadi", client.post(
+    "/api/users", headers=HR19,
+    json={"username": "u19fd", "password": "parol1234",
+          "full_name": "U19 FD", "role": "finance_director"}).status_code, 200)
+ck("HR filial rahbari rolini ochOLMAYDI", client.post(
+    "/api/users", headers=HR19,
+    json={"username": "u19bm", "password": "parol1234",
+          "full_name": "U19 BM", "role": "branch_manager",
+          "branch_id": BID}).status_code, 403)
+ck("HR asoschi rolini ochOLMAYDI", client.post(
+    "/api/users", headers=HR19,
+    json={"username": "u19f", "password": "parol1234",
+          "full_name": "U19 F", "role": "founder"}).status_code, 403)
+db = SessionLocal()
+_ah19 = db.query(models.User).filter_by(username="u19ah").first().id
+db.add(models.User(username="bm19", password_hash=hash_password("x"),
+                   full_name="BM 19", role="branch_manager", branch_id=BID))
+db.commit()
+_bm19 = db.query(models.User).filter_by(username="bm19").first().id
+db.close()
+ck("HR yangi parol beradi", client.put(
+    f"/api/users/{_ah19}", headers=HR19,
+    json={"password": "yangi12345"}).status_code, 200)
+ck("yangi parol ishlaydi", client.post(
+    "/api/auth/login", json={"username": "u19ah",
+                             "password": "yangi12345"}).status_code, 200)
+ck("filial rahbari paroliga HR tegolmaydi", client.put(
+    f"/api/users/{_bm19}", headers=HR19,
+    json={"password": "hacker1234"}).status_code, 403)
+ck("filial rahbarini HR o'chirolmaydi", client.put(
+    f"/api/users/{_bm19}", headers=HR19,
+    json={"is_active": False}).status_code, 403)
+ck("lekin kartasini tahrirlaydi", client.put(
+    f"/api/users/{_bm19}", headers=HR19,
+    json={"phone": "+998900000019"}).status_code, 200)
+# HR supportni guruhga biriktiradi
+db = SessionLocal()
+_supu = db.query(models.User).filter_by(username="sup18").first()
+_supt = db.query(models.Teacher).filter_by(user_id=_supu.id).first()
+_g19 = models.Group(name="G19", branch_id=BID, monthly_fee=400000,
+                    lesson_days="mon,wed,fri", lesson_time="11:00-12:00")
+db.add(_g19); db.commit()
+_tid19, _gid19 = _supt.id, _g19.id
+db.close()
+ck("HR supportni guruhga biriktiradi", client.put(
+    f"/api/support-teachers/{_tid19}/groups", headers=HR19,
+    json={"group_ids": [_gid19]}).status_code, 200)
+r = client.get(f"/api/support-teachers/{_tid19}/groups",
+               headers=HR19).json()
+ck("biriktirish saqlandi", r["assigned"], [_gid19])
+
 print()
 if fails:
     print("YIQILGANLAR:", fails)

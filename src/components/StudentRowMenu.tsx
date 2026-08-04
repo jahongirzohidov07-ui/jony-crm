@@ -98,16 +98,32 @@ export function StudentRowMenu({
   };
 
   const removeFromGroup = () => {
-    if (
-      !confirm(
-        `${student.full_name} guruhdan chiqarilsinmi?\n\n` +
-          "O'quvchi bazada qoladi — to'lov tarixi va davomati saqlanadi."
-      )
-    )
-      return;
-    run(() =>
-      api.post(`/students/${student.id}/move-group`, { group_id: null })
+    // Sabab MAJBURIY — ustozlar o'quvchi nega ketganini bilishi uchun.
+    const reason = prompt(
+      `${student.full_name} guruhdan chiqarilsinmi?\n\n` +
+        "Chiqarish sababini yozing (majburiy):\n" +
+        "Qarzi bo'lmasa — arxivga o'tadi. Qarzi bo'lsa — guruhsiz " +
+        "qoladi, qarz to'langach avtomat arxivlanadi."
     );
+    if (reason === null) return;
+    if (!reason.trim()) {
+      setErr("Chiqarish sababi majburiy");
+      return;
+    }
+    run(async () => {
+      const r = await api.post<{ archived: boolean; debt: number }>(
+        `/students/${student.id}/remove-from-group`,
+        { reason: reason.trim() }
+      );
+      alert(
+        r.archived
+          ? "O'quvchi guruhdan chiqarildi va arxivga o'tkazildi."
+          : `O'quvchi guruhdan chiqarildi. ${r.debt.toLocaleString()} so'm ` +
+            "qarzi borligi uchun arxivga tushmadi — qarz to'langach " +
+            "avtomat arxivga o'tadi."
+      );
+      return r;
+    });
   };
 
   const others = groups.filter((g) => g.id !== student.group?.id);

@@ -39,6 +39,27 @@ MIGRATIONS = [
     ("0006_archive_when_paid", [
         "ALTER TABLE students ADD COLUMN archive_when_paid INTEGER",
     ]),
+    # HR dan ochilgan ustoz/support hisoblari Ustozlar bo'limida ham
+    # ko'rinishi uchun: avval ism mos egasiz kartaga bog'laymiz,
+    # qolganlarga yangi karta ochamiz.
+    ("0007_teacher_cards_for_users", [
+        "UPDATE teachers SET user_id = ("
+        " SELECT u.id FROM users u WHERE u.full_name = teachers.full_name"
+        " AND u.role IN ('teacher','support_teacher')"
+        " AND NOT EXISTS (SELECT 1 FROM teachers t2"
+        "                 WHERE t2.user_id = u.id) LIMIT 1)"
+        " WHERE teachers.user_id IS NULL AND EXISTS ("
+        " SELECT 1 FROM users u WHERE u.full_name = teachers.full_name"
+        " AND u.role IN ('teacher','support_teacher')"
+        " AND NOT EXISTS (SELECT 1 FROM teachers t2"
+        "                 WHERE t2.user_id = u.id))",
+        "INSERT INTO teachers (full_name, user_id, branch_id, is_active)"
+        " SELECT u.full_name, u.id, u.branch_id, 1 FROM users u"
+        " WHERE u.role IN ('teacher','support_teacher')"
+        " AND u.is_active = 1"
+        " AND NOT EXISTS (SELECT 1 FROM teachers t"
+        "                 WHERE t.user_id = u.id)",
+    ]),
 ]
 
 

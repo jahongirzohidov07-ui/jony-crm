@@ -1896,7 +1896,7 @@ def attendance_grid(
     year: int,
     month: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    user=Depends(require_role(*roles.ATTENDANCE_VIEW)),
 ):
     """Davomat jadvali: chapda o'quvchilar, tepada shu oydagi dars kunlari."""
     _get_group_in_scope(db, group_id, user)
@@ -2121,7 +2121,7 @@ def grades_grid(
     year: int,
     month: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    user=Depends(require_role(*roles.ATTENDANCE_VIEW)),
 ):
     """Baholash jadvali - davomat bilan bir xil ko'rinish, lekin
     kataklarda 1-5 baho turadi."""
@@ -2534,7 +2534,7 @@ def student_attendance(
     student_id: int,
     months: int = 6,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_STAFF)),
+    user=Depends(require_role(*roles.TEACHING_STAFF, roles.HR_MANAGER)),
 ):
     """O'quvchining davomati va kunlik baholari - oxirgi N oy."""
     months = max(1, min(months, 24))
@@ -9757,7 +9757,7 @@ def reference_lists(
 def timetable(
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_STAFF)),
+    user=Depends(require_role(*roles.TEACHING_STAFF, roles.HR_MANAGER)),
 ):
     """Haftalik dars jadvali: qaysi kun, qaysi vaqt, qaysi guruh,
     qaysi ustoz, qaysi xona. Administrator uchun kunlik ish shu

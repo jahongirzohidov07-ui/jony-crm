@@ -666,6 +666,10 @@ TEACHING_ACCESS = FULL_ACCESS + [
     TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, ACADEMIC_HEAD,
 ]
+# Davomat va baholash jurnalini KO'RISH: dars beruvchilar + HR.
+# HR belgilay olmaydi (yozish TEACHING_ACCESS/GRADE_EDIT da qoladi),
+# faqat xodimlarning darslari qanday ketayotganini kuzatadi.
+ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 

@@ -1292,11 +1292,12 @@ def _validate_lead_fields(source: Optional[str], stage: Optional[str]):
 @app.get("/api/leads", response_model=List[schemas.LeadOut])
 def list_leads(
     stage: Optional[str] = None,
+    branch_id: Optional[int] = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.LEAD_ACCESS)),
 ):
     backfill_missing_ids(db, "lead", models.Lead)
-    q = scope_to_branch(db.query(models.Lead), models.Lead, user)
+    q = scope_to_branch(db.query(models.Lead), models.Lead, user, branch_id)
     if stage:
         q = q.filter(models.Lead.stage == stage)
     else:
@@ -3661,15 +3662,24 @@ def _teacher_branch_map(db: Session) -> dict:
 
 
 @app.get("/api/teachers", response_model=List[schemas.TeacherOut])
-def list_teachers(db: Session = Depends(get_db), user=Depends(get_current_user)):
+def list_teachers(branch_id: Optional[int] = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(get_current_user)):
     extra = _teacher_branch_map(db)
     # Filialga bog'langan xodim: asosiy filiali YOKI qo'shimcha
-    # filiallaridan biri unga tegishli ustozlarni ko'radi.
+    # filiallaridan biri unga tegishli ustozlarni ko'radi. Butun
+    # tashkilotni ko'radigan xodim filtri (branch_id) ham shu mantiq
+    # bilan ishlaydi.
+    want = None
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        want = user.branch_id
+    elif branch_id:
+        want = branch_id
+    if want:
         rows = [t for t in db.query(models.Teacher)
                 .order_by(models.Teacher.full_name).all()
-                if t.branch_id == user.branch_id
-                or user.branch_id in extra.get(t.id, [])]
+                if t.branch_id == want
+                or want in extra.get(t.id, [])]
     else:
         rows = (db.query(models.Teacher)
                 .order_by(models.Teacher.full_name).all())
@@ -3777,9 +3787,12 @@ def delete_teacher(
 
 # -------------------------------------------------------------- Groups ----
 @app.get("/api/groups", response_model=List[schemas.GroupOut])
-def list_groups(db: Session = Depends(get_db), user=Depends(get_current_user)):
+def list_groups(branch_id: Optional[int] = None,
+                db: Session = Depends(get_db),
+                user=Depends(get_current_user)):
     backfill_missing_ids(db, "group", models.Group)
-    q = scope_to_branch(db.query(models.Group), models.Group, user)
+    q = scope_to_branch(db.query(models.Group), models.Group, user,
+                        branch_id)
     groups = q.order_by(models.Group.name).all()
     out = []
     for g in groups:
@@ -4252,11 +4265,13 @@ def list_students(
     q: Optional[str] = None,
     group_id: Optional[int] = None,
     status_filter: Optional[str] = None,
+    branch_id: Optional[int] = None,
     db: Session = Depends(get_db),
     user=Depends(get_current_user),
 ):
     backfill_missing_ids(db, "student", models.Student)
-    query = scope_to_branch(db.query(models.Student), models.Student, user)
+    query = scope_to_branch(db.query(models.Student), models.Student, user,
+                            branch_id)
     if q:
         query = query.filter(models.Student.full_name.ilike(f"%{q}%"))
     if group_id:

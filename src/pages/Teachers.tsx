@@ -361,6 +361,9 @@ export default function Teachers() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, STAFF_VIEWERS);
+  // Support biriktirish huquqi bor, lekin tahrirlash yo'q rollar
+  // (masalan o'quv bo'limi rahbari) ham amal ustunini ko'radi.
+  const canAssign = can(user?.role, SUPPORT_ASSIGN);
   const canAccount = can(user?.role, ACCOUNT_MANAGE);
   // Ustozning o'zi hamkasbining oyligini ochmaydi
   const canSeeSalary =
@@ -565,7 +568,7 @@ export default function Teachers() {
                     Oylik (shu oy)
                   </th>
                 )}
-                {canEdit && <th className="px-4 py-3"></th>}
+                {(canEdit || canAssign) && <th className="px-4 py-3"></th>}
               </tr>
             </thead>
             <tbody>
@@ -645,8 +648,9 @@ export default function Teachers() {
                         )}
                       </td>
                     )}
-                    {canEdit && (
+                    {(canEdit || canAssign) && (
                       <td className="px-4 py-3 text-right whitespace-nowrap">
+                        {canEdit && (
                         <button
                           onClick={() => setEditing(t)}
                           title="Tahrirlash"
@@ -654,6 +658,7 @@ export default function Teachers() {
                         >
                           <Pencil size={15} />
                         </button>
+                        )}
                         {canAccount && !left && (
                           <button
                             onClick={() => setAccountFor(t)}
@@ -680,6 +685,7 @@ export default function Teachers() {
                             <Layers size={15} />
                           </button>
                         )}
+                        {canEdit && (
                         <button
                           onClick={() => toggleActive(t)}
                           title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}
@@ -687,6 +693,7 @@ export default function Teachers() {
                         >
                           {left ? <UserCheck size={16} /> : <UserMinus size={16} />}
                         </button>
+                        )}
                       </td>
                     )}
                   </tr>

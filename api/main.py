@@ -1079,6 +1079,14 @@ def update_user(
     # Asoschining kartasini faqat asoschining o'zi tahrirlaydi. Aks
     # holda HR asoschining parolini almashtirib yoki uni o'chirib,
     # butun tizimni egallab olishi mumkin bo'lardi.
+    # HR hammaning hisobini boshqaradi, LEKIN filial rahbariniki emas:
+    # parolini almashtirib filialni egallab olishning oldi olinadi.
+    if user.role == roles.HR_MANAGER \
+            and target.role in (roles.FOUNDER, roles.BRANCH_MANAGER) \
+            and (payload.password or payload.is_active is not None):
+        raise HTTPException(
+            403, "Asoschi va filial rahbari hisobini (parol, faollik) "
+                 "faqat asoschi boshqaradi")
     if target.role == roles.FOUNDER and user.role != roles.FOUNDER:
         raise HTTPException(403, "Asoschi kartasini faqat asoschi "
                                  "tahrirlaydi")

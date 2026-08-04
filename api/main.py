@@ -26156,3 +26156,95 @@ def import_teachers(payload: schemas.TeacherImportIn,
               entity_label=f"{created} ta ustoz",
               new_value=created, commit=True)
     return {"created": created, "results": results}
+
+
+# =====================================================================
+#  O'QUVCHILARNI EXCEL'DAN GURUHGA IMPORT QILISH
+#
+#  LC UP'dan guruh bo'yicha eksport qilingan ro'yxatni bir bosishda
+#  ko'chirish. Dublikat himoyasi: shu guruhda bir xil ism yoki bir xil
+#  telefon bo'lsa, qator o'tkazib yuboriladi. Sig'im tekshiruvi import
+#  uchun YUMSHATILADI — eski tizimdagi guruh shundoq ham to'la bo'lishi
+#  mumkin, ko'chirish to'sib qo'yilmasin.
+# =====================================================================
+@app.post("/api/students/import")
+def import_students(payload: schemas.StudentImportIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.FREEZE_ROLES))):
+    g = db.query(models.Group).get(payload.group_id)
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and g.branch_id and g.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+
+    today = roles.local_today()
+    existing = db.query(models.Student).filter(
+        models.Student.group_id == g.id).all()
+    names = {(s.full_name or "").strip().lower() for s in existing}
+    phones = set()
+    for s in existing:
+        d = "".join(ch for ch in (s.phone or "") if ch.isdigit())
+        if len(d) >= 9:
+            phones.add(d[-9:])
+
+    def _status(txt):
+        t = (txt or "").strip().lower()
+        if "arxiv" in t or "archiv" in t:
+            return "archived"
+        if "muzlat" in t or "frozen" in t:
+            return "frozen"
+        if "sinov" in t or "trial" in t:
+            return "trial"
+        return "active"
+
+    results, created = [], 0
+    for r in payload.rows:
+        name = (r.full_name or "").strip()
+        if not name:
+            continue
+        digits = "".join(ch for ch in (r.phone or "") if ch.isdigit())
+        tail = digits[-9:] if len(digits) >= 9 else None
+        if name.lower() in names:
+            results.append({"name": name, "status": "skip",
+                            "reason": "bu guruhda allaqachon bor"})
+            continue
+        if tail and tail in phones:
+            results.append({"name": name, "status": "skip",
+                            "reason": "bu telefon shu guruhda bor"})
+            continue
+
+        # LC UP bo'sh tug'ilgan sanaga eksport kunini yozadi — 4
+        # yoshdan kichik chiqsa, sana yo'q deb hisoblaymiz.
+        bdate = None
+        if r.birth_date:
+            try:
+                bdate = date.fromisoformat(str(r.birth_date)[:10])
+                if bdate.year > today.year - 4:
+                    bdate = None
+            except ValueError:
+                bdate = None
+
+        s = models.Student(
+            full_name=name,
+            phone=(r.phone or "").strip() or None,
+            address=(r.address or "").strip() or None,
+            birth_date=bdate,
+            group_id=g.id,
+            branch_id=g.branch_id,
+            status=_status(r.status),
+            subject=g.subject,
+            level=g.level,
+            enrolled_date=today,
+        )
+        db.add(s)
+        names.add(name.lower())
+        if tail:
+            phones.add(tail)
+        created += 1
+        results.append({"name": name, "status": "ok"})
+    db.commit()
+    audit.log(db, user, entity="student", action="import",
+              entity_label=f"{g.name}: {created} ta o'quvchi",
+              new_value=created, branch_id=g.branch_id, commit=True)
+    return {"created": created, "group": g.name, "results": results}

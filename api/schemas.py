@@ -2146,3 +2146,17 @@ class TeacherImportRow(BaseModel):
 class TeacherImportIn(BaseModel):
     rows: List[TeacherImportRow]
     branch_id: Optional[int] = None
+
+
+class StudentImportRow(BaseModel):
+    """Excel'dan (LC UP eksporti) bitta o'quvchi qatori."""
+    full_name: str
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    birth_date: Optional[str] = None
+    status: Optional[str] = None       # "Aktiv" / "Arxiv" / ...
+
+
+class StudentImportIn(BaseModel):
+    rows: List[StudentImportRow]
+    group_id: int

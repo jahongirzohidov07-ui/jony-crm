@@ -3794,10 +3794,17 @@ def list_groups(branch_id: Optional[int] = None,
     q = scope_to_branch(db.query(models.Group), models.Group, user,
                         branch_id)
     groups = q.order_by(models.Group.name).all()
+    # STATISTIKA FAQAT FAOL O'QUVCHILAR BO'YICHA: sinovdagi va
+    # muzlatilganlar songa qo'shilmaydi.
+    counts = dict(
+        db.query(models.Student.group_id, func.count(models.Student.id))
+        .filter(models.Student.status == "active",
+                models.Student.group_id.isnot(None))
+        .group_by(models.Student.group_id).all())
     out = []
     for g in groups:
         item = schemas.GroupOut.model_validate(g)
-        item.student_count = len(g.students)
+        item.student_count = counts.get(g.id, 0)
         out.append(item)
     return out
 
@@ -3808,7 +3815,9 @@ def get_group(
 ):
     group = _get_group_in_scope(db, group_id, user)
     item = schemas.GroupOut.model_validate(group)
-    item.student_count = len(group.students)
+    item.student_count = db.query(models.Student).filter(
+        models.Student.group_id == group.id,
+        models.Student.status == "active").count()
     return item
 
 
@@ -4195,7 +4204,9 @@ def update_group(
     db.commit()
     db.refresh(group)
     item = schemas.GroupOut.model_validate(group)
-    item.student_count = len(group.students)
+    item.student_count = db.query(models.Student).filter(
+        models.Student.group_id == group.id,
+        models.Student.status == "active").count()
     return item
 
 
@@ -12585,8 +12596,9 @@ def timetable_grid(
     for g in groups:
         g_days = [d for d in (g.lesson_days or "").split(",") if d]
         start, end = _group_slot(g)
+        # Statistika faqat FAOL o'quvchilar bo'yicha
         mine = [s for s in students
-                if s.group_id == g.id and s.status in ("active", "trial")]
+                if s.group_id == g.id and s.status == "active"]
         cap = _group_capacity(g, room_by_id)
         ages = [round((today - s.birth_date).days / 365.25, 1)
                 for s in mine if s.birth_date]
@@ -15416,9 +15428,10 @@ def leaderboard(
     elif scope == "month":
         since, _e = billing.month_bounds(today.year, today.month)
 
+    # Xonalardagi o'quvchilar soni FAQAT FAOLLARDAN olinadi
     students = scope_to_branch(db.query(models.Student), models.Student,
                                user, branch_id).filter(
-        models.Student.status.in_(["active", "trial"])).all()
+        models.Student.status == "active").all()
     if group_id:
         students = [s for s in students if s.group_id == group_id]
     ids = [s.id for s in students]
@@ -16264,9 +16277,10 @@ def _fill_rows(db: Session, user: models.User, *, branch_id=None,
         models.Room.active == 1).all()
     groups = scope_to_branch(db.query(models.Group), models.Group,
                              user, branch_id).all()
+    # Xonalardagi o'quvchilar soni FAQAT FAOLLARDAN olinadi
     students = scope_to_branch(db.query(models.Student), models.Student,
                                user, branch_id).filter(
-        models.Student.status.in_(["active", "trial"])).all()
+        models.Student.status == "active").all()
     branches = {b.id: b.name for b in db.query(models.Branch).all()}
     teachers = {t.id: t for t in db.query(models.Teacher).all()}
     grades = {g.key: g for g in db.query(models.TeacherGrade).all()}

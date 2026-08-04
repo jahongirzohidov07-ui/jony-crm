@@ -6324,6 +6324,118 @@ def restore_student(
 
 
 # =====================================================================
+#  TARIXIY STATISTIKA — eski yillardagi o'quvchilar soni
+# =====================================================================
+def _parse_snapshot_date(tok: str):
+    """Ikki formatni tushunadi: 2023-01-15 va 15.01.2023."""
+    tok = tok.strip()
+    try:
+        return date.fromisoformat(tok)
+    except ValueError:
+        pass
+    try:
+        d, m, y = tok.replace("/", ".").split(".")
+        return date(int(y), int(m), int(d))
+    except Exception:
+        return None
+
+
+@app.get("/api/stats/history")
+def stats_history(db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """Tarixiy sonlar + bugungi jonli nuqta bitta javobda."""
+    rows = (db.query(models.StudentCountSnapshot)
+            .order_by(models.StudentCountSnapshot.date).all())
+    live = (db.query(models.Student)
+            .filter(models.Student.status == "active").count())
+    return {
+        "rows": [{"id": r.id, "date": r.date.isoformat(),
+                  "count": r.count, "note": r.note} for r in rows],
+        "today": {"date": roles.local_today().isoformat(), "count": live},
+    }
+
+
+@app.post("/api/stats/history")
+def stats_history_add(payload: schemas.SnapshotIn,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(roles.FOUNDER))):
+    if payload.count < 0:
+        raise HTTPException(400, "Son manfiy bo'lmaydi")
+    r = (db.query(models.StudentCountSnapshot)
+         .filter(models.StudentCountSnapshot.date == payload.date).first())
+    if r:
+        # Bir sanaga bitta yozuv: qayta kiritilsa yangilanadi
+        r.count = payload.count
+        r.note = payload.note or r.note
+    else:
+        r = models.StudentCountSnapshot(
+            date=payload.date, count=payload.count,
+            note=payload.note, created_by=user.full_name)
+        db.add(r)
+    audit.log(db, user, entity="stats", action="update",
+              entity_label=str(payload.date), field="student_count",
+              new_value=payload.count, note=payload.note)
+    db.commit()
+    return {"ok": True, "id": r.id}
+
+
+@app.post("/api/stats/history/bulk")
+def stats_history_bulk(payload: schemas.SnapshotBulkIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.FOUNDER))):
+    """Har qatorda: sana va son (ixtiyoriy izoh). Masalan:
+    2023-01-15 480
+    01.09.2023 520 yangi o'quv yili"""
+    added = updated = 0
+    errors = []
+    for i, line in enumerate(payload.text.splitlines(), start=1):
+        line = line.replace(",", " ").replace(";", " ").strip()
+        if not line:
+            continue
+        parts = line.split()
+        d = _parse_snapshot_date(parts[0])
+        cnt = None
+        if len(parts) >= 2:
+            try:
+                cnt = int(float(parts[1]))
+            except ValueError:
+                cnt = None
+        if not d or cnt is None or cnt < 0:
+            errors.append(f"{i}-qator tushunilmadi: {line[:40]}")
+            continue
+        note = " ".join(parts[2:]) or None
+        r = (db.query(models.StudentCountSnapshot)
+             .filter(models.StudentCountSnapshot.date == d).first())
+        if r:
+            r.count, updated = cnt, updated + 1
+            if note:
+                r.note = note
+        else:
+            db.add(models.StudentCountSnapshot(
+                date=d, count=cnt, note=note, created_by=user.full_name))
+            added += 1
+    audit.log(db, user, entity="stats", action="import",
+              entity_label="tarixiy sonlar",
+              note=f"qo'shildi {added}, yangilandi {updated}")
+    db.commit()
+    return {"ok": True, "added": added, "updated": updated,
+            "errors": errors}
+
+
+@app.delete("/api/stats/history/{sid}")
+def stats_history_delete(sid: int, db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.FOUNDER))):
+    r = db.query(models.StudentCountSnapshot).get(sid)
+    if not r:
+        raise HTTPException(404, "Yozuv topilmadi")
+    audit.log(db, user, entity="stats", action="delete",
+              entity_label=r.date.isoformat(), old_value=r.count)
+    db.delete(r)
+    db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
 #  OTA-ONALAR
 # =====================================================================
 def _parent_out(p: models.Parent, students: list = None) -> dict:

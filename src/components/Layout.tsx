@@ -8,7 +8,6 @@ import {
   GraduationCap as TeacherIcon,
   LogOut,
   School,
-  Building2,
   UserCog,
   KeyRound,
   Target,
@@ -32,6 +31,7 @@ import {
   X,
   Menu,
   Bell,
+  Settings as SettingsIcon,
  Search } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
@@ -291,9 +291,7 @@ export default function Layout() {
   if (can(user?.role, AUDIT_VIEW) || can(user?.role, EXAM_VIEW)) {
     items = [...items, { to: "/audit", label: "Audit", icon: History }];
   }
-  if (can(user?.role, TASK_ACCESS)) {
-    items = [...items, { to: "/tasks", label: "Vazifalar", icon: ClipboardList }];
-  }
+  // Vazifalar endi tepada, qo'ng'iroqcha yonida turadi — menyuda emas.
   if (can(user?.role, INVENTORY_VIEW)) {
     items = [...items, { to: "/inventory", label: "Ombor", icon: Package }];
   }
@@ -303,8 +301,7 @@ export default function Layout() {
   if (user?.role === FOUNDER) {
     items = [
       ...items,
-      { to: "/branches", label: "Filiallar", icon: Building2 },
-      { to: "/permissions", label: "Ruxsatlar", icon: ShieldCheck },
+      { to: "/settings", label: "Sozlamalar", icon: SettingsIcon },
     ];
   }
   // Ustozda menyu ochiq ro'yxat bo'yicha kesiladi: dars berishga
@@ -411,6 +408,17 @@ export default function Layout() {
         </div>
         {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
         <GlobalSearch />
+        {can(user?.role, TASK_ACCESS) && (
+          <div className="absolute top-4 right-28 sm:right-[16.5rem] z-40">
+            <button
+              onClick={() => navigate("/tasks")}
+              title="Vazifalar"
+              className="p-2 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
+            >
+              <ClipboardList size={16} />
+            </button>
+          </div>
+        )}
         <NotifBell />
         {/* Profil — yuqori o'ng burchakda */}
         <div className="absolute top-4 right-3 md:right-6 z-40" ref={profileRef}>
@@ -576,6 +584,11 @@ function NotifBell() {
   const navigate = useNavigate();
   const [d, setD] = useState<{ items: NotifItem[]; count: number } | null>(null);
   const [openB, setOpenB] = useState(false);
+  // O'qilganini eslab qolamiz: ochilganda belgi o'chadi, faqat YANGI
+  // xabar kelganda qaytib chiqadi.
+  const [seenKey, setSeenKey] = useState(
+    () => localStorage.getItem("jonyos_alerts_seen") || ""
+  );
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -605,11 +618,17 @@ function NotifBell() {
   return (
     <div className="absolute top-4 right-16 sm:right-56 z-40" ref={ref}>
       <button
-        onClick={() => setOpenB((v) => !v)}
+        onClick={() => {
+          setOpenB((v) => !v);
+          const key = d ? JSON.stringify(d.items.map((i) => i.text)) : "";
+          localStorage.setItem("jonyos_alerts_seen", key);
+          setSeenKey(key);
+        }}
         className="relative p-2 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
       >
         <Bell size={16} />
-        {(d?.count || 0) > 0 && (
+        {(d?.count || 0) > 0 &&
+          JSON.stringify(d!.items.map((i) => i.text)) !== seenKey && (
           <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-semibold flex items-center justify-center">
             {d!.count > 9 ? "9+" : d!.count}
           </span>
@@ -674,7 +693,7 @@ function GlobalSearch() {
   }, [q]);
 
   return (
-    <div className="absolute top-4 left-14 right-28 sm:left-auto sm:right-[17rem] z-40 sm:w-72"
+    <div className="absolute top-4 left-14 right-40 sm:left-auto sm:right-[19.5rem] z-40 sm:w-72"
          ref={boxRef}>
       <div className="relative">
         <Search size={14}

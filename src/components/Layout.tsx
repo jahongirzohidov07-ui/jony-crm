@@ -57,8 +57,9 @@ import {
   CONTENT_REQUESTER,
   IDEA_SUBMIT,
   TEACHER_MENU,
+  BRANCH_SWITCH,
 } from "../lib/roles";
-import { api } from "../lib/api";
+import { api, setGlobalBranch, getGlobalBranch } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 
 const navItems = [
@@ -411,6 +412,7 @@ export default function Layout() {
         </div>
         {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
         <GlobalSearch />
+        {can(user?.role, BRANCH_SWITCH) && <BranchSwitcher />}
         {can(user?.role, TASK_ACCESS) && (
           <div className="absolute top-4 right-28 sm:right-[16.5rem] z-40">
             <button
@@ -696,7 +698,7 @@ function GlobalSearch() {
   }, [q]);
 
   return (
-    <div className="absolute top-4 left-14 right-40 sm:left-auto sm:right-[19.5rem] z-40 sm:w-72"
+    <div className="absolute top-4 left-14 right-40 sm:left-auto sm:right-[30.5rem] z-40 sm:w-64"
          ref={boxRef}>
       <div className="relative">
         <Search size={14}
@@ -805,3 +807,48 @@ type SearchRes = {
   teachers?: { id: number; name: string }[];
   staff?: SearchRow[];
 };
+
+
+/** FILIAL ALMASHTIRGICH — rahbariyat uchun (asoschi, o'quv bo'limi,
+ *  SMM, HR, moliya direktori). Tanlangan filial BUTUN platformaga
+ *  ta'sir qiladi: har bir sahifa faqat shu filial ma'lumotini
+ *  ko'rsatadi. "Barcha filiallar" — umumiy ko'rinish. Qolgan xodimlar
+ *  o'z filialiga bog'langan, ularga bu tanlagich chiqmaydi. */
+function BranchSwitcher() {
+  const [branches, setBranches] = useState<
+    { id: number; name: string }[]
+  >([]);
+  const current = getGlobalBranch();
+
+  useEffect(() => {
+    api.get<{ id: number; name: string }[]>("/branches")
+      .then(setBranches)
+      .catch(() => {});
+  }, []);
+
+  if (branches.length < 2) return null;
+
+  return (
+    <div className="absolute top-4 right-[19.5rem] z-40 hidden sm:block">
+      <select
+        value={current || ""}
+        onChange={(e) => {
+          setGlobalBranch(e.target.value || null);
+          // Hamma sahifa yangi filial bilan qayta yuklansin
+          window.location.reload();
+        }}
+        title="Filial bo'yicha ko'rish"
+        className={`h-10 rounded-full border px-3 pr-7 text-sm shadow-sm bg-white focus:outline-none max-w-[10.5rem] truncate ${
+          current
+            ? "border-brand-400 text-brand-700 font-medium"
+            : "border-slate-200 text-slate-600"
+        }`}
+      >
+        <option value="">Barcha filiallar</option>
+        {branches.map((b) => (
+          <option key={b.id} value={b.id}>{b.name}</option>
+        ))}
+      </select>
+    </div>
+  );
+}

@@ -150,6 +150,8 @@ export interface TeacherAccount {
 }
 
 export interface Group {
+  /** 1 — stavka qo'lda kiritilgan (darajadan avtomat emas). */
+  rate_manual?: number | null;
   id: number;
   name: string;
   room?: string;

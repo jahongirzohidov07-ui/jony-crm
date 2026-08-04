@@ -497,7 +497,7 @@ def _backfill_public_ids():
 #  narsa qo'shsangiz — SCHEMA_STAMP satrini ham yangilang, aks holda
 #  yangi ustunlar jonli bazaga yetib bormaydi.
 # =====================================================================
-SCHEMA_STAMP = "stamp_2026_08_04b"
+SCHEMA_STAMP = "stamp_2026_08_04c"
 
 
 def _schema_bootstrap():
@@ -1155,7 +1155,7 @@ def update_user(
     # "bo'shatildi" holatlarini ajratadi, aks holda tahrirlash oynasida
     # tegilmagan maydon ham tozalanib ketardi.
     for f in ("phone", "birth_date", "position", "manager_id",
-              "hired_date", "photo"):
+              "hired_date", "photo", "exit_type", "exit_reason"):
         if f in given:
             setattr(target, f, given[f])
 
@@ -4634,6 +4634,20 @@ def add_payment(
         if _maybe_auto_activate(db, s, user=user, paid=True):
             db.commit()
 
+    # AVTOMAT ARXIV: guruhdan qarzdorligicha chiqarilgan o'quvchi
+    # qarzini to'liq yopgach o'zi arxivga o'tadi.
+    if payload.kind == "payment" and getattr(s, "archive_when_paid", 0) \
+            and not s.group_id and student_balance(db, s.id) >= 0:
+        s.status = "archived"
+        s.archive_when_paid = 0
+        _sync_student_left_date(s)
+        audit.log(db, user, entity="student", action="auto_archive",
+                  entity_id=s.id, entity_label=s.full_name, field="status",
+                  new_value="archived",
+                  note="Qarz to'liq to'landi — avtomat arxivga o'tdi",
+                  branch_id=s.branch_id)
+        db.commit()
+
     # Telegram: ota-onaga chek — to'lov qabul qilindi (bog'langan bo'lsa)
     if payload.kind == "payment" and s.telegram_chat_id:
         try:
@@ -6159,13 +6173,11 @@ def move_student_group(
         raise HTTPException(404, "O'quvchi topilmadi")
 
     if payload.group_id is None:
-        old = s.group.name if s.group else None
-        audit.log(db, user, entity="student", action="group_remove",
-                  entity_id=s.id, entity_label=s.full_name, field="group",
-                  old_value=old, new_value=None, branch_id=s.branch_id)
-        s.group_id = None
-        db.commit()
-        return {"ok": True, "group_id": None}
+        # Guruhdan chiqarish endi ALOHIDA endpoint orqali - sabab
+        # majburiy va arxiv qoidalari ishlaydi.
+        raise HTTPException(
+            400, "Guruhdan chiqarish uchun sabab ko'rsatilishi shart — "
+                 "'Guruhdan chiqarish' amalidan foydalaning")
 
     g = _get_group_in_scope(db, payload.group_id, user)
     if g.id == s.group_id:
@@ -6186,6 +6198,82 @@ def move_student_group(
         s.branch_id = g.branch_id
     db.commit()
     return {"ok": True, "group_id": g.id, "group": g.name}
+
+
+@app.post("/api/students/{student_id}/remove-from-group")
+def remove_student_from_group(
+    student_id: int,
+    payload: schemas.RemoveFromGroupIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """Guruhdan chiqarish — sabab MAJBURIY (ustozlar nima uchun ketganini
+    bilishi uchun). Qoidalar:
+      - qarzi YO'Q  -> darhol arxivga tushadi;
+      - qarzi BOR   -> arxivga tushmaydi, "guruhsiz" bo'lib faol qoladi;
+        qarz to'liq to'langach AVTOMAT arxivga o'tadi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not s.group_id:
+        raise HTTPException(400, "O'quvchi hech qaysi guruhda emas")
+    reason = (payload.reason or "").strip()
+    if len(reason) < 3:
+        raise HTTPException(400, "Chiqarish sababi majburiy — "
+                                 "kamida bir necha so'z yozing")
+
+    old_group = s.group.name if s.group else None
+    bal = student_balance(db, s.id)
+    s.group_id = None
+
+    if bal < 0:
+        # Qarzdor: arxivga EMAS — ro'yxatda guruhsiz turadi,
+        # qarzi yopilgach avtomat arxivlanadi.
+        s.archive_when_paid = 1
+        debt = int(-bal)
+        note = (f"Sabab: {reason} · Qarzi bor "
+                f"({debt:,} so'm) — to'langach avtomat arxivga o'tadi"
+                .replace(",", " "))
+        archived = False
+    else:
+        s.status = "archived"
+        s.archive_when_paid = 0
+        _sync_student_left_date(s)
+        note = f"Sabab: {reason} · Arxivga o'tkazildi"
+        archived = True
+
+    audit.log(db, user, entity="student", action="group_remove",
+              entity_id=s.id, entity_label=s.full_name, field="group",
+              old_value=old_group, new_value=None, note=note,
+              branch_id=s.branch_id)
+    db.commit()
+    return {"ok": True, "archived": archived,
+            "debt": int(-bal) if bal < 0 else 0}
+
+
+@app.post("/api/students/{student_id}/restore")
+def restore_student(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """Arxivdagi o'quvchini qayta tiklaydi — o'quvchilar qaytib kelishi
+    mumkin. Holati FAOL bo'ladi, guruh esa bo'sh qoladi: keyin qo'lda
+    kerakli guruhga qo'shiladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if s.status != "archived":
+        raise HTTPException(400, "Bu o'quvchi arxivda emas")
+    s.status = "active"
+    s.archive_when_paid = 0
+    _sync_student_left_date(s)
+    audit.log(db, user, entity="student", action="restore", entity_id=s.id,
+              entity_label=s.full_name, field="status",
+              old_value="archived", new_value="active",
+              note="Arxivdan qayta tiklandi", branch_id=s.branch_id)
+    db.commit()
+    return {"ok": True, "status": s.status}
 
 
 # =====================================================================
@@ -7419,12 +7507,17 @@ def student_history(
         seen(groups_seen, l.new_value)
         seen(teachers_seen, teacher_by_group.get(l.old_value or ""))
         seen(teachers_seen, teacher_by_group.get(l.new_value or ""))
+        _detail = f"{l.old_value or '—'} → {l.new_value or '—'}"
+        # Chiqarish sababi tarixda ko'rinadi — ustozlar o'quvchi nega
+        # ketganini shu yerdan biladi.
+        if l.note:
+            _detail += f" · {l.note}"
         timeline.append({
             "date": l.created_at.isoformat() if l.created_at else None,
             "kind": "group",
             "title": "Guruhdan chiqarildi" if l.action == "group_remove"
                      else "Guruh almashtirildi",
-            "detail": f"{l.old_value or '—'} → {l.new_value or '—'}",
+            "detail": _detail,
             "by": l.user_name,
         })
 
@@ -7516,6 +7609,10 @@ def student_history(
         "activate": "Faollashtirildi", "to_trial": "Sinovga qaytarildi",
         "to_lead": "Lidga qaytarildi", "archive": "Arxivlandi",
         "delete": "O'chirildi",
+        "group_remove": "Guruhdan chiqarildi",
+        "group_move": "Guruh almashtirildi",
+        "auto_archive": "Qarz to'landi — avtomat arxivlandi",
+        "restore": "Arxivdan qayta tiklandi",
     }
     for l in logs:
         if l.action in handled:
@@ -23744,6 +23841,34 @@ def _support_month(db: Session, teacher_id: int, year: int,
         "min": roles.SUPPORT_PAY_MIN,
         "max": roles.SUPPORT_PAY_MAX,
     }
+
+
+@app.get("/api/support-teachers/salaries")
+def support_teacher_salaries(year: int | None = None,
+                             month: int | None = None,
+                             db: Session = Depends(get_db),
+                             user=Depends(require_role(
+                                 *roles.FULL_ACCESS, roles.ACADEMIC_HEAD,
+                                 roles.HEAD_SUPPORT, roles.HR_MANAGER,
+                                 roles.FINANCE_DIRECTOR))):
+    """Barcha support teacherlarning shu oy oyligi — ro'yxatda ko'rsatish
+    uchun. Formulasiz, faqat yakuniy summa va seans soni."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER))
+    q = scope_to_branch(q, models.Teacher, user)
+    rows = []
+    for t in q.all():
+        out = _support_month(db, t.id, y, m)
+        rows.append({
+            "teacher_id": t.id,
+            "salary": out.get("salary", 0),
+            "session_count": out.get("session_count", 0),
+            "hours": out.get("hours", 0),
+        })
+    return {"period": f"{y:04d}-{m:02d}", "rows": rows}
 
 
 @app.get("/api/me/support-sessions")

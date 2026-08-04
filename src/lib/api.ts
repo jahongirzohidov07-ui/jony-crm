@@ -112,6 +112,8 @@ export interface Teacher {
   /** Ustoz ishlaydigan barcha filiallar (2-3 bo'lishi mumkin). */
   branch_ids?: number[];
   branches_label?: string | null;
+  /** "support" — yordamchi o'qituvchi, "teacher" — asosiy ustoz. */
+  kind?: string | null;
   hired_date?: string | null;
   left_date?: string | null;
   /** 1 = hozir ishlayapti, 0 = ishdan ketgan. */

@@ -196,11 +196,13 @@ export function roleLabel(role: string | undefined): string {
  * Kim kimga qanday rol bera oladi. Rol berish tizimdagi eng xavfli
  * amal, shuning uchun faqat asoschi barcha rollarni bera oladi.
  */
-/** HR shu rollarda xodim ocha oladi. Asoschi va filial rahbari yo'q —
- *  ular to'liq huquqqa ega, ularni faqat asoschi tayinlaydi. */
+/** HR HAMMAGA xodim ochadi va login/parol beradi — faqat asoschi va
+ *  filial rahbari mustasno: ularni faqat asoschi tayinlaydi. */
 export const HR_ASSIGNABLE_ROLES = [
   TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
   SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
+  SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
+  HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
   PARENT, STUDENT,
 ];
 

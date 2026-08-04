@@ -952,6 +952,23 @@ r = client.get(f"/api/support-teachers/{_tid19}/groups",
                headers=HR19).json()
 ck("biriktirish saqlandi", r["assigned"], [_gid19])
 
+# ============ 20. Tarixiy statistika (eski yillar o'quvchilar soni) ============
+print("\n--- 20: tarixiy statistika ---")
+ck("yozuv qo'shish (asoschi)", client.post(
+    "/api/stats/history", headers=ASOS2,
+    json={"date": "2022-09-01", "count": 380}).status_code, 200)
+r = client.post("/api/stats/history/bulk", headers=ASOS2,
+    json={"text": "15.01.2023 410\n2023-02-01 425 izoh\nxato"}).json()
+ck("ommaviy: 2 qo'shildi 1 xato", (r["added"], len(r["errors"])), (2, 1))
+h = client.get("/api/stats/history", headers=ASOS2).json()
+ck("ro'yxat tartibli + jonli nuqta",
+   (len(h["rows"]) >= 3, "count" in h["today"]), (True, True))
+ck("HR ko'rolmaydi", client.get(
+    "/api/stats/history", headers=tok("hr18")).status_code, 403)
+ck("moliya kiritolmaydi", client.post(
+    "/api/stats/history", headers=tok("moliya"),
+    json={"date": "2021-01-01", "count": 5}).status_code, 403)
+
 print()
 if fails:
     print("YIQILGANLAR:", fails)

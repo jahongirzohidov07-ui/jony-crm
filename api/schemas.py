@@ -2132,6 +2132,18 @@ class PaymentEditIn(BaseModel):
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 
+class SnapshotIn(BaseModel):
+    """Tarixiy o'quvchilar soni — bitta yozuv."""
+    date: date
+    count: int
+    note: Optional[str] = None
+
+
+class SnapshotBulkIn(BaseModel):
+    """Ommaviy kiritish: har qatorda "sana son [izoh]"."""
+    text: str
+
+
 class RemoveFromGroupIn(BaseModel):
     """Guruhdan chiqarish — sabab MAJBURIY, ustozlar bilishi uchun."""
     reason: str

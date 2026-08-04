@@ -2927,6 +2927,22 @@ class ErrorLog(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+class StudentCountSnapshot(Base):
+    """Tarixiy statistika: ma'lum sanadagi o'quvchilar soni.
+
+    Tizim kiritilishidan OLDINGI yillar uchun asoschi qo'lda kiritadi
+    (masalan oyiga 2 marta yozib borilgan raqamlar). Grafikda jonli
+    ma'lumotlar bilan bitta chiziqda ko'rinadi."""
+    __tablename__ = "student_count_snapshots"
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, nullable=False, unique=True, index=True)
+    count = Column(Integer, nullable=False)
+    # Izoh: "Bekobod 2 ochildi", "yangi o'quv yili" kabi belgilar
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class SchemaMigration(Base):
     """Qo'llangan sxema o'zgarishlari ro'yxati. Har bir versiya bir
     marta ishlaydi — 'except: pass' o'rniga tartibli migratsiya."""

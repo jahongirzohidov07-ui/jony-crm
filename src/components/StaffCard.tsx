@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import {
   X, Plus, Trash2, CheckCircle2, Circle, Award, AlertTriangle,
-  GraduationCap, Clock, Plane, Star,
+  GraduationCap, Clock, Plane, Star, UserMinus, UserCheck,
 } from "lucide-react";
 import {
   api, type StaffCard as Card, type StaffEvents, type Onboarding,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { useAuth } from "../lib/AuthContext";
 
 const ICON: Record<string, typeof Award> = {
   training: GraduationCap,
@@ -38,9 +39,58 @@ export function StaffCard({
   canEdit: boolean;
   onClose: () => void;
 }) {
+  const { user } = useAuth();
   const [card, setCard] = useState<Card | null>(null);
   const [tab, setTab] = useState<Tab>("umumiy");
   const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+
+  // Asoschi kartasi bu yerdan bo'shatilmaydi; HR esa filial
+  // rahbariga tegolmaydi (server ham shuni tekshiradi).
+  const canDismiss =
+    canEdit &&
+    !!card &&
+    card.role !== "founder" &&
+    !(user?.role === "hr_manager" && card.role === "branch_manager");
+
+  async function dismiss() {
+    if (!card) return;
+    const reason = prompt(
+      `${card.full_name} ishdan bo'shatilsinmi?\n\n` +
+        "Bo'shatish sababini yozing (majburiy):"
+    );
+    if (reason === null) return;
+    if (!reason.trim()) {
+      alert("Bo'shatish sababi majburiy");
+      return;
+    }
+    setBusy(true);
+    try {
+      await api.put(`/users/${userId}`, {
+        is_active: false,
+        exit_reason: reason.trim(),
+      });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function rehire() {
+    if (!card) return;
+    if (!confirm(`${card.full_name} ishga qaytarilsinmi?`)) return;
+    setBusy(true);
+    try {
+      await api.put(`/users/${userId}`, { is_active: true });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   function load() {
     setLoading(true);
@@ -69,9 +119,31 @@ export function StaffCard({
               </p>
             )}
           </div>
-          <button onClick={onClose} className="text-slate-400">
-            <X size={18} />
-          </button>
+          <div className="flex items-center gap-2">
+            {canDismiss &&
+              (card!.is_active ? (
+                <button
+                  onClick={dismiss}
+                  disabled={busy}
+                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 disabled:opacity-50"
+                >
+                  <UserMinus size={14} />
+                  Ishdan bo'shatish
+                </button>
+              ) : (
+                <button
+                  onClick={rehire}
+                  disabled={busy}
+                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50"
+                >
+                  <UserCheck size={14} />
+                  Ishga qaytarish
+                </button>
+              ))}
+            <button onClick={onClose} className="text-slate-400">
+              <X size={18} />
+            </button>
+          </div>
         </div>
 
         {loading ? (

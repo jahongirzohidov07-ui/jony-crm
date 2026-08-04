@@ -4,10 +4,11 @@ import { Plus, X, Pencil, Search } from "lucide-react";
 import {
   api, ApiError, type Group, type Teacher, type Branch, type Room,
   type CheckProblem,
+  type CareerMap,
 } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
-import { FULL_ACCESS, can } from "../lib/roles";
+import { GROUP_MANAGE, can } from "../lib/roles";
 import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
@@ -56,6 +57,19 @@ export function GroupFormModal({
   const [teacherRate, setTeacherRate] = useState(
     String(initial?.teacher_rate_per_student ?? 0)
   );
+  // Stavka DARAJADAN avtomat olinadi; faqat istisno holatda qo'lda.
+  const [rateManual, setRateManual] = useState(initial?.rate_manual === 1);
+  const [gradeRates, setGradeRates] = useState<
+    Record<string, { label: string; rate: number }>
+  >({});
+  useEffect(() => {
+    api.get<CareerMap>("/career")
+      .then((d) =>
+        setGradeRates(Object.fromEntries(d.grades.map((g) => [
+          g.key, { label: g.label, rate: g.rate_per_student },
+        ]))))
+      .catch(() => setGradeRates({}));
+  }, []);
   const [subject, setSubject] = useState(initial?.subject ?? "english");
   const [level, setLevel] = useState(initial?.level ?? "");
   const [startDate, setStartDate] = useState(
@@ -98,7 +112,7 @@ export function GroupFormModal({
         monthly_fee: computedMonthlyFee,
         lesson_price: lessonPriceNum,
         standard_lessons_per_month: standardLessonsNum,
-        teacher_rate_per_student: Number(teacherRate) || 0,
+        teacher_rate_per_student: rateManual ? Number(teacherRate) || 0 : 0,
         subject: subject || null,
         level: level || null,
         start_date: startDate || null,
@@ -360,17 +374,55 @@ export function GroupFormModal({
             </p>
             <div className="mt-3">
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Ustoz stavkasi (1 talabadan, to'liq oy uchun, so'm)
+                Ustoz stavkasi (1 talabadan, to'liq oy uchun)
               </label>
-              <input
-                type="number"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-                value={teacherRate}
-                onChange={(e) => setTeacherRate(e.target.value)}
-              />
+              {(() => {
+                const t = teachers.find((x) => String(x.id) === teacherId);
+                const gi = t?.grade ? gradeRates[t.grade] : undefined;
+                if (!rateManual) {
+                  return (
+                    <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 flex items-center justify-between gap-2">
+                      <span>
+                        {!teacherId
+                          ? "Ustoz tanlanganda darajasidan avtomat olinadi"
+                          : gi
+                          ? `${formatSom(gi.rate)} — ${gi.label} darajasidan avtomat`
+                          : "Ustozga daraja belgilanmagan (0 so'm)"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRateManual(true);
+                          setTeacherRate(String(gi?.rate ?? 0));
+                        }}
+                        className="text-xs text-slate-400 hover:text-brand-600 shrink-0"
+                      >
+                        qo'lda kiritish
+                      </button>
+                    </div>
+                  );
+                }
+                return (
+                  <>
+                    <input
+                      type="number"
+                      className="w-full rounded-lg border border-amber-300 px-3 py-2 text-sm"
+                      value={teacherRate}
+                      onChange={(e) => setTeacherRate(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setRateManual(false)}
+                      className="text-xs text-brand-600 mt-1"
+                    >
+                      ← Darajadan avtomat olishga qaytarish
+                    </button>
+                  </>
+                );
+              })()}
               <p className="text-xs text-slate-400 mt-1">
-                Ustoz yoqlama qo'ygan darslar soniga qarab shu summadan
-                ulush oladi (barcha darsni o'tsa - to'liq summa).
+                Ustoz darajasi o'zgarsa, stavka ham o'zi yangilanadi
+                (qo'lda kiritilgan guruhlarga tegilmaydi).
               </p>
             </div>
           </div>
@@ -425,7 +477,7 @@ export default function Groups() {
   }
 
   useEffect(load, []);
-  const canEdit = can(user?.role, FULL_ACCESS);
+  const canEdit = can(user?.role, GROUP_MANAGE);
 
   const filtered = groups.filter((g) => {
     if (q && !g.name.toLowerCase().includes(q.toLowerCase())) return false;

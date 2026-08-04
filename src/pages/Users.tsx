@@ -367,8 +367,22 @@ export function StaffTab() {
 
   async function toggleActive(u: User) {
     setRowError(null);
+    // Ishdan bo'shatishda sabab MAJBURIY — arxivda ko'rinadi.
+    let body: Record<string, unknown> = { is_active: !u.is_active };
+    if (u.is_active) {
+      const reason = prompt(
+        `${u.full_name} ishdan bo'shatilsinmi?\n\n` +
+          "Bo'shatish sababini yozing (majburiy):"
+      );
+      if (reason === null) return;
+      if (!reason.trim()) {
+        setRowError("Bo'shatish sababi majburiy");
+        return;
+      }
+      body = { is_active: false, exit_reason: reason.trim() };
+    }
     try {
-      await api.put(`/users/${u.id}`, { is_active: !u.is_active });
+      await api.put(`/users/${u.id}`, body);
       load();
     } catch (e) {
       setRowError(e instanceof Error ? e.message : "Xatolik");

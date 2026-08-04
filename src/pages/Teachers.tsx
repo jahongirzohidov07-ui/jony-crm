@@ -13,7 +13,7 @@ import {
   STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER,
   ACCOUNT_MANAGE, can, FOUNDER, ACADEMIC_HEAD,
  SUPPORT_ASSIGN } from "../lib/roles";
-import { formatDate } from "../lib/format";
+import { formatDate, formatSom } from "../lib/format";
 import { SUBJECTS, subjectLabel } from "../lib/subjects";
 import { SalaryCard } from "../components/SalaryCard";
 import { TeacherScoreboard } from "../components/TeacherScoreboard";
@@ -372,6 +372,28 @@ export default function Teachers() {
   const [activeF, setActiveF] = useState("");
   // Yordamchi o'qituvchilar alohida bo'limda turadi (LC UP dagidek)
   const isSupportTab = tab === "support";
+  // Supportlarning shu oy oyligi — ro'yxatda summa ko'rinadi
+  const [supSalaries, setSupSalaries] = useState<
+    Record<number, { salary: number; session_count: number }>
+  >({});
+  useEffect(() => {
+    if (!isSupportTab || !canSeeSalary) return;
+    api
+      .get<{ rows: { teacher_id: number; salary: number;
+                     session_count: number }[] }>(
+        "/support-teachers/salaries?x=1")
+      .then((r) => {
+        const m: Record<number, { salary: number; session_count: number }> =
+          {};
+        for (const row of r.rows)
+          m[row.teacher_id] = {
+            salary: row.salary,
+            session_count: row.session_count,
+          };
+        setSupSalaries(m);
+      })
+      .catch(() => setSupSalaries({}));
+  }, [isSupportTab, canSeeSalary]);
   const visibleTeachers = teachers.filter((t) => {
     if (isSupportTab ? t.kind !== "support" : t.kind === "support")
       return false;
@@ -538,6 +560,11 @@ export default function Teachers() {
                 <th className="text-left px-4 py-3 font-medium">Daraja</th>
                 <th className="text-left px-4 py-3 font-medium">Filial</th>
                 <th className="text-left px-4 py-3 font-medium">Ishga kirgan</th>
+                {isSupportTab && canSeeSalary && (
+                  <th className="text-right px-4 py-3 font-medium">
+                    Oylik (shu oy)
+                  </th>
+                )}
                 {canEdit && <th className="px-4 py-3"></th>}
               </tr>
             </thead>
@@ -604,6 +631,20 @@ export default function Teachers() {
                     <td className="px-4 py-3 text-slate-500">
                       {t.hired_date ? formatDate(t.hired_date) : "—"}
                     </td>
+                    {isSupportTab && canSeeSalary && (
+                      <td className="px-4 py-3 text-right">
+                        {supSalaries[t.id] ? (
+                          <span className="font-medium text-slate-800">
+                            {formatSom(supSalaries[t.id].salary)}
+                            <span className="block text-[11px] font-normal text-slate-400">
+                              {supSalaries[t.id].session_count} ta seans
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="text-slate-400">—</span>
+                        )}
+                      </td>
+                    )}
                     {canEdit && (
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         <button

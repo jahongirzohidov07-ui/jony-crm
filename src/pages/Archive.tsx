@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Archive as ArchiveIcon, Download, X } from "lucide-react";
+import { Archive as ArchiveIcon, Download, RotateCcw, X } from "lucide-react";
 import {
   api, type ArchiveStudents, type ArchiveStaff, type ArchiveStaffRow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, STAFF_VIEWERS, HR_ACCESS, can } from "../lib/roles";
+import { TEACHING_STAFF, STAFF_VIEWERS, HR_ACCESS, FREEZE_ROLES, can } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
@@ -53,10 +53,15 @@ function toneOf(key: string) {
 
 // ------------------------------------------------------- O'quvchilar
 function StudentsTab() {
+  const { user } = useAuth();
   const [data, setData] = useState<ArchiveStudents | null>(null);
   const [branchId, setBranchId] = useState<number | null>(null);
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [busyId, setBusyId] = useState<number | null>(null);
+  // O'quvchilar qaytib kelishi mumkin — qayta tiklash huquqi
+  const canRestore = can(user?.role, FREEZE_ROLES);
 
   useEffect(() => {
     setLoading(true);
@@ -64,7 +69,26 @@ function StudentsTab() {
       .get<ArchiveStudents>(`/archive/students?x=1${branchParam(branchId)}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [branchId]);
+  }, [branchId, reloadKey]);
+
+  async function restore(id: number, name: string) {
+    if (
+      !confirm(
+        `${name} arxivdan qayta tiklansinmi?\n\n` +
+          "Holati FAOL bo'ladi, keyin kerakli guruhga qo'shasiz."
+      )
+    )
+      return;
+    setBusyId(id);
+    try {
+      await api.post(`/students/${id}/restore`, {});
+      setReloadKey((k) => k + 1);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusyId(null);
+    }
+  }
 
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
@@ -153,6 +177,7 @@ function StudentsTab() {
                 <th className="text-right w-24">Necha oy</th>
                 <th className="text-right w-36">Hisob</th>
                 <th className="text-left w-44 pr-4">Toifa</th>
+                {canRestore && <th className="w-32"></th>}
               </tr>
             </thead>
             <tbody>
@@ -196,6 +221,19 @@ function StudentsTab() {
                       {r.balance === 0 ? "—" : formatSom(r.balance)}
                     </td>
                     <td className={`pr-4 text-xs ${T.text}`}>{g?.label}</td>
+                    {canRestore && (
+                      <td className="pr-4 text-right">
+                        <button
+                          onClick={() => restore(r.id, r.full_name)}
+                          disabled={busyId === r.id}
+                          className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50"
+                          title="Arxivdan qayta tiklash"
+                        >
+                          <RotateCcw size={12} />
+                          Qayta tiklash
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 );
               })}

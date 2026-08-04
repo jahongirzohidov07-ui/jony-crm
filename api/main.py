@@ -625,19 +625,35 @@ def _months_between(start: date, end: date) -> float:
     return round((end - start).days / 30.44, 1)
 
 
+def _user_branch_ids(db, user: models.User) -> list:
+    """Xodimning BARCHA filiallari (asosiy + qo'shimcha). So'rov soni
+    oshmasin deb natija user obyektiga yopishtirib qo'yiladi."""
+    cached = getattr(user, "_all_branch_ids", None)
+    if cached is not None:
+        return cached
+    extra = [ub.branch_id for ub in db.query(models.UserBranch)
+             .filter(models.UserBranch.user_id == user.id).all()]
+    ids = ([user.branch_id] if user.branch_id else []) + \
+        [b for b in extra if b != user.branch_id]
+    user._all_branch_ids = ids
+    return ids
+
+
 def scope_to_branch(query, model, user: models.User, branch_id=None):
     """Filialga bo'yicha cheklash.
 
     Ikki xil cheklash bor va ular aralashmasligi kerak:
-      1) HUQUQ - filialga bog'langan xodim faqat o'z filialini ko'radi.
-         Buni hech kim aylanib o'ta olmaydi.
+      1) HUQUQ - filialga bog'langan xodim faqat O'Z FILIALLARINI
+         (asosiy + qo'shimcha) ko'radi. Buni hech kim aylanib o'tolmaydi.
       2) FILTR - butun tashkilotni ko'radigan odam (asoschi, HR, SMM)
          istagan filialni alohida ko'rmoqchi bo'lsa, branch_id beradi.
     """
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        # Huquq cheklovi: o'z filiali. So'ralgan filial boshqa bo'lsa ham
-        # baribir o'ziniki qaytadi.
-        return query.filter(model.branch_id == user.branch_id)
+        allowed = _user_branch_ids(query.session, user)
+        # O'z filiallaridan bittasini tanlab ko'rishi mumkin
+        if branch_id and branch_id in allowed:
+            return query.filter(model.branch_id == branch_id)
+        return query.filter(model.branch_id.in_(allowed or [-1]))
     if branch_id and hasattr(model, "branch_id"):
         return query.filter(model.branch_id == branch_id)
     return query
@@ -845,6 +861,21 @@ def _guard_role_assignment(
                  "rahbari rollarini faqat asoschi tayinlaydi.")
 
 
+def _sync_user_branches(db: Session, u: models.User, branch_ids: list):
+    """Xodimning filiallar ro'yxati: birinchisi asosiy (User.branch_id),
+    qolganlari user_branches jadvalida."""
+    db.query(models.UserBranch).filter(
+        models.UserBranch.user_id == u.id).delete()
+    seen = set()
+    for bid in branch_ids or []:
+        if not bid or bid in seen:
+            continue
+        seen.add(bid)
+        if bid == u.branch_id:
+            continue
+        db.add(models.UserBranch(user_id=u.id, branch_id=bid))
+
+
 @app.get("/api/users", response_model=List[schemas.UserOut])
 def list_users(
     db: Session = Depends(get_db),
@@ -852,7 +883,22 @@ def list_users(
 ):
     backfill_missing_ids(db, "user", models.User)
     q = scope_to_branch(db.query(models.User), models.User, user)
-    return q.order_by(models.User.full_name).all()
+    rows = q.order_by(models.User.full_name).all()
+    # Ko'p filialli xodimlar: barcha filiallari yorlig'i
+    extra_map: dict = {}
+    for ub in db.query(models.UserBranch).all():
+        extra_map.setdefault(ub.user_id, []).append(ub.branch_id)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    out = []
+    for u in rows:
+        item = schemas.UserOut.model_validate(u)
+        ids = ([u.branch_id] if u.branch_id else []) + \
+            [b for b in extra_map.get(u.id, []) if b != u.branch_id]
+        item.branch_ids = ids
+        item.branches_label = ", ".join(
+            bnames.get(b, "?") for b in ids) or None
+        out.append(item)
+    return out
 
 
 @app.get("/api/users/assignable", response_model=List[schemas.StaffOption])
@@ -989,12 +1035,15 @@ def create_user(
     if not roles.password_ok(payload.password):
         raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
 
+    # Ko'p filial: birinchisi asosiy bo'ladi
+    _bids = payload.branch_ids or []
+    _primary = payload.branch_id or (_bids[0] if _bids else None)
     new_user = models.User(
         username=payload.username,
         password_hash=hash_password(payload.password),
         full_name=payload.full_name,
         role=payload.role,
-        branch_id=payload.branch_id,
+        branch_id=_primary,
         fix_salary=payload.fix_salary,
         # Xodim kartasi. Tug'ilgan sana va ishga kirgan sana — tabrik
         # eslatmalarining asosi, shuning uchun boshidanoq yoziladi.
@@ -1008,6 +1057,8 @@ def create_user(
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    if _bids:
+        _sync_user_branches(db, new_user, _bids)
     # AVTOMAT: SMM'ga yangi xodimni suratga olish vazifasi
     _smm_new_staff_task(db, new_user)
     db.commit()
@@ -1033,6 +1084,9 @@ def update_user(
                                  "tahrirlaydi")
 
     new_role = payload.role if payload.role is not None else target.role
+    # Ko'p filial berilsa — birinchisi asosiy
+    if payload.branch_ids:
+        payload.branch_id = payload.branch_ids[0]
     new_branch_id = (
         payload.branch_id if payload.branch_id is not None else target.branch_id
     )
@@ -1091,7 +1145,9 @@ def update_user(
     # (roles.USER_ADMIN) o'zgartira oladi; endpoint allaqachon shu bilan
     # himoyalangan. exclude_unset orqali "berilmagan" va "0 qilindi"
     # holatlarini ajratamiz.
+    _new_bids = payload.branch_ids
     given = payload.model_dump(exclude_unset=True)
+    given.pop("branch_ids", None)
     if "fix_salary" in given:
         target.fix_salary = payload.fix_salary
 
@@ -1102,6 +1158,10 @@ def update_user(
               "hired_date", "photo"):
         if f in given:
             setattr(target, f, given[f])
+
+    # Ko'p filial ro'yxati yuborilgan bo'lsa — sinxronlaymiz
+    if _new_bids is not None:
+        _sync_user_branches(db, target, _new_bids or [])
 
     db.commit()
     db.refresh(target)
@@ -1348,7 +1408,9 @@ def create_lead(
             kind = "lid" if dup_lead else "o'quvchi"
             raise HTTPException(
                 409, f"Bu telefon raqami bilan {kind} allaqachon bor: "
-                     f"{who}. Baribir qo'shish uchun tasdiqlang.")
+                     f"{who}. Bir oila vakilimi (aka-uka / opa-singil) "
+                     "yoki raqamni adashib kiritdingizmi? Bir oiladan "
+                     "bo'lsa, tasdiqlang — bitta raqam bilan yozilaveradi.")
 
     # DUBLIKAT (ism bo'yicha): bir xil ism-familiyali lid yoki talaba
     # bo'lsa — adashib qayta kiritishning oldini olamiz. Yangi odam
@@ -26357,11 +26419,6 @@ def import_students(payload: schemas.StudentImportIn,
     existing = db.query(models.Student).filter(
         models.Student.group_id == g.id).all()
     names = {(s.full_name or "").strip().lower() for s in existing}
-    phones = set()
-    for s in existing:
-        d = "".join(ch for ch in (s.phone or "") if ch.isdigit())
-        if len(d) >= 9:
-            phones.add(d[-9:])
 
     def _status(txt):
         t = (txt or "").strip().lower()
@@ -26378,16 +26435,13 @@ def import_students(payload: schemas.StudentImportIn,
         name = (r.full_name or "").strip()
         if not name:
             continue
-        digits = "".join(ch for ch in (r.phone or "") if ch.isdigit())
-        tail = digits[-9:] if len(digits) >= 9 else None
         if name.lower() in names:
             results.append({"name": name, "status": "skip",
                             "reason": "bu guruhda allaqachon bor"})
             continue
-        if tail and tail in phones:
-            results.append({"name": name, "status": "skip",
-                            "reason": "bu telefon shu guruhda bor"})
-            continue
+        # DIQQAT: telefon bo'yicha o'tkazib yubormaymiz — aka-uka/opa-
+        # singillar bitta (ota-onaning) raqami bilan yoziladi. Haqiqiy
+        # dublikatni ism tekshiruvi ushlaydi.
 
         # LC UP bo'sh tug'ilgan sanaga eksport kunini yozadi — 4
         # yoshdan kichik chiqsa, sana yo'q deb hisoblaymiz.
@@ -26414,8 +26468,6 @@ def import_students(payload: schemas.StudentImportIn,
         )
         db.add(s)
         names.add(name.lower())
-        if tail:
-            phones.add(tail)
         created += 1
         results.append({"name": name, "status": "ok"})
     db.commit()

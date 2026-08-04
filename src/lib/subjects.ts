@@ -7,6 +7,7 @@ export const SUBJECTS = [
   { key: "korean", label: "Koreys tili" },
   { key: "turkish", label: "Turk tili" },
   { key: "german", label: "Nemis tili" },
+  { key: "kids_english", label: "Kids English" },
   { key: "biology", label: "Biologiya" },
   { key: "programming", label: "Dasturlash" },
   { key: "mental_math", label: "Mental arifmetika" },
@@ -31,6 +32,13 @@ const ENGLISH_LEVELS = [
   { key: "cefr", label: "CEFR" },
 ];
 
+// Kids English — Cambridge YLE bosqichlari (7-12 yosh)
+const KIDS_LEVELS = [
+  { key: "starters", label: "Starters" },
+  { key: "movers", label: "Movers" },
+  { key: "flyers", label: "Flyers" },
+];
+
 const COURSE_LEVELS = [
   { key: "basic", label: "Boshlang'ich" },
   { key: "intermediate", label: "O'rta" },
@@ -43,6 +51,7 @@ export const SUBJECT_LEVELS: Record<string, { key: string; label: string }[]> = 
   korean: CEFR_LEVELS,
   turkish: CEFR_LEVELS,
   german: CEFR_LEVELS,
+  kids_english: KIDS_LEVELS,
   biology: COURSE_LEVELS,
   programming: COURSE_LEVELS,
   mental_math: COURSE_LEVELS,

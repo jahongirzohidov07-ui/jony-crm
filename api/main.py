@@ -9895,7 +9895,8 @@ def archive_staff(
     q = scope_to_branch(db.query(models.User), models.User, user).filter(
         models.User.is_active == 0)
     rows = [{
-        "id": u.id, "public_id": u.public_id, "full_name": u.full_name,
+        "id": u.id, "kind": "user",
+        "public_id": u.public_id, "full_name": u.full_name,
         "username": u.username, "role": u.role,
         "role_label": roles.UZ_LABELS.get(u.role, u.role),
         "branch": u.branch.name if u.branch else None,
@@ -9905,6 +9906,23 @@ def archive_staff(
         "exit_reason": u.exit_reason,
         "exit_date": u.exit_date.isoformat() if u.exit_date else None,
     } for u in q.all()]
+    # Hisob ochilmagan, ishdan ketgan USTOZ KARTALARI ham arxivda
+    # ko'rinadi — O'qituvchilar bo'limida "ketgan" bo'lib yotmaydi.
+    tq = scope_to_branch(db.query(models.Teacher), models.Teacher,
+                         user).filter(models.Teacher.is_active == 0,
+                                      models.Teacher.user_id.is_(None))
+    for t in tq.all():
+        rows.append({
+            "id": -t.id, "kind": "teacher", "teacher_id": t.id,
+            "public_id": None, "full_name": t.full_name,
+            "username": "ustoz kartasi", "role": "teacher",
+            "role_label": "O'qituvchi",
+            "branch": t.branch.name if t.branch else None,
+            "exit_type": "neutral",
+            "exit_label": roles.EXIT_TYPE_LABELS.get("neutral", "Neytral"),
+            "exit_reason": None,
+            "exit_date": t.left_date.isoformat() if t.left_date else None,
+        })
     rows.sort(key=lambda r: (r["exit_date"] or "", r["full_name"]), reverse=True)
 
     groups = []

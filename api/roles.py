@@ -4481,7 +4481,7 @@ BUDGET_DEPARTMENT_LABELS = {
 # Ustoz va support teacher BUNDAY amallarni qila olmaydi.
 FREEZE_ROLES = [FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER]
 # Support teacherni guruhga biriktirish
-SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD]
+SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD, HR_MANAGER]
 # Ketma-ket nechta darsga kelmasa avtomat muzlatiladi
 AUTO_FREEZE_ABSENCES = 3
 # Junior teacher bo'lish shartlari (support teacher yo'li)

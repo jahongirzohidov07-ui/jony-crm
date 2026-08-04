@@ -2945,3 +2945,17 @@ class TeacherBranch(Base):
                         nullable=False, index=True)
     branch_id = Column(Integer, ForeignKey("branches.id"),
                        nullable=False, index=True)
+
+
+class UserBranch(Base):
+    """Xodim ishlaydigan QO'SHIMCHA filiallar. Ba'zi xodimlar (masalan,
+    administrator) 2-3 filialda ishlaydi — asosiysi User.branch_id da,
+    qolganlari shu yerda. Filialga bog'liq ko'rinishlar barcha
+    filiallarini hisobga oladi."""
+    __tablename__ = "user_branches"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"),
+                     nullable=False, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"),
+                       nullable=False, index=True)

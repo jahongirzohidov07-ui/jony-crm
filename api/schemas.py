@@ -49,6 +49,9 @@ class UserOut(BaseModel):
     phone: Optional[str] = None
     birth_date: Optional[date] = None
     hired_date: Optional[date] = None
+    # Barcha filiallari ("Markaziy, Bekobod 2") — ro'yxat uchun
+    branch_ids: Optional[List[int]] = None
+    branches_label: Optional[str] = None
 
 
 class UserCreate(BaseModel):
@@ -57,6 +60,8 @@ class UserCreate(BaseModel):
     full_name: str
     role: str
     branch_id: Optional[int] = None
+    # Xodim ishlaydigan BARCHA filiallar — birinchisi asosiy
+    branch_ids: Optional[List[int]] = None
     fix_salary: Optional[float] = None
     # ---- Xodim kartasi ----
     phone: Optional[str] = None
@@ -71,6 +76,7 @@ class UserUpdate(BaseModel):
     full_name: Optional[str] = None
     role: Optional[str] = None
     branch_id: Optional[int] = None
+    branch_ids: Optional[List[int]] = None
     is_active: Optional[bool] = None
     password: Optional[str] = None
     fix_salary: Optional[float] = None

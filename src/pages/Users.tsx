@@ -497,16 +497,34 @@ export function StaffTab() {
                       : ""}
                   </td>
                   <td className="px-4 py-3">
-                    <button
-                      onClick={() => toggleActive(u)}
-                      className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${
-                        u.is_active
-                          ? "bg-green-50 text-green-700 hover:bg-green-100"
-                          : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                      }`}
-                    >
-                      {u.is_active ? "Faol" : "Faolsiz"}
-                    </button>
+                    {user?.role === "hr_manager" &&
+                    (u.role === "founder" || u.role === "branch_manager") ? (
+                      <span
+                        className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${
+                          u.is_active
+                            ? "bg-green-50 text-green-700"
+                            : "bg-slate-100 text-slate-500"
+                        }`}
+                      >
+                        {u.is_active ? "Faol" : "Faolsiz"}
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => toggleActive(u)}
+                        title={
+                          u.is_active
+                            ? "Ishdan bo'shatish (sabab so'raladi)"
+                            : "Ishga qaytarish"
+                        }
+                        className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${
+                          u.is_active
+                            ? "bg-green-50 text-green-700 hover:bg-green-100"
+                            : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                        }`}
+                      >
+                        {u.is_active ? "Faol" : "Faolsiz"}
+                      </button>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button

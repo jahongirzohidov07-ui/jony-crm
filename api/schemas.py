@@ -206,6 +206,8 @@ class GroupOut(GroupCreate):
     teacher: Optional[TeacherOut] = None
     branch: Optional[BranchOut] = None
     student_count: int = 0
+    # 1 — stavka qo'lda kiritilgan (darajadan avtomat emas)
+    rate_manual: Optional[int] = None
 
 
 # ---------- Lesson ("yoqlama") ----------

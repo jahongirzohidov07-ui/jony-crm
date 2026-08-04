@@ -107,6 +107,9 @@ STAFF_ROLES = [r for r in ALL_ROLES if r not in EXTERNAL_ROLES]
 
 # Kundalik operatsion to'liq huquq.
 FULL_ACCESS = [FOUNDER, BRANCH_MANAGER]
+# Guruh ochish/tahrirlash — o'quv bo'limi rahbari ham qiladi: guruhlar
+# uning bevosita ishi (dars sifati, jadval, ustoz biriktirish).
+GROUP_MANAGE = [FOUNDER, BRANCH_MANAGER, ACADEMIC_HEAD]
 
 # Talaba yozuvlari bilan ishlaydiganlar.
 TEACHING_STAFF = FULL_ACCESS + [

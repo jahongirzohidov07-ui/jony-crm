@@ -28,6 +28,13 @@ MIGRATIONS = [
     ("0004_users_recovery", [
         "ALTER TABLE users ADD COLUMN recovery_hash VARCHAR",
     ]),
+    # Yordamchi o'qituvchi — ustozlik darajasi zinasida emas. Xodim
+    # sifatida ochilgan support teacher kartasiga adashib "junior"
+    # yozilib qolgan bo'lsa, tozalaymiz.
+    ("0005_support_teacher_gradeless", [
+        "UPDATE teachers SET grade = NULL WHERE user_id IN "
+        "(SELECT id FROM users WHERE role = 'support_teacher')",
+    ]),
 ]
 
 

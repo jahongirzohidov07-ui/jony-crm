@@ -123,6 +123,9 @@ class TeacherOut(TeacherCreate):
     login: Optional[str] = None
     # Barcha filiallari nomlari ("Markaziy, Bekobod 2") — ro'yxat uchun
     branches_label: Optional[str] = None
+    # "support" — yordamchi o'qituvchi (bog'langan hisob roli bo'yicha),
+    # aks holda "teacher". Ro'yxatda alohida bo'limda ko'rsatiladi.
+    kind: Optional[str] = None
 
 
 # ---------- Ustoz darajasi ----------

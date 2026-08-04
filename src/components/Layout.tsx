@@ -35,6 +35,7 @@ import {
  Search } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
+  SCHEDULE_VIEW,
   FOUNDER,
   STAFF_VIEWERS,
   LEAD_ACCESS,
@@ -212,7 +213,7 @@ export default function Layout() {
   // takrorlanmaydi.
   // Dars jadvali va Lidlar - administratorning kuni shulardan boshlanadi,
   // shuning uchun eng tepada turadi.
-  if (can(user?.role, TEACHING_STAFF)) {
+  if (can(user?.role, SCHEDULE_VIEW)) {
     items = [
       items[0],
       { to: "/timetable", label: "Dars jadvali", icon: CalendarDays },

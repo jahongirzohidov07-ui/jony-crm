@@ -95,8 +95,9 @@ function LeadForm({
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Xatolik";
       // Dublikat: shu telefon bilan lid/o'quvchi bor — tasdiq so'raymiz
-      if (!editing && msg.includes("allaqachon bor")) {
-        if (confirm(msg)) {
+      if (!editing && (msg.includes("allaqachon bor") ||
+          msg.includes("qayta kiritib qo'ymayapsizmi"))) {
+        if (confirm(msg + "\n\nOK — yangi odam, kiritilsin.")) {
           try {
             await api.post("/leads", {
               full_name: fullName,

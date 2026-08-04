@@ -77,7 +77,32 @@ function StudentModal({
       onSaved(s);
       onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Xatolik");
+      const msg = e instanceof Error ? e.message : "Xatolik";
+      // Dublikat ogohlantirishi: "yo'q, bu yangi odam" desa — force
+      // bilan kiritaveradi
+      if (!editing && msg.includes("qayta kiritib qo'ymayapsizmi")) {
+        if (confirm(msg + "\n\nOK — yangi odam, kiritilsin.")) {
+          try {
+            const s2 = await api.post<Student>("/students?force=true", {
+              full_name: fullName,
+              phone: phone || null,
+              parent_phone: parentPhone || null,
+              group_id: groupId ? Number(groupId) : null,
+              branch_id: branchId ? Number(branchId) : null,
+              enrolled_date: enrolledDate || null,
+              status,
+            });
+            onSaved(s2);
+            onClose();
+          } catch (e2) {
+            setError(e2 instanceof Error ? e2.message : "Xatolik");
+          } finally {
+            setSaving(false);
+          }
+          return;
+        }
+      }
+      setError(msg);
     } finally {
       setSaving(false);
     }

@@ -262,8 +262,11 @@ export default function Layout() {
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.
+  // SMM endi Marketing ICHIDA (tab). Marketingga kirolmaydigan, lekin
+  // kontent so'rovi/g'oya beradigan rollargagina alohida band qoladi.
   if (
     (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
+    !can(user?.role, MARKETING_ACCESS) &&
     user?.role !== "hr_manager" &&
     user?.role !== "sales_manager"
   ) {

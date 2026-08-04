@@ -46,6 +46,7 @@ const MyStudents = lazy(() => import("./pages/MyStudents"));
 const MySchedule = lazy(() => import("./pages/MySchedule"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
 const Parent = lazy(() => import("./pages/Parent"));
+const Settings = lazy(() => import("./pages/Settings"));
 
 function PageLoader() {
   return (
@@ -108,6 +109,7 @@ function AppRoutes() {
           <Route path="my-schedule" element={<MySchedule />} />
           <Route path="my-books" element={<MyBooks />} />
           <Route path="permissions" element={<Permissions />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="profile" element={<MyProfile />} />
           <Route path="my-coins" element={<MyCoins />} />
           <Route path="my-career" element={<MyCareer />} />

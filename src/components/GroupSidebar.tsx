@@ -136,7 +136,7 @@ export function GroupSidebar({
                   )}
                   <Link
                     to={`/students/${s.id}`}
-                    className={`text-sm truncate flex-1 ${
+                    className={`text-sm flex-1 min-w-0 break-words leading-snug ${
                       frozen
                         ? "text-sky-600 font-medium hover:text-sky-700"
                         : "text-slate-800 hover:text-brand-700"

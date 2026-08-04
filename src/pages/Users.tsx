@@ -29,6 +29,7 @@ function UserForm({
     full_name: string;
     role: string;
     branch_id: number | null;
+    branch_ids?: number[];
     fix_salary?: number | null;
     phone?: string | null;
     birth_date?: string | null;
@@ -42,6 +43,7 @@ function UserForm({
     full_name: string;
     role: string;
     branch_id: number | null;
+    branch_ids?: number[];
     is_active?: boolean;
     fix_salary?: number | null;
     phone?: string | null;
@@ -58,8 +60,16 @@ function UserForm({
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState(initial?.full_name ?? "");
   const [role, setRole] = useState(initial?.role ?? roles[0] ?? "");
-  const [branchId, setBranchId] = useState(
-    lockBranchId ? String(lockBranchId) : initial?.branch_id ? String(initial.branch_id) : ""
+  // Xodim 2-3 filialda ishlashi mumkin — birinchi tanlangani asosiy.
+  // Filial rahbari faqat o'z filialiga xodim ochadi (qulflangan).
+  const [branchIds, setBranchIds] = useState<number[]>(
+    lockBranchId
+      ? [lockBranchId]
+      : initial?.branch_ids?.length
+      ? initial.branch_ids
+      : initial?.branch_id
+      ? [initial.branch_id]
+      : []
   );
   const [isActive, setIsActive] = useState(initial?.is_active ?? true);
   // Fiks oylik HAR BIR xodimda bo'ladi: profilidagi maosh holati va
@@ -98,7 +108,8 @@ function UserForm({
         password: password || undefined,
         full_name: fullName,
         role,
-        branch_id: branchId ? Number(branchId) : null,
+        branch_id: branchIds[0] ?? null,
+        branch_ids: branchIds,
         is_active: isEdit ? isActive : undefined,
         fix_salary: fixSalary === "" ? null : Number(fixSalary),
         phone: phone.trim() || null,
@@ -175,20 +186,36 @@ function UserForm({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Filial</label>
-            <select
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white disabled:bg-slate-100 disabled:text-slate-400"
-              value={branchId}
-              onChange={(e) => setBranchId(e.target.value)}
-              disabled={!!lockBranchId}
-            >
-              <option value="">— tanlanmagan —</option>
-              {branches.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.name}
-                </option>
-              ))}
-            </select>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Filiallar (bir nechtasini belgilash mumkin)
+            </label>
+            <div className="flex flex-wrap gap-1.5">
+              {branches.map((b) => {
+                const on = branchIds.includes(b.id);
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    disabled={!!lockBranchId}
+                    onClick={() =>
+                      setBranchIds((prev) =>
+                        on ? prev.filter((x) => x !== b.id) : [...prev, b.id]
+                      )
+                    }
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition disabled:opacity-60 ${
+                      on
+                        ? "bg-brand-50 border-brand-400 text-brand-700"
+                        : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                    }`}
+                  >
+                    {b.name}
+                    {on && branchIds[0] === b.id && branchIds.length > 1 && (
+                      <span className="ml-1 opacity-60">(asosiy)</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div>
@@ -447,7 +474,7 @@ export function StaffTab() {
                   </td>
                   <td className="px-4 py-3 text-slate-600">{u.username}</td>
                   <td className="px-4 py-3 text-slate-600">{roleLabel(u.role)}</td>
-                  <td className="px-4 py-3 text-slate-600">{u.branch?.name || "—"}</td>
+                  <td className="px-4 py-3 text-slate-600">{u.branches_label || u.branch?.name || "—"}</td>
                   <td className="px-4 py-3 text-right text-slate-600">
                     {u.role === SALES_MANAGER
                       ? u.fix_salary
@@ -531,6 +558,7 @@ export function StaffTab() {
             full_name: editing.full_name,
             role: editing.role,
             branch_id: editing.branch_id ?? null,
+            branch_ids: editing.branch_ids ?? undefined,
             is_active: editing.is_active,
             fix_salary: editing.fix_salary ?? null,
             phone: editing.phone ?? null,

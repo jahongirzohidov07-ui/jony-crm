@@ -77,7 +77,26 @@ export function GroupFormModal({
   );
   const [endDate, setEndDate] = useState(initial?.end_date ?? "");
   const [lessonTime, setLessonTime] = useState(initial?.lesson_time ?? "");
-  const [days, setDays] = useState<string[]>(parseDays(initial?.lesson_days));
+  const [days, setDays] = useState<string[]>(
+    parseDays(initial?.lesson_days).length
+      ? parseDays(initial?.lesson_days)
+      : ["mon", "wed", "fri"]
+  );
+  // Kunlar tez tanlanadi: TOQ (du-chor-ju) / JUFT (se-pay-shan) /
+  // BOSHQA (bitta-bitta). Mavjud guruh qaysi to'plamga tushsa, o'sha
+  // rejim yoqilib turadi.
+  const ODD_DAYS = ["mon", "wed", "fri"];
+  const EVEN_DAYS = ["tue", "thu", "sat"];
+  const sameDays = (a: string[], b: string[]) =>
+    a.length === b.length && b.every((d) => a.includes(d));
+  const initDays = parseDays(initial?.lesson_days);
+  const [dayMode, setDayMode] = useState<"odd" | "even" | "custom">(
+    initDays.length === 0 || sameDays(initDays, ODD_DAYS)
+      ? "odd"
+      : sameDays(initDays, EVEN_DAYS)
+      ? "even"
+      : "custom"
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // Avtomatik tekshiruvlar: ustoz/xona to'qnashuvi, yuklama, bo'shliq
@@ -257,27 +276,56 @@ export function GroupFormModal({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Dars kunlari
             </label>
-            <div className="flex flex-wrap gap-1.5">
-              {WEEKDAYS.map((d) => {
-                const on = days.includes(d.key);
-                return (
-                  <button
-                    key={d.key}
-                    type="button"
-                    onClick={() =>
-                      setDays(on ? days.filter((x) => x !== d.key) : [...days, d.key])
-                    }
-                    className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
-                      on
-                        ? "bg-brand-50 border-brand-400 text-brand-700"
-                        : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-                    }`}
-                  >
-                    {d.label}
-                  </button>
-                );
-              })}
+            <div className="flex gap-1.5 mb-2">
+              {([
+                { k: "odd", l: "Toq kunlar", hint: "Du · Chor · Ju" },
+                { k: "even", l: "Juft kunlar", hint: "Se · Pay · Shan" },
+                { k: "custom", l: "Boshqa kunlar", hint: "o'zingiz tanlaysiz" },
+              ] as const).map((m) => (
+                <button
+                  key={m.k}
+                  type="button"
+                  onClick={() => {
+                    setDayMode(m.k);
+                    if (m.k === "odd") setDays(ODD_DAYS);
+                    else if (m.k === "even") setDays(EVEN_DAYS);
+                  }}
+                  className={`flex-1 px-2 py-2 rounded-lg text-xs font-medium border transition text-center ${
+                    dayMode === m.k
+                      ? "bg-brand-50 border-brand-400 text-brand-700"
+                      : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                  }`}
+                >
+                  {m.l}
+                  <span className="block text-[10px] font-normal opacity-70">
+                    {m.hint}
+                  </span>
+                </button>
+              ))}
             </div>
+            {dayMode === "custom" && (
+              <div className="flex flex-wrap gap-1.5">
+                {WEEKDAYS.map((d) => {
+                  const on = days.includes(d.key);
+                  return (
+                    <button
+                      key={d.key}
+                      type="button"
+                      onClick={() =>
+                        setDays(on ? days.filter((x) => x !== d.key) : [...days, d.key])
+                      }
+                      className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
+                        on
+                          ? "bg-brand-50 border-brand-400 text-brand-700"
+                          : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                      }`}
+                    >
+                      {d.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
             <p className="text-xs text-slate-400 mt-1.5">
               Tanlangan kunlar butun oy bo'yicha yoqlama jadvaliga avtomat
               chiqadi — har bir darsni alohida kiritish shart emas.

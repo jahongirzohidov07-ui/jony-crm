@@ -460,6 +460,7 @@ export default function Groups() {
   const [q, setQ] = useState("");
   const [teacherFilter, setTeacherFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
+  const [branchFilter, setBranchFilter] = useState("");
 
   function load() {
     setLoading(true);
@@ -494,10 +495,12 @@ export default function Groups() {
     if (q && !g.name.toLowerCase().includes(q.toLowerCase())) return false;
     if (teacherFilter && String(g.teacher_id ?? "") !== teacherFilter) return false;
     if (subjectFilter && g.subject !== subjectFilter) return false;
+    if (branchFilter && String(g.branch?.id ?? "") !== branchFilter)
+      return false;
     return true;
   });
 
-  const hasFilter = q || teacherFilter || subjectFilter;
+  const hasFilter = q || teacherFilter || subjectFilter || branchFilter;
 
   return (
     <div className="p-8">
@@ -533,6 +536,18 @@ export default function Groups() {
             onChange={(e) => setQ(e.target.value)}
           />
         </div>
+        {branches.length > 1 && (
+          <select
+            className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+            value={branchFilter}
+            onChange={(e) => setBranchFilter(e.target.value)}
+          >
+            <option value="">Barcha filiallar</option>
+            {branches.map((b) => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        )}
         <select
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
           value={subjectFilter}
@@ -563,6 +578,7 @@ export default function Groups() {
               setQ("");
               setTeacherFilter("");
               setSubjectFilter("");
+              setBranchFilter("");
             }}
             className="text-sm text-slate-500 hover:text-slate-700"
           >

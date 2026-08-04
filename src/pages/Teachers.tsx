@@ -365,11 +365,26 @@ export default function Teachers() {
   // Ustozning o'zi hamkasbining oyligini ochmaydi
   const canSeeSalary =
     can(user?.role, SALARY_SELF_VIEW) && !can(user?.role, [TEACHER, SUPPORT_TEACHER]);
+  // Filtrlar: qidiruv / filial / fan / holat
+  const [tq, setTq] = useState("");
+  const [branchF, setBranchF] = useState("");
+  const [subjectF, setSubjectF] = useState("");
+  const [activeF, setActiveF] = useState("");
   // Yordamchi o'qituvchilar alohida bo'limda turadi (LC UP dagidek)
   const isSupportTab = tab === "support";
-  const visibleTeachers = teachers.filter((t) =>
-    isSupportTab ? t.kind === "support" : t.kind !== "support"
-  );
+  const visibleTeachers = teachers.filter((t) => {
+    if (isSupportTab ? t.kind !== "support" : t.kind === "support")
+      return false;
+    if (tq && !t.full_name.toLowerCase().includes(tq.toLowerCase()))
+      return false;
+    if (branchF && !(t.branch_ids || (t.branch_id ? [t.branch_id] : []))
+        .includes(Number(branchF)))
+      return false;
+    if (subjectF && t.subject !== subjectF) return false;
+    if (activeF === "active" && t.is_active === 0) return false;
+    if (activeF === "left" && t.is_active !== 0) return false;
+    return true;
+  });
   const supportCount = teachers.filter((t) => t.kind === "support").length;
   const activeCount = visibleTeachers.filter(
     (t) => t.is_active !== 0
@@ -469,6 +484,44 @@ export default function Teachers() {
               <Plus size={16} /> Yangi o'qituvchi
             </button>
           </div>
+        )}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <input
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm w-52"
+          placeholder="Ism bo'yicha qidirish"
+          value={tq}
+          onChange={(e) => setTq(e.target.value)}
+        />
+        {branches.length > 1 && (
+          <select value={branchF} onChange={(e) => setBranchF(e.target.value)}
+            className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+            <option value="">Barcha filiallar</option>
+            {branches.map((b) => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        )}
+        <select value={subjectF} onChange={(e) => setSubjectF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+          <option value="">Barcha fanlar</option>
+          {SUBJECTS.map((s) => (
+            <option key={s.key} value={s.key}>{s.label}</option>
+          ))}
+        </select>
+        <select value={activeF} onChange={(e) => setActiveF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+          <option value="">Hammasi</option>
+          <option value="active">Ishlayapti</option>
+          <option value="left">Ketgan</option>
+        </select>
+        {(tq || branchF || subjectF || activeF) && (
+          <button
+            onClick={() => { setTq(""); setBranchF(""); setSubjectF(""); setActiveF(""); }}
+            className="text-xs text-slate-400 hover:text-slate-600">
+            Tozalash
+          </button>
         )}
       </div>
 

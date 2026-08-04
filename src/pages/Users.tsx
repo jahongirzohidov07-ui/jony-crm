@@ -311,10 +311,31 @@ export function StaffTab() {
   const canManage = can(user?.role, STAFF_EDIT);
   const lockBranchId = user?.role === BRANCH_MANAGER ? user?.branch_id ?? null : null;
 
+  // Filtrlar
+  const [uq, setUq] = useState("");
+  const [branchF, setBranchF] = useState("");
+  const [roleF, setRoleF] = useState("");
+  const [activeF, setActiveF] = useState("");
+
+  const shownUsers = users.filter((u) => {
+    if (uq && !u.full_name.toLowerCase().includes(uq.toLowerCase()))
+      return false;
+    if (branchF && String(u.branch?.id ?? "") !== branchF) return false;
+    if (roleF && u.role !== roleF) return false;
+    if (activeF === "active" && !u.is_active) return false;
+    if (activeF === "left" && u.is_active) return false;
+    return true;
+  });
+
   // O'qituvchilar bo'limidagi hisob ochilmagan ustozlar ham shu
   // ro'yxatda ko'rinadi — xodimlar ro'yxati TO'LIQ bo'lsin.
   const accountlessTeachers = teachers.filter(
-    (t) => !t.user_id && t.is_active !== 0
+    (t) =>
+      !t.user_id && t.is_active !== 0 &&
+      (!uq || t.full_name.toLowerCase().includes(uq.toLowerCase())) &&
+      (!branchF || (t.branch_ids || (t.branch_id ? [t.branch_id] : []))
+        .includes(Number(branchF))) &&
+      !roleF && activeF !== "left"
   );
 
   async function toggleActive(u: User) {
@@ -356,6 +377,44 @@ export function StaffTab() {
         )}
       </div>
 
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <input
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm w-52"
+          placeholder="Ism bo'yicha qidirish"
+          value={uq}
+          onChange={(e) => setUq(e.target.value)}
+        />
+        {branches.length > 1 && (
+          <select value={branchF} onChange={(e) => setBranchF(e.target.value)}
+            className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+            <option value="">Barcha filiallar</option>
+            {branches.map((b) => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        )}
+        <select value={roleF} onChange={(e) => setRoleF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white max-w-[12rem]">
+          <option value="">Barcha rollar</option>
+          {[...new Set(users.map((u) => u.role))].map((r) => (
+            <option key={r} value={r}>{roleLabel(r)}</option>
+          ))}
+        </select>
+        <select value={activeF} onChange={(e) => setActiveF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+          <option value="">Hammasi</option>
+          <option value="active">Faol</option>
+          <option value="left">Faolsiz</option>
+        </select>
+        {(uq || branchF || roleF || activeF) && (
+          <button
+            onClick={() => { setUq(""); setBranchF(""); setRoleF(""); setActiveF(""); }}
+            className="text-xs text-slate-400 hover:text-slate-600">
+            Tozalash
+          </button>
+        )}
+      </div>
+
       {rowError && <p className="text-sm text-red-600 mb-3">{rowError}</p>}
 
       {loading ? (
@@ -375,7 +434,7 @@ export function StaffTab() {
               </tr>
             </thead>
             <tbody>
-              {users.map((u) => (
+              {shownUsers.map((u) => (
                 <tr key={u.id} className="border-t border-slate-100 hover:bg-slate-50">
                   <td className="px-4 py-3">
                     <button

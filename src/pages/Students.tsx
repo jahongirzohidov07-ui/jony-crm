@@ -220,6 +220,10 @@ export default function Students() {
   const [groups, setGroups] = useState<Group[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
   const [q, setQ] = useState("");
+  // Filtrlar: filial / guruh / holat — yuklangan ro'yxat ustida ishlaydi
+  const [branchF, setBranchF] = useState("");
+  const [groupF, setGroupF] = useState("");
+  const [statusF, setStatusF] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [showImport, setShowImport] = useState(false);
@@ -249,12 +253,17 @@ export default function Students() {
 
   const canEdit = can(user?.role, TEACHING_STAFF);
   const showBranchColumn = branches.length > 1;
+  const filtered = students.filter((s) =>
+    (!branchF || String(s.branch?.id ?? "") === branchF) &&
+    (!groupF || String(s.group?.id ?? "") === groupF) &&
+    (!statusF || s.status === statusF)
+  );
 
   function exportStudents() {
     exportToExcel(
       `Talabalar-${new Date().toISOString().slice(0, 10)}`,
       "Talabalar",
-      students.map((s) => ({
+      filtered.map((s) => ({
         "F.I.Sh.": s.full_name,
         Telefon: s.phone || "",
         "Ota-ona telefoni": s.parent_phone || "",
@@ -270,7 +279,7 @@ export default function Students() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Talabalar</h1>
-          <p className="text-sm text-slate-500">Jami: {students.length}</p>
+          <p className="text-sm text-slate-500">Ko'rsatilmoqda: {filtered.length} / {students.length}</p>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -301,14 +310,47 @@ export default function Students() {
         </div>
       </div>
 
-      <div className="relative mb-4 max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-        <input
-          className="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm"
-          placeholder="Ism orqali qidirish..."
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="relative max-w-sm flex-1 min-w-[12rem]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <input
+            className="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm"
+            placeholder="Ism orqali qidirish..."
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
+        {branches.length > 1 && (
+          <select value={branchF} onChange={(e) => setBranchF(e.target.value)}
+            className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+            <option value="">Barcha filiallar</option>
+            {branches.map((b) => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        )}
+        <select value={groupF} onChange={(e) => setGroupF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white max-w-[11rem]">
+          <option value="">Barcha guruhlar</option>
+          {groups.map((g) => (
+            <option key={g.id} value={g.id}>{g.name}</option>
+          ))}
+        </select>
+        <select value={statusF} onChange={(e) => setStatusF(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white">
+          <option value="">Barcha holatlar</option>
+          <option value="active">Faol</option>
+          <option value="trial">Sinovda</option>
+          <option value="frozen">Muzlatilgan</option>
+          <option value="archived">Arxiv</option>
+        </select>
+        {(branchF || groupF || statusF) && (
+          <button
+            onClick={() => { setBranchF(""); setGroupF(""); setStatusF(""); }}
+            className="text-xs text-slate-400 hover:text-slate-600">
+            Tozalash
+          </button>
+        )}
       </div>
 
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
@@ -341,7 +383,7 @@ export default function Students() {
                 </td>
               </tr>
             )}
-            {students.map((s) => (
+            {filtered.map((s) => (
               <tr key={s.id} className="border-t border-slate-100 hover:bg-slate-50">
                 <td className="px-4 py-3">
                   <Link

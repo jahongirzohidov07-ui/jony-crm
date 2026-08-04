@@ -4078,12 +4078,33 @@ def _validate_group_fields(payload):
             raise HTTPException(400, "Noto'g'ri dars kuni")
 
 
+def _resolve_group_rate(db: Session, data: dict):
+    """Ustoz stavkasi DARAJADAN avtomat olinadi — guruh ochishda hech
+    kim qo'lda kiritmaydi. Ataylab boshqa summa yuborilgan bo'lsa,
+    istisno sifatida saqlanadi (rate_manual=1) va daraja o'zgarganda
+    unga tegilmaydi."""
+    tid = data.get("teacher_id")
+    given = data.get("teacher_rate_per_student") or 0
+    if not tid:
+        return
+    t = db.query(models.Teacher).get(tid)
+    gm = _grade_map(db)
+    grade_rate = 0
+    if t and t.grade and t.grade in gm:
+        grade_rate = gm[t.grade].rate_per_student or 0
+    if not given or abs(given - grade_rate) < 1:
+        data["teacher_rate_per_student"] = grade_rate
+        data["rate_manual"] = 0
+    else:
+        data["rate_manual"] = 1
+
+
 @app.post("/api/groups", response_model=schemas.GroupOut)
 def create_group(
     payload: schemas.GroupCreate,
     force: bool = False,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FULL_ACCESS)),
+    user=Depends(require_role(*roles.GROUP_MANAGE)),
 ):
     _validate_group_fields(payload)
     data = payload.model_dump()
@@ -4094,6 +4115,7 @@ def create_group(
                         lesson_days=data.get("lesson_days"),
                         lesson_time=data.get("lesson_time")),
         force=force)
+    _resolve_group_rate(db, data)
     group = models.Group(**data)
     db.add(group)
     db.commit()
@@ -4109,7 +4131,7 @@ def update_group(
     payload: schemas.GroupUpdate,
     force: bool = False,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FULL_ACCESS)),
+    user=Depends(require_role(*roles.GROUP_MANAGE)),
 ):
     group = db.query(models.Group).get(group_id)
     if not group:
@@ -4139,6 +4161,21 @@ def update_group(
                 lesson_days=fields.get("lesson_days", group.lesson_days),
                 lesson_time=fields.get("lesson_time", group.lesson_time)),
             force=force)
+
+    # Ustoz yoki stavka o'zgarayotgan bo'lsa — darajadan qayta olinadi
+    if "teacher_id" in fields or "teacher_rate_per_student" in fields:
+        merged_rate = {
+            "teacher_id": fields.get("teacher_id", group.teacher_id),
+            "teacher_rate_per_student": fields.get(
+                "teacher_rate_per_student",
+                0 if "teacher_id" in fields
+                else group.teacher_rate_per_student),
+        }
+        _resolve_group_rate(db, merged_rate)
+        fields["teacher_rate_per_student"] = \
+            merged_rate.get("teacher_rate_per_student", 0)
+        if "rate_manual" in merged_rate:
+            group.rate_manual = merged_rate["rate_manual"]
 
     for k, v in fields.items():
         setattr(group, k, v)

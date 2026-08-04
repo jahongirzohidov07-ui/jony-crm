@@ -26,7 +26,7 @@ import {
   type GeographyReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, can } from "../lib/roles";
+import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
 import { groupColor, MONTHS } from "../lib/expenses";
 import { subjectLine } from "../lib/subjects";
 import { formatSom, formatPeriodLabel } from "../lib/format";
@@ -35,7 +35,7 @@ import { ChurnReport } from "../components/ChurnReport";
 import { CapacityTab } from "../components/MarketingExtras";
 import { FillTab } from "../components/FillReport";
 
-type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat"
+type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
   | "oquvchi" | "ustoz" | "sigim" | "geo";
 
 const TABS: { key: Tab; label: string }[] = [
@@ -50,6 +50,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "ustoz", label: "Ustozlar" },
   { key: "sigim", label: "Xonalar bandligi" },
   { key: "geo", label: "Manzil va maktab" },
+  { key: "tarix", label: "Tarix (o'quvchilar soni)" },
 ];
 
 function short(n: number): string {
@@ -818,6 +819,257 @@ function QualityTab() {
 }
 
 // -------------------------------------------------------------------- Page
+// ---------------------------------------------------------------
+// Tarixiy statistika: tizimdan OLDINGI yillardagi o'quvchilar soni.
+// Asoschi qo'lda (yoki ommaviy) kiritadi, grafikda bugungi jonli
+// son bilan bitta chiziqda ko'rinadi.
+type SnapRow = { id: number; date: string; count: number; note: string | null };
+
+function HistoryTab() {
+  const { user } = useAuth();
+  const isFounder = user?.role === FOUNDER;
+  const [rows, setRows] = useState<SnapRow[]>([]);
+  const [today, setToday] = useState<{ date: string; count: number } | null>(null);
+  const [showAdd, setShowAdd] = useState(false);
+  const [showBulk, setShowBulk] = useState(false);
+  const [showList, setShowList] = useState(false);
+  const [d, setD] = useState("");
+  const [cnt, setCnt] = useState("");
+  const [note, setNote] = useState("");
+  const [bulk, setBulk] = useState("");
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const load = () =>
+    api
+      .get<{ rows: SnapRow[]; today: { date: string; count: number } }>(
+        "/stats/history"
+      )
+      .then((r) => {
+        setRows(r.rows);
+        setToday(r.today);
+      })
+      .catch(() => {});
+  useEffect(() => {
+    load();
+  }, []);
+
+  const chart = [
+    ...rows.map((r) => ({ date: r.date, count: r.count, note: r.note })),
+    ...(today && today.count > 0
+      ? [{ date: today.date, count: today.count, note: "Hozir (jonli)" }]
+      : []),
+  ];
+
+  async function addOne() {
+    if (!d || !cnt) {
+      setMsg("Sana va sonni kiriting");
+      return;
+    }
+    setBusy(true);
+    setMsg("");
+    try {
+      await api.post("/stats/history", {
+        date: d,
+        count: Number(cnt),
+        note: note || null,
+      });
+      setD(""); setCnt(""); setNote("");
+      setShowAdd(false);
+      load();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function addBulk() {
+    if (!bulk.trim()) return;
+    setBusy(true);
+    setMsg("");
+    try {
+      const r = await api.post<{ added: number; updated: number; errors: string[] }>(
+        "/stats/history/bulk",
+        { text: bulk }
+      );
+      setMsg(
+        `Qo'shildi: ${r.added}, yangilandi: ${r.updated}` +
+          (r.errors.length ? ` · Xato qatorlar: ${r.errors.length}` : "")
+      );
+      if (!r.errors.length) {
+        setBulk("");
+        setShowBulk(false);
+      }
+      load();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeRow(r: SnapRow) {
+    if (!confirm(`${r.date} — ${r.count} o'quvchi yozuvi o'chirilsinmi?`)) return;
+    await api.delete(`/stats/history/${r.id}`);
+    load();
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <div>
+          <h2 className="font-semibold text-slate-900">
+            O'quvchilar soni — yillar kesimi
+          </h2>
+          <p className="text-xs text-slate-500">
+            Tizimdan oldingi davr qo'lda kiritiladi; oxirgi nuqta — bugungi
+            faol o'quvchilar (jonli).
+          </p>
+        </div>
+        {isFounder && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => { setShowAdd(true); setShowBulk(false); }}
+              className="text-sm px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700"
+            >
+              + Yozuv
+            </button>
+            <button
+              onClick={() => { setShowBulk(true); setShowAdd(false); }}
+              className="text-sm px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50"
+            >
+              Ommaviy kiritish
+            </button>
+          </div>
+        )}
+      </div>
+
+      {msg && <p className="text-sm text-amber-700 mb-3">{msg}</p>}
+
+      {showAdd && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4 flex flex-wrap items-end gap-3">
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Sana</label>
+            <input type="date" value={d} onChange={(e) => setD(e.target.value)}
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">O'quvchilar soni</label>
+            <input type="number" value={cnt} onChange={(e) => setCnt(e.target.value)}
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm w-32" />
+          </div>
+          <div className="flex-1 min-w-[160px]">
+            <label className="block text-xs text-slate-500 mb-1">Izoh (ixtiyoriy)</label>
+            <input value={note} onChange={(e) => setNote(e.target.value)}
+              placeholder="masalan: Bekobod 2 ochildi"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          </div>
+          <button onClick={addOne} disabled={busy}
+            className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm disabled:opacity-50">
+            Saqlash
+          </button>
+          <button onClick={() => setShowAdd(false)}
+            className="px-3 py-2 text-sm text-slate-500">Bekor</button>
+        </div>
+      )}
+
+      {showBulk && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4">
+          <p className="text-xs text-slate-500 mb-2">
+            Har qatorda: <b>sana son izoh</b>. Sana ikkala formatda bo'ladi:
+            2023-01-15 yoki 15.01.2023. Masalan:
+            <br />
+            <code>15.01.2023 380</code>
+            <br />
+            <code>01.09.2023 520 yangi o'quv yili</code>
+          </p>
+          <textarea value={bulk} onChange={(e) => setBulk(e.target.value)}
+            rows={8}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm font-mono"
+            placeholder={"15.01.2023 380\n01.02.2023 395\n..."} />
+          <div className="flex gap-2 mt-2">
+            <button onClick={addBulk} disabled={busy}
+              className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm disabled:opacity-50">
+              Kiritish
+            </button>
+            <button onClick={() => setShowBulk(false)}
+              className="px-3 py-2 text-sm text-slate-500">Yopish</button>
+          </div>
+        </div>
+      )}
+
+      {chart.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Hali yozuv yo'q{isFounder ? " — «+ Yozuv» yoki «Ommaviy kiritish» orqali qo'shing" : ""}.
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <ResponsiveContainer width="100%" height={320}>
+            <LineChart data={chart} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="date" tick={{ fontSize: 11 }}
+                tickFormatter={(v: string) => v.slice(0, 7)} />
+              <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
+              <Tooltip
+                formatter={(v: number) => [`${v} o'quvchi`, "Soni"]}
+                labelFormatter={(l: string) => {
+                  const r = chart.find((x) => x.date === l);
+                  return l + (r?.note ? ` · ${r.note}` : "");
+                }}
+              />
+              <Line type="monotone" dataKey="count" stroke="#0d9488"
+                strokeWidth={2} dot={{ r: 3 }} name="O'quvchilar" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {rows.length > 0 && (
+        <div className="mt-4">
+          <button onClick={() => setShowList((v) => !v)}
+            className="text-sm text-brand-700 hover:underline">
+            {showList ? "Ro'yxatni yashirish" : `Barcha yozuvlar (${rows.length})`}
+          </button>
+          {showList && (
+            <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto mt-2">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-50 text-xs text-slate-500">
+                  <tr>
+                    <th className="text-left px-4 py-2">Sana</th>
+                    <th className="text-right px-4 py-2">Soni</th>
+                    <th className="text-left px-4 py-2">Izoh</th>
+                    {isFounder && <th className="w-16"></th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...rows].reverse().map((r) => (
+                    <tr key={r.id} className="border-t border-slate-100">
+                      <td className="px-4 py-2 text-slate-700">{r.date}</td>
+                      <td className="px-4 py-2 text-right font-medium text-slate-800">
+                        {r.count}
+                      </td>
+                      <td className="px-4 py-2 text-slate-500">{r.note || "—"}</td>
+                      {isFounder && (
+                        <td className="px-2 py-2 text-right">
+                          <button onClick={() => removeRow(r)}
+                            className="text-xs text-red-500 hover:text-red-700">
+                            o'chirish
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Analitika() {
   const { user } = useAuth();
   const [tab, setTab] = useState<Tab>("biznes");
@@ -886,6 +1138,7 @@ export default function Analitika() {
           {tab === "ltv" && <LtvFullReport />}
           {tab === "churn" && <ChurnReport />}
           {tab === "sigim" && <CapacityTab />}
+          {tab === "tarix" && <HistoryTab />}
           {tab === "geo" && <GeoTab months={months} />}
         </>
       )}

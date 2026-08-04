@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { api, type Timetable as Data, type TimetableItem } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, can } from "../lib/roles";
+import { SCHEDULE_VIEW, can } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { exportToExcel } from "../lib/exportXlsx";
 
@@ -82,7 +82,7 @@ export default function Timetable() {
       .finally(() => setLoading(false));
   }, [branchId]);
 
-  if (!can(user?.role, TEACHING_STAFF)) {
+  if (!can(user?.role, SCHEDULE_VIEW)) {
     return (
       <p className="text-sm text-slate-500 py-10 text-center">
         Bu bo'limga ruxsatingiz yo'q.

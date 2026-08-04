@@ -372,7 +372,8 @@ export default function Teachers() {
   const [tq, setTq] = useState("");
   const [branchF, setBranchF] = useState("");
   const [subjectF, setSubjectF] = useState("");
-  const [activeF, setActiveF] = useState("");
+  // Sukut bo'yicha faqat ishlayotganlar — ketganlar Arxivda
+  const [activeF, setActiveF] = useState("active");
   // Yordamchi o'qituvchilar alohida bo'limda turadi (LC UP dagidek)
   const isSupportTab = tab === "support";
   // Supportlarning shu oy oyligi — ro'yxatda summa ko'rinadi

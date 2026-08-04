@@ -269,6 +269,19 @@ function StaffTab() {
     ? data.rows.filter((r) => r.exit_type === filter)
     : data.rows;
   const canEdit = can(user?.role, HR_ACCESS);
+  const canRehire = can(user?.role, STAFF_VIEWERS);
+
+  async function rehire(r: ArchiveStaffRow) {
+    if (!confirm(`${r.full_name} ishga qaytarilsinmi?`)) return;
+    try {
+      if (r.kind === "teacher" && r.teacher_id)
+        await api.put(`/teachers/${r.teacher_id}`, { is_active: 1 });
+      else await api.put(`/users/${r.id}`, { is_active: true });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
 
   return (
     <div>
@@ -340,8 +353,18 @@ function StaffTab() {
                         {r.exit_label}
                       </span>
                     </td>
-                    <td className="pr-4 text-right">
-                      {canEdit && (
+                    <td className="pr-4 text-right whitespace-nowrap">
+                      {canRehire && (
+                        <button
+                          onClick={() => rehire(r)}
+                          className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 mr-2"
+                          title="Ishga qaytarish"
+                        >
+                          <RotateCcw size={12} />
+                          Qaytarish
+                        </button>
+                      )}
+                      {canEdit && r.kind !== "teacher" && (
                         <button
                           onClick={() => setEditing(r)}
                           className="px-2.5 py-1 rounded-md text-xs border border-slate-200 text-slate-600 hover:border-brand-300"

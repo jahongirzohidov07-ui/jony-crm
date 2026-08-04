@@ -342,7 +342,8 @@ export function StaffTab() {
   const [uq, setUq] = useState("");
   const [branchF, setBranchF] = useState("");
   const [roleF, setRoleF] = useState("");
-  const [activeF, setActiveF] = useState("");
+  // Sukut bo'yicha faqat ishlayotganlar — bo'shatilganlar Arxivda
+  const [activeF, setActiveF] = useState("active");
 
   const shownUsers = users.filter((u) => {
     if (uq && !u.full_name.toLowerCase().includes(uq.toLowerCase()))

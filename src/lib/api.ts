@@ -1645,6 +1645,9 @@ export interface ArchiveStudents {
 }
 
 export interface ArchiveStaffRow {
+  // "user" — hisobli xodim, "teacher" — hisob ochilmagan ustoz kartasi
+  kind?: string;
+  teacher_id?: number;
   id: number;
   public_id?: string | null;
   full_name: string;

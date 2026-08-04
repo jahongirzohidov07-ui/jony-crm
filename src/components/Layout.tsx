@@ -416,9 +416,9 @@ export default function Layout() {
             <button
               onClick={() => navigate("/tasks")}
               title="Vazifalar"
-              className="p-2 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
+              className="p-2.5 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
             >
-              <ClipboardList size={16} />
+              <ClipboardList size={20} />
             </button>
           </div>
         )}
@@ -627,9 +627,9 @@ function NotifBell() {
           localStorage.setItem("jonyos_alerts_seen", key);
           setSeenKey(key);
         }}
-        className="relative p-2 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
+        className="relative p-2.5 bg-white border border-slate-200 rounded-full shadow-sm text-slate-500 hover:text-slate-700"
       >
-        <Bell size={16} />
+        <Bell size={20} />
         {(d?.count || 0) > 0 &&
           JSON.stringify(d!.items.map((i) => i.text)) !== seenKey && (
           <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-semibold flex items-center justify-center">

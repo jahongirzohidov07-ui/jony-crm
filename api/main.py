@@ -497,7 +497,7 @@ def _backfill_public_ids():
 #  narsa qo'shsangiz — SCHEMA_STAMP satrini ham yangilang, aks holda
 #  yangi ustunlar jonli bazaga yetib bormaydi.
 # =====================================================================
-SCHEMA_STAMP = "stamp_2026_08_04d"
+SCHEMA_STAMP = "stamp_2026_08_04e"
 
 
 def _schema_bootstrap():
@@ -3797,6 +3797,22 @@ def _teacher_branch_map(db: Session) -> dict:
 def list_teachers(branch_id: Optional[int] = None,
                   db: Session = Depends(get_db),
                   user=Depends(get_current_user)):
+    # O'Z-O'ZINI TUZATISH: ustoz/support ROLIDAGI hisobga karta
+    # ochilmagan bo'lsa (eski yozuvlar, o'tkazib yuborilgan
+    # migratsiya), shu yerda ochib yuboramiz — ro'yxat har doim
+    # HR bo'limi bilan bir xil bo'ladi.
+    _missing = (db.query(models.User)
+                .filter(models.User.role.in_((roles.TEACHER,
+                                              roles.SUPPORT_TEACHER)),
+                        models.User.is_active == 1,
+                        ~models.User.id.in_(
+                            db.query(models.Teacher.user_id)
+                            .filter(models.Teacher.user_id
+                                    .isnot(None)))).all())
+    if _missing:
+        for _u in _missing:
+            _ensure_teacher_card(db, _u)
+        db.commit()
     extra = _teacher_branch_map(db)
     # Filialga bog'langan xodim: asosiy filiali YOKI qo'shimcha
     # filiallaridan biri unga tegishli ustozlarni ko'radi. Butun

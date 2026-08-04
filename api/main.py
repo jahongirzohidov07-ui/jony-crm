@@ -485,17 +485,46 @@ def _backfill_public_ids():
         db.close()
 
 
-_ensure_new_columns()
-_backfill_public_ids()
+# =====================================================================
+#  SXEMA TAYYORLASH — ENDI FAQAT BIR MARTA
+#
+#  Ilgari har sovuq startda ~100 ta ALTER urinishi bazaga qatnardi —
+#  server uzoq regionda tursa bu 20-30 soniyaga cho'zilib, so'rovlar
+#  504 bilan uzilardi. Endi hammasi bir marta bajarilib, bazaga tamg'a
+#  (stamp) yoziladi; keyingi startlar 1 ta so'rov bilan o'tib ketadi.
+#
+#  MUHIM: _ensure_new_columns yoki migrations.MIGRATIONS ga yangi
+#  narsa qo'shsangiz — SCHEMA_STAMP satrini ham yangilang, aks holda
+#  yangi ustunlar jonli bazaga yetib bormaydi.
+# =====================================================================
+SCHEMA_STAMP = "stamp_2026_08_04a"
 
-# Versiyalangan migratsiyalar — yangi ustunlar endi shu yerdan o'tadi
-# (backend/migrations.py), "except: pass" emas.
-try:
-    _mdb = SessionLocal()
-    migrations.run(_mdb)
-    _mdb.close()
-except Exception:
-    pass
+
+def _schema_bootstrap():
+    db = SessionLocal()
+    try:
+        try:
+            done = db.query(models.SchemaMigration).filter(
+                models.SchemaMigration.version == SCHEMA_STAMP).first()
+        except Exception:
+            done = None
+        if done:
+            return
+        _ensure_new_columns()
+        _backfill_public_ids()
+        migrations.run(db)
+        db.add(models.SchemaMigration(version=SCHEMA_STAMP))
+        db.commit()
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+    finally:
+        db.close()
+
+
+_schema_bootstrap()
 
 app = FastAPI(title="JonyOS API — Jony Academy boshqaruv tizimi")
 

@@ -93,6 +93,10 @@ export const TEACHING_STAFF = [
   EXAMINER, HEAD_EXAMINER, ACADEMIC_HEAD,
 ];
 
+/** Dars jadvali, davomat va baholashni KO'RA oladiganlar
+ *  (HR belgilay olmaydi — faqat kuzatadi). */
+export const SCHEDULE_VIEW = [...TEACHING_STAFF, HR_MANAGER];
+
 /** Xodimlar ro'yxatini ko'ra oladiganlar. */
 export const STAFF_VIEWERS = [...FULL_ACCESS, HR_MANAGER, FINANCE_DIRECTOR];
 

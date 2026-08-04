@@ -35,6 +35,10 @@ MIGRATIONS = [
         "UPDATE teachers SET grade = NULL WHERE user_id IN "
         "(SELECT id FROM users WHERE role = 'support_teacher')",
     ]),
+    # Qarzdorligicha guruhdan chiqarilgan o'quvchi belgisi
+    ("0006_archive_when_paid", [
+        "ALTER TABLE students ADD COLUMN archive_when_paid INTEGER",
+    ]),
 ]
 
 

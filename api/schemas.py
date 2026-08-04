@@ -78,6 +78,9 @@ class UserUpdate(BaseModel):
     branch_id: Optional[int] = None
     branch_ids: Optional[List[int]] = None
     is_active: Optional[bool] = None
+    # Ishdan bo'shatish: qanday ajrashildi va sababi
+    exit_type: Optional[str] = None      # green | neutral | red
+    exit_reason: Optional[str] = None
     password: Optional[str] = None
     fix_salary: Optional[float] = None
     phone: Optional[str] = None
@@ -2127,6 +2130,11 @@ class PaymentEditIn(BaseModel):
     amount: float                     # yangi summa (musbat son kiritiladi)
     note: Optional[str] = None
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
+
+
+class RemoveFromGroupIn(BaseModel):
+    """Guruhdan chiqarish — sabab MAJBURIY, ustozlar bilishi uchun."""
+    reason: str
 
 
 class RecoverySetIn(BaseModel):

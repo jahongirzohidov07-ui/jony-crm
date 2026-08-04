@@ -819,6 +819,81 @@ ck("cron begonalarga yopiq",
 ck("cron asoschiga ochiq", client.get(
     "/api/cron/daily", headers=ASOS2).status_code, 200)
 
+# ============ 18. Guruhdan chiqarish: sabab + arxiv qoidalari ============
+print("\n--- 18: guruhdan chiqarish, avtoarxiv, tiklash ---")
+db = SessionLocal()
+g18 = models.Group(name="G18", branch_id=BID, monthly_fee=400000,
+                   lesson_days="mon,wed,fri", lesson_time="09:00-10:00")
+db.add(g18); db.commit()
+sA = models.Student(full_name="Chiquvchi Toza18", branch_id=BID,
+                    group_id=g18.id, status="active")
+sB = models.Student(full_name="Chiquvchi Qarzdor18", branch_id=BID,
+                    group_id=g18.id, status="active")
+db.add_all([sA, sB]); db.commit()
+SA18, SB18 = sA.id, sB.id
+db.add(models.Payment(student_id=SB18, amount=-250000, kind="charge"))
+db.commit(); db.close()
+
+ck("sababsiz chiqarish 400", client.post(
+    f"/api/students/{SA18}/remove-from-group", headers=ASOS2,
+    json={"reason": " "}).status_code, 400)
+ck("move-group(null) yopiq 400", client.post(
+    f"/api/students/{SA18}/move-group", headers=ASOS2,
+    json={"group_id": None}).status_code, 400)
+r = client.post(f"/api/students/{SA18}/remove-from-group", headers=ASOS2,
+                json={"reason": "Ko'chib ketdi"}).json()
+ck("qarzsiz -> darhol arxiv", r.get("archived"), True)
+r = client.post(f"/api/students/{SB18}/remove-from-group", headers=ASOS2,
+                json={"reason": "Qatnamay qo'ydi"}).json()
+ck("qarzdor arxivga tushmadi", r.get("archived"), False)
+st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
+ck("qarzdor guruhsiz faol", (st["status"], st.get("group")), ("active", None))
+client.post(f"/api/students/{SB18}/payments", headers=ASOS2,
+            json={"amount": 250000, "kind": "payment"})
+st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
+ck("qarz yopilgach avtoarxiv", st["status"], "archived")
+h = str(client.get(f"/api/students/{SB18}/history", headers=ASOS2).json())
+ck("tarixda sabab bor", "Qatnamay qo'ydi" in h, True)
+ck("qayta tiklash OK", client.post(
+    f"/api/students/{SB18}/restore", json={},
+    headers=ASOS2).status_code, 200)
+st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
+ck("tiklangan: faol, guruhsiz", (st["status"], st.get("group")),
+   ("active", None))
+ck("arxivda emasni tiklash 400", client.post(
+    f"/api/students/{SB18}/restore", json={},
+    headers=ASOS2).status_code, 400)
+
+# --- HR bo'shatish sababi + support oyliklari ---
+db = SessionLocal()
+db.add(models.User(username="xodim18", password_hash=hash_password("x"),
+                   full_name="Xodim 18", role="administrator",
+                   branch_id=BID))
+sup18u = models.User(username="sup18", password_hash=hash_password("x"),
+                     full_name="Support 18", role="support_teacher",
+                     branch_id=BID)
+db.add(sup18u); db.commit()
+db.add(models.Teacher(full_name="Support 18", user_id=sup18u.id,
+                      branch_id=BID, is_active=1))
+db.add(models.User(username="hr18", password_hash=hash_password("x"),
+                   full_name="HR 18", role="hr_manager"))
+db.commit()
+X18 = db.query(models.User).filter_by(username="xodim18").first().id
+db.close()
+HR18 = tok("hr18")
+ck("HR bo'shatish (sabab bilan)", client.put(
+    f"/api/users/{X18}", headers=HR18,
+    json={"is_active": False, "exit_reason": "Boshqa ishga o'tdi",
+          "exit_type": "green"}).status_code, 200)
+card = client.get(f"/api/staff/{X18}/card", headers=HR18).json()
+ck("sabab kartada", card.get("exit_reason"), "Boshqa ishga o'tdi")
+r = client.get("/api/support-teachers/salaries", headers=ASOS2)
+ck("support oyliklari ro'yxati", r.status_code, 200)
+ck("ro'yxatda summa bor",
+   len(r.json()["rows"]) >= 1 and "salary" in r.json()["rows"][0], True)
+ck("support o'zi ro'yxatni ocholmaydi", client.get(
+    "/api/support-teachers/salaries", headers=tok("sup18")).status_code, 403)
+
 print()
 if fails:
     print("YIQILGANLAR:", fails)

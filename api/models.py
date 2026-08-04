@@ -307,6 +307,9 @@ class Student(Base):
     # Oxirgi tahrir vaqti — ikki xodim bir vaqtda tahrirlaganda
     # "oxirgisi yutadi" o'rniga ogohlantirish berish uchun.
     updated_at = Column(DateTime, nullable=True)
+    # Guruhdan qarzdorligicha chiqarilgan: qarz to'langach AVTOMAT
+    # arxivga o'tadi. Ungacha "guruhsiz" bo'lib ro'yxatda turadi.
+    archive_when_paid = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     group = relationship("Group", back_populates="students")

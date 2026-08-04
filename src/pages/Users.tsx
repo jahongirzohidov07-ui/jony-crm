@@ -461,7 +461,7 @@ export function StaffTab() {
       {loading ? (
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
               <tr>

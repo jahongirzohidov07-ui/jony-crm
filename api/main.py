@@ -4190,17 +4190,63 @@ def update_group(
 def delete_group(
     group_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FULL_ACCESS)),
+    user=Depends(require_role(*roles.GROUP_MANAGE)),
 ):
+    """Guruhni o'chirish — asoschi, filial rahbari, o'quv bo'limi rahbari.
+
+    Himoya qoidalari:
+      - ichida o'quvchi bo'lsa — avval ko'chirilsin/arxivlansin;
+      - yoqlama tarixi bo'lsa — o'chirib BO'LMAYDI (bu ustoz oyligi va
+        o'quvchi to'lovining hujjati);
+      - bo'sh guruh (xato ochilgan) — darslari bilan birga tozalanadi."""
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and group.branch_id and group.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+
+    n_students = db.query(models.Student).filter(
+        models.Student.group_id == group.id).count()
+    if n_students:
+        raise HTTPException(
+            400, f"Guruhda {n_students} ta o'quvchi bor. Avval ularni "
+                 "boshqa guruhga ko'chiring yoki arxivlang — keyin "
+                 "guruhni o'chirasiz.")
+
+    lesson_ids = [lid for (lid,) in db.query(models.Lesson.id).filter(
+        models.Lesson.group_id == group.id).all()]
+    if lesson_ids:
+        n_att = db.query(models.Attendance).filter(
+            models.Attendance.lesson_id.in_(lesson_ids)).count()
+        if n_att:
+            raise HTTPException(
+                400, "Bu guruhda yoqlama tarixi bor — u ustoz oyligi va "
+                     "to'lovlarning hujjati, o'chirib bo'lmaydi. Guruh "
+                     "yakunlangan bo'lsa, tugash sanasini qo'yib qo'ying.")
+        db.query(models.DailyGrade).filter(
+            models.DailyGrade.lesson_id.in_(lesson_ids)).delete(
+            synchronize_session=False)
+        db.query(models.Lesson).filter(
+            models.Lesson.id.in_(lesson_ids)).delete(
+            synchronize_session=False)
+
+    # Yordamchi bog'lanishlar ham tozalanadi
+    try:
+        db.query(models.SupportAssignment).filter(
+            models.SupportAssignment.group_id == group.id).delete(
+            synchronize_session=False)
+    except Exception:
+        pass
+
+    audit.log(db, user, entity="group", action="delete",
+              entity_id=group.id, entity_label=group.name,
+              old_value=group.name, branch_id=group.branch_id)
     db.delete(group)
     db.commit()
     return {"ok": True}
 
 
-# ------------------------------------------------------------ Students ----
 @app.get("/api/students", response_model=List[schemas.StudentOut])
 def list_students(
     q: Optional[str] = None,

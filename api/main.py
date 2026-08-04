@@ -497,7 +497,7 @@ def _backfill_public_ids():
 #  narsa qo'shsangiz — SCHEMA_STAMP satrini ham yangilang, aks holda
 #  yangi ustunlar jonli bazaga yetib bormaydi.
 # =====================================================================
-SCHEMA_STAMP = "stamp_2026_08_04c"
+SCHEMA_STAMP = "stamp_2026_08_04d"
 
 
 def _schema_bootstrap():
@@ -1016,6 +1016,32 @@ def _smm_achievement_task(db: Session, s: models.Student, *,
         priority="high")
 
 
+def _ensure_teacher_card(db: Session, u: models.User):
+    """O'qituvchi yoki support roli bilan ochilgan hisobga Ustozlar
+    bo'limida ham karta ochib qo'yadi — HR dan qo'shilsa ham, ikkala
+    tomonda ko'rinib turadi. Ism mos kelgan egasiz karta bo'lsa,
+    dublikat ochmasdan o'shanga bog'laydi."""
+    if u.role not in (roles.TEACHER, roles.SUPPORT_TEACHER):
+        return None
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.user_id == u.id).first())
+    if t:
+        return t
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.full_name == u.full_name,
+                 models.Teacher.user_id.is_(None)).first())
+    if t:
+        t.user_id = u.id
+        if not t.branch_id:
+            t.branch_id = u.branch_id
+        return t
+    t = models.Teacher(full_name=u.full_name, user_id=u.id,
+                       branch_id=u.branch_id, is_active=1,
+                       hired_date=u.hired_date or date.today())
+    db.add(t)
+    return t
+
+
 @app.post("/api/users", response_model=schemas.UserOut)
 def create_user(
     payload: schemas.UserCreate,
@@ -1061,6 +1087,8 @@ def create_user(
         _sync_user_branches(db, new_user, _bids)
     # AVTOMAT: SMM'ga yangi xodimni suratga olish vazifasi
     _smm_new_staff_task(db, new_user)
+    # O'qituvchi/support bo'lsa — Ustozlar bo'limida ham darhol ko'rinsin
+    _ensure_teacher_card(db, new_user)
     db.commit()
     return new_user
 
@@ -1170,6 +1198,17 @@ def update_user(
     # Ko'p filial ro'yxati yuborilgan bo'lsa — sinxronlaymiz
     if _new_bids is not None:
         _sync_user_branches(db, target, _new_bids or [])
+
+    # Ustoz/support kartasi bilan ikki tomonlama sinxron: ism va
+    # faollik ikkala bo'limda bir xil tursin. Rol keyin o'qituvchiga
+    # o'zgartirilsa ham karta ochiladi.
+    _tcard = _ensure_teacher_card(db, target)
+    if _tcard:
+        if payload.full_name is not None:
+            _tcard.full_name = target.full_name
+        if payload.is_active is not None:
+            _tcard.is_active = int(target.is_active)
+            _sync_teacher_left_date(_tcard)
 
     db.commit()
     db.refresh(target)

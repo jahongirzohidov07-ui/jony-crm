@@ -2927,6 +2927,28 @@ class ErrorLog(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+class RefundRequest(Base):
+    """Pul qaytarish so'rovi. Sotuv menejeri so'raydi, filial rahbari
+    yoki moliyachi tasdiqlaydi — shundagina pul qaytadi. To'g'ridan
+    to'g'ri refund yo'q: to'rt ko'z qoidasi."""
+    __tablename__ = "refund_requests"
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    amount = Column(Float, nullable=False)
+    reason = Column(String, nullable=False)
+    status = Column(String, default="pending")  # pending/approved/rejected
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    requested_by = Column(String, nullable=True)
+    decided_by = Column(String, nullable=True)
+    decided_note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    decided_at = Column(DateTime, nullable=True)
+    payment_id = Column(Integer, ForeignKey("payments.id"), nullable=True)
+
+    student = relationship("Student")
+
+
 class StudentCountSnapshot(Base):
     """Tarixiy statistika: ma'lum sanadagi o'quvchilar soni.
 

@@ -670,6 +670,14 @@ TEACHING_ACCESS = FULL_ACCESS + [
 # HR belgilay olmaydi (yozish TEACHING_ACCESS/GRADE_EDIT da qoladi),
 # faqat xodimlarning darslari qanday ketayotganini kuzatadi.
 ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
+
+# Refund: sotuv menejeri SO'RAYDI, filial rahbari yoki moliyachi
+# TASDIQLAYDI. Bitta odam ham so'rab ham tasdiqlay olmaydi (asoschidan
+# tashqari) — pul qaytarish ikki ko'z ostida bo'ladi.
+REFUND_REQUEST = [SALES_MANAGER, FOUNDER]
+REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER]
+REFUND_VIEW = list(dict.fromkeys(
+    REFUND_REQUEST + REFUND_APPROVE + [SALES_HEAD]))
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 

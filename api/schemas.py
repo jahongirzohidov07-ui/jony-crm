@@ -2132,6 +2132,16 @@ class PaymentEditIn(BaseModel):
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 
+class RefundCreate(BaseModel):
+    student_id: int
+    amount: float
+    reason: str
+
+
+class RefundDecision(BaseModel):
+    note: Optional[str] = None
+
+
 class SnapshotIn(BaseModel):
     """Tarixiy o'quvchilar soni — bitta yozuv."""
     date: date

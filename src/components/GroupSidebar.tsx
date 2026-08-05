@@ -27,6 +27,15 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
+/** Telefonni 998siz qisqa ko'rsatish: 88-773-87-93 — ro'yxatda joy tejaydi. */
+function shortPhone(p: string): string {
+  const d = p.replace(/\D/g, "");
+  const t = d.length > 9 ? d.slice(-9) : d;
+  return t.length === 9
+    ? `${t.slice(0, 2)}-${t.slice(2, 5)}-${t.slice(5, 7)}-${t.slice(7, 9)}`
+    : p;
+}
+
 export function GroupSidebar({
   group,
   onEdit,
@@ -136,7 +145,7 @@ export function GroupSidebar({
                   )}
                   <Link
                     to={`/students/${s.id}`}
-                    className={`text-sm whitespace-nowrap ${
+                    className={`text-[13px] whitespace-nowrap ${
                       frozen
                         ? "text-sky-600 font-medium hover:text-sky-700"
                         : "text-slate-800 hover:text-brand-700"
@@ -151,9 +160,9 @@ export function GroupSidebar({
                     )}
                   </Link>
                   {s.phone && (
-                    <span className="text-xs text-slate-400 shrink-0 ml-auto hidden sm:flex items-center gap-1">
-                      <Phone size={11} />
-                      {s.phone}
+                    <span className="text-[11px] text-slate-400 shrink-0 ml-auto hidden sm:flex items-center gap-1">
+                      <Phone size={10} />
+                      {shortPhone(s.phone)}
                     </span>
                   )}
                   <StudentRowMenu student={s} groups={groups} onChanged={load} />

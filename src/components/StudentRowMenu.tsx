@@ -97,24 +97,38 @@ export function StudentRowMenu({
     );
   };
 
+  // Chiqarish sabablari — ustozlar aniq bilishi uchun ro'yxatdan
+  // tanlanadi; "Boshqa sabab"da qo'lda yoziladi.
+  const REMOVE_REASONS = [
+    "Dars yoqmadi",
+    "Boshqa joyga ko'chib ketdi",
+    "Yo'nalishini o'zgartirdi",
+    "Umuman bog'lanib bo'lmayapti",
+    "Narx to'g'ri kelmadi",
+    "Vaqti to'g'ri kelmadi",
+  ];
+  const [removing, setRemoving] = useState(false);
+  const [rReason, setRReason] = useState("");
+  const [rOther, setROther] = useState("");
+
   const removeFromGroup = () => {
-    // Sabab MAJBURIY — ustozlar o'quvchi nega ketganini bilishi uchun.
-    const reason = prompt(
-      `${student.full_name} guruhdan chiqarilsinmi?\n\n` +
-        "Chiqarish sababini yozing (majburiy):\n" +
-        "Qarzi bo'lmasa — arxivga o'tadi. Qarzi bo'lsa — guruhsiz " +
-        "qoladi, qarz to'langach avtomat arxivlanadi."
-    );
-    if (reason === null) return;
-    if (!reason.trim()) {
-      setErr("Chiqarish sababi majburiy");
+    setRemoving(true);
+    setRReason("");
+    setROther("");
+  };
+
+  const confirmRemove = () => {
+    const reason = rReason === "__other__" ? rOther.trim() : rReason;
+    if (!reason) {
+      setErr("Chiqarish sababini tanlang yoki yozing");
       return;
     }
     run(async () => {
       const r = await api.post<{ archived: boolean; debt: number }>(
         `/students/${student.id}/remove-from-group`,
-        { reason: reason.trim() }
+        { reason }
       );
+      setRemoving(false);
       alert(
         r.archived
           ? "O'quvchi guruhdan chiqarildi va arxivga o'tkazildi."
@@ -144,6 +158,83 @@ export function StudentRowMenu({
       >
         <MoreVertical size={15} />
       </button>
+
+      {removing && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="bg-white rounded-xl w-full max-w-sm p-5 shadow-xl">
+            <h3 className="font-semibold text-slate-900 mb-1">
+              Guruhdan chiqarish
+            </h3>
+            <p className="text-xs text-slate-500 mb-3">
+              {student.full_name} — sababni tanlang. Qarzi bo'lmasa arxivga
+              o'tadi, qarzi bo'lsa to'langach avtomat arxivlanadi.
+            </p>
+            <div className="space-y-1.5 mb-3">
+              {REMOVE_REASONS.map((r) => (
+                <label
+                  key={r}
+                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer ${
+                    rReason === r
+                      ? "border-brand-500 bg-brand-50 text-brand-800"
+                      : "border-slate-200 text-slate-700 hover:border-slate-300"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="rm-reason"
+                    checked={rReason === r}
+                    onChange={() => setRReason(r)}
+                  />
+                  {r}
+                </label>
+              ))}
+              <label
+                className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer ${
+                  rReason === "__other__"
+                    ? "border-brand-500 bg-brand-50 text-brand-800"
+                    : "border-slate-200 text-slate-700 hover:border-slate-300"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="rm-reason"
+                  checked={rReason === "__other__"}
+                  onChange={() => setRReason("__other__")}
+                />
+                Boshqa sabab
+              </label>
+              {rReason === "__other__" && (
+                <input
+                  value={rOther}
+                  onChange={(e) => setROther(e.target.value)}
+                  placeholder="Sababni yozing"
+                  autoFocus
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+              )}
+            </div>
+            {err && <p className="text-xs text-red-600 mb-2">{err}</p>}
+            <div className="flex gap-2">
+              <button
+                onClick={confirmRemove}
+                disabled={busy}
+                className="flex-1 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 disabled:opacity-50"
+              >
+                Chiqarish
+              </button>
+              <button
+                onClick={() => setRemoving(false)}
+                className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+              >
+                Bekor
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {open && (
         <div className="absolute right-0 top-7 z-30 w-60 bg-white rounded-xl border border-slate-200 shadow-lg py-1.5">

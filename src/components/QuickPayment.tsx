@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Wallet, X, Search, Check } from "lucide-react";
+import { printXReceipt } from "../lib/receipt";
 import { api, type Student } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { PAYMENT_METHODS } from "../lib/payments";
@@ -105,12 +106,31 @@ function PaymentModal({
     setSaving(true);
     setErr("");
     try {
-      await api.post(`/students/${picked.id}/payments`, {
-        amount: v,
-        kind: "payment",
-        method,
-        note: note || null,
-      });
+      const created = await api.post<{ id?: number }>(
+        `/students/${picked.id}/payments`,
+        {
+          amount: v,
+          kind: "payment",
+          method,
+          note: note || null,
+        }
+      );
+      // X-printer chek: xohlasa darrov chiqarib beradi
+      if (confirm("Chek chiqarilsinmi?")) {
+        printXReceipt({
+          student: picked.full_name,
+          publicId: (picked as { public_id?: string | null }).public_id,
+          amount: v,
+          method,
+          note: note || null,
+          balance:
+            (picked as { balance?: number | null }).balance != null
+              ? ((picked as { balance?: number }).balance ?? 0) + v
+              : null,
+          cashier: undefined,
+          paymentId: created?.id ?? null,
+        });
+      }
       setOk(true);
       setTimeout(onSaved, 900);
     } catch (e) {

@@ -58,7 +58,7 @@ export function GroupSidebar({
   const trials = students.filter((s) => s.status === "trial").length;
 
   return (
-    <aside className="w-full lg:w-80 shrink-0 bg-white rounded-xl border border-slate-200 p-5">
+    <aside className="w-full lg:w-[27rem] shrink-0 bg-white rounded-xl border border-slate-200 p-5">
       <div className="flex items-start justify-between gap-2 mb-3">
         <h1 className="text-lg font-semibold text-slate-900">{group.name}</h1>
         {onEdit && (
@@ -136,7 +136,7 @@ export function GroupSidebar({
                   )}
                   <Link
                     to={`/students/${s.id}`}
-                    className={`text-sm flex-1 min-w-0 break-words leading-snug ${
+                    className={`text-sm whitespace-nowrap ${
                       frozen
                         ? "text-sky-600 font-medium hover:text-sky-700"
                         : "text-slate-800 hover:text-brand-700"
@@ -151,7 +151,7 @@ export function GroupSidebar({
                     )}
                   </Link>
                   {s.phone && (
-                    <span className="text-xs text-slate-400 shrink-0 hidden sm:flex items-center gap-1">
+                    <span className="text-xs text-slate-400 shrink-0 ml-auto hidden sm:flex items-center gap-1">
                       <Phone size={11} />
                       {s.phone}
                     </span>
@@ -194,3 +194,5 @@ export function GroupSidebar({
     </aside>
   );
 }
+
+// LC UP uslubi: ism bitta qatorda, panel kengaytirilgan

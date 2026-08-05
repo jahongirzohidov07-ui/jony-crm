@@ -97,6 +97,11 @@ export const TEACHING_STAFF = [
  *  (HR belgilay olmaydi — faqat kuzatadi). */
 export const SCHEDULE_VIEW = [...TEACHING_STAFF, HR_MANAGER];
 
+/** Supportlar jadvalini ko'radiganlar. */
+export const SUPPORT_TT_VIEW = [
+  ...FULL_ACCESS, HEAD_SUPPORT, ACADEMIC_HEAD, HR_MANAGER,
+];
+
 /** Refund: sotuv menejeri so'raydi, rahbar/moliyachi tasdiqlaydi. */
 export const REFUND_REQUEST = [SALES_MANAGER, FOUNDER];
 export const REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER];

@@ -249,14 +249,25 @@ export function SupportGroupsModal({
     if (n.has(id)) n.delete(id); else n.add(id);
     setSel(n);
   };
-  const save = async () => {
+  const save = async (force = false) => {
     setBusy(true);
     try {
-      await api.put(`/support-teachers/${teacherId}/groups`,
-        { group_ids: [...sel] });
+      await api.put(
+        `/support-teachers/${teacherId}/groups${force ? "?force=true" : ""}`,
+        { group_ids: [...sel] }
+      );
       onClose();
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Xatolik");
+      const m = e instanceof Error ? e.message : "Xatolik";
+      // Band vaqt / to'qnashuv ogohlantirishi — xohlasa baribir qo'yadi
+      if (!force && m.includes("to'qnashuv")) {
+        if (confirm(m + "\n\nBaribir biriktirilsinmi?")) {
+          await save(true);
+          return;
+        }
+      } else {
+        setErr(m);
+      }
       setBusy(false);
     }
   };
@@ -294,7 +305,7 @@ export function SupportGroupsModal({
         <div className="flex justify-end gap-2">
           <button onClick={onClose}
             className="px-4 py-2 text-sm text-slate-600">Bekor</button>
-          <button onClick={save} disabled={busy}
+          <button onClick={() => save()} disabled={busy}
             className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
             Saqlash ({sel.size})
           </button>

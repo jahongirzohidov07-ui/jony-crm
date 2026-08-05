@@ -35,6 +35,7 @@ import {
  Search } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
+  SUPPORT_TT_VIEW,
   SCHEDULE_VIEW,
   FOUNDER,
   STAFF_VIEWERS,
@@ -219,6 +220,16 @@ export default function Layout() {
       { to: "/timetable", label: "Dars jadvali", icon: CalendarDays },
       ...items.slice(1),
     ];
+  }
+  // Supportlar bo'yicha ALOHIDA jadval — support manager, o'quv
+  // bo'limi rahbari va HR kimning qachon bandligini shu yerdan biladi.
+  if (can(user?.role, SUPPORT_TT_VIEW)) {
+    const ti = items.findIndex((i) => i.to === "/timetable");
+    const item = { to: "/support-schedule", label: "Supportlar jadvali",
+                   icon: CalendarDays };
+    items = ti >= 0
+      ? [...items.slice(0, ti + 1), item, ...items.slice(ti + 1)]
+      : [...items, item];
   }
   if (can(user?.role, LEAD_ACCESS)) {
     items = [

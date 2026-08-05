@@ -17,6 +17,7 @@ const Groups = lazy(() => import("./pages/Groups"));
 const GroupDetail = lazy(() => import("./pages/GroupDetail"));
 const MyExams = lazy(() => import("./pages/MyExams"));
 const MySessions = lazy(() => import("./pages/MySessions"));
+const SupportSchedule = lazy(() => import("./pages/SupportSchedule"));
 const Plan = lazy(() => import("./pages/Plan"));
 const Teachers = lazy(() => import("./pages/Teachers"));
 const Moliya = lazy(() => import("./pages/Moliya"));
@@ -85,6 +86,7 @@ function AppRoutes() {
           <Route path="groups/:id" element={<GroupDetail />} />
           <Route path="my-exams" element={<MyExams />} />
           <Route path="my-sessions" element={<MySessions />} />
+          <Route path="support-schedule" element={<SupportSchedule />} />
           <Route path="plan" element={<Plan />} />
           <Route path="teachers" element={<Teachers />} />
           <Route path="finance" element={<Moliya />} />

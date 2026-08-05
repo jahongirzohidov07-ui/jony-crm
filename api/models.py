@@ -2927,6 +2927,34 @@ class ErrorLog(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+class SupportBusy(Base):
+    """Support teacherning O'ZI belgilagan band vaqti: "seshanba-payshanba
+    14:00-16:00 — repetitorlik". Shu oraliqqa guruh biriktirilmoqchi
+    bo'lsa, support manager ogohlantirish oladi."""
+    __tablename__ = "support_busy"
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    days = Column(String, nullable=False)   # "mon,wed,fri"
+    start = Column(String, nullable=False)  # "14:00"
+    end = Column(String, nullable=False)    # "16:00"
+    note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ChargeSkip(Base):
+    """Asoschi avtomatik oylik yechimini O'CHIRGAN (student, oy) juftligi.
+    Cron yoki "qayta hisoblash" shu oyni shu o'quvchiga QAYTA yozmaydi —
+    aks holda o'chirilgan yechim ertasiga qaytib kelardi."""
+    __tablename__ = "charge_skips"
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    period = Column(String, nullable=False, index=True)  # "2026-08"
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class RefundRequest(Base):
     """Pul qaytarish so'rovi. Sotuv menejeri so'raydi, filial rahbari
     yoki moliyachi tasdiqlaydi — shundagina pul qaytadi. To'g'ridan

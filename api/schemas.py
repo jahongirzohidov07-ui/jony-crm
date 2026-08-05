@@ -2132,6 +2132,14 @@ class PaymentEditIn(BaseModel):
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 
+class SupportBusyIn(BaseModel):
+    """Support o'zi belgilaydigan band vaqt."""
+    days: str          # "mon,wed,fri"
+    start: str         # "14:00"
+    end: str           # "16:00"
+    note: Optional[str] = None
+
+
 class RefundCreate(BaseModel):
     student_id: int
     amount: float

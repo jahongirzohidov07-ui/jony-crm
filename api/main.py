@@ -4776,6 +4776,14 @@ def add_payment(
     return payment
 
 
+def _charge_skipped(db: Session, student_id: int, period: str) -> bool:
+    """Asoschi o'chirgan avto-oylik qayta yozilmasin."""
+    return (db.query(models.ChargeSkip)
+            .filter(models.ChargeSkip.student_id == student_id,
+                    models.ChargeSkip.period == period)
+            .first() is not None)
+
+
 @app.delete("/api/payments/{payment_id}")
 def delete_payment(
     payment_id: int,
@@ -4803,11 +4811,17 @@ def delete_payment(
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
 
     if p.period:
-        raise HTTPException(
-            400,
-            "Avtomatik hisoblangan oylikni o'chirib bo'lmaydi - "
-            "guruh sahifasidan qayta hisoblang",
-        )
+        # Avto-oylikni faqat ASOSCHI o'chiradi. O'chirilgach shu oy
+        # uchun QAYTA hisoblanmaydi (skip belgisi qo'yiladi) — kerak
+        # bo'lsa qo'lda "Hisoblash" yozuvi kiritiladi.
+        if user.role != roles.FOUNDER:
+            raise HTTPException(
+                403, "Avtomatik hisoblangan oylikni faqat asoschi "
+                     "o'chira oladi")
+        if p.kind == "charge":
+            db.add(models.ChargeSkip(
+                student_id=p.student_id, period=p.period,
+                created_by=user.full_name))
 
     # PUL KIRIMI (to'lov) va refund yozuvini faqat ASOSCHI o'chiradi —
     # kassadagi xato ham asoschi nazorati ostida to'g'rilanadi.
@@ -5035,7 +5049,8 @@ def run_billing(
     results = []
     for c in charges:
         created = False
-        if commit and not c["already_charged"] and c["amount"] > 0:
+        if commit and not c["already_charged"] and c["amount"] > 0 \
+                and not _charge_skipped(db, c["student_id"], period):
             payment = models.Payment(
                 student_id=c["student_id"],
                 amount=-abs(c["amount"]),
@@ -8649,6 +8664,8 @@ def _charge_from_activation(db: Session, s: models.Student, since: date,
                       models.Payment.kind == "charge").first())
     if exists:
         return None
+    if _charge_skipped(db, s.id, period):
+        return None
 
     lessons = _lessons_left_in_month(db, s.group_id, since)
     n = len(lessons)
@@ -8801,7 +8818,8 @@ def billing_month(
         disc = _student_discount_percent(db, s)
         amount = lessons * (g.lesson_price or 0) * (100 - disc) / 100
 
-        if commit and not already and amount > 0:
+        if commit and not already and amount > 0 \
+                and not _charge_skipped(db, s.id, period):
             db.add(models.Payment(
                 student_id=s.id, amount=-abs(amount), kind="charge",
                 note=f"{g.name} — {period} oyi uchun {lessons} dars"
@@ -24207,6 +24225,184 @@ def _support_month(db: Session, teacher_id: int, year: int,
     }
 
 
+def _time_to_min(t: str):
+    try:
+        h, m = t.strip().split(":")
+        return int(h) * 60 + int(m)
+    except Exception:
+        return None
+
+
+def _range_overlap(a1, a2, b1, b2) -> bool:
+    return a1 < b2 and b1 < a2
+
+
+_WD_UZ = {"mon": "Du", "tue": "Se", "wed": "Chor", "thu": "Pay",
+          "fri": "Ju", "sat": "Shan", "sun": "Yak"}
+
+
+def _days_uz(days: str) -> str:
+    return ", ".join(_WD_UZ.get(d, d)
+                     for d in (days or "").split(",") if d)
+
+
+def _support_conflicts(db: Session, teacher_id: int,
+                       groups: list) -> list:
+    """Yangi biriktirilayotgan guruhlar supportning band vaqtlari yoki
+    bir-birlari bilan to'qnashsa — ro'yxat qaytaradi."""
+    msgs = []
+    busy = (db.query(models.SupportBusy)
+            .filter(models.SupportBusy.teacher_id == teacher_id).all())
+
+    def parsed(g):
+        if not g.lesson_time or "-" not in (g.lesson_time or ""):
+            return None
+        s, e = g.lesson_time.split("-", 1)
+        s, e = _time_to_min(s), _time_to_min(e)
+        if s is None or e is None:
+            return None
+        days = set((g.lesson_days or "").split(","))
+        return s, e, days
+
+    infos = [(g, parsed(g)) for g in groups]
+    # 1) band vaqtlar bilan
+    for g, p in infos:
+        if not p:
+            continue
+        s, e, days = p
+        for b in busy:
+            bs, be = _time_to_min(b.start), _time_to_min(b.end)
+            if bs is None or be is None:
+                continue
+            bdays = set((b.days or "").split(","))
+            if days & bdays and _range_overlap(s, e, bs, be):
+                msgs.append(
+                    f"\"{g.name}\" ({_days_uz(g.lesson_days)} "
+                    f"{g.lesson_time}) — support bu vaqtni BAND deb "
+                    f"belgilagan: {_days_uz(b.days)} {b.start}-{b.end}"
+                    + (f" ({b.note})" if b.note else ""))
+    # 2) guruhlar bir-biri bilan
+    for i in range(len(infos)):
+        for j in range(i + 1, len(infos)):
+            g1, p1 = infos[i]
+            g2, p2 = infos[j]
+            if not p1 or not p2:
+                continue
+            if (p1[2] & p2[2]) and _range_overlap(p1[0], p1[1],
+                                                  p2[0], p2[1]):
+                msgs.append(
+                    f"\"{g1.name}\" va \"{g2.name}\" darslari bir "
+                    f"vaqtga to'g'ri keladi ({g1.lesson_time})")
+    return msgs
+
+
+# --------------------- Supportning band vaqtlari ---------------------
+@app.get("/api/me/support-busy")
+def my_support_busy(db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.SUPPORT_TEACHER))):
+    t = _my_teacher_or_404(db, user)
+    rows = (db.query(models.SupportBusy)
+            .filter(models.SupportBusy.teacher_id == t.id)
+            .order_by(models.SupportBusy.start).all())
+    return [{"id": r.id, "days": r.days, "start": r.start,
+             "end": r.end, "note": r.note} for r in rows]
+
+
+@app.post("/api/me/support-busy")
+def add_support_busy(payload: schemas.SupportBusyIn,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.SUPPORT_TEACHER))):
+    """Support o'zi: "bu vaqtda menga dars qo'yilmasin" deb belgilaydi.
+    Support manager guruh biriktirayotganda shu ko'rinib turadi."""
+    t = _my_teacher_or_404(db, user)
+    s, e = _time_to_min(payload.start), _time_to_min(payload.end)
+    if s is None or e is None or s >= e:
+        raise HTTPException(400, "Vaqt noto'g'ri — masalan 14:00 va 16:00")
+    days = [d for d in payload.days.split(",")
+            if d in ("mon", "tue", "wed", "thu", "fri", "sat", "sun")]
+    if not days:
+        raise HTTPException(400, "Kamida bitta kun tanlang")
+    r = models.SupportBusy(teacher_id=t.id, days=",".join(days),
+                           start=payload.start.strip(),
+                           end=payload.end.strip(),
+                           note=(payload.note or "").strip() or None)
+    db.add(r)
+    db.commit()
+    return {"ok": True, "id": r.id}
+
+
+@app.delete("/api/me/support-busy/{bid}")
+def del_support_busy(bid: int, db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.SUPPORT_TEACHER))):
+    t = _my_teacher_or_404(db, user)
+    r = db.query(models.SupportBusy).get(bid)
+    if not r or r.teacher_id != t.id:
+        raise HTTPException(404, "Yozuv topilmadi")
+    db.delete(r)
+    db.commit()
+    return {"ok": True}
+
+
+# --------------------- Supportlar jadvali (rahbariyat) ---------------------
+@app.get("/api/support-timetable")
+def support_timetable(day: str = "mon",
+                      branch_id: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(
+                          *roles.FULL_ACCESS, roles.HEAD_SUPPORT,
+                          roles.ACADEMIC_HEAD, roles.HR_MANAGER))):
+    """Supportlar bo'yicha alohida jadval: kim qaysi guruhda, qachon
+    band. Support manager kimdan so'ramasdan darsni qo'yaveradi."""
+    if day not in ("mon", "tue", "wed", "thu", "fri", "sat", "sun"):
+        raise HTTPException(400, "Kun noto'g'ri")
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER,
+                 models.Teacher.is_active == 1))
+    q = scope_to_branch(q, models.Teacher, user)
+    if branch_id:
+        q = q.filter(models.Teacher.branch_id == branch_id)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    rows = []
+    for t in q.order_by(models.Teacher.full_name).all():
+        blocks = []
+        # biriktirilgan guruhlar
+        gids = [a.group_id for a in
+                db.query(models.SupportAssignment)
+                .filter(models.SupportAssignment.user_id == t.user_id,
+                        models.SupportAssignment.group_id.isnot(None))
+                .all()]
+        for g in (db.query(models.Group)
+                  .filter(models.Group.id.in_(gids or [-1])).all()):
+            if day not in (g.lesson_days or ""):
+                continue
+            st = (g.lesson_time or "").split("-")[0].strip()
+            blocks.append({
+                "kind": "group", "label": g.name,
+                "time": g.lesson_time or "",
+                "sort": _time_to_min(st) or 0,
+                "room": g.room,
+            })
+        # o'zi belgilagan band vaqtlar
+        for b in (db.query(models.SupportBusy)
+                  .filter(models.SupportBusy.teacher_id == t.id).all()):
+            if day not in (b.days or ""):
+                continue
+            blocks.append({
+                "kind": "busy",
+                "label": b.note or "Band (o'zi belgilagan)",
+                "time": f"{b.start}-{b.end}",
+                "sort": _time_to_min(b.start) or 0,
+            })
+        blocks.sort(key=lambda x: x["sort"])
+        rows.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": bnames.get(t.branch_id),
+            "blocks": blocks,
+        })
+    return {"day": day, "rows": rows}
+
+
 @app.get("/api/support-teachers/salaries")
 def support_teacher_salaries(year: int | None = None,
                              month: int | None = None,
@@ -25011,6 +25207,8 @@ def _ensure_month_charges(db: Session):
             continue
         for c in charges:
             if c.get("already_charged") or (c.get("amount") or 0) <= 0:
+                continue
+            if _charge_skipped(db, c["student_id"], period):
                 continue
             db.add(models.Payment(
                 student_id=c["student_id"],
@@ -25951,28 +26149,69 @@ def support_teacher_groups(teacher_id: int, db: Session = Depends(get_db),
 @app.put("/api/support-teachers/{teacher_id}/groups")
 def set_support_teacher_groups(teacher_id: int,
                                payload: schemas.SupportGroupsIn,
+                               force: bool = False,
                                db: Session = Depends(get_db),
                                user=Depends(require_role(
                                    *roles.SUPPORT_ASSIGN))):
     """Support teacherni guruhlarga biriktirish — jadvali va
-    o'quvchilari shundan chiqadi."""
+    o'quvchilari shundan chiqadi.
+
+    Supportning O'ZI belgilagan band vaqtiga yoki bir-biriga to'qnash
+    guruhlar tanlansa — 409 ogohlantirish qaytadi (force bilan
+    o'tkazib yuborish mumkin). Yangi biriktirilgan har bir guruh uchun
+    supportga "sizga guruh biriktirildi" xabari tushadi."""
     t = db.query(models.Teacher).get(teacher_id)
     if not t or not t.user_id:
         raise HTTPException(404, "Support teacher yoki akkaunti topilmadi")
+
+    new_ids = {gid for gid in set(payload.group_ids)
+               if db.query(models.Group).get(gid)}
+    groups = (db.query(models.Group)
+              .filter(models.Group.id.in_(new_ids or [-1])).all())
+
+    # TO'QNASHUV: band vaqtlar va bir-biri bilan
+    if not force:
+        msgs = _support_conflicts(db, t.id, groups)
+        if msgs:
+            raise HTTPException(409, "DIQQAT — to'qnashuv bor:\n"
+                                + "\n".join(f"• {m}" for m in msgs))
+
+    old_ids = {a.group_id for a in
+               db.query(models.SupportAssignment)
+               .filter(models.SupportAssignment.user_id == t.user_id,
+                       models.SupportAssignment.group_id.isnot(None))
+               .all()}
     db.query(models.SupportAssignment).filter(
         models.SupportAssignment.user_id == t.user_id,
         models.SupportAssignment.group_id.isnot(None)).delete()
-    for gid in set(payload.group_ids):
-        if db.query(models.Group).get(gid):
-            db.add(models.SupportAssignment(
-                user_id=t.user_id, group_id=gid,
-                created_by=user.full_name))
+    for gid in new_ids:
+        db.add(models.SupportAssignment(
+            user_id=t.user_id, group_id=gid,
+            created_by=user.full_name))
     db.commit()
+
+    # XABAR: yangi qo'shilgan guruhlar haqida supportning o'ziga
+    added = new_ids - old_ids
+    for g in groups:
+        if g.id not in added:
+            continue
+        _hr_task_for(
+            db, t.user_id,
+            title=(f"Yangi guruh biriktirildi: {g.name} "
+                   f"({date.today().isoformat()})"),
+            body=(f"Sizga \"{g.name}\" guruhi biriktirildi: "
+                  f"{_days_uz(g.lesson_days)} kunlari, "
+                  f"{g.lesson_time or 'vaqti belgilanmagan'}. "
+                  f"Biriktirdi: {user.full_name}"),
+            branch_id=g.branch_id, days=1)
+    db.commit()
+
     audit.log(db, user, entity="support_assignment", action="set",
               entity_id=t.id, entity_label=t.full_name,
-              new_value=f"{len(set(payload.group_ids))} ta guruh",
+              new_value=f"{len(new_ids)} ta guruh",
+              note=("force" if force else None),
               commit=True)
-    return {"ok": True}
+    return {"ok": True, "added": len(added)}
 
 
 @app.get("/api/me/junior-path")

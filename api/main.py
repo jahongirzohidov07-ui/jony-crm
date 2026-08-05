@@ -1342,11 +1342,30 @@ def student_growth(
     today = date.today()
     granularity = "day" if window == "1m" else "month"
 
-    if not dates:
+    # TARIXIY STATISTIKA: tizimdan oldingi yillar sonlari (Analitika ->
+    # Tarix bo'limida kiritilgan) shu grafikka ham qo'shiladi. Sonlar
+    # butun markaz bo'yicha, shuning uchun faqat butun tashkilotni
+    # ko'radiganlarga aralashtiramiz — filialga bog'langan xodim
+    # grafigi buzilmaydi.
+    _snaps = []
+    if user.role in tuple(roles.ORG_WIDE_ROLES) or not user.branch_id:
+        _snaps = (db.query(models.StudentCountSnapshot)
+                  .order_by(models.StudentCountSnapshot.date).all())
+    _sd = [x.date for x in _snaps]
+    _sc = [x.count for x in _snaps]
+
+    def snap_through(cutoff: date) -> int:
+        i = bisect.bisect_right(_sd, cutoff)
+        return _sc[i - 1] if i else 0
+
+    if not dates and not _snaps:
         return {"granularity": granularity, "points": []}
 
     def count_through(cutoff: date) -> int:
-        return bisect.bisect_right(dates, cutoff)
+        live = bisect.bisect_right(dates, cutoff)
+        # O'tmishda jonli baza bo'sh — tarixiy son ustun; hozirda
+        # jonli baza to'liq — kattasi olinadi.
+        return max(live, snap_through(cutoff))
 
     points = []
     if window == "1m":
@@ -1358,7 +1377,8 @@ def student_growth(
         if window == "1y":
             months_back = 11
         elif window == "all":
-            earliest = dates[0]
+            _cands = ([dates[0]] if dates else []) + ([_sd[0]] if _sd else [])
+            earliest = min(_cands)
             months_back = (today.year - earliest.year) * 12 + (today.month - earliest.month)
         else:  # "6m" and any unrecognized value
             months_back = 5
@@ -2396,6 +2416,34 @@ def save_exam_results(
         _xp_for_exam(db, exam, by_user=user)
     except Exception:
         db.rollback()
+
+    # AVTOMAT SERTIFIKAT: daraja yakuniy testi ("end") dan o'tgan har
+    # bir o'quvchiga tugatganlik sertifikati yoziladi — StudentDetail
+    # -> Sertifikatlar bo'limidan yuklab olinadi. Bir daraja uchun
+    # bitta sertifikat: qayta topshirsa dublikat ochilmaydi.
+    if exam.kind == "end":
+        _g = db.query(models.Group).get(exam.group_id)
+        _lvl = ((_g.level or "").strip() or None) if _g else None
+        _lvl_label = _lvl or (exam.title or "Kurs yakuni")
+        for _r in exam.results:
+            if _r.absent or _r.percent is None:
+                continue
+            if _r.percent < roles.LEVEL_PASS_PERCENT:
+                continue
+            _dup = (db.query(models.Certificate)
+                    .filter(models.Certificate.student_id == _r.student_id,
+                            models.Certificate.kind == "level",
+                            models.Certificate.level == _lvl_label)
+                    .first())
+            if _dup:
+                continue
+            db.add(models.Certificate(
+                student_id=_r.student_id, kind="level",
+                level=_lvl_label, score=_r.percent,
+                note=(f"{_lvl_label} darajasi yakuniy testi — "
+                      f"{_r.percent}% bilan o'tdi"),
+                created_by="JonyOS avtomat"))
+        db.commit()
 
     # AVTOMAT: yuqori natija - SMM'ga video olish vazifasi.
     # Ustoz alohida hech kimga aytishi shart emas.
@@ -4761,6 +4809,12 @@ def delete_payment(
             "guruh sahifasidan qayta hisoblang",
         )
 
+    # PUL KIRIMI (to'lov) va refund yozuvini faqat ASOSCHI o'chiradi —
+    # kassadagi xato ham asoschi nazorati ostida to'g'rilanadi.
+    if p.kind in ("payment", "refund") and user.role != roles.FOUNDER:
+        raise HTTPException(
+            403, "To'lov (pul kirimi) yozuvini faqat asoschi o'chiradi")
+
     # Qarzdorlikni o'chirish ("charge" yozuvini olib tashlash) alohida
     # amal - kim qildi, qachon, qancha summani - hammasi yoziladi.
     act = "debt_write_off" if p.kind == "charge" else "payment_cancel"
@@ -6337,6 +6391,123 @@ def restore_student(
               note="Arxivdan qayta tiklandi", branch_id=s.branch_id)
     db.commit()
     return {"ok": True, "status": s.status}
+
+
+# =====================================================================
+#  REFUND — pul qaytarish (so'rov -> tasdiq)
+# =====================================================================
+def _refund_out(db, r: "models.RefundRequest") -> dict:
+    s = db.query(models.Student).get(r.student_id)
+    return {
+        "id": r.id, "student_id": r.student_id,
+        "student": s.full_name if s else "?",
+        "amount": r.amount, "reason": r.reason, "status": r.status,
+        "requested_by": r.requested_by, "decided_by": r.decided_by,
+        "decided_note": r.decided_note,
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+    }
+
+
+@app.post("/api/refunds")
+def create_refund(payload: schemas.RefundCreate,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.REFUND_REQUEST))):
+    s = db.query(models.Student).get(payload.student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    amount = roles.money(payload.amount)
+    if amount <= 0:
+        raise HTTPException(400, "Summa noldan katta bo'lsin")
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Sabab majburiy")
+    # Bitta o'quvchiga bitta ochiq so'rov yetadi
+    dup = (db.query(models.RefundRequest)
+           .filter(models.RefundRequest.student_id == s.id,
+                   models.RefundRequest.status == "pending").first())
+    if dup:
+        raise HTTPException(400, "Bu o'quvchiga ochiq refund so'rovi bor")
+    r = models.RefundRequest(
+        student_id=s.id, amount=amount, reason=payload.reason.strip(),
+        branch_id=s.branch_id, requested_by=user.full_name)
+    db.add(r)
+    audit.log(db, user, entity="payment", action="refund_request",
+              entity_label=s.full_name, new_value=amount,
+              note=payload.reason, branch_id=s.branch_id)
+    db.commit()
+    return {"ok": True, "id": r.id}
+
+
+@app.get("/api/refunds")
+def list_refunds(status: str | None = None,
+                 student_id: int | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.REFUND_VIEW))):
+    q = scope_to_branch(db.query(models.RefundRequest),
+                        models.RefundRequest, user)
+    if status:
+        q = q.filter(models.RefundRequest.status == status)
+    if student_id:
+        q = q.filter(models.RefundRequest.student_id == student_id)
+    rows = q.order_by(models.RefundRequest.created_at.desc()).limit(200).all()
+    return [_refund_out(db, r) for r in rows]
+
+
+@app.post("/api/refunds/{rid}/approve")
+def approve_refund(rid: int, payload: schemas.RefundDecision,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.REFUND_APPROVE))):
+    r = db.query(models.RefundRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
+    if user.role == roles.BRANCH_MANAGER and user.branch_id \
+            and r.branch_id != user.branch_id:
+        raise HTTPException(403, "Boshqa filial so'rovi")
+    s = db.query(models.Student).get(r.student_id)
+    # Pul qaytdi: balansdan ayriladigan yozuv
+    pay = models.Payment(
+        student_id=r.student_id, amount=-abs(r.amount), kind="refund",
+        method=None,
+        note=f"Refund: {r.reason} (so'ragan: {r.requested_by})",
+        created_by=user.full_name)
+    db.add(pay)
+    db.flush()
+    r.status = "approved"
+    r.decided_by = user.full_name
+    r.decided_note = payload.note
+    r.decided_at = datetime.utcnow()
+    r.payment_id = pay.id
+    audit.log(db, user, entity="payment", action="refund_approve",
+              entity_id=pay.id, entity_label=s.full_name if s else "",
+              new_value=-abs(r.amount), note=r.reason,
+              branch_id=r.branch_id)
+    db.commit()
+    return {"ok": True, "payment_id": pay.id}
+
+
+@app.post("/api/refunds/{rid}/reject")
+def reject_refund(rid: int, payload: schemas.RefundDecision,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.REFUND_APPROVE))):
+    r = db.query(models.RefundRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
+    if user.role == roles.BRANCH_MANAGER and user.branch_id \
+            and r.branch_id != user.branch_id:
+        raise HTTPException(403, "Boshqa filial so'rovi")
+    r.status = "rejected"
+    r.decided_by = user.full_name
+    r.decided_note = payload.note
+    r.decided_at = datetime.utcnow()
+    s = db.query(models.Student).get(r.student_id)
+    audit.log(db, user, entity="payment", action="refund_reject",
+              entity_label=s.full_name if s else "", new_value=r.amount,
+              note=payload.note or r.reason, branch_id=r.branch_id,
+              commit=True)
+    return {"ok": True}
 
 
 # =====================================================================

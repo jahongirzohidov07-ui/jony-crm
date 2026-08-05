@@ -13,6 +13,121 @@ type Any = any;
  *   (soat x 0.30 + o'quvchi x 0.20 + test koef x 0.50) x 10 000
  * kamida 400 000, ko'pi bilan 1 500 000.
  */
+const BUSY_DAYS = [
+  ["mon", "Du"], ["tue", "Se"], ["wed", "Chor"], ["thu", "Pay"],
+  ["fri", "Ju"], ["sat", "Shan"], ["sun", "Yak"],
+] as const;
+
+/** Support o'zi belgilaydigan BAND VAQTLAR: "bu soatlarga menga dars
+ *  qo'yilmasin" (o'z darsi, repetitorlik...). Support manager guruh
+ *  biriktirayotganda shu vaqtlar to'qnashsa ogohlantirish oladi. */
+function BusyTimes() {
+  type Row = { id: number; days: string; start: string; end: string;
+               note?: string | null };
+  const [rows, setRows] = useState<Row[]>([]);
+  const [days, setDays] = useState<string[]>([]);
+  const [start, setStart] = useState("14:00");
+  const [end, setEnd] = useState("16:00");
+  const [note, setNote] = useState("");
+  const [msg, setMsg] = useState("");
+  const load = () =>
+    api.get<Row[]>("/me/support-busy").then(setRows).catch(() => {});
+  useEffect(() => {
+    load();
+  }, []);
+  const dayUz = (d: string) =>
+    d.split(",").map((k) => BUSY_DAYS.find((x) => x[0] === k)?.[1] || k)
+      .join(", ");
+  async function add() {
+    if (!days.length) {
+      setMsg("Kamida bitta kun tanlang");
+      return;
+    }
+    setMsg("");
+    try {
+      await api.post("/me/support-busy", {
+        days: days.join(","), start, end, note: note || null,
+      });
+      setDays([]); setNote("");
+      load();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+  async function del(id: number) {
+    await api.delete(`/me/support-busy/${id}`);
+    load();
+  }
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-5 mb-4">
+      <p className="text-sm font-medium text-slate-700 mb-1">
+        Band vaqtlarim
+      </p>
+      <p className="text-xs text-slate-500 mb-3">
+        Bu vaqtlarga sizga guruh biriktirilmasin desangiz — belgilab
+        qo'ying. Support manager guruh qo'yayotganda ogohlantirish oladi.
+      </p>
+      {rows.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {rows.map((r) => (
+            <span
+              key={r.id}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-red-50 border border-red-200 text-red-700 px-2.5 py-1.5 text-xs"
+            >
+              <span className="font-semibold">{r.start}-{r.end}</span>
+              {dayUz(r.days)}
+              {r.note ? ` · ${r.note}` : ""}
+              <button
+                onClick={() => del(r.id)}
+                className="ml-1 text-red-400 hover:text-red-700"
+                title="O'chirish"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="flex gap-1">
+          {BUSY_DAYS.map(([k, l]) => (
+            <button
+              key={k}
+              onClick={() =>
+                setDays((d) =>
+                  d.includes(k) ? d.filter((x) => x !== k) : [...d, k]
+                )
+              }
+              className={`px-2 py-1.5 rounded-lg text-xs border ${
+                days.includes(k)
+                  ? "bg-brand-600 text-white border-brand-600"
+                  : "bg-white border-slate-200 text-slate-600"
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+        <input type="time" value={start}
+          onChange={(e) => setStart(e.target.value)}
+          className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
+        <span className="text-slate-400 text-xs">—</span>
+        <input type="time" value={end}
+          onChange={(e) => setEnd(e.target.value)}
+          className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
+        <input value={note} onChange={(e) => setNote(e.target.value)}
+          placeholder="Izoh (repetitorlik...)"
+          className="flex-1 min-w-[140px] rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
+        <button onClick={add}
+          className="px-3 py-1.5 rounded-lg bg-brand-600 text-white text-xs">
+          Qo'shish
+        </button>
+      </div>
+      {msg && <p className="text-xs text-red-600 mt-2">{msg}</p>}
+    </div>
+  );
+}
+
 export default function MySessions() {
   const [d, setD] = useState<Any>(null);
   const [jp, setJp] = useState<Any>(null);
@@ -78,6 +193,8 @@ export default function MySessions() {
         </h1>
       </div>
       <p className="text-sm text-slate-500 mb-5">{d.period}</p>
+
+      <BusyTimes />
 
       {/* ---- Oylik kartasi ---- */}
       <div className="bg-white border border-slate-200 rounded-xl p-5 mb-4">

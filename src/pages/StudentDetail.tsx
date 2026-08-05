@@ -508,8 +508,15 @@ function PaymentsTab({
     }
   }
 
-  async function remove(p: { id: number; amount: number }) {
-    if (!confirm(`${formatSom(p.amount)} yozuvi o'chirilsinmi?`)) return;
+  async function remove(p: {
+    id: number; amount: number; kind?: string; period?: string | null;
+  }) {
+    const msg = p.period
+      ? `${formatSom(p.amount)} — AVTOMATIK oylik yechimi o'chirilsinmi?\n\n` +
+        "Diqqat: bu oy uchun bu o'quvchiga qayta hisoblanmaydi. Kerak " +
+        "bo'lsa keyin qo'lda \"Hisoblash\" yozuvi kiritasiz."
+      : `${formatSom(p.amount)} yozuvi o'chirilsinmi?`;
+    if (!confirm(msg)) return;
     try {
       await api.delete(`/payments/${p.id}`);
       onChanged();
@@ -777,10 +784,9 @@ function PaymentsTab({
                 </td>
                 {canEdit && (
                   <td className="px-4 py-3 text-right">
-                    {!p.period &&
-                      (["payment", "refund"].includes(p.kind as string)
-                        ? isFounder
-                        : true) && (
+                    {(isFounder ||
+                      (!p.period &&
+                        !["payment", "refund"].includes(p.kind as string))) && (
                       <button
                         onClick={() => remove(p)}
                         title={

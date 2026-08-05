@@ -15,7 +15,10 @@ import {
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, TEACHING_STAFF, PAYMENT_EDIT, can } from "../lib/roles";
+import {
+  FINANCE_ACCESS, TEACHING_STAFF, PAYMENT_EDIT, REFUND_REQUEST,
+  REFUND_APPROVE, FOUNDER, can,
+} from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -24,6 +27,7 @@ import {
   HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
 } from "../lib/academic";
 import { StudentPayButton } from "../components/QuickPayment";
+import { printXReceipt, printCertificate } from "../lib/receipt";
 import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
 import { StudentModal } from "./Students";
@@ -32,6 +36,7 @@ const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
   charge: "Hisoblandi",
   discount: "Chegirma",
+  refund: "Refund (qaytarildi)",
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -384,6 +389,58 @@ function PaymentsTab({
   const canEdit = can(user?.role, FINANCE_ACCESS);
   // Summani tahrirlash — faqat asoschi, moliyachi, filial rahbari
   const canEditAmount = can(user?.role, PAYMENT_EDIT);
+  const isFounder = user?.role === FOUNDER;
+  // Refund: sotuv so'raydi, rahbar/moliyachi tasdiqlaydi
+  const canAskRefund = can(user?.role, REFUND_REQUEST);
+  const canApproveRefund = can(user?.role, REFUND_APPROVE);
+  type Refund = {
+    id: number; amount: number; reason: string; status: string;
+    requested_by?: string | null; decided_by?: string | null;
+  };
+  const [refunds, setRefunds] = useState<Refund[]>([]);
+  const [refundOpen, setRefundOpen] = useState(false);
+  const [refAmount, setRefAmount] = useState("");
+  const [refReason, setRefReason] = useState("");
+  const loadRefunds = () => {
+    if (!canAskRefund && !canApproveRefund) return;
+    api
+      .get<Refund[]>(`/refunds?student_id=${student.id}`)
+      .then(setRefunds)
+      .catch(() => setRefunds([]));
+  };
+  useEffect(loadRefunds, [student.id]);
+
+  async function askRefund() {
+    const v = Number(refAmount);
+    if (!v || v <= 0 || !refReason.trim()) {
+      alert("Summa va sababni kiriting");
+      return;
+    }
+    try {
+      await api.post("/refunds", {
+        student_id: student.id, amount: v, reason: refReason.trim(),
+      });
+      setRefundOpen(false);
+      setRefAmount(""); setRefReason("");
+      loadRefunds();
+      alert("Refund so'rovi yuborildi — filial rahbari yoki moliyachi tasdiqlashi kutilmoqda");
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  async function decideRefund(r: Refund, ok: boolean) {
+    if (!confirm(ok
+      ? `${formatSom(r.amount)} refund TASDIQLANSINMI? Balansdan yechiladi.`
+      : "So'rov rad etilsinmi?")) return;
+    try {
+      await api.post(`/refunds/${r.id}/${ok ? "approve" : "reject"}`, {});
+      loadRefunds();
+      onChanged();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
   const [editId, setEditId] = useState<number | null>(null);
   const [editVal, setEditVal] = useState("");
   const [editVer, setEditVer] = useState<string>("");
@@ -419,12 +476,27 @@ function PaymentsTab({
     setSaving(true);
     setError(null);
     try {
-      await api.post(`/students/${student.id}/payments`, {
-        amount: value,
-        kind,
-        method: kind === "payment" ? method : null,
-        note: note || null,
-      });
+      const created = await api.post<{ id?: number }>(
+        `/students/${student.id}/payments`,
+        {
+          amount: value,
+          kind,
+          method: kind === "payment" ? method : null,
+          note: note || null,
+        }
+      );
+      if (kind === "payment" && confirm("Chek chiqarilsinmi?")) {
+        printXReceipt({
+          student: student.full_name,
+          publicId: student.public_id,
+          branch: student.branch?.name || null,
+          amount: value,
+          method,
+          note: note || null,
+          balance: student.balance + value,
+          paymentId: created?.id ?? null,
+        });
+      }
       setAmount("");
       setNote("");
       setShowForm(false);
@@ -459,16 +531,90 @@ function PaymentsTab({
             {formatSom(student.balance)}
           </span>
         </p>
-        {canEdit && (
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            {showForm ? <X size={16} /> : <Plus size={16} />}
-            {showForm ? "Bekor qilish" : "Yangi yozuv"}
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {canAskRefund && (
+            <button
+              onClick={() => setRefundOpen(!refundOpen)}
+              className="flex items-center gap-1.5 rounded-lg border border-amber-300 text-amber-700 hover:bg-amber-50 px-3 py-2 text-sm font-medium"
+            >
+              Refund so'rovi
+            </button>
+          )}
+          {canEdit && (
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
+            >
+              {showForm ? <X size={16} /> : <Plus size={16} />}
+              {showForm ? "Bekor qilish" : "Yangi yozuv"}
+            </button>
+          )}
+        </div>
       </div>
+
+      {refundOpen && canAskRefund && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 space-y-2">
+          <p className="text-sm font-medium text-amber-800">
+            Pul qaytarish so'rovi — filial rahbari yoki moliyachi
+            tasdiqlagach balansdan yechiladi
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <input
+              type="number"
+              value={refAmount}
+              onChange={(e) => setRefAmount(e.target.value)}
+              placeholder="Summa (so'm)"
+              className="rounded-lg border border-amber-300 px-3 py-2 text-sm w-40"
+            />
+            <input
+              value={refReason}
+              onChange={(e) => setRefReason(e.target.value)}
+              placeholder="Sabab (majburiy)"
+              className="flex-1 min-w-[180px] rounded-lg border border-amber-300 px-3 py-2 text-sm"
+            />
+            <button
+              onClick={askRefund}
+              className="px-4 py-2 rounded-lg bg-amber-600 text-white text-sm hover:bg-amber-700"
+            >
+              Yuborish
+            </button>
+          </div>
+        </div>
+      )}
+
+      {refunds.filter((r) => r.status === "pending").map((r) => (
+        <div
+          key={r.id}
+          className="bg-amber-50 border border-amber-300 rounded-xl p-3 mb-3 flex flex-wrap items-center gap-2 text-sm"
+        >
+          <span className="font-medium text-amber-900">
+            Refund so'rovi: {formatSom(r.amount)}
+          </span>
+          <span className="text-amber-700">— {r.reason}</span>
+          <span className="text-xs text-amber-600">
+            (so'ragan: {r.requested_by || "?"})
+          </span>
+          <div className="flex-1" />
+          {canApproveRefund ? (
+            <>
+              <button
+                onClick={() => decideRefund(r, true)}
+                className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs hover:bg-emerald-700"
+              >
+                Tasdiqlash
+              </button>
+              <button
+                onClick={() => decideRefund(r, false)}
+                className="px-3 py-1.5 rounded-lg bg-red-50 text-red-700 text-xs hover:bg-red-100"
+              >
+                Rad etish
+              </button>
+            </>
+          ) : (
+            <span className="text-xs text-amber-600">Tasdiq kutilmoqda…</span>
+          )}
+        </div>
+      ))}
 
       {showForm && canEdit && (
         <div className="bg-slate-50 rounded-xl p-4 mb-4 space-y-3">
@@ -631,9 +777,17 @@ function PaymentsTab({
                 </td>
                 {canEdit && (
                   <td className="px-4 py-3 text-right">
-                    {!p.period && (
+                    {!p.period &&
+                      (["payment", "refund"].includes(p.kind as string)
+                        ? isFounder
+                        : true) && (
                       <button
                         onClick={() => remove(p)}
+                        title={
+                          p.kind === "payment"
+                            ? "To'lovni o'chirish (faqat asoschi)"
+                            : "Yozuvni o'chirish"
+                        }
                         className="text-slate-300 hover:text-red-500"
                       >
                         <Trash2 size={15} />
@@ -1063,7 +1217,13 @@ export default function StudentDetail() {
           {tab === "attendance" && <AttendanceTab studentId={student.id} />}
           {tab === "exams" && <ExamsTab studentId={student.id} />}
           {tab === "price" && <PriceTab studentId={student.id} />}
-          {tab === "history" && <HistoryTab studentId={student.id} />}
+          {tab === "history" && (
+            <HistoryTab
+              studentId={student.id}
+              studentName={student.full_name}
+              publicId={student.public_id}
+            />
+          )}
           {tab === "gamification" && <XpCard studentId={student.id} />}
           {tab === "coins" && <CoinsTab studentId={student.id} />}
           {tab === "note" && <NoteTab student={student} onSaved={load} />}
@@ -1189,15 +1349,27 @@ function PriceTab({ studentId }: { studentId: number }) {
 }
 
 // --------------------------------------------------------- Tarix tab ----
-function HistoryTab({ studentId }: { studentId: number }) {
+type CertRow = {
+  id: number; kind: string; level?: string | null;
+  score?: number | null; date?: string | null; note?: string | null;
+};
+
+function HistoryTab({ studentId, studentName, publicId }: {
+  studentId: number; studentName: string; publicId?: string | null;
+}) {
   const { user } = useAuth();
   const [data, setData] = useState<StudentHistory | null>(null);
+  const [certs, setCerts] = useState<CertRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [talkOpen, setTalkOpen] = useState(false);
   const [certOpen, setCertOpen] = useState(false);
 
   function load() {
     setLoading(true);
+    api
+      .get<CertRow[]>(`/students/${studentId}/certificates`)
+      .then(setCerts)
+      .catch(() => setCerts([]));
     api
       .get<StudentHistory>(`/students/${studentId}/history`)
       .then(setData)
@@ -1236,6 +1408,44 @@ function HistoryTab({ studentId }: { studentId: number }) {
           </div>
         ))}
       </div>
+
+      {certs.length > 0 && (
+        <div className="bg-white rounded-xl border border-amber-200 p-4 mb-4">
+          <p className="text-sm font-medium text-amber-800 mb-2 flex items-center gap-1.5">
+            <Award size={15} /> Sertifikatlar
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {certs.map((c) => (
+              <div
+                key={c.id}
+                className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm"
+              >
+                <span className="font-medium text-slate-800">
+                  {c.level || c.kind}
+                </span>
+                {c.score != null && (
+                  <span className="text-xs text-amber-700">{c.score}%</span>
+                )}
+                <button
+                  onClick={() =>
+                    printCertificate({
+                      student: studentName,
+                      level: c.level || c.kind,
+                      score: c.score,
+                      date: c.date,
+                      publicId,
+                    })
+                  }
+                  className="text-xs px-2 py-0.5 rounded-md bg-amber-600 text-white hover:bg-amber-700"
+                  title="Sertifikatni yuklab olish / chop etish"
+                >
+                  Yuklab olish
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {(s.teachers.length > 0 || s.groups.length > 0) && (
         <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4 text-sm">

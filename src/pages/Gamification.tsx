@@ -841,7 +841,7 @@ export default function Gamification() {
   return (
     <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1 flex items-center gap-2">
-        <Trophy size={20} className="text-brand-600" /> Coin tizimi
+        <Trophy size={20} className="text-brand-600" /> Gamification
       </h1>
       <p className="text-sm text-slate-500 mb-5">
         XP — o'quvchining mehnati va intizomi (sarflanmaydi). Coin —

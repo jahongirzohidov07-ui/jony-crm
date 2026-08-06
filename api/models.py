@@ -1018,6 +1018,11 @@ class SupportAssignment(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     group_id = Column(Integer, ForeignKey("groups.id"), nullable=True, index=True)
     student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
+    # Support darsi QAYSI kun/vaqtda o'tilishi — jadval shunga quriladi.
+    # Asosiy dars vaqti EMAS: support o'z vaqtida alohida o'tadi.
+    days = Column(String, nullable=True)
+    start = Column(String, nullable=True)
+    end = Column(String, nullable=True)
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

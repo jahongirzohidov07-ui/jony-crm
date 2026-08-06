@@ -1058,3 +1058,189 @@ def dashboard_trend_v2(months: int = 6,
         results.append({"period": f"{yy:04d}-{mm:02d}",
                         "income": float(income)})
     return results
+
+# =====================================================================
+#  DARS KO'CHIRILDI / O'RINBOSAR — ADMIN VA O'QUV BO'LIMIGA XABAR,
+#  JADVALDA KO'RINISH
+#  Admin jadvalga qarab yangi o'quvchini noto'g'ri kunga chaqirib
+#  qo'ymasligi uchun: (1) har bir tasdiqlangan ko'chirish/o'rinbosarlik
+#  administrator va o'quv bo'limi rahbariga vazifa-xabar bo'lib boradi;
+#  (2) Dars jadvali sahifasida yaqin kunlardagi o'zgarishlar chiqadi.
+# =====================================================================
+def _lesson_change_task(db: Session, g, title: str, body: str) -> None:
+    """Guruh filialidagi administratorlar va o'quv bo'limi rahbarlariga
+    (filialga bog'lanmaganlariga ham) alohida-alohida vazifa-xabar."""
+    users = (db.query(models.User)
+             .filter(models.User.is_active == 1,
+                     models.User.role.in_((roles.ADMINISTRATOR,
+                                           roles.ACADEMIC_HEAD)))
+             .all())
+    for u in users:
+        if u.branch_id and g.branch_id and u.branch_id != g.branch_id:
+            continue
+        t = models.Task(
+            title=title, description=body, assignee_id=u.id,
+            branch_id=g.branch_id,
+            deadline=date.today() + _td(days=2),
+            priority="normal", source="manual", created_by="Tizim")
+        db.add(t)
+        db.flush()
+        M._ensure_public_id(db, "task", t)
+    db.commit()
+
+
+_orig_my_resched_add = _find_endpoint("/api/me/reschedules", "POST")
+_orig_resched_decide = _find_endpoint("/api/reschedules/{rid}/decide", "POST")
+_orig_sub_decide = _find_endpoint("/api/me/substitutions/{sid}/decide", "POST")
+
+
+if _orig_my_resched_add is not None:
+    _drop_route("/api/me/reschedules", "POST")
+
+    @app.post("/api/me/reschedules")
+    def my_reschedule_add_v2(payload: schemas.RescheduleIn,
+                             db: Session = Depends(get_db),
+                             user=Depends(require_role(*roles.SELF_STATS))):
+        out = _orig_my_resched_add(payload=payload, db=db, user=user)
+        try:
+            if out.get("status") == "auto":
+                g = db.query(models.Group).get(payload.group_id)
+                if g is not None:
+                    _lesson_change_task(
+                        db, g,
+                        title=(f"Dars ko'chirildi: {g.name} "
+                               f"{payload.from_date} \u2192 {payload.to_date}"),
+                        body=(f"{user.full_name} \"{g.name}\" guruhining "
+                              f"{payload.from_date} dagi darsini "
+                              f"{payload.to_date} ga ko'chirdi. "
+                              f"Sabab: {out.get('reason_label') or payload.reason or '-'}. "
+                              f"Yangi o'quvchini jadvalga qarab chaqirishda "
+                              f"shuni hisobga oling."))
+        except Exception:
+            pass
+        return out
+
+
+if _orig_resched_decide is not None:
+    _drop_route("/api/reschedules/{rid}/decide", "POST")
+
+    @app.post("/api/reschedules/{rid}/decide")
+    def reschedule_decide_v2(rid: int, payload: schemas.RescheduleDecision,
+                             db: Session = Depends(get_db),
+                             user=Depends(require_role(
+                                 *roles.RESCHEDULE_APPROVE))):
+        out = _orig_resched_decide(rid=rid, payload=payload, db=db, user=user)
+        try:
+            if payload.decision == "approved":
+                r = db.query(models.LessonReschedule).get(rid)
+                g = db.query(models.Group).get(r.group_id) if r else None
+                if g is not None:
+                    _lesson_change_task(
+                        db, g,
+                        title=(f"Dars ko'chirildi: {g.name} "
+                               f"{r.from_date} \u2192 {r.to_date}"),
+                        body=(f"\"{g.name}\" guruhining {r.from_date} dagi "
+                              f"darsi {r.to_date} ga ko'chirildi "
+                              f"(tasdiqladi: {user.full_name}). "
+                              f"Yangi o'quvchini jadvalga qarab chaqirishda "
+                              f"shuni hisobga oling."))
+        except Exception:
+            pass
+        return out
+
+
+if _orig_sub_decide is not None:
+    _drop_route("/api/me/substitutions/{sid}/decide", "POST")
+
+    @app.post("/api/me/substitutions/{sid}/decide")
+    def my_substitution_decide_v2(sid: int,
+                                  payload: schemas.SubstitutionDecision,
+                                  db: Session = Depends(get_db),
+                                  user=Depends(require_role(
+                                      *roles.SELF_STATS))):
+        out = _orig_sub_decide(sid=sid, payload=payload, db=db, user=user)
+        try:
+            if payload.decision == "accepted":
+                s = db.query(models.Substitution).get(sid)
+                g = db.query(models.Group).get(s.group_id) if s else None
+                if g is not None:
+                    orig_t = (db.query(models.Teacher)
+                              .get(s.original_teacher_id)
+                              if s.original_teacher_id else None)
+                    _lesson_change_task(
+                        db, g,
+                        title=(f"O'rinbosar dars o'tadi: {g.name} "
+                               f"({s.lesson_date})"),
+                        body=(f"\"{g.name}\" guruhining {s.lesson_date} dagi "
+                              f"darsini {orig_t.full_name if orig_t else '-'} "
+                              f"o'rniga {user.full_name} o'tadi."))
+        except Exception:
+            pass
+        return out
+
+
+_orig_timetable = _find_endpoint("/api/timetable", "GET")
+
+if _orig_timetable is not None:
+    _drop_route("/api/timetable", "GET")
+
+    @app.get("/api/timetable")
+    def timetable_v2(branch_id: int | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.TEACHING_STAFF,
+                                               roles.HR_MANAGER))):
+        out = _orig_timetable(branch_id=branch_id, db=db, user=user)
+        try:
+            gids = {it["group_id"] for it in out.get("items", [])}
+            today = date.today()
+            horizon = today + _td(days=30)
+            changes = []
+            if gids:
+                gmap = {g.id: g for g in db.query(models.Group)
+                        .filter(models.Group.id.in_(gids)).all()}
+                rs = (db.query(models.LessonReschedule)
+                      .filter(models.LessonReschedule.group_id.in_(gids),
+                              models.LessonReschedule.status.in_(
+                                  ("auto", "approved")),
+                              models.LessonReschedule.to_date >= today,
+                              models.LessonReschedule.from_date <= horizon)
+                      .all())
+                for r in rs:
+                    g = gmap.get(r.group_id)
+                    t = (db.query(models.Teacher).get(r.teacher_id)
+                         if r.teacher_id else None)
+                    changes.append({
+                        "kind": "move", "group_id": r.group_id,
+                        "group": g.name if g else "",
+                        "teacher": t.full_name if t else None,
+                        "from_date": r.from_date.isoformat(),
+                        "to_date": r.to_date.isoformat(),
+                        "sort": r.from_date.isoformat(),
+                    })
+                ss = (db.query(models.Substitution)
+                      .filter(models.Substitution.group_id.in_(gids),
+                              models.Substitution.status == "accepted",
+                              models.Substitution.lesson_date >= today,
+                              models.Substitution.lesson_date <= horizon)
+                      .all())
+                for s in ss:
+                    g = gmap.get(s.group_id)
+                    ot = (db.query(models.Teacher)
+                          .get(s.original_teacher_id)
+                          if s.original_teacher_id else None)
+                    st = (db.query(models.Teacher)
+                          .get(s.substitute_teacher_id)
+                          if s.substitute_teacher_id else None)
+                    changes.append({
+                        "kind": "sub", "group_id": s.group_id,
+                        "group": g.name if g else "",
+                        "teacher": ot.full_name if ot else None,
+                        "substitute": st.full_name if st else None,
+                        "date": s.lesson_date.isoformat(),
+                        "sort": s.lesson_date.isoformat(),
+                    })
+            changes.sort(key=lambda x: x["sort"])
+            out["changes"] = changes
+        except Exception:
+            out.setdefault("changes", [])
+        return out

@@ -512,3 +512,308 @@ def set_group_supports(group_id: int, payload: _GroupSupportsIn,
     label = _group_support_map(db, [g.id]).get(g.id)
     return {"ok": True, "support_label": label,
             "added": len(added), "removed": len(removed)}
+
+# =====================================================================
+#  SUPPORT VAQTLARI + TELEFON-LOGIN
+#  1) Biriktirishda support darsining KUN/VAQTI so'raladi va saqlanadi.
+#  2) Jadval asosiy dars vaqtini EMAS, shu belgilangan vaqtni ko'rsatadi.
+#  3) Yangi akkaunt: telefon majburiy, login = raqam, parol = jonyjony.
+# =====================================================================
+import re as _re
+
+from sqlalchemy import inspect as _sa_inspect, text as _sa_text
+
+from auth import hash_password as _hash_pw
+from database import engine as _engine
+
+# --- support_assignments jadvaliga ustunlar (idempotent ALTER) ---
+try:
+    _cols = {c["name"] for c in
+             _sa_inspect(_engine).get_columns("support_assignments")}
+    with _engine.begin() as _c:
+        if "days" not in _cols:
+            _c.execute(_sa_text(
+                "ALTER TABLE support_assignments ADD COLUMN days VARCHAR"))
+        if "start" not in _cols:
+            _c.execute(_sa_text(
+                "ALTER TABLE support_assignments ADD COLUMN start VARCHAR"))
+        if "end" not in _cols:
+            _c.execute(_sa_text(
+                'ALTER TABLE support_assignments ADD COLUMN "end" VARCHAR'))
+except Exception:
+    pass
+
+
+class _SupItem(_BM):
+    user_id: int
+    days: str | None = None      # "mon,wed"
+    start: str | None = None     # "14:00"
+    end: str | None = None       # "16:00"
+
+
+class _GroupSupportsIn2(_BM):
+    items: list[_SupItem] | None = None
+    user_ids: list[int] | None = None  # eski format ham qabul qilinadi
+
+
+def _sup_time_ok(it) -> str | None:
+    """Vaqt kiritilgan bo'lsa to'g'riligini tekshiradi."""
+    if not (it.days or it.start or it.end):
+        return None
+    if not (it.days and it.start and it.end):
+        return "Kun va vaqtni to'liq kiriting (yoki butunlay bo'sh qoldiring)"
+    s, e = roles.hhmm_minutes(it.start), roles.hhmm_minutes(it.end)
+    if s is None or e is None:
+        return "Vaqt SS:DD ko'rinishida bo'lsin, masalan 14:00"
+    if e <= s:
+        return "Tugash vaqti boshlanishdan keyin bo'lsin"
+    return None
+
+
+def _sup_conflicts2(db: Session, uid: int, it, skip_group_id: int) -> list:
+    """Yangi belgilangan vaqt supportning band vaqtlari yoki boshqa
+    guruhlardagi BELGILANGAN vaqtlari bilan to'qnashsa — ro'yxat."""
+    if not (it.days and it.start and it.end):
+        return []
+    days = set((it.days or "").split(","))
+    s, e = roles.hhmm_minutes(it.start), roles.hhmm_minutes(it.end)
+    out = []
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.user_id == uid,
+                 models.Teacher.is_active == 1).first())
+    if t is not None:
+        for b in (db.query(models.SupportBusy)
+                  .filter(models.SupportBusy.teacher_id == t.id).all()):
+            bs, be = roles.hhmm_minutes(b.start), roles.hhmm_minutes(b.end)
+            if bs is None or be is None:
+                continue
+            if days & set((b.days or "").split(",")) and s < be and bs < e:
+                out.append(f"Support bu vaqtni BAND deb belgilagan: "
+                           f"{b.start}-{b.end} ({b.note or 'sabab yozilmagan'})")
+    rows = (db.query(models.SupportAssignment, models.Group)
+            .join(models.Group,
+                  models.Group.id == models.SupportAssignment.group_id)
+            .filter(models.SupportAssignment.user_id == uid,
+                    models.SupportAssignment.group_id != skip_group_id)
+            .all())
+    for a, g in rows:
+        if not (a.days and a.start and a.end):
+            continue
+        os_, oe = roles.hhmm_minutes(a.start), roles.hhmm_minutes(a.end)
+        if os_ is None or oe is None:
+            continue
+        if days & set((a.days or "").split(",")) and s < oe and os_ < e:
+            out.append(f"\"{g.name}\" guruhida allaqachon band: "
+                       f"{a.start}-{a.end}")
+    return out
+
+
+_drop_route("/api/groups/{group_id}/supports", "GET")
+
+
+@app.get("/api/groups/{group_id}/supports")
+def group_supports_v2(group_id: int,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SUPPORT_ASSIGN))):
+    g = _get_group_in_scope(db, group_id, user)
+    assigned = [{
+        "user_id": a.user_id, "days": a.days,
+        "start": a.start, "end": a.end,
+    } for a in db.query(models.SupportAssignment)
+        .filter(models.SupportAssignment.group_id == g.id).all()]
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER,
+                 models.Teacher.is_active == 1))
+    q = scope_to_branch(q, models.Teacher, user)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    options = [{
+        "user_id": t.user_id, "name": t.full_name,
+        "branch": bnames.get(t.branch_id),
+    } for t in q.order_by(models.Teacher.full_name).all()]
+    return {"assigned": assigned, "options": options}
+
+
+_drop_route("/api/groups/{group_id}/supports", "PUT")
+
+
+@app.put("/api/groups/{group_id}/supports")
+def set_group_supports_v2(group_id: int, payload: _GroupSupportsIn2,
+                          force: bool = False,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.SUPPORT_ASSIGN))):
+    g = _get_group_in_scope(db, group_id, user)
+    items = payload.items
+    if items is None:
+        items = [_SupItem(user_id=u) for u in (payload.user_ids or [])]
+    seen = set()
+    for it in items:
+        if it.user_id in seen:
+            raise HTTPException(400, "Bitta support ikki marta tanlangan")
+        seen.add(it.user_id)
+        u = db.query(models.User).get(it.user_id)
+        if not u or u.role != roles.SUPPORT_TEACHER:
+            raise HTTPException(400, "Faqat support teacherlarni "
+                                     "biriktirish mumkin")
+        msg = _sup_time_ok(it)
+        if msg:
+            raise HTTPException(400, msg)
+    if not force:
+        warns = []
+        for it in items:
+            warns += _sup_conflicts2(db, it.user_id, it, g.id)
+        if warns:
+            raise HTTPException(409, " \u2022 ".join(warns[:3]))
+    cur = {a.user_id: a for a in
+           db.query(models.SupportAssignment)
+           .filter(models.SupportAssignment.group_id == g.id).all()}
+    want = {it.user_id: it for it in items}
+    added = []
+    for uid, a in list(cur.items()):
+        if uid not in want:
+            db.delete(a)
+    for uid, it in want.items():
+        if uid in cur:
+            a = cur[uid]
+            a.days, a.start, a.end = it.days, it.start, it.end
+        else:
+            db.add(models.SupportAssignment(
+                user_id=uid, group_id=g.id,
+                days=it.days, start=it.start, end=it.end,
+                created_by=user.full_name))
+            added.append((uid, it))
+    for uid, it in added:
+        vaqt = f"{it.days or ''} {it.start or ''}-{it.end or ''}".strip(" -")
+        M._hr_task_for(
+            db, uid,
+            title=f"Sizga guruh biriktirildi: {g.name}",
+            body=(f"\"{g.name}\" guruhi sizga support sifatida "
+                  f"biriktirildi. Dars vaqti: {vaqt or 'kelishiladi'}."),
+            branch_id=g.branch_id)
+    db.commit()
+    label = _group_support_map(db, [g.id]).get(g.id)
+    return {"ok": True, "support_label": label}
+
+
+_drop_route("/api/support-timetable", "GET")
+
+
+@app.get("/api/support-timetable")
+def support_timetable_v2(day: str = "mon",
+                         branch_id: int | None = None,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(
+                             *roles.FULL_ACCESS, roles.HEAD_SUPPORT,
+                             roles.ACADEMIC_HEAD, roles.HR_MANAGER))):
+    """Supportlar jadvali. MUHIM: guruhning ASOSIY dars vaqti emas,
+    biriktirishda BELGILANGAN support-dars vaqti ko'rsatiladi."""
+    if day not in ("mon", "tue", "wed", "thu", "fri", "sat", "sun"):
+        raise HTTPException(400, "Kun noto'g'ri")
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER,
+                 models.Teacher.is_active == 1))
+    q = scope_to_branch(q, models.Teacher, user)
+    if branch_id:
+        q = q.filter(models.Teacher.branch_id == branch_id)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    rows = []
+    for t in q.order_by(models.Teacher.full_name).all():
+        blocks = []
+        arows = (db.query(models.SupportAssignment, models.Group)
+                 .join(models.Group,
+                       models.Group.id == models.SupportAssignment.group_id)
+                 .filter(models.SupportAssignment.user_id == t.user_id)
+                 .all())
+        for a, g in arows:
+            if not (a.days and a.start and a.end):
+                continue  # vaqti hali belgilanmagan
+            if day not in (a.days or ""):
+                continue
+            blocks.append({
+                "kind": "group", "label": g.name,
+                "group_id": g.id,
+                "time": f"{a.start}-{a.end}",
+                "sort": roles.hhmm_minutes(a.start) or 0,
+                "room": g.room,
+            })
+        for b in (db.query(models.SupportBusy)
+                  .filter(models.SupportBusy.teacher_id == t.id).all()):
+            if day not in (b.days or ""):
+                continue
+            blocks.append({
+                "kind": "busy",
+                "label": b.note or "Band (o'zi belgilagan)",
+                "time": f"{b.start}-{b.end}",
+                "sort": roles.hhmm_minutes(b.start) or 0,
+            })
+        blocks.sort(key=lambda x: x["sort"])
+        rows.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": bnames.get(t.branch_id),
+            "blocks": blocks,
+        })
+    return {"day": day, "rows": rows}
+
+
+# --------------------------------------------------------------
+#  YANGI AKKAUNT: telefon majburiy, login = raqam, parol jonyjony
+# --------------------------------------------------------------
+class _UserCreate2(schemas.UserCreate):
+    username: str | None = None
+    password: str | None = None
+
+
+_drop_route("/api/users", "POST")
+
+
+@app.post("/api/users", response_model=schemas.UserOut)
+def create_user_v2(payload: _UserCreate2,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.STAFF_EDIT))):
+    digits = _re.sub(r"\D", "", payload.phone or "")
+    if len(digits) < 7:
+        raise HTTPException(400, "Telefon raqamni kiriting — u login "
+                                 "o'rnida ishlatiladi")
+    username = (payload.username or "").strip() or digits
+    password = payload.password or "jonyjony"
+    if payload.role not in roles.ALL_ROLES:
+        raise HTTPException(400, "Noto'g'ri rol")
+    M._guard_role_assignment(user, payload.role, payload.branch_id)
+    if user.role == roles.BRANCH_MANAGER and user.branch_id \
+            and payload.branch_id != user.branch_id:
+        raise HTTPException(403, "Faqat o'z filialingizga xodim "
+                                 "qo'sha olasiz")
+    if db.query(models.User).filter(
+            models.User.username == username).first():
+        raise HTTPException(400, "Bu login band — bu raqam bilan akkaunt "
+                                 "allaqachon ochilgan bo'lishi mumkin")
+    # Standart "jonyjony" parolga qoida qo'llanmaydi — kirgach
+    # o'zgartirish tavsiya etiladi. O'zi kiritgan parol esa tekshiriladi.
+    if payload.password and not roles.password_ok(password):
+        raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
+    _bids = payload.branch_ids or []
+    _primary = payload.branch_id or (_bids[0] if _bids else None)
+    new_user = models.User(
+        username=username,
+        password_hash=_hash_pw(password),
+        full_name=payload.full_name,
+        role=payload.role,
+        branch_id=_primary,
+        fix_salary=payload.fix_salary,
+        phone=payload.phone,
+        birth_date=payload.birth_date,
+        position=payload.position,
+        manager_id=payload.manager_id,
+        hired_date=payload.hired_date or date.today(),
+        photo=payload.photo,
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    if _bids:
+        M._sync_user_branches(db, new_user, _bids)
+    M._smm_new_staff_task(db, new_user)
+    M._ensure_teacher_card(db, new_user)
+    db.commit()
+    return new_user

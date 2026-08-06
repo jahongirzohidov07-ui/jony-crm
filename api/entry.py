@@ -937,3 +937,124 @@ if _orig_update_group is not None:
             _teacher_limit_guard(db, fields["teacher_id"], group_id, user)
         return _orig_update_group(group_id=group_id, payload=payload,
                                   force=force, db=db, user=user)
+
+# =====================================================================
+#  ASOSCHI DASHBOARDI FILIAL ALMASHTIRGICHGA BO'YSUNADI
+#  Tepada filial tanlansa — kartalar va tushum grafigi o'sha filial
+#  bo'yicha; "Barcha filiallar"da — umumiy. (Avval doim umumiy edi.)
+# =====================================================================
+from datetime import timedelta as _td
+
+import billing as _billing
+
+
+_drop_route("/api/dashboard", "GET")
+
+
+@app.get("/api/dashboard", response_model=schemas.DashboardStats)
+def dashboard_v2(branch_id: int | None = None,
+                 db: Session = Depends(get_db),
+                 user: models.User = Depends(M.get_current_user)):
+    student_q = scope_to_branch(db.query(models.Student), models.Student,
+                                user, branch_id)
+    active = student_q.filter(models.Student.status == "active").count()
+    trial = student_q.filter(models.Student.status == "trial").count()
+    frozen = student_q.filter(models.Student.status == "frozen").count()
+    groups = scope_to_branch(db.query(models.Group), models.Group,
+                             user, branch_id).count()
+    teachers = scope_to_branch(db.query(models.Teacher), models.Teacher,
+                               user, branch_id).count()
+
+    month_start = date.today().replace(day=1)
+    all_students = student_q.all()
+    student_ids = [s.id for s in all_students]
+
+    month_income = 0.0
+    if student_ids:
+        month_income = (
+            db.query(func.coalesce(func.sum(models.Payment.amount), 0.0))
+            .filter(models.Payment.kind == "payment")
+            .filter(models.Payment.created_at >= month_start)
+            .filter(models.Payment.student_id.in_(student_ids))
+            .scalar()
+            or 0.0
+        )
+
+    month_pay_count = 0
+    month_new_count = 0
+    if student_ids:
+        pays = (
+            db.query(models.Payment)
+            .filter(models.Payment.kind == "payment")
+            .filter(models.Payment.created_at >= month_start)
+            .filter(models.Payment.student_id.in_(student_ids))
+            .all()
+        )
+        month_pay_count = len(pays)
+        firsts = M._payment_first_dates(db)
+        month_new_count = sum(
+            1 for p in pays if firsts.get(p.student_id) == p.created_at
+        )
+
+    staff_count = scope_to_branch(
+        db.query(models.User), models.User, user, branch_id
+    ).filter(models.User.is_active == 1).count()
+
+    balances = [(s.id, M.student_balance(db, s.id)) for s in all_students]
+    total_debt = sum(b for _, b in balances if b < 0)
+    debtor_count = sum(1 for _, b in balances if b < 0)
+
+    return schemas.DashboardStats(
+        active_students=active,
+        trial_students=trial,
+        frozen_students=frozen,
+        total_groups=groups,
+        total_teachers=teachers,
+        month_payment_count=month_pay_count,
+        month_new_payment_count=month_new_count,
+        staff_count=staff_count,
+        month_income=float(month_income),
+        total_debt=float(total_debt),
+        debtor_count=debtor_count,
+    )
+
+
+_drop_route("/api/dashboard/trend", "GET")
+
+
+@app.get("/api/dashboard/trend")
+def dashboard_trend_v2(months: int = 6,
+                       branch_id: int | None = None,
+                       db: Session = Depends(get_db),
+                       user: models.User = Depends(M.get_current_user)):
+    student_q = scope_to_branch(db.query(models.Student), models.Student,
+                                user, branch_id)
+    student_ids = [s.id for s in student_q.all()]
+
+    today = date.today()
+    y, m = today.year, today.month
+    periods = []
+    for _ in range(max(1, min(months, 24))):
+        periods.append((y, m))
+        m -= 1
+        if m == 0:
+            y, m = y - 1, 12
+    periods.reverse()
+
+    results = []
+    for yy, mm in periods:
+        start, end = _billing.month_bounds(yy, mm)
+        income = 0.0
+        if student_ids:
+            income = (
+                db.query(func.coalesce(func.sum(models.Payment.amount), 0.0))
+                .filter(models.Payment.kind == "payment")
+                .filter(models.Payment.created_at >= start)
+                .filter(models.Payment.created_at < end + _td(days=1))
+                .filter(models.Payment.student_id.in_(student_ids))
+                .scalar()
+                or 0.0
+            )
+        results.append({"period": f"{yy:04d}-{mm:02d}",
+                        "income": float(income)})
+    return results

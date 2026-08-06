@@ -817,3 +817,46 @@ def create_user_v2(payload: _UserCreate2,
     M._ensure_teacher_card(db, new_user)
     db.commit()
     return new_user
+
+# =====================================================================
+#  XONALAR FILIALGA QAT'IY BOG'LANADI
+#  Har filialning o'z xonalari; ro'yxat filial almashtirgichga bo'ysunadi;
+#  yangi xona filialsiz ochilmaydi (filial sig'imi xonalardan chiqadi).
+# =====================================================================
+_drop_route("/api/rooms", "GET")
+
+
+@app.get("/api/rooms")
+def list_rooms_v2(branch_id: int | None = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.TEACHING_STAFF))):
+    q = scope_to_branch(db.query(models.Room), models.Room, user, branch_id)
+    rooms = q.order_by(models.Room.name).all()
+    by_room = {}
+    for g in (db.query(models.Group)
+              .filter(models.Group.room_id.isnot(None)).all()):
+        by_room.setdefault(g.room_id, []).append(g)
+    return [M._room_out(r, by_room.get(r.id, [])) for r in rooms]
+
+
+_drop_route("/api/rooms", "POST")
+
+
+@app.post("/api/rooms")
+def create_room_v2(payload: schemas.RoomCreate,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.ACADEMIC_ACCESS))):
+    data = payload.model_dump()
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        data["branch_id"] = user.branch_id
+    if not data.get("branch_id"):
+        raise HTTPException(400, "Xonaning filialini tanlang \u2014 har bir "
+                                 "filialning o'z xonalari bo'ladi")
+    r = models.Room(**data)
+    db.add(r)
+    db.commit()
+    db.refresh(r)
+    audit.log(db, user, entity="room", action="create", entity_id=r.id,
+              entity_label=r.name, new_value=r.capacity,
+              branch_id=r.branch_id, commit=True)
+    return M._room_out(r)

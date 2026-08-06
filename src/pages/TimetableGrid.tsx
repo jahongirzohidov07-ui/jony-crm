@@ -79,6 +79,17 @@ function Block({ it }: { it: GridItem }) {
   );
 }
 
+type TTChange = {
+  kind: "move" | "sub";
+  group_id: number;
+  group: string;
+  teacher?: string | null;
+  substitute?: string | null;
+  from_date?: string;
+  to_date?: string;
+  date?: string;
+};
+
 export default function TimetableGrid() {
   const [data, setData] = useState<Grid | null>(null);
   const [day, setDay] = useState("mon");
@@ -183,6 +194,36 @@ export default function TimetableGrid() {
           </button>
         )}
       </div>
+
+      {((data as unknown as { changes?: TTChange[] }).changes?.length ?? 0) > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
+          <div className="flex items-center gap-2 mb-1">
+            <AlertTriangle size={15} className="text-amber-600" />
+            <p className="text-sm font-medium text-amber-900">
+              Yaqin kunlardagi o'zgarishlar — yangi o'quvchi chaqirishda
+              hisobga oling!
+            </p>
+          </div>
+          {((data as unknown as { changes?: TTChange[] }).changes ?? []).map(
+            (c, i) => (
+              <p key={i} className="text-xs text-amber-800">
+                {c.kind === "move" ? (
+                  <>
+                    <b>{c.group}</b>
+                    {c.teacher ? ` (${c.teacher})` : ""}: {c.from_date} dagi
+                    dars <b>{c.to_date}</b> ga ko'chirilgan
+                  </>
+                ) : (
+                  <>
+                    <b>{c.group}</b> ({c.date}): {c.teacher || "ustoz"}{" "}
+                    o'rniga <b>{c.substitute || "o'rinbosar"}</b> dars o'tadi
+                  </>
+                )}
+              </p>
+            )
+          )}
+        </div>
+      )}
 
       {data.clashes.length > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">

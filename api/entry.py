@@ -1244,3 +1244,72 @@ if _orig_timetable is not None:
         except Exception:
             out.setdefault("changes", [])
         return out
+
+# --- Jadval GRID ko'rinishida ham o'zgarishlar banneri ---
+_orig_timetable_grid = _find_endpoint("/api/timetable/grid", "GET")
+
+if _orig_timetable_grid is not None:
+    _drop_route("/api/timetable/grid", "GET")
+
+    @app.get("/api/timetable/grid")
+    def timetable_grid_v2(day: str = "mon",
+                          branch_id: int | None = None,
+                          db: Session = Depends(get_db),
+                          user=Depends(M.require_perm("timetable", "view"))):
+        out = _orig_timetable_grid(day=day, branch_id=branch_id,
+                                   db=db, user=user)
+        try:
+            gq = scope_to_branch(db.query(models.Group), models.Group,
+                                 user, branch_id)
+            gmap = {g.id: g for g in gq.all()}
+            gids = set(gmap)
+            today = date.today()
+            horizon = today + _td(days=30)
+            changes = []
+            if gids:
+                rs = (db.query(models.LessonReschedule)
+                      .filter(models.LessonReschedule.group_id.in_(gids),
+                              models.LessonReschedule.status.in_(
+                                  ("auto", "approved")),
+                              models.LessonReschedule.to_date >= today,
+                              models.LessonReschedule.from_date <= horizon)
+                      .all())
+                for r in rs:
+                    g = gmap.get(r.group_id)
+                    t = (db.query(models.Teacher).get(r.teacher_id)
+                         if r.teacher_id else None)
+                    changes.append({
+                        "kind": "move", "group_id": r.group_id,
+                        "group": g.name if g else "",
+                        "teacher": t.full_name if t else None,
+                        "from_date": r.from_date.isoformat(),
+                        "to_date": r.to_date.isoformat(),
+                        "sort": r.from_date.isoformat(),
+                    })
+                ss = (db.query(models.Substitution)
+                      .filter(models.Substitution.group_id.in_(gids),
+                              models.Substitution.status == "accepted",
+                              models.Substitution.lesson_date >= today,
+                              models.Substitution.lesson_date <= horizon)
+                      .all())
+                for s in ss:
+                    g = gmap.get(s.group_id)
+                    ot = (db.query(models.Teacher)
+                          .get(s.original_teacher_id)
+                          if s.original_teacher_id else None)
+                    st = (db.query(models.Teacher)
+                          .get(s.substitute_teacher_id)
+                          if s.substitute_teacher_id else None)
+                    changes.append({
+                        "kind": "sub", "group_id": s.group_id,
+                        "group": g.name if g else "",
+                        "teacher": ot.full_name if ot else None,
+                        "substitute": st.full_name if st else None,
+                        "date": s.lesson_date.isoformat(),
+                        "sort": s.lesson_date.isoformat(),
+                    })
+            changes.sort(key=lambda x: x["sort"])
+            out["changes"] = changes
+        except Exception:
+            out.setdefault("changes", [])
+        return out

@@ -425,3 +425,90 @@ def support_timetable(day: str = "mon",
             "blocks": blocks,
         })
     return {"day": day, "rows": rows}
+
+# =====================================================================
+#  RO'YXATDAN TURIB SUPPORT BIRIKTIRISH / USTOZ ALMASHTIRISH
+#  Guruh kartasiga kirmasdan, Guruhlar ro'yxatining o'zida.
+# =====================================================================
+from pydantic import BaseModel as _BM
+
+
+class _GroupSupportsIn(_BM):
+    user_ids: list[int] = []
+
+
+_drop_route("/api/groups/{group_id}/supports", "GET")
+
+
+@app.get("/api/groups/{group_id}/supports")
+def group_supports(group_id: int,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.SUPPORT_ASSIGN))):
+    """Guruhga biriktirilgan supportlar + tanlash uchun ro'yxat."""
+    g = _get_group_in_scope(db, group_id, user)
+    assigned = [a.user_id for a in
+                db.query(models.SupportAssignment)
+                .filter(models.SupportAssignment.group_id == g.id).all()]
+    q = (db.query(models.Teacher, models.User)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER,
+                 models.Teacher.is_active == 1))
+    q = scope_to_branch(q, models.Teacher, user)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    options = [{
+        "user_id": t.user_id, "name": t.full_name,
+        "branch": bnames.get(t.branch_id),
+    } for t, u in q.order_by(models.Teacher.full_name).all()]
+    return {"assigned": assigned, "options": options}
+
+
+_drop_route("/api/groups/{group_id}/supports", "PUT")
+
+
+@app.put("/api/groups/{group_id}/supports")
+def set_group_supports(group_id: int, payload: _GroupSupportsIn,
+                       force: bool = False,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.SUPPORT_ASSIGN))):
+    """Guruh uchun supportlar to'plamini saqlash. Yangi support
+    qo'shilsa unga xabar boradi; band vaqtiga to'qnashsa 409
+    ogohlantirish qaytadi (force=true bilan o'tkaziladi)."""
+    g = _get_group_in_scope(db, group_id, user)
+    want = set(payload.user_ids or [])
+    for uid in want:
+        u = db.query(models.User).get(uid)
+        if not u or u.role != roles.SUPPORT_TEACHER:
+            raise HTTPException(400, "Faqat support teacherlarni "
+                                     "biriktirish mumkin")
+    cur = {a.user_id: a for a in
+           db.query(models.SupportAssignment)
+           .filter(models.SupportAssignment.group_id == g.id).all()}
+    added = sorted(want - set(cur))
+    removed = sorted(set(cur) - want)
+    if added and not force and hasattr(M, "_support_conflicts"):
+        warns = []
+        for uid in added:
+            t = (db.query(models.Teacher)
+                 .filter(models.Teacher.user_id == uid,
+                         models.Teacher.is_active == 1).first())
+            if t is not None:
+                warns += M._support_conflicts(db, t.id, [g])
+        if warns:
+            raise HTTPException(409, " • ".join(warns[:3]))
+    for uid in removed:
+        db.delete(cur[uid])
+    for uid in added:
+        db.add(models.SupportAssignment(
+            user_id=uid, group_id=g.id, created_by=user.full_name))
+        days = M._days_uz(g.lesson_days) if hasattr(M, "_days_uz") \
+            else (g.lesson_days or "")
+        M._hr_task_for(
+            db, uid,
+            title=f"Sizga guruh biriktirildi: {g.name}",
+            body=(f"\"{g.name}\" guruhi ({days} {g.lesson_time or ''}) "
+                  f"sizga support sifatida biriktirildi."),
+            branch_id=g.branch_id)
+    db.commit()
+    label = _group_support_map(db, [g.id]).get(g.id)
+    return {"ok": True, "support_label": label,
+            "added": len(added), "removed": len(removed)}

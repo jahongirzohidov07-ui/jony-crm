@@ -2132,6 +2132,13 @@ class PaymentEditIn(BaseModel):
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 
+class ExerciseIn(BaseModel):
+    """Mashq natijasi: jami savol va to'g'ri javoblar soni."""
+    total: int
+    correct: int
+    topic: Optional[str] = None
+
+
 class SupportBusyIn(BaseModel):
     """Support o'zi belgilaydigan band vaqt."""
     days: str          # "mon,wed,fri"

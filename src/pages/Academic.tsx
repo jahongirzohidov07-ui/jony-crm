@@ -705,6 +705,10 @@ function RoomsTab({ canEdit, branches }: { canEdit: boolean; branches: Branch[] 
       setErr("Xona nomini yozing");
       return;
     }
+    if (branches.length > 0 && !form.branch_id) {
+      setErr("Filialni tanlang — har bir filialning o'z xonalari bo'ladi");
+      return;
+    }
     const body = {
       name: form.name.trim(),
       capacity: Number(form.capacity) || 1,
@@ -766,8 +770,15 @@ function RoomsTab({ canEdit, branches }: { canEdit: boolean; branches: Branch[] 
                   {r.capacity}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
-                {r.branch || "filialsiz"} · {r.capacity} o'rin
+              <p className="text-xs mt-1">
+                {r.branch ? (
+                  <span className="text-slate-400">{r.branch}</span>
+                ) : (
+                  <span className="text-amber-600">
+                    Filial belgilanmagan — tahrirlab filial tanlang!
+                  </span>
+                )}
+                <span className="text-slate-400"> · {r.capacity} o'rin</span>
               </p>
               {r.groups.length > 0 && (
                 <p className="text-xs text-slate-500 mt-2">
@@ -835,13 +846,13 @@ function RoomsTab({ canEdit, branches }: { canEdit: boolean; branches: Branch[] 
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 />
               </div>
-              {branches.length > 1 && (
+              {branches.length > 0 && (
                 <select
                   value={form.branch_id}
                   onChange={(e) => setForm({ ...form, branch_id: e.target.value })}
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 >
-                  <option value="">Filial tanlanmagan</option>
+                  <option value="">— Filialni tanlang (majburiy) —</option>
                   {branches.map((b) => (
                     <option key={b.id} value={b.id}>
                       {b.name}

@@ -21,11 +21,12 @@ import { GroupHomeworkTab, GroupHistoryTab, GroupNotesTab } from "../components/
 import { GroupSidebar } from "../components/GroupSidebar";
 import { GroupFormModal } from "./Groups";
 
-type GroupTab = "attendance" | "grades" | "exams" | "xp" | "homework" | "history" | "notes";
+type GroupTab = "attendance" | "grades" | "exams" | "xp" | "homework" | "mashqlar" | "history" | "notes";
 
 const GROUP_TABS: { key: GroupTab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
   { key: "homework", label: "Uyga vazifalar" },
+  { key: "mashqlar", label: "Mashqlar" },
   { key: "grades", label: "Baholash" },
   { key: "exams", label: "Imtihonlar" },
   { key: "xp", label: "Tezkor XP" },
@@ -323,6 +324,9 @@ export default function GroupDetail() {
       )}
 
       {tab === "homework" && <GroupHomeworkTab groupId={groupId} />}
+      {tab === "mashqlar" && (
+        <ExercisesTab groupId={group.id} canEdit={canMarkLesson} />
+      )}
       {tab === "history" && <GroupHistoryTab groupId={groupId} />}
       {tab === "notes" && <GroupNotesTab groupId={groupId} />}
         </div>
@@ -345,3 +349,192 @@ export default function GroupDetail() {
     </div>
   );
 }
+
+
+// ---------------------------------------------------------------
+// MASHQLAR: har bir o'quvchining to'g'ri/noto'g'ri javoblari, ball
+// va daraja zinasi (Beginner -> Native, IELTS/CEFR mo'ljali bilan).
+// Ustoz kiritadi, o'quv bo'limi rahbari kuzatadi.
+type ExLevel = { key: string; label: string; ielts: string; cefr: string };
+type ExRow = {
+  student_id: number;
+  full_name: string;
+  done: number;
+  percent: number;
+  points: number;
+  level: ExLevel;
+  next: {
+    label: string; ielts: string; cefr: string;
+    points_left: number; progress_percent: number;
+  } | null;
+};
+
+function ExercisesTab({ groupId, canEdit }: {
+  groupId: number; canEdit: boolean;
+}) {
+  const [rows, setRows] = useState<ExRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [forId, setForId] = useState<number | null>(null);
+  const [total, setTotal] = useState("");
+  const [correct, setCorrect] = useState("");
+  const [topic, setTopic] = useState("");
+  const [err, setErr] = useState("");
+
+  function load() {
+    setLoading(true);
+    api
+      .get<{ rows: ExRow[] }>(`/groups/${groupId}/exercises-stats`)
+      .then((r) => setRows(r.rows))
+      .catch(() => setRows([]))
+      .finally(() => setLoading(false));
+  }
+  useEffect(load, [groupId]);
+
+  async function save() {
+    const t = Number(total), c = Number(correct);
+    if (!forId || !t || c < 0 || c > t) {
+      setErr("Savollar va to'g'ri javoblar sonini to'g'ri kiriting");
+      return;
+    }
+    setErr("");
+    try {
+      const r = await api.post<{ leveled_up: boolean }>(
+        `/students/${forId}/exercises`,
+        { total: t, correct: c, topic: topic || null }
+      );
+      if (r.leveled_up)
+        alert("Tabriklaymiz — o'quvchi YANGI DARAJAGA ko'tarildi!");
+      setForId(null); setTotal(""); setCorrect(""); setTopic("");
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  if (loading)
+    return <p className="text-sm text-slate-400 py-6">Yuklanmoqda...</p>;
+
+  return (
+    <div>
+      <p className="text-xs text-slate-500 mb-3">
+        Har bir to'g'ri javob — 1 ball. Har 500 ball — yangi daraja:
+        Beginner → Elementary → Pre-Int → Intermediate → Upper-Int →
+        Advanced → Native (IELTS/CEFR mo'ljali bilan).
+      </p>
+      {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-xs text-slate-500">
+            <tr>
+              <th className="text-left px-3 py-2">O'quvchi</th>
+              <th className="text-right px-3 py-2">Mashqlar</th>
+              <th className="text-right px-3 py-2">To'g'ri %</th>
+              <th className="text-left px-3 py-2">Daraja</th>
+              <th className="text-left px-3 py-2 w-64">Keyingi darajaga</th>
+              {canEdit && <th className="w-24" />}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.student_id} className="border-t border-slate-100">
+                <td className="px-3 py-2.5 text-slate-800">{r.full_name}</td>
+                <td className="px-3 py-2.5 text-right text-slate-600">
+                  {r.done || "—"}
+                </td>
+                <td className={`px-3 py-2.5 text-right font-medium ${
+                  r.percent >= 80 ? "text-emerald-600"
+                    : r.percent >= 60 ? "text-amber-600"
+                    : r.done ? "text-red-500" : "text-slate-400"
+                }`}>
+                  {r.done ? `${r.percent}%` : "—"}
+                </td>
+                <td className="px-3 py-2.5">
+                  <span className="inline-flex flex-col">
+                    <span className="text-slate-800 font-medium">
+                      {r.level.label}
+                    </span>
+                    <span className="text-[11px] text-slate-400">
+                      IELTS {r.level.ielts} · CEFR {r.level.cefr}
+                    </span>
+                  </span>
+                </td>
+                <td className="px-3 py-2.5">
+                  {r.next ? (
+                    <div>
+                      <div className="flex justify-between text-[11px] text-slate-500 mb-0.5">
+                        <span>{r.next.label}</span>
+                        <span>
+                          {r.next.progress_percent}% ·{" "}
+                          {r.next.points_left} ball qoldi
+                        </span>
+                      </div>
+                      <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                        <div
+                          className="h-2 rounded-full bg-brand-500"
+                          style={{ width: `${r.next.progress_percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="text-xs text-emerald-600">
+                      Eng yuqori daraja!
+                    </span>
+                  )}
+                </td>
+                {canEdit && (
+                  <td className="px-2 py-2.5 text-right">
+                    <button
+                      onClick={() => { setForId(r.student_id); setErr(""); }}
+                      className="text-xs px-2 py-1 rounded-md bg-brand-50 text-brand-700 hover:bg-brand-100"
+                    >
+                      + Natija
+                    </button>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {forId !== null && (
+        <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl w-full max-w-xs p-5 shadow-xl">
+            <h3 className="font-semibold text-slate-900 mb-1">
+              Mashq natijasi
+            </h3>
+            <p className="text-xs text-slate-500 mb-3">
+              {rows.find((x) => x.student_id === forId)?.full_name}
+            </p>
+            <div className="space-y-2">
+              <input type="number" value={total}
+                onChange={(e) => setTotal(e.target.value)}
+                placeholder="Jami savollar soni" autoFocus
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+              <input type="number" value={correct}
+                onChange={(e) => setCorrect(e.target.value)}
+                placeholder="To'g'ri javoblar soni"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+              <input value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                placeholder="Mavzu (ixtiyoriy)"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+            </div>
+            {err && <p className="text-xs text-red-600 mt-2">{err}</p>}
+            <div className="flex gap-2 mt-4">
+              <button onClick={save}
+                className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium">
+                Saqlash
+              </button>
+              <button onClick={() => setForId(null)}
+                className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600">
+                Bekor
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+

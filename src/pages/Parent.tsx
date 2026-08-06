@@ -95,6 +95,38 @@ export default function Parent() {
           <p className="text-sm font-semibold text-slate-800 mb-3">
             So'nggi darslar
           </p>
+          {d.practice && d.practice.done > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4">
+              <p className="text-xs text-slate-500 mb-1">
+                Mashqlar bo'yicha daraja
+              </p>
+              <p className="text-lg font-semibold text-slate-900">
+                {d.practice.level.label}
+                <span className="ml-2 text-xs font-normal text-slate-400">
+                  IELTS {d.practice.level.ielts} · CEFR {d.practice.level.cefr}
+                </span>
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {d.practice.done} ta mashq · to'g'ri javoblar{" "}
+                {d.practice.percent}%
+              </p>
+              {d.practice.next && (
+                <div className="mt-2">
+                  <div className="flex justify-between text-[11px] text-slate-500 mb-0.5">
+                    <span>Keyingi: {d.practice.next.label}</span>
+                    <span>{d.practice.next.points_left} ball qoldi</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div
+                      className="h-2 rounded-full bg-emerald-500"
+                      style={{ width: `${d.practice.next.progress_percent}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {d.attendance.length === 0 && (
             <p className="text-sm text-slate-400">
               Hozircha dars yozuvi yo'q.

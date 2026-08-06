@@ -3590,7 +3590,7 @@ RESCHEDULE_DONE = ["auto", "approved"]
 # o'quvchi va ota-onani ogohlantirishga vaqt qoldirmaydi
 RESCHEDULE_MIN_NOTICE_DAYS = 1
 # Bundan uzoqqa surib bo'lmaydi
-RESCHEDULE_MAX_SHIFT_DAYS = 14
+RESCHEDULE_MAX_SHIFT_DAYS = 30
 
 RESCHEDULE_APPROVE = FULL_ACCESS + [ACADEMIC_HEAD]
 

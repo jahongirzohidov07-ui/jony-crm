@@ -217,6 +217,8 @@ class GroupOut(GroupCreate):
     student_count: int = 0
     # 1 — stavka qo'lda kiritilgan (darajadan avtomat emas)
     rate_manual: Optional[int] = None
+    # Guruhga biriktirilgan support ustoz(lar) nomi — ro'yxatda ko'rinadi
+    support_label: Optional[str] = None
 
 
 # ---------- Lesson ("yoqlama") ----------

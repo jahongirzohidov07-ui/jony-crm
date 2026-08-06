@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CalendarDays, Users2 } from "lucide-react";
 import { api, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
@@ -17,6 +18,7 @@ const DAYS: { key: string; label: string }[] = [
 type Block = {
   kind: "group" | "busy";
   label: string;
+  group_id?: number | null;
   time: string;
   room?: string | null;
 };
@@ -32,6 +34,7 @@ type Row = {
  *  manager kimdan so'ramasdan darsni qo'yaveradi. */
 export default function SupportSchedule() {
   const { user } = useAuth();
+  const nav = useNavigate();
   const today = new Date().getDay(); // 0=yak
   const defDay = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][today];
   const [day, setDay] = useState(defDay === "sun" ? "mon" : defDay);
@@ -145,11 +148,15 @@ export default function SupportSchedule() {
                         {r.blocks.map((b, i) => (
                           <span
                             key={i}
-                            title={b.kind === "busy" ? "O'zi belgilagan band vaqt" : "Biriktirilgan guruh"}
+                            onClick={() => {
+                              if (b.kind === "group" && b.group_id)
+                                nav(`/groups/${b.group_id}`);
+                            }}
+                            title={b.kind === "busy" ? "O'zi belgilagan band vaqt" : "Guruhga kirish uchun bosing"}
                             className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs border ${
                               b.kind === "busy"
                                 ? "bg-red-50 border-red-200 text-red-700"
-                                : "bg-teal-50 border-teal-200 text-teal-800"
+                                : "bg-teal-50 border-teal-200 text-teal-800 cursor-pointer hover:bg-teal-100 hover:border-teal-300"
                             }`}
                           >
                             <span className="font-semibold">{b.time}</span>

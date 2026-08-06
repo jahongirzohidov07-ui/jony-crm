@@ -7,6 +7,13 @@ qo'shadi. main.py to'liq yangilanganda bu modul dublikatlarni olib
 tashlab, o'z nusxasini qayta o'rnatadi — ikkala holatda ham bir xil
 ishlaydi (idempotent).
 """
+import os
+import sys
+
+# Vercel entry.py ni to'g'ridan-to'g'ri yuklaydi — api/ papkasini
+# import yo'liga qo'shmasa, yonidagi modullar (audit, models...) topilmaydi.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from datetime import date
 
 from fastapi import Depends, HTTPException

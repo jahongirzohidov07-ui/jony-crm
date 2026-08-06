@@ -237,6 +237,8 @@ export function SupportGroupsModal({
   const [sel, setSel] = useState<Set<number>>(new Set());
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  // Guruh ko'p bo'lsa qidirib topish oson bo'lsin
+  const [gq, setGq] = useState("");
 
   useEffect(() => {
     api.get<Any>(`/support-teachers/${teacherId}/groups`)
@@ -289,8 +291,21 @@ export function SupportGroupsModal({
           kabinetida ko'rinadi.
         </p>
         {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
-        <div className="space-y-1 mb-4">
-          {groups.map((g) => (
+        <input
+          value={gq}
+          onChange={(e) => setGq(e.target.value)}
+          placeholder="Guruh nomini qidirish..."
+          autoFocus
+          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm mb-2"
+        />
+        <div className="space-y-1 mb-4 max-h-72 overflow-y-auto">
+          {groups
+            .filter(
+              (g) =>
+                !gq ||
+                String(g.name).toLowerCase().includes(gq.toLowerCase())
+            )
+            .map((g) => (
             <label key={g.id}
               className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 text-sm text-slate-700 cursor-pointer">
               <input type="checkbox" checked={sel.has(g.id)}
@@ -302,6 +317,11 @@ export function SupportGroupsModal({
             <p className="text-sm text-slate-400">Guruh topilmadi.</p>
           )}
         </div>
+        {sel.size > 0 && (
+          <p className="text-xs text-slate-500 mb-2">
+            Tanlangan: {sel.size} ta guruh
+          </p>
+        )}
         <div className="flex justify-end gap-2">
           <button onClick={onClose}
             className="px-4 py-2 text-sm text-slate-600">Bekor</button>

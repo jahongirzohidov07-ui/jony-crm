@@ -827,8 +827,12 @@ export default function Groups() {
 
 
 // ---------------------------------------------------------------
-// SUPPORT BIRIKTIRISH — Guruhlar ro'yxatidan turib, kartaga kirmasdan
+// SUPPORT BIRIKTIRISH \u2014 Guruhlar ro'yxatidan turib, kartaga kirmasdan.
+// Har support uchun DARS KUNI va VAQTI so'raladi \u2014 jadval shunga quriladi
+// (asosiy dars vaqti emas!). Vaqt boshqa bandlik bilan to'qnashsa \u2014
+// ogohlantirish.
 type SupOption = { user_id: number; name: string; branch?: string | null };
+type SupTime = { days: string[]; start: string; end: string };
 
 function GroupSupportsModal({
   group,
@@ -839,7 +843,7 @@ function GroupSupportsModal({
   onClose: () => void;
   onSaved: () => void;
 }) {
-  const [assigned, setAssigned] = useState<number[]>([]);
+  const [sel, setSel] = useState<Record<number, SupTime>>({});
   const [options, setOptions] = useState<SupOption[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(true);
@@ -848,11 +852,25 @@ function GroupSupportsModal({
 
   useEffect(() => {
     api
-      .get<{ assigned: number[]; options: SupOption[] }>(
-        `/groups/${group.id}/supports`
-      )
+      .get<{
+        assigned: {
+          user_id: number;
+          days: string | null;
+          start: string | null;
+          end: string | null;
+        }[];
+        options: SupOption[];
+      }>(`/groups/${group.id}/supports`)
       .then((r) => {
-        setAssigned(r.assigned);
+        const m: Record<number, SupTime> = {};
+        for (const a of r.assigned) {
+          m[a.user_id] = {
+            days: parseDays(a.days),
+            start: a.start ?? "",
+            end: a.end ?? "",
+          };
+        }
+        setSel(m);
         setOptions(r.options);
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
@@ -860,23 +878,45 @@ function GroupSupportsModal({
   }, [group.id]);
 
   function toggle(id: number) {
-    setAssigned((a) =>
-      a.includes(id) ? a.filter((x) => x !== id) : [...a, id]
-    );
+    setSel((m) => {
+      const n = { ...m };
+      if (n[id]) delete n[id];
+      else n[id] = { days: parseDays(group.lesson_days), start: "", end: "" };
+      return n;
+    });
+  }
+
+  function patch(id: number, p: Partial<SupTime>) {
+    setSel((m) => ({ ...m, [id]: { ...m[id], ...p } }));
   }
 
   async function save(force?: boolean) {
+    for (const [uid, t] of Object.entries(sel)) {
+      const filled = t.days.length > 0 || t.start || t.end;
+      if (filled && (!t.days.length || !t.start || !t.end)) {
+        const nm = options.find((o) => o.user_id === Number(uid))?.name;
+        setErr(`${nm ?? "Support"} uchun kun va vaqtni to'liq kiriting`);
+        return;
+      }
+    }
     setSaving(true);
     setErr("");
     try {
       await api.put(
         `/groups/${group.id}/supports${force ? "?force=true" : ""}`,
-        { user_ids: assigned }
+        {
+          items: Object.entries(sel).map(([uid, t]) => ({
+            user_id: Number(uid),
+            days: t.days.length ? t.days.join(",") : null,
+            start: t.start || null,
+            end: t.end || null,
+          })),
+        }
       );
       onSaved();
     } catch (e) {
       if (e instanceof ApiError && e.status === 409) {
-        if (confirm(e.message + "\n\nBaribir biriktirilsinmi?")) {
+        if (confirm(e.message + "\\n\\nBaribir biriktirilsinmi?")) {
           save(true);
           return;
         }
@@ -894,7 +934,7 @@ function GroupSupportsModal({
 
   return (
     <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl w-full max-w-sm p-5 shadow-xl">
+      <div className="bg-white rounded-xl w-full max-w-md p-5 shadow-xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-1">
           <h3 className="font-semibold text-slate-900">
             Support biriktirish
@@ -904,7 +944,8 @@ function GroupSupportsModal({
           </button>
         </div>
         <p className="text-xs text-slate-500 mb-3">
-          "{group.name}" guruhi uchun
+          "{group.name}" guruhi. Support darsi asosiy darsdan ALOHIDA
+          vaqtda o'tadi \u2014 kuni va vaqtini belgilang.
         </p>
         {loading ? (
           <p className="text-sm text-slate-400 py-4">Yuklanmoqda...</p>
@@ -917,22 +958,74 @@ function GroupSupportsModal({
               autoFocus
               className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm mb-2"
             />
-            <div className="space-y-1 max-h-60 overflow-y-auto mb-2">
+            <div className="space-y-1 max-h-72 overflow-y-auto mb-2">
               {shown.map((o) => (
-                <label
-                  key={o.user_id}
-                  className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 text-sm text-slate-700 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={assigned.includes(o.user_id)}
-                    onChange={() => toggle(o.user_id)}
-                  />
-                  {o.name}
-                  {o.branch && (
-                    <span className="text-xs text-slate-400">{o.branch}</span>
+                <div key={o.user_id}>
+                  <label className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 text-sm text-slate-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={!!sel[o.user_id]}
+                      onChange={() => toggle(o.user_id)}
+                    />
+                    {o.name}
+                    {o.branch && (
+                      <span className="text-xs text-slate-400">{o.branch}</span>
+                    )}
+                  </label>
+                  {sel[o.user_id] && (
+                    <div className="ml-7 mb-2 rounded-lg bg-slate-50 border border-slate-100 p-2">
+                      <div className="flex flex-wrap gap-1 mb-1.5">
+                        {WEEKDAYS.map((d) => {
+                          const on = sel[o.user_id].days.includes(d.key);
+                          return (
+                            <button
+                              key={d.key}
+                              type="button"
+                              onClick={() =>
+                                patch(o.user_id, {
+                                  days: on
+                                    ? sel[o.user_id].days.filter(
+                                        (x) => x !== d.key
+                                      )
+                                    : [...sel[o.user_id].days, d.key],
+                                })
+                              }
+                              className={`px-1.5 py-0.5 rounded text-[11px] font-medium border ${
+                                on
+                                  ? "bg-brand-50 border-brand-400 text-brand-700"
+                                  : "bg-white border-slate-200 text-slate-500"
+                              }`}
+                            >
+                              {d.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <input
+                          type="time"
+                          value={sel[o.user_id].start}
+                          onChange={(e) =>
+                            patch(o.user_id, { start: e.target.value })
+                          }
+                          className="rounded-md border border-slate-200 px-2 py-1 text-xs"
+                        />
+                        <span className="text-slate-400 text-xs">\u2014</span>
+                        <input
+                          type="time"
+                          value={sel[o.user_id].end}
+                          onChange={(e) =>
+                            patch(o.user_id, { end: e.target.value })
+                          }
+                          className="rounded-md border border-slate-200 px-2 py-1 text-xs"
+                        />
+                        <span className="text-[10px] text-slate-400 ml-1">
+                          support darsi vaqti
+                        </span>
+                      </div>
+                    </div>
                   )}
-                </label>
+                </div>
               ))}
               {shown.length === 0 && (
                 <p className="text-sm text-slate-400 py-2">
@@ -940,9 +1033,9 @@ function GroupSupportsModal({
                 </p>
               )}
             </div>
-            {assigned.length > 0 && (
+            {Object.keys(sel).length > 0 && (
               <p className="text-xs text-slate-500 mb-2">
-                Tanlangan: {assigned.length} ta support
+                Tanlangan: {Object.keys(sel).length} ta support
               </p>
             )}
             {err && <p className="text-xs text-red-600 mb-2">{err}</p>}

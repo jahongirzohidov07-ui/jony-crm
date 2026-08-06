@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { GraduationCap } from "lucide-react";
+import { Eye, EyeOff, GraduationCap } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
 
@@ -8,6 +8,8 @@ export default function Login() {
   const { login, loading, error } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // Ko'z belgisi: bosilsa parol ochiq ko'rinadi (telefonda xato yozmaslik uchun)
+  const [showPw, setShowPw] = useState(false);
   const [recovery, setRecovery] = useState(false);
   const navigate = useNavigate();
 
@@ -58,13 +60,24 @@ export default function Login() {
             <label className="block text-sm font-medium text-slate-700 mb-1">
               Parol
             </label>
-            <input
-              type="password"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPw ? "text" : "password"}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                tabIndex={-1}
+                onClick={() => setShowPw((v) => !v)}
+                title={showPw ? "Parolni yashirish" : "Parolni ko'rish"}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
 
           {error && (

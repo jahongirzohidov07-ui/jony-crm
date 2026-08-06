@@ -88,8 +88,8 @@ function UserForm({
   const [error, setError] = useState<string | null>(null);
 
   async function submit() {
-    if (!isEdit && (!username.trim() || !password.trim())) {
-      setError("Login va parolni kiriting");
+    if (!isEdit && phone.replace(/\D/g, "").length < 7) {
+      setError("Telefon raqamni kiriting — u login o'rnida ishlatiladi");
       return;
     }
     if (!fullName.trim()) {
@@ -104,7 +104,7 @@ function UserForm({
     setError(null);
     try {
       await onSubmit({
-        username: isEdit ? undefined : username,
+        username: isEdit ? undefined : username.trim() || undefined,
         password: password || undefined,
         full_name: fullName,
         role,
@@ -147,19 +147,24 @@ function UserForm({
 
           {!isEdit && (
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Login *</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Login (ixtiyoriy — bo'sh qolsa telefon raqam login bo'ladi)
+              </label>
               <input
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 autoComplete="off"
+                placeholder="bo'sh qoldiring → telefon raqam"
               />
             </div>
           )}
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              {isEdit ? "Yangi parol (o'zgartirmasa bo'sh qoldiring)" : "Parol *"}
+              {isEdit
+                ? "Yangi parol (o'zgartirmasa bo'sh qoldiring)"
+                : "Parol (bo'sh qolsa: jonyjony)"}
             </label>
             <input
               type="password"
@@ -267,7 +272,7 @@ function UserForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Telefon
+              Telefon {isEdit ? "" : "*"}
             </label>
             <input
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
@@ -275,6 +280,12 @@ function UserForm({
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+998 90 123 45 67"
             />
+            {!isEdit && (
+              <p className="text-xs text-slate-400 mt-1">
+                Login yozilmasa, shu raqam login bo'ladi; parol yozilmasa
+                — jonyjony (kirgach o'zgartirish tavsiya etiladi).
+              </p>
+            )}
           </div>
 
           {isEdit && (

@@ -88,6 +88,16 @@ export function GroupSidebar({
             <span className="text-brand-700">{group.teacher?.full_name || "—"}</span>
           }
         />
+        <Row
+          label="Support"
+          value={
+            group.support_label ? (
+              <span className="text-sky-700">{group.support_label}</span>
+            ) : (
+              <span className="text-amber-600">yo'q</span>
+            )
+          }
+        />
         <Row label="Narx" value={formatSom(group.monthly_fee)} />
         {group.lesson_time && <Row label="Vaqt" value={group.lesson_time} />}
         {subjectLine(group) && <Row label="Kurs" value={subjectLine(group)} />}

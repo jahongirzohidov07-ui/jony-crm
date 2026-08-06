@@ -15,6 +15,13 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(username, password);
+      if (password === "jonyjony") {
+        alert(
+          "Siz standart parol bilan kirdingiz.\\n\\nXavfsizlik uchun " +
+            "parolni o'zgartirib olishni tavsiya qilamiz: " +
+            "Profil → Parolni o'zgartirish."
+        );
+      }
       navigate("/", { replace: true });
     } catch {
       // error is surfaced via context

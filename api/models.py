@@ -2927,6 +2927,22 @@ class ErrorLog(Base):
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
 
 
+class ExerciseResult(Base):
+    """O'quvchi bajargan mashq natijasi: nechta savol, nechtasi to'g'ri.
+    Har to'g'ri javob 1 ball — ball yig'ilib daraja ko'tariladi
+    (roles.ENG_LEVELS zinasi)."""
+    __tablename__ = "exercise_results"
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    date = Column(Date, default=date.today)
+    total = Column(Integer, nullable=False)
+    correct = Column(Integer, nullable=False)
+    topic = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class SupportBusy(Base):
     """Support teacherning O'ZI belgilagan band vaqti: "seshanba-payshanba
     14:00-16:00 — repetitorlik". Shu oraliqqa guruh biriktirilmoqchi

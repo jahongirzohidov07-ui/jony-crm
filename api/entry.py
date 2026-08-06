@@ -362,3 +362,66 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         if s.frozen_until else None,
         "practice": _practice_summary(db, s.id),
     }
+
+# =====================================================================
+#  SUPPORT JADVALIDA GURUHGA O'TISH — bloklarda group_id
+# =====================================================================
+_drop_route("/api/support-timetable", "GET")
+
+
+@app.get("/api/support-timetable")
+def support_timetable(day: str = "mon",
+                      branch_id: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(
+                          *roles.FULL_ACCESS, roles.HEAD_SUPPORT,
+                          roles.ACADEMIC_HEAD, roles.HR_MANAGER))):
+    """Supportlar jadvali: guruh bloki bosilganda guruhga kirish uchun
+    group_id ham qaytadi."""
+    if day not in ("mon", "tue", "wed", "thu", "fri", "sat", "sun"):
+        raise HTTPException(400, "Kun noto'g'ri")
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.User.role == roles.SUPPORT_TEACHER,
+                 models.Teacher.is_active == 1))
+    q = scope_to_branch(q, models.Teacher, user)
+    if branch_id:
+        q = q.filter(models.Teacher.branch_id == branch_id)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    rows = []
+    for t in q.order_by(models.Teacher.full_name).all():
+        blocks = []
+        gids = [a.group_id for a in
+                db.query(models.SupportAssignment)
+                .filter(models.SupportAssignment.user_id == t.user_id,
+                        models.SupportAssignment.group_id.isnot(None))
+                .all()]
+        for g in (db.query(models.Group)
+                  .filter(models.Group.id.in_(gids or [-1])).all()):
+            if day not in (g.lesson_days or ""):
+                continue
+            st = (g.lesson_time or "").split("-")[0].strip()
+            blocks.append({
+                "kind": "group", "label": g.name,
+                "group_id": g.id,
+                "time": g.lesson_time or "",
+                "sort": M._time_to_min(st) or 0,
+                "room": g.room,
+            })
+        for b in (db.query(models.SupportBusy)
+                  .filter(models.SupportBusy.teacher_id == t.id).all()):
+            if day not in (b.days or ""):
+                continue
+            blocks.append({
+                "kind": "busy",
+                "label": b.note or "Band (o'zi belgilagan)",
+                "time": f"{b.start}-{b.end}",
+                "sort": M._time_to_min(b.start) or 0,
+            })
+        blocks.sort(key=lambda x: x["sort"])
+        rows.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": bnames.get(t.branch_id),
+            "blocks": blocks,
+        })
+    return {"day": day, "rows": rows}

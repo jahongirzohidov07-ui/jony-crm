@@ -906,8 +906,7 @@ def _teacher_limit_guard(db: Session, teacher_id, group_id, user):
         for p in problems:
             p["severity"] = "block"
         raise HTTPException(400, {
-            "message": problems[0]["message"] +
-                       " Bunday holatda guruhni faqat asoschi ochа oladi.",
+            "message": "Mumkin emas: " + problems[0]["message"],
             "problems": problems,
         })
 

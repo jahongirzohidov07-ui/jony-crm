@@ -695,6 +695,15 @@ export default function Groups() {
                         {formatSom(g.teacher_rate_per_student)}/talaba
                       </span>
                     )}
+                    {g.support_label ? (
+                      <span className="block text-xs text-sky-600">
+                        Support: {g.support_label}
+                      </span>
+                    ) : (
+                      <span className="block text-xs text-amber-500">
+                        Support yo'q
+                      </span>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">

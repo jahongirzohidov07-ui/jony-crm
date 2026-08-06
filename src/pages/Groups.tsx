@@ -8,7 +8,7 @@ import {
 } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
-import { GROUP_MANAGE, can } from "../lib/roles";
+import { GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
 import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
@@ -503,6 +503,9 @@ export default function Groups() {
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState<Group | null>(null);
+  // Ro'yxatdan turib tez tahrirlash
+  const [supFor, setSupFor] = useState<Group | null>(null);
+  const [teachFor, setTeachFor] = useState<Group | null>(null);
 
   // Filtrlar
   const [q, setQ] = useState("");
@@ -527,6 +530,7 @@ export default function Groups() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, GROUP_MANAGE);
+  const canSupport = can(user?.role, SUPPORT_ASSIGN);
 
   async function removeGroup(g: Group) {
     if (!confirm(`"${g.name}" guruhi o'chirilsinmi?\n\nIchida o'quvchi`
@@ -687,8 +691,19 @@ export default function Groups() {
                     )}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <span className="text-slate-700">
-                      {g.teacher?.full_name || "—"}
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="text-slate-700">
+                        {g.teacher?.full_name || "—"}
+                      </span>
+                      {canEdit && (
+                        <button
+                          onClick={() => setTeachFor(g)}
+                          title="Ustozni almashtirish"
+                          className="text-slate-300 hover:text-brand-600"
+                        >
+                          <Pencil size={13} />
+                        </button>
+                      )}
                     </span>
                     {g.teacher_rate_per_student > 0 && (
                       <span className="block text-xs text-slate-400">
@@ -696,12 +711,28 @@ export default function Groups() {
                       </span>
                     )}
                     {g.support_label ? (
-                      <span className="block text-xs text-sky-600">
+                      <span
+                        onClick={() => canSupport && setSupFor(g)}
+                        title={canSupport ? "Supportni o'zgartirish" : undefined}
+                        className={`block text-xs text-sky-600 ${
+                          canSupport
+                            ? "cursor-pointer hover:underline"
+                            : ""
+                        }`}
+                      >
                         Support: {g.support_label}
                       </span>
                     ) : (
-                      <span className="block text-xs text-amber-500">
-                        Support yo'q
+                      <span
+                        onClick={() => canSupport && setSupFor(g)}
+                        title={canSupport ? "Support biriktirish" : undefined}
+                        className={`block text-xs text-amber-500 ${
+                          canSupport
+                            ? "cursor-pointer hover:underline"
+                            : ""
+                        }`}
+                      >
+                        Support yo'q{canSupport ? " — biriktirish" : ""}
                       </span>
                     )}
                   </td>
@@ -769,6 +800,274 @@ export default function Groups() {
           onSaved={load}
         />
       )}
+      {supFor && (
+        <GroupSupportsModal
+          group={supFor}
+          onClose={() => setSupFor(null)}
+          onSaved={() => {
+            setSupFor(null);
+            load();
+          }}
+        />
+      )}
+      {teachFor && (
+        <ChangeTeacherModal
+          group={teachFor}
+          teachers={teachers}
+          onClose={() => setTeachFor(null)}
+          onSaved={() => {
+            setTeachFor(null);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+
+// ---------------------------------------------------------------
+// SUPPORT BIRIKTIRISH — Guruhlar ro'yxatidan turib, kartaga kirmasdan
+type SupOption = { user_id: number; name: string; branch?: string | null };
+
+function GroupSupportsModal({
+  group,
+  onClose,
+  onSaved,
+}: {
+  group: Group;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [assigned, setAssigned] = useState<number[]>([]);
+  const [options, setOptions] = useState<SupOption[]>([]);
+  const [q, setQ] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    api
+      .get<{ assigned: number[]; options: SupOption[] }>(
+        `/groups/${group.id}/supports`
+      )
+      .then((r) => {
+        setAssigned(r.assigned);
+        setOptions(r.options);
+      })
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
+      .finally(() => setLoading(false));
+  }, [group.id]);
+
+  function toggle(id: number) {
+    setAssigned((a) =>
+      a.includes(id) ? a.filter((x) => x !== id) : [...a, id]
+    );
+  }
+
+  async function save(force?: boolean) {
+    setSaving(true);
+    setErr("");
+    try {
+      await api.put(
+        `/groups/${group.id}/supports${force ? "?force=true" : ""}`,
+        { user_ids: assigned }
+      );
+      onSaved();
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 409) {
+        if (confirm(e.message + "\n\nBaribir biriktirilsinmi?")) {
+          save(true);
+          return;
+        }
+      } else {
+        setErr(e instanceof Error ? e.message : "Xatolik");
+      }
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const shown = options.filter(
+    (o) => !q || o.name.toLowerCase().includes(q.toLowerCase())
+  );
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl w-full max-w-sm p-5 shadow-xl">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-900">
+            Support biriktirish
+          </h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-3">
+          "{group.name}" guruhi uchun
+        </p>
+        {loading ? (
+          <p className="text-sm text-slate-400 py-4">Yuklanmoqda...</p>
+        ) : (
+          <>
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Support ismini qidirish..."
+              autoFocus
+              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm mb-2"
+            />
+            <div className="space-y-1 max-h-60 overflow-y-auto mb-2">
+              {shown.map((o) => (
+                <label
+                  key={o.user_id}
+                  className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 text-sm text-slate-700 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={assigned.includes(o.user_id)}
+                    onChange={() => toggle(o.user_id)}
+                  />
+                  {o.name}
+                  {o.branch && (
+                    <span className="text-xs text-slate-400">{o.branch}</span>
+                  )}
+                </label>
+              ))}
+              {shown.length === 0 && (
+                <p className="text-sm text-slate-400 py-2">
+                  Support teacher topilmadi.
+                </p>
+              )}
+            </div>
+            {assigned.length > 0 && (
+              <p className="text-xs text-slate-500 mb-2">
+                Tanlangan: {assigned.length} ta support
+              </p>
+            )}
+            {err && <p className="text-xs text-red-600 mb-2">{err}</p>}
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={() => save()}
+                disabled={saving}
+                className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-60"
+              >
+                {saving ? "Saqlanmoqda..." : "Saqlash"}
+              </button>
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+              >
+                Bekor
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------
+// USTOZNI ALMASHTIRISH — ro'yxatdan turib, bitta tanlov bilan
+function ChangeTeacherModal({
+  group,
+  teachers,
+  onClose,
+  onSaved,
+}: {
+  group: Group;
+  teachers: Teacher[];
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [val, setVal] = useState<string>(
+    group.teacher_id ? String(group.teacher_id) : ""
+  );
+  const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState("");
+
+  // Asosiy ustozlar; guruh filialidagilar birinchi turadi
+  const list = teachers
+    .filter((t) => t.kind !== "support" && t.is_active !== 0)
+    .sort((a, b) => {
+      const ab = a.branch_id === group.branch?.id ? 0 : 1;
+      const bb = b.branch_id === group.branch?.id ? 0 : 1;
+      return ab !== bb
+        ? ab - bb
+        : a.full_name.localeCompare(b.full_name);
+    });
+
+  async function save(force?: boolean) {
+    setSaving(true);
+    setErr("");
+    try {
+      await api.put(`/groups/${group.id}${force ? "?force=true" : ""}`, {
+        teacher_id: val ? Number(val) : null,
+      });
+      onSaved();
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 409) {
+        if (confirm(e.message + "\n\nBaribir almashtirilsinmi?")) {
+          save(true);
+          return;
+        }
+      } else {
+        setErr(e instanceof Error ? e.message : "Xatolik");
+      }
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl w-full max-w-sm p-5 shadow-xl">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-900">
+            Ustozni almashtirish
+          </h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-3">
+          "{group.name}" guruhi — hozirgi ustoz:{" "}
+          {group.teacher?.full_name || "yo'q"}
+        </p>
+        <select
+          value={val}
+          onChange={(e) => setVal(e.target.value)}
+          autoFocus
+          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm bg-white mb-2"
+        >
+          <option value="">— O'qituvchisiz —</option>
+          {list.map((t) => (
+            <option key={t.id} value={t.id}>
+              {t.full_name}
+              {t.branch_id !== group.branch?.id && t.branch?.name
+                ? ` (${t.branch.name})`
+                : ""}
+            </option>
+          ))}
+        </select>
+        {err && <p className="text-xs text-red-600 mb-2">{err}</p>}
+        <div className="flex gap-2 mt-2">
+          <button
+            onClick={() => save()}
+            disabled={saving}
+            className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-60"
+          >
+            {saving ? "Saqlanmoqda..." : "Almashtirish"}
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

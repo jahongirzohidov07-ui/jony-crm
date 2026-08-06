@@ -174,8 +174,9 @@ export default function SupportSchedule() {
         </div>
       )}
       <p className="text-xs text-slate-400 mt-3">
-        Yashil — bo'sh; ko'k — guruh darsi; qizil — support o'zi
-        "dars qo'yilmasin" deb belgilagan vaqt.
+        Yashil — bo'sh; ko'k — support darsi (biriktirishda belgilangan
+        vaqt); qizil — support o'zi "dars qo'yilmasin" degan vaqt.
+        Vaqti belgilanmagan biriktirishlar jadvalda ko'rinmaydi.
       </p>
     </div>
   );

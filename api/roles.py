@@ -674,6 +674,28 @@ ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 # Refund: sotuv menejeri SO'RAYDI, filial rahbari yoki moliyachi
 # TASDIQLAYDI. Bitta odam ham so'rab ham tasdiqlay olmaydi (asoschidan
 # tashqari) — pul qaytarish ikki ko'z ostida bo'ladi.
+# Mashqlar bo'yicha INGLIZ TILI darajalari zinasi. Har bir to'g'ri
+# javob 1 ball; har daraja uchun PRACTICE_POINTS_PER_LEVEL ball
+# yig'ilsa keyingisiga o'tadi. IELTS/CEFR — taxminiy mo'ljal.
+PRACTICE_POINTS_PER_LEVEL = 500
+ENG_LEVELS = [
+    {"key": "beginner",          "label": "Beginner",
+     "ielts": "~2.0-2.5", "cefr": "A1"},
+    {"key": "elementary",        "label": "Elementary",
+     "ielts": "~3.0-3.5", "cefr": "A2"},
+    {"key": "pre_intermediate",  "label": "Pre-Intermediate",
+     "ielts": "~4.0-4.5", "cefr": "B1"},
+    {"key": "intermediate",      "label": "Intermediate",
+     "ielts": "~5.0-5.5", "cefr": "B1+/B2"},
+    {"key": "upper_intermediate", "label": "Upper-Intermediate",
+     "ielts": "~6.0-6.5", "cefr": "B2/C1"},
+    {"key": "advanced",          "label": "Advanced",
+     "ielts": "~7.0-8.0", "cefr": "C1"},
+    {"key": "native",            "label": "Native",
+     "ielts": "~8.5-9.0", "cefr": "C2"},
+]
+
+
 REFUND_REQUEST = [SALES_MANAGER, FOUNDER]
 REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER]
 REFUND_VIEW = list(dict.fromkeys(

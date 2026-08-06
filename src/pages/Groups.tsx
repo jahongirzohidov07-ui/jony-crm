@@ -346,11 +346,16 @@ export function GroupFormModal({
               }}
             >
               <option value="">— tanlanmagan —</option>
-              {rooms.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name} ({r.capacity} o'rin)
-                </option>
-              ))}
+              {rooms
+                .filter(
+                  (r) =>
+                    !branchId || String(r.branch_id ?? "") === branchId
+                )
+                .map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name} ({r.capacity} o'rin)
+                  </option>
+                ))}
             </select>
             <p className="text-xs text-slate-400 mt-1">
               Xona sig'imi guruh to'lishi koeffitsiyentini hisoblashda

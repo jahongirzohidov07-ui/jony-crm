@@ -860,3 +860,81 @@ def create_room_v2(payload: schemas.RoomCreate,
               entity_label=r.name, new_value=r.capacity,
               branch_id=r.branch_id, commit=True)
     return M._room_out(r)
+
+# =====================================================================
+#  USTOZ GURUH CHEGARASI: FAQAT ASOSCHI "BARIBIR OCHISH" QILA OLADI
+#  Junior 1 ta, Middle 2-3 ta... — chegaradan oshsa: asoschiga
+#  ogohlantirish + "baribir saqlash" tugmasi; boshqalarga QAT'IY taqiq.
+# =====================================================================
+def _find_endpoint(path: str, method: str):
+    for r in app.router.routes:
+        if getattr(r, "path", None) == path and \
+                method in (getattr(r, "methods", None) or []):
+            return r.endpoint
+    return None
+
+
+_orig_create_group = _find_endpoint("/api/groups", "POST")
+_orig_update_group = _find_endpoint("/api/groups/{group_id}", "PUT")
+
+# Asl tekshiruvda chegara "block" (hech kim o'tolmaydi) edi. Endi u
+# "warn"ga tushiriladi — asoschi 409 ogohlantirish oladi va "baribir
+# saqlash" qila oladi. Asoschi bo'lmaganlarni esa pastdagi guard
+# har qanday holatda 400 bilan to'xtatadi. Qayta tayyorlash (remediation)
+# taqig'i esa "chegara" so'zisiz — u block'ligicha qoladi.
+_orig_check_teacher_load = M._check_teacher_load
+
+
+def _check_teacher_load_soft(db, teacher_id, group_id):
+    problems = _orig_check_teacher_load(db, teacher_id, group_id)
+    for p in problems:
+        if p.get("key") == "teacher_overload" and "chegara" in p.get("message", ""):
+            p["severity"] = "warn"
+    return problems
+
+
+M._check_teacher_load = _check_teacher_load_soft
+
+
+def _teacher_limit_guard(db: Session, teacher_id, group_id, user):
+    """Chegaradan oshganda asoschi bo'lmaganlarga qattiq taqiq."""
+    if not teacher_id or user.role == roles.FOUNDER:
+        return
+    problems = [p for p in _orig_check_teacher_load(db, teacher_id, group_id)
+                if p.get("key") == "teacher_overload"]
+    if problems:
+        for p in problems:
+            p["severity"] = "block"
+        raise HTTPException(400, {
+            "message": problems[0]["message"] +
+                       " Bunday holatda guruhni faqat asoschi ochа oladi.",
+            "problems": problems,
+        })
+
+
+if _orig_create_group is not None:
+    _drop_route("/api/groups", "POST")
+
+    @app.post("/api/groups")
+    def create_group_v2(payload: schemas.GroupCreate,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+        _teacher_limit_guard(db, payload.teacher_id, None, user)
+        return _orig_create_group(payload=payload, force=force,
+                                  db=db, user=user)
+
+
+if _orig_update_group is not None:
+    _drop_route("/api/groups/{group_id}", "PUT")
+
+    @app.put("/api/groups/{group_id}")
+    def update_group_v2(group_id: int, payload: schemas.GroupUpdate,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+        fields = payload.model_dump(exclude_unset=True)
+        if "teacher_id" in fields and fields.get("teacher_id"):
+            _teacher_limit_guard(db, fields["teacher_id"], group_id, user)
+        return _orig_update_group(group_id=group_id, payload=payload,
+                                  force=force, db=db, user=user)

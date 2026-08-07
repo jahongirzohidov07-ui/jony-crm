@@ -38,9 +38,9 @@ import {
 } from "../lib/api";
 import { formatSom, formatPeriodLabel, formatGrowthLabel } from "../lib/format";
 import {
-  CASH_ACCESS, DEBTOR_ACCESS, PROFIT_VIEW, SALES_MANAGER, can,
+  CASH_ACCESS, DEBTOR_ACCESS, PROFIT_VIEW, SALES_MANAGER, ADMINISTRATOR, can,
 } from "../lib/roles";
-import { SalesPanelCards } from "../components/SalesPanel";
+import { SalesPanelCards, AdminCollectionCard } from "../components/SalesPanel";
 import { MyPanel } from "../components/MyPanel";
 import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
@@ -352,7 +352,8 @@ export default function Dashboard() {
   const { user } = useAuth();
   // Administratorning ekrani boshqacha: unga daromad grafigi va
   // obunachilar soni emas, BUGUN nima qilish kerakligi kerak.
-  const isSales = user?.role === SALES_MANAGER;
+  const isSales =
+    user?.role === SALES_MANAGER || user?.role === ADMINISTRATOR;
   // Butun markaz bo'yicha kartalar — Examiner, HR va SMM'ga kerak
   // emas: ular faqat o'z ishini ko'radi.
   const [showGeneral, setShowGeneral] = useState(true);
@@ -494,13 +495,20 @@ export default function Dashboard() {
       {stats && showGeneral && (
         <>
           {can(user?.role, CASH_ACCESS) && <CollectionCard />}
+          {/* Administratorning bonusi eski to'lov yig'imidan chiqadi —
+              shuning uchun u xonalar bandligidan ham tepada turadi. */}
+          {isSales && <AdminCollectionCard />}
           <FillCard />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />
             <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} />
             <KpiCard icon={Users} label="Muzlatilgan talabalar" value={String(stats.frozen_students)} />
-            <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} />
+            {/* Guruh va xodim soni administratorning ishiga aloqasiz —
+                unga o'quvchi, to'lov va qarzdorlik kerak. */}
+            {!isSales && (
+              <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} />
+            )}
             <KpiCard
               icon={Receipt}
               label="Shu oy yangi to'lovlar"
@@ -508,7 +516,9 @@ export default function Dashboard() {
               hint={`jami ${stats.month_payment_count} ta to'lov`}
               tone="brand"
             />
-            <KpiCard icon={Briefcase} label="Xodimlar soni" value={String(stats.staff_count)} />
+            {!isSales && (
+              <KpiCard icon={Briefcase} label="Xodimlar soni" value={String(stats.staff_count)} />
+            )}
             <KpiCard icon={Wallet} label="Shu oy tushum" value={formatSom(stats.month_income)} tone="brand" />
             <KpiCard
               icon={AlertTriangle}

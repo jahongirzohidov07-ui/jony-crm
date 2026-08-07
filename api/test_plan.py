@@ -176,7 +176,11 @@ ck("guruhlar soni 1", o["groups_count"], 1)
 ck("guruhda 2 o'quvchi", o["groups"][0]["students"], 2)
 ck("bo'sh joy 10", o["groups"][0]["free"], 10)
 ck("to'lganlik 17%", o["groups"][0]["fill"], 17)
-ck("shartnoma 90 kun qoldi", o["contract"]["days_left"], 90)
+# Server Toshkent vaqti bilan sanaydi (UTC+5). CI UTC'da ishlagani
+# uchun kechqurun ikkalasi ikki xil kunda bo'lib qoladi — shuning uchun
+# kutilgan qiymatni ham serverning kunidan hisoblaymiz.
+ck("shartnoma 90 kun qoldi", o["contract"]["days_left"],
+   (TODAY + timedelta(days=90) - roles.local_today()).days)
 ck("sertifikat ko'rinadi", o["certificate"]["title"], "IELTS 7.5")
 ck("tug'ilgan kun bor", o["birthday"] is not None, True)
 ck("sifat 80%", o["quality_percent"], 80.0)

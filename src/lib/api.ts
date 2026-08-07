@@ -1346,6 +1346,8 @@ export interface BillingMonth {
   committed: boolean;
   students: number;
   created: number;
+  /** Guruhida shu oyda dars kuni yo'q - pul hisoblanmaydigan o'quvchilar. */
+  no_lesson?: number;
   expected_total: number;
   rows: BillingRow[];
 }

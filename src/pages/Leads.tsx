@@ -44,7 +44,6 @@ function LeadForm({
   // qayta bosib ketmaymiz.
   const [stageTouched, setStageTouched] = useState(editing);
   const [address, setAddress] = useState(initial?.address ?? "");
-  const ref = useReference();
   const [school, setSchool] = useState(initial?.school ?? "");
   const [grade, setGrade] = useState(initial?.grade ?? "");
   const [note, setNote] = useState(initial?.note ?? "");
@@ -52,6 +51,12 @@ function LeadForm({
     initial?.branch_id ? String(initial.branch_id) : defaultBranchId ? String(defaultBranchId) : ""
   );
   const { user: me } = useAuth();
+  // Filial tanlanganda mahalla/maktab ro'yxati o'sha filialga mos
+  // almashadi — har filialning o'z hududlari bor (Zafar ro'yxati
+  // boshqa filiallarga chiqib turmasin).
+  const ref = useReference(
+    branchId ? Number(branchId) : me?.branch_id ?? null
+  );
   const meIsAdmin =
     me?.role === "administrator" || me?.role === "sales_manager";
   // Admin uchun backend o'zi biriktiradi — bu yerda tanlanmaydi.

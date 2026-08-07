@@ -66,10 +66,21 @@ function PaymentModal({
   const [amount, setAmount] = useState("");
   const [method, setMethod] = useState("cash");
   const [note, setNote] = useState("");
+  const [books, setBooks] = useState<
+    { id: number; name: string; qty: number }[]
+  >([]);
+  const [bookId, setBookId] = useState("");
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState("");
   const [ok, setOk] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    api
+      .get<{ id: number; name: string; qty: number }[]>("/consumables/books")
+      .then(setBooks)
+      .catch(() => setBooks([]));
+  }, []);
 
   useEffect(() => {
     if (fixed) return;
@@ -115,6 +126,20 @@ function PaymentModal({
           note: note || null,
         }
       );
+      // Kitob berilgan bo'lsa — ombordan kamaytiramiz
+      if (bookId) {
+        try {
+          await api.post(`/consumables/${bookId}/give-book`, {
+            student_id: picked.id,
+          });
+        } catch (be) {
+          alert(
+            be instanceof Error
+              ? be.message
+              : "Kitobni ombordan yechishda xatolik"
+          );
+        }
+      }
       // X-printer chek: xohlasa darrov chiqarib beradi
       if (confirm("Chek chiqarilsinmi?")) {
         printXReceipt({
@@ -289,6 +314,34 @@ function PaymentModal({
                     ))}
                   </div>
                 </div>
+
+                {books.length > 0 && (
+                  <div>
+                    <label className="block text-xs text-slate-500 mb-1">
+                      Kitob berildimi?
+                    </label>
+                    <select
+                      value={bookId}
+                      onChange={(e) => setBookId(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+                    >
+                      <option value="">— kitob berilmadi —</option>
+                      {books.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.name} (qoldiq: {b.qty})
+                        </option>
+                      ))}
+                    </select>
+                    {bookId &&
+                      (books.find((b) => String(b.id) === bookId)?.qty ?? 0) <
+                        1 && (
+                        <p className="text-xs text-red-600 mt-1">
+                          Omborda yo'q! Filial rahbariga ayting — avval kirim
+                          qilinsin.
+                        </p>
+                      )}
+                  </div>
+                )}
 
                 <input
                   value={note}

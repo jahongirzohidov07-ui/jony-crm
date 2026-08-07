@@ -72,7 +72,8 @@ export default function GroupDetail() {
   const [payrollLoading, setPayrollLoading] = useState(false);
   const [persistedPayouts, setPersistedPayouts] = useState<TeacherPayout[]>([]);
 
-  const canMarkLesson = can(user?.role, TEACHING_STAFF);
+  const canMarkLesson =
+    can(user?.role, TEACHING_STAFF) || user?.role === "hr_manager";
   const canFinance = can(user?.role, FINANCE_ACCESS);
 
   // Tezkor XP uchun guruhdagi o'quvchilar ro'yxati

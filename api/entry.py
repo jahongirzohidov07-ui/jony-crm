@@ -2028,3 +2028,316 @@ if _orig_att_grid is not None:
                                 if s.get("status") != "frozen"]
             return data
         return result
+
+
+# =====================================================================
+#  ADMINISTRATOR ROLLARI BITTA BO'LDI
+#  "Administrator" va "Administrator (qabul)" amalda bir xil ish edi.
+#  Eski hisoblar sales_manager'ga ko'chiriladi, tanlov ro'yxatidan
+#  esa "qabul" varianti olib tashlanadi.
+# =====================================================================
+roles.UZ_LABELS[roles.ADMINISTRATOR] = "Administrator"
+roles.ALL_ROLES[:] = [r for r in roles.ALL_ROLES
+                      if r != roles.ADMINISTRATOR]
+for _i, _grp in enumerate(roles.ROLE_GROUPS):
+    if _grp[0] == "sales":
+        roles.ROLE_GROUPS[_i] = (
+            _grp[0], _grp[1],
+            [r for r in _grp[2] if r != roles.ADMINISTRATOR])
+
+
+def _merge_admin_roles() -> None:
+    """Bir martalik ko'chirish. Takror chaqirilsa hech narsa qilmaydi."""
+    db = _SessionLocal()
+    try:
+        n = (db.query(models.User)
+             .filter(models.User.role == roles.ADMINISTRATOR)
+             .update({models.User.role: roles.SALES_MANAGER},
+                     synchronize_session=False))
+        if n:
+            db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
+
+
+try:
+    _merge_admin_roles()
+except Exception:
+    pass
+
+
+# =====================================================================
+#  XODIM OYLIGI: BERILGAN PULNI YOZIB BORISH
+#  Ustozlarda TeacherPayment bor, lekin examinerda Ustoz kartasi yo'q.
+#  Shuning uchun user_id'ga bog'langan umumiy jadval.
+# =====================================================================
+from datetime import datetime as _dt  # noqa: E402
+from sqlalchemy import Column, DateTime, Float, Integer, String  # noqa: E402
+from sqlalchemy import Date as _SaDate  # noqa: E402
+from database import Base as _Base, engine as _engine  # noqa: E402
+
+if getattr(models, "StaffSalaryPayment", None) is None:
+    class StaffSalaryPayment(_Base):
+        """Xodimga HAQIQATDA berilgan pul: oylik, avans yoki tuzatish.
+
+        Ishlab topilgani har oy formuladan qayta hisoblanadi va hech
+        qayerda saqlanmaydi; bu jadval faqat kassadan chiqqan pulni
+        yozadi. Qoldiq = ishlab topgan - berilgan."""
+
+        __tablename__ = "staff_salary_payments"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        user_id = Column(Integer, index=True, nullable=False)
+        amount = Column(Float, nullable=False)
+        kind = Column(String, default="salary")
+        period = Column(String, index=True)
+        paid_on = Column(_SaDate, default=date.today)
+        method = Column(String, default="cash")
+        note = Column(String)
+        created_by = Column(String)
+        created_at = Column(DateTime, default=_dt.utcnow)
+
+    models.StaffSalaryPayment = StaffSalaryPayment
+    try:
+        _Base.metadata.create_all(
+            bind=_engine, tables=[StaffSalaryPayment.__table__])
+    except Exception:
+        pass
+
+_SSP = models.StaffSalaryPayment
+
+_SALARY_KINDS = [("salary", "Oylik"), ("advance", "Avans"),
+                 ("correction", "Tuzatish")]
+_SALARY_KIND_LABELS = dict(_SALARY_KINDS)
+
+# Oyliklarni Moliya bo'limida ko'radigan va to'laydiganlar
+_PAYROLL_VIEW = list(dict.fromkeys(
+    list(roles.SALARY_PAY) + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
+                              roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
+_PAYROLL_PAY = list(roles.SALARY_PAY)
+
+
+def _staff_paid(db: Session, user_id: int, period: str | None = None):
+    q = db.query(func.coalesce(func.sum(_SSP.amount), 0.0)).filter(
+        _SSP.user_id == user_id)
+    if period:
+        q = q.filter(_SSP.period == period)
+    return round(float(q.scalar() or 0.0), 2)
+
+
+def _attach_paid(db: Session, data: dict, key: str, period: str) -> dict:
+    """Oylik ro'yxatiga "berilgan" va "qoldiq" ustunlarini qo'shadi."""
+    for r in data.get("rows", []):
+        uid = r.get(key)
+        if uid is None:
+            continue
+        paid = _staff_paid(db, uid, period)
+        r["paid"] = paid
+        r["left"] = round((r.get("salary") or 0) - paid, 2)
+    data["paid_total"] = round(
+        sum(r.get("paid", 0) for r in data.get("rows", [])), 2)
+    data["left_total"] = round(
+        sum(r.get("left", 0) for r in data.get("rows", [])), 2)
+    data["kinds"] = [{"key": k, "label": lbl} for k, lbl in _SALARY_KINDS]
+    return data
+
+
+# --- Examiner oyliklari: Moliya ham ko'rsin + berilgan pul ko'rinsin ---
+_orig_ex_salary = _find_endpoint("/api/examiners/salary", "GET")
+
+if _orig_ex_salary is not None:
+    _drop_route("/api/examiners/salary", "GET")
+
+    @app.get("/api/examiners/salary")
+    def examiner_salary_v2(year: int | None = None, month: int | None = None,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *list(dict.fromkeys(
+                                   list(roles.EXAMINER_SALARY_VIEW)
+                                   + _PAYROLL_VIEW))))):
+        data = _orig_ex_salary(year=year, month=month, db=db, user=user)
+        data = _attach_paid(db, data, "user_id", data.get("period", ""))
+        data["can_pay"] = user.role in tuple(_PAYROLL_PAY)
+        return data
+
+
+# --- Support teacher oyliklari: xuddi shunday ---
+_orig_su_salary = _find_endpoint("/api/support/salary", "GET")
+
+if _orig_su_salary is not None:
+    _drop_route("/api/support/salary", "GET")
+
+    @app.get("/api/support/salary")
+    def support_salary_v2(year: int | None = None, month: int | None = None,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(
+                              *list(dict.fromkeys(
+                                  list(roles.SALARY_VIEW_ALL)
+                                  + [roles.ACADEMIC_HEAD]
+                                  + _PAYROLL_VIEW))))):
+        data = _orig_su_salary(year=year, month=month, db=db, user=user)
+        # Support teacherda Ustoz kartasi bor — user_id ni topib beramiz
+        for r in data.get("rows", []):
+            t = db.query(models.Teacher).get(r.get("teacher_id"))
+            r["user_id"] = t.user_id if t else None
+        data = _attach_paid(db, data, "user_id", data.get("period", ""))
+        data["can_pay"] = user.role in tuple(_PAYROLL_PAY)
+        return data
+
+
+@app.post("/api/staff-salary")
+def staff_salary_pay(payload: dict, db: Session = Depends(get_db),
+                     user=Depends(require_role(*_PAYROLL_PAY))):
+    """Xodimga oylik/avans berish. Bitta tugma — bitta yozuv."""
+    uid = payload.get("user_id")
+    amount = payload.get("amount")
+    kind = payload.get("kind") or "salary"
+    if not uid:
+        raise HTTPException(400, "Xodim tanlanmadi")
+    if kind not in _SALARY_KIND_LABELS:
+        raise HTTPException(400, "Noto'g'ri to'lov turi")
+    try:
+        amount = float(amount)
+    except (TypeError, ValueError):
+        amount = 0.0
+    if amount <= 0:
+        raise HTTPException(400, "Summani kiriting")
+    u = db.query(models.User).get(int(uid))
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    if (user.role == roles.BRANCH_MANAGER and user.branch_id
+            and u.branch_id and u.branch_id != user.branch_id):
+        raise HTTPException(403, "Faqat o'z filialingiz xodimiga "
+                                 "oylik bera olasiz")
+    period = payload.get("period") or date.today().isoformat()[:7]
+    row = _SSP(user_id=u.id, amount=round(amount, 2), kind=kind,
+               period=period, paid_on=date.today(),
+               method=payload.get("method") or "cash",
+               note=payload.get("note"), created_by=user.full_name)
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    audit.log(db, user, entity="user", action="salary_change",
+              entity_id=u.id, entity_label=u.full_name,
+              branch_id=u.branch_id,
+              field=_SALARY_KIND_LABELS[kind],
+              new_value=f"{amount:,.0f}".replace(",", " "))
+    db.commit()
+    return {"ok": True, "id": row.id,
+            "paid": _staff_paid(db, u.id, period)}
+
+
+@app.get("/api/staff-salary")
+def staff_salary_list(user_id: int, period: str | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*_PAYROLL_VIEW))):
+    q = db.query(_SSP).filter(_SSP.user_id == user_id)
+    if period:
+        q = q.filter(_SSP.period == period)
+    rows = q.order_by(_SSP.paid_on.desc(), _SSP.id.desc()).all()
+    return {
+        "rows": [{"id": r.id, "amount": r.amount, "kind": r.kind,
+                  "kind_label": _SALARY_KIND_LABELS.get(r.kind, r.kind),
+                  "period": r.period,
+                  "date": r.paid_on.isoformat() if r.paid_on else None,
+                  "method": r.method, "note": r.note,
+                  "created_by": r.created_by} for r in rows],
+        "total": round(sum(r.amount for r in rows), 2),
+        "can_pay": user.role in tuple(_PAYROLL_PAY),
+    }
+
+
+@app.delete("/api/staff-salary/{row_id}")
+def staff_salary_delete(row_id: int, db: Session = Depends(get_db),
+                        user=Depends(require_role(*_PAYROLL_PAY))):
+    r = db.query(_SSP).get(row_id)
+    if not r:
+        raise HTTPException(404, "Topilmadi")
+    u = db.query(models.User).get(r.user_id)
+    audit.log(db, user, entity="user", action="delete", entity_id=r.user_id,
+              entity_label=u.full_name if u else "—",
+              field="Xodim oyligi",
+              old_value=f"{r.amount:,.0f}".replace(",", " "))
+    db.delete(r)
+    db.commit()
+    return {"ok": True}
+
+
+# =====================================================================
+#  SHU OY TO'LOV QILGANLAR RO'YXATI
+#  Administrator har kuni "kim to'ladi?" deb so'raydi — endi ro'yxat
+#  Moliya bo'limining o'zida turadi. Xarajat va foyda bu yerda YO'Q,
+#  shuning uchun administratorga ham ochiq.
+# =====================================================================
+_PAYLIST_VIEW = list(dict.fromkeys([
+    roles.FOUNDER, roles.BRANCH_MANAGER, roles.FINANCE_DIRECTOR,
+    roles.ACCOUNTANT, roles.SALES_MANAGER, roles.ADMINISTRATOR,
+]))
+
+
+@app.get("/api/payments/month")
+def payments_of_month(year: int | None = None, month: int | None = None,
+                      branch_id: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*_PAYLIST_VIEW))):
+    """Bir oyda kelib tushgan to'lovlar — o'quvchi kesimida.
+
+    Yangi mijoz (birinchi to'lovi shu oyda) alohida belgilanadi, chunki
+    administrator bonusi eski va yangi to'lov uchun boshqa-boshqa."""
+    today = roles.local_today()
+    y = year or today.year
+    m = month or today.month
+    start, end = M.billing.month_bounds(y, m)
+    d0, d1 = M._utc_window(start, end)
+
+    q = (db.query(models.Payment, models.Student)
+         .join(models.Student,
+               models.Payment.student_id == models.Student.id)
+         .filter(models.Payment.kind == "payment",
+                 models.Payment.created_at >= d0,
+                 models.Payment.created_at <= d1))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.Student.branch_id == user.branch_id)
+    elif branch_id:
+        q = q.filter(models.Student.branch_id == branch_id)
+
+    first_dates = M._payment_first_dates(db)
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    method_labels = dict(getattr(roles, "PAYMENT_METHOD_LABELS", {}) or {})
+
+    rows, total, new_sum, old_sum = [], 0.0, 0.0, 0.0
+    for p, st in q.all():
+        is_new = first_dates.get(st.id) == p.created_at
+        total += p.amount
+        if is_new:
+            new_sum += p.amount
+        else:
+            old_sum += p.amount
+        method = p.method or "cash"
+        rows.append({
+            "id": p.id,
+            "date": p.created_at.date().isoformat() if p.created_at else None,
+            "student_id": st.id,
+            "student": st.full_name,
+            "phone": st.phone,
+            "amount": p.amount,
+            "method": method,
+            "method_label": method_labels.get(method, method),
+            "branch": branches.get(st.branch_id) or "—",
+            "is_new": is_new,
+            "note": p.note,
+            "created_by": p.created_by,
+        })
+    rows.sort(key=lambda r: (r["date"] or "", -r["amount"]), reverse=True)
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "count": len(rows),
+        "students": len({r["student_id"] for r in rows}),
+        "total": round(total, 2),
+        "new_total": round(new_sum, 2),
+        "old_total": round(old_sum, 2),
+    }

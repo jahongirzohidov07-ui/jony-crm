@@ -10,6 +10,18 @@ import { api, ApiError, type Student, type Group, type CheckProblem }
   from "../lib/api";
 import { ScheduleProblems } from "./ScheduleProblems";
 
+/** Faollashtirishdan oldin: shu sanadan qancha pul yechilishi. */
+interface ActivatePreview {
+  lessons: number;
+  amount: number;
+  discount: number;
+  already: boolean;
+  group: string | null;
+  lesson_price?: number;
+  cap: number;
+  hint: string;
+}
+
 /**
  * Guruh ro'yxatidagi o'quvchi yonidagi uch nuqta menyusi:
  * Faollashtirish · Boshqa guruhga o'tkazish · O'chirish.
@@ -33,6 +45,13 @@ export function StudentRowMenu({
   const [freezing, setFreezing] = useState(false);
   const [fUntil, setFUntil] = useState("");
   const [fNote, setFNote] = useState("");
+  // Faollashtirish: qaysi kundan o'qishni boshlagani so'raladi —
+  // shu kundan oy oxirigacha nechta dars bo'lsa, shuncha pul yechiladi.
+  const [activating, setActivating] = useState(false);
+  const [aOn, setAOn] = useState(() =>
+    new Date().toISOString().slice(0, 10)
+  );
+  const [aPrev, setAPrev] = useState<ActivatePreview | null>(null);
   const [moving, setMoving] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -58,6 +77,8 @@ export function StudentRowMenu({
       await fn();
       setOpen(false);
       setMoving(false);
+      setActivating(false);
+      setAPrev(null);
       setProblems([]);
       setPendingGroup(null);
       onChanged();
@@ -73,8 +94,23 @@ export function StudentRowMenu({
     }
   }
 
+  // Sana o'zgarganda qancha pul yechilishini oldindan ko'rsatamiz
+  useEffect(() => {
+    if (!activating || !aOn) return;
+    let alive = true;
+    api
+      .get<ActivatePreview>(
+        `/students/${student.id}/activate-preview?on=${aOn}`
+      )
+      .then((p) => alive && setAPrev(p))
+      .catch(() => alive && setAPrev(null));
+    return () => {
+      alive = false;
+    };
+  }, [activating, aOn, student.id]);
+
   const activate = () =>
-    run(() => api.post(`/students/${student.id}/activate`, {}));
+    run(() => api.post(`/students/${student.id}/activate`, { on: aOn }));
 
   const freeze = () => {
     if (!fUntil) { setErr("Qaytish sanasini belgilang"); return; }
@@ -255,7 +291,59 @@ export function StudentRowMenu({
             </div>
           )}
 
-          {freezing ? (
+          {activating ? (
+            <div className="px-3 py-2">
+              <p className="text-xs font-medium text-slate-600 mb-1.5">
+                Qaysi kundan o'qishni boshladi? *
+              </p>
+              <input
+                type="date"
+                value={aOn}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(e) => setAOn(e.target.value)}
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2"
+              />
+              {aPrev && (
+                <div
+                  className={`rounded-lg px-2.5 py-2 mb-2 text-xs ${
+                    aPrev.already
+                      ? "bg-slate-50 text-slate-500"
+                      : "bg-emerald-50 text-emerald-800"
+                  }`}
+                >
+                  {aPrev.already ? (
+                    aPrev.hint
+                  ) : (
+                    <>
+                      Hisobidan{" "}
+                      <b>{aPrev.amount.toLocaleString("ru-RU")} so'm</b>{" "}
+                      yechiladi
+                      <div className="text-[11px] opacity-80 mt-0.5">
+                        {aPrev.hint}
+                        {aPrev.lessons >= aPrev.cap &&
+                          " — oyiga eng ko'pi 12 dars, ortig'i bonus"}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => { setActivating(false); setAPrev(null); }}
+                  className="flex-1 text-sm text-slate-500 py-1.5"
+                >
+                  Bekor
+                </button>
+                <button
+                  onClick={activate}
+                  disabled={busy || !aOn}
+                  className="flex-1 bg-emerald-600 text-white rounded-lg py-1.5 text-sm font-medium disabled:opacity-40"
+                >
+                  Faollashtirish
+                </button>
+              </div>
+            </div>
+          ) : freezing ? (
             <div className="px-3 py-2">
               <p className="text-xs font-medium text-slate-600 mb-1.5">
                 Muzlatish — qachon qaytadi? *
@@ -295,7 +383,7 @@ export function StudentRowMenu({
                 To'lov qo'shish
               </button>
               <button
-                onClick={activate}
+                onClick={() => { setActivating(true); setErr(""); }}
                 disabled={busy || student.status === "active"}
                 className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white"
               >

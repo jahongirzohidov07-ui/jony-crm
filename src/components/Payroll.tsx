@@ -1,0 +1,612 @@
+import { useEffect, useState } from "react";
+import { Wallet, Check, Trash2, Search, Download } from "lucide-react";
+import {
+  api,
+  type StaffPayrollList,
+  type StaffPayrollRow,
+  type StaffSalaryHistory,
+  type MonthPayments,
+} from "../lib/api";
+import { formatSom, formatDate } from "../lib/format";
+import { MONTHS } from "../lib/expenses";
+import { exportToExcel } from "../lib/exportXlsx";
+
+const now = new Date();
+
+/** Oy va yilni tanlash — uchala bo'limda bir xil ko'rinadi. */
+function PeriodPicker({
+  year, month, onYear, onMonth,
+}: {
+  year: number;
+  month: number;
+  onYear: (v: number) => void;
+  onMonth: (v: number) => void;
+}) {
+  const years = [now.getFullYear(), now.getFullYear() - 1];
+  return (
+    <div className="flex gap-2">
+      <select
+        value={month}
+        onChange={(e) => onMonth(Number(e.target.value))}
+        className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm bg-white"
+      >
+        {MONTHS.map((m, i) => (
+          <option key={m} value={i + 1}>{m}</option>
+        ))}
+      </select>
+      <select
+        value={year}
+        onChange={(e) => onYear(Number(e.target.value))}
+        className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm bg-white"
+      >
+        {years.map((y) => (
+          <option key={y} value={y}>{y}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+/**
+ * Bitta xodimga oylik berish oynasi. Summa avtomat "qoldiq" bilan
+ * to'ldiriladi — eng ko'p uchraydigan holat shu, bir bosishda tugaydi.
+ */
+function PayModal({
+  row, period, kinds, onClose, onDone,
+}: {
+  row: StaffPayrollRow;
+  period: string;
+  kinds: { key: string; label: string }[];
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const [amount, setAmount] = useState(String(Math.max(0, row.left)));
+  const [kind, setKind] = useState("salary");
+  const [method, setMethod] = useState("cash");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [hist, setHist] = useState<StaffSalaryHistory | null>(null);
+
+  function loadHist() {
+    if (!row.user_id) return;
+    api
+      .get<StaffSalaryHistory>(
+        `/staff-salary?user_id=${row.user_id}&period=${period}`
+      )
+      .then(setHist)
+      .catch(() => setHist(null));
+  }
+  useEffect(loadHist, [row.user_id, period]);
+
+  async function save() {
+    setBusy(true);
+    setErr("");
+    try {
+      await api.post("/staff-salary", {
+        user_id: row.user_id,
+        amount: Number(amount),
+        kind,
+        method,
+        period,
+        note,
+      });
+      onDone();
+      onClose();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function remove(id: number) {
+    if (!confirm("Bu yozuv o'chirilsinmi?")) return;
+    try {
+      await api.delete(`/staff-salary/${id}`);
+      loadHist();
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5 shadow-xl">
+        <h3 className="font-semibold text-slate-900 mb-0.5">
+          {row.name} — oylik berish
+        </h3>
+        <p className="text-xs text-slate-500 mb-4">
+          {period} · hisoblangan {formatSom(row.salary)} · berilgan{" "}
+          {formatSom(row.paid)} · qoldiq{" "}
+          <b className={row.left > 0 ? "text-red-600" : "text-emerald-600"}>
+            {formatSom(row.left)}
+          </b>
+        </p>
+
+        <div className="space-y-3">
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Summa (so'm) *
+            </label>
+            <input
+              type="number"
+              autoFocus
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Turi
+              </label>
+              <select
+                value={kind}
+                onChange={(e) => setKind(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              >
+                {kinds.map((k) => (
+                  <option key={k.key} value={k.key}>{k.label}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Usul
+              </label>
+              <select
+                value={method}
+                onChange={(e) => setMethod(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              >
+                <option value="cash">Naqd</option>
+                <option value="card">Click</option>
+                <option value="terminal">Terminal</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Izoh
+            </label>
+            <input
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Ixtiyoriy"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            />
+          </div>
+        </div>
+
+        {hist && hist.rows.length > 0 && (
+          <div className="mt-4 border-t border-slate-100 pt-3">
+            <p className="text-xs font-medium text-slate-600 mb-2">
+              Shu oyda berilgan:
+            </p>
+            <div className="space-y-1.5 max-h-40 overflow-y-auto">
+              {hist.rows.map((h) => (
+                <div
+                  key={h.id}
+                  className="flex items-center justify-between text-xs text-slate-600"
+                >
+                  <span>
+                    {h.date && formatDate(h.date)} · {h.kind_label}
+                    {h.note && ` · ${h.note}`}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <b className="text-slate-800">{formatSom(h.amount)}</b>
+                    {hist.can_pay && (
+                      <button
+                        onClick={() => remove(h.id)}
+                        className="text-slate-400 hover:text-red-600"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {err && <p className="text-sm text-red-600 mt-3">{err}</p>}
+
+        <div className="flex gap-2 mt-5">
+          <button
+            onClick={save}
+            disabled={busy || !Number(amount)}
+            className="flex-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+          >
+            {busy ? "Saqlanmoqda…" : "Berildi"}
+          </button>
+          <button
+            onClick={onClose}
+            className="px-4 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Examiner yoki support teacher oyliklari jadvali. Har qatorda
+ * "To'lash" tugmasi — Moliya bo'limidan chiqmasdan oylik beriladi.
+ */
+function PayrollTable({ url, title, hint }: {
+  url: string;
+  title: string;
+  hint: string;
+}) {
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<StaffPayrollList | null>(null);
+  const [err, setErr] = useState("");
+  const [pay, setPay] = useState<StaffPayrollRow | null>(null);
+
+  function load() {
+    setErr("");
+    api
+      .get<StaffPayrollList>(`${url}?year=${year}&month=${month}`)
+      .then(setD)
+      .catch((e) => {
+        setD(null);
+        setErr(e instanceof Error ? e.message : "Xatolik");
+      });
+  }
+  useEffect(load, [url, year, month]);
+
+  if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div>
+          <p className="text-sm font-medium text-slate-800">{title}</p>
+          <p className="text-xs text-slate-500">
+            {d.period} · hisoblangan{" "}
+            <b className="text-slate-800">{formatSom(d.total)}</b> · berilgan{" "}
+            <b className="text-emerald-600">{formatSom(d.paid_total)}</b> ·
+            qoldiq{" "}
+            <b className="text-red-600">{formatSom(d.left_total)}</b>
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <PeriodPicker
+            year={year} month={month} onYear={setYear} onMonth={setMonth}
+          />
+          <button
+            onClick={() =>
+              exportToExcel(`${title}-${d.period}`, title, d.rows.map((r) => ({
+                "F.I.Sh.": r.name,
+                Hisoblangan: r.salary,
+                Berilgan: r.paid,
+                Qoldiq: r.left,
+              })))
+            }
+            className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+          >
+            <Download size={14} /> Excel
+          </button>
+        </div>
+      </div>
+
+      {d.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Bu oyda xodim topilmadi.
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-xs text-slate-500">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">F.I.Sh.</th>
+                <th className="text-right px-3 py-2.5 font-medium">
+                  Hisoblangan
+                </th>
+                <th className="text-right px-3 py-2.5 font-medium">Berilgan</th>
+                <th className="text-right px-3 py-2.5 font-medium">Qoldiq</th>
+                <th className="px-3 py-2.5" />
+              </tr>
+            </thead>
+            <tbody>
+              {d.rows.map((r) => (
+                <tr
+                  key={r.user_id ?? r.teacher_id ?? r.name}
+                  className="border-t border-slate-100"
+                >
+                  <td className="px-4 py-2.5">
+                    <p className="text-slate-900">{r.name}</p>
+                    <p className="text-xs text-slate-400">
+                      {r.exam_count !== undefined
+                        ? `${r.exam_count} imtihon · ${r.points} ball`
+                        : `${r.hours ?? 0} soat · ${r.students ?? 0} o'quvchi`}
+                    </p>
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-slate-800">
+                    {formatSom(r.salary)}
+                    {(r.clamped_min || r.clamped_max) && (
+                      <span className="text-xs text-amber-600 ml-1">
+                        ({r.clamped_min ? "min" : "max"})
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-emerald-600">
+                    {r.paid ? formatSom(r.paid) : "—"}
+                  </td>
+                  <td
+                    className={`px-3 py-2.5 text-right font-medium ${
+                      r.left > 0 ? "text-red-600" : "text-emerald-600"
+                    }`}
+                  >
+                    {r.left <= 0 ? (
+                      <span className="inline-flex items-center gap-1">
+                        <Check size={13} /> To'landi
+                      </span>
+                    ) : (
+                      formatSom(r.left)
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5 text-right">
+                    {d.can_pay && r.user_id && (
+                      <button
+                        onClick={() => setPay(r)}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 text-xs font-medium"
+                      >
+                        <Wallet size={13} /> Oylik berish
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <p className="text-xs text-slate-400 mt-3 max-w-3xl">{hint}</p>
+
+      {pay && (
+        <PayModal
+          row={pay}
+          period={d.period}
+          kinds={d.kinds || [{ key: "salary", label: "Oylik" }]}
+          onClose={() => setPay(null)}
+          onDone={load}
+        />
+      )}
+    </div>
+  );
+}
+
+/** Moliya > Oyliklar: examiner va support teacher bir joyda. */
+export function PayrollTab() {
+  const [sub, setSub] = useState<"examiner" | "support">("examiner");
+  const SUBS: { key: "examiner" | "support"; label: string }[] = [
+    { key: "examiner", label: "Examiner oyliklari" },
+    { key: "support", label: "Support teacher oyliklari" },
+  ];
+
+  return (
+    <div>
+      <div className="flex gap-1.5 mb-5">
+        {SUBS.map((s) => (
+          <button
+            key={s.key}
+            onClick={() => setSub(s.key)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
+              sub === s.key
+                ? "bg-brand-600 text-white"
+                : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300"
+            }`}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+
+      {sub === "examiner" ? (
+        <PayrollTable
+          url="/examiners/salary"
+          title="Examiner oyliklari"
+          hint="Oylik o'tkazilgan imtihonlardan avtomat hisoblanadi:
+                daraja bo'yicha baza ball + qatnashgan o'quvchi. Jarima va
+                qo'lda ayirilgan ballar chegiriladi."
+        />
+      ) : (
+        <PayrollTable
+          url="/support/salary"
+          title="Support teacher oyliklari"
+          hint="Oylik seanslardan avtomat hisoblanadi: (soat x 0.30 +
+                o'quvchi x 0.20 + test koef x 0.50) x 10 000 so'm."
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * Moliya > Shu oy to'lovlari. Administrator har kuni "kim to'ladi?"
+ * deb so'raydi — ro'yxat shu yerda turadi.
+ */
+export function MonthPaymentsTab() {
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<MonthPayments | null>(null);
+  const [err, setErr] = useState("");
+  const [q, setQ] = useState("");
+  const [only, setOnly] = useState<"all" | "new" | "old">("all");
+
+  useEffect(() => {
+    setErr("");
+    api
+      .get<MonthPayments>(`/payments/month?year=${year}&month=${month}`)
+      .then(setD)
+      .catch((e) => {
+        setD(null);
+        setErr(e instanceof Error ? e.message : "Xatolik");
+      });
+  }, [year, month]);
+
+  if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  const needle = q.trim().toLowerCase();
+  const rows = d.rows.filter((r) => {
+    if (only === "new" && !r.is_new) return false;
+    if (only === "old" && r.is_new) return false;
+    if (!needle) return true;
+    return (
+      r.student.toLowerCase().includes(needle) ||
+      (r.phone || "").includes(needle)
+    );
+  });
+
+  const FILTERS: { key: "all" | "new" | "old"; label: string }[] = [
+    { key: "all", label: `Hammasi (${d.count})` },
+    { key: "new", label: "Yangi mijoz" },
+    { key: "old", label: "Eski to'lov" },
+  ];
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+        {[
+          { l: "Jami tushum", v: formatSom(d.total), c: "text-slate-900" },
+          { l: "To'lovlar soni", v: String(d.count), c: "text-slate-900" },
+          {
+            l: "Yangi mijozlardan", v: formatSom(d.new_total),
+            c: "text-brand-700",
+          },
+          {
+            l: "Eski to'lovlardan", v: formatSom(d.old_total),
+            c: "text-emerald-600",
+          },
+        ].map((s) => (
+          <div
+            key={s.l}
+            className="bg-white rounded-xl border border-slate-200 p-4"
+          >
+            <p className="text-xs text-slate-500 mb-1">{s.l}</p>
+            <p className={`text-lg font-semibold ${s.c}`}>{s.v}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="relative">
+          <Search
+            size={15}
+            className="absolute left-2.5 top-2.5 text-slate-400"
+          />
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="O'quvchi yoki telefon"
+            className="rounded-lg border border-slate-300 pl-8 pr-3 py-1.5 text-sm w-56"
+          />
+        </div>
+        <div className="flex gap-1.5">
+          {FILTERS.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => setOnly(f.key)}
+              className={`px-3 py-1.5 rounded-lg text-sm transition ${
+                only === f.key
+                  ? "bg-brand-600 text-white"
+                  : "bg-white border border-slate-200 text-slate-600"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+        <PeriodPicker
+          year={year} month={month} onYear={setYear} onMonth={setMonth}
+        />
+        <button
+          onClick={() =>
+            exportToExcel(`Tolovlar-${d.period}`, "To'lovlar", rows.map((r) => ({
+              Sana: r.date || "",
+              "O'quvchi": r.student,
+              Telefon: r.phone || "",
+              Summa: r.amount,
+              Usul: r.method_label,
+              Turi: r.is_new ? "Yangi mijoz" : "Eski to'lov",
+              Filial: r.branch,
+              "Qabul qilgan": r.created_by || "",
+            })))
+          }
+          className="flex items-center gap-1.5 rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+        >
+          <Download size={14} /> Excel
+        </button>
+      </div>
+
+      {rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Bu oyda to'lov yo'q.
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-xs text-slate-500">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">Sana</th>
+                <th className="text-left px-3 py-2.5 font-medium">O'quvchi</th>
+                <th className="text-right px-3 py-2.5 font-medium">Summa</th>
+                <th className="text-left px-3 py-2.5 font-medium">Usul</th>
+                <th className="text-left px-3 py-2.5 font-medium">Turi</th>
+                <th className="text-left px-3 py-2.5 font-medium">
+                  Qabul qilgan
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5 text-slate-500 whitespace-nowrap">
+                    {r.date && formatDate(r.date)}
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <p className="text-slate-900">{r.student}</p>
+                    {r.phone && (
+                      <p className="text-xs text-slate-400">{r.phone}</p>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5 text-right font-medium text-emerald-600 whitespace-nowrap">
+                    {formatSom(r.amount)}
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-600">
+                    {r.method_label}
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                        r.is_new
+                          ? "bg-brand-100 text-brand-700"
+                          : "bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      {r.is_new ? "Yangi mijoz" : "Eski to'lov"}
+                    </span>
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-500">
+                    {r.created_by || "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -59,6 +59,9 @@ function LeadForm({
   );
   const meIsAdmin =
     me?.role === "administrator" || me?.role === "sales_manager";
+  // Xodimning o'z filiali bo'lsa, lid o'sha yerga tushadi — tanlash
+  // oynasi ortiqcha. Filialsiz (asoschi, SMM) uchungina chiqadi.
+  const needBranch = !me?.branch_id && branches.length > 1;
   // Admin uchun backend o'zi biriktiradi — bu yerda tanlanmaydi.
   const [assignedId, setAssignedId] = useState(
     initial?.assigned_user_id ? String(initial.assigned_user_id) : ""
@@ -78,8 +81,26 @@ function LeadForm({
   );
 
   async function save() {
-    if (!fullName.trim()) {
-      setError("Ism-familiyani kiriting");
+    // Lid to'liq to'ldirilmasa, keyin qaysi mahalladan va qaysi
+    // maktabdan ko'p o'quvchi kelayotgani ko'rinmay qoladi — shuning
+    // uchun bo'sh qoldirishga yo'l qo'ymaymiz.
+    const missing = [
+      [fullName.trim(), "Ism-familiya"],
+      [(phone ?? "").replace(/\D/g, "").length >= 9 ? "1" : "", "Telefon"],
+      [(address ?? "").trim(), "Qayerdan (mahalla / tuman)"],
+      [(school ?? "").trim(), "Maktab"],
+      [(grade ?? "").trim(), "Sinf"],
+      [source, "Qayerdan keldi"],
+      [stage, "Bosqich"],
+      ...(needBranch ? [[branchId, "Filial"] as [string, string]] : []),
+    ].filter(([v]) => !v).map(([, label]) => label);
+
+    if (missing.length) {
+      setError(
+        missing.length === 1
+          ? `"${missing[0]}" to'ldirilmadi`
+          : `To'ldirilmadi: ${missing.join(", ")}`
+      );
       return;
     }
     setSaving(true);
@@ -164,14 +185,14 @@ function LeadForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Telefon
+              Telefon *
             </label>
             <PhoneInput value={phone ?? ""} onChange={setPhone} />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Qayerdan (mahalla / tuman)
+              Qayerdan (mahalla / tuman) *
             </label>
             <PickList
               value={address ?? ""}
@@ -188,7 +209,7 @@ function LeadForm({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Maktab
+                Maktab *
               </label>
               <PickList
                 value={school ?? ""}
@@ -199,7 +220,7 @@ function LeadForm({
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Sinf
+                Sinf *
               </label>
               <select
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
@@ -218,7 +239,7 @@ function LeadForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Qayerdan keldi
+              Qayerdan keldi *
             </label>
             <div className="flex flex-wrap gap-1.5">
               {LEAD_SOURCES.map((s) => (
@@ -240,7 +261,7 @@ function LeadForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Bosqich
+              Bosqich *
             </label>
             <select
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
@@ -263,16 +284,14 @@ function LeadForm({
             )}
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
-              Mas'ul xodim
-            </label>
-            {meIsAdmin ? (
-              <p className="text-sm text-slate-700 bg-slate-50 rounded-lg px-3 py-2">
-                Siz — <b>{me?.full_name}</b> (admin kiritgan lidga avtomat
-                o'zi mas'ul bo'ladi)
-              </p>
-            ) : (
+          {/* Adminga "mas'ul xodim" ko'rsatilmaydi — u baribir o'zi
+              bo'ladi va buni admin biladi. Rahbar boshqaga biriktirishi
+              mumkin, shuning uchun unga ro'yxat chiqadi. */}
+          {!meIsAdmin && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Mas'ul xodim
+              </label>
               <select
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
                 value={assignedId}
@@ -285,13 +304,16 @@ function LeadForm({
                   </option>
                 ))}
               </select>
-            )}
-          </div>
+            </div>
+          )}
 
-          {branches.length > 1 && (
+          {/* Filiali bor xodimning lidi o'z filialiga tushadi — tanlash
+              shart emas. Faqat butun tashkilotni ko'radiganlar (asoschi,
+              SMM) uchun ro'yxat chiqadi. */}
+          {needBranch && (
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
-                Filial
+                Filial *
               </label>
               <select
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
@@ -310,7 +332,7 @@ function LeadForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Izoh
+              Izoh (ixtiyoriy)
             </label>
             <textarea
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"

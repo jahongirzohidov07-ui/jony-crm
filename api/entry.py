@@ -1313,3 +1313,470 @@ if _orig_timetable_grid is not None:
         except Exception:
             out.setdefault("changes", [])
         return out
+
+
+# =====================================================================
+#  OMBOR (kitoblar, qabul qilish, hisobot) + LID MAS'ULI + JAMOAVIY KPI
+# =====================================================================
+from datetime import datetime as _dt2
+
+from database import SessionLocal as _SessionLocal
+
+# "Admin" deb ikkala rol tushuniladi: sotuv menejeri (Administrator) va
+# administrator (qabul). Lidga mas'ul faqat shulardan bo'ladi.
+_ADMIN_ROLES = (roles.ADMINISTRATOR, roles.SALES_MANAGER)
+_BOOK_KINDS = ("book", "welcome_pack")
+
+# --- stock_moves: "qabul qilib oldim" ustunlari (idempotent ALTER) ---
+try:
+    _sm_cols = {c["name"]
+                for c in _sa_inspect(_engine).get_columns("stock_moves")}
+    with _engine.begin() as _con:
+        if "accepted_by" not in _sm_cols:
+            _con.execute(_sa_text(
+                "ALTER TABLE stock_moves ADD COLUMN accepted_by INTEGER"))
+        if "accepted_at" not in _sm_cols:
+            _con.execute(_sa_text(
+                "ALTER TABLE stock_moves ADD COLUMN accepted_at TIMESTAMP"))
+except Exception:
+    pass
+
+
+# --- Har filialda standart kitoblar bo'lsin ---
+def _seed_books() -> None:
+    db = _SessionLocal()
+    try:
+        defaults = [("Step 1", "book"), ("Step 2", "book"),
+                    ("Step 3", "book"), ("Welcome Pack", "welcome_pack")]
+        added = False
+        for b in db.query(models.Branch).all():
+            for name, kind in defaults:
+                exists = (db.query(models.Consumable)
+                          .filter(models.Consumable.branch_id == b.id,
+                                  func.lower(models.Consumable.name)
+                                  == name.lower())
+                          .first())
+                if not exists:
+                    db.add(models.Consumable(
+                        name=name, kind=kind, branch_id=b.id,
+                        qty=0, min_qty=0, unit="dona"))
+                    added = True
+        if added:
+            db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
+
+
+try:
+    _seed_books()
+except Exception:
+    pass
+
+
+# --- Lidga mas'ul bo'la oladiganlar: faqat adminlar ---
+_orig_assignable = _find_endpoint("/api/users/assignable", "GET")
+
+if _orig_assignable is not None:
+    _drop_route("/api/users/assignable", "GET")
+
+    @app.get("/api/users/assignable",
+             response_model=list[schemas.StaffOption])
+    def assignable_v2(db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.LEAD_ACCESS))):
+        """Ustoz va examiner mas'ul bo'lmaydi — faqat adminlar."""
+        q = scope_to_branch(db.query(models.User), models.User, user)
+        return (q.filter(models.User.is_active == 1,
+                         models.User.role.in_(_ADMIN_ROLES))
+                .order_by(models.User.full_name).all())
+
+
+# --- Lid yaratish: admin kiritsa mas'ul avtomat o'zi ---
+_orig_create_lead2 = _find_endpoint("/api/leads", "POST")
+
+if _orig_create_lead2 is not None:
+    _drop_route("/api/leads", "POST")
+
+    @app.post("/api/leads", response_model=schemas.LeadOut)
+    def create_lead_v2(payload: schemas.LeadCreate,
+                       db: Session = Depends(get_db),
+                       user: models.User = Depends(
+                           require_role(*roles.LEAD_ACCESS))):
+        if user.role in _ADMIN_ROLES:
+            payload.assigned_user_id = user.id
+        elif payload.assigned_user_id:
+            a = db.query(models.User).get(payload.assigned_user_id)
+            if not a or a.role not in _ADMIN_ROLES:
+                raise HTTPException(
+                    400, "Mas'ul xodim faqat administrator bo'la oladi")
+        return _orig_create_lead2(payload=payload, db=db, user=user)
+
+
+# --- Lid tahrirlash: mas'ulsiz lidni admin surse — o'zi mas'ul bo'ladi ---
+_orig_update_lead2 = _find_endpoint("/api/leads/{lead_id}", "PUT")
+
+if _orig_update_lead2 is not None:
+    _drop_route("/api/leads/{lead_id}", "PUT")
+
+    @app.put("/api/leads/{lead_id}", response_model=schemas.LeadOut)
+    def update_lead_v2(lead_id: int, payload: schemas.LeadUpdate,
+                       db: Session = Depends(get_db),
+                       user: models.User = Depends(
+                           require_role(*roles.LEAD_ACCESS))):
+        want = getattr(payload, "assigned_user_id", None)
+        if want:
+            a = db.query(models.User).get(want)
+            if not a or a.role not in _ADMIN_ROLES:
+                raise HTTPException(
+                    400, "Mas'ul xodim faqat administrator bo'la oladi")
+        out = _orig_update_lead2(lead_id=lead_id, payload=payload,
+                                 db=db, user=user)
+        try:
+            lead = db.query(models.Lead).get(lead_id)
+            if (lead is not None and not lead.assigned_user_id
+                    and user.role in _ADMIN_ROLES):
+                lead.assigned_user_id = user.id
+                db.commit()
+                db.refresh(lead)
+                out = lead
+        except Exception:
+            pass
+        return out
+
+
+# --- Marketing (inbox) lidi: filialda bitta admin bo'lsa — avtomat u ---
+_orig_msg_lead = _find_endpoint("/api/inbox/{mid}/lead", "POST")
+
+if _orig_msg_lead is not None:
+    _drop_route("/api/inbox/{mid}/lead", "POST")
+
+    @app.post("/api/inbox/{mid}/lead")
+    def message_to_lead_v2(mid: int, payload: schemas.MessageToLead,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.INBOX_ACCESS))):
+        out = _orig_msg_lead(mid=mid, payload=payload, db=db, user=user)
+        try:
+            lid = out.get("lead_id") if isinstance(out, dict) else None
+            lead = db.query(models.Lead).get(lid) if lid else None
+            if lead is not None and not lead.assigned_user_id and lead.branch_id:
+                admins = (db.query(models.User)
+                          .filter(models.User.is_active == 1,
+                                  models.User.role.in_(_ADMIN_ROLES),
+                                  models.User.branch_id == lead.branch_id)
+                          .all())
+                if len(admins) == 1:
+                    lead.assigned_user_id = admins[0].id
+                    db.commit()
+        except Exception:
+            pass
+        return out
+
+
+# --- Kitoblar ro'yxati (to'lov oynasi uchun) ---
+_INV_BOOK_ROLES = tuple(dict.fromkeys(
+    list(roles.INVENTORY_VIEW) + list(_ADMIN_ROLES)))
+
+
+@app.get("/api/consumables/books")
+def list_books_v2(branch_id: int | None = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*_INV_BOOK_ROLES))):
+    q = scope_to_branch(db.query(models.Consumable), models.Consumable,
+                        user, branch_id)
+    rows = (q.filter(models.Consumable.kind.in_(_BOOK_KINDS))
+            .order_by(models.Consumable.name).all())
+    if not rows:
+        # Yangi filial — standart kitoblarni shu yerda ham yaratib olamiz
+        _seed_books()
+        rows = (q.filter(models.Consumable.kind.in_(_BOOK_KINDS))
+                .order_by(models.Consumable.name).all())
+    return [{"id": c.id, "name": c.name, "qty": c.qty or 0,
+             "unit": c.unit or "dona", "branch_id": c.branch_id}
+            for c in rows]
+
+
+# --- Kitob berish (yangi to'lov bilan): ombordan kamayadi ---
+class _GiveBookIn(_BM):
+    student_id: int | None = None
+    note: str | None = None
+
+
+@app.post("/api/consumables/{cid}/give-book")
+def give_book_v2(cid: int, payload: _GiveBookIn,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*_INV_BOOK_ROLES))):
+    c = db.query(models.Consumable).get(cid)
+    if not c:
+        raise HTTPException(404, "Mahsulot topilmadi")
+    if (c.qty or 0) < 1:
+        raise HTTPException(
+            409, f"Omborda yo'q: \"{c.name}\" qoldig'i 0. "
+                 "Filial rahbariga ayting — kirim qilinsin.")
+    st = (db.query(models.Student).get(payload.student_id)
+          if payload.student_id else None)
+    note = "Kitob berildi (to'lov bilan)"
+    if st:
+        note += f": {st.full_name}"
+    if payload.note:
+        note += f" — {payload.note}"
+    db.add(models.StockMove(consumable_id=c.id, delta=-1, reason="out",
+                            note=note, created_by=user.full_name))
+    c.qty = (c.qty or 0) - 1
+    db.commit()
+    try:
+        M._check_stock(db, c)
+        db.commit()
+    except Exception:
+        pass
+    return {"ok": True, "qty": c.qty, "name": c.name}
+
+
+# --- Qabul qilinmagan kirimlar ---
+@app.get("/api/stock-moves/pending")
+def pending_stock_moves_v2(branch_id: int | None = None,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*_INV_BOOK_ROLES))):
+    rows = db.execute(_sa_text(
+        "SELECT sm.id, sm.delta, sm.note, sm.created_by, sm.created_at, "
+        "c.name, c.unit, c.branch_id "
+        "FROM stock_moves sm JOIN consumables c ON c.id = sm.consumable_id "
+        "WHERE sm.reason = 'in' AND sm.accepted_at IS NULL "
+        "ORDER BY sm.created_at DESC")).fetchall()
+    if user.role in tuple(roles.ORG_WIDE_ROLES):
+        bid = branch_id
+    else:
+        bid = user.branch_id
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    out = []
+    for r in rows:
+        if bid and r[7] and r[7] != bid:
+            continue
+        out.append({
+            "id": r[0], "qty": abs(r[1] or 0), "note": r[2], "by": r[3],
+            "created_at": (r[4].isoformat()
+                           if hasattr(r[4], "isoformat") else str(r[4] or "")),
+            "name": r[5], "unit": r[6] or "dona",
+            "branch": bnames.get(r[7], "—"),
+        })
+    return {"rows": out,
+            "can_accept": user.role in
+            ((roles.FOUNDER, roles.BRANCH_MANAGER) + _ADMIN_ROLES)}
+
+
+# --- Kirimni qabul qilish: filial rahbari, bo'lmasa admin ---
+@app.post("/api/stock-moves/{mid}/accept")
+def accept_stock_move_v2(mid: int, db: Session = Depends(get_db),
+                         user=Depends(require_role(
+                             roles.FOUNDER, roles.BRANCH_MANAGER,
+                             *_ADMIN_ROLES))):
+    row = db.execute(_sa_text(
+        "SELECT sm.id, sm.reason, sm.accepted_at, c.branch_id, c.name "
+        "FROM stock_moves sm JOIN consumables c ON c.id = sm.consumable_id "
+        "WHERE sm.id = :i"), {"i": mid}).fetchone()
+    if not row:
+        raise HTTPException(404, "Harakat topilmadi")
+    if row[1] != "in":
+        raise HTTPException(400, "Faqat kirim qabul qilinadi")
+    if row[2] is not None:
+        raise HTTPException(400, "Bu kirim allaqachon qabul qilingan")
+    bid = row[3]
+    if (user.role != roles.FOUNDER and user.branch_id and bid
+            and user.branch_id != bid):
+        raise HTTPException(403, "Bu boshqa filialning ombori")
+    if user.role in _ADMIN_ROLES:
+        bm = (db.query(models.User)
+              .filter(models.User.role == roles.BRANCH_MANAGER,
+                      models.User.is_active == 1,
+                      models.User.branch_id == bid)
+              .first())
+        if bm:
+            raise HTTPException(
+                403, f"Qabul qilishni filial rahbari ({bm.full_name}) "
+                     "belgilashi kerak")
+    db.execute(_sa_text(
+        "UPDATE stock_moves SET accepted_by = :u, accepted_at = :t "
+        "WHERE id = :i"),
+        {"u": user.id, "t": _dt2.utcnow(), "i": mid})
+    db.commit()
+    return {"ok": True}
+
+
+# --- Kitob hisoboti: qaysi filialda nechta qoldi ---
+_BOOK_REPORT_ALL = (roles.FOUNDER, roles.FINANCE_DIRECTOR,
+                    roles.FACILITY_MANAGER, roles.HR_MANAGER)
+
+
+@app.get("/api/inventory/book-report")
+def book_report_v2(db: Session = Depends(get_db),
+                   user=Depends(require_role(
+                       *(_BOOK_REPORT_ALL + (roles.BRANCH_MANAGER,))))):
+    q = db.query(models.Consumable).filter(
+        models.Consumable.kind.in_(_BOOK_KINDS))
+    if user.role == roles.BRANCH_MANAGER and user.branch_id:
+        q = q.filter(models.Consumable.branch_id == user.branch_id)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    rows = q.all()
+    names = sorted({c.name for c in rows})
+    per: dict = {}
+    for c in rows:
+        b = bnames.get(c.branch_id, "Filialsiz")
+        per.setdefault(b, {})
+        per[b][c.name] = (per[b].get(c.name, 0) or 0) + (c.qty or 0)
+    return {
+        "books": names,
+        "rows": [{"branch": b,
+                  "counts": {n: v.get(n, 0) for n in names},
+                  "total": sum(v.values())}
+                 for b, v in sorted(per.items())],
+    }
+
+
+# --- Adminlar KPI: eski to'lov yig'ish JAMOAVIY (filial bo'yicha) ---
+_drop_route("/api/kpi/admins", "GET")
+
+
+@app.get("/api/kpi/admins", response_model=schemas.AdminKpiResult)
+def admin_kpi_v2(year: int, month: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.KPI_VIEW))):
+    """Eski to'lovlarni yig'ish — jamoaviy bonus: filialdagi UMUMIY
+    yig'ilgan summa bilan o'lchanadi (mas'ul xodimga bo'linmaydi).
+    Bir filialda ikkita admin bo'lsa, ikkalasiga ham to'liq bonus.
+    Administrator (qabul) roli ham ro'yxatga kiradi."""
+    start, end = _billing.month_bounds(year, month)
+    period = M._period_key(year, month)
+    start_dt, end_dt = M._utc_window(start, end)
+
+    admins = db.query(models.User).filter(
+        models.User.role.in_(_ADMIN_ROLES),
+        models.User.is_active == 1,
+    )
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        admins = admins.filter(models.User.branch_id == user.branch_id)
+    admins = admins.order_by(models.User.full_name).all()
+    if not admins:
+        return schemas.AdminKpiResult(period=period, rows=[])
+
+    first_paid = M._first_payment_dates(db)
+    students = db.query(models.Student).all()
+    student_branch = {s.id: s.branch_id for s in students}
+
+    stats: dict = {}
+    for a in admins:
+        if a.branch_id in stats:
+            continue
+        stats[a.branch_id] = {
+            "active_students": sum(
+                1 for s in students
+                if s.branch_id == a.branch_id and s.status == "active"),
+            "expected": 0.0, "collected": 0.0,
+            "new_clients": set(), "new_revenue": 0.0,
+        }
+
+    charges = db.query(models.Payment).filter(
+        models.Payment.kind == "charge",
+        models.Payment.created_at >= start_dt,
+        models.Payment.created_at <= end_dt,
+    ).all()
+    for c in charges:
+        st = stats.get(student_branch.get(c.student_id))
+        if st is None:
+            continue
+        first = first_paid.get(c.student_id)
+        if first is None or first >= start_dt:
+            continue
+        st["expected"] += abs(c.amount)
+
+    pays = db.query(models.Payment).filter(
+        models.Payment.kind == "payment",
+        models.Payment.created_at >= start_dt,
+        models.Payment.created_at <= end_dt,
+    ).all()
+    for p in pays:
+        st = stats.get(student_branch.get(p.student_id))
+        if st is None:
+            continue
+        first = first_paid.get(p.student_id)
+        if first is not None and first >= start_dt:
+            st["new_clients"].add(p.student_id)
+            st["new_revenue"] += p.amount
+        else:
+            st["collected"] += p.amount
+
+    rows = []
+    for a in admins:
+        st = stats[a.branch_id]
+        pct = (round(st["collected"] / st["expected"] * 100, 1)
+               if st["expected"] else 0.0)
+        col_bonus = M._collection_bonus(db, st["active_students"], pct)
+        new_count = len(st["new_clients"])
+        new_bonus = M._new_client_bonus(db, new_count)
+        fix = a.fix_salary or 0.0
+        if (user.role not in
+                tuple(roles.FULL_ACCESS + [roles.FINANCE_DIRECTOR])
+                and a.id != user.id):
+            continue
+        rows.append(schemas.AdminKpi(
+            user_id=a.id, full_name=a.full_name, branch_id=a.branch_id,
+            branch=a.branch.name if a.branch else None,
+            fix_salary=fix,
+            active_students=st["active_students"],
+            expected=st["expected"], collected=st["collected"],
+            collection_percent=pct, collection_bonus=col_bonus,
+            new_clients=new_count, new_client_revenue=st["new_revenue"],
+            new_client_bonus=new_bonus,
+            total=fix + col_bonus + new_bonus,
+        ))
+    return schemas.AdminKpiResult(period=period, rows=rows)
+
+
+# MyProfile ham shu hisobdan foydalanadi
+M.admin_kpi = admin_kpi_v2
+
+# =====================================================================
+#  RUNTIME ROL OVERRIDE — roles.py fayli katta, o'zgarishlar shu yerda
+# =====================================================================
+# Audit ro'yxati: moliyachi va bosh examiner chiqadi, HR kiradi.
+roles.AUDIT_VIEW[:] = [roles.FOUNDER, roles.BRANCH_MANAGER,
+                       roles.HR_MANAGER]
+# SMM (kontent so'rovi) — o'quv bo'limi rahbariga kerak emas.
+roles.CONTENT_REQUESTER[:] = [r for r in roles.CONTENT_REQUESTER
+                              if r != roles.ACADEMIC_HEAD]
+# Ruxsat matritsasi (runtime o'qiladi):
+try:
+    roles.DEFAULT_MATRIX[roles.FINANCE_DIRECTOR].pop("audit", None)
+    roles.DEFAULT_MATRIX[roles.HEAD_EXAMINER].pop("audit", None)
+    roles.DEFAULT_MATRIX[roles.HR_MANAGER]["audit"] = {"view", "export"}
+except Exception:
+    pass
+
+# Audit endpointlari dekoratsiya paytida eski ro'yxatni "muhrlab" olgan —
+# yangi ro'yxat bilan qayta ulaymiz.
+_orig_audit_list = _find_endpoint("/api/audit", "GET")
+_orig_audit_meta = _find_endpoint("/api/audit/meta", "GET")
+
+if _orig_audit_list is not None:
+    _drop_route("/api/audit", "GET")
+
+    @app.get("/api/audit")
+    def audit_list_v2(entity: str | None = None,
+                      entity_id: int | None = None,
+                      action: str | None = None,
+                      user_id: int | None = None,
+                      days: int = 90,
+                      limit: int = 200,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(
+                          roles.FOUNDER, roles.BRANCH_MANAGER,
+                          roles.HR_MANAGER))):
+        return _orig_audit_list(entity=entity, entity_id=entity_id,
+                                action=action, user_id=user_id, days=days,
+                                limit=limit, db=db, user=user)
+
+if _orig_audit_meta is not None:
+    _drop_route("/api/audit/meta", "GET")
+
+    @app.get("/api/audit/meta")
+    def audit_meta_v2(user=Depends(require_role(
+            roles.FOUNDER, roles.BRANCH_MANAGER, roles.HR_MANAGER))):
+        return _orig_audit_meta(user=user)

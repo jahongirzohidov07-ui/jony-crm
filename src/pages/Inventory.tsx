@@ -674,6 +674,8 @@ function Stock({ branchId }: { branchId: number | null }) {
 
   return (
     <div>
+      <PendingIn branchId={branchId} />
+      <BookReport />
       {data.requests.length > 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5">
           <div className="flex items-center gap-2 mb-2">
@@ -1077,6 +1079,156 @@ function ConsumableForm({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ------------------------------------------- Qabul qilinmagan kirimlar ----
+type PendingRow = {
+  id: number;
+  qty: number;
+  note: string | null;
+  by: string | null;
+  created_at: string;
+  name: string;
+  unit: string;
+  branch: string;
+};
+
+function PendingIn({ branchId }: { branchId: number | null }) {
+  const [rows, setRows] = useState<PendingRow[]>([]);
+  const [canAccept, setCanAccept] = useState(false);
+  const [busy, setBusy] = useState<number | null>(null);
+
+  function load() {
+    api
+      .get<{ rows: PendingRow[]; can_accept: boolean }>(
+        `/stock-moves/pending?x=1${branchParam(branchId)}`
+      )
+      .then((d) => {
+        setRows(d.rows);
+        setCanAccept(d.can_accept);
+      })
+      .catch(() => setRows([]));
+  }
+
+  useEffect(load, [branchId]);
+
+  if (rows.length === 0) return null;
+
+  return (
+    <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 mb-5">
+      <div className="flex items-center gap-2 mb-2">
+        <Package size={15} className="text-sky-600" />
+        <p className="text-sm font-medium text-sky-900">
+          {rows.length} ta kirim qabul qilinishi kutilmoqda
+        </p>
+        <span className="text-xs text-sky-700">
+          filial rahbari (bo'lmasa admin) "qabul qilib oldim" deb belgilaydi
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {rows.map((r) => (
+          <div key={r.id} className="flex items-center gap-3 text-sm">
+            <span className="text-sky-900 flex-1">
+              {r.name} — {r.qty} {r.unit}
+              <span className="text-xs text-sky-600">
+                {" "}
+                · {r.branch} · {r.by || "—"} ·{" "}
+                {formatDate(r.created_at.slice(0, 10))}
+              </span>
+            </span>
+            {canAccept && (
+              <button
+                disabled={busy === r.id}
+                onClick={async () => {
+                  setBusy(r.id);
+                  try {
+                    await api.post(`/stock-moves/${r.id}/accept`, {});
+                    load();
+                  } catch (e) {
+                    alert(e instanceof Error ? e.message : "Xatolik");
+                  } finally {
+                    setBusy(null);
+                  }
+                }}
+                className="px-3 py-1.5 rounded-lg bg-sky-600 text-white text-xs font-medium hover:bg-sky-700 disabled:opacity-50"
+              >
+                Qabul qilib oldim
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------------------------ Kitob hisoboti ----
+type BookReportData = {
+  books: string[];
+  rows: { branch: string; counts: Record<string, number>; total: number }[];
+};
+
+function BookReport() {
+  const [data, setData] = useState<BookReportData | null>(null);
+
+  useEffect(() => {
+    api
+      .get<BookReportData>("/inventory/book-report")
+      .then(setData)
+      .catch(() => setData(null));
+  }, []);
+
+  if (!data || data.rows.length === 0) return null;
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-4 mb-5">
+      <p className="text-sm font-medium text-slate-800 mb-2">
+        Kitoblar qoldig'i — filiallar kesimida
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-xs text-slate-400">
+              <th className="py-1.5 pr-3">Filial</th>
+              {data.books.map((b) => (
+                <th key={b} className="py-1.5 pr-3">
+                  {b}
+                </th>
+              ))}
+              <th className="py-1.5">Jami</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.rows.map((r) => (
+              <tr key={r.branch} className="border-t border-slate-100">
+                <td className="py-1.5 pr-3 text-slate-700">{r.branch}</td>
+                {data.books.map((b) => (
+                  <td
+                    key={b}
+                    className={`py-1.5 pr-3 ${
+                      (r.counts[b] ?? 0) < 1
+                        ? "text-red-600 font-medium"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    {r.counts[b] ?? 0}
+                  </td>
+                ))}
+                <td className="py-1.5 font-medium text-slate-800">
+                  {r.total}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-xs text-slate-400 mt-2">
+        Yangi to'lovda admin "kitob berildi" deb belgilasa, qoldiq shu
+        yerdan avtomat kamayadi. Coin do'konidagi sovg'alar zaxirasi ham
+        o'quvchi sotib olganda o'zi kamayadi (Coin bo'limida).
+      </p>
     </div>
   );
 }

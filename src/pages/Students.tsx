@@ -276,7 +276,8 @@ export default function Students() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q]);
 
-  const canEdit = can(user?.role, TEACHING_STAFF);
+  const canEdit =
+    can(user?.role, TEACHING_STAFF) || user?.role === "hr_manager";
   const showBranchColumn = branches.length > 1;
   const filtered = students.filter((s) =>
     (!branchF || String(s.branch?.id ?? "") === branchF) &&

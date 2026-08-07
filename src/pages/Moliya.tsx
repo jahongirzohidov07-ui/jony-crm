@@ -19,7 +19,9 @@ import {
   type Branch,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, CASH_ACCESS, can } from "../lib/roles";
+import {
+  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can,
+} from "../lib/roles";
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
@@ -31,8 +33,9 @@ import { BreakEvenTab } from "../components/BreakEven";
 import { FinanceOverviewTab } from "../components/FinanceOverview";
 import { BudgetTab } from "../components/Budget";
 import { PaymentCalendarTab } from "../components/PaymentCalendar";
+import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
@@ -54,6 +57,16 @@ const FULL_TABS: { key: Tab; label: string }[] = [
   { key: "expenses", label: "Xarajatlar" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
+
+// Shu oy to'lovlari — administratorga ham ochiq, shuning uchun
+// tab ro'yxatiga rolga qarab qo'shiladi.
+const PAID_TAB: { key: Tab; label: string } = {
+  key: "paid", label: "Shu oy to'lovlari",
+};
+// Xodim oyliklari — faqat oylik beradigan va nazorat qiladiganlar.
+const PAYROLL_TAB: { key: Tab; label: string } = {
+  key: "payroll", label: "Oyliklar",
+};
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
 function short(n: number): string {
@@ -982,7 +995,11 @@ function ExpensesTab() {
 export default function Moliya() {
   const { user } = useAuth();
   const full = can(user?.role, FINANCE_ACCESS);
-  const TABS = full ? FULL_TABS : CASH_TABS;
+  const TABS = [
+    ...(full ? FULL_TABS : CASH_TABS),
+    ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
+    ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
+  ];
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish
   const [tab, setTab] = useState<Tab>(full ? "overview" : "debtors");
 
@@ -1030,6 +1047,8 @@ export default function Moliya() {
       {tab === "overview" && <FinanceOverviewTab />}
       {tab === "budget" && <BudgetTab />}
       {tab === "calendar" && <PaymentCalendarTab />}
+      {tab === "paid" && <MonthPaymentsTab />}
+      {tab === "payroll" && <PayrollTab />}
     </div>
   );
 }

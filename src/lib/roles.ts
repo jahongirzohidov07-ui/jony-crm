@@ -39,7 +39,8 @@ export const UZ_LABELS: Record<string, string> = {
   [BRANCH_MANAGER]: "Filial rahbari",
   [SALES_HEAD]: "Sotuv rahbari",
   [SALES_MANAGER]: "Administrator",
-  [ADMINISTRATOR]: "Administrator (qabul)",
+  // Eski hisoblar sales_manager'ga ko'chirildi — ikkalasi bir xil ish.
+  [ADMINISTRATOR]: "Administrator",
   [SMM_MANAGER]: "Marketolog / SMM",
   [ACADEMIC_HEAD]: "O'quv bo'limi rahbari",
   [TEACHER]: "O'qituvchi",
@@ -53,9 +54,11 @@ export const UZ_LABELS: Record<string, string> = {
   [STUDENT]: "O'quvchi",
 };
 
+// Tanlanadigan rollar. "Administrator (qabul)" bu yerda yo'q — u
+// Administrator bilan birlashdi, eski hisoblar ham shunga ko'chdi.
 export const ALL_ROLES = [
   FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, BRANCH_MANAGER,
-  SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, SMM_MANAGER,
+  SALES_HEAD, SALES_MANAGER, SMM_MANAGER,
   ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
   EXAMINER, HEAD_EXAMINER, HR_MANAGER, FACILITY_MANAGER,
   PARENT, STUDENT,
@@ -65,7 +68,7 @@ export const ROLE_GROUPS: { key: string; label: string; roles: string[] }[] = [
   { key: "leadership", label: "Rahbariyat",
     roles: [FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, BRANCH_MANAGER] },
   { key: "sales", label: "Sotuv va marketing",
-    roles: [SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, SMM_MANAGER] },
+    roles: [SALES_HEAD, SALES_MANAGER, SMM_MANAGER] },
   { key: "academic", label: "O'quv bo'limi",
     roles: [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
             EXAMINER, HEAD_EXAMINER] },
@@ -75,9 +78,12 @@ export const ROLE_GROUPS: { key: string; label: string; roles: string[] }[] = [
 ];
 
 export const EXTERNAL_ROLES = [PARENT, STUDENT];
-export const STAFF_ROLES = ALL_ROLES.filter(
-  (r) => !EXTERNAL_ROLES.includes(r)
-);
+// Eski "administrator" hisoblari ham xodim — ro'yxatdan tushib
+// qolmasin, aks holda vazifa va oylik ularga ko'rinmay qoladi.
+export const STAFF_ROLES = [
+  ...ALL_ROLES.filter((r) => !EXTERNAL_ROLES.includes(r)),
+  ADMINISTRATOR,
+];
 
 export const FULL_ACCESS = [FOUNDER, BRANCH_MANAGER];
 // Guruh ochish/tahrirlash — o'quv bo'limi rahbari ham qiladi
@@ -178,6 +184,20 @@ export const INVENTORY_VIEW = [
 export const SALARY_SELF_VIEW = STAFF_ROLES;
 export const SALARY_PAY = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT];
 
+/** Moliyadagi "Oyliklar" bo'limi — examiner va support teacher oyligi. */
+export const PAYROLL_VIEW = [
+  ...SALARY_PAY, HR_MANAGER, ACADEMIC_HEAD, HEAD_EXAMINER, HEAD_SUPPORT,
+];
+
+/**
+ * Shu oy to'lov qilganlar ro'yxati. Bu yerda xarajat ham, foyda ham
+ * yo'q — faqat kim to'ladi. Shuning uchun administratorga ham ochiq.
+ */
+export const PAYMENT_LIST_VIEW = [
+  FOUNDER, BRANCH_MANAGER, FINANCE_DIRECTOR, ACCOUNTANT,
+  SALES_MANAGER, ADMINISTRATOR,
+];
+
 /** Qarzdorlar bilan ishlaydiganlar. */
 export const DEBTOR_ACCESS = [
   ...FULL_ACCESS, SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,
@@ -212,7 +232,7 @@ export function roleLabel(role: string | undefined): string {
 /** HR HAMMAGA xodim ochadi va login/parol beradi — faqat asoschi va
  *  filial rahbari mustasno: ularni faqat asoschi tayinlaydi. */
 export const HR_ASSIGNABLE_ROLES = [
-  TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
+  TEACHER, SUPPORT_TEACHER, EXAMINER,
   SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
   SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
   HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
@@ -223,7 +243,7 @@ export function assignableRoles(myRole: string | undefined): string[] {
   if (myRole === FOUNDER) return ALL_ROLES;
   if (myRole === BRANCH_MANAGER)
     return [
-      SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
+      SALES_MANAGER, TEACHER, SUPPORT_TEACHER,
       EXAMINER, PARENT, STUDENT,
     ];
   if (myRole === HR_MANAGER) return HR_ASSIGNABLE_ROLES;

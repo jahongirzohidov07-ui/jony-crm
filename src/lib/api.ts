@@ -4370,3 +4370,76 @@ export interface ExamOrderQueue extends ExamOrderForm {
   accepted: number;
   urgent: ExamOrder[];
 }
+
+// ---------- Moliya: xodim oyliklari va to'lov qilganlar ----------
+export interface StaffPayrollRow {
+  user_id: number | null;
+  teacher_id?: number;
+  name: string;
+  role?: string;
+  salary: number;
+  paid: number;
+  left: number;
+  exam_count?: number;
+  points?: number;
+  hours?: number;
+  students?: number;
+  clamped_min?: boolean;
+  clamped_max?: boolean;
+}
+
+export interface StaffPayrollList {
+  period: string;
+  rows: StaffPayrollRow[];
+  total: number;
+  paid_total: number;
+  left_total: number;
+  min: number;
+  max: number;
+  hint?: string;
+  can_pay: boolean;
+  kinds: { key: string; label: string }[];
+}
+
+export interface StaffSalaryRow {
+  id: number;
+  amount: number;
+  kind: string;
+  kind_label: string;
+  period?: string | null;
+  date?: string | null;
+  method?: string | null;
+  note?: string | null;
+  created_by?: string | null;
+}
+
+export interface StaffSalaryHistory {
+  rows: StaffSalaryRow[];
+  total: number;
+  can_pay: boolean;
+}
+
+export interface MonthPaymentRow {
+  id: number;
+  date: string | null;
+  student_id: number;
+  student: string;
+  phone?: string | null;
+  amount: number;
+  method: string;
+  method_label: string;
+  branch: string;
+  is_new: boolean;
+  note?: string | null;
+  created_by?: string | null;
+}
+
+export interface MonthPayments {
+  period: string;
+  rows: MonthPaymentRow[];
+  count: number;
+  students: number;
+  total: number;
+  new_total: number;
+  old_total: number;
+}

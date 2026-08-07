@@ -2389,3 +2389,96 @@ if _cur_create_lead is not None:
             raise HTTPException(400, "Filial tanlanmadi")
 
         return _cur_create_lead(payload=payload, db=db, user=user)
+
+
+# =====================================================================
+#  OYLIK HISOB-KITOB: JADVALNI O'ZI YARATIB, HAMMADAN BIRDAN YECHADI
+#  Eski xatolik: dars kunlari faqat kimdir guruh yo'qlamasini ochganda
+#  yaratilardi. Yangi guruhda hech kim ochmagan bo'lsa "0 dars" chiqib,
+#  hech kimdan pul yechilmasdi. Endi hisoblashdan oldin jadval o'zi
+#  to'ldiriladi.
+#
+#  whole_month=True — o'quvchi oy o'rtasida qo'shilgan bo'lsa ham
+#  to'liq oy uchun hisoblanadi (eski o'quvchilarni ro'yxatga endi
+#  kiritganda kerak bo'ladi).
+# =====================================================================
+_drop_route("/api/billing/month", "POST")
+
+
+@app.post("/api/billing/month")
+def billing_month_v2(year: int, month: int, commit: bool = False,
+                     whole_month: bool = False,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    period = M._period_key(year, month)
+    start, end = M.billing.month_bounds(year, month)
+
+    students = [s for s in scope_to_branch(
+        db.query(models.Student), models.Student, user).all()
+        if s.status == "active" and s.group_id]
+
+    # Avval jadvalni to'ldiramiz — har guruh uchun bir marta
+    synced = set()
+    for s in students:
+        g = s.group
+        if not g or g.id in synced:
+            continue
+        synced.add(g.id)
+        try:
+            M._sync_scheduled_lessons(db, g, start, end)
+        except Exception:
+            db.rollback()
+    if synced:
+        db.commit()
+
+    rows, created, no_lesson = [], 0, 0
+    for s in students:
+        g = s.group
+        if not g:
+            continue
+        already = (db.query(models.Payment)
+                   .filter(models.Payment.student_id == s.id,
+                           models.Payment.period == period,
+                           models.Payment.kind == "charge").first())
+        since = start
+        if not whole_month and s.enrolled_date and s.enrolled_date > start:
+            since = s.enrolled_date
+        lessons = (len(M._lessons_left_in_month(db, g.id, since))
+                   if since <= end else 0)
+        disc = M._student_discount_percent(db, s)
+        amount = lessons * (g.lesson_price or 0) * (100 - disc) / 100
+        if lessons == 0:
+            no_lesson += 1
+
+        if commit and not already and amount > 0 \
+                and not M._charge_skipped(db, s.id, period):
+            db.add(models.Payment(
+                student_id=s.id, amount=-abs(amount), kind="charge",
+                note=f"{g.name} — {period} oyi uchun {lessons} dars"
+                     + (f" (chegirma {disc}%)" if disc else ""),
+                created_by=user.full_name, period=period))
+            created += 1
+        rows.append({
+            "student_id": s.id, "public_id": s.public_id,
+            "full_name": s.full_name, "group": g.name,
+            "lessons": lessons, "discount": disc,
+            "amount": round(amount, 2),
+            "already_charged": already is not None,
+        })
+
+    if commit:
+        audit.log(db, user, entity="payment", action="create",
+                  entity_label=f"{period} oylik hisob-kitob",
+                  new_value=created,
+                  note=f"{created} ta o'quvchiga hisoblandi", commit=True)
+        db.commit()
+
+    return {
+        "period": period,
+        "committed": commit,
+        "students": len(rows),
+        "created": created,
+        "no_lesson": no_lesson,
+        "expected_total": round(sum(r["amount"] for r in rows), 2),
+        "rows": sorted(rows, key=lambda r: r["full_name"]),
+    }

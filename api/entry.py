@@ -2482,3 +2482,266 @@ def billing_month_v2(year: int, month: int, commit: bool = False,
         "expected_total": round(sum(r["amount"] for r in rows), 2),
         "rows": sorted(rows, key=lambda r: r["full_name"]),
     }
+
+
+# =====================================================================
+#  NARX SIYOSATI: OYIGA 12 DARS = 480 000 SO'M
+#  Bitta dars 40 000. Oyda 13-14 dars chiqsa, ortig'i BONUS — mijozdan
+#  baribir 12 dars uchun olinadi. Oy o'rtasida qo'shilgan o'quvchi esa
+#  faqat qolgan darslari uchun to'laydi (u ham 12 tadan oshmaydi).
+#
+#  Diqqat: bu faqat O'QUVCHI to'lovi. Ustoz oyligi yo'qlamadan
+#  hisoblanadi va bu yerga aloqasi yo'q — tegilmadi.
+# =====================================================================
+def _lesson_cap(g) -> int:
+    return int(getattr(g, "standard_lessons_per_month", None) or 12)
+
+
+def _billable_lessons(db, g, since, start, end) -> int:
+    """Mijozdan haqiqatda olinadigan darslar soni.
+
+    To'liq oy o'qiydigan o'quvchi standart 12 darsni to'laydi — kalendarda
+    13 chiqsa ham, 11 chiqsa ham. Oy o'rtasida qo'shilgan (yoki guruhi
+    oy o'rtasida ochilgan) bo'lsa — o'sha kundan oy oxirigacha nechta
+    dars bo'lsa, shuncha (lekin 12 tadan oshmaydi)."""
+    cap = _lesson_cap(g)
+    partial = since > start
+    if getattr(g, "start_date", None) and g.start_date > start:
+        partial = True
+    if getattr(g, "end_date", None) and g.end_date < end:
+        partial = True
+    if not partial:
+        return cap
+    n = len(M._lessons_left_in_month(db, g.id, since)) if since <= end else 0
+    return min(n, cap)
+
+
+def _charge_note(g, period: str, billable: int, disc: float,
+                 prefix: str = "") -> str:
+    cap = _lesson_cap(g)
+    txt = f"{g.name} — {period}: {prefix}{billable} dars"
+    if billable >= cap:
+        txt += " (standart oy)"
+    if disc:
+        txt += f" (chegirma {disc}%)"
+    return txt
+
+
+# --- Faollashtirilganda avtomat yechish ham shu qoidaga bo'ysunsin ---
+def _charge_from_activation_v2(db, s, since, user=None):
+    """Faollashgan kundan oy oxirigacha — 12 darsdan oshmaydi."""
+    if not s.group_id or not s.group:
+        return None
+    period = M._period_key(since.year, since.month)
+    exists = (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.period == period,
+                      models.Payment.kind == "charge").first())
+    if exists:
+        return None
+    if M._charge_skipped(db, s.id, period):
+        return None
+
+    start, end = M.billing.month_bounds(since.year, since.month)
+    g = s.group
+    # Guruh jadvali hali yaratilmagan bo'lsa — o'zi to'ldiradi
+    try:
+        M._sync_scheduled_lessons(db, g, start, end)
+    except Exception:
+        pass
+    n = _billable_lessons(db, g, since, start, end)
+    if n <= 0:
+        return None
+
+    price = g.lesson_price or 0
+    disc = M._student_discount_percent(db, s)
+    amount = n * price * (100 - disc) / 100
+    if amount <= 0:
+        return None
+
+    db.add(models.Payment(
+        student_id=s.id, amount=-abs(amount), kind="charge",
+        note=_charge_note(g, period, n, disc, "faollashgandan "),
+        created_by=(user.full_name if user else "avtomat"),
+        period=period))
+    return {"lessons": n, "amount": amount, "discount": disc}
+
+
+M._charge_from_activation = _charge_from_activation_v2
+
+
+# --- Oylik hisob-kitob ---
+_drop_route("/api/billing/month", "POST")
+
+
+@app.post("/api/billing/month")
+def billing_month_v3(year: int, month: int, commit: bool = False,
+                     whole_month: bool = False,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    period = M._period_key(year, month)
+    start, end = M.billing.month_bounds(year, month)
+
+    students = [s for s in scope_to_branch(
+        db.query(models.Student), models.Student, user).all()
+        if s.status == "active" and s.group_id]
+
+    # Jadvalni avval to'ldiramiz — har guruh uchun bir marta
+    synced = set()
+    for s in students:
+        g = s.group
+        if not g or g.id in synced:
+            continue
+        synced.add(g.id)
+        try:
+            M._sync_scheduled_lessons(db, g, start, end)
+        except Exception:
+            db.rollback()
+    if synced:
+        db.commit()
+
+    rows, created, no_lesson = [], 0, 0
+    for s in students:
+        g = s.group
+        if not g:
+            continue
+        already = (db.query(models.Payment)
+                   .filter(models.Payment.student_id == s.id,
+                           models.Payment.period == period,
+                           models.Payment.kind == "charge").first())
+        since = start
+        if not whole_month and s.enrolled_date and s.enrolled_date > start:
+            since = s.enrolled_date
+        billable = _billable_lessons(db, g, since, start, end)
+        disc = M._student_discount_percent(db, s)
+        amount = billable * (g.lesson_price or 0) * (100 - disc) / 100
+        if billable == 0:
+            no_lesson += 1
+
+        if commit and not already and amount > 0 \
+                and not M._charge_skipped(db, s.id, period):
+            db.add(models.Payment(
+                student_id=s.id, amount=-abs(amount), kind="charge",
+                note=_charge_note(g, period, billable, disc),
+                created_by=user.full_name, period=period))
+            created += 1
+        rows.append({
+            "student_id": s.id, "public_id": s.public_id,
+            "full_name": s.full_name, "group": g.name,
+            "lessons": billable, "discount": disc,
+            "amount": round(amount, 2),
+            "already_charged": already is not None,
+        })
+
+    if commit:
+        audit.log(db, user, entity="payment", action="create",
+                  entity_label=f"{period} oylik hisob-kitob",
+                  new_value=created,
+                  note=f"{created} ta o'quvchiga hisoblandi", commit=True)
+        db.commit()
+
+    return {
+        "period": period,
+        "committed": commit,
+        "students": len(rows),
+        "created": created,
+        "no_lesson": no_lesson,
+        "expected_total": round(sum(r["amount"] for r in rows), 2),
+        "rows": sorted(rows, key=lambda r: r["full_name"]),
+    }
+
+
+# =====================================================================
+#  FAOLLASHTIRISH: SANA SO'RALADI VA O'SHA KUNDAN PUL YECHILADI
+#  Administrator "Faollashtirish" bosganda qaysi kundan o'qishni
+#  boshlaganini kiritadi. Shu kundan oy oxirigacha nechta dars bo'lsa,
+#  40 000 dan ko'paytirib avtomat yechiladi (12 darsdan oshmaydi).
+# =====================================================================
+_drop_route("/api/students/{student_id}/activate", "POST")
+
+
+@app.post("/api/students/{student_id}/activate")
+def activate_student_v2(student_id: int, payload: dict | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.FREEZE_ROLES))):
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if s.status == "active":
+        raise HTTPException(400, "Bu o'quvchi allaqachon faol")
+
+    on = M.roles.local_today()
+    raw = (payload or {}).get("on")
+    if raw:
+        try:
+            on = date.fromisoformat(str(raw)[:10])
+        except ValueError:
+            raise HTTPException(400, "Sana noto'g'ri")
+    if on > M.roles.local_today():
+        raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
+
+    old = s.status
+    s.status = "active"
+    if not s.enrolled_date or s.enrolled_date > on:
+        s.enrolled_date = on
+    M._sync_student_left_date(s)
+
+    charge = _charge_from_activation_v2(db, s, on, user)
+
+    audit.log(db, user, entity="student", action="activate", entity_id=s.id,
+              entity_label=s.full_name, field="status",
+              old_value=old, new_value="active", branch_id=s.branch_id,
+              note=(f"{on.isoformat()} dan — {charge['lessons']} dars, "
+                    f"{charge['amount']:,.0f} so'm".replace(",", " ")
+                    if charge else on.isoformat()))
+    db.commit()
+    return {"ok": True, "status": s.status,
+            "activated_on": on.isoformat(), "charge": charge}
+
+
+@app.get("/api/students/{student_id}/activate-preview")
+def activate_preview(student_id: int, on: str | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Faollashtirishdan oldin: shu sanadan qancha pul yechilishini
+    ko'rsatadi — administrator tasdiqlashdan oldin ko'rib turadi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    day = M.roles.local_today()
+    if on:
+        try:
+            day = date.fromisoformat(str(on)[:10])
+        except ValueError:
+            raise HTTPException(400, "Sana noto'g'ri")
+    g = s.group
+    if not g:
+        return {"lessons": 0, "amount": 0, "discount": 0,
+                "already": False, "group": None,
+                "hint": "O'quvchi guruhga biriktirilmagan — pul "
+                        "hisoblanmaydi."}
+    start, end = M.billing.month_bounds(day.year, day.month)
+    try:
+        M._sync_scheduled_lessons(db, g, start, end)
+        db.commit()
+    except Exception:
+        db.rollback()
+    period = M._period_key(day.year, day.month)
+    already = (db.query(models.Payment)
+               .filter(models.Payment.student_id == s.id,
+                       models.Payment.period == period,
+                       models.Payment.kind == "charge").first()) is not None
+    n = _billable_lessons(db, g, day, start, end)
+    disc = M._student_discount_percent(db, s)
+    amount = n * (g.lesson_price or 0) * (100 - disc) / 100
+    cap = _lesson_cap(g)
+    return {
+        "lessons": n, "amount": round(amount, 2), "discount": disc,
+        "already": already, "group": g.name,
+        "lesson_price": g.lesson_price or 0, "cap": cap,
+        "hint": ("Bu oy uchun allaqachon hisoblangan — qayta yechilmaydi."
+                 if already else
+                 f"{n} dars x {(g.lesson_price or 0):,.0f} so'm"
+                 .replace(",", " ")
+                 + (f" (chegirma {disc}%)" if disc else "")),
+    }

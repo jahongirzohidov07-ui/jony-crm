@@ -130,7 +130,7 @@ export const LEAD_ACCESS = [
 
 export const HR_ACCESS = [...FULL_ACCESS, HR_MANAGER];
 export const MARKETING_ACCESS = [...FULL_ACCESS, SMM_MANAGER, SALES_HEAD];
-export const AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER, FINANCE_DIRECTOR];
+export const AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER, HR_MANAGER];
 export const PROFIT_VIEW = [...FULL_ACCESS, FINANCE_DIRECTOR];
 
 export const ACADEMIC_ACCESS = [...FULL_ACCESS, ACADEMIC_HEAD, HEAD_SUPPORT];
@@ -234,7 +234,7 @@ export function assignableRoles(myRole: string | undefined): string[] {
 export const SMM_ACCESS = [FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD];
 export const CONTENT_REQUESTER = [
   FOUNDER, BRANCH_MANAGER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER,
-  ACADEMIC_HEAD, ADMINISTRATOR,
+  ADMINISTRATOR,
 ];
 /** G'oyani har qanday xodim yubora oladi. */
 export const IDEA_SUBMIT = STAFF_ROLES;

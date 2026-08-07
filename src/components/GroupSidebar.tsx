@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Download, Phone, Pencil } from "lucide-react";
 import { api, type Group, type Student } from "../lib/api";
+import { useAuth } from "../lib/AuthContext";
 import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -43,15 +44,25 @@ export function GroupSidebar({
   group: Group;
   onEdit?: () => void;
 }) {
+  const { user } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Ustozga muzlatilgan o'quvchi ko'rinmasin — aks holda unga ham
+  // yo'qlama qo'yib yuborilishi mumkin, bu esa oylikka noto'g'ri
+  // ta'sir qiladi.
+  const isTeacher = user?.role === "teacher";
 
   function load() {
     setLoading(true);
     api
       .get<Student[]>(`/students?group_id=${group.id}`)
-      .then(setStudents)
+      .then((rows) =>
+        setStudents(
+          isTeacher ? rows.filter((s) => s.status !== "frozen") : rows
+        )
+      )
       .finally(() => setLoading(false));
   }
 

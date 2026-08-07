@@ -51,6 +51,10 @@ function LeadForm({
   const [branchId, setBranchId] = useState(
     initial?.branch_id ? String(initial.branch_id) : defaultBranchId ? String(defaultBranchId) : ""
   );
+  const { user: me } = useAuth();
+  const meIsAdmin =
+    me?.role === "administrator" || me?.role === "sales_manager";
+  // Admin uchun backend o'zi biriktiradi — bu yerda tanlanmaydi.
   const [assignedId, setAssignedId] = useState(
     initial?.assigned_user_id ? String(initial.assigned_user_id) : ""
   );
@@ -258,18 +262,25 @@ function LeadForm({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Mas'ul xodim
             </label>
-            <select
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-              value={assignedId}
-              onChange={(e) => setAssignedId(e.target.value)}
-            >
-              <option value="">— tanlanmagan —</option>
-              {staff.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.full_name}
-                </option>
-              ))}
-            </select>
+            {meIsAdmin ? (
+              <p className="text-sm text-slate-700 bg-slate-50 rounded-lg px-3 py-2">
+                Siz — <b>{me?.full_name}</b> (admin kiritgan lidga avtomat
+                o'zi mas'ul bo'ladi)
+              </p>
+            ) : (
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={assignedId}
+                onChange={(e) => setAssignedId(e.target.value)}
+              >
+                <option value="">— tanlanmagan —</option>
+                {staff.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.full_name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {branches.length > 1 && (

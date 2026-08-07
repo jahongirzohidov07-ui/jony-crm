@@ -45,7 +45,6 @@ import {
   HR_ACCESS,
   MARKETING_ACCESS,
   AUDIT_VIEW,
-  EXAM_VIEW,
   ACADEMIC_VIEW,
   can,
   roleLabel,
@@ -281,7 +280,8 @@ export default function Layout() {
     (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
     !can(user?.role, MARKETING_ACCESS) &&
     user?.role !== "hr_manager" &&
-    user?.role !== "sales_manager"
+    user?.role !== "sales_manager" &&
+    user?.role !== "academic_head"
   ) {
     items = [...items, { to: "/smm", label: "SMM", icon: Megaphone }];
   }
@@ -304,7 +304,7 @@ export default function Layout() {
   // O'zgarishlar tarixi - eng oxirida, kamdan-kam ochiladi.
   // Audit - nazorat bo'limi: o'zgarishlar tarixi va imtihonlar.
   // Examiner ham shu yerga kiradi (u asoschiga bo'ysunadi).
-  if (can(user?.role, AUDIT_VIEW) || can(user?.role, EXAM_VIEW)) {
+  if (can(user?.role, AUDIT_VIEW)) {
     items = [...items, { to: "/audit", label: "Audit", icon: History }];
   }
   // Vazifalar endi tepada, qo'ng'iroqcha yonida turadi — menyuda emas.

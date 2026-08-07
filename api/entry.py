@@ -2745,3 +2745,243 @@ def activate_preview(student_id: int, on: str | None = None,
                  .replace(",", " ")
                  + (f" (chegirma {disc}%)" if disc else "")),
     }
+
+
+# =====================================================================
+#  LC UP'DAN ESKI TO'LOVLAR TARIXINI KO'CHIRISH
+#  Har bir eski to'lov yoniga o'sha kunning "hisoblangan" yozuvi ham
+#  qo'yiladi — natijada BALANS O'ZGARMAYDI. Ya'ni tarix ko'rinadi,
+#  lekin bugungi qarz buzilmaydi.
+#
+#  Barcha yozuvlar izohida "[LC UP]" belgisi turadi — kerak bo'lsa
+#  bitta tugma bilan hammasini qaytarib olib tashlash mumkin.
+# =====================================================================
+_LCUP_TAG = "[LC UP]"
+_IMPORT_ROLES = list(dict.fromkeys(
+    list(roles.FINANCE_ACCESS) + [roles.FOUNDER]))
+
+
+def _norm_name(s) -> str:
+    t = (s or "").lower().replace("'", "'").replace("`", "'")
+    t = _re2.sub(r"[^a-z0-9а-яё ]+", " ", t)
+    return " ".join(t.split())
+
+
+def _phone_tail(s) -> str:
+    d = "".join(ch for ch in str(s or "") if ch.isdigit())
+    return d[-9:] if len(d) >= 9 else ""
+
+
+def _parse_money(v) -> float:
+    """"480 000", "480,000.00", "480000 so'm" — hammasi 480000 bo'ladi."""
+    if v is None:
+        return 0.0
+    if isinstance(v, (int, float)):
+        return float(v)
+    t = str(v).strip().replace(" ", " ")
+    t = _re2.sub(r"[^0-9,.\-]", "", t)
+    if not t:
+        return 0.0
+    # 1,234.56 -> nuqta kasr; 1.234,56 -> vergul kasr
+    if "," in t and "." in t:
+        t = (t.replace(",", "") if t.rfind(".") > t.rfind(",")
+             else t.replace(".", "").replace(",", "."))
+    elif "," in t:
+        t = t.replace(",", "" if len(t.split(",")[-1]) == 3 else ".")
+    try:
+        return float(t)
+    except ValueError:
+        return 0.0
+
+
+def _parse_day(v):
+    """2026-08-07, 07.08.2026, 07/08/2026 — hammasini tushunadi."""
+    if not v:
+        return None
+    if isinstance(v, date):
+        return v
+    t = str(v).strip()[:19].replace("T", " ")
+    for fmt in ("%Y-%m-%d", "%d.%m.%Y", "%d/%m/%Y", "%Y/%m/%d",
+                "%d-%m-%Y", "%Y-%m-%d %H:%M:%S", "%d.%m.%Y %H:%M"):
+        try:
+            return _dt.strptime(t[:len(_dt.now().strftime(fmt))], fmt).date()
+        except ValueError:
+            continue
+    try:
+        return date.fromisoformat(t[:10])
+    except ValueError:
+        return None
+
+
+_METHOD_WORDS = {
+    "cash": ("naqd", "cash", "нал"),
+    "card": ("click", "karta", "card", "payme", "uzum", "plastik"),
+    "terminal": ("terminal", "терминал", "pos"),
+}
+
+
+def _parse_method(v) -> str:
+    t = str(v or "").lower()
+    for key, words in _METHOD_WORDS.items():
+        if any(w in t for w in words):
+            return key
+    return "cash"
+
+
+def _student_index(db, user):
+    """Ism va telefon bo'yicha o'quvchi qidirish uchun indeks."""
+    q = scope_to_branch(db.query(models.Student), models.Student, user)
+    by_name, by_phone = {}, {}
+    for s in q.all():
+        n = _norm_name(s.full_name)
+        if n:
+            by_name.setdefault(n, []).append(s)
+        for ph in (s.phone, s.parent_phone):
+            t = _phone_tail(ph)
+            if t:
+                by_phone.setdefault(t, []).append(s)
+    return by_name, by_phone
+
+
+# Diqqat: /api/payments/{id} yo'li bilan to'qnashmasin uchun
+# alohida prefiks.
+@app.post("/api/lcup/payments")
+def import_payments(payload: dict, db: Session = Depends(get_db),
+                    user=Depends(require_role(*_IMPORT_ROLES))):
+    """LC UP eksportidan eski to'lovlarni ko'chiradi.
+
+    commit=false — faqat tekshirib ko'rsatadi, hech narsa yozmaydi."""
+    rows = payload.get("rows") or []
+    commit = bool(payload.get("commit"))
+    if not isinstance(rows, list) or not rows:
+        raise HTTPException(400, "Fayldan bironta qator o'qilmadi")
+    if len(rows) > 20000:
+        raise HTTPException(400, "Bir martada 20 000 qatordan ko'p bo'lmasin")
+
+    by_name, by_phone = _student_index(db, user)
+    # Takror importni ushlash uchun: allaqachon bor [LC UP] to'lovlari
+    seen = set()
+    for p in (db.query(models.Payment)
+              .filter(models.Payment.kind == "payment",
+                      models.Payment.note.like(f"%{_LCUP_TAG}%")).all()):
+        seen.add((p.student_id, p.created_at.date() if p.created_at else None,
+                  round(p.amount, 2)))
+
+    out, ok, dup, miss, total = [], 0, 0, 0, 0.0
+    for i, r in enumerate(rows):
+        name = str(r.get("name") or "").strip()
+        amount = _parse_money(r.get("amount"))
+        day = _parse_day(r.get("date"))
+        phone = _phone_tail(r.get("phone"))
+
+        if not name and not phone:
+            continue
+        if amount <= 0:
+            out.append({"row": i + 1, "name": name, "status": "skip",
+                        "reason": "summa yo'q yoki noto'g'ri"})
+            continue
+        if not day:
+            out.append({"row": i + 1, "name": name, "status": "skip",
+                        "reason": "sana o'qilmadi"})
+            continue
+
+        # Avval ism, keyin telefon; ikkalasi bo'lsa — ikkovi kesishgani
+        cands = list(by_name.get(_norm_name(name), []))
+        if phone:
+            ph = by_phone.get(phone, [])
+            both = [s for s in cands if s in ph]
+            if both:
+                cands = both
+            elif not cands:
+                cands = list(ph)
+        if not cands:
+            miss += 1
+            out.append({"row": i + 1, "name": name, "date": day.isoformat(),
+                        "amount": amount, "status": "not_found",
+                        "reason": "bunday o'quvchi topilmadi"})
+            continue
+        if len(cands) > 1:
+            miss += 1
+            out.append({"row": i + 1, "name": name, "date": day.isoformat(),
+                        "amount": amount, "status": "ambiguous",
+                        "reason": f"{len(cands)} ta bir xil ismli o'quvchi "
+                                  f"bor — telefon ustunini qo'shing"})
+            continue
+
+        s = cands[0]
+        key = (s.id, day, round(amount, 2))
+        if key in seen:
+            dup += 1
+            out.append({"row": i + 1, "name": s.full_name,
+                        "date": day.isoformat(), "amount": amount,
+                        "status": "duplicate",
+                        "reason": "bu to'lov allaqachon ko'chirilgan"})
+            continue
+        seen.add(key)
+
+        method = _parse_method(r.get("method"))
+        note = str(r.get("note") or "").strip()
+        total += amount
+        ok += 1
+        out.append({"row": i + 1, "name": s.full_name, "student_id": s.id,
+                    "date": day.isoformat(), "amount": amount,
+                    "method": method, "status": "ok"})
+
+        if commit:
+            when = _dt.combine(day, _dt.min.time())
+            tail = f" · {note}" if note else ""
+            # To'lov (plyus)
+            db.add(models.Payment(
+                student_id=s.id, amount=abs(amount), kind="payment",
+                method=method, created_at=when, period=None,
+                note=f"{_LCUP_TAG} eski to'lov{tail}",
+                created_by=user.full_name))
+            # O'sha kunning hisoblangani (minus) — balans o'zgarmasin
+            db.add(models.Payment(
+                student_id=s.id, amount=-abs(amount), kind="charge",
+                created_at=when, period=None,
+                note=f"{_LCUP_TAG} eski hisob ({day.strftime('%Y-%m')})",
+                created_by=user.full_name))
+
+    if commit and ok:
+        db.commit()
+        audit.log(db, user, entity="payment", action="import",
+                  entity_label=f"LC UP: {ok} ta eski to'lov",
+                  new_value=ok,
+                  note=f"jami {total:,.0f} so'm".replace(",", " "),
+                  commit=True)
+
+    return {"committed": commit, "ok": ok, "duplicate": dup,
+            "not_found": miss, "total": round(total, 2),
+            "rows": out[:500], "shown": min(len(out), 500),
+            "all_rows": len(out)}
+
+
+@app.get("/api/lcup/payments")
+def import_payments_stats(db: Session = Depends(get_db),
+                          user=Depends(require_role(*_IMPORT_ROLES))):
+    """Hozirgacha nechta eski to'lov ko'chirilgan."""
+    q = (db.query(models.Payment)
+         .filter(models.Payment.kind == "payment",
+                 models.Payment.note.like(f"%{_LCUP_TAG}%")))
+    rows = q.all()
+    return {"count": len(rows),
+            "total": round(sum(r.amount for r in rows), 2),
+            "first": min((r.created_at.date().isoformat()
+                          for r in rows if r.created_at), default=None),
+            "last": max((r.created_at.date().isoformat()
+                         for r in rows if r.created_at), default=None)}
+
+
+@app.delete("/api/lcup/payments")
+def import_payments_undo(db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.FOUNDER))):
+    """Ko'chirilgan hammasini qaytarib olib tashlaydi — faqat asoschi."""
+    n = (db.query(models.Payment)
+         .filter(models.Payment.note.like(f"%{_LCUP_TAG}%"))
+         .delete(synchronize_session=False))
+    db.commit()
+    audit.log(db, user, entity="payment", action="delete",
+              entity_label="LC UP importi bekor qilindi",
+              old_value=n, commit=True)
+    return {"deleted": n}

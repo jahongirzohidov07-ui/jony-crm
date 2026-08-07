@@ -26,7 +26,7 @@ import roles
 import schemas
 from main import (  # noqa: F401
     app, get_db, require_role, scope_to_branch, _get_group_in_scope,
-    _my_teacher_or_404,
+    _my_teacher_or_404, get_current_user,
 )
 import main as M
 
@@ -1347,7 +1347,18 @@ def _seed_books() -> None:
     db = _SessionLocal()
     try:
         defaults = [("Step 1", "book"), ("Step 2", "book"),
-                    ("Step 3", "book"), ("Welcome Pack", "welcome_pack")]
+                    ("Step 3", "book"), ("Welcome Pack", "welcome_pack"),
+                    ("IELTS Introduction", "book"),
+                    ("IELTS Foundation", "book"),
+                    ("Family and Friends 0", "book"),
+                    ("Family and Friends 1", "book"),
+                    ("Family and Friends 2", "book"),
+                    ("Family and Friends 3", "book"),
+                    ("Round-up 0", "book"),
+                    ("Round-up 1", "book"),
+                    ("Round-up 2", "book"),
+                    ("Round-up 3", "book"),
+                    ("Round-up 4", "book")]
         added = False
         for b in db.query(models.Branch).all():
             for name, kind in defaults:
@@ -1780,3 +1791,240 @@ if _orig_audit_meta is not None:
     def audit_meta_v2(user=Depends(require_role(
             roles.FOUNDER, roles.BRANCH_MANAGER, roles.HR_MANAGER))):
         return _orig_audit_meta(user=user)
+
+# =====================================================================
+#  HR MENEJERGA QO'SHIMCHA HUQUQLAR
+#  Eski yo'qlama qo'yish, guruh ochish/tahrirlash, o'quvchi qo'shish.
+# =====================================================================
+_HRM = roles.HR_MANAGER
+
+# O'tgan kun yo'qlamasi — endpoint ichida runtime tekshiriladi:
+roles.PAST_ATTENDANCE[:] = [roles.FOUNDER, roles.ACADEMIC_HEAD, _HRM]
+# Guruh boshqaruvi ro'yxatiga ham (runtime o'qiydigan joylar uchun):
+if _HRM not in roles.GROUP_MANAGE:
+    roles.GROUP_MANAGE.append(_HRM)
+
+# Ruxsat matritsasi (Ruxsatlar sahifasida ham to'g'ri ko'rinsin):
+try:
+    _hrm_m = roles.DEFAULT_MATRIX[roles.HR_MANAGER]
+    _hrm_m["students"] = {"view", "create", "edit"}
+    _hrm_m["groups"] = {"view", "create", "edit"}
+    _hrm_m["attendance"] = {"view", "create", "edit"}
+except Exception:
+    pass
+
+
+# Yo'qlama saqlash — HR ham (o'tgan kunlar uchun ham, tepadagi
+# PAST_ATTENDANCE ro'yxati orqali):
+_orig_save_att = _find_endpoint("/api/lessons/{lesson_id}/attendance",
+                                "PUT")
+
+if _orig_save_att is not None:
+    _drop_route("/api/lessons/{lesson_id}/attendance", "PUT")
+
+    @app.put("/api/lessons/{lesson_id}/attendance")
+    def save_attendance_v2(lesson_id: int,
+                           payload: schemas.AttendanceBulk,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *(tuple(roles.TEACHING_ACCESS) + (_HRM,))))):
+        return _orig_save_att(lesson_id=lesson_id, payload=payload,
+                              db=db, user=user)
+
+
+# Dars (yo'qlama kuni) qo'shish — HR ham:
+_orig_add_lesson = _find_endpoint("/api/groups/{group_id}/lessons", "POST")
+
+if _orig_add_lesson is not None:
+    _drop_route("/api/groups/{group_id}/lessons", "POST")
+
+    @app.post("/api/groups/{group_id}/lessons",
+              response_model=schemas.LessonOut)
+    def add_lesson_v2(group_id: int, payload: schemas.LessonCreate,
+                      db: Session = Depends(get_db),
+                      user: models.User = Depends(require_role(
+                          *(tuple(roles.TEACHING_STAFF) + (_HRM,))))):
+        return _orig_add_lesson(group_id=group_id, payload=payload,
+                                db=db, user=user)
+
+
+# Guruh ochish/tahrirlash — HR ham (junior chegara nazorati saqlanadi):
+_cur_create_group = _find_endpoint("/api/groups", "POST")
+_cur_update_group = _find_endpoint("/api/groups/{group_id}", "PUT")
+
+if _cur_create_group is not None:
+    _drop_route("/api/groups", "POST")
+
+    @app.post("/api/groups")
+    def create_group_v3(payload: schemas.GroupCreate,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+        return _cur_create_group(payload=payload, force=force,
+                                 db=db, user=user)
+
+if _cur_update_group is not None:
+    _drop_route("/api/groups/{group_id}", "PUT")
+
+    @app.put("/api/groups/{group_id}")
+    def update_group_v3(group_id: int, payload: schemas.GroupUpdate,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+        return _cur_update_group(group_id=group_id, payload=payload,
+                                 force=force, db=db, user=user)
+
+
+# O'quvchi qo'shish/tahrirlash — HR ham:
+_cur_create_student = _find_endpoint("/api/students", "POST")
+_cur_update_student = _find_endpoint("/api/students/{student_id}", "PUT")
+
+if _cur_create_student is not None:
+    _drop_route("/api/students", "POST")
+
+    @app.post("/api/students", response_model=schemas.StudentOut)
+    def create_student_v2(payload: schemas.StudentCreate,
+                          force: bool = False,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(
+                              *(tuple(roles.TEACHING_STAFF) + (_HRM,))))):
+        return _cur_create_student(payload=payload, force=force,
+                                   db=db, user=user)
+
+if _cur_update_student is not None:
+    _drop_route("/api/students/{student_id}", "PUT")
+
+    @app.put("/api/students/{student_id}",
+             response_model=schemas.StudentOut)
+    def update_student_v2(student_id: int, payload: schemas.StudentUpdate,
+                          force: bool = False,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(
+                              *(tuple(roles.TEACHING_STAFF) + (_HRM,))))):
+        return _cur_update_student(student_id=student_id, payload=payload,
+                                   force=force, db=db, user=user)
+
+
+# =====================================================================
+#  LIDLAR: HAR FILIALNING O'Z HUDUD/MAKTAB RO'YXATI
+#  (avval Zafar mahallalari hamma filialga chiqib turardi)
+# =====================================================================
+import re as _re2
+
+_BEKOBOD1_AREAS = [
+    "Metal", "11-mikrarayon", "12-mikrarayon", "13-mikrarayon", "Kirf",
+    "Gidrometriya", "Xos", "Taqachi", "Navoiy",
+]
+_BEKOBOD2_AREAS = [
+    "3-mikrarayon", "Semetchi", "Shaxmat", "Semgorodok",
+]
+_STRETINKO_AREAS = [
+    "Stretinko", "Xos", "Navoiy", "20-brigada",
+]
+roles.BRANCH_AREAS["Bekobod 1"] = _BEKOBOD1_AREAS
+roles.BRANCH_AREAS["Bekobod 2"] = _BEKOBOD2_AREAS
+roles.BRANCH_AREAS["Stretinko"] = _STRETINKO_AREAS
+
+
+def _norm_bname(s):
+    return _re2.sub(r"[^a-z0-9]+", "", (s or "").lower())
+
+
+def _areas_for_branch_v2(name):
+    """Aniq mos kelmasa ham (masalan "Bekobod-1" yozilsa) filialni
+    taniydi — nomlar biroz farqlansa ro'yxat aralashib ketmasin."""
+    if name:
+        if name in roles.BRANCH_AREAS:
+            return roles.BRANCH_AREAS[name]
+        key = _norm_bname(name)
+        for bname, lst in roles.BRANCH_AREAS.items():
+            nb = _norm_bname(bname)
+            if nb and (nb == key or nb in key):
+                return lst
+    # Filial noma'lum - hammasini birlashtirib ko'rsatamiz
+    out = []
+    for lst in roles.BRANCH_AREAS.values():
+        for a in lst:
+            if a not in out:
+                out.append(a)
+    return out
+
+
+roles.areas_for_branch = _areas_for_branch_v2
+
+# Maktablar: Bekobod 1 va Bekobod 2'da 1-25 + ixtisoslashgan. Boshqa
+# filiallarda hozircha umumiy ro'yxat (1-60) qoladi - alohida ro'yxat
+# aytilmagan.
+_SCHOOLS_1_25 = [f"{i}-maktab" for i in range(1, 26)] + [
+    "Ixtisoslashgan maktab"]
+_BRANCH_SCHOOLS = {"Bekobod 1": _SCHOOLS_1_25, "Bekobod 2": _SCHOOLS_1_25}
+
+
+def _schools_for_branch(name):
+    if name:
+        if name in _BRANCH_SCHOOLS:
+            return _BRANCH_SCHOOLS[name]
+        key = _norm_bname(name)
+        for bname, lst in _BRANCH_SCHOOLS.items():
+            if _norm_bname(bname) == key:
+                return lst
+    return roles.SCHOOLS
+
+
+_orig_reference = _find_endpoint("/api/reference", "GET")
+
+if _orig_reference is not None:
+    _drop_route("/api/reference", "GET")
+
+    @app.get("/api/reference")
+    def reference_v2(branch_id: int | None = None,
+                     db: Session = Depends(get_db),
+                     user: models.User = Depends(get_current_user)):
+        bname = None
+        bid = branch_id or user.branch_id
+        if bid:
+            b = db.query(models.Branch).get(bid)
+            bname = b.name if b else None
+        return {
+            "areas": _areas_for_branch_v2(bname),
+            "schools": _schools_for_branch(bname),
+            "lesson_times": [
+                {"start": t, "end": roles.lesson_end_time(t),
+                 "label": roles.lesson_time_range(t)}
+                for t in roles.LESSON_START_TIMES
+            ],
+            "lesson_minutes": roles.LESSON_DURATION_MINUTES,
+            "exit_types": [{"key": k, "label": lbl, "hint": h}
+                           for k, lbl, h in roles.EXIT_TYPES],
+            "archive_groups": [{"key": k, "label": lbl, "hint": h}
+                               for k, lbl, h in roles.ARCHIVE_GROUPS],
+        }
+
+
+# =====================================================================
+#  USTOZGA MUZLATILGAN O'QUVCHI KO'RINMASIN
+#  Yo'qlama - oylik hisoblanadigan hujjat, shuning uchun muzlatilgan
+#  o'quvchi ustoz oldida chiqib, xato yo'qlama qo'yib qo'yilmasin.
+# =====================================================================
+_orig_att_grid = _find_endpoint("/api/groups/{group_id}/attendance", "GET")
+
+if _orig_att_grid is not None:
+    _drop_route("/api/groups/{group_id}/attendance", "GET")
+
+    @app.get("/api/groups/{group_id}/attendance",
+             response_model=schemas.AttendanceGrid)
+    def attendance_grid_v2(group_id: int, year: int, month: int,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *roles.ATTENDANCE_VIEW))):
+        result = _orig_att_grid(group_id=group_id, year=year, month=month,
+                                db=db, user=user)
+        if user.role == roles.TEACHER:
+            try:
+                data = result.model_dump()
+            except AttributeError:
+                data = result.dict()
+            data["students"] = [s for s in data["students"]
+                                if s.get("status") != "frozen"]
+            return data
+        return result

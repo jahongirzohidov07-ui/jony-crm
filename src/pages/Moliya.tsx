@@ -1064,6 +1064,9 @@ function BillingTab() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
+  // Eski o'quvchilarni ro'yxatga endi kiritganda: ular oyning
+  // boshidan o'qigan, shuning uchun to'liq oy uchun hisoblanadi.
+  const [whole, setWhole] = useState(false);
 
   function load() {
     setLoading(true);
@@ -1071,7 +1074,8 @@ function BillingTab() {
     Promise.all([
       api
         .post<BillingMonth>(
-          `/billing/month?year=${year}&month=${month}&commit=false`, {}
+          `/billing/month?year=${year}&month=${month}&commit=false` +
+            `&whole_month=${whole}`, {}
         )
         .then(setData),
       api
@@ -1080,7 +1084,7 @@ function BillingTab() {
         .catch(() => setCol(null)),
     ]).finally(() => setLoading(false));
   }
-  useEffect(load, [year, month]);
+  useEffect(load, [year, month, whole]);
 
   async function run() {
     if (
@@ -1094,7 +1098,8 @@ function BillingTab() {
     setBusy(true);
     try {
       const r = await api.post<BillingMonth>(
-        `/billing/month?year=${year}&month=${month}&commit=true`, {}
+        `/billing/month?year=${year}&month=${month}&commit=true` +
+          `&whole_month=${whole}`, {}
       );
       setMsg(`${r.created} ta o'quvchiga hisoblandi`);
       load();
@@ -1133,6 +1138,15 @@ function BillingTab() {
             </option>
           ))}
         </select>
+        <label className="flex items-center gap-1.5 text-sm text-slate-600 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={whole}
+            onChange={(e) => setWhole(e.target.checked)}
+            className="rounded border-slate-300"
+          />
+          To'liq oy uchun
+        </label>
         {msg && <span className="text-sm text-slate-600">{msg}</span>}
         <div className="flex-1" />
         <button
@@ -1183,10 +1197,22 @@ function BillingTab() {
             </div>
           </div>
 
+          {(data.no_lesson ?? 0) > 0 && (
+            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-1">
+              {data.no_lesson} ta o'quvchining guruhida bu oyda dars kuni
+              yo'q — ularga pul hisoblanmaydi. Guruh kartasida dars
+              kunlari (Du/Chor/Ju) va boshlanish sanasi to'g'ri
+              qo'yilganini tekshiring.
+            </p>
+          )}
+
           <Note>
             Hisoblash o'quvchi balansidan pulni yechadi — balans manfiyga
             ketsa, bu qarz degani va Talabalar ro'yxatida qizil ko'rinadi.
-            Bir oy uchun ikki marta hisoblanmaydi.
+            Bir oy uchun ikki marta hisoblanmaydi.{" "}
+            <b>To'liq oy uchun</b> belgisi qo'yilsa, oy o'rtasida
+            qo'shilgan o'quvchi ham butun oy uchun to'laydi — eski
+            o'quvchilarni tizimga endi kiritganda shu kerak bo'ladi.
           </Note>
 
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mt-4">

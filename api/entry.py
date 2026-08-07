@@ -2341,3 +2341,51 @@ def payments_of_month(year: int | None = None, month: int | None = None,
         "new_total": round(new_sum, 2),
         "old_total": round(old_sum, 2),
     }
+
+
+# =====================================================================
+#  LID KIRITISH: TO'LIQ TO'LDIRILSIN, FILIAL O'ZINIKI BO'LSIN
+#  Bo'sh mahalla/maktab keyin hisobotni buzadi; filialni qo'lda tanlash
+#  esa adashishga olib keladi — xodimning lidi o'z filialiga tushadi.
+# =====================================================================
+_LEAD_REQUIRED = [
+    ("full_name", "Ism-familiya"),
+    ("phone", "Telefon"),
+    ("address", "Qayerdan (mahalla / tuman)"),
+    ("school", "Maktab"),
+    ("grade", "Sinf"),
+    ("source", "Qayerdan keldi"),
+]
+
+_cur_create_lead = _find_endpoint("/api/leads", "POST")
+
+if _cur_create_lead is not None:
+    _drop_route("/api/leads", "POST")
+
+    @app.post("/api/leads", response_model=schemas.LeadOut)
+    def create_lead_v2(payload: schemas.LeadCreate,
+                       db: Session = Depends(get_db),
+                       user: models.User = Depends(
+                           require_role(*roles.LEAD_ACCESS))):
+        missing = []
+        for field, label in _LEAD_REQUIRED:
+            val = (getattr(payload, field, None) or "")
+            if field == "phone":
+                digits = "".join(c for c in str(val) if c.isdigit())
+                if len(digits) < 9:
+                    missing.append(label)
+            elif not str(val).strip():
+                missing.append(label)
+        if missing:
+            raise HTTPException(
+                400, "Quyidagilar to'ldirilmadi: " + ", ".join(missing))
+
+        # Filiali bor xodim boshqa filialga lid yoza olmaydi
+        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            payload.branch_id = user.branch_id
+        elif not payload.branch_id:
+            payload.branch_id = user.branch_id
+        if not payload.branch_id:
+            raise HTTPException(400, "Filial tanlanmadi")
+
+        return _cur_create_lead(payload=payload, db=db, user=user)

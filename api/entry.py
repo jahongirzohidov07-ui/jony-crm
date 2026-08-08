@@ -2985,3 +2985,300 @@ def import_payments_undo(db: Session = Depends(get_db),
               entity_label="LC UP importi bekor qilindi",
               old_value=n, commit=True)
     return {"deleted": n}
+
+
+# =====================================================================
+#  HR MENEJERGA YANA UCHTA HUQUQ
+#  Dars ko'chirish (kelmagan kunni surish ham shu), coin qo'shish va
+#  tahrirlash. Eski yo'qlama allaqachon ochilgan.
+# =====================================================================
+if _HRM not in roles.RESCHEDULE_APPROVE:
+    roles.RESCHEDULE_APPROVE.append(_HRM)
+if _HRM not in roles.COIN_ADMIN:
+    roles.COIN_ADMIN.append(_HRM)
+try:
+    roles.DEFAULT_MATRIX[_HRM]["gamification"] = {"view", "edit"}
+except Exception:
+    pass
+
+_TEACH_HR = tuple(dict.fromkeys(tuple(roles.TEACHING_ACCESS) + (_HRM,)))
+
+# --- Dars ko'chirish ---
+_cur_reschedule = _find_endpoint("/api/groups/{gid}/reschedule", "POST")
+
+if _cur_reschedule is not None:
+    _drop_route("/api/groups/{gid}/reschedule", "POST")
+
+    @app.post("/api/groups/{gid}/reschedule")
+    def group_reschedule_v2(gid: int, payload: schemas.GroupRescheduleIn,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(*_TEACH_HR))):
+        return _cur_reschedule(gid=gid, payload=payload, db=db, user=user)
+
+
+# --- Coin qo'shish / o'chirish ---
+_cur_coin_add = _find_endpoint("/api/students/{student_id}/coins", "POST")
+_cur_coin_del = _find_endpoint("/api/coins/{entry_id}", "DELETE")
+
+if _cur_coin_add is not None:
+    _drop_route("/api/students/{student_id}/coins", "POST")
+
+    @app.post("/api/students/{student_id}/coins",
+              response_model=schemas.CoinEntryOut)
+    def add_manual_coins_v2(student_id: int, payload: schemas.CoinManual,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(*roles.COIN_ADMIN))):
+        return _cur_coin_add(student_id=student_id, payload=payload,
+                             db=db, user=user)
+
+if _cur_coin_del is not None:
+    _drop_route("/api/coins/{entry_id}", "DELETE")
+
+    @app.delete("/api/coins/{entry_id}")
+    def delete_coin_entry_v2(entry_id: int, db: Session = Depends(get_db),
+                             user=Depends(require_role(*roles.COIN_ADMIN))):
+        return _cur_coin_del(entry_id=entry_id, db=db, user=user)
+
+
+# =====================================================================
+#  BAHO QO'YISH QOIDALARI QAT'IYLASHDI
+#  1) Yo'qlama qo'yilmagan o'quvchiga baho qo'yib bo'lmaydi — aks holda
+#     darsga kelmagan bolaga coin tushib ketardi.
+#  2) O'tib ketgan kunga baho qo'yish yopiq (yo'qlama bilan bir xil
+#     qoida): faqat asoschi, o'quv bo'limi rahbari va HR.
+#  3) Hali kelmagan kunga ham baho yo'q.
+# =====================================================================
+_cur_save_grades = _find_endpoint("/api/lessons/{lesson_id}/grades", "PUT")
+
+if _cur_save_grades is not None:
+    _drop_route("/api/lessons/{lesson_id}/grades", "PUT")
+
+    @app.put("/api/lessons/{lesson_id}/grades")
+    def save_grades_v2(lesson_id: int, payload: schemas.GradeBulk,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.GRADE_EDIT))):
+        lesson = db.query(models.Lesson).get(lesson_id)
+        if not lesson:
+            raise HTTPException(404, "Dars topilmadi")
+        _get_group_in_scope(db, lesson.group_id, user)
+
+        today = M.roles.local_today()
+        if lesson.date > today:
+            raise HTTPException(
+                400, "Hali kelmagan kunga baho qo'yilmaydi — dars "
+                     "bo'lib o'tmagan")
+        if lesson.date < today and user.role not in tuple(
+                roles.PAST_ATTENDANCE):
+            raise HTTPException(
+                403, "O'tib ketgan kunga baho qo'yib bo'lmaydi. Kerak "
+                     "bo'lsa o'quv bo'limi rahbari yoki HR menejerga "
+                     "murojaat qiling")
+
+        # Yo'qlamasi yo'q (yoki kelmagan) o'quvchiga baho yo'q
+        att = {a.student_id: (a.present or 0) for a in
+               db.query(models.Attendance)
+               .filter(models.Attendance.lesson_id == lesson_id).all()}
+        for m in payload.marks:
+            if m.score is None:
+                continue          # bahoni olib tashlash har doim mumkin
+            state = att.get(m.student_id)
+            if state is None:
+                st = db.query(models.Student).get(m.student_id)
+                raise HTTPException(
+                    400, f"Avval yo'qlama qo'ying — "
+                         f"{st.full_name if st else 'o?quvchi'} uchun bu "
+                         f"darsda belgi yo'q")
+            if state == 0:
+                st = db.query(models.Student).get(m.student_id)
+                raise HTTPException(
+                    400, f"{st.full_name if st else 'O?quvchi'} bu darsga "
+                         f"kelmagan — kelmagan o'quvchiga baho ham, coin "
+                         f"ham qo'yilmaydi")
+
+        return _cur_save_grades(lesson_id=lesson_id, payload=payload,
+                                db=db, user=user)
+
+
+# --- Baho jadvali: qaysi katakka tegish mumkinligi ham qaytsin ---
+_cur_grade_grid = _find_endpoint("/api/groups/{group_id}/grades", "GET")
+
+if _cur_grade_grid is not None:
+    _drop_route("/api/groups/{group_id}/grades", "GET")
+
+    @app.get("/api/groups/{group_id}/grades")
+    def grade_grid_v2(group_id: int, year: int, month: int,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.ATTENDANCE_VIEW))):
+        res = _cur_grade_grid(group_id=group_id, year=year, month=month,
+                              db=db, user=user)
+        try:
+            data = res.model_dump()
+        except AttributeError:
+            try:
+                data = res.dict()
+            except AttributeError:
+                data = dict(res)
+        ids = [ls["id"] for ls in data.get("lessons", [])]
+        present = {}
+        if ids:
+            for a in (db.query(models.Attendance)
+                      .filter(models.Attendance.lesson_id.in_(ids)).all()):
+                present[f"{a.lesson_id}:{a.student_id}"] = int(a.present or 0)
+        today = M.roles.local_today()
+        data["present"] = present
+        data["can_past"] = user.role in tuple(roles.PAST_ATTENDANCE)
+        data["today"] = today.isoformat()
+        return data
+
+
+# =====================================================================
+#  O'QUVCHINI USTOZ TAHRIRLAY OLMASIN
+#  Ustoz dars beradi, o'quvchi kartasini esa administrator yuritadi.
+#  Ko'rish qoladi, faqat saqlash yopiladi.
+# =====================================================================
+_NO_EDIT = (roles.TEACHER, roles.SUPPORT_TEACHER)
+_STUDENT_EDIT = tuple(r for r in
+                      (tuple(roles.TEACHING_STAFF) + (_HRM,))
+                      if r not in _NO_EDIT)
+
+_cur_upd_student = _find_endpoint("/api/students/{student_id}", "PUT")
+
+if _cur_upd_student is not None:
+    _drop_route("/api/students/{student_id}", "PUT")
+
+    @app.put("/api/students/{student_id}", response_model=schemas.StudentOut)
+    def update_student_v3(student_id: int, payload: schemas.StudentUpdate,
+                          force: bool = False,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*_STUDENT_EDIT))):
+        return _cur_upd_student(student_id=student_id, payload=payload,
+                                force=force, db=db, user=user)
+
+
+# =====================================================================
+#  GURUH VA FILIAL ALMASHTIRISH
+#  "Boshqa guruhga o'tkazish" — faqat O'SHA FILIAL ichida. Filialni
+#  almashtirish alohida amal: u yerdagi administratorga vazifa tushadi,
+#  chunki o'quvchini kutib olish, shartnoma va to'lov unga o'tadi.
+# =====================================================================
+def _branch_admin(db, branch_id):
+    """Filialdagi administrator (bo'lmasa — filial rahbari)."""
+    if not branch_id:
+        return None
+    q = db.query(models.User).filter(models.User.is_active == 1,
+                                     models.User.branch_id == branch_id)
+    for wanted in (_ADMIN_ROLES, (roles.BRANCH_MANAGER,)):
+        u = q.filter(models.User.role.in_(wanted)).order_by(
+            models.User.id).first()
+        if u:
+            return u
+    return None
+
+
+_cur_move_group = _find_endpoint("/api/students/{student_id}/move-group",
+                                 "POST")
+
+if _cur_move_group is not None:
+    _drop_route("/api/students/{student_id}/move-group", "POST")
+
+    @app.post("/api/students/{student_id}/move-group")
+    def move_student_group_v2(student_id: int,
+                              payload: schemas.StudentGroupMove,
+                              force: bool = False,
+                              db: Session = Depends(get_db),
+                              user=Depends(require_role(*roles.FREEZE_ROLES))):
+        s = db.query(models.Student).get(student_id)
+        if not s:
+            raise HTTPException(404, "O'quvchi topilmadi")
+        if payload.group_id:
+            g = db.query(models.Group).get(payload.group_id)
+            if g and s.branch_id and g.branch_id and \
+                    g.branch_id != s.branch_id:
+                raise HTTPException(
+                    400, "Bu guruh boshqa filialda. Filialni almashtirish "
+                         "uchun \"Boshqa filialga o'tkazish\" amalidan "
+                         "foydalaning")
+        return _cur_move_group(student_id=student_id, payload=payload,
+                               force=force, db=db, user=user)
+
+
+@app.post("/api/students/{student_id}/move-branch")
+def move_student_branch(student_id: int, payload: dict,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """O'quvchini boshqa filialga o'tkazadi.
+
+    Guruh tanlansa — o'sha filialdagi guruhga qo'shiladi; tanlanmasa
+    guruhsiz o'tadi va yangi filial administratori guruh tanlaydi.
+    Ikkala holatda ham u yerdagi administratorga vazifa tushadi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+
+    bid = payload.get("branch_id")
+    if not bid:
+        raise HTTPException(400, "Filial tanlanmadi")
+    br = db.query(models.Branch).get(int(bid))
+    if not br:
+        raise HTTPException(404, "Filial topilmadi")
+    if s.branch_id == br.id:
+        raise HTTPException(400, "O'quvchi allaqachon shu filialda")
+
+    g = None
+    gid = payload.get("group_id")
+    if gid:
+        g = db.query(models.Group).get(int(gid))
+        if not g:
+            raise HTTPException(404, "Guruh topilmadi")
+        if g.branch_id != br.id:
+            raise HTTPException(400, "Bu guruh tanlangan filialda emas")
+        M._raise_if_blocked(M._check_enrolment(db, s, g), force=force)
+
+    old_branch = s.branch.name if s.branch else "—"
+    old_group = s.group.name if s.group else None
+    note = str(payload.get("note") or "").strip()
+
+    s.branch_id = br.id
+    s.group_id = g.id if g else None
+    if g and not s.level:
+        s.subject = s.subject or g.subject
+        s.level = g.level
+
+    admin = _branch_admin(db, br.id)
+    bal = M.student_balance(db, s.id)
+    lines = [f"O'quvchi: {s.full_name}",
+             f"Qayerdan: {old_branch}"
+             + (f" · {old_group}" if old_group else ""),
+             f"Guruh: {g.name if g else 'hali tanlanmagan — guruh tanlang'}",
+             f"Balans: {bal:,.0f} so'm".replace(",", " ")]
+    if note:
+        lines.append(f"Izoh: {note}")
+    lines.append("")
+    lines.append("Kerak: o'quvchini kutib oling, guruhini va dars "
+                 "jadvalini tasdiqlang, ota-onasiga xabar bering.")
+
+    task = models.Task(
+        title=f"Yangi o'quvchi keldi: {s.full_name} ({old_branch}dan)",
+        description="\n".join(lines),
+        assignee_id=admin.id if admin else None,
+        branch_id=br.id,
+        deadline=M.roles.local_today() + M.timedelta(days=2),
+        priority="high", source="manual",
+        created_by=user.full_name)
+    db.add(task)
+    db.flush()
+    try:
+        M._ensure_public_id(db, "task", task)
+    except Exception:
+        pass
+
+    audit.log(db, user, entity="student", action="group_move",
+              entity_id=s.id, entity_label=s.full_name, field="branch",
+              old_value=old_branch, new_value=br.name, branch_id=br.id,
+              note=note or None)
+    db.commit()
+    return {"ok": True, "branch_id": br.id, "branch": br.name,
+            "group_id": g.id if g else None,
+            "group": g.name if g else None,
+            "task_for": admin.full_name if admin else None}

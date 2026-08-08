@@ -4251,3 +4251,551 @@ def archive_students_import_undo(db: Session = Depends(get_db),
                     if kept else None),
               commit=True)
     return {"deleted": gone, "kept": kept}
+
+
+# =====================================================================
+#  EXAMINER VA SUPPORT DARAJALARI: Volontyor -> Junior -> Middle ->
+#  Senior
+#
+#  Volontyorga OYLIK BERILMAYDI — u tajriba to'plash bosqichi.
+#  Qolgan darajalarda hisoblangan oylik koeffitsiyentga ko'paytiriladi.
+#  Koeffitsiyentlar bazadan o'qiladi, asoschi istagan payt o'zgartiradi.
+# =====================================================================
+_GRADE_SEED = [
+    ("volunteer", "Volontyor", 0.00, 1),
+    ("junior", "Junior", 1.00, 2),
+    ("middle", "Middle", 1.15, 3),
+    ("senior", "Senior", 1.30, 4),
+]
+_GRADED_ROLES = (roles.EXAMINER, roles.HEAD_EXAMINER,
+                 roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT)
+_GRADE_SET = list(dict.fromkeys(
+    list(roles.FULL_ACCESS) + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
+                               roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
+
+if getattr(models, "StaffGrade", None) is None:
+    class StaffGrade(_Base):
+        """Xodimning darajasi (examiner / support)."""
+
+        __tablename__ = "staff_grades"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        user_id = Column(Integer, index=True, unique=True, nullable=False)
+        grade = Column(String, default="volunteer")
+        since = Column(_SaDate, default=date.today)
+        note = Column(String)
+        updated_by = Column(String)
+        updated_at = Column(DateTime, default=_dt.utcnow,
+                            onupdate=_dt.utcnow)
+
+    class StaffGradeRate(_Base):
+        """Daraja koeffitsiyenti. Volontyor = 0 (oylik yo'q)."""
+
+        __tablename__ = "staff_grade_rates"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        key = Column(String, unique=True, index=True, nullable=False)
+        label = Column(String, nullable=False)
+        coef = Column(Float, default=1.0)
+        order_no = Column(Integer, default=0)
+
+    models.StaffGrade = StaffGrade
+    models.StaffGradeRate = StaffGradeRate
+    try:
+        _Base.metadata.create_all(
+            bind=_engine,
+            tables=[StaffGrade.__table__, StaffGradeRate.__table__])
+    except Exception:
+        pass
+
+_SG = models.StaffGrade
+_SGR = models.StaffGradeRate
+
+
+def _grade_rates(db: Session) -> dict:
+    rows = db.query(_SGR).all()
+    if not rows:
+        try:
+            for k, lbl, coef, n in _GRADE_SEED:
+                db.add(_SGR(key=k, label=lbl, coef=coef, order_no=n))
+            db.commit()
+            rows = db.query(_SGR).all()
+        except Exception:
+            db.rollback()
+            rows = []
+    out = {r.key: {"key": r.key, "label": r.label,
+                   "coef": float(r.coef or 0), "order_no": r.order_no}
+           for r in rows}
+    for k, lbl, coef, n in _GRADE_SEED:
+        out.setdefault(k, {"key": k, "label": lbl, "coef": coef,
+                           "order_no": n})
+    return out
+
+
+def _grade_of(db: Session, user_id: int) -> str:
+    r = db.query(_SG).filter(_SG.user_id == user_id).first()
+    return (r.grade if r and r.grade else "volunteer")
+
+
+def _apply_grade(db: Session, rows: list, key: str = "user_id") -> list:
+    """Ro'yxatdagi har bir xodimga darajani va koeffitsiyentni qo'llaydi."""
+    rates = _grade_rates(db)
+    for r in rows:
+        uid = r.get(key)
+        g = _grade_of(db, uid) if uid else "volunteer"
+        info = rates.get(g) or rates["volunteer"]
+        coef = float(info["coef"])
+        base = float(r.get("salary") or 0)
+        r["grade"] = g
+        r["grade_label"] = info["label"]
+        r["grade_coef"] = coef
+        r["salary_base"] = round(base, 0)
+        r["salary"] = round(base * coef, 0)
+        # Qoldiq oylikdan keyin qayta hisoblanadi — aks holda
+        # volontyorga 0 so'm oylikda ham "qoldiq" ko'rinib turardi.
+        if "paid" in r:
+            r["left"] = round(r["salary"] - float(r.get("paid") or 0), 0)
+        if coef == 0:
+            r["grade_note"] = "Volontyor — oylik berilmaydi"
+    return rows
+
+
+@app.get("/api/staff-grades")
+def staff_grades_list(db: Session = Depends(get_db),
+                      user=Depends(require_role(*_PAYROLL_VIEW))):
+    rates = _grade_rates(db)
+    order = sorted(rates.values(), key=lambda x: x["order_no"])
+    us = (db.query(models.User)
+          .filter(models.User.role.in_(_GRADED_ROLES),
+                  models.User.is_active == 1)
+          .order_by(models.User.full_name).all())
+    us = [u for u in us if user.role in tuple(roles.ORG_WIDE_ROLES)
+          or not user.branch_id or u.branch_id == user.branch_id]
+    rows = []
+    for u in us:
+        r = db.query(_SG).filter(_SG.user_id == u.id).first()
+        g = (r.grade if r and r.grade else "volunteer")
+        rows.append({
+            "user_id": u.id, "name": u.full_name,
+            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "grade": g,
+            "grade_label": (rates.get(g) or {}).get("label", g),
+            "coef": (rates.get(g) or {}).get("coef", 0),
+            "since": r.since.isoformat() if r and r.since else None,
+            "note": r.note if r else None,
+        })
+    return {"grades": order, "rows": rows,
+            "can_edit": user.role in tuple(_GRADE_SET),
+            "can_edit_rates": user.role == roles.FOUNDER,
+            "hint": ("Volontyorga oylik berilmaydi. Junior, Middle va "
+                     "Senior darajalarida hisoblangan oylik "
+                     "koeffitsiyentga ko'paytiriladi.")}
+
+
+@app.put("/api/staff-grades/{target_id}")
+def staff_grade_set(target_id: int, payload: dict = Body(...),
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*_GRADE_SET))):
+    g = str(payload.get("grade") or "").strip()
+    rates = _grade_rates(db)
+    if g not in rates:
+        raise HTTPException(400, "Noto'g'ri daraja")
+    u = db.query(models.User).get(target_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    if u.role not in _GRADED_ROLES:
+        raise HTTPException(
+            400, "Daraja faqat examiner va support teacherga qo'yiladi")
+    row = db.query(_SG).filter(_SG.user_id == u.id).first()
+    old = row.grade if row else None
+    if row is None:
+        row = _SG(user_id=u.id)
+        db.add(row)
+    row.grade = g
+    row.since = roles.local_today()
+    row.note = payload.get("note")
+    row.updated_by = user.full_name
+    db.commit()
+    audit.log(db, user, entity="user", action="update", entity_id=u.id,
+              entity_label=u.full_name, field="Daraja",
+              old_value=old, new_value=rates[g]["label"], commit=True)
+    return {"ok": True, "grade": g, "label": rates[g]["label"],
+            "coef": rates[g]["coef"]}
+
+
+@app.put("/api/staff-grades")
+def staff_grade_rates_set(payload: dict = Body(...),
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(roles.FOUNDER))):
+    _grade_rates(db)
+    for it in (payload.get("rates") or []):
+        k = str(it.get("key") or "")
+        row = db.query(_SGR).filter(_SGR.key == k).first()
+        if row is None:
+            continue
+        try:
+            c = float(it.get("coef"))
+        except (TypeError, ValueError):
+            continue
+        if c < 0 or c > 5:
+            raise HTTPException(400, "Koeffitsiyent 0 dan 5 gacha bo'lsin")
+        row.coef = c
+    db.commit()
+    return {"ok": True, "grades": sorted(_grade_rates(db).values(),
+                                         key=lambda x: x["order_no"])}
+
+
+# --- Oylik ro'yxatlariga daraja qo'llanadi ---
+_cur_ex_sal = _find_endpoint("/api/examiners/salary", "GET")
+_cur_su_sal = _find_endpoint("/api/support/salary", "GET")
+
+if _cur_ex_sal is not None:
+    _drop_route("/api/examiners/salary", "GET")
+
+    @app.get("/api/examiners/salary")
+    def examiner_salary_v3(year: int | None = None, month: int | None = None,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *list(dict.fromkeys(
+                                   list(roles.EXAMINER_SALARY_VIEW)
+                                   + _PAYROLL_VIEW))))):
+        data = _cur_ex_sal(year=year, month=month, db=db, user=user)
+        rows = _apply_grade(db, data.get("rows") or [], "user_id")
+        data["rows"] = rows
+        data["total"] = round(sum(r["salary"] for r in rows), 0)
+        return data
+
+if _cur_su_sal is not None:
+    _drop_route("/api/support/salary", "GET")
+
+    @app.get("/api/support/salary")
+    def support_salary_v3(year: int | None = None, month: int | None = None,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(
+                              *list(dict.fromkeys(
+                                  list(roles.SALARY_VIEW_ALL)
+                                  + [roles.ACADEMIC_HEAD]
+                                  + _PAYROLL_VIEW))))):
+        data = _cur_su_sal(year=year, month=month, db=db, user=user)
+        rows = _apply_grade(db, data.get("rows") or [], "user_id")
+        data["rows"] = rows
+        data["total"] = round(sum(r["salary"] for r in rows), 0)
+        return data
+
+
+# =====================================================================
+#  HR KUTUBXONASI (onboarding)
+#
+#  Yangi xodim ishga kirganda ko'rishi shart bo'lgan video, kitob va
+#  fayllar bir joyda turadi. Har bir xodim uchun: nechi foiz ko'rgani
+#  va HR "topshirdi" deb belgilagani yoziladi. Daraja ko'tarishda shu
+#  ro'yxat mezonlardan biri bo'ladi.
+# =====================================================================
+_LIB_KINDS = [("video", "Video"), ("book", "Kitob"),
+              ("file", "Fayl"), ("link", "Havola")]
+_LIB_KIND_LABELS = dict(_LIB_KINDS)
+_LIB_MANAGE = list(dict.fromkeys(
+    list(roles.FULL_ACCESS) + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
+                               roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
+
+if getattr(models, "LibraryItem", None) is None:
+    class LibraryItem(_Base):
+        """Kutubxona yozuvi: video, kitob, fayl yoki havola."""
+
+        __tablename__ = "library_items"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        title = Column(String, nullable=False)
+        kind = Column(String, default="video")
+        url = Column(String)
+        attachment_id = Column(Integer)
+        minutes = Column(Integer, default=0)
+        description = Column(String)
+        # Kimlarga tegishli: rollar ro'yxati. Bo'sh = hammaga.
+        target_roles = Column(String)
+        required = Column(Integer, default=1)
+        order_no = Column(Integer, default=0)
+        active = Column(Integer, default=1)
+        created_by = Column(String)
+        created_at = Column(DateTime, default=_dt.utcnow)
+
+    class LibraryProgress(_Base):
+        """Kim nechi foiz ko'rgani va topshirgani."""
+
+        __tablename__ = "library_progress"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        item_id = Column(Integer, index=True, nullable=False)
+        user_id = Column(Integer, index=True, nullable=False)
+        percent = Column(Integer, default=0)
+        passed = Column(Integer, default=0)
+        passed_at = Column(_SaDate)
+        passed_by = Column(String)
+        note = Column(String)
+        updated_at = Column(DateTime, default=_dt.utcnow,
+                            onupdate=_dt.utcnow)
+
+    models.LibraryItem = LibraryItem
+    models.LibraryProgress = LibraryProgress
+    try:
+        _Base.metadata.create_all(
+            bind=_engine,
+            tables=[LibraryItem.__table__, LibraryProgress.__table__])
+    except Exception:
+        pass
+
+_LI = models.LibraryItem
+_LP = models.LibraryProgress
+
+
+def _lib_for_role(it, role: str) -> bool:
+    t = [x.strip() for x in (it.target_roles or "").split(",") if x.strip()]
+    return (not t) or (role in t)
+
+
+def _lib_out(it, prog=None) -> dict:
+    return {
+        "id": it.id, "title": it.title, "kind": it.kind,
+        "kind_label": _LIB_KIND_LABELS.get(it.kind, it.kind),
+        "url": it.url, "attachment_id": it.attachment_id,
+        "minutes": it.minutes or 0, "description": it.description,
+        "target_roles": [x for x in (it.target_roles or "").split(",") if x],
+        "required": bool(it.required), "order_no": it.order_no or 0,
+        "active": bool(it.active),
+        "percent": (prog.percent or 0) if prog else 0,
+        "passed": bool(prog.passed) if prog else False,
+        "passed_at": (prog.passed_at.isoformat()
+                      if prog and prog.passed_at else None),
+        "note": prog.note if prog else None,
+    }
+
+
+@app.get("/api/library")
+def library_list(db: Session = Depends(get_db),
+                 user=Depends(M.get_current_user)):
+    """O'z ro'yxatim + (HR uchun) har bir yozuv bo'yicha umumiy holat."""
+    manage = user.role in tuple(_LIB_MANAGE)
+    q = db.query(_LI).order_by(_LI.order_no, _LI.id)
+    items = [it for it in q.all() if manage or (
+        it.active and _lib_for_role(it, user.role))]
+    mine = {p.item_id: p for p in db.query(_LP)
+            .filter(_LP.user_id == user.id).all()}
+
+    out = []
+    for it in items:
+        row = _lib_out(it, mine.get(it.id))
+        if manage:
+            people = db.query(_LP).filter(_LP.item_id == it.id).all()
+            row["watchers"] = len(people)
+            row["done"] = len([p for p in people if p.passed])
+            row["avg_percent"] = (
+                round(sum(p.percent or 0 for p in people) / len(people))
+                if people else 0)
+        out.append(row)
+
+    total = len([r for r in out if r["required"]])
+    done = len([r for r in out if r["required"] and r["passed"]])
+    return {
+        "items": out, "kinds": [{"key": k, "label": l}
+                                for k, l in _LIB_KINDS],
+        "can_manage": manage,
+        "my_total": total, "my_done": done,
+        "my_percent": round(done * 100 / total) if total else 0,
+        "roles": [{"key": r, "label": roles.UZ_LABELS.get(r, r)}
+                  for r in roles.STAFF_ROLES],
+    }
+
+
+@app.post("/api/library")
+def library_add(payload: dict = Body(...), db: Session = Depends(get_db),
+                user=Depends(require_role(*_LIB_MANAGE))):
+    title = str(payload.get("title") or "").strip()
+    if not title:
+        raise HTTPException(400, "Nomini kiriting")
+    kind = str(payload.get("kind") or "video")
+    if kind not in _LIB_KIND_LABELS:
+        raise HTTPException(400, "Noto'g'ri tur")
+    url = str(payload.get("url") or "").strip() or None
+    aid = payload.get("attachment_id")
+    if not url and not aid:
+        raise HTTPException(
+            400, "Havola qo'ying yoki fayl yuklang — bittasi bo'lishi kerak")
+    it = _LI(
+        title=title, kind=kind, url=url,
+        attachment_id=int(aid) if aid else None,
+        minutes=int(payload.get("minutes") or 0),
+        description=str(payload.get("description") or "").strip() or None,
+        target_roles=",".join(payload.get("target_roles") or []) or None,
+        required=1 if payload.get("required", True) else 0,
+        order_no=int(payload.get("order_no") or 0),
+        active=1, created_by=user.full_name)
+    db.add(it)
+    db.commit()
+    db.refresh(it)
+    audit.log(db, user, entity="user", action="create",
+              entity_label=f"Kutubxona: {title}", commit=True)
+    return _lib_out(it)
+
+
+@app.put("/api/library/{item_id}")
+def library_edit(item_id: int, payload: dict = Body(...),
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*_LIB_MANAGE))):
+    it = db.query(_LI).get(item_id)
+    if not it:
+        raise HTTPException(404, "Topilmadi")
+    for f in ("title", "url", "description"):
+        if f in payload:
+            setattr(it, f, str(payload.get(f) or "").strip() or None)
+    if payload.get("kind") in _LIB_KIND_LABELS:
+        it.kind = payload["kind"]
+    if "minutes" in payload:
+        it.minutes = int(payload.get("minutes") or 0)
+    if "order_no" in payload:
+        it.order_no = int(payload.get("order_no") or 0)
+    if "target_roles" in payload:
+        it.target_roles = ",".join(payload.get("target_roles") or []) or None
+    if "required" in payload:
+        it.required = 1 if payload.get("required") else 0
+    if "active" in payload:
+        it.active = 1 if payload.get("active") else 0
+    if not it.title:
+        raise HTTPException(400, "Nomini kiriting")
+    db.commit()
+    return _lib_out(it)
+
+
+@app.delete("/api/library/{item_id}")
+def library_delete(item_id: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*_LIB_MANAGE))):
+    it = db.query(_LI).get(item_id)
+    if not it:
+        raise HTTPException(404, "Topilmadi")
+    db.query(_LP).filter(_LP.item_id == item_id).delete(
+        synchronize_session=False)
+    name = it.title
+    db.delete(it)
+    db.commit()
+    audit.log(db, user, entity="user", action="delete",
+              entity_label=f"Kutubxona: {name}", commit=True)
+    return {"ok": True}
+
+
+@app.put("/api/library/{item_id}/progress")
+def library_progress(item_id: int, payload: dict = Body(...),
+                     db: Session = Depends(get_db),
+                     user=Depends(M.get_current_user)):
+    """Xodim o'zi qancha ko'rganini belgilaydi. "Topshirdi" ni HR qo'yadi."""
+    it = db.query(_LI).get(item_id)
+    if not it:
+        raise HTTPException(404, "Topilmadi")
+    try:
+        pct = int(payload.get("percent"))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Foizni kiriting")
+    pct = max(0, min(100, pct))
+    row = (db.query(_LP)
+           .filter(_LP.item_id == item_id, _LP.user_id == user.id).first())
+    if row is None:
+        row = _LP(item_id=item_id, user_id=user.id)
+        db.add(row)
+    # Orqaga tushirilmaydi — ko'rilgan ko'rilgan
+    row.percent = max(row.percent or 0, pct)
+    db.commit()
+    return _lib_out(it, row)
+
+
+@app.get("/api/library/{item_id}/people")
+def library_people(item_id: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*_LIB_MANAGE))):
+    it = db.query(_LI).get(item_id)
+    if not it:
+        raise HTTPException(404, "Topilmadi")
+    us = (db.query(models.User)
+          .filter(models.User.is_active == 1)
+          .order_by(models.User.full_name).all())
+    us = [u for u in us if u.role in tuple(roles.STAFF_ROLES)
+          and _lib_for_role(it, u.role)]
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        us = [u for u in us if u.branch_id == user.branch_id]
+    prog = {p.user_id: p for p in db.query(_LP)
+            .filter(_LP.item_id == item_id).all()}
+    rows = []
+    for u in us:
+        p = prog.get(u.id)
+        rows.append({
+            "user_id": u.id, "name": u.full_name,
+            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "percent": (p.percent or 0) if p else 0,
+            "passed": bool(p and p.passed),
+            "passed_at": (p.passed_at.isoformat()
+                          if p and p.passed_at else None),
+            "passed_by": p.passed_by if p else None,
+            "note": p.note if p else None,
+        })
+    return {"item": _lib_out(it), "rows": rows,
+            "done": len([r for r in rows if r["passed"]]),
+            "total": len(rows)}
+
+
+@app.put("/api/library/{item_id}/people/{target_id}")
+def library_mark(item_id: int, target_id: int, payload: dict = Body(...),
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*_LIB_MANAGE))):
+    """HR "topshirdi" deb belgilaydi (yoki belgini olib tashlaydi)."""
+    it = db.query(_LI).get(item_id)
+    if not it:
+        raise HTTPException(404, "Topilmadi")
+    u = db.query(models.User).get(target_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    row = (db.query(_LP)
+           .filter(_LP.item_id == item_id, _LP.user_id == target_id).first())
+    if row is None:
+        row = _LP(item_id=item_id, user_id=target_id)
+        db.add(row)
+    ok = bool(payload.get("passed"))
+    row.passed = 1 if ok else 0
+    row.passed_at = roles.local_today() if ok else None
+    row.passed_by = user.full_name if ok else None
+    if ok:
+        row.percent = 100
+    if "percent" in payload and not ok:
+        try:
+            row.percent = max(0, min(100, int(payload["percent"])))
+        except (TypeError, ValueError):
+            pass
+    if "note" in payload:
+        row.note = str(payload.get("note") or "").strip() or None
+    db.commit()
+    audit.log(db, user, entity="user", action="update", entity_id=u.id,
+              entity_label=u.full_name, field=f"Kutubxona: {it.title}",
+              new_value="topshirdi" if ok else "bekor qilindi",
+              commit=True)
+    return {"ok": True, "passed": ok, "percent": row.percent}
+
+
+@app.get("/api/library/person/{target_id}")
+def library_person(target_id: int, db: Session = Depends(get_db),
+                   user=Depends(M.get_current_user)):
+    """Bitta xodimning kutubxona holati — daraja ko'tarishda ko'riladi."""
+    if target_id != user.id and user.role not in tuple(_LIB_MANAGE):
+        raise HTTPException(403, "Ruxsat yo'q")
+    u = db.query(models.User).get(target_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    prog = {p.item_id: p for p in db.query(_LP)
+            .filter(_LP.user_id == target_id).all()}
+    items = [it for it in db.query(_LI)
+             .order_by(_LI.order_no, _LI.id).all()
+             if it.active and _lib_for_role(it, u.role)]
+    out = [_lib_out(it, prog.get(it.id)) for it in items]
+    need = [r for r in out if r["required"]]
+    done = [r for r in need if r["passed"]]
+    return {"user_id": u.id, "name": u.full_name,
+            "items": out, "total": len(need), "done": len(done),
+            "percent": round(len(done) * 100 / len(need)) if need else 0}

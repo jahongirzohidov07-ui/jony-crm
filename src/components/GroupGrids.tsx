@@ -1189,6 +1189,13 @@ export function SupportAttendanceTab({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
+  // Seans vaqti: support qaysi kunni tahrirlayotgani va o'sha kunning
+  // "qaysi vaqtdan qaysi vaqtgacha"si. Oylik AYNAN shu soatdan
+  // hisoblanadi, shuning uchun har kun alohida.
+  const [day, setDay] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [tErr, setTErr] = useState("");
 
   const load = () => {
     setLoading(true);
@@ -1202,6 +1209,25 @@ export function SupportAttendanceTab({
   };
   useEffect(load, [groupId, year, month]);
 
+  // Kun tanlanmagan bo'lsa — bugun (yoki oxirgi o'tgan support kuni)
+  useEffect(() => {
+    if (!grid || grid.days.length === 0) return;
+    const past = grid.days.filter((d) => d <= grid.today);
+    const pick = grid.days.includes(grid.today)
+      ? grid.today
+      : past[past.length - 1] || grid.days[0];
+    setDay((prev) => (prev && grid.days.includes(prev) ? prev : pick));
+  }, [grid]);
+
+  // Tanlangan kunning vaqtlari: yozilgani bo'lsa o'sha, bo'lmasa
+  // biriktirishdagi standart vaqt.
+  useEffect(() => {
+    if (!grid || !day) return;
+    const s = grid.sessions?.[day];
+    setFrom(s?.start || grid.default_start || "");
+    setTo(s?.end || grid.default_end || "");
+  }, [grid, day]);
+
   const today = grid?.today ?? new Date().toISOString().slice(0, 10);
   const editable = (d: string) =>
     !!grid?.can_edit && (d === today || (d < today && grid.can_past));
@@ -1214,12 +1240,12 @@ export function SupportAttendanceTab({
   };
 
   async function pick(
-    day: string,
+    onDay: string,
     studentId: number,
     what: "present" | "late" | "absent" | "remove"
   ) {
     if (!grid) return;
-    const key = `${day}:${studentId}`;
+    const key = `${onDay}:${studentId}`;
     const before = grid.marks[key];
     const marks = { ...grid.marks };
     if (what === "remove") delete marks[key];
@@ -1229,7 +1255,9 @@ export function SupportAttendanceTab({
     setOpen(null);
     try {
       await api.put(`/groups/${groupId}/support-attendance`, {
-        day,
+        day: onDay,
+        start_time: from || null,
+        end_time: to || null,
         marks: [
           what === "remove"
             ? { student_id: studentId, present: false, remove: true }
@@ -1246,6 +1274,27 @@ export function SupportAttendanceTab({
       else back[key] = before;
       setGrid({ ...grid, marks: back });
       alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(null);
+      load();
+    }
+  }
+
+  /** Faqat vaqtni saqlash — belgilarga tegmasdan. */
+  async function saveTime() {
+    if (!day) return;
+    setTErr("");
+    setSaving("time");
+    try {
+      await api.put(`/groups/${groupId}/support-attendance`, {
+        day,
+        start_time: from || null,
+        end_time: to || null,
+        marks: [],
+      });
+      load();
+    } catch (e) {
+      setTErr(e instanceof Error ? e.message : "Xatolik");
     } finally {
       setSaving(null);
     }
@@ -1269,6 +1318,7 @@ export function SupportAttendanceTab({
   const present = Object.values(grid.marks).filter(
     (v) => v === true || v === 2
   ).length;
+  const cur = day ? grid.sessions?.[day] : undefined;
 
   return (
     <div>
@@ -1280,6 +1330,78 @@ export function SupportAttendanceTab({
           o'quvchi hisobiga ham ta'sir qilmaydi.
         </p>
       </div>
+
+      {grid.can_edit && (
+        <div className="mb-3 rounded-xl border border-slate-200 bg-white p-4">
+          <p className="text-sm font-medium text-slate-800 mb-1">
+            Dars qaysi vaqtdan qaysi vaqtgacha bo'ldi?
+          </p>
+          <p className="text-xs text-slate-500 mb-3">
+            Oylik <b>aynan shu soatdan</b> hisoblanadi. Asosiy ustoz
+            ko'proq vazifa bergan kuni 1.5, 2 yoki 3 soat qo'yavering —
+            har kun alohida. Kelmagan o'quvchi sanalmaydi.
+          </p>
+          <div className="flex flex-wrap items-end gap-2">
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">Kun</label>
+              <select
+                value={day}
+                onChange={(e) => setDay(e.target.value)}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              >
+                {grid.days
+                  .filter((d) => d <= grid.today)
+                  .map((d) => (
+                    <option key={d} value={d}>
+                      {dayLabel(d)}
+                      {grid.sessions?.[d]
+                        ? ` · ${grid.sessions[d].hours} soat`
+                        : ""}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">
+                Boshlandi
+              </label>
+              <input
+                type="time"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">
+                Tugadi
+              </label>
+              <input
+                type="time"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              />
+            </div>
+            <button
+              onClick={saveTime}
+              disabled={saving === "time" || !day}
+              className="rounded-lg bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 text-sm font-medium disabled:opacity-40"
+            >
+              Vaqtni saqlash
+            </button>
+            {cur && (
+              <span className="text-sm text-sky-700">
+                {cur.start}–{cur.end} · <b>{cur.hours} soat</b> ·{" "}
+                {cur.students} o'quvchi
+              </span>
+            )}
+          </div>
+          {tErr && (
+            <p className="text-xs text-red-600 mt-2">{tErr}</p>
+          )}
+        </div>
+      )}
 
       <p className="text-xs text-slate-500 mb-3">
         {grid.days.length} support kuni · {grid.students.length} o'quvchi
@@ -1293,6 +1415,15 @@ export function SupportAttendanceTab({
             ({present}/{marked} belgilangan)
           </>
         )}
+        {grid.hours_total ? (
+          <>
+            {" "}
+            · shu oyda{" "}
+            <span className="font-medium text-sky-700">
+              {grid.hours_total} soat
+            </span>
+          </>
+        ) : null}
       </p>
 
       <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white">
@@ -1377,9 +1508,10 @@ export function SupportAttendanceTab({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        Kunlar support biriktirilganda tanlangan kun va vaqtdan
-        olinadi — asosiy dars kunlaridan emas. Kun yoki vaqt
-        o'zgarsa, guruh kartasidagi support biriktirmasini tahrirlang.
+        Kunlar support biriktirilganda tanlangan kunlardan olinadi —
+        asosiy dars kunlaridan emas. Belgi qo'yilgan har bir kun uchun
+        seans yoziladi va oylik o'sha soatlardan chiqadi; hech kim
+        kelmagan kun umuman sanalmaydi.
       </p>
     </div>
   );

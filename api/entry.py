@@ -3571,3 +3571,218 @@ if _cur_save_att is not None:
                      "bo'limidan qo'ying")
         return _cur_save_att(lesson_id=lesson_id, payload=payload,
                              db=db, user=user)
+
+
+# =====================================================================
+#  LC UP IMPORTI: KETGAN (ARXIV) O'QUVCHILARNI HAM QO'SHIB KETSIN
+#
+#  Muammo: eski to'lovlar tarixida allaqachon ketib bo'lgan o'quvchilar
+#  ko'p. Ular yangi tizimga umuman kiritilmagan, shuning uchun import
+#  "bunday o'quvchi topilmadi" deb yuz-yuzlab qatorni tashlab ketardi.
+#
+#  Yechim: "create_missing" belgilansa, topilmagan odam ARXIV
+#  o'quvchi sifatida ochiladi (status="archived") va to'lovi o'shanga
+#  yoziladi. Ular Arxiv bo'limida ko'rinadi, faol ro'yxatga
+#  aralashmaydi va hech qanday oylik/hisob-kitobga kirmaydi.
+# =====================================================================
+_LCUP_STU_NOTE = f"{_LCUP_TAG} arxivdan ko'chirilgan o'quvchi"
+
+_orig_import_payments = _find_endpoint("/api/lcup/payments", "POST")
+_drop_route("/api/lcup/payments", "POST")
+
+
+def _lcup_new_student(db: Session, user, name: str, phone: str | None,
+                      day):
+    """Topilmagan odamni arxiv o'quvchi qilib ochadi."""
+    s = models.Student(
+        full_name=name.strip(),
+        phone=(f"998{phone}" if phone and len(phone) == 9 else phone) or None,
+        status="archived",
+        branch_id=(None if user.role in tuple(roles.ORG_WIDE_ROLES)
+                   else user.branch_id),
+        enrolled_date=day,
+        left_date=day,
+        note=_LCUP_STU_NOTE,
+    )
+    db.add(s)
+    db.flush()
+    try:
+        M._ensure_public_id(db, "student", s)
+    except Exception:
+        pass
+    return s
+
+
+@app.post("/api/lcup/payments")
+def import_payments_v2(payload: dict, db: Session = Depends(get_db),
+                       user=Depends(require_role(*_IMPORT_ROLES))):
+    rows = payload.get("rows") or []
+    commit = bool(payload.get("commit"))
+    create_missing = bool(payload.get("create_missing"))
+    if not isinstance(rows, list) or not rows:
+        raise HTTPException(400, "Fayldan bironta qator o'qilmadi")
+    if len(rows) > 20000:
+        raise HTTPException(400, "Bir martada 20 000 qatordan ko'p bo'lmasin")
+
+    by_name, by_phone = _student_index(db, user)
+    seen = set()
+    for p in (db.query(models.Payment)
+              .filter(models.Payment.kind == "payment",
+                      models.Payment.note.like(f"%{_LCUP_TAG}%")).all()):
+        seen.add((p.student_id, p.created_at.date() if p.created_at else None,
+                  round(p.amount, 2)))
+
+    # Ko'rib chiqishda (commit=false) hech kim yaratilmaydi — shuning
+    # uchun bitta odam necha marta to'lagan bo'lsa ham bir marta
+    # sanaladi.
+    planned = {}
+    out, ok, dup, miss, made, total = [], 0, 0, 0, 0, 0.0
+
+    for i, r in enumerate(rows):
+        name = str(r.get("name") or "").strip()
+        amount = _parse_money(r.get("amount"))
+        day = _parse_day(r.get("date"))
+        phone = _phone_tail(r.get("phone"))
+
+        if not name and not phone:
+            continue
+        if amount <= 0:
+            out.append({"row": i + 1, "name": name, "status": "skip",
+                        "reason": "summa yo'q yoki noto'g'ri"})
+            continue
+        if not day:
+            out.append({"row": i + 1, "name": name, "status": "skip",
+                        "reason": "sana o'qilmadi"})
+            continue
+
+        cands = list(by_name.get(_norm_name(name), []))
+        if phone:
+            ph = by_phone.get(phone, [])
+            both = [s for s in cands if s in ph]
+            if both:
+                cands = both
+            elif not cands:
+                cands = list(ph)
+
+        new_one = False
+        if not cands:
+            if not create_missing or not name:
+                miss += 1
+                out.append({"row": i + 1, "name": name,
+                            "date": day.isoformat(), "amount": amount,
+                            "status": "not_found",
+                            "reason": "bunday o'quvchi topilmadi"})
+                continue
+            key = _norm_name(name)
+            if commit:
+                s = _lcup_new_student(db, user, name, phone, day)
+                by_name.setdefault(key, []).append(s)
+                if phone:
+                    by_phone.setdefault(phone, []).append(s)
+                cands = [s]
+                made += 1
+                new_one = True
+            else:
+                if key not in planned:
+                    planned[key] = True
+                    made += 1
+                total += amount
+                ok += 1
+                out.append({"row": i + 1, "name": name,
+                            "date": day.isoformat(), "amount": amount,
+                            "status": "will_create",
+                            "reason": "arxiv o'quvchi sifatida ochiladi"})
+                continue
+        elif len(cands) > 1:
+            miss += 1
+            out.append({"row": i + 1, "name": name, "date": day.isoformat(),
+                        "amount": amount, "status": "ambiguous",
+                        "reason": f"{len(cands)} ta bir xil ismli o'quvchi "
+                                  f"bor — telefon ustunini qo'shing"})
+            continue
+
+        s = cands[0]
+        key = (s.id, day, round(amount, 2))
+        if key in seen:
+            dup += 1
+            out.append({"row": i + 1, "name": s.full_name,
+                        "date": day.isoformat(), "amount": amount,
+                        "status": "duplicate",
+                        "reason": "bu to'lov allaqachon ko'chirilgan"})
+            continue
+        seen.add(key)
+
+        method = _parse_method(r.get("method"))
+        note = str(r.get("note") or "").strip()
+        total += amount
+        ok += 1
+        out.append({"row": i + 1, "name": s.full_name, "student_id": s.id,
+                    "date": day.isoformat(), "amount": amount,
+                    "method": method,
+                    "status": "created" if new_one else "ok"})
+
+        if commit:
+            when = _dt.combine(day, _dt.min.time())
+            tail = f" · {note}" if note else ""
+            db.add(models.Payment(
+                student_id=s.id, amount=abs(amount), kind="payment",
+                method=method, created_at=when, period=None,
+                note=f"{_LCUP_TAG} eski to'lov{tail}",
+                created_by=user.full_name))
+            db.add(models.Payment(
+                student_id=s.id, amount=-abs(amount), kind="charge",
+                created_at=when, period=None,
+                note=f"{_LCUP_TAG} eski hisob ({day.strftime('%Y-%m')})",
+                created_by=user.full_name))
+
+    if commit and (ok or made):
+        db.commit()
+        audit.log(db, user, entity="payment", action="import",
+                  entity_label=f"LC UP: {ok} ta eski to'lov"
+                               + (f", {made} ta arxiv o'quvchi" if made
+                                  else ""),
+                  new_value=ok,
+                  note=f"jami {total:,.0f} so'm".replace(",", " "),
+                  commit=True)
+
+    return {"committed": commit, "ok": ok, "duplicate": dup,
+            "not_found": miss, "created": made, "total": round(total, 2),
+            "rows": out[:500], "shown": min(len(out), 500),
+            "all_rows": len(out)}
+
+
+# Bekor qilishda import ochgan arxiv o'quvchilar ham ketadi — lekin
+# faqat o'zidan boshqa hech qanday izi qolmaganlari.
+_drop_route("/api/lcup/payments", "DELETE")
+
+
+@app.delete("/api/lcup/payments")
+def import_payments_undo_v2(db: Session = Depends(get_db),
+                            user=Depends(require_role(roles.FOUNDER))):
+    n = (db.query(models.Payment)
+         .filter(models.Payment.note.like(f"%{_LCUP_TAG}%"))
+         .delete(synchronize_session=False))
+    db.flush()
+
+    gone = 0
+    for s in (db.query(models.Student)
+              .filter(models.Student.note == _LCUP_STU_NOTE).all()):
+        busy = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id).count()
+                or db.query(models.Attendance)
+                .filter(models.Attendance.student_id == s.id).count()
+                or db.query(models.ExamResult)
+                .filter(models.ExamResult.student_id == s.id).count())
+        if busy:
+            continue
+        db.delete(s)
+        gone += 1
+
+    db.commit()
+    audit.log(db, user, entity="payment", action="delete",
+              entity_label="LC UP importi bekor qilindi",
+              old_value=n,
+              note=(f"{gone} ta arxiv o'quvchi ham o'chirildi"
+                    if gone else None),
+              commit=True)
+    return {"deleted": n, "students_deleted": gone}

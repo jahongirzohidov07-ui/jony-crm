@@ -3282,3 +3282,292 @@ def move_student_branch(student_id: int, payload: dict,
             "group_id": g.id if g else None,
             "group": g.name if g else None,
             "task_for": admin.full_name if admin else None}
+
+
+# =====================================================================
+#  GURUH BOSQICHI: "Step 2 · Unit 7"
+#  Administrator guruhga kirganda guruh qayerga yetganini darrov ko'radi.
+#  Manba — IMTIHONLAR: natijasi kiritilgan eng oxirgi unit imtihoni.
+#  Hech kim qo'lda hech nima kiritmaydi, shuning uchun bu ma'lumot
+#  hech qachon eskirmaydi.
+# =====================================================================
+_UNIT_TOTAL = 12
+
+
+@app.get("/api/groups/{group_id}/progress")
+def group_progress(group_id: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.ATTENDANCE_VIEW))):
+    g = _get_group_in_scope(db, group_id, user)
+
+    rows = (db.query(models.Exam)
+            .join(models.ExamResult,
+                  models.ExamResult.exam_id == models.Exam.id)
+            .filter(models.Exam.group_id == group_id,
+                    models.Exam.kind == "unit",
+                    models.Exam.unit_no.isnot(None),
+                    models.ExamResult.score.isnot(None))
+            .distinct().all())
+
+    done = sorted({int(e.unit_no) for e in rows if e.unit_no})
+    last = None
+    for e in rows:
+        if last is None or (int(e.unit_no or 0), e.date) > \
+                (int(last.unit_no or 0), last.date):
+            last = e
+
+    exam_out = None
+    if last is not None:
+        res = (db.query(models.ExamResult)
+               .filter(models.ExamResult.exam_id == last.id,
+                       models.ExamResult.score.isnot(None)).all())
+        pcts = [r.percent for r in res if r.percent is not None]
+        exam_out = {
+            "id": last.id,
+            "date": last.date.isoformat() if last.date else None,
+            "unit_no": int(last.unit_no or 0),
+            "title": last.title,
+            "students": len(res),
+            "avg_percent": (round(sum(pcts) / len(pcts), 1)
+                            if pcts else None),
+        }
+
+    unit = int(last.unit_no or 0) if last is not None else 0
+    lvl = g.level or ""
+    return {
+        "group_id": g.id,
+        "subject": g.subject,
+        "level": lvl or None,
+        "level_label": roles.LEVEL_LABELS.get(lvl) or (lvl or None),
+        "unit": unit,
+        "unit_total": _UNIT_TOTAL,
+        "next_unit": (unit + 1) if 0 < unit < _UNIT_TOTAL else
+                     (1 if unit == 0 else None),
+        "done_units": done,
+        "percent": round(unit * 100 / _UNIT_TOTAL) if unit else 0,
+        "last_exam": exam_out,
+    }
+
+
+# =====================================================================
+#  SUPPORT YO'QLAMASI — USTOZNIKIDAN BUTUNLAY ALOHIDA
+#
+#  Muammo: support ham, ustoz ham BITTA "attendances" jadvaliga
+#  yozardi. Support belgi qo'yganda ustozning belgisi ustiga yozilib
+#  ketardi — ustoz oyligi ham shundan chiqadi, ya'ni bu pul xatosi edi.
+#
+#  Yechim: supportning o'z jadvali (support_attendance) va o'z kunlari.
+#  Support darsi asosiy dars kuni emas — biriktirishda belgilangan
+#  kun/vaqtda o'tadi, shuning uchun kunlar SupportAssignment'dan
+#  quriladi. Bu jadvalga hech qanday pul hisob-kitobi bog'lanmagan:
+#  ustoz oyligiga ham, o'quvchi hisobiga ham ta'sir qilmaydi.
+# =====================================================================
+from fastapi import Body  # noqa: E402
+from pydantic import BaseModel as _BM  # noqa: E402
+
+if getattr(models, "SupportAttendance", None) is None:
+    class SupportAttendance(_Base):
+        """Support teacherning o'z seansidagi yo'qlamasi."""
+
+        __tablename__ = "support_attendance"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        group_id = Column(Integer, index=True, nullable=False)
+        student_id = Column(Integer, index=True, nullable=False)
+        date = Column(_SaDate, nullable=False, index=True)
+        # 1 = keldi, 2 = kech keldi, 0 = kelmadi
+        present = Column(Integer, default=1)
+        note = Column(String)
+        created_by = Column(String)
+        created_at = Column(DateTime, default=_dt.utcnow)
+        updated_at = Column(DateTime, default=_dt.utcnow,
+                            onupdate=_dt.utcnow)
+
+    models.SupportAttendance = SupportAttendance
+    try:
+        _Base.metadata.create_all(
+            bind=_engine, tables=[SupportAttendance.__table__])
+    except Exception:
+        pass
+
+_SUPATT = models.SupportAttendance
+
+_SUP_ROLES = (roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT)
+_SUP_ATT_EDIT = list(dict.fromkeys(
+    list(roles.FULL_ACCESS) + [roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT,
+                               roles.ACADEMIC_HEAD, roles.HR_MANAGER]))
+
+_WDX = {"mon": 0, "tue": 1, "wed": 2, "thu": 3,
+        "fri": 4, "sat": 5, "sun": 6}
+
+
+class _SupMark(_BM):
+    student_id: int
+    present: bool = True
+    late: bool = False
+    remove: bool = False
+
+
+class _SupBulk(_BM):
+    day: date
+    marks: list[_SupMark]
+
+
+def _month_bounds(year: int, month: int):
+    if not (1 <= month <= 12):
+        raise HTTPException(400, "Oy 1 dan 12 gacha bo'lsin")
+    start = date(year, month, 1)
+    end = (date(year + 1, 1, 1) if month == 12
+           else date(year, month + 1, 1)) - _td(days=1)
+    return start, end
+
+
+def _support_plan(db: Session, group_id: int):
+    """Guruhga biriktirilgan supportlar va ularning kun/vaqti."""
+    rows = (db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.group_id == group_id).all())
+    out = []
+    for a in rows:
+        u = db.query(models.User).get(a.user_id) if a.user_id else None
+        out.append({
+            "user_id": a.user_id,
+            "name": u.full_name if u else None,
+            "days": [d.strip() for d in (a.days or "").split(",")
+                     if d.strip()],
+            "start": a.start,
+            "end": a.end,
+        })
+    return out
+
+
+def _support_dates(db: Session, g, year: int, month: int,
+                   only_user: int | None = None):
+    start, end = _month_bounds(year, month)
+    if getattr(g, "start_date", None) and g.start_date > start:
+        start = g.start_date
+    if getattr(g, "end_date", None) and g.end_date < end:
+        end = g.end_date
+    want = set()
+    for p in _support_plan(db, g.id):
+        if only_user and p["user_id"] != only_user:
+            continue
+        for d in p["days"]:
+            if d in _WDX:
+                want.add(_WDX[d])
+    if not want or start > end:
+        return []
+    out, cur = [], start
+    while cur <= end:
+        if cur.weekday() in want:
+            out.append(cur)
+        cur += _td(days=1)
+    return out
+
+
+@app.get("/api/groups/{group_id}/support-attendance")
+def support_attendance_grid(group_id: int, year: int, month: int,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(
+                                *roles.ATTENDANCE_VIEW))):
+    g = _get_group_in_scope(db, group_id, user)
+    mine = user.id if user.role == roles.SUPPORT_TEACHER else None
+    days = _support_dates(db, g, year, month, only_user=mine)
+
+    students = M._group_students(db, group_id)
+    if user.role in (roles.TEACHER,) + _SUP_ROLES:
+        students = [s for s in students if s.status != "frozen"]
+
+    marks = {}
+    if days:
+        rows = (db.query(_SUPATT)
+                .filter(_SUPATT.group_id == group_id,
+                        _SUPATT.date >= days[0],
+                        _SUPATT.date <= days[-1]).all())
+        for r in rows:
+            v = 2 if (r.present or 0) == 2 else bool(r.present)
+            marks[f"{r.date.isoformat()}:{r.student_id}"] = v
+
+    plan = _support_plan(db, group_id)
+    label = " · ".join(
+        f"{p['name'] or 'Support'} ({p['start']}-{p['end']})"
+        for p in plan if p["start"] and p["end"]) or None
+
+    return {
+        "days": [d.isoformat() for d in days],
+        "students": [{"id": s.id, "full_name": s.full_name,
+                      "status": s.status} for s in students],
+        "marks": marks,
+        "plan": plan,
+        "label": label,
+        "today": roles.local_today().isoformat(),
+        "can_edit": user.role in tuple(_SUP_ATT_EDIT),
+        "can_past": user.role in tuple(roles.PAST_ATTENDANCE),
+        "hint": (None if days else
+                 "Support darsining kuni va vaqti belgilanmagan — "
+                 "guruh kartasidan supportni biriktirib, kun va "
+                 "vaqtini tanlang"),
+    }
+
+
+@app.put("/api/groups/{group_id}/support-attendance")
+def save_support_attendance(group_id: int, payload: _SupBulk = Body(...),
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(*_SUP_ATT_EDIT))):
+    g = _get_group_in_scope(db, group_id, user)
+    d = payload.day
+    today = roles.local_today()
+    if d > today:
+        raise HTTPException(
+            400, "Hali kelmagan kunga yo'qlama qo'yilmaydi")
+    if d < today and user.role not in tuple(roles.PAST_ATTENDANCE):
+        raise HTTPException(
+            403, "O'tib ketgan kunni faqat asoschi, o'quv bo'limi "
+                 "rahbari va HR menejer o'zgartira oladi")
+
+    mine = user.id if user.role == roles.SUPPORT_TEACHER else None
+    allowed = set(_support_dates(db, g, d.year, d.month, only_user=mine))
+    if d not in allowed:
+        raise HTTPException(
+            400, "Bu kun support darsi kuni emas — biriktirishda "
+                 "belgilangan kunlarga yo'qlama qo'yiladi")
+
+    existing = {r.student_id: r for r in db.query(_SUPATT).filter(
+        _SUPATT.group_id == group_id, _SUPATT.date == d).all()}
+    for m in payload.marks:
+        if m.remove:
+            row = existing.pop(m.student_id, None)
+            if row is not None:
+                db.delete(row)
+            continue
+        val = (2 if m.late else 1) if m.present else 0
+        row = existing.get(m.student_id)
+        if row is not None:
+            row.present = val
+        else:
+            row = _SUPATT(group_id=group_id, student_id=m.student_id,
+                          date=d, present=val,
+                          created_by=user.full_name)
+            db.add(row)
+            existing[m.student_id] = row
+    db.commit()
+    return {"ok": True, "date": d.isoformat(),
+            "marked": len(existing)}
+
+
+# --- Ustozning yo'qlamasi supportdan himoyalandi ---
+_cur_save_att = _find_endpoint("/api/lessons/{lesson_id}/attendance", "PUT")
+
+if _cur_save_att is not None:
+    _drop_route("/api/lessons/{lesson_id}/attendance", "PUT")
+
+    @app.put("/api/lessons/{lesson_id}/attendance")
+    def save_attendance_v2(lesson_id: int, payload: schemas.AttendanceBulk,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*_TEACH_HR))):
+        if user.role in _SUP_ROLES:
+            raise HTTPException(
+                403, "Ustozning yo'qlamasi alohida — unga tegilmaydi. "
+                     "O'z yo'qlamangizni \"Support davomati\" "
+                     "bo'limidan qo'ying")
+        return _cur_save_att(lesson_id=lesson_id, payload=payload,
+                             db=db, user=user)

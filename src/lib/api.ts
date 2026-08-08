@@ -4486,4 +4486,14 @@ export interface SupportAttendanceGrid {
   can_edit: boolean;
   can_past: boolean;
   hint?: string | null;
+  /** Kunlik seans: "YYYY-MM-DD" -> qaysi vaqtdan qaysi vaqtgacha. */
+  sessions?: Record<
+    string,
+    { start: string; end: string; minutes: number; hours: number;
+      students: number }
+  >;
+  default_start?: string | null;
+  default_end?: string | null;
+  hours_total?: number;
+  students_total?: number;
 }

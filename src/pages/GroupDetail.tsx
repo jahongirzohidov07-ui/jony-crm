@@ -16,15 +16,30 @@ import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { QuickXp } from "../components/XpAdmin";
-import { AttendanceTab, GradesTab, ExamsTab } from "../components/GroupGrids";
+import {
+  AttendanceTab,
+  GradesTab,
+  ExamsTab,
+  SupportAttendanceTab,
+} from "../components/GroupGrids";
 import { GroupHomeworkTab, GroupHistoryTab, GroupNotesTab } from "../components/GroupExtras";
 import { GroupSidebar } from "../components/GroupSidebar";
 import { GroupFormModal } from "./Groups";
 
-type GroupTab = "attendance" | "grades" | "exams" | "xp" | "homework" | "mashqlar" | "history" | "notes";
+type GroupTab =
+  | "attendance"
+  | "support"
+  | "grades"
+  | "exams"
+  | "xp"
+  | "homework"
+  | "mashqlar"
+  | "history"
+  | "notes";
 
 const GROUP_TABS: { key: GroupTab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
+  { key: "support", label: "Support davomati" },
   { key: "homework", label: "Uyga vazifalar" },
   { key: "mashqlar", label: "Mashqlar" },
   { key: "grades", label: "Baholash" },
@@ -74,6 +89,12 @@ export default function GroupDetail() {
 
   const canMarkLesson =
     can(user?.role, TEACHING_STAFF) || user?.role === "hr_manager";
+  // Support ustozning DAVOMAT varag'iga tegmaydi — uning o'z varag'i
+  // bor ("Support davomati"). Ilgari ikkalasi bitta jadvalga yozardi
+  // va support belgi qo'yganda ustozning yoqlamasi o'chib ketardi.
+  // Baholash va imtihonlar supportda o'zgarishsiz qoladi.
+  const isSupport =
+    user?.role === "support_teacher" || user?.role === "head_support";
   const canFinance = can(user?.role, FINANCE_ACCESS);
 
   // Tezkor XP uchun guruhdagi o'quvchilar ro'yxati
@@ -305,7 +326,14 @@ export default function GroupDetail() {
           groupId={group.id}
           year={selYear}
           month={selMonth}
-          canEdit={canMarkLesson}
+          canEdit={canMarkLesson && !isSupport}
+        />
+      )}
+      {tab === "support" && (
+        <SupportAttendanceTab
+          groupId={group.id}
+          year={selYear}
+          month={selMonth}
         />
       )}
       {tab === "grades" && (

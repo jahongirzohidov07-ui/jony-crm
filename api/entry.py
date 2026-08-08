@@ -3786,3 +3786,279 @@ def import_payments_undo_v2(db: Session = Depends(get_db),
                     if gone else None),
               commit=True)
     return {"deleted": n, "students_deleted": gone}
+
+
+# =====================================================================
+#  GURUHGA AVTOMAT NOM: "J/Z - Group 01/25"
+#
+#  Guruh ochayotgan odam nom o'ylab o'tirmasin. Qoida oddiy:
+#    J/Z      — ustozning ism-familiya bosh harflari
+#    Group 01 — guruh ochilgan OY (01 = yanvar)
+#    /25      — yil (2025)
+#  Bir ustozda shu oyda ikkinchi guruh bo'lsa oxiriga "-2" qo'shiladi.
+#  Nom oddiy matn bo'lib qoladi — ustoz xohlasa o'zgartiradi, tegmasa
+#  avtomat nom ketaveradi.
+# =====================================================================
+def _initials(full_name: str) -> str:
+    parts = [p for p in (full_name or "").replace(".", " ").split() if p]
+    letters = [p[0].upper() for p in parts[:2]]
+    return "/".join(letters) if letters else "XX"
+
+
+def _auto_group_name(db: Session, teacher_id=None, when=None) -> str:
+    d = when or roles.local_today()
+    who = "XX"
+    if teacher_id:
+        t = db.query(models.Teacher).get(int(teacher_id))
+        if t:
+            who = _initials(t.full_name)
+    base = f"{who} - Group {d.month:02d}/{d.year % 100:02d}"
+    taken = {g.name for g in db.query(models.Group)
+             .filter(models.Group.name.like(f"{base}%")).all()}
+    if base not in taken:
+        return base
+    n = 2
+    while f"{base}-{n}" in taken:
+        n += 1
+    return f"{base}-{n}"
+
+
+# Diqqat: /api/groups/{group_id} yo'li allaqachon ro'yxatdan o'tgan va
+# "suggest-name" ni raqam deb o'qib yuborardi — shuning uchun alohida
+# prefiks.
+@app.get("/api/group-name/suggest")
+def group_suggest_name(teacher_id: int | None = None,
+                       on: date | None = None,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.GROUP_MANAGE))):
+    return {"name": _auto_group_name(db, teacher_id, on)}
+
+
+_cur_create_group2 = _find_endpoint("/api/groups", "POST")
+
+if _cur_create_group2 is not None:
+    _drop_route("/api/groups", "POST")
+
+    @app.post("/api/groups")
+    def create_group_v4(payload: schemas.GroupCreate,
+                        force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+        # Nom bo'sh yuborilsa — o'zi qo'yiladi (frontendda ham
+        # oldindan ko'rsatiladi, bu esa ikkinchi himoya).
+        if not (payload.name or "").strip():
+            payload.name = _auto_group_name(
+                db, payload.teacher_id, payload.start_date)
+        return _cur_create_group2(payload=payload, force=force,
+                                  db=db, user=user)
+
+
+# =====================================================================
+#  SUPPORT SEANSI YO'QLAMA BILAN BIRGA — HAQIQIY SOAT BILAN
+#
+#  Ilgari support oyligi qo'lda kiritilgan seansdan chiqardi va amalda
+#  hamma joyda 1 soat bo'lib qolardi. Aslida asosiy ustoz ko'proq
+#  vazifa berganda support 1.5, 2, hatto 3 soat ishlaydi.
+#
+#  Endi support yo'qlamani qo'yayotganda O'SHA OYNADA "qaysi vaqtdan
+#  qaysi vaqtgacha" ni ham kiritadi. Shu ma'lumotdan seans yozuvi
+#  avtomat yaratiladi/yangilanadi va oylik aynan shundan hisoblanadi.
+#
+#  Muhim: KELMAGAN o'quvchi sanalmaydi — seansdagi "o'quvchilar soni"
+#  faqat kelganlardan iborat.
+# =====================================================================
+class _SupBulk2(_BM):
+    day: date
+    marks: list[_SupMark] = []
+    start_time: str | None = None
+    end_time: str | None = None
+
+
+def _sup_teacher_for(db: Session, user, group_id: int):
+    """Seans kimning nomiga yoziladi: supportning o'zi, aks holda shu
+    guruhga biriktirilgan support."""
+    if user.role == roles.SUPPORT_TEACHER:
+        return M._teacher_of_user(db, user)
+    a = (db.query(models.SupportAssignment)
+         .filter(models.SupportAssignment.group_id == group_id).first())
+    if a and a.user_id:
+        u = db.query(models.User).get(a.user_id)
+        if u:
+            return M._teacher_of_user(db, u)
+    return None
+
+
+def _sup_plan_time(db: Session, group_id: int, uid=None):
+    q = (db.query(models.SupportAssignment)
+         .filter(models.SupportAssignment.group_id == group_id))
+    if uid:
+        q = q.filter(models.SupportAssignment.user_id == uid)
+    a = q.first()
+    return (a.start, a.end) if a else (None, None)
+
+
+def _sync_support_session(db: Session, user, g, d, start, end):
+    """Kunlik seansni yo'qlamaga qarab yangilaydi."""
+    t = _sup_teacher_for(db, user, g.id)
+    if t is None:
+        return None
+    present = (db.query(_SUPATT)
+               .filter(_SUPATT.group_id == g.id, _SUPATT.date == d,
+                       _SUPATT.present != 0).count())
+    row = (db.query(models.SupportSession)
+           .filter(models.SupportSession.teacher_id == t.id,
+                   models.SupportSession.group_id == g.id,
+                   models.SupportSession.date == d).first())
+
+    # Hech kim kelmagan (yoki belgilar olib tashlangan) — seans yo'q
+    if present <= 0:
+        if row is not None:
+            db.delete(row)
+        return None
+
+    if not (start and end):
+        if row is not None:
+            start = start or row.start_time
+            end = end or row.end_time
+        else:
+            ps, pe = _sup_plan_time(db, g.id,
+                                    user.id if user.role ==
+                                    roles.SUPPORT_TEACHER else None)
+            start, end = start or ps, end or pe
+    if not (start and end):
+        raise HTTPException(
+            400, "Dars qaysi vaqtdan qaysi vaqtgacha bo'lganini "
+                 "kiriting — oylik shu soatdan hisoblanadi")
+
+    s_min, e_min = roles.hhmm_minutes(start), roles.hhmm_minutes(end)
+    if s_min is None or e_min is None:
+        raise HTTPException(400, "Vaqt SS:DD ko'rinishida bo'lsin, "
+                                 "masalan 14:30")
+    if e_min <= s_min:
+        raise HTTPException(400, "Tugash vaqti boshlanishdan keyin "
+                                 "bo'lishi kerak")
+    minutes = e_min - s_min
+    if minutes > roles.SUPPORT_SESSION_MAX_HOURS * 60:
+        raise HTTPException(
+            400, f"Bitta seans {roles.SUPPORT_SESSION_MAX_HOURS} "
+                 f"soatdan oshmaydi — vaqtni tekshiring")
+
+    present = min(present, roles.SUPPORT_SESSION_MAX_STUDENTS)
+    if row is None:
+        row = models.SupportSession(
+            teacher_id=t.id, group_id=g.id, branch_id=g.branch_id,
+            date=d, start_time=start, end_time=end, minutes=minutes,
+            students_count=present, note="Yo'qlamadan avtomat",
+            created_by=user.id)
+        db.add(row)
+    else:
+        row.start_time, row.end_time = start, end
+        row.minutes, row.students_count = minutes, present
+    return row
+
+
+_drop_route("/api/groups/{group_id}/support-attendance", "PUT")
+
+
+@app.put("/api/groups/{group_id}/support-attendance")
+def save_support_attendance_v2(group_id: int,
+                               payload: _SupBulk2 = Body(...),
+                               db: Session = Depends(get_db),
+                               user=Depends(require_role(*_SUP_ATT_EDIT))):
+    g = _get_group_in_scope(db, group_id, user)
+    d = payload.day
+    today = roles.local_today()
+    if d > today:
+        raise HTTPException(
+            400, "Hali kelmagan kunga yo'qlama qo'yilmaydi")
+    if d < today and user.role not in tuple(roles.PAST_ATTENDANCE):
+        raise HTTPException(
+            403, "O'tib ketgan kunni faqat asoschi, o'quv bo'limi "
+                 "rahbari va HR menejer o'zgartira oladi")
+
+    mine = user.id if user.role == roles.SUPPORT_TEACHER else None
+    allowed = set(_support_dates(db, g, d.year, d.month, only_user=mine))
+    if d not in allowed:
+        raise HTTPException(
+            400, "Bu kun support darsi kuni emas — biriktirishda "
+                 "belgilangan kunlarga yo'qlama qo'yiladi")
+
+    existing = {r.student_id: r for r in db.query(_SUPATT).filter(
+        _SUPATT.group_id == group_id, _SUPATT.date == d).all()}
+    for m in payload.marks:
+        if m.remove:
+            row = existing.pop(m.student_id, None)
+            if row is not None:
+                db.delete(row)
+            continue
+        val = (2 if m.late else 1) if m.present else 0
+        row = existing.get(m.student_id)
+        if row is not None:
+            row.present = val
+        else:
+            row = _SUPATT(group_id=group_id, student_id=m.student_id,
+                          date=d, present=val,
+                          created_by=user.full_name)
+            db.add(row)
+            existing[m.student_id] = row
+    db.flush()
+
+    ses = _sync_support_session(db, user, g, d,
+                                (payload.start_time or "").strip() or None,
+                                (payload.end_time or "").strip() or None)
+    db.commit()
+    return {
+        "ok": True, "date": d.isoformat(), "marked": len(existing),
+        "session": ({"start": ses.start_time, "end": ses.end_time,
+                     "minutes": ses.minutes,
+                     "hours": round(ses.minutes / 60, 2),
+                     "students": ses.students_count}
+                    if ses is not None else None),
+    }
+
+
+# --- Jadval: kunlik seans vaqtlari ham qaytsin ---
+_orig_sup_grid = _find_endpoint("/api/groups/{group_id}/support-attendance",
+                                "GET")
+
+if _orig_sup_grid is not None:
+    _drop_route("/api/groups/{group_id}/support-attendance", "GET")
+
+    @app.get("/api/groups/{group_id}/support-attendance")
+    def support_attendance_grid_v2(group_id: int, year: int, month: int,
+                                   db: Session = Depends(get_db),
+                                   user=Depends(require_role(
+                                       *roles.ATTENDANCE_VIEW))):
+        data = _orig_sup_grid(group_id=group_id, year=year, month=month,
+                              db=db, user=user)
+        days = data.get("days") or []
+        ses = {}
+        if days:
+            q = (db.query(models.SupportSession)
+                 .filter(models.SupportSession.group_id == group_id,
+                         models.SupportSession.date >= date.fromisoformat(
+                             days[0]),
+                         models.SupportSession.date <= date.fromisoformat(
+                             days[-1])))
+            if user.role == roles.SUPPORT_TEACHER:
+                t = M._teacher_of_user(db, user)
+                if t:
+                    q = q.filter(models.SupportSession.teacher_id == t.id)
+            for r in q.all():
+                ses[r.date.isoformat()] = {
+                    "start": r.start_time, "end": r.end_time,
+                    "minutes": r.minutes,
+                    "hours": round((r.minutes or 0) / 60, 2),
+                    "students": r.students_count,
+                }
+        ps, pe = _sup_plan_time(
+            db, group_id,
+            user.id if user.role == roles.SUPPORT_TEACHER else None)
+        data["sessions"] = ses
+        data["default_start"] = ps
+        data["default_end"] = pe
+        data["hours_total"] = round(
+            sum(v["minutes"] or 0 for v in ses.values()) / 60, 2)
+        data["students_total"] = sum(v["students"] or 0
+                                     for v in ses.values())
+        return data

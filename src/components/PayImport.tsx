@@ -21,7 +21,14 @@ interface ResRow {
   date?: string;
   amount?: number;
   method?: string;
-  status: "ok" | "not_found" | "ambiguous" | "duplicate" | "skip";
+  status:
+    | "ok"
+    | "created"
+    | "will_create"
+    | "not_found"
+    | "ambiguous"
+    | "duplicate"
+    | "skip";
   reason?: string;
 }
 
@@ -30,6 +37,8 @@ interface ImpResult {
   ok: number;
   duplicate: number;
   not_found: number;
+  /** Arxiv o'quvchi sifatida ochilgan (yoki ochiladigan) odamlar soni. */
+  created: number;
   total: number;
   rows: ResRow[];
   shown: number;
@@ -45,6 +54,8 @@ interface ImpStats {
 
 const STATUS_LABEL: Record<string, string> = {
   ok: "tayyor",
+  created: "arxivga qo'shildi",
+  will_create: "arxivga qo'shiladi",
   not_found: "o'quvchi topilmadi",
   ambiguous: "noaniq",
   duplicate: "allaqachon bor",
@@ -53,6 +64,8 @@ const STATUS_LABEL: Record<string, string> = {
 
 const STATUS_TONE: Record<string, string> = {
   ok: "bg-emerald-100 text-emerald-700",
+  created: "bg-sky-100 text-sky-700",
+  will_create: "bg-sky-100 text-sky-700",
   not_found: "bg-red-100 text-red-700",
   ambiguous: "bg-amber-100 text-amber-700",
   duplicate: "bg-slate-100 text-slate-500",
@@ -74,6 +87,10 @@ export function PayImportTab() {
   const [stats, setStats] = useState<ImpStats | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  // Ketgan o'quvchilar yangi tizimga umuman kiritilmagan. Shu belgi
+  // qo'yilsa, ular ARXIV o'quvchi bo'lib ochiladi va to'lov tarixi
+  // o'shanga tushadi — faol ro'yxatga aralashmaydi.
+  const [addArchive, setAddArchive] = useState(true);
 
   function loadStats() {
     api
@@ -139,7 +156,7 @@ export function PayImportTab() {
     }
   }
 
-  async function check(list: ImpRow[]) {
+  async function check(list: ImpRow[], withArchive = addArchive) {
     setBusy(true);
     setErr("");
     try {
@@ -147,6 +164,7 @@ export function PayImportTab() {
         await api.post<ImpResult>("/lcup/payments", {
           rows: list,
           commit: false,
+          create_missing: withArchive,
         })
       );
     } catch (e) {
@@ -161,6 +179,9 @@ export function PayImportTab() {
     if (
       !confirm(
         `${res.ok} ta eski to'lov ko'chirilsinmi?\n\n` +
+          (res.created
+            ? `${res.created} ta ketgan o'quvchi Arxivga qo'shiladi.\n`
+            : "") +
           "Balans o'zgarmaydi — har to'lov yoniga o'sha oyning " +
           "hisoblangani ham yoziladi.\n" +
           "Kerak bo'lsa keyin bitta tugma bilan bekor qilasiz."
@@ -173,6 +194,7 @@ export function PayImportTab() {
       const r = await api.post<ImpResult>("/lcup/payments", {
         rows,
         commit: true,
+        create_missing: addArchive,
       });
       setRes(r);
       loadStats();
@@ -219,8 +241,8 @@ export function PayImportTab() {
           tashlang. Fayl sarlavhasida <b>Ism</b>, <b>Sana</b> va{" "}
           <b>Summa</b> ustunlari bo'lsa yetadi — <b>Telefon</b>,{" "}
           <b>Usul</b> va <b>Izoh</b> bo'lsa yanada aniq bo'ladi.
-          O'quvchilar ismi bo'yicha topiladi, shuning uchun avval
-          o'quvchilarni kiritib olgan bo'lishingiz kerak.
+          O'quvchilar ismi bo'yicha topiladi — <b>arxivdagi (ketgan)
+          o'quvchilar ham</b> qidiruvga kiradi.
         </p>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -243,6 +265,26 @@ export function PayImportTab() {
           )}
           {busy && <span className="text-sm text-slate-400">Tekshirilmoqda…</span>}
         </div>
+
+        <label className="flex items-start gap-2 mt-4 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={addArchive}
+            onChange={(e) => {
+              setAddArchive(e.target.checked);
+              if (rows.length) check(rows, e.target.checked);
+            }}
+            className="mt-0.5 w-4 h-4 accent-brand-600"
+          />
+          <span className="text-xs text-slate-600">
+            <b>Topilmagan o'quvchilarni Arxivga qo'shib ket.</b> Eski
+            tarixdagi odamlarning ko'pi allaqachon ketgan va yangi
+            tizimga umuman kiritilmagan. Shu belgi turganda ular{" "}
+            <b>arxiv o'quvchi</b> bo'lib ochiladi va to'lov tarixi
+            o'shanga tushadi — faol ro'yxatga, oylikka va hisob-kitobga
+            aralashmaydi.
+          </span>
+        </label>
 
         <p className="text-xs text-slate-400 mt-3">
           Balans o'zgarmaydi: har bir eski to'lov yoniga o'sha kunning
@@ -285,7 +327,7 @@ export function PayImportTab() {
 
       {res && (
         <>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
             {[
               {
                 l: res.committed ? "Ko'chirildi" : "Ko'chirishga tayyor",
@@ -297,6 +339,11 @@ export function PayImportTab() {
                 l: "Topilmadi / noaniq",
                 v: String(res.not_found),
                 c: res.not_found ? "text-red-600" : "text-slate-400",
+              },
+              {
+                l: res.committed ? "Arxivga qo'shildi" : "Arxivga qo'shiladi",
+                v: String(res.created ?? 0),
+                c: res.created ? "text-sky-600" : "text-slate-400",
               },
               {
                 l: "Allaqachon bor",
@@ -327,8 +374,10 @@ export function PayImportTab() {
 
           {res.committed && (
             <p className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 mb-4">
-              {res.ok} ta eski to'lov ko'chirildi. Endi ular o'quvchi
-              kartasida va "Shu oy to'lovlari" bo'limida ko'rinadi.
+              {res.ok} ta eski to'lov ko'chirildi
+              {res.created ? `, ${res.created} ta ketgan o'quvchi Arxivga
+              qo'shildi` : ""}. Endi ular o'quvchi kartasida va "Shu oy
+              to'lovlari" bo'limida ko'rinadi.
             </p>
           )}
 

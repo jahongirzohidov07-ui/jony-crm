@@ -4445,3 +4445,45 @@ export interface MonthPayments {
   new_total: number;
   old_total: number;
 }
+
+/** Guruh bosqichi: "Step 2 · Unit 7/12". Manba — imtihonlar. */
+export interface GroupProgress {
+  group_id: number;
+  subject?: string | null;
+  level?: string | null;
+  level_label?: string | null;
+  unit: number;
+  unit_total: number;
+  next_unit?: number | null;
+  done_units: number[];
+  percent: number;
+  last_exam?: {
+    id: number;
+    date?: string | null;
+    unit_no: number;
+    title?: string | null;
+    students: number;
+    avg_percent?: number | null;
+  } | null;
+}
+
+/** Support teacherning O'Z seansidagi yo'qlamasi. Ustozning davomati
+ *  bilan hech qanday aloqasi yo'q — alohida jadval, alohida kunlar. */
+export interface SupportAttendanceGrid {
+  days: string[];
+  students: GridStudent[];
+  /** Kalit: "YYYY-MM-DD:studentId" */
+  marks: Record<string, boolean | number>;
+  plan: {
+    user_id: number;
+    name?: string | null;
+    days: string[];
+    start?: string | null;
+    end?: string | null;
+  }[];
+  label?: string | null;
+  today: string;
+  can_edit: boolean;
+  can_past: boolean;
+  hint?: string | null;
+}

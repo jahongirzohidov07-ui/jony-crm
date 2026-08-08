@@ -412,7 +412,11 @@ export default function Layout() {
 
       </aside>
 
-      <main className="flex-1 min-w-0 relative">
+      {/* pt-8: yuqoridagi suzuvchi panel (qidiruv, qo'ng'iroq, profil)
+          sahifaning o'z tugmalarini bosib qolmasin. Suzuvchi elementlar
+          absolute — ular joyida qoladi, faqat sahifa tarkibi pastga
+          suriladi. */}
+      <main className="flex-1 min-w-0 relative pt-8">
         {/* Yuqori panel: mobil menyu, qidiruv, qo'ng'iroqcha, profil */}
         <div className="absolute top-4 left-3 z-40 md:hidden">
           <button

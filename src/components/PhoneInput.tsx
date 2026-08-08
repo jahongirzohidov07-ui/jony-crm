@@ -26,8 +26,12 @@ export function PhoneInput({
   }, [value]);
 
   function digits(v: string): string {
-    let d = (v || "").replace(/\D/g, "");
-    if (d.startsWith("998")) d = d.slice(3);
+    const d = (v || "").replace(/\D/g, "");
+    // "998" mamlakat kodini FAQAT raqam 9 tadan oshsa kesamiz.
+    // Ilgari har doim kesilardi va "99 828 ..." kabi haqiqiy raqam
+    // yozilganda uchinchi belgida hammasi o'chib ketardi — 99 ham
+    // operator kodi (99, 98, 97, 95, 94, 93, 91, 90, 88, 77, 33, 20).
+    if (d.length > 9 && d.startsWith("998")) return d.slice(3, 12);
     return d.slice(0, 9);
   }
 
@@ -62,7 +66,7 @@ export function PhoneInput({
 export function formatPhone(v?: string | null): string {
   if (!v) return "";
   let d = v.replace(/\D/g, "");
-  if (d.startsWith("998")) d = d.slice(3);
+  if (d.length > 9 && d.startsWith("998")) d = d.slice(3, 12);
   if (d.length !== 9) return v;
   return `+998 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5, 7)} ${d.slice(7)}`;
 }

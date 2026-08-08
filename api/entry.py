@@ -4062,3 +4062,192 @@ if _orig_sup_grid is not None:
         data["students_total"] = sum(v["students"] or 0
                                      for v in ses.values())
         return data
+
+
+# =====================================================================
+#  ARXIV O'QUVCHILARNI EXCEL'DAN QO'SHISH
+#
+#  LC UP'dagi ketgan o'quvchilar ro'yxati bir marta ko'chiriladi.
+#  Ular ARXIV holatida ochiladi: faol ro'yxatga, oylikka, hisob-kitobga
+#  va yo'qlamaga umuman aralashmaydi — faqat tarix va eski to'lovlar
+#  bog'lanadigan karta bo'lib turadi.
+#
+#  Bir tugma bilan bekor qilinadi (asoschi) — import ochgan, boshqa
+#  hech qanday izi yo'q kartalar o'chadi.
+# =====================================================================
+_ARCH_TAG = "[ARXIV IMPORT]"
+_ARCH_IMPORT_ROLES = list(dict.fromkeys(
+    list(roles.FULL_ACCESS) + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
+                               roles.ACCOUNTANT, roles.FINANCE_DIRECTOR]))
+
+
+def _parse_date_any(v):
+    """01.02.2024 / 2024-02-01 / 1.2.24 — hammasini o'qiydi."""
+    s = str(v or "").strip()
+    if not s:
+        return None
+    s = s.split(" ")[0].replace("/", ".").replace("-", ".")
+    parts = [p for p in s.split(".") if p]
+    if len(parts) != 3:
+        return None
+    try:
+        a, b, c = (int(p) for p in parts)
+    except ValueError:
+        return None
+    if a > 31:                      # yil oldinda
+        y, m, d = a, b, c
+    else:
+        d, m, y = a, b, c
+    if y < 100:
+        y += 2000
+    try:
+        return date(y, m, d)
+    except ValueError:
+        return None
+
+
+@app.post("/api/archive/students/import")
+def archive_students_import(payload: dict, db: Session = Depends(get_db),
+                            user=Depends(require_role(
+                                *_ARCH_IMPORT_ROLES))):
+    """Excel'dan arxiv o'quvchilar. commit=false — faqat ko'rib chiqish."""
+    rows = payload.get("rows") or []
+    commit = bool(payload.get("commit"))
+    if not isinstance(rows, list) or not rows:
+        raise HTTPException(400, "Fayldan bironta qator o'qilmadi")
+    if len(rows) > 20000:
+        raise HTTPException(400, "Bir martada 20 000 qatordan ko'p bo'lmasin")
+
+    branches = {}
+    for b in db.query(models.Branch).all():
+        branches[_norm_name(b.name)] = b
+    groups = {}
+    for g in db.query(models.Group).all():
+        groups.setdefault(_norm_name(g.name), g)
+
+    by_name, by_phone = _student_index(db, user)
+    my_branch = (None if user.role in tuple(roles.ORG_WIDE_ROLES)
+                 else user.branch_id)
+
+    out, ok, dup, bad = [], 0, 0, 0
+    planned = set()
+    for i, r in enumerate(rows):
+        name = str(r.get("name") or "").strip()
+        if not name:
+            continue
+        phone = _phone_tail(r.get("phone"))
+        pphone = _phone_tail(r.get("parent_phone"))
+        key = _norm_name(name)
+
+        if len(name) < 3:
+            bad += 1
+            out.append({"row": i + 1, "name": name, "status": "skip",
+                        "reason": "ism juda qisqa"})
+            continue
+
+        # Allaqachon bormi — ism + telefon bo'yicha
+        found = list(by_name.get(key, []))
+        if phone:
+            ph = by_phone.get(phone, [])
+            both = [s for s in found if s in ph]
+            found = both or (found if not ph else found)
+        if found or (key, phone) in planned:
+            dup += 1
+            st = found[0] if found else None
+            out.append({
+                "row": i + 1, "name": name, "status": "duplicate",
+                "reason": (f"allaqachon bor ({st.status})" if st
+                           else "faylda ikki marta"),
+            })
+            continue
+        planned.add((key, phone))
+
+        b = branches.get(_norm_name(r.get("branch")))
+        g = groups.get(_norm_name(r.get("group")))
+        bid = (b.id if b else None) or (g.branch_id if g else None) \
+            or my_branch
+        enrolled = _parse_date_any(r.get("enrolled"))
+        left = _parse_date_any(r.get("left"))
+
+        ok += 1
+        out.append({
+            "row": i + 1, "name": name, "status": "ok",
+            "phone": phone or None,
+            "branch": (b.name if b else None),
+            "group": (g.name if g else None),
+            "enrolled": enrolled.isoformat() if enrolled else None,
+            "left": left.isoformat() if left else None,
+        })
+
+        if commit:
+            note = str(r.get("note") or "").strip()
+            s = models.Student(
+                full_name=name,
+                phone=(f"998{phone}" if phone else None),
+                parent_phone=(f"998{pphone}" if pphone else None),
+                status="archived",
+                branch_id=bid,
+                group_id=None,          # arxivda guruh bo'lmaydi
+                enrolled_date=enrolled,
+                left_date=left or roles.local_today(),
+                note=(f"{_ARCH_TAG} {note}".strip()
+                      + (f" · guruh: {g.name}" if g else "")),
+            )
+            db.add(s)
+            db.flush()
+            try:
+                M._ensure_public_id(db, "student", s)
+            except Exception:
+                pass
+            by_name.setdefault(key, []).append(s)
+            if phone:
+                by_phone.setdefault(phone, []).append(s)
+
+    if commit and ok:
+        db.commit()
+        audit.log(db, user, entity="student", action="import",
+                  entity_label=f"Arxiv: {ok} ta o'quvchi",
+                  new_value=ok, commit=True)
+
+    return {"committed": commit, "ok": ok, "duplicate": dup,
+            "skipped": bad, "rows": out[:500],
+            "shown": min(len(out), 500), "all_rows": len(out)}
+
+
+@app.get("/api/archive/students/import")
+def archive_students_import_stats(db: Session = Depends(get_db),
+                                  user=Depends(require_role(
+                                      *_ARCH_IMPORT_ROLES))):
+    q = (db.query(models.Student)
+         .filter(models.Student.note.like(f"{_ARCH_TAG}%")))
+    rows = q.all()
+    return {"count": len(rows),
+            "can_undo": user.role == roles.FOUNDER}
+
+
+@app.delete("/api/archive/students/import")
+def archive_students_import_undo(db: Session = Depends(get_db),
+                                 user=Depends(require_role(roles.FOUNDER))):
+    """Import ochgan kartalarni qaytarib oladi — faqat izi yo'qlarini."""
+    gone = kept = 0
+    for s in (db.query(models.Student)
+              .filter(models.Student.note.like(f"{_ARCH_TAG}%")).all()):
+        busy = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id).count()
+                or db.query(models.Attendance)
+                .filter(models.Attendance.student_id == s.id).count()
+                or db.query(models.ExamResult)
+                .filter(models.ExamResult.student_id == s.id).count())
+        if busy:
+            kept += 1
+            continue
+        db.delete(s)
+        gone += 1
+    db.commit()
+    audit.log(db, user, entity="student", action="delete",
+              entity_label="Arxiv importi bekor qilindi",
+              old_value=gone,
+              note=(f"{kept} tasida to'lov/yo'qlama bor — saqlab qolindi"
+                    if kept else None),
+              commit=True)
+    return {"deleted": gone, "kept": kept}

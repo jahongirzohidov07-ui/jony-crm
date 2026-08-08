@@ -3,6 +3,7 @@ import { Check, X, Plus, Trash2, Coins, CalendarClock, Clock, Minus } from "luci
 import {
   api,
   type AttendanceGrid,
+  type SupportAttendanceGrid,
   type Exam,
   type ExamDetail,
   type ExamKind,
@@ -210,7 +211,9 @@ export function AttendanceTab({
   // asoschi va o'quv bo'limi rahbariga; bugun — odatdagidek.
   const todayIso = new Date().toISOString().slice(0, 10);
   const canPast =
-    user?.role === "founder" || user?.role === "academic_head";
+    user?.role === "founder" ||
+    user?.role === "academic_head" ||
+    user?.role === "hr_manager";
   const cellEditable = (lsDate: string) =>
     canEdit &&
     (lsDate === todayIso || (lsDate < todayIso && canPast));
@@ -218,8 +221,8 @@ export function AttendanceTab({
     if (lsDate > todayIso)
       return "Hali kelmagan kun — yoqlama qo'yilmaydi";
     if (lsDate < todayIso && !canPast)
-      return "O'tib ketgan kun — faqat asoschi va o'quv bo'limi " +
-             "rahbari o'zgartiradi";
+      return "O'tib ketgan kun — o'quv bo'limi rahbari yoki HR " +
+             "menejer tuzatadi";
     return undefined;
   };
   const [moving, setMoving] = useState<{ id: number; date: string } | null>(
@@ -1161,6 +1164,223 @@ export function ExamsTab({
           onCreated={load}
         />
       )}
+    </div>
+  );
+}
+
+// --------------------------------------------- Support davomati ----
+
+/** Support teacherning O'Z seansidagi yo'qlamasi.
+ *
+ *  Ustozning davomatidan BUTUNLAY ajratilgan: alohida jadval, alohida
+ *  kunlar (support biriktirilganda belgilangan kun va vaqt). Bu yerga
+ *  qo'yilgan belgi ustoz oyligiga ham, o'quvchi hisobiga ham
+ *  tegmaydi — u faqat support ishining ko'zgusi. */
+export function SupportAttendanceTab({
+  groupId,
+  year,
+  month,
+}: {
+  groupId: number;
+  year: number;
+  month: number;
+}) {
+  const [grid, setGrid] = useState<SupportAttendanceGrid | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState<string | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
+
+  const load = () => {
+    setLoading(true);
+    api
+      .get<SupportAttendanceGrid>(
+        `/groups/${groupId}/support-attendance?year=${year}&month=${month}`
+      )
+      .then(setGrid)
+      .catch(() => setGrid(null))
+      .finally(() => setLoading(false));
+  };
+  useEffect(load, [groupId, year, month]);
+
+  const today = grid?.today ?? new Date().toISOString().slice(0, 10);
+  const editable = (d: string) =>
+    !!grid?.can_edit && (d === today || (d < today && grid.can_past));
+  const hint = (d: string) => {
+    if (d > today) return "Hali kelmagan kun";
+    if (d < today && !grid?.can_past)
+      return "O'tib ketgan kun — o'quv bo'limi rahbari yoki HR tuzatadi";
+    if (!grid?.can_edit) return "Faqat ko'rish uchun";
+    return undefined;
+  };
+
+  async function pick(
+    day: string,
+    studentId: number,
+    what: "present" | "late" | "absent" | "remove"
+  ) {
+    if (!grid) return;
+    const key = `${day}:${studentId}`;
+    const before = grid.marks[key];
+    const marks = { ...grid.marks };
+    if (what === "remove") delete marks[key];
+    else marks[key] = what === "late" ? 2 : what === "present";
+    setGrid({ ...grid, marks });
+    setSaving(key);
+    setOpen(null);
+    try {
+      await api.put(`/groups/${groupId}/support-attendance`, {
+        day,
+        marks: [
+          what === "remove"
+            ? { student_id: studentId, present: false, remove: true }
+            : {
+                student_id: studentId,
+                present: what !== "absent",
+                late: what === "late",
+              },
+        ],
+      });
+    } catch (e) {
+      const back = { ...grid.marks };
+      if (before === undefined) delete back[key];
+      else back[key] = before;
+      setGrid({ ...grid, marks: back });
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(null);
+    }
+  }
+
+  if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  if (!grid) return null;
+  if (grid.days.length === 0)
+    return (
+      <EmptyState
+        text={
+          grid.hint ||
+          "Bu guruhga support biriktirilmagan yoki uning kun/vaqti tanlanmagan."
+        }
+      />
+    );
+  if (grid.students.length === 0)
+    return <EmptyState text="Guruhda o'quvchi yo'q" />;
+
+  const marked = Object.keys(grid.marks).length;
+  const present = Object.values(grid.marks).filter(
+    (v) => v === true || v === 2
+  ).length;
+
+  return (
+    <div>
+      <div className="mb-3 rounded-lg bg-sky-50 border border-sky-100 px-3 py-2">
+        <p className="text-xs text-sky-800">
+          <b>Support darsi</b>
+          {grid.label ? <> — {grid.label}</> : null}. Bu jadval ustozning
+          davomatidan mustaqil: bu yerdagi belgi ustoz oyligiga ham,
+          o'quvchi hisobiga ham ta'sir qilmaydi.
+        </p>
+      </div>
+
+      <p className="text-xs text-slate-500 mb-3">
+        {grid.days.length} support kuni · {grid.students.length} o'quvchi
+        {marked > 0 && (
+          <>
+            {" "}
+            · davomat{" "}
+            <span className="font-medium text-slate-700">
+              {Math.round((present / marked) * 100)}%
+            </span>{" "}
+            ({present}/{marked} belgilangan)
+          </>
+        )}
+      </p>
+
+      <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white">
+        <table className="text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-50">
+              <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">
+                Talabalar
+              </th>
+              {grid.days.map((d) => (
+                <th
+                  key={d}
+                  className={`px-2 py-2 font-medium min-w-[76px] text-xs whitespace-nowrap ${
+                    d > today ? "text-slate-400" : "text-slate-700"
+                  }`}
+                >
+                  {dayLabel(d)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {grid.students.map((s, i) => (
+              <tr key={s.id} className="border-t border-slate-100">
+                <td className="sticky left-0 z-10 bg-white px-4 py-2.5 text-slate-800 whitespace-nowrap border-r border-slate-200">
+                  <span className="text-slate-400 mr-2 text-xs">{i + 1}</span>
+                  {s.full_name}
+                </td>
+                {grid.days.map((d) => {
+                  const key = `${d}:${s.id}`;
+                  const v = grid.marks[key];
+                  const can = editable(d);
+                  return (
+                    <td
+                      key={d}
+                      className="px-2 py-2 text-center relative"
+                      onMouseEnter={() => can && setOpen(key)}
+                      onMouseLeave={() =>
+                        setOpen((k) => (k === key ? null : k))
+                      }
+                    >
+                      <button
+                        onClick={() => can && setOpen(open === key ? null : key)}
+                        disabled={!can || saving === key}
+                        title={hint(d)}
+                        className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
+                          v === true
+                            ? "bg-sky-600 text-white"
+                            : v === 2
+                            ? "bg-amber-500 text-white"
+                            : v === false
+                            ? "bg-red-500 text-white"
+                            : d > today
+                            ? "bg-slate-50"
+                            : "bg-slate-100 hover:bg-slate-200"
+                        } ${can ? "cursor-pointer" : "cursor-not-allowed"} ${
+                          !can && v === undefined ? "opacity-50" : ""
+                        }`}
+                      >
+                        {v === true ? (
+                          <Check size={15} />
+                        ) : v === 2 ? (
+                          <Clock size={15} />
+                        ) : v === false ? (
+                          <X size={15} />
+                        ) : null}
+                      </button>
+                      {open === key && can && (
+                        <MarkPicker
+                          present={v as boolean | number | undefined}
+                          onPick={(what) => pick(d, s.id, what)}
+                          onClose={() => setOpen(null)}
+                        />
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="text-xs text-slate-400 mt-3">
+        Kunlar support biriktirilganda tanlangan kun va vaqtdan
+        olinadi — asosiy dars kunlaridan emas. Kun yoki vaqt
+        o'zgarsa, guruh kartasidagi support biriktirmasini tahrirlang.
+      </p>
     </div>
   );
 }

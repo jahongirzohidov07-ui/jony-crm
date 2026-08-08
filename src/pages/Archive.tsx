@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Archive as ArchiveIcon, Download, RotateCcw, X } from "lucide-react";
+import {
+  Archive as ArchiveIcon, Download, RotateCcw, X, FileUp,
+  Upload, Check, AlertTriangle, Trash2, FileDown,
+} from "lucide-react";
 import {
   api, type ArchiveStudents, type ArchiveStaff, type ArchiveStaffRow,
 } from "../lib/api";
@@ -60,8 +63,12 @@ function StudentsTab() {
   const [loading, setLoading] = useState(true);
   const [reloadKey, setReloadKey] = useState(0);
   const [busyId, setBusyId] = useState<number | null>(null);
+  // LC UP'dan ketgan o'quvchilar ro'yxatini ko'chirish
+  const [showImport, setShowImport] = useState(false);
   // O'quvchilar qaytib kelishi mumkin — qayta tiklash huquqi
   const canRestore = can(user?.role, FREEZE_ROLES);
+  const canImport = can(user?.role, HR_ACCESS) ||
+    user?.role === "accountant" || user?.role === "finance_director";
 
   useEffect(() => {
     setLoading(true);
@@ -159,7 +166,23 @@ function StudentsTab() {
         >
           <Download size={14} /> Excel
         </button>
+        {canImport && (
+          <button
+            onClick={() => setShowImport(true)}
+            title="LC UP'dagi ketgan o'quvchilar ro'yxatini ko'chirish"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-brand-300 hover:text-brand-700"
+          >
+            <FileUp size={14} /> Excel'dan qo'shish
+          </button>
+        )}
       </div>
+
+      {showImport && (
+        <ArchiveImportModal
+          onClose={() => setShowImport(false)}
+          onDone={() => setReloadKey((k) => k + 1)}
+        />
+      )}
 
       {shown.length === 0 ? (
         <p className="text-sm text-slate-400 py-10 text-center">
@@ -534,6 +557,399 @@ export default function Archive() {
       )}
 
       {tab === "students" || !showStaff ? <StudentsTab /> : <StaffTab />}
+    </div>
+  );
+}
+
+// ------------------------------ Excel'dan arxiv o'quvchilar
+
+interface Row {
+  name: string;
+  phone?: string;
+  parent_phone?: string;
+  branch?: string;
+  group?: string;
+  enrolled?: string;
+  left?: string;
+  note?: string;
+}
+
+interface ResRow {
+  row: number;
+  name: string;
+  phone?: string | null;
+  branch?: string | null;
+  group?: string | null;
+  enrolled?: string | null;
+  left?: string | null;
+  status: "ok" | "duplicate" | "skip";
+  reason?: string;
+}
+
+interface Result {
+  committed: boolean;
+  ok: number;
+  duplicate: number;
+  skipped: number;
+  rows: ResRow[];
+  shown: number;
+  all_rows: number;
+}
+
+const LABEL: Record<string, string> = {
+  ok: "qo'shiladi",
+  duplicate: "allaqachon bor",
+  skip: "o'tkazildi",
+};
+
+const TONE: Record<string, string> = {
+  ok: "bg-emerald-100 text-emerald-700",
+  duplicate: "bg-slate-100 text-slate-500",
+  skip: "bg-amber-100 text-amber-700",
+};
+
+/**
+ * LC UP'dagi ketgan o'quvchilar ro'yxatini bir marta ko'chirish.
+ *
+ * Ular ARXIV holatida ochiladi: faol ro'yxatga, oylikka, yo'qlamaga va
+ * hisob-kitobga umuman aralashmaydi — faqat eski to'lovlar va tarix
+ * bog'lanadigan karta bo'lib turadi.
+ */
+export function ArchiveImportModal({ onClose, onDone }: {
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const { user } = useAuth();
+  const [rows, setRows] = useState<Row[]>([]);
+  const [fileName, setFileName] = useState("");
+  const [res, setRes] = useState<Result | null>(null);
+  const [count, setCount] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  function loadStats() {
+    api
+      .get<{ count: number }>("/archive/students/import")
+      .then((d) => setCount(d.count))
+      .catch(() => setCount(0));
+  }
+  useEffect(loadStats, []);
+
+  async function readFile(f: File) {
+    setErr("");
+    setRes(null);
+    setRows([]);
+    try {
+      const XLSX = await import("xlsx");
+      const wb = XLSX.read(await f.arrayBuffer());
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const raw: unknown[][] = XLSX.utils.sheet_to_json(ws, {
+        header: 1,
+        raw: false,
+      });
+      if (raw.length < 2) throw new Error("Faylda ma'lumot topilmadi");
+      const head = (raw[0] as unknown[]).map((h) =>
+        String(h || "").toLowerCase()
+      );
+      const col = (...keys: string[]) =>
+        head.findIndex((h) => keys.some((k) => h.includes(k)));
+      const iName = col("name", "ism", "f.i", "student", "o'quvchi", "oquvchi");
+      const iPhone = col("phone", "telefon", "raqam", "mobile");
+      const iParent = col("parent", "ota", "ona", "родител");
+      const iBranch = col("branch", "filial", "фили");
+      const iGroup = col("group", "guruh", "груп");
+      const iEnroll = col("enroll", "qo'shil", "qoshil", "boshla", "start");
+      const iLeft = col("left", "ketgan", "chiqqan", "tugat", "end");
+      const iNote = col("note", "izoh", "comment", "коммент", "sabab");
+      if (iName < 0)
+        throw new Error(
+          "Ism ustuni topilmadi — sarlavhada Name / Ism / O'quvchi bo'lsin"
+        );
+
+      const out: Row[] = [];
+      const g = (r: unknown[], i: number) =>
+        i >= 0 ? String(r[i] ?? "").trim() : "";
+      for (const r of raw.slice(1)) {
+        const name = g(r, iName);
+        if (!name) continue;
+        out.push({
+          name,
+          phone: g(r, iPhone),
+          parent_phone: g(r, iParent),
+          branch: g(r, iBranch),
+          group: g(r, iGroup),
+          enrolled: g(r, iEnroll),
+          left: g(r, iLeft),
+          note: g(r, iNote),
+        });
+      }
+      if (out.length === 0) throw new Error("Bironta ham qator o'qilmadi");
+      setRows(out);
+      setFileName(f.name);
+      check(out);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Faylni o'qib bo'lmadi");
+    }
+  }
+
+  async function check(list: Row[]) {
+    setBusy(true);
+    setErr("");
+    try {
+      setRes(
+        await api.post<Result>("/archive/students/import", {
+          rows: list,
+          commit: false,
+        })
+      );
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function doImport() {
+    if (!res || res.ok === 0) return;
+    if (
+      !confirm(
+        `${res.ok} ta ketgan o'quvchi Arxivga qo'shilsinmi?\n\n` +
+          "Ular faol ro'yxatga, oylikka va yo'qlamaga aralashmaydi.\n" +
+          "Kerak bo'lsa keyin bitta tugma bilan bekor qilasiz."
+      )
+    )
+      return;
+    setBusy(true);
+    setErr("");
+    try {
+      const r = await api.post<Result>("/archive/students/import", {
+        rows,
+        commit: true,
+      });
+      setRes(r);
+      loadStats();
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function undo() {
+    if (
+      !confirm(
+        "Import bilan qo'shilgan arxiv o'quvchilar o'chirilsinmi?\n\n" +
+          "To'lovi yoki yo'qlamasi borlari saqlab qolinadi."
+      )
+    )
+      return;
+    setBusy(true);
+    try {
+      const r = await api.delete<{ deleted: number; kept: number }>(
+        "/archive/students/import"
+      );
+      alert(
+        `${r.deleted} ta o'chirildi` +
+          (r.kept ? `, ${r.kept} tasida to'lov bor — saqlandi` : "")
+      );
+      setRes(null);
+      setRows([]);
+      setFileName("");
+      loadStats();
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const bad = res ? res.rows.filter((r) => r.status !== "ok") : [];
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl p-6 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-semibold text-slate-900">
+            Arxiv o'quvchilarni Excel'dan qo'shish
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <p className="text-xs text-slate-500 mb-4">
+          LC UP'dan ketgan o'quvchilar ro'yxatini Excel qilib yuklab oling.
+          Sarlavhada <b>Ism</b> bo'lsa yetadi; <b>Telefon</b>,{" "}
+          <b>Ota-ona</b>, <b>Filial</b>, <b>Guruh</b>,{" "}
+          <b>Qo'shilgan</b>, <b>Ketgan</b> va <b>Izoh</b> bo'lsa
+          to'liqroq chiqadi. Bir xil ism-telefon ikkinchi marta
+          qo'shilmaydi, shuning uchun faylni qayta tashlashdan
+          qo'rqmang.
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          <label className="inline-flex items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 text-sm font-medium cursor-pointer">
+            <Upload size={15} />
+            Excel faylni tanlang
+            <input
+              type="file"
+              accept=".xlsx,.xls,.csv"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) readFile(f);
+                e.target.value = "";
+              }}
+            />
+          </label>
+          {fileName && (
+            <span className="text-sm text-slate-500">{fileName}</span>
+          )}
+          {busy && (
+            <span className="text-sm text-slate-400">Tekshirilmoqda…</span>
+          )}
+          <div className="flex-1" />
+          {count > 0 && (
+            <span className="text-xs text-slate-500">
+              Import bilan qo'shilgan: {count} ta
+            </span>
+          )}
+          {count > 0 && user?.role === "founder" && (
+            <button
+              onClick={undo}
+              disabled={busy}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 px-3 py-1.5 text-sm disabled:opacity-40"
+            >
+              <Trash2 size={14} /> Bekor qilish
+            </button>
+          )}
+        </div>
+
+        {err && (
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-4">
+            {err}
+          </p>
+        )}
+
+        {res && (
+          <>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {[
+                {
+                  l: res.committed ? "Qo'shildi" : "Qo'shishga tayyor",
+                  v: String(res.ok),
+                  c: "text-emerald-600",
+                },
+                {
+                  l: "Allaqachon bor",
+                  v: String(res.duplicate),
+                  c: "text-slate-400",
+                },
+                {
+                  l: "O'tkazildi",
+                  v: String(res.skipped),
+                  c: res.skipped ? "text-amber-600" : "text-slate-400",
+                },
+              ].map((s) => (
+                <div
+                  key={s.l}
+                  className="rounded-xl border border-slate-200 p-3"
+                >
+                  <p className="text-xs text-slate-500 mb-1">{s.l}</p>
+                  <p className={`text-lg font-semibold ${s.c}`}>{s.v}</p>
+                </div>
+              ))}
+            </div>
+
+            {!res.committed && res.ok > 0 && (
+              <button
+                onClick={doImport}
+                disabled={busy}
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 text-sm font-medium mb-4 disabled:opacity-40"
+              >
+                <Check size={16} />
+                {res.ok} ta o'quvchini Arxivga qo'shish
+              </button>
+            )}
+
+            {res.committed && (
+              <p className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 mb-4">
+                {res.ok} ta o'quvchi Arxivga qo'shildi. Endi eski
+                to'lovlar importi ularni topa oladi.
+              </p>
+            )}
+
+            {bad.length > 0 && (
+              <div className="rounded-xl border border-slate-200 overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-2.5 bg-amber-50 border-b border-amber-200">
+                  <p className="text-sm text-amber-800 flex items-center gap-1.5">
+                    <AlertTriangle size={14} />
+                    {bad.length} ta qator qo'shilmadi
+                  </p>
+                  <button
+                    onClick={() =>
+                      exportToExcel(
+                        "Qoshilmagan-arxiv",
+                        "Muammoli",
+                        bad.map((r) => ({
+                          Qator: r.row,
+                          "O'quvchi": r.name,
+                          Sabab: r.reason || LABEL[r.status],
+                        }))
+                      )
+                    }
+                    className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-brand-700"
+                  >
+                    <FileDown size={13} /> Excel
+                  </button>
+                </div>
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50 text-xs text-slate-500">
+                    <tr>
+                      <th className="text-left px-4 py-2 w-16">Qator</th>
+                      <th className="text-left px-3 py-2">O'quvchi</th>
+                      <th className="text-left px-3 py-2">Sabab</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bad.slice(0, 100).map((r) => (
+                      <tr
+                        key={`${r.row}-${r.status}`}
+                        className="border-t border-slate-100"
+                      >
+                        <td className="px-4 py-2 text-slate-400">{r.row}</td>
+                        <td className="px-3 py-2 text-slate-800">{r.name}</td>
+                        <td className="px-3 py-2">
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-xs font-medium ${TONE[r.status]}`}
+                          >
+                            {LABEL[r.status]}
+                          </span>
+                          {r.reason && (
+                            <span className="text-xs text-slate-500 ml-2">
+                              {r.reason}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {bad.length > 100 && (
+                  <p className="text-xs text-slate-400 px-4 py-2">
+                    Yana {bad.length - 100} ta — to'liq ro'yxat Excel'da.
+                  </p>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

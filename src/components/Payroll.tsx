@@ -6,6 +6,7 @@ import {
   type StaffPayrollRow,
   type StaffSalaryHistory,
   type MonthPayments,
+  type StaffGrades,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { MONTHS } from "../lib/expenses";
@@ -286,6 +287,7 @@ function PayrollTable({ url, title, hint }: {
             onClick={() =>
               exportToExcel(`${title}-${d.period}`, title, d.rows.map((r) => ({
                 "F.I.Sh.": r.name,
+                Daraja: r.grade_label ?? "",
                 Hisoblangan: r.salary,
                 Berilgan: r.paid,
                 Qoldiq: r.left,
@@ -308,6 +310,9 @@ function PayrollTable({ url, title, hint }: {
             <thead className="bg-slate-50 text-xs text-slate-500">
               <tr>
                 <th className="text-left px-4 py-2.5 font-medium">F.I.Sh.</th>
+                <th className="text-left px-3 py-2.5 font-medium w-32">
+                  Daraja
+                </th>
                 <th className="text-right px-3 py-2.5 font-medium">
                   Hisoblangan
                 </th>
@@ -330,8 +335,38 @@ function PayrollTable({ url, title, hint }: {
                         : `${r.hours ?? 0} soat · ${r.students ?? 0} o'quvchi`}
                     </p>
                   </td>
+                  <td className="px-3 py-2.5">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                        r.grade === "volunteer"
+                          ? "bg-slate-100 text-slate-500"
+                          : r.grade === "senior"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : r.grade === "middle"
+                          ? "bg-sky-50 text-sky-700"
+                          : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {r.grade_label || "—"}
+                    </span>
+                    {r.grade_coef !== undefined && r.grade_coef !== 1 && (
+                      <span className="text-[11px] text-slate-400 ml-1">
+                        x{r.grade_coef}
+                      </span>
+                    )}
+                  </td>
                   <td className="px-3 py-2.5 text-right text-slate-800">
                     {formatSom(r.salary)}
+                    {r.grade === "volunteer" ? (
+                      <p className="text-[11px] text-slate-400">
+                        volontyor — oylik yo'q
+                      </p>
+                    ) : r.salary_base !== undefined &&
+                      r.salary_base !== r.salary ? (
+                      <p className="text-[11px] text-slate-400">
+                        baza {formatSom(r.salary_base)}
+                      </p>
+                    ) : null}
                     {(r.clamped_min || r.clamped_max) && (
                       <span className="text-xs text-amber-600 ml-1">
                         ({r.clamped_min ? "min" : "max"})
@@ -355,7 +390,7 @@ function PayrollTable({ url, title, hint }: {
                     )}
                   </td>
                   <td className="px-3 py-2.5 text-right">
-                    {d.can_pay && r.user_id && (
+                    {d.can_pay && r.user_id && r.grade !== "volunteer" && (
                       <button
                         onClick={() => setPay(r)}
                         className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 text-xs font-medium"
@@ -388,10 +423,16 @@ function PayrollTable({ url, title, hint }: {
 
 /** Moliya > Oyliklar: examiner va support teacher bir joyda. */
 export function PayrollTab() {
-  const [sub, setSub] = useState<"examiner" | "support">("examiner");
-  const SUBS: { key: "examiner" | "support"; label: string }[] = [
+  const [sub, setSub] = useState<"examiner" | "support" | "grades">(
+    "examiner"
+  );
+  const SUBS: {
+    key: "examiner" | "support" | "grades";
+    label: string;
+  }[] = [
     { key: "examiner", label: "Examiner oyliklari" },
     { key: "support", label: "Support teacher oyliklari" },
+    { key: "grades", label: "Darajalar" },
   ];
 
   return (
@@ -418,15 +459,19 @@ export function PayrollTab() {
           title="Examiner oyliklari"
           hint="Oylik o'tkazilgan imtihonlardan avtomat hisoblanadi:
                 daraja bo'yicha baza ball + qatnashgan o'quvchi. Jarima va
-                qo'lda ayirilgan ballar chegiriladi."
+                qo'lda ayirilgan ballar chegiriladi. Volontyorga oylik
+                berilmaydi."
         />
-      ) : (
+      ) : sub === "support" ? (
         <PayrollTable
           url="/support/salary"
           title="Support teacher oyliklari"
           hint="Oylik seanslardan avtomat hisoblanadi: (soat x 0.30 +
-                o'quvchi x 0.20 + test koef x 0.50) x 10 000 so'm."
+                o'quvchi x 0.20 + test koef x 0.50) x 10 000 so'm.
+                Volontyorga oylik berilmaydi."
         />
+      ) : (
+        <StaffGradesTab />
       )}
     </div>
   );
@@ -600,6 +645,174 @@ export function MonthPaymentsTab() {
                   </td>
                   <td className="px-3 py-2.5 text-slate-500">
                     {r.created_by || "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ------------------------------------------- Darajalar (Volontyor...) ----
+
+/** Examiner va support teacherlarning darajasi.
+ *
+ *  Volontyorga oylik berilmaydi — bu tajriba to'plash bosqichi.
+ *  Junior/Middle/Senior darajalarida hisoblangan oylik
+ *  koeffitsiyentga ko'paytiriladi (koeffitsiyentni asoschi
+ *  o'zgartiradi). */
+export function StaffGradesTab() {
+  const [d, setD] = useState<StaffGrades | null>(null);
+  const [busy, setBusy] = useState<number | null>(null);
+  const [err, setErr] = useState("");
+  const [coefs, setCoefs] = useState<Record<string, string>>({});
+
+  const load = () => {
+    api
+      .get<StaffGrades>("/staff-grades")
+      .then((x) => {
+        setD(x);
+        setCoefs(
+          Object.fromEntries(x.grades.map((g) => [g.key, String(g.coef)]))
+        );
+      })
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  };
+  useEffect(load, []);
+
+  async function setGrade(uid: number, grade: string) {
+    setBusy(uid);
+    setErr("");
+    try {
+      await api.put(`/staff-grades/${uid}`, { grade });
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function saveCoefs() {
+    setErr("");
+    try {
+      await api.put("/staff-grades", {
+        rates: Object.entries(coefs).map(([key, v]) => ({
+          key,
+          coef: Number(v.replace(",", ".")) || 0,
+        })),
+      });
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  if (err && !d) return <p className="text-sm text-slate-500 py-8">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  return (
+    <div>
+      <p className="text-xs text-slate-500 mb-4 max-w-3xl">{d.hint}</p>
+
+      {err && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">
+          {err}
+        </p>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4">
+        <p className="text-sm font-medium text-slate-800 mb-2">
+          Daraja koeffitsiyentlari
+        </p>
+        <div className="flex flex-wrap items-end gap-3">
+          {d.grades.map((g) => (
+            <div key={g.key}>
+              <label className="block text-xs text-slate-500 mb-1">
+                {g.label}
+              </label>
+              <input
+                value={coefs[g.key] ?? ""}
+                onChange={(e) =>
+                  setCoefs((c) => ({ ...c, [g.key]: e.target.value }))
+                }
+                disabled={!d.can_edit_rates}
+                className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:bg-slate-50"
+              />
+            </div>
+          ))}
+          {d.can_edit_rates && (
+            <button
+              onClick={saveCoefs}
+              className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 text-sm font-medium"
+            >
+              Saqlash
+            </button>
+          )}
+        </div>
+        <p className="text-xs text-slate-400 mt-2">
+          0 — oylik berilmaydi. 1 — hisoblangan oylikning o'zi. 1.3 —
+          30% ustama. Koeffitsiyentni faqat asoschi o'zgartiradi.
+        </p>
+      </div>
+
+      {d.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Examiner yoki support teacher topilmadi.
+        </p>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-xs text-slate-500">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">F.I.Sh.</th>
+                <th className="text-left px-3 py-2.5 font-medium w-40">
+                  Lavozim
+                </th>
+                <th className="text-left px-3 py-2.5 font-medium w-32">
+                  Berilgan sana
+                </th>
+                <th className="text-left px-3 py-2.5 font-medium">Daraja</th>
+              </tr>
+            </thead>
+            <tbody>
+              {d.rows.map((r) => (
+                <tr key={r.user_id} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5 text-slate-900">{r.name}</td>
+                  <td className="px-3 py-2.5 text-xs text-slate-500">
+                    {r.role}
+                  </td>
+                  <td className="px-3 py-2.5 text-xs text-slate-500">
+                    {r.since ? formatDate(r.since) : "—"}
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex flex-wrap gap-1.5">
+                      {d.grades.map((g) => {
+                        const on = r.grade === g.key;
+                        return (
+                          <button
+                            key={g.key}
+                            onClick={() => setGrade(r.user_id, g.key)}
+                            disabled={!d.can_edit || busy === r.user_id || on}
+                            className={`px-2.5 py-1 rounded-full text-xs border transition disabled:cursor-default ${
+                              on
+                                ? g.key === "volunteer"
+                                  ? "bg-slate-500 border-slate-500 text-white"
+                                  : "bg-brand-600 border-brand-600 text-white"
+                                : "bg-white border-slate-200 text-slate-500 hover:border-brand-300 disabled:opacity-40"
+                            }`}
+                          >
+                            {g.label}
+                            {g.coef !== 1 && (
+                              <span className="opacity-70"> x{g.coef}</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </td>
                 </tr>
               ))}

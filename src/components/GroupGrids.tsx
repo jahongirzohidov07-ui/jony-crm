@@ -602,6 +602,28 @@ export function GradesTab({
       .finally(() => setLoading(false));
   }, [groupId, year, month]);
 
+  /** Baho qo'yish shartlari: dars o'tgan bo'lsin, o'quvchi kelgan
+   *  bo'lsin. Kelmagan bolaga baho qo'yilsa unga coin ham tushib
+   *  ketardi — shuning uchun katak umuman bosilmaydi. */
+  const g = grid as (AttendanceGrid & {
+    present?: Record<string, number>;
+    can_past?: boolean;
+    today?: string;
+  }) | null;
+  function cellState(lessonDate: string, lessonId: number, studentId: number) {
+    const today = g?.today ?? new Date().toISOString().slice(0, 10);
+    if (lessonDate > today)
+      return { ok: false, why: "Dars hali bo'lib o'tmagan" };
+    if (lessonDate < today && !g?.can_past)
+      return { ok: false, why: "O'tib ketgan kun — o'quv bo'limi rahbari tuzatadi" };
+    const p = g?.present?.[`${lessonId}:${studentId}`];
+    if (p === undefined)
+      return { ok: false, why: "Avval yo'qlama qo'ying" };
+    if (p === 0)
+      return { ok: false, why: "Bu darsga kelmagan — baho qo'yilmaydi" };
+    return { ok: true, why: "" };
+  }
+
   /** Bosilganda 1→2→3→4→5→bo'sh aylanadi. Har ball shuncha coin beradi. */
   async function cycle(lessonId: number, studentId: number) {
     if (!canEdit || !grid) return;
@@ -618,8 +640,9 @@ export function GradesTab({
       await api.put(`/lessons/${lessonId}/grades`, {
         marks: [{ student_id: studentId, score: next }],
       });
-    } catch {
+    } catch (e) {
       setGrid({ ...grid, marks: grid.marks });
+      alert(e instanceof Error ? e.message : "Baho saqlanmadi");
     }
   }
 
@@ -685,16 +708,23 @@ export function GradesTab({
                   </td>
                   {grid.lessons.map((ls) => {
                     const v = grid.marks[`${ls.id}:${s.id}`] as number | undefined;
+                    const st = cellState(ls.date, ls.id, s.id);
+                    const locked = !canEdit || (!st.ok && v === undefined);
                     return (
                       <td key={ls.id} className="px-2 py-2 text-center">
                         <button
                           onClick={() => cycle(ls.id, s.id)}
-                          disabled={!canEdit}
+                          disabled={locked}
+                          title={st.ok ? "" : st.why}
                           className={`w-8 h-8 rounded-lg inline-flex items-center justify-center font-semibold text-sm transition ${
-                            v ? gradeTone(v) : "bg-slate-100 hover:bg-slate-200"
+                            v
+                              ? gradeTone(v)
+                              : locked
+                                ? "bg-slate-50 text-slate-300 cursor-not-allowed"
+                                : "bg-slate-100 hover:bg-slate-200"
                           }`}
                         >
-                          {v ?? ""}
+                          {v ?? (locked ? "·" : "")}
                         </button>
                       </td>
                     );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Download, Phone, Pencil } from "lucide-react";
-import { api, type Group, type Student } from "../lib/api";
+import { api, type Group, type GroupProgress, type Student } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
@@ -25,6 +25,74 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
     <p className="text-sm text-slate-600">
       <span className="font-medium text-slate-700">{label}:</span> {value}
     </p>
+  );
+}
+
+/** "Step 2 · Unit 7/12" — guruh qayerga yetgani.
+ *
+ *  Ma'lumot IMTIHONLARDAN olinadi: natijasi kiritilgan eng oxirgi unit
+ *  testi. Hech kim qo'lda kiritmaydi, shuning uchun eskirmaydi. */
+function ProgressBox({ groupId }: { groupId: number }) {
+  const [p, setP] = useState<GroupProgress | null>(null);
+
+  useEffect(() => {
+    api
+      .get<GroupProgress>(`/groups/${groupId}/progress`)
+      .then(setP)
+      .catch(() => setP(null));
+  }, [groupId]);
+
+  if (!p) return null;
+  const pct = Math.max(0, Math.min(100, p.percent));
+
+  return (
+    <div className="mb-4 rounded-xl border border-brand-100 bg-brand-50/60 px-3 py-2.5">
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="text-sm font-semibold text-brand-800">
+          {p.level_label || "Daraja tanlanmagan"}
+          {p.unit > 0 ? (
+            <>
+              {" · "}
+              <span className="text-brand-700">
+                Unit {p.unit}
+                <span className="text-brand-500 font-normal">
+                  /{p.unit_total}
+                </span>
+              </span>
+            </>
+          ) : null}
+        </p>
+        {p.unit > 0 && p.next_unit ? (
+          <span className="text-[11px] text-brand-600 shrink-0">
+            keyingisi: Unit {p.next_unit}
+          </span>
+        ) : null}
+      </div>
+
+      {p.unit > 0 ? (
+        <div className="mt-2 h-1.5 rounded-full bg-brand-100 overflow-hidden">
+          <div
+            className="h-full bg-brand-500 rounded-full"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+      ) : null}
+
+      <p className="text-[11px] text-slate-500 mt-1.5">
+        {p.last_exam ? (
+          <>
+            Oxirgi imtihon: Unit {p.last_exam.unit_no}
+            {p.last_exam.date ? ` · ${formatDate(p.last_exam.date)}` : ""}
+            {p.last_exam.avg_percent !== null &&
+            p.last_exam.avg_percent !== undefined
+              ? ` · o'rtacha ${p.last_exam.avg_percent}%`
+              : ""}
+          </>
+        ) : (
+          "Hali natijasi kiritilgan unit imtihoni yo'q"
+        )}
+      </p>
+    </div>
   );
 }
 
@@ -91,6 +159,8 @@ export function GroupSidebar({
           </button>
         )}
       </div>
+
+      <ProgressBox groupId={group.id} />
 
       <div className="space-y-1 mb-4">
         <Row

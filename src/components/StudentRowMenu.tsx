@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   MoreVertical, Play, RefreshCw, Trash2, X, Snowflake, Wallet,
-  Undo2, UserX,
+  Undo2, UserX, Building2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
@@ -52,6 +52,11 @@ export function StudentRowMenu({
     new Date().toISOString().slice(0, 10)
   );
   const [aPrev, setAPrev] = useState<ActivatePreview | null>(null);
+  // Boshqa filialga o'tkazish
+  const [toBranch, setToBranch] = useState(false);
+  const [bId, setBId] = useState("");
+  const [bGroup, setBGroup] = useState("");
+  const [bNote, setBNote] = useState("");
   const [moving, setMoving] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -79,6 +84,10 @@ export function StudentRowMenu({
       setMoving(false);
       setActivating(false);
       setAPrev(null);
+      setToBranch(false);
+      setBId("");
+      setBGroup("");
+      setBNote("");
       setProblems([]);
       setPendingGroup(null);
       onChanged();
@@ -121,6 +130,18 @@ export function StudentRowMenu({
     run(() => api.post(`/students/${student.id}/to-trial`, {}));
   const toLead = () =>
     run(() => api.post(`/students/${student.id}/to-lead`, {}));
+
+  const moveBranch = (force = false) =>
+    run(() =>
+      api.post(
+        `/students/${student.id}/move-branch${force ? "?force=true" : ""}`,
+        {
+          branch_id: Number(bId),
+          group_id: bGroup ? Number(bGroup) : null,
+          note: bNote || null,
+        }
+      )
+    );
 
   const moveTo = (groupId: number, force = false) => {
     setPendingGroup(groupId);
@@ -176,7 +197,25 @@ export function StudentRowMenu({
     });
   };
 
-  const others = groups.filter((g) => g.id !== student.group?.id);
+  // Guruh almashtirishda faqat O'SHA FILIAL guruhlari chiqadi —
+  // boshqa filialga o'tkazish alohida amal, u yerda vazifa ham
+  // yaratiladi.
+  const myBranch = student.branch?.id ?? student.group?.branch_id ?? null;
+  const others = groups.filter(
+    (g) =>
+      g.id !== student.group?.id &&
+      (!myBranch || !g.branch_id || g.branch_id === myBranch)
+  );
+  const otherBranchGroups = groups.filter(
+    (g) => g.branch_id && myBranch && g.branch_id !== myBranch
+  );
+  const branchOptions = Array.from(
+    new Map(
+      otherBranchGroups
+        .filter((g) => g.branch)
+        .map((g) => [g.branch!.id, g.branch!])
+    ).values()
+  );
 
   if (!canManage) return null;
 
@@ -291,7 +330,74 @@ export function StudentRowMenu({
             </div>
           )}
 
-          {activating ? (
+          {toBranch ? (
+            <div className="px-3 py-2">
+              <p className="text-xs font-medium text-slate-600 mb-1.5">
+                Qaysi filialga? *
+              </p>
+              <select
+                value={bId}
+                onChange={(e) => { setBId(e.target.value); setBGroup(""); }}
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2 bg-white"
+              >
+                <option value="">— filialni tanlang —</option>
+                {branchOptions.map((b) => (
+                  <option key={b.id} value={b.id}>{b.name}</option>
+                ))}
+              </select>
+              {bId && (
+                <select
+                  value={bGroup}
+                  onChange={(e) => setBGroup(e.target.value)}
+                  className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2 bg-white"
+                >
+                  <option value="">
+                    — guruhni keyin administrator tanlaydi —
+                  </option>
+                  {otherBranchGroups
+                    .filter((g) => String(g.branch_id) === bId)
+                    .map((g) => (
+                      <option key={g.id} value={g.id}>{g.name}</option>
+                    ))}
+                </select>
+              )}
+              <input
+                value={bNote}
+                onChange={(e) => setBNote(e.target.value)}
+                placeholder="Sabab (ixtiyoriy)"
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2"
+              />
+              <p className="text-[11px] text-slate-400 mb-2">
+                Yangi filial administratoriga "o'quvchi keldi" vazifasi
+                tushadi.
+              </p>
+              {problems.length > 0 && (
+                <div className="mb-2">
+                  <ScheduleProblems
+                    problems={problems}
+                    canForce={problems.every((p) => p.severity !== "block")}
+                    saving={busy}
+                    onForce={() => moveBranch(true)}
+                  />
+                </div>
+              )}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => { setToBranch(false); setProblems([]); }}
+                  className="flex-1 text-sm text-slate-500 py-1.5"
+                >
+                  Bekor
+                </button>
+                <button
+                  onClick={() => moveBranch()}
+                  disabled={busy || !bId}
+                  className="flex-1 bg-violet-600 text-white rounded-lg py-1.5 text-sm font-medium disabled:opacity-40"
+                >
+                  O'tkazish
+                </button>
+              </div>
+            </div>
+          ) : activating ? (
             <div className="px-3 py-2">
               <p className="text-xs font-medium text-slate-600 mb-1.5">
                 Qaysi kundan o'qishni boshladi? *
@@ -426,6 +532,16 @@ export function StudentRowMenu({
                 <RefreshCw size={15} className="text-sky-600" />
                 Boshqa guruhga o'tkazish
               </button>
+              {branchOptions.length > 0 && (
+                <button
+                  onClick={() => { setToBranch(true); setErr(""); }}
+                  disabled={busy}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <Building2 size={15} className="text-violet-600" />
+                  Boshqa filialga o'tkazish
+                </button>
+              )}
               <button
                 onClick={removeFromGroup}
                 disabled={busy}

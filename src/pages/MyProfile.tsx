@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import {
   UserCircle, Wallet, Clock, CheckCircle2, Circle, TrendingUp,
+  BookOpen, PlayCircle, ExternalLink,
 } from "lucide-react";
-import { api, type MyProfile as Profile } from "../lib/api";
+import {
+  api, type MyProfile as Profile, type LibraryList,
+} from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 
@@ -252,6 +255,122 @@ export default function MyProfile() {
             )}
         </div>
       )}
+
+      <MyLibrary />
+    </div>
+  );
+}
+
+/** Kutubxona: onboarding paytida ko'rishim kerak bo'lgan materiallar.
+ *
+ *  Ko'rgan foizni o'zim belgilayman; "topshirdi" degan belgini esa HR
+ *  qo'yadi. Daraja ko'tarishda shu ro'yxat qaraladi. */
+function MyLibrary() {
+  const [d, setD] = useState<LibraryList | null>(null);
+  const [busy, setBusy] = useState<number | null>(null);
+
+  const load = () => {
+    api
+      .get<LibraryList>("/library")
+      .then(setD)
+      .catch(() => setD(null));
+  };
+  useEffect(load, []);
+
+  async function setPercent(id: number, pct: number) {
+    setBusy(id);
+    try {
+      await api.put(`/library/${id}/progress`, { percent: pct });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  if (!d || d.items.length === 0) return null;
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5 mt-4">
+      <div className="flex items-center gap-2 mb-1">
+        <BookOpen size={15} className="text-brand-500" />
+        <p className="text-sm font-medium text-slate-700">Kutubxona</p>
+        <span className="text-xs text-slate-400">
+          {d.my_done}/{d.my_total} topshirilgan
+        </span>
+      </div>
+      <p className="text-xs text-slate-400 mb-3">
+        Ko'rganingizni o'zingiz belgilaysiz. "Topshirdi" belgisini HR
+        qo'yadi — daraja ko'tarishda shu ro'yxat qaraladi.
+      </p>
+
+      <div className="space-y-2">
+        {d.items.map((it) => (
+          <div
+            key={it.id}
+            className="rounded-lg border border-slate-200 px-3 py-2.5"
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              {it.kind === "video" ? (
+                <PlayCircle size={15} className="text-slate-400 shrink-0" />
+              ) : (
+                <BookOpen size={15} className="text-slate-400 shrink-0" />
+              )}
+              <span className="text-sm text-slate-800">{it.title}</span>
+              <span className="text-xs text-slate-400">
+                {it.kind_label}
+                {it.minutes ? ` · ${it.minutes} daq` : ""}
+              </span>
+              {it.passed && (
+                <span className="text-[10px] uppercase tracking-wide bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded">
+                  topshirdim
+                </span>
+              )}
+              <div className="flex-1" />
+              {it.url && (
+                <a
+                  href={it.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-brand-600 hover:underline"
+                >
+                  Ochish <ExternalLink size={12} />
+                </a>
+              )}
+            </div>
+
+            {it.description && (
+              <p className="text-xs text-slate-400 mt-1">{it.description}</p>
+            )}
+
+            <div className="flex items-center gap-2 mt-2">
+              <span className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                <span
+                  className={`h-full block ${
+                    it.passed ? "bg-emerald-500" : "bg-brand-500"
+                  }`}
+                  style={{ width: `${it.percent}%` }}
+                />
+              </span>
+              <span className="text-xs text-slate-500 w-10 text-right">
+                {it.percent}%
+              </span>
+              {!it.passed &&
+                [25, 50, 75, 100].map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => setPercent(it.id, v)}
+                    disabled={busy === it.id || it.percent >= v}
+                    className="px-2 py-0.5 rounded-md text-[11px] border border-slate-200 text-slate-500 hover:border-brand-300 hover:text-brand-700 disabled:opacity-30"
+                  >
+                    {v}%
+                  </button>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

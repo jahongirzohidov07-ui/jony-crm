@@ -33,6 +33,9 @@ export function GroupFormModal({
   onSaved: () => void;
 }) {
   const [name, setName] = useState(initial?.name ?? "");
+  // Nom avtomat qo'yiladi ("J/Z - Group 01/25"). Foydalanuvchi qo'lda
+  // tekkanidan keyin biz unga boshqa tegmaymiz.
+  const [nameTouched, setNameTouched] = useState(!!initial);
   const [room, setRoom] = useState(initial?.room ?? "");
   const [roomId, setRoomId] = useState<string>(
     initial?.room_id ? String(initial.room_id) : ""
@@ -109,6 +112,19 @@ export function GroupFormModal({
     api.get<Room[]>("/rooms").then(setRooms).catch(() => setRooms([]));
   }, []);
 
+  // Yangi guruh: ustoz yoki boshlanish sanasi tanlangach nom o'zi
+  // to'ldiriladi. Tahrirlashda ishlamaydi.
+  useEffect(() => {
+    if (initial || nameTouched) return;
+    const q = new URLSearchParams();
+    if (teacherId) q.set("teacher_id", teacherId);
+    if (startDate) q.set("on", startDate);
+    api
+      .get<{ name: string }>(`/group-name/suggest?${q.toString()}`)
+      .then((d) => setName(d.name))
+      .catch(() => undefined);
+  }, [teacherId, startDate, nameTouched, initial]);
+
   const lessonPriceNum = Number(lessonPrice) || 0;
   const standardLessonsNum = Number(standardLessons) || 0;
   const computedMonthlyFee = lessonPriceNum * standardLessonsNum;
@@ -177,10 +193,19 @@ export function GroupFormModal({
             <input
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Masalan: IELTS 1.0"
+              onChange={(e) => {
+                setNameTouched(true);
+                setName(e.target.value);
+              }}
+              placeholder="J/Z - Group 01/25"
               autoFocus
             />
+            {!initial && !nameTouched && (
+              <p className="text-xs text-slate-400 mt-1">
+                Nom o'zi qo'yildi: ustoz harflari + guruh ochilgan oy/yil.
+                Xohlasangiz shu yerda o'zgartiring.
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>

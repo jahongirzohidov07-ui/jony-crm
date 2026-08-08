@@ -4388,6 +4388,12 @@ export interface StaffPayrollRow {
   students?: number;
   clamped_min?: boolean;
   clamped_max?: boolean;
+  /** Volontyor / Junior / Middle / Senior */
+  grade?: string;
+  grade_label?: string;
+  grade_coef?: number;
+  salary_base?: number;
+  grade_note?: string;
 }
 
 export interface StaffPayrollList {
@@ -4496,4 +4502,83 @@ export interface SupportAttendanceGrid {
   default_end?: string | null;
   hours_total?: number;
   students_total?: number;
+}
+
+/** Examiner / support darajasi: Volontyor -> Junior -> Middle -> Senior. */
+export interface StaffGradeRate {
+  key: string;
+  label: string;
+  coef: number;
+  order_no: number;
+}
+
+export interface StaffGradeRow {
+  user_id: number;
+  name: string;
+  role: string;
+  grade: string;
+  grade_label: string;
+  coef: number;
+  since?: string | null;
+  note?: string | null;
+}
+
+export interface StaffGrades {
+  grades: StaffGradeRate[];
+  rows: StaffGradeRow[];
+  can_edit: boolean;
+  can_edit_rates: boolean;
+  hint: string;
+}
+
+/** HR kutubxonasi: onboarding video, kitob va fayllari. */
+export interface LibraryItem {
+  id: number;
+  title: string;
+  kind: string;
+  kind_label: string;
+  url?: string | null;
+  attachment_id?: number | null;
+  minutes: number;
+  description?: string | null;
+  target_roles: string[];
+  required: boolean;
+  order_no: number;
+  active: boolean;
+  percent: number;
+  passed: boolean;
+  passed_at?: string | null;
+  note?: string | null;
+  /** Faqat HR uchun */
+  watchers?: number;
+  done?: number;
+  avg_percent?: number;
+}
+
+export interface LibraryList {
+  items: LibraryItem[];
+  kinds: { key: string; label: string }[];
+  can_manage: boolean;
+  my_total: number;
+  my_done: number;
+  my_percent: number;
+  roles: { key: string; label: string }[];
+}
+
+export interface LibraryPerson {
+  user_id: number;
+  name: string;
+  role: string;
+  percent: number;
+  passed: boolean;
+  passed_at?: string | null;
+  passed_by?: string | null;
+  note?: string | null;
+}
+
+export interface LibraryPeople {
+  item: LibraryItem;
+  rows: LibraryPerson[];
+  done: number;
+  total: number;
 }

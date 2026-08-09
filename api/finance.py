@@ -241,9 +241,24 @@ def update_payout(
     payout = db.query(models.TeacherPayout).get(payout_id)
     if not payout:
         raise HTTPException(404, "Yozuv topilmadi")
+    old_paid = payout.paid
     payout.paid = int(payload.paid)
     db.commit()
     db.refresh(payout)
+    if old_paid != payout.paid:
+        # Ustozga pul chiqqan/chiqmaganini belgilaydi - pul harakatiga
+        # bevosita bog'liq, shuning uchun kim qachon belgilaganini
+        # Audit'da ko'rish kerak (masalan kimdir noto'g'ri "to'landi"
+        # deb belgilab qo'ysa, buni keyin tekshirib bo'lishi uchun).
+        t = db.query(models.Teacher).get(payout.teacher_id)
+        audit.log(
+            db, user, entity="teacher_payout", action="update",
+            entity_id=payout.id,
+            entity_label=f"{t.full_name if t else '?'} — {payout.period}",
+            field="To'landimi", old_value=bool(old_paid),
+            new_value=bool(payout.paid),
+            note=f"{payout.amount:,.0f} so'm".replace(",", " "),
+            commit=True)
     return payout
 
 def _refund_out(db, r: "models.RefundRequest") -> dict:

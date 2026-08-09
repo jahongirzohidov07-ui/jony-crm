@@ -830,6 +830,15 @@ def create_user_v2(payload: _UserCreate2,
     M._smm_new_staff_task(db, new_user)
     M._ensure_teacher_card(db, new_user)
     db.commit()
+    # DIQQAT: bu funksiya auth_users.py:create_user()'ni TO'LIQ
+    # ALMASHTIRADI (_drop_route yuqorida) - o'sha yerdagi audit.log
+    # chaqiruvi bu yo'lda HECH QACHON ishga tushmaydi. Shuning uchun
+    # audit yozuvi shu yerda, HAQIQIY ishlaydigan versiyada ham
+    # takrorlanadi.
+    audit.log(db, user, entity="user", action="create",
+              entity_id=new_user.id, entity_label=new_user.full_name,
+              note=f"Rol: {roles.UZ_LABELS.get(new_user.role, new_user.role)}",
+              commit=True)
     return new_user
 
 # =====================================================================
@@ -4464,6 +4473,7 @@ def staff_grade_rates_set(payload: dict = Body(...),
                           db: Session = Depends(get_db),
                           user=Depends(require_role(roles.FOUNDER))):
     _grade_rates(db)
+    _changed = []  # (row, old_coef) - keyin, commit'dan OLDIN yozib olamiz
     for it in (payload.get("rates") or []):
         k = str(it.get("key") or "")
         row = db.query(_SGR).filter(_SGR.key == k).first()
@@ -4475,8 +4485,21 @@ def staff_grade_rates_set(payload: dict = Body(...),
             continue
         if c < 0 or c > 5:
             raise HTTPException(400, "Koeffitsiyent 0 dan 5 gacha bo'lsin")
-        row.coef = c
+        if c != row.coef:
+            _changed.append((row, row.coef))
+            row.coef = c
     db.commit()
+    # Bu BARCHA xodimlarning oyligini hisoblash formulasiga ta'sir
+    # qiladigan global sozlama - FOUNDER'dan boshqa hech kim
+    # o'zgartira olmaydi, shuning uchun HAR bir o'zgargan (haqiqatda
+    # farq qilgan, no-op emas) koeffitsiyent alohida qayd etiladi.
+    for row, old_coef in _changed:
+        audit.log(db, user, entity="staff_grade_rate", action="update",
+                  entity_id=row.id, entity_label=row.label,
+                  field="Koeffitsiyent", old_value=old_coef,
+                  new_value=row.coef)
+    if _changed:
+        db.commit()
     return {"ok": True, "grades": sorted(_grade_rates(db).values(),
                                          key=lambda x: x["order_no"])}
 

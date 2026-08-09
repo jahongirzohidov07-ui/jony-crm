@@ -142,6 +142,14 @@ def change_own_password(
         raise HTTPException(status_code=400, detail=roles.PASSWORD_RULE_TEXT)
     user.password_hash = hash_password(payload.new_password)
     db.commit()
+    # "recover" (tiklash kodi bilan) va "password_reset" (admin
+    # o'rniga majburan) dan farqli - bu yerda foydalanuvchi TIZIMGA
+    # KIRGAN holda O'ZI, joriy parolini bilgan holda almashtiryapti.
+    # Uchalasi ham xavfsizlik nuqtai nazaridan ahamiyatli va Audit'da
+    # bir-biridan ajralib turishi kerak.
+    audit.log(db, user, entity="user", action="password_change",
+              entity_id=user.id, entity_label=user.full_name,
+              note="foydalanuvchi o'z parolini almashtirdi", commit=True)
     return {"ok": True}
 
 def _guard_role_assignment(
@@ -268,6 +276,10 @@ def create_user(
     # O'qituvchi/support bo'lsa — Ustozlar bo'limida ham darhol ko'rinsin
     _ensure_teacher_card(db, new_user)
     db.commit()
+    audit.log(db, user, entity="user", action="create",
+              entity_id=new_user.id, entity_label=new_user.full_name,
+              note=f"Rol: {roles.UZ_LABELS.get(new_user.role, new_user.role)}",
+              commit=True)
     return new_user
 
 @router.put("/api/users/{user_id}", response_model=schemas.UserOut)

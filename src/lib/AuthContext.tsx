@@ -13,7 +13,7 @@ interface AuthContextValue {
   user: AuthUser | null;
   loading: boolean;
   error: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<AuthUser>;
   logout: () => void;
 }
 
@@ -68,6 +68,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const u = { full_name: res.full_name, role: res.role, branch_id: res.branch_id };
       sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
       setUser(u);
+      // Kirgan odamning roli qaytariladi — chaqirgan joy (Login.tsx)
+      // qayerga yo'naltirishni shundan biladi (o'quvchi -> /student).
+      return u;
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik yuz berdi");
       throw e;

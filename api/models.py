@@ -2949,6 +2949,9 @@ class ExerciseResult(Base):
     total = Column(Integer, nullable=False)
     correct = Column(Integer, nullable=False)
     topic = Column(String, nullable=True)
+    # Qaysi ko'nikma (roles.SKILL_KEYS). NULL = eski yozuv, faqat
+    # umumiy darajaga sanaladi.
+    skill = Column(String, nullable=True, index=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -3054,3 +3057,46 @@ class UserBranch(Base):
                      nullable=False, index=True)
     branch_id = Column(Integer, ForeignKey("branches.id"),
                        nullable=False, index=True)
+
+
+class VocabWord(Base):
+    """Lug'at bazasi — Jony Student ilovasidagi so'z o'yinlari shu
+    yerdan savol tuzadi.
+
+    Ataylab SODDA: bitta so'z + tarjima + daraja + mavzu. Murakkab
+    struktura (misol gaplar, audio va h.k.) keyin qo'shilishi mumkin,
+    lekin o'yinlar ishlashi uchun shu yetarli. Import orqali
+    (POST /api/vocab/import) katta ro'yxatni bir zumda yuklash mumkin —
+    kod o'zgartirmasdan."""
+    __tablename__ = "vocab_words"
+
+    id = Column(Integer, primary_key=True, index=True)
+    word = Column(String, nullable=False, index=True)      # inglizcha
+    translation = Column(String, nullable=False)           # o'zbekcha
+    level = Column(String, nullable=True, index=True)      # A1..C1 (CEFR)
+    topic = Column(String, nullable=True, index=True)      # ixtiyoriy mavzu
+    example = Column(Text, nullable=True)                  # misol gap
+    is_active = Column(Integer, default=1, index=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class VocabAttempt(Base):
+    """O'quvchining lug'at o'yinidagi HAR BIR javobi.
+
+    Nega har bir javob alohida yoziladi: (1) reyting va statistika shu
+    yerdan chiqadi; (2) qaysi so'z qiyin kelayotganini bilish mumkin
+    (kelajakda "xatolar ustida ishlash" rejimi uchun); (3) XP takror
+    berilmasligini nazorat qilish oson."""
+    __tablename__ = "vocab_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    word_id = Column(Integer, ForeignKey("vocab_words.id"),
+                     nullable=True, index=True)
+    game = Column(String, nullable=False, index=True)   # roles.VOCAB_GAMES
+    correct = Column(Integer, default=0, index=True)    # 1 / 0
+    answer = Column(String, nullable=True)              # o'quvchi javobi
+    date = Column(Date, default=date.today, index=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

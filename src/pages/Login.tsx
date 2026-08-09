@@ -17,7 +17,7 @@ export default function Login() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     try {
-      await login(username, password);
+      const u = await login(username, password);
       if (password === "jonyjony") {
         alert(
           "Siz standart parol bilan kirdingiz.\\n\\nXavfsizlik uchun " +
@@ -25,7 +25,9 @@ export default function Login() {
             "Profil → Parolni o'zgartirish."
         );
       }
-      navigate("/", { replace: true });
+      // O'quvchi O'Z ilovasiga tushadi (Jony Student), xodimlar
+      // paneliga emas — u yerda ko'radigan narsasi yo'q.
+      navigate(u?.role === "student" ? "/student" : "/", { replace: true });
     } catch {
       // error is surfaced via context
     }

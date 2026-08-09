@@ -835,7 +835,13 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
     # Vaqt kiritilmagan bo'lsa ham tekshiriladi, aks holda jadvalsiz
     # guruh ochib chegaradan chiqib ketish mumkin bo'lardi.
     if teacher_id:
-        problems += _check_teacher_load(db, teacher_id, group_id)
+        # entry.py bu funksiyani ishga tushgach almashtirishi mumkin
+        # (M._check_teacher_load = ...) - bo'linishdan oldin bitta
+        # fayl bo'lgani uchun bu avtomat ishlagan, endi main orqali
+        # dinamik chaqiramiz, aks holda eski (almashtirilmagan)
+        # versiya ishlatilib qolardi.
+        import main as _main
+        problems += _main._check_teacher_load(db, teacher_id, group_id)
 
     if not days or not start:
         return problems
@@ -1287,7 +1293,10 @@ def _activate_student(db: Session, s: models.Student, *, on: date,
         s.enrolled_date = on
     _sync_student_left_date(s)
 
-    charge = _charge_from_activation(db, s, on, user)
+    # Xuddi shu sabab bilan (yuqoridagi izohga qarang) main orqali
+    # dinamik chaqiramiz - entry.py buni almashtirishi mumkin.
+    import main as _main
+    charge = _main._charge_from_activation(db, s, on, user)
 
     # Lid ham yopiladi - u endi o'quvchi, doskada turishi shart emas
     lead = (db.query(models.Lead)

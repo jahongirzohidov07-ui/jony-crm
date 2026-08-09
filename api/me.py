@@ -35,7 +35,6 @@ from common import *  # noqa: F401,F403 - shared helpers/state
 # main.py bo'linishidan oldin bitta fayl bo'lgani uchun bu ishlagan,
 # endi aniq import kerak.
 from teachers import teacher_career
-from dashboard import admin_kpi
 
 router = APIRouter()
 
@@ -231,7 +230,11 @@ def my_profile(
     if user.role in (roles.SALES_MANAGER, roles.ADMINISTRATOR,
                      roles.SALES_HEAD):
         try:
-            k = admin_kpi(year=today.year, month=today.month, db=db, user=user)
+            # entry.py buni almashtirishi mumkin (M.admin_kpi = ...,
+            # "MyProfile ham shu hisobdan foydalanadi" izohiga qarang)
+            # - main orqali dinamik chaqiramiz.
+            import main as _main
+            k = _main.admin_kpi(year=today.year, month=today.month, db=db, user=user)
             row = next((r for r in k.rows if r.user_id == user.id), None)
             if row:
                 kpi = {

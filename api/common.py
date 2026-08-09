@@ -2372,6 +2372,84 @@ def _ensure_staff_date_tasks(db: Session, user: models.User) -> int:
     db.commit()
     return made
 
+
+def _level_for_points(points: int) -> dict:
+    """Ball -> daraja + keyingi darajagacha qolgan yo'l.
+
+    Bitta joyda: umumiy daraja ham, har bir ko'nikma darajasi ham
+    AYNAN shu zinadan yuradi (roles.ENG_LEVELS,
+    roles.PRACTICE_POINTS_PER_LEVEL) — ikki xil hisob-kitob bo'lib
+    ketmasligi uchun."""
+    per = roles.PRACTICE_POINTS_PER_LEVEL
+    idx = min(len(roles.ENG_LEVELS) - 1, int(points) // per)
+    cur = roles.ENG_LEVELS[idx]
+    is_last = idx >= len(roles.ENG_LEVELS) - 1
+    in_level = int(points) - idx * per
+    nxt = None if is_last else roles.ENG_LEVELS[idx + 1]
+    return {
+        "points": int(points),
+        "level": cur,
+        "max_level": is_last,
+        "next": None if is_last else {
+            "label": nxt["label"], "ielts": nxt["ielts"], "cefr": nxt["cefr"],
+            "points_left": per - in_level,
+            "progress_percent": round(in_level * 100 / per, 1),
+        },
+    }
+
+
+def _skill_points(db: Session, student_id: int) -> dict:
+    """Har bir ko'nikma bo'yicha yig'ilgan ball (to'g'ri javoblar).
+
+    Ikkita manbadan qo'shiladi:
+      1. ExerciseResult — ustoz kiritgan mashq natijalari (skill
+         ustuni bilan; eski, skill'siz yozuvlar ko'nikmaga sanalmaydi
+         lekin umumiyga sanaladi);
+      2. VocabAttempt — o'quvchining Jony Student ilovasidagi lug'at
+         o'yinlari (har to'g'ri javob 1 ball, "vocabulary" ko'nikmasi).
+    """
+    out = {k: 0 for k in roles.SKILL_KEYS}
+    rows = (db.query(models.ExerciseResult.skill,
+                     func.coalesce(func.sum(models.ExerciseResult.correct), 0))
+            .filter(models.ExerciseResult.student_id == student_id)
+            .group_by(models.ExerciseResult.skill).all())
+    for skill, correct in rows:
+        if skill in out:
+            out[skill] += int(correct or 0)
+    vocab = (db.query(func.count(models.VocabAttempt.id))
+             .filter(models.VocabAttempt.student_id == student_id,
+                     models.VocabAttempt.correct == 1).scalar() or 0)
+    out["vocabulary"] += int(vocab)
+    return out
+
+
+def _skills_card(db: Session, student_id: int) -> dict:
+    """Jony Student uchun: UMUMIY daraja + har bir ko'nikma darajasi.
+
+    Umumiy ball = barcha mashq natijalari (skill'siz eskilari ham) +
+    lug'at o'yinlari — ya'ni hech bir ball yo'qolmaydi. Ko'nikma
+    kesimi esa faqat belgilangan yozuvlardan chiqadi."""
+    total_ex = (db.query(
+        func.coalesce(func.sum(models.ExerciseResult.correct), 0))
+        .filter(models.ExerciseResult.student_id == student_id)
+        .scalar() or 0)
+    vocab = (db.query(func.count(models.VocabAttempt.id))
+             .filter(models.VocabAttempt.student_id == student_id,
+                     models.VocabAttempt.correct == 1).scalar() or 0)
+    per_skill = _skill_points(db, student_id)
+    overall = _level_for_points(int(total_ex) + int(vocab))
+    return {
+        "overall": overall,
+        "skills": [{
+            "key": k,
+            "label": roles.SKILL_LABELS[k],
+            "tone": roles.SKILL_TONE[k],
+            **_level_for_points(per_skill[k]),
+        } for k in roles.SKILL_KEYS],
+        "points_per_level": roles.PRACTICE_POINTS_PER_LEVEL,
+        "levels": roles.ENG_LEVELS,
+    }
+
 def _student_of_user(db: Session, user: models.User) -> models.Student | None:
     """Foydalanuvchi hisobiga bog'langan o'quvchi.
 
@@ -3628,6 +3706,9 @@ __all__ = [
     "_student_coin_balance",
     "_student_discount_percent",
     "_student_gamification",
+    "_level_for_points",
+    "_skill_points",
+    "_skills_card",
     "_student_of_user",
     "_student_payments",
     "_student_ranks",

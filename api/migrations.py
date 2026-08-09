@@ -70,6 +70,13 @@ MIGRATIONS = [
     ("0008_students_parent_token_expiry", [
         "ALTER TABLE students ADD COLUMN parent_token_expires_at TIMESTAMP",
     ]),
+    # Ko'nikma (skill) kesimidagi daraja uchun: mavjud mashq
+    # natijalariga "qaysi ko'nikma" ustuni. Eski yozuvlar NULL bo'lib
+    # qoladi va UMUMIY darajaga hisoblanaveradi (hech kim ball
+    # yo'qotmaydi), faqat ko'nikma kesimida ko'rinmaydi.
+    ("0009_exercise_skill", [
+        "ALTER TABLE exercise_results ADD COLUMN skill VARCHAR",
+    ]),
 ]
 
 

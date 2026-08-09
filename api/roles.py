@@ -678,6 +678,40 @@ ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 # javob 1 ball; har daraja uchun PRACTICE_POINTS_PER_LEVEL ball
 # yig'ilsa keyingisiga o'tadi. IELTS/CEFR — taxminiy mo'ljal.
 PRACTICE_POINTS_PER_LEVEL = 500
+# KO'NIKMALAR (skills). Jony Student ilovasida o'quvchi UMUMIY
+# darajasini ko'radi, ustiga bosganda esa har bir ko'nikma bo'yicha
+# ALOHIDA darajasi va keyingi darajagacha qancha qolganini ko'radi
+# (2026-08-09, Jahongir so'radi). Har bir ko'nikma bir xil zinadan
+# (ENG_LEVELS) yuradi, lekin balli alohida yig'iladi.
+SKILLS = [
+    ("vocabulary", "Lug'at",     "sky"),
+    ("grammar",    "Grammatika", "violet"),
+    ("reading",    "O'qish",     "emerald"),
+    ("listening",  "Tinglash",   "amber"),
+    ("writing",    "Yozish",     "rose"),
+    ("speaking",   "Gapirish",   "teal"),
+]
+SKILL_KEYS = [k for k, _, _ in SKILLS]
+SKILL_LABELS = {k: lbl for k, lbl, _ in SKILLS}
+SKILL_TONE = {k: t for k, _, t in SKILLS}
+
+# Lug'at o'yinlari (Jony Student). Ro'yxatga yangi o'yin qo'shilsa
+# frontend avtomat ko'rsatadi — alohida kod yozish shart emas.
+VOCAB_GAMES = [
+    ("flashcard",  "Kartochka",        "So'zni ko'r, tarjimasini esla"),
+    ("en_uz",      "Inglizcha → O'zbekcha", "4 ta variantdan to'g'risini tanla"),
+    ("uz_en",      "O'zbekcha → Inglizcha", "4 ta variantdan to'g'risini tanla"),
+    ("match",      "Juftlash",         "So'z va tarjimasini juftla"),
+    ("spelling",   "Imlo",             "Eshitgan/ko'rgan so'zni yozib chiq"),
+]
+VOCAB_GAME_KEYS = [k for k, _, _ in VOCAB_GAMES]
+VOCAB_GAME_LABELS = {k: lbl for k, lbl, _ in VOCAB_GAMES}
+
+# Bitta o'yin turida nechta savol bo'ladi va har to'g'ri javob uchun
+# necha XP beriladi.
+VOCAB_ROUND_SIZE = 10
+VOCAB_XP_PER_CORRECT = 1.0
+
 ENG_LEVELS = [
     {"key": "beginner",          "label": "Beginner",
      "ielts": "~2.0-2.5", "cefr": "A1"},

@@ -54,6 +54,16 @@ const ParentGamification = lazy(() => import("./pages/ParentGamification"));
 const ParentResults = lazy(() => import("./pages/ParentResults"));
 const ParentRank = lazy(() => import("./pages/ParentRank"));
 const Settings = lazy(() => import("./pages/Settings"));
+// Jony Student — o'quvchining O'Z ilovasi (alohida qobiq, pastda tab
+// paneli bilan; xodimlar paneliga aralashmaydi).
+const StudentLayout = lazy(() => import("./pages/student/StudentLayout"));
+const StudentHome = lazy(() => import("./pages/student/StudentHome"));
+const StudentGames = lazy(() => import("./pages/student/StudentGames"));
+const StudentGamePlay = lazy(() => import("./pages/student/StudentGamePlay"));
+const StudentLeaderboard = lazy(
+  () => import("./pages/student/StudentLeaderboard"),
+);
+const StudentProfile = lazy(() => import("./pages/student/StudentProfile"));
 
 function PageLoader() {
   return (
@@ -66,6 +76,16 @@ function PageLoader() {
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+}
+
+/** Xodimlar paneli. O'quvchi bu yerga tushib qolsa (masalan eski
+ * xatcho'p yoki noma'lum manzil orqali) — O'Z ilovasiga qaytariladi,
+ * chunki xodim vositalari unga ko'rinmasligi kerak. */
+function RequireStaff({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role === "student") return <Navigate to="/student" replace />;
   return <>{children}</>;
 }
 
@@ -85,12 +105,29 @@ function AppRoutes() {
           <Route path="results" element={<ParentResults />} />
           <Route path="rank" element={<ParentRank />} />
         </Route>
+        {/* Jony Student — o'quvchi ilovasi. Alohida qobiq: xodimlar
+            paneli (Layout) bilan aralashmaydi, PWA nomi ham boshqa
+            ("Jony Student"). */}
+        <Route
+          path="/student"
+          element={
+            <RequireAuth>
+              <StudentLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<StudentHome />} />
+          <Route path="games" element={<StudentGames />} />
+          <Route path="games/:game" element={<StudentGamePlay />} />
+          <Route path="leaderboard" element={<StudentLeaderboard />} />
+          <Route path="profile" element={<StudentProfile />} />
+        </Route>
         <Route
           path="/"
           element={
-            <RequireAuth>
+            <RequireStaff>
               <Layout />
-            </RequireAuth>
+            </RequireStaff>
           }
         >
           <Route index element={<Dashboard />} />

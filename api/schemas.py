@@ -2215,3 +2215,24 @@ class StudentImportRow(BaseModel):
 class StudentImportIn(BaseModel):
     rows: List[StudentImportRow]
     group_id: int
+
+
+# ---------- Jony Student: lug'at o'yinlari ----------
+class VocabAnswerIn(BaseModel):
+    """Bitta javob. To'g'riligini SERVER hal qiladi — bu yerda faqat
+    o'quvchi nima deganini yuboramiz."""
+    word_id: int
+    game: str
+    answer: Optional[str] = None
+
+
+class VocabWordIn(BaseModel):
+    word: str
+    translation: str
+    level: Optional[str] = None
+    topic: Optional[str] = None
+    example: Optional[str] = None
+
+
+class VocabImportIn(BaseModel):
+    words: List[VocabWordIn]

@@ -90,6 +90,7 @@ import marketing as _r_marketing
 import me as _r_me
 import notifications as _r_notifications
 import parents as _r_parents
+import student_app as _r_student_app
 import students as _r_students
 import support as _r_support
 import system as _r_system
@@ -117,6 +118,7 @@ app.include_router(_r_marketing.router)
 app.include_router(_r_me.router)
 app.include_router(_r_notifications.router)
 app.include_router(_r_parents.router)
+app.include_router(_r_student_app.router)
 app.include_router(_r_students.router)
 app.include_router(_r_support.router)
 app.include_router(_r_system.router)
@@ -150,6 +152,15 @@ try:
     from common import _seed_hr_structure
     with _HS(engine) as _db3:
         _seed_hr_structure(_db3)
+except Exception:
+    pass
+# Jony Student: lug'at o'yinlari birinchi kundanoq ishlashi uchun
+# boshlang'ich so'z bazasi (idempotent — dublikat yaratmaydi).
+try:
+    from sqlalchemy.orm import Session as _VS
+    from vocab_seed import seed_vocab
+    with _VS(engine) as _db4:
+        seed_vocab(_db4)
 except Exception:
     pass
 

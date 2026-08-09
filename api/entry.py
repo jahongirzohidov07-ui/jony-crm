@@ -33,12 +33,26 @@ import main as M
 
 def _drop_route(path: str, method: str) -> None:
     """Bir xil yo'l qayta e'lon qilinganda eskisini olib tashlaydi —
-    main.py yangi versiyada bo'lsa ham, bo'lmasa ham bitta nusxa qoladi."""
+    main.py yangi versiyada bo'lsa ham, bo'lmasa ham bitta nusxa qoladi.
+
+    2026-08: main.py bo'lindi - domen routerlari endi
+    app.include_router(...) orqali ulanadi, shuning uchun
+    app.router.routes ichida to'g'ridan-to'g'ri emas, balki
+    _IncludedRouter ichiga o'ralgan holda turadi. Shu ichkariga
+    ham qarab, mos yo'lni topib olib tashlaymiz - xatti-harakat
+    o'zgarmagan, faqat qidiruv chuqurroq."""
+    def _matches(r):
+        return getattr(r, "path", None) == path and \
+            method in (getattr(r, "methods", None) or [])
+
     keep = []
     for r in app.router.routes:
-        if getattr(r, "path", None) == path and \
-                method in (getattr(r, "methods", None) or []):
+        if _matches(r):
             continue
+        ic = getattr(r, "include_context", None)
+        nested = getattr(ic, "included_router", None) if ic else None
+        if nested is not None and hasattr(nested, "routes"):
+            nested.routes = [nr for nr in nested.routes if not _matches(nr)]
         keep.append(r)
     app.router.routes = keep
 

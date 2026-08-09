@@ -312,10 +312,39 @@ def parent_manifest(token: str, db: Session = Depends(get_db)):
                     media_type="application/manifest+json")
 
 
+# Ota-ona sahifasida ko'rsatiladigan yorliqlar — StudentDetail.tsx
+# (KIND_LABEL) va src/lib/payments.ts (PAYMENT_METHODS) bilan bir xil,
+# shunda administrator panelida va ota-ona sahifasida bir xil so'zlar
+# ishlatiladi.
+_PARENT_KIND_LABEL = {
+    "payment": "To'lov", "charge": "Hisoblandi",
+    "discount": "Chegirma", "refund": "Refund (qaytarildi)",
+}
+_PARENT_METHOD_LABEL = {
+    "cash": "Naqd", "card": "Click",
+    "terminal": "Terminal", "other": "Boshqa",
+}
+
+
 @router.get("/api/parent/{token}")
 def parent_view(token: str, db: Session = Depends(get_db)):
-    """Ota-ona ko'radigan ochiq sahifa ma'lumoti: davomat, vazifa,
-    balans. Faqat o'qish; token orqali bitta o'quvchi."""
+    """DIQQAT — BU FUNKSIYA HECH QACHON ISHLAMAYDI (o'lik kod):
+    entry.py o'z ustidan BUTUNLAY MUSTAQIL parent_view() yozadi va
+    _drop_route orqali shu yo'lni almashtiradi (haqiqiy jonli kod —
+    entry.py'dagi izohga qarang). Bu yerdagi versiya faqat hujjat
+    sifatida saqlanmoqda va entry.py bilan bir xil holatda
+    yangilanadi — lekin HAQIQIY o'zgartirish uchun har doim
+    entry.py:parent_view() ga qarang, shu YERGA emas.
+
+    Ota-ona ko'radigan ochiq sahifa ma'lumoti: davomat, vazifa,
+    balans, to'lovlar tarixi, coin/XP va o'zlashtirish/test
+    natijalari. Faqat o'qish; token orqali bitta o'quvchi.
+
+    2026-08-09: Jahongir so'radi — avval faqat davomat va balans
+    ko'rinardi, endi to'lovlar tarixi, coin/XP va o'zlashtirish/test
+    natijalari ham qo'shildi. Barcha yangi so'rovlar ham xuddi
+    davomat kabi FAQAT shu bitta o'quvchi (s.id) bilan cheklangan —
+    boshqa hech qanday o'quvchi yoki xodim ma'lumoti sizib chiqmaydi."""
     if not token or len(token) < 10:
         raise HTTPException(404, "Topilmadi")
     s = db.query(models.Student).filter(
@@ -348,6 +377,63 @@ def parent_view(token: str, db: Session = Depends(get_db)):
     bal = student_balance(db, s.id)
     st_lbl = {"active": "faol", "trial": "sinovda",
               "frozen": "muzlatilgan", "archived": "arxivda"}
+
+    # TO'LOVLAR TARIXI: avval faqat jami balans ko'rinardi, endi
+    # oxirgi harakatlar (to'lov/hisob/chegirma) ro'yxati ham beriladi.
+    pay_rows = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id)
+                .order_by(models.Payment.created_at.desc())
+                .limit(30).all())
+    payments = [{
+        "date": p.created_at.isoformat() if p.created_at else None,
+        "amount": p.amount,
+        "kind": _PARENT_KIND_LABEL.get(p.kind, p.kind),
+        "method": (_PARENT_METHOD_LABEL.get(p.method, p.method)
+                  if p.method else None),
+        "note": p.note,
+    } for p in pay_rows]
+
+    # COIN VA XP: mavjud gamifikatsiya kartasi (_gam_card, common.py)
+    # qayta ishlatiladi — liga, daraja, progress va coin balansi bir
+    # joyda, xodim paneli bilan bir xil hisob-kitob orqali.
+    gam = _gam_card(db, s)
+    xp_history = [{
+        "date": h["date"],
+        "amount": h["amount"],
+        "label": h["label"],
+        "category_label": h["category_label"],
+        "tone": h["tone"],
+    } for h in _xp_history(db, s.id, limit=15)]
+
+    # O'ZLASHTIRISH NATIJALARI: har bir darsdagi kundalik baho (1-5).
+    grade_rows = (db.query(models.DailyGrade, models.Lesson)
+                  .join(models.Lesson,
+                        models.DailyGrade.lesson_id == models.Lesson.id)
+                  .filter(models.DailyGrade.student_id == s.id)
+                  .order_by(models.Lesson.date.desc()).limit(20).all())
+    daily_grades = [{
+        "date": ls.date.isoformat(),
+        "score": dg.score,
+    } for dg, ls in grade_rows]
+
+    # TEST NATIJALARI: faqat TASDIQLANGAN (approved) testlar — hali
+    # qoralama (draft) bosqichidagi test ota-onaga ko'rinmasin.
+    exam_rows = (db.query(models.ExamResult, models.Exam)
+                 .join(models.Exam,
+                       models.ExamResult.exam_id == models.Exam.id)
+                 .filter(models.ExamResult.student_id == s.id,
+                         models.Exam.status == "approved")
+                 .order_by(models.Exam.date.desc()).limit(20).all())
+    exam_results = [{
+        "date": ex.date.isoformat() if ex.date else None,
+        "title": ex.title or roles.exam_title(ex.kind, ex.unit_no),
+        "score": er.score,
+        "max_score": ex.max_score,
+        "band": er.band,
+        "percent": er.percent,
+        "absent": bool(er.absent),
+    } for er, ex in exam_rows]
+
     return {
         "name": s.full_name,
         "group": g.name if g else None,
@@ -357,5 +443,10 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "attendance": att,
         "frozen_until": s.frozen_until.isoformat()
         if s.frozen_until else None,
+        "payments": payments,
+        "gamification": gam,
+        "xp_history": xp_history,
+        "daily_grades": daily_grades,
+        "exam_results": exam_results,
     }
 

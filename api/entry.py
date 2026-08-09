@@ -368,9 +368,22 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
 _drop_route("/api/parent/{token}", "GET")
 
 
+# Ota-onaga ko'rsatiladigan yorliqlar — StudentDetail.tsx (KIND_LABEL)
+# va src/lib/payments.ts (PAYMENT_METHODS) bilan bir xil so'zlar.
+_PARENT_KIND_LABEL = {
+    "payment": "To'lov", "charge": "Hisoblandi",
+    "discount": "Chegirma", "refund": "Refund (qaytarildi)",
+}
+_PARENT_METHOD_LABEL = {
+    "cash": "Naqd", "card": "Click",
+    "terminal": "Terminal", "other": "Boshqa",
+}
+
+
 @app.get("/api/parent/{token}")
 def parent_view(token: str, db: Session = Depends(get_db)):
     from datetime import datetime, timedelta
+    from common import _gam_card, _xp_history
     if not token or len(token) < 10:
         raise HTTPException(404, "Topilmadi")
     s = db.query(models.Student).filter(
@@ -400,6 +413,63 @@ def parent_view(token: str, db: Session = Depends(get_db)):
     bal = M.student_balance(db, s.id)
     st_lbl = {"active": "faol", "trial": "sinovda",
               "frozen": "muzlatilgan", "archived": "arxivda"}
+
+    # TO'LOVLAR TARIXI, COIN/XP, O'ZLASHTIRISH VA TEST NATIJALARI
+    # (2026-08-09, Jahongir so'radi): avval faqat davomat va jami
+    # balans ko'rinardi. MUHIM: bu funksiya haqiqiy jonli yo'l
+    # (yuqoridagi izohga qarang — parents.py'dagi nusxa umuman
+    # ishlamaydi), shuning uchun yangi qism aynan SHU YERGA
+    # qo'shildi. Barchasi faqat shu bitta o'quvchi (s.id) bilan
+    # cheklangan.
+    pay_rows = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id)
+                .order_by(models.Payment.created_at.desc())
+                .limit(30).all())
+    payments = [{
+        "date": p.created_at.isoformat() if p.created_at else None,
+        "amount": p.amount,
+        "kind": _PARENT_KIND_LABEL.get(p.kind, p.kind),
+        "method": (_PARENT_METHOD_LABEL.get(p.method, p.method)
+                  if p.method else None),
+        "note": p.note,
+    } for p in pay_rows]
+
+    gam = _gam_card(db, s)
+    xp_history = [{
+        "date": h["date"],
+        "amount": h["amount"],
+        "label": h["label"],
+        "category_label": h["category_label"],
+        "tone": h["tone"],
+    } for h in _xp_history(db, s.id, limit=15)]
+
+    grade_rows = (db.query(models.DailyGrade, models.Lesson)
+                  .join(models.Lesson,
+                        models.DailyGrade.lesson_id == models.Lesson.id)
+                  .filter(models.DailyGrade.student_id == s.id)
+                  .order_by(models.Lesson.date.desc()).limit(20).all())
+    daily_grades = [{
+        "date": ls.date.isoformat(),
+        "score": dg.score,
+    } for dg, ls in grade_rows]
+
+    # Faqat TASDIQLANGAN testlar — qoralama bosqichidagisi ko'rinmasin.
+    exam_rows = (db.query(models.ExamResult, models.Exam)
+                 .join(models.Exam,
+                       models.ExamResult.exam_id == models.Exam.id)
+                 .filter(models.ExamResult.student_id == s.id,
+                         models.Exam.status == "approved")
+                 .order_by(models.Exam.date.desc()).limit(20).all())
+    exam_results = [{
+        "date": ex.date.isoformat() if ex.date else None,
+        "title": ex.title or roles.exam_title(ex.kind, ex.unit_no),
+        "score": er.score,
+        "max_score": ex.max_score,
+        "band": er.band,
+        "percent": er.percent,
+        "absent": bool(er.absent),
+    } for er, ex in exam_rows]
+
     return {
         "name": s.full_name,
         "group": g.name if g else None,
@@ -410,6 +480,11 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "frozen_until": s.frozen_until.isoformat()
         if s.frozen_until else None,
         "practice": _practice_summary(db, s.id),
+        "payments": payments,
+        "gamification": gam,
+        "xp_history": xp_history,
+        "daily_grades": daily_grades,
+        "exam_results": exam_results,
     }
 
 # =====================================================================

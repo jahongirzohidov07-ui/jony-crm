@@ -157,6 +157,81 @@ export default function Parent() {
           )}
         </div>
 
+        {d.payments && d.payments.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-3">
+              To'lovlar tarixi
+            </p>
+            <div className="space-y-3">
+              {d.payments.map((p: Any, i: number) => (
+                <div key={i} className="flex items-start justify-between gap-3 text-sm">
+                  <div className="min-w-0">
+                    <p className="text-slate-700">
+                      {p.kind}
+                      {p.method ? ` · ${p.method}` : ""}
+                    </p>
+                    <p className="text-[11px] text-slate-400 truncate">
+                      {(p.date || "").slice(0, 10)}
+                      {p.note ? ` · ${p.note}` : ""}
+                    </p>
+                  </div>
+                  <span
+                    className={`font-medium shrink-0 ${
+                      p.amount < 0 ? "text-red-600" : "text-emerald-600"
+                    }`}
+                  >
+                    {p.amount > 0 ? "+" : ""}
+                    {fmt(p.amount)} so'm
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {d.gamification && (
+          <div
+            className="rounded-xl p-5 text-white relative overflow-hidden"
+            style={{
+              background: d.gamification.league?.color
+                ? `linear-gradient(135deg, ${d.gamification.league.color} 0%, #0f172a 130%)`
+                : "linear-gradient(135deg,#334155,#0f172a)",
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <div className="text-4xl leading-none">
+                {d.gamification.league?.icon || "🌱"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs opacity-80">
+                  {d.gamification.league?.name || "Newcomer"}
+                </p>
+                <p className="text-2xl font-semibold leading-tight">
+                  {fmt(d.gamification.lifetime_xp)}
+                  <span className="text-sm font-normal opacity-80"> XP</span>
+                </p>
+                <p className="text-sm opacity-90 mt-0.5">
+                  {d.gamification.level}-daraja · {d.gamification.coins} coin
+                </p>
+              </div>
+            </div>
+            {!d.gamification.max_league && (
+              <div className="mt-4">
+                <div className="flex justify-between text-[11px] opacity-80 mb-1">
+                  <span>Keyingi liga: {d.gamification.next_league?.name}</span>
+                  <span>{fmt(d.gamification.league_to_next)} XP qoldi</span>
+                </div>
+                <div className="h-2 rounded-full bg-white/20 overflow-hidden">
+                  <div
+                    className="h-2 rounded-full bg-white"
+                    style={{ width: `${d.gamification.league_percent}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {d.status === "muzlatilgan" && d.frozen_until && (
           <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 flex items-start gap-2.5">
             <Snowflake size={16} className="text-sky-500 mt-0.5" />
@@ -230,6 +305,77 @@ export default function Parent() {
             })}
           </div>
         </div>
+
+        {((d.daily_grades && d.daily_grades.length > 0) ||
+          (d.exam_results && d.exam_results.length > 0)) && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-3">
+              O'zlashtirish va test natijalari
+            </p>
+
+            {d.exam_results && d.exam_results.length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs text-slate-500 mb-2">Test natijalari</p>
+                <div className="space-y-2">
+                  {d.exam_results.map((e: Any, i: number) => (
+                    <div key={i} className="flex items-center justify-between text-sm">
+                      <div className="min-w-0">
+                        <p className="text-slate-700">{e.title}</p>
+                        <p className="text-[11px] text-slate-400">
+                          {(e.date || "").slice(0, 10)}
+                        </p>
+                      </div>
+                      {e.absent ? (
+                        <span className="text-[11px] rounded-full px-2 py-0.5 font-medium bg-red-100 text-red-600 shrink-0">
+                          Kelmadi
+                        </span>
+                      ) : (
+                        <span className="text-sm font-medium text-slate-800 shrink-0">
+                          {e.band != null
+                            ? `Band ${e.band}`
+                            : e.max_score
+                            ? `${e.score}/${e.max_score}`
+                            : e.score}
+                          {e.percent != null && (
+                            <span className="text-[11px] text-slate-400 font-normal">
+                              {" "}
+                              ({e.percent}%)
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {d.daily_grades && d.daily_grades.length > 0 && (
+              <div>
+                <p className="text-xs text-slate-500 mb-2">
+                  Kundalik baholar (har bir dars)
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {d.daily_grades.map((g: Any, i: number) => (
+                    <div
+                      key={i}
+                      title={(g.date || "").slice(0, 10)}
+                      className={`text-xs font-medium rounded-lg px-2 py-1 ${
+                        g.score >= 4
+                          ? "bg-emerald-100 text-emerald-700"
+                          : g.score === 3
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-red-100 text-red-600"
+                      }`}
+                    >
+                      {(g.date || "").slice(5, 10)} · {g.score}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <p className="text-[11px] text-slate-400 text-center px-6">
           Bu sahifa faqat sizga berilgan maxsus havola orqali ochiladi.

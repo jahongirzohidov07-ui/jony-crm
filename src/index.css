@@ -1,13 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Jony Academy brend ko'k rangi (2026-08-09, logo bilan moslashtirildi) */
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
+  /* Jony Academy brend ko'k rangi — asl logotip faylidan aniq
+     o'lchangan (2026-08-09): #1A6FE4 (RGB 26,111,228). Ilgarigi
+     taxminiy qiymat (#2563eb asosidagi shkala) noto'g'ri edi — logotip
+     fayli hali qo'lda bo'lmagani uchun ko'zga qarab tanlangan edi.
+     Endi 600 - ANIQ o'lchangan rang, qolganlari shu tondan (H215
+     S79.5%) yorug'lik darajasini o'zgartirib hosil qilindi. */
+  --color-brand-50: #eff5fd;
+  --color-brand-100: #d6e5fa;
+  --color-brand-400: #5a98ec;
+  --color-brand-500: #3882e8;
+  --color-brand-600: #1a6fe4;
+  --color-brand-700: #165cbe;
   --font-sans: "Segoe UI", system-ui, sans-serif;
 }
 

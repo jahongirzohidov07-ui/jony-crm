@@ -1,15 +1,21 @@
+import brandIconSrc from "../assets/brand-icon.png";
+
 /**
- * Jony Academy logotipi belgisi (2026-08-09).
+ * Jony Academy logotipi belgisi (tuzatildi 2026-08-09).
  *
- * Jahongir yubordi rasm — ko'k dumaloq kvadrat + 3 ta oq o'ngga
- * qaragan uchburchak (o'sib boruvchi o'lcham). Rasm fayl sifatida
- * emas, suhbatga to'g'ridan-to'g'ri joylashtirilgan rasm sifatida
- * kelgani uchun asl pikselларни chiqarib olib bo'lmadi — shuning
- * uchun bu SVG qo'lda, ko'rgan rasmga qarab qayta chizilgan aniq
- * nusxa (yaqin, lekin 100% bir xil emas). Agar Jahongir asl faylni
- * (SVG yoki katta PNG) yuborsa, buni bir zumda asl fayl bilan
- * almashtirish mumkin — barcha chaqiruv joylari shu komponent
- * orqali ishlaydi.
+ * ILGARIGI XATOLIK: birinchi versiya rasm faylsiz, faqat suhbatga
+ * joylashtirilgan tasvirni ko'rib, qo'lda SVG sifatida chizilgan edi
+ * (3 ta oddiy o'ngga qaragan uchburchak, ranggi ham taxminiy). Jahongir
+ * buni asl logotipdan farq qilishini aniq ko'rsatdi ("logosini
+ * buzibsan"). Asl fayl (Ish stolidan "oq fon.jpg") olingandan keyin
+ * ma'lum bo'ldiki, haqiqiy belgi ancha murakkab: chap tomonga
+ * qaragan uchburchak + tik panel + oraliq + o'ngga qaragan uchburchak
+ * + tik panel + kattaroq o'ngga qaragan uchburchak.
+ *
+ * Bu safar qo'lda qayta chizishga urinilmadi — buning o'rniga asl
+ * fayldan ANIQ piksel bilan kesib olingan tasvir ishlatiladi
+ * (src/assets/brand-icon.png, fon olib tashlangan, shaffof burchaklar
+ * bilan). Rang ham fayldan aniq o'lchandi: #1A6FE4.
  */
 export function BrandIcon({
   size = 32,
@@ -19,18 +25,14 @@ export function BrandIcon({
   className?: string;
 }) {
   return (
-    <svg
+    <img
+      src={brandIconSrc}
       width={size}
       height={size}
-      viewBox="0 0 32 32"
+      alt=""
       className={className}
-      aria-hidden="true"
-    >
-      <rect width="32" height="32" rx="7.04" fill="#2563eb" />
-      <polygon points="8.75,13.188 14.375,16 8.75,18.812" fill="#ffffff" />
-      <polygon points="13.438,11.312 20,16 13.438,20.688" fill="#ffffff" />
-      <polygon points="18.75,9 26.875,16 18.75,23" fill="#ffffff" />
-    </svg>
+      style={{ width: size, height: size, objectFit: "contain" }}
+    />
   );
 }
 
@@ -45,12 +47,7 @@ export function BrandLockup({
 }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <div
-        className="rounded-xl overflow-hidden shrink-0"
-        style={{ width: iconSize, height: iconSize }}
-      >
-        <BrandIcon size={iconSize} />
-      </div>
+      <BrandIcon size={iconSize} />
       <span className="font-extrabold tracking-tight text-slate-900 leading-none text-xl">
         JONY<br />ACADEMY
       </span>

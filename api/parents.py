@@ -294,7 +294,7 @@ def parent_manifest(token: str, db: Session = Depends(get_db)):
         "scope": f"/parent/{token}",
         "display": "standalone",
         "background_color": "#ffffff",
-        "theme_color": "#0d9488",
+        "theme_color": "#1A6FE4",
         "orientation": "portrait",
         "lang": "uz",
         "icons": [

@@ -1158,16 +1158,21 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
     # Rahbariyat/HR menejer darsni ISTALGAN sanaga ko'chira oladi —
     # bugun, kelajak, HATTO o'tib ketgan sanaga ham (masalan, oy
     # oxirini qayta taqsimlash yoki orqada qolgan jadvalni tuzatish
-    # uchun, 2026-08-09 so'ralgan). Haqiqiy to'siqlar shu funksiyaning
-    # davomida qoladi: shift_days chegarasi (pastda, ikkala tomonga
-    # ham amal qiladi) va manba darsning "held" bo'lmasligi — bular
-    # ish haqi hisobini himoya qiladi, rahbariyatga ham tegishli.
-    # Oddiy ustoz uchun talab o'zgarmadi: qat'iy kelajakdagi sana.
+    # uchun, 2026-08-09 so'ralgan). SHU BILAN BIRGA manba darsning
+    # o'zi (from_date) ham o'tib ketgan bo'lishi mumkin — masalan,
+    # bir kun o'z vaqtida ko'chirilmay qolgan bo'lsa, HR endi uni
+    # istalgan kunga surib, keyin o'sha yerda yo'qlama qo'ya oladi
+    # (2026-08-09, aynan shu holat so'ralgan). Haqiqiy to'siqlar shu
+    # funksiyaning davomida qoladi: shift_days chegarasi (pastda,
+    # ikkala tomonga ham amal qiladi) va manba darsning "held"
+    # bo'lmasligi — bular ish haqi hisobini himoya qiladi,
+    # rahbariyatga ham tegishli. Oddiy ustoz uchun talab o'zgarmadi:
+    # qat'iy kelajakdagi sana, manba ham o'tmish bo'lmasligi kerak.
     if not manager and payload.to_date <= today:
         raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
-    if payload.from_date < today:
+    if not manager and payload.from_date < today:
         raise HTTPException(400, "O'tib ketgan darsni ko'chirib bo'lmaydi")
 
     ls = db.query(models.Lesson).filter(

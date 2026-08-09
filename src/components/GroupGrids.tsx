@@ -157,7 +157,7 @@ function DateMenu({
         <p className="text-xs text-slate-400 mb-2">
           O'tilgan darsni ko'chirib bo'lmaydi — u ish haqi asosi.
         </p>
-      ) : past ? (
+      ) : past && !box.manager ? (
         <p className="text-xs text-slate-400 mb-2">
           O'tib ketgan darsni ko'chirib bo'lmaydi.
         </p>
@@ -426,8 +426,8 @@ export function AttendanceTab({
         ham — belgilangan yoqlama, ikkalasida ham ustoz oyligi
         yoziladi; faqat belgilanmaganda (yoki belgi olib
         tashlanganda) yozilmaydi. Hali kelmagan kunga hech kim
-        yoqlama qo'ya olmaydi; o'tib ketgan kunni faqat asoschi va
-        o'quv bo'limi rahbari o'zgartiradi.
+        yoqlama qo'ya olmaydi; o'tib ketgan kunni faqat asoschi,
+        o'quv bo'limi rahbari yoki HR menejer o'zgartiradi.
         Har bir o'quvchi alohida belgilanadi — ommaviy belgilash yo'q,
         chunki u yoqlamani rasmiyatchilikka aylantiradi. Sana ustiga
         bosilsa dars ko'chirish menyusi chiqadi. Kulrang sana — hali

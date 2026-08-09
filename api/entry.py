@@ -383,7 +383,7 @@ _PARENT_METHOD_LABEL = {
 @app.get("/api/parent/{token}")
 def parent_view(token: str, db: Session = Depends(get_db)):
     from datetime import datetime, timedelta
-    from common import _gam_card, _xp_history
+    from common import _gam_card, _xp_history, _student_ranks
     if not token or len(token) < 10:
         raise HTTPException(404, "Topilmadi")
     s = db.query(models.Student).filter(
@@ -485,6 +485,7 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "xp_history": xp_history,
         "daily_grades": daily_grades,
         "exam_results": exam_results,
+        "ranks": _student_ranks(db, s.id),
     }
 
 # =====================================================================

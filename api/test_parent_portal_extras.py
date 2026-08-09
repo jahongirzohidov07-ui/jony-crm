@@ -105,6 +105,24 @@ db.add(models.CoinEntry(student_id=s.id, amount=25, source="daily_grade",
                         ref_id=ls.id))
 db.commit()
 
+# GURUHDAGI O'RIN (rank): _student_ranks() faqat StudentGamification
+# jadvalidagi lifetime_xp'ga qaraydi (CoinEntry emas — bular alohida
+# jurnal). Reytingni haqiqiy tekshirish uchun bitta guruhda IKKINCHI
+# o'quvchi kerak, undan ko'proq XP bilan — shunda Aziz 2/2 bo'lishi
+# kerak.
+db.add(models.StudentGamification(student_id=s.id, lifetime_xp=40,
+                                  season_xp=15))
+s2 = models.Student(full_name="Malika Yusupova", branch_id=b.id,
+                    group_id=g.id, status="active",
+                    enrolled_date=today,
+                    parent_token="zzzzzzzzzzzzzzzzzzzz9999",
+                    public_id="STU-000002")
+db.add(s2)
+db.commit()
+db.add(models.StudentGamification(student_id=s2.id, lifetime_xp=100,
+                                  season_xp=60))
+db.commit()
+
 r = client.get(f"/api/parent/{s.parent_token}")
 ck("status 200", r.status_code, 200)
 d = r.json()
@@ -134,6 +152,13 @@ er = d["exam_results"][0]
 ck("sarlavha avtomatik yaratilgan", er["title"], "Unit 5")
 ck("foiz to'g'ri", er["percent"], 85.0)
 ck("band bo'sh (unit test uchun)", er["band"], None)
+
+print("\n=== GURUHDAGI O'RIN (rank) ===")
+ranks = d.get("ranks") or {}
+ck("guruhda 2 o'quvchidan 2-o'rin (Malika'dan XP kam)",
+   ranks.get("group_rank"), 2)
+ck("guruh jami soni to'g'ri", ranks.get("group_total"), 2)
+ck("filial reytingi ham qaytadi", ranks.get("branch_rank"), 2)
 
 print("\n=== MUDDATI TUGAGAN HAVOLA HAMON BLOKLANADI (regressiya) ===")
 from datetime import datetime, timedelta

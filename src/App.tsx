@@ -48,6 +48,11 @@ const MyStudents = lazy(() => import("./pages/MyStudents"));
 const MySchedule = lazy(() => import("./pages/MySchedule"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
 const Parent = lazy(() => import("./pages/Parent"));
+const ParentHome = lazy(() => import("./pages/ParentHome"));
+const ParentPayments = lazy(() => import("./pages/ParentPayments"));
+const ParentGamification = lazy(() => import("./pages/ParentGamification"));
+const ParentResults = lazy(() => import("./pages/ParentResults"));
+const ParentRank = lazy(() => import("./pages/ParentRank"));
 const Settings = lazy(() => import("./pages/Settings"));
 
 function PageLoader() {
@@ -69,8 +74,17 @@ function AppRoutes() {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/login" element={<Login />} />
-        {/* Ota-ona sahifasi — loginsiz, token havola orqali */}
-        <Route path="/parent/:token" element={<Parent />} />
+        {/* Ota-ona sahifasi — loginsiz, token havola orqali. Ichki
+            bo'limlar (to'lovlar, coin/XP, natijalar, reyting) endi
+            har biri o'z sahifasida (2026-08-09) — Parent.tsx faqat
+            ma'lumotni bir marta yuklab, Outlet orqali beradi. */}
+        <Route path="/parent/:token" element={<Parent />}>
+          <Route index element={<ParentHome />} />
+          <Route path="payments" element={<ParentPayments />} />
+          <Route path="coins" element={<ParentGamification />} />
+          <Route path="results" element={<ParentResults />} />
+          <Route path="rank" element={<ParentRank />} />
+        </Route>
         <Route
           path="/"
           element={

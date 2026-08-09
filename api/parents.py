@@ -448,5 +448,6 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "xp_history": xp_history,
         "daily_grades": daily_grades,
         "exam_results": exam_results,
+        "ranks": _student_ranks(db, s.id),
     }
 

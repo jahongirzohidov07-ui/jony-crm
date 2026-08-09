@@ -881,10 +881,30 @@ def create_room_v2(payload: schemas.RoomCreate,
 #  ogohlantirish + "baribir saqlash" tugmasi; boshqalarga QAT'IY taqiq.
 # =====================================================================
 def _find_endpoint(path: str, method: str):
+    """Berilgan yo'l+metodga mos endpoint funksiyasini topadi - pastda
+    ko'plab joyda "_orig_xxx = _find_endpoint(...)" qilib asl
+    funksiyani ushlab, keyin uni o'z ichida chaqiradigan "_v2" wrapper
+    yozish uchun ishlatiladi.
+
+    2026-08: main.py bo'lindi - _drop_route()dagi bilan bir xil sabab
+    bilan (routerlar endi _IncludedRouter ichida joylashadi) bu yerda
+    ham ichkariga qarab qidirish kerak, aks holda _orig_xxx doim None
+    bo'lib, pastdagi "if _orig_xxx is not None:" bloklari sukut bilan
+    ishlamay qolar edi (asl route ustidan yozilmasdan, eskisi xizmat
+    qilishda davom etardi)."""
+    def _matches(r):
+        return getattr(r, "path", None) == path and \
+            method in (getattr(r, "methods", None) or [])
+
     for r in app.router.routes:
-        if getattr(r, "path", None) == path and \
-                method in (getattr(r, "methods", None) or []):
+        if _matches(r):
             return r.endpoint
+        ic = getattr(r, "include_context", None)
+        nested = getattr(ic, "included_router", None) if ic else None
+        if nested is not None:
+            for nr in nested.routes:
+                if _matches(nr):
+                    return nr.endpoint
     return None
 
 

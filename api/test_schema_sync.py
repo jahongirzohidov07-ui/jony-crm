@@ -46,16 +46,23 @@ check("qo'lda migratsiya kerak bo'lgani yo'q", res["manual"] == [],
       res["manual"])
 
 print("\n--- Modelga yangi ustun qo'shildi, bazada yo'q ---")
-models.Student.parent_token_expires_at = Column(
-    "parent_token_expires_at", DateTime)
+# ESLATMA (2026-08-09): probe ustun sifatida ASL
+# parent_token_expires_at nomi ishlatilgan edi — lekin o'sha kunning
+# o'zida bu ustun models.Student'ga HAQIQIY, doimiy maydon sifatida
+# ham qo'shilgan (ota-ona havolasi muddati ishi). Ikkalasi bir xil
+# nomda to'qnashib, SQLAlchemy "Implicitly combining column..." xatosi
+# berardi. Shuning uchun probe endi soxta, hech qachon haqiqiy model
+# maydoni bo'lmaydigan nom ishlatadi — vaziyat qanday ishlashini
+# tekshirish printsipi o'zgarmadi.
+models.Student.probe_synced_at = Column("probe_synced_at", DateTime)
 models.Student.probe_note = Column("probe_note", String)
-check("bazada hali yo'q", "parent_token_expires_at" not in cols("students"))
+check("bazada hali yo'q", "probe_synced_at" not in cols("students"))
 
 res = entry._sync_missing_columns()
 check("ikkalasi ham qo'shildi",
-      "students.parent_token_expires_at" in res["added"]
+      "students.probe_synced_at" in res["added"]
       and "students.probe_note" in res["added"], res["added"])
-check("bazada paydo bo'ldi", "parent_token_expires_at" in cols("students"))
+check("bazada paydo bo'ldi", "probe_synced_at" in cols("students"))
 
 print("\n--- O'quvchi so'rovi endi ishlaydi ---")
 db = SessionLocal()

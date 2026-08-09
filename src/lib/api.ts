@@ -376,6 +376,7 @@ export interface AttendanceGrid {
   /** Sana menyusi uchun: kim ko'chira oladi va qancha imkon qolgan. */
   reschedule?: {
     can: boolean;
+    manager: boolean;
     as_manager: boolean;
     moved: Record<
       string,

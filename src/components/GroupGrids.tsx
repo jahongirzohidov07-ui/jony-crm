@@ -472,7 +472,14 @@ function MoveLessonModal({
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
-  const min = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  // Rahbariyat/HR menejer darsni BUGUNGA ham ko'chira oladi (masalan,
+  // oy oxiridagi darslarni tezlashtirib guruhni muddatidan oldin
+  // tugatish uchun) — backend shuni ruxsat beradi (groups_lessons.py:
+  // group_reschedule). Oddiy ustoz uchun kamida ertaga bo'lishi kerak.
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const min = box.manager
+    ? todayStr
+    : new Date(Date.now() + 86400000).toISOString().slice(0, 10);
   const max = new Date(
     new Date(fromDate).getTime() + box.max_shift_days * 86400000
   )

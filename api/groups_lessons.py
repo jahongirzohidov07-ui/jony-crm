@@ -1110,6 +1110,7 @@ def _reschedule_box(db: Session, group_id: int, user: models.User,
 
     box = {
         "can": mine or manager,
+        "manager": manager,
         "as_manager": manager and not mine,
         "moved": by_date,
         "reasons": [{"key": k, "label": l}
@@ -1154,7 +1155,14 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         raise HTTPException(403, "Bu guruhning darsini ko'chira olmaysiz")
 
     today = roles.local_today()
-    if payload.to_date <= today:
+    if manager:
+        # Rahbariyat/HR menejer guruhni tezlashtirish uchun darsni
+        # BUGUNGA ham ko'chira oladi — faqat tarixni orqaga
+        # o'zgartirib bo'lmaydi (o'tib ketgan sanaga taqiqlanadi).
+        if payload.to_date < today:
+            raise HTTPException(
+                400, "O'tib ketgan sanaga ko'chirib bo'lmaydi")
+    elif payload.to_date <= today:
         raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")

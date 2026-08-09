@@ -64,6 +64,14 @@ const StudentLeaderboard = lazy(
   () => import("./pages/student/StudentLeaderboard"),
 );
 const StudentProfile = lazy(() => import("./pages/student/StudentProfile"));
+// Jony Teacher — ustozning O'Z ilovasi (telefon uchun: yo'qlama,
+// jadval, barcha bo'limlar).
+const TeacherLayout = lazy(() => import("./pages/teacher/TeacherLayout"));
+const TeacherToday = lazy(() => import("./pages/teacher/TeacherToday"));
+const TeacherLesson = lazy(() => import("./pages/teacher/TeacherLesson"));
+const TeacherWeek = lazy(() => import("./pages/teacher/TeacherWeek"));
+const TeacherMore = lazy(() => import("./pages/teacher/TeacherMore"));
+const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
 
 function PageLoader() {
   return (
@@ -121,6 +129,23 @@ function AppRoutes() {
           <Route path="games/:game" element={<StudentGamePlay />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="profile" element={<StudentProfile />} />
+        </Route>
+        {/* Jony Teacher — ustoz ilovasi (telefon). Xodimlar paneli
+            (Layout) o'chirilmadi: "To'liq panelga o'tish" tugmasi
+            orqali ochiladi. */}
+        <Route
+          path="/teacher"
+          element={
+            <RequireAuth>
+              <TeacherLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<TeacherToday />} />
+          <Route path="week" element={<TeacherWeek />} />
+          <Route path="lesson/:id" element={<TeacherLesson />} />
+          <Route path="more" element={<TeacherMore />} />
+          <Route path="profile" element={<TeacherProfile />} />
         </Route>
         <Route
           path="/"

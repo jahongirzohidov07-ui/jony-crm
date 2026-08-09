@@ -191,6 +191,50 @@ def _round_match(words):
     return [{"left": left, "right": right}]
 
 
+def _round_truefalse(words, pool):
+    """To'g'ri/Xato: yarmiga TO'G'RI tarjima, yarmiga boshqa so'zning
+    tarjimasi qo'yiladi. Tasodifiy emas — aniq yarma-yarim, shunda
+    "hamma vaqt ha desam bo'ldi" degan hiyla ishlamaydi."""
+    out = []
+    for i, w in enumerate(words):
+        show_correct = (i % 2 == 0)
+        if show_correct:
+            shown = w.translation
+        else:
+            others = [x for x in pool
+                      if x.id != w.id and x.translation != w.translation]
+            shown = random.choice(others).translation if others else w.translation
+            if shown == w.translation:
+                show_correct = True
+        out.append({
+            "word_id": w.id,
+            "prompt": w.word,
+            "shown": shown,
+            "answer": "togri" if show_correct else "xato",
+        })
+    random.shuffle(out)
+    return out
+
+
+def _round_scramble(words):
+    """Harflarni tartiblash: so'z harflari aralashtiriladi."""
+    out = []
+    for w in words:
+        letters = list(w.word)
+        if len(letters) > 1:
+            for _ in range(8):
+                random.shuffle(letters)
+                if "".join(letters).lower() != w.word.lower():
+                    break
+        out.append({
+            "word_id": w.id,
+            "prompt": w.translation,
+            "letters": letters,
+            "answer": w.word,
+        })
+    return out
+
+
 def _round_spelling(words):
     return [{"word_id": w.id, "prompt": w.translation, "answer": w.word,
              "hint": (w.word[0] + "·" * (len(w.word) - 1)) if w.word else ""}
@@ -229,6 +273,10 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
         items = _round_choice(words, pool, forward=False)
     elif game == "match":
         items = _round_match(words[:min(5, len(words))])
+    elif game == "truefalse":
+        items = _round_truefalse(words, pool)
+    elif game == "scramble":
+        items = _round_scramble(words)
     else:  # spelling
         items = _round_spelling(words)
 
@@ -257,11 +305,19 @@ def vocab_answer(payload: schemas.VocabAnswerIn,
         raise HTTPException(404, "So'z topilmadi")
 
     given = (payload.answer or "").strip().lower()
-    if payload.game == "uz_en" or payload.game == "spelling":
+    if payload.game in ("uz_en", "spelling", "scramble"):
         expected = (w.word or "").strip().lower()
     elif payload.game == "flashcard":
         # Kartochkada o'quvchi o'zini o'zi baholaydi ("bildim"/"bilmadim")
         expected = "bildim"
+    elif payload.game == "truefalse":
+        # Bu yerda mijoz "togri"/"xato" deb javob beradi, LEKIN qaysi
+        # tarjima ko'rsatilgani ham kerak — aks holda server nimani
+        # tekshirishini bilmaydi. shown maydonini solishtiramiz.
+        shown = (payload.shown or "").strip().lower()
+        truth = "togri" if shown == (w.translation or "").strip().lower() \
+            else "xato"
+        expected = truth
     else:
         expected = (w.translation or "").strip().lower()
     ok = bool(given) and given == expected
@@ -291,7 +347,8 @@ def vocab_answer(payload: schemas.VocabAnswerIn,
 
     return {
         "correct": ok,
-        "expected": (w.word if payload.game in ("uz_en", "spelling")
+        "expected": (w.word
+                     if payload.game in ("uz_en", "spelling", "scramble")
                      else w.translation),
         "xp": xp_given,
         "skills": _skills_card(db, s.id),

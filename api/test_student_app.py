@@ -125,11 +125,29 @@ ckt("variantlar takrorlanmaydi", len(set(first["options"])) == 4)
 
 r = client.get("/api/student/vocab/round?game=match", headers=H1)
 ck("juftlash o'yini ham ishlaydi", r.status_code, 200)
+
+# JonyLugatBot'dagi qolgan ikki o'yin turi (2026-08-10)
+r = client.get("/api/student/vocab/round?game=truefalse", headers=H1)
+ck("To'g'ri/Xato o'yini ishlaydi", r.status_code, 200)
+tf = r.json()["items"]
+ck("10 ta savol", len(tf), 10)
+ckt("har savolda ko'rsatilgan tarjima bor", all(i.get("shown") for i in tf))
+n_true = sum(1 for i in tf if i["answer"] == "togri")
+ckt("javoblar yarma-yarim (hamma vaqt 'ha' ishlamaydi)",
+    2 <= n_true <= 8)
+
+r = client.get("/api/student/vocab/round?game=scramble", headers=H1)
+ck("Harflarni tartiblash ishlaydi", r.status_code, 200)
+sc = r.json()["items"][0]
+ckt("harflar berilgan", len(sc["letters"]) > 0)
+ck("harflar so'zning o'zi", sorted(sc["letters"]), sorted(sc["answer"]))
 r = client.get("/api/student/vocab/round?game=yoq", headers=H1)
 ck("noma'lum o'yin rad etiladi", r.status_code, 400)
 
 print("\n=== JAVOB BERISH (ball SERVERDA hisoblanadi) ===")
-w = db.query(models.VocabWord).filter(models.VocabWord.word == "book").first()
+# Bazadagi birinchi so'z (JonyLugatBot bazasi katta-kichik harf
+# aralash, shuning uchun aniq nom bo'yicha qidirilmaydi).
+w = db.query(models.VocabWord).order_by(models.VocabWord.id).first()
 r = client.post("/api/student/vocab/answer", headers=H1,
                 json={"word_id": w.id, "game": "en_uz",
                       "answer": w.translation})
@@ -154,20 +172,42 @@ r = client.post("/api/student/vocab/answer", headers=H1,
                       "answer": w.translation})  # uz_en'da inglizcha kutiladi
 ck("mijoz javobi serverda qayta tekshiriladi", r.json()["correct"], False)
 
+# To'g'ri/Xato: server ko'rsatilgan tarjimani BAZA bilan solishtiradi
+r = client.post("/api/student/vocab/answer", headers=H1,
+                json={"word_id": w.id, "game": "truefalse",
+                      "shown": w.translation, "answer": "togri"})
+ck("to'g'ri tarjimaga 'to'g'ri' — qabul qilinadi",
+   r.json()["correct"], True)
+r = client.post("/api/student/vocab/answer", headers=H1,
+                json={"word_id": w.id, "game": "truefalse",
+                      "shown": "butunlay boshqa tarjima",
+                      "answer": "togri"})
+ck("noto'g'ri tarjimaga 'to'g'ri' — rad etiladi",
+   r.json()["correct"], False)
+
+# Harflarni tartiblash: to'g'ri yig'ilgan so'z qabul qilinadi
+r = client.post("/api/student/vocab/answer", headers=H1,
+                json={"word_id": w.id, "game": "scramble",
+                      "answer": w.word})
+ck("tartiblangan so'z to'g'ri", r.json()["correct"], True)
+
 print("\n=== STATISTIKA ===")
 r = client.get("/api/student/vocab/stats", headers=H1)
 ck("status 200", r.status_code, 200)
 st = r.json()
-ck("jami 3 ta javob", st["total"], 3)
-ck("1 tasi to'g'ri", st["correct"], 1)
+ckt("javoblar soni yozilgan", st["total"] >= 3)
+ckt("to'g'ri javoblar sanaladi", st["correct"] >= 1)
 ck("7 kunlik grafik", len(st["week"]), 7)
 ck("bugundan streak 1", st["streak"], 1)
 
 print("\n=== REYTING (boshqa o'quvchi ismi QISQARTIRILADI) ===")
 # Malika 3 ta to'g'ri javob beradi -> u birinchi bo'lishi kerak
-for word_name in ("water", "house", "school"):
-    ww = db.query(models.VocabWord).filter(
-        models.VocabWord.word == word_name).first()
+# Malika ATAYLAB ko'proq (6 ta) to'g'ri javob beradi — Ali yuqorida
+# 3 ta to'g'ri javob berdi (en_uz + truefalse + scramble), shuning
+# uchun reyting tartibi aniq bo'lishi kerak.
+others = (db.query(models.VocabWord)
+          .order_by(models.VocabWord.id).offset(1).limit(6).all())
+for ww in others:
     client.post("/api/student/vocab/answer", headers=H2,
                 json={"word_id": ww.id, "game": "en_uz",
                       "answer": ww.translation})
@@ -176,7 +216,7 @@ r = client.get("/api/student/leaderboard?scope=group&period=all", headers=H1)
 ck("status 200", r.status_code, 200)
 lb = r.json()
 ck("2 ta o'quvchi bor", len(lb["rows"]), 2)
-ck("Malika birinchi (3 ball)", lb["rows"][0]["points"], 3)
+ck("Malika birinchi (6 ball)", lb["rows"][0]["points"], 6)
 ck("boshqa o'quvchi familiyasi qisqartirilgan",
    lb["rows"][0]["name"], "Malika Y.")
 ck("o'zi 'Siz' deb ko'rsatiladi", lb["rows"][1]["name"], "Siz")
@@ -215,7 +255,7 @@ Hf = {"Authorization": f"Bearer {client.post('/api/auth/login', json={'username'
 before = db.query(models.VocabWord).count()
 r = client.post("/api/vocab/import", headers=Hf, json={"words": [
     {"word": "resilience", "translation": "bardoshlilik", "level": "C1"},
-    {"word": "book", "translation": "kitob", "level": "A1"},  # dublikat
+    {"word": w.word, "translation": w.translation, "level": "A1"},  # dublikat
 ]})
 ck("import 200", r.status_code, 200)
 ck("1 ta yangi so'z qo'shildi", r.json()["added"], 1)

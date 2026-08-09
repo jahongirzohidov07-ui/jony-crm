@@ -69,6 +69,10 @@ export interface RoundItem {
   example?: string | null;
   hint?: string;
   options?: string[];
+  /** "To'g'ri / Xato" o'yini: ekranda ko'rsatilgan tarjima. */
+  shown?: string;
+  /** "Harflarni tartiblash": aralashtirilgan harflar. */
+  letters?: string[];
   left?: { word_id: number; text: string }[];
   right?: { word_id: number; text: string }[];
 }

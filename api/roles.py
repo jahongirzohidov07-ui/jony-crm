@@ -697,12 +697,18 @@ SKILL_TONE = {k: t for k, _, t in SKILLS}
 
 # Lug'at o'yinlari (Jony Student). Ro'yxatga yangi o'yin qo'shilsa
 # frontend avtomat ko'rsatadi — alohida kod yozish shart emas.
+# JonyLugatBot'dagi mashq turlari bilan bir xil (bot.py: EX) —
+# bola botda ham, ilovada ham AYNAN o'sha o'yinlarni ko'radi.
+# Botdagi "🎤 Ovozli javob" hozircha yo'q (mikrofon/nutq tanish
+# alohida ish, keyingi bosqichga qoldirildi).
 VOCAB_GAMES = [
-    ("flashcard",  "Kartochka",        "So'zni ko'r, tarjimasini esla"),
-    ("en_uz",      "Inglizcha → O'zbekcha", "4 ta variantdan to'g'risini tanla"),
-    ("uz_en",      "O'zbekcha → Inglizcha", "4 ta variantdan to'g'risini tanla"),
-    ("match",      "Juftlash",         "So'z va tarjimasini juftla"),
-    ("spelling",   "Imlo",             "Eshitgan/ko'rgan so'zni yozib chiq"),
+    ("en_uz",      "Ko'p tanlov (EN→UZ)", "4 ta variantdan to'g'risini tanlang"),
+    ("uz_en",      "Ko'p tanlov (UZ→EN)", "4 ta variantdan to'g'risini tanlang"),
+    ("spelling",   "Yozib javob berish",  "So'zni inglizcha yozib chiqing"),
+    ("truefalse",  "To'g'ri / Xato",      "Tarjima to'g'rimi — hal qiling"),
+    ("scramble",   "Harflarni tartiblash", "Aralashgan harflardan so'z yasang"),
+    ("flashcard",  "Kartochka",           "O'zingizni o'zingiz tekshiring"),
+    ("match",      "Juftlash",            "So'z va tarjimasini juftlang"),
 ]
 VOCAB_GAME_KEYS = [k for k, _, _ in VOCAB_GAMES]
 VOCAB_GAME_LABELS = {k: lbl for k, lbl, _ in VOCAB_GAMES}

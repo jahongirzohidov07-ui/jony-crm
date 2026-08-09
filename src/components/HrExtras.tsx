@@ -6,6 +6,7 @@ import {
 } from "../lib/api";
 import { formatDate } from "../lib/format";
 import { StaffCard } from "./StaffCard";
+import { Time24Input } from "./Time24Input";
 
 // =============================================== Xodimlar davomati
 export function AttendanceTab() {
@@ -260,8 +261,7 @@ function AttendanceForm({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs text-slate-500 mb-1">Keldi</label>
-              <input
-                type="time" lang="en-GB"
+              <Time24Input
                 value={inT}
                 onChange={(e) => setInT(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
@@ -269,8 +269,7 @@ function AttendanceForm({
             </div>
             <div>
               <label className="block text-xs text-slate-500 mb-1">Ketdi</label>
-              <input
-                type="time" lang="en-GB"
+              <Time24Input
                 value={outT}
                 onChange={(e) => setOutT(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"

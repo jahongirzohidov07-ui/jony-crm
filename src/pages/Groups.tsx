@@ -7,6 +7,7 @@ import {
   type CareerMap,
 } from "../lib/api";
 import { formatSom } from "../lib/format";
+import { Time24Input } from "../components/Time24Input";
 import { useAuth } from "../lib/AuthContext";
 import { GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
 import {
@@ -1032,8 +1033,7 @@ function GroupSupportsModal({
                         })}
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <input
-                          type="time" lang="en-GB"
+                        <Time24Input
                           value={sel[o.user_id].start}
                           onChange={(e) =>
                             patch(o.user_id, { start: e.target.value })
@@ -1041,8 +1041,7 @@ function GroupSupportsModal({
                           className="rounded-md border border-slate-200 px-2 py-1 text-xs"
                         />
                         <span className="text-slate-400 text-xs">\u2014</span>
-                        <input
-                          type="time" lang="en-GB"
+                        <Time24Input
                           value={sel[o.user_id].end}
                           onChange={(e) =>
                             patch(o.user_id, { end: e.target.value })

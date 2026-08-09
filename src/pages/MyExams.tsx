@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ClipboardCheck, Info, X, CheckCircle2 } from "lucide-react";
 import { api, type MyExamOrders, type ExamOrder } from "../lib/api";
+import { Time24Input } from "../components/Time24Input";
 
 const TONE: Record<string, string> = {
   amber: "bg-amber-100 text-amber-700",
@@ -222,8 +223,7 @@ function OrderForm({
           </div>
           <div>
             <label className="block text-xs text-slate-500 mb-1">Vaqt</label>
-            <input
-              type="time" lang="en-GB"
+            <Time24Input
               value={f.time || group?.time || ""}
               onChange={(e) => setF({ ...f, time: e.target.value })}
               className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"

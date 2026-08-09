@@ -18,6 +18,7 @@ import {
 } from "../lib/exams";
 import { formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
+import { Time24Input } from "./Time24Input";
 
 /** Sana ustuni sarlavhasi: "01 iyul" ko'rinishida qisqa. */
 const SHORT_MONTHS = [
@@ -1405,8 +1406,7 @@ export function SupportAttendanceTab({
               <label className="block text-xs text-slate-500 mb-1">
                 Boshlandi
               </label>
-              <input
-                type="time" lang="en-GB"
+              <Time24Input
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
@@ -1416,8 +1416,7 @@ export function SupportAttendanceTab({
               <label className="block text-xs text-slate-500 mb-1">
                 Tugadi
               </label>
-              <input
-                type="time" lang="en-GB"
+              <Time24Input
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm"

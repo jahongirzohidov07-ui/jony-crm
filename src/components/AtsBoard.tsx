@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
+import { Time24Input } from "./Time24Input";
 
 const TONE: Record<string, string> = {
   slate: "bg-slate-100 text-slate-700",
@@ -519,8 +520,7 @@ function MainTab({ d, onChange }: { d: Any; onChange: () => void }) {
             onChange={(e) => setF({ ...f, date: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm"
           />
-          <input
-            type="time" lang="en-GB"
+          <Time24Input
             value={f.time}
             onChange={(e) => setF({ ...f, time: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm"

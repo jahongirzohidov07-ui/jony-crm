@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Timer, Info, Trash2, Wallet, GraduationCap, Check, X as XIcon } from "lucide-react";
 import { api } from "../lib/api";
+import { Time24Input } from "../components/Time24Input";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -108,11 +109,11 @@ function BusyTimes() {
             </button>
           ))}
         </div>
-        <input type="time" lang="en-GB" value={start}
+        <Time24Input value={start}
           onChange={(e) => setStart(e.target.value)}
           className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
         <span className="text-slate-400 text-xs">—</span>
-        <input type="time" lang="en-GB" value={end}
+        <Time24Input value={end}
           onChange={(e) => setEnd(e.target.value)}
           className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
         <input value={note} onChange={(e) => setNote(e.target.value)}
@@ -305,14 +306,12 @@ export default function MySessions() {
               </option>
             ))}
           </select>
-          <input
-            type="time" lang="en-GB"
+          <Time24Input
             value={f.start_time}
             onChange={(e) => setF({ ...f, start_time: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-2 text-sm"
           />
-          <input
-            type="time" lang="en-GB"
+          <Time24Input
             value={f.end_time}
             onChange={(e) => setF({ ...f, end_time: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-2 text-sm"

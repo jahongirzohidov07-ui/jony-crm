@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { BrandIcon } from "./BrandIcon";
 import {
   LayoutDashboard,
   Users,
@@ -7,7 +8,6 @@ import {
   BookMarked,
   GraduationCap as TeacherIcon,
   LogOut,
-  School,
   UserCog,
   KeyRound,
   Target,
@@ -370,8 +370,8 @@ export default function Layout() {
         } md:static md:flex md:z-auto w-60 shrink-0 bg-white border-r border-slate-200 flex-col overflow-y-auto`}
       >
         <div className="h-16 shrink-0 flex items-center gap-2 px-5 border-b border-slate-100">
-          <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
-            <School className="text-white" size={18} />
+          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0">
+            <BrandIcon size={32} />
           </div>
           <span className="font-semibold text-slate-900">JonyOS</span>
           <button

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, GraduationCap } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import { BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
 
@@ -36,11 +37,8 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 px-4">
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8">
         <div className="flex flex-col items-center mb-6">
-          <div className="w-12 h-12 rounded-xl bg-brand-500 flex items-center justify-center mb-3">
-            <GraduationCap className="text-white" size={26} />
-          </div>
-          <h1 className="text-lg font-semibold text-slate-900">JonyOS</h1>
-          <p className="text-sm text-slate-500">Boshqaruv paneliga kirish</p>
+          <BrandLockup iconSize={56} className="mb-3" />
+          <p className="text-sm text-slate-500">JonyOS &middot; Boshqaruv paneliga kirish</p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-4">

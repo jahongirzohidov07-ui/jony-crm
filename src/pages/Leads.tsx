@@ -18,6 +18,8 @@ import { PickList, useReference } from "../components/PickList";
 // ---------------------------------------------------------------- modal ----
 function LeadForm({
   branches,
+  branchesError,
+  onRetryBranches,
   staff,
   defaultBranchId,
   initial,
@@ -25,6 +27,8 @@ function LeadForm({
   onSaved,
 }: {
   branches: Branch[];
+  branchesError: boolean;
+  onRetryBranches: () => void;
   staff: StaffOption[];
   defaultBranchId: number | null;
   initial?: Lead;
@@ -61,7 +65,13 @@ function LeadForm({
     me?.role === "administrator" || me?.role === "sales_manager";
   // Xodimning o'z filiali bo'lsa, lid o'sha yerga tushadi — tanlash
   // oynasi ortiqcha. Filialsiz (asoschi, SMM) uchungina chiqadi.
-  const needBranch = !me?.branch_id && branches.length > 1;
+  // MUHIM: bu yerda branches.length > 1 shartini QO'YMAYMIZ — agar
+  // filiallar ro'yxati hali yuklanmagan/yuklanmay qolgan bo'lsa ham,
+  // backend baribir filial talab qiladi va o'zi hech narsani
+  // taxmin qilib bermaydi. Ro'yxatni yashirish shu holatda odamni
+  // "filial tanlanmadi" xatosi bilan chiqish yo'li yo'q holatga
+  // olib kelardi (aynan shu xato bilan).
+  const needBranch = !me?.branch_id;
   // Admin uchun backend o'zi biriktiradi — bu yerda tanlanmaydi.
   const [assignedId, setAssignedId] = useState(
     initial?.assigned_user_id ? String(initial.assigned_user_id) : ""
@@ -319,6 +329,7 @@ function LeadForm({
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
                 value={branchId}
                 onChange={(e) => setBranchId(e.target.value)}
+                disabled={branches.length === 0}
               >
                 <option value="">— tanlanmagan —</option>
                 {branches.map((b) => (
@@ -327,6 +338,24 @@ function LeadForm({
                   </option>
                 ))}
               </select>
+              {branches.length === 0 && (
+                <p className="text-[11px] text-amber-600 mt-1">
+                  {branchesError ? (
+                    <>
+                      Filiallar ro'yxati yuklanmadi.{" "}
+                      <button
+                        type="button"
+                        onClick={onRetryBranches}
+                        className="underline"
+                      >
+                        Qayta urinish
+                      </button>
+                    </>
+                  ) : (
+                    "Filiallar yuklanmoqda..."
+                  )}
+                </p>
+              )}
             </div>
           )}
 
@@ -572,6 +601,7 @@ export default function Leads() {
   const { user } = useAuth();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
+  const [branchesError, setBranchesError] = useState(false);
   const [staff, setStaff] = useState<StaffOption[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
@@ -591,9 +621,17 @@ export default function Leads() {
       .finally(() => setLoading(false));
   }
 
+  function loadBranches() {
+    setBranchesError(false);
+    api
+      .get<Branch[]>("/branches")
+      .then(setBranches)
+      .catch(() => setBranchesError(true));
+  }
+
   useEffect(() => {
     load();
-    api.get<Branch[]>("/branches").then(setBranches).catch(() => {});
+    loadBranches();
     api.get<StaffOption[]>("/users/assignable").then(setStaff).catch(() => {});
     api.get<Group[]>("/groups").then(setGroups).catch(() => {});
   }, []);
@@ -726,6 +764,8 @@ export default function Leads() {
       {showNew && (
         <LeadForm
           branches={branches}
+          branchesError={branchesError}
+          onRetryBranches={loadBranches}
           staff={staff}
           defaultBranchId={user?.branch_id ?? null}
           onClose={() => setShowNew(false)}
@@ -735,6 +775,8 @@ export default function Leads() {
       {editing && (
         <LeadForm
           branches={branches}
+          branchesError={branchesError}
+          onRetryBranches={loadBranches}
           staff={staff}
           defaultBranchId={user?.branch_id ?? null}
           initial={editing}

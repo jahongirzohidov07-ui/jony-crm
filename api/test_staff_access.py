@@ -203,7 +203,7 @@ print("\n=== 8. FRONTEND VA BACKEND BIR XIL ===")
 # holda tugma ko'rinadi-yu, bosilganda 403 chiqadi
 import re
 ts = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                       "..", "frontend", "src", "lib", "roles.ts")).read()
+                       "..", "src", "lib", "roles.ts")).read()
 m = re.search(r"HR_ASSIGNABLE_ROLES = \[(.*?)\]", ts, re.S)
 ts_names = [x.strip() for x in m.group(1).replace("\n", " ").split(",")
             if x.strip()]

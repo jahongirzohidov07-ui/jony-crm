@@ -170,6 +170,25 @@ ck("bekor qilib bo'lmasligi aytilgan",
 GID = T["Mening guruh"]
 
 
+def _next_month_start(d):
+    return (date(d.year + 1, 1, 1) if d.month == 12
+            else date(d.year, d.month + 1, 1))
+
+
+# MUHIM: bu uchta ko'chirish ATAYLAB "kelasi oy"ning aniq kunlariga
+# bog'langan (TODAY+3/+7/+11 kabi qattiq sonlarga emas). Kvota "DARS
+# oyi" bo'yicha sanalgani uchun (pastda, 6-bandda tekshiriladi) test
+# har doim - oyning qaysi kunida ishga tushirilishidan qat'i nazar -
+# bir xil natija berishi kerak. Qattiq son ishlatilganda test faqat
+# oyning oxirgi ~10-15 kunida to'g'ri natija berardi, boshqa kunlarda
+# esa "kelasi oy" deb hisoblangan darslar aslida JORIY oyga tushib,
+# 6-banddagi tekshiruv teskarisiga aylanardi.
+_NMS = _next_month_start(TODAY)
+D1 = (_NMS + timedelta(days=1) - TODAY).days
+D2 = (_NMS + timedelta(days=5) - TODAY).days
+D3 = (_NMS + timedelta(days=9) - TODAY).days
+
+
 def move(from_days, to_days):
     return client.post("/api/me/reschedules", headers=ME, json={
         "group_id": GID,
@@ -178,16 +197,16 @@ def move(from_days, to_days):
         "reason": "sick"})
 
 
-r = move(3, 5)
+r = move(D1, D1 + 2)
 ck("birinchi surish avtomat", r.json()["status"], "auto")
 ck("avtomat deb belgilandi", r.json()["auto_approved"], True)
 ck("kvota kamaydi", r.json()["quota"]["left_month"], 1)
 
-r = move(7, 9)
+r = move(D2, D2 + 2)
 ck("ikkinchi surish ham avtomat", r.json()["status"], "auto")
 ck("oylik kvota tugadi", r.json()["quota"]["left_month"], 0)
 
-r = move(11, 13)
+r = move(D3, D3 + 2)
 ck("uchinchisi tasdiqqa ketdi", r.json()["status"], "pending")
 ck("avtomat emas", r.json()["auto_approved"], False)
 RID = r.json()["id"]
@@ -215,7 +234,7 @@ r = client.post("/api/me/reschedules", headers=ME, json={
     "to_date": (TODAY + timedelta(days=60)).isoformat()})
 ck("juda uzoqqa surib bo'lmaydi", r.status_code, 400)
 
-r = move(3, 6)
+r = move(D1, D1 + 3)
 ck("bir dars ikki marta surilmaydi", r.status_code, 400)
 
 r = client.post("/api/me/reschedules", headers=OTHER, json={

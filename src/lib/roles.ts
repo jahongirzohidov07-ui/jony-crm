@@ -232,7 +232,7 @@ export function roleLabel(role: string | undefined): string {
 /** HR HAMMAGA xodim ochadi va login/parol beradi — faqat asoschi va
  *  filial rahbari mustasno: ularni faqat asoschi tayinlaydi. */
 export const HR_ASSIGNABLE_ROLES = [
-  TEACHER, SUPPORT_TEACHER, EXAMINER,
+  TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
   SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
   SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
   HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
@@ -243,7 +243,7 @@ export function assignableRoles(myRole: string | undefined): string[] {
   if (myRole === FOUNDER) return ALL_ROLES;
   if (myRole === BRANCH_MANAGER)
     return [
-      SALES_MANAGER, TEACHER, SUPPORT_TEACHER,
+      SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
       EXAMINER, PARENT, STUDENT,
     ];
   if (myRole === HR_MANAGER) return HR_ASSIGNABLE_ROLES;

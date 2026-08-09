@@ -123,6 +123,16 @@ ls = db.query(models.Lesson).filter(
     models.Lesson.group_id == GID, models.Lesson.date == TODAY).first()
 ck("dars bazada bugungi sanaga ko'chgan", bool(ls), True)
 
+print("\n=== 2b. YANGI (to_date) ustunida 'boshqa kundan "
+      "ko'chirilgan' belgisi chiqadi (YANGILIK, 2026-08-09) ===")
+rbox = client.get(f"/api/groups/{GID}/attendance",
+                  params={"year": TODAY.year, "month": TODAY.month},
+                  headers=HR)
+mi = rbox.json()["reschedule"].get("moved_in", {})
+ck("bugungi sana moved_in'da bor", TODAY.isoformat() in mi, True)
+ck("asl sana to'g'ri ko'rsatilgan",
+   mi.get(TODAY.isoformat(), {}).get("from_date"), from_date.isoformat())
+
 print("\n=== 3. HR menejer O'TIB KETGAN sanaga ham ko'chiradi (YANGILIK) ===")
 from_date2 = TODAY + timedelta(days=16)
 past_ok = TODAY - timedelta(days=5)   # shift_days (30) doirasida

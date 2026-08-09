@@ -382,6 +382,13 @@ export interface AttendanceGrid {
       string,
       { id: number; status: string; status_label: string; to_date: string }
     >;
+    /** Teskarisi: shu (yangi) sanaga BOSHQA kundan ko'chirilgan dars
+     *  bo'lsa shu yerda chiqadi — jadvalda "bu ko'chirilgan dars"
+     *  belgisini ko'rsatish uchun. */
+    moved_in?: Record<
+      string,
+      { id: number; status: string; status_label: string; from_date: string }
+    >;
     reasons: { key: string; label: string }[];
     min_notice_days: number;
     max_shift_days: number;

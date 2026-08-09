@@ -223,6 +223,16 @@ def save_attendance(
             403, "O'tib ketgan kunning yoqlamasini faqat asoschi va "
                  "o'quv bo'limi rahbari o'zgartira oladi")
 
+    # Muzlatilgan o'quvchiga yoqlama qo'yilmaydi/o'zgartirilmaydi —
+    # UI'da bunday qator umuman chiqmaydi (attendance_grid_v2), lekin
+    # eski/keshlangan sahifa yoki to'g'ridan-to'g'ri so'rov orqali
+    # ham himoyalanadi (2026-08-09, ish haqi hujjati himoyasi).
+    _frozen_ids = {
+        sid for (sid,) in db.query(models.Student.id).filter(
+            models.Student.group_id == lesson.group_id,
+            models.Student.status == "frozen").all()
+    }
+
     existing = {
         a.student_id: a
         for a in db.query(models.Attendance).filter(
@@ -230,6 +240,8 @@ def save_attendance(
     }
     newly_absent = []  # Telegram: "darsga kelmadi" xabari uchun
     for m in payload.marks:
+        if m.student_id in _frozen_ids:
+            continue
         # Belgini olib tashlash: o'quvchi "belgilanmagan"ga qaytadi
         # va shu dars uchun oylikka kirmaydi
         if m.remove:
@@ -390,7 +402,11 @@ def grades_grid(
     """Baholash jadvali - davomat bilan bir xil ko'rinish, lekin
     kataklarda 1-5 baho turadi."""
     _get_group_in_scope(db, group_id, user)
-    students = _group_students(db, group_id)
+    # Davomatdagi bilan bir xil qoida: muzlatilgan o'quvchi baholash
+    # jadvalida ham qator bo'lib chiqmasin — u darsga kelmaydi, baho
+    # olmaydi (2026-08-09, davomatdagi bilan bir vaqtda tuzatildi).
+    students = [s for s in _group_students(db, group_id)
+               if s.status != "frozen"]
     lessons = _group_lessons_in_month(db, group_id, year, month)
     lesson_ids = [ls.id for ls in lessons]
 
@@ -438,12 +454,22 @@ def save_grades(
 
     _mark_lesson_held(db, lesson)
 
+    # Davomatdagi bilan bir xil himoya: muzlatilgan o'quvchiga baho
+    # qo'yilmaydi (2026-08-09).
+    _frozen_ids = {
+        sid for (sid,) in db.query(models.Student.id).filter(
+            models.Student.group_id == lesson.group_id,
+            models.Student.status == "frozen").all()
+    }
+
     existing = {
         g.student_id: g
         for g in db.query(models.DailyGrade).filter(
             models.DailyGrade.lesson_id == lesson_id).all()
     }
     for m in payload.marks:
+        if m.student_id in _frozen_ids:
+            continue
         row = existing.get(m.student_id)
         if m.score is None:
             if row:
@@ -1098,21 +1124,36 @@ def _reschedule_box(db: Session, group_id: int, user: models.User,
         models.LessonReschedule.group_id == group_id,
         models.LessonReschedule.status.in_(
             roles.RESCHEDULE_DONE + ["pending"])).all()
+    _status_labels = dict(
+        (k, l) for k, l, _t in roles.RESCHEDULE_STATUSES)
     by_date = {}
+    # TESKARI XARITA: yangi (to_date) sana ustunida "bu dars boshqa
+    # kundan ko'chirilgan" belgisi chiqishi uchun (2026-08-09,
+    # Jahongir so'radi — ko'chirilgan sana ustida qaysi kundan
+    # ko'chirilgani bilinib turishi kerak). Faqat HAQIQATDA
+    # qo'llangan (RESCHEDULE_DONE) ko'chirishlar kiradi — "pending"
+    # hali biror darsni jismonan ko'chirmagan (_apply_reschedule hali
+    # chaqirilmagan), demak to_date'da hali ko'rsatadigan dars yo'q.
+    moved_in = {}
     for r in rows:
         by_date[r.from_date.isoformat()] = {
             "id": r.id, "status": r.status,
-            "status_label": dict(
-                (k, l) for k, l, _t in roles.RESCHEDULE_STATUSES
-            ).get(r.status, r.status),
+            "status_label": _status_labels.get(r.status, r.status),
             "to_date": r.to_date.isoformat(),
         }
+        if r.status in roles.RESCHEDULE_DONE:
+            moved_in[r.to_date.isoformat()] = {
+                "id": r.id, "status": r.status,
+                "status_label": _status_labels.get(r.status, r.status),
+                "from_date": r.from_date.isoformat(),
+            }
 
     box = {
         "can": mine or manager,
         "manager": manager,
         "as_manager": manager and not mine,
         "moved": by_date,
+        "moved_in": moved_in,
         "reasons": [{"key": k, "label": l}
                     for k, l in roles.RESCHEDULE_REASONS],
         "min_notice_days": roles.RESCHEDULE_MIN_NOTICE_DAYS,

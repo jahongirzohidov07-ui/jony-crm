@@ -2101,9 +2101,17 @@ if _orig_reference is not None:
 
 
 # =====================================================================
-#  USTOZGA MUZLATILGAN O'QUVCHI KO'RINMASIN
+#  MUZLATILGAN O'QUVCHI YO'QLAMADA HECH KIMGA KO'RINMASIN
 #  Yo'qlama - oylik hisoblanadigan hujjat, shuning uchun muzlatilgan
-#  o'quvchi ustoz oldida chiqib, xato yo'qlama qo'yib qo'yilmasin.
+#  o'quvchi ko'rinib, xato yo'qlama qo'yib qo'yilmasin.
+#
+#  2026-08-09: bu tekshiruv ilgari FAQAT `role == TEACHER` bo'lsa
+#  ishlagan — HR menejer, asoschi, filial rahbari va boshqa
+#  rollarga muzlatilgan o'quvchi hali ham to'liq qator bo'lib,
+#  yoqlama belgisi bilan chiqaverardi (Jahongir skrinshot bilan
+#  ko'rsatdi: muzlatilgan o'quvchiga "03 avg" kuni belgi qo'yilgan
+#  edi). Sabab (yo'qlama — ish haqi hujjati) ROLGA BOG'LIQ EMAS,
+#  shuning uchun endi HAMMA uchun bir xil qo'llanadi.
 # =====================================================================
 _orig_att_grid = _find_endpoint("/api/groups/{group_id}/attendance", "GET")
 
@@ -2118,15 +2126,13 @@ if _orig_att_grid is not None:
                                *roles.ATTENDANCE_VIEW))):
         result = _orig_att_grid(group_id=group_id, year=year, month=month,
                                 db=db, user=user)
-        if user.role == roles.TEACHER:
-            try:
-                data = result.model_dump()
-            except AttributeError:
-                data = result.dict()
-            data["students"] = [s for s in data["students"]
-                                if s.get("status") != "frozen"]
-            return data
-        return result
+        try:
+            data = result.model_dump()
+        except AttributeError:
+            data = result.dict()
+        data["students"] = [s for s in data["students"]
+                            if s.get("status") != "frozen"]
+        return data
 
 
 # =====================================================================

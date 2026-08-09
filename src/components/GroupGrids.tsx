@@ -121,6 +121,7 @@ function DateMenu({
   held,
   box,
   moved,
+  movedIn,
   onMove,
   onClose,
 }: {
@@ -128,6 +129,7 @@ function DateMenu({
   held: number;
   box: NonNullable<AttendanceGrid["reschedule"]>;
   moved?: { status_label: string; to_date: string };
+  movedIn?: { status_label: string; from_date: string };
   onMove: () => void;
   onClose: () => void;
 }) {
@@ -141,6 +143,15 @@ function DateMenu({
       <p className="text-xs text-slate-500 mb-2">
         {held ? "Dars o'tilgan" : "Jadval bo'yicha reja"}
       </p>
+
+      {movedIn && (
+        <div className="rounded-lg bg-teal-50 border border-teal-200 p-2 mb-2">
+          <p className="text-xs text-teal-700">
+            {formatDate(movedIn.from_date)}dan ko'chirilgan dars
+          </p>
+          <p className="text-[11px] text-teal-500">{movedIn.status_label}</p>
+        </div>
+      )}
 
       {moved ? (
         <div className="rounded-lg bg-slate-50 border border-slate-200 p-2 mb-2">
@@ -323,6 +334,7 @@ export function AttendanceTab({
               </th>
               {grid.lessons.map((ls) => {
                 const mv = box?.moved?.[ls.date];
+                const movedIn = box?.moved_in?.[ls.date];
                 return (
                   <th
                     key={ls.id}
@@ -332,17 +344,31 @@ export function AttendanceTab({
                       onClick={() => setMenu(menu === ls.id ? null : ls.id)}
                       className={`text-xs whitespace-nowrap px-1.5 py-1 rounded-lg hover:bg-slate-200 transition ${
                         ls.held ? "text-slate-700" : "text-slate-400"
-                      } ${mv ? "line-through" : ""}`}
-                      title="Menyu: dars ko'chirish"
+                      } ${mv ? "line-through" : ""} ${
+                        movedIn ? "bg-teal-50 text-teal-700" : ""
+                      }`}
+                      title={
+                        movedIn
+                          ? `Ko'chirilgan dars — asli ${formatDate(
+                              movedIn.from_date
+                            )}`
+                          : "Menyu: dars ko'chirish"
+                      }
                     >
                       {dayLabel(ls.date)}
                     </button>
+                    {movedIn && (
+                      <p className="text-[9px] leading-none text-teal-600 mt-0.5 whitespace-nowrap">
+                        {dayLabel(movedIn.from_date)}dan
+                      </p>
+                    )}
                     {menu === ls.id && box && (
                       <DateMenu
                         date={ls.date}
                         held={ls.held}
                         box={box}
                         moved={mv}
+                        movedIn={movedIn}
                         onMove={() => {
                           setMenu(null);
                           setMoving({ id: ls.id, date: ls.date });

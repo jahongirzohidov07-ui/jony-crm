@@ -96,16 +96,33 @@ export default function TimetableGrid() {
   const [branchId, setBranchId] = useState<number | null>(null);
   const [usage, setUsage] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
+    setError(null);
     api
       .get<Grid>(`/timetable/grid?day=${day}${branchParam(branchId)}`)
       .then(setData)
+      .catch((e) => setError(e instanceof Error ? e.message : "Xatolik"))
       .finally(() => setLoading(false));
-  }, [day, branchId]);
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(load, [day, branchId]);
 
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (error)
+    return (
+      <div className="py-8">
+        <p className="text-sm text-red-600 mb-2">{error}</p>
+        <button
+          onClick={load}
+          className="text-sm text-brand-600 hover:text-brand-700 underline"
+        >
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!data) return null;
 
   const width = data.slots.length * SLOT_W;

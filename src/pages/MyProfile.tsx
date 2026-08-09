@@ -25,15 +25,32 @@ const PART_TONE: Record<string, string> = {
 export default function MyProfile() {
   const [p, setP] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true);
+    setError(null);
     api
       .get<Profile>("/me/profile")
       .then(setP)
+      .catch((e) => setError(e instanceof Error ? e.message : "Xatolik"))
       .finally(() => setLoading(false));
-  }, []);
+  };
+  useEffect(load, []);
 
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+  if (error)
+    return (
+      <div className="py-8">
+        <p className="text-sm text-red-600 mb-2">{error}</p>
+        <button
+          onClick={load}
+          className="text-sm text-brand-600 hover:text-brand-700 underline"
+        >
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!p) return null;
 
   const max = Math.max(...p.parts.map((x) => x.amount), 1);

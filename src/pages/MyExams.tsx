@@ -299,11 +299,14 @@ export function ExamOrderQueueTab() {
   const [err, setErr] = useState("");
 
   const load = () => {
+    setErr("");
     const p = filter ? `?status=${filter}` : "";
     api
       .get<import("../lib/api").ExamOrderQueue>("/exam-orders" + p)
       .then(setD)
-      .catch(() => setD(null));
+      .catch((e) =>
+        setErr(e instanceof Error ? e.message : "Ro'yxatni yuklab bo'lmadi")
+      );
   };
   useEffect(load, [filter]);
 
@@ -320,6 +323,18 @@ export function ExamOrderQueueTab() {
     }
   };
 
+  if (err && !d)
+    return (
+      <div className="py-6">
+        <p className="text-sm text-red-600 mb-2">{err}</p>
+        <button
+          onClick={load}
+          className="text-sm text-brand-600 hover:text-brand-700 underline"
+        >
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!d) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda…</p>;
 
   return (

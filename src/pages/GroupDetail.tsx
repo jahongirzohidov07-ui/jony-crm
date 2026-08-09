@@ -68,6 +68,7 @@ export default function GroupDetail() {
   const t = today();
 
   const [group, setGroup] = useState<Group | null>(null);
+  const [groupError, setGroupError] = useState<string | null>(null);
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [lessonsLoading, setLessonsLoading] = useState(true);
@@ -118,11 +119,17 @@ export default function GroupDetail() {
   }
 
   function loadGroup() {
-    api.get<Group>(`/groups/${groupId}`).then((g) => {
-      setGroup(g);
-      setLessonTeacherId((prev) => prev || (g.teacher_id ? String(g.teacher_id) : ""));
-    });
-    api.get<Teacher[]>("/teachers").then(setTeachers);
+    setGroupError(null);
+    api
+      .get<Group>(`/groups/${groupId}`)
+      .then((g) => {
+        setGroup(g);
+        setLessonTeacherId((prev) => prev || (g.teacher_id ? String(g.teacher_id) : ""));
+      })
+      .catch((e) =>
+        setGroupError(e instanceof Error ? e.message : "Guruhni yuklab bo'lmadi")
+      );
+    api.get<Teacher[]>("/teachers").then(setTeachers).catch(() => setTeachers([]));
   }
 
   function loadLessons(y: number, m: number) {
@@ -249,6 +256,24 @@ export default function GroupDetail() {
   void payrollLoading; void addLesson; void deleteLesson;
   void runBilling; void runPayroll; void togglePaid;
   void exportBilling; void exportPayroll;
+
+  // Xato bo'lsa ABADIY "Yuklanmoqda..."da qotib qolmasin — sabab va
+  // qayta urinish tugmasi ko'rsatiladi (2026-08-09, ustoz o'z
+  // guruhiga kirolmasligi haqida xabar berdi: sabab shu — xato
+  // hech qachon ko'rinmagan, sahifa abadiy kutib turaverardi).
+  if (groupError) {
+    return (
+      <div className="p-8">
+        <p className="text-sm text-red-600 mb-3">{groupError}</p>
+        <button
+          onClick={loadGroup}
+          className="text-sm text-brand-600 hover:text-brand-700 underline"
+        >
+          Qayta urinish
+        </button>
+      </div>
+    );
+  }
 
   return (
       <div className="p-8">

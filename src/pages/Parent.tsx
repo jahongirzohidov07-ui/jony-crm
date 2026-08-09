@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GraduationCap, Snowflake } from "lucide-react";
+import { Download, GraduationCap, Snowflake, X } from "lucide-react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -17,6 +17,8 @@ export default function Parent() {
   const { token } = useParams();
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
+  const [installEvt, setInstallEvt] = useState<Any>(null);
+  const [installHidden, setInstallHidden] = useState(false);
 
   useEffect(() => {
     fetch(`/api/parent/${token}`)
@@ -26,6 +28,51 @@ export default function Parent() {
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, [token]);
+
+  // PWA: shu FARZANDGA xos manifest ulanadi (uy ekraniga qo'shilsa,
+  // to'g'ridan-to'g'ri shu sahifaga ochiladi) va servis worker faqat
+  // /parent/ doirasida ro'yxatdan o'tadi — xodimlar paneliga tegmaydi.
+  useEffect(() => {
+    if (!token) return;
+    let link = document.querySelector<HTMLLinkElement>(
+      'link[rel="manifest"]'
+    );
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "manifest";
+      document.head.appendChild(link);
+    }
+    link.href = `/api/parent/${token}/manifest.webmanifest`;
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js", { scope: "/parent/" })
+        .catch(() => {});
+    }
+
+    return () => {
+      link?.parentNode?.removeChild(link);
+    };
+  }, [token]);
+
+  // Android/Chrome "uy ekraniga qo'shish mumkin" deb topsa shu
+  // hodisani otadi — brauzerning o'zi ko'rsatadigan (ko'zga unча
+  // tashlanmaydigan) taklif o'rniga aniq tugma ko'rsatamiz.
+  useEffect(() => {
+    function onPrompt(e: Any) {
+      e.preventDefault();
+      setInstallEvt(e);
+    }
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", onPrompt);
+  }, []);
+
+  async function installApp() {
+    if (!installEvt) return;
+    installEvt.prompt();
+    await installEvt.userChoice;
+    setInstallEvt(null);
+  }
 
   if (err)
     return (
@@ -67,6 +114,35 @@ export default function Parent() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-5 space-y-4">
+        {installEvt && !installHidden && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+              <Download size={16} className="text-brand-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-slate-800">
+                Ilovani telefoningizga o'rnating
+              </p>
+              <p className="text-xs text-slate-500">
+                Uy ekranidan bir bosishda oching
+              </p>
+            </div>
+            <button
+              onClick={installApp}
+              className="text-xs font-medium px-3 py-1.5 rounded-lg bg-brand-600 text-white shrink-0"
+            >
+              O'rnatish
+            </button>
+            <button
+              onClick={() => setInstallHidden(true)}
+              className="text-slate-400 shrink-0"
+              aria-label="Yopish"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
           <p className="text-xs text-slate-500">Balans</p>
           <p className={`text-2xl font-semibold ${

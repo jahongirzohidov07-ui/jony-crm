@@ -354,21 +354,36 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
 
 # =====================================================================
 #  OTA-ONA PORTALIDA MASHQ DARAJASI
+#
+#  MUHIM (2026-08-09 topildi): parents.py:parent_view() da qo'shilgan
+#  parent_token_expires_at tekshiruvi shu YERGA — haqiqiy ishlaydigan
+#  nusxaga — hech qachon ko'chirilmagan ekan. entry.py o'z ustidan
+#  BUTUNLAY MUSTAQIL parent_view() yozadi (parents.py'nikini chaqirmay,
+#  hammasini qaytadan yozadi) va _drop_route orqali uni almashtiradi —
+#  demak parents.py'dagi muddat tekshiruvi HECH QACHON ishlamagan
+#  (create_user_v2'da topilgan xuddi shu naqsh). Muddati o'tgan
+#  havolalar shu paytgacha baribir ochilaverar edi. Endi shu yerga
+#  ham qo'shildi — bu HAQIQIY jonli yo'l.
 # =====================================================================
 _drop_route("/api/parent/{token}", "GET")
 
 
 @app.get("/api/parent/{token}")
 def parent_view(token: str, db: Session = Depends(get_db)):
+    from datetime import datetime, timedelta
     if not token or len(token) < 10:
         raise HTTPException(404, "Topilmadi")
     s = db.query(models.Student).filter(
         models.Student.parent_token == token).first()
     if not s:
         raise HTTPException(404, "Topilmadi")
+    if (s.parent_token_expires_at
+            and s.parent_token_expires_at < datetime.utcnow()):
+        raise HTTPException(
+            404, "Havola muddati tugagan. Administratordan yangi "
+                 "havola so'rang.")
     g = db.query(models.Group).get(s.group_id) if s.group_id else None
     today = roles.local_today()
-    from datetime import timedelta
     start = today - timedelta(days=45)
     rows = (db.query(models.Attendance, models.Lesson)
             .join(models.Lesson,

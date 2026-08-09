@@ -7,8 +7,10 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
+import json as _json
+
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
 
@@ -261,6 +263,54 @@ def delete_certificate(
         raise HTTPException(404, "Topilmadi")
     db.delete(c); db.commit()
     return {"ok": True}
+
+@router.get("/api/parent/{token}/manifest.webmanifest")
+def parent_manifest(token: str, db: Session = Depends(get_db)):
+    """Ota-onaning O'ZIGA XOS PWA manifesti.
+
+    Har bir farzand uchun ALOHIDA manifest qaytaramiz (start_url va
+    scope shu tokenga qattiq bog'langan) — shunda ota-ona uy ekraniga
+    qo'shganda, ilova to'g'ridan-to'g'ri O'SHA farzandning sahifasiga
+    ochiladi (umumiy /parent bosh sahifasi degan narsa yo'q, shuning
+    uchun bu muhim). Bir nechta farzandi bo'lgan ota-ona xohlasa
+    har biri uchun alohida "ilova" o'rnatishi mumkin — nomi
+    farzand ismi bilan farqlanadi.
+
+    Token haqiqiy bo'lmasa 404 — bekor havolaga o'rnatiladigan
+    manifest tarqatib yurmaymiz."""
+    if not token or len(token) < 10:
+        raise HTTPException(404, "Topilmadi")
+    s = db.query(models.Student).filter(
+        models.Student.parent_token == token).first()
+    if not s:
+        raise HTTPException(404, "Topilmadi")
+    manifest = {
+        "id": f"/parent/{token}",
+        "name": f"Jony Academy — {s.full_name}",
+        "short_name": "Jony Academy",
+        "description":
+            "Farzandingizning davomati, balansi va mashq darajasi",
+        "start_url": f"/parent/{token}?pwa=1",
+        "scope": f"/parent/{token}",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#0d9488",
+        "orientation": "portrait",
+        "lang": "uz",
+        "icons": [
+            {"src": "/pwa-192.png", "sizes": "192x192",
+             "type": "image/png", "purpose": "any"},
+            {"src": "/pwa-512.png", "sizes": "512x512",
+             "type": "image/png", "purpose": "any"},
+            {"src": "/maskable-192.png", "sizes": "192x192",
+             "type": "image/png", "purpose": "maskable"},
+            {"src": "/maskable-512.png", "sizes": "512x512",
+             "type": "image/png", "purpose": "maskable"},
+        ],
+    }
+    return Response(content=_json.dumps(manifest),
+                    media_type="application/manifest+json")
+
 
 @router.get("/api/parent/{token}")
 def parent_view(token: str, db: Session = Depends(get_db)):

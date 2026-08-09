@@ -4582,3 +4582,39 @@ export interface LibraryPeople {
   done: number;
   total: number;
 }
+
+/** Support teacherning O'Z daraja yo'li — ustoznikidan alohida. */
+export interface SupportCareerLevel {
+  key: string;
+  label: string;
+  coef: number;
+  groups: string;
+  free_courses: number;
+  cert?: string | null;
+  note?: string | null;
+  paid: boolean;
+}
+
+export interface SupportCareer {
+  kind: string;
+  grade: string;
+  grade_label: string;
+  coef: number;
+  since?: string | null;
+  months_in_grade: number;
+  months_total: number;
+  volunteer_months_needed: number;
+  levels: SupportCareerLevel[];
+  stats: {
+    period?: string | null;
+    groups: number;
+    hours: number;
+    students: number;
+    avg_percent?: number | null;
+    salary_base: number;
+    salary: number;
+  };
+  library: { done: number; total: number; percent: number };
+  formula?: string | null;
+  hint: string;
+}

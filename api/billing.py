@@ -30,6 +30,7 @@ import calendar
 from datetime import date
 from typing import Optional
 
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 import models
@@ -133,12 +134,42 @@ def compute_student_charges(
 #  Shuning uchun stavka har bir darsning SANASIGA qarab, o'sha kuni
 #  kuchda bo'lgan daraja bo'yicha olinadi.
 # =====================================================================
+def _log_db_error(db: Session, where: str, exc: Exception) -> None:
+    """DB xatosini error_logs jadvaliga yozadi - asoschi buni Audit
+    bo'limida ko'radi (bundan oldin bu xatolar hech qayerda ko'rinmasdan
+    yo'qolib ketardi).
+
+    db.rollback() SHART: SQLAlchemy xato chiqqan sessiyani "buzilgan"
+    holatda qoldiradi - agar shu sessiyada keyin yana so'rov yuborilsa
+    (masalan grade_on()'dagi zaxira so'rovi, yoki so'rovning davomida
+    keladigan boshqa so'rovlar), ular ham asossiz xato berib qoladi.
+    Avval tozalab olinmasa, ErrorLog yozuvining o'zi ham muvaffaqiyatsiz
+    tugaydi."""
+    try:
+        db.rollback()
+        db.add(models.ErrorLog(
+            path=f"billing.{where}", method="internal",
+            detail=f"{type(exc).__name__}: {exc}"[:4000]))
+        db.commit()
+    except Exception:
+        pass  # ErrorLog yozishning o'zi ham muvaffaqiyatsiz bo'lsa -
+              # bu yerda qila oladigan boshqa ishonchli narsa qolmaydi.
+
+
 def grade_rates(db: Session) -> dict:
     """Daraja -> bir o'quvchidan oylik summa."""
     try:
         return {g.key: (g.rate_per_student or 0)
                 for g in db.query(models.TeacherGrade).all()}
-    except Exception:
+    except SQLAlchemyError as e:
+        # Faqat DB-darajasidagi xatolar (aloqa uzilishi, jadval
+        # muammosi va h.k.) yutiladi - avvalgi "except Exception" hatto
+        # dasturchi xatosini (masalan noto'g'ri atribut nomi) ham
+        # abadiy sezilmas qilib qo'yardi. Bo'sh {} qaytarish eski
+        # xatti-harakat bilan bir xil qoladi (rate_per_student()
+        # guruhning qo'lda kiritilgan narxiga tushadi) - farqi shuki
+        # endi bu holat KO'RINADI.
+        _log_db_error(db, "grade_rates", e)
         return {}
 
 
@@ -157,8 +188,8 @@ def grade_on(db: Session, teacher_id: int, on_date: date) -> Optional[str]:
               .first())
         if ev:
             return ev.to_grade
-    except Exception:
-        pass
+    except SQLAlchemyError as e:
+        _log_db_error(db, "grade_on", e)
     t = db.query(models.Teacher).get(teacher_id)
     return t.grade if t else None
 

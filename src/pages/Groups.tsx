@@ -1033,7 +1033,7 @@ function GroupSupportsModal({
                       </div>
                       <div className="flex items-center gap-1.5">
                         <input
-                          type="time"
+                          type="time" lang="en-GB"
                           value={sel[o.user_id].start}
                           onChange={(e) =>
                             patch(o.user_id, { start: e.target.value })
@@ -1042,7 +1042,7 @@ function GroupSupportsModal({
                         />
                         <span className="text-slate-400 text-xs">\u2014</span>
                         <input
-                          type="time"
+                          type="time" lang="en-GB"
                           value={sel[o.user_id].end}
                           onChange={(e) =>
                             patch(o.user_id, { end: e.target.value })

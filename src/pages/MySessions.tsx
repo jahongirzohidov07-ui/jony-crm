@@ -108,11 +108,11 @@ function BusyTimes() {
             </button>
           ))}
         </div>
-        <input type="time" value={start}
+        <input type="time" lang="en-GB" value={start}
           onChange={(e) => setStart(e.target.value)}
           className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
         <span className="text-slate-400 text-xs">—</span>
-        <input type="time" value={end}
+        <input type="time" lang="en-GB" value={end}
           onChange={(e) => setEnd(e.target.value)}
           className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs" />
         <input value={note} onChange={(e) => setNote(e.target.value)}
@@ -306,13 +306,13 @@ export default function MySessions() {
             ))}
           </select>
           <input
-            type="time"
+            type="time" lang="en-GB"
             value={f.start_time}
             onChange={(e) => setF({ ...f, start_time: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-2 text-sm"
           />
           <input
-            type="time"
+            type="time" lang="en-GB"
             value={f.end_time}
             onChange={(e) => setF({ ...f, end_time: e.target.value })}
             className="border border-slate-300 rounded-lg px-2 py-2 text-sm"

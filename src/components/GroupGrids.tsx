@@ -1380,7 +1380,7 @@ export function SupportAttendanceTab({
                 Boshlandi
               </label>
               <input
-                type="time"
+                type="time" lang="en-GB"
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
@@ -1391,7 +1391,7 @@ export function SupportAttendanceTab({
                 Tugadi
               </label>
               <input
-                type="time"
+                type="time" lang="en-GB"
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm"

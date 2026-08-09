@@ -261,7 +261,7 @@ function AttendanceForm({
             <div>
               <label className="block text-xs text-slate-500 mb-1">Keldi</label>
               <input
-                type="time"
+                type="time" lang="en-GB"
                 value={inT}
                 onChange={(e) => setInT(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
@@ -270,7 +270,7 @@ function AttendanceForm({
             <div>
               <label className="block text-xs text-slate-500 mb-1">Ketdi</label>
               <input
-                type="time"
+                type="time" lang="en-GB"
                 value={outT}
                 onChange={(e) => setOutT(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"

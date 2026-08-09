@@ -223,7 +223,7 @@ function OrderForm({
           <div>
             <label className="block text-xs text-slate-500 mb-1">Vaqt</label>
             <input
-              type="time"
+              type="time" lang="en-GB"
               value={f.time || group?.time || ""}
               onChange={(e) => setF({ ...f, time: e.target.value })}
               className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"

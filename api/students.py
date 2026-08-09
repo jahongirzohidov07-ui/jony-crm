@@ -1410,20 +1410,63 @@ def notify_debt(student_id: int, db: Session = Depends(get_db),
                   branch_id=s.branch_id, commit=True)
     return {"sent": sent}
 
+def _new_parent_token(s: models.Student) -> None:
+    """Yangi (yoki birinchi) ota-ona tokeni + muddatini o'rnatadi.
+    Chaqiruvchi commit qiladi."""
+    import secrets as _sec
+    s.parent_token = _sec.token_urlsafe(16)
+    s.parent_token_expires_at = (
+        datetime.utcnow()
+        + timedelta(days=roles.PARENT_TOKEN_VALIDITY_DAYS))
+
+
 @router.get("/api/students/{student_id}/parent-link")
 def parent_link(student_id: int, db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.CASH_ACCESS))):
     """Ota-onaga beriladigan havola. Token taxmin qilib bo'lmaydigan
-    tasodifiy satr; kerak bo'lsa yangilash tugmasi bilan almashtiriladi."""
+    tasodifiy satr, roles.PARENT_TOKEN_VALIDITY_DAYS kundan keyin
+    muddati tugaydi - kerak bo'lsa /regenerate bilan almashtiriladi.
+
+    Bu endpoint MAVJUD havolani hech qachon bekor qilmaydi (shunchaki
+    ko'rish/nusxalash uchun ochilganda ham tasodifan almashtirib
+    qo'ymaslik uchun) - faqat token umuman yo'q bo'lsa yaratadi, yoki
+    muddat tizimidan OLDINGI eski tokenga (parent_token_expires_at
+    NULL) endi ham amal qiladigan muddat belgilaydi."""
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if not s.parent_token:
-        import secrets as _sec
-        s.parent_token = _sec.token_urlsafe(16)
+        _new_parent_token(s)
+        db.commit()
+    elif not s.parent_token_expires_at:
+        s.parent_token_expires_at = (
+            datetime.utcnow()
+            + timedelta(days=roles.PARENT_TOKEN_VALIDITY_DAYS))
         db.commit()
     base = os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app")
-    return {"url": f"{base}/parent/{s.parent_token}"}
+    return {"url": f"{base}/parent/{s.parent_token}",
+            "expires_at": s.parent_token_expires_at.isoformat()}
+
+
+@router.post("/api/students/{student_id}/parent-link/regenerate")
+def parent_link_regenerate(student_id: int, db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.CASH_ACCESS))):
+    """Eski havolani DARHOL bekor qiladi (endi ishlamaydi) va yangisini
+    yaratadi. Token noto'g'ri odamga ketgan yoki muddati tugagan
+    bo'lsa ishlatiladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    had_old = bool(s.parent_token)
+    _new_parent_token(s)
+    db.commit()
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, field="Ota-ona havolasi",
+              old_value="eski havola bekor qilindi" if had_old else "yo'q edi",
+              new_value="yangi havola yaratildi", commit=True)
+    base = os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app")
+    return {"url": f"{base}/parent/{s.parent_token}",
+            "expires_at": s.parent_token_expires_at.isoformat()}
 
 @router.get("/api/students/{student_id}/pay-link")
 def pay_link(student_id: int, amount: float = 0,

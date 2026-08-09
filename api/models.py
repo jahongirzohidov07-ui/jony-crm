@@ -304,6 +304,11 @@ class Student(Base):
     telegram_chat_id = Column(String, nullable=True)
     # Ota-ona sahifasi: login-siz, taxmin qilib bo'lmaydigan havola.
     parent_token = Column(String, nullable=True, index=True)
+    # Havola muddati (roles.PARENT_TOKEN_VALIDITY_DAYS). NULL = eski
+    # (muddat tizimidan oldingi) token - hali muddati tugamagan deb
+    # hisoblanadi, birinchi murojaatda backfill qilinadi (students.py:
+    # parent_link()).
+    parent_token_expires_at = Column(DateTime, nullable=True)
     # Oxirgi tahrir vaqti — ikki xodim bir vaqtda tahrirlaganda
     # "oxirgisi yutadi" o'rniga ogohlantirish berish uchun.
     updated_at = Column(DateTime, nullable=True)

@@ -226,9 +226,19 @@ function ParentTools({ student }: { student: StudentDetailType }) {
   };
 
   const parentLink = async () => {
-    const r = await api.get<{ url: string }>(
+    const r = await api.get<{ url: string; expires_at: string }>(
       `/students/${student.id}/parent-link`);
     copy(r.url, "Ota-ona sahifasi havolasi");
+  };
+
+  const parentLinkRegenerate = async () => {
+    if (!confirm(
+      "Eski havola DARHOL ishlamay qoladi. Ota-onaga yangisini "
+      + "yuborishga tayyormisiz?"
+    )) return;
+    const r = await api.post<{ url: string; expires_at: string }>(
+      `/students/${student.id}/parent-link/regenerate`, {});
+    copy(r.url, "Yangi ota-ona sahifasi havolasi");
   };
 
   const notifyDebt = async () => {
@@ -269,6 +279,11 @@ function ParentTools({ student }: { student: StudentDetailType }) {
         <button onClick={parentLink}
           className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
           Ota-ona sahifasi
+        </button>
+        <button onClick={parentLinkRegenerate}
+          title="Eski havolani bekor qilib, yangisini yaratadi (havola 180 kunda eskiradi)"
+          className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-500 hover:border-amber-300 hover:text-amber-700">
+          Havolani yangilash
         </button>
         {pay?.enabled && pay.links && Object.keys(pay.links).length > 0 &&
           Object.entries(pay.links).map(([k, url]) => (

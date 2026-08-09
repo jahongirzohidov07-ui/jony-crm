@@ -60,6 +60,16 @@ MIGRATIONS = [
         " AND NOT EXISTS (SELECT 1 FROM teachers t"
         "                 WHERE t.user_id = u.id)",
     ]),
+    # Ota-ona havolasiga muddat qo'shildi (roles.PARENT_TOKEN_VALIDITY_DAYS).
+    # Faqat ustun qo'shiladi - mavjud tokenlarning muddati bu yerda
+    # BELGILANMAYDI (SQLite/Postgres orasida sana arifmetikasi
+    # boshqacha yoziladi, xato qilib xavfli DB-maxsus SQL yozgandan
+    # ko'ra ilova kodida bajarish xavfsizroq). NULL qolgan eskilar
+    # birinchi "Ota-ona havolasi" so'ralganda students.py:parent_link()
+    # orqali backfill qilinadi - hech kim hozircha yo'qotmaydi.
+    ("0008_students_parent_token_expiry", [
+        "ALTER TABLE students ADD COLUMN parent_token_expires_at TIMESTAMP",
+    ]),
 ]
 
 

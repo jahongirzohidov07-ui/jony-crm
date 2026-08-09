@@ -4553,6 +4553,14 @@ def password_ok(pw: str) -> bool:
 LOGIN_MAX_FAILS = 5
 LOGIN_WINDOW_MIN = 15
 
+# Ota-ona havolasi (login-siz, faqat token bilan): shuncha kundan
+# keyin muddati tugaydi. Login talab qilinmagani uchun token
+# muddatsiz yashasa, tasodifan (yoki Telegram guruhida, skrinshotda
+# va h.k.) tarqalib qolgan eski havola abadiy ochiq qolardi.
+# Muddati tugasa ham ma'lumot yo'qolmaydi - xodim "yangilash"
+# tugmasi bilan bir zumda yangi havola chiqaradi.
+PARENT_TOKEN_VALIDITY_DAYS = 180
+
 
 def money(x) -> float:
     """Pul har doim butun so'mgacha yaxlitlanadi — Float ustunlarda

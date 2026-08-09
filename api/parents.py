@@ -272,6 +272,14 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         models.Student.parent_token == token).first()
     if not s:
         raise HTTPException(404, "Topilmadi")
+    # NULL muddat = muddat tizimidan oldingi eski token - hali
+    # amal qiladi (birinchi "Ota-ona havolasi" so'ralganda
+    # students.py:parent_link() muddat belgilab qo'yadi).
+    if (s.parent_token_expires_at
+            and s.parent_token_expires_at < datetime.utcnow()):
+        raise HTTPException(
+            404, "Havola muddati tugagan. Administratordan yangi "
+                 "havola so'rang.")
     g = db.query(models.Group).get(s.group_id) if s.group_id else None
     today = roles.local_today()
     start = today - timedelta(days=45)

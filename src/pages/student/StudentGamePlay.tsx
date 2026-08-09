@@ -65,6 +65,9 @@ export default function StudentGamePlay() {
         word_id: wid,
         game: round.game,
         answer: value,
+        // "To'g'ri/Xato" uchun: ekranda qaysi tarjima turganini ham
+        // yuboramiz, chunki to'g'riligini SERVER hal qiladi.
+        shown: item.shown,
       });
       if (res.correct) setCorrectCount((c) => c + 1);
       if (!silent) setFeedback(res);
@@ -161,6 +164,12 @@ export default function StudentGamePlay() {
         )}
         {round.game === "spelling" && (
           <Spelling item={item} onAnswer={answer} disabled={!!feedback} />
+        )}
+        {round.game === "truefalse" && (
+          <TrueFalse item={item} onAnswer={answer} disabled={!!feedback} />
+        )}
+        {round.game === "scramble" && (
+          <Scramble item={item} onAnswer={answer} disabled={!!feedback} />
         )}
         {round.game === "match" && (
           <Match
@@ -384,6 +393,111 @@ function Spelling({
         Tekshirish
       </button>
     </form>
+  );
+}
+
+/* ---------------- To'g'ri / Xato --------------------------------- */
+function TrueFalse({
+  item,
+  onAnswer,
+  disabled,
+}: {
+  item: RoundItem;
+  onAnswer: (v: string) => void;
+  disabled: boolean;
+}) {
+  return (
+    <div className="text-center">
+      <p className="text-2xl font-bold text-slate-900 pt-4">{item.prompt}</p>
+      <p className="text-xs text-slate-400 py-1">tarjimasi shumi?</p>
+      <p className="text-xl font-medium text-brand-700 pb-6">{item.shown}</p>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          disabled={disabled}
+          onClick={() => onAnswer("xato")}
+          className="py-3.5 rounded-xl border border-red-200 text-red-600 text-sm font-semibold active:bg-red-50 disabled:opacity-50"
+        >
+          ✗ Xato
+        </button>
+        <button
+          disabled={disabled}
+          onClick={() => onAnswer("togri")}
+          className="py-3.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold active:bg-emerald-700 disabled:opacity-50"
+        >
+          ✓ To'g'ri
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Harflarni tartiblash --------------------------- */
+function Scramble({
+  item,
+  onAnswer,
+  disabled,
+}: {
+  item: RoundItem;
+  onAnswer: (v: string) => void;
+  disabled: boolean;
+}) {
+  // Tanlangan harflar indeks bo'yicha saqlanadi — bir xil harf ikki
+  // marta uchrasa ham ("letter" emas, "index") chalkashmaydi.
+  const [picked, setPicked] = useState<number[]>([]);
+  useEffect(() => setPicked([]), [item.word_id]);
+
+  const letters = item.letters || [];
+  const built = picked.map((i) => letters[i]).join("");
+
+  return (
+    <div className="text-center">
+      <p className="text-xs text-slate-500 pt-2">Shu so'zni harflardan yig'ing</p>
+      <p className="text-xl font-bold text-slate-900 py-3">{item.prompt}</p>
+
+      <div className="min-h-[52px] rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center gap-1 px-3 py-2 mb-4">
+        {built ? (
+          <span className="text-2xl font-bold tracking-widest text-brand-700">
+            {built}
+          </span>
+        ) : (
+          <span className="text-sm text-slate-300">harflarni bosing</span>
+        )}
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
+        {letters.map((ch, i) => (
+          <button
+            key={i}
+            disabled={disabled || picked.includes(i)}
+            onClick={() => setPicked((p) => [...p, i])}
+            className={`w-11 h-11 rounded-xl border text-lg font-bold transition ${
+              picked.includes(i)
+                ? "border-slate-100 bg-slate-50 text-slate-300"
+                : "border-slate-300 text-slate-800 active:bg-slate-100"
+            }`}
+          >
+            {ch}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          disabled={disabled || picked.length === 0}
+          onClick={() => setPicked((p) => p.slice(0, -1))}
+          className="py-3 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium disabled:opacity-40"
+        >
+          O'chirish
+        </button>
+        <button
+          disabled={disabled || picked.length !== letters.length}
+          onClick={() => onAnswer(built)}
+          className="py-3 rounded-xl bg-brand-600 text-white text-sm font-medium disabled:opacity-40"
+        >
+          Tekshirish
+        </button>
+      </div>
+    </div>
   );
 }
 

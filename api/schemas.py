@@ -2220,10 +2220,15 @@ class StudentImportIn(BaseModel):
 # ---------- Jony Student: lug'at o'yinlari ----------
 class VocabAnswerIn(BaseModel):
     """Bitta javob. To'g'riligini SERVER hal qiladi — bu yerda faqat
-    o'quvchi nima deganini yuboramiz."""
+    o'quvchi nima deganini yuboramiz.
+
+    shown — faqat "To'g'ri/Xato" o'yini uchun: ekranda qaysi tarjima
+    ko'rsatilgani. Server shu tarjimani bazadagi haqiqiy tarjima bilan
+    solishtirib, javob to'g'ri yoki yo'qligini O'ZI hal qiladi."""
     word_id: int
     game: str
     answer: Optional[str] = None
+    shown: Optional[str] = None
 
 
 class VocabWordIn(BaseModel):

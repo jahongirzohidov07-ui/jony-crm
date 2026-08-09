@@ -25,9 +25,17 @@ export default function Login() {
             "Profil → Parolni o'zgartirish."
         );
       }
-      // O'quvchi O'Z ilovasiga tushadi (Jony Student), xodimlar
-      // paneliga emas — u yerda ko'radigan narsasi yo'q.
-      navigate(u?.role === "student" ? "/student" : "/", { replace: true });
+      // Har kim O'Z ilovasiga tushadi: o'quvchi -> Jony Student,
+      // ustoz/support -> Jony Teacher (telefonda yo'qlama uchun),
+      // qolganlar -> xodimlar paneli. Ustoz xohlasa Profil'dagi
+      // "To'liq panelga o'tish" orqali eski ko'rinishga o'tadi.
+      const dest =
+        u?.role === "student"
+          ? "/student"
+          : u?.role === "teacher" || u?.role === "support_teacher"
+            ? "/teacher"
+            : "/";
+      navigate(dest, { replace: true });
     } catch {
       // error is surfaced via context
     }

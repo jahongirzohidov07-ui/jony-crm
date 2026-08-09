@@ -95,6 +95,7 @@ import students as _r_students
 import support as _r_support
 import system as _r_system
 import tasks as _r_tasks
+import teacher_app as _r_teacher_app
 import teachers as _r_teachers
 import timetable as _r_timetable
 
@@ -123,6 +124,7 @@ app.include_router(_r_students.router)
 app.include_router(_r_support.router)
 app.include_router(_r_system.router)
 app.include_router(_r_tasks.router)
+app.include_router(_r_teacher_app.router)
 app.include_router(_r_teachers.router)
 app.include_router(_r_timetable.router)
 

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./lib/AuthContext";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
+import { ToastHost } from "./components/ToastHost";
 
 /**
  * TEZLIK: har bir sahifa alohida bo'lak (code splitting). Ilgari
@@ -128,6 +129,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
+        <ToastHost />
       </AuthProvider>
     </BrowserRouter>
   );

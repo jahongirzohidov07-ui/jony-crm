@@ -1,3 +1,5 @@
+import { pushToast } from "./toast";
+
 const TOKEN_KEY = "jony_crm_token";
 
 export function getToken(): string | null {
@@ -65,10 +67,19 @@ async function request<T>(
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const res = await fetch(`/api${path}`, { ...options, headers });
+  let res: Response;
+  try {
+    res = await fetch(`/api${path}`, { ...options, headers });
+  } catch {
+    // Tarmoq darajasidagi xato (internet uzildi, server ishlamayapti
+    // va h.k.) — bularda ham hech narsa ko'rsatilmasdan qolmasin.
+    pushToast("Tarmoq bilan bog'lanib bo'lmadi. Internetni tekshiring.");
+    throw new ApiError("Tarmoq bilan bog'lanib bo'lmadi");
+  }
 
   if (res.status === 401) {
     clearToken();
+    pushToast("Sessiya tugadi, qayta kiring", "info");
     window.location.href = "/login";
     throw new Error("Sessiya tugadi, qayta kiring");
   }
@@ -78,17 +89,29 @@ async function request<T>(
     const d = body.detail;
     // Avtomatik tekshiruvlar xatoni obyekt sifatida qaytaradi:
     // {message, problems, can_force}. Oddiy xatolarda esa matn keladi.
+    //
+    // MUHIM (2026-08-09): bu yerda pushToast(...) chaqirilishi —
+    // ruxsat etilmagan yoki boshqa sabab bilan muvaffaqiyatsiz
+    // tugagan HAR BIR so'rov ko'rinadigan xabar bilan chiqishini
+    // kafolatlaydi, hatto chaqirgan sahifa o'zi xatoni ushlab
+    // (catch) alohida ko'rsatmasa ham ("screen refreshed, hech
+    // nima bo'lmagandek" muammosi — Jahongir HR menejer misolida
+    // ko'rsatdi). Sahifaning o'z mahalliy xato matni (masalan forma
+    // ichidagi qizil yozuv) bilan bir vaqtda, unga xalaqit bermay
+    // ishlaydi.
     if (d && typeof d === "object" && !Array.isArray(d)) {
       const err = new ApiError(d.message || `Xatolik: ${res.status}`);
       err.problems = d.problems ?? [];
       err.canForce = Boolean(d.can_force);
       err.status = res.status;
+      pushToast(err.message);
       throw err;
     }
     const err = new ApiError(
       typeof d === "string" ? d : `Xatolik: ${res.status}`
     );
     err.status = res.status;
+    pushToast(err.message);
     throw err;
   }
 

@@ -238,7 +238,9 @@ def save_attendance(
         for a in db.query(models.Attendance).filter(
             models.Attendance.lesson_id == lesson_id).all()
     }
-    newly_absent = []  # Telegram: "darsga kelmadi" xabari uchun
+    newly_absent = []   # Telegram: "darsga kelmadi" xabari uchun
+    newly_present = []  # Telegram: "darsga keldi" xabari uchun
+    newly_late = []     # Telegram: "kech keldi" xabari uchun
     for m in payload.marks:
         if m.student_id in _frozen_ids:
             continue
@@ -255,8 +257,13 @@ def save_attendance(
         # (soat belgisi bilan) ko'rinadi.
         val = (2 if m.late else 1) if m.present else 0
         row = existing.get(m.student_id)
-        if val == 0 and (row is None or (row.present or 0) != 0):
+        prev = (row.present or 0) if row else None
+        if val == 0 and prev != 0:
             newly_absent.append(m.student_id)
+        elif val == 1 and prev != 1:
+            newly_present.append(m.student_id)
+        elif val == 2 and prev != 2:
+            newly_late.append(m.student_id)
         if row:
             row.present = val
             # Tekshirilmagan bo'lsa eskisiga tegilmaydi — ustoz
@@ -284,9 +291,12 @@ def save_attendance(
         lesson.held = 0
     db.commit()
 
-    # Telegram: BUGUNGI darsga kelmagan bola haqida ota-onaga xabar.
-    # Faqat yangi belgilanganlarga — tuzatishlarda qayta ketmaydi.
-    if newly_absent and lesson.date == _today and notify.enabled():
+    # Telegram: BUGUNGI davomat haqida ota-onaga xabar (kelmadi/keldi/
+    # kech keldi) — faqat YANGI belgilanganlarga, tuzatishlarda qayta
+    # ketmaydi (2026-08-09, Jahongir: "darsga keldi degan bildirishnoma,
+    # ustoz kech keldi deb belgilasa kech keldi degan bildirishnoma").
+    if (newly_absent or newly_present or newly_late) \
+            and lesson.date == _today and notify.enabled():
         try:
             g_name = (db.query(models.Group).get(lesson.group_id).name
                       if lesson.group_id else "")
@@ -298,6 +308,20 @@ def save_attendance(
                         f"❗ {st.full_name} bugun ({lesson.date:%d.%m}) "
                         f"{g_name} darsiga kelmadi.\nSababini bilsangiz, "
                         "administratorga xabar bering.")
+            for sid in newly_present:
+                st = db.query(models.Student).get(sid)
+                if st is not None and st.telegram_chat_id:
+                    notify.send(
+                        st.telegram_chat_id,
+                        f"✅ {st.full_name} bugun ({lesson.date:%d.%m}) "
+                        f"{g_name} darsiga keldi.")
+            for sid in newly_late:
+                st = db.query(models.Student).get(sid)
+                if st is not None and st.telegram_chat_id:
+                    notify.send(
+                        st.telegram_chat_id,
+                        f"🕒 {st.full_name} bugun ({lesson.date:%d.%m}) "
+                        f"{g_name} darsiga kech keldi.")
         except Exception:
             pass
 

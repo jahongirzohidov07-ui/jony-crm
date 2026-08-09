@@ -85,9 +85,13 @@ db.add(models.Payment(student_id=s.id, amount=300000, kind="payment",
                       public_id="PAY-0002"))
 db.commit()
 
-# Tasdiqlangan test — ko'rinishi kerak.
+# Natija kiritilgan test — status "done" (save_exam_results() shunday
+# qiladi, exams.py) — KO'RINISHI kerak. Bu ataylab "approved" emas,
+# "done": aynan shu holat ilgari BUG tufayli ko'rinmay qolardi (fix
+# 2026-08-09) — testni "approved" bilan yozsak bug qaytadan kirib
+# kelsa ham sezilmay qolar edi.
 ex_ok = models.Exam(group_id=g.id, kind="unit", unit_no=5, date=today,
-                    status="approved", max_score=20)
+                    status="done", max_score=20)
 db.add(ex_ok)
 db.commit()
 db.add(models.ExamResult(exam_id=ex_ok.id, student_id=s.id, score=17,
@@ -99,6 +103,13 @@ ex_draft = models.Exam(group_id=g.id, kind="mock", date=today,
 db.add(ex_draft)
 db.commit()
 db.add(models.ExamResult(exam_id=ex_draft.id, student_id=s.id, band=6.5))
+
+# Bekor qilingan test — KO'RINMASLIGI kerak.
+ex_cancelled = models.Exam(group_id=g.id, kind="unit", unit_no=6, date=today,
+                           status="cancelled", max_score=20)
+db.add(ex_cancelled)
+db.commit()
+db.add(models.ExamResult(exam_id=ex_cancelled.id, student_id=s.id, score=10))
 db.commit()
 
 db.add(models.CoinEntry(student_id=s.id, amount=25, source="daily_grade",
@@ -146,7 +157,7 @@ ck("1 ta kundalik baho bor", len(d.get("daily_grades", [])), 1)
 ck("baho qiymati to'g'ri", d["daily_grades"][0]["score"], 5)
 
 print("\n=== TEST NATIJALARI ===")
-ck("faqat TASDIQLANGAN test ko'rinadi (1 ta, qoralama emas)",
+ck("faqat NATIJA KIRITILGAN test ko'rinadi (1 ta, qoralama/bekor emas)",
    len(d.get("exam_results", [])), 1)
 er = d["exam_results"][0]
 ck("sarlavha avtomatik yaratilgan", er["title"], "Unit 5")

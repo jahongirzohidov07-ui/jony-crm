@@ -4,13 +4,13 @@ import {
   ClipboardCheck,
   Coins,
   Download,
-  GraduationCap,
   Snowflake,
   Trophy,
   Wallet,
   X,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { BrandIcon } from "../components/BrandIcon";
 import type { ParentCtx } from "./Parent";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -66,8 +66,8 @@ export default function ParentHome() {
       <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-8 pb-10">
         <div className="max-w-md mx-auto">
           <div className="flex items-center gap-2 mb-4 opacity-90">
-            <GraduationCap size={18} />
-            <span className="text-sm font-medium">Jony Academy</span>
+            <BrandIcon size={18} className="rounded-md" />
+            <span className="text-sm font-medium">Jony ota-ona</span>
           </div>
           <h1 className="text-xl font-semibold">{d.name}</h1>
           <p className="text-sm opacity-90 mt-0.5">

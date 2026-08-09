@@ -156,9 +156,39 @@ def save_exam_results(
             created_by=user.full_name,
         )
 
+    # Telegram: "test natijalari chiqdi" xabari faqat BIRINCHI marta
+    # natija kiritilganda yuborilishi kerak (2026-08-09, Jahongir
+    # so'radi) — status hali "approved" bo'lsa, demak bu shu test
+    # uchun birinchi save_exam_results() chaqiruvi; keyinroq ustoz
+    # bitta bahoni tuzatsa (status allaqachon "done"), qayta xabar
+    # ketmaydi.
+    was_first_entry = exam.status == "approved"
     if exam.status == "approved":
         exam.status = "done"
     db.commit()
+
+    if was_first_entry and notify.enabled():
+        try:
+            title = exam.title or roles.exam_title(exam.kind, exam.unit_no)
+            for r in exam.results:
+                if r.absent:
+                    continue
+                st = db.query(models.Student).get(r.student_id)
+                if st is None or not st.telegram_chat_id:
+                    continue
+                if r.band is not None:
+                    result_desc = f"Band {r.band:g}"
+                elif exam.max_score:
+                    result_desc = (f"{(r.score or 0):g}/{exam.max_score:g} "
+                                   f"({r.percent}%)")
+                else:
+                    result_desc = f"{(r.score or 0):g}"
+                notify.send(
+                    st.telegram_chat_id,
+                    f"📊 Test natijasi chiqdi\n{st.full_name}\n"
+                    f"{title}: {result_desc}")
+        except Exception:
+            pass
 
     # AVTOMAT XP: natija bandi, o'sish bonusi, unit/imtihon va mock.
     # Bitta natijaga faqat bitta band qoidasi ishlaydi.

@@ -286,8 +286,8 @@ def parent_manifest(token: str, db: Session = Depends(get_db)):
         raise HTTPException(404, "Topilmadi")
     manifest = {
         "id": f"/parent/{token}",
-        "name": f"Jony Academy — {s.full_name}",
-        "short_name": "Jony Academy",
+        "name": f"Jony ota-ona — {s.full_name}",
+        "short_name": "Jony ota-ona",
         "description":
             "Farzandingizning davomati, balansi va mashq darajasi",
         "start_url": f"/parent/{token}?pwa=1",
@@ -416,13 +416,16 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "score": dg.score,
     } for dg, ls in grade_rows]
 
-    # TEST NATIJALARI: faqat TASDIQLANGAN (approved) testlar — hali
-    # qoralama (draft) bosqichidagi test ota-onaga ko'rinmasin.
+    # TEST NATIJALARI: TASDIQLANGAN yoki NATIJA KIRITILGAN (done)
+    # testlar — qoralama va bekor qilingan ko'rinmasin. TUZATILDI
+    # (2026-08-09): save_exam_results() natija kiritilgach statusni
+    # "done"ga o'tkazadi (exams.py) — faqat "approved"ni tekshirish
+    # haqiqiy kiritilgan natijalarni yashirib qo'yardi.
     exam_rows = (db.query(models.ExamResult, models.Exam)
                  .join(models.Exam,
                        models.ExamResult.exam_id == models.Exam.id)
                  .filter(models.ExamResult.student_id == s.id,
-                         models.Exam.status == "approved")
+                         models.Exam.status.in_(["approved", "done"]))
                  .order_by(models.Exam.date.desc()).limit(20).all())
     exam_results = [{
         "date": ex.date.isoformat() if ex.date else None,

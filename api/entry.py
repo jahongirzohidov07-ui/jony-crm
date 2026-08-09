@@ -453,12 +453,18 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "score": dg.score,
     } for dg, ls in grade_rows]
 
-    # Faqat TASDIQLANGAN testlar — qoralama bosqichidagisi ko'rinmasin.
+    # Faqat TASDIQLANGAN yoki NATIJA KIRITILGAN testlar ko'rinsin —
+    # qoralama (draft, hali Examiner tasdiqlamagan) va bekor qilingan
+    # ko'rinmasin. TUZATILDI (2026-08-09): ilgari faqat "approved"
+    # o'tkazilardi, lekin save_exam_results() natija kiritilgach
+    # statusni "done"ga o'zgartiradi (exams.py) — demak haqiqiy
+    # kiritilgan natijalar aynan shu holatga o'tgach ko'rinmay
+    # qolardi. Endi ikkalasi ham hisobga olinadi.
     exam_rows = (db.query(models.ExamResult, models.Exam)
                  .join(models.Exam,
                        models.ExamResult.exam_id == models.Exam.id)
                  .filter(models.ExamResult.student_id == s.id,
-                         models.Exam.status == "approved")
+                         models.Exam.status.in_(["approved", "done"]))
                  .order_by(models.Exam.date.desc()).limit(20).all())
     exam_results = [{
         "date": ex.date.isoformat() if ex.date else None,

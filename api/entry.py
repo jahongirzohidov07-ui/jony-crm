@@ -57,6 +57,26 @@ def _drop_route(path: str, method: str) -> None:
     app.router.routes = keep
 
 
+# HR menejerga "rahbariyat" sifatida dars ko'chirishni tasdiqlash/
+# ko'rish huquqi shu YERDA, faylning ENG BOSHIDA berilishi SHART.
+# Sabab: pastroqda (~qator 3040) xuddi shu qo'shimcha bor edi, lekin u
+# YETARLI EMAS - Python fayl ichidagi @decorator'larni YUQORIDAN
+# PASTGA, YOZUV TARTIBIDA ishga tushiradi va require_role(*ro'yxat)
+# ro'yxatni SHU DAQIQADAGI holatida (snapshot) o'qib oladi, keyin
+# ro'yxat o'zgarsa ham bu qayta o'qilmaydi. Natijada pastroqdagi
+# qo'shimcha faylning YUQORI qismidagi reschedule_decide_v2 (~qator
+# 1170) uchun umuman kech qolar edi, GET /api/reschedules
+# (groups_lessons.py, main.py orqali - bu esa entry.py o'zining birinchi
+# qatoridayoq to'liq import qilib bo'ladi) uchun esa HECH QACHON
+# yetib bormas edi - u fayl entry.py ishga tushishidan OLDIN to'liq
+# yuklanib bo'ladi. Amalda: HR menejer darsni TO'G'RIDAN-TO'G'RI
+# ko'chira olardi (bu tekshiruv unga bog'liq emas edi), lekin
+# ustozning kvotadan oshgan so'rovlarini KO'RA ("Bu amal uchun
+# ruxsatingiz yo'q") ham, TASDIQLAY ham OLMASDI.
+if roles.HR_MANAGER not in roles.RESCHEDULE_APPROVE:
+    roles.RESCHEDULE_APPROVE.append(roles.HR_MANAGER)
+
+
 # =====================================================================
 #  MASHQLAR — natijalar, ballar va daraja zinasi
 # =====================================================================
@@ -1162,6 +1182,27 @@ if _orig_my_resched_add is not None:
         except Exception:
             pass
         return out
+
+
+# GET /api/reschedules (rahbariyat ro'yxati) - ilgari umuman
+# almashtirilmagan edi, shuning uchun yuqoridagi (fayl boshidagi)
+# tuzatish bo'lmasa ham, bo'lsa ham HR menejerga yetib bormas edi -
+# main.py to'liq yuklanib bo'lgach (shu jumladan groups_lessons.py'ning
+# @router.get("/api/reschedules") qatori) entry.py o'zining BIRINCHI
+# qatoridayoq (`from main import ...`) shuni chaqiradi, ya'ni entry.py
+# tanasi hali bitta ham qator ishlamasidan turib bu qaror allaqachon
+# qabul qilingan bo'lardi.
+_cur_reschedules_list = _find_endpoint("/api/reschedules", "GET")
+
+if _cur_reschedules_list is not None:
+    _drop_route("/api/reschedules", "GET")
+
+    @app.get("/api/reschedules")
+    def reschedules_list_v2(status: str | None = None,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(
+                                *roles.RESCHEDULE_APPROVE))):
+        return _cur_reschedules_list(status=status, db=db, user=user)
 
 
 if _orig_resched_decide is not None:
@@ -3034,6 +3075,11 @@ def import_payments_undo(db: Session = Depends(get_db),
 #  HR MENEJERGA YANA UCHTA HUQUQ
 #  Dars ko'chirish (kelmagan kunni surish ham shu), coin qo'shish va
 #  tahrirlash. Eski yo'qlama allaqachon ochilgan.
+#
+#  RESCHEDULE_APPROVE'ga HR_MANAGER qo'shish endi faylning ENG
+#  BOSHIDA ham bajariladi (qarang: yuqorida, _drop_route() ta'rifidan
+#  keyin) - bu yerdagi qator shunchaki xavfsizlik uchun qoldirilgan
+#  (if tekshiruvi tufayli ikki marta qo'shib yubormaydi).
 # =====================================================================
 if _HRM not in roles.RESCHEDULE_APPROVE:
     roles.RESCHEDULE_APPROVE.append(_HRM)

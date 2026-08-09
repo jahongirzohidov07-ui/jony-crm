@@ -4799,3 +4799,142 @@ def library_person(target_id: int, db: Session = Depends(get_db),
     return {"user_id": u.id, "name": u.full_name,
             "items": out, "total": len(need), "done": len(done),
             "percent": round(len(done) * 100 / len(need)) if need else 0}
+
+
+# =====================================================================
+#  SUPPORT TEACHERNING O'Z DARAJA YO'LI
+#
+#  Ilgari "Mening yo'lim" sahifasida supportga USTOZNING darajalari
+#  (Junior teacher, 80 000 so'm har bir o'quvchidan) ko'rinardi — bu
+#  xato edi, chunki supportning bosqichlari ham, talablari ham, oylik
+#  hisobi ham butunlay boshqa.
+#
+#  Oylik hisobi O'ZGARMAYDI: seanslardan chiqadigan formula o'z holida
+#  qoladi, ustiga faqat daraja koeffitsiyenti qo'llanadi. Qo'llanmadagi
+#  "soatiga 2000 / 3500 / 6000 so'm" raqamlari ishlatilmaydi.
+# =====================================================================
+_SUP_LADDER = {
+    "volunteer": {
+        "groups": "—",
+        "free_courses": 0,
+        "cert": "CEFR B2 53+ yoki IELTS 5.5",
+        "note": ("2 oylik sinov bosqichi: oylik berilmaydi va imtiyoz "
+                 "yo'q. Kitob va videolarni topshirib boradi."),
+    },
+    "junior": {
+        "groups": "2 ta guruh",
+        "free_courses": 1,
+        "cert": "CEFR B2 60+ yoki IELTS 6.0",
+        "note": "Bitta kurs bepul.",
+    },
+    "middle": {
+        "groups": "3–5 ta guruh",
+        "free_courses": 1,
+        "cert": "CEFR C1 yoki IELTS 6.5+",
+        "note": "Bitta kurs bepul.",
+    },
+    "senior": {
+        "groups": "10 tagacha guruh",
+        "free_courses": 2,
+        "cert": "CEFR C1 yoki IELTS 7.0+",
+        "note": "Ikkita kurs bepul.",
+    },
+}
+_SUP_VOLUNTEER_MONTHS = 2
+
+
+def _months_since(d) -> float:
+    if not d:
+        return 0.0
+    today = roles.local_today()
+    return round((today - d).days / 30.44, 1)
+
+
+@app.get("/api/me/support-career")
+def my_support_career(db: Session = Depends(get_db),
+                      user=Depends(M.get_current_user)):
+    """Supportning o'z daraja yo'li. Ustoznikidan butunlay alohida."""
+    if user.role not in (roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT):
+        raise HTTPException(404, "Bu sahifa support teacherlar uchun")
+
+    rates = _grade_rates(db)
+    row = db.query(_SG).filter(_SG.user_id == user.id).first()
+    cur = (row.grade if row and row.grade else "volunteer")
+
+    levels = []
+    for info in sorted(rates.values(), key=lambda x: x["order_no"]):
+        extra = _SUP_LADDER.get(info["key"], {})
+        levels.append({
+            "key": info["key"],
+            "label": (info["label"] + " support"
+                      if info["key"] != "volunteer" else "Volontyor support"),
+            "coef": info["coef"],
+            "groups": extra.get("groups", "—"),
+            "free_courses": extra.get("free_courses", 0),
+            "cert": extra.get("cert"),
+            "note": extra.get("note"),
+            "paid": info["coef"] > 0,
+        })
+
+    # Hozirgi holat
+    gids = [a.group_id for a in db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.user_id == user.id,
+                    models.SupportAssignment.group_id.isnot(None)).all()]
+    today = roles.local_today()
+    t = M._teacher_of_user(db, user)
+    month = {}
+    if t:
+        try:
+            d = M._support_month(db, t.id, today.year, today.month)
+            d.pop("sessions", None)
+            month = d
+        except Exception:
+            month = {}
+    base = float(month.get("salary") or 0)
+    coef = float((rates.get(cur) or {}).get("coef", 0))
+
+    # Kutubxona — daraja ko'tarishda qaraladigan mezonlardan biri
+    lib_done = lib_total = 0
+    try:
+        prog = {p.item_id: p for p in db.query(_LP)
+                .filter(_LP.user_id == user.id).all()}
+        for it in db.query(_LI).all():
+            if not it.active or not it.required:
+                continue
+            if not _lib_for_role(it, user.role):
+                continue
+            lib_total += 1
+            p = prog.get(it.id)
+            if p and p.passed:
+                lib_done += 1
+    except Exception:
+        pass
+
+    in_grade = _months_since(row.since if row else None)
+    return {
+        "kind": "support",
+        "grade": cur,
+        "grade_label": (rates.get(cur) or {}).get("label", cur),
+        "coef": coef,
+        "since": (row.since.isoformat() if row and row.since else None),
+        "months_in_grade": in_grade,
+        "months_total": _months_since(user.hired_date),
+        "volunteer_months_needed": _SUP_VOLUNTEER_MONTHS,
+        "levels": levels,
+        "stats": {
+            "period": month.get("period"),
+            "groups": len(set(gids)),
+            "hours": month.get("hours", 0),
+            "students": month.get("students", 0),
+            "avg_percent": month.get("avg_percent"),
+            "salary_base": round(base, 0),
+            "salary": round(base * coef, 0),
+        },
+        "library": {"done": lib_done, "total": lib_total,
+                    "percent": (round(lib_done * 100 / lib_total)
+                                if lib_total else 0)},
+        "formula": month.get("formula"),
+        "hint": ("Oylik seanslardan avtomat hisoblanadi, so'ng daraja "
+                 "koeffitsiyentiga ko'paytiriladi. Volontyor bosqichida "
+                 "oylik berilmaydi."),
+    }

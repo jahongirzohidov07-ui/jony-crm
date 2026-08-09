@@ -2,10 +2,10 @@ import os
 from datetime import datetime, timedelta
 from typing import Optional
 
+import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -16,16 +16,39 @@ SECRET_KEY = os.environ.get("JONY_CRM_SECRET", "dev-secret-change-me-before-depl
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 12  # 12 soat
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+
+# 2026-08: passlib'dan voz kechildi (2020-yildan beri yangilanmagan,
+# shuning uchun bcrypt==3.2.0'ga "michoqlanib" qolgan edi - xavfsizlik
+# yamoqlari kelmasdi). Endi bcrypt kutubxonasidan TO'G'RIDAN-TO'G'RI
+# foydalanamiz. Bazadagi eski (passlib orqali yozilgan) parol
+# hash'lari O'ZGARMAYDI - ular oddiy $2b$... formatidagi standart
+# bcrypt hash, passlib buni faqat o'rab turgan edi. Shu sababli hech
+# bir foydalanuvchi parolini qayta kiritishi shart emas.
+#
+# bcrypt 72 BAYTdan uzun parolni qabul qilmaydi (ValueError) - passlib
+# bunday holatda jimgina kesib tashlagan, xatti-harakat bir xil
+# qolishi uchun shu yerda ham xuddi shunday kesamiz.
+_BCRYPT_MAX_BYTES = 72
+
+
+def _prep(password: str) -> bytes:
+    return (password or "").encode("utf-8")[:_BCRYPT_MAX_BYTES]
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(_prep(password), bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    if not hashed:
+        return False
+    try:
+        return bcrypt.checkpw(_prep(plain), hashed.encode("utf-8"))
+    except (ValueError, TypeError):
+        # Buzilgan/notanish formatdagi hash - kirishga ruxsat yo'q,
+        # lekin 500 bilan yiqilib tushmaydi.
+        return False
 
 
 def create_access_token(data: dict) -> str:

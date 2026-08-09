@@ -2,8 +2,7 @@ fastapi==0.140.1
 uvicorn==0.51.0
 SQLAlchemy==2.0.51
 python-jose==3.5.0
-passlib==1.7.4
-bcrypt==3.2.0
+bcrypt==5.0.0
 pydantic==2.13.4
 python-multipart==0.0.32
 psycopg2-binary==2.9.12

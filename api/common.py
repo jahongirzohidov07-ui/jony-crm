@@ -823,6 +823,29 @@ def _check_teacher_load(db: Session, teacher_id: int,
                and max_groups == grade_max else ".")))
     return problems
 
+def _active_student_count(db: Session, group_id: int,
+                          exclude_student_id: int | None = None) -> int:
+    """Guruhdagi FAOL o'quvchilar soni — xona/guruh sig'imini
+    tekshirishda ishlatiladi.
+
+    Sinovdagi (trial) va muzlatilgan (frozen) o'quvchilar
+    HISOBLANMAYDI: muzlatilgan darsga kelmaydi, joy egallamaydi;
+    sinovdagi hali tasdiqlanmagan. Bu /api/groups va /api/timetable
+    (timetable.py) dagi student_count bilan BIR XIL, ataylab izchil
+    qoida — o'sha yerlarda "STATISTIKA FAQAT FAOL O'QUVCHILAR
+    BO'YICHA: sinovdagi va muzlatilganlar songa qo'shilmaydi" deb
+    aniq yozilgan. Bu funksiya paydo bo'lishidan oldin sig'im
+    tekshiruvi xato ravishda `status != "archived"` (ya'ni trial VA
+    frozen'ni ham qo'shib) hisoblardi — 34 o'quvchili guruhda 5 tasi
+    muzlatilgan bo'lsa ham "34 ta, sig'maydi" derdi, aslida 29 ta
+    joy band edi (2026-08-09, Jahongir xabar qildi)."""
+    q = db.query(models.Student).filter(
+        models.Student.group_id == group_id,
+        models.Student.status == "active")
+    if exclude_student_id is not None:
+        q = q.filter(models.Student.id != exclude_student_id)
+    return q.count()
+
 def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
                     lesson_days, lesson_time, branch_id=None) -> list:
     """Jadval to'qnashuvlarini topadi. group_id berilsa o'sha guruhning
@@ -912,12 +935,11 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
                 continue
             break
 
-    # Xona sig'imi guruh o'quvchilaridan kichik bo'lmasin
+    # Xona sig'imi FAOL o'quvchilardan kichik bo'lmasin (sinovdagi
+    # va muzlatilganlar hisoblanmaydi — _active_student_count'ga q.)
     if room_id and group_id:
         room = db.query(models.Room).get(room_id)
-        n = db.query(models.Student).filter(
-            models.Student.group_id == group_id,
-            models.Student.status != "archived").count()
+        n = _active_student_count(db, group_id)
         if room and room.capacity and n > room.capacity:
             problems.append(_problem(
                 "over_capacity",
@@ -931,10 +953,7 @@ def _check_enrolment(db: Session, s: models.Student, g: models.Group) -> list:
     if not g:
         return problems
 
-    n = db.query(models.Student).filter(
-        models.Student.group_id == g.id,
-        models.Student.status != "archived",
-        models.Student.id != s.id).count()
+    n = _active_student_count(db, g.id, exclude_student_id=s.id)
     rooms = {r.id: r for r in db.query(models.Room).all()}
     cap = _group_capacity(g, rooms)
     if cap and n + 1 > cap:

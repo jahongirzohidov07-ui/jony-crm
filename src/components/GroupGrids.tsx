@@ -472,13 +472,20 @@ function MoveLessonModal({
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
-  // Rahbariyat/HR menejer darsni BUGUNGA ham ko'chira oladi (masalan,
-  // oy oxiridagi darslarni tezlashtirib guruhni muddatidan oldin
-  // tugatish uchun) — backend shuni ruxsat beradi (groups_lessons.py:
-  // group_reschedule). Oddiy ustoz uchun kamida ertaga bo'lishi kerak.
-  const todayStr = new Date().toISOString().slice(0, 10);
+  // Rahbariyat/HR menejer darsni ISTALGAN sanaga ko'chira oladi —
+  // hatto o'tib ketganiga ham (oy oxirini qayta taqsimlash yoki
+  // orqada qolgan jadvalni tuzatish uchun, 2026-08-09 so'ralgan) —
+  // backend shuni ruxsat beradi (groups_lessons.py:group_reschedule).
+  // Yagona chegara ikkala tomonga ham amal qiladigan max_shift_days,
+  // shuning uchun min'ni HAM shu masofaga qo'yamiz — aks holda forma
+  // backend rad etadigan sanani tanlashga imkon berardi. Oddiy ustoz
+  // uchun eskicha: kamida ertaga bo'lishi kerak.
   const min = box.manager
-    ? todayStr
+    ? new Date(
+        new Date(fromDate).getTime() - box.max_shift_days * 86400000
+      )
+        .toISOString()
+        .slice(0, 10)
     : new Date(Date.now() + 86400000).toISOString().slice(0, 10);
   const max = new Date(
     new Date(fromDate).getTime() + box.max_shift_days * 86400000

@@ -1155,14 +1155,15 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         raise HTTPException(403, "Bu guruhning darsini ko'chira olmaysiz")
 
     today = roles.local_today()
-    if manager:
-        # Rahbariyat/HR menejer guruhni tezlashtirish uchun darsni
-        # BUGUNGA ham ko'chira oladi — faqat tarixni orqaga
-        # o'zgartirib bo'lmaydi (o'tib ketgan sanaga taqiqlanadi).
-        if payload.to_date < today:
-            raise HTTPException(
-                400, "O'tib ketgan sanaga ko'chirib bo'lmaydi")
-    elif payload.to_date <= today:
+    # Rahbariyat/HR menejer darsni ISTALGAN sanaga ko'chira oladi —
+    # bugun, kelajak, HATTO o'tib ketgan sanaga ham (masalan, oy
+    # oxirini qayta taqsimlash yoki orqada qolgan jadvalni tuzatish
+    # uchun, 2026-08-09 so'ralgan). Haqiqiy to'siqlar shu funksiyaning
+    # davomida qoladi: shift_days chegarasi (pastda, ikkala tomonga
+    # ham amal qiladi) va manba darsning "held" bo'lmasligi — bular
+    # ish haqi hisobini himoya qiladi, rahbariyatga ham tegishli.
+    # Oddiy ustoz uchun talab o'zgarmadi: qat'iy kelajakdagi sana.
+    if not manager and payload.to_date <= today:
         raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")

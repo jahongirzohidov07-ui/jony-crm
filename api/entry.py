@@ -5056,3 +5056,86 @@ def my_support_career(db: Session = Depends(get_db),
                  "koeffitsiyentiga ko'paytiriladi. Volontyor bosqichida "
                  "oylik berilmaydi."),
     }
+
+
+# =====================================================================
+#  BAZA SXEMASI MODELDAN ORQADA QOLMASIN
+#
+#  create_all() faqat YO'Q JADVALNI yaratadi — mavjud jadvalga yangi
+#  ustun qo'shmaydi. Shuning uchun modelga ustun qo'shilib migratsiya
+#  yozilmasa, o'sha jadvalga tegadigan HAR BIR so'rov 500 beradi:
+#  dashboard ham, dars jadvali ham, o'quvchilar ro'yxati ham birdan
+#  qulaydi. Kod to'g'ri, baza ortda qolgan — tashqaridan qarab sababini
+#  topish qiyin, chunki xato ekranda "server xatosi" bo'lib ko'rinadi.
+#
+#  Shu yerda ilova ishga tushganda tekshiriladi va yetishmagan ustun
+#  o'zi qo'shiladi. Faqat NULL bo'la oladigan ustunlar qo'shiladi:
+#  NOT NULL ustun ma'lumot bilan to'ldirilishi kerak, uni jimgina
+#  qo'shib bo'lmaydi — u ro'yxatga chiqariladi va qo'lda hal qilinadi.
+# =====================================================================
+def _sync_missing_columns() -> dict:
+    from sqlalchemy import inspect as _insp
+    from sqlalchemy import text as _txt
+    from sqlalchemy.schema import CreateColumn
+    from database import Base as _B, engine as _eng
+
+    try:
+        insp = _insp(_eng)
+        have = set(insp.get_table_names())
+    except Exception:
+        return {"added": [], "manual": []}
+
+    cols_by_table = {}
+    try:                                    # bitta borishda hammasi
+        for key, cols in insp.get_multi_columns().items():
+            name = key[1] if isinstance(key, tuple) else key
+            cols_by_table[name] = {c["name"] for c in cols}
+    except Exception:
+        cols_by_table = {}
+
+    added, manual = [], []
+    for table in _B.metadata.sorted_tables:
+        if table.name not in have:
+            continue
+        known = cols_by_table.get(table.name)
+        if known is None:
+            try:
+                known = {c["name"] for c in insp.get_columns(table.name)}
+            except Exception:
+                continue
+        for col in table.columns:
+            if col.name in known or col.primary_key:
+                continue
+            if (not col.nullable and col.server_default is None
+                    and col.default is None):
+                manual.append(f"{table.name}.{col.name}")
+                continue
+            try:
+                ddl = str(CreateColumn(col).compile(dialect=_eng.dialect))
+                with _eng.begin() as cx:
+                    cx.execute(_txt(
+                        f'ALTER TABLE "{table.name}" ADD COLUMN {ddl}'))
+                added.append(f"{table.name}.{col.name}")
+            except Exception as exc:        # noqa: BLE001
+                manual.append(f"{table.name}.{col.name} "
+                              f"({exc.__class__.__name__})")
+    if added:
+        print("[schema] yangi ustunlar qo'shildi: " + ", ".join(added))
+    if manual:
+        print("[schema] qo'lda migratsiya kerak: " + ", ".join(manual))
+    return {"added": added, "manual": manual}
+
+
+_SCHEMA_SYNC = _sync_missing_columns()
+
+
+@app.get("/api/system/schema-sync")
+def system_schema_sync(user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Ishga tushganda nima qo'shilgani — xato qidirishda kerak."""
+    return {
+        "added": _SCHEMA_SYNC.get("added", []),
+        "manual": _SCHEMA_SYNC.get("manual", []),
+        "hint": ("Bo'sh bo'lsa — baza model bilan mos. \"manual\" "
+                 "ro'yxatidagi ustunlar NOT NULL, ularni qo'lda "
+                 "to'ldirish kerak."),
+    }

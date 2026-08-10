@@ -428,7 +428,7 @@ export default function Layout() {
         </div>
         {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
         <GlobalSearch />
-        {can(user?.role, BRANCH_SWITCH) && <BranchSwitcher />}
+        <BranchSwitcher />
         {can(user?.role, TASK_ACCESS) && (
           <div className="absolute top-4 right-28 sm:right-[16.5rem] z-40">
             <button
@@ -825,22 +825,37 @@ type SearchRes = {
 };
 
 
-/** FILIAL ALMASHTIRGICH — rahbariyat uchun (asoschi, o'quv bo'limi,
- *  SMM, HR, moliya direktori). Tanlangan filial BUTUN platformaga
- *  ta'sir qiladi: har bir sahifa faqat shu filial ma'lumotini
- *  ko'rsatadi. "Barcha filiallar" — umumiy ko'rinish. Qolgan xodimlar
- *  o'z filialiga bog'langan, ularga bu tanlagich chiqmaydi. */
+/** FILIAL ALMASHTIRGICH. Tanlangan filial BUTUN platformaga ta'sir
+ *  qiladi: har bir sahifa faqat shu filial ma'lumotini ko'rsatadi.
+ *  "Barcha filiallar" — umumiy ko'rinish.
+ *
+ *  IKKI XIL foydalanuvchiga chiqadi:
+ *   1. Rahbariyat (BRANCH_SWITCH) — BARCHA filiallar ro'yxati bilan;
+ *   2. IKKI YOKI UNDAN KO'P filialda ishlaydigan xodim — masalan ikki
+ *      filialda dars beradigan ustoz yoki guruhlari turli filialda
+ *      bo'lgan SUPPORT TEACHER — faqat O'Z filiallari bilan.
+ *
+ *  (2) 2026-08-10 da qo'shildi (Jahongir: "supportlarda agar guruhi
+ *  bir nechta filialda bo'lsa, filial almashtirish bo'lsin — tepada
+ *  o'ng tomonda boshqa xodimlarga o'xshab"). Bitta filialli xodimga
+ *  hamon chiqmaydi — unga tanlov ko'rsatish chalg'itadi. */
 function BranchSwitcher() {
-  const [branches, setBranches] = useState<
-    { id: number; name: string }[]
-  >([]);
+  const { user } = useAuth();
+  const [all, setAll] = useState<{ id: number; name: string }[]>([]);
   const current = getGlobalBranch();
+  const orgWide = can(user?.role, BRANCH_SWITCH);
+  const mine = user?.branches ?? [];
 
   useEffect(() => {
+    // To'liq ro'yxat faqat rahbariyatga kerak — qolganlarga o'z
+    // filiallari /api/me dan allaqachon keladi.
+    if (!orgWide) return;
     api.get<{ id: number; name: string }[]>("/branches")
-      .then(setBranches)
+      .then(setAll)
       .catch(() => {});
-  }, []);
+  }, [orgWide]);
+
+  const branches = orgWide ? all : mine;
 
   if (branches.length < 2) return null;
 

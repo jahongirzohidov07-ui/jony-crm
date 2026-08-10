@@ -372,6 +372,21 @@ def update_user(
                   entity_label=target.full_name, field="password",
                   note="Parol o'zgartirildi", branch_id=target.branch_id)
 
+    # SUPPORT BO'SHATILSA GURUHLARI AVTOMAT BO'SHASIN (2026-08-10).
+    # DIQQAT: bu tekshiruv rol va faollik O'ZGARTIRILISHIDAN OLDIN
+    # turishi SHART. Pastda target.role allaqachon yangi qiymatga
+    # o'tib bo'ladi va "avval support edimi?" degan savolga javob
+    # topib bo'lmay qoladi.
+    _was_support = target.role == roles.SUPPORT_TEACHER
+    _leaving = (payload.is_active is not None
+                and target.is_active and not int(payload.is_active))
+    _role_changed = (payload.role is not None
+                     and payload.role != roles.SUPPORT_TEACHER)
+    if _was_support and (_leaving or _role_changed):
+        _release_support_groups(
+            db, target,
+            "ishdan bo'shatildi" if _leaving else "lavozimi o'zgartirildi")
+
     if payload.full_name is not None:
         target.full_name = payload.full_name
     if payload.role is not None:

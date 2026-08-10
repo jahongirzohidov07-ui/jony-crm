@@ -474,16 +474,73 @@ def _months_between(start: date, end: date) -> float:
 
 def _user_branch_ids(db, user: models.User) -> list:
     """Xodimning BARCHA filiallari (asosiy + qo'shimcha). So'rov soni
-    oshmasin deb natija user obyektiga yopishtirib qo'yiladi."""
+    oshmasin deb natija user obyektiga yopishtirib qo'yiladi.
+
+    IKKI MANBADAN yig'iladi:
+      1. user_branches — xodim kartasidan (Xodimlar bo'limi);
+      2. teacher_branches — USTOZ kartasidan (Ustozlar bo'limi).
+
+    (2) 2026-08-10 da qo'shildi. Muammo: HR ustoz kartasida "ikkinchi
+    filial" ni belgilaganda faqat teacher_branches ga yozilardi
+    (teachers.py:_sync_teacher_branches), user_branches esa bo'sh
+    qolardi. Natijada ustozning KIRISH hisobi hamon bitta filialga
+    bog'liq bo'lib, ikkinchi filialdagi o'z guruhini ro'yxatda ko'rib
+    tursa ham ocholmasdi ("Bu guruh boshqa filialga tegishli").
+    Endi ikkala jadval ham hisobga olinadi — HR qayerdan belgilashidan
+    qat'i nazar ishlaydi."""
     cached = getattr(user, "_all_branch_ids", None)
     if cached is not None:
         return cached
     extra = [ub.branch_id for ub in db.query(models.UserBranch)
              .filter(models.UserBranch.user_id == user.id).all()]
-    ids = ([user.branch_id] if user.branch_id else []) + \
-        [b for b in extra if b != user.branch_id]
+    # Ustoz kartasidagi qo'shimcha filiallar
+    try:
+        t = (db.query(models.Teacher)
+             .filter(models.Teacher.user_id == user.id).first())
+        if t:
+            if t.branch_id:
+                extra.append(t.branch_id)
+            extra += [tb.branch_id for tb in db.query(models.TeacherBranch)
+                      .filter(models.TeacherBranch.teacher_id == t.id).all()]
+    except Exception:
+        pass
+    ids = ([user.branch_id] if user.branch_id else [])
+    for b in extra:
+        if b and b not in ids:
+            ids.append(b)
     user._all_branch_ids = ids
     return ids
+
+def _in_user_branches(db, user: models.User, branch_id,
+                      null_ok: bool = False) -> bool:
+    """Shu filial foydalanuvchiga tegishlimi (asosiy YOKI qo'shimcha).
+
+    NEGA KERAK (2026-08-10, Jahongir xabar berdi): ikki filialda
+    ishlaydigan xodim RO'YXATDA ikkala filial yozuvlarini ko'rardi
+    (scope_to_branch to'g'ri ishlaydi — u _user_branch_ids ishlatadi),
+    LEKIN bittasini OCHMOQCHI bo'lsa 403 "boshqa filialga tegishli"
+    chiqardi. Sababi: yakka yozuv tekshiruvlari user.branch_id ni
+    (BITTA filial) solishtirardi. Natijada ustoz o'z guruhini ro'yxatda
+    ko'rib, ustiga bosganda ochib bo'lmasdi; examiner esa ikkinchi
+    filial imtihonini qabul qila olmasdi.
+
+    Endi ro'yxat va yakka yozuv tekshiruvi BIR XIL qoidadan yuradi."""
+    if user.role in tuple(roles.ORG_WIDE_ROLES):
+        return True
+    if not user.branch_id:
+        # Filialga umuman bog'lanmagan xodim — cheklov qo'llanmaydi
+        return True
+    if branch_id is None:
+        # DIQQAT: filiali YO'Q yozuv (branch_id = NULL) ataylab
+        # RUXSAT ETILMAYDI. Sabab: filialsiz yozuv odatda butun
+        # tashkilotga tegishli (masalan filialga bog'lanmagan HR
+        # xodimi) — filial rahbari uni tahrirlay olmasligi kerak.
+        # Filialsizga ruxsat berilishi kerak bo'lgan kam sonli
+        # joyda (masalan hali filial biriktirilmagan o'quvchi)
+        # null_ok=True beriladi.
+        return bool(null_ok)
+    return branch_id in _user_branch_ids(db, user)
+
 
 def scope_to_branch(query, model, user: models.User, branch_id=None):
     """Filialga bo'yicha cheklash.
@@ -1081,9 +1138,8 @@ def _get_group_in_scope(db: Session, group_id: int, user: models.User) -> models
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES):
-        if user.branch_id and group.branch_id != user.branch_id:
-            raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+    if not _in_user_branches(db, user, group.branch_id):
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
     if user.role in tuple(roles.OWN_GROUPS_ONLY) and not _teacher_owns(
             db, group, user):
         if not _teacher_of_user(db, user):
@@ -3643,6 +3699,7 @@ __all__ = [
     "_fraud_alert",
     "_freeze_task",
     "_gam_card",
+    "_in_user_branches",
     "_get_group_in_scope",
     "_grade_after",
     "_grade_card",

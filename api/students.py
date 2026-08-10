@@ -239,8 +239,7 @@ def get_student(
         out.payments = []
         return out
     # FILIAL AUDITI: filialga bog'langan xodim faqat o'z filialini ko'radi
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and s.branch_id and s.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     out.balance = student_balance(db, s.id)
     out.payments = [schemas.PaymentOut.model_validate(p) for p in s.payments]
@@ -298,8 +297,7 @@ def update_student(
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
     # Filialga bog'langan xodim boshqa filial o'quvchisini tahrirlamaydi
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and s.branch_id and s.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     changes = payload.model_dump(exclude_unset=True)
 
@@ -360,8 +358,7 @@ def list_payments(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and s.branch_id and s.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     return (
         db.query(models.Payment)
@@ -1503,8 +1500,7 @@ def import_students(payload: schemas.StudentImportIn,
     g = db.query(models.Group).get(payload.group_id)
     if not g:
         raise HTTPException(404, "Guruh topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and g.branch_id and g.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, g.branch_id, null_ok=True):
         raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
 
     today = roles.local_today()

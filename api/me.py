@@ -84,16 +84,31 @@ def my_career(
     return teacher_career(t.id, db=db, user=user)
 
 @router.get("/api/me")
-def my_identity(user=Depends(get_current_user)):
+def my_identity(db: Session = Depends(get_db),
+                user=Depends(get_current_user)):
     """Kim ekanini yengil qaytaradi. Frontend login paytida keshlagan
     ism/rolni har ochilishda shu yerdan yangilab oladi — ism serverda
     o'zgarsa (masalan Administrator -> Asoschi) burchakdagi profil
-    chipida eskirib qolmasligi uchun."""
+    chipida eskirib qolmasligi uchun.
+
+    branches — xodim ishlaydigan BARCHA filiallar (asosiy + qo'shimcha).
+    Ikkitadan ko'p bo'lsa, tepadagi filial tanlagich shu ro'yxatdan
+    chiqadi (2026-08-10: ikki filialda dars beradigan ustozda tanlagich
+    umuman chiqmasdi — u faqat butun tashkilotni ko'radiganlarga
+    ko'rsatilardi)."""
+    ids = _user_branch_ids(db, user)
+    branches = []
+    if ids:
+        rows = (db.query(models.Branch)
+                .filter(models.Branch.id.in_(ids))
+                .order_by(models.Branch.name).all())
+        branches = [{"id": b.id, "name": b.name} for b in rows]
     return {
         "full_name": user.full_name,
         "role": user.role,
         "branch_id": user.branch_id,
         "role_label": roles.UZ_LABELS.get(user.role, user.role),
+        "branches": branches,
     }
 
 @router.get("/api/me/permissions")

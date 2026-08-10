@@ -238,8 +238,8 @@ def create_user(
         raise HTTPException(400, "Noto'g'ri rol")
     _guard_role_assignment(user, payload.role, payload.branch_id)
     # Filial rahbari faqat o'z filialiga xodim ochadi
-    if user.role == roles.BRANCH_MANAGER and user.branch_id \
-            and payload.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not _in_user_branches(db, user, payload.branch_id):
         raise HTTPException(403, "Faqat o'z filialingizga xodim "
                                  "qo'sha olasiz")
     if db.query(models.User).filter(models.User.username == payload.username).first():
@@ -328,7 +328,8 @@ def update_user(
             and user.role not in roles.SALARY_EDIT:
         raise HTTPException(403, "Fiks oylikni o'zgartirish huquqi "
                                  "sizda yo'q")
-    if user.role == roles.BRANCH_MANAGER and target.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not _in_user_branches(db, user, target.branch_id):
         raise HTTPException(403, "Faqat o'z filialingiz xodimlarini tahrirlay olasiz")
     if target.id == user.id and payload.is_active is False:
         raise HTTPException(400, "O'zingizni faolsizlantira olmaysiz")

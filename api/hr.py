@@ -1441,8 +1441,8 @@ def hr_vacancy_one(vid: int, db: Session = Depends(get_db),
     v = db.query(models.Vacancy).get(vid)
     if not v:
         raise HTTPException(404, "Topilmadi")
-    if user.role == roles.BRANCH_MANAGER and user.branch_id \
-            and v.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not _in_user_branches(db, user, v.branch_id):
         raise HTTPException(403, "Bu boshqa filialning vakansiyasi")
     return _vacancy_out(db, v)
 

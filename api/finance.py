@@ -40,9 +40,8 @@ def _get_expense_in_scope(db: Session, expense_id: int, user: models.User) -> mo
     exp = db.query(models.Expense).get(expense_id)
     if not exp:
         raise HTTPException(404, "Xarajat topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES):
-        if user.branch_id and exp.branch_id != user.branch_id:
-            raise HTTPException(403, "Bu xarajat boshqa filialga tegishli")
+    if not _in_user_branches(db, user, exp.branch_id):
+        raise HTTPException(403, "Bu xarajat boshqa filialga tegishli")
     return exp
 
 @router.get("/api/expenses", response_model=List[schemas.ExpenseOut])
@@ -179,12 +178,7 @@ def delete_payment(
         raise HTTPException(404, "Yozuv topilmadi")
 
     s = db.query(models.Student).get(p.student_id)
-    if (
-        user.role not in tuple(roles.ORG_WIDE_ROLES)
-        and user.branch_id
-        and s
-        and s.branch_id != user.branch_id
-    ):
+    if s and not _in_user_branches(db, user, s.branch_id):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
 
     if p.period:
@@ -323,8 +317,8 @@ def approve_refund(rid: int, payload: schemas.RefundDecision,
         raise HTTPException(404, "So'rov topilmadi")
     if r.status != "pending":
         raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
-    if user.role == roles.BRANCH_MANAGER and user.branch_id \
-            and r.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not _in_user_branches(db, user, r.branch_id):
         raise HTTPException(403, "Boshqa filial so'rovi")
     s = db.query(models.Student).get(r.student_id)
     # Pul qaytdi: balansdan ayriladigan yozuv
@@ -356,8 +350,8 @@ def reject_refund(rid: int, payload: schemas.RefundDecision,
         raise HTTPException(404, "So'rov topilmadi")
     if r.status != "pending":
         raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
-    if user.role == roles.BRANCH_MANAGER and user.branch_id \
-            and r.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not _in_user_branches(db, user, r.branch_id):
         raise HTTPException(403, "Boshqa filial so'rovi")
     r.status = "rejected"
     r.decided_by = user.full_name
@@ -1854,8 +1848,8 @@ def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
         raise HTTPException(404, "Yozuv topilmadi")
     st = db.query(models.Student).get(p.student_id)
     # Filial rahbari faqat o'z filialini tahrirlaydi
-    if (user.role == roles.BRANCH_MANAGER and user.branch_id
-            and st and st.branch_id != user.branch_id):
+    if (user.role == roles.BRANCH_MANAGER and st
+            and not _in_user_branches(db, user, st.branch_id)):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     if payload.amount <= 0:
         raise HTTPException(400, "Summani musbat son bilan kiriting")

@@ -911,8 +911,8 @@ def create_user_v2(payload: _UserCreate2,
     if payload.role not in roles.ALL_ROLES:
         raise HTTPException(400, "Noto'g'ri rol")
     M._guard_role_assignment(user, payload.role, payload.branch_id)
-    if user.role == roles.BRANCH_MANAGER and user.branch_id \
-            and payload.branch_id != user.branch_id:
+    if user.role == roles.BRANCH_MANAGER \
+            and not M._in_user_branches(db, user, payload.branch_id):
         raise HTTPException(403, "Faqat o'z filialingizga xodim "
                                  "qo'sha olasiz")
     if db.query(models.User).filter(
@@ -2395,8 +2395,8 @@ def staff_salary_pay(payload: dict, db: Session = Depends(get_db),
     u = db.query(models.User).get(int(uid))
     if not u:
         raise HTTPException(404, "Xodim topilmadi")
-    if (user.role == roles.BRANCH_MANAGER and user.branch_id
-            and u.branch_id and u.branch_id != user.branch_id):
+    if (user.role == roles.BRANCH_MANAGER and u.branch_id
+            and not M._in_user_branches(db, user, u.branch_id)):
         raise HTTPException(403, "Faqat o'z filialingiz xodimiga "
                                  "oylik bera olasiz")
     period = payload.get("period") or date.today().isoformat()[:7]

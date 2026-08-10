@@ -2586,6 +2586,16 @@ def _skill_points(db: Session, student_id: int) -> dict:
             .filter(models.GrammarAttempt.student_id == student_id,
                     models.GrammarAttempt.correct == 1).scalar() or 0)
     out["grammar"] += int(gram)
+    # Listening/Reading/Writing/Speaking mashqlari (2026-08-10):
+    # har ko'nikmada distinct to'g'ri yechilgan mashq = 1 ball.
+    rows2 = (db.query(models.SkillAttempt.skill,
+                      func.count(func.distinct(models.SkillAttempt.ref)))
+             .filter(models.SkillAttempt.student_id == student_id,
+                     models.SkillAttempt.correct == 1)
+             .group_by(models.SkillAttempt.skill).all())
+    for skill, cnt in rows2:
+        if skill in out:
+            out[skill] += int(cnt or 0)
     return out
 
 
@@ -2606,8 +2616,13 @@ def _skills_card(db: Session, student_id: int) -> dict:
                 func.distinct(models.GrammarAttempt.question_id)))
             .filter(models.GrammarAttempt.student_id == student_id,
                     models.GrammarAttempt.correct == 1).scalar() or 0)
+    prac = (db.query(func.count(func.distinct(
+                models.SkillAttempt.skill + ":" + models.SkillAttempt.ref)))
+            .filter(models.SkillAttempt.student_id == student_id,
+                    models.SkillAttempt.correct == 1).scalar() or 0)
     per_skill = _skill_points(db, student_id)
-    overall = _level_for_points(int(total_ex) + int(vocab) + int(gram))
+    overall = _level_for_points(
+        int(total_ex) + int(vocab) + int(gram) + int(prac))
     return {
         "overall": overall,
         "skills": [{

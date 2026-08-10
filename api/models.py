@@ -3090,6 +3090,50 @@ class VocabWord(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class ReadingText(Base):
+    """Reading mashqi uchun qisqa matn (2026-08-10)."""
+    __tablename__ = "reading_texts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    level = Column(String, default="A1")       # A1 | A2 | B1
+    body = Column(Text, nullable=False)
+    is_active = Column(Integer, default=1)
+
+
+class ReadingQuestion(Base):
+    """Matnga tegishli tushunish savoli (4 variantli)."""
+    __tablename__ = "reading_questions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    text_id = Column(Integer, ForeignKey("reading_texts.id"),
+                     nullable=False, index=True)
+    prompt = Column(Text, nullable=False)
+    options = Column(Text, nullable=False)     # JSON list
+    answer = Column(Text, nullable=False)
+    explain = Column(Text)
+
+
+class SkillAttempt(Base):
+    """Listening/Reading/Writing/Speaking mashqlaridagi javoblar.
+
+    ref - manba kaliti: "word:12" (lug'atdan), "gram:45" (grammar
+    jumlasidan), "read:7" (reading savolidan). Ball har ko'nikmada
+    distinct to'g'ri ref bo'yicha - bitta mashqni qayta yechib ball
+    yig'ib bo'lmaydi."""
+    __tablename__ = "skill_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    skill = Column(String, nullable=False, index=True)
+    ref = Column(String, nullable=False, index=True)
+    correct = Column(Integer, default=0)
+    answer = Column(String)
+    date = Column(Date, default=date.today)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class GrammarQuestion(Base):
     """Grammar mashqlari bazasi (2026-08-10, Jahongir: "Grammar har
     bir ingliz tilidagi mavzuga xilma-xil mashqlar bo'lsin").

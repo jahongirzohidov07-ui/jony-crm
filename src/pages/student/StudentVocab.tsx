@@ -6,6 +6,7 @@ import {
 import { api } from "../../lib/api";
 import type { StudentHome, VocabStats } from "../../lib/studentApi";
 import { getLang, LANGS } from "../../lib/lang";
+import { Flag } from "../../components/Flag";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -59,7 +60,7 @@ export default function StudentVocab() {
           </Link>
           <h1 className="text-xl font-semibold flex items-center gap-2">
             <BookA size={22} />
-            Lug'at · {langMeta.flag} {langMeta.label}
+            Lug'at · <Flag code={lang} size={20} /> {langMeta.label}
           </h1>
           <p className="text-sm opacity-90 mt-0.5">
             Unitni tanlang — mashq turi so'raladi

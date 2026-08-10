@@ -54,7 +54,7 @@ print("=== SEED ISHLAGAN ===")
 total_q = db.query(models.GrammarQuestion).count()
 total_active = db.query(models.GrammarQuestion).filter(
     models.GrammarQuestion.is_active == 1).count()
-ck("333 ta A1 savoli faol", total_active, 333)
+ck("343 ta A1 savoli faol (333 + 10 cloze)", total_active, 343)
 
 print("\n=== MAVZULAR RO'YXATI ===")
 r = c.get("/api/student/grammar/topics", headers=H)

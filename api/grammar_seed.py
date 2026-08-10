@@ -834,6 +834,96 @@ SEED_A2_TITLES = [
 ]
 
 
+
+
+# CLOZE (kichik matnli test) savollari (2026-08-11): dialog/matn
+# ichida bir nechta bo'sh joy. options = har blank uchun variantlar
+# ro'yxati, answer = JSON ro'yxat (har blank javobi tartibda).
+# Mavzu nomi SEED_A1 dagi bilan AYNAN mos bo'lishi shart.
+SEED_CLOZE = [
+("Level 1 — TO BE + sifat",
+ "- Hi! How (1)___ you?\n- I (2)___ fine, thanks. And you?\n"
+ "- I'm OK. My brother (3)___ ill today.\n- Oh no! (4)___ your "
+ "parents at home?",
+ [["are", "is", "am"], ["am", "is", "are"], ["is", "am", "are"],
+  ["Are", "Is", "Am"]],
+ ["are", "am", "is", "Are"],
+ "Dialogda to be: I am, he is, they are."),
+("Level 2 — TO BE + ot (birlik)",
+ "This is my friend Aziz. He (1)___ a student. His mother is "
+ "(2)___ teacher and his father is (3)___ engineer. Aziz's dream: "
+ "\"I want to be (4)___ doctor.\"",
+ [["is", "am", "are"], ["a", "an", "the"], ["an", "a", "the"],
+  ["a", "an", "the"]],
+ ["is", "a", "an", "a"],
+ "Kasb oldidan a/an: a teacher, an engineer."),
+("Level 6 — TO BE + joy",
+ "- Where is my phone?\n- It is (1)___ the table.\n- And my "
+ "keys?\n- They are (2)___ your bag.\n- Where are you now?\n- "
+ "I am (3)___ school. Dad is (4)___ home.",
+ [["on", "in", "at"], ["in", "on", "at"], ["at", "in", "on"],
+  ["at", "on", "in"]],
+ ["on", "in", "at", "at"],
+ "on the table, in the bag, at school, at home."),
+("BOSS — TO BE hozirgi zamon",
+ "My name (1)___ Malika. I (2)___ eleven years old. My brothers "
+ "(3)___ students. We (4)___ from Bekobod. (5)___ you from "
+ "Bekobod too?",
+ [["is", "am", "are"], ["am", "is", "are"], ["are", "is", "am"],
+  ["are", "am", "is"], ["Are", "Is", "Am"]],
+ ["is", "am", "are", "are", "Are"],
+ "to be barcha shakllari bitta matnda."),
+("Level 7 — TO BE o'tgan zamon (birlik)",
+ "Yesterday (1)___ Sunday. I (2)___ at my grandma's house. The "
+ "weather (3)___ sunny. My grandma (4)___ very happy.",
+ [["was", "were", "is"], ["was", "were", "am"],
+  ["was", "were", "is"], ["was", "were", "is"]],
+ ["was", "was", "was", "was"],
+ "O'tgan zamonda birlik bilan was."),
+("Level 11 — Present Continuous",
+ "Look at the park! The children (1)___ playing football. A girl "
+ "(2)___ reading a book. Two boys (3)___ eating ice cream. And I "
+ "(4)___ sitting on a bench.",
+ [["are", "is", "am"], ["is", "are", "am"], ["are", "is", "am"],
+  ["am", "is", "are"]],
+ ["are", "is", "are", "am"],
+ "to be + V-ing: hozir bo'layotgan ishlar."),
+("Level 16 — Present Simple (asosiy shakl)",
+ "I (1)___ up at seven every day. My sister and I (2)___ to "
+ "school by bus. We (3)___ lunch at school. In the evening I "
+ "(4)___ my homework.",
+ [["get", "gets", "getting"], ["go", "goes", "going"],
+  ["have", "has", "having"], ["do", "does", "doing"]],
+ ["get", "go", "have", "do"],
+ "I/we bilan fe'l o'z holicha."),
+("Level 17 — Present Simple (3-shaxs birlik)",
+ "My father (1)___ in a bank. He (2)___ work at 9 o'clock. He "
+ "(3)___ lunch at 1 pm. In the evening he (4)___ TV and (5)___ "
+ "to bed at 11.",
+ [["works", "work", "working"], ["starts", "start", "starting"],
+  ["has", "have", "having"], ["watches", "watch", "watching"],
+  ["goes", "go", "going"]],
+ ["works", "starts", "has", "watches", "goes"],
+ "He bilan hamma fe'lga -s/-es."),
+("Level 23 — Past Simple (to'g'ri fe'llar)",
+ "Last Saturday we (1)___ our grandparents. Grandma (2)___ plov "
+ "for us. After lunch we (3)___ football in the yard. We (4)___ "
+ "home at 6 pm.",
+ [["visited", "visit", "visits"], ["cooked", "cook", "cooks"],
+  ["played", "play", "plays"], ["returned", "return", "returns"]],
+ ["visited", "cooked", "played", "returned"],
+ "O'tgan zamonda -ed."),
+("Level 24 — Past Simple (noto'g'ri fe'llar)",
+ "Yesterday I (1)___ to the market with mum. We (2)___ apples "
+ "and bread. Then we (3)___ tea in a cafe. I (4)___ a small "
+ "present for my sister.",
+ [["went", "goed", "go"], ["bought", "buyed", "buy"],
+  ["drank", "drinked", "drink"], ["took", "taked", "take"]],
+ ["went", "bought", "drank", "took"],
+ "go-went, buy-bought, drink-drank, take-took."),
+]
+
+
 def seed_grammar(db):
     """A1 savollarini yuklaydi, eski umumiy mavzularni o'chiradi."""
     import json
@@ -851,6 +941,7 @@ def seed_grammar(db):
     have = {(t, p) for (t, p) in
             db.query(models.GrammarQuestion.topic,
                      models.GrammarQuestion.prompt).all()}
+    order_of = {t: (o, b) for o, b, t, _ in SEED_A1}
     made = 0
     for order, is_boss, topic, questions in SEED_A1:
         for kind, prompt, options, answer, explain in questions:
@@ -863,6 +954,18 @@ def seed_grammar(db):
                 options=json.dumps(options, ensure_ascii=False),
                 answer=answer, explain=explain))
             made += 1
+    # Cloze savollari (matnli test)
+    for topic, prompt, opts, answers, explain in SEED_CLOZE:
+        if (topic, prompt) in have or topic not in order_of:
+            continue
+        o, b = order_of[topic]
+        db.add(models.GrammarQuestion(
+            topic=topic, level="A1", topic_order=o,
+            is_boss=1 if b else 0, kind="cloze", prompt=prompt,
+            options=json.dumps(opts, ensure_ascii=False),
+            answer=json.dumps(answers, ensure_ascii=False),
+            explain=explain))
+        made += 1
     db.commit()
     return made
 

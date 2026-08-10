@@ -26,9 +26,29 @@ export default function StudentGrammarPlay() {
   const [busy, setBusy] = useState(false);
   // Joriy savol holati
   const [picked, setPicked] = useState<string[]>([]); // order uchun
+  // MASHQ TURI (2026-08-11, Jahongir): mavzu tanlangach 4 tur
+  // taklif qilinadi. null = hali tanlanmagan (tanlash ekrani).
+  const [kind, setKind] = useState<string | null>(null);
+  const [kinds, setKinds] = useState<string[]>([]);
+  const [clozeSel, setClozeSel] = useState<Record<number, string>>({});
   const [result, setResult] = useState<Any>(null); // serverdan javob
   const [score, setScore] = useState({ ok: 0, xp: 0 });
   const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    // Bu mavzuda qaysi turlar borligini bilib olamiz
+    api
+      .get<Any>("/student/grammar/topics")
+      .then((r) => {
+        const all = [
+          ...(r?.a1?.topics || []),
+          ...(r?.a2?.topics || []),
+        ];
+        const t = all.find((x: Any) => x.topic === topic);
+        setKinds(t?.kinds || ["fill", "error", "order"]);
+      })
+      .catch(() => setKinds(["fill", "error", "order"]));
+  }, [topic]);
 
   const load = useCallback(() => {
     setErr("");
@@ -38,11 +58,16 @@ export default function StudentGrammarPlay() {
     setPicked([]);
     setScore({ ok: 0, xp: 0 });
     setFinished(false);
+    if (kind === null) return;
     api
-      .get<Any>(`/student/grammar/round?topic=${encodeURIComponent(topic || "")}`)
+      .get<Any>(
+        `/student/grammar/round?topic=${encodeURIComponent(topic || "")}${
+          kind && kind !== "mix" ? `&kind=${kind}` : ""
+        }`,
+      )
       .then((r) => setItems(r.items || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [topic]);
+  }, [topic, kind]);
 
   useEffect(load, [load]);
 
@@ -74,6 +99,7 @@ export default function StudentGrammarPlay() {
     setIdx(idx + 1);
     setResult(null);
     setPicked([]);
+    setClozeSel({});
   }
 
   const remainingWords =
@@ -157,6 +183,44 @@ export default function StudentGrammarPlay() {
           </div>
         )}
 
+        {/* ---- MASHQ TURINI TANLASH ---- */}
+        {kind === null && !err && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-3">
+              Qaysi turdagi mashqni xohlaysiz?
+            </p>
+            <div className="space-y-1.5">
+              {[
+                ["mix", "Aralash", "Har xil turdagi mashqlar"],
+                ["fill", "Bo'sh joyni to'ldirish", "4 variantdan tanlang"],
+                ["order", "Gaplarni tartiblash", "So'zlardan jumla tuzing"],
+                ["error", "Xatoni topish", "Gapdagi xato so'zni belgilang"],
+                ["cloze", "Kichik matnli test", "Dialog ichida bir nechta bo'sh joy"],
+              ]
+                .filter(
+                  ([k]) => k === "mix" || kinds.includes(k as string),
+                )
+                .map(([k, lbl, hint]) => (
+                  <button
+                    key={k}
+                    onClick={() => setKind(k as string)}
+                    className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0 text-sm font-bold">
+                      {(lbl as string).charAt(0)}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-slate-800">
+                        {lbl}
+                      </p>
+                      <p className="text-[11px] text-slate-400">{hint}</p>
+                    </div>
+                  </button>
+                ))}
+            </div>
+          </div>
+        )}
+
         {/* ---- SAVOL ---- */}
         {!finished && q && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
@@ -165,11 +229,63 @@ export default function StudentGrammarPlay() {
                 ? "Bo'sh joyni to'ldiring"
                 : q.kind === "error"
                   ? "Xato so'zni toping"
-                  : "So'zlardan jumla tuzing"}
+                  : q.kind === "cloze"
+                    ? "Matnni to'ldiring"
+                    : "So'zlardan jumla tuzing"}
             </p>
-            <p className="text-base font-medium text-slate-900 leading-relaxed mb-4">
+            <p className="text-base font-medium text-slate-900 leading-relaxed mb-4 whitespace-pre-line">
               {q.prompt}
             </p>
+
+            {/* CLOZE: har raqamli bo'sh joy uchun variantlar */}
+            {q.kind === "cloze" && (
+              <div className="space-y-3 mb-1">
+                {(q.options || []).map((grp: string[], bi: number) => (
+                  <div key={bi}>
+                    <p className="text-[11px] text-slate-500 mb-1">
+                      ({bi + 1}) uchun:
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {grp.map((o) => (
+                        <button
+                          key={o}
+                          disabled={!!result}
+                          onClick={() =>
+                            setClozeSel((c) => ({ ...c, [bi]: o }))
+                          }
+                          className={`px-3 py-2 rounded-lg border text-sm font-medium transition disabled:opacity-60 ${
+                            clozeSel[bi] === o
+                              ? "bg-violet-600 text-white border-transparent"
+                              : "bg-white text-slate-700 border-slate-200"
+                          }`}
+                        >
+                          {o}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {!result && (
+                  <button
+                    disabled={
+                      busy ||
+                      Object.keys(clozeSel).length <
+                        (q.options || []).length
+                    }
+                    onClick={() =>
+                      submit(
+                        (q.options || [])
+                          .map((_: Any, bi: number) => clozeSel[bi] || "")
+                          .join("|"),
+                      )
+                    }
+                    className="w-full py-3 rounded-xl bg-violet-600 text-white text-sm font-semibold disabled:opacity-40"
+                  >
+                    Tekshirish
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* order: yig'ilgan jumla */}
             {q.kind === "order" && (
@@ -195,7 +311,7 @@ export default function StudentGrammarPlay() {
             )}
 
             <div className="flex flex-wrap gap-1.5">
-              {q.kind === "order"
+              {q.kind === "cloze" ? null : q.kind === "order"
                 ? remainingWords.map((w: string, i: number) => (
                     <button
                       key={`${w}-${i}`}

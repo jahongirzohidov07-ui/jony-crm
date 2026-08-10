@@ -548,6 +548,34 @@ def student_photo_save(payload: schemas.StudentPhotoIn,
     return {"ok": True, "photo": bool(s.photo)}
 
 
+@router.get("/api/student/word-lookup")
+def word_lookup(w: str, db: Session = Depends(get_db),
+                user=Depends(require_role(roles.STUDENT))):
+    """READING POP-UP LUG'ATI (2026-08-11, Jahongir: "qiyin so'zlar
+    ustiga bosganda tarjimasini ko'rsatuvchi interaktiv lug'at").
+
+    Matndagi so'z bosilganda tarjimasi lug'at bazasidan qidiriladi -
+    4341 so'zlik bot bazasi shu yerda ham xizmat qiladi."""
+    _me(db, user)
+    key = "".join(ch for ch in (w or "").strip().lower()
+                  if ch.isalpha() or ch in "'-")
+    if not key or len(key) > 40:
+        return {"word": w, "found": False}
+    row = (db.query(models.VocabWord)
+           .filter(func.lower(models.VocabWord.word) == key,
+                   (models.VocabWord.language == "en")
+                   | (models.VocabWord.language.is_(None))).first())
+    if row is None and key.endswith("s"):
+        row = (db.query(models.VocabWord)
+               .filter(func.lower(models.VocabWord.word) == key[:-1],
+                       (models.VocabWord.language == "en")
+                       | (models.VocabWord.language.is_(None))).first())
+    if row is None:
+        return {"word": key, "found": False}
+    return {"word": row.word, "found": True,
+            "translation": row.translation}
+
+
 # =====================================================================
 #  TO'LOVLAR VA IMTIHONLAR TARIXI (2026-08-10, Jahongir: "Profil
 #  qismida to'lovlar tarixi, imtihonlar tarixi ham tursin, bosh
@@ -1002,8 +1030,10 @@ def grammar_topics(db: Session = Depends(get_db),
             t = topics.setdefault(q.topic, {
                 "topic": q.topic, "order": q.topic_order,
                 "boss": bool(q.is_boss), "total": 0, "solved": 0,
+                "kinds": set(),
             })
             t["total"] += 1
+            t["kinds"].add(q.kind)
             if q.id in solved:
                 t["solved"] += 1
         out = sorted(topics.values(), key=lambda x: x["order"])
@@ -1011,6 +1041,7 @@ def grammar_topics(db: Session = Depends(get_db),
             t["percent"] = round(t["solved"] * 100 / t["total"]) \
                 if t["total"] else 0
             t["done"] = t["total"] > 0 and t["solved"] >= t["total"]
+            t["kinds"] = sorted(t["kinds"])
         return out
 
     a1 = build("A1")
@@ -1033,7 +1064,8 @@ def grammar_topics(db: Session = Depends(get_db),
 
 
 @router.get("/api/student/grammar/round")
-def grammar_round(topic: str, db: Session = Depends(get_db),
+def grammar_round(topic: str, kind: str | None = None,
+                  db: Session = Depends(get_db),
                   user=Depends(require_role(roles.STUDENT))):
     """Bitta mashg'ulot: mavzudan 8 ta savol.
 
@@ -1042,9 +1074,14 @@ def grammar_round(topic: str, db: Session = Depends(get_db),
     MIJOZGA KETMAYDI - tekshiruv faqat serverda (/answer). order
     turida so'zlar shu yerda aralashtiriladi."""
     s = _me(db, user)
-    qs = (db.query(models.GrammarQuestion)
+    q0 = (db.query(models.GrammarQuestion)
           .filter(models.GrammarQuestion.is_active == 1,
-                  models.GrammarQuestion.topic == topic).all())
+                  models.GrammarQuestion.topic == topic))
+    # MASHQ TURI TANLASH (2026-08-11, Jahongir): mavzu ichida
+    # 4 tur - fill / order / error / cloze. kind berilmasa aralash.
+    if kind in ("fill", "order", "error", "cloze"):
+        q0 = q0.filter(models.GrammarQuestion.kind == kind)
+    qs = q0.all()
     if not qs:
         raise HTTPException(404, "Bunday mavzu topilmadi")
 
@@ -1062,6 +1099,19 @@ def grammar_round(topic: str, db: Session = Depends(get_db),
     items = []
     for q in picked:
         opts = json.loads(q.options)
+        if q.kind == "cloze":
+            # cloze: options = [[blank1 variantlari], [blank2...]] -
+            # har guruh alohida aralashtiriladi, javob ketmaydi
+            shuffled = []
+            for grp in opts:
+                g = grp[:]
+                random.shuffle(g)
+                shuffled.append(g)
+            items.append({
+                "id": q.id, "kind": q.kind, "prompt": q.prompt,
+                "options": shuffled, "solved": q.id in solved,
+            })
+            continue
         if q.kind == "order":
             # So'zlarni aralashtiramiz; tasodifan to'g'ri tartibda
             # qolib ketmasin
@@ -1109,6 +1159,12 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
 
     if q.kind == "order":
         ok = _norm_sentence(payload.answer) == _norm_sentence(q.answer)
+    elif q.kind == "cloze":
+        # Javoblar "|" bilan: har blank alohida solishtiriladi
+        want = [a.strip() for a in json.loads(q.answer)]
+        got = [a.strip() for a in (payload.answer or "").split("|")]
+        ok = len(want) == len(got) and all(
+            w == g for w, g in zip(want, got))
     else:
         ok = (payload.answer or "").strip() == (q.answer or "").strip()
 
@@ -1140,7 +1196,8 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
 
     return {
         "correct": ok,
-        "expected": q.answer,
+        "expected": (" | ".join(json.loads(q.answer))
+                     if q.kind == "cloze" else q.answer),
         "explain": q.explain,
         "first_time": ok and not was_solved,
         "xp": xp_given,

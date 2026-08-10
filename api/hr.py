@@ -1065,7 +1065,7 @@ def hr_requests(status: str | None = None, branch_id: int | None = None,
     q = db.query(models.StaffRequest)
     # Filial rahbari faqat o'z filialining so'rovlarini ko'radi
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
-        q = q.filter(models.StaffRequest.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.StaffRequest.branch_id))
     elif branch_id:
         q = q.filter(models.StaffRequest.branch_id == branch_id)
     if status:
@@ -1396,7 +1396,7 @@ def hr_vacancies(status: str | None = None, branch_id: int | None = None,
                  user=Depends(require_role(*roles.WORKFORCE_VIEW))):
     q = db.query(models.Vacancy)
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
-        q = q.filter(models.Vacancy.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.Vacancy.branch_id))
     elif branch_id:
         q = q.filter(models.Vacancy.branch_id == branch_id)
     if status:
@@ -1667,7 +1667,7 @@ def hr_leaves(status: str | None = None, user_id: int | None = None,
     if user.role not in tuple(roles.LEAVE_APPROVE):
         q = q.filter(models.LeaveRequest.user_id == user.id)
     elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.LeaveRequest.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.LeaveRequest.branch_id))
     if status:
         q = q.filter(models.LeaveRequest.status == status)
     if user_id and user.role in tuple(roles.LEAVE_APPROVE):

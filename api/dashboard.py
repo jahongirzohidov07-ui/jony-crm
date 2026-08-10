@@ -1080,7 +1080,7 @@ def cashflow_ledger(
                 models.Payment.created_at <= d1)
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        pq = pq.filter(models.Student.branch_id == user.branch_id)
+        pq = pq.filter(_branch_in(db, user, models.Student.branch_id))
     elif branch_id:
         pq = pq.filter(models.Student.branch_id == branch_id)
 
@@ -2325,7 +2325,7 @@ def _overhead_per_student_month(db: Session, user, branch_id=None) -> float:
     if branch_id:
         eq = eq.filter(models.Expense.branch_id == branch_id)
     elif user and user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        eq = eq.filter(models.Expense.branch_id == user.branch_id)
+        eq = eq.filter(_branch_in(db, user, models.Expense.branch_id))
     total = sum(e.amount or 0 for e in eq.all())
 
     sq = scope_to_branch(db.query(models.Student), models.Student,
@@ -2611,7 +2611,7 @@ def analytics_romi(
     if branch_id:
         leads = leads.filter(models.Lead.branch_id == branch_id)
     elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        leads = leads.filter(models.Lead.branch_id == user.branch_id)
+        leads = leads.filter(_branch_in(db, user, models.Lead.branch_id))
     leads = leads.all()
 
     # Kanal xarajati: reklama xarajatlari channel bo'yicha

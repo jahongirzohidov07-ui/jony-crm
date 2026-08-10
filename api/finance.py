@@ -222,7 +222,8 @@ def list_payouts(
     q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
     if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id:
-            q = q.join(models.Group).filter(models.Group.branch_id == user.branch_id)
+            q = q.join(models.Group).filter(
+                _branch_in(db, user, models.Group.branch_id))
     return q.all()
 
 @router.put("/api/payouts/{payout_id}", response_model=schemas.TeacherPayoutOut)

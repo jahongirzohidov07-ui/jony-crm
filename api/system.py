@@ -142,7 +142,7 @@ def global_student_search(q: str, db: Session = Depends(get_db),
         gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
         sq = sq.filter(models.Student.group_id.in_(gids or [-1]))
     elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        sq = sq.filter(models.Student.branch_id == user.branch_id)
+        sq = sq.filter(_branch_in(db, user, models.Student.branch_id))
     groups = {g.id: g.name for g in db.query(models.Group).all()}
     st_lbl = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan"}
     students = [{
@@ -158,7 +158,7 @@ def global_student_search(q: str, db: Session = Depends(get_db),
             (models.Lead.full_name.ilike(like)) |
             (models.Lead.phone.ilike(like)))
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            lq = lq.filter(models.Lead.branch_id == user.branch_id)
+            lq = lq.filter(_branch_in(db, user, models.Lead.branch_id))
         leads = [{
             "id": l.id, "name": l.full_name, "group": None,
             "status_label": roles.LEAD_STAGE_LABELS.get(l.stage, l.stage),
@@ -169,7 +169,7 @@ def global_student_search(q: str, db: Session = Depends(get_db),
     if not own_only:
         gq = db.query(models.Group).filter(models.Group.name.ilike(like))
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            gq = gq.filter(models.Group.branch_id == user.branch_id)
+            gq = gq.filter(_branch_in(db, user, models.Group.branch_id))
         found_groups = [{"id": g.id, "name": g.name}
                         for g in gq.order_by(models.Group.name)
                         .limit(5).all()]
@@ -177,7 +177,7 @@ def global_student_search(q: str, db: Session = Depends(get_db),
             models.Teacher.is_active == 1,
             models.Teacher.full_name.ilike(like))
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            tq = tq.filter(models.Teacher.branch_id == user.branch_id)
+            tq = tq.filter(_branch_in(db, user, models.Teacher.branch_id))
         found_teachers = [{"id": t.id, "name": t.full_name}
                           for t in tq.order_by(models.Teacher.full_name)
                           .limit(5).all()]

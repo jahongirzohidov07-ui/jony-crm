@@ -310,7 +310,7 @@ def list_risk_tasks(
     q = db.query(models.RiskTask).join(
         models.Student, models.RiskTask.student_id == models.Student.id)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.Student.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.Student.branch_id))
     if status:
         q = q.filter(models.RiskTask.status == status)
     today = date.today()

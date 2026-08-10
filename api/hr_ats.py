@@ -771,7 +771,7 @@ def ats_interviews(days: int = 14, mine: bool = False,
         models.Interview.date >= today - timedelta(days=2),
         models.Interview.date <= today + timedelta(days=days))
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.Interview.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.Interview.branch_id))
     if mine:
         q = q.filter(models.Interview.interviewer_id == user.id)
     rows = [_interview_out(db, i) for i in

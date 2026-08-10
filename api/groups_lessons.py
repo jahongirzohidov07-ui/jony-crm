@@ -1059,7 +1059,7 @@ def reschedules_list(status: str | None = None,
     out = [_resch_out(db, r) for r in rows]
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
         gids = {g.id for g in db.query(models.Group).filter(
-            models.Group.branch_id == user.branch_id).all()}
+            _branch_in(db, user, models.Group.branch_id)).all()}
         out = [r for r in out if r["group_id"] in gids]
 
     # Ustoz kesimi — kim ko'p suryapti

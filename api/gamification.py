@@ -218,7 +218,7 @@ def list_redemptions(
 ):
     q = db.query(models.RewardRedemption).join(models.Student)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.Student.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.Student.branch_id))
     return q.order_by(models.RewardRedemption.created_at.desc()).limit(200).all()
 
 @router.post("/api/nps")

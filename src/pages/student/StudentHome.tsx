@@ -152,62 +152,6 @@ export default function StudentHome() {
           </Link>
         )}
 
-        {/* CEFR / IELTS QULFLARI (2026-08-11, Jahongir): "bosh
-            sahifada CEFR va IELTS qismi tursin faqat qulf tursin -
-            IELTS uchun kamida INTERMEDIATE, CEFR uchun
-            PRE-INTERMEDIATE daraja kerak". */}
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            {
-              key: "cefr",
-              label: "CEFR",
-              hint: "Til darajasi imtihoni",
-              needIdx: 2,
-              needLabel: "PRE-INTERMEDIATE",
-            },
-            {
-              key: "ielts",
-              label: "IELTS",
-              hint: "Xalqaro imtihon",
-              needIdx: 3,
-              needLabel: "INTERMEDIATE",
-            },
-          ].map((c) => {
-            const levels = [
-              "beginner", "elementary", "pre_intermediate",
-              "intermediate", "upper_intermediate", "advanced",
-              "native",
-            ];
-            const myIdx = levels.indexOf(
-              (d as any).overall?.level?.key || "beginner",
-            );
-            const open = myIdx >= c.needIdx;
-            return (
-              <button
-                key={c.key}
-                onClick={() => setLockMsg(c as any)}
-                className={`rounded-2xl border p-4 text-left ${
-                  open
-                    ? "bg-white border-emerald-200"
-                    : "bg-slate-50 border-dashed border-2 border-slate-300"
-                }`}
-              >
-                <p
-                  className={`text-sm font-bold flex items-center gap-1.5 ${
-                    open ? "text-emerald-700" : "text-slate-500"
-                  }`}
-                >
-                  {!open && <LockIcon size={13} />}
-                  {c.label}
-                </p>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  {open ? "Ochilgan" : c.hint}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-
         {/* --- UMUMIY DARAJA: bosilsa ko'nikmalar ochiladi --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           <button
@@ -314,6 +258,77 @@ export default function StudentHome() {
               Mashq qilish
             </Link>
           </div>
+        </div>
+
+        {/* CEFR / IELTS QULFLARI (2026-08-11): "Bugun mashq qil"
+            kartasining TAGIDA, har biri alohida qatorda. */}
+        <div className="space-y-2">
+          {[
+            {
+              key: "cefr",
+              label: "CEFR",
+              hint: "Til darajasi imtihoniga tayyorgarlik",
+              needIdx: 2,
+              needLabel: "PRE-INTERMEDIATE",
+            },
+            {
+              key: "ielts",
+              label: "IELTS",
+              hint: "Xalqaro imtihonga tayyorgarlik",
+              needIdx: 3,
+              needLabel: "INTERMEDIATE",
+            },
+          ].map((c) => {
+            const levels = [
+              "beginner", "elementary", "pre_intermediate",
+              "intermediate", "upper_intermediate", "advanced",
+              "native",
+            ];
+            const myIdx = levels.indexOf(
+              (d as any).overall?.level?.key || "beginner",
+            );
+            const open = myIdx >= c.needIdx;
+            return (
+              <button
+                key={c.key}
+                onClick={() => setLockMsg(c as any)}
+                className={`w-full flex items-center gap-3 rounded-2xl border p-4 text-left ${
+                  open
+                    ? "bg-white border-emerald-200"
+                    : "bg-slate-50 border-dashed border-2 border-slate-300"
+                }`}
+              >
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                    open
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-slate-200 text-slate-500"
+                  }`}
+                >
+                  <LockIcon size={17} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={`text-sm font-bold ${
+                      open ? "text-emerald-700" : "text-slate-600"
+                    }`}
+                  >
+                    {c.label}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    {c.hint}
+                  </p>
+                </div>
+                <span
+                  className={`text-[11px] font-semibold shrink-0 ${
+                    open ? "text-emerald-600" : "text-slate-400"
+                  }`}
+                >
+                  {open ? "Ochilgan" : "Qulf"}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
       </div>

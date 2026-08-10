@@ -4304,7 +4304,14 @@ SUPPORT_RESULT_BANDS = [
 ]
 
 # Bitta seans uchun aql chegaralari — xato kiritishdan himoya
-SUPPORT_SESSION_MAX_HOURS = 6
+# SUPPORT SEANSI QOIDASI (2026-08-10, Jahongir aniqlashtirdi):
+# bitta seans KAMIDA 1 soat, KO'PI BILAN 3 soat. Support qancha dars
+# o'tganini O'ZI belgilaydi — soatni ro'yxatdan tanlaydi, tugash
+# vaqtini hisoblab o'tirmaydi.
+SUPPORT_SESSION_MIN_HOURS = 1
+SUPPORT_SESSION_MAX_HOURS = 3
+# Tanlash uchun tayyor qadamlar (yarim soatlik)
+SUPPORT_SESSION_HOUR_STEPS = [1, 1.5, 2, 2.5, 3]
 SUPPORT_SESSION_MAX_STUDENTS = 40
 
 

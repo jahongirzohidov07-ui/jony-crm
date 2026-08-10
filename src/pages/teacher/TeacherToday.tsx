@@ -67,7 +67,7 @@ export default function TeacherToday() {
           <Stat value={String(d.lessons_this_month)} label="Bu oy dars" />
         </div>
 
-        {missed.length > 0 && (
+        {!isSupport && missed.length > 0 && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
             <div className="flex items-start gap-2.5 mb-2">
               <AlertTriangle size={17} className="text-amber-600 mt-0.5 shrink-0" />
@@ -125,9 +125,9 @@ export default function TeacherToday() {
         <div>
           <div className="flex items-baseline justify-between mb-2">
             <p className="text-sm font-semibold text-slate-800">
-              Bugungi darslar
+              {isSupport ? "Bugungi guruhlarim" : "Bugungi darslar"}
             </p>
-            {d.pending > 0 && (
+            {!isSupport && d.pending > 0 && (
               <span className="text-xs font-medium text-amber-600">
                 {d.pending} ta kutmoqda
               </span>
@@ -142,7 +142,11 @@ export default function TeacherToday() {
           ) : (
             <div className="space-y-2">
               {d.today.map((l) => (
-                <LessonRow key={l.lesson_id} l={l} />
+                <LessonRow
+                  key={l.lesson_id}
+                  l={l}
+                  to={isSupport ? "/teacher/session" : undefined}
+                />
               ))}
             </div>
           )}
@@ -152,10 +156,17 @@ export default function TeacherToday() {
   );
 }
 
-export function LessonRow({ l }: { l: LessonCard }) {
+export function LessonRow({
+  l,
+  to,
+}: {
+  l: LessonCard;
+  /** Support uchun boshqa manzil: u yo'qlama qo'ymaydi. */
+  to?: string;
+}) {
   return (
     <Link
-      to={`/teacher/lesson/${l.lesson_id}`}
+      to={to ?? `/teacher/lesson/${l.lesson_id}`}
       className="flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-200 p-4 active:scale-[0.99] transition"
     >
       <div

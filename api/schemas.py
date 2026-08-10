@@ -23,6 +23,20 @@ class LoginRequest(BaseModel):
     remember: bool | None = False
 
 
+class StudentProfileIn(BaseModel):
+    first_name: str
+    last_name: str
+    middle_name: str | None = None
+    birth_date: date | None = None
+    address: str | None = None
+    school: str | None = None
+    school_grade: str | None = None
+
+
+class StudentPhotoIn(BaseModel):
+    photo: str | None = None   # data:image/... yoki None (o'chirish)
+
+
 class GrammarAnswerIn(BaseModel):
     question_id: int
     answer: str
@@ -352,6 +366,11 @@ class StudentUpdate(StudentCreate):
 
 class StudentOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
+    # O'quvchi ilovadan o'zi kiritadigan qismlar (2026-08-10)
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    middle_name: Optional[str] = None
+    photo: Optional[str] = None
     address: Optional[str] = None
     school: Optional[str] = None
     school_grade: Optional[str] = None

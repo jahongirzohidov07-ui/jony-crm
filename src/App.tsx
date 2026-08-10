@@ -82,6 +82,7 @@ const TeacherToday = lazy(() => import("./pages/teacher/TeacherToday"));
 const TeacherLesson = lazy(() => import("./pages/teacher/TeacherLesson"));
 const TeacherWeek = lazy(() => import("./pages/teacher/TeacherWeek"));
 const TeacherSession = lazy(() => import("./pages/teacher/TeacherSession"));
+const TeacherVocab = lazy(() => import("./pages/teacher/TeacherVocab"));
 const TeacherMore = lazy(() => import("./pages/teacher/TeacherMore"));
 const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
 
@@ -165,6 +166,7 @@ function AppRoutes() {
           <Route path="week" element={<TeacherWeek />} />
           <Route path="lesson/:id" element={<TeacherLesson />} />
           <Route path="session" element={<TeacherSession />} />
+          <Route path="vocab" element={<TeacherVocab />} />
           <Route path="more" element={<TeacherMore />} />
           <Route path="profile" element={<TeacherProfile />} />
         </Route>

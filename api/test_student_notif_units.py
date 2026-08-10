@@ -87,9 +87,9 @@ print("\n=== UNITLAR RO'YXATI ===")
 r = c.get("/api/student/vocab/units", headers=H)
 ck("status 200", r.status_code, 200)
 units = r.json()["units"]
-ck("59 unit bor", len(units), 59)
+ck("33 unit bor (SAT chiqarilgan)", len(units), 33)
 ck("tartib raqam bo'yicha", units[0]["key"], "Unit 1")
-ck("oxirgisi Unit 59", units[-1]["key"], "Unit 59")
+ck("oxirgisi Unit 33", units[-1]["key"], "Unit 33")
 u1_n = units[0]["n"]
 ck("Unit 1 da so'z bor", u1_n > 0, True)
 
@@ -110,9 +110,14 @@ w = (db.query(models.VocabWord)
 c.post("/api/student/vocab/answer", headers=H,
        json={"game": "en_uz", "word_id": w.id,
              "answer": w.translation})
+# 3 marta to'g'ri topilgach "o'rganilgan" sanaladi
+for _ in range(2):
+    c.post("/api/student/vocab/answer", headers=H,
+           json={"game": "en_uz", "word_id": w.id,
+                 "answer": w.translation})
 r = c.get("/api/student/vocab/units", headers=H)
 u1 = [x for x in r.json()["units"] if x["key"] == "Unit 1"][0]
-ck("yechilganlar soni oshdi", u1["solved"], 1)
+ck("3 marta topilgach o'rganilgan", u1["learned3"], 1)
 
 print("\n=== BALANS, TO'LOV VA IMTIHON TARIXI ===")
 r = c.get("/api/student/home", headers=H)

@@ -92,13 +92,17 @@ def _streak_days(db: Session, student_id: int) -> int:
 
 
 def _active_words(db: Session, level: str | None = None,
-                  unit: str | None = None):
+                  unit: str | None = None, language: str = "en"):
     q = db.query(models.VocabWord).filter(models.VocabWord.is_active == 1)
+    # Til (2026-08-11, bayroq): eski yozuvlarda NULL = en
+    if language == "en":
+        q = q.filter((models.VocabWord.language == "en")
+                     | (models.VocabWord.language.is_(None)))
+    else:
+        q = q.filter(models.VocabWord.language == language)
     if level:
         q = q.filter(models.VocabWord.level == level)
     if unit:
-        # Botdagi unit tanlash (2026-08-10, Jahongir): topic maydonida
-        # "Unit 12" ko'rinishida saqlanadi
         q = q.filter(models.VocabWord.topic == unit)
     return q
 
@@ -251,7 +255,7 @@ def _round_spelling(words):
 
 @router.get("/api/student/vocab/round")
 def vocab_round(game: str = "en_uz", level: str | None = None,
-                unit: str | None = None,
+                unit: str | None = None, language: str = "en",
                 db: Session = Depends(get_db),
                 user=Depends(require_role(roles.STUDENT))):
     """Bitta o'yin bosqichi (round) tuzadi.
@@ -265,7 +269,9 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
     if game not in roles.VOCAB_GAME_KEYS:
         raise HTTPException(400, "Bunday o'yin yo'q")
 
-    pool = _active_words(db, level, unit).all()
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+    pool = _active_words(db, level, unit, language).all()
     if len(pool) < 4:
         raise HTTPException(
             400, "Bu bo'limda so'z kam - boshqa unit tanlang"
@@ -605,26 +611,45 @@ def student_exams(db: Session = Depends(get_db),
 # =====================================================================
 
 @router.get("/api/student/vocab/units")
-def vocab_units(db: Session = Depends(get_db),
+def vocab_units(language: str = "en", db: Session = Depends(get_db),
                 user=Depends(require_role(roles.STUDENT))):
-    """Unitlar ro'yxati + har birida nechta so'z va o'quvchi nechtasini
-    yechgani. Bot bazasidagi tartib: topic = "Unit 1" ... "Unit 59"."""
+    """Unitlar ro'yxati + o'rganish foizi (2026-08-11 qoidasi).
+
+    Jahongir: "har bir so'zni kamida 3 marta to'g'ri topgan bo'lsa
+    progress bar ko'k, 6 marta topgan bo'lsa yashil; 99% gacha o'zi
+    practice qilib boradi, ustoz 'unitni topshirdi' deb tick qo'ysa
+    100% bo'ladi."
+
+    Hisob: har so'z bo'yicha TO'G'RI javoblar SONI (takror o'yinlar
+    ham sanaladi - bola necha marta mashq qilgani muhim):
+      3+  = so'z "o'rganilgan" (ko'k mezon)
+      6+  = so'z "mustahkam" (yashil mezon)
+    Foiz = o'rganilgan(3+) / jami * 99 (yaxlitlab) - 99% dan
+    oshmaydi. Ustoz tasdig'i (VocabUnitPass) = 100%.
+    Bar rangi: passed -> "gold", hammasi 6+ -> "green", aks "blue"."""
     s = _me(db, user)
-    rows = (db.query(models.VocabWord.topic,
-                     func.count(models.VocabWord.id))
-            .filter(models.VocabWord.is_active == 1,
-                    models.VocabWord.topic.isnot(None))
-            .group_by(models.VocabWord.topic).all())
-    solved_rows = (db.query(models.VocabWord.topic,
-                            func.count(func.distinct(
-                                models.VocabAttempt.word_id)))
-                   .join(models.VocabAttempt,
-                         models.VocabAttempt.word_id ==
-                         models.VocabWord.id)
-                   .filter(models.VocabAttempt.student_id == s.id,
-                           models.VocabAttempt.correct == 1)
-                   .group_by(models.VocabWord.topic).all())
-    solved = dict(solved_rows)
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+
+    words = _active_words(db, language=language).all()
+    if not words:
+        return {"units": [], "total_words": 0, "language": language}
+
+    by_unit = {}
+    for w in words:
+        by_unit.setdefault(w.topic or "Boshqa", []).append(w.id)
+
+    # Har so'z bo'yicha to'g'ri javoblar soni (bitta so'rov)
+    cnt_rows = (db.query(models.VocabAttempt.word_id,
+                         func.count(models.VocabAttempt.id))
+                .filter(models.VocabAttempt.student_id == s.id,
+                        models.VocabAttempt.correct == 1)
+                .group_by(models.VocabAttempt.word_id).all())
+    cnt = dict(cnt_rows)
+
+    passed = {p.unit for p in db.query(models.VocabUnitPass)
+              .filter(models.VocabUnitPass.student_id == s.id,
+                      models.VocabUnitPass.language == language).all()}
 
     def unit_no(t):
         try:
@@ -632,11 +657,25 @@ def vocab_units(db: Session = Depends(get_db),
         except (ValueError, IndexError):
             return 9999
 
-    units = sorted(
-        [{"key": t, "n": int(n), "solved": int(solved.get(t, 0))}
-         for t, n in rows], key=lambda x: unit_no(x["key"]))
-    total = sum(u["n"] for u in units)
-    return {"units": units, "total_words": total}
+    units = []
+    for topic, ids in by_unit.items():
+        n = len(ids)
+        l3 = sum(1 for i in ids if cnt.get(i, 0) >= 3)
+        l6 = sum(1 for i in ids if cnt.get(i, 0) >= 6)
+        is_passed = topic in passed
+        percent = 100 if is_passed else min(99, round(l3 * 99 / n)) \
+            if n else 0
+        units.append({
+            "key": topic, "n": n,
+            "learned3": l3, "learned6": l6,
+            "percent": percent,
+            "passed": is_passed,
+            "tone": ("gold" if is_passed
+                     else "green" if n and l6 >= n else "blue"),
+        })
+    units.sort(key=lambda x: unit_no(x["key"]))
+    return {"units": units, "total_words": len(words),
+            "language": language}
 
 
 # =====================================================================
@@ -938,50 +977,58 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
 @router.get("/api/student/grammar/topics")
 def grammar_topics(db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
-    """Mavzular ro'yxati + o'quvchining har biridagi progressi.
+    """A1 dasturi (Jahongir bergan tartibda) + A2 qulfi.
 
-    Progress = shu mavzuda KAMIDA BIR MARTA to'g'ri yechilgan
-    savollar / jami savollar. Shuning uchun bola mavzuni "yopish"
-    uchun hamma savolini to'g'ri yechishi kerak - shunchaki kirib
-    chiqish foiz bermaydi."""
+    Qoida (2026-08-11): "Avval A1 ni tugatgandan keyin A2 ochilsin,
+    A2 mavzulari umuman ko'rinmasin, faqat qulf bo'lib tursin.
+    A1 tugaganda A1 yopiladi (yig'ilib turadi), xohlasa ochib eski
+    mavzularni ishlayveradi." Mavzu "yopildi" = hamma savoli kamida
+    bir marta to'g'ri yechildi."""
     s = _me(db, user)
     qs = (db.query(models.GrammarQuestion)
           .filter(models.GrammarQuestion.is_active == 1)
           .order_by(models.GrammarQuestion.topic_order,
                     models.GrammarQuestion.id).all())
-    if not qs:
-        return {"levels": [], "total_correct": 0}
-
     solved = {qid for (qid,) in
               db.query(func.distinct(models.GrammarAttempt.question_id))
               .filter(models.GrammarAttempt.student_id == s.id,
                       models.GrammarAttempt.correct == 1).all()}
 
-    topics = {}
-    for q in qs:
-        t = topics.setdefault(q.topic, {
-            "topic": q.topic, "level": q.level, "total": 0,
-            "solved": 0, "kinds": set(),
-        })
-        t["total"] += 1
-        t["kinds"].add(q.kind)
-        if q.id in solved:
-            t["solved"] += 1
+    def build(level):
+        topics = {}
+        for q in qs:
+            if q.level != level:
+                continue
+            t = topics.setdefault(q.topic, {
+                "topic": q.topic, "order": q.topic_order,
+                "boss": bool(q.is_boss), "total": 0, "solved": 0,
+            })
+            t["total"] += 1
+            if q.id in solved:
+                t["solved"] += 1
+        out = sorted(topics.values(), key=lambda x: x["order"])
+        for t in out:
+            t["percent"] = round(t["solved"] * 100 / t["total"]) \
+                if t["total"] else 0
+            t["done"] = t["total"] > 0 and t["solved"] >= t["total"]
+        return out
 
-    by_level = {}
-    for t in topics.values():
-        t["percent"] = round(t["solved"] * 100 / t["total"]) \
-            if t["total"] else 0
-        t["done"] = t["solved"] >= t["total"]
-        t["kinds"] = sorted(t["kinds"])
-        by_level.setdefault(t["level"], []).append(t)
+    a1 = build("A1")
+    a1_completed = bool(a1) and all(t["done"] for t in a1)
+    a2 = build("A2") if a1_completed else []
 
-    order = ["A1", "A2", "B1", "B2", "C1"]
     return {
-        "levels": [{"level": lv, "topics": by_level[lv]}
-                   for lv in order if lv in by_level],
+        "a1": {"topics": a1,
+               "done": sum(1 for t in a1 if t["done"]),
+               "total": len(a1),
+               "completed": a1_completed},
+        "a2_locked": not a1_completed,
+        "a2": {"topics": a2, "ready": len(a2) > 0},
         "total_correct": len(solved),
         "round_size": roles.GRAMMAR_ROUND_SIZE,
+        # eski UI mosligi uchun
+        "levels": [{"level": "A1", "topics": a1}]
+                  + ([{"level": "A2", "topics": a2}] if a2 else []),
     }
 
 

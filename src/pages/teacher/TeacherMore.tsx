@@ -41,6 +41,8 @@ const SECTIONS = [
         hint: "O'quvchilaringiz uchun kitob" },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck,
         hint: "Unit / mock test so'rash" },
+      { to: "/teacher/vocab", label: "Lug'at unitlari", icon: BookMarked,
+        hint: "Unit topshirganini tasdiqlash (100%)" },
     ],
   },
   {

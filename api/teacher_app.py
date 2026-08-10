@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from datetime import date, datetime, timedelta
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -250,6 +250,130 @@ def teacher_support_options(db: Session = Depends(get_db),
         "max_hours": roles.SUPPORT_SESSION_MAX_HOURS,
         "max_students": roles.SUPPORT_SESSION_MAX_STUDENTS,
     }
+
+
+# =====================================================================
+#  LUG'AT UNITLARINI TASDIQLASH (2026-08-11, Jahongir: "ustoz
+#  1-unitni topshirdi degan tick qo'ysa unit avtomat 100% bo'lsin")
+# =====================================================================
+
+def _teacher_student_or_403(db, user, student_id: int):
+    """Ustoz faqat O'Z guruhidagi o'quvchini ko'radi/tasdiqlaydi."""
+    t = _me_teacher(db, user)
+    gids = _my_group_ids(db, user, t)
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if st.group_id not in (gids or []):
+        raise HTTPException(403, "Bu o'quvchi sizning guruhingizda emas")
+    return st
+
+
+@router.get("/api/teacher/vocab-students")
+def teacher_vocab_students(group_id: int,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*TEACHER_APP_ROLES))):
+    """Guruh o'quvchilari - unit tasdiqlash sahifasi uchun."""
+    t = _me_teacher(db, user)
+    gids = _my_group_ids(db, user, t)
+    if group_id not in (gids or []):
+        raise HTTPException(403, "Bu guruh sizniki emas")
+    rows = (db.query(models.Student)
+            .filter(models.Student.group_id == group_id,
+                    models.Student.status.in_(("active", "trial")))
+            .order_by(models.Student.full_name).all())
+    return {"students": [{"id": x.id, "full_name": x.full_name}
+                         for x in rows]}
+
+
+@router.get("/api/teacher/vocab/{student_id}")
+def teacher_vocab_progress(student_id: int, language: str = "en",
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*TEACHER_APP_ROLES))):
+    """O'quvchining unit progressi - ustoz ko'zi bilan."""
+    st = _teacher_student_or_403(db, user, student_id)
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+
+    q = db.query(models.VocabWord).filter(models.VocabWord.is_active == 1)
+    if language == "en":
+        q = q.filter((models.VocabWord.language == "en")
+                     | (models.VocabWord.language.is_(None)))
+    else:
+        q = q.filter(models.VocabWord.language == language)
+    words = q.all()
+    by_unit = {}
+    for w in words:
+        by_unit.setdefault(w.topic or "Boshqa", []).append(w.id)
+    cnt = dict(db.query(models.VocabAttempt.word_id,
+                        func.count(models.VocabAttempt.id))
+               .filter(models.VocabAttempt.student_id == st.id,
+                       models.VocabAttempt.correct == 1)
+               .group_by(models.VocabAttempt.word_id).all())
+    passed = {p.unit for p in db.query(models.VocabUnitPass)
+              .filter(models.VocabUnitPass.student_id == st.id,
+                      models.VocabUnitPass.language == language).all()}
+
+    def unit_no(t):
+        try:
+            return int(str(t).split()[-1])
+        except (ValueError, IndexError):
+            return 9999
+
+    units = []
+    for topic, ids in by_unit.items():
+        n = len(ids)
+        l3 = sum(1 for i in ids if cnt.get(i, 0) >= 3)
+        is_passed = topic in passed
+        units.append({
+            "key": topic, "n": n, "learned3": l3,
+            "percent": 100 if is_passed
+            else (min(99, round(l3 * 99 / n)) if n else 0),
+            "passed": is_passed,
+        })
+    units.sort(key=lambda x: unit_no(x["key"]))
+    return {"student": st.full_name, "units": units,
+            "language": language}
+
+
+@router.post("/api/teacher/vocab-pass")
+def teacher_vocab_pass(payload: dict = Body(...),
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*TEACHER_APP_ROLES))):
+    """Unitni topshirdi (yoki bekor qilish). Auditga yoziladi."""
+    student_id = int(payload.get("student_id") or 0)
+    unit = str(payload.get("unit") or "").strip()
+    language = str(payload.get("language") or "en")
+    want = bool(payload.get("passed", True))
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+    if not unit:
+        raise HTTPException(400, "Unit ko'rsatilmadi")
+    st = _teacher_student_or_403(db, user, student_id)
+
+    row = (db.query(models.VocabUnitPass)
+           .filter(models.VocabUnitPass.student_id == st.id,
+                   models.VocabUnitPass.unit == unit,
+                   models.VocabUnitPass.language == language).first())
+    if want and row is None:
+        db.add(models.VocabUnitPass(
+            student_id=st.id, unit=unit, language=language,
+            passed_by=user.id))
+        note = f"{unit} topshirildi deb tasdiqlandi"
+    elif not want and row is not None:
+        db.delete(row)
+        note = f"{unit} tasdig'i bekor qilindi"
+    else:
+        return {"ok": True, "passed": want}
+    db.commit()
+    try:
+        audit.log(db, user, entity="student", action="update",
+                  entity_id=st.id, entity_label=st.full_name,
+                  field="Lug'at uniti", note=note,
+                  branch_id=st.branch_id, commit=True)
+    except Exception:
+        db.rollback()
+    return {"ok": True, "passed": want}
 
 
 @router.get("/api/teacher/home")

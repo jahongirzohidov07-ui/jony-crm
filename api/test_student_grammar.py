@@ -52,25 +52,25 @@ H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'9989
 
 print("=== SEED ISHLAGAN ===")
 total_q = db.query(models.GrammarQuestion).count()
-ck("312 savol yuklangan", total_q, 312)
+total_active = db.query(models.GrammarQuestion).filter(
+    models.GrammarQuestion.is_active == 1).count()
+ck("333 ta A1 savoli faol", total_active, 333)
 
 print("\n=== MAVZULAR RO'YXATI ===")
 r = c.get("/api/student/grammar/topics", headers=H)
 ck("status 200", r.status_code, 200)
 d = r.json()
-lv_names = [x["level"] for x in d["levels"]]
-ck("darajalar tartibi A1,A2,B1", lv_names, ["A1", "A2", "B1"])
-all_topics = [t for x in d["levels"] for t in x["topics"]]
-ck("26 mavzu", len(all_topics), 26)
+all_topics = d["a1"]["topics"]
+ck("37 ta A1 mavzusi", len(all_topics), 37)
+ck("A2 qulfda", d["a2_locked"], True)
 ck("boshida hech biri yopilmagan",
    any(t["done"] for t in all_topics), False)
 t0 = all_topics[0]
-ck("har mavzuda 3 xil mashq bor", t0["kinds"],
-   ["error", "fill", "order"])
+ck("1-mavzu Level 1", "Level 1" in t0["topic"], True)
 
 print("\n=== ROUND: JAVOB SIRDA QOLADI ===")
-topic = "Present Simple"
-r = c.get(f"/api/student/grammar/round?topic={topic}", headers=H)
+topic = all_topics[0]["topic"]
+r = c.get("/api/student/grammar/round", params={"topic": topic}, headers=H)
 ck("status 200", r.status_code, 200)
 items = r.json()["items"]
 ck("8 ta savol", len(items), roles.GRAMMAR_ROUND_SIZE)
@@ -116,7 +116,7 @@ ck("noto'g'ri tartib rad etiladi",
 
 print("\n=== PROGRESS VA SKILLS ===")
 r = c.get("/api/student/grammar/topics", headers=H)
-ps = [t for x in r.json()["levels"] for t in x["topics"]
+ps = [t for t in r.json()["a1"]["topics"]
       if t["topic"] == topic][0]
 ck("mavzu progressi oshdi (2 savol)", ps["solved"], 2)
 r = c.get("/api/student/skills", headers=H)
@@ -133,7 +133,7 @@ db.add(adm); db.commit()
 Ha = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'adm','password':'Parol123!'}).json()['access_token']}"}
 r = c.get("/api/student/grammar/topics", headers=Ha)
 ck("xodimga yopiq", r.status_code, 403)
-r = c.get("/api/student/grammar/round?topic=YOQ_MAVZU", headers=H)
+r = c.get("/api/student/grammar/round", params={"topic": "YOQ_MAVZU"}, headers=H)
 ck("mavjud bo'lmagan mavzu 404", r.status_code, 404)
 
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))

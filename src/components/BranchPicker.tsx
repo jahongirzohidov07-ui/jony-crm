@@ -5,9 +5,18 @@ import { useAuth } from "../lib/AuthContext";
 import { ORG_WIDE_ROLES } from "../lib/roles";
 
 /**
- * Filial tanlagich. Faqat butun tashkilotni ko'radigan foydalanuvchiga
- * ko'rinadi — filialga bog'langan xodim baribir o'z filialini ko'radi,
- * shuning uchun unga tanlov ko'rsatish chalg'itadi.
+ * Filial tanlagich.
+ *
+ * IKKI XIL foydalanuvchiga ko'rinadi:
+ *  1. Butun tashkilotni ko'radigan rol (asoschi, HR, o'quv bo'limi
+ *     rahbari va h.k.) — BARCHA filiallar ro'yxati bilan;
+ *  2. IKKI YOKI UNDAN KO'P filialga biriktirilgan xodim (masalan ikki
+ *     filialda dars beradigan ustoz) — faqat O'Z filiallari bilan.
+ *
+ * (2) 2026-08-10 da qo'shildi: Jahongir xabar berdi — ikki filialli
+ * ustozda tanlagich umuman chiqmasdi, chunki u faqat (1) ga
+ * ko'rsatilardi. Bitta filialga bog'langan xodimga esa hamon
+ * ko'rinmaydi — unga tanlov ko'rsatish chalg'itadi.
  */
 export function BranchPicker({
   value,
@@ -19,14 +28,22 @@ export function BranchPicker({
   className?: string;
 }) {
   const { user } = useAuth();
-  const [branches, setBranches] = useState<Branch[]>([]);
+  const [all, setAll] = useState<Branch[]>([]);
+  const orgWide = !!user?.role && ORG_WIDE_ROLES.includes(user.role);
+  const mine = user?.branches ?? [];
 
   useEffect(() => {
-    api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));
-  }, []);
+    // Butun tashkilotni ko'radiganlar uchungina to'liq ro'yxat
+    // so'raladi — qolganlarga o'z filiallari /me dan allaqachon keladi.
+    if (!orgWide) return;
+    api.get<Branch[]>("/branches").then(setAll).catch(() => setAll([]));
+  }, [orgWide]);
 
-  const orgWide = !!user?.role && ORG_WIDE_ROLES.includes(user.role);
-  if (!orgWide || branches.length < 2) return null;
+  const branches: Branch[] = orgWide
+    ? all
+    : (mine as Branch[]);
+
+  if (branches.length < 2) return null;
 
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>

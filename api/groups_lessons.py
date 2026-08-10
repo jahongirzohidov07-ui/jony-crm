@@ -740,8 +740,7 @@ def delete_group(
     group = db.query(models.Group).get(group_id)
     if not group:
         raise HTTPException(404, "Guruh topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and group.branch_id and group.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, group.branch_id, null_ok=True):
         raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
 
     n_students = db.query(models.Student).filter(

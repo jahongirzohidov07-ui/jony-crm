@@ -3,10 +3,18 @@ import {
 } from "react";
 import { api, getToken, setToken, clearToken } from "./api";
 
+export interface AuthBranch {
+  id: number;
+  name: string;
+}
+
 interface AuthUser {
   full_name: string;
   role: string;
   branch_id: number | null;
+  /** Xodim ishlaydigan BARCHA filiallar (asosiy + qo'shimcha).
+   * Ikkitadan ko'p bo'lsa tepada filial tanlagich chiqadi. */
+  branches?: AuthBranch[];
 }
 
 interface AuthContextValue {
@@ -32,21 +40,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!getToken()) return;
     api
-      .get<{ full_name: string; role: string; branch_id: number | null }>(
-        "/me",
-      )
+      .get<{
+        full_name: string;
+        role: string;
+        branch_id: number | null;
+        branches?: AuthBranch[];
+      }>("/me")
       .then((r) => {
         const u = {
           full_name: r.full_name,
           role: r.role,
           branch_id: r.branch_id,
+          branches: r.branches ?? [],
         };
         sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
         setUser((prev) =>
           prev &&
           prev.full_name === u.full_name &&
           prev.role === u.role &&
-          prev.branch_id === u.branch_id
+          prev.branch_id === u.branch_id &&
+          (prev.branches?.length ?? 0) === u.branches.length
             ? prev
             : u,
         );

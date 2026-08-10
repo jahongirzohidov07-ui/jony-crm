@@ -36,9 +36,8 @@ def _get_lead_in_scope(db: Session, lead_id: int, user: models.User) -> models.L
     lead = db.query(models.Lead).get(lead_id)
     if not lead:
         raise HTTPException(404, "Lid topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES):
-        if user.branch_id and lead.branch_id != user.branch_id:
-            raise HTTPException(403, "Bu lid boshqa filialga tegishli")
+    if not _in_user_branches(db, user, lead.branch_id):
+        raise HTTPException(403, "Bu lid boshqa filialga tegishli")
     return lead
 
 def _validate_lead_fields(source: Optional[str], stage: Optional[str]):

@@ -514,8 +514,7 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
     o = db.query(models.ExamOrder).get(oid)
     if not o:
         raise HTTPException(404, "Buyurtma topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and o.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, o.branch_id):
         raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
     if o.status == "accepted":
         who = db.query(models.User).get(o.accepted_by)
@@ -568,8 +567,7 @@ def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
     o = db.query(models.ExamOrder).get(oid)
     if not o:
         raise HTTPException(404, "Buyurtma topilmadi")
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
-            and o.branch_id != user.branch_id:
+    if not _in_user_branches(db, user, o.branch_id):
         raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
     if o.status not in ("new", "accepted"):
         raise HTTPException(400, "Bu buyurtma yopilgan")

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
+import { Bell,
   ChevronDown, ChevronRight, Coins, Flame, Sparkles, Trophy,
-} from "lucide-react";
+ } from "lucide-react";
 import type { ReactNode } from "react";
 import { api } from "../../lib/api";
 import { BrandIcon } from "../../components/BrandIcon";
@@ -24,6 +24,20 @@ export default function StudentHome() {
   const [d, setD] = useState<Home | null>(null);
   const [err, setErr] = useState("");
   const [open, setOpen] = useState(false);
+
+  const [hasNew, setHasNew] = useState(false);
+
+  useEffect(() => {
+    // Yangi bildirishnoma bormi - oxirgi ko'rilgan vaqt bilan
+    // solishtiramiz (sahifasi ochilganda o'sha vaqt yangilanadi)
+    api
+      .get<{ latest: string | null }>("/student/notifications")
+      .then((r) => {
+        const seen = localStorage.getItem("jonyos_notif_seen") || "";
+        setHasNew(!!r.latest && r.latest > seen);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     api
@@ -50,7 +64,8 @@ export default function StudentHome() {
           {/* ENG TEPADA: rasm + ism (2026-08-10, Jahongir). Bosilsa
               profil ochiladi - rasm qo'yish/ism o'zgartirish o'sha
               yerda. */}
-          <Link to="/student/profile" className="flex items-center gap-3">
+          <div className="flex items-center gap-3">
+          <Link to="/student/profile" className="flex items-center gap-3 flex-1 min-w-0">
             <div className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/40 overflow-hidden flex items-center justify-center shrink-0">
               {(d as any).photo ? (
                 <img
@@ -72,6 +87,20 @@ export default function StudentHome() {
               </p>
             </div>
           </Link>
+          {/* QO'NG'IROQCHA (2026-08-10, Jahongir): to'lov vaqti va
+              imtihon natijasi xabarlari. Qizil nuqta - oxirgi
+              ko'rilgandan keyin yangi xabar bor degani. */}
+          <Link
+            to="/student/notifications"
+            className="relative w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0"
+            aria-label="Bildirishnomalar"
+          >
+            <Bell size={20} />
+            {hasNew && (
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-brand-600" />
+            )}
+          </Link>
+          </div>
         </div>
       </div>
 
@@ -184,34 +213,6 @@ export default function StudentHome() {
           </div>
         </div>
 
-        {/* --- O'yinlar --- */}
-        <div>
-          <p className="text-sm font-semibold text-slate-800 mb-2">
-            Lug'at o'yinlari
-          </p>
-          <div className="space-y-2">
-            {d.games.map((gm) => (
-              <Link
-                key={gm.key}
-                to={`/student/games/${gm.key}`}
-                className="flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 active:scale-[0.99] transition"
-              >
-                <div className="w-9 h-9 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0 text-sm font-bold">
-                  {gm.label.charAt(0)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-800">
-                    {gm.label}
-                  </p>
-                  <p className="text-[11px] text-slate-400 truncate">
-                    {gm.hint}
-                  </p>
-                </div>
-                <ChevronRight size={16} className="text-slate-300 shrink-0" />
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
     </>
   );

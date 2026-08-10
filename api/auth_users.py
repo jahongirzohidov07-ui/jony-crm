@@ -65,6 +65,30 @@ def login(payload: schemas.LoginRequest, request: Request,
           (request.client.host if request.client else "") or "")[:64]
     _login_guard(db, payload.username, ip)
     user = db.query(models.User).filter(models.User.username == payload.username).first()
+    # TELEFON-LOGIN MOSLASHUVI (2026-08-10, Jahongir: "apkdan raqam
+    # bilan parol kirgizsam ishlamadi"). O'quvchi raqamini +998 bilan,
+    # probel/chiziqcha bilan yoki 998siz yozishi mumkin; bazadagi login
+    # esa kiritilgan kartadagi ko'rinishga qarab "901234567" yoki
+    # "998901234567" bo'ladi. Aniq mos kelmasa, faqat raqamlar olinib
+    # ikkala ko'rinish ham sinab ko'riladi. Parol tekshiruvi o'z
+    # joyida qoladi - bu shunchaki yozuv shakli moslashuvi.
+    if user is None:
+        _digits = "".join(ch for ch in (payload.username or "")
+                          if ch.isdigit())
+        _cands = []
+        if len(_digits) >= 7:
+            _cands.append(_digits)
+            if len(_digits) == 9:
+                _cands.append("998" + _digits)
+            if len(_digits) == 12 and _digits.startswith("998"):
+                _cands.append(_digits[3:])
+        for _c in _cands:
+            if _c == payload.username:
+                continue
+            user = (db.query(models.User)
+                    .filter(models.User.username == _c).first())
+            if user is not None:
+                break
     if not user or not verify_password(payload.password, user.password_hash):
         _login_record(db, payload.username, ip, False)
         raise HTTPException(status_code=401, detail="Login yoki parol noto'g'ri")

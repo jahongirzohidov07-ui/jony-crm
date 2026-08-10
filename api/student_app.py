@@ -818,12 +818,100 @@ def _gram_sentences(db, limit=400):
     return rows[:limit]
 
 
+PRACTICE_NEW_KINDS = {
+    "reading": ("read_tfng", "read_gap", "read_match"),
+    "listening": ("listen_img", "listen_qa", "listen_order"),
+    "writing": ("write_transform",),
+    "speaking": ("speak_repeat", "speak_answer"),
+}
+
+
+def _pi_round(db, s, skill, kind):
+    """PracticeItem jadvalidan round (yangi turlar, 2026-08-11)."""
+    solved = {r for (r,) in
+              db.query(func.distinct(models.SkillAttempt.ref))
+              .filter(models.SkillAttempt.student_id == s.id,
+                      models.SkillAttempt.skill == skill,
+                      models.SkillAttempt.correct == 1).all()}
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == skill,
+                    models.PracticeItem.kind == kind,
+                    models.PracticeItem.is_active == 1).all())
+    if not rows:
+        raise HTTPException(404, "Bu turda mashq hali yo'q")
+    fresh = [r for r in rows if f"pi:{r.id}" not in solved]
+    done = [r for r in rows if f"pi:{r.id}" in solved]
+    random.shuffle(fresh)
+    random.shuffle(done)
+
+    if kind == "read_tfng":
+        # Bitta matn + unga tegishli barcha fikrlar
+        pool = fresh or done
+        first = json.loads(pool[0].payload)["text"]
+        group = [r for r in rows
+                 if json.loads(r.payload)["text"] == first]
+        items = [{
+            "ref": f"pi:{r.id}", "kind": kind,
+            "prompt": json.loads(r.payload)["statement"],
+            "options": ["True", "False", "Not Given"],
+            "solved": f"pi:{r.id}" in solved,
+        } for r in group]
+        return {"skill": skill, "kind": kind,
+                "text": {"title": "Matnni o'qing", "level": pool[0].level,
+                         "body": first},
+                "items": items}
+
+    picked = (fresh + done)[:PRACTICE_ROUND]
+    items = []
+    for r in picked:
+        pl = json.loads(r.payload)
+        base = {"ref": f"pi:{r.id}", "kind": kind,
+                "solved": f"pi:{r.id}" in solved,
+                "level": r.level}
+        if kind in ("read_gap", "read_match"):
+            if kind == "read_gap":
+                opts = [_shuffled(g) for g in pl["options"]]
+                base.update({"text": pl["text"], "options": opts})
+            else:
+                base.update({
+                    "paragraphs": pl["paragraphs"],
+                    "options": [_shuffled(pl["headings"])
+                                for _ in pl["paragraphs"]],
+                })
+        elif kind == "listen_img":
+            base.update({"say": pl["say"],
+                         "options": _shuffled(pl["options"])})
+        elif kind == "listen_qa":
+            base.update({"say": pl["say"], "prompt": pl["prompt"],
+                         "options": _shuffled(pl["options"])})
+        elif kind == "listen_order":
+            steps = pl["steps"][:]
+            for _ in range(10):
+                random.shuffle(steps)
+                if steps != pl["steps"] or len(steps) < 2:
+                    break
+            base.update({"say": pl["say"], "options": steps})
+        elif kind == "write_transform":
+            base.update({"instruction": pl["instruction"],
+                         "given": pl["given"]})
+        elif kind == "speak_repeat":
+            base.update({"say": pl["say"]})
+        elif kind == "speak_answer":
+            base.update({"say": pl["say"], "hint": pl["hint"]})
+        items.append(base)
+    return {"skill": skill, "kind": kind, "items": items}
+
+
 @router.get("/api/student/practice/{skill}/round")
-def practice_round(skill: str, db: Session = Depends(get_db),
+def practice_round(skill: str, kind: str | None = None,
+                   db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
     s = _me(db, user)
     if skill not in PRACTICE_SKILLS:
         raise HTTPException(404, "Bunday mashq yo'q")
+    # YANGI TURLAR (2026-08-11, Jahongir spetsifikatsiyasi)
+    if kind and kind in PRACTICE_NEW_KINDS.get(skill, ()):
+        return _pi_round(db, s, skill, kind)
 
     solved = {r for (r,) in
               db.query(func.distinct(models.SkillAttempt.ref))
@@ -942,6 +1030,65 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
     sid = int(sid)
 
     expected, explain = None, None
+    if kind == "pi":
+        it = db.query(models.PracticeItem).get(sid)
+        if not it or not it.is_active or it.skill != skill:
+            raise HTTPException(404, "Mashq topilmadi")
+        explain = it.explain
+        given = (payload.answer or "").strip()
+        if it.kind in ("read_tfng", "listen_img", "listen_qa"):
+            ok = given == it.answer.strip()
+            expected = it.answer
+        elif it.kind in ("read_gap", "read_match", "listen_order"):
+            want = [a.strip() for a in json.loads(it.answer)]
+            got = [a.strip() for a in given.split("|")]
+            ok = len(want) == len(got) and all(
+                w == g for w, g in zip(want, got))
+            expected = " | ".join(want)
+        elif it.kind == "write_transform":
+            cands = [it.answer] + (json.loads(it.alt) if it.alt else [])
+            ok = any(_norm_loose(given) == _norm_loose(c)
+                     for c in cands)
+            expected = it.answer
+        elif it.kind == "speak_repeat":
+            ok = _word_overlap(it.answer, given) >= 0.7
+            expected = it.answer
+        elif it.kind == "speak_answer":
+            pats = json.loads(it.answer)
+            norm = _norm_loose(given)
+            ok = bool(norm) and any(p in norm for p in pats)
+            expected = json.loads(it.payload).get("hint")
+        else:
+            raise HTTPException(400, "Noma'lum tur")
+        was = (db.query(models.SkillAttempt.id)
+               .filter(models.SkillAttempt.student_id == s.id,
+                       models.SkillAttempt.skill == skill,
+                       models.SkillAttempt.ref == payload.ref,
+                       models.SkillAttempt.correct == 1)
+               .first() is not None)
+        db.add(models.SkillAttempt(
+            student_id=s.id, skill=skill, ref=payload.ref,
+            correct=1 if ok else 0,
+            answer=given[:300], date=date.today()))
+        db.commit()
+        xp_given = 0.0
+        if ok and not was:
+            try:
+                res = award_xp(
+                    db, student_id=s.id,
+                    event_code="PRACTICE_CORRECT",
+                    amount=roles.GRAMMAR_XP_PER_CORRECT,
+                    source_type=f"practice_{skill}", source_id=sid,
+                    reason=f"{skill.capitalize()} mashqi",
+                    idempotency_key=f"PRACT:{skill}:{s.id}:{payload.ref}")
+                if res.get("ok"):
+                    xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+            except Exception:
+                db.rollback()
+        return {"correct": ok, "expected": expected,
+                "explain": explain,
+                "first_time": ok and not was, "xp": xp_given}
+
     if kind == "word":
         w = db.query(models.VocabWord).get(sid)
         if not w:

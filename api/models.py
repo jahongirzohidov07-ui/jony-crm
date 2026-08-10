@@ -3093,6 +3093,33 @@ class VocabWord(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class PracticeItem(Base):
+    """4 ko'nikma uchun universal mashq elementi (2026-08-11).
+
+    Jahongir bergan spetsifikatsiyadagi yangi turlar shu jadvalda:
+      reading:  read_tfng (T/F/Not Given), read_gap (matnda bo'sh
+                joy), read_match (sarlavha moslash)
+      listening: listen_img (emoji-rasm tanlash), listen_qa (dialog
+                bo'yicha savol), listen_order (tartiblash)
+      writing:  write_transform (qayta tuzish/kengaytirish)
+      speaking: speak_repeat (eshitib takrorlash), speak_answer
+                (savolga og'zaki javob - kalit iboralar bo'yicha)
+
+    payload - JSON (har tur o'z tuzilishida), answer - JSON yoki
+    matn, alt - qo'shimcha to'g'ri javoblar (JSON ro'yxat)."""
+    __tablename__ = "practice_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    skill = Column(String, nullable=False, index=True)
+    kind = Column(String, nullable=False, index=True)
+    level = Column(String, default="A1")
+    payload = Column(Text, nullable=False)
+    answer = Column(Text, nullable=False)
+    alt = Column(Text)
+    explain = Column(Text)
+    is_active = Column(Integer, default=1)
+
+
 class ReadingText(Base):
     """Reading mashqi uchun qisqa matn (2026-08-10)."""
     __tablename__ = "reading_texts"

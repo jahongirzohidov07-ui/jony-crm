@@ -46,6 +46,8 @@ const SECTIONS = [
   {
     title: "Natijalar va oylik",
     items: [
+      { to: "/teacher/session", label: "Soat belgilash", icon: Timer,
+        hint: "Support seanslarini yozish", supportOnly: true },
       { to: "/my-sessions", label: "Darslarim va oyligim", icon: Timer,
         hint: "O'tilgan darslar va hisob-kitob" },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart,
@@ -89,7 +91,10 @@ export default function TeacherMore() {
       <div className="max-w-md mx-auto px-4 -mt-5 space-y-5">
         {SECTIONS.map((sec) => {
           const items = sec.items.filter(
-            (i) => !(isSupport && SUPPORT_HIDDEN.includes(i.to)),
+            (i) =>
+              !(isSupport && SUPPORT_HIDDEN.includes(i.to)) &&
+              // supportOnly bo'limlar faqat support teacherga
+              !(!isSupport && (i as { supportOnly?: boolean }).supportOnly),
           );
           if (items.length === 0) return null;
           return (

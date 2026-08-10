@@ -263,8 +263,11 @@ export default function TeacherLesson() {
         </p>
       )}
 
+      {/* Saqlash paneli pastdagi TAB PANELI USTIDA turadi (2026-08-10,
+          Jahongir: "saqlash tugmasi juda pastda"). Ilgari ikkalasi ham
+          bottom-0 edi va tab paneli (z-40) tugmani berkitib qo'yardi. */}
       {d.editable && rows.length > 0 && (
-        <div className="fixed bottom-0 inset-x-0 p-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent pb-6">
+        <div className="fixed bottom-[60px] inset-x-0 px-4 pt-6 pb-3 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent z-30">
           <div className="max-w-md mx-auto">
             <button
               onClick={save}
@@ -305,7 +308,7 @@ function Shell({
           {subtitle && <p className="text-sm opacity-90">{subtitle}</p>}
         </div>
       </div>
-      <div className="max-w-md mx-auto px-4 -mt-4 pb-28">{children}</div>
+      <div className="max-w-md mx-auto px-4 -mt-4 pb-44">{children}</div>
     </>
   );
 }

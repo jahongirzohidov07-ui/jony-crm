@@ -215,6 +215,9 @@ export function AttendanceTab({
   const { user } = useAuth();
   const [grid, setGrid] = useState<AttendanceGrid | null>(null);
   const [loading, setLoading] = useState(true);
+  // Xato holati SHART: aks holda so'rov xato bersa ekran butunlay
+  // bo'sh qolardi (2026-08-10 tuzatildi).
+  const [err, setErr] = useState("");
   const [saving, setSaving] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null); // ochiq katak
   const [menu, setMenu] = useState<number | null>(null); // ochiq sana
@@ -243,11 +246,15 @@ export function AttendanceTab({
 
   const load = () => {
     setLoading(true);
+    setErr("");
     api
       .get<AttendanceGrid>(
         `/groups/${groupId}/attendance?year=${year}&month=${month}`
       )
       .then(setGrid)
+      .catch((e) =>
+        setErr(e instanceof Error ? e.message : "Yuklab bo'lmadi"),
+      )
       .finally(() => setLoading(false));
   };
   useEffect(load, [groupId, year, month]);
@@ -293,6 +300,15 @@ export function AttendanceTab({
   }
 
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  if (err)
+    return (
+      <div className="py-8 text-center">
+        <p className="text-sm text-red-600 mb-2">{err}</p>
+        <button onClick={load} className="text-sm text-brand-600 underline">
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!grid) return null;
   if (grid.lessons.length === 0)
     return (
@@ -637,14 +653,22 @@ export function GradesTab({
 }) {
   const [grid, setGrid] = useState<AttendanceGrid | null>(null);
   const [loading, setLoading] = useState(true);
+  // Xato holati SHART: aks holda so'rov xato bersa ekran butunlay
+  // bo'sh qolardi (2026-08-10 tuzatildi).
+  const [err, setErr] = useState("");
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
+    setErr("");
     api
       .get<AttendanceGrid>(`/groups/${groupId}/grades?year=${year}&month=${month}`)
       .then(setGrid)
+      .catch((e) =>
+        setErr(e instanceof Error ? e.message : "Yuklab bo'lmadi"),
+      )
       .finally(() => setLoading(false));
-  }, [groupId, year, month]);
+  };
+  useEffect(load, [groupId, year, month]);
 
   /** Baho qo'yish shartlari: dars o'tgan bo'lsin, o'quvchi kelgan
    *  bo'lsin. Kelmagan bolaga baho qo'yilsa unga coin ham tushib
@@ -691,6 +715,15 @@ export function GradesTab({
   }
 
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  if (err)
+    return (
+      <div className="py-8 text-center">
+        <p className="text-sm text-red-600 mb-2">{err}</p>
+        <button onClick={load} className="text-sm text-brand-600 underline">
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!grid) return null;
   if (grid.lessons.length === 0)
     return <EmptyState text="Bu oyda hali dars belgilanmagan" />;
@@ -1228,6 +1261,8 @@ export function SupportAttendanceTab({
 }) {
   const [grid, setGrid] = useState<SupportAttendanceGrid | null>(null);
   const [loading, setLoading] = useState(true);
+  // Xato holati SHART (2026-08-10): xato bo'lsa ekran bo'sh qolmasin.
+  const [err, setErr] = useState("");
   const [saving, setSaving] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
   // Seans vaqti: support qaysi kunni tahrirlayotgani va o'sha kunning
@@ -1245,7 +1280,9 @@ export function SupportAttendanceTab({
         `/groups/${groupId}/support-attendance?year=${year}&month=${month}`
       )
       .then(setGrid)
-      .catch(() => setGrid(null))
+      .catch((e) =>
+        setErr(e instanceof Error ? e.message : "Yuklab bo'lmadi"),
+      )
       .finally(() => setLoading(false));
   };
   useEffect(load, [groupId, year, month]);
@@ -1342,6 +1379,15 @@ export function SupportAttendanceTab({
   }
 
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  if (err)
+    return (
+      <div className="py-8 text-center">
+        <p className="text-sm text-red-600 mb-2">{err}</p>
+        <button onClick={load} className="text-sm text-brand-600 underline">
+          Qayta urinish
+        </button>
+      </div>
+    );
   if (!grid) return null;
   if (grid.days.length === 0)
     return (

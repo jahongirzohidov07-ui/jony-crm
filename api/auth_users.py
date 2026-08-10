@@ -166,6 +166,25 @@ def _guard_role_assignment(
             403, "Bu rolni berish huquqi sizda yo'q. Asoschi va filial "
                  "rahbari rollarini faqat asoschi tayinlaydi.")
 
+def _sync_user_roles(db: Session, u: models.User, extra_roles: list):
+    """Xodimning QO'SHIMCHA lavozimlari (2026-08-10).
+
+    Asosiy lavozim User.role da qoladi; bu yerda faqat qo'shimchalari.
+    Asosiy lavozim tasodifan qo'shimchaga ham yozilib qolmasin —
+    o'tkazib yuboriladi."""
+    db.query(models.UserRole).filter(
+        models.UserRole.user_id == u.id).delete()
+    seen = set()
+    for r in extra_roles or []:
+        r = (r or "").strip()
+        if not r or r in seen or r == u.role:
+            continue
+        if r not in roles.ALL_ROLES:
+            continue
+        seen.add(r)
+        db.add(models.UserRole(user_id=u.id, role=r))
+
+
 def _sync_user_branches(db: Session, u: models.User, branch_ids: list):
     """Xodimning filiallar ro'yxati: birinchisi asosiy (User.branch_id),
     qolganlari user_branches jadvalida."""
@@ -193,6 +212,10 @@ def list_users(
     for ub in db.query(models.UserBranch).all():
         extra_map.setdefault(ub.user_id, []).append(ub.branch_id)
     bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    # Ko'p lavozimli xodimlar (2026-08-10)
+    role_map: dict = {}
+    for ur in db.query(models.UserRole).all():
+        role_map.setdefault(ur.user_id, []).append(ur.role)
     out = []
     for u in rows:
         item = schemas.UserOut.model_validate(u)
@@ -201,6 +224,8 @@ def list_users(
         item.branch_ids = ids
         item.branches_label = ", ".join(
             bnames.get(b, "?") for b in ids) or None
+        item.extra_roles = [r for r in role_map.get(u.id, [])
+                            if r != u.role]
         out.append(item)
     return out
 
@@ -271,6 +296,9 @@ def create_user(
     db.refresh(new_user)
     if _bids:
         _sync_user_branches(db, new_user, _bids)
+    if payload.extra_roles:
+        _sync_user_roles(db, new_user, payload.extra_roles)
+        db.commit()
     # AVTOMAT: SMM'ga yangi xodimni suratga olish vazifasi
     _smm_new_staff_task(db, new_user)
     # O'qituvchi/support bo'lsa — Ustozlar bo'limida ham darhol ko'rinsin
@@ -388,6 +416,9 @@ def update_user(
     # Ko'p filial ro'yxati yuborilgan bo'lsa — sinxronlaymiz
     if _new_bids is not None:
         _sync_user_branches(db, target, _new_bids or [])
+    # Qo'shimcha lavozimlar yuborilgan bo'lsa — sinxronlaymiz
+    if "extra_roles" in given:
+        _sync_user_roles(db, target, given.get("extra_roles") or [])
 
     # Ustoz/support kartasi bilan ikki tomonlama sinxron: ism va
     # faollik ikkala bo'limda bir xil tursin. Rol keyin o'qituvchiga

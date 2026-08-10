@@ -103,12 +103,17 @@ def my_identity(db: Session = Depends(get_db),
                 .filter(models.Branch.id.in_(ids))
                 .order_by(models.Branch.name).all())
         branches = [{"id": b.id, "name": b.name} for b in rows]
+    # KO'P LAVOZIM (2026-08-10): xodimda qo'shimcha lavozim bo'lsa,
+    # tepadagi lavozim tanlagichi shu ro'yxatdan chiqadi.
+    my_roles = _user_roles(db, user)
     return {
         "full_name": user.full_name,
         "role": user.role,
         "branch_id": user.branch_id,
         "role_label": roles.UZ_LABELS.get(user.role, user.role),
         "branches": branches,
+        "roles": [{"key": r, "label": roles.UZ_LABELS.get(r, r)}
+                  for r in my_roles],
     }
 
 @router.get("/api/me/permissions")

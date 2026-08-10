@@ -67,7 +67,7 @@ export function printXReceipt(o: {
   ${o.cashier ? `<div class="row"><span>Qabul qildi:</span><span>${o.cashier}</span></div>` : ""}
   <div class="hr"></div>
   <div class="c">To'lovingiz uchun rahmat!</div>
-  <div class="c">JonyOS · jony-crm.vercel.app</div>
+  <div class="c">JonyOS · jonyos.uz</div>
 </body></html>`);
   w.document.close();
   w.focus();

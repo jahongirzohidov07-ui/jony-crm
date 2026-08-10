@@ -626,7 +626,7 @@ def teacher_account_create(tid: int, db: Session = Depends(get_db),
         "login": login,
         "password": password,
         "full_name": t.full_name,
-        "url": "https://jony-crm.vercel.app",
+        "url": os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app"),
         "warning": ("Parol shu yerda bir marta ko'rsatiladi. Yopilgach "
                     "uni hech kim — hatto asoschi ham — qayta ko'ra "
                     "olmaydi. Nusxalab ustozga bering."),
@@ -656,7 +656,7 @@ def teacher_account_reset(tid: int, db: Session = Depends(get_db),
         "login": u.username,
         "password": password,
         "full_name": t.full_name,
-        "url": "https://jony-crm.vercel.app",
+        "url": os.environ.get("PUBLIC_URL", "https://jony-crm.vercel.app"),
         "warning": ("Eski parol endi ishlamaydi. Yangisini ustozga "
                     "bering — bu oyna yopilgach qayta ko'rinmaydi."),
         **_account_state(db, t),

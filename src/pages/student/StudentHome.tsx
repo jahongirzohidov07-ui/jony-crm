@@ -105,6 +105,39 @@ export default function StudentHome() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-7 space-y-4">
+        {/* --- BALANS (2026-08-10, Jahongir: "bosh sahifada balansi
+            ko'rinib turishi kerak"). Manfiy - qizil, to'lov
+            eslatmasi bilan. --- */}
+        {typeof (d as any).balance === "number" && (
+          <Link
+            to="/student/profile"
+            className={`flex items-center justify-between rounded-2xl shadow-sm border p-4 ${
+              (d as any).balance < 0
+                ? "bg-red-50 border-red-200"
+                : "bg-white border-slate-200"
+            }`}
+          >
+            <div>
+              <p className="text-xs text-slate-500">Balansingiz</p>
+              <p
+                className={`text-xl font-bold leading-tight ${
+                  (d as any).balance < 0 ? "text-red-600" : "text-slate-900"
+                }`}
+              >
+                {Math.round((d as any).balance).toLocaleString("ru-RU")} so'm
+              </p>
+              {(d as any).balance < 0 && (
+                <p className="text-[11px] text-red-500 mt-0.5">
+                  To'lov vaqti keldi — administratorga murojaat qiling
+                </p>
+              )}
+            </div>
+            <span className="text-xs font-medium text-brand-600 shrink-0">
+              Tarix →
+            </span>
+          </Link>
+        )}
+
         {/* --- UMUMIY DARAJA: bosilsa ko'nikmalar ochiladi --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           <button

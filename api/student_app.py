@@ -128,6 +128,7 @@ def student_home(db: Session = Depends(get_db),
     return {
         "name": s.full_name,
         "photo": s.photo,
+        "balance": student_balance(db, s.id),
         "group": g.name if g else None,
         "level_label": (g.level if g else None) or s.level,
         "status": s.status,
@@ -539,6 +540,63 @@ def student_photo_save(payload: schemas.StudentPhotoIn,
         s.photo = None
     db.commit()
     return {"ok": True, "photo": bool(s.photo)}
+
+
+# =====================================================================
+#  TO'LOVLAR VA IMTIHONLAR TARIXI (2026-08-10, Jahongir: "Profil
+#  qismida to'lovlar tarixi, imtihonlar tarixi ham tursin, bosh
+#  sahifada balansi ko'rinib turishi kerak")
+# =====================================================================
+
+@router.get("/api/student/payments")
+def student_payments(db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.STUDENT))):
+    """O'quvchining pul tarixi: to'lovlar (+), hisoblangan oylik (-),
+    chegirmalar. Ota-ona portalidagi bilan bir xil manba - payments
+    jadvali, hech qanday alohida hisob yo'q."""
+    s = _me(db, user)
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.student_id == s.id)
+            .order_by(models.Payment.created_at.desc())
+            .limit(60).all())
+    kinds = {"payment": "To'lov", "charge": "Oylik hisob",
+             "discount": "Chegirma"}
+    return {
+        "balance": student_balance(db, s.id),
+        "rows": [{
+            "id": p.public_id or p.id,
+            "amount": p.amount,
+            "kind": p.kind,
+            "kind_label": kinds.get(p.kind, p.kind),
+            "note": p.note,
+            "date": (p.created_at.date().isoformat()
+                     if p.created_at else None),
+        } for p in rows],
+    }
+
+
+@router.get("/api/student/exams")
+def student_exams(db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.STUDENT))):
+    """Imtihonlar tarixi - tasdiqlangan natijalar."""
+    s = _me(db, user)
+    rows = (db.query(models.ExamResult, models.Exam)
+            .join(models.Exam,
+                  models.ExamResult.exam_id == models.Exam.id)
+            .filter(models.ExamResult.student_id == s.id,
+                    models.Exam.status.in_(["approved", "done"]))
+            .order_by(models.Exam.date.desc()).limit(40).all())
+    return {"rows": [{
+        "id": er.id,
+        "title": ex.title or roles.exam_title(ex.kind, ex.unit_no),
+        "date": ex.date.isoformat() if ex.date else None,
+        "score": er.score,
+        "max_score": ex.max_score,
+        "percent": er.percent,
+        "band": er.band,
+        "coins": er.coins,
+        "absent": bool(er.absent),
+    } for er, ex in rows]}
 
 
 # =====================================================================

@@ -19,6 +19,11 @@ export default function StudentProfile() {
   const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const [pay, setPay] = useState<any>(null);
+  const [ex, setEx] = useState<any>(null);
+  const [showPay, setShowPay] = useState(false);
+  const [showEx, setShowEx] = useState(false);
+
   const loadProfile = () =>
     api
       .get<any>("/student/profile")
@@ -40,6 +45,8 @@ export default function StudentProfile() {
     api.get<StudentHome>("/student/home").then(setH).catch(() => {});
     api.get<SkillsCard>("/student/skills").then(setSk).catch(() => {});
     loadProfile();
+    api.get<any>("/student/payments").then(setPay).catch(() => {});
+    api.get<any>("/student/exams").then(setEx).catch(() => {});
   }, []);
 
   // RASM: telefonda tanlangan surat 512px gacha kichraytirilib
@@ -330,6 +337,132 @@ export default function StudentProfile() {
                 label="Filialdagi o'rin"
                 value={`${h.ranks.branch_rank} / ${h.ranks.branch_total}`}
               />
+            )}
+          </div>
+        )}
+
+        {/* TO'LOVLAR TARIXI (2026-08-10) */}
+        {pay && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <button
+              onClick={() => setShowPay((v) => !v)}
+              className="w-full flex items-center justify-between"
+            >
+              <div className="text-left">
+                <p className="text-sm font-semibold text-slate-800">
+                  To'lovlar tarixi
+                </p>
+                <p
+                  className={`text-xs mt-0.5 ${
+                    pay.balance < 0 ? "text-red-600" : "text-slate-400"
+                  }`}
+                >
+                  Balans:{" "}
+                  {Math.round(pay.balance).toLocaleString("ru-RU")} so'm
+                </p>
+              </div>
+              <span className="text-xs font-medium text-brand-600">
+                {showPay ? "Yopish" : `Ko'rish (${pay.rows.length})`}
+              </span>
+            </button>
+            {showPay && (
+              <div className="mt-3 pt-2 border-t border-slate-100 max-h-72 overflow-y-auto">
+                {pay.rows.length === 0 && (
+                  <p className="text-sm text-slate-400 text-center py-4">
+                    Hozircha yozuv yo'q
+                  </p>
+                )}
+                {pay.rows.map((r: any) => (
+                  <div
+                    key={r.id}
+                    className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm text-slate-700">
+                        {r.kind_label}
+                        {r.note ? (
+                          <span className="text-slate-400"> · {r.note}</span>
+                        ) : null}
+                      </p>
+                      {r.date && (
+                        <p className="text-[11px] text-slate-400">
+                          {r.date.slice(8, 10)}.{r.date.slice(5, 7)}.
+                          {r.date.slice(0, 4)}
+                        </p>
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm font-semibold shrink-0 ${
+                        r.amount >= 0 ? "text-emerald-600" : "text-red-600"
+                      }`}
+                    >
+                      {r.amount >= 0 ? "+" : ""}
+                      {Math.round(r.amount).toLocaleString("ru-RU")}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* IMTIHONLAR TARIXI (2026-08-10) */}
+        {ex && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <button
+              onClick={() => setShowEx((v) => !v)}
+              className="w-full flex items-center justify-between"
+            >
+              <p className="text-sm font-semibold text-slate-800">
+                Imtihonlar tarixi
+              </p>
+              <span className="text-xs font-medium text-brand-600">
+                {showEx ? "Yopish" : `Ko'rish (${ex.rows.length})`}
+              </span>
+            </button>
+            {showEx && (
+              <div className="mt-3 pt-2 border-t border-slate-100 max-h-72 overflow-y-auto">
+                {ex.rows.length === 0 && (
+                  <p className="text-sm text-slate-400 text-center py-4">
+                    Hozircha imtihon natijasi yo'q
+                  </p>
+                )}
+                {ex.rows.map((r: any) => (
+                  <div
+                    key={r.id}
+                    className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-slate-700 truncate">
+                        {r.title}
+                      </p>
+                      {r.date && (
+                        <p className="text-[11px] text-slate-400">
+                          {r.date.slice(8, 10)}.{r.date.slice(5, 7)}.
+                          {r.date.slice(0, 4)}
+                        </p>
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm font-semibold shrink-0 ml-2 ${
+                        r.absent
+                          ? "text-slate-400"
+                          : (r.percent ?? 0) >= 70 || (r.band ?? 0) >= 6
+                            ? "text-emerald-600"
+                            : "text-amber-600"
+                      }`}
+                    >
+                      {r.absent
+                        ? "Kelmagan"
+                        : r.band != null
+                          ? `Band ${r.band}`
+                          : r.percent != null
+                            ? `${r.score ?? 0} (${Math.round(r.percent)}%)`
+                            : (r.score ?? 0)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}

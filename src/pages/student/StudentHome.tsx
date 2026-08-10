@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getLang, setLang, LANGS } from "../../lib/lang";
-import { Bell,
+import { Flag } from "../../components/Flag";
+import { Lock as LockIcon, Bell,
   ChevronDown, ChevronRight, Coins, Flame, Sparkles, Trophy,
- } from "lucide-react";
+  } from "lucide-react";
 import type { ReactNode } from "react";
 import { api } from "../../lib/api";
 import { BrandIcon } from "../../components/BrandIcon";
@@ -29,6 +30,7 @@ export default function StudentHome() {
   const [hasNew, setHasNew] = useState(false);
   const [lang, setLangState] = useState(getLang());
   const [langOpen, setLangOpen] = useState(false);
+  const [lockMsg, setLockMsg] = useState<any>(null);
 
   useEffect(() => {
     // Yangi bildirishnoma bormi - oxirgi ko'rilgan vaqt bilan
@@ -94,10 +96,10 @@ export default function StudentHome() {
               tanlash oynasi ochiladi - lug'at shu tilga o'tadi. */}
           <button
             onClick={() => setLangOpen(true)}
-            className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0 text-xl"
+            className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0"
             aria-label="Til tanlash"
           >
-            {(LANGS.find((l) => l.code === lang) || LANGS[0]).flag}
+            <Flag code={lang} size={22} />
           </button>
           {/* QO'NG'IROQCHA (2026-08-10, Jahongir): to'lov vaqti va
               imtihon natijasi xabarlari. Qizil nuqta - oxirgi
@@ -149,6 +151,62 @@ export default function StudentHome() {
             </span>
           </Link>
         )}
+
+        {/* CEFR / IELTS QULFLARI (2026-08-11, Jahongir): "bosh
+            sahifada CEFR va IELTS qismi tursin faqat qulf tursin -
+            IELTS uchun kamida INTERMEDIATE, CEFR uchun
+            PRE-INTERMEDIATE daraja kerak". */}
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            {
+              key: "cefr",
+              label: "CEFR",
+              hint: "Til darajasi imtihoni",
+              needIdx: 2,
+              needLabel: "PRE-INTERMEDIATE",
+            },
+            {
+              key: "ielts",
+              label: "IELTS",
+              hint: "Xalqaro imtihon",
+              needIdx: 3,
+              needLabel: "INTERMEDIATE",
+            },
+          ].map((c) => {
+            const levels = [
+              "beginner", "elementary", "pre_intermediate",
+              "intermediate", "upper_intermediate", "advanced",
+              "native",
+            ];
+            const myIdx = levels.indexOf(
+              (d as any).overall?.level?.key || "beginner",
+            );
+            const open = myIdx >= c.needIdx;
+            return (
+              <button
+                key={c.key}
+                onClick={() => setLockMsg(c as any)}
+                className={`rounded-2xl border p-4 text-left ${
+                  open
+                    ? "bg-white border-emerald-200"
+                    : "bg-slate-50 border-dashed border-2 border-slate-300"
+                }`}
+              >
+                <p
+                  className={`text-sm font-bold flex items-center gap-1.5 ${
+                    open ? "text-emerald-700" : "text-slate-500"
+                  }`}
+                >
+                  {!open && <LockIcon size={13} />}
+                  {c.label}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  {open ? "Ochilgan" : c.hint}
+                </p>
+              </button>
+            );
+          })}
+        </div>
 
         {/* --- UMUMIY DARAJA: bosilsa ko'nikmalar ochiladi --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -260,6 +318,34 @@ export default function StudentHome() {
 
       </div>
 
+      {/* ---- CEFR/IELTS QULF XABARI ---- */}
+      {lockMsg && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 flex items-center justify-center px-6"
+          onClick={() => setLockMsg(null)}
+        >
+          <div
+            className="w-full max-w-sm bg-white rounded-2xl p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-base font-bold text-slate-900 mb-1.5">
+              {lockMsg.label} bo'limi
+            </p>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Bu bo'lim ochilishi uchun sizning darajangiz kamida{" "}
+              <b>{lockMsg.needLabel}</b> bo'lishi kerak. Mashqlarni
+              bajarib darajangizni oshiring!
+            </p>
+            <button
+              onClick={() => setLockMsg(null)}
+              className="w-full mt-4 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold"
+            >
+              Tushunarli
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ---- TIL TANLASH ---- */}
       {langOpen && (
         <div
@@ -288,7 +374,7 @@ export default function StudentHome() {
                       : "border-slate-200"
                   }`}
                 >
-                  <span className="text-2xl">{l.flag}</span>
+                  <Flag code={l.code} size={28} />
                   <span className="text-sm font-medium text-slate-800 flex-1">
                     {l.label}
                   </span>

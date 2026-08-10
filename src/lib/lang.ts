@@ -6,10 +6,10 @@
  * localStorage'da, lug'at sahifalari shu tilga qarab ishlaydi.
  * Grammatika hozircha faqat ingliz tilida. */
 export const LANGS = [
-  { code: "en", flag: "🇬🇧", label: "Ingliz tili" },
-  { code: "ru", flag: "🇷🇺", label: "Rus tili" },
-  { code: "de", flag: "🇩🇪", label: "Nemis tili" },
-  { code: "ko", flag: "🇰🇷", label: "Koreys tili" },
+  { code: "en", label: "Ingliz tili" },
+  { code: "ru", label: "Rus tili" },
+  { code: "de", label: "Nemis tili" },
+  { code: "ko", label: "Koreys tili" },
 ];
 
 export function getLang(): string {

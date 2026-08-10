@@ -29,12 +29,12 @@ const META: Record<string, { label: string; grad: string; icon: Any }> = {
   speaking: { label: "Speaking", grad: "from-teal-600 to-teal-500", icon: Mic },
 };
 
-function speak(text: string) {
+function speak(text: string, rate = 0.95) {
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "en-US";
-    u.rate = 0.9;
+    u.rate = rate;
     window.speechSynthesis.speak(u);
   } catch {
     /* TTS yo'q */
@@ -55,6 +55,11 @@ export default function StudentPractice() {
   const [listening, setListening] = useState(false);
   const [heard, setHeard] = useState("");
   const recRef = useRef<Any>(null);
+  // LISTENING TEZLIGI (2026-08-11, Jahongir): 0.75x sekin / 1x normal
+  const [rate, setRate] = useState(1.0);
+  // READING POP-UP LUG'ATI: bosilgan so'z tarjimasi
+  const [dict, setDict] = useState<Any>(null);
+  const dictCache = useRef<Record<string, Any>>({});
 
   const load = useCallback(() => {
     setErr("");
@@ -106,6 +111,26 @@ export default function StudentPractice() {
     setResult(null);
     setTyped("");
     setHeard("");
+  }
+
+  // ---- READING: so'z bosilganda tarjima (2026-08-11) ----
+  async function lookupWord(raw: string) {
+    const w = raw.replace(/[^A-Za-z'-]/g, "").toLowerCase();
+    if (!w) return;
+    if (dictCache.current[w]) {
+      setDict(dictCache.current[w]);
+      return;
+    }
+    setDict({ word: raw, loading: true });
+    try {
+      const r = await api.get<Any>(
+        `/student/word-lookup?w=${encodeURIComponent(w)}`,
+      );
+      dictCache.current[w] = r;
+      setDict(r);
+    } catch {
+      setDict(null);
+    }
   }
 
   // ---- SPEAKING: mikrofon ----
@@ -194,9 +219,70 @@ export default function StudentPractice() {
                 {d.text.level}
               </span>
             </div>
+            {/* Har so'z bosiladi - tarjimasi chiqadi (pop-up
+                lug'at); tepada matnni eshitish tugmasi. */}
             <p className="text-sm text-slate-700 leading-relaxed">
-              {d.text.body}
+              {String(d.text.body)
+                .split(/(\s+)/)
+                .map((tok: string, i: number) =>
+                  /\s+/.test(tok) ? (
+                    tok
+                  ) : (
+                    <span
+                      key={i}
+                      onClick={() => lookupWord(tok)}
+                      className="cursor-pointer active:bg-amber-100 rounded"
+                    >
+                      {tok}
+                    </span>
+                  ),
+                )}
             </p>
+            <div className="flex items-center gap-2 mt-3">
+              <button
+                onClick={() => speak(d.text.body, 0.95)}
+                className="flex items-center gap-1.5 text-xs font-medium text-sky-600 bg-sky-50 px-3 py-1.5 rounded-lg"
+              >
+                <Volume2 size={13} />
+                Matnni eshitish
+              </button>
+              <p className="text-[10px] text-slate-400">
+                So'z ustiga bossangiz — tarjimasi chiqadi
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ---- SO'Z TARJIMASI (pop-up) ---- */}
+        {dict && (
+          <div
+            className="fixed inset-x-0 bottom-20 z-40 flex justify-center px-6"
+            onClick={() => setDict(null)}
+          >
+            <div className="bg-slate-900 text-white rounded-xl px-4 py-3 shadow-xl max-w-xs w-full flex items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold">{dict.word}</p>
+                <p className="text-xs text-slate-300">
+                  {dict.loading
+                    ? "Qidirilmoqda..."
+                    : dict.found
+                      ? dict.translation
+                      : "Lug'atda topilmadi"}
+                </p>
+              </div>
+              {!dict.loading && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    speak(dict.word);
+                  }}
+                  className="text-slate-300"
+                  aria-label="Talaffuz"
+                >
+                  <Volume2 size={16} />
+                </button>
+              )}
+            </div>
           </div>
         )}
 
@@ -238,12 +324,34 @@ export default function StudentPractice() {
                     : "Eshiting va yozing"}
                 </p>
                 <button
-                  onClick={() => speak(q.say)}
-                  className="w-full py-5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center gap-2 text-amber-700 font-semibold text-sm mb-3 active:scale-[0.99]"
+                  onClick={() => speak(q.say, rate)}
+                  className="w-full py-5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center gap-2 text-amber-700 font-semibold text-sm mb-2 active:scale-[0.99]"
                 >
                   <Volume2 size={20} />
                   Eshitish
                 </button>
+                {/* TEZLIK (2026-08-11): 0.75x sekin / 1x normal */}
+                <div className="flex gap-1.5 mb-3">
+                  {[
+                    [0.75, "0.75x sekin"],
+                    [1.0, "1x normal"],
+                  ].map(([v, lbl]) => (
+                    <button
+                      key={String(v)}
+                      onClick={() => {
+                        setRate(v as number);
+                        speak(q.say, v as number);
+                      }}
+                      className={`flex-1 py-1.5 rounded-lg border text-xs font-medium ${
+                        rate === v
+                          ? "bg-amber-600 text-white border-transparent"
+                          : "bg-white text-slate-500 border-slate-200"
+                      }`}
+                    >
+                      {lbl}
+                    </button>
+                  ))}
+                </div>
                 {q.kind === "listen_choice" ? (
                   <div className="space-y-1.5">
                     {(q.options || []).map((o: string) => {
@@ -422,6 +530,13 @@ export default function StudentPractice() {
                 {result.explain && (
                   <p className="text-xs text-slate-500 mt-1">
                     {result.explain}
+                  </p>
+                )}
+                {/* SKRIPT (2026-08-11): topshiriq bajarilgach audio
+                    matni ko'rinadi */}
+                {q.kind?.startsWith("listen") && q.say && (
+                  <p className="text-xs text-slate-600 mt-1.5 bg-white/60 rounded-lg px-2 py-1.5">
+                    📜 Skript: <i>{q.say}</i>
                   </p>
                 )}
                 <button

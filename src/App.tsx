@@ -64,6 +64,10 @@ const StudentLeaderboard = lazy(
   () => import("./pages/student/StudentLeaderboard"),
 );
 const StudentProfile = lazy(() => import("./pages/student/StudentProfile"));
+const StudentGrammar = lazy(() => import("./pages/student/StudentGrammar"));
+const StudentGrammarPlay = lazy(
+  () => import("./pages/student/StudentGrammarPlay"),
+);
 // Jony Teacher — ustozning O'Z ilovasi (telefon uchun: yo'qlama,
 // jadval, barcha bo'limlar).
 const TeacherLayout = lazy(() => import("./pages/teacher/TeacherLayout"));
@@ -128,6 +132,8 @@ function AppRoutes() {
           <Route index element={<StudentHome />} />
           <Route path="games" element={<StudentGames />} />
           <Route path="games/:game" element={<StudentGamePlay />} />
+          <Route path="grammar" element={<StudentGrammar />} />
+          <Route path="grammar/:topic" element={<StudentGrammarPlay />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="profile" element={<StudentProfile />} />
         </Route>

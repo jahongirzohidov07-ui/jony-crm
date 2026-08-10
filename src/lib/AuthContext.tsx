@@ -29,7 +29,11 @@ interface AuthContextValue {
   user: AuthUser | null;
   loading: boolean;
   error: string | null;
-  login: (username: string, password: string) => Promise<AuthUser>;
+  login: (
+    username: string,
+    password: string,
+    remember?: boolean,
+  ) => Promise<AuthUser>;
   logout: () => void;
 }
 
@@ -37,7 +41,11 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => {
-    const saved = sessionStorage.getItem("jony_crm_user");
+    // Eslab qolish yoqilgan bo'lsa foydalanuvchi localStorage'da
+    // turadi - ilova qayta ochilganda ham darhol ichkarida bo'ladi.
+    const saved =
+      sessionStorage.getItem("jony_crm_user") ??
+      localStorage.getItem("jony_crm_user");
     return saved ? JSON.parse(saved) : null;
   });
   const [loading, setLoading] = useState(false);
@@ -63,7 +71,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           branches: r.branches ?? [],
           roles: r.roles ?? [],
         };
-        sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
+        // Qaysi omborda saqlangan bo'lsa, o'shani yangilaymiz
+        (localStorage.getItem("jony_crm_user")
+          ? localStorage
+          : sessionStorage
+        ).setItem("jony_crm_user", JSON.stringify(u));
         setUser((prev) =>
           prev &&
           prev.full_name === u.full_name &&
@@ -78,7 +90,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch(() => {});
   }, []);
 
-  async function login(username: string, password: string) {
+  async function login(
+    username: string,
+    password: string,
+    remember = false,
+  ) {
     setLoading(true);
     setError(null);
     try {
@@ -87,10 +103,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role: string;
         full_name: string;
         branch_id: number | null;
-      }>("/auth/login", { username, password });
-      setToken(res.access_token);
+      }>("/auth/login", { username, password, remember });
+      setToken(res.access_token, remember);
       const u = { full_name: res.full_name, role: res.role, branch_id: res.branch_id };
-      sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
+      sessionStorage.removeItem("jony_crm_user");
+      localStorage.removeItem("jony_crm_user");
+      (remember ? localStorage : sessionStorage).setItem(
+        "jony_crm_user",
+        JSON.stringify(u),
+      );
       setUser(u);
       // Kirgan odamning roli qaytariladi — chaqirgan joy (Login.tsx)
       // qayerga yo'naltirishni shundan biladi (o'quvchi -> /student).
@@ -106,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout() {
     clearToken();
     sessionStorage.removeItem("jony_crm_user");
+    localStorage.removeItem("jony_crm_user");
     setUser(null);
   }
 

@@ -3081,6 +3081,45 @@ class VocabWord(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class GrammarQuestion(Base):
+    """Grammar mashqlari bazasi (2026-08-10, Jahongir: "Grammar har
+    bir ingliz tilidagi mavzuga xilma-xil mashqlar bo'lsin").
+
+    Uch tur: fill (bo'sh joy), error (xatoni top), order (jumla
+    yig'ish). options JSON ro'yxat; order turida options TO'G'RI
+    tartibdagi so'zlar - server round tuzayotganda aralashtiradi,
+    shuning uchun to'g'ri javob mijozga hech qachon ketmaydi."""
+    __tablename__ = "grammar_questions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    topic = Column(String, nullable=False, index=True)
+    topic_order = Column(Integer, default=0)   # mavzular tartibi
+    level = Column(String, default="A1")       # A1 | A2 | B1
+    kind = Column(String, nullable=False)      # fill | error | order
+    prompt = Column(Text, nullable=False)
+    options = Column(Text, nullable=False)     # JSON list
+    answer = Column(Text, nullable=False)
+    explain = Column(Text)
+    is_active = Column(Integer, default=1)
+
+
+class GrammarAttempt(Base):
+    """O'quvchining grammar mashqidagi har bir javobi. Ball va
+    mavzu progressi shu yerdan chiqadi; bitta savol uchun ball bir
+    marta beriladi (distinct hisob)."""
+    __tablename__ = "grammar_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    question_id = Column(Integer, ForeignKey("grammar_questions.id"),
+                         nullable=False, index=True)
+    correct = Column(Integer, default=0)
+    answer = Column(String)
+    date = Column(Date, default=date.today)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class VocabAttempt(Base):
     """O'quvchining lug'at o'yinidagi HAR BIR javobi.
 

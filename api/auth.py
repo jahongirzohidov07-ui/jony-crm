@@ -51,9 +51,13 @@ def verify_password(plain: str, hashed: str) -> bool:
         return False
 
 
-def create_access_token(data: dict) -> str:
+def create_access_token(data: dict, minutes: int | None = None) -> str:
+    """minutes berilmasa odatiy 12 soat. "Eslab qolish" bilan
+    kirilganda login yo'li uzoqroq muddat beradi (60 kun) -
+    o'quvchi ilovani har ochganda qayta kirib o'tirmasin."""
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + timedelta(
+        minutes=minutes or ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

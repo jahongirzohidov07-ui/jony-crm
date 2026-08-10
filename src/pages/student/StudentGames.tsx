@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, Flame } from "lucide-react";
+import { BookOpenCheck, ChevronRight, Flame } from "lucide-react";
 import { api } from "../../lib/api";
 import type { StudentHome, VocabStats } from "../../lib/studentApi";
 
@@ -62,6 +62,24 @@ export default function StudentGames() {
             </div>
           </div>
         )}
+
+        {/* GRAMMAR (2026-08-10): mavzular bo'yicha mashqlar - lug'at
+            o'yinlaridan alohida bo'lim */}
+        <Link
+          to="/student/grammar"
+          className="flex items-center gap-3 bg-gradient-to-r from-violet-600 to-violet-500 rounded-xl shadow-sm p-4 active:scale-[0.99] transition text-white"
+        >
+          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+            <BookOpenCheck size={20} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold">Grammar mashqlari</p>
+            <p className="text-xs opacity-85">
+              Har mavzuga xilma-xil mashqlar: A1 dan B1 gacha
+            </p>
+          </div>
+          <ChevronRight size={18} className="opacity-70 shrink-0" />
+        </Link>
 
         <div className="space-y-2">
           {(d?.games || []).map((gm) => (

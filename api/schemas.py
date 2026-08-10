@@ -19,6 +19,13 @@ class BranchOut(BranchCreate):
 class LoginRequest(BaseModel):
     username: str
     password: str
+    # Eslab qolish: belgi qo'yilsa token 60 kun yashaydi (2026-08-10)
+    remember: bool | None = False
+
+
+class GrammarAnswerIn(BaseModel):
+    question_id: int
+    answer: str
 
 
 class ChangePasswordRequest(BaseModel):

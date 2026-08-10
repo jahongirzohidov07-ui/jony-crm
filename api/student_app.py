@@ -15,6 +15,7 @@ Reytingda boshqa o'quvchilar ko'rinadi — bu ataylab (musobaqa
 motivatsiya beradi), lekin FAMILIYA QISQARTIRILADI (roles.mask_name
 bilan bir xil uslub) va faqat o'z guruhi/filiali doirasida.
 """
+import json
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -396,6 +397,176 @@ def vocab_stats(db: Session = Depends(get_db),
 # =====================================================================
 #  REYTING
 # =====================================================================
+# =====================================================================
+#  GRAMMAR MASHQLARI (2026-08-10, Jahongir: "Grammar har bir ingliz
+#  tilidagi mavzuga xilma-xil mashqlar bo'lsin")
+# =====================================================================
+
+@router.get("/api/student/grammar/topics")
+def grammar_topics(db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.STUDENT))):
+    """Mavzular ro'yxati + o'quvchining har biridagi progressi.
+
+    Progress = shu mavzuda KAMIDA BIR MARTA to'g'ri yechilgan
+    savollar / jami savollar. Shuning uchun bola mavzuni "yopish"
+    uchun hamma savolini to'g'ri yechishi kerak - shunchaki kirib
+    chiqish foiz bermaydi."""
+    s = _me(db, user)
+    qs = (db.query(models.GrammarQuestion)
+          .filter(models.GrammarQuestion.is_active == 1)
+          .order_by(models.GrammarQuestion.topic_order,
+                    models.GrammarQuestion.id).all())
+    if not qs:
+        return {"levels": [], "total_correct": 0}
+
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 1).all()}
+
+    topics = {}
+    for q in qs:
+        t = topics.setdefault(q.topic, {
+            "topic": q.topic, "level": q.level, "total": 0,
+            "solved": 0, "kinds": set(),
+        })
+        t["total"] += 1
+        t["kinds"].add(q.kind)
+        if q.id in solved:
+            t["solved"] += 1
+
+    by_level = {}
+    for t in topics.values():
+        t["percent"] = round(t["solved"] * 100 / t["total"]) \
+            if t["total"] else 0
+        t["done"] = t["solved"] >= t["total"]
+        t["kinds"] = sorted(t["kinds"])
+        by_level.setdefault(t["level"], []).append(t)
+
+    order = ["A1", "A2", "B1", "B2", "C1"]
+    return {
+        "levels": [{"level": lv, "topics": by_level[lv]}
+                   for lv in order if lv in by_level],
+        "total_correct": len(solved),
+        "round_size": roles.GRAMMAR_ROUND_SIZE,
+    }
+
+
+@router.get("/api/student/grammar/round")
+def grammar_round(topic: str, db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.STUDENT))):
+    """Bitta mashg'ulot: mavzudan 8 ta savol.
+
+    AVVAL hali to'g'ri yechilmaganlar olinadi (bola yangi narsa
+    o'rgansin), yetmasa yechilganlaridan to'ldiriladi. To'g'ri javob
+    MIJOZGA KETMAYDI - tekshiruv faqat serverda (/answer). order
+    turida so'zlar shu yerda aralashtiriladi."""
+    s = _me(db, user)
+    qs = (db.query(models.GrammarQuestion)
+          .filter(models.GrammarQuestion.is_active == 1,
+                  models.GrammarQuestion.topic == topic).all())
+    if not qs:
+        raise HTTPException(404, "Bunday mavzu topilmadi")
+
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 1).all()}
+    fresh = [q for q in qs if q.id not in solved]
+    done = [q for q in qs if q.id in solved]
+    random.shuffle(fresh)
+    random.shuffle(done)
+    picked = (fresh + done)[:roles.GRAMMAR_ROUND_SIZE]
+    random.shuffle(picked)
+
+    items = []
+    for q in picked:
+        opts = json.loads(q.options)
+        if q.kind == "order":
+            # So'zlarni aralashtiramiz; tasodifan to'g'ri tartibda
+            # qolib ketmasin
+            shuffled = opts[:]
+            for _ in range(10):
+                random.shuffle(shuffled)
+                if shuffled != opts or len(opts) < 2:
+                    break
+            opts = shuffled
+        elif q.kind == "fill":
+            opts = opts[:]
+            random.shuffle(opts)
+        # error turida tartib saqlanadi - variantlar gapning
+        # bo'laklari, o'qish tartibi muhim
+        items.append({
+            "id": q.id, "kind": q.kind, "prompt": q.prompt,
+            "options": opts, "solved": q.id in solved,
+        })
+
+    return {
+        "topic": topic, "items": items,
+        "xp_per_correct": roles.GRAMMAR_XP_PER_CORRECT,
+    }
+
+
+def _norm_sentence(t: str) -> str:
+    t = (t or "").strip().lower()
+    for ch in ".,!?;:":
+        t = t.replace(ch, "")
+    return " ".join(t.split())
+
+
+@router.post("/api/student/grammar/answer")
+def grammar_answer(payload: schemas.GrammarAnswerIn,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.STUDENT))):
+    """Javobni tekshiradi (faqat SERVER hal qiladi) va yozib qo'yadi.
+
+    XP bitta savol uchun BIR marta: avval to'g'ri yechilgan savolga
+    qayta XP berilmaydi - lekin mashq qilaverish mumkin."""
+    s = _me(db, user)
+    q = db.query(models.GrammarQuestion).get(payload.question_id)
+    if not q or not q.is_active:
+        raise HTTPException(404, "Savol topilmadi")
+
+    if q.kind == "order":
+        ok = _norm_sentence(payload.answer) == _norm_sentence(q.answer)
+    else:
+        ok = (payload.answer or "").strip() == (q.answer or "").strip()
+
+    was_solved = (db.query(models.GrammarAttempt.id)
+                  .filter(models.GrammarAttempt.student_id == s.id,
+                          models.GrammarAttempt.question_id == q.id,
+                          models.GrammarAttempt.correct == 1)
+                  .first() is not None)
+
+    db.add(models.GrammarAttempt(
+        student_id=s.id, question_id=q.id,
+        correct=1 if ok else 0,
+        answer=(payload.answer or "")[:300], date=date.today()))
+    db.commit()
+
+    xp_given = 0.0
+    if ok and not was_solved:
+        try:
+            res = award_xp(
+                db, student_id=s.id, event_code="GRAMMAR_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT,
+                source_type="grammar", source_id=q.id,
+                reason=f"Grammar mashqi: {q.topic}",
+                idempotency_key=f"GRAM:{s.id}:{q.id}")
+            if res.get("ok"):
+                xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+        except Exception:
+            db.rollback()
+
+    return {
+        "correct": ok,
+        "expected": q.answer,
+        "explain": q.explain,
+        "first_time": ok and not was_solved,
+        "xp": xp_given,
+    }
+
+
 @router.get("/api/student/leaderboard")
 def student_leaderboard(scope: str = "group", period: str = "all",
                         db: Session = Depends(get_db),

@@ -166,6 +166,15 @@ try:
 except Exception:
     pass
 
+# Grammar savollar bazasi (idempotent - faqat yo'qlarini qo'shadi)
+try:
+    from sqlalchemy.orm import Session as _VS7
+    from grammar_seed import seed_grammar
+    with _VS7(engine) as _db7:
+        seed_grammar(_db7)
+except Exception:
+    pass
+
 # Barcha mavjud o'quvchilarga akkaunt: login = telefon, parol =
 # jonyjony (2026-08-10, Jahongir). Yangi kiritilganlarga
 # _ensure_student_account ochadi - bu esa eskilarni bir marta qoplaydi.

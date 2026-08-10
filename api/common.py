@@ -2578,6 +2578,14 @@ def _skill_points(db: Session, student_id: int) -> dict:
              .filter(models.VocabAttempt.student_id == student_id,
                      models.VocabAttempt.correct == 1).scalar() or 0)
     out["vocabulary"] += int(vocab)
+    # Grammar mashqlari (2026-08-10): har TO'G'RI yechilgan savol
+    # 1 ball, lekin bitta savol faqat BIR marta sanaladi (distinct) -
+    # bitta oson savolni qayta-qayta yechib ball yig'ib bo'lmaydi.
+    gram = (db.query(func.count(
+                func.distinct(models.GrammarAttempt.question_id)))
+            .filter(models.GrammarAttempt.student_id == student_id,
+                    models.GrammarAttempt.correct == 1).scalar() or 0)
+    out["grammar"] += int(gram)
     return out
 
 
@@ -2594,8 +2602,12 @@ def _skills_card(db: Session, student_id: int) -> dict:
     vocab = (db.query(func.count(models.VocabAttempt.id))
              .filter(models.VocabAttempt.student_id == student_id,
                      models.VocabAttempt.correct == 1).scalar() or 0)
+    gram = (db.query(func.count(
+                func.distinct(models.GrammarAttempt.question_id)))
+            .filter(models.GrammarAttempt.student_id == student_id,
+                    models.GrammarAttempt.correct == 1).scalar() or 0)
     per_skill = _skill_points(db, student_id)
-    overall = _level_for_points(int(total_ex) + int(vocab))
+    overall = _level_for_points(int(total_ex) + int(vocab) + int(gram))
     return {
         "overall": overall,
         "skills": [{

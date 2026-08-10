@@ -2,16 +2,30 @@ import { pushToast } from "./toast";
 
 const TOKEN_KEY = "jony_crm_token";
 
+// ESLAB QOLISH (2026-08-10, Jahongir): belgi qo'yilsa token
+// localStorage'da saqlanadi - ilova/brauzer yopilsa ham kirgan
+// holda qoladi (ayniqsa o'quvchilar APK'ni har ochganda qayta
+// login qilmasin). Belgisiz - avvalgidek sessionStorage (yopilsa
+// chiqadi). O'qishda ikkalasi ham tekshiriladi.
 export function getToken(): string | null {
-  return sessionStorage.getItem(TOKEN_KEY);
+  return (
+    sessionStorage.getItem(TOKEN_KEY) ?? localStorage.getItem(TOKEN_KEY)
+  );
 }
 
-export function setToken(token: string) {
-  sessionStorage.setItem(TOKEN_KEY, token);
+export function setToken(token: string, remember = false) {
+  if (remember) {
+    localStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.removeItem(TOKEN_KEY);
+  } else {
+    sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.removeItem(TOKEN_KEY);
+  }
 }
 
 export function clearToken() {
   sessionStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(TOKEN_KEY);
 }
 
 /** Avtomatik tekshiruv topgan muammo. */
@@ -99,7 +113,13 @@ async function request<T>(
     throw new ApiError("Tarmoq bilan bog'lanib bo'lmadi");
   }
 
-  if (res.status === 401) {
+  // MUHIM (2026-08-10): /auth/ so'rovlari bu yerda USHLANMAYDI.
+  // Aks holda noto'g'ri parol bilan kirishga uringan odam ham
+  // "Sessiya tugadi" degan chalkash xabar olardi (Jahongir shuni
+  // ko'rsatdi) - aslida esa "Login yoki parol noto'g'ri" bo'lishi
+  // kerak. Auth xatolari pastdagi umumiy tarmoqqa tushadi va
+  // serverdagi aniq matn bilan ko'rsatiladi.
+  if (res.status === 401 && !path.startsWith("/auth/")) {
     clearToken();
     pushToast("Sessiya tugadi, qayta kiring", "info");
     window.location.href = "/login";

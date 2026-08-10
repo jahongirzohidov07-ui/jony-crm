@@ -91,6 +91,17 @@ ck("roli student", r.json().get("role"), "student")
 r = c.get("/api/student/home", headers=H)
 ck("Jony Student ochiladi", r.status_code, 200)
 
+print("\n=== TURLI YOZUV SHAKLLARI BILAN KIRISH ===")
+r = c.post("/api/auth/login", json={"username": "+998 90 123-45-67",
+                                    "password": "jonyjony"})
+ck("+998 va probel bilan ham kiradi", r.status_code, 200)
+r = c.post("/api/auth/login", json={"username": "901234567",
+                                    "password": "jonyjony"})
+ck("998siz tersa ham kiradi", r.status_code, 200)
+r = c.post("/api/auth/login", json={"username": "901234567",
+                                    "password": "notogri"})
+ck("parol baribir tekshiriladi", r.status_code, 401)
+
 print("\n=== TELEFONSIZLAR VAZIFASI ===")
 tk = (db.query(models.Task)
       .filter(models.Task.assignee_id == founder.id).first())

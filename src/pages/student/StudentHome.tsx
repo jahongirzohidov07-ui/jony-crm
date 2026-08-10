@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Bell,
   ChevronDown, ChevronRight, Coins, Flame, Sparkles, Trophy,
  } from "lucide-react";
@@ -26,6 +27,8 @@ export default function StudentHome() {
   const [open, setOpen] = useState(false);
 
   const [hasNew, setHasNew] = useState(false);
+  const [lang, setLangState] = useState(getLang());
+  const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
     // Yangi bildirishnoma bormi - oxirgi ko'rilgan vaqt bilan
@@ -87,6 +90,15 @@ export default function StudentHome() {
               </p>
             </div>
           </Link>
+          {/* BAYROQ (2026-08-11): o'rganilayotgan til. Bosilsa
+              tanlash oynasi ochiladi - lug'at shu tilga o'tadi. */}
+          <button
+            onClick={() => setLangOpen(true)}
+            className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0 text-xl"
+            aria-label="Til tanlash"
+          >
+            {(LANGS.find((l) => l.code === lang) || LANGS[0]).flag}
+          </button>
           {/* QO'NG'IROQCHA (2026-08-10, Jahongir): to'lov vaqti va
               imtihon natijasi xabarlari. Qizil nuqta - oxirgi
               ko'rilgandan keyin yangi xabar bor degani. */}
@@ -247,6 +259,54 @@ export default function StudentHome() {
         </div>
 
       </div>
+
+      {/* ---- TIL TANLASH ---- */}
+      {langOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 flex items-end justify-center"
+          onClick={() => setLangOpen(false)}
+        >
+          <div
+            className="w-full max-w-md bg-white rounded-t-2xl p-4 pb-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-sm font-semibold text-slate-800 mb-3">
+              Qaysi tilni o'rganyapsiz?
+            </p>
+            <div className="space-y-1.5">
+              {LANGS.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => {
+                    setLang(l.code);
+                    setLangState(l.code);
+                    setLangOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 rounded-xl border p-3.5 text-left ${
+                    lang === l.code
+                      ? "border-brand-400 bg-brand-50"
+                      : "border-slate-200"
+                  }`}
+                >
+                  <span className="text-2xl">{l.flag}</span>
+                  <span className="text-sm font-medium text-slate-800 flex-1">
+                    {l.label}
+                  </span>
+                  {lang === l.code && (
+                    <span className="text-xs font-semibold text-brand-600">
+                      Tanlangan
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-3">
+              Lug'at mashqlari tanlangan tilda bo'ladi. Grammatika
+              hozircha ingliz tilida.
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 }

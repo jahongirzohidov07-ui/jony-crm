@@ -3085,6 +3085,9 @@ class VocabWord(Base):
     level = Column(String, nullable=True, index=True)      # A1..C1 (CEFR)
     topic = Column(String, nullable=True, index=True)      # ixtiyoriy mavzu
     example = Column(Text, nullable=True)                  # misol gap
+    # Qaysi til lug'ati: en | ru | de | ko (2026-08-11, bayroq
+    # almashtirish uchun). Eski yozuvlarda NULL = en deb o'qiladi.
+    language = Column(String, default="en", index=True)
     is_active = Column(Integer, default=1, index=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -3147,6 +3150,7 @@ class GrammarQuestion(Base):
     id = Column(Integer, primary_key=True, index=True)
     topic = Column(String, nullable=False, index=True)
     topic_order = Column(Integer, default=0)   # mavzular tartibi
+    is_boss = Column(Integer, default=0)       # BOSS LEVEL belgisi
     level = Column(String, default="A1")       # A1 | A2 | B1
     kind = Column(String, nullable=False)      # fill | error | order
     prompt = Column(Text, nullable=False)
@@ -3170,6 +3174,23 @@ class GrammarAttempt(Base):
     correct = Column(Integer, default=0)
     answer = Column(String)
     date = Column(Date, default=date.today)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class VocabUnitPass(Base):
+    """USTOZ tasdig'i: o'quvchi unitni topshirdi (2026-08-11).
+
+    Jahongir: "ustoz 1-unitni topshirdi degan tick qo'ysa birinchi
+    unit avtomat 100% bo'lishi kerak" - practice bilan maksimum 99%
+    yig'iladi, 100% faqat shu tasdiq bilan."""
+    __tablename__ = "vocab_unit_passes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    unit = Column(String, nullable=False, index=True)   # "Unit 1"
+    language = Column(String, default="en")
+    passed_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
 

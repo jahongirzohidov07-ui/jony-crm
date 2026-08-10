@@ -26,6 +26,7 @@ export default function StudentGamePlay() {
   // Unit tanlangan bo'lsa o'yin faqat shu unit so'zlaridan (2026-08-10)
   const [sp] = useSearchParams();
   const unit = sp.get("unit") || "";
+  const lang = sp.get("lang") || "en";
   const [round, setRound] = useState<VocabRound | null>(null);
   const [err, setErr] = useState("");
   const [idx, setIdx] = useState(0);
@@ -43,13 +44,13 @@ export default function StudentGamePlay() {
     setDone(false);
     api
       .get<VocabRound>(
-        `/student/vocab/round?game=${game}${
+        `/student/vocab/round?game=${game}&language=${lang}${
           unit ? `&unit=${encodeURIComponent(unit)}` : ""
         }`,
       )
       .then(setRound)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [game, unit]);
+  }, [game, unit, lang]);
 
   useEffect(load, [load]);
 

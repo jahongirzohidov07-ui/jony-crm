@@ -650,6 +650,19 @@ DEFAULT_EXAM_COIN_RULES = [
 # ko'pincha qabuldagi administrator qo'yadi.
 # DIQQAT: akademik BAHO bunga kirmaydi - u alohida GRADE_EDIT bilan
 # himoyalangan (yuqoriga qarang).
+# USTOZ GURUH SONI CHEGARASIDAN OSHISHIGA RUXSATI BORLAR
+# (2026-08-10, Jahongir: "HR manager ham guruhlarni to'siqlarsiz
+# tahrirlayversin, chunki ba'zi ustozlarda guruhi limitdan oshsa ham
+# bemalol saqlayversin").
+#
+# Chegara o'zi qoladi va ogohlantirish ko'rinadi — faqat bu rollar
+# uchun u QAT'IY TAQIQ emas, "baribir saqlash" mumkin bo'lgan
+# ogohlantirishga tushadi. Boshqalarda hamon 400 bilan to'xtaydi.
+# DIQQAT: bu FAQAT guruh SONI chegarasiga tegishli. Vaqt/xona
+# to'qnashuvi (bir vaqtda ikki guruh) hamma uchun taqiqligicha
+# qoladi — u jismonan imkonsiz narsa.
+GROUP_LIMIT_OVERRIDE = [FOUNDER, HR_MANAGER]
+
 # Faqat O'Z guruhini ko'radigan rollar. Bular uchun guruh, o'quvchi
 # va davomat manzil qatoridan ham ochilmaydi — biriktirilmagan guruh
 # 403 qaytaradi.

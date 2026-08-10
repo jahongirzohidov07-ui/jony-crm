@@ -1064,10 +1064,14 @@ _orig_create_group = _find_endpoint("/api/groups", "POST")
 _orig_update_group = _find_endpoint("/api/groups/{group_id}", "PUT")
 
 # Asl tekshiruvda chegara "block" (hech kim o'tolmaydi) edi. Endi u
-# "warn"ga tushiriladi — asoschi 409 ogohlantirish oladi va "baribir
-# saqlash" qila oladi. Asoschi bo'lmaganlarni esa pastdagi guard
-# har qanday holatda 400 bilan to'xtatadi. Qayta tayyorlash (remediation)
-# taqig'i esa "chegara" so'zisiz — u block'ligicha qoladi.
+# "warn"ga tushiriladi — roles.GROUP_LIMIT_OVERRIDE dagi rollar 409
+# ogohlantirish olib "baribir saqlash" qila oladi. Qolganlarni esa
+# pastdagi guard har qanday holatda 400 bilan to'xtatadi. Qayta
+# tayyorlash (remediation) taqig'i esa "chegara" so'zisiz — u
+# block'ligicha qoladi.
+#
+# 2026-08-10: ro'yxatga HR MENEJER ham qo'shildi (Jahongir so'radi) —
+# ilgari faqat asoschi o'tardi va HR guruhni umuman saqlay olmasdi.
 _orig_check_teacher_load = M._check_teacher_load
 
 
@@ -1083,8 +1087,12 @@ M._check_teacher_load = _check_teacher_load_soft
 
 
 def _teacher_limit_guard(db: Session, teacher_id, group_id, user):
-    """Chegaradan oshganda asoschi bo'lmaganlarga qattiq taqiq."""
-    if not teacher_id or user.role == roles.FOUNDER:
+    """Chegaradan oshganda RUXSATI YO'Q rollarga qattiq taqiq.
+
+    Ruxsati borlar (roles.GROUP_LIMIT_OVERRIDE — asoschi va HR
+    menejer) bu yerdan o'tib ketadi va yuqoridagi "warn" tufayli
+    409 ogohlantirish oladi: "baribir saqlash" mumkin."""
+    if not teacher_id or user.role in tuple(roles.GROUP_LIMIT_OVERRIDE):
         return
     problems = [p for p in _orig_check_teacher_load(db, teacher_id, group_id)
                 if p.get("key") == "teacher_overload"]

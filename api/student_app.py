@@ -533,6 +533,236 @@ def student_photo_save(payload: schemas.StudentPhotoIn,
 
 
 # =====================================================================
+#  4 KO'NIKMA MASHQLARI (2026-08-10, Jahongir: "listening, reading,
+#  writing, speaking mashqlari ham qo'shaylik")
+#
+#  Kontent qayerdan:
+#   - listening: lug'at so'zlari va grammar jumlalarini brauzer TTS
+#     o'qib beradi - diktant yoki tanlov (yangi kontent yozilmadi,
+#     mavjud 4341 so'z + 300+ jumla ishlaydi);
+#   - speaking: o'sha jumlalarni MIKROFONGA o'qib berish - brauzer
+#     nutqni matnga aylantiradi, server solishtiradi;
+#   - writing: grammar'ning "order" savollari - o'zbekcha ma'noni
+#     INGLIZCHA YOZIB tarjima qilish;
+#   - reading: reading_seed matnlari + tushunish savollari.
+#  Ball: har ko'nikmada distinct to'g'ri mashq = 1 ball (skills
+#  kartasidagi tegishli qatorga tushadi).
+# =====================================================================
+
+PRACTICE_SKILLS = ("listening", "reading", "writing", "speaking")
+PRACTICE_ROUND = 8
+
+
+def _norm_loose(t: str) -> str:
+    t = (t or "").strip().lower()
+    for ch in ".,!?;:'\u2019\u2018ʻ`-":
+        t = t.replace(ch, " ")
+    return " ".join(t.split())
+
+
+def _word_overlap(a: str, b: str) -> float:
+    """Speaking uchun: aytilgan matn nishonga qancha mos (0..1)."""
+    wa, wb = _norm_loose(a).split(), _norm_loose(b).split()
+    if not wa or not wb:
+        return 0.0
+    match = 0
+    used = [False] * len(wa)
+    for w in wb:
+        for i, x in enumerate(wa):
+            if not used[i] and x == w:
+                used[i] = True
+                match += 1
+                break
+    return match / max(len(wa), len(wb))
+
+
+def _gram_sentences(db, limit=400):
+    rows = (db.query(models.GrammarQuestion)
+            .filter(models.GrammarQuestion.kind == "order",
+                    models.GrammarQuestion.is_active == 1).all())
+    return rows[:limit]
+
+
+@router.get("/api/student/practice/{skill}/round")
+def practice_round(skill: str, db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    if skill not in PRACTICE_SKILLS:
+        raise HTTPException(404, "Bunday mashq yo'q")
+
+    solved = {r for (r,) in
+              db.query(func.distinct(models.SkillAttempt.ref))
+              .filter(models.SkillAttempt.student_id == s.id,
+                      models.SkillAttempt.skill == skill,
+                      models.SkillAttempt.correct == 1).all()}
+
+    def prefer_fresh(pool, key):
+        fresh = [x for x in pool if key(x) not in solved]
+        done = [x for x in pool if key(x) in solved]
+        random.shuffle(fresh)
+        random.shuffle(done)
+        return fresh + done
+
+    if skill == "reading":
+        # Bitta matn + savollari. Avval yechilmagan savoli KO'PROQ
+        # qolgan matn tanlanadi.
+        texts = (db.query(models.ReadingText)
+                 .filter(models.ReadingText.is_active == 1).all())
+        if not texts:
+            raise HTTPException(400, "Matnlar hali yuklanmagan")
+        qs_by_text = {}
+        for q in db.query(models.ReadingQuestion).all():
+            qs_by_text.setdefault(q.text_id, []).append(q)
+        texts.sort(key=lambda t: sum(
+            1 for q in qs_by_text.get(t.id, [])
+            if f"read:{q.id}" not in solved), reverse=True)
+        tx = texts[0] if texts else None
+        qs = qs_by_text.get(tx.id, [])
+        return {
+            "skill": skill,
+            "text": {"title": tx.title, "level": tx.level,
+                     "body": tx.body},
+            "items": [{
+                "ref": f"read:{q.id}", "kind": "read_mcq",
+                "prompt": q.prompt,
+                "options": _shuffled(json.loads(q.options)),
+                "solved": f"read:{q.id}" in solved,
+            } for q in qs],
+        }
+
+    if skill == "writing":
+        pool = prefer_fresh(_gram_sentences(db),
+                            lambda q: f"gram:{q.id}")
+        items = [{
+            "ref": f"gram:{q.id}", "kind": "write_translate",
+            "prompt": q.prompt,          # o'zbekcha ma'no
+            "words": len(json.loads(q.options)),
+            "solved": f"gram:{q.id}" in solved,
+        } for q in pool[:PRACTICE_ROUND]]
+        return {"skill": skill, "items": items}
+
+    if skill == "speaking":
+        pool = prefer_fresh(_gram_sentences(db),
+                            lambda q: f"gram:{q.id}")
+        items = [{
+            "ref": f"gram:{q.id}", "kind": "speak_read",
+            "text": q.answer,            # ovoz chiqarib o'qiladi
+            "solved": f"gram:{q.id}" in solved,
+        } for q in pool[:PRACTICE_ROUND]]
+        return {"skill": skill, "items": items}
+
+    # listening: yarmi so'z (diktant yoki tanlov), yarmi jumla diktanti
+    words = (db.query(models.VocabWord)
+             .filter(models.VocabWord.is_active == 1).all()
+             if hasattr(models.VocabWord, "is_active")
+             else db.query(models.VocabWord).all())
+    wpool = prefer_fresh(words, lambda w: f"word:{w.id}")
+    spool = prefer_fresh(_gram_sentences(db),
+                         lambda q: f"gram:{q.id}")
+    items = []
+    for w in wpool[:PRACTICE_ROUND // 2]:
+        if len(items) % 2 == 0:
+            items.append({
+                "ref": f"word:{w.id}", "kind": "listen_type",
+                "say": w.word, "solved": f"word:{w.id}" in solved,
+            })
+        else:
+            wrong = random.sample(
+                [x.translation for x in words
+                 if x.id != w.id and x.translation], 3)                 if len(words) > 4 else []
+            opts = wrong + [w.translation]
+            random.shuffle(opts)
+            items.append({
+                "ref": f"word:{w.id}", "kind": "listen_choice",
+                "say": w.word, "options": opts,
+                "solved": f"word:{w.id}" in solved,
+            })
+    for q in spool[:PRACTICE_ROUND - len(items)]:
+        items.append({
+            "ref": f"gram:{q.id}", "kind": "listen_dictation",
+            "say": q.answer, "solved": f"gram:{q.id}" in solved,
+        })
+    random.shuffle(items)
+    return {"skill": skill, "items": items}
+
+
+def _shuffled(lst):
+    out = lst[:]
+    random.shuffle(out)
+    return out
+
+
+@router.post("/api/student/practice/answer")
+def practice_answer(payload: schemas.PracticeAnswerIn,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.STUDENT))):
+    """Tekshiruv FAQAT serverda - ref manbadan qayta o'qiladi."""
+    s = _me(db, user)
+    skill = payload.skill
+    if skill not in PRACTICE_SKILLS:
+        raise HTTPException(404, "Bunday mashq yo'q")
+    kind, _, sid = payload.ref.partition(":")
+    if not sid.isdigit():
+        raise HTTPException(400, "Noto'g'ri mashq kaliti")
+    sid = int(sid)
+
+    expected, explain = None, None
+    if kind == "word":
+        w = db.query(models.VocabWord).get(sid)
+        if not w:
+            raise HTTPException(404, "So'z topilmadi")
+        given = _norm_loose(payload.answer)
+        ok = given in (_norm_loose(w.word), _norm_loose(w.translation))
+        expected = w.word + " — " + (w.translation or "")
+    elif kind == "gram":
+        q = db.query(models.GrammarQuestion).get(sid)
+        if not q:
+            raise HTTPException(404, "Mashq topilmadi")
+        expected = q.answer
+        if skill == "speaking":
+            ok = _word_overlap(q.answer, payload.answer) >= 0.75
+        else:
+            ok = _norm_loose(payload.answer) == _norm_loose(q.answer)
+    elif kind == "read":
+        q = db.query(models.ReadingQuestion).get(sid)
+        if not q:
+            raise HTTPException(404, "Savol topilmadi")
+        ok = (payload.answer or "").strip() == q.answer.strip()
+        expected, explain = q.answer, q.explain
+    else:
+        raise HTTPException(400, "Noto'g'ri mashq kaliti")
+
+    was = (db.query(models.SkillAttempt.id)
+           .filter(models.SkillAttempt.student_id == s.id,
+                   models.SkillAttempt.skill == skill,
+                   models.SkillAttempt.ref == payload.ref,
+                   models.SkillAttempt.correct == 1)
+           .first() is not None)
+    db.add(models.SkillAttempt(
+        student_id=s.id, skill=skill, ref=payload.ref,
+        correct=1 if ok else 0,
+        answer=(payload.answer or "")[:300], date=date.today()))
+    db.commit()
+
+    xp_given = 0.0
+    if ok and not was:
+        try:
+            res = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT,
+                source_type=f"practice_{skill}", source_id=sid,
+                reason=f"{skill.capitalize()} mashqi",
+                idempotency_key=f"PRACT:{skill}:{s.id}:{payload.ref}")
+            if res.get("ok"):
+                xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+        except Exception:
+            db.rollback()
+
+    return {"correct": ok, "expected": expected, "explain": explain,
+            "first_time": ok and not was, "xp": xp_given}
+
+
+# =====================================================================
 #  GRAMMAR MASHQLARI (2026-08-10, Jahongir: "Grammar har bir ingliz
 #  tilidagi mavzuga xilma-xil mashqlar bo'lsin")
 # =====================================================================

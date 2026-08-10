@@ -23,6 +23,12 @@ class LoginRequest(BaseModel):
     remember: bool | None = False
 
 
+class PracticeAnswerIn(BaseModel):
+    skill: str
+    ref: str
+    answer: str
+
+
 class StudentProfileIn(BaseModel):
     first_name: str
     last_name: str

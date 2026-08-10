@@ -175,6 +175,15 @@ try:
 except Exception:
     pass
 
+# Reading matnlari (idempotent)
+try:
+    from sqlalchemy.orm import Session as _VS8
+    from reading_seed import seed_reading
+    with _VS8(engine) as _db8:
+        seed_reading(_db8)
+except Exception:
+    pass
+
 # Barcha mavjud o'quvchilarga akkaunt: login = telefon, parol =
 # jonyjony (2026-08-10, Jahongir). Yangi kiritilganlarga
 # _ensure_student_account ochadi - bu esa eskilarni bir marta qoplaydi.

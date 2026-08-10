@@ -69,6 +69,9 @@ const StudentVocab = lazy(() => import("./pages/student/StudentVocab"));
 const StudentPractice = lazy(
   () => import("./pages/student/StudentPractice"),
 );
+const StudentNotifications = lazy(
+  () => import("./pages/student/StudentNotifications"),
+);
 const StudentGrammarPlay = lazy(
   () => import("./pages/student/StudentGrammarPlay"),
 );
@@ -138,6 +141,10 @@ function AppRoutes() {
           <Route path="games/:game" element={<StudentGamePlay />} />
           <Route path="vocab" element={<StudentVocab />} />
           <Route path="practice/:skill" element={<StudentPractice />} />
+          <Route
+            path="notifications"
+            element={<StudentNotifications />}
+          />
           <Route path="grammar" element={<StudentGrammar />} />
           <Route path="grammar/:topic" element={<StudentGrammarPlay />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />

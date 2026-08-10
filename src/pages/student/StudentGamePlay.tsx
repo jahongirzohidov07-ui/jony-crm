@@ -2,7 +2,7 @@ import {
   useCallback, useEffect, useState,
   type FormEvent, type ReactNode,
 } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Check, RotateCcw, X } from "lucide-react";
 import { api } from "../../lib/api";
 import type { AnswerResult, RoundItem, VocabRound } from "../../lib/studentApi";
@@ -23,6 +23,9 @@ import type { AnswerResult, RoundItem, VocabRound } from "../../lib/studentApi";
  */
 export default function StudentGamePlay() {
   const { game = "en_uz" } = useParams();
+  // Unit tanlangan bo'lsa o'yin faqat shu unit so'zlaridan (2026-08-10)
+  const [sp] = useSearchParams();
+  const unit = sp.get("unit") || "";
   const [round, setRound] = useState<VocabRound | null>(null);
   const [err, setErr] = useState("");
   const [idx, setIdx] = useState(0);
@@ -39,10 +42,14 @@ export default function StudentGamePlay() {
     setFeedback(null);
     setDone(false);
     api
-      .get<VocabRound>(`/student/vocab/round?game=${game}`)
+      .get<VocabRound>(
+        `/student/vocab/round?game=${game}${
+          unit ? `&unit=${encodeURIComponent(unit)}` : ""
+        }`,
+      )
       .then(setRound)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [game]);
+  }, [game, unit]);
 
   useEffect(load, [load]);
 

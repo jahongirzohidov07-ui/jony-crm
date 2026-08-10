@@ -91,10 +91,15 @@ def _streak_days(db: Session, student_id: int) -> int:
     return streak
 
 
-def _active_words(db: Session, level: str | None = None):
+def _active_words(db: Session, level: str | None = None,
+                  unit: str | None = None):
     q = db.query(models.VocabWord).filter(models.VocabWord.is_active == 1)
     if level:
         q = q.filter(models.VocabWord.level == level)
+    if unit:
+        # Botdagi unit tanlash (2026-08-10, Jahongir): topic maydonida
+        # "Unit 12" ko'rinishida saqlanadi
+        q = q.filter(models.VocabWord.topic == unit)
     return q
 
 
@@ -245,6 +250,7 @@ def _round_spelling(words):
 
 @router.get("/api/student/vocab/round")
 def vocab_round(game: str = "en_uz", level: str | None = None,
+                unit: str | None = None,
                 db: Session = Depends(get_db),
                 user=Depends(require_role(roles.STUDENT))):
     """Bitta o'yin bosqichi (round) tuzadi.
@@ -258,10 +264,12 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
     if game not in roles.VOCAB_GAME_KEYS:
         raise HTTPException(400, "Bunday o'yin yo'q")
 
-    pool = _active_words(db, level).all()
+    pool = _active_words(db, level, unit).all()
     if len(pool) < 4:
         raise HTTPException(
-            400, "Lug'at bazasi hali to'lmagan — administratorga "
+            400, "Bu bo'limda so'z kam - boshqa unit tanlang"
+                 if unit else
+                 "Lug'at bazasi hali to'lmagan — administratorga "
                  "murojaat qiling")
 
     n = min(roles.VOCAB_ROUND_SIZE, len(pool))
@@ -285,6 +293,7 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
     return {
         "game": game,
         "label": roles.VOCAB_GAME_LABELS[game],
+        "unit": unit,
         "items": items,
         "xp_per_correct": roles.VOCAB_XP_PER_CORRECT,
         "student": s.full_name,
@@ -530,6 +539,107 @@ def student_photo_save(payload: schemas.StudentPhotoIn,
         s.photo = None
     db.commit()
     return {"ok": True, "photo": bool(s.photo)}
+
+
+# =====================================================================
+#  LUG'AT UNITLARI (2026-08-10, Jahongir: "botga unit so'zlarni
+#  kiritgandim - unitni tanlab shu bo'yicha practica qilsin")
+# =====================================================================
+
+@router.get("/api/student/vocab/units")
+def vocab_units(db: Session = Depends(get_db),
+                user=Depends(require_role(roles.STUDENT))):
+    """Unitlar ro'yxati + har birida nechta so'z va o'quvchi nechtasini
+    yechgani. Bot bazasidagi tartib: topic = "Unit 1" ... "Unit 59"."""
+    s = _me(db, user)
+    rows = (db.query(models.VocabWord.topic,
+                     func.count(models.VocabWord.id))
+            .filter(models.VocabWord.is_active == 1,
+                    models.VocabWord.topic.isnot(None))
+            .group_by(models.VocabWord.topic).all())
+    solved_rows = (db.query(models.VocabWord.topic,
+                            func.count(func.distinct(
+                                models.VocabAttempt.word_id)))
+                   .join(models.VocabAttempt,
+                         models.VocabAttempt.word_id ==
+                         models.VocabWord.id)
+                   .filter(models.VocabAttempt.student_id == s.id,
+                           models.VocabAttempt.correct == 1)
+                   .group_by(models.VocabWord.topic).all())
+    solved = dict(solved_rows)
+
+    def unit_no(t):
+        try:
+            return int(str(t).split()[-1])
+        except (ValueError, IndexError):
+            return 9999
+
+    units = sorted(
+        [{"key": t, "n": int(n), "solved": int(solved.get(t, 0))}
+         for t, n in rows], key=lambda x: unit_no(x["key"]))
+    total = sum(u["n"] for u in units)
+    return {"units": units, "total_words": total}
+
+
+# =====================================================================
+#  BILDIRISHNOMALAR (2026-08-10, Jahongir: "o'ng burchakda
+#  qo'ng'iroqcha - to'lov vaqti yetgani, imtihon natijasi chiqqani")
+#
+#  Alohida jadval YO'Q - xabarlar mavjud ma'lumotdan quriladi
+#  (balans va imtihon natijalari), shuning uchun hech qachon
+#  eskirmaydi va sinxronlash muammosi bo'lmaydi. "O'qildi" belgisi
+#  mijozda saqlanadi (oxirgi ko'rilgan vaqt).
+# =====================================================================
+
+@router.get("/api/student/notifications")
+def student_notifications(db: Session = Depends(get_db),
+                          user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    items = []
+
+    # 1) To'lov: balans manfiy bo'lsa - to'lov vaqti kelgan
+    bal = student_balance(db, s.id)
+    if bal < 0:
+        items.append({
+            "id": f"pay:{date.today().strftime('%Y-%m')}",
+            "kind": "payment",
+            "title": "To'lov vaqti keldi",
+            "body": (f"Balansingiz: {int(bal):,} so'm. "
+                     f"Administratorga to'lovni topshiring."
+                     ).replace(",", " "),
+            "date": date.today().isoformat(),
+        })
+
+    # 2) Imtihon natijalari (oxirgi 60 kun, tasdiqlanganlari)
+    since = date.today() - timedelta(days=60)
+    rows = (db.query(models.ExamResult, models.Exam)
+            .join(models.Exam,
+                  models.ExamResult.exam_id == models.Exam.id)
+            .filter(models.ExamResult.student_id == s.id,
+                    models.Exam.status.in_(["approved", "done"]),
+                    models.Exam.date >= since)
+            .order_by(models.Exam.date.desc()).limit(15).all())
+    for er, ex in rows:
+        title = ex.title or roles.exam_title(ex.kind, ex.unit_no)
+        if er.absent:
+            body = "Siz bu imtihonda qatnashmagansiz"
+        elif er.band is not None:
+            body = f"Natijangiz: band {er.band}"
+        elif er.percent is not None:
+            body = f"Natijangiz: {er.score or 0} ball ({round(er.percent)}%)"
+        else:
+            body = f"Natijangiz: {er.score or 0} ball"
+        items.append({
+            "id": f"exam:{er.id}",
+            "kind": "exam",
+            "title": f"Imtihon natijasi chiqdi: {title}",
+            "body": body,
+            "date": ex.date.isoformat() if ex.date else None,
+        })
+
+    items.sort(key=lambda x: x["date"] or "", reverse=True)
+    return {"items": items,
+            "latest": items[0]["date"] if items else None}
 
 
 # =====================================================================

@@ -504,6 +504,29 @@ def _user_branch_ids(db, user: models.User) -> list:
                       .filter(models.TeacherBranch.teacher_id == t.id).all()]
     except Exception:
         pass
+    # SUPPORT TEACHER: uning filiallari BIRIKTIRILGAN GURUHLARIDAN
+    # chiqadi (2026-08-10, Jahongir: "supportlarda boshqa filialdagi
+    # guruhlari bor, lekin guruhlarida turibdi — guruhga kirsa
+    # 'guruh boshqa filialda' degan qizil yozuv chiqayabdi").
+    #
+    # Supportda ustozdan farqli o'laroq "qo'shimcha filial" degan
+    # alohida sozlama YO'Q: unga shunchaki guruh biriktiriladi
+    # (SupportAssignment) va o'sha guruh istalgan filialda bo'lishi
+    # mumkin. Shuning uchun filiallari biriktirilgan guruhlarining
+    # filialidan olinadi — ro'yxatda ko'ringan guruh ochilmay
+    # qolmasin.
+    try:
+        if user.role == roles.SUPPORT_TEACHER:
+            extra += [
+                b for (b,) in db.query(models.Group.branch_id)
+                .join(models.SupportAssignment,
+                      models.SupportAssignment.group_id == models.Group.id)
+                .filter(models.SupportAssignment.user_id == user.id,
+                        models.Group.branch_id.isnot(None))
+                .distinct().all()
+            ]
+    except Exception:
+        pass
     ids = ([user.branch_id] if user.branch_id else [])
     for b in extra:
         if b and b not in ids:

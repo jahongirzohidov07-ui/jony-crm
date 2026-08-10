@@ -759,6 +759,15 @@ def my_students(group_id: int | None = None, q: str | None = None,
 
     query = db.query(models.Student).filter(
         models.Student.group_id.in_(list(gid_map.keys()) or [-1]))
+    # MUZLATILGAN O'QUVCHI USTOZGA KO'RINMAYDI (2026-08-10, Jahongir:
+    # "muzlatilgan o'quvchilar o'qituvchilarga ko'rinmasin, yo'qlama
+    # baho qo'yib bo'lmasin"). Davomat jadvalida va yo'qlama
+    # ekranida ular allaqachon chiqmaydi — ro'yxatda esa hamon
+    # turardi va ustoz "nega belgilay olmayapman" deb chalkashardi.
+    # Rahbariyat (o'quv bo'limi, HR) ular ro'yxatini boshqa
+    # bo'limlarda ko'raveradi.
+    if user.role in (roles.TEACHER, roles.SUPPORT_TEACHER):
+        query = query.filter(models.Student.status != "frozen")
     if group_id:
         query = query.filter(models.Student.group_id == group_id)
     if q:

@@ -60,7 +60,9 @@ import {
   TEACHER_MENU,
   BRANCH_SWITCH,
 } from "../lib/roles";
-import { api, setGlobalBranch, getGlobalBranch } from "../lib/api";
+import {
+  api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
+} from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 
 const navItems = [
@@ -429,6 +431,7 @@ export default function Layout() {
         {/* Global o'quvchi qidiruv — barcha xodimlar uchun */}
         <GlobalSearch />
         <BranchSwitcher />
+        <RoleSwitcher />
         {can(user?.role, TASK_ACCESS) && (
           <div className="absolute top-4 right-28 sm:right-[16.5rem] z-40">
             <button
@@ -494,6 +497,7 @@ export default function Layout() {
                   keng ekran uchun (hidden sm:block), shuning uchun
                   ikki filialli xodim telefonda ham almashtira olsin
                   (2026-08-10). */}
+              <MobileRolePicker onDone={() => setProfileOpen(false)} />
               <MobileBranchPicker onDone={() => setProfileOpen(false)} />
               <button
                 onClick={onLogout}
@@ -828,6 +832,74 @@ type SearchRes = {
   teachers?: { id: number; name: string }[];
   staff?: SearchRow[];
 };
+
+
+/** Profil menyusidagi lavozim tanlash — telefonda. */
+function MobileRolePicker({ onDone }: { onDone: () => void }) {
+  const { user } = useAuth();
+  const myRoles = user?.roles ?? [];
+  const current = getActiveRole() || user?.role || "";
+  if (myRoles.length < 2) return null;
+  return (
+    <div className="lg:hidden border-t border-slate-100 px-4 py-2.5">
+      <p className="text-[11px] text-slate-400 mb-1.5">Lavozim</p>
+      <select
+        value={current}
+        onChange={(e) => {
+          setActiveRole(e.target.value || null);
+          onDone();
+          window.location.href = "/";
+        }}
+        className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-sm bg-white"
+      >
+        {myRoles.map((r) => (
+          <option key={r.key} value={r.key}>{r.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+
+/** LAVOZIM ALMASHTIRGICH (2026-08-10).
+ *
+ *  Jahongir: "bir xodim bir nechta lavozim qo'shsak bo'ladimi, filial
+ *  almashtirgandek lavozimini almashtirib kiraverardi. Masalan HR
+ *  managerimiz Support managerlik ishini ham qiladi; Nodir filial
+ *  rahbari ham, ustoz ham."
+ *
+ *  Tanlangan lavozim BUTUN platformaga ta'sir qiladi: menyu, huquqlar
+ *  va ko'rinadigan ma'lumot AYNAN o'sha lavozimniki bo'ladi (aralash
+ *  emas). Shu sababli xodim bir vaqtda faqat bitta "rolda" ishlaydi —
+ *  bu tasodifan ortiqcha ma'lumot ko'rinishining oldini oladi.
+ *
+ *  Faqat IKKI VA UNDAN KO'P lavozimi bor xodimga chiqadi. */
+function RoleSwitcher() {
+  const { user } = useAuth();
+  const myRoles = user?.roles ?? [];
+  const current = getActiveRole() || user?.role || "";
+
+  if (myRoles.length < 2) return null;
+
+  return (
+    <div className="absolute top-4 right-[30.5rem] z-40 hidden lg:block">
+      <select
+        value={current}
+        onChange={(e) => {
+          setActiveRole(e.target.value || null);
+          // Menyu va huquqlar butunlay o'zgaradi — to'liq qayta yuklash
+          window.location.href = "/";
+        }}
+        title="Lavozim bo'yicha ishlash"
+        className="h-10 rounded-full border border-brand-400 bg-brand-50 px-3 pr-7 text-sm text-brand-700 font-medium shadow-sm focus:outline-none max-w-[11rem] truncate"
+      >
+        {myRoles.map((r) => (
+          <option key={r.key} value={r.key}>{r.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
 
 
 /** Profil menyusidagi filial tanlash — FAQAT telefonda ko'rinadi

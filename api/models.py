@@ -3100,3 +3100,31 @@ class VocabAttempt(Base):
     answer = Column(String, nullable=True)              # o'quvchi javobi
     date = Column(Date, default=date.today, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class UserRole(Base):
+    """Xodimning QO'SHIMCHA lavozimlari (2026-08-10).
+
+    Jahongir: "bir xodim bir nechta lavozim qo'shsak bo'ladimi,
+    filial almashtirgandek lavozimini almashtirib kiraverardi.
+    Masalan HR managerimiz Support managerlik ishini ham qiladi;
+    Nodir filial rahbari ham, ustoz ham; Zafar filial rahbari ham,
+    moliyachi ham, xo'jalik ishlari rahbari ham."
+
+    ASOSIY lavozim User.role da qoladi (butun tizim shuni o'qiydi),
+    qo'shimchalari shu jadvalda. Xodim tepadagi tanlagichdan
+    lavozimni almashtirsa, so'rov sarlavhasida (X-Active-Role) qaysi
+    lavozimda ishlayotgani keladi va o'sha so'rov davomida user.role
+    SHU lavozimga almashtiriladi.
+
+    NEGA SHUNDAY: tizimda yuzlab joyda user.role tekshiriladi. Agar
+    "barcha lavozimlar birlashsin" desak, har bir tekshiruvni qayta
+    yozish kerak bo'lardi — bu esa xavfsizlik teshiklari uchun eng
+    qulay yo'l. Almashtirish esa mavjud tekshiruvlarning HAMMASI
+    o'zgarishsiz to'g'ri ishlashini kafolatlaydi."""
+    __tablename__ = "user_roles"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"),
+                     nullable=False, index=True)
+    role = Column(String, nullable=False, index=True)

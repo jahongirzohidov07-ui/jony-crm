@@ -8,6 +8,11 @@ export interface AuthBranch {
   name: string;
 }
 
+export interface AuthRole {
+  key: string;
+  label: string;
+}
+
 interface AuthUser {
   full_name: string;
   role: string;
@@ -15,6 +20,9 @@ interface AuthUser {
   /** Xodim ishlaydigan BARCHA filiallar (asosiy + qo'shimcha).
    * Ikkitadan ko'p bo'lsa tepada filial tanlagich chiqadi. */
   branches?: AuthBranch[];
+  /** Xodim bajaradigan BARCHA lavozimlar (asosiy + qo'shimcha).
+   * Ikkitadan ko'p bo'lsa tepada lavozim tanlagich chiqadi. */
+  roles?: AuthRole[];
 }
 
 interface AuthContextValue {
@@ -45,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role: string;
         branch_id: number | null;
         branches?: AuthBranch[];
+        roles?: AuthRole[];
       }>("/me")
       .then((r) => {
         const u = {
@@ -52,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           role: r.role,
           branch_id: r.branch_id,
           branches: r.branches ?? [],
+          roles: r.roles ?? [],
         };
         sessionStorage.setItem("jony_crm_user", JSON.stringify(u));
         setUser((prev) =>
@@ -59,7 +69,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           prev.full_name === u.full_name &&
           prev.role === u.role &&
           prev.branch_id === u.branch_id &&
-          (prev.branches?.length ?? 0) === u.branches.length
+          (prev.branches?.length ?? 0) === u.branches.length &&
+          (prev.roles?.length ?? 0) === u.roles.length
             ? prev
             : u,
         );

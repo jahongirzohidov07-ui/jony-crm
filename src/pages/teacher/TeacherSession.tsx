@@ -33,6 +33,8 @@ export default function TeacherSession() {
     hours: 0,
     students_count: "",
   });
+  // Tayyor tugmalardan tashqari erkin yoziladigan soat (1.25, 2.4...)
+  const [freeHours, setFreeHours] = useState("");
 
   const load = () => {
     setErr("");
@@ -54,8 +56,13 @@ export default function TeacherSession() {
 
   const groups: Any[] = opts?.groups || [];
   const steps: number[] = opts?.hour_steps || [1, 1.5, 2, 2.5, 3];
+  const minH: number = opts?.min_hours ?? 1;
+  const maxH: number = opts?.max_hours ?? 3;
+  // Chegara TEKSHIRUVI SERVERDA ham bor — bu yerdagisi shunchaki
+  // xatoni oldindan ko'rsatish uchun (bekorga so'rov ketmasin).
+  const hoursOk = f.hours >= minH && f.hours <= maxH;
   const valid =
-    !!f.group_id && !!f.start_time && f.hours > 0 &&
+    !!f.group_id && !!f.start_time && hoursOk &&
     Number(f.students_count) > 0;
 
   async function add() {
@@ -71,6 +78,7 @@ export default function TeacherSession() {
         students_count: Number(f.students_count),
       });
       setF({ group_id: "", start_time: "", hours: 0, students_count: "" });
+      setFreeHours("");
       pushToast("Seans yozildi", "success", 2500);
       load();
     } catch {
@@ -145,7 +153,9 @@ export default function TeacherSession() {
 
           {/* SOATNI SUPPORTNING O'ZI TANLAYDI (Jahongir, 2026-08-10):
               kamida 1, ko'pi bilan 3 soat. Tugash vaqtini hisoblab
-              o'tirmaydi — server o'zi chiqaradi. */}
+              o'tirmaydi — server o'zi chiqaradi.
+              Tayyor tugmalardan tashqari ERKIN YOZISH ham mumkin
+              (masalan 1.25 yoki 2.4) — Jahongir keyin so'radi. */}
           <div>
             <label className="block text-[11px] text-slate-500 mb-1.5">
               Necha soat dars o'tdingiz
@@ -155,9 +165,12 @@ export default function TeacherSession() {
                 <button
                   key={h}
                   type="button"
-                  onClick={() => setF({ ...f, hours: h })}
+                  onClick={() => {
+                    setF({ ...f, hours: h });
+                    setFreeHours("");
+                  }}
                   className={`py-2.5 rounded-lg border text-sm font-semibold transition ${
-                    f.hours === h
+                    f.hours === h && !freeHours
                       ? "bg-brand-600 text-white border-transparent"
                       : "bg-white text-slate-600 border-slate-200"
                   }`}
@@ -166,7 +179,35 @@ export default function TeacherSession() {
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-slate-400 mt-1">
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-[11px] text-slate-400 shrink-0">
+                yoki o'zingiz:
+              </span>
+              <input
+                type="number"
+                inputMode="decimal"
+                step="0.25"
+                min={opts?.min_hours ?? 1}
+                max={opts?.max_hours ?? 3}
+                value={freeHours}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setFreeHours(v);
+                  setF({ ...f, hours: v ? Number(v) : 0 });
+                }}
+                className={`flex-1 rounded-lg border px-3 py-2 text-sm ${
+                  freeHours && !hoursOk
+                    ? "border-red-300 text-red-700"
+                    : "border-slate-300"
+                }`}
+                placeholder="masalan 1.75"
+              />
+            </div>
+            <p
+              className={`text-[11px] mt-1 ${
+                freeHours && !hoursOk ? "text-red-600" : "text-slate-400"
+              }`}
+            >
               {opts?.min_hours ?? 1}–{opts?.max_hours ?? 3} soat oralig'ida
             </p>
           </div>

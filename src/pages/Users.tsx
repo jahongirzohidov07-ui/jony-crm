@@ -30,6 +30,7 @@ function UserForm({
     role: string;
     branch_id: number | null;
     branch_ids?: number[];
+    extra_roles?: string[];
     fix_salary?: number | null;
     phone?: string | null;
     birth_date?: string | null;
@@ -44,6 +45,7 @@ function UserForm({
     role: string;
     branch_id: number | null;
     branch_ids?: number[];
+    extra_roles?: string[];
     is_active?: boolean;
     fix_salary?: number | null;
     phone?: string | null;
@@ -70,6 +72,12 @@ function UserForm({
       : initial?.branch_id
       ? [initial.branch_id]
       : []
+  );
+  // QO'SHIMCHA LAVOZIMLAR (2026-08-10): xodim bir nechta ish
+  // bajarsa (masalan HR + support menejer), shu yerda belgilanadi.
+  // Tepadagi tanlagichdan almashtirib ishlaydi.
+  const [extraRoles, setExtraRoles] = useState<string[]>(
+    initial?.extra_roles ?? []
   );
   const [isActive, setIsActive] = useState(initial?.is_active ?? true);
   // Fiks oylik HAR BIR xodimda bo'ladi: profilidagi maosh holati va
@@ -110,6 +118,7 @@ function UserForm({
         role,
         branch_id: branchIds[0] ?? null,
         branch_ids: branchIds,
+        extra_roles: extraRoles.filter((r) => r !== role),
         is_active: isEdit ? isActive : undefined,
         fix_salary: fixSalary === "" ? null : Number(fixSalary),
         phone: phone.trim() || null,
@@ -220,6 +229,41 @@ function UserForm({
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Qo'shimcha lavozimlar
+            </label>
+            <p className="text-[11px] text-slate-400 mb-1.5">
+              Xodim boshqa ishni ham bajarsa belgilang — u tepadagi
+              tanlagichdan lavozimni almashtirib ishlaydi.
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {roles
+                .filter((r) => r !== role)
+                .map((r) => {
+                  const on = extraRoles.includes(r);
+                  return (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() =>
+                        setExtraRoles((prev) =>
+                          on ? prev.filter((x) => x !== r) : [...prev, r]
+                        )
+                      }
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
+                        on
+                          ? "bg-brand-50 border-brand-400 text-brand-700"
+                          : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                      }`}
+                    >
+                      {roleLabel(r)}
+                    </button>
+                  );
+                })}
             </div>
           </div>
 

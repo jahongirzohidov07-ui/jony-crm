@@ -47,6 +47,26 @@ export function getGlobalBranch(): string | null {
   return globalBranchId;
 }
 
+// KO'P LAVOZIMLI XODIM (2026-08-10). Xodimda bir nechta lavozim
+// bo'lsa, tepadagi tanlagichdan qaysi lavozimda ishlayotgani
+// tanlanadi va HAR BIR so'rovga X-Active-Role sarlavhasi qo'shiladi.
+// Server sarlavhaga ko'r-ko'rona ishonmaydi — lavozim xodimning
+// haqiqiy ro'yxatida bo'lsagina qabul qiladi (auth.py).
+let activeRole: string | null =
+  typeof localStorage !== "undefined"
+    ? localStorage.getItem("jonyos_role")
+    : null;
+
+export function setActiveRole(role: string | null) {
+  activeRole = role;
+  if (role) localStorage.setItem("jonyos_role", role);
+  else localStorage.removeItem("jonyos_role");
+}
+
+export function getActiveRole(): string | null {
+  return activeRole;
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {}
@@ -65,6 +85,8 @@ async function request<T>(
   const headers: Record<string, string> = {
     ...(options.body ? { "Content-Type": "application/json" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    // Qaysi lavozimda ishlayotgani (ko'p lavozimli xodim uchun)
+    ...(activeRole ? { "X-Active-Role": activeRole } : {}),
   };
 
   let res: Response;
@@ -152,6 +174,8 @@ export interface User {
   hired_date?: string | null;
   public_id?: string | null;
   branch_ids?: number[];
+  /** Qo'shimcha lavozimlar (ko'p lavozimli xodim). */
+  extra_roles?: string[];
   branches_label?: string | null;
 }
 
@@ -164,6 +188,8 @@ export interface Teacher {
   branch?: Branch;
   /** Ustoz ishlaydigan barcha filiallar (2-3 bo'lishi mumkin). */
   branch_ids?: number[];
+  /** Qo'shimcha lavozimlar (ko'p lavozimli xodim). */
+  extra_roles?: string[];
   branches_label?: string | null;
   /** "support" — yordamchi o'qituvchi, "teacher" — asosiy ustoz. */
   kind?: string | null;

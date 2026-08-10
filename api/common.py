@@ -534,6 +534,26 @@ def _user_branch_ids(db, user: models.User) -> list:
     user._all_branch_ids = ids
     return ids
 
+def _user_roles(db, user: models.User) -> list:
+    """Xodimning BARCHA lavozimlari: asosiysi + qo'shimchalari.
+
+    Birinchisi doim asosiy lavozim (User.role) — tanlanmagan holatda
+    shu ishlatiladi."""
+    cached = getattr(user, "_all_roles", None)
+    if cached is not None:
+        return cached
+    out = [user.role] if user.role else []
+    try:
+        for ur in (db.query(models.UserRole)
+                   .filter(models.UserRole.user_id == user.id).all()):
+            if ur.role and ur.role not in out and ur.role in roles.ALL_ROLES:
+                out.append(ur.role)
+    except Exception:
+        pass
+    user._all_roles = out
+    return out
+
+
 def _in_user_branches(db, user: models.User, branch_id,
                       null_ok: bool = False) -> bool:
     """Shu filial foydalanuvchiga tegishlimi (asosiy YOKI qo'shimcha).
@@ -3818,6 +3838,7 @@ __all__ = [
     "_time_to_min",
     "_trial_attendance",
     "_user_branch_ids",
+    "_user_roles",
     "_utc_window",
     "_xp_history",
     "_xp_rule",

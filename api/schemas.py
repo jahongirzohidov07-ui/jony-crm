@@ -51,6 +51,10 @@ class UserOut(BaseModel):
     hired_date: Optional[date] = None
     # Barcha filiallari ("Markaziy, Bekobod 2") — ro'yxat uchun
     branch_ids: Optional[List[int]] = None
+    # Qo'shimcha lavozimlar (2026-08-10): asosiy lavozim
+    # `role` da, bu yerda esa xodim bajaradigan boshqa
+    # lavozimlar. Tepadagi tanlagichdan almashtiriladi.
+    extra_roles: Optional[List[str]] = None
     branches_label: Optional[str] = None
 
 
@@ -62,6 +66,10 @@ class UserCreate(BaseModel):
     branch_id: Optional[int] = None
     # Xodim ishlaydigan BARCHA filiallar — birinchisi asosiy
     branch_ids: Optional[List[int]] = None
+    # Qo'shimcha lavozimlar (2026-08-10): asosiy lavozim
+    # `role` da, bu yerda esa xodim bajaradigan boshqa
+    # lavozimlar. Tepadagi tanlagichdan almashtiriladi.
+    extra_roles: Optional[List[str]] = None
     fix_salary: Optional[float] = None
     # ---- Xodim kartasi ----
     phone: Optional[str] = None
@@ -77,6 +85,10 @@ class UserUpdate(BaseModel):
     role: Optional[str] = None
     branch_id: Optional[int] = None
     branch_ids: Optional[List[int]] = None
+    # Qo'shimcha lavozimlar (2026-08-10): asosiy lavozim
+    # `role` da, bu yerda esa xodim bajaradigan boshqa
+    # lavozimlar. Tepadagi tanlagichdan almashtiriladi.
+    extra_roles: Optional[List[str]] = None
     is_active: Optional[bool] = None
     # Ishdan bo'shatish: qanday ajrashildi va sababi
     exit_type: Optional[str] = None      # green | neutral | red

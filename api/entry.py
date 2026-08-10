@@ -4100,6 +4100,10 @@ class _SupBulk2(_BM):
     marks: list[_SupMark] = []
     start_time: str | None = None
     end_time: str | None = None
+    # QO'LDA SOAT (2026-08-10, Jahongir): support tugash vaqtini
+    # hisoblab o'tirmaydi - necha soat dars o'tganini o'zi tanlaydi
+    # (1-3), tugash vaqtini server chiqaradi.
+    hours: float | None = None
 
 
 def _sup_teacher_for(db: Session, user, group_id: int):
@@ -4166,6 +4170,12 @@ def _sync_support_session(db: Session, user, g, d, start, end):
         raise HTTPException(400, "Tugash vaqti boshlanishdan keyin "
                                  "bo'lishi kerak")
     minutes = e_min - s_min
+    # 1-3 SOAT QOIDASI bu yo'lda ham (POST /me/support-sessions bilan
+    # bir xil) - ikki eshikdan kirganda ikki xil qoida bo'lmasin.
+    if minutes < roles.SUPPORT_SESSION_MIN_HOURS * 60:
+        raise HTTPException(
+            400, f"Seans kamida {roles.SUPPORT_SESSION_MIN_HOURS} "
+                 f"soat bo'ladi — soatni tekshiring")
     if minutes > roles.SUPPORT_SESSION_MAX_HOURS * 60:
         raise HTTPException(
             400, f"Bitta seans {roles.SUPPORT_SESSION_MAX_HOURS} "
@@ -4231,9 +4241,38 @@ def save_support_attendance_v2(group_id: int,
             existing[m.student_id] = row
     db.flush()
 
-    ses = _sync_support_session(db, user, g, d,
-                                (payload.start_time or "").strip() or None,
-                                (payload.end_time or "").strip() or None)
+    start = (payload.start_time or "").strip() or None
+    end = (payload.end_time or "").strip() or None
+    if payload.hours is not None:
+        # Soat berildi - tugash vaqtini o'zimiz chiqaramiz. Chegara
+        # tekshiruvi baribir _sync_support_session ichida ham bor,
+        # bu yerdagisi aniqroq xato matni uchun.
+        try:
+            _hrs = float(payload.hours)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Soatni to'g'ri tanlang")
+        if not (roles.SUPPORT_SESSION_MIN_HOURS <= _hrs
+                <= roles.SUPPORT_SESSION_MAX_HOURS):
+            raise HTTPException(
+                400, f"Seans {roles.SUPPORT_SESSION_MIN_HOURS}-"
+                     f"{roles.SUPPORT_SESSION_MAX_HOURS} soat "
+                     f"oralig'ida bo'ladi")
+        if not start:
+            _ps, _pe = _sup_plan_time(
+                db, group_id,
+                user.id if user.role == roles.SUPPORT_TEACHER else None)
+            start = _ps
+        if not start:
+            raise HTTPException(
+                400, "Dars soat nechada boshlanganini kiriting")
+        _sm = roles.hhmm_minutes(start)
+        if _sm is None:
+            raise HTTPException(400, "Vaqt SS:DD ko'rinishida bo'lsin, "
+                                     "masalan 14:30")
+        _em = _sm + int(round(_hrs * 60))
+        end = f"{(_em // 60) % 24:02d}:{_em % 60:02d}"
+
+    ses = _sync_support_session(db, user, g, d, start, end)
     db.commit()
     return {
         "ok": True, "date": d.isoformat(), "marked": len(existing),

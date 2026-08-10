@@ -166,6 +166,17 @@ try:
 except Exception:
     pass
 
+# Barcha mavjud o'quvchilarga akkaunt: login = telefon, parol =
+# jonyjony (2026-08-10, Jahongir). Yangi kiritilganlarga
+# _ensure_student_account ochadi - bu esa eskilarni bir marta qoplaydi.
+try:
+    from sqlalchemy.orm import Session as _VS6
+    from common import _backfill_student_accounts
+    with _VS6(engine) as _db6:
+        _backfill_student_accounts(_db6)
+except Exception:
+    pass
+
 # Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
 # Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
 # bo'shatish paytidayoq _release_support_groups orqali tozalanadi.

@@ -231,20 +231,29 @@ export function roleLabel(role: string | undefined): string {
  */
 /** HR HAMMAGA xodim ochadi va login/parol beradi — faqat asoschi va
  *  filial rahbari mustasno: ularni faqat asoschi tayinlaydi. */
+/** DIQQAT: "Ota-ona" va "O'quvchi" ATAYLAB YO'Q (2026-08-10) —
+ *  ular xodim emas va hisobi QO'LDA ochilmaydi:
+ *   - o'quvchi hisobi o'quvchi kartasi bilan AVTOMAT ochiladi
+ *     (login = telefon, parol = jonyjony);
+ *   - ota-ona umuman hisobsiz, maxsus havola bilan kiradi. */
 export const HR_ASSIGNABLE_ROLES = [
   TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
   SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
   SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
   HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
-  PARENT, STUDENT,
 ];
 
+/** Xodim sifatida qo'lda tayinlanadigan rollar (ota-ona/o'quvchisiz). */
+export const STAFF_ASSIGNABLE_ROLES = ALL_ROLES.filter(
+  (r) => r !== PARENT && r !== STUDENT,
+);
+
 export function assignableRoles(myRole: string | undefined): string[] {
-  if (myRole === FOUNDER) return ALL_ROLES;
+  if (myRole === FOUNDER) return STAFF_ASSIGNABLE_ROLES;
   if (myRole === BRANCH_MANAGER)
     return [
       SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
-      EXAMINER, PARENT, STUDENT,
+      EXAMINER,
     ];
   if (myRole === HR_MANAGER) return HR_ASSIGNABLE_ROLES;
   return [];

@@ -39,7 +39,7 @@ from database import Base, engine, get_db, SessionLocal
 # ularni `main` modulidan kutadi. ----
 from auth_users import _guard_role_assignment, _smm_new_staff_task, _sync_user_branches
 from branches_rooms import _room_out
-from common import _branch_in, _in_user_branches, _charge_from_activation, _charge_skipped, _check_enrolment, _check_teacher_load, _ensure_public_id, _ensure_teacher_card, _get_group_in_scope, _group_students, _hr_task_for, _lessons_left_in_month, _period_key, _raise_if_blocked, _student_discount_percent, _support_month, _sync_student_left_date, _teacher_of_user, _time_to_min, _utc_window, backfill_missing_ids, scope_to_branch, student_balance
+from common import _cleanup_stale_support_assignments, _branch_in, _in_user_branches, _charge_from_activation, _charge_skipped, _check_enrolment, _check_teacher_load, _ensure_public_id, _ensure_teacher_card, _get_group_in_scope, _group_students, _hr_task_for, _lessons_left_in_month, _period_key, _raise_if_blocked, _student_discount_percent, _support_month, _sync_student_left_date, _teacher_of_user, _time_to_min, _utc_window, backfill_missing_ids, scope_to_branch, student_balance
 from dashboard import _collection_bonus, _first_payment_dates, _new_client_bonus, _payment_first_dates, admin_kpi
 from groups_lessons import _sync_scheduled_lessons
 from inventory import _check_stock
@@ -163,6 +163,16 @@ try:
     from vocab_seed import seed_vocab
     with _VS(engine) as _db4:
         seed_vocab(_db4)
+except Exception:
+    pass
+
+# Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
+# Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
+# bo'shatish paytidayoq _release_support_groups orqali tozalanadi.
+try:
+    from sqlalchemy.orm import Session as _VS5
+    with _VS5(engine) as _db5:
+        _cleanup_stale_support_assignments(_db5)
 except Exception:
     pass
 

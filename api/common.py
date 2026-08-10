@@ -3760,7 +3760,125 @@ def _freeze_task(db, st: models.Student, until, note):
 
 
 
+
+# ---------------------------------------------------------------------------
+# SUPPORT BO'SHATILGANDA GURUHLARI BO'SHASIN (2026-08-10, Jahongir)
+#
+# Muammo: support teacher ishdan bo'shatilsa (yoki akkaunti o'chirilsa),
+# support_assignments jadvalidagi yozuvlari joyida qolardi. Natijada
+# guruh kartasida allaqachon ketgan xodim "support" bo'lib turardi va
+# hech kim o'sha guruhga yangi support biriktirish kerakligini bilmasdi.
+# Aynan shu Malika bilan bo'lgan: akkaunt o'chirilgan, ismi esa hamon
+# guruhda.
+#
+# Yechim ikki qismli: (1) bo'shatish PAYTIDA biriktirishlarni olib
+# tashlaymiz va support managerga vazifa qo'yamiz; (2) allaqachon
+# qolib ketgan eski yozuvlarni bir marta tozalaymiz (pastdagi funksiya).
+# ---------------------------------------------------------------------------
+def _support_manager_id(db: Session, branch_id=None):
+    """Vazifa kimga tushsin: support boshlig'i -> o'quv bo'limi -> asoschi.
+
+    Support boshlig'i bo'lmasa vazifa YO'QOLIB ketmasligi kerak, shuning
+    uchun zanjir bo'ylab yuqoriga ko'tariladi."""
+    for role in (roles.HEAD_SUPPORT, roles.ACADEMIC_HEAD, roles.FOUNDER):
+        q = (db.query(models.User)
+             .filter(models.User.role == role, models.User.is_active == 1))
+        if branch_id:
+            # avval o'sha filialdagisini qidiramiz
+            row = q.filter(models.User.branch_id == branch_id).first()
+            if row:
+                return row.id
+        row = q.first()
+        if row:
+            return row.id
+    return None
+
+
+def _release_support_groups(db: Session, target, reason: str) -> list:
+    """Support bo'shatilganda guruhlarini bo'shatadi va vazifa yaratadi.
+
+    Qaytaradi: bo'shab qolgan guruh nomlari ro'yxati."""
+    rows = (db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.user_id == target.id).all())
+    if not rows:
+        return []
+
+    gids = [r.group_id for r in rows if r.group_id]
+    groups = (db.query(models.Group)
+              .filter(models.Group.id.in_(gids or [-1]))
+              .order_by(models.Group.name).all())
+    names = [g.name for g in groups]
+
+    for r in rows:
+        db.delete(r)
+    db.flush()
+
+    # Vazifa yaratish ASOSIY ishni buzmasligi kerak - xodimni bo'shatish
+    # baribir amalga oshsin, vazifada nimadir noto'g'ri ketsa ham.
+    try:
+        who = _support_manager_id(db, getattr(target, "branch_id", None))
+        if who and names:
+            _hr_task_for(
+                db, who,
+                title=(f"Supportsiz qolgan guruhlar: {target.full_name} "
+                       f"({date.today().isoformat()})"),
+                body=(f"{target.full_name} {reason}. Quyidagi guruhlar "
+                      f"supportsiz qoldi - yangi support biriktirish "
+                      f"kerak:\n\n- " + "\n- ".join(names) +
+                      "\n\nGuruhlar bo'limidan har biriga support "
+                      "tayinlang."),
+                branch_id=getattr(target, "branch_id", None), days=2)
+    except Exception:
+        pass
+    return names
+
+
+def _cleanup_stale_support_assignments(db: Session) -> int:
+    """Allaqachon qolib ketgan biriktirishlarni tozalaydi (bir martalik).
+
+    Bu funksiya tuzatishdan OLDIN bo'shatilgan supportlar uchun - ular
+    uchun yuqoridagi ilgak ishlamagan. Har ishga tushishda tekshiriladi,
+    lekin tozalaydigan narsa bo'lmasa hech nima qilmaydi."""
+    rows = db.query(models.SupportAssignment).all()
+    if not rows:
+        return 0
+    uids = {r.user_id for r in rows if r.user_id}
+    ok = {u.id for u in db.query(models.User)
+          .filter(models.User.id.in_(uids or [-1]),
+                  models.User.is_active == 1,
+                  models.User.role == roles.SUPPORT_TEACHER).all()}
+    stale = [r for r in rows if r.user_id not in ok]
+    if not stale:
+        return 0
+
+    gids = [r.group_id for r in stale if r.group_id]
+    names = [g.name for g in db.query(models.Group)
+             .filter(models.Group.id.in_(gids or [-1]))
+             .order_by(models.Group.name).all()]
+    for r in stale:
+        db.delete(r)
+    db.commit()
+
+    try:
+        who = _support_manager_id(db)
+        if who and names:
+            _hr_task_for(
+                db, who,
+                title=f"Supportsiz qolgan guruhlar ({date.today().isoformat()})",
+                body=("Ishdan bo'shatilgan yoki lavozimi o'zgargan "
+                      "supportlarning guruhlari bo'shatildi. Quyidagi "
+                      "guruhlarga yangi support biriktirish kerak:\n\n- "
+                      + "\n- ".join(names)),
+                days=3)
+            db.commit()
+    except Exception:
+        db.rollback()
+    return len(stale)
+
+
 __all__ = [
+    "_release_support_groups", "_cleanup_stale_support_assignments",
+    "_support_manager_id",
     "GRID_END_MIN",
     "GRID_START_MIN",
     "PUBLIC_ID_PREFIX",

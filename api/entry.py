@@ -218,7 +218,9 @@ def _group_support_map(db: Session, group_ids: list) -> dict:
                      models.User.full_name)
             .join(models.User,
                   models.User.id == models.SupportAssignment.user_id)
-            .filter(models.SupportAssignment.group_id.in_(group_ids))
+            .filter(models.SupportAssignment.group_id.in_(group_ids),
+                    models.User.is_active == 1,
+                    models.User.role == roles.SUPPORT_TEACHER)
             .all())
     m = {}
     for gid, name in rows:

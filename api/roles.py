@@ -746,6 +746,11 @@ VOCAB_GAME_LABELS = {k: lbl for k, lbl, _ in VOCAB_GAMES}
 VOCAB_ROUND_SIZE = 10
 VOCAB_XP_PER_CORRECT = 1.0
 
+# Grammar mashqlari (2026-08-10): bitta mashg'ulotda nechta savol
+# va har birinchi-marta-to'g'ri javob uchun necha XP.
+GRAMMAR_ROUND_SIZE = 8
+GRAMMAR_XP_PER_CORRECT = 1.0
+
 ENG_LEVELS = [
     {"key": "beginner",          "label": "Beginner",
      "ielts": "~2.0-2.5", "cefr": "A1"},

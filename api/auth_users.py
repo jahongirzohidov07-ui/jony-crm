@@ -95,7 +95,9 @@ def login(payload: schemas.LoginRequest, request: Request,
     if not user.is_active:
         raise HTTPException(status_code=401, detail="Bu hisob faolsizlantirilgan")
     _login_record(db, payload.username, ip, True)
-    token = create_access_token({"sub": user.username})
+    token = create_access_token(
+        {"sub": user.username},
+        minutes=60 * 24 * 60 if payload.remember else None)
     # Oy boshida birinchi kirishda oylik to'lovlar avtomat yechiladi
     try:
         _founder_name_fix(db)

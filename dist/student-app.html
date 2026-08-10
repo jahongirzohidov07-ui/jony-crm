@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jony Student</title>
+  <!-- APK QURISH UCHUN STATIK SAHIFA (2026-08-10).
+       Muammo: student.webmanifest faqat /student ochilgach JS orqali
+       ulanardi, /student esa loginsiz /login ga yo'naltiradi - shuning
+       uchun PWABuilder kabi tashqi vositalar manifestni topa olmasdi.
+       Bu sahifa manifestni STATIK bog'laydi - APK qurish vositalari
+       shu manzilni tahlil qiladi. Oddiy foydalanuvchiga ham foydali:
+       ilovaga kirish tugmasi bor. -->
+  <link rel="manifest" href="/student.webmanifest" />
+  <link rel="icon" href="/favicon.png" />
+  <meta name="theme-color" content="#1A6FE4" />
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,sans-serif;
+         min-height:100vh;display:flex;align-items:center;
+         justify-content:center;background:#f8fafc}
+    .card{text-align:center;padding:32px}
+    img{width:96px;height:96px;border-radius:22px}
+    h1{font-size:22px;color:#0f172a;margin:16px 0 6px}
+    p{color:#64748b;font-size:14px;margin:0 0 20px}
+    a{display:inline-block;background:#1A6FE4;color:#fff;
+      text-decoration:none;padding:13px 34px;border-radius:12px;
+      font-weight:600;font-size:15px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="/pwa-192.png" alt="Jony Student" />
+    <h1>Jony Student</h1>
+    <p>Lug'at o'yinlari, darajalar va reyting</p>
+    <a href="/student">Ilovaga kirish</a>
+  </div>
+  <script>
+    if ("serviceWorker" in navigator)
+      navigator.serviceWorker.register("/sw.js").catch(function(){});
+  </script>
+</body>
+</html>

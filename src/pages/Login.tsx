@@ -7,8 +7,15 @@ import { api } from "../lib/api";
 
 export default function Login() {
   const { login, loading, error } = useAuth();
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(
+    () => localStorage.getItem("jonyos_last_login") || "",
+  );
   const [password, setPassword] = useState("");
+  // ESLAB QOLISH (2026-08-10, Jahongir): belgi qo'yilsa 60 kunlik
+  // sessiya + login maydoni keyingi safar o'zi to'lgan bo'ladi.
+  // Odatiy holatda YOQIQ - o'quvchilar har safar qayta kirib
+  // o'tirmasin.
+  const [remember, setRemember] = useState(true);
   // Ko'z belgisi: bosilsa parol ochiq ko'rinadi (telefonda xato yozmaslik uchun)
   const [showPw, setShowPw] = useState(false);
   const [recovery, setRecovery] = useState(false);
@@ -17,7 +24,9 @@ export default function Login() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     try {
-      const u = await login(username, password);
+      const u = await login(username, password, remember);
+      if (remember) localStorage.setItem("jonyos_last_login", username);
+      else localStorage.removeItem("jonyos_last_login");
       if (password === "jonyjony") {
         alert(
           "Siz standart parol bilan kirdingiz.\\n\\nXavfsizlik uchun " +
@@ -87,6 +96,18 @@ export default function Login() {
               </button>
             </div>
           </div>
+
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+              className="w-4 h-4 rounded border-slate-300 accent-brand-600"
+            />
+            <span className="text-sm text-slate-600">
+              Meni eslab qol (60 kun qayta kirish shart emas)
+            </span>
+          </label>
 
           {error && (
             <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">

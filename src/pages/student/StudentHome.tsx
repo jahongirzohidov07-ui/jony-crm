@@ -209,29 +209,29 @@ export default function StudentHome() {
           )}
         </div>
 
-        {/* --- Statistika --- */}
+        {/* --- Statistika (2026-08-11: yorqin gradientlar) --- */}
         <div className="grid grid-cols-2 gap-3">
           <Stat
-            icon={<CoinIcon size={18} />}
-            tone="bg-amber-50 text-amber-600"
+            icon={<CoinIcon size={22} />}
+            tone="from-amber-400 to-orange-500"
             value={fmtNum(d.gamification.coins)}
             label="Coin"
           />
           <Stat
-            icon={<Sparkles size={16} />}
-            tone="bg-violet-50 text-violet-600"
+            icon={<Sparkles size={19} />}
+            tone="from-violet-500 to-purple-600"
             value={fmtNum(d.gamification.lifetime_xp)}
             label="XP"
           />
           <Stat
-            icon={<Flame size={16} />}
-            tone="bg-orange-50 text-orange-600"
+            icon={<Flame size={19} />}
+            tone="from-orange-500 to-red-500"
             value={`${d.streak} kun`}
             label="Ketma-ket"
           />
           <Stat
-            icon={<Trophy size={16} />}
-            tone="bg-emerald-50 text-emerald-600"
+            icon={<Trophy size={19} />}
+            tone="from-emerald-500 to-teal-600"
             value={
               d.ranks.group_rank
                 ? `${d.ranks.group_rank}/${d.ranks.group_total}`
@@ -451,13 +451,13 @@ function Stat({
   label: string;
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5">
-      <div
-        className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${tone}`}
-      >
+    <div
+      className={`bg-gradient-to-br ${tone} rounded-2xl shadow-sm p-3.5 text-white`}
+    >
+      <div className="w-9 h-9 rounded-xl bg-white/25 flex items-center justify-center mb-2">
         {icon}
       </div>
-      <p className="text-lg font-semibold text-slate-900 leading-tight">
+      <p className="text-xl font-bold leading-tight">
         {value}
       </p>
       <p className="text-[11px] text-slate-500">{label}</p>

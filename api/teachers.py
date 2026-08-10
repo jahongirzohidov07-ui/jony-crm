@@ -78,16 +78,20 @@ def list_teachers(branch_id: Optional[int] = None,
     # filiallaridan biri unga tegishli ustozlarni ko'radi. Butun
     # tashkilotni ko'radigan xodim filtri (branch_id) ham shu mantiq
     # bilan ishlaydi.
-    want = None
+    # IKKI FILIALLI XODIM (2026-08-10): ilgari faqat user.branch_id
+    # tekshirilardi — ikki filialda ishlaydigan xodim ikkinchi filial
+    # ustozlarini umuman ko'rmasdi. Endi barcha filiallari hisobga
+    # olinadi (ro'yxatlar bilan bir xil qoida).
+    want_ids = None
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        want = user.branch_id
+        want_ids = _user_branch_ids(db, user)
     elif branch_id:
-        want = branch_id
-    if want:
+        want_ids = [branch_id]
+    if want_ids:
         rows = [t for t in db.query(models.Teacher)
                 .order_by(models.Teacher.full_name).all()
-                if t.branch_id == want
-                or want in extra.get(t.id, [])]
+                if t.branch_id in want_ids
+                or any(b in want_ids for b in extra.get(t.id, []))]
     else:
         rows = (db.query(models.Teacher)
                 .order_by(models.Teacher.full_name).all())

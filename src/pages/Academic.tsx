@@ -981,8 +981,12 @@ function SupportTab({ canAssign }: { canAssign: boolean }) {
 
   useEffect(() => {
     if (isSupport) return;
-    api.get<User[]>("/users")
-      .then((u) => setStaff(u.filter((x) => x.role === SUPPORT_TEACHER)))
+    // /users EMAS: u faqat HR/asoschi/moliya uchun ochiq va o'quv
+    // bo'limi rahbarida 403 berardi — natijada tanlagich bo'sh
+    // qolardi (2026-08-10 tuzatildi). Yangi yo'l faqat support
+    // teacherlarning ismini qaytaradi.
+    api.get<{ id: number; full_name: string }[]>("/support/teachers")
+      .then((u) => setStaff(u as unknown as User[]))
       .catch(() => setStaff([]));
     api.get<Group[]>("/groups").then(setGroups).catch(() => setGroups([]));
   }, [isSupport]);

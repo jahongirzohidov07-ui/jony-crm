@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  AlertTriangle, CheckCircle2, ChevronRight, Clock, Users,
+  AlertTriangle, CheckCircle2, ChevronRight, Clock, Timer, Users,
 } from "lucide-react";
 import { api } from "../../lib/api";
+import { useAuth } from "../../lib/AuthContext";
 import { BrandIcon } from "../../components/BrandIcon";
 import type { LessonCard, TeacherHome } from "../../lib/teacherApi";
 
@@ -15,6 +16,8 @@ import type { LessonCard, TeacherHome } from "../../lib/teacherApi";
  * pastda yoki "Bo'limlar" tabida.
  */
 export default function TeacherToday() {
+  const { user } = useAuth();
+  const isSupport = user?.role === "support_teacher";
   const [d, setD] = useState<TeacherHome | null>(null);
   const [missed, setMissed] = useState<LessonCard[]>([]);
   const [err, setErr] = useState("");
@@ -95,6 +98,28 @@ export default function TeacherToday() {
               ))}
             </div>
           </div>
+        )}
+
+        {/* SUPPORT TEACHER uchun asosiy kunlik amal — SOAT BELGILASH
+            (2026-08-10, Jahongir: "supportlar soat belgilashi yo'q
+            bo'lib qolibdi"). Yo'qlama ustozning ishi, support esa
+            o'z seansini yozadi — oyligi shundan chiqadi. */}
+        {isSupport && (
+          <Link
+            to="/teacher/session"
+            className="flex items-center gap-3 bg-brand-600 text-white rounded-xl shadow-sm p-4 active:scale-[0.99] transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+              <Timer size={19} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold">Soat belgilash</p>
+              <p className="text-xs opacity-90">
+                Bugungi seansingizni yozing — oylik shundan
+              </p>
+            </div>
+            <ChevronRight size={18} className="opacity-70 shrink-0" />
+          </Link>
         )}
 
         <div>

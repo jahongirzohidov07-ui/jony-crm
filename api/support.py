@@ -91,6 +91,30 @@ def _student_attendance_stats(db: Session, sid: int, since: date) -> dict:
         "percent": round(present / marked * 100, 1) if marked else None,
     }
 
+@router.get("/api/support/teachers")
+def support_teacher_list(db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.SUPPORT_ACCESS))):
+    """Support teacherlar ro'yxati (faqat id + ism).
+
+    NEGA ALOHIDA YO'L (2026-08-10, Jahongir: "support teacherlar
+    ro'yxati o'quv bo'limi rahbarida ko'rinmayabdi"): sahifa ilgari
+    GET /api/users ni chaqirardi, u esa STAFF_VIEWERS bilan
+    himoyalangan (asoschi, filial rahbari, HR, moliya direktori).
+    O'quv bo'limi rahbari va support boshlig'i u ro'yxatda YO'Q,
+    shuning uchun 403 olib, tanlagich BO'SH qolardi.
+
+    Butun xodimlar ro'yxatini ochib qo'yish noto'g'ri bo'lardi (u
+    yerda oylik ham bor), shuning uchun bu yo'l FAQAT support
+    teacherlarning ismini qaytaradi — boshqa hech narsa."""
+    q = db.query(models.User).filter(
+        models.User.role == roles.SUPPORT_TEACHER,
+        models.User.is_active == 1)
+    q = scope_to_branch(q, models.User, user)
+    rows = q.order_by(models.User.full_name).all()
+    return [{"id": u.id, "full_name": u.full_name,
+             "branch_id": u.branch_id} for u in rows]
+
+
 @router.get("/api/support/panel")
 def support_panel(
     user_id: int | None = None,

@@ -216,7 +216,7 @@ def student_growth(
 def report_cashflow(
     months: int = 6,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.CASHFLOW_ACCESS)),
 ):
     """Oxirgi N oy uchun pul oqimi: qancha kirdi (naqd/plastik/terminal
     kesimida), qancha chiqdi (xarajat + ustozlar ish haqi), sof qoldiq."""
@@ -1063,7 +1063,7 @@ def cashflow_ledger(
     month: int,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.CASHFLOW_ACCESS)),
 ):
     """Bir oylik kassa daftari: har bir kirim va chiqim alohida qator.
     Tepasida - Kirim / Chiqim / Kassa jadvali usullar kesimida, va

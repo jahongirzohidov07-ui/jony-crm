@@ -16,13 +16,47 @@
   --font-sans: "Segoe UI", system-ui, sans-serif;
 }
 
+/* iPHONE MUAMMOLARI (2026-08-10, Jahongir xabar berdi):
+   "har yo'qlama qilgandan keyin boshiga qaytib qolyabdi, ekranni
+   tepaga suraverish kerak bo'lyabdi, ko'proq survorsa programmadan
+   chiqarib yuboryabdi."
+
+   Uchta sabab bor edi:
+   1. overscroll-behavior yo'q edi — iOS'da uy ekraniga o'rnatilgan
+      ilovada ro'yxat oxiriga yetib yana surilsa, tizimning "ilovani
+      yopish" imosi ishga tushardi. `none` uni to'xtatadi.
+   2. 100vh — iOS'da manzil paneli hisobga olinmaydi, shuning uchun
+      sahifa ko'rinadigan joydan BALAND bo'lib qolardi va har
+      qayta chizilganda joyi siljirdi. 100dvh haqiqiy ko'rinadigan
+      balandlikni beradi (eski brauzerlar uchun 100vh zaxira
+      sifatida qoldirildi).
+   3. Safari'da scroll-anchoring yo'q — shuning uchun tugma
+      bosilganda balandlik o'zgarsa ekran sakraydi. touch-action
+      bilan ikki marta bosishdagi zoom ham to'xtatildi. */
+html {
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
   background-color: #f6f8fa;
   color: #0f172a;
+  overscroll-behavior-y: none;
+  /* Ikki marta bosilganda zoom bo'lmasin — ekran sakrashining
+     asosiy sabablaridan biri shu edi. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Pastdagi tab panellari iPhone'ning "home indicator" chizig'i
+   ostida qolib ketmasligi uchun xavfsiz zona. */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

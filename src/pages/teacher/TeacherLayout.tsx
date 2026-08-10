@@ -53,7 +53,7 @@ export default function TeacherLayout() {
     <div className="min-h-screen bg-slate-50 pb-20">
       <Outlet />
 
-      <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 z-40">
+      <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 z-40 pb-safe">
         <div className="max-w-md mx-auto grid grid-cols-4">
           {TABS.map((t) => (
             <NavLink

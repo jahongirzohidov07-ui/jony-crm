@@ -39,11 +39,18 @@ import { PayImportTab } from "../components/PayImport";
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup";
 
 /**
- * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar va
- * oylik hisob-kitob. Foyda-zarar va xarajatlar unga ko'rinmaydi.
+ * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar,
+ * oylik hisob-kitob, PUL OQIMI va XARAJATLAR (2026-08-10, Jahongir:
+ * "administratorlarga cashflow bo'limini ochib ber va xarajatlarni
+ * kirgizishni ham ochib ber").
+ *
+ * Foyda-zarar, zararsizlik, budjet va oyliklar unga ATAYLAB
+ * ko'rinmaydi — ular boshqa darajadagi ma'lumot.
  */
 const CASH_TABS: { key: Tab; label: string }[] = [
   { key: "debtors", label: "Qarzdorlar" },
+  { key: "cashflow", label: "Pul oqimi" },
+  { key: "expenses", label: "Xarajatlar" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
 

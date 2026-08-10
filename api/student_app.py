@@ -122,6 +122,7 @@ def student_home(db: Session = Depends(get_db),
 
     return {
         "name": s.full_name,
+        "photo": s.photo,
         "group": g.name if g else None,
         "level_label": (g.level if g else None) or s.level,
         "status": s.status,
@@ -397,6 +398,140 @@ def vocab_stats(db: Session = Depends(get_db),
 # =====================================================================
 #  REYTING
 # =====================================================================
+# =====================================================================
+#  O'QUVCHI PROFILI (2026-08-10, Jahongir: "eng yuqorida ism familiyasi,
+#  alohida rasmi uchun joy bo'lsin, faqat ism/familiya/otchestvani
+#  alohida o'zgartirsin, boshqa har xil narsa yozib bo'lmasin")
+# =====================================================================
+
+import re as _re
+
+# Ism/familiya/otasining ismi uchun QAT'IY qolip: faqat harflar
+# (lotin, kirill, o'zbek belgilar), ichida chiziqcha yoki apostrof
+# bo'lishi mumkin. Raqam, emoji, probel, boshqa belgilar - YO'Q.
+# Shu tufayli "ism" maydoniga laqab/reklama/har xil narsa yozib
+# bo'lmaydi.
+_NAME_RE = _re.compile(
+    r"^[A-Za-z\u0400-\u04FF\u2018\u2019'ʻ`-]{2,30}$")
+
+
+def _clean_name(raw: str, label: str, required: bool = True):
+    v = (raw or "").strip()
+    if not v:
+        if required:
+            raise HTTPException(400, f"{label} kiritilishi shart")
+        return None
+    if " " in v:
+        raise HTTPException(
+            400, f"{label} bitta so'z bo'lishi kerak (probelsiz)")
+    if not _NAME_RE.match(v):
+        raise HTTPException(
+            400, f"{label} faqat harflardan iborat bo'lsin - raqam va "
+                 f"boshqa belgilar mumkin emas")
+    # Bosh harfini katta qilamiz, qolganiga tegmaymiz (O'ktamjon,
+    # Abdul-Aziz kabi ismlar buzilmasin)
+    return v[0].upper() + v[1:]
+
+
+@router.get("/api/student/profile")
+def student_profile(db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    g = db.query(models.Group).get(s.group_id) if s.group_id else None
+    return {
+        "full_name": s.full_name,
+        "first_name": s.first_name,
+        "last_name": s.last_name,
+        "middle_name": s.middle_name,
+        "photo": s.photo,
+        "birth_date": s.birth_date.isoformat() if s.birth_date else None,
+        "address": s.address,
+        "school": s.school,
+        "school_grade": s.school_grade,
+        "phone": s.phone,          # faqat ko'rsatish uchun (login)
+        "group": g.name if g else None,
+    }
+
+
+@router.put("/api/student/profile")
+def student_profile_save(payload: schemas.StudentProfileIn,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    """O'quvchi o'z ma'lumotlarini to'ldiradi.
+
+    Ism/familiya/otasining ismi QAT'IY tekshiruvdan o'tadi va
+    full_name shulardan yig'iladi - xodimlar bazasida ham darhol
+    yangi ism ko'rinadi. O'zgarish auditga yoziladi - kim qachon
+    o'zgartirgani izsiz qolmaydi. Telefon BU YERDAN o'zgarmaydi
+    (u login)."""
+    s = _me(db, user)
+
+    first = _clean_name(payload.first_name, "Ism")
+    last = _clean_name(payload.last_name, "Familiya")
+    middle = _clean_name(payload.middle_name, "Otasining ismi",
+                         required=False)
+
+    old_name = s.full_name
+    s.first_name, s.last_name, s.middle_name = first, last, middle
+    s.full_name = f"{first} {last}"
+
+    if payload.birth_date is not None:
+        if payload.birth_date > date.today():
+            raise HTTPException(400, "Tug'ilgan sana kelajakda bo'lmaydi")
+        if payload.birth_date.year < 1950:
+            raise HTTPException(400, "Tug'ilgan sanani tekshiring")
+        s.birth_date = payload.birth_date
+    for f in ("address", "school", "school_grade"):
+        v = getattr(payload, f)
+        if v is not None:
+            setattr(s, f, v.strip()[:200] or None)
+
+    # Kirish hisobidagi ism ham yangilansin - salomlashish va
+    # xodimlar ro'yxatida bir xil ko'rinsin
+    if s.user_id:
+        u = db.query(models.User).get(s.user_id)
+        if u:
+            u.full_name = s.full_name
+    db.commit()
+
+    if old_name != s.full_name:
+        try:
+            audit.log(db, user, entity="student", action="update",
+                      entity_id=s.id, entity_label=s.full_name,
+                      field="F.I.Sh.", old_value=old_name,
+                      new_value=f"{last} {first}"
+                                + (f" {middle}" if middle else ""),
+                      note="O'quvchi ilovadan o'zi o'zgartirdi",
+                      branch_id=s.branch_id, commit=True)
+        except Exception:
+            db.rollback()
+    return student_profile(db=db, user=user)
+
+
+@router.put("/api/student/photo")
+def student_photo_save(payload: schemas.StudentPhotoIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.STUDENT))):
+    """Avatar: kichraytirilgan rasm data URL ko'rinishida.
+
+    Chegara ~300KB - mijoz rasmni saqlashdan avval o'zi 512px ga
+    kichraytiradi. Katta fayl kelsa rad etiladi (baza shishmasin)."""
+    s = _me(db, user)
+    ph = payload.photo
+    if ph:
+        if not ph.startswith(("data:image/jpeg;base64,",
+                              "data:image/png;base64,",
+                              "data:image/webp;base64,")):
+            raise HTTPException(400, "Faqat rasm yuklash mumkin")
+        if len(ph) > 400_000:
+            raise HTTPException(400, "Rasm juda katta - qayta urining")
+        s.photo = ph
+    else:
+        s.photo = None
+    db.commit()
+    return {"ok": True, "photo": bool(s.photo)}
+
+
 # =====================================================================
 #  GRAMMAR MASHQLARI (2026-08-10, Jahongir: "Grammar har bir ingliz
 #  tilidagi mavzuga xilma-xil mashqlar bo'lsin")

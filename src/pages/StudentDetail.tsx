@@ -94,14 +94,31 @@ function ProfileCard({
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-5">
       <div className="flex items-start gap-3 mb-4">
-        <div className="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-semibold shrink-0">
-          {initial}
+        {/* O'quvchi ilovadan qo'ygan rasm shu yerda ham ko'rinadi
+            (2026-08-10) - bo'lmasa bosh harfi */}
+        <div className="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-semibold shrink-0 overflow-hidden">
+          {(student as any).photo ? (
+            <img
+              src={(student as any).photo}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            initial
+          )}
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-lg font-semibold text-slate-900 leading-tight">
             {student.full_name}
           </h1>
-          <p className="text-xs text-slate-400">ID: {student.id}</p>
+          <p className="text-xs text-slate-400">
+            ID: {student.id}
+            {(student as any).middle_name
+              ? ` · ${(student as any).last_name || ""} ${
+                  (student as any).first_name || ""
+                } ${(student as any).middle_name}`
+              : ""}
+          </p>
         </div>
       </div>
 

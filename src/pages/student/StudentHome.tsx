@@ -47,11 +47,31 @@ export default function StudentHome() {
             <BrandIcon size={18} className="rounded-md" />
             <span className="text-sm font-medium">Jony Student</span>
           </div>
-          <h1 className="text-xl font-semibold">{d.name}</h1>
-          <p className="text-sm opacity-90 mt-0.5">
-            {d.group || "guruh biriktirilmagan"}
-            {d.level_label ? ` · ${d.level_label}` : ""}
-          </p>
+          {/* ENG TEPADA: rasm + ism (2026-08-10, Jahongir). Bosilsa
+              profil ochiladi - rasm qo'yish/ism o'zgartirish o'sha
+              yerda. */}
+          <Link to="/student/profile" className="flex items-center gap-3">
+            <div className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/40 overflow-hidden flex items-center justify-center shrink-0">
+              {(d as any).photo ? (
+                <img
+                  src={(d as any).photo}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-xl font-bold">
+                  {d.name?.charAt(0) || "?"}
+                </span>
+              )}
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-xl font-semibold truncate">{d.name}</h1>
+              <p className="text-sm opacity-90 mt-0.5">
+                {d.group || "guruh biriktirilmagan"}
+                {d.level_label ? ` · ${d.level_label}` : ""}
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
 

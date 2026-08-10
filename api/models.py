@@ -270,6 +270,15 @@ class Student(Base):
     # o'zgarsa ham bu o'zgarmaydi - tarix shunga bog'lanadi.
     public_id = Column(String, unique=True, index=True)
     full_name = Column(String, nullable=False)
+    # O'quvchi PROFILIDAN kiritiladigan alohida qismlar (2026-08-10,
+    # Jahongir: "faqat ism, familiya, otchestva alohida o'zgartirsin").
+    # full_name shulardan yig'iladi - xodimlar bazasida ham darhol
+    # ko'rinadi. photo - kichraytirilgan avatar (data URL, ~50KB);
+    # serverless muhitda fayl diski yo'q, shuning uchun bazada.
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    middle_name = Column(String, nullable=True)
+    photo = Column(Text, nullable=True)
     phone = Column(String, nullable=True)
     parent_phone = Column(String, nullable=True)
     birth_date = Column(Date, nullable=True)

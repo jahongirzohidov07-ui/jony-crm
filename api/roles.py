@@ -3566,19 +3566,37 @@ SALARY_EDIT = SALARY_VIEW_ALL
 # HAMMAGA, faqat ASOSCHI va FILIAL RAHBARI bundan mustasno: ular
 # tizimda to'liq huquqqa ega, ularni faqat asoschi tayinlaydi. Aks
 # holda HR o'ziga filial rahbari huquqini berib olishi mumkin bo'lardi.
+# DIQQAT: "Ota-ona" va "O'quvchi" ATAYLAB YO'Q (2026-08-10, Jahongir:
+# "ota-ona yoki o'quvchi degan rol ochib o'tirilmasin ... bu yerda
+# ota-ona o'quvchi degan rollar keremas, olib tashla").
+#
+# Sabab: ular XODIM emas — hisoblari QO'LDA ochilmaydi:
+#   - o'quvchi: o'quvchi kartasi yaratilishi bilan hisob AVTOMAT
+#     ochiladi (login = telefon raqami, parol = jonyjony);
+#   - ota-ona: umuman hisob ochilmaydi, maxsus havola orqali kiradi
+#     (parent_token), u ham o'quvchi kartasida avtomat turadi.
+# Shuning uchun bu ikkisi xodim rollari ro'yxatida ko'rinmasligi
+# kerak — aks holda HR adashib "ota-ona" hisobini ochib qo'yardi.
 HR_ASSIGNABLE_ROLES = [
     TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
     SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
     SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
     HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
-    PARENT, STUDENT,
 ]
+
+# Xodim sifatida QO'LDA tayinlanadigan rollar (ota-ona/o'quvchisiz).
+# Xodim kartasidagi rol tanlagichlari shu ro'yxatdan chiqadi.
+STAFF_ASSIGNABLE_ROLES = [r for r in ALL_ROLES
+                          if r not in (PARENT, STUDENT)]
 
 
 # Filial rahbari o'z filialida shu rollarni tayinlay oladi
+# Ota-ona/o'quvchi bu yerda ham YO'Q (2026-08-10) — yuqoridagi
+# HR_ASSIGNABLE_ROLES izohiga qarang: ular xodim emas, hisobi
+# qo'lda ochilmaydi.
 BRANCH_ASSIGNABLE_ROLES = [
     SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER,
-    EXAMINER, PARENT, STUDENT,
+    EXAMINER,
 ]
 
 
@@ -4600,6 +4618,12 @@ PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER]
 PASSWORD_MIN = 8
 PASSWORD_RULE_TEXT = ("Parol kamida 8 belgi bo'lib, ichida harf ham, "
                       "raqam ham bo'lishi kerak")
+
+
+# O'quvchi hisobi avtomat ochilganda beriladigan parol (2026-08-10).
+# Login sahifasida shu parol bilan kirgan odamga "parolni
+# o'zgartiring" deb eslatma chiqadi (Login.tsx).
+DEFAULT_PASSWORD = "jonyjony"
 
 
 def password_ok(pw: str) -> bool:

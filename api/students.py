@@ -282,6 +282,12 @@ def create_student(
               entity_label=s.full_name, branch_id=s.branch_id,
               new_value=s.full_name)
     db.commit()
+    # AVTOMAT KIRISH HISOBI (2026-08-10, Jahongir so'radi): o'quvchi
+    # kiritilishi bilan unga hisob ochiladi — login telefon raqami,
+    # parol jonyjony. Alohida "hisob ochish" bosqichi qolmadi.
+    # Ota-onaga esa hisob umuman ochilmaydi: u maxsus havola
+    # (parent_token) orqali kiradi, u ham shu yerda avtomat turadi.
+    _ensure_student_account(db, s)
     db.refresh(s)
     return to_student_out(db, s)
 
@@ -327,6 +333,9 @@ def update_student(
     s.updated_at = datetime.utcnow()
     _sync_student_left_date(s)
     db.commit()
+    # Hisobi hali yo'q bo'lsa (masalan avval telefon kiritilmagan
+    # edi) — endi ochib qo'yamiz. Hisobi bori qayta ochilmaydi.
+    _ensure_student_account(db, s)
     db.refresh(s)
     return to_student_out(db, s)
 

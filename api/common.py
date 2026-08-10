@@ -534,6 +534,48 @@ def _user_branch_ids(db, user: models.User) -> list:
     user._all_branch_ids = ids
     return ids
 
+def _ensure_student_account(db, s) -> str | None:
+    """O'quvchiga kirish hisobini AVTOMAT ochadi (2026-08-10).
+
+    Jahongir: "o'quvchi kiritildimi avtomat unga o'quvchi maqomi va
+    akkaunti ochilsin, nomeri login paroli esa jonyjony bo'lsin."
+
+    Login = telefon raqami (faqat raqamlar), parol = jonyjony.
+    Qaytaradi: yaratilgan login yoki None.
+
+    Idempotent — hisobi bor o'quvchiga ikkinchi marta ochmaydi.
+    Telefon raqami bo'lmasa yoki band bo'lsa JIMGINA o'tkazib
+    yuboriladi: o'quvchi kartasi baribir yaratilishi kerak, hisob
+    esa keyin telefon kiritilganda ochiladi (bu funksiya
+    tahrirlashda ham chaqiriladi)."""
+    from auth import hash_password
+    if not s or s.user_id:
+        return None
+    raw = (s.phone or s.parent_phone or "")
+    digits = "".join(ch for ch in raw if ch.isdigit())
+    if len(digits) < 7:
+        return None
+    if db.query(models.User).filter(models.User.username == digits).first():
+        return None
+    try:
+        u = models.User(
+            username=digits,
+            password_hash=hash_password(roles.DEFAULT_PASSWORD),
+            full_name=s.full_name,
+            role=roles.STUDENT,
+            branch_id=s.branch_id,
+            is_active=1,
+        )
+        db.add(u)
+        db.flush()
+        s.user_id = u.id
+        db.commit()
+        return digits
+    except Exception:
+        db.rollback()
+        return None
+
+
 def _branch_in(db, user: models.User, column):
     """RO'YXAT filtri uchun shart: yozuv xodimning FILIALLARIDAN
     birida bo'lsin.
@@ -3746,6 +3788,7 @@ __all__ = [
     "_ensure_month_charges",
     "_ensure_new_columns",
     "_ensure_public_id",
+    "_ensure_student_account",
     "_ensure_staff_date_tasks",
     "_ensure_teacher_card",
     "_exam_order_form",

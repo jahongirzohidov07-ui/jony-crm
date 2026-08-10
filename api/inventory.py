@@ -443,7 +443,7 @@ def book_orders_list(status: str | None = None,
                      user=Depends(require_role(*roles.BOOK_ORDER_MANAGE))):
     q = db.query(models.BookOrder)
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
-        q = q.filter(models.BookOrder.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.BookOrder.branch_id))
     if status:
         q = q.filter(models.BookOrder.status == status)
     rows = [_book_out(db, o) for o in

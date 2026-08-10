@@ -534,6 +534,23 @@ def _user_branch_ids(db, user: models.User) -> list:
     user._all_branch_ids = ids
     return ids
 
+def _branch_in(db, user: models.User, column):
+    """RO'YXAT filtri uchun shart: yozuv xodimning FILIALLARIDAN
+    birida bo'lsin.
+
+    NEGA (2026-08-10): tizimda o'nlab joyda
+    `X.branch_id == user.branch_id` yozilgan edi — ya'ni faqat ASOSIY
+    filial. Ikki filialda ishlaydigan xodim ikkinchi filialdagi
+    yozuvlarni umuman ko'rmasdi. Eng og'rig'i examinerlarda chiqdi:
+    ustoz yuborgan imtihon so'rovi RO'YXATDA ko'rinmasdi (garchi
+    qabul qilish huquqi bo'lsa ham) — Jahongir "qabul qilinishi kerak
+    bo'lgan imtihonlar ko'rinmayapti" deb xabar berdi.
+
+    Endi hamma joyda BITTA qoida: xodimning barcha filiallari."""
+    ids = _user_branch_ids(db, user) or [-1]
+    return column.in_(ids)
+
+
 def _user_roles(db, user: models.User) -> list:
     """Xodimning BARCHA lavozimlari: asosiysi + qo'shimchalari.
 
@@ -795,7 +812,7 @@ def _income_by_method(db: Session, user, start: date, end: date,
         models.Payment.created_at <= _utc_window(start, end)[1],
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.Student.branch_id == user.branch_id)
+        q = q.filter(_branch_in(db, user, models.Student.branch_id))
     elif branch_id:
         q = q.filter(models.Student.branch_id == branch_id)
 
@@ -834,7 +851,7 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
 
     gq = db.query(models.Group)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        gq = gq.filter(models.Group.branch_id == user.branch_id)
+        gq = gq.filter(_branch_in(db, user, models.Group.branch_id))
     elif branch_id:
         gq = gq.filter(models.Group.branch_id == branch_id)
     groups = {g.id: g for g in gq.all()}
@@ -2161,7 +2178,7 @@ def _my_sales_cards(db: Session, user: models.User) -> list:
     mine = db.query(models.Lead).filter(
         models.Lead.created_at >= d0)
     if user.branch_id:
-        mine = mine.filter(models.Lead.branch_id == user.branch_id)
+        mine = mine.filter(_branch_in(db, user, models.Lead.branch_id))
     leads = mine.all()
     converted = [l for l in leads if l.stage == "converted"]
 
@@ -3837,6 +3854,7 @@ __all__ = [
     "_teacher_test_avg",
     "_time_to_min",
     "_trial_attendance",
+    "_branch_in",
     "_user_branch_ids",
     "_user_roles",
     "_utc_window",

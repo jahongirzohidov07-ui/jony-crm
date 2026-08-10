@@ -486,8 +486,16 @@ def exam_orders_queue(status: str | None = None,
 
     Examiner boshlig'i va asoschi hammasini ko'radi."""
     q = db.query(models.ExamOrder)
+    # IKKI FILIALLI EXAMINER (2026-08-10, Jahongir: "qabul qilinishi
+    # kerak bo'lgan imtihonlar ko'rinmayapti deyabdi examinerlar").
+    # Ilgari faqat ASOSIY filial tekshirilardi — ikki filialda
+    # ishlaydigan examiner ikkinchi filialdagi so'rovni umuman
+    # ko'rmasdi, ro'yxat bo'sh chiqardi. Qabul qilish (accept/reject)
+    # allaqachon barcha filiallarni hisobga olardi, RO'YXAT esa yo'q —
+    # ya'ni examiner qabul qila oladigan so'rovni ko'ra olmasdi.
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.ExamOrder.branch_id == user.branch_id)
+        q = q.filter(models.ExamOrder.branch_id.in_(
+            _user_branch_ids(db, user) or [-1]))
     if status:
         q = q.filter(models.ExamOrder.status == status)
     rows = q.order_by(models.ExamOrder.date, models.ExamOrder.id).limit(

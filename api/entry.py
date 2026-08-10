@@ -1840,7 +1840,7 @@ def book_report_v2(db: Session = Depends(get_db),
     q = db.query(models.Consumable).filter(
         models.Consumable.kind.in_(_BOOK_KINDS))
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
-        q = q.filter(models.Consumable.branch_id == user.branch_id)
+        q = q.filter(M._branch_in(db, user, models.Consumable.branch_id))
     bnames = {b.id: b.name for b in db.query(models.Branch).all()}
     rows = q.all()
     names = sorted({c.name for c in rows})
@@ -2521,7 +2521,7 @@ def payments_of_month(year: int | None = None, month: int | None = None,
                  models.Payment.created_at >= d0,
                  models.Payment.created_at <= d1))
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(models.Student.branch_id == user.branch_id)
+        q = q.filter(M._branch_in(db, user, models.Student.branch_id))
     elif branch_id:
         q = q.filter(models.Student.branch_id == branch_id)
 

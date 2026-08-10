@@ -1878,7 +1878,7 @@ def my_alerts(db: Session = Depends(get_db),
             models.Student.frozen_until.isnot(None),
             models.Student.frozen_until <= today)
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            fq = fq.filter(models.Student.branch_id == user.branch_id)
+            fq = fq.filter(_branch_in(db, user, models.Student.branch_id))
         back = fq.all()
         for s in back[:5]:
             items.append({
@@ -1903,7 +1903,7 @@ def my_alerts(db: Session = Depends(get_db),
         sq = db.query(models.Student).filter(
             models.Student.status == "active")
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            sq = sq.filter(models.Student.branch_id == user.branch_id)
+            sq = sq.filter(_branch_in(db, user, models.Student.branch_id))
         debtors = sum(1 for s in sq.all() if (bal.get(s.id, 0) or 0) < 0)
         if debtors:
             items.append({

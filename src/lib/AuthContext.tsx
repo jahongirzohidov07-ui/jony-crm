@@ -53,7 +53,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Keshdagi ism/rol eskirib qolmasin: har ochilishda serverdan
   // yangilab olamiz (masalan, ism serverda o'zgartirilgan bo'lsa).
-  useEffect(() => {
+  //
+  // MUHIM (2026-08-11, Jahongir: "2 filialli xodim filialdan
+  // filialga o'ta olmayapti"): bu so'rov avval FAQAT ilova birinchi
+  // ochilganda ketardi. Login qilingan zahoti esa foydalanuvchida
+  // branches/roles ro'yxati BO'LMASDI - natijada filial va lavozim
+  // tanlagichlari sahifa qo'lda yangilanmaguncha umuman chiqmasdi
+  // (PWA/APK da hech kim yangilamaydi). Endi refreshMe() login
+  // tugashi bilan ham chaqiriladi.
+  const refreshMe = () => {
     if (!getToken()) return;
     api
       .get<{
@@ -88,7 +96,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         );
       })
       .catch(() => {});
-  }, []);
+  };
+
+  useEffect(refreshMe, []);
 
   async function login(
     username: string,
@@ -112,6 +122,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         "jony_crm_user",
         JSON.stringify(u),
       );
+      // Filial/lavozim tanlagichlari darhol chiqishi uchun to'liq
+      // profilni fon rejimida yuklaymiz (kutmaymiz - yo'naltirish
+      // login javobidagi rol bilan ketaveradi)
+      setTimeout(refreshMe, 0);
       setUser(u);
       // Kirgan odamning roli qaytariladi — chaqirgan joy (Login.tsx)
       // qayerga yo'naltirishni shundan biladi (o'quvchi -> /student).

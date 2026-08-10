@@ -52,21 +52,43 @@ export default function StudentLayout() {
 
       <nav className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 z-40 pb-safe">
         <div className="max-w-md mx-auto grid grid-cols-4">
-          {TABS.map((t) => (
-            <NavLink
-              key={t.to}
-              to={t.to}
-              end={t.end}
-              className={({ isActive }) =>
-                `flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition ${
-                  isActive ? "text-brand-600" : "text-slate-400"
-                }`
-              }
-            >
-              <t.icon size={20} />
-              {t.label}
-            </NavLink>
-          ))}
+          {TABS.map((t, i) => {
+            const active = [
+              "text-sky-600 bg-sky-50",
+              "text-emerald-600 bg-emerald-50",
+              "text-amber-600 bg-amber-50",
+              "text-violet-600 bg-violet-50",
+            ][i % 4];
+            return (
+              <NavLink
+                key={t.to}
+                to={t.to}
+                end={t.end}
+                className="flex flex-col items-center gap-0.5 py-2 text-[11px] font-medium"
+              >
+                {({ isActive }) => (
+                  <>
+                    <span
+                      className={`flex items-center justify-center w-12 h-7 rounded-full transition ${
+                        isActive ? active : "text-slate-400"
+                      }`}
+                    >
+                      <t.icon size={20} />
+                    </span>
+                    <span
+                      className={
+                        isActive
+                          ? active.split(" ")[0] + " font-semibold"
+                          : "text-slate-400"
+                      }
+                    >
+                      {t.label}
+                    </span>
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </div>
       </nav>
     </div>

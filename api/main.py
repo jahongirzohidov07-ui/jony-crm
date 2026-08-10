@@ -175,6 +175,15 @@ try:
 except Exception:
     pass
 
+# 4 ko'nikma yangi mashq turlari (idempotent)
+try:
+    from sqlalchemy.orm import Session as _VS9
+    from practice_seed import seed_practice
+    with _VS9(engine) as _db9:
+        seed_practice(_db9)
+except Exception:
+    pass
+
 # Reading matnlari (idempotent)
 try:
     from sqlalchemy.orm import Session as _VS8

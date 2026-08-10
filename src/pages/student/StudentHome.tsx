@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
+import { CoinIcon } from "../../components/CoinIcon";
 import { Lock as LockIcon, Bell,
-  ChevronDown, ChevronRight, Coins, Flame, Sparkles, Trophy,
+  ChevronDown, ChevronRight, Flame, Sparkles, Trophy,
   } from "lucide-react";
 import type { ReactNode } from "react";
 import { api } from "../../lib/api";
@@ -211,7 +212,7 @@ export default function StudentHome() {
         {/* --- Statistika --- */}
         <div className="grid grid-cols-2 gap-3">
           <Stat
-            icon={<Coins size={16} />}
+            icon={<CoinIcon size={18} />}
             tone="bg-amber-50 text-amber-600"
             value={fmtNum(d.gamification.coins)}
             label="Coin"

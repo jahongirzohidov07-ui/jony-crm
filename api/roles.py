@@ -127,6 +127,21 @@ USER_ADMIN = [FOUNDER]
 # Moliya (foyda-zarar, xarajat, ish haqi).
 FINANCE_ACCESS = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
 
+# PUL OQIMI VA XARAJATLAR — ADMINISTRATORGA HAM (2026-08-10, Jahongir:
+# "administratorlarga cashflow bo'limini ochib ber va xarajatlarni
+# kirgizishni ham ochib ber").
+#
+# Administrator kunlik kassa bilan ishlaydi — kirim-chiqimni u
+# ko'radi va mayda xarajatni (masalan suv, kanselyariya) o'zi
+# kiritadi. Foyda-zarar, budjet va oyliklar esa unga OCHILMADI —
+# ular boshqacha darajadagi ma'lumot.
+CASHFLOW_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
+# Xarajat KIRITISH va tahrirlash. O'CHIRISH ataylab bunga kirmaydi
+# (pastdagi EXPENSE_DELETE) — kiritilgan xarajatni o'chirish pul
+# hisobotini o'zgartiradi, shuning uchun moliyada qoladi.
+EXPENSE_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
+EXPENSE_DELETE = FINANCE_ACCESS
+
 # Kassa: pul qabul qilish, qarzdorlar bilan ishlash, to'lov foizi.
 # Administrator va sotuv menejeri shu ishni qiladi — lekin FOYDANI
 # ko'rmaydi. Shuning uchun bu FINANCE_ACCESS dan alohida turadi.

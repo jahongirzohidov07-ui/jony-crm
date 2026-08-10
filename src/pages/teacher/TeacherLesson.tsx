@@ -23,9 +23,10 @@ import {
  * hisobi bor. Ikkinchi nusxa yozilsa, shulardan biri esdan chiqib
  * ketishi mumkin edi.
  *
- * "Hammasi keldi" tugmasi ataylab bor: 15 kishilik guruhda odatda
- * 1-2 kishi kelmaydi — ustoz bir bosib hammasini belgilaydi, keyin
- * kelmaganini o'zgartiradi. Bu darsdagi vaqtni tejaydi.
+ * "Hammasi keldi" tugmasi 2026-08-10 da OLIB TASHLANDI (Jahongir
+ * so'radi): har bir o'quvchi alohida belgilanishi kerak, chunki
+ * yo'qlama ustoz oyligining va o'quvchi davomat foizining asosi —
+ * bir bosishda hammasini "keldi" qilish nazoratni yo'qotardi.
  */
 export default function TeacherLesson() {
   const { id } = useParams();
@@ -67,12 +68,6 @@ export default function TeacherLesson() {
         return next;
       }),
     );
-    setDirty(true);
-  }
-
-  function markAll(v: number) {
-    if (!d?.editable) return;
-    setRows((rs) => rs.map((r) => ({ ...r, present: v })));
     setDirty(true);
   }
 
@@ -135,16 +130,14 @@ export default function TeacherLesson() {
         </div>
       )}
 
+      {/* "Hammasi keldi" tugmasi OLIB TASHLANDI (2026-08-10, Jahongir:
+          "ustozlarga hamma keldi belgilash yo'q bo'lsin") — har bir
+          o'quvchi alohida belgilanadi, chunki yo'qlama ustoz
+          oyligining va o'quvchi davomat foizining asosi. */}
       {d.editable && (
-        <div className="flex items-center gap-2 mb-4">
-          <button
-            onClick={() => markAll(1)}
-            className="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium active:bg-emerald-700"
-          >
-            Hammasi keldi
-          </button>
-          <span className="text-xs text-slate-400 shrink-0 px-1">
-            {marked}/{rows.length}
+        <div className="flex items-center justify-end mb-3">
+          <span className="text-xs text-slate-400">
+            {marked}/{rows.length} belgilandi
           </span>
         </div>
       )}
@@ -192,7 +185,6 @@ export default function TeacherLesson() {
                 </button>
               ))}
               <button
-                disabled={s.present === 0}
                 onClick={() =>
                   setOpenExtra(openExtra === s.id ? null : s.id)
                 }
@@ -216,7 +208,7 @@ export default function TeacherLesson() {
               </button>
             </div>
 
-            {openExtra === s.id && s.present !== 0 && (
+            {openExtra === s.id && (
               <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
                 <div>
                   <p className="text-[11px] text-slate-500 mb-1.5">
@@ -226,7 +218,7 @@ export default function TeacherLesson() {
                     {HOMEWORK_OPTS.map((o) => (
                       <button
                         key={o.v}
-                        disabled={!d.editable}
+                        disabled={!d.editable || s.present === 0}
                         onClick={() =>
                           setField(s.id, {
                             homework: s.homework === o.v ? null : o.v,
@@ -246,12 +238,17 @@ export default function TeacherLesson() {
                 <div>
                   <p className="text-[11px] text-slate-500 mb-1.5">
                     Dars bahosi (coin beriladi)
+                    {s.present === 0 && (
+                      <span className="text-red-500">
+                        {" "}— kelmaganga qo'yilmaydi
+                      </span>
+                    )}
                   </p>
                   <div className="flex gap-1.5">
                     {[1, 2, 3, 4, 5].map((n) => (
                       <button
                         key={n}
-                        disabled={!d.editable}
+                        disabled={!d.editable || s.present === 0}
                         onClick={() =>
                           setField(s.id, { grade: s.grade === n ? null : n })
                         }

@@ -49,7 +49,7 @@ def list_expenses(
     year: Optional[int] = None,
     month: Optional[int] = None,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+    user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
     """Xarajatlar ro'yxati. year/month berilsa - o'sha oy uchun."""
     q = scope_to_branch(db.query(models.Expense), models.Expense, user)
@@ -62,7 +62,7 @@ def list_expenses(
 def create_expense(
     payload: schemas.ExpenseCreate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+    user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
     if payload.category not in roles.EXPENSE_CATEGORIES:
         raise HTTPException(400, "Noto'g'ri xarajat turi")
@@ -93,7 +93,7 @@ def update_expense(
     expense_id: int,
     payload: schemas.ExpenseUpdate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+    user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
     data = payload.model_dump(exclude_unset=True)
@@ -115,7 +115,7 @@ def update_expense(
 def delete_expense(
     expense_id: int,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
+    user: models.User = Depends(require_role(*roles.EXPENSE_DELETE)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
     audit.log(db, user, entity="expense", action="delete", entity_id=exp.id,

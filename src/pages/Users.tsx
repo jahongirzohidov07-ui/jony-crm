@@ -133,9 +133,9 @@ function UserForm({
   }
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-        <div className="flex items-center justify-between mb-4">
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4 py-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[92vh] flex flex-col">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
           <h2 className="font-semibold text-slate-900">
             {isEdit ? "Xodimni tahrirlash" : "Yangi xodim"}
           </h2>
@@ -143,7 +143,7 @@ function UserForm({
             <X size={18} />
           </button>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 px-6 flex-1 overflow-y-auto">
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">F.I.Sh. *</label>
             <input
@@ -344,11 +344,23 @@ function UserForm({
           )}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
+          <div className="h-1" />
+        </div>
 
+        {/* Tugmalar HAR DOIM ko'rinadi — forma qanchalik uzun
+            bo'lmasin, pastda turadi. */}
+        <div className="flex items-center gap-2 px-6 py-4 border-t border-slate-100 shrink-0">
+          <button
+            onClick={onCancel}
+            disabled={saving}
+            className="flex-1 border border-slate-200 text-slate-600 rounded-lg py-2.5 text-sm font-medium disabled:opacity-60"
+          >
+            Bekor qilish
+          </button>
           <button
             onClick={submit}
             disabled={saving}
-            className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium mt-2 disabled:opacity-60"
+            className="flex-[2] bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-60"
           >
             {saving ? "Saqlanmoqda..." : submitLabel}
           </button>

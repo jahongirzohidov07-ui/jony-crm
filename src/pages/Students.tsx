@@ -109,8 +109,8 @@ function StudentModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4 py-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 max-h-[92vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-slate-900">
             {editing ? "Talabani tahrirlash" : "Yangi talaba qo'shish"}
@@ -601,7 +601,7 @@ function ImportStudentsModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4 py-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-auto p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-slate-900">

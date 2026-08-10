@@ -51,7 +51,22 @@ export default function TeacherLesson() {
 
   function setField(sid: number, patch: Partial<LessonStudent>) {
     if (!d?.editable) return;
-    setRows((rs) => rs.map((r) => (r.id === sid ? { ...r, ...patch } : r)));
+    setRows((rs) =>
+      rs.map((r) => {
+        if (r.id !== sid) return r;
+        const next = { ...r, ...patch };
+        // KELMAGAN O'QUVCHIGA BAHO YO'Q (2026-08-10, Jahongir).
+        // "Yo'q" bosilishi bilan bahosi va uy vazifasi tozalanadi —
+        // server ham buni rad etadi, lekin ekranda ham darhol
+        // ko'rinib tursin (ustoz keyin "nega saqlanmadi" deb
+        // o'ylamasin).
+        if (patch.present === 0) {
+          next.grade = null;
+          next.homework = null;
+        }
+        return next;
+      }),
+    );
     setDirty(true);
   }
 
@@ -177,15 +192,21 @@ export default function TeacherLesson() {
                 </button>
               ))}
               <button
+                disabled={s.present === 0}
                 onClick={() =>
                   setOpenExtra(openExtra === s.id ? null : s.id)
                 }
-                className={`w-11 rounded-lg border text-xs transition ${
+                className={`w-11 rounded-lg border text-xs transition disabled:opacity-30 ${
                   s.homework !== null || s.grade !== null
                     ? "border-brand-300 bg-brand-50 text-brand-600"
                     : "border-slate-200 text-slate-400"
                 }`}
                 aria-label="Uy vazifasi va baho"
+                title={
+                  s.present === 0
+                    ? "Kelmagan o'quvchiga baho qo'yilmaydi"
+                    : "Uy vazifasi va baho"
+                }
               >
                 {s.grade !== null ? (
                   <span className="font-bold">{s.grade}</span>
@@ -195,7 +216,7 @@ export default function TeacherLesson() {
               </button>
             </div>
 
-            {openExtra === s.id && (
+            {openExtra === s.id && s.present !== 0 && (
               <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
                 <div>
                   <p className="text-[11px] text-slate-500 mb-1.5">
@@ -259,7 +280,8 @@ export default function TeacherLesson() {
         <p className="text-[11px] text-slate-400 flex items-start gap-1.5 mt-4 px-1">
           <Info size={11} className="mt-0.5 shrink-0" />
           Belgilanmagan o'quvchi oylik hisobiga kirmaydi. Kech kelgan
-          ham "kelgan" hisoblanadi.
+          ham "kelgan" hisoblanadi. Kelmagan o'quvchiga baho va coin
+          qo'yilmaydi.
         </p>
       )}
 

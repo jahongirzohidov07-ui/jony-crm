@@ -279,6 +279,25 @@ def save_attendance(
             existing[m.student_id] = new_row
     db.flush()
 
+    # KELMAGAN BO'LIB QOLGAN O'QUVCHINING BAHOSI VA COINI OLINADI
+    # (2026-08-10, Jahongir: "kelmagan o'quvchilarga baho qo'yib coin
+    # qo'yib bo'lyabdi, qo'yib bo'lmasin").
+    #
+    # Yangi baho qo'yishda tekshiruv allaqachon bor edi (entry.py),
+    # LEKIN teshik boshqa yerda edi: ustoz avval "keldi" deb belgilab
+    # baho qo'yadi, keyin "yo'q"ga o'zgartiradi — baho ham, coin ham
+    # bazada qolib ketardi. Endi belgi "kelmadi"ga o'zgarganda o'sha
+    # darsdagi bahosi va u bergan coin AVTOMAT qaytariladi.
+    if newly_absent:
+        for sid in newly_absent:
+            gr = (db.query(models.DailyGrade)
+                  .filter(models.DailyGrade.lesson_id == lesson_id,
+                          models.DailyGrade.student_id == sid).first())
+            if gr:
+                _drop_coin_entry(db, "daily", gr.id)
+                db.delete(gr)
+        db.flush()
+
     # Hamma belgi olib tashlangan bo'lsa dars "reja"ga qaytadi —
     # yoqlamasiz dars o'tilgan hisoblanmaydi va pul keltirmaydi
     left = db.query(models.Attendance).filter(

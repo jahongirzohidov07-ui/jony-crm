@@ -24,13 +24,13 @@ type Any = any;
  */
 export default function TeacherSession() {
   const [d, setD] = useState<Any>(null);
-  const [groups, setGroups] = useState<Any[]>([]);
+  const [opts, setOpts] = useState<Any>(null);
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const [f, setF] = useState({
     group_id: "",
     start_time: "",
-    end_time: "",
+    hours: 0,
     students_count: "",
   });
 
@@ -44,14 +44,19 @@ export default function TeacherSession() {
 
   useEffect(() => {
     load();
+    // Guruhlar VA ruxsat etilgan soatlar backend'dan (chegara ikki
+    // joyda yozilib qolmasin).
     api
-      .get<Any>("/me/groups")
-      .then((r) => setGroups(r.rows || []))
-      .catch(() => setGroups([]));
+      .get<Any>("/teacher/support-options")
+      .then(setOpts)
+      .catch(() => setOpts(null));
   }, []);
 
+  const groups: Any[] = opts?.groups || [];
+  const steps: number[] = opts?.hour_steps || [1, 1.5, 2, 2.5, 3];
   const valid =
-    f.group_id && f.start_time && f.end_time && Number(f.students_count) > 0;
+    !!f.group_id && !!f.start_time && f.hours > 0 &&
+    Number(f.students_count) > 0;
 
   async function add() {
     if (!valid || busy) return;
@@ -60,10 +65,12 @@ export default function TeacherSession() {
       await api.post("/me/support-sessions", {
         group_id: Number(f.group_id),
         start_time: f.start_time,
-        end_time: f.end_time,
+        // Tugash vaqti EMAS — necha soat dars o'tgani. Server
+        // tugash vaqtini o'zi hisoblaydi.
+        hours: f.hours,
         students_count: Number(f.students_count),
       });
-      setF({ group_id: "", start_time: "", end_time: "", students_count: "" });
+      setF({ group_id: "", start_time: "", hours: 0, students_count: "" });
       pushToast("Seans yozildi", "success", 2500);
       load();
     } catch {
@@ -125,27 +132,43 @@ export default function TeacherSession() {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-[11px] text-slate-500 mb-1">
-                Boshlandi
-              </label>
-              <Time24Input
-                value={f.start_time}
-                onChange={(e) => setF({ ...f, start_time: e.target.value })}
-                className="w-full rounded-lg border border-slate-300 px-2 py-2.5 text-sm"
-              />
+          <div>
+            <label className="block text-[11px] text-slate-500 mb-1">
+              Boshlandi
+            </label>
+            <Time24Input
+              value={f.start_time}
+              onChange={(e) => setF({ ...f, start_time: e.target.value })}
+              className="w-full rounded-lg border border-slate-300 px-2 py-2.5 text-sm"
+            />
+          </div>
+
+          {/* SOATNI SUPPORTNING O'ZI TANLAYDI (Jahongir, 2026-08-10):
+              kamida 1, ko'pi bilan 3 soat. Tugash vaqtini hisoblab
+              o'tirmaydi — server o'zi chiqaradi. */}
+          <div>
+            <label className="block text-[11px] text-slate-500 mb-1.5">
+              Necha soat dars o'tdingiz
+            </label>
+            <div className="grid grid-cols-5 gap-1.5">
+              {steps.map((h) => (
+                <button
+                  key={h}
+                  type="button"
+                  onClick={() => setF({ ...f, hours: h })}
+                  className={`py-2.5 rounded-lg border text-sm font-semibold transition ${
+                    f.hours === h
+                      ? "bg-brand-600 text-white border-transparent"
+                      : "bg-white text-slate-600 border-slate-200"
+                  }`}
+                >
+                  {h}
+                </button>
+              ))}
             </div>
-            <div>
-              <label className="block text-[11px] text-slate-500 mb-1">
-                Tugadi
-              </label>
-              <Time24Input
-                value={f.end_time}
-                onChange={(e) => setF({ ...f, end_time: e.target.value })}
-                className="w-full rounded-lg border border-slate-300 px-2 py-2.5 text-sm"
-              />
-            </div>
+            <p className="text-[11px] text-slate-400 mt-1">
+              {opts?.min_hours ?? 1}–{opts?.max_hours ?? 3} soat oralig'ida
+            </p>
           </div>
 
           <div>

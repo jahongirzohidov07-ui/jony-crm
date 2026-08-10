@@ -227,6 +227,31 @@ def teacher_week(db: Session = Depends(get_db),
             "days": days, "teacher": t.full_name}
 
 
+@router.get("/api/teacher/support-options")
+def teacher_support_options(db: Session = Depends(get_db),
+                            user=Depends(require_role(*TEACHER_APP_ROLES))):
+    """Support seansi uchun tanlovlar: guruhlar va RUXSAT ETILGAN
+    soatlar (1 / 1.5 / 2 / 2.5 / 3).
+
+    Chegaralar backend'dan keladi — telefonda qattiq yozib qo'yilsa,
+    qoida o'zgarganda ikki joyni yangilash kerak bo'lardi va biri
+    esdan chiqib, ekranda ruxsat etilgan, serverda esa rad etiladigan
+    variant paydo bo'lardi."""
+    t = _me_teacher(db, user)
+    gids = _my_group_ids(db, user, t)
+    groups = (db.query(models.Group)
+              .filter(models.Group.id.in_(gids or [-1]))
+              .order_by(models.Group.name).all()) if gids else []
+    return {
+        "groups": [{"id": g.id, "name": g.name,
+                    "lesson_time": g.lesson_time} for g in groups],
+        "hour_steps": roles.SUPPORT_SESSION_HOUR_STEPS,
+        "min_hours": roles.SUPPORT_SESSION_MIN_HOURS,
+        "max_hours": roles.SUPPORT_SESSION_MAX_HOURS,
+        "max_students": roles.SUPPORT_SESSION_MAX_STUDENTS,
+    }
+
+
 @router.get("/api/teacher/home")
 def teacher_home(db: Session = Depends(get_db),
                  user=Depends(require_role(*TEACHER_APP_ROLES))):

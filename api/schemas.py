@@ -2055,7 +2055,11 @@ class SupportSessionIn(BaseModel):
     # NoneType bo'lib qolardi — shuning uchun _dt.date orqali yoziladi
     date: Optional[_dt.date] = None    # bo'sh bo'lsa — bugun
     start_time: str                    # "14:00"
-    end_time: str                      # "15:30"
+    # IKKI XIL usul (2026-08-10): support YO tugash vaqtini yozadi,
+    # YO qancha soat dars o'tganini o'zi tanlaydi (1 / 1.5 / 2 / 2.5 / 3).
+    # Ikkinchisi qulayroq — telefonda hisoblab o'tirmaydi.
+    end_time: Optional[str] = None     # "15:30"
+    hours: Optional[float] = None      # 1 ... 3
     students_count: int
     note: Optional[str] = None
 

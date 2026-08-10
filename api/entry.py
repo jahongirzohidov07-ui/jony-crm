@@ -299,18 +299,44 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
                  "rahbari kirita oladi — darsni o'sha kuni kiriting")
 
     s_min = roles.hhmm_minutes(payload.start_time)
-    e_min = roles.hhmm_minutes(payload.end_time)
-    if s_min is None or e_min is None:
+    if s_min is None:
         raise HTTPException(400, "Vaqt SS:DD ko'rinishida bo'lsin, "
                                  "masalan 14:30")
-    if e_min <= s_min:
-        raise HTTPException(400, "Tugash vaqti boshlanishdan keyin "
-                                 "bo'lishi kerak")
-    minutes = e_min - s_min
+
+    # SOAT: support qancha dars o'tganini O'ZI belgilaydi (2026-08-10).
+    # Ikki xil kiritish qo'llab-quvvatlanadi — tayyor soat (1/1.5/2/
+    # 2.5/3) yoki tugash vaqti. Soat berilsa tugash vaqti o'zi
+    # hisoblanadi, shunda telefonda ortiqcha ish qolmaydi.
+    if payload.hours is not None:
+        try:
+            hrs = float(payload.hours)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Soatni to'g'ri tanlang")
+        minutes = int(round(hrs * 60))
+        e_min = s_min + minutes
+        end_time = f"{(e_min // 60) % 24:02d}:{e_min % 60:02d}"
+    else:
+        e_min = roles.hhmm_minutes(payload.end_time or "")
+        if e_min is None:
+            raise HTTPException(400, "Tugash vaqtini kiriting yoki "
+                                     "necha soat dars o'tganingizni tanlang")
+        if e_min <= s_min:
+            raise HTTPException(400, "Tugash vaqti boshlanishdan keyin "
+                                     "bo'lishi kerak")
+        minutes = e_min - s_min
+        end_time = payload.end_time.strip()
+
+    # 1-3 SOAT QOIDASI (Jahongir belgiladi): kamida bir soat, ko'pi
+    # bilan uch soat. Chegaradan chiqsa yozilmaydi — oylik shu
+    # yozuvlardan hisoblanadi, shuning uchun qat'iy.
+    if minutes < roles.SUPPORT_SESSION_MIN_HOURS * 60:
+        raise HTTPException(
+            400, f"Seans kamida {roles.SUPPORT_SESSION_MIN_HOURS} "
+                 f"soat bo'lishi kerak")
     if minutes > roles.SUPPORT_SESSION_MAX_HOURS * 60:
         raise HTTPException(
             400, f"Bitta seans {roles.SUPPORT_SESSION_MAX_HOURS} "
-                 f"soatdan oshmaydi — xato kiritmadingizmi?")
+                 f"soatdan oshmaydi")
     if not (1 <= payload.students_count
             <= roles.SUPPORT_SESSION_MAX_STUDENTS):
         raise HTTPException(
@@ -342,7 +368,7 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
     row = models.SupportSession(
         teacher_id=t.id, group_id=g.id, date=d,
         start_time=payload.start_time.strip(),
-        end_time=payload.end_time.strip(),
+        end_time=end_time,
         minutes=minutes,
         students_count=payload.students_count,
         note=(payload.note or "").strip() or None,

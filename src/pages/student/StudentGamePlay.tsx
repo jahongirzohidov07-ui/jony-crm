@@ -120,7 +120,7 @@ export default function StudentGamePlay() {
             Yana o'ynash
           </button>
           <Link
-            to="/student/games"
+            to="/student/vocab"
             className="mt-2 block w-full py-3 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium"
           >
             Boshqa o'yin
@@ -229,7 +229,7 @@ function Shell({
       <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-6 pb-8">
         <div className="max-w-md mx-auto">
           <Link
-            to="/student/games"
+            to="/student/vocab"
             className="inline-flex items-center gap-1.5 text-sm text-white/85 mb-3"
           >
             <ArrowLeft size={16} />

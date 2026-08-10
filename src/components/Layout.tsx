@@ -490,6 +490,11 @@ export default function Layout() {
                   Tiklash kodini o'rnatish
                 </button>
               )}
+              {/* TELEFONDA filial almashtirish: tepadagi tanlagich
+                  keng ekran uchun (hidden sm:block), shuning uchun
+                  ikki filialli xodim telefonda ham almashtira olsin
+                  (2026-08-10). */}
+              <MobileBranchPicker onDone={() => setProfileOpen(false)} />
               <button
                 onClick={onLogout}
                 className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
@@ -825,6 +830,48 @@ type SearchRes = {
 };
 
 
+/** Profil menyusidagi filial tanlash — FAQAT telefonda ko'rinadi
+ *  (keng ekranda tepadagi BranchSwitcher bor). Ikki va undan ko'p
+ *  filialda ishlaydigan xodimga chiqadi. */
+function MobileBranchPicker({ onDone }: { onDone: () => void }) {
+  const { user } = useAuth();
+  const [all, setAll] = useState<{ id: number; name: string }[]>([]);
+  const orgWide = can(user?.role, BRANCH_SWITCH);
+  const mine = user?.branches ?? [];
+  const current = getGlobalBranch();
+
+  useEffect(() => {
+    if (!orgWide) return;
+    api.get<{ id: number; name: string }[]>("/branches")
+      .then(setAll)
+      .catch(() => {});
+  }, [orgWide]);
+
+  const branches = orgWide ? all : mine;
+  if (branches.length < 2) return null;
+
+  return (
+    <div className="sm:hidden border-t border-slate-100 px-4 py-2.5">
+      <p className="text-[11px] text-slate-400 mb-1.5">Filial</p>
+      <select
+        value={current || ""}
+        onChange={(e) => {
+          setGlobalBranch(e.target.value || null);
+          onDone();
+          window.location.reload();
+        }}
+        className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-sm bg-white"
+      >
+        <option value="">Barcha filiallar</option>
+        {branches.map((b) => (
+          <option key={b.id} value={b.id}>{b.name}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+
 /** FILIAL ALMASHTIRGICH. Tanlangan filial BUTUN platformaga ta'sir
  *  qiladi: har bir sahifa faqat shu filial ma'lumotini ko'rsatadi.
  *  "Barcha filiallar" — umumiy ko'rinish.
@@ -859,8 +906,15 @@ function BranchSwitcher() {
 
   if (branches.length < 2) return null;
 
+  // "Vazifalar" tugmasi bor rollarda u right-[16.5rem] da turadi,
+  // yo'q rollarda esa o'sha joy bo'sh qoladi — almashtirgich o'shanga
+  // qarab suriladi, aks holda o'rtada bo'sh oraliq ko'rinardi.
+  const right = can(user?.role, TASK_ACCESS)
+    ? "sm:right-[19.5rem]"
+    : "sm:right-[16.5rem]";
+
   return (
-    <div className="absolute top-4 right-[19.5rem] z-40 hidden sm:block">
+    <div className={`absolute top-4 ${right} z-40 hidden sm:block`}>
       <select
         value={current || ""}
         onChange={(e) => {

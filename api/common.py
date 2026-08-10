@@ -3775,6 +3775,92 @@ def _freeze_task(db, st: models.Student, until, note):
 # tashlaymiz va support managerga vazifa qo'yamiz; (2) allaqachon
 # qolib ketgan eski yozuvlarni bir marta tozalaymiz (pastdagi funksiya).
 # ---------------------------------------------------------------------------
+def _backfill_student_accounts(db) -> int:
+    """BARCHA mavjud o'quvchilarga bir yo'la akkaunt ochadi (2026-08-10).
+
+    Jahongir: "hop endi o'quvchilarga avtomat login parol qo'yib ber,
+    loginga nomeri, parolga jonyjony."
+
+    _ensure_student_account faqat YANGI kiritilgan (yoki tahrirlangan)
+    o'quvchiga ishlaydi - bu funksiya esa undan OLDIN kiritilgan eski
+    o'quvchilarni bir marta qoplab chiqadi. Har ishga tushishda
+    tekshiriladi, lekin hisobi ochilganlar qayta ko'rilmaydi.
+
+    TEZLIK: parol hammada bir xil (jonyjony) bo'lgani uchun hash BIR
+    MARTA hisoblanadi. Aks holda bcrypt har o'quvchiga ~100ms olib,
+    yuzlab o'quvchida serverning ishga tushishi o'zi qulab tushardi.
+    Band username tekshiruvi ham bitta so'rov bilan (hammasi to'plamga
+    olinadi) - N ta alohida so'rov emas.
+
+    Qoidalar _ensure_student_account bilan BIR XIL: login = telefon
+    (faqat raqamlar, kamida 7 ta), telefoni yo'q/band bo'lsa jimgina
+    o'tkaziladi. Arxivdagi o'quvchiga hisob ochilmaydi. Telefonsizlar
+    ro'yxati asoschiga bir martalik vazifa bo'lib tushadi - aks holda
+    "nega bolam kira olmayapti" degan savol javobsiz qolardi."""
+    from auth import hash_password
+
+    rows = (db.query(models.Student)
+            .filter(models.Student.user_id.is_(None),
+                    models.Student.status.in_(("active", "trial",
+                                               "frozen")))
+            .order_by(models.Student.id).all())
+    if not rows:
+        return 0
+
+    taken = {u for (u,) in db.query(models.User.username).all()}
+    shared_hash = hash_password(roles.DEFAULT_PASSWORD)
+
+    made, no_phone = 0, []
+    for st in rows:
+        raw = (st.phone or st.parent_phone or "")
+        digits = "".join(ch for ch in raw if ch.isdigit())
+        if len(digits) < 7:
+            no_phone.append(st)
+            continue
+        if digits in taken:
+            continue
+        u = models.User(
+            username=digits,
+            password_hash=shared_hash,
+            full_name=st.full_name,
+            role=roles.STUDENT,
+            branch_id=st.branch_id,
+            is_active=1,
+        )
+        db.add(u)
+        db.flush()
+        st.user_id = u.id
+        taken.add(digits)
+        made += 1
+    db.commit()
+
+    try:
+        if no_phone:
+            who = (db.query(models.User)
+                   .filter(models.User.role == roles.FOUNDER,
+                           models.User.is_active == 1).first())
+            if who:
+                names = [f"{x.full_name}"
+                         + (f" ({x.public_id})" if x.public_id else "")
+                         for x in no_phone[:80]]
+                more = len(no_phone) - len(names)
+                _hr_task_for(
+                    db, who.id,
+                    title="Telefonsiz o'quvchilar - akkaunt ochilmadi",
+                    body=("Quyidagi o'quvchilarda telefon raqami "
+                          "yo'qligi uchun Jony Student akkaunti "
+                          "ochilmadi. Kartasiga raqam kiritilishi "
+                          "bilan akkaunt avtomat ochiladi:\n\n- "
+                          + "\n- ".join(names)
+                          + (f"\n... va yana {more} ta" if more > 0
+                             else "")),
+                    days=5)
+                db.commit()
+    except Exception:
+        db.rollback()
+    return made
+
+
 def _support_manager_id(db: Session, branch_id=None):
     """Vazifa kimga tushsin: support boshlig'i -> o'quv bo'limi -> asoschi.
 
@@ -3877,6 +3963,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "_backfill_student_accounts",
     "_release_support_groups", "_cleanup_stale_support_assignments",
     "_support_manager_id",
     "GRID_END_MIN",

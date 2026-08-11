@@ -41,6 +41,7 @@ TODAY = date.today()
 YEAR = TODAY.year if TODAY.month >= 9 else TODAY.year - 1
 db = SessionLocal()
 b = models.Branch(name="Zafar"); db.add(b); db.commit()
+BID = b.id  # 2026-08-11: reja endi FILIAL kesimida saqlanadi
 BID = b.id
 for u, role in [("asos", "founder"), ("moliya", "finance_director"),
                 ("sotuv", "sales_head"), ("smm", "smm_manager"),
@@ -82,9 +83,22 @@ for mth in roles.PLAN_MONTHS:
     items.append({"metric": "leads", "month": mth, "value": 100})
     items.append({"metric": "revenue", "month": mth, "value": 200000000})
     items.append({"metric": "students", "month": mth, "value": 500})
-r = client.put(f"/api/plan/{YEAR}", headers=ASOS, json={"items": items})
+# Filialsiz saqlash endi rad etiladi (reja filialga kiritiladi)
+r0 = client.put(f"/api/plan/{YEAR}", headers=ASOS, json={"items": items})
+ck("filialsiz saqlash 400", r0.status_code, 400)
+r = client.put(f"/api/plan/{YEAR}?branch_id={BID}", headers=ASOS,
+               json={"items": items})
 ck("reja saqlandi", r.status_code, 200)
-d = client.get(f"/api/plan?year={YEAR}", headers=ASOS).json()
+# Umumiy (yig'indi) ko'rinish - bitta filial bo'lgani uchun qiymatlar
+# bir xil; asoschi umumiyda TAHRIRLAY OLMAYDI
+d_total = client.get(f"/api/plan?year={YEAR}", headers=ASOS).json()
+ck("umumiyda tahrir yopiq", d_total["can_edit"], False)
+ck("umumiy yig'indi to'g'ri",
+   [x for x in d_total["rows"] if x["metric"] == "leads"][0]["sum_plan"],
+   1200)
+d = client.get(f"/api/plan?year={YEAR}&branch_id={BID}",
+               headers=ASOS).json()
+ck("filialda tahrir ochiq", d["can_edit"], True)
 ck("asoschi hamma bo'limni ko'radi", sorted(d["sections"]),
    ["moliya", "online", "sotuv"])
 ck("12 ustun", len(d["columns"]), 12)

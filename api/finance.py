@@ -985,24 +985,40 @@ def _work_days(start: date, end: date) -> int:
         d += timedelta(days=1)
     return n
 
-def _plan_fakt(db: Session, metric: str, start: date, end: date):
-    """Ko'rsatkich fakti [start, end) oralig'ida — tirik ma'lumotdan."""
+def _plan_fakt(db: Session, metric: str, start: date, end: date,
+               branch_id: int | None = None):
+    """Ko'rsatkich fakti [start, end) oralig'ida — tirik ma'lumotdan.
+
+    branch_id berilsa faqat shu filial bo'yicha (2026-08-11, Jahongir:
+    "har bir filial uchun alohida reja va fakt"). None = butun markaz."""
     if metric == "leads":
         d0, d1 = _utc_window(start, end)
-        return db.query(models.Lead).filter(
+        q = db.query(models.Lead).filter(
             models.Lead.created_at >= d0,
-            models.Lead.created_at < d1).count()
+            models.Lead.created_at < d1)
+        if branch_id:
+            q = q.filter(models.Lead.branch_id == branch_id)
+        return q.count()
     if metric == "visits":
         d0, d1 = _utc_window(start, end)
-        return db.query(models.Lead).filter(
+        q = db.query(models.Lead).filter(
             models.Lead.created_at >= d0, models.Lead.created_at < d1,
-            models.Lead.stage.in_(("trial_attended", "converted"))).count()
+            models.Lead.stage.in_(("trial_attended", "converted")))
+        if branch_id:
+            q = q.filter(models.Lead.branch_id == branch_id)
+        return q.count()
     if metric in ("new_payments", "old_payments"):
         d0, d1 = _utc_window(start, end)
-        pays = db.query(models.Payment).filter(
-            models.Payment.kind == "payment", models.Payment.amount > 0,
-            models.Payment.created_at >= d0,
-            models.Payment.created_at < d1).all()
+        pq = (db.query(models.Payment)
+              .join(models.Student,
+                    models.Payment.student_id == models.Student.id)
+              .filter(models.Payment.kind == "payment",
+                      models.Payment.amount > 0,
+                      models.Payment.created_at >= d0,
+                      models.Payment.created_at < d1))
+        if branch_id:
+            pq = pq.filter(models.Student.branch_id == branch_id)
+        pays = pq.all()
         if not pays:
             return 0
         sids = {p.student_id for p in pays}
@@ -1022,33 +1038,48 @@ def _plan_fakt(db: Session, metric: str, start: date, end: date):
         today = roles.local_today()
         if start <= today < end or (start.year, start.month) == (
                 today.year, today.month):
-            return db.query(models.Student).filter(
-                models.Student.status == "active").count()
+            q = db.query(models.Student).filter(
+                models.Student.status == "active")
+            if branch_id:
+                q = q.filter(models.Student.branch_id == branch_id)
+            return q.count()
         m0 = date(start.year, start.month, 1)
         m1 = date(m0.year + 1, 1, 1) if m0.month == 12 else \
             date(m0.year, m0.month + 1, 1)
-        return (db.query(models.Attendance.student_id)
-                .join(models.Lesson,
-                      models.Lesson.id == models.Attendance.lesson_id)
-                .filter(models.Lesson.date >= m0, models.Lesson.date < m1)
-                .distinct().count())
+        q = (db.query(models.Attendance.student_id)
+             .join(models.Lesson,
+                   models.Lesson.id == models.Attendance.lesson_id)
+             .filter(models.Lesson.date >= m0, models.Lesson.date < m1))
+        if branch_id:
+            q = (q.join(models.Group,
+                        models.Group.id == models.Lesson.group_id)
+                 .filter(models.Group.branch_id == branch_id))
+        return q.distinct().count()
     if metric == "revenue":
         d0, d1 = _utc_window(start, end)
-        return round(db.query(func.coalesce(
-            func.sum(models.Payment.amount), 0)).filter(
-            models.Payment.kind == "payment", models.Payment.amount > 0,
-            models.Payment.created_at >= d0,
-            models.Payment.created_at < d1).scalar() or 0, 0)
+        q = (db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+             .filter(models.Payment.kind == "payment",
+                     models.Payment.amount > 0,
+                     models.Payment.created_at >= d0,
+                     models.Payment.created_at < d1))
+        if branch_id:
+            q = (q.join(models.Student,
+                        models.Payment.student_id == models.Student.id)
+                 .filter(models.Student.branch_id == branch_id))
+        return round(q.scalar() or 0, 0)
     if metric == "expenses":
-        return round(db.query(func.coalesce(
+        q = db.query(func.coalesce(
             func.sum(models.Expense.amount), 0)).filter(
             models.Expense.date >= start,
-            models.Expense.date < end).scalar() or 0, 0)
+            models.Expense.date < end)
+        if branch_id:
+            q = q.filter(models.Expense.branch_id == branch_id)
+        return round(q.scalar() or 0, 0)
     if metric == "profit":
-        rev = _plan_fakt(db, "revenue", start, end)
-        exp = _plan_fakt(db, "expenses", start, end)
+        rev = _plan_fakt(db, "revenue", start, end, branch_id)
+        exp = _plan_fakt(db, "expenses", start, end, branch_id)
         return round((rev or 0) - (exp or 0), 0)
-    return None   # online_visits / online_payments — qo'lda ham emas, hozircha yo'q
+    return None
 
 def _plan_windows(year: int, granularity: str, month: int | None):
     """Davr ustunlari: (label, start, end, oy_kaliti)."""
@@ -1107,6 +1138,7 @@ def _plan_distribute(kind: str, plans: dict, year: int, win) -> float | None:
 
 @router.get("/api/plan")
 def get_plan(year: int | None = None, granularity: str = "month",
+             branch_id: int | None = None,
              month: int | None = None,
              db: Session = Depends(get_db),
              user=Depends(require_role(*roles.PLAN_VIEW))):
@@ -1120,11 +1152,22 @@ def get_plan(year: int | None = None, granularity: str = "month",
             if user.role == roles.FOUNDER
             else roles.plan_sections_for(user.role))
     wins = _plan_windows(year, granularity, month)
-    targets = db.query(models.PlanTarget).filter(
-        models.PlanTarget.year == year).all()
+    # FILIAL KESIMI (2026-08-11, Jahongir): har filialga alohida reja.
+    # FULL_ACCESS (asoschi, filial rahbari) filial tanlaydi yoki
+    # UMUMIY yig'indini ko'radi; qolgan xodimlarga o'z filiali.
+    full_access = user.role in tuple(roles.FULL_ACCESS)
+    if not full_access:
+        branch_id = user.branch_id or None
+    tq = db.query(models.PlanTarget).filter(
+        models.PlanTarget.year == year)
+    if branch_id:
+        tq = tq.filter(models.PlanTarget.branch_id == branch_id)
+    targets = tq.all()
     plan_map = {}
     for t in targets:
-        plan_map.setdefault(t.metric, {})[t.month] = t.value
+        d = plan_map.setdefault(t.metric, {})
+        # Umumiy rejimda barcha filiallar rejasi YIG'ILADI
+        d[t.month] = (d.get(t.month) or 0) + (t.value or 0)
     # SMM sotuv bo'limidan faqat ikkita ko'rsatkichni ko'radi
     smm_extra = (user.role == roles.SMM_MANAGER)
     rows = []
@@ -1139,7 +1182,8 @@ def get_plan(year: int | None = None, granularity: str = "month",
             fakt = None
             if auto and s <= today:
                 fakt = _plan_fakt(db, key, s, min(e, today + timedelta(
-                    days=1)) if granularity == "day" else e)
+                    days=1)) if granularity == "day" else e,
+                    branch_id)
             cells.append({
                 "label": wl,
                 "plan": _plan_distribute(kind, plans, year, w),
@@ -1187,7 +1231,14 @@ def get_plan(year: int | None = None, granularity: str = "month",
         "sundays": [i for i, w in enumerate(wins)
                     if granularity == "day" and w[1].weekday() == 6],
         "rows": rows,
-        "can_edit": user.role in tuple(roles.PLAN_EDIT),
+        "can_edit": user.role in tuple(roles.PLAN_EDIT)
+        and branch_id is not None,
+        "branch_id": branch_id,
+        "branches": ([{"id": b.id, "name": b.name}
+                      for b in db.query(models.Branch)
+                      .order_by(models.Branch.name).all()]
+                     if full_access else []),
+        "is_total": branch_id is None,
         "plan_raw": plan_map,
         "hint": ("Reja yil boshida oy kesimida tuziladi; hafta va kun "
                  "rejasi oydan avtomat taqsimlanadi (yakshanba dam). "
@@ -1196,6 +1247,7 @@ def get_plan(year: int | None = None, granularity: str = "month",
 
 @router.get("/api/plan/suggest")
 def plan_suggest(year: int, growth: int = roles.PLAN_DEFAULT_GROWTH,
+                 branch_id: int | None = None,
                  db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.PLAN_EDIT))):
     """O'tgan yil fakti + o'sish foizi — yangi reja uchun taklif."""
@@ -1210,7 +1262,7 @@ def plan_suggest(year: int, growth: int = roles.PLAN_DEFAULT_GROWTH,
             y = roles.plan_month_year(year - 1, m)
             s = date(y, m, 1)
             e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
-            f = _plan_fakt(db, key, s, e)
+            f = _plan_fakt(db, key, s, e, branch_id)
             if f:
                 vals[m] = round(f * (1 + growth / 100),
                                 -3 if kind == "money" else 0)
@@ -1219,21 +1271,33 @@ def plan_suggest(year: int, growth: int = roles.PLAN_DEFAULT_GROWTH,
 
 @router.put("/api/plan/{year}")
 def save_plan(year: int, payload: schemas.PlanSaveIn,
+              branch_id: int | None = None,
               db: Session = Depends(get_db),
               user=Depends(require_role(*roles.PLAN_EDIT))):
-    """Yillik rejani saqlash (bor oylar ustidan yoziladi)."""
+    """Yillik rejani saqlash (bor oylar ustidan yoziladi).
+
+    2026-08-11 (Jahongir): reja FILIALGA kiritiladi - umumiy jadval
+    faqat yig'indi ko'rinish, unga yozib bo'lmaydi."""
+    if not branch_id:
+        raise HTTPException(
+            400, "Avval filialni tanlang - reja har filialga alohida "
+                 "kiritiladi")
+    if not db.query(models.Branch).get(branch_id):
+        raise HTTPException(404, "Filial topilmadi")
     n = 0
     for it in payload.items:
         if it.metric not in roles.PLAN_METRIC_KEYS or not (
                 1 <= it.month <= 12):
             raise HTTPException(400, f"Noto'g'ri ko'rsatkich: {it.metric}")
         row = db.query(models.PlanTarget).filter_by(
-            year=year, metric=it.metric, month=it.month).first()
+            year=year, metric=it.metric, month=it.month,
+            branch_id=branch_id).first()
         if row:
             row.value = it.value
         else:
             db.add(models.PlanTarget(year=year, metric=it.metric,
                                      month=it.month, value=it.value,
+                                     branch_id=branch_id,
                                      created_by=user.full_name))
         n += 1
     db.commit()

@@ -2871,6 +2871,11 @@ class PlanTarget(Base):
     metric = Column(String, nullable=False, index=True)
     month = Column(Integer, nullable=False)      # 1..12
     value = Column(Float, nullable=False, default=0)
+    # 2026-08-11 (Jahongir): "har bir filial uchun alohida reja va
+    # fakt bo'ladi" - reja endi filial kesimida. NULL qolmasligi uchun
+    # eski yozuvlar bir martalik migratsiyada Bekobod 1 ga biriktiriladi
+    # (ular o'sha filial uchun tuzilgan edi).
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow,

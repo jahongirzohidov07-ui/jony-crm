@@ -41,12 +41,17 @@ export default function Plan() {
   const [gran, setGran] = useState<"month" | "week" | "day">("month");
   const [month, setMonth] = useState(9);
   const [edit, setEdit] = useState(false);
+  // Filial kesimi (2026-08-11, Jahongir): "" = UMUMIY (yig'indi,
+  // faqat rahbariyatga), aks holda tanlangan filial. Oddiy xodimga
+  // backend o'zi uning filialini beradi - tanlagich chiqmaydi.
+  const [branch, setBranch] = useState<string>("");
 
   const load = () => {
     const q = new URLSearchParams();
     if (year) q.set("year", String(year));
     q.set("granularity", gran);
     if (gran === "day") q.set("month", String(month));
+    if (branch) q.set("branch_id", branch);
     api
       .get<Any>(`/plan?${q}`)
       .then((r) => {
@@ -55,7 +60,7 @@ export default function Plan() {
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   };
-  useEffect(load, [year, gran, month]);
+  useEffect(load, [year, gran, month, branch]);
 
   if (err)
     return <p className="text-sm text-slate-500 py-10 text-center">{err}</p>;
@@ -91,6 +96,22 @@ export default function Plan() {
             <ChevronRight size={15} />
           </button>
         </div>
+        {d.branches && d.branches.length > 0 && (
+          <select
+            value={branch}
+            onChange={(e) => setBranch(e.target.value)}
+            className={`border rounded-lg px-2 py-1.5 text-sm bg-white ${
+              branch ? "border-brand-400 text-brand-700 font-medium"
+                     : "border-slate-300 text-slate-600"
+            }`}
+            title="Reja filial kesimida - kiritish uchun filialni tanlang"
+          >
+            <option value="">Umumiy (barcha filiallar yig'indisi)</option>
+            {d.branches.map((b: { id: number; name: string }) => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        )}
         <div className="flex gap-1 bg-white border border-slate-200 rounded-lg p-1">
           {(["month", "week", "day"] as const).map((g) => (
             <button
@@ -122,6 +143,11 @@ export default function Plan() {
           </select>
         )}
         <div className="flex-1" />
+        {d.is_total && d.branches && d.branches.length > 0 && (
+          <span className="text-xs text-slate-400">
+            Reja tuzish uchun filialni tanlang
+          </span>
+        )}
         {d.can_edit && (
           <button
             onClick={() => setEdit(true)}
@@ -268,6 +294,12 @@ export default function Plan() {
           yearLabel={d.year_label}
           months={d.months}
           raw={d.plan_raw}
+          branchId={branch}
+          branchName={
+            d.branches?.find(
+              (b: { id: number; name: string }) => String(b.id) === branch
+            )?.name || ""
+          }
           onClose={() => {
             setEdit(false);
             load();
@@ -292,10 +324,10 @@ const MONTH_SHORT = ["Sen", "Okt", "Noy", "Dek", "Yan", "Fev", "Mar",
   "Apr", "May", "Iyn", "Iyl", "Avg"];
 
 function PlanEditor({
-  year, yearLabel, months, raw, onClose,
+  year, yearLabel, months, raw, onClose, branchId, branchName,
 }: {
   year: number; yearLabel: string; months: number[];
-  raw: Any; onClose: () => void;
+  raw: Any; onClose: () => void; branchId: string; branchName: string;
 }) {
   const [vals, setVals] = useState<Record<string, Record<number, string>>>(
     () => {
@@ -313,7 +345,8 @@ function PlanEditor({
     setBusy(true);
     try {
       const r = await api.get<Any>(
-        `/plan/suggest?year=${year}&growth=${growth}`);
+        `/plan/suggest?year=${year}&growth=${growth}` +
+        (branchId ? `&branch_id=${branchId}` : ""));
       setVals((old) => {
         const v = { ...old };
         for (const [k] of METRICS) {
@@ -343,7 +376,9 @@ function PlanEditor({
           items.push({ metric: k, month: m, value: Number(s) });
       }
     try {
-      await api.put(`/plan/${year}`, { items });
+      await api.put(
+        `/plan/${year}${branchId ? `?branch_id=${branchId}` : ""}`,
+        { items });
       onClose();
     } catch (e) {
       alert(e instanceof Error ? e.message : "Xatolik");
@@ -357,6 +392,7 @@ function PlanEditor({
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-semibold text-slate-900">
             Reja tuzish — {yearLabel}
+            {branchName ? ` · ${branchName}` : ""}
           </h2>
           <button onClick={onClose} className="text-slate-400">
             <X size={18} />

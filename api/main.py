@@ -247,6 +247,27 @@ try:
 except Exception:
     pass
 
+# 2026-08-11 (Jahongir): "men Bekobod 1 uchun reja tuzgan edim, lekin
+# u Bekobod 2 ga ham o'tib qolibdi" - eski (filialsiz) reja yozuvlari
+# bir marta Bekobod 1 ga biriktiriladi, reja endi filial kesimida
+try:
+    from sqlalchemy.orm import Session as _VS16
+    from common import _seed_done, _seed_mark
+    with _VS16(engine) as _db16:
+        if not _seed_done(_db16, "plan_branch_v1"):
+            _bb1 = (_db16.query(models.Branch)
+                    .filter(models.Branch.name.ilike("bekobod 1%"))
+                    .first())
+            if _bb1 is not None:
+                (_db16.query(models.PlanTarget)
+                 .filter(models.PlanTarget.branch_id.is_(None))
+                 .update({models.PlanTarget.branch_id: _bb1.id},
+                         synchronize_session=False))
+                _db16.commit()
+            _seed_mark(_db16, "plan_branch_v1")
+except Exception:
+    pass
+
 # Eski yillardagi to'lov yig'ilishi (reja/fakt) arxivi - idempotent
 try:
     from sqlalchemy.orm import Session as _VS11

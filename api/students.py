@@ -376,6 +376,52 @@ def list_payments(
         .all()
     )
 
+def _pay_coin(db: Session, s: models.Student,
+              payment: models.Payment, today=None) -> None:
+    """To'lov sanasiga qarab avtomat coin (Jahongir qoidasi):
+    1-5 sana +10, 6-10 sana +5, 11-15 sana +1, 16-oy oxiri 0;
+    oldingi oydan QARZ bilan kelib to'lasa (oydan o'tib) -5.
+
+    Oyiga BIR marta: bo'lib-bo'lib to'laganda faqat birinchisiga.
+    To'lov o'chirilsa coin ham qaytariladi (finance.delete_payment).
+    Eski tizim ham xuddi shu qoidada qo'lda berardi - endi avtomat."""
+    if today is None:
+        today = roles.local_today()
+    # Shu kalendar oyda allaqachon baholanganmi
+    month_start = datetime(today.year, today.month, 1)
+    if (db.query(models.CoinEntry)
+            .filter(models.CoinEntry.student_id == s.id,
+                    models.CoinEntry.source == "pay_ontime",
+                    models.CoinEntry.created_at >= month_start).first()):
+        return
+    # Oldingi oylardan qarz: joriy oy avto-hisobini (charge, period=shu
+    # oy) chiqarib tashlaganda balans manfiy bo'lsa - o'tgan oy puli
+    # hali yopilmagan holda oy o'tib ketgan.
+    period = f"{today.year:04d}-{today.month:02d}"
+    bal = 0.0
+    for p in (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.id != payment.id).all()):
+        if p.kind == "charge" and p.period == period:
+            continue
+        bal += p.amount or 0
+    if bal < -0.5:
+        amount, note = -5, "To'lov oydan o'tib qilindi (-5 coin)"
+    else:
+        d = today.day
+        if d <= 5:
+            amount, note = 10, "To'lovni 5-sanagacha qildi (+10 coin)"
+        elif d <= 10:
+            amount, note = 5, "To'lovni 10-sanagacha qildi (+5 coin)"
+        elif d <= 15:
+            amount, note = 1, "To'lovni 15-sanagacha qildi (+1 coin)"
+        else:
+            return
+    db.add(models.CoinEntry(
+        student_id=s.id, amount=amount, source="pay_ontime",
+        ref_id=payment.id, note=note, created_by="Avtomat"))
+
+
 @router.post("/api/students/{student_id}/payments", response_model=schemas.PaymentOut)
 def add_payment(
     student_id: int,
@@ -422,6 +468,15 @@ def add_payment(
               entity_label=s.full_name, field=payload.kind,
               new_value=amount, note=payload.note, branch_id=s.branch_id)
     db.commit()
+
+    # AVTOMAT COIN: to'lov sanasiga qarab (5-sanagacha +10, 10 gacha
+    # +5, 15 gacha +1; oydan o'tib kelgan qarz uchun -5).
+    if payload.kind == "payment" and amount > 0:
+        try:
+            _pay_coin(db, s, payment)
+            db.commit()
+        except Exception:
+            db.rollback()
 
     # AVTOMAT: bu o'quvchini kimdir olib kelgan bo'lsa, o'sha odamning
     # referral chegirmasi shu to'lov bilan yoqiladi.

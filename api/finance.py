@@ -207,6 +207,15 @@ def delete_payment(
               entity_label=s.full_name if s else None, field=p.kind,
               old_value=p.amount, new_value=None, note=p.note,
               branch_id=s.branch_id if s else None)
+    # To'lov bilan birga uning avtomat coini ham qaytariladi -
+    # aks holda xato to'lovdan coin qolib ketardi
+    try:
+        for ce in db.query(models.CoinEntry).filter(
+                models.CoinEntry.source == "pay_ontime",
+                models.CoinEntry.ref_id == p.id).all():
+            db.delete(ce)
+    except Exception:
+        pass
     db.delete(p)
     db.commit()
     return {"ok": True}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { GraduationCap, Info, AlertTriangle } from "lucide-react";
-import { api, type MyStudentList } from "../lib/api";
+import { GraduationCap, Info, AlertTriangle, Coins } from "lucide-react";
+import { api, type MyStudentList, type MyStudent } from "../lib/api";
 import { formatDate } from "../lib/format";
 
 const HW_TONE: Record<string, string> = {
@@ -23,6 +23,33 @@ export default function MyStudents() {
   const [group, setGroup] = useState("");
   const [q, setQ] = useState("");
   const [onlyRisk, setOnlyRisk] = useState(false);
+  // Coin ayirish (intizom). Jahongir (2026-08-12): "ustozlarga coin
+  // ayrish imkonini berish... minimum 1ta maksimum 15ta gacha".
+  const [deduct, setDeduct] = useState<MyStudent | null>(null);
+  const [amt, setAmt] = useState(1);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [dErr, setDErr] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  const doDeduct = async () => {
+    if (!deduct) return;
+    setBusy(true);
+    setDErr(null);
+    try {
+      await api.post(`/me/students/${deduct.id}/coin-deduct`, {
+        amount: amt,
+        note: note.trim() || undefined,
+      });
+      setMsg(`${deduct.full_name}: −${amt} coin ayirildi`);
+      setDeduct(null);
+      setTimeout(() => setMsg(null), 4000);
+    } catch (e) {
+      setDErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   useEffect(() => {
     const p = new URLSearchParams();
@@ -72,6 +99,12 @@ export default function MyStudents() {
         </p>
       )}
 
+      {msg && (
+        <p className="text-sm rounded-lg px-3 py-2 mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800">
+          {msg}
+        </p>
+      )}
+
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <select
           value={group}
@@ -108,6 +141,7 @@ export default function MyStudents() {
               </th>
               <th className="text-right px-3 py-2.5 font-medium">Imtihon</th>
               <th className="text-right px-4 py-2.5 font-medium">Qancha vaqt</th>
+              <th className="text-right px-3 py-2.5 font-medium">Coin</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -168,6 +202,20 @@ export default function MyStudents() {
                 <td className="px-4 py-2.5 text-right text-slate-500">
                   {s.months != null ? `${s.months} oy` : "—"}
                 </td>
+                <td className="px-3 py-2.5 text-right">
+                  <button
+                    onClick={() => {
+                      setDeduct(s);
+                      setAmt(1);
+                      setNote("");
+                      setDErr(null);
+                    }}
+                    className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-lg border border-amber-300 text-amber-700 hover:bg-amber-50"
+                    title="Coin ayirish (intizom, 1–15)"
+                  >
+                    <Coins size={13} /> −
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -183,6 +231,72 @@ export default function MyStudents() {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+
+      {deduct && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
+          onClick={() => !busy && setDeduct(null)}
+        >
+          <div
+            className="bg-white rounded-xl w-full max-w-xs p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-sm font-semibold text-slate-900 mb-3">
+              Coin ayirish — {deduct.full_name}
+            </p>
+            <div className="flex items-center gap-2 mb-2">
+              <button
+                onClick={() => setAmt(Math.max(1, amt - 1))}
+                className="w-8 h-8 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-50"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                min={1}
+                max={15}
+                value={amt}
+                onChange={(e) =>
+                  setAmt(
+                    Math.min(15, Math.max(1, Number(e.target.value) || 1)),
+                  )
+                }
+                className="w-16 text-center border border-slate-300 rounded-lg px-2 py-1.5 text-sm"
+              />
+              <button
+                onClick={() => setAmt(Math.min(15, amt + 1))}
+                className="w-8 h-8 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-50"
+              >
+                +
+              </button>
+              <span className="text-xs text-slate-400">1–15 ta</span>
+            </div>
+            <input
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Sababi (ixtiyoriy)"
+              className="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-sm mb-3"
+            />
+            {dErr && <p className="text-xs text-red-600 mb-2">{dErr}</p>}
+            <div className="flex gap-2">
+              <button
+                disabled={busy}
+                onClick={doDeduct}
+                className="flex-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-50"
+              >
+                {busy ? "..." : `−${amt} coin ayirish`}
+              </button>
+              <button
+                disabled={busy}
+                onClick={() => setDeduct(null)}
+                className="px-3 rounded-lg border border-slate-300 text-sm text-slate-600"
+              >
+                Bekor
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

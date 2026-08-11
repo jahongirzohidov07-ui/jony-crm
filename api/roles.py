@@ -642,6 +642,8 @@ COIN_SOURCE_LABELS = {
     "exam": "Imtihon",
     "manual": "Qo'lda",
     "reward": "Sovg'a",
+    "teacher_deduct": "Ustoz ayirdi (intizom)",
+    "pay_ontime": "O'z vaqtida to'lov",
 }
 
 # Kunlik baho shkalasi: ustoz har dars uchun 1-5 qo'yadi va o'sha ball

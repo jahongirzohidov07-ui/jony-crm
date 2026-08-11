@@ -31,6 +31,8 @@ export const COIN_SOURCE_LABELS: Record<string, string> = {
   exam: "Imtihon",
   manual: "Qo'lda",
   reward: "Sovg'a",
+  teacher_deduct: "Ustoz ayirdi (intizom)",
+  pay_ontime: "O'z vaqtida to'lov",
 };
 
 export function coinSourceLabel(key?: string | null): string {

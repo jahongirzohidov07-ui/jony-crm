@@ -904,6 +904,46 @@ def _my_students_hint() -> str:
             "ko'rsatilmaydi — bu administrator va moliya bo'limining "
             "ishi.")
 
+
+@router.post("/api/me/students/{student_id}/coin-deduct")
+def my_student_coin_deduct(student_id: int, payload: schemas.CoinManual,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(roles.TEACHER))):
+    """Ustoz o'z o'quvchisidan intizom uchun coin AYIRADI.
+
+    Jahongir (2026-08-12): "ustozlarga coin ayrish imkonini berish
+    funksiyasini qoshib qoy, minimum 1ta maksimum 15ta gacha ayrish
+    mumkin". Faqat ayirish — coin BERISH avvalgidek kunlik baho,
+    imtihon va rahbariyat (Gamification) orqali qoladi, aks holda
+    ustozlar coin tarqatib inflyatsiya bo'lardi.
+    """
+    try:
+        amount = int(payload.amount)
+    except Exception:
+        raise HTTPException(400, "Miqdor noto'g'ri")
+    if amount < 1 or amount > 15:
+        raise HTTPException(400, "1 tadan 15 tagacha ayirish mumkin")
+
+    t = _my_teacher_or_404(db, user)
+    gids = {g.id for g in _cabinet_groups(db, user, t)}
+    s = db.query(models.Student).get(student_id)
+    if not s or s.group_id not in gids:
+        raise HTTPException(403, "Bu o'quvchi sizning guruhingizda emas")
+    if s.status == "frozen":
+        raise HTTPException(400, "Muzlatilgan o'quvchidan coin ayirilmaydi")
+
+    note = (payload.note or "").strip()
+    db.add(models.CoinEntry(
+        student_id=s.id, amount=-amount, source="teacher_deduct",
+        note=note or None, created_by=user.full_name))
+    db.commit()
+    audit.log(db, user, entity="student", action="coin_deduct",
+              entity_id=s.id, entity_label=s.full_name,
+              new_value=-amount, note=note or None,
+              branch_id=s.branch_id, commit=True)
+    return {"ok": True, "amount": -amount,
+            "balance": _student_coin_balance(db, s.id)}
+
 @router.get("/api/me/reschedules")
 def my_reschedules(db: Session = Depends(get_db),
                    user=Depends(require_role(*roles.SELF_STATS))):

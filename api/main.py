@@ -213,6 +213,16 @@ try:
 except Exception:
     pass
 
+# LC UP joriy balanslari bilan YAKUNIY tenglashtirish - barcha coin
+# importlaridan KEYIN turishi shart (Jahongir, 2026-08-11 snapshot)
+try:
+    from sqlalchemy.orm import Session as _VS15
+    from lcup_balance_seed import seed_lcup_balance
+    with _VS15(engine) as _db15:
+        seed_lcup_balance(_db15)
+except Exception:
+    pass
+
 # Muzlatilganlarning eski "kelmadi" yo'qlamalarini tozalash -
 # kelmagan o'quvchi uchun ustozga oylik hisoblanmasin (Jahongir)
 try:

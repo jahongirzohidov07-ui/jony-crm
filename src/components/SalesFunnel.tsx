@@ -51,14 +51,14 @@ function Card({
     slate: "text-slate-800",
   };
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-start gap-3">
-      <span className={"rounded-lg p-2 shrink-0 " + tones[tone]}>
-        <Icon size={16} />
+    <div className="bg-white rounded-lg border border-slate-200 px-3 py-2.5 flex items-start gap-2.5">
+      <span className={"rounded-md p-1.5 shrink-0 " + tones[tone]}>
+        <Icon size={13} />
       </span>
       <div className="min-w-0">
-        <p className={"text-2xl font-semibold leading-tight " + vt[tone]}>{value}</p>
-        <p className="text-xs text-slate-500 mt-0.5 leading-snug">{label}</p>
-        {sub && <p className="text-xs text-slate-400 mt-0.5 leading-snug">{sub}</p>}
+        <p className={"text-base font-semibold leading-tight " + vt[tone]}>{value}</p>
+        <p className="text-[11px] text-slate-500 leading-snug">{label}</p>
+        {sub && <p className="text-[11px] text-slate-400 leading-snug">{sub}</p>}
       </div>
     </div>
   );
@@ -107,7 +107,7 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
   return (
     <div>
       {/* ---------- 4 ta ko'rsatkich ---------- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-3">
         <Card
           icon={Percent}
           tone="emerald"
@@ -138,14 +138,14 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
         />
       </div>
 
-      <p className="text-xs text-slate-400 mb-3">
+      <p className="text-[11px] text-slate-400 mb-2">
         Bosqichni bosing — 2- va 3- ko'rsatkich shu bosqich bo'yicha
         qayta hisoblanadi.
       </p>
 
       {/* ---------- Voronka ---------- */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="hidden sm:grid grid-cols-[minmax(180px,1fr)_minmax(160px,300px)_92px_92px] gap-0 px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wide text-slate-400 font-medium">
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden max-w-3xl">
+        <div className="hidden sm:grid grid-cols-[minmax(150px,1fr)_minmax(110px,200px)_70px_70px] gap-0 px-3 py-1.5 bg-slate-50 border-b border-slate-200 text-[10px] uppercase tracking-wide text-slate-400 font-medium">
           <span>Bosqich</span>
           <span />
           <span className="text-right">Shu yergacha</span>
@@ -168,36 +168,34 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
               key={r.stage}
               onClick={() => setSel(i)}
               className={
-                "w-full text-left grid grid-cols-[1fr_minmax(90px,150px)] sm:grid-cols-[minmax(180px,1fr)_minmax(160px,300px)_92px_92px] items-stretch border-b border-slate-100 last:border-b-0 transition-colors " +
+                "w-full text-left grid grid-cols-[1fr_minmax(80px,120px)] sm:grid-cols-[minmax(150px,1fr)_minmax(110px,200px)_70px_70px] items-stretch border-b border-slate-100 last:border-b-0 transition-colors " +
                 (on ? "bg-sky-50/70" : "hover:bg-slate-50")
               }
             >
-              <span className="px-4 py-3 flex flex-col justify-center">
-                <span className="flex items-baseline gap-2">
-                  <span className="text-xl font-semibold text-slate-900">
-                    {r.reached}
-                  </span>
-                  <span className="text-xs text-slate-400">ta</span>
+              <span className="px-3 py-1.5 flex items-center gap-1.5 flex-wrap">
+                <span className="text-sm font-semibold text-slate-900">
+                  {r.reached}
                 </span>
+                <span className="text-[10px] text-slate-400">ta</span>
                 <span
                   className={
-                    "text-sm mt-0.5 " +
+                    "text-xs " +
                     (on ? "text-sky-700 font-medium" : "text-slate-600")
                   }
                 >
                   {r.label}
                 </span>
-                <span className="text-xs font-medium text-indigo-500 mt-0.5">
+                <span className="text-[11px] font-medium text-indigo-500">
                   {pct1(r.ofTotal)}
-                  {r.here_now > 0 && (
-                    <span className="text-slate-400 font-normal">
-                      {" · hozir " + r.here_now + " ta"}
-                    </span>
-                  )}
                 </span>
+                {r.here_now > 0 && (
+                  <span className="text-[10px] text-slate-400">
+                    {"hozir " + r.here_now + " ta"}
+                  </span>
+                )}
               </span>
 
-              <span className="relative block h-[78px] sm:h-[88px]">
+              <span className="relative block h-[40px] sm:h-[46px]">
                 <svg
                   viewBox="0 0 100 100"
                   preserveAspectRatio="none"
@@ -216,20 +214,20 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
                 </svg>
               </span>
 
-              <span className="hidden sm:flex px-3 items-center justify-end">
+              <span className="hidden sm:flex px-2 items-center justify-end">
                 <span
                   className={
-                    "text-sm font-medium " +
+                    "text-xs font-medium " +
                     (r.cumPct > 0 ? "text-slate-700" : "text-slate-300")
                   }
                 >
                   {pct1(r.cumPct)}
                 </span>
               </span>
-              <span className="hidden sm:flex px-4 items-center justify-end">
+              <span className="hidden sm:flex px-3 items-center justify-end">
                 <span
                   className={
-                    "text-sm font-semibold " +
+                    "text-xs font-semibold " +
                     (r.stepPct > 0 ? "text-rose-600" : "text-slate-300")
                   }
                 >
@@ -241,7 +239,7 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
         })}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-3 text-xs text-slate-400">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-[11px] text-slate-400">
         <span>Jami lid: {total} ta</span>
         {rejected > 0 && <span>Rad etdi: {rejected} ta</span>}
         <span>Oxirgi bosqichga yetgan: {last.reached} ta</span>

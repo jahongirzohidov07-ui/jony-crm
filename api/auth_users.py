@@ -233,6 +233,11 @@ def list_users(
 ):
     backfill_missing_ids(db, "user", models.User)
     q = scope_to_branch(db.query(models.User), models.User, user)
+    # XODIMLAR ro'yxati - o'quvchi va ota-ona akkauntlari bunga
+    # kirmaydi (Jahongir: "Xodimlar bo'limida, o'quvchilar ham
+    # ko'rinyabdi. nega yoqot ularni"). O'quvchi akkauntlari avtomat
+    # ochilgani uchun ro'yxat minglab bo'lib ketgan edi.
+    q = q.filter(models.User.role.notin_((roles.STUDENT, roles.PARENT)))
     # Support boshlig'i faqat o'z jamoasini (support teacherlar) va
     # o'zini ko'radi - butun xodimlar ro'yxati unga tegishli emas.
     if user.role == roles.HEAD_SUPPORT:

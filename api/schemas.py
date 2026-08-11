@@ -174,6 +174,10 @@ class TeacherOut(TeacherCreate):
     # "support" — yordamchi o'qituvchi (bog'langan hisob roli bo'yicha),
     # aks holda "teacher". Ro'yxatda alohida bo'limda ko'rsatiladi.
     kind: Optional[str] = None
+    # Support darajasi (Volontyor/Junior/Middle/Senior) — faqat
+    # kind="support" bo'lganda to'ldiriladi
+    staff_grade: Optional[str] = None
+    staff_grade_label: Optional[str] = None
 
 
 # ---------- Ustoz darajasi ----------

@@ -233,7 +233,9 @@ export interface Teacher {
   remediation_reason?: string | null;
   /** Tizimga kirish hisobi. Bo'sh bo'lsa akkaunt ochilmagan. */
   user_id?: number | null;
-  login?: string | null;
+  login?: string | null;  /** Support darajasi (volunteer/junior/middle/senior) — kind="support" da. */
+  staff_grade?: string | null;
+  staff_grade_label?: string | null;
 }
 
 export interface TeacherAccount {

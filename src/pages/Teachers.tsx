@@ -71,12 +71,37 @@ function TeacherModal({
     initial?.support_months != null ? String(initial.support_months) : ""
   );
   const [grades, setGrades] = useState<GradeRow[]>([]);
+  // SUPPORT teacher uchun daraja boshqa zina: Volontyor -> Junior ->
+  // Middle -> Senior (ustoz darajasi EMAS). Jahongir: "Supportni
+  // teacherni tahrirlasa darajasini o'zgartirishda o'qituvchi bo'lim
+  // tahrirlanyabdi" - endi support o'z darajasi bilan tahrirlanadi.
+  const isSupport = initial?.kind === "support";
+  const [sGrade, setSGrade] = useState(initial?.staff_grade ?? "volunteer");
+  const [sGrades, setSGrades] = useState<
+    { key: string; label: string; coef: number }[]
+  >([]);
   useEffect(() => {
+    if (isSupport) {
+      api
+        .get<{ grades: { key: string; label: string; coef: number }[] }>(
+          "/staff-grades"
+        )
+        .then((d) => setSGrades(d.grades))
+        .catch(() =>
+          setSGrades([
+            { key: "volunteer", label: "Volontyor", coef: 0 },
+            { key: "junior", label: "Junior", coef: 1 },
+            { key: "middle", label: "Middle", coef: 1.15 },
+            { key: "senior", label: "Senior", coef: 1.3 },
+          ])
+        );
+      return;
+    }
     api
       .get<CareerMap>("/career")
       .then((d) => setGrades(d.grades))
       .catch(() => setGrades([]));
-  }, []);
+  }, [isSupport]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -104,8 +129,16 @@ function TeacherModal({
         skill_score: skillScore === "" ? null : Number(skillScore),
         support_months: supportMonths === "" ? null : Number(supportMonths),
       };
+      if (isSupport) body.grade = null; // ustoz darajasi supportga tegishli emas
       if (editing) await api.put(`/teachers/${initial!.id}`, body);
       else await api.post("/teachers", body);
+      if (
+        isSupport &&
+        initial?.user_id &&
+        sGrade !== (initial.staff_grade ?? "volunteer")
+      ) {
+        await api.put(`/staff-grades/${initial.user_id}`, { grade: sGrade });
+      }
       onSaved();
       onClose();
     } catch (e) {
@@ -160,6 +193,34 @@ function TeacherModal({
               )}
             </select>
           </div>
+          {isSupport ? (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Support darajasi
+              </label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={sGrade}
+                onChange={(e) => setSGrade(e.target.value)}
+                disabled={!initial?.user_id}
+              >
+                {sGrades.map((g) => (
+                  <option key={g.key} value={g.key}>
+                    {g.label}
+                    {g.coef === 0
+                      ? " · oylik yo'q"
+                      : ` · koef ${g.coef}`}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-slate-400 mt-1">
+                {initial?.user_id
+                  ? "Volontyorga oylik berilmaydi; qolganlarida seans " +
+                    "oyligi koeffitsiyentga ko'paytiriladi."
+                  : "Daraja qo'yish uchun avval akkaunt oching (kalit belgisi)."}
+              </p>
+            </div>
+          ) : (
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Daraja
@@ -181,6 +242,7 @@ function TeacherModal({
               shundan chiqadi.
             </p>
           </div>
+          )}
 
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -623,7 +685,7 @@ export default function Teachers() {
                     <td className="px-4 py-3">
                       {t.kind === "support" ? (
                         <span className="text-xs px-2 py-0.5 rounded-full bg-sky-50 text-sky-700">
-                          Support teacher
+                          Support · {t.staff_grade_label || "Volontyor"}
                         </span>
                       ) : (
                       <button

@@ -102,6 +102,20 @@ def list_teachers(branch_id: Optional[int] = None,
               .filter(models.User.id.in_(ids or [-1])).all()}
     logins = {uid: u.username for uid, u in linked.items()}
     bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    # Support darajalari (StaffGrade entry.py da yaratiladi)
+    sgrades, sglabels = {}, {"volunteer": "Volontyor", "junior": "Junior",
+                             "middle": "Middle", "senior": "Senior"}
+    _SG = getattr(models, "StaffGrade", None)
+    if _SG is not None:
+        try:
+            for r in db.query(_SG).filter(_SG.user_id.in_(ids or [-1])).all():
+                sgrades[r.user_id] = r.grade or "volunteer"
+            _SGR = getattr(models, "StaffGradeRate", None)
+            if _SGR is not None:
+                for r in db.query(_SGR).all():
+                    sglabels[r.key] = r.label
+        except Exception:
+            pass
     out = []
     for t in rows:
         t.login = logins.get(t.user_id)
@@ -111,8 +125,15 @@ def list_teachers(branch_id: Optional[int] = None,
                      else "teacher")
         # Yordamchi o'qituvchi ustozlik darajasi zinasida emas —
         # kartasida adashib daraja qolgan bo'lsa ham ko'rsatilmaydi.
+        # O'rniga SUPPORT darajasi (Volontyor/Junior/Middle/Senior)
+        # ko'rsatiladi (Jahongir: "Supportni teacherni tahrirlasa
+        # darajasini o'zgartirishda o'qituvchi bo'lim tahrirlanyabdi").
         if item.kind == "support":
             item.grade = None
+            sg = sgrades.get(t.user_id)
+            item.staff_grade = sg or "volunteer"
+            item.staff_grade_label = sglabels.get(
+                item.staff_grade, item.staff_grade)
         all_ids = ([t.branch_id] if t.branch_id else []) + \
             [b for b in extra.get(t.id, []) if b != t.branch_id]
         item.branch_ids = all_ids

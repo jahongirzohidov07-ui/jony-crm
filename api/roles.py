@@ -3897,7 +3897,8 @@ EXAM_ORDER_REJECT_REASONS = [
 def exam_order_message(*, teacher: str, branch: str, date_text: str,
                        time_text: str, kind: str, group: str,
                        students: int, accepted_by: str | None = None,
-                       status: str = "new") -> str:
+                       status: str = "new",
+                       unit_no: int | None = None) -> str:
     """Buyurtma xabari. Ustoz ham, examiner ham AYNAN bir xil matnni
     ko'radi — kim nimani ko'rgani haqida bahs chiqmaydi."""
     lines = [
@@ -3907,7 +3908,8 @@ def exam_order_message(*, teacher: str, branch: str, date_text: str,
         f"Filial: {branch}",
         f"Sana: {date_text}",
         f"Vaqt: {time_text}",
-        f"Test turi: {kind}",
+        f"Test turi: {kind}"
+        + (f" — Unit {unit_no}" if unit_no else ""),
         f"Guruh: {group}",
         f"O'quvchilar soni: {students}",
     ]

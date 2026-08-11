@@ -1623,9 +1623,15 @@ def my_exam_order_add(payload: schemas.ExamOrderIn,
                  f"oldin buyurtma qilinadi")
     if payload.kind not in roles.EXAM_KINDS:
         raise HTTPException(400, "Test turi noto'g'ri")
-    if payload.kind == "unit" and payload.unit_no and not (
-            1 <= payload.unit_no <= roles.UNIT_COUNT):
-        raise HTTPException(400, f"Unit 1 dan {roles.UNIT_COUNT} gacha")
+    if payload.kind == "unit":
+        # Qaysi unit ekani MAJBURIY - examiner shu unitning testini
+        # tayyorlab keladi (Jahongir, 2026-08-11)
+        if not payload.unit_no:
+            raise HTTPException(
+                400, "Qaysi unit ekanini belgilang - examiner shu "
+                     "unitning testini tayyorlab keladi")
+        if not (1 <= payload.unit_no <= roles.UNIT_COUNT):
+            raise HTTPException(400, f"Unit 1 dan {roles.UNIT_COUNT} gacha")
 
     dup = db.query(models.ExamOrder).filter(
         models.ExamOrder.group_id == g.id,

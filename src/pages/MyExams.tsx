@@ -161,6 +161,10 @@ function OrderForm({
     .slice(0, 10);
 
   const save = async () => {
+    if (f.kind === "unit" && !f.unit_no) {
+      setErr("Qaysi unit ekanini belgilang — examiner shu unitning testini tayyorlab keladi");
+      return;
+    }
     setBusy(true);
     setErr("");
     try {
@@ -250,15 +254,22 @@ function OrderForm({
           </div>
           {f.kind === "unit" && (
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Unit</label>
+              <label className="block text-xs text-slate-500 mb-1">
+                Qaysi unit? *
+              </label>
               <input
                 type="number"
                 min={1}
                 max={data.unit_count}
                 value={f.unit_no}
                 onChange={(e) => setF({ ...f, unit_no: e.target.value })}
+                required
+                placeholder="masalan: 5"
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
               />
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Examiner aynan shu unitning testini tayyorlab keladi
+              </p>
             </div>
           )}
         </div>

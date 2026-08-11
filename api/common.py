@@ -3492,6 +3492,10 @@ def _exam_order_out(db: Session, o: models.ExamOrder) -> dict:
     br = db.query(models.Branch).get(o.branch_id) if o.branch_id else None
     who = db.query(models.User).get(o.accepted_by) if o.accepted_by else None
     kind_label = roles.EXAM_KIND_LABELS.get(o.kind, o.kind)
+    # Unit testda QAYSI unit ekani hamma joyda ko'rinsin (Jahongir:
+    # "examinerlar ham bilib shu unitni testini chiqarib turadi")
+    if o.kind == "unit" and o.unit_no:
+        kind_label = f"{kind_label} — Unit {o.unit_no}"
     return {
         "id": o.id,
         "public_id": o.public_id,
@@ -3531,7 +3535,8 @@ def _exam_order_out(db: Session, o: models.ExamOrder) -> dict:
             group=g.name if g else "—",
             students=o.students_count or 0,
             accepted_by=who.full_name if who else None,
-            status=o.status),
+            status=o.status,
+            unit_no=o.unit_no if o.kind == "unit" else None),
     }
 
 def _exam_order_form(db: Session, user: models.User) -> dict:

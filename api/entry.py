@@ -5728,3 +5728,202 @@ def lcup_exams_undo(db: Session = Depends(get_db),
                            f"{n_res} natija",
               new_value=n_res, commit=True)
     return {"deleted_exams": n_ex, "deleted_results": n_res}
+
+
+# ---------------------------------------------------------------
+# LC UP: HAQIQIY TO'LOV TARIXI + TANGA BALANSI
+# Faqat kvitansiyalar ko'chadi. LC UP o'zi hisoblagan yechimlar
+# (oylik to'lov, aktivlashtirish, o'tkazish, muzlatish) ko'chirilmaydi —
+# JonyOS o'z oyligini o'zi hisoblaydi, aks holda ikki marta yechiladi.
+# ---------------------------------------------------------------
+_LC_PAY_NOTE = "[LC UP] to'lov tarixi"
+_LC_COIN_NOTE = "[LC UP] tanga ko'chirish"
+
+_LC_METHOD = {
+    "naqd pul": "cash", "naqd": "cash", "cash": "cash",
+    "plastik karta": "card", "karta": "card", "card": "card",
+    "terminal": "terminal",
+    "bank hisobi": "other", "bank": "other", "o'tkazma": "other",
+}
+
+
+def _lc_method(v) -> str:
+    return _LC_METHOD.get(_lc_name(v), "other")
+
+
+def _lc_amt(v) -> float:
+    """«480,000 so'm ( 13 dars )» -> 480000.0 (faqat oldingi son)."""
+    t = " ".join(str(v or "").split()).replace(" ", " ")
+    neg = t.lstrip().startswith("-")
+    d = ""
+    for ch in t:
+        if ch.isdigit():
+            d += ch
+        elif ch in " ,":
+            if d and not d.isdigit():
+                break
+            continue
+        elif ch == "." and d:
+            d += "."
+        elif d:
+            break
+    if not d:
+        return 0.0
+    try:
+        x = float(d)
+    except ValueError:
+        return 0.0
+    return -x if neg else x
+
+
+def _lc_date(v):
+    """«Aug 11, 2026» yoki «2026-08-11» -> date."""
+    from datetime import datetime as _dt
+    s = " ".join(str(v or "").split())
+    if not s:
+        return None
+    try:
+        return date.fromisoformat(s[:10])
+    except Exception:
+        pass
+    for fmt in ("%b %d, %Y", "%d.%m.%Y", "%d/%m/%Y", "%Y/%m/%d", "%B %d, %Y"):
+        try:
+            return _dt.strptime(s, fmt).date()
+        except Exception:
+            continue
+    return None
+
+
+@app.post("/api/lcup/payments")
+def lcup_payments_import(payload: dict = Body(...),
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.FULL_ACCESS))):
+    """rows: [{name, phone, date, amount, method}] — kvitansiyalar."""
+    from datetime import datetime as _dt
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply"))
+    by_ph, by_nm = _lc_index(db)
+    made = dup = bad = 0
+    miss = []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, _how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss.append(r.get("name"))
+            continue
+        amt = _lc_amt(r.get("amount"))
+        d = _lc_date(r.get("date"))
+        if amt <= 0 or d is None:
+            bad += 1
+            continue
+        seen = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id,
+                        models.Payment.note == _LC_PAY_NOTE,
+                        models.Payment.amount == amt).all())
+        if any(p.created_at and p.created_at.date() == d for p in seen):
+            dup += 1
+            continue
+        if not apply:
+            made += 1
+            continue
+        pay = models.Payment(
+            student_id=s.id, amount=amt, kind="payment",
+            method=_lc_method(r.get("method")), note=_LC_PAY_NOTE,
+            created_by=getattr(user, "full_name", None))
+        pay.created_at = _dt(d.year, d.month, d.day, 12, 0)
+        db.add(pay)
+        db.flush()
+        M._ensure_public_id(db, "payment", pay)
+        made += 1
+    if apply and made:
+        db.commit()
+        audit.log(db, user, entity="payment", action="lcup_history",
+                  entity_label=f"LC UP to'lov tarixi: {made} kvitansiya",
+                  new_value=made, commit=True)
+    return {"apply": apply, "yozildi": made, "takror": dup,
+            "sana/summa xato": bad, "o'quvchi topilmadi": len(miss)}
+
+
+@app.delete("/api/lcup/payments")
+def lcup_payments_undo(db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Ko'chirilgan to'lov tarixini bekor qiladi."""
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.note == _LC_PAY_NOTE).all())
+    n = len(rows)
+    for p in rows:
+        db.delete(p)
+    db.commit()
+    audit.log(db, user, entity="payment", action="lcup_history_undo",
+              entity_label=f"LC UP to'lov tarixi bekor qilindi: {n}",
+              new_value=n, commit=True)
+    return {"deleted": n}
+
+
+@app.post("/api/lcup/coins")
+def lcup_coins_sync(payload: dict = Body(...),
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.FULL_ACCESS))):
+    """rows: [{name, phone, coins}] — tanga balansini tenglashtiradi."""
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply"))
+    by_ph, by_nm = _lc_index(db)
+    out, found, changed, miss = [], 0, 0, []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss.append(r.get("name"))
+            continue
+        found += 1
+        target = int(round(_lc_amt(r.get("coins"))))
+        now = M._student_coin_balance(db, s.id)
+        diff = target - now
+        item = {"student_id": s.id, "name": s.full_name, "how": how,
+                "lcup": target, "hozir": now, "farq": diff}
+        if diff == 0:
+            item["skip"] = "bir xil"
+            out.append(item)
+            continue
+        changed += 1
+        if apply:
+            old = (db.query(models.CoinEntry)
+                   .filter(models.CoinEntry.student_id == s.id,
+                           models.CoinEntry.note == _LC_COIN_NOTE).first())
+            if old is not None:
+                old.amount = int(old.amount) + diff
+            else:
+                db.add(models.CoinEntry(
+                    student_id=s.id, amount=diff, source="lcup",
+                    note=_LC_COIN_NOTE,
+                    created_by=getattr(user, "full_name", None)))
+        out.append(item)
+    if apply and changed:
+        db.commit()
+        audit.log(db, user, entity="student", action="lcup_coins",
+                  entity_label=f"LC UP tanga: {changed} o'quvchi tenglashtirildi",
+                  new_value=changed, commit=True)
+    return {"apply": apply, "topildi": found, "o'zgargan": changed,
+            "topilmadi": len(miss), "rows": out}
+
+
+@app.delete("/api/lcup/coins")
+def lcup_coins_undo(db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Ko'chirilgan tanga yozuvlarini bekor qiladi."""
+    rows = (db.query(models.CoinEntry)
+            .filter(models.CoinEntry.note == _LC_COIN_NOTE).all())
+    n = len(rows)
+    for c in rows:
+        db.delete(c)
+    db.commit()
+    audit.log(db, user, entity="student", action="lcup_coins_undo",
+              entity_label=f"LC UP tanga ko'chirish bekor qilindi: {n}",
+              new_value=n, commit=True)
+    return {"deleted": n}

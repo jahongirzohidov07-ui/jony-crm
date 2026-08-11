@@ -197,12 +197,11 @@ export default function SalesFunnel({ total, stages, rejected, labelOf }: Props)
                 </span>
               </span>
 
-              <span className="relative block">
+              <span className="relative block h-[78px] sm:h-[88px]">
                 <svg
                   viewBox="0 0 100 100"
                   preserveAspectRatio="none"
-                  className="w-full h-full block"
-                  style={{ minHeight: 72 }}
+                  className="absolute inset-0 w-full h-full block"
                 >
                   <path d={d} fill={fill} />
                   {on && (

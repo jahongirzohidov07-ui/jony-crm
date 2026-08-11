@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, Link } from "react-router-dom";
 import { BrandIcon } from "./BrandIcon";
 import {
   LayoutDashboard,
@@ -32,7 +32,7 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search } from "lucide-react";
+ Search, Smartphone } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -499,6 +499,17 @@ export default function Layout() {
                   (2026-08-10). */}
               <MobileRolePicker onDone={() => setProfileOpen(false)} />
               <MobileBranchPicker onDone={() => setProfileOpen(false)} />
+              {(user?.role === "teacher" ||
+                user?.role === "support_teacher") && (
+                <Link
+                  to="/teacher"
+                  onClick={() => setProfileOpen(false)}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+                >
+                  <Smartphone size={15} />
+                  Telefon ko'rinishiga qaytish
+                </Link>
+              )}
               <button
                 onClick={onLogout}
                 className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"

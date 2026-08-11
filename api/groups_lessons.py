@@ -398,6 +398,54 @@ def save_attendance(
     if touched:
         db.commit()
 
+    # SINOVDAGI O'QUVCHI 2 TA "KELMADI" OLSA (Jahongir, 2026-08-11):
+    # yo'qlamalari o'chiriladi, o'quvchi avtomat LIDLARGA qaytadi,
+    # tarixi va lid eslatmasida "guruhga qo'yildi lekin darsga
+    # kelmadi" yozuvi qoladi. Sinovchi hali to'lamagan - uni ustoz
+    # oyligi hujjatida ham, o'quvchilar safida ham ushlab turish
+    # noto'g'ri; sotuv bo'limi qayta ishlashi kerak.
+    try:
+        _tr_absent = [m.student_id for m in payload.marks
+                      if m.present is False and not m.remove]
+        for sid in set(_tr_absent):
+            st = db.query(models.Student).get(sid)
+            if not st or st.status != "trial":
+                continue
+            rows_ = (db.query(models.Attendance)
+                     .join(models.Lesson,
+                           models.Lesson.id == models.Attendance.lesson_id)
+                     .filter(models.Attendance.student_id == sid,
+                             models.Lesson.group_id == lesson.group_id)
+                     .all())
+            absents = [a for a in rows_ if (a.present or 0) == 0]
+            if len(absents) < 2:
+                continue
+            lesson_ids_ = list({a.lesson_id for a in rows_})
+            for a in rows_:
+                db.delete(a)
+            db.flush()
+            for lid_ in lesson_ids_:
+                ls_ = db.query(models.Lesson).get(lid_)
+                if ls_ and not db.query(models.Attendance).filter(
+                        models.Attendance.lesson_id == lid_).count():
+                    ls_.held = 0
+            gname = lesson.group.name if lesson.group else ""
+            note_txt = (f"Guruhga qo'yildi ({gname}), lekin darsga "
+                        "kelmadi - sinovda 2 ta yo'qlama. Avtomat "
+                        "lidlarga qaytarildi, qayta aloqa kerak")
+            db.add(models.Lead(
+                full_name=st.full_name, phone=st.phone,
+                source="other", stage="new",
+                branch_id=st.branch_id, note=note_txt))
+            st.status = "archived"
+            st.group_id = None
+            db.commit()
+            audit.log(db, None, entity="student", action="trial_dropout",
+                      entity_id=st.id, entity_label=st.full_name,
+                      note=note_txt, branch_id=st.branch_id, commit=True)
+    except Exception:
+        db.rollback()
+
     # AVTOMUZLATISH: ketma-ket 3 darsga kelmagan o'quvchi muzlatiladi,
     # o'sha 3 kungi yoqlamasi bekor bo'ladi (ustoz oyligidan ham chiqadi)
     # va adminlarga "aloqaga chiqing" vazifasi tushadi.

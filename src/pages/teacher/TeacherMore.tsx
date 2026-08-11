@@ -50,8 +50,8 @@ const SECTIONS = [
     items: [
       { to: "/teacher/session", label: "Soat belgilash", icon: Timer,
         hint: "Support seanslarini yozish", supportOnly: true },
-      { to: "/my-sessions", label: "Darslarim va oyligim", icon: Timer,
-        hint: "O'tilgan darslar va hisob-kitob" },
+      { to: "/teacher/salary", label: "Darslarim va oyligim", icon: Timer,
+        hint: "Ishlab topganim va balans" },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart,
         hint: "Guruhlaringiz o'zlashtirishi" },
       { to: "/my-career", label: "Karyera yo'lim", icon: TrendingUp,

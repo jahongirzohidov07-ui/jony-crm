@@ -135,6 +135,20 @@ def save_exam_results(
     existing = {r.student_id: r for r in exam.results}
     has_lesson = _counted_ids(db, exam, [m.student_id
                                          for m in payload.marks])
+    # 100% chegirmada o'qiydiganlar: baholanadi, natijasi ko'rinadi,
+    # lekin coin BERILMAYDI ham YECHILMAYDI (Jahongir, 2026-08-11).
+    # DIQQAT: _student_discount_percent 50% da kesiladi (umumiy cap),
+    # shuning uchun bu yerda chegirma yozuvlarining O'ZI tekshiriladi:
+    # faol va muddati o'tmagan percent>=100 yozuv = grant o'quvchi.
+    _free_ids = set()
+    _ids_ = [m.student_id for m in payload.marks]
+    if _ids_:
+        for _d in (db.query(models.Discount)
+                   .filter(models.Discount.student_id.in_(_ids_),
+                           models.Discount.status == "active",
+                           models.Discount.percent >= 100).all()):
+            if _discount_alive(_d):
+                _free_ids.add(_d.student_id)
 
     for m in payload.marks:
         row = existing.get(m.student_id)
@@ -174,9 +188,9 @@ def save_exam_results(
             row.band = None
             row.percent = round(m.score / exam.max_score * 100, 1)
 
-        if not row.counted:
-            # Endi kelgan o'quvchi: natija ko'rinadi, lekin coin ham
-            # berilmaydi/yechilmaydi - u hali o'qib ulgurmagan
+        if not row.counted or m.student_id in _free_ids:
+            # Endi kelgan o'quvchi YOKI 100% chegirmali: natija
+            # ko'rinadi, lekin coin berilmaydi/yechilmaydi
             row.coins = 0
             _drop_coin_entry(db, "exam", row.id)
             continue

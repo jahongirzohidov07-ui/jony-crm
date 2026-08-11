@@ -1653,13 +1653,32 @@ def my_exam_order_add(payload: schemas.ExamOrderIn,
     db.commit(); db.refresh(o)
 
     out = _exam_order_out(db, o)
-    # So'rov FILIALDAGI examinerlarga boradi
-    _hr_task(db, title=f"Imtihon buyurtmasi {o.public_id}",
-             body=out["message"],
-             to_roles=roles.EXAM_ORDER_ACCEPT,
-             branch_id=g.branch_id,
-             days=max(1, (payload.date - today).days),
-             priority="high")
+    # So'rov FILIALDAGI BARCHA examinerlarga alohida vazifa bo'lib
+    # tushadi (Jahongir: "shu filialdagi examinerlaga bildirishnoma
+    # bo'lib tushsin, xabar kelsin"). Ilgari bitta odamga (ko'pincha
+    # asoschiga) tushardi - examinerlar ko'rmay qolardi.
+    _exs = (db.query(models.User)
+            .filter(models.User.role.in_((roles.EXAMINER,
+                                          roles.HEAD_EXAMINER)),
+                    models.User.is_active == 1).all())
+    _extra = {ub.user_id for ub in db.query(models.UserBranch)
+              .filter(models.UserBranch.branch_id == g.branch_id).all()}
+    _local = [u for u in _exs
+              if u.branch_id == g.branch_id or u.id in _extra
+              or not u.branch_id]
+    _targets = _local or _exs  # filialda examiner bo'lmasa - hammasiga
+    _days = max(1, (payload.date - today).days)
+    for _u in _targets:
+        _hr_task_for(
+            db, _u.id,
+            title=f"Imtihon buyurtmasi {o.public_id} — {_u.full_name}",
+            body=out["message"],
+            branch_id=g.branch_id, days=_days)
+    if not _targets:
+        _hr_task(db, title=f"Imtihon buyurtmasi {o.public_id}",
+                 body=out["message"],
+                 to_roles=roles.EXAM_ORDER_ACCEPT,
+                 branch_id=g.branch_id, days=_days, priority="high")
     db.commit()
 
     audit.log(db, user, entity="exam_order", action="create",

@@ -355,14 +355,38 @@ def _norm(token: str) -> str:
     return "".join(c for c in out if c.isalpha())
 
 
-def _tok_match(a: str, b: str) -> bool:
-    """To'liq mosligi yoki biri ikkinchisining boshi (kamida 4 harf).
+def _one_edit(a: str, b: str) -> bool:
+    """Ikkala so'z bitta harf farqi bilan bir xilmi.
 
-    "Umida" va "Umidaxon" bitta odam - prefiks moslik shuni qoplaydi."""
+    "Abdulqodir" (rasmda) va "Abduqodir" (bazada) bitta odam - L
+    harfi tushib qolgan. Shunday mayda imlo farqlari uchun."""
+    la, lb = len(a), len(b)
+    if abs(la - lb) > 1:
+        return False
+    if la == lb:
+        return sum(1 for x, y in zip(a, b) if x != y) <= 1
+    if la > lb:
+        a, b, la, lb = b, a, lb, la
+    i = 0
+    while i < la and a[i] == b[i]:
+        i += 1
+    return a[i:] == b[i + 1:]
+
+
+def _tok_match(a: str, b: str) -> bool:
+    """To'liq mosligi, biri ikkinchisining boshi (kamida 4 harf),
+    yoki uzun so'zlarda bitta harf farqi.
+
+    "Umida"/"Umidaxon" bitta odam - prefiks moslik shuni qoplaydi.
+    "Abdulqodir"/"Abduqodir" ham bitta odam - bir harf farqi.
+    Adashish xavfi yo'q: ism ham, familiya ham birga mos kelishi
+    shart, ikki ustozga birdek to'g'ri kelsa umuman yozilmaydi."""
     if a == b:
         return True
-    if len(a) >= 4 and len(b) >= 4:
-        return a.startswith(b) or b.startswith(a)
+    if len(a) >= 4 and len(b) >= 4 and (a.startswith(b) or b.startswith(a)):
+        return True
+    if len(a) >= 6 and len(b) >= 6 and _one_edit(a, b):
+        return True
     return False
 
 

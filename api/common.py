@@ -3888,6 +3888,66 @@ def _backfill_student_accounts(db) -> int:
     return made
 
 
+def _cleanup_frozen_absences(db: Session) -> int:
+    """Muzlatilgan o'quvchilarning oxirgi ketma-ket "kelmadi"
+    yozuvlarini o'chiradi - ustoz oyligidan chiqsin.
+
+    Jahongir: "3ta dars kelmadi, avtomat muzlatasan degan edim, lekin
+    shu 3ta yoq deb belgilangan davomatni olib tashlanishi kerak,
+    chunki bu kelmaganlarga oylik hisoblanmasligi kerak ustozga".
+
+    Yangi avtomuzlatishlarda bu yo'qlama saqlash paytida o'zi bo'ladi
+    (groups_lessons.save_attendance ichida). Bu funksiya esa ESKI
+    holatlarni tozalaydi: qoida qo'shilishidan oldin muzlatilganlar
+    va qo'lda muzlatilganlar. Ehtiyot chorasi: faqat oxirgi KETMA-KET
+    kelmagan zanjiri kamida 3 ta bo'lsa tegiladi - 1-2 ta qoldirib
+    muzlatilgan (masalan oilaviy sabab) holatga aralashmaymiz.
+
+    Yoqlamasi butunlay bo'shab qolgan dars "o'tilmagan" (held=0) ga
+    qaytadi - xuddi avtomuzlatishdagi kabi. Idempotent: bir marta
+    o'chirilgach zanjir topilmaydi."""
+    frozen = (db.query(models.Student)
+              .filter(models.Student.status == "frozen",
+                      models.Student.group_id.isnot(None)).all())
+    removed = 0
+    for st in frozen:
+        try:
+            rows = (db.query(models.Attendance)
+                    .join(models.Lesson,
+                          models.Lesson.id == models.Attendance.lesson_id)
+                    .filter(models.Attendance.student_id == st.id,
+                            models.Lesson.group_id == st.group_id)
+                    .order_by(models.Lesson.date.desc(),
+                              models.Lesson.id.desc())
+                    .limit(12).all())
+            chain = []
+            for a in rows:
+                if (a.present or 0) != 0:
+                    break
+                chain.append(a)
+            if len(chain) < 3:
+                continue
+            lesson_ids = [a.lesson_id for a in chain]
+            for a in chain:
+                db.delete(a)
+            db.flush()
+            for lid_ in lesson_ids:
+                ls_ = db.query(models.Lesson).get(lid_)
+                if ls_ and not db.query(models.Attendance).filter(
+                        models.Attendance.lesson_id == lid_).count():
+                    ls_.held = 0
+            removed += len(chain)
+            audit.log(db, None, entity="student", action="update",
+                      entity_id=st.id, entity_label=st.full_name,
+                      note=(f"Muzlatilgan o'quvchining {len(chain)} ta "
+                            "'kelmadi' yo'qlamasi o'chirildi - ustoz "
+                            "oyligiga kirmasin"), commit=False)
+            db.commit()
+        except Exception:
+            db.rollback()
+    return removed
+
+
 def _support_manager_id(db: Session, branch_id=None):
     """Vazifa kimga tushsin: support boshlig'i -> o'quv bo'limi -> asoschi.
 

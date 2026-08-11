@@ -193,6 +193,16 @@ try:
 except Exception:
     pass
 
+# Muzlatilganlarning eski "kelmadi" yo'qlamalarini tozalash -
+# kelmagan o'quvchi uchun ustozga oylik hisoblanmasin (Jahongir)
+try:
+    from sqlalchemy.orm import Session as _VS12
+    from common import _cleanup_frozen_absences
+    with _VS12(engine) as _db12:
+        _cleanup_frozen_absences(_db12)
+except Exception:
+    pass
+
 # Eski yillardagi to'lov yig'ilishi (reja/fakt) arxivi - idempotent
 try:
     from sqlalchemy.orm import Session as _VS11

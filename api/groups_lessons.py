@@ -556,7 +556,13 @@ def create_exam(
     group_id: int,
     payload: schemas.ExamCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    # Jahongir: "Ustoz o'zi imthon o'tkazib, baholay olyabdi shu
+    # joyini olib tashla, ustoz faqat imthon buyurtma qilish mumkin".
+    # Ustoz va support endi test YARATA olmaydi - buyurtma beradi
+    # (exam-orders), examiner qabul qilib o'zi ochadi.
+    user=Depends(require_role(*[r for r in roles.TEACHING_ACCESS
+                                if r not in (roles.TEACHER,
+                                             roles.SUPPORT_TEACHER)])),
 ):
     _get_group_in_scope(db, group_id, user)
     if payload.kind not in roles.EXAM_KINDS:

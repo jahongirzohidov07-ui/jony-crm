@@ -89,7 +89,11 @@ def save_exam_results(
     exam_id: int,
     payload: schemas.ExamScoreBulk,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    # Ustoz/support natija KIRITA olmaydi - baholash examinerniki
+    # (Jahongir). Ko'rish (get_exam) ustozga qoladi.
+    user=Depends(require_role(*[r for r in roles.TEACHING_ACCESS
+                                if r not in (roles.TEACHER,
+                                             roles.SUPPORT_TEACHER)])),
 ):
     """Ustoz faqat ball (mock uchun band) kiritadi. Foiz avtomat
     hisoblanadi, coin ham qoidaga qarab avtomat beriladi.

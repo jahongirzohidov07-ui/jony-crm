@@ -13,7 +13,7 @@ import {
   type Student,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, FINANCE_ACCESS, can, ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR } from "../lib/roles";
+import { TEACHING_STAFF, FINANCE_ACCESS, can, ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { QuickXp } from "../components/XpAdmin";
 import {
@@ -97,6 +97,11 @@ export default function GroupDetail() {
   const isSupport =
     user?.role === "support_teacher" || user?.role === "head_support";
   const canFinance = can(user?.role, FINANCE_ACCESS);
+  // Imtihon yaratish/baholash ustoz va supportdan olib tashlandi -
+  // ular faqat buyurtma beradi (Jahongir)
+  const isTeacherRole =
+    user?.role === TEACHER || user?.role === SUPPORT_TEACHER;
+  const canExamManage = canMarkLesson && !isTeacherRole;
   // Guruhni tahrirlash qalami: moliya ruxsati borlar + o'quv bo'limi
   // rahbari, administrator, HR (Jahongir so'radi)
   const canGroupEdit =
@@ -375,11 +380,19 @@ export default function GroupDetail() {
         />
       )}
       {tab === "exams" && (
-        <ExamsTab
-          groupId={group.id}
-          canEdit={canMarkLesson}
-          canDelete={canFinance}
-        />
+        <>
+          {isTeacherRole && (
+            <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-3">
+              Imtihonni examiner o'tkazadi va baholaydi. Sizga imtihon
+              kerak bo'lsa — "Imtihonlarim" bo'limidan buyurtma bering.
+            </p>
+          )}
+          <ExamsTab
+            groupId={group.id}
+            canEdit={canExamManage}
+            canDelete={canFinance}
+          />
+        </>
       )}
 
       {tab === "homework" && <GroupHomeworkTab groupId={groupId} />}

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Info, Pencil, X } from "lucide-react";
+import { Info, Pencil, X, Lock, LockOpen, CheckCircle2, CopyPlus } from "lucide-react";
 import { api } from "../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
 
-/** Budjet: yillik/oylik/filial/bo'lim, reja-fakt, yil oxiri prognozi. */
+/** Budjet: yillik/oylik/filial/bo'lim, reja-fakt, yil oxiri prognozi.
+ *  Yil tanlanadi (o'tgan / joriy / keyingi o'quv yili), oy tasdiqlanadi —
+ *  tasdiqlangan oy qulflanadi, qulfni faqat asoschi ochadi. */
 
 const fmt = (n: Any) =>
   n === null || n === undefined ? "—"
@@ -24,20 +26,38 @@ function pctTone(f: Any, p: Any, lower = false) {
 
 export function BudgetTab() {
   const [d, setD] = useState<Any>(null);
+  const [meta, setMeta] = useState<Any>(null);
   const [err, setErr] = useState("");
   const [sub, setSub] = useState<"yillik" | "oylik" | "filial" | "bolim" |
     "prognoz">("yillik");
+  const [year, setYear] = useState<number | null>(null);
   const [month, setMonth] = useState<number | null>(null);
   const [edit, setEdit] = useState(false);
+  const [copy, setCopy] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const loadMeta = (y?: number | null) => {
+    const q = y ? `?year=${y}` : "";
+    api.get<Any>(`/finance/budget-meta${q}`)
+      .then((r) => { setMeta(r); if (!year) setYear(r.year); })
+      .catch(() => {});
+  };
 
   const load = () => {
-    const q = month ? `?month=${month}` : "";
+    const p: string[] = [];
+    if (year) p.push(`year=${year}`);
+    if (month) p.push(`month=${month}`);
+    const q = p.length ? `?${p.join("&")}` : "";
     api.get<Any>(`/finance/budget${q}`).then((r) => {
       setD(r);
       if (!month) setMonth(r.monthly.month);
+      if (!year) setYear(r.year);
     }).catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   };
-  useEffect(load, [month]);
+
+  useEffect(() => { loadMeta(year); }, [year]);
+  useEffect(load, [year, month]);
+
   if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
 
@@ -45,9 +65,71 @@ export function BudgetTab() {
     ["filial", "Filial"], ["bolim", "Bo'lim"],
     ["prognoz", "Yil oxiri prognozi"]] as const;
   const fc = d.forecast;
+  const curM = month || d.monthly.month;
+  const appr = (meta && meta.approved) ? meta.approved[String(curM)] : null;
+  const locked = !!appr;
+  const yearFilled = meta ? meta.filled : null;
+  const emptyYear = yearFilled === 0;
+
+  const doApprove = async () => {
+    setBusy(true);
+    try {
+      await api.post("/finance/budget-approve", { year: d.year, month: curM });
+      loadMeta(year); load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+    setBusy(false);
+  };
+
+  const doUnlock = async () => {
+    if (!confirm("Qulfni ochasizmi? O'zgarish audit jurnaliga yoziladi."))
+      return;
+    setBusy(true);
+    try {
+      await api.delete(`/finance/budget-approve?year=${d.year}&month=${curM}`);
+      loadMeta(year); load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+    setBusy(false);
+  };
 
   return (
     <div>
+      {/* ---------------- Yil va bo'lim tanlash ---------------- */}
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        {meta && meta.years && (
+          <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
+            {meta.years.map((y: Any) => (
+              <button key={y.year} onClick={() => { setYear(y.year); setMonth(null); }}
+                className={`px-3 py-1 rounded-md text-sm ${y.year === d.year
+                  ? "bg-white shadow-sm text-slate-900 font-medium"
+                  : "text-slate-500 hover:text-slate-700"}`}>
+                {y.short}
+                {y.filled === 0 && (
+                  <span className="text-[10px] text-amber-600 ml-1">bo'sh</span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="flex-1" />
+        {meta && meta.can_edit && (
+          <button onClick={() => setCopy(true)}
+            className="flex items-center gap-1.5 border border-slate-300 text-slate-700 rounded-lg px-3 py-1.5 text-sm font-medium hover:bg-slate-50">
+            <CopyPlus size={13} /> O'tgan yildan ko'chirish
+          </button>
+        )}
+      </div>
+
+      {emptyYear && (
+        <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <b>{d.year_label}</b> uchun budjet hali tuzilmagan. "O'tgan yildan
+          ko'chirish" bilan boshlang yoki oyma-oy qo'lda kiriting.
+        </div>
+      )}
+
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="flex gap-1 bg-white border border-slate-200 rounded-lg p-1">
           {subs.map(([k, l]) => (
@@ -60,7 +142,7 @@ export function BudgetTab() {
           ))}
         </div>
         {(sub === "oylik" || sub === "filial" || sub === "bolim") && (
-          <select value={month || d.monthly.month}
+          <select value={curM}
             onChange={(e) => setMonth(Number(e.target.value))}
             className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
             {d.months.map((m: number) => (
@@ -77,6 +159,56 @@ export function BudgetTab() {
           </button>
         )}
       </div>
+
+      {/* ---------------- Tasdiqlash paneli ---------------- */}
+      {meta && (
+        <div className={`mb-4 rounded-xl border px-4 py-3 flex flex-wrap items-center gap-3 text-sm ${
+          locked ? "border-emerald-200 bg-emerald-50"
+            : "border-slate-200 bg-white"}`}>
+          {locked ? (
+            <>
+              <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+              <span className="text-emerald-800">
+                <b>{MONTH_N[curM - 1]}</b> budjeti tasdiqlangan — qulflangan.
+                <span className="text-emerald-700/80">
+                  {appr.by ? ` ${appr.by}` : ""}
+                  {appr.at ? ` · ${appr.at.slice(0, 10)}` : ""}
+                </span>
+              </span>
+              <div className="flex-1" />
+              {meta.can_unlock ? (
+                <button onClick={doUnlock} disabled={busy}
+                  className="flex items-center gap-1.5 border border-emerald-300 text-emerald-800 rounded-lg px-3 py-1.5 text-xs font-medium bg-white disabled:opacity-40">
+                  <LockOpen size={12} /> Qulfni ochish
+                </button>
+              ) : (
+                <span className="text-xs text-emerald-700/70 flex items-center gap-1">
+                  <Lock size={12} /> Qulfni faqat asoschi ochadi
+                </span>
+              )}
+            </>
+          ) : (
+            <>
+              <Lock size={16} className="text-slate-400 shrink-0" />
+              <span className="text-slate-600">
+                <b>{MONTH_N[curM - 1]}</b> budjeti hali tasdiqlanmagan.
+                {meta.next && meta.next.due && (
+                  <span className="text-slate-400">
+                    {" "}Keyingi oyni tasdiqlash muddati: {meta.next.due}
+                  </span>
+                )}
+              </span>
+              <div className="flex-1" />
+              {meta.can_approve && (
+                <button onClick={doApprove} disabled={busy}
+                  className="flex items-center gap-1.5 bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-40">
+                  <CheckCircle2 size={12} /> Tasdiqlash
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      )}
 
       {sub === "yillik" && (
         <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto">
@@ -99,28 +231,39 @@ export function BudgetTab() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {d.yearly.map((r: Any) => (
-                <tr key={r.month}>
-                  <td className="px-4 py-2 text-slate-700 capitalize">
-                    {r.label}</td>
-                  <td className="px-3 py-2 text-right text-slate-500">
-                    {fmt(r.plan_income)}</td>
-                  <td className={`px-3 py-2 text-right font-medium ${
-                    pctTone(r.fakt_income, r.plan_income)}`}>
-                    {fmt(r.fakt_income)}</td>
-                  <td className="px-3 py-2 text-right text-slate-500">
-                    {fmt(r.plan_expense)}</td>
-                  <td className={`px-3 py-2 text-right font-medium ${
-                    pctTone(r.fakt_expense, r.plan_expense, true)}`}>
-                    {fmt(r.fakt_expense)}</td>
-                  <td className="px-3 py-2 text-right text-slate-500">
-                    {fmt(r.plan_profit)}</td>
-                  <td className={`px-4 py-2 text-right font-medium ${
-                    (r.fakt_profit ?? 0) >= 0 ? "text-emerald-700"
-                    : "text-red-600"}`}>
-                    {fmt(r.fakt_profit)}</td>
-                </tr>
-              ))}
+              {d.yearly.map((r: Any) => {
+                const ok = meta && meta.approved
+                  && meta.approved[String(r.month)];
+                return (
+                  <tr key={r.month}>
+                    <td className="px-4 py-2 text-slate-700 capitalize">
+                      <span className="flex items-center gap-1.5">
+                        {r.label}
+                        {ok && (
+                          <CheckCircle2 size={12}
+                            className="text-emerald-500 shrink-0" />
+                        )}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2 text-right text-slate-500">
+                      {fmt(r.plan_income)}</td>
+                    <td className={`px-3 py-2 text-right font-medium ${
+                      pctTone(r.fakt_income, r.plan_income)}`}>
+                      {fmt(r.fakt_income)}</td>
+                    <td className="px-3 py-2 text-right text-slate-500">
+                      {fmt(r.plan_expense)}</td>
+                    <td className={`px-3 py-2 text-right font-medium ${
+                      pctTone(r.fakt_expense, r.plan_expense, true)}`}>
+                      {fmt(r.fakt_expense)}</td>
+                    <td className="px-3 py-2 text-right text-slate-500">
+                      {fmt(r.plan_profit)}</td>
+                    <td className={`px-4 py-2 text-right font-medium ${
+                      (r.fakt_profit ?? 0) >= 0 ? "text-emerald-700"
+                      : "text-red-600"}`}>
+                      {fmt(r.fakt_profit)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -265,18 +408,96 @@ export function BudgetTab() {
       </p>
 
       {edit && (
-        <BudgetEditor d={d} month={month || d.monthly.month}
-          onClose={() => { setEdit(false); load(); }} />
+        <BudgetEditor d={d} month={curM} approved={meta ? meta.approved : {}}
+          onClose={() => { setEdit(false); loadMeta(year); load(); }} />
+      )}
+      {copy && (
+        <BudgetCopy d={d} years={meta ? meta.years : []}
+          onClose={(ok: boolean) => {
+            setCopy(false);
+            if (ok) { loadMeta(year); load(); }
+          }} />
       )}
     </div>
   );
 }
 
-function BudgetEditor({ d, month, onClose }: Any) {
+/** O'tgan yil budjetini keyingi yilga ko'chirish (+% o'sish bilan). */
+function BudgetCopy({ d, years, onClose }: Any) {
+  const opts = (years || []).filter((y: Any) => y.year !== d.year
+    && y.filled > 0);
+  const [from, setFrom] = useState<number>(opts.length ? opts[0].year
+    : d.year - 1);
+  const [growth, setGrowth] = useState("15");
+  const [busy, setBusy] = useState(false);
+
+  const run = async () => {
+    setBusy(true);
+    try {
+      const r: Any = await api.post("/finance/budget-copy", {
+        to_year: d.year, from_year: from,
+        growth_pct: Number(growth) || 0,
+      });
+      alert(`${r.saved} ta qator ko'chirildi.` +
+        (r.skipped ? ` ${r.skipped} ta qator tegilmadi (tasdiqlangan oy).` : ""));
+      onClose(true);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-base font-semibold text-slate-900">
+            Budjetni ko'chirish — {d.year_label}
+          </h2>
+          <button onClick={() => onClose(false)} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-3">
+          Tanlangan yilning har bir oyi va kategoriyasi ko'chiriladi, ustiga
+          o'sish foizi qo'shiladi. Tasdiqlangan oylar tegilmaydi.
+        </p>
+        <label className="block text-xs text-slate-600 mb-2">
+          Qaysi yildan
+          <select value={from} onChange={(e) => setFrom(Number(e.target.value))}
+            className="mt-0.5 w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+            {opts.length === 0 && (
+              <option value={d.year - 1}>{d.year - 1}-{d.year} o'quv yili</option>
+            )}
+            {opts.map((y: Any) => (
+              <option key={y.year} value={y.year}>{y.label}</option>
+            ))}
+          </select>
+        </label>
+        <label className="block text-xs text-slate-600 mb-4">
+          O'sish foizi (%)
+          <input value={growth} onChange={(e) => setGrowth(e.target.value)}
+            className="mt-0.5 w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm text-right" />
+        </label>
+        <div className="flex justify-end gap-2">
+          <button onClick={() => onClose(false)}
+            className="px-4 py-2 text-sm text-slate-600">Bekor</button>
+          <button onClick={run} disabled={busy}
+            className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
+            Ko'chirish
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BudgetEditor({ d, month, approved, onClose }: Any) {
   const [m, setM] = useState(month);
   const [income, setIncome] = useState("");
   const [vals, setVals] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
+  const locked = !!(approved && approved[String(m)]);
 
   useEffect(() => {
     // joriy qiymatlarni oylikdan olamiz
@@ -336,6 +557,13 @@ function BudgetEditor({ d, month, onClose }: Any) {
             placeholder="Daromad rejasi (so'm)"
             className="border border-slate-300 rounded-lg px-3 py-1.5 text-sm flex-1" />
         </div>
+        {locked && (
+          <p className="mb-3 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800 flex items-start gap-1.5">
+            <Lock size={12} className="shrink-0 mt-0.5" />
+            {MONTH_N[m - 1]} tasdiqlangan — o'zgartirish uchun avval asoschi
+            qulfni ochishi kerak.
+          </p>
+        )}
         <p className="text-xs font-medium text-slate-500 mb-1.5">
           Xarajat rejasi (kategoriya bo'yicha):
         </p>
@@ -353,7 +581,7 @@ function BudgetEditor({ d, month, onClose }: Any) {
         <div className="flex justify-end gap-2">
           <button onClick={onClose}
             className="px-4 py-2 text-sm text-slate-600">Bekor</button>
-          <button onClick={save} disabled={busy}
+          <button onClick={save} disabled={busy || locked}
             className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
             Saqlash
           </button>

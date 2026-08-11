@@ -405,17 +405,26 @@ export function AttendanceTab({
               // "eski davomatlar tarixi qolishi kerak...
               // ertaga bizga u kerak bo'ladi")
               const frozen = s.status === "frozen";
+              // Boshqa guruhga o'tgan: eski yo'qlamalari shu yerda
+              // qoladi (eski ustoz oyligi hujjati), faqat o'qish uchun
+              const gone = s.status === "transferred";
+              const locked = frozen || gone;
               return (
               <tr
                 key={s.id}
                 className={`border-t border-slate-100 ${
-                  frozen ? "bg-sky-50/40" : ""
+                  frozen ? "bg-sky-50/40" : gone ? "bg-violet-50/40" : ""
                 }`}
               >
                 <td
                   className={`sticky left-0 z-10 px-4 py-2.5 whitespace-nowrap border-r border-slate-200 ${
-                    frozen ? "bg-sky-50 text-sky-700" : "bg-white text-slate-800"
+                    frozen
+                      ? "bg-sky-50 text-sky-700"
+                      : gone
+                      ? "bg-violet-50 text-violet-700"
+                      : "bg-white text-slate-800"
                   }`}
+                  title={s.note || undefined}
                 >
                   <span className="text-slate-400 mr-2 text-xs">{i + 1}</span>
                   {s.full_name}
@@ -424,11 +433,16 @@ export function AttendanceTab({
                       muzlatilgan
                     </span>
                   )}
+                  {gone && (
+                    <span className="ml-2 text-[10px] font-medium bg-violet-100 text-violet-700 px-1.5 py-0.5 rounded">
+                      boshqa guruhga o'tgan
+                    </span>
+                  )}
                 </td>
                 {grid.lessons.map((ls) => {
                   const key = `${ls.id}:${s.id}`;
                   const v = grid.marks[key];
-                  const editable = !frozen && cellEditable(ls.date);
+                  const editable = !locked && cellEditable(ls.date);
                   return (
                     <td
                       key={ls.id}
@@ -446,6 +460,9 @@ export function AttendanceTab({
                         title={
                           frozen
                             ? "Muzlatilgan o'quvchi — tarix faqat o'qish uchun"
+                            : gone
+                            ? s.note ||
+                              "Boshqa guruhga o'tgan — tarix faqat o'qish uchun"
                             : cellHint(ls.date)
                         }
                         className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${

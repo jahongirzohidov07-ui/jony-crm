@@ -232,6 +232,13 @@ def save_attendance(
             models.Student.group_id == lesson.group_id,
             models.Student.status == "frozen").all()
     }
+    # Guruhga TEGISHLI o'quvchilar - boshqa guruhga o'tib ketganning
+    # eski yozuvi rahbariyatga ko'rinadi, lekin o'zgartirilmaydi
+    # (eski ustoz oyligi hujjati, 2026-08-11)
+    _member_ids = {
+        sid for (sid,) in db.query(models.Student.id).filter(
+            models.Student.group_id == lesson.group_id).all()
+    }
 
     existing = {
         a.student_id: a
@@ -243,6 +250,8 @@ def save_attendance(
     newly_late = []     # Telegram: "kech keldi" xabari uchun
     for m in payload.marks:
         if m.student_id in _frozen_ids:
+            continue
+        if m.student_id not in _member_ids:
             continue
         # Belgini olib tashlash: o'quvchi "belgilanmagan"ga qaytadi
         # va shu dars uchun oylikka kirmaydi
@@ -504,6 +513,13 @@ def save_grades(
             models.Student.group_id == lesson.group_id,
             models.Student.status == "frozen").all()
     }
+    # Guruhga TEGISHLI o'quvchilar - boshqa guruhga o'tib ketganning
+    # eski yozuvi rahbariyatga ko'rinadi, lekin o'zgartirilmaydi
+    # (eski ustoz oyligi hujjati, 2026-08-11)
+    _member_ids = {
+        sid for (sid,) in db.query(models.Student.id).filter(
+            models.Student.group_id == lesson.group_id).all()
+    }
 
     existing = {
         g.student_id: g
@@ -512,6 +528,8 @@ def save_grades(
     }
     for m in payload.marks:
         if m.student_id in _frozen_ids:
+            continue
+        if m.student_id not in _member_ids:
             continue
         row = existing.get(m.student_id)
         if m.score is None:

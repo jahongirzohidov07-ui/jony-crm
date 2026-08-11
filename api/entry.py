@@ -2267,16 +2267,34 @@ if _orig_att_grid is not None:
         # (yangi yo'qlama qo'yib yubormasin). Rahbariyatda ham qator
         # faqat O'QISH uchun - frontend belgilashni bloklaydi,
         # backend ham saqlashda o'tkazib yuboradi.
+        marked = {int(k.split(":")[1]) for k in
+                  (data.get("marks") or {}).keys()}
         if user.role in _FROZEN_HISTORY_VIEW:
             frozen = [x for x in data["students"]
                       if x.get("status") == "frozen"]
             act = [x for x in data["students"]
                    if x.get("status") != "frozen"]
             # Tarixi butunlay bo'sh muzlatilganlar qatori ko'rsatilmaydi
-            marked = {int(k.split(":")[1]) for k in
-                      (data.get("marks") or {}).keys()}
             frozen = [x for x in frozen if x["id"] in marked]
             data["students"] = act + frozen
+            # BOSHQA GURUHGA O'TGANLAR (Jahongir, 2026-08-11):
+            # yo'qlamasi shu guruh tarixida bor, lekin o'zi endi
+            # boshqa guruhda. Satr faqat o'qish uchun ko'rinadi -
+            # eski ustozning oyligi shu yozuvlardan chiqadi.
+            have = {x["id"] for x in data["students"]}
+            gone = marked - have
+            if gone:
+                for st in db.query(models.Student).filter(
+                        models.Student.id.in_(gone)).all():
+                    gname = st.group.name if st.group else None
+                    data["students"].append({
+                        "id": st.id, "full_name": st.full_name,
+                        "status": "transferred",
+                        "note": ("Boshqa guruhga o'tgan"
+                                 + (f": {gname}" if gname else "")
+                                 + " - yo'qlamalari avvalgi ustoz "
+                                   "oyligida qoladi"),
+                    })
         else:
             data["students"] = [x for x in data["students"]
                                 if x.get("status") != "frozen"]

@@ -427,6 +427,7 @@ export interface GridStudent {
   id: number;
   full_name: string;
   status: string;
+  note?: string | null;
 }
 
 export interface GridLesson {

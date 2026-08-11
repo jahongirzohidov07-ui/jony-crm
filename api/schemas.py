@@ -575,6 +575,8 @@ class GridStudent(BaseModel):
     id: int
     full_name: str
     status: str
+    # "transferred" satrlar uchun: qayerga/qachon ketgani izohi
+    note: Optional[str] = None
 
 
 class GridLesson(BaseModel):

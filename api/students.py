@@ -291,6 +291,82 @@ def create_student(
     db.refresh(s)
     return to_student_out(db, s)
 
+def _transfer_recharge(db: Session, s: models.Student,
+                       old_g, new_g, user, today=None) -> int:
+    """Guruh almashtirishda JORIY OY to'lovini taqsimlash (Jahongir):
+    "birinchi 6 ta dars oqigan to'lov summasi yechib olib
+    hisoblansinda, qolgan summa yangi o'tgan guruh uchun".
+
+    Eski guruh(lar)da shu oy YO'QLAMASI BELGILANGAN darslar o'sha
+    guruh narxida, yangi guruhda bugundan oy oxirigacha qolgan
+    darslar yangi narxda. Mavjud oylik hisob (charge) shu taqsimotga
+    almashtiriladi; hali hisoblanmagan bo'lsa - darhol yoziladi
+    (keyin oylik hisob-kitob uni takrorlamaydi, period belgisi bor).
+
+    Qaytaradi: eski guruhdagi belgilangan yo'qlamalar soni."""
+    today = today or roles.local_today()
+    period = f"{today.year:04d}-{today.month:02d}"
+    month_start = date(today.year, today.month, 1)
+
+    # Shu oy BELGILANGAN yo'qlamalari - guruhlar kesimida (bir oyda
+    # ikki marta ko'chsa ham har guruhdagisi o'z narxida hisoblanadi)
+    rows = (db.query(models.Lesson.group_id,
+                     func.count(models.Attendance.id))
+            .join(models.Attendance,
+                  models.Attendance.lesson_id == models.Lesson.id)
+            .filter(models.Attendance.student_id == s.id,
+                    models.Lesson.date >= month_start,
+                    models.Lesson.date <= today,
+                    models.Lesson.group_id != new_g.id)
+            .group_by(models.Lesson.group_id).all())
+    old_attended = 0
+    old_sum = 0.0
+    gnames = {g.id: g for g in db.query(models.Group).filter(
+        models.Group.id.in_([gid for gid, _ in rows] or [-1])).all()}
+    parts = []
+    for gid, cnt in rows:
+        g = gnames.get(gid)
+        price = (g.lesson_price or 0) if g else 0
+        old_sum += cnt * price
+        old_attended += cnt
+        if g:
+            parts.append(f"{g.name}da {cnt} dars")
+
+    left = _lessons_left_in_month(db, new_g.id, today)
+    new_cnt = len(left)
+    new_sum = new_cnt * (new_g.lesson_price or 0)
+    parts.append(f"{new_g.name}da {new_cnt} dars")
+
+    disc = _student_discount_percent(db, s)
+    total = roles.money((old_sum + new_sum) * (100 - disc) / 100)
+    note = ("Guruh almashtirildi: " + " + ".join(parts)
+            + (f" (chegirma {disc}%)" if disc else ""))
+
+    charge = (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.period == period,
+                      models.Payment.kind == "charge").first())
+    if charge is not None:
+        old_amt = charge.amount
+        charge.amount = -abs(total)
+        charge.note = note
+        audit.log(db, user, entity="payment", action="update",
+                  entity_id=charge.id, entity_label=s.full_name,
+                  field="Oylik hisob (guruh almashtirildi)",
+                  old_value=old_amt, new_value=charge.amount, note=note,
+                  branch_id=s.branch_id)
+    elif total > 0 and not _charge_skipped(db, s.id, period):
+        p = models.Payment(student_id=s.id, amount=-abs(total),
+                           kind="charge", period=period, note=note,
+                           created_by=user.full_name)
+        db.add(p)
+        audit.log(db, user, entity="payment", action="create",
+                  entity_label=s.full_name,
+                  field="Oylik hisob (guruh almashtirildi)",
+                  new_value=p.amount, note=note, branch_id=s.branch_id)
+    return old_attended
+
+
 @router.put("/api/students/{student_id}", response_model=schemas.StudentOut)
 def update_student(
     student_id: int,
@@ -319,9 +395,13 @@ def update_student(
 
     # Yangi guruhga o'tkazilyaptimi - sig'im va daraja tekshiriladi.
     new_gid = changes.get("group_id")
+    _old_group = None
+    _new_group = None
     if new_gid and new_gid != s.group_id:
         g = db.query(models.Group).get(new_gid)
         _raise_if_blocked(_check_enrolment(db, s, g), force=force)
+        _old_group = s.group
+        _new_group = g
         # O'quvchining darajasi hali yo'q bo'lsa - guruhnikidan olamiz.
         if g and not s.level:
             changes.setdefault("subject", g.subject)
@@ -333,6 +413,25 @@ def update_student(
     s.updated_at = datetime.utcnow()
     _sync_student_left_date(s)
     db.commit()
+
+    # GURUH ALMASHTIRILDI (Jahongir, 2026-08-11): eski ustozning
+    # yo'qlamalari o'z joyida qoladi (oyligi saqlanadi), joriy oy
+    # to'lovi taqsimlanadi, tarixga "Guruh almashtirildi" yoziladi.
+    if _new_group is not None:
+        try:
+            _att = _transfer_recharge(db, s, _old_group, _new_group, user)
+            audit.log(db, user, entity="student", action="group_move",
+                      entity_id=s.id, entity_label=s.full_name,
+                      old_value=_old_group.name if _old_group else None,
+                      new_value=_new_group.name,
+                      note=(f"{_att} ta belgilangan yo'qlama bilan "
+                            "ko'chdi - eski yo'qlamalari avvalgi "
+                            "ustoz oyligida qoladi"),
+                      branch_id=s.branch_id)
+            db.commit()
+        except Exception:
+            db.rollback()
+
     # Hisobi hali yo'q bo'lsa (masalan avval telefon kiritilmagan
     # edi) — endi ochib qo'yamiz. Hisobi bori qayta ochilmaydi.
     _ensure_student_account(db, s)

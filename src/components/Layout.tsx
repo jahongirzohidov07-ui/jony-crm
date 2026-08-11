@@ -280,7 +280,6 @@ export default function Layout() {
   // kontent so'rovi/g'oya beradigan rollargagina alohida band qoladi.
   if (
     (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
-    !can(user?.role, MARKETING_ACCESS) &&
     user?.role !== "hr_manager" &&
     user?.role !== "sales_manager" &&
     user?.role !== "academic_head"

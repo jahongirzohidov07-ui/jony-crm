@@ -6864,3 +6864,57 @@ def _bud_install():
 
 
 _BUD_INSTALLED = _bud_install()
+
+
+
+# ---- Budjet vazifalari: qo'lda ishga tushirish + kunda bir marta o'zi ----
+_BUD_RAN = {"day": None}
+
+
+def _bud_tick(db):
+    """Kunda bir marta (har protsessda) vazifalarni tekshiradi."""
+    today = roles.local_today()
+    if _BUD_RAN["day"] == today.isoformat():
+        return
+    _BUD_RAN["day"] = today.isoformat()
+    try:
+        _bud_tasks_ensure(db)
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+
+
+_drop_route("/api/finance/budget-meta", "GET")
+
+
+@app.get("/api/finance/budget-meta")
+def budget_meta_v2(year: int | None = None, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    _bud_tick(db)
+    return budget_meta(year=year, db=db, user=user)
+
+
+@app.post("/api/finance/budget-tasks-run")
+def budget_tasks_run(db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.FOUNDER))):
+    """Budjet vazifalarini shu zahoti tekshiradi (diagnostika uchun ham)."""
+    info = {"installed": _BUD_INSTALLED}
+    try:
+        _bud_tasks_ensure(db)
+        info["ok"] = True
+    except Exception as e:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        info["ok"] = False
+        info["err"] = f"{type(e).__name__}: {e}"[:400]
+    try:
+        info["tasks"] = db.query(models.Task).filter(
+            models.Task.source == _BUD_SRC).count()
+    except Exception:
+        db.rollback()
+        info["tasks"] = -1
+    return info

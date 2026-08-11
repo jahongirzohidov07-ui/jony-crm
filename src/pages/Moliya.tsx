@@ -20,8 +20,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can,
-} from "../lib/roles";
+  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT } from "../lib/roles";
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
@@ -226,12 +225,18 @@ function ledgerCategoryLabel(r: LedgerRow): string {
 
 function CashflowTab() {
   const now = new Date();
+  const { user } = useAuth();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [filter, setFilter] = useState<"all" | "in" | "out">("all");
   const [data, setData] = useState<CashflowLedger | null>(null);
   const [trend, setTrend] = useState<CashflowReport | null>(null);
   const [loading, setLoading] = useState(true);
+  // Xato kiritilgan kirim/chiqimni to'g'rilash (asoschi, moliyachi,
+  // filial rahbari) - Jahongir so'radi
+  const canPayEdit = can(user?.role, PAYMENT_EDIT);
+  const [editing, setEditing] = useState<PayEditTarget | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -239,7 +244,7 @@ function CashflowTab() {
       .get<CashflowLedger>(`/reports/cashflow-ledger?year=${year}&month=${month}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [year, month]);
+  }, [year, month, reloadKey]);
 
   useEffect(() => {
     api
@@ -359,6 +364,7 @@ function CashflowTab() {
                   <th className="text-left w-24">Turi</th>
                   <th className="text-left w-32">Filial</th>
                   <th className="text-left w-32">Kategoriya</th>
+                  <th className="w-8"></th>
                 </tr>
               </thead>
               <tbody>
@@ -394,6 +400,28 @@ function CashflowTab() {
                       <td className="font-medium">{inRow ? "Kirim" : "Chiqim"}</td>
                       <td>{r.branch}</td>
                       <td>{ledgerCategoryLabel(r)}</td>
+                      <td className="pr-3 text-right">
+                        {canPayEdit && (
+                          <button
+                            onClick={() =>
+                              setEditing({
+                                kind: r.id.startsWith("e")
+                                  ? "expense"
+                                  : "payment",
+                                id: Number(r.id.slice(1)),
+                                amount: r.amount,
+                                method: r.method,
+                                note: r.note,
+                                title: r.title,
+                              })
+                            }
+                            className="opacity-40 hover:opacity-100"
+                            title="Tahrirlash (summa, usul, izoh)"
+                          >
+                            <Pencil size={13} />
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
@@ -402,6 +430,14 @@ function CashflowTab() {
           </div>
         )}
       </div>
+
+      {editing && (
+        <PayEditModal
+          target={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => setReloadKey((k) => k + 1)}
+        />
+      )}
 
       {/* --- Oylar bo'yicha dinamika --- */}
       {trend && (

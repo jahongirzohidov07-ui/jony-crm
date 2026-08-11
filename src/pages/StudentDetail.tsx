@@ -475,10 +475,14 @@ function PaymentsTab({
   const [editId, setEditId] = useState<number | null>(null);
   const [editVal, setEditVal] = useState("");
   const [editVer, setEditVer] = useState<string>("");
+  // To'lov usulini ham to'g'rilash mumkin (naqd <-> plastik) -
+  // Jahongir: "adashib naqd kiritib yuboribmiz aslida u plastikdan"
+  const [editMethod, setEditMethod] = useState<string>("");
   const saveAmount = async (pid: number) => {
     try {
       await api.put(`/payments/${pid}`, {
         amount: Number(editVal),
+        ...(editMethod ? { method: editMethod } : {}),
         // Parallel tahrir himoyasi: men ochgan versiyani yuboraman —
         // boshqa xodim shu orada o'zgartirgan bo'lsa 409 keladi.
         expected_updated_at: editVer,
@@ -767,6 +771,20 @@ function PaymentsTab({
                         className="w-28 border border-slate-300 rounded-lg px-2 py-1 text-sm text-right"
                         autoFocus
                       />
+                      {p.kind === "payment" && (
+                        <select
+                          value={editMethod}
+                          onChange={(e) => setEditMethod(e.target.value)}
+                          className="border border-slate-300 rounded-lg px-1.5 py-1 text-xs bg-white"
+                          title="To'lov usuli"
+                        >
+                          {PAYMENT_METHODS.map((m) => (
+                            <option key={m} value={m}>
+                              {methodLabel(m)}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                       <button
                         onClick={() => saveAmount(p.id)}
                         className="text-emerald-600 hover:text-emerald-700"
@@ -791,6 +809,9 @@ function PaymentsTab({
                           onClick={() => {
                             setEditId(p.id);
                             setEditVal(String(Math.abs(p.amount)));
+                            setEditMethod(
+                              (p as unknown as { method?: string })
+                                .method || "cash");
                             setEditVer(
                               ((p as unknown as { updated_at?: string })
                                 .updated_at) || "");

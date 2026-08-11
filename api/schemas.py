@@ -2199,6 +2199,8 @@ class ReminderIn(BaseModel):
 class PaymentEditIn(BaseModel):
     amount: float                     # yangi summa (musbat son kiritiladi)
     note: Optional[str] = None
+    # To'lov usulini to'g'rilash (naqd <-> plastik) - faqat kind=payment
+    method: Optional[str] = None
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 

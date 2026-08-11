@@ -1916,8 +1916,25 @@ def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
     p.amount = sign * abs(round(payload.amount, 0))
     if payload.note is not None and payload.note.strip():
         p.note = payload.note.strip()
+    # TO'LOV USULINI to'g'rilash (Jahongir: "adashib naqd kiritib
+    # yuboribmiz aslida u plastikdan edi shuni togrlay olmayabmiz").
+    # Faqat haqiqiy pul kirimida ma'noga ega; cashflow hisobotlari
+    # avtomat to'g'rilanadi (ular shu maydondan o'qiydi).
+    old_method = p.method
+    if payload.method is not None and p.kind == "payment":
+        if payload.method not in roles.PAYMENT_METHODS:
+            raise HTTPException(400, "Noto'g'ri to'lov usuli")
+        p.method = payload.method
     p.updated_at = datetime.utcnow()
     db.commit()
+    if payload.method is not None and p.kind == "payment" \
+            and old_method != p.method:
+        audit.log(db, user, entity="payment", action="update",
+                  entity_id=p.id,
+                  entity_label=st.full_name if st else None,
+                  field="To'lov usuli",
+                  old_value=old_method, new_value=p.method,
+                  branch_id=st.branch_id if st else None, commit=True)
     audit.log(db, user, entity="payment", action="amount_edit",
               entity_id=p.id,
               entity_label=st.full_name if st else None,

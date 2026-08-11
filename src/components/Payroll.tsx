@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PAYMENT_EDIT, can } from "../lib/roles";
 import { Wallet, Check, Trash2, Search, Download } from "lucide-react";
 import {
   api,
@@ -482,12 +483,17 @@ export function PayrollTab() {
  * deb so'raydi — ro'yxat shu yerda turadi.
  */
 export function MonthPaymentsTab() {
+  const { user } = useAuth();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [d, setD] = useState<MonthPayments | null>(null);
   const [err, setErr] = useState("");
   const [q, setQ] = useState("");
   const [only, setOnly] = useState<"all" | "new" | "old">("all");
+  // Xato kiritilgan to'lovni to'g'rilash (summa, naqd/plastik, izoh)
+  const canPayEdit = can(user?.role, PAYMENT_EDIT);
+  const [editing, setEditing] = useState<PayEditTarget | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     setErr("");
@@ -498,7 +504,7 @@ export function MonthPaymentsTab() {
         setD(null);
         setErr(e instanceof Error ? e.message : "Xatolik");
       });
-  }, [year, month]);
+  }, [year, month, reloadKey]);
 
   if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
@@ -612,6 +618,7 @@ export function MonthPaymentsTab() {
                 <th className="text-left px-3 py-2.5 font-medium">
                   Qabul qilgan
                 </th>
+                <th className="w-8"></th>
               </tr>
             </thead>
             <tbody>
@@ -646,11 +653,39 @@ export function MonthPaymentsTab() {
                   <td className="px-3 py-2.5 text-slate-500">
                     {r.created_by || "—"}
                   </td>
+                  <td className="px-2 py-2.5 text-right">
+                    {canPayEdit && (
+                      <button
+                        onClick={() =>
+                          setEditing({
+                            kind: "payment",
+                            id: r.id,
+                            amount: r.amount,
+                            method: r.method,
+                            note: r.note,
+                            title: r.student,
+                          })
+                        }
+                        className="text-slate-300 hover:text-brand-600"
+                        title="Tahrirlash (summa, usul, izoh)"
+                      >
+                        <Pencil size={13} />
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      )}
+
+      {editing && (
+        <PayEditModal
+          target={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => setReloadKey((k) => k + 1)}
+        />
       )}
     </div>
   );

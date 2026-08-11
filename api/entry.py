@@ -5927,3 +5927,66 @@ def lcup_coins_undo(db: Session = Depends(get_db),
               entity_label=f"LC UP tanga ko'chirish bekor qilindi: {n}",
               new_value=n, commit=True)
     return {"deleted": n}
+
+
+# ---------------------------------------------------------------
+# LC UP tanga: coin balansini main.py ga bog'lanmasdan hisoblash.
+# Sabab: jonli serverda M._student_coin_balance topilmadi -> 500.
+# ---------------------------------------------------------------
+_drop_route("/api/lcup/coins", "POST")
+
+
+def _lc_coin_bal(db: Session, sid: int) -> int:
+    v = (db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+         .filter(models.CoinEntry.student_id == sid).scalar())
+    return int(v or 0)
+
+
+@app.post("/api/lcup/coins")
+def lcup_coins_sync_v2(payload: dict = Body(...),
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.FULL_ACCESS))):
+    """rows: [{name, phone, coins}] — tanga balansini tenglashtiradi."""
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply") or payload.get("commit"))
+    by_ph, by_nm = _lc_index(db)
+    out, found, changed, miss = [], 0, 0, []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss.append(r.get("name"))
+            continue
+        found += 1
+        target = int(round(_lc_amt(r.get("coins"))))
+        now = _lc_coin_bal(db, s.id)
+        diff = target - now
+        item = {"student_id": s.id, "name": s.full_name, "how": how,
+                "lcup": target, "hozir": now, "farq": diff}
+        if diff == 0:
+            item["skip"] = "bir xil"
+            out.append(item)
+            continue
+        changed += 1
+        if apply:
+            old = (db.query(models.CoinEntry)
+                   .filter(models.CoinEntry.student_id == s.id,
+                           models.CoinEntry.note == _LC_COIN_NOTE).first())
+            if old is not None:
+                old.amount = int(old.amount) + diff
+            else:
+                db.add(models.CoinEntry(
+                    student_id=s.id, amount=diff, source="lcup",
+                    note=_LC_COIN_NOTE,
+                    created_by=getattr(user, "full_name", None)))
+        out.append(item)
+    if apply and changed:
+        db.commit()
+        audit.log(db, user, entity="student", action="lcup_coins",
+                  entity_label=f"LC UP tanga: {changed} o'quvchi",
+                  new_value=changed, commit=True)
+    return {"apply": apply, "topildi": found, "o'zgargan": changed,
+            "topilmadi": len(miss), "rows": out}

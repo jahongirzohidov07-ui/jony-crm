@@ -140,6 +140,7 @@ def dashboard_trend(
 @router.get("/api/dashboard/student-growth")
 def student_growth(
     window: str = "6m",
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(get_current_user),
 ):
@@ -158,7 +159,10 @@ def student_growth(
     Qoida: enrolled_date <= sana VA (ketmagan YOKI left_date > sana).
     Ketgan-u sanasi noma'lum (arxiv, left_date bo'sh) yozuvlar
     grafikka umuman kirmaydi - ular tarixni shishiradi xolos."""
-    student_q = scope_to_branch(db.query(models.Student), models.Student, user)
+    # Filial tanlagichga bo'ysunadi — kartalar Zafarni ko'rsatsa,
+    # grafik ham Zafarni ko'rsatsin (2026-08-12).
+    student_q = scope_to_branch(db.query(models.Student), models.Student,
+                                user, branch_id)
     starts, ends = [], []
     for s in student_q.all():
         if not s.enrolled_date:
@@ -180,7 +184,10 @@ def student_growth(
     # ko'radiganlarga aralashtiramiz — filialga bog'langan xodim
     # grafigi buzilmaydi.
     _snaps = []
-    if user.role in tuple(roles.ORG_WIDE_ROLES) or not user.branch_id:
+    # Tarixiy sonlar BUTUN MARKAZ bo'yicha - filial filtrida aralashmaydi
+    if branch_id:
+        pass
+    elif user.role in tuple(roles.ORG_WIDE_ROLES) or not user.branch_id:
         _snaps = (db.query(models.StudentCountSnapshot)
                   .order_by(models.StudentCountSnapshot.date).all())
     _sd = [x.date for x in _snaps]

@@ -5593,3 +5593,6 @@ def lcup_exams_import(payload: dict = Body(...),
     return {"apply": apply, "imtihon": made_exams, "natija": made_rows,
             "guruh topilmadi": sorted(miss_gr)[:50],
             "o'quvchi topilmadi": len(miss_st)}
+
+
+# LC UP ko'chirish moduli yuklandi (balans + imtihon, coinsiz).

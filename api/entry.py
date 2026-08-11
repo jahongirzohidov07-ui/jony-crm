@@ -6437,3 +6437,430 @@ def exam_report(start: str | None = None, end: str | None = None,
         "failed": failed[:lim],
         "jami_natija": tot,
     }
+
+
+# =====================================================================
+#  BUDJET: o'quv yilini tanlash, oyni tasdiqlash (qulf) va avtomat
+#  vazifalar.
+#   - Tasdiqlash: asoschi yoki moliya direktori.
+#   - Qulfni ochish: faqat asoschi.
+#   - Har yili 1-iyundan asoschiga vazifa: keyingi o'quv yili budjeti
+#     va rejalari 31-avgustgacha to'liq tuzilishi kerak.
+#   - Har oyning oxirgi 3 kunida: keyingi oy budjetini tasdiqlash
+#     vazifasi (muddat — oyning oxirgi kuni).
+# =====================================================================
+import calendar as _cal
+import re as _re
+from datetime import datetime as _dtm
+
+_BUD_APPROVE_ROLES = [roles.FOUNDER, roles.FINANCE_DIRECTOR]
+_BUD_UNLOCK_ROLES = [roles.FOUNDER]
+_BUD_SRC = "budget"
+_BUD_YEAR_TITLE = "Keyingi o'quv yili budjeti va rejalari"
+_BUD_MON_TITLE = "Keyingi oy budjetini tasdiqlash"
+_BUD_DDL_DONE = {"ok": False}
+
+
+def _bud_sql(db, q, p=None):
+    from sqlalchemy import text as _t
+    return db.execute(_t(q), p or {})
+
+
+def _bud_ddl(db):
+    """budget_approvals jadvalini bir marta yaratadi (idempotent)."""
+    if _BUD_DDL_DONE["ok"]:
+        return
+    try:
+        name = db.get_bind().dialect.name
+    except Exception:
+        name = "postgresql"
+    pk = ("id INTEGER PRIMARY KEY AUTOINCREMENT" if name == "sqlite"
+          else "id SERIAL PRIMARY KEY")
+    _bud_sql(db, "CREATE TABLE IF NOT EXISTS budget_approvals ("
+                 + pk + ", year INTEGER NOT NULL, month INTEGER NOT NULL, "
+                 "approved_by TEXT, approved_at TIMESTAMP, note TEXT)")
+    _bud_sql(db, "CREATE UNIQUE INDEX IF NOT EXISTS ix_budget_appr_ym "
+                 "ON budget_approvals (year, month)")
+    db.commit()
+    _BUD_DDL_DONE["ok"] = True
+
+
+def _bud_iso(v):
+    if v is None:
+        return None
+    if hasattr(v, "isoformat"):
+        return v.isoformat()
+    return str(v)
+
+
+def _bud_approved(db, year):
+    """{oy: {"by":..., "at":...}} — shu o'quv yilining tasdiqlangan oylari."""
+    _bud_ddl(db)
+    rows = _bud_sql(db, "SELECT month, approved_by, approved_at "
+                        "FROM budget_approvals WHERE year = :y",
+                    {"y": int(year)}).fetchall()
+    return {int(r[0]): {"by": r[1], "at": _bud_iso(r[2])} for r in rows}
+
+
+def _bud_is_locked(db, year, month):
+    return int(month) in _bud_approved(db, year)
+
+
+def _bud_cur_year(today=None):
+    t = today or roles.local_today()
+    return t.year if t.month >= 9 else t.year - 1
+
+
+def _bud_ay(year, month):
+    """Kalendar oy qaysi o'quv yiliga tegishli."""
+    return year if month >= 9 else year - 1
+
+
+def _bud_filled(db, year):
+    """Shu yilda reja kiritilgan oylar soni."""
+    rows = db.query(models.BudgetLine.month).filter(
+        models.BudgetLine.year == int(year)).distinct().all()
+    return len(rows)
+
+
+def _bud_next_month(today=None):
+    t = today or roles.local_today()
+    y = t.year + 1 if t.month == 12 else t.year
+    m = 1 if t.month == 12 else t.month + 1
+    return y, m
+
+
+def _bud_last_day(y, m):
+    return _cal.monthrange(y, m)[1]
+
+
+@app.get("/api/finance/budget-meta")
+def budget_meta(year: int | None = None, db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """Yil ro'yxati, tasdiqlangan oylar va huquqlar."""
+    today = roles.local_today()
+    cur = _bud_cur_year(today)
+    y = int(year or cur)
+    years = []
+    for yy in (cur - 1, cur, cur + 1):
+        years.append({
+            "year": yy,
+            "label": roles.plan_year_label(yy),
+            "short": f"{yy}-{yy + 1}",
+            "is_current": yy == cur,
+            "filled": _bud_filled(db, yy),
+            "approved": len(_bud_approved(db, yy)),
+        })
+    ny, nm = _bud_next_month(today)
+    nay = _bud_ay(ny, nm)
+    due = date(today.year, today.month, _bud_last_day(today.year, today.month))
+    return {
+        "year": y,
+        "year_label": roles.plan_year_label(y),
+        "current_year": cur,
+        "years": years,
+        "filled": _bud_filled(db, y),
+        "approved": {str(k): v for k, v in _bud_approved(db, y).items()},
+        "can_approve": user.role in tuple(_BUD_APPROVE_ROLES),
+        "can_unlock": user.role in tuple(_BUD_UNLOCK_ROLES),
+        "can_edit": user.role in tuple(roles.BUDGET_EDIT),
+        "next": {
+            "year": nay,
+            "month": nm,
+            "label": f"{roles.UZ_MONTHS[nm - 1]} {ny}",
+            "approved": _bud_is_locked(db, nay, nm),
+            "due": due.isoformat(),
+        },
+    }
+
+
+@app.post("/api/finance/budget-approve")
+def budget_approve(payload: dict = Body(...), db: Session = Depends(get_db),
+                   user=Depends(require_role(*_BUD_APPROVE_ROLES))):
+    """Oy budjetini tasdiqlaydi — shundan keyin oy qulflanadi."""
+    try:
+        y = int(payload.get("year"))
+        m = int(payload.get("month"))
+    except Exception:
+        raise HTTPException(400, "yil va oy kerak")
+    if not (1 <= m <= 12):
+        raise HTTPException(400, "Oy 1-12 orasida bo'lishi kerak")
+    _bud_ddl(db)
+    if _bud_is_locked(db, y, m):
+        return {"ok": True, "already": True}
+    _bud_sql(db, "INSERT INTO budget_approvals "
+                 "(year, month, approved_by, approved_at) "
+                 "VALUES (:y, :m, :by, :at)",
+             {"y": y, "m": m, "by": user.full_name, "at": _dtm.utcnow()})
+    db.commit()
+    audit.log(db, user, entity="budget", action="approve", entity_id=y,
+              entity_label=f"{roles.plan_year_label(y)} · "
+                           f"{roles.UZ_MONTHS[m - 1]}",
+              new_value="tasdiqlandi", commit=True)
+    try:
+        _bud_close_month_task(db, y, m)
+    except Exception:
+        db.rollback()
+    return {"ok": True}
+
+
+@app.delete("/api/finance/budget-approve")
+def budget_unapprove(year: int, month: int, db: Session = Depends(get_db),
+                     user=Depends(require_role(*_BUD_UNLOCK_ROLES))):
+    """Qulfni ochadi — faqat asoschi."""
+    _bud_ddl(db)
+    _bud_sql(db, "DELETE FROM budget_approvals WHERE year=:y AND month=:m",
+             {"y": int(year), "m": int(month)})
+    db.commit()
+    audit.log(db, user, entity="budget", action="unlock", entity_id=int(year),
+              entity_label=f"{roles.plan_year_label(int(year))} · "
+                           f"{roles.UZ_MONTHS[int(month) - 1]}",
+              new_value="qulf ochildi", commit=True)
+    return {"ok": True}
+
+
+@app.post("/api/finance/budget-copy")
+def budget_copy(payload: dict = Body(...), db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.BUDGET_EDIT))):
+    """Bir o'quv yili budjetini boshqasiga ko'chiradi (+% o'sish bilan).
+    Tasdiqlangan oylarga tegmaydi."""
+    try:
+        to_y = int(payload.get("to_year"))
+        from_y = int(payload.get("from_year"))
+    except Exception:
+        raise HTTPException(400, "to_year va from_year kerak")
+    if to_y == from_y:
+        raise HTTPException(400, "Bir xil yil tanlangan")
+    try:
+        growth = float(payload.get("growth_pct") or 0)
+    except Exception:
+        growth = 0.0
+    k = 1.0 + growth / 100.0
+    src = db.query(models.BudgetLine).filter(
+        models.BudgetLine.year == from_y).all()
+    if not src:
+        raise HTTPException(400, "Tanlangan yilda budjet yo'q")
+    locked = set(_bud_approved(db, to_y).keys())
+    saved = skipped = 0
+    for s in src:
+        if s.month in locked:
+            skipped += 1
+            continue
+        amt = round(float(s.amount or 0) * k, 0)
+        row = db.query(models.BudgetLine).filter_by(
+            year=to_y, month=s.month, kind=s.kind,
+            category=s.category, branch_id=s.branch_id).first()
+        if row:
+            row.amount = amt
+        else:
+            db.add(models.BudgetLine(
+                year=to_y, month=s.month, kind=s.kind, category=s.category,
+                branch_id=s.branch_id, amount=amt,
+                created_by=user.full_name,
+                note=f"{roles.plan_year_label(from_y)}dan ko'chirildi"))
+        saved += 1
+    db.commit()
+    audit.log(db, user, entity="budget", action="copy", entity_id=to_y,
+              entity_label=roles.plan_year_label(to_y),
+              new_value=f"{roles.plan_year_label(from_y)} +{growth}% · "
+                        f"{saved} qator", commit=True)
+    try:
+        _bud_tasks_ensure(db)
+    except Exception:
+        db.rollback()
+    return {"ok": True, "saved": saved, "skipped": skipped}
+
+
+# ---- Budjet saqlash: tasdiqlangan oy qulflangan ----
+_drop_route("/api/finance/budget/{year}", "PUT")
+
+
+@app.put("/api/finance/budget/{year}")
+def save_budget_locked(year: int, payload: schemas.BudgetSaveIn,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.BUDGET_EDIT))):
+    locked = set(_bud_approved(db, year).keys())
+    n = 0
+    for it in payload.items:
+        if it.kind not in ("income", "expense") or not (1 <= it.month <= 12):
+            raise HTTPException(400, "Noto'g'ri budjet qatori")
+        if it.month in locked:
+            raise HTTPException(
+                400, f"{roles.UZ_MONTHS[it.month - 1]} tasdiqlangan — "
+                     "avval asoschi qulfni ochishi kerak")
+        row = db.query(models.BudgetLine).filter_by(
+            year=year, month=it.month, kind=it.kind,
+            category=it.category, branch_id=it.branch_id).first()
+        if row:
+            row.amount = it.amount
+        else:
+            db.add(models.BudgetLine(
+                year=year, month=it.month, kind=it.kind,
+                category=it.category, branch_id=it.branch_id,
+                amount=it.amount, created_by=user.full_name))
+        n += 1
+    db.commit()
+    audit.log(db, user, entity="budget", action="save", entity_id=year,
+              entity_label=roles.plan_year_label(year),
+              new_value=f"{n} ta qator", commit=True)
+    try:
+        _bud_tasks_ensure(db)
+    except Exception:
+        db.rollback()
+    return {"ok": True, "saved": n}
+
+
+# --------------------------------------------- avtomat vazifalar ----
+def _bud_user(db, role):
+    q = db.query(models.User).filter(models.User.role == role)
+    try:
+        q = q.filter(models.User.is_active == True)  # noqa: E712
+    except Exception:
+        pass
+    return q.order_by(models.User.id).first()
+
+
+def _bud_task_by_key(db, key):
+    """Vazifani izohdagi belgi bo'yicha topadi: [bud:...]"""
+    return db.query(models.Task).filter(
+        models.Task.source == _BUD_SRC,
+        models.Task.description.like(f"%[{key}]%")).first()
+
+
+def _bud_year_ready(db, year):
+    """Yil to'liq tuzilgan: har oyda ham daromad, ham xarajat rejasi bor."""
+    rows = db.query(models.BudgetLine.month, models.BudgetLine.kind).filter(
+        models.BudgetLine.year == int(year)).all()
+    inc = {int(m) for m, k in rows if k == "income"}
+    exp = {int(m) for m, k in rows if k == "expense"}
+    return all(m in inc and m in exp for m in roles.PLAN_MONTHS)
+
+
+def _bud_close(db, t, why):
+    if t and t.status not in tuple(roles.TASK_CLOSED):
+        t.status = "done"
+        t.done_at = _dtm.utcnow()
+        t.result = why
+        db.commit()
+
+
+def _bud_close_month_task(db, ay, m):
+    t = _bud_task_by_key(db, f"bud:mon:{ay}-{m:02d}")
+    _bud_close(db, t, "Budjet tasdiqlandi")
+
+
+def _bud_add_source_label():
+    try:
+        if not any(k == _BUD_SRC for k, _ in roles.TASK_SOURCES):
+            roles.TASK_SOURCES.append((_BUD_SRC, "Budjet"))
+            roles.TASK_SOURCE_LABELS[_BUD_SRC] = "Budjet"
+    except Exception:
+        pass
+
+
+_bud_add_source_label()
+
+
+def _bud_tasks_ensure(db):
+    """Yillik va oylik budjet vazifalarini yaratadi/yopadi. Har login va
+    kunlik cron shu funksiyani chaqiradi."""
+    today = roles.local_today()
+    f = _bud_user(db, roles.FOUNDER)
+    if not f:
+        return
+    fd = _bud_user(db, roles.FINANCE_DIRECTOR)
+    watch = fd.id if fd else None
+
+    # ---- 1) Yillik: 1-iyundan 31-avgustgacha ----
+    if 6 <= today.month <= 8:
+        ty = today.year          # keyingi o'quv yili shu yil sentabrda boshlanadi
+        key = f"bud:year:{ty}"
+        t = _bud_task_by_key(db, key)
+        if _bud_year_ready(db, ty):
+            _bud_close(db, t, "Budjet to'liq tuzildi")
+        elif t is None:
+            db.add(models.Task(
+                title=f"{_BUD_YEAR_TITLE} — {roles.plan_year_label(ty)}",
+                description=(
+                    f"[{key}]\n{roles.plan_year_label(ty)} uchun budjet "
+                    "(daromad va xarajat rejasi, 12 oy) va bo'lim rejalari "
+                    "to'liq tuzilishi kerak. Muddat — 31-avgust."),
+                assignee_id=f.id, watcher_id=watch,
+                deadline=date(today.year, 8, 31),
+                priority="high", status="new", source=_BUD_SRC,
+                created_by="tizim"))
+            db.commit()
+
+    # Eski yillik vazifa tugagan bo'lsa — yopamiz
+    for t in db.query(models.Task).filter(
+            models.Task.source == _BUD_SRC,
+            models.Task.description.like("%[bud:year:%")).all():
+        if t.status in tuple(roles.TASK_CLOSED):
+            continue
+        mt = _re.search(r"\[bud:year:(\d{4})\]", t.description or "")
+        if mt and _bud_year_ready(db, int(mt.group(1))):
+            _bud_close(db, t, "Budjet to'liq tuzildi")
+
+    # ---- 2) Oylik: oyning oxirgi 3 kuni ----
+    ny, nm = _bud_next_month(today)
+    nay = _bud_ay(ny, nm)
+    last = _bud_last_day(today.year, today.month)
+    key = f"bud:mon:{nay}-{nm:02d}"
+    t = _bud_task_by_key(db, key)
+    if _bud_is_locked(db, nay, nm):
+        _bud_close(db, t, "Budjet tasdiqlandi")
+    elif t is None and today.day >= last - 2:
+        db.add(models.Task(
+            title=f"{_BUD_MON_TITLE} — {roles.UZ_MONTHS[nm - 1]} {ny}",
+            description=(
+                f"[{key}]\nMoliya → Budjet bo'limida "
+                f"{roles.UZ_MONTHS[nm - 1]} oyi rejasini ko'rib chiqib "
+                "tasdiqlang. Tasdiqlangandan keyin oy qulflanadi."),
+            assignee_id=f.id, watcher_id=watch,
+            deadline=date(today.year, today.month, last),
+            priority="high", status="new", source=_BUD_SRC,
+            created_by="tizim"))
+        db.commit()
+
+    # Tasdiqlangan oylarning ochiq vazifalarini yopamiz
+    for t in db.query(models.Task).filter(
+            models.Task.source == _BUD_SRC,
+            models.Task.description.like("%[bud:mon:%")).all():
+        if t.status in tuple(roles.TASK_CLOSED):
+            continue
+        mt = _re.search(r"\[bud:mon:(\d{4})-(\d{2})\]", t.description or "")
+        if mt and _bud_is_locked(db, int(mt.group(1)), int(mt.group(2))):
+            _bud_close(db, t, "Budjet tasdiqlandi")
+
+
+def _bud_install():
+    """_ensure_month_charges ustiga qo'shamiz — login va cron ikkalasi ham
+    shu funksiyani chaqiradi."""
+    import sys as _sys
+    done = []
+    for mod in ("common", "system", "main"):
+        m = _sys.modules.get(mod)
+        if m is None:
+            continue
+        old = getattr(m, "_ensure_month_charges", None)
+        if old is None or getattr(old, "_bud_new", False):
+            continue
+
+        def _wrap(db, _old=old):
+            r = _old(db)
+            try:
+                _bud_tasks_ensure(db)
+            except Exception:
+                try:
+                    db.rollback()
+                except Exception:
+                    pass
+            return r
+
+        _wrap._bud_new = True
+        setattr(m, "_ensure_month_charges", _wrap)
+        done.append(mod)
+    return done
+
+
+_BUD_INSTALLED = _bud_install()

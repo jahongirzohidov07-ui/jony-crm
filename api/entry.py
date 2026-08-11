@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from datetime import date
 
-from fastapi import Depends, HTTPException
+from fastapi import Body, Depends, HTTPException
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -5352,3 +5352,244 @@ def system_schema_sync(user=Depends(require_role(*roles.FULL_ACCESS))):
                  "ro'yxatidagi ustunlar NOT NULL, ularni qo'lda "
                  "to'ldirish kerak."),
     }
+
+
+# =====================================================================
+#  LC UP -> JONYOS KO'CHIRISH
+#
+#  1) Balans: LC UP dagi balans asosiy deb olinadi. Har o'quvchiga
+#     farqni yopadigan BITTA "[LC UP] balans tenglashtirish" yozuvi
+#     qo'shiladi. Qayta yuborilsa eski tenglashtirish o'chirilib,
+#     yangisi yoziladi — ya'ni necha marta bosilsa ham natija bir xil.
+#  2) Imtihon natijalari: coin BERILMAYDI (coins=0). Faqat natija
+#     ko'chiriladi — o'quvchi o'z kabinetida ko'radi.
+# =====================================================================
+_LC_BAL_NOTE = "[LC UP] balans tenglashtirish"
+_LC_EXAM_NOTE = "[LC UP]"
+
+
+def _lc_phone(v) -> str:
+    d = "".join(ch for ch in str(v or "") if ch.isdigit())
+    if len(d) > 9 and d.startswith("998"):
+        d = d[3:]
+    elif len(d) == 10 and d.startswith("0"):
+        d = d[1:]
+    return d[-9:] if len(d) >= 9 else ""
+
+
+def _lc_name(v) -> str:
+    t = " ".join(str(v or "").split()).lower()
+    for a, b in (("'", "'"), ("`", "'"), ("’", "'"), ("ʼ", "'")):
+        t = t.replace(a, b)
+    return t
+
+
+def _lc_num(v) -> float:
+    """«-1 388 000 so'm», «110 769», «1,388,000» -> float."""
+    t = str(v or "").replace(" ", " ")
+    neg = "-" in t
+    d = "".join(ch for ch in t if ch.isdigit() or ch == ".")
+    if not d:
+        return 0.0
+    try:
+        x = float(d)
+    except ValueError:
+        return 0.0
+    return -x if neg else x
+
+
+def _lc_index(db: Session):
+    """Telefon va ism bo'yicha qidiruv indeksi."""
+    by_ph, by_nm = {}, {}
+    for s in db.query(models.Student).all():
+        p = _lc_phone(getattr(s, "phone", None))
+        if p:
+            by_ph.setdefault(p, s)
+        by_nm.setdefault(_lc_name(s.full_name), s)
+    return by_ph, by_nm
+
+
+def _lc_match(row, by_ph, by_nm):
+    s = by_ph.get(_lc_phone(row.get("phone")))
+    if s is not None:
+        return s, "telefon"
+    s = by_nm.get(_lc_name(row.get("name")))
+    return (s, "ism") if s is not None else (None, None)
+
+
+@app.post("/api/lcup/balance")
+def lcup_balance_sync(payload: dict = Body(...),
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.FULL_ACCESS))):
+    """LC UP balanslarini yangi platformaga moslaydi.
+
+    apply=false (standart) — hech narsa yozilmaydi, faqat farq
+    ro'yxati qaytadi. apply=true — tenglashtirish yozuvlari qo'yiladi.
+    """
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply"))
+    by_ph, by_nm = _lc_index(db)
+    seen, diffs, miss = set(), [], []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss.append({"name": r.get("name"), "phone": r.get("phone")})
+            continue
+        if s.id in seen:
+            continue
+        seen.add(s.id)
+        target = _lc_num(r.get("balance"))
+        # Eski tenglashtirishni hisobdan chiqarib, "toza" balansni olamiz
+        old = (db.query(models.Payment)
+               .filter(models.Payment.student_id == s.id,
+                       models.Payment.note == _LC_BAL_NOTE).all())
+        clean = M.student_balance(db, s.id) - sum(p.amount for p in old)
+        diff = round(target - clean, 2)
+        now = M.student_balance(db, s.id)
+        item = {"student_id": s.id, "name": s.full_name, "how": how,
+                "lcup": target, "hozir": round(clean, 2), "farq": diff,
+                "balans": round(now, 2)}
+        # Balans allaqachon LC UP dagidek bo'lsa — qayta yozmaymiz
+        if abs(target - now) < 1:
+            item["skip"] = "farq yo'q"
+            diffs.append(item)
+            continue
+        diffs.append(item)
+        if not apply:
+            continue
+        for p in old:
+            db.delete(p)
+        pay = models.Payment(
+            student_id=s.id, amount=diff,
+            kind="payment" if diff > 0 else "charge",
+            note=_LC_BAL_NOTE, created_by=getattr(user, "full_name", None))
+        db.add(pay)
+        db.flush()
+        M._ensure_public_id(db, "payment", pay)
+    changed = [d for d in diffs if not d.get("skip")]
+    if apply and changed:
+        db.commit()
+        audit.log(db, user, entity="payment", action="lcup_balance",
+                  entity_label=f"LC UP: {len(changed)} ta balans",
+                  new_value=len(changed), commit=True)
+    return {"apply": apply, "kelgan": len(rows), "topildi": len(diffs),
+            "o'zgargan": len(changed), "topilmadi": len(miss),
+            "rows": changed[:500], "miss": miss[:300]}
+
+
+@app.delete("/api/lcup/balance")
+def lcup_balance_undo(db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Tenglashtirishni bekor qiladi — hamma [LC UP] yozuvi o'chadi."""
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.note == _LC_BAL_NOTE).all())
+    for p in rows:
+        db.delete(p)
+    db.commit()
+    audit.log(db, user, entity="payment", action="lcup_balance_undo",
+              entity_label=f"{len(rows)} ta tenglashtirish o'chirildi",
+              new_value=len(rows), commit=True)
+    return {"deleted": len(rows)}
+
+
+def _lc_group(db: Session, name: str):
+    t = _lc_name(name)
+    if not t:
+        return None
+    for g in db.query(models.Group).all():
+        if _lc_name(g.name) == t:
+            return g
+    for g in db.query(models.Group).all():
+        if t and (t in _lc_name(g.name) or _lc_name(g.name) in t):
+            return g
+    return None
+
+
+@app.post("/api/lcup/exams")
+def lcup_exams_import(payload: dict = Body(...),
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.FULL_ACCESS))):
+    """LC UP imtihon natijalarini ko'chiradi. COIN BERILMAYDI.
+
+    rows: [{group, exam, date, max, name, phone, score}]
+    """
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply"))
+    by_ph, by_nm = _lc_index(db)
+    buckets, miss_st, miss_gr = {}, [], set()
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, _how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss_st.append(r.get("name"))
+            continue
+        key = (str(r.get("group") or ""), str(r.get("exam") or ""),
+               str(r.get("date") or ""))
+        buckets.setdefault(key, []).append((s, r))
+    made_exams = made_rows = 0
+    for (gname, ename, edate), items in buckets.items():
+        g = _lc_group(db, gname)
+        if g is None:
+            g = next((it[0].group for it in items
+                      if getattr(it[0], "group", None)), None)
+        if g is None:
+            miss_gr.add(gname)
+            continue
+        d = M._date_of(edate) if hasattr(M, "_date_of") else None
+        if d is None:
+            try:
+                d = date.fromisoformat(str(edate)[:10])
+            except Exception:
+                d = date.today()
+        mx = 0.0
+        for _s, r in items:
+            mx = max(mx, _lc_num(r.get("max")) or 0)
+        if mx <= 0:
+            mx = 100.0
+        ex = (db.query(models.Exam)
+              .filter(models.Exam.group_id == g.id,
+                      models.Exam.title == ename,
+                      models.Exam.date == d).first())
+        if ex is None:
+            if not apply:
+                made_exams += 1
+                made_rows += len(items)
+                continue
+            ex = models.Exam(group_id=g.id, kind="unit", title=ename,
+                             date=d, max_score=mx, status="done",
+                             note=_LC_EXAM_NOTE,
+                             created_by=getattr(user, "full_name", None))
+            db.add(ex)
+            db.flush()
+            made_exams += 1
+        elif not apply:
+            made_rows += len(items)
+            continue
+        have = {r.student_id for r in ex.results}
+        for s, r in items:
+            if s.id in have:
+                continue
+            sc = _lc_num(r.get("score"))
+            db.add(models.ExamResult(
+                exam_id=ex.id, student_id=s.id, score=sc, band=None,
+                percent=round(sc / mx * 100, 1) if mx else None,
+                coins=0,                      # <- coin berilmaydi
+                absent=0, note=_LC_EXAM_NOTE,
+                created_by=getattr(user, "full_name", None)))
+            made_rows += 1
+    if apply and (made_exams or made_rows):
+        db.commit()
+        audit.log(db, user, entity="exam", action="lcup_import",
+                  entity_label=f"LC UP: {made_exams} imtihon, "
+                               f"{made_rows} natija (coinsiz)",
+                  new_value=made_rows, commit=True)
+    return {"apply": apply, "imtihon": made_exams, "natija": made_rows,
+            "guruh topilmadi": sorted(miss_gr)[:50],
+            "o'quvchi topilmadi": len(miss_st)}

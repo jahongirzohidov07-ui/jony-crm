@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Layers, Users, BarChart3, CheckCircle2, XCircle, Target,
 } from "lucide-react";
+import { api } from "../lib/api";
 
 /**
  * Imtihonlar hisoboti — markaz bo'yicha umumiy ko'rinish.
@@ -72,14 +73,10 @@ export default function ExamReport() {
     let alive = true;
     setLoading(true);
     setErr("");
-    const tok = localStorage.getItem("jony_crm_token") || "";
-    const url = "/api/analytics/exam-report?start=" + start +
+    // api.get global filial tanlagichini o'zi qo'shadi (branch_id).
+    const url = "/analytics/exam-report?start=" + start +
       "&end=" + end + "&limit=500";
-    fetch(url, { headers: { Authorization: "Bearer " + tok } })
-      .then((r) => {
-        if (!r.ok) throw new Error("Hisobotni olish imkoni bo'lmadi");
-        return r.json();
-      })
+    api.get<Data>(url)
       .then((j) => { if (alive) setData(j); })
       .catch((e) => { if (alive) setErr(String(e.message || e)); })
       .finally(() => { if (alive) setLoading(false); });

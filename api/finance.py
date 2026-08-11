@@ -985,6 +985,75 @@ def add_debtor_contact(
     db.commit()
     return {"ok": True}
 
+def _avg_check(db: Session, year: int, month: int,
+               branch_id: int | None = None):
+    """Oyning O'RTACHA CHEKI: tushum / TO'LAGAN O'QUVCHILAR soni.
+
+    Jahongir (2026-08-12): "bir o'quvchi 2 marta bo'lib to'laganligi
+    hisobga bitta qilib olinsin" - shuning uchun to'lovlar soni emas,
+    DISTINCT o'quvchilar soni olinadi."""
+    start, end = billing.month_bounds(year, month)
+    d0, d1 = _utc_window(start, end)
+    q = (db.query(models.Payment.student_id, models.Payment.amount)
+         .join(models.Student,
+               models.Payment.student_id == models.Student.id)
+         .filter(models.Payment.kind == "payment",
+                 models.Payment.amount > 0,
+                 models.Payment.created_at >= d0,
+                 models.Payment.created_at <= d1))
+    if branch_id:
+        q = q.filter(models.Student.branch_id == branch_id)
+    rows = q.all()
+    revenue = round(sum(a for _s, a in rows), 0)
+    payers = len({s for s, _a in rows})
+    return {"revenue": revenue, "payers": payers,
+            "avg_check": round(revenue / payers, 0) if payers else None}
+
+
+def _avg_check_recent(db: Session, branch_id: int | None = None,
+                      months: int = 3):
+    """Oxirgi N TO'LIQ oyning umumiy o'rtacha cheki - reja hisoblari
+    uchun barqaror asos (joriy chala oy olinmaydi)."""
+    today = roles.local_today()
+    y, m = today.year, today.month
+    tot_rev, tot_payers = 0.0, 0
+    for _ in range(months):
+        m -= 1
+        if m == 0:
+            y, m = y - 1, 12
+        st = _avg_check(db, y, m, branch_id)
+        tot_rev += st["revenue"]
+        tot_payers += st["payers"]
+    return round(tot_rev / tot_payers, 0) if tot_payers else None
+
+
+@router.get("/api/reports/avg-check")
+def report_avg_check(months: int = 12, branch_id: int | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(*roles.FINANCE_ACCESS))):
+    """O'rtacha chek statistikasi - oylar kesimida (Jahongir,
+    2026-08-12). Filial tanlansa shu filial bo'yicha."""
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        branch_id = user.branch_id
+    months = max(1, min(24, months))
+    today = roles.local_today()
+    y, m = today.year, today.month
+    out = []
+    for _ in range(months):
+        st = _avg_check(db, y, m, branch_id)
+        out.append({"year": y, "month": m,
+                    "label": f"{roles.UZ_MONTHS[m - 1]} {y}", **st})
+        m -= 1
+        if m == 0:
+            y, m = y - 1, 12
+    out.reverse()
+    return {"rows": out,
+            "recent_avg": _avg_check_recent(db, branch_id),
+            "hint": ("O'rtacha chek = oy tushumi / to'lagan o'quvchilar "
+                     "soni. Bo'lib-bo'lib to'lagan o'quvchi BITTA "
+                     "hisoblanadi.")}
+
+
 def _work_days(start: date, end: date) -> int:
     """[start, end) oralig'idagi ish kunlari (yakshanba dam)."""
     n, d = 0, start
@@ -1177,6 +1246,46 @@ def get_plan(year: int | None = None, granularity: str = "month",
         d = plan_map.setdefault(t.metric, {})
         # Umumiy rejimda barcha filiallar rejasi YIG'ILADI
         d[t.month] = (d.get(t.month) or 0) + (t.value or 0)
+
+    # AVTOMAT REJALAR (Jahongir, 2026-08-12):
+    # 1) TUSHUM rejasi = o'rtacha chek x (yangi + eski to'lovlar
+    #    rejasi). O'rtacha chek - oxirgi 3 to'liq oy, to'lagan
+    #    o'quvchi bitta hisoblanadi.
+    avg_check = _avg_check_recent(db, branch_id)
+    _newp = plan_map.get("new_payments", {})
+    _oldp = plan_map.get("old_payments", {})
+    if avg_check and (_newp or _oldp):
+        rev = {}
+        for _m in roles.PLAN_MONTHS:
+            if _newp.get(_m) is None and _oldp.get(_m) is None:
+                continue
+            rev[_m] = round(avg_check * ((_newp.get(_m) or 0)
+                                         + (_oldp.get(_m) or 0)), 0)
+        if rev:
+            plan_map["revenue"] = rev
+    # 2) XARAJAT rejasi = shu oy BUDJETdagi xarajatlar yig'indisi
+    bq = (db.query(models.BudgetLine.month,
+                   func.coalesce(func.sum(models.BudgetLine.amount), 0))
+          .filter(models.BudgetLine.year == year,
+                  models.BudgetLine.kind == "expense"))
+    if branch_id:
+        bq = bq.filter(models.BudgetLine.branch_id == branch_id)
+    _bexp = {m_: v_ for m_, v_ in bq.group_by(models.BudgetLine.month)
+             .all() if v_}
+    if _bexp:
+        plan_map["expenses"] = {m_: round(v_, 0)
+                                for m_, v_ in _bexp.items()}
+    # 3) FOYDA rejasi = tushum rejasi - xarajat rejasi
+    _revp = plan_map.get("revenue", {})
+    _expp = plan_map.get("expenses", {})
+    if _revp and _expp:
+        prof = {}
+        for _m in roles.PLAN_MONTHS:
+            if _revp.get(_m) is None or _expp.get(_m) is None:
+                continue
+            prof[_m] = round(_revp[_m] - _expp[_m], 0)
+        if prof:
+            plan_map["profit"] = prof
     # SMM sotuv bo'limidan faqat ikkita ko'rsatkichni ko'radi
     smm_extra = (user.role == roles.SMM_MANAGER)
     rows = []
@@ -1243,6 +1352,8 @@ def get_plan(year: int | None = None, granularity: str = "month",
         "can_edit": user.role in tuple(roles.PLAN_EDIT)
         and branch_id is not None,
         "branch_id": branch_id,
+        "avg_check": avg_check,
+        "auto_plans": ["revenue", "expenses", "profit"],
         "branches": ([{"id": b.id, "name": b.name}
                       for b in db.query(models.Branch)
                       .order_by(models.Branch.name).all()]
@@ -1295,6 +1406,10 @@ def save_plan(year: int, payload: schemas.PlanSaveIn,
         raise HTTPException(404, "Filial topilmadi")
     n = 0
     for it in payload.items:
+        # revenue/expenses/profit endi AVTOMAT hisoblanadi - qo'lda
+        # kiritilgani jimgina o'tkaziladi (2026-08-12)
+        if it.metric in ("revenue", "expenses", "profit"):
+            continue
         if it.metric not in roles.PLAN_METRIC_KEYS or not (
                 1 <= it.month <= 12):
             raise HTTPException(400, f"Noto'g'ri ko'rsatkich: {it.metric}")

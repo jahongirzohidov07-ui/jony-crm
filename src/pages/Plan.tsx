@@ -310,6 +310,11 @@ export default function Plan() {
   );
 }
 
+// 2026-08-12 (Jahongir): tushum/xarajat/foyda REJASI avtomat:
+// tushum = o'rtacha chek x (yangi + eski to'lovlar rejasi),
+// xarajat = shu oy budjeti, foyda = tushum - xarajat.
+const AUTO_PLANS = ["revenue", "expenses", "profit"];
+
 const METRICS = [
   ["leads", "Lid"],
   ["visits", "Tashrif"],
@@ -369,12 +374,14 @@ function PlanEditor({
   const save = async () => {
     setBusy(true);
     const items: Any[] = [];
-    for (const [k] of METRICS)
+    for (const [k] of METRICS) {
+      if (AUTO_PLANS.includes(k)) continue;
       for (const m of months) {
         const s = vals[k][m];
         if (s !== "" && s !== null && !isNaN(Number(s)))
           items.push({ metric: k, month: m, value: Number(s) });
       }
+    }
     try {
       await api.put(
         `/plan/${year}${branchId ? `?branch_id=${branchId}` : ""}`,
@@ -432,7 +439,24 @@ function PlanEditor({
               </tr>
             </thead>
             <tbody>
-              {METRICS.map(([k, label]) => (
+              {METRICS.map(([k, label]) =>
+                AUTO_PLANS.includes(k) ? (
+                  <tr key={k} className="border-t border-slate-100 bg-slate-50/60">
+                    <td className="px-2 py-1 text-slate-500 whitespace-nowrap">
+                      {label}
+                    </td>
+                    <td
+                      colSpan={months.length}
+                      className="px-2 py-1 text-xs text-slate-400"
+                    >
+                      {k === "revenue"
+                        ? "Avtomat: o'rtacha chek × (yangi + eski to'lovlar rejasi)"
+                        : k === "expenses"
+                        ? "Avtomat: shu oy budjetidagi xarajatlar (Moliya → Budjet)"
+                        : "Avtomat: tushum rejasi − xarajat rejasi"}
+                    </td>
+                  </tr>
+                ) : (
                 <tr key={k} className="border-t border-slate-100">
                   <td className="px-2 py-1 text-slate-700 whitespace-nowrap">
                     {label}
@@ -452,7 +476,8 @@ function PlanEditor({
                     </td>
                   ))}
                 </tr>
-              ))}
+                )
+              )}
             </tbody>
           </table>
         </div>

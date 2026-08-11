@@ -77,6 +77,8 @@ export function FinanceOverviewTab() {
         {d.hint}
       </p>
 
+      <AvgCheckBlock />
+
       {open && (
         <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
              onClick={() => setOpen(null)}>
@@ -126,6 +128,68 @@ export function FinanceOverviewTab() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ---------------- O'rtacha chek (oylar kesimida) --------------------
+// Jahongir (2026-08-12): "o'rtacha chek statistikasi ham yuritilsin
+// har oy uchun, bir o'quvchi 2 marta bo'lib to'laganligi bitta qilib
+// olinsin". Tushum rejasi ham shu ko'rsatkichdan hisoblanadi.
+function AvgCheckBlock() {
+  const [d, setD] = useState<Any>(null);
+  useEffect(() => {
+    api.get<Any>("/reports/avg-check?months=12").then(setD)
+      .catch(() => setD(null));
+  }, []);
+  if (!d || !d.rows?.length) return null;
+  const nz = d.rows.filter((r: Any) => r.payers > 0);
+  return (
+    <div className="mt-6 bg-white rounded-xl border border-slate-200 p-4">
+      <div className="flex items-center justify-between mb-1">
+        <p className="text-sm font-semibold text-slate-900">
+          O'rtacha chek — oylar kesimida
+        </p>
+        {d.recent_avg && (
+          <p className="text-sm text-slate-600">
+            Oxirgi 3 oy:{" "}
+            <span className="font-semibold text-brand-700">
+              {Number(d.recent_avg).toLocaleString("ru-RU")} so'm
+            </span>
+          </p>
+        )}
+      </div>
+      <p className="text-xs text-slate-400 mb-3">{d.hint}</p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="text-xs text-slate-500">
+            <tr>
+              <th className="text-left py-1.5 font-medium">Oy</th>
+              <th className="text-right font-medium">Tushum</th>
+              <th className="text-right font-medium">To'lagan o'quvchi</th>
+              <th className="text-right font-medium">O'rtacha chek</th>
+            </tr>
+          </thead>
+          <tbody>
+            {nz.map((r: Any) => (
+              <tr key={r.label} className="border-t border-slate-100">
+                <td className="py-1.5 text-slate-700">{r.label}</td>
+                <td className="text-right tabular-nums text-slate-600">
+                  {Number(r.revenue).toLocaleString("ru-RU")}
+                </td>
+                <td className="text-right tabular-nums text-slate-600">
+                  {r.payers}
+                </td>
+                <td className="text-right tabular-nums font-medium text-slate-900">
+                  {r.avg_check
+                    ? Number(r.avg_check).toLocaleString("ru-RU") + " so'm"
+                    : "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

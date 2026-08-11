@@ -55,8 +55,6 @@ import {
   PARENT,
   TEACHER,
   SUPPORT_TEACHER,
-  CONTENT_REQUESTER,
-  IDEA_SUBMIT,
   TEACHER_MENU,
   BRANCH_SWITCH,
 } from "../lib/roles";
@@ -278,11 +276,11 @@ export default function Layout() {
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.
   // SMM endi Marketing ICHIDA (tab). Marketingga kirolmaydigan, lekin
   // kontent so'rovi/g'oya beradigan rollargagina alohida band qoladi.
+  // SMM bo'limi: faqat marketing/SMM va sotuv rahbari (+ asoschi).
   if (
-    (can(user?.role, CONTENT_REQUESTER) || can(user?.role, IDEA_SUBMIT)) &&
-    user?.role !== "hr_manager" &&
-    user?.role !== "sales_manager" &&
-    user?.role !== "academic_head"
+    user?.role === "founder" ||
+    user?.role === "smm_manager" ||
+    user?.role === "sales_head"
   ) {
     items = [...items, { to: "/smm", label: "SMM", icon: Megaphone }];
   }

@@ -2887,6 +2887,22 @@ class BudgetLine(Base):
                         onupdate=datetime.utcnow)
 
 
+class LegacyCollectionMonth(Base):
+    """Eski yillardagi oylik to'lov yig'ilishi (reja/fakt) - Google
+    Sheets arxividan import. Joriy billing hisobiga aralashmaydi,
+    faqat tarixiy ko'rsatkich sifatida Moliya bo'limida ko'rinadi."""
+    __tablename__ = "legacy_collection_months"
+
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(Integer, nullable=False, index=True)
+    month = Column(Integer, nullable=False)
+    # Filialga ID bilan emas, nom bilan bog'lanadi - tarixiy jamlanma
+    # filiallar keyin o'zgarsa ham buzilmasin
+    branch_label = Column(String, nullable=False, default="Markaz umumiy")
+    plan = Column(Float, default=0)   # qancha tushishi kerak edi
+    fact = Column(Float, default=0)   # qancha tushdi
+
+
 class PaymentDue(Base):
     """To'lov kalendari: qachon maosh, ijara, soliq, reklama va
     yetkazib beruvchiga to'lov. recurring=1 — har oy shu kuni."""

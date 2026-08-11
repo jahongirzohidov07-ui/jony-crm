@@ -1276,6 +1276,132 @@ function BillingTab() {
           </div>
         </>
       )}
+
+      <LegacyCollectionArchive />
+    </div>
+  );
+}
+
+// ---------------------- Eski yillar to'lov arxivi (import) ----
+// Jahongirning eski Google Sheets jadvalidan kiritilgan reja/fakt.
+// Faqat moliya ruxsati borlarga API javob beradi - boshqalarga
+// bo'lim umuman ko'rinmaydi.
+type LegacyBlock = {
+  label: string;
+  year: number;
+  months: { month: number; plan: number; fact: number; percent: number | null }[];
+  plan: number;
+  fact: number;
+  percent: number | null;
+};
+
+function pctTone(p: number | null): string {
+  if (p == null) return "text-slate-400";
+  if (p >= 98) return "text-emerald-600";
+  if (p >= 90) return "text-sky-600";
+  if (p >= 80) return "text-amber-600";
+  return "text-rose-600";
+}
+
+function LegacyCollectionArchive() {
+  const [blocks, setBlocks] = useState<LegacyBlock[] | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<{ blocks: LegacyBlock[] }>("/billing/collection-legacy")
+      .then((r) => setBlocks(r.blocks))
+      .catch(() => setBlocks(null));
+  }, []);
+
+  if (!blocks || blocks.length === 0) return null;
+
+  return (
+    <div className="mt-8">
+      <h3 className="text-sm font-semibold text-slate-900 mb-1">
+        Eski yillar arxivi — to'lov yig'ilishi
+      </h3>
+      <p className="text-xs text-slate-500 mb-3">
+        Eski jadvaldan import qilingan: qancha tushishi kerak edi va
+        qancha tushdi. Foiz reja/faktdan hisoblanadi.
+      </p>
+      <div className="grid gap-2 sm:grid-cols-2">
+        {blocks.map((b) => {
+          const key = `${b.year}-${b.label}`;
+          const opened = open === key;
+          return (
+            <div
+              key={key}
+              className="rounded-xl border border-slate-200 bg-white overflow-hidden"
+            >
+              <button
+                onClick={() => setOpen(opened ? null : key)}
+                className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50"
+              >
+                <div>
+                  <div className="text-sm font-medium text-slate-900">
+                    {b.year} — {b.label}
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    Reja {short(b.plan)} · Fakt {short(b.fact)}
+                  </div>
+                </div>
+                <span
+                  className={`text-base font-semibold tabular-nums ${pctTone(b.percent)}`}
+                >
+                  {b.percent != null ? `${b.percent}%` : "—"}
+                </span>
+              </button>
+              {opened && (
+                <table className="w-full text-xs border-t border-slate-100">
+                  <thead>
+                    <tr className="text-slate-400">
+                      <th className="text-left font-medium pl-4 py-1.5">Oy</th>
+                      <th className="text-right font-medium">Reja</th>
+                      <th className="text-right font-medium">Fakt</th>
+                      <th className="text-right font-medium pr-4">Foiz</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {b.months.map((m) => (
+                      <tr key={m.month} className="border-t border-slate-50">
+                        <td className="pl-4 py-1.5 text-slate-600">
+                          {MONTHS[m.month - 1]}
+                        </td>
+                        <td className="text-right tabular-nums text-slate-600">
+                          {formatSom(m.plan)}
+                        </td>
+                        <td className="text-right tabular-nums text-slate-600">
+                          {formatSom(m.fact)}
+                        </td>
+                        <td
+                          className={`text-right pr-4 tabular-nums font-medium ${pctTone(m.percent)}`}
+                        >
+                          {m.percent != null ? `${m.percent}%` : "—"}
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="border-t border-slate-200 font-semibold">
+                      <td className="pl-4 py-2 text-slate-900">Umumiy</td>
+                      <td className="text-right tabular-nums text-slate-900">
+                        {formatSom(b.plan)}
+                      </td>
+                      <td className="text-right tabular-nums text-slate-900">
+                        {formatSom(b.fact)}
+                      </td>
+                      <td
+                        className={`text-right pr-4 tabular-nums ${pctTone(b.percent)}`}
+                      >
+                        {b.percent != null ? `${b.percent}%` : "—"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

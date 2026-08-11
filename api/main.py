@@ -193,6 +193,15 @@ try:
 except Exception:
     pass
 
+# Eski yillardagi to'lov yig'ilishi (reja/fakt) arxivi - idempotent
+try:
+    from sqlalchemy.orm import Session as _VS11
+    from legacy_collection_seed import seed_legacy_collection
+    with _VS11(engine) as _db11:
+        seed_legacy_collection(_db11)
+except Exception:
+    pass
+
 # Eski tizimdagi ustozlar dars-sifati statistikasi (2026 yan-iyul).
 # Jahongir: "qolda kirigizib otirish keremas" - avtomat import,
 # rubric_key bo'yicha idempotent.

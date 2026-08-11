@@ -584,6 +584,46 @@ def billing_month(
         "rows": sorted(rows, key=lambda r: r["full_name"]),
     }
 
+@router.get("/api/billing/collection-legacy")
+def billing_collection_legacy(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Eski yillardagi to'lov yig'ilishi arxivi (import qilingan).
+
+    Jahongir eski Google Sheets jadvalidagi reja/fakt raqamlarini
+    tizimda ham ko'rinsin dedi. Guruhlash: filial -> yil -> oylar,
+    foiz har doim reja/faktdan qayta hisoblanadi."""
+    rows = (db.query(models.LegacyCollectionMonth)
+            .order_by(models.LegacyCollectionMonth.branch_label,
+                      models.LegacyCollectionMonth.year,
+                      models.LegacyCollectionMonth.month).all())
+    out = {}
+    for r in rows:
+        blk = out.setdefault(r.branch_label, {}).setdefault(
+            r.year, {"months": [], "plan": 0.0, "fact": 0.0})
+        blk["months"].append({
+            "month": r.month, "plan": r.plan, "fact": r.fact,
+            "percent": round(r.fact / r.plan * 100, 1) if r.plan else None,
+        })
+        blk["plan"] += r.plan
+        blk["fact"] += r.fact
+    result = []
+    for label, years in out.items():
+        for year, blk in sorted(years.items()):
+            result.append({
+                "label": label, "year": year,
+                "months": blk["months"],
+                "plan": round(blk["plan"], 2),
+                "fact": round(blk["fact"], 2),
+                "percent": round(blk["fact"] / blk["plan"] * 100, 1)
+                if blk["plan"] else None,
+            })
+    # Yangi yillar tepada, filial nomi bo'yicha barqaror tartib
+    result.sort(key=lambda b: (-b["year"], b["label"]))
+    return {"blocks": result}
+
+
 @router.get("/api/billing/collection")
 def billing_collection(
     year: int,

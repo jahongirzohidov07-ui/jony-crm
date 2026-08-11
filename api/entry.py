@@ -5990,3 +5990,91 @@ def lcup_coins_sync_v2(payload: dict = Body(...),
                   new_value=changed, commit=True)
     return {"apply": apply, "topildi": found, "o'zgargan": changed,
             "topilmadi": len(miss), "rows": out}
+
+
+# ---------------------------------------------------------------
+# LC UP: AYNAN BITTA O'QUVCHIGA (id bo'yicha) yozish.
+# Bir xil ismli o'quvchilar bo'lganda ism/telefon bo'yicha topish
+# ishlamaydi — bu yerda id aniq ko'rsatiladi.
+# ---------------------------------------------------------------
+@app.post("/api/lcup/by-id")
+def lcup_by_id(payload: dict = Body(...),
+               db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.FULL_ACCESS))):
+    """payload: {student_id, payments:[{date,amount,method}], coins, balance, apply}"""
+    from datetime import datetime as _dt
+    sid = int(payload.get("student_id") or 0)
+    s = (db.query(models.Student)
+         .filter(models.Student.id == sid).first()) if sid else None
+    if s is None:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    apply = bool(payload.get("apply") or payload.get("commit"))
+    made = dup = bad = 0
+    for r in (payload.get("payments") or []):
+        if not isinstance(r, dict):
+            continue
+        amt = _lc_amt(r.get("amount"))
+        d = _lc_date(r.get("date"))
+        if amt <= 0 or d is None:
+            bad += 1
+            continue
+        seen = (db.query(models.Payment)
+                .filter(models.Payment.student_id == sid,
+                        models.Payment.note == _LC_PAY_NOTE,
+                        models.Payment.amount == amt).all())
+        if any(p.created_at and p.created_at.date() == d for p in seen):
+            dup += 1
+            continue
+        if not apply:
+            made += 1
+            continue
+        pay = models.Payment(
+            student_id=sid, amount=amt, kind="payment",
+            method=_lc_method(r.get("method")), note=_LC_PAY_NOTE,
+            created_by=getattr(user, "full_name", None))
+        pay.created_at = _dt(d.year, d.month, d.day, 12, 0)
+        db.add(pay)
+        db.flush()
+        M._ensure_public_id(db, "payment", pay)
+        made += 1
+    coin = None
+    if payload.get("coins") is not None:
+        target = int(round(_lc_amt(payload.get("coins"))))
+        now = _lc_coin_bal(db, sid)
+        coin = {"lcup": target, "hozir": now, "farq": target - now}
+        if apply and coin["farq"]:
+            old = (db.query(models.CoinEntry)
+                   .filter(models.CoinEntry.student_id == sid,
+                           models.CoinEntry.note == _LC_COIN_NOTE).first())
+            if old is not None:
+                old.amount = int(old.amount) + coin["farq"]
+            else:
+                db.add(models.CoinEntry(
+                    student_id=sid, amount=coin["farq"], source="lcup",
+                    note=_LC_COIN_NOTE,
+                    created_by=getattr(user, "full_name", None)))
+    bal = None
+    if payload.get("balance") is not None:
+        target = _lc_amt(payload.get("balance"))
+        if apply:
+            db.flush()
+        now = M.student_balance(db, sid)
+        bal = {"lcup": target, "hozir": now, "farq": round(target - now, 2)}
+        if apply and abs(bal["farq"]) >= 1:
+            p = models.Payment(
+                student_id=sid, amount=bal["farq"],
+                kind="payment" if bal["farq"] > 0 else "charge",
+                method="other" if bal["farq"] > 0 else None,
+                note=_LC_BAL_NOTE, created_by=getattr(user, "full_name", None))
+            db.add(p)
+            db.flush()
+            M._ensure_public_id(db, "payment", p)
+    if apply:
+        db.commit()
+        audit.log(db, user, entity="student", action="lcup_by_id",
+                  entity_id=sid, entity_label=f"LC UP (id bo'yicha): "
+                  f"{s.full_name} — {made} to'lov",
+                  new_value=made, commit=True)
+    return {"apply": apply, "student": s.full_name, "student_id": sid,
+            "to'lov yozildi": made, "takror": dup, "xato qator": bad,
+            "tanga": coin, "balans": bal}

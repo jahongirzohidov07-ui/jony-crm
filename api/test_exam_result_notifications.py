@@ -41,7 +41,7 @@ db.add(b)
 db.commit()
 
 user_t = models.User(username="ust3", full_name="Ustoz Dilnoza",
-                     password_hash=hash_password("x"), role="teacher",
+                     password_hash=hash_password("x"), role="examiner",
                      branch_id=b.id, is_active=1)
 db.add(user_t)
 db.commit()

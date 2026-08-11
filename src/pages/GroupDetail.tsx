@@ -13,7 +13,7 @@ import {
   type Student,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, FINANCE_ACCESS, can } from "../lib/roles";
+import { TEACHING_STAFF, FINANCE_ACCESS, can, ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { QuickXp } from "../components/XpAdmin";
 import {
@@ -97,6 +97,11 @@ export default function GroupDetail() {
   const isSupport =
     user?.role === "support_teacher" || user?.role === "head_support";
   const canFinance = can(user?.role, FINANCE_ACCESS);
+  // Guruhni tahrirlash qalami: moliya ruxsati borlar + o'quv bo'limi
+  // rahbari, administrator, HR (Jahongir so'radi)
+  const canGroupEdit =
+    canFinance ||
+    can(user?.role, [ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR]);
 
   // Tezkor XP uchun guruhdagi o'quvchilar ro'yxati
   const [groupStudents, setGroupStudents] = useState<Student[]>([]);
@@ -141,7 +146,7 @@ export default function GroupDetail() {
   }
 
   function loadPersistedPayouts(y: number, m: number) {
-    if (!canFinance) return;
+    if (!canGroupEdit) return;
     api
       .get<TeacherPayout[]>(`/payouts?year=${y}&month=${m}`)
       .then((all) => setPersistedPayouts(all.filter((p) => p.group_id === groupId)))
@@ -298,7 +303,7 @@ export default function GroupDetail() {
       <div className="flex flex-col lg:flex-row gap-5 items-start">
         <GroupSidebar
           group={group}
-          onEdit={canFinance ? () => setEditOpen(true) : undefined}
+          onEdit={canGroupEdit ? () => setEditOpen(true) : undefined}
         />
 
         <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">

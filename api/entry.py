@@ -2087,7 +2087,11 @@ if _cur_update_group is not None:
     def update_group_v3(group_id: int, payload: schemas.GroupUpdate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+                        user=Depends(require_role(
+                            *(list(roles.GROUP_MANAGE)
+                              + [roles.HR_MANAGER, roles.SALES_MANAGER,
+                                 roles.ADMINISTRATOR,
+                                 roles.FINANCE_DIRECTOR])))):
         return _cur_update_group(group_id=group_id, payload=payload,
                                  force=force, db=db, user=user)
 
@@ -2231,6 +2235,15 @@ if _orig_reference is not None:
 #  edi). Sabab (yo'qlama — ish haqi hujjati) ROLGA BOG'LIQ EMAS,
 #  shuning uchun endi HAMMA uchun bir xil qo'llanadi.
 # =====================================================================
+# Muzlatilganlar davomat TARIXINI ko'radiganlar (Jahongir ro'yxati):
+# administratorlar, o'quv bo'limi rahbari, HR, moliyachi, filial
+# rahbarlari + asoschi. Administrator hisoblari sales_manager'ga
+# birlashtirilgan - ikkala kalit ham kiritildi.
+_FROZEN_HISTORY_VIEW = (
+    roles.FOUNDER, roles.BRANCH_MANAGER, roles.ACADEMIC_HEAD,
+    roles.HR_MANAGER, roles.FINANCE_DIRECTOR, roles.SALES_MANAGER,
+    roles.ADMINISTRATOR)
+
 _orig_att_grid = _find_endpoint("/api/groups/{group_id}/attendance", "GET")
 
 if _orig_att_grid is not None:
@@ -2248,8 +2261,25 @@ if _orig_att_grid is not None:
             data = result.model_dump()
         except AttributeError:
             data = result.dict()
-        data["students"] = [s for s in data["students"]
-                            if s.get("status") != "frozen"]
+        # 2026-08-11 (Jahongir): muzlatilganning ESKI davomat tarixi
+        # rahbariyatga ko'rinsin - "ertaga bizga u kerak bo'ladi".
+        # Ustoz va boshqalarga esa avvalgidek umuman chiqmaydi
+        # (yangi yo'qlama qo'yib yubormasin). Rahbariyatda ham qator
+        # faqat O'QISH uchun - frontend belgilashni bloklaydi,
+        # backend ham saqlashda o'tkazib yuboradi.
+        if user.role in _FROZEN_HISTORY_VIEW:
+            frozen = [x for x in data["students"]
+                      if x.get("status") == "frozen"]
+            act = [x for x in data["students"]
+                   if x.get("status") != "frozen"]
+            # Tarixi butunlay bo'sh muzlatilganlar qatori ko'rsatilmaydi
+            marked = {int(k.split(":")[1]) for k in
+                      (data.get("marks") or {}).keys()}
+            frozen = [x for x in frozen if x["id"] in marked]
+            data["students"] = act + frozen
+        else:
+            data["students"] = [x for x in data["students"]
+                                if x.get("status") != "frozen"]
         return data
 
 

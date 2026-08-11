@@ -17,8 +17,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, TEACHING_STAFF, PAYMENT_EDIT, REFUND_REQUEST,
-  REFUND_APPROVE, FOUNDER, can,
-} from "../lib/roles";
+  REFUND_APPROVE, FOUNDER, can, HR_MANAGER } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -87,7 +86,7 @@ function ProfileCard({
   onChanged: () => void;
 }) {
   const { user } = useAuth();
-  const canEdit = can(user?.role, TEACHING_STAFF);
+  const canEdit = can(user?.role, [...TEACHING_STAFF, HR_MANAGER]);
   const canFinance = can(user?.role, FINANCE_ACCESS);
   const initial = student.full_name.trim().charAt(0).toUpperCase();
 
@@ -1123,7 +1122,7 @@ function NoteTab({
   onSaved: () => void;
 }) {
   const { user } = useAuth();
-  const canEdit = can(user?.role, TEACHING_STAFF);
+  const canEdit = can(user?.role, [...TEACHING_STAFF, HR_MANAGER]);
   const [text, setText] = useState(student.note ?? "");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);

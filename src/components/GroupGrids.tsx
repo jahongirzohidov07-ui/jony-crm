@@ -399,16 +399,36 @@ export function AttendanceTab({
             </tr>
           </thead>
           <tbody>
-            {grid.students.map((s, i) => (
-              <tr key={s.id} className="border-t border-slate-100">
-                <td className="sticky left-0 z-10 bg-white px-4 py-2.5 text-slate-800 whitespace-nowrap border-r border-slate-200">
+            {grid.students.map((s, i) => {
+              // Muzlatilgan o'quvchi: eski davomat TARIXI rahbariyatga
+              // ko'rinadi, lekin belgilab bo'lmaydi (Jahongir:
+              // "eski davomatlar tarixi qolishi kerak...
+              // ertaga bizga u kerak bo'ladi")
+              const frozen = s.status === "frozen";
+              return (
+              <tr
+                key={s.id}
+                className={`border-t border-slate-100 ${
+                  frozen ? "bg-sky-50/40" : ""
+                }`}
+              >
+                <td
+                  className={`sticky left-0 z-10 px-4 py-2.5 whitespace-nowrap border-r border-slate-200 ${
+                    frozen ? "bg-sky-50 text-sky-700" : "bg-white text-slate-800"
+                  }`}
+                >
                   <span className="text-slate-400 mr-2 text-xs">{i + 1}</span>
                   {s.full_name}
+                  {frozen && (
+                    <span className="ml-2 text-[10px] font-medium bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded">
+                      muzlatilgan
+                    </span>
+                  )}
                 </td>
                 {grid.lessons.map((ls) => {
                   const key = `${ls.id}:${s.id}`;
                   const v = grid.marks[key];
-                  const editable = cellEditable(ls.date);
+                  const editable = !frozen && cellEditable(ls.date);
                   return (
                     <td
                       key={ls.id}
@@ -423,7 +443,11 @@ export function AttendanceTab({
                           editable && setOpen(open === key ? null : key)
                         }
                         disabled={!editable || saving === key}
-                        title={cellHint(ls.date)}
+                        title={
+                          frozen
+                            ? "Muzlatilgan o'quvchi — tarix faqat o'qish uchun"
+                            : cellHint(ls.date)
+                        }
                         className={`w-8 h-8 rounded-lg inline-flex items-center justify-center transition ${
                           v === true
                             ? "bg-brand-500 text-white"
@@ -457,7 +481,8 @@ export function AttendanceTab({
                   );
                 })}
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

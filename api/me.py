@@ -1562,8 +1562,18 @@ def _teacher_dashboard(db: Session, user: models.User):
     for a in alerts:
         by_kind[a["kind"]] = by_kind.get(a["kind"], 0) + 1
 
+    # Yo'qlama intizomi — joriy oy. Jahongir (2026-08-12): "intizom
+    # foizi ... o'ziga ham ko'rinib tursin, qancha vaqt kechikib
+    # yo'qlama qilyapti, qancha o'z vaqtida".
+    try:
+        _disc = _discipline_one(db, t.id, month_start,
+                                today + timedelta(days=1))
+    except Exception:
+        _disc = None
+
     return {
         "teacher": {"id": t.id, "name": t.full_name},
+        "discipline": _disc,
         "attendance": {
             "percent": this_month["percent"],
             "last_month": last_month["percent"],

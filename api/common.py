@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
 import json
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time as dtime
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
@@ -4172,6 +4172,8 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "_discipline_stats", "_discipline_one", "_fmt_delay",
+    "ATT_ONTIME_MIN",
     "_backfill_student_accounts",
     "_release_support_groups", "_cleanup_stale_support_assignments",
     "_support_manager_id",
@@ -4325,3 +4327,148 @@ __all__ = [
     "student_balance",
     "to_student_out",
 ]
+
+
+# =====================================================================
+#  USTOZ INTIZOMI — yo'qlama QACHON va KIM tomonidan belgilangani
+#  Jahongir (2026-08-12, LC UP hisobotini ko'rsatib): "mana shunaqa
+#  statistika bizga ham kerak hisobotlar bo'limida — ustozning
+#  intizomi. Intizom foizi ustoz kartasida ham, o'ziga ham ko'rinib
+#  tursin: qancha kechikib yo'qlama qilyapti, qancha o'z vaqtida."
+# =====================================================================
+# O'z vaqtida = ustozning O'ZI dars boshlanishidan 60 daqiqa ichida
+# (yoki o'sha kuni oldinroq) belgilagan. Menejer/administrator
+# belgilagan dars ustoz uchun o'z vaqtida HISOBLANMAYDI.
+ATT_ONTIME_MIN = 60
+
+
+def _fmt_delay(minutes) -> str:
+    """31 -> "31 daq", 140 -> "2.3 soat"."""
+    if minutes is None:
+        return "—"
+    m = round(minutes)
+    if m < 60:
+        return f"{m} daq"
+    return f"{round(m / 60, 1)} soat"
+
+
+def _discipline_stats(db: Session, start: date, end: date,
+                      branch_id: int | None = None,
+                      teacher_id: int | None = None) -> list:
+    """Har ustoz bo'yicha yo'qlama intizomi ([start, end) oralig'ida).
+
+    Qaytadi: ro'yxat, har biri:
+      teacher_id, name, marked (belgilangan darslar), self_marked,
+      manager_marked, on_time, on_time_pct, avg_delay_min (faqat
+      KECHIKKAN belgilashlar bo'yicha), avg_delay_label, unmarked
+      (o'tib ketgan, umuman belgilanmagan darslar), state.
+    """
+    today = roles.local_today()
+    q = (db.query(models.Lesson, models.Group)
+         .join(models.Group, models.Lesson.group_id == models.Group.id)
+         .filter(models.Lesson.date >= start, models.Lesson.date < end))
+    if branch_id:
+        q = q.filter(models.Group.branch_id == branch_id)
+    lessons = q.all()
+
+    def _tid(ls, g):
+        return ls.teacher_id or g.teacher_id
+
+    if teacher_id:
+        lessons = [(ls, g) for ls, g in lessons
+                   if _tid(ls, g) == teacher_id]
+
+    held = [(ls, g) for ls, g in lessons if ls.held == 1]
+    lids = [ls.id for ls, _ in held]
+
+    # Har dars uchun BIRINCHI belgilash vaqti va kim belgilagani
+    first: dict = {}
+    if lids:
+        CHUNK = 900
+        for i in range(0, len(lids), CHUNK):
+            rows = (db.query(models.Attendance.lesson_id,
+                             models.Attendance.created_at,
+                             models.Attendance.created_by)
+                    .filter(models.Attendance.lesson_id
+                            .in_(lids[i:i + CHUNK])).all())
+            for lid, at, by in rows:
+                if at is None:
+                    continue
+                cur = first.get(lid)
+                if cur is None or at < cur[0]:
+                    first[lid] = (at, by)
+
+    tnames = {t.id: t.full_name for t in db.query(models.Teacher).all()}
+    agg: dict = {}
+
+    def _e(tid):
+        if tid not in agg:
+            agg[tid] = {"teacher_id": tid,
+                        "name": tnames.get(tid, f"Ustoz #{tid}"),
+                        "marked": 0, "self_marked": 0,
+                        "manager_marked": 0, "on_time": 0,
+                        "denom": 0, "delays": [], "unmarked": 0}
+        return agg[tid]
+
+    for ls, g in held:
+        tid = _tid(ls, g)
+        if not tid or ls.id not in first:
+            continue
+        e = _e(tid)
+        e["marked"] += 1
+        at_utc, by = first[ls.id]
+        is_self = bool(by) and by == tnames.get(tid)
+        if is_self:
+            e["self_marked"] += 1
+        else:
+            e["manager_marked"] += 1
+            e["denom"] += 1          # menejer belgilagani = kechikkan
+            continue
+        st_time = _group_slot(g)[0]
+        st_min = roles.time_to_minutes(st_time) if st_time else None
+        if st_min is None:
+            continue                  # dars vaqti yo'q — o'lchab bo'lmaydi
+        start_dt = datetime.combine(
+            ls.date, dtime(st_min // 60, st_min % 60))
+        delay = (roles.to_local(at_utc) - start_dt).total_seconds() / 60
+        if delay < 0:
+            delay = 0.0
+        e["denom"] += 1
+        if delay <= ATT_ONTIME_MIN:
+            e["on_time"] += 1
+        else:
+            e["delays"].append(delay - 0)
+
+    # O'tib ketgan, belgilanmagan darslar
+    for ls, g in lessons:
+        if ls.held == 0 and ls.date < today:
+            tid = _tid(ls, g)
+            if tid:
+                _e(tid)["unmarked"] += 1
+
+    rows = []
+    for e in agg.values():
+        denom = e.pop("denom")
+        e["measured"] = denom
+        delays = e.pop("delays")
+        pct = round(e["on_time"] / denom * 100, 0) if denom else None
+        avg_d = (sum(delays) / len(delays)) if delays else (
+            0.0 if denom else None)
+        e["on_time_pct"] = pct
+        e["avg_delay_min"] = round(avg_d, 0) if avg_d is not None else None
+        e["avg_delay_label"] = _fmt_delay(avg_d)
+        e["problems"] = (denom - e["on_time"]) + e["unmarked"]
+        e["state"] = (None if pct is None else
+                      "good" if pct >= 90 else
+                      "mid" if pct >= 70 else "bad")
+        rows.append(e)
+
+    rows.sort(key=lambda r: (r["on_time_pct"] is None,
+                             -(r["on_time_pct"] or 0)))
+    return rows
+
+
+def _discipline_one(db: Session, teacher_id: int,
+                    start: date, end: date) -> dict | None:
+    rows = _discipline_stats(db, start, end, teacher_id=teacher_id)
+    return rows[0] if rows else None

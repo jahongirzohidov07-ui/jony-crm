@@ -17,10 +17,12 @@ import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "payroll" | "funnel" | "sales" | "kpi";
+type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "payroll", label: "Ustozlar oyligi" },
+  { key: "discipline", label: "Ustoz intizomi" },
+  { key: "tasks", label: "Vazifalar" },
   { key: "funnel", label: "Sales funnel" },
   { key: "sales", label: "Sotuv menejerlari" },
   { key: "kpi", label: "Adminlar KPI" },
@@ -1046,6 +1048,269 @@ function KpiTab({ canAdmin }: { canAdmin: boolean }) {
 
 
 // -------------------------------------------------------------------- Page
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type AnyRow = any;
+
+const DISC_STATE: Record<string, { label: string; cls: string }> = {
+  good: { label: "Yaxshi", cls: "bg-emerald-100 text-emerald-700" },
+  mid: { label: "O'rtacha", cls: "bg-amber-100 text-amber-700" },
+  bad: { label: "Zaif", cls: "bg-red-100 text-red-700" },
+};
+
+function discBarColor(p: number | null): string {
+  if (p == null) return "bg-slate-300";
+  if (p >= 90) return "bg-emerald-500";
+  if (p >= 70) return "bg-amber-500";
+  return "bg-red-500";
+}
+
+function MonthPicker({ year, month, setYear, setMonth }: {
+  year: number; month: number;
+  setYear: (v: number) => void; setMonth: (v: number) => void;
+}) {
+  const now = new Date();
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <select value={month} onChange={(e) => setMonth(Number(e.target.value))}
+              className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+        {MONTHS.map((m, i) => (
+          <option key={i} value={i + 1}>{m}</option>
+        ))}
+      </select>
+      <select value={year} onChange={(e) => setYear(Number(e.target.value))}
+              className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+        {[0, 1, 2].map((d) => (
+          <option key={d} value={now.getFullYear() - d}>
+            {now.getFullYear() - d}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+// ------------------------------------------------------ Ustoz intizomi
+function DisciplineTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<AnyRow>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api.get<AnyRow>(`/reports/teacher-discipline?year=${year}&month=${month}`)
+      .then(setD)
+      .finally(() => setLoading(false));
+  }, [year, month]);
+
+  if (loading || !d)
+    return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+  const c = d.cards;
+
+  return (
+    <div>
+      <MonthPicker year={year} month={month}
+                   setYear={setYear} setMonth={setMonth} />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <Stat label="O'z vaqtida belgilash"
+              value={c.ontime_pct != null ? `${c.ontime_pct}%` : "—"}
+              hint={`${c.ontime} / ${c.measured} darsdan`}
+              tone={c.ontime_pct >= 90 ? "green"
+                : c.ontime_pct >= 70 ? "slate" : "red"} />
+        <Stat label="O'zi belgilagan"
+              value={c.self_pct != null ? `${c.self_pct}%` : "—"}
+              hint={`menejer belgilagan: ${c.manager_marked} ta`} />
+        <Stat label="O'rtacha kechikish" value={c.avg_delay_label}
+              hint="kechikkan belgilashlar bo'yicha" />
+        <Stat label="Belgilanmagan darslar" value={String(c.unmarked)}
+              tone={c.unmarked > 0 ? "red" : "green"}
+              hint="o'tib ketgan, yo'qlamasiz" />
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium">O'qituvchi</th>
+              <th className="text-right px-3 py-2.5 font-medium">Belgilangan</th>
+              <th className="text-left px-3 py-2.5 font-medium w-[30%]">O'z vaqtida</th>
+              <th className="text-right px-3 py-2.5 font-medium">O'rtacha kechikish</th>
+              <th className="text-right px-3 py-2.5 font-medium">Menejer belgilagan</th>
+              <th className="text-right px-3 py-2.5 font-medium">Belgilanmagan</th>
+              <th className="text-right px-4 py-2.5 font-medium">Holat</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {d.rows.map((r: AnyRow) => (
+              <tr key={r.teacher_id}>
+                <td className="px-4 py-2.5 font-medium text-slate-800">
+                  {r.name}
+                  {r.problems > 0 && (
+                    <span className="ml-2 text-xs text-red-500">
+                      {r.problems} muammoli
+                    </span>
+                  )}
+                </td>
+                <td className="px-3 py-2.5 text-right text-slate-700">
+                  {r.marked}
+                  <span className="block text-xs text-slate-400">
+                    o'zi: {r.self_marked}
+                  </span>
+                </td>
+                <td className="px-3 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${discBarColor(r.on_time_pct)}`}
+                        style={{ width: `${r.on_time_pct ?? 0}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-slate-800 w-11 text-right">
+                      {r.on_time_pct != null ? `${r.on_time_pct}%` : "—"}
+                    </span>
+                  </div>
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                    !r.avg_delay_min ? "bg-emerald-50 text-emerald-700"
+                      : r.avg_delay_min <= 120 ? "bg-amber-50 text-amber-700"
+                      : "bg-red-50 text-red-700"}`}>
+                    {r.avg_delay_label}
+                  </span>
+                </td>
+                <td className="px-3 py-2.5 text-right text-slate-600">
+                  {r.manager_marked || "—"}
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  {r.unmarked ? (
+                    <span className="text-red-600 font-medium">{r.unmarked}</span>
+                  ) : "—"}
+                </td>
+                <td className="px-4 py-2.5 text-right">
+                  {r.state && (
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                      DISC_STATE[r.state]?.cls || ""}`}>
+                      {DISC_STATE[r.state]?.label}
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {d.rows.length === 0 && (
+          <p className="text-sm text-slate-400 py-8 text-center">
+            Bu oyda ma'lumot yo'q.
+          </p>
+        )}
+      </div>
+      <Note>{d.hint}</Note>
+    </div>
+  );
+}
+
+// -------------------------------------------------- Vazifalar hisoboti
+function TaskReportTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<AnyRow>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api.get<AnyRow>(`/reports/task-performance?year=${year}&month=${month}`)
+      .then(setD)
+      .finally(() => setLoading(false));
+  }, [year, month]);
+
+  if (loading || !d)
+    return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+  const c = d.cards;
+
+  return (
+    <div>
+      <MonthPicker year={year} month={month}
+                   setYear={setYear} setMonth={setMonth} />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <Stat label="Qo'yilgan vazifalar" value={String(c.total)} />
+        <Stat label="Bajarilgan"
+              value={c.done_pct != null ? `${c.done_pct}%` : "—"}
+              hint={`${c.done} ta`}
+              tone={c.done_pct >= 80 ? "green"
+                : c.done_pct >= 50 ? "slate" : "red"} />
+        <Stat label="O'rtacha bajarish tezligi" value={c.avg_speed_label} />
+        <Stat label="Ochiq kechikkan" value={String(c.overdue_open)}
+              tone={c.overdue_open > 0 ? "red" : "green"}
+              hint="muddati o'tgan, bajarilmagan" />
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium">Xodim</th>
+              <th className="text-right px-3 py-2.5 font-medium">Vazifa</th>
+              <th className="text-left px-3 py-2.5 font-medium w-[26%]">Bajarilgan</th>
+              <th className="text-right px-3 py-2.5 font-medium">Tezlik</th>
+              <th className="text-right px-3 py-2.5 font-medium">Kechikib bajardi</th>
+              <th className="text-right px-4 py-2.5 font-medium">Ochiq kechikkan</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {d.rows.map((r: AnyRow) => (
+              <tr key={r.user_id}>
+                <td className="px-4 py-2.5">
+                  <p className="font-medium text-slate-800">{r.name}</p>
+                  <p className="text-xs text-slate-400">{r.role_label}</p>
+                </td>
+                <td className="px-3 py-2.5 text-right text-slate-700">
+                  {r.total}
+                </td>
+                <td className="px-3 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${discBarColor(r.done_pct)}`}
+                        style={{ width: `${r.done_pct ?? 0}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-slate-800 w-16 text-right">
+                      {r.done}/{r.total}
+                    </span>
+                  </div>
+                </td>
+                <td className="px-3 py-2.5 text-right text-slate-700">
+                  {r.speed_label}
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  {r.done_late ? (
+                    <span className="text-amber-600 font-medium">{r.done_late}</span>
+                  ) : "—"}
+                </td>
+                <td className="px-4 py-2.5 text-right">
+                  {r.overdue_open ? (
+                    <span className="text-red-600 font-medium">{r.overdue_open}</span>
+                  ) : "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {d.rows.length === 0 && (
+          <p className="text-sm text-slate-400 py-8 text-center">
+            Bu oyda vazifa qo'yilmagan.
+          </p>
+        )}
+      </div>
+      <Note>{d.hint}</Note>
+    </div>
+  );
+}
+
 export default function Reports() {
   const { user } = useAuth();
   const [tab, setTab] = useState<Tab>("payroll");
@@ -1084,6 +1349,8 @@ export default function Reports() {
       </div>
 
       {tab === "payroll" && <PayrollTab />}
+      {tab === "discipline" && <DisciplineTab />}
+      {tab === "tasks" && <TaskReportTab />}
       {tab === "funnel" && <FunnelTab />}
       {tab === "sales" && <SalesTab />}
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}

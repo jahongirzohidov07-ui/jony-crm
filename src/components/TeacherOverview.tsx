@@ -120,6 +120,35 @@ export function TeacherOverviewModal({
               </div>
             </div>
 
+            {d.discipline && (
+              <div className="rounded-lg border border-slate-200 p-3 mb-4">
+                <p className="text-xs font-medium text-slate-600 mb-2">
+                  Yo'qlama intizomi (joriy oy)
+                </p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+                  <span className={
+                    d.discipline.state === "good" ? "text-emerald-600 font-semibold"
+                    : d.discipline.state === "mid" ? "text-amber-600 font-semibold"
+                    : "text-red-600 font-semibold"}>
+                    {d.discipline.on_time_pct !== null
+                      ? `${d.discipline.on_time_pct}% o'z vaqtida`
+                      : "o'lchov yo'q"}
+                  </span>
+                  <span className="text-slate-600">
+                    O'rtacha kechikish: {d.discipline.avg_delay_label}
+                  </span>
+                  <span className="text-slate-600">
+                    Belgilangan: {d.discipline.marked} (o'zi {d.discipline.self_marked})
+                  </span>
+                  {d.discipline.unmarked > 0 && (
+                    <span className="text-red-600">
+                      {d.discipline.unmarked} dars belgilanmagan
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="grid md:grid-cols-2 gap-3 mb-4">
               <div className="rounded-lg border border-slate-200 p-3">
                 <p className="text-xs font-medium text-slate-600 flex items-center gap-1">

@@ -37,7 +37,7 @@ import { FillTab } from "../components/FillReport";
 import ExamReport from "../components/ExamReport";
 
 type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
-  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon";
+  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "akademik", label: "Akademik" },
@@ -52,6 +52,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "ustoz", label: "Ustozlar" },
   { key: "sigim", label: "Xonalar bandligi" },
   { key: "geo", label: "Manzil va maktab" },
+  { key: "manba", label: "Manbalar" },
   { key: "tarix", label: "Tarix (o'quvchilar soni)" },
 ];
 
@@ -387,6 +388,86 @@ const DIMENSIONS: { key: LtvDimension; label: string }[] = [
   { key: "teacher", label: "Ustozlar" },
   { key: "group", label: "Guruhlar" },
 ];
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const SRC_COLORS = [
+  "#6366f1", "#10b981", "#f59e0b", "#ef4444", "#0ea5e9",
+  "#a855f7", "#64748b", "#f97316", "#14b8a6",
+];
+
+function SourcePie({ title, total, rows }: {
+  title: string; total: number; rows: any[];
+}) {
+  const data = rows.map((r) => ({ name: r.label, value: r.count }));
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <p className="text-sm font-semibold text-slate-900">{title}</p>
+      <p className="text-xs text-slate-400 mb-2">jami {total} ta</p>
+      {rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Ma'lumot yo'q
+        </p>
+      ) : (
+        <div className="grid sm:grid-cols-2 gap-2 items-center">
+          <div style={{ height: 230 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={data} dataKey="value" nameKey="name"
+                     cx="50%" cy="50%" innerRadius={48} outerRadius={85}
+                     paddingAngle={2}>
+                  {data.map((_, i) => (
+                    <Cell key={i} fill={SRC_COLORS[i % SRC_COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(v: any) => [`${v} ta`, ""]} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="space-y-1.5">
+            {rows.map((r, i) => (
+              <div key={r.key} className="flex items-center gap-2 text-sm">
+                <span className="w-2.5 h-2.5 rounded-full shrink-0"
+                      style={{ background: SRC_COLORS[i % SRC_COLORS.length] }} />
+                <span className="text-slate-700 flex-1 truncate">{r.label}</span>
+                <span className="font-medium text-slate-900">{r.count}</span>
+                <span className="text-xs text-slate-400 w-11 text-right">
+                  {total ? Math.round((r.count / total) * 100) : 0}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SourcesTab({ months }: { months: number }) {
+  const [d, setD] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api.get<any>(`/analytics/sources?months=${months}`)
+      .then(setD)
+      .finally(() => setLoading(false));
+  }, [months]);
+
+  if (loading || !d)
+    return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+
+  return (
+    <div>
+      <div className="grid lg:grid-cols-2 gap-4">
+        <SourcePie title="Lidlar qayerdan kelyapti"
+                   total={d.total_leads} rows={d.leads} />
+        <SourcePie title="O'quvchilar qayerdan kelgan"
+                   total={d.total_students} rows={d.students} />
+      </div>
+      <p className="text-xs text-slate-400 mt-3 max-w-3xl">{d.hint}</p>
+    </div>
+  );
+}
 
 function LtvTab() {
   const [dimension, setDimension] = useState<LtvDimension>("branch");
@@ -1143,6 +1224,7 @@ export default function Analitika() {
           {tab === "sigim" && <CapacityTab />}
           {tab === "tarix" && <HistoryTab />}
           {tab === "geo" && <GeoTab months={months} />}
+          {tab === "manba" && <SourcesTab months={months} />}
         </>
       )}
     </div>

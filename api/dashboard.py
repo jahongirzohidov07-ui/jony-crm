@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
 import json
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time as dtime
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
@@ -3106,3 +3106,74 @@ def _geo_stats(db: Session, branch_id=None) -> dict:
         "student_schools": top(ssq.all()),
     }
 
+
+
+@router.get("/api/analytics/sources")
+def analytics_sources(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Lid va o'quvchilar QAYERDAN kelgani (pie chart uchun).
+
+    Jahongir (2026-08-12): "Analitika bo'limida lid va o'quvchilar
+    qayerdanligini pie chart yordamida ko'rsatilsin".
+
+    O'quvchi manbasi — u aylantirilgan lidning manbasi. Lidsiz (to'g'ridan
+    to'g'ri qo'shilgan) o'quvchilar "Lidsiz qo'shilgan" bo'lib chiqadi."""
+    today = roles.local_today()
+    if months and months > 0:
+        start_d = today - timedelta(days=months * 31)
+    else:
+        start_d = date(2000, 1, 1)
+    start_dt = datetime.combine(start_d, dtime(0, 0))
+
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        branch_id = user.branch_id
+
+    lbl = roles.LEAD_SOURCE_LABELS
+
+    # ---- Lidlar manbasi ----
+    lq = (db.query(models.Lead.source, func.count(models.Lead.id))
+          .filter(models.Lead.created_at >= start_dt))
+    if branch_id:
+        lq = lq.filter(models.Lead.branch_id == branch_id)
+    leads = [{"key": k or "other", "label": lbl.get(k, k or "Boshqa"),
+              "count": int(c)}
+             for k, c in lq.group_by(models.Lead.source).all() if c]
+    leads.sort(key=lambda r: -r["count"])
+
+    # ---- O'quvchilar manbasi (aylantirilgan lid orqali) ----
+    sq = (db.query(models.Student.id, models.Lead.source)
+          .outerjoin(models.Lead,
+                     models.Lead.converted_student_id == models.Student.id)
+          .filter(models.Student.enrolled_date >= start_d))
+    if branch_id:
+        sq = sq.filter(models.Student.branch_id == branch_id)
+    seen: dict = {}
+    for sid, src in sq.all():
+        # bitta o'quvchiga bir nechta lid ulangan bo'lsa — bittasi yetadi
+        if sid in seen and seen[sid]:
+            continue
+        seen[sid] = src
+    s_counts: dict = {}
+    for src in seen.values():
+        key = src or "__nolead__"
+        s_counts[key] = s_counts.get(key, 0) + 1
+    students = [{"key": k,
+                 "label": ("Lidsiz qo'shilgan" if k == "__nolead__"
+                           else lbl.get(k, k)),
+                 "count": c} for k, c in s_counts.items() if c]
+    students.sort(key=lambda r: -r["count"])
+
+    return {
+        "months": months,
+        "leads": leads,
+        "students": students,
+        "total_leads": sum(r["count"] for r in leads),
+        "total_students": sum(r["count"] for r in students),
+        "hint": ("O'quvchi manbasi — u qaysi liddan aylangani. "
+                 "'Lidsiz qo'shilgan' — CRMga to'g'ridan-to'g'ri "
+                 "kiritilgan o'quvchilar (manbasi yozilmagan)."),
+    }

@@ -59,6 +59,8 @@ function Delta({ v }: { v: number | null }) {
  */
 export function TeacherDash({ d }: { d: TeacherDashboard }) {
   const att = d.attendance;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  const disc = (d as any).discipline;
 
   return (
     <div className="space-y-4 mb-6">
@@ -130,6 +132,40 @@ export function TeacherDash({ d }: { d: TeacherDashboard }) {
             Shu oygi davomat
           </p>
         </div>
+
+        {disc && (
+          <div className={`rounded-lg border p-3 mb-3 ${
+            disc.state === "good" ? "bg-emerald-50/60 border-emerald-200"
+            : disc.state === "mid" ? "bg-amber-50/60 border-amber-200"
+            : disc.state === "bad" ? "bg-red-50/60 border-red-200"
+            : "bg-slate-50 border-slate-200"}`}>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              <span className="font-medium text-slate-800">
+                Yo'qlama intizomim:
+              </span>
+              <span className={`font-semibold ${
+                disc.state === "good" ? "text-emerald-700"
+                : disc.state === "mid" ? "text-amber-700"
+                : "text-red-700"}`}>
+                {disc.on_time_pct !== null
+                  ? `${disc.on_time_pct}% o'z vaqtida`
+                  : "hali o'lchov yo'q"}
+              </span>
+              <span className="text-slate-600">
+                o'rtacha kechikish: {disc.avg_delay_label}
+              </span>
+              {disc.unmarked > 0 && (
+                <span className="text-red-700 font-medium">
+                  {disc.unmarked} dars belgilanmagan!
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              Yo'qlamani dars boshlanishidan 60 daqiqa ichida qo'ysangiz
+              "o'z vaqtida" hisoblanadi.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
           <div className="rounded-lg border border-slate-200 p-3">

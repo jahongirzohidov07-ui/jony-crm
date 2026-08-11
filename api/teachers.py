@@ -812,8 +812,17 @@ def teacher_overview(teacher_id: int,
         except AttributeError:
             grade_label = t.grade
 
+    # Yo'qlama intizomi — joriy oy (Jahongir 2026-08-12: "intizom
+    # foizi ustoz kartasida ham ko'rinib tursin")
+    try:
+        disc = _discipline_one(db, t.id, today.replace(day=1),
+                               today + timedelta(days=1))
+    except Exception:
+        disc = None
+
     return {
         "id": t.id, "name": t.full_name,
+        "discipline": disc,
         "months": months,
         "salary_now": months[-1]["salary"] if months else 0,
         "salary_growth": (months[-1]["salary"] - months[-2]["salary"])
@@ -903,3 +912,70 @@ def import_teachers(payload: schemas.TeacherImportIn,
               new_value=created, commit=True)
     return {"created": created, "results": results}
 
+
+
+# =====================================================================
+#  USTOZ INTIZOMI HISOBOTI (Jahongir, 2026-08-12 — LC UP uslubida)
+# =====================================================================
+_DISC_ROLES = tuple(dict.fromkeys(
+    tuple(roles.FINANCE_ACCESS)
+    + (roles.ACADEMIC_HEAD, roles.HR_MANAGER)))
+
+
+@router.get("/api/reports/teacher-discipline")
+def teacher_discipline_report(
+    year: int | None = None,
+    month: int | None = None,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*_DISC_ROLES)),
+):
+    """Yo'qlama intizomi: kim o'z vaqtida belgilayapti, kim kechikib.
+
+    O'z vaqtida = ustozning O'ZI dars boshlanishidan 60 daqiqa ichida
+    belgilagan. Menejer belgilagani ustoz foydasiga o'tmaydi."""
+    today = roles.local_today()
+    y = year or today.year
+    m = month or today.month
+    start = date(y, m, 1)
+    end = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        branch_id = user.branch_id
+
+    rows = _discipline_stats(db, start, end, branch_id=branch_id)
+
+    marked = sum(r["marked"] for r in rows)
+    on_time = sum(r["on_time"] for r in rows)
+    measured = sum(r["measured"] for r in rows)
+    self_marked = sum(r["self_marked"] for r in rows)
+    manager_marked = sum(r["manager_marked"] for r in rows)
+    unmarked = sum(r["unmarked"] for r in rows)
+    delays = [r["avg_delay_min"] for r in rows
+              if r["avg_delay_min"] and r["avg_delay_min"] > 0]
+    avg_delay = (sum(delays) / len(delays)) if delays else None
+
+    return {
+        "year": y, "month": m,
+        "month_label": f"{roles.UZ_MONTHS[m - 1]} {y}",
+        "ontime_limit_min": ATT_ONTIME_MIN,
+        "cards": {
+            "ontime_pct": (round(on_time / measured * 100, 0)
+                           if measured else None),
+            "ontime": on_time,
+            "measured": measured,
+            "marked": marked,
+            "self_pct": (round(self_marked / marked * 100, 0)
+                         if marked else None),
+            "self_marked": self_marked,
+            "manager_marked": manager_marked,
+            "avg_delay_label": _fmt_delay(avg_delay),
+            "unmarked": unmarked,
+        },
+        "rows": rows,
+        "hint": ("O'z vaqtida = ustozning o'zi dars boshlanishidan "
+                 f"{ATT_ONTIME_MIN} daqiqa ichida belgilagan. Menejer "
+                 "belgilagan dars ustozga o'z vaqtida hisoblanmaydi. "
+                 "O'rtacha kechikish faqat kechikkan belgilashlar "
+                 "bo'yicha."),
+    }

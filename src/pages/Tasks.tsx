@@ -39,6 +39,9 @@ export default function Tasks() {
   const [staff, setStaff] = useState<User[]>([]);
   const [branchId, setBranchId] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("");
+  // 2026-08-12, Jahongir: "vazifa kimga tegishli bo'lsa shunga borsin" —
+  // default faqat MENIKI; rahbariyat xohlasa "Hammasi"ni yoqadi.
+  const [scope, setScope] = useState<"mine" | "all">("mine");
   const [form, setForm] = useState(false);
   const [meeting, setMeeting] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
@@ -47,12 +50,14 @@ export default function Tasks() {
   function load() {
     setLoading(true);
     api
-      .get<TaskList>(`/tasks?x=1${branchParam(branchId)}`)
+      .get<TaskList>(
+        `/tasks?x=1${scope === "all" ? "&all=1" : ""}${branchParam(branchId)}`,
+      )
       .then(setData)
       .finally(() => setLoading(false));
   }
 
-  useEffect(load, [branchId]);
+  useEffect(load, [branchId, scope]);
   useEffect(() => {
     api.get<User[]>("/users").then(setStaff).catch(() => setStaff([]));
   }, []);
@@ -114,6 +119,26 @@ export default function Tasks() {
               {data.counts.done ?? 0}
             </p>
           </div>
+        </div>
+      )}
+
+      {canManage && (
+        <div className="flex items-center gap-1 mb-3">
+          {([["mine", "Menga tegishli"], ["all", "Hammaniki"]] as const).map(
+            ([k, lbl]) => (
+              <button
+                key={k}
+                onClick={() => setScope(k)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
+                  scope === k
+                    ? "bg-slate-900 border-slate-900 text-white"
+                    : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+                }`}
+              >
+                {lbl}
+              </button>
+            ),
+          )}
         </div>
       )}
 

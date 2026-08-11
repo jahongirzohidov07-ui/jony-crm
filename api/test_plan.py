@@ -128,7 +128,16 @@ ck("moliyachi tahrir qilolmaydi", d["can_edit"], False)
 d = client.get(f"/api/plan?year={YEAR}", headers=tok("sotuv")).json()
 ck("sotuvchi sotuvni ko'radi", list(d["sections"]), ["sotuv"])
 d = client.get(f"/api/plan?year={YEAR}", headers=tok("smm")).json()
-ck("smm onlineni ko'radi", list(d["sections"]), ["online"])
+# 2026-08-11 (Jahongir): SMM online + sotuvdan 2 ko'rsatkichni ko'radi
+ck("smm online va sotuv sarlavhasini ko'radi",
+   sorted(d["sections"]), ["online", "sotuv"])
+_smm_keys = {r["metric"] for r in d["rows"]}
+ck("smm yangi to'lovlar sonini ko'radi", "new_payments" in _smm_keys, True)
+ck("smm o'quvchilar sonini ko'radi", "students" in _smm_keys, True)
+ck("smm sotuvning boshqa metrikalarini KO'RMAYDI",
+   "visits" in _smm_keys or "old_payments" in _smm_keys, False)
+ck("olib tashlanganlar chiqmaydi",
+   any(k in _smm_keys for k in ("online_visits", "online_payments")), False)
 ck("ustoz rejani ko'rmaydi",
    client.get(f"/api/plan?year={YEAR}",
               headers=tok("ustoz1")).status_code, 403)

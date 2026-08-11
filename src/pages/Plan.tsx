@@ -280,8 +280,6 @@ export default function Plan() {
 
 const METRICS = [
   ["leads", "Lid"],
-  ["online_visits", "Onlinedan tashriflar"],
-  ["online_payments", "Yangi to'lovlar (online)"],
   ["visits", "Tashrif"],
   ["new_payments", "Yangi to'lovlar soni"],
   ["old_payments", "Eski to'lovlar soni"],

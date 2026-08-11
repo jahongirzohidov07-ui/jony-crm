@@ -4569,9 +4569,11 @@ def smm_sales_bonus(percent: float) -> tuple:
 PLAN_METRICS = [
     # (kalit, nomi, bo'lim, tur: flow|stock|money, fakt avtomatmi)
     ("leads", "Lid", "online", "flow", True),
-    ("online_visits", "Onlinedan tashriflar soni", "online", "flow", False),
-    ("online_payments", "Yangi to'lovlar soni (online)", "online", "flow",
-     False),
+    # 2026-08-11 (Jahongir): "Onlinedan tashriflar soni" va "Yangi
+    # to'lovlar soni (online)" UMUMAN olib tashlandi - fakti avtomat
+    # yig'ilmasdi, hech kimga kerak emas edi (asoschiga ham).
+    # O'rniga SMM'ga sotuvdagi new_payments va students ko'rinadi
+    # (PLAN_SMM_EXTRA).
     ("visits", "Tashrif", "sotuv", "flow", True),
     ("new_payments", "Yangi to'lovlar soni", "sotuv", "flow", True),
     ("old_payments", "Eski to'lovlar soni", "sotuv", "flow", True),
@@ -4589,6 +4591,12 @@ PLAN_SECTION_ROLES = {
     "sotuv": [FOUNDER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER],
     "moliya": [FOUNDER, FINANCE_DIRECTOR],
 }
+# SMM o'z bo'limidan tashqari shu ikki ko'rsatkichni ham ko'radi:
+# yangi to'lovlar soni va o'qiyotgan o'quvchilar soni (Jahongir,
+# 2026-08-11: "yangi to'lovni ozi va o'quvchi soni reja fakt
+# korinsin SMM chilarda")
+PLAN_SMM_EXTRA = ("new_payments", "students")
+
 PLAN_EDIT = [FOUNDER]
 PLAN_VIEW = list(dict.fromkeys(
     r for rs in PLAN_SECTION_ROLES.values() for r in rs))

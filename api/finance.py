@@ -1125,9 +1125,12 @@ def get_plan(year: int | None = None, granularity: str = "month",
     plan_map = {}
     for t in targets:
         plan_map.setdefault(t.metric, {})[t.month] = t.value
+    # SMM sotuv bo'limidan faqat ikkita ko'rsatkichni ko'radi
+    smm_extra = (user.role == roles.SMM_MANAGER)
     rows = []
     for key, label, sec, kind, auto in roles.PLAN_METRICS:
-        if sec not in secs:
+        if sec not in secs and not (
+                smm_extra and key in roles.PLAN_SMM_EXTRA):
             continue
         plans = plan_map.get(key, {})
         cells = []
@@ -1176,7 +1179,10 @@ def get_plan(year: int | None = None, granularity: str = "month",
         "year": year, "year_label": roles.plan_year_label(year),
         "granularity": granularity, "month": month,
         "months": roles.PLAN_MONTHS,
-        "sections": {s: roles.PLAN_SECTION_LABELS[s] for s in secs},
+        "sections": {s: roles.PLAN_SECTION_LABELS[s]
+                     for s in (list(secs) + (["sotuv"]
+                               if smm_extra and "sotuv" not in secs
+                               else []))},
         "columns": [w[0] for w in wins],
         "sundays": [i for i, w in enumerate(wins)
                     if granularity == "day" and w[1].weekday() == 6],

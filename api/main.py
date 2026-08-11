@@ -193,6 +193,17 @@ try:
 except Exception:
     pass
 
+# Eski tizimdagi ustozlar dars-sifati statistikasi (2026 yan-iyul).
+# Jahongir: "qolda kirigizib otirish keremas" - avtomat import,
+# rubric_key bo'yicha idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS10
+    from legacy_quality_seed import seed_legacy_quality
+    with _VS10(engine) as _db10:
+        seed_legacy_quality(_db10)
+except Exception:
+    pass
+
 # Barcha mavjud o'quvchilarga akkaunt: login = telefon, parol =
 # jonyjony (2026-08-10, Jahongir). Yangi kiritilganlarga
 # _ensure_student_account ochadi - bu esa eskilarni bir marta qoplaydi.

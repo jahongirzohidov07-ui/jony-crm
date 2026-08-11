@@ -5596,3 +5596,135 @@ def lcup_exams_import(payload: dict = Body(...),
 
 
 # LC UP ko'chirish moduli yuklandi (balans + imtihon, coinsiz).
+
+
+# ---------------------------------------------------------------
+# LC UP IMTIHONLARI v2: guruhni KO'PCHILIK bo'yicha aniqlash + bekor qilish
+# Sabab: o'quvchilar guruhdan guruhga o'tgan. Birinchi mos tushgan
+# o'quvchining guruhi ko'pincha xato bo'lib chiqadi (617 imtihondan 121 tasi).
+# ---------------------------------------------------------------
+_drop_route("/api/lcup/exams", "POST")
+
+
+def _lc_pick_group(db: Session, items):
+    """Mos tushgan o'quvchilarning ko'pchiligi qaysi guruhda — o'shani oladi."""
+    tally = {}
+    for st, _r in items:
+        gg = getattr(st, "group", None)
+        if gg is not None and getattr(gg, "id", None):
+            tally[gg.id] = tally.get(gg.id, 0) + 1
+    if not tally:
+        return None
+    best = max(tally.items(), key=lambda kv: (kv[1], -kv[0]))[0]
+    return (db.query(models.Group)
+            .filter(models.Group.id == best).first())
+
+
+@app.post("/api/lcup/exams")
+def lcup_exams_import_v2(payload: dict = Body(...),
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.FULL_ACCESS))):
+    """LC UP imtihon natijalarini ko'chiradi. COIN BERILMAYDI.
+
+    rows: [{group, exam, date, max, name, phone, score}]
+    """
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    apply = bool(payload.get("apply"))
+    by_ph, by_nm = _lc_index(db)
+    buckets, miss_st, miss_gr = {}, [], set()
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        s, _how = _lc_match(r, by_ph, by_nm)
+        if s is None:
+            miss_st.append(r.get("name"))
+            continue
+        key = (str(r.get("group") or ""), str(r.get("exam") or ""),
+               str(r.get("date") or ""))
+        buckets.setdefault(key, []).append((s, r))
+    made_exams = made_rows = 0
+    for (gname, ename, edate), items in buckets.items():
+        g = _lc_group(db, gname)
+        if g is None:
+            g = _lc_pick_group(db, items)
+        if g is None:
+            miss_gr.add(gname)
+            continue
+        d = M._date_of(edate) if hasattr(M, "_date_of") else None
+        if d is None:
+            try:
+                d = date.fromisoformat(str(edate)[:10])
+            except Exception:
+                d = date.today()
+        mx = 0.0
+        for _s, r in items:
+            mx = max(mx, _lc_num(r.get("max")) or 0)
+        if mx <= 0:
+            mx = 100.0
+        ex = (db.query(models.Exam)
+              .filter(models.Exam.group_id == g.id,
+                      models.Exam.title == ename,
+                      models.Exam.date == d).first())
+        if ex is None:
+            if not apply:
+                made_exams += 1
+                made_rows += len(items)
+                continue
+            ex = models.Exam(group_id=g.id, kind="unit", title=ename,
+                             date=d, max_score=mx, status="done",
+                             note=_LC_EXAM_NOTE,
+                             created_by=getattr(user, "full_name", None))
+            db.add(ex)
+            db.flush()
+            made_exams += 1
+        elif not apply:
+            made_rows += len(items)
+            continue
+        have = {r.student_id for r in ex.results}
+        for s, r in items:
+            if s.id in have:
+                continue
+            sc = _lc_num(r.get("score"))
+            db.add(models.ExamResult(
+                exam_id=ex.id, student_id=s.id, score=sc, band=None,
+                percent=round(sc / mx * 100, 1) if mx else None,
+                coins=0,                      # <- coin berilmaydi
+                absent=0, note=_LC_EXAM_NOTE,
+                created_by=getattr(user, "full_name", None)))
+            have.add(s.id)
+            made_rows += 1
+    if apply and (made_exams or made_rows):
+        db.commit()
+        audit.log(db, user, entity="exam", action="lcup_import",
+                  entity_label=f"LC UP: {made_exams} imtihon, "
+                               f"{made_rows} natija (coinsiz)",
+                  new_value=made_rows, commit=True)
+    return {"apply": apply, "imtihon": made_exams, "natija": made_rows,
+            "guruh topilmadi": sorted(miss_gr)[:50],
+            "o'quvchi topilmadi": len(miss_st)}
+
+
+@app.delete("/api/lcup/exams")
+def lcup_exams_undo(db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.FULL_ACCESS))):
+    """LC UP dan ko'chirilgan imtihon natijalarini bekor qiladi."""
+    res = (db.query(models.ExamResult)
+           .filter(models.ExamResult.note == _LC_EXAM_NOTE).all())
+    n_res = len(res)
+    for x in res:
+        db.delete(x)
+    db.flush()
+    n_ex = 0
+    for e in (db.query(models.Exam)
+              .filter(models.Exam.note == _LC_EXAM_NOTE).all()):
+        if not e.results:
+            db.delete(e)
+            n_ex += 1
+    db.commit()
+    audit.log(db, user, entity="exam", action="lcup_undo",
+              entity_label=f"LC UP importi bekor qilindi: {n_ex} imtihon, "
+                           f"{n_res} natija",
+              new_value=n_res, commit=True)
+    return {"deleted_exams": n_ex, "deleted_results": n_res}

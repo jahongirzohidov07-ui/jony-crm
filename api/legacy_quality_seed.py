@@ -24,6 +24,13 @@ import models
 import roles
 from sqlalchemy.orm import Session
 
+# Jahongir (2026-08-12): "Sardor Alimjanov eski, ishdan boshlab ketgan
+# xodim, Xazratqulova Orzigul ham shunaqa" - bular bazaga QO'SHILMAYDI
+# va asoschiga qayta-qayta "topilmadi" vazifasi bo'lib tushmaydi.
+# Diqqat: XAZRATQULOV MARDONBEK boshqa odam, u ro'yxatda EMAS.
+_IGNORE_NAMES = {"ALIMJANOV SARDOR", "XAZRATQULOVA ORZIGUL"}
+
+
 # (yil, oy) -> [(rasmdagi ism, foiz), ...]
 LEGACY_DATA = {
     # ============ 2025 YIL (Jahongir: "bu 2025 yilniki bu") ============
@@ -417,7 +424,32 @@ def _find_teacher(teachers, name: str):
             used.add(found)
         if ok:
             hits.append(t)
-    return hits[0] if len(hits) == 1 else None
+    if len(hits) == 1:
+        return hits[0]
+    if len(hits) > 1:
+        # Bazada dublikat yozuv bo'lishi mumkin (masalan, "Sug'diyona
+        # Toshtemirova" faol + "SUGDIYONA TOSHTEMIROVA" ketgan deb
+        # belgilangan nusxa). Eski statistika HOZIR ishlayotgan
+        # ustozga tegishli - ketmagan yagona nomzod bo'lsa, o'sha.
+        alive = [t for t in hits if not getattr(t, "left_date", None)]
+        if len(alive) == 1:
+            return alive[0]
+    return None
+
+
+_IGNORE_KEYS = None
+
+
+def _ignored(name: str) -> bool:
+    """Ketgan xodimlar ro'yxatiga kiradimi (imlo farqlariga chidamli:
+    "XAZRATQQULOVA" ham "XAZRATQULOVA" ham bitta kalitga tushadi)."""
+    global _IGNORE_KEYS
+    if _IGNORE_KEYS is None:
+        _IGNORE_KEYS = {
+            " ".join(sorted(_norm(x) for x in n.split() if _norm(x)))
+            for n in _IGNORE_NAMES}
+    key = " ".join(sorted(_norm(x) for x in name.split() if _norm(x)))
+    return key in _IGNORE_KEYS
 
 
 def seed_legacy_quality(db: Session) -> int:
@@ -436,6 +468,8 @@ def seed_legacy_quality(db: Session) -> int:
             models.LessonObservation.teacher_id).filter(
             models.LessonObservation.rubric_key == rk).all()}
         for name, score in rows:
+            if _ignored(name):
+                continue          # ketgan xodim - jimgina o'tkaziladi
             t = _find_teacher(prepared, name)
             if t is None:
                 unmatched.append(f"{name} ({_MONTH_UZ[month]}, {score})")

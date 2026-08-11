@@ -203,6 +203,16 @@ try:
 except Exception:
     pass
 
+# Coin do'koni xaridlari (LC UP daromadlar eksporti) - coin yechish;
+# eski eksportda allaqachon aks etganlari qayta kiritilmaydi
+try:
+    from sqlalchemy.orm import Session as _VS14
+    from legacy_shop_seed import seed_legacy_shop
+    with _VS14(engine) as _db14:
+        seed_legacy_shop(_db14)
+except Exception:
+    pass
+
 # Muzlatilganlarning eski "kelmadi" yo'qlamalarini tozalash -
 # kelmagan o'quvchi uchun ustozga oylik hisoblanmasin (Jahongir)
 try:

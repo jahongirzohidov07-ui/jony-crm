@@ -18,7 +18,7 @@ import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "smm" | "journey" | "funnel" | "channels" | "romi" | "rfm"
-  | "notify" | "referral" | "ads" | "social";
+  | "notify" | "referral" | "ads" | "social" | "salesplan";
 
 import {
   RomiTab, RfmTab, NotifyTab, ReferralTab,
@@ -35,6 +35,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "referral", label: "Referral" },
   { key: "ads", label: "Reklama ko'rsatkichlari" },
   { key: "social", label: "Ijtimoiy tarmoqlar" },
+  { key: "salesplan", label: "Sotuv rejasi va bonus" },
 ];
 
 const STAGE_COLORS = ["#94a3b8", "#38bdf8", "#818cf8", "#a78bfa", "#10b981"];
@@ -1002,7 +1003,9 @@ export default function Marketing() {
         <RangePicker months={months} setMonths={setMonths} />
       )}
 
-      {tab === "social" ? (
+      {tab === "salesplan" ? (
+        <SalesPlanTab />
+      ) : tab === "social" ? (
         <SocialTab />
       ) : tab === "romi" ? (
         <RomiTab />
@@ -1027,6 +1030,176 @@ export default function Marketing() {
       ) : (
         <ChannelsTab data={data} cac={cac} />
       )}
+    </div>
+  );
+}
+
+// ------------------- Sotuv rejasi va marketolog bonusi -------------
+// Jahongir (2026-08-11): sotuv rejasi bajarilishiga qarab bonus aniq
+// jadval bo'yicha: 80% dan 1 mln ... 150%+ da 8 mln. Yangi to'lovlar
+// soni va hozirgi o'quvchilar soni ham shu yerda ko'rinadi.
+type SalesPlanRow = {
+  branch_id: number; branch: string; plan: number; fact: number;
+  percent: number | null; bonus: number; bonus_label: string;
+  new_payments_count: number; students_now: number;
+};
+
+function SalesPlanTab() {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<{
+    rows: SalesPlanRow[]; can_edit: boolean;
+    scale: { min: number; bonus: number; label: string }[];
+  } | null>(null);
+  const [editing, setEditing] = useState<number | null>(null);
+  const [val, setVal] = useState("");
+  const [reload, setReload] = useState(0);
+
+  useEffect(() => {
+    api
+      .get<typeof d>(`/smm/sales-plan?year=${year}&month=${month}`)
+      .then((r) => setD(r as never))
+      .catch(() => setD(null));
+  }, [year, month, reload]);
+
+  async function save(branchId: number) {
+    try {
+      await api.put("/smm/sales-plan", {
+        branch_id: branchId, year, month, amount: Number(val) || 0,
+      });
+      setEditing(null);
+      setReload((k) => k + 1);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
+
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+
+  const MONTH_NAMES = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+    "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"];
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <select value={month} onChange={(e) => setMonth(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm">
+          {MONTH_NAMES.map((m, i) => (
+            <option key={m} value={i + 1}>{m}</option>
+          ))}
+        </select>
+        <select value={year} onChange={(e) => setYear(Number(e.target.value))}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm">
+          {[now.getFullYear(), now.getFullYear() - 1].map((y) => (
+            <option key={y} value={y}>{y}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto mb-5">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-xs text-slate-500">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium">Filial</th>
+              <th className="text-right px-3 py-2.5 font-medium">Reja (so'm)</th>
+              <th className="text-right px-3 py-2.5 font-medium">Fakt (tushum)</th>
+              <th className="text-right px-3 py-2.5 font-medium">%</th>
+              <th className="text-left px-3 py-2.5 font-medium">Holat</th>
+              <th className="text-right px-3 py-2.5 font-medium">Bonus</th>
+              <th className="text-right px-3 py-2.5 font-medium">Yangi to'lovlar</th>
+              <th className="text-right px-3 py-2.5 font-medium">O'quvchilar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.rows.map((r) => {
+              const tone = r.percent == null
+                ? "text-slate-400"
+                : r.percent >= 100 ? "text-emerald-600"
+                : r.percent >= 80 ? "text-amber-600" : "text-rose-600";
+              return (
+                <tr key={r.branch_id} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5 font-medium text-slate-900">
+                    {r.branch}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums">
+                    {editing === r.branch_id ? (
+                      <span className="inline-flex items-center gap-1">
+                        <input type="number" value={val} autoFocus
+                          onChange={(e) => setVal(e.target.value)}
+                          className="w-32 border border-slate-300 rounded-lg px-2 py-1 text-sm text-right" />
+                        <button onClick={() => save(r.branch_id)}
+                          className="text-emerald-600 text-xs font-medium">OK</button>
+                        <button onClick={() => setEditing(null)}
+                          className="text-slate-400 text-xs">✕</button>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5">
+                        {r.plan ? formatSom(r.plan) : "—"}
+                        {d.can_edit && (
+                          <button
+                            onClick={() => {
+                              setEditing(r.branch_id);
+                              setVal(r.plan ? String(r.plan) : "");
+                            }}
+                            className="text-slate-300 hover:text-brand-600"
+                            title="Rejani kiritish/o'zgartirish">
+                            ✎
+                          </button>
+                        )}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums">
+                    {formatSom(r.fact)}
+                  </td>
+                  <td className={`px-3 py-2.5 text-right font-semibold tabular-nums ${tone}`}>
+                    {r.percent != null ? `${r.percent}%` : "—"}
+                  </td>
+                  <td className={`px-3 py-2.5 text-xs ${tone}`}>
+                    {r.bonus_label}
+                  </td>
+                  <td className={`px-3 py-2.5 text-right font-medium tabular-nums ${tone}`}>
+                    {r.percent != null ? formatSom(r.bonus) : "—"}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums">
+                    {r.new_payments_count}
+                  </td>
+                  <td className="px-3 py-2.5 text-right tabular-nums">
+                    {r.students_now}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-4 max-w-md">
+        <p className="text-sm font-medium text-slate-900 mb-2">
+          Bonus shkalasi
+        </p>
+        <table className="w-full text-xs">
+          <tbody>
+            <tr className="text-slate-500">
+              <td className="py-1">80% dan past</td>
+              <td>Sotuv rejasi bajarilmadi</td>
+              <td className="text-right">bonus yo'q</td>
+            </tr>
+            {[...d.scale].sort((a, b) => a.min - b.min).map((s) => (
+              <tr key={s.min} className="border-t border-slate-50">
+                <td className="py-1">{s.min}%+</td>
+                <td>{s.label}</td>
+                <td className="text-right font-medium">{formatSom(s.bonus)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="text-[11px] text-slate-400 mt-2">
+          Fakt — shu oyda filialga tushgan jami to'lovlar. Marketolog o'z
+          panelida (Dashboard) xuddi shu raqamlarni ko'radi.
+        </p>
+      </div>
     </div>
   );
 }

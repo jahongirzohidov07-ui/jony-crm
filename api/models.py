@@ -2898,6 +2898,25 @@ class BudgetLine(Base):
                         onupdate=datetime.utcnow)
 
 
+class SmmSalesPlan(Base):
+    """Marketolog uchun OYLIK SOTUV REJASI - filial kesimida (so'm).
+
+    Jahongir (2026-08-11): sotuv rejasi bajarilishiga qarab marketolog
+    bonusi aniq jadval bo'yicha chiqadi (80% dan 1 mln ... 150%+ da
+    8 mln). Reja shu jadvalga kiritiladi, fakt (shu oy tushumi) va
+    foiz avtomat hisoblanadi."""
+    __tablename__ = "smm_sales_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False)
+    year = Column(Integer, nullable=False)
+    month = Column(Integer, nullable=False)
+    amount = Column(Float, nullable=False, default=0)
+    created_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
 class SeedMark(Base):
     """Bir martalik import/seed bajarilganini belgilaydi.
 

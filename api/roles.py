@@ -4545,6 +4545,27 @@ def examiner_salary(points: float) -> dict:
 # Reja oy kesimida kiritiladi; hafta/kun rejasi oydan avtomat
 # taqsimlanadi (ish kunlariga bo'lib; yakshanba dam). Fakt platforma
 # ma'lumotlaridan o'zi to'ladi.
+# Marketolog SOTUV BONUSI shkalasi (Jahongir, 2026-08-11, Bekobod 1
+# marketologi uchun berilgan jadval - barcha marketologlarga amal
+# qiladi). (min_foiz, bonus_som, holat nomi) - yuqoridan pastga.
+SMM_SALES_BONUS = [
+    (150.0, 8_000_000, "Maksimal tushum"),
+    (120.0, 5_500_000, "Rekord sotuv"),
+    (110.0, 4_000_000, "Yuqori tushum"),
+    (100.0, 3_000_000, "Sotuv rejasi bajarildi"),
+    (90.0, 2_000_000, "Yaxshi sotuv"),
+    (80.0, 1_000_000, "Minimal chiziq"),
+]
+
+
+def smm_sales_bonus(percent: float) -> tuple:
+    """Foizdan (bonus, holat nomi). 80% dan past - bonus yo'q."""
+    for mn, bonus, label in SMM_SALES_BONUS:
+        if percent >= mn:
+            return bonus, label
+    return 0, "Sotuv rejasi bajarilmadi"
+
+
 PLAN_METRICS = [
     # (kalit, nomi, bo'lim, tur: flow|stock|money, fakt avtomatmi)
     ("leads", "Lid", "online", "flow", True),

@@ -2367,6 +2367,58 @@ def _my_facility_cards(db: Session, user: models.User) -> list:
               "amber" if reqs else "good", "/inventory"),
     ]
 
+def _smm_sales_state(db: Session, branch_id, year: int, month: int) -> dict:
+    """Marketolog sotuv rejasi holati: reja, fakt (shu oy tushumi,
+    filial bo'yicha), foiz, bonus, yangi to'lovlar soni va hozirgi
+    o'quvchilar soni (Jahongir jadvali, 2026-08-11)."""
+    m_start, m_end = billing.month_bounds(year, month)
+    d0, d1 = _utc_window(m_start, m_end)
+
+    plan_row = (db.query(models.SmmSalesPlan)
+                .filter(models.SmmSalesPlan.branch_id == branch_id,
+                        models.SmmSalesPlan.year == year,
+                        models.SmmSalesPlan.month == month).first()
+                if branch_id else None)
+    plan = float(plan_row.amount) if plan_row else 0.0
+
+    pq = (db.query(models.Payment, models.Student)
+          .join(models.Student,
+                models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= d0,
+                  models.Payment.created_at <= d1))
+    if branch_id:
+        pq = pq.filter(models.Student.branch_id == branch_id)
+    # Har o'quvchining ENG BIRINCHI to'lovi shu oyga tushsa - yangi
+    # mijoz (dashboard'dagi hisob bilan bir xil mantiq)
+    first_dates = dict(
+        db.query(models.Payment.student_id,
+                 func.min(models.Payment.created_at))
+        .filter(models.Payment.kind == "payment")
+        .group_by(models.Payment.student_id).all())
+    fact = 0.0
+    new_count = 0
+    for p, st in pq.all():
+        fact += p.amount or 0
+        if first_dates.get(st.id) == p.created_at:
+            new_count += 1
+
+    sq = db.query(models.Student).filter(
+        models.Student.status == "active")
+    if branch_id:
+        sq = sq.filter(models.Student.branch_id == branch_id)
+    students_now = sq.count()
+
+    percent = round(fact / plan * 100, 1) if plan else None
+    bonus, label = (roles.smm_sales_bonus(percent)
+                    if percent is not None else (0, "Reja kiritilmagan"))
+    return {
+        "plan": round(plan, 0), "fact": round(fact, 0),
+        "percent": percent, "bonus": bonus, "bonus_label": label,
+        "new_payments_count": new_count, "students_now": students_now,
+    }
+
+
 def _my_marketing_cards(db: Session, user: models.User) -> list:
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
@@ -2376,7 +2428,7 @@ def _my_marketing_cards(db: Session, user: models.User) -> list:
     spend = sum(e.amount for e in db.query(models.Expense).filter(
         models.Expense.category == "ads",
         models.Expense.date >= m_start).all())
-    return [
+    cards = [
         _card("Shu oy lidlar", len(leads), None, "brand", "/marketing"),
         _card("O'quvchiga aylandi", len(conv), None, "good", "/marketing"),
         _card("Reklama xarajati", round(spend, 2), None, "plain", "/marketing"),
@@ -2384,6 +2436,35 @@ def _my_marketing_cards(db: Session, user: models.User) -> list:
               round(spend / len(leads)) if leads else 0,
               "CAC", "plain", "/analytics"),
     ]
+    # SOTUV REJASI VA BONUS (Jahongir, 2026-08-11): reja/fakt, foiz,
+    # bonus jadval bo'yicha + yangi to'lovlar soni va o'quvchilar soni
+    try:
+        st8 = _smm_sales_state(db, user.branch_id, today.year, today.month)
+        if st8["percent"] is None:
+            cards.append(_card(
+                "Sotuv rejasi (oy)", "Reja kiritilmagan",
+                "Marketing bo'limida asoschi kiritadi", "amber",
+                "/marketing"))
+        else:
+            pct = st8["percent"]
+            tone = ("good" if pct >= 100
+                    else "amber" if pct >= 80 else "bad")
+            cards.append(_card(
+                "Sotuv rejasi bajarilishi", f"{pct}%",
+                f"reja {st8['plan']:,.0f} · fakt {st8['fact']:,.0f}"
+                .replace(",", " "), tone, "/marketing"))
+            cards.append(_card(
+                "Sotuv bonusi", st8["bonus"],
+                st8["bonus_label"], tone, "/marketing"))
+        cards.append(_card(
+            "Yangi to'lovlar soni", st8["new_payments_count"],
+            "shu oy, birinchi marta to'laganlar", "brand", "/marketing"))
+        cards.append(_card(
+            "Hozirgi o'quvchilar", st8["students_now"],
+            "faol o'quvchilar soni", "plain", "/students"))
+    except Exception:
+        pass
+    return cards
 
 def _my_finance_cards(db: Session, user: models.User) -> list:
     today = date.today()

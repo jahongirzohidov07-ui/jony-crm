@@ -7,7 +7,7 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
@@ -592,6 +592,71 @@ def billing_month(
         "expected_total": round(sum(r["amount"] for r in rows), 2),
         "rows": sorted(rows, key=lambda r: r["full_name"]),
     }
+
+@router.get("/api/smm/sales-plan")
+def smm_sales_plan_list(
+    year: int | None = None,
+    month: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*(list(roles.FULL_ACCESS)
+                                + [roles.FINANCE_DIRECTOR,
+                                   roles.SMM_MANAGER]))),
+):
+    """Marketolog sotuv rejasi va bonusi - filiallar kesimida.
+
+    Rahbariyat hammasini ko'radi; marketolog faqat o'z filialini
+    (o'z panelida ham xuddi shu raqamlar chiqadi)."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    q = db.query(models.Branch).order_by(models.Branch.name)
+    if user.role == roles.SMM_MANAGER and user.branch_id:
+        q = q.filter(models.Branch.id == user.branch_id)
+    rows = []
+    for b in q.all():
+        st = _smm_sales_state(db, b.id, y, m)
+        rows.append({"branch_id": b.id, "branch": b.name, **st})
+    return {"year": y, "month": m, "rows": rows,
+            "scale": [{"min": mn, "bonus": bo, "label": lb}
+                      for mn, bo, lb in roles.SMM_SALES_BONUS],
+            "can_edit": user.role in tuple(roles.FULL_ACCESS)
+            or user.role == roles.FINANCE_DIRECTOR}
+
+
+@router.put("/api/smm/sales-plan")
+def smm_sales_plan_set(
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*(list(roles.FULL_ACCESS)
+                                + [roles.FINANCE_DIRECTOR]))),
+):
+    """Filial uchun oylik sotuv rejasini kiritish/yangilash."""
+    try:
+        branch_id = int(payload.get("branch_id"))
+        year = int(payload.get("year"))
+        month = int(payload.get("month"))
+        amount = float(payload.get("amount") or 0)
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Maydonlar noto'g'ri")
+    if not (1 <= month <= 12) or amount < 0:
+        raise HTTPException(400, "Oy yoki summa noto'g'ri")
+    row = (db.query(models.SmmSalesPlan)
+           .filter(models.SmmSalesPlan.branch_id == branch_id,
+                   models.SmmSalesPlan.year == year,
+                   models.SmmSalesPlan.month == month).first())
+    old = row.amount if row else None
+    if row is None:
+        row = models.SmmSalesPlan(branch_id=branch_id, year=year,
+                                  month=month, created_by=user.full_name)
+        db.add(row)
+    row.amount = amount
+    db.commit()
+    b = db.query(models.Branch).get(branch_id)
+    audit.log(db, user, entity="plan", action="update",
+              entity_label=f"Sotuv rejasi - {b.name if b else branch_id}",
+              field=f"{year}-{month:02d}",
+              old_value=old, new_value=amount, commit=True)
+    return {"ok": True}
+
 
 @router.get("/api/billing/collection-legacy")
 def billing_collection_legacy(

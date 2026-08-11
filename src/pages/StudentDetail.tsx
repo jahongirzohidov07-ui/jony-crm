@@ -779,8 +779,8 @@ function PaymentsTab({
                           title="To'lov usuli"
                         >
                           {PAYMENT_METHODS.map((m) => (
-                            <option key={m} value={m}>
-                              {methodLabel(m)}
+                            <option key={m.key} value={m.key}>
+                              {m.label}
                             </option>
                           ))}
                         </select>

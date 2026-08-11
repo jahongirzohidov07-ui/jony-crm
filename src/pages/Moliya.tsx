@@ -27,6 +27,7 @@ import {
 } from "../lib/expenses";
 import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
+import { PayEditModal, type PayEditTarget } from "../components/PayEditModal";
 import { exportToExcel } from "../lib/exportXlsx";
 import { BreakEvenTab } from "../components/BreakEven";
 import { FinanceOverviewTab } from "../components/FinanceOverview";

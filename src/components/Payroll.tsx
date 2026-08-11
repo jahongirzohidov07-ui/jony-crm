@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../lib/AuthContext";
+import { PayEditModal, type PayEditTarget } from "./PayEditModal";
 import { PAYMENT_EDIT, can } from "../lib/roles";
-import { Wallet, Check, Trash2, Search, Download } from "lucide-react";
+import { Wallet, Check, Trash2, Search, Download, Pencil } from "lucide-react";
 import {
   api,
   type StaffPayrollList,

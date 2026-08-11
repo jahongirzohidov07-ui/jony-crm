@@ -6078,3 +6078,184 @@ def lcup_by_id(payload: dict = Body(...),
     return {"apply": apply, "student": s.full_name, "student_id": sid,
             "to'lov yozildi": made, "takror": dup, "xato qator": bad,
             "tanga": coin, "balans": bal}
+
+
+# =====================================================================
+#  OYLIK TO'LOV — YANGI QOIDA (Jahongir tasdiqlagan)
+#
+#  Avval: summa O'TILGAN darsdan hisoblanardi, shuning uchun oyning
+#  1-kuni 0 chiqib hech kimdan yechilmasdi; birinchi dars o'tilgan kuni
+#  esa faqat 1 dars uchun yechilardi va "bu oy bajarildi" degan UMUMIY
+#  belgi qolgan hamma o'quvchini oy oxirigacha chetda qoldirardi.
+#
+#  Endi: har oyning 1-kuni 05:00 (Toshkent)da har bir faol o'quvchidan
+#  TO'LIQ standart oylik yechiladi (standart dars soni x dars narxi).
+#  Oy tugagach, agar dars kam o'tilgan bo'lsa, farq avtomat qaytariladi
+#  (chegirma yozuvi). Tekshiruv har bir o'quvchi bo'yicha alohida —
+#  bitta guruh yechilgani boshqasini to'xtatib qo'ymaydi.
+#
+#  Avgust 2026 va undan oldingi oylarga tegilmaydi (qo'lda kiritilgan).
+# =====================================================================
+_MC_BY = "avtomat (oylik)"
+_MC_BACK = "farq qaytarildi"
+_MC_FROM = "2026-09"          # shu oydan boshlab yangi qoida ishlaydi
+
+
+def _mc_key(y: int, m: int) -> str:
+    return f"{y:04d}-{m:02d}"
+
+
+def _mc_has_charge(db: Session, sid: int, period: str) -> bool:
+    """Shu o'quvchidan shu oy uchun allaqachon yechilgan (qo'lda,
+    faollashtirishda yoki avtomat) — ikkinchi marta yechilmaydi."""
+    return (db.query(models.Payment)
+            .filter(models.Payment.student_id == sid,
+                    models.Payment.kind == "charge",
+                    models.Payment.period == period)
+            .first() is not None)
+
+
+def _mc_active_groups(db: Session):
+    ids = [gid for (gid,) in
+           db.query(models.Student.group_id)
+           .filter(models.Student.status == "active",
+                   models.Student.group_id.isnot(None))
+           .distinct().all()]
+    out = []
+    for gid in ids:
+        g = db.query(models.Group).filter(models.Group.id == gid).first()
+        if g is not None:
+            out.append(g)
+    return out
+
+
+def _mc_charge_full(db: Session, today) -> int:
+    """1-kundan boshlab: har bir faol o'quvchidan to'liq standart oylik."""
+    import billing as _B  # noqa: F401  (kelgusida kerak bo'ladi)
+    period = _mc_key(today.year, today.month)
+    n = 0
+    for g in _mc_active_groups(db):
+        price = float(g.lesson_price or 0)
+        std = int(g.standard_lessons_per_month or 12)
+        full = roles.money(price * std)
+        if full <= 0:
+            continue
+        students = (db.query(models.Student)
+                    .filter(models.Student.group_id == g.id,
+                            models.Student.status == "active").all())
+        for s in students:
+            # Shu oy ichida qo'shilgan bo'lsa — faollashtirish yozuvi
+            # allaqachon o'z ulushini yechgan, aralashmaymiz.
+            if s.enrolled_date and _mc_key(
+                    s.enrolled_date.year, s.enrolled_date.month) == period:
+                continue
+            if _mc_has_charge(db, s.id, period):
+                continue
+            if M._charge_skipped(db, s.id, period):
+                continue
+            db.add(models.Payment(
+                student_id=s.id, amount=-full, kind="charge",
+                note=f"{g.name} — {period}: {std} dars (standart oy, avtomat)",
+                created_by=_MC_BY, period=period))
+            n += 1
+    return n
+
+
+def _mc_refund_prev(db: Session, today) -> int:
+    """O'tgan oy uchun: dars kam o'tilgan bo'lsa farqni qaytaradi."""
+    from datetime import timedelta as _td
+    import billing as _B
+    first = date(today.year, today.month, 1)
+    prev_end = first - _td(days=1)
+    period = _mc_key(prev_end.year, prev_end.month)
+    if period < _MC_FROM:
+        return 0
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.period == period,
+                    models.Payment.kind == "charge",
+                    models.Payment.created_by == _MC_BY).all())
+    n = 0
+    for p in rows:
+        s = (db.query(models.Student)
+             .filter(models.Student.id == p.student_id).first())
+        if s is None or s.group is None:
+            continue
+        done = (db.query(models.Payment)
+                .filter(models.Payment.student_id == s.id,
+                        models.Payment.period == period,
+                        models.Payment.note.like("%" + _MC_BACK + "%"))
+                .first())
+        if done is not None:
+            continue
+        g = s.group
+        price = float(g.lesson_price or 0)
+        held = _B.billable_lessons_for_student(
+            db, s, g, prev_end.year, prev_end.month)
+        actual = roles.money(price * held)
+        back = roles.money(abs(p.amount) - actual)
+        if back < 1:
+            continue
+        db.add(models.Payment(
+            student_id=s.id, amount=back, kind="discount",
+            note=f"{g.name} — {period}: {held} dars o'tildi, {_MC_BACK}",
+            created_by=_MC_BY, period=period))
+        n += 1
+    return n
+
+
+def _mc_ensure(db: Session, _orig=None):
+    """Login va kunlik cron shu funksiyani chaqiradi."""
+    now = roles.local_now()
+    today = now.date()
+    if today.day == 1 and now.hour < 5:
+        return
+    period = _mc_key(today.year, today.month)
+    if period < _MC_FROM:
+        # Eski oylar — avvalgi mantiq (tegilmaydi).
+        if _orig is not None:
+            try:
+                return _orig(db)
+            except Exception:
+                return
+        return
+    try:
+        from sqlalchemy import text as _text
+        if db.get_bind().dialect.name == "postgresql":
+            db.execute(_text("SELECT pg_advisory_xact_lock(917202)"))
+    except Exception:
+        pass
+    n1 = n2 = 0
+    try:
+        n2 = _mc_refund_prev(db, today)
+    except Exception:
+        db.rollback()
+    try:
+        n1 = _mc_charge_full(db, today)
+    except Exception:
+        db.rollback()
+    if n1 or n2:
+        db.commit()
+    return {"yechildi": n1, "qaytarildi": n2}
+
+
+def _mc_install():
+    """common/system modullaridagi eski funksiyani almashtiramiz."""
+    import sys as _s
+    done = []
+    for mod in ("common", "system", "main"):
+        m = _s.modules.get(mod)
+        if m is None:
+            continue
+        old = getattr(m, "_ensure_month_charges", None)
+        if old is None or getattr(old, "_mc_new", False):
+            continue
+
+        def _wrap(db, _old=old):
+            return _mc_ensure(db, _old)
+        _wrap._mc_new = True
+        setattr(m, "_ensure_month_charges", _wrap)
+        done.append(mod)
+    return done
+
+
+_MC_INSTALLED = _mc_install()

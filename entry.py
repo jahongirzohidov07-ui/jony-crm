@@ -6291,3 +6291,149 @@ def _mc_install():
 
 
 _MC_INSTALLED = _mc_install()
+
+
+# =====================================================================
+#  IMTIHON HISOBOTI (Analitika -> Imtihonlar tabi)
+#  LC UP dagi ko'rinishga o'xshash: tepada 6 ta karta, keyin 4 kesim.
+#  O'tish chegarasi: 65% (imtihonda alohida o'tish bali maydoni yo'q).
+# =====================================================================
+_EXR_PASS = 65.0
+_EXR_ROLES = (getattr(roles, "EXAM_VIEW", None)
+              or getattr(roles, "ACADEMIC_VIEW", None)
+              or roles.FULL_ACCESS)
+
+
+def _exr_date(v, default=None):
+    try:
+        return date.fromisoformat(str(v)[:10])
+    except Exception:
+        return default
+
+
+def _exr_pct(r, mx):
+    """Natijaning foizi: retake bo'lsa u ustun, keyin percent, keyin ball."""
+    for v in (getattr(r, "retake_percent", None), r.percent):
+        if v is not None:
+            return float(v)
+    rsc = getattr(r, "retake_score", None)
+    sc = rsc if rsc is not None else r.score
+    if sc is None or not mx:
+        return None
+    return float(sc) / float(mx) * 100.0
+
+
+@app.get("/api/analytics/exam-report")
+def exam_report(start: str | None = None, end: str | None = None,
+                branch_id: int | None = None, teacher_id: int | None = None,
+                limit: int = 300,
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*_EXR_ROLES))):
+    """Imtihonlar bo'yicha umumiy hisobot."""
+    d1 = _exr_date(start, date.today().replace(month=1, day=1))
+    d2 = _exr_date(end, date.today())
+    q = (db.query(models.Exam)
+         .filter(models.Exam.date >= d1, models.Exam.date <= d2))
+    exams = q.all()
+    if not exams:
+        return {"pass_mark": _EXR_PASS, "cards": {
+            "guruh": 0, "natija": 0, "ortacha": 0, "otgan": 0,
+            "yiqilgan": 0, "otish_foizi": 0},
+            "groups": [], "students": [], "teachers": [], "failed": []}
+    gids = {e.group_id for e in exams if e.group_id}
+    groups = {}
+    for gid in gids:
+        g = db.query(models.Group).filter(models.Group.id == gid).first()
+        if g is not None:
+            groups[gid] = g
+    tnames = {}
+    for t in db.query(models.Teacher).all():
+        tnames[t.id] = t.full_name
+    snames = {}
+    for s in db.query(models.Student).all():
+        snames[s.id] = s.full_name
+    gstat, tstat = {}, {}
+    rows, failed = [], []
+    tot = pas = 0
+    psum = 0.0
+    for e in exams:
+        g = groups.get(e.group_id)
+        if g is None:
+            continue
+        if branch_id and getattr(g, "branch_id", None) != branch_id:
+            continue
+        tid = getattr(g, "teacher_id", None)
+        if teacher_id and tid != teacher_id:
+            continue
+        mx = float(e.max_score or 100)
+        for r in (e.results or []):
+            if r.absent:
+                continue
+            pct = _exr_pct(r, mx)
+            if pct is None:
+                continue
+            ok = pct >= _EXR_PASS
+            tot += 1
+            psum += pct
+            if ok:
+                pas += 1
+            gs = gstat.setdefault(e.group_id, {
+                "guruh": g.name, "ustoz": tnames.get(tid) or "—",
+                "imtihon": set(), "natija": 0, "otgan": 0, "sum": 0.0})
+            gs["imtihon"].add(e.id)
+            gs["natija"] += 1
+            gs["sum"] += pct
+            if ok:
+                gs["otgan"] += 1
+            if tid:
+                ts = tstat.setdefault(tid, {
+                    "ustoz": tnames.get(tid) or "—", "natija": 0,
+                    "otgan": 0, "sum": 0.0, "guruh": set()})
+                ts["natija"] += 1
+                ts["sum"] += pct
+                ts["guruh"].add(e.group_id)
+                if ok:
+                    ts["otgan"] += 1
+            item = {"oquvchi": snames.get(r.student_id) or "—",
+                    "guruh": g.name, "imtihon": e.title,
+                    "sana": str(e.date), "ball": r.score,
+                    "foiz": round(pct, 1), "otdi": ok}
+            rows.append(item)
+            if not ok:
+                failed.append(item)
+    rows.sort(key=lambda x: (x["sana"], -x["foiz"]), reverse=True)
+    failed.sort(key=lambda x: x["foiz"])
+    glist = []
+    for gid, v in gstat.items():
+        n = v["natija"] or 1
+        glist.append({"guruh": v["guruh"], "ustoz": v["ustoz"],
+                      "imtihon": len(v["imtihon"]), "natija": v["natija"],
+                      "ortacha": round(v["sum"] / n, 1),
+                      "otish_foizi": round(v["otgan"] * 100.0 / n, 1)})
+    glist.sort(key=lambda x: x["otish_foizi"])
+    tlist = []
+    for tid, v in tstat.items():
+        n = v["natija"] or 1
+        tlist.append({"ustoz": v["ustoz"], "guruh": len(v["guruh"]),
+                      "natija": v["natija"],
+                      "ortacha": round(v["sum"] / n, 1),
+                      "otish_foizi": round(v["otgan"] * 100.0 / n, 1)})
+    tlist.sort(key=lambda x: -x["otish_foizi"])
+    lim = max(20, min(int(limit or 300), 2000))
+    return {
+        "pass_mark": _EXR_PASS,
+        "start": str(d1), "end": str(d2),
+        "cards": {
+            "guruh": len(gstat),
+            "natija": tot,
+            "ortacha": round(psum / tot, 1) if tot else 0,
+            "otgan": pas,
+            "yiqilgan": tot - pas,
+            "otish_foizi": round(pas * 100.0 / tot, 1) if tot else 0,
+        },
+        "groups": glist,
+        "teachers": tlist,
+        "students": rows[:lim],
+        "failed": failed[:lim],
+        "jami_natija": tot,
+    }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SalesFunnel from "../components/SalesFunnel";
 import { Download, Users, TrendingDown, GraduationCap } from "lucide-react";
 import {
   api,
@@ -288,44 +289,12 @@ function FunnelTab() {
         Qaysi bosqichda odam yo'qolayotgani
       </p>
 
-      {lf.total === 0 ? (
-        <p className="text-sm text-slate-400 py-4">Hali lid kiritilmagan.</p>
-      ) : (
-        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-8">
-          {lf.stages.map((s, i) => {
-            const prev = i > 0 ? lf.stages[i - 1].reached : lf.total;
-            const dropped = prev - s.reached;
-            const dropPct = prev ? Math.round((dropped / prev) * 100) : 0;
-            return (
-              <div key={s.stage} className="mb-3 last:mb-0">
-                <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-slate-700">{stageLabel(s.stage)}</span>
-                  <span className="text-slate-500">
-                    <span className="font-semibold text-slate-800">{s.reached}</span> ta ·{" "}
-                    {s.percent}%
-                  </span>
-                </div>
-                <div className="h-7 bg-slate-100 rounded-lg overflow-hidden">
-                  <div
-                    className="h-full bg-brand-500 flex items-center px-2"
-                    style={{ width: `${Math.max(s.percent, 2)}%` }}
-                  />
-                </div>
-                {i > 0 && dropped > 0 && (
-                  <p className="text-xs text-red-500 mt-1">
-                    ↓ shu bosqichda {dropped} ta yo'qotildi ({dropPct}%)
-                  </p>
-                )}
-              </div>
-            );
-          })}
-          {lf.rejected > 0 && (
-            <p className="text-xs text-slate-400 mt-4">
-              Bundan tashqari {lf.rejected} ta lid "Rad etdi" deb belgilangan.
-            </p>
-          )}
-        </div>
-      )}
+      <SalesFunnel
+        total={lf.total}
+        stages={lf.stages}
+        rejected={lf.rejected}
+        labelOf={stageLabel}
+      />
 
       {/* ---------------- Oylik voronka ---------------- */}
       <h3 className="font-medium text-slate-800 mb-1">

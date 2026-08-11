@@ -916,8 +916,11 @@ function RoleSwitcher() {
 function MobileBranchPicker({ onDone }: { onDone: () => void }) {
   const { user } = useAuth();
   const [all, setAll] = useState<{ id: number; name: string }[]>([]);
-  const orgWide = can(user?.role, BRANCH_SWITCH);
   const mine = user?.branches ?? [];
+  // Xodimga biriktirilgan filiallar bo'lsa - faqat o'shalari
+  // (Jahongir, 2026-08-11); asoschiga hammasi
+  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const orgWide = !restricted && can(user?.role, BRANCH_SWITCH);
   const current = getGlobalBranch();
 
   useEffect(() => {
@@ -942,7 +945,7 @@ function MobileBranchPicker({ onDone }: { onDone: () => void }) {
         }}
         className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-sm bg-white"
       >
-        <option value="">Barcha filiallar</option>
+        {!restricted && <option value="">Barcha filiallar</option>}
         {branches.map((b) => (
           <option key={b.id} value={b.id}>{b.name}</option>
         ))}
@@ -970,8 +973,14 @@ function BranchSwitcher() {
   const { user } = useAuth();
   const [all, setAll] = useState<{ id: number; name: string }[]>([]);
   const current = getGlobalBranch();
-  const orgWide = can(user?.role, BRANCH_SWITCH);
+  // 2026-08-11 (Jahongir): xodimga filial biriktirilgan bo'lsa,
+  // tanlagichda FAQAT o'sha filiallar chiqadi - u kira olmaydigan
+  // filiallar ko'rinmaydi. "Barcha filiallar" ham chiqmaydi.
+  // Faqat asoschi (yoki filial biriktirilmagan rahbariyat) butun
+  // ro'yxatni ko'radi.
   const mine = user?.branches ?? [];
+  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const orgWide = !restricted && can(user?.role, BRANCH_SWITCH);
 
   useEffect(() => {
     // To'liq ro'yxat faqat rahbariyatga kerak — qolganlarga o'z
@@ -981,6 +990,17 @@ function BranchSwitcher() {
       .then(setAll)
       .catch(() => {});
   }, [orgWide]);
+
+  // Cheklangan xodim "Barcha filiallar" holatida qolib ketmasin -
+  // avtomatik o'z (asosiy) filialiga o'tkaziladi
+  useEffect(() => {
+    if (!restricted || mine.length === 0) return;
+    const cur = getGlobalBranch();
+    if (!cur || !mine.some((b) => String(b.id) === String(cur))) {
+      setGlobalBranch(String(mine[0].id));
+      window.location.reload();
+    }
+  }, [restricted, mine.length]);
 
   const branches = orgWide ? all : mine;
 
@@ -1009,7 +1029,7 @@ function BranchSwitcher() {
             : "border-slate-200 text-slate-600"
         }`}
       >
-        <option value="">Barcha filiallar</option>
+        {!restricted && <option value="">Barcha filiallar</option>}
         {branches.map((b) => (
           <option key={b.id} value={b.id}>{b.name}</option>
         ))}

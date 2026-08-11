@@ -29,8 +29,12 @@ export function BranchPicker({
 }) {
   const { user } = useAuth();
   const [all, setAll] = useState<Branch[]>([]);
-  const orgWide = !!user?.role && ORG_WIDE_ROLES.includes(user.role);
   const mine = user?.branches ?? [];
+  // Filial biriktirilgan xodimga faqat o'z filiallari (Jahongir,
+  // 2026-08-11); asoschiga (va biriktirilmagan rahbariyatga) hammasi
+  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const orgWide =
+    !restricted && !!user?.role && ORG_WIDE_ROLES.includes(user.role);
 
   useEffect(() => {
     // Butun tashkilotni ko'radiganlar uchungina to'liq ro'yxat
@@ -53,7 +57,7 @@ export function BranchPicker({
         onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
         className="px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
       >
-        <option value="">Barcha filiallar</option>
+        {!restricted && <option value="">Barcha filiallar</option>}
         {branches.map((b) => (
           <option key={b.id} value={b.id}>
             {b.name}

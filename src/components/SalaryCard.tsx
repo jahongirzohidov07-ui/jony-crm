@@ -35,10 +35,14 @@ export function SalaryCard({
   }
   useEffect(load, [teacherId, self]);
 
+  // Volontyor support/examiner - raqamlar umuman ko'rsatilmaydi
+  const vol = c as unknown as { volunteer?: boolean; hint?: string } | null;
   const body = loading ? (
     <p className="text-sm text-slate-400 py-6">Yuklanmoqda...</p>
   ) : err ? (
     <p className="text-sm text-slate-500 py-6">{err}</p>
+  ) : vol?.volunteer ? (
+    <p className="text-sm text-slate-500 py-6">{vol.hint}</p>
   ) : !c ? null : (
     <div className="space-y-5">
       {/* --- Asosiy raqamlar --- */}

@@ -154,11 +154,22 @@ def update_teacher(
     teacher_id: int,
     payload: schemas.TeacherCreate,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.STAFF_VIEWERS)),
+    user=Depends(require_role(*(list(roles.STAFF_VIEWERS)
+                                + [roles.HEAD_SUPPORT]))),
 ):
     teacher = db.query(models.Teacher).get(teacher_id)
     if not teacher:
         raise HTTPException(404, "O'qituvchi topilmadi")
+    # Support boshlig'i FAQAT support teacherlarni tahrirlaydi
+    # (Jahongir: "Support manager support teacherlarni polniy edit
+    # qila olsin"). Oddiy ustozlarga tegolmaydi.
+    if user.role == roles.HEAD_SUPPORT:
+        _lu = (db.query(models.User).get(teacher.user_id)
+               if teacher.user_id else None)
+        if not _lu or _lu.role != roles.SUPPORT_TEACHER:
+            raise HTTPException(
+                403, "Support boshlig'i faqat support teacherlarni "
+                     "tahrirlaydi")
     given = payload.model_dump(exclude_unset=True)
     new_grade = given.pop("grade", None)
     branch_ids = given.pop("branch_ids", None)
@@ -575,21 +586,42 @@ def _account_state(db: Session, t: models.Teacher) -> dict:
         "role": u.role if u else None,
     }
 
+def _head_support_guard(db: Session, user, t: models.Teacher):
+    """Support boshlig'i faqat SUPPORT teacherlar ustida ishlaydi.
+
+    Jahongir: "Support manager support teacherlarni polniy edit qila
+    olsin har qanday narsasini" - shu jumladan akkaunt/parol ham.
+    Lekin oddiy ustozlarga tegolmaydi."""
+    if user.role != roles.HEAD_SUPPORT:
+        return
+    lu = db.query(models.User).get(t.user_id) if t.user_id else None
+    if not lu or lu.role != roles.SUPPORT_TEACHER:
+        raise HTTPException(
+            403, "Support boshlig'i faqat support teacherlar bilan "
+                 "ishlaydi")
+
+
 @router.get("/api/teachers/{tid}/account")
 def teacher_account(tid: int, db: Session = Depends(get_db),
-                    user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+                    user=Depends(require_role(
+                        *(list(roles.ACCOUNT_MANAGE)
+                          + [roles.HEAD_SUPPORT])))):
     t = db.query(models.Teacher).get(tid)
     if not t:
         raise HTTPException(404, "Ustoz topilmadi")
+    _head_support_guard(db, user, t)
     return _account_state(db, t)
 
 @router.post("/api/teachers/{tid}/account")
 def teacher_account_create(tid: int, db: Session = Depends(get_db),
-                           user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+                           user=Depends(require_role(
+                               *(list(roles.ACCOUNT_MANAGE)
+                                 + [roles.HEAD_SUPPORT])))):
     """Akkaunt ochadi va login/parolni BIR MARTA qaytaradi."""
     t = db.query(models.Teacher).get(tid)
     if not t:
         raise HTTPException(404, "Ustoz topilmadi")
+    _head_support_guard(db, user, t)
 
     st = _account_state(db, t)
     if st["has_account"]:
@@ -635,11 +667,14 @@ def teacher_account_create(tid: int, db: Session = Depends(get_db),
 
 @router.post("/api/teachers/{tid}/account/reset")
 def teacher_account_reset(tid: int, db: Session = Depends(get_db),
-                          user=Depends(require_role(*roles.ACCOUNT_MANAGE))):
+                          user=Depends(require_role(
+                              *(list(roles.ACCOUNT_MANAGE)
+                                + [roles.HEAD_SUPPORT])))):
     """Parolni unutgan bo'lsa — yangisi yasaladi. Login o'zgarmaydi."""
     t = db.query(models.Teacher).get(tid)
     if not t:
         raise HTTPException(404, "Ustoz topilmadi")
+    _head_support_guard(db, user, t)
     st = _account_state(db, t)
     if not st["has_account"]:
         raise HTTPException(400, "Avval akkaunt oching")

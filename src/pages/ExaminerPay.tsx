@@ -219,6 +219,12 @@ export function ExaminerPayTab() {
   if (err)
     return <p className="text-sm text-slate-500 py-10 text-center">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-10">Yuklanmoqda…</p>;
+  if (d.volunteer)
+    return (
+      <p className="text-sm text-slate-500 py-10 text-center max-w-md mx-auto">
+        {d.hint}
+      </p>
+    );
   return (
     <div>
       <SalaryCard d={d} />

@@ -57,6 +57,38 @@ def _group_homework(db: Session, group_id: int,
     return {"checked": n, "done": done, "percent": pct,
             "label": label, "tone": tone}
 
+_VOLUNTEER_HINT = ("Siz hozir Volontyor bosqichidasiz - bu tajriba "
+                   "to'plash davri, oylik hisoblanmaydi. Junior "
+                   "darajaga o'tganingizda oyligingiz shu yerda "
+                   "ko'rinadi.")
+
+
+def _is_volunteer(db: Session, user) -> bool:
+    """Volontyor darajadagi support/examinerga oylik KO'RINMAYDI.
+
+    Jahongir: "Volunteer darajadagi support teacher oyligi umuman
+    o'ziga korinmasin, chunki u oylik olmaydi, lekin hisobotda
+    rahbariyatga korinsin. Examinerlarda ham Volunteer examiner
+    darajasi bor ularda ham oylik ko'rinmasin".
+
+    Rahbariyat hisobotlariga (Moliya -> Ish haqi) bu tegmaydi - u
+    yerda volontyor 0 so'm bilan ko'rinib turadi. Daraja yozuvi
+    bo'lmasa ham volontyor hisoblanadi (daraja qo'yilmagan yangi
+    xodim) - bu payroll hisobi bilan bir xil qoida."""
+    graded = (roles.SUPPORT_TEACHER, roles.EXAMINER,
+              roles.HEAD_EXAMINER, roles.HEAD_SUPPORT)
+    if user.role not in graded:
+        return False
+    SG = getattr(models, "StaffGrade", None)
+    if SG is None:
+        return False
+    try:
+        r = db.query(SG).filter(SG.user_id == user.id).first()
+        return (r.grade if r and r.grade else "volunteer") == "volunteer"
+    except Exception:
+        return False
+
+
 @router.get("/api/my/salary")
 def my_salary(
     db: Session = Depends(get_db),
@@ -64,6 +96,8 @@ def my_salary(
 ):
     """Ustozning o'z oyligi. Kirgan zahoti shu kungacha ishlab topgan
     puli va balansi ko'rinadi."""
+    if _is_volunteer(db, user):
+        return {"volunteer": True, "hint": _VOLUNTEER_HINT}
     t = _teacher_of_user(db, user)
     if not t:
         raise HTTPException(404, "Sizga bog'langan ustoz yozuvi topilmadi")
@@ -114,6 +148,9 @@ def my_identity(db: Session = Depends(get_db),
         "branches": branches,
         "roles": [{"key": r, "label": roles.UZ_LABELS.get(r, r)}
                   for r in my_roles],
+        # Volontyor support/examiner - "Mening oyligim" umuman
+        # ko'rinmasin (Jahongir)
+        "salary_hidden": _is_volunteer(db, user),
     }
 
 @router.get("/api/me/permissions")
@@ -1815,6 +1852,8 @@ def my_examiner_salary(year: int | None = None, month: int | None = None,
                        user=Depends(require_role(
                            roles.EXAMINER, roles.HEAD_EXAMINER))):
     """Examinerning o'z oyligi — imtihonlari kesimida, avtomat."""
+    if _is_volunteer(db, user):
+        return {"volunteer": True, "hint": _VOLUNTEER_HINT}
     today = roles.local_today()
     return _examiner_month(db, user.id, year or today.year,
                            month or today.month)

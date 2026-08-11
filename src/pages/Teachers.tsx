@@ -10,7 +10,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER,
+  STAFF_VIEWERS, SALARY_SELF_VIEW, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
   ACCOUNT_MANAGE, can, FOUNDER, ACADEMIC_HEAD,
  SUPPORT_ASSIGN } from "../lib/roles";
 import { formatDate, formatSom } from "../lib/format";
@@ -361,6 +361,13 @@ export default function Teachers() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, STAFF_VIEWERS);
+  // Support boshlig'i O'Z JAMOASINI (support teacherlar) to'liq
+  // tahrirlaydi - qator darajasida tekshiriladi (Jahongir)
+  const isHeadSupport = user?.role === HEAD_SUPPORT;
+  const canEditRow = (row: Teacher) =>
+    canEdit || (isHeadSupport && row.kind === "support");
+  const canAccountRow = (row: Teacher) =>
+    canAccount || (isHeadSupport && row.kind === "support");
   // Support biriktirish huquqi bor, lekin tahrirlash yo'q rollar
   // (masalan o'quv bo'limi rahbari) ham amal ustunini ko'radi.
   const canAssign = can(user?.role, SUPPORT_ASSIGN);
@@ -442,8 +449,11 @@ export default function Teachers() {
     }
   }
 
+  // Volontyor supportga "Mening oyligim" umuman chiqmaydi - u oylik
+  // olmaydi (Jahongir). Rahbariyat hisobotlariga bu ta'sir qilmaydi.
   const isTeacher =
-    user?.role === TEACHER || user?.role === SUPPORT_TEACHER;
+    (user?.role === TEACHER || user?.role === SUPPORT_TEACHER) &&
+    !user?.salary_hidden;
 
   return (
     <div className="p-8">
@@ -569,7 +579,9 @@ export default function Teachers() {
                     Oylik (shu oy)
                   </th>
                 )}
-                {(canEdit || canAssign) && <th className="px-4 py-3"></th>}
+                {(canEdit || canAssign || isHeadSupport) && (
+                  <th className="px-4 py-3"></th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -649,9 +661,9 @@ export default function Teachers() {
                         )}
                       </td>
                     )}
-                    {(canEdit || canAssign) && (
+                    {(canEdit || canAssign || isHeadSupport) && (
                       <td className="px-4 py-3 text-right whitespace-nowrap">
-                        {canEdit && (
+                        {canEditRow(t) && (
                         <button
                           onClick={() => setEditing(t)}
                           title="Tahrirlash"
@@ -660,7 +672,7 @@ export default function Teachers() {
                           <Pencil size={15} />
                         </button>
                         )}
-                        {canAccount && !left && (
+                        {canAccountRow(t) && !left && (
                           <button
                             onClick={() => setAccountFor(t)}
                             title={
@@ -686,7 +698,7 @@ export default function Teachers() {
                             <Layers size={15} />
                           </button>
                         )}
-                        {canEdit && (
+                        {canEditRow(t) && (
                         <button
                           onClick={() => toggleActive(t)}
                           title={left ? "Ishga qaytarish" : "Ishdan ketgan deb belgilash"}

@@ -228,10 +228,16 @@ def _sync_user_branches(db: Session, u: models.User, branch_ids: list):
 @router.get("/api/users", response_model=List[schemas.UserOut])
 def list_users(
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.STAFF_VIEWERS)),
+    user: models.User = Depends(require_role(
+        *(list(roles.STAFF_VIEWERS) + [roles.HEAD_SUPPORT]))),
 ):
     backfill_missing_ids(db, "user", models.User)
     q = scope_to_branch(db.query(models.User), models.User, user)
+    # Support boshlig'i faqat o'z jamoasini (support teacherlar) va
+    # o'zini ko'radi - butun xodimlar ro'yxati unga tegishli emas.
+    if user.role == roles.HEAD_SUPPORT:
+        q = q.filter((models.User.role == roles.SUPPORT_TEACHER)
+                     | (models.User.id == user.id))
     rows = q.order_by(models.User.full_name).all()
     # Ko'p filialli xodimlar: barcha filiallari yorlig'i
     extra_map: dict = {}
@@ -341,11 +347,28 @@ def update_user(
     user_id: int,
     payload: schemas.UserUpdate,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.STAFF_EDIT)),
+    user: models.User = Depends(require_role(
+        *(list(roles.STAFF_EDIT) + [roles.HEAD_SUPPORT]))),
 ):
     target = db.query(models.User).get(user_id)
     if not target:
         raise HTTPException(404, "Foydalanuvchi topilmadi")
+
+    # Support boshlig'i FAQAT support teacher hisobini to'liq
+    # boshqaradi (parol, telefon, faollik...). Boshqa rolga o'tkaza
+    # olmaydi va boshqa xodimlarga tegolmaydi (Jahongir: "polniy edit
+    # qila olsin har qanday narsasini").
+    if user.role == roles.HEAD_SUPPORT:
+        if target.role != roles.SUPPORT_TEACHER:
+            raise HTTPException(
+                403, "Support boshlig'i faqat support teacher "
+                     "hisobini tahrirlaydi")
+        if payload.role is not None \
+                and payload.role != roles.SUPPORT_TEACHER:
+            raise HTTPException(
+                403, "Support boshlig'i rol o'zgartira olmaydi - "
+                     "boshqa lavozimga o'tkazishni o'quv bo'limi "
+                     "yoki HR qiladi")
 
     # Asoschining kartasini faqat asoschining o'zi tahrirlaydi. Aks
     # holda HR asoschining parolini almashtirib yoki uni o'chirib,

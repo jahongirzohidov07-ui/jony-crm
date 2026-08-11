@@ -23,6 +23,8 @@ interface AuthUser {
   /** Xodim bajaradigan BARCHA lavozimlar (asosiy + qo'shimcha).
    * Ikkitadan ko'p bo'lsa tepada lavozim tanlagich chiqadi. */
   roles?: AuthRole[];
+  /** Volontyor support/examiner - "Mening oyligim" ko'rinmaydi. */
+  salary_hidden?: boolean;
 }
 
 interface AuthContextValue {
@@ -70,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         branch_id: number | null;
         branches?: AuthBranch[];
         roles?: AuthRole[];
+        salary_hidden?: boolean;
       }>("/me")
       .then((r) => {
         const u = {
@@ -78,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           branch_id: r.branch_id,
           branches: r.branches ?? [],
           roles: r.roles ?? [],
+          salary_hidden: r.salary_hidden ?? false,
         };
         // Qaysi omborda saqlangan bo'lsa, o'shani yangilaymiz
         (localStorage.getItem("jony_crm_user")
@@ -90,7 +94,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           prev.role === u.role &&
           prev.branch_id === u.branch_id &&
           (prev.branches?.length ?? 0) === u.branches.length &&
-          (prev.roles?.length ?? 0) === u.roles.length
+          (prev.roles?.length ?? 0) === u.roles.length &&
+          (prev.salary_hidden ?? false) === u.salary_hidden
             ? prev
             : u,
         );

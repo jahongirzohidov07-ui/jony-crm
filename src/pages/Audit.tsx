@@ -725,7 +725,8 @@ export default function Audit() {
   const showExams = can(user?.role, EXAM_VIEW);
   // Buyurtmani faqat qabul qila oladiganlar ko'radi
   const showOrders = can(user?.role, EXAM_ORDER_ACCEPT);
-  const showPay = can(user?.role, EXAMINER_PAY_OWN);
+  // Volontyor examinerga "Oyligim" umuman chiqmaydi (Jahongir)
+  const showPay = can(user?.role, EXAMINER_PAY_OWN) && !user?.salary_hidden;
   const showPayList = can(user?.role, EXAMINER_SALARY_VIEW);
 
   useEffect(() => {

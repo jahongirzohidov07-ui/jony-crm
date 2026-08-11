@@ -2417,6 +2417,26 @@ def _attach_paid(db: Session, data: dict, key: str, period: str) -> dict:
 
 
 # --- Examiner oyliklari: Moliya ham ko'rsin + berilgan pul ko'rinsin ---
+def _rows_in_branch(db, rows, branch_id, key="user_id"):
+    """Ro'yxat qatorlarini filial bo'yicha filtrlaydi (asosiy filial
+    yoki qo'shimcha biriktirilgan filial mos kelsa qoladi). Filial
+    tanlanganda supportlar/examinerlar ro'yxati ham faqat shu
+    filialniki bo'ladi (Jahongir, 2026-08-12)."""
+    if not branch_id:
+        return rows
+    ids = [r.get(key) for r in rows if r.get(key)]
+    if not ids:
+        return rows
+    main_ok = {uid for (uid,) in db.query(models.User.id).filter(
+        models.User.id.in_(ids),
+        models.User.branch_id == branch_id).all()}
+    extra_ok = {ub.user_id for ub in db.query(models.UserBranch).filter(
+        models.UserBranch.user_id.in_(ids),
+        models.UserBranch.branch_id == branch_id).all()}
+    ok = main_ok | extra_ok
+    return [r for r in rows if r.get(key) in ok]
+
+
 _orig_ex_salary = _find_endpoint("/api/examiners/salary", "GET")
 
 if _orig_ex_salary is not None:
@@ -2424,12 +2444,15 @@ if _orig_ex_salary is not None:
 
     @app.get("/api/examiners/salary")
     def examiner_salary_v2(year: int | None = None, month: int | None = None,
+                           branch_id: int | None = None,
                            db: Session = Depends(get_db),
                            user=Depends(require_role(
                                *list(dict.fromkeys(
                                    list(roles.EXAMINER_SALARY_VIEW)
                                    + _PAYROLL_VIEW))))):
         data = _orig_ex_salary(year=year, month=month, db=db, user=user)
+        if isinstance(data, dict) and data.get("rows") is not None:
+            data["rows"] = _rows_in_branch(db, data["rows"], branch_id)
         data = _attach_paid(db, data, "user_id", data.get("period", ""))
         data["can_pay"] = user.role in tuple(_PAYROLL_PAY)
         return data
@@ -4680,7 +4703,8 @@ def _apply_grade(db: Session, rows: list, key: str = "user_id") -> list:
 
 
 @app.get("/api/staff-grades")
-def staff_grades_list(db: Session = Depends(get_db),
+def staff_grades_list(branch_id: int | None = None,
+                      db: Session = Depends(get_db),
                       user=Depends(require_role(*_PAYROLL_VIEW))):
     rates = _grade_rates(db)
     order = sorted(rates.values(), key=lambda x: x["order_no"])
@@ -4690,6 +4714,12 @@ def staff_grades_list(db: Session = Depends(get_db),
           .order_by(models.User.full_name).all())
     us = [u for u in us if user.role in tuple(roles.ORG_WIDE_ROLES)
           or not user.branch_id or u.branch_id == user.branch_id]
+    # Filial tanlangan bo'lsa - faqat shu filial xodimlari (2026-08-12)
+    if branch_id:
+        _extra_b = {ub.user_id for ub in db.query(models.UserBranch)
+                    .filter(models.UserBranch.branch_id == branch_id).all()}
+        us = [u for u in us
+              if u.branch_id == branch_id or u.id in _extra_b]
     rows = []
     for u in us:
         r = db.query(_SG).filter(_SG.user_id == u.id).first()
@@ -4803,6 +4833,7 @@ if _cur_su_sal is not None:
 
     @app.get("/api/support/salary")
     def support_salary_v3(year: int | None = None, month: int | None = None,
+                          branch_id: int | None = None,
                           db: Session = Depends(get_db),
                           user=Depends(require_role(
                               *list(dict.fromkeys(
@@ -4811,6 +4842,7 @@ if _cur_su_sal is not None:
                                   + _PAYROLL_VIEW))))):
         data = _cur_su_sal(year=year, month=month, db=db, user=user)
         rows = _apply_grade(db, data.get("rows") or [], "user_id")
+        rows = _rows_in_branch(db, rows, branch_id)
         data["rows"] = rows
         data["total"] = round(sum(r["salary"] for r in rows), 0)
         return data

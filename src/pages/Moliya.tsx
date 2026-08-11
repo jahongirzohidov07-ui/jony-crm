@@ -34,7 +34,6 @@ import { FinanceOverviewTab } from "../components/FinanceOverview";
 import { BudgetTab } from "../components/Budget";
 import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
-import { PayImportTab } from "../components/PayImport";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup";
 
@@ -76,9 +75,6 @@ const PAYROLL_TAB: { key: Tab; label: string } = {
   key: "payroll", label: "Oyliklar",
 };
 // Eski tizimdan tarix ko'chirish — bir martalik ish, moliya bo'limida.
-const LCUP_TAB: { key: Tab; label: string } = {
-  key: "lcup", label: "Eski to'lovlarni ko'chirish",
-};
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
 function short(n: number): string {
@@ -1048,7 +1044,6 @@ export default function Moliya() {
     ...(full ? FULL_TABS : CASH_TABS),
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
     ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
-    ...(full ? [LCUP_TAB] : []),
   ];
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish
   const [tab, setTab] = useState<Tab>(full ? "overview" : "debtors");
@@ -1099,7 +1094,6 @@ export default function Moliya() {
       {tab === "calendar" && <PaymentCalendarTab />}
       {tab === "paid" && <MonthPaymentsTab />}
       {tab === "payroll" && <PayrollTab />}
-      {tab === "lcup" && <PayImportTab />}
     </div>
   );
 }

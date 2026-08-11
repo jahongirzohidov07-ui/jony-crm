@@ -1141,22 +1141,37 @@ def cashflow_ledger(
             "note": e.note,
         })
 
-    # Ustozlar ish haqi - avtomatik chiqim, alohida qator sifatida
+    # 2026-08-12 (Jahongir): "Ustozlar oyligi (avtomatik)" degan
+    # PROGNOZ qatori olib tashlandi - cashflow REAL KASSA holatini
+    # ko'rsatishi kerak. O'rniga faqat HAQIQATDA BERILGAN ustoz
+    # oyliklari (TeacherPayment yozuvlari) chiqim bo'lib tushadi.
     period = _period_key(year, month)
-    payroll = _payroll_total(db, user, period)
-    if payroll:
-        chiqim["cash"] += payroll
+    tp_q = (db.query(models.TeacherPayment, models.Teacher)
+            .join(models.Teacher,
+                  models.TeacherPayment.teacher_id == models.Teacher.id)
+            .filter(models.TeacherPayment.paid_on >= start,
+                    models.TeacherPayment.paid_on <= end))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        tp_q = tp_q.filter(_branch_in(db, user, models.Teacher.branch_id))
+    elif branch_id:
+        tp_q = tp_q.filter(models.Teacher.branch_id == branch_id)
+    for tp, t in tp_q.all():
+        m_ = getattr(tp, "method", None) or "cash"
+        if m_ not in chiqim:
+            m_ = "cash"
+        chiqim[m_] += tp.amount or 0
         rows.append({
-            "id": f"payroll-{period}",
-            "date": end.isoformat(),
-            "amount": payroll,
-            "title": "Ustozlar oyligi (avtomatik)",
+            "id": f"tp{tp.id}",
+            "date": tp.paid_on.isoformat() if tp.paid_on
+            else end.isoformat(),
+            "amount": tp.amount or 0,
+            "title": f"Ustoz oyligi: {t.full_name}",
             "student_id": None,
-            "method": "cash",
+            "method": m_,
             "direction": "out",
-            "branch": "—",
+            "branch": branches.get(t.branch_id) or "—",
             "category": "teacher_salary",
-            "note": None,
+            "note": getattr(tp, "note", None),
         })
 
     rows.sort(key=lambda r: (r["date"], r["id"]))

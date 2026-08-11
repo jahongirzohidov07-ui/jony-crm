@@ -224,15 +224,24 @@ def delete_payment(
 def list_payouts(
     year: int,
     month: int,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
+    """Ustoz oyliklari GURUH kesimida yozilgan, guruh esa filialga
+    tegishli - shu bois ikki filialda ishlaydigan ustozning oyligi
+    har filialda ALOHIDA ko'rinadi (Jahongir, 2026-08-12). Filial
+    tanlansa faqat shu filial guruhlari bo'yicha hisoblangan qismi
+    chiqadi."""
     period = f"{year:04d}-{month:02d}"
     q = db.query(models.TeacherPayout).filter(models.TeacherPayout.period == period)
     if user.role not in tuple(roles.ORG_WIDE_ROLES):
         if user.branch_id:
             q = q.join(models.Group).filter(
                 _branch_in(db, user, models.Group.branch_id))
+    elif branch_id:
+        q = q.join(models.Group).filter(
+            models.Group.branch_id == branch_id)
     return q.all()
 
 @router.put("/api/payouts/{payout_id}", response_model=schemas.TeacherPayoutOut)

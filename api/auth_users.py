@@ -227,12 +227,16 @@ def _sync_user_branches(db: Session, u: models.User, branch_ids: list):
 
 @router.get("/api/users", response_model=List[schemas.UserOut])
 def list_users(
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(
         *(list(roles.STAFF_VIEWERS) + [roles.HEAD_SUPPORT]))),
 ):
     backfill_missing_ids(db, "user", models.User)
-    q = scope_to_branch(db.query(models.User), models.User, user)
+    # 2026-08-12 (Jahongir): filial tanlanganda XODIMLAR ham faqat shu
+    # filialniki chiqadi - tepadagi filial tanlagichi hurmat qilinadi
+    q = scope_to_branch(db.query(models.User), models.User, user,
+                        branch_id)
     # XODIMLAR ro'yxati - o'quvchi va ota-ona akkauntlari bunga
     # kirmaydi (Jahongir: "Xodimlar bo'limida, o'quvchilar ham
     # ko'rinyabdi. nega yoqot ularni"). O'quvchi akkauntlari avtomat

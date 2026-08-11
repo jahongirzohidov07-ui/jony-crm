@@ -47,6 +47,26 @@ def _coins_for_percent(db: Session, percent: float, kind: str) -> int:
             return max(matching, key=lambda r: r.min_percent).coins
     return 0
 
+def _counted_ids(db: Session, exam: models.Exam,
+                 student_ids: list) -> set:
+    """Imtihon kunigacha shu guruhda KAMIDA 1 ta yo'qlamasi bor
+    o'quvchilar. Qolganlari (endi kelganlar) natijada ko'rinadi,
+    lekin umumiy o'rtachaga va coinga kirmaydi (Jahongir:
+    "Kelishiga imthon bo'lib qolgan o'quvchilar ham umumiy ballga
+    kiritilmaydi... Ustoz dars o'tsa, yoqlama qoysa hech bo'lmasa
+    1ta va undan keyin imthonga kirganlar umumiyga hisoblanaveradi")."""
+    if not student_ids:
+        return set()
+    q = (db.query(models.Attendance.student_id)
+         .join(models.Lesson,
+               models.Lesson.id == models.Attendance.lesson_id)
+         .filter(models.Lesson.group_id == exam.group_id,
+                 models.Attendance.student_id.in_(student_ids)))
+    if exam.date:
+        q = q.filter(models.Lesson.date <= exam.date)
+    return {sid for (sid,) in q.distinct().all()}
+
+
 def _exam_in_scope(db: Session, exam_id: int, user: models.User) -> models.Exam:
     exam = db.query(models.Exam).get(exam_id)
     if not exam:
@@ -113,6 +133,8 @@ def save_exam_results(
             roles.EXAMINER, roles.HEAD_EXAMINER):
         exam.examiner_id = user.id
     existing = {r.student_id: r for r in exam.results}
+    has_lesson = _counted_ids(db, exam, [m.student_id
+                                         for m in payload.marks])
 
     for m in payload.marks:
         row = existing.get(m.student_id)
@@ -124,6 +146,7 @@ def save_exam_results(
 
         row.absent = 1 if m.absent else 0
         row.note = m.note
+        row.counted = 1 if m.student_id in has_lesson else 0
 
         if m.absent:
             row.score = None
@@ -151,6 +174,12 @@ def save_exam_results(
             row.band = None
             row.percent = round(m.score / exam.max_score * 100, 1)
 
+        if not row.counted:
+            # Endi kelgan o'quvchi: natija ko'rinadi, lekin coin ham
+            # berilmaydi/yechilmaydi - u hali o'qib ulgurmagan
+            row.coins = 0
+            _drop_coin_entry(db, "exam", row.id)
+            continue
         row.coins = _coins_for_percent(db, row.percent, exam.kind)
         _sync_coin_entry(
             db, student_id=m.student_id, source="exam", ref_id=row.id,
@@ -257,13 +286,94 @@ def save_exam_results(
                                       status=s.status) for s in students],
     )
 
+@router.put("/api/exams/{exam_id}/retake", response_model=schemas.ExamDetail)
+def save_exam_retake(
+    exam_id: int,
+    payload: schemas.ExamRetakeIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*[r for r in roles.TEACHING_ACCESS
+                                if r not in (roles.TEACHER,
+                                             roles.SUPPORT_TEACHER)])),
+):
+    """RETAKE - examiner o'quvchidan qayta topshirig'ini oladi.
+
+    Jahongir: "examdan keyin o'quvchidan examiner retake olinishi
+    mumkin, va retake olinganligi va birinchi balli korinib tursin,
+    retake uchun coin umuman hisoblanmasin. Retake foizi umumiyga
+    ham hisoblanmaydi".
+
+    Birinchi ball/foizga TEGILMAYDI, coin yozilmaydi, o'rtacha
+    o'zgarmaydi - faqat retake ustunlari to'ldiriladi."""
+    exam = _exam_in_scope(db, exam_id, user)
+    if exam.status == "cancelled":
+        raise HTTPException(400, "Bekor qilingan testga retake yozilmaydi")
+    row = (db.query(models.ExamResult)
+           .filter(models.ExamResult.exam_id == exam.id,
+                   models.ExamResult.student_id == payload.student_id)
+           .first())
+    if row is None:
+        raise HTTPException(
+            404, "Avval asosiy natija kiritilishi kerak - retake "
+                 "birinchi ballning ustiga yoziladi")
+
+    if payload.remove:
+        row.retake_score = None
+        row.retake_band = None
+        row.retake_percent = None
+        row.retake_at = None
+        row.retake_by = None
+    elif exam.kind == "mock":
+        if payload.band is None or not (0 <= payload.band
+                                        <= roles.MOCK_MAX_BAND):
+            raise HTTPException(400, "Band 0-9 oralig'ida bo'lishi kerak")
+        row.retake_band = payload.band
+        row.retake_score = None
+        row.retake_percent = round(
+            payload.band / roles.MOCK_MAX_BAND * 100, 1)
+        row.retake_at = roles.local_today()
+        row.retake_by = user.full_name
+    else:
+        bad = (payload.score is None or payload.score < 0
+               or payload.score > (exam.max_score or 0))
+        if bad:
+            raise HTTPException(
+                400, f"Ball 0 va {exam.max_score} oralig'ida bo'lishi kerak")
+        row.retake_score = payload.score
+        row.retake_band = None
+        row.retake_percent = round(
+            payload.score / exam.max_score * 100, 1)
+        row.retake_at = roles.local_today()
+        row.retake_by = user.full_name
+    db.commit()
+
+    st = db.query(models.Student).get(payload.student_id)
+    audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
+              entity_label=st.full_name if st else None, field="retake",
+              new_value=row.retake_percent,
+              note=("Retake o'chirildi" if payload.remove
+                    else f"Retake: {row.retake_percent}% (coin yo'q, "
+                         "o'rtachaga kirmaydi)"),
+              commit=True)
+
+    base = _exam_summary(db, exam)
+    students = _group_students(db, exam.group_id)
+    return schemas.ExamDetail(
+        **base.model_dump(),
+        results=[schemas.ExamResultOut.model_validate(r)
+                 for r in exam.results],
+        students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
+                                      status=s.status) for s in students],
+    )
+
+
 @router.get("/api/exam-coin-rules", response_model=List[schemas.ExamCoinRuleOut])
 def list_coin_rules(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.TEACHING_ACCESS)),
 ):
-    return db.query(models.ExamCoinRule).order_by(
-        models.ExamCoinRule.min_percent.desc()).all()
+    return (db.query(models.ExamCoinRule)
+            .filter(models.ExamCoinRule.min_percent >= 0)
+            .order_by(models.ExamCoinRule.min_percent.desc()).all())
 
 @router.put("/api/exam-coin-rules", response_model=List[schemas.ExamCoinRuleOut])
 def replace_coin_rules(
@@ -277,15 +387,18 @@ def replace_coin_rules(
     for r in payload:
         if r.kind and r.kind not in roles.EXAM_KINDS:
             raise HTTPException(400, "Noto'g'ri test turi")
-        if r.coins < 0:
-            raise HTTPException(400, "Coin manfiy bo'lmasligi kerak")
-    db.query(models.ExamCoinRule).delete()
+        # Manfiy coin RUXSAT: past natija coin yechadi (Jahongir
+        # shkalasi, 2026-08-11)
+    db.query(models.ExamCoinRule).filter(
+        models.ExamCoinRule.min_percent >= 0).delete(
+        synchronize_session=False)
     for r in payload:
         db.add(models.ExamCoinRule(min_percent=r.min_percent, coins=r.coins,
                                    kind=r.kind))
     db.commit()
-    return db.query(models.ExamCoinRule).order_by(
-        models.ExamCoinRule.min_percent.desc()).all()
+    return (db.query(models.ExamCoinRule)
+            .filter(models.ExamCoinRule.min_percent >= 0)
+            .order_by(models.ExamCoinRule.min_percent.desc()).all())
 
 def _seed_rubrics(db: Session) -> None:
     have = {r.key for r in db.query(models.LessonRubric).all()}

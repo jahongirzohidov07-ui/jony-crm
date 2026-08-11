@@ -3578,7 +3578,9 @@ def group_progress(group_id: int, db: Session = Depends(get_db),
         res = (db.query(models.ExamResult)
                .filter(models.ExamResult.exam_id == last.id,
                        models.ExamResult.score.isnot(None)).all())
-        pcts = [r.percent for r in res if r.percent is not None]
+        # Retake/yangi kelganlar guruh o'rtachasiga kirmaydi
+        pcts = [r.percent for r in res if r.percent is not None
+                and (r.counted is None or r.counted != 0)]
         exam_out = {
             "id": last.id,
             "date": last.date.isoformat() if last.date else None,

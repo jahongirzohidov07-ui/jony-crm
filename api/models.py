@@ -584,6 +584,17 @@ class ExamResult(Base):
     coins = Column(Integer, default=0)      # avtomat
     absent = Column(Integer, default=0)
     note = Column(String, nullable=True)
+    # RETAKE (qayta topshirish) - examiner keyin qayta olishi mumkin.
+    # Birinchi ball O'ZGARMAYDI va ko'rinib turadi; retake uchun coin
+    # umuman berilmaydi, guruh o'rtachasiga ham kirmaydi (Jahongir).
+    retake_score = Column(Float, nullable=True)
+    retake_band = Column(Float, nullable=True)
+    retake_percent = Column(Float, nullable=True)
+    retake_at = Column(Date, nullable=True)
+    retake_by = Column(String, nullable=True)
+    # 0 = umumiy o'rtachaga KIRMAYDI (imtihongacha birorta ham
+    # yo'qlamasi bo'lmagan yangi o'quvchi). None/1 = kiradi.
+    counted = Column(Integer, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

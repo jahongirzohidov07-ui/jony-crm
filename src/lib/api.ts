@@ -500,7 +500,11 @@ export interface ExamResult {
   percent?: number | null;
   coins: number;
   absent: boolean;
-  note?: string | null;
+  note?: string | null;  retake_score?: number | null;
+  retake_band?: number | null;
+  retake_percent?: number | null;
+  retake_at?: string | null;
+  counted?: number | null;
 }
 
 export interface ExamDetail extends Exam {

@@ -223,9 +223,22 @@ def _ensure_new_columns():
     try:
         from sqlalchemy.orm import Session as _S
         with _S(engine) as db:
-            if db.query(models.ExamCoinRule).count() == 0:
+            # 2026-08-11: Jahongir yangi 14 pog'onali shkala berdi
+            # (manfiylari bilan). Bir MARTA eski umumiy qoidalar yangi
+            # shkalaga almashtiriladi (marker qator) - keyin asoschi
+            # UI'dan o'zgartirsa qayta yozilmaydi.
+            _mk = (db.query(models.ExamCoinRule)
+                   .filter(models.ExamCoinRule.kind == "__migr_v2__")
+                   .first())
+            if _mk is None:
+                (db.query(models.ExamCoinRule)
+                 .filter(models.ExamCoinRule.kind.is_(None))
+                 .delete(synchronize_session=False))
                 for pct, coins in roles.DEFAULT_EXAM_COIN_RULES:
-                    db.add(models.ExamCoinRule(min_percent=pct, coins=coins))
+                    db.add(models.ExamCoinRule(min_percent=pct,
+                                               coins=coins))
+                db.add(models.ExamCoinRule(
+                    min_percent=-999, coins=0, kind="__migr_v2__"))
                 db.commit()
 
             # Adminlar KPI qoidalari ham xuddi shunday: bir marta
@@ -816,7 +829,12 @@ def _group_students(db: Session, group_id: int):
     )
 
 def _exam_summary(db: Session, exam: models.Exam) -> schemas.ExamOut:
-    scored = [r for r in exam.results if r.percent is not None and not r.absent]
+    # O'rtacha FAQAT birinchi urinishdan va faqat hisobga kiradigan
+    # (imtihongacha kamida 1 yo'qlamasi bor) o'quvchilardan. Retake
+    # va yangi kelganlar o'rtachani o'zgartirmaydi (Jahongir).
+    scored = [r for r in exam.results
+              if r.percent is not None and not r.absent
+              and (r.counted is None or r.counted != 0)]
     return schemas.ExamOut(
         id=exam.id, group_id=exam.group_id, kind=exam.kind,
         unit_no=exam.unit_no, title=exam.title, date=exam.date,

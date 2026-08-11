@@ -652,11 +652,23 @@ DAILY_GRADE_MAX = 5
 # Imtihon natijasidan coin: foiz shu qiymatdan katta yoki teng bo'lsa,
 # eng yuqori mos qator ishlaydi. Bu faqat BOSHLANG'ICH jadval - asoschi
 # uni Gamification bo'limidan o'zgartira oladi.
+# Jahongirning 2026-08-11 shkalasi: yuqori natija mukofotlanadi,
+# past natija coin YECHADI. 65% chegarasi +1 foydasiga.
 DEFAULT_EXAM_COIN_RULES = [
-    (90.0, 50),
-    (80.0, 30),
-    (70.0, 15),
-    (60.0, 5),
+    (96.0, 10),
+    (86.0, 5),
+    (74.0, 3),
+    (65.0, 1),
+    (60.0, 0),
+    (54.0, -1),
+    (48.0, -2),
+    (42.0, -3),
+    (36.0, -5),
+    (30.0, -7),
+    (24.0, -10),
+    (18.0, -15),
+    (12.0, -20),
+    (0.0, -10),
 ]
 
 # ---- Ruxsatlar --------------------------------------------------------

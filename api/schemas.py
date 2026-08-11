@@ -625,6 +625,20 @@ class ExamResultOut(BaseModel):
     coins: int = 0
     absent: bool = False
     note: Optional[str] = None
+    # Retake (qayta topshirish) - birinchi ball bilan yonma-yon
+    retake_score: Optional[float] = None
+    retake_band: Optional[float] = None
+    retake_percent: Optional[float] = None
+    retake_at: Optional[date] = None
+    # 0 = umumiy o'rtacha/coinga kirmagan (imtihon kuni yangi kelgan)
+    counted: Optional[int] = None
+
+
+class ExamRetakeIn(BaseModel):
+    student_id: int
+    score: Optional[float] = None
+    band: Optional[float] = None
+    remove: bool = False
 
 
 class ExamOut(BaseModel):

@@ -1002,6 +1002,32 @@ function ExamSheet({
   const [draft, setDraft] = useState<Record<number, string>>({});
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Retake: examiner qayta topshiriq ballini kiritadi. Coin va
+  // o'rtacha faqat birinchi balldan - retake shunchaki yonida turadi.
+  const [retakeFor, setRetakeFor] = useState<number | null>(null);
+  const [retakeVal, setRetakeVal] = useState("");
+
+  async function saveRetake(studentId: number, remove = false) {
+    setError(null);
+    try {
+      const num = Number(retakeVal);
+      const body = remove
+        ? { student_id: studentId, remove: true }
+        : exam!.kind === "mock"
+        ? { student_id: studentId, band: num }
+        : { student_id: studentId, score: num };
+      const updated = await api.put<ExamDetail>(
+        `/exams/${examId}/retake`,
+        body
+      );
+      setExam(updated);
+      setRetakeFor(null);
+      setRetakeVal("");
+      onChanged();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
 
   function load() {
     api.get<ExamDetail>(`/exams/${examId}`).then((d) => {
@@ -1092,6 +1118,7 @@ function ExamSheet({
               </th>
               <th className="text-right px-4 py-3 font-medium">Foiz</th>
               <th className="text-right px-4 py-3 font-medium">Coin</th>
+              <th className="text-right px-4 py-3 font-medium">Retake</th>
             </tr>
           </thead>
           <tbody>
@@ -1099,7 +1126,17 @@ function ExamSheet({
               const r = byStudent[s.id];
               return (
                 <tr key={s.id} className="border-t border-slate-100">
-                  <td className="px-4 py-2.5 text-slate-800">{s.full_name}</td>
+                  <td className="px-4 py-2.5 text-slate-800">
+                    {s.full_name}
+                    {r && r.counted === 0 && (
+                      <span
+                        className="ml-2 text-[10px] font-medium bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded"
+                        title="Imtihongacha birorta ham yo'qlamasi yo'q — natija ko'rinadi, lekin umumiy o'rtacha va coinga kirmaydi"
+                      >
+                        hisobga kirmaydi
+                      </span>
+                    )}
+                  </td>
                   <td className="px-4 py-2">
                     <input
                       type="number"
@@ -1117,10 +1154,72 @@ function ExamSheet({
                     {r && r.percent != null ? `${r.percent}%` : "—"}
                   </td>
                   <td className="px-4 py-2 text-right">
-                    {r && r.coins > 0 ? (
-                      <span className="inline-flex items-center gap-1 text-brand-700 font-medium">
-                        <Coins size={13} /> {r.coins}
+                    {r && r.coins !== 0 ? (
+                      <span
+                        className={`inline-flex items-center gap-1 font-medium ${
+                          r.coins > 0 ? "text-brand-700" : "text-rose-600"
+                        }`}
+                      >
+                        <Coins size={13} /> {r.coins > 0 ? r.coins : r.coins}
                       </span>
+                    ) : (
+                      <span className="text-slate-300">—</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-2 text-right whitespace-nowrap">
+                    {retakeFor === s.id ? (
+                      <span className="inline-flex items-center gap-1">
+                        <input
+                          type="number"
+                          step={isMock ? "0.5" : "1"}
+                          autoFocus
+                          className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm"
+                          value={retakeVal}
+                          onChange={(e) => setRetakeVal(e.target.value)}
+                          placeholder={isMock ? "band" : "ball"}
+                        />
+                        <button
+                          onClick={() => saveRetake(s.id)}
+                          className="text-emerald-600 hover:text-emerald-700 text-xs font-medium"
+                        >
+                          OK
+                        </button>
+                        <button
+                          onClick={() => {
+                            setRetakeFor(null);
+                            setRetakeVal("");
+                          }}
+                          className="text-slate-400 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    ) : r && r.retake_percent != null ? (
+                      <span
+                        className="text-violet-600 text-xs font-medium"
+                        title={`Retake ${r.retake_at ? formatDate(r.retake_at) : ""} — coin yo'q, o'rtachaga kirmaydi. Birinchi ball saqlanadi.`}
+                      >
+                        {r.retake_percent}%
+                        {canEdit && (
+                          <button
+                            onClick={() => saveRetake(s.id, true)}
+                            title="Retake'ni o'chirish"
+                            className="ml-1 text-slate-300 hover:text-rose-500"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </span>
+                    ) : canEdit && r && !r.absent && r.percent != null ? (
+                      <button
+                        onClick={() => {
+                          setRetakeFor(s.id);
+                          setRetakeVal("");
+                        }}
+                        className="text-xs text-slate-400 hover:text-violet-600 underline decoration-dotted"
+                      >
+                        retake
+                      </button>
                     ) : (
                       <span className="text-slate-300">—</span>
                     )}
@@ -1134,7 +1233,11 @@ function ExamSheet({
 
       <p className="text-xs text-slate-400 mt-3">
         Faqat {isMock ? "band" : "ball"} kiriting — foiz va coin o'zi
-        hisoblanadi. Bo'sh qoldirilgan katak "kelmagan" deb yoziladi.
+        hisoblanadi (past natija coin yechadi). Bo'sh katak "kelmagan"
+        deb yoziladi. Retake — qayta topshirish: birinchi ball va foiz
+        saqlanib qoladi, retake uchun coin berilmaydi va u guruh
+        o'rtachasiga kirmaydi. Imtihon kuni endi kelgan (yo'qlamasiz)
+        o'quvchi natijasi ko'rinadi, lekin o'rtacha va coinga kirmaydi.
       </p>
     </div>
   );

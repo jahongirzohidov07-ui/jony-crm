@@ -261,6 +261,9 @@ SEED = [
 
 def seed_reading(db):
     """Idempotent: sarlavha bo'yicha faqat yo'q matnlar qo'shiladi."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "reading_v1"):
+        return None
     import json
     import models
     have = {t for (t,) in db.query(models.ReadingText.title).all()}
@@ -279,4 +282,5 @@ def seed_reading(db):
             made += 1
     if made:
         db.commit()
+    _seed_mark(db, "reading_v1")
     return made

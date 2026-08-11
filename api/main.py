@@ -193,6 +193,20 @@ try:
 except Exception:
     pass
 
+# TEZLIK: coin importlari va idempotent tekshiruvlar uchun indeks
+# (source, ref_id) - usiz har startupda katta skanerlash bo'lardi.
+# IF NOT EXISTS - mavjud bo'lsa hech narsa qilmaydi, ma'lumotga
+# tegmaydi (Postgres ham, SQLite ham qo'llaydi).
+try:
+    from sqlalchemy import text as _sql_text
+    with engine.connect() as _conn:
+        _conn.execute(_sql_text(
+            "CREATE INDEX IF NOT EXISTS ix_coin_source_ref "
+            "ON coin_entries (source, ref_id)"))
+        _conn.commit()
+except Exception:
+    pass
+
 # Eski (Crystal) tizimdagi coin tarixi - idempotent, ism bo'yicha,
 # arxivdagilarga ham; topilmaganlar shunchaki o'tkaziladi (Jahongir)
 try:

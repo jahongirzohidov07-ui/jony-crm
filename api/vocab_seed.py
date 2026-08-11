@@ -42,6 +42,9 @@ def _load():
 
 def seed_vocab(db):
     """Idempotent seed + eski yozuvlarni to'g'rilash."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "vocab_v2"):
+        return None
     import models
 
     data = _load()
@@ -110,4 +113,6 @@ def seed_vocab(db):
             made += 1
     if made or moved or deact:
         db.commit()
+    # To'liq bajarildi - keyingi startlarda JSON qayta o'qilmaydi
+    _seed_mark(db, "vocab_v2")
     return {"made": made, "moved": moved, "deactivated": deact}

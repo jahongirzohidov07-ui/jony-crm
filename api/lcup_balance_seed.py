@@ -34,6 +34,9 @@ _SOURCE = "lcup_sync"
 
 
 def seed_lcup_balance(db: Session) -> int:
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "lcup_balance_v1"):
+        return 0
     path = os.path.join(os.path.dirname(__file__), "lcup_balance.json")
     if not os.path.exists(path):
         return 0
@@ -46,6 +49,7 @@ def seed_lcup_balance(db: Session) -> int:
             .filter(models.CoinEntry.source == _SOURCE).all()}
     todo = [r for r in rows if r[0] not in done]
     if not todo:
+        _seed_mark(db, "lcup_balance_v1")
         return 0
 
     students = db.query(models.Student).all()
@@ -132,4 +136,5 @@ def seed_lcup_balance(db: Session) -> int:
                 commit=True)
         except Exception:
             db.rollback()
+    _seed_mark(db, "lcup_balance_v1")
     return made

@@ -29,6 +29,9 @@ _SOURCE = "legacy_shop"
 
 
 def seed_legacy_shop(db: Session) -> int:
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "legacy_shop_v1"):
+        return 0
     path = os.path.join(os.path.dirname(__file__), "legacy_shop.json")
     if not os.path.exists(path):
         return 0
@@ -112,4 +115,5 @@ def seed_legacy_shop(db: Session) -> int:
                 changed += 1
         if changed:
             db.commit()
+    _seed_mark(db, "legacy_shop_v1")
     return made

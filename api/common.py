@@ -3911,6 +3911,24 @@ def _backfill_student_accounts(db) -> int:
     return made
 
 
+def _seed_done(db: Session, key: str) -> bool:
+    """Og'ir seed allaqachon to'liq bajarilganmi - bitta yengil so'rov."""
+    try:
+        return db.query(models.SeedMark).get(key) is not None
+    except Exception:
+        return False
+
+
+def _seed_mark(db: Session, key: str) -> None:
+    """Seed to'liq bajarildi - keyingi startlarda ochilmasin."""
+    try:
+        if db.query(models.SeedMark).get(key) is None:
+            db.add(models.SeedMark(key=key))
+            db.commit()
+    except Exception:
+        db.rollback()
+
+
 def _cleanup_frozen_absences(db: Session) -> int:
     """Muzlatilgan o'quvchilarning oxirgi ketma-ket "kelmadi"
     yozuvlarini o'chiradi - ustoz oyligidan chiqsin.

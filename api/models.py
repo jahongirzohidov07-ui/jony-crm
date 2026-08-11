@@ -2898,6 +2898,23 @@ class BudgetLine(Base):
                         onupdate=datetime.utcnow)
 
 
+class SeedMark(Base):
+    """Bir martalik import/seed bajarilganini belgilaydi.
+
+    Sabab (2026-08-11, Jahongir: "tezroq ishlaydigan qil"): har
+    server uyg'onishida katta JSON fayllar (lug'at 733KB, coin tarixi
+    647KB...) qayta o'qilib, minglab yozuvlar qayta solishtirilardi -
+    sovuq start sekinlashardi. Endi to'liq bajarilgan seed shu yerga
+    belgi qo'yadi va keyingi startlarda BITTA yengil so'rov bilan
+    o'tkazib yuboriladi. Hech qanday ma'lumot o'chirilmaydi - bu
+    faqat "qayta tekshirish shart emas" belgisi. Yangi ma'lumot
+    qo'shilsa kod yangi kalit (masalan _v2) bilan keladi."""
+    __tablename__ = "seed_marks"
+
+    key = Column(String, primary_key=True)
+    done_at = Column(DateTime, default=datetime.utcnow)
+
+
 class LegacyCollectionMonth(Base):
     """Eski yillardagi oylik to'lov yig'ilishi (reja/fakt) - Google
     Sheets arxividan import. Joriy billing hisobiga aralashmaydi,

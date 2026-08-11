@@ -926,6 +926,9 @@ SEED_CLOZE = [
 
 def seed_grammar(db):
     """A1 savollarini yuklaydi, eski umumiy mavzularni o'chiradi."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "grammar_v2"):
+        return None
     import json
     import models
 
@@ -967,5 +970,6 @@ def seed_grammar(db):
             explain=explain))
         made += 1
     db.commit()
+    _seed_mark(db, "grammar_v2")
     return made
 

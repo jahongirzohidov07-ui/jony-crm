@@ -81,6 +81,9 @@ def _subset(small: tuple, big: tuple) -> bool:
 
 
 def seed_legacy_coins(db: Session) -> int:
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "legacy_coins_v1"):
+        return 0
     path = os.path.join(os.path.dirname(__file__), "legacy_coins.json")
     if not os.path.exists(path):
         return 0
@@ -94,6 +97,7 @@ def seed_legacy_coins(db: Session) -> int:
             .filter(models.CoinEntry.source == _SOURCE).all()}
     todo = [r for r in rows if r[0] not in done]
     if not todo:
+        _seed_mark(db, "legacy_coins_v1")
         return 0
 
     # O'quvchilar indeksi - ARXIV ham kiradi (Jahongir talabi)
@@ -175,4 +179,5 @@ def seed_legacy_coins(db: Session) -> int:
                 commit=True)
         except Exception:
             db.rollback()
+    _seed_mark(db, "legacy_coins_v1")
     return len(payload)

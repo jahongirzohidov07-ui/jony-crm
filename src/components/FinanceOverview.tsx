@@ -50,7 +50,6 @@ export function FinanceOverviewTab() {
                 {c.unit}
               </span>
             </p>
-            <p className="text-[11px] text-slate-400 mb-1">{c.sub}</p>
             {c.plan ? (
               <p className="text-[11px] text-slate-500">
                 Reja: {fmt(c.plan)} ·{" "}
@@ -146,7 +145,7 @@ function AvgCheckBlock() {
   const nz = d.rows.filter((r: Any) => r.payers > 0);
   return (
     <div className="mt-6 bg-white rounded-xl border border-slate-200 p-4">
-      <div className="flex items-center justify-between mb-1">
+      <div className="flex items-center justify-between mb-3">
         <p className="text-sm font-semibold text-slate-900">
           O'rtacha chek — oylar kesimida
         </p>
@@ -159,7 +158,6 @@ function AvgCheckBlock() {
           </p>
         )}
       </div>
-      <p className="text-xs text-slate-400 mb-3">{d.hint}</p>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-xs text-slate-500">

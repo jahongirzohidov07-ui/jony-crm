@@ -193,6 +193,16 @@ try:
 except Exception:
     pass
 
+# Eski (Crystal) tizimdagi coin tarixi - idempotent, ism bo'yicha,
+# arxivdagilarga ham; topilmaganlar shunchaki o'tkaziladi (Jahongir)
+try:
+    from sqlalchemy.orm import Session as _VS13
+    from legacy_coin_seed import seed_legacy_coins
+    with _VS13(engine) as _db13:
+        seed_legacy_coins(_db13)
+except Exception:
+    pass
+
 # Muzlatilganlarning eski "kelmadi" yo'qlamalarini tozalash -
 # kelmagan o'quvchi uchun ustozga oylik hisoblanmasin (Jahongir)
 try:

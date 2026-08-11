@@ -149,11 +149,28 @@ def student_growth(
     - "6m":  last 6 months, monthly buckets (default)
     - "1y":  last 12 months, monthly buckets
     - "all": from the earliest enrollment to today, monthly buckets
-    Each point's count is the number of students whose enrolled_date falls
-    on or before that bucket's date - i.e. a running total, so the line
-    tracks how the student base has grown."""
+    Har bir nuqta = O'SHA PAYTDA O'QIB YURGAN o'quvchilar soni
+    (2026-08-12, Jahongir: "bu yerda faol o'quvchilar hisoblanishi
+    kerak edi, nega 2680 bo'lib ketdi" - avval jami ro'yxatga
+    olinganlar yig'indisi chizilardi va LC UP'dan import qilingan
+    arxiv o'quvchilar grafikni osmonga otvorgan edi).
+
+    Qoida: enrolled_date <= sana VA (ketmagan YOKI left_date > sana).
+    Ketgan-u sanasi noma'lum (arxiv, left_date bo'sh) yozuvlar
+    grafikka umuman kirmaydi - ular tarixni shishiradi xolos."""
     student_q = scope_to_branch(db.query(models.Student), models.Student, user)
-    dates = sorted(s.enrolled_date for s in student_q.all() if s.enrolled_date)
+    starts, ends = [], []
+    for s in student_q.all():
+        if not s.enrolled_date:
+            continue
+        if s.left_date is None and (s.status or "") == "archived":
+            continue          # qachon ketgani noma'lum - hisobga kirmaydi
+        starts.append(s.enrolled_date)
+        if s.left_date:
+            ends.append(s.left_date)
+    starts.sort()
+    ends.sort()
+    dates = starts            # eng erta sana va bo'shlik tekshiruvi uchun
     today = date.today()
     granularity = "day" if window == "1m" else "month"
 
@@ -177,7 +194,8 @@ def student_growth(
         return {"granularity": granularity, "points": []}
 
     def count_through(cutoff: date) -> int:
-        live = bisect.bisect_right(dates, cutoff)
+        live = (bisect.bisect_right(starts, cutoff)
+                - bisect.bisect_right(ends, cutoff))
         # O'tmishda jonli baza bo'sh — tarixiy son ustun; hozirda
         # jonli baza to'liq — kattasi olinadi.
         return max(live, snap_through(cutoff))

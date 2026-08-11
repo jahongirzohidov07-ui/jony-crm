@@ -162,16 +162,22 @@ ck("status 400 (shift chegarasi buzilmaydi)", r3.status_code, 400)
 ck("sababi shift haqida",
    "ko'pi bilan" in r3.json().get("detail", ""), True)
 
-print("\n=== 5. Oddiy ustoz hali ham bugun/o'tmishga ko'chira OLMAYDI "
-      "(o'zgarmadi) ===")
+print("\n=== 5. Oddiy ustoz BUGUNGA ko'chira oladi (2026-08-11 "
+      "Jahongir), lekin O'TGAN kunga - yo'q ===")
 from_date4 = TODAY + timedelta(days=18)
 r4 = client.post(f"/api/groups/{GID}/reschedule", headers=TEA, json={
     "from_date": from_date4.isoformat(), "to_date": TODAY.isoformat(),
     "reason": "test",
 })
-ck("status 400 (ustoz uchun eski qoida saqlanadi)", r4.status_code, 400)
-ck("sababi eski xabar bilan mos",
-   "kelajakda bo'lishi kerak" in r4.json().get("detail", ""), True)
+ck("bugunga surish endi 200", r4.status_code, 200)
+r4b = client.post(f"/api/groups/{GID}/reschedule", headers=TEA, json={
+    "from_date": (TODAY + timedelta(days=19)).isoformat(),
+    "to_date": (TODAY - timedelta(days=1)).isoformat(),
+    "reason": "test",
+})
+ck("o'tgan kunga surish 400", r4b.status_code, 400)
+ck("sababi yangi xabar bilan mos",
+   "O'tib ketgan sanaga" in r4b.json().get("detail", ""), True)
 
 print("\n=== 6. HR menejer MANBA DARSNING O'ZI o'tib ketgan bo'lsa ham "
       "boshqa kunga suradi (YANGILIK, 2026-08-09) ===")

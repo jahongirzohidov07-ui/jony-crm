@@ -951,11 +951,12 @@ def my_reschedule_add(payload: schemas.RescheduleIn,
     if g.teacher_id != t.id:
         raise HTTPException(403, "Bu guruh sizniki emas")
 
-    today = date.today()
-    # Yangi sana MAJBURIY va o'tmishga surib bo'lmaydi — bu "bekor
-    # qilish"ning yashirin yo'li bo'lib qolmasin
-    if payload.to_date <= today:
-        raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
+    today = roles.local_today()
+    # O'tmishga surib bo'lmaydi — bu "bekor qilish"ning yashirin
+    # yo'li bo'lib qolmasin. BUGUNGA surish mumkin (Jahongir,
+    # 2026-08-11: "kelajakdagi darsni bugunga sura olmayabdi").
+    if payload.to_date < today:
+        raise HTTPException(400, "O'tib ketgan sanaga surib bo'lmaydi")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
     if payload.from_date < today:

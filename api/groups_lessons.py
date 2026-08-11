@@ -1275,8 +1275,11 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
     # bo'lmasligi — bular ish haqi hisobini himoya qiladi,
     # rahbariyatga ham tegishli. Oddiy ustoz uchun talab o'zgarmadi:
     # qat'iy kelajakdagi sana, manba ham o'tmish bo'lmasligi kerak.
-    if not manager and payload.to_date <= today:
-        raise HTTPException(400, "Yangi sana kelajakda bo'lishi kerak")
+    # 2026-08-11 (Jahongir): "ustozlar kelajakdagi darsni bugunga sura
+    # olmayabdi" - endi BUGUNGA surish mumkin, faqat o'tib ketgan
+    # kunga surish taqiqlanadi.
+    if not manager and payload.to_date < today:
+        raise HTTPException(400, "O'tib ketgan sanaga surib bo'lmaydi")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
     if not manager and payload.from_date < today:

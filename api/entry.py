@@ -6918,3 +6918,15 @@ def budget_tasks_run(db: Session = Depends(get_db),
         db.rollback()
         info["tasks"] = -1
     return info
+
+
+
+# Prod'da users.is_active INTEGER — "== True" Postgres'da xato beradi.
+# Shuning uchun filtrni Python tomonida bajaramiz.
+def _bud_user(db, role):
+    rows = db.query(models.User).filter(
+        models.User.role == role).order_by(models.User.id).all()
+    for u in rows:
+        if getattr(u, "is_active", 1) in (True, 1, "1", "true"):
+            return u
+    return rows[0] if rows else None

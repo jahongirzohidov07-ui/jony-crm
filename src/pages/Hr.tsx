@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Plus, Trash2, Pencil, Users, UserCheck, Clock, Briefcase, X,
 } from "lucide-react";
@@ -885,7 +886,11 @@ function VacanciesTab({ branches }: { branches: Branch[] }) {
 // ---------------------------------------------------------------- Sahifa
 export default function Hr() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("overview");
+  const [spHr] = useSearchParams();
+  const _hrTab = spHr.get("tab");
+  const [tab, setTab] = useState<Tab>(
+    _hrTab && TABS.some((t) => t.key === _hrTab)
+      ? (_hrTab as Tab) : "overview");
   const [branches, setBranches] = useState<Branch[]>([]);
 
   useEffect(() => {

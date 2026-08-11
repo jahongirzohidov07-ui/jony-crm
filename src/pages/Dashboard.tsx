@@ -60,12 +60,16 @@ function KpiCard({
   value,
   hint,
   tone = "default",
+  to,
 }: {
   icon: React.ElementType;
   label: string;
   value: string;
   hint?: string;
   tone?: "default" | "danger" | "brand";
+  /** Bosilganda o'tiladigan sahifa (2026-08-12, Jahongir: "kartaga
+   *  ezganda tegishli bo'limga filtri bilan o'tsin, shunda oson"). */
+  to?: string;
 }) {
   const toneClasses =
     tone === "danger"
@@ -74,8 +78,12 @@ function KpiCard({
       ? "bg-brand-50 text-brand-600"
       : "bg-slate-100 text-slate-600";
 
-  return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
+  const card = (
+    <div
+      className={`bg-white rounded-xl border border-slate-200 p-5 h-full ${
+        to ? "hover:border-brand-400 hover:shadow-sm transition" : ""
+      }`}
+    >
       <div className="flex items-center gap-3 mb-3">
         <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${toneClasses}`}>
           <Icon size={18} />
@@ -86,6 +94,7 @@ function KpiCard({
       {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
     </div>
   );
+  return to ? <Link to={to} className="block">{card}</Link> : card;
 }
 
 /** Instagram / Telegram obunachilar - Marketing bo'limidan olinadi. */
@@ -501,13 +510,13 @@ export default function Dashboard() {
           <FillCard />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-            <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" />
-            <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} />
-            <KpiCard icon={Users} label="Muzlatilgan talabalar" value={String(stats.frozen_students)} />
+            <KpiCard icon={UserCheck} label="Faol talabalar" value={String(stats.active_students)} tone="brand" to="/students?status=active" />
+            <KpiCard icon={Users} label="Sinovdagi talabalar" value={String(stats.trial_students)} to="/students?status=trial" />
+            <KpiCard icon={Users} label="Muzlatilgan talabalar" value={String(stats.frozen_students)} to="/students?status=frozen" />
             {/* Guruh va xodim soni administratorning ishiga aloqasiz —
                 unga o'quvchi, to'lov va qarzdorlik kerak. */}
             {!isSales && (
-              <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} />
+              <KpiCard icon={Layers} label="Guruhlar soni" value={String(stats.total_groups)} to="/groups" />
             )}
             <KpiCard
               icon={Receipt}
@@ -515,9 +524,10 @@ export default function Dashboard() {
               value={String(stats.month_new_payment_count)}
               hint={`jami ${stats.month_payment_count} ta to'lov`}
               tone="brand"
+              to="/finance?tab=paid&filter=new"
             />
             {!isSales && (
-              <KpiCard icon={Briefcase} label="Xodimlar soni" value={String(stats.staff_count)} />
+              <KpiCard icon={Briefcase} label="Xodimlar soni" value={String(stats.staff_count)} to="/hr?tab=staff" />
             )}
             <KpiCard icon={Wallet} label="Shu oy tushum" value={formatSom(stats.month_income)} tone="brand" />
             <KpiCard
@@ -525,20 +535,19 @@ export default function Dashboard() {
               label="Umumiy qarzdorlik"
               value={formatSom(stats.total_debt)}
               tone="danger"
+              to={can(user?.role, DEBTOR_ACCESS)
+                ? "/finance?tab=debtors" : undefined}
             />
-            {can(user?.role, DEBTOR_ACCESS) ? (
-              <Link to="/finance" className="block">
-                <KpiCard
-                  icon={AlertTriangle}
-                  label="Qarzdorlar soni"
-                  value={String(stats.debtor_count)}
-                  hint="ro'yxatni ochish uchun bosing"
-                  tone="danger"
-                />
-              </Link>
-            ) : (
-              <KpiCard icon={AlertTriangle} label="Qarzdorlar soni" value={String(stats.debtor_count)} tone="danger" />
-            )}
+            <KpiCard
+              icon={AlertTriangle}
+              label="Qarzdorlar soni"
+              value={String(stats.debtor_count)}
+              hint={can(user?.role, DEBTOR_ACCESS)
+                ? "ro'yxatni ochish uchun bosing" : undefined}
+              tone="danger"
+              to={can(user?.role, DEBTOR_ACCESS)
+                ? "/finance?tab=debtors" : undefined}
+            />
             {!isSales && <SocialCards />}
           </div>
 

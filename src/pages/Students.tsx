@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Plus, Search, X, Download, Pencil, FileUp } from "lucide-react";
 import { api, type Student, type Group, type Branch } from "../lib/api";
 import { formatSom } from "../lib/format";
@@ -248,7 +248,14 @@ export default function Students() {
   // Filtrlar: filial / guruh / holat — yuklangan ro'yxat ustida ishlaydi
   const [branchF, setBranchF] = useState("");
   const [groupF, setGroupF] = useState("");
-  const [statusF, setStatusF] = useState("");
+  // Dashboard kartasidan kelganda filtr URL orqali keladi
+  // (2026-08-12, Jahongir: "faol talabalarga ezganda talabalar
+  // bo'limiga o'tib faol talabalar filtri bilan chiqsin")
+  const [sp] = useSearchParams();
+  const _urlStatus = sp.get("status") || "";
+  const [statusF, setStatusF] = useState(
+    ["active", "trial", "frozen", "archived"].includes(_urlStatus)
+      ? _urlStatus : "");
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [showImport, setShowImport] = useState(false);

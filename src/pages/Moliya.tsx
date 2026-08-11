@@ -5,7 +5,7 @@ import {
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from "recharts";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   api,
   type CashflowReport,
@@ -1045,8 +1045,14 @@ export default function Moliya() {
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
     ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
   ];
-  // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish
-  const [tab, setTab] = useState<Tab>(full ? "overview" : "debtors");
+  // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish.
+  // Dashboard kartasidan kelganda ?tab= orqali kerakli bo'lim ochiladi.
+  const [sp] = useSearchParams();
+  const _urlTab = sp.get("tab");
+  const [tab, setTab] = useState<Tab>(
+    _urlTab && TABS.some((t) => t.key === _urlTab)
+      ? (_urlTab as Tab)
+      : full ? "overview" : "debtors");
 
   if (!can(user?.role, CASH_ACCESS)) {
     return (

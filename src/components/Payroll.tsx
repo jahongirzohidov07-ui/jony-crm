@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
 import { PayEditModal, type PayEditTarget } from "./PayEditModal";
 import { PAYMENT_EDIT, can } from "../lib/roles";
@@ -491,7 +492,12 @@ export function MonthPaymentsTab() {
   const [d, setD] = useState<MonthPayments | null>(null);
   const [err, setErr] = useState("");
   const [q, setQ] = useState("");
-  const [only, setOnly] = useState<"all" | "new" | "old">("all");
+  // Dashboard "Shu oy yangi to'lovlar" kartasidan ?filter=new bilan
+  // kelganda darhol yangi to'lovlar filtri yoqilgan holda ochiladi.
+  const [spq] = useSearchParams();
+  const _f = spq.get("filter");
+  const [only, setOnly] = useState<"all" | "new" | "old">(
+    _f === "new" ? "new" : _f === "old" ? "old" : "all");
   // Xato kiritilgan to'lovni to'g'rilash (summa, naqd/plastik, izoh)
   const canPayEdit = can(user?.role, PAYMENT_EDIT);
   const [editing, setEditing] = useState<PayEditTarget | null>(null);

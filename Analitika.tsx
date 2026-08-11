@@ -34,12 +34,14 @@ import { LtvFullReport } from "../components/LtvReport";
 import { ChurnReport } from "../components/ChurnReport";
 import { CapacityTab } from "../components/MarketingExtras";
 import { FillTab } from "../components/FillReport";
+import ExamReport from "../components/ExamReport";
 
 type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
-  | "oquvchi" | "ustoz" | "sigim" | "geo";
+  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "akademik", label: "Akademik" },
+  { key: "imtihon", label: "Imtihonlar" },
   { key: "tolganlik", label: "Markaz to'lganligi" },
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
   { key: "ltv", label: "LTV" },
@@ -1137,6 +1139,7 @@ export default function Analitika() {
           {tab === "ustoz" && <TeacherTab data={data} />}
           {tab === "ltv" && <LtvFullReport />}
           {tab === "churn" && <ChurnReport />}
+          {tab === "imtihon" && <ExamReport />}
           {tab === "sigim" && <CapacityTab />}
           {tab === "tarix" && <HistoryTab />}
           {tab === "geo" && <GeoTab months={months} />}

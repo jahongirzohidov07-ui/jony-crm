@@ -35,14 +35,20 @@ router = APIRouter()
 
 @router.get("/api/dashboard", response_model=schemas.DashboardStats)
 def dashboard(
+    branch_id: int | None = None,
     db: Session = Depends(get_db), user: models.User = Depends(get_current_user)
 ):
-    student_q = scope_to_branch(db.query(models.Student), models.Student, user)
+    # 2026-08-12: kartalar ham tepadagi filial tanlagichga bo'ysunadi —
+    # avval asoschi Zafarni tanlasa ham butun markaz sonlari chiqardi.
+    student_q = scope_to_branch(db.query(models.Student), models.Student,
+                                user, branch_id)
     active = student_q.filter(models.Student.status == "active").count()
     trial = student_q.filter(models.Student.status == "trial").count()
     frozen = student_q.filter(models.Student.status == "frozen").count()
-    groups = scope_to_branch(db.query(models.Group), models.Group, user).count()
-    teachers = scope_to_branch(db.query(models.Teacher), models.Teacher, user).count()
+    groups = scope_to_branch(db.query(models.Group), models.Group, user,
+                             branch_id).count()
+    teachers = scope_to_branch(db.query(models.Teacher), models.Teacher,
+                               user, branch_id).count()
 
     month_start = date.today().replace(day=1)
     all_students = student_q.all()
@@ -77,7 +83,7 @@ def dashboard(
         )
 
     staff_count = scope_to_branch(
-        db.query(models.User), models.User, user
+        db.query(models.User), models.User, user, branch_id
     ).filter(models.User.is_active == 1).count()
 
     balances = [(s.id, student_balance(db, s.id)) for s in all_students]

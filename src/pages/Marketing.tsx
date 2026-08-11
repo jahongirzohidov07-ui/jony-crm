@@ -26,7 +26,6 @@ import {
 import Smm from "./Smm";
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: "smm", label: "SMM (kontent)" },
   { key: "journey", label: "To'liq yo'l" },
   { key: "funnel", label: "Lid voronkasi" },
   { key: "channels", label: "Kanallar va CAC" },
@@ -938,7 +937,7 @@ function AdsTab() {
 export default function Marketing() {
   const { user } = useAuth();
   const [tab, setTab] = useState<Tab>(
-    user?.role === "smm_manager" ? "smm" : "journey"
+    "journey"
   );
   const [months, setMonths] = useState(6);
   const [data, setData] = useState<MarketingFunnel | null>(null);

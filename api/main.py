@@ -471,6 +471,28 @@ try:
 except Exception:
     pass
 
+# Eski (2026-08-12 gacha yuborilgan) chegirma so'rovlari hech kimga
+# vazifa bo'lib tushmagan edi - Jahongir: "menga kelmadi lekin".
+# Bir martalik: kutib yotgan so'rovlarga tasdiqlovchilar uchun vazifa
+# ochib qo'yamiz, shunda ular ko'zdan qolmaydi.
+try:
+    from sqlalchemy.orm import Session as _VS16
+    from common import (_seed_done as _sd16, _seed_mark as _sm16,
+                        _notify_discount_approvers as _nda16)
+    with _VS16(engine) as _db16:
+        if not _sd16(_db16, "disc_pending_task_v1"):
+            for _d16 in _db16.query(models.Discount).filter(
+                    models.Discount.status == "pending").all():
+                _st16 = _db16.query(models.Student).get(_d16.student_id)
+                if _st16:
+                    try:
+                        _nda16(_db16, _d16, _st16)
+                    except Exception:
+                        pass
+            _sm16(_db16, "disc_pending_task_v1")
+except Exception:
+    pass
+
 # Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
 # Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
 # bo'shatish paytidayoq _release_support_groups orqali tozalanadi.

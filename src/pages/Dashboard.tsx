@@ -504,6 +504,12 @@ export default function Dashboard() {
       {["founder", "branch_manager", "academic_head", "hr_manager"]
         .includes(user?.role || "") && <ReschedulePendingBlock />}
 
+      {/* Chegirma so'rovlari (2026-08-12, Jahongir: "menga kelmadi
+          lekin") — vazifa bo'lib tushardi, lekin Vazifalar ro'yxatida
+          ko'zdan qochardi. Endi bosh sahifada, tugmalari bilan. */}
+      {["founder", "branch_manager", "finance_director"]
+        .includes(user?.role || "") && <DiscountPendingBlock />}
+
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />
 
@@ -782,6 +788,91 @@ function ReschedulePendingBlock() {
               <button
                 disabled={busy === r.id}
                 onClick={() => decide(r.id, "rejected")}
+                className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-50"
+              >
+                Rad etish
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+function DiscountPendingBlock() {
+  const [rows, setRows] = useState<any[]>([]);
+  const [busy, setBusy] = useState<number | null>(null);
+
+  const load = () =>
+    api.get<any>("/discounts?status_filter=pending")
+      .then((d) => setRows(Array.isArray(d) ? d : (d.rows || [])))
+      .catch(() => {});
+  useEffect(() => { load(); }, []);
+
+  if (rows.length === 0) return null;
+
+  const decide = async (id: number, approve: boolean) => {
+    let reason: string | undefined;
+    if (!approve) {
+      const r = prompt("Rad etish sababi:");
+      if (r === null) return;
+      reason = r.trim() || undefined;
+    }
+    setBusy(id);
+    try {
+      await api.post(`/discounts/${id}/approve`, { approve, reason });
+      await load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 mb-6">
+      <p className="text-sm font-semibold text-violet-900 mb-2">
+        Chegirma so'rovlari — tasdiq kutmoqda ({rows.length})
+      </p>
+      <div className="space-y-2">
+        {rows.map((r: any) => (
+          <div key={r.id}
+               className="bg-white rounded-lg border border-violet-100 p-3 flex flex-wrap items-center gap-3">
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-slate-800">
+                <Link to={`/students/${r.student_id}`}
+                      className="hover:text-brand-700">
+                  {r.student_name}
+                </Link>
+                {" · "}
+                <span className="text-brand-700">
+                  {r.percent ? `${r.percent}%`
+                    : r.amount ? `${r.amount.toLocaleString("ru-RU")} so'm`
+                      : "—"}
+                </span>
+                {" · "}
+                <span className="text-slate-500">{r.kind_label}</span>
+              </p>
+              <p className="text-xs text-slate-500">
+                {r.reason}
+                {r.requested_by ? ` · so'ragan: ${r.requested_by}` : ""}
+                {r.kind === "family" && r.referrer_name
+                  ? ` · oila: ${r.referrer_name}` : ""}
+              </p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <button
+                disabled={busy === r.id}
+                onClick={() => decide(r.id, true)}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+              >
+                Tasdiqlash
+              </button>
+              <button
+                disabled={busy === r.id}
+                onClick={() => decide(r.id, false)}
                 className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-50"
               >
                 Rad etish

@@ -252,7 +252,16 @@ def get_student(
     if not _in_user_branches(db, user, s.branch_id, null_ok=True):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     out.balance = student_balance(db, s.id)
-    out.payments = [schemas.PaymentOut.model_validate(p) for p in s.payments]
+    # TARTIB: eng oxirgi to'lov/yechim eng tepada. Ilgari tartib
+    # umuman berilmagan edi va baza qatorlarni o'zi xohlagancha
+    # (odatda id bo'yicha) qaytarardi — LC UP importi eski to'lovlarni
+    # oxirgi sanadan boshlab yozgani uchun bugungi to'lov ro'yxatning
+    # ENG PASTIGA tushib qolardi (Jahongir, 2026-08-12: "nega tolov
+    # avgust kiritilgani eng pastga tushib ketgan").
+    _pays = sorted(s.payments,
+                   key=lambda p: (p.created_at or datetime.min, p.id),
+                   reverse=True)
+    out.payments = [schemas.PaymentOut.model_validate(p) for p in _pays]
     return out
 
 @router.post("/api/students", response_model=schemas.StudentOut)
@@ -481,7 +490,8 @@ def list_payments(
     return (
         db.query(models.Payment)
         .filter(models.Payment.student_id == student_id)
-        .order_by(models.Payment.created_at.desc())
+        .order_by(models.Payment.created_at.desc(),
+                  models.Payment.id.desc())
         .all()
     )
 

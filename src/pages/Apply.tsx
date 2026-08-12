@@ -51,7 +51,7 @@ export default function Apply() {
     full_name: "", address: "", birth_date: "", phone: "",
     workplaces: "", socials: "", education: "", marital: "",
     position: "", other_position: "", subject: "",
-    experience_years: "",
+    experience_years: "", work_duration: "",
   });
   const [photo, setPhoto] = useState("");
   const [cert, setCert] = useState("");
@@ -110,9 +110,16 @@ export default function Apply() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-700 to-brand-500 py-8 px-4">
       <div className="max-w-lg mx-auto">
-        <div className="flex items-center gap-2 justify-center mb-4 text-white">
-          <BrandIcon size={22} className="rounded-md" />
-          <span className="font-semibold">JONY ACADEMY</span>
+        <div className="flex flex-col items-center gap-2 mb-5">
+          <div className="bg-white rounded-2xl p-3 shadow-lg">
+            <BrandIcon size={44} className="rounded-xl" />
+          </div>
+          <span className="text-white text-2xl font-extrabold tracking-wide drop-shadow-md">
+            JONY ACADEMY
+          </span>
+          <span className="text-white/90 text-sm font-medium -mt-1">
+            Bizning jamoaga qo'shiling!
+          </span>
         </div>
         <div className="bg-white rounded-2xl shadow-xl p-6">
           <h1 className="text-lg font-bold text-slate-900">
@@ -170,6 +177,18 @@ export default function Apply() {
             <option value="single">Turmush qurmagan</option>
             <option value="married">Oilali</option>
             <option value="divorced">Ajrashgan</option>
+          </select>
+
+          <label className={lbl}>Qancha vaqt ishlamoqchisiz?</label>
+          <select className={inp} value={f.work_duration}
+                  onChange={(e) => set("work_duration", e.target.value)}>
+            <option value="">— tanlang —</option>
+            <option value="3-6 oy">3–6 oy</option>
+            <option value="6 oy - 1 yil">6 oy – 1 yil</option>
+            <option value="1-2 yil">1–2 yil</option>
+            <option value="2 yildan ko'p (uzoq muddat)">
+              2 yildan ko'p (uzoq muddatga)
+            </option>
           </select>
 
           <label className={lbl}>Shaxsiy fotosuratingiz *</label>

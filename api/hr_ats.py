@@ -1203,6 +1203,7 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
         f"Ma'lumoti: {_s('education', 300) or '—'}",
         f"Oilaviy holati: {_APPLY_MARITAL.get(marital, '—')}",
         f"Ijtimoiy tarmoqlar: {_s('socials', 300) or '—'}",
+        f"Qancha vaqt ishlamoqchi: {_s('work_duration', 100) or '—'}",
     ]
     if position == "teacher":
         note_lines.append(f"Qaysi fandan dars beradi: "

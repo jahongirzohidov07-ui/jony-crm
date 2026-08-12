@@ -2466,6 +2466,37 @@ def _my_facility_cards(db: Session, user: models.User) -> list:
               "amber" if reqs else "good", "/inventory"),
     ]
 
+def _plan_fakt_revenue_plan(db: Session, branch_id, year: int,
+                            month: int) -> float:
+    """Reja-Faktdagi TUSHUM rejasi shu kalendar oy uchun.
+
+    2026-08-12, Jahongir: "sotuv rejasi ko'rinmayapti, lekin men
+    kiritib qo'yganman Bekobod 1 nikini keyingi o'quv yili uchun" -
+    u rejani Reja-Fakt bo'limiga kiritgan (SMM jadvaliga emas).
+    Marketolog kartasi endi o'sha yerdan ham o'qiydi: tushum rejasi =
+    o'rtacha chek x (yangi + eski to'lovlar soni rejasi) - Reja-Fakt
+    dagi avtomat hisob bilan bir xil."""
+    if not branch_id:
+        return 0.0
+    sy = year if month >= 9 else year - 1     # o'quv yili boshi
+    rows = (db.query(models.PlanTarget)
+            .filter(models.PlanTarget.year == sy,
+                    models.PlanTarget.branch_id == branch_id,
+                    models.PlanTarget.month == month,
+                    models.PlanTarget.metric.in_(
+                        ("new_payments", "old_payments", "revenue")))
+            .all())
+    vals = {r.metric: r.value for r in rows}
+    if vals.get("revenue"):
+        return float(vals["revenue"])         # eski qo'lda kiritilganlar
+    cnt = (vals.get("new_payments") or 0) + (vals.get("old_payments") or 0)
+    if not cnt:
+        return 0.0
+    from finance import _avg_check_recent
+    ac = _avg_check_recent(db, branch_id) or 0
+    return float(round(ac * cnt, 0))
+
+
 def _smm_sales_state(db: Session, branch_id, year: int, month: int) -> dict:
     """Marketolog sotuv rejasi holati: reja, fakt (shu oy tushumi,
     filial bo'yicha), foiz, bonus, yangi to'lovlar soni va hozirgi
@@ -2479,6 +2510,8 @@ def _smm_sales_state(db: Session, branch_id, year: int, month: int) -> dict:
                         models.SmmSalesPlan.month == month).first()
                 if branch_id else None)
     plan = float(plan_row.amount) if plan_row else 0.0
+    if not plan:
+        plan = _plan_fakt_revenue_plan(db, branch_id, year, month)
 
     pq = (db.query(models.Payment, models.Student)
           .join(models.Student,
@@ -2540,10 +2573,22 @@ def _my_marketing_cards(db: Session, user: models.User) -> list:
     try:
         st8 = _smm_sales_state(db, user.branch_id, today.year, today.month)
         if st8["percent"] is None:
-            cards.append(_card(
-                "Sotuv rejasi (oy)", "Reja kiritilmagan",
-                "Marketing bo'limida asoschi kiritadi", "amber",
-                "/marketing"))
+            # Joriy oyda reja yo'q - keyingi oydan boshlanayotgan
+            # bo'lsa (masalan, sentabrdan) shuni ko'rsatamiz
+            ny, nm = ((today.year + 1, 1) if today.month == 12
+                      else (today.year, today.month + 1))
+            nxt = _smm_sales_state(db, user.branch_id, ny, nm)
+            if nxt["plan"]:
+                cards.append(_card(
+                    f"Sotuv rejasi ({roles.UZ_MONTHS[nm - 1].lower()})",
+                    f"{nxt['plan']:,.0f} so'm".replace(",", " "),
+                    f"{roles.UZ_MONTHS[nm - 1]}dan kuchga kiradi",
+                    "brand", "/marketing"))
+            else:
+                cards.append(_card(
+                    "Sotuv rejasi (oy)", "Reja kiritilmagan",
+                    "Marketing bo'limida asoschi kiritadi", "amber",
+                    "/marketing"))
         else:
             pct = st8["percent"]
             tone = ("good" if pct >= 100
@@ -4271,6 +4316,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "_plan_fakt_revenue_plan",
     "_visible_discounts",
     "_balances_bulk", "_neg_since_bulk", "_aging_bucket",
     "DEBT_AGING_BUCKETS", "_risk_scan",

@@ -37,7 +37,7 @@ import { FillTab } from "../components/FillReport";
 import ExamReport from "../components/ExamReport";
 
 type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
-  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba";
+  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba" | "nps";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "akademik", label: "Akademik" },
@@ -53,6 +53,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "sigim", label: "Xonalar bandligi" },
   { key: "geo", label: "Manzil va maktab" },
   { key: "manba", label: "Manbalar" },
+  { key: "nps", label: "NPS" },
   { key: "tarix", label: "Tarix (o'quvchilar soni)" },
 ];
 
@@ -438,6 +439,112 @@ function SourcePie({ title, total, rows }: {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function NpsTab() {
+  const [d, setD] = useState<any>(null);
+  const [quarter, setQuarter] = useState<string>("");
+
+  useEffect(() => {
+    api.get<any>(`/nps/summary${quarter ? `?quarter=${quarter}` : ""}`)
+      .then(setD).catch(() => {});
+  }, [quarter]);
+
+  if (!d) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+
+  const npsColor = (v: number | null) =>
+    v === null ? "text-slate-400"
+    : v >= 50 ? "text-emerald-600" : v >= 0 ? "text-amber-600"
+    : "text-red-600";
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <select value={quarter || d.quarter}
+                onChange={(e) => setQuarter(e.target.value)}
+                className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+          {d.quarters.map((q: string) => (
+            <option key={q} value={q}>{q}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 mb-5 max-w-xl">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">NPS</p>
+          <p className={`text-2xl font-semibold ${npsColor(d.nps)}`}>
+            {d.nps === null ? "—" : d.nps}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">Javoblar</p>
+          <p className="text-2xl font-semibold text-slate-900">{d.total}</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-xs text-slate-500 mb-1">O'rtacha ball</p>
+          <p className="text-2xl font-semibold text-slate-900">
+            {d.avg ?? "—"}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-4 mb-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-900 mb-2">
+            Filial kesimida
+          </p>
+          {d.by_branch.length === 0 ? (
+            <p className="text-sm text-slate-400">Hali javob yo'q</p>
+          ) : d.by_branch.map((b: any) => (
+            <div key={b.branch} className="flex items-center justify-between py-1.5 text-sm border-b border-slate-100 last:border-0">
+              <span className="text-slate-700">{b.branch}</span>
+              <span>
+                <b className={npsColor(b.nps)}>{b.nps ?? "—"}</b>
+                <span className="text-xs text-slate-400 ml-2">{b.count} javob</span>
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-900 mb-2">
+            Ustoz kesimida
+          </p>
+          {d.by_teacher.length === 0 ? (
+            <p className="text-sm text-slate-400">
+              Kamida 3 javob to'planganda chiqadi
+            </p>
+          ) : d.by_teacher.map((t: any) => (
+            <div key={t.teacher} className="flex items-center justify-between py-1.5 text-sm border-b border-slate-100 last:border-0">
+              <span className="text-slate-700">{t.teacher}</span>
+              <span>
+                <b className={npsColor(t.nps)}>{t.nps ?? "—"}</b>
+                <span className="text-xs text-slate-400 ml-2">{t.count}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {d.comments.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-3">
+          <p className="text-sm font-semibold text-slate-900 mb-2">Izohlar</p>
+          <div className="space-y-2">
+            {d.comments.map((c: any, i: number) => (
+              <p key={i} className="text-sm text-slate-600">
+                <span className={`font-semibold ${
+                  c.score >= 9 ? "text-emerald-600"
+                  : c.score >= 7 ? "text-amber-600" : "text-red-600"}`}>
+                  {c.score}
+                </span>
+                {" · "}{c.who}: {c.comment}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+      <p className="text-xs text-slate-400 max-w-3xl">{d.hint}</p>
     </div>
   );
 }
@@ -1225,6 +1332,7 @@ export default function Analitika() {
           {tab === "tarix" && <HistoryTab />}
           {tab === "geo" && <GeoTab months={months} />}
           {tab === "manba" && <SourcesTab months={months} />}
+          {tab === "nps" && <NpsTab />}
         </>
       )}
     </div>

@@ -198,6 +198,56 @@ export default function StudentGrammar() {
             </p>
           </div>
         ) : null}
+
+        {/* ---- B1 (2026-08-12: kontent qo'shildi, zanjir qulf) ---- */}
+        {d?.b1_locked ? (
+          <LockedLevel name="B1 — Intermediate"
+                       hint="A2 dagi barcha mavzularni tugating — B1 ochiladi" />
+        ) : d?.b1?.ready ? (
+          <LevelBlock name="B1 — Intermediate" topics={d.b1.topics}
+                      Row={TopicRow} />
+        ) : null}
+
+        {/* ---- B2 ---- */}
+        {d?.b2_locked ? (
+          <LockedLevel name="B2 — Upper-Intermediate"
+                       hint="B1 dagi barcha mavzularni tugating — B2 ochiladi" />
+        ) : d?.b2?.ready ? (
+          <LevelBlock name="B2 — Upper-Intermediate" topics={d.b2.topics}
+                      Row={TopicRow} />
+        ) : null}
+      </div>
+    </>
+  );
+}
+
+function LockedLevel({ name, hint }: { name: string; hint: string }) {
+  return (
+    <div className="rounded-xl border-2 border-dashed border-slate-300 p-5 flex items-center gap-3 bg-slate-50">
+      <div className="w-10 h-10 rounded-xl bg-slate-200 text-slate-500 flex items-center justify-center shrink-0">
+        <Lock size={18} />
+      </div>
+      <div>
+        <p className="text-sm font-bold text-slate-600">{name}</p>
+        <p className="text-[11px] text-slate-400">{hint}</p>
+      </div>
+    </div>
+  );
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function LevelBlock({ name, topics, Row }: {
+  name: string; topics: any[]; Row: any;
+}) {
+  return (
+    <>
+      <div className="rounded-xl p-4 bg-white border border-slate-200">
+        <p className="text-sm font-bold text-slate-800">{name}</p>
+      </div>
+      <div className="space-y-2">
+        {topics.map((t: any) => (
+          <Row key={t.topic} t={t} />
+        ))}
       </div>
     </>
   );

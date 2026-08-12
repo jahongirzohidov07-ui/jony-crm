@@ -44,7 +44,8 @@ print("=== CLOZE YUKLANGAN ===")
 n = (db.query(models.GrammarQuestion)
      .filter(models.GrammarQuestion.kind == "cloze",
              models.GrammarQuestion.is_active == 1).count())
-ck("10 ta cloze", n, 10)
+# 2026-08-12: barcha A1 mavzulariga (37) + A2 ga (8) cloze to'ldirildi
+ck("45 ta cloze (A1 37 + A2 8)", n, 45)
 
 print("\n=== MAVZUDA TURLAR KO'RINADI ===")
 r = c.get("/api/student/grammar/topics", headers=H)

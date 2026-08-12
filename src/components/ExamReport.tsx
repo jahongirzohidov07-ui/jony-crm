@@ -130,6 +130,8 @@ export default function ExamReport() {
   const td = "px-3 py-2 text-sm text-slate-700";
 
   return (
+    <>
+    <ExamTrendBlock />
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {cards.map((x) => (
@@ -289,6 +291,93 @@ export default function ExamReport() {
           )}
         </div>
       )}
+    </div>
+  </>
+  );
+}
+
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/** Oyma-oy o'rtacha imtihon foizi (2026-08-12, Jahongir: "guruh/ustoz
+ *  kesimida o'rtacha foizning oyma-oy o'zgarishi - shuni qosh"). */
+export function ExamTrendBlock() {
+  const [d, setD] = useState<any>(null);
+  useEffect(() => {
+    api.get<any>("/analytics/exam-trend?months=12").then(setD)
+      .catch(() => {});
+  }, []);
+  if (!d) return null;
+  const pts = d.months.filter((m: any) => m.avg !== null);
+  if (pts.length === 0) return null;
+  const max = 100;
+  const W = 660, H = 120;
+  const xs = (i: number) => 30 + (i * (W - 40)) / Math.max(d.months.length - 1, 1);
+  const ys = (v: number) => H - 15 - (v / max) * (H - 30);
+  const line = d.months
+    .map((m: any, i: number) => (m.avg === null ? null : `${xs(i)},${ys(m.avg)}`))
+    .filter(Boolean)
+    .join(" ");
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
+      <p className="text-sm font-semibold text-slate-900 mb-1">
+        Imtihon natijalari trendi (oyma-oy o'rtacha %)
+      </p>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+        {[40, 65, 90].map((g) => (
+          <g key={g}>
+            <line x1="30" x2={W - 10} y1={ys(g)} y2={ys(g)}
+                  stroke="#e2e8f0" strokeDasharray="3 3" />
+            <text x="2" y={ys(g) + 3} fontSize="9" fill="#94a3b8">{g}%</text>
+          </g>
+        ))}
+        <polyline points={line} fill="none" stroke="#7c3aed"
+                  strokeWidth="2" />
+        {d.months.map((m: any, i: number) => m.avg !== null && (
+          <g key={m.period}>
+            <circle cx={xs(i)} cy={ys(m.avg)} r="3" fill="#7c3aed" />
+            <text x={xs(i)} y={ys(m.avg) - 6} fontSize="8.5"
+                  textAnchor="middle" fill="#475569">{m.avg}</text>
+          </g>
+        ))}
+        {d.months.map((m: any, i: number) => (
+          <text key={m.period} x={xs(i)} y={H - 2} fontSize="8"
+                textAnchor="middle" fill="#94a3b8">{m.label}</text>
+        ))}
+      </svg>
+      {d.teachers.length > 0 && (
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="text-xs text-slate-500">
+              <tr>
+                <th className="text-left py-1.5 font-medium">Ustoz</th>
+                <th className="text-right font-medium">Avvalgi 3 oy</th>
+                <th className="text-right font-medium">Oxirgi 3 oy</th>
+                <th className="text-right font-medium">O'zgarish</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {d.teachers.map((t: any) => (
+                <tr key={t.teacher}>
+                  <td className="py-1.5 text-slate-800">{t.teacher}</td>
+                  <td className="text-right text-slate-500">
+                    {t.prev3 ?? "—"}
+                  </td>
+                  <td className="text-right font-medium text-slate-800">
+                    {t.last3 ?? "—"}
+                  </td>
+                  <td className={`text-right font-medium ${
+                    t.delta === null ? "text-slate-400"
+                    : t.delta >= 0 ? "text-emerald-600" : "text-red-600"}`}>
+                    {t.delta === null ? "—"
+                     : (t.delta >= 0 ? "+" : "") + t.delta}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p className="text-xs text-slate-400 mt-2">{d.hint}</p>
     </div>
   );
 }

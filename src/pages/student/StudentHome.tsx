@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NpsCard } from "../../components/NpsCard";
 import { Link } from "react-router-dom";
 import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
@@ -120,6 +121,7 @@ export default function StudentHome() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-7 space-y-4">
+        <div className="-mt-6 mb-4"><NpsCard /></div>
         {/* --- BALANS (2026-08-10, Jahongir: "bosh sahifada balansi
             ko'rinib turishi kerak"). Manfiy - qizil, to'lov
             eslatmasi bilan. --- */}

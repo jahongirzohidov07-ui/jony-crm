@@ -89,6 +89,7 @@ import leads as _r_leads
 import marketing as _r_marketing
 import me as _r_me
 import notifications as _r_notifications
+import nps as _r_nps
 import parents as _r_parents
 import student_app as _r_student_app
 import students as _r_students
@@ -118,6 +119,7 @@ app.include_router(_r_leads.router)
 app.include_router(_r_marketing.router)
 app.include_router(_r_me.router)
 app.include_router(_r_notifications.router)
+app.include_router(_r_nps.router)
 app.include_router(_r_parents.router)
 app.include_router(_r_student_app.router)
 app.include_router(_r_students.router)
@@ -172,6 +174,17 @@ try:
     from grammar_seed import seed_grammar
     with _VS7(engine) as _db7:
         seed_grammar(_db7)
+except Exception:
+    pass
+
+# Grammar A2/B1/B2 + A1 qolgan cloze (2026-08-12, Jahongir: "A2, B1,
+# B2 uchun tuzilma tayyor, kontent YO'Q - shularni to'ldirib chiq
+# hammasini. A1'dagi cloze ham"). Idempotent (grammar_l2_v1).
+try:
+    from sqlalchemy.orm import Session as _VS13
+    from grammar_seed2 import seed_grammar_levels
+    with _VS13(engine) as _db13:
+        seed_grammar_levels(_db13)
 except Exception:
     pass
 

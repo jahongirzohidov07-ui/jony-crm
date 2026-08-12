@@ -95,8 +95,10 @@ r = c.get("/api/student/grammar/topics", headers=H)
 d = r.json()
 ck("A1 completed", d["a1"]["completed"], True)
 ck("qulf ochildi", d["a2_locked"], False)
-ck("A2 hali tayyor emas (savollar keyin)",
-   d["a2"]["ready"], False)
+# 2026-08-12: A2 kontenti to'ldirildi (grammar_seed2) - endi A1
+# tugagach A2 DARHOL tayyor bo'ladi.
+ck("A2 tayyor (kontent to'ldirilgan)",
+   d["a2"]["ready"], True)
 
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

@@ -1194,6 +1194,20 @@ def grammar_topics(db: Session = Depends(get_db),
     a1 = build("A1")
     a1_completed = bool(a1) and all(t["done"] for t in a1)
     a2 = build("A2") if a1_completed else []
+    a2_completed = bool(a2) and all(t["done"] for t in a2)
+    # 2026-08-12: B1/B2 kontenti qo'shildi - xuddi shu qoidada
+    # zanjir bo'lib ochiladi: A1 -> A2 -> B1 -> B2.
+    b1 = build("B1") if a2_completed else []
+    b1_completed = bool(b1) and all(t["done"] for t in b1)
+    b2 = build("B2") if b1_completed else []
+
+    levels = [{"level": "A1", "topics": a1}]
+    if a2:
+        levels.append({"level": "A2", "topics": a2})
+    if b1:
+        levels.append({"level": "B1", "topics": b1})
+    if b2:
+        levels.append({"level": "B2", "topics": b2})
 
     return {
         "a1": {"topics": a1,
@@ -1201,12 +1215,17 @@ def grammar_topics(db: Session = Depends(get_db),
                "total": len(a1),
                "completed": a1_completed},
         "a2_locked": not a1_completed,
-        "a2": {"topics": a2, "ready": len(a2) > 0},
+        "a2": {"topics": a2, "ready": len(a2) > 0,
+               "completed": a2_completed},
+        "b1_locked": not a2_completed,
+        "b1": {"topics": b1, "ready": len(b1) > 0,
+               "completed": b1_completed},
+        "b2_locked": not b1_completed,
+        "b2": {"topics": b2, "ready": len(b2) > 0},
         "total_correct": len(solved),
         "round_size": roles.GRAMMAR_ROUND_SIZE,
         # eski UI mosligi uchun
-        "levels": [{"level": "A1", "topics": a1}]
-                  + ([{"level": "A2", "topics": a2}] if a2 else []),
+        "levels": levels,
     }
 
 

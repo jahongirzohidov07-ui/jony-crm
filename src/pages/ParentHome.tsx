@@ -1,4 +1,5 @@
 import { Link, useOutletContext } from "react-router-dom";
+import { NpsCard } from "../components/NpsCard";
 import {
   ChevronRight,
   ClipboardCheck,
@@ -78,6 +79,7 @@ export default function ParentHome() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-5 space-y-4">
+        <div className="-mt-4 mb-4"><NpsCard /></div>
         {installEvt && !installHidden && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">

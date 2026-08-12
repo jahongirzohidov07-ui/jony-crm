@@ -2922,6 +2922,24 @@ class SmmSalesPlan(Base):
                         onupdate=datetime.utcnow)
 
 
+class NpsResponse(Base):
+    """NPS so'rovi javobi (2026-08-12): chorakda bir marta, o'quvchi
+    va ota-onadan alohida. teacher_id - javob paytidagi guruh ustozi
+    (sifat o'lchovi ustoz kesimida chiqishi uchun)."""
+    __tablename__ = "nps_responses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    who = Column(String, nullable=False, default="student")  # student/parent
+    score = Column(Integer, nullable=False)
+    comment = Column(Text, nullable=True)
+    quarter = Column(String, nullable=False, index=True)      # 2026-Q3
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    teacher_id = Column(Integer, ForeignKey("teachers.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class SeedMark(Base):
     """Bir martalik import/seed bajarilganini belgilaydi.
 

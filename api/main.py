@@ -460,6 +460,15 @@ try:
 except Exception:
     pass
 
+# Onlayn arizalar quvurda ham ko'rinsin (bir martalik backfill)
+try:
+    from sqlalchemy.orm import Session as _VS15
+    from hr_ats import backfill_apply_applications
+    with _VS15(engine) as _db15:
+        backfill_apply_applications(_db15)
+except Exception:
+    pass
+
 # Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
 # Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
 # bo'shatish paytidayoq _release_support_groups orqali tozalanadi.

@@ -1246,6 +1246,24 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
         _att(cert, "certificate", f"sertifikat_{c.id}")
     db.commit()
 
+    # Quvurga ham tushsin (2026-08-12: "arizada topshirib ko'rgandik,
+    # quvurda ko'rinmadi") - Ishga olish quvuri CandidateApplication
+    # dan o'qiydi, shuning uchun ariza ham ochamiz.
+    try:
+        a = models.CandidateApplication(
+            candidate_id=c.id, vacancy_id=None, branch_id=None,
+            stage="new", stage_since=date.today(),
+            source="other",
+            note=f"Onlayn ariza: {pos_label}")
+        db.add(a); db.commit(); db.refresh(a)
+        _ensure_public_id(db, "application", a)
+        db.add(models.ApplicationStageLog(
+            application_id=a.id, from_stage=None, to_stage="new",
+            days_in_stage=0))
+        db.commit()
+    except Exception:
+        db.rollback()
+
     # HR'ga xabar bo'lib tushsin
     try:
         hr_users = (db.query(models.User)
@@ -1266,3 +1284,34 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
         db.rollback()
 
     return {"ok": True, "id": c.id}
+
+
+
+def backfill_apply_applications(db: Session) -> int:
+    """Onlayn arizadan kelgan-u quvurda ko'rinmagan nomzodlarga
+    ariza ochib qo'yadi (bir martalik, 2026-08-12)."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "apply_backfill_v1"):
+        return 0
+    made = 0
+    cands = (db.query(models.Candidate)
+             .filter(models.Candidate.created_by == "Onlayn ariza").all())
+    for c in cands:
+        has = (db.query(models.CandidateApplication)
+               .filter(models.CandidateApplication.candidate_id == c.id)
+               .count())
+        if has:
+            continue
+        a = models.CandidateApplication(
+            candidate_id=c.id, stage="new",
+            stage_since=roles.local_today(), source="other",
+            note="Onlayn ariza (backfill)")
+        db.add(a); db.commit(); db.refresh(a)
+        _ensure_public_id(db, "application", a)
+        db.add(models.ApplicationStageLog(
+            application_id=a.id, from_stage=None, to_stage="new",
+            days_in_stage=0))
+        made += 1
+    db.commit()
+    _seed_mark(db, "apply_backfill_v1")
+    return made

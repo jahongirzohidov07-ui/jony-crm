@@ -466,6 +466,8 @@ try:
     from hr_ats import backfill_apply_applications
     with _VS15(engine) as _db15:
         backfill_apply_applications(_db15)
+        from hr_ats import fix_apply_attachments
+        fix_apply_attachments(_db15)
 except Exception:
     pass
 

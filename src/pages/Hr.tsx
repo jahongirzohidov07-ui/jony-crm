@@ -328,7 +328,14 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   };
 
   const move = async (c: Candidate, stage: string) => {
-    await api.put(`/candidates/${c.id}`, { stage });
+    // 2026-08-12, Jahongir: "rad etildidan keyin sabab so'rasa yaxshi edi"
+    let reject_reason: string | undefined;
+    if (stage === "rejected") {
+      const r = prompt("Rad etish sababi (nomzod kartasida saqlanadi):");
+      if (r === null) return;          // bekor qilindi
+      reject_reason = r.trim() || undefined;
+    }
+    await api.put(`/candidates/${c.id}`, { stage, reject_reason });
     load();
   };
 

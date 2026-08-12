@@ -543,8 +543,20 @@ def ats_pipeline(vacancy_id: int | None = None,
                  db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.ATS_VIEW))):
     """Kanban: har bosqichda kim turibdi va kim uzoq kutib qoldi."""
-    q = scope_to_branch(db.query(models.CandidateApplication),
-                        models.CandidateApplication, user, branch_id)
+    # Filial tanlanganda FILIALSIZ (umumiy, masalan onlayn ariza)
+    # arizalar ham ko'rinadi - aks holda ular "yo'qolib" qolardi
+    # (2026-08-12: "quvurda ko'rinmadi" muammosining sababi).
+    A = models.CandidateApplication
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        from common import _user_branch_ids
+        allowed = _user_branch_ids(db, user)
+        q = db.query(A).filter(A.branch_id.in_(allowed or [-1])
+                               | A.branch_id.is_(None))
+    elif branch_id:
+        q = db.query(A).filter((A.branch_id == branch_id)
+                               | A.branch_id.is_(None))
+    else:
+        q = db.query(A)
     if vacancy_id:
         q = q.filter(models.CandidateApplication.vacancy_id == vacancy_id)
     if stage:
@@ -1232,14 +1244,16 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
     db.refresh(c)
 
     def _att(data_url: str, kind: str, fname: str):
+        # Ko'rish oynasi data ni XOM base64 kutadi (data: prefiksisiz)
         try:
-            mime = data_url.split(";", 1)[0].split(":", 1)[1]
+            head, b64 = data_url.split(",", 1)
+            mime = head.split(";", 1)[0].split(":", 1)[1]
         except Exception:
-            mime = "application/octet-stream"
+            mime, b64 = "application/octet-stream", data_url
         db.add(models.Attachment(
             entity="candidate", entity_id=c.id, kind=kind,
-            filename=fname, mime=mime, size=len(data_url),
-            data=data_url, created_by="Onlayn ariza"))
+            filename=fname, mime=mime, size=len(b64),
+            data=b64, created_by="Onlayn ariza"))
 
     _att(photo, "photo", f"foto_{c.id}.jpg")
     if cert:
@@ -1315,3 +1329,28 @@ def backfill_apply_applications(db: Session) -> int:
     db.commit()
     _seed_mark(db, "apply_backfill_v1")
     return made
+
+
+def fix_apply_attachments(db: Session) -> int:
+    """Onlayn arizadan kelgan fayllar data: prefiksi bilan saqlangan
+    edi - rasm ochilmasdi (2026-08-12). Xom base64 ga o'tkazamiz."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "apply_att_fix_v1"):
+        return 0
+    fixed = 0
+    rows = (db.query(models.Attachment)
+            .filter(models.Attachment.created_by == "Onlayn ariza").all())
+    for a in rows:
+        d = a.data or ""
+        if d.startswith("data:"):
+            try:
+                head, b64 = d.split(",", 1)
+                a.mime = head.split(";", 1)[0].split(":", 1)[1]
+                a.data = b64
+                a.size = len(b64)
+                fixed += 1
+            except Exception:
+                pass
+    db.commit()
+    _seed_mark(db, "apply_att_fix_v1")
+    return fixed

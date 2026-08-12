@@ -196,13 +196,13 @@ export function Attachments({
             </div>
             {preview.mime?.startsWith("image/") ? (
               <img
-                src={`data:${preview.mime};base64,${preview.data}`}
+                src={preview.data?.startsWith("data:") ? preview.data : `data:${preview.mime};base64,${preview.data}`}
                 alt={preview.filename || ""}
                 className="max-w-full rounded-lg"
               />
             ) : (
               <a
-                href={`data:${preview.mime || "application/octet-stream"};base64,${preview.data}`}
+                href={preview.data?.startsWith("data:") ? preview.data : `data:${preview.mime || "application/octet-stream"};base64,${preview.data}`}
                 download={preview.filename || "fayl"}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-600 text-white text-sm"
               >

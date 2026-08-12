@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Plus, Search, X, Download, Pencil, FileUp } from "lucide-react";
-import { api, type Student, type Group, type Branch } from "../lib/api";
+import {
+  api, getGlobalBranch, type Student, type Group, type Branch,
+} from "../lib/api";
 import { formatSom } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { TEACHING_STAFF, can } from "../lib/roles";
@@ -492,7 +494,7 @@ export default function Students() {
         <StudentModal
           groups={groups}
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           onClose={() => setShowAdd(false)}
           onSaved={() => load()}
         />
@@ -501,7 +503,7 @@ export default function Students() {
         <StudentModal
           groups={groups}
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           initial={editing}
           onClose={() => setEditing(null)}
           onSaved={() => {

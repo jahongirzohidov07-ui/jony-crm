@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, X, Pencil, Search , Trash2 } from "lucide-react";
 import {
-  api, ApiError, type Group, type Teacher, type Branch, type Room,
+  api, ApiError, getGlobalBranch, type Group, type Teacher,
+  type Branch, type Room,
   type CheckProblem,
   type CareerMap,
 } from "../lib/api";
@@ -840,7 +841,7 @@ export default function Groups() {
         <GroupFormModal
           teachers={teachers}
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           submitLabel="Qo'shish"
           onClose={() => setShowAdd(false)}
           onSaved={load}
@@ -850,7 +851,7 @@ export default function Groups() {
         <GroupFormModal
           teachers={teachers}
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           initial={editing}
           submitLabel="Saqlash"
           onClose={() => setEditing(null)}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Trash2, UserPlus, Phone, GripVertical } from "lucide-react";
-import { api } from "../lib/api";
+import { api, getGlobalBranch } from "../lib/api";
 import type { Lead, Branch, StaffOption, Group } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { FULL_ACCESS, LEAD_ACCESS, can } from "../lib/roles";
@@ -767,7 +767,7 @@ export default function Leads() {
           branchesError={branchesError}
           onRetryBranches={loadBranches}
           staff={staff}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           onClose={() => setShowNew(false)}
           onSaved={load}
         />
@@ -778,7 +778,7 @@ export default function Leads() {
           branchesError={branchesError}
           onRetryBranches={loadBranches}
           staff={staff}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           initial={editing}
           onClose={() => setEditing(null)}
           onSaved={load}

@@ -5,7 +5,8 @@ import {
   FileUp,
  Layers } from "lucide-react";
 import {
-  api, type Teacher, type Branch, type GradeRow, type CareerMap,
+  api, getGlobalBranch, type Teacher, type Branch, type GradeRow,
+  type CareerMap,
   type TeacherAccount,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
@@ -795,7 +796,7 @@ export default function Teachers() {
       {showAdd && (
         <TeacherModal
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           onClose={() => setShowAdd(false)}
           onSaved={load}
         />
@@ -803,7 +804,7 @@ export default function Teachers() {
       {editing && (
         <TeacherModal
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           initial={editing}
           onClose={() => setEditing(null)}
           onSaved={() => {

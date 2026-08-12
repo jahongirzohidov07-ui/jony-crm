@@ -8,6 +8,7 @@ import {
 import { Link, useSearchParams } from "react-router-dom";
 import {
   api,
+  getGlobalBranch,
   type CashflowReport,
   type CashflowLedger,
   type BillingMonth,
@@ -655,9 +656,18 @@ function ExpenseForm({
   const [note, setNote] = useState(initial?.note ?? "");
   const [method, setMethod] = useState(initial?.method ?? "cash");
   const [channel, setChannel] = useState(initial?.channel ?? "");
+  // FILIAL: tepadagi tanlagichda aniq filial turgan bo'lsa, xarajat
+  // o'shanga yoziladi va savol berilmaydi (Jahongir, 2026-08-12:
+  // "men hozir Bekobod 1 da ishlayabman demak bekobod 1 xarajati
+  // bo'ladi, agar barcha filiallarni tanlab ishlaganimda filial
+  // so'rasa bo'lardi").
+  const globalBranch = getGlobalBranch();
+  const lockedBranch = !initial && !!globalBranch;
   const [branchId, setBranchId] = useState(
     initial?.branch_id
       ? String(initial.branch_id)
+      : globalBranch
+      ? String(globalBranch)
       : defaultBranchId
       ? String(defaultBranchId)
       : ""
@@ -808,7 +818,17 @@ function ExpenseForm({
             </div>
           )}
 
-          {branches.length > 1 && (
+          {lockedBranch ? (
+            <p className="text-xs text-slate-500">
+              Filial:{" "}
+              <span className="font-medium text-slate-700">
+                {branches.find((b) => String(b.id) === branchId)?.name
+                  || "—"}
+              </span>{" "}
+              — tepadagi tanlovga ko'ra. Boshqa filialga yozish uchun
+              tepadan "Barcha filiallar" ni tanlang.
+            </p>
+          ) : branches.length > 1 && (
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">Filial</label>
               <select
@@ -1019,7 +1039,7 @@ function ExpensesTab() {
       {showNew && (
         <ExpenseForm
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           defaultDate={defaultDate}
           onClose={() => setShowNew(false)}
           onSaved={load}
@@ -1028,7 +1048,7 @@ function ExpensesTab() {
       {editing && (
         <ExpenseForm
           branches={branches}
-          defaultBranchId={user?.branch_id ?? null}
+          defaultBranchId={Number(getGlobalBranch()) || user?.branch_id || null}
           defaultDate={defaultDate}
           initial={editing}
           onClose={() => setEditing(null)}

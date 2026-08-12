@@ -496,6 +496,7 @@ export default function Layout() {
                   (2026-08-10). */}
               <MobileRolePicker onDone={() => setProfileOpen(false)} />
               <MobileBranchPicker onDone={() => setProfileOpen(false)} />
+              <ProfileRolePicker />
               {(user?.role === "teacher" ||
                 user?.role === "support_teacher") && (
                 <Link
@@ -900,6 +901,35 @@ function RoleSwitcher() {
         }}
         title="Lavozim bo'yicha ishlash"
         className="h-10 rounded-full border border-brand-400 bg-brand-50 px-3 pr-7 text-sm text-brand-700 font-medium shadow-sm focus:outline-none max-w-[11rem] truncate"
+      >
+        {myRoles.map((r) => (
+          <option key={r.key} value={r.key}>{r.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+
+/** Profil menyusidagi LAVOZIM tanlash (2026-08-12, Jahongir: "Nodir
+ *  ham ustoz ham filial rahbari... Go'zal ham ustoz ham o'quv bo'limi
+ *  rahbari — lavozim almashtirish funksiyasi qo'shilsin profil
+ *  bo'limida"). Ikki va undan ko'p lavozimli xodimga chiqadi. */
+function ProfileRolePicker() {
+  const { user } = useAuth();
+  const myRoles = user?.roles ?? [];
+  const current = getActiveRole() || user?.role || "";
+  if (myRoles.length < 2) return null;
+  return (
+    <div className="border-t border-slate-100 px-4 py-2.5">
+      <p className="text-[11px] text-slate-400 mb-1.5">Lavozim</p>
+      <select
+        value={current}
+        onChange={(e) => {
+          setActiveRole(e.target.value || null);
+          window.location.href = "/";
+        }}
+        className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-sm bg-white"
       >
         {myRoles.map((r) => (
           <option key={r.key} value={r.key}>{r.label}</option>

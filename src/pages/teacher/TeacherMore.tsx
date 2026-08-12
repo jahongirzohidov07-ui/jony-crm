@@ -5,6 +5,7 @@ import {
   Users,
 } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
+import { setActiveRole, getActiveRole } from "../../lib/api";
 
 /**
  * JONY TEACHER — "Bo'limlar".
@@ -91,6 +92,10 @@ export default function TeacherMore() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-5 space-y-5">
+        {/* LAVOZIM ALMASHTIRISH (2026-08-12, Jahongir): ham ustoz, ham
+            rahbar bo'lgan xodim (Nodir, Go'zal) shu yerdan boshqaruv
+            paneliga o'tadi. 2+ lavozimlilardagina ko'rinadi. */}
+        <RoleSwitchCard />
         {SECTIONS.map((sec) => {
           const items = sec.items.filter(
             (i) =>
@@ -138,5 +143,33 @@ export default function TeacherMore() {
         </p>
       </div>
     </>
+  );
+}
+
+
+function RoleSwitchCard() {
+  const { user } = useAuth();
+  const myRoles = user?.roles ?? [];
+  const current = getActiveRole() || user?.role || "";
+  if (myRoles.length < 2) return null;
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-brand-200 p-4">
+      <p className="text-sm font-bold text-slate-800 mb-1">Lavozim</p>
+      <p className="text-[11px] text-slate-400 mb-2">
+        Qaysi lavozimda ishlashni tanlang — panel to'liq o'zgaradi
+      </p>
+      <select
+        value={current}
+        onChange={(e) => {
+          setActiveRole(e.target.value || null);
+          window.location.href = "/";
+        }}
+        className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm bg-white"
+      >
+        {myRoles.map((r) => (
+          <option key={r.key} value={r.key}>{r.label}</option>
+        ))}
+      </select>
+    </div>
   );
 }

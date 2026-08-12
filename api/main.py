@@ -377,6 +377,89 @@ try:
 except Exception:
     pass
 
+# IKKI LAVOZIMLI XODIMLAR (2026-08-12, Jahongir): "Nodir Abdulatipov
+# ham ustoz ham filial rahbari... Go'zal Zoxidova ham ustoz ham o'quv
+# bo'limi rahbari - lavozim almashtirish funksiyasi berilsin".
+# - Nodir: asosiy lavozim filial rahbari, qo'shimcha - ustoz.
+# - Go'zal: IKKITA alohida akkauntda edi (5: o'quv bo'limi, 49: ustoz).
+#   Ustoz kartasi asosiy (o'quv bo'limi) akkauntiga ulanadi, vazifalar
+#   ko'chiriladi, eski ustoz-akkaunt faolsizlantiriladi (o'chirilmaydi).
+# Bir martalik, hech qanday ma'lumot yo'qolmaydi.
+try:
+    from sqlalchemy.orm import Session as _VS14
+    from common import _seed_done as _sd14, _seed_mark as _sm14
+    from legacy_quality_seed import _norm as _n14
+    with _VS14(engine) as _db14:
+        if not _sd14(_db14, "dual_role_setup_v1"):
+            def _key14(nm):
+                return " ".join(sorted(_n14(x) for x in (nm or "").split()
+                                       if _n14(x)))
+
+            def _find_user(name_key, role):
+                return [u for u in _db14.query(models.User).all()
+                        if _key14(u.full_name) == name_key
+                        and u.role == role]
+
+            def _add_extra(uid, role):
+                have = _db14.query(models.UserRole).filter(
+                    models.UserRole.user_id == uid,
+                    models.UserRole.role == role).count()
+                if not have:
+                    _db14.add(models.UserRole(user_id=uid, role=role))
+
+            # ---- Nodir: teacher -> branch_manager (+ teacher) ----
+            _nk = _key14("Nodirbek Abdulatipov")
+            _nods = _find_user(_nk, roles.TEACHER)
+            if len(_nods) == 1:
+                _u = _nods[0]
+                _u.role = roles.BRANCH_MANAGER
+                _add_extra(_u.id, roles.TEACHER)
+                try:
+                    audit.log(_db14, None, entity="user",
+                              action="role_change", entity_id=_u.id,
+                              entity_label=_u.full_name,
+                              old_value="teacher",
+                              new_value="branch_manager (+ustoz)",
+                              note="Ikki lavozim: tepadagi/profildagi "
+                                   "tanlagichdan almashtiriladi")
+                except Exception:
+                    pass
+
+            # ---- Go'zal: 2 akkauntni birlashtirish ----
+            _gk = _key14("Go'zal Zohidova")
+            _mains = _find_user(_gk, roles.ACADEMIC_HEAD)
+            _dups = _find_user(_gk, roles.TEACHER)
+            if len(_mains) == 1 and len(_dups) == 1:
+                _m, _d = _mains[0], _dups[0]
+                # Ustoz kartasi asosiy akkauntga
+                for _t in _db14.query(models.Teacher).filter(
+                        models.Teacher.user_id == _d.id).all():
+                    _t.user_id = _m.id
+                # Vazifalar ko'chadi
+                (_db14.query(models.Task)
+                 .filter(models.Task.assignee_id == _d.id)
+                 .update({models.Task.assignee_id: _m.id},
+                         synchronize_session=False))
+                (_db14.query(models.Task)
+                 .filter(models.Task.watcher_id == _d.id)
+                 .update({models.Task.watcher_id: _m.id},
+                         synchronize_session=False))
+                _add_extra(_m.id, roles.TEACHER)
+                _d.is_active = 0
+                try:
+                    audit.log(_db14, None, entity="user",
+                              action="merge_accounts", entity_id=_m.id,
+                              entity_label=_m.full_name,
+                              note=f"Ustoz-akkaunt (#{_d.id}, "
+                                   f"{_d.username}) asosiy akkauntga "
+                                   f"birlashtirildi va faolsizlantirildi")
+                except Exception:
+                    pass
+            _db14.commit()
+            _sm14(_db14, "dual_role_setup_v1")
+except Exception:
+    pass
+
 # Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
 # Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
 # bo'shatish paytidayoq _release_support_groups orqali tozalanadi.

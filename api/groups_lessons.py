@@ -70,8 +70,13 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
         def _busy(l):
             if l.held:
                 return True
-            return db.query(models.Attendance).filter(
-                models.Attendance.lesson_id == l.id).count() > 0
+            if db.query(models.Attendance).filter(
+                    models.Attendance.lesson_id == l.id).count() > 0:
+                return True
+            # Ko'chirish tarixi bog'langan darsni o'chirib bo'lmaydi
+            # (FK): 2026-08-12, "koreys tilida" guruhi 2 kun 500 berdi.
+            return db.query(models.LessonReschedule).filter(
+                models.LessonReschedule.lesson_id == l.id).count() > 0
         loser = None
         if not _busy(ls):
             loser = ls
@@ -97,6 +102,14 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
         models.LessonReschedule.group_id == group.id,
         models.LessonReschedule.status.in_(roles.RESCHEDULE_DONE)).all()
     protected = {m.lesson_id for m in moves if m.lesson_id}
+    # HAR QANDAY statusdagi (kutilayotgan, rad etilgan...) ko'chirish
+    # bog'lagan darslar ham o'chirilmaydi - lesson_reschedules dagi FK
+    # buni baribir taqiqlaydi, urinish esa butun sahifani 500 bilan
+    # yiqitardi (2026-08-12, guruh 23 "koreys tilida" 2 kun ochilmadi).
+    _ref = db.query(models.LessonReschedule.lesson_id).filter(
+        models.LessonReschedule.group_id == group.id,
+        models.LessonReschedule.lesson_id.isnot(None)).all()
+    protected |= {x[0] for x in _ref}
     vacated = {m.from_date for m in moves}      # bu kunlarda dars yo'q
     landed = {m.to_date for m in moves}
     protected |= {ls.id for ls in existing if ls.date in landed}

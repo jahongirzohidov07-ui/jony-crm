@@ -350,6 +350,26 @@ function GroupsTab({ student }: { student: StudentDetailType }) {
   const days = parseDays(g.lesson_days);
 
   return (
+    <>
+      {/* O'NG TOMONDA alohida "Davomat" — bosilganda sahifadan
+          chiqmasdan oylik yoqlama oynasi ochiladi (Jahongir,
+          2026-08-12: "alohida davomat degan yozuv qoyib bosadigan
+          qilib ber o'ng tomonda"). */}
+      <div className="flex justify-end mb-3">
+        <button
+          onClick={() => setAttOpen(true)}
+          className="text-sm font-medium text-brand-600 hover:text-brand-700"
+        >
+          Davomat →
+        </button>
+      </div>
+      {attOpen && (
+        <AttendanceGridModal
+          studentId={student.id}
+          studentName={student.full_name}
+          onClose={() => setAttOpen(false)}
+        />
+      )}
     <div className="border border-slate-200 rounded-xl overflow-hidden max-w-lg">
       <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
         <Link
@@ -408,24 +428,16 @@ function GroupsTab({ student }: { student: StudentDetailType }) {
         {g.room && <Row label="Xona" value={g.room} />}
         <Row label="Guruh narxi" value={formatSom(g.monthly_fee)} />
       </div>
-      {/* 2026-08-12, Jahongir: "davomat degan joyga bossa o'quvchi
-          oynasidan chiqmagan holda oyna ochilsa va yoqlamalari
-          korinib tursa". Guruhga o'tish yuqoridagi guruh nomi
-          orqali qoladi. */}
-      <button
-        onClick={() => setAttOpen(true)}
-        className="block w-full text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
+      {/* Bu tugma AVVALGIDEK guruh sahifasiga olib boradi (Jahongir,
+          2026-08-12: "davomat va baho ezsa gruppaga otaversin"). */}
+      <Link
+        to={`/groups/${g.id}`}
+        className="block text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
       >
         Davomat &amp; Baho →
-      </button>
-      {attOpen && (
-        <AttendanceGridModal
-          studentId={student.id}
-          studentName={student.full_name}
-          onClose={() => setAttOpen(false)}
-        />
-      )}
+      </Link>
     </div>
+    </>
   );
 }
 

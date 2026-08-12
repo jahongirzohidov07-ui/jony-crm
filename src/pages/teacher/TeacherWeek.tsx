@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDayMonth } from "../../lib/format";
 import { api } from "../../lib/api";
 import type { TeacherWeek as Week } from "../../lib/teacherApi";
 import { LessonRow } from "./TeacherToday";
@@ -22,8 +23,8 @@ export default function TeacherWeek() {
           <h1 className="text-xl font-semibold">Haftalik jadval</h1>
           {d && (
             <p className="text-sm opacity-90 mt-0.5">
-              {d.start.slice(8, 10)}.{d.start.slice(5, 7)} —{" "}
-              {d.end.slice(8, 10)}.{d.end.slice(5, 7)}
+              {formatDayMonth(d.start)} —{" "}
+              {formatDayMonth(d.end)}
             </p>
           )}
         </div>
@@ -46,7 +47,7 @@ export default function TeacherWeek() {
                 {day.label}
               </p>
               <span className="text-xs text-slate-400">
-                {day.date.slice(8, 10)}.{day.date.slice(5, 7)}
+                {formatDayMonth(day.date)}
               </span>
               {day.is_today && (
                 <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-brand-50 text-brand-600">

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { formatDate } from "../../lib/format";
 import { Camera, Check, LogOut, Pencil } from "lucide-react";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/AuthContext";
@@ -386,8 +387,7 @@ export default function StudentProfile() {
                       </p>
                       {r.date && (
                         <p className="text-[11px] text-slate-400">
-                          {r.date.slice(8, 10)}.{r.date.slice(5, 7)}.
-                          {r.date.slice(0, 4)}
+                          {formatDate(r.date)}
                         </p>
                       )}
                     </div>
@@ -438,8 +438,7 @@ export default function StudentProfile() {
                       </p>
                       {r.date && (
                         <p className="text-[11px] text-slate-400">
-                          {r.date.slice(8, 10)}.{r.date.slice(5, 7)}.
-                          {r.date.slice(0, 4)}
+                          {formatDate(r.date)}
                         </p>
                       )}
                     </div>

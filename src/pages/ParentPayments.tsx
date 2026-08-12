@@ -1,4 +1,5 @@
 import { useOutletContext } from "react-router-dom";
+import { formatDate } from "../lib/format";
 import { Wallet } from "lucide-react";
 import { ParentPageHeader } from "../components/ParentPageHeader";
 import type { ParentCtx } from "./Parent";
@@ -47,7 +48,7 @@ export default function ParentPayments() {
                 <p className="text-xs text-emerald-700 mt-0.5">{ds.reason}</p>
                 <p className="text-[11px] text-emerald-600 mt-0.5">
                   {ds.until
-                    ? `${ds.until.split("-").reverse().join(".")} gacha`
+                    ? `${formatDate(ds.until)} gacha`
                     : "Muddatsiz"}
                 </p>
               </div>

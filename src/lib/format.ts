@@ -3,14 +3,36 @@ export function formatSom(amount: number): string {
   return `${rounded.toLocaleString("en-US")} so'm`;
 }
 
+/**
+ * Sana OY NOMI bilan: "12-Avg 2026".
+ *
+ * 2026-08-12, Jahongir: "hamma joyda date faqat raqamda yozilgan, shu
+ * oylarni nomlarini yozgin chalkashlik bolmasin". 12.08 va 08.12 ni
+ * chalkashtirib yuborish oson — oy nomi bo'lsa chalkashlik yo'q.
+ */
 export function formatDate(dateStr?: string): string {
   if (!dateStr) return "—";
+  // "2026-08-12" ni Date orqali o'tkazmaymiz: zona farqi bilan bir kun
+  // surilib ketishi mumkin.
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
+  if (m) {
+    const [, y, mo, day] = m;
+    return `${day}-${SHORT_MONTHS[Number(mo) - 1]} ${y}`;
+  }
   const d = new Date(dateStr);
-  return d.toLocaleDateString("uz-UZ", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  if (isNaN(d.getTime())) return dateStr;
+  return `${String(d.getDate()).padStart(2, "0")}-` +
+    `${SHORT_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+/** Yilsiz, ixcham: "12-Avg". Jadval ustunlari uchun. */
+export function formatDayMonth(dateStr?: string): string {
+  if (!dateStr) return "—";
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
+  if (m) return `${m[3]}-${SHORT_MONTHS[Number(m[2]) - 1]}`;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${String(d.getDate()).padStart(2, "0")}-${SHORT_MONTHS[d.getMonth()]}`;
 }
 
 const SHORT_MONTHS = [
@@ -60,7 +82,7 @@ export function formatDateTime(ts?: string | null,
   if (!ts) return "—";
   const t = toUz(ts);
   if (!t) return ts;
-  return `${p2(t.getUTCDate())}.${p2(t.getUTCMonth() + 1)}.` +
+  return `${p2(t.getUTCDate())}-${SHORT_MONTHS[t.getUTCMonth()]} ` +
     `${t.getUTCFullYear()} ${p2(t.getUTCHours())}:${p2(t.getUTCMinutes())}` +
     (withSeconds ? `:${p2(t.getUTCSeconds())}` : "");
 }

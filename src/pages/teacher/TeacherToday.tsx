@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDayMonth } from "../../lib/format";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle, CheckCircle2, ChevronRight, Clock, Timer, Users,
@@ -54,7 +55,7 @@ export default function TeacherToday() {
           </div>
           <h1 className="text-xl font-semibold">{d.teacher}</h1>
           <p className="text-sm opacity-90 mt-0.5">
-            {dayName} · {d.date.slice(8, 10)}.{d.date.slice(5, 7)}
+            {dayName} · {formatDayMonth(d.date)}
             {d.grade ? ` · ${d.grade}` : ""}
           </p>
         </div>
@@ -88,7 +89,7 @@ export default function TeacherToday() {
                   className="flex items-center gap-2 bg-white rounded-lg px-3 py-2 border border-amber-200"
                 >
                   <span className="text-xs text-slate-500 shrink-0">
-                    {l.date.slice(8, 10)}.{l.date.slice(5, 7)}
+                    {formatDayMonth(l.date)}
                   </span>
                   <span className="text-sm text-slate-800 flex-1 truncate">
                     {l.group}

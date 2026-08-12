@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDate } from "../../lib/format";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Bell, CircleDollarSign, GraduationCap } from "lucide-react";
 import { api } from "../../lib/api";
@@ -94,8 +95,7 @@ export default function StudentNotifications() {
                 <p className="text-xs text-slate-500 mt-0.5">{n.body}</p>
                 {n.date && (
                   <p className="text-[11px] text-slate-400 mt-1">
-                    {n.date.slice(8, 10)}.{n.date.slice(5, 7)}.
-                    {n.date.slice(0, 4)}
+                    {formatDate(n.date)}
                   </p>
                 )}
               </div>

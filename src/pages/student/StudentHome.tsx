@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDate } from "../../lib/format";
 import { NpsCard } from "../../components/NpsCard";
 import { Link } from "react-router-dom";
 import { getLang, setLang, LANGS } from "../../lib/lang";
@@ -174,7 +175,7 @@ export default function StudentHome() {
                 </p>
                 <p className="text-[11px] text-emerald-600 mt-0.5">
                   {ds.until
-                    ? `${ds.until.split("-").reverse().join(".")} gacha amal qiladi`
+                    ? `${formatDate(ds.until)} gacha amal qiladi`
                     : "Muddatsiz"}
                 </p>
               </div>

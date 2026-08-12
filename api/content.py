@@ -1709,7 +1709,7 @@ def _build_report(db: Session, start: date, end: date,
     days = (end - start).days + 1
     lines = []
     lines.append(
-        f"{start.strftime('%d.%m')}–{end.strftime('%d.%m.%Y')} "
+        f"{roles.uz_date(start)}–{roles.uz_date_full(end)} "
         f"({days} kun): {len(published)} ta kontent joylandi, "
         f"reja {kpi['plan_percent']}% bajarildi.")
     if tot["reach"]:

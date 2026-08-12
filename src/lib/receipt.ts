@@ -1,3 +1,4 @@
+import { formatDate } from "./format";
 /**
  * X-Printer (80mm termal) uchun chek. Yangi oynada ochiladi va avtomat
  * print dialogi chiqadi — printer tanlangach chek chiqadi.
@@ -16,10 +17,12 @@ export function printXReceipt(o: {
   paymentId?: number | string | null;
 }) {
   const now = new Date();
+  // Chekda ham sana OY NOMI bilan — "12-Avg 2026 17:41" (Jahongir,
+  // 2026-08-12: "qayerda sana bolsa oy nomi bolsin").
   const dt =
-    now.toLocaleDateString("ru-RU") +
+    formatDate(now.toISOString().slice(0, 10)) +
     " " +
-    now.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+    now.toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" });
   const som = (n: number) =>
     Math.round(n).toLocaleString("ru-RU").replace(/,/g, " ") + " so'm";
   const METHODS: Record<string, string> = {
@@ -90,9 +93,8 @@ export function printCertificate(o: {
   date?: string | null;
   publicId?: string | null;
 }) {
-  const d = o.date
-    ? new Date(o.date).toLocaleDateString("ru-RU")
-    : new Date().toLocaleDateString("ru-RU");
+  const d = formatDate(
+    o.date ? o.date : new Date().toISOString().slice(0, 10));
   const w = window.open("", "_blank", "width=1100,height=800");
   if (!w) {
     alert("Brauzer oynani bloklab qo'ydi — popupga ruxsat bering");

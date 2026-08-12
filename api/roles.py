@@ -3934,10 +3934,14 @@ def exam_order_message(*, teacher: str, branch: str, date_text: str,
 
 
 def uz_date_full(d) -> str:
-    """01.08.2026 ko'rinishi. uz_date() dan farqi — YIL ham bor.
-    Imtihon buyurtmasida yil kerak: "12-avgust" degan sana kelasi
-    yilnikimi yoki shu yilnikimi — noaniq qoladi."""
-    return d.strftime("%d.%m.%Y") if d else "—"
+    """12-avgust 2026 ko'rinishi. uz_date() dan farqi — YIL ham bor.
+
+    2026-08-12, Jahongir: "hamma joyda date faqat raqamda yozilgan, shu
+    oylarni nomlarini yozgin chalkashlik bolmasin". 01.08 va 08.01 ni
+    chalkashtirish oson — oy nomi bo'lsa xato bo'lmaydi."""
+    if not d:
+        return "—"
+    return f"{d.day}-{UZ_MONTHS[d.month - 1]} {d.year}"
 
 
 # =====================================================================

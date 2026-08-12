@@ -14,7 +14,7 @@ import {
   type StudentHistory,
   type StudentPricing,
 } from "../lib/api";
-import { formatSom, formatDate, formatTime, formatDateTime } from "../lib/format";
+import { formatSom, formatDate, formatTime, formatDateTime, formatDayMonth } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
@@ -1902,13 +1902,11 @@ function printReceipt(p: { id: number; public_id?: string | null;
   amount: number; created_at: string; note?: string | null;
   created_by?: string | null; method?: string | null },
   student: StudentDetailType) {
-  const d = new Date(p.created_at);
   openPrint(`<!doctype html><html><head><meta charset="utf-8">
   <title>Chek</title>${P_STYLE}</head><body>
   <h2>Jony Academy</h2>
   <p class="m">To'lov cheki № ${p.public_id || p.id} ·
-    ${d.toLocaleDateString("uz-UZ")} ${d.toLocaleTimeString("uz-UZ",
-      { hour: "2-digit", minute: "2-digit" })}</p>
+    ${formatDateTime(p.created_at, false)}</p>
   <div class="line"></div>
   <table>
     <tr><td>O'quvchi</td><td>${student.full_name}</td></tr>
@@ -1924,7 +1922,7 @@ function printReceipt(p: { id: number; public_id?: string | null;
 
 function printContract(student: StudentDetailType) {
   const g = student.group;
-  const today = new Date().toLocaleDateString("uz-UZ");
+  const today = formatDate(new Date().toISOString().slice(0, 10));
   openPrint(`<!doctype html><html><head><meta charset="utf-8">
   <title>Shartnoma</title>${P_STYLE}</head><body>
   <h2>Jony Academy — o'quv xizmatlari shartnomasi</h2>
@@ -2127,7 +2125,7 @@ function AttendanceGridModal({
                         {row.days.map((day) => (
                           <th key={day.date}
                               className="px-3 py-2 text-xs font-medium text-slate-500 whitespace-nowrap border-b border-slate-100">
-                            {day.date.slice(8, 10)}.{day.date.slice(5, 7)}
+                            {formatDayMonth(day.date)}
                           </th>
                         ))}
                       </tr>

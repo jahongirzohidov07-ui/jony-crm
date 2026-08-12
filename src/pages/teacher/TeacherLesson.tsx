@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { formatDayMonth } from "../../lib/format";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Info, Lock, Star } from "lucide-react";
 import { api } from "../../lib/api";
@@ -122,7 +123,7 @@ export default function TeacherLesson() {
   const marked = rows.filter((r) => r.present !== null).length;
 
   return (
-    <Shell title={d.group} subtitle={`${d.date.slice(8, 10)}.${d.date.slice(5, 7)}${d.time ? ` · ${d.time}` : ""}`}>
+    <Shell title={d.group} subtitle={`${formatDayMonth(d.date)}${d.time ? ` · ${d.time}` : ""}`}>
       {!d.editable && d.readonly_reason && (
         <div className="bg-slate-100 border border-slate-200 rounded-xl p-3.5 flex items-start gap-2.5 mb-4">
           <Lock size={16} className="text-slate-500 mt-0.5 shrink-0" />

@@ -338,6 +338,7 @@ function ParentTools({ student }: { student: StudentDetailType }) {
 // -------------------------------------------------------------- Guruhlar
 function GroupsTab({ student }: { student: StudentDetailType }) {
   const g = student.group;
+  const [attOpen, setAttOpen] = useState(false);
   if (!g)
     return (
       <p className="text-sm text-slate-400 py-8 text-center">
@@ -407,12 +408,23 @@ function GroupsTab({ student }: { student: StudentDetailType }) {
         {g.room && <Row label="Xona" value={g.room} />}
         <Row label="Guruh narxi" value={formatSom(g.monthly_fee)} />
       </div>
-      <Link
-        to={`/groups/${g.id}`}
-        className="block text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
+      {/* 2026-08-12, Jahongir: "davomat degan joyga bossa o'quvchi
+          oynasidan chiqmagan holda oyna ochilsa va yoqlamalari
+          korinib tursa". Guruhga o'tish yuqoridagi guruh nomi
+          orqali qoladi. */}
+      <button
+        onClick={() => setAttOpen(true)}
+        className="block w-full text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
       >
         Davomat &amp; Baho →
-      </Link>
+      </button>
+      {attOpen && (
+        <AttendanceGridModal
+          studentId={student.id}
+          studentName={student.full_name}
+          onClose={() => setAttOpen(false)}
+        />
+      )}
     </div>
   );
 }
@@ -1932,4 +1944,211 @@ function printContract(student: StudentDetailType) {
     <span>Ota-ona (imzo)</span>
   </div>
   </body></html>`);
+}
+
+
+// --------------------------------------------- Oylik davomat panjarasi
+/**
+ * O'quvchi kartasidan chiqmasdan ochiladigan davomat oynasi
+ * (2026-08-12, Jahongir: "davomat degan joyga bossa o'quvchi
+ * oynasidan chiqmagan holda oyna ochilsa va yoqlamalari korinib
+ * tursa, muzlatilganlarniki ham"). Yil + oy tanlanadi, har bir
+ * guruh alohida qator: keldi (✓), kelmadi (✕), kechikdi, hali
+ * belgilanmagan (bo'sh) va o'sha kungi baho.
+ */
+const ATT_MONTHS = [
+  "Yan", "Fev", "Mar", "Apr", "May", "Iyun",
+  "Iyul", "Avg", "Sen", "Okt", "Noy", "Dek",
+];
+
+type AttGridDay = {
+  date: string;
+  state: "present" | "absent" | "late" | "none";
+  grade?: number | null;
+  homework_label?: string | null;
+};
+type AttGridRow = {
+  group_id: number;
+  group: string;
+  teacher?: string | null;
+  current: boolean;
+  days: AttGridDay[];
+  present: number;
+  absent: number;
+  late: number;
+  unmarked: number;
+  percent: number | null;
+};
+type AttGrid = {
+  year: number;
+  month: number;
+  student: string;
+  status: string;
+  groups: AttGridRow[];
+};
+
+function AttendanceGridModal({
+  studentId,
+  studentName,
+  onClose,
+}: {
+  studentId: number;
+  studentName: string;
+  onClose: () => void;
+}) {
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<AttGrid | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get<AttGrid>(
+        `/students/${studentId}/attendance-grid?year=${year}&month=${month}`)
+      .then(setD)
+      .catch(() => setD(null))
+      .finally(() => setLoading(false));
+  }, [studentId, year, month]);
+
+  const years = [now.getFullYear(), now.getFullYear() - 1,
+                 now.getFullYear() - 2];
+
+  const cell = (day: AttGridDay) => {
+    if (day.state === "present")
+      return <span className="text-emerald-600 font-semibold">✓</span>;
+    if (day.state === "late")
+      return <span className="text-amber-600 font-semibold" title="Kechikdi">
+        ⏱
+      </span>;
+    if (day.state === "absent")
+      return <span className="text-red-600 font-semibold">✕</span>;
+    return <span className="text-slate-300">—</span>;
+  };
+
+  return (
+    <div
+      className="fixed inset-0 bg-slate-900/40 z-50 flex justify-end"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-full max-w-4xl h-full overflow-y-auto p-5 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900">
+              {studentName} — guruhlardagi davomati
+            </h3>
+            <p className="text-xs text-slate-500">
+              Muzlatilgan va arxivdagi o'quvchilarning tarixi ham
+              ko'rinadi.
+            </p>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-1.5 mb-4">
+          <select
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+            className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm bg-white mr-1"
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+          {ATT_MONTHS.map((m, i) => (
+            <button
+              key={m}
+              onClick={() => setMonth(i + 1)}
+              className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
+                month === i + 1
+                  ? "bg-brand-600 border-brand-600 text-white"
+                  : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+              }`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+
+        {loading ? (
+          <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>
+        ) : !d || d.groups.length === 0 ? (
+          <p className="text-sm text-slate-400 py-8">
+            Bu oyda dars yo'q.
+          </p>
+        ) : (
+          <div className="space-y-5">
+            {d.groups.map((row) => (
+              <div key={row.group_id}
+                   className="border border-slate-200 rounded-xl overflow-hidden">
+                <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+                  <span className="text-sm font-medium text-slate-800">
+                    {row.group}
+                  </span>
+                  {row.teacher && (
+                    <span className="text-xs text-slate-500">
+                      · {row.teacher}
+                    </span>
+                  )}
+                  {!row.current && (
+                    <span className="text-[11px] bg-slate-200 text-slate-600 rounded px-1.5 py-0.5">
+                      eski guruh
+                    </span>
+                  )}
+                  <span className="flex-1" />
+                  <span className="text-xs text-slate-500">
+                    Keldi {row.present} · Kelmadi {row.absent}
+                    {row.late ? ` · Kechikdi ${row.late}` : ""}
+                    {row.percent !== null ? ` · ${row.percent}%` : ""}
+                  </span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="text-sm">
+                    <thead>
+                      <tr>
+                        {row.days.map((day) => (
+                          <th key={day.date}
+                              className="px-3 py-2 text-xs font-medium text-slate-500 whitespace-nowrap border-b border-slate-100">
+                            {day.date.slice(8, 10)}.{day.date.slice(5, 7)}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {row.days.map((day) => (
+                          <td key={day.date}
+                              className="px-3 py-2 text-center border-b border-slate-100">
+                            {cell(day)}
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        {row.days.map((day) => (
+                          <td key={day.date}
+                              className="px-3 py-1.5 text-center text-xs text-slate-600">
+                            {day.grade ?? ""}
+                          </td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+            <p className="text-xs text-slate-400">
+              ✓ keldi · ✕ kelmadi · ⏱ kechikdi · — yoqlama qo'yilmagan.
+              Pastki qator — o'sha kungi baho.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

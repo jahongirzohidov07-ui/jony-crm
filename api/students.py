@@ -145,6 +145,117 @@ def student_attendance(
         "homework": _homework_stats(db, student_id, since=start),
     }
 
+@router.get("/api/students/{student_id}/attendance-grid")
+def student_attendance_grid(
+    student_id: int,
+    year: int | None = None,
+    month: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_STAFF, roles.HR_MANAGER)),
+):
+    """O'quvchining OYLIK davomat panjarasi — guruh kesimida.
+
+    2026-08-12, Jahongir: "davomat degan joyga bossa o'quvchi
+    oynasidan chiqmagan holda oyna ochilsa va yoqlamalari korinib
+    tursa, muzlatilganlarniki ham".
+
+    Har bir guruh uchun o'sha oydagi DARS KUNLARI ustun bo'lib
+    chiqadi: keldi / kelmadi / kechikdi / hali belgilanmagan, va
+    o'sha kungi baho. O'quvchi holati (faol, muzlatilgan, arxiv)
+    hech narsani yashirmaydi — tarix baribir ko'rinadi.
+    """
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not _in_user_branches(db, user, st.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+
+    today = roles.local_today()
+    year = year or today.year
+    month = month or today.month
+    if not (1 <= month <= 12):
+        raise HTTPException(400, "Oy 1-12 oralig'ida bo'lishi kerak")
+    start, end = billing.month_bounds(year, month)
+
+    # Shu oyda o'quvchi davomati BELGILANGAN barcha darslar (qaysi
+    # guruhda bo'lishidan qat'i nazar — guruh almashgan bo'lsa
+    # ikkalasi ham chiqadi).
+    att_rows = (db.query(models.Attendance, models.Lesson)
+                .join(models.Lesson,
+                      models.Attendance.lesson_id == models.Lesson.id)
+                .filter(models.Attendance.student_id == student_id,
+                        models.Lesson.date >= start,
+                        models.Lesson.date <= end).all())
+    by_lesson = {ls.id: a for a, ls in att_rows}
+    gids = {ls.group_id for _a, ls in att_rows}
+    # Hozirgi guruhi — hali yoqlama qo'yilmagan darslar ham bo'sh
+    # katak bo'lib ko'rinsin.
+    if st.group_id:
+        gids.add(st.group_id)
+    if not gids:
+        return {"year": year, "month": month, "groups": [],
+                "student": st.full_name, "status": st.status}
+
+    lessons = (db.query(models.Lesson)
+               .filter(models.Lesson.group_id.in_(gids),
+                       models.Lesson.date >= start,
+                       models.Lesson.date <= end)
+               .order_by(models.Lesson.date).all())
+    grades = {g.lesson_id: g.score
+              for g in db.query(models.DailyGrade).filter(
+                  models.DailyGrade.student_id == student_id).all()}
+    groups = {g.id: g for g in db.query(models.Group).filter(
+        models.Group.id.in_(gids)).all()}
+
+    out = []
+    for gid in gids:
+        g = groups.get(gid)
+        rows = [ls for ls in lessons if ls.group_id == gid]
+        days = []
+        present = absent = late = unmarked = 0
+        for ls in rows:
+            a = by_lesson.get(ls.id)
+            if a is None:
+                state = "none"
+                unmarked += 1
+            elif a.present == 2:
+                state = "late"
+                late += 1
+                present += 1
+            elif a.present:
+                state = "present"
+                present += 1
+            else:
+                state = "absent"
+                absent += 1
+            days.append({
+                "date": ls.date.isoformat(),
+                "state": state,
+                "grade": grades.get(ls.id),
+                "homework": a.homework if a else None,
+                "homework_label": (roles.HOMEWORK_LABELS.get(a.homework)
+                                   if a else None),
+            })
+        marked = present + absent
+        t = db.query(models.Teacher).get(g.teacher_id) if g and g.teacher_id \
+            else None
+        out.append({
+            "group_id": gid,
+            "group": g.name if g else f"#{gid}",
+            "teacher": t.full_name if t else None,
+            "current": bool(st.group_id == gid),
+            "days": days,
+            "present": present, "absent": absent, "late": late,
+            "unmarked": unmarked,
+            "percent": round(present / marked * 100) if marked else None,
+        })
+    out.sort(key=lambda x: (not x["current"], x["group"]))
+    return {
+        "year": year, "month": month,
+        "student": st.full_name, "status": st.status,
+        "groups": out,
+    }
+
 @router.get("/api/students/{student_id}/coins", response_model=List[schemas.CoinEntryOut])
 def student_coin_history(
     student_id: int,

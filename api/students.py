@@ -567,6 +567,26 @@ def add_payment(
         if method not in roles.PAYMENT_METHODS:
             raise HTTPException(400, "Noto'g'ri to'lov usuli")
 
+    # ESKI SANA bilan kiritish. 2026-08-12, Jahongir: "asoschiga va
+    # moliyachiga eski sana bilan to'lov kirgizish funksiyasi
+    # qoshilsin". Boshqa xodimlarga berilmaydi: kassa tarixini
+    # orqaga surish - hisobotni buzadigan amal, shuning uchun u
+    # faqat ikki lavozimda va auditda izi qoladi.
+    when = None
+    if payload.date:
+        if user.role not in (roles.FOUNDER, roles.FINANCE_DIRECTOR):
+            raise HTTPException(
+                403, "O'tgan sana bilan to'lov kiritishni faqat asoschi "
+                     "va moliya direktori qila oladi")
+        if payload.date > roles.local_today():
+            raise HTTPException(400, "Kelajak sanasi bilan bo'lmaydi")
+        # Sana bo'yicha tartib to'g'ri chiqishi uchun kun ichidagi
+        # vaqtni ham saqlaymiz (o'sha kunning hozirgi soati).
+        _now = datetime.utcnow()
+        when = datetime(payload.date.year, payload.date.month,
+                        payload.date.day, _now.hour, _now.minute,
+                        _now.second)
+
     payment = models.Payment(
         student_id=student_id,
         amount=amount,
@@ -575,6 +595,8 @@ def add_payment(
         note=payload.note,
         created_by=user.full_name,
     )
+    if when:
+        payment.created_at = when
     db.add(payment)
     db.commit()
     db.refresh(payment)
@@ -583,9 +605,13 @@ def add_payment(
     # Chegirma alohida amal sifatida yoziladi - "kim chegirma berdi"
     # degan savolga javob shu yerdan chiqadi.
     act = "discount" if payload.kind == "discount" else "create"
+    _note = payload.note
+    if when:
+        _note = ((_note + " · ") if _note else "") + \
+            f"ESKI SANA bilan kiritildi: {payload.date.isoformat()}"
     audit.log(db, user, entity="payment", action=act, entity_id=payment.id,
               entity_label=s.full_name, field=payload.kind,
-              new_value=amount, note=payload.note, branch_id=s.branch_id)
+              new_value=amount, note=_note, branch_id=s.branch_id)
     db.commit()
 
     # AVTOMAT COIN: to'lov sanasiga qarab (5-sanagacha +10, 10 gacha

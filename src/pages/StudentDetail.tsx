@@ -18,7 +18,8 @@ import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
-  REFUND_REQUEST, REFUND_APPROVE, FOUNDER, can, HR_MANAGER,
+  REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can,
+  HR_MANAGER,
 } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
@@ -511,6 +512,13 @@ function PaymentsTab({
   const [kind, setKind] = useState("payment");
   const [method, setMethod] = useState("cash");
   const [note, setNote] = useState("");
+  // ESKI SANA bilan kiritish — faqat asoschi va moliya direktori
+  // (2026-08-12, Jahongir: "asoschiga va moliyachiga eski sana bilan
+  // to'lov kirgizish funksiyasi qoshilsin, aynan o'quvchini profilida
+  // tolovlar qismida yangi yozuv kiritish degan joyda").
+  const canBackdate =
+    user?.role === FOUNDER || user?.role === FINANCE_DIRECTOR;
+  const [payDate, setPayDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -530,6 +538,7 @@ function PaymentsTab({
           kind,
           method: kind === "payment" ? method : null,
           note: note || null,
+          date: canBackdate && payDate ? payDate : null,
         }
       );
       if (kind === "payment" && confirm("Chek chiqarilsinmi?")) {
@@ -546,6 +555,7 @@ function PaymentsTab({
       }
       setAmount("");
       setNote("");
+      setPayDate("");
       setShowForm(false);
       onChanged();
     } catch (e) {
@@ -715,6 +725,35 @@ function PaymentsTab({
                   {m.label}
                 </button>
               ))}
+            </div>
+          )}
+
+          {canBackdate && (
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-xs text-slate-500">Sana</label>
+              <input
+                type="date"
+                max={new Date().toISOString().slice(0, 10)}
+                value={payDate}
+                onChange={(e) => setPayDate(e.target.value)}
+                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm"
+              />
+              {payDate ? (
+                <span className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1">
+                  Yozuv {formatDate(payDate)} sanasi bilan kiritiladi
+                  <button
+                    onClick={() => setPayDate("")}
+                    className="ml-2 text-slate-500 underline"
+                  >
+                    bugunga qaytar
+                  </button>
+                </span>
+              ) : (
+                <span className="text-xs text-slate-400">
+                  Bo'sh qolsa — bugungi kun. O'tgan sana bilan kiritish
+                  auditda qayd etiladi.
+                </span>
+              )}
             </div>
           )}
 

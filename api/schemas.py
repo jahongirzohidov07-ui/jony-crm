@@ -74,8 +74,8 @@ class UserOut(BaseModel):
     fix_salary: Optional[float] = None
     # Eslatmalar shu ikki sanaga tayanadi - ro'yxatda ham ko'rinsin
     phone: Optional[str] = None
-    birth_date: Optional[date] = None
-    hired_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
+    hired_date: Optional[_dt.date] = None
     # Barcha filiallari ("Markaziy, Bekobod 2") — ro'yxat uchun
     branch_ids: Optional[List[int]] = None
     # Qo'shimcha lavozimlar (2026-08-10): asosiy lavozim
@@ -100,10 +100,10 @@ class UserCreate(BaseModel):
     fix_salary: Optional[float] = None
     # ---- Xodim kartasi ----
     phone: Optional[str] = None
-    birth_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
     position: Optional[str] = None
     manager_id: Optional[int] = None
-    hired_date: Optional[date] = None
+    hired_date: Optional[_dt.date] = None
     photo: Optional[str] = None
 
 
@@ -123,10 +123,10 @@ class UserUpdate(BaseModel):
     password: Optional[str] = None
     fix_salary: Optional[float] = None
     phone: Optional[str] = None
-    birth_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
     position: Optional[str] = None
     manager_id: Optional[int] = None
-    hired_date: Optional[date] = None
+    hired_date: Optional[_dt.date] = None
     photo: Optional[str] = None
 
 
@@ -137,7 +137,7 @@ class TeacherCreate(BaseModel):
     subject: Optional[str] = None
     branch_id: Optional[int] = None
     # Ishga kirgan sana - retention hisoboti shundan boshlab sanaydi.
-    hired_date: Optional[date] = None
+    hired_date: Optional[_dt.date] = None
     # 1 = hozir ishlayapti, 0 = ishdan ketgan. left_date qo'lda emas,
     # shu bayroqdan avtomatik chiqadi.
     is_active: Optional[int] = 1
@@ -150,7 +150,7 @@ class TeacherCreate(BaseModel):
     cert: Optional[str] = None
     cert_score: Optional[float] = None
     qualification: Optional[str] = None
-    birth_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
     skill_score: Optional[float] = None
     support_months: Optional[float] = None
     # Ustoz ishlaydigan BARCHA filiallar (2-3 filialda ishlashi mumkin).
@@ -162,7 +162,7 @@ class TeacherOut(TeacherCreate):
     model_config = ConfigDict(from_attributes=True)
     id: int
     branch: Optional[BranchOut] = None
-    left_date: Optional[date] = None
+    left_date: Optional[_dt.date] = None
     grade_since: Optional[date] = None
     remediation_until: Optional[date] = None
     remediation_reason: Optional[str] = None
@@ -219,8 +219,8 @@ class GroupCreate(BaseModel):
     branch_id: Optional[int] = None
     subject: Optional[str] = None
     level: Optional[str] = None
-    end_date: Optional[date] = None
-    start_date: Optional[date] = None
+    end_date: Optional[_dt.date] = None
+    start_date: Optional[_dt.date] = None
     lesson_time: Optional[str] = None
     lesson_days: Optional[str] = None
     monthly_fee: float = 0
@@ -241,8 +241,8 @@ class GroupUpdate(BaseModel):
     branch_id: Optional[int] = None
     subject: Optional[str] = None
     level: Optional[str] = None
-    end_date: Optional[date] = None
-    start_date: Optional[date] = None
+    end_date: Optional[_dt.date] = None
+    start_date: Optional[_dt.date] = None
     lesson_time: Optional[str] = None
     lesson_days: Optional[str] = None
     monthly_fee: Optional[float] = None
@@ -332,6 +332,10 @@ class PaymentCreate(BaseModel):
     # cash | card | terminal | other - faqat kind="payment" uchun
     method: Optional[str] = None
     note: Optional[str] = None
+    # O'TGAN SANA bilan kiritish (2026-08-12, Jahongir: "asoschiga va
+    # moliyachiga eski sana bilan to'lov kirgizish funksiyasi"). Faqat
+    # asoschi va moliya direktori uchun; bo'sh bo'lsa - bugungi kun.
+    date: Optional[_dt.date] = None
 
 
 class PaymentOut(BaseModel):
@@ -353,8 +357,8 @@ class StudentCreate(BaseModel):
     full_name: str
     phone: Optional[str] = None
     parent_phone: Optional[str] = None
-    birth_date: Optional[date] = None
-    enrolled_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
+    enrolled_date: Optional[_dt.date] = None
     group_id: Optional[int] = None
     branch_id: Optional[int] = None
     parent_id: Optional[int] = None
@@ -391,9 +395,9 @@ class StudentOut(BaseModel):
     full_name: str
     phone: Optional[str] = None
     parent_phone: Optional[str] = None
-    birth_date: Optional[date] = None
-    enrolled_date: Optional[date] = None
-    left_date: Optional[date] = None
+    birth_date: Optional[_dt.date] = None
+    enrolled_date: Optional[_dt.date] = None
+    left_date: Optional[_dt.date] = None
     status: str
     note: Optional[str] = None
     group: Optional[GroupOut] = None
@@ -468,7 +472,7 @@ class LeadConvertRequest(BaseModel):
     """Lidni o'quvchiga aylantirish - ixtiyoriy ravishda darrov guruhga
     biriktirish va qo'shilgan sanani belgilash mumkin."""
     group_id: Optional[int] = None
-    enrolled_date: Optional[date] = None
+    enrolled_date: Optional[_dt.date] = None
 
 
 class ExpenseCreate(BaseModel):
@@ -482,7 +486,7 @@ class ExpenseCreate(BaseModel):
 
 
 class ExpenseUpdate(BaseModel):
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     category: Optional[str] = None
     amount: Optional[float] = None
     note: Optional[str] = None
@@ -612,7 +616,7 @@ class ExamUpdate(BaseModel):
     kind: Optional[str] = None
     unit_no: Optional[int] = None
     title: Optional[str] = None
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     max_score: Optional[float] = None
 
 
@@ -931,9 +935,9 @@ class ContractCreate(BaseModel):
     parent_id: Optional[int] = None
     group_id: Optional[int] = None
     branch_id: Optional[int] = None
-    date: Optional[date] = None
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    date: Optional[_dt.date] = None
+    start_date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
     monthly_fee: float = 0
     discount_percent: float = 0
     status: str = "active"
@@ -943,9 +947,9 @@ class ContractCreate(BaseModel):
 class ContractUpdate(BaseModel):
     parent_id: Optional[int] = None
     group_id: Optional[int] = None
-    date: Optional[date] = None
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    date: Optional[_dt.date] = None
+    start_date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
     monthly_fee: Optional[float] = None
     discount_percent: Optional[float] = None
     status: Optional[str] = None
@@ -1005,20 +1009,20 @@ class RiskTaskCreate(BaseModel):
     title: str
     level: Optional[str] = None
     assigned_user_id: Optional[int] = None
-    due_date: Optional[date] = None
+    due_date: Optional[_dt.date] = None
 
 
 class RiskTaskUpdate(BaseModel):
     title: Optional[str] = None
     assigned_user_id: Optional[int] = None
-    due_date: Optional[date] = None
+    due_date: Optional[_dt.date] = None
     status: Optional[str] = None
     result: Optional[str] = None
 
 
 # ---------- Ota-ona suhbati / sertifikat ----------
 class ParentTalkCreate(BaseModel):
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     channel: str = "phone"
     topic: str
     summary: Optional[str] = None
@@ -1029,7 +1033,7 @@ class CertificateCreate(BaseModel):
     kind: str = "internal"
     level: Optional[str] = None
     score: Optional[float] = None
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     note: Optional[str] = None
 
 
@@ -1050,7 +1054,7 @@ class ExamStatusUpdate(BaseModel):
 
 
 class RetakeCreate(BaseModel):
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     note: Optional[str] = None
 
 
@@ -1067,13 +1071,13 @@ class SupportPlanCreate(BaseModel):
     user_id: Optional[int] = None
     issue: str = "attendance"
     plan: str
-    due_date: Optional[date] = None
+    due_date: Optional[_dt.date] = None
 
 
 class SupportPlanUpdate(BaseModel):
     issue: Optional[str] = None
     plan: Optional[str] = None
-    due_date: Optional[date] = None
+    due_date: Optional[_dt.date] = None
     status: Optional[str] = None
     result: Optional[str] = None
 
@@ -1116,8 +1120,8 @@ class DiscountCreate(BaseModel):
     percent: Optional[float] = None
     amount: Optional[float] = None
     reason: str
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    start_date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
     referrer_student_id: Optional[int] = None
     staff_user_id: Optional[int] = None
     # Individual (yashirin) - o'quvchi/ota-onaga ko'rinmaydi
@@ -1408,8 +1412,8 @@ class LeagueUpdate(BaseModel):
 
 class SeasonCreate(BaseModel):
     name: str
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    start_date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
     note: Optional[str] = None
 
 
@@ -1744,8 +1748,8 @@ class MediaPatch(BaseModel):
 # ---- Hisobot ----
 class ReportIn(BaseModel):
     period: Optional[str] = "month"
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    start_date: Optional[_dt.date] = None
+    end_date: Optional[_dt.date] = None
     branch_id: Optional[int] = None
     summary: Optional[str] = None
 
@@ -2015,7 +2019,7 @@ class OfferIn(BaseModel):
     position: Optional[str] = None
     salary: Optional[float] = None
     salary_note: Optional[str] = None
-    start_date: Optional[date] = None
+    start_date: Optional[_dt.date] = None
     probation_months: Optional[int] = None
     terms: Optional[str] = None
 
@@ -2073,7 +2077,7 @@ class ReviewIn(BaseModel):
 
 class OneOnOneIn(BaseModel):
     user_id: int
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
     privacy: str = "open"
     notes: Optional[str] = None
     agreements: Optional[str] = None
@@ -2096,7 +2100,7 @@ class DisciplineIn(BaseModel):
     user_id: int
     kind: str
     reason: str
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
 
 
 class RecognitionIn(BaseModel):
@@ -2104,7 +2108,7 @@ class RecognitionIn(BaseModel):
     kind: str
     reason: Optional[str] = None
     amount: Optional[float] = None
-    date: Optional[date] = None
+    date: Optional[_dt.date] = None
 
 
 class OffboardIn(BaseModel):

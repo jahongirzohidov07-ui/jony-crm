@@ -1177,17 +1177,17 @@ def student_family_link(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
 ):
-    """Ikki o'quvchini BIR OILA deb bog'laydi.
+    """Ikki o'quvchini BIR OILA deb bog'lash.
 
-    2026-08-12, Jahongir: "bitta oquvchini boshqasiga oila deb
-    boglanganda nargisini yana bunga qayta yana boglab otirilmasin
-    avtomat ikkalasiga 10% chegirmani hisoblayversin".
+    2026-08-12, Jahongir: "agar bir xil familya bo'lsa, qiz bolada
+    oxir fozilova o'gil bolada fozilov bo'lsa ham avtomat tizim
+    tasdiqlayversin, lekin agar boshqa familya bolsa sorov bolib
+    vazifa bolib tushsin".
 
-    Ishlash tartibi: ikkovi BITTA ota-onaga (Parent) bog'lanadi -
-    shuning uchun bog'lanish o'z-o'zidan ikki tomonlama. Oilaviy
-    chegirmani tizim shu bog'lanishdan o'zi hisoblaydi
-    (_family_discount_percent), qo'lda chegirma yozilmaydi: aka yoki
-    uka o'qishni to'xtatsa chegirma ham o'zi yo'qoladi.
+    Ya'ni: familiya bir xil bo'lsa (yoki so'ragan odamning o'zi
+    tasdiqlash huquqiga ega bo'lsa) - darrov bog'lanadi. Familiya
+    boshqa bo'lsa - "tasdiq kutmoqda" holatidagi so'rov yoziladi va
+    filial rahbari, moliyachi hamda asoschiga vazifa tushadi.
     """
     a = db.query(models.Student).get(student_id)
     b = db.query(models.Student).get(payload.sibling_id)
@@ -1195,62 +1195,62 @@ def student_family_link(
         raise HTTPException(404, "O'quvchi topilmadi")
     if a.id == b.id:
         raise HTTPException(400, "O'quvchini o'ziga bog'lab bo'lmaydi")
+    if a.parent_id and a.parent_id == b.parent_id:
+        raise HTTPException(400, "Bular allaqachon bir oila")
 
-    moved = None
-    if a.parent_id and b.parent_id and a.parent_id != b.parent_id:
-        # Ikkalasida ham ota-ona bor, lekin boshqa-boshqa. Ikkinchi
-        # oilani BIRINCHISIGA ko'chiramiz - yozuv o'chirilmaydi.
-        old_pid = b.parent_id
-        for x in db.query(models.Student).filter(
-                models.Student.parent_id == old_pid).all():
-            x.parent_id = a.parent_id
-        moved = old_pid
-    elif a.parent_id:
-        b.parent_id = a.parent_id
-    elif b.parent_id:
-        a.parent_id = b.parent_id
-    else:
-        # Hech birida ota-ona yo'q - yangi oila yozuvi ochiladi.
-        name = (payload.parent_name or "").strip()
-        if not name:
-            # Familiya odatda umumiy: "Abdushukurov Islombek" ->
-            # "Abdushukurov oilasi".
-            fam = (a.full_name or "").strip().split(" ")[0] or "Oila"
-            name = f"{fam} oilasi"
-        phone = (payload.parent_phone or a.parent_phone
-                 or b.parent_phone or None)
-        p = models.Parent(full_name=name, phone=phone,
-                          branch_id=a.branch_id or b.branch_id,
-                          created_by=user.username)
-        db.add(p); db.commit(); db.refresh(p)
-        _ensure_public_id(db, "parent", p)
-        a.parent_id = p.id
-        b.parent_id = p.id
-    db.commit()
+    same = _same_surname(a.full_name, b.full_name)
+    can_approve = user.role in tuple(roles.DISCOUNT_APPROVE)
 
-    kids = (db.query(models.Student)
-            .filter(models.Student.parent_id == a.parent_id).all())
-    fam_pct = _family_discount_percent(db, a)
-    audit.log(db, user, entity="student", action="family_link",
-              entity_id=a.id, entity_label=a.full_name,
-              branch_id=a.branch_id,
-              new_value=f"{a.full_name} + {b.full_name} = bir oila"
-                        + (f" (oila #{moved} birlashtirildi)" if moved else ""),
-              commit=True)
+    if same or can_approve:
+        out = _do_family_link(db, a, b, user.username)
+        audit.log(db, user, entity="student", action="family_link",
+                  entity_id=a.id, entity_label=a.full_name,
+                  branch_id=a.branch_id,
+                  new_value=f"{a.full_name} + {b.full_name} = bir oila"
+                            + (" (familiya bir xil - avtomat)" if same
+                               else " (rahbar bog'ladi)"),
+                  commit=True)
+        out["status"] = "linked"
+        if same and not can_approve:
+            out["message"] += " Familiya bir xil bo'lgani uchun tasdiq " \
+                              "so'ralmadi."
+        return out
+
+    # Familiya boshqa - tasdiqqa yuboriladi. So'rov CHEGIRMA yozuvi
+    # sifatida saqlanadi: tasdiqlash/rad etish tugmalari allaqachon
+    # o'sha yerda va tarix ham bir joyda qoladi.
+    dup = (db.query(models.Discount)
+           .filter(models.Discount.student_id == a.id,
+                   models.Discount.kind == "family",
+                   models.Discount.referrer_student_id == b.id,
+                   models.Discount.status == "pending").first())
+    if dup:
+        raise HTTPException(400, "Bu so'rov allaqachon yuborilgan")
+    d = models.Discount(
+        student_id=a.id, kind="family",
+        percent=roles.FAMILY_DISCOUNT_PERCENT,
+        reason=f"Oila: {b.full_name} bilan bog'lash so'rovi "
+               f"(familiyalar har xil)",
+        start_date=date.today(),
+        referrer_student_id=b.id,
+        requested_by=user.full_name,
+        status="pending")
+    db.add(d); db.commit(); db.refresh(d)
+    _notify_discount_approvers(db, d, a, extra=(
+        f"Familiyalar har xil ({a.full_name} / {b.full_name}) — "
+        f"shuning uchun tasdiq so'ralmoqda."))
+    audit.log(db, user, entity="discount", action="create", entity_id=d.id,
+              entity_label=a.full_name, branch_id=a.branch_id,
+              new_value=f"Oila so'rovi: {b.full_name}", commit=True)
     return {
-        "parent_id": a.parent_id,
-        "family_percent": fam_pct,
-        "min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
-        "children": [{"id": k.id, "full_name": k.full_name,
-                      "status": k.status} for k in kids],
-        "active_children": sum(1 for k in kids if k.status == "active"),
-        "message": (
-            f"Bog'landi — oilada {sum(1 for k in kids if k.status == 'active')} "
-            f"ta faol farzand, har biriga {fam_pct:.0f}% oilaviy chegirma "
-            f"avtomat hisoblanadi."
-            if fam_pct else
-            f"Bog'landi. Oilaviy chegirma uchun kamida "
-            f"{roles.FAMILY_DISCOUNT_MIN_CHILDREN} ta FAOL farzand kerak."),
+        "status": "pending",
+        "discount_id": d.id,
+        "family_percent": 0.0,
+        "active_children": 0,
+        "children": [],
+        "message": ("Familiyalar har xil — so'rov filial rahbari, "
+                    "moliyachi va asoschiga vazifa bo'lib yuborildi. "
+                    "Tasdiqlangach ikkalasiga 10% avtomat hisoblanadi."),
     }
 
 @router.get("/api/students/{student_id}/trial")

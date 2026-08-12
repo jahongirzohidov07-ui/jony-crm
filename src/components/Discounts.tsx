@@ -128,7 +128,8 @@ export function Discounts({ studentId }: { studentId: number }) {
                   </p>
                   {d.referrer_name && (
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Olib kelgan: {d.referrer_name}
+                      {d.kind === "family" ? "Oila" : "Olib kelgan"}:{" "}
+                      {d.referrer_name}
                     </p>
                   )}
                   {d.staff_name && (
@@ -345,7 +346,10 @@ function DiscountForm({
       key: "family_link",
       label: "Oila (aka-uka / opa-singil)",
       hint: "Ikki o'quvchi bog'lanadi — 10% chegirma IKKALASIGA avtomat "
-        + "hisoblanadi. Ikkinchisini qayta bog'lash shart emas.",
+        + "hisoblanadi, ikkinchisini qayta bog'lash shart emas. "
+        + "Familiya bir xil bo'lsa (Fozilov / Fozilova) darrov "
+        + "bog'lanadi; familiya boshqa bo'lsa filial rahbari, "
+        + "moliyachi va asoschiga tasdiq uchun so'rov ketadi.",
     },
     ...types,
   ];
@@ -405,7 +409,7 @@ function DiscountForm({
           `/students/${studentId}/family-link`,
           { sibling_id: pickStudent.id });
         setOkMsg(r.message);
-        setTimeout(onSaved, 1200);
+        setTimeout(onSaved, r.message.length > 90 ? 3500 : 1500);
       } catch (e) {
         setErr(e instanceof Error ? e.message : "Xatolik");
         setSaving(false);
@@ -493,8 +497,8 @@ function DiscountForm({
               value={pickStudent}
               onPick={setPickStudent}
               search={searchStudents}
-              hint="Bog'langach ikkalasiga ham 10% oilaviy chegirma o'zi
-                    hisoblanadi. Biri o'qishni to'xtatsa — o'zi yo'qoladi."
+              hint="Familiya bir xil bo'lsa darrov bog'lanadi. Boshqa
+                    familiya bo'lsa — tasdiqqa so'rov ketadi."
             />
           )}
 

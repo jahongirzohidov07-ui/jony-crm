@@ -1387,6 +1387,142 @@ def _group_capacity(g: models.Group, rooms: dict) -> int | None:
     r = rooms.get(g.room_id)
     return r.capacity if r else None
 
+def _notify_discount_approvers(db: Session, d, st, extra: str = "") -> None:
+    """Chegirma so'rovi jimgina yotib qolmasin.
+
+    2026-08-12, Jahongir: "Chegirma sorovi jonatsa administrator
+    kimlarga vazifa bolib tushadi tasdiqlash, filial rahbari,
+    moliyachiga tushsin". Shuning uchun so'rov TASDIQLOVCHILARNING
+    HAR BIRIGA alohida vazifa bo'lib tushadi: o'quvchi filialining
+    rahbari, moliya direktori va asoschi.
+    """
+    label = roles.DISCOUNT_TYPE_LABELS.get(d.kind, d.kind)
+    size = (f"{d.percent:.0f}%" if d.percent
+            else (f"{d.amount:,.0f} so'm" if d.amount else "—"))
+    title = f"Chegirma so'rovi #{d.id} — {st.full_name}"
+    body = (f"{label} · {size}\n"
+            f"O'quvchi: {st.full_name}\n"
+            f"Sabab: {d.reason or '—'}\n"
+            f"So'ragan: {d.requested_by or '—'}\n"
+            + (extra + "\n" if extra else "")
+            + "Tasdiqlash: o'quvchi kartasi > Narx va chegirma.")
+    seen = set()
+    for r in roles.DISCOUNT_APPROVE:
+        q = db.query(models.User).filter(models.User.role == r,
+                                         models.User.is_active == 1)
+        # Filial rahbari - FAQAT o'sha filialniki. Moliyachi va
+        # asoschi butun tashkilot bo'yicha ko'radi.
+        if r == roles.BRANCH_MANAGER and st.branch_id:
+            q = q.filter(models.User.branch_id == st.branch_id)
+        for u in q.all():
+            if u.id in seen:
+                continue
+            seen.add(u.id)
+            if db.query(models.Task).filter(
+                    models.Task.title == title,
+                    models.Task.assignee_id == u.id).first():
+                continue
+            t = models.Task(
+                title=title, description=body, assignee_id=u.id,
+                branch_id=st.branch_id,
+                deadline=date.today() + timedelta(days=2),
+                priority="high", source="manual", created_by="Tizim")
+            db.add(t)
+            db.flush()
+            _ensure_public_id(db, "task", t)
+    db.commit()
+
+
+def _norm_surname(full_name: str) -> str:
+    """Familiyani solishtirish uchun soddalashtiradi.
+
+    2026-08-12, Jahongir: "agar bir xil familya bo'lsa, qiz bolada
+    oxir fozilova o'gil bolada fozilov bo'lsa ham avtomat tizim
+    tasdiqlayversin". O'zbekchada ayol familiyasi -ova/-eva bilan
+    tugaydi, shuning uchun -a tashlanadi. Apostrof va o'/g' turli
+    belgilar bilan yozilishi mumkin - ular ham tenglashtiriladi.
+    """
+    if not full_name:
+        return ""
+    w = full_name.strip().split()
+    if not w:
+        return ""
+    x = w[0].lower()
+    for ch in ("\u02bb", "\u02bc", "\u2018", "\u2019", "`", "'", "\u00b4"):
+        x = x.replace(ch, "")
+    x = x.replace("\u0451", "\u0435")
+    # ...ova -> ...ov, ...eva -> ...ev, ...yeva -> ...yev
+    for suf in ("ova", "eva", "yeva", "ova\u02bb"):
+        if x.endswith(suf):
+            x = x[:-1]
+            break
+    else:
+        # Ruscha yozuvda ham shunday: -\u043e\u0432\u0430 / -\u0435\u0432\u0430
+        for suf in ("\u043e\u0432\u0430", "\u0435\u0432\u0430"):
+            if x.endswith(suf):
+                x = x[:-1]
+                break
+    return x
+
+
+def _same_surname(a: str, b: str) -> bool:
+    """Ikki F.I.SH bir familiyadanmi (Fozilov = Fozilova)."""
+    na, nb = _norm_surname(a), _norm_surname(b)
+    return bool(na) and na == nb
+
+
+def _do_family_link(db: Session, a: models.Student, b: models.Student,
+                    username: str = "Tizim") -> dict:
+    """Ikki o'quvchini BITTA ota-onaga (Parent) bog'laydi.
+
+    Bog'lanish bitta yozuv orqali bo'lgani uchun ikki tomonlama -
+    ikkinchisini qayta bog'lash shart emas (Jahongir, 2026-08-12).
+    Oilaviy chegirmani tizim shu bog'lanishdan o'zi hisoblaydi.
+    """
+    moved = None
+    if a.parent_id and b.parent_id and a.parent_id != b.parent_id:
+        old_pid = b.parent_id
+        for x in db.query(models.Student).filter(
+                models.Student.parent_id == old_pid).all():
+            x.parent_id = a.parent_id
+        moved = old_pid
+    elif a.parent_id:
+        b.parent_id = a.parent_id
+    elif b.parent_id:
+        a.parent_id = b.parent_id
+    else:
+        fam = (a.full_name or "").strip().split(" ")[0] or "Oila"
+        p = models.Parent(full_name=f"{fam} oilasi",
+                          phone=a.parent_phone or b.parent_phone or None,
+                          branch_id=a.branch_id or b.branch_id,
+                          created_by=username)
+        db.add(p); db.commit(); db.refresh(p)
+        _ensure_public_id(db, "parent", p)
+        a.parent_id = p.id
+        b.parent_id = p.id
+    db.commit()
+
+    kids = (db.query(models.Student)
+            .filter(models.Student.parent_id == a.parent_id).all())
+    pct = _family_discount_percent(db, a)
+    active = sum(1 for k in kids if k.status == "active")
+    return {
+        "parent_id": a.parent_id,
+        "merged_parent_id": moved,
+        "family_percent": pct,
+        "min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
+        "children": [{"id": k.id, "full_name": k.full_name,
+                      "status": k.status} for k in kids],
+        "active_children": active,
+        "message": (
+            f"Bog'landi \u2014 oilada {active} ta faol farzand, har biriga "
+            f"{pct:.0f}% oilaviy chegirma avtomat hisoblanadi."
+            if pct else
+            f"Bog'landi. Oilaviy chegirma uchun kamida "
+            f"{roles.FAMILY_DISCOUNT_MIN_CHILDREN} ta FAOL farzand kerak."),
+    }
+
+
 def _family_discount_percent(db: Session, s: models.Student) -> float:
     """Oilaviy chegirma foizi. AVTOMAT: bir ota-onaga bog'langan
     FAOL farzandlar soni chegaradan oshsa - chegirma bor, kamaysa
@@ -4362,6 +4498,10 @@ __all__ = [
     "_expenses_total",
     "_expire_discounts",
     "_family_discount_percent",
+    "_norm_surname",
+    "_notify_discount_approvers",
+    "_same_surname",
+    "_do_family_link",
     "_founder_name_fix",
     "_fraud_alert",
     "_freeze_task",

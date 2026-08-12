@@ -53,8 +53,19 @@ begona = models.Student(full_name="Toshmatov Sardor", branch_id=BID,
                         group_id=GID, status="active")
 db.add_all([aka, uka, begona]); db.commit()
 AKA, UKA, BEGONA = aka.id, uka.id, begona.id
-db.add(models.User(username="asos", full_name="Asoschi", role="founder",
-                   password_hash=hash_password("x"), is_active=1))
+db.add_all([
+    models.User(username="asos", full_name="Asoschi", role="founder",
+                password_hash=hash_password("x"), is_active=1),
+    models.User(username="admin1", full_name="Administrator", branch_id=BID,
+                role="administrator", password_hash=hash_password("x"),
+                is_active=1),
+    models.User(username="fr", full_name="Filial rahbari", branch_id=BID,
+                role="branch_manager", password_hash=hash_password("x"),
+                is_active=1),
+    models.User(username="mol", full_name="Moliyachi", branch_id=BID,
+                role="finance_director", password_hash=hash_password("x"),
+                is_active=1),
+])
 db.commit()
 db.close()
 
@@ -122,6 +133,79 @@ print("\n=== 8. O'zini o'ziga bog'lab bo'lmaydi ===")
 r7 = client.post(f"/api/students/{AKA}/family-link", headers=F,
                  json={"sibling_id": AKA})
 ck("xato qaytadi", r7.status_code, 400)
+
+print("\n=== 9. Administrator chegirma so'rasa - rahbarlarga vazifa ===")
+A = tok("admin1")
+db = SessionLocal()
+yolg = models.Student(full_name="Karimov Doston", branch_id=BID,
+                      group_id=GID, status="active")
+db.add(yolg); db.commit()
+YOLG = yolg.id
+db.close()
+r9 = client.post("/api/discounts", headers=A, json={
+    "student_id": YOLG, "kind": "grant", "percent": 15,
+    "reason": "olimpiada g'olibi"})
+ck("so'rov yuborildi", r9.status_code, 200)
+ck("holati tasdiq kutmoqda", r9.json()["status"], "pending")
+db = SessionLocal()
+tasks = [t for t in db.query(models.Task).all()
+         if t.title.startswith("Chegirma so'rovi")]
+who = sorted({db.query(models.User).get(t.assignee_id).role
+              for t in tasks if t.assignee_id})
+db.close()
+ck("vazifa filial rahbari, moliyachi va asoschiga tushdi", who,
+   ["branch_manager", "finance_director", "founder"])
+
+print("\n=== 10. Familiya BIR XIL - avtomat bog'lanadi (admin) ===")
+db = SessionLocal()
+qiz = models.Student(full_name="Fozilova Nargiza", branch_id=BID,
+                     group_id=GID, status="active")
+ogil = models.Student(full_name="Fozilov Javohir", branch_id=BID,
+                      group_id=GID, status="active")
+db.add_all([qiz, ogil]); db.commit()
+QIZ, OGIL = qiz.id, ogil.id
+db.close()
+r10 = client.post(f"/api/students/{QIZ}/family-link", headers=A,
+                  json={"sibling_id": OGIL})
+ck("so'rov 200", r10.status_code, 200)
+ck("darrov bog'landi", r10.json()["status"], "linked")
+ck("ikkalasiga 10%", r10.json()["family_percent"], 10.0)
+d10 = client.get(f"/api/students/{OGIL}/discounts", headers=A).json()
+ck("o'g'il bolada ham 10%", d10["family_percent"], 10.0)
+
+print("\n=== 11. Familiya BOSHQA - tasdiqqa so'rov ketadi ===")
+db = SessionLocal()
+x1 = models.Student(full_name="Rahimov Ali", branch_id=BID,
+                    group_id=GID, status="active")
+x2 = models.Student(full_name="Yo'ldosheva Zilola", branch_id=BID,
+                    group_id=GID, status="active")
+db.add_all([x1, x2]); db.commit()
+X1, X2 = x1.id, x2.id
+db.close()
+r11 = client.post(f"/api/students/{X1}/family-link", headers=A,
+                  json={"sibling_id": X2})
+ck("so'rov 200", r11.status_code, 200)
+ck("tasdiq kutadi", r11.json()["status"], "pending")
+ck("hali bog'lanmagan", client.get(
+    f"/api/students/{X1}/discounts", headers=A).json()["family_percent"], 0)
+DID = r11.json()["discount_id"]
+db = SessionLocal()
+n_tasks = len([t for t in db.query(models.Task).all()
+               if t.title == f"Chegirma so'rovi #{DID} — Rahimov Ali"])
+db.close()
+ck("uchala rahbarga vazifa tushdi", n_tasks, 3)
+
+print("\n=== 12. Filial rahbari tasdiqlasa - bog'lanadi ===")
+FR = tok("fr")
+r12 = client.post(f"/api/discounts/{DID}/approve", headers=FR,
+                  json={"approve": True})
+ck("tasdiqlandi", r12.status_code, 200)
+d12 = client.get(f"/api/students/{X2}/discounts", headers=FR).json()
+ck("endi ikkinchisida ham 10%", d12["family_percent"], 10.0)
+p12 = client.get(f"/api/students/{X1}/pricing", headers=FR).json()
+ck("birinchisining oilasida ikkinchisi bor",
+   [x["id"] for x in p12["siblings"]], [X2])
+ck("oilaviy chegirma ikki marta hisoblanmadi", d12["total_percent"], 10.0)
 
 print()
 if fails:

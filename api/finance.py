@@ -486,6 +486,12 @@ def create_discount(
     db.add(d)
     db.commit()
     db.refresh(d)
+    # 2026-08-12, Jahongir: "Chegirma sorovi jonatsa administrator
+    # kimlarga vazifa bolib tushadi tasdiqlash, filial rahbari,
+    # moliyachiga tushsin". Ilgari so'rov hech kimga bildirilmasdi -
+    # administrator yuborardi, javob kelishini kutib o'tirardi.
+    if d.status == "pending":
+        _notify_discount_approvers(db, d, st)
     audit.log(db, user, entity="discount", action="create", entity_id=d.id,
               entity_label=st.full_name, branch_id=st.branch_id,
               new_value=f"{roles.DISCOUNT_TYPE_LABELS[d.kind]} "
@@ -512,6 +518,13 @@ def approve_discount(
     if not payload.approve:
         d.cancelled_reason = payload.reason
     db.commit()
+    # Oila so'rovi tasdiqlansa - o'quvchilar shu yerda BOG'LANADI.
+    # Chegirma foizini keyin tizim o'zi hisoblaydi (aka-uka ketsa
+    # o'zi yo'qoladi), shuning uchun qo'lda foiz yozilmaydi.
+    if payload.approve and d.kind == "family" and d.referrer_student_id:
+        sib = db.query(models.Student).get(d.referrer_student_id)
+        if st and sib:
+            _do_family_link(db, st, sib, user.username)
     audit.log(db, user, entity="discount",
               action="approve" if payload.approve else "reject",
               entity_id=d.id, entity_label=st.full_name if st else "—",

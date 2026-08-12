@@ -1124,3 +1124,144 @@ def offer_action(oid: int, payload: schemas.OfferAction,
               note=payload.note, commit=True)
     return _offer_out(db, o)
 
+
+
+# =====================================================================
+#  OCHIQ ARIZA FORMASI (2026-08-12, Jahongir): "HR nomzodlarga link
+#  tashlasa, nomzod to'ldirsa avtomat bazaga yoziladigan funksiya
+#  kerak ishga topshirayotganlar uchun... to'ldirsa HR bo'limi
+#  nomzodlar bo'limiga tushsin".
+#  LOGINSIZ ishlaydi: https://jonyos.uz/apply
+# =====================================================================
+_APPLY_POSITIONS = {
+    "sales": "Sotuv menejeri",
+    "teacher": "Ustoz",
+    "cleaner": "Farrosh",
+    "examiner": "Examiner",
+    "support": "Support teacher",
+    "other": "Boshqa",
+}
+_APPLY_CERT_REQUIRED = ("teacher", "examiner", "support")
+_APPLY_MARITAL = {
+    "single": "Turmush qurmagan",
+    "married": "Oilali",
+    "divorced": "Ajrashgan",
+}
+
+
+@router.post("/api/apply")
+def public_apply(payload: dict, db: Session = Depends(get_db)):
+    """Nomzodning o'zi to'ldiradigan ochiq ariza. Auth YO'Q."""
+    def _s(key, limit=300):
+        return str(payload.get(key) or "").strip()[:limit]
+
+    full_name = _s("full_name", 120)
+    phone = _s("phone", 40)
+    position = _s("position", 20)
+    if len(full_name) < 5:
+        raise HTTPException(400, "F.I.Sh to'liq yozilishi kerak")
+    if len(phone) < 7:
+        raise HTTPException(400, "Telefon raqam noto'g'ri")
+    if position not in _APPLY_POSITIONS:
+        raise HTTPException(400, "Lavozim tanlanmagan")
+
+    photo = payload.get("photo") or ""
+    cert = payload.get("certificate") or ""
+    if not (isinstance(photo, str) and photo.startswith("data:image")
+            and len(photo) > 100):
+        raise HTTPException(400, "Shaxsiy fotosurat yuklanishi shart")
+    if len(photo) > 600_000:
+        raise HTTPException(400, "Fotosurat juda katta (400KB gacha)")
+    if position in _APPLY_CERT_REQUIRED:
+        if not (isinstance(cert, str) and cert.startswith("data:")
+                and len(cert) > 100):
+            raise HTTPException(
+                400, "Bu lavozim uchun sertifikat yuklash shart")
+        if len(cert) > 4_000_000:
+            raise HTTPException(400, "Sertifikat juda katta (3MB gacha)")
+    else:
+        cert = ""
+
+    # Takror bosishdan himoya: bir xil telefon + ism 24 soat ichida
+    day_ago = datetime.utcnow() - timedelta(hours=24)
+    dup = (db.query(models.Candidate)
+           .filter(models.Candidate.phone == phone,
+                   models.Candidate.created_at >= day_ago).count())
+    if dup:
+        return {"ok": True, "already": True}
+
+    marital = _s("marital", 20)
+    other_position = _s("other_position", 100)
+    pos_label = _APPLY_POSITIONS[position]
+    if position == "other" and other_position:
+        pos_label = f"Boshqa: {other_position}"
+
+    note_lines = [
+        f"LAVOZIM: {pos_label}",
+        f"Yashash manzili: {_s('address', 200) or '—'}",
+        f"Tug'ilgan sana: {_s('birth_date', 20) or '—'}",
+        f"Ma'lumoti: {_s('education', 300) or '—'}",
+        f"Oilaviy holati: {_APPLY_MARITAL.get(marital, '—')}",
+        f"Ijtimoiy tarmoqlar: {_s('socials', 300) or '—'}",
+    ]
+    if position == "teacher":
+        note_lines.append(f"Qaysi fandan dars beradi: "
+                          f"{_s('subject', 100) or '—'}")
+    note_lines.append("Manba: onlayn ariza (https://jonyos.uz/apply)")
+
+    exp_years = None
+    try:
+        if payload.get("experience_years") not in (None, ""):
+            exp_years = float(payload.get("experience_years"))
+    except Exception:
+        exp_years = None
+
+    c = models.Candidate(
+        full_name=full_name,
+        phone=phone,
+        stage="applied",
+        source="other",
+        note="\n".join(note_lines),
+        workplaces=_s("workplaces", 1000) or None,
+        experience_years=exp_years,
+        created_by="Onlayn ariza",
+    )
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+
+    def _att(data_url: str, kind: str, fname: str):
+        try:
+            mime = data_url.split(";", 1)[0].split(":", 1)[1]
+        except Exception:
+            mime = "application/octet-stream"
+        db.add(models.Attachment(
+            entity="candidate", entity_id=c.id, kind=kind,
+            filename=fname, mime=mime, size=len(data_url),
+            data=data_url, created_by="Onlayn ariza"))
+
+    _att(photo, "photo", f"foto_{c.id}.jpg")
+    if cert:
+        _att(cert, "certificate", f"sertifikat_{c.id}")
+    db.commit()
+
+    # HR'ga xabar bo'lib tushsin
+    try:
+        hr_users = (db.query(models.User)
+                    .filter(models.User.role == roles.HR_MANAGER,
+                            models.User.is_active == 1).all())
+        for h in hr_users:
+            db.add(models.Task(
+                title=f"Yangi nomzod: {full_name}",
+                description=(f"{pos_label} lavozimiga onlayn ariza "
+                             f"keldi. Tel: {phone}. HR -> Nomzodlar "
+                             f"bo'limida ko'ring."),
+                assignee_id=h.id,
+                deadline=date.today() + timedelta(days=2),
+                priority="high", source="manual",
+                created_by="Onlayn ariza"))
+        db.commit()
+    except Exception:
+        db.rollback()
+
+    return {"ok": True, "id": c.id}

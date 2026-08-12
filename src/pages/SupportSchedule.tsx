@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { SupportLoadBlock } from "../components/HrCore";
+import { useAuth as useAuthSL } from "../lib/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { CalendarDays, Users2 } from "lucide-react";
 import { api, type Branch } from "../lib/api";
@@ -77,6 +79,10 @@ export default function SupportSchedule() {
         Qaysi support qachon band — guruhlari va o'zi belgilagan vaqtlari
         bir qarashda
       </p>
+
+      {/* Yuklama paneli — support manager, HR va rahbariyatga
+          (2026-08-12). Supportning o'ziga ko'rinmaydi. */}
+      <SupportLoadGate />
 
       <div className="flex flex-wrap items-center gap-2 mb-5">
         {DAYS.map((d) => (
@@ -178,6 +184,19 @@ export default function SupportSchedule() {
         vaqt); qizil — support o'zi "dars qo'yilmasin" degan vaqt.
         Vaqti belgilanmagan biriktirishlar jadvalda ko'rinmaydi.
       </p>
+    </div>
+  );
+}
+
+
+function SupportLoadGate() {
+  const { user } = useAuthSL();
+  const allowed = ["founder", "branch_manager", "hr_manager",
+    "academic_head", "head_support", "accountant"];
+  if (!user || !allowed.includes(user.role)) return null;
+  return (
+    <div className="mb-5">
+      <SupportLoadBlock />
     </div>
   );
 }

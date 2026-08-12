@@ -48,6 +48,7 @@ const MyStudents = lazy(() => import("./pages/MyStudents"));
 const MySchedule = lazy(() => import("./pages/MySchedule"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
 const Parent = lazy(() => import("./pages/Parent"));
+const Apply = lazy(() => import("./pages/Apply"));
 const ParentHome = lazy(() => import("./pages/ParentHome"));
 const ParentPayments = lazy(() => import("./pages/ParentPayments"));
 const ParentGamification = lazy(() => import("./pages/ParentGamification"));
@@ -120,6 +121,8 @@ function AppRoutes() {
             bo'limlar (to'lovlar, coin/XP, natijalar, reyting) endi
             har biri o'z sahifasida (2026-08-09) — Parent.tsx faqat
             ma'lumotni bir marta yuklab, Outlet orqali beradi. */}
+        {/* Ochiq ariza formasi — loginsiz (2026-08-12) */}
+        <Route path="/apply" element={<Apply />} />
         <Route path="/parent/:token" element={<Parent />}>
           <Route index element={<ParentHome />} />
           <Route path="payments" element={<ParentPayments />} />

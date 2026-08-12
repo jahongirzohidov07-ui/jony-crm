@@ -935,6 +935,9 @@ WEEKDAY_LABELS = {k: lbl for k, lbl, _ in WEEKDAYS}
 # nechta guruh olib bora oladi. Bundan oshsa sifat tushadi.
 TEACHER_MAX_LESSONS_PER_DAY = 4
 TEACHER_MAX_GROUPS = 8
+# Support uchun norma (2026-08-12): bitta support nechta
+# guruhgacha biriktirilishi me'yoriy hisoblanadi.
+SUPPORT_MAX_GROUPS = 4
 
 # Darslar orasidagi mantiqsiz bo'shliq. Ustoz 09:00 da dars berib,
 # keyingisi 19:00 da bo'lsa - kuni behuda ketadi.

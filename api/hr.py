@@ -2249,3 +2249,96 @@ def hr_overview(db: Session = Depends(get_db),
                  "va ketish signallari. Qizil — bugun qilinadigan ish."),
     }
 
+
+
+def _support_load(db: Session, branch_id=None) -> list[dict]:
+    """Supportlarning yuklamasi (2026-08-12, Jahongir: "xuddi shunaqa
+    supportlarga ham ko'rinsa zo'r bo'larkan").
+
+    Yuklama = biriktirilgan guruhlar soni (SupportAssignment).
+    Norma: roles.SUPPORT_MAX_GROUPS (hozircha bitta umumiy chegara).
+    """
+    # Support = User roli support_teacher bo'lgan ustoz kartalari
+    # (Teacher jadvalida alohida "kind" ustuni yo'q)
+    q = (db.query(models.Teacher)
+         .join(models.User, models.User.id == models.Teacher.user_id)
+         .filter(models.Teacher.is_active == 1,
+                 models.User.is_active == 1,
+                 models.User.role == roles.SUPPORT_TEACHER))
+    if branch_id:
+        q = q.filter(models.Teacher.branch_id == branch_id)
+    sups = q.all()
+    if not sups:
+        return []
+
+    # user_id -> biriktirilgan faol guruhlar soni
+    per_user: dict = {}
+    rows = (db.query(models.SupportAssignment.user_id,
+                     models.SupportAssignment.group_id)
+            .join(models.Group,
+                  models.Group.id == models.SupportAssignment.group_id)
+            .all())
+    for uid, gid in rows:
+        per_user.setdefault(uid, set()).add(gid)
+
+    # daraja yorlig'i (staff_grades)
+    grade_of = {}
+    try:
+        for sg in db.query(models.StaffGrade).all():
+            grade_of[sg.user_id] = sg.grade
+    except Exception:
+        pass
+    rate_label = {}
+    try:
+        for r in db.query(models.StaffGradeRate).all():
+            rate_label[r.key] = r.label
+    except Exception:
+        pass
+
+    limit = roles.SUPPORT_MAX_GROUPS
+    out = []
+    for t in sups:
+        cnt = len(per_user.get(t.user_id, set())) if t.user_id else 0
+        pct = round(cnt / limit * 100, 1) if limit else 0.0
+        key, label, tone = roles.utilization_band(pct)
+        br = db.query(models.Branch).get(t.branch_id) if t.branch_id else None
+        gk = grade_of.get(t.user_id, "volunteer")
+        out.append({
+            "teacher_id": t.id, "name": t.full_name,
+            "branch": br.name if br else None,
+            "branch_id": t.branch_id,
+            "grade": gk,
+            "grade_label": rate_label.get(gk, gk.capitalize() if gk else "—"),
+            "groups": cnt, "max_groups": limit,
+            "free_slots": max(0, limit - cnt),
+            "percent": pct, "band": key, "band_label": label, "tone": tone,
+        })
+    out.sort(key=lambda r: -r["percent"])
+    return out
+
+
+_SUPPORT_LOAD_VIEW = tuple(dict.fromkeys(
+    tuple(roles.WORKFORCE_VIEW) + (roles.HEAD_SUPPORT, roles.HR_MANAGER)))
+
+
+@router.get("/api/hr/support-load")
+def hr_support_load(branch_id: int | None = None,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*_SUPPORT_LOAD_VIEW))):
+    """Support yuklamasi — HR, o'quv bo'limi va support manager uchun."""
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        branch_id = branch_id or user.branch_id
+    load = _support_load(db, branch_id)
+    summary = {}
+    for r in load:
+        summary[r["band"]] = summary.get(r["band"], 0) + 1
+    return {
+        "rows": load,
+        "summary": [{"key": k, "label": lbl, "tone": tn,
+                     "count": summary.get(k, 0)}
+                    for _lim, k, lbl, tn in roles.UTILIZATION_BANDS],
+        "limit": roles.SUPPORT_MAX_GROUPS,
+        "hint": (f"Norma: bitta supportga {roles.SUPPORT_MAX_GROUPS} "
+                 "tagacha guruh. Yuklama biriktirilgan guruhlar "
+                 "sonidan hisoblanadi."),
+    }

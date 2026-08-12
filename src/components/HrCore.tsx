@@ -192,6 +192,10 @@ export function WorkforceTab() {
         )}
       </div>
 
+      {/* Support yuklamasi (2026-08-12, Jahongir: "xuddi shunaqa
+          supportlarga ham ko'rinsa zo'r bo'larkan") */}
+      <SupportLoadBlock />
+
       {adding && st && (
         <PlanForm structure={st} branches={branches}
                   onClose={() => setAdding(false)}
@@ -971,6 +975,65 @@ function VacancyDrawer({ row, closeReasons, canEdit, onClose, onDone }: {
           )
         )}
       </div>
+    </div>
+  );
+}
+
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function SupportLoadBlock() {
+  const [d, setD] = useState<any>(null);
+  useEffect(() => {
+    api.get<any>("/hr/support-load").then(setD).catch(() => {});
+  }, []);
+  if (!d) return null;
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-4">
+      <p className="text-sm font-medium text-slate-700 mb-3">
+        Supportlar yuklamasi
+      </p>
+      <div className="flex gap-2 mb-3 flex-wrap">
+        {d.summary.map((s2: any) => (
+          <span key={s2.key}
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
+              TONE[s2.tone] || TONE.slate}`}>
+            {s2.label}: {s2.count}
+          </span>
+        ))}
+      </div>
+      {d.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-4 text-center">
+          Support yo'q.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {d.rows.map((t: any) => (
+            <div key={t.teacher_id} className="flex items-center gap-3">
+              <span className="text-sm text-slate-900 w-40 truncate shrink-0">
+                {t.name}
+              </span>
+              <span className="text-xs text-slate-400 w-24 shrink-0 hidden md:block">
+                {t.grade_label}
+              </span>
+              <div className="flex-1 bg-slate-100 rounded h-5 overflow-hidden">
+                <div className={`h-full ${
+                  t.tone === "red" ? "bg-red-400"
+                  : t.tone === "amber" ? "bg-amber-400"
+                  : t.tone === "sky" ? "bg-sky-300" : "bg-emerald-400"}`}
+                  style={{ width: Math.min(t.percent, 100) + "%" }} />
+              </div>
+              <span className="text-xs text-slate-500 w-16 text-right shrink-0">
+                {t.groups}/{t.max_groups}
+              </span>
+              <span className={`text-[11px] px-1.5 py-0.5 rounded w-28 text-center shrink-0 ${
+                TONE[t.tone] || TONE.slate}`}>
+                {t.band_label}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="text-xs text-slate-400 mt-2">{d.hint}</p>
     </div>
   );
 }

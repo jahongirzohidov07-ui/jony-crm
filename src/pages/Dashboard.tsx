@@ -498,6 +498,12 @@ export default function Dashboard() {
       {loading && <p className="text-slate-400 text-sm">Yuklanmoqda...</p>}
       {err && <p className="text-red-600 text-sm">{err}</p>}
 
+      {/* Dars ko'chirish so'rovlari (2026-08-12, Jahongir: "HR manager
+          yoki O'quv bo'limi rahbariga borishi kerak") — tasdiq
+          kutayotganlar shu yerda, bir bosishda hal qilinadi. */}
+      {["founder", "branch_manager", "academic_head", "hr_manager"]
+        .includes(user?.role || "") && <ReschedulePendingBlock />}
+
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />
 
@@ -712,6 +718,78 @@ function DashTabs({
           {t.label}
         </button>
       ))}
+    </div>
+  );
+}
+
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function ReschedulePendingBlock() {
+  const [d, setD] = useState<any>(null);
+  const [busy, setBusy] = useState<number | null>(null);
+
+  const load = () =>
+    api.get<any>("/reschedules?status=pending").then(setD).catch(() => {});
+  useEffect(() => { load(); }, []);
+
+  if (!d || !d.rows || d.rows.length === 0) return null;
+
+  const decide = async (id: number, decision: "approved" | "rejected") => {
+    let note: string | undefined;
+    if (decision === "rejected") {
+      const r = prompt("Rad etish sababi:");
+      if (r === null) return;
+      note = r.trim() || undefined;
+    }
+    setBusy(id);
+    try {
+      await api.post(`/reschedules/${id}/decide`, { decision, note });
+      await load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+      <p className="text-sm font-semibold text-amber-900 mb-2">
+        Dars ko'chirish so'rovlari — tasdiq kutmoqda ({d.rows.length})
+      </p>
+      <div className="space-y-2">
+        {d.rows.map((r: any) => (
+          <div key={r.id}
+               className="bg-white rounded-lg border border-amber-100 p-3 flex flex-wrap items-center gap-3">
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-slate-800">
+                {r.group} · {r.teacher}
+              </p>
+              <p className="text-xs text-slate-500">
+                {r.from_date} → {r.to_date}
+                {r.reason_label ? ` · ${r.reason_label}` : ""}
+                {r.note ? ` · ${r.note}` : ""}
+              </p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <button
+                disabled={busy === r.id}
+                onClick={() => decide(r.id, "approved")}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+              >
+                Tasdiqlash
+              </button>
+              <button
+                disabled={busy === r.id}
+                onClick={() => decide(r.id, "rejected")}
+                className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-50"
+              >
+                Rad etish
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

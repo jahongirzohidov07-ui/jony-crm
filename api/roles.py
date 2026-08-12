@@ -3704,7 +3704,9 @@ RESCHEDULE_MIN_NOTICE_DAYS = 1
 # Bundan uzoqqa surib bo'lmaydi
 RESCHEDULE_MAX_SHIFT_DAYS = 30
 
-RESCHEDULE_APPROVE = FULL_ACCESS + [ACADEMIC_HEAD]
+# 2026-08-12, Jahongir: "HR manager yoki O'quv bo'limi rahbariga -
+# ikkalasidan biriga borishi kerak" - HR ham tasdiqlay oladi.
+RESCHEDULE_APPROVE = FULL_ACCESS + [ACADEMIC_HEAD, HR_MANAGER]
 
 
 def reschedule_quota(used_month: int, used_window: int) -> dict:

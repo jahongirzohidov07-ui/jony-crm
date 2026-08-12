@@ -45,6 +45,14 @@ export function StudentRowMenu({
   const [freezing, setFreezing] = useState(false);
   const [fUntil, setFUntil] = useState("");
   const [fNote, setFNote] = useState("");
+  const [fFrom, setFFrom] = useState(() => {
+    const d = new Date();
+    const p = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  });
+  const [fPrev, setFPrev] = useState<{
+    lessons: number; current: number; target: number;
+  } | null>(null);
   // Faollashtirish: qaysi kundan o'qishni boshlagani so'raladi —
   // shu kundan oy oxirigacha nechta dars bo'lsa, shuncha pul yechiladi.
   const [activating, setActivating] = useState(false);
@@ -119,12 +127,48 @@ export function StudentRowMenu({
   }, [activating, aOn, student.id]);
 
   const activate = () =>
-    run(() => api.post(`/students/${student.id}/activate`, { on: aOn }));
+    run(async () => {
+      const r = await api.post<{
+        adjust?: { lessons: number; old: number; new: number } | null;
+        charge?: { lessons: number; amount: number } | null;
+      }>(`/students/${student.id}/activate`, { on: aOn });
+      if (r && r.adjust) {
+        alert(`Faollashtirildi. Jami ${r.adjust.lessons} dars: ` +
+          `${som(r.adjust.old)} → ${som(r.adjust.new)} so'm`);
+      } else if (r && r.charge) {
+        alert(`Faollashtirildi. ${r.charge.lessons} dars uchun ` +
+          `${som(r.charge.amount)} so'm hisoblandi`);
+      }
+    });
+
+  const som = (n: number) =>
+    Number(n || 0).toLocaleString().replace(/,/g, " ");
+
+  /** Muzlatish sanasi bo'yicha nechta dars hisoblanishini oldindan
+   *  ko'rsatadi — administrator summani bilib turib bosadi. */
+  const loadPrev = (d: string) => {
+    if (!d) { setFPrev(null); return; }
+    api
+      .get<{ lessons: number; current: number; target: number }>(
+        `/students/${student.id}/freeze-preview?from_date=${d}`)
+      .then(setFPrev)
+      .catch(() => setFPrev(null));
+  };
 
   const freeze = () => {
     if (!fUntil) { setErr("Qaytish sanasini belgilang"); return; }
-    run(() => api.post(`/students/${student.id}/freeze`,
-      { until: fUntil, note: fNote || null }));
+    run(async () => {
+      const r = await api.post<{ adjust?: { lessons: number;
+        old: number; new: number } | null }>(
+        `/students/${student.id}/freeze`,
+        { until: fUntil, from_date: fFrom || null,
+          note: fNote || null });
+      const a = r && r.adjust;
+      if (a) {
+        alert(`Muzlatildi. ${a.lessons} dars hisoblandi: ` +
+          `${som(a.old)} → ${som(a.new)} so'm`);
+      }
+    });
   };
   const toTrial = () =>
     run(() => api.post(`/students/${student.id}/to-trial`, {}));
@@ -452,10 +496,24 @@ export function StudentRowMenu({
           ) : freezing ? (
             <div className="px-3 py-2">
               <p className="text-xs font-medium text-slate-600 mb-1.5">
-                Muzlatish — qachon qaytadi? *
+                Qaysi kundan muzlatiladi?
+              </p>
+              <input type="date" value={fFrom}
+                onChange={(e) => { setFFrom(e.target.value);
+                  loadPrev(e.target.value); }}
+                className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-1.5" />
+              {fPrev && (
+                <p className="text-[11px] text-sky-700 bg-sky-50 rounded-lg px-2 py-1 mb-1.5">
+                  {fPrev.lessons} dars hisoblanadi · {som(fPrev.current)} → {" "}
+                  <b>{som(fPrev.target)}</b> so'm
+                </p>
+              )}
+              <p className="text-xs font-medium text-slate-600 mb-1.5">
+                Qachon qaytadi? *
               </p>
               <input type="date" value={fUntil}
-                onChange={(e) => setFUntil(e.target.value)}
+                onChange={(e) => { setFUntil(e.target.value);
+                  if (!fPrev) loadPrev(fFrom); }}
                 className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-1.5" />
               <input value={fNote}
                 onChange={(e) => setFNote(e.target.value)}

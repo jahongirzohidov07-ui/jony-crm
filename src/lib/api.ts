@@ -2203,10 +2203,13 @@ export interface DebtorRow {
   status: string;
   debt: number;
   days: number;
+  aging_days: number;
+  bucket: string;
   urgency: string;
   urgency_label: string;
   urgency_tone: string;
   last_contact?: string | null;
+  last_by?: string | null;
   last_result?: string | null;
   last_result_label?: string | null;
   last_note?: string | null;
@@ -2224,6 +2227,7 @@ export interface DebtorList {
   due_today: number;
   never_contacted: number;
   results: { key: string; label: string; tone: string }[];
+  aging: { key: string; label: string; count: number; sum: number }[];
 }
 
 export interface DebtContactRow {

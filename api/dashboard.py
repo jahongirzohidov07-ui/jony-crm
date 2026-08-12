@@ -86,9 +86,9 @@ def dashboard(
         db.query(models.User), models.User, user, branch_id
     ).filter(models.User.is_active == 1).count()
 
-    balances = [(s.id, student_balance(db, s.id)) for s in all_students]
-    total_debt = sum(b for _, b in balances if b < 0)
-    debtor_count = sum(1 for _, b in balances if b < 0)
+    _bal = _balances_bulk(db, student_ids)
+    total_debt = sum(b for b in _bal.values() if b < 0)
+    debtor_count = sum(1 for b in _bal.values() if b < 0)
 
     return schemas.DashboardStats(
         active_students=active,
@@ -1653,8 +1653,9 @@ def ceo_today(
     all_students = scope_students(db.query(models.Student)).all()
     active = [s for s in all_students if s.status == "active"]
     debtors = []
+    _bal2 = _balances_bulk(db, [s.id for s in active])
     for s in active:
-        bal = student_balance(db, s.id)
+        bal = _bal2.get(s.id, 0.0)
         if bal < 0:
             debtors.append({"id": s.id, "public_id": s.public_id,
                             "full_name": s.full_name, "balance": bal,
@@ -2083,7 +2084,8 @@ def ceo_branches(
         new_clients = sum(1 for s in bs
                           if s.id in firsts and start <= firsts[s.id].date() <= end)
 
-        debt = sum(min(0.0, student_balance(db, s.id)) for s in active)
+        _bal3 = _balances_bulk(db, [s.id for s in active])
+        debt = sum(min(0.0, v) for v in _bal3.values())
 
         rows.append({
             "branch_id": b.id, "branch": b.name,

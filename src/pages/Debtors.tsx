@@ -49,8 +49,10 @@ export default function Debtors() {
     if (filter === "broken") return r.promise_broken;
     if (filter === "today") return r.promised_date === today;
     if (filter === "never") return !r.last_contact;
+    if (filter.startsWith("age:")) return r.bucket === filter.slice(4);
     return true;
   });
+
 
   return (
     <div>
@@ -86,6 +88,35 @@ export default function Debtors() {
           active={filter === "never"}
         />
       </div>
+
+      {/* Qarz eskirish (aging) — 2026-08-12, Jahongir: "0-15 / 16-30 /
+          31-60 / 60+ kun bo'yicha bo'lish" */}
+      {data.aging && (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          {data.aging.map((a) => (
+            <button
+              key={a.key}
+              onClick={() => setFilter(filter === `age:${a.key}` ? "" : `age:${a.key}`)}
+              className={`text-left bg-white rounded-xl border p-3 transition ${
+                filter === `age:${a.key}`
+                  ? "border-brand-500 ring-1 ring-brand-300"
+                  : "border-slate-200 hover:border-slate-300"
+              }`}
+            >
+              <p className="text-xs text-slate-500 mb-0.5">
+                Minusda: {a.label}
+              </p>
+              <p className={`text-base font-semibold ${
+                a.key === "b60p" && a.count ? "text-red-700" : "text-slate-900"}`}>
+                {a.count} ta
+                <span className="block text-xs font-normal text-slate-400">
+                  {formatSom(a.sum)}
+                </span>
+              </p>
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="flex items-center gap-2 mb-4">
         {filter && (
@@ -129,6 +160,15 @@ export default function Debtors() {
                     >
                       {r.urgency_label} · {r.days} kun
                     </span>
+                    {r.aging_days > 15 && (
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                        TONE[
+                          r.bucket === "b60p" ? "red"
+                          : r.bucket === "b60" ? "orange" : "amber"
+                        ]}`}>
+                        {r.aging_days} kundan beri minusda
+                      </span>
+                    )}
                     {r.promise_broken && (
                       <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700 flex items-center gap-1">
                         <AlertTriangle size={11} />
@@ -147,6 +187,7 @@ export default function Debtors() {
                       <Clock size={11} className="text-slate-400" />
                       <span>
                         {formatDate(r.last_contact)} — {r.last_result_label}
+                        {r.last_by ? ` (${r.last_by})` : ""}
                       </span>
                       {r.promised_date && (
                         <span

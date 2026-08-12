@@ -199,6 +199,12 @@ def my_dashboard(
         except Exception:
             db.rollback()
 
+    # Ketish xavfi skaneri - kuniga bir marta, kim birinchi kirsa
+    try:
+        _risk_scan(db)
+    except Exception:
+        db.rollback()
+
     builder = _MY_CARDS.get(user.role)
     cards = builder(db, user) if builder else []
 

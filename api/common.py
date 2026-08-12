@@ -453,6 +453,75 @@ def student_balance(db: Session, student_id: int) -> float:
     )
     return float(total or 0)
 
+def _balances_bulk(db: Session, student_ids) -> dict:
+    """Hamma o'quvchi balansi BITTA so'rovda. Avval har o'quvchiga
+    alohida so'rov ketardi (1000+ o'quvchida sekinlashadi -
+    2026-08-12 tahlilida aniqlangan)."""
+    ids = list(student_ids)
+    if not ids:
+        return {}
+    out = {}
+    CHUNK = 900
+    for i in range(0, len(ids), CHUNK):
+        rows = (db.query(models.Payment.student_id,
+                         func.coalesce(func.sum(models.Payment.amount), 0.0))
+                .filter(models.Payment.student_id.in_(ids[i:i + CHUNK]))
+                .group_by(models.Payment.student_id).all())
+        out.update({sid: float(v or 0) for sid, v in rows})
+    return out
+
+
+def _neg_since_bulk(db: Session, student_ids) -> dict:
+    """Har qarzdor uchun balans QACHONDAN BERI minusda (aging).
+
+    Jahongir (2026-08-12): "qarzdorlarni 0-15 / 16-30 / 31-60 / 60+
+    kun bo'yicha bo'lish". To'lovlar xronologiyasi bo'ylab yurib,
+    balans oxirgi marta 0 dan pastga tushgan sana topiladi."""
+    ids = list(student_ids)
+    if not ids:
+        return {}
+    out = {}
+    CHUNK = 700
+    for i in range(0, len(ids), CHUNK):
+        rows = (db.query(models.Payment.student_id,
+                         models.Payment.amount,
+                         models.Payment.created_at)
+                .filter(models.Payment.student_id.in_(ids[i:i + CHUNK]))
+                .order_by(models.Payment.student_id,
+                          models.Payment.created_at,
+                          models.Payment.id).all())
+        cur, run, since = None, 0.0, None
+        for sid, amt, at in rows:
+            if sid != cur:
+                if cur is not None and run < 0 and since:
+                    out[cur] = since
+                cur, run, since = sid, 0.0, None
+            prev = run
+            run += float(amt or 0)
+            if run < 0 and prev >= 0:
+                since = at.date() if hasattr(at, "date") else at
+            elif run >= 0:
+                since = None
+        if cur is not None and run < 0 and since:
+            out[cur] = since
+    return out
+
+
+DEBT_AGING_BUCKETS = [
+    ("b15", "0-15 kun", 15),
+    ("b30", "16-30 kun", 30),
+    ("b60", "31-60 kun", 60),
+    ("b60p", "60+ kun", None),
+]
+
+
+def _aging_bucket(days: int) -> str:
+    for key, _lbl, lim in DEBT_AGING_BUCKETS:
+        if lim is None or days <= lim:
+            return key
+    return "b60p"
+
+
 def to_student_out(db: Session, s: models.Student) -> schemas.StudentOut:
     data = schemas.StudentOut.model_validate(s)
     data.balance = student_balance(db, s.id)
@@ -4172,6 +4241,8 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "_balances_bulk", "_neg_since_bulk", "_aging_bucket",
+    "DEBT_AGING_BUCKETS", "_risk_scan",
     "_discipline_stats", "_discipline_one", "_fmt_delay",
     "ATT_ONTIME_MIN",
     "_backfill_student_accounts",
@@ -4472,3 +4543,120 @@ def _discipline_one(db: Session, teacher_id: int,
                     start: date, end: date) -> dict | None:
     rows = _discipline_stats(db, start, end, teacher_id=teacher_id)
     return rows[0] if rows else None
+
+
+# =====================================================================
+#  KETISH XAVFI AVTOMAT SKANERI (kuniga 1 marta)
+#  Jahongir (2026-08-12): "davomati 2 hafta ketma-ket tushayotgan yoki
+#  qarzdor bo'lib qolayotgan o'quvchini tizim o'zi 'ketish xavfi'
+#  ro'yxatiga qo'shsin... bu narsa adminlarga qizil bayroq bo'lib
+#  vazifa bo'lib tushsin".
+# =====================================================================
+def _risk_scan(db: Session) -> int:
+    """Faol o'quvchilarni tekshiradi, xavf topsa RiskFlag + shu filial
+    administratorlariga SHOSHILINCH vazifa ochadi. Takror ochmaydi:
+    o'quvchida shu signal bo'yicha faol bayroq turgan bo'lsa - jim.
+
+    Qoidalar:
+      1) Davomat: oxirgi 14 kun foizi avvalgi 14 kundan kamida 10
+         punktga past VA 70% dan past (har oynada >=4 belgi bo'lsa).
+      2) Qarz: balans minusda va qarz bir oylik narxdan 20%+ ko'p.
+    """
+    today = roles.local_today()
+    key = f"risk_scan_{today.isoformat()}"
+    if _seed_done(db, key):
+        return 0
+    _seed_mark(db, key)          # parallel so'rovlar takror yurmasin
+    db.commit()
+
+    students = (db.query(models.Student)
+                .filter(models.Student.status == "active").all())
+    if not students:
+        return 0
+    sids = [s.id for s in students]
+
+    # Davomat: oxirgi 28 kun, ikkiga bo'lib
+    since = today - timedelta(days=28)
+    mid = today - timedelta(days=14)
+    att: dict = {}
+    CHUNK = 900
+    for i in range(0, len(sids), CHUNK):
+        rows = (db.query(models.Attendance.student_id,
+                         models.Lesson.date,
+                         models.Attendance.present)
+                .join(models.Lesson,
+                      models.Attendance.lesson_id == models.Lesson.id)
+                .filter(models.Attendance.student_id.in_(sids[i:i + CHUNK]),
+                        models.Lesson.held == 1,
+                        models.Lesson.date >= since).all())
+        for sid, d, pr in rows:
+            e = att.setdefault(sid, [0, 0, 0, 0])  # old_n, old_p, new_n, new_p
+            if d < mid:
+                e[0] += 1
+                e[1] += 1 if pr else 0
+            else:
+                e[2] += 1
+                e[3] += 1 if pr else 0
+
+    balances = _balances_bulk(db, sids)
+    fees = {g.id: (g.monthly_fee or 0) for g in db.query(models.Group).all()}
+
+    open_flags = {(f.student_id, f.signal) for f in
+                  db.query(models.RiskFlag)
+                  .filter(models.RiskFlag.active == 1).all()}
+
+    admins: dict = {}
+    for u in (db.query(models.User)
+              .filter(models.User.role == roles.ADMINISTRATOR,
+                      models.User.is_active == 1).all()):
+        admins.setdefault(u.branch_id, []).append(u)
+
+    made = 0
+    for s in students:
+        alerts = []
+        e = att.get(s.id)
+        if e and e[0] >= 4 and e[2] >= 4:
+            oldp = e[1] / e[0] * 100
+            newp = e[3] / e[2] * 100
+            if newp < oldp - 10 and newp < 70:
+                alerts.append((
+                    "absent_streak",
+                    f"Davomati {round(oldp)}% dan {round(newp)}% ga "
+                    f"tushdi (oxirgi 2 hafta / avvalgi 2 hafta)"))
+        bal = balances.get(s.id, 0.0)
+        fee = fees.get(s.group_id, 0.0) or 0.0
+        if bal < 0 and fee and -bal >= fee * 1.2:
+            alerts.append((
+                "payment_late",
+                f"Qarzi {round(-bal):,} so'm - bir oylik narxdan "
+                f"({round(fee):,}) ko'p".replace(",", " ")))
+
+        for sig, note in alerts:
+            if (s.id, sig) in open_flags:
+                continue
+            db.add(models.RiskFlag(
+                student_id=s.id, signal=sig, active=1,
+                note="Avtomat: " + note, created_by="Tizim"))
+            open_flags.add((s.id, sig))
+            for adm in admins.get(s.branch_id, []):
+                db.add(models.Task(
+                    title=f"KETISH XAVFI: {s.full_name}",
+                    description=(note + ". O'quvchi yoki ota-onasi "
+                                 "bilan bog'lanib sababini aniqlang va "
+                                 "natijani yozing."),
+                    assignee_id=adm.id,
+                    branch_id=s.branch_id,
+                    deadline=today + timedelta(days=2),
+                    priority="urgent",
+                    source="risk",
+                    created_by="Tizim (avtomat)"))
+            made += 1
+    if made:
+        db.commit()
+        try:
+            audit.log(db, None, entity="student", action="risk_scan",
+                      note=f"Avtomat skaner: {made} ta xavf bayrog'i "
+                           f"qo'yildi", commit=True)
+        except Exception:
+            db.rollback()
+    return made

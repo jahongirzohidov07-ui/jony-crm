@@ -887,15 +887,37 @@ def list_debtors(
               .order_by(models.DebtorContact.contacted_on).all()):
         contacts[c.student_id] = c
 
+    # Tezlik: balanslar bitta so'rovda (avval har o'quvchiga alohida)
+    _bal = _balances_bulk(db, [s.id for s in students])
+    _debtor_ids = [s.id for s in students if _bal.get(s.id, 0) < 0]
+    # Aging: balans qachondan beri minusda (2026-08-12, Jahongir:
+    # "0-15 / 16-30 / 31-60 / 60+ kun bo'yicha")
+    _neg = _neg_since_bulk(db, _debtor_ids)
+    # Oxirgi hisoblash sanalari ham bitta so'rovda
+    _lc = {}
+    if _debtor_ids:
+        for i in range(0, len(_debtor_ids), 900):
+            for sid, mx in (db.query(models.Payment.student_id,
+                                     func.max(models.Payment.created_at))
+                            .filter(models.Payment.student_id.in_(
+                                        _debtor_ids[i:i + 900]),
+                                    models.Payment.kind == "charge")
+                            .group_by(models.Payment.student_id).all()):
+                if mx is not None:
+                    _lc[sid] = mx.date() if hasattr(mx, "date") else mx
+
     rows = []
     for s in students:
-        bal = student_balance(db, s.id)
+        bal = _bal.get(s.id, 0.0)
         if bal >= 0:
             continue
         debt = abs(bal)
-        since = _last_charge_date(db, s.id) or s.enrolled_date or today
+        since = _lc.get(s.id) or s.enrolled_date or today
         days = (today - since).days
         key, label, tone = roles.debt_urgency(days)
+        _ns = _neg.get(s.id)
+        aging_days = (today - _ns).days if _ns else days
+        bucket = _aging_bucket(aging_days)
 
         c = contacts.get(s.id)
         promised = c.promised_date if c else None
@@ -913,10 +935,13 @@ def list_debtors(
             "status": s.status,
             "debt": round(debt, 2),
             "days": days,
+            "aging_days": aging_days,
+            "bucket": bucket,
             "urgency": key,
             "urgency_label": label,
             "urgency_tone": tone,
             "last_contact": c.contacted_on.isoformat() if c else None,
+            "last_by": c.created_by if c else None,
             "last_result": c.result if c else None,
             "last_result_label": (roles.DEBT_CONTACT_LABELS.get(c.result, c.result)
                                   if c else None),
@@ -950,6 +975,13 @@ def list_debtors(
         "never_contacted": sum(1 for r in rows if not r["last_contact"]),
         "results": [{"key": k, "label": lbl, "tone": t}
                     for k, lbl, t in roles.DEBT_CONTACT_RESULTS],
+        # Qarz eskirish (aging) xulosasi - 4 chelak
+        "aging": [{
+            "key": k, "label": lbl,
+            "count": sum(1 for r in rows if r["bucket"] == k),
+            "sum": round(sum(r["debt"] for r in rows
+                             if r["bucket"] == k), 0),
+        } for k, lbl, _lim in DEBT_AGING_BUCKETS],
     }
 
 @router.post("/api/debtors/contact")

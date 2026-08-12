@@ -299,6 +299,71 @@ try:
 except Exception:
     pass
 
+# Sug'diyona Toshtemirovaning DUBLIKAT kartasini birlashtirib o'chirish.
+# Jahongir (2026-08-12): "Shu ketgan sugdiyonani o'chirib tashla,
+# duplikat umuman qolmasin". Xavfsiz yo'l: avval dublikatga tegishli
+# BARCHA yozuvlar (darslar, yo'qlamalar orqali oylik, kuzatuvlar,
+# filiallar...) faol kartaga ko'chiriladi, keyin bo'sh qolgan dublikat
+# o'chiriladi - hech qanday ma'lumot yo'qolmaydi. Bir martalik.
+try:
+    from sqlalchemy.orm import Session as _VS12
+    from common import _seed_done, _seed_mark
+    from legacy_quality_seed import _norm as _lqnorm
+    with _VS12(engine) as _db12:
+        if not _seed_done(_db12, "merge_dup_sugdiyona_v1"):
+            def _key(nm):
+                return " ".join(sorted(_lqnorm(x) for x in (nm or "").split()
+                                       if _lqnorm(x)))
+            _want = _key("Sug'diyona Toshtemirova")
+            _cands = [t for t in _db12.query(models.Teacher).all()
+                      if _key(t.full_name) == _want]
+            _alive = [t for t in _cands if not t.left_date]
+            _gone = [t for t in _cands if t.left_date]
+            if len(_alive) == 1 and len(_gone) == 1:
+                _main, _dup = _alive[0], _gone[0]
+                for _tbl in Base.metadata.tables.values():
+                    if _tbl.name == "teachers":
+                        continue
+                    if _tbl.name == "teacher_branches":
+                        # takror (ustoz, filial) juftlik qolmasin
+                        _have = {r[0] for r in _db12.execute(
+                            _tbl.select().with_only_columns(
+                                _tbl.c.branch_id).where(
+                                _tbl.c.teacher_id == _main.id)).all()}
+                        _db12.execute(_tbl.delete().where(
+                            (_tbl.c.teacher_id == _dup.id)
+                            & (_tbl.c.branch_id.in_(_have or [-1]))))
+                    # teachers.id ga qaragan HAR QANDAY ustun
+                    # (teacher_id, substitute_teacher_id, ...)
+                    for _col in _tbl.c:
+                        if any(_fk.column.table.name == "teachers"
+                               for _fk in _col.foreign_keys):
+                            _db12.execute(_tbl.update().where(
+                                _col == _dup.id
+                            ).values({_col.name: _main.id}))
+                # Dublikatning alohida akkaunti bo'lsa - o'chirmaymiz,
+                # faqat kirishini yopamiz (ma'lumot yo'qolmasin).
+                if _dup.user_id and _dup.user_id != _main.user_id:
+                    _u = _db12.query(models.User).get(_dup.user_id)
+                    if _u:
+                        _u.is_active = 0
+                _db12.delete(_dup)
+                _db12.commit()
+                try:
+                    audit.log(_db12, None, entity="teacher",
+                              action="merge_duplicate",
+                              entity_id=_main.id,
+                              entity_label=_main.full_name,
+                              note=(f"Dublikat karta #{_dup.id} "
+                                    f"('{_dup.full_name}') faol kartaga "
+                                    f"birlashtirilib o'chirildi"),
+                              commit=True)
+                except Exception:
+                    _db12.rollback()
+            _seed_mark(_db12, "merge_dup_sugdiyona_v1")
+except Exception:
+    pass
+
 # Ishdan bo'shatilgan supportlarning guruhdagi izlarini tozalash.
 # Tuzatishdan OLDIN bo'shatilganlar uchun (masalan Malika) - keyingilari
 # bo'shatish paytidayoq _release_support_groups orqali tozalanadi.

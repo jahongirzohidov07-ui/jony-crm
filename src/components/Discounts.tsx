@@ -107,7 +107,14 @@ export function Discounts({ studentId }: { studentId: number }) {
                       {d.status_label}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{d.reason}</p>
+                  <p className="text-xs text-slate-600 mt-1">
+                    {d.hidden && (
+                      <span className="inline-block mr-1.5 px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 text-[10px] font-medium align-middle">
+                        yashirin
+                      </span>
+                    )}
+                    {d.reason}
+                  </p>
                   {d.referrer_name && (
                     <p className="text-xs text-slate-500 mt-0.5">
                       Olib kelgan: {d.referrer_name}
@@ -220,6 +227,8 @@ function DiscountForm({
   const [kind, setKind] = useState(types[0]?.key ?? "individual");
   const [percent, setPercent] = useState("");
   const [reason, setReason] = useState("");
+  // 2026-08-12: yashirin (individual) chegirma - o'quvchiga ko'rinmaydi
+  const [hidden, setHidden] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [referrer, setReferrer] = useState("");
@@ -258,6 +267,7 @@ function DiscountForm({
         end_date: end || null,
         referrer_student_id: referrer ? Number(referrer) : null,
         staff_user_id: staffId ? Number(staffId) : null,
+        hidden,
       });
       onSaved();
     } catch (e) {
@@ -367,7 +377,26 @@ function DiscountForm({
               placeholder="Nima uchun chegirma berilyapti"
               className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
             />
+            <p className="text-[11px] text-slate-400 mt-1">
+              Sabab va muddat o'quvchi/ota-ona portalida ko'rinadi
+              (yashirin bo'lmasa).
+            </p>
           </div>
+
+          <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={hidden}
+              onChange={(e) => setHidden(e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              Individual (yashirin) chegirma
+              <span className="block text-[11px] text-slate-400">
+                O'quvchi va ota-onaga KO'RINMAYDI — faqat xodimlar ko'radi
+              </span>
+            </span>
+          </label>
 
           <div className="grid grid-cols-2 gap-3">
             <div>

@@ -155,6 +155,33 @@ export default function StudentHome() {
           </Link>
         )}
 
+        {/* --- CHEGIRMA (2026-08-12, Jahongir: "o'quvchiga chegirmani
+            nega olgani va qancha chegirmasi qachongacha borligi
+            ko'rinib tursin"). Yashirin (individual) chegirmalar
+            serverdan umuman kelmaydi. --- */}
+        {((d as any).discounts || []).length > 0 && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+            {((d as any).discounts || []).map((ds: any, i: number) => (
+              <div key={i} className={i > 0 ? "mt-2 pt-2 border-t border-emerald-100" : ""}>
+                <p className="text-sm font-bold text-emerald-800">
+                  🎁 Chegirmangiz:{" "}
+                  {ds.percent
+                    ? `${ds.percent}%`
+                    : `${Math.round(ds.amount || 0).toLocaleString("ru-RU")} so'm`}
+                </p>
+                <p className="text-[12px] text-emerald-700 mt-0.5">
+                  {ds.reason}
+                </p>
+                <p className="text-[11px] text-emerald-600 mt-0.5">
+                  {ds.until
+                    ? `${ds.until.split("-").reverse().join(".")} gacha amal qiladi`
+                    : "Muddatsiz"}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* --- UMUMIY DARAJA: bosilsa ko'nikmalar ochiladi --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           <button

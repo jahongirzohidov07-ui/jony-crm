@@ -447,6 +447,7 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "frozen_until": s.frozen_until.isoformat()
         if s.frozen_until else None,
         "payments": payments,
+        "discounts": _visible_discounts(db, s.id),
         "gamification": gam,
         "xp_history": xp_history,
         "daily_grades": daily_grades,

@@ -417,7 +417,10 @@ def list_discounts(
                   for k, lbl, h in roles.DISCOUNT_TYPES],
         "statuses": [{"key": k, "label": lbl}
                      for k, lbl in roles.DISCOUNT_STATUSES],
-        "max_percent": roles.MAX_TOTAL_DISCOUNT_PERCENT,
+        # Asoschiga 100% gacha ruxsat (2026-08-12), qolganlarga 50%
+        "max_percent": (roles.DISCOUNT_ABSOLUTE_CAP
+                        if user.role == roles.FOUNDER
+                        else roles.MAX_TOTAL_DISCOUNT_PERCENT),
         "can_approve": user.role in roles.DISCOUNT_APPROVE,
         "pending": sum(1 for d in rows if d.status == "pending"),
     }
@@ -445,15 +448,20 @@ def create_discount(
     if payload.kind == "staff_child" and not payload.staff_user_id:
         raise HTTPException(400, "Qaysi xodimning farzandi ekanini tanlang")
 
-    # Jami chegirma chegaradan oshmasin
+    # Jami chegirma chegaradan oshmasin. Oddiy xodimlarga 50%,
+    # ASOSCHIGA 100% gacha (2026-08-12, Jahongir: "100% chegirma
+    # qo'ya olmayapman, ba'zi holatlarda chegirma qo'yiladigan
+    # joylari bor").
+    cap = (roles.DISCOUNT_ABSOLUTE_CAP if user.role == roles.FOUNDER
+           else roles.MAX_TOTAL_DISCOUNT_PERCENT)
     now = _student_discount_percent(db, st)
     add = payload.percent or 0
     if not add and payload.amount and st.group and st.group.monthly_fee:
         add = payload.amount / st.group.monthly_fee * 100
-    if now + add > roles.MAX_TOTAL_DISCOUNT_PERCENT:
+    if now + add > cap:
         raise HTTPException(
             400,
-            f"Jami chegirma {roles.MAX_TOTAL_DISCOUNT_PERCENT}% dan oshmasligi "
+            f"Jami chegirma {cap:.0f}% dan oshmasligi "
             f"kerak. Hozir {now:.0f}%, siz yana {add:.0f}% qo'shyapsiz.")
 
     d = models.Discount(
@@ -466,6 +474,7 @@ def create_discount(
         end_date=payload.end_date,
         referrer_student_id=payload.referrer_student_id,
         staff_user_id=payload.staff_user_id,
+        hidden=1 if payload.hidden else 0,
         requested_by=user.full_name,
         status="pending",
     )

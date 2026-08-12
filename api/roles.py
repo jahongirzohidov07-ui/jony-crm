@@ -1019,6 +1019,10 @@ DISCOUNT_STATUS_LABELS = dict(DISCOUNT_STATUSES)
 # Bitta o'quvchida jami chegirma shundan oshmasin - aks holda o'qish
 # tekinga aylanadi.
 MAX_TOTAL_DISCOUNT_PERCENT = 50.0
+# 2026-08-12, Jahongir: "100% chegirma qo'ya olmayapman" - ODDIY
+# xodimlar uchun chegara 50% ligicha qoladi, lekin ASOSCHI ba'zi
+# holatlarda (yetim, alohida kelishuv...) 100% gacha qo'ya oladi.
+DISCOUNT_ABSOLUTE_CAP = 100.0
 
 
 # =====================================================================

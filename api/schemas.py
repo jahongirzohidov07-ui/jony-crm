@@ -1113,6 +1113,8 @@ class DiscountCreate(BaseModel):
     end_date: Optional[date] = None
     referrer_student_id: Optional[int] = None
     staff_user_id: Optional[int] = None
+    # Individual (yashirin) - o'quvchi/ota-onaga ko'rinmaydi
+    hidden: Optional[bool] = False
 
 
 class DiscountDecision(BaseModel):

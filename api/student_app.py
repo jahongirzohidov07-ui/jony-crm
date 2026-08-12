@@ -133,6 +133,8 @@ def student_home(db: Session = Depends(get_db),
         "name": s.full_name,
         "photo": s.photo,
         "balance": student_balance(db, s.id),
+        # Faol chegirmalar (yashirin/individual bundan MUSTASNO)
+        "discounts": _visible_discounts(db, s.id),
         "group": g.name if g else None,
         "level_label": (g.level if g else None) or s.level,
         "status": s.status,

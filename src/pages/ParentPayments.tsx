@@ -32,6 +32,29 @@ export default function ParentPayments() {
           )}
         </div>
 
+        {/* Chegirma (2026-08-12): sabab va muddat ota-onaga ham ko'rinadi,
+            yashirin (individual) chegirmalar serverdan kelmaydi */}
+        {((d as any).discounts || []).length > 0 && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+            {((d as any).discounts || []).map((ds: Any, i: number) => (
+              <div key={i} className={i > 0 ? "mt-2 pt-2 border-t border-emerald-100" : ""}>
+                <p className="text-sm font-semibold text-emerald-800">
+                  Chegirma:{" "}
+                  {ds.percent
+                    ? `${ds.percent}%`
+                    : `${fmt(ds.amount || 0)} so'm`}
+                </p>
+                <p className="text-xs text-emerald-700 mt-0.5">{ds.reason}</p>
+                <p className="text-[11px] text-emerald-600 mt-0.5">
+                  {ds.until
+                    ? `${ds.until.split("-").reverse().join(".")} gacha`
+                    : "Muddatsiz"}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
           <p className="text-sm font-semibold text-slate-800 mb-3">
             Harakatlar tarixi

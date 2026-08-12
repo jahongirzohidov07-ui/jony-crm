@@ -76,6 +76,8 @@ MIGRATIONS = [
     # yo'qotmaydi), faqat ko'nikma kesimida ko'rinmaydi.
     ("0009_exercise_skill", [
         "ALTER TABLE exercise_results ADD COLUMN skill VARCHAR",
+        # 2026-08-12: yashirin (individual) chegirma
+        "ALTER TABLE discounts ADD COLUMN hidden INTEGER",
     ]),
 ]
 

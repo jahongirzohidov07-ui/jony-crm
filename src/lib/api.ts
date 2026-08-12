@@ -1784,6 +1784,7 @@ export interface CheckResult {
 // ------------------------------------------------------------ Chegirmalar
 export interface DiscountRow {
   id: number;
+  hidden?: boolean;
   student_id: number;
   student_name?: string;
   kind: string;

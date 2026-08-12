@@ -1113,6 +1113,10 @@ class Discount(Base):
     start_date = Column(Date, nullable=True)
     end_date = Column(Date, nullable=True)      # bo'sh = muddatsiz
     status = Column(String, nullable=False, default="pending")
+    # 2026-08-12, Jahongir: "individual ruxsat berilganlarga ko'rinmasin" -
+    # yashirin chegirma o'quvchi/ota-ona portalida KO'RSATILMAYDI,
+    # faqat xodimlarga ko'rinadi.
+    hidden = Column(Integer, default=0)
 
     # Referral: qaysi do'sti olib keldi
     referrer_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)

@@ -1450,13 +1450,43 @@ def _student_discount_percent(db: Session, s: models.Student) -> float:
             total += d.percent
         elif d.amount and fee:
             total += d.amount / fee * 100
-    return min(roles.MAX_TOTAL_DISCOUNT_PERCENT, round(total, 2))
+    # Asoschi 100% gacha qo'ya olgani uchun hisobda ham mutlaq
+    # chegara 100% (oddiy chegirmalar yaratishda baribir 50% da
+    # to'xtatiladi - finance.create_discount).
+    return min(roles.DISCOUNT_ABSOLUTE_CAP, round(total, 2))
+
+def _visible_discounts(db: Session, student_id: int) -> list:
+    """O'quvchi/ota-ona portalida ko'rinadigan chegirmalar.
+
+    2026-08-12, Jahongir: "o'quvchiga chegirmani nega olgani va qancha
+    chegirmasi qachongacha borligi ko'rinib tursin, lekin individual
+    ruxsat berilganlarga ko'rinmasin" - hidden=1 bo'lganlar
+    KO'RSATILMAYDI."""
+    rows = (db.query(models.Discount)
+            .filter(models.Discount.student_id == student_id,
+                    models.Discount.status == "active").all())
+    out = []
+    for d in rows:
+        if getattr(d, "hidden", 0):
+            continue
+        if not _discount_alive(d):
+            continue
+        out.append({
+            "percent": d.percent,
+            "amount": d.amount,
+            "kind_label": roles.DISCOUNT_TYPE_LABELS.get(d.kind, d.kind),
+            "reason": d.reason,
+            "until": d.end_date.isoformat() if d.end_date else None,
+        })
+    return out
+
 
 def _discount_out(db: Session, d: models.Discount) -> dict:
     ref = db.query(models.Student).get(d.referrer_student_id) if d.referrer_student_id else None
     emp = db.query(models.User).get(d.staff_user_id) if d.staff_user_id else None
     return {
         "id": d.id,
+        "hidden": bool(getattr(d, "hidden", 0)),
         "student_id": d.student_id,
         "kind": d.kind,
         "kind_label": roles.DISCOUNT_TYPE_LABELS.get(d.kind, d.kind),
@@ -4241,6 +4271,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "_visible_discounts",
     "_balances_bulk", "_neg_since_bulk", "_aging_bucket",
     "DEBT_AGING_BUCKETS", "_risk_scan",
     "_discipline_stats", "_discipline_one", "_fmt_delay",

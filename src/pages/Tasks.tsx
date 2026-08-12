@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { api, type TaskList, type TaskRow, type User } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TASK_ACCESS, can } from "../lib/roles";
+import { TASK_ACCESS, DISCOUNT_APPROVE, can } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 
 const TONE: Record<string, string> = {
@@ -421,6 +421,12 @@ function TaskBody({
         </p>
       )}
 
+      {/* Chegirma so'rovini VAZIFANING O'ZIDA tasdiqlash (2026-08-12,
+          Jahongir: "sorovni kelgan joyida tasdiqlaydigan qilaylik,
+          men uni oquvchini topib profiliga kirib osha yerdan
+          tasdiqlashim kerak ekan"). */}
+      <DiscountTaskActions task={task} onDone={onDone} />
+
       {task.meeting && (
         <p className="text-xs text-slate-500">
           Majlis: <span className="text-slate-700">{task.meeting}</span>
@@ -761,6 +767,77 @@ function MeetingForm({
         >
           {saving ? "Saqlanmoqda..." : "Vazifalarga aylantirish"}
         </button>
+      </div>
+    </div>
+  );
+}
+
+
+/**
+ * Vazifa "Chegirma so'rovi #12 — Ism" bo'lsa, shu yerning o'zida
+ * tasdiqlash/rad etish tugmalari chiqadi. Foydalanuvchi o'quvchini
+ * qidirib, kartasiga kirib o'tirmasin.
+ */
+function DiscountTaskActions({
+  task,
+  onDone,
+}: {
+  task: TaskRow;
+  onDone: () => void;
+}) {
+  const { user } = useAuth();
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  const m = /Chegirma so'rovi #(\d+)/.exec(task.title || "");
+  const id = m ? Number(m[1]) : null;
+  const canApprove = can(user?.role, DISCOUNT_APPROVE);
+  if (!id || !canApprove || task.status === "done") return null;
+
+  const decide = async (approve: boolean) => {
+    let reason: string | undefined;
+    if (!approve) {
+      const r = prompt("Rad etish sababi:");
+      if (r === null) return;
+      reason = r.trim() || undefined;
+    }
+    setBusy(true);
+    try {
+      await api.post(`/discounts/${id}/approve`, { approve, reason });
+      // Qaror qabul qilindi - vazifa ham yopiladi.
+      await api.put(`/tasks/${task.id}`, {
+        status: "done",
+        result: approve ? "Chegirma tasdiqlandi" : "Chegirma rad etildi",
+      });
+      setMsg(approve ? "Tasdiqlandi ✓" : "Rad etildi");
+      onDone();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="bg-violet-50 border border-violet-200 rounded-lg p-3">
+      <p className="text-xs text-violet-900 mb-2">
+        Chegirma so'rovi — shu yerdan hal qilishingiz mumkin
+      </p>
+      <div className="flex items-center gap-2">
+        <button
+          disabled={busy}
+          onClick={() => decide(true)}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+        >
+          Tasdiqlash
+        </button>
+        <button
+          disabled={busy}
+          onClick={() => decide(false)}
+          className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-50"
+        >
+          Rad etish
+        </button>
+        {msg && <span className="text-xs text-slate-600">{msg}</span>}
       </div>
     </div>
   );

@@ -448,12 +448,22 @@ def create_discount(
     if payload.kind == "staff_child" and not payload.staff_user_id:
         raise HTTPException(400, "Qaysi xodimning farzandi ekanini tanlang")
 
-    # Jami chegirma chegaradan oshmasin. Oddiy xodimlarga 50%,
-    # ASOSCHIGA 100% gacha (2026-08-12, Jahongir: "100% chegirma
-    # qo'ya olmayapman, ba'zi holatlarda chegirma qo'yiladigan
-    # joylari bor").
-    cap = (roles.DISCOUNT_ABSOLUTE_CAP if user.role == roles.FOUNDER
-           else roles.MAX_TOTAL_DISCOUNT_PERCENT)
+    # Jami chegirma chegaradan oshmasin.
+    #
+    # 2026-08-12, Jahongir: "individual ruxsat skidkasida xodim
+    # xohlagan foizini yozib sorov jonatishi mumkin va tasdiqlangandan
+    # keyingina ishlayveradi". Ya'ni SO'RASH erkin - chegara TASDIQDA
+    # ishlaydi. Shuning uchun:
+    #   - tasdiqlash huquqi bor odam o'zi yozsa (darrov amalda
+    #     bo'ladi) - asoschiga 100%, qolganlariga 50%;
+    #   - oddiy xodim SO'ROV yuborsa - 100% gacha yozaveradi, chunki
+    #     u baribir tasdiqsiz ishlamaydi.
+    can_approve_now = user.role in tuple(roles.DISCOUNT_APPROVE)
+    if not can_approve_now:
+        cap = roles.DISCOUNT_ABSOLUTE_CAP
+    else:
+        cap = (roles.DISCOUNT_ABSOLUTE_CAP if user.role == roles.FOUNDER
+               else roles.MAX_TOTAL_DISCOUNT_PERCENT)
     now = _student_discount_percent(db, st)
     add = payload.percent or 0
     if not add and payload.amount and st.group and st.group.monthly_fee:
@@ -512,6 +522,24 @@ def approve_discount(
     if d.status not in ("pending", "rejected"):
         raise HTTPException(400, "Bu chegirma allaqachon hal qilingan")
     st = db.query(models.Student).get(d.student_id)
+    # Chegara aynan SHU YERDA ishlaydi: 50% dan oshiq chegirmani
+    # faqat asoschi tasdiqlay oladi (so'rash hammaga ochiq).
+    if payload.approve and st:
+        add = d.percent or 0
+        if not add and d.amount and st.group and st.group.monthly_fee:
+            add = d.amount / st.group.monthly_fee * 100
+        now = _student_discount_percent(db, st)
+        if (now + add > roles.MAX_TOTAL_DISCOUNT_PERCENT
+                and user.role != roles.FOUNDER):
+            raise HTTPException(
+                400,
+                f"Jami chegirma {roles.MAX_TOTAL_DISCOUNT_PERCENT:.0f}% "
+                f"dan oshadi ({now:.0f}% + {add:.0f}%) — bunday "
+                f"chegirmani faqat asoschi tasdiqlaydi.")
+        if now + add > roles.DISCOUNT_ABSOLUTE_CAP:
+            raise HTTPException(
+                400, f"Jami chegirma {roles.DISCOUNT_ABSOLUTE_CAP:.0f}% "
+                     f"dan oshib ketadi")
     d.status = "active" if payload.approve else "rejected"
     d.approved_by = user.full_name
     d.approved_at = datetime.utcnow()

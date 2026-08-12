@@ -207,6 +207,53 @@ ck("birinchisining oilasida ikkinchisi bor",
    [x["id"] for x in p12["siblings"]], [X2])
 ck("oilaviy chegirma ikki marta hisoblanmadi", d12["total_percent"], 10.0)
 
+print("\n=== 13. Xodim XOHLAGAN foizni so'rashi mumkin ===")
+db = SessionLocal()
+vip = models.Student(full_name="Mardonov Jasur", branch_id=BID,
+                     group_id=GID, status="active")
+db.add(vip); db.commit()
+VIP = vip.id
+db.close()
+r13 = client.post("/api/discounts", headers=A, json={
+    "student_id": VIP, "kind": "individual", "percent": 100,
+    "reason": "Mardonning jiyani, asoschi ruxsat bergan"})
+ck("administrator 100% SO'RAY oladi", r13.status_code, 200)
+ck("lekin darrov ishlamaydi", r13.json()["status"], "pending")
+ck("bugungi jami chegirma hali 0%", client.get(
+    f"/api/students/{VIP}/discounts", headers=A).json()["total_percent"], 0)
+D13 = r13.json()["id"]
+
+print("\n=== 14. 50% dan oshig'ini faqat ASOSCHI tasdiqlaydi ===")
+r14 = client.post(f"/api/discounts/{D13}/approve", headers=FR,
+                  json={"approve": True})
+ck("filial rahbari tasdiqlay olmaydi", r14.status_code, 400)
+ck("hali ham kutmoqda", client.get(
+    f"/api/students/{VIP}/discounts", headers=A).json()["total_percent"], 0)
+r14b = client.post(f"/api/discounts/{D13}/approve", headers=F,
+                   json={"approve": True})
+ck("asoschi tasdiqladi", r14b.status_code, 200)
+ck("endi 100% ishlayapti", client.get(
+    f"/api/students/{VIP}/discounts", headers=A).json()["total_percent"], 100.0)
+ck("to'lanadigan 0 so'm", client.get(
+    f"/api/students/{VIP}/pricing", headers=A).json()["final_fee"], 0.0)
+
+print("\n=== 15. 50% ichidagini filial rahbari ham tasdiqlaydi ===")
+db = SessionLocal()
+oq = models.Student(full_name="Sattorov Bekzod", branch_id=BID,
+                    group_id=GID, status="active")
+db.add(oq); db.commit()
+OQ = oq.id
+db.close()
+r15 = client.post("/api/discounts", headers=A, json={
+    "student_id": OQ, "kind": "grant", "percent": 30,
+    "reason": "a'lochi"})
+D15 = r15.json()["id"]
+r15b = client.post(f"/api/discounts/{D15}/approve", headers=FR,
+                   json={"approve": True})
+ck("filial rahbari 30% ni tasdiqladi", r15b.status_code, 200)
+ck("30% ishlayapti", client.get(
+    f"/api/students/{OQ}/discounts", headers=A).json()["total_percent"], 30.0)
+
 print()
 if fails:
     print(f"XATOLAR ({len(fails)}): " + ", ".join(fails))

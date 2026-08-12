@@ -1405,7 +1405,8 @@ def _notify_discount_approvers(db: Session, d, st, extra: str = "") -> None:
             f"Sabab: {d.reason or '—'}\n"
             f"So'ragan: {d.requested_by or '—'}\n"
             + (extra + "\n" if extra else "")
-            + "Tasdiqlash: o'quvchi kartasi > Narx va chegirma.")
+            + "Tasdiqlash: shu vazifaning ichidagi tugmadan yoki "
+              "bosh sahifadagi \"Chegirma so'rovlari\" blokidan.")
     seen = set()
     for r in roles.DISCOUNT_APPROVE:
         q = db.query(models.User).filter(models.User.role == r,

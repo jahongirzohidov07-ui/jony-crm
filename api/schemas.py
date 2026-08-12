@@ -486,6 +486,17 @@ class ExpenseCreate(BaseModel):
     branch_id: Optional[int] = None
     channel: Optional[str] = None
     method: Optional[str] = "cash"
+    # OYLIK yo'li (2026-08-12, Jahongir): xodim tanlanadi. Ustoz
+    # bo'lsa teacher_id, ma'muriy xodim bo'lsa staff_user_id.
+    teacher_id: Optional[int] = None
+    staff_user_id: Optional[int] = None
+    period: Optional[str] = None          # "YYYY-MM" — qaysi oy uchun
+    # SONI va mahsulot (kitob/marker...): ombor qoldig'i shu bilan
+    # to'ldiriladi.
+    qty: Optional[float] = None
+    consumable_id: Optional[int] = None
+    # Ro'yxatda yo'q kitob nomi — yangi mahsulot ochiladi
+    new_item_name: Optional[str] = None
 
 
 class ExpenseUpdate(BaseModel):
@@ -511,6 +522,9 @@ class ExpenseOut(BaseModel):
     method: Optional[str] = None
     created_by: Optional[str] = None
     created_at: datetime
+    staff_user_id: Optional[int] = None
+    qty: Optional[float] = None
+    consumable_id: Optional[int] = None
 
 
 class DashboardStats(BaseModel):

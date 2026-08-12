@@ -144,6 +144,9 @@ def _ensure_new_columns():
         # To'lov qaysi kanal orqali kelgani (naqd/plastik/terminal).
         "ALTER TABLE payments ADD COLUMN method VARCHAR",
         "ALTER TABLE payments ADD COLUMN entered_at TIMESTAMP",
+        "ALTER TABLE expenses ADD COLUMN staff_user_id INTEGER",
+        "ALTER TABLE expenses ADD COLUMN qty FLOAT",
+        "ALTER TABLE expenses ADD COLUMN consumable_id INTEGER",
         # LTV hisoboti uchun - o'quvchi qachon ketgani.
         "ALTER TABLE students ADD COLUMN left_date DATE",
         # Arxivdagi eski o'quvchilarda ketgan sana yo'q edi; ularni

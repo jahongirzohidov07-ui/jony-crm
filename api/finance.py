@@ -58,6 +58,111 @@ def list_expenses(
         q = q.filter(models.Expense.date >= start, models.Expense.date <= end)
     return q.order_by(models.Expense.date.desc(), models.Expense.id.desc()).all()
 
+@router.get("/api/expenses/staff")
+def expense_staff_list(
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
+):
+    """OYLIK berish uchun xodimlar ro'yxati — filial kesimida.
+
+    2026-08-12, Jahongir: "oylikni tanlasa shu filial xodimlari chiqib
+    kelsin, hammasi, supportdan tortib examiner yoki ustozgacha".
+
+    Ustozlar (support va examiner ham Teacher yozuvida bo'ladi)
+    alohida belgilanadi: ularga berilgan pul TeacherPayment jadvaliga
+    tushadi va ustozning oylik kartasida ko'rinadi. Qolgan xodimlar
+    (administrator, HR, marketolog...) xarajat sifatida yoziladi va
+    xodim kartasida ko'rinadi.
+    """
+    tq = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
+                         branch_id)
+    teachers = tq.filter(models.Teacher.is_active == 1).all()
+    uq = scope_to_branch(db.query(models.User), models.User, user, branch_id)
+    users = uq.filter(models.User.is_active == 1).all()
+
+    rows = []
+    linked = set()
+    for t in teachers:
+        u = db.query(models.User).get(t.user_id) if t.user_id else None
+        if u:
+            linked.add(u.id)
+        rows.append({
+            "key": f"t{t.id}",
+            "teacher_id": t.id,
+            "user_id": t.user_id,
+            "name": t.full_name,
+            "role": u.role if u else roles.TEACHER,
+            "role_label": roles.UZ_LABELS.get(
+                u.role if u else roles.TEACHER, "O'qituvchi"),
+            "branch": t.branch.name if t.branch else None,
+            "to_salary_card": True,
+        })
+    for u in users:
+        if u.id in linked or u.role in (roles.STUDENT, roles.PARENT):
+            continue
+        rows.append({
+            "key": f"u{u.id}",
+            "teacher_id": None,
+            "user_id": u.id,
+            "name": u.full_name or u.username,
+            "role": u.role,
+            "role_label": roles.UZ_LABELS.get(u.role, u.role),
+            "branch": u.branch.name if u.branch else None,
+            "to_salary_card": False,
+        })
+    rows.sort(key=lambda r: (r["role_label"], r["name"]))
+    return {"rows": rows}
+
+
+@router.get("/api/expenses/staff-salaries")
+def staff_salaries(
+    year: Optional[int] = None,
+    month: Optional[int] = None,
+    user_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(
+        *roles.FINANCE_ACCESS, *roles.SALARY_VIEW_ALL)),
+):
+    """Ma'muriy xodimlarga berilgan oyliklar (xarajat sifatida
+    yozilganlari). Ustozlarniki bu yerda emas — ular oylik kartasida.
+
+    Jahongir, 2026-08-12: "nargi tomonlardagi joylarda ham oylik
+    berilganligi korinsin".
+    """
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user)
+    q = q.filter(models.Expense.staff_user_id.isnot(None),
+                 models.Expense.date >= start,
+                 models.Expense.date <= end)
+    if user_id:
+        q = q.filter(models.Expense.staff_user_id == user_id)
+    rows = []
+    for e in q.order_by(models.Expense.date.desc()).all():
+        u = db.query(models.User).get(e.staff_user_id)
+        rows.append({
+            "id": e.id,
+            "date": e.date.isoformat(),
+            "user_id": e.staff_user_id,
+            "name": (u.full_name or u.username) if u else "—",
+            "role_label": roles.UZ_LABELS.get(u.role, u.role) if u else "—",
+            "amount": e.amount,
+            "method": e.method,
+            "method_label": roles.PAYMENT_METHOD_LABELS.get(e.method, e.method),
+            "branch": e.branch.name if e.branch else None,
+            "note": e.note,
+            "created_by": e.created_by,
+        })
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "total": round(sum(r["amount"] for r in rows), 2),
+        "count": len(rows),
+    }
+
+
 @router.post("/api/expenses", response_model=schemas.ExpenseOut)
 def create_expense(
     payload: schemas.ExpenseCreate,
@@ -69,20 +174,96 @@ def create_expense(
     if payload.amount <= 0:
         raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
 
+    branch_id = (payload.branch_id if payload.branch_id is not None
+                 else user.branch_id)
+
+    # ---- OYLIK: ustozga berilsa, ustozning oylik kartasiga yoziladi.
+    # Xarajatlar jadvaliga QO'SHILMAYDI: P&L da ustozlar oyligi
+    # TeacherPayment dan allaqachon hisoblanadi, aks holda ikki marta
+    # ketardi.
+    if payload.teacher_id:
+        if user.role not in tuple(roles.SALARY_PAY):
+            raise HTTPException(403, "Oylik berish huquqi yo'q")
+        t = db.query(models.Teacher).get(payload.teacher_id)
+        if not t:
+            raise HTTPException(404, "Xodim topilmadi")
+        tp = models.TeacherPayment(
+            teacher_id=t.id, amount=abs(payload.amount), kind="salary",
+            period=payload.period or payload.date.isoformat()[:7],
+            paid_on=payload.date, method=payload.method or "cash",
+            note=payload.note, created_by=user.full_name)
+        db.add(tp); db.commit(); db.refresh(tp)
+        audit.log(db, user, entity="teacher", action="salary_change",
+                  entity_id=t.id, entity_label=t.full_name,
+                  branch_id=t.branch_id, field="Oylik",
+                  new_value=f"{payload.amount:,.0f}".replace(",", " "),
+                  note="Moliya > Xarajatlar orqali", commit=True)
+        # Javob shakli bir xil bo'lishi uchun "soxta" xarajat qaytaramiz
+        return schemas.ExpenseOut(
+            id=-tp.id, date=tp.paid_on, category="teacher_salary",
+            amount=tp.amount, note=f"{t.full_name} — oylik",
+            branch_id=t.branch_id, branch=None, channel=None,
+            method=tp.method, created_by=tp.created_by,
+            created_at=tp.created_at or datetime.utcnow())
+
+    # ---- KITOB/MARKER va boshqa sanaladigan mahsulot: ombor kirimi
+    cons = None
+    if payload.consumable_id:
+        cons = db.query(models.Consumable).get(payload.consumable_id)
+        if not cons:
+            raise HTTPException(404, "Mahsulot topilmadi")
+    elif (payload.new_item_name or "").strip() and payload.category == "book":
+        cons = models.Consumable(
+            name=payload.new_item_name.strip(), kind="book",
+            branch_id=branch_id, qty=0, min_qty=0, unit="dona")
+        db.add(cons); db.commit(); db.refresh(cons)
+
+    staff_name = None
+    if payload.staff_user_id:
+        su = db.query(models.User).get(payload.staff_user_id)
+        if not su:
+            raise HTTPException(404, "Xodim topilmadi")
+        if user.role not in tuple(roles.SALARY_PAY):
+            raise HTTPException(403, "Oylik berish huquqi yo'q")
+        staff_name = su.full_name or su.username
+
+    note = payload.note
+    if staff_name:
+        note = f"{staff_name} — oylik" + (f" · {note}" if note else "")
+    if cons:
+        qty_txt = f"{payload.qty:g} ta " if payload.qty else ""
+        note = f"{qty_txt}{cons.name}" + (f" · {note}" if note else "")
+
     exp = models.Expense(
         date=payload.date,
         category=payload.category,
         amount=abs(payload.amount),
-        note=payload.note,
-        branch_id=payload.branch_id if payload.branch_id is not None else user.branch_id,
+        note=note,
+        branch_id=branch_id,
         # Kanal faqat reklama xarajatida ma'noga ega - CAC shundan chiqadi.
         channel=payload.channel,
         method=payload.method or "cash",
+        staff_user_id=payload.staff_user_id,
+        qty=payload.qty,
+        consumable_id=cons.id if cons else None,
         created_by=user.full_name,
     )
     db.add(exp)
     db.commit()
     db.refresh(exp)
+
+    # Ombor: sotib olingan mahsulot QOLDIQQA qo'shiladi — "kitob
+    # olindi, lekin omborda ko'rinmadi" degan holat bo'lmasin
+    # (Jahongir: "bu yoqda oborda ham korinsin keyin").
+    if cons and payload.qty:
+        db.add(models.StockMove(
+            consumable_id=cons.id, delta=abs(payload.qty), reason="in",
+            note=f"Xarajatdan: {exp.note or ''}".strip(),
+            created_by=user.full_name))
+        cons.qty = (cons.qty or 0) + abs(payload.qty)
+        if payload.amount and payload.qty:
+            cons.unit_price = round(abs(payload.amount) / abs(payload.qty), 2)
+        db.commit()
     audit.log(db, user, entity="expense", action="create", entity_id=exp.id,
               entity_label=exp.note or exp.category, field=exp.category,
               new_value=exp.amount, branch_id=exp.branch_id, commit=True)

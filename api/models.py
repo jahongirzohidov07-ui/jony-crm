@@ -461,9 +461,23 @@ class Expense(Base):
     # Qaysi usulda to'landi - naqd/click/terminal. Kassa qoldig'i usul
     # kesimida to'g'ri chiqishi uchun kerak.
     method = Column(String, nullable=True, default="cash")
+    # OYLIK: qaysi xodimga berilgani (ustoz bo'lmagan xodimlar uchun —
+    # ustoznikilar TeacherPayment jadvalida). Shu bog'lanish tufayli
+    # xodim kartasida "oylik berilgan" ko'rinadi (Jahongir,
+    # 2026-08-12: "nargi tomonlardagi joylarda ham oylik berilganligi
+    # korinsin").
+    staff_user_id = Column(Integer, ForeignKey("users.id"), nullable=True,
+                           index=True)
+    # SONI va qaysi mahsulot: "3 ta Round-up 5" kabi. Kitob/marker
+    # olinganda ombor qoldig'i shu orqali oshadi.
+    qty = Column(Float, nullable=True)
+    consumable_id = Column(Integer, ForeignKey("consumables.id"),
+                           nullable=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     branch = relationship("Branch")
+    staff = relationship("User", foreign_keys=[staff_user_id])
+    consumable = relationship("Consumable")
 
 
 class TeacherPayout(Base):

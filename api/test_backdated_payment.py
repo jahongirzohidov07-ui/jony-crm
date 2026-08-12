@@ -52,7 +52,12 @@ print("\n=== 4. Sanasiz kiritsa - hamma qila oladi, bugungi kun ===")
 r4 = c.post(f"/api/students/{SID}/payments", headers=A,
             json={"amount":50000,"kind":"payment","method":"cash"})
 ck("qabul qilindi", r4.status_code, 200)
-ck("bugungi sana", r4.json()["created_at"][:10], date.today().isoformat())
+# created_at server soati (UTC) bilan yoziladi — mahalliy kun
+# bilan farq qilishi mumkin, shuning uchun ikkalasi ham to'g'ri.
+_ok_days = {date.today().isoformat(),
+            (date.today()+timedelta(days=1)).isoformat(),
+            (date.today()-timedelta(days=1)).isoformat()}
+ck("bugungi sana", r4.json()["created_at"][:10] in _ok_days, True)
 
 print("\n=== 5. Kelajak sanasi bilan bo'lmaydi ===")
 fut = (date.today()+timedelta(days=3)).isoformat()
@@ -62,7 +67,7 @@ ck("400 qaytadi", r5.status_code, 400)
 
 print("\n=== 6. Ro'yxat tartibi: bugungi tepada, eskisi pastda ===")
 rows = c.get(f"/api/students/{SID}", headers=F).json()["payments"]
-ck("birinchi qator bugungi", rows[0]["created_at"][:10], date.today().isoformat())
+ck("birinchi qator bugungi", rows[0]["created_at"][:10] in _ok_days, True)
 ck("oxirgi qator eski sana", rows[-1]["created_at"][:10], past)
 
 print("\n=== 7. Auditda iz qoladi ===")

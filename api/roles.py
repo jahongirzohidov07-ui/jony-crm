@@ -214,6 +214,11 @@ EXPENSE_CATEGORY_DEFS = [
     ("marker", "Marker / doska", "office"),
     ("stationery", "Boshqa kanstovar", "office"),
     ("equipment", "Jihoz", "office"),
+    # 2026-08-12, Jahongir: "ichiga ishxona telefoni uchun ham alohida,
+    # kitobga alohida, vlajniy alohida tanlaydigan bo'lsin".
+    ("wet_wipes", "Vlajniy salfetka", "office"),
+    ("book", "Kitob", "office"),
+    ("office_phone", "Ishxona telefoni", "communal"),
 
     ("admin_salary", "Ma'muriy xodim oyligi", "admin_salary"),
     ("support_salary", "Farrosh / qorovul", "admin_salary"),
@@ -227,6 +232,17 @@ EXPENSE_CATEGORY_DEFS = [
 ]
 
 EXPENSE_CATEGORIES = [c for c, _, _ in EXPENSE_CATEGORY_DEFS]
+
+# SONI so'raladigan xarajatlar. "3 ta vlajniy 45 000 so'm" deb yozilsa,
+# keyin "oyiga nechta marker ketyapti" degan savolga javob bor
+# (Jahongir, 2026-08-12: "keyin sonini qoshadigan bo'lsin").
+EXPENSE_COUNTABLE = [
+    "book", "wet_wipes", "paper", "marker", "stationery",
+    "cooler_water", "printer_refill",
+]
+# Oylik sifatida yoziladigan kategoriyalar — ular "Oylik" yo'lidan
+# keladi va xodimga bog'lanadi.
+EXPENSE_SALARY_CATEGORIES = ["admin_salary", "support_salary", "salary"]
 EXPENSE_CATEGORY_LABELS = {c: lbl for c, lbl, _ in EXPENSE_CATEGORY_DEFS}
 EXPENSE_CATEGORY_GROUP = {c: g for c, _, g in EXPENSE_CATEGORY_DEFS}
 

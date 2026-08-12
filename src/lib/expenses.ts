@@ -40,6 +40,7 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
   { key: "gas", label: "Gaz", group: "communal" },
   { key: "water_main", label: "Vodoprovod suv", group: "communal" },
   { key: "internet", label: "Internet / aloqa", group: "communal" },
+  { key: "office_phone", label: "Ishxona telefoni", group: "communal" },
   { key: "utilities", label: "Kommunal (umumiy)", group: "communal", legacy: true },
 
   { key: "cooler_water", label: "Kuler suvi", group: "office" },
@@ -48,6 +49,9 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
   { key: "marker", label: "Marker / doska", group: "office" },
   { key: "stationery", label: "Boshqa kanstovar", group: "office" },
   { key: "equipment", label: "Jihoz", group: "office" },
+  // 2026-08-12, Jahongir: vlajniy, kitob va ishxona telefoni alohida
+  { key: "wet_wipes", label: "Vlajniy salfetka", group: "office" },
+  { key: "book", label: "Kitob", group: "office" },
 
   { key: "admin_salary", label: "Ma'muriy xodim oyligi", group: "admin_salary" },
   { key: "support_salary", label: "Farrosh / qorovul", group: "admin_salary" },
@@ -80,6 +84,20 @@ export function categoriesByGroup() {
       items: ACTIVE_CATEGORIES.filter((c) => c.group === g.key),
     }))
     .filter((g) => g.items.length > 0);
+}
+
+/**
+ * SONI so'raladigan xarajatlar (Jahongir, 2026-08-12: "keyin sonini
+ * qoshadigan bo'lsin masalan, list vlajniy, kitob, markerlarni
+ * tanlaganda"). api/roles.py EXPENSE_COUNTABLE bilan bir xil.
+ */
+export const COUNTABLE_CATEGORIES = [
+  "book", "wet_wipes", "paper", "marker", "stationery",
+  "cooler_water", "printer_refill",
+];
+
+export function isCountable(key?: string | null): boolean {
+  return !!key && COUNTABLE_CATEGORIES.includes(key);
 }
 
 export const MONTHS = [

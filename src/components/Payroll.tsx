@@ -428,15 +428,17 @@ function PayrollTable({ url, title, hint }: {
 
 /** Moliya > Oyliklar: examiner va support teacher bir joyda. */
 export function PayrollTab() {
-  const [sub, setSub] = useState<"examiner" | "support" | "grades">(
-    "examiner"
-  );
+  const [sub, setSub] =
+    useState<"examiner" | "support" | "staff" | "grades">("examiner");
   const SUBS: {
-    key: "examiner" | "support" | "grades";
+    key: "examiner" | "support" | "staff" | "grades";
     label: string;
   }[] = [
     { key: "examiner", label: "Examiner oyliklari" },
     { key: "support", label: "Support teacher oyliklari" },
+    // 2026-08-12, Jahongir: Moliya > Xarajatlardan "Oylik" berilsa,
+    // shu yerda ham ko'rinib tursin.
+    { key: "staff", label: "Ma'muriy xodimlar" },
     { key: "grades", label: "Darajalar" },
   ];
 
@@ -475,9 +477,92 @@ export function PayrollTab() {
                 o'quvchi x 0.20 + test koef x 0.50) x 10 000 so'm.
                 Volontyorga oylik berilmaydi."
         />
+      ) : sub === "staff" ? (
+        <StaffSalaryTable />
       ) : (
         <StaffGradesTab />
       )}
+    </div>
+  );
+}
+
+/**
+ * Ma'muriy xodimlarga berilgan oyliklar — Moliya > Xarajatlar
+ * bo'limidan "Oylik" tanlab kiritilganlari (Jahongir, 2026-08-12:
+ * "nargi tomonlardagi joylarda ham oylik berilganligi korinsin").
+ * Ustozlarniki bu yerda emas: ular o'z oylik kartasida.
+ */
+function StaffSalaryTable() {
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [d, setD] = useState<{
+    rows: {
+      id: number; date: string; name: string; role_label: string;
+      amount: number; method_label?: string | null;
+      branch?: string | null; note?: string | null;
+      created_by?: string | null;
+    }[];
+    total: number; count: number;
+  } | null>(null);
+
+  useEffect(() => {
+    api
+      .get<typeof d>(`/expenses/staff-salaries?year=${year}&month=${month}`)
+      .then(setD)
+      .catch(() => setD(null));
+  }, [year, month]);
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <PeriodPicker
+          year={year} month={month} onYear={setYear} onMonth={setMonth}
+        />
+        <span className="text-sm text-slate-500">
+          {d ? `${d.count} ta to'lov · ${formatSom(d.total)}` : ""}
+        </span>
+      </div>
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+            <tr>
+              <th className="text-left px-4 py-3 font-medium">Sana</th>
+              <th className="text-left px-4 py-3 font-medium">Xodim</th>
+              <th className="text-left px-4 py-3 font-medium">Lavozim</th>
+              <th className="text-left px-4 py-3 font-medium">Filial</th>
+              <th className="text-left px-4 py-3 font-medium">Usul</th>
+              <th className="text-left px-4 py-3 font-medium">Kim berdi</th>
+              <th className="text-right px-4 py-3 font-medium">Summa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(!d || d.rows.length === 0) && (
+              <tr>
+                <td colSpan={7} className="px-4 py-6 text-center text-slate-400">
+                  Bu oyda ma'muriy xodimlarga oylik berilmagan.
+                </td>
+              </tr>
+            )}
+            {d?.rows.map((r) => (
+              <tr key={r.id} className="border-t border-slate-100">
+                <td className="px-4 py-3 text-slate-600">{formatDate(r.date)}</td>
+                <td className="px-4 py-3 text-slate-800">{r.name}</td>
+                <td className="px-4 py-3 text-slate-500">{r.role_label}</td>
+                <td className="px-4 py-3 text-slate-500">{r.branch || "—"}</td>
+                <td className="px-4 py-3 text-slate-500">
+                  {r.method_label || "—"}
+                </td>
+                <td className="px-4 py-3 text-slate-500">
+                  {r.created_by || "—"}
+                </td>
+                <td className="px-4 py-3 text-right font-medium text-slate-800">
+                  {formatSom(r.amount)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

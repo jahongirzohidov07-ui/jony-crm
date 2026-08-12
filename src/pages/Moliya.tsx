@@ -25,6 +25,7 @@ import {
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
+  isCountable,
 } from "../lib/expenses";
 import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
@@ -632,6 +633,19 @@ function PnlTab() {
 }
 
 // -------------------------------------------------------------- Xarajatlar
+/** Oylik beriladigan xodim (ustoz ham, ma'muriy xodim ham). */
+type StaffPayee = {
+  key: string;
+  teacher_id: number | null;
+  user_id: number | null;
+  name: string;
+  role_label: string;
+  branch?: string | null;
+  to_salary_card: boolean;
+};
+
+const EXPENSE_SALARY_KEYS = ["admin_salary", "support_salary", "salary"];
+
 function ExpenseForm({
   branches,
   defaultBranchId,
@@ -675,25 +689,74 @@ function ExpenseForm({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // ---- IKKI YO'L: OYLIK yoki XARAJAT (Jahongir, 2026-08-12:
+  // "bitta tanlaydigan qilish kerak unda 2ta variant boladi oylik
+  // yoki xarajat").
+  const [mode, setMode] = useState<"salary" | "expense">(
+    initial && EXPENSE_SALARY_KEYS.includes(initial.category)
+      ? "salary" : "expense");
+  const [staff, setStaff] = useState<StaffPayee[]>([]);
+  const [payee, setPayee] = useState<StaffPayee | null>(null);
+  const [staffQ, setStaffQ] = useState("");
+  // Soni va kitob
+  const [qty, setQty] = useState("");
+  const [books, setBooks] = useState<{ id: number; name: string; qty: number }[]>([]);
+  const [bookId, setBookId] = useState("");
+  const [newBook, setNewBook] = useState("");
+
+  useEffect(() => {
+    if (mode !== "salary" || staff.length) return;
+    api.get<{ rows: StaffPayee[] }>(
+      `/expenses/staff${branchId ? `?branch_id=${branchId}` : ""}`)
+      .then((r) => setStaff(r.rows || []))
+      .catch(() => setStaff([]));
+  }, [mode, branchId]);
+
+  useEffect(() => {
+    if (category !== "book" || books.length) return;
+    api.get<{ id: number; name: string; qty: number }[]>("/consumables/books")
+      .then(setBooks)
+      .catch(() => setBooks([]));
+  }, [category]);
+
   async function save() {
     const value = Number(amount);
     if (!value || value <= 0) {
       setError("To'g'ri summa kiriting");
       return;
     }
+    if (mode === "salary" && !payee) {
+      setError("Kimga oylik berilayotganini tanlang");
+      return;
+    }
+    if (mode === "expense" && category === "book" && !bookId && !newBook.trim()) {
+      setError("Qaysi kitob ekanini tanlang");
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
+      const salary = mode === "salary";
       const body = {
         date,
-        category,
+        category: salary ? "admin_salary" : category,
         amount: value,
         note: note || null,
         method,
         // Kanal faqat reklama xarajatida ma'noga ega - CAC shundan
         // hisoblanadi. Boshqa turda tozalab yuboramiz.
-        channel: categoryGroup(category) === "marketing" ? channel || null : null,
+        channel: !salary && categoryGroup(category) === "marketing"
+          ? channel || null : null,
         branch_id: branchId ? Number(branchId) : null,
+        teacher_id: salary ? payee?.teacher_id ?? null : null,
+        staff_user_id: salary && !payee?.teacher_id
+          ? payee?.user_id ?? null : null,
+        period: salary ? date.slice(0, 7) : null,
+        qty: !salary && qty ? Number(qty) : null,
+        consumable_id: !salary && category === "book" && bookId
+          ? Number(bookId) : null,
+        new_item_name: !salary && category === "book" && !bookId
+          ? newBook.trim() || null : null,
       };
       if (editing) await api.put(`/expenses/${initial!.id}`, body);
       else await api.post("/expenses", body);
@@ -711,7 +774,9 @@ function ExpenseForm({
       <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 max-h-[88vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-slate-900">
-            {editing ? "Xarajatni tahrirlash" : "Yangi xarajat"}
+            {editing
+              ? "Xarajatni tahrirlash"
+              : mode === "salary" ? "Oylik berish" : "Yangi xarajat"}
           </h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={18} />
@@ -719,6 +784,100 @@ function ExpenseForm({
         </div>
 
         <div className="space-y-4">
+          {/* 1-QADAM: oylik yoki xarajat */}
+          <div className="grid grid-cols-2 gap-2">
+            {([
+              ["salary", "Oylik", "Xodimga berilgan pul"],
+              ["expense", "Xarajat", "Ijara, kommunal, kanstovar…"],
+            ] as const).map(([k, label, hint]) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => { setMode(k); setError(null); }}
+                className={`rounded-xl border p-3 text-left transition ${
+                  mode === k
+                    ? "bg-brand-50 border-brand-400"
+                    : "bg-white border-slate-200 hover:border-slate-300"
+                }`}
+              >
+                <p className={`text-sm font-medium ${
+                  mode === k ? "text-brand-700" : "text-slate-700"}`}>
+                  {label}
+                </p>
+                <p className="text-[11px] text-slate-400">{hint}</p>
+              </button>
+            ))}
+          </div>
+
+          {/* OYLIK: shu filial xodimlari */}
+          {mode === "salary" && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Kimga
+              </label>
+              {payee ? (
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-300 bg-brand-50">
+                  <span className="text-sm text-slate-800 flex-1 truncate">
+                    {payee.name}
+                    <span className="text-xs text-slate-500">
+                      {" "}· {payee.role_label}
+                    </span>
+                  </span>
+                  <button type="button" onClick={() => setPayee(null)}
+                          className="text-slate-400 hover:text-red-600">
+                    <X size={15} />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <input
+                    value={staffQ}
+                    onChange={(e) => setStaffQ(e.target.value)}
+                    placeholder="Ism yoki lavozim bo'yicha qidiring…"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <div className="mt-1 border border-slate-200 rounded-lg divide-y divide-slate-100 max-h-56 overflow-y-auto">
+                    {staff
+                      .filter((x) => {
+                        const q = staffQ.trim().toLowerCase();
+                        if (!q) return true;
+                        return (x.name || "").toLowerCase().includes(q)
+                          || (x.role_label || "").toLowerCase().includes(q);
+                      })
+                      .slice(0, 40)
+                      .map((x) => (
+                        <button
+                          key={x.key}
+                          type="button"
+                          onClick={() => setPayee(x)}
+                          className="w-full text-left px-3 py-2 hover:bg-slate-50"
+                        >
+                          <p className="text-sm text-slate-800">{x.name}</p>
+                          <p className="text-xs text-slate-400">
+                            {x.role_label}
+                            {x.branch ? ` · ${x.branch}` : ""}
+                            {x.to_salary_card ? " · oylik kartasiga tushadi" : ""}
+                          </p>
+                        </button>
+                      ))}
+                    {staff.length === 0 && (
+                      <p className="px-3 py-2 text-xs text-slate-400">
+                        Xodimlar yuklanmoqda…
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
+              {payee?.to_salary_card && (
+                <p className="text-[11px] text-emerald-700 mt-1">
+                  Bu pul {payee.name}ning oylik kartasida ham ko'rinadi.
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* XARAJAT: turlar ro'yxati */}
+          {mode === "expense" && (
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-2">
               Xarajat turi
@@ -747,6 +906,56 @@ function ExpenseForm({
               </div>
             ))}
           </div>
+          )}
+
+          {/* KITOB: qaysi kitob (Multilevel, Round-up...) */}
+          {mode === "expense" && category === "book" && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Qaysi kitob
+              </label>
+              <select
+                value={bookId}
+                onChange={(e) => setBookId(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+              >
+                <option value="">— ro'yxatda yo'q, nomini yozaman —</option>
+                {books.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name} (omborda {b.qty})
+                  </option>
+                ))}
+              </select>
+              {!bookId && (
+                <input
+                  value={newBook}
+                  onChange={(e) => setNewBook(e.target.value)}
+                  placeholder="Yangi kitob nomi (masalan: Round-up 4)"
+                  className="w-full mt-1.5 rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                />
+              )}
+              <p className="text-[11px] text-slate-400 mt-1">
+                Sotib olingan kitoblar OMBOR qoldig'iga qo'shiladi.
+              </p>
+            </div>
+          )}
+
+          {/* SONI — sanaladigan xarajatlarda */}
+          {mode === "expense" && isCountable(category) && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Soni
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
+                placeholder="Masalan: 3"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              />
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -794,7 +1003,7 @@ function ExpenseForm({
             </div>
           </div>
 
-          {categoryGroup(category) === "marketing" && (
+          {mode === "expense" && categoryGroup(category) === "marketing" && (
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Reklama kanali

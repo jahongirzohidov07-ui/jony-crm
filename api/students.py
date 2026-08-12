@@ -208,6 +208,11 @@ def list_students(
         query = query.filter(models.Student.group_id.in_(gids or [-1]))
 
     students = query.order_by(models.Student.full_name).all()
+    # Rasmni lazy-load ham qilmaslik uchun instansiyaga None yozamiz
+    # (ORM hodisalarini chetlab) - aks holda pydantic har o'quvchi
+    # uchun alohida so'rov yuborardi (N+1 + trafik).
+    for _s in students:
+        _s.__dict__.setdefault("photo", None)
     # TEZLIK: balanslar bitta so'rovda (har o'quvchiga alohida so'rov —
     # N+1 — 2-3 ming o'quvchida sahifani sekinlashtirib yuborardi).
     balances = dict(
@@ -218,6 +223,11 @@ def list_students(
     for s in students:
         r = schemas.StudentOut.model_validate(s)
         r.balance = 0.0 if own_only else float(balances.get(s.id, 0) or 0)
+        # TRAFIK (2026-08-12): ro'yxatda RASM yuborilmaydi. Har rasm
+        # ~50KB data-URL, 2-3 ming o'quvchi = yuzlab MB bir ochilishda.
+        # Aynan shu Neon'ning data-transfer kvotasini yeb, saytni
+        # yotqizgan edi. Rasm faqat bitta o'quvchi ochilganda keladi.
+        r.photo = None
         rows.append(r)
     return rows
 

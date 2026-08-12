@@ -2,7 +2,7 @@ from datetime import datetime, date
 from sqlalchemy import (
     Column, Integer, String, Float, Date, DateTime, ForeignKey, Text
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, deferred
 from database import Base
 
 
@@ -275,10 +275,13 @@ class Student(Base):
     # full_name shulardan yig'iladi - xodimlar bazasida ham darhol
     # ko'rinadi. photo - kichraytirilgan avatar (data URL, ~50KB);
     # serverless muhitda fayl diski yo'q, shuning uchun bazada.
+    # DEFERRED (2026-08-12): rasm faqat so'ralganda yuklanadi - aks
+    # holda har "hamma o'quvchilar" so'rovi yuzlab MB tortib, Neon
+    # data-transfer kvotasini yeb qo'ygan edi (sayt yotib qoldi).
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
     middle_name = Column(String, nullable=True)
-    photo = Column(Text, nullable=True)
+    photo = deferred(Column(Text, nullable=True))
     phone = Column(String, nullable=True)
     parent_phone = Column(String, nullable=True)
     birth_date = Column(Date, nullable=True)

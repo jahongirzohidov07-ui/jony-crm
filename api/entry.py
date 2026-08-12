@@ -6930,3 +6930,307 @@ def _bud_user(db, role):
         if getattr(u, "is_active", 1) in (True, 1, "1", "true"):
             return u
     return rows[0] if rows else None
+
+
+# =====================================================================
+#  MUZLATISH SANASI + BALANSNI TO'G'RILASH
+#
+#  Oy boshida to'liq oylik yechiladi (12 dars x 40 000 = 480 000).
+#  Agar o'quvchi oy o'rtasida muzlatilsa, muzlatish sanasigacha
+#  o'tilgan darslar qayta hisoblanadi va shu oyning hisoblangan
+#  to'lovi to'g'rilanadi: 480 000 -> 240 000 (6 dars).
+#
+#  Qaytib kelganda: o'sha kundan oy oxirigacha qolgan darslar
+#  hisoblanib, hisoblangan to'lovga qo'shiladi.
+#
+#  Qoidalar:
+#   - Muzlatish sanasidagi darsning o'zi FAQAT o'quvchi yo'qlamada
+#     "keldi" bo'lsa hisoblanadi.
+#   - Bitta oyga bitta hisob qatori qoladi — summasi o'zgaradi,
+#     eski summa audit jurnaliga yoziladi. Izohda [dars:N] turadi.
+#   - 12 darsdan (guruh standartidan) oshmaydi.
+# =====================================================================
+_FZ_BACK_DAYS = 62          # bundan eski sanaga muzlatib bo'lmaydi
+
+
+def _fz_period(d) -> str:
+    return f"{d.year:04d}-{d.month:02d}"
+
+
+def _fz_date(raw, field: str):
+    if not raw:
+        return None
+    try:
+        return date.fromisoformat(str(raw)[:10])
+    except ValueError:
+        raise HTTPException(400, f"{field}: sana noto'g'ri")
+
+
+def _fz_cap(g) -> int:
+    return int(getattr(g, "standard_lessons_per_month", None) or 12)
+
+
+def _fz_unit(db: Session, s) -> float:
+    """Bitta darsning narxi — chegirma hisobga olingan holda."""
+    g = s.group
+    price = float((getattr(g, "lesson_price", 0) if g else 0) or 0)
+    try:
+        disc = float(M._student_discount_percent(db, s) or 0)
+    except Exception:
+        disc = 0.0
+    return price * (100.0 - disc) / 100.0
+
+
+def _fz_row(db: Session, sid: int, period: str):
+    return (db.query(models.Payment)
+            .filter(models.Payment.student_id == sid,
+                    models.Payment.kind == "charge",
+                    models.Payment.period == period)
+            .order_by(models.Payment.id.desc()).first())
+
+
+def _fz_lessons_of(db: Session, s, row) -> int:
+    """Shu qator nechta dars uchun yozilgan."""
+    if row is None:
+        return 0
+    m = _re.search(r"\[dars:(\d+)\]", row.note or "")
+    if m:
+        return int(m.group(1))
+    unit = _fz_unit(db, s)
+    if unit <= 0:
+        return 0
+    return int(round(abs(float(row.amount or 0)) / unit))
+
+
+def _fz_held_before(db: Session, s, on: date) -> int:
+    """Oy boshidan (yoki qo'shilgan kunidan) `on` sanasigacha o'tilgan
+    darslar. `on` kunidagi dars faqat o'quvchi kelgan bo'lsa qo'shiladi."""
+    g = s.group
+    if g is None:
+        return 0
+    start = date(on.year, on.month, 1)
+    if s.enrolled_date and s.enrolled_date > start:
+        start = s.enrolled_date
+    if start > on:
+        return 0
+    try:
+        rows = M.billing.held_lessons_query(db, g.id, start, on).all()
+    except Exception:
+        return 0
+    n = 0
+    for L in rows:
+        if L.date < on:
+            n += 1
+            continue
+        a = (db.query(models.Attendance)
+             .filter(models.Attendance.lesson_id == L.id,
+                     models.Attendance.student_id == s.id).first())
+        if a is not None and int(a.present or 0) == 1:
+            n += 1
+    return min(n, _fz_cap(g))
+
+
+def _fz_left_from(db: Session, s, on: date) -> int:
+    """`on` kunidan (shu kun ham kiradi) oy oxirigacha dars kunlari."""
+    g = s.group
+    if g is None:
+        return 0
+    try:
+        start, end = M.billing.month_bounds(on.year, on.month)
+        try:
+            M._sync_scheduled_lessons(db, g, start, end)
+        except Exception:
+            pass
+        return len(M._lessons_left_in_month(db, g.id, on))
+    except Exception:
+        return 0
+
+
+def _fz_set(db: Session, s, period: str, lessons: int, why: str, user):
+    """Shu oyning hisoblangan to'lovini `lessons` dars bo'yicha qo'yadi.
+    Yangi qator faqat dars bor bo'lsa yaratiladi."""
+    lessons = max(int(lessons or 0), 0)
+    unit = _fz_unit(db, s)
+    target = roles.money(lessons * unit)
+    row = _fz_row(db, s.id, period)
+    gname = s.group.name if s.group else ""
+    if row is None:
+        if target <= 0:
+            return None
+        try:
+            if M._charge_skipped(db, s.id, period):
+                return None
+        except Exception:
+            pass
+        row = models.Payment(
+            student_id=s.id, amount=-target, kind="charge",
+            note=f"{gname} — {period}: {why}, {lessons} dars [dars:{lessons}]",
+            created_by=(user.full_name if user else "avtomat"),
+            period=period)
+        db.add(row)
+        db.flush()
+        old = 0.0
+    else:
+        old = abs(float(row.amount or 0))
+        if abs(old - target) < 1:
+            return None
+        base = _re.sub(r"\s*\[dars:\d+\]", "", row.note or "")
+        base = base.split(" · ")[0].strip()
+        row.amount = -target
+        row.note = f"{base} · {why}: {lessons} dars [dars:{lessons}]"
+    audit.log(db, user, entity="payment", action="lessons_recount",
+              entity_id=row.id, entity_label=s.full_name, field="amount",
+              old_value=f"{old:,.0f}".replace(",", " "),
+              new_value=f"{target:,.0f}".replace(",", " "),
+              note=why, branch_id=s.branch_id)
+    return {"old": old, "new": target, "lessons": lessons}
+
+
+def _fz_activation_charge(db: Session, s, on: date, user):
+    """Faollashtirish to'lovi — deploy'dagi v2 bo'lsa o'shani, bo'lmasa
+    asosiy moduldagisini chaqiradi."""
+    fn = globals().get("_charge_from_activation_v2")
+    if fn is None:
+        fn = getattr(M, "_charge_from_activation", None)
+    if fn is None:
+        return None
+    return fn(db, s, on, user)
+
+
+# ---- Muzlatish: sana tanlanadi, balans to'g'rilanadi ----
+_drop_route("/api/students/{student_id}/freeze", "POST")
+
+
+@app.post("/api/students/{student_id}/freeze")
+def freeze_student_v2(student_id: int, payload: dict = Body(...),
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """O'quvchini muzlatish.
+
+    `from_date` — qaysi kundan muzlatiladi (bo'sh bo'lsa bugundan).
+    Shu sanagacha o'tilgan darslar hisoblanib, oyning hisoblangan
+    to'lovi to'g'rilanadi. `until` — qachon qaytadi (majburiy)."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    today = roles.local_today()
+    until = _fz_date(payload.get("until"), "Qaytish sanasi")
+    if until is None:
+        raise HTTPException(400, "Qaytish sanasi majburiy")
+    if until <= today:
+        raise HTTPException(400, "Qaytish sanasi kelajakda bo'lishi kerak")
+    frm = _fz_date(payload.get("from_date"), "Muzlatish sanasi") or today
+    if frm > today:
+        raise HTTPException(400, "Muzlatish sanasi kelajakda bo'lmaydi")
+    if (today - frm).days > _FZ_BACK_DAYS:
+        raise HTTPException(
+            400, f"Muzlatish sanasi {_FZ_BACK_DAYS} kundan eski bo'lmasin")
+    note = (payload.get("note") or None)
+
+    st.status = "frozen"
+    st.frozen_until = until
+    st.frozen_note = note
+    try:
+        M._freeze_task(db, st, until, note)
+    except Exception:
+        pass
+    audit.log(db, user, entity="student", action="freeze",
+              entity_id=st.id, entity_label=st.full_name,
+              new_value=f"{frm.isoformat()} dan, qaytishi: "
+                        f"{until.isoformat()}",
+              note=note, branch_id=st.branch_id)
+    db.commit()
+
+    adjust = None
+    if st.group_id and st.group is not None:
+        n = _fz_held_before(db, st, frm)
+        adjust = _fz_set(db, st, _fz_period(frm), n,
+                         f"{frm.strftime('%d.%m')} dan muzlatildi", user)
+        db.commit()
+    return {"ok": True, "from_date": frm.isoformat(), "adjust": adjust}
+
+
+@app.get("/api/students/{student_id}/freeze-preview")
+def freeze_preview(student_id: int, from_date: str | None = None,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Muzlatishdan oldin: nechta dars hisoblanadi va summa qanday
+    o'zgaradi."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    frm = _fz_date(from_date, "Muzlatish sanasi") or roles.local_today()
+    period = _fz_period(frm)
+    row = _fz_row(db, st.id, period)
+    n = _fz_held_before(db, st, frm) if st.group_id else 0
+    unit = _fz_unit(db, st)
+    return {
+        "from_date": frm.isoformat(),
+        "period": period,
+        "lessons": n,
+        "unit": roles.money(unit),
+        "current": roles.money(abs(float(row.amount or 0))) if row else 0,
+        "target": roles.money(n * unit),
+        "has_charge": row is not None,
+    }
+
+
+# ---- Qayta faollashtirish: qolgan darslar qo'shiladi ----
+_drop_route("/api/students/{student_id}/activate", "POST")
+
+
+@app.post("/api/students/{student_id}/activate")
+def activate_student_v3(student_id: int, payload: dict | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Sinovdagi yoki muzlatilgan o'quvchini faol qiladi.
+
+    Muzlatilgan o'quvchi qaytganda: shu kundan oy oxirigacha qolgan
+    darslar hisoblanib, oyning hisoblangan to'loviga qo'shiladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if s.status == "active":
+        raise HTTPException(400, "Bu o'quvchi allaqachon faol")
+
+    today = roles.local_today()
+    on = _fz_date((payload or {}).get("on"), "Sana") or today
+    if on > today:
+        raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
+
+    old_status = s.status
+    s.status = "active"
+    if not s.enrolled_date or s.enrolled_date > on:
+        s.enrolled_date = on
+    s.frozen_until = None
+    try:
+        M._sync_student_left_date(s)
+    except Exception:
+        pass
+
+    charge = adjust = None
+    try:
+        charge = _fz_activation_charge(db, s, on, user)
+    except Exception:
+        charge = None
+    if charge is None and old_status == "frozen" and s.group_id \
+            and s.group is not None:
+        period = _fz_period(on)
+        row = _fz_row(db, s.id, period)
+        if row is not None:
+            have = _fz_lessons_of(db, s, row)
+            left = _fz_left_from(db, s, on)
+            total = min(have + left, _fz_cap(s.group))
+            if left > 0:
+                adjust = _fz_set(db, s, period, total,
+                                 f"{on.strftime('%d.%m')} dan qaytdi", user)
+
+    audit.log(db, user, entity="student", action="activate", entity_id=s.id,
+              entity_label=s.full_name, field="status",
+              old_value=old_status, new_value="active",
+              branch_id=s.branch_id,
+              note=(f"{on.isoformat()} dan — {charge['lessons']} dars"
+                    if charge else on.isoformat()))
+    db.commit()
+    return {"ok": True, "status": s.status, "activated_on": on.isoformat(),
+            "charge": charge, "adjust": adjust}

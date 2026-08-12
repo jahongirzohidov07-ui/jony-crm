@@ -4,6 +4,7 @@ import {
   api, type StudentDiscounts, type Student, type User,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { roleLabel } from "../lib/roles";
 
 const STATUS_TONE: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
@@ -51,6 +52,16 @@ export function Discounts({ studentId }: { studentId: number }) {
               ? `Shundan ${data.family_percent}% — oilaviy chegirma (tizim o'zi beradi)`
               : `Chegara ${data.max_percent}%`}
           </p>
+          {/* 2026-08-12, Jahongir: "10% chegirma berganimdan keyin jami
+              chegirmada 0% turibdi". Chegirma bor edi, lekin boshlanish
+              sanasi kelajakda edi — buni endi ochiq yozamiz. */}
+          {(data.upcoming_percent ?? 0) > 0 && (
+            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1 mt-1.5 inline-block">
+              Yana {data.upcoming_percent}% —{" "}
+              {data.upcoming_from ? formatDate(data.upcoming_from) : ""} dan
+              boshlanadi (hozircha hisobga olinmaydi)
+            </p>
+          )}
         </div>
         <button
           onClick={() => setForm(true)}
@@ -213,6 +224,108 @@ export function Discounts({ studentId }: { studentId: number }) {
   );
 }
 
+
+/**
+ * Ism/familiyaning 3 harfini yozganda tavsiya chiqaradigan tanlagich.
+ * 2026-08-12, Jahongir: "undan ism yoki familya 3ta harfini yozsa
+ * qaysilar borligi tavsiya chiqsin". Ilgari bu yerda 2000+ o'quvchili
+ * uzun <select> turardi - kerakli odamni topib bo'lmasdi.
+ */
+function SearchPick({
+  label,
+  placeholder,
+  value,
+  onPick,
+  search,
+  hint,
+}: {
+  label: string;
+  placeholder: string;
+  value: { id: number; full_name: string } | null;
+  onPick: (v: { id: number; full_name: string } | null) => void;
+  search: (q: string) => Promise<{ id: number; full_name: string; sub?: string }[]>;
+  hint?: string;
+}) {
+  const [q, setQ] = useState("");
+  const [rows, setRows] = useState<{ id: number; full_name: string; sub?: string }[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  useEffect(() => {
+    const needle = q.trim();
+    if (needle.length < 3) {
+      setRows([]);
+      return;
+    }
+    let dead = false;
+    setBusy(true);
+    const t = setTimeout(() => {
+      search(needle)
+        .then((r) => { if (!dead) setRows(r.slice(0, 8)); })
+        .catch(() => { if (!dead) setRows([]); })
+        .finally(() => { if (!dead) setBusy(false); });
+    }, 250);
+    return () => { dead = true; clearTimeout(t); };
+  }, [q]);
+
+  if (value) {
+    return (
+      <div>
+        <label className="block text-xs text-slate-500 mb-1">{label}</label>
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-300 bg-brand-50">
+          <span className="text-sm text-slate-800 flex-1 truncate">
+            {value.full_name}
+          </span>
+          <button
+            onClick={() => { onPick(null); setQ(""); }}
+            className="text-slate-400 hover:text-red-600"
+            title="Boshqasini tanlash"
+          >
+            <X size={15} />
+          </button>
+        </div>
+        {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <label className="block text-xs text-slate-500 mb-1">{label}</label>
+      <input
+        value={q}
+        onChange={(e) => { setQ(e.target.value); setTouched(true); }}
+        placeholder={placeholder}
+        className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+      />
+      {touched && q.trim().length > 0 && q.trim().length < 3 && (
+        <p className="text-xs text-slate-400 mt-1">
+          Kamida 3 ta harf yozing…
+        </p>
+      )}
+      {busy && <p className="text-xs text-slate-400 mt-1">Qidirilmoqda…</p>}
+      {rows.length > 0 && (
+        <div className="mt-1 border border-slate-200 rounded-lg divide-y divide-slate-100 max-h-52 overflow-y-auto">
+          {rows.map((r) => (
+            <button
+              key={r.id}
+              onClick={() => { onPick({ id: r.id, full_name: r.full_name }); setRows([]); }}
+              className="w-full text-left px-3 py-2 hover:bg-slate-50"
+            >
+              <p className="text-sm text-slate-800">{r.full_name}</p>
+              {r.sub && <p className="text-xs text-slate-400">{r.sub}</p>}
+            </button>
+          ))}
+        </div>
+      )}
+      {!busy && q.trim().length >= 3 && rows.length === 0 && (
+        <p className="text-xs text-slate-400 mt-1">Topilmadi</p>
+      )}
+      {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
+    </div>
+  );
+}
+
 function DiscountForm({
   studentId,
   types,
@@ -224,30 +337,81 @@ function DiscountForm({
   onClose: () => void;
   onSaved: () => void;
 }) {
-  const [kind, setKind] = useState(types[0]?.key ?? "individual");
+  // "family_link" - haqiqiy chegirma turi emas, bu IKKI O'QUVCHINI
+  // oila qilib bog'lash. Chegirmani keyin tizim o'zi hisoblaydi
+  // (Jahongir, 2026-08-12: "oilaviy chegirma yo'q ekan").
+  const ALL_KINDS = [
+    {
+      key: "family_link",
+      label: "Oila (aka-uka / opa-singil)",
+      hint: "Ikki o'quvchi bog'lanadi — 10% chegirma IKKALASIGA avtomat "
+        + "hisoblanadi. Ikkinchisini qayta bog'lash shart emas.",
+    },
+    ...types,
+  ];
+  const [kind, setKind] = useState(ALL_KINDS[0]?.key ?? "individual");
   const [percent, setPercent] = useState("");
   const [reason, setReason] = useState("");
   // 2026-08-12: yashirin (individual) chegirma - o'quvchiga ko'rinmaydi
   const [hidden, setHidden] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [referrer, setReferrer] = useState("");
-  const [staffId, setStaffId] = useState("");
-  const [students, setStudents] = useState<Student[]>([]);
+  const [pickStudent, setPickStudent] =
+    useState<{ id: number; full_name: string } | null>(null);
+  const [pickStaff, setPickStaff] =
+    useState<{ id: number; full_name: string } | null>(null);
   const [staff, setStaff] = useState<User[]>([]);
   const [err, setErr] = useState("");
+  const [okMsg, setOkMsg] = useState("");
   const [saving, setSaving] = useState(false);
+  const isFamily = kind === "family_link";
 
   useEffect(() => {
-    if (kind === "referral" && students.length === 0)
-      api.get<Student[]>("/students").then(setStudents).catch(() => {});
     if (kind === "staff_child" && staff.length === 0)
       api.get<User[]>("/users").then(setStaff).catch(() => {});
   }, [kind]);
 
-  const hint = types.find((t) => t.key === kind)?.hint;
+  const searchStudents = async (q: string) => {
+    const r = await api.get<Student[]>(
+      `/students?q=${encodeURIComponent(q)}`);
+    return r
+      .filter((x) => x.id !== studentId)
+      .map((x) => ({
+        id: x.id,
+        full_name: x.full_name,
+        sub: [x.group?.name, x.branch?.name].filter(Boolean).join(" · "),
+      }));
+  };
+
+  const searchStaff = async (q: string) => {
+    const needle = q.toLowerCase();
+    return staff
+      .filter((x) => (x.full_name || "").toLowerCase().includes(needle))
+      .map((x) => ({ id: x.id, full_name: x.full_name,
+                     sub: roleLabel(x.role) }));
+  };
+
+  const hint = ALL_KINDS.find((t) => t.key === kind)?.hint;
 
   async function save() {
+    if (isFamily) {
+      if (!pickStudent) {
+        setErr("Qaysi o'quvchi bilan bir oila ekanini tanlang");
+        return;
+      }
+      setSaving(true);
+      try {
+        const r = await api.post<{ message: string }>(
+          `/students/${studentId}/family-link`,
+          { sibling_id: pickStudent.id });
+        setOkMsg(r.message);
+        setTimeout(onSaved, 1200);
+      } catch (e) {
+        setErr(e instanceof Error ? e.message : "Xatolik");
+        setSaving(false);
+      }
+      return;
+    }
     if (!reason.trim()) {
       setErr("Sababni yozing — chegirma sababsiz berilmaydi");
       return;
@@ -265,8 +429,8 @@ function DiscountForm({
         reason: reason.trim(),
         start_date: start || null,
         end_date: end || null,
-        referrer_student_id: referrer ? Number(referrer) : null,
-        staff_user_id: staffId ? Number(staffId) : null,
+        referrer_student_id: pickStudent ? pickStudent.id : null,
+        staff_user_id: pickStaff ? pickStaff.id : null,
         hidden,
       });
       onSaved();
@@ -286,8 +450,15 @@ function DiscountForm({
           </button>
         </div>
         <p className="text-xs text-slate-500 mb-4">
-          Chegirmani rahbar tasdiqlaguncha amal qilmaydi
+          {isFamily
+            ? "Oila bog'langach, chegirmani tizim o'zi hisoblaydi"
+            : "Chegirmani rahbar tasdiqlaguncha amal qilmaydi"}
         </p>
+        {okMsg && (
+          <p className="text-sm text-emerald-700 bg-emerald-50 rounded-lg px-3 py-2 mb-3">
+            {okMsg}
+          </p>
+        )}
         {err && (
           <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">
             {err}
@@ -298,10 +469,15 @@ function DiscountForm({
             <label className="block text-xs text-slate-500 mb-1">Turi</label>
             <select
               value={kind}
-              onChange={(e) => setKind(e.target.value)}
+              onChange={(e) => {
+                setKind(e.target.value);
+                setErr("");
+                setPickStudent(null);
+                setPickStaff(null);
+              }}
               className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
             >
-              {types.map((t) => (
+              {ALL_KINDS.map((t) => (
                 <option key={t.key} value={t.key}>
                   {t.label}
                 </option>
@@ -310,51 +486,41 @@ function DiscountForm({
             {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
           </div>
 
+          {isFamily && (
+            <SearchPick
+              label="Qaysi o'quvchi bilan bir oila"
+              placeholder="Ism yoki familiyaning 3 harfi…"
+              value={pickStudent}
+              onPick={setPickStudent}
+              search={searchStudents}
+              hint="Bog'langach ikkalasiga ham 10% oilaviy chegirma o'zi
+                    hisoblanadi. Biri o'qishni to'xtatsa — o'zi yo'qoladi."
+            />
+          )}
+
           {kind === "referral" && (
-            <div>
-              <label className="block text-xs text-slate-500 mb-1">
-                Qaysi do'sti olib keldi
-              </label>
-              <select
-                value={referrer}
-                onChange={(e) => setReferrer(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
-              >
-                <option value="">— tanlang —</option>
-                {students
-                  .filter((s) => s.id !== studentId)
-                  .map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.full_name}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            <SearchPick
+              label="Qaysi do'sti olib keldi"
+              placeholder="Ism yoki familiyaning 3 harfi…"
+              value={pickStudent}
+              onPick={setPickStudent}
+              search={searchStudents}
+            />
           )}
 
           {kind === "staff_child" && (
-            <div>
-              <label className="block text-xs text-slate-500 mb-1">
-                Qaysi xodimning farzandi
-              </label>
-              <select
-                value={staffId}
-                onChange={(e) => setStaffId(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
-              >
-                <option value="">— tanlang —</option>
-                {staff.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.full_name}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-amber-600 mt-1">
-                Xodim ishdan ketsa chegirma avtomat bekor bo'ladi.
-              </p>
-            </div>
+            <SearchPick
+              label="Qaysi xodimning farzandi"
+              placeholder="Ism yoki familiyaning 3 harfi…"
+              value={pickStaff}
+              onPick={setPickStaff}
+              search={searchStaff}
+              hint="Xodim ishdan ketsa chegirma avtomat bekor bo'ladi."
+            />
           )}
 
+          {!isFamily && (
+          <>
           <div>
             <label className="block text-xs text-slate-500 mb-1">
               Chegirma foizi
@@ -423,16 +589,20 @@ function DiscountForm({
             </div>
           </div>
           <p className="text-xs text-slate-400">
-            Tugash sanasi qo'yilsa — o'sha kundan keyin chegirma o'zi
-            yo'qoladi.
+            Boshlanish sanasi kelajakda bo'lsa — chegirma o'sha kungacha
+            hisobga olinmaydi. Tugash sanasidan keyin o'zi yo'qoladi.
           </p>
+          </>
+          )}
 
           <button
             onClick={save}
             disabled={saving}
             className="w-full py-2.5 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-50"
           >
-            {saving ? "Saqlanmoqda..." : "So'rov yuborish"}
+            {saving
+              ? "Saqlanmoqda..."
+              : isFamily ? "Oila qilib bog'lash" : "So'rov yuborish"}
           </button>
         </div>
       </div>

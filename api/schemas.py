@@ -896,6 +896,13 @@ class StudentGroupMove(BaseModel):
 
 
 # ---------- Ota-ona ----------
+class FamilyLinkIn(BaseModel):
+    """Ikki o'quvchini bir oila deb bog'lash (aka-uka/opa-singil)."""
+    sibling_id: int
+    parent_name: Optional[str] = None
+    parent_phone: Optional[str] = None
+
+
 class ParentCreate(BaseModel):
     full_name: str
     phone: Optional[str] = None

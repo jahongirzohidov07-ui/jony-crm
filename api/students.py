@@ -1064,10 +1064,34 @@ def student_discounts(
             .filter(models.Discount.student_id == student_id)
             .order_by(models.Discount.created_at.desc()).all())
     fam = _family_discount_percent(db, s)
+    # 2026-08-12, Jahongir: "10% chegirma berganimdan keyin jami
+    # chegirmada 0% turibdi". Sabab: chegirmaning boshlanish sanasi
+    # KELAJAKDA edi (01.09) - ya'ni bugun hali amal qilmaydi. Raqam
+    # to'g'ri edi, lekin ekranda buning izohi yo'q edi. Endi
+    # "keyinroq boshlanadi" alohida ko'rsatiladi.
+    fee = s.group.monthly_fee if s.group else 0.0
+    upcoming = 0.0
+    upcoming_from = None
+    today = date.today()
+    for d in rows:
+        if d.status != "active" or not d.start_date or d.start_date <= today:
+            continue
+        if d.end_date and d.end_date < today:
+            continue
+        if d.kind == "family":
+            continue
+        if d.percent:
+            upcoming += d.percent
+        elif d.amount and fee:
+            upcoming += d.amount / fee * 100
+        if upcoming_from is None or d.start_date < upcoming_from:
+            upcoming_from = d.start_date
     return {
         "rows": [_discount_out(db, d) for d in rows],
         "family_percent": fam,
         "total_percent": _student_discount_percent(db, s),
+        "upcoming_percent": round(upcoming, 2),
+        "upcoming_from": upcoming_from.isoformat() if upcoming_from else None,
         "max_percent": roles.MAX_TOTAL_DISCOUNT_PERCENT,
         "can_approve": user.role in roles.DISCOUNT_APPROVE,
         "types": [{"key": k, "label": lbl, "hint": h}
@@ -1098,6 +1122,22 @@ def student_pricing(
     if contract and contract.monthly_fee:
         base = contract.monthly_fee
 
+    # Tasdiqlangan va BUGUN amalda bo'lgan chegirmalar (referral, grant,
+    # individual...). Ilgari bu blok faqat shartnomadagi foizni
+    # ko'rsatardi - o'quvchiga 10% chegirma berilsa ham "To'lanadigan"
+    # o'zgarmasdi (Jahongir, 2026-08-12).
+    granted = 0.0
+    for d in db.query(models.Discount).filter(
+            models.Discount.student_id == student_id,
+            models.Discount.status == "active").all():
+        if d.kind == "family" or not _discount_alive(d):
+            continue
+        if d.percent:
+            granted += d.percent
+        elif d.amount and base:
+            granted += d.amount / base * 100
+    granted = round(granted, 2)
+
     siblings = []
     if s.parent_id:
         siblings = [{"id": x.id, "full_name": x.full_name, "status": x.status}
@@ -1105,12 +1145,13 @@ def student_pricing(
                         models.Student.parent_id == s.parent_id,
                         models.Student.id != s.id).all()]
 
-    total_pct = min(100.0, fam + personal)
+    total_pct = min(100.0, fam + personal + granted)
     return {
         "base_fee": base,
         "family_discount": fam,
         "family_min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
         "personal_discount": personal,
+        "granted_discount": granted,
         "total_discount": total_pct,
         "final_fee": round(base * (100 - total_pct) / 100, 2),
         "parent_id": s.parent_id,
@@ -1127,6 +1168,89 @@ def student_pricing(
              if s.parent_id else
              "Ota-ona biriktirilmagan — oilaviy chegirma hisoblanmaydi.")
         ),
+    }
+
+@router.post("/api/students/{student_id}/family-link")
+def student_family_link(
+    student_id: int,
+    payload: schemas.FamilyLinkIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
+):
+    """Ikki o'quvchini BIR OILA deb bog'laydi.
+
+    2026-08-12, Jahongir: "bitta oquvchini boshqasiga oila deb
+    boglanganda nargisini yana bunga qayta yana boglab otirilmasin
+    avtomat ikkalasiga 10% chegirmani hisoblayversin".
+
+    Ishlash tartibi: ikkovi BITTA ota-onaga (Parent) bog'lanadi -
+    shuning uchun bog'lanish o'z-o'zidan ikki tomonlama. Oilaviy
+    chegirmani tizim shu bog'lanishdan o'zi hisoblaydi
+    (_family_discount_percent), qo'lda chegirma yozilmaydi: aka yoki
+    uka o'qishni to'xtatsa chegirma ham o'zi yo'qoladi.
+    """
+    a = db.query(models.Student).get(student_id)
+    b = db.query(models.Student).get(payload.sibling_id)
+    if not a or not b:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if a.id == b.id:
+        raise HTTPException(400, "O'quvchini o'ziga bog'lab bo'lmaydi")
+
+    moved = None
+    if a.parent_id and b.parent_id and a.parent_id != b.parent_id:
+        # Ikkalasida ham ota-ona bor, lekin boshqa-boshqa. Ikkinchi
+        # oilani BIRINCHISIGA ko'chiramiz - yozuv o'chirilmaydi.
+        old_pid = b.parent_id
+        for x in db.query(models.Student).filter(
+                models.Student.parent_id == old_pid).all():
+            x.parent_id = a.parent_id
+        moved = old_pid
+    elif a.parent_id:
+        b.parent_id = a.parent_id
+    elif b.parent_id:
+        a.parent_id = b.parent_id
+    else:
+        # Hech birida ota-ona yo'q - yangi oila yozuvi ochiladi.
+        name = (payload.parent_name or "").strip()
+        if not name:
+            # Familiya odatda umumiy: "Abdushukurov Islombek" ->
+            # "Abdushukurov oilasi".
+            fam = (a.full_name or "").strip().split(" ")[0] or "Oila"
+            name = f"{fam} oilasi"
+        phone = (payload.parent_phone or a.parent_phone
+                 or b.parent_phone or None)
+        p = models.Parent(full_name=name, phone=phone,
+                          branch_id=a.branch_id or b.branch_id,
+                          created_by=user.username)
+        db.add(p); db.commit(); db.refresh(p)
+        _ensure_public_id(db, "parent", p)
+        a.parent_id = p.id
+        b.parent_id = p.id
+    db.commit()
+
+    kids = (db.query(models.Student)
+            .filter(models.Student.parent_id == a.parent_id).all())
+    fam_pct = _family_discount_percent(db, a)
+    audit.log(db, user, entity="student", action="family_link",
+              entity_id=a.id, entity_label=a.full_name,
+              branch_id=a.branch_id,
+              new_value=f"{a.full_name} + {b.full_name} = bir oila"
+                        + (f" (oila #{moved} birlashtirildi)" if moved else ""),
+              commit=True)
+    return {
+        "parent_id": a.parent_id,
+        "family_percent": fam_pct,
+        "min_children": roles.FAMILY_DISCOUNT_MIN_CHILDREN,
+        "children": [{"id": k.id, "full_name": k.full_name,
+                      "status": k.status} for k in kids],
+        "active_children": sum(1 for k in kids if k.status == "active"),
+        "message": (
+            f"Bog'landi — oilada {sum(1 for k in kids if k.status == 'active')} "
+            f"ta faol farzand, har biriga {fam_pct:.0f}% oilaviy chegirma "
+            f"avtomat hisoblanadi."
+            if fam_pct else
+            f"Bog'landi. Oilaviy chegirma uchun kamida "
+            f"{roles.FAMILY_DISCOUNT_MIN_CHILDREN} ta FAOL farzand kerak."),
     }
 
 @router.get("/api/students/{student_id}/trial")

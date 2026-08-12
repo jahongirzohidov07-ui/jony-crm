@@ -1337,6 +1337,8 @@ export interface StudentPricing {
   family_discount: number;
   family_min_children: number;
   personal_discount: number;
+  /** Tasdiqlangan chegirmalar (referral, grant, individual...). */
+  granted_discount?: number;
   total_discount: number;
   final_fee: number;
   parent_id?: number | null;
@@ -1818,6 +1820,9 @@ export interface StudentDiscounts {
   rows: DiscountRow[];
   family_percent: number;
   total_percent: number;
+  /** Tasdiqlangan, lekin boshlanish sanasi hali kelmagan chegirmalar. */
+  upcoming_percent?: number;
+  upcoming_from?: string | null;
   max_percent: number;
   can_approve: boolean;
   types: DiscountType[];

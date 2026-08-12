@@ -34,6 +34,7 @@ import { FinanceOverviewTab } from "../components/FinanceOverview";
 import { BudgetTab } from "../components/Budget";
 import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
+import { QuickPayment } from "../components/QuickPayment";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup";
 
@@ -298,6 +299,9 @@ function CashflowTab() {
           ))}
         </select>
         <div className="flex-1" />
+        {/* Kirim-chiqim ro'yxatining o'zida ham to'lov qabul qilinadi -
+            administrator sahifa almashtirmasin. */}
+        <QuickPayment onDone={() => setReloadKey((k) => k + 1)} />
         <button
           onClick={exportRows}
           className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
@@ -1048,6 +1052,7 @@ export default function Moliya() {
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish.
   // Dashboard kartasidan kelganda ?tab= orqali kerakli bo'lim ochiladi.
   const [sp] = useSearchParams();
+  const [payKey, setPayKey] = useState(0);
   const _urlTab = sp.get("tab");
   const [tab, setTab] = useState<Tab>(
     _urlTab && TABS.some((t) => t.key === _urlTab)
@@ -1066,12 +1071,23 @@ export default function Moliya() {
 
   return (
     <div className="p-8 max-w-6xl">
-      <h1 className="text-xl font-semibold text-slate-900 mb-1">Moliya</h1>
-      <p className="text-sm text-slate-500 mb-5">
-        {full
-          ? "Pul oqimi, foyda-zarar va xarajatlar"
-          : "Qarzdorlar va oylik hisob-kitob"}
-      </p>
+      {/* To'lov qabul qilish tugmasi Moliyaning HAR BIR bo'limida
+          ko'rinib turadi. Ilgari u faqat yon menyuning tepasida edi va
+          administrator qarzdorlar yoki pul oqimida turib to'lov kirita
+          olmasdi (Jahongir, 2026-08-12: "oson bolsin topish").
+          To'lovdan keyin ochiq bo'lim qayta yuklanadi - payKey. */}
+      <div className="flex items-start gap-3 mb-1">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-xl font-semibold text-slate-900 mb-1">Moliya</h1>
+          <p className="text-sm text-slate-500">
+            {full
+              ? "Pul oqimi, foyda-zarar va xarajatlar"
+              : "Qarzdorlar va oylik hisob-kitob"}
+          </p>
+        </div>
+        <QuickPayment onDone={() => setPayKey((k) => k + 1)} />
+      </div>
+      <div className="h-4" />
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">
         {TABS.map((t) => (
@@ -1089,17 +1105,19 @@ export default function Moliya() {
         ))}
       </div>
 
-      {tab === "debtors" && <Debtors />}
-      {tab === "cashflow" && <CashflowTab />}
-      {tab === "pnl" && <PnlTab />}
-      {tab === "expenses" && <ExpensesTab />}
-      {tab === "billing" && <BillingTab />}
-      {tab === "breakeven" && <BreakEvenTab />}
-      {tab === "overview" && <FinanceOverviewTab />}
-      {tab === "budget" && <BudgetTab />}
-      {tab === "calendar" && <PaymentCalendarTab />}
-      {tab === "paid" && <MonthPaymentsTab />}
-      {tab === "payroll" && <PayrollTab />}
+      <div key={payKey}>
+        {tab === "debtors" && <Debtors />}
+        {tab === "cashflow" && <CashflowTab />}
+        {tab === "pnl" && <PnlTab />}
+        {tab === "expenses" && <ExpensesTab />}
+        {tab === "billing" && <BillingTab />}
+        {tab === "breakeven" && <BreakEvenTab />}
+        {tab === "overview" && <FinanceOverviewTab />}
+        {tab === "budget" && <BudgetTab />}
+        {tab === "calendar" && <PaymentCalendarTab />}
+        {tab === "paid" && <MonthPaymentsTab />}
+        {tab === "payroll" && <PayrollTab />}
+      </div>
     </div>
   );
 }

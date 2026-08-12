@@ -5,10 +5,11 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
-import { FREEZE_ROLES, can } from "../lib/roles";
+import { FREEZE_ROLES, CASH_ACCESS, can } from "../lib/roles";
 import { api, ApiError, type Student, type Group, type CheckProblem }
   from "../lib/api";
 import { ScheduleProblems } from "./ScheduleProblems";
+import { StudentPayModal } from "./QuickPayment";
 
 /** Faollashtirishdan oldin: shu sanadan qancha pul yechilishi. */
 interface ActivatePreview {
@@ -41,7 +42,9 @@ export function StudentRowMenu({
   const { user } = useAuth();
   const navigate = useNavigate();
   const canManage = can(user?.role, FREEZE_ROLES);
+  const canCash = can(user?.role, CASH_ACCESS);
   const [open, setOpen] = useState(false);
+  const [paying, setPaying] = useState(false);
   const [freezing, setFreezing] = useState(false);
   const [fUntil, setFUntil] = useState("");
   const [fNote, setFNote] = useState("");
@@ -265,6 +268,13 @@ export function StudentRowMenu({
 
   return (
     <div className="relative" ref={ref}>
+      {paying && (
+        <StudentPayModal
+          student={student}
+          onClose={() => setPaying(false)}
+          onSaved={onChanged}
+        />
+      )}
       <button
         onClick={(e) => {
           e.preventDefault();
@@ -535,16 +545,20 @@ export function StudentRowMenu({
             </div>
           ) : !moving ? (
             <>
+              {/* Ilgari bu tugma o'quvchi kartasiga OLIB O'TARDI - to'lov
+                  uch bosishga cho'zilardi. Endi oyna shu yerda ochiladi
+                  (Jahongir, 2026-08-12: "oson bolsin topish"). */}
               <button
                 onClick={() => {
                   setOpen(false);
-                  navigate(`/students/${student.id}`);
+                  if (canCash) setPaying(true);
+                  else navigate(`/students/${student.id}`);
                 }}
                 disabled={busy}
                 className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
               >
                 <Wallet size={15} className="text-emerald-600" />
-                To'lov qo'shish
+                To'lov qabul qilish
               </button>
               <button
                 onClick={() => { setActivating(true); setErr(""); }}

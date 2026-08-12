@@ -366,6 +366,33 @@ function PaymentModal({
   );
 }
 
+/**
+ * O'quvchi allaqachon tanlangan holdagi to'lov oynasi. Ro'yxatdagi
+ * "uch nuqta" menyusi kabi joylardan chaqiriladi - administrator
+ * o'quvchi kartasiga o'tib o'tirmasin (Jahongir, 2026-08-12:
+ * "qoshish uchun joy bolsin oson bolsin topish").
+ */
+export function StudentPayModal({
+  student,
+  onClose,
+  onSaved,
+}: {
+  student: Student;
+  onClose: () => void;
+  onSaved?: () => void;
+}) {
+  return (
+    <PaymentModal
+      student={student}
+      onClose={onClose}
+      onSaved={() => {
+        onClose();
+        onSaved?.();
+      }}
+    />
+  );
+}
+
 /** O'quvchi kartasidan to'lov: qidiruvsiz, darrov summa so'raydi. */
 export function StudentPayButton({
   student,

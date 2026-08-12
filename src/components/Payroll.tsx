@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
 import { PayEditModal, type PayEditTarget } from "./PayEditModal";
+import { QuickPayment } from "./QuickPayment";
 import { PAYMENT_EDIT, can } from "../lib/roles";
 import { Wallet, Check, Trash2, Search, Download, Pencil } from "lucide-react";
 import {
@@ -590,6 +591,9 @@ export function MonthPaymentsTab() {
         <PeriodPicker
           year={year} month={month} onYear={setYear} onMonth={setMonth}
         />
+        {/* Shu oy to'lovlari - administrator eng ko'p ochadigan ro'yxat.
+            Yangi to'lovni shu yerdan kiritadi (Jahongir, 2026-08-12). */}
+        <QuickPayment onDone={() => setReloadKey((k) => k + 1)} />
         <button
           onClick={() =>
             exportToExcel(`Tolovlar-${d.period}`, "To'lovlar", rows.map((r) => ({

@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil, Printer } from "lucide-react";
 import {
   api,
+  type Student,
   type StudentDetail as StudentDetailType,
   type StudentExams,
   type StudentAttendance,
@@ -16,8 +17,9 @@ import {
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, TEACHING_STAFF, PAYMENT_EDIT, REFUND_REQUEST,
-  REFUND_APPROVE, FOUNDER, can, HR_MANAGER } from "../lib/roles";
+  FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
+  REFUND_REQUEST, REFUND_APPROVE, FOUNDER, can, HR_MANAGER,
+} from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -88,6 +90,12 @@ function ProfileCard({
   const { user } = useAuth();
   const canEdit = can(user?.role, [...TEACHING_STAFF, HR_MANAGER]);
   const canFinance = can(user?.role, FINANCE_ACCESS);
+  // To'lovni ADMINISTRATOR ham qabul qiladi (server tomonda ham
+  // CASH_ACCESS). Ilgari bu tugma FINANCE_ACCESS bilan yopilgan
+  // edi va administrator o'quvchi kartasidan to'lov kirita
+  // olmasdi - Jahongir, 2026-08-12: "o'quvchini profilida ham
+  // qoshish uchun joy bolsin".
+  const canCash = can(user?.role, CASH_ACCESS);
   const initial = student.full_name.trim().charAt(0).toUpperCase();
 
   return (
@@ -196,7 +204,7 @@ function ProfileCard({
       </div>
 
       <div className="flex gap-2 mt-4 pt-3 border-t border-slate-100">
-        {canFinance && <StudentPayButton student={student} onDone={onChanged} />}
+        {canCash && <StudentPayButton student={student} onDone={onChanged} />}
         {canEdit && (
           <button
             onClick={onEdit}
@@ -418,6 +426,10 @@ function PaymentsTab({
 }) {
   const { user } = useAuth();
   const canEdit = can(user?.role, FINANCE_ACCESS);
+  // Administrator "Yangi yozuv" formasini (hisoblash, chegirma...)
+  // ko'rmaydi, lekin TO'LOV qabul qiladi - shuning uchun unga shu
+  // tabda ham alohida to'lov tugmasi (Jahongir, 2026-08-12).
+  const canCash = can(user?.role, CASH_ACCESS);
   // Summani tahrirlash — faqat asoschi, moliyachi, filial rahbari
   const canEditAmount = can(user?.role, PAYMENT_EDIT);
   const isFounder = user?.role === FOUNDER;
@@ -581,6 +593,12 @@ function PaymentsTab({
             >
               Refund so'rovi
             </button>
+          )}
+          {!canEdit && canCash && (
+            <StudentPayButton
+              student={student as unknown as Student}
+              onDone={onChanged}
+            />
           )}
           {canEdit && (
             <button

@@ -1,0 +1,61 @@
+# KUNLIK BAZA ZAXIRASI (2026-08-12, Jahongir: "baza zaxirasi... shuni
+# hal qil"). Har kuni Toshkent vaqti bilan ~04:00 da butun Postgres
+# bazadan pg_dump olinadi va GitHub artefakt sifatida saqlanadi:
+#   - kunlik nusxa 30 kun turadi
+#   - har dushanba kungisi 90 kun turadi
+# ISHLASHI UCHUN BIR MARTALIK SOZLASH KERAK:
+#   GitHub repo -> Settings -> Secrets and variables -> Actions ->
+#   New repository secret -> nomi: DATABASE_URL, qiymati: Vercel'dagi
+#   DATABASE_URL (Vercel -> jony-crm -> Settings -> Environment
+#   Variables ichidan nusxa olinadi).
+# Tiklash: artefaktni yuklab olib: psql "$DATABASE_URL" < dump.sql
+name: DB Backup
+on:
+  schedule:
+    - cron: "0 23 * * *"   # 23:00 UTC = 04:00 Toshkent
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secret
+        env:
+          DB: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DB" ]; then
+            echo "::error::DATABASE_URL sekreti qo'shilmagan! Settings -> Secrets -> Actions -> New repository secret (nomi: DATABASE_URL)."
+            exit 1
+          fi
+      - name: Install pg_dump 17
+        run: |
+          sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - 2>/dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17
+      - name: Dump
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          STAMP=$(date -u +%Y-%m-%d)
+          /usr/lib/postgresql/17/bin/pg_dump --no-owner --no-privileges \
+            --format=plain "$DATABASE_URL" | gzip > "jonyos_${STAMP}.sql.gz"
+          ls -lh jonyos_*.sql.gz
+          # bo'sh dump = xato (baza ulanmagan bo'lishi mumkin)
+          [ $(stat -c%s jonyos_${STAMP}.sql.gz) -gt 10000 ] || { echo "::error::Dump juda kichik!"; exit 1; }
+      - name: Upload daily (30 kun)
+        uses: actions/upload-artifact@v4
+        with:
+          name: jonyos-db-daily-${{ github.run_id }}
+          path: jonyos_*.sql.gz
+          retention-days: 30
+      - name: Weekly artifact
+        id: wk
+        run: echo "dow=$(date -u +%u)" >> "$GITHUB_OUTPUT"
+      - name: Upload weekly copy
+        if: steps.wk.outputs.dow == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jonyos-db-weekly-${{ github.run_id }}
+          path: jonyos_*.sql.gz
+          retention-days: 90

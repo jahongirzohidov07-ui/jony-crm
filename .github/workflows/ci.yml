@@ -48,3 +48,24 @@ jobs:
         run: npx tsc -b
       - name: Build
         run: npx vite build
+
+  full-suite:
+    # To'liq test to'plami faqat [deploy] commitlarda - minutlarni
+    # tejash uchun (oddiy pushda smoke + 2 test yetadi).
+    if: contains(github.event.head_commit.message, '[deploy]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Run ALL api tests
+        working-directory: api
+        run: |
+          set -e
+          for f in test_*.py; do
+            echo "=== $f ==="
+            DATABASE_URL="sqlite:////tmp/ci_$f.db" timeout 240 python "$f"
+          done

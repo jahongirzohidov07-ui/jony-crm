@@ -541,6 +541,10 @@ export default function Groups() {
   // Filtrlar
   const [q, setQ] = useState("");
   const [teacherFilter, setTeacherFilter] = useState("");
+  // 2026-08-12, Jahongir: "ustozlar filtri ichida supportlar bor,
+  // lekin supportni tanlasa guruh chiqmayapti - alohida supportlar
+  // kesimida filtr kerak"
+  const [supportFilter, setSupportFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
   const [branchFilter, setBranchFilter] = useState("");
 
@@ -577,13 +581,18 @@ export default function Groups() {
   const filtered = groups.filter((g) => {
     if (q && !g.name.toLowerCase().includes(q.toLowerCase())) return false;
     if (teacherFilter && String(g.teacher_id ?? "") !== teacherFilter) return false;
+    if (supportFilter &&
+        !(g.support_label || "")
+          .toLowerCase()
+          .includes(supportFilter.toLowerCase())) return false;
     if (subjectFilter && g.subject !== subjectFilter) return false;
     if (branchFilter && String(g.branch?.id ?? "") !== branchFilter)
       return false;
     return true;
   });
 
-  const hasFilter = q || teacherFilter || subjectFilter || branchFilter;
+  const hasFilter =
+    q || teacherFilter || supportFilter || subjectFilter || branchFilter;
 
   return (
     <div className="p-8">
@@ -649,17 +658,34 @@ export default function Groups() {
           onChange={(e) => setTeacherFilter(e.target.value)}
         >
           <option value="">Barcha o'qituvchilar</option>
-          {teachers.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.full_name}
-            </option>
-          ))}
+          {teachers
+            .filter((t) => t.kind !== "support")
+            .map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.full_name}
+              </option>
+            ))}
+        </select>
+        <select
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={supportFilter}
+          onChange={(e) => setSupportFilter(e.target.value)}
+        >
+          <option value="">Barcha supportlar</option>
+          {teachers
+            .filter((t) => t.kind === "support" && t.is_active !== 0)
+            .map((t) => (
+              <option key={t.id} value={(t.full_name || "").trim()}>
+                {(t.full_name || "").trim()}
+              </option>
+            ))}
         </select>
         {hasFilter && (
           <button
             onClick={() => {
               setQ("");
               setTeacherFilter("");
+              setSupportFilter("");
               setSubjectFilter("");
               setBranchFilter("");
             }}

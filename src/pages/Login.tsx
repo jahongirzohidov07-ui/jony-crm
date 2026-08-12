@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
+import { PasswordInput } from "../components/PasswordInput";
 
 export default function Login() {
   const { login, loading, error } = useAuth();
@@ -201,13 +202,11 @@ function RecoverForm({ onBack }: { onBack: () => void }) {
               onChange={(e) => setCode(e.target.value)}
               required
             />
-            <input
-              type="password"
-              placeholder="Yangi parol"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            <PasswordInput
               value={next}
-              onChange={(e) => setNext(e.target.value)}
-              required
+              onChange={setNext}
+              placeholder="Yangi parol"
+              autoComplete="new-password"
             />
             {err && (
               <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">

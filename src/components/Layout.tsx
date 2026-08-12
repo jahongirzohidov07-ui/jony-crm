@@ -62,6 +62,7 @@ import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
 } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
+import { PasswordInput } from "./PasswordInput";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -136,34 +137,31 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Joriy parol
               </label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              <PasswordInput
                 value={current}
-                onChange={(e) => setCurrent(e.target.value)}
+                onChange={setCurrent}
                 autoFocus
+                autoComplete="current-password"
               />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Yangi parol
               </label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              <PasswordInput
                 value={next}
-                onChange={(e) => setNext(e.target.value)}
+                onChange={setNext}
+                autoComplete="new-password"
               />
             </div>
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Yangi parolni tasdiqlang
               </label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              <PasswordInput
                 value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
+                onChange={setConfirm}
+                autoComplete="new-password"
               />
             </div>
             {error && <p className="text-sm text-red-600">{error}</p>}
@@ -587,12 +585,11 @@ function RecoveryModal({ onClose }: { onClose: () => void }) {
               Parolni unutsangiz, login oynasida shu kod bilan yangi
               parol o'rnatasiz. Kodni hech kimga bermang.
             </p>
-            <input
-              type="password"
-              placeholder="Joriy parolingiz"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            <PasswordInput
               value={current}
-              onChange={(e) => setCurrent(e.target.value)}
+              onChange={setCurrent}
+              placeholder="Joriy parolingiz"
+              autoComplete="current-password"
             />
             <input
               type="text"

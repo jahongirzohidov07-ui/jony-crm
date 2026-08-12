@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Pencil } from "lucide-react";
 import { api, type User, type Branch, type Teacher } from "../lib/api";
+import { PasswordInput } from "../components/PasswordInput";
 import { StaffCard } from "../components/StaffCard";
 import { useAuth } from "../lib/AuthContext";
 import {
@@ -175,11 +176,9 @@ function UserForm({
                 ? "Yangi parol (o'zgartirmasa bo'sh qoldiring)"
                 : "Parol (bo'sh qolsa: jonyjony)"}
             </label>
-            <input
-              type="password"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            <PasswordInput
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={setPassword}
               autoComplete="new-password"
             />
           </div>

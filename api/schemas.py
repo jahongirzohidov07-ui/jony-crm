@@ -350,6 +350,9 @@ class PaymentOut(BaseModel):
     period: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
+    # Haqiqiy kiritilish vaqti (eski sana bilan kiritilganda
+    # created_at dan farq qiladi).
+    entered_at: Optional[datetime] = None
 
 
 # ---------- Student ----------

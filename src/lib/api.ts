@@ -288,6 +288,8 @@ export interface Payment {
   created_by?: string;
   period?: string;
   created_at: string;
+  /** Haqiqiy kiritilish vaqti (eski sana bilan kiritilsa farq qiladi). */
+  entered_at?: string | null;
   public_id?: string | null;
 }
 

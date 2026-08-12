@@ -595,6 +595,10 @@ def add_payment(
         note=payload.note,
         created_by=user.full_name,
     )
+    # Rostakam kiritilish vaqti — HAR DOIM server soati (eski sana
+    # bilan kiritilsa ham). "Kim va qachon kiritdi" savoli javobsiz
+    # qolmasin.
+    payment.entered_at = datetime.utcnow()
     if when:
         payment.created_at = when
     db.add(payment)

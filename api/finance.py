@@ -345,7 +345,7 @@ def approve_refund(rid: int, payload: schemas.RefundDecision,
         student_id=r.student_id, amount=-abs(r.amount), kind="refund",
         method=None,
         note=f"Refund: {r.reason} (so'ragan: {r.requested_by})",
-        created_by=user.full_name)
+        created_by=user.full_name, entered_at=datetime.utcnow())
     db.add(pay)
     db.flush()
     r.status = "approved"
@@ -627,7 +627,8 @@ def billing_month(
                 student_id=s.id, amount=-abs(amount), kind="charge",
                 note=f"{g.name} — {period} oyi uchun {lessons} dars"
                      + (f" (chegirma {disc}%)" if disc else ""),
-                created_by=user.full_name, period=period))
+                created_by=user.full_name, period=period,
+                entered_at=datetime.utcnow()))
             created += 1
         rows.append({
             "student_id": s.id, "public_id": s.public_id,

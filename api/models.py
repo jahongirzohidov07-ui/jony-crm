@@ -363,6 +363,12 @@ class Payment(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     # Summa tahrirlangan oxirgi vaqt — parallel tahrirda 409 uchun.
     updated_at = Column(DateTime, nullable=True)
+    # HAQIQATDA qachon kiritilgani (server vaqti). created_at "to'lov
+    # sanasi" bo'lib, eski sana bilan kiritilganda orqaga suriladi —
+    # shuning uchun rostakam kiritilish vaqti alohida saqlanadi
+    # (Jahongir, 2026-08-12: "kim va qaysi soatda kirgizganligi aniq
+    # ko'rinib tursin sekundlarigacha").
+    entered_at = Column(DateTime, nullable=True)
 
     student = relationship("Student", back_populates="payments")
 

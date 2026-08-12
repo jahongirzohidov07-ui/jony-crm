@@ -14,7 +14,7 @@ import {
   type StudentHistory,
   type StudentPricing,
 } from "../lib/api";
-import { formatSom, formatDate } from "../lib/format";
+import { formatSom, formatDate, formatTime, formatDateTime } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
@@ -791,6 +791,7 @@ function PaymentsTab({
               <th className="text-left px-4 py-3 font-medium">Sana</th>
               <th className="text-left px-4 py-3 font-medium">Turi</th>
               <th className="text-left px-4 py-3 font-medium">Usul</th>
+              <th className="text-left px-4 py-3 font-medium">Kim kiritdi</th>
               <th className="text-left px-4 py-3 font-medium">Izoh</th>
               <th className="text-right px-4 py-3 font-medium">Summa</th>
               {canEdit && <th className="px-4 py-3"></th>}
@@ -799,19 +800,36 @@ function PaymentsTab({
           <tbody>
             {student.payments.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-6 text-center text-slate-400">
                   Hali yozuv yo'q
                 </td>
               </tr>
             )}
             {student.payments.map((p) => (
               <tr key={p.id} className="border-t border-slate-100">
-                <td className="px-4 py-3 text-slate-600">{formatDate(p.created_at)}</td>
+                {/* Sana + SOAT (sekundigacha) — Jahongir, 2026-08-12:
+                    "kim va qaysi soatda kirgizganligi aniq ko'rinib
+                    tursin sekundlarigacha". */}
+                <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
+                  {formatDate(p.created_at)}
+                  <span className="block text-[11px] text-slate-400">
+                    {formatTime(p.created_at)}
+                  </span>
+                </td>
                 <td className="px-4 py-3 text-slate-600">
                   {KIND_LABEL[p.kind] || p.kind}
                 </td>
                 <td className="px-4 py-3 text-slate-500">
                   {methodLabel(p.method) || "—"}
+                </td>
+                <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
+                  {p.created_by || "—"}
+                  {p.entered_at &&
+                    p.entered_at.slice(0, 10) !== p.created_at.slice(0, 10) && (
+                      <span className="block text-[11px] text-amber-700">
+                        kiritilgan: {formatDateTime(p.entered_at)}
+                      </span>
+                    )}
                 </td>
                 <td className="px-4 py-3 text-slate-600">{p.note || "—"}</td>
                 <td

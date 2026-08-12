@@ -37,3 +37,40 @@ export function formatDayLabel(period: string): string {
 export function formatGrowthLabel(period: string, granularity: "day" | "month"): string {
   return granularity === "day" ? formatDayLabel(period) : formatPeriodLabel(period);
 }
+
+/** Toshkent vaqti (UTC+5) — server vaqtni zona belgisisiz (UTC) yuboradi. */
+const UZ_OFFSET_MIN = 5 * 60;
+
+function toUz(ts: string): Date | null {
+  const iso = /[zZ]$|[+-]\d{2}:?\d{2}$/.test(ts) ? ts : ts + "Z";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  return new Date(d.getTime() + UZ_OFFSET_MIN * 60000);
+}
+
+const p2 = (n: number) => String(n).padStart(2, "0");
+
+/**
+ * "2026-08-12T12:41:59.129" -> "12.08.2026 17:41:59" (Toshkent vaqti).
+ * 2026-08-12, Jahongir: "kim va qaysi soatda kirgizganligi aniq
+ * ko'rinib tursin sekundlarigacha".
+ */
+export function formatDateTime(ts?: string | null,
+                               withSeconds = true): string {
+  if (!ts) return "—";
+  const t = toUz(ts);
+  if (!t) return ts;
+  return `${p2(t.getUTCDate())}.${p2(t.getUTCMonth() + 1)}.` +
+    `${t.getUTCFullYear()} ${p2(t.getUTCHours())}:${p2(t.getUTCMinutes())}` +
+    (withSeconds ? `:${p2(t.getUTCSeconds())}` : "");
+}
+
+/** Faqat soat: "17:41:59" (Toshkent vaqti). */
+export function formatTime(ts?: string | null,
+                           withSeconds = true): string {
+  if (!ts) return "—";
+  const t = toUz(ts);
+  if (!t) return "—";
+  return `${p2(t.getUTCHours())}:${p2(t.getUTCMinutes())}` +
+    (withSeconds ? `:${p2(t.getUTCSeconds())}` : "");
+}

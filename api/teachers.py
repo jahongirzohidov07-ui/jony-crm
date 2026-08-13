@@ -922,6 +922,125 @@ _DISC_ROLES = tuple(dict.fromkeys(
     + (roles.ACADEMIC_HEAD, roles.HR_MANAGER)))
 
 
+@router.get("/api/reports/teacher-salary-detail")
+def teacher_salary_detail(
+    year: int | None = None,
+    month: int | None = None,
+    branch_id: int | None = None,
+    teacher_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*_DISC_ROLES)),
+):
+    """Ustoz oyligi O'QUVCHI KESIMIDA.
+
+    2026-08-13, Jahongir: "ustozlarga oyligi korinyabdi lekin
+    hisobotlar bolimidan har bir o'quvchidan qancha summa nechta
+    yo'qlama qoyganligi to'liq korinib turadigan ham korinib tursin".
+
+    Ustozning oyligi har bir YOQLAMADAN yig'iladi: bitta o'quvchi
+    bitta darsda belgilansa — bitta yoqlama narxi. Shuning uchun
+    "kimdan qancha" degan savolga aniq javob bor: o'quvchiga
+    qo'yilgan yoqlamalar soni x bir yoqlama narxi.
+    """
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+
+    tq = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
+                         branch_id)
+    if teacher_id:
+        tq = tq.filter(models.Teacher.id == teacher_id)
+    teachers = tq.filter(models.Teacher.is_active == 1).all()
+    tids = [t.id for t in teachers]
+    if not tids:
+        return {"period": f"{y:04d}-{m:02d}", "rows": [], "total": 0}
+
+    lessons = (db.query(models.Lesson)
+               .filter(models.Lesson.teacher_id.in_(tids),
+                       models.Lesson.held == 1,
+                       models.Lesson.date >= start,
+                       models.Lesson.date <= end).all())
+    if not lessons:
+        return {"period": f"{y:04d}-{m:02d}",
+                "rows": [{"teacher_id": t.id, "teacher": t.full_name,
+                          "branch": t.branch.name if t.branch else None,
+                          "amount": 0, "attendances": 0, "lessons": 0,
+                          "students": []} for t in teachers],
+                "total": 0}
+
+    lids = [l.id for l in lessons]
+    atts = (db.query(models.Attendance)
+            .filter(models.Attendance.lesson_id.in_(lids)).all())
+    att_by_lesson: dict = {}
+    for a in atts:
+        att_by_lesson.setdefault(a.lesson_id, []).append(a)
+    students = {s.id: s for s in db.query(models.Student).filter(
+        models.Student.id.in_({a.student_id for a in atts}))
+        .all()} if atts else {}
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    rates = billing.grade_rates(db)
+
+    # ustoz -> o'quvchi -> {summa, yoqlama, keldi, kelmadi, guruhlar}
+    per_teacher: dict = {t.id: {} for t in teachers}
+    tot_lessons: dict = {t.id: 0 for t in teachers}
+    for l in lessons:
+        g = groups.get(l.group_id)
+        if not g:
+            continue
+        tot_lessons[l.teacher_id] = tot_lessons.get(l.teacher_id, 0) + 1
+        rate, _per_student = billing.lesson_rate(db, g, l, rates)
+        for a in att_by_lesson.get(l.id, []):
+            st = students.get(a.student_id)
+            box = per_teacher.setdefault(l.teacher_id, {})
+            row = box.setdefault(a.student_id, {
+                "student_id": a.student_id,
+                "student": st.full_name if st else f"#{a.student_id}",
+                "status": st.status if st else None,
+                "groups": set(), "attendances": 0,
+                "present": 0, "absent": 0, "amount": 0.0,
+            })
+            row["groups"].add(g.name)
+            row["attendances"] += 1
+            if a.present:
+                row["present"] += 1
+            else:
+                row["absent"] += 1
+            row["amount"] += rate
+
+    rows = []
+    for t in teachers:
+        box = per_teacher.get(t.id, {})
+        st_rows = []
+        for r in box.values():
+            r = dict(r)
+            r["groups"] = ", ".join(sorted(r["groups"]))
+            r["amount"] = round(r["amount"], 2)
+            st_rows.append(r)
+        st_rows.sort(key=lambda r: -r["amount"])
+        amount = round(sum(r["amount"] for r in st_rows), 2)
+        att = sum(r["attendances"] for r in st_rows)
+        rows.append({
+            "teacher_id": t.id,
+            "teacher": t.full_name,
+            "branch": t.branch.name if t.branch else None,
+            "lessons": tot_lessons.get(t.id, 0),
+            "attendances": att,
+            "students_count": len(st_rows),
+            "amount": amount,
+            "per_attendance": round(amount / att, 2) if att else 0,
+            "students": st_rows,
+        })
+    rows.sort(key=lambda r: -r["amount"])
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "total": round(sum(r["amount"] for r in rows), 2),
+        "attendances": sum(r["attendances"] for r in rows),
+        "hint": ("Ustoz oyligi HAR BIR YOQLAMADAN yig'iladi: o'quvchiga "
+                 "qo'yilgan yoqlama soni x bir yoqlama narxi. Yoqlama "
+                 "qo'yilmagan dars uchun pul hisoblanmaydi."),
+    }
+
 @router.get("/api/reports/teacher-discipline")
 def teacher_discipline_report(
     year: int | None = None,

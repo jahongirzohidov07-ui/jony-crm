@@ -115,9 +115,21 @@ def public_lead(payload: dict, request: Request,
         except (TypeError, ValueError):
             branch = None
     if branch is None and _s("branch", 80):
-        nm = _s("branch", 80).lower()
-        branch = next((b for b in db.query(models.Branch).all()
-                       if (b.name or "").lower() == nm), None)
+        # Saytda filial "Bekobod shahar" deb yozilgan bo'lishi mumkin,
+        # bizda esa "Bekobod 1". Shuning uchun aniq moslik topilmasa,
+        # birinchi so'z bo'yicha qidiramiz (Jahongir, 2026-08-13:
+        # saytdagi mavjud forma ulanmoqda).
+        nm = _s("branch", 80).lower().strip()
+        all_b = db.query(models.Branch).order_by(models.Branch.id).all()
+        branch = next((b for b in all_b if (b.name or "").lower() == nm),
+                      None)
+        if branch is None:
+            head = nm.split()[0] if nm else ""
+            if head:
+                branch = next(
+                    (b for b in all_b
+                     if (b.name or "").lower().startswith(head)
+                     or head in (b.name or "").lower()), None)
 
     # TAKROR: shu raqamdan 24 soat ichida ariza kelgan bo'lsa, yangi
     # lid ochilmaydi - odam tugmani ikki marta bosgan bo'lishi mumkin.

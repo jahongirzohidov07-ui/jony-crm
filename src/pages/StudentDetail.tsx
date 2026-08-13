@@ -29,6 +29,7 @@ import {
   HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
 } from "../lib/academic";
 import { StudentPayButton } from "../components/QuickPayment";
+import { StudentRowMenu } from "../components/StudentRowMenu";
 import { printXReceipt, printCertificate } from "../lib/receipt";
 import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
@@ -336,9 +337,22 @@ function ParentTools({ student }: { student: StudentDetailType }) {
 }
 
 // -------------------------------------------------------------- Guruhlar
-function GroupsTab({ student }: { student: StudentDetailType }) {
+function GroupsTab({
+  student,
+  onChanged,
+}: {
+  student: StudentDetailType;
+  onChanged: () => void;
+}) {
   const g = student.group;
   const [attOpen, setAttOpen] = useState(false);
+  // Uch nuqta menyusi uchun guruhlar ro'yxati (boshqa guruhga
+  // o'tkazishda kerak) — Jahongir, 2026-08-13: "o'quvchi ustida
+  // amallardan 3tasini qoshib ber, xuddi LC dagida".
+  const [allGroups, setAllGroups] = useState<Group[]>([]);
+  useEffect(() => {
+    api.get<Group[]>("/groups").then(setAllGroups).catch(() => {});
+  }, []);
   if (!g)
     return (
       <p className="text-sm text-slate-400 py-8 text-center">
@@ -371,13 +385,20 @@ function GroupsTab({ student }: { student: StudentDetailType }) {
         />
       )}
     <div className="border border-slate-200 rounded-xl overflow-hidden max-w-lg">
-      <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
+      <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center gap-2">
         <Link
           to={`/groups/${g.id}`}
-          className="font-semibold text-slate-900 hover:text-brand-700"
+          className="font-semibold text-slate-900 hover:text-brand-700 flex-1 min-w-0 truncate"
         >
           {g.name}
         </Link>
+        {/* LC UP dagidek uch nuqta: faollashtirish, boshqa guruhga
+            o'tkazish, guruhdan chiqarish va boshqa amallar. */}
+        <StudentRowMenu
+          student={student as unknown as Student}
+          groups={allGroups}
+          onChanged={onChanged}
+        />
       </div>
       <div className="p-4 divide-y divide-slate-100">
         <Row
@@ -1369,7 +1390,9 @@ export default function StudentDetail() {
             ))}
           </div>
 
-          {tab === "groups" && <GroupsTab student={student} />}
+          {tab === "groups" && (
+            <GroupsTab student={student} onChanged={load} />
+          )}
           {tab === "payments" && <PaymentsTab student={student} onChanged={load} />}
           {tab === "attendance" && <AttendanceTab studentId={student.id} />}
           {tab === "exams" && <ExamsTab studentId={student.id} />}

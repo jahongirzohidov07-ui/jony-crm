@@ -46,6 +46,136 @@ def _validate_lead_fields(source: Optional[str], stage: Optional[str]):
     if stage is not None and stage not in roles.LEAD_STAGES:
         raise HTTPException(400, "Noto'g'ri bosqich")
 
+# =====================================================================
+#  SAYT (jonyacademy.uz) UCHUN OCHIQ ARIZA
+#
+#  2026-08-13, Jahongir: "saytimizga ariza qoldirsa avtomat JonyOS ga
+#  qaysi filial tanlangan bo'lsa shu filialga lid bolib tushsin va
+#  manbasi website bo'ladigan qil".
+#
+#  Auth YO'Q - sayt tashqarida turadi. Shuning uchun himoya:
+#  honeypot maydon, telefon tekshiruvi, bir xil raqamdan 24 soatda
+#  bitta ariza va IP bo'yicha soatiga cheklov.
+# =====================================================================
+
+_WEB_LEAD_HITS: dict = {}
+_WEB_LEAD_MAX_PER_HOUR = 30
+
+
+def _web_rate_ok(ip: str) -> bool:
+    now = datetime.utcnow()
+    hits = [t for t in _WEB_LEAD_HITS.get(ip, []) if (now - t).seconds < 3600]
+    hits.append(now)
+    _WEB_LEAD_HITS[ip] = hits[-100:]
+    return len(hits) <= _WEB_LEAD_MAX_PER_HOUR
+
+
+@router.get("/api/public/branches")
+def public_branches(db: Session = Depends(get_db)):
+    """Sayt formasidagi filial ro'yxati. Auth yo'q - faqat nom va id."""
+    rows = db.query(models.Branch).order_by(models.Branch.name).all()
+    return [{"id": b.id, "name": b.name} for b in rows
+            if not (b.name or "").lower().startswith("test")]
+
+
+@router.post("/api/public/lead")
+def public_lead(payload: dict, request: Request,
+                db: Session = Depends(get_db)):
+    """Saytdagi "Ariza qoldirish" formasi. Auth YO'Q.
+
+    Kutiladigan maydonlar:
+      full_name (majburiy), phone (majburiy), branch_id yoki branch,
+      course, note, page, utm_source, hp (honeypot - bo'sh bo'lishi kerak)
+    """
+    ip = (request.client.host if request.client else "?") or "?"
+    if not _web_rate_ok(ip):
+        raise HTTPException(429, "Juda ko'p so'rov — birozdan keyin urinib "
+                                 "ko'ring")
+
+    def _s(key, limit=200):
+        return str(payload.get(key) or "").strip()[:limit]
+
+    # Honeypot: odam ko'rmaydigan maydon. Bot to'ldiradi - jimgina
+    # "ok" qaytaramiz, lekin bazaga yozmaymiz.
+    if _s("hp", 50):
+        return {"ok": True}
+
+    full_name = " ".join(_s("full_name", 120).split())
+    phone = _s("phone", 40)
+    digits = "".join(ch for ch in phone if ch.isdigit())
+    if len(full_name) < 3:
+        raise HTTPException(400, "Ismingizni to'liq yozing")
+    if len(digits) < 7:
+        raise HTTPException(400, "Telefon raqamini to'g'ri kiriting")
+
+    branch = None
+    if payload.get("branch_id"):
+        try:
+            branch = db.query(models.Branch).get(int(payload["branch_id"]))
+        except (TypeError, ValueError):
+            branch = None
+    if branch is None and _s("branch", 80):
+        nm = _s("branch", 80).lower()
+        branch = next((b for b in db.query(models.Branch).all()
+                       if (b.name or "").lower() == nm), None)
+
+    # TAKROR: shu raqamdan 24 soat ichida ariza kelgan bo'lsa, yangi
+    # lid ochilmaydi - odam tugmani ikki marta bosgan bo'lishi mumkin.
+    tail = digits[-9:]
+    since = datetime.utcnow() - timedelta(hours=24)
+    for l in (db.query(models.Lead)
+              .filter(models.Lead.created_at >= since).all()):
+        d = "".join(ch for ch in (l.phone or "") if ch.isdigit())
+        if d and d[-9:] == tail:
+            return {"ok": True, "duplicate": True, "lead_id": l.id}
+
+    course = _s("course", 120)
+    page = _s("page", 200)
+    utm = _s("utm_source", 80)
+    extra = _s("note", 500)
+    note_lines = ["Sayt orqali ariza (jonyacademy.uz)"]
+    if course:
+        note_lines.append(f"Yo'nalish: {course}")
+    if branch:
+        note_lines.append(f"Tanlagan filiali: {branch.name}")
+    if extra:
+        note_lines.append(f"Izoh: {extra}")
+    if page:
+        note_lines.append(f"Sahifa: {page}")
+    if utm:
+        note_lines.append(f"UTM: {utm}")
+
+    lead = models.Lead(
+        full_name=full_name,
+        phone=phone,
+        source="website",
+        stage=roles.LEAD_SOURCE_DEFAULT_STAGE.get("website", "new"),
+        branch_id=branch.id if branch else None,
+        note="\n".join(note_lines),
+        created_by="Sayt")
+    db.add(lead); db.commit(); db.refresh(lead)
+    _ensure_public_id(db, "lead", lead)
+    db.commit()
+
+    # Ariza javobsiz qolmasin: filial administratoriga vazifa.
+    try:
+        _hr_task(db,
+                 title=f"Saytdan ariza: {full_name} ({lead.public_id or lead.id})",
+                 body=("\n".join(note_lines)
+                       + f"\nTelefon: {phone}\n"
+                         "Iltimos, bugunning o'zida qo'ng'iroq qiling."),
+                 to_roles=[roles.ADMINISTRATOR, roles.SALES_MANAGER,
+                           roles.SALES_HEAD, roles.BRANCH_MANAGER],
+                 branch_id=lead.branch_id, days=1, priority="high")
+        db.commit()
+    except Exception:
+        db.rollback()
+
+    return {"ok": True, "lead_id": lead.id,
+            "public_id": lead.public_id,
+            "branch": branch.name if branch else None}
+
+
 @router.get("/api/leads", response_model=List[schemas.LeadOut])
 def list_leads(
     stage: Optional[str] = None,

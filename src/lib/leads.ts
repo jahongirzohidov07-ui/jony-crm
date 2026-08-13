@@ -14,6 +14,7 @@ export type LeadSource =
   | "phone"
   | "instagram"
   | "telegram"
+  | "website"
   | "referral"
   | "ads"
   | "other";
@@ -63,6 +64,8 @@ export const LEAD_SOURCES: { key: LeadSource; label: string }[] = [
   { key: "phone", label: "Telefon" },
   { key: "instagram", label: "Instagram" },
   { key: "telegram", label: "Telegram" },
+  // 2026-08-13: saytdan (jonyacademy.uz) kelgan arizalar
+  { key: "website", label: "Sayt (jonyacademy.uz)" },
   { key: "referral", label: "Tanish orqali" },
   { key: "ads", label: "Reklama" },
   { key: "other", label: "Boshqa" },
@@ -75,6 +78,7 @@ export const SOURCE_DEFAULT_STAGE: Record<LeadSource, LeadStage> = {
   phone: "contacted",
   instagram: "new",
   telegram: "new",
+  website: "new",
   referral: "new",
   ads: "new",
   other: "new",

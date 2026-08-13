@@ -295,6 +295,9 @@ LEAD_SOURCES = [
     "phone",      # Telefon - o'zi qo'ng'iroq qilgan
     "instagram",
     "telegram",
+    # 2026-08-13, Jahongir: "saytimizga ariza qoldirsa avtomat JonyOS
+    # ga ... lid bolib tushsin va manbasi website bo'ladigan qil"
+    "website",    # Sayt (jonyacademy.uz) formasi
     "referral",   # Tanish orqali
     "ads",        # Reklama
     "other",      # Boshqa
@@ -306,6 +309,7 @@ LEAD_SOURCE_DEFAULT_STAGE = {
     "phone": "contacted",
     "instagram": "new",
     "telegram": "new",
+    "website": "new",
     "referral": "new",
     "ads": "new",
     "other": "new",
@@ -608,6 +612,7 @@ LEAD_SOURCE_LABELS = {
     "phone": "Telefon",
     "instagram": "Instagram",
     "telegram": "Telegram",
+    "website": "Sayt (jonyacademy.uz)",
     "referral": "Tanish orqali",
     "ads": "Reklama",
     "other": "Boshqa",
@@ -617,6 +622,7 @@ MARKETING_CHANNEL_LABELS = {
     "phone": "Telefon",
     "instagram": "Instagram",
     "telegram": "Telegram",
+    "website": "Sayt",
     "referral": "Tanish orqali",
     "ads": "Reklama (boshqa)",
     "other": "Boshqa",

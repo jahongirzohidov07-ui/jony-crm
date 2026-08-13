@@ -106,7 +106,9 @@ rows = db.query(models.Payment).filter(
 note = rows[0].note if rows else ""
 db.close()
 ck("bitta qator", len(rows), 1)
-ck("izohda ikkala guruh bor", "Qimmat guruh → Arzon guruh" in note, True)
+ck("izohda eski guruh va summasi", "Qimmat guruh: 4 dars" in note, True)
+ck("izohda yangi guruh va summasi", "Arzon guruh: 6 dars" in note, True)
+print("   izoh:", note)
 ck("izohda darslar soni", f"[dars:{len(old_days)+len(new_days)}]" in note, True)
 
 print("\n=== 5. Auditda eski summa qoldi ===")

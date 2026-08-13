@@ -1321,11 +1321,25 @@ def _recharge_after_move(db: Session, s: models.Student,
     if abs(was - target) < 1:
         return None
 
+    # IZOH: qaysi guruh uchun qancha pul hisoblangani ochiq yozilsin
+    # (Jahongir, 2026-08-13: "qaysi guruh uchun qancha pul
+    # hisoblanganligi korinib tursa boldi").
     o_name = getattr(old_group, "name", "—")
     n_name = getattr(new_group, "name", "—")
+
+    def _som(v):
+        return f"{v:,.0f}".replace(",", " ")
+
+    parts = []
+    if old_n:
+        parts.append(f"{o_name}: {old_n} dars x {_som(_unit(old_group))} "
+                     f"= {_som(old_n * _unit(old_group))}")
+    if new_n:
+        parts.append(f"{n_name}: {new_n} dars x {_som(_unit(new_group))} "
+                     f"= {_som(new_n * _unit(new_group))}")
     row.amount = -target
-    row.note = (f"{o_name} → {n_name} — {period}: guruh almashdi, "
-                f"{old_n}+{new_n} dars [dars:{old_n + new_n}]")
+    row.note = (f"{period} — guruh almashdi · " + " + ".join(parts)
+                + f" [dars:{old_n + new_n}]")
     audit.log(db, user, entity="payment", action="lessons_recount",
               entity_id=row.id, entity_label=s.full_name, field="amount",
               old_value=f"{was:,.0f}".replace(",", " "),

@@ -1266,6 +1266,76 @@ def _raise_if_blocked(problems: list, *, force: bool = False):
             "can_force": True,
         })
 
+def _recharge_after_move(db: Session, s: models.Student,
+                         old_group, new_group, on_date: date = None,
+                         user=None) -> dict | None:
+    """Oy o'rtasida guruh almashsa — shu oyning hisobini QAYTA bo'ladi.
+
+    2026-08-13, Jahongir: narxi boshqa guruhga o'tganda o'sha oyning
+    hisobi eski narxda qolib ketardi. Endi muzlatishdagi kabi:
+    ko'chgan kungacha bo'lgan darslar ESKI guruh narxida, o'sha kundan
+    oy oxirigacha YANGI guruh narxida hisoblanadi va oyning yagona
+    hisob qatori shunga qarab to'g'rilanadi. Eski summa audit
+    jurnalida qoladi.
+
+    Hisob qatori hali yozilmagan bo'lsa — hech narsa qilinmaydi:
+    oylik hisob-kitob keyin yurgizilganda baribir yangi guruh
+    narxida hisoblanadi.
+    """
+    on = on_date or roles.local_today()
+    period = f"{on.year:04d}-{on.month:02d}"
+    row = (db.query(models.Payment)
+           .filter(models.Payment.student_id == s.id,
+                   models.Payment.kind == "charge",
+                   models.Payment.period == period)
+           .order_by(models.Payment.id.desc()).first())
+    if row is None:
+        return None
+
+    start, end = billing.month_bounds(on.year, on.month)
+    try:
+        disc = float(_student_discount_percent(db, s) or 0)
+    except Exception:
+        disc = 0.0
+    k = (100.0 - disc) / 100.0
+
+    def _unit(g):
+        return float((getattr(g, "lesson_price", 0) or 0)) * k
+
+    def _std(g):
+        return int(getattr(g, "standard_lessons_per_month", None) or 12)
+
+    def _count(g, frm, to):
+        if not g or frm > to:
+            return 0
+        return (db.query(models.Lesson)
+                .filter(models.Lesson.group_id == g.id,
+                        models.Lesson.date >= frm,
+                        models.Lesson.date <= to).count())
+
+    old_n = min(_count(old_group, start, on - timedelta(days=1)),
+                _std(old_group) if old_group else 0)
+    new_n = min(_count(new_group, on, end), _std(new_group))
+    target = roles.money(old_n * _unit(old_group) + new_n * _unit(new_group))
+    was = abs(float(row.amount or 0))
+    if abs(was - target) < 1:
+        return None
+
+    o_name = getattr(old_group, "name", "—")
+    n_name = getattr(new_group, "name", "—")
+    row.amount = -target
+    row.note = (f"{o_name} → {n_name} — {period}: guruh almashdi, "
+                f"{old_n}+{new_n} dars [dars:{old_n + new_n}]")
+    audit.log(db, user, entity="payment", action="lessons_recount",
+              entity_id=row.id, entity_label=s.full_name, field="amount",
+              old_value=f"{was:,.0f}".replace(",", " "),
+              new_value=f"{target:,.0f}".replace(",", " "),
+              note=f"Guruh almashdi: {o_name} → {n_name}",
+              branch_id=s.branch_id)
+    return {"old": was, "new": target, "old_lessons": old_n,
+            "new_lessons": new_n}
+
+
 def _charge_skipped(db: Session, student_id: int, period: str) -> bool:
     """Asoschi o'chirgan avto-oylik qayta yozilmasin."""
     return (db.query(models.ChargeSkip)
@@ -4503,6 +4573,7 @@ __all__ = [
     "_expenses_total",
     "_expire_discounts",
     "_family_discount_percent",
+    "_recharge_after_move",
     "_norm_surname",
     "_notify_discount_approvers",
     "_same_surname",

@@ -842,12 +842,26 @@ def move_student_group(
               entity_label=s.full_name, field="group",
               old_value=s.group.name if s.group else None, new_value=g.name,
               branch_id=s.branch_id)
+    old_group = s.group
     s.group_id = g.id
     # Filial guruh bilan birga o'zgaradi - aks holda hisobotlar chalkashadi.
     if g.branch_id:
         s.branch_id = g.branch_id
     db.commit()
-    return {"ok": True, "group_id": g.id, "group": g.name}
+
+    # MOLIYA: oy o'rtasida ko'chsa, shu oyning hisobi ikkiga bo'linib
+    # qayta hisoblanadi (Jahongir, 2026-08-13: "narxi boshqa guruhga
+    # o'tsa farqni qo'lda to'g'rilash kerak bo'lardi — shuni ham
+    # avtomat qil").
+    recharge = None
+    try:
+        recharge = _recharge_after_move(db, s, old_group, g, user=user)
+        db.commit()
+    except Exception:
+        db.rollback()
+
+    return {"ok": True, "group_id": g.id, "group": g.name,
+            "recharge": recharge}
 
 @router.post("/api/students/{student_id}/remove-from-group")
 def remove_student_from_group(

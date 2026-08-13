@@ -7234,3 +7234,113 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
     db.commit()
     return {"ok": True, "status": s.status, "activated_on": on.isoformat(),
             "charge": charge, "adjust": adjust}
+
+
+# =====================================================================
+#  AVTOMUZLATISHDA OY TO'LOVINI QAYTA HISOBLASH
+#
+#  Ketma-ket 3 darsga kelmagan o'quvchi avtomat muzlatiladi va o'sha
+#  3 ta yo'qlama bekor qilinadi (ustoz oyligidan ham chiqadi). Ammo oy
+#  boshida undan to'liq oylik yechib olingan bo'ladi — hisoblangan
+#  qator 480 000 bo'lib qolaverardi va uni har safar qo'lda
+#  to'g'rilashga to'g'ri kelardi.
+#
+#  Endi bu ish avtomat: muzlatilgan zahoti shu oyning hisoblangan
+#  to'lovi ro'yxatga tushgan (bekor qilinmagan) darslar soni bo'yicha
+#  qayta yoziladi.
+#
+#      6 dars o'tdi -> 3 ta kelmadi -> avtomuzlatildi
+#      480 000  ->  240 000
+#
+#  Qoidalar:
+#    * Muzlatishga sabab bo'lgan 3 ta dars hisobga kirmaydi — ular
+#      allaqachon o'chirilgan.
+#    * Undan oldingi darslar (kelgan ham, qoldirgan ham) hisoblanadi —
+#      markazning qoidasi shu: kelmagani uchun pul qaytmaydi.
+#    * Summa faqat KAMAYADI. Qator allaqachon kamaytirilgan bo'lsa
+#      (qo'lda yoki muzlatish orqali) qayta ko'tarilmaydi.
+#    * Eski oylarga tegilmaydi — faqat muzlatilgan kun oyidagi qator.
+#    * Qaytib faollashtirilganda oyning qolgan darslari alohida
+#      yechiladi (activate_student_v3) — bu ish o'zgarmaydi.
+# =====================================================================
+_AF_WHY = "avtomuzlatish"
+
+
+def _af_marked_lessons(db: Session, s, on: date) -> int:
+    """`on` sanasi oyida o'quvchi ro'yxatiga tushgan darslar soni.
+
+    Avtomuzlatish bekor qilgan 3 ta yo'qlama bu paytda allaqachon
+    o'chirilgan, shuning uchun ular bu yerga kirmaydi."""
+    g = s.group
+    if g is None:
+        return 0
+    try:
+        start, end = M.billing.month_bounds(on.year, on.month)
+    except Exception:
+        return 0
+    if s.enrolled_date and s.enrolled_date > start:
+        start = s.enrolled_date
+    if start > end:
+        return 0
+    try:
+        n = (db.query(models.Attendance)
+             .join(models.Lesson,
+                   models.Lesson.id == models.Attendance.lesson_id)
+             .filter(models.Attendance.student_id == s.id,
+                     models.Lesson.group_id == g.id,
+                     models.Lesson.held == 1,
+                     models.Lesson.date >= start,
+                     models.Lesson.date <= end)
+             .count())
+    except Exception:
+        return 0
+    return min(int(n or 0), _fz_cap(g))
+
+
+def _af_recount(db: Session, s):
+    """Avtomuzlatilgan o'quvchining shu oylik hisobini to'g'rilaydi."""
+    if s is None or s.group_id is None or s.group is None:
+        return None
+    today = roles.local_today()
+    period = _fz_period(today)
+    row = _fz_row(db, s.id, period)
+    if row is None:
+        # Bu oy uchun hech narsa yechilmagan — to'g'rilaydigan narsa yo'q.
+        return None
+    n = _af_marked_lessons(db, s, today)
+    if n >= _fz_lessons_of(db, s, row):
+        # Kamaymaydi — ortiqcha yozuv va audit qoldirmaymiz.
+        return None
+    return _fz_set(db, s, period, n, _AF_WHY, None)
+
+
+def _af_install():
+    """`_freeze_task` ustiga qo'shamiz — avtomuzlatish shu funksiyani
+    chaqiradi (qo'lda muzlatishda `until` doim to'ldirilgan bo'ladi,
+    shuning uchun ikkalasi aralashib ketmaydi)."""
+    import sys as _s
+    done = []
+    for mod in ("common", "system", "main"):
+        m = _s.modules.get(mod)
+        if m is None:
+            continue
+        old = getattr(m, "_freeze_task", None)
+        if old is None or getattr(old, "_af_new", False):
+            continue
+
+        def _wrap(db, st, until, note, _old=old):
+            res = _old(db, st, until, note)
+            try:
+                if until is None and "avtomuzlat" in (note or "").lower():
+                    _af_recount(db, st)
+            except Exception:
+                pass
+            return res
+
+        _wrap._af_new = True
+        setattr(m, "_freeze_task", _wrap)
+        done.append(mod)
+    return done
+
+
+_AF_INSTALLED = _af_install()

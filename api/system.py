@@ -131,11 +131,37 @@ def global_student_search(q: str, db: Session = Depends(get_db),
         return {"students": [], "leads": [], "groups": [],
                 "teachers": [], "staff": []}
     like = f"%{q}%"
-    sq = db.query(models.Student).filter(
-        models.Student.status != "archived",
-        (models.Student.full_name.ilike(like)) |
-        (models.Student.phone.ilike(like)) |
-        (models.Student.public_id.ilike(like)))
+
+    # TELEFON BO'YICHA QIDIRUV. Raqamlar bazada "+(998) 90-404-47-48"
+    # ko'rinishida saqlanadi — foydalanuvchi esa "904044748" yoki
+    # "90 404 47 48" deb yozadi. Shuning uchun ustundagi ortiqcha
+    # belgilarni olib tashlab solishtiramiz (Jahongir, 2026-08-13:
+    # "global qidiruvda nomer yozsa ham nomer bilan qidirsa ham
+    # bo'ladigan qilgin").
+    digits = "".join(ch for ch in q if ch.isdigit())
+
+    def _dig(col):
+        e = col
+        for ch in ("+", "(", ")", "-", " ", "."):
+            e = func.replace(e, ch, "")
+        return e
+
+    def _phone_match(col):
+        if len(digits) < 4:
+            return None
+        return _dig(col).like(f"%{digits}%")
+
+    conds = [models.Student.full_name.ilike(like),
+             models.Student.phone.ilike(like),
+             models.Student.public_id.ilike(like)]
+    for c in (_phone_match(models.Student.phone),
+              _phone_match(models.Student.parent_phone)):
+        if c is not None:
+            conds.append(c)
+    # ARXIVDAGILAR HAM CHIQADI (Jahongir, 2026-08-13: "tepadagi global
+    # qidiruvda qidirganda arxivdagi o'quvchilar ham chiqsin") — ular
+    # ro'yxatda "arxivda" deb belgilanadi.
+    sq = db.query(models.Student).filter(or_(*conds))
     own_only = user.role in tuple(roles.OWN_GROUPS_ONLY)
     if own_only:
         t = _teacher_of_user(db, user)
@@ -144,19 +170,30 @@ def global_student_search(q: str, db: Session = Depends(get_db),
     elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         sq = sq.filter(_branch_in(db, user, models.Student.branch_id))
     groups = {g.id: g.name for g in db.query(models.Group).all()}
-    st_lbl = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan"}
+    st_lbl = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan",
+              "archived": "arxivda", "left": "ketgan"}
+    # Faollar yuqorida, arxivdagilar pastda tursin
+    _rows = sq.order_by(models.Student.full_name).limit(24).all()
+    _rows.sort(key=lambda x: (x.status in ("archived", "left"),
+                              x.full_name or ""))
     students = [{
         "id": s.id, "name": s.full_name,
         "group": groups.get(s.group_id),
+        "phone": s.phone,
+        "archived": s.status in ("archived", "left"),
         "status_label": st_lbl.get(s.status, s.status),
-    } for s in sq.order_by(models.Student.full_name).limit(8).all()]
+    } for s in _rows[:10]]
 
     leads = []
     if not own_only:
+        _lconds = [models.Lead.full_name.ilike(like),
+                   models.Lead.phone.ilike(like)]
+        _lp = _phone_match(models.Lead.phone)
+        if _lp is not None:
+            _lconds.append(_lp)
         lq = db.query(models.Lead).filter(
             models.Lead.stage.notin_(("converted", "rejected")),
-            (models.Lead.full_name.ilike(like)) |
-            (models.Lead.phone.ilike(like)))
+            or_(*_lconds))
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
             lq = lq.filter(_branch_in(db, user, models.Lead.branch_id))
         leads = [{

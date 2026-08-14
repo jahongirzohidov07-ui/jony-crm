@@ -738,7 +738,7 @@ function GlobalSearch() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onFocus={() => res && setOpenS(true)}
-          placeholder="O'quvchi qidirish…"
+          placeholder="Ism yoki telefon raqami…"
           className="w-full bg-white border border-slate-200 rounded-full pl-8 pr-3 py-2 text-sm shadow-sm focus:border-brand-400 focus:outline-none"
         />
       </div>
@@ -754,9 +754,17 @@ function GlobalSearch() {
               onClick={() => { setOpenS(false); setQ("");
                 navigate(`/students/${s.id}`); }}
               className="w-full text-left px-3 py-2 hover:bg-slate-50">
-              <p className="text-sm text-slate-800">{s.name}</p>
+              <p className="text-sm text-slate-800">
+                {s.name}
+                {s.archived && (
+                  <span className="ml-1.5 text-[10px] font-semibold bg-slate-200 text-slate-600 rounded px-1.5 py-0.5 align-middle">
+                    arxiv
+                  </span>
+                )}
+              </p>
               <p className="text-xs text-slate-400">
                 {s.group || "guruhsiz"} · {s.status_label}
+                {s.phone ? ` · ${s.phone}` : ""}
               </p>
             </button>
           ))}
@@ -831,6 +839,9 @@ function GlobalSearch() {
 type SearchRow = {
   id: number; name: string; group?: string | null;
   status_label: string;
+  /** Arxivdagi o'quvchi — ro'yxatda belgilanadi (2026-08-13). */
+  archived?: boolean;
+  phone?: string | null;
 };
 type SearchRes = {
   students: SearchRow[]; leads: SearchRow[];

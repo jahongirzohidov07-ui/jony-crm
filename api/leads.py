@@ -231,9 +231,13 @@ def create_lead(
                 dup_lead = l
                 break
         dup_student = None
+        # ARXIVDAGILAR ham tekshiriladi (Jahongir, 2026-08-13: "agar
+        # nomer togri kelib qolsa ... arxiv bilan yoki o'qiyotgan bor
+        # o'quvchi bilan bunday o'quvchi bor deb tavsiya qilsin") —
+        # ketgan o'quvchi qaytib kelayotgan bo'lishi mumkin, uni yangi
+        # lid qilib emas, arxivdan tiklash kerak.
         if not dup_lead:
-            for s in db.query(models.Student).filter(
-                    models.Student.status != "archived").all():
+            for s in db.query(models.Student).all():
                 for ph in (s.phone, s.parent_phone):
                     d = "".join(ch for ch in (ph or "") if ch.isdigit())
                     if d and d[-9:] == tail:
@@ -244,11 +248,22 @@ def create_lead(
         if dup_lead or dup_student:
             who = dup_lead.full_name if dup_lead else dup_student.full_name
             kind = "lid" if dup_lead else "o'quvchi"
+            extra = ""
+            if dup_student is not None and dup_student.status in (
+                    "archived", "left"):
+                kind = "ARXIVDAGI o'quvchi"
+                extra = (" U ilgari o'qigan — yangi lid ochish o'rniga "
+                         "Arxiv bo'limidan tiklasangiz, to'lov va davomat "
+                         "tarixi saqlanib qoladi.")
+            elif dup_student is not None:
+                extra = (f" U hozir {'guruhda o‘qiyapti' if dup_student.group_id else 'bazada bor'}"
+                         f" ({dup_student.status}).")
             raise HTTPException(
                 409, f"Bu telefon raqami bilan {kind} allaqachon bor: "
-                     f"{who}. Bir oila vakilimi (aka-uka / opa-singil) "
-                     "yoki raqamni adashib kiritdingizmi? Bir oiladan "
-                     "bo'lsa, tasdiqlang — bitta raqam bilan yozilaveradi.")
+                     f"{who}.{extra} Bir oila vakilimi (aka-uka / "
+                     "opa-singil) yoki raqamni adashib kiritdingizmi? "
+                     "Bir oiladan bo'lsa, tasdiqlang — bitta raqam bilan "
+                     "yozilaveradi.")
 
     # DUBLIKAT (ism bo'yicha): bir xil ism-familiyali lid yoki talaba
     # bo'lsa — adashib qayta kiritishning oldini olamiz. Yangi odam
@@ -262,16 +277,24 @@ def create_lead(
         same_student = None
         if not same_lead:
             same_student = next(
-                (st for st in db.query(models.Student)
-                 .filter(models.Student.status != "archived").all()
+                (st for st in db.query(models.Student).all()
                  if " ".join((st.full_name or "").split()).lower() == nm),
                 None)
         if same_lead or same_student:
-            kind = "lid" if same_lead else "talaba"
+            kind = "lid" if same_lead else "o'quvchi"
+            extra = ""
+            if same_student is not None:
+                if same_student.status in ("archived", "left"):
+                    kind = "ARXIVDAGI o'quvchi"
+                    extra = (" Uni Arxiv bo'limidan tiklash mumkin — "
+                             "tarixi saqlanib qoladi.")
+                else:
+                    extra = f" (holati: {same_student.status})"
             raise HTTPException(
-                409, f"Bunday ismli {kind} allaqachon bor — adashib "
-                     f"qayta kiritib qo'ymayapsizmi? Agar bu boshqa "
-                     f"(yangi) odam bo'lsa, tasdiqlang.")
+                409, f"Bunday ismli {kind} allaqachon bor: "
+                     f"{(same_lead or same_student).full_name}.{extra} "
+                     f"Adashib qayta kiritib qo'ymayapsizmi? Agar bu "
+                     f"boshqa (yangi) odam bo'lsa, tasdiqlang.")
 
     # Bosqich berilmasa, manbaga qarab o'zi tanlanadi: tashrif bilan kelgan
     # odam "unga qo'ng'iroq qilish kerak" bosqichini o'tib bo'lgan.

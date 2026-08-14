@@ -128,6 +128,8 @@ export function AtsBoard() {
         </div>
       </div>
 
+      <RejectedPanel d={d} onOpen={setOpen} />
+
       <p className="text-xs text-slate-500 mt-3 flex items-start gap-1.5">
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
@@ -307,12 +309,13 @@ function AppModal({
   };
   useEffect(load, [id]);
 
-  const move = async (stage: string, reason?: string) => {
+  const move = async (stage: string, reason?: string, note?: string) => {
     setErr("");
     try {
       await api.post(`/ats/applications/${id}/move`, {
         stage,
         reason: reason || null,
+        note: note || null,
       });
       load();
     } catch (e) {
@@ -371,6 +374,23 @@ function AppModal({
           />
         </div>
 
+        {d.closed && (d.reject_reason_label || d.reject_note) && (
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2">
+            <p className="text-sm font-medium text-red-800">
+              {d.stage === "withdrew" ? "O'zi voz kechdi" : "Rad etildi"} —{" "}
+              {d.reject_reason_label || "sabab yozilmagan"}
+            </p>
+            {d.reject_note && (
+              <p className="text-xs text-red-700 mt-0.5">{d.reject_note}</p>
+            )}
+            {d.pool && (
+              <p className="text-[11px] text-red-600 mt-1">
+                Talent poolda — keyingi vakansiyaga qaytarish mumkin.
+              </p>
+            )}
+          </div>
+        )}
+
         {!d.closed && (
           <div className="flex gap-2 mb-4 flex-wrap">
             {next && (
@@ -381,7 +401,10 @@ function AppModal({
                 {nextLabel} <ChevronRight size={14} />
               </button>
             )}
-            <RejectButton onReject={(r) => move("rejected", r)} data={d} />
+            <RejectButton
+              onReject={(r, n) => move("rejected", r, n)}
+              data={d}
+            />
           </div>
         )}
         {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
@@ -425,11 +448,12 @@ function RejectButton({
   onReject,
   data,
 }: {
-  onReject: (reason: string) => void;
+  onReject: (reason: string, note: string) => void;
   data: Any;
 }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
+  const [note, setNote] = useState("");
   if (!open)
     return (
       <button
@@ -454,14 +478,116 @@ function RejectButton({
           </option>
         ))}
       </select>
+      <input
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        placeholder="Izoh (ixtiyoriy)"
+        className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm w-44"
+      />
       <button
-        onClick={() => reason && onReject(reason)}
+        onClick={() => reason && onReject(reason, note)}
         disabled={!reason}
         className="bg-red-600 text-white rounded-lg px-3 py-1.5 text-sm disabled:opacity-40"
       >
         Rad
       </button>
     </span>
+  );
+}
+
+/**
+ * Rad etilganlar — kanbanda ko'rinmaydigan yopilgan arizalar.
+ *
+ * Sabab HR uchun eng qimmatli ma'lumot: "nega odam topilmayapti"
+ * degan savolga aynan shu ro'yxat javob beradi. Tepada sabablar
+ * kesimi, ichida esa har bir nomzod va izohi.
+ */
+function RejectedPanel({
+  d,
+  onOpen,
+}: {
+  d: Any;
+  onOpen: (id: number) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const rows: Any[] = (d.rows || []).filter(
+    (r: Any) => r.stage === "rejected" || r.stage === "withdrew"
+  );
+  if (rows.length === 0) return null;
+
+  const by: Record<string, number> = {};
+  rows.forEach((r: Any) => {
+    const k = r.reject_reason_label || "Sabab yozilmagan";
+    by[k] = (by[k] || 0) + 1;
+  });
+  const top = Object.keys(by).sort((a, b) => by[b] - by[a]);
+
+  return (
+    <div className="mt-5 bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center gap-2 px-4 py-3 text-left hover:bg-slate-50"
+      >
+        <span className="text-sm font-medium text-slate-800">
+          Rad etilganlar
+        </span>
+        <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-red-100 text-red-700">
+          {rows.length}
+        </span>
+        <div className="flex-1" />
+        <span className="text-xs text-slate-400">
+          {open ? "yopish" : "ro'yxatni ochish"}
+        </span>
+      </button>
+
+      <div className="px-4 pb-3 flex flex-wrap gap-1.5">
+        {top.map((label) => (
+          <span
+            key={label}
+            className="px-2 py-0.5 rounded-lg text-[11px] bg-slate-100 text-slate-600"
+          >
+            {label} · {by[label]}
+          </span>
+        ))}
+      </div>
+
+      {open && (
+        <table className="w-full text-sm border-t border-slate-100">
+          <tbody className="divide-y divide-slate-100">
+            {rows.map((r: Any) => (
+              <tr
+                key={r.id}
+                onClick={() => onOpen(r.id)}
+                className="hover:bg-slate-50 cursor-pointer align-top"
+              >
+                <td className="px-4 py-2">
+                  <p className="text-slate-800">{r.candidate}</p>
+                  <p className="text-xs text-slate-400">
+                    {r.vacancy || "vakansiyasiz"}
+                    {r.branch ? ` · ${r.branch}` : ""}
+                  </p>
+                </td>
+                <td className="px-3 py-2">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-red-100 text-red-700">
+                    {r.reject_reason_label || "sabab yozilmagan"}
+                  </span>
+                  {r.reject_note && (
+                    <p className="text-xs text-slate-500 mt-1">
+                      {r.reject_note}
+                    </p>
+                  )}
+                </td>
+                <td className="px-4 py-2 text-right text-xs text-slate-400 whitespace-nowrap">
+                  {r.stage === "withdrew" ? "o'zi voz kechdi" : ""}
+                  {r.pool ? " · talent pool" : ""}
+                  {r.closed_at ? ` · ${String(r.closed_at).slice(0, 10)}` : ""}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 }
 

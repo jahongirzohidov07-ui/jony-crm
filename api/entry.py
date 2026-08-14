@@ -7344,3 +7344,155 @@ def _af_install():
 
 
 _AF_INSTALLED = _af_install()
+
+
+# =====================================================================
+#  GURUH ALMASHTIRISHDA OYLIK CHEGARA
+#
+#  Bir oyda o'quvchidan STANDART dars sonidan (odatda 12 ta) ortiq pul
+#  olinmaydi — 13- va 14-darslar bepul. Guruhdan guruhga o'tganda esa
+#  eski guruhdagi darslar bilan yangi guruhdagi qolgan darslar oddiy
+#  qo'shilib ketardi:
+#
+#      6 dars (eski guruh) + 8 dars (yangi guruh) = 14 dars
+#      560 000 so'm  ->  480 000 dan oshib ketdi
+#
+#  Endi jami dars soni oy standartida cheklanadi: avval eski
+#  guruhdagi o'tilgan darslar, qolgan joyga yangi guruh darslari
+#  yoziladi. Ortiqchasi bepul va izohda ko'rinib turadi.
+# =====================================================================
+def _tr_cap(new_g, old_gs) -> int:
+    """Oyning standart dars soni — yangi guruhniki asos."""
+    for g in [new_g] + list(old_gs or []):
+        n = getattr(g, "standard_lessons_per_month", None) if g else None
+        if n:
+            return int(n)
+    return 12
+
+
+def _tr_old_rows(db: Session, s, new_g, month_start, today):
+    """Shu oy eski guruh(lar)da belgilangan yo'qlamalar — guruhlar
+    kesimida, birinchi dars sanasi bo'yicha tartiblangan."""
+    try:
+        rows = (db.query(models.Lesson.group_id, models.Lesson.date)
+                .join(models.Attendance,
+                      models.Attendance.lesson_id == models.Lesson.id)
+                .filter(models.Attendance.student_id == s.id,
+                        models.Lesson.date >= month_start,
+                        models.Lesson.date <= today,
+                        models.Lesson.group_id != new_g.id)
+                .order_by(models.Lesson.date).all())
+    except Exception:
+        return []
+    order, cnt = [], {}
+    for gid, _d in rows:
+        if gid not in cnt:
+            order.append(gid)
+            cnt[gid] = 0
+        cnt[gid] += 1
+    return [(gid, cnt[gid]) for gid in order]
+
+
+def _transfer_recharge_v2(db: Session, s, old_g, new_g, user, today=None):
+    """Guruh almashtirishda joriy oy to'lovini qayta taqsimlaydi.
+
+    Eski guruhda o'tilgan darslar o'sha guruh narxida, yangi guruhda
+    bugundan oy oxirigacha qolgan darslar yangi narxda. JAMI dars soni
+    oy standartidan (12) oshmaydi — ortig'i bepul.
+
+    Qaytaradi: eski guruhdagi belgilangan yo'qlamalar soni."""
+    today = today or roles.local_today()
+    period = f"{today.year:04d}-{today.month:02d}"
+    month_start = date(today.year, today.month, 1)
+
+    rows = _tr_old_rows(db, s, new_g, month_start, today)
+    gmap = {}
+    if rows:
+        gmap = {g.id: g for g in db.query(models.Group).filter(
+            models.Group.id.in_([gid for gid, _ in rows])).all()}
+    cap = _tr_cap(new_g, list(gmap.values()))
+
+    room = cap
+    old_attended = 0
+    old_sum = 0.0
+    billed = 0
+    parts = []
+    for gid, cnt in rows:
+        g = gmap.get(gid)
+        price = float((g.lesson_price or 0) if g else 0)
+        take = min(int(cnt), max(room, 0))
+        old_sum += take * price
+        old_attended += int(cnt)
+        billed += take
+        room -= take
+        if g:
+            parts.append(f"{g.name}da {cnt} dars")
+
+    try:
+        new_cnt = len(M._lessons_left_in_month(db, new_g.id, today))
+    except Exception:
+        new_cnt = 0
+    new_take = min(int(new_cnt), max(room, 0))
+    new_sum = new_take * float(new_g.lesson_price or 0)
+    billed += new_take
+    parts.append(f"{new_g.name}da {new_cnt} dars")
+
+    try:
+        disc = float(M._student_discount_percent(db, s) or 0)
+    except Exception:
+        disc = 0.0
+    total = roles.money((old_sum + new_sum) * (100.0 - disc) / 100.0)
+
+    free = (old_attended + new_cnt) - billed
+    note = "Guruh almashtirildi: " + " + ".join(parts)
+    if free > 0:
+        note += f" — {billed} dars hisoblandi, {free} dars bepul"
+    if disc:
+        note += f" (chegirma {disc:g}%)"
+
+    charge = (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.period == period,
+                      models.Payment.kind == "charge").first())
+    if charge is not None:
+        old_amt = charge.amount
+        charge.amount = -abs(total)
+        charge.note = note
+        audit.log(db, user, entity="payment", action="update",
+                  entity_id=charge.id, entity_label=s.full_name,
+                  field="Oylik hisob (guruh almashtirildi)",
+                  old_value=old_amt, new_value=charge.amount, note=note,
+                  branch_id=s.branch_id)
+    elif total > 0 and not M._charge_skipped(db, s.id, period):
+        p = models.Payment(student_id=s.id, amount=-abs(total),
+                           kind="charge", period=period, note=note,
+                           created_by=(user.full_name if user else "avtomat"))
+        db.add(p)
+        audit.log(db, user, entity="payment", action="create",
+                  entity_label=s.full_name,
+                  field="Oylik hisob (guruh almashtirildi)",
+                  new_value=p.amount, note=note, branch_id=s.branch_id)
+    return old_attended
+
+
+def _tr_install():
+    """`_transfer_recharge` ni qaysi modulda bo'lsa o'sha yerda
+    almashtiramiz — guruh ko'chirish endpointi shu nomni chaqiradi."""
+    import sys as _s
+    done = []
+    for name, m in list(_s.modules.items()):
+        if m is None:
+            continue
+        try:
+            fn = getattr(m, "_transfer_recharge", None)
+        except Exception:
+            continue
+        if fn is None or getattr(fn, "_tr_new", False):
+            continue
+        _transfer_recharge_v2._tr_new = True
+        setattr(m, "_transfer_recharge", _transfer_recharge_v2)
+        done.append(name)
+    return done
+
+
+_TR_INSTALLED = _tr_install()

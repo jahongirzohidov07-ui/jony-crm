@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getLang, translateDom } from "../lib/lang";
+import { getUiLang, translateDom } from "../lib/uiLang";
 
 /**
  * Ruscha rejim yoqilgan bo'lsa, sahifadagi matnlarni lug'at bo'yicha
@@ -10,7 +10,7 @@ import { getLang, translateDom } from "../lib/lang";
  */
 export function AutoTranslate() {
   useEffect(() => {
-    if (getLang() !== "ru") return;
+    if (getUiLang() !== "ru") return;
     let raf = 0;
     const run = () => {
       cancelAnimationFrame(raf);

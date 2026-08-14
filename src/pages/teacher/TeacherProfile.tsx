@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, LogOut, Monitor } from "lucide-react";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/AuthContext";
-import { getLang, setLang } from "../../lib/lang";
+import { getUiLang, setUiLang } from "../../lib/uiLang";
 import { BrandIcon } from "../../components/BrandIcon";
 import type { TeacherHome } from "../../lib/teacherApi";
 
@@ -107,10 +107,10 @@ function Stat({ value, label }: { value: string; label: string }) {
 
 /** Til tanlash: o'zbekcha yoki ruscha. Tanlangach sahifa yangilanadi. */
 function LangCard() {
-  const cur = getLang();
+  const cur = getUiLang();
   const pick = (l: "uz" | "ru") => {
     if (l === cur) return;
-    setLang(l);
+    setUiLang(l);
     window.location.reload();
   };
   return (

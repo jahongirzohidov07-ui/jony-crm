@@ -88,8 +88,24 @@ export default function GroupDetail() {
   const [payrollLoading, setPayrollLoading] = useState(false);
   const [persistedPayouts, setPersistedPayouts] = useState<TeacherPayout[]>([]);
 
+  // Rahbar o'zi dars beradigan guruhda yo'qlama/baho qo'ya olmaydi —
+  // yo'qlama pul hujjati, o'z oyligini o'zi yozib qo'ymasligi kerak.
+  const [ownLock, setOwnLock] = useState<{
+    locked: boolean; reason: string | null;
+  } | null>(null);
+  useEffect(() => {
+    if (!groupId) return;
+    api
+      .get<{ locked: boolean; reason: string | null }>(
+        `/groups/${groupId}/my-access`,
+      )
+      .then(setOwnLock)
+      .catch(() => setOwnLock(null));
+  }, [groupId]);
+
   const canMarkLesson =
-    can(user?.role, TEACHING_STAFF) || user?.role === "hr_manager";
+    (can(user?.role, TEACHING_STAFF) || user?.role === "hr_manager") &&
+    !ownLock?.locked;
   // Support ustozning DAVOMAT varag'iga tegmaydi — uning o'z varag'i
   // bor ("Support davomati"). Ilgari ikkalasi bitta jadvalga yozardi
   // va support belgi qo'yganda ustozning yoqlamasi o'chib ketardi.
@@ -327,6 +343,12 @@ export default function GroupDetail() {
               </button>
             ))}
           </div>
+
+          {ownLock?.locked && (
+            <div className="mb-5 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2">
+              <p className="text-sm text-amber-900">{ownLock.reason}</p>
+            </div>
+          )}
 
           <div className="flex items-center gap-2 mb-5">
             <select

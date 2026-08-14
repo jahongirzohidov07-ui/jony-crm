@@ -49,11 +49,14 @@ from timetable import require_perm
 from common import _ensure_month_charges
 from content import _period_range, _smm_kpi
 
-Base.metadata.create_all(bind=engine)
+# SOVUQ START: sxema allaqachon joriy versiyada bo'lsa, 143 ta
+# jadval uchun reflection so'rovlari YUBORILMAYDI — bitta yengil
+# "stamp bormi?" so'rovi bilan cheklanamiz (2026-08-14).
+from common import _schema_bootstrap, _schema_ready  # noqa: E402
 
-from common import _schema_bootstrap  # noqa: E402
-
-_schema_bootstrap()
+if not _schema_ready():
+    Base.metadata.create_all(bind=engine)
+    _schema_bootstrap()
 
 app = FastAPI(title="JonyOS API — Jony Academy boshqaruv tizimi")
 

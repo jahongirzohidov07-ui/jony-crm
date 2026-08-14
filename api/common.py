@@ -56,6 +56,10 @@ def _ensure_new_columns():
         "ALTER TABLE leads ADD COLUMN public_id VARCHAR",
         "ALTER TABLE groups ADD COLUMN public_id VARCHAR",
         "ALTER TABLE payments ADD COLUMN public_id VARCHAR",
+        # Dubl to'lovga qarshi idempotentlik kaliti (2026-08-14)
+        "ALTER TABLE payments ADD COLUMN client_key VARCHAR",
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_payments_client_key "
+        "ON payments (client_key)",
         "ALTER TABLE users ADD COLUMN public_id VARCHAR",
         "ALTER TABLE lessons ADD COLUMN held INTEGER DEFAULT 1",
         # Eski darslar qo'lda kiritilgan - demak ular o'tilgan.
@@ -424,9 +428,83 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_04e"
+SCHEMA_STAMP = "stamp_2026_08_14a"
+
+# ---------------------------------------------------------------
+#  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
+#  143 ta jadval uchun create_all reflection so'rovlari ketadi ...
+#  shularni ham togrla")
+#
+#  Ilgari server har uyg'onganda Base.metadata.create_all() ishlar
+#  edi. U 143 ta jadvalning HAR BIRI uchun bazadan "bu jadval
+#  bormi?" deb so'rardi — ya'ni bitta bo'sh so'rov o'rniga 143 ta.
+#  Vercel'da funksiya tez-tez uxlab-uyg'onadi, natijada Neon
+#  trafigi bekorga sarflanardi (avgustdagi kvota avariyasi).
+#
+#  Endi BITTA yengil so'rov qilinadi: schema_migrations jadvalida
+#  joriy SCHEMA_STAMP bormi? Bo'lsa — sxema tayyor, hech qanday
+#  reflection ham, migratsiya ham ishlamaydi. Yo'q bo'lsa (yangi
+#  baza yoki yangi migratsiya) — avvalgidek to'liq yo'l bosiladi
+#  va oxirida stamp yoziladi.
+# ---------------------------------------------------------------
+
+_SCHEMA_OK: bool | None = None
+# Jarayon BOSHLANGANDA sxema tayyor edimi? _schema_bootstrap() ishlagach
+# _SCHEMA_OK True bo'ladi, lekin entry.py'da KEYIN e'lon qilinadigan
+# jadvallar hali yaratilmagan bo'lishi mumkin — shuning uchun
+# ensure_tables() aynan SHU bayroqqa qaraydi.
+_SCHEMA_BOOT_OK: bool = False
+
+
+def _schema_ready() -> bool:
+    """Sxema joriy versiyada tayyormi? Javob jarayon xotirasida
+    saqlanadi — bitta funksiya nusxasi ichida faqat bir marta
+    so'raladi."""
+    global _SCHEMA_OK
+    if _SCHEMA_OK is not None:
+        return _SCHEMA_OK
+    from sqlalchemy import text
+    ok = False
+    db = None
+    try:
+        db = SessionLocal()
+        row = db.execute(
+            text("SELECT 1 FROM schema_migrations "
+                 "WHERE version = :v LIMIT 1"),
+            {"v": SCHEMA_STAMP}).first()
+        ok = row is not None
+    except Exception:
+        # Jadval hali yo'q (yangi baza) yoki baza javob bermadi —
+        # ehtiyot yuzasidan to'liq yo'ldan boramiz.
+        ok = False
+    finally:
+        if db is not None:
+            try:
+                db.close()
+            except Exception:
+                pass
+    global _SCHEMA_BOOT_OK
+    _SCHEMA_OK = ok
+    _SCHEMA_BOOT_OK = ok
+    return ok
+
+
+def ensure_tables(tables):
+    """Kichik yordamchi: sxema tayyor bo'lsa hech nima qilmaydi.
+    entry.py'dagi "yangi jadval qo'shish" bloklari shuni chaqiradi —
+    aks holda har cold start'da har bir jadval uchun alohida
+    tekshiruv so'rovi ketardi."""
+    if _schema_ready() and _SCHEMA_BOOT_OK:
+        return
+    try:
+        Base.metadata.create_all(bind=engine, tables=list(tables))
+    except Exception:
+        pass
 
 def _schema_bootstrap():
+    global _SCHEMA_OK
+    if _schema_ready():
+        return
     db = SessionLocal()
     try:
         try:
@@ -435,12 +513,14 @@ def _schema_bootstrap():
         except Exception:
             done = None
         if done:
+            _SCHEMA_OK = True
             return
         _ensure_new_columns()
         _backfill_public_ids()
         migrations.run(db)
         db.add(models.SchemaMigration(version=SCHEMA_STAMP))
         db.commit()
+        _SCHEMA_OK = True
     except Exception:
         try:
             db.rollback()
@@ -3609,7 +3689,12 @@ def _observation_out(db: Session, o: models.LessonObservation,
     return row
 
 def _seed_brand(db: Session) -> None:
-    """Brandbookdagi qoidalarni bazaga yozadi. Mavjudini o'zgartirmaydi."""
+    """Brandbookdagi qoidalarni bazaga yozadi. Mavjudini o'zgartirmaydi.
+
+    2026-08-14: bir marta bajarilgach BELGILANADI — ilgari har cold
+    start'da 45 ta qator uchun 45 ta tekshiruv so'rovi ketardi."""
+    if _seed_done(db, "brand_v1"):
+        return
     def add(section, key, title, value=None, note=None, kind=None,
             source="PDF", pos=0):
         row = db.query(models.BrandRule).filter(
@@ -3641,9 +3726,13 @@ def _seed_brand(db: Session) -> None:
     add("word", "word", roles.BRAND_WORD, roles.BRAND_WORD,
         roles.BRAND_WORD_NOTE, None, "TO'LDIRILDI", 0)
     db.commit()
+    _seed_mark(db, "brand_v1")
 
 def _seed_kb(db: Session) -> None:
-    """Boshlang'ich maqolalar — brandbookdan kelib chiqqan holda."""
+    """Boshlang'ich maqolalar — brandbookdan kelib chiqqan holda.
+    Bir marta bajarilgach belgilanadi (sovuq start dietasi)."""
+    if _seed_done(db, "kb_v1"):
+        return
     seed = [
         ("Post chiqarishdan oldingi tekshiruv", "process",
          "Har bir post joylashdan oldin shu ro'yxat bo'yicha "
@@ -3710,6 +3799,7 @@ def _seed_kb(db: Session) -> None:
         db.add(models.KbArticle(title=title, category=cat, body=body,
                                 reviewed_at=date.today()))
     db.commit()
+    _seed_mark(db, "kb_v1")
 
 def _link_teacher_accounts(db: Session) -> None:
     """Ism bo'yicha bog'langan eski akkauntlarni ID'ga o'tkazadi.
@@ -3776,6 +3866,10 @@ def _hr_task_for(db: Session, user_id: int, *, title: str, body: str,
     _ensure_public_id(db, "task", task)
 
 def _seed_hr_structure(db: Session) -> None:
+    """Bo'lim va lavozim ro'yxati. Bir marta yoziladi — ilgari har
+    cold start'da 24 ta tekshiruv so'rovi ketardi (2026-08-14)."""
+    if _seed_done(db, "hr_struct_v1"):
+        return
     for i, (key, name, desc) in enumerate(roles.DEPARTMENTS):
         if not db.query(models.Department).filter(
                 models.Department.key == key).first():
@@ -3793,6 +3887,7 @@ def _seed_hr_structure(db: Session) -> None:
             system_role=role, probation_months=months,
             trial_required=1 if trial else 0))
     db.commit()
+    _seed_mark(db, "hr_struct_v1")
 
 def _support_assigned_groups(db: Session, user) -> list:
     """Support teacherga biriktirilgan guruhlar (SupportAssignment,
@@ -4167,76 +4262,160 @@ def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
                  "ayirishi mumkin."),
     }
 
-def _ensure_month_charges(db: Session):
+def _ensure_month_charges(db: Session, budget_s: float = 8.0):
     """Har oyning 1-kuni ertalab 5:00 (Toshkent)dan boshlab faol
     o'quvchilardan shu oy to'lovi avtomat yechiladi.
 
-    Server "uxlab" qolgan bo'lsa ham birinchi kirishda ishlaydi.
-    Idempotent: allaqachon yechilgan o'quvchidan qayta yechilmaydi."""
+    2026-08-14 (Jahongir: "Oylik avtomat hisoblash foydalanuvchi
+    so'rovi ichida ishlaydi (30 soniya limit, guruhlar bo'ylab
+    tsiklda). Guruhlar ko'paysa yarmida uzilib, oyning bir qismi
+    hisoblanmay qolishi mumkin"):
+
+      * BOSQICHMA-BOSQICH. Har GURUH alohida belgilanadi
+        (mc_<oy>_g<id>). Vaqt byudjeti tugasa funksiya to'xtaydi —
+        keyingi chaqiruvda AYNAN QOLGAN JOYIDAN davom etadi. Ilgari
+        "birorta charge bormi?" degan yagona belgi bor edi: yarmida
+        uzilsa, keyingi safar "bo'ldi" deb o'ylab to'xtardi va oyning
+        qolgan qismi hech qachon hisoblanmasdi.
+      * KIRISH SEKINLASHMAYDI. Login yo'lida byudjet kichik (8 s),
+        kunlik cron'da katta (25 s) — 30 soniyalik Vercel limitiga
+        hech qachon urilmaymiz.
+      * POYGA HIMOYASI. pg_try_advisory_lock: ikkinchi nusxa kutib
+        turmaydi, shunchaki chetga chiqadi (navbat yig'ilmasin).
+      * IDEMPOTENT. Bir o'quvchidan bir oyda ikki marta yechilmaydi
+        (already_charged + guruh belgisi).
+    """
+    import time as _time
     now = roles.local_now()
     today = now.date()
     if today.day == 1 and now.hour < 5:
         return
     period = f"{today.year:04d}-{today.month:02d}"
-    # POYGA HIMOYASI: bir vaqtda ikki server nusxasi ishga tushsa,
-    # ikkalasi ham "hali yechilmagan" deb o'ylab QAYTA yechmasin.
-    # Postgres advisory lock tranzaksiya tugaguncha ushlab turadi;
-    # SQLite (test) bitta jarayon bo'lgani uchun kerak emas.
+    dialect = ""
     try:
-        if db.get_bind().dialect.name == "postgresql":
-            db.execute(text("SELECT pg_advisory_xact_lock(917201)"))
+        dialect = db.get_bind().dialect.name
     except Exception:
         pass
-    done = db.query(models.Payment).filter(
-        models.Payment.kind == "charge",
-        models.Payment.period == period,
-        models.Payment.created_by == "avtomat (oylik)").first()
-    if done:
-        return
-    group_ids = [gid for (gid,) in
-                 db.query(models.Student.group_id)
-                 .filter(models.Student.status == "active",
-                         models.Student.group_id.isnot(None))
-                 .distinct().all()]
-    n = 0
-    for gid in group_ids:
-        g = db.query(models.Group).get(gid)
-        if not g:
-            continue
+    if dialect == "postgresql":
         try:
-            charges = billing.compute_student_charges(
-                db, g, today.year, today.month)
+            got = db.execute(
+                text("SELECT pg_try_advisory_lock(917201)")).scalar()
+            if not got:
+                return          # boshqa nusxa allaqachon ishlayapti
         except Exception:
-            continue
-        for c in charges:
-            if c.get("already_charged") or (c.get("amount") or 0) <= 0:
+            pass
+
+    try:
+        group_ids = [gid for (gid,) in
+                     db.query(models.Student.group_id)
+                     .filter(models.Student.status == "active",
+                             models.Student.group_id.isnot(None))
+                     .distinct().all()]
+        # HAR GURUH alohida belgilanadi. Umumiy "bo'ldi" bayrog'i
+        # ATAYLAB yo'q: oy o'rtasida ochilgan YANGI guruh ham
+        # hisoblanishi kerak (eski kodda birinchi yechimdan keyin
+        # funksiya butunlay to'xtardi va yangi guruh chetda qolardi).
+        todo = [g for g in group_ids
+                if not _seed_done(db, f"mc_{period}_g{g}")]
+        if not todo:
+            _purge_old_logs(db, today)
+            return
+
+        # Guruhlarni BITTA so'rovda olamiz (ilgari har biriga alohida
+        # so'rov ketardi — 100 guruh = 100 so'rov).
+        groups = {g.id: g for g in db.query(models.Group)
+                  .filter(models.Group.id.in_(todo)).all()}
+
+        t0 = _time.monotonic()
+        for gid in todo:
+            if _time.monotonic() - t0 > budget_s:
+                continue        # keyingi chaqiruvda davom etadi
+            g = groups.get(gid)
+            gkey = f"mc_{period}_g{gid}"
+            if not g:
+                _seed_mark(db, gkey)    # guruh o'chgan — qayta urinmaymiz
                 continue
-            if _charge_skipped(db, c["student_id"], period):
-                continue
-            db.add(models.Payment(
-                student_id=c["student_id"],
-                amount=-roles.money(abs(c["amount"])),
-                kind="charge",
-                note=f"{g.name} - {period} oyi uchun "
-                     f"{c.get('billable_lessons', '')} dars (avtomat)",
-                created_by="avtomat (oylik)",
-                period=period,
-            ))
-            n += 1
-    if n:
-        db.commit()
-    # Muzlatilganlardan bugun qaytishi kerak bo'lganlar bo'yicha
-    # adminlarga Telegram eslatma yuborilmaydi (vazifa allaqachon
-    # tushgan) — bu yerda faqat eski jurnal yozuvlarini tozalaymiz.
+            try:
+                charges = billing.compute_student_charges(
+                    db, g, today.year, today.month)
+            except Exception:
+                continue        # bu guruhni keyingi safar qayta uriniladi
+            n = 0
+            pending = 0        # hali yechilmagan, lekin yechilishi kerak
+            for c in charges:
+                if c.get("already_charged"):
+                    continue
+                if _charge_skipped(db, c["student_id"], period):
+                    continue
+                if (c.get("amount") or 0) <= 0:
+                    # Hali dars o'tilmagan (oy boshi) — summa 0.
+                    # Guruhni "tugadi" deb BELGILAMAYMIZ, darslar
+                    # o'tilgach qayta ko'riladi.
+                    pending += 1
+                    continue
+                db.add(models.Payment(
+                    student_id=c["student_id"],
+                    amount=-roles.money(abs(c["amount"])),
+                    kind="charge",
+                    note=f"{g.name} - {period} oyi uchun "
+                         f"{c.get('billable_lessons', '')} dars (avtomat)",
+                    created_by="avtomat (oylik)",
+                    period=period,
+                ))
+                n += 1
+            try:
+                if n:
+                    db.commit()
+                # Guruhda yechilmagan qolmagan bo'lsagina belgilaymiz.
+                # Belgi qo'yilgach bu guruh boshqa ko'rilmaydi —
+                # ikki marta yechish yo'q; lekin kutayotgani bo'lsa
+                # keyingi chaqiruvda davom etadi.
+                if not pending:
+                    _seed_mark(db, gkey)
+            except Exception:
+                db.rollback()
+    finally:
+        if dialect == "postgresql":
+            try:
+                db.execute(text("SELECT pg_advisory_unlock(917201)"))
+                db.commit()
+            except Exception:
+                pass
+
+    _purge_old_logs(db, today)
+
+
+def _purge_old_logs(db: Session, today=None):
+    """Eski kirish urinishlari va xato jurnalini tozalash — KUNIGA
+    BIR MARTA (ilgari har chaqiruvda ikki DELETE ketardi)."""
+    today = today or roles.local_today()
+    key = f"purge_{today.isoformat()}"
+    if _seed_done(db, key):
+        return
     try:
         old = datetime.utcnow() - timedelta(days=30)
         db.query(models.LoginAttempt).filter(
             models.LoginAttempt.created_at < old).delete()
         db.query(models.ErrorLog).filter(
             models.ErrorLog.created_at < old).delete()
+        # Eski bosqich belgilarini ham tozalab qo'yamiz (oylik
+        # hisoblash har guruh uchun bitta belgi qoldiradi).
+        keep = (today.replace(day=1) - timedelta(days=62)).strftime(
+            "mc_%Y-%m")
+        db.query(models.SeedMark).filter(
+            models.SeedMark.key.like("mc_%"),
+            models.SeedMark.key < keep).delete(
+                synchronize_session=False)
+        db.query(models.SeedMark).filter(
+            models.SeedMark.key.like("purge_%"),
+            models.SeedMark.key < "purge_"
+            + (today - timedelta(days=7)).isoformat()).delete(
+                synchronize_session=False)
         db.commit()
+        _seed_mark(db, key)
     except Exception:
         db.rollback()
+
 
 def _founder_name_fix(db: Session):
     """Asoschi akkaunti "Administrator" deb nomlangan edi — markazda
@@ -4361,10 +4540,27 @@ def _backfill_student_accounts(db) -> int:
     return made
 
 
+# Seed belgilarini HAR BIRI uchun alohida so'rash o'rniga bir marta
+# BITTA so'rovda o'qiymiz (2026-08-14 sovuq start dietasi). Jarayon
+# xotirasida turadi; yangi belgi qo'yilsa shu yerga ham qo'shiladi.
+_SEED_KEYS: set | None = None
+
+
+def _seed_keys(db: Session) -> set:
+    global _SEED_KEYS
+    if _SEED_KEYS is None:
+        try:
+            _SEED_KEYS = {k for (k,) in db.query(models.SeedMark.key).all()}
+        except Exception:
+            return set()
+    return _SEED_KEYS
+
+
 def _seed_done(db: Session, key: str) -> bool:
-    """Og'ir seed allaqachon to'liq bajarilganmi - bitta yengil so'rov."""
+    """Og'ir seed allaqachon to'liq bajarilganmi - so'rovsiz javob
+    (belgilar ro'yxati bir marta o'qib olinadi)."""
     try:
-        return db.query(models.SeedMark).get(key) is not None
+        return key in _seed_keys(db)
     except Exception:
         return False
 
@@ -4375,6 +4571,8 @@ def _seed_mark(db: Session, key: str) -> None:
         if db.query(models.SeedMark).get(key) is None:
             db.add(models.SeedMark(key=key))
             db.commit()
+        if _SEED_KEYS is not None:
+            _SEED_KEYS.add(key)
     except Exception:
         db.rollback()
 
@@ -4554,6 +4752,8 @@ __all__ = [
     "GRID_START_MIN",
     "PUBLIC_ID_PREFIX",
     "SCHEMA_STAMP",
+    "_schema_ready",
+    "ensure_tables",
     "_PERM_CACHE",
     "_activate_student",
     "_active_season",
@@ -4575,6 +4775,7 @@ __all__ = [
     "_discount_out",
     "_drop_coin_entry",
     "_ensure_month_charges",
+    "_purge_old_logs",
     "_ensure_new_columns",
     "_ensure_public_id",
     "_ensure_student_account",

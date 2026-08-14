@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PurchasesTab, RemindersTab } from "../components/StudentExtras";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil, Printer } from "lucide-react";
 import {
   api,
+  newClientKey,
+  ApiError,
   type Student,
   type StudentDetail as StudentDetailType,
   type StudentExams,
@@ -566,6 +568,10 @@ function PaymentsTab({
   const [payDate, setPayDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // DUBL HIMOYASI (2026-08-14, Jahongir: "Tugma ikki marta bosilsa
+  // yoki internet uzilib qayta yuborilsa — ikkita to'lov tushadi").
+  // Kalit faqat muvaffaqiyatli saqlangandan keyin yangilanadi.
+  const payKey = useRef<string>(newClientKey());
 
   async function submit() {
     const value = Number(amount);
@@ -576,16 +582,37 @@ function PaymentsTab({
     setSaving(true);
     setError(null);
     try {
-      const created = await api.post<{ id?: number }>(
-        `/students/${student.id}/payments`,
-        {
-          amount: value,
-          kind,
-          method: kind === "payment" ? method : null,
-          note: note || null,
-          date: canBackdate && payDate ? payDate : null,
+      const body = {
+        amount: value,
+        kind,
+        method: kind === "payment" ? method : null,
+        note: note || null,
+        date: canBackdate && payDate ? payDate : null,
+        client_key: payKey.current,
+        force: false,
+      };
+      let created: { id?: number } = {};
+      try {
+        created = await api.post<{ id?: number }>(
+          `/students/${student.id}/payments`,
+          body
+        );
+      } catch (dup) {
+        if (
+          dup instanceof ApiError &&
+          dup.status === 409 &&
+          dup.canForce &&
+          confirm(dup.message + "\n\nBaribir kiritilsinmi?")
+        ) {
+          created = await api.post<{ id?: number }>(
+            `/students/${student.id}/payments`,
+            { ...body, client_key: newClientKey(), force: true }
+          );
+        } else {
+          throw dup;
         }
-      );
+      }
+      payKey.current = newClientKey();
       if (kind === "payment" && confirm("Chek chiqarilsinmi?")) {
         printXReceipt({
           student: student.full_name,

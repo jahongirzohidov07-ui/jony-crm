@@ -18,6 +18,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sqlalchemy import Column, DateTime, String, inspect  # noqa: E402
 
+# 2026-08-14: sovuq startni tezlashtirish uchun bu tekshiruv endi
+# sxema stamp'i yangi bo'lsa O'TKAZIB YUBORILADI (143 jadval bo'yicha
+# reflection har uyg'onishda ketmasin). Shuning uchun testda ATAYLAB
+# force=True bilan chaqiramiz — tekshirilayotgan mantiq o'zgarmadi.
+
 import entry  # noqa: E402
 import models  # noqa: E402
 from database import Base, SessionLocal, engine  # noqa: E402
@@ -40,7 +45,7 @@ def cols(table):
 
 
 print("\n--- Ishga tushganda ustunlar mos ---")
-res = entry._sync_missing_columns()
+res = entry._sync_missing_columns(force=True)
 check("hech narsa qo'shilmadi (baza mos)", res["added"] == [], res["added"])
 check("qo'lda migratsiya kerak bo'lgani yo'q", res["manual"] == [],
       res["manual"])
@@ -58,7 +63,7 @@ models.Student.probe_synced_at = Column("probe_synced_at", DateTime)
 models.Student.probe_note = Column("probe_note", String)
 check("bazada hali yo'q", "probe_synced_at" not in cols("students"))
 
-res = entry._sync_missing_columns()
+res = entry._sync_missing_columns(force=True)
 check("ikkalasi ham qo'shildi",
       "students.probe_synced_at" in res["added"]
       and "students.probe_note" in res["added"], res["added"])
@@ -72,12 +77,12 @@ check("so'rov 500 bermaydi", db.query(models.Student).count() >= 1)
 db.close()
 
 print("\n--- Ikkinchi yurishda takrorlanmaydi ---")
-res = entry._sync_missing_columns()
+res = entry._sync_missing_columns(force=True)
 check("qayta qo'shmaydi", res["added"] == [], res["added"])
 
 print("\n--- NOT NULL ustun jimgina qo'shilmaydi ---")
 models.Student.must_fill = Column("must_fill", String, nullable=False)
-res = entry._sync_missing_columns()
+res = entry._sync_missing_columns(force=True)
 check("qo'shilmadi", "students.must_fill" not in res["added"], res["added"])
 check("ro'yxatga chiqarildi", "students.must_fill" in res["manual"],
       res["manual"])
@@ -85,7 +90,7 @@ check("baza tegilmadi", "must_fill" not in cols("students"))
 
 print("\n--- Yo'q jadval e'tiborsiz qoldiriladi ---")
 Base.metadata.tables  # noqa: B018  - metadata yuklanganini bildiradi
-res = entry._sync_missing_columns()
+res = entry._sync_missing_columns(force=True)
 check("xato bermadi", isinstance(res, dict))
 
 print(f"\n=== {ok} ok / {fail} fail ===")

@@ -24,6 +24,7 @@ export function setToken(token: string, remember = false) {
 }
 
 export function clearToken() {
+  invalidate(); // chiqishda boshqa xodimga eski ma'lumot ko'rinmasin
   sessionStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(TOKEN_KEY);
 }
@@ -53,6 +54,7 @@ let globalBranchId: string | null =
 
 export function setGlobalBranch(id: string | null) {
   globalBranchId = id;
+  invalidate(); // filial o'zgardi - eski javoblar yaroqsiz
   if (id) localStorage.setItem("jonyos_branch", id);
   else localStorage.removeItem("jonyos_branch");
 }
@@ -73,6 +75,7 @@ let activeRole: string | null =
 
 export function setActiveRole(role: string | null) {
   activeRole = role;
+  invalidate(); // lavozim o'zgardi - ruxsatlar boshqa, kesh tozalanadi
   if (role) localStorage.setItem("jonyos_role", role);
   else localStorage.removeItem("jonyos_role");
 }
@@ -81,20 +84,121 @@ export function getActiveRole(): string | null {
   return activeRole;
 }
 
+
+// ---------------------------------------------------------------
+//  GET KESHI + SO'ROVLARNI BIRLASHTIRISH  (2026-08-14, Jahongir:
+//  "Frontendda kesh yo'q ... togrla optimizatsiya qilib kuchaytir")
+//
+//  Ilgari har sahifaga o'tganda hamma narsa noldan yuklanardi va
+//  bir sahifadagi 3-4 komponent BIR XIL manzilni bir vaqtda
+//  so'rardi. Bu Neon (baza) trafigini bekorga yeb qo'yardi -
+//  avgustda kvota shu sababdan tugagan edi.
+//
+//  Endi:
+//   1) DEDUPE - ayni damda ketayotgan bir xil GET so'rov bitta
+//      qilib yuboriladi, javob hammaga ulashiladi;
+//   2) TTL KESH - yaqinda olingan javob qisqa muddat saqlanadi
+//      (odatda 30 soniya; o'zgarmaydigan ro'yxatlar 5 daqiqa);
+//   3) YOZUVDAN KEYIN TOZALASH - har qanday POST/PUT/DELETE'dan
+//      keyin kesh butunlay tozalanadi, ya'ni to'lov kiritilgach
+//      raqamlar HAR DOIM yangi ko'rinadi (eski son ko'rinib qolish
+//      xavfi yo'q);
+//   4) FILIAL YOKI LAVOZIM almashtirilsa ham kesh tozalanadi.
+// ---------------------------------------------------------------
+
+const CACHE_TTL_MS = 30_000;
+const CACHE_TTL_LONG_MS = 5 * 60_000;
+
+/** Deyarli o'zgarmaydigan ro'yxatlar - uzoqroq saqlanadi. */
+const LONG_TTL = ["/reference", "/branches", "/roles", "/permissions"];
+
+/** Hech qachon keshlanmaydi (jonli bo'lishi shart). */
+const NO_CACHE = ["/auth", "/health", "/_bootstrap", "/cron"];
+
+interface CacheRow {
+  at: number;
+  ttl: number;
+  data: unknown;
+}
+
+const getCache = new Map<string, CacheRow>();
+const inFlight = new Map<string, Promise<unknown>>();
+
+function ttlFor(path: string): number {
+  return LONG_TTL.some((p) => path.startsWith(p))
+    ? CACHE_TTL_LONG_MS
+    : CACHE_TTL_MS;
+}
+
+function cacheable(path: string): boolean {
+  return !NO_CACHE.some((p) => path.startsWith(p));
+}
+
+/** Keshni tozalash. Bo'sh chaqirilsa - hammasini.
+ *  Masalan: invalidate("/students") - faqat o'quvchilarga tegishlisini. */
+export function invalidate(prefix?: string) {
+  if (!prefix) {
+    getCache.clear();
+    return;
+  }
+  for (const k of [...getCache.keys()]) {
+    if (k.startsWith(prefix)) getCache.delete(k);
+  }
+}
+
 async function request<T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  /** true - keshni chetlab o'tib, serverdan yangi javob oladi. */
+  fresh = false
 ): Promise<T> {
+  const isGet = !options.method || options.method === "GET";
   // Faqat o'qish so'rovlariga filial filtri qo'shiladi; sahifa o'zi
   // branch_id bergan bo'lsa yoki auth so'rovi bo'lsa — tegilmaydi.
   if (
-    (!options.method || options.method === "GET") &&
+    isGet &&
     globalBranchId &&
     !path.includes("branch_id=") &&
     !path.startsWith("/auth")
   ) {
     path += (path.includes("?") ? "&" : "?") + "branch_id=" + globalBranchId;
   }
+
+  // ---- KESH (faqat GET) ----
+  const useCache = isGet && !fresh && cacheable(path);
+  if (useCache) {
+    const hit = getCache.get(path);
+    if (hit && Date.now() - hit.at < hit.ttl) return hit.data as T;
+    const running = inFlight.get(path);
+    if (running) return running as Promise<T>;
+  }
+  if (isGet && cacheable(path)) {
+    const p = doRequest<T>(path, options)
+      .then((data) => {
+        getCache.set(path, { at: Date.now(), ttl: ttlFor(path), data });
+        return data;
+      })
+      .finally(() => {
+        inFlight.delete(path);
+      });
+    inFlight.set(path, p as Promise<unknown>);
+    return p;
+  }
+  // ---- YOZUV so'rovi: bajarilgach kesh tozalanadi ----
+  if (!isGet) {
+    try {
+      return await doRequest<T>(path, options);
+    } finally {
+      invalidate();
+    }
+  }
+  return doRequest<T>(path, options);
+}
+
+async function doRequest<T>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
     ...(options.body ? { "Content-Type": "application/json" } : {}),
@@ -161,8 +265,30 @@ async function request<T>(
   return res.json();
 }
 
+/**
+ * DUBL TO'LOVGA QARSHI KALIT (2026-08-14). Forma ochilganda bitta
+ * tasodifiy kalit yaratiladi va to'lov shu kalit bilan yuboriladi.
+ * Tugma ikki marta bosilsa yoki internet uzilib qayta yuborilsa —
+ * server yangi yozuv OCHMAYDI, birinchisini qaytaradi. Kalit faqat
+ * muvaffaqiyatli saqlangandan keyin yangilanadi.
+ */
+export function newClientKey(): string {
+  try {
+    if (typeof crypto !== "undefined" && crypto.randomUUID)
+      return crypto.randomUUID();
+  } catch {
+    /* eski brauzer */
+  }
+  return `k${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
+
 export const api = {
-  get: <T,>(path: string) => request<T>(path),
+  /** Odatiy o'qish - 30 soniyalik kesh bilan. */
+  get: <T,>(path: string, fresh = false) => request<T>(path, {}, fresh),
+  /** Keshni chetlab o'tib, aniq yangi ma'lumot olish. */
+  fresh: <T,>(path: string) => request<T>(path, {}, true),
+  /** Keshni qo'lda tozalash (kerak bo'lganda). */
+  invalidate,
   post: <T,>(path: string, body?: unknown) =>
     request<T>(path, { method: "POST", body: body ? JSON.stringify(body) : undefined }),
   put: <T,>(path: string, body?: unknown) =>

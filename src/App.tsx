@@ -1,9 +1,16 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { AuthProvider, useAuth } from "./lib/AuthContext";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
 import { ToastHost } from "./components/ToastHost";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 /**
  * TEZLIK: har bir sahifa alohida bo'lak (code splitting). Ilgari
@@ -112,9 +119,24 @@ function RequireStaff({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/** Manzil o'zgarganda xato qobig'ini yangilaydi - boshqa bo'limga
+ * o'tilganda eski xato ekrani qolib ketmasin. */
+function RouteBoundary({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  return (
+    <ErrorBoundary key={pathname} where={pathname} compact>
+      {children}
+    </ErrorBoundary>
+  );
+}
+
 function AppRoutes() {
   return (
-    <Suspense fallback={<PageLoader />}>
+    // SAHIFA QATLAMI: bitta sahifa yiqilsa ham qolgan bo'limlar
+    // ishlab turaveradi. Manzil o'zgarganda qobiq o'zini tozalaydi
+    // (key={pathname}) - aks holda xato ekrani yopishib qolardi.
+    <RouteBoundary>
+      <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/login" element={<Login />} />
         {/* Ota-ona sahifasi — loginsiz, token havola orqali. Ichki
@@ -224,18 +246,23 @@ function AppRoutes() {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Suspense>
+      </Suspense>
+    </RouteBoundary>
   );
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-        <ToastHost />
-      </AuthProvider>
-    </BrowserRouter>
+    // ENG TASHQI QATLAM: hatto login yoki umumiy qobiq yiqilsa ham
+    // oq ekran emas, tushunarli xabar chiqadi.
+    <ErrorBoundary where="Ilova">
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+          <ToastHost />
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

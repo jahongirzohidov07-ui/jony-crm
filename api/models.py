@@ -363,6 +363,13 @@ class Payment(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     # Summa tahrirlangan oxirgi vaqt — parallel tahrirda 409 uchun.
     updated_at = Column(DateTime, nullable=True)
+    # DUBL HIMOYASI (2026-08-14, Jahongir: "Tugma ikki marta bosilsa
+    # yoki internet uzilib qayta yuborilsa — ikkita to'lov tushadi").
+    # Brauzer har bir forma uchun bitta tasodifiy kalit yuboradi.
+    # Ayni kalit bilan ikkinchi so'rov kelsa — YANGI yozuv ochilmaydi,
+    # birinchisining o'zi qaytariladi. Ya'ni necha marta bosilsa ham
+    # natija bitta to'lov (idempotentlik).
+    client_key = Column(String, unique=True, index=True, nullable=True)
     # HAQIQATDA qachon kiritilgani (server vaqti). created_at "to'lov
     # sanasi" bo'lib, eski sana bilan kiritilganda orqaga suriladi —
     # shuning uchun rostakam kiritilish vaqti alohida saqlanadi

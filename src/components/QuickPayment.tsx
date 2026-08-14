@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Wallet, X, Search, Check } from "lucide-react";
 import { printXReceipt } from "../lib/receipt";
-import { api, type Student } from "../lib/api";
+import { api, newClientKey, ApiError, type Student } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { PAYMENT_METHODS } from "../lib/payments";
 import { formatPhone } from "./PhoneInput";
@@ -74,6 +74,9 @@ function PaymentModal({
   const [err, setErr] = useState("");
   const [ok, setOk] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  // Dubl to'lovga qarshi idempotentlik kaliti — muvaffaqiyatli
+  // saqlangandan keyingina yangilanadi (2026-08-14).
+  const payKey = useRef<string>(newClientKey());
 
   useEffect(() => {
     api
@@ -117,15 +120,40 @@ function PaymentModal({
     setSaving(true);
     setErr("");
     try {
-      const created = await api.post<{ id?: number }>(
-        `/students/${picked.id}/payments`,
-        {
-          amount: v,
-          kind: "payment",
-          method,
-          note: note || null,
+      // DUBL HIMOYASI (2026-08-14): bir xil kalit bilan yuborilgan
+      // takroriy so'rov serverda ikkinchi to'lov ochmaydi.
+      const body = {
+        amount: v,
+        kind: "payment",
+        method,
+        note: note || null,
+        client_key: payKey.current,
+        force: false,
+      };
+      let created: { id?: number } = {};
+      try {
+        created = await api.post<{ id?: number }>(
+          `/students/${picked.id}/payments`,
+          body
+        );
+      } catch (dup) {
+        // Server "hozirgina xuddi shunday to'lov kiritilgan" desa —
+        // xodimdan aniq so'raymiz, tasdiqlasa o'tkazamiz.
+        if (
+          dup instanceof ApiError &&
+          dup.status === 409 &&
+          dup.canForce &&
+          confirm(dup.message + "\n\nBaribir kiritilsinmi?")
+        ) {
+          created = await api.post<{ id?: number }>(
+            `/students/${picked.id}/payments`,
+            { ...body, client_key: newClientKey(), force: true }
+          );
+        } else {
+          throw dup;
         }
-      );
+      }
+      payKey.current = newClientKey(); // keyingi to'lov uchun yangi kalit
       // Kitob berilgan bo'lsa — ombordan kamaytiramiz
       if (bookId) {
         try {

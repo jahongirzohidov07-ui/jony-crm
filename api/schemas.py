@@ -336,6 +336,15 @@ class PaymentCreate(BaseModel):
     # moliyachiga eski sana bilan to'lov kirgizish funksiyasi"). Faqat
     # asoschi va moliya direktori uchun; bo'sh bo'lsa - bugungi kun.
     date: Optional[_dt.date] = None
+    # DUBL HIMOYASI (2026-08-14). Brauzer forma ochilganda bitta
+    # tasodifiy kalit yaratadi va shu kalit bilan yuboradi. Tugma ikki
+    # marta bosilsa yoki internet uzilib qayta yuborilsa ham server
+    # ikkinchi yozuv OCHMAYDI — birinchisini qaytaradi.
+    client_key: Optional[str] = None
+    # Bir xil o'quvchiga bir xil summa 2 daqiqa ichida qayta
+    # kiritilayotgan bo'lsa server ogohlantiradi. Xodim "ha, bu
+    # boshqa to'lov" desa — force=true bilan qayta yuboriladi.
+    force: bool = False
 
 
 class PaymentOut(BaseModel):

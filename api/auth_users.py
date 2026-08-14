@@ -101,7 +101,10 @@ def login(payload: schemas.LoginRequest, request: Request,
     # Oy boshida birinchi kirishda oylik to'lovlar avtomat yechiladi
     try:
         _founder_name_fix(db)
-        _ensure_month_charges(db)
+        # Kirish sekinlashmasin: bu yerda faqat 5 soniyalik ulush
+        # bajariladi, qolgani keyingi kirishlarda va kunlik cron'da
+        # davom etadi (2026-08-14).
+        _ensure_month_charges(db, budget_s=5.0)
     except Exception:
         pass
     return schemas.Token(

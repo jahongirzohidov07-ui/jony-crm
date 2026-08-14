@@ -663,6 +663,33 @@ def add_payment(
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
 
+    # ---------------------------------------------------------------
+    #  DUBL TO'LOVGA QARSHI HIMOYA (2026-08-14, Jahongir: "Tugma ikki
+    #  marta bosilsa yoki internet uzilib qayta yuborilsa — ikkita
+    #  to'lov tushadi. Avgustdagi 480 000 so'mlik dubl aynan shu
+    #  turdagi xato edi").
+    #
+    #  Ikki qatlam:
+    #   1) IDEMPOTENTLIK KALITI — brauzer forma uchun bitta tasodifiy
+    #      kalit yuboradi. Ayni kalit ikkinchi marta kelsa yangi yozuv
+    #      OCHILMAYDI, birinchisining o'zi qaytariladi. Bu tarmoq
+    #      uzilib qayta yuborilgan so'rovni ham to'liq to'sadi.
+    #   2) 2 DAQIQALIK OGOHLANTIRISH — bir xil o'quvchiga bir xil
+    #      summa 2 daqiqa ichida ikkinchi marta kiritilayotgan bo'lsa
+    #      (masalan ikki xodim bir vaqtda kiritdi) — server to'xtatib
+    #      so'raydi. Xodim "ha, bu haqiqatan boshqa to'lov" desa,
+    #      forma force=true bilan qayta yuboriladi va o'tadi.
+    # ---------------------------------------------------------------
+    ckey = (payload.client_key or "").strip()[:64] or None
+    if ckey:
+        was = (db.query(models.Payment)
+               .filter(models.Payment.client_key == ckey).first())
+        if was:
+            # Xuddi shu so'rov allaqachon bajarilgan — takror emas.
+            # Javob birinchi yozuvning o'zi: brauzer uchun hech narsa
+            # o'zgarmaydi, lekin bazada ikkinchi to'lov paydo bo'lmaydi.
+            return was
+
     # Pul har doim butun so'm — kasr qoldiqlari yig'ilib ketmasin
     amount = roles.money(payload.amount)
     if payload.kind in ("charge", "discount") and amount > 0:
@@ -698,6 +725,34 @@ def add_payment(
                         payload.date.day, _now.hour, _now.minute,
                         _now.second)
 
+    # 2-qatlam: yaqinda AYNI SHUNDAY yozuv kiritilganmi?
+    if not payload.force and payload.kind == "payment":
+        since = datetime.utcnow() - timedelta(minutes=2)
+        twin = (db.query(models.Payment)
+                .filter(models.Payment.student_id == student_id,
+                        models.Payment.kind == "payment",
+                        models.Payment.amount == amount,
+                        models.Payment.entered_at.isnot(None),
+                        models.Payment.entered_at >= since)
+                .order_by(models.Payment.id.desc()).first())
+        if twin:
+            raise HTTPException(409, detail={
+                "message": (
+                    f"Diqqat: {s.full_name} uchun {abs(amount):,.0f}"
+                    .replace(",", " ") + " so'm to'lov hozirgina "
+                    f"({twin.created_by or 'nomalum'}) kiritilgan. "
+                    "Bu ikkinchi, boshqa to'lovmi?"),
+                "problems": [{
+                    "key": "duplicate_payment",
+                    "label": "Takroriy to'lov",
+                    "severity": "block",
+                    "message": ("Agar bu xato bo'lsa — Bekor qiling. "
+                                "Agar haqiqatan ikkinchi to'lov bo'lsa "
+                                "— Baribir kiritish tugmasini bosing."),
+                }],
+                "can_force": True,
+            })
+
     payment = models.Payment(
         student_id=student_id,
         amount=amount,
@@ -705,6 +760,7 @@ def add_payment(
         method=method,
         note=payload.note,
         created_by=user.full_name,
+        client_key=ckey,
     )
     # Rostakam kiritilish vaqti — HAR DOIM server soati (eski sana
     # bilan kiritilsa ham). "Kim va qachon kiritdi" savoli javobsiz

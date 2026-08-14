@@ -115,7 +115,8 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
     if not ok_call:
         raise HTTPException(403, "Ruxsat yo'q")
     _founder_name_fix(db)
-    _ensure_month_charges(db)
+    # Kunlik cron - eng katta ulush (Vercel limiti 30 s).
+    _ensure_month_charges(db, budget_s=24.0)
     return {"ok": True, "ran_at": datetime.utcnow().isoformat()}
 
 @router.get("/api/search/students")

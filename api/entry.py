@@ -28,6 +28,7 @@ from main import (  # noqa: F401
     app, get_db, require_role, scope_to_branch, _get_group_in_scope,
     _my_teacher_or_404, get_current_user,
 )
+from common import ensure_tables  # noqa: E402
 import main as M
 
 
@@ -2372,11 +2373,7 @@ if getattr(models, "StaffSalaryPayment", None) is None:
         created_at = Column(DateTime, default=_dt.utcnow)
 
     models.StaffSalaryPayment = StaffSalaryPayment
-    try:
-        _Base.metadata.create_all(
-            bind=_engine, tables=[StaffSalaryPayment.__table__])
-    except Exception:
-        pass
+    ensure_tables([StaffSalaryPayment.__table__])
 
 _SSP = models.StaffSalaryPayment
 
@@ -3685,11 +3682,7 @@ if getattr(models, "SupportAttendance", None) is None:
                             onupdate=_dt.utcnow)
 
     models.SupportAttendance = SupportAttendance
-    try:
-        _Base.metadata.create_all(
-            bind=_engine, tables=[SupportAttendance.__table__])
-    except Exception:
-        pass
+    ensure_tables([SupportAttendance.__table__])
 
 _SUPATT = models.SupportAttendance
 
@@ -4643,12 +4636,7 @@ if getattr(models, "StaffGrade", None) is None:
 
     models.StaffGrade = StaffGrade
     models.StaffGradeRate = StaffGradeRate
-    try:
-        _Base.metadata.create_all(
-            bind=_engine,
-            tables=[StaffGrade.__table__, StaffGradeRate.__table__])
-    except Exception:
-        pass
+    ensure_tables([StaffGrade.__table__, StaffGradeRate.__table__])
 
 _SG = models.StaffGrade
 _SGR = models.StaffGradeRate
@@ -4904,12 +4892,7 @@ if getattr(models, "LibraryItem", None) is None:
 
     models.LibraryItem = LibraryItem
     models.LibraryProgress = LibraryProgress
-    try:
-        _Base.metadata.create_all(
-            bind=_engine,
-            tables=[LibraryItem.__table__, LibraryProgress.__table__])
-    except Exception:
-        pass
+    ensure_tables([LibraryItem.__table__, LibraryProgress.__table__])
 
 _LI = models.LibraryItem
 _LP = models.LibraryProgress
@@ -5318,7 +5301,15 @@ def my_support_career(db: Session = Depends(get_db),
 #  NOT NULL ustun ma'lumot bilan to'ldirilishi kerak, uni jimgina
 #  qo'shib bo'lmaydi — u ro'yxatga chiqariladi va qo'lda hal qilinadi.
 # =====================================================================
-def _sync_missing_columns() -> dict:
+#  2026-08-14 (Jahongir: "Har sovuq startda ... reflection so'rovlari
+#  ketadi ... shularni ham togrla"): bu tekshiruv ham HAR uyg'onishda
+#  butun sxemani o'qir edi. Endi u faqat sxema stamp'i yangilanmagan
+#  bo'lsa (ya'ni haqiqatan yangi migratsiya bo'lsa) ishlaydi. Kerak
+#  bo'lsa qo'lda ham chaqirish mumkin: /api/system/schema-sync.
+def _sync_missing_columns(force: bool = False) -> dict:
+    from common import _schema_ready as _ready
+    if not force and _ready():
+        return {"added": [], "manual": [], "skipped": True}
     from sqlalchemy import inspect as _insp
     from sqlalchemy import text as _txt
     from sqlalchemy.schema import CreateColumn
@@ -5375,11 +5366,16 @@ _SCHEMA_SYNC = _sync_missing_columns()
 
 
 @app.get("/api/system/schema-sync")
-def system_schema_sync(user=Depends(require_role(*roles.FULL_ACCESS))):
-    """Ishga tushganda nima qo'shilgani — xato qidirishda kerak."""
+def system_schema_sync(force: int = 0,
+                       user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Ishga tushganda nima qo'shilgani — xato qidirishda kerak.
+    ?force=1 bilan chaqirilsa sxemani ATAYLAB qaytadan tekshiradi
+    (sovuq startda bu tekshiruv endi o'tkazib yuboriladi)."""
+    res = _sync_missing_columns(force=True) if force else _SCHEMA_SYNC
     return {
-        "added": _SCHEMA_SYNC.get("added", []),
-        "manual": _SCHEMA_SYNC.get("manual", []),
+        "added": res.get("added", []),
+        "manual": res.get("manual", []),
+        "skipped": res.get("skipped", False),
         "hint": ("Bo'sh bo'lsa — baza model bilan mos. \"manual\" "
                  "ro'yxatidagi ustunlar NOT NULL, ularni qo'lda "
                  "to'ldirish kerak."),
@@ -6148,29 +6144,47 @@ def _mc_has_charge(db: Session, sid: int, period: str) -> bool:
 
 
 def _mc_active_groups(db: Session):
+    """Faol o'quvchisi bor guruhlar. 2026-08-14: ilgari har guruh
+    uchun alohida so'rov ketardi (100 guruh = 100 so'rov), endi
+    hammasi BITTA so'rovda olinadi."""
     ids = [gid for (gid,) in
            db.query(models.Student.group_id)
            .filter(models.Student.status == "active",
                    models.Student.group_id.isnot(None))
            .distinct().all()]
-    out = []
-    for gid in ids:
-        g = db.query(models.Group).filter(models.Group.id == gid).first()
-        if g is not None:
-            out.append(g)
-    return out
+    if not ids:
+        return []
+    return (db.query(models.Group)
+            .filter(models.Group.id.in_(ids))
+            .order_by(models.Group.id).all())
 
 
-def _mc_charge_full(db: Session, today) -> int:
-    """1-kundan boshlab: har bir faol o'quvchidan to'liq standart oylik."""
+def _mc_charge_full(db: Session, today, deadline=None) -> tuple:
+    """1-kundan boshlab: har bir faol o'quvchidan to'liq standart oylik.
+
+    2026-08-14 (Jahongir: "Guruhlar ko'paysa yarmida uzilib, oyning
+    bir qismi hisoblanmay qolishi mumkin"): endi HAR GURUH alohida
+    belgilanadi va vaqt byudjeti tugasa funksiya to'xtaydi — keyingi
+    chaqiruv aynan QOLGAN guruhlardan davom etadi. Qaytaradi:
+    (nechta yozuv, hammasi tugadimi)."""
+    import time as _time
     import billing as _B  # noqa: F401  (kelgusida kerak bo'ladi)
+    from common import _seed_done as _sd, _seed_mark as _sm
     period = _mc_key(today.year, today.month)
     n = 0
+    finished = True
     for g in _mc_active_groups(db):
+        gkey = f"mcf_{period}_g{g.id}"
+        if _sd(db, gkey):
+            continue
+        if deadline is not None and _time.monotonic() > deadline:
+            finished = False
+            continue
         price = float(g.lesson_price or 0)
         std = int(g.standard_lessons_per_month or 12)
         full = roles.money(price * std)
         if full <= 0:
+            _sm(db, gkey)      # narxi yo'q guruh — qayta urinmaymiz
             continue
         students = (db.query(models.Student)
                     .filter(models.Student.group_id == g.id,
@@ -6190,24 +6204,40 @@ def _mc_charge_full(db: Session, today) -> int:
                 note=f"{g.name} — {period}: {std} dars (standart oy, avtomat)",
                 created_by=_MC_BY, period=period))
             n += 1
-    return n
+        # Guruh to'liq ishlandi — belgilaymiz va saqlaymiz. Shundan
+        # keyin bu guruh qayta ko'rilmaydi (ikki marta yechish yo'q).
+        try:
+            db.commit()
+            _sm(db, gkey)
+        except Exception:
+            db.rollback()
+            finished = False
+    return n, finished
 
 
-def _mc_refund_prev(db: Session, today) -> int:
-    """O'tgan oy uchun: dars kam o'tilgan bo'lsa farqni qaytaradi."""
+def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
+    """O'tgan oy uchun: dars kam o'tilgan bo'lsa farqni qaytaradi.
+    Vaqt byudjeti tugasa to'xtaydi — qaytarilmaganlari keyingi
+    chaqiruvda ko'riladi (allaqachon qaytarilgani qayta ko'rilmaydi,
+    izohdagi belgi bo'yicha)."""
+    import time as _time
     from datetime import timedelta as _td
     import billing as _B
     first = date(today.year, today.month, 1)
     prev_end = first - _td(days=1)
     period = _mc_key(prev_end.year, prev_end.month)
     if period < _MC_FROM:
-        return 0
+        return 0, True
     rows = (db.query(models.Payment)
             .filter(models.Payment.period == period,
                     models.Payment.kind == "charge",
                     models.Payment.created_by == _MC_BY).all())
     n = 0
+    finished = True
     for p in rows:
+        if deadline is not None and _time.monotonic() > deadline:
+            finished = False
+            break
         s = (db.query(models.Student)
              .filter(models.Student.id == p.student_id).first())
         if s is None or s.group is None:
@@ -6232,11 +6262,25 @@ def _mc_refund_prev(db: Session, today) -> int:
             note=f"{g.name} — {period}: {held} dars o'tildi, {_MC_BACK}",
             created_by=_MC_BY, period=period))
         n += 1
-    return n
+    if n:
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
+            finished = False
+    return n, finished
 
 
-def _mc_ensure(db: Session, _orig=None):
-    """Login va kunlik cron shu funksiyani chaqiradi."""
+def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
+    """Login va kunlik cron shu funksiyani chaqiradi.
+
+    2026-08-14: VAQT BYUDJETI bilan ishlaydi. Login yo'lida kichik
+    (5 s), cron'da katta (24 s) — Vercel'ning 30 soniyalik limitiga
+    urilib yarim yo'lda uzilib qolmaydi. Tugallanmagan qismi keyingi
+    chaqiruvda AYNAN QOLGAN JOYIDAN davom etadi (guruh belgilari).
+    Ikkinchi nusxa esa kutib turmaydi — try_lock bilan chetga chiqadi,
+    shunda navbat yig'ilmaydi."""
+    import time as _time
     now = roles.local_now()
     today = now.date()
     if today.day == 1 and now.hour < 5:
@@ -6246,28 +6290,63 @@ def _mc_ensure(db: Session, _orig=None):
         # Eski oylar — avvalgi mantiq (tegilmaydi).
         if _orig is not None:
             try:
+                return _orig(db, budget_s=budget_s)
+            except TypeError:
                 return _orig(db)
             except Exception:
                 return
         return
+
+    from common import _seed_done as _sd, _seed_mark as _sm
+    # Umumiy "bo'ldi" bayrog'i ATAYLAB yo'q — oy o'rtasida ochilgan
+    # YANGI guruh ham hisoblanishi kerak. Har guruh alohida
+    # belgilanadi (mcf_<oy>_g<id>), qaytarish esa oyiga bir marta.
+    refund_key = f"mcr_{period}"
+    todo = [g for g in _mc_active_groups(db)
+            if not _sd(db, f"mcf_{period}_g{g.id}")]
+    if not todo and _sd(db, refund_key):
+        return {"yechildi": 0, "qaytarildi": 0, "tugagan": True}
+
+    pg = False
     try:
         from sqlalchemy import text as _text
-        if db.get_bind().dialect.name == "postgresql":
-            db.execute(_text("SELECT pg_advisory_xact_lock(917202)"))
+        pg = db.get_bind().dialect.name == "postgresql"
+        if pg:
+            got = db.execute(
+                _text("SELECT pg_try_advisory_lock(917202)")).scalar()
+            if not got:
+                return {"band": True}
     except Exception:
-        pass
+        pg = False
+
+    deadline = _time.monotonic() + max(float(budget_s), 0.0)
     n1 = n2 = 0
+    ok1 = ok2 = True
     try:
-        n2 = _mc_refund_prev(db, today)
-    except Exception:
-        db.rollback()
-    try:
-        n1 = _mc_charge_full(db, today)
-    except Exception:
-        db.rollback()
-    if n1 or n2:
-        db.commit()
-    return {"yechildi": n1, "qaytarildi": n2}
+        if not _sd(db, refund_key):
+            try:
+                n2, ok2 = _mc_refund_prev(db, today, deadline)
+                if ok2:
+                    _sm(db, refund_key)
+            except Exception:
+                db.rollback(); ok2 = False
+        try:
+            n1, ok1 = _mc_charge_full(db, today, deadline)
+        except Exception:
+            db.rollback(); ok1 = False
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
+    finally:
+        if pg:
+            try:
+                from sqlalchemy import text as _text2
+                db.execute(_text2("SELECT pg_advisory_unlock(917202)"))
+                db.commit()
+            except Exception:
+                pass
+    return {"yechildi": n1, "qaytarildi": n2, "tugagan": ok1 and ok2}
 
 
 def _mc_install():
@@ -6282,8 +6361,8 @@ def _mc_install():
         if old is None or getattr(old, "_mc_new", False):
             continue
 
-        def _wrap(db, _old=old):
-            return _mc_ensure(db, _old)
+        def _wrap(db, _old=old, **kw):
+            return _mc_ensure(db, _old, **kw)
         _wrap._mc_new = True
         setattr(m, "_ensure_month_charges", _wrap)
         done.append(mod)
@@ -6846,8 +6925,10 @@ def _bud_install():
         if old is None or getattr(old, "_bud_new", False):
             continue
 
-        def _wrap(db, _old=old):
-            r = _old(db)
+        def _wrap(db, _old=old, **kw):
+            # budget_s va boshqa argumentlar o'zgarmasdan o'tadi
+            # (2026-08-14: oylik hisoblash bosqichma-bosqich bo'ldi).
+            r = _old(db, **kw)
             try:
                 _bud_tasks_ensure(db)
             except Exception:

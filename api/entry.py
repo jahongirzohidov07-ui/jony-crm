@@ -7496,3 +7496,42 @@ def _tr_install():
 
 
 _TR_INSTALLED = _tr_install()
+
+
+# =====================================================================
+#  NOMZOD ZAXIRASI (talent pool)
+#
+#  Yaxshi nomzod bor, lekin hozir o'rin yo'q yoki maosh kelishilmadi —
+#  uni "Rad etildi" ga tashlab yuborsak, olti oydan keyin o'rin
+#  ochilganda uni hech kim eslamaydi. Endi alohida bosqich bor:
+#  "Zaxiraga olindi". Nomzodlar ro'yxatidan shu bosqichni tanlab
+#  zaxirada kimlar borligini ko'rish mumkin.
+#
+#  Voronkaga kirmaydi — zaxira yutuq ham, yo'qotish ham emas, u
+#  kelajakdagi imkoniyat.
+# =====================================================================
+_POOL_KEY = "pool"
+_POOL_LABEL = "Zaxiraga olindi"
+
+
+def _pool_install():
+    """roles moduliga yangi bosqichni qo'shamiz (import paytida)."""
+    try:
+        stages = getattr(roles, "CANDIDATE_STAGES", None)
+        if stages is None:
+            return False
+        if any(k == _POOL_KEY for k, _l in stages):
+            return "bor"
+        stages.append((_POOL_KEY, _POOL_LABEL))
+        labels = getattr(roles, "CANDIDATE_STAGE_LABELS", None)
+        if isinstance(labels, dict):
+            labels[_POOL_KEY] = _POOL_LABEL
+        # Voronka: zaxira ham, rad etilgan ham bosqich emas.
+        roles.CANDIDATE_FUNNEL = [
+            k for k, _l in stages if k not in ("rejected", _POOL_KEY)]
+        return True
+    except Exception:
+        return False
+
+
+_POOL_INSTALLED = _pool_install()

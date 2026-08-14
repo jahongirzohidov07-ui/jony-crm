@@ -8,11 +8,13 @@ export const CANDIDATE_STAGES = [
   { key: "offer", label: "Taklif berildi", color: "#f59e0b" },
   { key: "hired", label: "Ishga olindi", color: "#10b981" },
   { key: "rejected", label: "Rad etildi", color: "#ef4444" },
+  // Hozir o'rin yo'q, lekin kelajakda kerak bo'ladigan kadr.
+  { key: "pool", label: "Zaxiraga olindi", color: "#0d9488" },
 ];
 
-/** Voronka ustunlari - "rad etildi" alohida turadi, u bosqich emas. */
+/** Voronka ustunlari - "rad etildi" va "zaxira" bosqich emas. */
 export const CANDIDATE_FUNNEL = CANDIDATE_STAGES.filter(
-  (s) => s.key !== "rejected"
+  (s) => s.key !== "rejected" && s.key !== "pool"
 );
 
 export function stageLabel(key?: string | null): string {

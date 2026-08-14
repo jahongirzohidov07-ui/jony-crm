@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, LogOut, Monitor } from "lucide-react";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/AuthContext";
+import { getLang, setLang } from "../../lib/lang";
 import { BrandIcon } from "../../components/BrandIcon";
 import type { TeacherHome } from "../../lib/teacherApi";
 
@@ -77,6 +78,11 @@ export default function TeacherProfile() {
           </Link>
         </div>
 
+        {/* TIL / ЯЗЫК — 2026-08-13, Jahongir: "Profil bo'limida til
+            o'zgartirish joyini qo'shgin ... hozir faqat rus tiliga,
+            faqat ustozlar uchun". */}
+        <LangCard />
+
         <button
           onClick={logout}
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium"
@@ -94,6 +100,45 @@ function Stat({ value, label }: { value: string; label: string }) {
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3 text-center">
       <p className="text-xl font-bold text-slate-900 leading-tight">{value}</p>
       <p className="text-[11px] text-slate-500 mt-0.5">{label}</p>
+    </div>
+  );
+}
+
+
+/** Til tanlash: o'zbekcha yoki ruscha. Tanlangach sahifa yangilanadi. */
+function LangCard() {
+  const cur = getLang();
+  const pick = (l: "uz" | "ru") => {
+    if (l === cur) return;
+    setLang(l);
+    window.location.reload();
+  };
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5">
+      <p className="text-sm font-medium text-slate-800 mb-0.5">
+        Til / Язык
+      </p>
+      <p className="text-[11px] text-slate-400 mb-2.5">
+        Ustoz kabineti tanlangan tilda ko'rinadi
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {([
+          ["uz", "O'zbekcha"],
+          ["ru", "Русский"],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            onClick={() => pick(k)}
+            className={`py-2.5 rounded-lg text-sm font-medium border transition ${
+              cur === k
+                ? "bg-brand-600 border-brand-600 text-white"
+                : "bg-white border-slate-200 text-slate-600"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

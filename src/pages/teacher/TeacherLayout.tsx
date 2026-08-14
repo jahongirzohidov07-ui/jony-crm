@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { NavLink, Outlet, Navigate } from "react-router-dom";
 import { CalendarDays, Home, LayoutGrid, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
+import { AutoTranslate } from "../../components/AutoTranslate";
 
 const TABS = [
   { to: "/teacher", end: true, icon: Home, label: "Bugun" },
@@ -51,6 +52,8 @@ export default function TeacherLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
+      {/* Ruscha rejim (2026-08-13) — faqat ustoz kabinetida */}
+      <AutoTranslate />
       <Outlet />
 
       <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 z-40 pb-safe">

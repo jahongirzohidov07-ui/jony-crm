@@ -346,6 +346,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   };
 
   const shown = stageFilter ? rows.filter((r) => r.stage === stageFilter) : rows;
+  const poolCount = rows.filter((r) => r.stage === "pool").length;
 
   return (
     <div>
@@ -363,6 +364,19 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
           ))}
         </select>
         <span className="text-sm text-slate-500">{shown.length} ta nomzod</span>
+        {poolCount > 0 && (
+          <button
+            onClick={() => setStageFilter(stageFilter === "pool" ? "" : "pool")}
+            title="Hozir olmadik, lekin kelajakda kerak bo'lishi mumkin"
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition ${
+              stageFilter === "pool"
+                ? "bg-teal-600 text-white border-teal-600"
+                : "bg-teal-50 text-teal-700 border-teal-200 hover:border-teal-300"
+            }`}
+          >
+            Zaxirada: {poolCount}
+          </button>
+        )}
         <div className="flex-1" />
         <button
           onClick={() =>

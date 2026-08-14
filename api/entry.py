@@ -7535,3 +7535,136 @@ def _pool_install():
 
 
 _POOL_INSTALLED = _pool_install()
+
+
+# =====================================================================
+#  RAHBAR O'Z GURUHIGA YO'QLAMA QO'YMAYDI
+#
+#  O'quv bo'limi rahbari va filial rahbari ba'zan o'zlari ham dars
+#  beradi. Muammo shundaki, ular rahbar sifatida o'tgan kun
+#  yo'qlamasini ham o'zgartira oladi (PAST_ATTENDANCE) — ya'ni o'z
+#  oyligini o'zi yozib qo'ya oladi. Yo'qlama — pul hujjati, shuning
+#  uchun bir odam ham o'qituvchi, ham nazoratchi bo'lib qolmasligi
+#  kerak.
+#
+#  Endi: rahbar LAVOZIMIDA turib o'zi ustoz bo'lgan guruhda
+#  yo'qlama, baho va dars ko'chirish yopiq. Lavozimi "ustoz" ga
+#  o'zgartirilsa — hammasi ochiladi (o'shanda filial almashtirgich
+#  yo'qoladi, chunki ustoz faqat o'z filialini ko'radi).
+#
+#  Boshqa ustozlarning guruhlarida rahbarning huquqi o'zgarmaydi.
+# =====================================================================
+_OWN_LOCK_ROLES = [roles.ACADEMIC_HEAD, roles.BRANCH_MANAGER]
+_OWN_LOCK_MSG = ("Bu — o'zingiz dars beradigan guruh. Rahbar lavozimida "
+                 "o'z guruhingizga yo'qlama/baho qo'yilmaydi. Buni ustoz "
+                 "lavozimida bajarasiz.")
+
+
+def _own_teacher(db: Session, user):
+    """Foydalanuvchining ustoz yozuvi (bo'lsa)."""
+    try:
+        return M._teacher_of_user(db, user)
+    except Exception:
+        return None
+
+
+def _own_locked(db: Session, user, group_id) -> bool:
+    """Shu guruh — foydalanuvchining o'z guruhimi va u rahbarmi?"""
+    if user is None or not group_id:
+        return False
+    if getattr(user, "role", None) not in _OWN_LOCK_ROLES:
+        return False
+    t = _own_teacher(db, user)
+    if t is None:
+        return False
+    g = (db.query(models.Group)
+         .filter(models.Group.id == int(group_id)).first())
+    return bool(g is not None and g.teacher_id == t.id)
+
+
+def _own_locked_lesson(db: Session, user, lesson_id) -> bool:
+    if not lesson_id:
+        return False
+    L = (db.query(models.Lesson)
+         .filter(models.Lesson.id == int(lesson_id)).first())
+    return bool(L is not None and _own_locked(db, user, L.group_id))
+
+
+def _own_guard(kw, kind: str):
+    """Yozishdan oldingi tekshiruv. Sessiya va foydalanuvchi endpoint
+    argumentlaridan olinadi."""
+    db = kw.get("db")
+    user = kw.get("user")
+    if db is None or user is None:
+        return
+    gid = kw.get("gid") or kw.get("group_id")
+    lid = kw.get("lesson_id")
+    if kind == "lesson":
+        bad = _own_locked_lesson(db, user, lid)
+    elif kind == "payload_group":
+        p = kw.get("payload")
+        bad = _own_locked(db, user, getattr(p, "group_id", None))
+    else:
+        bad = _own_locked(db, user, gid)
+    if bad:
+        raise HTTPException(403, _OWN_LOCK_MSG)
+
+
+def _own_wrap(path: str, method: str, kind: str):
+    """Mavjud endpointni o'rab olamiz — kodini qayta yozmaymiz."""
+    import functools as _ft
+    for r in app.routes:
+        if getattr(r, "path", None) != path:
+            continue
+        if method not in (getattr(r, "methods", None) or ()):
+            continue
+        orig = getattr(getattr(r, "dependant", None), "call", None)
+        if orig is None or getattr(orig, "_own_new", False):
+            continue
+
+        @_ft.wraps(orig)
+        def _new(*a, _o=orig, _k=kind, **kw):
+            _own_guard(kw, _k)
+            return _o(*a, **kw)
+
+        _new._own_new = True
+        r.dependant.call = _new
+        try:
+            r.endpoint = _new
+        except Exception:
+            pass
+        return True
+    return False
+
+
+def _own_install():
+    done = {}
+    for path, method, kind in (
+        ("/api/lessons/{lesson_id}/attendance", "PUT", "lesson"),
+        ("/api/lessons/{lesson_id}/grades", "PUT", "lesson"),
+        ("/api/lessons/{lesson_id}/homework", "PUT", "lesson"),
+        ("/api/groups/{gid}/reschedule", "POST", "group"),
+        ("/api/me/reschedules", "POST", "payload_group"),
+    ):
+        done[f"{method} {path}"] = _own_wrap(path, method, kind)
+    return done
+
+
+_OWN_INSTALLED = _own_install()
+
+
+@app.get("/api/groups/{gid}/my-access")
+def group_my_access(gid: int, db: Session = Depends(get_db),
+                    user=Depends(M.get_current_user)):
+    """Shu guruhda men yo'qlama/baho qo'ya olamanmi.
+
+    Frontend jurnalni shu javobga qarab yopadi — ochiladi, lekin
+    katakchalar o'chirilgan bo'ladi va sabab yozib turadi."""
+    locked = _own_locked(db, user, gid)
+    return {
+        "group_id": gid,
+        "locked": locked,
+        "can_mark": (not locked) and (
+            getattr(user, "role", None) in tuple(roles.TEACHING_STAFF)),
+        "reason": _OWN_LOCK_MSG if locked else None,
+    }

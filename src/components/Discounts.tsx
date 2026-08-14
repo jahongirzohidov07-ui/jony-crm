@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Percent, Plus, X, Check, Ban, ShieldCheck } from "lucide-react";
 import {
-  api, type StudentDiscounts, type Student, type User,
+  api, type StudentDiscounts, type User,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { roleLabel } from "../lib/roles";
@@ -365,6 +365,9 @@ function DiscountForm({
   const [pickStaff, setPickStaff] =
     useState<{ id: number; full_name: string } | null>(null);
   const [staff, setStaff] = useState<User[]>([]);
+  // 2026-08-14, Jahongir: oila a'zosi BOSHQA FILIALDA o'qiyotgan
+  // bo'lishi mumkin — shu belgi qo'yilsa boshqa filiallardan qidiradi.
+  const [otherBranch, setOtherBranch] = useState(false);
   const [err, setErr] = useState("");
   const [okMsg, setOkMsg] = useState("");
   const [saving, setSaving] = useState(false);
@@ -376,15 +379,17 @@ function DiscountForm({
   }, [kind]);
 
   const searchStudents = async (q: string) => {
-    const r = await api.get<Student[]>(
-      `/students?q=${encodeURIComponent(q)}`);
-    return r
-      .filter((x) => x.id !== studentId)
-      .map((x) => ({
-        id: x.id,
-        full_name: x.full_name,
-        sub: [x.group?.name, x.branch?.name].filter(Boolean).join(" · "),
-      }));
+    const r = await api.get<{
+      id: number; full_name: string; group?: string | null;
+      branch?: string | null;
+    }[]>(
+      `/family-search?q=${encodeURIComponent(q)}`
+      + `&other_branch=${otherBranch ? 1 : 0}&exclude=${studentId}`);
+    return r.map((x) => ({
+      id: x.id,
+      full_name: x.full_name,
+      sub: [x.group, x.branch].filter(Boolean).join(" · "),
+    }));
   };
 
   const searchStaff = async (q: string) => {
@@ -491,15 +496,38 @@ function DiscountForm({
           </div>
 
           {isFamily && (
-            <SearchPick
-              label="Qaysi o'quvchi bilan bir oila"
-              placeholder="Ism yoki familiyaning 3 harfi…"
-              value={pickStudent}
-              onPick={setPickStudent}
-              search={searchStudents}
-              hint="Familiya bir xil bo'lsa darrov bog'lanadi. Boshqa
-                    familiya bo'lsa — tasdiqqa so'rov ketadi."
-            />
+            <div>
+              <SearchPick
+                key={otherBranch ? "other" : "own"}
+                label="Qaysi o'quvchi bilan bir oila"
+                placeholder="Ism yoki familiyaning 3 harfi…"
+                value={pickStudent}
+                onPick={setPickStudent}
+                search={searchStudents}
+                hint="Familiya bir xil bo'lsa darrov bog'lanadi. Boshqa
+                      familiya bo'lsa — tasdiqqa so'rov ketadi."
+              />
+              {/* Oila a'zosi boshqa filialda o'qiyotgan bo'lishi
+                  mumkin (Jahongir, 2026-08-14). */}
+              <label className="flex items-start gap-2 mt-2 text-sm text-slate-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={otherBranch}
+                  onChange={(e) => {
+                    setOtherBranch(e.target.checked);
+                    setPickStudent(null);
+                  }}
+                  className="mt-0.5"
+                />
+                <span>
+                  Boshqa filialda o'qiydi
+                  <span className="block text-[11px] text-slate-400">
+                    Belgilansa — boshqa filiallar ro'yxatidan qidiriladi.
+                    Bo'sh qolsa o'z filialingizdan.
+                  </span>
+                </span>
+              </label>
+            </div>
           )}
 
           {kind === "referral" && (

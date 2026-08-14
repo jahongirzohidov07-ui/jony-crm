@@ -1335,6 +1335,59 @@ def student_pricing(
         ),
     }
 
+@router.get("/api/family-search")
+def family_search(
+    q: str,
+    other_branch: int = 0,
+    exclude: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
+):
+    """Oila a'zosini qidirish — kerak bo'lsa BOSHQA FILIALLARDAN ham.
+
+    2026-08-14, Jahongir: "boshqa filialda oila azosi oqishiyam mumkin
+    ... 'boshqa filialda' degan ptichka qo'yadigan joy chiqsa, agar
+    bossa boshqa filial o'quvchilari orasidan chiqadi, bosmasa o'zini
+    filialidan qidiradi".
+
+    Javobda faqat ism, guruh va filial bo'ladi — pul ma'lumoti yo'q,
+    shuning uchun boshqa filialni ko'rish maxfiylikni buzmaydi.
+    """
+    q = (q or "").strip()
+    if len(q) < 3:
+        return []
+    like = f"%{q}%"
+    query = db.query(models.Student).filter(
+        models.Student.full_name.ilike(like))
+    if other_branch:
+        # Boshqa filiallar: o'z filiali CHIQARIB tashlanadi, qolgan
+        # hammasi ko'rinadi (oila boshqa filialda o'qiyotgan bo'lsa).
+        mine = _user_branch_ids(db, user)
+        if exclude:
+            me = db.query(models.Student).get(exclude)
+            if me and me.branch_id:
+                mine = [me.branch_id]
+        if mine:
+            query = query.filter(
+                or_(models.Student.branch_id.is_(None),
+                    models.Student.branch_id.notin_(mine)))
+    else:
+        query = scope_to_branch(query, models.Student, user)
+    rows = query.order_by(models.Student.full_name).limit(15).all()
+    out = []
+    for x in rows:
+        if exclude and x.id == exclude:
+            continue
+        out.append({
+            "id": x.id,
+            "full_name": x.full_name,
+            "group": x.group.name if x.group else None,
+            "branch": x.branch.name if x.branch else None,
+            "status": x.status,
+        })
+    return out
+
+
 @router.post("/api/students/{student_id}/family-link")
 def student_family_link(
     student_id: int,

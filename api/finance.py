@@ -1209,7 +1209,8 @@ def billing_month(
             since = s.enrolled_date
         lessons = len(_lessons_left_in_month(db, g.id, since)) if since <= end else 0
         disc = _student_discount_percent(db, s)
-        amount = lessons * (g.lesson_price or 0) * (100 - disc) / 100
+        amount = lessons * billing.student_lesson_price(s, g) \
+            * (100 - disc) / 100
 
         if commit and not already and amount > 0 \
                 and not _charge_skipped(db, s.id, period):

@@ -82,6 +82,31 @@ def billable_lessons_for_student(
     return min(held, cap)
 
 
+def student_lesson_price(student, group) -> float:
+    """SHU O'QUVCHI uchun bitta dars narxi (2026-08-15).
+
+    Jahongir: "bizda o'qib turganlar uchun faol bolib turganlar uchun
+    sentabrdan narx eski narxda qoladi faqat yangilar uchun yoki
+    avgust muzlatib keyin yana kelganlarga narx oshgan bolishi kerak".
+
+    Shuning uchun narx endi ikki qavatli:
+      1) o'quvchida QULFLANGAN narx bo'lsa - o'sha (eski narx
+         himoyasi: narx oshganda faol bo'lgan o'quvchi);
+      2) bo'lmasa - guruhning joriy narxi (yangi kelganlar va
+         muzlatib qaytganlar shu yerga tushadi).
+
+    Qulf bo'lmaganda javob AVVALGIDEK - guruh narxi. Ya'ni hech
+    narsa qulflanmagan bo'lsa butun hisob-kitob bir zarra
+    o'zgarmaydi."""
+    try:
+        v = getattr(student, "locked_lesson_price", None)
+        if v is not None and float(v) > 0:
+            return float(v)
+    except Exception:
+        pass
+    return float((getattr(group, "lesson_price", 0) if group else 0) or 0)
+
+
 def compute_student_charges(
     db: Session, group: models.Group, year: int, month: int
 ) -> list[dict]:
@@ -100,7 +125,7 @@ def compute_student_charges(
     out = []
     for s in students:
         billable = billable_lessons_for_student(db, s, group, year, month)
-        amount = billable * (group.lesson_price or 0)
+        amount = billable * student_lesson_price(s, group)
         already_charged = (
             db.query(models.Payment)
             .filter(

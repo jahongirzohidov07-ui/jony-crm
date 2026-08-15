@@ -57,6 +57,14 @@ def _ensure_new_columns():
         # Nomzod qaysi lavozimga va qaysi fandan (2026-08-15)
         "ALTER TABLE candidates ADD COLUMN position VARCHAR",
         "ALTER TABLE candidates ADD COLUMN subject VARCHAR",
+        # Eski narx himoyasi (2026-08-15)
+        "ALTER TABLE course_price_changes ADD COLUMN "
+        "keep_old_for_active INTEGER DEFAULT 1",
+        "ALTER TABLE course_price_changes ADD COLUMN "
+        "locked_students INTEGER DEFAULT 0",
+        "ALTER TABLE students ADD COLUMN locked_lesson_price FLOAT",
+        "ALTER TABLE students ADD COLUMN locked_price_at TIMESTAMP",
+        "ALTER TABLE students ADD COLUMN locked_price_note VARCHAR",
         # Hamkor filial va kurslar (2026-08-15)
         "ALTER TABLE branches ADD COLUMN is_partner INTEGER DEFAULT 0",
         "ALTER TABLE branches ADD COLUMN partner_note VARCHAR",
@@ -455,7 +463,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15f"
+SCHEMA_STAMP = "stamp_2026_08_15h"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
@@ -1935,7 +1943,8 @@ def _charge_from_activation(db: Session, s: models.Student, since: date,
     if n <= 0:
         return None
 
-    price = s.group.lesson_price or 0
+    # Eski narx himoyasi: o'quvchida qulflangan narx bo'lsa o'sha
+    price = billing.student_lesson_price(s, s.group)
     # Oylik chegirmasi bor bo'lsa - bir darsning narxi ham kamayadi.
     # Oilaviy + tasdiqlangan chegirmalarning hammasi hisobga olinadi.
     disc = _student_discount_percent(db, s)

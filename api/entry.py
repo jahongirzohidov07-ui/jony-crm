@@ -2748,7 +2748,8 @@ def billing_month_v2(year: int, month: int, commit: bool = False,
         lessons = (len(M._lessons_left_in_month(db, g.id, since))
                    if since <= end else 0)
         disc = M._student_discount_percent(db, s)
-        amount = lessons * (g.lesson_price or 0) * (100 - disc) / 100
+        amount = lessons * _billing.student_lesson_price(s, g) \
+            * (100 - disc) / 100
         if lessons == 0:
             no_lesson += 1
 
@@ -2855,7 +2856,7 @@ def _charge_from_activation_v2(db, s, since, user=None):
     if n <= 0:
         return None
 
-    price = g.lesson_price or 0
+    price = _billing.student_lesson_price(s, g)   # eski narx himoyasi
     disc = M._student_discount_percent(db, s)
     amount = n * price * (100 - disc) / 100
     if amount <= 0:
@@ -2916,7 +2917,8 @@ def billing_month_v3(year: int, month: int, commit: bool = False,
             since = s.enrolled_date
         billable = _billable_lessons(db, g, since, start, end)
         disc = M._student_discount_percent(db, s)
-        amount = billable * (g.lesson_price or 0) * (100 - disc) / 100
+        amount = billable * _billing.student_lesson_price(s, g) \
+            * (100 - disc) / 100
         if billable == 0:
             no_lesson += 1
 
@@ -3035,15 +3037,16 @@ def activate_preview(student_id: int, on: str | None = None,
                        models.Payment.kind == "charge").first()) is not None
     n = _billable_lessons(db, g, day, start, end)
     disc = M._student_discount_percent(db, s)
-    amount = n * (g.lesson_price or 0) * (100 - disc) / 100
+    _pr = _billing.student_lesson_price(s, g)     # eski narx himoyasi
+    amount = n * _pr * (100 - disc) / 100
     cap = _lesson_cap(g)
     return {
         "lessons": n, "amount": round(amount, 2), "discount": disc,
         "already": already, "group": g.name,
-        "lesson_price": g.lesson_price or 0, "cap": cap,
+        "lesson_price": _pr, "cap": cap,
         "hint": ("Bu oy uchun allaqachon hisoblangan — qayta yechilmaydi."
                  if already else
-                 f"{n} dars x {(g.lesson_price or 0):,.0f} so'm"
+                 f"{n} dars x {_pr:,.0f} so'm"
                  .replace(",", " ")
                  + (f" (chegirma {disc}%)" if disc else "")),
     }
@@ -6193,14 +6196,18 @@ def _mc_charge_full(db: Session, today, deadline=None) -> tuple:
             continue
         price = float(g.lesson_price or 0)
         std = int(g.standard_lessons_per_month or 12)
-        full = roles.money(price * std)
-        if full <= 0:
+        if roles.money(price * std) <= 0:
             _sm(db, gkey)      # narxi yo'q guruh — qayta urinmaymiz
             continue
         students = (db.query(models.Student)
                     .filter(models.Student.group_id == g.id,
                             models.Student.status == "active").all())
         for s in students:
+            # ESKI NARX HIMOYASI: o'quvchida qulflangan narx bo'lsa
+            # o'sha ishlaydi (2026-08-15)
+            full = roles.money(_billing.student_lesson_price(s, g) * std)
+            if full <= 0:
+                continue
             # Shu oy ichida qo'shilgan bo'lsa — faollashtirish yozuvi
             # allaqachon o'z ulushini yechgan, aralashmaymiz.
             if s.enrolled_date and _mc_key(
@@ -6261,7 +6268,7 @@ def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
         if done is not None:
             continue
         g = s.group
-        price = float(g.lesson_price or 0)
+        price = _billing.student_lesson_price(s, g)
         held = _B.billable_lessons_for_student(
             db, s, g, prev_end.year, prev_end.month)
         actual = roles.money(price * held)

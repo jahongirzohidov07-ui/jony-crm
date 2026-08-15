@@ -919,6 +919,14 @@ class CoursePriceIn(BaseModel):
     lesson_price: float
     lessons_per_month: Optional[int] = None
     note: Optional[str] = None
+    # Hozirgi FAOL o'quvchilarga eski narx qolsinmi (2026-08-15)
+    keep_old_for_active: Optional[bool] = True
+
+
+class PriceLockIn(BaseModel):
+    """Eski narx qulfi: price berilsa qo'yiladi, bo'sh bo'lsa ochiladi."""
+    price: Optional[float] = None
+    note: Optional[str] = None
 
 
 class CoinSetIn(BaseModel):

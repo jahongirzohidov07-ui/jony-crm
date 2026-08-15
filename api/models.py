@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from sqlalchemy import (
-    Column, Integer, String, Float, Date, DateTime, ForeignKey, Text
+    Column, Integer, String, Float, Date, DateTime, ForeignKey, Text,
+    event,
 )
 from sqlalchemy.orm import relationship, deferred
 from database import Base
@@ -339,6 +340,11 @@ class CoursePriceChange(Base):
     lesson_price = Column(Float, nullable=False)
     lessons_per_month = Column(Integer, nullable=True)
     note = Column(String, nullable=True)
+    # ESKI NARX HIMOYASI (2026-08-15): belgilansa, narx oshgan kuni
+    # FAOL bo'lgan o'quvchilar eski narxda qolib ketadi. Yangi
+    # kelganlar va muzlatib qaytganlar yangi narxda o'qiydi.
+    keep_old_for_active = Column(Integer, default=1)
+    locked_students = Column(Integer, default=0)   # nechtasi qulflandi
     applied_at = Column(DateTime, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -394,6 +400,20 @@ class Student(Base):
     # balansini ko'radi va sovg'a so'ray oladi.
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
     note = Column(Text, nullable=True)
+    # ESKI NARX HIMOYASI (2026-08-15, Jahongir: "bizda o'qib turganlar
+    # uchun faol bolib turganlar uchun sentabrdan narx eski narxda
+    # qoladi faqat yangilar uchun yoki avgust muzlatib keyin yana
+    # kelganlarga narx oshgan bolishi kerak").
+    #
+    # Narx oshirilganda O'SHA PAYTDA FAOL bo'lgan o'quvchining narxi
+    # shu yerga qulflanadi va uning hisobi shu narxda ketaveradi.
+    # Muzlatilsa yoki chiqib ketsa qulf OCHILADI - qaytib kelsa
+    # o'sha paytdagi (yangi) narxda o'qiydi. Yangi kelganlarda bu
+    # maydon bo'sh - ular doim joriy narxda.
+    locked_lesson_price = Column(Float, nullable=True)
+    locked_price_at = Column(DateTime, nullable=True)
+    locked_price_note = Column(String, nullable=True)
+
     # Telegram: ota-ona botga /start KOD yozganda chat bog'lanadi va
     # "darsga kelmadi", "to'lov qabul qilindi" xabarlari boradi.
     tg_code = Column(String, nullable=True, index=True)
@@ -3599,3 +3619,26 @@ class UserRole(Base):
     user_id = Column(Integer, ForeignKey("users.id"),
                      nullable=False, index=True)
     role = Column(String, nullable=False, index=True)
+
+
+# =====================================================================
+#  ESKI NARX QULFI O'ZI OCHILADI (2026-08-15)
+#
+#  Jahongir: "avgust muzlatib keyin yana kelganlarga narx oshgan
+#  bolishi kerak".
+#
+#  O'quvchi FAOL bo'lmay qolsa (muzlatildi, arxivlandi, ketdi) eski
+#  narx himoyasi bekor bo'ladi — qaytib kelsa o'sha paytdagi joriy
+#  narxda o'qiydi.
+#
+#  Buni bitta joyda hal qilamiz: status maydoni QAYERDA o'zgartirilsa
+#  ham shu ilgak ishlaydi. Aks holda muzlatish, arxivlash, guruhdan
+#  chiqarish — har birini alohida tuzatish kerak bo'lardi va bittasi
+#  esdan chiqsa xato jimgina qolib ketardi.
+# =====================================================================
+@event.listens_for(Student.status, "set")
+def _release_price_lock_on_status(target, value, oldvalue, initiator):
+    if value != "active" and getattr(target, "locked_lesson_price", None):
+        target.locked_lesson_price = None
+        target.locked_price_at = None
+        target.locked_price_note = None

@@ -74,7 +74,16 @@ def _course_out(db: Session, c: models.Course) -> dict:
             "lesson_price": nxt.lesson_price,
             "lessons_per_month": nxt.lessons_per_month,
             "note": nxt.note,
+            "keep_old_for_active": bool(
+                getattr(nxt, "keep_old_for_active", 1)),
         } if nxt else None),
+        # Nechta o'quvchi ESKI narxda qolgan (2026-08-15)
+        "locked_students": (
+            db.query(models.Student)
+            .filter(models.Student.group_id.in_(
+                [g.id for g in groups] or [-1]),
+                models.Student.locked_lesson_price.isnot(None))
+            .count() if groups else 0),
     }
 
 
@@ -106,6 +115,45 @@ def _push_price_to_groups(db: Session, c: models.Course,
     return n
 
 
+def lock_price_for_active(db: Session, c: models.Course,
+                          old_price: float = None,
+                          note: str = None) -> int:
+    """ESKI NARX HIMOYASI (2026-08-15, Jahongir: "bizda o'qib
+    turganlar uchun faol bolib turganlar uchun sentabrdan narx eski
+    narxda qoladi faqat yangilar uchun yoki avgust muzlatib keyin
+    yana kelganlarga narx oshgan bolishi kerak").
+
+    Narx oshgan KUNI faol bo'lgan o'quvchilarning narxi qulflanadi.
+    Muzlatilganlar va chiqib ketganlarga QULF QO'YILMAYDI — qaytib
+    kelsa yangi narxda o'qiydi."""
+    groups = (db.query(models.Group)
+              .filter(models.Group.course_id == c.id).all())
+    if not groups:
+        return 0
+    n = 0
+    for g in groups:
+        # Har guruhning O'SHA PAYTDAGI narxi qulflanadi — o'quvchi
+        # aynan nima to'lab turgan bo'lsa, o'sha qoladi. (Guruhga
+        # alohida narx qo'yilgan bo'lishi ham mumkin.)
+        price = float(old_price if old_price else (g.lesson_price or 0))
+        if price <= 0:
+            continue
+        rows = (db.query(models.Student)
+                .filter(models.Student.group_id == g.id,
+                        models.Student.status == "active",
+                        models.Student.locked_lesson_price.is_(None)).all())
+        for st in rows:
+            st.locked_lesson_price = price
+            st.locked_price_at = datetime.utcnow()
+            st.locked_price_note = (
+                note
+                or f"{c.name}: narx oshganda eski narx saqlab qolindi")
+            n += 1
+    if n:
+        db.commit()
+    return n
+
+
 def apply_due_price_changes(db: Session, on: date = None) -> int:
     """Sanasi kelgan narx o'zgarishlarini qo'llaydi (kunlik ish)."""
     on = on or roles.local_today()
@@ -118,6 +166,16 @@ def apply_due_price_changes(db: Session, on: date = None) -> int:
         if c is None:
             ch.applied_at = datetime.utcnow()
             continue
+        old_price = c.lesson_price
+        # ESKI NARX HIMOYASI — narx ko'tarilishidan OLDIN qulflaymiz
+        locked = 0
+        if getattr(ch, "keep_old_for_active", 1) \
+                and (ch.lesson_price or 0) > (old_price or 0):
+            locked = lock_price_for_active(
+                db, c, None,
+                f"{c.name}: {ch.from_date.isoformat()} dan narx oshdi, "
+                "eski narx saqlab qolindi")
+        ch.locked_students = locked
         c.lesson_price = ch.lesson_price
         if ch.lessons_per_month:
             c.lessons_per_month = ch.lessons_per_month
@@ -262,23 +320,68 @@ def schedule_price_change(cid: int, payload: schemas.CoursePriceIn,
         models.CoursePriceChange.course_id == cid,
         models.CoursePriceChange.applied_at.is_(None)).delete(
             synchronize_session=False)
+    keep = (True if payload.keep_old_for_active is None
+            else bool(payload.keep_old_for_active))
     ch = models.CoursePriceChange(
         course_id=cid, from_date=payload.from_date,
         lesson_price=payload.lesson_price,
         lessons_per_month=payload.lessons_per_month,
+        keep_old_for_active=1 if keep else 0,
         note=payload.note, created_by=user.full_name)
     db.add(ch); db.commit(); db.refresh(ch)
     applied = apply_due_price_changes(db)
+    db.refresh(ch)
+    locked = ch.locked_students or 0
     audit.log(db, user, entity="course", action="price_plan",
               entity_id=c.id, entity_label=c.name,
               old_value=c.lesson_price, new_value=payload.lesson_price,
               note=f"{payload.from_date.isoformat()} dan",
               branch_id=c.branch_id, commit=True)
+    keep_txt = (" Hozirgi FAOL o'quvchilar eski narxda qoladi; "
+                "yangi kelganlar va muzlatib qaytganlar yangi narxda."
+                if keep else
+                " Diqqat: hamma o'quvchi yangi narxga o'tadi.")
     return {"ok": True, "applied_now": bool(applied),
-            "message": ("Narx darrov qo'llandi va guruhlarga ko'chdi."
-                        if applied else
-                        f"{payload.from_date.isoformat()} kuni avtomat "
-                        "qo'llanadi. Shu kungacha eski narx ishlaydi.")}
+            "locked_students": locked,
+            "message": (
+                (f"Narx darrov qo'llandi va guruhlarga ko'chdi. "
+                 f"{locked} ta o'quvchiga eski narx qulflandi."
+                 if applied else
+                 f"{payload.from_date.isoformat()} kuni avtomat "
+                 "qo'llanadi. Shu kungacha eski narx ishlaydi.")
+                + keep_txt)}
+
+
+@router.post("/api/students/{sid}/price-lock")
+def set_student_price_lock(sid: int, payload: schemas.PriceLockIn,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.FULL_ACCESS))):
+    """O'quvchining ESKI NARX qulfini qo'yish yoki ochish.
+
+    Qulf ochilsa o'quvchi joriy (yangi) narxga o'tadi. Bu qo'lda
+    aralashuv - shuning uchun auditga yoziladi."""
+    st = db.query(models.Student).get(sid)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not _in_user_branches(db, user, st.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    old = st.locked_lesson_price
+    if payload.price and payload.price > 0:
+        st.locked_lesson_price = float(payload.price)
+        st.locked_price_at = datetime.utcnow()
+        st.locked_price_note = (payload.note
+                                or f"Qo'lda qo'yildi ({user.full_name})")
+    else:
+        st.locked_lesson_price = None
+        st.locked_price_at = None
+        st.locked_price_note = None
+    db.commit()
+    audit.log(db, user, entity="student", action="price_lock",
+              entity_id=st.id, entity_label=st.full_name,
+              field="locked_lesson_price", old_value=old,
+              new_value=st.locked_lesson_price,
+              note=payload.note, branch_id=st.branch_id, commit=True)
+    return {"ok": True, "locked_lesson_price": st.locked_lesson_price}
 
 
 @router.delete("/api/courses/price-change/{chid}")

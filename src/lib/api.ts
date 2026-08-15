@@ -330,7 +330,10 @@ export interface Course {
     lesson_price: number;
     lessons_per_month?: number | null;
     note?: string | null;
+    keep_old_for_active?: boolean;
   } | null;
+  /** Nechta o'quvchi eski narxda qolgan (2026-08-15). */
+  locked_students?: number;
   groups_updated?: number;
 }
 
@@ -1514,6 +1517,11 @@ export interface StudentPricing {
   siblings: { id: number; full_name: string; status: string }[];
   active_siblings: number;
   explanation: string;
+  /** ESKI NARX HIMOYASI (2026-08-15) — qulflangan bitta dars narxi. */
+  locked_lesson_price?: number | null;
+  locked_price_note?: string | null;
+  locked_price_at?: string | null;
+  current_lesson_price?: number | null;
 }
 
 export interface FamilyDiscountReport {

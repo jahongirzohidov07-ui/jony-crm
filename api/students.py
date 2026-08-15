@@ -1384,6 +1384,12 @@ def student_pricing(
         raise HTTPException(404, "O'quvchi topilmadi")
 
     base = s.group.monthly_fee if s.group else 0.0
+    # ESKI NARX HIMOYASI (2026-08-15): o'quvchida qulflangan narx
+    # bo'lsa oylik shundan hisoblanadi, guruh narxidan emas.
+    locked = getattr(s, "locked_lesson_price", None)
+    if locked and s.group:
+        base = round(float(locked)
+                     * (s.group.standard_lessons_per_month or 12))
     fam = _family_discount_percent(db, s)
 
     # Shartnomadagi shaxsiy chegirma (agar bo'lsa)
@@ -1428,6 +1434,13 @@ def student_pricing(
         "total_discount": total_pct,
         "final_fee": round(base * (100 - total_pct) / 100, 2),
         "parent_id": s.parent_id,
+        # Eski narx himoyasi (2026-08-15)
+        "locked_lesson_price": locked,
+        "locked_price_note": getattr(s, "locked_price_note", None),
+        "locked_price_at": (s.locked_price_at.isoformat()
+                            if getattr(s, "locked_price_at", None)
+                            else None),
+        "current_lesson_price": (s.group.lesson_price if s.group else None),
         "siblings": siblings,
         "active_siblings": sum(1 for x in siblings if x["status"] == "active"),
         # Chegirma qanday paydo bo'lgani va qachon yo'qolishi

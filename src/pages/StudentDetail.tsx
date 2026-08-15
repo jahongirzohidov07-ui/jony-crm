@@ -1575,16 +1575,18 @@ export default function StudentDetail() {
 
 // ------------------------------------------------- Narx va chegirma ----
 function PriceTab({ studentId }: { studentId: number }) {
+  const { user } = useAuth();
   const [data, setData] = useState<StudentPricing | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
     api
-      .get<StudentPricing>(`/students/${studentId}/pricing`)
+      .fresh<StudentPricing>(`/students/${studentId}/pricing`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [studentId]);
+  };
+  useEffect(load, [studentId]);
 
   if (loading) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda...</p>;
   if (!data) return null;
@@ -1601,6 +1603,50 @@ function PriceTab({ studentId }: { studentId: number }) {
           <span className="text-sm text-slate-500">Guruh narxi</span>
           <span className="text-sm text-slate-800">{formatSom(data.base_fee)}</span>
         </div>
+        {/* ESKI NARX HIMOYASI (2026-08-15, Jahongir: "o'qib turganlar
+            uchun sentabrdan narx eski narxda qoladi") */}
+        {!!data.locked_lesson_price && (
+          <div className="px-4 py-3 bg-emerald-50/60">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-emerald-800">
+                Eski narx saqlab qolingan
+              </span>
+              <span className="text-sm font-medium text-emerald-800">
+                {formatSom(data.locked_lesson_price)} / dars
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs text-emerald-700 leading-snug">
+              {data.locked_price_note || "Narx oshganda eski narx qoldi"}
+              {data.current_lesson_price &&
+              data.current_lesson_price !== data.locked_lesson_price
+                ? ` · joriy narx ${formatSom(data.current_lesson_price)}`
+                : ""}
+              . Muzlatilsa yoki ketsa — qaytganda yangi narxda o'qiydi.
+            </p>
+            {user?.role === FOUNDER && (
+              <button
+                onClick={async () => {
+                  if (
+                    !confirm(
+                      "Eski narx himoyasi olib tashlansinmi? " +
+                        "O'quvchi joriy narxga o'tadi."
+                    )
+                  )
+                    return;
+                  try {
+                    await api.post(`/students/${studentId}/price-lock`, {});
+                    load();
+                  } catch (e) {
+                    alert(e instanceof Error ? e.message : "Xatolik");
+                  }
+                }}
+                className="mt-2 rounded-lg border border-emerald-300 bg-white px-2.5 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-50"
+              >
+                Joriy narxga o'tkazish
+              </button>
+            )}
+          </div>
+        )}
         {data.family_discount > 0 && (
           <div className="flex items-center justify-between px-4 py-3">
             <span className="text-sm text-slate-500">Oilaviy chegirma</span>

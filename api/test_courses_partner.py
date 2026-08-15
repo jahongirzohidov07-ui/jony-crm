@@ -224,6 +224,89 @@ print("\n=== 15. Husayn Jony kursini tahrirlay olmaydi ===")
 r = c.put(f"/api/courses/{JC}", headers=H, json={"lesson_price": 1})
 ck("403", r.status_code, 403)
 
+print("\n=== 16. ESKI NARX HIMOYASI (sentabrdan narx oshadi) ===")
+# Jony guruhiga uch xil o'quvchi: faol, muzlatilgan va keyin qo'shiladigan
+db = SessionLocal()
+gj = db.query(models.Group).get(G1)
+gj.lesson_price = 50000; gj.standard_lessons_per_month = 8
+db.commit()
+old_st = models.Student(full_name="Eski O'quvchi", branch_id=B1,
+                        status="active", group_id=G1)
+frz = models.Student(full_name="Muzlatilgan", branch_id=B1,
+                     status="frozen", group_id=G1)
+db.add_all([old_st, frz]); db.commit()
+OLD_ID, FRZ_ID = old_st.id, frz.id
+db.close()
+
+r = c.post(f"/api/courses/{JC}/price-change", headers=F, json={
+    "from_date": roles.local_today().isoformat(),
+    "lesson_price": 70000,
+    "keep_old_for_active": True,
+    "note": "Sentabrdan narx oshdi"})
+ck("qo'llandi", r.json()["applied_now"], True)
+# 12-bandda ham qulflangan edi (o'sha o'zgarishda ham himoya yoqilgan),
+# shuning uchun bu safar YANGI qo'shilgan faol o'quvchi qulflanadi
+ck("eski o'quvchilar qulflandi", r.json()["locked_students"] >= 1, True)
+
+db = SessionLocal()
+ck("FAOL o'quvchida eski narx qulflandi",
+   db.query(models.Student).get(OLD_ID).locked_lesson_price, 50000)
+ck("MUZLATILGANDA qulf yo'q",
+   db.query(models.Student).get(FRZ_ID).locked_lesson_price, None)
+ck("guruh narxi yangi", db.query(models.Group).get(G1).lesson_price, 70000)
+db.close()
+
+print("\n=== 17. Hisob-kitob har kimga o'z narxida ===")
+import billing as _B                                # noqa: E402
+db = SessionLocal()
+g = db.query(models.Group).get(G1)
+ck("eski o'quvchiga 50 000",
+   _B.student_lesson_price(db.query(models.Student).get(OLD_ID), g), 50000)
+# Yangi kelgan o'quvchi
+new_st = models.Student(full_name="Yangi O'quvchi", branch_id=B1,
+                        status="active", group_id=G1)
+db.add(new_st); db.commit(); NEW_ID = new_st.id
+ck("yangi kelganga 70 000",
+   _B.student_lesson_price(new_st, g), 70000)
+db.close()
+
+print("\n=== 18. Muzlatib qaytgan YANGI narxda ===")
+db = SessionLocal()
+st = db.query(models.Student).get(OLD_ID)
+st.status = "frozen"        # avgustda muzlatdi
+db.commit()
+ck("muzlatilganda qulf O'ZI ochildi", st.locked_lesson_price, None)
+st.status = "active"        # qaytib keldi
+db.commit()
+ck("qaytgach yangi narx",
+   _B.student_lesson_price(st, db.query(models.Group).get(G1)), 70000)
+db.close()
+
+print("\n=== 19. Qulfni qo'lda ochish/qo'yish ===")
+r = c.post(f"/api/students/{NEW_ID}/price-lock", headers=F,
+           json={"price": 55000, "note": "Kelishuv bo'yicha"})
+ck("qulf qo'yildi", r.json()["locked_lesson_price"], 55000)
+r = c.post(f"/api/students/{NEW_ID}/price-lock", headers=F, json={})
+ck("qulf ochildi", r.json()["locked_lesson_price"], None)
+
+print("\n=== 20. Narx kartasida ko'rinadi ===")
+db = SessionLocal()
+st = db.query(models.Student).get(NEW_ID)
+st.locked_lesson_price = 50000
+db.commit(); db.close()
+r = c.get(f"/api/students/{NEW_ID}/pricing", headers=F)
+d = r.json()
+ck("qulflangan narx ko'rsatilgan", d["locked_lesson_price"], 50000)
+ck("oylik eski narxdan hisoblandi", d["base_fee"], 400000)
+ck("joriy narx ham ko'rinadi", d["current_lesson_price"], 70000)
+
+print("\n=== 21. Himoyasiz o'zgartirish — hamma yangi narxda ===")
+r = c.post(f"/api/courses/{JC}/price-change", headers=F, json={
+    "from_date": roles.local_today().isoformat(),
+    "lesson_price": 80000, "keep_old_for_active": False})
+ck("qo'llandi", r.json()["applied_now"], True)
+ck("hech kim qulflanmadi", r.json()["locked_students"], 0)
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

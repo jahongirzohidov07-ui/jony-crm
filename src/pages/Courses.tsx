@@ -147,6 +147,11 @@ export default function Courses() {
                   ? `${c.groups} ta guruh: ${(c.group_names || []).join(", ")}`
                   : "Hali guruh biriktirilmagan"}
               </p>
+              {!!c.locked_students && (
+                <p className="mt-1 text-xs text-emerald-700">
+                  {c.locked_students} ta o'quvchi eski narxda o'qiydi
+                </p>
+              )}
 
               {c.next_change && (
                 <p className="mt-2 flex items-start gap-1.5 rounded-lg bg-amber-50 px-2 py-1.5 text-[11px] leading-snug text-amber-800">
@@ -154,6 +159,9 @@ export default function Courses() {
                   <span>
                     {formatDate(c.next_change.from_date)} dan —{" "}
                     <b>{formatSom(c.next_change.lesson_price)}</b>
+                    {c.next_change.keep_old_for_active
+                      ? " · hozirgilar eski narxda qoladi"
+                      : " · hammaga yangi narx"}
                     {c.next_change.note ? ` · ${c.next_change.note}` : ""}
                   </span>
                 </p>
@@ -414,6 +422,9 @@ function PriceModal({
     String(course.lessons_per_month ?? 12)
   );
   const [note, setNote] = useState("");
+  // ESKI NARX HIMOYASI (2026-08-15, Jahongir: "o'qib turganlar uchun
+  // sentabrdan narx eski narxda qoladi faqat yangilar uchun")
+  const [keepOld, setKeepOld] = useState(true);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState("");
   const [msg, setMsg] = useState("");
@@ -431,6 +442,7 @@ function PriceModal({
           lesson_price: Number(price),
           lessons_per_month: Number(perMonth) || null,
           note: note || null,
+          keep_old_for_active: keepOld,
         }
       );
       setMsg(r.message);
@@ -490,6 +502,26 @@ function PriceModal({
                 onChange={(e) => setPerMonth(e.target.value)}
               />
             </div>
+          </div>
+          <div className="rounded-lg border border-slate-200 p-3">
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={keepOld}
+                onChange={(e) => setKeepOld(e.target.checked)}
+                className="mt-0.5"
+              />
+              <span>
+                <span className="text-sm font-medium text-slate-800">
+                  Hozirgi o'quvchilarga eski narx qolsin
+                </span>
+                <span className="block text-xs text-slate-500 leading-snug">
+                  Narx oshgan kuni FAOL bo'lgan o'quvchilar eski narxda
+                  o'qiyveradi. Yangi kelganlar va muzlatib qaytganlar
+                  yangi narxda bo'ladi.
+                </span>
+              </span>
+            </label>
           </div>
           <input
             className={inp}

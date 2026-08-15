@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
@@ -20,11 +20,6 @@ export default function Login() {
   // Ko'z belgisi: bosilsa parol ochiq ko'rinadi (telefonda xato yozmaslik uchun)
   const [showPw, setShowPw] = useState(false);
   const [recovery, setRecovery] = useState(false);
-  // Parolni saqlash: token brauzerda qoladi va login maydoni oldindan
-  // to'ldiriladi. Umumiy kompyuterda belgilanmaydi.
-  const [remember, setRemember] = useState(
-    () => localStorage.getItem("jony_remember") === "1"
-  );
   const navigate = useNavigate();
 
   async function onSubmit(e: FormEvent) {
@@ -75,9 +70,7 @@ export default function Login() {
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              name="username"
-              autoComplete="username"
-              autoFocus={!username}
+              autoFocus
               required
             />
           </div>
@@ -91,9 +84,6 @@ export default function Login() {
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                name="password"
-                autoComplete="current-password"
-                autoFocus={!!username}
                 required
               />
               <button
@@ -120,22 +110,9 @@ export default function Login() {
             </span>
           </label>
 
-          <label className="flex items-center gap-2 text-sm text-slate-600
-                            select-none cursor-pointer">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-              className="w-4 h-4 rounded border-slate-300 accent-brand-600"
-            />
-            Parolni saqlash
-          </label>
-
           {error && (
-            <p className="text-sm text-red-700 bg-red-50 border border-red-200
-                          rounded-lg px-3 py-2 flex items-start gap-2">
-              <AlertCircle size={15} className="mt-0.5 shrink-0" />
-              <span>{error}</span>
+            <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
+              {error}
             </p>
           )}
 
@@ -162,9 +139,7 @@ export default function Login() {
 /** Asoschi parolni unutsa: profilda oldindan o'rnatgan tiklash kodi
  *  bilan yangi parol qo'yadi. Kod bo'lmasa — bu yo'l yopiq. */
 function RecoverForm({ onBack }: { onBack: () => void }) {
-  const [username, setUsername] = useState(
-    () => localStorage.getItem("jony_login") || ""
-  );
+  const [username, setUsername] = useState("");
   const [code, setCode] = useState("");
   const [next, setNext] = useState("");
   const [err, setErr] = useState("");

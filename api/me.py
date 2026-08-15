@@ -455,6 +455,15 @@ def _reward_out(r: models.Reward, balance: int = None) -> dict:
         # O'quvchiga: yetadimi va yetmasa qancha kam
         "affordable": (balance is not None and balance >= r.cost),
         "need_more": (max(0, r.cost - balance) if balance is not None else None),
+        # COINGA CHEGIRMA (2026-08-15): sovg'adan farqli - qo'lga
+        # berilmaydi, to'g'ridan-to'g'ri to'lovga tushadi.
+        "kind": getattr(r, "kind", "gift") or "gift",
+        "discount_percent": getattr(r, "discount_percent", None),
+        "discount_amount": getattr(r, "discount_amount", None),
+        # Bugun sotib olinsa QAYSI OYGA tegishli bo'ladi
+        "period": (roles.shop_discount_period()
+                   if (getattr(r, "kind", "gift") or "gift") == "discount"
+                   else None),
     }
 
 @router.get("/api/me/coins")
@@ -556,6 +565,72 @@ def request_reward(
             f"Coin yetarli emas. Sizda {available} coin bor, "
             f"\"{r.name}\" uchun {r.cost} coin kerak — "
             f"yana {r.cost - available} coin yig'ish kerak.")
+
+    # ---------------------------------------------------------------
+    #  COINGA CHEGIRMA (2026-08-15, Jahongir: "Jony Shopda coiniga
+    #  skidka sotib olsa avtomat balansida shu narsa ozgarsin va
+    #  15-kungacha sotib olsa shu oy uchun 15-kundan keyin sotib olsa
+    #  keyingi oyga ishlasin").
+    #
+    #  Sovg'adan farqi: buni QO'LGA BERISH kerak emas, shuning uchun
+    #  ODAM ARALASHMAYDI - coin darrov yechiladi va chegirma o'z
+    #  oyiga yoziladi.
+    # ---------------------------------------------------------------
+    if (getattr(r, "kind", "gift") or "gift") == "discount":
+        period = roles.shop_discount_period()
+        y, m = int(period[:4]), int(period[5:7])
+        first = date(y, m, 1)
+        last = date(y + (m == 12), (m % 12) + 1, 1) - timedelta(days=1)
+
+        red = models.RewardRedemption(
+            student_id=s.id, reward_id=r.id, coins=r.cost,
+            status="given", requested_by_student=1,
+            given_by="Jony Shop (avtomat)", given_at=datetime.utcnow(),
+            note=f"{period} oyiga chegirma", created_by=user.full_name)
+        db.add(red)
+        db.add(models.CoinEntry(
+            student_id=s.id, amount=-abs(r.cost), source="reward",
+            note=f"Jony Shop: {r.name} ({period} oyiga chegirma)",
+            created_by="Jony Shop"))
+        d = models.Discount(
+            student_id=s.id, kind="coin_shop",
+            percent=r.discount_percent, amount=r.discount_amount,
+            reason=f"Jony Shop: {r.name} ({r.cost} coin)",
+            start_date=first, end_date=last, status="active",
+            period=period, requested_by=user.full_name,
+            approved_by="Jony Shop (avtomat)",
+            approved_at=datetime.utcnow())
+        db.add(d)
+        if r.stock is not None:
+            r.stock = max(0, (r.stock or 0) - 1)
+        db.commit()
+        db.refresh(d)
+        # Shu oyning hisobi allaqachon bo'lsa - balans DARROV o'zgaradi
+        applied = 0
+        try:
+            applied = _apply_shop_discounts(db, period)
+        except Exception:
+            db.rollback()
+        summa = _shop_discount_sum(db, s, d)
+        when = ("shu oy" if period == roles.local_today().strftime("%Y-%m")
+                else "keyingi oy")
+        return {
+            "id": red.id,
+            "status": "given",
+            "kind": "discount",
+            "period": period,
+            "amount": summa,
+            "applied": bool(applied),
+            "message": (
+                f"Tabriklaymiz! \"{r.name}\" olindi. "
+                + (f"{int(summa):,} so'm".replace(",", " ")
+                   if summa else "Chegirma")
+                + f" {when} ({period}) to'loviga hisoblanadi."
+                + ("" if applied else
+                   " Shu oy hisobi chiqishi bilan balansingizda "
+                   "ko'rinadi.")),
+            "available": available - r.cost,
+        }
 
     red = models.RewardRedemption(
         student_id=s.id, reward_id=r.id, coins=r.cost,

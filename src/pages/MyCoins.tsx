@@ -88,10 +88,25 @@ export default function MyCoins() {
   const pending = d.orders.filter((o) => o.status === "requested");
 
   async function buy(r: RewardItem) {
+    // CHEGIRMA (2026-08-15): sovg'adan farqli — markazdan olib ketish
+    // shart emas, to'g'ridan-to'g'ri to'lovga tushadi. Shuning uchun
+    // savol ham boshqacha va qaysi OYGA tushishi aytiladi.
+    const isDisc = r.kind === "discount";
+    const what = isDisc
+      ? r.discount_percent
+        ? `${r.discount_percent}% chegirma`
+        : r.discount_amount
+          ? `${Math.round(r.discount_amount).toLocaleString("ru-RU")} so'm chegirma`
+          : "chegirma"
+      : "";
     if (
       !confirm(
-        `"${r.name}" — ${r.cost} coin.\n\nSo'ralgach coin band qilinadi, ` +
-          `sovg'ani markazdan olib ketasiz. Rozimisiz?`
+        isDisc
+          ? `"${r.name}" — ${r.cost} coin.\n\n${what} ${
+              r.period ? `(${r.period} oyi to'loviga)` : ""
+            } hisobingizga tushadi. Coin darrov yechiladi.\n\nRozimisiz?`
+          : `"${r.name}" — ${r.cost} coin.\n\nSo'ralgach coin band qilinadi, ` +
+              `sovg'ani markazdan olib ketasiz. Rozimisiz?`
       )
     )
       return;
@@ -248,6 +263,12 @@ export default function MyCoins() {
                   <p className="text-sm font-medium text-slate-900 mb-1 flex-1">
                     {r.name}
                   </p>
+                  {r.kind === "discount" && (
+                    <p className="text-[11px] text-emerald-700 bg-emerald-50 rounded px-1.5 py-1 mb-2 leading-snug">
+                      To'lovga chegirma
+                      {r.period ? ` · ${r.period} oyiga` : ""}
+                    </p>
+                  )}
 
                   <div className="flex items-center gap-1.5 mb-3">
                     <Coins size={14} className="text-amber-500" />
@@ -261,7 +282,8 @@ export default function MyCoins() {
                       onClick={() => buy(r)}
                       className="w-full py-2 rounded-lg bg-brand-600 text-white text-xs font-medium hover:bg-brand-700 flex items-center justify-center gap-1.5"
                     >
-                      <Gift size={13} /> Olish
+                      <Gift size={13} />{" "}
+                      {r.kind === "discount" ? "Chegirmani olish" : "Olish"}
                     </button>
                   ) : (
                     <div className="w-full py-2 rounded-lg bg-slate-50 text-center">

@@ -290,6 +290,47 @@ def add_manual_coins(
     db.refresh(entry)
     return entry
 
+@router.put("/api/students/{student_id}/coins")
+def set_coin_balance(
+    student_id: int,
+    payload: schemas.CoinSetIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """COIN BALANSINI TO'G'RILASH — FAQAT ASOSCHI (2026-08-15,
+    Jahongir: "faqatgina asoschida coinlarni tahrirlaydigan funksiya
+    qoshib ber coin oldida bitta qalamcha bilan yetadi").
+
+    Eski yozuvlar O'CHIRILMAYDI. Balans yozuvlar yig'indisidan
+    chiqadi, shuning uchun to'g'rilash FARQ yozuvi bo'lib qo'shiladi:
+    tarix ham buzilmaydi, "kim va nima uchun o'zgartirdi" ham
+    ko'rinib turadi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    want = int(payload.balance)
+    if want < 0:
+        raise HTTPException(400, "Coin manfiy bo'lishi mumkin emas")
+    now = _student_coin_balance(db, student_id)
+    diff = want - now
+    if diff == 0:
+        return {"ok": True, "balance": now, "changed": 0,
+                "message": "Balans allaqachon shunday"}
+    reason = (payload.note or "").strip()
+    entry = models.CoinEntry(
+        student_id=student_id, amount=diff, source="admin_fix",
+        note=(f"Asoschi to'g'riladi: {now} -> {want}"
+              + (f". Sabab: {reason}" if reason else "")),
+        created_by=user.full_name)
+    db.add(entry)
+    db.commit()
+    audit.log(db, user, entity="student", action="coin_fix",
+              entity_id=s.id, entity_label=s.full_name,
+              field="coin", old_value=now, new_value=want,
+              note=reason or None, branch_id=s.branch_id, commit=True)
+    return {"ok": True, "balance": want, "changed": diff}
+
+
 @router.get("/api/students", response_model=List[schemas.StudentOut])
 def list_students(
     q: Optional[str] = None,

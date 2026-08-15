@@ -57,6 +57,13 @@ def _ensure_new_columns():
         # Nomzod qaysi lavozimga va qaysi fandan (2026-08-15)
         "ALTER TABLE candidates ADD COLUMN position VARCHAR",
         "ALTER TABLE candidates ADD COLUMN subject VARCHAR",
+        # Coinga chegirma sotib olish (2026-08-15)
+        "ALTER TABLE rewards ADD COLUMN kind VARCHAR DEFAULT 'gift'",
+        "ALTER TABLE rewards ADD COLUMN discount_percent FLOAT",
+        "ALTER TABLE rewards ADD COLUMN discount_amount FLOAT",
+        "ALTER TABLE discounts ADD COLUMN period VARCHAR",
+        "ALTER TABLE discounts ADD COLUMN applied_at TIMESTAMP",
+        "UPDATE rewards SET kind = 'gift' WHERE kind IS NULL",
         # Ariza savollari qo'lda kiritishda ham (2026-08-15)
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
@@ -441,7 +448,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15c"
+SCHEMA_STAMP = "stamp_2026_08_15d"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
@@ -4403,7 +4410,84 @@ def _ensure_month_charges(db: Session, budget_s: float = 8.0):
             except Exception:
                 pass
 
+    # Do'kondan olingan chegirmalar shu oy hisobiga tushsin (2026-08-15)
+    try:
+        _apply_shop_discounts(db, period)
+    except Exception:
+        db.rollback()
+
     _purge_old_logs(db, today)
+
+
+# =====================================================================
+#  JONY SHOP — COINGA CHEGIRMA (2026-08-15)
+#  Jahongir: "oquvchilar o'z profilidan kirib Jony Shopda coiniga
+#  skidka sotib olsa avtomat balansida shu narsa ozgarsin va
+#  15-kungacha sotib olsa shu oy uchun 15-kundan keyin sotib olsa
+#  keyingi oyga ishlasin".
+#
+#  QANDAY ISHLAYDI. Sotib olinganda Discount yozuvi ochiladi
+#  (kind="coin_shop", period="YYYY-MM"). Chegirma pulga aylanishi
+#  uchun O'SHA OYNING hisobi (charge) bo'lishi kerak:
+#    - hisob allaqachon bor bo'lsa - balansga DARROV tushadi;
+#    - hali bo'lmasa (keyingi oy) - hisob paydo bo'lgach kunlik
+#      ish uni o'zi tushiradi.
+#  Ikki marta tushmasligi applied_at belgisi bilan kafolatlanadi.
+# =====================================================================
+def _shop_discount_sum(db: Session, s, d) -> float:
+    """Chegirma qancha so'm. Foiz bo'lsa - o'sha oydagi guruh
+    narxidan hisoblanadi."""
+    if d.amount:
+        return float(d.amount)
+    pct = float(d.percent or 0)
+    if pct <= 0:
+        return 0.0
+    fee = 0.0
+    try:
+        if s.group is not None:
+            fee = float(s.group.monthly_fee or 0)
+            if not fee:
+                fee = float((s.group.lesson_price or 0)
+                            * (s.group.standard_lessons_per_month or 12))
+    except Exception:
+        fee = 0.0
+    return round(fee * pct / 100.0, 0)
+
+
+def _apply_shop_discounts(db: Session, period: str = None) -> int:
+    """Balansga tushirilmagan do'kon chegirmalarini tushiradi.
+    Faqat o'sha oyning hisobi mavjud o'quvchilarga."""
+    q = (db.query(models.Discount)
+         .filter(models.Discount.kind == "coin_shop",
+                 models.Discount.status == "active",
+                 models.Discount.applied_at.is_(None)))
+    if period:
+        q = q.filter(models.Discount.period == period)
+    made = 0
+    for d in q.all():
+        if not d.period:
+            continue
+        s = db.query(models.Student).get(d.student_id)
+        if s is None:
+            continue
+        charge = (db.query(models.Payment)
+                  .filter(models.Payment.student_id == d.student_id,
+                          models.Payment.period == d.period,
+                          models.Payment.kind == "charge").first())
+        if charge is None:
+            continue            # hisob hali yo'q - keyingi safar
+        amount = _shop_discount_sum(db, s, d)
+        if amount <= 0:
+            continue
+        db.add(models.Payment(
+            student_id=d.student_id, amount=abs(amount), kind="discount",
+            period=d.period, created_by="Jony Shop (coin)",
+            note=f"{d.period} - Jony Shop chegirmasi ({d.reason})"))
+        d.applied_at = datetime.utcnow()
+        made += 1
+    if made:
+        db.commit()
+    return made
 
 
 def _purge_old_logs(db: Session, today=None):
@@ -4808,6 +4892,8 @@ __all__ = [
     "_examiner_month",
     "_expenses_total",
     "_expire_discounts",
+    "_apply_shop_discounts",
+    "_shop_discount_sum",
     "_family_discount_percent",
     "_recharge_after_move",
     "_norm_surname",

@@ -311,12 +311,25 @@ function RewardForm({
   const [branchId, setBranchId] = useState(
     initial?.branch_id ? String(initial.branch_id) : ""
   );
+  // COINGA CHEGIRMA (2026-08-15, Jahongir: "Jony Shopda coiniga
+  // skidka sotib olsa avtomat balansida shu narsa ozgarsin")
+  const [kind, setKind] = useState(initial?.kind || "gift");
+  const [dPct, setDPct] = useState(
+    initial?.discount_percent ? String(initial.discount_percent) : ""
+  );
+  const [dSom, setDSom] = useState(
+    initial?.discount_amount ? String(Math.round(initial.discount_amount)) : ""
+  );
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   async function save() {
     if (!name.trim() || !Number(cost)) {
       setError("Nom va coin narxini kiriting");
+      return;
+    }
+    if (kind === "discount" && !Number(dPct) && !Number(dSom)) {
+      setError("Chegirma uchun foiz yoki so'm miqdorini kiriting");
       return;
     }
     setSaving(true);
@@ -328,6 +341,10 @@ function RewardForm({
         value_som: valueSom ? Number(valueSom) : null,
         stock: stock === "" ? null : Number(stock),
         branch_id: branchId ? Number(branchId) : null,
+        kind,
+        discount_percent:
+          kind === "discount" && dPct ? Number(dPct) : null,
+        discount_amount: kind === "discount" && dSom ? Number(dSom) : null,
       };
       if (editing) await api.put(`/rewards/${initial!.id}`, body);
       else await api.post("/rewards", body);
@@ -353,6 +370,60 @@ function RewardForm({
         </div>
 
         <div className="space-y-3">
+          {/* TURI (2026-08-15): oddiy sovg'a yoki to'lovga chegirma */}
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Turi
+            </label>
+            <select
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={kind}
+              onChange={(e) => setKind(e.target.value)}
+            >
+              <option value="gift">Sovg'a — qo'lga beriladi</option>
+              <option value="discount">
+                Chegirma — o'quv to'loviga tushadi
+              </option>
+            </select>
+            {kind === "discount" && (
+              <p className="text-[11px] text-slate-400 mt-1 leading-snug">
+                O'quvchi sotib olsa coin darrov yechiladi va chegirma
+                balansiga o'zi tushadi. Oyning 15-kunigacha olsa shu
+                oyga, keyin olsa keyingi oyga hisoblanadi.
+              </p>
+            )}
+          </div>
+          {kind === "discount" && (
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-slate-500 mb-1">
+                  Foizda (%)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  value={dPct}
+                  onChange={(e) => setDPct(e.target.value)}
+                  placeholder="masalan 10"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-500 mb-1">
+                  Yoki so'mda
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  value={dSom}
+                  onChange={(e) => setDSom(e.target.value)}
+                  placeholder="masalan 50000"
+                />
+              </div>
+            </div>
+          )}
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Nomi

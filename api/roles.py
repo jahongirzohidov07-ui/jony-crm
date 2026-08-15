@@ -1064,12 +1064,27 @@ DISCOUNT_TYPES = [
     ("promo", "Aksiya", "Vaqtinchalik marketing aksiyasi"),
     ("social", "Ijtimoiy yordam", "Oilaviy og'ir sharoit"),
     ("individual", "Individual ruxsat", "Asoschi shaxsan ruxsat bergan"),
+    ("coin_shop", "Jony Shop (coinga)",
+     "O'quvchi o'z coinига do'kondan sotib olgan"),
 ]
 DISCOUNT_TYPE_LABELS = {k: lbl for k, lbl, _ in DISCOUNT_TYPES}
 DISCOUNT_TYPE_HINTS = {k: h for k, _, h in DISCOUNT_TYPES}
 
 # Qaysi chegirmani tizim o'zi boshqaradi - qo'lda tegilmaydi.
-AUTO_DISCOUNT_TYPES = ["family"]
+AUTO_DISCOUNT_TYPES = ["family", "coin_shop"]
+
+# DO'KON CHEGIRMASI QOIDASI (2026-08-15, Jahongir: "15-kungacha sotib
+# olsa shu oy uchun 15-kundan keyin sotib olsa keyingi oyga ishlasin").
+SHOP_DISCOUNT_CUTOFF_DAY = 15
+
+
+def shop_discount_period(on=None) -> str:
+    """Sotib olingan chegirma QAYSI OYGA tegishli ("YYYY-MM")."""
+    d = on or local_today()
+    if d.day <= SHOP_DISCOUNT_CUTOFF_DAY:
+        return f"{d.year:04d}-{d.month:02d}"
+    y, m = (d.year + 1, 1) if d.month == 12 else (d.year, d.month + 1)
+    return f"{y:04d}-{m:02d}"
 
 # Chegirmani kim tasdiqlay oladi. Administrator so'rov yubora oladi,
 # lekin tasdiqlash asoschi va filial rahbarida.

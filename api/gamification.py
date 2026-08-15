@@ -105,10 +105,22 @@ def create_reward(
 ):
     if payload.cost <= 0:
         raise HTTPException(400, "Coin narxi 0 dan katta bo'lishi kerak")
+    kind = (payload.kind or "gift").strip() or "gift"
+    if kind not in ("gift", "discount"):
+        raise HTTPException(400, "Turi noto'g'ri (gift yoki discount)")
+    if kind == "discount" and not (payload.discount_percent
+                                   or payload.discount_amount):
+        raise HTTPException(
+            400, "Chegirma uchun foiz yoki so'm miqdorini kiriting")
     r = models.Reward(
         name=payload.name.strip(), cost=payload.cost,
         value_som=payload.value_som, stock=payload.stock,
         active=1 if payload.active else 0,
+        kind=kind,
+        discount_percent=(payload.discount_percent
+                          if kind == "discount" else None),
+        discount_amount=(payload.discount_amount
+                         if kind == "discount" else None),
         branch_id=payload.branch_id if payload.branch_id is not None
         else user.branch_id,
     )
@@ -134,6 +146,12 @@ def update_reward(
         data["active"] = 1 if data["active"] else 0
     for k, v in data.items():
         setattr(r, k, v)
+    if (r.kind or "gift") != "discount":
+        r.discount_percent = None
+        r.discount_amount = None
+    elif not (r.discount_percent or r.discount_amount):
+        raise HTTPException(
+            400, "Chegirma uchun foiz yoki so'm miqdorini kiriting")
     db.commit()
     db.refresh(r)
     return r

@@ -679,6 +679,10 @@ export interface Reward {
   active: boolean;
   branch_id?: number | null;
   branch?: Branch | null;
+  /** "gift" — sovg'a, "discount" — o'quv to'loviga chegirma. */
+  kind?: string | null;
+  discount_percent?: number | null;
+  discount_amount?: number | null;
 }
 
 export interface Redemption {
@@ -3023,6 +3027,12 @@ export interface RewardItem {
   active: boolean;
   affordable: boolean;
   need_more?: number | null;
+  /** "gift" — qo'lga beriladigan sovg'a, "discount" — to'lovga chegirma. */
+  kind?: string | null;
+  discount_percent?: number | null;
+  discount_amount?: number | null;
+  /** Chegirma bugun olinsa qaysi oyga tegishli ("YYYY-MM"). */
+  period?: string | null;
 }
 
 export interface CoinHistoryRow {

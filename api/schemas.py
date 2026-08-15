@@ -752,6 +752,11 @@ class RewardCreate(BaseModel):
     stock: Optional[int] = None
     active: Optional[bool] = True
     branch_id: Optional[int] = None
+    # Coinga CHEGIRMA (2026-08-15): kind="discount" bo'lsa sovg'a
+    # emas, o'quv to'loviga chegirma sotiladi.
+    kind: Optional[str] = "gift"
+    discount_percent: Optional[float] = None
+    discount_amount: Optional[float] = None
 
 
 class RewardUpdate(BaseModel):
@@ -761,6 +766,9 @@ class RewardUpdate(BaseModel):
     stock: Optional[int] = None
     active: Optional[bool] = None
     branch_id: Optional[int] = None
+    kind: Optional[str] = None
+    discount_percent: Optional[float] = None
+    discount_amount: Optional[float] = None
 
 
 class RewardOut(BaseModel):
@@ -773,6 +781,9 @@ class RewardOut(BaseModel):
     active: bool = True
     branch_id: Optional[int] = None
     branch: Optional[BranchOut] = None
+    kind: Optional[str] = "gift"
+    discount_percent: Optional[float] = None
+    discount_amount: Optional[float] = None
 
 
 class RedeemRequest(BaseModel):
@@ -877,6 +888,12 @@ class VacancyUpdate(BaseModel):
     salary_from: Optional[float] = None
     salary_to: Optional[float] = None
     description: Optional[str] = None
+
+
+class CoinSetIn(BaseModel):
+    """Coin balansini to'g'ri songa keltirish (faqat asoschi)."""
+    balance: int
+    note: Optional[str] = None
 
 
 class CandidateCreate(BaseModel):

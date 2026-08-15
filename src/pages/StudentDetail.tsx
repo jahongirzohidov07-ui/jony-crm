@@ -148,6 +148,47 @@ function ProfileCard({
           <Coins size={14} />
           <span className="font-semibold">{coins}</span>
           <span className="text-xs opacity-70">coin</span>
+          {/* COIN TAHRIRLASH — FAQAT ASOSCHI (2026-08-15, Jahongir:
+              "faqatgina asoschida coinlarni tahrirlaydigan funksiya
+              qoshib ber coin oldida bitta qalamcha bilan yetadi").
+              Eski yozuvlar o'chmaydi: farq tuzatish yozuvi bo'lib
+              qo'shiladi, tarix va sabab saqlanadi. */}
+          {user?.role === FOUNDER && (
+            <button
+              onClick={async () => {
+                const v = prompt(
+                  `${student.full_name} — coin balansi.\n` +
+                    "To'g'ri sonni yozing:",
+                  String(coins)
+                );
+                if (v === null) return;
+                const want = Number(v);
+                if (!Number.isFinite(want) || want < 0) {
+                  alert("Butun musbat son kiriting");
+                  return;
+                }
+                if (want === coins) return;
+                const why = prompt(
+                  "Nima uchun o'zgartirilyapti? (tarixda qoladi)",
+                  ""
+                );
+                if (why === null) return;
+                try {
+                  await api.put(`/students/${student.id}/coins`, {
+                    balance: want,
+                    note: why.trim(),
+                  });
+                  onChanged();
+                } catch (e) {
+                  alert(e instanceof Error ? e.message : "Xatolik");
+                }
+              }}
+              title="Coin balansini to'g'rilash (faqat asoschi)"
+              className="ml-0.5 p-0.5 rounded hover:bg-amber-100"
+            >
+              <Pencil size={12} />
+            </button>
+          )}
         </div>
         <div
           className={`rounded-lg px-3 py-1.5 text-xs font-medium flex items-center ${

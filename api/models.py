@@ -689,6 +689,16 @@ class Reward(Base):
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    # COINGA CHEGIRMA (2026-08-15, Jahongir: "oquvchilar o'z profilidan
+    # kirib Jony Shopda coiniga skidka sotib olsa avtomat balansida shu
+    # narsa ozgarsin").
+    #   kind="gift"     — oddiy sovg'a, qo'lga beriladi (odatiy);
+    #   kind="discount" — o'quv to'loviga chegirma, ODAM ARALASHMAYDI:
+    #                     coin yechiladi va balans o'zi to'g'rilanadi.
+    kind = Column(String, default="gift", index=True)
+    discount_percent = Column(Float, nullable=True)   # oylikdan foiz
+    discount_amount = Column(Float, nullable=True)    # yoki qat'iy so'm
+
     branch = relationship("Branch")
 
 
@@ -1177,6 +1187,11 @@ class Discount(Base):
     # yashirin chegirma o'quvchi/ota-ona portalida KO'RSATILMAYDI,
     # faqat xodimlarga ko'rinadi.
     hidden = Column(Integer, default=0)
+    # DO'KON CHEGIRMASI (2026-08-15): qaysi OYGA tegishli va balansga
+    # allaqachon tushirilganmi. 15-kungacha sotib olinsa shu oy,
+    # keyin — keyingi oy (period = "YYYY-MM").
+    period = Column(String, nullable=True, index=True)
+    applied_at = Column(DateTime, nullable=True)
 
     # Referral: qaysi do'sti olib keldi
     referrer_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)

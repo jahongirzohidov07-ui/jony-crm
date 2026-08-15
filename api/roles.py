@@ -4772,6 +4772,23 @@ JUNIOR_PATH = [
 # o'zgarish auditga yoziladi.
 PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER]
 
+# TO'LOVNI TUZATISH SO'ROVI (2026-08-15, Jahongir: "sotuv manager
+# tolovni notogri urvordi ... sorov yuborsa filial rahbari yoki
+# moliyachiga borsa yoki asoschiga tasdiqlavorsa ozgarsin").
+#   - so'rovni KIM yubora oladi: kassaga tegadigan hamma xodim;
+#   - kim TASDIQLAY oladi: tahrirlash huquqi borlar (o'zgarishni
+#     ular baribir qo'lda ham qila olardi).
+PAYMENT_FIX_REQUEST = list(dict.fromkeys(CASH_ACCESS + PAYMENT_EDIT))
+PAYMENT_FIX_APPROVE = list(PAYMENT_EDIT)
+
+PAYMENT_FIX_KINDS = [
+    ("amount", "Summani to'g'rilash"),
+    ("method", "To'lov usulini to'g'rilash"),
+    ("note", "Izohni to'g'rilash"),
+    ("delete", "Yozuvni bekor qilish"),
+]
+PAYMENT_FIX_KIND_LABELS = dict(PAYMENT_FIX_KINDS)
+
 # ---------------------------------------------------------------------------
 #  XAVFSIZLIK SIYOSATI
 # ---------------------------------------------------------------------------

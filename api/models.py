@@ -3139,6 +3139,52 @@ class DeletedPayment(Base):
     restored_by = Column(String, nullable=True)
 
 
+class PaymentFixRequest(Base):
+    """TO'LOVNI TUZATISH SO'ROVI (2026-08-15).
+
+    Jahongir: "masalan sotuv manager tolovni notogri urvordi, shuni
+    ozgartirish qilib sorov yuborsa filial rahbari yoki moliyachiga
+    borsa yoki asoschiga tasdiqlavorsa ozgarsin, chunki shunaqa holat
+    boldi u menga aloqaga chiqadi men uni topaman ozgartiraman vaqt
+    ketadi".
+
+    Ilgari to'lovni faqat asoschi/moliya direktori/filial rahbari
+    tahrirlay olardi. Sotuv menejeri xato kiritsa — telefon qilib,
+    odam qidirib, vaqt ketardi. Endi u SO'ROV yuboradi: so'rov uchala
+    tasdiqlovchiga vazifa bo'lib tushadi va kim birinchi bo'lib
+    tasdiqlasa — o'zgarish o'zi qo'llanadi.
+
+    Nima o'zgarishi mumkin: summa, to'lov usuli, izoh yoki butunlay
+    o'chirish (o'chirilsa arxivga tushadi, yo'qolmaydi)."""
+    __tablename__ = "payment_fix_requests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, index=True)
+    payment_id = Column(Integer, ForeignKey("payments.id"),
+                        nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+
+    # amount | method | note | delete
+    kind = Column(String, nullable=False, default="amount")
+    old_amount = Column(Float, nullable=True)
+    new_amount = Column(Float, nullable=True)
+    old_method = Column(String, nullable=True)
+    new_method = Column(String, nullable=True)
+    new_note = Column(String, nullable=True)
+    reason = Column(Text, nullable=False)
+
+    status = Column(String, nullable=False, default="pending", index=True)
+    requested_by = Column(String, nullable=True)
+    requested_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    decided_by = Column(String, nullable=True)
+    decided_at = Column(DateTime, nullable=True)
+    decision_note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    student = relationship("Student")
+
+
 class ErrorLog(Base):
     """Kutilmagan server xatolari. Foydalanuvchi aytishini kutmasdan
     asoschi o'zi ko'rib turadi (Audit -> Tizim xatolari)."""

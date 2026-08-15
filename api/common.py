@@ -386,6 +386,7 @@ PUBLIC_ID_PREFIX = {
     "lead": "LID",
     "group": "GRP",
     "payment": "PAY",
+    "payment_fix": "TUZ",
     "contract": "SHT",
     "task": "TSK",
     "content": "CNT",
@@ -448,7 +449,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15d"
+SCHEMA_STAMP = "stamp_2026_08_15e"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

@@ -2281,6 +2281,19 @@ class PaymentEditIn(BaseModel):
     expected_updated_at: Optional[str] = None  # parallel tahrir himoyasi
 
 
+class PaymentFixIn(BaseModel):
+    """To'lovni tuzatish so'rovi (2026-08-15)."""
+    kind: str = "amount"              # amount | method | note | delete
+    amount: Optional[float] = None    # yangi summa (musbat son)
+    method: Optional[str] = None      # yangi to'lov usuli
+    note: Optional[str] = None        # yangi izoh
+    reason: str                       # nima uchun — MAJBURIY
+
+
+class PaymentFixDecision(BaseModel):
+    note: Optional[str] = None
+
+
 class ExerciseIn(BaseModel):
     """Mashq natijasi: jami savol va to'g'ri javoblar soni."""
     total: int

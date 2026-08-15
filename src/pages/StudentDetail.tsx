@@ -521,6 +521,62 @@ function PaymentsTab({
   const canCash = can(user?.role, CASH_ACCESS);
   // Summani tahrirlash — faqat asoschi, moliyachi, filial rahbari
   const canEditAmount = can(user?.role, PAYMENT_EDIT);
+  // TUZATISH SO'ROVI (2026-08-15, Jahongir: "sotuv manager tolovni
+  // notogri urvordi ... sorov yuborsa filial rahbari yoki moliyachiga
+  // borsa yoki asoschiga tasdiqlavorsa ozgarsin"). Tahrirlash huquqi
+  // bo'lmagan xodim endi kutib o'tirmaydi — so'rov yuboradi.
+  const canAskFix = !canEditAmount && can(user?.role, CASH_ACCESS);
+
+  async function askFix(p: { id: number; amount: number; kind?: string }) {
+    const kind = prompt(
+      "Nimani tuzatish kerak?\n" +
+        "1 — Summani\n2 — To'lov usulini\n3 — Izohni\n" +
+        "4 — Yozuvni butunlay bekor qilish\n\nRaqamini yozing:",
+      "1"
+    );
+    if (kind === null) return;
+    const map: Record<string, string> = {
+      "1": "amount", "2": "method", "3": "note", "4": "delete",
+    };
+    const k = map[kind.trim()];
+    if (!k) return alert("1, 2, 3 yoki 4 raqamini yozing");
+
+    const body: Record<string, unknown> = { kind: k };
+    if (k === "amount") {
+      const v = prompt("To'g'ri summa (so'm):", String(Math.abs(p.amount)));
+      if (v === null) return;
+      if (!Number(v) || Number(v) <= 0) return alert("Summani to'g'ri yozing");
+      body.amount = Number(v);
+    } else if (k === "method") {
+      const v = prompt(
+        "To'g'ri to'lov usuli: " +
+          PAYMENT_METHODS.map((m) => m.key).join(" / "),
+        "cash"
+      );
+      if (v === null) return;
+      body.method = v.trim();
+    } else if (k === "note") {
+      const v = prompt("To'g'ri izoh:", "");
+      if (v === null) return;
+      body.note = v;
+    }
+    const why = prompt(
+      "Nima uchun tuzatish kerak? (rahbar shu asosida qaror qiladi)",
+      ""
+    );
+    if (why === null) return;
+    if (why.trim().length < 3) return alert("Sababini yozing");
+    body.reason = why.trim();
+    try {
+      const r = await api.post<{ message: string }>(
+        `/payments/${p.id}/fix-request`,
+        body
+      );
+      alert(r.message);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
   const isFounder = user?.role === FOUNDER;
   // Refund: sotuv so'raydi, rahbar/moliyachi tasdiqlaydi
   const canAskRefund = can(user?.role, REFUND_REQUEST);
@@ -1016,6 +1072,15 @@ function PaymentsTab({
                           }}
                           className="text-slate-300 hover:text-brand-600"
                           title="Summani tahrirlash"
+                        >
+                          <Pencil size={13} />
+                        </button>
+                      )}
+                      {canAskFix && (
+                        <button
+                          onClick={() => askFix(p)}
+                          className="text-slate-300 hover:text-amber-600"
+                          title="Xato kiritilgan bo'lsa — tuzatish so'rovi yuborish"
                         >
                           <Pencil size={13} />
                         </button>

@@ -38,7 +38,7 @@ import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup" | "trash";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup" | "trash" | "fixes";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar,
@@ -80,6 +80,10 @@ const PAYROLL_TAB: { key: Tab; label: string } = {
 // O'chirilgan to'lovlar arxivi (2026-08-15) - hech narsa yo'qolmaydi
 const TRASH_TAB: { key: Tab; label: string } = {
   key: "trash", label: "O'chirilganlar",
+};
+// To'lovni tuzatish so'rovlari (2026-08-15)
+const FIX_TAB: { key: Tab; label: string } = {
+  key: "fixes", label: "Tuzatish so'rovlari",
 };
 // Eski tizimdan tarix ko'chirish — bir martalik ish, moliya bo'limida.
 
@@ -1282,6 +1286,7 @@ export default function Moliya() {
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
     ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
     ...(full ? [TRASH_TAB] : []),
+    ...(can(user?.role, CASH_ACCESS) ? [FIX_TAB] : []),
   ];
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish.
   // Dashboard kartasidan kelganda ?tab= orqali kerakli bo'lim ochiladi.
@@ -1352,6 +1357,7 @@ export default function Moliya() {
         {tab === "paid" && <MonthPaymentsTab />}
         {tab === "payroll" && <PayrollTab />}
         {tab === "trash" && <DeletedPaymentsTab />}
+        {tab === "fixes" && <PaymentFixesTab />}
       </div>
     </div>
   );
@@ -1853,6 +1859,182 @@ function DeletedPaymentsTab() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// ------------------------------ To'lovni tuzatish so'rovlari ----
+// 2026-08-15, Jahongir: "sotuv manager tolovni notogri urvordi, shuni
+// ozgartirish qilib sorov yuborsa filial rahbari yoki moliyachiga
+// borsa yoki asoschiga tasdiqlavorsa ozgarsin, chunki shunaqa holat
+// boldi u menga aloqaga chiqadi men uni topaman ozgartiraman vaqt
+// ketadi".
+interface FixRow {
+  id: number;
+  public_id?: string | null;
+  payment_id: number;
+  payment_exists: boolean;
+  student_id?: number | null;
+  student?: string | null;
+  kind: string;
+  kind_label: string;
+  what: string;
+  reason: string;
+  status: string;
+  requested_by?: string | null;
+  created_at?: string | null;
+  decided_by?: string | null;
+  decided_at?: string | null;
+  decision_note?: string | null;
+  can_approve: boolean;
+}
+
+function PaymentFixesTab() {
+  const [rows, setRows] = useState<FixRow[] | null>(null);
+  const [status, setStatus] = useState("pending");
+  const [busy, setBusy] = useState<number | null>(null);
+
+  const load = () => {
+    api
+      .fresh<FixRow[]>(`/payments/fix-requests?status=${status}`)
+      .then(setRows)
+      .catch(() => setRows([]));
+  };
+  useEffect(load, [status]);
+
+  async function decide(r: FixRow, ok: boolean) {
+    if (ok) {
+      if (!confirm(`${r.what}\n\nTasdiqlansinmi? O'zgarish darrov qo'llanadi.`))
+        return;
+    }
+    const note = ok ? null : prompt("Rad etish sababi (ixtiyoriy):", "");
+    if (!ok && note === null) return;
+    setBusy(r.id);
+    try {
+      await api.post(
+        `/payments/fix-requests/${r.id}/${ok ? "approve" : "reject"}`,
+        { note }
+      );
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  if (rows === null)
+    return <p className="p-8 text-sm text-slate-400">Yuklanmoqda…</p>;
+
+  return (
+    <div className="p-8">
+      <h2 className="text-base font-semibold text-slate-900">
+        To'lovni tuzatish so'rovlari
+      </h2>
+      <p className="mt-1 text-sm text-slate-500">
+        Xato kiritilgan to'lovni tahrirlash huquqi yo'q xodim shu yerga
+        so'rov yuboradi. Tasdiqlansa o'zgarish darrov qo'llanadi —
+        kimnidir qidirib, telefon qilib o'tirish shart emas.
+      </p>
+
+      <div className="mt-4 flex items-center gap-2">
+        {[
+          ["pending", "Kutilmoqda"],
+          ["approved", "Tasdiqlangan"],
+          ["rejected", "Rad etilgan"],
+          ["all", "Hammasi"],
+        ].map(([k, lbl]) => (
+          <button
+            key={k}
+            onClick={() => setStatus(k)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border ${
+              status === k
+                ? "bg-brand-50 border-brand-400 text-brand-700"
+                : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+            }`}
+          >
+            {lbl}
+          </button>
+        ))}
+      </div>
+
+      {rows.length === 0 ? (
+        <p className="mt-6 text-sm text-slate-400">So'rov yo'q.</p>
+      ) : (
+        <div className="mt-4 space-y-2">
+          {rows.map((r) => (
+            <div
+              key={r.id}
+              className="rounded-xl border border-slate-200 bg-white p-4"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-slate-900">
+                    {r.student_id ? (
+                      <Link
+                        to={`/students/${r.student_id}`}
+                        className="text-brand-700 hover:underline"
+                      >
+                        {r.student || "O'quvchi"}
+                      </Link>
+                    ) : (
+                      r.student || "—"
+                    )}
+                    <span className="ml-2 text-slate-500 font-normal">
+                      {r.what}
+                    </span>
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Sabab: {r.reason}
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-400">
+                    So'ragan: {r.requested_by || "—"}
+                    {r.created_at ? ` · ${formatDateTime(r.created_at)}` : ""}
+                    {!r.payment_exists && (
+                      <span className="text-amber-600">
+                        {" "}
+                        · yozuv topilmadi
+                      </span>
+                    )}
+                  </p>
+                  {r.status !== "pending" && (
+                    <p className="mt-1 text-xs text-slate-500">
+                      {r.status === "approved" ? "Tasdiqladi" : "Rad etdi"}:{" "}
+                      {r.decided_by || "—"}
+                      {r.decided_at ? ` · ${formatDateTime(r.decided_at)}` : ""}
+                      {r.decision_note ? ` · ${r.decision_note}` : ""}
+                    </p>
+                  )}
+                </div>
+                {r.status === "pending" && r.can_approve && (
+                  <div className="flex gap-2 shrink-0">
+                    <button
+                      onClick={() => decide(r, true)}
+                      disabled={busy === r.id}
+                      className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+                    >
+                      Tasdiqlash
+                    </button>
+                    <button
+                      onClick={() => decide(r, false)}
+                      disabled={busy === r.id}
+                      className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+                    >
+                      Rad etish
+                    </button>
+                  </div>
+                )}
+                {r.status === "pending" && !r.can_approve && (
+                  <span className="text-xs text-amber-600 shrink-0">
+                    tasdiq kutilmoqda
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

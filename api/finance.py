@@ -430,6 +430,305 @@ def delete_payment(
     return {"ok": True, "archived": True}
 
 
+# =====================================================================
+#  TO'LOVNI TUZATISH SO'ROVI (2026-08-15)
+#  Jahongir: "sotuv manager tolovni notogri urvordi, shuni ozgartirish
+#  qilib sorov yuborsa filial rahbari yoki moliyachiga borsa yoki
+#  asoschiga tasdiqlavorsa ozgarsin, chunki shunaqa holat boldi u
+#  menga aloqaga chiqadi men uni topaman ozgartiraman vaqt ketadi".
+# =====================================================================
+def _fix_label(r) -> str:
+    k = roles.PAYMENT_FIX_KIND_LABELS.get(r.kind, r.kind)
+    if r.kind == "amount":
+        return (f"{k}: {abs(r.old_amount or 0):,.0f} -> "
+                f"{abs(r.new_amount or 0):,.0f} so'm").replace(",", " ")
+    if r.kind == "method":
+        return (f"{k}: {roles.PAYMENT_METHOD_LABELS.get(r.old_method or '', '—')}"
+                f" -> {roles.PAYMENT_METHOD_LABELS.get(r.new_method or '', '—')}")
+    if r.kind == "note":
+        return f"{k}: \"{(r.new_note or '')[:60]}\""
+    return k
+
+
+def _notify_fix_approvers(db: Session, r, st) -> None:
+    """So'rov jimgina yotib qolmasin — HAR BIR tasdiqlovchiga
+    alohida vazifa. Filial rahbariga faqat O'Z filialidagisi."""
+    title = f"To'lovni tuzatish so'rovi #{r.id}"
+    body = (f"{_fix_label(r)}\n"
+            f"O'quvchi: {st.full_name if st else '—'}\n"
+            f"Sabab: {r.reason}\n"
+            f"So'ragan: {r.requested_by or '—'}\n"
+            "Tasdiqlash: Moliya -> \"Tuzatish so'rovlari\" bo'limida.")
+    seen = set()
+    for role_key in roles.PAYMENT_FIX_APPROVE:
+        q = db.query(models.User).filter(models.User.role == role_key,
+                                         models.User.is_active == 1)
+        if role_key == roles.BRANCH_MANAGER and r.branch_id:
+            q = q.filter(models.User.branch_id == r.branch_id)
+        for u in q.all():
+            if u.id in seen or u.id == r.requested_by_id:
+                continue
+            seen.add(u.id)
+            t = models.Task(
+                title=title, description=body, assignee_id=u.id,
+                branch_id=r.branch_id,
+                deadline=date.today() + timedelta(days=1),
+                priority="high", source="manual", created_by="Tizim")
+            db.add(t)
+            db.flush()
+            _ensure_public_id(db, "task", t)
+    db.commit()
+
+
+@router.post("/api/payments/{payment_id}/fix-request")
+def request_payment_fix(
+    payment_id: int,
+    payload: schemas.PaymentFixIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PAYMENT_FIX_REQUEST)),
+):
+    """Xato kiritilgan to'lovni tuzatish uchun SO'ROV yuborish.
+
+    Tahrirlash huquqi bor xodim (asoschi, moliya direktori, filial
+    rahbari) so'rov yubormaydi — u to'g'ridan-to'g'ri tahrirlaydi."""
+    p = db.query(models.Payment).get(payment_id)
+    if not p:
+        raise HTTPException(404, "Yozuv topilmadi")
+    st = db.query(models.Student).get(p.student_id)
+    if st and not _in_user_branches(db, user, st.branch_id):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    if payload.kind not in roles.PAYMENT_FIX_KIND_LABELS:
+        raise HTTPException(400, "Tuzatish turi noto'g'ri")
+    reason = (payload.reason or "").strip()
+    if len(reason) < 3:
+        raise HTTPException(
+            400, "Sababini yozing — tasdiqlovchi shu asosida qaror qiladi")
+
+    open_one = (db.query(models.PaymentFixRequest)
+                .filter(models.PaymentFixRequest.payment_id == payment_id,
+                        models.PaymentFixRequest.status == "pending")
+                .first())
+    if open_one:
+        raise HTTPException(
+            400, "Bu yozuv bo'yicha tasdiq kutayotgan so'rov bor")
+
+    r = models.PaymentFixRequest(
+        payment_id=p.id, student_id=p.student_id,
+        branch_id=st.branch_id if st else None,
+        kind=payload.kind, reason=reason,
+        old_amount=p.amount, old_method=p.method,
+        requested_by=user.full_name, requested_by_id=user.id)
+    if payload.kind == "amount":
+        if not payload.amount or payload.amount <= 0:
+            raise HTTPException(400, "Yangi summani musbat son bilan yozing")
+        sign = -1 if (p.amount or 0) < 0 or p.kind == "charge" else 1
+        r.new_amount = sign * abs(round(payload.amount, 0))
+    elif payload.kind == "method":
+        if payload.method not in roles.PAYMENT_METHODS:
+            raise HTTPException(400, "To'lov usuli noto'g'ri")
+        if p.kind != "payment":
+            raise HTTPException(
+                400, "To'lov usuli faqat haqiqiy pul kirimida bo'ladi")
+        r.new_method = payload.method
+    elif payload.kind == "note":
+        if not (payload.note or "").strip():
+            raise HTTPException(400, "Yangi izohni yozing")
+        r.new_note = payload.note.strip()[:400]
+
+    db.add(r); db.commit(); db.refresh(r)
+    _ensure_public_id(db, "payment_fix", r)
+    try:
+        _notify_fix_approvers(db, r, st)
+    except Exception:
+        db.rollback()
+    audit.log(db, user, entity="payment", action="fix_request",
+              entity_id=p.id, entity_label=st.full_name if st else None,
+              note=f"{_fix_label(r)} · {reason}",
+              branch_id=r.branch_id, commit=True)
+    return {"ok": True, "id": r.id,
+            "message": ("So'rov yuborildi. Filial rahbari, moliya "
+                        "direktori va asoschiga vazifa bo'lib tushdi — "
+                        "tasdiqlangach o'zgarish o'zi qo'llanadi.")}
+
+
+@router.get("/api/payments/fix-requests")
+def list_payment_fixes(
+    status: str = "pending",
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PAYMENT_FIX_REQUEST)),
+):
+    """Tuzatish so'rovlari. Filial rahbari faqat o'z filialini
+    ko'radi; so'rov yuborgan xodim o'zinikini ko'radi."""
+    q = db.query(models.PaymentFixRequest)
+    if status and status != "all":
+        q = q.filter(models.PaymentFixRequest.status == status)
+    can_approve = user.role in tuple(roles.PAYMENT_FIX_APPROVE)
+    if not can_approve:
+        q = q.filter(models.PaymentFixRequest.requested_by_id == user.id)
+    elif user.role != roles.FOUNDER:
+        mine = _user_branch_ids(db, user)
+        if mine:
+            q = q.filter(or_(
+                models.PaymentFixRequest.branch_id.in_(mine),
+                models.PaymentFixRequest.branch_id.is_(None)))
+    rows = q.order_by(models.PaymentFixRequest.id.desc()).limit(200).all()
+    out = []
+    for r in rows:
+        st = db.query(models.Student).get(r.student_id) \
+            if r.student_id else None
+        p = db.query(models.Payment).get(r.payment_id)
+        out.append({
+            "id": r.id, "public_id": r.public_id,
+            "payment_id": r.payment_id,
+            "payment_exists": p is not None,
+            "student_id": r.student_id,
+            "student": st.full_name if st else None,
+            "branch_id": r.branch_id,
+            "kind": r.kind,
+            "kind_label": roles.PAYMENT_FIX_KIND_LABELS.get(r.kind, r.kind),
+            "what": _fix_label(r),
+            "old_amount": r.old_amount, "new_amount": r.new_amount,
+            "old_method": r.old_method, "new_method": r.new_method,
+            "new_note": r.new_note,
+            "reason": r.reason,
+            "status": r.status,
+            "requested_by": r.requested_by,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+            "decided_by": r.decided_by,
+            "decided_at": r.decided_at.isoformat() if r.decided_at else None,
+            "decision_note": r.decision_note,
+            "can_approve": can_approve,
+        })
+    return out
+
+
+@router.post("/api/payments/fix-requests/{rid}/approve")
+def approve_payment_fix(
+    rid: int,
+    payload: schemas.PaymentFixDecision = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PAYMENT_FIX_APPROVE)),
+):
+    """Tasdiqlash — o'zgarish SHU YERDA qo'llanadi. Kim birinchi
+    tasdiqlasa, o'sha bajaradi."""
+    r = db.query(models.PaymentFixRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
+    st = db.query(models.Student).get(r.student_id) if r.student_id else None
+    if (user.role == roles.BRANCH_MANAGER
+            and not _in_user_branches(db, user, r.branch_id, null_ok=True)):
+        raise HTTPException(403, "Bu so'rov boshqa filialga tegishli")
+    p = db.query(models.Payment).get(r.payment_id)
+    if not p:
+        r.status = "rejected"
+        r.decided_by = user.full_name
+        r.decided_at = datetime.utcnow()
+        r.decision_note = "Yozuv topilmadi (o'chirilgan bo'lishi mumkin)"
+        db.commit()
+        raise HTTPException(400, "To'lov yozuvi topilmadi")
+
+    old_amount, old_method, old_note = p.amount, p.method, p.note
+    if r.kind == "amount":
+        p.amount = r.new_amount
+        p.updated_at = datetime.utcnow()
+    elif r.kind == "method":
+        p.method = r.new_method
+        p.updated_at = datetime.utcnow()
+    elif r.kind == "note":
+        p.note = r.new_note
+        p.updated_at = datetime.utcnow()
+    elif r.kind == "delete":
+        # O'chirish emas — ARXIVGA ko'chirish (hech narsa yo'qolmaydi)
+        db.add(models.DeletedPayment(
+            payment_id=p.id, public_id=p.public_id,
+            student_id=p.student_id,
+            student_name=st.full_name if st else None,
+            branch_id=r.branch_id, amount=p.amount, kind=p.kind,
+            method=p.method, note=p.note, period=p.period,
+            created_by=p.created_by, created_at=p.created_at,
+            entered_at=getattr(p, "entered_at", None),
+            client_key=getattr(p, "client_key", None),
+            deleted_by=f"{user.full_name} (so'rov #{r.id})",
+            reason=r.reason))
+        if p.period and p.kind == "charge":
+            db.add(models.ChargeSkip(
+                student_id=p.student_id, period=p.period,
+                created_by=user.full_name))
+        db.delete(p)
+
+    r.status = "approved"
+    r.decided_by = user.full_name
+    r.decided_at = datetime.utcnow()
+    r.decision_note = (payload.note if payload else None)
+    db.commit()
+
+    audit.log(db, user, entity="payment", action="fix_approve",
+              entity_id=r.payment_id,
+              entity_label=st.full_name if st else None,
+              field=r.kind,
+              old_value=(old_amount if r.kind == "amount"
+                         else old_method if r.kind == "method"
+                         else old_note),
+              new_value=(r.new_amount if r.kind == "amount"
+                         else r.new_method if r.kind == "method"
+                         else r.new_note if r.kind == "note" else "bekor"),
+              note=f"So'rov #{r.id}: {r.reason} · so'ragan "
+                   f"{r.requested_by}",
+              branch_id=r.branch_id, commit=True)
+    # So'ragan xodimga xabar
+    try:
+        if r.requested_by_id:
+            t = models.Task(
+                title=f"To'lov tuzatildi: {st.full_name if st else ''}",
+                description=(f"{_fix_label(r)}\n"
+                             f"Tasdiqladi: {user.full_name}"),
+                assignee_id=r.requested_by_id, branch_id=r.branch_id,
+                deadline=date.today(), priority="normal",
+                source="manual", created_by="Tizim")
+            db.add(t); db.flush(); _ensure_public_id(db, "task", t)
+            db.commit()
+    except Exception:
+        db.rollback()
+    return {"ok": True, "applied": r.kind}
+
+
+@router.post("/api/payments/fix-requests/{rid}/reject")
+def reject_payment_fix(
+    rid: int,
+    payload: schemas.PaymentFixDecision = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.PAYMENT_FIX_APPROVE)),
+):
+    r = db.query(models.PaymentFixRequest).get(rid)
+    if not r:
+        raise HTTPException(404, "So'rov topilmadi")
+    if r.status != "pending":
+        raise HTTPException(400, "Bu so'rov allaqachon ko'rib chiqilgan")
+    r.status = "rejected"
+    r.decided_by = user.full_name
+    r.decided_at = datetime.utcnow()
+    r.decision_note = (payload.note if payload else None)
+    db.commit()
+    try:
+        if r.requested_by_id:
+            t = models.Task(
+                title=f"To'lov tuzatish so'rovi rad etildi #{r.id}",
+                description=(f"{_fix_label(r)}\n"
+                             f"Rad etdi: {user.full_name}"
+                             + (f"\nIzoh: {r.decision_note}"
+                                if r.decision_note else "")),
+                assignee_id=r.requested_by_id, branch_id=r.branch_id,
+                deadline=date.today(), priority="normal",
+                source="manual", created_by="Tizim")
+            db.add(t); db.flush(); _ensure_public_id(db, "task", t)
+            db.commit()
+    except Exception:
+        db.rollback()
+    return {"ok": True}
+
+
 @router.get("/api/payments/deleted")
 def list_deleted_payments(
     limit: int = 200,

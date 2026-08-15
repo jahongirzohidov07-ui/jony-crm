@@ -135,7 +135,7 @@ from hr_ats import backfill_candidate_positions   # noqa: E402
 import common                                     # noqa: E402
 db = SessionLocal()
 db.query(models.SeedMark).filter(
-    models.SeedMark.key == "cand_position_v1").delete()
+    models.SeedMark.key == "cand_answers_v1").delete()
 db.commit()
 common._SEED_KEYS = None
 n = backfill_candidate_positions(db)
@@ -167,6 +167,87 @@ def _c(conn, cur, st, p, ctx, many):
 cnt[0] = 0
 c.get("/api/candidates", headers=F)
 ck("15 tadan kam so'rov", cnt[0] < 15, True)
+
+print("\n=== 10. QO'LDA kiritishda ariza savollari saqlanadi ===")
+r = c.post("/api/candidates", headers=F, json={
+    "full_name": "Qo'lda Nomzod",
+    "phone": "+998901119999",
+    "position": "teacher",
+    "subject": "Rus tili",
+    "experience_years": 3.5,
+    "address": "Bekobod, Navoiy 12",
+    "birth_date": "2000-05-14",
+    "education": "TDPU, ingliz tili",
+    "marital": "married",
+    "socials": "@nomzod",
+    "workplaces": "Maktab 5 — 2 yil",
+    "work_duration": "2 yildan ko'p (uzoq muddat)",
+    "note": "Tanish tavsiya qildi",
+    "branch_id": B1,
+})
+ck("qo'shildi", r.status_code, 200)
+MID = r.json()["id"]
+r = c.get(f"/api/candidates/{MID}", headers=F)
+d = r.json()
+ck("manzil saqlandi", d["address"], "Bekobod, Navoiy 12")
+ck("tug'ilgan sana", d["birth_date_text"], "2000-05-14")
+ck("ma'lumoti", d["education"], "TDPU, ingliz tili")
+ck("oilaviy holati", d["marital_label"], "Oilali")
+ck("ijtimoiy tarmoq", d["socials"], "@nomzod")
+ck("qancha ishlamoqchi", d["work_duration"],
+   "2 yildan ko'p (uzoq muddat)")
+ck("ish joylari", d["workplaces"], "Maktab 5 — 2 yil")
+ck("tajriba", d["experience_years"], 3.5)
+ck("fan", d["subject"], "Rus tili")
+
+print("\n=== 11. Izoh ONLAYN ARIZADAGIDEK yig'iladi ===")
+note = d["note"] or ""
+for need in ("LAVOZIM: Ustoz", "Yashash manzili: Bekobod",
+             "Oilaviy holati: Oilali",
+             "Qaysi fandan dars beradi: Rus tili"):
+    ck(f"izohda '{need[:22]}…'", need in note, True)
+ck("kim kiritgani yozilgan", "qo'lda kiritildi" in note, True)
+ck("erkin izoh ham saqlandi", "Tanish tavsiya qildi" in note, True)
+
+print("\n=== 12. Onlayn ariza ham AYNI maydonlarni to'ldiradi ===")
+r = c.post("/api/apply", json={
+    "full_name": "Onlayn Nomzod Test",
+    "phone": "+998901118888",
+    "position": "sales",
+    "address": "Yangiyer",
+    "birth_date": "1999-01-02",
+    "education": "Maktab 3",
+    "marital": "single",
+    "socials": "@onlayn",
+    "work_duration": "1-2 yil",
+    "workplaces": "Do'kon — 1 yil",
+    "photo": "data:image/png;base64," + "A" * 200,
+})
+ck("ariza qabul qilindi", r.status_code, 200)
+r = c.get("/api/candidates?q=Onlayn Nomzod", headers=F)
+OID = r.json()[0]["id"]
+d2 = c.get(f"/api/candidates/{OID}", headers=F).json()
+ck("manzil", d2["address"], "Yangiyer")
+ck("ma'lumoti", d2["education"], "Maktab 3")
+ck("oilaviy holati", d2["marital_label"], "Turmush qurmagan")
+ck("ijtimoiy tarmoq", d2["socials"], "@onlayn")
+ck("ikkala yo'l bir xil maydonlarni to'ldiradi",
+   sorted(k for k in ("address", "education", "marital", "socials",
+                      "work_duration") if d2.get(k)),
+   ["address", "education", "marital", "socials", "work_duration"])
+
+print("\n=== 13. Eski nomzodning javoblari izohdan ko'chdi ===")
+db = SessionLocal()
+db.query(models.SeedMark).filter(
+    models.SeedMark.key.in_(["cand_position_v1",
+                             "cand_answers_v1"])).delete(
+    synchronize_session=False)
+db.commit()
+common._SEED_KEYS = None
+backfill_candidate_positions(db)
+row = db.query(models.Candidate).get(OLD_ID)
+ck("manzil izohdan olindi", row.address, "Bekobod")
+db.close()
 
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))

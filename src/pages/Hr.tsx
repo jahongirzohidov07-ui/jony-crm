@@ -17,6 +17,7 @@ import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
 import { HR_ACCESS, can, ALL_ROLES, roleLabel } from "../lib/roles";
 import {
   CANDIDATE_STAGES, CANDIDATE_SOURCES, APPLY_POSITIONS,
+  APPLY_MARITAL, APPLY_WORK_DURATIONS,
   VACANCY_STATUSES, stageLabel, stageColor, candidateSourceLabel,
   vacancyStatusLabel,
 } from "../lib/hr";
@@ -248,13 +249,26 @@ function FunnelTab() {
 }
 
 // --------------------------------------------------------- Nomzodlar
+/**
+ * Yangi nomzod formasi — jonyos.uz/apply dagi savollar bilan BIR XIL
+ * (2026-08-15, Jahongir: "yangi nomzod qo'lda ochsam biz link jo'natib
+ * so'rovnomadagi savollar chiqmas ekan, qo'lda kiritsa ham shu
+ * savollar chiqishi kerak").
+ */
 const emptyCand = {
   full_name: "",
   phone: "",
   vacancy_id: "" as string | number,
-  // Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
   position: "",
   subject: "",
+  experience_years: "",
+  address: "",
+  birth_date: "",
+  education: "",
+  marital: "",
+  socials: "",
+  workplaces: "",
+  work_duration: "",
   stage: "applied",
   source: "other",
   branch_id: "" as string | number,
@@ -293,11 +307,12 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   };
   useEffect(load, []);
 
-  const open = (c?: Candidate) => {
+  const open = async (c?: Candidate) => {
     setErr("");
     if (c) {
       setEditing(c);
       setForm({
+        ...emptyCand,
         full_name: c.full_name,
         phone: c.phone ?? "",
         vacancy_id: c.vacancy_id ?? "",
@@ -308,6 +323,32 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
         branch_id: c.branch_id ?? "",
         note: c.note ?? "",
       });
+      setModal(true);
+      // Ariza javoblari kartada to'liq saqlanadi — tahrirlashda ham
+      // shu savollar to'ldirilgan holda chiqsin (2026-08-15).
+      try {
+        const full = await api.fresh<Record<string, unknown>>(
+          `/candidates/${c.id}`
+        );
+        const g = (k: string) => (full[k] as string) ?? "";
+        setForm((p) => ({
+          ...p,
+          address: g("address"),
+          birth_date: g("birth_date_text"),
+          education: g("education"),
+          marital: g("marital"),
+          socials: g("socials"),
+          workplaces: g("workplaces"),
+          work_duration: g("work_duration"),
+          experience_years:
+            full["experience_years"] != null
+              ? String(full["experience_years"])
+              : "",
+        }));
+      } catch {
+        /* karta yuklanmasa ham asosiy maydonlar joyida */
+      }
+      return;
     } else {
       setEditing(null);
       setForm({ ...emptyCand });
@@ -326,14 +367,29 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
       vacancy_id: form.vacancy_id ? Number(form.vacancy_id) : null,
       position: form.position || null,
       subject: form.position === "teacher" ? (form.subject || null) : null,
+      // Ariza savollari (2026-08-15) — havola orqali kelgan nomzod
+      // bilan bir xil ma'lumot yig'iladi
+      address: form.address || null,
+      education: form.education || null,
+      marital: form.marital || null,
+      socials: form.socials || null,
+      workplaces: form.workplaces || null,
+      work_duration: form.work_duration || null,
+      experience_years: form.experience_years
+        ? Number(form.experience_years)
+        : null,
       stage: form.stage,
       source: form.source,
       branch_id: form.branch_id ? Number(form.branch_id) : null,
       note: form.note || null,
     };
+    const bodyWithDate = editing
+      ? { ...body, birth_date_text: form.birth_date || null }
+      : { ...body, birth_date: form.birth_date || null };
     try {
-      if (editing) await api.put(`/candidates/${editing.id}`, body);
-      else await api.post("/candidates", body);
+      if (editing)
+        await api.put(`/candidates/${editing.id}`, bodyWithDate);
+      else await api.post("/candidates", bodyWithDate);
       setModal(false);
       load();
     } catch (e: unknown) {
@@ -675,15 +731,108 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 ))}
               </select>
               {form.position === "teacher" && (
-                <input
-                  value={form.subject}
-                  onChange={(e) =>
-                    setForm({ ...form, subject: e.target.value })
-                  }
-                  placeholder="Qaysi fandan? (Ingliz tili, Matematika…)"
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
-                />
+                <>
+                  <input
+                    value={form.subject}
+                    onChange={(e) =>
+                      setForm({ ...form, subject: e.target.value })
+                    }
+                    placeholder="Qaysi fandan? (Ingliz tili, Matematika…)"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.5"
+                    value={form.experience_years}
+                    onChange={(e) =>
+                      setForm({ ...form, experience_years: e.target.value })
+                    }
+                    placeholder="Qancha vaqt ustoz bo'lib ishlagan? (yil)"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  />
+                </>
               )}
+
+              {/* ARIZA SAVOLLARI — jonyos.uz/apply dagi bilan bir xil
+                  (2026-08-15). Qo'lda kiritilganda ham shu ma'lumot
+                  yig'ilsin, keyin "bilmadik" degan gap bo'lmasin. */}
+              <div className="pt-1 border-t border-slate-100">
+                <p className="text-xs font-medium text-slate-500 pt-2 pb-1">
+                  Ariza savollari
+                  <span className="font-normal text-slate-400">
+                    {" "}
+                    — havola orqali so'raladiganlar bilan bir xil
+                  </span>
+                </p>
+              </div>
+              <input
+                value={form.address}
+                onChange={(e) => setForm({ ...form, address: e.target.value })}
+                placeholder="Yashash manzili"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              />
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  value={form.birth_date}
+                  onChange={(e) =>
+                    setForm({ ...form, birth_date: e.target.value })
+                  }
+                  placeholder="Tug'ilgan sana"
+                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                />
+                <select
+                  value={form.marital}
+                  onChange={(e) =>
+                    setForm({ ...form, marital: e.target.value })
+                  }
+                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                >
+                  <option value="">Oilaviy holati</option>
+                  {APPLY_MARITAL.map((m) => (
+                    <option key={m.key} value={m.key}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <input
+                value={form.education}
+                onChange={(e) =>
+                  setForm({ ...form, education: e.target.value })
+                }
+                placeholder="Ma'lumoti (maktab raqami yoki bitirgan joyi)"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              />
+              <textarea
+                value={form.workplaces}
+                onChange={(e) =>
+                  setForm({ ...form, workplaces: e.target.value })
+                }
+                rows={2}
+                placeholder="Avvalgi ish joylari (lavozim, qancha vaqt)"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              />
+              <input
+                value={form.socials}
+                onChange={(e) => setForm({ ...form, socials: e.target.value })}
+                placeholder="Ijtimoiy tarmoqlar (Instagram, Telegram…)"
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              />
+              <select
+                value={form.work_duration}
+                onChange={(e) =>
+                  setForm({ ...form, work_duration: e.target.value })
+                }
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              >
+                <option value="">Qancha vaqt ishlamoqchi?</option>
+                {APPLY_WORK_DURATIONS.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
+              </select>
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={form.stage}

@@ -890,6 +890,15 @@ class CandidateCreate(BaseModel):
     # Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
     position: Optional[str] = None
     subject: Optional[str] = None
+    # Ariza savollari — qo'lda kiritishda ham so'raladi (2026-08-15)
+    address: Optional[str] = None
+    birth_date: Optional[str] = None
+    education: Optional[str] = None
+    marital: Optional[str] = None
+    socials: Optional[str] = None
+    work_duration: Optional[str] = None
+    workplaces: Optional[str] = None
+    experience_years: Optional[float] = None
 
 
 class CandidateUpdate(BaseModel):
@@ -917,6 +926,12 @@ class CandidateUpdate(BaseModel):
     # Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
     position: Optional[str] = None
     subject: Optional[str] = None
+    address: Optional[str] = None
+    birth_date_text: Optional[str] = None
+    education: Optional[str] = None
+    marital: Optional[str] = None
+    socials: Optional[str] = None
+    work_duration: Optional[str] = None
 
 
 # ---------- Ijtimoiy tarmoq ----------

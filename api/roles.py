@@ -872,6 +872,24 @@ APPLY_POSITIONS = [
 ]
 APPLY_POSITION_LABELS = dict(APPLY_POSITIONS)
 
+# Sertifikat SHART bo'lgan lavozimlar (ochiq arizada tekshiriladi)
+APPLY_CERT_REQUIRED = ("teacher", "examiner", "support")
+
+APPLY_MARITAL = [
+    ("single", "Turmush qurmagan"),
+    ("married", "Oilali"),
+    ("divorced", "Ajrashgan"),
+]
+APPLY_MARITAL_LABELS = dict(APPLY_MARITAL)
+
+# "Qancha vaqt ishlamoqchisiz?" javoblari
+APPLY_WORK_DURATIONS = [
+    "3-6 oy",
+    "6 oy - 1 yil",
+    "1-2 yil",
+    "2 yildan ko'p (uzoq muddat)",
+]
+
 SUBJECTS = [
     ("english", "Ingliz tili"),
     ("russian", "Rus tili"),

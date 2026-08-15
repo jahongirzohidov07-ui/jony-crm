@@ -57,6 +57,13 @@ def _ensure_new_columns():
         # Nomzod qaysi lavozimga va qaysi fandan (2026-08-15)
         "ALTER TABLE candidates ADD COLUMN position VARCHAR",
         "ALTER TABLE candidates ADD COLUMN subject VARCHAR",
+        # Ariza savollari qo'lda kiritishda ham (2026-08-15)
+        "ALTER TABLE candidates ADD COLUMN address VARCHAR",
+        "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
+        "ALTER TABLE candidates ADD COLUMN education VARCHAR",
+        "ALTER TABLE candidates ADD COLUMN marital VARCHAR",
+        "ALTER TABLE candidates ADD COLUMN socials VARCHAR",
+        "ALTER TABLE candidates ADD COLUMN work_duration VARCHAR",
         "ALTER TABLE groups ADD COLUMN public_id VARCHAR",
         "ALTER TABLE payments ADD COLUMN public_id VARCHAR",
         # Dubl to'lovga qarshi idempotentlik kaliti (2026-08-14)
@@ -434,7 +441,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15b"
+SCHEMA_STAMP = "stamp_2026_08_15c"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

@@ -104,6 +104,55 @@ def delete_vacancy(
     db.delete(v); db.commit()
     return {"ok": True}
 
+# =====================================================================
+#  ARIZA JAVOBLARI — BITTA MANBA (2026-08-15)
+#  Jahongir: "qo'lda kiritsa ham shu savollar chiqishi kerak".
+#  Ochiq ariza (jonyos.uz/apply) va HR qo'lda kiritadigan forma
+#  AYNI savollarni so'raydi va AYNI ko'rinishda saqlaydi — shuning
+#  uchun ikkalasi ham shu ikki yordamchidan foydalanadi.
+# =====================================================================
+_APPLY_FIELDS = ("address", "birth_date", "education", "marital",
+                 "socials", "work_duration", "workplaces",
+                 "subject", "experience_years")
+
+
+def _apply_note_lines(get, pos_label: str, is_teacher: bool) -> list:
+    """Nomzod kartasidagi o'qiladigan izoh — ikkala yo'lda bir xil."""
+    lines = [
+        f"LAVOZIM: {pos_label}",
+        f"Yashash manzili: {get('address') or '—'}",
+        f"Tug'ilgan sana: {get('birth_date') or '—'}",
+        f"Ma'lumoti: {get('education') or '—'}",
+        f"Oilaviy holati: "
+        f"{roles.APPLY_MARITAL_LABELS.get(get('marital'), '—')}",
+        f"Ijtimoiy tarmoqlar: {get('socials') or '—'}",
+        f"Qancha vaqt ishlamoqchi: {get('work_duration') or '—'}",
+    ]
+    if is_teacher:
+        lines.append(f"Qaysi fandan dars beradi: {get('subject') or '—'}")
+    return lines
+
+
+def _apply_fill(c, get, position: str) -> None:
+    """Javoblarni nomzodning ALOHIDA maydonlariga yozadi."""
+    c.position = position or None
+    c.subject = (get("subject") or None) if position == "teacher" else None
+    c.address = get("address") or None
+    c.birth_date_text = get("birth_date") or None
+    c.education = get("education") or None
+    c.marital = get("marital") or None
+    c.socials = get("socials") or None
+    c.work_duration = get("work_duration") or None
+    if get("workplaces"):
+        c.workplaces = get("workplaces")
+    try:
+        v = get("experience_years")
+        if v not in (None, ""):
+            c.experience_years = float(v)
+    except Exception:
+        pass
+
+
 def _cand_role(c) -> tuple:
     """Nomzod QAYSI ISHGA kelgan: (asosiy yozuv, fan).
 
@@ -211,13 +260,20 @@ def backfill_candidate_positions(db: Session) -> int:
     alohida maydonlarga ko'chiramiz — shundan keyin filtr ham
     ishlaydi. Idempotent: to'ldirilganiga qayta tegmaydi."""
     from common import _seed_done, _seed_mark
-    if _seed_done(db, "cand_position_v1"):
+    if _seed_done(db, "cand_answers_v1"):
         return 0
     n = 0
     rev = {lbl.lower(): k for k, lbl in roles.APPLY_POSITIONS}
+    mar = {lbl.lower(): k for k, lbl in roles.APPLY_MARITAL}
+    # Izohdagi sarlavha -> nomzod maydoni
+    MAP = {
+        "yashash manzili": "address",
+        "tug'ilgan sana": "birth_date_text",
+        "ma'lumoti": "education",
+        "ijtimoiy tarmoqlar": "socials",
+        "qancha vaqt ishlamoqchi": "work_duration",
+    }
     for c in db.query(models.Candidate).all():
-        if c.position and (c.subject or c.position != "teacher"):
-            continue
         label, subject = _cand_role(c)
         changed = False
         if not c.position and label:
@@ -230,11 +286,28 @@ def backfill_candidate_positions(db: Session) -> int:
         if not c.subject and subject:
             c.subject = subject[:100]
             changed = True
+        for line in (c.note or "").splitlines():
+            if ":" not in line:
+                continue
+            head, val = line.split(":", 1)
+            head = head.strip().lower()
+            val = val.strip()
+            if not val or val == "—":
+                continue
+            field = MAP.get(head)
+            if field and not getattr(c, field, None):
+                setattr(c, field, val[:300])
+                changed = True
+            elif head == "oilaviy holati" and not c.marital:
+                k = mar.get(val.lower())
+                if k:
+                    c.marital = k
+                    changed = True
         if changed:
             n += 1
     if n:
         db.commit()
-    _seed_mark(db, "cand_position_v1")
+    _seed_mark(db, "cand_answers_v1")
     return n
 
 
@@ -291,6 +364,21 @@ def get_candidate(
         "phone": c.phone,
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
+        # Ariza savollari (2026-08-15) — qo'lda kiritilsa ham,
+        # havola orqali kelsa ham bir xil joyda
+        "role_label": _cand_role(c)[0],
+        "position": c.position,
+        "position_label": roles.APPLY_POSITION_LABELS.get(
+            c.position or "", None),
+        "subject": _cand_role(c)[1],
+        "address": c.address,
+        "birth_date_text": c.birth_date_text,
+        "education": c.education,
+        "marital": c.marital,
+        "marital_label": roles.APPLY_MARITAL_LABELS.get(c.marital or "",
+                                                        None),
+        "socials": c.socials,
+        "work_duration": c.work_duration,
         "stage": c.stage,
         "stage_label": dict(roles.CANDIDATE_STAGES).get(c.stage, c.stage)
                        if hasattr(roles, "CANDIDATE_STAGES") else c.stage,
@@ -355,7 +443,30 @@ def create_candidate(
     # filtriga farrosh ham tushib qolardi.
     if data.get("position") and data["position"] != "teacher":
         data["subject"] = None
+    # birth_date -> birth_date_text (matn holida saqlanadi)
+    if data.get("birth_date") is not None:
+        data["birth_date_text"] = data.pop("birth_date")
+    else:
+        data.pop("birth_date", None)
+    free_note = (data.pop("note", None) or "").strip()
+    position = data.get("position") or ""
+
+    # ARIZA IZOHI (2026-08-15, Jahongir: "qo'lda kiritsa ham shu
+    # savollar chiqishi kerak"). Qo'lda kiritilganda ham kartada
+    # AYNI ONLAYN ARIZADAGIDEK o'qiladigan izoh hosil bo'ladi.
     c = models.Candidate(**data, created_by=user.username)
+    if position:
+        pos_label = roles.APPLY_POSITION_LABELS.get(position, position)
+        lines = _apply_note_lines(
+            lambda k: getattr(c, "birth_date_text", None)
+            if k == "birth_date" else getattr(c, k, None),
+            pos_label, position == "teacher")
+        lines.append(f"Manba: qo'lda kiritildi ({user.full_name})")
+        if free_note:
+            lines += ["", free_note]
+        c.note = "\n".join(lines)
+    else:
+        c.note = free_note or None
     _sync_candidate_dates(c)
     db.add(c); db.commit(); db.refresh(c)
     return {"id": c.id}
@@ -1285,11 +1396,7 @@ def offer_action(oid: int, payload: schemas.OfferAction,
 # nomzodlar filtri bir manbadan oziqlansin.
 _APPLY_POSITIONS = dict(roles.APPLY_POSITIONS)
 _APPLY_CERT_REQUIRED = ("teacher", "examiner", "support")
-_APPLY_MARITAL = {
-    "single": "Turmush qurmagan",
-    "married": "Oilali",
-    "divorced": "Ajrashgan",
-}
+_APPLY_MARITAL = dict(roles.APPLY_MARITAL)
 
 
 @router.post("/api/apply")
@@ -1339,18 +1446,8 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
     if position == "other" and other_position:
         pos_label = f"Boshqa: {other_position}"
 
-    note_lines = [
-        f"LAVOZIM: {pos_label}",
-        f"Yashash manzili: {_s('address', 200) or '—'}",
-        f"Tug'ilgan sana: {_s('birth_date', 20) or '—'}",
-        f"Ma'lumoti: {_s('education', 300) or '—'}",
-        f"Oilaviy holati: {_APPLY_MARITAL.get(marital, '—')}",
-        f"Ijtimoiy tarmoqlar: {_s('socials', 300) or '—'}",
-        f"Qancha vaqt ishlamoqchi: {_s('work_duration', 100) or '—'}",
-    ]
-    if position == "teacher":
-        note_lines.append(f"Qaysi fandan dars beradi: "
-                          f"{_s('subject', 100) or '—'}")
+    note_lines = _apply_note_lines(lambda k: _s(k, 300), pos_label,
+                                   position == "teacher")
     note_lines.append("Manba: onlayn ariza (https://jonyos.uz/apply)")
 
     exp_years = None
@@ -1369,13 +1466,10 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
         workplaces=_s("workplaces", 1000) or None,
         experience_years=exp_years,
         created_by="Onlayn ariza",
-        # 2026-08-15: tanlangan lavozim va fan endi ALOHIDA maydonda —
-        # ro'yxatda ko'rinadi va filtr qilinadi (ilgari faqat izoh
-        # matni ichida yotardi).
-        position=position or None,
-        subject=(_s("subject", 100) or None) if position == "teacher"
-        else None,
     )
+    # 2026-08-15: javoblar ALOHIDA maydonlarga ham yoziladi —
+    # ro'yxatda ko'rinadi, filtr qilinadi va keyin tahrirlanadi.
+    _apply_fill(c, lambda k: _s(k, 300), position)
     db.add(c)
     db.commit()
     db.refresh(c)

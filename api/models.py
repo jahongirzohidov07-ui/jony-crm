@@ -834,6 +834,20 @@ class Candidate(Base):
     position = Column(String, nullable=True, index=True)   # roles.APPLY_POSITIONS
     subject = Column(String, nullable=True)                # ustoz uchun fan
 
+    # ARIZA SAVOLLARI (2026-08-15, Jahongir: "yangi nomzod qo'lda
+    # ochsam biz link jo'natib so'rovnomadagi savollar chiqmas ekan,
+    # qo'lda kiritsa ham shu savollar chiqishi kerak").
+    # Ilgari bu javoblar faqat ONLAYN arizada, u ham bo'lsa izoh
+    # matni ichida yig'ilardi. Endi alohida maydonlarda — qo'lda
+    # kiritilsa ham, havola orqali kelsa ham bir xil joyda turadi
+    # va keyin tahrirlash mumkin.
+    address = Column(String, nullable=True)          # yashash manzili
+    birth_date_text = Column(String, nullable=True)  # tug'ilgan sana (matn)
+    education = Column(String, nullable=True)        # ma'lumoti
+    marital = Column(String, nullable=True)          # oilaviy holati
+    socials = Column(String, nullable=True)          # ijtimoiy tarmoqlar
+    work_duration = Column(String, nullable=True)    # qancha ishlamoqchi
+
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

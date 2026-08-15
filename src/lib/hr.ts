@@ -59,6 +59,23 @@ export function applyPositionLabel(key?: string | null): string {
   return APPLY_POSITIONS.find((p) => p.key === key)?.label || key;
 }
 
+/** Sertifikat SHART bo'lgan lavozimlar (ariza formasidagidek). */
+export const CERT_REQUIRED = ["teacher", "support", "examiner"];
+
+export const APPLY_MARITAL = [
+  { key: "single", label: "Turmush qurmagan" },
+  { key: "married", label: "Oilali" },
+  { key: "divorced", label: "Ajrashgan" },
+];
+
+/** "Qancha vaqt ishlamoqchisiz?" javoblari. */
+export const APPLY_WORK_DURATIONS = [
+  "3-6 oy",
+  "6 oy - 1 yil",
+  "1-2 yil",
+  "2 yildan ko'p (uzoq muddat)",
+];
+
 export const VACANCY_STATUSES = [
   { key: "open", label: "Ochiq", color: "emerald" },
   { key: "paused", label: "To'xtatilgan", color: "amber" },

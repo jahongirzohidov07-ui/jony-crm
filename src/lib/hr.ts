@@ -41,6 +41,24 @@ export function candidateSourceLabel(key?: string | null): string {
   return CANDIDATE_SOURCES.find((s) => s.key === key)?.label || key;
 }
 
+/**
+ * NOMZOD LAVOZIMLARI (2026-08-15). Ochiq ariza formasidagi tanlov
+ * bilan bir xil — backend roles.APPLY_POSITIONS bilan mos.
+ */
+export const APPLY_POSITIONS = [
+  { key: "teacher", label: "Ustoz" },
+  { key: "support", label: "Support teacher" },
+  { key: "examiner", label: "Examiner" },
+  { key: "sales", label: "Sotuv menejeri" },
+  { key: "cleaner", label: "Farrosh" },
+  { key: "other", label: "Boshqa" },
+];
+
+export function applyPositionLabel(key?: string | null): string {
+  if (!key) return "";
+  return APPLY_POSITIONS.find((p) => p.key === key)?.label || key;
+}
+
 export const VACANCY_STATUSES = [
   { key: "open", label: "Ochiq", color: "emerald" },
   { key: "paused", label: "To'xtatilgan", color: "amber" },

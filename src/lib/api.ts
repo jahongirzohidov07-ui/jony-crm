@@ -1071,6 +1071,12 @@ export interface Candidate {
   phone?: string | null;
   vacancy_id?: number | null;
   vacancy?: string | null;
+  /** Qaysi ishga kelgan: vakansiya nomi yoki tanlagan lavozimi. */
+  role_label?: string | null;
+  position?: string | null;
+  position_label?: string | null;
+  /** Ustoz bo'lsa — qaysi fandan. */
+  subject?: string | null;
   stage: string;
   source: string;
   branch_id?: number | null;

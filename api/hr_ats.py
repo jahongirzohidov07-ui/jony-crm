@@ -104,22 +104,92 @@ def delete_vacancy(
     db.delete(v); db.commit()
     return {"ok": True}
 
+def _cand_role(c) -> tuple:
+    """Nomzod QAYSI ISHGA kelgan: (asosiy yozuv, fan).
+
+    Uch manba bor va tartib shu (2026-08-15, Jahongir: "BU ROYXATDA
+    QAYSI VAKANSIYANI TANLAGANI KO'RINIB TURSIN"):
+      1) haqiqiy vakansiyaga bog'langan bo'lsa — vakansiya nomi;
+      2) bo'lmasa — o'zi tanlagan lavozim (onlayn arizadan);
+      3) ikkalasi ham bo'lmasa — izoh matnidagi "LAVOZIM: ..." qatori
+         (eski yozuvlar shu ko'rinishda qolgan).
+    Ustoz bo'lsa fan alohida qaytadi — ro'yxatda yonida ko'rinsin.
+    """
+    label = None
+    if getattr(c, "vacancy", None) is not None:
+        label = c.vacancy.title
+    if not label and c.position:
+        label = roles.APPLY_POSITION_LABELS.get(c.position, c.position)
+    subject = c.subject or None
+    if not label or not subject:
+        for line in (c.note or "").splitlines():
+            t = line.strip()
+            if not label and t.upper().startswith("LAVOZIM:"):
+                label = t.split(":", 1)[1].strip() or None
+            if not subject and t.lower().startswith(
+                    "qaysi fandan dars beradi"):
+                v = t.split(":", 1)[1].strip() if ":" in t else ""
+                subject = v if v and v != "—" else None
+    return label, subject
+
+
 @router.get("/api/candidates")
 def list_candidates(
     vacancy_id: int | None = None,
     stage: str | None = None,
+    q: str | None = None,
+    position: str | None = None,
+    subject: str | None = None,
+    source: str | None = None,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.HR_ACCESS)),
 ):
-    q = scope_to_branch(db.query(models.Candidate), models.Candidate, user)
+    """Nomzodlar ro'yxati.
+
+    2026-08-15, Jahongir: "keyin filtr ham qoyib bersan shu yerga
+    nomzodlar kopayganda topish osonlashadi". Qidiruv ism va telefon
+    bo'yicha; qolgan filtrlar birga ishlaydi (VA mantig'i)."""
+    qq = scope_to_branch(db.query(models.Candidate), models.Candidate,
+                         user, branch_id)
     if vacancy_id:
-        q = q.filter(models.Candidate.vacancy_id == vacancy_id)
+        qq = qq.filter(models.Candidate.vacancy_id == vacancy_id)
     if stage:
-        q = q.filter(models.Candidate.stage == stage)
+        qq = qq.filter(models.Candidate.stage == stage)
+    if position:
+        qq = qq.filter(models.Candidate.position == position)
+    if source:
+        qq = qq.filter(models.Candidate.source == source)
+    if subject:
+        qq = qq.filter(models.Candidate.subject.ilike(f"%{subject}%"))
+    if q and len(q.strip()) >= 2:
+        t = q.strip()
+        digits = "".join(ch for ch in t if ch.isdigit())
+        conds = [models.Candidate.full_name.ilike(f"%{t}%")]
+        if len(digits) >= 3:
+            # Telefon bazada "+998 90 123 45 67" ko'rinishida ham
+            # bo'lishi mumkin - belgilarni olib tashlab solishtiramiz
+            clean = models.Candidate.phone
+            for ch in (" ", "+", "-", "(", ")"):
+                clean = func.replace(clean, ch, "")
+            conds.append(clean.ilike(f"%{digits}%"))
+        else:
+            conds.append(models.Candidate.phone.ilike(f"%{t}%"))
+        qq = qq.filter(or_(*conds))
+    from sqlalchemy.orm import selectinload as _sel
+    qq = qq.options(_sel(models.Candidate.vacancy),
+                    _sel(models.Candidate.branch))
+    rows = qq.order_by(models.Candidate.created_at.desc()).all()
     return [{
         "id": c.id, "full_name": c.full_name, "phone": c.phone,
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
+        # QAYSI ISHGA kelgani va (ustoz bo'lsa) QAYSI FANDAN
+        "role_label": _cand_role(c)[0],
+        "position": c.position,
+        "position_label": roles.APPLY_POSITION_LABELS.get(
+            c.position or "", None),
+        "subject": _cand_role(c)[1],
         "stage": c.stage, "source": c.source,
         "branch_id": c.branch_id,
         "branch": c.branch.name if c.branch else None,
@@ -132,7 +202,66 @@ def list_candidates(
         "expected_salary": c.expected_salary,
         "language_level": c.language_level,
         "experience_years": c.experience_years,
-    } for c in q.order_by(models.Candidate.created_at.desc()).all()]
+    } for c in rows]
+
+
+def backfill_candidate_positions(db: Session) -> int:
+    """ESKI NOMZODLAR (2026-08-15). Onlayn ariza orqali kelganlarning
+    lavozimi va fani faqat IZOH matnida yotardi. Bir marta o'qib,
+    alohida maydonlarga ko'chiramiz — shundan keyin filtr ham
+    ishlaydi. Idempotent: to'ldirilganiga qayta tegmaydi."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, "cand_position_v1"):
+        return 0
+    n = 0
+    rev = {lbl.lower(): k for k, lbl in roles.APPLY_POSITIONS}
+    for c in db.query(models.Candidate).all():
+        if c.position and (c.subject or c.position != "teacher"):
+            continue
+        label, subject = _cand_role(c)
+        changed = False
+        if not c.position and label:
+            key = rev.get(label.strip().lower())
+            if key is None and label.lower().startswith("boshqa"):
+                key = "other"
+            if key:
+                c.position = key
+                changed = True
+        if not c.subject and subject:
+            c.subject = subject[:100]
+            changed = True
+        if changed:
+            n += 1
+    if n:
+        db.commit()
+    _seed_mark(db, "cand_position_v1")
+    return n
+
+
+@router.get("/api/candidates/filters")
+def candidate_filters(db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.HR_ACCESS))):
+    """Filtr tanlagichlari uchun ro'yxatlar (2026-08-15).
+    Fanlar bazadagi HAQIQIY qiymatlardan yig'iladi — ariza formasida
+    fan erkin yoziladi, shuning uchun oldindan aniq ro'yxat yo'q."""
+    q = scope_to_branch(db.query(models.Candidate), models.Candidate, user)
+    subs, poss = set(), set()
+    for c in q.all():
+        lab, sub = _cand_role(c)
+        if sub:
+            subs.add(sub.strip())
+        if c.position:
+            poss.add(c.position)
+    return {
+        "positions": [{"key": k, "label": lbl}
+                      for k, lbl in roles.APPLY_POSITIONS],
+        "used_positions": sorted(poss),
+        "subjects": sorted(subs, key=lambda x: x.lower()),
+        "sources": [{"key": k, "label": lbl}
+                    for k, lbl in roles.CANDIDATE_SOURCES]
+        if hasattr(roles, "CANDIDATE_SOURCES") else [],
+    }
+
 
 @router.get("/api/candidates/{cid}")
 def get_candidate(
@@ -221,6 +350,11 @@ def create_candidate(
     data = payload.model_dump()
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         data["branch_id"] = user.branch_id
+    # Fan faqat USTOZ uchun ma'noga ega (2026-08-15). Boshqa lavozim
+    # tanlangan bo'lsa fan tozalanadi - aks holda "Ingliz tili"
+    # filtriga farrosh ham tushib qolardi.
+    if data.get("position") and data["position"] != "teacher":
+        data["subject"] = None
     c = models.Candidate(**data, created_by=user.username)
     _sync_candidate_dates(c)
     db.add(c); db.commit(); db.refresh(c)
@@ -238,6 +372,8 @@ def update_candidate(
         raise HTTPException(404, "Nomzod topilmadi")
     for k, val in payload.model_dump(exclude_unset=True).items():
         setattr(c, k, val)
+    if c.position and c.position != "teacher":
+        c.subject = None            # fan faqat ustoz uchun
     _sync_candidate_dates(c)
     db.commit()
     return {"ok": True}
@@ -1145,14 +1281,9 @@ def offer_action(oid: int, payload: schemas.OfferAction,
 #  nomzodlar bo'limiga tushsin".
 #  LOGINSIZ ishlaydi: https://jonyos.uz/apply
 # =====================================================================
-_APPLY_POSITIONS = {
-    "sales": "Sotuv menejeri",
-    "teacher": "Ustoz",
-    "cleaner": "Farrosh",
-    "examiner": "Examiner",
-    "support": "Support teacher",
-    "other": "Boshqa",
-}
+# 2026-08-15: ro'yxat roles.py ga ko'chdi — ariza formasi va
+# nomzodlar filtri bir manbadan oziqlansin.
+_APPLY_POSITIONS = dict(roles.APPLY_POSITIONS)
 _APPLY_CERT_REQUIRED = ("teacher", "examiner", "support")
 _APPLY_MARITAL = {
     "single": "Turmush qurmagan",
@@ -1238,6 +1369,12 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
         workplaces=_s("workplaces", 1000) or None,
         experience_years=exp_years,
         created_by="Onlayn ariza",
+        # 2026-08-15: tanlangan lavozim va fan endi ALOHIDA maydonda —
+        # ro'yxatda ko'rinadi va filtr qilinadi (ilgari faqat izoh
+        # matni ichida yotardi).
+        position=position or None,
+        subject=(_s("subject", 100) or None) if position == "teacher"
+        else None,
     )
     db.add(c)
     db.commit()

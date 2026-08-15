@@ -467,6 +467,16 @@ try:
 except Exception:
     pass
 
+# Nomzodning lavozimi va fani izoh matnidan alohida maydonga
+# ko'chirilsin (bir martalik, 2026-08-15)
+try:
+    from sqlalchemy.orm import Session as _VS17
+    from hr_ats import backfill_candidate_positions as _bcp
+    with _VS17(engine) as _db17:
+        _bcp(_db17)
+except Exception:
+    pass
+
 # Onlayn arizalar quvurda ham ko'rinsin (bir martalik backfill)
 try:
     from sqlalchemy.orm import Session as _VS15

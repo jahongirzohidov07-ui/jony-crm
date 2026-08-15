@@ -859,6 +859,19 @@ KPI_ADMIN = [FOUNDER]
 # Guruh ochilganda fan va daraja tanlanadi. Ta'lim sifati hisoboti ham
 # shu kesimda chiqadi.
 
+# NOMZOD LAVOZIMLARI (2026-08-15). Ochiq ariza formasi ham,
+# nomzodlar ro'yxatidagi filtr ham shu ro'yxatdan oziqlanadi —
+# ikki joyda ikki xil bo'lib ketmasin.
+APPLY_POSITIONS = [
+    ("teacher", "Ustoz"),
+    ("support", "Support teacher"),
+    ("examiner", "Examiner"),
+    ("sales", "Sotuv menejeri"),
+    ("cleaner", "Farrosh"),
+    ("other", "Boshqa"),
+]
+APPLY_POSITION_LABELS = dict(APPLY_POSITIONS)
+
 SUBJECTS = [
     ("english", "Ingliz tili"),
     ("russian", "Rus tili"),

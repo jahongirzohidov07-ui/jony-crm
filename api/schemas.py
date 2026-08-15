@@ -887,6 +887,9 @@ class CandidateCreate(BaseModel):
     source: str = "other"
     branch_id: Optional[int] = None
     note: Optional[str] = None
+    # Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
+    position: Optional[str] = None
+    subject: Optional[str] = None
 
 
 class CandidateUpdate(BaseModel):
@@ -911,6 +914,9 @@ class CandidateUpdate(BaseModel):
     weaknesses: Optional[str] = None
     reference_note: Optional[str] = None
     decision: Optional[str] = None
+    # Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
+    position: Optional[str] = None
+    subject: Optional[str] = None
 
 
 # ---------- Ijtimoiy tarmoq ----------

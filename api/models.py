@@ -823,6 +823,17 @@ class Candidate(Base):
     reference_note = Column(Text, nullable=True)     # tavsiyanoma
     decision = Column(String, nullable=True, default="pending")
 
+    # QAYSI LAVOZIMGA VA QAYSI FANDAN (2026-08-15, Jahongir: "BU
+    # ROYXATDA QAYSI VAKANSIYANI TANLAGANI KO'RINIB TURSIN USTOZ
+    # TANLASA QAYSI FANLIGI HAM").
+    #
+    # Ilgari bu ma'lumot faqat onlayn arizaning IZOH matni ichida
+    # yotardi ("LAVOZIM: Ustoz", "Qaysi fandan dars beradi: ..."),
+    # shuning uchun ro'yxatda "—" ko'rinardi va filtr ham qilib
+    # bo'lmasdi. Endi alohida maydonda — ko'rinadi ham, saralanadi ham.
+    position = Column(String, nullable=True, index=True)   # roles.APPLY_POSITIONS
+    subject = Column(String, nullable=True)                # ustoz uchun fan
+
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

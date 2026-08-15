@@ -16,7 +16,7 @@ import { AtsBoard } from "../components/AtsBoard";
 import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
 import { HR_ACCESS, can, ALL_ROLES, roleLabel } from "../lib/roles";
 import {
-  CANDIDATE_STAGES, CANDIDATE_SOURCES,
+  CANDIDATE_STAGES, CANDIDATE_SOURCES, APPLY_POSITIONS,
   VACANCY_STATUSES, stageLabel, stageColor, candidateSourceLabel,
   vacancyStatusLabel,
 } from "../lib/hr";
@@ -252,6 +252,9 @@ const emptyCand = {
   full_name: "",
   phone: "",
   vacancy_id: "" as string | number,
+  // Qaysi ishga kelgani va (ustoz bo'lsa) qaysi fandan — 2026-08-15
+  position: "",
+  subject: "",
   stage: "applied",
   source: "other",
   branch_id: "" as string | number,
@@ -267,6 +270,13 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   const [card, setCard] = useState<number | null>(null);
   const [form, setForm] = useState({ ...emptyCand });
   const [stageFilter, setStageFilter] = useState("");
+  // FILTRLAR (2026-08-15, Jahongir: "filtr ham qoyib bersan shu yerga
+  // nomzodlar kopayganda topish osonlashadi"). Hammasi birga ishlaydi.
+  const [search, setSearch] = useState("");
+  const [posFilter, setPosFilter] = useState("");
+  const [subjFilter, setSubjFilter] = useState("");
+  const [srcFilter, setSrcFilter] = useState("");
+  const [brFilter, setBrFilter] = useState("");
   const [err, setErr] = useState("");
 
   const load = () => {
@@ -291,6 +301,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
         full_name: c.full_name,
         phone: c.phone ?? "",
         vacancy_id: c.vacancy_id ?? "",
+        position: c.position ?? "",
+        subject: c.subject ?? "",
         stage: c.stage,
         source: c.source,
         branch_id: c.branch_id ?? "",
@@ -312,6 +324,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
       full_name: form.full_name.trim(),
       phone: form.phone || null,
       vacancy_id: form.vacancy_id ? Number(form.vacancy_id) : null,
+      position: form.position || null,
+      subject: form.position === "teacher" ? (form.subject || null) : null,
       stage: form.stage,
       source: form.source,
       branch_id: form.branch_id ? Number(form.branch_id) : null,
@@ -345,8 +359,34 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
     load();
   };
 
-  const shown = stageFilter ? rows.filter((r) => r.stage === stageFilter) : rows;
+  // Fanlar ro'yxati mavjud nomzodlardan yig'iladi — ariza formasida
+  // fan erkin yoziladi, oldindan aniq ro'yxat yo'q.
+  const subjects = Array.from(
+    new Set(rows.map((r) => (r.subject || "").trim()).filter(Boolean))
+  ).sort((a, b) => a.localeCompare(b));
+
+  const digits = (v: string) => v.replace(/\D/g, "");
+  const term = search.trim().toLowerCase();
+  const termDigits = digits(search);
+  const shown = rows.filter((r) => {
+    if (stageFilter && r.stage !== stageFilter) return false;
+    if (posFilter && (r.position || "") !== posFilter) return false;
+    if (subjFilter && (r.subject || "") !== subjFilter) return false;
+    if (srcFilter && r.source !== srcFilter) return false;
+    if (brFilter && String(r.branch_id ?? "") !== brFilter) return false;
+    if (term) {
+      const byName = r.full_name.toLowerCase().includes(term);
+      const byPhone =
+        termDigits.length >= 3 &&
+        digits(r.phone || "").includes(termDigits);
+      const byRole = (r.role_label || "").toLowerCase().includes(term);
+      if (!byName && !byPhone && !byRole) return false;
+    }
+    return true;
+  });
   const poolCount = rows.filter((r) => r.stage === "pool").length;
+  const anyFilter =
+    stageFilter || posFilter || subjFilter || srcFilter || brFilter || term;
 
   return (
     <div>
@@ -363,7 +403,85 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             </option>
           ))}
         </select>
-        <span className="text-sm text-slate-500">{shown.length} ta nomzod</span>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Ism yoki telefon…"
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm w-52"
+        />
+        <select
+          value={posFilter}
+          onChange={(e) => setPosFilter(e.target.value)}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          <option value="">Barcha lavozimlar</option>
+          {APPLY_POSITIONS.map((p) => (
+            <option key={p.key} value={p.key}>
+              {p.label}
+            </option>
+          ))}
+        </select>
+        {subjects.length > 0 && (
+          <select
+            value={subjFilter}
+            onChange={(e) => setSubjFilter(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            <option value="">Barcha fanlar</option>
+            {subjects.map((sb) => (
+              <option key={sb} value={sb}>
+                {sb}
+              </option>
+            ))}
+          </select>
+        )}
+        <select
+          value={srcFilter}
+          onChange={(e) => setSrcFilter(e.target.value)}
+          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+        >
+          <option value="">Barcha manbalar</option>
+          {CANDIDATE_SOURCES.map((s2) => (
+            <option key={s2.key} value={s2.key}>
+              {s2.label}
+            </option>
+          ))}
+        </select>
+        {branches.length > 1 && (
+          <select
+            value={brFilter}
+            onChange={(e) => setBrFilter(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            <option value="">Barcha filiallar</option>
+            {branches.map((b) => (
+              <option key={b.id} value={String(b.id)}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+        )}
+        <span className="text-sm text-slate-500">
+          {shown.length} ta nomzod
+          {anyFilter && rows.length !== shown.length && (
+            <span className="text-slate-400"> / {rows.length}</span>
+          )}
+        </span>
+        {anyFilter && (
+          <button
+            onClick={() => {
+              setStageFilter("");
+              setSearch("");
+              setPosFilter("");
+              setSubjFilter("");
+              setSrcFilter("");
+              setBrFilter("");
+            }}
+            className="px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-200 text-slate-600 hover:border-slate-300"
+          >
+            Filtrni tozalash
+          </button>
+        )}
         {poolCount > 0 && (
           <button
             onClick={() => setStageFilter(stageFilter === "pool" ? "" : "pool")}
@@ -384,7 +502,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
               shown.map((c) => ({
                 "F.I.Sh.": c.full_name,
                 Telefon: c.phone ?? "",
-                Vakansiya: c.vacancy ?? "",
+                Vakansiya: c.role_label ?? "",
+                Fan: c.subject ?? "",
                 Bosqich: stageLabel(c.stage),
                 Manba: candidateSourceLabel(c.source),
                 Filial: c.branch ?? "",
@@ -436,7 +555,20 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     </button>
                   </td>
                   <td className="text-slate-500">{c.phone || "—"}</td>
-                  <td className="text-slate-500">{c.vacancy || "—"}</td>
+                  <td className="text-slate-600">
+                    {c.role_label ? (
+                      <>
+                        <span>{c.role_label}</span>
+                        {c.subject && (
+                          <span className="ml-1.5 inline-block px-1.5 py-0.5 rounded bg-brand-50 text-brand-700 text-[11px] font-medium align-middle">
+                            {c.subject}
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-slate-400">—</span>
+                    )}
+                  </td>
                   <td className="text-slate-500">
                     {candidateSourceLabel(c.source)}
                   </td>
@@ -528,6 +660,30 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </option>
                 ))}
               </select>
+              {/* Vakansiya ochilmagan bo'lsa ham QAYSI ISHGA kelgani
+                  bilinib tursin (2026-08-15). Ustoz bo'lsa — fani. */}
+              <select
+                value={form.position}
+                onChange={(e) => setForm({ ...form, position: e.target.value })}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+              >
+                <option value="">Lavozim tanlanmagan</option>
+                {APPLY_POSITIONS.map((p) => (
+                  <option key={p.key} value={p.key}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+              {form.position === "teacher" && (
+                <input
+                  value={form.subject}
+                  onChange={(e) =>
+                    setForm({ ...form, subject: e.target.value })
+                  }
+                  placeholder="Qaysi fandan? (Ingliz tili, Matematika…)"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                />
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={form.stage}

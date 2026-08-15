@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Settings as SettingsIcon, Building2, ShieldCheck, Database } from "lucide-react";
+import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope } from "lucide-react";
 import Branches from "./Branches";
 import Permissions from "./Permissions";
 import BackupCard from "../components/BackupCard";
+import SelfTestCard from "../components/SelfTestCard";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER } from "../lib/roles";
 
@@ -12,7 +13,7 @@ import { FOUNDER } from "../lib/roles";
  * joyda turadi. Kelajakda boshqa sozlamalar ham shu yerga qo'shiladi
  * (Telegram, integratsiyalar va h.k. Ruxsatlar ichida turibdi).
  */
-type Tab = "branches" | "permissions" | "backup";
+type Tab = "branches" | "permissions" | "backup" | "selftest";
 
 export default function Settings() {
   const [tab, setTab] = useState<Tab>("branches");
@@ -24,7 +25,14 @@ export default function Settings() {
     { key: "branches", label: "Filiallar", icon: Building2 },
     { key: "permissions", label: "Ruxsatlar", icon: ShieldCheck },
     ...(isFounder
-      ? [{ key: "backup" as Tab, label: "Zaxira", icon: Database }]
+      ? [
+          { key: "backup" as Tab, label: "Zaxira", icon: Database },
+          {
+            key: "selftest" as Tab,
+            label: "Tizim tekshiruvi",
+            icon: Stethoscope,
+          },
+        ]
       : []),
   ];
 
@@ -60,6 +68,11 @@ export default function Settings() {
         {tab === "backup" && isFounder && (
           <div className="p-8">
             <BackupCard />
+          </div>
+        )}
+        {tab === "selftest" && isFounder && (
+          <div className="p-8">
+            <SelfTestCard />
           </div>
         )}
       </div>

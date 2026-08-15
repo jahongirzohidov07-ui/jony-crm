@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Settings as SettingsIcon, Building2, ShieldCheck } from "lucide-react";
+import { Settings as SettingsIcon, Building2, ShieldCheck, Database } from "lucide-react";
 import Branches from "./Branches";
 import Permissions from "./Permissions";
+import BackupCard from "../components/BackupCard";
+import { useAuth } from "../lib/AuthContext";
+import { FOUNDER } from "../lib/roles";
 
 /**
  * SOZLAMALAR — asoschining boshqaruv burchagi.
@@ -9,14 +12,20 @@ import Permissions from "./Permissions";
  * joyda turadi. Kelajakda boshqa sozlamalar ham shu yerga qo'shiladi
  * (Telegram, integratsiyalar va h.k. Ruxsatlar ichida turibdi).
  */
-type Tab = "branches" | "permissions";
+type Tab = "branches" | "permissions" | "backup";
 
 export default function Settings() {
   const [tab, setTab] = useState<Tab>("branches");
+  const { user } = useAuth();
+  // Zaxira faqat ASOSCHIGA: faylda markazning barcha ma'lumoti bor.
+  const isFounder = user?.role === FOUNDER;
 
   const tabs: { key: Tab; label: string; icon: typeof Building2 }[] = [
     { key: "branches", label: "Filiallar", icon: Building2 },
     { key: "permissions", label: "Ruxsatlar", icon: ShieldCheck },
+    ...(isFounder
+      ? [{ key: "backup" as Tab, label: "Zaxira", icon: Database }]
+      : []),
   ];
 
   return (
@@ -48,6 +57,11 @@ export default function Settings() {
       <div className="-mx-8">
         {tab === "branches" && <Branches />}
         {tab === "permissions" && <Permissions />}
+        {tab === "backup" && isFounder && (
+          <div className="p-8">
+            <BackupCard />
+          </div>
+        )}
       </div>
     </div>
   );

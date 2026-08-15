@@ -116,8 +116,21 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         raise HTTPException(403, "Ruxsat yo'q")
     _founder_name_fix(db)
     # Kunlik cron - eng katta ulush (Vercel limiti 30 s).
-    _ensure_month_charges(db, budget_s=24.0)
-    return {"ok": True, "ran_at": datetime.utcnow().isoformat()}
+    _ensure_month_charges(db, budget_s=18.0)
+    # KUNLIK ZAXIRA (2026-08-15). Asoschining Telegramiga fayl bo'lib
+    # boradi. Bot sozlanmagan yoki chat bog'lanmagan bo'lsa jimgina
+    # o'tadi - kunlik ish shu sababdan yiqilmasin.
+    bkp = {}
+    try:
+        import backup as _bkp
+        bkp = _bkp.daily_backup_to_telegram(db)
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+    return {"ok": True, "ran_at": datetime.utcnow().isoformat(),
+            "backup": bkp}
 
 @router.get("/api/search/students")
 def global_student_search(q: str, db: Session = Depends(get_db),

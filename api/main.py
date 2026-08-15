@@ -75,6 +75,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 import academic as _r_academic
 import audit_admin as _r_audit_admin
+import backup as _r_backup
 import auth_users as _r_auth_users
 import branches_rooms as _r_branches_rooms
 import complaints as _r_complaints
@@ -105,6 +106,7 @@ import timetable as _r_timetable
 
 app.include_router(_r_academic.router)
 app.include_router(_r_audit_admin.router)
+app.include_router(_r_backup.router)
 app.include_router(_r_auth_users.router)
 app.include_router(_r_branches_rooms.router)
 app.include_router(_r_complaints.router)

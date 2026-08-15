@@ -41,6 +41,19 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+/** Foydalanuvchi keshi tokendagi qoida bo'yicha saqlanadi. */
+function saveUser(u: AuthUser, remember?: boolean) {
+  const keep = remember ?? localStorage.getItem("jony_remember") === "1";
+  const s = JSON.stringify(u);
+  if (keep) {
+    localStorage.setItem("jony_crm_user", s);
+    sessionStorage.removeItem("jony_crm_user");
+  } else {
+    sessionStorage.setItem("jony_crm_user", s);
+    localStorage.removeItem("jony_crm_user");
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => {
     // Eslab qolish yoqilgan bo'lsa foydalanuvchi localStorage'da

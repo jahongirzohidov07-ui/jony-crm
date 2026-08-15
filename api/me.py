@@ -117,6 +117,59 @@ def my_career(
         raise HTTPException(404, "Sizning ustoz kartangiz topilmadi")
     return teacher_career(t.id, db=db, user=user)
 
+# =====================================================================
+#  XODIM TELEGRAMINI ULASH (2026-08-15)
+#  Asoschiga kunlik zaxira fayli va server xatosi ogohlantirishi
+#  Telegram orqali boradi — buning uchun chat bir marta bog'lanishi
+#  kerak. Kod profilda ko'rinadi, xodim uni botga yozadi.
+# =====================================================================
+@router.get("/api/me/telegram")
+def my_telegram(db: Session = Depends(get_db),
+                user=Depends(get_current_user)):
+    import notify
+    me = db.query(models.User).get(user.id)
+    if me is None:
+        raise HTTPException(404, "Foydalanuvchi topilmadi")
+    if not me.tg_code:
+        # Taxmin qilib bo'lmaydigan qisqa kod
+        import secrets
+        alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+        for _ in range(6):
+            code = "".join(secrets.choice(alphabet) for _ in range(6))
+            clash = (db.query(models.User)
+                     .filter(models.User.tg_code == code).first()
+                     or db.query(models.Student)
+                     .filter(models.Student.tg_code == code).first())
+            if not clash:
+                me.tg_code = code
+                db.commit()
+                break
+    bot = None
+    try:
+        bot = notify.bot_info()
+    except Exception:
+        bot = None
+    return {
+        "code": me.tg_code,
+        "linked": bool(me.telegram_chat_id),
+        "bot": bot,
+        "bot_link": (f"https://t.me/{bot}?start={me.tg_code}"
+                     if bot and me.tg_code else None),
+        "ready": notify.enabled(),
+    }
+
+
+@router.delete("/api/me/telegram")
+def unlink_telegram(db: Session = Depends(get_db),
+                    user=Depends(get_current_user)):
+    """Aloqani uzish — masalan telefon almashtirilganda."""
+    me = db.query(models.User).get(user.id)
+    if me:
+        me.telegram_chat_id = None
+        db.commit()
+    return {"ok": True}
+
+
 @router.get("/api/me")
 def my_identity(db: Session = Depends(get_db),
                 user=Depends(get_current_user)):

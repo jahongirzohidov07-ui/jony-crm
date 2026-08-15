@@ -8,6 +8,7 @@ import {
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
+import TelegramLink from "../components/TelegramLink";
 
 const PART_TONE: Record<string, string> = {
   fix: "bg-slate-100 text-slate-700",
@@ -88,6 +89,9 @@ export default function MyProfile() {
           </p>
         </div>
       </div>
+
+      {/* --- Telegram (2026-08-15): zaxira va xato ogohlantirishi --- */}
+      <TelegramLink />
 
       {/* --- Ish haqi --- */}
       <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4">

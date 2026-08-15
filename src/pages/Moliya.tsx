@@ -21,13 +21,13 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT } from "../lib/roles";
+  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER } from "../lib/roles";
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
   isCountable,
 } from "../lib/expenses";
-import { formatSom, formatPeriodLabel, formatDate } from "../lib/format";
+import { formatSom, formatPeriodLabel, formatDate, formatDateTime } from "../lib/format";
 import { methodLabel, MARKETING_CHANNELS, PAYMENT_METHODS } from "../lib/payments";
 import { PayEditModal, type PayEditTarget } from "../components/PayEditModal";
 import { exportToExcel } from "../lib/exportXlsx";
@@ -38,7 +38,7 @@ import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup" | "trash";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar,
@@ -76,6 +76,10 @@ const PAID_TAB: { key: Tab; label: string } = {
 // Xodim oyliklari — faqat oylik beradigan va nazorat qiladiganlar.
 const PAYROLL_TAB: { key: Tab; label: string } = {
   key: "payroll", label: "Oyliklar",
+};
+// O'chirilgan to'lovlar arxivi (2026-08-15) - hech narsa yo'qolmaydi
+const TRASH_TAB: { key: Tab; label: string } = {
+  key: "trash", label: "O'chirilganlar",
 };
 // Eski tizimdan tarix ko'chirish — bir martalik ish, moliya bo'limida.
 
@@ -1277,6 +1281,7 @@ export default function Moliya() {
     ...(full ? FULL_TABS : CASH_TABS),
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
     ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
+    ...(full ? [TRASH_TAB] : []),
   ];
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish.
   // Dashboard kartasidan kelganda ?tab= orqali kerakli bo'lim ochiladi.
@@ -1346,6 +1351,7 @@ export default function Moliya() {
         {tab === "calendar" && <PaymentCalendarTab />}
         {tab === "paid" && <MonthPaymentsTab />}
         {tab === "payroll" && <PayrollTab />}
+        {tab === "trash" && <DeletedPaymentsTab />}
       </div>
     </div>
   );
@@ -1686,6 +1692,169 @@ function LegacyCollectionArchive() {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+
+// ------------------------------- O'chirilgan to'lovlar arxivi ----
+// 2026-08-15, Jahongir'ning asosiy qoidasi: "hech narsa o'chmasin".
+// Ilgari xato yozuv butunlay yo'q bo'lardi - endi shu yerda turadi:
+// kim o'chirgan, qachon, nima sababdan. Asoschi qaytara oladi.
+interface DeletedPay {
+  id: number;
+  payment_id: number;
+  public_id?: string | null;
+  student_id?: number | null;
+  student_name?: string | null;
+  amount: number;
+  kind?: string | null;
+  method?: string | null;
+  note?: string | null;
+  period?: string | null;
+  created_by?: string | null;
+  created_at?: string | null;
+  deleted_by?: string | null;
+  deleted_at?: string | null;
+  reason?: string | null;
+  restored_at?: string | null;
+  restored_by?: string | null;
+}
+
+function DeletedPaymentsTab() {
+  const { user } = useAuth();
+  const [rows, setRows] = useState<DeletedPay[] | null>(null);
+  const [busy, setBusy] = useState<number | null>(null);
+  const isFounder = user?.role === FOUNDER;
+
+  const load = () => {
+    api
+      .fresh<DeletedPay[]>("/payments/deleted?limit=300")
+      .then(setRows)
+      .catch(() => setRows([]));
+  };
+  useEffect(load, []);
+
+  async function restore(r: DeletedPay) {
+    if (
+      !confirm(
+        `${r.student_name || "O'quvchi"} - ${formatSom(r.amount)}\n` +
+          "Bu yozuv qaytarilsinmi? Balans darrov o'zgaradi."
+      )
+    )
+      return;
+    setBusy(r.id);
+    try {
+      await api.post(`/payments/deleted/${r.id}/restore`);
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  if (rows === null)
+    return <p className="p-8 text-sm text-slate-400">Yuklanmoqda…</p>;
+
+  return (
+    <div className="p-8">
+      <h2 className="text-base font-semibold text-slate-900">
+        O'chirilgan to'lovlar
+      </h2>
+      <p className="mt-1 text-sm text-slate-500">
+        O'chirilgan yozuv yo'qolmaydi — shu yerda saqlanadi. Xato
+        o'chirilgan bo'lsa, asoschi uni qaytara oladi.
+      </p>
+
+      {rows.length === 0 ? (
+        <p className="mt-6 text-sm text-slate-400">
+          Hozircha o'chirilgan yozuv yo'q.
+        </p>
+      ) : (
+        <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-xs text-slate-500">
+              <tr>
+                <th className="px-3 py-2 text-left">O'quvchi</th>
+                <th className="px-3 py-2 text-right">Summa</th>
+                <th className="px-3 py-2 text-left">Turi</th>
+                <th className="px-3 py-2 text-left">Kim o'chirdi</th>
+                <th className="px-3 py-2 text-left">Qachon</th>
+                <th className="px-3 py-2 text-left">Sabab</th>
+                <th className="px-3 py-2"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr
+                  key={r.id}
+                  className={`border-t border-slate-100 ${
+                    r.restored_at ? "opacity-50" : ""
+                  }`}
+                >
+                  <td className="px-3 py-2">
+                    {r.student_id ? (
+                      <Link
+                        to={`/students/${r.student_id}`}
+                        className="text-brand-700 hover:underline"
+                      >
+                        {r.student_name || "—"}
+                      </Link>
+                    ) : (
+                      r.student_name || "—"
+                    )}
+                    {r.note && (
+                      <span className="block text-xs text-slate-400">
+                        {r.note}
+                      </span>
+                    )}
+                  </td>
+                  <td
+                    className={`px-3 py-2 text-right font-medium ${
+                      r.amount < 0 ? "text-red-600" : "text-emerald-600"
+                    }`}
+                  >
+                    {formatSom(r.amount)}
+                  </td>
+                  <td className="px-3 py-2 text-slate-500">
+                    {r.kind === "charge"
+                      ? "Hisoblangan"
+                      : r.kind === "discount"
+                        ? "Chegirma"
+                        : "To'lov"}
+                    {r.period ? ` · ${r.period}` : ""}
+                  </td>
+                  <td className="px-3 py-2 text-slate-600">
+                    {r.deleted_by || "—"}
+                  </td>
+                  <td className="px-3 py-2 text-slate-500">
+                    {r.deleted_at ? formatDateTime(r.deleted_at) : "—"}
+                  </td>
+                  <td className="px-3 py-2 text-slate-500">
+                    {r.reason || <span className="text-slate-300">—</span>}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    {r.restored_at ? (
+                      <span className="text-xs text-slate-400">
+                        Qaytarilgan
+                      </span>
+                    ) : isFounder ? (
+                      <button
+                        onClick={() => restore(r)}
+                        disabled={busy === r.id}
+                        className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                      >
+                        {busy === r.id ? "…" : "Qaytarish"}
+                      </button>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

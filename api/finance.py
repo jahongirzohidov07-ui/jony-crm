@@ -344,6 +344,7 @@ def check_enrolment(
 @router.delete("/api/payments/{payment_id}")
 def delete_payment(
     payment_id: int,
+    reason: str = "",
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FINANCE_ACCESS)),
 ):
@@ -397,9 +398,118 @@ def delete_payment(
             db.delete(ce)
     except Exception:
         pass
+
+    # ARXIVGA KO'CHIRAMIZ, YO'Q QILMAYMIZ (2026-08-15).
+    # Jahongir'ning qoidasi: "hech narsa o'chmasin". Yozuv
+    # payments'dan olinadi (balans va hisobotlar darrov to'g'rilanadi),
+    # lekin payments_deleted jadvalida to'liq saqlanib qoladi - kim
+    # o'chirgani, qachon va nima sababdan bilan birga. Asoschi kerak
+    # bo'lsa bir bosishda qaytaradi.
+    try:
+        db.add(models.DeletedPayment(
+            payment_id=p.id, public_id=p.public_id,
+            student_id=p.student_id,
+            student_name=s.full_name if s else None,
+            branch_id=s.branch_id if s else None,
+            amount=p.amount, kind=p.kind, method=p.method, note=p.note,
+            period=p.period, created_by=p.created_by,
+            created_at=p.created_at,
+            entered_at=getattr(p, "entered_at", None),
+            client_key=getattr(p, "client_key", None),
+            deleted_by=user.full_name,
+            reason=(reason or "").strip()[:400] or None))
+    except Exception:
+        # Arxiv yozilmasa - O'CHIRMAYMIZ ham. Ma'lumot yo'qolgandan
+        # ko'ra amal bajarilmagani yaxshi.
+        db.rollback()
+        raise HTTPException(
+            500, "Arxivga yozib bo'lmadi - yozuv o'chirilmadi. "
+                 "Qayta urinib ko'ring.")
     db.delete(p)
     db.commit()
-    return {"ok": True}
+    return {"ok": True, "archived": True}
+
+
+@router.get("/api/payments/deleted")
+def list_deleted_payments(
+    limit: int = 200,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """O'chirilgan to'lovlar arxivi. Filial rahbari faqat o'z
+    filialidagilarni ko'radi."""
+    q = db.query(models.DeletedPayment)
+    if user.role != roles.FOUNDER:
+        mine = _user_branch_ids(db, user)
+        if mine:
+            q = q.filter(models.DeletedPayment.branch_id.in_(mine))
+    rows = q.order_by(models.DeletedPayment.id.desc()).limit(
+        min(max(limit, 1), 1000)).all()
+    return [{
+        "id": r.id, "payment_id": r.payment_id,
+        "public_id": r.public_id,
+        "student_id": r.student_id, "student_name": r.student_name,
+        "amount": r.amount, "kind": r.kind, "method": r.method,
+        "note": r.note, "period": r.period,
+        "created_by": r.created_by,
+        "created_at": r.created_at.isoformat() if r.created_at else None,
+        "deleted_by": r.deleted_by,
+        "deleted_at": r.deleted_at.isoformat() if r.deleted_at else None,
+        "reason": r.reason,
+        "restored_at": (r.restored_at.isoformat()
+                        if r.restored_at else None),
+        "restored_by": r.restored_by,
+    } for r in rows]
+
+
+@router.post("/api/payments/deleted/{row_id}/restore")
+def restore_deleted_payment(
+    row_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """Xato o'chirilgan yozuvni qaytarish. Faqat asoschi.
+
+    Bir marta qaytarilgan yozuv ikkinchi marta qaytarilmaydi -
+    aks holda bitta to'lov ikki nusxa bo'lib qolardi."""
+    r = db.query(models.DeletedPayment).get(row_id)
+    if not r:
+        raise HTTPException(404, "Arxivda bunday yozuv yo'q")
+    if r.restored_at:
+        raise HTTPException(400, "Bu yozuv allaqachon qaytarilgan")
+    if r.student_id and db.query(models.Payment).filter(
+            models.Payment.id == r.payment_id).first():
+        raise HTTPException(400, "Bu raqamli yozuv allaqachon mavjud")
+
+    p = models.Payment(
+        student_id=r.student_id, amount=r.amount, kind=r.kind,
+        method=r.method, note=r.note, period=r.period,
+        created_by=r.created_by, created_at=r.created_at)
+    try:
+        p.entered_at = r.entered_at
+    except Exception:
+        pass
+    db.add(p)
+    db.flush()
+    # Avtomatik oylik o'chirilganda "qayta hisoblanmasin" belgisi
+    # qo'yilgan edi - qaytarilganda uni olib tashlaymiz.
+    if r.period:
+        try:
+            db.query(models.ChargeSkip).filter(
+                models.ChargeSkip.student_id == r.student_id,
+                models.ChargeSkip.period == r.period).delete(
+                    synchronize_session=False)
+        except Exception:
+            pass
+    r.restored_at = datetime.utcnow()
+    r.restored_by = user.full_name
+    db.commit()
+    audit.log(db, user, entity="payment", action="restore",
+              entity_id=p.id, entity_label=r.student_name,
+              field=r.kind, old_value=None, new_value=r.amount,
+              note=f"Arxivdan qaytarildi (avval #{r.payment_id})",
+              branch_id=r.branch_id, commit=True)
+    return {"ok": True, "payment_id": p.id}
 
 @router.get("/api/payouts", response_model=List[schemas.TeacherPayoutOut])
 def list_payouts(

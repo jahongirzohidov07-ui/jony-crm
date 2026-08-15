@@ -574,14 +574,30 @@ async def telegram_webhook(request: Request, secret: str = "",
             return {"ok": True}
         s = db.query(models.Student).filter(
             models.Student.tg_code == code).first()
-        if not s:
-            notify.send(chat_id, "Kod topilmadi. Administratordan "
-                                 "qayta so'rang.")
+        if s:
+            s.telegram_chat_id = chat_id
+            db.commit()
+            notify.send(chat_id,
+                        f"Bog'landi: {s.full_name}.\nEndi davomat va "
+                        "to'lov xabarlari shu yerga keladi.")
             return {"ok": True}
-        s.telegram_chat_id = chat_id
-        db.commit()
-        notify.send(chat_id,
-                    f"✅ Bog'landi: {s.full_name}.\nEndi davomat va "
-                    "to'lov xabarlari shu yerga keladi.")
+        # XODIM KODI (2026-08-15). Asoschiga server xatosi
+        # ogohlantirishi va kunlik zaxira fayli shu chat orqali boradi.
+        u = db.query(models.User).filter(
+            models.User.tg_code == code,
+            models.User.is_active == 1).first()
+        if u:
+            u.telegram_chat_id = chat_id
+            db.commit()
+            extra = ("\nHar kuni baza zaxirasi va server xatolari "
+                     "haqida xabar shu yerga keladi."
+                     if u.role == roles.FOUNDER else "")
+            notify.send(chat_id,
+                        f"Bog'landi: {u.full_name} "
+                        f"({roles.UZ_LABELS.get(u.role, u.role)})."
+                        + extra)
+            return {"ok": True}
+        notify.send(chat_id, "Kod topilmadi. Administratordan "
+                             "qayta so'rang.")
     return {"ok": True}
 

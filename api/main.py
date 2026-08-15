@@ -509,23 +509,113 @@ except Exception:
     pass
 
 
+
+# =====================================================================
+#  XATO OGOHLANTIRISHI (2026-08-15)
+#  Kutilmagan server xatosi yuz berishi bilan asoschiga Telegram
+#  xabar ketadi. Bir xil xato 30 daqiqada bir marta - telefon
+#  xabarga ko'milib qolmasin.
+# =====================================================================
+_ALERT_SEEN: dict = {}
+_ALERT_QUIET_MIN = 30
+
+
+def _alert_founders(db, path: str, method: str, who, trace: str) -> bool:
+    import notify
+    if not notify.enabled():
+        return False
+    last_line = (trace.strip().splitlines() or ["?"])[-1][:200]
+    key = f"{method} {path} :: {last_line}"
+    now = datetime.utcnow()
+    seen = _ALERT_SEEN.get(key)
+    if seen and (now - seen).total_seconds() < _ALERT_QUIET_MIN * 60:
+        return False
+    _ALERT_SEEN[key] = now
+    if len(_ALERT_SEEN) > 200:          # xotira o'smasin
+        _ALERT_SEEN.clear()
+        _ALERT_SEEN[key] = now
+
+    when = roles.to_local(now).strftime("%d.%m.%Y %H:%M")
+    text_ = (
+        "JONYOS - SERVER XATOSI\n"
+        f"Vaqt: {when}\n"
+        f"Manzil: {method} {path}\n"
+        f"Kim duch keldi: {who or 'nomalum'}\n\n"
+        f"{last_line}\n\n"
+        "To'liq matn: JonyOS -> Audit -> Tizim xatolari.\n"
+        f"(Bir xil xato {_ALERT_QUIET_MIN} daqiqada bir marta "
+        "yuboriladi.)")
+    sent = 0
+    try:
+        for u in (db.query(models.User)
+                  .filter(models.User.role == roles.FOUNDER,
+                          models.User.is_active == 1,
+                          models.User.telegram_chat_id.isnot(None)).all()):
+            if notify.send(u.telegram_chat_id, text_):
+                sent += 1
+    except Exception:
+        return False
+    return bool(sent)
+
+
 @app.exception_handler(Exception)
 async def _unhandled_error(request: Request, exc: Exception):
     """Kutilmagan xato: foydalanuvchi aytishini kutmasdan error_logs
-    jadvaliga yozamiz - asoschi Audit bo'limida ko'radi."""
+    jadvaliga yozamiz - asoschi Audit bo'limida ko'radi.
+
+    2026-08-15 (Jahongir: "Xato monitoringi ... buzilganini xodim
+    qo'ng'iroq qilganda bilasiz"): endi xato yuz bergan zahoti
+    ASOSCHIGA TELEGRAM XABAR ham ketadi. Yangi sekret kerak emas -
+    TELEGRAM_BOT_TOKEN allaqachon serverda bor.
+
+    BOSIB TURISH: bir xil xato (bir xil manzil + bir xil oxirgi
+    satr) 30 daqiqada BIR MARTA yuboriladi. Aks holda bitta buzilgan
+    sahifa telefonni xabarga ko'mib tashlardi."""
+    import traceback
+    trace = "".join(traceback.format_exception(
+        type(exc), exc, exc.__traceback__))
+    path = str(request.url.path)[:200]
+    who = None
+    edb = None
     try:
-        import traceback
         edb = SessionLocal()
+        # Kim duch keldi - xatoni takrorlash uchun eng muhim ma'lumot
+        try:
+            tok = (request.headers.get("authorization") or "").replace(
+                "Bearer ", "")
+            if tok:
+                from jose import jwt as _jwt
+                from auth import ALGORITHM as _alg
+                sub = _jwt.decode(tok, SECRET_KEY,
+                                  algorithms=[_alg]).get("sub")
+                u = edb.query(models.User).filter(
+                    models.User.username == sub).first()
+                who = u.full_name if u else sub
+        except Exception:
+            who = None
         edb.add(models.ErrorLog(
-            path=str(request.url.path)[:200],
-            method=request.method,
-            detail="".join(traceback.format_exception(
-                type(exc), exc, exc.__traceback__))[-4000:],
-        ))
+            path=path, method=request.method, user_name=who,
+            detail=trace[-4000:]))
         edb.commit()
-        edb.close()
+    except Exception:
+        try:
+            if edb is not None:
+                edb.rollback()
+        except Exception:
+            pass
+
+    # ---- Asoschiga darhol xabar ----
+    try:
+        if edb is not None:
+            _alert_founders(edb, path, request.method, who, trace)
     except Exception:
         pass
+    try:
+        if edb is not None:
+            edb.close()
+    except Exception:
+        pass
+
     return JSONResponse(status_code=500, content={
         "detail": "Serverda kutilmagan xato. Bu xato qayd etildi va "
                   "tez orada ko'rib chiqiladi."})

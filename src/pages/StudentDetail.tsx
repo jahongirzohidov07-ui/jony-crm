@@ -646,8 +646,18 @@ function PaymentsTab({
         "bo'lsa keyin qo'lda \"Hisoblash\" yozuvi kiritasiz."
       : `${formatSom(p.amount)} yozuvi o'chirilsinmi?`;
     if (!confirm(msg)) return;
+    // SABAB (2026-08-15): yozuv o'chmaydi, arxivga ko'chadi — nima
+    // uchun o'chirilgani yozib qo'yilsa, keyin savol qolmaydi.
+    const reason = prompt(
+      "Nima uchun o'chirilyapti? (masalan: ikki marta kiritilgan, " +
+        "summa xato)\n\nBo'sh qoldirsangiz ham bo'ladi.",
+      ""
+    );
+    if (reason === null) return;
     try {
-      await api.delete(`/payments/${p.id}`);
+      await api.delete(
+        `/payments/${p.id}?reason=${encodeURIComponent(reason.trim())}`
+      );
       onChanged();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");

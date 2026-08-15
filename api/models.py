@@ -44,6 +44,11 @@ class User(Base):
     role = Column(String, nullable=False, default="teacher")
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
     is_active = Column(Integer, default=1)
+    # XODIM TELEGRAMI (2026-08-15). Asoschiga server xatosi
+    # ogohlantirishi va kunlik zaxira fayli shu chat orqali boradi.
+    # Ulash: xodim profilidagi kodni botga "/start KOD" deb yozadi.
+    tg_code = Column(String, nullable=True, index=True)
+    telegram_chat_id = Column(String, nullable=True)
     # Ishdan bo'shaganda qanday ajrashildi: yashil / neytral / qizil
     # yo'lak. Qayta ishga olish masalasi shu bilan hal bo'ladi.
     exit_type = Column(String, nullable=True)
@@ -3051,6 +3056,47 @@ class LoginAttempt(Base):
     ip = Column(String, nullable=True)
     success = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+class DeletedPayment(Base):
+    """O'CHIRILGAN TO'LOV ARXIVI (2026-08-15).
+
+    Jahongir'ning asosiy qoidasi: "hech narsa o'chmasin". Ilgari xato
+    yozuv butunlay o'chib ketardi - faqat audit izohi qolardi, summani
+    qaytarib bo'lmasdi. Endi yozuv payments'dan olinadi va SHU YERGA
+    ko'chiriladi: kim o'chirdi, qachon, nima sababdan. Kerak bo'lsa
+    asoschi bir bosishda qaytaradi.
+
+    Nega alohida jadval, nega "o'chirilgan" bayrog'i emas: balans va
+    barcha hisobotlar payments jadvalining yig'indisidan chiqadi.
+    Bayroq qo'yilsa, uni FILTRLASHNI unutgan bitta so'rov ham
+    hisobotni buzardi. Arxivga ko'chirilganda esa hech qanday hisobot
+    o'zgarmaydi - xato qilish imkoniyati yo'q."""
+    __tablename__ = "payments_deleted"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # payments.id - qaysi yozuv edi (tiklashda o'sha raqam qaytadi)
+    payment_id = Column(Integer, index=True, nullable=False)
+    public_id = Column(String, nullable=True)
+    student_id = Column(Integer, index=True, nullable=True)
+    student_name = Column(String, nullable=True)
+    branch_id = Column(Integer, nullable=True)
+    amount = Column(Float, nullable=False)
+    kind = Column(String, nullable=True)
+    method = Column(String, nullable=True)
+    note = Column(String, nullable=True)
+    period = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, nullable=True)
+    entered_at = Column(DateTime, nullable=True)
+    client_key = Column(String, nullable=True)
+    # --- o'chirish tafsiloti ---
+    deleted_by = Column(String, nullable=True)
+    deleted_at = Column(DateTime, default=datetime.utcnow, index=True)
+    reason = Column(String, nullable=True)
+    # Qaytarilgan bo'lsa - qachon va kim
+    restored_at = Column(DateTime, nullable=True)
+    restored_by = Column(String, nullable=True)
 
 
 class ErrorLog(Base):

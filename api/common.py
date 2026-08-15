@@ -61,6 +61,9 @@ def _ensure_new_columns():
         "CREATE UNIQUE INDEX IF NOT EXISTS ix_payments_client_key "
         "ON payments (client_key)",
         "ALTER TABLE users ADD COLUMN public_id VARCHAR",
+        # Xodim Telegrami (2026-08-15): xato ogohlantirishi va zaxira
+        "ALTER TABLE users ADD COLUMN tg_code VARCHAR",
+        "ALTER TABLE users ADD COLUMN telegram_chat_id VARCHAR",
         "ALTER TABLE lessons ADD COLUMN held INTEGER DEFAULT 1",
         # Eski darslar qo'lda kiritilgan - demak ular o'tilgan.
         "UPDATE lessons SET held = 1 WHERE held IS NULL",
@@ -428,7 +431,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_14a"
+SCHEMA_STAMP = "stamp_2026_08_15a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

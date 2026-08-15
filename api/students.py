@@ -318,7 +318,18 @@ def list_students(
         gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
         query = query.filter(models.Student.group_id.in_(gids or [-1]))
 
-    students = query.order_by(models.Student.full_name).all()
+    # TEZLIK (2026-08-15): guruh, filial va guruhning ustozi OLDINDAN
+    # birga o'qiladi. Ilgari pydantic har o'quvchi uchun alohida
+    # so'rov yuborardi (45 guruh + 18 ustoz + 3 filial = 66 ortiqcha
+    # so'rov). Javob AYNAN o'sha — faqat o'qish usuli o'zgardi.
+    from sqlalchemy.orm import selectinload as _sel
+    students = (query
+                .options(_sel(models.Student.branch),
+                         _sel(models.Student.group)
+                         .selectinload(models.Group.teacher),
+                         _sel(models.Student.group)
+                         .selectinload(models.Group.branch))
+                .order_by(models.Student.full_name).all())
     # Rasmni lazy-load ham qilmaslik uchun instansiyaga None yozamiz
     # (ORM hodisalarini chetlab) - aks holda pydantic har o'quvchi
     # uchun alohida so'rov yuborardi (N+1 + trafik).

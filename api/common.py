@@ -1079,14 +1079,22 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
                        models.Lesson.held == 1,
                        models.Lesson.date >= start,
                        models.Lesson.date <= end).all())
+    if not lessons:
+        return 0.0
+    # 2026-08-15: ilgari HAR DARS uchun 3 ta alohida so'rov ketardi
+    # (daraja tarixi + ustoz + yo'qlama soni). 360 dars = ~1000 so'rov.
+    # Endi hammasi 3 ta so'rovda oldindan o'qiladi, hisob xotirada
+    # bo'ladi. Natija AYNAN o'sha — mantiq o'zgarmagan.
+    gi = billing.GradeIndex(db)
+    counts = billing.attendance_counts(db, [l.id for l in lessons])
     total = 0.0
-    rates = billing.grade_rates(db)
     for l in lessons:
         g = groups.get(l.group_id)
         if not g or l.teacher_id is None:
             continue
-        rate, _ = billing.lesson_rate(db, g, l, rates)
-        total += billing.lesson_student_count(db, l) * rate
+        per_student = gi.per_student(g, l.teacher_id, l.date)
+        rate = billing.per_attendance_rate(g, per_student)
+        total += counts.get(l.id, 0) * rate
     return round(total, 2)
 
 def _problem(key: str, message: str) -> dict:

@@ -978,7 +978,11 @@ def teacher_salary_detail(
         models.Student.id.in_({a.student_id for a in atts}))
         .all()} if atts else {}
     groups = {g.id: g for g in db.query(models.Group).all()}
-    rates = billing.grade_rates(db)
+    # 2026-08-15: ilgari HAR DARS uchun ustoz darajasi alohida
+    # so'raldi (lesson_rate -> grade_on). 360 dars = 360 so'rov.
+    # GradeIndex butun tarixni bir marta o'qib, xotirada javob
+    # beradi — natija AYNAN o'sha.
+    gi = billing.GradeIndex(db)
 
     # ustoz -> o'quvchi -> {summa, yoqlama, keldi, kelmadi, guruhlar}
     per_teacher: dict = {t.id: {} for t in teachers}
@@ -988,7 +992,8 @@ def teacher_salary_detail(
         if not g:
             continue
         tot_lessons[l.teacher_id] = tot_lessons.get(l.teacher_id, 0) + 1
-        rate, _per_student = billing.lesson_rate(db, g, l, rates)
+        _per_student = gi.per_student(g, l.teacher_id, l.date)
+        rate = billing.per_attendance_rate(g, _per_student)
         for a in att_by_lesson.get(l.id, []):
             st = students.get(a.student_id)
             box = per_teacher.setdefault(l.teacher_id, {})

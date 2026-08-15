@@ -240,7 +240,13 @@ def list_groups(branch_id: int | None = None,
     M.backfill_missing_ids(db, "group", models.Group)
     q = scope_to_branch(db.query(models.Group), models.Group, user,
                         branch_id)
-    groups = q.order_by(models.Group.name).all()
+    # TEZLIK (2026-08-15): ustoz va filial guruhlar bilan BIRGA
+    # o'qiladi. Ilgari har guruh uchun alohida so'rov ketardi
+    # (45 guruh = 21 ortiqcha so'rov). Javob o'zgarmaydi.
+    from sqlalchemy.orm import selectinload as _sel
+    groups = (q.options(_sel(models.Group.teacher),
+                        _sel(models.Group.branch))
+              .order_by(models.Group.name).all())
     counts = dict(
         db.query(models.Student.group_id, func.count(models.Student.id))
         .filter(models.Student.status == "active",
@@ -1197,9 +1203,14 @@ def dashboard_v2(branch_id: int | None = None,
         db.query(models.User), models.User, user, branch_id
     ).filter(models.User.is_active == 1).count()
 
-    balances = [(s.id, M.student_balance(db, s.id)) for s in all_students]
-    total_debt = sum(b for _, b in balances if b < 0)
-    debtor_count = sum(1 for _, b in balances if b < 0)
+    # 2026-08-15: ilgari HAR O'QUVCHIGA alohida balans so'rovi ketardi —
+    # 700 o'quvchi = 700 so'rov, Dashboard shu sababdan sekin edi.
+    # _balances_bulk hammasini bitta so'rovda yig'adi; natija AYNAN
+    # o'sha (ikkalasi ham payments.amount yig'indisi).
+    from common import _balances_bulk as _bb
+    _bal = _bb(db, [s.id for s in all_students])
+    total_debt = sum(b for b in _bal.values() if b < 0)
+    debtor_count = sum(1 for b in _bal.values() if b < 0)
 
     return schemas.DashboardStats(
         active_students=active,

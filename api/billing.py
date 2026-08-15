@@ -30,6 +30,7 @@ import calendar
 from datetime import date
 from typing import Optional
 
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -192,6 +193,84 @@ def grade_on(db: Session, teacher_id: int, on_date: date) -> Optional[str]:
         _log_db_error(db, "grade_on", e)
     t = db.query(models.Teacher).get(teacher_id)
     return t.grade if t else None
+
+
+# =====================================================================
+#  TO'PLAM BO'LIB O'QISH (2026-08-15, Jahongir: "D ni ham qil")
+#
+#  Muammo: oylik hisoblashda HAR DARS uchun alohida so'rov ketardi —
+#  grade_on() 1-2 ta, lesson_student_count() 1 ta. 360 dars = ~1000
+#  so'rov. Moliya sahifasi shu sababdan 1 100 so'rov qilardi.
+#
+#  Yechim: kerakli hamma narsa 3 ta so'rovda oldindan o'qib olinadi,
+#  keyin xotirada hisoblanadi. MANTIQ AYNAN O'ZGARMAGAN — quyidagi
+#  GradeIndex.on() grade_on() bilan bir xil javob beradi (shu sana
+#  yoki undan oldingi ENG OXIRGI voqea, bo'lmasa ustozning hozirgi
+#  darajasi). Buni test isbotlaydi: eski va yangi yo'l bir xil
+#  summani chiqarishi solishtiriladi.
+# =====================================================================
+class GradeIndex:
+    """Ustoz darajasi tarixini bir marta o'qib, xotirada javob beradi."""
+
+    def __init__(self, db: Session):
+        self.events: dict = {}
+        self.now: dict = {}
+        self.rates: dict = grade_rates(db)
+        try:
+            rows = (db.query(models.TeacherGradeEvent)
+                    .filter(models.TeacherGradeEvent.to_grade.isnot(None))
+                    .order_by(models.TeacherGradeEvent.effective_from,
+                              models.TeacherGradeEvent.id).all())
+            for e in rows:
+                self.events.setdefault(e.teacher_id, []).append(
+                    (e.effective_from, e.to_grade))
+        except SQLAlchemyError as exc:
+            _log_db_error(db, "GradeIndex.events", exc)
+        try:
+            for t in db.query(models.Teacher.id, models.Teacher.grade).all():
+                self.now[t[0]] = t[1]
+        except SQLAlchemyError as exc:
+            _log_db_error(db, "GradeIndex.now", exc)
+
+    def on(self, teacher_id, on_date):
+        """grade_on() bilan bir xil: shu sanadagi daraja."""
+        if not teacher_id:
+            return None
+        found = None
+        for eff, grade in self.events.get(teacher_id, ()):
+            if eff is not None and eff <= on_date:
+                found = grade      # ro'yxat o'sish tartibida - oxirgisi qoladi
+            else:
+                break
+        if found is not None:
+            return found
+        return self.now.get(teacher_id)
+
+    def per_student(self, group, teacher_id, on_date) -> float:
+        """rate_per_student() bilan bir xil."""
+        if getattr(group, "rate_manual", 0):
+            return group.teacher_rate_per_student or 0
+        v = self.rates.get(self.on(teacher_id, on_date))
+        if v:
+            return v
+        return group.teacher_rate_per_student or 0
+
+
+def attendance_counts(db: Session, lesson_ids) -> dict:
+    """Har darsda nechta yo'qlama bor — BITTA so'rovda.
+    lesson_student_count() ning to'plam varianti."""
+    ids = list(lesson_ids)
+    out = {}
+    CHUNK = 900
+    for i in range(0, len(ids), CHUNK):
+        part = ids[i:i + CHUNK]
+        rows = (db.query(models.Attendance.lesson_id,
+                         func.count(models.Attendance.id))
+                .filter(models.Attendance.lesson_id.in_(part))
+                .group_by(models.Attendance.lesson_id).all())
+        for lid, n in rows:
+            out[lid] = n
+    return out
 
 
 def rate_per_student(db: Session, group: models.Group,

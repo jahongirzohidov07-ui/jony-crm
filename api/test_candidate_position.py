@@ -249,6 +249,62 @@ row = db.query(models.Candidate).get(OLD_ID)
 ck("manzil izohdan olindi", row.address, "Bekobod")
 db.close()
 
+print("\n=== 14. QO'LDA kiritilgan nomzod QUVURDA ham chiqadi ===")
+db = SessionLocal()
+app = (db.query(models.CandidateApplication)
+       .filter(models.CandidateApplication.candidate_id == MID).first())
+ck("ariza ochildi", app is not None, True)
+ck("bosqichi 'Yangi ariza'", app.stage if app else None, "new")
+ck("filial ko'chdi", app.branch_id if app else None, B1)
+ck("tarix yozildi",
+   db.query(models.ApplicationStageLog).filter(
+       models.ApplicationStageLog.application_id == app.id).count()
+   if app else 0, 1)
+db.close()
+
+print("\n=== 15. Kanban ro'yxatida ko'rinadi ===")
+r = c.get("/api/ats/pipeline", headers=F)
+ck("quvur javob berdi", r.status_code, 200)
+body = r.text
+ck("qo'lda kiritilgan nomzod bor", "Qo'lda Nomzod" in body, True)
+
+print("\n=== 16. Bosqich o'zgarsa QUVUR ham yuradi ===")
+r = c.put(f"/api/candidates/{MID}", headers=F,
+          json={"stage": "interview"})
+ck("bosqich o'zgardi", r.status_code, 200)
+db = SessionLocal()
+app = (db.query(models.CandidateApplication)
+       .filter(models.CandidateApplication.candidate_id == MID).first())
+ck("quvurda ham 'Suhbat'", app.stage, "interview")
+ck("tarixda ikkita yozuv",
+   db.query(models.ApplicationStageLog).filter(
+       models.ApplicationStageLog.application_id == app.id).count(), 2)
+db.close()
+
+print("\n=== 17. Ikkinchi ariza OCHILMAYDI (dubl bo'lmasin) ===")
+db = SessionLocal()
+cc = db.query(models.Candidate).get(MID)
+from hr_ats import _open_application                # noqa: E402
+_open_application(db, cc)
+ck("hamon bitta ariza",
+   db.query(models.CandidateApplication).filter(
+       models.CandidateApplication.candidate_id == MID).count(), 1)
+db.close()
+
+print("\n=== 18. Eski nomzodlar ham quvurga tushdi ===")
+db = SessionLocal()
+db.query(models.SeedMark).filter(
+    models.SeedMark.key == "apply_backfill_v2").delete()
+db.commit()
+common._SEED_KEYS = None
+from hr_ats import backfill_apply_applications      # noqa: E402
+backfill_apply_applications(db)
+total_c = db.query(models.Candidate).count()
+total_a = (db.query(models.CandidateApplication.candidate_id)
+           .distinct().count())
+ck("har nomzodda ariza bor", total_a, total_c)
+db.close()
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

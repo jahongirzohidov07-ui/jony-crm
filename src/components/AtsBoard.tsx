@@ -104,8 +104,11 @@ export function AtsBoard() {
                     <p className="text-sm font-medium text-slate-900 truncate">
                       {r.candidate}
                     </p>
+                    {/* Vakansiya ochilmagan bo'lsa ham qaysi ishga
+                        kelgani ko'rinsin (2026-08-15) */}
                     <p className="text-xs text-slate-400 truncate">
-                      {r.vacancy || "vakansiyasiz"}
+                      {r.role_label || r.vacancy || "lavozim ko'rsatilmagan"}
+                      {r.subject ? ` · ${r.subject}` : ""}
                     </p>
                     <p
                       className={`text-[11px] mt-1 ${
@@ -364,7 +367,9 @@ function AppModal({
           </button>
         </div>
         <p className="text-xs text-slate-400 mb-3">
-          {d.public_id} · {d.vacancy || "vakansiyasiz"} · {d.phone || "—"}
+          {d.public_id} · {d.role_label || d.vacancy
+            || "lavozim ko'rsatilmagan"}
+          {d.subject ? ` · ${d.subject}` : ""} · {d.phone || "—"}
         </p>
 
         <div className="h-1.5 bg-slate-100 rounded-full mb-4 overflow-hidden">
@@ -563,7 +568,8 @@ function RejectedPanel({
                 <td className="px-4 py-2">
                   <p className="text-slate-800">{r.candidate}</p>
                   <p className="text-xs text-slate-400">
-                    {r.vacancy || "vakansiyasiz"}
+                    {r.role_label || r.vacancy || "lavozim ko'rsatilmagan"}
+                    {r.subject ? ` · ${r.subject}` : ""}
                     {r.branch ? ` · ${r.branch}` : ""}
                   </p>
                 </td>

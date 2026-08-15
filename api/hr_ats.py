@@ -153,6 +153,73 @@ def _apply_fill(c, get, position: str) -> None:
         pass
 
 
+def _open_application(db: Session, c, user=None, note: str = None):
+    """Nomzodga ISHGA OLISH QUVURIDA ariza ochadi (2026-08-15,
+    Jahongir: "ishga olish quvuri juda zor narsa ekan faqat qo'lda
+    nomzod kiritsam bu joyga chiqmayabdi").
+
+    Quvur CandidateApplication jadvalidan o'qiydi. Onlayn ariza uni
+    o'zi ochardi, qo'lda kiritilganda esa ochilmasdi — shuning uchun
+    qo'lda kiritilgan nomzod quvurda ko'rinmasdi.
+
+    Ochiq arizasi bor bo'lsa ikkinchisini OCHMAYDI."""
+    exists = (db.query(models.CandidateApplication)
+              .filter(models.CandidateApplication.candidate_id == c.id)
+              .first())
+    if exists:
+        return exists
+    today = roles.local_today()
+    stage = roles.CANDIDATE_TO_APPLICATION.get(c.stage or "applied", "new")
+    a = models.CandidateApplication(
+        candidate_id=c.id, vacancy_id=c.vacancy_id,
+        branch_id=c.branch_id, stage=stage, stage_since=today,
+        source=c.source, note=note,
+        owner_id=getattr(user, "id", None))
+    if stage in roles.APPLICATION_CLOSED:
+        a.closed_at = today
+        a.reject_reason = c.reject_reason
+    db.add(a)
+    db.commit()
+    db.refresh(a)
+    _ensure_public_id(db, "application", a)
+    db.add(models.ApplicationStageLog(
+        application_id=a.id, from_stage=None, to_stage=stage,
+        days_in_stage=0, by_user_id=getattr(user, "id", None)))
+    db.commit()
+    return a
+
+
+def _sync_application_stage(db: Session, c, user=None) -> bool:
+    """Nomzodlar ro'yxatida bosqich o'zgarsa QUVUR ham yurishi kerak —
+    aks holda bir odam ikki joyda ikki xil bosqichda turardi."""
+    want = roles.CANDIDATE_TO_APPLICATION.get(c.stage or "")
+    if not want:
+        return False
+    a = (db.query(models.CandidateApplication)
+         .filter(models.CandidateApplication.candidate_id == c.id)
+         .order_by(models.CandidateApplication.id.desc()).first())
+    if a is None or a.stage == want:
+        return False
+    today = roles.local_today()
+    since = a.stage_since or (a.created_at.date() if a.created_at
+                              else today)
+    old_stage = a.stage
+    a.stage = want
+    a.stage_since = today
+    if want in roles.APPLICATION_CLOSED:
+        a.closed_at = today
+        if want == "rejected":
+            a.reject_reason = c.reject_reason or a.reject_reason
+    else:
+        a.closed_at = None
+    db.add(models.ApplicationStageLog(
+        application_id=a.id, from_stage=old_stage, to_stage=want,
+        days_in_stage=(today - since).days,
+        note="Nomzodlar ro'yxatidan o'zgartirildi",
+        by_user_id=getattr(user, "id", None)))
+    return True
+
+
 def _cand_role(c) -> tuple:
     """Nomzod QAYSI ISHGA kelgan: (asosiy yozuv, fan).
 
@@ -469,6 +536,13 @@ def create_candidate(
         c.note = free_note or None
     _sync_candidate_dates(c)
     db.add(c); db.commit(); db.refresh(c)
+    # ISHGA OLISH QUVURIGA ham tushsin (2026-08-15). Ilgari faqat
+    # onlayn ariza quvurda ko'rinardi, qo'lda kiritilgani yo'q edi.
+    try:
+        _open_application(db, c, user,
+                          note=f"Qo'lda kiritildi ({user.full_name})")
+    except Exception:
+        db.rollback()          # quvur ochilmasa ham nomzod saqlansin
     return {"id": c.id}
 
 @router.put("/api/candidates/{cid}")
@@ -481,11 +555,19 @@ def update_candidate(
     c = db.query(models.Candidate).get(cid)
     if not c:
         raise HTTPException(404, "Nomzod topilmadi")
+    before = c.stage
     for k, val in payload.model_dump(exclude_unset=True).items():
         setattr(c, k, val)
     if c.position and c.position != "teacher":
         c.subject = None            # fan faqat ustoz uchun
     _sync_candidate_dates(c)
+    # Bosqich o'zgargan bo'lsa QUVUR ham yursin — bir odam ikki joyda
+    # ikki xil bosqichda turmasin (2026-08-15).
+    if c.stage != before:
+        try:
+            _sync_application_stage(db, c, user)
+        except Exception:
+            pass
     db.commit()
     return {"ok": True}
 
@@ -603,6 +685,11 @@ def _app_out(db: Session, a: models.CandidateApplication,
         "phone": c.phone if c else None,
         "vacancy_id": a.vacancy_id,
         "vacancy": v.title if v else None,
+        # Vakansiya ochilmagan bo'lsa ham QAYSI ISHGA kelgani
+        # ko'rinsin (2026-08-15) — kartada "vakansiyasiz" o'rniga
+        # "Ustoz · Ingliz tili" chiqadi.
+        "role_label": (v.title if v else (_cand_role(c)[0] if c else None)),
+        "subject": (_cand_role(c)[1] if c else None),
         "branch_id": a.branch_id,
         "branch": br.name if br else None,
         "stage": a.stage,
@@ -1533,32 +1620,31 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
 
 
 def backfill_apply_applications(db: Session) -> int:
-    """Onlayn arizadan kelgan-u quvurda ko'rinmagan nomzodlarga
-    ariza ochib qo'yadi (bir martalik, 2026-08-12)."""
+    """Quvurda ko'rinmayotgan nomzodlarga ariza ochib qo'yadi.
+
+    2026-08-12: onlayn arizadan kelganlar uchun edi.
+    2026-08-15 (Jahongir: "qo'lda nomzod kiritsam bu joyga
+    chiqmayabdi"): endi MANBADAN QAT'IY NAZAR — qo'lda kiritilgan
+    nomzodlar ham quvurga tushadi. Bosqichi nomzod kartasidagidan
+    olinadi, ya'ni allaqachon suhbatga chaqirilgani "Yangi ariza"
+    ustuniga tushib qolmaydi."""
     from common import _seed_done, _seed_mark
-    if _seed_done(db, "apply_backfill_v1"):
+    if _seed_done(db, "apply_backfill_v2"):
         return 0
     made = 0
-    cands = (db.query(models.Candidate)
-             .filter(models.Candidate.created_by == "Onlayn ariza").all())
-    for c in cands:
+    for c in db.query(models.Candidate).all():
         has = (db.query(models.CandidateApplication)
                .filter(models.CandidateApplication.candidate_id == c.id)
                .count())
         if has:
             continue
-        a = models.CandidateApplication(
-            candidate_id=c.id, stage="new",
-            stage_since=roles.local_today(), source="other",
-            note="Onlayn ariza (backfill)")
-        db.add(a); db.commit(); db.refresh(a)
-        _ensure_public_id(db, "application", a)
-        db.add(models.ApplicationStageLog(
-            application_id=a.id, from_stage=None, to_stage="new",
-            days_in_stage=0))
-        made += 1
+        try:
+            _open_application(db, c, None, note="Avvaldan kiritilgan")
+            made += 1
+        except Exception:
+            db.rollback()
     db.commit()
-    _seed_mark(db, "apply_backfill_v1")
+    _seed_mark(db, "apply_backfill_v2")
     return made
 
 

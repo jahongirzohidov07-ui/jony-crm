@@ -587,6 +587,21 @@ CANDIDATE_STAGES = [
     ("rejected", "Rad etildi"),     # yo'qotish
 ]
 CANDIDATE_STAGE_LABELS = dict(CANDIDATE_STAGES)
+
+# NOMZOD BOSQICHI -> ISHGA OLISH QUVURI BOSQICHI (2026-08-15).
+# Nomzodlar ro'yxati va "Ishga olish quvuri" bir xil odamni ikki xil
+# ko'rsatmasligi uchun. Teskari yo'nalish hr_ats.ats_application_move
+# ichida allaqachon bor edi.
+CANDIDATE_TO_APPLICATION = {
+    "applied": "new",
+    "screening": "screening",
+    "interview": "interview",
+    "demo": "demo",
+    "offer": "offer",
+    "hired": "hired",
+    "rejected": "rejected",
+    "pool": "pool",
+}
 CANDIDATE_FUNNEL = [k for k, _ in CANDIDATE_STAGES if k != "rejected"]
 
 CANDIDATE_SOURCES = [

@@ -469,6 +469,16 @@ try:
 except Exception:
     pass
 
+# O'quvchi filiali bo'sh bo'lsa - guruhining filialiga biriktiramiz
+# (2026-08-15: "yoqlamada bor lekin o'quvchilar royxatida yo'q")
+try:
+    from sqlalchemy.orm import Session as _VS18
+    from common import backfill_student_branches as _bsb
+    with _VS18(engine) as _db18:
+        _bsb(_db18)
+except Exception:
+    pass
+
 # Nomzodning lavozimi va fani izoh matnidan alohida maydonga
 # ko'chirilsin (bir martalik, 2026-08-15)
 try:

@@ -4546,6 +4546,55 @@ def _apply_shop_discounts(db: Session, period: str = None) -> int:
     return made
 
 
+def backfill_student_branches(db: Session) -> int:
+    """O'QUVCHINI O'Z FILIALIGA BIRIKTIRISH (2026-08-15).
+
+    Jahongir: "yoqlamada bor lekin o'quvchilar royxatida o'quvchi
+    korinmayabdiku".
+
+    Sabab: eski ko'chirishdan qolgan 1600 dan ortiq o'quvchida filial
+    UMUMAN belgilanmagan edi (branch_id bo'sh). Tepadagi tanlagichda
+    biror filial tanlansa, bunday o'quvchi HECH QAYERDA ko'rinmasdi —
+    ro'yxatda ham, qidiruvda ham, hisobotda ham. Yo'qlama esa guruh
+    orqali ishlagani uchun u yerda ko'rinib turaverardi.
+
+    Yechim: o'quvchi qaysi guruhda bo'lsa, o'sha guruhning filialiga
+    biriktiriladi. Guruhi yo'q o'quvchiga tegilmaydi — uni qo'lda
+    biriktirish kerak.
+
+    Bir martalik va xavfsiz: faqat BO'SH filialni to'ldiradi,
+    mavjudini hech qachon o'zgartirmaydi."""
+    # Kuniga bir marta tekshiriladi (bir martalik emas): kelajakda
+    # yana filialsiz o'quvchi paydo bo'lsa ham o'zi to'g'rilanadi.
+    key = f"stbranch_{roles.local_today().isoformat()}"
+    if _seed_done(db, key):
+        return 0
+    _seed_mark(db, key)
+    n = 0
+    try:
+        rows = (db.query(models.Student, models.Group.branch_id)
+                .join(models.Group,
+                      models.Student.group_id == models.Group.id)
+                .filter(models.Student.branch_id.is_(None),
+                        models.Group.branch_id.isnot(None)).all())
+        for st, bid in rows:
+            st.branch_id = bid
+            n += 1
+        if n:
+            db.commit()
+    except Exception:
+        db.rollback()
+        return 0
+    try:
+        if n:
+            audit.log(db, None, entity="student", action="update",
+                      note=f"{n} ta o'quvchi o'z guruhining filialiga "
+                           "biriktirildi (filial bo'sh edi)", commit=True)
+    except Exception:
+        db.rollback()
+    return n
+
+
 def _purge_old_logs(db: Session, today=None):
     """Eski kirish urinishlari va xato jurnalini tozalash — KUNIGA
     BIR MARTA (ilgari har chaqiruvda ikki DELETE ketardi)."""
@@ -4937,6 +4986,7 @@ __all__ = [
     "_drop_coin_entry",
     "_ensure_month_charges",
     "_purge_old_logs",
+    "backfill_student_branches",
     "_ensure_new_columns",
     "_ensure_public_id",
     "_ensure_student_account",

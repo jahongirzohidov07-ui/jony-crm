@@ -120,6 +120,15 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
     # KUNLIK ZAXIRA (2026-08-15). Asoschining Telegramiga fayl bo'lib
     # boradi. Bot sozlanmagan yoki chat bog'lanmagan bo'lsa jimgina
     # o'tadi - kunlik ish shu sababdan yiqilmasin.
+    # Filialsiz qolgan o'quvchini guruhining filialiga biriktirish
+    try:
+        from common import backfill_student_branches as _bsb
+        _bsb(db)
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
     # Sanasi kelgan kurs narxlari qo'llansin (2026-08-15)
     try:
         import courses as _crs

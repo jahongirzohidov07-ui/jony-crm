@@ -155,9 +155,16 @@ async function request<T>(
   const isGet = !options.method || options.method === "GET";
   // Faqat o'qish so'rovlariga filial filtri qo'shiladi; sahifa o'zi
   // branch_id bergan bo'lsa yoki auth so'rovi bo'lsa — tegilmaydi.
+  // GURUH ICHIDAGI SO'ROVGA TEPADAGI FILIAL FILTRI QO'SHILMAYDI
+  // (2026-08-15). Guruh o'zi bitta filialga tegishli — ustiga yana
+  // filial filtri qo'shilsa, tepada BOSHQA filial tanlangan bo'lsa
+  // guruh ichidagi o'quvchilar "yo'q" bo'lib ko'rinardi. Aynan shu
+  // holat bo'ldi: tanlagich "Stetch"da turgan, guruh esa Zafarniki.
+  const groupScoped = path.includes("group_id=");
   if (
     isGet &&
     globalBranchId &&
+    !groupScoped &&
     !path.includes("branch_id=") &&
     !path.startsWith("/auth")
   ) {

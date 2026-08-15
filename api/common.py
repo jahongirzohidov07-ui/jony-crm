@@ -57,6 +57,12 @@ def _ensure_new_columns():
         # Nomzod qaysi lavozimga va qaysi fandan (2026-08-15)
         "ALTER TABLE candidates ADD COLUMN position VARCHAR",
         "ALTER TABLE candidates ADD COLUMN subject VARCHAR",
+        # Hamkor filial va kurslar (2026-08-15)
+        "ALTER TABLE branches ADD COLUMN is_partner INTEGER DEFAULT 0",
+        "ALTER TABLE branches ADD COLUMN partner_note VARCHAR",
+        "ALTER TABLE branches ADD COLUMN owner_percent FLOAT",
+        "ALTER TABLE groups ADD COLUMN course_id INTEGER",
+        "ALTER TABLE groups ADD COLUMN price_manual INTEGER DEFAULT 0",
         # Coinga chegirma sotib olish (2026-08-15)
         "ALTER TABLE rewards ADD COLUMN kind VARCHAR DEFAULT 'gift'",
         "ALTER TABLE rewards ADD COLUMN discount_percent FLOAT",
@@ -449,7 +455,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15e"
+SCHEMA_STAMP = "stamp_2026_08_15f"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
@@ -831,14 +837,48 @@ def _in_user_branches(db, user: models.User, branch_id,
     return branch_id in _user_branch_ids(db, user)
 
 
+_PARTNER_IDS: list | None = None
+
+
+def partner_branch_ids(db) -> list:
+    """HAMKOR filiallar ro'yxati (2026-08-15, Jahongir: "hamkorlikda
+    ochgan Stech ... uni men umuman boshqarmayman, faqat asoschi
+    sifatida 40% ulushim bor").
+
+    Bunday filial JonyOS ichida to'liq ishlaydi, lekin uning raqamlari
+    Jony Academy'ning UMUMIY yig'indilariga qo'shilmaydi. Ko'rish
+    uchun tepadagi tanlagichdan o'sha filialni tanlash kerak.
+
+    Javob jarayon xotirasida saqlanadi — har so'rovda qayta
+    so'ralmasin (filial kam va deyarli o'zgarmaydi)."""
+    global _PARTNER_IDS
+    if _PARTNER_IDS is None:
+        try:
+            _PARTNER_IDS = [b.id for b in db.query(models.Branch)
+                            .filter(models.Branch.is_partner == 1).all()]
+        except Exception:
+            return []
+    return _PARTNER_IDS
+
+
+def reset_partner_cache():
+    """Filial hamkorligi o'zgarganda chaqiriladi."""
+    global _PARTNER_IDS
+    _PARTNER_IDS = None
+
+
 def scope_to_branch(query, model, user: models.User, branch_id=None):
     """Filialga bo'yicha cheklash.
 
-    Ikki xil cheklash bor va ular aralashmasligi kerak:
+    Uch xil cheklash bor va ular aralashmasligi kerak:
       1) HUQUQ - filialga bog'langan xodim faqat O'Z FILIALLARINI
          (asosiy + qo'shimcha) ko'radi. Buni hech kim aylanib o'tolmaydi.
       2) FILTR - butun tashkilotni ko'radigan odam (asoschi, HR, SMM)
          istagan filialni alohida ko'rmoqchi bo'lsa, branch_id beradi.
+      3) HAMKOR FILIAL (2026-08-15) - "barcha filiallar" rejimida
+         hamkor markaz raqamlari CHIQARIB TASHLANADI. U alohida
+         biznes; tanlab ko'rish mumkin, lekin umumiy yig'indiga
+         qo'shilmaydi.
     """
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         allowed = _user_branch_ids(query.session, user)
@@ -848,6 +888,12 @@ def scope_to_branch(query, model, user: models.User, branch_id=None):
         return query.filter(model.branch_id.in_(allowed or [-1]))
     if branch_id and hasattr(model, "branch_id"):
         return query.filter(model.branch_id == branch_id)
+    # "Barcha filiallar" - hamkorniki aralashmasin
+    if hasattr(model, "branch_id"):
+        skip = partner_branch_ids(query.session)
+        if skip:
+            return query.filter(or_(model.branch_id.is_(None),
+                                    model.branch_id.notin_(skip)))
     return query
 
 def _smm_user(db: Session, branch_id: int | None = None) -> models.User | None:
@@ -5011,6 +5057,8 @@ __all__ = [
     "has_perm",
     "perms_for",
     "scope_to_branch",
+    "partner_branch_ids",
+    "reset_partner_cache",
     "student_balance",
     "to_student_out",
 ]

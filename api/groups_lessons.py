@@ -741,6 +741,30 @@ def _resolve_group_rate(db: Session, data: dict):
     else:
         data["rate_manual"] = 1
 
+def _apply_course_price(db: Session, data: dict) -> None:
+    """KURS TANLANGAN BO'LSA narx kursdan olinadi (2026-08-15,
+    Jahongir: "shu narxlar hamma joyga ulanadi va shu boyicha hisob
+    kitob qilinaveradi").
+
+    Guruhga ataylab boshqa narx yozilgan bo'lsa (price_manual)
+    tegilmaydi — istisno holatlar uchun yo'l ochiq qoladi."""
+    cid = data.get("course_id")
+    if not cid or data.get("price_manual"):
+        return
+    c = db.query(models.Course).get(cid)
+    if c is None:
+        return
+    data["lesson_price"] = c.lesson_price
+    if c.lessons_per_month:
+        data["standard_lessons_per_month"] = c.lessons_per_month
+    data["monthly_fee"] = round((c.lesson_price or 0)
+                                * (c.lessons_per_month or 0))
+    if not data.get("subject") and c.subject:
+        data["subject"] = c.subject
+    if not data.get("level") and c.level:
+        data["level"] = c.level
+
+
 @router.post("/api/groups", response_model=schemas.GroupOut)
 def create_group(
     payload: schemas.GroupCreate,
@@ -758,6 +782,8 @@ def create_group(
                         lesson_time=data.get("lesson_time")),
         force=force)
     _resolve_group_rate(db, data)
+    data["price_manual"] = 1 if data.get("price_manual") else 0
+    _apply_course_price(db, data)
     group = models.Group(**data)
     db.add(group)
     db.commit()
@@ -818,8 +844,21 @@ def update_group(
         if "rate_manual" in merged_rate:
             group.rate_manual = merged_rate["rate_manual"]
 
+    if "price_manual" in fields:
+        fields["price_manual"] = 1 if fields["price_manual"] else 0
     for k, v in fields.items():
         setattr(group, k, v)
+    # KURS TANLANGANDA narx kursdan olinadi (2026-08-15). Faqat kurs
+    # yoki narx belgisi o'zgarganda - qolgan tahrirlarga tegmaymiz.
+    if ("course_id" in fields or "price_manual" in fields) \
+            and group.course_id and not group.price_manual:
+        d = {"course_id": group.course_id, "price_manual": 0,
+             "subject": group.subject, "level": group.level}
+        _apply_course_price(db, d)
+        group.lesson_price = d.get("lesson_price", group.lesson_price)
+        group.standard_lessons_per_month = d.get(
+            "standard_lessons_per_month", group.standard_lessons_per_month)
+        group.monthly_fee = d.get("monthly_fee", group.monthly_fee)
     db.commit()
     db.refresh(group)
     item = schemas.GroupOut.model_validate(group)

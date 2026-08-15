@@ -42,10 +42,18 @@ def create_branch(
     db: Session = Depends(get_db),
     user=Depends(require_role(roles.FOUNDER)),
 ):
-    branch = models.Branch(**payload.model_dump())
+    data = payload.model_dump()
+    data["is_partner"] = 1 if data.get("is_partner") else 0
+    branch = models.Branch(**data)
     db.add(branch)
     db.commit()
     db.refresh(branch)
+    # Hamkorlik belgisi o'zgardi - keshni tozalaymiz (2026-08-15)
+    try:
+        from common import reset_partner_cache
+        reset_partner_cache()
+    except Exception:
+        pass
     return branch
 
 @router.put("/api/branches/{branch_id}", response_model=schemas.BranchOut)
@@ -62,8 +70,21 @@ def update_branch(
         raise HTTPException(400, "Filial nomini kiriting")
     b.name = payload.name.strip()
     b.address = payload.address
+    # HAMKOR FILIAL (2026-08-15, Jahongir: Stech). Belgilansa uning
+    # raqamlari umumiy yig'indilarga qo'shilmaydi.
+    if payload.is_partner is not None:
+        b.is_partner = 1 if payload.is_partner else 0
+    if payload.partner_note is not None:
+        b.partner_note = payload.partner_note
+    if payload.owner_percent is not None:
+        b.owner_percent = payload.owner_percent
     db.commit()
     db.refresh(b)
+    try:
+        from common import reset_partner_cache
+        reset_partner_cache()
+    except Exception:
+        pass
     return b
 
 @router.delete("/api/branches/{branch_id}")

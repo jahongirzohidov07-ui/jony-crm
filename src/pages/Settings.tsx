@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope } from "lucide-react";
+import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen } from "lucide-react";
 import Branches from "./Branches";
 import Permissions from "./Permissions";
 import BackupCard from "../components/BackupCard";
+import Courses from "./Courses";
 import SelfTestCard from "../components/SelfTestCard";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER } from "../lib/roles";
@@ -13,7 +14,7 @@ import { FOUNDER } from "../lib/roles";
  * joyda turadi. Kelajakda boshqa sozlamalar ham shu yerga qo'shiladi
  * (Telegram, integratsiyalar va h.k. Ruxsatlar ichida turibdi).
  */
-type Tab = "branches" | "permissions" | "backup" | "selftest";
+type Tab = "branches" | "courses" | "permissions" | "backup" | "selftest";
 
 export default function Settings() {
   const [tab, setTab] = useState<Tab>("branches");
@@ -23,6 +24,8 @@ export default function Settings() {
 
   const tabs: { key: Tab; label: string; icon: typeof Building2 }[] = [
     { key: "branches", label: "Filiallar", icon: Building2 },
+    // KURSLAR (2026-08-15): har filialning narx ro'yxati
+    { key: "courses", label: "Kurslar", icon: BookOpen },
     { key: "permissions", label: "Ruxsatlar", icon: ShieldCheck },
     ...(isFounder
       ? [
@@ -64,6 +67,7 @@ export default function Settings() {
       {/* Ichki sahifalar o'z p-8 padding'i bilan keladi */}
       <div className="-mx-8">
         {tab === "branches" && <Branches />}
+        {tab === "courses" && <Courses />}
         {tab === "permissions" && <Permissions />}
         {tab === "backup" && isFounder && (
           <div className="p-8">

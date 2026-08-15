@@ -14,6 +14,12 @@ function BranchModal({
   const editing = !!initial;
   const [name, setName] = useState(initial?.name ?? "");
   const [address, setAddress] = useState(initial?.address ?? "");
+  // HAMKOR MARKAZ (2026-08-15, Jahongir: Stech)
+  const [isPartner, setIsPartner] = useState(!!initial?.is_partner);
+  const [pNote, setPNote] = useState(initial?.partner_note ?? "");
+  const [pPct, setPPct] = useState(
+    initial?.owner_percent != null ? String(initial.owner_percent) : ""
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +31,13 @@ function BranchModal({
     setSaving(true);
     setError(null);
     try {
-      const body = { name, address: address || null };
+      const body = {
+        name,
+        address: address || null,
+        is_partner: isPartner,
+        partner_note: isPartner ? pNote || null : null,
+        owner_percent: isPartner && pPct ? Number(pPct) : null,
+      };
       if (editing) await api.put(`/branches/${initial!.id}`, body);
       else await api.post("/branches", body);
       onSaved();
@@ -66,6 +78,49 @@ function BranchModal({
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
+          </div>
+          {/* HAMKOR MARKAZ (2026-08-15, Jahongir: "hamkorlikda ochgan
+              Stech ... uni men umuman boshqarmayman, faqat asoschi
+              sifatida 40% ulushim bor") */}
+          <div className="rounded-lg border border-slate-200 p-3">
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={isPartner}
+                onChange={(e) => setIsPartner(e.target.checked)}
+                className="mt-0.5"
+              />
+              <span>
+                <span className="text-sm font-medium text-slate-800">
+                  Hamkor markaz
+                </span>
+                <span className="block text-xs text-slate-500 leading-snug">
+                  Belgilansa bu filial JonyOS'da to'liq ishlaydi, lekin
+                  uning o'quvchilari va puli UMUMIY yig'indilarga
+                  qo'shilmaydi. Ko'rish uchun tepadagi tanlagichdan
+                  shu filialni tanlaysiz.
+                </span>
+              </span>
+            </label>
+            {isPartner && (
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <input
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  value={pNote}
+                  onChange={(e) => setPNote(e.target.value)}
+                  placeholder="Kim boshqaradi"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  value={pPct}
+                  onChange={(e) => setPPct(e.target.value)}
+                  placeholder="Bizning ulush (%)"
+                />
+              </div>
+            )}
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
@@ -150,8 +205,24 @@ export default function Branches() {
                   </button>
                 </div>
               </div>
-              <h3 className="font-semibold text-slate-900 mb-1">{b.name}</h3>
-              <p className="text-sm text-slate-500">{b.address || "Manzil kiritilmagan"}</p>
+              <h3 className="font-semibold text-slate-900 mb-1">
+                {b.name}
+                {b.is_partner && (
+                  <span className="ml-2 align-middle rounded-full bg-violet-50 px-2 py-0.5 text-[10px] font-medium text-violet-700">
+                    hamkor
+                  </span>
+                )}
+              </h3>
+              <p className="text-sm text-slate-500">
+                {b.address || "Manzil kiritilmagan"}
+              </p>
+              {b.is_partner && (
+                <p className="mt-1 text-xs text-violet-700">
+                  Umumiy hisobotga qo'shilmaydi
+                  {b.partner_note ? ` · ${b.partner_note}` : ""}
+                  {b.owner_percent ? ` · bizning ulush ${b.owner_percent}%` : ""}
+                </p>
+              )}
             </div>
           ))}
         </div>

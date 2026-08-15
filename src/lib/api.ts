@@ -301,6 +301,37 @@ export interface Branch {
   id: number;
   name: string;
   address?: string;
+  /** Hamkor markaz — umumiy yig'indilarga qo'shilmaydi (2026-08-15). */
+  is_partner?: boolean | null;
+  partner_note?: string | null;
+  owner_percent?: number | null;
+}
+
+/** Kurs — filialning narx ro'yxati (2026-08-15). */
+export interface Course {
+  id: number;
+  branch_id?: number | null;
+  branch?: string | null;
+  name: string;
+  subject?: string | null;
+  subject_label?: string | null;
+  level?: string | null;
+  lesson_minutes?: number | null;
+  lesson_price: number;
+  lessons_per_month?: number | null;
+  monthly_fee?: number | null;
+  active: boolean;
+  note?: string | null;
+  groups: number;
+  group_names?: string[];
+  next_change?: {
+    id: number;
+    from_date: string;
+    lesson_price: number;
+    lessons_per_month?: number | null;
+    note?: string | null;
+  } | null;
+  groups_updated?: number;
 }
 
 export interface User {

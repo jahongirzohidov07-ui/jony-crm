@@ -19,6 +19,18 @@ class Branch(Base):
     rating_weights = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    # HAMKOR FILIAL (2026-08-15, Jahongir: "hamkorlikda ochgan Stech
+    # o'quv markazimi ham bor ... uni men umuman boshqarmayman, faqat
+    # asoschi sifatida 40% ulushim bor").
+    #
+    # Hamkor filial JonyOS ichida to'liq ishlaydi, LEKIN uning
+    # raqamlari Jony Academy'ning UMUMIY yig'indilariga qo'shilmaydi:
+    # bu boshqa biznesning aylanmasi. Ko'rish uchun tepadagi
+    # tanlagichdan o'sha filialni tanlash kerak.
+    is_partner = Column(Integer, default=0, index=True)
+    partner_note = Column(String, nullable=True)   # kim boshqaradi, ulush
+    owner_percent = Column(Float, nullable=True)   # bizning ulushimiz (%)
+
     teachers = relationship("Teacher", back_populates="branch")
     groups = relationship("Group", back_populates="branch")
     students = relationship("Student", back_populates="branch")
@@ -257,6 +269,14 @@ class Group(Base):
     teacher_rate_per_student = Column(Float, default=0)
     rate_manual = Column(Integer, default=0)
 
+    # QAYSI KURS (2026-08-15). Kurs tanlansa narx va oyiga dars soni
+    # kursdan olinadi va kurs narxi o'zgarganda bu guruhga ham
+    # ko'chiriladi. price_manual=1 bo'lsa - bu guruhga ataylab boshqa
+    # narx qo'yilgan, kurs o'zgarishi unga tegmaydi.
+    course_id = Column(Integer, ForeignKey("courses.id"), nullable=True,
+                       index=True)
+    price_manual = Column(Integer, default=0)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     teacher = relationship("Teacher", back_populates="groups")
@@ -265,6 +285,65 @@ class Group(Base):
     lessons = relationship(
         "Lesson", back_populates="group", cascade="all, delete-orphan"
     )
+
+
+class Course(Base):
+    """KURS — filialning narx ro'yxati (2026-08-15).
+
+    Jahongir: "sozlamalar ichida kurslar bolimini ochib u yerda
+    kurslarni yozadi dars vaqti narxini bitta darsga narxini yozadi,
+    shu narxlar hamma joyga ulanadi va shu boyicha hisob kitob
+    qilinaveradi bizda ham sentabrdan narxlar oshadi".
+
+    Har filialning O'Z kurslari bo'ladi — hamkor markazda fanlar ham,
+    narx ham, dars davomiyligi ham boshqacha.
+
+    NARX QANDAY ISHLAYDI. Kurs narxi guruhga KO'CHIRILADI
+    (group.lesson_price). Shu sababli butun hisob-kitob mantig'i
+    o'zgarmaydi va o'tgan oylarning hisobi hech qachon qayta
+    yozilmaydi — faqat kelgusi hisoblar yangi narxda chiqadi."""
+    __tablename__ = "courses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    name = Column(String, nullable=False)
+    subject = Column(String, nullable=True)        # roles.SUBJECTS yoki erkin
+    level = Column(String, nullable=True)
+    # Bitta darsning davomiyligi (daqiqa) — jadval tuzishda ishlatiladi
+    lesson_minutes = Column(Integer, default=90)
+    # Bitta dars narxi va standart oyda nechta dars uchun to'lanadi
+    lesson_price = Column(Float, default=0)
+    lessons_per_month = Column(Integer, default=12)
+    active = Column(Integer, default=1, index=True)
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    branch = relationship("Branch")
+
+
+class CoursePriceChange(Base):
+    """Rejalashtirilgan narx o'zgarishi ("sentabrdan oshadi").
+
+    Sana kelganda kunlik ish narxni kursga va uning guruhlariga
+    ko'chiradi. O'tgan oylarga TEGMAYDI."""
+    __tablename__ = "course_price_changes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"), nullable=False,
+                       index=True)
+    from_date = Column(Date, nullable=False, index=True)
+    lesson_price = Column(Float, nullable=False)
+    lessons_per_month = Column(Integer, nullable=True)
+    note = Column(String, nullable=True)
+    applied_at = Column(DateTime, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    course = relationship("Course")
 
 
 class Student(Base):

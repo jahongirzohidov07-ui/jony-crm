@@ -8,6 +8,10 @@ from pydantic import BaseModel, ConfigDict
 class BranchCreate(BaseModel):
     name: str
     address: Optional[str] = None
+    # HAMKOR FILIAL (2026-08-15): umumiy yig'indilarga qo'shilmaydi
+    is_partner: Optional[bool] = None
+    partner_note: Optional[str] = None
+    owner_percent: Optional[float] = None
 
 
 class BranchOut(BranchCreate):
@@ -225,6 +229,9 @@ class GroupCreate(BaseModel):
     lesson_days: Optional[str] = None
     monthly_fee: float = 0
     lesson_price: float = 40000
+    # Qaysi KURS (2026-08-15) — narx shundan olinadi
+    course_id: Optional[int] = None
+    price_manual: Optional[bool] = None
     standard_lessons_per_month: int = 12
     teacher_rate_per_student: float = 0
 
@@ -249,6 +256,9 @@ class GroupUpdate(BaseModel):
     lesson_price: Optional[float] = None
     standard_lessons_per_month: Optional[int] = None
     teacher_rate_per_student: Optional[float] = None
+    # Qaysi KURS (2026-08-15) — narx shundan olinadi
+    course_id: Optional[int] = None
+    price_manual: Optional[bool] = None
 
 
 class GroupOut(GroupCreate):
@@ -888,6 +898,27 @@ class VacancyUpdate(BaseModel):
     salary_from: Optional[float] = None
     salary_to: Optional[float] = None
     description: Optional[str] = None
+
+
+class CourseIn(BaseModel):
+    """Kurs (2026-08-15): dars davomiyligi va bitta dars narxi."""
+    name: Optional[str] = None
+    branch_id: Optional[int] = None
+    subject: Optional[str] = None
+    level: Optional[str] = None
+    lesson_minutes: Optional[int] = None
+    lesson_price: Optional[float] = None
+    lessons_per_month: Optional[int] = None
+    active: Optional[bool] = None
+    note: Optional[str] = None
+
+
+class CoursePriceIn(BaseModel):
+    """Narxni SANADAN boshlab o'zgartirish (sentabrdan oshirish)."""
+    from_date: _dt.date
+    lesson_price: float
+    lessons_per_month: Optional[int] = None
+    note: Optional[str] = None
 
 
 class CoinSetIn(BaseModel):

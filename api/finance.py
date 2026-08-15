@@ -1521,7 +1521,10 @@ def list_debtors(
     ketganlar, keyin eski qarzlar."""
     today = date.today()
     q = scope_to_branch(db.query(models.Student), models.Student, user, branch_id)
-    students = q.filter(models.Student.status.in_(["active", "trial", "frozen"])).all()
+    # "left" — guruhdan chiqarilgan, lekin qarzi bor: undirish
+    # davom etadi (2026-08-15).
+    students = q.filter(
+        models.Student.status.in_(roles.STUDENT_OPEN_STATUSES)).all()
 
     # Oxirgi bog'lanish yozuvlari
     contacts: dict[int, models.DebtorContact] = {}

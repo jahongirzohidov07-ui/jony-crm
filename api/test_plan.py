@@ -874,7 +874,11 @@ r = client.post(f"/api/students/{SB18}/remove-from-group", headers=ASOS2,
                 json={"reason": "Qatnamay qo'ydi"}).json()
 ck("qarzdor arxivga tushmadi", r.get("archived"), False)
 st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
-ck("qarzdor guruhsiz faol", (st["status"], st.get("group")), ("active", None))
+# 2026-08-15: guruhsiz odam FAOL bo'la olmaydi — endi "Chiqib ketgan"
+# bo'lib Qarzdorlar ro'yxatida qoladi (Jahongir: "guruhdan chiqarildimi
+# u faol emas endi")
+ck("qarzdor guruhsiz, faol EMAS",
+   (st["status"], st.get("group")), ("left", None))
 client.post(f"/api/students/{SB18}/payments", headers=ASOS2,
             json={"amount": 250000, "kind": "payment"})
 st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()

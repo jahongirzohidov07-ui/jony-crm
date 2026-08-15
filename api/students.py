@@ -565,6 +565,24 @@ def update_student(
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     changes = payload.model_dump(exclude_unset=True)
 
+    # GURUHSIZ O'QUVCHI "FAOL" BO'LA OLMAYDI (2026-08-15, Jahongir:
+    # "birorta oquvchi guruhsiz lekin faol bola olmaydi guruhdan
+    # chiqarildimi u faol emas endi"). Guruhi bo'lmagan odam uchun
+    # dars ham, hisob ham yo'q — u "Chiqib ketgan" yoki arxivda
+    # bo'lishi kerak.
+    _new_group = changes.get("group_id", s.group_id)
+    if changes.get("status") == "active" and not _new_group:
+        # Ataylab "faol" qilinmoqchi, lekin guruhi yo'q — to'sib
+        # qo'yamiz va nima qilish kerakligini aytamiz.
+        raise HTTPException(
+            400, "Guruhsiz o'quvchi \"Faol\" bo'la olmaydi. Avval "
+                 "guruhga qo'shing yoki holatini \"Chiqib ketgan\" "
+                 "deb qoldiring.")
+    if ("group_id" in changes and not changes["group_id"]
+            and changes.get("status", s.status) == "active"):
+        # Guruhdan olindi — holat o'zi "Chiqib ketgan"ga o'tadi
+        changes["status"] = roles.STUDENT_LEFT
+
     # Parallel tahrir himoyasi: men ochgan versiyadan keyin boshqa
     # xodim o'zgartirgan bo'lsa — ustidan yozmaymiz.
     expected = changes.pop("expected_updated_at", None)
@@ -862,6 +880,7 @@ def add_payment(
     # qarzini to'liq yopgach o'zi arxivga o'tadi.
     if payload.kind == "payment" and getattr(s, "archive_when_paid", 0) \
             and not s.group_id and student_balance(db, s.id) >= 0:
+        # "Chiqib ketgan" ham shu yerda arxivga o'tadi (2026-08-15)
         s.status = "archived"
         s.archive_when_paid = 0
         _sync_student_left_date(s)
@@ -978,11 +997,24 @@ def remove_student_from_group(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.FREEZE_ROLES)),
 ):
-    """Guruhdan chiqarish — sabab MAJBURIY (ustozlar nima uchun ketganini
-    bilishi uchun). Qoidalar:
-      - qarzi YO'Q  -> darhol arxivga tushadi;
-      - qarzi BOR   -> arxivga tushmaydi, "guruhsiz" bo'lib faol qoladi;
-        qarz to'liq to'langach AVTOMAT arxivga o'tadi."""
+    """Guruhdan chiqarish — sabab MAJBURIY.
+
+    2026-08-15, Jahongir: "guruhdan chiqqanda avtomat shu kungacha
+    qatnashgan darslarini hisoblanib hisobi ham togrlanishi kerak, va
+    guruhsiz bolishi kerak talab qarzi bolsa qarzdorlarda, qarzi yoq
+    bolsa arxivga tushsin" + "birorta oquvchi guruhsiz lekin faol
+    bola olmaydi".
+
+    Tartib:
+      1) SHU OYNING HISOBI QAYTA HISOBLANADI — chiqqan kungacha
+         O'TILGAN darslar bo'yicha. Kelmagan darslar uchun pul
+         qaytariladi (balans o'zi to'g'rilanadi).
+      2) Guruhdan chiqariladi va holati "Chiqib ketgan" bo'ladi —
+         FAOL bo'lib qolmaydi.
+      3) Qarzi YO'Q  -> darhol arxivga tushadi;
+         qarzi BOR   -> "Chiqib ketgan" bo'lib Qarzdorlar ro'yxatida
+         qoladi, qarz to'liq to'langach AVTOMAT arxivga o'tadi.
+    """
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
@@ -993,13 +1025,24 @@ def remove_student_from_group(
         raise HTTPException(400, "Chiqarish sababi majburiy — "
                                  "kamida bir necha so'z yozing")
 
-    old_group = s.group.name if s.group else None
+    group = s.group
+    old_group = group.name if group else None
+    # 1) Hisobni chiqqan kungacha o'tilgan darslar bo'yicha to'g'rilash
+    recalc = None
+    try:
+        recalc = _recharge_on_leave(db, s, group, user=user)
+        if recalc:
+            db.flush()
+    except Exception:
+        recalc = None
+
     bal = student_balance(db, s.id)
     s.group_id = None
 
     if bal < 0:
-        # Qarzdor: arxivga EMAS — ro'yxatda guruhsiz turadi,
-        # qarzi yopilgach avtomat arxivlanadi.
+        # Qarzdor: arxivga EMAS — "chiqib ketgan" bo'lib qoladi va
+        # Qarzdorlar ro'yxatida ko'rinaveradi. Faol emas.
+        s.status = roles.STUDENT_LEFT
         s.archive_when_paid = 1
         debt = int(-bal)
         note = (f"Sabab: {reason} · Qarzi bor "
@@ -1012,6 +1055,10 @@ def remove_student_from_group(
         _sync_student_left_date(s)
         note = f"Sabab: {reason} · Arxivga o'tkazildi"
         archived = True
+    if recalc:
+        note += (f" · Hisob to'g'rilandi: {recalc['lessons']} dars, "
+                 f"{int(recalc['returned']):,} so'm qaytarildi"
+                 .replace(",", " "))
 
     audit.log(db, user, entity="student", action="group_remove",
               entity_id=s.id, entity_label=s.full_name, field="group",
@@ -1019,6 +1066,8 @@ def remove_student_from_group(
               branch_id=s.branch_id)
     db.commit()
     return {"ok": True, "archived": archived,
+            "status": s.status,
+            "recalc": recalc,
             "debt": int(-bal) if bal < 0 else 0}
 
 @router.post("/api/students/{student_id}/restore")
@@ -1033,7 +1082,7 @@ def restore_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
-    if s.status != "archived":
+    if s.status not in ("archived", roles.STUDENT_LEFT):
         raise HTTPException(400, "Bu o'quvchi arxivda emas")
     s.status = "active"
     s.archive_when_paid = 0

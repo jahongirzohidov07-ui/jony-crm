@@ -1429,6 +1429,75 @@ def _raise_if_blocked(problems: list, *, force: bool = False):
             "can_force": True,
         })
 
+def _recharge_on_leave(db: Session, s: models.Student, group,
+                       on: date = None, user=None) -> dict | None:
+    """GURUHDAN CHIQQANDA shu oyning hisobini to'g'rilaydi.
+
+    2026-08-15, Jahongir: "guruhdan chiqqanda avtomat shu kungacha
+    qatnashgan darslarini hisoblanib hisobi ham togrlanishi kerak".
+
+    Oy boshida butun oy uchun pul yechilgan bo'ladi. O'quvchi oy
+    o'rtasida chiqsa, u kelmagan darslar uchun to'lashi shart emas —
+    shuning uchun hisob CHIQQAN KUNGACHA O'TILGAN darslar bo'yicha
+    qayta hisoblanadi va farq balansga qaytadi.
+
+    Faqat HAQIQATDA O'TILGAN darslar (held=1) sanaladi. Chegirma
+    ham hisobga olinadi. Hisob qatori hali yozilmagan bo'lsa hech
+    narsa qilinmaydi.
+    """
+    if group is None:
+        return None
+    on = on or roles.local_today()
+    period = f"{on.year:04d}-{on.month:02d}"
+    row = (db.query(models.Payment)
+           .filter(models.Payment.student_id == s.id,
+                   models.Payment.kind == "charge",
+                   models.Payment.period == period)
+           .order_by(models.Payment.id.desc()).first())
+    if row is None:
+        return None
+
+    start, _end = billing.month_bounds(on.year, on.month)
+    frm = start
+    if s.enrolled_date and s.enrolled_date > start:
+        frm = s.enrolled_date
+    held = (db.query(models.Lesson)
+            .filter(models.Lesson.group_id == group.id,
+                    models.Lesson.held == 1,
+                    models.Lesson.date >= frm,
+                    models.Lesson.date <= on).count())
+    cap = int(getattr(group, "standard_lessons_per_month", None) or 12)
+    n = min(held, cap)
+    try:
+        disc = float(_student_discount_percent(db, s) or 0)
+    except Exception:
+        disc = 0.0
+    unit = billing.student_lesson_price(s, group) * (100.0 - disc) / 100.0
+    target = roles.money(n * unit)
+    was = abs(float(row.amount or 0))
+    if abs(was - target) < 1:
+        return None
+
+    row.amount = -abs(target)
+    row.updated_at = datetime.utcnow()
+    row.note = (f"{period} — guruhdan chiqdi ({on.isoformat()}): "
+                f"{n} dars hisoblandi"
+                + (f", chegirma {disc:.0f}%" if disc else ""))
+    try:
+        audit.log(db, user, entity="payment", action="amount_edit",
+                  entity_id=row.id, entity_label=s.full_name,
+                  field="amount",
+                  old_value=f"{was:,.0f}".replace(",", " "),
+                  new_value=f"{target:,.0f}".replace(",", " "),
+                  note=(f"Guruhdan chiqarildi — {n} ta o'tilgan dars "
+                        "bo'yicha qayta hisoblandi"),
+                  branch_id=s.branch_id)
+    except Exception:
+        pass
+    return {"lessons": n, "was": was, "now": target,
+            "returned": round(was - target)}
+
+
 def _recharge_after_move(db: Session, s: models.Student,
                          old_group, new_group, on_date: date = None,
                          user=None) -> dict | None:
@@ -4595,6 +4664,36 @@ def backfill_student_branches(db: Session) -> int:
     return n
 
 
+def fix_groupless_active(db: Session) -> int:
+    """GURUHSIZ "FAOL" O'QUVCHI BO'LMASIN (2026-08-15).
+
+    Jahongir: "birorta oquvchi guruhsiz lekin faol bola olmaydi
+    guruhdan chiqarildimi u faol emas endi".
+
+    Guruhi yo'q, lekin "faol" bo'lib qolgan o'quvchilar "Chiqib
+    ketgan" holatiga o'tkaziladi — ular dars ham olmayapti, hisob
+    ham yurmayapti, lekin faol sonini shishirib turardi.
+
+    SINOVDAGILARGA TEGILMAYDI: yangi kelgan o'quvchi hali guruhga
+    qo'shilmagan bo'lishi normal holat."""
+    rows = (db.query(models.Student)
+            .filter(models.Student.status == "active",
+                    models.Student.group_id.is_(None)).all())
+    if not rows:
+        return 0
+    for st in rows:
+        st.status = roles.STUDENT_LEFT
+    db.commit()
+    try:
+        audit.log(db, None, entity="student", action="update",
+                  note=(f"{len(rows)} ta guruhsiz o'quvchi \"Chiqib "
+                        "ketgan\" holatiga o'tkazildi (guruhsiz odam "
+                        "faol bo'la olmaydi)"), commit=True)
+    except Exception:
+        db.rollback()
+    return len(rows)
+
+
 def _purge_old_logs(db: Session, today=None):
     """Eski kirish urinishlari va xato jurnalini tozalash — KUNIGA
     BIR MARTA (ilgari har chaqiruvda ikki DELETE ketardi)."""
@@ -4987,6 +5086,7 @@ __all__ = [
     "_ensure_month_charges",
     "_purge_old_logs",
     "backfill_student_branches",
+    "fix_groupless_active",
     "_ensure_new_columns",
     "_ensure_public_id",
     "_ensure_student_account",
@@ -5002,6 +5102,7 @@ __all__ = [
     "_shop_discount_sum",
     "_family_discount_percent",
     "_recharge_after_move",
+    "_recharge_on_leave",
     "_norm_surname",
     "_notify_discount_approvers",
     "_same_surname",

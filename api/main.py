@@ -473,9 +473,11 @@ except Exception:
 # (2026-08-15: "yoqlamada bor lekin o'quvchilar royxatida yo'q")
 try:
     from sqlalchemy.orm import Session as _VS18
-    from common import backfill_student_branches as _bsb
+    from common import (backfill_student_branches as _bsb,
+                        fix_groupless_active as _fga)
     with _VS18(engine) as _db18:
         _bsb(_db18)
+        _fga(_db18)
 except Exception:
     pass
 

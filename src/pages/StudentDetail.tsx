@@ -48,6 +48,8 @@ const STATUS_LABEL: Record<string, string> = {
   active: "Faol",
   trial: "Sinovda",
   frozen: "Muzlatilgan",
+  // Guruhdan chiqarilgan, lekin hali arxivda emas (2026-08-15)
+  left: "Chiqib ketgan",
   archived: "Arxiv",
 };
 

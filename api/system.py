@@ -121,9 +121,12 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
     # boradi. Bot sozlanmagan yoki chat bog'lanmagan bo'lsa jimgina
     # o'tadi - kunlik ish shu sababdan yiqilmasin.
     # Filialsiz qolgan o'quvchini guruhining filialiga biriktirish
+    # va guruhsiz "faol" o'quvchini to'g'ri holatga o'tkazish
     try:
-        from common import backfill_student_branches as _bsb
+        from common import (backfill_student_branches as _bsb,
+                            fix_groupless_active as _fga)
         _bsb(db)
+        _fga(db)
     except Exception:
         try:
             db.rollback()

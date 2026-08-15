@@ -13,6 +13,7 @@ import { PhoneInput, formatPhone } from "../components/PhoneInput";
 const STATUSES = [
   { key: "active", label: "Faol" },
   { key: "trial", label: "Sinovda" },
+  { key: "left", label: "Chiqib ketgan" },
   { key: "frozen", label: "Muzlatilgan" },
   { key: "archived", label: "Arxiv (ketgan)" },
 ];
@@ -376,6 +377,7 @@ export default function Students() {
           <option value="">Barcha holatlar</option>
           <option value="active">Faol</option>
           <option value="trial">Sinovda</option>
+          <option value="left">Chiqib ketgan</option>
           <option value="frozen">Muzlatilgan</option>
           <option value="archived">Arxiv</option>
         </select>

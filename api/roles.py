@@ -905,6 +905,24 @@ APPLY_WORK_DURATIONS = [
     "2 yildan ko'p (uzoq muddat)",
 ]
 
+# O'QUVCHI HOLATLARI (2026-08-15). "left" — guruhdan chiqarilgan,
+# lekin hali arxivga tushmagan (odatda qarzi bor).
+#
+# Jahongir: "birorta oquvchi guruhsiz lekin faol bola olmaydi
+# guruhdan chiqarildimi u faol emas endi ... qarzi bolsa
+# qarzdorlarda, qarzi yoq bolsa arxivga tushsin".
+STUDENT_LEFT = "left"
+STUDENT_STATUSES = [
+    ("active", "Faol"),
+    ("trial", "Sinovda"),
+    ("frozen", "Muzlatilgan"),
+    ("left", "Chiqib ketgan"),
+    ("archived", "Arxiv"),
+]
+STUDENT_STATUS_LABELS = dict(STUDENT_STATUSES)
+# Markazda hisobga olinadigan (arxivga tushmagan) holatlar
+STUDENT_OPEN_STATUSES = ["active", "trial", "frozen", "left"]
+
 SUBJECTS = [
     ("english", "Ingliz tili"),
     ("russian", "Rus tili"),

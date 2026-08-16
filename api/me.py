@@ -440,6 +440,66 @@ def _held_coins(db: Session, student_id: int) -> int:
                     models.RewardRedemption.status == "requested").all())
     return sum(r.coins or 0 for r in rows)
 
+def _reward_task_title(redemption_id: int) -> str:
+    """Vazifa sarlavhasidagi barqaror belgi. Sovg'a berilganda shu
+    matn bo'yicha vazifa topiladi va yopiladi."""
+    return f"Sovg'a so'rovi #R{redemption_id}"
+
+
+# Sovg'ani kim beradi — birinchi topilgani vazifani oladi. Tartib
+# ataylab shunday: kundalik ish administratorda, u bo'lmasa support,
+# eng oxirida rahbariyat bezovta qilinadi.
+_REWARD_TASK_ROLES = [
+    [roles.ADMINISTRATOR],
+    [roles.HEAD_SUPPORT, roles.SUPPORT_TEACHER],
+    [roles.ACADEMIC_HEAD, roles.SALES_MANAGER],
+    [roles.BRANCH_MANAGER],
+    [roles.FOUNDER],
+]
+
+
+def _reward_task_assignee(db: Session, branch_id):
+    """Filialdagi eng mos xodim. Filialda topilmasa — umumiy."""
+    for group in _REWARD_TASK_ROLES:
+        q = db.query(models.User).filter(models.User.role.in_(group),
+                                         models.User.is_active == 1)
+        if branch_id:
+            who = q.filter(models.User.branch_id == branch_id).first()
+            if who:
+                return who
+    for group in _REWARD_TASK_ROLES:
+        who = (db.query(models.User)
+               .filter(models.User.role.in_(group),
+                       models.User.is_active == 1).first())
+        if who:
+            return who
+    return None
+
+
+def _reward_request_task(db: Session, s, r, red) -> None:
+    """O'quvchi sovg'a so'radi — xodimga vazifa."""
+    title = _reward_task_title(red.id)
+    if db.query(models.Task).filter(models.Task.title == title).first():
+        return
+    who = _reward_task_assignee(db, s.branch_id)
+    body = (f"{s.full_name}"
+            + (f" ({s.group.name})" if s.group else "")
+            + f" — \"{r.name}\" sovg'asini {red.coins} coinga olmoqchi.\n\n"
+              f"Coin band qilindi. Sovg'ani qo'lga bergach "
+              f"Gamifikatsiya → Sovg'a so'rovlari bo'limida "
+              f"\"Berildi\" tugmasini bosing — shundagina coin "
+              f"hisobdan yechiladi. Rad etilsa coin qaytadi.")
+    task = models.Task(
+        title=title, description=body,
+        assignee_id=who.id if who else None,
+        branch_id=s.branch_id,
+        deadline=date.today() + timedelta(days=2),
+        priority="normal", source="manual", created_by="Jony Shop")
+    db.add(task)
+    db.flush()
+    _ensure_public_id(db, "task", task)
+
+
 def _reward_out(r: models.Reward, balance: int = None) -> dict:
     return {
         "id": r.id,
@@ -637,11 +697,32 @@ def request_reward(
         status="requested", requested_by_student=1,
         created_by=user.full_name)
     db.add(red); db.commit(); db.refresh(red)
+
+    # -----------------------------------------------------------------
+    #  ADMINGA VAZIFA (2026-08-16, Jahongir: "sovga yutib olsa
+    #  adminlarga vazifa bolib borsin falonchi coinga shu narsa
+    #  olmoqchi deb").
+    #
+    #  Sovg'a QO'LGA beriladi, ya'ni odam kerak. Ilova ichida
+    #  bosilgan tugma xodimga yetib bormasa - o'quvchi kutib
+    #  qoladi va coin band bo'lib turaveradi. Shuning uchun har
+    #  so'rov Vazifalar bo'limiga tushadi.
+    #
+    #  Sarlavhada "#R<id>" turadi: sovg'a berilganda yoki rad
+    #  etilganda aynan shu vazifa topilib yopiladi.
+    # -----------------------------------------------------------------
+    try:
+        _reward_request_task(db, s, r, red)
+        db.commit()
+    except Exception:
+        db.rollback()   # vazifa yaratilmasa ham so'rov saqlanib qoladi
+
     return {
         "id": red.id,
         "status": "requested",
         "message": (f"\"{r.name}\" so'raldi. {r.cost} coin band qilindi — "
-                    f"sovg'ani markazdan olib ketishingiz mumkin."),
+                    f"administrator tasdiqlagach sovg'ani markazdan "
+                    f"olib ketasiz."),
         "available": available - r.cost,
     }
 

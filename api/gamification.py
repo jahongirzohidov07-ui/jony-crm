@@ -496,6 +496,24 @@ def reward_requests(
                      for k, lbl, t in roles.REDEEM_STATUSES],
     }
 
+def _close_reward_task(db: Session, redemption_id: int, user,
+                       given: bool) -> None:
+    """Sovg'a so'rovi hal bo'ldi — o'sha vazifa ham yopilsin
+    (2026-08-16). Aks holda Vazifalar bo'limi bajarilgan ishlar
+    bilan to'lib ketadi va xodim haqiqiy ishni ko'rmay qoladi.
+
+    Vazifa me.py'da "Sovg'a so'rovi #R<id>" sarlavhasi bilan
+    yaratiladi — shu bo'yicha topiladi."""
+    title = f"Sovg'a so'rovi #R{redemption_id}"
+    t = db.query(models.Task).filter(models.Task.title == title).first()
+    if not t or t.status in tuple(roles.TASK_CLOSED):
+        return
+    t.status = "done"
+    t.done_at = datetime.utcnow()
+    t.result = (f"Sovg'a berildi ({user.full_name})" if given
+                else f"Rad etildi ({user.full_name})")
+
+
 @router.post("/api/rewards/requests/{rid}/give")
 def give_reward(
     rid: int,
@@ -521,6 +539,7 @@ def give_reward(
         red.note = payload.note
         red.given_by = user.full_name
         red.given_at = datetime.utcnow()
+        _close_reward_task(db, red.id, user, given=False)
         db.commit()
         return {"ok": True, "status": "rejected"}
 
@@ -540,6 +559,7 @@ def give_reward(
     red.note = payload.note
     if r and r.stock is not None:
         r.stock -= 1
+    _close_reward_task(db, red.id, user, given=True)
     db.commit()
 
     audit.log(db, user, entity="reward", action="update", entity_id=red.id,

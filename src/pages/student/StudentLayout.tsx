@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, Navigate } from "react-router-dom";
-import { Home, Gamepad2, Trophy, User } from "lucide-react";
+import { Home, Gamepad2, ShoppingBag, Trophy, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 
+// Do'kon 2026-08-16 da qo'shildi (Jahongir: "ichida Do'konni
+// qoshmabmiz nega coin yigyabdi nimadur sotib olishi kerakku").
+// O'rtada turibdi — coin yig'ishning maqsadi ko'z oldida bo'lsin.
 const TABS = [
   { to: "/student", end: true, icon: Home, label: "Asosiy" },
   { to: "/student/games", end: false, icon: Gamepad2, label: "Mashq" },
+  { to: "/student/shop", end: false, icon: ShoppingBag, label: "Do'kon" },
   { to: "/student/leaderboard", end: false, icon: Trophy, label: "Reyting" },
   { to: "/student/profile", end: false, icon: User, label: "Profil" },
 ];
@@ -51,14 +55,15 @@ export default function StudentLayout() {
       <Outlet />
 
       <nav className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 z-40 pb-safe">
-        <div className="max-w-md mx-auto grid grid-cols-4">
+        <div className="max-w-md mx-auto grid grid-cols-5">
           {TABS.map((t, i) => {
             const active = [
               "text-sky-600 bg-sky-50",
               "text-emerald-600 bg-emerald-50",
+              "text-brand-600 bg-brand-50",
               "text-amber-600 bg-amber-50",
               "text-violet-600 bg-violet-50",
-            ][i % 4];
+            ][i % 5];
             return (
               <NavLink
                 key={t.to}
@@ -69,7 +74,7 @@ export default function StudentLayout() {
                 {({ isActive }) => (
                   <>
                     <span
-                      className={`flex items-center justify-center w-12 h-7 rounded-full transition ${
+                      className={`flex items-center justify-center w-11 h-7 rounded-full transition ${
                         isActive ? active : "text-slate-400"
                       }`}
                     >

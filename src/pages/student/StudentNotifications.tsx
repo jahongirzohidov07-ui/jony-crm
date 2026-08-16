@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatDate } from "../../lib/format";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Bell, CircleDollarSign, GraduationCap } from "lucide-react";
+import { ArrowLeft, Bell, CircleDollarSign, GraduationCap, Gift } from "lucide-react";
 import { api } from "../../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -79,11 +79,15 @@ export default function StudentNotifications() {
                 className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                   n.kind === "payment"
                     ? "bg-red-50 text-red-600"
+                    : n.kind === "reward"
+                    ? "bg-emerald-50 text-emerald-600"
                     : "bg-violet-50 text-violet-600"
                 }`}
               >
                 {n.kind === "payment" ? (
                   <CircleDollarSign size={19} />
+                ) : n.kind === "reward" ? (
+                  <Gift size={19} />
                 ) : (
                   <GraduationCap size={19} />
                 )}

@@ -764,6 +764,38 @@ def student_notifications(db: Session = Depends(get_db),
             "date": ex.date.isoformat() if ex.date else None,
         })
 
+    # 3) Sovg'a so'rovi hal bo'ldi (2026-08-16, Jahongir: Do'kon
+    #    qo'shilgach o'quvchi "so'rovim nima bo'ldi?" deb ilovani
+    #    qayta-qayta ochib ko'rmasin).
+    reds = (db.query(models.RewardRedemption, models.Reward)
+            .join(models.Reward,
+                  models.RewardRedemption.reward_id == models.Reward.id)
+            .filter(models.RewardRedemption.student_id == s.id,
+                    models.RewardRedemption.requested_by_student == 1,
+                    models.RewardRedemption.status.in_(["given", "rejected"]),
+                    models.RewardRedemption.given_at.isnot(None))
+            .order_by(models.RewardRedemption.given_at.desc())
+            .limit(10).all())
+    for red, rw in reds:
+        when = (red.given_at.date() if red.given_at else None)
+        if when and when < since:
+            continue
+        if red.status == "given":
+            title = f"Sovg'a berildi: {rw.name}"
+            body = (f"{red.coins} coin hisobingizdan yechildi. "
+                    f"Tabriklaymiz!")
+        else:
+            title = f"Sovg'a so'rovi rad etildi: {rw.name}"
+            body = ((red.note + " · ") if red.note else "") + \
+                   f"{red.coins} coin hisobingizga qaytarildi."
+        items.append({
+            "id": f"reward:{red.id}",
+            "kind": "reward",
+            "title": title,
+            "body": body,
+            "date": when.isoformat() if when else None,
+        })
+
     items.sort(key=lambda x: x["date"] or "", reverse=True)
     return {"items": items,
             "latest": items[0]["date"] if items else None}

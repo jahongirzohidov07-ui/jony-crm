@@ -30,8 +30,52 @@ export interface SkillProgress extends LevelProgress {
   tone: string;
 }
 
+/** Kunlik uchta vazifa (2026-08-16). Bajarilgani BUGUNGI mashq
+ * yozuvlaridan hisoblanadi — alohida "bajardim" tugmasi yo'q. */
+export interface DailyTask {
+  key: string;
+  title: string;
+  hint: string;
+  target: number;
+  done_count: number;
+  done: boolean;
+  minutes: number;
+  href: string;
+}
+
+export interface DailyGoal {
+  tasks: DailyTask[];
+  done: number;
+  total: number;
+  percent: number;
+  all_done: boolean;
+  reward_xp: number;
+  reward_coin: number;
+  next: DailyTask | null;
+}
+
+/** Yarim qolgan grammatika mavzusi — "Davom ettirish" kartasi. */
+export interface ContinueCard {
+  kind: string;
+  title: string;
+  subtitle: string;
+  level: string;
+  solved: number;
+  total: number;
+  percent: number;
+  minutes: number;
+  xp: number;
+  coin: number;
+  href: string;
+}
+
 export interface StudentHome {
   name: string;
+  photo?: string | null;
+  balance?: number;
+  daily?: DailyGoal;
+  continue?: ContinueCard | null;
+  week_xp?: number;
   group: string | null;
   level_label: string | null;
   status: string;

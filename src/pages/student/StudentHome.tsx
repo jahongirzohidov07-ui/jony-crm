@@ -1,43 +1,47 @@
 import { useEffect, useState } from "react";
-import { formatDate } from "../../lib/format";
-import { NpsCard } from "../../components/NpsCard";
 import { Link } from "react-router-dom";
+import {
+  Bell, ChevronDown, ChevronRight, Flame, Globe, Map as MapIcon,
+  Play, Sparkles, CreditCard, Check, BookOpen,
+} from "lucide-react";
 import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
 import { CoinIcon } from "../../components/CoinIcon";
-import { Lock as LockIcon, Bell,
-  ChevronDown, ChevronRight, Flame, Sparkles, Trophy,
-  } from "lucide-react";
-import type { ReactNode } from "react";
+import { NpsCard } from "../../components/NpsCard";
 import { api } from "../../lib/api";
-import { BrandIcon } from "../../components/BrandIcon";
-import {
-  fmtNum, TONE_BAR, type SkillProgress, type StudentHome as Home,
-} from "../../lib/studentApi";
+import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 
 /**
- * JONY STUDENT — bosh ekran (2026-08-09).
+ * JONY STUDENT — BOSH EKRAN (2026-08-16 da to'liq qayta yozildi).
  *
- * Jahongir aynan shuni so'radi: "o'quvchiga umumiy darajasi va ustiga
- * bosganda har bir bo'limdan alohida darajalari progress ko'rinib
- * tursin, qachon keyingi darajaga yetadi qancha qoldi."
- * Shuning uchun umumiy daraja kartasi BOSILADI va ichidan olti
- * ko'nikma (lug'at, grammatika, o'qish, tinglash, yozish, gapirish)
- * har biri o'z progress chizig'i bilan ochiladi.
+ * Jahongir bergan tanqid va yangi dizayn:
+ *
+ *   "hozircha u 'gamification app'dan ko'ra chiroyli elektron
+ *   kabinetga yaqinroq ... O'quvchi coinni qayerda ishlatishini, XP
+ *   nima berishini bilmaydi ... Bosh sahifada balans juda katta
+ *   e'tibor olgan ... 'Bugun' bloki juda bo'sh."
+ *
+ * Shunga ko'ra tartib qat'iy o'zgardi:
+ *   1. Salomlashuv
+ *   2. Daraja va progress (foiz + son bilan)
+ *   3. Kunlik maqsad (0/3 halqa, mukofot ko'rinib turadi)
+ *   4. Coin / XP / Streak — uchtasi ham BOSILADI
+ *   5. Davom ettirish
+ *   6. To'lov — eng pastda, kichkina qatorda
+ *
+ * To'lov ataylab pastga tushirildi: qizil karta tepada turganda
+ * butun ilova "qarzdorlik ilovasi"dek ko'rinardi. Ma'lumot
+ * yo'qolmadi — faqat o'z o'rniga o'tdi.
  */
+
 export default function StudentHome() {
   const [d, setD] = useState<Home | null>(null);
   const [err, setErr] = useState("");
-  const [open, setOpen] = useState(false);
-
   const [hasNew, setHasNew] = useState(false);
   const [lang, setLangState] = useState(getLang());
   const [langOpen, setLangOpen] = useState(false);
-  const [lockMsg, setLockMsg] = useState<any>(null);
 
   useEffect(() => {
-    // Yangi bildirishnoma bormi - oxirgi ko'rilgan vaqt bilan
-    // solishtiramiz (sahifasi ochilganda o'sha vaqt yangilanadi)
     api
       .get<{ latest: string | null }>("/student/notifications")
       .then((r) => {
@@ -55,344 +59,373 @@ export default function StudentHome() {
   }, []);
 
   if (err)
-    return <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>;
+    return (
+      <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>
+    );
   if (!d)
-    return <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>;
+    return (
+      <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>
+    );
 
   const ov = d.overall;
+  const daily = d.daily;
+  const cont = d.continue;
+  const firstName = (d.name || "").split(" ").slice(-1)[0] || d.name;
+  const pct = ov?.next ? Math.round(ov.next.progress_percent) : 100;
+  const perLevel = 500; // roles.PRACTICE_POINTS_PER_LEVEL
+  const inLevel = ov?.next ? perLevel - ov.next.points_left : perLevel;
+  const balance = d.balance;
 
   return (
     <>
-      <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-8 pb-12">
+      {/* ================================================ SARLAVHA */}
+      <div className="bg-brand-600 text-white px-4 pt-6 pb-14">
         <div className="max-w-md mx-auto">
-          <div className="flex items-center gap-2 mb-4 opacity-90">
-            <BrandIcon size={18} className="rounded-md" />
-            <span className="text-sm font-medium">Jony Student</span>
-          </div>
-          {/* ENG TEPADA: rasm + ism (2026-08-10, Jahongir). Bosilsa
-              profil ochiladi - rasm qo'yish/ism o'zgartirish o'sha
-              yerda. */}
-          <div className="flex items-center gap-3">
-          <Link to="/student/profile" className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="w-14 h-14 rounded-full bg-white/20 border-2 border-white/40 overflow-hidden flex items-center justify-center shrink-0">
-              {(d as any).photo ? (
-                <img
-                  src={(d as any).photo}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
+          <div className="flex items-center gap-2">
+            <div className="flex-1 min-w-0 leading-none">
+              <p className="text-[19px] font-extrabold tracking-tight">
+                JONY
+              </p>
+              <p className="text-[10px] font-semibold tracking-[0.35em] text-white/80">
+                STUDENT
+              </p>
+            </div>
+
+            <button
+              onClick={() => setLangOpen(true)}
+              className="h-9 px-3 rounded-full border border-white/40 flex items-center gap-1.5 text-sm font-medium shrink-0"
+              aria-label="Til tanlash"
+            >
+              <Globe size={15} />
+              {lang.toUpperCase()}
+              <ChevronDown size={14} className="opacity-70" />
+            </button>
+
+            <Link
+              to="/student/notifications"
+              className="relative w-9 h-9 flex items-center justify-center shrink-0"
+              aria-label="Bildirishnomalar"
+            >
+              <Bell size={21} />
+              {hasNew && (
+                <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-brand-600" />
+              )}
+            </Link>
+
+            <Link
+              to="/student/profile"
+              className="w-11 h-11 rounded-full bg-white/20 border-2 border-white/50 overflow-hidden flex items-center justify-center shrink-0"
+            >
+              {d.photo ? (
+                <img src={d.photo} alt="" className="w-full h-full object-cover" />
               ) : (
-                <span className="text-xl font-bold">
+                <span className="text-base font-bold">
                   {d.name?.charAt(0) || "?"}
                 </span>
               )}
-            </div>
-            <div className="min-w-0">
-              <h1 className="text-xl font-semibold truncate">{d.name}</h1>
-              <p className="text-sm opacity-90 mt-0.5">
-                {d.group || "guruh biriktirilmagan"}
-                {d.level_label ? ` · ${d.level_label}` : ""}
-              </p>
-            </div>
-          </Link>
-          {/* BAYROQ (2026-08-11): o'rganilayotgan til. Bosilsa
-              tanlash oynasi ochiladi - lug'at shu tilga o'tadi. */}
-          <button
-            onClick={() => setLangOpen(true)}
-            className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0"
-            aria-label="Til tanlash"
-          >
-            <Flag code={lang} size={22} />
-          </button>
-          {/* QO'NG'IROQCHA (2026-08-10, Jahongir): to'lov vaqti va
-              imtihon natijasi xabarlari. Qizil nuqta - oxirgi
-              ko'rilgandan keyin yangi xabar bor degani. */}
-          <Link
-            to="/student/notifications"
-            className="relative w-11 h-11 rounded-full bg-white/15 flex items-center justify-center shrink-0"
-            aria-label="Bildirishnomalar"
-          >
-            <Bell size={20} />
-            {hasNew && (
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-brand-600" />
-            )}
-          </Link>
+            </Link>
           </div>
+
+          <h1 className="text-xl font-bold mt-4">Salom, {firstName}! 👋</h1>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 -mt-7 space-y-4">
-        <div className="-mt-6 mb-4"><NpsCard /></div>
-        {/* --- BALANS (2026-08-10, Jahongir: "bosh sahifada balansi
-            ko'rinib turishi kerak"). Manfiy - qizil, to'lov
-            eslatmasi bilan. --- */}
-        {typeof (d as any).balance === "number" && (
-          <Link
-            to="/student/profile"
-            className={`flex items-center justify-between rounded-2xl shadow-sm border p-4 ${
-              (d as any).balance < 0
-                ? "bg-red-50 border-red-200"
-                : "bg-white border-slate-200"
-            }`}
-          >
-            <div>
-              <p className="text-xs text-slate-500">Balansingiz</p>
-              <p
-                className={`text-xl font-bold leading-tight ${
-                  (d as any).balance < 0 ? "text-red-600" : "text-slate-900"
-                }`}
-              >
-                {Math.round((d as any).balance).toLocaleString("ru-RU")} so'm
+      <div className="max-w-md mx-auto px-4 -mt-9 pb-6 space-y-4">
+        {/* ======================================= DARAJA KARTASI */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+          <div className="flex items-start gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-slate-500">Hozirgi daraja</p>
+              <p className="text-[30px] font-extrabold text-slate-900 leading-tight mt-0.5">
+                {ov?.level?.label || "—"}
               </p>
-              {(d as any).balance < 0 && (
-                <p className="text-[11px] text-red-500 mt-0.5">
-                  To'lov vaqti keldi — administratorga murojaat qiling
-                </p>
-              )}
+              <p className="text-sm text-slate-500 mt-0.5">
+                CEFR {ov?.level?.cefr} · IELTS{" "}
+                {(ov?.level?.ielts || "").replace("~", "")}
+              </p>
             </div>
-            <span className="text-xs font-medium text-brand-600 shrink-0">
-              Tarix →
-            </span>
-          </Link>
-        )}
-
-        {/* --- CHEGIRMA (2026-08-12, Jahongir: "o'quvchiga chegirmani
-            nega olgani va qancha chegirmasi qachongacha borligi
-            ko'rinib tursin"). Yashirin (individual) chegirmalar
-            serverdan umuman kelmaydi. --- */}
-        {((d as any).discounts || []).length > 0 && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
-            {((d as any).discounts || []).map((ds: any, i: number) => (
-              <div key={i} className={i > 0 ? "mt-2 pt-2 border-t border-emerald-100" : ""}>
-                <p className="text-sm font-bold text-emerald-800">
-                  🎁 Chegirmangiz:{" "}
-                  {ds.percent
-                    ? `${ds.percent}%`
-                    : `${Math.round(ds.amount || 0).toLocaleString("ru-RU")} so'm`}
-                </p>
-                <p className="text-[12px] text-emerald-700 mt-0.5">
-                  {ds.reason}
-                </p>
-                <p className="text-[11px] text-emerald-600 mt-0.5">
-                  {ds.until
-                    ? `${formatDate(ds.until)} gacha amal qiladi`
-                    : "Muddatsiz"}
-                </p>
+            {/* Qalqon nishoni — CEFR darajasi */}
+            <div className="shrink-0 w-16 h-[72px] relative">
+              <svg viewBox="0 0 64 72" className="w-full h-full">
+                <path
+                  d="M32 2 L60 12 V38 C60 54 46 65 32 70 C18 65 4 54 4 38 V12 Z"
+                  fill="#EAF2FE"
+                  stroke="#C7DDFB"
+                  strokeWidth="2"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pt-1">
+                <span className="text-[19px] font-extrabold text-brand-600">
+                  {ov?.level?.cefr}
+                </span>
+                <Sparkles size={11} className="text-brand-400 mt-0.5" />
               </div>
-            ))}
+            </div>
           </div>
-        )}
 
-        {/* --- UMUMIY DARAJA: bosilsa ko'nikmalar ochiladi --- */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="w-full text-left p-5 active:bg-slate-50 transition"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-xs text-slate-500">Umumiy darajangiz</p>
-                <p className="text-2xl font-bold text-slate-900 leading-tight">
-                  {ov.level.label}
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  IELTS {ov.level.ielts} · CEFR {ov.level.cefr}
-                </p>
-              </div>
-              <span className="flex items-center gap-1 text-xs font-medium text-brand-600 shrink-0 mt-1">
-                Bo'limlar
-                {open ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
-              </span>
-            </div>
-
-            {ov.max_level ? (
-              <p className="mt-4 text-sm font-medium text-emerald-600">
-                Eng yuqori daraja 🎉
-              </p>
-            ) : (
-              <div className="mt-4">
-                <div className="flex justify-between text-[11px] text-slate-500 mb-1">
-                  <span>Keyingi: {ov.next!.label}</span>
-                  <span className="font-medium text-slate-700">
-                    yana {fmtNum(ov.next!.points_left)} ball
-                  </span>
-                </div>
-                <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-brand-600"
-                    style={{ width: `${ov.next!.progress_percent}%` }}
-                  />
-                </div>
-              </div>
-            )}
-          </button>
-
-          {open && (
-            <div className="border-t border-slate-100 p-4 space-y-3.5 bg-slate-50/60">
-              <p className="text-[11px] text-slate-400">
-                Har bir bo'lim alohida hisoblanadi
-              </p>
-              {d.skills.map((s) => (
-                <SkillRow key={s.key} s={s} />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* --- Statistika (2026-08-11: yorqin gradientlar) --- */}
-        <div className="grid grid-cols-2 gap-3">
-          <Stat
-            icon={<CoinIcon size={22} />}
-            tone="from-amber-400 to-orange-500"
-            value={fmtNum(d.gamification.coins)}
-            label="Coin"
-          />
-          <Stat
-            icon={<Sparkles size={19} />}
-            tone="from-violet-500 to-purple-600"
-            value={fmtNum(d.gamification.lifetime_xp)}
-            label="XP"
-          />
-          <Stat
-            icon={<Flame size={19} />}
-            tone="from-orange-500 to-red-500"
-            value={`${d.streak} kun`}
-            label="Ketma-ket"
-          />
-          <Stat
-            icon={<Trophy size={19} />}
-            tone="from-emerald-500 to-teal-600"
-            value={
-              d.ranks.group_rank
-                ? `${d.ranks.group_rank}/${d.ranks.group_total}`
-                : "—"
-            }
-            label="Guruhda"
-          />
-        </div>
-
-        {/* --- Bugun --- */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-slate-800">Bugun</p>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {d.today.answered === 0
-                  ? "Hali mashq qilmadingiz"
-                  : `${d.today.correct} to'g'ri / ${d.today.answered} javob`}
-              </p>
-            </div>
-            <Link
-              to="/student/games"
-              className="text-xs font-medium px-3.5 py-2 rounded-lg bg-brand-600 text-white shrink-0"
+          {/* Progress: FOIZ ham, SON ham (Jahongir aynan shuni so'radi) */}
+          <div className="mt-4 h-7 rounded-full bg-slate-100 relative overflow-hidden">
+            <div
+              className="h-full bg-brand-600 rounded-full transition-all"
+              style={{ width: `${Math.max(pct, 6)}%` }}
+            />
+            <span
+              className="absolute inset-y-0 flex items-center text-xs font-semibold text-slate-600"
+              style={{ left: `calc(${Math.max(pct, 6)}% + 10px)` }}
             >
-              Mashq qilish
+              {pct}%
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between mt-2.5 text-sm">
+            <span className="text-slate-500">
+              Keyingi bosqich:{" "}
+              <b className="text-brand-600 font-semibold">
+                {ov?.next?.label || "Eng yuqori daraja"}
+              </b>
+            </span>
+            {ov?.next && (
+              <span className="text-slate-500 shrink-0">
+                {inLevel}/{perLevel} XP
+              </span>
+            )}
+          </div>
+
+          <div className="border-t border-slate-100 mt-4 pt-3">
+            <Link
+              to="/student/roadmap"
+              className="flex items-center justify-center gap-2 text-sm font-semibold text-brand-600"
+            >
+              <MapIcon size={16} />
+              Yo'l xaritasi
             </Link>
           </div>
         </div>
 
-        {/* CEFR / IELTS QULFLARI (2026-08-11): "Bugun mashq qil"
-            kartasining TAGIDA, har biri alohida qatorda. */}
-        <div className="space-y-2">
-          {[
-            {
-              key: "cefr",
-              label: "CEFR",
-              hint: "Til darajasi imtihoniga tayyorgarlik",
-              needIdx: 2,
-              needLabel: "PRE-INTERMEDIATE",
-            },
-            {
-              key: "ielts",
-              label: "IELTS",
-              hint: "Xalqaro imtihonga tayyorgarlik",
-              needIdx: 3,
-              needLabel: "INTERMEDIATE",
-            },
-          ].map((c) => {
-            const levels = [
-              "beginner", "elementary", "pre_intermediate",
-              "intermediate", "upper_intermediate", "advanced",
-              "native",
-            ];
-            const myIdx = levels.indexOf(
-              (d as any).overall?.level?.key || "beginner",
-            );
-            const open = myIdx >= c.needIdx;
-            return (
-              <button
-                key={c.key}
-                onClick={() => setLockMsg(c as any)}
-                className={`w-full flex items-center gap-3 rounded-2xl border p-4 text-left ${
-                  open
-                    ? "bg-white border-emerald-200"
-                    : "bg-slate-50 border-dashed border-2 border-slate-300"
-                }`}
-              >
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                    open
-                      ? "bg-emerald-100 text-emerald-700"
-                      : "bg-slate-200 text-slate-500"
-                  }`}
-                >
-                  <LockIcon size={17} />
+        {/* ====================================== BUGUNGI MAQSAD */}
+        {daily && (
+          <div
+            className={`rounded-2xl border p-4 ${
+              daily.all_done
+                ? "bg-emerald-50 border-emerald-300"
+                : "bg-gradient-to-br from-sky-50 via-white to-violet-50 border-brand-200"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-14 h-14 rounded-full bg-brand-600 flex items-center justify-center shrink-0">
+                {daily.all_done ? (
+                  <Check size={26} className="text-white" strokeWidth={3} />
+                ) : (
+                  <div className="w-7 h-7 rounded-full border-[3px] border-white flex items-center justify-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-white" />
+                  </div>
+                )}
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <p className="text-lg font-bold text-slate-900">
+                  {daily.all_done ? "Bugungi maqsad bajarildi!" : "Bugungi maqsad"}
+                </p>
+                <p className="text-sm text-slate-500 mt-0.5 truncate">
+                  {daily.next
+                    ? `${daily.next.title} · ${daily.next.minutes} daqiqa`
+                    : "Ertaga yangi maqsad ochiladi"}
+                </p>
+                <div className="flex gap-2 mt-2">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold">
+                    ⭐ +{daily.reward_xp} XP
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">
+                    <CoinIcon size={12} /> +{daily.reward_coin} Coin
+                  </span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className={`text-sm font-bold ${
-                      open ? "text-emerald-700" : "text-slate-600"
+              </div>
+
+              {/* Halqa: 0/3 */}
+              <div className="relative w-[70px] h-[70px] shrink-0">
+                <svg viewBox="0 0 70 70" className="w-full h-full -rotate-90">
+                  <circle
+                    cx="35" cy="35" r="30" fill="none"
+                    stroke="#E5E9F0" strokeWidth="7"
+                  />
+                  <circle
+                    cx="35" cy="35" r="30" fill="none"
+                    stroke={daily.all_done ? "#10B981" : "#1A6FE4"}
+                    strokeWidth="7" strokeLinecap="round"
+                    strokeDasharray={`${(daily.percent / 100) * 188.5} 188.5`}
+                  />
+                </svg>
+                <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-brand-600">
+                  {daily.done}/{daily.total}
+                </span>
+              </div>
+            </div>
+
+            {!daily.all_done && daily.next && (
+              <Link
+                to={daily.next.href}
+                className="mt-4 w-full h-14 rounded-xl bg-brand-600 text-white font-semibold flex items-center justify-center gap-2.5 active:bg-brand-700"
+              >
+                <span className="w-7 h-7 rounded-full bg-white/25 flex items-center justify-center">
+                  <Play size={14} fill="currentColor" />
+                </span>
+                Boshlash
+              </Link>
+            )}
+
+            {/* Uch vazifaning holati */}
+            <div className="mt-3 space-y-1.5">
+              {daily.tasks.map((t) => (
+                <Link
+                  key={t.key}
+                  to={t.href}
+                  className="flex items-center gap-2 text-xs"
+                >
+                  <span
+                    className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                      t.done
+                        ? "bg-emerald-500 text-white"
+                        : "border-2 border-slate-300"
                     }`}
                   >
-                    {c.label}
+                    {t.done && <Check size={10} strokeWidth={4} />}
+                  </span>
+                  <span
+                    className={
+                      t.done
+                        ? "text-slate-400 line-through flex-1"
+                        : "text-slate-600 flex-1"
+                    }
+                  >
+                    {t.title}
+                  </span>
+                  <span className="text-slate-400 shrink-0">
+                    {t.done_count}/{t.target}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ============================== COIN / XP / STREAK ===== */}
+        <div className="grid grid-cols-3 gap-2.5">
+          <Link
+            to="/student/shop"
+            className="bg-white rounded-xl border border-slate-200 p-3 active:scale-[0.98] transition"
+          >
+            <div className="flex items-start justify-between">
+              <CoinIcon size={26} />
+              <ChevronRight size={16} className="text-slate-300" />
+            </div>
+            <p className="text-[22px] font-bold text-slate-900 mt-1.5 leading-none">
+              {fmtNum(d.gamification?.coins)}
+            </p>
+            <p className="text-xs text-slate-500 mt-1">Coin</p>
+          </Link>
+
+          <Link
+            to="/student/roadmap"
+            className="bg-white rounded-xl border border-slate-200 p-3 active:scale-[0.98] transition"
+          >
+            <div className="flex items-start justify-between">
+              <Sparkles size={24} className="text-brand-500" />
+              <ChevronRight size={16} className="text-slate-300" />
+            </div>
+            <p className="text-[22px] font-bold text-slate-900 mt-1.5 leading-none">
+              {fmtNum(d.gamification?.lifetime_xp)}
+            </p>
+            <p className="text-xs text-slate-500 mt-1">XP</p>
+          </Link>
+
+          <Link
+            to="/student/games"
+            className="bg-white rounded-xl border border-slate-200 p-3 active:scale-[0.98] transition"
+          >
+            <div className="flex items-start justify-between">
+              <Flame size={24} className="text-orange-500" />
+              <ChevronRight size={16} className="text-slate-300" />
+            </div>
+            <p className="text-[22px] font-bold text-slate-900 mt-1.5 leading-none">
+              {d.streak}
+              <span className="text-sm font-medium text-slate-500"> kun</span>
+            </p>
+            <p className="text-xs text-slate-500 mt-1">Streak</p>
+          </Link>
+        </div>
+
+        {/* Streak uchun keyingi qadam */}
+        {d.streak === 0 && (
+          <p className="text-xs text-slate-400 -mt-1.5 px-1">
+            Bugun mashq qilsangiz streak boshlanadi. 7 kun ketma-ket = 50 coin.
+          </p>
+        )}
+
+        {/* ===================================== DAVOM ETTIRISH */}
+        {cont && (
+          <div>
+            <p className="text-[15px] font-bold text-slate-900 mb-2">
+              Davom ettirish
+            </p>
+            <Link
+              to={cont.href}
+              className="block bg-white rounded-xl border border-slate-200 p-4 active:scale-[0.99] transition"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                  <BookOpen size={24} className="text-emerald-600" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-base font-bold text-slate-900 truncate">
+                    {cont.title}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    {c.hint}
+                  <p className="text-sm text-slate-500 mt-0.5">
+                    {cont.subtitle} · {cont.solved}/{cont.total}
                   </p>
                 </div>
-                <span
-                  className={`text-[11px] font-semibold shrink-0 ${
-                    open ? "text-emerald-600" : "text-slate-400"
-                  }`}
-                >
-                  {open ? "Ochilgan" : "Qulf"}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                <ChevronRight size={20} className="text-slate-300 shrink-0" />
+              </div>
 
+              <div className="h-2 rounded-full bg-slate-100 mt-3 overflow-hidden">
+                <div
+                  className="h-full bg-emerald-500 rounded-full"
+                  style={{ width: `${cont.percent}%` }}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-xs text-slate-400">
+                  🕐 Taxminan {cont.minutes} daqiqa · +{cont.xp} XP
+                </span>
+                <span className="px-4 py-2 rounded-lg border border-brand-500 text-brand-600 text-sm font-semibold">
+                  Davom etish
+                </span>
+              </div>
+            </Link>
+          </div>
+        )}
+
+        <NpsCard />
+
+        {/* ============ TO'LOV — eng pastda, kichik qatorda ====== */}
+        {typeof balance === "number" && balance < 0 && (
+          <Link
+            to="/student/profile"
+            className="flex items-center gap-2.5 bg-red-50 border border-red-200 rounded-xl px-3.5 py-3"
+          >
+            <span className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center shrink-0">
+              <CreditCard size={16} className="text-red-500" />
+            </span>
+            <span className="text-sm font-semibold text-red-600 flex-1">
+              To'lov muddati keldi
+            </span>
+            <span className="text-sm text-red-600 underline">Ko'rish</span>
+            <ChevronRight size={16} className="text-red-400" />
+          </Link>
+        )}
       </div>
 
-      {/* ---- CEFR/IELTS QULF XABARI ---- */}
-      {lockMsg && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 flex items-center justify-center px-6"
-          onClick={() => setLockMsg(null)}
-        >
-          <div
-            className="w-full max-w-sm bg-white rounded-2xl p-5"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p className="text-base font-bold text-slate-900 mb-1.5">
-              {lockMsg.label} bo'limi
-            </p>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              Bu bo'lim ochilishi uchun sizning darajangiz kamida{" "}
-              <b>{lockMsg.needLabel}</b> bo'lishi kerak. Mashqlarni
-              bajarib darajangizni oshiring!
-            </p>
-            <button
-              onClick={() => setLockMsg(null)}
-              className="w-full mt-4 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold"
-            >
-              Tushunarli
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ---- TIL TANLASH ---- */}
+      {/* ------------------------------------------ TIL TANLASH */}
       {langOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-40 flex items-end justify-center"
@@ -433,64 +466,12 @@ export default function StudentHome() {
               ))}
             </div>
             <p className="text-[11px] text-slate-400 mt-3">
-              Lug'at mashqlari tanlangan tilda bo'ladi. Grammatika
-              hozircha ingliz tilida.
+              Lug'at mashqlari tanlangan tilda bo'ladi. Grammatika hozircha
+              ingliz tilida.
             </p>
           </div>
         </div>
       )}
     </>
-  );
-}
-
-function SkillRow({ s }: { s: SkillProgress }) {
-  return (
-    <div>
-      <div className="flex items-baseline justify-between gap-2 mb-1">
-        <span className="text-sm text-slate-700">{s.label}</span>
-        <span className="text-xs font-medium text-slate-800">
-          {s.level.label}
-        </span>
-      </div>
-      <div className="h-2 rounded-full bg-slate-200 overflow-hidden">
-        <div
-          className={`h-full rounded-full ${TONE_BAR[s.tone] || TONE_BAR.slate}`}
-          style={{ width: `${s.next ? s.next.progress_percent : 100}%` }}
-        />
-      </div>
-      <p className="text-[11px] text-slate-400 mt-1">
-        {s.max_level
-          ? "Eng yuqori daraja 🎉"
-          : `${s.level.label} → ${s.next!.label} · yana ${fmtNum(
-              s.next!.points_left,
-            )} ball`}
-      </p>
-    </div>
-  );
-}
-
-function Stat({
-  icon,
-  tone,
-  value,
-  label,
-}: {
-  icon: ReactNode;
-  tone: string;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div
-      className={`bg-gradient-to-br ${tone} rounded-2xl shadow-sm p-3.5 text-white`}
-    >
-      <div className="w-9 h-9 rounded-xl bg-white/25 flex items-center justify-center mb-2">
-        {icon}
-      </div>
-      <p className="text-xl font-bold leading-tight">
-        {value}
-      </p>
-      <p className="text-[11px] text-slate-500">{label}</p>
-    </div>
   );
 }

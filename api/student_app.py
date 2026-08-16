@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import random
 from datetime import date, datetime, timedelta
+from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func
@@ -91,6 +92,139 @@ def _streak_days(db: Session, student_id: int) -> int:
     return streak
 
 
+# =====================================================================
+#  KUNLIK MAQSAD VA "DAVOM ETTIRISH" (2026-08-16)
+#
+#  Jahongir: "Coin va XP maqsadi tushunarsiz ... 'Bugun' bloki juda
+#  bo'sh. 'Hali mashq qilmadingiz' o'rniga aniq vazifa bering:
+#  Bugungi maqsad / 10 ta yangi so'z · 5 daqiqa / Mukofot: +20 XP,
+#  +5 Coin. Tugagach, progress 0/3 -> 3/3 bo'lib, kichik tabrik
+#  animatsiyasi chiqishi kerak."
+#
+#  MUHIM: yangi jadval OCHILMADI. Uch vazifa ham BUGUNGI mavjud
+#  yozuvlardan hisoblanadi (VocabAttempt / GrammarAttempt /
+#  SkillAttempt). Ya'ni o'quvchi mashq qilsa vazifa o'zi yopiladi,
+#  alohida "bajardim" tugmasi kerak emas va ma'lumot dublikat
+#  bo'lmaydi.
+# =====================================================================
+
+DAILY_TASKS = [
+    # (kalit, sarlavha, izoh, maqsad, taxminiy daqiqa, yo'l)
+    ("vocab", "10 ta yangi so'z", "Lug'at mashqi", 10, 5, "/student/vocab"),
+    ("grammar", "5 ta grammatika savoli", "Grammatika", 5, 4,
+     "/student/grammar"),
+    ("skill", "5 ta ko'nikma mashqi", "Listening yoki Reading", 5, 6,
+     "/student/games"),
+]
+DAILY_REWARD_XP = 20
+DAILY_REWARD_COIN = 5
+
+
+def _daily_progress(db: Session, student_id: int) -> dict:
+    """Bugungi uchta vazifa: nechtasi bajarildi."""
+    today = date.today()
+    vocab = (db.query(func.count(models.VocabAttempt.id))
+             .filter(models.VocabAttempt.student_id == student_id,
+                     models.VocabAttempt.date == today,
+                     models.VocabAttempt.correct == 1).scalar() or 0)
+    gram = (db.query(func.count(models.GrammarAttempt.id))
+            .filter(models.GrammarAttempt.student_id == student_id,
+                    models.GrammarAttempt.date == today,
+                    models.GrammarAttempt.correct == 1).scalar() or 0)
+    skill = (db.query(func.count(models.SkillAttempt.id))
+             .filter(models.SkillAttempt.student_id == student_id,
+                     models.SkillAttempt.date == today,
+                     models.SkillAttempt.correct == 1).scalar() or 0)
+    got = {"vocab": int(vocab), "grammar": int(gram), "skill": int(skill)}
+
+    tasks = []
+    for key, title, hint, target, minutes, href in DAILY_TASKS:
+        have = min(got[key], target)
+        tasks.append({
+            "key": key, "title": title, "hint": hint,
+            "target": target, "done_count": have,
+            "done": have >= target, "minutes": minutes, "href": href,
+        })
+    done = sum(1 for t in tasks if t["done"])
+    return {
+        "tasks": tasks,
+        "done": done,
+        "total": len(tasks),
+        "percent": round(done * 100 / len(tasks)),
+        "all_done": done >= len(tasks),
+        "reward_xp": DAILY_REWARD_XP,
+        "reward_coin": DAILY_REWARD_COIN,
+        # Birinchi bajarilmagan vazifa — "Boshlash" tugmasi shuni ochadi
+        "next": next((t for t in tasks if not t["done"]), None),
+    }
+
+
+def _continue_card(db: Session, student_id: int) -> dict | None:
+    """Yarim qolgan grammatika mavzusi — "Davom ettirish" kartasi.
+
+    Boshlanib, tugamagan mavzu tanlanadi (eng past tartibdagisi).
+    Bunday mavzu bo'lmasa — keyingi ochilmagan mavzu."""
+    qs = (db.query(models.GrammarQuestion)
+          .filter(models.GrammarQuestion.is_active == 1)
+          .order_by(models.GrammarQuestion.topic_order,
+                    models.GrammarQuestion.id).all())
+    if not qs:
+        return None
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == student_id,
+                      models.GrammarAttempt.correct == 1).all()}
+    topics = {}
+    for q in qs:
+        t = topics.setdefault((q.topic_order, q.topic, q.level),
+                              {"total": 0, "solved": 0})
+        t["total"] += 1
+        if q.id in solved:
+            t["solved"] += 1
+    started = [(k, v) for k, v in topics.items()
+               if 0 < v["solved"] < v["total"]]
+    pick = None
+    if started:
+        pick = sorted(started, key=lambda x: x[0][0])[0]
+    else:
+        fresh = [(k, v) for k, v in topics.items() if v["solved"] == 0]
+        if fresh:
+            pick = sorted(fresh, key=lambda x: x[0][0])[0]
+    if not pick:
+        return None
+    (order, topic, level), v = pick
+    left = max(0, v["total"] - v["solved"])
+    return {
+        "kind": "grammar",
+        "title": topic,
+        "subtitle": "Grammar",
+        "level": level,
+        "solved": v["solved"],
+        "total": v["total"],
+        "percent": round(v["solved"] * 100 / v["total"]) if v["total"] else 0,
+        # ~30 soniyadan bitta savol, eng kami 1 daqiqa
+        "minutes": max(1, round(left * 0.5)),
+        "xp": int(left * roles.GRAMMAR_XP_PER_CORRECT) or 1,
+        "coin": 0,
+        # Mavzu nomida bo'sh joy va tire bor — manzilga qo'yishdan
+        # oldin kodlanadi (StudentGrammar.tsx ham shunday qiladi).
+        "href": f"/student/grammar/{quote(topic, safe='')}",
+    }
+
+
+def _week_xp(db: Session, student_id: int) -> float:
+    """Shu hafta (dushanbadan) yig'ilgan XP."""
+    today = date.today()
+    start = today - timedelta(days=today.weekday())
+    lo, _hi = _utc_window(start, today)
+    total = (db.query(func.coalesce(
+                func.sum(models.XpTransaction.amount), 0))
+             .filter(models.XpTransaction.student_id == student_id,
+                     models.XpTransaction.is_reversal == 0,
+                     models.XpTransaction.created_at >= lo).scalar() or 0)
+    return round(float(total), 1)
+
+
 def _active_words(db: Session, level: str | None = None,
                   unit: str | None = None, language: str = "en"):
     q = db.query(models.VocabWord).filter(models.VocabWord.is_active == 1)
@@ -148,6 +282,11 @@ def student_home(db: Session = Depends(get_db),
         },
         "streak": _streak_days(db, s.id),
         "today": {"answered": int(solved_today), "correct": int(correct_today)},
+        # 2026-08-16 yangi bosh ekran uchun. Eski maydonlar o'z
+        # o'rnida qoldi — boshqa sahifalar buzilmasin.
+        "daily": _daily_progress(db, s.id),
+        "continue": _continue_card(db, s.id),
+        "week_xp": _week_xp(db, s.id),
         "ranks": ranks,
         "games": [{"key": k, "label": lbl, "hint": hint}
                   for k, lbl, hint in roles.VOCAB_GAMES],

@@ -293,6 +293,98 @@ def student_home(db: Session = Depends(get_db),
     }
 
 
+@router.get("/api/student/learn")
+def student_learn(db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.STUDENT))):
+    """O'RGANISH sahifasi — BITTA so'rovda hamma narsa (2026-08-16).
+
+    Jahongir: "Bu sahifa dizayn jihatdan eng yaxshi chiqqan. Ammo har
+    kartada progress foizi, oxirgi ishlangan mavzu, davom ettirish
+    tugmasi, olinadigan XP va taxminiy vaqt bo'lishi kerak."
+
+    Ilgari sahifa uchta alohida so'rov yuborardi (vocab/stats,
+    grammar/topics, skills). Grammar/topics esa butun savollar
+    jadvalini o'qiydi — telefon uchun og'ir va Neon trafigi bekorga
+    ketardi. Endi bitta yengil so'rov."""
+    s = _me(db, user)
+    gam = _gam_card(db, s)
+
+    # --- Grammatika: nechta mavzu yopilgan ---
+    rows = (db.query(models.GrammarQuestion.topic,
+                     models.GrammarQuestion.id)
+            .filter(models.GrammarQuestion.is_active == 1).all())
+    solved_ids = {qid for (qid,) in
+                  db.query(func.distinct(models.GrammarAttempt.question_id))
+                  .filter(models.GrammarAttempt.student_id == s.id,
+                          models.GrammarAttempt.correct == 1).all()}
+    topics = {}
+    for topic, qid in rows:
+        t = topics.setdefault(topic, [0, 0])
+        t[0] += 1
+        if qid in solved_ids:
+            t[1] += 1
+    gram_total = len(topics)
+    gram_done = sum(1 for v in topics.values() if v[0] and v[1] >= v[0])
+
+    # --- Lug'at: aniqlik foizi ---
+    v_total = (db.query(func.count(models.VocabAttempt.id))
+               .filter(models.VocabAttempt.student_id == s.id).scalar() or 0)
+    v_ok = (db.query(func.count(models.VocabAttempt.id))
+            .filter(models.VocabAttempt.student_id == s.id,
+                    models.VocabAttempt.correct == 1).scalar() or 0)
+    v_pct = round(v_ok * 100 / v_total, 1) if v_total else 0.0
+
+    pts = _skill_points(db, s.id)
+    per = roles.PRACTICE_POINTS_PER_LEVEL
+
+    def in_level(p):
+        """Hozirgi daraja ichidagi foiz — chiziq shu bo'yicha to'ladi."""
+        return round((int(p) % per) * 100 / per)
+
+    sections = [
+        {"key": "grammar", "label": "Grammar", "tone": "violet",
+         "href": "/student/grammar",
+         "value": f"{gram_done}/{gram_total} mavzu",
+         "percent": (round(gram_done * 100 / gram_total)
+                     if gram_total else 0),
+         "xp": int(pts.get("grammar", 0))},
+        {"key": "vocabulary", "label": "Lug'at", "tone": "emerald",
+         "href": "/student/vocab",
+         "value": f"{v_pct}% aniqlik",
+         "percent": round(v_pct),
+         "xp": int(pts.get("vocabulary", 0))},
+        {"key": "listening", "label": "Listening", "tone": "amber",
+         "href": "/student/practice/listening",
+         "value": f"{int(pts.get('listening', 0))} XP",
+         "percent": in_level(pts.get("listening", 0)),
+         "xp": int(pts.get("listening", 0))},
+        {"key": "reading", "label": "Reading", "tone": "sky",
+         "href": "/student/practice/reading",
+         "value": f"{int(pts.get('reading', 0))} XP",
+         "percent": in_level(pts.get("reading", 0)),
+         "xp": int(pts.get("reading", 0))},
+        {"key": "writing", "label": "Writing", "tone": "rose",
+         "href": "/student/practice/writing",
+         "value": f"{int(pts.get('writing', 0))} XP",
+         "percent": in_level(pts.get("writing", 0)),
+         "xp": int(pts.get("writing", 0))},
+        {"key": "speaking", "label": "Speaking", "tone": "teal",
+         "href": "/student/practice/speaking",
+         "value": f"{int(pts.get('speaking', 0))} XP",
+         "percent": in_level(pts.get("speaking", 0)),
+         "xp": int(pts.get("speaking", 0))},
+    ]
+
+    return {
+        "lifetime_xp": gam.get("lifetime_xp"),
+        "coins": gam.get("coins"),
+        "streak": _streak_days(db, s.id),
+        "daily": _daily_progress(db, s.id),
+        "continue": _continue_card(db, s.id),
+        "sections": sections,
+    }
+
+
 @router.get("/api/student/skills")
 def student_skills(db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
@@ -1544,61 +1636,125 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
 
 
 @router.get("/api/student/leaderboard")
-def student_leaderboard(scope: str = "group", period: str = "all",
+def student_leaderboard(scope: str = "group", period: str = "week",
                         db: Session = Depends(get_db),
                         user=Depends(require_role(roles.STUDENT))):
-    """Lug'at o'yinlari reytingi.
+    """REYTING — XP bo'yicha (2026-08-16 da qayta yozildi).
 
-    scope: group (o'z guruhi) | branch (o'z filiali)
-    period: all (butun davr) | week (shu hafta)
+    Jahongir: "Eng katta UX kamchiligi — reyting faqat lug'at
+    o'yinlari asosida ekanligi. Bu grammatikasi yoki speaking'i
+    kuchli bolaga adolatsiz tuyuladi."
 
-    Faqat O'Z guruhi/filiali — butun markaz bo'yicha ro'yxat
-    berilmaydi (bola o'zi tanimagan yuzlab odam orasida 300-o'rinni
-    ko'rib ruhlanmaydi). Familiya qisqartiriladi."""
+    To'g'ri gap edi. Endi reyting XP jurnalidan (xp_transactions)
+    hisoblanadi — ya'ni lug'at, grammatika, 4 ko'nikma, davomat,
+    imtihon — hammasi qo'shiladi.
+
+    scope:  group | branch | all
+    period: week (dushanbadan) | all
+
+    "Umumiy" qo'shildi, lekin ro'yxat 50 tada kesiladi va o'quvchining
+    o'z o'rni HAR DOIM alohida kartada ko'rsatiladi — 300-o'rinni
+    ro'yxatdan qidirib yurmasin.
+
+    Familiya qisqartiriladi (_mask) — bola boshqa oilalarning to'liq
+    ismini ko'rmaydi."""
     s = _me(db, user)
-    if scope not in ("group", "branch"):
-        raise HTTPException(400, "scope: group yoki branch")
+    if scope not in ("group", "branch", "all"):
+        raise HTTPException(400, "scope: group, branch yoki all")
     if period not in ("all", "week"):
         raise HTTPException(400, "period: all yoki week")
 
-    q = (db.query(models.Student.id, models.Student.full_name,
-                  func.count(models.VocabAttempt.id).label("pts"))
-         .join(models.VocabAttempt,
-               models.VocabAttempt.student_id == models.Student.id)
-         .filter(models.VocabAttempt.correct == 1,
-                 models.Student.status.in_(("active", "trial"))))
+    today = date.today()
+    week_start = today - timedelta(days=today.weekday())
 
-    if scope == "group":
-        if not s.group_id:
-            return {"scope": scope, "period": period, "rows": [],
-                    "me": None,
-                    "hint": "Siz hali guruhga biriktirilmagansiz."}
-        q = q.filter(models.Student.group_id == s.group_id)
-    else:
-        if not s.branch_id:
-            return {"scope": scope, "period": period, "rows": [], "me": None,
-                    "hint": "Filial biriktirilmagan."}
-        q = q.filter(models.Student.branch_id == s.branch_id)
+    def totals(since: date | None, until: date | None = None):
+        """Qamrov ichidagi o'quvchilarning XP yig'indisi."""
+        q = (db.query(models.Student.id, models.Student.full_name,
+                      models.Student.photo,
+                      func.coalesce(func.sum(models.XpTransaction.amount), 0)
+                      .label("pts"))
+             .join(models.XpTransaction,
+                   models.XpTransaction.student_id == models.Student.id)
+             .filter(models.XpTransaction.is_reversal == 0,
+                     models.Student.status.in_(("active", "trial"))))
+        if scope == "group":
+            q = q.filter(models.Student.group_id == s.group_id)
+        elif scope == "branch":
+            q = q.filter(models.Student.branch_id == s.branch_id)
+        if since:
+            lo = _utc_window(since, until or today)[0]
+            q = q.filter(models.XpTransaction.created_at >= lo)
+        if until:
+            hi = _utc_window(since or until, until)[1]
+            q = q.filter(models.XpTransaction.created_at <= hi)
+        return (q.group_by(models.Student.id, models.Student.full_name,
+                           models.Student.photo)
+                .order_by(func.sum(models.XpTransaction.amount).desc())
+                .all())
 
+    if scope == "group" and not s.group_id:
+        return {"scope": scope, "period": period, "podium": [], "rows": [],
+                "me": None, "total": 0, "prize_coin": roles.RANK_PRIZE_COIN,
+                "hint": "Siz hali guruhga biriktirilmagansiz."}
+    if scope == "branch" and not s.branch_id:
+        return {"scope": scope, "period": period, "podium": [], "rows": [],
+                "me": None, "total": 0, "prize_coin": roles.RANK_PRIZE_COIN,
+                "hint": "Filial biriktirilmagan."}
+
+    rows = totals(week_start if period == "week" else None)
+
+    # O'tgan hafta bilan solishtirish — o'q belgisi (o'sdi/tushdi)
+    prev_rank = {}
     if period == "week":
-        today = date.today()
-        q = q.filter(models.VocabAttempt.date
-                     >= today - timedelta(days=today.weekday()))
-
-    rows = (q.group_by(models.Student.id, models.Student.full_name)
-            .order_by(func.count(models.VocabAttempt.id).desc())
-            .limit(50).all())
+        prev_start = week_start - timedelta(days=7)
+        prev = totals(prev_start, week_start - timedelta(days=1))
+        for i, (sid, _n, _p, _pts) in enumerate(prev, 1):
+            prev_rank[sid] = i
 
     out, me = [], None
-    for i, (sid, name, pts) in enumerate(rows, 1):
+    for i, (sid, name, photo, pts) in enumerate(rows, 1):
         mine = sid == s.id
+        was = prev_rank.get(sid)
+        trend = None
+        if was is not None:
+            trend = "up" if i < was else ("down" if i > was else "same")
+        elif period == "week" and prev_rank:
+            trend = "up"      # o'tgan hafta ro'yxatda yo'q edi
         item = {"rank": i, "name": ("Siz" if mine else _mask(name)),
-                "points": int(pts), "is_me": mine}
-        out.append(item)
+                "photo": photo, "points": int(round(float(pts or 0))),
+                "is_me": mine, "trend": trend}
         if mine:
-            me = item
-    return {"scope": scope, "period": period, "rows": out, "me": me,
-            "total": len(out)}
+            me = dict(item)
+        if i <= 50:
+            out.append(item)
+
+    # O'quvchi ro'yxatda umuman yo'q bo'lsa ham o'z kartasi bo'lsin
+    if me is None:
+        me = {"rank": None, "name": "Siz", "photo": s.photo, "points": 0,
+              "is_me": True, "trend": None}
+
+    # "Top 10 gacha yana X XP"
+    to_top10 = None
+    if me.get("rank") is None or me["rank"] > 10:
+        if len(rows) >= 10:
+            tenth = int(round(float(rows[9][3] or 0)))
+            to_top10 = max(0, tenth - me["points"])
+        elif rows:
+            to_top10 = 0
+
+    return {
+        "scope": scope,
+        "period": period,
+        "prize_coin": roles.RANK_PRIZE_COIN,
+        "podium": out[:3],
+        "rows": out[3:],
+        "me": me,
+        "to_top10": to_top10,
+        "total": len(rows),
+        "hint": None if rows else (
+            "Bu haftada hali reyting boshlanmadi. "
+            "10 ta savol yechib, birinchi o'rinni egallang."),
+    }
 
 
 # =====================================================================

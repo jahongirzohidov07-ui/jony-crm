@@ -212,15 +212,47 @@ for ww in others:
                 json={"word_id": ww.id, "game": "en_uz",
                       "answer": ww.translation})
 
+# 2026-08-16: reyting endi XP jurnalidan hisoblanadi (ilgari faqat
+# lug'at javoblari sanalardi — Jahongir: "grammatikasi yoki
+# speaking'i kuchli bolaga adolatsiz tuyuladi"). Javob berilganda
+# har to'g'ri javob uchun 1 XP beriladi, shuning uchun sonlar
+# o'zgarmadi. Javob shakli ham o'zgardi: birinchi uchtasi "podium",
+# qolgani "rows".
 r = client.get("/api/student/leaderboard?scope=group&period=all", headers=H1)
 ck("status 200", r.status_code, 200)
 lb = r.json()
-ck("2 ta o'quvchi bor", len(lb["rows"]), 2)
-ck("Malika birinchi (6 ball)", lb["rows"][0]["points"], 6)
+ck("2 ta o'quvchi bor", len(lb["podium"]), 2)
+ck("Malika birinchi (6 XP)", lb["podium"][0]["points"], 6)
 ck("boshqa o'quvchi familiyasi qisqartirilgan",
-   lb["rows"][0]["name"], "Malika Y.")
-ck("o'zi 'Siz' deb ko'rsatiladi", lb["rows"][1]["name"], "Siz")
+   lb["podium"][0]["name"], "Malika Y.")
+ck("o'zi 'Siz' deb ko'rsatiladi", lb["podium"][1]["name"], "Siz")
 ck("o'z o'rni alohida qaytadi", lb["me"]["rank"], 2)
+ck("sovrin ko'rsatilgan", lb["prize_coin"], 50)
+# Guruh/filial/umumiy — uchalasi ham ochilishi kerak
+for sc in ("group", "branch", "all"):
+    rr = client.get(f"/api/student/leaderboard?scope={sc}&period=week",
+                    headers=H1)
+    ck(f"scope={sc} ishlaydi", rr.status_code, 200)
+rr = client.get("/api/student/leaderboard?scope=xato", headers=H1)
+ck("noto'g'ri scope rad etiladi", rr.status_code, 400)
+
+print("\n=== O'RGANISH SAHIFASI (bitta so'rov) ===")
+r = client.get("/api/student/learn", headers=H1)
+ck("status 200", r.status_code, 200)
+lr = r.json()
+ck("6 ta bo'lim", len(lr["sections"]), 6)
+ck("kunlik 3 vazifa", lr["daily"]["total"], 3)
+ckt("XP qaytadi", isinstance(lr["lifetime_xp"], (int, float)))
+ckt("har bo'limda foiz bor",
+    all(isinstance(x["percent"], (int, float)) for x in lr["sections"]))
+
+print("\n=== BOSH EKRAN: kunlik maqsad va davom ettirish ===")
+hm = client.get("/api/student/home", headers=H1).json()
+ckt("daily qo'shildi", "daily" in hm)
+ck("uchta vazifa", hm["daily"]["total"], 3)
+ckt("lug'at vazifasi hisoblanmoqda",
+    hm["daily"]["tasks"][0]["done_count"] >= 1)
+ckt("week_xp qaytadi", "week_xp" in hm)
 
 print("\n=== XAVFSIZLIK ===")
 # Ali'ning bosh sahifasi Malika'nikidan boshqa bo'lishi shart

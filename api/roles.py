@@ -2183,6 +2183,11 @@ REDEEM_STATUSES = [
 REDEEM_STATUS_LABELS = {k: lbl for k, lbl, _ in REDEEM_STATUSES}
 REDEEM_STATUS_TONE = {k: t for k, _, t in REDEEM_STATUSES}
 
+# Haftalik reyting sovrini (2026-08-16). Reyting sahifasining tepasida
+# "Sovrin: 50 Coin" bo'lib ko'rinadi — o'quvchi nima uchun
+# kurashayotganini bilsin.
+RANK_PRIZE_COIN = 50
+
 # Sovg'ani kim beradi
 REWARD_GIVE = FULL_ACCESS + [ACADEMIC_HEAD, SALES_MANAGER, ADMINISTRATOR,
                              SUPPORT_TEACHER, HEAD_SUPPORT]

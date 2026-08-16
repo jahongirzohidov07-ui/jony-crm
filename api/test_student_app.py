@@ -298,5 +298,39 @@ ck("baza soni 1 ga oshdi",
 r = client.post("/api/vocab/import", headers=H1, json={"words": []})
 ck("o'quvchi so'z import qila olmaydi", r.status_code, 403)
 
+print("\n=== YUTUQLAR VA SERTIFIKATLAR (2026-08-16) ===")
+r = client.get("/api/student/achievements", headers=H1)
+ck("status 200", r.status_code, 200)
+ac = r.json()
+ckt("yutuqlar ro'yxati bo'sh emas", len(ac["badges"]) > 0)
+ck("streak sovrinlari 3 ta", len(ac["streak_rewards"]), 3)
+ck("7 kunlik sovrin 20 coin", ac["streak_rewards"][0]["coin"], 20)
+ckt("hech biri hali ochilmagan (yangi o'quvchi)", ac["done"] == 0)
+ckt("keyingi maqsad ko'rsatilgan", ac["next"] is not None)
+ckt("har yutuqda foiz bor",
+    all(0 <= b["percent"] <= 100 for b in ac["badges"]))
+
+r = client.get("/api/student/certificates", headers=H1)
+ck("sertifikatlar 200", r.status_code, 200)
+ck("hozircha yo'q", r.json()["count"], 0)
+
+print("\n=== PROFIL: radar va sanoqlar ===")
+r = client.get("/api/student/profile", headers=H1)
+ck("status 200", r.status_code, 200)
+pf = r.json()
+ck("radar 6 ta ko'nikma", len(pf["radar"]), 6)
+ckt("radar 0-100 oralig'ida",
+    all(0 <= x["score"] <= 100 for x in pf["radar"]))
+ckt("eng kuchli ko'rsatilgan", pf["strongest"] is not None)
+ckt("eng zaif ko'rsatilgan", pf["weakest"] is not None)
+ckt("yutuq sanog'i bor", pf["badges_total"] > 0)
+ckt("eski maydonlar joyida", "full_name" in pf and "phone" in pf)
+
+# Ustoz bu yo'llarga kira olmaydi
+for path in ("/api/student/achievements", "/api/student/certificates",
+             "/api/student/learn"):
+    ck(f"ustozga yopiq: {path}",
+       client.get(path, headers=Ht).status_code, 403)
+
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

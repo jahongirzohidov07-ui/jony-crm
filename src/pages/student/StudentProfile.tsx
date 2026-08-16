@@ -1,488 +1,421 @@
-import { useEffect, useRef, useState } from "react";
-import { formatDate } from "../../lib/format";
-import { Camera, Check, LogOut, Pencil } from "lucide-react";
-import { api } from "../../lib/api";
-import { useAuth } from "../../lib/AuthContext";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  fmtNum, TONE_BAR, type SkillsCard, type StudentHome,
-} from "../../lib/studentApi";
+  Award, ChevronRight, CreditCard, LogOut, Settings, Star, TrendingUp,
+  Trophy, User as UserIcon, Camera, Check, X,
+} from "lucide-react";
+import { CoinIcon } from "../../components/CoinIcon";
+import { useAuth } from "../../lib/AuthContext";
+import { api } from "../../lib/api";
+import { fmtNum, type LevelProgress } from "../../lib/studentApi";
 
-/** JONY STUDENT — profil: barcha ko'nikmalar to'liq ro'yxati va
- * hisobdan chiqish. */
-export default function StudentProfile() {
-  const { user, logout } = useAuth();
-  const [h, setH] = useState<StudentHome | null>(null);
-  const [sk, setSk] = useState<SkillsCard | null>(null);
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const [p, setP] = useState<any>(null); // profil ma'lumotlari
-  const [edit, setEdit] = useState(false);
-  const [f, setF] = useState<any>({});
-  const [saving, setSaving] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
+/**
+ * JONY STUDENT — PROFIL (2026-08-16 da dizayn bo'yicha qayta yozildi).
+ *
+ * Jahongir: "Progress bosh sahifada ham, profilda ham deyarli bir xil
+ * takrorlangan. Profilga quyidagilar ko'proq mos: yutuqlar va
+ * badge'lar, coin tarixi, XP tarixi, o'rganish statistikasi,
+ * sertifikatlar, to'lovlar, sozlamalar."
+ *
+ * Shuning uchun profildan kunlik vazifa va daraja progressi olib
+ * tashlandi (ular Asosiy sahifada). O'rniga ENGLISH SKILLS radar
+ * diagrammasi — o'quvchi qaysi ko'nikmasi kuchli, qaysi biri
+ * orqada ekanini bir qarashda ko'radi.
+ *
+ * Radar sof SVG bilan chizilgan — hech qanday kutubxona
+ * qo'shilmadi (ilova og'irlashmasin).
+ */
 
-  const [pay, setPay] = useState<any>(null);
-  const [ex, setEx] = useState<any>(null);
-  const [showPay, setShowPay] = useState(false);
-  const [showEx, setShowEx] = useState(false);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Radar = { key: string; label: string; tone: string; score: number;
+               points: number };
 
-  const loadProfile = () =>
-    api
-      .get<any>("/student/profile")
-      .then((r) => {
-        setP(r);
-        setF({
-          first_name: r.first_name || "",
-          last_name: r.last_name || "",
-          middle_name: r.middle_name || "",
-          birth_date: r.birth_date || "",
-          address: r.address || "",
-          school: r.school || "",
-          school_grade: r.school_grade || "",
-        });
-      })
-      .catch(() => {});
+type Profile = {
+  full_name: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  photo?: string | null;
+  phone?: string | null;
+  group?: string | null;
+  school?: string | null;
+  level?: LevelProgress;
+  radar?: Radar[];
+  radar_note?: string;
+  xp?: number;
+  coins?: number;
+  streak?: number;
+  balance?: number;
+  badges_done?: number;
+  badges_total?: number;
+  certificates?: number;
+  strongest?: { label: string; score: number } | null;
+  weakest?: { label: string; score: number } | null;
+};
 
-  useEffect(() => {
-    api.get<StudentHome>("/student/home").then(setH).catch(() => {});
-    api.get<SkillsCard>("/student/skills").then(setSk).catch(() => {});
-    loadProfile();
-    api.get<any>("/student/payments").then(setPay).catch(() => {});
-    api.get<any>("/student/exams").then(setEx).catch(() => {});
-  }, []);
+/** Oltiburchak radar. Hech qanday kutubxona ishlatilmaydi. */
+function RadarChart({ data }: { data: Radar[] }) {
+  const size = 300;
+  const cx = size / 2;
+  const cy = size / 2 + 6;
+  const R = 96;
+  const n = data.length || 1;
 
-  // RASM: telefonda tanlangan surat 512px gacha kichraytirilib
-  // (kanvas, JPEG 0.82) data URL bo'lib serverga ketadi - katta
-  // fayl bazani shishirmasin.
-  function pickPhoto(file: File) {
-    const img = new Image();
-    img.onload = async () => {
-      const side = Math.min(img.width, img.height);
-      const sx = (img.width - side) / 2;
-      const sy = (img.height - side) / 2;
-      const c = document.createElement("canvas");
-      const size = Math.min(512, side);
-      c.width = size;
-      c.height = size;
-      c.getContext("2d")!.drawImage(img, sx, sy, side, side, 0, 0, size, size);
-      const dataUrl = c.toDataURL("image/jpeg", 0.82);
-      try {
-        await api.put("/student/photo", { photo: dataUrl });
-        loadProfile();
-        api.get<StudentHome>("/student/home").then(setH).catch(() => {});
-      } catch {
-        /* toast */
-      }
-    };
-    img.src = URL.createObjectURL(file);
-  }
+  const pt = (i: number, r: number) => {
+    const a = (Math.PI * 2 * i) / n - Math.PI / 2;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  };
 
-  async function saveProfile() {
-    if (saving) return;
-    setSaving(true);
-    try {
-      await api.put("/student/profile", {
-        first_name: f.first_name,
-        last_name: f.last_name,
-        middle_name: f.middle_name || null,
-        birth_date: f.birth_date || null,
-        address: f.address || null,
-        school: f.school || null,
-        school_grade: f.school_grade || null,
-      });
-      setEdit(false);
-      loadProfile();
-      api.get<StudentHome>("/student/home").then(setH).catch(() => {});
-    } catch {
-      /* xato toast'da ko'rinadi */
-    } finally {
-      setSaving(false);
-    }
-  }
+  const ring = (frac: number) =>
+    data
+      .map((_, i) => pt(i, R * frac).map((v) => v.toFixed(1)).join(","))
+      .join(" ");
+
+  const shape = data
+    .map((d, i) =>
+      pt(i, (R * Math.max(4, Math.min(100, d.score))) / 100)
+        .map((v) => v.toFixed(1))
+        .join(",")
+    )
+    .join(" ");
 
   return (
-    <>
-      <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-8 pb-12">
-        <div className="max-w-md mx-auto flex items-center gap-3">
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="relative w-16 h-16 rounded-full bg-white/20 border-2 border-white/40 overflow-hidden flex items-center justify-center shrink-0"
-            aria-label="Rasm qo'yish"
-          >
-            {p?.photo ? (
-              <img src={p.photo} alt="" className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-2xl font-bold">
-                {(h?.name || user?.full_name || "?").charAt(0)}
-              </span>
-            )}
-            <span className="absolute bottom-0 inset-x-0 bg-black/45 py-0.5 flex justify-center">
-              <Camera size={11} />
-            </span>
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) pickPhoto(file);
-              e.target.value = "";
-            }}
+    <svg viewBox={`0 0 ${size} ${size + 30}`} className="w-full">
+      {[0.25, 0.5, 0.75, 1].map((f) => (
+        <polygon
+          key={f}
+          points={ring(f)}
+          fill="none"
+          stroke="#DDE6F5"
+          strokeWidth="1"
+        />
+      ))}
+      {data.map((_, i) => {
+        const [x, y] = pt(i, R);
+        return (
+          <line
+            key={i}
+            x1={cx}
+            y1={cy}
+            x2={x}
+            y2={y}
+            stroke="#E8EEF9"
+            strokeWidth="1"
           />
-          <div className="min-w-0">
-            <h1 className="text-lg font-semibold truncate">
-              {h?.name || user?.full_name}
-            </h1>
-            <p className="text-sm opacity-90">
-              {h?.group || "guruh biriktirilmagan"}
-            </p>
-          </div>
-        </div>
-      </div>
+        );
+      })}
 
-      <div className="max-w-md mx-auto px-4 -mt-7 space-y-4">
-        {/* SHAXSIY MA'LUMOTLAR (2026-08-10): faqat ism, familiya,
-            otasining ismi alohida maydonlarda - boshqa narsa yozib
-            bo'lmaydi (server ham tekshiradi). To'ldirilgani xodimlar
-            bazasida darhol ko'rinadi. */}
-        {p && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-slate-800">
-                Shaxsiy ma'lumotlar
+      <polygon
+        points={shape}
+        fill="#1A6FE4"
+        fillOpacity="0.28"
+        stroke="#1A6FE4"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+      />
+      {data.map((d, i) => {
+        const [x, y] = pt(i, (R * Math.max(4, Math.min(100, d.score))) / 100);
+        return <circle key={i} cx={x} cy={y} r="4.5" fill="#1A6FE4" />;
+      })}
+
+      {data.map((d, i) => {
+        const [x, y] = pt(i, R + 30);
+        return (
+          <g key={d.key}>
+            <text
+              x={x}
+              y={y - 4}
+              textAnchor="middle"
+              className="fill-slate-700"
+              style={{ fontSize: 12, fontWeight: 600 }}
+            >
+              {d.label}
+            </text>
+            <text
+              x={x}
+              y={y + 11}
+              textAnchor="middle"
+              className="fill-brand-600"
+              style={{ fontSize: 13, fontWeight: 700 }}
+            >
+              {d.score}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+export default function StudentProfile() {
+  const { logout } = useAuth();
+  const [d, setD] = useState<Profile | null>(null);
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  function load() {
+    api
+      .fresh<Profile>("/student/profile")
+      .then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }
+  useEffect(load, []);
+
+  async function onPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    if (f.size > 3 * 1024 * 1024) {
+      setErr("Rasm 3 MB dan katta bo'lmasin");
+      return;
+    }
+    setBusy(true);
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        await api.put("/student/photo", { photo: reader.result });
+        setMsg("Rasm yangilandi");
+        load();
+      } catch (ex) {
+        setErr(ex instanceof Error ? ex.message : "Xatolik");
+      } finally {
+        setBusy(false);
+      }
+    };
+    reader.readAsDataURL(f);
+  }
+
+  if (err && !d)
+    return (
+      <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>
+    );
+  if (!d)
+    return (
+      <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>
+    );
+
+  const lv = d.level;
+  const per = 500;
+  const inLevel = lv?.next ? per - lv.next.points_left : per;
+  const pct = lv?.next ? Math.round(lv.next.progress_percent) : 100;
+
+  return (
+    <div className="bg-slate-50 min-h-screen">
+      <div className="max-w-md mx-auto px-4 pt-6 pb-8 space-y-4">
+        <div className="flex items-center">
+          <h1 className="text-xl font-bold text-slate-900 flex-1 text-center pl-8">
+            Profil
+          </h1>
+          <Link
+            to="/student/settings"
+            className="w-9 h-9 flex items-center justify-center text-slate-400"
+          >
+            <Settings size={22} />
+          </Link>
+        </div>
+
+        {msg && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex gap-2 items-center">
+            <Check size={16} className="text-emerald-600" />
+            <p className="text-sm text-emerald-800 flex-1">{msg}</p>
+            <button onClick={() => setMsg("")} className="text-emerald-500">
+              <X size={15} />
+            </button>
+          </div>
+        )}
+        {err && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-2 items-center">
+            <p className="text-sm text-red-700 flex-1">{err}</p>
+            <button onClick={() => setErr("")} className="text-red-400">
+              <X size={15} />
+            </button>
+          </div>
+        )}
+
+        {/* ------------------------------------------ FOYDALANUVCHI */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+          <div className="flex items-center gap-4">
+            <label className="relative shrink-0 cursor-pointer">
+              <div className="w-[72px] h-[72px] rounded-full bg-brand-50 overflow-hidden flex items-center justify-center">
+                {d.photo ? (
+                  <img
+                    src={d.photo}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <UserIcon size={32} className="text-brand-300" />
+                )}
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center border-2 border-white">
+                <Camera size={13} />
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={busy}
+                onChange={onPhoto}
+              />
+            </label>
+
+            <div className="min-w-0 flex-1">
+              <p className="text-[22px] font-bold text-slate-900 truncate">
+                {d.first_name || d.full_name}
               </p>
-              {!edit && (
-                <button
-                  onClick={() => setEdit(true)}
-                  className="flex items-center gap-1 text-xs font-medium text-brand-600"
-                >
-                  <Pencil size={12} />
-                  O'zgartirish
-                </button>
+              <span className="inline-block mt-1 px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold">
+                {lv?.level?.cefr || "—"}
+              </span>
+              <p className="text-xs text-slate-500 mt-2">
+                XP {fmtNum(inLevel)} / {fmtNum(per)}
+              </p>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                  <div
+                    className="h-full bg-brand-600 rounded-full"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+                <span className="text-xs font-semibold text-brand-600 shrink-0">
+                  {pct}%
+                </span>
+              </div>
+              {d.group && (
+                <p className="text-xs text-slate-400 mt-1.5">{d.group}</p>
               )}
             </div>
-
-            {!edit ? (
-              <>
-                <Row label="Familiya" value={p.last_name || "—"} />
-                <Row label="Ism" value={p.first_name || "—"} />
-                <Row label="Otasining ismi" value={p.middle_name || "—"} />
-                <Row label="Tug'ilgan sana" value={p.birth_date || "—"} />
-                <Row label="Maktab" value={p.school || "—"} />
-                <Row label="Sinf" value={p.school_grade || "—"} />
-                <Row label="Manzil" value={p.address || "—"} />
-                <Row label="Login (raqam)" value={p.phone || "—"} />
-              </>
-            ) : (
-              <div className="space-y-3">
-                {[
-                  ["last_name", "Familiya *", "Valiyev"],
-                  ["first_name", "Ism *", "Ali"],
-                  ["middle_name", "Otasining ismi", "Anvarovich"],
-                ].map(([k, lbl, ph]) => (
-                  <div key={k}>
-                    <label className="block text-[11px] text-slate-500 mb-1">
-                      {lbl}
-                    </label>
-                    <input
-                      value={f[k] || ""}
-                      onChange={(e) =>
-                        setF({ ...f, [k]: e.target.value })
-                      }
-                      placeholder={ph}
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
-                    />
-                  </div>
-                ))}
-                <p className="text-[11px] text-slate-400 -mt-1">
-                  Faqat harflar - bitta so'zdan. Laqab yoki boshqa
-                  narsa yozib bo'lmaydi.
-                </p>
-                <div>
-                  <label className="block text-[11px] text-slate-500 mb-1">
-                    Tug'ilgan sana
-                  </label>
-                  <input
-                    type="date"
-                    value={f.birth_date || ""}
-                    onChange={(e) =>
-                      setF({ ...f, birth_date: e.target.value })
-                    }
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm bg-white"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-[11px] text-slate-500 mb-1">
-                      Maktab
-                    </label>
-                    <input
-                      value={f.school || ""}
-                      onChange={(e) =>
-                        setF({ ...f, school: e.target.value })
-                      }
-                      placeholder="21-maktab"
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-slate-500 mb-1">
-                      Sinf
-                    </label>
-                    <input
-                      value={f.school_grade || ""}
-                      onChange={(e) =>
-                        setF({ ...f, school_grade: e.target.value })
-                      }
-                      placeholder="9-A"
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[11px] text-slate-500 mb-1">
-                    Manzil
-                  </label>
-                  <input
-                    value={f.address || ""}
-                    onChange={(e) =>
-                      setF({ ...f, address: e.target.value })
-                    }
-                    placeholder="Bekobod, Zafar MFY"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
-                  />
-                </div>
-                <div className="flex gap-2 pt-1">
-                  <button
-                    onClick={saveProfile}
-                    disabled={saving || !f.first_name || !f.last_name}
-                    className="flex-1 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold flex items-center justify-center gap-1.5 disabled:opacity-40"
-                  >
-                    <Check size={15} />
-                    {saving ? "Saqlanmoqda…" : "Saqlash"}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEdit(false);
-                      loadProfile();
-                    }}
-                    className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-semibold"
-                  >
-                    Bekor qilish
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
-        )}
+        </div>
 
-        {sk && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-            <p className="text-sm font-semibold text-slate-800 mb-1">
-              Barcha bo'limlar
-            </p>
-            <p className="text-[11px] text-slate-400 mb-4">
-              Har {fmtNum(sk.points_per_level)} ball — keyingi daraja
-            </p>
-            <div className="space-y-4">
-              {sk.skills.map((s) => (
-                <div key={s.key}>
-                  <div className="flex items-baseline justify-between gap-2 mb-1">
-                    <span className="text-sm text-slate-700">{s.label}</span>
-                    <span className="text-xs font-medium text-slate-800">
-                      {s.level.label}
-                    </span>
-                  </div>
-                  <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${
-                        TONE_BAR[s.tone] || TONE_BAR.slate
-                      }`}
-                      style={{
-                        width: `${s.next ? s.next.progress_percent : 100}%`,
-                      }}
-                    />
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    {fmtNum(s.points)} ball
-                    {s.max_level
-                      ? " · eng yuqori daraja 🎉"
-                      : ` · ${s.next!.label} gacha yana ${fmtNum(
-                          s.next!.points_left,
-                        )}`}
+        {/* -------------------------------------- ENGLISH SKILLS */}
+        {d.radar && d.radar.length > 0 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+            <div className="flex items-start">
+              <div className="flex-1">
+                <p className="text-xl font-bold text-slate-900">
+                  English Skills
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {d.radar_note}
+                </p>
+              </div>
+              <span className="px-2.5 py-1 rounded-lg bg-brand-50 text-brand-700 text-xs font-bold shrink-0">
+                {lv?.level?.cefr}
+              </span>
+            </div>
+
+            <RadarChart data={d.radar} />
+
+            <div className="grid grid-cols-2 gap-2 mt-1">
+              <div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-2.5">
+                <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <Star size={15} className="text-emerald-600" fill="currentColor" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] text-slate-500">Eng kuchli</p>
+                  <p className="text-sm font-bold text-emerald-700 truncate">
+                    {d.strongest?.label} {d.strongest?.score}
                   </p>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center gap-2 rounded-xl bg-orange-50 p-2.5">
+                <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <TrendingUp size={15} className="text-orange-500" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] text-slate-500">Rivojlantirish</p>
+                  <p className="text-sm font-bold text-orange-600 truncate">
+                    {d.weakest?.label} {d.weakest?.score}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {h && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-            <p className="text-sm font-semibold text-slate-800 mb-3">
-              Hisobim
+        {/* -------------------------------------------- UCH KARTA */}
+        <div className="grid grid-cols-3 gap-2.5">
+          <Link
+            to="/student/shop?tab=badges"
+            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
+          >
+            <span className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center mx-auto">
+              <Trophy size={19} className="text-brand-600" />
+            </span>
+            <p className="text-sm font-bold text-slate-900 mt-2">Yutuqlar</p>
+            <p className="text-[11px] text-slate-400">
+              {d.badges_done}/{d.badges_total}
             </p>
-            <Row label="Coin" value={fmtNum(h.gamification.coins)} />
-            <Row label="Umumiy XP" value={fmtNum(h.gamification.lifetime_xp)} />
-            <Row label="Daraja" value={String(h.gamification.level)} />
-            {h.gamification.league && (
-              <Row
-                label="Liga"
-                value={`${h.gamification.league.icon} ${h.gamification.league.name}`}
-              />
-            )}
-            <Row label="Ketma-ket kunlar" value={`${h.streak} kun`} />
-            {h.ranks.branch_rank && (
-              <Row
-                label="Filialdagi o'rin"
-                value={`${h.ranks.branch_rank} / ${h.ranks.branch_total}`}
-              />
-            )}
-          </div>
-        )}
+          </Link>
 
-        {/* TO'LOVLAR TARIXI (2026-08-10) */}
-        {pay && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-            <button
-              onClick={() => setShowPay((v) => !v)}
-              className="w-full flex items-center justify-between"
+          <Link
+            to="/student/shop"
+            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
+          >
+            <span className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center mx-auto">
+              <CoinIcon size={20} />
+            </span>
+            <p className="text-sm font-bold text-slate-900 mt-2">Coin</p>
+            <p className="text-[11px] text-slate-400">{fmtNum(d.coins)}</p>
+          </Link>
+
+          <Link
+            to="/student/certificates"
+            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
+          >
+            <span className="w-10 h-10 rounded-full bg-violet-50 flex items-center justify-center mx-auto">
+              <Award size={19} className="text-violet-600" />
+            </span>
+            <p className="text-sm font-bold text-slate-900 mt-2">
+              Sertifikat
+            </p>
+            <p className="text-[11px] text-slate-400">{d.certificates ?? 0}</p>
+          </Link>
+        </div>
+
+        {/* ---------------------------------------------- TO'LOV */}
+        <Link
+          to="/student/payments"
+          className={`flex items-center gap-3 rounded-xl border p-4 ${
+            (d.balance ?? 0) < 0
+              ? "bg-red-50 border-red-200"
+              : "bg-white border-slate-200"
+          }`}
+        >
+          <span
+            className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              (d.balance ?? 0) < 0
+                ? "bg-red-100 text-red-500"
+                : "bg-emerald-50 text-emerald-600"
+            }`}
+          >
+            <CreditCard size={19} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-slate-900">To'lovlar</p>
+            <p
+              className={`text-sm mt-0.5 ${
+                (d.balance ?? 0) < 0 ? "text-red-600" : "text-slate-500"
+              }`}
             >
-              <div className="text-left">
-                <p className="text-sm font-semibold text-slate-800">
-                  To'lovlar tarixi
-                </p>
-                <p
-                  className={`text-xs mt-0.5 ${
-                    pay.balance < 0 ? "text-red-600" : "text-slate-400"
-                  }`}
-                >
-                  Balans:{" "}
-                  {Math.round(pay.balance).toLocaleString("ru-RU")} so'm
-                </p>
-              </div>
-              <span className="text-xs font-medium text-brand-600">
-                {showPay ? "Yopish" : `Ko'rish (${pay.rows.length})`}
-              </span>
-            </button>
-            {showPay && (
-              <div className="mt-3 pt-2 border-t border-slate-100 max-h-72 overflow-y-auto">
-                {pay.rows.length === 0 && (
-                  <p className="text-sm text-slate-400 text-center py-4">
-                    Hozircha yozuv yo'q
-                  </p>
-                )}
-                {pay.rows.map((r: any) => (
-                  <div
-                    key={r.id}
-                    className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm text-slate-700">
-                        {r.kind_label}
-                        {r.note ? (
-                          <span className="text-slate-400"> · {r.note}</span>
-                        ) : null}
-                      </p>
-                      {r.date && (
-                        <p className="text-[11px] text-slate-400">
-                          {formatDate(r.date)}
-                        </p>
-                      )}
-                    </div>
-                    <span
-                      className={`text-sm font-semibold shrink-0 ${
-                        r.amount >= 0 ? "text-emerald-600" : "text-red-600"
-                      }`}
-                    >
-                      {r.amount >= 0 ? "+" : ""}
-                      {Math.round(r.amount).toLocaleString("ru-RU")}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
+              Balans: {fmtNum(d.balance)} so'm
+            </p>
           </div>
-        )}
+          <ChevronRight size={18} className="text-slate-300" />
+        </Link>
 
-        {/* IMTIHONLAR TARIXI (2026-08-10) */}
-        {ex && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-            <button
-              onClick={() => setShowEx((v) => !v)}
-              className="w-full flex items-center justify-between"
-            >
-              <p className="text-sm font-semibold text-slate-800">
-                Imtihonlar tarixi
-              </p>
-              <span className="text-xs font-medium text-brand-600">
-                {showEx ? "Yopish" : `Ko'rish (${ex.rows.length})`}
-              </span>
-            </button>
-            {showEx && (
-              <div className="mt-3 pt-2 border-t border-slate-100 max-h-72 overflow-y-auto">
-                {ex.rows.length === 0 && (
-                  <p className="text-sm text-slate-400 text-center py-4">
-                    Hozircha imtihon natijasi yo'q
-                  </p>
-                )}
-                {ex.rows.map((r: any) => (
-                  <div
-                    key={r.id}
-                    className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm text-slate-700 truncate">
-                        {r.title}
-                      </p>
-                      {r.date && (
-                        <p className="text-[11px] text-slate-400">
-                          {formatDate(r.date)}
-                        </p>
-                      )}
-                    </div>
-                    <span
-                      className={`text-sm font-semibold shrink-0 ml-2 ${
-                        r.absent
-                          ? "text-slate-400"
-                          : (r.percent ?? 0) >= 70 || (r.band ?? 0) >= 6
-                            ? "text-emerald-600"
-                            : "text-amber-600"
-                      }`}
-                    >
-                      {r.absent
-                        ? "Kelmagan"
-                        : r.band != null
-                          ? `Band ${r.band}`
-                          : r.percent != null
-                            ? `${r.score ?? 0} (${Math.round(r.percent)}%)`
-                            : (r.score ?? 0)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
+        {/* ---------------------------------------------- CHIQISH */}
         <button
           onClick={logout}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium"
+          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-sm font-medium"
         >
           <LogOut size={16} />
           Chiqish
         </button>
-      </div>
-    </>
-  );
-}
 
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
-      <span className="text-sm text-slate-500">{label}</span>
-      <span className="text-sm font-medium text-slate-800">{value}</span>
+        <p className="text-[11px] text-slate-400 text-center pt-1">
+          Jony Student · {d.phone}
+        </p>
+      </div>
     </div>
   );
 }

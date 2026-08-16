@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Gift, Percent, Clock, Check, X, ShoppingBag, Target, AlertCircle,
+  Flame, Trophy, Lock, BookOpen, Star, Calendar, Award,
 } from "lucide-react";
 import { CoinIcon } from "../../components/CoinIcon";
 import { formatDate } from "../../lib/format";
@@ -41,6 +43,42 @@ const TONE: Record<string, string> = {
   slate: "bg-slate-100 text-slate-600",
 };
 
+type Badge = {
+  key: string; label: string; hint: string; icon: string; tone: string;
+  have: number; target: number; done: boolean; percent: number; left: number;
+};
+
+type Ach = {
+  streak: number;
+  badges: Badge[];
+  done: number;
+  total: number;
+  streak_rewards: { days: number; coin: number; done: boolean;
+                    left: number; percent: number }[];
+  next: Badge | null;
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const BADGE_ICON: Record<string, any> = {
+  flame: Flame,
+  book: BookOpen,
+  check: Check,
+  star: Star,
+  calendar: Calendar,
+  award: Award,
+};
+
+const BADGE_TONE: Record<string, string> = {
+  amber: "bg-amber-100 text-amber-600",
+  orange: "bg-orange-100 text-orange-500",
+  red: "bg-red-100 text-red-500",
+  emerald: "bg-emerald-100 text-emerald-600",
+  teal: "bg-teal-100 text-teal-600",
+  violet: "bg-violet-100 text-violet-600",
+  sky: "bg-sky-100 text-sky-600",
+  rose: "bg-rose-100 text-rose-500",
+};
+
 function money(n?: number | null) {
   if (!n) return "";
   return Math.round(n).toLocaleString("ru-RU").replace(/ /g, " ") + " so'm";
@@ -67,7 +105,11 @@ export default function StudentShop() {
   const [d, setD] = useState<MyCoins | null>(null);
   const [err, setErr] = useState("");
   const [cat, setCat] = useState("");
-  const [tab, setTab] = useState<"shop" | "orders">("shop");
+  const [params] = useSearchParams();
+  const [tab, setTab] = useState<"shop" | "orders" | "badges">(
+    params.get("tab") === "badges" ? "badges" : "shop"
+  );
+  const [ach, setAch] = useState<Ach | null>(null);
   const [ask, setAsk] = useState<RewardItem | null>(null);
   const [busy, setBusy] = useState(false);
   const [ok, setOk] = useState("");
@@ -82,6 +124,13 @@ export default function StudentShop() {
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }
   useEffect(load, []);
+
+  // Yutuqlar alohida so'rov — do'kon ochilganda bekorga yuklanmasin
+  useEffect(() => {
+    if (tab === "badges" && !ach) {
+      api.get<Ach>("/student/achievements").then(setAch).catch(() => {});
+    }
+  }, [tab, ach]);
 
   async function buy(r: RewardItem) {
     setBusy(true);
@@ -191,8 +240,8 @@ export default function StudentShop() {
       <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-7 pb-12">
         <div className="max-w-md mx-auto">
           <h1 className="text-lg font-semibold flex items-center gap-2">
-            <ShoppingBag size={19} />
-            Jony Shop
+            <Gift size={19} />
+            Mukofotlar
           </h1>
           <div className="mt-4 flex items-end gap-2">
             <CoinIcon size={30} />
@@ -236,13 +285,14 @@ export default function StudentShop() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl border border-slate-200 p-1 grid grid-cols-2 gap-1">
+        <div className="bg-white rounded-xl border border-slate-200 p-1 grid grid-cols-3 gap-1">
           {(
             [
               ["shop", "Do'kon"],
+              ["badges", "Yutuqlar"],
               [
                 "orders",
-                `Buyurtmalarim${waiting.length ? ` (${waiting.length})` : ""}`,
+                `Buyurtma${waiting.length ? ` (${waiting.length})` : ""}`,
               ],
             ] as const
           ).map(([k, l]) => (
@@ -317,6 +367,141 @@ export default function StudentShop() {
               </p>
             )}
           </>
+        )}
+
+        {/* ============================= YUTUQLAR VA STREAK ===== */}
+        {tab === "badges" && !ach && (
+          <p className="text-sm text-slate-400 text-center py-10">
+            Yuklanmoqda…
+          </p>
+        )}
+        {tab === "badges" && ach && (
+          <div className="space-y-4">
+            {/* Streak sovrinlari */}
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Flame size={18} className="text-orange-500" />
+                <p className="text-sm font-bold text-slate-900 flex-1">
+                  Uzluksiz mashq sovrinlari
+                </p>
+                <span className="text-sm font-bold text-orange-500">
+                  {ach.streak} kun
+                </span>
+              </div>
+              <div className="space-y-2">
+                {ach.streak_rewards.map((r) => (
+                  <div key={r.days} className="flex items-center gap-2.5">
+                    <span
+                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                        r.done
+                          ? "bg-emerald-500 text-white"
+                          : "bg-slate-100 text-slate-400"
+                      }`}
+                    >
+                      {r.done ? (
+                        <Check size={15} strokeWidth={3} />
+                      ) : (
+                        <Lock size={13} />
+                      )}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-slate-800">
+                        {r.days} kun ketma-ket
+                      </p>
+                      <div className="h-1.5 rounded-full bg-slate-100 mt-1 overflow-hidden">
+                        <div
+                          className="h-full bg-orange-400 rounded-full"
+                          style={{ width: `${r.percent}%` }}
+                        />
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-sm font-bold text-slate-700 shrink-0">
+                      <CoinIcon size={13} />
+                      {r.coin}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-slate-400 mt-3">
+                Sovrin ochilgach administrator coinni hisobingizga qo'shadi.
+              </p>
+            </div>
+
+            {/* Yaqin maqsad */}
+            {ach.next && (
+              <div className="bg-brand-50 border border-brand-200 rounded-xl p-3.5 flex items-center gap-3">
+                <Target size={18} className="text-brand-600 shrink-0" />
+                <p className="text-sm text-brand-800 flex-1">
+                  Keyingi yutuq: <b>{ach.next.label}</b> — yana{" "}
+                  {ach.next.left} ta
+                </p>
+              </div>
+            )}
+
+            <div className="flex items-center gap-2 px-1">
+              <Trophy size={16} className="text-brand-600" />
+              <p className="text-[15px] font-bold text-slate-900 flex-1">
+                Yutuqlar
+              </p>
+              <span className="text-sm text-slate-400">
+                {ach.done}/{ach.total}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              {ach.badges.map((b) => {
+                const Icon = BADGE_ICON[b.icon] || Trophy;
+                return (
+                  <div
+                    key={b.key}
+                    className={`rounded-xl border p-3.5 ${
+                      b.done
+                        ? "bg-white border-amber-200"
+                        : "bg-white border-slate-100"
+                    }`}
+                  >
+                    <span
+                      className={`w-11 h-11 rounded-full flex items-center justify-center ${
+                        b.done
+                          ? BADGE_TONE[b.tone] || BADGE_TONE.amber
+                          : "bg-slate-100 text-slate-300"
+                      }`}
+                    >
+                      <Icon size={20} />
+                    </span>
+                    <p
+                      className={`text-sm font-bold mt-2 ${
+                        b.done ? "text-slate-900" : "text-slate-400"
+                      }`}
+                    >
+                      {b.label}
+                    </p>
+                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                      {b.hint}
+                    </p>
+                    {!b.done && (
+                      <>
+                        <div className="h-1.5 rounded-full bg-slate-100 mt-2 overflow-hidden">
+                          <div
+                            className="h-full bg-brand-500 rounded-full"
+                            style={{ width: `${b.percent}%` }}
+                          />
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-1">
+                          {b.have}/{b.target}
+                        </p>
+                      </>
+                    )}
+                    {b.done && (
+                      <p className="text-[11px] text-emerald-600 font-semibold mt-2">
+                        Ochildi
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         )}
 
         {tab === "orders" && (

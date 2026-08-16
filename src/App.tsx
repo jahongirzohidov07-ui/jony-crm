@@ -74,6 +74,11 @@ const StudentLeaderboard = lazy(
 const StudentProfile = lazy(() => import("./pages/student/StudentProfile"));
 const StudentShop = lazy(() => import("./pages/student/StudentShop"));
 const StudentRoadmap = lazy(() => import("./pages/student/StudentRoadmap"));
+const StudentSettings = lazy(() => import("./pages/student/StudentSettings"));
+const StudentPayments = lazy(() => import("./pages/student/StudentPayments"));
+const StudentCertificates = lazy(
+  () => import("./pages/student/StudentCertificates"),
+);
 const StudentGrammar = lazy(() => import("./pages/student/StudentGrammar"));
 const StudentVocab = lazy(() => import("./pages/student/StudentVocab"));
 const StudentPractice = lazy(
@@ -179,6 +184,9 @@ function AppRoutes() {
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="shop" element={<StudentShop />} />
           <Route path="roadmap" element={<StudentRoadmap />} />
+          <Route path="settings" element={<StudentSettings />} />
+          <Route path="payments" element={<StudentPayments />} />
+          <Route path="certificates" element={<StudentCertificates />} />
           <Route path="profile" element={<StudentProfile />} />
         </Route>
         {/* Jony Teacher — ustoz ilovasi (telefon). Xodimlar paneli

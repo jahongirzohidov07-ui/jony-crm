@@ -2183,6 +2183,68 @@ REDEEM_STATUSES = [
 REDEEM_STATUS_LABELS = {k: lbl for k, lbl, _ in REDEEM_STATUSES}
 REDEEM_STATUS_TONE = {k: t for k, _, t in REDEEM_STATUSES}
 
+# =====================================================================
+#  YUTUQLAR (BADGE) VA STREAK SOVRINLARI (2026-08-16)
+#
+#  Jahongir: "Qo'shilishi kerak bo'lgan gamification elementlari:
+#  ... 7, 14, 30 kunlik streak sovrinlari; badge va achievement'lar
+#  ... 'Yana 10 XP va sovrin ochiladi' kabi yaqin maqsad."
+#
+#  MUHIM QAROR: yutuqlar uchun YANGI JADVAL OCHILMADI. Har bir
+#  yutuq mavjud yozuvlardan HISOBLANADI (streak, lug'at javoblari,
+#  grammatika mavzulari, XP, davomat, imtihon). Sabablari:
+#    - migratsiya xavfi yo'q;
+#    - eski o'quvchilar ham darrov o'z yutuqlarini ko'radi
+#      (orqaga qarab hisoblanadi);
+#    - ma'lumot dublikat bo'lmaydi, ikki joyda ikki xil son chiqmaydi.
+#
+#  (kalit, sarlavha, izoh, o'lchov, maqsad, belgi, rang)
+#  o'lchov: streak | vocab | grammar_topics | xp | lessons | exams
+# =====================================================================
+BADGES = [
+    ("streak_7",    "Bir hafta uzluksiz", "7 kun ketma-ket mashq",
+     "streak", 7, "flame", "amber"),
+    ("streak_14",   "Ikki hafta uzluksiz", "14 kun ketma-ket mashq",
+     "streak", 14, "flame", "orange"),
+    ("streak_30",   "Bir oy uzluksiz", "30 kun ketma-ket mashq",
+     "streak", 30, "flame", "red"),
+
+    ("vocab_100",   "Yuz so'z", "100 ta so'zni to'g'ri bildingiz",
+     "vocab", 100, "book", "emerald"),
+    ("vocab_500",   "Besh yuz so'z", "500 ta to'g'ri javob",
+     "vocab", 500, "book", "teal"),
+    ("vocab_1000",  "Ming so'z", "1000 ta to'g'ri javob",
+     "vocab", 1000, "book", "violet"),
+
+    ("gram_1",      "Birinchi mavzu", "1 ta grammatika mavzusi yopildi",
+     "grammar_topics", 1, "check", "sky"),
+    ("gram_10",     "O'n mavzu", "10 ta grammatika mavzusi yopildi",
+     "grammar_topics", 10, "check", "violet"),
+
+    ("xp_500",      "500 XP", "Birinchi darajani yakunladingiz",
+     "xp", 500, "star", "amber"),
+    ("xp_2500",     "2 500 XP", "Jiddiy yo'l bosdingiz",
+     "xp", 2500, "star", "violet"),
+    ("xp_5000",     "5 000 XP", "Markaz yulduzi",
+     "xp", 5000, "star", "rose"),
+
+    ("lesson_30",   "30 dars", "30 ta darsga qatnashdingiz",
+     "lessons", 30, "calendar", "sky"),
+    ("lesson_100",  "100 dars", "100 ta darsga qatnashdingiz",
+     "lessons", 100, "calendar", "emerald"),
+
+    ("exam_1",      "Birinchi imtihon", "Birinchi imtihonni topshirdingiz",
+     "exams", 1, "award", "teal"),
+    ("exam_5",      "Besh imtihon", "5 ta imtihon natijasi bor",
+     "exams", 5, "award", "amber"),
+]
+
+# Streak sovrinlari — necha kun uzluksiz mashqqa qancha coin.
+# Coin AVTOMAT berilmaydi: bola sovrinni Mukofotlar bo'limida
+# ko'radi, xodim esa uni odatdagi coin berish oynasidan beradi.
+# (Avtomat berish keyinroq — hozir pul mantig'iga tegmayapmiz.)
+STREAK_REWARDS = [(7, 20), (14, 50), (30, 120)]
+
 # Haftalik reyting sovrini (2026-08-16). Reyting sahifasining tepasida
 # "Sovrin: 50 Coin" bo'lib ko'rinadi — o'quvchi nima uchun
 # kurashayotganini bilsin.

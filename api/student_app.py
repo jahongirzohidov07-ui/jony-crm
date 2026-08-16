@@ -682,11 +682,155 @@ def _clean_name(raw: str, label: str, required: bool = True):
     return v[0].upper() + v[1:]
 
 
+def _badge_counters(db: Session, s) -> dict:
+    """Yutuqlar uchun o'lchovlar — hammasi mavjud yozuvlardan."""
+    vocab = (db.query(func.count(models.VocabAttempt.id))
+             .filter(models.VocabAttempt.student_id == s.id,
+                     models.VocabAttempt.correct == 1).scalar() or 0)
+    rows = (db.query(models.GrammarQuestion.topic, models.GrammarQuestion.id)
+            .filter(models.GrammarQuestion.is_active == 1).all())
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 1).all()}
+    topics = {}
+    for topic, qid in rows:
+        t = topics.setdefault(topic, [0, 0])
+        t[0] += 1
+        if qid in solved:
+            t[1] += 1
+    gram_done = sum(1 for v in topics.values() if v[0] and v[1] >= v[0])
+    xp = (db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
+          .filter(models.XpTransaction.student_id == s.id,
+                  models.XpTransaction.is_reversal == 0).scalar() or 0)
+    lessons = (db.query(func.count(models.Attendance.id))
+               .filter(models.Attendance.student_id == s.id,
+                       models.Attendance.present == 1).scalar() or 0)
+    exams = (db.query(func.count(models.ExamResult.id))
+             .join(models.Exam, models.ExamResult.exam_id == models.Exam.id)
+             .filter(models.ExamResult.student_id == s.id,
+                     models.ExamResult.absent == 0,
+                     models.Exam.status.in_(["approved", "done"]))
+             .scalar() or 0)
+    return {
+        "streak": _streak_days(db, s.id),
+        "vocab": int(vocab),
+        "grammar_topics": int(gram_done),
+        "xp": int(round(float(xp))),
+        "lessons": int(lessons),
+        "exams": int(exams),
+    }
+
+
+def _badges(db: Session, s) -> list:
+    """Yutuqlar ro'yxati — ochilgani va yaqin maqsad bilan."""
+    c = _badge_counters(db, s)
+    out = []
+    for key, label, hint, metric, target, icon, tone in roles.BADGES:
+        have = int(c.get(metric, 0))
+        out.append({
+            "key": key, "label": label, "hint": hint,
+            "icon": icon, "tone": tone,
+            "have": min(have, target), "target": target,
+            "done": have >= target,
+            "percent": min(100, round(have * 100 / target)) if target else 0,
+            "left": max(0, target - have),
+        })
+    # Ochilmaganlari orasidan eng yaqini oldinga chiqmaydi — tartib
+    # o'zgarmasin, lekin ochilganlar tepada tursin.
+    out.sort(key=lambda b: (not b["done"], -b["percent"]))
+    return out
+
+
+@router.get("/api/student/achievements")
+def student_achievements(db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    """Yutuqlar va streak sovrinlari (2026-08-16).
+
+    Jahongir: "7, 14, 30 kunlik streak sovrinlari; badge va
+    achievement'lar ... 'Yana 10 XP va sovrin ochiladi' kabi yaqin
+    maqsad."
+
+    Yangi jadval yo'q — hammasi mavjud yozuvlardan hisoblanadi,
+    shuning uchun eski o'quvchilar ham darrov o'z yutuqlarini
+    ko'radi."""
+    s = _me(db, user)
+    badges = _badges(db, s)
+    streak = _streak_days(db, s.id)
+    rewards = [{
+        "days": d, "coin": coin,
+        "done": streak >= d,
+        "left": max(0, d - streak),
+        "percent": min(100, round(streak * 100 / d)),
+    } for d, coin in roles.STREAK_REWARDS]
+    nxt = next((b for b in badges if not b["done"]), None)
+    return {
+        "streak": streak,
+        "badges": badges,
+        "done": sum(1 for b in badges if b["done"]),
+        "total": len(badges),
+        "streak_rewards": rewards,
+        "next": nxt,
+    }
+
+
+def _cert_rows(db: Session, s) -> list:
+    """Sertifikatga arziydigan imtihon natijalari.
+
+    Alohida "sertifikat" jadvali ochilmadi: markazda sertifikat
+    imtihon natijasi asosida beriladi, ya'ni ma'lumot allaqachon
+    bazada. Faqat kuchli natijalar olinadi — har unit testi
+    sertifikat emas."""
+    rows = (db.query(models.ExamResult, models.Exam)
+            .join(models.Exam, models.ExamResult.exam_id == models.Exam.id)
+            .filter(models.ExamResult.student_id == s.id,
+                    models.ExamResult.absent == 0,
+                    models.Exam.status.in_(["approved", "done"]))
+            .order_by(models.Exam.date.desc()).limit(30).all())
+    out = []
+    for er, ex in rows:
+        pct = er.percent
+        band = er.band
+        # Sertifikatga arziydigan natija: band bor yoki 70% dan yuqori
+        if band is None and (pct is None or float(pct) < 70):
+            continue
+        out.append({
+            "id": er.id,
+            "title": ex.title or roles.exam_title(ex.kind, ex.unit_no),
+            "date": ex.date.isoformat() if ex.date else None,
+            "band": band,
+            "percent": round(float(pct), 1) if pct is not None else None,
+            "level": getattr(ex, "level", None),
+        })
+    return out
+
+
+@router.get("/api/student/certificates")
+def student_certificates(db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    """Sertifikatlar (2026-08-16)."""
+    s = _me(db, user)
+    rows = _cert_rows(db, s)
+    return {"rows": rows, "count": len(rows)}
+
+
 @router.get("/api/student/profile")
 def student_profile(db: Session = Depends(get_db),
                     user=Depends(require_role(roles.STUDENT))):
     s = _me(db, user)
     g = db.query(models.Group).get(s.group_id) if s.group_id else None
+    skills = _skills_card(db, s.id)
+    gam = _gam_card(db, s)
+    per = roles.PRACTICE_POINTS_PER_LEVEL
+    badges = _badges(db, s)
+    certs = len(_cert_rows(db, s))
+    _sk = sorted(skills["skills"], key=lambda k: k["points"])
+    weakest = ({"label": _sk[0]["label"],
+                "score": min(100, round(_sk[0]["points"] * 100 / per))}
+               if _sk else None)
+    strongest = ({"label": _sk[-1]["label"],
+                  "score": min(100, round(_sk[-1]["points"] * 100 / per))}
+                 if _sk else None)
     return {
         "full_name": s.full_name,
         "first_name": s.first_name,
@@ -699,6 +843,24 @@ def student_profile(db: Session = Depends(get_db),
         "school_grade": s.school_grade,
         "phone": s.phone,          # faqat ko'rsatish uchun (login)
         "group": g.name if g else None,
+        # --- 2026-08-16: yangi Profil ekrani uchun (qo'shimcha) ---
+        "level": skills["overall"],
+        "radar": [{
+            "key": k["key"], "label": k["label"], "tone": k["tone"],
+            # 0-100 shkala: bir daraja (500 ball) = 100%
+            "score": min(100, round(k["points"] * 100 / per)),
+            "points": k["points"],
+        } for k in skills["skills"]],
+        "radar_note": (f"Har ko'nikma {per} ballga yetganda 100 bo'ladi"),
+        "xp": int(round(float(gam.get("lifetime_xp") or 0))),
+        "coins": gam.get("coins"),
+        "streak": _streak_days(db, s.id),
+        "balance": student_balance(db, s.id),
+        "badges_done": sum(1 for b in badges if b["done"]),
+        "badges_total": len(badges),
+        "certificates": certs,
+        "strongest": strongest,
+        "weakest": weakest,
     }
 
 

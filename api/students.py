@@ -666,6 +666,187 @@ def update_student(
     db.refresh(s)
     return to_student_out(db, s)
 
+# =====================================================================
+#  IKKI YOZUVNI BIRLASHTIRISH (2026-08-17)
+#
+#  Jahongir: "qara sen aytyabman shu ikktani bitta qil, bittasini
+#  toliq ochirib tashla, davomatri, otsin lekin bunga".
+#
+#  Kelib chiqishi: bazada bitta o'quvchida bitta guruh bo'lgani uchun
+#  ikki fanga qatnaydigan bola IKKI MARTA kiritilgan. Endi ko'p guruh
+#  bor, shuning uchun ikkitasini bittaga yig'ish kerak.
+#
+#  QOIDA: hech narsa YO'QOLMAYDI. Ortiqcha yozuvning BUTUN tarixi —
+#  davomat, baho, imtihon, coin, XP, to'lov, chegirma, shartnoma,
+#  shikoyat — omon qolgan kartaga KO'CHADI. Ko'chirilgach ortiqcha
+#  yozuv bo'm-bo'sh qobiq bo'lib qoladi va o'sha holda o'chiriladi.
+#  Ya'ni "o'chirish" hech qanday ma'lumotni yo'qotmaydi.
+# =====================================================================
+
+# (model, ustun) — student_id ga bog'langan hamma jadval.
+# Yangi jadval qo'shilsa shu ro'yxatga ham qo'shish kerak.
+_MERGE_TABLES = [
+    "Payment", "Attendance", "DailyGrade", "ExamResult", "CoinEntry",
+    "RewardRedemption", "Contract", "Complaint", "RiskFlag", "RiskTask",
+    "ParentTalk", "Certificate", "SupportAssignment", "SupportPlan",
+    "Discount", "DebtorContact", "TeacherRating", "LeaveReason",
+    "Notification", "XpTransaction", "StudentLeagueHistory",
+    "StudentAchievement", "XpApprovalRequest", "XpFraudAlert",
+    "SeasonRankSnapshot", "MediaAsset", "NpsResponse", "StudentReminder",
+    "PaymentFixRequest", "ExerciseResult", "ChargeSkip", "RefundRequest",
+    "SkillAttempt", "GrammarAttempt", "VocabUnitPass", "VocabAttempt",
+]
+
+# Bitta o'quvchida BITTA bo'lishi kerak bo'lgan jadvallar — ko'chirilsa
+# ikkita bo'lib qoladi. Shuning uchun omon qolganda bori qoldiriladi,
+# ortiqchasi o'chiriladi.
+_MERGE_SINGLETON = ["StudentGamification", "XpStreak"]
+
+
+@router.post("/api/students/{keep_id}/merge/{drop_id}")
+def merge_students(
+    keep_id: int,
+    drop_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """Ikki yozuvni bitta qilish. FAQAT ASOSCHI.
+
+    keep_id — qoladigan karta, drop_id — yo'q qilinadigani."""
+    if keep_id == drop_id:
+        raise HTTPException(400, "Bir xil yozuv")
+    keep = db.query(models.Student).get(keep_id)
+    drop = db.query(models.Student).get(drop_id)
+    if not keep or not drop:
+        raise HTTPException(404, "O'quvchi topilmadi")
+
+    # XAVFSIZLIK: tasodifan boshqa odamni qo'shib yubormaslik uchun
+    # telefon yoki ism mos kelishi SHART.
+    def dig(v):
+        return "".join(ch for ch in (v or "") if ch.isdigit())[-9:]
+
+    same_phone = dig(keep.phone) and dig(keep.phone) == dig(drop.phone)
+    same_name = (keep.full_name or "").strip().lower() == \
+        (drop.full_name or "").strip().lower()
+    if not (same_phone or same_name):
+        raise HTTPException(
+            400, "Bu ikkisi bir odamga o'xshamayapti (telefon ham, ism "
+                 "ham boshqa). Birlashtirish to'xtatildi.")
+
+    moved = {}
+
+    # 0) Ikkalasining ham bog'lanishi borligiga ishonch hosil qilamiz.
+    #    Eski o'quvchilarda bog'lanish kunlik cron'da yaratiladi —
+    #    u ishlamagan bo'lsa guruhlar ko'chmay qolardi (test tutdi).
+    ensure_link(db, keep)
+    ensure_link(db, drop)
+    db.flush()
+
+    # 1) GURUHLAR — ortiqchaning guruhlari omon qolganga o'tadi
+    for lk in (db.query(models.StudentGroupLink)
+               .filter(models.StudentGroupLink.student_id == drop.id,
+                       models.StudentGroupLink.active == 1).all()):
+        try:
+            attach_group(db, keep, lk.group_id, user,
+                         joined=lk.joined_date)
+        except Exception:
+            db.rollback()
+    db.query(models.StudentGroupLink).filter(
+        models.StudentGroupLink.student_id == drop.id).delete(
+            synchronize_session=False)
+
+    # 2) DAVOMAT — bir darsda ikki yozuv bo'lib qolmasin
+    keep_lessons = {lid for (lid,) in db.query(models.Attendance.lesson_id)
+                    .filter(models.Attendance.student_id == keep.id).all()}
+    n_att = n_dup = 0
+    for a in (db.query(models.Attendance)
+              .filter(models.Attendance.student_id == drop.id).all()):
+        if a.lesson_id in keep_lessons:
+            db.delete(a)          # o'sha darsda allaqachon yozuv bor
+            n_dup += 1
+        else:
+            a.student_id = keep.id
+            n_att += 1
+    if n_att:
+        moved["Davomat"] = n_att
+    if n_dup:
+        moved["Davomat (takror, olib tashlandi)"] = n_dup
+
+    # 3) QOLGAN HAMMA JADVAL
+    for name in _MERGE_TABLES:
+        if name == "Attendance":
+            continue
+        M = getattr(models, name, None)
+        if M is None:
+            continue
+        try:
+            n = (db.query(M).filter(M.student_id == drop.id)
+                 .update({M.student_id: keep.id},
+                         synchronize_session=False))
+            if n:
+                moved[name] = n
+        except Exception:
+            db.rollback()
+            raise HTTPException(
+                500, f"{name} jadvalini ko'chirishda xato — hech narsa "
+                     f"o'zgartirilmadi")
+
+    # 4) BITTALIK jadvallar — ortiqchasi o'chadi
+    for name in _MERGE_SINGLETON:
+        M = getattr(models, name, None)
+        if M is None:
+            continue
+        has = db.query(M).filter(M.student_id == keep.id).first()
+        rows = db.query(M).filter(M.student_id == drop.id).all()
+        for r in rows:
+            if has:
+                db.delete(r)
+            else:
+                r.student_id = keep.id
+                has = r
+
+    # 5) Bo'sh maydonlarni to'ldiramiz (ma'lumot boy bo'lsin)
+    for f in ("phone", "parent_phone", "birth_date", "address", "school",
+              "school_grade", "photo", "middle_name", "note"):
+        if not getattr(keep, f, None) and getattr(drop, f, None):
+            setattr(keep, f, getattr(drop, f))
+    if drop.enrolled_date and (not keep.enrolled_date
+                               or drop.enrolled_date < keep.enrolled_date):
+        keep.enrolled_date = drop.enrolled_date
+
+    # 6) Login: ortiqchasidagi hisob bo'shatiladi (bitta odam — bitta login)
+    old_user_id = drop.user_id
+    drop.user_id = None
+    db.flush()
+    if old_user_id and not keep.user_id:
+        keep.user_id = old_user_id
+    elif old_user_id:
+        u = db.query(models.User).get(old_user_id)
+        if u:
+            u.is_active = 0     # ikkinchi login o'chiriladi
+
+    drop_name = drop.full_name
+    drop_public = drop.public_id
+    db.flush()
+    db.delete(drop)             # endi bo'm-bo'sh qobiq
+    sync_primary_group(db, keep)
+    db.commit()
+    db.refresh(keep)
+
+    audit.log(db, user, entity="student", action="update",
+              entity_id=keep.id, entity_label=keep.full_name,
+              field="Ikki yozuv birlashtirildi",
+              old_value=f"{drop_name} ({drop_public or drop_id})",
+              new_value="; ".join(f"{k}: {v}" for k, v in moved.items())
+                        or "ko'chirilgan yozuv yo'q",
+              branch_id=keep.branch_id, commit=True)
+
+    return {"ok": True, "kept": keep.id, "removed": drop_id,
+            "moved": moved,
+            "balance": student_balance(db, keep.id),
+            "groups": len(student_group_ids(db, keep.id))}
+
+
 @router.delete("/api/students/{student_id}")
 def delete_student(
     student_id: int,

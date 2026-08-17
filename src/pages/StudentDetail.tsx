@@ -427,6 +427,7 @@ function GroupsTab({
           karta bo'lib yonma-yon turadi. */}
       <StudentGroupsCard
         studentId={student.id}
+        studentName={student.full_name}
         allGroups={allGroups as unknown as {
           id: number; name: string; subject?: string | null;
         }[]}

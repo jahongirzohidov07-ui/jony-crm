@@ -4711,7 +4711,14 @@ def sync_primary_group(db: Session, s) -> bool:
                      models.StudentGroupLink.active == 1)
              .order_by(models.StudentGroupLink.is_primary.desc(),
                        models.StudentGroupLink.id).all())
-    want = links[0].group_id if links else None
+    if not links:
+        # XAVFSIZLIK (2026-08-17): bog'lanish jadvali hali
+        # to'ldirilmagan bo'lsa (eski o'quvchi, cron ishlamagan)
+        # group_id ni BO'SHATMAYMIZ — aks holda guruhi joyida
+        # bo'lgan o'quvchi guruhsiz bo'lib qolardi. Buni
+        # birlashtirish testi tutdi.
+        return False
+    want = links[0].group_id
     if s.group_id != want:
         s.group_id = want
         return True
@@ -4762,6 +4769,22 @@ def detach_group(db: Session, s, group_id: int, on=None) -> bool:
     db.flush()
     sync_primary_group(db, s)
     return True
+
+
+def ensure_link(db: Session, s) -> None:
+    """group_id bor, lekin bog'lanish yozuvi yo'q bo'lsa — yaratadi.
+    Birlashtirish va karta ochilishida ishlatiladi."""
+    if not s or not s.group_id:
+        return
+    has = (db.query(models.StudentGroupLink)
+           .filter(models.StudentGroupLink.student_id == s.id,
+                   models.StudentGroupLink.group_id == s.group_id).first())
+    if not has:
+        db.add(models.StudentGroupLink(
+            student_id=s.id, group_id=s.group_id, is_primary=1,
+            joined_date=s.enrolled_date, active=1,
+            created_by="Avtomat"))
+        db.flush()
 
 
 def backfill_student_groups(db: Session) -> int:
@@ -5227,6 +5250,7 @@ __all__ = [
     "_expenses_total",
     "_expire_discounts",
     "in_group",
+    "ensure_link",
     "student_group_ids",
     "sync_primary_group",
     "attach_group",

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Star, X } from "lucide-react";
+import { Merge, Plus, Star, X } from "lucide-react";
 import { api } from "../lib/api";
+import { MergeStudents } from "./MergeStudents";
+import { useAuth } from "../lib/AuthContext";
+import { FOUNDER, can } from "../lib/roles";
 import { formatDate, formatSom } from "../lib/format";
 
 /**
@@ -63,15 +66,20 @@ function Row2({ label, value }: { label: string; value: React.ReactNode }) {
 
 export function StudentGroupsCard({
   studentId,
+  studentName = "",
   allGroups,
   canEdit,
   onChanged,
 }: {
   studentId: number;
+  studentName?: string;
   allGroups: { id: number; name: string; subject?: string | null }[];
   canEdit: boolean;
   onChanged?: () => void;
 }) {
+  const { user } = useAuth();
+  const isFounder = can(user?.role, [FOUNDER]);
+  const [merging, setMerging] = useState(false);
   const [rows, setRows] = useState<Row[]>([]);
   const [adding, setAdding] = useState(false);
   const [pick, setPick] = useState("");
@@ -123,6 +131,18 @@ export function StudentGroupsCard({
 
   return (
     <div className="mb-4">
+      {merging && (
+        <MergeStudents
+          studentId={studentId}
+          studentName={studentName}
+          onClose={() => setMerging(false)}
+          onDone={() => {
+            setMerging(false);
+            load();
+            onChanged?.();
+          }}
+        />
+      )}
       <div className="flex items-center gap-2 mb-3">
         <p className="text-sm font-semibold text-slate-700 flex-1">
           Guruhlari
@@ -132,6 +152,15 @@ export function StudentGroupsCard({
             </span>
           )}
         </p>
+        {isFounder && (
+          <button
+            onClick={() => setMerging(true)}
+            title="Shu odamning ikkinchi yozuvi bo'lsa — bitta qilish"
+            className="flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-slate-700"
+          >
+            <Merge size={14} /> Dublikatni qo'shish
+          </button>
+        )}
         {canEdit && !adding && (
           <button
             onClick={() => setAdding(true)}

@@ -972,6 +972,9 @@ class CandidateUpdate(BaseModel):
     workplaces: Optional[str] = None
     certificates: Optional[str] = None
     language_level: Optional[str] = None
+    # Ona tili (2026-08-16) — til darajasi ro'yxati faqat ingliz
+    # tiliga mo'ljallangan edi.
+    native_language: Optional[str] = None
     expected_salary: Optional[float] = None
     trial_score: Optional[float] = None
     interview_score: Optional[float] = None

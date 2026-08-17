@@ -571,6 +571,17 @@ FAMILY_DISCOUNT_PERCENT = 10.0
 # ko'rinib turadi.
 HR_ACCESS = FULL_ACCESS + [HR_MANAGER]
 
+# NOMZODNI KO'RISH (2026-08-16, Jahongir: "nomzod o'qituvchi bo'lsa
+# o'quv bo'limi rahbariga ham ko'rinish kerak. shunda baholay
+# olardi").
+#
+# O'quv bo'limi rahbari sinov darsini baholaydi, lekin HR bo'limining
+# hammasini ko'rishi shart emas. Shuning uchun:
+#   - ro'yxat va karta OCHIQ, ammo FAQAT USTOZ nomzodlari
+#     (buni hr_ats.py dagi _teacher_only_for() cheklaydi);
+#   - kartani TAHRIRLASH esa avvalgidek faqat HR_ACCESS'da qoladi.
+HR_CANDIDATE_VIEW = HR_ACCESS + [ACADEMIC_HEAD]
+
 VACANCY_STATUSES = [
     ("open", "Ochiq"),
     ("paused", "To'xtatilgan"),

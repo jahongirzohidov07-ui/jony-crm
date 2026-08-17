@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { ClipboardCheck, X, Info, Pencil, Check } from "lucide-react";
+import { ClipboardCheck, X, Info, Pencil, Check, FileSpreadsheet} from "lucide-react";
 import {
   api, type RubricList, type RubricRow, type ObservationRow,
   type Teacher,
 } from "../lib/api";
 import { formatDate } from "../lib/format";
+import { exportSheetsToExcel } from "../lib/exportXlsx";
 
 const TONE: Record<string, string> = {
   emerald: "bg-emerald-100 text-emerald-700",
@@ -364,6 +365,7 @@ export function ObservationList({
   const [rows, setRows] = useState<ObservationRow[]>([]);
   const [open, setOpen] = useState(false);
   const [detail, setDetail] = useState<ObservationRow | null>(null);
+  const [xls, setXls] = useState(false);
 
   function load() {
     const q = teacherId
@@ -380,16 +382,79 @@ export function ObservationList({
     setDetail(await api.get<ObservationRow>(`/observations/${id}`));
   }
 
+  /**
+   * BAHOLASHNI EXCELGA CHIQARISH (2026-08-16).
+   *
+   * Jahongir: "daras baholagandan keyin jadval qilib excell qilish
+   * mumkin bo'lsin ustozga tashlab berishga oson bo'ladi".
+   *
+   * Har baholash ALOHIDA varaq bo'ladi: mezonlar, maksimal ball,
+   * qo'yilgan ball va izoh. Oxirida jami natija, sana, baholovchi,
+   * kuchli va zaif tomonlar. Shu holida ustozga yuborsa bo'ladi.
+   */
+  async function toExcel() {
+    if (rows.length === 0) return;
+    setXls(true);
+    try {
+      const full = await Promise.all(
+        rows.map((o) => api.get<ObservationRow>(`/observations/${o.id}`))
+      );
+      const sheets = full.map((o, i) => {
+        const body: Record<string, unknown>[] = (o.scores || []).map((c) => ({
+          "\u2116": c.no,
+          Mezon: c.text,
+          "Maksimal ball": c.points,
+          "Qo'yilgan ball": c.fact,
+          Izoh: c.note || "",
+        }));
+        const line = (m: string, izoh: unknown) =>
+          body.push({ "\u2116": "", Mezon: m, "Maksimal ball": "",
+                      "Qo'yilgan ball": "", Izoh: izoh ?? "" });
+        body.push({ "\u2116": "", Mezon: "", "Maksimal ball": "",
+                    "Qo'yilgan ball": "", Izoh: "" });
+        body.push({ "\u2116": "", Mezon: "JAMI",
+                    "Maksimal ball": o.max_total,
+                    "Qo'yilgan ball": o.total,
+                    Izoh: `${o.percent}% \u2014 ${o.band_label}` });
+        line("Sana", o.date);
+        line("Baholadi", o.observer);
+        line("Kuchli tomonlari", o.strengths);
+        line("Rivojlantirish kerak", o.weaknesses);
+        if (o.note) line("Izoh", o.note);
+        const nm = `${i + 1}-baholash ${o.date || ""}`.trim();
+        return { name: nm.slice(0, 31), rows: body };
+      });
+      const who = full[0]?.teacher || "nomzod";
+      exportSheetsToExcel(`Dars baholash - ${who}`, sheets);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Excelga chiqarib bo'lmadi");
+    } finally {
+      setXls(false);
+    }
+  }
+
   return (
     <div>
-      {canAdd && (
-        <button
-          onClick={() => setOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium mb-3 hover:bg-brand-700"
-        >
-          <ClipboardCheck size={15} /> Dars baholash
-        </button>
-      )}
+      <div className="flex flex-wrap gap-2 mb-3">
+        {canAdd && (
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+          >
+            <ClipboardCheck size={15} /> Dars baholash
+          </button>
+        )}
+        {rows.length > 0 && (
+          <button
+            onClick={toExcel}
+            disabled={xls}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-emerald-300 text-emerald-700 bg-white text-sm font-medium hover:bg-emerald-50 disabled:opacity-60"
+          >
+            <FileSpreadsheet size={15} />
+            {xls ? "Tayyorlanmoqda\u2026" : "Excelga yuklash"}
+          </button>
+        )}
+      </div>
 
       {rows.length === 0 ? (
         <p className="text-sm text-slate-400 py-6 text-center">

@@ -14,7 +14,9 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import { AtsBoard } from "../components/AtsBoard";
 import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
-import { HR_ACCESS, can, ALL_ROLES, roleLabel } from "../lib/roles";
+import {
+  HR_ACCESS, HR_CANDIDATE_VIEW, can, ALL_ROLES, roleLabel,
+} from "../lib/roles";
 import {
   CANDIDATE_STAGES, CANDIDATE_SOURCES, APPLY_POSITIONS,
   APPLY_MARITAL, APPLY_WORK_DURATIONS,
@@ -276,6 +278,7 @@ const emptyCand = {
 };
 
 function CandidatesTab({ branches }: { branches: Branch[] }) {
+  const { user } = useAuth();
   const [rows, setRows] = useState<Candidate[]>([]);
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
   const [loading, setLoading] = useState(true);
@@ -669,7 +672,11 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
       {card !== null && (
         <CandidateCard
           id={card}
-          canEdit
+          /* O'quv bo'limi rahbari kartani TAHRIRLAMAYDI — u faqat
+             ma'lumotni ko'rib, sinov darsini baholaydi
+             (2026-08-16). Server ham shu qoidada: PUT hamon
+             HR_ACCESS'da. */
+          canEdit={can(user?.role, HR_ACCESS)}
           onClose={() => setCard(null)}
           onSaved={load}
         />
@@ -1223,13 +1230,24 @@ export default function Hr() {
     api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));
   }, []);
 
-  if (!can(user?.role, HR_ACCESS)) {
+  if (!can(user?.role, HR_CANDIDATE_VIEW)) {
     return (
       <p className="text-sm text-slate-500 py-10 text-center">
         Bu bo'limga ruxsatingiz yo'q.
       </p>
     );
   }
+
+  /* O'quv bo'limi rahbariga HR'ning hammasi kerak emas — u faqat
+     ustoz nomzodini ko'rib, sinov darsini baholaydi (2026-08-16).
+     Shuning uchun unga faqat ikkita tab ochiladi. */
+  const fullHr = can(user?.role, HR_ACCESS);
+  const visibleTabs = fullHr
+    ? TABS
+    : TABS.filter((t) => t.key === "candidates" || t.key === "rubric");
+  const activeTab = visibleTabs.some((t) => t.key === tab)
+    ? tab
+    : visibleTabs[0].key;
 
   return (
     <div>
@@ -1242,12 +1260,12 @@ export default function Hr() {
       </p>
 
       <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
-        {TABS.map((t) => (
+        {visibleTabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
-              tab === t.key
+              activeTab === t.key
                 ? "border-brand-600 text-brand-700"
                 : "border-transparent text-slate-500 hover:text-slate-700"
             }`}
@@ -1257,21 +1275,21 @@ export default function Hr() {
         ))}
       </div>
 
-      {tab === "overview" && <HrOverviewTab />}
-      {tab === "ats" && <AtsBoard />}
-      {tab === "lifecycle" && <HrLifecycleTab />}
-      {tab === "funnel" && <FunnelTab />}
-      {tab === "workforce" && <WorkforceTab />}
-      {tab === "requests" && <StaffRequestsTab />}
-      {tab === "hrvacancies" && <HrVacanciesTab />}
-      {tab === "candidates" && <CandidatesTab branches={branches} />}
-      {tab === "vacancies" && <VacanciesTab branches={branches} />}
-      {tab === "staff" && <StaffTab />}
-      {tab === "rubric" && <ObservationsTab />}
-      {tab === "dates" && <StaffDatesTab />}
-      {tab === "attendance" && <AttendanceTab />}
-      {tab === "nps" && <NpsTab />}
-      {tab === "library" && <LibraryTab />}
+      {activeTab === "overview" && <HrOverviewTab />}
+      {activeTab === "ats" && <AtsBoard />}
+      {activeTab === "lifecycle" && <HrLifecycleTab />}
+      {activeTab === "funnel" && <FunnelTab />}
+      {activeTab === "workforce" && <WorkforceTab />}
+      {activeTab === "requests" && <StaffRequestsTab />}
+      {activeTab === "hrvacancies" && <HrVacanciesTab />}
+      {activeTab === "candidates" && <CandidatesTab branches={branches} />}
+      {activeTab === "vacancies" && <VacanciesTab branches={branches} />}
+      {activeTab === "staff" && <StaffTab />}
+      {activeTab === "rubric" && <ObservationsTab />}
+      {activeTab === "dates" && <StaffDatesTab />}
+      {activeTab === "attendance" && <AttendanceTab />}
+      {activeTab === "nps" && <NpsTab />}
+      {activeTab === "library" && <LibraryTab />}
     </div>
   );
 }

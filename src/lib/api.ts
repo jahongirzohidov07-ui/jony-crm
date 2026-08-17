@@ -2042,6 +2042,8 @@ export interface CandidateCard {
   certificates?: string | null;
   language_level?: string | null;
   language_level_label?: string | null;
+  /** Ona tili (2026-08-16) */
+  native_language?: string | null;
   expected_salary?: number | null;
   trial_score?: number | null;
   interview_score?: number | null;
@@ -2053,7 +2055,9 @@ export interface CandidateCard {
   decision_label: string;
   files: { id: number; name?: string | null; kind: string; size: number;
            created_at?: string | null }[];
-  language_levels: { key: string; label: string }[];
+  /** Kodda yozilganlari + HR qo'shganlari (custom = qo'shilgani) */
+  language_levels: { key: string; label: string; custom?: boolean;
+                     id?: number }[];
   decisions: { key: string; label: string }[];
 }
 

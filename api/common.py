@@ -79,6 +79,8 @@ def _ensure_new_columns():
         "ALTER TABLE discounts ADD COLUMN applied_at TIMESTAMP",
         "UPDATE rewards SET kind = 'gift' WHERE kind IS NULL",
         # Ariza savollari qo'lda kiritishda ham (2026-08-15)
+        # Ona tili (2026-08-16)
+        "ALTER TABLE candidates ADD COLUMN native_language VARCHAR",
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
         "ALTER TABLE candidates ADD COLUMN education VARCHAR",
@@ -463,7 +465,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_15h"
+SCHEMA_STAMP = "stamp_2026_08_16a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Save, FileText } from "lucide-react";
+import { X, Save, FileText, Plus } from "lucide-react";
 import { api, type CandidateCard as Card } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { Attachments } from "./Attachments";
@@ -35,6 +35,7 @@ export function CandidateCard({
         workplaces: d.workplaces ?? "",
         certificates: d.certificates ?? "",
         language_level: d.language_level ?? "",
+        native_language: d.native_language ?? "",
         expected_salary: d.expected_salary?.toString() ?? "",
         trial_score: d.trial_score?.toString() ?? "",
         interview_score: d.interview_score?.toString() ?? "",
@@ -52,6 +53,34 @@ export function CandidateCard({
     setOk(false);
   }
 
+  /**
+   * Til darajasi ro'yxatiga YANGI variant qo'shish (2026-08-16).
+   *
+   * Jahongir: "tagidan qo'shadigan qilish kerak til darajasini
+   * nomzodlarda hr bo'limida, ona tili yo boshqa sertifikatlar
+   * kiritib bo'lmayabdi".
+   *
+   * Qo'shilgan variant BAZAGA yoziladi — keyingi safar hamma
+   * uchun ro'yxatda turadi, har safar qaytadan yozish shart emas.
+   */
+  async function addLanguageOption() {
+    const label = prompt(
+      "Yangi variant nomi\n\nMasalan: TOEFL 90+, Rus tili C1, " +
+      "CEFR sertifikati, Ona tili"
+    );
+    if (!label || !label.trim()) return;
+    try {
+      const row = await api.post<{ key: string; label: string }>(
+        "/hr/options/language_level",
+        { label: label.trim() }
+      );
+      await api.put(`/candidates/${id}`, { language_level: row.key });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Qo'shib bo'lmadi");
+    }
+  }
+
   async function save() {
     setSaving(true);
     await api.put(`/candidates/${id}`, {
@@ -60,6 +89,7 @@ export function CandidateCard({
       workplaces: f.workplaces || null,
       certificates: f.certificates || null,
       language_level: f.language_level || null,
+      native_language: f.native_language || null,
       expected_salary: f.expected_salary ? Number(f.expected_salary) : null,
       trial_score: f.trial_score ? Number(f.trial_score) : null,
       interview_score: f.interview_score ? Number(f.interview_score) : null,
@@ -148,27 +178,53 @@ export function CandidateCard({
               />
               <div>
                 <label className="block text-xs text-slate-500 mb-1">
-                  Til darajasi
+                  Til darajasi / sertifikat
                 </label>
                 {canEdit ? (
-                  <select
-                    value={f.language_level}
-                    onChange={(e) => set("language_level", e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
-                  >
-                    <option value="">— tanlang —</option>
-                    {c.language_levels.map((l) => (
-                      <option key={l.key} value={l.key}>
-                        {l.label}
-                      </option>
-                    ))}
-                  </select>
+                  <>
+                    <select
+                      value={f.language_level}
+                      onChange={(e) => set("language_level", e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+                    >
+                      <option value="">— tanlang —</option>
+                      {c.language_levels.map((l) => (
+                        <option key={l.key} value={l.key}>
+                          {l.label}
+                        </option>
+                      ))}
+                      {/* Ro'yxatda yo'q eski qiymat ham yo'qolmasin */}
+                      {f.language_level &&
+                        !c.language_levels.some(
+                          (l) => l.key === f.language_level
+                        ) && (
+                          <option value={f.language_level}>
+                            {c.language_level_label || f.language_level}
+                          </option>
+                        )}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={addLanguageOption}
+                      className="mt-1.5 inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700"
+                    >
+                      <Plus size={13} />
+                      Ro'yxatga yangi variant qo'shish
+                    </button>
+                  </>
                 ) : (
                   <p className="text-sm text-slate-800 py-2">
                     {c.language_level_label || "—"}
                   </p>
                 )}
               </div>
+              <Text
+                label="Ona tili"
+                value={f.native_language}
+                onChange={(v) => set("native_language", v)}
+                canEdit={canEdit}
+                placeholder="O'zbek / Rus / Qoraqalpoq"
+              />
               <Text
                 label="Kutilayotgan maosh"
                 value={f.expected_salary}
@@ -329,6 +385,7 @@ function Text({
   canEdit,
   type = "text",
   hint,
+  placeholder,
 }: {
   label: string;
   value: string;
@@ -336,6 +393,7 @@ function Text({
   canEdit: boolean;
   type?: string;
   hint?: string;
+  placeholder?: string;
 }) {
   return (
     <div>
@@ -344,6 +402,7 @@ function Text({
         <input
           type={type}
           value={value}
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
           className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
         />

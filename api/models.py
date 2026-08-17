@@ -924,6 +924,10 @@ class Candidate(Base):
     workplaces = Column(Text, nullable=True)         # oldingi ish joylari
     certificates = Column(Text, nullable=True)       # sertifikatlar ro'yxati
     language_level = Column(String, nullable=True)   # roles.LANGUAGE_LEVELS
+    # ONA TILI (2026-08-16, Jahongir: "ona tili yo boshqa sertifikatlar
+    # kiritib bo'lmayabdi"). Til darajasi ro'yxati ingliz tiliga
+    # mo'ljallangan edi — ona tili va boshqa tillar uchun joy yo'q edi.
+    native_language = Column(String, nullable=True)
     expected_salary = Column(Float, nullable=True)
     trial_score = Column(Float, nullable=True)       # probniy dars bahosi (0-10)
     interview_score = Column(Float, nullable=True)   # intervyu bahosi (0-10)
@@ -2667,6 +2671,36 @@ class ExamOrder(Base):
 # =====================================================================
 #  HR FAZA 2B — ATS
 # =====================================================================
+class HrOption(Base):
+    """HR ro'yxatlariga QO'LDA qo'shiladigan variantlar (2026-08-16).
+
+    Jahongir: "tagidan qo'shadigan qilish kerak til darajasini
+    nomzodlarda hr bo'limida, ona tili yo boshqa sertifikatlar
+    kiritib bo'lmayabdi".
+
+    Ilgari til darajasi ro'yxati kodda qattiq yozilgan edi
+    (roles.LANGUAGE_LEVELS): A1..C2 va IELTS. TOEFL, CEFR C2
+    sertifikati, rus tili darajasi yoki "ona tili" kabi narsalarni
+    kiritib bo'lmasdi — har safar dasturchi kerak bo'lardi.
+
+    Endi HR o'zi qo'sha oladi. Kodda yozilganlari JOYIDA QOLADI
+    (eski yozuvlar buzilmasin), bu jadval faqat USTIGA qo'shiladi.
+
+    kind — qaysi ro'yxat ("language_level" va kelajakda boshqalar).
+    """
+    __tablename__ = "hr_options"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, nullable=False, index=True)
+    # key — saqlanadigan qiymat, label — ekranda ko'rinadigani.
+    key = Column(String, nullable=False)
+    label = Column(String, nullable=False)
+    position = Column(Integer, default=0)
+    active = Column(Integer, default=1)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class CandidateApplication(Base):
     """Bitta odamning bitta vakansiyaga arizasi.
 

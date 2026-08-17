@@ -259,7 +259,7 @@ def list_candidates(
     source: str | None = None,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.HR_ACCESS)),
+    user=Depends(require_role(*roles.HR_CANDIDATE_VIEW)),
 ):
     """Nomzodlar ro'yxati.
 
@@ -268,6 +268,10 @@ def list_candidates(
     bo'yicha; qolgan filtrlar birga ishlaydi (VA mantig'i)."""
     qq = scope_to_branch(db.query(models.Candidate), models.Candidate,
                          user, branch_id)
+    # O'quv bo'limi rahbariga faqat USTOZ nomzodlari (2026-08-16)
+    if _teacher_only(user):
+        qq = qq.filter(or_(models.Candidate.position == "teacher",
+                           models.Candidate.subject.isnot(None)))
     if vacancy_id:
         qq = qq.filter(models.Candidate.vacancy_id == vacancy_id)
     if stage:
@@ -378,6 +382,70 @@ def backfill_candidate_positions(db: Session) -> int:
     return n
 
 
+@router.get("/api/hr/options/{kind}")
+def list_hr_options(
+    kind: str,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_CANDIDATE_VIEW)),
+):
+    """Ro'yxat variantlari: kodda yozilganlari + HR qo'shganlari."""
+    if kind == "language_level":
+        return {"kind": kind, "rows": _language_levels(db)}
+    return {"kind": kind, "rows": _custom_options(db, kind)}
+
+
+@router.post("/api/hr/options/{kind}")
+def add_hr_option(
+    kind: str,
+    payload: dict,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    """Ro'yxatga yangi variant qo'shish (2026-08-16).
+
+    Jahongir: "tagidan qo'shadigan qilish kerak til darajasini ...
+    ona tili yo boshqa sertifikatlar kiritib bo'lmayabdi".
+
+    Kalit yozilgan matndan hosil qilinadi, shunda baza ichida ham
+    o'qish oson bo'ladi ("TOEFL 90+" -> "toefl_90")."""
+    label = (payload or {}).get("label", "").strip()
+    if not label:
+        raise HTTPException(400, "Nomini yozing")
+    if len(label) > 60:
+        raise HTTPException(400, "Nomi 60 belgidan oshmasin")
+    key = "".join(ch if ch.isalnum() else "_" for ch in label.lower())
+    key = "_".join(x for x in key.split("_") if x)[:40] or "opt"
+    # Dublikat: kodda ham, qo'shilganlar orasida ham bo'lmasin
+    have = {o["key"] for o in _language_levels(db)} if kind == "language_level" \
+        else {o["key"] for o in _custom_options(db, kind)}
+    if key in have:
+        raise HTTPException(400, "Bunday variant allaqachon bor")
+    row = models.HrOption(kind=kind, key=key, label=label,
+                          position=999, active=1,
+                          created_by=user.full_name)
+    db.add(row); db.commit(); db.refresh(row)
+    return {"key": row.key, "label": row.label, "custom": True,
+            "id": row.id}
+
+
+@router.delete("/api/hr/options/{oid}")
+def delete_hr_option(
+    oid: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    """Variantni ro'yxatdan olib tashlash.
+
+    Yozuv O'CHIRILMAYDI, faqat yashiriladi: shu variant tanlangan
+    eski nomzod kartalarida nomi ko'rinib turaversin."""
+    row = db.query(models.HrOption).get(oid)
+    if not row:
+        raise HTTPException(404, "Topilmadi")
+    row.active = 0
+    db.commit()
+    return {"ok": True}
+
+
 @router.get("/api/candidates/filters")
 def candidate_filters(db: Session = Depends(get_db),
                       user=Depends(require_role(*roles.HR_ACCESS))):
@@ -407,11 +475,15 @@ def candidate_filters(db: Session = Depends(get_db),
 def get_candidate(
     cid: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.HR_ACCESS)),
+    user=Depends(require_role(*roles.HR_CANDIDATE_VIEW)),
 ):
     """Nomzod kartasi - qaror qabul qilish uchun kerak bo'lgan hammasi
     bir ekranda: CV, tajriba, ballar, kuchli va zaif tomonlari."""
     c = db.query(models.Candidate).get(cid)
+    if c and _teacher_only(user) and not _is_teacher_candidate(c):
+        raise HTTPException(
+            403, "Bu nomzod ustoz emas — sizga faqat ustoz nomzodlari "
+                 "ko'rinadi.")
     if not c:
         raise HTTPException(404, "Nomzod topilmadi")
 
@@ -462,8 +534,8 @@ def get_candidate(
         "workplaces": c.workplaces,
         "certificates": c.certificates,
         "language_level": c.language_level,
-        "language_level_label": roles.LANGUAGE_LEVEL_LABELS.get(
-            c.language_level or "", None),
+        "language_level_label": _language_label(db, c.language_level),
+        "native_language": getattr(c, "native_language", None),
         "expected_salary": c.expected_salary,
         "trial_score": c.trial_score,
         "interview_score": c.interview_score,
@@ -478,11 +550,58 @@ def get_candidate(
                    "size": a.size,
                    "created_at": a.created_at.isoformat() if a.created_at else None}
                   for a in files],
-        "language_levels": [{"key": k, "label": lbl}
-                            for k, lbl in roles.LANGUAGE_LEVELS],
+        "language_levels": _language_levels(db),
         "decisions": [{"key": k, "label": lbl}
                       for k, lbl in roles.HIRE_DECISIONS],
     }
+
+def _teacher_only(user) -> bool:
+    """O'quv bo'limi rahbariga FAQAT ustoz nomzodlari ko'rinadi
+    (2026-08-16). U sinov darsini baholaydi — farrosh yoki
+    administrator nomzodini ko'rishi shart emas."""
+    return user.role == roles.ACADEMIC_HEAD
+
+
+def _is_teacher_candidate(c) -> bool:
+    pos = (getattr(c, "position", None) or "").lower()
+    return pos == "teacher" or bool(getattr(c, "subject", None))
+
+
+def _custom_options(db: Session, kind: str) -> list:
+    """HR qo'lda qo'shgan variantlar."""
+    try:
+        rows = (db.query(models.HrOption)
+                .filter(models.HrOption.kind == kind,
+                        models.HrOption.active == 1)
+                .order_by(models.HrOption.position, models.HrOption.id).all())
+    except Exception:
+        return []
+    return [{"key": r.key, "label": r.label, "custom": True, "id": r.id}
+            for r in rows]
+
+
+def _language_levels(db: Session) -> list:
+    """Kodda yozilganlari + HR qo'shganlari (2026-08-16)."""
+    base = [{"key": k, "label": lbl, "custom": False}
+            for k, lbl in roles.LANGUAGE_LEVELS]
+    have = {x["key"] for x in base}
+    return base + [o for o in _custom_options(db, "language_level")
+                   if o["key"] not in have]
+
+
+def _language_label(db: Session, key: str | None) -> str | None:
+    """Belgining nomi. Ro'yxatda bo'lmasa — qiymatning o'zi
+    ko'rsatiladi, ya'ni eski yozuv ham hech qachon yo'qolmaydi."""
+    if not key:
+        return None
+    lbl = roles.LANGUAGE_LEVEL_LABELS.get(key)
+    if lbl:
+        return lbl
+    for o in _custom_options(db, "language_level"):
+        if o["key"] == key:
+            return o["label"]
+    return key
+
 
 def _sync_candidate_dates(c: models.Candidate):
     """Bosqichga qarab sanalarni avtomat to'ldiradi/tozalaydi."""

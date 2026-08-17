@@ -135,6 +135,13 @@ export const LEAD_ACCESS = [
 ];
 
 export const HR_ACCESS = [...FULL_ACCESS, HR_MANAGER];
+
+/** Nomzodni KO'RISH (2026-08-16, Jahongir: "nomzod o'qituvchi bo'lsa
+ *  o'quv bo'limi rahbariga ham ko'rinish kerak. shunda baholay
+ *  olardi"). O'quv bo'limi rahbariga faqat USTOZ nomzodlari
+ *  ko'rinadi (server ham shuni cheklaydi) va u kartani TAHRIRLAY
+ *  olmaydi — faqat dars baholaydi. */
+export const HR_CANDIDATE_VIEW = [...HR_ACCESS, ACADEMIC_HEAD];
 export const MARKETING_ACCESS = [...FULL_ACCESS, SMM_MANAGER, SALES_HEAD];
 export const AUDIT_VIEW = [FOUNDER, BRANCH_MANAGER, HR_MANAGER];
 export const PROFIT_VIEW = [...FULL_ACCESS, FINANCE_DIRECTOR];

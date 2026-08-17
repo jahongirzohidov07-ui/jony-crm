@@ -42,7 +42,7 @@ import {
   LEAD_ACCESS,
   FINANCE_ACCESS,
   TEACHING_STAFF,
-  HR_ACCESS,
+  HR_CANDIDATE_VIEW,
   MARKETING_ACCESS,
   AUDIT_VIEW,
   ACADEMIC_VIEW,
@@ -291,7 +291,9 @@ export default function Layout() {
     items = [...items, { to: "/users", label: "Xodimlar", icon: UserCog }];
   }
   // HR - xodimlar ro'yxatidan keyin, chunki u kadr ishining davomi.
-  if (can(user?.role, HR_ACCESS)) {
+  // O'quv bo'limi rahbari ham kiradi — unga faqat "Nomzodlar" va
+  // "Dars baholash" tablari ochiladi (Hr.tsx ichida cheklangan).
+  if (can(user?.role, HR_CANDIDATE_VIEW)) {
     items = [...items, { to: "/hr", label: "HR", icon: Briefcase }];
   }
   if (can(user?.role, TEACHING_STAFF)) {

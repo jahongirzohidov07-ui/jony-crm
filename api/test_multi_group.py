@@ -155,6 +155,23 @@ ck("ustoz guruh qo'sha olmaydi",
 ck("ustoz ro'yxatni ko'ra oladi",
    c.get(f"/api/students/{SID}/groups", headers=T).status_code, 200)
 
+print("\n=== 10. Bog'lanishsiz eski o'quvchi ham GURUHSIZ ko'rinmaydi ===")
+# Jahongir: "munisaga kirsam ikkalasidam guruhsiz bolib qolgan".
+# Sabab: bog'lanish jadvali kunlik cron'da to'ldiriladi. Endi karta
+# ochilganda yetishmayotgani shu yerda yaratiladi.
+db = SessionLocal()
+eski = models.Student(full_name="Eski Bola", branch_id=BID,
+                      status="active", group_id=G1, phone="+998901110000")
+db.add(eski); db.commit(); EID = eski.id
+ck("bog'lanishi yo'q", student_group_ids(db, EID), [])
+db.close()
+r = c.get(f"/api/students/{EID}/groups", headers=F)
+ck("karta ochildi", r.status_code, 200)
+ck("guruhi DARROV ko'rindi", r.json()["active_count"], 1)
+db = SessionLocal()
+ck("bog'lanish o'zi yaratildi", student_group_ids(db, EID), [G1])
+db.close()
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta muammo: {fails}"))
 sys.exit(1 if fails else 0)

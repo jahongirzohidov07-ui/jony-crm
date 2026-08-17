@@ -1037,6 +1037,23 @@ def student_groups(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
+    # O'Z-O'ZINI TUZATISH (2026-08-17). Bog'lanish jadvali kunlik
+    # cron'da to'ldiriladi, lekin u ishlagunicha karta BO'SH
+    # ko'rinardi — Jahongir: "munisaga kirsam ikkalasidam guruhsiz
+    # bolib qolgan". Endi karta ochilganda yetishmayotgan bog'lanish
+    # shu yerda yaratiladi: hech kim bo'sh karta ko'rmaydi.
+    if s.group_id:
+        try:
+            have = (db.query(models.StudentGroupLink)
+                    .filter(models.StudentGroupLink.student_id == s.id,
+                            models.StudentGroupLink.group_id == s.group_id)
+                    .first())
+            if not have:
+                attach_group(db, s, s.group_id, user,
+                             joined=s.enrolled_date)
+                db.commit()
+        except Exception:
+            db.rollback()
     rows = (db.query(models.StudentGroupLink, models.Group)
             .join(models.Group,
                   models.Group.id == models.StudentGroupLink.group_id)

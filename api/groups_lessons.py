@@ -242,7 +242,7 @@ def save_attendance(
     # ham himoyalanadi (2026-08-09, ish haqi hujjati himoyasi).
     _frozen_ids = {
         sid for (sid,) in db.query(models.Student.id).filter(
-            models.Student.group_id == lesson.group_id,
+            in_group(lesson.group_id),
             models.Student.status == "frozen").all()
     }
     # Guruhga TEGISHLI o'quvchilar - boshqa guruhga o'tib ketganning
@@ -250,7 +250,7 @@ def save_attendance(
     # (eski ustoz oyligi hujjati, 2026-08-11)
     _member_ids = {
         sid for (sid,) in db.query(models.Student.id).filter(
-            models.Student.group_id == lesson.group_id).all()
+            in_group(lesson.group_id)).all()
     }
 
     existing = {
@@ -571,7 +571,7 @@ def save_grades(
     # qo'yilmaydi (2026-08-09).
     _frozen_ids = {
         sid for (sid,) in db.query(models.Student.id).filter(
-            models.Student.group_id == lesson.group_id,
+            in_group(lesson.group_id),
             models.Student.status == "frozen").all()
     }
     # Guruhga TEGISHLI o'quvchilar - boshqa guruhga o'tib ketganning
@@ -579,7 +579,7 @@ def save_grades(
     # (eski ustoz oyligi hujjati, 2026-08-11)
     _member_ids = {
         sid for (sid,) in db.query(models.Student.id).filter(
-            models.Student.group_id == lesson.group_id).all()
+            in_group(lesson.group_id)).all()
     }
 
     existing = {
@@ -703,7 +703,7 @@ def get_group(
     group = _get_group_in_scope(db, group_id, user)
     item = schemas.GroupOut.model_validate(group)
     item.student_count = db.query(models.Student).filter(
-        models.Student.group_id == group.id,
+        in_group(group.id),
         models.Student.status == "active").count()
     return item
 
@@ -863,7 +863,7 @@ def update_group(
     db.refresh(group)
     item = schemas.GroupOut.model_validate(group)
     item.student_count = db.query(models.Student).filter(
-        models.Student.group_id == group.id,
+        in_group(group.id),
         models.Student.status == "active").count()
     return item
 
@@ -887,7 +887,7 @@ def delete_group(
         raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
 
     n_students = db.query(models.Student).filter(
-        models.Student.group_id == group.id).count()
+        in_group(group.id)).count()
     if n_students:
         raise HTTPException(
             400, f"Guruhda {n_students} ta o'quvchi bor. Avval ularni "
@@ -1503,7 +1503,7 @@ def group_history(group_id: int, db: Session = Depends(get_db),
     g = _get_group_in_scope(db, group_id, user)
     events = []
     for s in db.query(models.Student).filter(
-            models.Student.group_id == group_id).all():
+            in_group(group_id)).all():
         if s.enrolled_date:
             events.append({"date": s.enrolled_date.isoformat(),
                            "kind": "join", "icon": "user",
@@ -1563,7 +1563,7 @@ def group_notes(group_id: int, db: Session = Depends(get_db),
     _dt_defs = getattr(roles, "DISCOUNT_TYPES", []) or []
     dlbl = {t[0]: t[1] for t in _dt_defs}
     for s in (db.query(models.Student)
-              .filter(models.Student.group_id == group_id,
+              .filter(in_group(group_id),
                       models.Student.status != "archived")
               .order_by(models.Student.full_name).all()):
         ds = (db.query(models.Discount)

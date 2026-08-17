@@ -22,6 +22,7 @@ import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
   REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can,
   HR_MANAGER,
+  FREEZE_ROLES,
 } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
@@ -32,6 +33,7 @@ import {
 } from "../lib/academic";
 import { StudentPayButton } from "../components/QuickPayment";
 import { StudentRowMenu } from "../components/StudentRowMenu";
+import { StudentGroupsCard } from "../components/StudentGroupsCard";
 import { printXReceipt, printCertificate } from "../lib/receipt";
 import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
@@ -390,6 +392,9 @@ function GroupsTab({
   onChanged: () => void;
 }) {
   const g = student.group;
+  const { user: _u } = useAuth();
+  // Guruh qo'shish/olib tashlash — muzlatish bilan bir xil huquq
+  const canEditGroups = can(_u?.role, FREEZE_ROLES);
   const [attOpen, setAttOpen] = useState(false);
   // Uch nuqta menyusi uchun guruhlar ro'yxati (boshqa guruhga
   // o'tkazishda kerak) — Jahongir, 2026-08-13: "o'quvchi ustida
@@ -398,18 +403,34 @@ function GroupsTab({
   useEffect(() => {
     api.get<Group[]>("/groups").then(setAllGroups).catch(() => {});
   }, []);
+  // KO'P GURUH (2026-08-17): guruhlar ro'yxati kartaning eng tepasida.
+  // Guruhi yo'q bo'lsa ham ko'rinadi — shu yerdan qo'shish mumkin.
+  const groupsCard = (
+    <StudentGroupsCard
+      studentId={student.id}
+      allGroups={allGroups as unknown as {
+        id: number; name: string; subject?: string | null;
+      }[]}
+      canEdit={canEditGroups}
+      onChanged={onChanged}
+    />
+  );
+
   if (!g)
     return (
-      <p className="text-sm text-slate-400 py-8 text-center">
-        O'quvchi hech qaysi guruhga biriktirilmagan. Talabalar ro'yxatidan
-        tahrirlab guruh tanlang.
-      </p>
+      <>
+        {groupsCard}
+        <p className="text-sm text-slate-400 py-8 text-center">
+          O'quvchi hech qaysi guruhga biriktirilmagan.
+        </p>
+      </>
     );
 
   const days = parseDays(g.lesson_days);
 
   return (
     <>
+      {groupsCard}
       {/* O'NG TOMONDA alohida "Davomat" — bosilganda sahifadan
           chiqmasdan oylik yoqlama oynasi ochiladi (Jahongir,
           2026-08-12: "alohida davomat degan yozuv qoyib bosadigan

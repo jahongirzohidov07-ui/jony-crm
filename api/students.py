@@ -346,7 +346,9 @@ def list_students(
     if q:
         query = query.filter(models.Student.full_name.ilike(f"%{q}%"))
     if group_id:
-        query = query.filter(models.Student.group_id == group_id)
+        # Ikki guruhga qatnaydigan o'quvchi IKKALASIDA ham chiqsin
+        # (2026-08-17) — ilgari faqat asosiy guruhida ko'rinardi.
+        query = query.filter(in_group(group_id))
     if status_filter:
         query = query.filter(models.Student.status == status_filter)
 
@@ -470,6 +472,14 @@ def create_student(
     # Ota-onaga esa hisob umuman ochilmaydi: u maxsus havola
     # (parent_token) orqali kiradi, u ham shu yerda avtomat turadi.
     _ensure_student_account(db, s)
+    # Guruh bog'lanishi (2026-08-17) — yangi o'quvchi ham darrov
+    # bog'lanish jadvaliga tushsin, ikki guruhli bo'lishi mumkin.
+    if s.group_id:
+        try:
+            attach_group(db, s, s.group_id, user, joined=s.enrolled_date)
+            db.commit()
+        except Exception:
+            db.rollback()
     db.refresh(s)
     return to_student_out(db, s)
 
@@ -608,10 +618,28 @@ def update_student(
             changes.setdefault("level", g.level)
     # Eski qiymatlar hali joyida turganda yozib olamiz.
     audit.log_changes(db, user, entity="student", obj=s, changes=changes)
+    _prev_gid = s.group_id
     for k, v in changes.items():
         setattr(s, k, v)
     s.updated_at = datetime.utcnow()
     _sync_student_left_date(s)
+    # GURUH BOG'LANISHI (2026-08-17). Kartadagi "guruh" maydoni
+    # o'zgarsa bog'lanish jadvali ham yursin — aks holda o'quvchi
+    # yangi guruhda ko'rinmay qolardi. Ko'p guruhli o'quvchida bu
+    # maydon ASOSIY guruhni almashtiradi, qolganlariga tegmaydi.
+    if "group_id" in changes and s.group_id != _prev_gid:
+        # DIQQAT: avval YANGISINI qo'shamiz, keyin eskisini yopamiz.
+        # Teskarisi qilinsa detach_group() asosiy guruhni bo'shatib
+        # yuboradi va s.group_id None bo'lib qoladi.
+        _target = s.group_id
+        try:
+            if _target:
+                attach_group(db, s, _target, user)
+            if _prev_gid and _prev_gid != _target:
+                detach_group(db, s, _prev_gid)
+            s.group_id = _target
+        except Exception:
+            db.rollback()
     db.commit()
 
     # GURUH ALMASHTIRILDI (Jahongir, 2026-08-11): eski ustozning
@@ -987,8 +1015,127 @@ def move_student_group(
     except Exception:
         db.rollback()
 
+    # Bog'lanish jadvalidan ham yopamiz (2026-08-17)
+    try:
+        detach_group(db, s, g.id)
+        db.commit()
+    except Exception:
+        db.rollback()
     return {"ok": True, "group_id": g.id, "group": g.name,
             "recharge": recharge}
+
+@router.get("/api/students/{student_id}/groups")
+def student_groups(
+    student_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    """O'quvchining guruhlari (2026-08-17).
+
+    Jahongir: "Abduvaliyeva Munisa degan qiz 2ta gruppaga keladi ...
+    biz ham bazda 2ta gruppa qilishimiz kerak"."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    rows = (db.query(models.StudentGroupLink, models.Group)
+            .join(models.Group,
+                  models.Group.id == models.StudentGroupLink.group_id)
+            .filter(models.StudentGroupLink.student_id == s.id)
+            .order_by(models.StudentGroupLink.active.desc(),
+                      models.StudentGroupLink.is_primary.desc(),
+                      models.StudentGroupLink.id).all())
+    out = []
+    for lk, g in rows:
+        t = db.query(models.Teacher).get(g.teacher_id) if g.teacher_id else None
+        out.append({
+            "id": lk.id, "group_id": g.id, "group": g.name,
+            "subject": g.subject, "level": g.level,
+            "teacher": t.full_name if t else None,
+            "lesson_price": lk.lesson_price or g.lesson_price,
+            "is_primary": bool(lk.is_primary),
+            "active": bool(lk.active),
+            "joined_date": (lk.joined_date.isoformat()
+                            if lk.joined_date else None),
+            "left_date": (lk.left_date.isoformat()
+                          if lk.left_date else None),
+        })
+    return {"rows": out,
+            "active_count": sum(1 for r in out if r["active"]),
+            "primary_group_id": s.group_id}
+
+
+@router.post("/api/students/{student_id}/groups")
+def student_add_group(
+    student_id: int,
+    payload: dict,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """O'quvchini YANA BIR guruhga qo'shish (2026-08-17).
+
+    PUL MANTIG'IGA TEGILMAYDI — oylik hisob hozircha asosiy guruh
+    bo'yicha chiqadi. Ikki fan uchun hisob va 10% chegirma keyingi
+    bosqichda, Jahongir qoidani aytgach qo'shiladi."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    gid = (payload or {}).get("group_id")
+    if not gid:
+        raise HTTPException(400, "Guruhni tanlang")
+    g = db.query(models.Group).get(int(gid))
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if s.branch_id and g.branch_id and s.branch_id != g.branch_id:
+        raise HTTPException(
+            400, "Guruh boshqa filialda — avval o'quvchining filialini "
+                 "o'zgartiring.")
+    exists = (db.query(models.StudentGroupLink)
+              .filter(models.StudentGroupLink.student_id == s.id,
+                      models.StudentGroupLink.group_id == g.id,
+                      models.StudentGroupLink.active == 1).first())
+    if exists:
+        raise HTTPException(400, "O'quvchi bu guruhda allaqachon bor")
+    attach_group(db, s, g.id, user, note=(payload or {}).get("note"))
+    db.commit()
+    audit.log(db, user, entity="student", action="update",
+              entity_id=s.id, entity_label=s.full_name,
+              field="Guruh qo'shildi", new_value=g.name,
+              branch_id=s.branch_id, commit=True)
+    return {"ok": True, "group": g.name,
+            "active_count": len(student_group_ids(db, s.id))}
+
+
+@router.delete("/api/students/{student_id}/groups/{group_id}")
+def student_remove_group(
+    student_id: int,
+    group_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """Bitta guruhdan chiqarish. Yozuv o'chirilmaydi — yopiladi.
+
+    Oxirgi guruhdan chiqarish uchun eski "guruhdan chiqarish"
+    tugmasi ishlatiladi (u hisobni ham to'g'rilaydi)."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if len(student_group_ids(db, s.id)) <= 1:
+        raise HTTPException(
+            400, "Bu oxirgi guruhi. Butunlay chiqarish uchun "
+                 "\"Guruhdan chiqarish\" tugmasidan foydalaning — "
+                 "u hisobni ham to'g'rilaydi.")
+    g = db.query(models.Group).get(group_id)
+    if not detach_group(db, s, group_id):
+        raise HTTPException(404, "Bu guruhda emas")
+    db.commit()
+    audit.log(db, user, entity="student", action="update",
+              entity_id=s.id, entity_label=s.full_name,
+              field="Guruhdan olindi",
+              old_value=g.name if g else str(group_id),
+              branch_id=s.branch_id, commit=True)
+    return {"ok": True,
+            "active_count": len(student_group_ids(db, s.id))}
+
 
 @router.post("/api/students/{student_id}/remove-from-group")
 def remove_student_from_group(
@@ -2190,7 +2337,7 @@ def import_students(payload: schemas.StudentImportIn,
 
     today = roles.local_today()
     existing = db.query(models.Student).filter(
-        models.Student.group_id == g.id).all()
+        in_group(g.id)).all()
     names = {(s.full_name or "").strip().lower() for s in existing}
 
     def _status(txt):

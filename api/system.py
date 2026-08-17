@@ -124,9 +124,12 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
     # va guruhsiz "faol" o'quvchini to'g'ri holatga o'tkazish
     try:
         from common import (backfill_student_branches as _bsb,
-                            fix_groupless_active as _fga)
+                            fix_groupless_active as _fga,
+                            backfill_student_groups as _bsg)
         _bsb(db)
         _fga(db)
+        # Guruh bog'lanishlari (2026-08-17) — bir martalik ko'chirish
+        _bsg(db)
     except Exception:
         try:
             db.rollback()

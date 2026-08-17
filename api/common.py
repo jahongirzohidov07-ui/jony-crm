@@ -10,7 +10,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from sqlalchemy import func, or_, text
+from sqlalchemy import func, or_, select, text
 from sqlalchemy.orm import Session
 
 import audit
@@ -465,7 +465,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_16a"
+SCHEMA_STAMP = "stamp_2026_08_17a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
@@ -4666,6 +4666,132 @@ def backfill_student_branches(db: Session) -> int:
     return n
 
 
+# =====================================================================
+#  O'QUVCHI <-> GURUH BOG'LANISHI (2026-08-17)
+#
+#  Jahongir: "Abduvaliyeva Munisa degan qiz 2ta gruppaga keladi,
+#  shuning uchun ham biz ham bazda 2ta gruppa qilishimiz kerak".
+#
+#  Student.group_id ("asosiy guruh") SAQLANIB QOLADI va shu yerdagi
+#  birinchi faol bog'lanishga teng turadi — shunda mavjud kod
+#  (hisob-kitob, yo'qlama, ustoz oyligi) buzilmaydi.
+# =====================================================================
+
+def in_group(group_id):
+    """SQL sharti: o'quvchi shu guruhda (asosiy yoki qo'shimcha).
+
+    Eski `Student.group_id == gid` o'rniga ishlatiladi — ikki guruhga
+    qatnaydigan bola IKKALASIDA ham ko'rinsin. Asosiy guruh ham
+    shartga kiritilgan: bog'lanish jadvali biror sababdan
+    to'ldirilmay qolsa ham hech kim yo'qolib qolmaydi."""
+    return or_(
+        models.Student.group_id == group_id,
+        models.Student.id.in_(
+            select(models.StudentGroupLink.student_id).where(
+                models.StudentGroupLink.group_id == group_id,
+                models.StudentGroupLink.active == 1)),
+    )
+
+
+def student_group_ids(db: Session, student_id: int) -> list:
+    """O'quvchining barcha FAOL guruhlari."""
+    rows = (db.query(models.StudentGroupLink.group_id)
+            .filter(models.StudentGroupLink.student_id == student_id,
+                    models.StudentGroupLink.active == 1).all())
+    return [g for (g,) in rows]
+
+
+def sync_primary_group(db: Session, s) -> bool:
+    """Student.group_id ni bog'lanishlarga moslashtiradi.
+
+    Asosiy deb belgilangani bo'lsa — o'sha; bo'lmasa eng eski faol
+    bog'lanish. Bittasi ham qolmasa — group_id bo'shatiladi."""
+    links = (db.query(models.StudentGroupLink)
+             .filter(models.StudentGroupLink.student_id == s.id,
+                     models.StudentGroupLink.active == 1)
+             .order_by(models.StudentGroupLink.is_primary.desc(),
+                       models.StudentGroupLink.id).all())
+    want = links[0].group_id if links else None
+    if s.group_id != want:
+        s.group_id = want
+        return True
+    return False
+
+
+def attach_group(db: Session, s, group_id: int, user=None,
+                 joined=None, note: str = None):
+    """O'quvchini guruhga qo'shish (bog'lanish yozuvi).
+
+    Ikki marta qo'shilmaydi — bor bo'lsa qaytadan FAOLLASHTIRILADI,
+    yangi qator ochilmaydi (tarix chalkashmasin)."""
+    link = (db.query(models.StudentGroupLink)
+            .filter(models.StudentGroupLink.student_id == s.id,
+                    models.StudentGroupLink.group_id == group_id).first())
+    if link:
+        link.active = 1
+        link.left_date = None
+        if joined:
+            link.joined_date = joined
+    else:
+        has = (db.query(models.StudentGroupLink)
+               .filter(models.StudentGroupLink.student_id == s.id,
+                       models.StudentGroupLink.active == 1).count())
+        link = models.StudentGroupLink(
+            student_id=s.id, group_id=group_id,
+            is_primary=1 if has == 0 else 0,
+            joined_date=joined or roles.local_today(),
+            active=1, note=note,
+            created_by=getattr(user, "full_name", None))
+        db.add(link)
+    db.flush()
+    sync_primary_group(db, s)
+    return link
+
+
+def detach_group(db: Session, s, group_id: int, on=None) -> bool:
+    """Guruhdan chiqarish — yozuv O'CHIRILMAYDI, yopiladi."""
+    link = (db.query(models.StudentGroupLink)
+            .filter(models.StudentGroupLink.student_id == s.id,
+                    models.StudentGroupLink.group_id == group_id,
+                    models.StudentGroupLink.active == 1).first())
+    if not link:
+        return False
+    link.active = 0
+    link.left_date = on or roles.local_today()
+    link.is_primary = 0
+    db.flush()
+    sync_primary_group(db, s)
+    return True
+
+
+def backfill_student_groups(db: Session) -> int:
+    """Mavjud group_id larni bog'lanish jadvaliga ko'chirish.
+
+    Bir martalik. Hech narsa o'chirilmaydi — faqat yetishmayotgan
+    bog'lanish qo'shiladi."""
+    if _seed_done(db, "student_groups_v1"):
+        return 0
+    have = {(a, b) for a, b in db.query(
+        models.StudentGroupLink.student_id,
+        models.StudentGroupLink.group_id).all()}
+    made = 0
+    rows = (db.query(models.Student)
+            .filter(models.Student.group_id.isnot(None)).all())
+    for s in rows:
+        if (s.id, s.group_id) in have:
+            continue
+        db.add(models.StudentGroupLink(
+            student_id=s.id, group_id=s.group_id, is_primary=1,
+            joined_date=s.enrolled_date, active=1,
+            created_by="Avtomat ko'chirish"))
+        made += 1
+        if made % 500 == 0:
+            db.commit()
+    db.commit()
+    _seed_mark(db, "student_groups_v1")
+    return made
+
+
 def fix_groupless_active(db: Session) -> int:
     """GURUHSIZ "FAOL" O'QUVCHI BO'LMASIN (2026-08-15).
 
@@ -5100,6 +5226,12 @@ __all__ = [
     "_examiner_month",
     "_expenses_total",
     "_expire_discounts",
+    "in_group",
+    "student_group_ids",
+    "sync_primary_group",
+    "attach_group",
+    "detach_group",
+    "backfill_student_groups",
     "_apply_shop_discounts",
     "_shop_discount_sum",
     "_family_discount_percent",

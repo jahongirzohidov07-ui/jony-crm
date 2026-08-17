@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from sqlalchemy import (
     Column, Integer, String, Float, Date, DateTime, ForeignKey, Text,
-    event,
+    event, UniqueConstraint,
 )
 from sqlalchemy.orm import relationship, deferred
 from database import Base
@@ -2671,6 +2671,49 @@ class ExamOrder(Base):
 # =====================================================================
 #  HR FAZA 2B — ATS
 # =====================================================================
+class StudentGroupLink(Base):
+    """O'QUVCHI <-> GURUH bog'lanishi (2026-08-17).
+
+    Jahongir: "Abduvaliyeva Munisa degan qiz 2ta gruppaga keladi,
+    shuning uchun ham biz ham bazda 2ta gruppa qilishimiz kerak".
+
+    Ilgari o'quvchida BITTA guruh bo'lardi (Student.group_id). Ikki
+    fanga qatnaydigan bola ikki marta kiritilardi — natijada faol
+    o'quvchilar soni, qarz va hisobotlar ikki barobar ko'rinardi
+    (Bekobod 2 da 3 ta shunday yozuv topildi).
+
+    MUHIM — BOSQICHMA-BOSQICH: Student.group_id O'CHIRILMADI. U endi
+    "asosiy guruh" bo'lib qoladi va shu jadvaldagi birinchi faol
+    bog'lanishga teng turadi. Shu sababli mavjud 27 ta joydagi eski
+    so'rovlar (hisob-kitob, yo'qlama, ustoz oyligi) ishlayveradi —
+    ular keyingi bosqichlarda bittalab ko'chiriladi.
+    """
+    __tablename__ = "student_groups"
+    __table_args__ = (
+        UniqueConstraint("student_id", "group_id",
+                         name="uq_student_group"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"),
+                      nullable=False, index=True)
+    # Asosiy guruh — Student.group_id shunga teng turadi
+    is_primary = Column(Integer, default=0)
+    joined_date = Column(Date, nullable=True)
+    left_date = Column(Date, nullable=True)
+    active = Column(Integer, default=1, index=True)
+    # Shu guruh uchun alohida narx (bo'sh = guruh narxi)
+    lesson_price = Column(Float, nullable=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student")
+    group = relationship("Group")
+
+
 class HrOption(Base):
     """HR ro'yxatlariga QO'LDA qo'shiladigan variantlar (2026-08-16).
 

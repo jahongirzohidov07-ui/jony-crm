@@ -1047,10 +1047,19 @@ def student_groups(
     out = []
     for lk, g in rows:
         t = db.query(models.Teacher).get(g.teacher_id) if g.teacher_id else None
+        room = db.query(models.Room).get(g.room_id) if g.room_id else None
         out.append({
             "id": lk.id, "group_id": g.id, "group": g.name,
             "subject": g.subject, "level": g.level,
             "teacher": t.full_name if t else None,
+            "teacher_id": g.teacher_id,
+            # LC UP dagidek to'liq karta uchun (2026-08-17)
+            "lesson_days": g.lesson_days,
+            "lesson_time": g.lesson_time,
+            "room": (room.name if room else g.room),
+            "monthly_fee": g.monthly_fee,
+            "start_date": (g.start_date.isoformat()
+                           if g.start_date else None),
             "lesson_price": lk.lesson_price or g.lesson_price,
             "is_primary": bool(lk.is_primary),
             "active": bool(lk.active),

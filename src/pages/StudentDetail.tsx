@@ -26,7 +26,6 @@ import {
 } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
-import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
 import { examTitle, coinSourceLabel, gradeTone } from "../lib/exams";
 import {
   HISTORY_KINDS, CERTIFICATE_KINDS, TALK_CHANNELS,
@@ -391,46 +390,18 @@ function GroupsTab({
   student: StudentDetailType;
   onChanged: () => void;
 }) {
-  const g = student.group;
-  const { user: _u } = useAuth();
+  const { user } = useAuth();
   // Guruh qo'shish/olib tashlash — muzlatish bilan bir xil huquq
-  const canEditGroups = can(_u?.role, FREEZE_ROLES);
+  const canEditGroups = can(user?.role, FREEZE_ROLES);
   const [attOpen, setAttOpen] = useState(false);
-  // Uch nuqta menyusi uchun guruhlar ro'yxati (boshqa guruhga
-  // o'tkazishda kerak) — Jahongir, 2026-08-13: "o'quvchi ustida
-  // amallardan 3tasini qoshib ber, xuddi LC dagida".
+  // Guruh tanlagich uchun ro'yxat
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   useEffect(() => {
     api.get<Group[]>("/groups").then(setAllGroups).catch(() => {});
   }, []);
-  // KO'P GURUH (2026-08-17): guruhlar ro'yxati kartaning eng tepasida.
-  // Guruhi yo'q bo'lsa ham ko'rinadi — shu yerdan qo'shish mumkin.
-  const groupsCard = (
-    <StudentGroupsCard
-      studentId={student.id}
-      allGroups={allGroups as unknown as {
-        id: number; name: string; subject?: string | null;
-      }[]}
-      canEdit={canEditGroups}
-      onChanged={onChanged}
-    />
-  );
-
-  if (!g)
-    return (
-      <>
-        {groupsCard}
-        <p className="text-sm text-slate-400 py-8 text-center">
-          O'quvchi hech qaysi guruhga biriktirilmagan.
-        </p>
-      </>
-    );
-
-  const days = parseDays(g.lesson_days);
 
   return (
     <>
-      {groupsCard}
       {/* O'NG TOMONDA alohida "Davomat" — bosilganda sahifadan
           chiqmasdan oylik yoqlama oynasi ochiladi (Jahongir,
           2026-08-12: "alohida davomat degan yozuv qoyib bosadigan
@@ -450,80 +421,28 @@ function GroupsTab({
           onClose={() => setAttOpen(false)}
         />
       )}
-    <div className="border border-slate-200 rounded-xl overflow-hidden max-w-lg">
-      <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center gap-2">
-        <Link
-          to={`/groups/${g.id}`}
-          className="font-semibold text-slate-900 hover:text-brand-700 flex-1 min-w-0 truncate"
-        >
-          {g.name}
-        </Link>
-        {/* LC UP dagidek uch nuqta: faollashtirish, boshqa guruhga
-            o'tkazish, guruhdan chiqarish va boshqa amallar. */}
+
+      {/* KO'P GURUH (2026-08-17, Jahongir: "shu yerda 2ta guruh
+          korinib tursin, LC da shunaqa") — har guruh alohida to'liq
+          karta bo'lib yonma-yon turadi. */}
+      <StudentGroupsCard
+        studentId={student.id}
+        allGroups={allGroups as unknown as {
+          id: number; name: string; subject?: string | null;
+        }[]}
+        canEdit={canEditGroups}
+        onChanged={onChanged}
+      />
+
+      {/* O'quvchi ustidagi amallar (faollashtirish, boshqa guruhga
+          o'tkazish, guruhdan chiqarish) — avvalgidek. */}
+      <div className="max-w-lg flex justify-end">
         <StudentRowMenu
           student={student as unknown as Student}
           groups={allGroups}
           onChanged={onChanged}
         />
       </div>
-      <div className="p-4 divide-y divide-slate-100">
-        <Row
-          label="O'qituvchi"
-          value={<span className="text-brand-700">{g.teacher?.full_name || "—"}</span>}
-        />
-        {days.length > 0 && (
-          <Row
-            label="Dars kunlari"
-            value={WEEKDAYS.filter((d) => days.includes(d.key))
-              .map((d) => d.label)
-              .join(", ")}
-          />
-        )}
-        {g.lesson_time && <Row label="Vaqt" value={g.lesson_time} />}
-        {subjectLine(g) && (
-          <Row
-            label="Kursi"
-            value={
-              <span className="bg-brand-50 text-brand-700 rounded-md px-2 py-0.5 text-xs font-medium">
-                {subjectLine(g)}
-              </span>
-            }
-          />
-        )}
-        <Row
-          label="Holati"
-          value={
-            <span
-              className={`rounded-md px-2 py-0.5 text-xs font-medium ${
-                student.status === "active"
-                  ? "bg-green-50 text-green-700"
-                  : "bg-amber-50 text-amber-700"
-              }`}
-            >
-              {STATUS_LABEL[student.status] || student.status}
-            </span>
-          }
-        />
-        <Row
-          label="Guruhga qo'shilgan sana"
-          value={student.enrolled_date ? formatDate(student.enrolled_date) : "—"}
-        />
-        <Row
-          label="Boshlanish sanasi"
-          value={g.start_date ? formatDate(g.start_date) : "—"}
-        />
-        {g.room && <Row label="Xona" value={g.room} />}
-        <Row label="Guruh narxi" value={formatSom(g.monthly_fee)} />
-      </div>
-      {/* Bu tugma AVVALGIDEK guruh sahifasiga olib boradi (Jahongir,
-          2026-08-12: "davomat va baho ezsa gruppaga otaversin"). */}
-      <Link
-        to={`/groups/${g.id}`}
-        className="block text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
-      >
-        Davomat &amp; Baho →
-      </Link>
-    </div>
     </>
   );
 }

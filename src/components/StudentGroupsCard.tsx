@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Layers, Plus, Star, X, Users } from "lucide-react";
+import { Plus, Star, X } from "lucide-react";
 import { api } from "../lib/api";
 import { formatDate, formatSom } from "../lib/format";
 
 /**
- * O'QUVCHINING GURUHLARI (2026-08-17).
+ * O'QUVCHINING GURUHLARI — LC UP uslubida (2026-08-17).
  *
- * Jahongir: "Abduvaliyeva Munisa degan qiz 2ta gruppaga keladi,
- * shuning uchun ham biz ham bazda 2ta gruppa qilishimiz kerak".
+ * Jahongir: "Abduvaliyeva Munisa degan qiz 2ta gruppaga keladi ...
+ * biz ham bazda 2ta gruppa qilishimiz kerak" va keyin: "shu yerda
+ * 2ta guruh korinib tursin, LC da shunaqa".
  *
- * Ilgari o'quvchida bitta guruh bo'lardi va ikki fanga qatnaydigan
- * bola IKKI MARTA kiritilardi — natijada faol o'quvchilar soni ham,
- * qarz ham ikki barobar ko'rinardi. Endi bitta o'quvchi bir nechta
- * guruhda tura oladi.
- *
- * DIQQAT: bu bosqichda oylik hisob HALI asosiy guruh bo'yicha
- * chiqadi. Ikki fan uchun hisob va 10% chegirma keyingi bosqichda —
- * Jahongir qoidani aytgach qo'shiladi. Shuning uchun kartada shu
- * haqda ochiq yozib qo'yildi, xodim adashmasin.
+ * Ya'ni ro'yxat emas — HAR GURUH ALOHIDA TO'LIQ KARTA bo'lib, yonma-
+ * yon turadi: o'qituvchi, dars kunlari, vaqt, kurs, holat, qo'shilgan
+ * sana, xona va guruh narxi. Aynan LC UP dagidek.
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -29,12 +24,42 @@ type Row = {
   subject?: string | null;
   level?: string | null;
   teacher?: string | null;
+  lesson_days?: string | null;
+  lesson_time?: string | null;
+  room?: string | null;
+  monthly_fee?: number | null;
+  start_date?: string | null;
   lesson_price?: number | null;
   is_primary: boolean;
   active: boolean;
   joined_date?: string | null;
   left_date?: string | null;
 };
+
+const WD: Record<string, string> = {
+  mon: "Dushanba", tue: "Seshanba", wed: "Chorshanba", thu: "Payshanba",
+  fri: "Juma", sat: "Shanba", sun: "Yakshanba",
+  "1": "Dushanba", "2": "Seshanba", "3": "Chorshanba", "4": "Payshanba",
+  "5": "Juma", "6": "Shanba", "7": "Yakshanba",
+};
+
+function daysText(v?: string | null) {
+  if (!v) return "—";
+  return v
+    .split(/[,\s]+/)
+    .filter(Boolean)
+    .map((d) => WD[d.toLowerCase()] || d)
+    .join(", ");
+}
+
+function Row2({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex items-start justify-between gap-3 py-2">
+      <span className="text-sm text-slate-500 shrink-0">{label}</span>
+      <span className="text-sm text-slate-800 text-right">{value}</span>
+    </div>
+  );
+}
 
 export function StudentGroupsCard({
   studentId,
@@ -97,10 +122,9 @@ export function StudentGroupsCard({
   }
 
   return (
-    <div className="border border-slate-200 rounded-xl overflow-hidden max-w-lg mb-4">
-      <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center gap-2">
-        <Layers size={16} className="text-slate-400" />
-        <p className="font-semibold text-slate-900 flex-1">
+    <div className="mb-4">
+      <div className="flex items-center gap-2 mb-3">
+        <p className="text-sm font-semibold text-slate-700 flex-1">
           Guruhlari
           {active.length > 1 && (
             <span className="ml-2 px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold">
@@ -118,114 +142,152 @@ export function StudentGroupsCard({
         )}
       </div>
 
-      <div className="divide-y divide-slate-100">
+      {err && (
+        <p className="mb-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          {err}
+        </p>
+      )}
+
+      {adding && (
+        <div className="mb-3 max-w-md bg-slate-50 border border-slate-200 rounded-xl p-3">
+          <select
+            value={pick}
+            onChange={(e) => setPick(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+          >
+            <option value="">— guruhni tanlang —</option>
+            {allGroups
+              .filter((g) => !taken.has(g.id))
+              .map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                  {g.subject ? ` (${g.subject})` : ""}
+                </option>
+              ))}
+          </select>
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={() => {
+                setAdding(false);
+                setPick("");
+              }}
+              className="flex-1 py-2 rounded-lg border border-slate-200 text-slate-600 text-sm"
+            >
+              Bekor
+            </button>
+            <button
+              onClick={add}
+              disabled={busy || !pick}
+              className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-50"
+            >
+              {busy ? "..." : "Qo'shish"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ---- LC UP dagidek: har guruh alohida karta, yonma-yon ---- */}
+      <div className="grid gap-4 md:grid-cols-2">
         {active.map((r) => (
-          <div key={r.id} className="px-4 py-3 flex items-center gap-3">
-            <Users size={15} className="text-slate-300 shrink-0" />
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <Link
-                  to={`/groups/${r.group_id}`}
-                  className="text-sm font-medium text-slate-900 hover:text-brand-700 truncate"
-                >
-                  {r.group}
-                </Link>
-                {r.is_primary && (
-                  <span
-                    title="Asosiy guruh — oylik hisob shu bo'yicha chiqadi"
-                    className="shrink-0"
-                  >
-                    <Star size={12} className="text-amber-500" fill="currentColor" />
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {r.teacher || "—"}
-                {r.lesson_price
-                  ? ` · ${formatSom(r.lesson_price)}/dars`
-                  : ""}
-                {r.joined_date ? ` · ${formatDate(r.joined_date)}` : ""}
-              </p>
-            </div>
-            {canEdit && active.length > 1 && (
-              <button
-                onClick={() => drop(r)}
-                title="Shu guruhdan chiqarish"
-                className="p-1.5 rounded-lg text-slate-300 hover:text-red-600 hover:bg-red-50 shrink-0"
+          <div
+            key={r.id}
+            className="border border-slate-200 rounded-xl overflow-hidden bg-white"
+          >
+            <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center gap-2">
+              <Link
+                to={`/groups/${r.group_id}`}
+                className="font-semibold text-slate-900 hover:text-brand-700 flex-1 min-w-0 truncate"
               >
-                <X size={15} />
-              </button>
-            )}
+                {r.group}
+              </Link>
+              {r.is_primary && (
+                <span title="Asosiy guruh — oylik hisob shu bo'yicha chiqadi">
+                  <Star size={13} className="text-amber-500" fill="currentColor" />
+                </span>
+              )}
+              {canEdit && active.length > 1 && (
+                <button
+                  onClick={() => drop(r)}
+                  title="Shu guruhdan chiqarish"
+                  className="p-1 rounded-lg text-slate-300 hover:text-red-600 hover:bg-red-50"
+                >
+                  <X size={15} />
+                </button>
+              )}
+            </div>
+
+            <div className="px-4 divide-y divide-slate-100">
+              <Row2
+                label="O'qituvchi"
+                value={
+                  <span className="text-brand-700">{r.teacher || "—"}</span>
+                }
+              />
+              <Row2 label="Dars kunlari" value={daysText(r.lesson_days)} />
+              <Row2 label="Vaqt" value={r.lesson_time || "—"} />
+              {(r.subject || r.level) && (
+                <Row2
+                  label="Kursi"
+                  value={
+                    <span className="bg-brand-50 text-brand-700 rounded-md px-2 py-0.5 text-xs font-medium">
+                      {[r.subject, r.level].filter(Boolean).join(" · ")}
+                    </span>
+                  }
+                />
+              )}
+              <Row2
+                label="Holati"
+                value={
+                  <span className="bg-green-50 text-green-700 rounded-md px-2 py-0.5 text-xs font-medium">
+                    Faol
+                  </span>
+                }
+              />
+              <Row2
+                label="Guruhga qo'shilgan sana"
+                value={r.joined_date ? formatDate(r.joined_date) : "—"}
+              />
+              <Row2
+                label="Boshlanish sanasi"
+                value={r.start_date ? formatDate(r.start_date) : "—"}
+              />
+              {r.room && <Row2 label="Xona" value={r.room} />}
+              <Row2
+                label="Guruh narxi"
+                value={formatSom(r.monthly_fee || 0)}
+              />
+            </div>
+
+            <Link
+              to={`/groups/${r.group_id}`}
+              className="block text-center py-2.5 text-sm font-medium text-brand-600 hover:bg-brand-50 border-t border-slate-200"
+            >
+              Davomat &amp; Baho →
+            </Link>
           </div>
         ))}
-
-        {active.length === 0 && (
-          <p className="px-4 py-4 text-sm text-slate-400">
-            Guruhga biriktirilmagan.
-          </p>
-        )}
-
-        {adding && (
-          <div className="px-4 py-3 bg-slate-50">
-            <select
-              value={pick}
-              onChange={(e) => setPick(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
-            >
-              <option value="">— guruhni tanlang —</option>
-              {allGroups
-                .filter((g) => !taken.has(g.id))
-                .map((g) => (
-                  <option key={g.id} value={g.id}>
-                    {g.name}
-                    {g.subject ? ` (${g.subject})` : ""}
-                  </option>
-                ))}
-            </select>
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={() => {
-                  setAdding(false);
-                  setPick("");
-                  setErr("");
-                }}
-                className="flex-1 py-2 rounded-lg border border-slate-200 text-slate-600 text-sm"
-              >
-                Bekor
-              </button>
-              <button
-                onClick={add}
-                disabled={busy || !pick}
-                className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-50"
-              >
-                {busy ? "..." : "Qo'shish"}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {err && (
-          <p className="px-4 py-2.5 text-sm text-red-600 bg-red-50">{err}</p>
-        )}
-
-        {closed.length > 0 && (
-          <div className="px-4 py-2.5">
-            <p className="text-xs text-slate-400">
-              Chiqqan guruhlari:{" "}
-              {closed
-                .map(
-                  (r) =>
-                    r.group +
-                    (r.left_date ? ` (${formatDate(r.left_date)})` : "")
-                )
-                .join(", ")}
-            </p>
-          </div>
-        )}
       </div>
 
+      {active.length === 0 && (
+        <p className="text-sm text-slate-400 py-6 text-center">
+          O'quvchi hech qaysi guruhga biriktirilmagan.
+        </p>
+      )}
+
+      {closed.length > 0 && (
+        <p className="text-xs text-slate-400 mt-3">
+          Chiqqan guruhlari:{" "}
+          {closed
+            .map(
+              (r) =>
+                r.group + (r.left_date ? ` (${formatDate(r.left_date)})` : "")
+            )
+            .join(", ")}
+        </p>
+      )}
+
       {active.length > 1 && (
-        <p className="px-4 py-2.5 text-[11px] text-amber-700 bg-amber-50 border-t border-amber-200 leading-snug">
+        <p className="mt-3 max-w-2xl text-[12px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 leading-snug">
           Oylik hisob hozircha faqat asosiy guruh (⭐) bo'yicha chiqadi.
           Ikki fan uchun hisob va chegirma keyingi bosqichda ulanadi.
         </p>

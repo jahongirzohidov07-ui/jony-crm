@@ -132,6 +132,19 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
             db.rollback()
         except Exception:
             pass
+    # NOMZOD <-> QUVUR MOSLIGI (2026-08-16, Jahongir: "ishga olish
+    # quvuri bilan nomzodlar bo'limi deyarli bir biriga
+    # bog'lanmayabdi"). Eski nomuvofiqlar kuniga bir marta
+    # to'g'rilanadi — bosqichlar avtomat ergashishi 2026-08-15 da
+    # qo'shilgan, undan oldingi yozuvlar turlicha qolgan.
+    try:
+        from hr_ats import fix_candidate_pipeline as _fcp
+        _fcp(db)
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
     # Sanasi kelgan kurs narxlari qo'llansin (2026-08-15)
     try:
         import courses as _crs

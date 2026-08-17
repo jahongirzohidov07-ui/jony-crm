@@ -613,6 +613,48 @@ CANDIDATE_TO_APPLICATION = {
     "rejected": "rejected",
     "pool": "pool",
 }
+# TESKARI XARITA: QUVUR BOSQICHI -> NOMZOD BOSQICHI (2026-08-16).
+#
+# Quvurda bosqichlar KO'PROQ (telefon suhbati, topshiriq,
+# tavsiyanoma tekshiruvi). Nomzodlar ro'yxatida ular yo'q, shuning
+# uchun bir nechtasi bitta bosqichga tushadi:
+#     phone, interview      -> interview
+#     task, demo            -> demo
+#     reference, offer      -> offer
+#
+# Bu xarita ilgari ats_application_move ichida QO'LDA yozilgan edi.
+# Ikki joyda ikki nusxa bo'lib qolmasin uchun shu yerga ko'chirildi —
+# endi moslikni tekshirish ham shundan foydalanadi.
+APPLICATION_TO_CANDIDATE = {
+    "new": "applied",
+    "screening": "screening",
+    "phone": "interview",
+    "interview": "interview",
+    "task": "demo",
+    "demo": "demo",
+    "reference": "offer",
+    "offer": "offer",
+    "hired": "hired",
+    "rejected": "rejected",
+    "withdrew": "rejected",
+    "pool": "rejected",
+}
+
+
+def stages_match(app_stage: str | None, cand_stage: str | None) -> bool:
+    """Quvur va nomzod bosqichi BIR XIL holatni bildiradimi?
+
+    Ataylab teskari xarita bo'yicha tekshiriladi. Masalan quvurda
+    "Telefon suhbati", nomzodda "Suhbatga chaqirildi" bo'lsa — bu
+    NOMUVOFIQLIK EMAS, ikkalasi bir bosqich. Aks holda HR nomzod
+    kartasini har saqlaganda quvurdagi nozikroq bosqich yo'qolib,
+    "Suhbat"ga tushib qolardi.
+    """
+    if not app_stage or not cand_stage:
+        return False
+    return APPLICATION_TO_CANDIDATE.get(app_stage) == cand_stage
+
+
 CANDIDATE_FUNNEL = [k for k, _ in CANDIDATE_STAGES if k != "rejected"]
 
 CANDIDATE_SOURCES = [

@@ -189,35 +189,88 @@ def _open_application(db: Session, c, user=None, note: str = None):
     return a
 
 
-def _sync_application_stage(db: Session, c, user=None) -> bool:
+def _sync_application_stage(db: Session, c, user=None,
+                            note: str = None) -> int:
     """Nomzodlar ro'yxatida bosqich o'zgarsa QUVUR ham yurishi kerak —
-    aks holda bir odam ikki joyda ikki xil bosqichda turardi."""
+    aks holda bir odam ikki joyda ikki xil bosqichda turadi.
+
+    2026-08-16 da ikkita nuqson tuzatildi (Jahongir: "ishga olish
+    quvuri bilan nomzodlar bo'limi deyarli bir biriga
+    bog'lanmayabdi, nomzodlardan suhbatdan o'tdi desa ishga olish
+    quvurida resume ko'rildi bo'lib turibdi"):
+
+    1) Faqat ENG OXIRGI ariza yangilanardi. Bir nomzodda bir nechta
+       ariza bo'lsa (onlayn ariza + qo'lda kiritilgani), eskisi
+       quvurda eski bosqichda osilib turardi. Endi shu nomzodning
+       BARCHA OCHIQ arizalari birga yuradi.
+
+    2) Quvurdagi NOZIK bosqich yo'qolardi. Quvurda "Telefon suhbati"
+       turgan bo'lsa, HR kartani saqlashi bilan u "Suhbat"ga tushib
+       ketardi — chunki nomzodda ikkalasi ham "Suhbatga chaqirildi".
+       Endi roles.stages_match() bilan tekshiriladi: bosqichlar bir
+       xil holatni bildirsa — TEGILMAYDI.
+    """
     want = roles.CANDIDATE_TO_APPLICATION.get(c.stage or "")
     if not want:
-        return False
-    a = (db.query(models.CandidateApplication)
-         .filter(models.CandidateApplication.candidate_id == c.id)
-         .order_by(models.CandidateApplication.id.desc()).first())
-    if a is None or a.stage == want:
-        return False
+        return 0
+    rows = (db.query(models.CandidateApplication)
+            .filter(models.CandidateApplication.candidate_id == c.id)
+            .order_by(models.CandidateApplication.id.desc()).all())
     today = roles.local_today()
-    since = a.stage_since or (a.created_at.date() if a.created_at
-                              else today)
-    old_stage = a.stage
-    a.stage = want
-    a.stage_since = today
-    if want in roles.APPLICATION_CLOSED:
-        a.closed_at = today
-        if want == "rejected":
-            a.reject_reason = c.reject_reason or a.reject_reason
-    else:
-        a.closed_at = None
-    db.add(models.ApplicationStageLog(
-        application_id=a.id, from_stage=old_stage, to_stage=want,
-        days_in_stage=(today - since).days,
-        note="Nomzodlar ro'yxatidan o'zgartirildi",
-        by_user_id=getattr(user, "id", None)))
-    return True
+    moved = 0
+    for a in rows:
+        if roles.stages_match(a.stage, c.stage):
+            continue                      # allaqachon bir xil holat
+        since = a.stage_since or (a.created_at.date() if a.created_at
+                                  else today)
+        old_stage = a.stage
+        a.stage = want
+        a.stage_since = today
+        if want in roles.APPLICATION_CLOSED:
+            a.closed_at = today
+            if want == "rejected":
+                a.reject_reason = c.reject_reason or a.reject_reason
+        else:
+            a.closed_at = None
+        db.add(models.ApplicationStageLog(
+            application_id=a.id, from_stage=old_stage, to_stage=want,
+            days_in_stage=(today - since).days,
+            note=note or "Nomzodlar ro'yxatidan o'zgartirildi",
+            by_user_id=getattr(user, "id", None)))
+        moved += 1
+    return moved
+
+
+def fix_candidate_pipeline(db: Session, limit: int = 400) -> int:
+    """ESKI NOMUVOFIQLIKNI TUZATISH (2026-08-16).
+
+    Nomzod bosqichi bilan quvur bosqichi bir-biriga ergashishi
+    2026-08-15 da qo'shilgan. Undan OLDIN o'zgartirilgan nomzodlarda
+    ikkalasi turlicha bo'lib qolgan: masalan kartada "Suhbatga
+    chaqirildi", quvurda esa hamon "Rezyume ko'rilmoqda".
+
+    Bu funksiya kuniga bir marta ishlaydi va ANIQ nomuvofiqlarni
+    to'g'rilaydi. Nomzod kartasi asos qilib olinadi — HR kundalik
+    ishni o'sha ro'yxatda qiladi.
+
+    stages_match() tufayli quvurdagi nozikroq bosqichlar (telefon
+    suhbati, topshiriq, tavsiyanoma) TEGILMAY qoladi.
+    """
+    rows = (db.query(models.Candidate)
+            .join(models.CandidateApplication,
+                  models.CandidateApplication.candidate_id
+                  == models.Candidate.id)
+            .distinct().limit(limit).all())
+    fixed = 0
+    for c in rows:
+        try:
+            fixed += _sync_application_stage(
+                db, c, None, note="Avtomat moslashtirildi")
+        except Exception:
+            db.rollback()
+    if fixed:
+        db.commit()
+    return fixed
 
 
 def _cand_role(c) -> tuple:
@@ -685,8 +738,17 @@ def update_candidate(
     if c.stage != before:
         try:
             _sync_application_stage(db, c, user)
-        except Exception:
-            pass
+        except Exception as exc:
+            # Ilgari xato JIMGINA yutilardi — quvur qolib ketsa ham
+            # hech kim bilmasdi. Endi Xatolar bo'limiga tushadi.
+            try:
+                db.rollback()
+                db.add(models.ErrorLog(
+                    path=f"ats_sync.candidate.{c.id}", method="internal",
+                    detail=f"{type(exc).__name__}: {exc}"[:4000]))
+                db.commit()
+            except Exception:
+                pass
     db.commit()
     return {"ok": True}
 
@@ -1188,13 +1250,11 @@ def ats_application_move(aid: int, payload: schemas.ApplicationMove,
     # ishlashda davom etsin
     cand = db.query(models.Candidate).get(a.candidate_id)
     if cand:
-        mapping = {"new": "applied", "screening": "screening",
-                   "phone": "interview", "interview": "interview",
-                   "task": "demo", "demo": "demo",
-                   "reference": "offer", "offer": "offer",
-                   "hired": "hired", "rejected": "rejected"}
-        if payload.stage in mapping:
-            cand.stage = mapping[payload.stage]
+        # Xarita roles.APPLICATION_TO_CANDIDATE'da — bitta joyda
+        # (2026-08-16). Ilgari shu yerda qo'lda yozilgan edi.
+        mapped = roles.APPLICATION_TO_CANDIDATE.get(payload.stage)
+        if mapped:
+            cand.stage = mapped
         if payload.stage == "hired":
             cand.hired_date = today
         if payload.stage in roles.APPLICATION_CLOSED:

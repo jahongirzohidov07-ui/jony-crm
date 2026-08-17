@@ -752,6 +752,87 @@ def update_candidate(
     db.commit()
     return {"ok": True}
 
+@router.post("/api/candidates/{cid}/schedule")
+def schedule_candidate(
+    cid: int,
+    payload: schemas.CandidateSchedule,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    """BOSQICH + KALENDAR bitta harakatda (2026-08-16).
+
+    Jahongir: "suhbat va sinov darsi kalendari qo'shish kerak,
+    suhbatga chaqrildi yoki sinov darsi belgilansa sana so'rasin
+    soati va kunini kiritsam shu bo'limga biriktirilsin".
+
+    Ilgari HR ikki joyda ish qilardi: nomzod kartasida bosqichni
+    o'zgartirardi, keyin ALOHIDA quvurga kirib suhbat qo'shardi.
+    Ikkinchisi ko'pincha unutilardi — natijada "suhbatga chaqirildi"
+    deb yozilgan, lekin qachonligi hech qayerda yo'q.
+
+    Endi bitta so'rov: bosqich ham o'zgaradi, suhbat ham kalendarga
+    tushadi, quvur ham yuradi."""
+    c = db.query(models.Candidate).get(cid)
+    if not c:
+        raise HTTPException(404, "Nomzod topilmadi")
+    if payload.stage not in ("interview", "demo"):
+        raise HTTPException(400, "Faqat suhbat yoki sinov darsi uchun")
+    if payload.date < roles.local_today():
+        raise HTTPException(400, "O'tib ketgan sanaga yozib bo'lmaydi")
+
+    kind = payload.kind or ("demo" if payload.stage == "demo" else "hr")
+    if kind not in roles.INTERVIEW_KIND_LABELS:
+        raise HTTPException(400, "Suhbat turi noto'g'ri")
+
+    # Arizasi bo'lmasa ochamiz — kalendar arizaga bog'lanadi
+    a = _open_application(db, c, user)
+
+    before = c.stage
+    c.stage = payload.stage
+    _sync_candidate_dates(c)
+    if c.stage != before:
+        try:
+            _sync_application_stage(db, c, user)
+        except Exception:
+            db.rollback()
+
+    i = models.Interview(
+        application_id=a.id, candidate_id=c.id, branch_id=c.branch_id,
+        kind=kind, date=payload.date, time=payload.time,
+        minutes=payload.minutes or roles.INTERVIEW_MINUTES.get(kind),
+        place=payload.place,
+        interviewer_id=payload.interviewer_id or user.id,
+        status="planned", note=payload.note, created_by=user.id)
+    db.add(i); db.commit(); db.refresh(i)
+    _ensure_public_id(db, "interview", i)
+    db.commit(); db.refresh(i)
+
+    # Suhbatni o'tkazadigan odamga vazifa — kalendarga qarab
+    # yurmasin (o'ziga qo'ygan bo'lsa vazifa kerak emas)
+    if i.interviewer_id and i.interviewer_id != user.id:
+        try:
+            _hr_task_for(db, i.interviewer_id,
+                         title=f"Suhbat {i.public_id}",
+                         body=(f"{c.full_name} — "
+                               f"{roles.INTERVIEW_KIND_LABELS.get(kind)}. "
+                               f"{roles.uz_date_full(i.date)} "
+                               f"{i.time or ''}"),
+                         branch_id=c.branch_id,
+                         days=max(1, (i.date - roles.local_today()).days))
+            db.commit()
+        except Exception:
+            db.rollback()
+
+    audit.log(db, user, entity="interview", action="create",
+              entity_id=i.id, entity_label=c.full_name,
+              branch_id=c.branch_id,
+              field=roles.INTERVIEW_KIND_LABELS.get(kind),
+              new_value=f"{roles.uz_date_full(i.date)} "
+                        f"{i.time or ''}".strip(),
+              note="Nomzod kartasidan belgilandi", commit=True)
+    return {"ok": True, "stage": c.stage, "interview": _interview_out(db, i)}
+
+
 @router.delete("/api/candidates/{cid}")
 def delete_candidate(
     cid: int,
@@ -948,6 +1029,8 @@ def _app_out(db: Session, a: models.CandidateApplication,
 def _interview_out(db: Session, i: models.Interview) -> dict:
     who = (db.query(models.User).get(i.interviewer_id)
            if i.interviewer_id else None)
+    cand = (db.query(models.Candidate).get(i.candidate_id)
+            if i.candidate_id else None)
     return {
         "id": i.id, "public_id": i.public_id,
         "application_id": i.application_id,
@@ -968,6 +1051,11 @@ def _interview_out(db: Session, i: models.Interview) -> dict:
         "note": i.note,
         "has_scorecard": db.query(models.Scorecard).filter(
             models.Scorecard.interview_id == i.id).first() is not None,
+        # Kalendarda kim kelishini ko'rsatish uchun (2026-08-16)
+        "candidate": cand.full_name if cand else None,
+        "position": cand.position if cand else None,
+        "subject": cand.subject if cand else None,
+        "phone": cand.phone if cand else None,
     }
 
 def _scorecard_out(db: Session, s: models.Scorecard) -> dict:
@@ -1288,13 +1376,33 @@ def ats_application_pool(aid: int, payload: schemas.ExamOrderDecision,
 
 @router.get("/api/ats/interviews")
 def ats_interviews(days: int = 14, mine: bool = False,
+                   date_from: str | None = None,
+                   date_to: str | None = None,
                    db: Session = Depends(get_db),
                    user=Depends(require_role(*roles.ATS_VIEW))):
-    """Yaqin kunlardagi suhbatlar."""
+    """Suhbatlar va sinov darslari.
+
+    Odatda yaqin kunlar (days). KALENDAR uchun (2026-08-16) aniq
+    oraliq berish mumkin: date_from / date_to — shunda butun oy
+    bir so'rovda keladi."""
     today = roles.local_today()
+    lo = today - timedelta(days=2)
+    hi = today + timedelta(days=days)
+    if date_from:
+        try:
+            lo = date.fromisoformat(date_from)
+        except ValueError:
+            raise HTTPException(400, "date_from noto'g'ri")
+    if date_to:
+        try:
+            hi = date.fromisoformat(date_to)
+        except ValueError:
+            raise HTTPException(400, "date_to noto'g'ri")
+    if hi < lo:
+        raise HTTPException(400, "Oraliq teskari")
     q = db.query(models.Interview).filter(
-        models.Interview.date >= today - timedelta(days=2),
-        models.Interview.date <= today + timedelta(days=days))
+        models.Interview.date >= lo,
+        models.Interview.date <= hi)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.filter(_branch_in(db, user, models.Interview.branch_id))
     if mine:

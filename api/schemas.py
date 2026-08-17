@@ -2105,6 +2105,19 @@ class InterviewIn(BaseModel):
     note: Optional[str] = None
 
 
+class CandidateSchedule(BaseModel):
+    """Nomzod bosqichini o'zgartirish + suhbat/sinov darsini
+    kalendarga qo'yish — bitta harakatda (2026-08-16)."""
+    stage: str                       # interview | demo
+    date: date
+    time: Optional[str] = None
+    kind: Optional[str] = None       # bo'sh bo'lsa bosqichdan olinadi
+    minutes: Optional[int] = None
+    place: Optional[str] = None
+    interviewer_id: Optional[int] = None
+    note: Optional[str] = None
+
+
 class InterviewStatusIn(BaseModel):
     status: str
     note: Optional[str] = None

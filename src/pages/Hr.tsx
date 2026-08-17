@@ -24,6 +24,8 @@ import {
   vacancyStatusLabel,
 } from "../lib/hr";
 import { CandidateCard } from "../components/CandidateCard";
+import { ScheduleDialog } from "../components/ScheduleDialog";
+import { HrCalendar } from "../components/HrCalendar";
 import { AttendanceTab, NpsTab } from "../components/HrExtras";
 import { StaffDatesTab } from "../components/StaffDates";
 import { ObservationsTab } from "../components/LessonRubric";
@@ -36,6 +38,7 @@ import { Attachments } from "../components/Attachments";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
+  | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library";
 
@@ -50,6 +53,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "candidates", label: "Nomzodlar" },
   { key: "vacancies", label: "Vakansiyalar" },
   { key: "staff", label: "Xodimlar" },
+  { key: "calendar", label: "Kalendar" },
   { key: "rubric", label: "Dars baholash" },
   { key: "dates", label: "Sanalar" },
   { key: "attendance", label: "Davomat" },
@@ -285,6 +289,9 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState<Candidate | null>(null);
   const [card, setCard] = useState<number | null>(null);
+  const [schedule, setSchedule] = useState<
+    { id: number; name: string; stage: string } | null
+  >(null);
   const [form, setForm] = useState({ ...emptyCand });
   const [stageFilter, setStageFilter] = useState("");
   // FILTRLAR (2026-08-15, Jahongir: "filtr ham qoyib bersan shu yerga
@@ -402,6 +409,14 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
 
   const move = async (c: Candidate, stage: string) => {
     // 2026-08-12, Jahongir: "rad etildidan keyin sabab so'rasa yaxshi edi"
+    // SUHBAT / SINOV DARSI — sana so'raladi (2026-08-16, Jahongir:
+    // "suhbatga chaqrildi yoki sinov darsi belgilansa sana so'rasin
+    // soati va kunini kiritsam shu bo'limga biriktirilsin").
+    // Bosqich shu oynada saqlanadi — bu yerda hech narsa yozilmaydi.
+    if (stage === "interview" || stage === "demo") {
+      setSchedule({ id: c.id, name: c.full_name, stage });
+      return;
+    }
     let reject_reason: string | undefined;
     if (stage === "rejected") {
       const r = prompt("Rad etish sababi (nomzod kartasida saqlanadi):");
@@ -667,6 +682,19 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             </tbody>
           </table>
         </div>
+      )}
+
+      {schedule && (
+        <ScheduleDialog
+          candidateId={schedule.id}
+          candidateName={schedule.name}
+          stage={schedule.stage}
+          onClose={() => setSchedule(null)}
+          onDone={() => {
+            setSchedule(null);
+            load();
+          }}
+        />
       )}
 
       {card !== null && (
@@ -1244,7 +1272,8 @@ export default function Hr() {
   const fullHr = can(user?.role, HR_ACCESS);
   const visibleTabs = fullHr
     ? TABS
-    : TABS.filter((t) => t.key === "candidates" || t.key === "rubric");
+    : TABS.filter((t) => ["candidates", "calendar", "rubric"]
+        .includes(t.key));
   const activeTab = visibleTabs.some((t) => t.key === tab)
     ? tab
     : visibleTabs[0].key;
@@ -1285,6 +1314,7 @@ export default function Hr() {
       {activeTab === "candidates" && <CandidatesTab branches={branches} />}
       {activeTab === "vacancies" && <VacanciesTab branches={branches} />}
       {activeTab === "staff" && <StaffTab />}
+      {activeTab === "calendar" && <HrCalendar />}
       {activeTab === "rubric" && <ObservationsTab />}
       {activeTab === "dates" && <StaffDatesTab />}
       {activeTab === "attendance" && <AttendanceTab />}

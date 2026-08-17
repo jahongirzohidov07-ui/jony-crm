@@ -147,6 +147,47 @@ c.put(f"/api/candidates/{CID}", headers=H,
 ck("quvurda ham rad etildi", set(app_stages(CID)), {"rejected"})
 ck("nomzodda ham", cand_stage(CID), "rejected")
 
+print("\n=== 8. SUHBAT/SINOV DARSI KALENDARI ===")
+from datetime import date as _d, timedelta as _td
+r = c.post("/api/candidates", headers=H, json={
+    "full_name": "Kalendar Nomzod", "phone": "+998907778899",
+    "position": "teacher", "subject": "Ingliz tili",
+    "stage": "applied", "source": "other", "branch_id": BID})
+KID = r.json()["id"]
+kun = (_d.today() + _td(days=3)).isoformat()
+r = c.post(f"/api/candidates/{KID}/schedule", headers=H, json={
+    "stage": "interview", "date": kun, "time": "14:30", "kind": "hr",
+    "place": "Bekobod 1, 3-xona"})
+ck("suhbat belgilandi", r.status_code, 200)
+d = r.json()
+ck("bosqich o'zgardi", d["stage"], "interview")
+ck("soat saqlandi", d["interview"]["time"], "14:30")
+ck("quvur ham yurdi", app_stages(KID), ["interview"])
+
+kun2 = (_d.today() + _td(days=5)).isoformat()
+r = c.post(f"/api/candidates/{KID}/schedule", headers=H, json={
+    "stage": "demo", "date": kun2, "time": "09:00"})
+ck("sinov darsi belgilandi", r.status_code, 200)
+ck("turi avtomat demo bo'ldi", r.json()["interview"]["kind"], "demo")
+ck("nomzod sinov darsida", cand_stage(KID), "demo")
+
+r = c.get(f"/api/ats/interviews?date_from={kun}&date_to={kun2}", headers=H)
+ck("kalendar oralig'i ishlaydi", r.status_code, 200)
+rows = r.json()["rows"]
+ck("ikkala yozuv ham bor", len(rows), 2)
+ck("nomzod ismi kalendarda", rows[0]["candidate"], "Kalendar Nomzod")
+ck("telefoni ham", rows[0]["phone"], "+998907778899")
+
+o = (_d.today() - _td(days=1)).isoformat()
+r = c.post(f"/api/candidates/{KID}/schedule", headers=H,
+           json={"stage": "interview", "date": o})
+ck("o'tib ketgan sana rad etiladi", r.status_code, 400)
+r = c.post(f"/api/candidates/{KID}/schedule", headers=H,
+           json={"stage": "offer", "date": kun})
+ck("boshqa bosqich rad etiladi", r.status_code, 400)
+r = c.get("/api/ats/interviews?date_from=xato", headers=H)
+ck("noto'g'ri sana rad etiladi", r.status_code, 400)
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta muammo: {fails}"))
 sys.exit(1 if fails else 0)

@@ -85,6 +85,25 @@ db.add_all([
                 password_hash=hash_password("x"), is_active=1),
 ])
 db.commit()
+# QIYIN HOLATLAR: birlashtirishni yiqitgan jadvallar (2026-08-17)
+#  - xp_streak_milestones: qo'lda yozilgan ro'yxatda yo'q edi ->
+#    "students" ni o'chirishda FK xatosi chiqardi (jonli saytda
+#    aynan shu 500 xatoni berdi);
+#  - Lead.converted_student_id: student_id EMAS, boshqa ustun;
+#  - StudentGamification: bitta o'quvchida bitta bo'lishi kerak.
+db.add_all([
+    models.XpStreakMilestone(student_id=AID, kind='attendance',
+                             milestone=7),
+    models.XpStreakMilestone(student_id=BID_S, kind='attendance',
+                             milestone=7),
+    models.XpStreakMilestone(student_id=BID_S, kind='attendance',
+                             milestone=14),
+    models.StudentGamification(student_id=AID),
+    models.StudentGamification(student_id=BID_S),
+    models.Lead(full_name="Abduvalieva Munisa", phone="+998940411480",
+                branch_id=BID, converted_student_id=BID_S),
+])
+db.commit()
 BEG_ATT = db.query(models.Attendance).count()
 db.close()
 
@@ -159,6 +178,23 @@ ck("eng eski qo'shilgan sana saqlandi", keep.enrolled_date,
    date(2026, 7, 7))
 ck("ikkala guruh faol", sorted(student_group_ids(db, AID)),
    sorted([G1, G2]))
+db.close()
+
+print("\n=== 7b. QIYIN JADVALLAR ham to'g'ri ishladi ===")
+db = SessionLocal()
+ck("lid omon qolgan kartaga bog'landi",
+   db.query(models.Lead).filter(
+       models.Lead.converted_student_id == AID).count(), 1)
+ck("gamifikatsiya bittada qoldi",
+   db.query(models.StudentGamification).filter(
+       models.StudentGamification.student_id == AID).count(), 1)
+ck("streak nishonlari yo'qolmadi (7 va 14)",
+   sorted(x.milestone for x in db.query(models.XpStreakMilestone)
+          .filter(models.XpStreakMilestone.student_id == AID).all()),
+   [7, 14])
+ck("o'chirilgan kartada hech narsa qolmadi",
+   db.query(models.XpStreakMilestone).filter(
+       models.XpStreakMilestone.student_id == BID_S).count(), 0)
 db.close()
 
 print("\n=== 8. Tarixga yozildi ===")

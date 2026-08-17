@@ -683,24 +683,67 @@ def update_student(
 #  Ya'ni "o'chirish" hech qanday ma'lumotni yo'qotmaydi.
 # =====================================================================
 
-# (model, ustun) — student_id ga bog'langan hamma jadval.
-# Yangi jadval qo'shilsa shu ro'yxatga ham qo'shish kerak.
-_MERGE_TABLES = [
-    "Payment", "Attendance", "DailyGrade", "ExamResult", "CoinEntry",
-    "RewardRedemption", "Contract", "Complaint", "RiskFlag", "RiskTask",
-    "ParentTalk", "Certificate", "SupportAssignment", "SupportPlan",
-    "Discount", "DebtorContact", "TeacherRating", "LeaveReason",
-    "Notification", "XpTransaction", "StudentLeagueHistory",
-    "StudentAchievement", "XpApprovalRequest", "XpFraudAlert",
-    "SeasonRankSnapshot", "MediaAsset", "NpsResponse", "StudentReminder",
-    "PaymentFixRequest", "ExerciseResult", "ChargeSkip", "RefundRequest",
-    "SkillAttempt", "GrammarAttempt", "VocabUnitPass", "VocabAttempt",
-]
+# Bog'langan jadvallar QO'LDA sanalmaydi — SQLAlchemy metadata'sidan
+# avtomat topiladi (2026-08-17). Ilgari qo'lda ro'yxat bor edi va
+# xp_streak_milestones o'tkazib yuborilgan — birlashtirish server
+# xatosi bergan. Endi yangi jadval qo'shilsa ham o'zi topiladi.
 
-# Bitta o'quvchida BITTA bo'lishi kerak bo'lgan jadvallar — ko'chirilsa
-# ikkita bo'lib qoladi. Shuning uchun omon qolganda bori qoldiriladi,
-# ortiqchasi o'chiriladi.
-_MERGE_SINGLETON = ["StudentGamification", "XpStreak"]
+def _student_fk_columns():
+    """students.id ga bog'langan (jadval, ustun) juftliklari."""
+    out = []
+    for mapper in models.Base.registry.mappers:
+        cls = mapper.class_
+        if cls is models.Student:
+            continue
+        for col in mapper.local_table.columns:
+            for fk in col.foreign_keys:
+                if fk.target_fullname == "students.id":
+                    out.append((cls, col.name))
+    return out
+
+
+# Bitta o'quvchida BITTA bo'lishi kerak — ko'chirilsa ikkita bo'lib
+# qoladi yoki unique cheklovga urinadi. Ular ko'chirilmaydi:
+# omon qolganda bori qoladi, ortiqchasi o'chiriladi.
+# DIQQAT: bu yerga faqat HAQIQATAN bitta bo'lishi kerak bo'lgan
+# jadval yoziladi. Masalan XpStreakMilestone bunday EMAS — bola 7
+# kunlik ham, 14 kunlik ham nishon olishi mumkin, ikkalasi ham
+# saqlanishi kerak (test tutdi).
+_MERGE_SINGLETON = {"StudentGamification", "XpStreak",
+                    "StudentGroupLink"}
+
+# Ko'chgandan keyin TAKRORI olib tashlanadigan jadvallar: bazada
+# unique cheklov yo'q, lekin mazmunan bir xil yozuv ikki marta
+# turmasligi kerak (masalan "7 kunlik nishon" ikkita bo'lmasin).
+_MERGE_DEDUPE = {
+    "XpStreakMilestone": ("kind", "milestone"),
+    "StudentAchievement": ("achievement_id",),
+    "VocabUnitPass": ("unit", "language"),
+}
+
+
+def _dedupe_after_merge(db: Session, keep_id: int) -> dict:
+    """Bir xil yozuv ikki marta qolib ketmasin."""
+    out = {}
+    for name, keys in _MERGE_DEDUPE.items():
+        M = getattr(models, name, None)
+        if M is None or not hasattr(M, "student_id"):
+            continue
+        cols = [getattr(M, k, None) for k in keys]
+        if any(c is None for c in cols):
+            continue
+        seen, gone = set(), 0
+        for r in (db.query(M).filter(M.student_id == keep_id)
+                  .order_by(M.id).all()):
+            sig = tuple(getattr(r, k) for k in keys)
+            if sig in seen:
+                db.delete(r)
+                gone += 1
+            else:
+                seen.add(sig)
+        if gone:
+            out[f"{name} (takror)"] = gone
+    return out
 
 
 @router.post("/api/students/{keep_id}/merge/{drop_id}")
@@ -772,38 +815,53 @@ def merge_students(
     if n_dup:
         moved["Davomat (takror, olib tashlandi)"] = n_dup
 
-    # 3) QOLGAN HAMMA JADVAL
-    for name in _MERGE_TABLES:
-        if name == "Attendance":
+    # 3) QOLGAN HAMMA JADVAL — metadata'dan avtomat
+    for M, colname in _student_fk_columns():
+        name = M.__name__
+        if name == "Attendance" and colname == "student_id":
+            continue                     # yuqorida alohida ishlandi
+        col = getattr(M, colname)
+        if name in _MERGE_SINGLETON:
+            # Bittalik: omon qolganda bori qolsin, ortiqchasi o'chsin
+            has = db.query(M).filter(col == keep.id).first()
+            gone = 0
+            for r in db.query(M).filter(col == drop.id).all():
+                if has:
+                    db.delete(r)
+                    gone += 1
+                else:
+                    setattr(r, colname, keep.id)
+                    has = r
+            if gone:
+                moved[f"{name} (takror)"] = gone
             continue
-        M = getattr(models, name, None)
-        if M is None:
-            continue
+        # Ko'chirishda unique cheklovga urilishi mumkin — o'sha
+        # yozuvni o'tkazib yuboramiz, qolgani ko'chaveradi.
+        sp = db.begin_nested()
         try:
-            n = (db.query(M).filter(M.student_id == drop.id)
-                 .update({M.student_id: keep.id},
-                         synchronize_session=False))
+            n = (db.query(M).filter(col == drop.id)
+                 .update({col: keep.id}, synchronize_session=False))
+            sp.commit()
             if n:
                 moved[name] = n
         except Exception:
-            db.rollback()
-            raise HTTPException(
-                500, f"{name} jadvalini ko'chirishda xato — hech narsa "
-                     f"o'zgartirilmadi")
-
-    # 4) BITTALIK jadvallar — ortiqchasi o'chadi
-    for name in _MERGE_SINGLETON:
-        M = getattr(models, name, None)
-        if M is None:
-            continue
-        has = db.query(M).filter(M.student_id == keep.id).first()
-        rows = db.query(M).filter(M.student_id == drop.id).all()
-        for r in rows:
-            if has:
-                db.delete(r)
-            else:
-                r.student_id = keep.id
-                has = r
+            sp.rollback()
+            ok = skip = 0
+            for r in db.query(M).filter(col == drop.id).all():
+                sp2 = db.begin_nested()
+                try:
+                    setattr(r, colname, keep.id)
+                    db.flush()
+                    sp2.commit()
+                    ok += 1
+                except Exception:
+                    sp2.rollback()
+                    db.delete(r)
+                    skip += 1
+            if ok:
+                moved[name] = ok
+            if skip:
+                moved[f"{name} (takror)"] = skip
 
     # 5) Bo'sh maydonlarni to'ldiramiz (ma'lumot boy bo'lsin)
     for f in ("phone", "parent_phone", "birth_date", "address", "school",
@@ -824,6 +882,12 @@ def merge_students(
         u = db.query(models.User).get(old_user_id)
         if u:
             u.is_active = 0     # ikkinchi login o'chiriladi
+
+    # Takror yozuvlarni tozalaymiz (7 kunlik nishon ikkita bo'lmasin)
+    try:
+        moved.update(_dedupe_after_merge(db, keep.id))
+    except Exception:
+        pass
 
     drop_name = drop.full_name
     drop_public = drop.public_id

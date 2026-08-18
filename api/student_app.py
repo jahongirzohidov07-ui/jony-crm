@@ -2033,7 +2033,11 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
     import httpx
 
     oai = (os.getenv("OPENAI_API_KEY") or "").strip()
-    gem = (os.getenv("GEMINI_API_KEY") or "").strip()
+    # 2026-08-18: Jahongir kalitni Vercel'da "JonyTeacher" nomi bilan
+    # kiritdi — qayta nomlatib o'tirmaymiz, ikkala nom ham o'qiladi.
+    gem = (os.getenv("GEMINI_API_KEY")
+           or os.getenv("JonyTeacher")
+           or os.getenv("JONYTEACHER") or "").strip()
 
     if oai:
         r = httpx.post(

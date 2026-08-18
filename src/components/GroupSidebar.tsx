@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+// (2026-08-18) "Guruhdan o'chirilganlar" yig'ma bo'limi uchun
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Download, Phone, Pencil } from "lucide-react";
 import { api, type Group, type GroupProgress, type Student } from "../lib/api";
@@ -116,6 +118,23 @@ export function GroupSidebar({
   const [students, setStudents] = useState<Student[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
+  // GURUHDAN O'CHIRILGANLAR (2026-08-18, Jahongir: "Pastda alohida
+  // guruhdan ochirilganlar bolimi tursa osha yerdni bossagina alohida
+  // chiqsin bosilmasa chiqmasin"). Ro'yxat faqat ochilganda so'raladi.
+  const [goneOpen, setGoneOpen] = useState(false);
+  const [gone, setGone] = useState<Student[] | null>(null);
+  const [goneBusy, setGoneBusy] = useState(false);
+  function toggleGone() {
+    const next = !goneOpen;
+    setGoneOpen(next);
+    if (next && gone === null && !goneBusy) {
+      setGoneBusy(true);
+      api.get<Student[]>(`/students?group_id=${group.id}&left=1`)
+        .then(setGone)
+        .catch(() => setGone([]))
+        .finally(() => setGoneBusy(false));
+    }
+  }
 
   // Ustozga muzlatilgan o'quvchi ko'rinmasin — aks holda unga ham
   // yo'qlama qo'yib yuborilishi mumkin, bu esa oylikka noto'g'ri
@@ -134,7 +153,12 @@ export function GroupSidebar({
       .finally(() => setLoading(false));
   }
 
-  useEffect(load, [group.id]);
+  useEffect(() => {
+    load();
+    setGone(null);
+    setGoneOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [group.id]);
 
   // "Boshqa guruhga o'tkazish" ro'yxati uchun.
   useEffect(() => {
@@ -288,6 +312,47 @@ export function GroupSidebar({
             >
               <Download size={13} /> Excel
             </button>
+          </div>
+
+          {/* GURUHDAN O'CHIRILGANLAR — yig'ma bo'lim. Bosilmasa
+              so'ralmaydi ham, ko'rinmaydi ham. */}
+          <div className="mt-3 pt-2 border-t border-slate-100">
+            <button
+              onClick={toggleGone}
+              className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-600"
+            >
+              {goneOpen ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+              Guruhdan o'chirilganlar
+              {gone !== null && ` (${gone.length})`}
+            </button>
+            {goneOpen && (
+              <div className="mt-1.5 space-y-0.5 -mx-2">
+                {goneBusy && (
+                  <p className="text-xs text-slate-400 px-2 py-1">
+                    Yuklanmoqda...
+                  </p>
+                )}
+                {gone !== null && gone.length === 0 && !goneBusy && (
+                  <p className="text-xs text-slate-400 px-2 py-1">
+                    Bu guruhdan o'chirilganlar yo'q
+                  </p>
+                )}
+                {(gone || []).map((s) => (
+                  <div key={s.id}
+                    className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-slate-50">
+                    <span className="w-2.5 h-2.5 rounded-full shrink-0 bg-slate-300" />
+                    <Link to={`/students/${s.id}`}
+                      className="text-[13px] text-slate-400 hover:text-slate-600 line-through decoration-slate-300">
+                      {s.full_name}
+                    </Link>
+                    <span className="ml-auto text-[10px] uppercase tracking-wide text-slate-400 shrink-0">
+                      {s.status === "archived" ? "arxiv"
+                        : s.status === "left" ? "ketgan" : s.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </>
       )}

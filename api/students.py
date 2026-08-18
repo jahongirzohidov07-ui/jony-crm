@@ -337,6 +337,7 @@ def list_students(
     group_id: Optional[int] = None,
     status_filter: Optional[str] = None,
     branch_id: Optional[int] = None,
+    left: bool = False,
     db: Session = Depends(get_db),
     user=Depends(get_current_user),
 ):
@@ -345,10 +346,37 @@ def list_students(
                             branch_id)
     if q:
         query = query.filter(models.Student.full_name.ilike(f"%{q}%"))
-    if group_id:
+    if group_id and left:
+        # GURUHDAN O'CHIRILGANLAR (2026-08-18, Jahongir: "guruhdan
+        # ochirilgan talaba bu yerda turmasin... Pastda alohida
+        # guruhdan ochirilganlar bolimi tursa osha yerdni bossagina
+        # alohida chiqsin"). Bu ro'yxat FAQAT tugma bosilganda
+        # so'raladi: shu guruhdan chiqarilgan (bog'lanishi yopilgan)
+        # yoki shu guruhda turib arxivga o'tgan o'quvchilar.
+        gone_ids = [sid for (sid,) in
+                    db.query(models.StudentGroupLink.student_id)
+                    .filter(models.StudentGroupLink.group_id == group_id,
+                            models.StudentGroupLink.active == 0).all()]
+        query = query.filter(
+            models.Student.id.in_(gone_ids or [-1])
+            | (in_group(group_id)
+               & models.Student.status.in_(("archived", "left"))))
+        # Hozir guruhda faol o'qiyotganlar bu ro'yxatga tushmasin
+        # (chiqarilib keyin QAYTA qo'shilganlar bo'lishi mumkin)
+        query = query.filter(
+            models.Student.status.in_(("archived", "left"))
+            | ~in_group(group_id))
+    elif group_id:
         # Ikki guruhga qatnaydigan o'quvchi IKKALASIDA ham chiqsin
         # (2026-08-17) — ilgari faqat asosiy guruhida ko'rinardi.
         query = query.filter(in_group(group_id))
+        # 2026-08-18: guruh ro'yxatida ARXIVDAGI/KETGAN o'quvchi
+        # TURMAYDI — ular pastdagi "Guruhdan o'chirilganlar"da.
+        # Aniq status so'ralgan bo'lsa (masalan arxiv sahifasi) —
+        # aralashmaymiz.
+        if not status_filter:
+            query = query.filter(
+                ~models.Student.status.in_(("archived", "left")))
     if status_filter:
         query = query.filter(models.Student.status == status_filter)
 
@@ -972,7 +1000,11 @@ def merge_students(
 def delete_student(
     student_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FULL_ACCESS)),
+    # 2026-08-18, Jahongir: "arxivdagilarni ochirishni faqatgina menga
+    # asoschiga ruxsatini ber". O'quvchini BUTUNLAY o'chirish — tarixi
+    # bilan yo'qotadigan amal, endi faqat asoschi qila oladi. Qolganlar
+    # arxivga o'tkazadi (hech narsa yo'qolmaydi).
+    user=Depends(require_role(roles.FOUNDER)),
 ):
     s = db.query(models.Student).get(student_id)
     if not s:

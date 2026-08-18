@@ -530,6 +530,15 @@ def grades_grid(
         ).all()
         marks = {f"{g.lesson_id}:{g.student_id}": g.score for g in rows}
 
+    # 2026-08-18 (Jahongir: "guruhdan ochirilgan talaba bu yerda
+    # turmasin"): arxivga o'tgan/ketgan o'quvchi baholash jadvalida
+    # bo'sh qator bo'lib turmaydi. Shu oyda bahosi BOR bo'lsa qoladi
+    # (tarix), bo'lmasa umuman chiqmaydi.
+    _graded = {int(k.split(":")[1]) for k in marks}
+    students = [s for s in students
+                if s.status not in ("archived", "left")
+                or s.id in _graded]
+
     return schemas.AttendanceGrid(
         students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
                                       status=s.status) for s in students],

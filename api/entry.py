@@ -2281,6 +2281,22 @@ if _orig_att_grid is not None:
         # backend ham saqlashda o'tkazib yuboradi.
         marked = {int(k.split(":")[1]) for k in
                   (data.get("marks") or {}).keys()}
+        # GURUHDAN O'CHIRILGAN / ARXIVDAGI o'quvchi (2026-08-18,
+        # Jahongir: "guruhdan ochirilgan talaba bu yerda turmasin,
+        # bunaqa bolib"): jadvalda ODATIY qator bo'lib TURMAYDI.
+        #   - o'sha oyda yo'qlamasi YO'Q bo'lsa - umuman chiqmaydi
+        #     (skrinshotdagi bo'sh kataklar qatori aynan shu edi);
+        #   - yo'qlamasi BOR bo'lsa - rahbariyatga faqat o'qish uchun
+        #     kulrang qator (ustoz oyligi hujjati yo'qolmasin).
+        _gone_rows = []
+        for x in list(data["students"]):
+            if x.get("status") in ("archived", "left"):
+                data["students"].remove(x)
+                if x["id"] in marked and user.role in _FROZEN_HISTORY_VIEW:
+                    x["status"] = "transferred"
+                    x["note"] = ("Guruhdan o'chirilgan (arxiv) - "
+                                 "yo'qlama tarixi o'qish uchun")
+                    _gone_rows.append(x)
         if user.role in _FROZEN_HISTORY_VIEW:
             frozen = [x for x in data["students"]
                       if x.get("status") == "frozen"]
@@ -2288,7 +2304,7 @@ if _orig_att_grid is not None:
                    if x.get("status") != "frozen"]
             # Tarixi butunlay bo'sh muzlatilganlar qatori ko'rsatilmaydi
             frozen = [x for x in frozen if x["id"] in marked]
-            data["students"] = act + frozen
+            data["students"] = act + frozen + _gone_rows
             # BOSHQA GURUHGA O'TGANLAR (Jahongir, 2026-08-11):
             # yo'qlamasi shu guruh tarixida bor, lekin o'zi endi
             # boshqa guruhda. Satr faqat o'qish uchun ko'rinadi -

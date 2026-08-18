@@ -37,6 +37,7 @@ import { BudgetTab } from "../components/Budget";
 import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
+import { PayImportTab } from "../components/PayImport";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup" | "trash" | "fixes";
 
@@ -86,6 +87,15 @@ const FIX_TAB: { key: Tab; label: string } = {
   key: "fixes", label: "Tuzatish so'rovlari",
 };
 // Eski tizimdan tarix ko'chirish — bir martalik ish, moliya bo'limida.
+// 2026-08-18, Jahongir: "LC upda hammasini togrlab qoydim sen uni toliq
+// kochirib ber JonyOS ga tolovlar tarixini". Ko'chirish ekrani (PayImport)
+// allaqachon yozilgan edi, lekin hech qaysi sahifaga ULANMAGAN — ya'ni
+// undan umuman foydalanib bo'lmasdi. Endi Moliya bo'limida tab bo'lib
+// turadi. Faqat asoschi va moliya direktoriga ko'rinadi: eski tarixni
+// ko'chirish - bir martalik va qaytarib olinadigan amal.
+const LCUP_TAB: { key: Tab; label: string } = {
+  key: "lcup", label: "LC UP tarixi",
+};
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
 function short(n: number): string {
@@ -1287,6 +1297,7 @@ export default function Moliya() {
     ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
     ...(full ? [TRASH_TAB] : []),
     ...(can(user?.role, CASH_ACCESS) ? [FIX_TAB] : []),
+    ...(full ? [LCUP_TAB] : []),
   ];
   // Asoschi va moliya direktori uchun birinchi sahifa — Umumiy ko'rinish.
   // Dashboard kartasidan kelganda ?tab= orqali kerakli bo'lim ochiladi.
@@ -1358,6 +1369,7 @@ export default function Moliya() {
         {tab === "payroll" && <PayrollTab />}
         {tab === "trash" && <DeletedPaymentsTab />}
         {tab === "fixes" && <PaymentFixesTab />}
+        {tab === "lcup" && <PayImportTab />}
       </div>
     </div>
   );

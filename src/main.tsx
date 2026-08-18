@@ -2,6 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { detectAppMode } from './lib/appMode'
+
+// Jony Student PWA'dan ochilganini birinchi qatorda aniqlab olamiz
+detectAppMode()
 
 // Yangi versiya chiqqanda ochiq turgan tab eski JS bo'laklarini qidirib
 // topolmaydi va sahifa "Yuklanmoqda..."da qotib qoladi. Vite bunda

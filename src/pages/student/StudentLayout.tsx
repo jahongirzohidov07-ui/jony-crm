@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { NavLink, Outlet, Navigate } from "react-router-dom";
 import { Home, BookOpen, Trophy, Gift, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
+import { isStudentApp } from "../../lib/appMode";
 
 /**
  * JONY STUDENT — ilova qobig'i (2026-08-09, menyu 2026-08-16 da
@@ -36,7 +37,7 @@ const TABS = [
 ];
 
 export default function StudentLayout() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   // PWA: "Jony Student" nomi bilan uy ekraniga o'rnatiladi. Manifest
   // faqat shu bo'limda ulanadi — xodimlar paneli o'zicha qoladi.
@@ -57,6 +58,14 @@ export default function StudentLayout() {
   }, []);
 
   if (!user) return <Navigate to="/login" replace />;
+  // Ilova rejimida xodim hisobi bilan ochilsa — xodim paneliga OLIB
+  // KETILMAYDI (2026-08-18, "xodimlar ham akkauntlariga kirib
+  // ketyabdi"): login sahifasiga qaytariladi, u yerda tushuntirish
+  // chiqadi. Oddiy saytda esa avvalgidek o'z paneliga o'tadi.
+  if (user.role !== "student" && isStudentApp()) {
+    logout();
+    return <Navigate to="/login" replace />;
+  }
   if (user.role !== "student") return <Navigate to="/" replace />;
 
   return (

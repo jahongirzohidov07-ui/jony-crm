@@ -5,9 +5,11 @@ import { BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
 import { PasswordInput } from "../components/PasswordInput";
+import { isStudentApp } from "../lib/appMode";
 
 export default function Login() {
-  const { login, loading, error } = useAuth();
+  const { login, loading, error, logout } = useAuth();
+  const [appBlock, setAppBlock] = useState("");
   const [username, setUsername] = useState(
     () => localStorage.getItem("jonyos_last_login") || "",
   );
@@ -26,6 +28,21 @@ export default function Login() {
     e.preventDefault();
     try {
       const u = await login(username, password, remember);
+      // JONY STUDENT ILOVASI FAQAT O'QUVCHILAR UCHUN (2026-08-18,
+      // Jahongir: "jony student appdan faqat studentlar kira olsin
+      // xodimlar ham akkauntlariga kirib ketyabdi undan"). Xodim
+      // hisobi bu ilovadan kiritilmaydi — sessiya darhol yopiladi.
+      // Xodimlar jonyos.uz saytining o'zidan kiradi (u yerda hech
+      // narsa o'zgarmagan).
+      if (isStudentApp() && u && u.role !== "student") {
+        logout();
+        setAppBlock(
+          "Bu ilova faqat o'quvchilar uchun. Xodimlar jonyos.uz " +
+          "saytidan (brauzer orqali) kiradi."
+        );
+        return;
+      }
+      setAppBlock("");
       if (remember) localStorage.setItem("jonyos_last_login", username);
       else localStorage.removeItem("jonyos_last_login");
       if (password === "jonyjony") {
@@ -110,6 +127,11 @@ export default function Login() {
             </span>
           </label>
 
+          {appBlock && (
+            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              {appBlock}
+            </p>
+          )}
           {error && (
             <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
               {error}

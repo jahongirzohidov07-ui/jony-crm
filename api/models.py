@@ -1770,6 +1770,11 @@ class StudentGamification(Base):
     current_level = Column(Integer, default=1)
     # Kategoriya kesimidagi XP (JSON)
     by_category = Column(Text, nullable=True)
+    # MAQSAD BALLI (2026-08-18, Jahongir: "o'quvchilar kirganda target
+    # ballini kirgizsa uni progressidan kelib chiqib shu ballni olishga
+    # qancha vaqt qolganligni korsatib tursin"). O'quvchining o'zi
+    # qo'yadi, ilova unga yetish vaqtini hisoblab turadi.
+    xp_target = Column(Float, nullable=True)
     last_xp_at = Column(DateTime, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)

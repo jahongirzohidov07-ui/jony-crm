@@ -2156,3 +2156,94 @@ def speaking_turn(payload: dict, db: Session = Depends(get_db),
 
     return {"reply": reply[:800], "xp_given": xp_given,
             "xp_today": today_xp, "xp_cap": SPEAKING_DAILY_XP_CAP}
+
+
+# =====================================================================
+#  MAQSAD BALLI (2026-08-18)
+#
+#  Jahongir: "o'quvchilar kirganda target ballini kirgizsa uni
+#  progressidan kelib chiqib shu ballni olishga qancha vaqt qolganligni
+#  korsatib tursin, shuncha yil, shuncha kun va shuncha soatdan keyin
+#  olasan deb".
+#
+#  Hisob: oxirgi 30 kunda yig'ilgan XP dan kunlik tezlik chiqariladi.
+#  30 kunda hech narsa bo'lmasa - butun tarixdan. Tezlik 0 bo'lsa -
+#  muddat aytilmaydi, "mashq qilishni boshlang" deyiladi.
+# =====================================================================
+
+XP_TARGET_MAX = 1_000_000
+
+
+def _goal_out(db, s) -> dict:
+    gam = (db.query(models.StudentGamification)
+           .filter(models.StudentGamification.student_id == s.id).first())
+    cur = float(gam.lifetime_xp or 0) if gam else 0.0
+    target = float(gam.xp_target) if (gam and gam.xp_target) else None
+
+    out = {"target": target, "xp": int(round(cur)), "done": False,
+           "eta": None, "per_day": None, "percent": None}
+    if not target:
+        return out
+    out["percent"] = max(0, min(100, round(cur / target * 100)))
+    if cur >= target:
+        out["done"] = True
+        return out
+
+    now = datetime.utcnow()
+    q = (db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
+         .filter(models.XpTransaction.student_id == s.id,
+                 models.XpTransaction.amount > 0))
+    xp30 = float(q.filter(models.XpTransaction.created_at
+                          >= now - timedelta(days=30)).scalar() or 0)
+    if xp30 > 0:
+        rate = xp30 / 30.0
+    else:
+        first = (db.query(func.min(models.XpTransaction.created_at))
+                 .filter(models.XpTransaction.student_id == s.id,
+                         models.XpTransaction.amount > 0).scalar())
+        if first and cur > 0:
+            days = max(1.0, (now - first).total_seconds() / 86400)
+            rate = cur / days
+        else:
+            rate = 0.0
+
+    if rate <= 0:
+        return out  # eta None - mashq boshlanmagan
+
+    hours_left = (target - cur) / rate * 24.0
+    total_h = int(hours_left) if hours_left >= 1 else 1
+    years, rem = divmod(total_h, 365 * 24)
+    days, hours = divmod(rem, 24)
+    out["per_day"] = round(rate, 1)
+    out["eta"] = {"years": int(years), "days": int(days),
+                  "hours": int(hours)}
+    return out
+
+
+@router.get("/api/student/goal")
+def goal_get(db: Session = Depends(get_db),
+             user=Depends(require_role(roles.STUDENT))):
+    return _goal_out(db, _me(db, user))
+
+
+@router.post("/api/student/goal")
+def goal_set(payload: dict, db: Session = Depends(get_db),
+             user=Depends(require_role(roles.STUDENT))):
+    """Maqsad ballini qo'yish/o'zgartirish/olib tashlash (target=0)."""
+    s = _me(db, user)
+    try:
+        target = float(payload.get("target") or 0)
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Ball raqam bo'lishi kerak")
+    if target < 0 or target > XP_TARGET_MAX:
+        raise HTTPException(400, "Ball 0 dan 1 000 000 gacha bo'lsin")
+
+    gam = (db.query(models.StudentGamification)
+           .filter(models.StudentGamification.student_id == s.id).first())
+    if not gam:
+        gam = models.StudentGamification(student_id=s.id, lifetime_xp=0)
+        db.add(gam)
+        db.flush()
+    gam.xp_target = target or None
+    db.commit()
+    return _goal_out(db, s)

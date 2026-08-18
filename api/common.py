@@ -81,6 +81,8 @@ def _ensure_new_columns():
         # Ariza savollari qo'lda kiritishda ham (2026-08-15)
         # Ona tili (2026-08-16)
         "ALTER TABLE candidates ADD COLUMN native_language VARCHAR",
+        # Maqsad balli (2026-08-18)
+        "ALTER TABLE student_gamification ADD COLUMN xp_target FLOAT",
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
         "ALTER TABLE candidates ADD COLUMN education VARCHAR",
@@ -465,7 +467,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_17a"
+SCHEMA_STAMP = "stamp_2026_08_18a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

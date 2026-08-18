@@ -8,6 +8,7 @@ import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
 import { CoinIcon } from "../../components/CoinIcon";
 import { NpsCard } from "../../components/NpsCard";
+import { GoalCard } from "../../components/GoalCard";
 import { api } from "../../lib/api";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 
@@ -353,6 +354,11 @@ export default function StudentHome() {
             <p className="text-xs text-slate-500 mt-1">Streak</p>
           </Link>
         </div>
+
+        {/* ============================== MAQSAD BALLI (2026-08-18,
+            Jahongir: "target ballini kirgizsa ... shuncha yil, shuncha
+            kun va shuncha soatdan keyin olasan deb") */}
+        <GoalCard />
 
         {/* Streak uchun keyingi qadam */}
         {d.streak === 0 && (

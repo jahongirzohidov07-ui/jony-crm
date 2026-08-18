@@ -120,7 +120,11 @@ ck("mavjud hisob ikkinchi marta ochilmaydi",
    db.query(models.User).count(), before)
 
 print("\n=== BAND LOGIN: KARTA BARIBIR YARATILADI ===")
-r = c.post("/api/students", headers=H, json={
+# 2026-08-18: endi bir xil telefon dublikat deb ogohlantiriladi
+# (Boymirzaev Bekzod holati). Bu yerda ataylab boshqa odam kiritilyapti
+# — shuning uchun force=true bilan tasdiqlanadi. Test maqsadi
+# o'zgarmadi: login band bo'lsa ham KARTA yaratilishi kerak.
+r = c.post("/api/students?force=true", headers=H, json={
     "full_name": "Uchinchi Bola", "branch_id": b.id,
     "phone": "998901234567",  # Azizniki bilan bir xil
     "status": "active", "enrolled_date": date.today().isoformat()})

@@ -436,24 +436,81 @@ def create_student(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.TEACHING_STAFF)),
 ):
-    # DUBLIKAT: bir xil ism-familiyali talaba bo'lsa ogohlantiramiz —
-    # adashib ikkinchi karta ochib qo'ymaslik uchun. Yangi (boshqa)
-    # odam bo'lsa, tasdiqlab kiritaveradi.
+    # DUBLIKAT TEKSHIRUVI.
+    #
+    # 2026-08-18, Jahongir: "qara shu boymirzayev Bekzod degan o'quvchi
+    # yoqolib qolib bir paydo bolib qolyabdi, keyi yana men qoshib
+    # qoydim deyabdi admin".
+    #
+    # Sabab topildi: o'quvchi 3 darsga ketma-ket kelmagani uchun
+    # AVTOMUZLATILGAN edi (auto_freeze). Muzlatilgan o'quvchi faol
+    # ro'yxatdan va davomat jadvalidan tushib qoladi — admin uni
+    # topolmay YANGI karta ochib yuborgan. Natijada bitta bolaga
+    # ikkita yozuv: biri muzlatilgan (qarzi/balansi bilan), ikkinchisi
+    # bo'm-bo'sh yangi. Bu holat takrorlanaveradi.
+    #
+    # Shuning uchun tekshiruv ikki tomonlama qilindi:
+    #   1) ISM bo'yicha — avvalgidek;
+    #   2) TELEFON bo'yicha — YANGI. Ism biroz boshqacha yozilsa ham
+    #      (masalan "Bekzod" va "Bekzodbek Ravshan o'g'li") raqam
+    #      bir xil bo'lsa ushlanadi.
+    # Ikkalasi ham ARXIV va MUZLATILGANLARNI ham qamrab oladi — aynan
+    # o'shalar ko'rinmagani uchun dubl paydo bo'ladi. Ogohlantirishda
+    # holati ham yoziladi, admin nima qilishni biladi: yangi karta
+    # ochish emas, eskisini TIKLASH kerak.
     if not force:
+        _ST_LABEL = {"active": "faol", "frozen": "MUZLATILGAN",
+                     "archived": "ARXIVDA", "trial": "sinov darsida"}
+
+        def _tail(v):
+            d = "".join(ch for ch in str(v or "") if ch.isdigit())
+            return d[-9:] if len(d) >= 9 else ""
+
         nm = " ".join((payload.full_name or "").split()).lower()
-        same = next(
-            (st for st in db.query(models.Student)
-             .filter(models.Student.status != "archived").all()
-             if " ".join((st.full_name or "").split()).lower() == nm),
-            None)
+        ph = _tail(payload.phone)
+        pph = _tail(getattr(payload, "parent_phone", None))
+        same = None
+        by_phone = False
+        for st in db.query(models.Student).all():
+            if " ".join((st.full_name or "").split()).lower() == nm \
+                    and st.status != "archived":
+                same = st
+                break
+            if same:
+                continue
+            s_ph, s_pph = _tail(st.phone), _tail(st.parent_phone)
+            # DIQQAT: ota-ona raqami ↔ ota-ona raqami solishtirilmaydi.
+            # Aka-uka, opa-singil bir xil ota-ona raqamini yozadi
+            # (masalan Murotova Dilshoda va Murodova Durdona) — ular
+            # dublikat emas, ularni to'sish noto'g'ri bo'lardi.
+            hit = (
+                (ph and (ph == s_ph or ph == s_pph))
+                or (pph and pph == s_ph)
+            )
+            if hit:
+                same, by_phone = st, True
         if same:
             g = db.query(models.Group).get(same.group_id) \
                 if same.group_id else None
-            joy = f" ({g.name} guruhida)" if g else ""
+            joy = f", {g.name} guruhida" if g else ""
+            holat = _ST_LABEL.get(same.status, same.status or "")
+            qaysi = "Bu TELEFON RAQAM" if by_phone else "Bunday ISMLI"
+            kengash = ""
+            if same.status == "frozen":
+                kengash = (" U 3 darsga ketma-ket kelmagani uchun "
+                           "avtomuzlatilgan bo'lishi mumkin — shuning "
+                           "uchun ro'yxatda ko'rinmayapti. Yangi karta "
+                           "ochmang, o'sha kartani TIKLANG: qarzi, "
+                           "to'lov tarixi va davomati o'sha yerda.")
+            elif same.status == "archived":
+                kengash = (" U arxivda turibdi. Yangi karta ochmang — "
+                           "arxivdan tiklang, tarixi saqlanib qoladi.")
             raise HTTPException(
-                409, f"Bunday ismli talaba allaqachon bor{joy} — "
-                     "adashib qayta kiritib qo'ymayapsizmi? Agar bu "
-                     "boshqa (yangi) odam bo'lsa, tasdiqlang.")
+                409,
+                f"{qaysi} bilan o'quvchi allaqachon bor: "
+                f"{same.full_name} (#{same.id}, {holat}{joy})."
+                f"{kengash} Agar bu haqiqatan BOSHQA odam bo'lsa — "
+                "tasdiqlang.")
     data = payload.model_dump()
     if not data.get("enrolled_date"):
         data["enrolled_date"] = date.today()

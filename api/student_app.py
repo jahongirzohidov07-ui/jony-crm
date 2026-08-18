@@ -2058,23 +2058,42 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
         return r.json()["choices"][0]["message"]["content"].strip()
 
     if gem:
-        model = os.getenv("SPEAKING_MODEL", "gemini-2.0-flash")
-        r = httpx.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/"
-            f"{model}:generateContent?key={gem}",
-            json={
-                "systemInstruction": {"parts": [{"text": system}]},
-                "generationConfig": {"maxOutputTokens": 160,
-                                     "temperature": 0.7},
-                "contents": [
-                    {"role": ("model" if m["role"] == "teacher" else "user"),
-                     "parts": [{"text": m["text"]}]} for m in messages],
-            },
-            timeout=25,
-        )
-        r.raise_for_status()
-        return (r.json()["candidates"][0]["content"]["parts"][0]["text"]
-                .strip())
+        # MODEL ZAXIRA RO'YXATI (2026-08-18): Google eski modellarni
+        # o'chirib turadi — bitta nomga bog'lanib qolmaymiz. Birinchisi
+        # ishlamasa keyingisi uriladi; oxirgi xato matni saqlanadi
+        # (Audit -> Tizim xatolarida ko'rinadi).
+        names = [os.getenv("SPEAKING_MODEL"), "gemini-2.5-flash",
+                 "gemini-2.0-flash", "gemini-flash-latest"]
+        last = ""
+        for model in [m for m in names if m]:
+            try:
+                r = httpx.post(
+                    f"https://generativelanguage.googleapis.com/v1beta/"
+                    f"models/{model}:generateContent",
+                    headers={"x-goog-api-key": gem},
+                    json={
+                        "systemInstruction": {"parts": [{"text": system}]},
+                        "generationConfig": {"maxOutputTokens": 300,
+                                             "temperature": 0.7},
+                        "contents": [
+                            {"role": ("model" if m["role"] == "teacher"
+                                      else "user"),
+                             "parts": [{"text": m["text"]}]}
+                            for m in messages],
+                    },
+                    timeout=25,
+                )
+                r.raise_for_status()
+                return (r.json()["candidates"][0]["content"]["parts"][0]
+                        ["text"].strip())
+            except Exception as e:
+                body = ""
+                try:
+                    body = e.response.text[:300]  # type: ignore
+                except Exception:
+                    pass
+                last = f"{model}: {e} {body}"
+        raise LookupError(last or "gemini javob bermadi")
 
     raise RuntimeError("no-key")
 
@@ -2153,7 +2172,18 @@ def speaking_turn(payload: dict, db: Session = Depends(get_db),
         raise HTTPException(
             503, "Jony Teacher hali ulanmagan — administratorga ayting "
                  "(AI kaliti sozlanishi kerak).")
-    except Exception:
+    except Exception as e:
+        # Xato sababi jurnalga yoziladi — asoschi Audit -> Tizim
+        # xatolaridan aniq nima bo'lganini ko'radi (kalit noto'g'rimi,
+        # model yopilganmi). O'quvchiga esa sodda xabar.
+        try:
+            db.add(models.ErrorLog(
+                path="/api/student/speaking", method="AI",
+                user_name=s.full_name,
+                detail=str(e)[:1200]))
+            db.commit()
+        except Exception:
+            db.rollback()
         raise HTTPException(
             502, "Jony Teacher hozir javob bera olmadi — birozdan keyin "
                  "qayta urinib ko'ring.")

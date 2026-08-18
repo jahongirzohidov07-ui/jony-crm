@@ -209,6 +209,28 @@ export default function StudentGames() {
           </div>
         )}
 
+        {/* ============================== JONY TEACHER (2026-08-18,
+            Jahongir: "savol berib koproq oquvchini gapirtiradigan
+            Jony Teacher") — AI bilan jonli suhbat. */}
+        <Link to="/student/speaking"
+          className="block bg-gradient-to-br from-indigo-600 to-violet-500 rounded-2xl p-4 text-white shadow-sm active:scale-[0.99] transition">
+          <div className="flex items-center gap-3.5">
+            <span className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center text-3xl shrink-0">
+              🧑‍🏫
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[16px] font-bold">Jony Teacher</p>
+              <p className="text-[12.5px] text-white/85 mt-0.5">
+                AI speaking partner — savollarga ingliz tilida javob
+                bering, gapirishni mashq qiling
+              </p>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-white/20 text-[11px] font-bold shrink-0">
+              YANGI
+            </span>
+          </div>
+        </Link>
+
         {/* ==================================== BARCHA MASHQLAR */}
         <div>
           <p className="text-[15px] font-bold text-slate-900 mb-2">

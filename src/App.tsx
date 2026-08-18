@@ -84,6 +84,9 @@ const StudentVocab = lazy(() => import("./pages/student/StudentVocab"));
 const StudentPractice = lazy(
   () => import("./pages/student/StudentPractice"),
 );
+const StudentSpeaking = lazy(
+  () => import("./pages/student/StudentSpeaking"),
+);
 const StudentNotifications = lazy(
   () => import("./pages/student/StudentNotifications"),
 );
@@ -175,6 +178,7 @@ function AppRoutes() {
           <Route path="games/:game" element={<StudentGamePlay />} />
           <Route path="vocab" element={<StudentVocab />} />
           <Route path="practice/:skill" element={<StudentPractice />} />
+          <Route path="speaking" element={<StudentSpeaking />} />
           <Route
             path="notifications"
             element={<StudentNotifications />}

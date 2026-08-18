@@ -4,6 +4,7 @@ import {
   ArrowLeft, Check, Ear, Mic, PenLine, RotateCcw, Sparkles, Volume2, X,
 } from "lucide-react";
 import { api } from "../../lib/api";
+import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -143,6 +144,10 @@ export default function StudentPractice() {
   const items: Any[] = d?.items || [];
   const q = items[idx];
 
+  // Javobdan keyin o'zi keyingi savolga o'tadi (2026-08-18, Jahongir:
+  // "shu narsa avtomat otsin keyingisiga"). Tugma qoladi — sanoq bilan.
+  const autoNext = useAutoNext(() => next());
+
   async function submit(answer: string) {
     if (!q || busy || result) return;
     setBusy(true);
@@ -155,6 +160,15 @@ export default function StudentPractice() {
       setResult({ ...r, _mine: answer });
       if (r.correct)
         setScore((s) => ({ ok: s.ok + 1, xp: s.xp + (r.xp || 0) }));
+      // Skript (listening/speaking) va izoh — o'qishga vaqt kerak
+      const hasExtra = !!r.explain || !!q.say;
+      autoNext.schedule(
+        autoNextDelay({
+          correct: !!r.correct,
+          hasAnswer: !!r.expected,
+          hasExtra,
+        }),
+      );
     } catch {
       /* toast */
     } finally {
@@ -163,6 +177,7 @@ export default function StudentPractice() {
   }
 
   function next() {
+    autoNext.cancel();
     window.speechSynthesis?.cancel();
     if (idx + 1 >= items.length) {
       setFinished(true);
@@ -938,6 +953,7 @@ export default function StudentPractice() {
                   className="w-full mt-2.5 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold"
                 >
                   {idx + 1 >= items.length ? "Yakunlash" : "Keyingisi"}
+                  {autoNext.secsLeft > 0 ? ` (${autoNext.secsLeft})` : ""}
                 </button>
               </div>
             )}

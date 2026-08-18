@@ -2159,36 +2159,73 @@ def speaking_turn(payload: dict, db: Session = Depends(get_db),
 
 
 # =====================================================================
-#  MAQSAD BALLI (2026-08-18)
+#  MAQSAD: IELTS BALLI (2026-08-18)
 #
 #  Jahongir: "o'quvchilar kirganda target ballini kirgizsa uni
 #  progressidan kelib chiqib shu ballni olishga qancha vaqt qolganligni
 #  korsatib tursin, shuncha yil, shuncha kun va shuncha soatdan keyin
-#  olasan deb".
+#  olasan deb" va aniqlashtirdi: "nechi XP emas IELTS nechi
+#  olmoqchiligi bolishi kerak".
 #
-#  Hisob: oxirgi 30 kunda yig'ilgan XP dan kunlik tezlik chiqariladi.
-#  30 kunda hech narsa bo'lmasa - butun tarixdan. Tezlik 0 bo'lsa -
-#  muddat aytilmaydi, "mashq qilishni boshlang" deyiladi.
+#  Hisob mavjud daraja zinasiga BOG'LANGAN (roles.ENG_LEVELS + har
+#  daraja 500 ball): o'quvchining mashq ballari qaysi darajada
+#  ekanini aytadi, daraja esa IELTS oralig'iga mos. Shu zinada
+#  ball <-> taxminiy IELTS o'zaro aylantiriladi. Tezlik oxirgi 30
+#  kunlik XP dan olinadi (1 XP ~ 1 mashq balli). Bu TAXMIN - ilova
+#  buni yashirmaydi, kartada "taxminiy" deb yoziladi.
 # =====================================================================
 
-XP_TARGET_MAX = 1_000_000
+# Har daraja BOSHIDAGI taxminiy IELTS bali (roles.ENG_LEVELS tartibida:
+# beginner, elementary, pre-inter, inter, upper, advanced, native) +
+# oxirgi nuqta 9.0. Daraja ichida chiziqli o'sadi.
+_IELTS_LADDER = [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.5, 9.0]
+IELTS_MIN, IELTS_MAX = 3.0, 9.0
+
+
+def _points_to_band(points: float) -> float:
+    per = roles.PRACTICE_POINTS_PER_LEVEL
+    seg = len(_IELTS_LADDER) - 1  # 7 segment
+    idx = min(seg - 1, int(points // per))
+    frac = min(1.0, (points - idx * per) / per)
+    band = _IELTS_LADDER[idx] + frac * (_IELTS_LADDER[idx + 1]
+                                        - _IELTS_LADDER[idx])
+    return min(9.0, band)
+
+
+def _band_to_points(band: float) -> float:
+    per = roles.PRACTICE_POINTS_PER_LEVEL
+    band = min(9.0, max(_IELTS_LADDER[0], band))
+    for i in range(len(_IELTS_LADDER) - 1):
+        lo, hi = _IELTS_LADDER[i], _IELTS_LADDER[i + 1]
+        if band <= hi:
+            return (i + (band - lo) / (hi - lo)) * per
+    return (len(_IELTS_LADDER) - 1) * per
 
 
 def _goal_out(db, s) -> dict:
     gam = (db.query(models.StudentGamification)
            .filter(models.StudentGamification.student_id == s.id).first())
-    cur = float(gam.lifetime_xp or 0) if gam else 0.0
-    target = float(gam.xp_target) if (gam and gam.xp_target) else None
+    target = float(gam.ielts_target) if (gam and gam.ielts_target) else None
 
-    out = {"target": target, "xp": int(round(cur)), "done": False,
+    card = _skills_card(db, s.id)
+    pts = float(card["overall"]["points"] or 0)
+    cur_band = round(_points_to_band(pts) * 2) / 2  # 0.5 ga yaxlitlanadi
+    out = {"target": target, "band": cur_band,
+           "level": card["overall"]["level"]["label"],
+           "points": int(pts), "done": False,
            "eta": None, "per_day": None, "percent": None}
     if not target:
         return out
-    out["percent"] = max(0, min(100, round(cur / target * 100)))
-    if cur >= target:
+    if cur_band >= target:
         out["done"] = True
+        out["percent"] = 100
         return out
 
+    need_pts = _band_to_points(target)
+    out["percent"] = max(0, min(99, round(pts / need_pts * 100))) \
+        if need_pts > 0 else 0
+
+    # Tezlik: oxirgi 30 kunlik XP (1 XP ~ 1 mashq balli)
     now = datetime.utcnow()
     q = (db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
          .filter(models.XpTransaction.student_id == s.id,
@@ -2201,17 +2238,16 @@ def _goal_out(db, s) -> dict:
         first = (db.query(func.min(models.XpTransaction.created_at))
                  .filter(models.XpTransaction.student_id == s.id,
                          models.XpTransaction.amount > 0).scalar())
-        if first and cur > 0:
+        if first and pts > 0:
             days = max(1.0, (now - first).total_seconds() / 86400)
-            rate = cur / days
+            rate = pts / days
         else:
             rate = 0.0
-
     if rate <= 0:
-        return out  # eta None - mashq boshlanmagan
+        return out
 
-    hours_left = (target - cur) / rate * 24.0
-    total_h = int(hours_left) if hours_left >= 1 else 1
+    hours_left = (need_pts - pts) / rate * 24.0
+    total_h = max(1, int(hours_left))
     years, rem = divmod(total_h, 365 * 24)
     days, hours = divmod(rem, 24)
     out["per_day"] = round(rate, 1)
@@ -2229,14 +2265,16 @@ def goal_get(db: Session = Depends(get_db),
 @router.post("/api/student/goal")
 def goal_set(payload: dict, db: Session = Depends(get_db),
              user=Depends(require_role(roles.STUDENT))):
-    """Maqsad ballini qo'yish/o'zgartirish/olib tashlash (target=0)."""
+    """Maqsad IELTS balini qo'yish/o'zgartirish/olib tashlash (0)."""
     s = _me(db, user)
     try:
         target = float(payload.get("target") or 0)
     except (TypeError, ValueError):
         raise HTTPException(400, "Ball raqam bo'lishi kerak")
-    if target < 0 or target > XP_TARGET_MAX:
-        raise HTTPException(400, "Ball 0 dan 1 000 000 gacha bo'lsin")
+    if target and (target < IELTS_MIN or target > IELTS_MAX
+                   or round(target * 2) != target * 2):
+        raise HTTPException(
+            400, "IELTS bali 3.0 dan 9.0 gacha, 0.5 qadam bilan bo'ladi")
 
     gam = (db.query(models.StudentGamification)
            .filter(models.StudentGamification.student_id == s.id).first())
@@ -2244,6 +2282,6 @@ def goal_set(payload: dict, db: Session = Depends(get_db),
         gam = models.StudentGamification(student_id=s.id, lifetime_xp=0)
         db.add(gam)
         db.flush()
-    gam.xp_target = target or None
+    gam.ielts_target = target or None
     db.commit()
     return _goal_out(db, s)

@@ -1,19 +1,19 @@
-"""MAQSAD BALLI (2026-08-18).
+"""MAQSAD: IELTS BALLI (2026-08-18).
 
-Jahongir: "o'quvchilar kirganda target ballini kirgizsa uni
-progressidan kelib chiqib shu ballni olishga qancha vaqt qolganligni
-korsatib tursin, shuncha yil, shuncha kun va shuncha soatdan keyin
-olasan deb".
+Jahongir: "target ballini kirgizsa uni progressidan kelib chiqib shu
+ballni olishga qancha vaqt qolganligni korsatib tursin" + aniqlashtirdi:
+"nechi XP emas IELTS nechi olmoqchiligi bolishi kerak".
 """
 import os, sys
-from datetime import datetime, timedelta
-os.environ["DATABASE_URL"] = "sqlite:////tmp/xpgoal.db"
-if os.path.exists("/tmp/xpgoal.db"):
-    os.remove("/tmp/xpgoal.db")
+from datetime import date, datetime, timedelta
+os.environ["DATABASE_URL"] = "sqlite:////tmp/ieltsgoal.db"
+if os.path.exists("/tmp/ieltsgoal.db"):
+    os.remove("/tmp/ieltsgoal.db")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fastapi.testclient import TestClient          # noqa: E402
 import main, models, roles                         # noqa: E402
 import entry                                       # noqa: E402
+import student_app                                 # noqa: E402
 from database import SessionLocal                  # noqa: E402
 from auth import hash_password                     # noqa: E402
 
@@ -29,10 +29,19 @@ def ck(n, g, w):
         fails.append(n)
 
 
+# Zinaning o'zi to'g'riligini avval sinaymiz
+print("=== 0. Ball <-> IELTS aylantirish ===")
+ck("0 ball -> 2.0", student_app._points_to_band(0), 2.0)
+ck("500 ball -> 3.0", student_app._points_to_band(500), 3.0)
+ck("750 ball -> 3.5", student_app._points_to_band(750), 3.5)
+ck("2000 ball -> 6.0", student_app._points_to_band(2000), 6.0)
+ck("juda katta -> 9.0", student_app._points_to_band(99999), 9.0)
+ck("6.0 -> 2000 ball", student_app._band_to_points(6.0), 2000.0)
+ck("7.0 -> 2500 ball", student_app._band_to_points(7.0), 2500.0)
+
 db = SessionLocal()
 b = models.Branch(name="B"); db.add(b); db.commit()
-s = models.Student(full_name="Munisa", phone="998940411480",
-                   branch_id=b.id, status="active")
+s = models.Student(full_name="Munisa", branch_id=b.id, status="active")
 db.add(s); db.commit(); SID = s.id
 u = models.User(username="stu", full_name="Munisa",
                 password_hash=hash_password("x"), role=roles.STUDENT,
@@ -45,57 +54,52 @@ tok = c.post("/api/auth/login",
 H = {"Authorization": f"Bearer {tok}"}
 
 # ---------------------------------------------------------------- 1
-print("\n=== 1. Boshida maqsad yo'q ===")
+print("\n=== 1. Boshida: maqsad yo'q, daraja ko'rinadi ===")
 r = c.get("/api/student/goal", headers=H).json()
 ck("target bo'sh", r["target"], None)
+ck("band 2.0 (yangi o'quvchi)", r["band"], 2.0)
 
 # ---------------------------------------------------------------- 2
-print("\n=== 2. Maqsad qo'yish; hali XP yo'q — muddat aytilmaydi ===")
-r = c.post("/api/student/goal", headers=H, json={"target": 3000}).json()
-ck("saqlandi", r["target"], 3000)
-ck("muddat yo'q (tezlik 0)", r["eta"], None)
-ck("foiz 0", r["percent"], 0)
+print("\n=== 2. Maqsad 6.0; mashq yo'q — muddat aytilmaydi ===")
+r = c.post("/api/student/goal", headers=H, json={"target": 6.0}).json()
+ck("saqlandi", r["target"], 6.0)
+ck("muddat yo'q", r["eta"], None)
 
 # ---------------------------------------------------------------- 3
-print("\n=== 3. 30 kunlik tezlikdan muddat ===")
+print("\n=== 3. 750 mashq balli (~3.5) + kuniga 20 XP tezlik ===")
 db = SessionLocal()
-gam = (db.query(models.StudentGamification)
-       .filter(models.StudentGamification.student_id == SID).first())
-gam.lifetime_xp = 600
+# 750 to'g'ri javob — grammatikadan (eng soddasi: 750 ta alohida savol)
+for i in range(750):
+    db.add(models.GrammarAttempt(student_id=SID, question_id=i + 1,
+                                 correct=1, date=date.today()))
 now = datetime.utcnow()
-# Oxirgi 30 kunda 600 XP -> kuniga 20 XP. Qolgan 2400 XP -> 120 kun.
 for i in range(6):
     db.add(models.XpTransaction(student_id=SID, amount=100,
                                 created_at=now - timedelta(days=i * 5)))
 db.commit(); db.close()
 r = c.get("/api/student/goal", headers=H).json()
-ck("foiz 20", r["percent"], 20)
-ck("kunlik tezlik 20", r["per_day"], 20.0)
+ck("hozirgi band 3.5", r["band"], 3.5)
+# 6.0 uchun 2000 ball kerak, bor 750, kuniga 20 -> 62.5 kun
 e = r["eta"]
-ck("yil 0", e["years"], 0)
-ck("kunlar ~120", 118 <= e["days"] <= 120, True)
+ck("muddat keldi", e is not None, True)
+ck("kunlar ~62", 61 <= e["days"] <= 63, True)
+ck("foiz 37-38", r["percent"] in (37, 38), True)
 
 # ---------------------------------------------------------------- 4
-print("\n=== 4. Juda katta maqsad — yillarga o'tadi ===")
-c.post("/api/student/goal", headers=H, json={"target": 300000})
-e = c.get("/api/student/goal", headers=H).json()["eta"]
-# (300000-600)/20 = 14970 kun ≈ 41 yil
-ck("yillar hisoblandi", e["years"] >= 40, True)
+print("\n=== 4. Maqsadga yetilgan bo'lsa ===")
+r = c.post("/api/student/goal", headers=H, json={"target": 3.5}).json()
+ck("done", r["done"], True)
 
 # ---------------------------------------------------------------- 5
-print("\n=== 5. Yetib bo'lingan maqsad ===")
-r = c.post("/api/student/goal", headers=H, json={"target": 500}).json()
-ck("done", r["done"], True)
-ck("muddat kerak emas", r["eta"], None)
-
-# ---------------------------------------------------------------- 6
-print("\n=== 6. Chegara va olib tashlash ===")
-r = c.post("/api/student/goal", headers=H, json={"target": 2000000})
-ck("million chegarasi", r.status_code, 400)
+print("\n=== 5. Chegaralar ===")
+ck("9.5 rad", c.post("/api/student/goal", headers=H,
+                     json={"target": 9.5}).status_code, 400)
+ck("6.3 rad (0.5 qadam emas)", c.post("/api/student/goal", headers=H,
+                                      json={"target": 6.3}).status_code, 400)
+ck("2.0 rad (past)", c.post("/api/student/goal", headers=H,
+                            json={"target": 2.0}).status_code, 400)
 r = c.post("/api/student/goal", headers=H, json={"target": 0}).json()
-ck("0 = olib tashlandi", r["target"], None)
-r = c.post("/api/student/goal", headers=H, json={"target": "abc"})
-ck("harf qabul qilinmaydi", r.status_code, 400)
+ck("0 = olib tashlash", r["target"], None)
 
 print("\n" + ("HAMMASI JOYIDA" if not fails
               else f"MUAMMO: {len(fails)} ta -> {fails}"))

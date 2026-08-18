@@ -357,7 +357,8 @@ export default function StudentHome() {
 
         {/* ============================== MAQSAD BALLI (2026-08-18,
             Jahongir: "target ballini kirgizsa ... shuncha yil, shuncha
-            kun va shuncha soatdan keyin olasan deb") */}
+            kun va shuncha soatdan keyin olasan deb"; keyin: "nechi XP
+            emas IELTS nechi olmoqchiligi bolishi kerak") */}
         <GoalCard />
 
         {/* Streak uchun keyingi qadam */}

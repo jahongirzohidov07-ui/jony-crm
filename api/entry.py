@@ -7882,3 +7882,6 @@ if _mgx_groups_v1 is not None:
                 r["status"] = st
                 r["status_label"] = _MGX_LABEL.get(st, st)
         return rows
+
+
+# Ikki guruh tuzatishi jonli holatga chiqarildi (2026-08-18).

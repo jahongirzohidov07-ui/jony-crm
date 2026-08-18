@@ -35,6 +35,9 @@ type Row = {
   lesson_price?: number | null;
   is_primary: boolean;
   active: boolean;
+  /** Bolaning haqiqiy holati: faol / muzlatilgan / chiqarilgan. */
+  status?: string | null;
+  status_label?: string | null;
   joined_date?: string | null;
   left_date?: string | null;
 };
@@ -264,11 +267,24 @@ export function StudentGroupsCard({
                   }
                 />
               )}
+              {/* Holat qotirilgan "Faol" emas: muzlatilgan yoki
+                  guruhdan chiqarilgan bola ham shu kartada turadi,
+                  yolg'on yashil yorliq ekranga ishonchni yo'qotadi. */}
               <Row2
                 label="Holati"
                 value={
-                  <span className="bg-green-50 text-green-700 rounded-md px-2 py-0.5 text-xs font-medium">
-                    Faol
+                  <span
+                    className={`rounded-md px-2 py-0.5 text-xs font-medium ${
+                      !r.active || r.status === "left"
+                        ? "bg-slate-100 text-slate-600"
+                        : r.status === "frozen"
+                        ? "bg-sky-50 text-sky-700"
+                        : r.status === "archived"
+                        ? "bg-slate-100 text-slate-600"
+                        : "bg-green-50 text-green-700"
+                    }`}
+                  >
+                    {r.status_label || (r.active ? "Faol" : "Guruhdan chiqarilgan")}
                   </span>
                 }
               />

@@ -366,6 +366,47 @@ def convert_lead(
     if lead.converted_student_id:
         raise HTTPException(400, "Bu lid allaqachon o'quvchiga aylantirilgan")
 
+    # DUBLIKAT TEKSHIRUVI (2026-08-18).
+    #
+    # Jahongir: "shu boymirzayev Bekzod degan o'quvchi yoqolib qolib bir
+    # paydo bolib qolyabdi, keyi yana men qoshib qoydim deyabdi admin".
+    #
+    # Tekshirganda ma'lum bo'ldiki, o'sha karta QO'LDA emas, aynan SHU
+    # yo'l bilan — lid o'quvchiga aylantirilganda ochilgan. Va bu yo'lda
+    # hech qanday tekshiruv yo'q edi: bir xil telefonli odam bazada
+    # bo'lsa ham ikkinchi karta jimgina ochilaverardi. Endi "O'quvchi
+    # qo'shish" formasidagi bilan bir xil ogohlantirish beriladi.
+    if not payload.force:
+        def _tail(v):
+            d = "".join(ch for ch in str(v or "") if ch.isdigit())
+            return d[-9:] if len(d) >= 9 else ""
+
+        ph = _tail(lead.phone)
+        nm = " ".join((lead.full_name or "").split()).lower()
+        dup = None
+        for st in db.query(models.Student).all():
+            if ph and (_tail(st.phone) == ph or _tail(st.parent_phone) == ph):
+                dup = st
+                break
+            if nm and " ".join((st.full_name or "").split()).lower() == nm \
+                    and st.status != "archived":
+                dup = st
+                break
+        if dup:
+            _lbl = {"active": "faol", "frozen": "MUZLATILGAN",
+                    "archived": "ARXIVDA", "trial": "sinov darsida"}
+            br = db.query(models.Branch).get(dup.branch_id) \
+                if dup.branch_id else None
+            joy = f", {br.name} filialida" if br else ""
+            raise HTTPException(
+                409,
+                f"Bu odam bazada allaqachon bor: {dup.full_name} "
+                f"(#{dup.id}, {_lbl.get(dup.status, dup.status or '')}"
+                f"{joy}). Yangi karta ochish o'rniga o'shani ishlating — "
+                "aks holda bitta bolaga ikkita karta bo'lib, pul va "
+                "davomat ikkiga bo'linib ketadi. Boshqa odam bo'lsa "
+                "(masalan aka-uka) — tasdiqlang.")
+
     # Lidda yig'ilgan qo'shimcha ma'lumot (manzil, maktab, sinf) yo'qolib
     # ketmasligi uchun uni o'quvchining izohiga ko'chiramiz.
     extra = []
@@ -398,6 +439,39 @@ def convert_lead(
     lead.stage = "converted"
     lead.converted_student_id = student.id
     db.commit()
+    db.refresh(student)
+
+    # 2026-08-18: bu yo'l "O'quvchi qo'shish" formasidan ORQADA qolgan
+    # edi — uchta narsa qilinmasdi. Endi bir xil:
+    #
+    #  1) AUDITGA YOZILADI. Avval bu yerda hech qanday iz qolmasdi.
+    #     Aynan shuning uchun Bekzodning kartasi "qayerdan paydo
+    #     bo'ldi" degan savolga javob topib bo'lmadi — jurnalda u
+    #     haqda bitta ham qator yo'q edi.
+    #  2) O'QUVCHIGA HISOB ochiladi (login = telefon). Aks holda bola
+    #     ilovaga kira olmasdi.
+    #  3) GURUH BOG'LANISHI yoziladi — ko'p guruhli tizim shu jadvalga
+    #     tayanadi, u bo'lmasa guruh kartadan yo'qolib qolishi mumkin.
+    try:
+        _ensure_public_id(db, "student", student)
+    except Exception:
+        pass
+    audit.log(db, user, entity="student", action="create",
+              entity_id=student.id, entity_label=student.full_name,
+              branch_id=student.branch_id, new_value=student.full_name,
+              note=f"Lid #{lead.id} o'quvchiga aylantirildi")
+    db.commit()
+    try:
+        _ensure_student_account(db, student)
+    except Exception:
+        db.rollback()
+    if student.group_id:
+        try:
+            attach_group(db, student, student.group_id, user,
+                         joined=student.enrolled_date)
+            db.commit()
+        except Exception:
+            db.rollback()
     db.refresh(student)
     return to_student_out(db, student)
 

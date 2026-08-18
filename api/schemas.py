@@ -495,6 +495,9 @@ class LeadConvertRequest(BaseModel):
     biriktirish va qo'shilgan sanani belgilash mumkin."""
     group_id: Optional[int] = None
     enrolled_date: Optional[_dt.date] = None
+    # Bir xil telefonli o'quvchi bazada bo'lsa server ogohlantiradi.
+    # Haqiqatan boshqa odam bo'lsa (aka-uka) shu belgi bilan tasdiqlanadi.
+    force: bool = False
 
 
 class ExpenseCreate(BaseModel):

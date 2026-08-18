@@ -170,11 +170,30 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
             "backup": bkp}
 
 @router.get("/api/search/students")
-def global_student_search(q: str, db: Session = Depends(get_db),
+def global_student_search(q: str, branch_id: int | None = None,
+                          db: Session = Depends(get_db),
                           user=Depends(get_current_user)):
     """Tepadagi qidiruv: 3 harfdan boshlab o'quvchilar va potensial
     o'quvchilar (lidlar). Ustoz faqat o'z guruhlaridagilarini ko'radi,
-    lidlar unga chiqmaydi. Balans qaytarilmaydi."""
+    lidlar unga chiqmaydi. Balans qaytarilmaydi.
+
+    FILIAL DOIRASI (2026-08-18, Jahongir: "kimdur qidirsa o'z
+    filialidagi o'quvchilarni chiqarginda, faqat asoschi barcha
+    filiallarda turganda yoki boshqa xodim barcha filiallarda turganda
+    qidiruv qilsa barcha filiallardagi o'quvchilari chiqarsin").
+
+    Avval asoschi (va boshqa org-wide lavozimlar) tepadagi filial
+    tanlagichiga UMUMAN qaramasdi — "Bekobod 2"da turgan bo'lsa ham
+    qidiruv butun tarmoqni qaytarardi. Aynan shu chalkashlik keltirib
+    chiqargan: Bekobod 2 da qidirilganda Zafar filialidagi boshqa bola
+    chiqib, "shu bola muzlab qolibdi" degan xulosa chiqarilgan.
+
+    Endi qoida oddiy va hamma uchun bir xil:
+      - tepada aniq filial tanlangan bo'lsa -> faqat o'sha filial;
+      - "Barcha filiallar" tanlangan bo'lsa  -> xodim kira oladigan
+        barcha filiallar (asoschida - hammasi).
+    Xodim o'ziga ruxsat berilmagan filialni so'rasa, baribir faqat
+    o'ziniki qaytariladi — tanlagich orqali chetga chiqib bo'lmaydi."""
     if user.role in ("student", "parent"):
         raise HTTPException(403, "Ruxsat yo'q")
     q = (q or "").strip()
@@ -202,6 +221,26 @@ def global_student_search(q: str, db: Session = Depends(get_db),
             return None
         return _dig(col).like(f"%{digits}%")
 
+    # --- FILIAL DOIRASI: bitta joyda hisoblanadi, hamma ro'yxatga
+    #     (o'quvchi, lid, guruh, ustoz) bir xil qo'llanadi.
+    _org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
+    _mine = _user_branch_ids(db, user)
+
+    def _scope(col):
+        """Qidiruv doirasi shartini qaytaradi (yoki None - cheklovsiz)."""
+        if branch_id:
+            if _org_wide or branch_id in (_mine or []):
+                return col == branch_id
+            # Ruxsat yo'q filial so'ralgan - o'zinikidan chiqarmaymiz
+            return col.in_(_mine or [-1])
+        if _org_wide:
+            return None
+        if _mine:
+            return col.in_(_mine)
+        if user.branch_id:
+            return col == user.branch_id
+        return None
+
     conds = [models.Student.full_name.ilike(like),
              models.Student.phone.ilike(like),
              models.Student.public_id.ilike(like)]
@@ -218,8 +257,10 @@ def global_student_search(q: str, db: Session = Depends(get_db),
         t = _teacher_of_user(db, user)
         gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
         sq = sq.filter(models.Student.group_id.in_(gids or [-1]))
-    elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        sq = sq.filter(_branch_in(db, user, models.Student.branch_id))
+    else:
+        _c = _scope(models.Student.branch_id)
+        if _c is not None:
+            sq = sq.filter(_c)
     groups = {g.id: g.name for g in db.query(models.Group).all()}
     st_lbl = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan",
               "archived": "arxivda", "left": "ketgan"}
@@ -245,8 +286,9 @@ def global_student_search(q: str, db: Session = Depends(get_db),
         lq = db.query(models.Lead).filter(
             models.Lead.stage.notin_(("converted", "rejected")),
             or_(*_lconds))
-        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            lq = lq.filter(_branch_in(db, user, models.Lead.branch_id))
+        _c = _scope(models.Lead.branch_id)
+        if _c is not None:
+            lq = lq.filter(_c)
         leads = [{
             "id": l.id, "name": l.full_name, "group": None,
             "status_label": roles.LEAD_STAGE_LABELS.get(l.stage, l.stage),
@@ -256,27 +298,27 @@ def global_student_search(q: str, db: Session = Depends(get_db),
     found_groups, found_teachers, found_staff = [], [], []
     if not own_only:
         gq = db.query(models.Group).filter(models.Group.name.ilike(like))
-        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            gq = gq.filter(_branch_in(db, user, models.Group.branch_id))
+        _c = _scope(models.Group.branch_id)
+        if _c is not None:
+            gq = gq.filter(_c)
         found_groups = [{"id": g.id, "name": g.name}
                         for g in gq.order_by(models.Group.name)
                         .limit(5).all()]
         tq = db.query(models.Teacher).filter(
             models.Teacher.is_active == 1,
             models.Teacher.full_name.ilike(like))
-        if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            tq = tq.filter(_branch_in(db, user, models.Teacher.branch_id))
+        _c = _scope(models.Teacher.branch_id)
+        if _c is not None:
+            tq = tq.filter(_c)
         found_teachers = [{"id": t.id, "name": t.full_name}
                           for t in tq.order_by(models.Teacher.full_name)
                           .limit(5).all()]
-        if user.role in tuple(roles.STAFF_VIEWERS):
-            uq = db.query(models.User).filter(
-                models.User.is_active == 1,
-                models.User.full_name.ilike(like))
-            found_staff = [{
-                "id": u.id, "name": u.full_name,
-                "status_label": roles.UZ_LABELS.get(u.role, u.role),
-            } for u in uq.order_by(models.User.full_name).limit(5).all()]
+        # XODIMLAR QIDIRUVDAN OLIB TASHLANDI (2026-08-18, Jahongir:
+        # "qidiruvda xodimlar chiqmasin"). Tepadagi qidiruv kundalik
+        # ish uchun — o'quvchi, lid, guruh, ustoz. Xodim qidirish
+        # kamdan-kam kerak bo'ladi va uning o'z bo'limi bor; bu yerda
+        # turgani natijalarni chalg'itardi (ism-familiyalar aralashib
+        # ketardi).
     return {"students": students, "leads": leads, "groups": found_groups,
             "teachers": found_teachers, "staff": found_staff}
 

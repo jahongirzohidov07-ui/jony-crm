@@ -810,24 +810,12 @@ function GlobalSearch() {
               <p className="text-sm text-slate-800">{t.name}</p>
             </button>
           ))}
-          {(res.staff || []).length > 0 && (
-            <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-400 border-t border-slate-100">
-              Xodimlar
-            </p>
-          )}
-          {(res.staff || []).map((u) => (
-            <button key={`u${u.id}`}
-              onClick={() => { setOpenS(false); setQ("");
-                navigate("/users"); }}
-              className="w-full text-left px-3 py-2 hover:bg-slate-50">
-              <p className="text-sm text-slate-800">{u.name}</p>
-              <p className="text-xs text-slate-400">{u.status_label}</p>
-            </button>
-          ))}
+          {/* XODIMLAR bo'limi olib tashlandi (2026-08-18, Jahongir:
+              "qidiruvda xodimlar chiqmasin") — tepadagi qidiruv
+              o'quvchi, lid, guruh va ustoz uchun. */}
           {res.students.length === 0 && res.leads.length === 0 &&
             (res.groups || []).length === 0 &&
-            (res.teachers || []).length === 0 &&
-            (res.staff || []).length === 0 && (
+            (res.teachers || []).length === 0 && (
             <p className="text-sm text-slate-400 px-3 py-2.5">
               Topilmadi.
             </p>

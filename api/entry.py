@@ -7767,3 +7767,118 @@ def group_my_access(gid: int, db: Session = Depends(get_db),
             getattr(user, "role", None) in tuple(roles.TEACHING_STAFF)),
         "reason": _OWN_LOCK_MSG if locked else None,
     }
+
+
+# ---------------------------------------------------------------------------
+# IKKI GURUHDA O'QIYDIGAN BOLA GURUH ICHIDA HAM KO'RINSIN  (_MGX_*)
+#
+# Jahongir: "2 ta guruhda bor, ikkalasidayam faol ko'rsatyapti, lekin
+# guruhga kirsa muzlatilgan chiqyapti."
+#
+# Sabab. Ko'p guruh uchun student_groups jadvali qo'shildi, lekin guruh
+# ichidagi ro'yxatni beradigan yagona yordamchi — _group_students —
+# hamon eski qoidada ishlayotgan edi:
+#
+#     Student.group_id == group_id
+#
+# Student.group_id esa BITTA: u ASOSIY guruhni ko'rsatadi. Munisaning
+# asosiy guruhi "Rus tili", shuning uchun "New" guruhining ro'yxatiga
+# u umuman tushmagan. Lekin uning shu guruhda yo'qlamasi bor edi —
+# davomat jadvali esa "ro'yxatda yo'q, ammo belgisi bor" degan bolani
+# BOSHQA GURUHGA O'TGAN deb hisoblaydi (bu qoida haqiqiy ko'chirish
+# uchun yozilgan). Natijada ikkinchi guruhda u kulrang, faqat o'qish
+# uchun qator bo'lib turdi.
+#
+# Tuzatish: _group_students endi ikkala manbani ham o'qiydi —
+# Student.group_id VA student_groups dagi faol bog'lanish. Bitta
+# yordamchi 30 dan ortiq joyda ishlatiladi (ro'yxat, davomat, baho,
+# imtihon, uy vazifasi), shuning uchun bitta joyni tuzatish hammasini
+# tuzatadi.
+#
+# Nega modullarni aylanib chiqamiz. Modullar `from common import *`
+# yozadi — ya'ni har biri funksiyaning O'Z nusxasini ushlab turadi.
+# Faqat common dagisini almashtirsak, ular eskisini chaqiraverardi.
+# ---------------------------------------------------------------------------
+
+_MGX_LINK = getattr(models, "StudentGroupLink", None)
+
+
+def _mgx_group_students(db: Session, group_id: int):
+    """Guruh ro'yxati: asosiy guruhi shu bo'lganlar + shu guruhga
+    bog'langanlar (ikkinchi, uchinchi fan)."""
+    ids = set()
+    if _MGX_LINK is not None:
+        try:
+            for (sid,) in (db.query(_MGX_LINK.student_id)
+                           .filter(_MGX_LINK.group_id == group_id,
+                                   _MGX_LINK.active == 1).all()):
+                ids.add(int(sid))
+        except Exception:
+            ids = set()
+    q = db.query(models.Student)
+    if ids:
+        q = q.filter((models.Student.group_id == group_id) |
+                     (models.Student.id.in_(list(ids))))
+    else:
+        q = q.filter(models.Student.group_id == group_id)
+    return q.order_by(models.Student.full_name).all()
+
+
+def _mgx_install() -> int:
+    """Yordamchini yuklangan hamma modulda almashtiradi."""
+    n = 0
+    for mod in list(sys.modules.values()):
+        if mod is None:
+            continue
+        try:
+            cur = getattr(mod, "_group_students", None)
+        except Exception:
+            continue
+        if cur is not None and cur is not _mgx_group_students:
+            try:
+                setattr(mod, "_group_students", _mgx_group_students)
+                n += 1
+            except Exception:
+                pass
+    return n
+
+
+_MGX_PATCHED = _mgx_install()
+
+
+# --- O'quvchi kartasidagi "Holati" haqiqiy bo'lsin ---
+#
+# Karta har ikki guruh uchun ham qotirilgan "Faol" yozib turardi.
+# Muzlatilgan bola ham, guruhdan chiqarilgan bola ham "Faol"
+# ko'rinardi — bu ekranga ishonchni yo'qotadi.
+_MGX_LABEL = {
+    "active": "Faol",
+    "frozen": "Muzlatilgan",
+    "archived": "Arxivda",
+    "left": "Chiqib ketgan",
+    "trial": "Sinov darsi",
+}
+
+_mgx_groups_v1 = _find_endpoint("/api/students/{student_id}/groups", "GET")
+
+if _mgx_groups_v1 is not None:
+    _drop_route("/api/students/{student_id}/groups", "GET")
+
+    @app.get("/api/students/{student_id}/groups")
+    def mgx_student_groups(student_id: int, db: Session = Depends(get_db),
+                           user=Depends(require_role(*roles.TEACHING_ACCESS))):
+        rows = _mgx_groups_v1(student_id=student_id, db=db, user=user)
+        s = db.query(models.Student).get(student_id)
+        st = getattr(s, "status", None) or "active"
+        seq = rows if isinstance(rows, list) else (rows or {}).get("rows") or []
+        for r in seq:
+            if not isinstance(r, dict):
+                continue
+            if not r.get("active"):
+                # Bog'lanish yopilgan — bola shu guruhda o'qimaydi
+                r["status"] = "left"
+                r["status_label"] = "Guruhdan chiqarilgan"
+            else:
+                r["status"] = st
+                r["status_label"] = _MGX_LABEL.get(st, st)
+        return rows

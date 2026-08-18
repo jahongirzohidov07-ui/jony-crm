@@ -504,22 +504,9 @@ export function AttendanceTab({
         </table>
       </div>
 
-      <p className="text-xs text-slate-400 mt-3">
-        Katak ustiga sichqonchani olib boring: ✓ keldi, soat — kech
-        keldi, ✗ kelmadi; belgilangan katakda esa qolgan holatlar va
-        <b> – belgini olib tashlash</b> chiqadi. Keldi ham, kelmadi
-        ham — belgilangan yoqlama, ikkalasida ham ustoz oyligi
-        yoziladi; faqat belgilanmaganda (yoki belgi olib
-        tashlanganda) yozilmaydi. Hali kelmagan kunga hech kim
-        yoqlama qo'ya olmaydi; o'tib ketgan kunni faqat asoschi,
-        o'quv bo'limi rahbari yoki HR menejer o'zgartiradi.
-        Har bir o'quvchi alohida belgilanadi — ommaviy belgilash yo'q,
-        chunki u yoqlamani rasmiyatchilikka aylantiradi. Sana ustiga
-        bosilsa dars ko'chirish menyusi chiqadi. Kulrang sana — hali
-        yoqlama qo'yilmagan reja; u pulga ham, ustoz ish haqiga ham
-        kirmaydi.
-      </p>
-
+      {/* 2026-08-18, Jahongir: "shu joydagi shu yozuvni ham olib
+          tashla kerak mas" — jadval ostidagi uzun qo'llanma matni
+          olib tashlandi. Qoidalarning o'zi o'zgargani yo'q. */}
       {moving && box && (
         <MoveLessonModal
           groupId={groupId}

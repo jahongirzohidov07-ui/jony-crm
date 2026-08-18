@@ -7119,28 +7119,43 @@ def _fz_lessons_of(db: Session, s, row) -> int:
 
 def _fz_held_before(db: Session, s, on: date) -> int:
     """Oy boshidan (yoki qo'shilgan kunidan) `on` sanasigacha o'tilgan
-    darslar. `on` kunidagi dars faqat o'quvchi kelgan bo'lsa qo'shiladi."""
+    darslar. `on` kunidagi dars faqat o'quvchi kelgan bo'lsa qo'shiladi.
+
+    2026-08-18, Jahongir: "muzlatishda abdullayeva Muhlisa 5ta dars
+    kelgan lekin men muzlatiladigan sanani tanlasam 3ta darsga
+    hisoblayabdi nega". Sabab: hisob qo'shilgan sanadan (enrolled_date)
+    boshlanardi, lekin o'quvchining undan OLDINGI darslarda ham
+    yo'qlamasi bor edi (guruhga keyin rasmiylashtirilgan, darsga esa
+    oldinroq kelgan). Yo'qlama - hujjat: belgisi bor dars endi
+    qo'shilgan sanadan qat'i nazar HISOBGA KIRADI. Belgisiz darslar
+    esa avvalgidek faqat qo'shilgan sanadan keyin hisoblanadi."""
     g = s.group
     if g is None:
         return 0
-    start = date(on.year, on.month, 1)
-    if s.enrolled_date and s.enrolled_date > start:
-        start = s.enrolled_date
-    if start > on:
-        return 0
+    month_start = date(on.year, on.month, 1)
+    enr = s.enrolled_date if (s.enrolled_date
+                              and s.enrolled_date > month_start) \
+        else month_start
     try:
-        rows = M.billing.held_lessons_query(db, g.id, start, on).all()
+        rows = M.billing.held_lessons_query(
+            db, g.id, month_start, on).all()
     except Exception:
         return 0
+    marked = {a.lesson_id: int(a.present or 0) for a in
+              db.query(models.Attendance)
+              .filter(models.Attendance.student_id == s.id,
+                      models.Attendance.lesson_id.in_(
+                          [L.id for L in rows] or [-1])).all()}
     n = 0
     for L in rows:
         if L.date < on:
-            n += 1
+            # Belgisi bo'lsa — har doim hisobda; belgisiz bo'lsa —
+            # faqat qo'shilgan sanadan keyingi darslar
+            if L.id in marked or L.date >= enr:
+                n += 1
             continue
-        a = (db.query(models.Attendance)
-             .filter(models.Attendance.lesson_id == L.id,
-                     models.Attendance.student_id == s.id).first())
-        if a is not None and int(a.present or 0) == 1:
+        # Muzlatish kunining o'zi: faqat kelgan bo'lsa
+        if marked.get(L.id) == 1:
             n += 1
     return min(n, _fz_cap(g))
 

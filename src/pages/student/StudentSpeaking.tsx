@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft, GraduationCap, Mic, Send, Volume2, VolumeX,
+  ArrowLeft, GraduationCap, Mic, Volume2, VolumeX,
 } from "lucide-react";
 import { api } from "../../lib/api";
 
@@ -37,7 +37,6 @@ type Msg = { role: "teacher" | "student"; text: string };
 export default function StudentSpeaking() {
   const [topic, setTopic] = useState<string | null>(null);
   const [msgs, setMsgs] = useState<Msg[]>([]);
-  const [typed, setTyped] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [listening, setListening] = useState(false);
@@ -71,10 +70,16 @@ export default function StudentSpeaking() {
     u.lang = "en-US";
     u.rate = 0.92;
     const vs = window.speechSynthesis.getVoices();
-    const v = vs.find((x) => x.lang?.startsWith("en") &&
-                             /female|zira|samantha|google us/i.test(x.name))
-      || vs.find((x) => x.lang?.startsWith("en"));
+    // Jony Teacher ERKAK ovozda gapiradi (2026-08-18, Jahongir:
+    // "ovozi qizlarniki men o'gil bolaman jony teacher"). Qurilmada
+    // qaysi erkak ovoz bo'lsa o'sha tanlanadi; topilmasa - past
+    // tembr bilan har qanday inglizcha ovoz.
+    const male = vs.find((x) => x.lang?.startsWith("en") &&
+      /male|david|daniel|george|guy|james|ryan|alex|fred|uk english male|us english male/i
+        .test(x.name) && !/female/i.test(x.name));
+    const v = male || vs.find((x) => x.lang?.startsWith("en"));
     if (v) u.voice = v;
+    if (!male) u.pitch = 0.75; // erkak ovoz topilmasa pastroq tembr
     window.speechSynthesis.speak(u);
   }
 
@@ -105,10 +110,12 @@ export default function StudentSpeaking() {
     turn([], t);
   }
 
-  function sendText(text: string) {
+  // FAQAT GAPIRISH (2026-08-18, Jahongir: "Bu jony teacherga faqat
+  // gapirish kerak yozish mumkin bo'lmasin") — matn maydoni yo'q,
+  // bu funksiya faqat mikrofondan kelgan matn bilan chaqiriladi.
+  function sendSpoken(text: string) {
     const clean = text.trim();
     if (!clean || busy || !topic) return;
-    setTyped("");
     const next: Msg[] = [...msgs, { role: "student", text: clean }];
     setMsgs(next);
     turn(next, topic);
@@ -119,8 +126,8 @@ export default function StudentSpeaking() {
       (window as Any).SpeechRecognition ||
       (window as Any).webkitSpeechRecognition;
     if (!SR) {
-      setErr("Bu qurilma ovozni matnga aylantirishni qo'llamaydi — " +
-             "pastdagi yozish maydonidan foydalaning.");
+      setErr("Bu qurilma ovozni matnga aylantirishni qo'llamaydi. " +
+             "Android Chrome yoki iPhone Safari'da ochib ko'ring.");
       return;
     }
     if (listening) {
@@ -138,7 +145,7 @@ export default function StudentSpeaking() {
     rec.onresult = (e: Any) => {
       const t = e.results[0][0].transcript;
       setListening(false);
-      sendText(t);
+      sendSpoken(t);
     };
     rec.onerror = () => setListening(false);
     rec.onend = () => setListening(false);
@@ -257,29 +264,24 @@ export default function StudentSpeaking() {
         </div>
       </div>
 
-      <div className="shrink-0 bg-white border-t border-slate-200 px-3 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))]">
-        <div className="max-w-md mx-auto flex items-center gap-2">
+      {/* FAQAT MIKROFON — yozish yo'q (Jahongir: "faqat gapirish
+          kerak yozish mumkin bo'lmasin"). Speaking mashqi yozish
+          bilan aldab bo'lmaydigan bo'ldi. */}
+      <div className="shrink-0 bg-white border-t border-slate-200 px-3 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
+        <div className="max-w-md mx-auto flex flex-col items-center gap-1.5">
           <button onClick={startMic} disabled={busy}
-            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition ${
+            className={`w-16 h-16 rounded-full flex items-center justify-center transition shadow-lg ${
               listening
                 ? "bg-red-500 text-white animate-pulse"
                 : "bg-brand-600 text-white active:bg-brand-700"
             } disabled:opacity-40`}>
-            <Mic size={20} />
+            <Mic size={26} />
           </button>
-          <input
-            value={typed}
-            onChange={(e) => setTyped(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") sendText(typed); }}
-            placeholder={listening ? "Gapiring..." : "Yoki yozing..."}
-            disabled={busy}
-            className="flex-1 h-11 rounded-full border border-slate-200 bg-slate-50 px-4 text-sm focus:outline-none focus:border-brand-400 disabled:opacity-50"
-          />
-          <button onClick={() => sendText(typed)}
-            disabled={busy || !typed.trim()}
-            className="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0 disabled:opacity-30">
-            <Send size={17} />
-          </button>
+          <p className="text-[11.5px] font-semibold text-slate-400">
+            {busy ? "Jony Teacher o'ylayapti..."
+              : listening ? "Gapiring... to'xtatish uchun bosing"
+                : "Mikrofonni bosib, inglizcha javob bering"}
+          </p>
         </div>
       </div>
       <span className="hidden"><GraduationCap size={1} /></span>

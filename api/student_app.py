@@ -2058,42 +2058,70 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
         return r.json()["choices"][0]["message"]["content"].strip()
 
     if gem:
-        # MODEL ZAXIRA RO'YXATI (2026-08-18): Google eski modellarni
-        # o'chirib turadi — bitta nomga bog'lanib qolmaymiz. Birinchisi
-        # ishlamasa keyingisi uriladi; oxirgi xato matni saqlanadi
-        # (Audit -> Tizim xatolarida ko'rinadi).
-        names = [os.getenv("SPEAKING_MODEL"), "gemini-2.5-flash",
+        contents = [
+            {"role": ("model" if m["role"] == "teacher" else "user"),
+             "parts": [{"text": m["text"]}]} for m in messages]
+        # GEMINI QOIDASI: suhbat "user"dan boshlanishi SHART. Ikkinchi
+        # xabardan boshlab tarix Teacher salomlashuvi bilan boshlanadi
+        # — shuning uchun boshiga sun'iy user yozuvi qo'yiladi. (Aynan
+        # shu sabab "bitta savolga javob berdi, keyin ishlamadi".)
+        if contents and contents[0]["role"] == "model":
+            contents.insert(0, {"role": "user", "parts": [
+                {"text": "(The student opened the chat.)"}]})
+
+        # MODEL ZAXIRA RO'YXATI: bittasi band/yopiq bo'lsa keyingisi.
+        # 503 (band) bo'lsa o'sha modelga BIR marta qayta uriladi —
+        # jurnal ko'rsatdiki Google bepul modellari tez-tez qisqa
+        # "high demand" qaytaradi. Ishlagan model eslab qolinadi va
+        # keyingi so'rov to'g'ridan-to'g'ri o'shanga boradi (tezlik).
+        names = [os.getenv("SPEAKING_MODEL"),
+                 getattr(_ai_reply, "_good", None),
+                 "gemini-2.5-flash", "gemini-2.5-flash-lite",
                  "gemini-2.0-flash", "gemini-flash-latest"]
-        last = ""
-        for model in [m for m in names if m]:
-            try:
-                r = httpx.post(
-                    f"https://generativelanguage.googleapis.com/v1beta/"
-                    f"models/{model}:generateContent",
-                    headers={"x-goog-api-key": gem},
-                    json={
-                        "systemInstruction": {"parts": [{"text": system}]},
-                        "generationConfig": {"maxOutputTokens": 300,
-                                             "temperature": 0.7},
-                        "contents": [
-                            {"role": ("model" if m["role"] == "teacher"
-                                      else "user"),
-                             "parts": [{"text": m["text"]}]}
-                            for m in messages],
-                    },
-                    timeout=25,
-                )
-                r.raise_for_status()
-                return (r.json()["candidates"][0]["content"]["parts"][0]
-                        ["text"].strip())
-            except Exception as e:
-                body = ""
+        seen, order = set(), []
+        for n in names:
+            if n and n not in seen:
+                seen.add(n)
+                order.append(n)
+        errs = []
+        for model in order:
+            body = {
+                "systemInstruction": {"parts": [{"text": system}]},
+                "generationConfig": {"maxOutputTokens": 300,
+                                     "temperature": 0.7},
+                "contents": contents,
+            }
+            if "2.5" in model:
+                # 2.5 modellari sekin "o'ylaydi" — suhbatda kerak emas,
+                # o'chirsak javob ancha tez keladi.
+                body["generationConfig"]["thinkingConfig"] = {
+                    "thinkingBudget": 0}
+            for attempt in (1, 2):
                 try:
-                    body = e.response.text[:300]  # type: ignore
-                except Exception:
-                    pass
-                last = f"{model}: {e} {body}"
-        raise LookupError(last or "gemini javob bermadi")
+                    r = httpx.post(
+                        f"https://generativelanguage.googleapis.com/"
+                        f"v1beta/models/{model}:generateContent",
+                        headers={"x-goog-api-key": gem},
+                        json=body, timeout=20)
+                    r.raise_for_status()
+                    _ai_reply._good = model  # type: ignore
+                    return (r.json()["candidates"][0]["content"]
+                            ["parts"][0]["text"].strip())
+                except Exception as e:
+                    detail = ""
+                    try:
+                        detail = e.response.text[:160]  # type: ignore
+                    except Exception:
+                        pass
+                    errs.append(f"{model}#{attempt}: {e} {detail}")
+                    status = getattr(getattr(e, "response", None),
+                                     "status_code", None)
+                    if status == 503 and attempt == 1:
+                        import time as _t
+                        _t.sleep(1.2)
+                        continue  # o'sha modelga yana bir urinish
+                    break        # boshqa xato - keyingi modelga
+        raise LookupError(" || ".join(errs) or "gemini javob bermadi")
 
     raise RuntimeError("no-key")
 

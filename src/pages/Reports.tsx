@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SalesFunnel from "../components/SalesFunnel";
+import { PayrollTab } from "../components/Payroll";
 import { Download, Users, TrendingDown } from "lucide-react";
 import {
   api,
@@ -10,18 +11,20 @@ import {
   type SalesWindow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
+import { FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, can } from "../lib/roles";
 import { MONTHS } from "../lib/expenses";
 import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "discipline" | "tasks" | "funnel" | "sales" | "kpi";
+type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi";
 
-// OYLIK BO'LIMLARI MOLIYAGA KO'CHDI (2026-08-20, Jahongir:
-// "oyliklar bo'limini hisobotlardan moliyaga olib o't") — endi
-// Moliya > Oyliklar ichida: "Ustozlar oyligi" va "O'quvchi kesimida".
+// OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
+// Jahongir: "uzr molyia bolimidan hisobotlarga olib ot demoqchi
+// edim"). Ichida: Ustozlar oyligi, O'quvchi kesimida, Examiner,
+// Support teacher, Ma'muriy xodimlar, Darajalar.
 const TABS: { key: Tab; label: string }[] = [
+  { key: "payroll", label: "Oyliklar" },
   { key: "discipline", label: "Ustoz intizomi" },
   { key: "tasks", label: "Vazifalar" },
   { key: "funnel", label: "Sales funnel" },
@@ -1118,9 +1121,17 @@ function TaskReportTab() {
 
 export default function Reports() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("discipline");
+  // Oylik bo'limini moliyachidan tashqari HR, o'quv rahbari va bosh
+  // examiner/support ham ko'radi (PAYROLL_VIEW) — ular uchun sahifada
+  // FAQAT "Oyliklar" tabi ochiladi, qolgan hisobotlar avvalgidek
+  // yopiq. Shunday qilib ko'chirishda hech kimning huquqi
+  // o'zgarmadi.
+  const finance = can(user?.role, FINANCE_ACCESS);
+  const payrollOnly = !finance && can(user?.role, PAYROLL_VIEW);
+  const tabs = finance ? TABS : TABS.filter((t) => t.key === "payroll");
+  const [tab, setTab] = useState<Tab>(finance ? "payroll" : "payroll");
 
-  if (!can(user?.role, FINANCE_ACCESS)) {
+  if (!finance && !payrollOnly) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -1134,12 +1145,11 @@ export default function Reports() {
     <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1">Hisobotlar</h1>
       <p className="text-sm text-slate-500 mb-5">
-        Ustoz intizomi, sotuv voronkasi va adminlar KPI'si
-        (ustozlar oyligi endi Moliya &gt; Oyliklar bo'limida)
+        Oyliklar, ustoz intizomi, sotuv voronkasi va adminlar KPI'si
       </p>
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">
-        {TABS.map((t) => (
+        {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
@@ -1154,6 +1164,7 @@ export default function Reports() {
         ))}
       </div>
 
+      {tab === "payroll" && <PayrollTab />}
       {tab === "discipline" && <DisciplineTab />}
       {tab === "tasks" && <TaskReportTab />}
       {tab === "funnel" && <FunnelTab />}

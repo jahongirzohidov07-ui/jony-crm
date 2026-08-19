@@ -21,7 +21,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, CASH_ACCESS, PAYROLL_VIEW, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER } from "../lib/roles";
+  FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER } from "../lib/roles";
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
@@ -35,11 +35,11 @@ import { BreakEvenTab } from "../components/BreakEven";
 import { FinanceOverviewTab } from "../components/FinanceOverview";
 import { BudgetTab } from "../components/Budget";
 import { PaymentCalendarTab } from "../components/PaymentCalendar";
-import { PayrollTab, MonthPaymentsTab } from "../components/Payroll";
+import { MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 import { PayImportTab } from "../components/PayImport";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "payroll" | "paid" | "lcup" | "trash" | "fixes";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar,
@@ -74,10 +74,10 @@ const FULL_TABS: { key: Tab; label: string }[] = [
 const PAID_TAB: { key: Tab; label: string } = {
   key: "paid", label: "Shu oy to'lovlari",
 };
-// Xodim oyliklari — faqat oylik beradigan va nazorat qiladiganlar.
-const PAYROLL_TAB: { key: Tab; label: string } = {
-  key: "payroll", label: "Oyliklar",
-};
+// OYLIKLAR BO'LIMI HISOBOTLARGA KO'CHDI (2026-08-20, Jahongir:
+// "uzr molyia bolimidan hisobotlarga olib ot demoqchi edim").
+// Moliyada faqat kassa-hisob qoldi; barcha oyliklar - ustoz,
+// examiner, support, ma'muriy - Hisobotlar > Oyliklar ichida.
 // O'chirilgan to'lovlar arxivi (2026-08-15) - hech narsa yo'qolmaydi
 const TRASH_TAB: { key: Tab; label: string } = {
   key: "trash", label: "O'chirilganlar",
@@ -1294,7 +1294,6 @@ export default function Moliya() {
   const TABS = [
     ...(full ? FULL_TABS : CASH_TABS),
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
-    ...(can(user?.role, PAYROLL_VIEW) ? [PAYROLL_TAB] : []),
     ...(full ? [TRASH_TAB] : []),
     ...(can(user?.role, CASH_ACCESS) ? [FIX_TAB] : []),
     ...(full ? [LCUP_TAB] : []),
@@ -1366,7 +1365,6 @@ export default function Moliya() {
         {tab === "budget" && <BudgetTab />}
         {tab === "calendar" && <PaymentCalendarTab />}
         {tab === "paid" && <MonthPaymentsTab />}
-        {tab === "payroll" && <PayrollTab />}
         {tab === "trash" && <DeletedPaymentsTab />}
         {tab === "fixes" && <PaymentFixesTab />}
         {tab === "lcup" && <PayImportTab />}

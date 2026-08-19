@@ -94,18 +94,22 @@ mk(2027, 5, [24, 25])
 run(2027, 5)
 ck("25-may dam", [r for r in plan(2027, 5) if r[0] == 25][0][1], 1)
 
-print("\n=== 6. O'tilgan darsga tegilmaydi ===")
-# Avgust: 13 dars, 13-chisi ALLAQACHON o'tilgan (xato bilan) —
+print("\n=== 6. O'tilgan darsga tegilmaydi (avgust-2027) ===")
+# Avgust 2027: 13 dars, 13-chisi ALLAQACHON o'tilgan (xato bilan) —
 # u tegilmaydi, o'rniga oxiridan keyingi bekor bo'ladigan topiladi
-mk(2026, 8, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 31], held=(31,))
-run(2026, 8)
-rows = plan(2026, 8)
+mk(2027, 8, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 31], held=(31,))
+run(2027, 8)
+rows = plan(2027, 8)
 d31 = [r for r in rows if r[0] == 31][0]
 ck("o'tilgan 31-avg tegilmadi", d31[1], 0)
 ck("o'rniga 23-avg dam bo'ldi",
    [r for r in rows if r[0] == 23][0][1], 1)
 
-print("\n=== 7. 2026-avgustdan OLDINGI oylar tegilmaydi ===")
+print("\n=== 7. O'quv yili boshigacha (2026-avg va oldin) tegilmaydi ===")
+mk(2026, 8, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 31])
+run(2026, 8)
+ck("2026-avgust o'z holicha (13 dars qoladi)",
+   sum(1 for r in plan(2026, 8) if r[1]), 0)
 mk(2025, 12, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25])
 run(2025, 12)
 ck("2025-dekabr o'z holicha",

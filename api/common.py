@@ -89,6 +89,14 @@ def _ensure_new_columns():
         # Darsni bekor qilish / dam kunlari (2026-08-19)
         "ALTER TABLE lessons ADD COLUMN cancelled INTEGER",
         "ALTER TABLE lessons ADD COLUMN cancel_note VARCHAR",
+        # 2026-08-20: avtomat dam qoidasi avval avgustdan yoqilgan edi;
+        # Jahongir "sentabrdan qilaver keyingi o'quv yilidan" dedi —
+        # oradagi qisqa vaqtda avtomat bekor bo'lib qolgan avgust
+        # darslari qaytariladi (qo'lda bekor qilinganlarga tegilmaydi,
+        # ular izohidan ajratiladi).
+        "UPDATE lessons SET cancelled=0, cancel_note=NULL "
+        "WHERE cancel_note='Dam: avgustda 12 ta dars qoidasi' "
+        "AND date < '2026-09-01'",
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
         "ALTER TABLE candidates ADD COLUMN education VARCHAR",
@@ -473,7 +481,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_19a"
+SCHEMA_STAMP = "stamp_2026_08_19b"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

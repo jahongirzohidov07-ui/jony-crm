@@ -180,11 +180,14 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
 #   - yanvar: ortig'i OY BOSHIdan dam qilinadi (oxirgi 12 tasi
 #     qoladi) — o'qish yangi yildan keyinroq boshlanadi;
 #   - o'tilgan (yo'qlama qo'yilgan) darsga hech qachon tegilmaydi;
-#   - qoida 2026-avgustdan amal qiladi, eski oylarga tegilmaydi.
+#   - qoida YANGI O'QUV YILIDAN — 2026-yil 1-sentabrdan amal qiladi
+#     (Jahongir: "sentabrdan qilaver keyingi o'quv yilidan, bizda
+#     o'quv yili 1-sentabrdan keyingi yil 31-avgustgacha"). Shu
+#     avgustga tegilmaydi.
 # =====================================================================
 _FIXED_DAM = {(9, 1): "1-sentabr", (3, 8): "8-mart", (5, 25): "25-may"}
 _CAP_MONTHS = {8: "end", 12: "end", 1: "start"}
-_AUTO_REST_SINCE = date(2026, 8, 1)
+_AUTO_REST_SINCE = date(2026, 9, 1)
 
 
 def _lesson_marked(db: Session, L: models.Lesson) -> bool:

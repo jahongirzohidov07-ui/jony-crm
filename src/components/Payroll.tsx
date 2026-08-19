@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { TeacherPayrollTab, SalaryDetailTab } from "./TeacherPayroll";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
 import { PayEditModal, type PayEditTarget } from "./PayEditModal";
 import { QuickPayment } from "./QuickPayment";
-import { PAYMENT_EDIT, can } from "../lib/roles";
+import { PAYMENT_EDIT, FINANCE_ACCESS, can } from "../lib/roles";
 import { Wallet, Check, Trash2, Search, Download, Pencil } from "lucide-react";
 import {
   api,
@@ -426,14 +427,27 @@ function PayrollTable({ url, title, hint }: {
   );
 }
 
-/** Moliya > Oyliklar: examiner va support teacher bir joyda. */
+/** Moliya > Oyliklar: ustoz, examiner, support va ma'muriy xodimlar
+ *  oyliklari BIR JOYDA (2026-08-20, Jahongir: "oyliklar bo'limini
+ *  hisobotlardan moliyaga olib o't"). Ustoz oyligi va uning o'quvchi
+ *  kesimidagi tafsiloti ilgari Hisobotlar sahifasida edi. */
 export function PayrollTab() {
-  const [sub, setSub] =
-    useState<"examiner" | "support" | "staff" | "grades">("examiner");
-  const SUBS: {
-    key: "examiner" | "support" | "staff" | "grades";
-    label: string;
-  }[] = [
+  type Sub = "teacher" | "teacher_detail" | "examiner" | "support"
+    | "staff" | "grades";
+  const { user } = useAuth();
+  // Ustoz oyligi ilgari Hisobotlar sahifasida edi va u yerni faqat
+  // moliya ko'rardi — ko'chirishda HUQUQ KENGAYIB KETMASLIGI uchun
+  // shu ikki bo'lim ham FINANCE_ACCESS bilan yopiladi. HR va o'quv
+  // rahbari avvalgidek faqat examiner/support oyligini ko'radi.
+  const finance = can(user?.role, FINANCE_ACCESS);
+  const [sub, setSub] = useState<Sub>(finance ? "teacher" : "examiner");
+  const SUBS: { key: Sub; label: string }[] = [
+    ...(finance ? [
+      { key: "teacher" as Sub, label: "Ustozlar oyligi" },
+      // 2026-08-13, Jahongir: "har bir o'quvchidan qancha summa nechta
+      // yo'qlama qoyganligi to'liq korinib turadigan"
+      { key: "teacher_detail" as Sub, label: "O'quvchi kesimida" },
+    ] : []),
     { key: "examiner", label: "Examiner oyliklari" },
     { key: "support", label: "Support teacher oyliklari" },
     // 2026-08-12, Jahongir: Moliya > Xarajatlardan "Oylik" berilsa,
@@ -444,7 +458,7 @@ export function PayrollTab() {
 
   return (
     <div>
-      <div className="flex gap-1.5 mb-5">
+      <div className="flex flex-wrap gap-1.5 mb-5">
         {SUBS.map((s) => (
           <button
             key={s.key}
@@ -460,7 +474,11 @@ export function PayrollTab() {
         ))}
       </div>
 
-      {sub === "examiner" ? (
+      {sub === "teacher" ? (
+        <TeacherPayrollTab />
+      ) : sub === "teacher_detail" ? (
+        <SalaryDetailTab />
+      ) : sub === "examiner" ? (
         <PayrollTable
           url="/examiners/salary"
           title="Examiner oyliklari"

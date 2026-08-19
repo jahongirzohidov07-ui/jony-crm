@@ -1167,12 +1167,13 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
     gi = billing.GradeIndex(db)
     counts = billing.attendance_counts(db, [l.id for l in lessons])
     total = 0.0
+    _mc: dict = {}   # oy bo'luvchisi keshi (2026-08-19 qoidasi)
     for l in lessons:
         g = groups.get(l.group_id)
         if not g or l.teacher_id is None:
             continue
         per_student = gi.per_student(g, l.teacher_id, l.date)
-        rate = billing.per_attendance_rate(g, per_student)
+        rate = billing.per_attendance_rate_m(db, g, l.date, per_student, _mc)
         total += counts.get(l.id, 0) * rate
     return round(total, 2)
 
@@ -2189,13 +2190,14 @@ def _teacher_earned(db: Session, teacher_id: int, *,
     by_group: dict[int, dict] = {}
     by_period: dict[str, dict] = {}
 
+    _mc: dict = {}   # oy bo'luvchisi keshi (2026-08-19 qoidasi)
     for l in lessons:
         g = groups.get(l.group_id)
         if not g:
             continue
         # Stavka dars SANASIGA qarab olinadi: ustoz keyin ko'tarilgan
         # bo'lsa ham o'tgan oyning darslari eski narxda qoladi.
-        rate, per_student = billing.lesson_rate(db, g, l, rates)
+        rate, per_student = billing.lesson_rate(db, g, l, rates, _mc)
         n = billing.lesson_student_count(db, l)
         amount = n * rate
         total += amount

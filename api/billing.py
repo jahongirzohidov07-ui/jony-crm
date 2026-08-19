@@ -338,12 +338,72 @@ def per_attendance_rate(group: models.Group,
     return (per_student or 0) / std
 
 
+# =====================================================================
+#  OYLIK BO'LUVCHISI: REJADAGI DARS SONI (2026-08-19)
+#
+#  Jahongir: "biz minimum 12ta dars o'tishimiz kerak va bu oy hisoblashi
+#  boyicha 13ta dars bor lekin sen 11ta bilan bir o'quvchiga to'liq
+#  o'tmasidan 140,000 hisoblab qoygansan" va tasdiqladi: "yangi hisobni
+#  tasdiqlayman 13 ta darsni toliq o'tsa 160,000 oladi".
+#
+#  Avval bo'luvchi DOIM standart (12) edi. 13 darslik oyda ustoz
+#  hammasini o'tsa 13/12 barobar — oylik stavkadan OSHIB ketardi.
+#  Endi bo'luvchi = o'sha oyda guruhning REJADAGI dars soni, lekin
+#  12 dan (standartdan) kam bo'lmaydi:
+#    13 darslik oy: to'liq o'tsa — aynan oylik stavka;
+#    12 darslik oy: hech narsa o'zgarmaydi;
+#    11 rejali oy: baribir 12 ga bo'linadi — "kamida 12 dars" qoidasi.
+#
+#  FAQAT 2026-AVGUSTDAN. O'tgan oylarning hisob-kitobi to'langan va
+#  yopilgan — ular eski qoidada qoladi, orqaga qayta ochilmaydi.
+# =====================================================================
+SALARY_DIVISOR_SINCE = date(2026, 8, 1)
+
+
+def month_divisor(db: Session, group: models.Group, on_date: date,
+                  cache: Optional[dict] = None) -> int:
+    """Shu oy uchun oylik stavka bo'linadigan dars soni."""
+    std = int(group.standard_lessons_per_month or 12)
+    if std <= 0:
+        std = 12
+    if on_date < SALARY_DIVISOR_SINCE:
+        return std
+    key = (group.id, on_date.year, on_date.month)
+    if cache is not None and key in cache:
+        return cache[key]
+    start, end = month_bounds(on_date.year, on_date.month)
+    try:
+        n = (db.query(func.count(models.Lesson.id))
+             .filter(models.Lesson.group_id == group.id,
+                     models.Lesson.date >= start,
+                     models.Lesson.date <= end).scalar() or 0)
+    except SQLAlchemyError as e:
+        _log_db_error(db, "month_divisor", e)
+        n = 0
+    d = max(std, int(n))
+    if cache is not None:
+        cache[key] = d
+    return d
+
+
+def per_attendance_rate_m(db: Session, group: models.Group, on_date: date,
+                          per_student: float,
+                          cache: Optional[dict] = None) -> float:
+    """Bitta yoqlama narxi — oyning rejadagi dars soniga qarab."""
+    d = month_divisor(db, group, on_date, cache)
+    if d <= 0:
+        return 0.0
+    return (per_student or 0) / d
+
+
 def lesson_rate(db: Session, group: models.Group, lesson: models.Lesson,
-                rates: Optional[dict] = None) -> tuple[float, float]:
+                rates: Optional[dict] = None,
+                mcache: Optional[dict] = None) -> tuple[float, float]:
     """Shu dars uchun (bir yoqlama narxi, bir o'quvchidan oylik summa)."""
     per_student = rate_per_student(db, group, lesson.teacher_id,
                                    lesson.date, rates)
-    return per_attendance_rate(group, per_student), per_student
+    return (per_attendance_rate_m(db, group, lesson.date, per_student,
+                                  mcache), per_student)
 
 
 def lesson_student_count(db: Session, lesson: models.Lesson) -> int:
@@ -395,6 +455,7 @@ def compute_teacher_payroll(
     # Ustoz kesimida: nechta dars o'tdi, nechta yoqlama qo'ydi, qancha
     # ishlab topdi. Stavka dars sanasi bo'yicha olinadi.
     cache: dict = {}
+    mcache: dict = {}
     by_teacher: dict[Optional[int], dict] = {}
     for lesson in lessons:
         if lesson.teacher_id is None:
@@ -404,7 +465,8 @@ def compute_teacher_payroll(
             cache[key] = rate_per_student(db, group, lesson.teacher_id,
                                           lesson.date, rates)
         per_student = cache[key]
-        rate = per_attendance_rate(group, per_student)
+        rate = per_attendance_rate_m(db, group, lesson.date, per_student,
+                                     mcache)
         n = lesson_student_count(db, lesson)
 
         row = by_teacher.setdefault(lesson.teacher_id, {

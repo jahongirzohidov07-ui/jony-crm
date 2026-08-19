@@ -502,6 +502,13 @@ class Lesson(Base):
     # o'quvchidan pul ham, ustozga ish haqi ham faqat held=1 darslar uchun
     # hisoblanadi. Yoqlama yoki baho qo'yilishi bilan held=1 bo'ladi.
     held = Column(Integer, default=1)
+    # BEKOR QILINGAN DARS (2026-08-19, Jahongir: "darsni bekor qilish
+    # funsiyasini ham qoshib ber... Dam kunlari darslar bo'lmaydi va bu
+    # darslar umuman hisoblanmaydi"). O'chirilmaydi - belgilanadi:
+    # rejadan, davomatdan va oylik bo'luvchisidan chiqadi, lekin iz
+    # qoladi (kim, qachon, nima sabab).
+    cancelled = Column(Integer, default=0)
+    cancel_note = Column(String, nullable=True)
     note = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -3727,3 +3734,20 @@ def _release_price_lock_on_status(target, value, oldvalue, initiator):
         target.locked_lesson_price = None
         target.locked_price_at = None
         target.locked_price_note = None
+
+
+class Holiday(Base):
+    """DAM KUNI (2026-08-19, Jahongir: "bizda dam kunlari degan narsa
+    bor buni sozlamalarga qoshib qoysang ham bo'ladi. Dam kunlari
+    darslar bo'lmaydi va bu darslar umuman hisoblanmaydi").
+
+    Belgilanganda o'sha kundagi barcha rejadagi darslar bekor
+    qilinadi. Har bir guruhda oyda kamida 12 dars qolishi tekshiriladi
+    - kamaysa dam kuni qo'yilmaydi."""
+    __tablename__ = "holidays"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, nullable=False, unique=True, index=True)
+    name = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

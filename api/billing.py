@@ -376,7 +376,10 @@ def month_divisor(db: Session, group: models.Group, on_date: date,
         n = (db.query(func.count(models.Lesson.id))
              .filter(models.Lesson.group_id == group.id,
                      models.Lesson.date >= start,
-                     models.Lesson.date <= end).scalar() or 0)
+                     models.Lesson.date <= end,
+                     # Bekor qilingan (dam kuni) dars REJAGA kirmaydi
+                     (models.Lesson.cancelled.is_(None))
+                     | (models.Lesson.cancelled == 0)).scalar() or 0)
     except SQLAlchemyError as e:
         _log_db_error(db, "month_divisor", e)
         n = 0

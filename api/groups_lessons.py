@@ -134,6 +134,10 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     # Jadvalga mos kelmay qolgan bo'sh darslarni olib tashlaymiz.
     stale = [ls for ls in existing
              if not ls.held and ls.id not in protected
+             # BEKOR QILINGAN dars (dam kuni) hech qachon o'chirilmaydi
+             # — u hujjat: qaytarish (uncancel) imkoni saqlanadi va
+             # jadval o'sha kunga yangi dars ham YARATMAYDI (2026-08-19)
+             and not getattr(ls, "cancelled", 0)
              and (ls.date.weekday() not in wanted
                   or ls.date < lo or ls.date > hi)]
     for ls in stale:
@@ -164,7 +168,10 @@ def _group_lessons_in_month(db: Session, group_id: int, year: int, month: int):
     return (
         db.query(models.Lesson)
         .filter(models.Lesson.group_id == group_id,
-                models.Lesson.date >= start, models.Lesson.date <= end)
+                models.Lesson.date >= start, models.Lesson.date <= end,
+                # Bekor qilingan dars (dam kuni) jadvalda TURMAYDI
+                or_(models.Lesson.cancelled.is_(None),
+                    models.Lesson.cancelled == 0))
         .order_by(models.Lesson.date)
         .all()
     )
@@ -1593,3 +1600,182 @@ def group_notes(group_id: int, db: Session = Depends(get_db),
         })
     return {"students": rows}
 
+
+
+# =====================================================================
+#  DARSNI BEKOR QILISH + DAM KUNLARI (2026-08-19)
+#
+#  Jahongir: "darsni bekor qilish funsiyasini ham qoshib ber, shunday
+#  qilib darsni kochirishni tagida tursa, buni faqat men qila olaman...
+#  bizda dam kunlari degan narsa bor... Dam kunlari darslar bo'lmaydi
+#  va bu darslar umuman hisoblanmaydi... Lekin agar 12tadan kamayib
+#  ketsa bu darsni bekor qilib bolmaydi... dam kunlar belgilanganda
+#  12tadan kamaysa ogohlantirib bunday qilish mumkin emas degan yozuv
+#  chiqsin".
+#
+#  Qoidalar:
+#   - faqat ASOSCHI;
+#   - yo'qlama qo'yilgan (o'tilgan) darsni bekor qilib bo'lmaydi -
+#     u pul hujjati, faqat ko'chirish mumkin;
+#   - bekor qilingan dars rejadan butunlay chiqadi: davomat jadvali,
+#     oylik bo'luvchisi - hech qayerda sanalmaydi;
+#   - oyda kamida 12 (guruh standarti) dars QOLISHI SHART;
+#   - hech narsa o'chirilmaydi - dars "bekor" deb belgilanadi va
+#     qaytarish mumkin.
+# =====================================================================
+
+def _month_plan_count(db: Session, group_id: int, on: date) -> int:
+    """Shu oyda bekor qilinmagan darslar soni."""
+    start, end = billing.month_bounds(on.year, on.month)
+    return (db.query(func.count(models.Lesson.id))
+            .filter(models.Lesson.group_id == group_id,
+                    models.Lesson.date >= start,
+                    models.Lesson.date <= end,
+                    or_(models.Lesson.cancelled.is_(None),
+                        models.Lesson.cancelled == 0)).scalar() or 0)
+
+
+def _cancel_one_lesson(db: Session, L: models.Lesson, note: str,
+                       user) -> str | None:
+    """Bitta darsni tekshirib bekor qiladi. Xato bo'lsa matn qaytadi."""
+    g = db.query(models.Group).get(L.group_id)
+    if not g:
+        return "Guruh topilmadi"
+    if L.cancelled:
+        return "Bu dars allaqachon bekor qilingan"
+    marked = (db.query(models.Attendance)
+              .filter(models.Attendance.lesson_id == L.id).count())
+    if L.held == 1 or marked:
+        return ("O'tilgan (yo'qlama qo'yilgan) darsni bekor qilib "
+                "bo'lmaydi — u ish haqi hujjati. Kerak bo'lsa ko'chiring.")
+    std = int(g.standard_lessons_per_month or 12) or 12
+    n = _month_plan_count(db, g.id, L.date)
+    if n - 1 < std:
+        return (f"Bunday qilish mumkin emas: {g.name} guruhida oyda "
+                f"kamida {std} ta dars qolishi shart (hozir reja {n} ta)")
+    L.cancelled = 1
+    L.cancel_note = note
+    audit.log(db, user, entity="lesson", action="cancel",
+              entity_id=L.id, entity_label=f"{g.name} {L.date.isoformat()}",
+              branch_id=g.branch_id, note=note)
+    return None
+
+
+@router.post("/api/lessons/{lesson_id}/cancel")
+def cancel_lesson(lesson_id: int, payload: dict | None = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.FOUNDER))):
+    L = db.query(models.Lesson).get(lesson_id)
+    if not L:
+        raise HTTPException(404, "Dars topilmadi")
+    note = ((payload or {}).get("note") or "").strip() or "Bekor qilindi"
+    err = _cancel_one_lesson(db, L, note, user)
+    if err:
+        db.rollback()
+        raise HTTPException(400, err)
+    db.commit()
+    return {"ok": True}
+
+
+@router.post("/api/lessons/{lesson_id}/uncancel")
+def uncancel_lesson(lesson_id: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.FOUNDER))):
+    """Bekor qilingan darsni qaytarish — hech narsa yo'qolmaydi."""
+    L = db.query(models.Lesson).get(lesson_id)
+    if not L:
+        raise HTTPException(404, "Dars topilmadi")
+    if not L.cancelled:
+        raise HTTPException(400, "Bu dars bekor qilinmagan")
+    L.cancelled = 0
+    L.cancel_note = None
+    g = db.query(models.Group).get(L.group_id)
+    audit.log(db, user, entity="lesson", action="restore",
+              entity_id=L.id,
+              entity_label=f"{g.name if g else ''} {L.date.isoformat()}",
+              branch_id=g.branch_id if g else None, commit=True)
+    return {"ok": True}
+
+
+@router.get("/api/holidays")
+def holidays_list(db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.FULL_ACCESS))):
+    rows = (db.query(models.Holiday)
+            .order_by(models.Holiday.date.desc()).limit(100).all())
+    return {"rows": [{"id": h.id, "date": h.date.isoformat(),
+                      "name": h.name, "by": h.created_by} for h in rows]}
+
+
+@router.post("/api/holidays")
+def holiday_create(payload: dict, db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.FOUNDER))):
+    """Dam kuni: o'sha kundagi BARCHA rejadagi darslar bekor qilinadi.
+
+    Avval hamma guruh tekshiriladi — bittasida ham oy 12 darsdan
+    kamayib ketsa, HECH NARSA o'zgarmaydi va sabab aytiladi."""
+    try:
+        d = date.fromisoformat(str(payload.get("date") or ""))
+    except ValueError:
+        raise HTTPException(400, "Sana noto'g'ri")
+    if d < roles.local_today():
+        raise HTTPException(400, "O'tib ketgan kunni dam qilib bo'lmaydi")
+    if db.query(models.Holiday).filter(models.Holiday.date == d).first():
+        raise HTTPException(400, "Bu kun allaqachon dam kuni")
+    name = (payload.get("name") or "").strip() or "Dam kuni"
+
+    lessons = (db.query(models.Lesson)
+               .filter(models.Lesson.date == d,
+                       or_(models.Lesson.cancelled.is_(None),
+                           models.Lesson.cancelled == 0)).all())
+    # Oldin TO'LIQ tekshiruv — yarmi bekor bo'lib yarmi qolib ketmasin
+    problems = []
+    for L in lessons:
+        g = db.query(models.Group).get(L.group_id)
+        if not g:
+            continue
+        marked = (db.query(models.Attendance)
+                  .filter(models.Attendance.lesson_id == L.id).count())
+        if L.held == 1 or marked:
+            problems.append(f"{g.name}: darsi allaqachon o'tilgan")
+            continue
+        std = int(g.standard_lessons_per_month or 12) or 12
+        if _month_plan_count(db, g.id, d) - 1 < std:
+            problems.append(f"{g.name}: oyda {std} tadan kamayib ketadi")
+    if problems:
+        raise HTTPException(
+            400, "Bunday qilish mumkin emas — " + "; ".join(problems[:5])
+                 + (f" va yana {len(problems)-5} ta guruh"
+                    if len(problems) > 5 else ""))
+
+    for L in lessons:
+        _cancel_one_lesson(db, L, f"Dam kuni: {name}", user)
+    h = models.Holiday(date=d, name=name, created_by=user.full_name)
+    db.add(h)
+    db.commit()
+    audit.log(db, user, entity="lesson", action="holiday",
+              entity_label=f"Dam kuni {d.isoformat()}: {name}",
+              new_value=len(lessons), commit=True)
+    return {"ok": True, "cancelled_lessons": len(lessons)}
+
+
+@router.delete("/api/holidays/{hid}")
+def holiday_delete(hid: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.FOUNDER))):
+    """Dam kuni bekor qilinsa — o'sha kunning darslari rejaga qaytadi."""
+    h = db.query(models.Holiday).get(hid)
+    if not h:
+        raise HTTPException(404, "Dam kuni topilmadi")
+    n = 0
+    for L in (db.query(models.Lesson)
+              .filter(models.Lesson.date == h.date,
+                      models.Lesson.cancelled == 1,
+                      models.Lesson.cancel_note ==
+                      f"Dam kuni: {h.name}").all()):
+        L.cancelled = 0
+        L.cancel_note = None
+        n += 1
+    db.delete(h)
+    db.commit()
+    audit.log(db, user, entity="lesson", action="restore",
+              entity_label=f"Dam kuni olib tashlandi {h.date.isoformat()}",
+              new_value=n, commit=True)
+    return {"ok": True, "restored_lessons": n}

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen } from "lucide-react";
+import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen, CalendarOff } from "lucide-react";
 import Branches from "./Branches";
 import Permissions from "./Permissions";
 import BackupCard from "../components/BackupCard";
 import Courses from "./Courses";
 import SelfTestCard from "../components/SelfTestCard";
+import { HolidaysCard } from "../components/HolidaysCard";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER } from "../lib/roles";
 
@@ -14,7 +15,7 @@ import { FOUNDER } from "../lib/roles";
  * joyda turadi. Kelajakda boshqa sozlamalar ham shu yerga qo'shiladi
  * (Telegram, integratsiyalar va h.k. Ruxsatlar ichida turibdi).
  */
-type Tab = "branches" | "courses" | "permissions" | "backup" | "selftest";
+type Tab = "branches" | "courses" | "permissions" | "backup" | "selftest" | "holidays";
 
 export default function Settings() {
   const [tab, setTab] = useState<Tab>("branches");
@@ -29,6 +30,8 @@ export default function Settings() {
     { key: "permissions", label: "Ruxsatlar", icon: ShieldCheck },
     ...(isFounder
       ? [
+          // DAM KUNLARI (2026-08-19, Jahongir) — faqat asoschi
+          { key: "holidays" as Tab, label: "Dam kunlari", icon: CalendarOff },
           { key: "backup" as Tab, label: "Zaxira", icon: Database },
           {
             key: "selftest" as Tab,
@@ -69,6 +72,11 @@ export default function Settings() {
         {tab === "branches" && <Branches />}
         {tab === "courses" && <Courses />}
         {tab === "permissions" && <Permissions />}
+        {tab === "holidays" && isFounder && (
+          <div className="p-8">
+            <HolidaysCard />
+          </div>
+        )}
         {tab === "backup" && isFounder && (
           <div className="p-8">
             <BackupCard />

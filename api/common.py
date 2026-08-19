@@ -86,6 +86,9 @@ def _ensure_new_columns():
         # Maqsad IELTS balli (2026-08-18, keyinroq: "nechi XP emas
         # IELTS nechi olmoqchiligi bolishi kerak")
         "ALTER TABLE student_gamification ADD COLUMN ielts_target FLOAT",
+        # Darsni bekor qilish / dam kunlari (2026-08-19)
+        "ALTER TABLE lessons ADD COLUMN cancelled INTEGER",
+        "ALTER TABLE lessons ADD COLUMN cancel_note VARCHAR",
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
         "ALTER TABLE candidates ADD COLUMN education VARCHAR",
@@ -470,7 +473,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_18b"
+SCHEMA_STAMP = "stamp_2026_08_19a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

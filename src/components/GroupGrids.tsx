@@ -124,6 +124,7 @@ function DateMenu({
   moved,
   movedIn,
   onMove,
+  onCancelLesson,
   onClose,
 }: {
   date: string;
@@ -132,6 +133,9 @@ function DateMenu({
   moved?: { status_label: string; to_date: string };
   movedIn?: { status_label: string; from_date: string };
   onMove: () => void;
+  /** Darsni BEKOR qilish — faqat asoschiga beriladi (2026-08-19,
+   *  Jahongir: "buni faqat men qila olaman"). */
+  onCancelLesson?: () => void;
   onClose: () => void;
 }) {
   const past = date < new Date().toISOString().slice(0, 10);
@@ -180,6 +184,19 @@ function DateMenu({
         >
           <CalendarClock size={14} />
           Dars ko'chirish
+        </button>
+      )}
+
+      {/* DARSNI BEKOR QILISH (2026-08-19) — "Dars ko'chirish"ning
+          TAGIDA turadi, faqat asoschida. O'tilgan darsni bekor qilib
+          bo'lmaydi. Rejadan butunlay chiqadi (dam kuni mantig'i). */}
+      {onCancelLesson && !held && !moved && (
+        <button
+          onClick={onCancelLesson}
+          className="w-full flex items-center justify-center gap-1.5 border border-red-200 bg-red-50 text-red-700 rounded-lg py-2 text-sm font-medium mb-2"
+        >
+          <X size={14} />
+          Darsni bekor qilish
         </button>
       )}
 
@@ -390,6 +407,28 @@ export function AttendanceTab({
                           setMenu(null);
                           setMoving({ id: ls.id, date: ls.date });
                         }}
+                        onCancelLesson={
+                          user?.role === "founder"
+                            ? async () => {
+                                if (!confirm(
+                                  formatDate(ls.date) + " darsi BEKOR " +
+                                  "qilinsinmi?\n\nU rejadan butunlay " +
+                                  "chiqadi: davomatda ko'rinmaydi va " +
+                                  "oylik hisobiga kirmaydi. Oyda " +
+                                  "kamida 12 ta dars qolishi shart."))
+                                  return;
+                                try {
+                                  await api.post(
+                                    `/lessons/${ls.id}/cancel`, {});
+                                  setMenu(null);
+                                  load();
+                                } catch (e) {
+                                  alert(e instanceof Error
+                                    ? e.message : "Xatolik");
+                                }
+                              }
+                            : undefined
+                        }
                         onClose={() => setMenu(null)}
                       />
                     )}

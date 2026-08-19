@@ -285,7 +285,7 @@ function ProfileCard({
 }
 
 /** Ota-ona bilan aloqa vositalari: Telegram bog'lash kodi, ota-ona
- *  sahifasi havolasi, onlayn to'lov havolasi, shartnoma chop etish. */
+ *  sahifasi havolasi, onlayn to'lov havolasi. */
 function ParentTools({ student }: { student: StudentDetailType }) {
   const [tg, setTg] = useState<{
     enabled: boolean; linked?: boolean; code?: string; bot?: string | null;
@@ -389,10 +389,6 @@ function ParentTools({ student }: { student: StudentDetailType }) {
             Qarz eslatmasi yuborish
           </button>
         )}
-        <button onClick={() => printContract(student)}
-          className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300">
-          Shartnoma chop etish
-        </button>
       </div>
       {msg && <p className="text-xs text-emerald-600">{msg}</p>}
     </div>
@@ -2042,7 +2038,7 @@ function CertModal({
   );
 }
 
-/* ==================== CHOP ETISH: chek va shartnoma ==================== */
+/* ========================= CHOP ETISH: chek ========================= */
 function openPrint(html: string) {
   const w = window.open("", "_blank", "width=480,height=640");
   if (!w) { alert("Brauzer yangi oynani blokladi"); return; }
@@ -2087,41 +2083,10 @@ function printReceipt(p: { id: number; public_id?: string | null;
   </body></html>`);
 }
 
-function printContract(student: StudentDetailType) {
-  const g = student.group;
-  const today = formatDate(new Date().toISOString().slice(0, 10));
-  openPrint(`<!doctype html><html><head><meta charset="utf-8">
-  <title>Shartnoma</title>${P_STYLE}</head><body>
-  <h2>Jony Academy — o'quv xizmatlari shartnomasi</h2>
-  <p class="m">Bekobod · ${today}</p>
-  <table>
-    <tr><td>O'quvchi</td><td>${student.full_name}</td></tr>
-    <tr><td>ID</td><td>${student.public_id || student.id}</td></tr>
-    <tr><td>Telefon</td><td>${student.phone || "____________"}</td></tr>
-    <tr><td>Ota-ona telefoni</td><td>${student.parent_phone || "____________"}</td></tr>
-    <tr><td>Manzil</td><td>${student.address || "____________"}</td></tr>
-    <tr><td>Guruh</td><td>${g?.name || "____________"}</td></tr>
-    <tr><td>Dars vaqti</td><td>${g?.lesson_time || "____________"}</td></tr>
-    <tr><td>Oylik to'lov</td><td>${g ? formatSom(g.monthly_fee) : "____________"}</td></tr>
-  </table>
-  <div class="line"></div>
-  <ol>
-    <li>O'quv markaz o'quvchini belgilangan jadval asosida sifatli
-        o'qitish majburiyatini oladi.</li>
-    <li>Oylik to'lov har oyning boshida to'lanadi. Darsga kelmaslik
-        to'lovdan ozod qilmaydi (muzlatish holati bundan mustasno).</li>
-    <li>O'quvchi 3 ta darsga sababsiz kelmasa, o'qish avtomatik
-        muzlatiladi va ota-ona bilan bog'laniladi.</li>
-    <li>Ota-ona farzandining davomati va natijalari haqida xabardor
-        qilib boriladi.</li>
-    <li>Tomonlar o'zaro hurmat va hamkorlik tamoyillariga amal qiladi.</li>
-  </ol>
-  <div class="sig">
-    <span>O'quv markaz (imzo)</span>
-    <span>Ota-ona (imzo)</span>
-  </div>
-  </body></html>`);
-}
+/* SHARTNOMA CHOP ETISH OLIB TASHLANDI (2026-08-20, Jahongir:
+   "shartnoma chop etish degan joyi oquv markazga kerak emas").
+   O'quv markazda qog'oz shartnoma ishlatilmaydi - kelishuv ota-ona
+   sahifasi va qoidalar orqali yuritiladi. Ma'lumotlarga tegilmadi. */
 
 
 // --------------------------------------------- Oylik davomat panjarasi

@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import {
   MoreVertical, Play, RefreshCw, Trash2, X, Snowflake, Wallet,
-  Undo2, UserX, Building2,
+  Undo2, UserX, Building2, Merge,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
-import { FREEZE_ROLES, CASH_ACCESS, can } from "../lib/roles";
+import { FREEZE_ROLES, CASH_ACCESS, FOUNDER, can } from "../lib/roles";
 import { api, ApiError, type Student, type Group, type CheckProblem }
   from "../lib/api";
 import { ScheduleProblems } from "./ScheduleProblems";
 import { StudentPayModal } from "./QuickPayment";
+import { MergeStudents } from "./MergeStudents";
 
 /** Faollashtirishdan oldin: shu sanadan qancha pul yechilishi. */
 interface ActivatePreview {
@@ -43,8 +44,13 @@ export function StudentRowMenu({
   const navigate = useNavigate();
   const canManage = can(user?.role, FREEZE_ROLES);
   const canCash = can(user?.role, CASH_ACCESS);
+  const isFounder = can(user?.role, [FOUNDER]);
   const [open, setOpen] = useState(false);
   const [paying, setPaying] = useState(false);
+  // Dublikatni birlashtirish (2026-08-20, Jahongir: "dublikat
+  // qoshishni ham o'ng tomondan olib o'sha joyga qoshib ber") -
+  // ilgari Guruhlar kartasining tepasida alohida tugma edi.
+  const [merging, setMerging] = useState(false);
   const [freezing, setFreezing] = useState(false);
   const [fUntil, setFUntil] = useState("");
   const [fNote, setFNote] = useState("");
@@ -273,6 +279,17 @@ export function StudentRowMenu({
           student={student}
           onClose={() => setPaying(false)}
           onSaved={onChanged}
+        />
+      )}
+      {merging && (
+        <MergeStudents
+          studentId={student.id}
+          studentName={student.full_name}
+          onClose={() => setMerging(false)}
+          onDone={() => {
+            setMerging(false);
+            onChanged();
+          }}
         />
       )}
       <button
@@ -612,6 +629,17 @@ export function StudentRowMenu({
                 >
                   <Building2 size={15} className="text-violet-600" />
                   Boshqa filialga o'tkazish
+                </button>
+              )}
+              {isFounder && (
+                <button
+                  onClick={() => { setOpen(false); setMerging(true); }}
+                  disabled={busy}
+                  title="Shu odamning ikkinchi yozuvi bo'lsa — bitta qilish"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                >
+                  <Merge size={15} className="text-slate-500" />
+                  Dublikatni qo'shish
                 </button>
               )}
               <button

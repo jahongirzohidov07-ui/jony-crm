@@ -656,6 +656,83 @@ def _language_label(db: Session, key: str | None) -> str | None:
     return key
 
 
+def _hire_account(db: Session, c: models.Candidate, user) -> dict | None:
+    """NOMZOD ISHGA OLINGANDA XODIM HISOBI AVTOMAT OCHILADI (2026-08-19).
+
+    Jahongir: "hr bo'limida nomzod ishga olindi qilinsa to'g'ridan
+    to'g'ri akkaunt ochiladigan qilaylik, shu ma'lumotlarni boshqatdan
+    profiliga kiritib chiqish kerak bo'larkan baribr".
+
+    Nomzod kartasidagi ma'lumotlar hisobga KO'CHADI: ism, telefon
+    (login bo'ladi), filial, lavozim, ustoz bo'lsa fani bilan Ustozlar
+    bo'limida karta ham ochiladi. Parol: jonyjony (birinchi kirishda
+    almashtirish tavsiya etiladi).
+
+    Ehtiyotkorlik:
+      - shu telefonli hisob allaqachon bo'lsa YANGI ochilmaydi
+        (masalan qaytib kelgan xodim) — mavjudi ko'rsatiladi;
+      - lavozim rolga mos kelmasa (farrosh, boshqa) hisob ochilmaydi
+        — ularga tizimga kirish shart emas;
+      - telefon bo'lmasa ochilmaydi (login yasashga asos yo'q).
+    Natija nomzod IZOHIGA yoziladi — HR login-parolni shu yerdan
+    ko'radi."""
+    ROLE_MAP = {"teacher": roles.TEACHER,
+                "support": roles.SUPPORT_TEACHER,
+                "examiner": roles.EXAMINER,
+                "sales": roles.SALES_MANAGER}
+    role = ROLE_MAP.get(c.position or "")
+    if not role:
+        return {"created": False,
+                "reason": "Bu lavozimga tizim hisobi ochilmaydi"}
+    digits = "".join(ch for ch in str(c.phone or "") if ch.isdigit())
+    if len(digits) < 9:
+        return {"created": False,
+                "reason": "Telefon raqami yo'q — hisob ochilmadi"}
+    uname = digits if digits.startswith("998") else "998" + digits[-9:]
+
+    old = (db.query(models.User)
+           .filter(models.User.username == uname).first())
+    if old:
+        return {"created": False, "login": uname,
+                "reason": f"Bu raqamda hisob allaqachon bor "
+                          f"({old.full_name}, "
+                          f"{roles.UZ_LABELS.get(old.role, old.role)})"}
+
+    u = models.User(username=uname,
+                    password_hash=hash_password("jonyjony"),
+                    full_name=c.full_name, role=role,
+                    branch_id=c.branch_id, is_active=1)
+    db.add(u)
+    db.flush()
+    try:
+        _ensure_public_id(db, "user", u)
+    except Exception:
+        pass
+    # Ustoz/support bo'lsa Ustozlar bo'limida karta ham ochiladi —
+    # fani va telefoni nomzod kartasidan ko'chadi.
+    try:
+        t = _ensure_teacher_card(db, u)
+        if t is not None:
+            if not t.phone:
+                t.phone = c.phone
+            if not t.subject and c.subject:
+                t.subject = c.subject
+            if c.hired_date:
+                t.hired_date = c.hired_date
+    except Exception:
+        pass
+    # HR login-parolni nomzod kartasidan ko'rsin
+    tag = (f"[{date.today().isoformat()}] Hisob avtomat ochildi: "
+           f"login {uname}, parol jonyjony")
+    c.note = (c.note + "\n\n" + tag) if c.note else tag
+    audit.log(db, user, entity="user", action="create", entity_id=u.id,
+              entity_label=u.full_name, branch_id=u.branch_id,
+              new_value=roles.UZ_LABELS.get(role, role),
+              note=f"Nomzod #{c.id} ishga olindi - hisob avtomat")
+    return {"created": True, "login": uname, "password": "jonyjony",
+            "role": roles.UZ_LABELS.get(role, role)}
+
+
 def _sync_candidate_dates(c: models.Candidate):
     """Bosqichga qarab sanalarni avtomat to'ldiradi/tozalaydi."""
     if c.stage == "hired":
@@ -733,6 +810,12 @@ def update_candidate(
     if c.position and c.position != "teacher":
         c.subject = None            # fan faqat ustoz uchun
     _sync_candidate_dates(c)
+    account = None
+    if c.stage == "hired" and before != "hired":
+        try:
+            account = _hire_account(db, c, user)
+        except Exception:
+            db.rollback()
     # Bosqich o'zgargan bo'lsa QUVUR ham yursin — bir odam ikki joyda
     # ikki xil bosqichda turmasin (2026-08-15).
     if c.stage != before:
@@ -750,7 +833,7 @@ def update_candidate(
             except Exception:
                 pass
     db.commit()
-    return {"ok": True}
+    return {"ok": True, "account": account}
 
 @router.post("/api/candidates/{cid}/schedule")
 def schedule_candidate(
@@ -1344,7 +1427,14 @@ def ats_application_move(aid: int, payload: schemas.ApplicationMove,
         if mapped:
             cand.stage = mapped
         if payload.stage == "hired":
+            first_hire = cand.hired_date is None
             cand.hired_date = today
+            # Quvurdan "ishga olindi"ga tortilganda ham hisob ochiladi
+            if first_hire:
+                try:
+                    _hire_account(db, cand, user)
+                except Exception:
+                    db.rollback()
         if payload.stage in roles.APPLICATION_CLOSED:
             cand.closed_date = today
     db.commit(); db.refresh(a)

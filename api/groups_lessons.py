@@ -154,6 +154,88 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     if changed:
         db.commit()
 
+    # HAR YILGI AVTOMAT DAM QOIDALARI (2026-08-19) — pastdagi
+    # _auto_rest. Jadval har safar sinxronlanganda qoida ham qayta
+    # tekshiriladi: yangi oy ochilishi bilan ortiqcha darslar o'zi
+    # dam bo'lib turadi, hech kim eslab yurishi shart emas.
+    try:
+        _auto_rest(db, group, start, end)
+    except Exception:
+        db.rollback()
+
+
+# =====================================================================
+#  HAR YILGI AVTOMAT DAM QOIDALARI (2026-08-19)
+#
+#  Jahongir: "har yilgi aniq narsalarni qoshib qoyay bizda Avgust va
+#  Dekabr oylarida 12ta dars bo'ladi undan kop bolmaydi 12ta darsdan
+#  keyingi darslarni doim dam qilib belgila, 1-sentabr dam, 25-may
+#  dam, 8-mart dam yanvarda ham 12ta dars otamiz undan kop emas,
+#  lekin unda yanvarni boshidagi kunlar dam bo'lishi kerak".
+#
+#  Qoidalar (har yili, avtomat):
+#   - 1-sentabr, 8-mart, 25-may — doim dam;
+#   - avgust va dekabr: guruh standartidan (12) ortig'i OY OXIRIDAN
+#     dam qilinadi (birinchi 12 tasi qoladi);
+#   - yanvar: ortig'i OY BOSHIdan dam qilinadi (oxirgi 12 tasi
+#     qoladi) — o'qish yangi yildan keyinroq boshlanadi;
+#   - o'tilgan (yo'qlama qo'yilgan) darsga hech qachon tegilmaydi;
+#   - qoida 2026-avgustdan amal qiladi, eski oylarga tegilmaydi.
+# =====================================================================
+_FIXED_DAM = {(9, 1): "1-sentabr", (3, 8): "8-mart", (5, 25): "25-may"}
+_CAP_MONTHS = {8: "end", 12: "end", 1: "start"}
+_AUTO_REST_SINCE = date(2026, 8, 1)
+
+
+def _lesson_marked(db: Session, L: models.Lesson) -> bool:
+    return bool(L.held) or (
+        db.query(models.Attendance)
+        .filter(models.Attendance.lesson_id == L.id).count() > 0)
+
+
+def _auto_rest(db: Session, group: models.Group,
+               start: date, end: date) -> None:
+    if start < _AUTO_REST_SINCE:
+        return
+    rows = (db.query(models.Lesson)
+            .filter(models.Lesson.group_id == group.id,
+                    models.Lesson.date >= start,
+                    models.Lesson.date <= end,
+                    or_(models.Lesson.cancelled.is_(None),
+                        models.Lesson.cancelled == 0))
+            .order_by(models.Lesson.date, models.Lesson.id).all())
+    changed = False
+
+    # 1) Belgilangan sanalar — doim dam
+    for L in list(rows):
+        key = (L.date.month, L.date.day)
+        if key in _FIXED_DAM and not _lesson_marked(db, L):
+            L.cancelled = 1
+            L.cancel_note = f"Dam kuni: {_FIXED_DAM[key]}"
+            rows.remove(L)
+            changed = True
+
+    # 2) Avgust/dekabr/yanvar — standartdan ortig'i dam
+    mode = _CAP_MONTHS.get(start.month)
+    if mode:
+        std = int(group.standard_lessons_per_month or 12) or 12
+        need = len(rows) - std
+        if need > 0:
+            order = (reversed(rows) if mode == "end" else rows)
+            for L in order:
+                if need <= 0:
+                    break
+                if _lesson_marked(db, L):
+                    continue        # o'tilganiga tegilmaydi
+                L.cancelled = 1
+                _oy = {8: "avgust", 12: "dekabr", 1: "yanvar"}[start.month]
+                L.cancel_note = f"Dam: {_oy}da {std} ta dars qoidasi"
+                need -= 1
+                changed = True
+    if changed:
+        db.commit()
+
+
 def _mark_lesson_held(db: Session, lesson: models.Lesson) -> None:
     """Yoqlama yoki baho qo'yilgan dars - o'tilgan dars. Shundan keyingina
     u pulga va ustoz ish haqiga kiradi."""

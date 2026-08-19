@@ -86,11 +86,13 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 function ProfileCard({
   student,
   coins,
+  groups,
   onEdit,
   onChanged,
 }: {
   student: StudentDetailType;
   coins: number;
+  groups: Group[];
   onEdit: () => void;
   onChanged: () => void;
 }) {
@@ -133,6 +135,21 @@ function ProfileCard({
                 } ${(student as any).middle_name}`
               : ""}
           </p>
+        </div>
+        {/* UCH NUQTA MENYU (2026-08-20, Jahongir: "shu yerda ham
+            oquvchi taxirlash uchun 3ta nuqtachalik mennyu bolsin,
+            oquvchini muzlatish, ochirish ham bolsin u yerda, boshqa
+            filialga otkizish, boshqa guruhga otkizishlar ham bolsin").
+            Guruh ro'yxatidagi menyu bilan BIR XIL komponent - amallar
+            farq qilmaydi: muzlatish, faollashtirish, boshqa guruh/
+            filialga o'tkazish, guruhdan chiqarish (arxiv). Hech narsa
+            o'chirilmaydi - tarix saqlanadi. */}
+        <div className="shrink-0 -mr-1 -mt-0.5">
+          <StudentRowMenu
+            student={student as unknown as Student}
+            groups={groups}
+            onChanged={onChanged}
+          />
         </div>
       </div>
 
@@ -435,15 +452,9 @@ function GroupsTab({
         onChanged={onChanged}
       />
 
-      {/* O'quvchi ustidagi amallar (faollashtirish, boshqa guruhga
-          o'tkazish, guruhdan chiqarish) — avvalgidek. */}
-      <div className="max-w-lg flex justify-end">
-        <StudentRowMenu
-          student={student as unknown as Student}
-          groups={allGroups}
-          onChanged={onChanged}
-        />
-      </div>
+      {/* Uch nuqta amallar menyusi endi chap paneldagi profil
+          kartasida turadi (2026-08-20) - bu yerdagi yakka qolgan
+          tugma olib tashlandi, funksiya yo'qolgani yo'q. */}
     </>
   );
 }
@@ -1454,6 +1465,7 @@ export default function StudentDetail() {
           <ProfileCard
             student={student}
             coins={coins}
+            groups={groups}
             onEdit={() => setEditOpen(true)}
             onChanged={load}
           />

@@ -2069,15 +2069,43 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
             contents.insert(0, {"role": "user", "parts": [
                 {"text": "(The student opened the chat.)"}]})
 
-        # MODEL ZAXIRA RO'YXATI: bittasi band/yopiq bo'lsa keyingisi.
-        # 503 (band) bo'lsa o'sha modelga BIR marta qayta uriladi —
-        # jurnal ko'rsatdiki Google bepul modellari tez-tez qisqa
-        # "high demand" qaytaradi. Ishlagan model eslab qolinadi va
-        # keyingi so'rov to'g'ridan-to'g'ri o'shanga boradi (tezlik).
-        names = [os.getenv("SPEAKING_MODEL"),
-                 getattr(_ai_reply, "_good", None),
-                 "gemini-2.5-flash", "gemini-2.5-flash-lite",
-                 "gemini-2.0-flash", "gemini-flash-latest"]
+        # MODELLAR RO'YXATI GOOGLE'NING O'ZIDAN OLINADI (2026-08-19).
+        # Jurnal ko'rsatdi: qo'lda yozilgan nomlar (gemini-2.5-flash va
+        # h.k.) yangi kalitlar uchun YOPILGAN — "no longer available to
+        # new users" (404). Nom taxmin qilishni to'xtatamiz: kalitga
+        # aynan qaysi modellar ochiqligini ListModels'dan so'raymiz va
+        # javob keshda turadi. Ro'yxat o'zgarsa ham kod eskirmasdi.
+        avail = getattr(_ai_reply, "_avail", None)
+        if not avail:
+            try:
+                lr = httpx.get(
+                    "https://generativelanguage.googleapis.com/v1beta/"
+                    "models?pageSize=200",
+                    headers={"x-goog-api-key": gem}, timeout=15)
+                lr.raise_for_status()
+                avail = []
+                for m in lr.json().get("models", []):
+                    nm = (m.get("name") or "").split("/")[-1]
+                    if ("generateContent" in
+                            (m.get("supportedGenerationMethods") or [])
+                            and nm.startswith("gemini")
+                            and "embedding" not in nm):
+                        avail.append(nm)
+                _ai_reply._avail = avail  # type: ignore
+            except Exception:
+                avail = []
+
+        def _rank(nm: str) -> tuple:
+            # flash birinchi (tez va arzon), lite keyin, pro oxirida;
+            # "latest" nomlari barqaror — yuqoriroq turadi
+            return (0 if "flash" in nm and "lite" not in nm else
+                    1 if "lite" in nm else 2,
+                    0 if "latest" in nm else 1, nm)
+
+        cand = sorted(avail, key=_rank)
+        names = ([os.getenv("SPEAKING_MODEL"),
+                  getattr(_ai_reply, "_good", None)]
+                 + cand[:4] + ["gemini-flash-latest"])
         seen, order = set(), []
         for n in names:
             if n and n not in seen:
@@ -2091,11 +2119,6 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
                                      "temperature": 0.7},
                 "contents": contents,
             }
-            if "2.5" in model:
-                # 2.5 modellari sekin "o'ylaydi" — suhbatda kerak emas,
-                # o'chirsak javob ancha tez keladi.
-                body["generationConfig"]["thinkingConfig"] = {
-                    "thinkingBudget": 0}
             for attempt in (1, 2):
                 try:
                     r = httpx.post(
@@ -2110,17 +2133,22 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
                 except Exception as e:
                     detail = ""
                     try:
-                        detail = e.response.text[:160]  # type: ignore
+                        detail = e.response.text[:200]  # type: ignore
                     except Exception:
                         pass
                     errs.append(f"{model}#{attempt}: {e} {detail}")
                     status = getattr(getattr(e, "response", None),
                                      "status_code", None)
-                    if status == 503 and attempt == 1:
+                    if status in (503, 429) and attempt == 1:
+                        # Band yoki daqiqalik kvota — bir oz kutib
+                        # o'sha modelga yana bir urinish
                         import time as _t
-                        _t.sleep(1.2)
-                        continue  # o'sha modelga yana bir urinish
+                        _t.sleep(1.5)
+                        continue
                     break        # boshqa xato - keyingi modelga
+        # Hammasi kvota (429) bo'lsa — bolaga tushunarli alohida xabar
+        if errs and all("429" in x for x in errs):
+            raise TimeoutError(" || ".join(errs))
         raise LookupError(" || ".join(errs) or "gemini javob bermadi")
 
     raise RuntimeError("no-key")
@@ -2200,6 +2228,18 @@ def speaking_turn(payload: dict, db: Session = Depends(get_db),
         raise HTTPException(
             503, "Jony Teacher hali ulanmagan — administratorga ayting "
                  "(AI kaliti sozlanishi kerak).")
+    except TimeoutError as e:
+        # Bepul kvota vaqtincha tugagan — bu XATO emas, navbat.
+        try:
+            db.add(models.ErrorLog(
+                path="/api/student/speaking", method="AI",
+                user_name=s.full_name, detail=str(e)[:1200]))
+            db.commit()
+        except Exception:
+            db.rollback()
+        raise HTTPException(
+            502, "Jony Teacher hozir juda band 😅 1-2 daqiqadan keyin "
+                 "qayta urinib ko'ring.")
     except Exception as e:
         # Xato sababi jurnalga yoziladi — asoschi Audit -> Tizim
         # xatolaridan aniq nima bo'lganini ko'radi (kalit noto'g'rimi,

@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { BrandLockup } from "../components/BrandIcon";
+import { Eye, EyeOff, LockKeyhole, ShieldCheck, UserRound } from "lucide-react";
+import { BrandIcon, BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
 import { PasswordInput } from "../components/PasswordInput";
@@ -69,6 +69,123 @@ export default function Login() {
   }
 
   if (recovery) return <RecoverForm onBack={() => setRecovery(false)} />;
+
+  // JONY STUDENT ILOVASI UCHUN ALOHIDA KIRISH EKRANI (2026-08-20,
+  // Jahongir: "Jony Student appning dizaynini toliq tashladim
+  // papkada 1ga 1 qilib ber" - "kirish.png"). Faqat app rejimida
+  // (?pwa=1 orqali ochilganda) ko'rinadi; xodimlar jonyos.uz'dan
+  // kirganda eski oq oyna o'zgarmagan.
+  if (isStudentApp()) {
+    return (
+      <div className="min-h-screen px-4 py-10 flex flex-col justify-center"
+           style={{ background:
+             "radial-gradient(120% 90% at 50% 0%,#1B3FA8 0%,#122a80 40%,#0A1550 75%,#070E38 100%)" }}>
+        <div className="w-full max-w-sm mx-auto">
+          <div className="flex items-center justify-center gap-3">
+            <BrandIcon size={64} />
+            <div className="leading-none">
+              <p className="text-[30px] font-extrabold text-white">JONY</p>
+              <p className="text-[30px] font-extrabold text-white">
+                STUDENT APP
+              </p>
+            </div>
+          </div>
+          <p className="text-center text-[16px] text-white/85 mt-5 leading-relaxed px-2">
+            O'qishingiz, natijalaringiz va mukofotlaringiz — barchasi bir
+            joyda.
+          </p>
+
+          <form onSubmit={onSubmit}
+                className="mt-7 bg-white/95 rounded-3xl p-5 shadow-[0_0_60px_rgba(43,80,224,0.55)] space-y-4">
+            <div>
+              <label className="block text-[17px] font-bold text-slate-900 mb-2">
+                Login
+              </label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-600">
+                  <UserRound size={20} />
+                </span>
+                <input
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-3 py-3.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-brand-400"
+                  placeholder="Telefon raqamingiz"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-[17px] font-bold text-slate-900 mb-2">
+                Parol
+              </label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-600">
+                  <LockKeyhole size={20} />
+                </span>
+                <input
+                  type={showPw ? "text" : "password"}
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-11 py-3.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-brand-400"
+                  placeholder="Parolingizni kiriting"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button type="button" tabIndex={-1}
+                        onClick={() => setShowPw((v) => !v)}
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+                  {showPw ? <EyeOff size={19} /> : <Eye size={19} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" checked={remember}
+                       onChange={(e) => setRemember(e.target.checked)}
+                       className="w-5 h-5 rounded accent-brand-600" />
+                <span className="text-sm font-medium text-slate-700">
+                  Meni eslab qol
+                </span>
+              </label>
+              <button type="button"
+                onClick={() => alert(
+                  "Parolni administrator yangilab beradi — filialingizga murojaat qiling.")}
+                className="text-sm font-semibold text-brand-600">
+                Parolni unutdingizmi?
+              </button>
+            </div>
+
+            {appBlock && (
+              <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                {appBlock}
+              </p>
+            )}
+            {error && (
+              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" disabled={loading}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-2xl py-4 text-[18px] font-bold transition disabled:opacity-60">
+              {loading ? "Kirilmoqda..." : "Kirish"}
+            </button>
+          </form>
+
+          <p className="text-center text-[15px] text-white mt-6 flex items-center justify-center gap-2">
+            <ShieldCheck size={18} className="text-sky-300" />
+            Ma'lumotlaringiz xavfsiz himoyalangan
+          </p>
+          <p className="text-center text-sm text-white/60 mt-4">
+            Yordam kerakmi?{" "}
+            <span className="text-sky-300 font-medium">
+              Administrator bilan bog'laning
+            </span>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 px-4">

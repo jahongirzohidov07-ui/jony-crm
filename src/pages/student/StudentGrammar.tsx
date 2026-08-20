@@ -1,254 +1,340 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowLeft, BookOpenCheck, Check, ChevronDown, ChevronRight,
-  Crown, Lock,
-} from "lucide-react";
+import { ArrowLeft, Check, ChevronRight, Crown, Lock } from "lucide-react";
 import { api } from "../../lib/api";
+import { CoinIcon } from "../../components/CoinIcon";
+import { XpHex, JSA } from "../../components/Jsa";
+import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
 
 /**
- * JONY STUDENT — GRAMMAR A1 DASTURI (2026-08-11, Jahongir bergan
- * tartibda qayta qurildi).
+ * JONY STUDENT — GRAMMAR.
  *
- * Level 1 dan boshlab ketma-ket, orasida BOSS LEVEL sinovlari
- * (toj belgisi bilan). A2 qulf bo'lib turadi - A1 dagi HAMMA mavzu
- * yopilgandagina ochiladi. A1 tugagach yig'ilib turadi, lekin
- * xohlasa ochib eski mavzularni qayta ishlash mumkin.
+ * 2026-08-20: "ORganish grammar.png" dizayni bo'yicha to'q temada
+ * qayta terildi (Jahongir: "1ga 1 qilib ber"). Ma'lumot va qulf
+ * mantig'i o'zgarmadi: /student/grammar/topics, A1->A2->B1->B2
+ * zanjiri, boss mavzular.
  */
+
+const LEVELS = [
+  { key: "a1", chip: "A1", name: "A1 — Beginner" },
+  { key: "a2", chip: "A2", name: "A2 — Elementary" },
+  { key: "b1", chip: "B1", name: "B1 — Intermediate" },
+  { key: "b2", chip: "B2", name: "B2 — Upper-Intermediate" },
+] as const;
+
 export default function StudentGrammar() {
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
-  const [showA1, setShowA1] = useState(true);
+  const [sel, setSel] = useState<string>("a1");
+  const [xp, setXp] = useState<number | null>(null);
 
   useEffect(() => {
     api
       .get<Any>("/student/grammar/topics")
       .then((r) => {
         setD(r);
-        if (r?.a1?.completed) setShowA1(false); // tugagan - yig'iq
+        // Ochilganda hozir o'qilayotgan daraja tanlangan bo'lsin
+        const cur = !r?.a1?.completed ? "a1"
+          : r?.a2_locked ? "a1"
+          : !(r?.a2?.completed) ? "a2"
+          : r?.b1_locked ? "a2"
+          : !(r?.b1?.completed) ? "b1"
+          : r?.b2_locked ? "b1" : "b2";
+        setSel(cur);
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+    api.get<Home>("/student/home")
+      .then((h) => setXp(h.gamification?.lifetime_xp ?? null))
+      .catch(() => {});
   }, []);
 
-  const a1 = d?.a1;
-  const a2 = d?.a2;
+  const info = useMemo(() => {
+    if (!d) return null;
+    const lv: Record<string, Any> = { a1: d.a1, a2: d.a2, b1: d.b1, b2: d.b2 };
+    const locked: Record<string, boolean> = {
+      a1: false, a2: !!d.a2_locked, b1: !!d.b1_locked, b2: !!d.b2_locked,
+    };
+    let done = 0, total = 0;
+    for (const k of ["a1", "a2", "b1", "b2"]) {
+      const x = lv[k];
+      if (x?.topics) { done += x.done || 0; total += x.total || x.topics.length; }
+    }
+    return { lv, locked, done, total,
+             pct: total ? Math.round((done / total) * 100) : 0 };
+  }, [d]);
 
-  function TopicRow({ t }: { t: Any }) {
-    return (
-      <Link
-        to={`/student/grammar/${encodeURIComponent(t.topic)}`}
-        className={`flex items-center gap-3 rounded-xl shadow-sm border p-3.5 active:scale-[0.99] transition ${
-          t.boss
-            ? "bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200"
-            : "bg-white border-slate-200"
-        }`}
-      >
-        <div
-          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xs font-bold ${
-            t.done
-              ? "bg-emerald-100 text-emerald-700"
-              : t.boss
-                ? "bg-amber-100 text-amber-700"
-                : "bg-violet-50 text-violet-600"
-          }`}
-        >
-          {t.done ? (
-            <Check size={17} />
-          ) : t.boss ? (
-            <Crown size={17} />
-          ) : (
-            `${t.percent}%`
-          )}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p
-            className={`text-sm font-semibold truncate ${
-              t.boss ? "text-amber-800" : "text-slate-800"
-            }`}
-          >
-            {t.topic}
-          </p>
-          <div className="h-1.5 bg-slate-100 rounded-full mt-1.5 overflow-hidden">
-            <div
-              className={`h-full rounded-full ${
-                t.done
-                  ? "bg-emerald-500"
-                  : t.boss
-                    ? "bg-amber-500"
-                    : "bg-violet-500"
-              }`}
-              style={{ width: `${t.percent}%` }}
-            />
-          </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">
-            {t.solved}/{t.total} savol yechildi
-          </p>
-        </div>
-        <ChevronRight size={17} className="text-slate-300 shrink-0" />
-      </Link>
-    );
-  }
+  if (err)
+    return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
+  if (!d || !info)
+    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+
+  const card = { background: JSA.card, borderColor: JSA.cardBorder };
+  const cur = info.lv[sel];
+  const curLocked = info.locked[sel];
+  const curName = LEVELS.find((l) => l.key === sel)?.name || "";
+  const topics: Any[] = cur?.topics || [];
+  // Birinchi tugallanmagan mavzu - "faol" (oq karta); undan keyingisi
+  // "Keyingi" belgisini oladi.
+  const activeIdx = topics.findIndex((t) => !t.done);
 
   return (
-    <>
-      <div className="bg-gradient-to-br from-violet-700 to-violet-500 text-white px-4 pt-6 pb-10">
-        <div className="max-w-md mx-auto">
-          <Link
-            to="/student/games"
-            className="inline-flex items-center gap-1.5 text-sm text-white/85 mb-3"
-          >
-            <ArrowLeft size={16} />
-            Mashqlar
-          </Link>
-          <h1 className="text-xl font-semibold flex items-center gap-2">
-            <BookOpenCheck size={22} />
+    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      {/* ------------------------------------------------ sarlavha */}
+      <div className="flex items-center gap-2.5">
+        <Link
+          to="/student/games"
+          className="w-10 h-10 rounded-xl border flex items-center justify-center text-white shrink-0"
+          style={card}
+        >
+          <ArrowLeft size={18} />
+        </Link>
+        <p className="text-[15px] font-extrabold text-white tracking-wide flex-1">
+          JONY STUDENT APP
+        </p>
+        {xp != null && (
+          <span className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 border shrink-0"
+                style={card}>
+            <XpHex size={16} />
+            <b className="text-white text-sm">{fmtNum(xp)} XP</b>
+          </span>
+        )}
+      </div>
+
+      <div className="flex items-end gap-3 mt-3">
+        <div className="flex-1">
+          <h1 className="text-[38px] font-extrabold text-white leading-none">
             Grammar
           </h1>
-          {a1 && (
-            <p className="text-sm opacity-90 mt-0.5">
-              A1: {a1.done}/{a1.total} mavzu
-              {a1.completed ? " — tugatildi! 🎉" : ""}
-            </p>
-          )}
+          <p className="text-[15px] text-slate-400 mt-2">
+            {info.done}/{info.total} mavzu
+          </p>
         </div>
+        <span className="text-[52px] leading-none -mb-1">📖</span>
       </div>
 
-      <div className="max-w-md mx-auto px-4 -mt-5 space-y-3 pb-8">
-        {err && (
-          <div className="bg-white rounded-xl border border-red-200 p-4 text-sm text-red-600">
-            {err}
-          </div>
-        )}
-
-        {/* ---- A1 ---- */}
-        {a1 && (
-          <>
-            <button
-              onClick={() => setShowA1((v) => !v)}
-              className={`w-full flex items-center justify-between rounded-xl p-4 border ${
-                a1.completed
-                  ? "bg-emerald-50 border-emerald-200"
-                  : "bg-white border-slate-200"
-              }`}
-            >
-              <div className="text-left">
-                <p className="text-sm font-bold text-slate-800">
-                  A1 — Beginner
-                </p>
-                <p className="text-[11px] text-slate-500">
-                  {a1.done}/{a1.total} mavzu yopildi
-                  {a1.completed ? " · tugatilgan" : ""}
+      {/* ------------------------------------- umumiy progress */}
+      <div className="rounded-2xl border p-4 mt-4" style={card}>
+        <div className="grid grid-cols-4 gap-1">
+          {LEVELS.map((l) => {
+            const x = info.lv[l.key];
+            const doneAll = !!x?.completed;
+            const active = !doneAll && !info.locked[l.key];
+            return (
+              <div key={l.key} className="text-center">
+                <div className="relative inline-block">
+                  <svg width="46" height="46" viewBox="0 0 24 24">
+                    <path d="M12 1.5 21 6.75v10.5L12 22.5 3 17.25V6.75Z"
+                          fill={doneAll || active ? "#5B4BE8" : "#2A3670"}
+                          stroke={doneAll || active ? "#8F7CFF" : "#3A4890"}
+                          strokeWidth="1.2" />
+                    <text x="12" y="15.5" textAnchor="middle" fontSize="7.5"
+                          fontWeight="800" fill="#fff">{l.chip}</text>
+                  </svg>
+                  {doneAll && (
+                    <span className="absolute -top-1 -right-1 w-4.5 h-4.5 w-[18px] h-[18px] rounded-full bg-white flex items-center justify-center">
+                      <Check size={11} strokeWidth={4} className="text-slate-900" />
+                    </span>
+                  )}
+                </div>
+                <p className="text-[10px] text-slate-300 leading-tight mt-0.5">
+                  {doneAll ? `${l.chip} tugatildi 🎉`
+                    : info.locked[l.key] ? `${l.chip} qulflangan`
+                    : `${l.chip} davom etmoqda`}
                 </p>
               </div>
-              <ChevronDown
-                size={18}
-                className={`text-slate-400 transition ${
-                  showA1 ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {showA1 && (
-              <div className="space-y-2">
-                {a1.topics.map((t: Any) => (
-                  <TopicRow key={t.topic} t={t} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-
-        {/* ---- A2 ---- */}
-        {d?.a2_locked ? (
-          <div className="rounded-xl border-2 border-dashed border-slate-300 p-5 flex items-center gap-3 bg-slate-50">
-            <div className="w-10 h-10 rounded-xl bg-slate-200 text-slate-500 flex items-center justify-center shrink-0">
-              <Lock size={18} />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-slate-600">
-                A2 — Elementary
-              </p>
-              <p className="text-[11px] text-slate-400">
-                A1 dagi barcha mavzularni tugating — A2 ochiladi
-              </p>
-            </div>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-3 mt-3">
+          <div className="h-2.5 flex-1 rounded-full bg-[#26326B] overflow-hidden">
+            <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-400"
+                 style={{ width: `${info.pct}%` }} />
           </div>
-        ) : a2?.ready ? (
-          <>
-            <div className="rounded-xl p-4 bg-white border border-slate-200">
-              <p className="text-sm font-bold text-slate-800">
-                A2 — Elementary
-              </p>
-            </div>
-            <div className="space-y-2">
-              {a2.topics.map((t: Any) => (
-                <TopicRow key={t.topic} t={t} />
-              ))}
-            </div>
-          </>
-        ) : a1?.completed ? (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-            <p className="text-sm font-semibold text-amber-800">
-              A2 ochildi! 🎉
-            </p>
-            <p className="text-[11px] text-amber-700 mt-0.5">
-              A2 mashqlari tez orada yuklanadi.
-            </p>
-          </div>
-        ) : null}
-
-        {/* ---- B1 (2026-08-12: kontent qo'shildi, zanjir qulf) ---- */}
-        {d?.b1_locked ? (
-          <LockedLevel name="B1 — Intermediate"
-                       hint="A2 dagi barcha mavzularni tugating — B1 ochiladi" />
-        ) : d?.b1?.ready ? (
-          <LevelBlock name="B1 — Intermediate" topics={d.b1.topics}
-                      Row={TopicRow} />
-        ) : null}
-
-        {/* ---- B2 ---- */}
-        {d?.b2_locked ? (
-          <LockedLevel name="B2 — Upper-Intermediate"
-                       hint="B1 dagi barcha mavzularni tugating — B2 ochiladi" />
-        ) : d?.b2?.ready ? (
-          <LevelBlock name="B2 — Upper-Intermediate" topics={d.b2.topics}
-                      Row={TopicRow} />
-        ) : null}
+          <b className="text-white text-[15px]">{info.pct}%</b>
+        </div>
+        <p className="text-xs text-slate-400 mt-1.5">Umumiy progress</p>
       </div>
-    </>
-  );
-}
 
-function LockedLevel({ name, hint }: { name: string; hint: string }) {
-  return (
-    <div className="rounded-xl border-2 border-dashed border-slate-300 p-5 flex items-center gap-3 bg-slate-50">
-      <div className="w-10 h-10 rounded-xl bg-slate-200 text-slate-500 flex items-center justify-center shrink-0">
-        <Lock size={18} />
-      </div>
-      <div>
-        <p className="text-sm font-bold text-slate-600">{name}</p>
-        <p className="text-[11px] text-slate-400">{hint}</p>
-      </div>
-    </div>
-  );
-}
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-function LevelBlock({ name, topics, Row }: {
-  name: string; topics: any[]; Row: any;
-}) {
-  return (
-    <>
-      <div className="rounded-xl p-4 bg-white border border-slate-200">
-        <p className="text-sm font-bold text-slate-800">{name}</p>
-      </div>
-      <div className="space-y-2">
-        {topics.map((t: any) => (
-          <Row key={t.topic} t={t} />
+      {/* ------------------------------------------- daraja chiplari */}
+      <div className="flex gap-2.5 mt-4">
+        {LEVELS.map((l) => (
+          <button
+            key={l.key}
+            onClick={() => setSel(l.key)}
+            className={`flex-1 py-2.5 rounded-full text-[15px] font-bold transition ${
+              sel === l.key
+                ? "bg-violet-600 text-white"
+                : "text-slate-300 border"
+            }`}
+            style={sel === l.key ? undefined : card}
+          >
+            {l.chip}
+          </button>
         ))}
       </div>
-    </>
+
+      {/* ------------------------------------------- daraja nomi */}
+      <h2 className="text-[24px] font-extrabold text-white mt-5">{curName}</h2>
+      <p className="text-sm text-slate-400 mt-1">
+        {curLocked
+          ? "Oldingi darajani tugating — bu bosqich ochiladi"
+          : `${cur?.done ?? 0}/${cur?.total ?? topics.length} mavzu`}
+      </p>
+
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2.5 text-[12px] text-slate-400">
+        <span className="inline-flex items-center gap-1">
+          <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-flex items-center justify-center">
+            <Check size={9} strokeWidth={4} className="text-white" />
+          </span>
+          Tugatildi
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="w-3.5 h-3.5 rounded-full border-2 border-violet-400 inline-block" />
+          Davom etyapti
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <Lock size={11} /> Qulflangan
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <Crown size={12} className="text-amber-400" /> Boss
+        </span>
+      </div>
+
+      {/* --------------------------------------------- mavzular */}
+      <div className="space-y-3 mt-4">
+        {curLocked && (
+          <div className="rounded-2xl border-2 border-dashed p-5 flex items-center gap-3"
+               style={{ borderColor: "#2A3670" }}>
+            <span className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: "#1A2558" }}>
+              <Lock size={17} className="text-slate-400" />
+            </span>
+            <p className="text-sm text-slate-300">
+              {curName} hali qulf — oldingi darajadagi barcha mavzularni
+              tugating.
+            </p>
+          </div>
+        )}
+
+        {!curLocked && topics.map((t: Any, i: number) => {
+          const boss = !!t.boss;
+          const isActive = i === activeIdx && !t.done;
+          const isNext = activeIdx >= 0 && i === activeIdx + 1 && !t.done;
+          const href = `/student/grammar/${encodeURIComponent(t.topic)}`;
+
+          if (boss) {
+            return (
+              <Link key={t.topic} to={href}
+                className="flex items-center gap-3 rounded-2xl border p-3.5 active:scale-[0.99] transition"
+                style={{ background: "#241B45", borderColor: "#7A5B16" }}>
+                <span className="w-12 h-12 rounded-2xl bg-violet-600/60 flex items-center justify-center shrink-0">
+                  <Crown size={22} className="text-amber-400" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-amber-300 font-bold">BOSS —</p>
+                  <p className="text-[17px] font-extrabold text-amber-400 truncate">
+                    {t.topic}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {t.solved}/{t.total} · 🕐 4 daqiqa
+                  </p>
+                </div>
+                <span className="px-3 py-1.5 rounded-full border border-amber-500/60 text-amber-300 text-xs font-bold shrink-0">
+                  Boss sinovi
+                </span>
+                {t.done ? (
+                  <span className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+                    <Check size={13} strokeWidth={4} className="text-white" />
+                  </span>
+                ) : (
+                  <Lock size={15} className="text-slate-400 shrink-0" />
+                )}
+              </Link>
+            );
+          }
+
+          if (isActive) {
+            return (
+              <Link key={t.topic} to={href}
+                className="flex items-center gap-3 rounded-2xl bg-white p-3.5 active:scale-[0.99] transition shadow-[0_0_24px_rgba(124,92,240,0.35)]">
+                <span className="w-12 h-12 rounded-2xl bg-violet-600 flex items-center justify-center text-white font-extrabold text-[15px] shrink-0">
+                  Aa
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-slate-500 font-semibold">
+                    Level {i + 1} —
+                  </p>
+                  <p className="text-[18px] font-extrabold text-slate-900 truncate">
+                    {t.topic}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    <b className="text-violet-600">{t.solved}/{t.total}</b>
+                    {" "}· 🕐 4 daqiqa
+                  </p>
+                  <div className="h-1.5 rounded-full bg-slate-100 mt-1.5 overflow-hidden">
+                    <div className="h-full bg-violet-500 rounded-full"
+                         style={{ width: `${t.percent}%` }} />
+                  </div>
+                </div>
+                <div className="text-right shrink-0 space-y-1">
+                  <p className="text-xs font-bold text-slate-700 inline-flex items-center gap-1">
+                    <XpHex size={13} /> +9 XP
+                  </p>
+                  <p className="text-xs font-bold text-slate-700 flex items-center gap-1 justify-end">
+                    <CoinIcon size={13} /> +5 Coin
+                  </p>
+                  <span className="inline-flex w-10 h-10 rounded-xl bg-violet-600 items-center justify-center">
+                    <ChevronRight size={19} className="text-white" />
+                  </span>
+                </div>
+              </Link>
+            );
+          }
+
+          return (
+            <Link key={t.topic} to={href}
+              className="flex items-center gap-3 rounded-2xl border p-3.5 active:scale-[0.99] transition"
+              style={card}>
+              <span className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+                t.done ? "bg-emerald-500/20" : "bg-violet-600/40"}`}>
+                {t.done
+                  ? <Check size={20} className="text-emerald-400" strokeWidth={3} />
+                  : <Lock size={18} className="text-violet-200" />}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs text-slate-400 font-semibold">
+                  Level {i + 1} —
+                </p>
+                <p className="text-[17px] font-extrabold text-white truncate">
+                  {t.topic}
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {t.solved}/{t.total} · 🕐 4 daqiqa
+                </p>
+              </div>
+              {isNext ? (
+                <span className="px-3.5 py-2 rounded-xl border text-slate-200 text-sm font-semibold shrink-0"
+                      style={{ borderColor: "#3A4890", background: "#1A2558" }}>
+                  Keyingi
+                </span>
+              ) : !t.done ? (
+                <Lock size={16} className="text-slate-500 shrink-0" />
+              ) : (
+                <ChevronRight size={17} className="text-slate-500 shrink-0" />
+              )}
+            </Link>
+          );
+        })}
+
+        {!curLocked && topics.length === 0 && (
+          <p className="text-sm text-slate-400 text-center py-8">
+            Bu darajaga mashqlar tez orada yuklanadi.
+          </p>
+        )}
+      </div>
+    </div>
   );
 }

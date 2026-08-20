@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Award, ChevronRight, CreditCard, LogOut, Settings, Star, TrendingUp,
-  Trophy, User as UserIcon, Camera, Check, X,
-} from "lucide-react";
+import { Camera, Check, ChevronRight, LogOut, Settings,
+  TrendingUp, X } from "lucide-react";
+import { BrandIcon } from "../../components/BrandIcon";
 import { CoinIcon } from "../../components/CoinIcon";
 import { useAuth } from "../../lib/AuthContext";
 import { api } from "../../lib/api";
@@ -198,224 +197,226 @@ export default function StudentProfile() {
   const inLevel = lv?.next ? per - lv.next.points_left : per;
   const pct = lv?.next ? Math.round(lv.next.progress_percent) : 100;
 
+  // 2026-08-20: "profil.png" dizayni bo'yicha TO'Q temada qayta
+  // terildi (Jahongir: "1ga 1 qilib ber"). Radar, rasm yuklash,
+  // to'lov va chiqish mantig'i o'zgarmadi.
+  const card = { background: "#111C4B", borderColor: "#223070" };
+
   return (
-    <div className="bg-slate-50 min-h-screen">
-      <div className="max-w-md mx-auto px-4 pt-6 pb-8 space-y-4">
-        <div className="flex items-center">
-          <h1 className="text-xl font-bold text-slate-900 flex-1 text-center pl-8">
-            Profil
-          </h1>
-          <Link
-            to="/student/settings"
-            className="w-9 h-9 flex items-center justify-center text-slate-400"
-          >
-            <Settings size={22} />
-          </Link>
+    <div className="max-w-md mx-auto px-4 pt-5 pb-8 space-y-4">
+      {/* ------------------------------------------------ sarlavha */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 flex-1 min-w-0">
+          <span className="shrink-0"><BrandIcon size={40} /></span>
+          <div className="leading-none">
+            <p className="text-[15px] font-extrabold text-white">JONY</p>
+            <p className="text-[15px] font-extrabold text-white">STUDENT APP</p>
+          </div>
         </div>
+        <Link
+          to="/student/settings"
+          className="w-11 h-11 rounded-xl border flex items-center justify-center text-white shrink-0"
+          style={card}
+        >
+          <Settings size={20} />
+        </Link>
+      </div>
 
-        {msg && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex gap-2 items-center">
-            <Check size={16} className="text-emerald-600" />
-            <p className="text-sm text-emerald-800 flex-1">{msg}</p>
-            <button onClick={() => setMsg("")} className="text-emerald-500">
-              <X size={15} />
-            </button>
-          </div>
-        )}
-        {err && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-2 items-center">
-            <p className="text-sm text-red-700 flex-1">{err}</p>
-            <button onClick={() => setErr("")} className="text-red-400">
-              <X size={15} />
-            </button>
-          </div>
-        )}
+      <div>
+        <h1 className="text-[34px] font-extrabold text-white leading-none">
+          Profil
+        </h1>
+        <p className="text-sm text-slate-400 mt-1.5">
+          O'zingiz haqingizda ma'lumotlar
+        </p>
+      </div>
 
-        {/* ------------------------------------------ FOYDALANUVCHI */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
-          <div className="flex items-center gap-4">
-            <label className="relative shrink-0 cursor-pointer">
-              <div className="w-[72px] h-[72px] rounded-full bg-brand-50 overflow-hidden flex items-center justify-center">
-                {d.photo ? (
-                  <img
-                    src={d.photo}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <UserIcon size={32} className="text-brand-300" />
-                )}
-              </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center border-2 border-white">
-                <Camera size={13} />
-              </span>
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                disabled={busy}
-                onChange={onPhoto}
-              />
-            </label>
+      {msg && (
+        <div className="bg-emerald-500/10 border border-emerald-500/40 rounded-xl p-3 flex gap-2 items-center">
+          <Check size={16} className="text-emerald-400" />
+          <p className="text-sm text-emerald-300 flex-1">{msg}</p>
+          <button onClick={() => setMsg("")} className="text-emerald-400">
+            <X size={15} />
+          </button>
+        </div>
+      )}
+      {err && (
+        <div className="bg-red-500/10 border border-red-500/40 rounded-xl p-3 flex gap-2 items-center">
+          <p className="text-sm text-red-300 flex-1">{err}</p>
+          <button onClick={() => setErr("")} className="text-red-400">
+            <X size={15} />
+          </button>
+        </div>
+      )}
 
-            <div className="min-w-0 flex-1">
-              <p className="text-[22px] font-bold text-slate-900 truncate">
-                {d.first_name || d.full_name}
-              </p>
-              <span className="inline-block mt-1 px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold">
-                {lv?.level?.cefr || "—"}
-              </span>
-              <p className="text-xs text-slate-500 mt-2">
-                XP {fmtNum(inLevel)} / {fmtNum(per)}
-              </p>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
-                  <div
-                    className="h-full bg-brand-600 rounded-full"
-                    style={{ width: `${pct}%` }}
-                  />
-                </div>
-                <span className="text-xs font-semibold text-brand-600 shrink-0">
-                  {pct}%
+      {/* -------------------------------------- FOYDALANUVCHI KARTASI */}
+      <div className="rounded-3xl p-5"
+           style={{ background:
+             "linear-gradient(120deg,#16267A 0%,#1D2F8E 60%,#3A2F9E 100%)" }}>
+        <div className="flex items-center gap-4">
+          <label className="relative shrink-0 cursor-pointer">
+            <div className="w-[88px] h-[88px] rounded-full bg-brand-600 border-4 border-brand-400/70 overflow-hidden flex items-center justify-center">
+              {d.photo ? (
+                <img src={d.photo} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-[34px] font-extrabold text-white">
+                  {(d.first_name || d.full_name || "?").charAt(0)}
                 </span>
-              </div>
+              )}
+            </div>
+            <span className="absolute -bottom-0.5 -right-0.5 w-8 h-8 rounded-full bg-white text-brand-600 flex items-center justify-center border-2 border-brand-300">
+              <Camera size={14} />
+            </span>
+            <input type="file" accept="image/*" className="hidden"
+                   disabled={busy} onChange={onPhoto} />
+          </label>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[26px] font-extrabold text-white truncate">
+              {d.first_name || d.full_name}
+            </p>
+            <div className="flex flex-wrap gap-1.5 mt-1.5">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#101B4A] border border-[#2E56E8] text-white text-xs font-bold">
+                🛡 {lv?.level?.label} · {lv?.level?.cefr}
+              </span>
               {d.group && (
-                <p className="text-xs text-slate-400 mt-1.5">{d.group}</p>
+                <span className="px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold truncate max-w-[130px]">
+                  {d.group}
+                </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* -------------------------------------- ENGLISH SKILLS */}
-        {d.radar && d.radar.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
-            <div className="flex items-start">
-              <div className="flex-1">
-                <p className="text-xl font-bold text-slate-900">
-                  English Skills
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  {d.radar_note}
-                </p>
-              </div>
-              <span className="px-2.5 py-1 rounded-lg bg-brand-50 text-brand-700 text-xs font-bold shrink-0">
-                {lv?.level?.cefr}
+        <p className="text-sm text-white/85 mt-4">
+          Daraja XP <b className="text-white">{fmtNum(inLevel)}</b>
+          <span className="text-white/60"> / {fmtNum(per)}</span>
+        </p>
+        <div className="flex items-center gap-2.5 mt-2">
+          <div className="h-2.5 flex-1 rounded-full bg-white/20 overflow-hidden">
+            <div className="h-full rounded-full bg-white"
+                 style={{ width: `${Math.max(pct, 4)}%` }} />
+          </div>
+          <b className="text-white text-sm shrink-0">{pct}%</b>
+        </div>
+        {lv?.next && (
+          <p className="text-[13px] text-white/75 mt-2">
+            {lv.next.label}'gacha{" "}
+            <b className="text-sky-300">{lv.next.points_left} XP</b> qoldi
+          </p>
+        )}
+      </div>
+
+      {/* -------------------------------------- ENGLISH SKILLS (oq) */}
+      {d.radar && d.radar.length > 0 && (
+        <div className="bg-white rounded-3xl p-4">
+          <p className="text-[22px] font-extrabold text-slate-900">
+            English Skills
+          </p>
+          <p className="text-xs text-slate-400 mt-0.5">{d.radar_note}</p>
+
+          <RadarChart data={d.radar} />
+
+          <div className="grid grid-cols-2 gap-2 mt-1">
+            <div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-2.5">
+              <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+                <TrendingUp size={15} className="text-white" />
               </span>
-            </div>
-
-            <RadarChart data={d.radar} />
-
-            <div className="grid grid-cols-2 gap-2 mt-1">
-              <div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-2.5">
-                <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                  <Star size={15} className="text-emerald-600" fill="currentColor" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[11px] text-slate-500">Eng kuchli</p>
-                  <p className="text-sm font-bold text-emerald-700 truncate">
-                    {d.strongest?.label} {d.strongest?.score}
-                  </p>
-                </div>
+              <div className="min-w-0">
+                <p className="text-[11px] text-emerald-700">Eng kuchli</p>
+                <p className="text-sm font-bold text-emerald-700 truncate">
+                  {d.strongest?.label}{" "}
+                  <span className="text-[17px]">{d.strongest?.score}</span>
+                </p>
               </div>
-              <div className="flex items-center gap-2 rounded-xl bg-orange-50 p-2.5">
-                <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                  <TrendingUp size={15} className="text-orange-500" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[11px] text-slate-500">Rivojlantirish</p>
-                  <p className="text-sm font-bold text-orange-600 truncate">
-                    {d.weakest?.label} {d.weakest?.score}
-                  </p>
-                </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-xl bg-red-50 p-2.5">
+              <span className="w-8 h-8 rounded-full bg-red-400 flex items-center justify-center shrink-0">
+                <TrendingUp size={15} className="text-white" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] text-red-600">Rivojlantirish</p>
+                <p className="text-sm font-bold text-red-600 truncate">
+                  {d.weakest?.label}{" "}
+                  <span className="text-[17px]">{d.weakest?.score}</span>
+                </p>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* -------------------------------------------- UCH KARTA */}
-        <div className="grid grid-cols-3 gap-2.5">
-          <Link
-            to="/student/shop?tab=badges"
-            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
-          >
-            <span className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center mx-auto">
-              <Trophy size={19} className="text-brand-600" />
-            </span>
-            <p className="text-sm font-bold text-slate-900 mt-2">Yutuqlar</p>
-            <p className="text-[11px] text-slate-400">
+      {/* ------------------------------------------ 2x2 KARTALAR */}
+      <div className="grid grid-cols-2 gap-3">
+        <Link to="/student/shop?tab=badges"
+          className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
+          style={card}>
+          <span className="text-[30px] shrink-0">🏆</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">Yutuqlar</p>
+            <p className="text-[15px] font-extrabold text-brand-300">
               {d.badges_done}/{d.badges_total}
             </p>
-          </Link>
-
-          <Link
-            to="/student/shop"
-            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
-          >
-            <span className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center mx-auto">
-              <CoinIcon size={20} />
-            </span>
-            <p className="text-sm font-bold text-slate-900 mt-2">Coin</p>
-            <p className="text-[11px] text-slate-400">{fmtNum(d.coins)}</p>
-          </Link>
-
-          <Link
-            to="/student/certificates"
-            className="bg-white rounded-xl border border-slate-200 p-3 text-center active:scale-[0.98] transition"
-          >
-            <span className="w-10 h-10 rounded-full bg-violet-50 flex items-center justify-center mx-auto">
-              <Award size={19} className="text-violet-600" />
-            </span>
-            <p className="text-sm font-bold text-slate-900 mt-2">
-              Sertifikat
-            </p>
-            <p className="text-[11px] text-slate-400">{d.certificates ?? 0}</p>
-          </Link>
-        </div>
-
-        {/* ---------------------------------------------- TO'LOV */}
-        <Link
-          to="/student/payments"
-          className={`flex items-center gap-3 rounded-xl border p-4 ${
-            (d.balance ?? 0) < 0
-              ? "bg-red-50 border-red-200"
-              : "bg-white border-slate-200"
-          }`}
-        >
-          <span
-            className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-              (d.balance ?? 0) < 0
-                ? "bg-red-100 text-red-500"
-                : "bg-emerald-50 text-emerald-600"
-            }`}
-          >
-            <CreditCard size={19} />
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-slate-900">To'lovlar</p>
-            <p
-              className={`text-sm mt-0.5 ${
-                (d.balance ?? 0) < 0 ? "text-red-600" : "text-slate-500"
-              }`}
-            >
-              Balans: {fmtNum(d.balance)} so'm
-            </p>
           </div>
-          <ChevronRight size={18} className="text-slate-300" />
+          <ChevronRight size={17} className="text-slate-500 shrink-0" />
         </Link>
 
-        {/* ---------------------------------------------- CHIQISH */}
-        <button
-          onClick={logout}
-          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-sm font-medium"
-        >
-          <LogOut size={16} />
-          Chiqish
-        </button>
+        <Link to="/student/shop"
+          className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
+          style={card}>
+          <span className="shrink-0"><CoinIcon size={30} /></span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">Coin</p>
+            <p className="text-[15px] font-extrabold text-brand-300">
+              {fmtNum(d.coins)}
+            </p>
+          </div>
+          <ChevronRight size={17} className="text-slate-500 shrink-0" />
+        </Link>
 
-        <p className="text-[11px] text-slate-400 text-center pt-1">
-          Jony Student · {d.phone}
-        </p>
+        <Link to="/student/certificates"
+          className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
+          style={card}>
+          <span className="text-[30px] shrink-0">🎖️</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">Sertifikatlar</p>
+            <p className="text-[15px] font-extrabold text-brand-300">
+              {d.certificates ?? 0}
+            </p>
+          </div>
+          <ChevronRight size={17} className="text-slate-500 shrink-0" />
+        </Link>
+
+        <Link to="/student/payments"
+          className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
+          style={card}>
+          <span className="text-[30px] shrink-0">👛</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">To'lovlar</p>
+            <p className={`text-[15px] font-extrabold truncate ${
+              (d.balance ?? 0) < 0 ? "text-red-400" : "text-emerald-400"}`}>
+              {(d.balance ?? 0) > 0 ? "+" : ""}{fmtNum(d.balance)} so'm
+            </p>
+          </div>
+          <ChevronRight size={17} className="text-slate-500 shrink-0" />
+        </Link>
       </div>
+
+      {/* ------------------------------------------------ CHIQISH */}
+      <button
+        onClick={logout}
+        className="w-full flex items-center justify-between px-4 py-4 rounded-2xl border-2 border-red-500/70 text-red-400 text-[16px] font-bold"
+      >
+        <span className="flex items-center gap-2.5">
+          <LogOut size={18} />
+          Chiqish
+        </span>
+        <ChevronRight size={18} />
+      </button>
+
+      <p className="text-[11px] text-slate-500 text-center pt-1">
+        Jony Student · {d.phone}
+      </p>
     </div>
   );
 }

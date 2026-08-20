@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink, Outlet, Navigate } from "react-router-dom";
+import { NavLink, Outlet, Navigate, useLocation } from "react-router-dom";
 import { Home, BookOpen, Trophy, Gift, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 import { isStudentApp } from "../../lib/appMode";
@@ -70,24 +70,41 @@ export default function StudentLayout() {
   }
   if (user.role !== "student") return <Navigate to="/" replace />;
 
+  // TO'Q KO'K TEMA (2026-08-20, Jahongir: "Jony Student appning
+  // dizaynini toliq tashladim papkada 1ga 1 qilib ber"). Dizayn
+  // berilgan 5 asosiy ekran to'q navy fonda; ichki sahifalar
+  // (mashqlar, sozlamalar, to'lovlar...) hali eski och temada -
+  // ularning matni to'q fonda ko'rinmay qolmasligi uchun fon
+  // marshrutga qarab tanlanadi. Do'kon o'z fonini o'zi qo'yadi.
+  const path = useLocation().pathname;
+  const dark =
+    path === "/student" ||
+    path === "/student/leaderboard" ||
+    path === "/student/roadmap" ||
+    path === "/student/profile" ||
+    path === "/student/grammar";
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
+    <div className="min-h-screen pb-24"
+         style={{ background: dark ? "#0A1233" : "#F1F5F9" }}>
       <Outlet />
 
-      <nav className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 z-40 pb-safe">
-        <div className="max-w-md mx-auto grid grid-cols-5">
+      <nav
+        className="fixed bottom-0 inset-x-0 z-40 pb-safe border-t"
+        style={{ background: "rgba(10,17,46,0.97)", borderColor: "#1D2A63" }}
+      >
+        <div className="max-w-md mx-auto grid grid-cols-5 pt-1.5 pb-1">
           {TABS.map((t) => (
             <NavLink
               key={t.to}
               to={t.to}
               end={t.end}
-              className="flex flex-col items-center gap-0.5 py-2 text-[10px] font-medium"
+              className="flex flex-col items-center gap-1 py-1 text-[11px] font-medium"
             >
               {({ isActive }) => (
                 <>
                   <span
-                    className={`flex items-center justify-center w-11 h-7 rounded-full transition ${
-                      isActive ? t.tone : "text-slate-400"
+                    className={`flex items-center justify-center w-12 h-8 rounded-2xl transition ${
+                      isActive ? "bg-brand-600 text-white" : "text-slate-400"
                     }`}
                   >
                     <t.icon size={19} />
@@ -95,7 +112,7 @@ export default function StudentLayout() {
                   <span
                     className={
                       isActive
-                        ? t.tone.split(" ")[0] + " font-semibold"
+                        ? "text-brand-400 font-semibold"
                         : "text-slate-400"
                     }
                   >

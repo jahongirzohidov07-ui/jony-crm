@@ -647,3 +647,55 @@ async def _unhandled_error(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={
         "detail": "Serverda kutilmagan xato. Bu xato qayd etildi va "
                   "tez orada ko'rib chiqiladi."})
+
+
+# ---------------------------------------------------------------------
+# LIGA COINLARINI YANGI SHKALAGA TENGLASHTIRISH (2026-08-20).
+# Jahongir: "eski tartiba olingan coinlarni yangi tartibdagidek qilib
+# berish kerak". Eski shkala (amateur 1 ... goat 100) bo'yicha berilgan
+# har bir liga-coin yozuvi yangi shkala (1,2,3,4,5,6,8,10,12,14,16,25,
+# 30) bilan solishtiriladi va FARQ bitta tuzatish yozuvi bo'lib
+# qo'shiladi. Eski yozuvlar O'CHIRILMAYDI - tarix to'liq qoladi.
+# Balans 0 dan pastga tushmaydi (coinini sarflab bo'lganlarga qarz
+# yozilmaydi). Bir martalik.
+try:
+    from sqlalchemy.orm import Session as _VS17
+    from common import _seed_done as _sd17, _seed_mark as _sm17
+    from common import _student_coin_balance as _bal17
+    with _VS17(engine) as _db17:
+        if not _sd17(_db17, "league_coin_rescale_v1"):
+            _new_scale = {lg.key: (lg.reward_coin or 0)
+                          for lg in _db17.query(models.XpLeague).all()}
+            _name2key = {lg.name: lg.key
+                         for lg in _db17.query(models.XpLeague).all()}
+            _rows17 = (_db17.query(models.CoinEntry)
+                       .filter(models.CoinEntry.source == "league").all())
+            _delta = {}
+            for _e in _rows17:
+                _nm = (_e.note or "").split(" ligasiga")[0].strip()
+                _k = _name2key.get(_nm)
+                if not _k:
+                    continue
+                _d = _new_scale.get(_k, 0) - (_e.amount or 0)
+                if _d:
+                    _delta[_e.student_id] = _delta.get(_e.student_id, 0) + _d
+            _fixed17 = 0
+            for _sid, _d in _delta.items():
+                if not _d:
+                    continue
+                if _d < 0:
+                    _have = _bal17(_db17, _sid)
+                    if _have + _d < 0:
+                        _d = -_have  # balans 0 dan pastga tushmasin
+                    if _d == 0:
+                        continue
+                _db17.add(models.CoinEntry(
+                    student_id=_sid, amount=_d, source="league",
+                    note=("Liga coinlari yangi shkalaga tenglashtirildi "
+                          "(2026-08-20 qoidasi)"),
+                    created_by="Tizim"))
+                _fixed17 += 1
+            _db17.commit()
+            _sm17(_db17, "league_coin_rescale_v1")
+except Exception:
+    pass

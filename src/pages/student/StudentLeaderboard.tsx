@@ -250,29 +250,27 @@ export default function StudentLeaderboard() {
           <p className="text-[17px] font-extrabold text-slate-900 mb-3">
             Sizning o'rningiz
           </p>
-          <div className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/60 p-3">
-            <span className="text-[26px] font-extrabold text-brand-600 w-8 text-center shrink-0">
-              {d.me.rank ?? "—"}
-            </span>
-            <Avatar row={d.me} size={48} ring="border-white" />
-            <div className="min-w-0 flex-1">
-              {typeof d.to_top10 === "number" && d.to_top10 > 0 ? (
-                <p className="text-sm text-slate-600 leading-snug">
-                  Top 10 gacha yana <b>{fmtNum(d.to_top10)} XP</b>
-                </p>
-              ) : (
-                <p className="text-sm text-slate-600 leading-snug">
-                  Siz eng yaxshi<br />10 talikdasiz
-                </p>
-              )}
+          <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3">
+            <div className="flex items-center gap-2.5">
+              <span className="text-[24px] font-extrabold text-brand-600 w-7 text-center shrink-0">
+                {d.me.rank ?? "—"}
+              </span>
+              <Avatar row={d.me} size={44} ring="border-white" />
+              <p className="text-[13px] text-slate-600 leading-snug flex-1 min-w-0">
+                {typeof d.to_top10 === "number" && d.to_top10 > 0 ? (
+                  <>Top 10 gacha yana <b>{fmtNum(d.to_top10)} XP</b></>
+                ) : (
+                  <>Siz eng yaxshi 10 talikdasiz</>
+                )}
+              </p>
+              <b className="text-[17px] text-brand-600 shrink-0">
+                {fmtNum(d.me.points)} XP
+              </b>
+              <Link to="/student/games"
+                className="px-3.5 py-2.5 rounded-xl bg-brand-600 text-white text-[13px] font-bold shrink-0">
+                Mashq qilish
+              </Link>
             </div>
-            <b className="text-[19px] text-brand-600 shrink-0">
-              {fmtNum(d.me.points)} XP
-            </b>
-            <Link to="/student/games"
-              className="px-4 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-bold shrink-0">
-              Mashq qilish
-            </Link>
           </div>
         </div>
       )}

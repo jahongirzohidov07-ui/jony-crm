@@ -32,7 +32,7 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search, Smartphone } from "lucide-react";
+ Search, Smartphone , Sparkles } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -264,6 +264,12 @@ export default function Layout() {
       { to: "/reports", label: "Hisobotlar", icon: BarChart3 },
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
+  }
+  // BIZNES MASLAHATCHI AI - faqat asoschi (2026-08-20, Jahongir:
+  // "menga asoschi uchun Biznes maslahatchi AI qoshib ber").
+  if (user?.role === FOUNDER) {
+    items = [...items,
+      { to: "/advisor", label: "Maslahatchi AI", icon: Sparkles }];
   }
   // O'quv bo'limi - ta'lim sifati. Guruhlardan keyin turadi.
   // Sotuv menejerining ishi sotuv — bu bo'lim unga ko'rinmaydi.

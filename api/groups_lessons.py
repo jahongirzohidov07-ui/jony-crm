@@ -1345,6 +1345,16 @@ def reschedule_decide(rid: int, payload: schemas.RescheduleDecision,
     r.decision_note = payload.note
     if payload.decision == "approved":
         _apply_reschedule(db, r)
+    # "Dars ko'chirish so'rovi #N" vazifalari hammada yopiladi
+    # (2026-08-20, Jahongir: "boshqa sorovlar ham tasdiqlansa
+    # vazifada ham bajarildi bo'lsin").
+    try:
+        _close_request_tasks(
+            db, f"Dars ko'chirish so'rovi #{rid}",
+            ("Tasdiqlandi" if payload.decision == "approved"
+             else "Rad etildi") + f" ({user.full_name})")
+    except Exception:
+        pass
     db.commit()
     audit.log(db, user, entity="lesson_reschedule", action=payload.decision,
               entity_id=rid, note=payload.note, commit=True)

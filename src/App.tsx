@@ -31,6 +31,7 @@ const Teachers = lazy(() => import("./pages/Teachers"));
 const Moliya = lazy(() => import("./pages/Moliya"));
 const Reports = lazy(() => import("./pages/Reports"));
 const Analitika = lazy(() => import("./pages/Analitika"));
+const Advisor = lazy(() => import("./pages/Advisor"));
 const Hr = lazy(() => import("./pages/Hr"));
 const Marketing = lazy(() => import("./pages/Marketing"));
 const Ceo = lazy(() => import("./pages/Ceo"));
@@ -235,6 +236,7 @@ function AppRoutes() {
           <Route path="finance" element={<Moliya />} />
           <Route path="reports" element={<Reports />} />
           <Route path="analytics" element={<Analitika />} />
+          <Route path="advisor" element={<Advisor />} />
           <Route path="ceo" element={<Ceo />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="audit" element={<Audit />} />

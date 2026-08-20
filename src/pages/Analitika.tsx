@@ -16,6 +16,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { BiPanel } from "../components/BiPanel";
 import {
   api,
   type AnalyticsSummary,
@@ -36,10 +37,13 @@ import { CapacityTab } from "../components/MarketingExtras";
 import { FillTab } from "../components/FillReport";
 import ExamReport from "../components/ExamReport";
 
-type Tab = "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
+type Tab = "bi" | "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
   | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba" | "nps";
 
 const TABS: { key: Tab; label: string }[] = [
+  // 2026-08-20, Jahongir: "analitik bo'limini eng zor BI
+  // texnologiyalari bilan ... chiroyli pie chart, line graph"
+  { key: "bi", label: "BI panel" },
   { key: "akademik", label: "Akademik" },
   { key: "imtihon", label: "Imtihonlar" },
   { key: "tolganlik", label: "Markaz to'lganligi" },
@@ -1262,7 +1266,7 @@ function HistoryTab() {
 
 export default function Analitika() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("biznes");
+  const [tab, setTab] = useState<Tab>("bi");
   const [months, setMonths] = useState(12);
   const [data, setData] = useState<AnalyticsSummary | null>(null);
   const [loading, setLoading] = useState(true);
@@ -1318,7 +1322,8 @@ export default function Analitika() {
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
         <>
-          {tab === "akademik" && <AcademicTab />}
+          {tab === "bi" && <BiPanel />}
+      {tab === "akademik" && <AcademicTab />}
           {tab === "tolganlik" && <FillTab />}
           {tab === "biznes" && <BusinessTab data={data} />}
           {tab === "sifat" && <QualityTab />}

@@ -343,3 +343,6 @@ export const SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD, HR_MANAGER]
 
 // To'lov summasini tahrirlash — asoschi, moliyachi, filial rahbari
 export const PAYMENT_EDIT = [FOUNDER, FINANCE_DIRECTOR, BRANCH_MANAGER];
+// So'rovlarni VAZIFA ichida tasdiqlash uchun (2026-08-20)
+export const PAYMENT_FIX_APPROVE = [...PAYMENT_EDIT];
+export const RESCHEDULE_APPROVE = [...FULL_ACCESS, ACADEMIC_HEAD, HR_MANAGER];

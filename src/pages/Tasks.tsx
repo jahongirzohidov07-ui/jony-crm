@@ -5,7 +5,8 @@ import {
 } from "lucide-react";
 import { api, type TaskList, type TaskRow, type User } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TASK_ACCESS, DISCOUNT_APPROVE, can } from "../lib/roles";
+import { TASK_ACCESS, DISCOUNT_APPROVE, PAYMENT_FIX_APPROVE,
+  RESCHEDULE_APPROVE, can } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 
 const TONE: Record<string, string> = {
@@ -426,6 +427,11 @@ function TaskBody({
           men uni oquvchini topib profiliga kirib osha yerdan
           tasdiqlashim kerak ekan"). */}
       <DiscountTaskActions task={task} onDone={onDone} />
+      {/* Boshqa so'rovlar ham vazifaning o'zida hal qilinadi
+          (2026-08-20, Jahongir: "menga shu narsa vazifalar bolimiga
+          kelsin va vazifalardan tasdiqlansan vazifa avtomat
+          bajarilgan bo'lsin"). */}
+      <RequestTaskActions task={task} onDone={onDone} />
 
       {task.meeting && (
         <p className="text-xs text-slate-500">
@@ -803,11 +809,8 @@ function DiscountTaskActions({
     setBusy(true);
     try {
       await api.post(`/discounts/${id}/approve`, { approve, reason });
-      // Qaror qabul qilindi - vazifa ham yopiladi.
-      await api.put(`/tasks/${task.id}`, {
-        status: "done",
-        result: approve ? "Chegirma tasdiqlandi" : "Chegirma rad etildi",
-      });
+      // Vazifa(lar)ni server o'zi yopadi - BARCHA tasdiqlovchilarda
+      // (2026-08-20). Bu yerda qo'lda yopish shart emas.
       setMsg(approve ? "Tasdiqlandi ✓" : "Rad etildi");
       onDone();
     } catch (e) {
@@ -838,6 +841,133 @@ function DiscountTaskActions({
           Rad etish
         </button>
         {msg && <span className="text-xs text-slate-600">{msg}</span>}
+      </div>
+    </div>
+  );
+}
+
+
+/**
+ * SO'ROV VAZIFALARI UCHUN UMUMIY TUGMALAR (2026-08-20).
+ *
+ * Jahongir: "moliya boyicha tolovni notogri kirgizib qoygan shuni
+ * torlash sorovini yubordi dashboardda chiqdi shuni dashboarddan
+ * o'zgartirib bolmaydi, men uni moliyaga kirib tolovni ozgartirish
+ * sorovini topib ozgartirishim kerak, menga shu narsa vazifalar
+ * bolimiga kelsin va vazifalardan tasdiqlansan vazifa avtomat
+ * bajarilgan bo'lsin".
+ *
+ * Sarlavhadagi raqamga qarab qaysi so'rov ekani topiladi va shu
+ * yerning o'zida Tasdiqlash/Rad etish bosiladi. Server so'rovni
+ * bajaradi va BARCHA tasdiqlovchilardagi vazifalarni yopadi.
+ */
+function RequestTaskActions({
+  task,
+  onDone,
+}: {
+  task: TaskRow;
+  onDone: () => void;
+}) {
+  const { user } = useAuth();
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  if (task.status === "done") return null;
+
+  type Kind = {
+    label: string;
+    tone: string;
+    approve: () => Promise<unknown>;
+    reject: (reason: string) => Promise<unknown>;
+  };
+  let kind: Kind | null = null;
+  let m = /To'lovni tuzatish so'rovi #(\d+)/.exec(task.title || "");
+  if (m && can(user?.role, PAYMENT_FIX_APPROVE)) {
+    const id = Number(m[1]);
+    kind = {
+      label: "To'lovni tuzatish so'rovi — shu yerdan hal qiling",
+      tone: "emerald",
+      approve: () => api.post(`/payments/fix-requests/${id}/approve`, {}),
+      reject: (reason) =>
+        api.post(`/payments/fix-requests/${id}/reject`, { note: reason }),
+    };
+  }
+  if (!kind) {
+    m = /Dars ko'chirish so'rovi #(\d+)/.exec(task.title || "");
+    if (m && can(user?.role, RESCHEDULE_APPROVE)) {
+      const id = Number(m[1]);
+      kind = {
+        label: "Dars ko'chirish so'rovi — shu yerdan hal qiling",
+        tone: "sky",
+        approve: () =>
+          api.post(`/reschedules/${id}/decide`, { decision: "approved" }),
+        reject: (reason) =>
+          api.post(`/reschedules/${id}/decide`,
+            { decision: "rejected", note: reason }),
+      };
+    }
+  }
+  if (!kind) {
+    m = /Sovg'a so'rovi #R(\d+)/.exec(task.title || "");
+    if (m) {
+      const id = Number(m[1]);
+      kind = {
+        label: "Sovg'a so'rovi — berilganini shu yerda belgilang",
+        tone: "amber",
+        approve: () =>
+          api.post(`/rewards/requests/${id}/give`, { give: true }),
+        reject: (reason) =>
+          api.post(`/rewards/requests/${id}/give`,
+            { give: false, note: reason }),
+      };
+    }
+  }
+  if (!kind) return null;
+
+  const TONES: Record<string, string> = {
+    emerald: "bg-emerald-50 border-emerald-200 text-emerald-900",
+    sky: "bg-sky-50 border-sky-200 text-sky-900",
+    amber: "bg-amber-50 border-amber-200 text-amber-900",
+  };
+
+  const run = async (ok: boolean) => {
+    let reason = "";
+    if (!ok) {
+      const r = prompt("Rad etish sababi:");
+      if (r === null) return;
+      reason = r.trim();
+    }
+    setBusy(true);
+    try {
+      if (ok) await kind!.approve();
+      else await kind!.reject(reason);
+      setMsg(ok ? "Tasdiqlandi ✓" : "Rad etildi");
+      onDone();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className={`border rounded-lg p-3 ${TONES[kind.tone]}`}>
+      <p className="text-xs mb-2">{kind.label}</p>
+      <div className="flex items-center gap-2">
+        <button
+          disabled={busy}
+          onClick={() => run(true)}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+        >
+          Tasdiqlash
+        </button>
+        <button
+          disabled={busy}
+          onClick={() => run(false)}
+          className="border border-slate-300 bg-white text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-50"
+        >
+          Rad etish
+        </button>
+        {msg && <span className="text-xs">{msg}</span>}
       </div>
     </div>
   );

@@ -1729,6 +1729,29 @@ def _group_capacity(g: models.Group, rooms: dict) -> int | None:
     r = rooms.get(g.room_id)
     return r.capacity if r else None
 
+def _close_request_tasks(db: Session, title_prefix: str,
+                         result: str) -> int:
+    """SO'ROV HAL BO'LDI — unga bog'liq BARCHA vazifalar yopiladi.
+
+    2026-08-20, Jahongir: "vazifalardan tasdiqlansan vazifa avtomat
+    bajarilgan bo'lsin ... boshqa sorovlar ham tasdiqlansa vazifada
+    ham bajarildi bo'lsin".
+
+    So'rov bir nechta tasdiqlovchiga alohida vazifa bo'lib tushadi.
+    Bittasi hal qilgach qolganlarining ro'yxatida ochiq turib
+    qolmasin - hammasi bir yo'la "bajarildi" bo'ladi. Vazifalar
+    O'CHIRILMAYDI, natija yozilib yopiladi (tarix qoladi)."""
+    rows = (db.query(models.Task)
+            .filter(models.Task.title.like(title_prefix + "%"),
+                    ~models.Task.status.in_(tuple(roles.TASK_CLOSED)))
+            .all())
+    for t in rows:
+        t.status = "done"
+        t.done_at = datetime.utcnow()
+        t.result = result
+    return len(rows)
+
+
 def _notify_discount_approvers(db: Session, d, st, extra: str = "") -> None:
     """Chegirma so'rovi jimgina yotib qolmasin.
 
@@ -5283,6 +5306,7 @@ __all__ = [
     "_recharge_after_move",
     "_recharge_on_leave",
     "_norm_surname",
+    "_close_request_tasks",
     "_notify_discount_approvers",
     "_same_surname",
     "_do_family_link",

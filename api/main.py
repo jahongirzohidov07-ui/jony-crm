@@ -74,6 +74,7 @@ app.add_middleware(
 # o'zgarmagan - faqat joylashuv. Qarang: REFACTOR_NOTES.md
 # ---------------------------------------------------------------------------
 import academic as _r_academic
+import advisor as _r_advisor
 import audit_admin as _r_audit_admin
 import backup as _r_backup
 import courses as _r_courses
@@ -107,6 +108,7 @@ import teachers as _r_teachers
 import timetable as _r_timetable
 
 app.include_router(_r_academic.router)
+app.include_router(_r_advisor.router)
 app.include_router(_r_audit_admin.router)
 app.include_router(_r_backup.router)
 app.include_router(_r_courses.router)

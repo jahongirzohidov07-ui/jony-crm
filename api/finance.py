@@ -662,6 +662,11 @@ def approve_payment_fix(
     r.decided_by = user.full_name
     r.decided_at = datetime.utcnow()
     r.decision_note = (payload.note if payload else None)
+    # Barcha tasdiqlovchilardagi vazifalar yopiladi (2026-08-20,
+    # Jahongir: "vazifalardan tasdiqlansan vazifa avtomat bajarilgan
+    # bo'lsin").
+    _close_request_tasks(db, f"To'lovni tuzatish so'rovi #{r.id}",
+                         f"Tasdiqlandi ({user.full_name})")
     db.commit()
 
     audit.log(db, user, entity="payment", action="fix_approve",
@@ -710,6 +715,8 @@ def reject_payment_fix(
     r.decided_by = user.full_name
     r.decided_at = datetime.utcnow()
     r.decision_note = (payload.note if payload else None)
+    _close_request_tasks(db, f"To'lovni tuzatish so'rovi #{r.id}",
+                         f"Rad etildi ({user.full_name})")
     db.commit()
     try:
         if r.requested_by_id:
@@ -1135,6 +1142,12 @@ def approve_discount(
     d.approved_at = datetime.utcnow()
     if not payload.approve:
         d.cancelled_reason = payload.reason
+    # Hamma tasdiqlovchidagi "Chegirma so'rovi #N" vazifalari yopiladi
+    # (2026-08-20). Ilgari faqat bosgan odamniki yopilardi - qolganlar
+    # ro'yxatida ochiq turib qolardi.
+    _close_request_tasks(db, f"Chegirma so'rovi #{d.id}",
+                         ("Tasdiqlandi" if payload.approve else "Rad etildi")
+                         + f" ({user.full_name})")
     db.commit()
     # Oila so'rovi tasdiqlansa - o'quvchilar shu yerda BOG'LANADI.
     # Chegirma foizini keyin tizim o'zi hisoblaydi (aka-uka ketsa

@@ -1532,12 +1532,26 @@ def remove_student_from_group(
         raise HTTPException(400, "Chiqarish sababi majburiy — "
                                  "kamida bir necha so'z yozing")
 
+    # QAYSI KUNGACHA (2026-08-20, Jahongir: "guruhdan talabani
+    # chiqarishda, sana tanlaydigan bo'lsin va masalan tanlangan
+    # sanagacha hisoblanib hisobi o'zgarsin va guruhdan chiqarilsin").
+    # Ilgari doim "bugun" olinardi — administrator kechikib kiritsa
+    # o'quvchidan ortiqcha pul yechilib qolardi.
+    on = payload.on_date or roles.local_today()
+    _today = roles.local_today()
+    if on > _today:
+        raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
+    if s.enrolled_date and on < s.enrolled_date:
+        raise HTTPException(
+            400, f"Sana qo'shilgan kunidan oldin bo'lishi mumkin emas "
+                 f"({s.enrolled_date.isoformat()})")
+
     group = s.group
     old_group = group.name if group else None
-    # 1) Hisobni chiqqan kungacha o'tilgan darslar bo'yicha to'g'rilash
+    # 1) Hisobni TANLANGAN kungacha o'tilgan darslar bo'yicha to'g'rilash
     recalc = None
     try:
-        recalc = _recharge_on_leave(db, s, group, user=user)
+        recalc = _recharge_on_leave(db, s, group, on=on, user=user)
         if recalc:
             db.flush()
     except Exception:
@@ -1559,9 +1573,12 @@ def remove_student_from_group(
     else:
         s.status = "archived"
         s.archive_when_paid = 0
-        _sync_student_left_date(s)
-        note = f"Sabab: {reason} · Arxivga o'tkazildi"
+        # Ketgan sana — TANLANGAN kun (hisobotlar shu kun bo'yicha
+        # chiqadi, 2026-08-20).
+        s.left_date = on
         archived = True
+        note = f"Sabab: {reason} · Arxivga o'tkazildi"
+    note += f" · Chiqarilgan sana: {on.isoformat()}"
     if recalc:
         note += (f" · Hisob to'g'rilandi: {recalc['lessons']} dars, "
                  f"{int(recalc['returned']):,} so'm qaytarildi"
@@ -1574,8 +1591,82 @@ def remove_student_from_group(
     db.commit()
     return {"ok": True, "archived": archived,
             "status": s.status,
+            "on_date": on.isoformat(),
             "recalc": recalc,
             "debt": int(-bal) if bal < 0 else 0}
+
+
+@router.get("/api/students/{student_id}/leave-preview")
+def leave_preview(
+    student_id: int,
+    on_date: str | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """Guruhdan chiqarishdan OLDIN: tanlangan sanagacha nechta dars
+    hisoblanadi va balans qanday bo'ladi (2026-08-20).
+
+    Hech narsa o'zgartirmaydi — administrator raqamni ko'rib turib
+    tugmani bosadi, keyin "nega bunday summa" degan savol chiqmaydi.
+    """
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    g = s.group
+    try:
+        on = (date.fromisoformat(on_date) if on_date
+              else roles.local_today())
+    except ValueError:
+        raise HTTPException(400, "Sana formati noto'g'ri")
+
+    current = student_balance(db, s.id)
+    if g is None:
+        return {"lessons": 0, "current": current, "target": current,
+                "returned": 0, "changed": False,
+                "hint": "O'quvchi guruhda emas"}
+
+    start, _end = billing.month_bounds(on.year, on.month)
+    frm = start
+    if s.enrolled_date and s.enrolled_date > start:
+        frm = s.enrolled_date
+    held = (db.query(models.Lesson)
+            .filter(models.Lesson.group_id == g.id,
+                    models.Lesson.held == 1,
+                    models.Lesson.date >= frm,
+                    models.Lesson.date <= on).count())
+    cap = int(getattr(g, "standard_lessons_per_month", None) or 12)
+    n = min(held, cap)
+    try:
+        disc = float(_student_discount_percent(db, s) or 0)
+    except Exception:
+        disc = 0.0
+    unit = billing.student_lesson_price(s, g) * (100.0 - disc) / 100.0
+    target_charge = roles.money(n * unit)
+
+    period = f"{on.year:04d}-{on.month:02d}"
+    row = (db.query(models.Payment)
+           .filter(models.Payment.student_id == s.id,
+                   models.Payment.kind == "charge",
+                   models.Payment.period == period)
+           .order_by(models.Payment.id.desc()).first())
+    was = abs(float(row.amount or 0)) if row is not None else 0.0
+    returned = round(was - target_charge) if row is not None else 0
+    return {
+        "lessons": n,
+        "price": round(unit),
+        "discount": disc,
+        "was": round(was),
+        "charge": round(target_charge),
+        "returned": returned,
+        "current": round(current),
+        "target": round(current + returned),
+        "changed": bool(row is not None and abs(returned) >= 1),
+        "hint": (f"{on.isoformat()} kunigacha {n} ta dars o'tilgan"
+                 if row is not None else
+                 "Bu oy uchun hisob chiqarilmagan — balans o'zgarmaydi"),
+    }
 
 @router.post("/api/students/{student_id}/restore")
 def restore_student(

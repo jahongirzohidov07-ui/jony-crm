@@ -2395,6 +2395,11 @@ class SnapshotBulkIn(BaseModel):
 class RemoveFromGroupIn(BaseModel):
     """Guruhdan chiqarish — sabab MAJBURIY, ustozlar bilishi uchun."""
     reason: str
+    # QAYSI KUNGACHA (2026-08-20, Jahongir: "guruhdan talabani
+    # chiqarishda, sana tanlaydigan bo'lsin va masalan tanlangan
+    # sanagacha hisoblanib hisobi o'zgarsin va guruhdan chiqarilsin").
+    # Bo'sh bo'lsa bugungi kun.
+    on_date: Optional[date] = None
 
 
 class RecoverySetIn(BaseModel):

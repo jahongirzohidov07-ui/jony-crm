@@ -158,6 +158,61 @@ ck("200", r.status_code, 200)
 ck("hisob to'g'rilanmadi (yozuv yo'q edi)", r.json()["recalc"], None)
 ck("arxivga tushdi", r.json()["archived"], True)
 
+print("\n=== 9. SANA TANLAB chiqarish (2026-08-20) ===")
+# Jahongir: "guruhdan talabani chiqarishda, sana tanlaydigan bo'lsin
+# va masalan tanlangan sanagacha hisoblanib hisobi o'zgarsin va
+# guruhdan chiqarilsin".
+db = SessionLocal()
+st3 = models.Student(full_name="Sanali Bola", branch_id=BID,
+                     status="active", group_id=GID, enrolled_date=first)
+db.add(st3); db.commit(); SANA = st3.id
+db.add(models.Payment(student_id=SANA, amount=-400000, kind="charge",
+                      period=f"{today.year:04d}-{today.month:02d}",
+                      created_by="avtomat (oylik)"))
+db.add(models.Payment(student_id=SANA, amount=400000, kind="payment",
+                      method="cash", created_by="Admin"))
+db.commit(); db.close()
+
+# Oldindan ko'rish: 2-dars kunigacha (first+1) faqat 2 dars o'tilgan
+d2 = (first + timedelta(days=1)).isoformat()
+r = c.get(f"/api/students/{SANA}/leave-preview?on_date={d2}", headers=H)
+ck("preview 200", r.status_code, 200)
+pv = r.json()
+ck("2 ta dars hisoblanadi", pv["lessons"], 2)
+ck("300 000 qaytadi", pv["returned"], 300000)
+ck("balans 300 000 bo'ladi", pv["target"], 300000)
+
+# Bugungi kun bo'yicha esa 4 dars
+r = c.get(f"/api/students/{SANA}/leave-preview", headers=H)
+ck("bugungi kunda 4 dars", r.json()["lessons"], 4)
+
+# Kelajak sana rad etiladi
+r = c.post(f"/api/students/{SANA}/remove-from-group", headers=H,
+           json={"reason": "Sana sinovi",
+                 "on_date": (today + timedelta(days=3)).isoformat()})
+ck("kelajak sana 400", r.status_code, 400)
+
+# Qo'shilgan kunidan oldin ham bo'lmaydi
+r = c.post(f"/api/students/{SANA}/remove-from-group", headers=H,
+           json={"reason": "Sana sinovi",
+                 "on_date": (first - timedelta(days=1)).isoformat()})
+ck("erta sana 400", r.status_code, 400)
+
+# Tanlangan sana bilan chiqaramiz
+r = c.post(f"/api/students/{SANA}/remove-from-group", headers=H,
+           json={"reason": "Oyning boshida ketgan edi", "on_date": d2})
+ck("200", r.status_code, 200)
+d = r.json()
+ck("preview bilan bir xil: 2 dars", d["recalc"]["lessons"], 2)
+ck("300 000 qaytdi", d["recalc"]["returned"], 300000)
+ck("sana javobda", d["on_date"], d2)
+db = SessionLocal()
+ck("balans 300 000", student_balance(db, SANA), 300000)
+st3 = db.query(models.Student).get(SANA)
+ck("ketgan sana tanlangan kun", st3.left_date.isoformat(), d2)
+ck("guruhsiz", st3.group_id, None)
+db.close()
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

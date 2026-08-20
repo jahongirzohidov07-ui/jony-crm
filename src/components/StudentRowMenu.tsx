@@ -220,11 +220,32 @@ export function StudentRowMenu({
   const [removing, setRemoving] = useState(false);
   const [rReason, setRReason] = useState("");
   const [rOther, setROther] = useState("");
+  // QAYSI KUNGACHA (2026-08-20, Jahongir: "guruhdan talabani
+  // chiqarishda, sana tanlaydigan bo'lsin va masalan tanlangan
+  // sanagacha hisoblanib hisobi o'zgarsin va guruhdan chiqarilsin").
+  const [rOn, setROn] = useState(() => new Date().toISOString().slice(0, 10));
+  const [rPrev, setRPrev] = useState<{
+    lessons: number; returned: number; current: number; target: number;
+    changed: boolean; hint: string;
+  } | null>(null);
+
+  const loadLeavePrev = (dstr: string) => {
+    if (!dstr) { setRPrev(null); return; }
+    api
+      .get<{ lessons: number; returned: number; current: number;
+             target: number; changed: boolean; hint: string }>(
+        `/students/${student.id}/leave-preview?on_date=${dstr}`)
+      .then(setRPrev)
+      .catch(() => setRPrev(null));
+  };
 
   const removeFromGroup = () => {
+    const t = new Date().toISOString().slice(0, 10);
     setRemoving(true);
     setRReason("");
     setROther("");
+    setROn(t);
+    loadLeavePrev(t);
   };
 
   const confirmRemove = () => {
@@ -236,7 +257,7 @@ export function StudentRowMenu({
     run(async () => {
       const r = await api.post<{ archived: boolean; debt: number }>(
         `/students/${student.id}/remove-from-group`,
-        { reason }
+        { reason, on_date: rOn || null }
       );
       setRemoving(false);
       alert(
@@ -318,6 +339,38 @@ export function StudentRowMenu({
               {student.full_name} — sababni tanlang. Qarzi bo'lmasa arxivga
               o'tadi, qarzi bo'lsa to'langach avtomat arxivlanadi.
             </p>
+
+            {/* QAYSI KUNGACHA (2026-08-20). Hisob shu sanagacha
+                O'TILGAN darslar bo'yicha qayta hisoblanadi — kechikib
+                kiritilsa ham o'quvchidan ortiqcha pul yechilmaydi. */}
+            <label className="block text-xs font-medium text-slate-600 mb-1">
+              Qaysi kungacha o'qidi?
+            </label>
+            <input
+              type="date"
+              value={rOn}
+              max={new Date().toISOString().slice(0, 10)}
+              onChange={(e) => { setROn(e.target.value);
+                loadLeavePrev(e.target.value); }}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mb-2"
+            />
+            {rPrev && (
+              <p className="text-[11px] text-sky-800 bg-sky-50 rounded-lg px-2.5 py-2 mb-3 leading-snug">
+                {rPrev.lessons} dars hisoblanadi
+                {rPrev.changed ? (
+                  <>
+                    {" · "}
+                    {rPrev.returned > 0
+                      ? `${som(rPrev.returned)} so'm qaytariladi`
+                      : `${som(-rPrev.returned)} so'm qo'shimcha hisoblanadi`}
+                    {" · balans "}
+                    {som(rPrev.current)} → <b>{som(rPrev.target)}</b> so'm
+                  </>
+                ) : (
+                  <>{" · "}balans o'zgarmaydi</>
+                )}
+              </p>
+            )}
             <div className="space-y-1.5 mb-3">
               {REMOVE_REASONS.map((r) => (
                 <label

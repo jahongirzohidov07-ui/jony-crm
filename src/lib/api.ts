@@ -724,6 +724,8 @@ export interface Reward {
   kind?: string | null;
   discount_percent?: number | null;
   discount_amount?: number | null;
+  /** Do'konda ko'rinadigan rasm (havola yoki data-URL). */
+  image?: string | null;
 }
 
 export interface Redemption {
@@ -3086,6 +3088,8 @@ export interface RewardItem {
   /** Coin yetsa DARROV beriladimi (33% va 100%), yoki xodim
    *  tasdig'i kerakmi (2026-08-20). */
   auto?: boolean;
+  /** Do'kon kartasidagi rasm havolasi (2026-08-20). */
+  image?: string | null;
 }
 
 export interface CoinHistoryRow {

@@ -1,36 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
-  Gift, Percent, Clock, Check, X, ShoppingBag, Target, AlertCircle,
-  Flame, Trophy, Lock, BookOpen, Star, Calendar, Award,
+  Check, X, ShoppingBag, AlertCircle, ChevronRight, Search,
+  ShoppingCart, Flame, Trophy, Lock, BookOpen, Star, Calendar, Award,
+  Target, Clock, ArrowLeft, Gift, Percent,
 } from "lucide-react";
 import { CoinIcon } from "../../components/CoinIcon";
 import { formatDate } from "../../lib/format";
 import { api, type MyCoins, type RewardItem } from "../../lib/api";
 
 /**
- * JONY STUDENT — DO'KON (2026-08-16).
+ * JONY STUDENT — COIN DO'KONI.
  *
- * Jahongir: "ichida Do'konni qoshmabmiz nega coin yigyabdi nimadur
- * sotib olishi kerakku, sotib olgandan keyin masalan skidka sotib
- * olsa avtomat hisobiga ishlasin ... sovga yutib olsa adminlarga
- * vazifa bolib borsin falonchi coinga shu narsa olmoqchi deb".
+ * 2026-08-20, Jahongir: "menga shopdagi korinish umuman yoqmadi,
+ * o'sha narsani rasmi bo'lishi kerak va men senga shop degan
+ * dizaynni tashladim shuni 100% bir xil qilib bergin ... 1ga 1
+ * copya bolishi kerak".
  *
- * Do'kon xodimlar panelida (MyCoins.tsx) allaqachon bor edi, lekin
- * o'quvchi ilovasiga (/student) ulanmagan ekan — o'quvchi coin
- * yig'ardi-yu, sarflay olmasdi. Shu bo'shliq to'ldirildi.
+ * Ekran uning dizayni bo'yicha qayta qurildi:
+ *   sarlavha + savat ikonkasi (buyurtmalar, kutilayotgani bo'lsa nuqta)
+ *   ko'k balans kartasi: coin soni, "Coin tarixi", keyingi sovringa
+ *     qancha qolgani progress bilan
+ *   "Coinlaringizni sovringa aylantiring" bloki -> Yutuqlar
+ *   qidiruv + kategoriya chiplari
+ *   ikki ustunli RASMLI mahsulot kartalari
  *
- * Ikki xil mahsulot bir joyda, lekin ATAYLAB ajratib ko'rsatilgan:
- *
- *   CHEGIRMA — odam aralashmaydi. Bosildi = coin yechildi, chegirma
- *   to'lovga tushdi. 15-kungacha olinsa shu oyga, keyin olinsa
- *   keyingi oyga (server hal qiladi, oy nomi kartada yozib turadi).
- *
- *   SOVG'A — qo'lga beriladi, ya'ni odam kerak. Coin BAND qilinadi,
- *   administratorga vazifa boradi; u "Berildi" bosgandagina coin
- *   yechiladi. Rad etilsa coin qaytadi.
- *
- * Shuning uchun tugma matni ham har xil: "Sotib olish" ↔ "So'rash".
+ * Mantiq o'zgarmadi (2026-08-15/20 qoidalari): 33% va 100% chegirma
+ * coin yetsa darrov beriladi; qolgan chegirma va sovg'alar xodim
+ * tasdig'i bilan - coin band bo'lib turadi, rad etilsa qaytadi.
  */
 
 const TONE: Record<string, string> = {
@@ -60,12 +57,8 @@ type Ach = {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const BADGE_ICON: Record<string, any> = {
-  flame: Flame,
-  book: BookOpen,
-  check: Check,
-  star: Star,
-  calendar: Calendar,
-  award: Award,
+  flame: Flame, book: BookOpen, check: Check, star: Star,
+  calendar: Calendar, award: Award,
 };
 
 const BADGE_TONE: Record<string, string> = {
@@ -81,14 +74,13 @@ const BADGE_TONE: Record<string, string> = {
 
 function money(n?: number | null) {
   if (!n) return "";
-  return Math.round(n).toLocaleString("ru-RU").replace(/ /g, " ") + " so'm";
+  return Math.round(n).toLocaleString("ru-RU").replace(/ /g, " ") + " so'm";
 }
 
 const MONTHS = [
   "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
   "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr",
 ];
-/** "2026-09" -> "Sentabr" */
 function periodLabel(p?: string | null) {
   if (!p || p.length < 7) return "";
   const m = Number(p.slice(5, 7));
@@ -101,12 +93,37 @@ function discountText(r: RewardItem) {
   return "Chegirma";
 }
 
+/** Dizayndagidek bo'shliq bilan: 1 240 */
+function coinNum(n: number) {
+  return Math.round(n).toLocaleString("ru-RU").replace(/ /g, " ");
+}
+
+/**
+ * MAHSULOT RASMI. Avval xodim yuklagan rasm (reward.image), bo'lmasa
+ * nomiga qarab tayyor rasm topiladi - do'kon birinchi kundanoq
+ * dizayndagidek to'la ko'rinadi. Hech biri bo'lmasa ikonka.
+ */
+const STOCK_IMG: { test: RegExp; src: string }[] = [
+  { test: /daftar|bloknot|notebook/i, src: "/shop/daftar.png" },
+  { test: /ruchka|qalam|pen/i, src: "/shop/ruchka.png" },
+  { test: /mock|imtihon|test/i, src: "/shop/mock.png" },
+  { test: /event|bilet|tadbir/i, src: "/shop/event.png" },
+];
+function rewardImage(r: RewardItem): string | null {
+  if (r.image) return r.image;
+  const hit = STOCK_IMG.find((s) => s.test.test(r.name));
+  if (hit) return hit.src;
+  if (r.kind === "discount") return null;
+  return "/shop/gift.png";
+}
+
 export default function StudentShop() {
   const [d, setD] = useState<MyCoins | null>(null);
   const [err, setErr] = useState("");
   const [cat, setCat] = useState("");
+  const [q, setQ] = useState("");
   const [params] = useSearchParams();
-  const [tab, setTab] = useState<"shop" | "orders" | "badges">(
+  const [view, setView] = useState<"shop" | "orders" | "badges" | "history">(
     params.get("tab") === "badges" ? "badges" : "shop"
   );
   const [ach, setAch] = useState<Ach | null>(null);
@@ -117,20 +134,16 @@ export default function StudentShop() {
   function load() {
     api
       .fresh<MyCoins>("/me/coins")
-      .then((r) => {
-        setD(r);
-        setErr("");
-      })
+      .then((r) => { setD(r); setErr(""); })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }
   useEffect(load, []);
 
-  // Yutuqlar alohida so'rov — do'kon ochilganda bekorga yuklanmasin
   useEffect(() => {
-    if (tab === "badges" && !ach) {
+    if (view === "badges" && !ach) {
       api.get<Ach>("/student/achievements").then(setAch).catch(() => {});
     }
-  }, [tab, ach]);
+  }, [view, ach]);
 
   async function buy(r: RewardItem) {
     setBusy(true);
@@ -156,125 +169,140 @@ export default function StudentShop() {
     }
   }
 
+  const waiting = useMemo(
+    () => (d ? d.orders.filter((o) => o.status === "requested") : []),
+    [d]
+  );
+
   if (err && !d)
-    return (
-      <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>
-    );
+    return <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return (
-      <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>
-    );
+    return <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>;
 
-  const rewards = cat ? d.rewards.filter((r) => r.category === cat) : d.rewards;
-  const discounts = rewards.filter((r) => r.kind === "discount");
-  const gifts = rewards.filter((r) => r.kind !== "discount");
-  const waiting = d.orders.filter((o) => o.status === "requested");
+  const rewards = d.rewards.filter(
+    (r) =>
+      (!cat || r.category === cat) &&
+      (!q.trim() || r.name.toLowerCase().includes(q.trim().toLowerCase()))
+  );
 
+  // Keyingi sovrin: balansdan qimmatroq eng arzoni - dizayndagi
+  // "Yana 60 coin — yangi sovrin" chizig'i shundan chiqadi.
+  const goal = d.next_goal;
+  const goalLeft = goal ? Math.max(0, goal.cost - d.available) : 0;
+  const goalPct = goal && goal.cost > 0
+    ? Math.min(100, Math.round((d.available / goal.cost) * 100))
+    : 100;
+
+  /* ------------------------------------------------- mahsulot karta */
   const card = (r: RewardItem) => {
-    const isDisc = r.kind === "discount";
+    const img = rewardImage(r);
     const can = d.available >= r.cost && r.in_stock;
+    const badge =
+      !r.in_stock ? { text: "Tugagan", cls: "bg-red-50 text-red-600" }
+      : r.kind === "discount" && r.auto
+        ? { text: "Darrov", cls: "bg-emerald-50 text-emerald-700" }
+      : r.kind === "discount"
+        ? { text: "Tasdiqlanadi", cls: "bg-amber-50 text-amber-700" }
+      : null;
     return (
       <button
         key={r.id}
-        disabled={!can}
-        onClick={() => setAsk(r)}
-        className={`w-full text-left bg-white rounded-xl border p-3.5 flex items-center gap-3 transition ${
-          can
-            ? "border-slate-200 active:scale-[0.99] active:border-brand-300"
-            : "border-slate-100 opacity-60"
+        onClick={() => can && setAsk(r)}
+        className={`text-left bg-white rounded-2xl p-3 flex flex-col transition ${
+          can ? "active:scale-[0.99]" : "opacity-60"
         }`}
+        style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.06)" }}
       >
-        <div
-          className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
-            isDisc
-              ? "bg-emerald-50 text-emerald-600"
-              : "bg-violet-50 text-violet-600"
-          }`}
-        >
-          {isDisc ? <Percent size={20} /> : <Gift size={20} />}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-slate-900 truncate">
-            {r.name}
-          </p>
-          <p className="text-xs text-slate-500 mt-0.5">
-            {isDisc ? (
-              <>
-                {discountText(r)}
-                {r.period && (
-                  <span className="text-emerald-600">
-                    {" · "}
-                    {periodLabel(r.period)} to'loviga
-                  </span>
-                )}
-                {/* 33% va 100% darrov beriladi, boshqasini xodim
-                    tasdiqlaydi (2026-08-20). */}
-                {!r.auto && (
-                  <span className="text-amber-600">
-                    {" · "}tasdiqlanadi
-                  </span>
-                )}
-              </>
-            ) : (
-              <span
-                className={`px-1.5 py-0.5 rounded ${TONE[r.tone] || TONE.slate}`}
-              >
-                {r.category_label}
-              </span>
-            )}
-          </p>
-          {!r.in_stock && (
-            <p className="text-[11px] text-red-500 mt-1">Tugagan</p>
+        <div className="relative h-[104px] flex items-center justify-center">
+          {badge && (
+            <span
+              className={`absolute top-0 right-0 px-2.5 py-1 rounded-full text-[11px] font-medium ${badge.cls}`}
+            >
+              {badge.text}
+            </span>
           )}
-          {r.in_stock && !can && (
-            <p className="text-[11px] text-amber-600 mt-1">
-              Yana {r.cost - d.available} coin kerak
-            </p>
+          {img ? (
+            <img
+              src={img}
+              alt=""
+              className="max-h-[96px] max-w-full object-contain"
+              loading="lazy"
+            />
+          ) : (
+            <span className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Percent size={28} />
+            </span>
           )}
         </div>
 
-        <span className="shrink-0 inline-flex items-center gap-1 font-bold text-slate-900">
-          <CoinIcon size={15} />
-          {r.cost}
-        </span>
+        <p className="text-[15px] font-semibold text-slate-900 mt-2 leading-tight">
+          {r.name}
+        </p>
+        {r.kind === "discount" && r.period && (
+          <p className="text-[11px] text-emerald-600 mt-0.5">
+            {periodLabel(r.period)} to'loviga
+          </p>
+        )}
+
+        <div className="flex items-end mt-2">
+          <span className="flex items-center gap-1.5 flex-1 min-w-0">
+            <CoinIcon size={17} />
+            <b className="text-[17px] text-slate-900 leading-none">{r.cost}</b>
+            <span className="text-xs text-slate-400 leading-none pb-[1px]">
+              coin
+            </span>
+          </span>
+          <span
+            className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+              can ? "bg-brand-600 text-white" : "bg-slate-100 text-slate-300"
+            }`}
+          >
+            <ShoppingCart size={18} />
+          </span>
+        </div>
+        {r.in_stock && !can && (
+          <p className="text-[11px] text-amber-600 mt-1.5">
+            Yana {r.cost - d.available} coin kerak
+          </p>
+        )}
       </button>
     );
   };
 
+  /* --------------------------------------------------------- ekran */
   return (
-    <>
-      <div className="bg-gradient-to-br from-brand-700 to-brand-500 text-white px-4 pt-7 pb-12">
-        <div className="max-w-md mx-auto">
-          <h1 className="text-lg font-semibold flex items-center gap-2">
-            <Gift size={19} />
-            Mukofotlar
-          </h1>
-          <div className="mt-4 flex items-end gap-2">
-            <CoinIcon size={30} />
-            <span className="text-4xl font-bold leading-none">
-              {d.available}
-            </span>
-            <span className="text-white/70 text-sm pb-0.5">coin</span>
-          </div>
-          {d.held > 0 && (
-            <p className="text-xs text-white/70 mt-2">
-              {d.held} coin so'ralgan sovg'aga band qilingan
-            </p>
+    <div className="min-h-screen" style={{ background: "#F7FAFE" }}>
+      <div className="max-w-md mx-auto px-4 pt-5 pb-6">
+        {/* ----------------------------------------- sarlavha qatori */}
+        <div className="flex items-start justify-between mb-4">
+          {view === "shop" ? (
+            <h1 className="text-[26px] font-extrabold text-slate-900 leading-tight">
+              Coin do'koni
+            </h1>
+          ) : (
+            <button
+              onClick={() => setView("shop")}
+              className="flex items-center gap-1.5 text-[17px] font-bold text-slate-900"
+            >
+              <ArrowLeft size={20} />
+              {view === "orders" ? "Buyurtmalarim"
+                : view === "history" ? "Coin tarixi" : "Yutuqlar"}
+            </button>
           )}
-          {d.next_goal && (
-            <p className="text-xs text-white/80 mt-2 flex items-center gap-1.5">
-              <Target size={12} />
-              Keyingi maqsad: {d.next_goal.name} —{" "}
-              {d.next_goal.cost - d.available} coin qoldi
-            </p>
-          )}
+          <button
+            onClick={() => setView(view === "orders" ? "shop" : "orders")}
+            className="relative shrink-0 text-slate-900"
+            aria-label="Buyurtmalarim"
+          >
+            <ShoppingBag size={26} strokeWidth={1.8} />
+            {waiting.length > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-[11px] h-[11px] rounded-full bg-brand-600 border-2 border-[#F7FAFE]" />
+            )}
+          </button>
         </div>
-      </div>
 
-      <div className="max-w-md mx-auto px-4 -mt-7 pb-8 space-y-4">
         {ok && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex gap-2.5">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex gap-2.5 mb-3">
             <Check size={17} className="text-emerald-600 shrink-0 mt-0.5" />
             <p className="text-sm text-emerald-800 flex-1">{ok}</p>
             <button onClick={() => setOk("")} className="text-emerald-500">
@@ -283,7 +311,7 @@ export default function StudentShop() {
           </div>
         )}
         {err && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-3.5 flex gap-2.5">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-3.5 flex gap-2.5 mb-3">
             <AlertCircle size={17} className="text-red-500 shrink-0 mt-0.5" />
             <p className="text-sm text-red-700 flex-1">{err}</p>
             <button onClick={() => setErr("")} className="text-red-400">
@@ -292,50 +320,122 @@ export default function StudentShop() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl border border-slate-200 p-1 grid grid-cols-3 gap-1">
-          {(
-            [
-              ["shop", "Do'kon"],
-              ["badges", "Yutuqlar"],
-              [
-                "orders",
-                `Buyurtma${waiting.length ? ` (${waiting.length})` : ""}`,
-              ],
-            ] as const
-          ).map(([k, l]) => (
-            <button
-              key={k}
-              onClick={() => setTab(k)}
-              className={`py-2 rounded-lg text-sm font-medium transition ${
-                tab === k ? "bg-brand-600 text-white" : "text-slate-500"
-              }`}
-            >
-              {l}
-            </button>
-          ))}
-        </div>
+        {/* -------------------------------------- ko'k balans kartasi */}
+        {view !== "badges" && (
+          <div
+            className="relative rounded-[20px] px-5 py-5 overflow-hidden"
+            style={{ background: "#1A6EE4" }}
+          >
+            <img
+              src="/shop/coins.png"
+              alt=""
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-[168px] pointer-events-none select-none"
+            />
+            <div className="relative">
+              <p className="text-[15px] text-white/90">Sizning balansingiz</p>
+              <p className="mt-1 flex items-end gap-2">
+                <span className="text-[42px] font-extrabold text-white leading-none">
+                  {coinNum(d.available)}
+                </span>
+                <span className="text-white/85 text-[17px] pb-1">coin</span>
+              </p>
+              <button
+                onClick={() => setView("history")}
+                className="mt-3 flex items-center gap-1.5 text-white text-[15px] font-medium"
+              >
+                <span className="underline underline-offset-4">Coin tarixi</span>
+                <ChevronRight size={17} />
+              </button>
+              {d.held > 0 && (
+                <p className="text-[12px] text-white/75 mt-2">
+                  {d.held} coin so'ralgan sovg'aga band qilingan
+                </p>
+              )}
+              <div className="mt-5">
+                <p className="text-[14px] text-white/90">
+                  {goal
+                    ? `Yana ${goalLeft} coin — ${goal.name}`
+                    : "Barcha sovrinlar sizga yetadi"}
+                </p>
+                <div className="mt-2 h-2 rounded-full bg-white/30 w-[62%] overflow-hidden">
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: `${goalPct}%`, background: "#F5C518" }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
-        {tab === "shop" && (
+        {/* ================================================== DO'KON */}
+        {view === "shop" && (
           <>
-            <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-1 px-1">
+            {/* promo blok */}
+            <div
+              className="mt-4 rounded-[18px] px-5 py-4 flex items-center gap-2"
+              style={{ background: "#EBF2FE" }}
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-[17px] font-bold text-slate-900 leading-snug">
+                  Coinlaringizni sovringa aylantiring
+                </p>
+                <p className="text-[13px] text-slate-500 mt-1.5 leading-snug">
+                  Mashqlarni bajaring va ko'proq coin oling
+                </p>
+              </div>
+              <img
+                src="/shop/gift.png"
+                alt=""
+                className="w-[92px] shrink-0 -my-1"
+              />
+              <button
+                onClick={() => setView("badges")}
+                className="shrink-0 bg-brand-600 text-white rounded-xl px-4 py-3 text-[14px] font-semibold"
+              >
+                Coin yig'ish
+              </button>
+            </div>
+
+            {/* qidiruv */}
+            <div
+              className="mt-4 bg-white rounded-2xl flex items-center gap-2.5 px-4 h-[52px]"
+              style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+            >
+              <Search size={20} className="text-slate-400 shrink-0" />
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Sovrin qidiring"
+                className="flex-1 min-w-0 text-[15px] text-slate-800 placeholder:text-slate-400 outline-none bg-transparent"
+              />
+              {q && (
+                <button onClick={() => setQ("")} className="text-slate-300">
+                  <X size={17} />
+                </button>
+              )}
+            </div>
+
+            {/* kategoriya chiplari */}
+            <div className="mt-4 flex gap-2.5 overflow-x-auto pb-1 -mx-4 px-4">
               <button
                 onClick={() => setCat("")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium border whitespace-nowrap ${
+                className={`shrink-0 px-5 py-2.5 rounded-full text-[15px] font-semibold transition ${
                   cat === ""
-                    ? "bg-brand-50 border-brand-400 text-brand-700"
-                    : "bg-white border-slate-200 text-slate-500"
+                    ? "bg-brand-600 text-white"
+                    : "bg-white text-slate-600 border border-slate-200"
                 }`}
               >
-                Hammasi
+                Barchasi
               </button>
               {d.categories.map((c) => (
                 <button
                   key={c.key}
                   onClick={() => setCat(c.key)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border whitespace-nowrap ${
+                  className={`shrink-0 px-5 py-2.5 rounded-full text-[15px] font-semibold transition ${
                     cat === c.key
-                      ? "bg-brand-50 border-brand-400 text-brand-700"
-                      : "bg-white border-slate-200 text-slate-500"
+                      ? "bg-brand-600 text-white"
+                      : "bg-white text-slate-600 border border-slate-200"
                   }`}
                 >
                   {c.label}
@@ -343,49 +443,144 @@ export default function StudentShop() {
               ))}
             </div>
 
-            {discounts.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide px-1">
-                  To'lovga chegirma
-                </p>
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-3.5 py-2.5">
-                  <p className="text-[12px] text-emerald-800 leading-snug">
-                    Chegirma darrov ishlaydi — coin yechiladi va to'lov
-                    hisobingiz o'zi kamayadi. Oyning <b>15-kunigacha</b>{" "}
-                    olsangiz shu oyga, keyinroq olsangiz keyingi oyga tushadi.
-                  </p>
-                </div>
-                {discounts.map(card)}
-              </div>
-            )}
+            {/* bo'lim sarlavhasi */}
+            <div className="mt-5 flex items-center">
+              <h2 className="text-[21px] font-extrabold text-slate-900 flex-1">
+                {cat || q ? "Sovrinlar" : "Mashhur sovrinlar"}
+              </h2>
+              {(cat || q) && (
+                <button
+                  onClick={() => { setCat(""); setQ(""); }}
+                  className="flex items-center gap-0.5 text-[15px] font-semibold text-brand-600"
+                >
+                  Barchasi <ChevronRight size={17} />
+                </button>
+              )}
+            </div>
 
-            {gifts.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide px-1">
-                  Sovg'alar
-                </p>
-                {gifts.map(card)}
-              </div>
-            )}
-
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {rewards.map(card)}
+            </div>
             {rewards.length === 0 && (
               <p className="text-sm text-slate-400 text-center py-10">
-                Bu bo'limda hozircha narsa yo'q
+                Bunday sovrin topilmadi
               </p>
             )}
           </>
         )}
 
-        {/* ============================= YUTUQLAR VA STREAK ===== */}
-        {tab === "badges" && !ach && (
-          <p className="text-sm text-slate-400 text-center py-10">
-            Yuklanmoqda…
-          </p>
+        {/* =============================================== COIN TARIXI */}
+        {view === "history" && (
+          <div className="mt-4 space-y-2">
+            {d.history.length === 0 && (
+              <p className="text-sm text-slate-400 text-center py-10">
+                Hozircha yozuv yo'q
+              </p>
+            )}
+            {d.history.map((h) => (
+              <div
+                key={h.id}
+                className="bg-white rounded-2xl p-3.5 flex items-center gap-3"
+                style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+              >
+                <span
+                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-sm font-bold ${
+                    h.amount >= 0
+                      ? "bg-emerald-50 text-emerald-600"
+                      : "bg-rose-50 text-rose-500"
+                  }`}
+                >
+                  {h.amount >= 0 ? "+" : "−"}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14px] font-medium text-slate-800 truncate">
+                    {h.note || h.source_label}
+                  </p>
+                  <p className="text-[12px] text-slate-400">
+                    {h.date ? formatDate(h.date) : ""}
+                  </p>
+                </div>
+                <span
+                  className={`text-[15px] font-bold shrink-0 ${
+                    h.amount >= 0 ? "text-emerald-600" : "text-rose-500"
+                  }`}
+                >
+                  {h.amount >= 0 ? "+" : ""}
+                  {h.amount}
+                </span>
+              </div>
+            ))}
+          </div>
         )}
-        {tab === "badges" && ach && (
-          <div className="space-y-4">
-            {/* Streak sovrinlari */}
-            <div className="bg-white rounded-xl border border-slate-200 p-4">
+
+        {/* ============================================= BUYURTMALARIM */}
+        {view === "orders" && (
+          <div className="mt-4 space-y-2">
+            {d.orders.length === 0 && (
+              <div className="bg-white rounded-2xl p-8 text-center">
+                <ShoppingBag size={28} className="mx-auto text-slate-300 mb-2" />
+                <p className="text-sm text-slate-500">
+                  Hali hech narsa olmagansiz
+                </p>
+              </div>
+            )}
+            {d.orders.map((o) => (
+              <div
+                key={o.id}
+                className="bg-white rounded-2xl p-3.5"
+                style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium text-slate-900 flex-1 truncate">
+                    {o.reward}
+                  </p>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                      TONE[o.tone] || TONE.slate
+                    }`}
+                  >
+                    {o.status_label}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+                  <CoinIcon size={12} />
+                  {o.coins} coin
+                  {o.date && (
+                    <>
+                      <Clock size={11} className="ml-1 text-slate-400" />
+                      {formatDate(o.date)}
+                    </>
+                  )}
+                </p>
+                {o.note && <p className="text-xs text-slate-500 mt-1">{o.note}</p>}
+                {o.status === "requested" && (
+                  <div className="mt-2.5 flex items-center gap-2">
+                    <p className="text-[11px] text-amber-600 flex-1">
+                      Administrator tasdiqlashini kutmoqda
+                    </p>
+                    <button
+                      onClick={() => cancelOrder(o.id)}
+                      className="text-[11px] text-slate-400 underline"
+                    >
+                      Bekor qilish
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ================================================== YUTUQLAR */}
+        {view === "badges" && !ach && (
+          <p className="text-sm text-slate-400 text-center py-10">Yuklanmoqda…</p>
+        )}
+        {view === "badges" && ach && (
+          <div className="mt-4 space-y-4">
+            <div
+              className="bg-white rounded-2xl p-4"
+              style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+            >
               <div className="flex items-center gap-2 mb-3">
                 <Flame size={18} className="text-orange-500" />
                 <p className="text-sm font-bold text-slate-900 flex-1">
@@ -405,11 +600,7 @@ export default function StudentShop() {
                           : "bg-slate-100 text-slate-400"
                       }`}
                     >
-                      {r.done ? (
-                        <Check size={15} strokeWidth={3} />
-                      ) : (
-                        <Lock size={13} />
-                      )}
+                      {r.done ? <Check size={15} strokeWidth={3} /> : <Lock size={13} />}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-slate-800">
@@ -434,22 +625,18 @@ export default function StudentShop() {
               </p>
             </div>
 
-            {/* Yaqin maqsad */}
             {ach.next && (
-              <div className="bg-brand-50 border border-brand-200 rounded-xl p-3.5 flex items-center gap-3">
+              <div className="bg-brand-50 border border-brand-200 rounded-2xl p-3.5 flex items-center gap-3">
                 <Target size={18} className="text-brand-600 shrink-0" />
                 <p className="text-sm text-brand-800 flex-1">
-                  Keyingi yutuq: <b>{ach.next.label}</b> — yana{" "}
-                  {ach.next.left} ta
+                  Keyingi yutuq: <b>{ach.next.label}</b> — yana {ach.next.left} ta
                 </p>
               </div>
             )}
 
             <div className="flex items-center gap-2 px-1">
               <Trophy size={16} className="text-brand-600" />
-              <p className="text-[15px] font-bold text-slate-900 flex-1">
-                Yutuqlar
-              </p>
+              <p className="text-[15px] font-bold text-slate-900 flex-1">Yutuqlar</p>
               <span className="text-sm text-slate-400">
                 {ach.done}/{ach.total}
               </span>
@@ -461,11 +648,8 @@ export default function StudentShop() {
                 return (
                   <div
                     key={b.key}
-                    className={`rounded-xl border p-3.5 ${
-                      b.done
-                        ? "bg-white border-amber-200"
-                        : "bg-white border-slate-100"
-                    }`}
+                    className="rounded-2xl bg-white p-3.5"
+                    style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
                   >
                     <span
                       className={`w-11 h-11 rounded-full flex items-center justify-center ${
@@ -510,89 +694,30 @@ export default function StudentShop() {
             </div>
           </div>
         )}
-
-        {tab === "orders" && (
-          <div className="space-y-2">
-            {d.orders.length === 0 && (
-              <div className="bg-white rounded-xl border border-slate-200 p-8 text-center">
-                <ShoppingBag size={28} className="mx-auto text-slate-300 mb-2" />
-                <p className="text-sm text-slate-500">
-                  Hali hech narsa olmagansiz
-                </p>
-              </div>
-            )}
-            {d.orders.map((o) => (
-              <div
-                key={o.id}
-                className="bg-white rounded-xl border border-slate-200 p-3.5"
-              >
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-slate-900 flex-1 truncate">
-                    {o.reward}
-                  </p>
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                      TONE[o.tone] || TONE.slate
-                    }`}
-                  >
-                    {o.status_label}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                  <CoinIcon size={12} />
-                  {o.coins} coin
-                  {o.date && (
-                    <>
-                      <Clock size={11} className="ml-1 text-slate-400" />
-                      {formatDate(o.date)}
-                    </>
-                  )}
-                </p>
-                {o.note && (
-                  <p className="text-xs text-slate-500 mt-1">{o.note}</p>
-                )}
-                {o.status === "requested" && (
-                  <div className="mt-2.5 flex items-center gap-2">
-                    <p className="text-[11px] text-amber-600 flex-1">
-                      Administrator tasdiqlashini kutmoqda
-                    </p>
-                    <button
-                      onClick={() => cancelOrder(o.id)}
-                      className="text-[11px] text-slate-400 underline"
-                    >
-                      Bekor qilish
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
+      {/* ------------------------------------------- tasdiqlash oynasi */}
       {ask && (
         <div
           className="fixed inset-0 bg-black/40 z-50 flex items-end"
           onClick={() => !busy && setAsk(null)}
         >
           <div
-            className="w-full max-w-md mx-auto bg-white rounded-t-2xl p-5 pb-8"
+            className="w-full max-w-md mx-auto bg-white rounded-t-3xl p-5 pb-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div
-                className={`w-11 h-11 rounded-xl flex items-center justify-center ${
-                  ask.kind === "discount"
-                    ? "bg-emerald-50 text-emerald-600"
-                    : "bg-violet-50 text-violet-600"
-                }`}
-              >
-                {ask.kind === "discount" ? (
-                  <Percent size={20} />
-                ) : (
-                  <Gift size={20} />
-                )}
-              </div>
+              {rewardImage(ask) ? (
+                <img
+                  src={rewardImage(ask)!}
+                  alt=""
+                  className="w-14 h-14 object-contain shrink-0"
+                />
+              ) : (
+                <span className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  {ask.kind === "discount" ? <Percent size={22} /> : <Gift size={22} />}
+                </span>
+              )}
               <div className="min-w-0">
                 <p className="font-semibold text-slate-900">{ask.name}</p>
                 <p className="text-sm text-slate-500 flex items-center gap-1">
@@ -603,11 +728,6 @@ export default function StudentShop() {
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed">
-              {/* 2026-08-20, Jahongir: "33% lik va 100% lik
-                  chegirmalarni ... avtomat berilsin admin tasdiqlashi
-                  shartmas, qolganlarini admin tasdiqlashi va berishi
-                  kerak". O'quvchi tugmani bosishdan OLDIN qaysi yo'l
-                  ekanini bilib tursin. */}
               {ask.kind === "discount" && ask.auto ? (
                 <>
                   {discountText(ask)} <b>{periodLabel(ask.period)}</b> oyi
@@ -645,16 +765,13 @@ export default function StudentShop() {
                 onClick={() => buy(ask)}
                 className="flex-1 py-3 rounded-xl bg-brand-600 text-white font-semibold text-sm disabled:opacity-60"
               >
-                {busy
-                  ? "..."
-                  : ask.kind === "discount" && ask.auto
-                  ? "Sotib olish"
-                  : "So'rash"}
+                {busy ? "..." : ask.kind === "discount" && ask.auto
+                  ? "Sotib olish" : "So'rash"}
               </button>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

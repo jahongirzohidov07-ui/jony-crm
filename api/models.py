@@ -805,6 +805,12 @@ class Reward(Base):
     discount_percent = Column(Float, nullable=True)   # oylikdan foiz
     discount_amount = Column(Float, nullable=True)    # yoki qat'iy so'm
 
+    # MAHSULOT RASMI (2026-08-20, Jahongir: "menga shopdagi korinish
+    # umuman yoqmadi, o'sha narsani rasmi bo'lishi kerak"). Havola
+    # yoki data-URL. Bo'sh bo'lsa ilova nomiga qarab tayyor rasmni
+    # o'zi topadi, topolmasa chiroyli ikonka chiqaradi.
+    image = Column(Text, nullable=True)
+
     branch = relationship("Branch")
 
 

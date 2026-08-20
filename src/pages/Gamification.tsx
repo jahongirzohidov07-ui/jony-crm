@@ -320,6 +320,10 @@ function RewardForm({
   const [dSom, setDSom] = useState(
     initial?.discount_amount ? String(Math.round(initial.discount_amount)) : ""
   );
+  // MAHSULOT RASMI (2026-08-20, Jahongir: "o'sha narsani rasmi
+  // bo'lishi kerak"). Havola yoki telefondan tanlangan surat -
+  // ikkinchisi kichraytirilib data-URL bo'lib saqlanadi.
+  const [image, setImage] = useState(initial?.image || "");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -345,6 +349,7 @@ function RewardForm({
         discount_percent:
           kind === "discount" && dPct ? Number(dPct) : null,
         discount_amount: kind === "discount" && dSom ? Number(dSom) : null,
+        image: image.trim() || null,
       };
       if (editing) await api.put(`/rewards/${initial!.id}`, body);
       else await api.post("/rewards", body);
@@ -493,6 +498,62 @@ function RewardForm({
                 </select>
               </div>
             )}
+          </div>
+
+          {/* RASM (2026-08-20) - o'quvchi ilovasidagi do'konda shu
+              surat chiqadi. Yuklangan rasm 600px gacha kichraytirilib
+              saqlanadi: ilova tez ochilishi kerak. */}
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Rasm
+            </label>
+            <div className="flex items-center gap-3">
+              {image ? (
+                <img
+                  src={image}
+                  alt=""
+                  className="w-14 h-14 rounded-lg object-contain bg-slate-50 border border-slate-200"
+                />
+              ) : (
+                <span className="w-14 h-14 rounded-lg bg-slate-50 border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400">
+                  rasm yo'q
+                </span>
+              )}
+              <div className="flex-1 min-w-0">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (!f) return;
+                    const fr = new FileReader();
+                    fr.onload = () => {
+                      const im = new Image();
+                      im.onload = () => {
+                        const max = 600;
+                        const k = Math.min(1, max / Math.max(im.width, im.height));
+                        const cv = document.createElement("canvas");
+                        cv.width = Math.round(im.width * k);
+                        cv.height = Math.round(im.height * k);
+                        cv.getContext("2d")?.drawImage(im, 0, 0, cv.width, cv.height);
+                        setImage(cv.toDataURL("image/png"));
+                      };
+                      im.src = String(fr.result);
+                    };
+                    fr.readAsDataURL(f);
+                  }}
+                  className="block w-full text-xs text-slate-500"
+                />
+                {image && (
+                  <button
+                    onClick={() => setImage("")}
+                    className="text-[11px] text-slate-400 underline mt-1"
+                  >
+                    Rasmni olib tashlash
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
 
           {error && <p className="text-sm text-red-600">{error}</p>}

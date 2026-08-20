@@ -520,6 +520,8 @@ def _reward_out(r: models.Reward, balance: int = None) -> dict:
         "kind": getattr(r, "kind", "gift") or "gift",
         "discount_percent": getattr(r, "discount_percent", None),
         "discount_amount": getattr(r, "discount_amount", None),
+        # Do'kon kartasidagi rasm (2026-08-20)
+        "image": getattr(r, "image", None),
         # Bugun sotib olinsa QAYSI OYGA tegishli bo'ladi
         "period": (roles.shop_discount_period()
                    if (getattr(r, "kind", "gift") or "gift") == "discount"

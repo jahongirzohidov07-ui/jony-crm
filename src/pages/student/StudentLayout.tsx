@@ -30,8 +30,10 @@ const TABS = [
     tone: "text-emerald-600 bg-emerald-50" },
   { to: "/student/leaderboard", end: false, icon: Trophy, label: "Reyting",
     tone: "text-amber-600 bg-amber-50" },
+  // Dizaynda (shop.png, 2026-08-20) faol "Mukofotlar" ko'k rangda -
+  // do'kon ekrani bilan bir xil bo'lsin.
   { to: "/student/shop", end: false, icon: Gift, label: "Mukofotlar",
-    tone: "text-violet-600 bg-violet-50" },
+    tone: "text-brand-600 bg-brand-50" },
   { to: "/student/profile", end: false, icon: User, label: "Profil",
     tone: "text-sky-600 bg-sky-50" },
 ];

@@ -123,6 +123,8 @@ def create_reward(
                          if kind == "discount" else None),
         branch_id=payload.branch_id if payload.branch_id is not None
         else user.branch_id,
+        # Do'kondagi rasm (2026-08-20)
+        image=(payload.image or None),
     )
     db.add(r)
     db.commit()

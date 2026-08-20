@@ -75,6 +75,9 @@ def _ensure_new_columns():
         "ALTER TABLE rewards ADD COLUMN kind VARCHAR DEFAULT 'gift'",
         "ALTER TABLE rewards ADD COLUMN discount_percent FLOAT",
         "ALTER TABLE rewards ADD COLUMN discount_amount FLOAT",
+        # Do'kon mahsuloti rasmi (2026-08-20, Jahongir: "o'sha
+        # narsani rasmi bo'lishi kerak")
+        "ALTER TABLE rewards ADD COLUMN image TEXT",
         "ALTER TABLE discounts ADD COLUMN period VARCHAR",
         "ALTER TABLE discounts ADD COLUMN applied_at TIMESTAMP",
         "UPDATE rewards SET kind = 'gift' WHERE kind IS NULL",
@@ -481,7 +484,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_19b"
+SCHEMA_STAMP = "stamp_2026_08_20a"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

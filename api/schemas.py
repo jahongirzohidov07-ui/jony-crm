@@ -770,6 +770,7 @@ class RewardCreate(BaseModel):
     kind: Optional[str] = "gift"
     discount_percent: Optional[float] = None
     discount_amount: Optional[float] = None
+    image: Optional[str] = None
 
 
 class RewardUpdate(BaseModel):
@@ -782,6 +783,7 @@ class RewardUpdate(BaseModel):
     kind: Optional[str] = None
     discount_percent: Optional[float] = None
     discount_amount: Optional[float] = None
+    image: Optional[str] = None
 
 
 class RewardOut(BaseModel):
@@ -797,6 +799,7 @@ class RewardOut(BaseModel):
     kind: Optional[str] = "gift"
     discount_percent: Optional[float] = None
     discount_amount: Optional[float] = None
+    image: Optional[str] = None
 
 
 class RedeemRequest(BaseModel):

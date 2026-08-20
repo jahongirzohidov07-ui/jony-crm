@@ -2264,6 +2264,7 @@ if _orig_att_grid is not None:
     @app.get("/api/groups/{group_id}/attendance",
              response_model=schemas.AttendanceGrid)
     def attendance_grid_v2(group_id: int, year: int, month: int,
+                           others: int = 0,
                            db: Session = Depends(get_db),
                            user=Depends(require_role(
                                *roles.ATTENDANCE_VIEW))):
@@ -2288,6 +2289,12 @@ if _orig_att_grid is not None:
         #     (skrinshotdagi bo'sh kataklar qatori aynan shu edi);
         #   - yo'qlamasi BOR bo'lsa - rahbariyatga faqat o'qish uchun
         #     kulrang qator (ustoz oyligi hujjati yo'qolmasin).
+        # TUGMA BILAN OCHILADI (2026-08-20, Jahongir: "pastiga
+        # ketganlar va muzaltilganlarni daovmatini korsatish degan
+        # tugmani qoysak bosganda korinsin muzlatilganlar va
+        # ketganlarniki ham"). others=0 (odatiy) - jadval faqat
+        # faollardan iborat, toza. others=1 - rahbariyatga muzlatilgan
+        # va ketganlarning tarixi ham qo'shiladi (faqat o'qish uchun).
         _gone_rows = []
         for x in list(data["students"]):
             if x.get("status") in ("archived", "left"):
@@ -2297,13 +2304,14 @@ if _orig_att_grid is not None:
                     x["note"] = ("Guruhdan o'chirilgan (arxiv) - "
                                  "yo'qlama tarixi o'qish uchun")
                     _gone_rows.append(x)
-        if user.role in _FROZEN_HISTORY_VIEW:
-            frozen = [x for x in data["students"]
-                      if x.get("status") == "frozen"]
-            act = [x for x in data["students"]
-                   if x.get("status") != "frozen"]
-            # Tarixi butunlay bo'sh muzlatilganlar qatori ko'rsatilmaydi
-            frozen = [x for x in frozen if x["id"] in marked]
+        show_others = bool(others) and user.role in _FROZEN_HISTORY_VIEW
+        frozen = [x for x in data["students"]
+                  if x.get("status") == "frozen"]
+        act = [x for x in data["students"]
+               if x.get("status") != "frozen"]
+        if show_others:
+            # Muzlatilganlar - tarixi bo'sh bo'lsa ham ko'rinadi
+            # (holatini bilish uchun), ketganlar - yozuvi borlari.
             data["students"] = act + frozen + _gone_rows
             # BOSHQA GURUHGA O'TGANLAR (Jahongir, 2026-08-11):
             # yo'qlamasi shu guruh tarixida bor, lekin o'zi endi
@@ -2324,8 +2332,7 @@ if _orig_att_grid is not None:
                                    "oyligida qoladi"),
                     })
         else:
-            data["students"] = [x for x in data["students"]
-                                if x.get("status") != "frozen"]
+            data["students"] = act
         return data
 
 

@@ -261,12 +261,23 @@ export function AttendanceTab({
     null
   );
 
+  // MUZLATILGAN VA KETGANLAR DAVOMATI (2026-08-20, Jahongir:
+  // "pastiga ketganlar va muzaltilganlarni daovmatini korsatish
+  // degan tugmani qoysak bosganda korinsin"). Odatiy holda jadval
+  // faqat faollardan iborat - tugma bosilganda tarix ham ochiladi.
+  const [showOthers, setShowOthers] = useState(false);
+  const canSeeOthers = [
+    "founder", "branch_manager", "academic_head", "hr_manager",
+    "finance_director", "sales_manager", "administrator",
+  ].includes(user?.role || "");
+
   const load = () => {
     setLoading(true);
     setErr("");
     api
       .get<AttendanceGrid>(
-        `/groups/${groupId}/attendance?year=${year}&month=${month}`
+        `/groups/${groupId}/attendance?year=${year}&month=${month}` +
+          (showOthers ? "&others=1" : "")
       )
       .then(setGrid)
       .catch((e) =>
@@ -274,7 +285,7 @@ export function AttendanceTab({
       )
       .finally(() => setLoading(false));
   };
-  useEffect(load, [groupId, year, month]);
+  useEffect(load, [groupId, year, month, showOthers]);
 
   /** Bitta amal: keldi / kech keldi / kelmadi / olib tashlash.
    *  Olib tashlangan o'quvchi "belgilanmagan"ga qaytadi va shu dars
@@ -542,6 +553,29 @@ export function AttendanceTab({
           </tbody>
         </table>
       </div>
+
+      {/* Muzlatilgan va ketganlar tarixi tugmasi (2026-08-20) */}
+      {canSeeOthers && (
+        <div className="mt-2">
+          <button
+            onClick={() => setShowOthers((v) => !v)}
+            className={`text-xs px-3 py-1.5 rounded-lg border transition ${
+              showOthers
+                ? "bg-sky-50 border-sky-300 text-sky-700"
+                : "bg-white border-slate-200 text-slate-500 hover:border-sky-300 hover:text-sky-700"
+            }`}
+          >
+            {showOthers
+              ? "Muzlatilgan va ketganlar davomatini yashirish"
+              : "Muzlatilgan va ketganlar davomatini ko'rsatish"}
+          </button>
+          {showOthers && (
+            <span className="ml-2 text-[11px] text-slate-400">
+              Bu qatorlar faqat o'qish uchun — yoqlama qo'yilmaydi.
+            </span>
+          )}
+        </div>
+      )}
 
       {/* 2026-08-18, Jahongir: "shu joydagi shu yozuvni ham olib
           tashla kerak mas" — jadval ostidagi uzun qo'llanma matni

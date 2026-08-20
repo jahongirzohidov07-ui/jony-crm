@@ -680,8 +680,16 @@ try:
                 if _d:
                     _delta[_e.student_id] = _delta.get(_e.student_id, 0) + _d
             _fixed17 = 0
+            _note17 = ("Liga coinlari yangi shkalaga tenglashtirildi "
+                       "(2026-08-20 qoidasi)")
             for _sid, _d in _delta.items():
                 if not _d:
+                    continue
+                # Ikki lambda bir vaqtda uyg'onsa ham takror yozmasin
+                if (_db17.query(models.CoinEntry)
+                        .filter(models.CoinEntry.student_id == _sid,
+                                models.CoinEntry.note == _note17)
+                        .first()):
                     continue
                 if _d < 0:
                     _have = _bal17(_db17, _sid)
@@ -691,11 +699,39 @@ try:
                         continue
                 _db17.add(models.CoinEntry(
                     student_id=_sid, amount=_d, source="league",
-                    note=("Liga coinlari yangi shkalaga tenglashtirildi "
-                          "(2026-08-20 qoidasi)"),
-                    created_by="Tizim"))
+                    note=_note17, created_by="Tizim"))
+                _db17.commit()
                 _fixed17 += 1
             _db17.commit()
             _sm17(_db17, "league_coin_rescale_v1")
+except Exception:
+    pass
+
+# ---------------------------------------------------------------------
+# TENGLASHTIRISH DUBLIKATINI TUZATISH (2026-08-20, kechqurun).
+# Yuqoridagi bir martalik tenglashtirish ikkita lambda bir vaqtda
+# uyg'onganida BA'ZI o'quvchilarga ikki marta yozilib qolgan (masalan
+# -8 va yana -8). Bu biznes ma'lumoti emas - tizimning o'zi bir necha
+# soniya ichida takror yozgan texnik dublikat, shuning uchun ortiqcha
+# nusxasi olib tashlanadi (har o'quvchida bittasi qoladi).
+try:
+    from sqlalchemy.orm import Session as _VS18
+    from common import _seed_done as _sd18, _seed_mark as _sm18
+    with _VS18(engine) as _db18:
+        if not _sd18(_db18, "league_coin_rescale_fix_v2"):
+            _note18 = ("Liga coinlari yangi shkalaga tenglashtirildi "
+                       "(2026-08-20 qoidasi)")
+            _rows18 = (_db18.query(models.CoinEntry)
+                       .filter(models.CoinEntry.note == _note18)
+                       .order_by(models.CoinEntry.student_id,
+                                 models.CoinEntry.id).all())
+            _seen18 = set()
+            for _e in _rows18:
+                if _e.student_id in _seen18:
+                    _db18.delete(_e)   # texnik dublikat
+                else:
+                    _seen18.add(_e.student_id)
+            _db18.commit()
+            _sm18(_db18, "league_coin_rescale_fix_v2")
 except Exception:
     pass

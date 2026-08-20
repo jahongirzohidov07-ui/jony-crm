@@ -3083,6 +3083,9 @@ export interface RewardItem {
   discount_amount?: number | null;
   /** Chegirma bugun olinsa qaysi oyga tegishli ("YYYY-MM"). */
   period?: string | null;
+  /** Coin yetsa DARROV beriladimi (33% va 100%), yoki xodim
+   *  tasdig'i kerakmi (2026-08-20). */
+  auto?: boolean;
 }
 
 export interface CoinHistoryRow {

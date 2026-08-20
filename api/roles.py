@@ -1148,6 +1148,32 @@ AUTO_DISCOUNT_TYPES = ["family", "coin_shop"]
 # olsa shu oy uchun 15-kundan keyin sotib olsa keyingi oyga ishlasin").
 SHOP_DISCOUNT_CUTOFF_DAY = 15
 
+# QAYSI CHEGIRMA AVTOMAT BERILADI (2026-08-20, Jahongir: "33% lik va
+# 100% lik chegirmalarni o'quvchi shopdan sotib olganda coini yetsa
+# avtomat berilsin admin tasdiqlashi shartmas, qolganlarini admin
+# tasdiqlashi va berishi kerak bo'ladi").
+#
+# Bu ikkisi bizning standart, hamma biladigan chegirmalarimiz -
+# ularni tasdiqlatib o'tirish ortiqcha ish. Boshqa har qanday
+# chegirma (masalan bir martalik aksiya foizi) va barcha qo'lga
+# beriladigan sovg'alar avvalgidek xodim tasdig'idan o'tadi.
+AUTO_SHOP_DISCOUNT_PERCENTS = [33.0, 100.0]
+
+
+def shop_auto_discount(reward) -> bool:
+    """Shu do'kon mahsuloti avtomat beriladimi?
+
+    Faqat chegirma turidagi va foizi ruxsat etilgan ro'yxatda
+    bo'lganlar. Qat'iy so'mdagi chegirma (discount_amount) avtomat
+    bo'lmaydi - uni ham xodim ko'rib chiqadi."""
+    if (getattr(reward, "kind", "gift") or "gift") != "discount":
+        return False
+    try:
+        pct = round(float(getattr(reward, "discount_percent", 0) or 0), 2)
+    except (TypeError, ValueError):
+        return False
+    return pct in AUTO_SHOP_DISCOUNT_PERCENTS
+
 
 def shop_discount_period(on=None) -> str:
     """Sotib olingan chegirma QAYSI OYGA tegishli ("YYYY-MM")."""

@@ -524,6 +524,10 @@ def _reward_out(r: models.Reward, balance: int = None) -> dict:
         "period": (roles.shop_discount_period()
                    if (getattr(r, "kind", "gift") or "gift") == "discount"
                    else None),
+        # Coin yetsa DARROV beriladimi yoki xodim tasdig'i kerakmi
+        # (2026-08-20). Ilova shu bayroqqa qarab to'g'ri yozuv
+        # ko'rsatadi - o'quvchi nima bo'lishini oldindan biladi.
+        "auto": roles.shop_auto_discount(r),
     }
 
 @router.get("/api/me/coins")
@@ -636,7 +640,13 @@ def request_reward(
     #  ODAM ARALASHMAYDI - coin darrov yechiladi va chegirma o'z
     #  oyiga yoziladi.
     # ---------------------------------------------------------------
-    if (getattr(r, "kind", "gift") or "gift") == "discount":
+    # AVTOMAT FAQAT 33% VA 100% (2026-08-20, Jahongir: "33% lik va
+    # 100% lik chegirmalarni o'quvchi shopdan sotib olganda coini
+    # yetsa avtomat berilsin admin tasdiqlashi shartmas, qolganlarini
+    # admin tasdiqlashi va berishi kerak bo'ladi"). Qolgan chegirmalar
+    # ham sovg'a kabi so'rov bo'lib xodimga tushadi - chegirmaning
+    # o'zi tasdiqlanganda yaratiladi (gamification.give_reward).
+    if roles.shop_auto_discount(r):
         period = roles.shop_discount_period()
         y, m = int(period[:4]), int(period[5:7])
         first = date(y, m, 1)

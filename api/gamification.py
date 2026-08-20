@@ -560,7 +560,35 @@ def give_reward(
     if r and r.stock is not None:
         r.stock -= 1
     _close_reward_task(db, red.id, user, given=True)
+
+    # CHEGIRMA TASDIQLANDI (2026-08-20, Jahongir: "qolganlarini admin
+    # tasdiqlashi va berishi kerak bo'ladi"). 33%/100% avtomat ketadi,
+    # boshqa foizdagi chegirma esa shu yerda - xodim tasdiqlaganda -
+    # yaratiladi. Sanasi TASDIQLANGAN kun bo'yicha (15-kun qoidasi),
+    # shunda o'quvchi kutib qolgani uchun zarar ko'rmaydi.
+    shop = None
+    if r and (getattr(r, "kind", "gift") or "gift") == "discount":
+        period = roles.shop_discount_period()
+        y, m = int(period[:4]), int(period[5:7])
+        first = date(y, m, 1)
+        last = date(y + (m == 12), (m % 12) + 1, 1) - timedelta(days=1)
+        shop = models.Discount(
+            student_id=red.student_id, kind="coin_shop",
+            percent=r.discount_percent, amount=r.discount_amount,
+            reason=f"Jony Shop: {r.name} ({red.coins} coin)",
+            start_date=first, end_date=last, status="active",
+            period=period, requested_by=(s.full_name if s else None),
+            approved_by=user.full_name, approved_at=datetime.utcnow())
+        db.add(shop)
     db.commit()
+
+    if shop is not None:
+        # Shu oy hisobi allaqachon chiqqan bo'lsa - balans darrov
+        # to'g'rilanadi (avtomat yo'ldagi bilan bir xil mantiq).
+        try:
+            _apply_shop_discounts(db, shop.period)
+        except Exception:
+            db.rollback()
 
     audit.log(db, user, entity="reward", action="update", entity_id=red.id,
               entity_label=s.full_name if s else "—",

@@ -208,6 +208,13 @@ export default function StudentShop() {
                     {periodLabel(r.period)} to'loviga
                   </span>
                 )}
+                {/* 33% va 100% darrov beriladi, boshqasini xodim
+                    tasdiqlaydi (2026-08-20). */}
+                {!r.auto && (
+                  <span className="text-amber-600">
+                    {" · "}tasdiqlanadi
+                  </span>
+                )}
               </>
             ) : (
               <span
@@ -596,11 +603,22 @@ export default function StudentShop() {
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed">
-              {ask.kind === "discount" ? (
+              {/* 2026-08-20, Jahongir: "33% lik va 100% lik
+                  chegirmalarni ... avtomat berilsin admin tasdiqlashi
+                  shartmas, qolganlarini admin tasdiqlashi va berishi
+                  kerak". O'quvchi tugmani bosishdan OLDIN qaysi yo'l
+                  ekanini bilib tursin. */}
+              {ask.kind === "discount" && ask.auto ? (
                 <>
                   {discountText(ask)} <b>{periodLabel(ask.period)}</b> oyi
                   to'loviga hisoblanadi va balansingizda darrov ko'rinadi.
                   Hisobingizdan <b>{ask.cost} coin</b> yechiladi.
+                </>
+              ) : ask.kind === "discount" ? (
+                <>
+                  <b>{ask.cost} coin</b> band qilinadi va administratorga
+                  so'rov boradi. Tasdiqlangach {discountText(ask)}{" "}
+                  to'lovingizga hisoblanadi. Rad etilsa coin qaytadi.
                 </>
               ) : (
                 <>
@@ -629,7 +647,7 @@ export default function StudentShop() {
               >
                 {busy
                   ? "..."
-                  : ask.kind === "discount"
+                  : ask.kind === "discount" && ask.auto
                   ? "Sotib olish"
                   : "So'rash"}
               </button>

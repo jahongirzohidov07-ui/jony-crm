@@ -98,10 +98,15 @@ ck("o'zgarish bo'lmasa 0", r.json()["changed"], 0)
 
 print("\n=== 4. Do'konga chegirma qo'yish ===")
 r = c.post("/api/rewards", headers=F, json={
-    "name": "10% chegirma", "cost": 100, "kind": "discount",
-    "discount_percent": 10, "branch_id": BID})
+    "name": "33% chegirma", "cost": 100, "kind": "discount",
+    "discount_percent": 33, "branch_id": BID})
 ck("chegirma yaratildi", r.status_code, 200)
 RID = r.json()["id"]
+# 2026-08-20: 33% va 100% avtomat, qolgani xodim tasdig'i bilan
+r = c.post("/api/rewards", headers=F, json={
+    "name": "10% chegirma", "cost": 30, "kind": "discount",
+    "discount_percent": 10, "branch_id": BID})
+RID10 = r.json()["id"]
 ck("turi discount", r.json()["kind"], "discount")
 r = c.post("/api/rewards", headers=F, json={
     "name": "Bo'sh chegirma", "cost": 50, "kind": "discount"})
@@ -110,7 +115,7 @@ r = c.post("/api/rewards", headers=F, json={
     "name": "Ruchka", "cost": 20, "branch_id": BID})
 ck("oddiy sovg'a ham ishlaydi", r.json()["kind"], "gift")
 
-print("\n=== 5. O'quvchi chegirmani SOTIB OLADI ===")
+print("\n=== 5. O'quvchi 33% chegirmani AVTOMAT sotib oladi ===")
 db = SessionLocal()
 period_now = roles.local_today().strftime("%Y-%m")
 # Shu oy hisobi mavjud bo'lsin — balans darrov o'zgarishi kerak
@@ -124,15 +129,15 @@ r = c.post(f"/api/me/rewards/{RID}", headers=S)
 ck("sotib olindi", r.status_code, 200)
 d = r.json()
 ck("turi chegirma", d["kind"], "discount")
-ck("summa 40 000 (400 000 ning 10%)", d["amount"], 40000)
+ck("summa 132 000 (400 000 ning 33%)", d["amount"], 132000)
 db = SessionLocal()
 ck("coin yechildi", _student_coin_balance(db, SID), coins_before - 100)
 today = roles.local_today()
 if today.day <= 15:
     ck("shu oyga tegishli", d["period"], period_now)
     ck("balansga DARROV tushdi", d["applied"], True)
-    ck("balans 40 000 ga yaxshilandi",
-       round(student_balance(db, SID) - bal_before), 40000)
+    ck("balans 132 000 ga yaxshilandi",
+       round(student_balance(db, SID) - bal_before), 132000)
 else:
     nxt = ((today.year + 1, 1) if today.month == 12
            else (today.year, today.month + 1))
@@ -185,6 +190,54 @@ ck("balans 50 000 ga yaxshilandi",
 n = _apply_shop_discounts(db, nxt_p)
 ck("takror tushmadi", n, 0)
 db.close()
+
+print("\n=== 8b. 10% chegirma — XODIM TASDIG'I bilan ===")
+# Jahongir, 2026-08-20: "33% lik va 100% lik chegirmalarni ... avtomat
+# berilsin admin tasdiqlashi shartmas, qolganlarini admin tasdiqlashi
+# va berishi kerak bo'ladi".
+db = SessionLocal()
+coins0 = _student_coin_balance(db, SID)
+n_disc0 = db.query(models.Discount).filter(
+    models.Discount.kind == "coin_shop").count()
+db.close()
+r = c.post(f"/api/me/rewards/{RID10}", headers=S)
+ck("so'rov qabul qilindi", r.status_code, 200)
+ck("darrov berilmadi", r.json().get("status"), "requested")
+RQ = r.json()["id"]
+db = SessionLocal()
+ck("coin hali yechilmadi", _student_coin_balance(db, SID), coins0)
+ck("chegirma hali yo'q",
+   db.query(models.Discount).filter(
+       models.Discount.kind == "coin_shop").count(), n_disc0)
+db.close()
+r = c.get("/api/rewards/requests", headers=A)
+ck("xodim ro'yxatida ko'rinadi",
+   any(x["id"] == RQ for x in r.json()["rows"]), True)
+r = c.post(f"/api/rewards/requests/{RQ}/give", headers=A,
+           json={"give": True})
+ck("tasdiqlandi", r.status_code, 200)
+db = SessionLocal()
+ck("coin endi yechildi", _student_coin_balance(db, SID), coins0 - 30)
+ck("chegirma yozuvi ochildi",
+   db.query(models.Discount).filter(
+       models.Discount.kind == "coin_shop").count(), n_disc0 + 1)
+last = (db.query(models.Discount)
+        .filter(models.Discount.kind == "coin_shop")
+        .order_by(models.Discount.id.desc()).first())
+ck("foizi to'g'ri", last.percent, 10)
+ck("kim tasdiqlagani yozilgan", last.approved_by, "Admin")
+db.close()
+
+print("\n=== 8c. Qoida: qaysi chegirma avtomat ===")
+class _R:
+    def __init__(self, kind, pct=None, amt=None):
+        self.kind, self.discount_percent, self.discount_amount = kind, pct, amt
+ck("33% avtomat", roles.shop_auto_discount(_R("discount", 33)), True)
+ck("100% avtomat", roles.shop_auto_discount(_R("discount", 100)), True)
+ck("10% avtomat emas", roles.shop_auto_discount(_R("discount", 10)), False)
+ck("so'mdagi chegirma avtomat emas",
+   roles.shop_auto_discount(_R("discount", None, 50000)), False)
+ck("sovg'a avtomat emas", roles.shop_auto_discount(_R("gift")), False)
 
 print("\n=== 9. 15-kun qoidasi ===")
 ck("14-kun -> shu oy",

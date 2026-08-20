@@ -2380,21 +2380,28 @@ XP_CATEGORY_TONE = {k: t for k, _, t in XP_CATEGORIES}
 # ---- Ligalar --------------------------------------------------------
 # rank, kalit, nom, min XP, max XP (None = cheklanmagan), rang,
 # ikonka, mukofot coin
+# Coin shkalasi 2026-08-20 da Jahongir bergan tartibda yangilandi:
+# "1,2,3,4,5,6,8,10,12,14,16,18,20,25,30". Liga 14 ta, ko'tarilish
+# esa 13 ta (Newcomer - boshlanish nuqtasi, unga ko'tarilib
+# bo'lmaydi), shuning uchun 18 va 20 tushirib qoldirilib, cho'qqidagi
+# ikki ligaga eng katta qiymatlar (25, 30) berildi. Eski shkala
+# (jami 413 coin) juda saxiy edi - coin qadrsizlanardi; yangisi
+# jami 126 coin.
 XP_LEAGUES = [
     (1, "newcomer", "Newcomer", 0, 99, "#f1f5f9", "🌱", 0),
     (2, "amateur", "Amateur", 100, 199, "#d4d4d8", "🔰", 1),
     (3, "wood", "Wood", 200, 399, "#a8a29e", "🪵", 2),
-    (4, "stone", "Stone", 400, 599, "#78716c", "🪨", 4),
-    (5, "bronze", "Bronze", 600, 999, "#d97706", "🥉", 6),
-    (6, "silver", "Silver", 1000, 1499, "#94a3b8", "🥈", 10),
-    (7, "gold", "Gold", 1500, 1999, "#f59e0b", "🥇", 15),
-    (8, "crystal", "Crystal", 2000, 2999, "#8b5cf6", "💎", 20),
-    (9, "elite", "Elite", 3000, 4999, "#ef4444", "⚔️", 25),
-    (10, "master", "Master", 5000, 7999, "#22c55e", "🎓", 30),
-    (11, "titan", "Titan", 8000, 11999, "#0ea5e9", "🗿", 50),
-    (12, "champion", "Champion", 12000, 19999, "#eab308", "🏆", 60),
-    (13, "legendary", "Legendary", 20000, 49999, "#991b1b", "🔥", 80),
-    (14, "goat", "G.O.A.T", 50000, None, "#0f172a", "🐐", 100),
+    (4, "stone", "Stone", 400, 599, "#78716c", "🪨", 3),
+    (5, "bronze", "Bronze", 600, 999, "#d97706", "🥉", 4),
+    (6, "silver", "Silver", 1000, 1499, "#94a3b8", "🥈", 5),
+    (7, "gold", "Gold", 1500, 1999, "#f59e0b", "🥇", 6),
+    (8, "crystal", "Crystal", 2000, 2999, "#8b5cf6", "💎", 8),
+    (9, "elite", "Elite", 3000, 4999, "#ef4444", "⚔️", 10),
+    (10, "master", "Master", 5000, 7999, "#22c55e", "🎓", 12),
+    (11, "titan", "Titan", 8000, 11999, "#0ea5e9", "🗿", 14),
+    (12, "champion", "Champion", 12000, 19999, "#eab308", "🏆", 16),
+    (13, "legendary", "Legendary", 20000, 49999, "#991b1b", "🔥", 25),
+    (14, "goat", "G.O.A.T", 50000, None, "#0f172a", "🐐", 30),
 ]
 LEAGUE_LABELS = {k: lbl for _r, k, lbl, _a, _b, _c, _i, _co in XP_LEAGUES}
 

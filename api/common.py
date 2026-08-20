@@ -100,6 +100,24 @@ def _ensure_new_columns():
         "UPDATE lessons SET cancelled=0, cancel_note=NULL "
         "WHERE cancel_note='Dam: avgustda 12 ta dars qoidasi' "
         "AND date < '2026-09-01'",
+        # Liga coin shkalasi (2026-08-20, Jahongir tartibi:
+        # "1,2,3,4,5,6,8,10,12,14,16,18,20,25,30" - 13 ko'tarilishga
+        # joylashtirildi, cho'qqiga 25 va 30). Berilib bo'lgan
+        # coinlarga tegilmaydi - faqat keyingi ko'tarilishlar yangi
+        # shkalada.
+        "UPDATE xp_leagues SET reward_coin=1 WHERE key='amateur'",
+        "UPDATE xp_leagues SET reward_coin=2 WHERE key='wood'",
+        "UPDATE xp_leagues SET reward_coin=3 WHERE key='stone'",
+        "UPDATE xp_leagues SET reward_coin=4 WHERE key='bronze'",
+        "UPDATE xp_leagues SET reward_coin=5 WHERE key='silver'",
+        "UPDATE xp_leagues SET reward_coin=6 WHERE key='gold'",
+        "UPDATE xp_leagues SET reward_coin=8 WHERE key='crystal'",
+        "UPDATE xp_leagues SET reward_coin=10 WHERE key='elite'",
+        "UPDATE xp_leagues SET reward_coin=12 WHERE key='master'",
+        "UPDATE xp_leagues SET reward_coin=14 WHERE key='titan'",
+        "UPDATE xp_leagues SET reward_coin=16 WHERE key='champion'",
+        "UPDATE xp_leagues SET reward_coin=25 WHERE key='legendary'",
+        "UPDATE xp_leagues SET reward_coin=30 WHERE key='goat'",
         "ALTER TABLE candidates ADD COLUMN address VARCHAR",
         "ALTER TABLE candidates ADD COLUMN birth_date_text VARCHAR",
         "ALTER TABLE candidates ADD COLUMN education VARCHAR",
@@ -484,7 +502,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_20a"
+SCHEMA_STAMP = "stamp_2026_08_20b"
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

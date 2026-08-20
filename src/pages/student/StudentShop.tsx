@@ -104,6 +104,17 @@ function coinNum(n: number) {
  * dizayndagidek to'la ko'rinadi. Hech biri bo'lmasa ikonka.
  */
 const STOCK_IMG: { test: RegExp; src: string }[] = [
+  // Jony Academy merch suratlari (2026-08-20, Jahongir: "sovglaarni
+  // boshqalarini ham kirgizdim qoshib qoy"). Nomi mos kelsa avtomat
+  // qo'yiladi - xodim rasm yuklamasa ham do'kon to'la ko'rinadi.
+  { test: /xudi|hoodie|худи|kapyushon/i, src: "/shop/xudi.png" },
+  { test: /switer|sviter|svitshot|sweatshirt|sweater|свитер/i,
+    src: "/shop/switer.png" },
+  { test: /futbolka|majka|t-?shirt|shirt|футболка/i,
+    src: "/shop/futbolka.png" },
+  { test: /kepka|bosh kiyim|cap|кепка/i, src: "/shop/kepka.png" },
+  { test: /bakal|kruzhka|krujka|chashka|piyola|mug|кружка/i,
+    src: "/shop/bakal.png" },
   { test: /daftar|bloknot|notebook/i, src: "/shop/daftar.png" },
   { test: /ruchka|qalam|pen/i, src: "/shop/ruchka.png" },
   { test: /mock|imtihon|test/i, src: "/shop/mock.png" },

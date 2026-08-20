@@ -1144,9 +1144,16 @@ DISCOUNT_TYPE_HINTS = {k: h for k, _, h in DISCOUNT_TYPES}
 # Qaysi chegirmani tizim o'zi boshqaradi - qo'lda tegilmaydi.
 AUTO_DISCOUNT_TYPES = ["family", "coin_shop"]
 
-# DO'KON CHEGIRMASI QOIDASI (2026-08-15, Jahongir: "15-kungacha sotib
-# olsa shu oy uchun 15-kundan keyin sotib olsa keyingi oyga ishlasin").
-SHOP_DISCOUNT_CUTOFF_DAY = 15
+# DO'KON CHEGIRMASI QAYSI OYGA TUSHADI.
+#
+# ESKI qoida (2026-08-15): 15-kungacha shu oyga, keyin keyingi oyga.
+# YANGI qoida (2026-08-20, Jahongir: "bunda coin yechildi lekin
+# avtomat skidka bermadi balansini deyabdi ... osha olgan oyiga
+# tolamagan bolsa shu olgan oyiga balans ozgarsin, agar tolagan
+# bolsa keyingi oyga"): sanaga emas, BALANSGA qaraladi -
+#   qarzi bor (balans < 0)  -> shu oyga, darrov tushadi;
+#   to'lab bo'lgan          -> keyingi oyga.
+SHOP_DISCOUNT_CUTOFF_DAY = 15  # eski qoida; endi ishlatilmaydi
 
 # QAYSI CHEGIRMA AVTOMAT BERILADI (2026-08-20, Jahongir: "33% lik va
 # 100% lik chegirmalarni o'quvchi shopdan sotib olganda coini yetsa
@@ -1176,9 +1183,22 @@ def shop_auto_discount(reward) -> bool:
 
 
 def shop_discount_period(on=None) -> str:
-    """Sotib olingan chegirma QAYSI OYGA tegishli ("YYYY-MM")."""
+    """ESKI 15-kun qoidasi — faqat tarix uchun qoldi, yangi kod
+    shop_discount_period_by_balance() ishlatadi."""
     d = on or local_today()
     if d.day <= SHOP_DISCOUNT_CUTOFF_DAY:
+        return f"{d.year:04d}-{d.month:02d}"
+    y, m = (d.year + 1, 1) if d.month == 12 else (d.year, d.month + 1)
+    return f"{y:04d}-{m:02d}"
+
+
+def shop_discount_period_by_balance(balance: float, on=None) -> str:
+    """Chegirma QAYSI OYGA tegishli — o'quvchining pul balansiga qarab
+    (2026-08-20, Jahongir): shu oyga to'lamagan (qarzli) bo'lsa shu
+    oyga va balans darrov o'zgaradi; to'lab bo'lgan bo'lsa keyingi
+    oyga."""
+    d = on or local_today()
+    if (balance or 0) < 0:
         return f"{d.year:04d}-{d.month:02d}"
     y, m = (d.year + 1, 1) if d.month == 12 else (d.year, d.month + 1)
     return f"{y:04d}-{m:02d}"

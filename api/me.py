@@ -500,7 +500,8 @@ def _reward_request_task(db: Session, s, r, red) -> None:
     _ensure_public_id(db, "task", task)
 
 
-def _reward_out(r: models.Reward, balance: int = None) -> dict:
+def _reward_out(r: models.Reward, balance: int = None,
+                pay_balance: float = None) -> dict:
     return {
         "id": r.id,
         "name": r.name,
@@ -523,7 +524,9 @@ def _reward_out(r: models.Reward, balance: int = None) -> dict:
         # Do'kon kartasidagi rasm (2026-08-20)
         "image": getattr(r, "image", None),
         # Bugun sotib olinsa QAYSI OYGA tegishli bo'ladi
-        "period": (roles.shop_discount_period()
+        # (2026-08-20: sanaga emas, BALANSGA qarab - qarzli bo'lsa
+        # shu oyga, to'lagan bo'lsa keyingi oyga)
+        "period": (roles.shop_discount_period_by_balance(pay_balance or 0)
                    if (getattr(r, "kind", "gift") or "gift") == "discount"
                    else None),
         # Coin yetsa DARROV beriladimi yoki xodim tasdig'i kerakmi
@@ -570,6 +573,10 @@ def my_coins(
     # Keyingi maqsad: hozirgi balansdan qimmatroq eng arzon sovg'a
     next_goal = next((r for r in rewards if r.cost > available), None)
 
+    # PUL balansi - chegirma qaysi oyga tushishini aytish uchun
+    # (2026-08-20, Jahongir qoidasi).
+    _pay_bal = student_balance(db, s.id)
+
     return {
         "student_id": s.id,
         "full_name": s.full_name,
@@ -579,7 +586,8 @@ def my_coins(
         "spent": spent,
         "held": held,
         "available": available,
-        "next_goal": (_reward_out(next_goal, available) if next_goal else None),
+        "next_goal": (_reward_out(next_goal, available, _pay_bal)
+                      if next_goal else None),
         "history": [{
             "id": e.id,
             "amount": e.amount,
@@ -590,7 +598,7 @@ def my_coins(
         } for e in entries],
         "categories": [{"key": k, "label": lbl, "tone": t}
                        for k, lbl, t in roles.REWARD_CATEGORIES],
-        "rewards": [_reward_out(r, available) for r in rewards],
+        "rewards": [_reward_out(r, available, _pay_bal) for r in rewards],
         "orders": [{
             "id": o.id,
             "reward": o.reward.name if o.reward else "—",
@@ -649,7 +657,13 @@ def request_reward(
     # ham sovg'a kabi so'rov bo'lib xodimga tushadi - chegirmaning
     # o'zi tasdiqlanganda yaratiladi (gamification.give_reward).
     if roles.shop_auto_discount(r):
-        period = roles.shop_discount_period()
+        # QAYSI OYGA (2026-08-20, Jahongir: "osha olgan oyiga
+        # tolamagan bolsa shu olgan oyiga balans ozgarsin, agar
+        # tolagan bolsa keyingi oyga"). Oybek misolida: -158 000
+        # qarzli edi, 20-avgustda oldi - eski 15-kun qoidasi
+        # sentabrga yozib yubordi va "balans o'zgarmadi" bo'ldi.
+        period = roles.shop_discount_period_by_balance(
+            student_balance(db, s.id))
         y, m = int(period[:4]), int(period[5:7])
         first = date(y, m, 1)
         last = date(y + (m == 12), (m % 12) + 1, 1) - timedelta(days=1)
@@ -685,7 +699,7 @@ def request_reward(
             db.rollback()
         summa = _shop_discount_sum(db, s, d)
         when = ("shu oy" if period == roles.local_today().strftime("%Y-%m")
-                else "keyingi oy")
+                else "keyingi oy (bu oy to'lab bo'lingan)")
         return {
             "id": red.id,
             "status": "given",

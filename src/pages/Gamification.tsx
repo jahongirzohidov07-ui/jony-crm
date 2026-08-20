@@ -392,9 +392,10 @@ function RewardForm({
             </select>
             {kind === "discount" && (
               <p className="text-[11px] text-slate-400 mt-1 leading-snug">
-                O'quvchi sotib olsa coin darrov yechiladi va chegirma
-                balansiga o'zi tushadi. Oyning 15-kunigacha olsa shu
-                oyga, keyin olsa keyingi oyga hisoblanadi.
+                33% va 100% chegirma coin yetsa AVTOMAT beriladi,
+                boshqa foizdagilarni xodim tasdiqlaydi. Oyi: o'quvchi
+                shu oyga to'lamagan bo'lsa — shu oyga (balans darrov
+                o'zgaradi), to'lab bo'lgan bo'lsa — keyingi oyga.
               </p>
             )}
           </div>

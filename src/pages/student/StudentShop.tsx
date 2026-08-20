@@ -81,6 +81,12 @@ const MONTHS = [
   "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
   "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr",
 ];
+/** Joriy oy "YYYY-MM" — chegirma shu oyga tushadimi bilish uchun. */
+function thisPeriod(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
 function periodLabel(p?: string | null) {
   if (!p || p.length < 7) return "";
   const m = Number(p.slice(5, 7));
@@ -752,10 +758,16 @@ export default function StudentShop() {
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed">
+              {/* 2026-08-20 qoidasi: bu oyga to'lamagan bo'lsa
+                  chegirma SHU OYGA tushadi va balans darrov
+                  o'zgaradi; to'lab bo'lgan bo'lsa - keyingi oyga. */}
               {ask.kind === "discount" && ask.auto ? (
                 <>
                   {discountText(ask)} <b>{periodLabel(ask.period)}</b> oyi
-                  to'loviga hisoblanadi va balansingizda darrov ko'rinadi.
+                  to'loviga hisoblanadi
+                  {ask.period === thisPeriod()
+                    ? " va balansingizda darrov ko'rinadi."
+                    : " — bu oy to'lovi allaqachon to'langani uchun keyingi oyga o'tadi."}{" "}
                   Hisobingizdan <b>{ask.cost} coin</b> yechiladi.
                 </>
               ) : ask.kind === "discount" ? (

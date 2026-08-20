@@ -570,7 +570,9 @@ def give_reward(
     # shunda o'quvchi kutib qolgani uchun zarar ko'rmaydi.
     shop = None
     if r and (getattr(r, "kind", "gift") or "gift") == "discount":
-        period = roles.shop_discount_period()
+        # 2026-08-20: oyi balansga qarab - qarzli bo'lsa shu oyga
+        period = roles.shop_discount_period_by_balance(
+            student_balance(db, red.student_id))
         y, m = int(period[:4]), int(period[5:7])
         first = date(y, m, 1)
         last = date(y + (m == 12), (m % 12) + 1, 1) - timedelta(days=1)

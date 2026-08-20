@@ -125,6 +125,10 @@ db.commit()
 bal_before = student_balance(db, SID)
 coins_before = _student_coin_balance(db, SID)
 db.close()
+# YANGI QOIDA (2026-08-20): talaba shu oyga TO'LAMAGAN (qarzli),
+# demak chegirma sanadan qat'i nazar SHU OYGA tushadi va balans
+# darrov o'zgaradi. (Oybek muammosi: 20-avgustda olgan edi, eski
+# 15-kun qoidasi sentabrga yozib "balans o'zgarmadi" bo'lgan.)
 r = c.post(f"/api/me/rewards/{RID}", headers=S)
 ck("sotib olindi", r.status_code, 200)
 d = r.json()
@@ -132,18 +136,10 @@ ck("turi chegirma", d["kind"], "discount")
 ck("summa 132 000 (400 000 ning 33%)", d["amount"], 132000)
 db = SessionLocal()
 ck("coin yechildi", _student_coin_balance(db, SID), coins_before - 100)
-today = roles.local_today()
-if today.day <= 15:
-    ck("shu oyga tegishli", d["period"], period_now)
-    ck("balansga DARROV tushdi", d["applied"], True)
-    ck("balans 132 000 ga yaxshilandi",
-       round(student_balance(db, SID) - bal_before), 132000)
-else:
-    nxt = ((today.year + 1, 1) if today.month == 12
-           else (today.year, today.month + 1))
-    ck("keyingi oyga tegishli", d["period"], f"{nxt[0]:04d}-{nxt[1]:02d}")
-    ck("hozir balansga tushmaydi", d["applied"], False)
-    ck("balans o'zgarmadi", student_balance(db, SID), bal_before)
+ck("QARZLI -> shu oyga tegishli", d["period"], period_now)
+ck("balansga DARROV tushdi", d["applied"], True)
+ck("balans 132 000 ga yaxshilandi",
+   round(student_balance(db, SID) - bal_before), 132000)
 disc = (db.query(models.Discount)
         .filter(models.Discount.kind == "coin_shop").first())
 ck("chegirma yozuvi ochildi", disc is not None, True)
@@ -239,15 +235,53 @@ ck("so'mdagi chegirma avtomat emas",
    roles.shop_auto_discount(_R("discount", None, 50000)), False)
 ck("sovg'a avtomat emas", roles.shop_auto_discount(_R("gift")), False)
 
-print("\n=== 9. 15-kun qoidasi ===")
-ck("14-kun -> shu oy",
-   roles.shop_discount_period(date(2026, 8, 14)), "2026-08")
-ck("15-kun -> shu oy (chegara ichida)",
-   roles.shop_discount_period(date(2026, 8, 15)), "2026-08")
-ck("16-kun -> keyingi oy",
-   roles.shop_discount_period(date(2026, 8, 16)), "2026-09")
-ck("31-dekabr -> keyingi YIL yanvari",
-   roles.shop_discount_period(date(2026, 12, 31)), "2027-01")
+print("\n=== 9. Oy qoidasi: balansga qarab (2026-08-20) ===")
+ck("qarzli -> shu oy",
+   roles.shop_discount_period_by_balance(-158000, date(2026, 8, 20)),
+   "2026-08")
+ck("to'lagan -> keyingi oy",
+   roles.shop_discount_period_by_balance(0, date(2026, 8, 20)),
+   "2026-09")
+ck("ortiqcha to'lagan -> keyingi oy",
+   roles.shop_discount_period_by_balance(50000, date(2026, 8, 5)),
+   "2026-09")
+ck("dekabrda to'lagan -> keyingi YIL yanvari",
+   roles.shop_discount_period_by_balance(0, date(2026, 12, 31)),
+   "2027-01")
+
+print("\n=== 10. TO'LAGAN o'quvchi olsa -> keyingi oyga ===")
+db = SessionLocal()
+st2 = models.Student(full_name="Tolagan Qiz", branch_id=BID,
+                     status="active", group_id=GID,
+                     phone="+998901112233")
+db.add(st2); db.commit(); SID2 = st2.id
+db.add_all([
+    models.CoinEntry(student_id=SID2, amount=200, source="manual",
+                     note="test", created_by="Admin"),
+    models.Payment(student_id=SID2, amount=-400000, kind="charge",
+                   period=period_now, created_by="avtomat (oylik)"),
+    models.Payment(student_id=SID2, amount=400000, kind="payment",
+                   method="cash", created_by="Admin"),
+])
+u2 = models.User(username="oquvchi2", full_name="Tolagan Qiz",
+                 role="student", branch_id=BID,
+                 password_hash=hash_password("x"), is_active=1)
+db.add(u2); db.commit()
+st2.user_id = u2.id; db.commit()
+bal2 = student_balance(db, SID2)
+db.close()
+S2 = tok("oquvchi2")
+r = c.post(f"/api/me/rewards/{RID}", headers=S2)
+ck("sotib olindi", r.status_code, 200)
+d = r.json()
+_t = roles.local_today()
+_nxt = ((_t.year + 1, 1) if _t.month == 12 else (_t.year, _t.month + 1))
+ck("TO'LAGAN -> keyingi oyga", d["period"],
+   f"{_nxt[0]:04d}-{_nxt[1]:02d}")
+ck("hozir balans o'zgarmadi", d["applied"], False)
+db = SessionLocal()
+ck("balans avvalgidek", student_balance(db, SID2), bal2)
+db.close()
 
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))

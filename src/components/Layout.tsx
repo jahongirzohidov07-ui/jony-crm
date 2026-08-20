@@ -32,7 +32,7 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search, Smartphone , Sparkles } from "lucide-react";
+ Search, Smartphone , Sparkles , BookOpen } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -265,6 +265,10 @@ export default function Layout() {
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
   }
+  // KUTUBXONA - barcha xodimga (2026-08-20, Jahongir: "kutubxona
+  // bo'liimi ham supportlarda ochilmadi"). Ilgari faqat HR sahifasi
+  // ichida edi - supportlar va boshqa xodimlar yo'l topolmasdi.
+  items = [...items, { to: "/library", label: "Kutubxona", icon: BookOpen }];
   // BIZNES MASLAHATCHI AI - faqat asoschi (2026-08-20, Jahongir:
   // "menga asoschi uchun Biznes maslahatchi AI qoshib ber").
   if (user?.role === FOUNDER) {

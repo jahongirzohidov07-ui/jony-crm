@@ -40,7 +40,7 @@ import { exportToExcel } from "../lib/exportXlsx";
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
-  | "workforce" | "requests" | "hrvacancies" | "library";
+  | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -59,6 +59,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "attendance", label: "Davomat" },
   { key: "nps", label: "Ustozlar NPS" },
   { key: "library", label: "Kutubxona" },
+  // 2026-08-20, Jahongir: "hamma xodimga xar xilda onboarding"
+  { key: "onbsteps", label: "Onboarding" },
 ];
 
 function Stat({
@@ -1320,6 +1322,7 @@ export default function Hr() {
       {activeTab === "attendance" && <AttendanceTab />}
       {activeTab === "nps" && <NpsTab />}
       {activeTab === "library" && <LibraryTab />}
+      {activeTab === "onbsteps" && <OnboardingStepsTab />}
     </div>
   );
 }
@@ -1336,6 +1339,7 @@ export function LibraryTab() {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState<LibraryItem | null>(null);
   const [adding, setAdding] = useState(false);
+  const [editing, setEditing] = useState<LibraryItem | null>(null);
   const [err, setErr] = useState("");
 
   const load = () => {
@@ -1466,6 +1470,15 @@ export function LibraryTab() {
                     >
                       Kimlar
                     </button>
+                    {data.can_manage && (
+                      <button
+                        onClick={() => setEditing(it)}
+                        className="text-slate-400 hover:text-brand-600 mr-2"
+                        title="Tahrirlash"
+                      >
+                        <Pencil size={14} />
+                      </button>
+                    )}
                     <button
                       onClick={() => remove(it)}
                       className="text-slate-300 hover:text-red-500"
@@ -1492,6 +1505,18 @@ export function LibraryTab() {
           }}
         />
       )}
+      {editing && (
+        <LibraryForm
+          roles={data.roles}
+          kinds={data.kinds}
+          initial={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => {
+            setEditing(null);
+            load();
+          }}
+        />
+      )}
       {open && (
         <LibraryPeopleModal
           item={open}
@@ -1504,20 +1529,25 @@ export function LibraryTab() {
 }
 
 function LibraryForm({
-  roles: roleList, kinds, onClose, onSaved,
+  roles: roleList, kinds, initial, onClose, onSaved,
 }: {
   roles: { key: string; label: string }[];
   kinds: { key: string; label: string }[];
+  /** Tahrirlash rejimi (2026-08-20, Jahongir: "majburiy kitob
+   *  videolarni qo'lda o'zgartiradigan qilib bering"). */
+  initial?: LibraryItem | null;
   onClose: () => void;
   onSaved: () => void;
 }) {
-  const [title, setTitle] = useState("");
-  const [kind, setKind] = useState("video");
-  const [url, setUrl] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [desc, setDesc] = useState("");
-  const [required, setRequired] = useState(true);
-  const [target, setTarget] = useState<string[]>([]);
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [kind, setKind] = useState(initial?.kind ?? "video");
+  const [url, setUrl] = useState(initial?.url ?? "");
+  const [minutes, setMinutes] = useState(
+    initial?.minutes ? String(initial.minutes) : "");
+  const [desc, setDesc] = useState(initial?.description ?? "");
+  const [required, setRequired] = useState(initial?.required ?? true);
+  const [target, setTarget] = useState<string[]>(
+    initial?.target_roles ?? []);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
@@ -1525,7 +1555,7 @@ function LibraryForm({
     setBusy(true);
     setErr("");
     try {
-      await api.post("/library", {
+      const body = {
         title,
         kind,
         url,
@@ -1533,7 +1563,9 @@ function LibraryForm({
         description: desc,
         required,
         target_roles: target,
-      });
+      };
+      if (initial) await api.put(`/library/${initial.id}`, body);
+      else await api.post("/library", body);
       onSaved();
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Xatolik");
@@ -1546,7 +1578,9 @@ function LibraryForm({
     <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-slate-900">Yangi material</h2>
+          <h2 className="font-semibold text-slate-900">
+            {initial ? "Materialni tahrirlash" : "Yangi material"}
+          </h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={18} />
           </button>
@@ -1808,5 +1842,232 @@ function LibraryPeopleModal({
         )}
       </div>
     </div>
+  );
+}
+
+
+/**
+ * ONBOARDING BOSQICHLARI BOSHQARUVI (2026-08-20).
+ *
+ * Jahongir: "hamma xodimga xar xilda onboarding". Har bosqichga
+ * qaysi rollarga tegishliligi belgilanadi - bo'sh qoldirilsa
+ * hammaga. Yangi xodim kartasidagi checklist shu ro'yxatdan rolga
+ * qarab yig'iladi. O'chirish - faolsizlantirish: eski xodimlarning
+ * bajarilgan belgilari yo'qolmaydi.
+ */
+function OnboardingStepsTab() {
+  type Step = { id: number; key: string; label: string;
+    target_roles: string[]; order_no: number; active: boolean };
+  const [d, setD] = useState<{ rows: Step[];
+    roles: { key: string; label: string }[] } | null>(null);
+  const [err, setErr] = useState("");
+  const [newLabel, setNewLabel] = useState("");
+  const [newRoles, setNewRoles] = useState<string[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [editRoles, setEditRoles] = useState<Step | null>(null);
+
+  const load = () => {
+    api.get<{ rows: Step[]; roles: { key: string; label: string }[] }>(
+      "/onboarding-steps")
+      .then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  };
+  useEffect(load, []);
+
+  async function run(fn: () => Promise<unknown>) {
+    setBusy(true); setErr("");
+    try { await fn(); load(); }
+    catch (e) { setErr(e instanceof Error ? e.message : "Xatolik"); }
+    finally { setBusy(false); }
+  }
+
+  if (err && !d) return <p className="text-sm text-red-600">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+
+  const roleLbl = (k: string) =>
+    d.roles.find((r) => r.key === k)?.label || k;
+
+  return (
+    <div className="max-w-3xl">
+      <p className="text-sm text-slate-500 mb-4">
+        Yangi xodim checklisti shu yerdan boshqariladi. "Kimga" bo'sh
+        bo'lsa — bosqich hammaga tegishli. O'chirilgan bosqich eski
+        xodimlarning tarixini buzmaydi.
+      </p>
+      {err && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">
+          {err}
+        </p>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        {d.rows.map((r) => (
+          <div key={r.id} className={`px-4 py-3 ${r.active ? "" : "opacity-50"}`}>
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                defaultValue={r.label}
+                onBlur={(e) => {
+                  const v = e.target.value.trim();
+                  if (v && v !== r.label)
+                    run(() => api.put(`/onboarding-steps/${r.id}`, { label: v }));
+                }}
+                className="flex-1 min-w-[220px] text-sm text-slate-800 font-medium bg-transparent border border-transparent hover:border-slate-200 focus:border-brand-400 rounded-lg px-2 py-1 outline-none"
+              />
+              <button
+                onClick={() => setEditRoles(r)}
+                className="text-xs px-2.5 py-1 rounded-lg border border-slate-200 text-slate-600 hover:border-brand-300"
+              >
+                {r.target_roles.length
+                  ? r.target_roles.map(roleLbl).join(", ")
+                  : "hammaga"}
+              </button>
+              <input
+                type="number"
+                defaultValue={r.order_no}
+                title="Tartib raqami"
+                onBlur={(e) => {
+                  const v = Number(e.target.value) || 0;
+                  if (v !== r.order_no)
+                    run(() => api.put(`/onboarding-steps/${r.id}`, { order_no: v }));
+                }}
+                className="w-16 text-sm text-slate-500 border border-slate-200 rounded-lg px-2 py-1"
+              />
+              {r.active ? (
+                <button
+                  onClick={() => run(() => api.delete(`/onboarding-steps/${r.id}`))}
+                  disabled={busy}
+                  className="text-slate-300 hover:text-red-500"
+                  title="Faolsizlantirish"
+                >
+                  <Trash2 size={14} />
+                </button>
+              ) : (
+                <button
+                  onClick={() => run(() => api.put(`/onboarding-steps/${r.id}`, { active: true }))}
+                  disabled={busy}
+                  className="text-xs text-emerald-600 hover:underline"
+                >
+                  Tiklash
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 bg-white rounded-xl border border-slate-200 p-4">
+        <p className="text-sm font-medium text-slate-700 mb-2">
+          Yangi bosqich
+        </p>
+        <input
+          value={newLabel}
+          onChange={(e) => setNewLabel(e.target.value)}
+          placeholder="Masalan: Kompaniya qadriyatlari videosi ko'rildi"
+          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mb-2"
+        />
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {d.roles.map((ro) => (
+            <button
+              key={ro.key}
+              onClick={() =>
+                setNewRoles((v) =>
+                  v.includes(ro.key)
+                    ? v.filter((x) => x !== ro.key)
+                    : [...v, ro.key])}
+              className={`text-xs px-2.5 py-1 rounded-lg border ${
+                newRoles.includes(ro.key)
+                  ? "bg-brand-50 border-brand-400 text-brand-700"
+                  : "bg-white border-slate-200 text-slate-500"
+              }`}
+            >
+              {ro.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() =>
+            run(async () => {
+              await api.post("/onboarding-steps", {
+                label: newLabel, target_roles: newRoles,
+                order_no: d.rows.length,
+              });
+              setNewLabel(""); setNewRoles([]);
+            })}
+          disabled={busy || !newLabel.trim()}
+          className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
+        >
+          Qo'shish
+        </button>
+        <p className="text-[11px] text-slate-400 mt-2">
+          Rol tanlanmasa — hammaga tegishli bo'ladi.
+        </p>
+      </div>
+
+      {editRoles && (
+        <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4"
+             onClick={() => setEditRoles(null)}>
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-5"
+               onClick={(e) => e.stopPropagation()}>
+            <p className="font-semibold text-slate-900 mb-1">
+              "{editRoles.label}" — kimga tegishli?
+            </p>
+            <p className="text-xs text-slate-400 mb-3">
+              Hech biri tanlanmasa — hammaga.
+            </p>
+            <RolePicker
+              all={d.roles}
+              value={editRoles.target_roles}
+              onSave={(v) =>
+                run(async () => {
+                  await api.put(`/onboarding-steps/${editRoles.id}`,
+                    { target_roles: v });
+                  setEditRoles(null);
+                })}
+              onClose={() => setEditRoles(null)}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RolePicker({ all, value, onSave, onClose }: {
+  all: { key: string; label: string }[];
+  value: string[];
+  onSave: (v: string[]) => void;
+  onClose: () => void;
+}) {
+  const [sel, setSel] = useState<string[]>(value);
+  return (
+    <>
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {all.map((ro) => (
+          <button
+            key={ro.key}
+            onClick={() =>
+              setSel((v) => v.includes(ro.key)
+                ? v.filter((x) => x !== ro.key) : [...v, ro.key])}
+            className={`text-xs px-2.5 py-1 rounded-lg border ${
+              sel.includes(ro.key)
+                ? "bg-brand-50 border-brand-400 text-brand-700"
+                : "bg-white border-slate-200 text-slate-500"
+            }`}
+          >
+            {ro.label}
+          </button>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <button onClick={onClose}
+                className="flex-1 py-2 rounded-lg border border-slate-200 text-sm text-slate-600">
+          Bekor
+        </button>
+        <button onClick={() => onSave(sel)}
+                className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium">
+          Saqlash
+        </button>
+      </div>
+    </>
   );
 }

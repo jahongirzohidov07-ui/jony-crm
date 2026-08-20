@@ -5178,6 +5178,186 @@ def library_person(target_id: int, db: Session = Depends(get_db),
 
 
 # =====================================================================
+#  ONBOARDING BOSQICHLARI — ROLGA QARAB, QO'LDA BOSHQARILADI
+#
+#  2026-08-20, Jahongir: "onboarding bilan majburiy kitob videolarni
+#  qo'lda o'zgartiradigan qilib bering, hamma xodimga xar xilda
+#  onboarding".
+#
+#  Ilgari bosqichlar roles.ONBOARDING_STEPS da qotib turardi - hamma
+#  rolga bir xil. Endi shablon jadvali bor: HR bosqich qo'shadi,
+#  nomini o'zgartiradi, qaysi rollarga tegishliligini belgilaydi.
+#  Jadval BO'SH bo'lsa eski standart ro'yxat ishlaydi - hech kimning
+#  checklisti yo'qolmaydi. O'chirish = faolsizlantirish (tarix
+#  saqlanadi, bajarilgan belgilar OnboardingStep'da qoladi).
+# =====================================================================
+if getattr(models, "OnboardingTemplate", None) is None:
+    class OnboardingTemplate(_Base):
+        """Onboarding bosqichi shabloni."""
+
+        __tablename__ = "onboarding_templates"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        key = Column(String, nullable=False, index=True)
+        label = Column(String, nullable=False)
+        # Kimlarga: rollar CSV. Bo'sh = barcha xodimlarga.
+        target_roles = Column(String)
+        order_no = Column(Integer, default=0)
+        active = Column(Integer, default=1)
+        created_by = Column(String)
+        created_at = Column(DateTime, default=_dt.utcnow)
+
+    models.OnboardingTemplate = OnboardingTemplate
+    ensure_tables([OnboardingTemplate.__table__])
+
+_OT = models.OnboardingTemplate
+_ONB_MANAGE = list(dict.fromkeys(
+    list(roles.HR_ACCESS) + [roles.ACADEMIC_HEAD, roles.HEAD_SUPPORT]))
+
+
+def _onb_templates(db) -> list:
+    try:
+        rows = (db.query(_OT).order_by(_OT.order_no, _OT.id).all())
+    except Exception:
+        rows = []
+    return rows
+
+
+def _onb_steps_for_role(db, role: str) -> list:
+    """Rol uchun (key, label) ro'yxati. Shablon bo'sh - eski standart."""
+    rows = [t for t in _onb_templates(db) if t.active]
+    if not rows:
+        return list(roles.ONBOARDING_STEPS)
+    out = []
+    for t in rows:
+        tr = [x for x in (t.target_roles or "").split(",") if x]
+        if not tr or role in tr:
+            out.append((t.key, t.label))
+    return out
+
+
+def _onboarding_rows_v2(db, user_id: int) -> list:
+    """common._onboarding_rows o'rnini bosadi - ROLGA QARAB."""
+    u = db.query(models.User).get(user_id)
+    steps = _onb_steps_for_role(db, u.role if u else "")
+    have = {r.step: r for r in db.query(models.OnboardingStep)
+            .filter(models.OnboardingStep.user_id == user_id).all()}
+    out = []
+    for key, label in steps:
+        r = have.get(key)
+        out.append({
+            "step": key,
+            "label": label,
+            "done": bool(r and r.done),
+            "done_at": r.done_at.isoformat() if r and r.done_at else None,
+            "done_by": r.done_by if r else None,
+            "note": r.note if r else None,
+        })
+    return out
+
+
+# Eski funksiyani hamma joyda almashtiramiz - me.py va hr.py uni
+# "from common import *" orqali o'z nomiga olib bo'lgan.
+import hr as _hr_mod  # noqa: E402
+M._onboarding_rows = _onboarding_rows_v2
+_hr_mod._onboarding_rows = _onboarding_rows_v2
+try:
+    import me as _me_mod  # noqa: E402
+    _me_mod._onboarding_rows = _onboarding_rows_v2
+except Exception:
+    pass
+
+
+def _slugify_key(label: str) -> str:
+    import re as _re
+    k = _re.sub(r"[^a-z0-9]+", "_", label.lower().replace("'", "")).strip("_")
+    return (k or "step")[:40]
+
+
+@app.get("/api/onboarding-steps")
+def onboarding_steps_list(db: Session = Depends(get_db),
+                          user=Depends(require_role(*_ONB_MANAGE))):
+    rows = _onb_templates(db)
+    if not rows:
+        # Standartni birinchi ochilishda jadvalga ko'chiramiz -
+        # shundan keyin hammasi qo'lda boshqariladi.
+        for i, (k, lbl) in enumerate(roles.ONBOARDING_STEPS):
+            db.add(_OT(key=k, label=lbl, order_no=i, active=1,
+                       created_by="Tizim (standart)"))
+        db.commit()
+        rows = _onb_templates(db)
+    return {
+        "rows": [{
+            "id": t.id, "key": t.key, "label": t.label,
+            "target_roles": [x for x in (t.target_roles or "").split(",")
+                             if x],
+            "order_no": t.order_no or 0, "active": bool(t.active),
+        } for t in rows],
+        "roles": [{"key": r, "label": roles.UZ_LABELS.get(r, r)}
+                  for r in roles.STAFF_ROLES],
+    }
+
+
+@app.post("/api/onboarding-steps")
+def onboarding_steps_add(payload: dict = Body(...),
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*_ONB_MANAGE))):
+    label = str(payload.get("label") or "").strip()
+    if not label:
+        raise HTTPException(400, "Bosqich nomini kiriting")
+    key = _slugify_key(label)
+    base, n = key, 2
+    while db.query(_OT).filter(_OT.key == key).first():
+        key = f"{base}_{n}"; n += 1
+    t = _OT(key=key, label=label,
+            target_roles=",".join(payload.get("target_roles") or []) or None,
+            order_no=int(payload.get("order_no") or 0),
+            active=1, created_by=user.full_name)
+    db.add(t); db.commit(); db.refresh(t)
+    audit.log(db, user, entity="user", action="create",
+              entity_label=f"Onboarding bosqichi: {label}", commit=True)
+    return {"ok": True, "id": t.id, "key": t.key}
+
+
+@app.put("/api/onboarding-steps/{tid}")
+def onboarding_steps_edit(tid: int, payload: dict = Body(...),
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*_ONB_MANAGE))):
+    t = db.query(_OT).get(tid)
+    if not t:
+        raise HTTPException(404, "Topilmadi")
+    if "label" in payload:
+        lbl = str(payload.get("label") or "").strip()
+        if not lbl:
+            raise HTTPException(400, "Bosqich nomini kiriting")
+        t.label = lbl
+    if "target_roles" in payload:
+        t.target_roles = ",".join(payload.get("target_roles") or []) or None
+    if "order_no" in payload:
+        t.order_no = int(payload.get("order_no") or 0)
+    if "active" in payload:
+        t.active = 1 if payload.get("active") else 0
+    db.commit()
+    return {"ok": True}
+
+
+@app.delete("/api/onboarding-steps/{tid}")
+def onboarding_steps_del(tid: int, db: Session = Depends(get_db),
+                         user=Depends(require_role(*_ONB_MANAGE))):
+    """O'chirish = faolsizlantirish. Bajarilgan belgilar saqlanadi."""
+    t = db.query(_OT).get(tid)
+    if not t:
+        raise HTTPException(404, "Topilmadi")
+    t.active = 0
+    db.commit()
+    audit.log(db, user, entity="user", action="update",
+              entity_label=f"Onboarding bosqichi o'chirildi: {t.label}",
+              commit=True)
+    return {"ok": True}
+
+
+# =====================================================================
 #  SUPPORT TEACHERNING O'Z DARAJA YO'LI
 #
 #  Ilgari "Mening yo'lim" sahifasida supportga USTOZNING darajalari

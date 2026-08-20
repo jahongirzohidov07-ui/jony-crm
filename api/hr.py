@@ -64,7 +64,17 @@ def set_onboarding(
     emp = db.query(models.User).get(user_id)
     if not emp:
         raise HTTPException(404, "Xodim topilmadi")
-    if payload.step not in roles.ONBOARDING_KEYS:
+    # Qadam ro'yxati endi QO'LDA boshqariladi (2026-08-20, Jahongir:
+    # "hamma xodimga xar xilda onboarding") - shablon jadvalidagi
+    # kalitlar ham qabul qilinadi, standart ro'yxat ham.
+    _valid = set(roles.ONBOARDING_KEYS)
+    try:
+        _OT = getattr(models, "OnboardingTemplate", None)
+        if _OT is not None:
+            _valid |= {t.key for t in db.query(_OT).all()}
+    except Exception:
+        pass
+    if payload.step not in _valid:
         raise HTTPException(400, "Noto'g'ri qadam")
     row = (db.query(models.OnboardingStep)
            .filter(models.OnboardingStep.user_id == user_id,

@@ -286,7 +286,7 @@ export default function MyProfile() {
  *
  *  Ko'rgan foizni o'zim belgilayman; "topshirdi" degan belgini esa HR
  *  qo'yadi. Daraja ko'tarishda shu ro'yxat qaraladi. */
-function MyLibrary() {
+export function MyLibrary() {
   const [d, setD] = useState<LibraryList | null>(null);
   const [busy, setBusy] = useState<number | null>(null);
 

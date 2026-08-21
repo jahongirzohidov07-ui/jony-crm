@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Archive as ArchiveIcon, Download, RotateCcw, X, FileUp,
-  Upload, Check, AlertTriangle, Trash2, FileDown,
+  Upload, Check, AlertTriangle, Trash2, FileDown, Search,
 } from "lucide-react";
 import {
   api, type ArchiveStudents, type ArchiveStaff, type ArchiveStaffRow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, STAFF_VIEWERS, HR_ACCESS, FREEZE_ROLES, can } from "../lib/roles";
+import {
+  TEACHING_STAFF, STAFF_VIEWERS, HR_ACCESS, FREEZE_ROLES, FOUNDER, can,
+} from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
@@ -60,13 +62,25 @@ function StudentsTab() {
   const [data, setData] = useState<ArchiveStudents | null>(null);
   const [branchId, setBranchId] = useState<number | null>(null);
   const [filter, setFilter] = useState("");
+  // 2026-08-22, Jahongir: "arxivda qidirv va filtr qoyib ber" — arxiv
+  // yuzlab qatorga yetdi, kerakli odamni ko'z bilan izlab bo'lmaydi.
+  const [q, setQ] = useState("");
+  const [groupF, setGroupF] = useState("");   // qaysi guruhda o'qigan
+  const [yearF, setYearF] = useState("");     // qaysi yilda ketgan
+  const [sortBy, setSortBy] = useState("amount"); // amount | name | left
   const [loading, setLoading] = useState(true);
   const [reloadKey, setReloadKey] = useState(0);
   const [busyId, setBusyId] = useState<number | null>(null);
   // LC UP'dan ketgan o'quvchilar ro'yxatini ko'chirish
   const [showImport, setShowImport] = useState(false);
+  // Butunlay o'chirishni tasdiqlash oynasi (faqat asoschi)
+  const [purging, setPurging] = useState<{ id: number; name: string } | null>(null);
   // O'quvchilar qaytib kelishi mumkin — qayta tiklash huquqi
   const canRestore = can(user?.role, FREEZE_ROLES);
+  // 2026-08-22, Jahongir: "arxivdagilarni ochirishni faqat menga qoshib
+  // ber" — butunlay o'chirish tarixni ham yo'q qiladi, shuning uchun
+  // tugma faqat asoschida ko'rinadi (backend ham FOUNDER bilan yopiq).
+  const canPurge = user?.role === FOUNDER;
   const canImport = can(user?.role, HR_ACCESS) ||
     user?.role === "accountant" || user?.role === "finance_director";
 
@@ -100,9 +114,54 @@ function StudentsTab() {
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
 
-  const shown = filter
-    ? data.rows.filter((r) => r.group_key === filter)
-    : data.rows;
+  // Guruh va yil ro'yxatlari — mavjud ma'lumotdan yig'iladi
+  const groupNames = Array.from(
+    new Set(data.rows.map((r) => r.group).filter(Boolean) as string[])
+  ).sort((a, b) => a.localeCompare(b));
+  const years = Array.from(
+    new Set(
+      data.rows.map((r) => (r.left_date ? r.left_date.slice(0, 4) : ""))
+        .filter(Boolean)
+    )
+  ).sort().reverse();
+
+  const needle = q.trim().toLowerCase();
+  const digits = needle.replace(/\D/g, "");
+  const shown = data.rows
+    .filter((r) => (filter ? r.group_key === filter : true))
+    .filter((r) => (groupF ? r.group === groupF : true))
+    .filter((r) => (yearF ? (r.left_date || "").slice(0, 4) === yearF : true))
+    .filter((r) => {
+      if (!needle) return true;
+      // Ism, ID, guruh, filial va telefon (raqamlar bo'yicha ham) qidiriladi
+      const hay = [r.full_name, r.public_id, r.group, r.branch]
+        .filter(Boolean).join(" ").toLowerCase();
+      if (hay.includes(needle)) return true;
+      if (digits.length >= 3) {
+        const phones = `${r.phone || ""} ${r.parent_phone || ""}`.replace(/\D/g, "");
+        if (phones.includes(digits)) return true;
+      }
+      return false;
+    });
+  shown.sort((a, b) => {
+    if (sortBy === "name") return a.full_name.localeCompare(b.full_name);
+    if (sortBy === "left") return (b.left_date || "").localeCompare(a.left_date || "");
+    return Math.abs(b.balance) - Math.abs(a.balance);
+  });
+  const hasFilter = !!(filter || q.trim() || groupF || yearF);
+
+  async function purge(id: number) {
+    setBusyId(id);
+    try {
+      await api.delete(`/students/${id}`);
+      setPurging(null);
+      setReloadKey((k) => k + 1);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusyId(null);
+    }
+  }
 
   return (
     <div>
@@ -134,17 +193,78 @@ function StudentsTab() {
         })}
       </div>
 
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm text-slate-500">{shown.length} ta o'quvchi</span>
-        {filter && (
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <div className="relative flex-1 min-w-[14rem] max-w-sm">
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            size={16}
+          />
+          <input
+            className="w-full rounded-lg border border-slate-300 pl-9 pr-8 py-2 text-sm"
+            placeholder="Ism, ID, telefon, guruh..."
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+          {q && (
+            <button
+              onClick={() => setQ("")}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+        {groupNames.length > 1 && (
+          <select
+            value={groupF}
+            onChange={(e) => setGroupF(e.target.value)}
+            className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white max-w-[12rem]"
+          >
+            <option value="">Barcha guruhlar</option>
+            {groupNames.map((g) => (
+              <option key={g} value={g}>{g}</option>
+            ))}
+          </select>
+        )}
+        {years.length > 1 && (
+          <select
+            value={yearF}
+            onChange={(e) => setYearF(e.target.value)}
+            className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white"
+          >
+            <option value="">Ketgan yil: barchasi</option>
+            {years.map((y) => (
+              <option key={y} value={y}>{y}-yil</option>
+            ))}
+          </select>
+        )}
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="rounded-lg border border-slate-300 px-2.5 py-2 text-sm bg-white"
+        >
+          <option value="amount">Summa bo'yicha</option>
+          <option value="name">Ism bo'yicha (A-Z)</option>
+          <option value="left">Ketgan sana (yangi)</option>
+        </select>
+        <BranchPicker value={branchId} onChange={setBranchId} />
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <span className="text-sm text-slate-500">
+          {shown.length} ta o'quvchi
+          {hasFilter && (
+            <span className="text-slate-400"> / {data.rows.length}</span>
+          )}
+        </span>
+        {hasFilter && (
           <button
-            onClick={() => setFilter("")}
+            onClick={() => { setFilter(""); setQ(""); setGroupF(""); setYearF(""); }}
             className="text-xs text-brand-600 hover:underline"
           >
             filtrni tozalash
           </button>
         )}
-        <BranchPicker value={branchId} onChange={setBranchId} />
         <div className="flex-1" />
         <button
           onClick={() =>
@@ -186,7 +306,7 @@ function StudentsTab() {
 
       {shown.length === 0 ? (
         <p className="text-sm text-slate-400 py-10 text-center">
-          Arxivda o'quvchi yo'q
+          {hasFilter ? "Qidiruvga mos o'quvchi topilmadi" : "Arxivda o'quvchi yo'q"}
         </p>
       ) : (
         <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
@@ -200,7 +320,7 @@ function StudentsTab() {
                 <th className="text-right w-24">Necha oy</th>
                 <th className="text-right w-36">Hisob</th>
                 <th className="text-left w-44 pr-4">Toifa</th>
-                {canRestore && <th className="w-32"></th>}
+                {(canRestore || canPurge) && <th className="w-44"></th>}
               </tr>
             </thead>
             <tbody>
@@ -244,17 +364,29 @@ function StudentsTab() {
                       {r.balance === 0 ? "—" : formatSom(r.balance)}
                     </td>
                     <td className={`pr-4 text-xs ${T.text}`}>{g?.label}</td>
-                    {canRestore && (
-                      <td className="pr-4 text-right">
-                        <button
-                          onClick={() => restore(r.id, r.full_name)}
-                          disabled={busyId === r.id}
-                          className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50"
-                          title="Arxivdan qayta tiklash"
-                        >
-                          <RotateCcw size={12} />
-                          Qayta tiklash
-                        </button>
+                    {(canRestore || canPurge) && (
+                      <td className="pr-4 text-right whitespace-nowrap">
+                        {canRestore && (
+                          <button
+                            onClick={() => restore(r.id, r.full_name)}
+                            disabled={busyId === r.id}
+                            className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50"
+                            title="Arxivdan qayta tiklash"
+                          >
+                            <RotateCcw size={12} />
+                            Qayta tiklash
+                          </button>
+                        )}
+                        {canPurge && (
+                          <button
+                            onClick={() => setPurging({ id: r.id, name: r.full_name })}
+                            disabled={busyId === r.id}
+                            className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md text-red-600 hover:bg-red-50 disabled:opacity-50 ml-1"
+                            title="Butunlay o'chirish (faqat asoschi)"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        )}
                       </td>
                     )}
                   </tr>
@@ -264,6 +396,86 @@ function StudentsTab() {
           </table>
         </div>
       )}
+
+      {purging && (
+        <PurgeModal
+          name={purging.name}
+          busy={busyId === purging.id}
+          onClose={() => setPurging(null)}
+          onConfirm={() => purge(purging.id)}
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * BUTUNLAY O'CHIRISH TASDIG'I (2026-08-22).
+ *
+ * Jahongir: "arxivdagilarni ochirishni faqat menga qoshib ber".
+ * Bu tizimdagi yagona QAYTARIB BO'LMAYDIGAN amal — o'quvchi bilan
+ * birga uning to'lov, yo'qlama va imtihon tarixi ham yo'qoladi.
+ * Shuning uchun tasodifan bosib yuborilmasin deb ism yozib tasdiqlash
+ * talab qilinadi.
+ */
+function PurgeModal({
+  name, busy, onClose, onConfirm,
+}: {
+  name: string;
+  busy: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  const [typed, setTyped] = useState("");
+  const ok = typed.trim().toLowerCase() === name.trim().toLowerCase();
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-semibold text-slate-800 flex items-center gap-2">
+            <AlertTriangle size={18} className="text-red-600" />
+            Butunlay o'chirish
+          </h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-sm text-slate-600 mb-2">
+          <b className="text-slate-900">{name}</b> bazadan butunlay
+          o'chiriladi. To'lov tarixi, yo'qlamalari va imtihon natijalari
+          ham birga yo'qoladi.
+        </p>
+        <p className="text-sm text-red-700 bg-red-50 rounded-lg px-3 py-2 mb-3">
+          Bu amalni QAYTARIB BO'LMAYDI. Agar shunchaki ro'yxatdan
+          yashirish kerak bo'lsa — o'quvchi allaqachon arxivda turibdi,
+          o'chirish shart emas.
+        </p>
+        <label className="block text-xs text-slate-500 mb-1">
+          Tasdiqlash uchun o'quvchining to'liq ismini yozing:
+        </label>
+        <input
+          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mb-4"
+          placeholder={name}
+          value={typed}
+          onChange={(e) => setTyped(e.target.value)}
+          autoFocus
+        />
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={onClose}
+            className="px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600"
+          >
+            Bekor qilish
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={!ok || busy}
+            className="px-3 py-2 rounded-lg bg-red-600 text-white text-sm disabled:opacity-40"
+          >
+            {busy ? "O'chirilmoqda..." : "Butunlay o'chirish"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -273,6 +485,7 @@ function StaffTab() {
   const { user } = useAuth();
   const [data, setData] = useState<ArchiveStaff | null>(null);
   const [filter, setFilter] = useState("");
+  const [q, setQ] = useState("");           // ism/lavozim/filial qidiruvi
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<ArchiveStaffRow | null>(null);
 
@@ -288,9 +501,16 @@ function StaffTab() {
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
 
-  const shown = filter
-    ? data.rows.filter((r) => r.exit_type === filter)
-    : data.rows;
+  const needle = q.trim().toLowerCase();
+  const shown = data.rows
+    .filter((r) => (filter ? r.exit_type === filter : true))
+    .filter((r) =>
+      needle
+        ? [r.full_name, r.username, r.role_label, r.branch, r.exit_reason]
+            .filter(Boolean).join(" ").toLowerCase().includes(needle)
+        : true
+    );
+  const hasFilter = !!(filter || needle);
   const canEdit = can(user?.role, HR_ACCESS);
   const canRehire = can(user?.role, STAFF_VIEWERS);
 
@@ -331,9 +551,46 @@ function StaffTab() {
         })}
       </div>
 
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <div className="relative flex-1 min-w-[14rem] max-w-sm">
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            size={16}
+          />
+          <input
+            className="w-full rounded-lg border border-slate-300 pl-9 pr-8 py-2 text-sm"
+            placeholder="Ism, lavozim, filial..."
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+          {q && (
+            <button
+              onClick={() => setQ("")}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+        <span className="text-sm text-slate-500">
+          {shown.length} ta xodim
+          {hasFilter && (
+            <span className="text-slate-400"> / {data.rows.length}</span>
+          )}
+        </span>
+        {hasFilter && (
+          <button
+            onClick={() => { setFilter(""); setQ(""); }}
+            className="text-xs text-brand-600 hover:underline"
+          >
+            filtrni tozalash
+          </button>
+        )}
+      </div>
+
       {shown.length === 0 ? (
         <p className="text-sm text-slate-400 py-10 text-center">
-          Ishdan bo'shagan xodim yo'q
+          {hasFilter ? "Qidiruvga mos xodim topilmadi" : "Ishdan bo'shagan xodim yo'q"}
         </p>
       ) : (
         <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">

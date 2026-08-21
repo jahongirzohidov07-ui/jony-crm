@@ -30,6 +30,9 @@ export default function StudentGrammarPlay() {
   // MASHQ TURI (2026-08-11, Jahongir): mavzu tanlangach 4 tur
   // taklif qilinadi. null = hali tanlanmagan (tanlash ekrani).
   const [kind, setKind] = useState<string | null>(null);
+  // Mashqlar soni (2026-08-21, Jahongir: "10, 20, 30, 50 tanlaydigan
+  // bolsin va koproq mashq qila olsin"). null = hali tanlanmagan.
+  const [cnt, setCnt] = useState<number | null>(null);
   const [kinds, setKinds] = useState<string[]>([]);
   const [clozeSel, setClozeSel] = useState<Record<number, string>>({});
   const [result, setResult] = useState<Any>(null); // serverdan javob
@@ -59,16 +62,16 @@ export default function StudentGrammarPlay() {
     setPicked([]);
     setScore({ ok: 0, xp: 0 });
     setFinished(false);
-    if (kind === null) return;
+    if (kind === null || cnt === null) return;
     api
       .get<Any>(
         `/student/grammar/round?topic=${encodeURIComponent(topic || "")}${
           kind && kind !== "mix" ? `&kind=${kind}` : ""
-        }`,
+        }&count=${cnt}`,
       )
       .then((r) => setItems(r.items || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [topic, kind]);
+  }, [topic, kind, cnt]);
 
   useEffect(load, [load]);
 
@@ -203,6 +206,43 @@ export default function StudentGrammarPlay() {
               >
                 Mavzular
               </Link>
+            </div>
+          </div>
+        )}
+
+        {/* ---- MASHQLAR SONINI TANLASH ---- */}
+        {kind !== null && cnt === null && !err && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-3">
+              Nechta mashq ishlaysiz?
+            </p>
+            <div className="space-y-1.5">
+              {[
+                [10, "10 ta", "Tezkor mashq"],
+                [20, "20 ta", "O'rtacha mashq"],
+                [30, "30 ta", "Yaxshi mashq"],
+                [50, "50 ta", "Katta mashq"],
+              ].map(([n, lbl, hint]) => (
+                <button
+                  key={n as number}
+                  onClick={() => setCnt(n as number)}
+                  className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0 text-sm font-bold">
+                    {n as number}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-slate-800">{lbl}</p>
+                    <p className="text-[11px] text-slate-400">{hint}</p>
+                  </div>
+                </button>
+              ))}
+              <button
+                onClick={() => setKind(null)}
+                className="w-full text-center text-xs text-slate-400 pt-2"
+              >
+                ← Mashq turiga qaytish
+              </button>
             </div>
           </div>
         )}

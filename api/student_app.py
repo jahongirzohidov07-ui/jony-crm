@@ -489,6 +489,7 @@ def _round_spelling(words):
 @router.get("/api/student/vocab/round")
 def vocab_round(game: str = "en_uz", level: str | None = None,
                 unit: str | None = None, language: str = "en",
+                count: int = 0,
                 db: Session = Depends(get_db),
                 user=Depends(require_role(roles.STUDENT))):
     """Bitta o'yin bosqichi (round) tuzadi.
@@ -512,7 +513,15 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
                  "Lug'at bazasi hali to'lmagan — administratorga "
                  "murojaat qiling")
 
-    n = min(roles.VOCAB_ROUND_SIZE, len(pool))
+    # NECHTA SO'Z (2026-08-21, Jahongir: "faqatgina 10tagina sozni
+    # mashq qilyabdi shuni 10 yoki 25 va 60 va hammasi tanlaydigan
+    # bolishi kerak"). count=0 - eski odatiy 10; katta son - "hammasi"
+    # (pool qanchalik bo'lsa shuncha, eng ko'pi 500).
+    want = int(count or 0)
+    if want <= 0:
+        want = roles.VOCAB_ROUND_SIZE
+    want = max(1, min(want, 500))
+    n = min(want, len(pool))
     words = random.sample(pool, n)
 
     if game == "flashcard":
@@ -1658,6 +1667,7 @@ def grammar_topics(db: Session = Depends(get_db),
 
 @router.get("/api/student/grammar/round")
 def grammar_round(topic: str, kind: str | None = None,
+                  count: int = 0,
                   db: Session = Depends(get_db),
                   user=Depends(require_role(roles.STUDENT))):
     """Bitta mashg'ulot: mavzudan 8 ta savol.
@@ -1678,6 +1688,27 @@ def grammar_round(topic: str, kind: str | None = None,
     if not qs:
         raise HTTPException(404, "Bunday mavzu topilmadi")
 
+    # NECHTA SAVOL (2026-08-21, Jahongir: "mashqlar 9tami shunaqa uni
+    # 10, 20, 30, 50 tanlaydigan bolsin va koproq mashq qila olsin").
+    # Mavzuning o'z banki yetmasa - O'SHA DARAJADAGI boshqa mavzulardan
+    # to'ldiriladi, bola ko'proq mashq qila oladi.
+    want = int(count or 0)
+    if want <= 0:
+        want = roles.GRAMMAR_ROUND_SIZE
+    want = max(1, min(want, 100))
+
+    if len(qs) < want:
+        lvl = qs[0].level if qs else None
+        extra_q = (db.query(models.GrammarQuestion)
+                   .filter(models.GrammarQuestion.is_active == 1,
+                           models.GrammarQuestion.level == lvl,
+                           models.GrammarQuestion.topic != topic))
+        if kind in ("fill", "order", "error", "cloze"):
+            extra_q = extra_q.filter(models.GrammarQuestion.kind == kind)
+        extra = extra_q.all()
+        random.shuffle(extra)
+        qs = qs + extra[: max(0, want - len(qs))]
+
     solved = {qid for (qid,) in
               db.query(func.distinct(models.GrammarAttempt.question_id))
               .filter(models.GrammarAttempt.student_id == s.id,
@@ -1686,7 +1717,7 @@ def grammar_round(topic: str, kind: str | None = None,
     done = [q for q in qs if q.id in solved]
     random.shuffle(fresh)
     random.shuffle(done)
-    picked = (fresh + done)[:roles.GRAMMAR_ROUND_SIZE]
+    picked = (fresh + done)[:want]
     random.shuffle(picked)
 
     items = []

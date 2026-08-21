@@ -31,6 +31,9 @@ export default function StudentVocab() {
   const [q, setQ] = useState("");
   const [filt, setFilt] = useState<"all" | "started" | "solid">("all");
   const [picker, setPicker] = useState<string | null>(null);
+  // Mashq soni tanlash (2026-08-21, Jahongir: "10 yoki 25 va 60 va
+  // hammasi tanlaydigan bolishi kerak"). null = hali tur tanlanmagan.
+  const [pickGame, setPickGame] = useState<string | null>(null);
 
   useEffect(() => {
     api.get<StudentHome>("/student/home").then(setD).catch(() => {});
@@ -45,11 +48,11 @@ export default function StudentVocab() {
   const langMeta = LANGS.find((l) => l.code === lang) || LANGS[0];
   const xp = d?.gamification?.lifetime_xp;
 
-  function openGame(game: string) {
-    const qq = picker
+  function openGame(game: string, count: number) {
+    const base = picker
       ? `?unit=${encodeURIComponent(picker)}&lang=${lang}`
       : `?lang=${lang}`;
-    nav(`/student/games/${game}${qq}`);
+    nav(`/student/games/${game}${base}&count=${count}`);
   }
 
   const shown = units.filter((u) => {
@@ -249,7 +252,7 @@ export default function StudentVocab() {
       {picker !== null && (
         <div
           className="fixed inset-0 bg-black/50 z-40 flex items-end justify-center"
-          onClick={() => setPicker(null)}
+          onClick={() => { setPicker(null); setPickGame(null); }}
         >
           <div
             className="w-full max-w-md bg-white rounded-t-2xl p-4 pb-8 max-h-[75vh] overflow-y-auto"
@@ -257,18 +260,51 @@ export default function StudentVocab() {
           >
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold text-slate-800">
-                {picker || "Umumiy mashq"} — qaysi turdagi practice?
+                {picker || "Umumiy mashq"} —{" "}
+                {pickGame === null ? "qaysi turdagi practice?" : "nechta so'z?"}
               </p>
-              <button onClick={() => setPicker(null)} className="text-slate-400"
+              <button onClick={() => { setPicker(null); setPickGame(null); }} className="text-slate-400"
                       aria-label="Yopish">
                 <X size={18} />
               </button>
             </div>
+            {pickGame !== null && (
+              <div className="space-y-1.5">
+                {[
+                  [10, "10 ta", "Tezkor mashq"],
+                  [25, "25 ta", "O'rtacha mashq"],
+                  [60, "60 ta", "Katta mashq"],
+                  [500, "Hammasi", "Barcha mavjud so'zlar"],
+                ].map(([n, lbl, hint]) => (
+                  <button
+                    key={n as number}
+                    onClick={() => openGame(pickGame, n as number)}
+                    className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 text-sm font-bold">
+                      {n === 500 ? "∞" : (n as number)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800">{lbl}</p>
+                      <p className="text-[11px] text-slate-400">{hint}</p>
+                    </div>
+                    <ChevronRight size={16} className="text-slate-300" />
+                  </button>
+                ))}
+                <button
+                  onClick={() => setPickGame(null)}
+                  className="w-full text-center text-xs text-slate-400 pt-2"
+                >
+                  ← Mashq turiga qaytish
+                </button>
+              </div>
+            )}
+            {pickGame === null && (
             <div className="space-y-1.5">
               {games.map((gm) => (
                 <button
                   key={gm.key}
-                  onClick={() => openGame(gm.key)}
+                  onClick={() => setPickGame(gm.key)}
                   className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
                 >
                   <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 text-sm font-bold">
@@ -286,6 +322,7 @@ export default function StudentVocab() {
                 </button>
               ))}
             </div>
+            )}
           </div>
         </div>
       )}

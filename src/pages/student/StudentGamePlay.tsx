@@ -27,6 +27,8 @@ export default function StudentGamePlay() {
   const [sp] = useSearchParams();
   const unit = sp.get("unit") || "";
   const lang = sp.get("lang") || "en";
+  // Nechta so'z mashq qilinadi (2026-08-21). Bo'sh = server standarti (10).
+  const count = sp.get("count") || "";
   const [round, setRound] = useState<VocabRound | null>(null);
   const [err, setErr] = useState("");
   const [idx, setIdx] = useState(0);
@@ -46,11 +48,11 @@ export default function StudentGamePlay() {
       .get<VocabRound>(
         `/student/vocab/round?game=${game}&language=${lang}${
           unit ? `&unit=${encodeURIComponent(unit)}` : ""
-        }`,
+        }${count ? `&count=${count}` : ""}`,
       )
       .then(setRound)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [game, unit, lang]);
+  }, [game, unit, lang, count]);
 
   useEffect(load, [load]);
 

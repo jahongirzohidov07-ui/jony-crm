@@ -74,6 +74,16 @@ r = c.get("/api/student/grammar/round", params={"topic": topic}, headers=H)
 ck("status 200", r.status_code, 200)
 items = r.json()["items"]
 ck("8 ta savol", len(items), roles.GRAMMAR_ROUND_SIZE)
+
+# Mashqlar soni tanlanadi (2026-08-21, Jahongir: "10, 20, 30, 50
+# tanlaydigan bolsin va koproq mashq qila olsin"). Mavzu bankida
+# yetmasa, shu darajadagi boshqa mavzulardan to'ldiriladi.
+r20 = c.get("/api/student/grammar/round",
+            params={"topic": topic, "count": 20}, headers=H)
+ck("count=20 status 200", r20.status_code, 200)
+items20 = r20.json()["items"]
+ck("20 tagacha savol (bank yetsa 20)", len(items20) > len(items), True)
+ck("javob bunda ham sirda", any("answer" in it for it in items20), False)
 ck("javob maydoni YO'Q",
    any("answer" in it for it in items), False)
 ck("izoh ham oldindan ketmaydi",

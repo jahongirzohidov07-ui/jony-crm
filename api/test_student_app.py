@@ -123,6 +123,17 @@ ck("har savolda 4 variant", len(first["options"]), 4)
 ckt("to'g'ri javob variantlar ichida", first["answer"] in first["options"])
 ckt("variantlar takrorlanmaydi", len(set(first["options"])) == 4)
 
+# Mashq sonini tanlash (2026-08-21, Jahongir: "10 yoki 25 va 60 va
+# hammasi tanlaydigan bolishi kerak")
+r = client.get("/api/student/vocab/round?game=en_uz&count=500", headers=H1)
+ck("Hammasi (count=500) ishlaydi", r.status_code, 200)
+pool_n = len(r.json()["items"])
+ckt("Hammasi standart 10 tadan kam emas", pool_n >= 10)
+r = client.get("/api/student/vocab/round?game=en_uz&count=25", headers=H1)
+ck("count=25 status 200", r.status_code, 200)
+ck("25 tagacha savol (baza yetsa 25)", len(r.json()["items"]),
+   min(25, pool_n))
+
 r = client.get("/api/student/vocab/round?game=match", headers=H1)
 ck("juftlash o'yini ham ishlaydi", r.status_code, 200)
 

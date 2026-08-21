@@ -3285,6 +3285,98 @@ def import_payments(payload: dict, db: Session = Depends(get_db),
             "all_rows": len(out)}
 
 
+@app.post("/api/lcup/cleanup-august")
+def lcup_cleanup_august(payload: dict = Body(default={}),
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(roles.FOUNDER))):
+    """AVGUST DUBL YECHIMINI TOZALASH (2026-08-22).
+
+    Jahongir: "JonyOSda ikki marta avgust uchun yechganlarni ochirsang
+    balans tenglashadiganlari bor. Masalan tolovlarni kirgizganimda sen
+    balansni tenglashtirish uchun o'zingcha yana yechib olishlar
+    qilgansan shularni ochir, hammasidan avgust oyi uchun yechilgan
+    pul".
+
+    Nima bo'lgan edi: LC UP to'lov importi har eski to'lov YONIGA xuddi
+    shu summada "[LC UP] eski hisob (YYYY-MM)" yechimini ham yozadi —
+    eski tarix balansni buzmasin deb (netto nol). Lekin 2026-08 uchun
+    JonyOS AVTOMAT oylikni allaqachon yechib bo'lgan — natijada avgust
+    IKKI MARTA yechilgan bo'lib qoldi.
+
+    Bu endpoint faqat shunday DUBL holatlarni topadi: o'quvchida ham
+    "[LC UP] eski hisob (2026-08)" yechimi, ham 2026-08 davri uchun
+    avtomat oylik bo'lsa — import yechimi ARXIVGA ko'chiriladi
+    (payments_deleted, tiklash mumkin). Hech narsa yo'q qilinmaydi.
+    commit=false — faqat ko'rib chiqish."""
+    commit = bool(payload.get("commit"))
+
+    charges = (db.query(models.Payment)
+               .filter(models.Payment.kind == "charge",
+                       models.Payment.note.like(
+                           f"%{_LCUP_TAG} eski hisob (2026-08)%"))
+               .all())
+    sids = list({c.student_id for c in charges})
+    if not sids:
+        return {"rows": [], "count": 0, "total": 0.0, "committed": False}
+
+    # Shu o'quvchilardan qaysilarida 2026-08 uchun AVTOMAT oylik bor
+    auto = {sid for (sid,) in
+            db.query(models.Payment.student_id)
+            .filter(models.Payment.kind == "charge",
+                    models.Payment.period == "2026-08",
+                    models.Payment.student_id.in_(sids))
+            .distinct().all()}
+    students = {st.id: st for st in
+                db.query(models.Student)
+                .filter(models.Student.id.in_(sids)).all()}
+
+    rows, total = [], 0.0
+    victims = []
+    for c in charges:
+        if c.student_id not in auto:
+            continue        # dubl emas — avto oylik yo'q, tegilmaydi
+        st = students.get(c.student_id)
+        rows.append({
+            "payment_id": c.id, "student_id": c.student_id,
+            "student": st.full_name if st else c.student_id,
+            "amount": c.amount,
+            "date": c.created_at.date().isoformat()
+                    if c.created_at else None,
+            "note": c.note,
+        })
+        total += abs(c.amount)
+        victims.append(c)
+
+    if commit and victims:
+        st_by_id = students
+        for c in victims:
+            st = st_by_id.get(c.student_id)
+            db.add(models.DeletedPayment(
+                payment_id=c.id, public_id=c.public_id,
+                student_id=c.student_id,
+                student_name=st.full_name if st else None,
+                branch_id=st.branch_id if st else None,
+                amount=c.amount, kind=c.kind, method=c.method,
+                note=c.note, period=c.period, created_by=c.created_by,
+                created_at=c.created_at,
+                entered_at=getattr(c, "entered_at", None),
+                client_key=getattr(c, "client_key", None),
+                deleted_by=user.full_name,
+                reason="Avgust dubl yechimi: avto oylik + LC UP import "
+                       "yechimi birga tushib qolgan edi"))
+            db.delete(c)
+        audit.log(db, user, entity="payment", action="debt_write_off",
+                  entity_label=f"LC UP avgust dubl tozalash: "
+                               f"{len(victims)} ta yechim arxivga",
+                  old_value=round(total, 2), new_value=None,
+                  note="Jahongir buyrug'i: avgust ikki marta "
+                       "yechilganlarni tozalash (2026-08-22)")
+        db.commit()
+
+    return {"rows": rows[:600], "count": len(rows),
+            "total": round(total, 2), "committed": bool(commit and victims)}
+
+
 @app.get("/api/lcup/payments")
 def import_payments_stats(db: Session = Depends(get_db),
                           user=Depends(require_role(*_IMPORT_ROLES))):

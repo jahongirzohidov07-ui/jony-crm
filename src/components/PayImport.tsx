@@ -3,6 +3,9 @@ import { Upload, Check, AlertTriangle, Trash2, FileDown } from "lucide-react";
 import { api } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
 import { exportToExcel } from "../lib/exportXlsx";
 
 interface ImpRow {
@@ -91,6 +94,48 @@ export function PayImportTab() {
   // qo'yilsa, ular ARXIV o'quvchi bo'lib ochiladi va to'lov tarixi
   // o'shanga tushadi — faol ro'yxatga aralashmaydi.
   const [addArchive, setAddArchive] = useState(true);
+  // AVGUST DUBL YECHIMI (2026-08-22, Jahongir: "ikki marta avgust
+  // uchun yechganlarni ochirsang balans tenglashadiganlari bor").
+  // Import har eski to'lov yoniga "eski hisob" yechimini yozgan edi,
+  // avgust uchun esa avto oylik ham bor — dubl. Bu blok faqat shu
+  // dublni arxivga ko'chiradi.
+  const [augRows, setAugRows] = useState<Any[] | null>(null);
+  const [augTotal, setAugTotal] = useState(0);
+  const [augBusy, setAugBusy] = useState(false);
+  const [augDone, setAugDone] = useState(false);
+
+  async function augPreview() {
+    setAugBusy(true);
+    try {
+      const r = await api.post<Any>("/lcup/cleanup-august", {
+        commit: false,
+      });
+      setAugRows(r.rows || []);
+      setAugTotal(r.total || 0);
+      setAugDone(false);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setAugBusy(false);
+    }
+  }
+
+  async function augCommit() {
+    if (!augRows || augRows.length === 0) return;
+    setAugBusy(true);
+    try {
+      const r = await api.post<Any>("/lcup/cleanup-august", {
+        commit: true,
+      });
+      setAugDone(true);
+      setAugRows(r.rows || []);
+      setAugTotal(r.total || 0);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setAugBusy(false);
+    }
+  }
 
   function loadStats() {
     api
@@ -457,6 +502,73 @@ export function PayImportTab() {
             </div>
           )}
         </>
+      )}
+
+      {user?.role === "founder" && (
+        <div className="mt-6 bg-white rounded-xl border border-amber-200 p-4">
+          <p className="text-sm font-semibold text-slate-800">
+            Avgust dubl yechimini tozalash
+          </p>
+          <p className="text-xs text-slate-500 mt-1 mb-3">
+            LC UP importi har eski to'lov yoniga "eski hisob" yechimini
+            yozgan. 2026-08 uchun avtomat oylik ham yechilgan — ya'ni
+            avgust IKKI MARTA yechilgan o'quvchilar bor. Bu tugma faqat
+            o'sha dubl yechimlarni topib ARXIVGA ko'chiradi (kerak
+            bo'lsa tiklanadi), boshqa hech narsaga tegmaydi.
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={augPreview}
+              disabled={augBusy}
+              className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-60"
+            >
+              {augBusy && augRows === null ? "Tekshirilmoqda…" : "Ko'rib chiqish"}
+            </button>
+            {augRows !== null && augRows.length > 0 && !augDone && (
+              <button
+                onClick={augCommit}
+                disabled={augBusy}
+                className="px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-semibold disabled:opacity-60"
+              >
+                {augBusy ? "Bajarilmoqda…" : `Tasdiqlash — ${augRows.length} ta yechimni arxivga`}
+              </button>
+            )}
+          </div>
+          {augDone && (
+            <p className="text-sm text-emerald-700 font-medium mt-3">
+              ✅ Bajarildi — {augRows?.length} ta dubl yechim arxivga
+              ko'chirildi. Balanslar darhol yangilandi.
+            </p>
+          )}
+          {augRows !== null && !augDone && (
+            <p className="text-xs text-slate-600 mt-3">
+              Topildi: <b>{augRows.length}</b> ta dubl yechim, jami{" "}
+              <b>{formatSom(augTotal)}</b>
+            </p>
+          )}
+          {augRows !== null && augRows.length > 0 && (
+            <div className="mt-2 max-h-64 overflow-y-auto border border-slate-100 rounded-lg">
+              <table className="w-full text-xs">
+                <tbody className="divide-y divide-slate-100">
+                  {augRows.slice(0, 300).map((r: Any) => (
+                    <tr key={r.payment_id}>
+                      <td className="px-3 py-1.5 text-slate-700">{r.student}</td>
+                      <td className="px-3 py-1.5 text-slate-500">{r.date}</td>
+                      <td className="px-3 py-1.5 text-right text-red-600">
+                        {formatSom(r.amount)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {augRows !== null && augRows.length === 0 && (
+            <p className="text-sm text-slate-500 mt-3">
+              Dubl yechim topilmadi.
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

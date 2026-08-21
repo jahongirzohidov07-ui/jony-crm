@@ -152,69 +152,111 @@ export default function StudentSpeaking() {
     rec.start();
   }
 
-  /* ═══════════════ MAVZU TANLASH ═══════════════ */
+  /* ═══════════════ MAVZU TANLASH (speaking.png, 2026-08-21:
+     Jahongir "hammasini 1ga 1 qilib ber") ═══════════════ */
   if (!topic) {
+    const card = { background: "#111C4B", borderColor: "#223070" };
     return (
-      <>
-        <div className="bg-gradient-to-br from-indigo-700 to-violet-500 text-white px-4 pt-6 pb-12">
-          <div className="max-w-md mx-auto">
-            <Link to="/student/games"
-              className="inline-flex items-center gap-1.5 text-sm text-white/85 mb-3">
-              <ArrowLeft size={16} /> Mashqlar
-            </Link>
-            <div className="flex items-center gap-3">
-              <span className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center text-2xl">
-                🧑‍🏫
-              </span>
-              <div>
-                <h1 className="text-xl font-bold">Jony Teacher</h1>
-                <p className="text-[13px] text-white/80">
-                  AI speaking partner — ingliz tilida suhbat
-                </p>
-              </div>
-            </div>
-          </div>
+      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+        <div className="flex items-center gap-2.5">
+          <Link to="/student/games"
+            className="w-10 h-10 rounded-xl border flex items-center justify-center text-white shrink-0"
+            style={card}>
+            <ArrowLeft size={18} />
+          </Link>
+          <span className="text-[15px] font-semibold text-slate-300 flex-1">
+            O'rganish
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 border shrink-0"
+                style={card}>
+            <span className="text-brand-300 text-sm font-bold">
+              Har javob +1 XP
+            </span>
+          </span>
         </div>
-        <div className="max-w-md mx-auto px-4 -mt-6 pb-24">
-          <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
-            <p className="text-sm font-bold text-slate-900 mb-1">
+
+        <div className="flex items-start gap-2 mt-4">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-[40px] font-extrabold text-white leading-none">
+              Jony Teacher
+            </h1>
+            <p className="text-[16px] text-slate-400 mt-2">
+              AI speaking partner
+            </p>
+            <span className="inline-block mt-2 px-2.5 py-1 rounded-lg bg-amber-400 text-slate-900 text-[11px] font-extrabold tracking-wide">
+              YANGI
+            </span>
+          </div>
+          <img src="/jsicons/learn-jony-teacher.png" alt=""
+               className="w-[88px] h-[88px] shrink-0" />
+        </div>
+
+        <div className="bg-white rounded-3xl p-4 mt-4">
+          <div className="flex items-center gap-3">
+            <span className="w-11 h-11 rounded-full bg-violet-100 flex items-center justify-center text-[20px] shrink-0">
+              💬
+            </span>
+            <p className="text-[19px] font-extrabold text-slate-900">
               Qaysi mavzuda gaplashamiz?
             </p>
-            <p className="text-xs text-slate-500 mb-3">
-              Jony Teacher savollar beradi — siz ingliz tilida javob
-              berasiz. Har javob uchun +1 XP (kuniga {xpCap} tagacha).
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              {TOPICS.map((t) => (
-                <button key={t.key} onClick={() => start(t.key)}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-[13.5px] font-semibold text-slate-800 text-left active:scale-[0.98]">
-                  {t.label}
-                </button>
-              ))}
-            </div>
           </div>
+          <p className="text-sm text-slate-500 mt-2">
+            Jony Teacher savol beradi, siz ingliz tilida javob berasiz.
+          </p>
+          <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2.5 text-[13px] text-slate-600 flex items-center gap-2 flex-wrap">
+            <span className="font-bold text-violet-600">
+              ⬡ Har javob +1 XP
+            </span>
+            <span className="text-slate-300">·</span>
+            <span>Kunlik limit <b>{xpCap} XP</b></span>
+          </p>
         </div>
-      </>
+
+        <div className="grid grid-cols-2 gap-3 mt-3">
+          {TOPICS.map((t, i) => (
+            <button key={t.key} onClick={() => start(t.key)}
+              className={`bg-white rounded-3xl p-4 text-left active:scale-[0.98] transition ${
+                i === 0 ? "ring-2 ring-violet-500 shadow-[0_0_22px_rgba(124,92,240,0.45)]" : ""}`}>
+              <p className="text-[16px] font-extrabold text-slate-900 leading-snug">
+                {t.label}
+              </p>
+              {i === 0 && (
+                <span className="inline-block mt-2 px-2.5 py-1 rounded-lg bg-violet-600 text-white text-[11px] font-bold">
+                  Tavsiya
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <button onClick={() => start(TOPICS[0].key)}
+          className="mt-4 w-full py-4 rounded-2xl bg-brand-600 text-white text-[17px] font-bold">
+          Suhbatni boshlash
+        </button>
+      </div>
     );
   }
 
   /* ═══════════════ SUHBAT ═══════════════ */
   return (
-    <div className="flex flex-col h-[100dvh]">
-      <div className="bg-gradient-to-br from-indigo-700 to-violet-500 text-white px-4 pt-4 pb-3 shrink-0">
+    <div className="flex flex-col h-[100dvh]" style={{ background: "#0A1233" }}>
+      <div className="px-4 pt-4 pb-3 shrink-0 text-white border-b"
+           style={{ borderColor: "#1D2A63" }}>
         <div className="max-w-md mx-auto flex items-center gap-2.5">
           <button onClick={() => { setTopic(null); setMsgs([]); }}
             className="p-1 -ml-1 text-white/85">
             <ArrowLeft size={19} />
           </button>
-          <span className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center text-lg">
-            🧑‍🏫
-          </span>
+          <img src="/jsicons/learn-jony-teacher.png" alt=""
+               className="w-10 h-10 shrink-0" />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold leading-tight">Jony Teacher</p>
-            <p className="text-[11px] text-white/75 truncate">
+            <p className="text-[11px] truncate">
+              <span className="text-emerald-400">● Onlayn</span>{"  "}
+              <span className="text-white/60">
               {TOPICS.find((t) => t.key === topic)?.label || topic}
-              {xpToday !== null && ` · bugun +${xpToday}/${xpCap} XP`}
+              {xpToday !== null && ` · Bugun +${xpToday}/${xpCap} XP`}
+              </span>
             </p>
           </div>
           <button onClick={() => setVoiceOn(!voiceOn)}
@@ -224,7 +266,7 @@ export default function StudentSpeaking() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-slate-50 px-4 py-3">
+      <div className="flex-1 overflow-y-auto px-4 py-3">
         <div className="max-w-md mx-auto space-y-2.5">
           {msgs.map((m, i) => (
             <div key={i}
@@ -232,7 +274,7 @@ export default function StudentSpeaking() {
               <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[14px] leading-relaxed whitespace-pre-wrap ${
                 m.role === "student"
                   ? "bg-brand-600 text-white rounded-br-md"
-                  : "bg-white border border-slate-200 text-slate-800 rounded-bl-md"
+                  : "bg-white text-slate-900 rounded-bl-md text-[16px] font-semibold"
               }`}>
                 {m.role === "teacher" && (
                   <button onClick={() => speak(m.text)}
@@ -267,21 +309,53 @@ export default function StudentSpeaking() {
       {/* FAQAT MIKROFON — yozish yo'q (Jahongir: "faqat gapirish
           kerak yozish mumkin bo'lmasin"). Speaking mashqi yozish
           bilan aldab bo'lmaydigan bo'ldi. */}
-      <div className="shrink-0 bg-white border-t border-slate-200 px-3 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))]">
-        <div className="max-w-md mx-auto flex flex-col items-center gap-1.5">
+      <div className="shrink-0 px-3 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))] border-t"
+           style={{ borderColor: "#1D2A63" }}>
+        <div className="max-w-md mx-auto flex flex-col items-center gap-2">
           <button onClick={startMic} disabled={busy}
-            className={`w-16 h-16 rounded-full flex items-center justify-center transition shadow-lg ${
+            className={`w-24 h-24 rounded-full flex items-center justify-center transition ${
               listening
                 ? "bg-red-500 text-white animate-pulse"
                 : "bg-brand-600 text-white active:bg-brand-700"
-            } disabled:opacity-40`}>
-            <Mic size={26} />
+            } disabled:opacity-40`}
+            style={{ boxShadow: listening
+              ? "0 0 40px rgba(239,68,68,0.6)"
+              : "0 0 44px rgba(63,131,248,0.65)" }}>
+            <Mic size={38} />
           </button>
-          <p className="text-[11.5px] font-semibold text-slate-400">
+          <p className="text-[14px] font-bold text-white text-center leading-snug">
             {busy ? "Jony Teacher o'ylayapti..."
               : listening ? "Gapiring... to'xtatish uchun bosing"
                 : "Mikrofonni bosib, inglizcha javob bering"}
           </p>
+          <div className="w-full grid grid-cols-3 gap-1 rounded-2xl border px-2 py-2.5 mt-1"
+               style={{ background: "#111C4B", borderColor: "#223070" }}>
+            <p className="text-center">
+              <span className={`text-[12px] font-bold ${
+                listening ? "text-emerald-400" : "text-slate-300"}`}>
+                ● Tinglayapti
+              </span>
+              <span className="block text-[10px] text-slate-500">
+                Teacher sizni tinglayapti
+              </span>
+            </p>
+            <p className="text-center border-x" style={{ borderColor: "#223070" }}>
+              <span className="text-[12px] font-bold text-violet-300">
+                ıılı Talaffuz tahlili
+              </span>
+              <span className="block text-[10px] text-slate-500">
+                Javobingiz tahlil qilinadi
+              </span>
+            </p>
+            <p className="text-center">
+              <span className="text-[12px] font-bold text-amber-400">
+                ⭐ +1 XP
+              </span>
+              <span className="block text-[10px] text-slate-500">
+                javob uchun
+              </span>
+            </p>
+          </div>
         </div>
       </div>
       <span className="hidden"><GraduationCap size={1} /></span>

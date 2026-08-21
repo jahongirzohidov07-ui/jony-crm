@@ -300,8 +300,10 @@ export default function StudentShop() {
   };
 
   /* --------------------------------------------------------- ekran */
+  const darkView = view !== "shop";
   return (
-    <div className="min-h-screen" style={{ background: "#F7FAFE" }}>
+    <div className="min-h-screen"
+         style={{ background: darkView ? "#0A1233" : "#F7FAFE" }}>
       <div className="max-w-md mx-auto px-4 pt-5 pb-6">
         {/* ----------------------------------------- sarlavha qatori */}
         <div className="flex items-start justify-between mb-4">
@@ -312,7 +314,7 @@ export default function StudentShop() {
           ) : (
             <button
               onClick={() => setView("shop")}
-              className="flex items-center gap-1.5 text-[17px] font-bold text-slate-900"
+              className="flex items-center gap-1.5 text-[22px] font-extrabold text-white"
             >
               <ArrowLeft size={20} />
               {view === "orders" ? "Buyurtmalarim"
@@ -321,7 +323,7 @@ export default function StudentShop() {
           )}
           <button
             onClick={() => setView(view === "orders" ? "shop" : "orders")}
-            className="relative shrink-0 text-slate-900"
+            className={`relative shrink-0 ${darkView ? "text-white" : "text-slate-900"}`}
             aria-label="Buyurtmalarim"
           >
             <ShoppingBag size={26} strokeWidth={1.8} />
@@ -351,7 +353,7 @@ export default function StudentShop() {
         )}
 
         {/* -------------------------------------- ko'k balans kartasi */}
-        {view !== "badges" && (
+        {(view === "shop" || view === "history") && (
           <div
             className="relative rounded-[20px] px-5 py-5 overflow-hidden"
             style={{ background: "#1A6EE4" }}
@@ -510,36 +512,56 @@ export default function StudentShop() {
             {d.history.map((h) => (
               <div
                 key={h.id}
-                className="bg-white rounded-2xl p-3.5 flex items-center gap-3"
-                style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+                className="rounded-2xl border p-3.5 flex items-center gap-3"
+                style={{ background: "#111C4B", borderColor: "#223070" }}
               >
                 <span
-                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-sm font-bold ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[17px] font-bold ${
                     h.amount >= 0
-                      ? "bg-emerald-50 text-emerald-600"
-                      : "bg-rose-50 text-rose-500"
+                      ? "bg-emerald-500/15 text-emerald-400"
+                      : "bg-rose-500/15 text-rose-400"
                   }`}
                 >
                   {h.amount >= 0 ? "+" : "−"}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[14px] font-medium text-slate-800 truncate">
+                  <p className="text-[15px] font-bold text-white truncate">
                     {h.note || h.source_label}
                   </p>
-                  <p className="text-[12px] text-slate-400">
-                    {h.date ? formatDate(h.date) : ""}
+                  <p className="text-[12px] text-slate-400 mt-0.5">
+                    🕐 {h.date ? formatDate(h.date) : ""}
                   </p>
                 </div>
                 <span
-                  className={`text-[15px] font-bold shrink-0 ${
-                    h.amount >= 0 ? "text-emerald-600" : "text-rose-500"
+                  className={`text-[16px] font-extrabold shrink-0 ${
+                    h.amount >= 0 ? "text-emerald-400" : "text-rose-400"
                   }`}
                 >
                   {h.amount >= 0 ? "+" : ""}
-                  {h.amount}
+                  {h.amount} <span className="text-[12px]">Coin</span>
                 </span>
               </div>
             ))}
+            {/* Bu oy yig'ildi (coinlar tarixi.png pastki kartasi) */}
+            {d.history.length > 0 && (() => {
+              const m = new Date().toISOString().slice(0, 7);
+              const got = d.history
+                .filter((h) => (h.date || "").startsWith(m) && h.amount > 0)
+                .reduce((a, b) => a + b.amount, 0);
+              return (
+                <div className="rounded-2xl border p-4 flex items-center gap-3"
+                     style={{ background: "#14245E", borderColor: "#2E56E8" }}>
+                  <span className="text-[30px]">📈</span>
+                  <div className="flex-1 text-center">
+                    <p className="text-[13px] text-slate-300">Bu oy</p>
+                    <p className="text-[30px] font-extrabold text-white leading-tight">
+                      +{got} <span className="text-[16px]">Coin</span>
+                    </p>
+                    <p className="text-[13px] text-slate-300">yig'dingiz</p>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -547,9 +569,10 @@ export default function StudentShop() {
         {view === "orders" && (
           <div className="mt-4 space-y-2">
             {d.orders.length === 0 && (
-              <div className="bg-white rounded-2xl p-8 text-center">
-                <ShoppingBag size={28} className="mx-auto text-slate-300 mb-2" />
-                <p className="text-sm text-slate-500">
+              <div className="rounded-2xl border p-8 text-center"
+                   style={{ background: "#111C4B", borderColor: "#223070" }}>
+                <ShoppingBag size={28} className="mx-auto text-slate-500 mb-2" />
+                <p className="text-sm text-slate-400">
                   Hali hech narsa olmagansiz
                 </p>
               </div>
@@ -557,11 +580,11 @@ export default function StudentShop() {
             {d.orders.map((o) => (
               <div
                 key={o.id}
-                className="bg-white rounded-2xl p-3.5"
-                style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
+                className="rounded-2xl border p-4"
+                style={{ background: "#0F1B4D", borderColor: "#2A3A7C" }}
               >
                 <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-slate-900 flex-1 truncate">
+                  <p className="text-[16px] font-extrabold text-white flex-1 truncate">
                     {o.reward}
                   </p>
                   <span
@@ -572,21 +595,25 @@ export default function StudentShop() {
                     {o.status_label}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                  <CoinIcon size={12} />
-                  {o.coins} coin
+                <p className="text-[14px] text-slate-300 mt-1.5 flex items-center gap-1.5">
+                  <CoinIcon size={15} />
+                  <b className="text-white">{o.coins}</b> Coin
                   {o.date && (
                     <>
-                      <Clock size={11} className="ml-1 text-slate-400" />
+                      <Clock size={12} className="ml-1 text-slate-400" />
                       {formatDate(o.date)}
                     </>
                   )}
                 </p>
-                {o.note && <p className="text-xs text-slate-500 mt-1">{o.note}</p>}
+                <p className="text-[13px] text-slate-400 mt-1.5">
+                  📍 Olib ketish joyi: <b className="text-slate-200">
+                  Jony Academy filiali</b>
+                </p>
+                {o.note && <p className="text-xs text-slate-400 mt-1">{o.note}</p>}
                 {o.status === "requested" && (
                   <div className="mt-2.5 flex items-center gap-2">
-                    <p className="text-[11px] text-amber-600 flex-1">
-                      Administrator tasdiqlashini kutmoqda
+                    <p className="text-[12px] text-amber-400 flex-1">
+                      ⏳ Administrator tasdiqlashini kutmoqda
                     </p>
                     <button
                       onClick={() => cancelOrder(o.id)}
@@ -598,6 +625,17 @@ export default function StudentShop() {
                 )}
               </div>
             ))}
+            {d.orders.length > 0 && (
+              <div className="rounded-2xl border p-3.5 flex items-center gap-3"
+                   style={{ background: "#111C4B", borderColor: "#223070" }}>
+                <span className="w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0 text-sm font-bold">
+                  i
+                </span>
+                <p className="text-[14px] text-slate-300">
+                  Buyurtmani olishda administratorga ismingizni ayting.
+                </p>
+              </div>
+            )}
           </div>
         )}
 

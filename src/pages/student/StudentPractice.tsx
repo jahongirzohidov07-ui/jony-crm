@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-  ArrowLeft, Check, Ear, Mic, PenLine, RotateCcw, Sparkles, Volume2, X,
+  Check, Ear, Mic, PenLine, RotateCcw, Sparkles, Volume2, X,
 } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
@@ -317,49 +317,58 @@ export default function StudentPractice() {
   );
 
   const groupsDone = (n: number) => Object.keys(sel).length >= n;
+  void Icon; // sarlavha dizayni o'zgardi, ikonka hozircha kerak emas
 
+  // 2026-08-21: mashq sarlavhasi dizayn to'plamidagi kabi
+  // (listening.png / reading.png / writing.png): X tugma, JONY
+  // STUDENT APP, +XP/+Coin pilllari, N/M progress. Mashqning ichki
+  // mantig'iga tegilmadi.
   return (
     <>
-      <div className={`bg-gradient-to-br ${m.grad} text-white px-4 pt-6 pb-10`}>
-        <div className="max-w-md mx-auto">
-          <Link
-            to="/student/games"
-            className="inline-flex items-center gap-1.5 text-sm text-white/85 mb-3"
-          >
-            <ArrowLeft size={16} />
-            Mashqlar
+      <div className="max-w-md mx-auto px-4 pt-5 text-white">
+        <div className="flex items-center gap-2.5">
+          <Link to="/student/games"
+            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
+            style={{ background: "#111C4B", borderColor: "#223070" }}>
+            <X size={18} />
           </Link>
-          <h1 className="text-lg font-semibold flex items-center gap-2">
-            <Icon size={20} />
-            {m.label}
-            {kind && (
-              <button
-                onClick={() => setKind(null)}
-                className="text-[11px] font-medium bg-white/20 rounded-full px-2.5 py-1 ml-1"
-              >
-                turni almashtirish
-              </button>
-            )}
-          </h1>
+          <p className="text-[15px] font-extrabold tracking-wide flex-1">
+            JONY STUDENT APP
+          </p>
+          <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold shrink-0"
+                style={{ background: "#111C4B", borderColor: "#223070" }}>
+            ⬡ +10 XP
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold text-amber-300 shrink-0"
+                style={{ background: "#111C4B", borderColor: "#5c4a15" }}>
+            🪙 +3 Coin
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-3 mb-1">
+          <p className="text-[22px] font-extrabold shrink-0">
+            {!finished && kind && items.length > 0
+              ? <>{Math.min(idx + 1, items.length)}
+                 <span className="text-slate-400"> / {items.length}</span></>
+              : m.label}
+          </p>
           {!finished && kind && items.length > 0 && (
-            <div className="flex items-center gap-2 mt-2">
-              <div className="flex-1 h-1.5 bg-white/25 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-white rounded-full transition-all"
-                  style={{
-                    width: `${((idx + (result ? 1 : 0)) / items.length) * 100}%`,
-                  }}
-                />
-              </div>
-              <span className="text-xs opacity-90">
-                {Math.min(idx + 1, items.length)}/{items.length}
-              </span>
+            <div className="flex-1 h-2 rounded-full overflow-hidden"
+                 style={{ background: "#26326B" }}>
+              <div className="h-full bg-brand-500 rounded-full transition-all"
+                   style={{ width: `${((idx + (result ? 1 : 0)) / items.length) * 100}%` }} />
             </div>
+          )}
+          {kind && (
+            <button onClick={() => setKind(null)}
+              className="text-[11px] font-medium rounded-full px-2.5 py-1 border text-slate-300 shrink-0"
+              style={{ background: "#111C4B", borderColor: "#223070" }}>
+              turni almashtirish
+            </button>
           )}
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 -mt-5 space-y-3 pb-8">
+      <div className="max-w-md mx-auto px-4 mt-3 space-y-3 pb-8">
         {err && (
           <div className="bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>

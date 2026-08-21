@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Check, RotateCcw, Sparkles, X } from "lucide-react";
+import { Check, RotateCcw, Sparkles, X } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
 
@@ -126,37 +126,49 @@ export default function StudentGrammarPlay() {
         })()
       : [];
 
+  // 2026-08-21: sarlavha "grammar mashq.png" dizayni bo'yicha - X
+  // tugma, JONY STUDENT APP, +XP/+Coin pilllar, N/M progress.
   return (
     <>
-      <div className="bg-gradient-to-br from-violet-700 to-violet-500 text-white px-4 pt-6 pb-10">
-        <div className="max-w-md mx-auto">
-          <Link
-            to="/student/grammar"
-            className="inline-flex items-center gap-1.5 text-sm text-white/85 mb-3"
-          >
-            <ArrowLeft size={16} />
-            Mavzular
+      <div className="max-w-md mx-auto px-4 pt-5 text-white">
+        <div className="flex items-center gap-2.5">
+          <Link to="/student/grammar"
+            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
+            style={{ background: "#171238", borderColor: "#2f2670" }}>
+            <X size={18} />
           </Link>
-          <h1 className="text-lg font-semibold truncate">{topic}</h1>
-          {!finished && items.length > 0 && (
-            <div className="flex items-center gap-2 mt-2">
-              <div className="flex-1 h-1.5 bg-white/25 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-white rounded-full transition-all"
-                  style={{
-                    width: `${((idx + (result ? 1 : 0)) / items.length) * 100}%`,
-                  }}
-                />
+          <p className="text-[15px] font-extrabold tracking-wide flex-1">
+            JONY STUDENT APP
+          </p>
+          <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold shrink-0"
+                style={{ background: "#241d52", borderColor: "#4a3d99" }}>
+            ⬡ +9 XP
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold text-amber-300 shrink-0"
+                style={{ background: "#241d52", borderColor: "#5c4a15" }}>
+            🪙 +5 Coin
+          </span>
+        </div>
+        <div className="flex items-center gap-2.5 mt-3 mb-1">
+          {!finished && items.length > 0 ? (
+            <>
+              <p className="text-[24px] font-extrabold shrink-0">
+                {Math.min(idx + 1, items.length)}
+                <span className="text-slate-400"> / {items.length}</span>
+              </p>
+              <div className="flex-1 h-2 rounded-full overflow-hidden"
+                   style={{ background: "#26326B" }}>
+                <div className="h-full rounded-full transition-all bg-gradient-to-r from-violet-500 to-fuchsia-400"
+                     style={{ width: `${((idx + (result ? 1 : 0)) / items.length) * 100}%` }} />
               </div>
-              <span className="text-xs opacity-90">
-                {Math.min(idx + 1, items.length)}/{items.length}
-              </span>
-            </div>
+            </>
+          ) : (
+            <p className="text-[19px] font-extrabold truncate">{topic}</p>
           )}
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 -mt-5 space-y-3 pb-8">
+      <div className="max-w-md mx-auto px-4 mt-3 space-y-3 pb-8">
         {err && (
           <div className="bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>

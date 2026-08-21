@@ -77,12 +77,9 @@ export default function StudentLayout() {
   // ularning matni to'q fonda ko'rinmay qolmasligi uchun fon
   // marshrutga qarab tanlanadi. Do'kon o'z fonini o'zi qo'yadi.
   const path = useLocation().pathname;
-  const dark =
-    path === "/student" ||
-    path === "/student/leaderboard" ||
-    path === "/student/roadmap" ||
-    path === "/student/profile" ||
-    path === "/student/grammar";
+  // 2026-08-21: dizayn to'plami to'liq keldi - endi deyarli barcha
+  // sahifalar to'q temada. Faqat do'kon (o'z och foni bor) tashqarida.
+  const dark = path !== "/student/shop";
   return (
     <div className="min-h-screen pb-24"
          style={{ background: dark ? "#0A1233" : "#F1F5F9" }}>

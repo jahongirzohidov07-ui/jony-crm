@@ -1340,13 +1340,24 @@ def _pi_round(db, s, skill, kind):
 
 @router.get("/api/student/practice/{skill}/round")
 def practice_round(skill: str, kind: str | None = None,
+                   language: str = "en",
                    db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
     s = _me(db, user)
     if skill not in PRACTICE_SKILLS:
         raise HTTPException(404, "Bunday mashq yo'q")
-    # YANGI TURLAR (2026-08-11, Jahongir spetsifikatsiyasi)
-    if kind and kind in PRACTICE_NEW_KINDS.get(skill, ()):
+    # Til filtri (2026-08-21, Jahongir: "listeninglar ham boshqa
+    # tillarni mashqlarini bervoryabdi aralashtirib... inglizcha
+    # chiqsin faqat"). Listening so'zlari tanlangan til bazasidan
+    # olinadi; boshqa tillarda inglizcha jumla/dialog mashqlari
+    # umuman aralashmaydi.
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+    # YANGI TURLAR (2026-08-11, Jahongir spetsifikatsiyasi).
+    # Bu mashqlar (dialog, tartiblash...) faqat ingliz tilida yozilgan,
+    # shuning uchun boshqa til tanlangan bo'lsa oddiy diktantga o'tamiz.
+    if (kind and kind in PRACTICE_NEW_KINDS.get(skill, ())
+            and not (skill == "listening" and language != "en")):
         return _pi_round(db, s, skill, kind)
 
     solved = {r for (r,) in
@@ -1410,16 +1421,17 @@ def practice_round(skill: str, kind: str | None = None,
         } for q in pool[:PRACTICE_ROUND]]
         return {"skill": skill, "items": items}
 
-    # listening: yarmi so'z (diktant yoki tanlov), yarmi jumla diktanti
-    words = (db.query(models.VocabWord)
-             .filter(models.VocabWord.is_active == 1).all()
-             if hasattr(models.VocabWord, "is_active")
-             else db.query(models.VocabWord).all())
+    # listening: yarmi so'z (diktant yoki tanlov), yarmi jumla diktanti.
+    # So'zlar FAQAT tanlangan til bazasidan (2026-08-21). Grammatika
+    # jumlalari inglizcha, shuning uchun boshqa tillarda qo'shilmaydi.
+    words = _active_words(db, language=language).all()
     wpool = prefer_fresh(words, lambda w: f"word:{w.id}")
-    spool = prefer_fresh(_gram_sentences(db),
-                         lambda q: f"gram:{q.id}")
+    spool = ([] if language != "en"
+             else prefer_fresh(_gram_sentences(db),
+                               lambda q: f"gram:{q.id}"))
+    w_take = PRACTICE_ROUND if language != "en" else PRACTICE_ROUND // 2
     items = []
-    for w in wpool[:PRACTICE_ROUND // 2]:
+    for w in wpool[:w_take]:
         if len(items) % 2 == 0:
             items.append({
                 "ref": f"word:{w.id}", "kind": "listen_type",

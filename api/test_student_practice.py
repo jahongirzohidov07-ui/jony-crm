@@ -115,6 +115,30 @@ r = c.post("/api/student/practice/answer", headers=H,
                  "answer": w.word})
 ck("so'z diktanti qabul", r.json()["correct"], True)
 
+# Til filtri (2026-08-21, Jahongir: "listeninglar ham boshqa tillarni
+# mashqlarini bervoryabdi aralashtirib... inglizcha chiqsin faqat")
+r = c.get("/api/student/practice/listening/round?language=en", headers=H)
+en_ids = [int(it["ref"].split(":")[1]) for it in r.json()["items"]
+          if it["ref"].startswith("word:")]
+langs = {w.language for w in
+         db.query(models.VocabWord)
+         .filter(models.VocabWord.id.in_(en_ids)).all()}
+ck("EN roundda faqat en/None so'zlar", langs <= {"en", None}, True)
+
+# Koreyscha so'z qo'shib, ko tilida round so'raymiz — faqat o'sha til
+db.add(models.VocabWord(word="사과", translation="olma",
+                        level="A1", language="ko"))
+db.commit()
+r = c.get("/api/student/practice/listening/round?language=ko", headers=H)
+ko_items = r.json()["items"]
+ck("KO roundda jumla diktanti yo'q (inglizcha aralashmaydi)",
+   any(it["ref"].startswith("gram:") for it in ko_items), False)
+ko_ids = [int(it["ref"].split(":")[1]) for it in ko_items]
+ko_langs = {w.language for w in
+            db.query(models.VocabWord)
+            .filter(models.VocabWord.id.in_(ko_ids)).all()}
+ck("KO roundda faqat koreys so'zlari", ko_langs, {"ko"})
+
 print("\n=== SKILLS KARTASIGA TUSHDI ===")
 r = c.get("/api/student/skills", headers=H)
 sk = {x["key"]: x["points"] for x in r.json()["skills"]}

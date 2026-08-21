@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
+import { getLang } from "../../lib/lang";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -55,11 +56,18 @@ const KINDS: Record<string, [string, string, string][]> = {
   ],
 };
 
+// Tanlangan tilga mos TTS ovozi (2026-08-21, Jahongir: listening
+// aralashmasin). Komponent renderda yangilab turadi.
+const TTS_LANGS: Record<string, string> = {
+  en: "en-US", ru: "ru-RU", de: "de-DE", ko: "ko-KR",
+};
+let ttsLang = "en-US";
+
 function speak(text: string, rate = 0.95) {
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
+    u.lang = ttsLang;
     u.rate = rate;
     window.speechSynthesis.speak(u);
   } catch {
@@ -96,6 +104,9 @@ function ColoredWords({ target, heard }: { target: string; heard: string }) {
 export default function StudentPractice() {
   const { skill } = useParams();
   const m = META[skill || ""] || META.listening;
+  // O'rganilayotgan til — listening shu til so'zlaridan tuziladi
+  const lang = getLang();
+  ttsLang = skill === "listening" ? TTS_LANGS[lang] || "en-US" : "en-US";
   const [kind, setKind] = useState<string | null>(null);
   const [d, setD] = useState<Any>(null);
   const [idx, setIdx] = useState(0);
@@ -128,12 +139,15 @@ export default function StudentPractice() {
     setScore({ ok: 0, xp: 0 });
     setFinished(false);
     const oldKinds = ["read_mcq", "dictation", "write_translate", "speak_read"];
-    const q = oldKinds.includes(kind) ? "" : `?kind=${kind}`;
+    const parts: string[] = [];
+    if (!oldKinds.includes(kind)) parts.push(`kind=${kind}`);
+    if (skill === "listening") parts.push(`language=${lang}`);
+    const q = parts.length ? `?${parts.join("&")}` : "";
     api
       .get<Any>(`/student/practice/${skill}/round${q}`)
       .then((r) => setD(r))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [skill, kind]);
+  }, [skill, kind, lang]);
 
   useEffect(load, [load]);
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
@@ -388,7 +402,13 @@ export default function StudentPractice() {
               Qaysi turdagi mashqni xohlaysiz?
             </p>
             <div className="space-y-1.5">
-              {(KINDS[skill || ""] || []).map(([k, lbl, hint]) => (
+              {(KINDS[skill || ""] || [])
+                .filter(
+                  ([k]) =>
+                    !(skill === "listening" && lang !== "en" &&
+                      k !== "dictation"),
+                )
+                .map(([k, lbl, hint]) => (
                 <button
                   key={k}
                   onClick={() => setKind(k)}

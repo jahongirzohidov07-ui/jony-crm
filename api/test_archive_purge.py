@@ -63,6 +63,23 @@ s3 = models.Student(full_name="Faol Bola", branch_id=b.id, status="active",
 db.add_all([s1, s2, s3]); db.commit()
 s1_id, s2_id = s1.id, s2.id
 
+# s2 ga BOG'LIQ yozuvlar — 2026-08-22 da aynan shular 500 xato bergan
+# ("debtor_contacts_student_id_fkey violates"). Endi tozalanishi kerak.
+db.add(models.DebtorContact(student_id=s2_id, note="qo'ng'iroq qilindi"))
+db.add(models.Payment(student_id=s2_id, amount=-480000, kind="charge",
+                      period="2026-05", note="2026-05 oylik"))
+db.add(models.CoinEntry(student_id=s2_id, amount=10, source="manual",
+                        note="test"))
+les = models.Lesson(group_id=g.id, date=date(2026, 5, 5))
+db.add(les); db.commit()
+db.add(models.Attendance(lesson_id=les.id, student_id=s2_id, present=1))
+db.add(models.Notification(kind="debt", student_id=s2_id, title="Salom",
+                           body="Test"))
+# Boshqa birovning yozuvidagi HAVOLA — yo'qolmasligi kerak
+db.add(models.Lead(full_name="Lid Bola", converted_student_id=s2_id))
+db.commit()
+lead_id = db.query(models.Lead).first().id
+
 H = {}
 for uname in users:
     tok = c.post("/api/auth/login",
@@ -89,12 +106,28 @@ for uname in ("mol", "adm"):
 ck("hech kim o'chmadi",
    db.query(models.Student).filter(models.Student.status == "archived").count(), 2)
 
-print("\n=== O'CHIRISH — ASOSCHIGA OCHIQ ===")
+print("\n=== O'CHIRISH — ASOSCHIGA OCHIQ (bog'liq yozuvlar bilan) ===")
 r = c.delete(f"/api/students/{s2_id}", headers=H["asos"])
 ck("asoschiga 200", r.status_code, 200)
+rm = r.json().get("removed", {})
+ck("qarz aloqasi tozalandi", rm.get("debtor_contacts"), 1)
+ck("to'lovi tozalandi", rm.get("payments"), 1)
+ck("coini tozalandi", rm.get("coin_entries"), 1)
+ck("yo'qlamasi tozalandi", rm.get("attendances"), 1)
 db.expire_all()
 ck("bazadan ketdi", db.query(models.Student).get(s2_id), None)
 ck("boshqasi joyida", db.query(models.Student).get(s1_id) is not None, True)
+ck("bog'liq yozuv qolmadi",
+   db.query(models.DebtorContact).filter(
+       models.DebtorContact.student_id == s2_id).count(), 0)
+ck("to'lovi qolmadi",
+   db.query(models.Payment).filter(
+       models.Payment.student_id == s2_id).count(), 0)
+
+print("\n=== BEGONA YOZUV YO'QOLMADI ===")
+lead = db.query(models.Lead).get(lead_id)
+ck("lid o'chmadi", lead is not None, True)
+ck("faqat havolasi bo'shadi", lead.converted_student_id if lead else "?", None)
 
 print("\n=== AUDITDA IZ QOLDI ===")
 a = (db.query(models.AuditLog)
@@ -103,6 +136,8 @@ a = (db.query(models.AuditLog)
 ck("audit yozuvi bor", len(a), 1)
 ck("kim o'chirgani yozilgan", a[0].user_role if a else None, roles.FOUNDER)
 ck("ismi saqlangan", a[0].entity_label if a else None, "Boshqa Bola")
+ck("nima o'chirilgani yozilgan",
+   "debtor_contacts" in (a[0].old_value or "") if a else False, True)
 
 print("\n=== YO'Q O'QUVCHI ===")
 r = c.delete("/api/students/999999", headers=H["asos"])

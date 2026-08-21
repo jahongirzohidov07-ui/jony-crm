@@ -9,7 +9,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from sqlalchemy import func, or_, text
+from sqlalchemy import delete as sa_delete, func, or_, text, update as sa_update
 from sqlalchemy.orm import Session
 
 import audit
@@ -996,6 +996,48 @@ def merge_students(
             "groups": len(student_group_ids(db, keep.id))}
 
 
+# O'quvchi o'chirilganda TEGILMAYDIGAN jadvallar. payments_deleted —
+# o'chirilgan to'lovlar arxivi: pul tarixi hech qachon yo'qolmasligi
+# kerak (ichida o'quvchining ismi ham saqlanadi, ya'ni yetim qolmaydi).
+_PURGE_KEEP_TABLES = {"payments_deleted", "audit_logs"}
+
+
+def _purge_student_children(db: Session, sid: int) -> dict:
+    """O'quvchiga bog'langan barcha yozuvlarni tozalash.
+
+    2026-08-22: arxivdan o'chirish 500 xato berardi —
+    "debtor_contacts_student_id_fkey violates". O'quvchiga 40 dan ortiq
+    jadval bog'langan (to'lov, yo'qlama, coin, imtihon, XP, sertifikat,
+    qarz aloqasi...), ularning hammasi tozalanmaguncha baza qatorni
+    o'chirishga ruxsat bermaydi.
+
+    Qoida oddiy: ustun nomi "student_id" bo'lsa — bu yozuv o'sha
+    o'quvchiniki, o'chiriladi. Boshqa nomdagi havola (masalan lidning
+    converted_student_id yoki chegirmadagi referrer_student_id) —
+    boshqa birovning yozuvi, u YO'QOTILMAYDI, faqat havola bo'shatiladi.
+    """
+    removed: dict = {}
+    for table in reversed(models.Base.metadata.sorted_tables):
+        if table.name in ("students",) or table.name in _PURGE_KEEP_TABLES:
+            continue
+        for col in table.columns:
+            points_to_student = any(
+                fk.column.table.name == "students" for fk in col.foreign_keys)
+            if col.name == "student_id":
+                pass                      # o'ziniki — o'chiriladi
+            elif points_to_student:
+                # begona yozuvdagi havola — faqat bo'shatiladi
+                db.execute(sa_update(table).where(col == sid)
+                           .values({col.name: None}))
+                continue
+            else:
+                continue
+            r = db.execute(sa_delete(table).where(col == sid))
+            if r.rowcount:
+                removed[table.name] = r.rowcount
+    return removed
+
+
 @router.delete("/api/students/{student_id}")
 def delete_student(
     student_id: int,
@@ -1009,12 +1051,17 @@ def delete_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
-    audit.log(db, user, entity="student", action="delete", entity_id=s.id,
-              entity_label=s.full_name, branch_id=s.branch_id,
-              old_value=s.full_name)
+    name, bid = s.full_name, s.branch_id
+    removed = _purge_student_children(db, s.id)
     db.delete(s)
+    # Auditga NIMA o'chirilgani ham yoziladi: keyin "bu odamning
+    # to'lovlari qani" degan savol chiqsa, javob shu yerda turadi.
+    detail = ", ".join(f"{k}:{v}" for k, v in sorted(removed.items())) or "—"
+    audit.log(db, user, entity="student", action="delete", entity_id=student_id,
+              entity_label=name, branch_id=bid,
+              old_value=f"{name} (bog'liq yozuvlar: {detail})")
     db.commit()
-    return {"ok": True}
+    return {"ok": True, "removed": removed}
 
 @router.get("/api/students/{student_id}/payments", response_model=List[schemas.PaymentOut])
 def list_payments(

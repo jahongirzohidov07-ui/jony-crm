@@ -92,6 +92,107 @@ def _streak_days(db: Session, student_id: int) -> int:
     return streak
 
 
+def _award_and_get_streak(db: Session, student_id: int) -> int:
+    """Streakni hisoblaydi va yetilgan sovrinlarni darhol beradi."""
+    streak = _streak_days(db, student_id)
+    try:
+        _award_streak_coins(db, student_id, streak)
+    except Exception:
+        pass
+    return streak
+
+
+def _award_streak_coins(db: Session, student_id: int, streak: int):
+    """STREAK SOVRINLARINI AVTOMAT BERISH (2026-08-21).
+
+    Jahongir: "Streak sovrinlari — 7 kun -> 1, 14 kun -> 3, 30 kun ->
+    5. 60 kun 10, 100 kunga 20, 200 kunga 50, 365 kunga 100. avtomat
+    bersin".
+
+    Har uzluksiz zanjir ichida har bosqich faqat BIR marta beriladi —
+    zanjir boshlangan sana yozuv izohiga muhrlanadi. Zanjir uzilib
+    yangidan boshlansa, bosqichlarni qaytadan yutish mumkin (ataylab:
+    motivatsiya saqlanadi, coin qiymatlari kichik)."""
+    if streak < roles.STREAK_REWARDS[0][0]:
+        return
+    last = (db.query(func.max(models.VocabAttempt.date))
+            .filter(models.VocabAttempt.student_id == student_id)
+            .scalar())
+    if not last:
+        return
+    run_start = last - timedelta(days=streak - 1)
+    tag = f"[{run_start.isoformat()}]"
+    changed = False
+    for d, coin in roles.STREAK_REWARDS:
+        if streak < d:
+            break
+        dup = (db.query(models.CoinEntry)
+               .filter(models.CoinEntry.student_id == student_id,
+                       models.CoinEntry.source == "streak",
+                       models.CoinEntry.ref_id == d,
+                       models.CoinEntry.note.like(f"%{tag}%")).first())
+        if dup:
+            continue
+        db.add(models.CoinEntry(
+            student_id=student_id, amount=coin, source="streak",
+            ref_id=d, note=f"{d} kunlik streak sovrini {tag}",
+            created_by="Tizim"))
+        changed = True
+    if changed:
+        db.commit()
+
+
+# Haftalik reyting g'olibiga avtomat sovrin shu sanadan boshlanadi
+# (2026-08-21, Jahongir: "Haftalik reytingda 1-sentabrdan boshlab
+# avtomat yutganga 10 coin berilsin").
+_RANK_PRIZE_FROM = date(2026, 9, 1)
+
+
+def _award_week_prizes(db: Session):
+    """TUGAGAN haftalar uchun umumiy reyting g'olibiga coin yozadi.
+
+    Cron yo'q (serverless) — reyting sahifasi ochilganda tekshiriladi.
+    Har hafta uchun bitta yozuv (source="rank", ref_id=hafta boshi),
+    shuning uchun ikki marta berilmaydi. Oxirgi 8 hafta qaraladi."""
+    today = date.today()
+    cur_week = today - timedelta(days=today.weekday())
+    first = _RANK_PRIZE_FROM - timedelta(days=_RANK_PRIZE_FROM.weekday())
+    w = max(first, cur_week - timedelta(days=7 * 8))
+    changed = False
+    while w < cur_week:                      # faqat TUGAGAN haftalar
+        ref = int(w.strftime("%Y%m%d"))
+        exists = (db.query(models.CoinEntry)
+                  .filter(models.CoinEntry.source == "rank",
+                          models.CoinEntry.ref_id == ref).first())
+        if not exists:
+            lo, hi = _utc_window(w, w + timedelta(days=6))
+            row = (db.query(models.XpTransaction.student_id,
+                            func.sum(models.XpTransaction.amount)
+                            .label("pts"))
+                   .join(models.Student,
+                         models.Student.id
+                         == models.XpTransaction.student_id)
+                   .filter(models.XpTransaction.is_reversal == 0,
+                           models.XpTransaction.created_at >= lo,
+                           models.XpTransaction.created_at <= hi,
+                           models.Student.status.in_(("active", "trial")))
+                   .group_by(models.XpTransaction.student_id)
+                   .order_by(func.sum(models.XpTransaction.amount)
+                             .desc())
+                   .first())
+            if row and float(row[1] or 0) > 0:
+                db.add(models.CoinEntry(
+                    student_id=row[0], amount=roles.RANK_PRIZE_COIN,
+                    source="rank", ref_id=ref,
+                    note=f"Haftalik reyting g'olibi "
+                         f"({w.isoformat()} haftasi)",
+                    created_by="Tizim"))
+                changed = True
+        w += timedelta(days=7)
+    if changed:
+        db.commit()
+
+
 # =====================================================================
 #  KUNLIK MAQSAD VA "DAVOM ETTIRISH" (2026-08-16)
 #
@@ -280,7 +381,7 @@ def student_home(db: Session = Depends(get_db),
             "level": gam.get("level"),
             "league": gam.get("league"),
         },
-        "streak": _streak_days(db, s.id),
+        "streak": _award_and_get_streak(db, s.id),
         "today": {"answered": int(solved_today), "correct": int(correct_today)},
         # 2026-08-16 yangi bosh ekran uchun. Eski maydonlar o'z
         # o'rnida qoldi — boshqa sahifalar buzilmasin.
@@ -378,7 +479,7 @@ def student_learn(db: Session = Depends(get_db),
     return {
         "lifetime_xp": gam.get("lifetime_xp"),
         "coins": gam.get("coins"),
-        "streak": _streak_days(db, s.id),
+        "streak": _award_and_get_streak(db, s.id),
         "daily": _daily_progress(db, s.id),
         "continue": _continue_card(db, s.id),
         "sections": sections,
@@ -643,7 +744,7 @@ def vocab_stats(db: Session = Depends(get_db),
     return {
         "total": int(total), "correct": int(correct),
         "percent": round(correct * 100 / total, 1) if total else 0,
-        "streak": _streak_days(db, s.id),
+        "streak": _award_and_get_streak(db, s.id),
         "by_game": [{
             "game": gme,
             "label": roles.VOCAB_GAME_LABELS.get(gme, gme),
@@ -722,7 +823,7 @@ def _badge_counters(db: Session, s) -> dict:
                      models.Exam.status.in_(["approved", "done"]))
              .scalar() or 0)
     return {
-        "streak": _streak_days(db, s.id),
+        "streak": _award_and_get_streak(db, s.id),
         "vocab": int(vocab),
         "grammar_topics": int(gram_done),
         "xp": int(round(float(xp))),
@@ -765,7 +866,7 @@ def student_achievements(db: Session = Depends(get_db),
     ko'radi."""
     s = _me(db, user)
     badges = _badges(db, s)
-    streak = _streak_days(db, s.id)
+    streak = _award_and_get_streak(db, s.id)
     rewards = [{
         "days": d, "coin": coin,
         "done": streak >= d,
@@ -863,7 +964,7 @@ def student_profile(db: Session = Depends(get_db),
         "radar_note": (f"Har ko'nikma {per} ballga yetganda 100 bo'ladi"),
         "xp": int(round(float(gam.get("lifetime_xp") or 0))),
         "coins": gam.get("coins"),
-        "streak": _streak_days(db, s.id),
+        "streak": _award_and_get_streak(db, s.id),
         "balance": student_balance(db, s.id),
         "badges_done": sum(1 for b in badges if b["done"]),
         "badges_total": len(badges),
@@ -1864,6 +1965,10 @@ def student_leaderboard(scope: str = "group", period: str = "week",
     Familiya qisqartiriladi (_mask) — bola boshqa oilalarning to'liq
     ismini ko'rmaydi."""
     s = _me(db, user)
+    try:
+        _award_week_prizes(db)   # tugagan hafta g'olibiga avtomat coin
+    except Exception:
+        pass
     if scope not in ("group", "branch", "all"):
         raise HTTPException(400, "scope: group, branch yoki all")
     if period not in ("all", "week"):

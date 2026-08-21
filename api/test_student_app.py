@@ -238,7 +238,7 @@ ck("boshqa o'quvchi familiyasi qisqartirilgan",
    lb["podium"][0]["name"], "Malika Y.")
 ck("o'zi 'Siz' deb ko'rsatiladi", lb["podium"][1]["name"], "Siz")
 ck("o'z o'rni alohida qaytadi", lb["me"]["rank"], 2)
-ck("sovrin ko'rsatilgan", lb["prize_coin"], 50)
+ck("sovrin ko'rsatilgan", lb["prize_coin"], 10)
 # Guruh/filial/umumiy — uchalasi ham ochilishi kerak
 for sc in ("group", "branch", "all"):
     rr = client.get(f"/api/student/leaderboard?scope={sc}&period=week",
@@ -314,8 +314,62 @@ r = client.get("/api/student/achievements", headers=H1)
 ck("status 200", r.status_code, 200)
 ac = r.json()
 ckt("yutuqlar ro'yxati bo'sh emas", len(ac["badges"]) > 0)
-ck("streak sovrinlari 3 ta", len(ac["streak_rewards"]), 3)
-ck("7 kunlik sovrin 20 coin", ac["streak_rewards"][0]["coin"], 20)
+ck("streak sovrinlari 7 bosqich", len(ac["streak_rewards"]), 7)
+ck("7 kunlik sovrin 1 coin", ac["streak_rewards"][0]["coin"], 1)
+ck("365 kunlik sovrin 100 coin", ac["streak_rewards"][-1]["coin"], 100)
+
+# STREAK AVTOMAT COIN (2026-08-21, Jahongir: "avtomat bersin"):
+# 7 kun ketma-ket mashq yozamiz -> achievements ochilганda 1 coin
+# o'zi tushishi kerak, ikkinchi ochishda TAKROR tushmasligi kerak.
+from datetime import date as _d, timedelta as _td
+for i in range(7):
+    db.add(models.VocabAttempt(student_id=s1.id, game="en_uz",
+                               correct=1,
+                               date=_d.today() - _td(days=i)))
+db.commit()
+bal0 = (client.get(f"/api/students/{s1.id}", headers=Hf).json()
+        if False else None)  # balansni to'g'ridan bazadan olamiz
+from sqlalchemy import func as _f
+def _coins():
+    return int(db.query(_f.coalesce(_f.sum(models.CoinEntry.amount), 0))
+               .filter(models.CoinEntry.student_id == s1.id,
+                       models.CoinEntry.source == "streak").scalar() or 0)
+r = client.get("/api/student/achievements", headers=H1)
+ck("7 kun streak ko'rinadi", r.json()["streak"] >= 7, True)
+db.expire_all()
+ck("7 kunlik 1 coin avtomat tushdi", _coins(), 1)
+r = client.get("/api/student/achievements", headers=H1)
+db.expire_all()
+ck("takror tushmadi", _coins(), 1)
+
+# HAFTALIK REYTING G'OLIBI (2026-08-21): o'tgan haftaga XP yozamiz,
+# boshlanish sanasini testda orqaga suramiz -> leaderboard ochilганda
+# g'olibga 10 coin avtomat.
+import student_app as _sa
+_sa._RANK_PRIZE_FROM = _d.today() - _td(days=21)
+from datetime import datetime as _dt2
+_wk = _d.today() - _td(days=_d.today().weekday())  # shu hafta boshi
+_prev = _wk - _td(days=7)
+db.add(models.XpTransaction(student_id=s1.id, amount=40, is_reversal=0,
+                            created_at=_dt2(_prev.year, _prev.month,
+                                            _prev.day, 12, 0)))
+db.commit()
+r = client.get("/api/student/leaderboard?scope=all&period=week",
+               headers=H1)
+ck("leaderboard 200", r.status_code, 200)
+ck("sovrin endi 10 coin", r.json()["prize_coin"], 10)
+db.expire_all()
+rank_coins = (db.query(models.CoinEntry)
+              .filter(models.CoinEntry.source == "rank").all())
+ck("o'tgan hafta g'olibiga yozildi", len(rank_coins) >= 1, True)
+ck("g'olib to'g'ri va 10 coin",
+   (rank_coins[-1].student_id, rank_coins[-1].amount), (s1.id, 10))
+n_rank = len(rank_coins)
+client.get("/api/student/leaderboard?scope=all&period=week", headers=H1)
+db.expire_all()
+ck("qayta ochishda takror berilmadi",
+   db.query(models.CoinEntry)
+   .filter(models.CoinEntry.source == "rank").count(), n_rank)
 ckt("hech biri hali ochilmagan (yangi o'quvchi)", ac["done"] == 0)
 ckt("keyingi maqsad ko'rsatilgan", ac["next"] is not None)
 ckt("har yutuqda foiz bor",

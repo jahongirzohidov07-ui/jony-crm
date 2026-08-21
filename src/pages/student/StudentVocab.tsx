@@ -255,7 +255,12 @@ export default function StudentVocab() {
           onClick={() => { setPicker(null); setPickGame(null); }}
         >
           <div
-            className="w-full max-w-md bg-white rounded-t-2xl p-4 pb-8 max-h-[75vh] overflow-y-auto"
+            className="w-full max-w-md bg-white rounded-t-2xl p-4 overflow-y-auto overscroll-contain"
+            style={{
+              maxHeight: "78dvh",
+              paddingBottom: "calc(2rem + env(safe-area-inset-bottom))",
+              WebkitOverflowScrolling: "touch",
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-3">

@@ -2339,15 +2339,17 @@ BADGES = [
 ]
 
 # Streak sovrinlari — necha kun uzluksiz mashqqa qancha coin.
-# Coin AVTOMAT berilmaydi: bola sovrinni Mukofotlar bo'limida
-# ko'radi, xodim esa uni odatdagi coin berish oynasidan beradi.
-# (Avtomat berish keyinroq — hozir pul mantig'iga tegmayapmiz.)
-STREAK_REWARDS = [(7, 20), (14, 50), (30, 120)]
+# 2026-08-21 (Jahongir): "Streak sovrinlari — 7 kun -> 1, 14 kun -> 3,
+# 30 kun -> 5. 60 kun 10, 100 kunga 20, 200 kunga 50, 365 kunga 100.
+# avtomat bersin". Endi AVTOMAT beriladi (student_app'da, har zanjir
+# uchun har bosqich bir marta).
+STREAK_REWARDS = [(7, 1), (14, 3), (30, 5), (60, 10),
+                  (100, 20), (200, 50), (365, 100)]
 
-# Haftalik reyting sovrini (2026-08-16). Reyting sahifasining tepasida
-# "Sovrin: 50 Coin" bo'lib ko'rinadi — o'quvchi nima uchun
-# kurashayotganini bilsin.
-RANK_PRIZE_COIN = 50
+# Haftalik reyting sovrini. 2026-08-21 (Jahongir): "Haftalik reytingda
+# 1-sentabrdan boshlab avtomat yutganga 10 coin berilsin" — endi hafta
+# tugagach umumiy reyting g'olibiga AVTOMAT yoziladi (student_app).
+RANK_PRIZE_COIN = 10
 
 # Sovg'ani kim beradi
 REWARD_GIVE = FULL_ACCESS + [ACADEMIC_HEAD, SALES_MANAGER, ADMINISTRATOR,

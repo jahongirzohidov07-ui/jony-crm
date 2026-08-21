@@ -176,12 +176,16 @@ export default function StudentPractice() {
         setScore((s) => ({ ok: s.ok + 1, xp: s.xp + (r.xp || 0) }));
       // Skript (listening/speaking) va izoh — o'qishga vaqt kerak
       const hasExtra = !!r.explain || !!q.say;
+      // Reading — matnli mashq (2026-08-21, Jahongir: "Readingda
+      // berilgan vaqt kam kopaytirish kerak"): vaqt 3 barobar.
+      const mult = skill === "reading" ? 3 : 1;
       autoNext.schedule(
-        autoNextDelay({
-          correct: !!r.correct,
-          hasAnswer: !!r.expected,
-          hasExtra,
-        }),
+        mult *
+          autoNextDelay({
+            correct: !!r.correct,
+            hasAnswer: !!r.expected,
+            hasExtra,
+          }),
       );
     } catch {
       /* toast */

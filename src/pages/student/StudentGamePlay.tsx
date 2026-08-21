@@ -6,6 +6,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Check, RotateCcw, X } from "lucide-react";
 import { api } from "../../lib/api";
 import type { AnswerResult, RoundItem, VocabRound } from "../../lib/studentApi";
+import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
 
 /**
  * JONY STUDENT — o'yin maydoni (2026-08-09).
@@ -80,7 +81,19 @@ export default function StudentGamePlay() {
         shown: item.shown,
       });
       if (res.correct) setCorrectCount((c) => c + 1);
-      if (!silent) setFeedback(res);
+      if (!silent) {
+        setFeedback(res);
+        // 2026-08-21, Jahongir: "Lugatda variantni tanlaganda davom
+        // etish tugmasi kerak emas ozi o'taversin avtomat" — javob
+        // ko'ringach o'zi o'tadi (xatoda uzoqroq turadi).
+        autoNext.schedule(
+          autoNextDelay({
+            correct: !!res.correct,
+            hasAnswer: !!res.expected,
+            hasExtra: false,
+          }),
+        );
+      }
     } catch {
       // xato toast orqali ko'rinadi (api.ts)
     } finally {
@@ -88,7 +101,10 @@ export default function StudentGamePlay() {
     }
   }
 
+  const autoNext = useAutoNext(() => next());
+
   function next() {
+    autoNext.cancel();
     setFeedback(null);
     if (!round) return;
     if (idx + 1 >= round.items.length) setDone(true);
@@ -215,12 +231,7 @@ export default function StudentGamePlay() {
               <p className="text-sm text-red-700">{feedback.expected}</p>
             )}
           </div>
-          <button
-            onClick={next}
-            className="text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-900 text-white shrink-0"
-          >
-            Keyingi
-          </button>
+
         </div>
       )}
     </Shell>

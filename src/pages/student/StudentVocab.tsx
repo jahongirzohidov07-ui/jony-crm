@@ -251,13 +251,13 @@ export default function StudentVocab() {
       {/* ---- MASHQ TURI TANLASH ---- */}
       {picker !== null && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 flex items-end justify-center"
+          className="fixed inset-0 bg-black/50 z-[60] flex items-end justify-center"
           onClick={() => { setPicker(null); setPickGame(null); }}
         >
           <div
             className="w-full max-w-md bg-white rounded-t-2xl p-4 overflow-y-auto overscroll-contain"
             style={{
-              maxHeight: "78dvh",
+              maxHeight: "85dvh",
               paddingBottom: "calc(2rem + env(safe-area-inset-bottom))",
               WebkitOverflowScrolling: "touch",
             }}

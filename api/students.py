@@ -344,7 +344,7 @@ def sweep_left_to_archive(db: Session, branch_id: int | None = None) -> int:
     "Chiqib ketgan" bo'lib ro'yxatda osilib qolardi.
 
     Endi ro'yxat har ochilganda shu holat tekshiriladi. Shart qat'iy:
-    holati "Chiqib ketgan" + biror faol guruhi yo'q + qarzi yo'q.
+    holati "Chiqib ketgan" + asosiy guruhi yo'q + qarzi yo'q.
     Faol o'quvchi yoki qarzdor hech qachon tegilmaydi.
     """
     q = db.query(models.Student).filter(
@@ -357,10 +357,17 @@ def sweep_left_to_archive(db: Session, branch_id: int | None = None) -> int:
         return 0
     ids = [s.id for s in cands]
 
-    # Ko'p guruhli bog'lanish ochiq bo'lsa — hali chiqmagan hisoblanadi
-    linked = {r[0] for r in db.query(models.StudentGroupLink.student_id)
-              .filter(models.StudentGroupLink.student_id.in_(ids),
-                      models.StudentGroupLink.active == 1).all()}
+    # OCHIQ QOLGAN BOG'LANISHLAR (2026-08-22). Asosiy guruhi bo'sh, lekin
+    # student_groups'dagi qatori hali "faol" turgan holatlar bor —
+    # holat qo'lda "Chiqib ketgan"ga o'zgartirilganda bog'lanish
+    # yopilmay qolgan. Kartada guruh ko'rinib turadi-yu, aslida u
+    # hech qaysi guruhda o'qimaydi. Arxivga o'tkazayotib shu qator
+    # ham yopiladi — ma'lumot izchil bo'lib qoladi.
+    open_links: dict = {}
+    for lnk in (db.query(models.StudentGroupLink)
+                .filter(models.StudentGroupLink.student_id.in_(ids),
+                        models.StudentGroupLink.active == 1).all()):
+        open_links.setdefault(lnk.student_id, []).append(lnk)
     # Balanslar — bitta so'rovda (har biriga alohida so'rov yubormaymiz)
     sums = dict(db.query(models.Payment.student_id,
                          func.coalesce(func.sum(models.Payment.amount), 0))
@@ -368,11 +375,14 @@ def sweep_left_to_archive(db: Session, branch_id: int | None = None) -> int:
                 .group_by(models.Payment.student_id).all())
 
     moved = 0
+    today = roles.local_today()
     for st in cands:
-        if st.id in linked:
-            continue
         if (sums.get(st.id) or 0) < -0.01:
             continue                      # qarzi bor — Qarzdorlarda qoladi
+        for lnk in open_links.get(st.id, []):
+            lnk.active = 0
+            if not lnk.left_date:
+                lnk.left_date = today
         st.status = "archived"
         st.archive_when_paid = 0
         _sync_student_left_date(st)

@@ -66,8 +66,9 @@ d2 = mk("Guruhli Ketgan", roles.STUDENT_LEFT, group_id=g.id)
 # 5. faol va muzlatilgan guruhsiz — tegilmaydi
 d3 = mk("Faol Bola", "active")
 d4 = mk("Muzlatilgan Bola", "frozen")
-# 6. guruhsiz "left", lekin ko'p guruh bog'lanishi ochiq — tegilmaydi
-d5 = mk("Bogliqligi Bor", roles.STUDENT_LEFT)
+# 6. guruhsiz "left", lekin eski bog'lanishi YOPILMAY qolgan (Yasina
+#    holati) — arxivga o'tadi va o'sha qator ham yopiladi
+d5 = mk("Ochiq Bogliqlik", roles.STUDENT_LEFT)
 db.add(models.StudentGroupLink(student_id=d5.id, group_id=g.id, active=1))
 db.commit()
 
@@ -99,12 +100,20 @@ ck("qarzdor joyida", st("Qarzdor Ketgan"), roles.STUDENT_LEFT)
 ck("guruhi bori joyida", st("Guruhli Ketgan"), roles.STUDENT_LEFT)
 ck("faol joyida", st("Faol Bola"), "active")
 ck("muzlatilgan joyida", st("Muzlatilgan Bola"), "frozen")
-ck("ochiq bog'lanishi bori joyida", st("Bogliqligi Bor"), roles.STUDENT_LEFT)
+ck("guruh kartasi bori joyida", st("Guruhli Ketgan"), roles.STUDENT_LEFT)
+
+print("\n=== OCHIQ QOLGAN BOG'LANISH (Yasina holati) ===")
+ck("u ham arxivga o'tdi", st("Ochiq Bogliqlik"), "archived")
+lnk = (db.query(models.StudentGroupLink)
+       .filter(models.StudentGroupLink.student_id == ids["Ochiq Bogliqlik"])
+       .first())
+ck("bog'lanish yopildi", lnk.active if lnk else "?", 0)
+ck("chiqqan sanasi qo'yildi", lnk.left_date is not None if lnk else False, True)
 
 print("\n=== AUDITDA IZ ===")
 a = (db.query(models.AuditLog)
      .filter(models.AuditLog.action == "auto_archive").all())
-ck("2 ta yozuv", len(a), 2)
+ck("3 ta yozuv", len(a), 3)
 ck("sababi yozilgan",
    "Guruhsiz va qarzsiz" in (a[0].note or "") if a else False, True)
 

@@ -243,6 +243,122 @@ def student_growth(
 
     return {"granularity": granularity, "points": points}
 
+@router.get("/api/reports/student-app-usage")
+def report_student_app_usage(
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FULL_ACCESS, roles.ACADEMIC_HEAD,
+                              roles.HR_MANAGER, roles.HEAD_SUPPORT)),
+):
+    """STUDENT APP FOYDALANISHI (2026-08-21).
+
+    Jahongir: "student appga o'quvchilar kiradiku shulardan kimlar
+    kirgan kirmagan hali bir marta ham kirib kormaganlarni chart
+    ko'rinishida berish kerak va boshqa shunga oxshash statistikalar".
+
+    Kirishlar login_attempts (muvaffaqiyatli) jadvalidan olinadi,
+    mashq faolligi vocab_attempts'dan. Hech narsa o'zgartirilmaydi —
+    faqat o'qish."""
+    today = date.today()
+    d7 = datetime.combine(today - timedelta(days=7), dtime.min)
+    d30 = datetime.combine(today - timedelta(days=30), dtime.min)
+
+    q = (db.query(models.Student, models.User.username)
+         .outerjoin(models.User, models.User.id == models.Student.user_id)
+         .filter(models.Student.status.in_(("active", "trial"))))
+    if branch_id:
+        q = q.filter(models.Student.branch_id == branch_id)
+    pairs = q.all()
+
+    unames = [u for (_s, u) in pairs if u]
+    # Har login uchun oxirgi muvaffaqiyatli kirish
+    last_login = {}
+    if unames:
+        for uname, mx in (db.query(models.LoginAttempt.username,
+                                   func.max(models.LoginAttempt.created_at))
+                          .filter(models.LoginAttempt.success == 1,
+                                  models.LoginAttempt.username.in_(unames))
+                          .group_by(models.LoginAttempt.username).all()):
+            last_login[uname] = mx
+
+    # Oxirgi 7 kunda mashq qilganlar (kirishdan kuchliroq signal)
+    sids = [st.id for (st, _u) in pairs]
+    prac7, prac30 = set(), set()
+    if sids:
+        for sid, mx in (db.query(models.VocabAttempt.student_id,
+                                 func.max(models.VocabAttempt.created_at))
+                        .filter(models.VocabAttempt.student_id.in_(sids))
+                        .group_by(models.VocabAttempt.student_id).all()):
+            if mx and mx >= d7:
+                prac7.add(sid)
+            if mx and mx >= d30:
+                prac30.add(sid)
+
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    total = len(pairs)
+    no_account, never, ever = 0, 0, 0
+    act7, act30 = 0, 0
+    never_rows = []
+    by_branch = {}
+    for st, uname in pairs:
+        bb = by_branch.setdefault(
+            branches.get(st.branch_id, "—"),
+            {"branch": branches.get(st.branch_id, "—"),
+             "total": 0, "ever": 0, "never": 0, "no_account": 0})
+        bb["total"] += 1
+        ll = last_login.get(uname) if uname else None
+        if not uname:
+            no_account += 1
+            bb["no_account"] += 1
+        elif ll is None:
+            never += 1
+            bb["never"] += 1
+            never_rows.append({
+                "id": st.id, "name": st.full_name,
+                "branch": branches.get(st.branch_id, "—"),
+                "phone": st.phone, "login": uname})
+        else:
+            ever += 1
+            bb["ever"] += 1
+            if ll >= d7:
+                act7 += 1
+            if ll >= d30:
+                act30 += 1
+
+    # Kunlik kirishlar grafigi (oxirgi 30 kun, faqat o'quvchi loginlari)
+    daily = []
+    if unames:
+        rows = (db.query(func.date(models.LoginAttempt.created_at),
+                         func.count(func.distinct(
+                             models.LoginAttempt.username)))
+                .filter(models.LoginAttempt.success == 1,
+                        models.LoginAttempt.created_at >= d30,
+                        models.LoginAttempt.username.in_(unames))
+                .group_by(func.date(models.LoginAttempt.created_at))
+                .all())
+        m = {str(d): int(n) for d, n in rows}
+        for back in range(29, -1, -1):
+            dd = today - timedelta(days=back)
+            daily.append({"day": dd.isoformat(),
+                          "users": m.get(dd.isoformat(), 0)})
+
+    return {
+        "total": total,
+        "with_account": total - no_account,
+        "no_account": no_account,
+        "ever_logged": ever,
+        "never_logged": never,
+        "active_7d": act7,
+        "active_30d": act30,
+        "practice_7d": len(prac7),
+        "practice_30d": len(prac30),
+        "by_branch": sorted(by_branch.values(),
+                            key=lambda x: -x["total"]),
+        "daily_logins": daily,
+        "never_list": sorted(never_rows, key=lambda x: x["name"])[:300],
+    }
+
+
 @router.get("/api/reports/cashflow")
 def report_cashflow(
     months: int = 6,

@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip,
+  XAxis, YAxis,
+} from "recharts";
 import SalesFunnel from "../components/SalesFunnel";
 import { PayrollTab } from "../components/Payroll";
 import { Download, Users, TrendingDown } from "lucide-react";
@@ -17,7 +21,7 @@ import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi";
+type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app";
 
 // OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
 // Jahongir: "uzr molyia bolimidan hisobotlarga olib ot demoqchi
@@ -30,6 +34,10 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "funnel", label: "Sales funnel" },
   { key: "sales", label: "Sotuv menejerlari" },
   { key: "kpi", label: "Adminlar KPI" },
+  // 2026-08-21, Jahongir: "student appga o'quvchilar kiradiku shulardan
+  // kimlar kirgan kirmagan hali bir marta ham kirib kormaganlarni chart
+  // ko'rinishida berish kerak"
+  { key: "app", label: "Student app" },
 ];
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
@@ -1170,7 +1178,157 @@ export default function Reports() {
       {tab === "funnel" && <FunnelTab />}
       {tab === "sales" && <SalesTab />}
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
+      {tab === "app" && <StudentAppTab />}
     </div>
   );
 }
 
+
+
+/* =====================================================================
+   STUDENT APP FOYDALANISHI (2026-08-21)
+
+   Jahongir: "student appga o'quvchilar kiradiku shulardan kimlar
+   kirgan kirmagan hali bir marta ham kirib kormaganlarni chart
+   ko'rinishida berish kerak va boshqa shunga oxshash statistikalar".
+===================================================================== */
+function StudentAppTab() {
+  type Any = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  const [d, setD] = useState<Any>(null);
+  const [err, setErr] = useState("");
+  useEffect(() => {
+    api
+      .get<Any>("/reports/student-app-usage")
+      .then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, []);
+  if (err) return <p className="text-sm text-red-600">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda…</p>;
+
+  const pie = [
+    { name: "Kirgan", value: d.ever_logged, color: "#10b981" },
+    { name: "Hech kirmagan", value: d.never_logged, color: "#ef4444" },
+    { name: "Akkaunti yo'q", value: d.no_account, color: "#94a3b8" },
+  ].filter((x) => x.value > 0);
+
+  const cards = [
+    ["Faol o'quvchilar", d.total, "text-slate-900"],
+    ["Kamida bir marta kirgan", d.ever_logged, "text-emerald-600"],
+    ["Hech kirmagan", d.never_logged, "text-red-600"],
+    ["Akkaunti yo'q", d.no_account, "text-slate-500"],
+    ["Oxirgi 7 kunda kirgan", d.active_7d, "text-brand-700"],
+    ["Oxirgi 30 kunda kirgan", d.active_30d, "text-brand-700"],
+    ["7 kunda mashq qilgan", d.practice_7d, "text-violet-600"],
+    ["30 kunda mashq qilgan", d.practice_30d, "text-violet-600"],
+  ] as [string, number, string][];
+
+  return (
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {cards.map(([lbl, v, cls]) => (
+          <div key={lbl}
+               className="bg-white rounded-xl border border-slate-200 p-4">
+            <p className="text-xs text-slate-400">{lbl}</p>
+            <p className={`text-2xl font-bold mt-1 ${cls}`}>{v}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-2">
+            Kirgan / kirmagan / akkauntsiz
+          </p>
+          <ResponsiveContainer width="100%" height={240}>
+            <PieChart>
+              <Pie data={pie} dataKey="value" nameKey="name"
+                   innerRadius={55} outerRadius={90} paddingAngle={2}
+                   label={(e: Any) => `${e.name}: ${e.value}`}>
+                {pie.map((x) => (
+                  <Cell key={x.name} fill={x.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-2">
+            Kunlik kirishlar (oxirgi 30 kun, nechta o'quvchi)
+          </p>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={d.daily_logins}>
+              <XAxis dataKey="day" tick={{ fontSize: 10 }}
+                     tickFormatter={(v: string) => v.slice(8)} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
+              <Tooltip />
+              <Bar dataKey="users" name="O'quvchi" fill="#4f46e5"
+                   radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <p className="text-sm font-semibold text-slate-800 mb-2">
+          Filial kesimida
+        </p>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
+              <th className="py-2 font-medium">Filial</th>
+              <th className="py-2 text-right font-medium">Faol o'quvchi</th>
+              <th className="py-2 text-right font-medium">Kirgan</th>
+              <th className="py-2 text-right font-medium">Hech kirmagan</th>
+              <th className="py-2 text-right font-medium">Akkauntsiz</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {d.by_branch.map((b: Any) => (
+              <tr key={b.branch}>
+                <td className="py-2 text-slate-800">{b.branch}</td>
+                <td className="py-2 text-right">{b.total}</td>
+                <td className="py-2 text-right text-emerald-600">{b.ever}</td>
+                <td className="py-2 text-right text-red-600">{b.never}</td>
+                <td className="py-2 text-right text-slate-400">
+                  {b.no_account}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <p className="text-sm font-semibold text-slate-800 mb-1">
+          Hali BIR MARTA ham kirmaganlar ({d.never_logged})
+        </p>
+        <p className="text-xs text-slate-400 mb-3">
+          Akkaunti bor, lekin ilovaga umuman kirmagan — support/admin
+          bog'lanib ilovani o'rgatishi kerak bo'lgan ro'yxat.
+        </p>
+        <div className="max-h-80 overflow-y-auto">
+          <table className="w-full text-sm">
+            <tbody className="divide-y divide-slate-100">
+              {d.never_list.map((st: Any) => (
+                <tr key={st.id}>
+                  <td className="py-1.5 text-slate-800">{st.name}</td>
+                  <td className="py-1.5 text-slate-500">{st.branch}</td>
+                  <td className="py-1.5 text-right text-slate-500">
+                    {st.phone || st.login || "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {d.never_list.length === 0 && (
+            <p className="text-sm text-slate-400 py-4 text-center">
+              Ajoyib — hamma kamida bir marta kirgan!
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -50,6 +50,14 @@ def audit_list(
         datetime.min.time())
     q = db.query(models.AuditLog).filter(models.AuditLog.created_at >= since)
 
+    # O'QUVCHI YOZUVLARI KO'RSATILMAYDI (2026-08-21, Jahongir:
+    # "auditda o'quvchilarnikini olib tashlagin, uni alohida hisobotlar
+    # bolimiga"). Bazadan hech narsa o'chirilmaydi — faqat ro'yxatda
+    # chiqmaydi; o'quvchi faoliyati endi Hisobotlar -> Student app
+    # bo'limida statistika bo'lib ko'rinadi.
+    q = q.filter(or_(models.AuditLog.user_role.is_(None),
+                     models.AuditLog.user_role != roles.STUDENT))
+
     # Filial rahbari faqat o'z filialining tarixini ko'radi.
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.filter(

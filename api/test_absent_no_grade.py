@@ -115,6 +115,38 @@ ck("takror saqlashda shovqin yo'q",
    .filter(models.AuditLog.entity == "attendance",
            models.AuditLog.entity_id == s1.id).count(), 2)
 
+# O'quvchi yozuvlari audit RO'YXATIDA chiqmaydi (2026-08-21, Jahongir:
+# "auditda o'quvchilarnikini olib tashlagin") — bazada qoladi, lekin
+# /api/audit javobiga kirmaydi.
+db.add(models.AuditLog(user_id=None, username="o'quvchi-test",
+                       user_name="Test O'quvchi", user_role="student",
+                       entity="reward", action="create",
+                       entity_label="test yozuv"))
+db.commit()
+uf = models.User(username="asos2", full_name="Asos",
+                 password_hash=hash_password("Parol123!"),
+                 role=roles.FOUNDER, branch_id=b.id, is_active=1)
+db.add(uf); db.commit()
+Hf2 = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username': 'asos2', 'password': 'Parol123!'}).json()['access_token']}"}
+r = c.get("/api/audit?days=2&limit=500", headers=Hf2)
+ck("audit 200", r.status_code, 200)
+_roles_in = {x["user_role"] for x in r.json()["rows"]}
+ck("o'quvchi yozuvi ro'yxatda yo'q", "student" in _roles_in, False)
+ck("bazada esa turibdi",
+   db.query(models.AuditLog)
+   .filter(models.AuditLog.user_role == "student").count() >= 1, True)
+
+# STUDENT APP FOYDALANISH HISOBOTI (2026-08-21): asosiy raqamlar
+r = c.get("/api/reports/student-app-usage", headers=Hf2)
+ck("hisobot 200", r.status_code, 200)
+j = r.json()
+ck("jami faol o'quvchilar", j["total"], 1)         # s1 (s2 muzlatilgan)
+ck("akkaunti yo'qlar", j["no_account"], 1)          # s1 da user yo'q
+ck("grafik 30 kunlik", len(j["daily_logins"]) in (0, 30), True)
+ck("filial kesimi bor", len(j["by_branch"]) >= 1, True)
+r = c.get("/api/reports/student-app-usage", headers=H)
+ck("ustozga yopiq", r.status_code, 403)
+
 print("\n=== 3. KELMAGANGA YANGI BAHO QO'YIB BO'LMAYDI ===")
 r = c.put(f"/api/lessons/{ls.id}/grades", headers=H,
           json={"marks": [{"student_id": s1.id, "score": 5}]})

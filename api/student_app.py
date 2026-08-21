@@ -2392,6 +2392,12 @@ def _goal_out(db, s) -> dict:
         return out
 
     hours_left = (need_pts - pts) / rate * 24.0
+    # REALLIK KOEFFITSIYENTI (2026-08-21, Jahongir: "IELTS 4.0 turibdi
+    # 6.0 maqsad 28 kunda chiqasiz deyabsan bu nerealniyku, shuni
+    # 3-5x ga kattalashtirish kerak"). Mashq balli tez yig'iladi,
+    # lekin real til o'sishi ancha sekin — shuning uchun taxmin 4
+    # barobarga cho'ziladi.
+    hours_left *= 4.0
     total_h = max(1, int(hours_left))
     years, rem = divmod(total_h, 365 * 24)
     days, hours = divmod(rem, 24)

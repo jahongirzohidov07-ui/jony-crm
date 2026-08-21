@@ -59,7 +59,9 @@ export default function StudentGames() {
 
   const cont = d.continue;
   const daily = d.daily;
-  const level = Math.floor((d.lifetime_xp || 0) / 100) + 1;
+  // 2026-08-21, Jahongir: "daraja uchun XP soni juda kam bolib qolgan
+  // 2x ga oshir" — endi har daraja 200 XP (backend roles.XP_PER_LEVEL).
+  const level = Math.floor((d.lifetime_xp || 0) / 200) + 1;
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const pill = "flex items-center gap-1.5 rounded-2xl border px-3 py-2 shrink-0";
 
@@ -161,6 +163,29 @@ export default function StudentGames() {
           </Link>
         </div>
       )}
+
+      {/* ------------------------------------------- Daraja testi */}
+      <Link to="/student/level-test"
+        className="block rounded-3xl p-4 mt-3 text-white"
+        style={{
+          background:
+            "linear-gradient(120deg,#2B50E0,#4A56EC 55%,#7B5CF0)",
+        }}>
+        <div className="flex items-center gap-4">
+          <img src="/jsicons/learn-exam.png" alt=""
+               className="w-14 h-14 shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[19px] font-extrabold">Daraja testi</p>
+            <p className="text-[12.5px] text-white/80 mt-0.5 leading-snug">
+              Grammar, Vocabulary, Reading va Listening bo'yicha aniq
+              darajangizni aniqlang
+            </p>
+          </div>
+          <span className="px-3.5 py-2.5 rounded-xl bg-white/15 text-sm font-bold shrink-0">
+            Boshlash
+          </span>
+        </div>
+      </Link>
 
       {/* --------------------------------------------- bo'limlar */}
       <div className="grid grid-cols-2 gap-3 mt-3">

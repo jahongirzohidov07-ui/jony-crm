@@ -2406,7 +2406,7 @@ XP_LEAGUES = [
 LEAGUE_LABELS = {k: lbl for _r, k, lbl, _a, _b, _c, _i, _co in XP_LEAGUES}
 
 # Level = floor(Lifetime XP / XP_PER_LEVEL) + 1
-XP_PER_LEVEL = 100
+XP_PER_LEVEL = 200   # 2026-08-21, Jahongir: "juda kam bolib qolgan 2x ga oshir"
 
 
 def level_for(xp: float) -> int:

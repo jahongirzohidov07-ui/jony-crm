@@ -502,7 +502,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_20b"
+SCHEMA_STAMP = "stamp_2026_08_21"  # level_test jadvallari
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

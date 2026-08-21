@@ -75,6 +75,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 import academic as _r_academic
 import advisor as _r_advisor
+import level_test as _r_level_test
 import audit_admin as _r_audit_admin
 import backup as _r_backup
 import courses as _r_courses
@@ -109,6 +110,7 @@ import timetable as _r_timetable
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
+app.include_router(_r_level_test.router)
 app.include_router(_r_audit_admin.router)
 app.include_router(_r_backup.router)
 app.include_router(_r_courses.router)

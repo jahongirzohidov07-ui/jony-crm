@@ -13,14 +13,15 @@ import { ExamOrderQueueTab } from "./MyExams";
 import { ExaminerPayTab, ExaminerPayAdminTab } from "./ExaminerPay";
 import {
   AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel, EXAM_ORDER_ACCEPT,
-  EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW,
+  EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW, TEACHING_STAFF,
 } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
+import ComplaintsPage from "./Complaints";
 
 type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist"
-  | "errors";
+  | "errors" | "complaints";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -728,6 +729,9 @@ export default function Audit() {
   // Volontyor examinerga "Oyligim" umuman chiqmaydi (Jahongir)
   const showPay = can(user?.role, EXAMINER_PAY_OWN) && !user?.salary_hidden;
   const showPayList = can(user?.role, EXAMINER_SALARY_VIEW);
+  // 2026-08-22, Jahongir: "Shikoyatlar bo'limini audit bo'limi ichiga
+  // qo'shib ber" — shikoyat ham nazorat ishi, alohida band shart emas.
+  const showComplaints = can(user?.role, TEACHING_STAFF);
 
   useEffect(() => {
     // Examiner kirganda birinchi ko'radigan narsa — kutayotgan
@@ -751,6 +755,7 @@ export default function Audit() {
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
     { key: "pay", label: "Oyligim", show: showPay },
     { key: "paylist", label: "Examiner oyliklari", show: showPayList },
+    { key: "complaints", label: "Shikoyatlar", show: showComplaints },
     { key: "errors", label: "Tizim xatolari", show: user?.role === "founder" },
   ];
 
@@ -793,6 +798,7 @@ export default function Audit() {
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "pay" && <ExaminerPayTab />}
       {tab === "paylist" && <ExaminerPayAdminTab />}
+      {tab === "complaints" && <ComplaintsPage />}
       {tab === "errors" && <ErrorsTab />}
     </div>
   );

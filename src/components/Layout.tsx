@@ -268,7 +268,17 @@ export default function Layout() {
   // KUTUBXONA - barcha xodimga (2026-08-20, Jahongir: "kutubxona
   // bo'liimi ham supportlarda ochilmadi"). Ilgari faqat HR sahifasi
   // ichida edi - supportlar va boshqa xodimlar yo'l topolmasdi.
-  items = [...items, { to: "/library", label: "Kutubxona", icon: BookOpen }];
+  //
+  // 2026-08-22, Jahongir: "Kutubxona bo'limini o'quv bo'limi ichiga
+  // qoshib ber" — endi u O'quv bo'limi ichida TAB. Menyuda ikki marta
+  // turmasligi uchun bandni faqat O'quv bo'limiga KIRA OLMAYDIGANLARGA
+  // qoldiramiz (HR, buxgalter, administrator, examiner, SMM...) —
+  // ular uchun kutubxonaga boshqa yo'l yo'q.
+  const seesAcademic = can(user?.role, ACADEMIC_VIEW)
+    && user?.role !== "sales_manager";
+  if (!seesAcademic) {
+    items = [...items, { to: "/library", label: "Kutubxona", icon: BookOpen }];
+  }
   // BIZNES MASLAHATCHI AI - faqat asoschi (2026-08-20, Jahongir:
   // "menga asoschi uchun Biznes maslahatchi AI qoshib ber").
   if (user?.role === FOUNDER) {
@@ -306,7 +316,11 @@ export default function Layout() {
   if (can(user?.role, HR_CANDIDATE_VIEW)) {
     items = [...items, { to: "/hr", label: "HR", icon: Briefcase }];
   }
-  if (can(user?.role, TEACHING_STAFF)) {
+  // SHIKOYATLAR - 2026-08-22, Jahongir: "Shikoyatlar bo'limini audit
+  // bo'limi ichiga qo'shib ber". Endi u Audit ichida TAB. Menyuda
+  // takrorlanmasin deb, bandni faqat Auditga kirolmaydiganlarga
+  // qoldiramiz (ustoz, support, administrator, examiner...).
+  if (can(user?.role, TEACHING_STAFF) && !can(user?.role, AUDIT_VIEW)) {
     items = [...items,
              { to: "/complaints", label: "Shikoyatlar", icon: MessageSquareWarning }];
   }

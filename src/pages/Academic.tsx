@@ -21,10 +21,11 @@ import { exportToExcel } from "../lib/exportXlsx";
 
 import StudentsPage from "./Students";
 import GroupsPage from "./Groups";
+import LibraryPage from "./Library";
 import { CareerTab } from "../components/Career";
 
 type Tab = "students" | "groups" | "risk" | "fill" | "tasks"
-  | "career" | "support" | "rooms";
+  | "career" | "support" | "rooms" | "library";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "students", label: "Talabalar" },
@@ -35,6 +36,10 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "career", label: "Ustozlar karyerasi" },
   { key: "support", label: "Support teacher" },
   { key: "rooms", label: "Xonalar" },
+  // 2026-08-22, Jahongir: "Kutubxona bo'limini o'quv bo'limi ichiga
+  // qoshib ber" — o'quv materiallari shu bo'limning ishi, menyuda
+  // alohida band bo'lib turishi shart emas.
+  { key: "library", label: "Kutubxona" },
 ];
 
 // ------------------------------------------------------------ Risk tab
@@ -949,6 +954,7 @@ export default function Academic() {
       {tab === "career" && <CareerTab />}
       {tab === "support" && <SupportTab canAssign={canEdit} />}
       {tab === "rooms" && <RoomsTab canEdit={canEdit} branches={branches} />}
+      {tab === "library" && <LibraryPage />}
     </div>
   );
 }

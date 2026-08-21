@@ -86,7 +86,17 @@ LADDERS = {
     "reading": ["A1", "A2", "B1"],   # hozircha matnlar B1 gacha
     "listening": ["A1", "A2", "B1", "B2"],
 }
-MAX_PER_SECTION = 12
+# 2026-08-21 (Jahongir: "12ta savol kam daraja testi uchun... kamida
+# 36ta savol berish kerak har bir bolimdan, lekin asosiysi darajasi
+# aniq bolishi muhim qancha savolligi emas"):
+# Endi bitta savol bilan qaror qabul qilinmaydi. Har darajada BLOK
+# o'ynaladi: 3 ta to'g'ri yig'ilsa daraja YUTILDI (tepaga), 2 ta xato
+# yig'ilsa YIQILDI (pastga). Shunda tasodifiy topib o'tib ketish
+# ehtimoli juda kichik bo'ladi va bo'lim odatda 15-30 savol davom
+# etadi (shift 36 tagacha).
+MAX_PER_SECTION = 36
+PASS_NEED = 3   # darajani yutish uchun to'g'ri javoblar
+FAIL_NEED = 2   # darajadan yiqilish uchun xato javoblar
 CEFR_ORDER = ["A1", "A2", "B1", "B2"]
 CEFR_UZ = {"A1": "Boshlang'ich", "A2": "Elementary",
            "B1": "O'rta (Intermediate)", "B2": "Yuqori o'rta"}
@@ -98,7 +108,8 @@ def _new_state() -> dict:
     return {
         "sec_i": 0,          # SECTIONS bo'yicha indeks
         "idx": 1,            # zinadagi daraja indeksi (A2 dan boshlanadi)
-        "tries": 0,          # joriy darajadagi xato urinishlar
+        "lvl_ok": 0,         # joriy darajadagi to'g'ri javoblar (blok)
+        "lvl_bad": 0,        # joriy darajadagi xato javoblar (blok)
         "passed": {},        # {"grammar": [false,true,...]}
         "failed": {},
         "count": 0,          # joriy bo'limda berilgan savollar
@@ -220,7 +231,8 @@ def _finish_section(db, st):
     st["results"][sec] = _section_level(st, sec)
     st["sec_i"] += 1
     st["idx"] = 1
-    st["tries"] = 0
+    st["lvl_ok"] = 0
+    st["lvl_bad"] = 0
     st["count"] = 0
     st["cur"] = None
 
@@ -325,24 +337,29 @@ def lt_answer(payload: dict, db: Session = Depends(get_db),
 
     section_over = False
     if correct:
+        st["lvl_ok"] = st.get("lvl_ok", 0) + 1
+    else:
+        st["lvl_bad"] = st.get("lvl_bad", 0) + 1
+
+    if st["lvl_ok"] >= PASS_NEED:
+        # Daraja YUTILDI (3 to'g'ri) -> qiyinlashadi
         passed[st["idx"]] = True
-        st["tries"] = 0
+        st["lvl_ok"] = st["lvl_bad"] = 0
         if st["idx"] >= len(ladder) - 1 or failed[st["idx"] + 1]:
-            # Eng tepani ham topdi (yoki tepasi allaqachon yiqilgan)
+            # Eng tepani ham yutdi (yoki tepasi allaqachon yiqilgan)
             section_over = True
         else:
-            st["idx"] += 1        # qiyinlashadi
-    else:
-        st["tries"] += 1
-        if st["tries"] >= 2:      # o'sha darajadan 2-savol ham xato
-            failed[st["idx"]] = True
-            st["tries"] = 0
-            if st["idx"] <= 0:
-                section_over = True
-            else:
-                st["idx"] -= 1    # pastroqdan berib ko'radi
-                if passed[st["idx"]]:
-                    section_over = True   # bu daraja allaqachon yutilgan
+            st["idx"] += 1
+    elif st["lvl_bad"] >= FAIL_NEED:
+        # Daraja YIQILDI (2 xato) -> pastroqdan berib ko'radi
+        failed[st["idx"]] = True
+        st["lvl_ok"] = st["lvl_bad"] = 0
+        if st["idx"] <= 0:
+            section_over = True
+        else:
+            st["idx"] -= 1
+            if passed[st["idx"]]:
+                section_over = True   # bu daraja allaqachon yutilgan
 
     if st["count"] >= MAX_PER_SECTION:
         section_over = True

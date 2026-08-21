@@ -184,15 +184,16 @@ export default function StudentLevelTest() {
                         {k}
                       </p>
                       <p className="text-[11px] text-slate-400">
-                        Har bo'limda 12 tagacha savol
+                        Har darajada bir nechta savol — chuqur tekshiruv
                       </p>
                     </div>
                   </div>
                 ),
               )}
               <p className="text-[11px] text-slate-400 mt-2">
-                Taxminan 10–15 daqiqa. Natija: har ko'nikma bo'yicha CEFR
-                daraja (A1–B2) va umumiy daraja.
+                Har darajani yutish uchun 3 ta to'g'ri javob kerak —
+                shunda natija aniq bo'ladi. Natija: har ko'nikma
+                bo'yicha CEFR daraja (A1–B2) va umumiy daraja.
               </p>
             </div>
 
@@ -250,7 +251,7 @@ export default function StudentLevelTest() {
                 className="h-full rounded-full transition-all bg-gradient-to-r from-sky-500 to-violet-500"
                 style={{
                   width: `${((q.section_no - 1) * 100 +
-                    Math.min(100, (q.question_no / 12) * 100)) /
+                    Math.min(100, (q.question_no / 36) * 100)) /
                     q.sections_total}%`,
                 }}
               />

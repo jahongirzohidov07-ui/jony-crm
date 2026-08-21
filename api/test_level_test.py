@@ -71,7 +71,7 @@ ck("grammar bo'limidan boshlanadi", q["section"], "grammar")
 ck("javob mijozga yuborilmaydi", "answer" in q["question"], False)
 ck("variantlar bor", len(q["question"]["options"]) >= 3, True)
 
-print("\n=== ADAPTIV: TO'G'RI -> QIYINLASHADI ===")
+print("\n=== ADAPTIV: 3 TO'G'RI -> DARAJA YUTILADI ===")
 db.expire_all()
 ans, st0 = answer_of(cur_sess())
 ck("A2 dan boshlangan", st0["idx"], 1)
@@ -80,7 +80,17 @@ r = c.post("/api/student/level-test/answer", headers=H,
 ck("to'g'ri deb topildi", r.json()["correct"], True)
 db.expire_all()
 _, st1 = answer_of(cur_sess())
-ck("daraja ko'tarildi (B1)", st1["idx"], 2)
+ck("1 to'g'ri hali yetmaydi (o'sha daraja)", st1["idx"], 1)
+ck("blok hisobi yuribdi", st1["lvl_ok"], 1)
+for _ in range(2):  # jami 3 to'g'ri
+    db.expire_all()
+    ans, _ = answer_of(cur_sess())
+    c.post("/api/student/level-test/answer", headers=H,
+           json={"answer": ans})
+db.expire_all()
+_, st2 = answer_of(cur_sess())
+ck("3 to'g'ridan keyin daraja ko'tarildi (B1)", st2["idx"], 2)
+ck("blok qayta boshlandi", (st2["lvl_ok"], st2["lvl_bad"]), (0, 0))
 
 print("\n=== ADAPTIV: 2 XATO -> PASTGA ===")
 r = c.post("/api/student/level-test/answer", headers=H,
@@ -89,20 +99,20 @@ ck("xato deb topildi", r.json()["correct"], False)
 ck("to'g'ri javob endi ko'rsatiladi",
    bool(r.json().get("expected")), True)
 db.expire_all()
-_, st2 = answer_of(cur_sess())
-ck("hali o'sha darajada (2-imkon)", st2["idx"], 2)
+_, st3 = answer_of(cur_sess())
+ck("1 xato hali yiqitmaydi", st3["idx"], 2)
 r = c.post("/api/student/level-test/answer", headers=H,
            json={"answer": "###notogri###"})
 db.expire_all()
 sess = cur_sess()
 # A2 yutilgan edi -> pastga tushishda bo'lim tugashi kerak
-st3 = json.loads(sess.state)
-ck("grammar yakunlandi, keyingi bo'lim", st3["sec_i"], 1)
-ck("grammar natijasi A2", st3["results"]["grammar"], "A2")
+st4 = json.loads(sess.state)
+ck("grammar yakunlandi, keyingi bo'lim", st4["sec_i"], 1)
+ck("grammar natijasi A2", st4["results"]["grammar"], "A2")
 
 print("\n=== QOLGAN BO'LIMLARNI O'TISH ===")
 guard = 0
-while guard < 80:
+while guard < 400:
     guard += 1
     db.expire_all()
     sess = cur_sess()
@@ -143,6 +153,7 @@ ck("XP_PER_LEVEL endi 200", roles.XP_PER_LEVEL, 200)
 import inspect
 src = inspect.getsource(sys.modules["student_app"])
 ck("maqsad muddati 4x cho'zilgan", "hours_left *= 4.0" in src, True)
+ck("bo'lim shifti 36 savol", level_test.MAX_PER_SECTION, 36)
 
 print("\n=== XAVFSIZLIK ===")
 r = c.post("/api/student/level-test/start")

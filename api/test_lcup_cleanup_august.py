@@ -115,6 +115,52 @@ arch = db.query(models.DeletedPayment).first()
 ck("arxivda sababi yozilgan", "dubl" in (arch.reason or ""), True)
 # s1 balansi endi: -480000 (avto) + 480000 (to'lov) - 325000 (iyul) = -325000
 
+print("\n=== UNDO-PRE12 ===")
+# s3: tenglashtirishda qatnashgan + 12-avggacha juftligi tozalangan
+s3 = models.Student(full_name="Teng Bola", branch_id=b.id,
+                    status="active", public_id="S3")
+db.add(s3); db.commit()
+db.add(models.Payment(student_id=s3.id, amount=480000, kind="payment",
+                      note="[LC UP] balans tenglashtirish",
+                      created_at=datetime(2026, 8, 11)))
+db.add(models.DeletedPayment(
+    payment_id=99991, student_id=s3.id, student_name="Teng Bola",
+    branch_id=b.id, amount=-480000, kind="charge",
+    note="[LC UP] eski hisob (2026-08)",
+    created_at=datetime(2026, 8, 5),
+    deleted_by="Asoschi",
+    reason="Avgust dubl yechimi: test"))
+# s4: tenglashtirishsiz — qaytarilmasligi kerak
+s4 = models.Student(full_name="Tengsiz Bola", branch_id=b.id,
+                    status="active", public_id="S4")
+db.add(s4); db.commit()
+db.add(models.DeletedPayment(
+    payment_id=99992, student_id=s4.id, student_name="Tengsiz Bola",
+    branch_id=b.id, amount=-480000, kind="charge",
+    note="[LC UP] eski hisob (2026-08)",
+    created_at=datetime(2026, 8, 5),
+    deleted_by="Asoschi",
+    reason="Avgust dubl yechimi: test"))
+db.commit()
+r = c.post("/api/lcup/cleanup-august-undo-pre12", headers=Hf,
+           json={"commit": False})
+ck("undo preview 200", r.status_code, 200)
+ck("faqat tenglashtirishli topildi", r.json()["count"], 1)
+r = c.post("/api/lcup/cleanup-august-undo-pre12", headers=Hf,
+           json={"commit": True})
+ck("undo bajarildi", r.json()["committed"], True)
+db.expire_all()
+ck("s3 yechimi QAYTDI",
+   db.query(models.Payment).filter(
+       models.Payment.student_id == s3.id,
+       models.Payment.kind == "charge").count(), 1)
+ck("s4 ga tegilmadi",
+   db.query(models.Payment).filter(
+       models.Payment.student_id == s4.id).count(), 0)
+r = c.post("/api/lcup/cleanup-august-undo-pre12", headers=Hf,
+           json={"commit": True})
+ck("ikkinchi marta bo'sh (restored belgisi)", r.json()["count"], 0)
+
 print("\n=== QAYTA BOSILSA — BO'SH ===")
 r = c.post("/api/lcup/cleanup-august", headers=Hf, json={"commit": True})
 ck("endi dubl yo'q", r.json()["count"], 0)

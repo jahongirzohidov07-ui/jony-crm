@@ -3377,6 +3377,71 @@ def lcup_cleanup_august(payload: dict = Body(default={}),
             "total": round(total, 2), "committed": bool(commit and victims)}
 
 
+@app.post("/api/lcup/cleanup-august-undo-pre12")
+def lcup_cleanup_undo_pre12(payload: dict = Body(default={}),
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(roles.FOUNDER))):
+    """TOZALASHNING ORTIQCHA QISMINI QAYTARISH (2026-08-22).
+
+    Dubl tozalashda 11-avgustGAcha sanali juft yechimlar ham arxivga
+    ketgan edi. Lekin o'sha kunlardagi to'lovlar 11-avgustdagi
+    "balans tenglashtirish"da ALLAQACHON hisoblangan — juft yechimi
+    o'chirilsa balans +to'lovcha oshib ketadi (LC UPdan yuqori).
+
+    Bu endpoint bugungi tozalash arxividan created_at < 2026-08-12
+    bo'lgan yechimlarni topib, FAQAT tenglashtirish qatnashgan
+    o'quvchilar uchun QAYTARIB qo'yadi (mavjud restore mexanizmi
+    mantig'i bilan). commit=false — ko'rib chiqish."""
+    from datetime import datetime as _dtm
+    commit = bool(payload.get("commit"))
+    cut = _dtm(2026, 8, 12)
+
+    arch = (db.query(models.DeletedPayment)
+            .filter(models.DeletedPayment.reason.like("Avgust dubl%"),
+                    models.DeletedPayment.restored_at.is_(None),
+                    models.DeletedPayment.created_at < cut).all())
+    sids = list({a.student_id for a in arch})
+    if not sids:
+        return {"rows": [], "count": 0, "total": 0.0, "committed": False}
+    teng = {sid for (sid,) in
+            db.query(models.Payment.student_id)
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.note.like("%balans tenglashtirish%"),
+                    models.Payment.student_id.in_(sids))
+            .distinct().all()}
+
+    rows, total = [], 0.0
+    victims = []
+    for a in arch:
+        if a.student_id not in teng:
+            continue    # tenglashtirishda qatnashmagan — qaytarilmaydi
+        rows.append({"archive_id": a.id, "student": a.student_name,
+                     "amount": a.amount,
+                     "date": a.created_at.date().isoformat()
+                             if a.created_at else None})
+        total += abs(a.amount)
+        victims.append(a)
+
+    if commit and victims:
+        now = _dtm.utcnow()
+        for a in victims:
+            db.add(models.Payment(
+                student_id=a.student_id, amount=a.amount, kind=a.kind,
+                method=a.method, note=a.note, period=a.period,
+                created_by=a.created_by, created_at=a.created_at))
+            a.restored_at = now
+            a.restored_by = user.full_name
+        audit.log(db, user, entity="payment", action="update",
+                  entity_label=f"Avgust dubl tozalash tuzatildi: "
+                               f"{len(victims)} ta 12-avggacha yechim "
+                               f"qaytarildi (tenglashtirish qatnashgan)",
+                  new_value=round(total, 2))
+        db.commit()
+
+    return {"rows": rows[:600], "count": len(rows),
+            "total": round(total, 2), "committed": bool(commit and victims)}
+
+
 @app.get("/api/lcup/payments")
 def import_payments_stats(db: Session = Depends(get_db),
                           user=Depends(require_role(*_IMPORT_ROLES))):

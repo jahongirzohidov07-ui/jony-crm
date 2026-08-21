@@ -568,6 +568,41 @@ export function PayImportTab() {
               Dubl yechim topilmadi.
             </p>
           )}
+
+          {/* 2026-08-22: tozalashda 12-avggacha juftlar ham ketib,
+              tenglashtirish qatnashganlarda balans oshib ketdi —
+              shu tugma faqat o'shalarni qaytaradi. */}
+          <div className="mt-4 pt-3 border-t border-slate-100">
+            <p className="text-xs text-slate-500 mb-2">
+              Tuzatish: 12-avgustgacha sanali juft yechimlarni qaytarish
+              (faqat 11-avgust tenglashtirishida qatnashganlarga —
+              ularniki ikki marta hisoblanib, balans oshib ketgan).
+            </p>
+            <button
+              onClick={async () => {
+                setAugBusy(true);
+                try {
+                  const r = await api.post<Any>(
+                    "/lcup/cleanup-august-undo-pre12",
+                    { commit: true },
+                  );
+                  alert(
+                    r.committed
+                      ? `Qaytarildi: ${r.count} ta yechim`
+                      : "Qaytariladigan yozuv topilmadi",
+                  );
+                } catch (e) {
+                  setErr(e instanceof Error ? e.message : "Xatolik");
+                } finally {
+                  setAugBusy(false);
+                }
+              }}
+              disabled={augBusy}
+              className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-60"
+            >
+              12-avggacha yechimlarni qaytarish
+            </button>
+          </div>
         </div>
       )}
     </div>

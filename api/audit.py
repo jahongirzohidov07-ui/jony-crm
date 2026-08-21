@@ -33,6 +33,8 @@ ACTIONS = {
     "approve": "Tasdiqlandi",
     "reject": "Rad etildi",
     "cancel": "Bekor qilindi",
+    "att_mark": "Yo'qlama belgilandi",
+    "att_remove": "Yo'qlama olib tashlandi",
 }
 
 # Kuzatiladigan obyektlar.
@@ -53,6 +55,10 @@ ENTITIES = {
     "discount": "Chegirma",
     "task": "Vazifa",
     "asset": "Aktiv",
+    # 2026-08-21, Jahongir: "yoqlamada yoq qoyganimda qandaydur bor
+    # bolib qolibdi... audit bolimida kimga qanday yoqlama qoygani
+    # korinadimi" — endi yo'qlama ham auditda.
+    "attendance": "Yo'qlama",
 }
 
 

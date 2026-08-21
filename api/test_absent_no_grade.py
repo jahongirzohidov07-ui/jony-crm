@@ -89,6 +89,32 @@ ck("BAHO O'CHIRILDI",
        models.DailyGrade.student_id == s1.id).count(), 0)
 ck("COIN QAYTARILDI", coins(s1.id), 0)
 
+# YO'QLAMA AUDITI (2026-08-21, Jahongir: "yoqlamada yoq qoyganimda
+# qandaydur bor bolib qolibdi... audit bolimida kimga qanday yoqlama
+# qoygani korinadimi") — har o'zgarish kim tomonidan yozilgani auditda.
+att_logs = (db.query(models.AuditLog)
+            .filter(models.AuditLog.entity == "attendance",
+                    models.AuditLog.entity_id == s1.id)
+            .order_by(models.AuditLog.id).all())
+ck("audit yozuvlari bor (keldi + kelmadi)", len(att_logs), 2)
+ck("1-yozuv: belgilanmagan -> keldi",
+   (att_logs[0].old_value, att_logs[0].new_value),
+   ("belgilanmagan", "keldi"))
+ck("2-yozuv: keldi -> kelmadi",
+   (att_logs[1].old_value, att_logs[1].new_value), ("keldi", "kelmadi"))
+ck("kim qo'ygani yozilgan", att_logs[1].user_name, "Ustoz")
+ck("o'quvchi nomi labelda",
+   "Kelgan Bola" in (att_logs[1].entity_label or ""), True)
+
+# Qayta bir xil belgini saqlash — YANGI audit yozuvi chiqmasin
+c.put(f"/api/lessons/{ls.id}/attendance", headers=H,
+      json={"marks": [{"student_id": s1.id, "present": False,
+                       "late": False}]})
+ck("takror saqlashda shovqin yo'q",
+   db.query(models.AuditLog)
+   .filter(models.AuditLog.entity == "attendance",
+           models.AuditLog.entity_id == s1.id).count(), 2)
+
 print("\n=== 3. KELMAGANGA YANGI BAHO QO'YIB BO'LMAYDI ===")
 r = c.put(f"/api/lessons/{ls.id}/grades", headers=H,
           json={"marks": [{"student_id": s1.id, "score": 5}]})

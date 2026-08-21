@@ -718,6 +718,42 @@ def teacher_account_reset(tid: int, db: Session = Depends(get_db),
         **_account_state(db, t),
     }
 
+@router.get("/api/teachers/{teacher_id}/groups")
+def teacher_groups(teacher_id: int,
+                   db: Session = Depends(get_db),
+                   user=Depends(get_current_user)):
+    """Ustozning guruhlari — o'quvchi soni bilan (2026-08-21).
+
+    Jahongir: "ustozlarga o'qituvchilar bolimidan kirganda ustiga
+    ezib kirsa guruhlari royxati nechta o'quvchsi bilan borligi bor
+    bolgan sahifaga o'tsin". Oylik ma'lumotlari YO'Q — shuning uchun
+    barcha xodimga ochiq (ustozlar ro'yxati kabi)."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    groups = (db.query(models.Group)
+              .filter(models.Group.teacher_id == teacher_id)
+              .order_by(models.Group.name).all())
+    out = []
+    for g in groups:
+        n = (db.query(models.Student.id)
+             .filter(in_group(g.id),
+                     models.Student.status.in_(("active", "trial")))
+             .count())
+        br = db.query(models.Branch).get(g.branch_id) \
+            if g.branch_id else None
+        out.append({
+            "id": g.id, "name": g.name, "students": n,
+            "capacity": g.capacity,
+            "lesson_days": g.lesson_days, "lesson_time": g.lesson_time,
+            "subject": g.subject, "level": g.level,
+            "branch": br.name if br else None,
+        })
+    return {"teacher": t.full_name,
+            "groups": out,
+            "total_students": sum(x["students"] for x in out)}
+
+
 @router.get("/api/teachers/{teacher_id}/overview")
 def teacher_overview(teacher_id: int,
                      db: Session = Depends(get_db),

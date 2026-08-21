@@ -353,6 +353,11 @@ def save_attendance(
     newly_absent = []   # Telegram: "darsga kelmadi" xabari uchun
     newly_present = []  # Telegram: "darsga keldi" xabari uchun
     newly_late = []     # Telegram: "kech keldi" xabari uchun
+    # AUDIT (2026-08-21, Jahongir: "yoqlamada yoq qoyganimda qandaydur
+    # bor bolib qolibdi... audit bolimida kimga qanday yoqlama qoygani
+    # korinadimi"): har O'ZGARGAN belgi kim tomonidan qanday
+    # o'zgartirilgani yozib boriladi. [(sid, eski, yangi, remove)]
+    _audit_changes = []
     for m in payload.marks:
         if m.student_id in _frozen_ids:
             continue
@@ -363,6 +368,8 @@ def save_attendance(
         if m.remove:
             row = existing.pop(m.student_id, None)
             if row:
+                _audit_changes.append(
+                    (m.student_id, row.present, None, True))
                 db.delete(row)
             continue
         hw = m.homework if m.homework in (0, 1, 2) else None
@@ -378,6 +385,10 @@ def save_attendance(
             newly_present.append(m.student_id)
         elif val == 2 and prev != 2:
             newly_late.append(m.student_id)
+        if row is None or (row.present or 0) != val:
+            _audit_changes.append(
+                (m.student_id,
+                 (row.present if row else None), val, False))
         if row:
             row.present = val
             # Tekshirilmagan bo'lsa eskisiga tegilmaydi — ustoz
@@ -392,6 +403,29 @@ def save_attendance(
             db.add(new_row)
             existing[m.student_id] = new_row
     db.flush()
+
+    # Auditga yozish: faqat O'ZGARGANLAR (qayta saqlashda shovqin
+    # bo'lmaydi). Kim, kimga, qachon, nima -> nima.
+    if _audit_changes:
+        _att_lbl = {None: "belgilanmagan", 0: "kelmadi",
+                    1: "keldi", 2: "kech keldi"}
+        _grp = db.query(models.Group).get(lesson.group_id)
+        _names = dict(
+            db.query(models.Student.id, models.Student.full_name)
+            .filter(models.Student.id.in_(
+                [c[0] for c in _audit_changes])).all())
+        for sid, prev_v, new_v, removed in _audit_changes:
+            audit.log(
+                db, user, entity="attendance",
+                action="att_remove" if removed else "att_mark",
+                entity_id=sid,
+                entity_label=f"{_names.get(sid, sid)} · "
+                             f"{_grp.name if _grp else ''} · "
+                             f"{lesson.date.isoformat()}",
+                field="present",
+                old_value=_att_lbl.get(prev_v, prev_v),
+                new_value=_att_lbl.get(new_v, new_v),
+                branch_id=_grp.branch_id if _grp else None)
 
     # KELMAGAN BO'LIB QOLGAN O'QUVCHINING BAHOSI VA COINI OLINADI
     # (2026-08-10, Jahongir: "kelmagan o'quvchilarga baho qo'yib coin

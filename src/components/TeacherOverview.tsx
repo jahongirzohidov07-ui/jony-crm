@@ -257,6 +257,99 @@ export function TeacherOverviewModal({
 }
 
 
+/** Ustoz guruhlari — o'quvchi soni bilan (2026-08-21).
+ *
+ * Jahongir: "ustozlarga o'qituvchilar bolimidan kirganda ustiga ezib
+ * kirsa guruhlari royxati nechta o'quvchsi bilan borligi bor bolgan
+ * sahifaga o'tsin". Oylik ma'lumotisiz — shuning uchun barcha
+ * xodimga ochiq (asoschi/o'quv rahbari to'liq kartani ko'radi). */
+export function TeacherGroupsModal({
+  teacherId, onClose,
+}: { teacherId: number; onClose: () => void }) {
+  const [d, setD] = useState<Any>(null);
+  const [err, setErr] = useState("");
+  useEffect(() => {
+    api
+      .get<Any>(`/teachers/${teacherId}/groups`)
+      .then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, [teacherId]);
+  return (
+    <div
+      className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[85vh] overflow-y-auto p-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <p className="text-base font-semibold text-slate-900">
+              {d?.teacher || "Ustoz"}
+            </p>
+            <p className="text-xs text-slate-400">
+              Guruhlari{d ? ` · jami ${d.total_students} o'quvchi` : ""}
+            </p>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"
+                  aria-label="Yopish">
+            <X size={18} />
+          </button>
+        </div>
+        {err && <p className="text-sm text-red-600">{err}</p>}
+        {!d && !err && (
+          <p className="text-sm text-slate-400 py-6 text-center">
+            Yuklanmoqda…
+          </p>
+        )}
+        {d && d.groups.length > 0 && (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
+                <th className="py-2 pr-2 font-medium">Guruh</th>
+                <th className="py-2 pr-2 font-medium">Jadval</th>
+                <th className="py-2 text-right font-medium">O'quvchi</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {d.groups.map((g: Any) => (
+                <tr key={g.id}>
+                  <td className="py-2.5 pr-2">
+                    <p className="font-medium text-slate-800">{g.name}</p>
+                    <p className="text-[11px] text-slate-400">
+                      {[g.subject, g.level, g.branch]
+                        .filter(Boolean).join(" · ")}
+                    </p>
+                  </td>
+                  <td className="py-2.5 pr-2 text-slate-600 text-xs">
+                    {[g.lesson_days, g.lesson_time]
+                      .filter(Boolean).join(" ") || "—"}
+                  </td>
+                  <td className="py-2.5 text-right font-semibold text-slate-800">
+                    {g.students}
+                    {g.capacity ? (
+                      <span className="text-[11px] text-slate-400 font-normal">
+                        {" "}/ {g.capacity}
+                      </span>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {d && d.groups.length === 0 && (
+          <p className="text-sm text-slate-400 py-5 text-center">
+            Guruh biriktirilmagan.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
 /** Support teacherni guruhlarga biriktirish (support manager /
  *  o'quv bo'limi rahbari). Jadvali va o'quvchilari shundan chiqadi. */
 export function SupportGroupsModal({

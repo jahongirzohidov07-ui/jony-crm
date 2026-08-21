@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TeacherOverviewModal, SupportGroupsModal } from "../components/TeacherOverview";
+import { TeacherOverviewModal, SupportGroupsModal, TeacherGroupsModal } from "../components/TeacherOverview";
 import {
   Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
   FileUp,
@@ -391,6 +391,8 @@ export default function Teachers() {
   const [editing, setEditing] = useState<Teacher | null>(null);
   const [accountFor, setAccountFor] = useState<Teacher | null>(null);
   const [overviewFor, setOverviewFor] = useState<Teacher | null>(null);
+  // Guruhlari oynasi (2026-08-21) — oyliksiz versiya, barcha xodimga
+  const [groupsFor, setGroupsFor] = useState<Teacher | null>(null);
   const [supportFor, setSupportFor] = useState<Teacher | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
   const [career, setCareer] = useState<number | null>(null);
@@ -664,16 +666,25 @@ export default function Teachers() {
                         >
                           {t.full_name}
                         </button>
-                      ) : canSeeSalary ? (
+                      ) : (
                         <button
-                          onClick={() => setSalary(t.id)}
+                          onClick={() => setGroupsFor(t)}
                           className="hover:text-brand-700"
-                          title="Ish haqi kartasi"
+                          title="Guruhlari"
                         >
                           {t.full_name}
                         </button>
-                      ) : (
-                        t.full_name
+                      )}
+                      {canSeeSalary &&
+                        user?.role !== FOUNDER &&
+                        user?.role !== ACADEMIC_HEAD && (
+                        <button
+                          onClick={() => setSalary(t.id)}
+                          className="ml-1.5 text-[11px] text-emerald-600 hover:text-emerald-800"
+                          title="Ish haqi kartasi"
+                        >
+                          so'm
+                        </button>
                       )}
                       {left && (
                         <span className="ml-2 text-[10px] uppercase tracking-wide bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded">
@@ -830,6 +841,12 @@ export default function Teachers() {
           teacherId={supportFor.id}
           name={supportFor.full_name}
           onClose={() => setSupportFor(null)}
+        />
+      )}
+      {groupsFor && (
+        <TeacherGroupsModal
+          teacherId={groupsFor.id}
+          onClose={() => setGroupsFor(null)}
         />
       )}
       {overviewFor && (

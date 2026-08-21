@@ -331,6 +331,62 @@ def set_coin_balance(
     return {"ok": True, "balance": want, "changed": diff}
 
 
+def sweep_left_to_archive(db: Session, branch_id: int | None = None) -> int:
+    """GURUHSIZ VA QARZSIZ "Chiqib ketgan"larni AVTOMAT arxivga o'tkazish.
+
+    2026-08-22, Jahongir: "guruhi yoq, qarzi yoq bo'lsa arxivga tushsin,
+    chiqib ketgan joyi kerak emasda bizga".
+
+    Ilgari arxivga o'tish faqat IKKI holatda ishlardi: guruhdan
+    chiqarilayotgan payt (qarzi bo'lmasa) va qarzdor keyin to'lov
+    qilganda. Ya'ni balans BOSHQA yo'l bilan nolga chiqsa (chegirma,
+    to'lov tuzatish, avgust dubl yechimini tozalash kabi) — odam
+    "Chiqib ketgan" bo'lib ro'yxatda osilib qolardi.
+
+    Endi ro'yxat har ochilganda shu holat tekshiriladi. Shart qat'iy:
+    holati "Chiqib ketgan" + biror faol guruhi yo'q + qarzi yo'q.
+    Faol o'quvchi yoki qarzdor hech qachon tegilmaydi.
+    """
+    q = db.query(models.Student).filter(
+        models.Student.status == roles.STUDENT_LEFT,
+        models.Student.group_id.is_(None))
+    if branch_id:
+        q = q.filter(models.Student.branch_id == branch_id)
+    cands = q.all()
+    if not cands:
+        return 0
+    ids = [s.id for s in cands]
+
+    # Ko'p guruhli bog'lanish ochiq bo'lsa — hali chiqmagan hisoblanadi
+    linked = {r[0] for r in db.query(models.StudentGroupLink.student_id)
+              .filter(models.StudentGroupLink.student_id.in_(ids),
+                      models.StudentGroupLink.active == 1).all()}
+    # Balanslar — bitta so'rovda (har biriga alohida so'rov yubormaymiz)
+    sums = dict(db.query(models.Payment.student_id,
+                         func.coalesce(func.sum(models.Payment.amount), 0))
+                .filter(models.Payment.student_id.in_(ids))
+                .group_by(models.Payment.student_id).all())
+
+    moved = 0
+    for st in cands:
+        if st.id in linked:
+            continue
+        if (sums.get(st.id) or 0) < -0.01:
+            continue                      # qarzi bor — Qarzdorlarda qoladi
+        st.status = "archived"
+        st.archive_when_paid = 0
+        _sync_student_left_date(st)
+        audit.log(db, None, entity="student", action="auto_archive",
+                  entity_id=st.id, entity_label=st.full_name, field="status",
+                  old_value=roles.STUDENT_LEFT, new_value="archived",
+                  note="Guruhsiz va qarzsiz — avtomat arxivga o'tdi",
+                  branch_id=st.branch_id)
+        moved += 1
+    if moved:
+        db.commit()
+    return moved
+
+
 @router.get("/api/students", response_model=List[schemas.StudentOut])
 def list_students(
     q: Optional[str] = None,
@@ -342,6 +398,11 @@ def list_students(
     user=Depends(get_current_user),
 ):
     backfill_missing_ids(db, "student", models.Student)
+    # Guruhsiz + qarzsiz "Chiqib ketgan"lar ro'yxatda osilib qolmasin
+    try:
+        sweep_left_to_archive(db)
+    except Exception:
+        db.rollback()
     query = scope_to_branch(db.query(models.Student), models.Student, user,
                             branch_id)
     if q:

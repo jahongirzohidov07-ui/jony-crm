@@ -413,6 +413,12 @@ def list_students(
         sweep_left_to_archive(db)
     except Exception:
         db.rollback()
+    # Faol bo'lmagan o'quvchi va ishdan ketgan xodim chegirmalari
+    # o'z-o'zidan to'xtasin (2026-08-22)
+    try:
+        _expire_discounts(db)
+    except Exception:
+        db.rollback()
     query = scope_to_branch(db.query(models.Student), models.Student, user,
                             branch_id)
     if q:

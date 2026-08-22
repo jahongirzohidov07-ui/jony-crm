@@ -1214,6 +1214,10 @@ DISCOUNT_STATUSES = [
     ("pending", "Tasdiq kutilmoqda"),
     ("active", "Amalda"),
     ("expired", "Muddati tugagan"),
+    # 2026-08-22, Jahongir: o'quvchi muzlatilsa chegirma ishlamasin,
+    # lekin qaytib kelsa o'zi tiklansin — shuning uchun "bekor" emas,
+    # VAQTINCHA to'xtatilgan holat.
+    ("paused", "Vaqtincha to'xtatilgan"),
     ("cancelled", "Bekor qilingan"),
     ("rejected", "Rad etilgan"),
 ]

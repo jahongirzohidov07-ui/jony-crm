@@ -119,15 +119,33 @@ ck("kelgusi chegirma 10% deb ko'rsatiladi", d5["upcoming_percent"], 10.0)
 ck("boshlanish sanasi ham qaytadi", d5["upcoming_from"], soon)
 
 print("\n=== 7. BUGUNDAN boshlangan chegirma darrov hisobga olinadi ===")
+# 2026-08-22: BEGONA yuqorida "chiqib ketgan" qilingan edi — yangi
+# qoida bo'yicha faol bo'lmagan o'quvchining chegirmasi avtomat bekor
+# bo'ladi. Shuning uchun bu bosqichda YANGI FAOL o'quvchi olinadi
+# (bosqichning maqsadi: bugun boshlangan chegirma darrov ishlashi).
+db = SessionLocal()
+yangi = models.Student(full_name="Olimov Bekzod", branch_id=BID,
+                       group_id=GID, status="active")
+db.add(yangi); db.commit()
+FAOL = yangi.id
+db.close()
 r6 = client.post("/api/discounts", headers=F, json={
-    "student_id": BEGONA, "kind": "grant", "percent": 20,
+    "student_id": FAOL, "kind": "grant", "percent": 20,
     "reason": "olimpiada"})
 ck("yaratildi", r6.status_code, 200)
-d6 = client.get(f"/api/students/{BEGONA}/discounts", headers=F).json()
+d6 = client.get(f"/api/students/{FAOL}/discounts", headers=F).json()
 ck("jami chegirma 20%", d6["total_percent"], 20.0)
-p6 = client.get(f"/api/students/{BEGONA}/pricing", headers=F).json()
+p6 = client.get(f"/api/students/{FAOL}/pricing", headers=F).json()
 ck("Narx blokida ham 20% ko'rinadi", p6["granted_discount"], 20.0)
 ck("to'lanadigan 400 000", p6["final_fee"], 400000.0)
+
+print("\n=== 7b. Ketgan o'quvchining chegirmasi avtomat bekor ===")
+r6b = client.post("/api/discounts", headers=F, json={
+    "student_id": BEGONA, "kind": "grant", "percent": 20,
+    "reason": "olimpiada"})
+ck("yaratildi", r6b.status_code, 200)
+d6b = client.get(f"/api/students/{BEGONA}/discounts", headers=F).json()
+ck("ketganda ishlamaydi", d6b["total_percent"], 0)
 
 print("\n=== 8. O'zini o'ziga bog'lab bo'lmaydi ===")
 r7 = client.post(f"/api/students/{AKA}/family-link", headers=F,

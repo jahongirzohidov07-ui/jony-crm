@@ -1931,21 +1931,94 @@ def _discount_alive(d: models.Discount, on: date = None) -> bool:
         return False
     return True
 
+# Chegirma to'xtaydigan holatlar. "trial" bu ro'yxatda YO'Q — sinovdagi
+# o'quvchi ham darsga qatnayapti, chegirmasi ishlashi kerak.
+_DISCOUNT_STOP_STATUSES = ("frozen", "archived", "left")
+
+
 def _expire_discounts(db: Session) -> int:
-    """AVTOMAT: muddati tugagan chegirmalarni yopadi va xodim ishdan
-    ketgan bo'lsa "xodim farzandi" chegirmasini bekor qiladi.
-    Hech kim qo'lda olib tashlashi shart emas."""
+    """AVTOMAT: chegirma o'z-o'zidan to'xtaydigan holatlar.
+
+    2026-08-22, Jahongir: "chegirma qoyilganda, oila qilib boglaganda
+    xodim qilib boglaganda, bu xodim ishda[n] boshasa yoki o'quvchi
+    faol bolmasa muzlatilgan arxivda bolsa chegirma avtomat bekor
+    bolishi kerak".
+
+    Qoidalar:
+      1) muddati o'tgan            -> "Muddati tugagan";
+      2) xodim ishdan ketgan       -> "Bekor qilingan" (xodim farzandi);
+      3) o'quvchi MUZLATILGAN      -> "Vaqtincha to'xtatilgan" — u
+         qaytib faollashsa chegirma O'ZI tiklanadi (muzlatish vaqtinchalik,
+         shuning uchun butunlay bekor qilinmaydi);
+      4) o'quvchi ARXIVDA/KETGAN   -> "Bekor qilingan".
+
+    Oila chegirmasi bunga muhtoj emas: u FAOL farzandlar sonidan
+    jonli hisoblanadi (_family_discount_percent) — biri muzlatilsa
+    foiz o'zi tushadi.
+
+    Hech kim qo'lda olib tashlashi shart emas; hamma o'zgarish
+    cancelled_reason'da yozilib qoladi."""
     today = date.today()
     n = 0
     rows = (db.query(models.Discount)
-            .filter(models.Discount.status == "active").all())
+            .filter(models.Discount.status.in_(("active", "paused"))).all())
+    if not rows:
+        return 0
+
+    sids = {d.student_id for d in rows if d.student_id}
+    smap = {}
+    if sids:
+        smap = {s.id: s for s in db.query(models.Student)
+                .filter(models.Student.id.in_(sids)).all()}
+    # Xodimlar bir so'rovda
+    uids = {d.staff_user_id for d in rows if d.staff_user_id}
+    umap = {}
+    if uids:
+        umap = {u.id: u for u in db.query(models.User)
+                .filter(models.User.id.in_(uids)).all()}
+
     for d in rows:
+        st = smap.get(d.student_id)
+        stat = st.status if st else None
+
+        # 3-4) O'quvchi faol emas — chegirma ishlamasligi kerak.
+        # DIQQAT: "trial" (sinov darsida) ham O'QIYAPTI — unga tegilmaydi,
+        # faqat muzlatilgan / arxiv / chiqib ketgan holatlar hisobga olinadi.
+        if stat in _DISCOUNT_STOP_STATUSES:
+            if stat == "frozen":
+                if d.status != "paused":
+                    d.status = "paused"
+                    d.cancelled_reason = ("O'quvchi muzlatilgan — chegirma "
+                                          "vaqtincha to'xtadi (faollashsa "
+                                          "o'zi tiklanadi)")
+                    n += 1
+            else:                       # archived | left | boshqa
+                d.status = "cancelled"
+                d.cancelled_reason = (
+                    f"O'quvchi {roles.STUDENT_STATUS_LABELS.get(stat, stat)} "
+                    "— chegirma avtomat bekor qilindi")
+                n += 1
+            continue
+
+        # Muzlatilgandan qaytdi — to'xtatilgani o'zi tiklanadi
+        if d.status == "paused":
+            if d.end_date and d.end_date < today:
+                d.status = "expired"
+                n += 1
+                continue
+            d.status = "active"
+            d.cancelled_reason = None
+            n += 1
+            continue
+
         if d.end_date and d.end_date < today:
             d.status = "expired"
             n += 1
             continue
+
+        # 2) Xodim ishdan ketdi
         if d.kind == "staff_child" and d.staff_user_id:
-            emp = db.query(models.User).get(d.staff_user_id)
+            emp = umap.get(d.staff_user_id)
             if not emp or not emp.is_active:
                 d.status = "cancelled"
                 d.cancelled_reason = (

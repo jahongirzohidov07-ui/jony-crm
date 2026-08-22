@@ -8260,3 +8260,469 @@ if _mgx_groups_v1 is not None:
 
 
 # Ikki guruh tuzatishi jonli holatga chiqarildi (2026-08-18).
+
+
+# =====================================================================
+#  SHAXSIY RIVOJLANISH  (_PD_*)
+#
+#  Ustozlar uchun video kutubxonasi. Uch narsa muhim:
+#
+#  1) Ko'rgani rostdan o'lchansin. Ustoz "ko'rdim" deb belgilamaydi —
+#     pleyer har necha soniyada "hozir nechanchi soniyadaman" deb
+#     xabar beradi, server esa videoni 10 soniyalik bo'laklarga bo'lib,
+#     qaysi bo'lak ko'rilganini belgilab boradi. Shuning uchun oxiriga
+#     tashlab yuborish foizni oshirmaydi: oradagi bo'laklar bo'sh qoladi.
+#
+#  2) Statistika faqat asoschi va HR menejerga ko'rinadi. Ustoz o'z
+#     foizini ko'radi, boshqalarnikini ko'rmaydi.
+#
+#  3) Video havolasi ochiq turmaydi: ustozga faqat YouTube ID beriladi
+#     va u JonyOS ichida ochiladi. Ustoz YouTube saytining o'zida
+#     ko'rsa — foiz o'smaydi, ya'ni baribir shu yerda ko'rishga to'g'ri
+#     keladi.
+# =====================================================================
+
+import re as _pd_re  # noqa: E402
+
+_PD_BUCKET = 10                    # bir bo'lak necha soniya
+_PD_MAX_JUMP = 30                  # bitta xabarda ruxsat etilgan siljish
+_PD_DONE = 90                      # necha foizdan keyin "ko'rildi"
+
+# Kim video qo'sha oladi va statistikani ko'radi
+_PD_MANAGE = [roles.FOUNDER, roles.HR_MANAGER]
+
+
+if getattr(models, "PdVideo", None) is None:
+    class PdVideo(_Base):
+        """Shaxsiy rivojlanish videosi (YouTube yashirin havolasi)."""
+
+        __tablename__ = "pd_videos"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        title = Column(String, nullable=False)
+        description = Column(String)
+        topic = Column(String)               # bo'lim: "Dars metodikasi" ...
+        yt_id = Column(String)               # YouTube video ID
+        duration = Column(Integer, default=0)   # soniya
+        target_roles = Column(String)        # bo'sh = hamma xodimga
+        required = Column(Integer, default=1)
+        order_no = Column(Integer, default=0)
+        active = Column(Integer, default=1)
+        created_by = Column(String)
+        created_at = Column(DateTime, default=_dt.utcnow)
+
+    class PdWatch(_Base):
+        """Kim qaysi videoni qancha ko'rgani — bo'laklar xaritasi bilan."""
+
+        __tablename__ = "pd_watch"
+        __table_args__ = {"extend_existing": True}
+
+        id = Column(Integer, primary_key=True, index=True)
+        video_id = Column(Integer, index=True, nullable=False)
+        user_id = Column(Integer, index=True, nullable=False)
+        marks = Column(String)                 # "0101..." har bo'lak uchun
+        percent = Column(Integer, default=0)
+        seconds = Column(Integer, default=0)   # ko'rilgan haqiqiy soniya
+        max_pos = Column(Integer, default=0)   # eng uzoq borgan nuqta
+        last_pos = Column(Integer, default=0)  # oxirgi xabardagi nuqta
+        opens = Column(Integer, default=0)     # necha marta ochgan
+        done = Column(Integer, default=0)
+        done_at = Column(DateTime)
+        first_at = Column(DateTime, default=_dt.utcnow)
+        last_at = Column(DateTime, default=_dt.utcnow, onupdate=_dt.utcnow)
+
+    models.PdVideo = PdVideo
+    models.PdWatch = PdWatch
+    try:
+        _Base.metadata.create_all(
+            bind=_engine, tables=[PdVideo.__table__, PdWatch.__table__])
+    except Exception:
+        pass
+
+_PDV = models.PdVideo
+_PDW = models.PdWatch
+
+
+def _pd_yt(raw: str) -> str:
+    """Havoladan YouTube ID ni ajratib olamiz.
+
+    Direktor havolani qanday nusxalasa ham ishlasin: to'liq havola,
+    youtu.be, embed, shorts yoki ID ning o'zi."""
+    s = (raw or "").strip()
+    if not s:
+        return ""
+    if _pd_re.fullmatch(r"[A-Za-z0-9_-]{11}", s):
+        return s
+    m = _pd_re.search(
+        r"(?:v=|/embed/|/shorts/|youtu\.be/|/live/)([A-Za-z0-9_-]{11})", s)
+    return m.group(1) if m else ""
+
+
+def _pd_buckets(duration: int) -> int:
+    return max(1, -(-int(duration or 0) // _PD_BUCKET))
+
+
+def _pd_marks(w, n: int) -> list:
+    s = (w.marks or "") if w is not None else ""
+    arr = [1 if c == "1" else 0 for c in s]
+    if len(arr) < n:
+        arr += [0] * (n - len(arr))
+    return arr[:n]
+
+
+def _pd_pct(arr: list) -> int:
+    return round(sum(arr) * 100 / len(arr)) if arr else 0
+
+
+def _pd_can_manage(user) -> bool:
+    return user.role in tuple(_PD_MANAGE)
+
+
+def _pd_for_role(v, role: str) -> bool:
+    t = [x.strip() for x in (v.target_roles or "").split(",") if x.strip()]
+    return (not t) or (role in t)
+
+
+def _pd_hhmm(sec: int) -> str:
+    sec = int(sec or 0)
+    h, m = sec // 3600, (sec % 3600) // 60
+    if h:
+        return f"{h} soat {m} daq"
+    if m:
+        return f"{m} daq {sec % 60} son"
+    return f"{sec} soniya"
+
+
+def _pd_video_out(v, w=None) -> dict:
+    return {
+        "id": v.id, "title": v.title, "description": v.description or "",
+        "topic": v.topic or "", "yt_id": v.yt_id or "",
+        "duration": int(v.duration or 0),
+        "minutes": round((v.duration or 0) / 60) or 1,
+        "required": bool(v.required), "active": bool(v.active),
+        "order_no": v.order_no or 0,
+        "target_roles": [x for x in (v.target_roles or "").split(",") if x],
+        "percent": int(getattr(w, "percent", 0) or 0),
+        "done": bool(getattr(w, "done", 0)),
+        "resume": int(getattr(w, "max_pos", 0) or 0),
+    }
+
+
+# --- Ustoz tomoni -----------------------------------------------------
+@app.get("/api/pd/my")
+def pd_my(db: Session = Depends(get_db), user=Depends(M.get_current_user)):
+    """O'z ro'yxatim: qaysi videolar, qanchasini ko'rganman."""
+    vids = [v for v in db.query(_PDV)
+            .order_by(_PDV.order_no, _PDV.id).all()
+            if v.active and _pd_for_role(v, user.role)]
+    mine = {w.video_id: w for w in db.query(_PDW)
+            .filter(_PDW.user_id == user.id).all()}
+    rows = [_pd_video_out(v, mine.get(v.id)) for v in vids]
+
+    req = [r for r in rows if r["required"]]
+    done = [r for r in req if r["done"]]
+    topics = []
+    for r in rows:
+        t = r["topic"] or "Umumiy"
+        if t not in topics:
+            topics.append(t)
+    return {
+        "items": rows, "topics": topics,
+        "total": len(req), "done": len(done),
+        "percent": round(len(done) * 100 / len(req)) if req else 0,
+        # Suv belgisi uchun — ustozning o'zi
+        "me": {"name": user.full_name or user.username,
+               "phone": (getattr(user, "phone", "") or "")[-4:]},
+        "watched_label": _pd_hhmm(
+            sum(int(getattr(w, "seconds", 0) or 0) for w in mine.values())),
+    }
+
+
+@app.post("/api/pd/{video_id}/beat")
+def pd_beat(video_id: int, payload: dict = Body(...),
+            db: Session = Depends(get_db),
+            user=Depends(M.get_current_user)):
+    """Pleyer har necha soniyada shu yerga "qayerdaman" deb yozadi.
+
+    Faqat shu nuqta atrofidagi bo'lak belgilanadi. Oldinga tashlab
+    yuborilsa oradagi bo'laklar bo'sh qoladi — foiz oshmaydi."""
+    v = db.query(_PDV).get(video_id)
+    if not v or not v.active:
+        raise HTTPException(404, "Video topilmadi")
+    if not _pd_for_role(v, user.role) and not _pd_can_manage(user):
+        raise HTTPException(403, "Bu video sizga tegishli emas")
+
+    try:
+        pos = int(float(payload.get("pos") or 0))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Vaqt noto'g'ri")
+    try:
+        dur = int(float(payload.get("duration") or 0))
+    except (TypeError, ValueError):
+        dur = 0
+    # Videoning uzunligini birinchi ko'rgan odam aniqlaydi
+    if dur > 0 and abs((v.duration or 0) - dur) > 2:
+        v.duration = dur
+    dur = int(v.duration or dur or 0)
+    n = _pd_buckets(dur)
+    pos = max(0, min(pos, dur if dur else pos))
+
+    w = (db.query(_PDW)
+         .filter(_PDW.video_id == video_id, _PDW.user_id == user.id).first())
+    if w is None:
+        w = _PDW(video_id=video_id, user_id=user.id, marks="0" * n,
+                 opens=1, last_pos=0, first_at=_dt.utcnow())
+        db.add(w)
+        db.flush()
+
+    arr = _pd_marks(w, n)
+    idx = min(n - 1, pos // _PD_BUCKET)
+    # Qadam OXIRGI xabardagi nuqtadan o'lchanadi. Agar eng uzoq borgan
+    # nuqtadan o'lchansa, videoni orqaga qaytarib qayta ko'rgan odamning
+    # vaqti hisobga o'tmay qolardi.
+    prev = int(getattr(w, "last_pos", 0) or 0)
+    step = pos - prev
+
+    # Tabiiy oqim bo'lsa — oradagi bo'laklarni ham belgilaymiz (xabar
+    # kechikishi mumkin). Sakrash bo'lsa — faqat turgan bo'lagi.
+    if 0 < step <= _PD_MAX_JUMP:
+        for i in range(max(0, prev // _PD_BUCKET), idx + 1):
+            arr[i] = 1
+        w.seconds = int(w.seconds or 0) + step
+    else:
+        arr[idx] = 1
+        w.seconds = int(w.seconds or 0) + min(_PD_BUCKET, max(0, step))
+
+    w.marks = "".join(str(x) for x in arr)
+    w.percent = _pd_pct(arr)
+    w.max_pos = max(int(w.max_pos or 0), pos)
+    w.last_pos = pos
+    if w.percent >= _PD_DONE and not w.done:
+        w.done = 1
+        w.done_at = _dt.utcnow()
+    db.commit()
+    return {"percent": w.percent, "done": bool(w.done),
+            "seconds": int(w.seconds or 0)}
+
+
+@app.post("/api/pd/{video_id}/open")
+def pd_open(video_id: int, db: Session = Depends(get_db),
+            user=Depends(M.get_current_user)):
+    """Videoni ochdi — necha marta ochgani ham foydali ko'rsatkich."""
+    v = db.query(_PDV).get(video_id)
+    if not v or not v.active:
+        raise HTTPException(404, "Video topilmadi")
+    w = (db.query(_PDW)
+         .filter(_PDW.video_id == video_id, _PDW.user_id == user.id).first())
+    if w is None:
+        w = _PDW(video_id=video_id, user_id=user.id, opens=0,
+                 marks="0" * _pd_buckets(v.duration))
+        db.add(w)
+    w.opens = int(w.opens or 0) + 1
+    db.commit()
+    return {"ok": True, "resume": int(w.max_pos or 0),
+            "percent": int(w.percent or 0)}
+
+
+# --- Boshqaruv: video qo'shish ----------------------------------------
+@app.get("/api/pd/videos")
+def pd_videos(db: Session = Depends(get_db),
+              user=Depends(require_role(*_PD_MANAGE))):
+    vids = db.query(_PDV).order_by(_PDV.order_no, _PDV.id).all()
+    out = []
+    for v in vids:
+        ws = db.query(_PDW).filter(_PDW.video_id == v.id).all()
+        row = _pd_video_out(v)
+        row["watchers"] = len(ws)
+        row["done_count"] = len([w for w in ws if w.done])
+        row["avg_percent"] = (round(sum(int(w.percent or 0) for w in ws)
+                                    / len(ws)) if ws else 0)
+        out.append(row)
+    return {"items": out, "can_manage": True,
+            "roles": [{"key": r, "label": roles.UZ_LABELS.get(r, r)}
+                      for r in roles.STAFF_ROLES]}
+
+
+@app.post("/api/pd/videos")
+def pd_video_add(payload: dict = Body(...), db: Session = Depends(get_db),
+                 user=Depends(require_role(*_PD_MANAGE))):
+    title = str(payload.get("title") or "").strip()
+    if not title:
+        raise HTTPException(400, "Video nomini kiriting")
+    yt = _pd_yt(str(payload.get("yt") or payload.get("yt_id") or ""))
+    if not yt:
+        raise HTTPException(
+            400, "YouTube havolasi noto'g'ri — havolani to'liq qo'ying")
+    tr = payload.get("target_roles") or []
+    v = _PDV(
+        title=title,
+        description=str(payload.get("description") or "").strip() or None,
+        topic=str(payload.get("topic") or "").strip() or None,
+        yt_id=yt,
+        duration=int(payload.get("duration") or 0),
+        target_roles=",".join(str(x) for x in tr) if tr else None,
+        required=1 if payload.get("required", True) else 0,
+        order_no=int(payload.get("order_no") or 0),
+        active=1, created_by=user.username, created_at=_dt.utcnow())
+    db.add(v)
+    db.commit()
+    return _pd_video_out(v)
+
+
+@app.put("/api/pd/videos/{video_id}")
+def pd_video_edit(video_id: int, payload: dict = Body(...),
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*_PD_MANAGE))):
+    v = db.query(_PDV).get(video_id)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    if "title" in payload:
+        t = str(payload["title"] or "").strip()
+        if not t:
+            raise HTTPException(400, "Nom bo'sh bo'lmasin")
+        v.title = t
+    if "yt" in payload or "yt_id" in payload:
+        yt = _pd_yt(str(payload.get("yt") or payload.get("yt_id") or ""))
+        if not yt:
+            raise HTTPException(400, "YouTube havolasi noto'g'ri")
+        if yt != v.yt_id:
+            v.yt_id = yt
+            v.duration = 0        # yangi video — uzunligi qaytadan
+    for k in ("description", "topic"):
+        if k in payload:
+            setattr(v, k, str(payload[k] or "").strip() or None)
+    if "target_roles" in payload:
+        tr = payload.get("target_roles") or []
+        v.target_roles = ",".join(str(x) for x in tr) if tr else None
+    if "required" in payload:
+        v.required = 1 if payload["required"] else 0
+    if "active" in payload:
+        v.active = 1 if payload["active"] else 0
+    if "order_no" in payload:
+        v.order_no = int(payload["order_no"] or 0)
+    db.commit()
+    return _pd_video_out(v)
+
+
+@app.delete("/api/pd/videos/{video_id}")
+def pd_video_del(video_id: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*_PD_MANAGE))):
+    v = db.query(_PDV).get(video_id)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    db.query(_PDW).filter(_PDW.video_id == video_id).delete()
+    db.delete(v)
+    db.commit()
+    return {"ok": True}
+
+
+# --- Boshqaruv: statistika --------------------------------------------
+@app.get("/api/pd/videos/{video_id}/people")
+def pd_video_people(video_id: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*_PD_MANAGE))):
+    """Shu videoni kim qancha ko'rgan."""
+    v = db.query(_PDV).get(video_id)
+    if not v:
+        raise HTTPException(404, "Topilmadi")
+    staff = [u for u in db.query(models.User)
+             .filter(models.User.is_active == 1).all()
+             if _pd_for_role(v, u.role)]
+    ws = {w.user_id: w for w in db.query(_PDW)
+          .filter(_PDW.video_id == video_id).all()}
+    rows = []
+    for u in staff:
+        w = ws.get(u.id)
+        rows.append({
+            "user_id": u.id, "name": u.full_name or u.username,
+            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "percent": int(getattr(w, "percent", 0) or 0),
+            "done": bool(getattr(w, "done", 0)),
+            "opens": int(getattr(w, "opens", 0) or 0),
+            "seconds": int(getattr(w, "seconds", 0) or 0),
+            "watched": _pd_hhmm(int(getattr(w, "seconds", 0) or 0)),
+            "last_at": (w.last_at.strftime("%d.%m.%Y %H:%M")
+                        if w is not None and w.last_at else None),
+            "started": w is not None,
+        })
+    rows.sort(key=lambda r: (-r["percent"], r["name"]))
+    return {"video": _pd_video_out(v), "rows": rows,
+            "started": len([r for r in rows if r["started"]]),
+            "done": len([r for r in rows if r["done"]]),
+            "total": len(rows)}
+
+
+@app.get("/api/pd/people")
+def pd_people(db: Session = Depends(get_db),
+              user=Depends(require_role(*_PD_MANAGE))):
+    """Har bir xodim bo'yicha umumiy holat."""
+    vids = [v for v in db.query(_PDV).all() if v.active]
+    ws_all = db.query(_PDW).all()
+    by_user = {}
+    for w in ws_all:
+        by_user.setdefault(w.user_id, []).append(w)
+    vid_by_id = {v.id: v for v in vids}
+
+    rows = []
+    for u in db.query(models.User).filter(models.User.is_active == 1).all():
+        mine = [v for v in vids if _pd_for_role(v, u.role) and v.required]
+        if not mine:
+            continue
+        ws = [w for w in by_user.get(u.id, []) if w.video_id in vid_by_id]
+        done = len([w for w in ws if w.done and w.video_id in
+                    {v.id for v in mine}])
+        sec = sum(int(w.seconds or 0) for w in ws)
+        pcts = {w.video_id: int(w.percent or 0) for w in ws}
+        avg = (round(sum(pcts.get(v.id, 0) for v in mine) / len(mine))
+               if mine else 0)
+        rows.append({
+            "user_id": u.id, "name": u.full_name or u.username,
+            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "total": len(mine), "done": done, "avg_percent": avg,
+            "seconds": sec, "watched": _pd_hhmm(sec),
+            "last_at": max([w.last_at for w in ws if w.last_at],
+                           default=None),
+        })
+    for r in rows:
+        r["last_at"] = (r["last_at"].strftime("%d.%m.%Y %H:%M")
+                        if r["last_at"] else None)
+    rows.sort(key=lambda r: (-r["avg_percent"], r["name"]))
+    return {"rows": rows,
+            "videos": len(vids),
+            "avg_percent": (round(sum(r["avg_percent"] for r in rows)
+                                  / len(rows)) if rows else 0),
+            "watched_total": _pd_hhmm(sum(r["seconds"] for r in rows))}
+
+
+@app.get("/api/pd/person/{user_id}")
+def pd_person(user_id: int, db: Session = Depends(get_db),
+              user=Depends(require_role(*_PD_MANAGE))):
+    """Bitta xodim — qaysi videoni qancha ko'rgan."""
+    u = db.query(models.User).get(user_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    vids = [v for v in db.query(_PDV).order_by(_PDV.order_no, _PDV.id).all()
+            if v.active and _pd_for_role(v, u.role)]
+    ws = {w.video_id: w for w in db.query(_PDW)
+          .filter(_PDW.user_id == user_id).all()}
+    rows = []
+    for v in vids:
+        w = ws.get(v.id)
+        rows.append({
+            "video_id": v.id, "title": v.title, "topic": v.topic or "",
+            "required": bool(v.required),
+            "percent": int(getattr(w, "percent", 0) or 0),
+            "done": bool(getattr(w, "done", 0)),
+            "opens": int(getattr(w, "opens", 0) or 0),
+            "watched": _pd_hhmm(int(getattr(w, "seconds", 0) or 0)),
+            "last_at": (w.last_at.strftime("%d.%m.%Y %H:%M")
+                        if w is not None and w.last_at else None),
+        })
+    req = [r for r in rows if r["required"]]
+    return {"name": u.full_name or u.username,
+            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "rows": rows,
+            "total": len(req),
+            "done": len([r for r in req if r["done"]]),
+            "percent": (round(sum(r["percent"] for r in req) / len(req))
+                        if req else 0)}

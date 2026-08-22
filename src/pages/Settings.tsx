@@ -5,6 +5,7 @@ import Permissions from "./Permissions";
 import BackupCard from "../components/BackupCard";
 import Courses from "./Courses";
 import SelfTestCard from "../components/SelfTestCard";
+import DemoSeedCard from "../components/DemoSeedCard";
 import { HolidaysCard } from "../components/HolidaysCard";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER } from "../lib/roles";
@@ -35,7 +36,7 @@ export default function Settings() {
           { key: "backup" as Tab, label: "Zaxira", icon: Database },
           {
             key: "selftest" as Tab,
-            label: "Tizim tekshiruvi",
+            label: "Tekshiruv va mashq",
             icon: Stethoscope,
           },
         ]
@@ -83,8 +84,11 @@ export default function Settings() {
           </div>
         )}
         {tab === "selftest" && isFounder && (
-          <div className="p-8">
+          <div className="p-8 space-y-5">
             <SelfTestCard />
+            {/* 2026-08-23: mashq filiali — yangi adminlar shu yerda
+                bosib o'rganadi (Jahongir so'ragan) */}
+            <DemoSeedCard />
           </div>
         )}
       </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Building2 } from "lucide-react";
 import { api, type Branch } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { ORG_WIDE_ROLES } from "../lib/roles";
+import { ORG_WIDE_ROLES, ALL_BRANCH_ROLES, can } from "../lib/roles";
 
 /**
  * Filial tanlagich.
@@ -32,7 +32,7 @@ export function BranchPicker({
   const mine = user?.branches ?? [];
   // Filial biriktirilgan xodimga faqat o'z filiallari (Jahongir,
   // 2026-08-11); asoschiga (va biriktirilmagan rahbariyatga) hammasi
-  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const restricted = !can(user?.role, ALL_BRANCH_ROLES) && mine.length >= 1;
   const orgWide =
     !restricted && !!user?.role && ORG_WIDE_ROLES.includes(user.role);
 

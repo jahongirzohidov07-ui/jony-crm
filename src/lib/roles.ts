@@ -91,7 +91,25 @@ export const GROUP_MANAGE = [...FULL_ACCESS, ACADEMIC_HEAD, HR_MANAGER];
 // Tepadagi filial almashtirgich — butun tashkilotni ko'radiganlar
 export const BRANCH_SWITCH = [
   FOUNDER, ACADEMIC_HEAD, SMM_MANAGER, HR_MANAGER, FINANCE_DIRECTOR,
+  // 2026-08-22, Jahongir: "Exam manager boshligi bor bizda Husniddin
+  // qilganmiz u butun filiallarni examlarini korib turishi kerak" —
+  // examinerlar boshlig'i butun tashkilotni nazorat qiladi.
+  HEAD_EXAMINER,
 ];
+
+/**
+ * FILIALI BIRIKTIRILGAN BO'LSA HAM BUTUN TASHKILOTNI KO'RADIGANLAR.
+ *
+ * Odatda xodimga filial biriktirilgan bo'lsa, u faqat o'sha filialni
+ * ko'radi va tanlagich "Barcha filiallar"ni bermaydi (2026-08-11
+ * qoidasi). Lekin ba'zi lavozimlar mohiyatan butun tashkilotniki:
+ * asoschi va examinerlar boshlig'i. Ularga biriktirilgan filial —
+ * shunchaki "qayerda o'tiradi" degani, ish doirasi emas.
+ *
+ * Backend allaqachon shunday ishlaydi (roles.ORG_WIDE_ROLES) — bu
+ * ro'yxat frontenddagi qamalib qolishni ochadi.
+ */
+export const ALL_BRANCH_ROLES = [FOUNDER, HEAD_EXAMINER];
 export const TEACHING_STAFF = [
   ...FULL_ACCESS,
   SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,

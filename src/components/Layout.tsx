@@ -57,6 +57,7 @@ import {
   SUPPORT_TEACHER,
   TEACHER_MENU,
   BRANCH_SWITCH,
+  ALL_BRANCH_ROLES,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
@@ -971,7 +972,7 @@ function MobileBranchPicker({ onDone }: { onDone: () => void }) {
   const mine = user?.branches ?? [];
   // Xodimga biriktirilgan filiallar bo'lsa - faqat o'shalari
   // (Jahongir, 2026-08-11); asoschiga hammasi
-  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const restricted = !can(user?.role, ALL_BRANCH_ROLES) && mine.length >= 1;
   const orgWide = !restricted && can(user?.role, BRANCH_SWITCH);
   const current = getGlobalBranch();
 
@@ -1031,7 +1032,7 @@ function BranchSwitcher() {
   // Faqat asoschi (yoki filial biriktirilmagan rahbariyat) butun
   // ro'yxatni ko'radi.
   const mine = user?.branches ?? [];
-  const restricted = user?.role !== "founder" && mine.length >= 1;
+  const restricted = !can(user?.role, ALL_BRANCH_ROLES) && mine.length >= 1;
   const orgWide = !restricted && can(user?.role, BRANCH_SWITCH);
 
   useEffect(() => {

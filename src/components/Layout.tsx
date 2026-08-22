@@ -32,7 +32,7 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search, Smartphone , Sparkles , BookOpen } from "lucide-react";
+ Search, Smartphone , Sparkles , BookOpen, Clapperboard } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -346,6 +346,13 @@ export default function Layout() {
   }
   // Ustozda menyu ochiq ro'yxat bo'yicha kesiladi: dars berishga
   // aloqasi yo'q bo'lim ko'rinmaydi.
+  // Shaxsiy rivojlanish — har bir xodimning o'z videolari. Ko'rgan
+  // qismi o'zi belgilanadi, statistikani esa faqat asoschi va HR
+  // ko'radi (u alohida sahifada).
+  items = [...items,
+           { to: "/development", label: "Shaxsiy rivojlanish",
+             icon: Clapperboard }];
+
   if (user?.role === TEACHER) {
     // Ustozda "Guruhlar" va "Talabalar" o'rniga o'ziniki: butun
     // markazning ro'yxati ustozning ishiga aloqador emas

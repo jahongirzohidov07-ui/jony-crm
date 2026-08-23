@@ -50,7 +50,7 @@ export function BranchPicker({
   if (branches.length < 2) return null;
 
   return (
-    <div className={`flex items-center gap-1.5 ${className}`}>
+    <div data-guide="topbar-branch" className={`flex items-center gap-1.5 ${className}`}>
       <Building2 size={14} className="text-slate-400" />
       <select
         value={value ?? ""}

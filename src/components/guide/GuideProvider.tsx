@@ -7,6 +7,7 @@ import { GraduationCap, X, ArrowRight, Check, MousePointerClick } from "lucide-r
 import { api, getGlobalBranch, setGlobalBranch } from "../../lib/api";
 import { useAuth } from "../../lib/AuthContext";
 import { lessonById, lessonsForRole, type GuideLesson } from "../../lib/guide/lessons";
+import { FOUNDER } from "../../lib/roles";
 
 /**
  * INTERAKTIV O'RGATUVCHI (2026-08-23).
@@ -36,6 +37,10 @@ interface GuideCtx {
   lessons: GuideLesson[];
   running: string | null;
   refresh: () => void;
+  /** Asoschi boshqa lavozim ko'zi bilan qarayotgan bo'lsa — o'sha rol */
+  asRole: string | null;
+  setAsRole: (r: string | null) => void;
+  canPreviewRoles: boolean;
 }
 
 const Ctx = createContext<GuideCtx>({
@@ -44,6 +49,9 @@ const Ctx = createContext<GuideCtx>({
   lessons: [],
   running: null,
   refresh: () => {},
+  asRole: null,
+  setAsRole: () => {},
+  canPreviewRoles: false,
 });
 
 export const useGuide = () => useContext(Ctx);
@@ -72,6 +80,10 @@ export function GuideProvider({ children }: { children: React.ReactNode }) {
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [lost, setLost] = useState(false);
   const [askIntro, setAskIntro] = useState(false);
+  // ASOSCHI UCHUN (2026-08-23, Jahongir: "6ta funksiya adminlar uchun
+  // edi nega asoschida chiqyabdi"). Endi asoschiga admin darslari
+  // ko'rinmaydi, lekin tekshirmoqchi bo'lsa shu yerdan tanlaydi.
+  const [asRole, setAsRole] = useState<string | null>(null);
   const prevBranch = useRef<string | null>(null);
 
   const lesson = lessonId ? lessonById(lessonId) : undefined;
@@ -182,7 +194,11 @@ export function GuideProvider({ children }: { children: React.ReactNode }) {
     return () => el.removeEventListener("click", onClick);
   }, [step, stepIx, rect, next]);
 
-  const lessons = useMemo(() => lessonsForRole(user?.role), [user?.role]);
+  const canPreviewRoles = user?.role === FOUNDER;
+  const lessons = useMemo(
+    () => lessonsForRole(canPreviewRoles && asRole ? asRole : user?.role),
+    [user?.role, asRole, canPreviewRoles]
+  );
 
   const value: GuideCtx = {
     start,
@@ -190,6 +206,9 @@ export function GuideProvider({ children }: { children: React.ReactNode }) {
     lessons,
     running: lessonId,
     refresh,
+    asRole,
+    setAsRole,
+    canPreviewRoles,
   };
 
   return (
@@ -197,7 +216,7 @@ export function GuideProvider({ children }: { children: React.ReactNode }) {
       {children}
 
       {/* --- Yangi xodimga taklif --- */}
-      {askIntro && !lessonId && lessons.length > 0 && (
+      {askIntro && !lessonId && !canPreviewRoles && lessons.length > 0 && (
         <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
             <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-brand-50 text-brand-600">

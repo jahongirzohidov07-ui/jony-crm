@@ -66,6 +66,7 @@ export function Discounts({ studentId }: { studentId: number }) {
           )}
         </div>
         <button
+          data-guide="discount-add"
           onClick={() => setForm(true)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-brand-300 hover:text-brand-700"
         >

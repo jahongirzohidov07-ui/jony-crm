@@ -314,6 +314,7 @@ export function StudentRowMenu({
         />
       )}
       <button
+        data-guide="student-menu"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -639,6 +640,7 @@ export function StudentRowMenu({
                 Faollashtirish
               </button>
               <button
+                data-guide="student-menu-freeze"
                 onClick={() => { setFreezing(true); setErr(""); }}
                 disabled={busy || student.status === "frozen"}
                 className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 disabled:opacity-40"
@@ -667,6 +669,7 @@ export function StudentRowMenu({
                 </button>
               )}
               <button
+                data-guide="student-menu-move"
                 onClick={() => setMoving(true)}
                 disabled={busy}
                 className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
@@ -696,6 +699,7 @@ export function StudentRowMenu({
                 </button>
               )}
               <button
+                data-guide="student-menu-remove"
                 onClick={removeFromGroup}
                 disabled={busy}
                 className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50"

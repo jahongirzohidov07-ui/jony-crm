@@ -371,7 +371,7 @@ export function AttendanceTab({
       </p>
 
       <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white">
-        <table className="text-sm border-collapse">
+        <table data-guide="attendance-grid" className="text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50">
               <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">

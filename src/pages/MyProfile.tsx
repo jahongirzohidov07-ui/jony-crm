@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  UserCircle, Wallet, Clock, CheckCircle2, Circle, TrendingUp,
+  UserCircle, Wallet, Clock, TrendingUp,
   BookOpen, PlayCircle, ExternalLink,
 } from "lucide-react";
 import {
@@ -233,7 +233,14 @@ export default function MyProfile() {
         <MyFunctions />
       </div>
 
-      {(p.late_count > 0 || p.onboarding_total > 0) && (
+      {/* ONBOARDING RO'YXATI OLIB TASHLANDI (2026-08-23, Jahongir:
+          "manabu 10ta onboarding olib tashla ishlamayabdi bu faqat
+          HR uchun qolsin"). Xodim o'zi belgilay olmasdi — HR
+          qo'yadigan belgilar edi, shuning uchun profilda faqat
+          chalkashtirardi. Endi u faqat HR bo'limida (Hr.tsx va
+          xodim kartasi) turadi. Bu yerda o'rniga "Mening
+          funksiyalarim" — xodim O'ZI ishlata oladigan narsa. */}
+      {p.late_count > 0 && (
         <div className="grid gap-4 md:grid-cols-2">
           {p.late_count > 0 && (
             <div className="bg-white rounded-xl border border-slate-200 p-5">
@@ -249,38 +256,6 @@ export default function MyProfile() {
             </div>
           )}
 
-          {p.onboarding_total > 0 &&
-            p.onboarding_done < p.onboarding_total && (
-              <div className="bg-white rounded-xl border border-slate-200 p-5">
-                <p className="text-sm font-medium text-slate-700 mb-2">
-                  Onboarding — {p.onboarding_done}/{p.onboarding_total}
-                </p>
-                <div className="space-y-1">
-                  {p.onboarding.map((r) => (
-                    <div
-                      key={r.step}
-                      className="flex items-center gap-2 text-sm"
-                    >
-                      {r.done ? (
-                        <CheckCircle2
-                          size={14}
-                          className="text-emerald-500 shrink-0"
-                        />
-                      ) : (
-                        <Circle size={14} className="text-slate-300 shrink-0" />
-                      )}
-                      <span
-                        className={
-                          r.done ? "text-slate-400 line-through" : "text-slate-700"
-                        }
-                      >
-                        {r.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
         </div>
       )}
 

@@ -332,6 +332,7 @@ export default function GroupDetail() {
             {GROUP_TABS.map((tb) => (
               <button
                 key={tb.key}
+                data-guide={"gtab-" + tb.key}
                 onClick={() => setTab(tb.key)}
                 className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
                   tab === tb.key

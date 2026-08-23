@@ -102,6 +102,19 @@ const COMMON: GuideLesson[] = [
   },
 ];
 
+/**
+ * ADMINISTRATOR ROLLARI (2026-08-23, Jahongir: "menda tepada turgan
+ * 6ta funksiya adminlar uchun edi nega asoschida chiqyabdi").
+ *
+ * Asoschi ATAYIN yo'q: bu darslar administratorning kunlik ishi,
+ * asoschining ish stoli boshqa. Asoschi ularni ko'rmoqchi bo'lsa —
+ * profildagi "boshqa lavozim ko'zi bilan" tanlagichidan tanlaydi.
+ *
+ * "sales_manager" ham bor: tizimda u ham "Administrator" deb
+ * ataladi (roles.ts, UZ_LABELS) — eski hisoblar o'shanda qolgan.
+ */
+const ADMIN_ROLES = ["administrator", "sales_manager"];
+
 /** ADMINISTRATOR — kunlik ishning o'zagi */
 const ADMIN: GuideLesson[] = [
   {
@@ -111,7 +124,7 @@ const ADMIN: GuideLesson[] = [
       "Kunlik ishning eng ko'p takrorlanadigan qismi. Noto'g'ri " +
       "kiritilgan to'lov kechqurun kassani to'g'rilashga majbur qiladi.",
     minutes: 3,
-    roles: ["administrator", "accountant", "branch_manager", "founder"],
+    roles: [...ADMIN_ROLES, "accountant", "branch_manager"],
     steps: [
       {
         path: "/",
@@ -168,13 +181,7 @@ const ADMIN: GuideLesson[] = [
       "Yo'qlama — pul. Ustoz oyligi va o'quvchi hisobi aynan yo'qlamadan " +
       "chiqadi. Qo'yilmagan yo'qlama = hisoblanmagan dars.",
     minutes: 3,
-    roles: [
-      "administrator",
-      "teacher",
-      "academic_head",
-      "branch_manager",
-      "founder",
-    ],
+    roles: [...ADMIN_ROLES, "teacher", "academic_head", "branch_manager"],
     steps: [
       {
         path: "/groups",
@@ -187,7 +194,7 @@ const ADMIN: GuideLesson[] = [
       },
       {
         kind: "click",
-        target: "tab-attendance",
+        target: "gtab-attendance",
         title: "Davomat bo'limi",
         text: "Guruh kartasidagi «Davomat» bo'limiga o'ting.",
         optional: true,
@@ -212,21 +219,26 @@ const ADMIN: GuideLesson[] = [
       "vaqtida gaplashmaslik. Bu ro'yxat har kuni ochiladi.",
     minutes: 2,
     roles: [
-      "administrator",
-      "accountant",
-      "branch_manager",
-      "finance_director",
-      "founder",
+      ...ADMIN_ROLES, "accountant", "branch_manager", "finance_director",
     ],
     steps: [
       {
-        path: "/debtors",
+        path: "/finance",
+        kind: "click",
+        target: "ftab-debtors",
+        title: "Moliya → Qarzdorlar",
+        text:
+          "Qarzdorlar Moliya bo'limining ichida. «Qarzdorlar» yorlig'ini " +
+          "bosing.",
+      },
+      {
         kind: "look",
         target: "debtors-table",
-        title: "Qarzdorlar ro'yxati",
+        title: "Ro'yxatni qanday o'qiysiz",
         text:
-          "Kim qancha qarzdor va necha kundan beri — shu yerda. Eng katta " +
-          "va eng eski qarz tepada turadi.",
+          "Kim qancha qarzdor va necha kundan beri — hammasi shu yerda. " +
+          "Eng katta va eng eski qarz tepada turadi: kunni o'shalarga " +
+          "qo'ng'iroq qilishdan boshlaysiz.",
         optional: true,
       },
     ],
@@ -238,7 +250,7 @@ const ADMIN: GuideLesson[] = [
       "Bola kasal bo'lsa yoki ta'tilga chiqsa — muzlatiladi. Muzlatilmasa " +
       "oylik hisoblanaveradi va keraksiz qarz yig'iladi.",
     minutes: 2,
-    roles: ["administrator", "branch_manager", "academic_head", "founder"],
+    roles: [...ADMIN_ROLES, "branch_manager", "academic_head"],
     steps: [
       {
         path: "/students",
@@ -275,7 +287,7 @@ const ADMIN: GuideLesson[] = [
       "Chegirma — bu pul. Shuning uchun xodim o'zi bera olmaydi, faqat " +
       "so'raydi; rahbar tasdiqlaydi.",
     minutes: 2,
-    roles: ["administrator", "branch_manager", "founder"],
+    roles: [...ADMIN_ROLES, "branch_manager"],
     steps: [
       {
         path: "/students",
@@ -288,7 +300,7 @@ const ADMIN: GuideLesson[] = [
       },
       {
         kind: "click",
-        target: "tab-discounts",
+        target: "stab-price",
         title: "Chegirma bo'limi",
         text: "«Narx va chegirma» bo'limiga o'ting.",
         optional: true,
@@ -305,6 +317,146 @@ const ADMIN: GuideLesson[] = [
       },
     ],
   },
+  {
+    id: "admin-group-move",
+    title: "Guruhdan guruhga o'tkazish",
+    why:
+      "Bola darajasi ko'tarilsa yoki vaqti to'g'ri kelmasa — guruhi " +
+      "almashadi. Noto'g'ri o'tkazsangiz eski ustozning oyligi ham, " +
+      "o'quvchining hisobi ham chalkashadi.",
+    minutes: 3,
+    roles: [...ADMIN_ROLES, "branch_manager", "academic_head"],
+    steps: [
+      {
+        path: "/students",
+        kind: "click",
+        target: "student-row-first",
+        title: "O'quvchini toping",
+        text:
+          "Ro'yxatdan o'quvchini bosing. Mashq uchun birinchisini oling — " +
+          "bu test filiali, hech narsa buzilmaydi.",
+      },
+      {
+        kind: "click",
+        target: "student-menu",
+        title: "Uch nuqta menyusi",
+        text:
+          "O'ng tomondagi uch nuqta — o'quvchi ustidagi barcha amallar " +
+          "shu yerda yig'ilgan.",
+        optional: true,
+      },
+      {
+        kind: "click",
+        target: "student-menu-move",
+        title: "«Boshqa guruhga o'tkazish»",
+        text:
+          "Shuni bosing — ochilgan ro'yxatdan yangi guruhni tanlaysiz.",
+        optional: true,
+      },
+      {
+        kind: "look",
+        target: "student-menu-move",
+        title: "Nima o'zgaradi",
+        text:
+          "Tizim o'zi qiladi: eski guruhdan chiqaradi, yangisiga qo'shadi, " +
+          "shu oy uchun to'langan pulni ikki ustoz o'rtasida O'TILGAN " +
+          "darslar bo'yicha bo'ladi va ko'chish tarixiga yozadi. Sig'im " +
+          "yoki daraja mos kelmasa — ogohlantiradi, o'qib chiqing.",
+        optional: true,
+      },
+    ],
+  },
+  {
+    id: "admin-group-remove",
+    title: "Guruhdan chiqarish",
+    why:
+      "O'quvchi tashlab ketsa guruhdan chiqarilishi kerak, aks holda " +
+      "unga oylik yechilaveradi va qarzdorlar ro'yxatini bo'yaydi. " +
+      "Lekin chiqarish — O'CHIRISH emas: tarixi joyida qoladi.",
+    minutes: 3,
+    roles: [...ADMIN_ROLES, "branch_manager", "academic_head"],
+    steps: [
+      {
+        path: "/students",
+        kind: "click",
+        target: "student-row-first",
+        title: "O'quvchini oching",
+        text: "Ro'yxatdan o'quvchini bosing.",
+      },
+      {
+        kind: "click",
+        target: "student-menu",
+        title: "Uch nuqta menyusi",
+        text: "Amallar ro'yxatini oching.",
+        optional: true,
+      },
+      {
+        kind: "look",
+        target: "student-menu-remove",
+        title: "«O'chirish» — bu guruhdan chiqarish",
+        text:
+          "Qizil yozuv qo'rqitmasin: o'quvchi bazadan yo'qolmaydi. " +
+          "Faqat guruhdan chiqadi, to'lov tarixi va davomati saqlanadi.",
+        optional: true,
+      },
+      {
+        kind: "look",
+        target: "student-menu-remove",
+        title: "Sana va sabab — eng muhimi",
+        text:
+          "QAYSI KUNGACHA o'qiganini belgilaysiz. Hisob aynan shu " +
+          "sanagacha o'tilgan darslar bo'yicha qayta hisoblanadi — " +
+          "kechikib kiritsangiz ham ortiqcha pul yechilmaydi. Qarzi " +
+          "bo'lmasa darrov arxivga, qarzi bo'lsa to'langach avtomat.",
+        optional: true,
+      },
+    ],
+  },
+  {
+    id: "admin-pay-fix",
+    title: "To'lovni xato kiritsangiz — tuzatish so'rovi",
+    why:
+      "Eng ko'p uchraydigan xato: summa yoki usul noto'g'ri kiritiladi. " +
+      "To'lovni O'ZINGIZ o'chirmaysiz va tahrirlamaysiz — kassa " +
+      "buziladi. To'g'ri yo'l: rahbarga so'rov yuborish.",
+    minutes: 3,
+    roles: [...ADMIN_ROLES, "accountant", "branch_manager"],
+    steps: [
+      {
+        path: "/students",
+        kind: "click",
+        target: "student-row-first",
+        title: "O'quvchi kartasini oching",
+        text: "Xato to'lov qaysi o'quvchida bo'lsa — o'shani oching.",
+      },
+      {
+        kind: "click",
+        target: "stab-payments",
+        title: "«To'lovlar» bo'limi",
+        text: "Uning barcha to'lovlari va yechimlari shu yerda.",
+        optional: true,
+      },
+      {
+        kind: "look",
+        target: "pay-fix-request",
+        title: "Qatordagi qalamcha",
+        text:
+          "Xato yozuv qatorida qalamcha bor. Bosing — to'g'ri summani " +
+          "va NEGA xato bo'lganini yozasiz.",
+        optional: true,
+      },
+      {
+        kind: "look",
+        target: "pay-fix-request",
+        title: "Keyin nima bo'ladi",
+        text:
+          "So'rov rahbarga vazifa bo'lib tushadi. U bir bosishda " +
+          "tasdiqlaydi — shundagina summa o'zgaradi. Kim so'ragani va " +
+          "kim tasdiqlagani auditda qoladi, ya'ni sizni himoya qiladi.",
+        optional: true,
+      },
+    ],
+  },
 ];
 
 export const LESSONS: GuideLesson[] = [...COMMON, ...ADMIN];
@@ -315,6 +467,21 @@ export function lessonsForRole(role?: string): GuideLesson[] {
   return LESSONS.filter(
     (l) => l.roles.includes("*") || l.roles.includes(role)
   );
+}
+
+/**
+ * Darsi bor lavozimlar ro'yxati (umumiy "*" darslardan tashqari).
+ * Asoschi profilda "boshqa lavozim ko'zi bilan" tanlaganda kerak:
+ * o'zi ko'rmaydigan darslarni ham tekshirib ko'ra oladi.
+ */
+export function rolesWithLessons(): string[] {
+  const out: string[] = [];
+  for (const l of LESSONS) {
+    for (const r of l.roles) {
+      if (r !== "*" && !out.includes(r)) out.push(r);
+    }
+  }
+  return out;
 }
 
 export function lessonById(id: string): GuideLesson | undefined {

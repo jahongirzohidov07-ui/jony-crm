@@ -229,6 +229,7 @@ function PaymentModal({
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 mb-2">
                   <Search size={15} className="text-slate-400" />
                   <input
+                    data-guide="pay-student"
                     ref={searchRef}
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
@@ -314,6 +315,7 @@ function PaymentModal({
                     Summa
                   </label>
                   <input
+                    data-guide="pay-amount"
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
@@ -327,7 +329,7 @@ function PaymentModal({
                   <label className="block text-xs text-slate-500 mb-1">
                     To'lov usuli
                   </label>
-                  <div className="flex gap-1.5">
+                  <div data-guide="pay-method" className="flex gap-1.5">
                     {PAYMENT_METHODS.map((m) => (
                       <button
                         key={m.key}
@@ -380,6 +382,7 @@ function PaymentModal({
                 />
 
                 <button
+                  data-guide="pay-submit"
                   onClick={save}
                   disabled={saving}
                   className="w-full py-2.5 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-50"

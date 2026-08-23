@@ -427,7 +427,7 @@ export default function Layout() {
               key={to}
               to={to}
               end={end}
-              data-guide={"nav-" + to.replace(/^\//, "")}
+              data-guide={"nav-" + (to === "/" ? "dashboard" : to.replace(/^\//, ""))}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                   isActive

@@ -1028,6 +1028,7 @@ function PaymentsTab({
                       )}
                       {canAskFix && (
                         <button
+                          data-guide="pay-fix-request"
                           onClick={() => askFix(p)}
                           className="text-slate-300 hover:text-amber-600"
                           title="Xato kiritilgan bo'lsa — tuzatish so'rovi yuborish"
@@ -1472,6 +1473,7 @@ export default function StudentDetail() {
             {TABS.map((t) => (
               <button
                 key={t.key}
+                data-guide={"stab-" + t.key}
                 onClick={() => setTab(t.key)}
                 className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
                   tab === t.key

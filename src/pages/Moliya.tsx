@@ -1342,6 +1342,7 @@ export default function Moliya() {
         {TABS.map((t) => (
           <button
             key={t.key}
+            data-guide={"ftab-" + t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
               tab === t.key

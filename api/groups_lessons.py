@@ -1334,7 +1334,9 @@ def reschedules_list(status: str | None = None,
     if status:
         q = q.filter(models.LessonReschedule.status == status)
     rows = q.order_by(models.LessonReschedule.id.desc()).limit(200).all()
-    out = [_resch_out(db, r) for r in rows]
+    # Guruh/ustoz/xodim nomlari uchta so'rovda oldindan olinadi (N+1 yo'q)
+    _maps = _resch_maps(db, rows)
+    out = [_resch_out(db, r, _maps) for r in rows]
     if user.role == roles.BRANCH_MANAGER and user.branch_id:
         gids = {g.id for g in db.query(models.Group).filter(
             _branch_in(db, user, models.Group.branch_id)).all()}

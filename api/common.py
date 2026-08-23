@@ -4238,10 +4238,36 @@ def _month_end(d: date) -> date:
         return date(d.year, 12, 31)
     return date(d.year, d.month + 1, 1) - timedelta(days=1)
 
-def _resch_out(db: Session, r: models.LessonReschedule) -> dict:
-    g = db.query(models.Group).get(r.group_id)
-    t = db.query(models.Teacher).get(r.teacher_id) if r.teacher_id else None
-    by = db.query(models.User).get(r.decided_by) if r.decided_by else None
+def _resch_maps(db: Session, rows: list) -> dict:
+    """TEZLIK (2026-08-23): dars ko'chirish ro'yxati uchun guruh, ustoz va
+    qaror qabul qilgan xodim nomlarini UCHTA so'rovda oldindan yig'adi.
+
+    Ilgari har qator uchun alohida uchta so'rov ketardi (200 qator =
+    600 ta so'rov) va ro'yxat 2.5 soniyada ochilardi. Endi qatorlar
+    soni qancha bo'lsa ham uchta so'rov."""
+    gids = {r.group_id for r in rows if r.group_id}
+    tids = {r.teacher_id for r in rows if r.teacher_id}
+    uids = {r.decided_by for r in rows if r.decided_by}
+    return {
+        "g": {x.id: x for x in db.query(models.Group).filter(
+            models.Group.id.in_(gids)).all()} if gids else {},
+        "t": {x.id: x for x in db.query(models.Teacher).filter(
+            models.Teacher.id.in_(tids)).all()} if tids else {},
+        "u": {x.id: x for x in db.query(models.User).filter(
+            models.User.id.in_(uids)).all()} if uids else {},
+    }
+
+
+def _resch_out(db: Session, r: models.LessonReschedule, maps=None) -> dict:
+    # maps berilsa — bazaga qayta murojaat qilinmaydi (N+1 yo'q)
+    if maps is not None:
+        g = maps["g"].get(r.group_id)
+        t = maps["t"].get(r.teacher_id) if r.teacher_id else None
+        by = maps["u"].get(r.decided_by) if r.decided_by else None
+    else:
+        g = db.query(models.Group).get(r.group_id)
+        t = db.query(models.Teacher).get(r.teacher_id) if r.teacher_id else None
+        by = db.query(models.User).get(r.decided_by) if r.decided_by else None
     return {
         "id": r.id,
         "group_id": r.group_id, "group": g.name if g else None,
@@ -5452,6 +5478,7 @@ __all__ = [
     "_problem",
     "_raise_if_blocked",
     "_recalc_gamification",
+    "_resch_maps",
     "_resch_out",
     "_reschedule_usage",
     "_rule_cap_hit",

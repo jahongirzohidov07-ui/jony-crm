@@ -202,7 +202,56 @@ async function request<T>(
   return doRequest<T>(path, options);
 }
 
+/**
+ * BIR VAQTDA NECHTA SO'ROV KETSIN (2026-08-23).
+ *
+ * Jahongir: "Dashboard haliyam judayam tez ishlamayabdi".
+ *
+ * O'lchov ko'rsatdi: Dashboard ochilganda 13 ta so'rov BIR VAQTDA
+ * ketardi. Serverimiz (Vercel Hobby) har bir bir vaqtdagi so'rov
+ * uchun ALOHIDA nusxa ko'taradi va har bir yangi nusxa "sovuq
+ * start" — Python'ni noldan yuklashi kerak, bu ~7 soniya. Ya'ni
+ * 13 ta so'rov = 13 ta sovuq start ehtimoli. Jonli o'lchovda
+ * uchtasi aynan 7,4 soniya ketdi, qolgani 0,4 soniya edi.
+ *
+ * Yechim: navbat. Bir vaqtda ko'pi bilan 4 ta so'rov ketadi,
+ * qolganlari navbatda turadi va ISSIQ nusxaga tushadi. Umumiy
+ * vaqt qisqaradi, chunki 7 soniyalik sovuq startlar yo'qoladi.
+ *
+ * Chegara 4: bittasi juda sekin (ekran qotadi), 13 tasi sovuq
+ * start yog'diradi — o'rtasi shu.
+ */
+const MAX_PARALLEL = 4;
+let running = 0;
+const queue: (() => void)[] = [];
+
+function acquire(): Promise<void> {
+  if (running < MAX_PARALLEL) {
+    running++;
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => queue.push(resolve));
+}
+
+function release() {
+  const next = queue.shift();
+  if (next) next();
+  else running--;
+}
+
 async function doRequest<T>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
+  await acquire();
+  try {
+    return await doRequestInner<T>(path, options);
+  } finally {
+    release();
+  }
+}
+
+async function doRequestInner<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {

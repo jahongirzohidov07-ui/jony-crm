@@ -112,5 +112,21 @@ r = c.get("/api/guide/state", headers=A2)
 ck("status 200", r.status_code, 200)
 ck("mashq filiali yo'q deb qaytadi", r.json()["test_branch_id"], None)
 
+print("\n=== 8. JADVAL YO'Q BO'LSA — O'ZI TIKLAYDI ===")
+# Jonli bazada aynan shu bo'ldi: yangi jadval yaratilmagan edi va
+# so'rov 500 qaytardi, ustiga tranzaksiyani buzib boshqa
+# bo'limlarni ham yiqitdi. Endi o'zi yaratib davom etishi kerak.
+from sqlalchemy import text as _sql_text
+import guide as _guide
+db.execute(_sql_text("DROP TABLE guide_progress"))
+db.commit()
+r = c.get("/api/guide/state", headers=A1)
+ck("jadval yo'q bo'lsa ham 200", r.status_code, 200)
+ck("bo'sh ro'yxat qaytdi", r.json()["done"], [])
+r = c.post("/api/guide/done", headers=A1, json={"lesson_id": "admin-payment"})
+ck("jadval tiklangach saqlanadi", r.json().get("ok"), True)
+j = c.get("/api/guide/state", headers=A1).json()
+ck("va o'qiladi", j["done"], ["admin-payment"])
+
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

@@ -502,7 +502,12 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_21"  # level_test jadvallari
+SCHEMA_STAMP = "stamp_2026_08_23"  # guide_progress (o'rgatuvchi)
+# MUHIM: YANGI JADVAL qo'shsangiz shu satrni ALBATTA yangilang.
+# Sababi: ensure_tables() sxema "tayyor" deb belgilangan bo'lsa
+# hech nima yaratmaydi (sovuq start tezligi uchun). Stamp
+# o'zgarmasa jonli bazada yangi jadval YARATILMAY qoladi va
+# so'rov "relation ... does not exist" bilan yiqiladi.
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

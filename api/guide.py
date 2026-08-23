@@ -64,6 +64,43 @@ _G = models.GuideProgress
 INTRO_KEY = "__intro__"
 
 
+def _heal(db: Session) -> None:
+    """Jadval yo'q bo'lsa — o'sha zahoti yaratamiz va tranzaksiyani
+    tozalaymiz.
+
+    NEGA KERAK. Sxema "tayyor" deb belgilangan bo'lsa ensure_tables()
+    hech nima yaratmaydi (sovuq start tezligi uchun). Yangi jadval
+    qo'shilganda SCHEMA_STAMP yangilanmasa — jonli bazada jadval
+    paydo bo'lmaydi va so'rov yiqiladi. Bundan ham yomoni: yiqilgan
+    so'rov Postgres tranzaksiyasini "buzuq" holatga o'tkazadi va SHU
+    so'rovdagi keyingi hamma narsa ham yiqiladi. Shuning uchun bu
+    yerda rollback qilamiz va jadvalni yaratib qo'yamiz."""
+    try:
+        db.rollback()
+    except Exception:
+        pass
+    try:
+        Base.metadata.create_all(bind=db.get_bind(),
+                                 tables=[_G.__table__])
+    except Exception:
+        pass
+
+
+def _rows(db: Session, user_id: int):
+    """Xodimning yozuvlari. Jadval yo'q bo'lsa — yaratamiz va bir
+    marta qayta urinamiz; baribir bo'lmasa bo'sh ro'yxat (o'rgatuvchi
+    yo'qligi sababli butun sahifa yiqilib qolmasin)."""
+    try:
+        return db.query(_G).filter(_G.user_id == user_id).all()
+    except Exception:
+        _heal(db)
+        try:
+            return db.query(_G).filter(_G.user_id == user_id).all()
+        except Exception:
+            _heal(db)
+            return []
+
+
 def _test_branch_id(db: Session) -> int | None:
     """Mashq uchun filial — nomida "test" so'zi bor birinchisi.
     Bo'lmasa None (o'rgatuvchi baribir ishlaydi, faqat filial
@@ -77,7 +114,7 @@ def _test_branch_id(db: Session) -> int | None:
 @router.get("/api/guide/state")
 def guide_state(db: Session = Depends(get_db), user=Depends(get_current_user)):
     """O'rgatuvchi holati: nima tugagan, taklif ko'rsatilganmi."""
-    rows = db.query(_G).filter(_G.user_id == user.id).all()
+    rows = _rows(db, user.id)
     done = sorted({r.lesson_id for r in rows
                    if r.state == "done" and r.lesson_id != INTRO_KEY})
     seen_intro = any(r.lesson_id == INTRO_KEY for r in rows)
@@ -99,15 +136,19 @@ def guide_done(payload: dict = Body(default={}),
     if not lid:
         return {"ok": False}
     state = "skipped" if payload.get("skipped") else "done"
-    row = (db.query(_G).filter(_G.user_id == user.id,
-                               _G.lesson_id == lid).first())
+    rows = [r for r in _rows(db, user.id) if r.lesson_id == lid]
+    row = rows[0] if rows else None
     if row:
         # "keyinroq" degan dars keyin tugallansa — holati yangilanadi
         if row.state != "done":
             row.state = state
     else:
         db.add(_G(user_id=user.id, lesson_id=lid, state=state))
-    db.commit()
+    try:
+        db.commit()
+    except Exception:
+        _heal(db)
+        return {"ok": False, "lesson_id": lid, "state": state}
     return {"ok": True, "lesson_id": lid, "state": state}
 
 
@@ -117,9 +158,13 @@ def guide_reset(lesson_id: str | None = None,
                 user=Depends(get_current_user)):
     """Qaytadan o'rganmoqchi — belgini olib tashlaymiz.
     lesson_id berilmasa — hammasi (o'rgatuvchini boshidan)."""
-    q = db.query(_G).filter(_G.user_id == user.id)
-    if lesson_id:
-        q = q.filter(_G.lesson_id == lesson_id)
-    n = q.delete(synchronize_session=False)
-    db.commit()
+    try:
+        q = db.query(_G).filter(_G.user_id == user.id)
+        if lesson_id:
+            q = q.filter(_G.lesson_id == lesson_id)
+        n = q.delete(synchronize_session=False)
+        db.commit()
+    except Exception:
+        _heal(db)
+        return {"ok": False, "removed": 0}
     return {"ok": True, "removed": n}

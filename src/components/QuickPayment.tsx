@@ -32,6 +32,7 @@ export function QuickPayment({
       ) : (
         <button
           onClick={() => setOpen(true)}
+          data-guide="btn-take-payment"
           className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 shadow-sm"
         >
           <Wallet size={16} />

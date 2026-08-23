@@ -81,6 +81,7 @@ import backup as _r_backup
 import courses as _r_courses
 import selftest as _r_selftest
 import demo_seed as _r_demo_seed
+import guide as _r_guide
 import auth_users as _r_auth_users
 import branches_rooms as _r_branches_rooms
 import complaints as _r_complaints
@@ -117,6 +118,7 @@ app.include_router(_r_backup.router)
 app.include_router(_r_courses.router)
 app.include_router(_r_selftest.router)
 app.include_router(_r_demo_seed.router)
+app.include_router(_r_guide.router)
 app.include_router(_r_auth_users.router)
 app.include_router(_r_branches_rooms.router)
 app.include_router(_r_complaints.router)

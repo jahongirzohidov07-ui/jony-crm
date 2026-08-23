@@ -9,6 +9,7 @@ import {
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 import TelegramLink from "../components/TelegramLink";
+import MyFunctions from "../components/guide/MyFunctions";
 
 const PART_TONE: Record<string, string> = {
   fix: "bg-slate-100 text-slate-700",
@@ -226,6 +227,12 @@ export default function MyProfile() {
       )}
 
       {/* --- Intizom --- */}
+      {/* MENING FUNKSIYALARIM (2026-08-23, Jahongir): lavozimga tegishli
+          ishlar ro'yxati — bilmasa bosadi, tizim ko'rsatib boradi */}
+      <div className="mb-6">
+        <MyFunctions />
+      </div>
+
       {(p.late_count > 0 || p.onboarding_total > 0) && (
         <div className="grid gap-4 md:grid-cols-2">
           {p.late_count > 0 && (

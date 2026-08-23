@@ -723,7 +723,7 @@ export default function Groups() {
                 </tr>
               )}
               {filtered.map((g, i) => (
-                <tr key={g.id} className="border-t border-slate-100 hover:bg-slate-50">
+                <tr key={g.id} data-guide={i === 0 ? "group-row-first" : undefined} className="border-t border-slate-100 hover:bg-slate-50">
                   <td className="px-4 py-3 text-slate-400">{i + 1}.</td>
                   <td className="px-4 py-3">
                     <Link

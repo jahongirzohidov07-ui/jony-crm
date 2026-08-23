@@ -420,8 +420,8 @@ export default function Students() {
                 </td>
               </tr>
             )}
-            {filtered.map((s) => (
-              <tr key={s.id} className="border-t border-slate-100 hover:bg-slate-50">
+            {filtered.map((s, si) => (
+              <tr key={s.id} data-guide={si === 0 ? "student-row-first" : undefined} className="border-t border-slate-100 hover:bg-slate-50">
                 <td className="px-4 py-3">
                   <Link
                     to={`/students/${s.id}`}

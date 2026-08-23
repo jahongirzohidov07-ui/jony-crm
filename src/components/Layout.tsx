@@ -427,6 +427,7 @@ export default function Layout() {
               key={to}
               to={to}
               end={end}
+              data-guide={"nav-" + to.replace(/^\//, "")}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                   isActive
@@ -773,6 +774,7 @@ function GlobalSearch() {
           onChange={(e) => setQ(e.target.value)}
           onFocus={() => res && setOpenS(true)}
           placeholder="Ism yoki telefon raqami…"
+          data-guide="topbar-search"
           className="w-full bg-white border border-slate-200 rounded-full pl-8 pr-3 py-2 text-sm shadow-sm focus:border-brand-400 focus:outline-none"
         />
       </div>

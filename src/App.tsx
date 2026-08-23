@@ -111,6 +111,7 @@ const TeacherSession = lazy(() => import("./pages/teacher/TeacherSession"));
 const TeacherVocab = lazy(() => import("./pages/teacher/TeacherVocab"));
 const TeacherMore = lazy(() => import("./pages/teacher/TeacherMore"));
 const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
+import { GuideProvider } from "./components/guide/GuideProvider";
 
 function PageLoader() {
   return (
@@ -225,7 +226,12 @@ function AppRoutes() {
           path="/"
           element={
             <RequireStaff>
-              <Layout />
+              {/* O'RGATUVCHI (2026-08-23): xodimlar panelining ustidan
+                  ishlaydi — strelka, matn va mashq rejimi shu yerdan
+                  boshqariladi. O'quvchi/ustoz ilovasiga tegmaydi. */}
+              <GuideProvider>
+                <Layout />
+              </GuideProvider>
             </RequireStaff>
           }
         >

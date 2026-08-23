@@ -63,11 +63,21 @@ export default function MyFunctions() {
                 className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700"
               >
                 <option value="">O'zim (asoschi)</option>
-                {rolesWithLessons().map((r) => (
-                  <option key={r} value={r}>
-                    {UZ_LABELS[r] ?? r}
-                  </option>
-                ))}
+                {/* Bir xil nomli rollar (administrator va sales_manager
+                    ikkalasi ham "Administrator") ro'yxatda ikki marta
+                    chiqmasin — tanlaganda farqi yo'q. */}
+                {rolesWithLessons()
+                  .filter(
+                    (r, i, all) =>
+                      all.findIndex(
+                        (x) => (UZ_LABELS[x] ?? x) === (UZ_LABELS[r] ?? r)
+                      ) === i
+                  )
+                  .map((r) => (
+                    <option key={r} value={r}>
+                      {UZ_LABELS[r] ?? r}
+                    </option>
+                  ))}
               </select>
             </div>
           )}

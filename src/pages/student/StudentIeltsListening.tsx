@@ -85,18 +85,21 @@ export default function StudentIeltsListening() {
     setPlays(1);
     setSlow(false);
     speak(q.say, q.rate);
+    if (q.options) return;   // tanlovli turda klaviatura kerak emas
     const t = setTimeout(() => inputRef.current?.focus(), 300);
     return () => clearTimeout(t);
   }, [q, result]);
 
-  async function submit() {
-    if (!q || busy || result || !typed.trim()) return;
+  async function submit(picked?: string) {
+    const answer = picked ?? typed;
+    if (!q || busy || result || !answer.trim()) return;
     setBusy(true);
     try {
       const r = await api.post<Any>("/student/ielts/listening/answer", {
         ref: q.ref,
-        answer: typed,
+        answer,
       });
+      if (picked) setTyped(picked);
       setResult(r);
       if (r.correct)
         setScore((s) => ({ ok: s.ok + 1, xp: s.xp + (r.xp || 0) }));
@@ -253,31 +256,64 @@ export default function StudentIeltsListening() {
               </div>
             )}
 
-            <input
-              ref={inputRef}
-              value={typed}
-              disabled={!!result}
-              onChange={(e) => setTyped(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && submit()}
-              placeholder={
-                q.prompt ? "Javobingizni yozing" : "Eshitganingizni yozing"
-              }
-              autoCapitalize={q.prompt ? "off" : "characters"}
-              autoCorrect="off"
-              spellCheck={false}
-              className={`w-full mt-3 px-3 py-3 rounded-lg border border-slate-200 text-base ${
-                q.prompt ? "" : "tracking-widest uppercase"
-              }`}
-            />
+            {/* A/B/C VARIANTLARI (2026-08-24 — exact word trap).
+                Bu turda javob yozilmaydi, tanlanadi. To'g'ri javob
+                serverdan faqat tanlovdan KEYIN keladi. */}
+            {q.options ? (
+              <div className="space-y-1.5 mt-3">
+                {q.options.map((o: string, i: number) => {
+                  const isMine = result && o === typed;
+                  const isAns = result && o === result.expected;
+                  return (
+                    <button
+                      key={o}
+                      disabled={!!result || busy}
+                      onClick={() => submit(o)}
+                      className={`w-full flex items-start gap-2.5 py-2.5 px-3 rounded-lg border text-sm text-left ${
+                        isAns
+                          ? "bg-emerald-600 text-white border-transparent"
+                          : isMine
+                            ? "bg-red-600 text-white border-transparent"
+                            : "bg-white text-slate-700 border-slate-200"
+                      }`}
+                    >
+                      <span className="font-bold shrink-0">
+                        {"ABC"[i]}
+                      </span>
+                      <span className="flex-1">{o}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <input
+                ref={inputRef}
+                value={typed}
+                disabled={!!result}
+                onChange={(e) => setTyped(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && submit()}
+                placeholder={
+                  q.prompt ? "Javobingizni yozing" : "Eshitganingizni yozing"
+                }
+                autoCapitalize={q.prompt ? "off" : "characters"}
+                autoCorrect="off"
+                spellCheck={false}
+                className={`w-full mt-3 px-3 py-3 rounded-lg border border-slate-200 text-base ${
+                  q.prompt ? "" : "tracking-widest uppercase"
+                }`}
+              />
+            )}
 
             {!result ? (
-              <button
-                onClick={submit}
-                disabled={busy || !typed.trim()}
-                className="w-full mt-2 py-3 rounded-lg bg-brand-600 text-white text-sm font-semibold disabled:opacity-40"
-              >
-                Tekshirish
-              </button>
+              !q.options && (
+                <button
+                  onClick={() => submit()}
+                  disabled={busy || !typed.trim()}
+                  className="w-full mt-2 py-3 rounded-lg bg-brand-600 text-white text-sm font-semibold disabled:opacity-40"
+                >
+                  Tekshirish
+                </button>
+              )
             ) : (
               <div
                 className={`mt-3 rounded-lg p-3 ${
@@ -294,7 +330,9 @@ export default function StudentIeltsListening() {
                 {!result.correct && (
                   <p className="text-sm text-slate-700 mt-1">
                     To'g'ri javob:{" "}
-                    <b className="tracking-widest">{result.expected}</b>
+                    <b className={q.options ? "" : "tracking-widest"}>
+                      {result.expected}
+                    </b>
                   </p>
                 )}
                 {result.explain && (

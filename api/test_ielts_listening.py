@@ -54,7 +54,8 @@ ck("status 200", r.status_code, 200)
 parts = {p["kind"]: p for p in r.json()["parts"]}
 # 2026-08-24: 4- va 5-mashq qo'shildi (ma'lumot ilib olish,
 # chalg'ituvchi javoblar) - endi beshta.
-ck("beshta mashq", len(parts), 5)
+# 2026-08-24: 6-mashq — exact word trap (A/B/C)
+ck("oltita mashq", len(parts), 6)
 ck("tartib: spelling birinchi", parts["ielts_spell"]["no"], 1)
 ck("tartib: raqam ikkinchi", parts["ielts_number"]["no"], 2)
 ck("tartib: aralash uchinchi", parts["ielts_mixed"]["no"], 3)
@@ -159,7 +160,7 @@ ck("count cheklangan", len(r.json()["items"]) <= 60, True)
 print("\n=== 9. 4- VA 5-MASHQ (2026-08-24) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("endi 5 ta mashq", len(parts), 5)
+ck("endi 6 ta mashq", len(parts), 6)
 ck("4-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 4)
 ck("5-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 5)
 ck(f"detail 100 ta ({parts['ielts_detail']['total']})",
@@ -223,6 +224,86 @@ if wd:
     r = c.post("/api/student/ielts/listening/answer", headers=H,
                json={"ref": f"pi:{wd.id}", "answer": "Tuesday"})
     ck("boshqa kun rad etiladi", r.json()["correct"], False)
+
+
+print("\n=== 11. EXACT WORD TRAP (A/B/C) ===")
+r = c.get("/api/student/ielts/listening/parts", headers=H)
+parts = {p["kind"]: p for p in r.json()["parts"]}
+ck("6-mashq ro'yxatda", parts["ielts_exact"]["no"], 6)
+ck(f"100 ta ({parts['ielts_exact']['total']})",
+   parts["ielts_exact"]["total"] >= 100, True)
+
+r = c.get("/api/student/ielts/listening/round"
+          "?kind=ielts_exact&count=60", headers=H)
+ex = r.json()["items"]
+ck("variantlar keladi", all(len(x.get("options") or []) == 3
+                            for x in ex), True)
+ck("savol ham keladi", all(x.get("prompt") for x in ex), True)
+ck("to'g'ri javob mijozga KETMAYDI",
+   any("answer" in x or "expected" in x for x in ex), False)
+ck("bosqichlar osib boradi",
+   [x["step"] for x in ex] == sorted(x["step"] for x in ex), True)
+
+print("\n=== 12. TUZOQ HAQIQATAN ISHLAYDIMI ===")
+# Har element uchun: noto'g'ri variantlar so'zlari audioda BOR,
+# to'g'ri javobniki esa YO'Q — Jahongirning talabi shu.
+import re as _re
+
+
+def _in_audio(phrase, audio):
+    return phrase.lower() in audio.lower()
+
+
+bad_correct, bad_wrong = [], []
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_exact").all()):
+    pl = json.loads(it.payload)
+    say = pl["say"]
+    if _in_audio(it.answer, say):
+        bad_correct.append(it.answer)
+    for o in pl["options"]:
+        if o == it.answer:
+            continue
+        if not _in_audio(o, say):
+            bad_wrong.append((o, say[:60]))
+ck("to'g'ri javob so'zlari audioda YO'Q (hammasida)",
+   bad_correct[:3], [])
+ck("noto'g'ri variantlar so'zlari audioda BOR (hammasida)",
+   bad_wrong[:3], [])
+
+print("\n=== 13. TANLOV TEKSHIRUVI ===")
+it = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_exact",
+              models.PracticeItem.answer == "young professional people")
+      .first())
+ck("Jahongir misoli (Sheepmarket) bazada", it is not None, True)
+if it:
+    pl = json.loads(it.payload)
+    ck("uchta variant", len(pl["options"]), 3)
+    # Gap boshida katta harf bilan kelishi mumkin — registrsiz
+    ck("audioda 'students from the university' bor",
+       "students from the university" in pl["say"].lower(), True)
+    ck("audioda 'young professional' YO'Q",
+       "young professional" in pl["say"].lower(), False)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}",
+                     "answer": "young professional people"})
+    ck("to'g'ri variant qabul qilindi", r.json()["correct"], True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}",
+                     "answer": "students from the university"})
+    ck("eshitilgan so'z tuzog'i RAD etiladi", r.json()["correct"], False)
+    ck("izohda tuzoq tushuntiriladi",
+       "TUZOQ" in (r.json().get("explain") or ""), True)
+
+print("\n=== 14. JAVOB A/B/C BO'YLAB TARQALGAN ===")
+pos = {0: 0, 1: 0, 2: 0}
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_exact").all()):
+    pl = json.loads(it.payload)
+    pos[pl["options"].index(it.answer)] += 1
+ck("A da ham, B da ham, C da ham javob bor",
+   all(v >= 20 for v in pos.values()), True)
 
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

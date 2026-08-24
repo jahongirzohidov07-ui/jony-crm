@@ -612,10 +612,19 @@ IELTS_PARTS = [
     {"kind": "ielts_trap", "title": "Chalg'ituvchi javoblar",
      "hint": "Audioda 2-3 ta o'xshash qiymat aytiladi — savol "
              "aynan qaysinisini so'rayotganini topish"},
+    # 2026-08-24, Jahongir: "exact word trap qopqoni... siz notogri
+    # variantdagi bor so'zlarni audioda eshitib qolasiz lekin u
+    # javob savolga togri kelmaydi"
+    {"kind": "ielts_exact", "title": "So'z tuzog'i (A/B/C)",
+     "hint": "Noto'g'ri variantlarning so'zlari audioda aynan "
+             "eshitiladi — to'g'risi esa boshqacha aytiladi"},
 ]
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
-IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap")
+IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap",
+                     "ielts_exact")
+# Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
+IELTS_CHOICE = ("ielts_exact",)
 
 
 def _ielts_norm(t: str) -> str:
@@ -706,6 +715,10 @@ def ielts_listening_round(kind: str, count: int = 10,
             # Savol matni — faqat savolli turlarda (javob EMAS)
             "prompt": (pl.get("prompt")
                        if r.kind in IELTS_WITH_PROMPT else None),
+            # Variantlar mijozga boradi, TO'G'RISI esa yo'q —
+            # tekshiruv faqat serverda
+            "options": (pl.get("options")
+                        if r.kind in IELTS_CHOICE else None),
             "length": len(r.answer.replace(" ", "")),
             "solved": f"pi:{r.id}" in solved,
         })
@@ -728,7 +741,14 @@ def ielts_listening_answer(payload: dict = Body(default={}),
     if not it or not it.is_active or it.skill != IELTS_SKILL:
         raise HTTPException(404, "Mashq topilmadi")
     given = str(payload.get("answer") or "")
-    ok = bool(given.strip()) and _ielts_norm(given) == _ielts_norm(it.answer)
+    if it.kind in IELTS_CHOICE:
+        # A/B/C tanlovi — tanlangan variant matni aynan solishtiriladi
+        # (bu yerda "kechirimli" normalizatsiya kerak emas va zararli:
+        # variantlar ichida "day", "km" kabi so'zlar bo'lishi mumkin)
+        ok = given.strip().lower() == (it.answer or "").strip().lower()
+    else:
+        ok = (bool(given.strip())
+              and _ielts_norm(given) == _ielts_norm(it.answer))
 
     was = (db.query(models.SkillAttempt.id)
            .filter(models.SkillAttempt.student_id == s.id,

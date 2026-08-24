@@ -223,6 +223,15 @@ try:
 except Exception:
     pass
 
+# IELTS listening 3-blok: exact word trap (2026-08-24)
+try:
+    from sqlalchemy.orm import Session as _VS17
+    from ielts_seed3 import seed_ielts3
+    with _VS17(engine) as _db17:
+        seed_ielts3(_db17)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -75,8 +75,10 @@ H = {"Authorization": "Bearer " + c.post(
     .json()["access_token"]}
 
 print("=== 1. Sababsiz chiqarib bo'lmaydi ===")
+# 2026-08-24: endi KATEGORIYA ham majburiy (Jahongir: "ketish
+# sababini majburiy qil") — ikkalasi ham tekshiriladi.
 r = c.post(f"/api/students/{TOLAGAN}/remove-from-group", headers=H,
-           json={"reason": ""})
+           json={"reason": "", "reason_code": "unknown"})
 ck("400", r.status_code, 400)
 
 print("\n=== 2. To'lagan o'quvchi: ortiqcha pul QAYTADI, arxivga ===")
@@ -84,7 +86,8 @@ db = SessionLocal()
 ck("chiqishdan oldin balans 0", student_balance(db, TOLAGAN), 0)
 db.close()
 r = c.post(f"/api/students/{TOLAGAN}/remove-from-group", headers=H,
-           json={"reason": "Boshqa shaharga ko'chib ketdi"})
+           json={"reason": "Boshqa shaharga ko'chib ketdi",
+                 "reason_code": "moved"})
 ck("200", r.status_code, 200)
 d = r.json()
 ck("arxivga tushdi", d["archived"], True)
@@ -105,7 +108,8 @@ db.close()
 
 print("\n=== 3. Qarzdor: arxivga TUSHMAYDI, 'Chiqib ketgan' bo'ladi ===")
 r = c.post(f"/api/students/{QARZDOR}/remove-from-group", headers=H,
-           json={"reason": "To'lamadi, aloqaga chiqmadi"})
+           json={"reason": "To'lamadi, aloqaga chiqmadi",
+                 "reason_code": "price"})
 ck("200", r.status_code, 200)
 d = r.json()
 ck("arxivga tushmadi", d["archived"], False)
@@ -153,7 +157,7 @@ st2 = models.Student(full_name="Yangi Bola", branch_id=BID,
 db.add(st2); db.commit(); NID = st2.id
 db.close()
 r = c.post(f"/api/students/{NID}/remove-from-group", headers=H,
-           json={"reason": "Sinov uchun"})
+           json={"reason": "Sinov uchun", "reason_code": "unknown"})
 ck("200", r.status_code, 200)
 ck("hisob to'g'rilanmadi (yozuv yo'q edi)", r.json()["recalc"], None)
 ck("arxivga tushdi", r.json()["archived"], True)
@@ -200,7 +204,7 @@ ck("erta sana 400", r.status_code, 400)
 
 # Tanlangan sana bilan chiqaramiz
 r = c.post(f"/api/students/{SANA}/remove-from-group", headers=H,
-           json={"reason": "Oyning boshida ketgan edi", "on_date": d2})
+           json={"reason": "Oyning boshida ketgan edi", "reason_code": "unknown", "on_date": d2})
 ck("200", r.status_code, 200)
 d = r.json()
 ck("preview bilan bir xil: 2 dars", d["recalc"]["lessons"], 2)

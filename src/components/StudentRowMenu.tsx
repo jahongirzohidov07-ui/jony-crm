@@ -207,15 +207,22 @@ export function StudentRowMenu({
     );
   };
 
-  // Chiqarish sabablari — ustozlar aniq bilishi uchun ro'yxatdan
-  // tanlanadi; "Boshqa sabab"da qo'lda yoziladi.
-  const REMOVE_REASONS = [
-    "Dars yoqmadi",
-    "Boshqa joyga ko'chib ketdi",
-    "Yo'nalishini o'zgartirdi",
-    "Umuman bog'lanib bo'lmayapti",
-    "Narx to'g'ri kelmadi",
-    "Vaqti to'g'ri kelmadi",
+  // KETISH SABABI — MAJBURIY (2026-08-24, Jahongir: "ketish
+  // sababini majburiy qil"). Ilgari erkin matn edi va analitikada
+  // hammasi "noma'lum" bo'lib qolardi. Endi ro'yxat backend'dagi
+  // roles.LEAVE_REASONS bilan AYNAN bir xil — statistika shundan
+  // yig'iladi. Qo'shimcha izohni pastda yozish mumkin.
+  const REMOVE_REASONS: [string, string][] = [
+    ["price", "Narx qimmat"],
+    ["teacher", "Ustozdan norozi"],
+    ["schedule", "Vaqti to'g'ri kelmadi"],
+    ["distance", "Uzoq"],
+    ["result", "Natija ko'rmadi"],
+    ["moved", "Ko'chib ketdi"],
+    ["finished", "Kursni tugatdi"],
+    ["competitor", "Boshqa markazga ketdi"],
+    ["family", "Oilaviy sabab"],
+    ["unknown", "Sababi noma'lum"],
   ];
   const [removing, setRemoving] = useState(false);
   const [rReason, setRReason] = useState("");
@@ -249,15 +256,22 @@ export function StudentRowMenu({
   };
 
   const confirmRemove = () => {
-    const reason = rReason === "__other__" ? rOther.trim() : rReason;
-    if (!reason) {
-      setErr("Chiqarish sababini tanlang yoki yozing");
+    if (!rReason) {
+      setErr("Ketish sababini ro'yxatdan tanlang — statistika shu "
+        + "asosda yig'iladi");
       return;
     }
+    const label =
+      REMOVE_REASONS.find(([k]) => k === rReason)?.[1] || rReason;
+    const note = rOther.trim();
     run(async () => {
       const r = await api.post<{ archived: boolean; debt: number }>(
         `/students/${student.id}/remove-from-group`,
-        { reason, on_date: rOn || null }
+        {
+          reason: note ? `${label} — ${note}` : label,
+          reason_code: rReason,
+          on_date: rOn || null,
+        }
       );
       setRemoving(false);
       alert(
@@ -372,12 +386,16 @@ export function StudentRowMenu({
                 )}
               </p>
             )}
+            <p className="text-[11px] text-slate-500 mb-2">
+              Sabab MAJBURIY — analitikada shu bo'yicha hisoblanadi
+              (qaysi ustozdan, qaysi sababdan ko'p ketyapti).
+            </p>
             <div className="space-y-1.5 mb-3">
-              {REMOVE_REASONS.map((r) => (
+              {REMOVE_REASONS.map(([k, lbl]) => (
                 <label
-                  key={r}
+                  key={k}
                   className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer ${
-                    rReason === r
+                    rReason === k
                       ? "border-brand-500 bg-brand-50 text-brand-800"
                       : "border-slate-200 text-slate-700 hover:border-slate-300"
                   }`}
@@ -385,33 +403,19 @@ export function StudentRowMenu({
                   <input
                     type="radio"
                     name="rm-reason"
-                    checked={rReason === r}
-                    onChange={() => setRReason(r)}
+                    checked={rReason === k}
+                    onChange={() => setRReason(k)}
                   />
-                  {r}
+                  {lbl}
                 </label>
               ))}
-              <label
-                className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer ${
-                  rReason === "__other__"
-                    ? "border-brand-500 bg-brand-50 text-brand-800"
-                    : "border-slate-200 text-slate-700 hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="rm-reason"
-                  checked={rReason === "__other__"}
-                  onChange={() => setRReason("__other__")}
-                />
-                Boshqa sabab
-              </label>
-              {rReason === "__other__" && (
+              {/* Kategoriya tanlangach — ixtiyoriy izoh. Tanlov
+                  o'rnini bosmaydi, uni to'ldiradi. */}
+              {rReason && (
                 <input
                   value={rOther}
                   onChange={(e) => setROther(e.target.value)}
-                  placeholder="Sababni yozing"
-                  autoFocus
+                  placeholder="Qo'shimcha izoh (ixtiyoriy)"
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                 />
               )}

@@ -1655,6 +1655,14 @@ def remove_student_from_group(
     if len(reason) < 3:
         raise HTTPException(400, "Chiqarish sababi majburiy — "
                                  "kamida bir necha so'z yozing")
+    # KATEGORIYA MAJBURIY (2026-08-24, Jahongir: "ketish sababini
+    # majburiy qil"). Sababsiz ketish — analitikada "noma'lum"
+    # bo'lib qoladi va nima tuzatish kerakligi ko'rinmaydi.
+    code = (payload.reason_code or "").strip()
+    if code not in roles.LEAVE_REASON_LABELS:
+        raise HTTPException(
+            400, "Ketish sababini ro'yxatdan tanlang — statistika "
+                 "shu asosda yig'iladi (narx, ustoz, vaqt, natija...)")
 
     # QAYSI KUNGACHA (2026-08-20, Jahongir: "guruhdan talabani
     # chiqarishda, sana tanlaydigan bo'lsin va masalan tanlangan
@@ -1682,6 +1690,14 @@ def remove_student_from_group(
         recalc = None
 
     bal = student_balance(db, s.id)
+    # Ketish sababi — analitika uchun (bir o'quvchiga bitta yozuv)
+    if not db.query(models.LeaveReason).filter(
+            models.LeaveReason.student_id == s.id).first():
+        db.add(models.LeaveReason(
+            student_id=s.id, reason=code, note=reason,
+            group_id=s.group_id,
+            teacher_id=(group.teacher_id if group else None),
+            left_date=on, created_by=user.full_name))
     s.group_id = None
 
     if bal < 0:

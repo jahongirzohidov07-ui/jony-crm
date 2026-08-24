@@ -2648,6 +2648,350 @@ def analytics_ltv(
                  "xarajat chiqarilgach)."),
     }
 
+# =====================================================================
+#  MANBA VORONKASI VA MARKETING QAYTIMI (2026-08-24)
+#
+#  Jahongir: "lid manbasi qayerdan kelayotganligi... biz togridan
+#  togri keldimi yoki avval telegram instagramdan aloqaga chiqib
+#  kursga yozilib keldimi shuni ham bilishimiz kerak".
+#
+#  UCH GURUH. Manbalar uchga bo'linadi:
+#    to'g'ridan-to'g'ri — o'zi kirib keldi yoki qo'ng'iroq qildi;
+#    onlayn — Instagram, Telegram, sayt, reklama (avval yozishgan);
+#    tavsiya — tanish olib kelgan.
+#  Shu bo'linish "reklama pulimiz ishlayaptimi yoki odamlar o'zi
+#  kelayaptimi" degan savolga javob beradi.
+#
+#  HAR MANBA UCHUN: nechta lid, voronkaning har bosqichi, konversiya,
+#  lid kelgandan yozilgunicha necha kun, hozir nechtasi faol, qancha
+#  pul keltirgan, o'rtacha LTV. Marketing xarajati kanal bo'yicha
+#  yozilgan bo'lsa — CAC va ROI ham chiqadi.
+# =====================================================================
+SOURCE_GROUPS = {
+    "visit": "direct", "phone": "direct",
+    "instagram": "online", "telegram": "online",
+    "website": "online", "ads": "online",
+    "referral": "referral",
+}
+SOURCE_GROUP_LABELS = {
+    "direct": "To'g'ridan-to'g'ri (o'zi keldi / qo'ng'iroq)",
+    "online": "Onlayn (Instagram, Telegram, sayt, reklama)",
+    "referral": "Tavsiya (tanish olib kelgan)",
+    "other": "Boshqa / noma'lum",
+}
+# Voronka bosqichlari — qaysi bosqichgacha yetgani "eng uzoq nuqta"
+# bo'yicha hisoblanadi (lid "converted" bo'lsa, u sinovga ham
+# borgan deb qaraladi).
+STAGE_ORDER = ["new", "contacted", "trial_scheduled", "trial_attended",
+               "converted"]
+LOST_STAGES = {"no_show": "Sinovga kelmadi", "rejected": "Rad etdi"}
+
+
+@router.get("/api/analytics/acquisition")
+def analytics_acquisition(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """Manba bo'yicha voronka, konversiya, pul va marketing qaytimi."""
+    today = roles.local_today()
+    start_d = (today - timedelta(days=months * 31)) if months and months > 0 \
+        else date(2000, 1, 1)
+    start_dt = datetime.combine(start_d, dtime(0, 0))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        branch_id = user.branch_id
+    lbl = roles.LEAD_SOURCE_LABELS
+
+    lq = db.query(models.Lead).filter(models.Lead.created_at >= start_dt)
+    if branch_id:
+        lq = lq.filter(models.Lead.branch_id == branch_id)
+    leads = lq.all()
+
+    # O'quvchilar va ularning to'lovlari (bitta so'rovda)
+    conv_ids = {l.converted_student_id for l in leads
+                if l.converted_student_id}
+    st_map = {}
+    if conv_ids:
+        for st in (db.query(models.Student)
+                   .filter(models.Student.id.in_(conv_ids)).all()):
+            st_map[st.id] = st
+    paid = {}
+    if conv_ids:
+        for sid, amt in (db.query(models.Payment.student_id,
+                                  func.sum(models.Payment.amount))
+                         .filter(models.Payment.student_id.in_(conv_ids),
+                                 models.Payment.kind == "payment")
+                         .group_by(models.Payment.student_id).all()):
+            paid[sid] = float(amt or 0)
+
+    # Marketing xarajati kanal bo'yicha (Expense.channel)
+    eq = (db.query(models.Expense.channel, func.sum(models.Expense.amount))
+          .filter(models.Expense.date >= start_d,
+                  models.Expense.channel.isnot(None)))
+    if branch_id:
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    spend = {(k or "").lower(): float(v or 0)
+             for k, v in eq.group_by(models.Expense.channel).all()}
+
+    rows = {}
+    for l in leads:
+        src = l.source or "other"
+        r = rows.setdefault(src, {
+            "key": src, "label": lbl.get(src, src),
+            "group": SOURCE_GROUPS.get(src, "other"),
+            "leads": 0, "contacted": 0, "trial_scheduled": 0,
+            "trial_attended": 0, "converted": 0,
+            "no_show": 0, "rejected": 0,
+            "active": 0, "left": 0, "revenue": 0.0, "_days": [],
+        })
+        r["leads"] += 1
+        stage = l.stage or "new"
+        if stage in LOST_STAGES:
+            r[stage] += 1
+        idx = STAGE_ORDER.index(stage) if stage in STAGE_ORDER else -1
+        # Bosqichlar KUMULYATIV: converted bo'lsa oldingilari ham
+        for i, name in enumerate(STAGE_ORDER[1:], start=1):
+            if idx >= i:
+                r[name] += 1
+        st = st_map.get(l.converted_student_id) if l.converted_student_id \
+            else None
+        if st:
+            if st.status == "active":
+                r["active"] += 1
+            elif st.status in ("archived", roles.STUDENT_LEFT):
+                r["left"] += 1
+            r["revenue"] += paid.get(st.id, 0.0)
+            if st.enrolled_date and l.created_at:
+                d = (st.enrolled_date - l.created_at.date()).days
+                if 0 <= d <= 365:
+                    r["_days"].append(d)
+
+    out = []
+    for r in rows.values():
+        days = r.pop("_days")
+        sp = spend.get(r["key"], 0.0)
+        conv = r["converted"]
+        out.append({
+            **r,
+            "conversion": round(conv * 100 / r["leads"], 1)
+            if r["leads"] else 0.0,
+            "trial_rate": round(r["trial_attended"] * 100 / r["leads"], 1)
+            if r["leads"] else 0.0,
+            "avg_days": round(sum(days) / len(days), 1) if days else None,
+            "avg_ltv": round(r["revenue"] / conv) if conv else 0,
+            "spend": round(sp),
+            "cac": round(sp / conv) if (sp and conv) else None,
+            "roi": (round((r["revenue"] - sp) * 100 / sp, 1)
+                    if sp else None),
+        })
+    out.sort(key=lambda r: -r["leads"])
+
+    # Guruhlar kesimi — to'g'ridan-to'g'ri / onlayn / tavsiya
+    groups = {}
+    for r in out:
+        g = groups.setdefault(r["group"], {
+            "key": r["group"], "label": SOURCE_GROUP_LABELS[r["group"]],
+            "leads": 0, "converted": 0, "revenue": 0.0, "spend": 0,
+            "sources": [],
+        })
+        g["leads"] += r["leads"]
+        g["converted"] += r["converted"]
+        g["revenue"] += r["revenue"]
+        g["spend"] += r["spend"]
+        g["sources"].append(r["label"])
+    for g in groups.values():
+        g["conversion"] = round(g["converted"] * 100 / g["leads"], 1) \
+            if g["leads"] else 0.0
+        g["revenue"] = round(g["revenue"])
+        g["share"] = 0.0
+    tot_leads = sum(g["leads"] for g in groups.values())
+    for g in groups.values():
+        g["share"] = round(g["leads"] * 100 / tot_leads, 1) \
+            if tot_leads else 0.0
+    group_rows = sorted(groups.values(), key=lambda g: -g["leads"])
+
+    # Umumiy voronka
+    funnel = []
+    prev = None
+    for key, label in (("leads", "Lid keldi"),
+                       ("contacted", "Bog'lanildi"),
+                       ("trial_scheduled", "Sinovga yozildi"),
+                       ("trial_attended", "Sinovga keldi"),
+                       ("converted", "O'quvchi bo'ldi")):
+        n = sum(r[key] for r in out)
+        funnel.append({
+            "key": key, "label": label, "count": n,
+            "percent": round(n * 100 / tot_leads, 1) if tot_leads else 0.0,
+            "drop": (prev - n) if prev is not None else 0,
+            "drop_percent": (round((prev - n) * 100 / prev, 1)
+                             if prev else 0.0),
+        })
+        prev = n
+
+    lost = [{"key": k, "label": v,
+             "count": sum(r.get(k, 0) for r in out)}
+            for k, v in LOST_STAGES.items()]
+
+    total_rev = sum(r["revenue"] for r in out)
+    total_spend = sum(r["spend"] for r in out)
+    return {
+        "months": months,
+        "sources": [{**r, "revenue": round(r["revenue"])} for r in out],
+        "groups": group_rows,
+        "funnel": funnel,
+        "lost": lost,
+        "total_leads": tot_leads,
+        "total_converted": sum(r["converted"] for r in out),
+        "total_revenue": round(total_rev),
+        "total_spend": round(total_spend),
+        "roi": round((total_rev - total_spend) * 100 / total_spend, 1)
+        if total_spend else None,
+        "hint": ("Voronka: lid keldi -> bog'lanildi -> sinovga yozildi "
+                 "-> sinovga keldi -> o'quvchi bo'ldi. Eng katta "
+                 "tushish qayerda bo'lsa, pul o'sha yerda yo'qolyapti. "
+                 "Marketing qaytimi (ROI) faqat xarajat KANAL bilan "
+                 "yozilgan bo'lsa hisoblanadi (Xarajatlar bo'limida "
+                 "kanalni tanlang)."),
+    }
+
+
+@router.get("/api/analytics/lifecycle")
+def analytics_lifecycle(
+    months: int = 24,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.LTV_ACCESS)),
+):
+    """Necha oydan keyin ketishadi + qaytib kelganlar + uyqudagilar.
+
+    2026-08-24, Jahongir tanlagan qo'shimcha statistikalar.
+    """
+    today = roles.local_today()
+    start_d = (today - timedelta(days=months * 31)) if months and months > 0 \
+        else date(2000, 1, 1)
+    students = scope_to_branch(db.query(models.Student), models.Student,
+                               user, branch_id).all()
+    groups = {g.id: g for g in db.query(models.Group).all()}
+    teachers = {t.id: t.full_name for t in db.query(models.Teacher).all()}
+    reasons = {r.student_id: r for r in db.query(models.LeaveReason).all()}
+    src_of = {}
+    for sid, src in (db.query(models.Lead.converted_student_id,
+                              models.Lead.source)
+                     .filter(models.Lead.converted_student_id.isnot(None))
+                     .all()):
+        src_of.setdefault(sid, src)
+
+    BUCKETS = [(0, 1, "1 oygacha"), (1, 3, "1-3 oy"), (3, 6, "3-6 oy"),
+               (6, 12, "6-12 oy"), (12, 999, "1 yildan ko'p")]
+
+    def bucket_of(m):
+        for lo, hi, label in BUCKETS:
+            if lo <= m < hi:
+                return label
+        return BUCKETS[-1][2]
+
+    hist = {b[2]: 0 for b in BUCKETS}
+    by_source = {}
+    by_teacher = {}
+    lived = []
+    left_rows = []
+    for s in students:
+        if not s.left_date or not s.enrolled_date:
+            continue
+        if s.left_date < start_d:
+            continue
+        m = max(0, (s.left_date - s.enrolled_date).days) / 30.0
+        lived.append(m)
+        b = bucket_of(m)
+        hist[b] += 1
+        src = src_of.get(s.id) or "__nolead__"
+        sr = by_source.setdefault(src, {
+            "key": src,
+            "label": ("Lidsiz qo'shilgan" if src == "__nolead__"
+                      else roles.LEAD_SOURCE_LABELS.get(src, src)),
+            "left": 0, "months_sum": 0.0})
+        sr["left"] += 1
+        sr["months_sum"] += m
+        g = groups.get(s.group_id) if s.group_id else None
+        tid = g.teacher_id if g else (
+            reasons[s.id].teacher_id if s.id in reasons else None)
+        if tid:
+            tr = by_teacher.setdefault(tid, {
+                "key": tid, "label": teachers.get(tid, "—"),
+                "left": 0, "months_sum": 0.0, "buckets": {}})
+            tr["left"] += 1
+            tr["months_sum"] += m
+            tr["buckets"][b] = tr["buckets"].get(b, 0) + 1
+        if len(left_rows) < 100:
+            r = reasons.get(s.id)
+            left_rows.append({
+                "student": s.full_name,
+                "months": round(m, 1),
+                "reason": (roles.LEAVE_REASON_LABELS.get(r.reason, r.reason)
+                           if r else "Sababi yozilmagan"),
+            })
+
+    def finish(d):
+        out = []
+        for r in d.values():
+            n = r.pop("months_sum")
+            out.append({**r, "avg_months": round(n / r["left"], 1)
+                        if r["left"] else 0.0})
+        out.sort(key=lambda r: -r["left"])
+        return out
+
+    # --- Qaytib kelganlar: ketgan sanasi bor, lekin hozir faol ---
+    returned = [s for s in students
+                if s.left_date and s.status in ("active", "trial")]
+    # --- Uyqudagilar: 2+ oy muzlatilgan ---
+    dormant = []
+    for s in students:
+        if s.status != "frozen":
+            continue
+        since = s.frozen_until or s.left_date
+        days = None
+        if s.frozen_until:
+            days = (today - s.frozen_until).days
+        if days is None or days >= 60:
+            dormant.append({
+                "student": s.full_name, "id": s.id,
+                "days": days if days is not None else None,
+                "note": s.frozen_note or "",
+            })
+    dormant.sort(key=lambda r: -(r["days"] or 0))
+
+    return {
+        "months": months,
+        "histogram": [{"label": b[2], "count": hist[b[2]],
+                       "percent": (round(hist[b[2]] * 100 / len(lived), 1)
+                                   if lived else 0.0)}
+                      for b in BUCKETS],
+        "avg_months": round(sum(lived) / len(lived), 1) if lived else 0.0,
+        "median_months": (round(sorted(lived)[len(lived) // 2], 1)
+                          if lived else 0.0),
+        "total_left": len(lived),
+        "by_source": finish(by_source),
+        "by_teacher": [{**r, "buckets": [
+            {"label": k, "count": v}
+            for k, v in sorted(r["buckets"].items(),
+                               key=lambda x: -x[1])]}
+            for r in finish(by_teacher)],
+        "examples": left_rows[:20],
+        "returned": {
+            "count": len(returned),
+            "rows": [{"student": s.full_name,
+                      "left_date": s.left_date.isoformat(),
+                      "status": s.status} for s in returned[:30]],
+        },
+        "dormant": {"count": len(dormant), "rows": dormant[:30]},
+        "hint": ("Ko'p o'quvchi 1-3 oyda ketsa — muammo sotuvda emas, "
+                 "birinchi oylardagi tajribada. Uyqudagilar — 2 oydan "
+                 "ortiq muzlatilganlar: ular amalda ketgan, lekin "
+                 "hisobotda faol ko'rinib turadi."),
+    }
+
+
 @router.get("/api/analytics/churn")
 def analytics_churn(
     months: int = 12,
@@ -2725,14 +3069,33 @@ def analytics_churn(
         rows.sort(key=lambda r: (-r["churn"], -r["left"]))
         return [r for r in rows if r["total"] > 0]
 
+    # KETGANDA GURUH ALOQASI UZILADI (2026-08-24). O'quvchi guruhdan
+    # chiqarilganda group_id bo'shatiladi — shu sababli ketganlarning
+    # hammasi "Biriktirilmagan" bo'lib qolardi va ustoz kesimi bo'sh
+    # chiqardi. Endi ketish yozuvidagi (LeaveReason) guruh va ustoz
+    # zaxira sifatida ishlatiladi — kim bilan o'qigani esda qoladi.
+    def _teacher_of(s):
+        if s.group_id in groups:
+            return groups[s.group_id].teacher_id
+        r = reasons.get(s.id)
+        if r:
+            if r.teacher_id:
+                return r.teacher_id
+            if r.group_id in groups:
+                return groups[r.group_id].teacher_id
+        return None
+
+    def _group_of(s):
+        if s.group_id:
+            return s.group_id
+        r = reasons.get(s.id)
+        return r.group_id if r else None
+
     by_teacher = bucket(
-        students,
-        lambda s: (groups[s.group_id].teacher_id
-                   if s.group_id in groups else None),
+        students, _teacher_of,
         lambda k: teachers[k].full_name if k in teachers else "Biriktirilmagan")
     by_group = bucket(
-        students,
-        lambda s: s.group_id,
+        students, _group_of,
         lambda k: groups[k].name if k in groups else "Guruhsiz")
 
     total_base = len(left) + len(active)

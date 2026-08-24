@@ -868,10 +868,12 @@ ck("move-group(null) yopiq 400", client.post(
     f"/api/students/{SA18}/move-group", headers=ASOS2,
     json={"group_id": None}).status_code, 400)
 r = client.post(f"/api/students/{SA18}/remove-from-group", headers=ASOS2,
-                json={"reason": "Ko'chib ketdi"}).json()
+                json={"reason": "Ko'chib ketdi",
+                      "reason_code": "moved"}).json()
 ck("qarzsiz -> darhol arxiv", r.get("archived"), True)
 r = client.post(f"/api/students/{SB18}/remove-from-group", headers=ASOS2,
-                json={"reason": "Qatnamay qo'ydi"}).json()
+                json={"reason": "Qatnamay qo'ydi",
+                      "reason_code": "unknown"}).json()
 ck("qarzdor arxivga tushmadi", r.get("archived"), False)
 st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
 # 2026-08-15: guruhsiz odam FAOL bo'la olmaydi — endi "Chiqib ketgan"

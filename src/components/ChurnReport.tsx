@@ -8,6 +8,10 @@ import { BranchPicker, branchParam } from "../components/BranchPicker";
  * Sababsiz raqam hech narsani o'zgartirmaydi: "10 kishi ketdi" emas,
  * "10 kishi ustozdan norozi bo'lib ketdi" degani qaror keltiradi.
  */
+// Bizga BOG'LIQ sabablar — ularni kamaytirish mumkin
+// (backend: roles.CONTROLLABLE_REASONS bilan bir xil).
+const CONTROLLABLE = ["teacher", "result", "competitor", "schedule"];
+
 export function ChurnReport() {
   const [data, setData] = useState<Data | null>(null);
   const [months, setMonths] = useState(12);
@@ -170,18 +174,34 @@ export function ChurnReport() {
                   >
                     {r.churn}%
                   </td>
+                  {/* SABABLAR TO'LIQ (2026-08-24, Jahongir: "har bir
+                      ustozdan ketish sabablariga keltirib bersang
+                      yaxshi bo'lardi"). Ilgari faqat eng ko'pi
+                      ko'rinib, qolgani "+2 boshqa" bo'lib
+                      yashiringan edi. */}
                   <td className="text-slate-600">
-                    {r.top_reason_label ? (
-                      <span className="flex items-center gap-1.5">
+                    {r.reasons.length ? (
+                      <span className="flex flex-wrap items-center gap-1">
                         {r.churn >= 30 && (
                           <AlertTriangle size={12} className="text-red-500" />
                         )}
-                        {r.top_reason_label}
-                        {r.reasons.length > 1 && (
-                          <span className="text-xs text-slate-400">
-                            +{r.reasons.length - 1} boshqa
+                        {r.reasons.map((x) => (
+                          <span
+                            key={x.key}
+                            title={`${x.label}: ${x.count} ta`}
+                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] ${
+                              CONTROLLABLE.includes(x.key)
+                                ? "bg-red-50 text-red-700 border border-red-200"
+                                : "bg-slate-100 text-slate-600"
+                            }`}
+                          >
+                            {x.label}
+                            <b>{x.count}</b>
+                            <span className="text-[10px] opacity-70">
+                              {Math.round((x.count / Math.max(r.left, 1)) * 100)}%
+                            </span>
                           </span>
-                        )}
+                        ))}
                       </span>
                     ) : (
                       "—"

@@ -2393,8 +2393,14 @@ class SnapshotBulkIn(BaseModel):
 
 
 class RemoveFromGroupIn(BaseModel):
-    """Guruhdan chiqarish — sabab MAJBURIY, ustozlar bilishi uchun."""
+    """Guruhdan chiqarish — sabab MAJBURIY, ustozlar bilishi uchun.
+
+    2026-08-24 (Jahongir: "ketish sababini majburiy qil"): endi
+    KATEGORIYA ham majburiy — roles.LEAVE_REASONS dan biri. Erkin
+    matn ("reason") izoh bo'lib qoladi; statistika kategoriyadan
+    chiqadi, aks holda hamma narsa "noma'lum" bo'lib ketardi."""
     reason: str
+    reason_code: Optional[str] = None
     # QAYSI KUNGACHA (2026-08-20, Jahongir: "guruhdan talabani
     # chiqarishda, sana tanlaydigan bo'lsin va masalan tanlangan
     # sanagacha hisoblanib hisobi o'zgarsin va guruhdan chiqarilsin").

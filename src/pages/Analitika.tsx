@@ -38,7 +38,8 @@ import { FillTab } from "../components/FillReport";
 import ExamReport from "../components/ExamReport";
 
 type Tab = "bi" | "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
-  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba" | "nps";
+  | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba" | "nps"
+  | "hayot";
 
 const TABS: { key: Tab; label: string }[] = [
   // 2026-08-20, Jahongir: "analitik bo'limini eng zor BI
@@ -56,7 +57,9 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "ustoz", label: "Ustozlar" },
   { key: "sigim", label: "Xonalar bandligi" },
   { key: "geo", label: "Manzil va maktab" },
-  { key: "manba", label: "Manbalar" },
+  { key: "manba", label: "Manbalar va voronka" },
+  // 2026-08-24, Jahongir tanlagan qo'shimcha statistika
+  { key: "hayot", label: "Hayot davri" },
   { key: "nps", label: "NPS" },
   { key: "tarix", label: "Tarix (o'quvchilar soni)" },
 ];
@@ -576,6 +579,320 @@ function SourcesTab({ months }: { months: number }) {
                    total={d.total_students} rows={d.students} />
       </div>
       <p className="text-xs text-slate-400 mt-3 max-w-3xl">{d.hint}</p>
+
+      {/* MANBA VORONKASI VA MARKETING QAYTIMI (2026-08-24) */}
+      <AcquisitionBlock months={months} />
+    </div>
+  );
+}
+
+/**
+ * MANBA VORONKASI (2026-08-24).
+ *
+ * Jahongir: "biz togridan togri keldimi yoki avval telegram
+ * instagramdan aloqaga chiqib kursga yozilib keldimi shuni ham
+ * bilishimiz kerak".
+ */
+function AcquisitionBlock({ months }: { months: number }) {
+  const [d, setD] = useState<any>(null);
+  useEffect(() => {
+    api.get<any>(`/analytics/acquisition?months=${months}`)
+      .then(setD).catch(() => setD(null));
+  }, [months]);
+  if (!d) return null;
+
+  const maxF = Math.max(...(d.funnel || []).map((f: any) => f.count), 1);
+  const G_TONE: Record<string, string> = {
+    direct: "bg-emerald-500", online: "bg-sky-500",
+    referral: "bg-violet-500", other: "bg-slate-400",
+  };
+
+  return (
+    <div className="mt-6 space-y-4">
+      {/* --- Uch guruh: to'g'ridan-to'g'ri / onlayn / tavsiya --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <h3 className="text-sm font-semibold text-slate-800 mb-1">
+          Qanday yo'l bilan kelishgan
+        </h3>
+        <p className="text-xs text-slate-400 mb-3">
+          To'g'ridan-to'g'ri kelganmi yoki avval Instagram/Telegramdan
+          yozib, keyin yozilganmi.
+        </p>
+        <div className="space-y-2.5">
+          {(d.groups || []).map((g: any) => (
+            <div key={g.key}>
+              <div className="flex items-baseline justify-between text-sm">
+                <span className="font-medium text-slate-700">{g.label}</span>
+                <span className="text-slate-500">
+                  {g.leads} lid · <b className="text-slate-800">{g.share}%</b>
+                  {" · konversiya "}
+                  <b className={g.conversion >= 30 ? "text-emerald-600"
+                    : g.conversion >= 15 ? "text-amber-600" : "text-red-600"}>
+                    {g.conversion}%
+                  </b>
+                </span>
+              </div>
+              <div className="h-2 rounded-full bg-slate-100 overflow-hidden mt-1">
+                <div className={`h-full rounded-full ${G_TONE[g.key]}`}
+                     style={{ width: `${g.share}%` }} />
+              </div>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                {g.converted} o'quvchi · {formatSom(g.revenue)} so'm
+                {g.spend > 0 && ` · xarajat ${formatSom(g.spend)} so'm`}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* --- Voronka --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <h3 className="text-sm font-semibold text-slate-800 mb-1">
+          Sotuv voronkasi
+        </h3>
+        <p className="text-xs text-slate-400 mb-3">
+          Eng katta tushish qayerda bo'lsa — pul o'sha yerda yo'qolyapti.
+        </p>
+        <div className="space-y-2">
+          {(d.funnel || []).map((f: any, i: number) => (
+            <div key={f.key}>
+              <div className="flex items-baseline justify-between text-sm">
+                <span className="text-slate-700">{f.label}</span>
+                <span className="text-slate-500">
+                  <b className="text-slate-800">{f.count}</b> · {f.percent}%
+                  {i > 0 && f.drop > 0 && (
+                    <span className="text-red-500 ml-2">
+                      −{f.drop} ({f.drop_percent}%)
+                    </span>
+                  )}
+                </span>
+              </div>
+              <div className="h-3 rounded bg-slate-100 overflow-hidden mt-1">
+                <div className="h-full bg-brand-500 rounded"
+                     style={{ width: `${(f.count / maxF) * 100}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-4 mt-3 text-xs text-slate-500">
+          {(d.lost || []).map((l: any) => (
+            <span key={l.key}>{l.label}: <b>{l.count}</b></span>
+          ))}
+        </div>
+      </div>
+
+      {/* --- Manbalar jadvali: konversiya, kun, pul, ROI --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 overflow-x-auto">
+        <h3 className="text-sm font-semibold text-slate-800 mb-3">
+          Har manba bo'yicha
+        </h3>
+        <table className="w-full text-sm min-w-[720px]">
+          <thead className="text-xs text-slate-500">
+            <tr className="border-b border-slate-200">
+              <th className="text-left py-2">Manba</th>
+              <th className="text-right">Lid</th>
+              <th className="text-right">Sinovga keldi</th>
+              <th className="text-right">O'quvchi</th>
+              <th className="text-right">Konversiya</th>
+              <th className="text-right">O'rt. kun</th>
+              <th className="text-right">Hozir faol</th>
+              <th className="text-right">Daromad</th>
+              <th className="text-right">O'rt. LTV</th>
+              <th className="text-right">Xarajat</th>
+              <th className="text-right">CAC</th>
+              <th className="text-right">ROI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(d.sources || []).map((r: any) => (
+              <tr key={r.key} className="border-b border-slate-100">
+                <td className="py-2 font-medium text-slate-800">{r.label}</td>
+                <td className="text-right text-slate-600">{r.leads}</td>
+                <td className="text-right text-slate-600">
+                  {r.trial_attended}
+                </td>
+                <td className="text-right text-slate-600">{r.converted}</td>
+                <td className={`text-right font-medium ${
+                  r.conversion >= 30 ? "text-emerald-600"
+                    : r.conversion >= 15 ? "text-amber-600" : "text-red-600"
+                }`}>{r.conversion}%</td>
+                <td className="text-right text-slate-500">
+                  {r.avg_days ?? "—"}
+                </td>
+                <td className="text-right text-slate-600">{r.active}</td>
+                <td className="text-right text-slate-700">
+                  {formatSom(r.revenue)}
+                </td>
+                <td className="text-right text-slate-600">
+                  {formatSom(r.avg_ltv)}
+                </td>
+                <td className="text-right text-slate-500">
+                  {r.spend ? formatSom(r.spend) : "—"}
+                </td>
+                <td className="text-right text-slate-500">
+                  {r.cac != null ? formatSom(r.cac) : "—"}
+                </td>
+                <td className={`text-right font-medium ${
+                  r.roi == null ? "text-slate-400"
+                    : r.roi > 0 ? "text-emerald-600" : "text-red-600"
+                }`}>{r.roi != null ? `${r.roi}%` : "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="text-xs text-slate-400 mt-3 max-w-3xl">{d.hint}</p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * HAYOT DAVRI (2026-08-24): necha oyda ketishadi, kim qaytdi,
+ * kim "uyquda" yotibdi.
+ */
+function LifecycleTab({ months }: { months: number }) {
+  const [d, setD] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(true);
+    api.get<any>(`/analytics/lifecycle?months=${Math.max(months, 24)}`)
+      .then(setD).finally(() => setLoading(false));
+  }, [months]);
+  if (loading || !d)
+    return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
+
+  const maxH = Math.max(...(d.histogram || []).map((h: any) => h.count), 1);
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Stat label="Ketganlar (jami)" value={String(d.total_left)} />
+        <Stat label="O'rtacha qancha o'qigan"
+              value={`${d.avg_months} oy`} />
+        <Stat label="Mediana" value={`${d.median_months} oy`} />
+        <Stat label="Qaytib kelganlar"
+              value={String(d.returned?.count ?? 0)} tone="green" />
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <h3 className="text-sm font-semibold text-slate-800 mb-1">
+          Necha oydan keyin ketishadi
+        </h3>
+        <p className="text-xs text-slate-400 mb-3">{d.hint}</p>
+        <div className="space-y-2">
+          {(d.histogram || []).map((h: any) => (
+            <div key={h.label}>
+              <div className="flex items-baseline justify-between text-sm">
+                <span className="text-slate-700">{h.label}</span>
+                <span className="text-slate-500">
+                  <b className="text-slate-800">{h.count}</b> · {h.percent}%
+                </span>
+              </div>
+              <div className="h-3 rounded bg-slate-100 overflow-hidden mt-1">
+                <div className="h-full bg-amber-500 rounded"
+                     style={{ width: `${(h.count / maxH) * 100}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <h3 className="text-sm font-semibold text-slate-800 mb-3">
+            Manba bo'yicha: qancha ushlanadi
+          </h3>
+          <table className="w-full text-sm">
+            <thead className="text-xs text-slate-500">
+              <tr className="border-b border-slate-200">
+                <th className="text-left py-1.5">Manba</th>
+                <th className="text-right">Ketgan</th>
+                <th className="text-right">O'rt. oy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(d.by_source || []).map((r: any) => (
+                <tr key={r.key} className="border-b border-slate-100">
+                  <td className="py-1.5 text-slate-700">{r.label}</td>
+                  <td className="text-right text-slate-600">{r.left}</td>
+                  <td className={`text-right font-medium ${
+                    r.avg_months < 3 ? "text-red-600" : "text-slate-700"
+                  }`}>{r.avg_months}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <h3 className="text-sm font-semibold text-slate-800 mb-3">
+            Ustoz bo'yicha: qancha ushlanadi
+          </h3>
+          <table className="w-full text-sm">
+            <thead className="text-xs text-slate-500">
+              <tr className="border-b border-slate-200">
+                <th className="text-left py-1.5">Ustoz</th>
+                <th className="text-right">Ketgan</th>
+                <th className="text-right">O'rt. oy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(d.by_teacher || []).map((r: any) => (
+                <tr key={r.key} className="border-b border-slate-100">
+                  <td className="py-1.5 text-slate-700">{r.label}</td>
+                  <td className="text-right text-slate-600">{r.left}</td>
+                  <td className={`text-right font-medium ${
+                    r.avg_months < 3 ? "text-red-600" : "text-slate-700"
+                  }`}>{r.avg_months}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl border border-amber-200 p-4">
+        <h3 className="text-sm font-semibold text-amber-800 mb-1">
+          Uyqudagilar — {d.dormant?.count ?? 0} ta
+        </h3>
+        <p className="text-xs text-slate-500 mb-3">
+          2 oydan ortiq muzlatilganlar. Ular amalda ketgan, lekin
+          hisobotda faol ko'rinib turibdi.
+        </p>
+        <div className="space-y-1">
+          {(d.dormant?.rows || []).map((r: any) => (
+            <div key={r.id}
+                 className="flex items-baseline justify-between text-sm border-b border-slate-100 py-1">
+              <span className="text-slate-700">{r.student}</span>
+              <span className="text-slate-400 text-xs">
+                {r.days != null ? `${r.days} kun` : "muddatsiz"}
+                {r.note ? ` · ${r.note}` : ""}
+              </span>
+            </div>
+          ))}
+          {(d.dormant?.rows || []).length === 0 && (
+            <p className="text-sm text-slate-400">Yo'q — yaxshi.</p>
+          )}
+        </div>
+      </div>
+
+      {(d.returned?.rows || []).length > 0 && (
+        <div className="bg-white rounded-xl border border-emerald-200 p-4">
+          <h3 className="text-sm font-semibold text-emerald-800 mb-2">
+            Qaytib kelganlar — {d.returned.count} ta
+          </h3>
+          <div className="space-y-1">
+            {d.returned.rows.map((r: any, i: number) => (
+              <div key={i}
+                   className="flex items-baseline justify-between text-sm border-b border-slate-100 py-1">
+                <span className="text-slate-700">{r.student}</span>
+                <span className="text-slate-400 text-xs">
+                  ketgan: {r.left_date}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1337,6 +1654,7 @@ export default function Analitika() {
           {tab === "tarix" && <HistoryTab />}
           {tab === "geo" && <GeoTab months={months} />}
           {tab === "manba" && <SourcesTab months={months} />}
+          {tab === "hayot" && <LifecycleTab months={months} />}
           {tab === "nps" && <NpsTab />}
         </>
       )}

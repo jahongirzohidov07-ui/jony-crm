@@ -219,7 +219,8 @@ export default function StudentIeltsListening() {
             </button>
             <div className="flex items-center justify-between mt-2">
               <p className="text-[11px] text-slate-400">
-                {plays} marta eshitildi · {q.length} belgi
+                {plays} marta eshitildi
+                {!q.prompt && ` · ${q.length} belgi`}
               </p>
               <button
                 onClick={() => {
@@ -237,17 +238,36 @@ export default function StudentIeltsListening() {
               </button>
             </div>
 
+            {/* SAVOL (2026-08-24). Ma'lumot ilib olish va
+                chalg'ituvchi javoblar mashqlarida audio — oddiy
+                dialog, savol esa ALOHIDA. Savolni ko'rsatmasak,
+                bola nimani yozishini bilmaydi. */}
+            {q.prompt && (
+              <div className="mt-3 rounded-lg bg-slate-900/5 border border-slate-200 px-3 py-2.5">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">
+                  Savol
+                </p>
+                <p className="text-sm font-medium text-slate-800 mt-0.5">
+                  {q.prompt}
+                </p>
+              </div>
+            )}
+
             <input
               ref={inputRef}
               value={typed}
               disabled={!!result}
               onChange={(e) => setTyped(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && submit()}
-              placeholder="Eshitganingizni yozing"
-              autoCapitalize="characters"
+              placeholder={
+                q.prompt ? "Javobingizni yozing" : "Eshitganingizni yozing"
+              }
+              autoCapitalize={q.prompt ? "off" : "characters"}
               autoCorrect="off"
               spellCheck={false}
-              className="w-full mt-3 px-3 py-3 rounded-lg border border-slate-200 text-base tracking-widest uppercase"
+              className={`w-full mt-3 px-3 py-3 rounded-lg border border-slate-200 text-base ${
+                q.prompt ? "" : "tracking-widest uppercase"
+              }`}
             />
 
             {!result ? (

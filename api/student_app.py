@@ -602,15 +602,36 @@ IELTS_PARTS = [
      "hint": "Telefon, karta, narx, yil — bittalab aytiladi"},
     {"kind": "ielts_mixed", "title": "Aralash — postcode va kodlar",
      "hint": "Harf va raqam aralash keladi"},
+    # 2026-08-24, Jahongir: "hafta kunlari, soat nechidaligi, qancha
+    # vaqt davom etishi, nechi km yurishi... 100ta bolsa yetadi"
+    {"kind": "ielts_detail", "title": "Ma'lumot ilib olish",
+     "hint": "Hafta kuni, soat, davomiylik, masofa, narx — qisqa "
+             "dialogdan aniq javobni topish"},
+    # "multiple answer trapi uchun alohida qism qilib... bir emas
+    # 2-3ta mos javob aytib chalgitish mashqidan 100ta bolsin"
+    {"kind": "ielts_trap", "title": "Chalg'ituvchi javoblar",
+     "hint": "Audioda 2-3 ta o'xshash qiymat aytiladi — savol "
+             "aynan qaysinisini so'rayotganini topish"},
 ]
+# Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
+# yoziladi, lekin ekranda SAVOL ham turishi shart).
+IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap")
 
 
 def _ielts_norm(t: str) -> str:
     """Tekshiruv uchun: registr, bo'sh joy, defis va apostrof
     e'tiborsiz. 'sw1a2aa' == 'SW1A 2AA' == 'sw1a-2aa'."""
     t = (t or "").upper()
-    for ch in " -/.,'\u2019\u02bb":
+    # 2026-08-24: soat ("9:30" / "9.30" / "930") va katta sonlar
+    # ("2,020" / "2020") bir xil qabul qilinsin.
+    for ch in " -/.,:;'\u2019\u02bb":
         t = t.replace(ch, "")
+    # "£15" / "15 POUNDS" kabi yozuvlar ham to'g'ri sanalsin
+    for w in ("POUNDS", "POUND", "MINUTES", "MINUTE", "HOURS", "HOUR",
+              "WEEKS", "WEEK", "MONTHS", "MONTH", "DAYS", "DAY",
+              "KILOMETRES", "KILOMETERS", "KM", "METRES", "METERS",
+              "AM", "PM", "\u00a3", "$"):
+        t = t.replace(w, "")
     return t
 
 
@@ -682,6 +703,9 @@ def ielts_listening_round(kind: str, count: int = 10,
             "ref": f"pi:{r.id}", "kind": r.kind,
             "say": pl["say"], "rate": pl.get("rate", 0.8),
             "step": pl.get("step", 1), "hint": pl.get("hint"),
+            # Savol matni — faqat savolli turlarda (javob EMAS)
+            "prompt": (pl.get("prompt")
+                       if r.kind in IELTS_WITH_PROMPT else None),
             "length": len(r.answer.replace(" ", "")),
             "solved": f"pi:{r.id}" in solved,
         })

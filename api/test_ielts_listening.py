@@ -52,7 +52,9 @@ print("=== 1. HAR MASHQDA 50 DAN KO'P ELEMENT ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 ck("status 200", r.status_code, 200)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("uchta mashq", len(parts), 3)
+# 2026-08-24: 4- va 5-mashq qo'shildi (ma'lumot ilib olish,
+# chalg'ituvchi javoblar) - endi beshta.
+ck("beshta mashq", len(parts), 5)
 ck("tartib: spelling birinchi", parts["ielts_spell"]["no"], 1)
 ck("tartib: raqam ikkinchi", parts["ielts_number"]["no"], 2)
 ck("tartib: aralash uchinchi", parts["ielts_mixed"]["no"], 3)
@@ -152,6 +154,75 @@ ck("loginsiz yopiq", r.status_code in (401, 403), True)
 r = c.get("/api/student/ielts/listening/round"
           "?kind=ielts_spell&count=999", headers=H)
 ck("count cheklangan", len(r.json()["items"]) <= 60, True)
+
+
+print("\n=== 9. 4- VA 5-MASHQ (2026-08-24) ===")
+r = c.get("/api/student/ielts/listening/parts", headers=H)
+parts = {p["kind"]: p for p in r.json()["parts"]}
+ck("endi 5 ta mashq", len(parts), 5)
+ck("4-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 4)
+ck("5-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 5)
+ck(f"detail 100 ta ({parts['ielts_detail']['total']})",
+   parts["ielts_detail"]["total"] >= 100, True)
+ck(f"trap 100 ta ({parts['ielts_trap']['total']})",
+   parts["ielts_trap"]["total"] >= 100, True)
+
+r = c.get("/api/student/ielts/listening/round"
+          "?kind=ielts_detail&count=60", headers=H)
+di = r.json()["items"]
+ck("savol matni keladi", all(x.get("prompt") for x in di), True)
+ck("bosqichlar osib boradi",
+   [x["step"] for x in di] == sorted(x["step"] for x in di), True)
+ck("javob mijozga ketmaydi",
+   any("answer" in x or "expected" in x for x in di), False)
+
+r = c.get("/api/student/ielts/listening/round"
+          "?kind=ielts_trap&count=60", headers=H)
+tr = r.json()["items"]
+ck("trapda ham savol bor", all(x.get("prompt") for x in tr), True)
+ck("chalg'ituvchilar mijozga OCHIQ ketmaydi",
+   any("others" in x for x in tr), False)
+
+print("\n=== 10. JAVOB SHAKLLARI KECHIRIMLI ===")
+# Jahongirning misoli: jami 2,020 km (chalg'ituvchi 206 va 632)
+it = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_trap",
+              models.PracticeItem.answer == "2020").first())
+ck("Jahongir misoli bazada", it is not None, True)
+if it:
+    pl = json.loads(it.payload)
+    ck("chalg'ituvchilar yozilgan", "206" in pl["others"], True)
+    for variant in ("2020", "2,020", "2 020", "2020 km"):
+        r = c.post("/api/student/ielts/listening/answer", headers=H,
+                   json={"ref": f"pi:{it.id}", "answer": variant})
+        ck(f"'{variant}' qabul qilinadi", r.json()["correct"], True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}", "answer": "206"})
+    ck("chalg'ituvchi javob RAD etiladi", r.json()["correct"], False)
+
+# soat: 9:30 / 9.30 / 930
+tim = (db.query(models.PracticeItem)
+       .filter(models.PracticeItem.kind == "ielts_detail",
+               models.PracticeItem.answer == "9.30").first())
+if tim:
+    for variant in ("9.30", "9:30", "930"):
+        r = c.post("/api/student/ielts/listening/answer", headers=H,
+                   json={"ref": f"pi:{tim.id}", "answer": variant})
+        ck(f"soat '{variant}' qabul qilinadi", r.json()["correct"], True)
+
+# hafta kuni: katta-kichik harf farq qilmasin
+wd = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_detail",
+              models.PracticeItem.answer == "Wednesday").first())
+if wd:
+    for variant in ("Wednesday", "wednesday", " WEDNESDAY "):
+        r = c.post("/api/student/ielts/listening/answer", headers=H,
+                   json={"ref": f"pi:{wd.id}", "answer": variant})
+        ck(f"kun '{variant.strip()}' qabul qilinadi",
+           r.json()["correct"], True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{wd.id}", "answer": "Tuesday"})
+    ck("boshqa kun rad etiladi", r.json()["correct"], False)
 
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

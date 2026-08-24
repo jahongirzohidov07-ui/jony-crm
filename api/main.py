@@ -214,6 +214,15 @@ try:
 except Exception:
     pass
 
+# IELTS listening 2-blok: ma'lumot ilib olish + tuzoqlar (2026-08-24)
+try:
+    from sqlalchemy.orm import Session as _VS16
+    from ielts_seed2 import seed_ielts2
+    with _VS16(engine) as _db16:
+        seed_ielts2(_db16)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

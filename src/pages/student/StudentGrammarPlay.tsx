@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, RotateCcw, Sparkles, X } from "lucide-react";
 import { api } from "../../lib/api";
+import { getLang } from "../../lib/lang";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -42,11 +43,15 @@ export default function StudentGrammarPlay() {
   useEffect(() => {
     // Bu mavzuda qaysi turlar borligini bilib olamiz
     api
-      .get<Any>("/student/grammar/topics")
+      .get<Any>(`/student/grammar/topics?language=${getLang()}`)
       .then((r) => {
         const all = [
           ...(r?.a1?.topics || []),
           ...(r?.a2?.topics || []),
+          ...(r?.b1?.topics || []),
+          ...(r?.b2?.topics || []),
+          ...(r?.c1?.topics || []),
+          ...(r?.c2?.topics || []),
         ];
         const t = all.find((x: Any) => x.topic === topic);
         setKinds(t?.kinds || ["fill", "error", "order"]);
@@ -67,7 +72,7 @@ export default function StudentGrammarPlay() {
       .get<Any>(
         `/student/grammar/round?topic=${encodeURIComponent(topic || "")}${
           kind && kind !== "mix" ? `&kind=${kind}` : ""
-        }&count=${cnt}`,
+        }&count=${cnt}&language=${getLang()}`,
       )
       .then((r) => setItems(r.items || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));

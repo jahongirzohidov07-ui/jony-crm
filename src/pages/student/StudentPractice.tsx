@@ -111,8 +111,10 @@ export default function StudentPractice() {
   // DARAJA BO'LIMLARI (2026-08-24, Jahongir: "reading listening
   // qismini a1 dan boshlab c2 darajagacha... bo'lim chiqib").
   // Boshqa tillar listeningida daraja yo'q — u faqat so'z diktanti.
+  // 2026-08-24 (Jahongir: "Writingni ham darajalanmagan u ham")
   const needLevel =
-    skill === "reading" || (skill === "listening" && lang === "en");
+    skill === "reading" || skill === "writing" ||
+    (skill === "listening" && lang === "en");
   const [level, setLevel] = useState<string | null>(null);
   const [levels, setLevels] = useState<Any[]>([]);
   const [cnt, setCnt] = useState(10);
@@ -199,7 +201,11 @@ export default function StudentPractice() {
       const hasExtra = !!r.explain || !!q.say;
       // Reading — matnli mashq (2026-08-21, Jahongir: "Readingda
       // berilgan vaqt kam kopaytirish kerak"): vaqt 3 barobar.
-      const mult = skill === "reading" ? 3 : 1;
+      // Listening XATO javobda (2026-08-24, Jahongir: "5 sekund
+      // kamlik qilyabdi xatosini tushunish uchun"): vaqt 2.5x —
+      // skript va to'g'ri javobni o'qishga ulguradi.
+      const mult = skill === "reading" ? 3
+        : skill === "listening" && !r.correct ? 2.5 : 1;
       autoNext.schedule(
         mult *
           autoNextDelay({

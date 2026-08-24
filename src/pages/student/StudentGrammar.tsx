@@ -5,6 +5,7 @@ import { api } from "../../lib/api";
 import { CoinIcon } from "../../components/CoinIcon";
 import { XpHex, JSA } from "../../components/Jsa";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
+import { getLang, LANGS } from "../../lib/lang";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -18,11 +19,14 @@ type Any = any;
  * zanjiri, boss mavzular.
  */
 
-const LEVELS = [
+const ALL_LEVELS = [
   { key: "a1", chip: "A1", name: "A1 — Beginner" },
   { key: "a2", chip: "A2", name: "A2 — Elementary" },
   { key: "b1", chip: "B1", name: "B1 — Intermediate" },
   { key: "b2", chip: "B2", name: "B2 — Upper-Intermediate" },
+  // 2026-08-24, Jahongir: "c1 va C2 mavzularni ham qoyish kerak"
+  { key: "c1", chip: "C1", name: "C1 — Advanced" },
+  { key: "c2", chip: "C2", name: "C2 — Native" },
 ] as const;
 
 export default function StudentGrammar() {
@@ -30,10 +34,15 @@ export default function StudentGrammar() {
   const [err, setErr] = useState("");
   const [sel, setSel] = useState<string>("a1");
   const [xp, setXp] = useState<number | null>(null);
+  // O'RGANILAYOTGAN TIL (2026-08-24, Jahongir: "Boshqa tillarni
+  // grammatikasi yoq ekan ularni ham qoshib qoygin") — bayroqdagi
+  // tanlov endi grammatikaga ham ta'sir qiladi.
+  const lang = getLang();
+  const langLabel = LANGS.find((l) => l.code === lang)?.label || "";
 
   useEffect(() => {
     api
-      .get<Any>("/student/grammar/topics")
+      .get<Any>(`/student/grammar/topics?language=${lang}`)
       .then((r) => {
         setD(r);
         // Ochilganda hozir o'qilayotgan daraja tanlangan bo'lsin
@@ -42,7 +51,11 @@ export default function StudentGrammar() {
           : !(r?.a2?.completed) ? "a2"
           : r?.b1_locked ? "a2"
           : !(r?.b1?.completed) ? "b1"
-          : r?.b2_locked ? "b1" : "b2";
+          : r?.b2_locked ? "b1"
+          : !(r?.b2?.completed) ? "b2"
+          : r?.c1_locked ? "b2"
+          : !(r?.c1?.completed) ? "c1"
+          : r?.c2_locked ? "c1" : "c2";
         setSel(cur);
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
@@ -53,16 +66,25 @@ export default function StudentGrammar() {
 
   const info = useMemo(() => {
     if (!d) return null;
-    const lv: Record<string, Any> = { a1: d.a1, a2: d.a2, b1: d.b1, b2: d.b2 };
-    const locked: Record<string, boolean> = {
-      a1: false, a2: !!d.a2_locked, b1: !!d.b1_locked, b2: !!d.b2_locked,
+    const lv: Record<string, Any> = {
+      a1: d.a1, a2: d.a2, b1: d.b1, b2: d.b2, c1: d.c1, c2: d.c2,
     };
+    const locked: Record<string, boolean> = {
+      a1: false, a2: !!d.a2_locked, b1: !!d.b1_locked,
+      b2: !!d.b2_locked, c1: !!d.c1_locked, c2: !!d.c2_locked,
+    };
+    // Shu tilda QAYSI darajalarda kontent bor — faqat o'shalar chiziladi
+    const avail = new Set(
+      ((d.available || ["A1", "A2", "B1", "B2"]) as string[])
+        .map((x: string) => x.toLowerCase()),
+    );
+    const levels = ALL_LEVELS.filter((l) => avail.has(l.key));
     let done = 0, total = 0;
-    for (const k of ["a1", "a2", "b1", "b2"]) {
+    for (const k of Object.keys(lv)) {
       const x = lv[k];
       if (x?.topics) { done += x.done || 0; total += x.total || x.topics.length; }
     }
-    return { lv, locked, done, total,
+    return { lv, locked, levels, done, total,
              pct: total ? Math.round((done / total) * 100) : 0 };
   }, [d]);
 
@@ -74,7 +96,7 @@ export default function StudentGrammar() {
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const cur = info.lv[sel];
   const curLocked = info.locked[sel];
-  const curName = LEVELS.find((l) => l.key === sel)?.name || "";
+  const curName = ALL_LEVELS.find((l) => l.key === sel)?.name || "";
   const topics: Any[] = cur?.topics || [];
   // Birinchi tugallanmagan mavzu - "faol" (oq karta); undan keyingisi
   // "Keyingi" belgisini oladi.
@@ -109,7 +131,7 @@ export default function StudentGrammar() {
             Grammar
           </h1>
           <p className="text-[15px] text-slate-400 mt-2">
-            {info.done}/{info.total} mavzu
+            {langLabel} · {info.done}/{info.total} mavzu
           </p>
         </div>
         <span className="text-[52px] leading-none -mb-1">📖</span>
@@ -117,8 +139,11 @@ export default function StudentGrammar() {
 
       {/* ------------------------------------- umumiy progress */}
       <div className="rounded-2xl border p-4 mt-4" style={card}>
-        <div className="grid grid-cols-4 gap-1">
-          {LEVELS.map((l) => {
+        <div className={`grid gap-1 ${
+          info.levels.length <= 2 ? "grid-cols-2"
+          : info.levels.length <= 4 ? "grid-cols-4" : "grid-cols-6"
+        }`}>
+          {info.levels.map((l) => {
             const x = info.lv[l.key];
             const doneAll = !!x?.completed;
             const active = !doneAll && !info.locked[l.key];
@@ -158,9 +183,47 @@ export default function StudentGrammar() {
         <p className="text-xs text-slate-400 mt-1.5">Umumiy progress</p>
       </div>
 
+      {/* ---- QIYNALGAN MAVZULAR (2026-08-24, Jahongir: "Qaysidur
+           mavzuda qiynalsa qiynalgan mavzularidan yana takrorlaydigan
+           joyi ham bo'lsin") ---- */}
+      {(d.weak || []).length > 0 && (
+        <div className="rounded-2xl border p-4 mt-4"
+             style={{ background: "#2A1E0E", borderColor: "#7A5A1E" }}>
+          <p className="text-[15px] font-bold text-amber-300">
+            Qiynalgan mavzular
+          </p>
+          <p className="text-[12px] text-amber-200/70 mt-0.5">
+            Shu mavzularda xato ko'p — takrorlash darajani ko'taradi.
+            Mashq xato qilingan savollardan boshlanadi.
+          </p>
+          <div className="space-y-2 mt-3">
+            {d.weak.map((w: Any) => (
+              <Link
+                key={w.topic}
+                to={`/student/grammar/${encodeURIComponent(w.topic)}`}
+                className="flex items-center gap-3 rounded-xl border px-3 py-2.5"
+                style={{ background: "#1A2558", borderColor: "#3A4890" }}
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-white truncate">
+                    {w.topic}
+                  </p>
+                  <p className="text-[11px] text-slate-400">
+                    {w.wrong} ta xato · aniqlik {w.accuracy}%
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-amber-300 bg-amber-400/10 border border-amber-400/30 rounded-full px-2.5 py-1 shrink-0">
+                  Takrorlash
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ------------------------------------------- daraja chiplari */}
       <div className="flex gap-2.5 mt-4">
-        {LEVELS.map((l) => (
+        {info.levels.map((l) => (
           <button
             key={l.key}
             onClick={() => setSel(l.key)}

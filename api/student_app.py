@@ -25,7 +25,7 @@ from datetime import date, datetime, timedelta
 from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 import audit
@@ -525,7 +525,7 @@ def practice_levels(skill: str,
     diktant jumlalari. Lug'at so'zlari darajasizligi uchun sanoqqa
     kirmaydi — ular A1/A2 diktantiga qo'shimcha bo'lib kelaveradi."""
     s = _me(db, user)
-    if skill not in ("reading", "listening"):
+    if skill not in ("reading", "listening", "writing"):
         raise HTTPException(404, "Bu ko'nikmada daraja bo'limi yo'q")
     total = {lv: 0 for lv in PRACTICE_LEVELS}
     solved_n = {lv: 0 for lv in PRACTICE_LEVELS}
@@ -556,6 +556,7 @@ def practice_levels(skill: str,
             if f"read:{q.id}" in solved:
                 solved_n[lv] += 1
     else:
+        # listening va writing — grammatika jumlalaridan
         for q in _gram_sentences(db):
             lv = (q.level or "A1")
             lv = lv if lv in total else "A1"
@@ -677,6 +678,63 @@ def _round_spelling(words):
             for w in words]
 
 
+VOCAB_MASTERED_AT = 6
+
+
+def _pick_vocab_words(db, student_id: int, pool, n: int):
+    """XATO USTIDA ISHLASH (2026-08-24).
+
+    Jahongir: "bitta sozni 6ta togri qilgan bo'lsa, xato qilganlarni
+    korsatsin qayta qayta, koproq xato qilgan ustida ishlashni
+    sistemasini qilgin. 1ta sozni biladimi qayta qayta bergandan
+    mano yoq uni".
+
+    Tartib:
+      1) xato qilingan so'zlar — KO'P xato qilingani birinchi;
+      2) hali umuman ko'rilmagan so'zlar;
+      3) o'rganilayotganlar (1-5 marta to'g'ri) — kam to'g'risi oldin;
+      4) o'zlashtirilganlar (6+ marta to'g'ri) — FAQAT boshqa so'z
+         yetmasa to'ldiruvchi sifatida.
+    Har guruh ichida aralashtiriladi — mashq bir xil bo'lib qolmasin.
+    """
+    stats = {}
+    rows = (db.query(models.VocabAttempt.word_id,
+                     models.VocabAttempt.correct,
+                     func.count(models.VocabAttempt.id))
+            .filter(models.VocabAttempt.student_id == student_id,
+                    models.VocabAttempt.word_id.isnot(None))
+            .group_by(models.VocabAttempt.word_id,
+                      models.VocabAttempt.correct).all())
+    for wid, corr, cnt in rows:
+        st = stats.setdefault(wid, [0, 0])   # [togri, xato]
+        st[0 if corr else 1] += int(cnt)
+
+    wrong, unseen, learning, mastered = [], [], [], []
+    for w in pool:
+        ok, bad = stats.get(w.id, (0, 0))
+        if bad > ok:                       # xatosi ustun — birinchi
+            wrong.append((bad, w))
+        elif ok == 0 and bad == 0:
+            unseen.append(w)
+        elif ok >= VOCAB_MASTERED_AT:      # biladi — qayta bermaymiz
+            mastered.append(w)
+        elif bad > 0:                      # xato bor, lekin tuzalgan
+            wrong.append((bad, w))
+        else:
+            learning.append((ok, w))
+
+    random.shuffle(wrong)
+    wrong.sort(key=lambda x: -x[0])
+    random.shuffle(unseen)
+    random.shuffle(learning)
+    learning.sort(key=lambda x: x[0])
+    random.shuffle(mastered)
+
+    ordered = ([w for _, w in wrong] + unseen
+               + [w for _, w in learning] + mastered)
+    return ordered[:n]
+
+
 @router.get("/api/student/vocab/round")
 def vocab_round(game: str = "en_uz", level: str | None = None,
                 unit: str | None = None, language: str = "en",
@@ -713,7 +771,7 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
         want = roles.VOCAB_ROUND_SIZE
     want = max(1, min(want, 500))
     n = min(want, len(pool))
-    words = random.sample(pool, n)
+    words = _pick_vocab_words(db, s.id, pool, n)
 
     if game == "flashcard":
         items = _round_flashcard(words)
@@ -1446,10 +1504,22 @@ def _word_overlap(a: str, b: str) -> float:
     return match / max(len(wa), len(wb))
 
 
-def _gram_sentences(db, limit=400):
-    rows = (db.query(models.GrammarQuestion)
-            .filter(models.GrammarQuestion.kind == "order",
-                    models.GrammarQuestion.is_active == 1).all())
+GRAMMAR_LANGS = ("en", "ru", "de", "ko")
+
+
+def _gram_lang(q, language: str):
+    """Til filtri. Eski yozuvlarda language NULL — ular ingliz tili."""
+    if language == "en":
+        return q.filter(or_(models.GrammarQuestion.language.is_(None),
+                            models.GrammarQuestion.language == "en"))
+    return q.filter(models.GrammarQuestion.language == language)
+
+
+def _gram_sentences(db, limit=400, language="en"):
+    q = (db.query(models.GrammarQuestion)
+         .filter(models.GrammarQuestion.kind == "order",
+                 models.GrammarQuestion.is_active == 1))
+    rows = _gram_lang(q, language).all()
     return rows[:limit]
 
 
@@ -1619,14 +1689,23 @@ def practice_round(skill: str, kind: str | None = None,
         }
 
     if skill == "writing":
-        pool = prefer_fresh(_gram_sentences(db),
-                            lambda q: f"gram:{q.id}")
+        # 2026-08-24 (Jahongir: "Writingni ham darajalanmagan u ham"):
+        # daraja va son endi bu yerda ham ishlaydi.
+        sents = _gram_sentences(db)
+        if level:
+            sents = [q for q in sents if (q.level or "A1") == level]
+        if level and not sents:
+            raise HTTPException(400, "Bu darajada mashq hali yo'q — "
+                                     "boshqa daraja tanlang")
+        pool = prefer_fresh(sents, lambda q: f"gram:{q.id}")
+        w_n = int(count or 0) or PRACTICE_ROUND
+        w_n = max(1, min(w_n, 100))
         items = [{
             "ref": f"gram:{q.id}", "kind": "write_translate",
             "prompt": q.prompt,          # o'zbekcha ma'no
             "words": len(json.loads(q.options)),
             "solved": f"gram:{q.id}" in solved,
-        } for q in pool[:PRACTICE_ROUND]]
+        } for q in pool[:w_n]]
         return {"skill": skill, "items": items}
 
     if skill == "speaking":
@@ -1650,14 +1729,16 @@ def practice_round(skill: str, kind: str | None = None,
     words = ([] if (level and level not in ("A1", "A2"))
               else _active_words(db, language=language).all())
     wpool = prefer_fresh(words, lambda w: f"word:{w.id}")
-    sents = [] if language != "en" else _gram_sentences(db)
+    # 2026-08-24: boshqa tillarda ham grammatika paydo bo'ldi — endi
+    # ruscha/nemischa/koreyscha diktantda ham o'sha til jumlalari bor.
+    sents = _gram_sentences(db, language=language)
     if level:
         sents = [q for q in sents if (q.level or "A1") == level]
     spool = prefer_fresh(sents, lambda q: f"gram:{q.id}")
     if level and not wpool and not spool:
         raise HTTPException(400, "Bu darajada mashq hali yo'q — "
                                  "boshqa daraja tanlang")
-    w_take = rnd_n if (language != "en" or not spool) else rnd_n // 2
+    w_take = rnd_n if not spool else rnd_n // 2
     items = []
     for w in wpool[:w_take]:
         if len(items) % 2 == 0:
@@ -1826,7 +1907,8 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
 # =====================================================================
 
 @router.get("/api/student/grammar/topics")
-def grammar_topics(db: Session = Depends(get_db),
+def grammar_topics(language: str = "en",
+                   db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
     """A1 dasturi (Jahongir bergan tartibda) + A2 qulfi.
 
@@ -1836,14 +1918,42 @@ def grammar_topics(db: Session = Depends(get_db),
     mavzularni ishlayveradi." Mavzu "yopildi" = hamma savoli kamida
     bir marta to'g'ri yechildi."""
     s = _me(db, user)
-    qs = (db.query(models.GrammarQuestion)
+    if language not in GRAMMAR_LANGS:
+        language = "en"
+    qq = (db.query(models.GrammarQuestion)
           .filter(models.GrammarQuestion.is_active == 1)
           .order_by(models.GrammarQuestion.topic_order,
-                    models.GrammarQuestion.id).all())
+                    models.GrammarQuestion.id))
+    qs = _gram_lang(qq, language).all()
     solved = {qid for (qid,) in
               db.query(func.distinct(models.GrammarAttempt.question_id))
               .filter(models.GrammarAttempt.student_id == s.id,
                       models.GrammarAttempt.correct == 1).all()}
+    # QIYNALGAN MAVZULAR (2026-08-24, Jahongir: "Qaysidur mavzuda
+    # qiynalsa qiynalgan mavzularidan yana takrorlaydigan joyi ham
+    # bo'lsin"): shu til savollari bo'yicha xatolar mavzu kesimida.
+    qids = {q.id: q.topic for q in qs}
+    att = (db.query(models.GrammarAttempt.question_id,
+                    models.GrammarAttempt.correct,
+                    func.count(models.GrammarAttempt.id))
+           .filter(models.GrammarAttempt.student_id == s.id)
+           .group_by(models.GrammarAttempt.question_id,
+                     models.GrammarAttempt.correct).all())
+    t_stat = {}
+    for qid, corr, cnt in att:
+        t = qids.get(qid)
+        if not t:
+            continue
+        st = t_stat.setdefault(t, [0, 0])   # [togri, xato]
+        st[0 if corr else 1] += int(cnt)
+    weak = []
+    for t, (ok, bad) in t_stat.items():
+        total_att = ok + bad
+        if bad >= 3 and total_att and bad * 100 / total_att > 25:
+            weak.append({"topic": t, "wrong": bad,
+                         "accuracy": round(ok * 100 / total_att)})
+    weak.sort(key=lambda x: -x["wrong"])
+    weak = weak[:6]
 
     def build(level):
         topics = {}
@@ -1867,6 +1977,9 @@ def grammar_topics(db: Session = Depends(get_db),
             t["kinds"] = sorted(t["kinds"])
         return out
 
+    # Shu TILDA qaysi darajalarda umuman kontent bor
+    have_levels = {q.level or "A1" for q in qs}
+
     a1 = build("A1")
     a1_completed = bool(a1) and all(t["done"] for t in a1)
     a2 = build("A2") if a1_completed else []
@@ -1876,6 +1989,12 @@ def grammar_topics(db: Session = Depends(get_db),
     b1 = build("B1") if a2_completed else []
     b1_completed = bool(b1) and all(t["done"] for t in b1)
     b2 = build("B2") if b1_completed else []
+    b2_completed = bool(b2) and all(t["done"] for t in b2)
+    # 2026-08-24 (Jahongir: "grammatika mavzulari B2da tugagan ekan
+    # c1 va C2 mavzularni ham qoyish kerak") — zanjir davom etadi.
+    c1 = build("C1") if b2_completed else []
+    c1_completed = bool(c1) and all(t["done"] for t in c1)
+    c2 = build("C2") if c1_completed else []
 
     levels = [{"level": "A1", "topics": a1}]
     if a2:
@@ -1884,8 +2003,18 @@ def grammar_topics(db: Session = Depends(get_db),
         levels.append({"level": "B1", "topics": b1})
     if b2:
         levels.append({"level": "B2", "topics": b2})
+    if c1:
+        levels.append({"level": "C1", "topics": c1})
+    if c2:
+        levels.append({"level": "C2", "topics": c2})
 
     return {
+        "language": language,
+        # Frontend faqat mavjud darajalarning chiplarini chizadi
+        # (ruschada hozircha A1/A2 bor — B1 chipi chiqmaydi).
+        "available": [lv for lv in ("A1", "A2", "B1", "B2", "C1", "C2")
+                      if lv in have_levels],
+        "weak": weak,
         "a1": {"topics": a1,
                "done": sum(1 for t in a1 if t["done"]),
                "total": len(a1),
@@ -1897,7 +2026,13 @@ def grammar_topics(db: Session = Depends(get_db),
         "b1": {"topics": b1, "ready": len(b1) > 0,
                "completed": b1_completed},
         "b2_locked": not b1_completed,
-        "b2": {"topics": b2, "ready": len(b2) > 0},
+        "b2": {"topics": b2, "ready": len(b2) > 0,
+               "completed": b2_completed},
+        "c1_locked": not b2_completed,
+        "c1": {"topics": c1, "ready": len(c1) > 0,
+               "completed": c1_completed},
+        "c2_locked": not c1_completed,
+        "c2": {"topics": c2, "ready": len(c2) > 0},
         "total_correct": len(solved),
         "round_size": roles.GRAMMAR_ROUND_SIZE,
         # eski UI mosligi uchun
@@ -1908,6 +2043,7 @@ def grammar_topics(db: Session = Depends(get_db),
 @router.get("/api/student/grammar/round")
 def grammar_round(topic: str, kind: str | None = None,
                   count: int = 0,
+                  language: str = "en",
                   db: Session = Depends(get_db),
                   user=Depends(require_role(roles.STUDENT))):
     """Bitta mashg'ulot: mavzudan 8 ta savol.
@@ -1917,9 +2053,12 @@ def grammar_round(topic: str, kind: str | None = None,
     MIJOZGA KETMAYDI - tekshiruv faqat serverda (/answer). order
     turida so'zlar shu yerda aralashtiriladi."""
     s = _me(db, user)
+    if language not in GRAMMAR_LANGS:
+        language = "en"
     q0 = (db.query(models.GrammarQuestion)
           .filter(models.GrammarQuestion.is_active == 1,
                   models.GrammarQuestion.topic == topic))
+    q0 = _gram_lang(q0, language)
     # MASHQ TURI TANLASH (2026-08-11, Jahongir): mavzu ichida
     # 4 tur - fill / order / error / cloze. kind berilmasa aralash.
     if kind in ("fill", "order", "error", "cloze"):
@@ -1943,6 +2082,7 @@ def grammar_round(topic: str, kind: str | None = None,
                    .filter(models.GrammarQuestion.is_active == 1,
                            models.GrammarQuestion.level == lvl,
                            models.GrammarQuestion.topic != topic))
+        extra_q = _gram_lang(extra_q, language)
         if kind in ("fill", "order", "error", "cloze"):
             extra_q = extra_q.filter(models.GrammarQuestion.kind == kind)
         extra = extra_q.all()
@@ -1953,9 +2093,19 @@ def grammar_round(topic: str, kind: str | None = None,
               db.query(func.distinct(models.GrammarAttempt.question_id))
               .filter(models.GrammarAttempt.student_id == s.id,
                       models.GrammarAttempt.correct == 1).all()}
+    # XATO USTIDA ISHLASH (2026-08-24): hali to'g'ri yechilmaganlar
+    # ichida XATO qilinganlari birinchi chiqadi — bola aynan
+    # qoqilgan joyini qayta mashq qiladi.
+    wrongs = {qid: int(cnt) for qid, cnt in
+              db.query(models.GrammarAttempt.question_id,
+                       func.count(models.GrammarAttempt.id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 0)
+              .group_by(models.GrammarAttempt.question_id).all()}
     fresh = [q for q in qs if q.id not in solved]
     done = [q for q in qs if q.id in solved]
     random.shuffle(fresh)
+    fresh.sort(key=lambda q: -wrongs.get(q.id, 0))
     random.shuffle(done)
     picked = (fresh + done)[:want]
     random.shuffle(picked)

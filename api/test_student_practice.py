@@ -132,13 +132,23 @@ db.add(models.VocabWord(word="사과", translation="olma",
 db.commit()
 r = c.get("/api/student/practice/listening/round?language=ko", headers=H)
 ko_items = r.json()["items"]
-ck("KO roundda jumla diktanti yo'q (inglizcha aralashmaydi)",
-   any(it["ref"].startswith("gram:") for it in ko_items), False)
-ko_ids = [int(it["ref"].split(":")[1]) for it in ko_items]
+# 2026-08-24: endi koreys tilining O'Z grammatikasi bor — diktantda
+# koreyscha jumlalar chiqishi MUMKIN, lekin inglizchasi EMAS.
+ko_gram = [int(it["ref"].split(":")[1]) for it in ko_items
+           if it["ref"].startswith("gram:")]
+if ko_gram:
+    glangs = {g.language for g in
+              db.query(models.GrammarQuestion)
+              .filter(models.GrammarQuestion.id.in_(ko_gram)).all()}
+    ck("KO diktant jumlalari faqat koreyscha", glangs, {"ko"})
+else:
+    ck("KO diktant jumlasiz ham ishlaydi", True, True)
+ko_ids = [int(it["ref"].split(":")[1]) for it in ko_items
+          if it["ref"].startswith("word:")]
 ko_langs = {w.language for w in
             db.query(models.VocabWord)
             .filter(models.VocabWord.id.in_(ko_ids)).all()}
-ck("KO roundda faqat koreys so'zlari", ko_langs, {"ko"})
+ck("KO roundda faqat koreys so'zlari", ko_langs <= {"ko"}, True)
 
 print("\n=== SKILLS KARTASIGA TUSHDI ===")
 r = c.get("/api/student/skills", headers=H)

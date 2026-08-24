@@ -205,6 +205,15 @@ try:
 except Exception:
     pass
 
+# C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
+try:
+    from sqlalchemy.orm import Session as _VS14
+    from grammar_seed3 import seed_grammar_extra
+    with _VS14(engine) as _db14:
+        seed_grammar_extra(_db14)
+except Exception:
+    pass
+
 # 4 ko'nikma yangi mashq turlari (idempotent)
 try:
     from sqlalchemy.orm import Session as _VS9

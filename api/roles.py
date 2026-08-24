@@ -852,7 +852,9 @@ VOCAB_XP_PER_CORRECT = 1.0
 
 # Grammar mashqlari (2026-08-10): bitta mashg'ulotda nechta savol
 # va har birinchi-marta-to'g'ri javob uchun necha XP.
-GRAMMAR_ROUND_SIZE = 8
+# 2026-08-24, Jahongir: "mashqlar soni 9ta bu juda kam buni sonini
+# 20ta kotarish kerak"
+GRAMMAR_ROUND_SIZE = 20
 GRAMMAR_XP_PER_CORRECT = 1.0
 
 ENG_LEVELS = [

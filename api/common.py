@@ -39,6 +39,8 @@ def _ensure_new_columns():
     from sqlalchemy import text
 
     statements = [
+        # Ko'p tilli grammatika (2026-08-24)
+        "ALTER TABLE grammar_questions ADD COLUMN language VARCHAR",
         "ALTER TABLE users ADD COLUMN exit_type VARCHAR",
         "ALTER TABLE users ADD COLUMN exit_reason VARCHAR",
         "ALTER TABLE users ADD COLUMN exit_date DATE",
@@ -502,7 +504,7 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_23"  # guide_progress (o'rgatuvchi)
+SCHEMA_STAMP = "stamp_2026_08_24"  # grammar_questions.language
 # MUHIM: YANGI JADVAL qo'shsangiz shu satrni ALBATTA yangilang.
 # Sababi: ensure_tables() sxema "tayyor" deb belgilangan bo'lsa
 # hech nima yaratmaydi (sovuq start tezligi uchun). Stamp

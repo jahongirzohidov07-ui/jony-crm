@@ -72,8 +72,12 @@ r = c.get("/api/student/practice/listening/levels", headers=H)
 ck("listening ham 200", r.status_code, 200)
 llv = {x["level"]: x for x in r.json()["levels"]}
 ck("listening C1 da mashq bor", llv["C1"]["total"] > 0, True)
+# 2026-08-24 (Jahongir: "Writingni ham darajalanmagan u ham") —
+# endi writingda ham daraja bo'limi BOR.
 r = c.get("/api/student/practice/writing/levels", headers=H)
-ck("writingda daraja bo'limi yo'q (404)", r.status_code, 404)
+ck("writingda ham daraja bo'limi bor", r.status_code, 200)
+r = c.get("/api/student/practice/speaking/levels", headers=H)
+ck("speakingda daraja bo'limi yo'q (404)", r.status_code, 404)
 
 print("\n=== 3. DARAJA FILTRI ISHLAYDI ===")
 r = c.get("/api/student/practice/reading/round?level=C1", headers=H)
@@ -132,8 +136,10 @@ items = r.json()["items"]
 ck("50 so'raganda bankdan ko'p keladi", len(items) > own, True)
 ck("50 dan oshmaydi", len(items) <= 50, True)
 # boshqa mavzudan kelgan savolga javob berish ham ishlaydi
+# cloze/orderda javob formati boshqacha — barqarorlik uchun fill/error
 other_q = next((x for x in items
-                if db.query(models.GrammarQuestion).get(x["id"]).topic
+                if x["kind"] in ("fill", "error")
+                and db.query(models.GrammarQuestion).get(x["id"]).topic
                 != t0), None)
 ck("boshqa mavzu savoli aralashgan", other_q is not None, True)
 if other_q:

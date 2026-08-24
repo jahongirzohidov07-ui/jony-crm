@@ -3628,6 +3628,10 @@ class GrammarQuestion(Base):
     topic_order = Column(Integer, default=0)   # mavzular tartibi
     is_boss = Column(Integer, default=0)       # BOSS LEVEL belgisi
     level = Column(String, default="A1")       # A1 | A2 | B1
+    # Qaysi til grammatikasi (2026-08-24, Jahongir: "boshqa tillarni
+    # grammatikasi yoq ekan ularni ham qoshib qoygin"). NULL = en
+    # (eski yozuvlar ingliz tili).
+    language = Column(String, nullable=True, index=True)
     kind = Column(String, nullable=False)      # fill | error | order
     prompt = Column(Text, nullable=False)
     options = Column(Text, nullable=False)     # JSON list

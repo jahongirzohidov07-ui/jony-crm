@@ -241,6 +241,15 @@ try:
 except Exception:
     pass
 
+# IELTS listening 5-blok: word reorder + combination (2026-08-25)
+try:
+    from sqlalchemy.orm import Session as _VS19
+    from ielts_seed5 import seed_ielts5
+    with _VS19(engine) as _db19:
+        seed_ielts5(_db19)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -56,7 +56,8 @@ parts = {p["kind"]: p for p in r.json()["parts"]}
 # chalg'ituvchi javoblar) - endi beshta.
 # 2026-08-24: 6-mashq — exact word trap (A/B/C)
 # 2026-08-25: yana uchta tuzoq — delayed / modification / distractor
-ck("to'qqizta mashq", len(parts), 9)
+# 2026-08-25: Word Reorder va Combination — jami 11 mashq
+ck("o'n bitta mashq", len(parts), 11)
 ck("tartib: spelling birinchi", parts["ielts_spell"]["no"], 1)
 ck("tartib: raqam ikkinchi", parts["ielts_number"]["no"], 2)
 ck("tartib: aralash uchinchi", parts["ielts_mixed"]["no"], 3)
@@ -161,7 +162,7 @@ ck("count cheklangan", len(r.json()["items"]) <= 60, True)
 print("\n=== 9. 4- VA 5-MASHQ (2026-08-24) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("endi 9 ta mashq", len(parts), 9)
+ck("endi 11 ta mashq", len(parts), 11)
 ck("4-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 4)
 ck("5-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 5)
 ck(f"detail 100 ta ({parts['ielts_detail']['total']})",
@@ -409,6 +410,172 @@ if neg:
     r = c.post("/api/student/ielts/listening/answer", headers=H,
                json={"ref": f"pi:{neg.id}", "answer": neg.answer})
     ck("inkordan keyingi javob to'g'ri", r.json()["correct"], True)
+
+
+print("\n=== 20. WORD REORDER TRAP ===")
+r = c.get("/api/student/ielts/listening/parts", headers=H)
+parts = {p["kind"]: p for p in r.json()["parts"]}
+ck("nomi to'g'ri", parts["ielts_reorder"]["title"],
+   "Word Reorder Trap")
+ck("tartib raqami", parts["ielts_reorder"]["no"], 10)
+ck(f"100 ta ({parts['ielts_reorder']['total']})",
+   parts["ielts_reorder"]["total"] >= 100, True)
+
+# TARTIB HAQIQATAN TESKARIMI. Savoldagi "boshqa bo'lak" (javobdan
+# keyin keladigan matn) audioda javobdan OLDIN kelishi kerak.
+def _content(words):
+    """Ma'noli so'zlar (yordamchilarni tashlaymiz)."""
+    STOP = {"and", "the", "for", "with", "your", "was", "carried",
+            "out", "people", "room", "has", "sports", "bring",
+            "meet", "take", "opens", "costs", "situated", "near",
+            "responsible", "pounds", "his", "her", "its"}
+    return [w.strip(".,()-") for w in words
+            if len(w.strip(".,()-")) > 2
+            and w.strip(".,()-").lower() not in STOP]
+
+
+flip_bad = []
+checked = 0
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_reorder").all()):
+    pl = json.loads(it.payload)
+    prompt, say = pl["prompt"], pl["say"]
+    ans = it.answer.lower()
+    sl = say.lower()
+    head, _, tail = prompt.partition("______")
+    tw, hw = _content(tail.split()), _content(head.split())
+    if tw:
+        # Savolda OXIRGI turgan bo'lak audioda javobdan OLDIN
+        # kelishi kerak — tartib aynan shunda almashadi.
+        anchor = tw[-1].lower()
+        if anchor in sl and ans in sl:
+            checked += 1
+            if sl.index(anchor) > sl.index(ans):
+                flip_bad.append(prompt)
+    elif hw:
+        # Bo'shliq oxirida: savolda BOSHIDA turgani audioda
+        # javobdan KEYIN kelishi kerak (passiv -> aktiv).
+        anchor = hw[-1].lower()
+        if anchor in sl and ans in sl:
+            checked += 1
+            if sl.index(anchor) < sl.index(ans):
+                flip_bad.append(prompt)
+ck("savol va audio tartibi HAMMASIDA teskari", flip_bad[:3], [])
+ck(f"tekshirilgan elementlar ({checked})", checked >= 90, True)
+
+r = c.get("/api/student/ielts/listening/round"
+          "?kind=ielts_reorder&count=40", headers=H)
+ri = r.json()["items"]
+ck("savol (bo'shliq bilan) keladi",
+   all("______" in (x.get("prompt") or "") for x in ri), True)
+ck("javob mijozga ketmaydi",
+   any("answer" in x or "expected" in x for x in ri), False)
+
+# Jahongirning rasmdagi misoli
+it = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_reorder",
+              models.PracticeItem.answer == "clothing").first())
+ck("rasmdagi misol bazada", it is not None, True)
+if it:
+    pl = json.loads(it.payload)
+    ck("savolda 'floors 1-3' OXIRIDA",
+       pl["prompt"].strip().endswith("floors 1-3"), True)
+    ck("audioda 'first three floors' BOSHIDA (javobdan oldin)",
+       pl["say"].lower().index("first three floors")
+       < pl["say"].lower().index("clothing"), True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}", "answer": "clothing"})
+    ck("javob qabul qilinadi", r.json()["correct"], True)
+
+print("\n=== 21. COMBINATION TRAP ===")
+ck("nomi to'g'ri", parts["ielts_combo"]["title"], "Combination Trap")
+ck("tartib raqami", parts["ielts_combo"]["no"], 11)
+ck(f"100 ta ({parts['ielts_combo']['total']})",
+   parts["ielts_combo"]["total"] >= 100, True)
+
+# HAR BIRIDA kamida IKKI qopqon belgisi bo'lishi kerak
+CON = ("although", "but ", "however", "even though", "while ",
+       "except", "despite")
+NEG = ("don't", "isn't", "wouldn't", "won't", "not ", "unlikely",
+       "hardly", "no,")
+MOD = ("sorry", "actually", "hang on", "forget that", "no, wait")
+DEL = ("let me", "one moment", "where did i", "look at the list",
+       "keep meaning", "right:")
+DAY_W = ("monday", "tuesday", "wednesday", "thursday", "friday",
+         "saturday", "sunday")
+
+
+def _reorder_mark(prompt, say, ans):
+    """Word Reorder qopqoni: savol oxiridagi bo'lak audioda
+    javobdan OLDIN kelgan bo'lsa."""
+    if "______" not in (prompt or ""):
+        return False
+    tail = prompt.partition("______")[2]
+    tw = _content(tail.split())
+    if not tw:
+        return False
+    a = tw[-1].lower()
+    sl = say.lower()
+    return a in sl and ans in sl and sl.index(a) < sl.index(ans)
+
+
+def _multi(say):
+    """Multiple Answers qopqoni: bir xil turdagi 3+ qiymat."""
+    times = len(_re.findall(r"\b\d{1,2}\.\d{2}\b", say))
+    days = sum(1 for d in DAY_W if d in say)
+    # bir xil turdagi ismlar (a X and a Y ... a Z)
+    arts = len(_re.findall(r"\ba [a-z]{4,}\b", say))
+    return times >= 3 or days >= 3 or arts >= 3
+
+
+few = []
+counts = {"contrast": 0, "negation": 0, "modification": 0,
+          "delayed": 0, "multiple": 0, "reorder": 0}
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_combo").all()):
+    say = json.loads(it.payload)["say"].lower()
+    marks = 0
+    if any(m in say for m in CON):
+        marks += 1
+        counts["contrast"] += 1
+    if any(m in say for m in NEG):
+        marks += 1
+        counts["negation"] += 1
+    if any(m in say for m in MOD):
+        marks += 1
+        counts["modification"] += 1
+    if any(m in say for m in DEL):
+        marks += 1
+        counts["delayed"] += 1
+    if _multi(say):
+        marks += 1
+        counts["multiple"] += 1
+    if _reorder_mark(json.loads(it.payload).get("prompt"), say,
+                     it.answer.lower()):
+        marks += 1
+        counts["reorder"] += 1
+    if marks < 2:
+        few.append(say[:60])
+ck("hammasida KAMIDA 2 qopqon belgisi bor", few[:3], [])
+ck("olti qopqon turi ham uchraydi",
+   all(v >= 10 for v in counts.values()), True)
+
+# izohda qaysi qopqonlar ekani yozilgan
+it = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_combo").first())
+ck("izohda COMBINATION deb yozilgan",
+   "COMBINATION TRAP" in (it.explain or ""), True)
+ck("izohda qopqon nomlari sanalgan",
+   any(x in (it.explain or "")
+       for x in ("Contrast", "Negation", "Modification",
+                 "Delayed Response", "Word Reorder",
+                 "Multiple Answers")), True)
+
+print("\n=== 22. JAMI ELEMENTLAR ===")
+tot = (db.query(models.PracticeItem)
+       .filter(models.PracticeItem.skill == "ielts_listening")
+       .count())
+ck(f"IELTS listening bazasi ({tot})", tot >= 950, True)
 
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

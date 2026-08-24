@@ -624,13 +624,19 @@ IELTS_PARTS = [
     {"kind": "ielts_distract", "title": "Distractor Trap",
      "hint": "although / but / however va don't / isn't / unlikely — "
              "chalg'ituvchi gap va inkor"},
+    {"kind": "ielts_reorder", "title": "Word Reorder Trap",
+     "hint": "Savoldagi so'zlar tartibi audioda boshqacha keladi — "
+             "oxirgi bo'lak birinchi aytilishi mumkin"},
+    {"kind": "ielts_combo", "title": "Combination Trap",
+     "hint": "Ikki-uch qopqon birga — haqiqiy imtihondagi kabi"},
 ]
 
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
 IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap", "ielts_exact",
                      "ielts_delayed", "ielts_modif",
-                     "ielts_distract")
+                     "ielts_distract", "ielts_reorder",
+                     "ielts_combo")
 # Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
 IELTS_CHOICE = ("ielts_exact",)
 

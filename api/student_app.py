@@ -483,6 +483,96 @@ def student_learn(db: Session = Depends(get_db),
         "daily": _daily_progress(db, s.id),
         "continue": _continue_card(db, s.id),
         "sections": sections,
+        # CEFR / IELTS bo'limi (2026-08-24, Jahongir: "CEFR va IELTS
+        # qismini intermediate tugatganda ochiladigan qilgan edik u
+        # yoqolib qolibdi, alohida bo'lim ochilishi kerak").
+        "ielts": _ielts_gate(db, s.id),
+    }
+
+
+def _ielts_gate(db: Session, student_id: int) -> dict:
+    """CEFR/IELTS bo'limi qulfi.
+
+    Qoida: Intermediate TUGAGANDA ochiladi — ya'ni o'quvchining
+    umumiy darajasi Upper-Intermediate yoki undan yuqori bo'lganda
+    (roles.ENG_LEVELS zinasida indeks >= 4). Daraja shu bolagacha
+    yig'ilgan umumiy mashq ballaridan chiqadi (_skills_card bilan
+    bir xil manba — ikki xil hisob bo'lib ketmasin)."""
+    card = _skills_card(db, student_id)
+    lv = card.get("overall", {}).get("level", {}) or {}
+    keys = [x["key"] for x in roles.ENG_LEVELS]
+    idx = keys.index(lv.get("key")) if lv.get("key") in keys else 0
+    need = roles.ENG_LEVELS[4]          # upper_intermediate
+    return {
+        "unlocked": idx >= 4,
+        "level_label": lv.get("label"),
+        "need_label": ("Intermediate darajasini tugatganingizda "
+                       "ochiladi"),
+        "need_key": need["key"],
+        "href": "/student/ielts",
+    }
+
+
+@router.get("/api/student/practice/{skill}/levels")
+def practice_levels(skill: str,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.STUDENT))):
+    """Reading/Listening daraja bo'limlari: har darajada nechta mashq
+    bor va nechtasi yechilgan (2026-08-24, Jahongir: "a1 dan boshlab
+    c2 darajagacha... bo'lim chiqib").
+
+    Sanaladi: PracticeItem (yangi turlar) + reading savollari yoki
+    diktant jumlalari. Lug'at so'zlari darajasizligi uchun sanoqqa
+    kirmaydi — ular A1/A2 diktantiga qo'shimcha bo'lib kelaveradi."""
+    s = _me(db, user)
+    if skill not in ("reading", "listening"):
+        raise HTTPException(404, "Bu ko'nikmada daraja bo'limi yo'q")
+    total = {lv: 0 for lv in PRACTICE_LEVELS}
+    solved_n = {lv: 0 for lv in PRACTICE_LEVELS}
+    solved = {r for (r,) in
+              db.query(func.distinct(models.SkillAttempt.ref))
+              .filter(models.SkillAttempt.student_id == s.id,
+                      models.SkillAttempt.skill == skill,
+                      models.SkillAttempt.correct == 1).all()}
+
+    for pid, lv in (db.query(models.PracticeItem.id,
+                             models.PracticeItem.level)
+                    .filter(models.PracticeItem.skill == skill,
+                            models.PracticeItem.is_active == 1).all()):
+        lv = lv if lv in total else "A1"
+        total[lv] += 1
+        if f"pi:{pid}" in solved:
+            solved_n[lv] += 1
+
+    if skill == "reading":
+        tl = {t.id: (t.level if t.level in total else "A1")
+              for t in db.query(models.ReadingText)
+              .filter(models.ReadingText.is_active == 1).all()}
+        for q in db.query(models.ReadingQuestion).all():
+            lv = tl.get(q.text_id)
+            if lv is None:
+                continue
+            total[lv] += 1
+            if f"read:{q.id}" in solved:
+                solved_n[lv] += 1
+    else:
+        for q in _gram_sentences(db):
+            lv = (q.level or "A1")
+            lv = lv if lv in total else "A1"
+            total[lv] += 1
+            if f"gram:{q.id}" in solved:
+                solved_n[lv] += 1
+
+    return {
+        "skill": skill,
+        "levels": [{
+            "level": lv,
+            "label": PRACTICE_LEVEL_LABELS[lv],
+            "total": total[lv],
+            "solved": min(solved_n[lv], total[lv]),
+            "percent": (round(min(solved_n[lv], total[lv]) * 100
+                              / total[lv]) if total[lv] else 0),
+        } for lv in PRACTICE_LEVELS],
     }
 
 
@@ -1323,6 +1413,14 @@ def student_notifications(db: Session = Depends(get_db),
 
 PRACTICE_SKILLS = ("listening", "reading", "writing", "speaking")
 PRACTICE_ROUND = 8
+# DARAJA BO'LIMLARI (2026-08-24, Jahongir: "reading listening qismini
+# a1 dan boshlab c2 darajagacha yani beginnerdan boshlab native
+# darajagacha bo'lim chiqib"). Grammatikadagi kabi CEFR zinasi.
+PRACTICE_LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
+PRACTICE_LEVEL_LABELS = {
+    "A1": "Beginner", "A2": "Elementary", "B1": "Pre-Intermediate",
+    "B2": "Intermediate+", "C1": "Advanced", "C2": "Native",
+}
 
 
 def _norm_loose(t: str) -> str:
@@ -1363,19 +1461,26 @@ PRACTICE_NEW_KINDS = {
 }
 
 
-def _pi_round(db, s, skill, kind):
-    """PracticeItem jadvalidan round (yangi turlar, 2026-08-11)."""
+def _pi_round(db, s, skill, kind, level=None, count=0):
+    """PracticeItem jadvalidan round (yangi turlar, 2026-08-11).
+
+    2026-08-24: level (A1..C2) filtri va count (nechta mashq) —
+    Jahongir: "bo'lim chiqib... mashqlarni ham kopaytir"."""
     solved = {r for (r,) in
               db.query(func.distinct(models.SkillAttempt.ref))
               .filter(models.SkillAttempt.student_id == s.id,
                       models.SkillAttempt.skill == skill,
                       models.SkillAttempt.correct == 1).all()}
-    rows = (db.query(models.PracticeItem)
-            .filter(models.PracticeItem.skill == skill,
-                    models.PracticeItem.kind == kind,
-                    models.PracticeItem.is_active == 1).all())
+    q0 = (db.query(models.PracticeItem)
+          .filter(models.PracticeItem.skill == skill,
+                  models.PracticeItem.kind == kind,
+                  models.PracticeItem.is_active == 1))
+    if level in PRACTICE_LEVELS:
+        q0 = q0.filter(models.PracticeItem.level == level)
+    rows = q0.all()
     if not rows:
-        raise HTTPException(404, "Bu turda mashq hali yo'q")
+        raise HTTPException(404, "Bu darajada bu turdagi mashq hali "
+                                 "yo'q — boshqa daraja tanlang")
     fresh = [r for r in rows if f"pi:{r.id}" not in solved]
     done = [r for r in rows if f"pi:{r.id}" in solved]
     random.shuffle(fresh)
@@ -1398,7 +1503,9 @@ def _pi_round(db, s, skill, kind):
                          "body": first},
                 "items": items}
 
-    picked = (fresh + done)[:PRACTICE_ROUND]
+    want = int(count or 0) or PRACTICE_ROUND
+    want = max(1, min(want, 100))
+    picked = (fresh + done)[:want]
     items = []
     for r in picked:
         pl = json.loads(r.payload)
@@ -1442,6 +1549,8 @@ def _pi_round(db, s, skill, kind):
 @router.get("/api/student/practice/{skill}/round")
 def practice_round(skill: str, kind: str | None = None,
                    language: str = "en",
+                   level: str | None = None,
+                   count: int = 0,
                    db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):
     s = _me(db, user)
@@ -1457,9 +1566,11 @@ def practice_round(skill: str, kind: str | None = None,
     # YANGI TURLAR (2026-08-11, Jahongir spetsifikatsiyasi).
     # Bu mashqlar (dialog, tartiblash...) faqat ingliz tilida yozilgan,
     # shuning uchun boshqa til tanlangan bo'lsa oddiy diktantga o'tamiz.
+    if level not in PRACTICE_LEVELS:
+        level = None
     if (kind and kind in PRACTICE_NEW_KINDS.get(skill, ())
             and not (skill == "listening" and language != "en")):
-        return _pi_round(db, s, skill, kind)
+        return _pi_round(db, s, skill, kind, level, count)
 
     solved = {r for (r,) in
               db.query(func.distinct(models.SkillAttempt.ref))
@@ -1477,10 +1588,16 @@ def practice_round(skill: str, kind: str | None = None,
     if skill == "reading":
         # Bitta matn + savollari. Avval yechilmagan savoli KO'PROQ
         # qolgan matn tanlanadi.
-        texts = (db.query(models.ReadingText)
-                 .filter(models.ReadingText.is_active == 1).all())
+        tq = (db.query(models.ReadingText)
+              .filter(models.ReadingText.is_active == 1))
+        if level:
+            tq = tq.filter(models.ReadingText.level == level)
+        texts = tq.all()
         if not texts:
-            raise HTTPException(400, "Matnlar hali yuklanmagan")
+            raise HTTPException(400, "Bu darajada matn hali yo'q — "
+                                     "boshqa daraja tanlang"
+                                     if level else
+                                     "Matnlar hali yuklanmagan")
         qs_by_text = {}
         for q in db.query(models.ReadingQuestion).all():
             qs_by_text.setdefault(q.text_id, []).append(q)
@@ -1525,12 +1642,22 @@ def practice_round(skill: str, kind: str | None = None,
     # listening: yarmi so'z (diktant yoki tanlov), yarmi jumla diktanti.
     # So'zlar FAQAT tanlangan til bazasidan (2026-08-21). Grammatika
     # jumlalari inglizcha, shuning uchun boshqa tillarda qo'shilmaydi.
-    words = _active_words(db, language=language).all()
+    # Diktantda daraja: jumlalar GrammarQuestion.level dan (A1..B2),
+    # so'zlar darajasiz — shuning uchun A1/A2 da (yoki daraja
+    # tanlanmaganda) qatnashadi, yuqori darajada faqat jumlalar.
+    rnd_n = int(count or 0) or PRACTICE_ROUND
+    rnd_n = max(1, min(rnd_n, 100))
+    words = ([] if (level and level not in ("A1", "A2"))
+              else _active_words(db, language=language).all())
     wpool = prefer_fresh(words, lambda w: f"word:{w.id}")
-    spool = ([] if language != "en"
-             else prefer_fresh(_gram_sentences(db),
-                               lambda q: f"gram:{q.id}"))
-    w_take = PRACTICE_ROUND if language != "en" else PRACTICE_ROUND // 2
+    sents = [] if language != "en" else _gram_sentences(db)
+    if level:
+        sents = [q for q in sents if (q.level or "A1") == level]
+    spool = prefer_fresh(sents, lambda q: f"gram:{q.id}")
+    if level and not wpool and not spool:
+        raise HTTPException(400, "Bu darajada mashq hali yo'q — "
+                                 "boshqa daraja tanlang")
+    w_take = rnd_n if (language != "en" or not spool) else rnd_n // 2
     items = []
     for w in wpool[:w_take]:
         if len(items) % 2 == 0:
@@ -1549,7 +1676,7 @@ def practice_round(skill: str, kind: str | None = None,
                 "say": w.word, "options": opts,
                 "solved": f"word:{w.id}" in solved,
             })
-    for q in spool[:PRACTICE_ROUND - len(items)]:
+    for q in spool[:rnd_n - len(items)]:
         items.append({
             "ref": f"gram:{q.id}", "kind": "listen_dictation",
             "say": q.answer, "solved": f"gram:{q.id}" in solved,

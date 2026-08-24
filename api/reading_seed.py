@@ -259,16 +259,366 @@ SEED = [
 ]
 
 
+
+
+# =====================================================================
+#  2-TO'LQIN (2026-08-24). Jahongir: "reading listening qismini a1 dan
+#  boshlab c2 darajagacha yani beginnerdan boshlab native darajagacha
+#  bo'lim chiqib mashqlarni ham kopaytir".
+#  Yangi: A1/A2/B1 ga qo'shimcha matnlar + B2/C1/C2 birinchi marta.
+# =====================================================================
+SEED2 = [
+("My Pet Rabbit", "A1",
+ "I have a rabbit. His name is Bunny. He is white and very soft. "
+ "Bunny lives in a small house in our garden. He eats carrots and "
+ "green leaves. Every morning I give him water. Bunny likes to jump. "
+ "My little brother laughs when Bunny jumps.",
+ [("What colour is Bunny?", ["White", "Black", "Brown", "Grey"],
+   "White", "\"He is white and very soft.\""),
+  ("Where does Bunny live?", ["In the garden", "In the kitchen",
+    "At school", "In a shop"], "In the garden",
+   "\"Bunny lives in a small house in our garden.\""),
+  ("What does Bunny eat?", ["Carrots and leaves", "Meat", "Bread",
+    "Fish"], "Carrots and leaves",
+   "\"He eats carrots and green leaves.\""),
+  ("Who laughs when Bunny jumps?", ["His little brother",
+    "His mother", "His teacher", "Nobody"], "His little brother",
+   "\"My little brother laughs.\"")]),
+("Rainy Day", "A1",
+ "Today it is raining. I cannot play football outside. I stay at "
+ "home with my sister. We draw pictures and watch cartoons. Mother "
+ "makes hot tea and gives us cookies. I like rainy days at home, "
+ "but I want to see the sun tomorrow.",
+ [("What is the weather like?", ["Rainy", "Sunny", "Snowy",
+    "Windy"], "Rainy", "\"Today it is raining.\""),
+  ("Why can't he play football?", ["Because of the rain",
+    "He is ill", "He has homework", "It is night"],
+   "Because of the rain", "Yomg'ir yog'ayotgani uchun."),
+  ("What does mother make?", ["Hot tea", "Soup", "Cake", "Coffee"],
+   "Hot tea", "\"Mother makes hot tea.\""),
+  ("What does he want tomorrow?", ["To see the sun", "More rain",
+    "To sleep", "New toys"], "To see the sun",
+   "\"I want to see the sun tomorrow.\"")]),
+("A Trip to Bukhara", "A2",
+ "Last spring our class went to Bukhara by bus. The trip took six "
+ "hours, but nobody was bored because we sang songs and played "
+ "games. In Bukhara we saw the old fortress and many beautiful "
+ "mosques. Our guide told us stories about ancient traders. I "
+ "bought a small souvenir for my grandmother. It was the best "
+ "school trip of the year.",
+ [("How did the class travel?", ["By bus", "By train", "By plane",
+    "By car"], "By bus", "\"went to Bukhara by bus\""),
+  ("How long was the trip?", ["Six hours", "Two hours",
+    "One day", "Three hours"], "Six hours",
+   "\"The trip took six hours.\""),
+  ("Who told stories about traders?", ["The guide", "The driver",
+    "The teacher", "A student"], "The guide",
+   "\"Our guide told us stories.\""),
+  ("What did he buy?", ["A souvenir", "A book", "Sweets",
+    "A ticket"], "A souvenir",
+   "\"I bought a small souvenir.\"")]),
+("The New Sports Hall", "A2",
+ "Our school built a new sports hall last year. Before that, we "
+ "did exercises outside, even in cold weather. Now we play "
+ "volleyball and basketball inside. The hall is open until seven "
+ "in the evening, so many students stay after lessons. My friends "
+ "and I go there every Tuesday and Friday. Our team is preparing "
+ "for the city championship in May.",
+ [("When was the hall built?", ["Last year", "Two years ago",
+    "This month", "In May"], "Last year",
+   "\"built a new sports hall last year\""),
+  ("Where did they exercise before?", ["Outside", "In the hall",
+    "At home", "In another school"], "Outside",
+   "\"we did exercises outside\""),
+  ("Until what time is the hall open?", ["Seven in the evening",
+    "Five o'clock", "Nine o'clock", "All night"],
+   "Seven in the evening", "\"open until seven in the evening\""),
+  ("What happens in May?", ["The city championship",
+    "The hall closes", "Exams start", "A concert"],
+   "The city championship",
+   "\"preparing for the city championship in May\"")]),
+("Why I Stopped Watching TV", "B1",
+ "Two months ago I noticed that I was spending almost four hours a "
+ "day in front of the TV. My homework was often late and I felt "
+ "tired in the mornings. So I made a rule: no TV before finishing "
+ "my tasks, and never more than one hour a day. The first week was "
+ "difficult, but then something surprising happened. I started "
+ "reading books again, my marks improved, and I even joined a "
+ "chess club. Now I watch only programmes I really choose, not "
+ "whatever is on.",
+ [("How much TV did he watch before?", ["About four hours a day",
+    "One hour a day", "Only at weekends", "Two hours a week"],
+   "About four hours a day",
+   "\"almost four hours a day\""),
+  ("What was his new rule?", ["No TV before finishing tasks",
+    "No TV at all", "TV only in the morning",
+    "TV only with friends"], "No TV before finishing tasks",
+   "\"no TV before finishing my tasks\""),
+  ("What happened after the change?", ["His marks improved",
+    "He felt more tired", "He left school", "He sold the TV"],
+   "His marks improved", "\"my marks improved\""),
+  ("How does he choose programmes now?", ["He picks them himself",
+    "He watches whatever is on", "His parents choose",
+    "He doesn't watch at all"], "He picks them himself",
+   "\"only programmes I really choose\"")]),
+("A Part-Time Job", "B1",
+ "My cousin Aziza is a university student. Twice a week she works "
+ "as a waitress in a small cafe near her dormitory. At first her "
+ "parents were against it - they were afraid the job would harm "
+ "her studies. However, Aziza planned her time carefully and her "
+ "grades did not fall. She says the job taught her more than money "
+ "management: she learned to stay calm with difficult customers "
+ "and to work in a team. Next summer the cafe owner wants to make "
+ "her a shift manager.",
+ [("How often does Aziza work?", ["Twice a week", "Every day",
+    "Once a month", "Only in summer"], "Twice a week",
+   "\"Twice a week she works as a waitress.\""),
+  ("Why were her parents against the job?", [
+    "They worried about her studies", "The cafe was far",
+    "The salary was low", "They disliked the owner"],
+   "They worried about her studies",
+   "\"afraid the job would harm her studies\""),
+  ("What did the job teach her?", [
+    "To stay calm and work in a team", "To cook well",
+    "To speak English", "To drive"],
+   "To stay calm and work in a team",
+   "\"stay calm with difficult customers and to work in a team\""),
+  ("What may happen next summer?", ["She may become a shift manager",
+    "She may quit", "The cafe may close", "She may move abroad"],
+   "She may become a shift manager",
+   "\"wants to make her a shift manager\"")]),
+("The Price of Convenience", "B2",
+ "Food delivery apps have transformed the way city dwellers eat. "
+ "With a few taps, a hot meal arrives at the door within half an "
+ "hour. Yet this convenience has hidden costs. Restaurants pay "
+ "the platforms commissions of up to thirty per cent, which "
+ "forces many small, family-run places to raise prices or close "
+ "their kitchens to walk-in guests entirely. Couriers, meanwhile, "
+ "often work without contracts, racing through traffic to meet "
+ "algorithm-set deadlines. Some economists argue that unless "
+ "regulation catches up, the apps will quietly reshape urban food "
+ "culture: fewer independent cafes, more 'ghost kitchens' that "
+ "cook only for delivery, and a generation that rarely eats out.",
+ [("What problem do small restaurants face?", [
+    "High platform commissions", "A lack of couriers",
+    "Too many walk-in guests", "Cheap ingredients"],
+   "High platform commissions",
+   "\"commissions of up to thirty per cent\""),
+  ("What is said about couriers?", [
+    "They often work without contracts",
+    "They earn thirty per cent", "They set their own deadlines",
+    "They own the platforms"],
+   "They often work without contracts",
+   "\"often work without contracts\""),
+  ("What is a 'ghost kitchen'?", [
+    "A kitchen that cooks only for delivery",
+    "A closed restaurant", "An illegal cafe",
+    "A kitchen open at night"],
+   "A kitchen that cooks only for delivery",
+   "\"cook only for delivery\""),
+  ("What do some economists call for?", ["Regulation",
+    "Higher prices", "More apps", "Free delivery"],
+   "Regulation", "\"unless regulation catches up\"")]),
+("Sleep and the Teenage Brain", "B2",
+ "Ask any teenager why they stay up past midnight and you will "
+ "hear about homework, games or endless group chats. Biology, "
+ "however, is also to blame. During adolescence the body releases "
+ "melatonin - the hormone that signals sleepiness - about two "
+ "hours later than in childhood. In other words, a fifteen-year-"
+ "old who cannot fall asleep at ten is not simply being stubborn. "
+ "The conflict arises because school still starts early. Studies "
+ "in several countries have shown that moving the first lesson "
+ "just one hour later improves attendance, mood and even exam "
+ "results. Critics answer that later starts complicate parents' "
+ "work schedules and school transport. The debate continues, but "
+ "the science is clear: teenagers are not lazy - their clocks "
+ "are different.",
+ [("Why do teenagers fall asleep later?", [
+    "Melatonin is released later", "They are lazy",
+    "They drink coffee", "Schools give no homework"],
+   "Melatonin is released later",
+   "\"releases melatonin... about two hours later\""),
+  ("What did studies show about later school starts?", [
+    "Attendance and results improved", "Students slept less",
+    "Parents were happier", "Nothing changed"],
+   "Attendance and results improved",
+   "\"improves attendance, mood and even exam results\""),
+  ("What do critics say?", [
+    "Later starts complicate schedules and transport",
+    "The science is wrong", "Teenagers need less sleep",
+    "Exams should be cancelled"],
+   "Later starts complicate schedules and transport",
+   "\"complicate parents' work schedules and school transport\""),
+  ("What is the author's conclusion?", [
+    "Teenagers' body clocks are different", "Teenagers are lazy",
+    "School should be cancelled", "Melatonin is harmful"],
+   "Teenagers' body clocks are different",
+   "\"their clocks are different\"")]),
+("The Paradox of Choice", "C1",
+ "Conventional wisdom holds that the more options we have, the "
+ "better off we are. Psychologist Barry Schwartz famously "
+ "challenged this assumption, arguing that beyond a certain point "
+ "abundance breeds paralysis rather than freedom. In one study, "
+ "shoppers offered twenty-four varieties of jam were far less "
+ "likely to buy any than those shown just six. The cost of "
+ "endless choice is not merely indecision: having finally chosen, "
+ "we are haunted by the alternatives we declined, and our "
+ "satisfaction shrinks accordingly. Schwartz distinguishes "
+ "'maximisers', who exhaustively seek the best, from "
+ "'satisficers', who settle for good enough - and finds the "
+ "latter consistently happier. The lesson is not to abolish "
+ "choice but to recognise that self-imposed limits can be a form "
+ "of liberation.",
+ [("What did the jam study demonstrate?", [
+    "More options led to fewer purchases",
+    "Shoppers preferred variety", "Jam sales rose with choice",
+    "Six varieties were too few"],
+   "More options led to fewer purchases",
+   "24 xil murabbo ko'rganlar deyarli sotib olmagan."),
+  ("Why does satisfaction shrink after choosing?", [
+    "We keep thinking about rejected alternatives",
+    "Products are low quality", "Prices rise",
+    "We forget our choice"],
+   "We keep thinking about rejected alternatives",
+   "\"haunted by the alternatives we declined\""),
+  ("Who tends to be happier, according to Schwartz?", [
+    "Satisficers", "Maximisers", "Shoppers", "Psychologists"],
+   "Satisficers", "\"finds the latter consistently happier\""),
+  ("What is the author's final message?", [
+    "Limiting choice can be liberating",
+    "Choice should be abolished", "Buy the best or nothing",
+    "Avoid shopping"], "Limiting choice can be liberating",
+   "\"self-imposed limits can be a form of liberation\"")]),
+("Rewilding: Nature's Second Chance", "C1",
+ "Rewilding - the large-scale restoration of ecosystems to the "
+ "point where nature can take care of itself - has moved from the "
+ "fringes of conservation to its mainstream. Its advocates point "
+ "to the reintroduction of wolves in Yellowstone, which triggered "
+ "a cascade of recovery: elk herds dispersed, riverbanks "
+ "revegetated, and beavers returned. Sceptics, however, caution "
+ "against romanticism. Landscapes emptied of predators for "
+ "centuries are now home to farms and villages; releasing large "
+ "carnivores into them raises legitimate questions about "
+ "livestock, livelihoods and liability. The most promising "
+ "projects therefore proceed incrementally, pairing ecological "
+ "ambition with compensation schemes and genuine local consent. "
+ "Rewilding, at its best, is less about turning back the clock "
+ "than about giving natural processes room to write the future.",
+ [("What happened after wolves returned to Yellowstone?", [
+    "Ecosystem recovery followed", "Elk disappeared entirely",
+    "Beavers left", "Farms expanded"],
+   "Ecosystem recovery followed",
+   "\"triggered a cascade of recovery\""),
+  ("What do sceptics worry about?", [
+    "Livestock, livelihoods and liability",
+    "Too many beavers", "Tourism decline", "River flooding"],
+   "Livestock, livelihoods and liability",
+   "Aynan shu uchlik matnda sanab o'tilgan."),
+  ("How do the best projects proceed?", [
+    "Gradually, with local consent", "As fast as possible",
+    "In secret", "Only in national parks"],
+   "Gradually, with local consent",
+   "\"incrementally... genuine local consent\""),
+  ("What is rewilding 'at its best'?", [
+    "Letting natural processes shape the future",
+    "Recreating the past exactly", "Removing all people",
+    "A tourism strategy"],
+   "Letting natural processes shape the future",
+   "\"giving natural processes room to write the future\"")]),
+("The Cartographer's Dilemma", "C2",
+ "Every map is a small act of tyranny. To render a spherical, "
+ "seething world legible on a flat rectangle, the cartographer "
+ "must decide what merits inclusion and what may be consigned to "
+ "oblivion - and each omission quietly legislates reality for the "
+ "map's readers. The Mercator projection, contrived for "
+ "sixteenth-century navigators, notoriously inflates the poles "
+ "until Greenland rivals Africa, a continent fourteen times its "
+ "size; generations have thus absorbed a geopolitics of distortion "
+ "without ever suspecting it. Nor is the digital age exempt: when "
+ "a navigation app shades one district grey and renders another "
+ "in inviting detail, it is not describing the city so much as "
+ "prescribing our passage through it. The honest cartographer, "
+ "then, does not promise objectivity. She discloses her choices, "
+ "names her projection, and trusts the reader to remember that "
+ "the territory always exceeds the map.",
+ [("Why is every map 'an act of tyranny'?", [
+    "It imposes choices about what exists for readers",
+    "It is drawn by governments", "It is expensive",
+    "It shows too much detail"],
+   "It imposes choices about what exists for readers",
+   "\"each omission quietly legislates reality\""),
+  ("What is wrong with the Mercator projection?", [
+    "It grossly inflates polar regions",
+    "It omits the oceans", "It is upside down",
+    "It shows Africa too large"],
+   "It grossly inflates polar regions",
+   "\"inflates the poles until Greenland rivals Africa\""),
+  ("How do navigation apps 'prescribe' movement?", [
+    "By rendering areas selectively", "By charging fees",
+    "By closing roads", "By tracking users"],
+   "By rendering areas selectively",
+   "\"shades one district grey... inviting detail\""),
+  ("What should an honest cartographer do?", [
+    "Disclose choices and name the projection",
+    "Promise objectivity", "Avoid making maps",
+    "Use only satellites"],
+   "Disclose choices and name the projection",
+   "\"discloses her choices, names her projection\"")]),
+("On the Uses of Boredom", "C2",
+ "Boredom has acquired the status of a modern pathology, to be "
+ "anaesthetised at the first twinge by the nearest glowing "
+ "screen. Yet a growing body of research suggests that this "
+ "restless vacancy is not a malfunction of the mind but one of "
+ "its indispensable moods. In the idling brain, the so-called "
+ "default mode network stitches memory to imagination, rehearsing "
+ "futures and auditing the past; it is precisely in these "
+ "unclaimed moments that insight tends to ambush us. The "
+ "implication is uncomfortable: by reflexively evicting boredom, "
+ "we may be foreclosing the very conditions of originality. None "
+ "of this romanticises tedium for its own sake - an assembly line "
+ "is not a salon. But it does suggest that the capacity to sit "
+ "with one's own unfurnished thoughts, once a universal human "
+ "competence, is becoming a deliberate discipline, and perhaps a "
+ "competitive advantage.",
+ [("How is boredom commonly treated today?", [
+    "As an illness to be instantly relieved",
+    "As a luxury", "As a discipline", "As a skill"],
+   "As an illness to be instantly relieved",
+   "\"anaesthetised at the first twinge\""),
+  ("What does the default mode network do?", [
+    "Connects memory with imagination",
+    "Blocks distractions", "Causes anxiety",
+    "Controls movement"],
+   "Connects memory with imagination",
+   "\"stitches memory to imagination\""),
+  ("What may constant stimulation cost us?", [
+    "The conditions for originality", "Better focus",
+    "More free time", "Stronger memory"],
+   "The conditions for originality",
+   "\"foreclosing the very conditions of originality\""),
+  ("What is the author's attitude to tedium?", [
+    "Valuable, but not romanticised for its own sake",
+    "Entirely positive", "Entirely negative",
+    "Indifferent"],
+   "Valuable, but not romanticised for its own sake",
+   "\"None of this romanticises tedium... assembly line is "
+   "not a salon\"")]),
+]
+
+
 def seed_reading(db):
-    """Idempotent: sarlavha bo'yicha faqat yo'q matnlar qo'shiladi."""
+    """Idempotent: sarlavha bo'yicha faqat yo'q matnlar qo'shiladi.
+
+    Marker reading_v2 (2026-08-24): SEED2 dagi yangi darajali matnlar
+    jonli bazaga ham tushishi uchun."""
     from common import _seed_done, _seed_mark
-    if _seed_done(db, "reading_v1"):
+    if _seed_done(db, "reading_v2"):
         return None
     import json
     import models
     have = {t for (t,) in db.query(models.ReadingText.title).all()}
     made = 0
-    for title, level, body, questions in SEED:
+    for title, level, body, questions in SEED + SEED2:
         if title in have:
             continue
         tx = models.ReadingText(title=title, level=level, body=body)
@@ -282,5 +632,5 @@ def seed_reading(db):
             made += 1
     if made:
         db.commit()
-    _seed_mark(db, "reading_v1")
+    _seed_mark(db, "reading_v2")
     return made

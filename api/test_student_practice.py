@@ -46,9 +46,10 @@ s.user_id = u.id; db.commit()
 H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'998901112233','password':'jonyjony'}).json()['access_token']}"}
 
 print("=== SEEDLAR ===")
+# 2026-08-24: har darajaga matn qo'shildi (12 -> 24, savol 48 -> 96)
 ck("reading matnlari yuklangan",
-   db.query(models.ReadingText).count(), 12)
-ck("reading savollari", db.query(models.ReadingQuestion).count(), 48)
+   db.query(models.ReadingText).count(), 24)
+ck("reading savollari", db.query(models.ReadingQuestion).count(), 96)
 
 print("\n=== READING ===")
 r = c.get("/api/student/practice/reading/round", headers=H)

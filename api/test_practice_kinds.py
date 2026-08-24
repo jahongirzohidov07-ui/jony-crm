@@ -41,7 +41,8 @@ s.user_id = u.id; db.commit()
 H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'998901112233','password':'jonyjony'}).json()['access_token']}"}
 
 print("=== SEED ===")
-ck("91 element", db.query(models.PracticeItem).count(), 91)
+# 2026-08-24: B2/C1/C2 darajalari qo'shildi (91 -> 118)
+ck("118 element", db.query(models.PracticeItem).count(), 118)
 
 def item_of(ref):
     return db.query(models.PracticeItem).get(int(ref.split(":")[1]))

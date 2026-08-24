@@ -1,5 +1,9 @@
 """4 KO'NIKMA YANGI MASHQ TURLARI BAZASI (2026-08-11).
 
+2026-08-24: B2/C1/C2 darajalari qo'shildi (Jahongir: "a1 dan
+boshlab c2 darajagacha... mashqlarni ham kopaytir"); marker
+practice_v2 - jonli bazaga ham tushadi.
+
 Jahongir bergan spetsifikatsiya bo'yicha. Har element:
 (skill, kind, level, payload dict, answer, alt, explain).
 Idempotent: (skill, kind, payload) bo'yicha faqat yo'qlari qo'shiladi.
@@ -84,6 +88,53 @@ _R_TFNG = [
   ("The study looked at ten projects.", "True", "Aniq raqam bor."),
   ("Taxi drivers are against the plan.", "Not Given",
    "Taksichilar haqida gap yo'q.")]),
+("B2", "Remote work, once a rare perk, became the norm for "
+ "millions during the pandemic. Many companies later introduced "
+ "hybrid schedules, asking employees to attend the office two or "
+ "three days a week. Surveys show most workers value flexibility "
+ "more than a higher salary, yet managers still worry that "
+ "creativity suffers without face-to-face contact.",
+ [("Remote work was common before the pandemic.", "False",
+   "\"once a rare perk\" — kam uchraydigan imtiyoz edi."),
+  ("Hybrid schedules require some office attendance.", "True",
+   "Haftasiga 2-3 kun ofis so'raladi."),
+  ("Most workers would prefer a higher salary to flexibility.",
+   "False", "Aksincha: moslashuvchanlik muhimroq."),
+  ("Managers' worries have been proved wrong.", "Not Given",
+   "Xavotir bor deyilgan, isboti aytilmagan.")]),
+("C1", "The placebo effect has long embarrassed medicine: patients "
+ "improve after receiving treatments with no active ingredient. "
+ "Recent trials complicate the picture further - some participants "
+ "who KNEW they were taking a placebo still reported genuine "
+ "relief. Researchers suspect the ritual of care itself, rather "
+ "than deception, triggers the body's self-regulating responses, "
+ "though the mechanism remains poorly understood.",
+ [("Patients can improve even when told the pill is a placebo.",
+   "True", "\"KNEW they were taking a placebo... genuine relief\"."),
+  ("Deception is essential for the placebo effect.", "False",
+   "Aldashsiz ham ishlagan — demak shart emas."),
+  ("The mechanism has now been fully explained.", "False",
+   "\"remains poorly understood\"."),
+  ("Placebo trials are cheaper than drug trials.", "Not Given",
+   "Narx haqida matnda gap yo'q.")]),
+("C2", "It is tempting to treat attention as a private faculty, "
+ "ours to spend as we please. Yet an economy has quietly grown up "
+ "around its capture, in which the idle moment is a vacancy to be "
+ "filled and distraction a service rendered. The vocabulary betrays "
+ "the shift: we 'pay' attention, platforms 'harvest' engagement. "
+ "Whether regulation can - or should - treat attention as a "
+ "protected resource, like clean air, is now a serious question "
+ "in several parliaments.",
+ [("The author says attention is now treated as an economic "
+   "resource.", "True",
+   "\"an economy has quietly grown up around its capture\"."),
+  ("Regulation of attention is already law in several countries.",
+   "Not Given",
+   "Parlamentlarda muhokama deyilgan — qonun deyilmagan."),
+  ("The language we use reflects the economic view of attention.",
+   "True", "\"pay attention... harvest engagement\"."),
+  ("The author believes distraction is harmless.", "False",
+   "Ohang tanqidiy.")]),
 ]
 
 # read_gap: payload {text (raqamli bo'shliqlar), options[[...]]};
@@ -131,6 +182,38 @@ _R_GAP = [
   "Important facts move into long-term memory.",
   "So a good night's sleep is real preparation for exams."],
  "B1: butun GAPLARNI matn mantig'iga qarab joylash."),
+("B2", "The city council has (1)___ a new recycling scheme. "
+ "Residents will (2)___ separate bins for glass, paper and "
+ "plastic. Officials hope the scheme will (3)___ landfill waste "
+ "by forty per cent (4)___ two years.",
+ [["launched", "cancelled", "forgotten"],
+  ["receive", "lose", "sell"],
+  ["reduce", "increase", "ignore"],
+  ["within", "until", "since"]],
+ ["launched", "receive", "reduce", "within"],
+ "launch a scheme; receive bins; reduce waste; within two years."),
+("C1", "Far from being a passive archive, memory is (1)___ "
+ "reconstructive: each act of recall subtly (2)___ the trace "
+ "itself. This is why eyewitness testimony, however sincere, "
+ "should be treated with (3)___, and why repeated questioning "
+ "can (4)___ implant details that were never there.",
+ [["inherently", "rarely", "allegedly"],
+  ["rewrites", "erases", "protects"],
+  ["caution", "applause", "indifference"],
+  ["inadvertently", "deliberately", "legally"]],
+ ["inherently", "rewrites", "caution", "inadvertently"],
+ "Xotira qayta quriladi — har eslash izni qayta yozadi."),
+("C2", "The essay's central (1)___ is that translation is less a "
+ "mirror than a negotiation: the translator must (2)___ fidelity "
+ "to the letter against loyalty to the effect. What is (3)___ in "
+ "syntax may be recovered in rhythm, and what a pun (4)___ in one "
+ "language, an image may redeem in another.",
+ [["contention", "apology", "footnote"],
+  ["weigh", "abandon", "conceal"],
+  ["forfeited", "doubled", "invented"],
+  ["surrenders", "acquires", "translates"]],
+ ["contention", "weigh", "forfeited", "surrenders"],
+ "Tarjima — muzokara: harf va ta'sir o'rtasida."),
 ]
 
 # read_match: payload {paragraphs:[...], headings:[...]};
@@ -168,6 +251,40 @@ _R_MATCH = [
  ["Why we buy too much", "A trick to stop impulse buying",
   "The power of small savings"],
  "Bosh g'oya (main idea) ni aniqlash."),
+("B2",
+ ["Electric scooters appeared on our streets almost overnight, "
+  "offering cheap, clean trips across the centre.",
+  "Hospitals, however, report a sharp rise in scooter-related "
+  "injuries, most involving riders without helmets.",
+  "The mayor now proposes speed limits, dedicated lanes and "
+  "mandatory parking zones to balance freedom with safety."],
+ ["A sudden arrival", "The hidden cost", "A plan to respond"],
+ ["A sudden arrival", "The hidden cost", "A plan to respond"],
+ "Paydo bo'lish — muammo — javob rejasi."),
+("C1",
+ ["For decades the region's farmers relied on glacial meltwater, "
+  "timing their sowing to its dependable rhythm.",
+  "As the glaciers retreat, that rhythm is faltering: rivers now "
+  "surge in spring and dwindle by midsummer.",
+  "Adaptation is under way - drip irrigation, drought-resistant "
+  "crops - but each measure demands capital the poorest lack."],
+ ["A dependable resource", "A rhythm disrupted",
+  "Adaptation and its limits"],
+ ["A dependable resource", "A rhythm disrupted",
+  "Adaptation and its limits"],
+ "Manba — buzilish — moslashuv chegaralari."),
+("C2",
+ ["The novel opens in the idiom of a courtroom transcript, all "
+  "clipped questions and numbered exhibits.",
+  "Midway, the prose loosens into memory: long, unpunctuated "
+  "sentences that mimic the drift of recollection.",
+  "The final chapters fuse the two registers, as if testimony "
+  "and remembrance had at last agreed on a single voice."],
+ ["Forensic beginnings", "The loosening of memory",
+  "A synthesis of registers"],
+ ["Forensic beginnings", "The loosening of memory",
+  "A synthesis of registers"],
+ "Uslub evolyutsiyasi: protokol — xotira — sintez."),
 ]
 
 # ============================ LISTENING ============================
@@ -269,6 +386,59 @@ _L_QA = [
  ["Go to gate 5", "Go home", "Board immediately",
   "Buy new tickets"], "Go to gate 5",
  "should go to gate 5 deyilgan."),
+("B2", "Attention, passengers. Flight two-four-seven to Istanbul "
+ "is delayed by ninety minutes due to fog. Passengers holding "
+ "connecting tickets should approach desk twelve for rebooking.",
+ "How long is the delay?",
+ ["Ninety minutes", "Twenty minutes", "Two hours", "All day"],
+ "Ninety minutes", "delayed by ninety minutes."),
+("B2", "Interviewer: You changed careers at forty. Was it "
+ "frightening? Guest: Honestly, the frightening part was staying. "
+ "I had stopped learning anything new years before.",
+ "Why did the guest change careers?",
+ ["He had stopped learning in his old job",
+  "He was fired", "He wanted more money", "He moved abroad"],
+ "He had stopped learning in his old job",
+ "\"I had stopped learning anything new\"."),
+("C1", "Professor: The experiment failed twice, and funding was "
+ "nearly withdrawn. Paradoxically, the second failure was the "
+ "breakthrough - it eliminated the only plausible alternative "
+ "explanation.",
+ "Why was the second failure valuable?",
+ ["It ruled out the alternative explanation",
+  "It attracted new funding", "It ended the project",
+  "It was published first"],
+ "It ruled out the alternative explanation",
+ "\"eliminated the only plausible alternative explanation\"."),
+("C1", "Curator: Visitors expect the restoration to make the "
+ "fresco look new. Our aim is the opposite - to stabilise the "
+ "decay, not to erase the centuries.",
+ "What is the restorers' goal?",
+ ["To preserve the fresco without hiding its age",
+  "To repaint the fresco completely",
+  "To move the fresco to a museum", "To sell reproductions"],
+ "To preserve the fresco without hiding its age",
+ "\"stabilise the decay, not erase the centuries\"."),
+("C2", "Critic: The composer's late quartets were dismissed as "
+ "incoherent by contemporaries; we now hear in that alleged "
+ "incoherence the first grammar of a music that would take a "
+ "century to be spoken fluently.",
+ "What does the critic claim about the late quartets?",
+ ["They anticipated a musical language ahead of their time",
+  "They were justly forgotten", "They imitated older works",
+  "They were never performed"],
+ "They anticipated a musical language ahead of their time",
+ "Keyingi asr musiqasining birinchi grammatikasi."),
+("C2", "Narrator: The archive survived the fire not by chance but "
+ "by bureaucracy: a clerk, distrusting the new building, had "
+ "quietly duplicated every ledger and lodged the copies with a "
+ "rival ministry he despised.",
+ "How did the archive survive?",
+ ["A clerk had secretly made duplicates",
+  "The fire never reached it", "Firefighters saved it",
+  "It was digitised"],
+ "A clerk had secretly made duplicates",
+ "\"quietly duplicated every ledger\"."),
 ]
 
 # listen_order: payload {say, steps (TO'G'RI tartibda)}; answer JSON
@@ -309,6 +479,28 @@ _L_ORDER = [
  ["He arrived late", "He explained his projects",
   "The manager asked questions", "She offered him the job"],
  "Hikoya ketma-ketligi."),
+("B2", "First the committee reviewed the budget. Then it "
+ "interviewed both candidates. After long debate it postponed the "
+ "final vote. In the end the decision was leaked to the press "
+ "anyway.",
+ ["The budget was reviewed", "Candidates were interviewed",
+  "The vote was postponed", "The decision was leaked"],
+ "Majlis voqealari ketma-ketligi."),
+("C1", "The manuscript was first dismissed as a forgery. Decades "
+ "later, ink analysis dated it to the twelfth century. That "
+ "finding prompted a full retranslation. The retranslation, in "
+ "turn, rewrote the history of the region's trade routes.",
+ ["It was dismissed as a forgery", "Ink analysis dated it",
+  "A retranslation followed", "Trade history was rewritten"],
+ "Qo'lyozma: shubha — sana — tarjima — qayta yozilgan tarix."),
+("C2", "The theory was ridiculed at the conference where it was "
+ "first read. Quiet replication in two rival laboratories "
+ "followed. Only then did the journals that had rejected the "
+ "paper solicit a review from its author. The Nobel committee, "
+ "characteristically, arrived last.",
+ ["The theory was ridiculed", "Rival labs replicated it",
+  "Journals solicited a review", "The Nobel committee acted"],
+ "Ilmiy e'tirof bosqichlari."),
 ]
 
 # ============================ WRITING ============================
@@ -415,7 +607,7 @@ _S_ANSWER = [
 def seed_practice(db):
     """Idempotent: (skill, kind, payload) bo'yicha yo'qlari qo'shiladi."""
     from common import _seed_done, _seed_mark
-    if _seed_done(db, "practice_v1"):
+    if _seed_done(db, "practice_v2"):
         return None
     import json
     import models
@@ -474,5 +666,5 @@ def seed_practice(db):
         made += 1
     if made:
         db.commit()
-    _seed_mark(db, "practice_v1")
+    _seed_mark(db, "practice_v2")
     return made

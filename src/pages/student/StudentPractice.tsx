@@ -108,6 +108,14 @@ export default function StudentPractice() {
   const lang = getLang();
   ttsLang = skill === "listening" ? TTS_LANGS[lang] || "en-US" : "en-US";
   const [kind, setKind] = useState<string | null>(null);
+  // DARAJA BO'LIMLARI (2026-08-24, Jahongir: "reading listening
+  // qismini a1 dan boshlab c2 darajagacha... bo'lim chiqib").
+  // Boshqa tillar listeningida daraja yo'q — u faqat so'z diktanti.
+  const needLevel =
+    skill === "reading" || (skill === "listening" && lang === "en");
+  const [level, setLevel] = useState<string | null>(null);
+  const [levels, setLevels] = useState<Any[]>([]);
+  const [cnt, setCnt] = useState(10);
   const [d, setD] = useState<Any>(null);
   const [idx, setIdx] = useState(0);
   const [err, setErr] = useState("");
@@ -126,8 +134,17 @@ export default function StudentPractice() {
   const [sel, setSel] = useState<Record<number, string>>({});
   const [seq, setSeq] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (!needLevel) return;
+    api
+      .get<Any>(`/student/practice/${skill}/levels`)
+      .then((r) => setLevels(r.levels || []))
+      .catch(() => setLevels([]));
+  }, [skill, needLevel]);
+
   const load = useCallback(() => {
     if (kind === null) return;
+    if (needLevel && level === null) return;
     setErr("");
     setD(null);
     setIdx(0);
@@ -142,17 +159,21 @@ export default function StudentPractice() {
     const parts: string[] = [];
     if (!oldKinds.includes(kind)) parts.push(`kind=${kind}`);
     if (skill === "listening") parts.push(`language=${lang}`);
+    if (needLevel && level) parts.push(`level=${level}`);
+    // Mashqlar soni (2026-08-24: "mashqlarni ham kopaytir")
+    if (cnt && kind !== "read_mcq") parts.push(`count=${cnt}`);
     const q = parts.length ? `?${parts.join("&")}` : "";
     api
       .get<Any>(`/student/practice/${skill}/round${q}`)
       .then((r) => setD(r))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [skill, kind, lang]);
+  }, [skill, kind, lang, level, cnt, needLevel]);
 
   useEffect(load, [load]);
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
   useEffect(() => {
     setKind(null);
+    setLevel(null);
   }, [skill]);
 
   const items: Any[] = d?.items || [];
@@ -383,6 +404,14 @@ export default function StudentPractice() {
               turni almashtirish
             </button>
           )}
+          {needLevel && level && (
+            <button onClick={() => { setKind(null); setLevel(null); }}
+              className="text-[11px] font-bold rounded-full px-2.5 py-1 border text-brand-300 shrink-0"
+              style={{ background: "#111C4B", borderColor: "#223070" }}
+              title="Darajani almashtirish">
+              {level}
+            </button>
+          )}
         </div>
       </div>
 
@@ -399,12 +428,80 @@ export default function StudentPractice() {
           </div>
         )}
 
+        {/* ---- DARAJA TANLASH (2026-08-24) ---- */}
+        {needLevel && level === null && (
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-1">
+              Darajangizni tanlang
+            </p>
+            <p className="text-[11px] text-slate-400 mb-3">
+              Beginner (A1) dan Native (C2) gacha — har bo'limda o'z
+              darajangizga mos mashqlar.
+            </p>
+            <div className="space-y-1.5">
+              {levels.map((lv: Any) => {
+                const empty = !lv.total;
+                return (
+                  <button
+                    key={lv.level}
+                    disabled={empty}
+                    onClick={() => setLevel(lv.level)}
+                    className={`w-full flex items-center gap-3 border rounded-xl p-3.5 text-left transition ${
+                      empty
+                        ? "border-slate-100 opacity-50"
+                        : "border-slate-200 active:scale-[0.99]"
+                    }`}
+                  >
+                    <div className="w-11 h-9 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center shrink-0 text-sm font-extrabold">
+                      {lv.level}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-800">
+                        {lv.label}
+                      </p>
+                      <p className="text-[11px] text-slate-400">
+                        {empty
+                          ? "Mashqlar tez orada qo'shiladi"
+                          : `${lv.solved}/${lv.total} bajarildi`}
+                      </p>
+                    </div>
+                    {!empty && (
+                      <div className="w-16 shrink-0">
+                        <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                          <div className="h-full bg-sky-500 rounded-full"
+                               style={{ width: `${lv.percent}%` }} />
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* ---- TUR TANLASH ---- */}
-        {kind === null && (
+        {kind === null && (!needLevel || level !== null) && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Qaysi turdagi mashqni xohlaysiz?
             </p>
+            <div className="flex items-center gap-1.5 mb-3">
+              <span className="text-[11px] text-slate-400 mr-1">Soni:</span>
+              {[10, 20, 30].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setCnt(n)}
+                  className={`px-3 py-1.5 rounded-lg border text-xs font-semibold ${
+                    cnt === n
+                      ? "bg-slate-800 text-white border-transparent"
+                      : "bg-white text-slate-500 border-slate-200"
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
             <div className="space-y-1.5">
               {(KINDS[skill || ""] || [])
                 .filter(

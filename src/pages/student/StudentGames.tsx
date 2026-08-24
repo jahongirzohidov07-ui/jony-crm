@@ -24,6 +24,8 @@ type Section = {
 type Learn = {
   lifetime_xp: number; coins: number; streak: number;
   daily: DailyGoal; continue: ContinueCard | null; sections: Section[];
+  ielts?: { unlocked: boolean; need_label: string;
+            level_label?: string; href: string };
 };
 
 /** Dizayn ikonkalari (Jahongir bergan to'plamdan). */
@@ -213,6 +215,30 @@ export default function StudentGames() {
           </Link>
         ))}
       </div>
+
+      {/* ---- CEFR / IELTS (2026-08-24, Jahongir: "alohida bo'lim
+           ochilishi kerak... intermediate tugatganda ochiladigan") */}
+      {d.ielts && (
+        <Link to={d.ielts.href || "/student/ielts"}
+          className="flex items-center gap-3 rounded-3xl p-4 mt-3 bg-white active:scale-[0.98] transition">
+          <img src="/jsicons/learn-exam.png" alt="" className="w-12 h-12 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-[17px] font-extrabold text-slate-900">
+              CEFR / IELTS
+            </p>
+            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">
+              {d.ielts.unlocked
+                ? "Xalqaro imtihon formatidagi bo'lim ochiq"
+                : d.ielts.need_label}
+            </p>
+          </div>
+          {d.ielts.unlocked ? (
+            <ChevronRight size={17} className="text-slate-300 shrink-0" />
+          ) : (
+            <span className="text-lg shrink-0">🔒</span>
+          )}
+        </Link>
+      )}
     </div>
   );
 }

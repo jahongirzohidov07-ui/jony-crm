@@ -1587,16 +1587,11 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         _apply_reschedule(db, r)
         db.commit()
     else:
-        # Tasdiq kerak bo'lsa — o'quv bo'limiga vazifa bo'lib boradi
-        _hr_task(db, title=f"Dars ko'chirish so'rovi #{r.id}",
-                 body=(f"{t.full_name if t else '—'} — {g.name}. "
-                       f"{payload.from_date} → {payload.to_date}. "
-                       f"Kvota tugagan (oyiga "
-                       f"{roles.RESCHEDULE_PER_MONTH} marta), shuning "
-                       f"uchun tasdiq kerak."),
-                 to_roles=roles.RESCHEDULE_APPROVE,
-                 branch_id=g.branch_id, days=1, priority="high")
-        db.commit()
+        # Tasdiq kerak bo'lsa — HAR BIR tasdiqlovchiga vazifa
+        # (2026-08-24, Jahongir: "HR uchun dars tasdiqlash chiqmay
+        # qolibdi dars kochirishlarniki"). Ilgari _hr_task() bitta
+        # odamga biriktirardi va HR umuman ko'rmasdi.
+        _notify_reschedule_approvers(db, r, g, t)
 
     audit.log(db, user, entity="lesson_reschedule", action="create",
               entity_id=r.id, entity_label=g.name,

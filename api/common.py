@@ -1822,6 +1822,62 @@ def _notify_discount_approvers(db: Session, d, st, extra: str = "") -> None:
     db.commit()
 
 
+def _notify_reschedule_approvers(db: Session, r, group, teacher) -> None:
+    """Dars ko'chirish so'rovi HAR BIR tasdiqlovchiga vazifa bo'lib tushadi.
+
+    2026-08-24, Jahongir: "HR uchun dars tasdiqlash chiqmay qolibdi
+    dars kochirishlarniki".
+
+    SABAB. Ilgari bu yerda _hr_task() ishlatilardi — u so'rovni FAQAT
+    BITTA odamga biriktirardi (ro'yxatdagi birinchi topilganga, ya'ni
+    amalda asoschiga). Natijada HR va o'quv bo'limi rahbari so'rovni
+    umuman ko'rmasdi. Chegirma so'rovida bu allaqachon to'g'ri
+    ishlangan (_notify_discount_approvers) — dars ko'chirish ham
+    o'shanday bo'ldi.
+
+    Kim ko'radi: asoschi, o'quv bo'limi rahbari va HR — butun
+    tashkilot bo'yicha; filial rahbari — faqat o'z filialining
+    guruhlari bo'yicha.
+
+    Bittasi hal qilgach _close_request_tasks() qolganlarining
+    vazifasini ham "bajarildi" qilib yopadi.
+    """
+    title = f"Dars ko'chirish so'rovi #{r.id}"
+    body = (f"{teacher.full_name if teacher else '—'} — "
+            f"{group.name if group else '—'}\n"
+            f"{r.from_date} → {r.to_date}\n"
+            f"Sabab: {roles.RESCHEDULE_REASON_LABELS.get(r.reason or '', '—')}"
+            f"\nIzoh: {r.note or '—'}\n"
+            f"Kvota tugagan (oyiga {roles.RESCHEDULE_PER_MONTH} marta), "
+            f"shuning uchun tasdiq kerak.\n"
+            "Tasdiqlash: shu vazifaning ichidagi tugmadan yoki bosh "
+            "sahifadagi \"Dars ko'chirish so'rovlari\" blokidan.")
+    bid = group.branch_id if group is not None else None
+    seen = set()
+    for role in roles.RESCHEDULE_APPROVE:
+        q = db.query(models.User).filter(models.User.role == role,
+                                         models.User.is_active == 1)
+        if role == roles.BRANCH_MANAGER and bid:
+            q = q.filter(models.User.branch_id == bid)
+        for u in q.all():
+            if u.id in seen:
+                continue
+            seen.add(u.id)
+            if db.query(models.Task).filter(
+                    models.Task.title == title,
+                    models.Task.assignee_id == u.id).first():
+                continue
+            t = models.Task(
+                title=title, description=body, assignee_id=u.id,
+                branch_id=bid,
+                deadline=date.today() + timedelta(days=1),
+                priority="high", source="manual", created_by="Tizim")
+            db.add(t)
+            db.flush()
+            _ensure_public_id(db, "task", t)
+    db.commit()
+
+
 def _norm_surname(full_name: str) -> str:
     """Familiyani solishtirish uchun soddalashtiradi.
 
@@ -5430,6 +5486,7 @@ __all__ = [
     "_norm_surname",
     "_close_request_tasks",
     "_notify_discount_approvers",
+    "_notify_reschedule_approvers",
     "_same_surname",
     "_do_family_link",
     "_founder_name_fix",

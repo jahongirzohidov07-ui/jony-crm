@@ -1284,15 +1284,10 @@ def my_reschedule_add(payload: schemas.RescheduleIn,
         _apply_reschedule(db, r)
         db.commit()
     else:
-        _hr_task(db, title=f"Dars ko'chirish so'rovi #{r.id}",
-                 body=(f"{t.full_name} — {g.name}. "
-                       f"{payload.from_date} → {payload.to_date}. "
-                       f"Kvota tugagan (oyiga "
-                       f"{roles.RESCHEDULE_PER_MONTH} marta), "
-                       f"shuning uchun tasdiq kerak."),
-                 to_roles=roles.RESCHEDULE_APPROVE,
-                 branch_id=g.branch_id, days=1, priority="high")
-        db.commit()
+        # HAR BIR tasdiqlovchiga alohida vazifa (2026-08-24,
+        # Jahongir: "HR uchun dars tasdiqlash chiqmay qolibdi").
+        # Ilgari _hr_task() faqat bitta odamga biriktirardi.
+        _notify_reschedule_approvers(db, r, g, t)
 
     audit.log(db, user, entity="lesson_reschedule", action="create",
               entity_id=r.id, entity_label=f"{g.name} {payload.from_date}",

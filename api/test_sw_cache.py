@@ -86,5 +86,31 @@ ck("ErrorBoundary versiya xatosini ajratadi",
    "isVersionError" in eb, True)
 ck("va boshqacha xabar beradi", "Dastur yangilandi" in eb, True)
 
+
+print("\n=== 8. IELTS LISTENING TUZILMASI (2026-08-24) ===")
+# Jahongir: "listening asosiy ko'nikmalar, listening ichida
+# bo'lishi kerak" - uch mashq endi Listening kartasining ICHIDA.
+root = os.path.dirname(HERE)
+ie = open(os.path.join(root, "src", "pages", "student",
+                       "StudentIelts.tsx"), encoding="utf-8").read()
+ck("Listening kartasi bosiladi",
+   'href: "/student/ielts/listening"' in ie, True)
+ck("pastdagi alohida blok olib tashlandi",
+   "Listening — asosiy ko'nikmalar" in ie, False)
+home = open(os.path.join(root, "src", "pages", "student",
+                         "StudentIeltsListeningHome.tsx"),
+            encoding="utf-8").read()
+ck("yangi sahifada mashqlar bor",
+   "Asosiy ko'nikmalar" in home, True)
+ck("mashqqa yo'l to'g'ri",
+   "/student/ielts/listening/${p.kind}" in home, True)
+ck("orqaga IELTS bo'limiga qaytadi",
+   'to="/student/ielts"' in home, True)
+app = open(os.path.join(root, "src", "App.tsx"), encoding="utf-8").read()
+ck("marshrut ro'yxatdan o'tdi",
+   'path="ielts/listening"' in app, True)
+ck("mashq marshruti ham joyida",
+   'path="ielts/listening/:kind"' in app, True)
+
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

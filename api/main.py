@@ -205,6 +205,15 @@ try:
 except Exception:
     pass
 
+# IELTS listening: spelling / raqam / postcode (2026-08-24)
+try:
+    from sqlalchemy.orm import Session as _VS15
+    from ielts_seed import seed_ielts
+    with _VS15(engine) as _db15:
+        seed_ielts(_db15)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

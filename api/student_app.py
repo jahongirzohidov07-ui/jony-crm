@@ -24,7 +24,7 @@ import random
 from datetime import date, datetime, timedelta
 from urllib.parse import quote
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
@@ -575,6 +575,164 @@ def practice_levels(skill: str,
                               / total[lv]) if total[lv] else 0),
         } for lv in PRACTICE_LEVELS],
     }
+
+
+# =====================================================================
+#  IELTS LISTENING — SPELLING VA RAQAMLAR (2026-08-24)
+#
+#  Jahongir: "Listening bo'limda birinchi spelling names bo'lsin...
+#  keyin 50ta number practice... 3-mashq spelling mixed koproq
+#  postcodelar... hammasi sekinidan boshlab qiyinlashib borsin va
+#  tezlashib borsin".
+#
+#  MASHQ TARTIBI. Elementlar step (1..5) bo'yicha saralab beriladi:
+#  bola sekin va oson boshlab, imtihon tezligiga chiqadi. Tezlik
+#  serverdan keladi (rate), mijoz o'zi hisoblamaydi.
+#
+#  QAYERGA YOZILADI. Bal va urinishlar SkillAttempt'ga skill=
+#  "listening" bo'lib tushadi — IELTS mashqi ham listening
+#  ko'nikmasini o'stiradi, alohida hisob ochilmaydi.
+# =====================================================================
+IELTS_SKILL = "ielts_listening"
+IELTS_PARTS = [
+    {"kind": "ielts_spell", "title": "Spelling — nomlar",
+     "hint": "Britaniya shaharlari, ko'chalari va familiyalari "
+             "harflab aytiladi"},
+    {"kind": "ielts_number", "title": "Raqamlar",
+     "hint": "Telefon, karta, narx, yil — bittalab aytiladi"},
+    {"kind": "ielts_mixed", "title": "Aralash — postcode va kodlar",
+     "hint": "Harf va raqam aralash keladi"},
+]
+
+
+def _ielts_norm(t: str) -> str:
+    """Tekshiruv uchun: registr, bo'sh joy, defis va apostrof
+    e'tiborsiz. 'sw1a2aa' == 'SW1A 2AA' == 'sw1a-2aa'."""
+    t = (t or "").upper()
+    for ch in " -/.,'\u2019\u02bb":
+        t = t.replace(ch, "")
+    return t
+
+
+@router.get("/api/student/ielts/listening/parts")
+def ielts_listening_parts(db: Session = Depends(get_db),
+                          user=Depends(require_role(roles.STUDENT))):
+    """Uch mashqning ro'yxati: nechta element va nechtasi bajarilgan."""
+    s = _me(db, user)
+    solved = {r for (r,) in
+              db.query(func.distinct(models.SkillAttempt.ref))
+              .filter(models.SkillAttempt.student_id == s.id,
+                      models.SkillAttempt.skill == "listening",
+                      models.SkillAttempt.correct == 1).all()}
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == IELTS_SKILL,
+                    models.PracticeItem.is_active == 1).all())
+    by_kind = {}
+    for r in rows:
+        by_kind.setdefault(r.kind, []).append(r)
+    out = []
+    for i, part in enumerate(IELTS_PARTS, 1):
+        items = by_kind.get(part["kind"], [])
+        done = sum(1 for r in items if f"pi:{r.id}" in solved)
+        out.append({
+            "no": i, "kind": part["kind"], "title": part["title"],
+            "hint": part["hint"], "total": len(items), "solved": done,
+            "percent": round(done * 100 / len(items)) if items else 0,
+        })
+    return {"parts": out}
+
+
+@router.get("/api/student/ielts/listening/round")
+def ielts_listening_round(kind: str, count: int = 10,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(roles.STUDENT))):
+    """Bitta mashg'ulot: OSONDAN QIYINGA saralangan elementlar.
+
+    Avval hali yechilmaganlar (step bo'yicha o'sib boradi), ular
+    tugasa yechilganlaridan davom etadi — mashq hech qachon
+    "tugab" qolmaydi."""
+    s = _me(db, user)
+    if kind not in {p["kind"] for p in IELTS_PARTS}:
+        raise HTTPException(404, "Bunday mashq yo'q")
+    n = max(1, min(int(count or 10), 60))
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == IELTS_SKILL,
+                    models.PracticeItem.kind == kind,
+                    models.PracticeItem.is_active == 1).all())
+    if not rows:
+        raise HTTPException(400, "Mashqlar hali yuklanmagan")
+    solved = {r for (r,) in
+              db.query(func.distinct(models.SkillAttempt.ref))
+              .filter(models.SkillAttempt.student_id == s.id,
+                      models.SkillAttempt.skill == "listening",
+                      models.SkillAttempt.correct == 1).all()}
+
+    def key(r):
+        pl = json.loads(r.payload)
+        return (int(pl.get("step", 1)), int(pl.get("order", 0)))
+
+    fresh = sorted([r for r in rows if f"pi:{r.id}" not in solved],
+                   key=key)
+    done = sorted([r for r in rows if f"pi:{r.id}" in solved], key=key)
+    picked = (fresh + done)[:n]
+    items = []
+    for r in picked:
+        pl = json.loads(r.payload)
+        items.append({
+            "ref": f"pi:{r.id}", "kind": r.kind,
+            "say": pl["say"], "rate": pl.get("rate", 0.8),
+            "step": pl.get("step", 1), "hint": pl.get("hint"),
+            "length": len(r.answer.replace(" ", "")),
+            "solved": f"pi:{r.id}" in solved,
+        })
+    return {"kind": kind, "items": items,
+            "title": next(p["title"] for p in IELTS_PARTS
+                          if p["kind"] == kind)}
+
+
+@router.post("/api/student/ielts/listening/answer")
+def ielts_listening_answer(payload: dict = Body(default={}),
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(roles.STUDENT))):
+    """Javob tekshiruvi — FAQAT serverda."""
+    s = _me(db, user)
+    ref = str(payload.get("ref") or "")
+    kind, _, sid = ref.partition(":")
+    if kind != "pi" or not sid.isdigit():
+        raise HTTPException(400, "Noto'g'ri mashq kaliti")
+    it = db.query(models.PracticeItem).get(int(sid))
+    if not it or not it.is_active or it.skill != IELTS_SKILL:
+        raise HTTPException(404, "Mashq topilmadi")
+    given = str(payload.get("answer") or "")
+    ok = bool(given.strip()) and _ielts_norm(given) == _ielts_norm(it.answer)
+
+    was = (db.query(models.SkillAttempt.id)
+           .filter(models.SkillAttempt.student_id == s.id,
+                   models.SkillAttempt.skill == "listening",
+                   models.SkillAttempt.ref == ref,
+                   models.SkillAttempt.correct == 1)
+           .first() is not None)
+    db.add(models.SkillAttempt(
+        student_id=s.id, skill="listening", ref=ref,
+        correct=1 if ok else 0, answer=given[:300], date=date.today()))
+    db.commit()
+
+    xp_given = 0.0
+    if ok and not was:
+        try:
+            res = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT,
+                source_type="practice_listening", source_id=it.id,
+                reason="IELTS listening mashqi",
+                idempotency_key=f"PRACT:listening:{s.id}:{ref}")
+            if res.get("ok"):
+                xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+        except Exception:
+            db.rollback()
+    return {"correct": ok, "expected": it.answer,
+            "explain": it.explain, "first_time": ok and not was,
+            "xp": xp_given}
 
 
 @router.get("/api/student/skills")

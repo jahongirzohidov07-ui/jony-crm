@@ -41,8 +41,15 @@ s.user_id = u.id; db.commit()
 H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'998901112233','password':'jonyjony'}).json()['access_token']}"}
 
 print("=== SEED ===")
-# 2026-08-24: B2/C1/C2 darajalari qo'shildi (91 -> 118)
-ck("118 element", db.query(models.PracticeItem).count(), 118)
+# 2026-08-24: B2/C1/C2 darajalari (91 -> 118), keyin IELTS
+# listening bloki (+159) — bu yerda faqat 4 ko'nikma sanaladi.
+ck("118 ta 4-ko'nikma elementi", db.query(models.PracticeItem)
+   .filter(models.PracticeItem.skill.in_(
+       ("reading", "listening", "writing", "speaking"))).count(), 118)
+ck("IELTS listening bloki 150+",
+   db.query(models.PracticeItem)
+   .filter(models.PracticeItem.skill == "ielts_listening")
+   .count() >= 150, True)
 
 def item_of(ref):
     return db.query(models.PracticeItem).get(int(ref.split(":")[1]))

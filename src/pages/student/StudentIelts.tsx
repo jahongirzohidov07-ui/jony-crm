@@ -34,8 +34,7 @@ const PARTS: {
     desc: "4 qism · 40 savol · 30 daqiqa. Suhbat, monolog, " +
       "ma'ruza - barchasi bir marta eshittiriladi.",
     icon: "/jsicons/learn-listening.png",
-    href: "/student/practice/listening",
-    hint: "Hozircha: C1/C2 darajali listening mashqlari",
+    // Listening mashqlari pastda alohida blokda (2026-08-24)
   },
   {
     key: "reading", title: "IELTS Reading",
@@ -61,6 +60,7 @@ const PARTS: {
 
 export default function StudentIelts() {
   const [gate, setGate] = useState<Any>(null);
+  const [parts, setParts] = useState<Any[]>([]);
   const [err, setErr] = useState("");
 
   useEffect(() => {
@@ -69,6 +69,15 @@ export default function StudentIelts() {
       .then((r) => setGate(r.ielts || { unlocked: false }))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, []);
+
+  // Listening mashqlari (2026-08-24): spelling / raqam / aralash
+  useEffect(() => {
+    if (!gate?.unlocked) return;
+    api
+      .get<Any>("/student/ielts/listening/parts")
+      .then((r) => setParts(r.parts || []))
+      .catch(() => setParts([]));
+  }, [gate?.unlocked]);
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
 
@@ -181,6 +190,54 @@ export default function StudentIelts() {
               ),
             )}
           </div>
+
+          {/* ---- LISTENING MASHQLARI (2026-08-24, Jahongir:
+               "Listening bo'limda birinchi spelling names bo'lsin...
+               keyin number practice... 3-mashq spelling mixed") ---- */}
+          {parts.length > 0 && (
+            <div className="rounded-2xl border p-4 mt-4" style={card}>
+              <p className="text-white font-bold text-[15px]">
+                Listening — asosiy ko'nikmalar
+              </p>
+              <p className="text-[12px] text-slate-400 mt-1 leading-relaxed">
+                IELTS'da eng ko'p ball yo'qotiladigan joy: ism, raqam
+                va postcode. Har mashq sekin va osondan boshlanib,
+                asta-sekin imtihon tezligiga chiqadi.
+              </p>
+              <div className="space-y-2 mt-3">
+                {parts.map((p: Any) => (
+                  <Link
+                    key={p.kind}
+                    to={`/student/ielts/listening/${p.kind}`}
+                    className="flex items-center gap-3 rounded-xl border px-3 py-3"
+                    style={{ background: "#1A2558", borderColor: "#3A4890" }}
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-amber-400/15 text-amber-300 flex items-center justify-center shrink-0 text-sm font-extrabold">
+                      {p.no}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] font-bold text-white">
+                        {p.title}
+                      </p>
+                      <p className="text-[11px] text-slate-400 leading-snug">
+                        {p.hint}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <div className="h-1.5 flex-1 rounded-full bg-slate-700/60 overflow-hidden">
+                          <div className="h-full bg-amber-400 rounded-full"
+                               style={{ width: `${p.percent}%` }} />
+                        </div>
+                        <span className="text-[10px] text-slate-400 shrink-0">
+                          {p.solved}/{p.total}
+                        </span>
+                      </div>
+                    </div>
+                    <ChevronRight size={17} className="text-slate-500 shrink-0" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="rounded-2xl border p-4 mt-4" style={card}>
             <p className="text-white font-bold text-[15px]">CEFR zinasi</p>

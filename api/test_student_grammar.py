@@ -52,9 +52,14 @@ H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'9989
 
 print("=== SEED ISHLAGAN ===")
 total_q = db.query(models.GrammarQuestion).count()
+# 2026-08-25: bank o'sib ketdi (C1/C2 ingliz + ru/de/ko qo'shildi),
+# shuning uchun endi FAQAT A1 ingliz savollari sanaladi.
 total_active = db.query(models.GrammarQuestion).filter(
-    models.GrammarQuestion.is_active == 1).count()
-ck("343 ta A1 savoli faol (333 + 10 cloze)", total_active, 343)
+    models.GrammarQuestion.is_active == 1,
+    models.GrammarQuestion.language.is_(None),
+    models.GrammarQuestion.level == "A1").count()
+ck("370 ta A1 ingliz savoli faol", total_active, 370)
+ck("umumiy bank kattalashdi", total_q > 1000, True)
 
 print("\n=== MAVZULAR RO'YXATI ===")
 r = c.get("/api/student/grammar/topics", headers=H)
@@ -78,11 +83,14 @@ ck("8 ta savol", len(items), roles.GRAMMAR_ROUND_SIZE)
 # Mashqlar soni tanlanadi (2026-08-21, Jahongir: "10, 20, 30, 50
 # tanlaydigan bolsin va koproq mashq qila olsin"). Mavzu bankida
 # yetmasa, shu darajadagi boshqa mavzulardan to'ldiriladi.
+# 2026-08-24 dan beri STANDART round ham 20 ta, shuning uchun
+# ko'proq savol so'rab tekshiramiz (50).
 r20 = c.get("/api/student/grammar/round",
-            params={"topic": topic, "count": 20}, headers=H)
-ck("count=20 status 200", r20.status_code, 200)
+            params={"topic": topic, "count": 50}, headers=H)
+ck("count=50 status 200", r20.status_code, 200)
 items20 = r20.json()["items"]
-ck("20 tagacha savol (bank yetsa 20)", len(items20) > len(items), True)
+ck("50 tagacha savol (bank yetsa ko'proq)",
+   len(items20) > len(items), True)
 ck("javob bunda ham sirda", any("answer" in it for it in items20), False)
 ck("javob maydoni YO'Q",
    any("answer" in it for it in items), False)

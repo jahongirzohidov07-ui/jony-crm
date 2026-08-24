@@ -9,17 +9,22 @@ export interface LevelStep {
   label: string;
   ielts: string;
   cefr: string;
+  /** Shu darajaga chiqish uchun kerakli JAMI ball (2026-08-25). */
+  need: number;
 }
 
 export interface LevelProgress {
   points: number;
   level: LevelStep;
   max_level: boolean;
+  level_from?: number;
+  level_to?: number | null;
   next: {
     label: string;
     ielts: string;
     cefr: string;
     points_left: number;
+    need?: number;
     progress_percent: number;
   } | null;
 }
@@ -28,6 +33,22 @@ export interface SkillProgress extends LevelProgress {
   key: string;
   label: string;
   tone: string;
+  /** 0-100 ball: 44 = B2 (IELTS 6.0), 70 = C1, 95 = C2 (2026-08-25). */
+  score: number;
+  band: number;
+  cefr: string;
+  /** Shu ko'nikmada JAMI nechta mashq bor va nechasi yechilgan. */
+  available: number;
+  coverage: number;
+}
+
+/** IELTS taxminiy bali — ko'nikma ballarining o'rtachasidan. */
+export interface IeltsCard {
+  band: number;
+  skills: { key: string; label: string; score: number; band: number;
+            cefr: string }[];
+  weakest: string;
+  scale: { score: number; band: number }[];
 }
 
 /** Kunlik uchta vazifa (2026-08-16). Bajarilgani BUGUNGI mashq
@@ -101,8 +122,35 @@ export interface StudentHome {
 export interface SkillsCard {
   overall: LevelProgress;
   skills: SkillProgress[];
+  ielts: IeltsCard;
   points_per_level: number;
   levels: LevelStep[];
+}
+
+/** Ligalar ro'yxati (2026-08-25). */
+export interface LeagueRow {
+  rank: number;
+  key: string;
+  name: string;
+  icon: string | null;
+  color: string | null;
+  min_xp: number;
+  max_xp: number | null;
+  coin: number;
+  state: "passed" | "current" | "locked";
+  xp_left: number;
+}
+
+export interface LeaguesCard {
+  xp: number;
+  current: { name: string; icon: string; color: string } | null;
+  next: { name: string; icon: string; color: string } | null;
+  percent: number;
+  to_next: number;
+  max_league: boolean;
+  coins: number;
+  leagues: LeagueRow[];
+  note: string;
 }
 
 /** Bitta o'yin savoli. Maydonlar o'yin turiga qarab to'ladi. */

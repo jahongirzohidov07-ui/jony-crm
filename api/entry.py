@@ -87,12 +87,14 @@ def _practice_summary(db: Session, student_id: int) -> dict:
                      func.coalesce(func.sum(models.ExerciseResult.correct), 0))
             .filter(models.ExerciseResult.student_id == student_id).one())
     done, total, correct = int(rows[0]), int(rows[1]), int(rows[2])
-    per = roles.PRACTICE_POINTS_PER_LEVEL
-    idx = min(len(roles.ENG_LEVELS) - 1, correct // per)
+    # 2026-08-25: zina chiziqli emas (roles.ENG_LEVEL_POINTS)
+    idx = roles.level_index_for(correct)
     cur = roles.ENG_LEVELS[idx]
     is_last = idx >= len(roles.ENG_LEVELS) - 1
     nxt = None if is_last else roles.ENG_LEVELS[idx + 1]
-    in_level = correct - idx * per
+    lo = cur["need"]
+    per = max(1, (nxt["need"] if nxt else lo) - lo)
+    in_level = correct - lo
     return {
         "done": done, "total": total, "correct": correct,
         "percent": round(correct * 100 / total, 1) if total else 0,

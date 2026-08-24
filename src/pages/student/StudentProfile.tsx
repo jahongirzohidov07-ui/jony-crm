@@ -27,7 +27,14 @@ import { fmtNum, type LevelProgress } from "../../lib/studentApi";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Radar = { key: string; label: string; tone: string; score: number;
-               points: number };
+               points: number; band?: number; cefr?: string;
+               available?: number; coverage?: number };
+type Ielts = {
+  band: number;
+  skills: { key: string; label: string; score: number; band: number;
+            cefr: string }[];
+  weakest: string;
+};
 
 type Profile = {
   full_name: string;
@@ -40,6 +47,8 @@ type Profile = {
   level?: LevelProgress;
   radar?: Radar[];
   radar_note?: string;
+  ielts?: Ielts;
+  league?: { name: string; icon: string; color: string } | null;
   xp?: number;
   coins?: number;
   streak?: number;
@@ -193,7 +202,11 @@ export default function StudentProfile() {
     );
 
   const lv = d.level;
-  const per = 500;
+  // 2026-08-25: daraja oralig'i endi har darajada har xil
+  // (roles.ENG_LEVEL_POINTS) — 500 deb qotirib qo'yish noto'g'ri edi.
+  const from = lv?.level_from ?? 0;
+  const to = lv?.next?.need ?? lv?.level_to ?? from;
+  const per = Math.max(1, to - from);
   const inLevel = lv?.next ? per - lv.next.points_left : per;
   const pct = lv?.next ? Math.round(lv.next.progress_percent) : 100;
 
@@ -306,6 +319,73 @@ export default function StudentProfile() {
           </p>
         )}
       </div>
+
+      {/* ------------------------------- IELTS taxminiy bali (oq) */}
+      {/* 2026-08-25, Jahongir: "hamma skillarni qoshib ortachasini
+          chiqarganda uni IELTS balli kelib chiqsin". */}
+      {d.ielts && (
+        <div className="bg-white rounded-3xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-[64px] h-[64px] rounded-2xl bg-slate-900 flex flex-col items-center justify-center shrink-0">
+              <b className="text-white text-[20px] leading-none">
+                {d.ielts.band > 0 ? d.ielts.band.toFixed(1) : "—"}
+              </b>
+              <span className="text-[9px] text-slate-400 mt-0.5">IELTS</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[19px] font-extrabold text-slate-900 leading-tight">
+                Taxminiy IELTS bali
+              </p>
+              <p className="text-[11.5px] text-slate-500 leading-snug mt-0.5">
+                Oltita ko'nikma balining o'rtachasi. Bitta ko'nikma
+                bo'sh tursa — umumiy ball ko'tarilmaydi.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-3 divide-y divide-slate-100">
+            {d.ielts.skills.map((sk) => (
+              <div key={sk.key} className="flex items-center gap-2 py-1.5">
+                <span className="text-[12.5px] text-slate-700 w-[78px] shrink-0">
+                  {sk.label}
+                </span>
+                <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-full rounded-full"
+                       style={{ width: `${Math.max(sk.score, 2)}%`,
+                                background: sk.score >= 44 ? "#16A34A"
+                                  : sk.score >= 18 ? "#F59E0B" : "#94A3B8" }} />
+                </div>
+                <span className="text-[10px] text-slate-400 w-7 shrink-0 text-right">
+                  {sk.cefr}
+                </span>
+                <b className="text-[12px] text-slate-900 w-8 shrink-0 text-right">
+                  {sk.band > 0 ? sk.band.toFixed(1) : "—"}
+                </b>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[11px] text-slate-400 mt-2.5 leading-relaxed">
+            44 ball = B2 (IELTS 6.0) · 70 = C1 (7.5) · 95 = C2 (9.0).
+            Eng zaif tomon — <b className="text-slate-700">
+            {d.ielts.weakest}</b>.
+          </p>
+        </div>
+      )}
+
+      {/* ------------------------------------------------ liga */}
+      <Link to="/student/leagues"
+            className="flex items-center gap-3 rounded-2xl border p-4"
+            style={card}>
+        <span className="text-[26px] shrink-0">{d.league?.icon || "🏅"}</span>
+        <div className="flex-1 min-w-0">
+          <p className="text-[11px] text-slate-400">Ligangiz</p>
+          <p className="text-white font-bold text-[16px] truncate">
+            {d.league?.name || "Newcomer"}
+          </p>
+        </div>
+        <ChevronRight size={17} className="text-slate-500 shrink-0" />
+      </Link>
 
       {/* -------------------------------------- ENGLISH SKILLS (oq) */}
       {d.radar && d.radar.length > 0 && (

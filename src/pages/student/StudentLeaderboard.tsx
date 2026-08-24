@@ -20,9 +20,14 @@ type Row = {
   points: number; is_me: boolean; trend?: string | null;
 };
 
+type League = { name: string; icon: string; color: string } | null;
+
 type Board = {
   scope: string; period: string; prize_coin: number;
   podium: Row[]; rows: Row[]; me: Row | null;
+  /** 2026-08-25: o'z ligangiz reyting sahifasida ham ko'rinadi. */
+  league?: League; next_league?: League;
+  league_to_next?: number; league_percent?: number;
   to_top10?: number | null; total: number; hint?: string | null;
 };
 
@@ -136,6 +141,41 @@ export default function StudentLeaderboard() {
           )}
         </div>
       </div>
+
+      {/* --------------------------------------------- MENING LIGAM */}
+      {/* 2026-08-25, Jahongir: "ligalarga kotarish bor unga coin
+          beryabsan lekin biror joyda ligalar royxati va u yerda
+          qaysi ligaga chiqqanligini korsatadigan joy yoq ekan". */}
+      {d?.league && (
+        <Link to="/student/leagues"
+              className="flex items-center gap-3 rounded-2xl border p-4 mt-4"
+              style={card}>
+          <span className="text-[30px] shrink-0">{d.league.icon}</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-[11px] text-slate-400">Mening ligam</p>
+            <p className="text-white font-extrabold text-[17px] truncate">
+              {d.league.name}
+            </p>
+            {d.next_league && (
+              <>
+                <div className="h-1.5 rounded-full bg-slate-700/60 overflow-hidden mt-1.5">
+                  <div className="h-full rounded-full bg-amber-400"
+                       style={{ width: `${Math.max(d.league_percent || 0, 3)}%` }} />
+                </div>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  {d.next_league.name} ligasigacha{" "}
+                  <b className="text-amber-300">
+                    {fmtNum(d.league_to_next || 0)} XP
+                  </b>
+                </p>
+              </>
+            )}
+          </div>
+          <span className="text-[11px] font-bold text-brand-300 shrink-0">
+            Barchasi →
+          </span>
+        </Link>
+      )}
 
       {/* ------------------------------------------------ tablar */}
       <div className="rounded-2xl border p-2 mt-4 space-y-2" style={card}>

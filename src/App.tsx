@@ -86,6 +86,9 @@ const StudentIeltsReadingHome = lazy(
 const StudentIeltsReading = lazy(
   () => import("./pages/student/StudentIeltsReading"),
 );
+const StudentLeagues = lazy(
+  () => import("./pages/student/StudentLeagues"),
+);
 const StudentGamePlay = lazy(() => import("./pages/student/StudentGamePlay"));
 const StudentLevelTest = lazy(() => import("./pages/student/StudentLevelTest"));
 const StudentLeaderboard = lazy(
@@ -205,6 +208,7 @@ function AppRoutes() {
                  element={<StudentIeltsReadingHome />} />
           <Route path="ielts/reading/:kind"
                  element={<StudentIeltsReading />} />
+          <Route path="leagues" element={<StudentLeagues />} />
           <Route path="games/:game" element={<StudentGamePlay />} />
           <Route path="level-test" element={<StudentLevelTest />} />
           <Route path="vocab" element={<StudentVocab />} />

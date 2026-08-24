@@ -29,15 +29,17 @@ def ck(n, g, w):
         fails.append(n)
 
 
-# Zinaning o'zi to'g'riligini avval sinaymiz
-print("=== 0. Ball <-> IELTS aylantirish ===")
-ck("0 ball -> 2.0", student_app._points_to_band(0), 2.0)
-ck("500 ball -> 3.0", student_app._points_to_band(500), 3.0)
-ck("750 ball -> 3.5", student_app._points_to_band(750), 3.5)
-ck("2000 ball -> 6.0", student_app._points_to_band(2000), 6.0)
-ck("juda katta -> 9.0", student_app._points_to_band(99999), 9.0)
-ck("6.0 -> 2000 ball", student_app._band_to_points(6.0), 2000.0)
-ck("7.0 -> 2500 ball", student_app._band_to_points(7.0), 2500.0)
+# 2026-08-25: band endi UMUMIY balldan emas, olti ko'nikmaning
+# o'rtachasidan chiqadi. Shu sababli _points_to_band olib tashlandi;
+# _band_to_points esa "shu bandga chiqish uchun jami necha ball
+# kerak" degan ma'noda qoldi.
+print("=== 0. Band -> kerakli ball ===")
+import roles as _r
+ck("6.0 -> har ko'nikmada 40 ball kerak", _r.score_for_band(6.0), 40)
+ck("6.0 -> jami ball", student_app._band_to_points(6.0),
+   _r.points_for_score(40) * len(_r.SKILL_KEYS))
+ck("9.0 jami ball 6.0 dan katta",
+   student_app._band_to_points(9.0) > student_app._band_to_points(6.0), True)
 
 db = SessionLocal()
 b = models.Branch(name="B"); db.add(b); db.commit()
@@ -57,7 +59,7 @@ H = {"Authorization": f"Bearer {tok}"}
 print("\n=== 1. Boshida: maqsad yo'q, daraja ko'rinadi ===")
 r = c.get("/api/student/goal", headers=H).json()
 ck("target bo'sh", r["target"], None)
-ck("band 2.0 (yangi o'quvchi)", r["band"], 2.0)
+ck("band 0 (hali mashq yo'q)", r["band"], 0.0)
 
 # ---------------------------------------------------------------- 2
 print("\n=== 2. Maqsad 6.0; mashq yo'q — muddat aytilmaydi ===")
@@ -66,9 +68,11 @@ ck("saqlandi", r["target"], 6.0)
 ck("muddat yo'q", r["eta"], None)
 
 # ---------------------------------------------------------------- 3
-print("\n=== 3. 750 mashq balli (~3.5) + kuniga 20 XP tezlik ===")
+print("\n=== 3. FAQAT GRAMMATIKA ishlagan bola 9.0 ga yaqinlashmaydi ===")
+# 2026-08-25, Jahongir: "IELTS 6.5 TURGAN QIZGA 72 kunda IELTS 9.0
+# olasan devoryabsan u faqat grammatika va lugat ishlagan bu tomonda
+# reading listeninglari yoq". Shuni AYNAN takrorlaymiz.
 db = SessionLocal()
-# 750 to'g'ri javob — grammatikadan (eng soddasi: 750 ta alohida savol)
 for i in range(750):
     db.add(models.GrammarAttempt(student_id=SID, question_id=i + 1,
                                  correct=1, date=date.today()))
@@ -77,18 +81,45 @@ for i in range(6):
     db.add(models.XpTransaction(student_id=SID, amount=100,
                                 created_at=now - timedelta(days=i * 5)))
 db.commit(); db.close()
+sk = c.get("/api/student/skills", headers=H).json()
+gram = [x for x in sk["ielts"]["skills"] if x["key"] == "grammar"][0]
+ck("grammatika bali 30-40", 30 <= gram["score"] <= 40, True)
+ck("grammatika bandi 5.5-6.0", gram["band"] in (5.5, 6.0), True)
+ck("o'qish bali 0", [x for x in sk["ielts"]["skills"]
+                     if x["key"] == "reading"][0]["score"], 0)
 r = c.get("/api/student/goal", headers=H).json()
-ck("hozirgi band 3.5", r["band"], 3.5)
-# 6.0 uchun 2000 ball kerak, bor 750, kuniga 20 -> 62.5 kun
+ck("UMUMIY band 1.5 dan past (chunki 5 ko'nikma bo'sh)",
+   r["band"] <= 1.5, True)
+ck("eng zaif tomon ko'rsatiladi", bool(sk["ielts"]["weakest"]), True)
 e = r["eta"]
 ck("muddat keldi", e is not None, True)
-ck("kunlar ~62", 61 <= e["days"] <= 63, True)
-ck("foiz 37-38", r["percent"] in (37, 38), True)
+ck("6.0 gacha 1 yildan ko'p",
+   (e["years"] * 365 + e["days"]) > 365 if e else False, True)
 
 # ---------------------------------------------------------------- 4
-print("\n=== 4. Maqsadga yetilgan bo'lsa ===")
-r = c.post("/api/student/goal", headers=H, json={"target": 3.5}).json()
-ck("done", r["done"], True)
+print("\n=== 4. Hamma ko'nikma ishlansa — band ko'tariladi ===")
+db = SessionLocal()
+# har ko'nikmaga ~950 ball (B2 darajasi = IELTS 6.0)
+for i in range(400):
+    db.add(models.GrammarAttempt(student_id=SID, question_id=2000 + i,
+                                 correct=1, date=date.today()))
+for i in range(950):
+    db.add(models.VocabAttempt(student_id=SID, word_id=i + 1,
+                               game="en_uz", correct=1,
+                               date=date.today()))
+for skill in ("reading", "listening", "writing", "speaking"):
+    for i in range(950):
+        db.add(models.SkillAttempt(student_id=SID, skill=skill,
+                                   ref=f"x:{i}", correct=1,
+                                   date=date.today()))
+db.commit(); db.close()
+sk = c.get("/api/student/skills", headers=H).json()
+for x in sk["ielts"]["skills"]:
+    # grammatikada 3-bosqichdagi 750 ball ustiga qo'shildi -> 6.5
+    ck(f"{x['key']} bandi >= 6.0", x["band"] >= 6.0, True)
+ck("UMUMIY band 6.0", sk["ielts"]["band"], 6.0)
+r = c.post("/api/student/goal", headers=H, json={"target": 6.0}).json()
+ck("maqsadga yetildi", r["done"], True)
 
 # ---------------------------------------------------------------- 5
 print("\n=== 5. Chegaralar ===")

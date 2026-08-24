@@ -114,8 +114,11 @@ g = r.json().get("ielts") or {}
 ck("bo'lim javobda bor", "unlocked" in g, True)
 ck("yangi o'quvchiga qulf", g.get("unlocked"), False)
 ck("sabab yozilgan", "Intermediate" in (g.get("need_label") or ""), True)
-# Intermediate tugatadigan ball beramiz: 4 daraja * ball
-need = roles.PRACTICE_POINTS_PER_LEVEL * 4
+# Intermediate tugatadigan ball beramiz.
+# 2026-08-25: zina chiziqli emas — kerakli ball ENG_LEVELS'dan
+# olinadi (Jahongir: "har bir darajalar orasi 500XP bu juda oson").
+need = [x for x in roles.ENG_LEVELS
+        if x["key"] == "upper_intermediate"][0]["need"]
 db.add(models.ExerciseResult(student_id=st.id, skill="reading",
                              correct=need, total=need))
 db.commit()

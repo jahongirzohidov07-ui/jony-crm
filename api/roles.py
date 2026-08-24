@@ -809,7 +809,151 @@ ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 # Mashqlar bo'yicha INGLIZ TILI darajalari zinasi. Har bir to'g'ri
 # javob 1 ball; har daraja uchun PRACTICE_POINTS_PER_LEVEL ball
 # yig'ilsa keyingisiga o'tadi. IELTS/CEFR — taxminiy mo'ljal.
-PRACTICE_POINTS_PER_LEVEL = 500
+PRACTICE_POINTS_PER_LEVEL = 500   # eskirgan (faqat moslik uchun)
+
+# ---------------------------------------------------------------------
+#  DARAJA ZINASI VA IELTS BALI (2026-08-25 da qayta qurildi)
+#
+#  Jahongir: "har bir darajalar orasi 500XP bu juda oson bolib
+#  qolyabdi IELTS 6.5 TURGAN QIZGA 72 kunda IELTS 9.0 olasan
+#  devoryabsan u faqat grammatika va lugat ishlagan bu tomonda
+#  reading listeninglari yoq".
+#
+#  MUAMMO NIMADA EDI. Daraja ham, IELTS bali ham BITTA umumiy
+#  balldan chiqardi va zina chiziqli edi (har 500 ball = keyingi
+#  daraja). Ya'ni faqat lug'at o'ynab 3000 ball yig'gan bola
+#  "Native / IELTS 9.0" ko'rsatardi — reading va listening umuman
+#  yo'q bo'lsa ham.
+#
+#  ENDI QANDAY. Ikki narsa ajratildi:
+#    1) DARAJA (Yo'l xaritasi) — umumiy balldan, lekin zina endi
+#       chiziqli emas: yuqoriga chiqqan sari qadam kattalashadi.
+#    2) IELTS BALI — har ko'nikma ALOHIDA 0-100 ballga o'giriladi,
+#       har biri o'z bandiga aylanadi, umumiy band esa OLTALASINING
+#       O'RTACHASI. Reading/listening nol bo'lsa — o'rtacha ham
+#       past bo'ladi, bola aldanmaydi.
+# ---------------------------------------------------------------------
+
+# Umumiy daraja zinasi: shu darajaga chiqish uchun kerakli jami ball.
+# ENG_LEVELS bilan bir tartibda (beginner ... native).
+ENG_LEVEL_POINTS = [0, 500, 1400, 3000, 6000, 11000, 20000]
+
+# Bitta KO'NIKMA bo'yicha: yig'ilgan ball -> 0-100 ball.
+# Tayanch nuqtalar (oralig'i chiziqli bo'linadi):
+#   950  -> 44  = B2 tugadi   -> IELTS 6.0
+#   1800 -> 70  = C1 tugadi   -> IELTS 7.5
+#   3200 -> 95  = C2          -> IELTS 9.0
+# Jahongir: "hozir u B2gacha grammatika ishlagan xolos bu degani
+# hozir grammatika IELTS 6.0".
+SKILL_SCORE_SCALE = [
+    (0, 0), (120, 8), (280, 18), (520, 30), (950, 44),
+    (1800, 70), (3200, 95), (4200, 100),
+]
+
+# 0-100 ball -> IELTS band.
+# Jahongir: "95-100 bu c2 yani IELTS 9.0 BOLSA qolganini 85-95ni
+# 8,5ga moslashtir qolganini shunga qarab mos ravishda moslashtirib
+# qoyaver" — yuqorida har 10 ball 0.5 band, pastda qadam ixchamroq.
+# Tayanch nuqtalar: A1=8 -> 3.0, A2=18 -> 4.0, B1=30 -> 5.0,
+# B2=44 -> 6.0, C1=70 -> 7.5, C2=95 -> 9.0
+IELTS_BANDS = [
+    (95, 9.0), (85, 8.5), (75, 8.0), (65, 7.5), (55, 7.0),
+    (48, 6.5), (40, 6.0), (34, 5.5), (28, 5.0), (23, 4.5),
+    (18, 4.0), (13, 3.5), (8, 3.0), (3, 2.5), (1, 2.0),
+]
+
+# 0-100 ball -> CEFR yorlig'i (yuqoridagi tayanch nuqtalar bilan bir xil)
+SCORE_CEFR = [
+    (95, "C2"), (70, "C1"), (44, "B2"), (30, "B1"),
+    (18, "A2"), (8, "A1"), (0, "-"),
+]
+
+
+def level_index_for(points: float) -> int:
+    """Umumiy ball -> ENG_LEVELS indeksi."""
+    idx = 0
+    for i, need in enumerate(ENG_LEVEL_POINTS):
+        if points >= need:
+            idx = i
+    return min(idx, len(ENG_LEVELS) - 1)
+
+
+def skill_score(points: float) -> int:
+    """Ko'nikma bali (yig'ilgan to'g'ri javoblar) -> 0-100."""
+    p = max(0.0, float(points or 0))
+    sc = SKILL_SCORE_SCALE
+    if p >= sc[-1][0]:
+        return 100
+    for i in range(len(sc) - 1):
+        lo_p, lo_s = sc[i]
+        hi_p, hi_s = sc[i + 1]
+        if p < hi_p:
+            frac = (p - lo_p) / max(1, hi_p - lo_p)
+            return int(round(lo_s + frac * (hi_s - lo_s)))
+    return 100
+
+
+def points_for_score(score: float) -> int:
+    """skill_score teskarisi: shu 0-100 ballga chiqish uchun necha
+    ball kerak."""
+    sc = SKILL_SCORE_SCALE
+    t = max(0.0, min(100.0, float(score)))
+    for i in range(len(sc) - 1):
+        lo_p, lo_s = sc[i]
+        hi_p, hi_s = sc[i + 1]
+        if t <= hi_s:
+            frac = (t - lo_s) / max(1, hi_s - lo_s)
+            return int(round(lo_p + frac * (hi_p - lo_p)))
+    return sc[-1][0]
+
+
+def score_for_band(band: float) -> int:
+    """Shu bandga yetish uchun kerakli eng kichik 0-100 ball."""
+    best = 0
+    for lo, b in sorted(IELTS_BANDS, key=lambda x: x[0]):
+        if b <= band:
+            best = lo
+    for lo, b in IELTS_BANDS:
+        if b >= band:
+            best = lo
+    return best
+
+
+def ielts_band(score: float) -> float:
+    """0-100 ball -> IELTS band. 0 ball = 0 (hali baholanmagan)."""
+    for lo, band in IELTS_BANDS:
+        if score >= lo:
+            return band
+    return 0.0
+
+
+def score_cefr(score: float) -> str:
+    for lo, lbl in SCORE_CEFR:
+        if score >= lo:
+            return lbl
+    return "-"
+
+
+def ielts_round(value: float) -> float:
+    """IELTS yaxlitlash qoidasi: .25 -> .5, .75 -> keyingi butun."""
+    whole = int(value)
+    rest = value - whole
+    if rest < 0.25:
+        return float(whole)
+    if rest < 0.75:
+        return whole + 0.5
+    return float(whole + 1)
+
+
+def ielts_overall(bands: list) -> float:
+    """Ko'nikma bandlarining o'rtachasi -> umumiy IELTS bali.
+
+    Jahongir: "endi hamma skillarni qoshib ortachasini chiqarganda
+    uni IELTS balli kelib chiqsin"."""
+    if not bands:
+        return 0.0
+    return min(9.0, ielts_round(sum(bands) / len(bands)))
+
 # KO'NIKMALAR (skills). Jony Student ilovasida o'quvchi UMUMIY
 # darajasini ko'radi, ustiga bosganda esa har bir ko'nikma bo'yicha
 # ALOHIDA darajasi va keyingi darajagacha qancha qolganini ko'radi
@@ -858,21 +1002,24 @@ GRAMMAR_ROUND_SIZE = 20
 GRAMMAR_XP_PER_CORRECT = 1.0
 
 ENG_LEVELS = [
+    # "need" — shu darajaga chiqish uchun kerakli JAMI ball
+    # (ENG_LEVEL_POINTS bilan bir xil, pastda tekshiriladi).
     {"key": "beginner",          "label": "Beginner",
-     "ielts": "~2.0-2.5", "cefr": "A1"},
+     "ielts": "~2.0-2.5", "cefr": "A1",     "need": 0},
     {"key": "elementary",        "label": "Elementary",
-     "ielts": "~3.0-3.5", "cefr": "A2"},
+     "ielts": "~3.0-3.5", "cefr": "A2",     "need": 500},
     {"key": "pre_intermediate",  "label": "Pre-Intermediate",
-     "ielts": "~4.0-4.5", "cefr": "B1"},
+     "ielts": "~4.0-4.5", "cefr": "B1",     "need": 1400},
     {"key": "intermediate",      "label": "Intermediate",
-     "ielts": "~5.0-5.5", "cefr": "B1+/B2"},
+     "ielts": "~5.0-5.5", "cefr": "B1+/B2", "need": 3000},
     {"key": "upper_intermediate", "label": "Upper-Intermediate",
-     "ielts": "~6.0-6.5", "cefr": "B2/C1"},
+     "ielts": "~6.0-6.5", "cefr": "B2/C1",  "need": 6000},
     {"key": "advanced",          "label": "Advanced",
-     "ielts": "~7.0-8.0", "cefr": "C1"},
+     "ielts": "~7.0-8.0", "cefr": "C1",     "need": 11000},
     {"key": "native",            "label": "Native",
-     "ielts": "~8.5-9.0", "cefr": "C2"},
+     "ielts": "~8.5-9.0", "cefr": "C2",     "need": 20000},
 ]
+assert [x["need"] for x in ENG_LEVELS] == ENG_LEVEL_POINTS
 
 
 REFUND_REQUEST = [SALES_MANAGER, FOUNDER]
@@ -2394,7 +2541,8 @@ XP_CATEGORY_TONE = {k: t for k, _, t in XP_CATEGORIES}
 # bo'lmaydi), shuning uchun 18 va 20 tushirib qoldirilib, cho'qqidagi
 # ikki ligaga eng katta qiymatlar (25, 30) berildi. Eski shkala
 # (jami 413 coin) juda saxiy edi - coin qadrsizlanardi; yangisi
-# jami 126 coin.
+# jami 136 coin (2026-08-25 da test bilan qayta sanaldi - izohda
+# 126 deb yozilgan ekan, xato edi).
 XP_LEAGUES = [
     (1, "newcomer", "Newcomer", 0, 99, "#f1f5f9", "🌱", 0),
     (2, "amateur", "Amateur", 100, 199, "#d4d4d8", "🔰", 1),

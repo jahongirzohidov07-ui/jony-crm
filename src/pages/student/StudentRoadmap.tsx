@@ -30,13 +30,17 @@ export default function StudentRoadmap() {
   if (!d)
     return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
 
-  const per = d.points_per_level;
+  // 2026-08-25: zina endi chiziqli emas — har darajaning O'Z chegarasi
+  // bor (lv.need). Jahongir: "har bir darajalar orasi 500XP bu juda
+  // oson bolib qolyabdi".
   const points = d.overall.points;
   const curKey = d.overall.level.key;
   const curIdx = d.levels.findIndex((l) => l.key === curKey);
   const cur = d.levels[curIdx];
   const next = d.levels[curIdx + 1];
-  const inLevel = Math.max(0, Math.min(per, points - curIdx * per));
+  const from = cur?.need ?? 0;
+  const per = Math.max(1, (next?.need ?? from) - from);
+  const inLevel = Math.max(0, Math.min(per, points - from));
   const pct = Math.round((inLevel / per) * 100);
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
@@ -86,6 +90,77 @@ export default function StudentRoadmap() {
           </p>
         </div>
       </div>
+
+      {/* ------------------------------------- IELTS taxminiy bali */}
+      {/* 2026-08-25, Jahongir: "hamma skillarni qoshib ortachasini
+          chiqarganda uni IELTS balli kelib chiqsin". Ilgari band
+          faqat umumiy balldan chiqardi — lug'at o'ynagan bola ham
+          9.0 ga "yaqinlashardi". */}
+      {d.ielts && (
+        <div className="rounded-2xl border p-4 mt-4" style={card}>
+          <div className="flex items-center gap-3">
+            <div className="w-[62px] h-[62px] rounded-2xl flex flex-col items-center justify-center shrink-0"
+                 style={{ background: "#122057", border: "1px solid #2E56E8" }}>
+              <b className="text-white text-[19px] leading-none">
+                {d.ielts.band > 0 ? d.ielts.band.toFixed(1) : "—"}
+              </b>
+              <span className="text-[9px] text-slate-400 mt-0.5">IELTS</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-bold text-[15px]">
+                Taxminiy IELTS bali
+              </p>
+              <p className="text-[11.5px] text-slate-400 leading-snug mt-0.5">
+                Oltita ko'nikma balining o'rtachasi. Bitta ko'nikma
+                bo'sh tursa — umumiy ball ham ko'tarilmaydi.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-1.5 mt-3">
+            {d.ielts.skills.map((sk) => (
+              <div key={sk.key} className="flex items-center gap-2">
+                <span className="text-[12px] text-slate-300 w-[74px] shrink-0">
+                  {sk.label}
+                </span>
+                <div className="h-1.5 flex-1 rounded-full bg-slate-700/60 overflow-hidden">
+                  <div className="h-full rounded-full"
+                       style={{ width: `${Math.max(sk.score, 2)}%`,
+                                background: sk.score >= 44
+                                  ? "#22C55E" : sk.score >= 18
+                                  ? "#F59E0B" : "#64748B" }} />
+                </div>
+                <span className="text-[10px] text-slate-400 w-8 shrink-0 text-right">
+                  {sk.cefr}
+                </span>
+                <b className="text-[11px] text-white w-7 shrink-0 text-right">
+                  {sk.band > 0 ? sk.band.toFixed(1) : "—"}
+                </b>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[11px] text-slate-500 mt-2.5 leading-relaxed">
+            44 ball = B2 (IELTS 6.0) · 70 = C1 (7.5) · 95 = C2 (9.0).
+            Eng zaif tomoningiz — <b className="text-amber-300">
+            {d.ielts.weakest}</b>.
+          </p>
+        </div>
+      )}
+
+      {/* ------------------------------------------- ligalar havolasi */}
+      <Link to="/student/leagues"
+            className="flex items-center gap-3 rounded-2xl border p-4 mt-3"
+            style={card}>
+        <span className="text-[24px] shrink-0">🏅</span>
+        <div className="flex-1 min-w-0">
+          <p className="text-white font-bold text-[15px]">Ligalar</p>
+          <p className="text-[11.5px] text-slate-400 leading-snug">
+            14 ta liga · har ko'tarilishda mukofot coin
+          </p>
+        </div>
+        <ChevronRight size={18} className="text-slate-500 shrink-0" />
+      </Link>
 
       {/* ------------------------------------ joriy daraja kartasi */}
       <div className="rounded-3xl p-5 mt-4"
@@ -151,7 +226,7 @@ export default function StudentRoadmap() {
           {d.levels.map((lv, i) => {
             const passed = i < curIdx;
             const current = i === curIdx;
-            const need = i * per;
+            const need = lv.need;
             return (
               <div key={lv.key} className="flex items-center gap-3 relative">
                 {/* tugun */}

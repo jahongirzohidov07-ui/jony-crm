@@ -436,11 +436,13 @@ def student_learn(db: Session = Depends(get_db),
     v_pct = round(v_ok * 100 / v_total, 1) if v_total else 0.0
 
     pts = _skill_points(db, s.id)
-    per = roles.PRACTICE_POINTS_PER_LEVEL
 
     def in_level(p):
-        """Hozirgi daraja ichidagi foiz — chiziq shu bo'yicha to'ladi."""
-        return round((int(p) % per) * 100 / per)
+        """Chiziq — ko'nikmaning 0-100 bali (2026-08-25).
+
+        Ilgari "daraja ichidagi foiz" edi va har 500 balldan keyin
+        nolga tushardi — bola qancha yo'l bosganini ko'rmasdi."""
+        return roles.skill_score(p)
 
     sections = [
         {"key": "grammar", "label": "Grammar", "tone": "violet",
@@ -1532,11 +1534,21 @@ def student_profile(db: Session = Depends(get_db),
         "level": skills["overall"],
         "radar": [{
             "key": k["key"], "label": k["label"], "tone": k["tone"],
-            # 0-100 shkala: bir daraja (500 ball) = 100%
-            "score": min(100, round(k["points"] * 100 / per)),
-            "points": k["points"],
+            # 2026-08-25: ball endi CEFR zinasidan chiqadi —
+            # 44 = B2 (IELTS 6.0), 70 = C1 (7.5), 95 = C2 (9.0)
+            "score": k["score"], "band": k["band"], "cefr": k["cefr"],
+            "points": k["points"], "available": k["available"],
+            "coverage": k["coverage"],
         } for k in skills["skills"]],
-        "radar_note": (f"Har ko'nikma {per} ballga yetganda 100 bo'ladi"),
+        "radar_note": ("44 ball = B2 (IELTS 6.0), 70 = C1 (7.5), "
+                       "95 = C2 (9.0)"),
+        "ielts": skills["ielts"],
+        # 2026-08-25: liga profilda ham ko'rinsin (Jahongir: "hamma
+        # kerakli joylarga qoshgin shu narsalari bilmayabdi")
+        "league": gam.get("league"),
+        "next_league": gam.get("next_league"),
+        "league_percent": gam.get("league_percent"),
+        "league_to_next": gam.get("league_to_next"),
         "xp": int(round(float(gam.get("lifetime_xp") or 0))),
         "coins": gam.get("coins"),
         "streak": _award_and_get_streak(db, s.id),
@@ -2645,6 +2657,63 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
     }
 
 
+# =====================================================================
+#  LIGALAR (2026-08-25)
+#
+#  Jahongir: "keyin ligalarga kotarish bor unga coin beryabsan lekin
+#  biror joyda ligalar royxati va u yerda qaysi ligaga chiqqanligini
+#  korsatadigan joy yoq ekan hamma kerakli joylarga qoshgin shu
+#  narsalari bilmayabdi o'quvchilar".
+#
+#  Coin ligaga KO'TARILGANDA beriladi, lekin bola qaysi ligada
+#  ekanini ham, oldinda nima borligini ham ko'rmasdi — ya'ni
+#  motivatsiya ishlamayotgan edi. Endi to'liq ro'yxat bor:
+#  o'tilganlar, hozirgisi va oldindagilari, har biriga XP chegarasi
+#  va mukofot coini bilan.
+# =====================================================================
+@router.get("/api/student/leagues")
+def student_leagues(db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    gam = _gam_card(db, s)
+    xp = float(gam.get("lifetime_xp") or 0)
+    cur = (gam.get("league") or {}).get("key")
+    rows = (db.query(models.XpLeague)
+            .filter(models.XpLeague.is_active == 1)
+            .order_by(models.XpLeague.rank).all())
+    out, cur_rank = [], 0
+    for lg in rows:
+        if lg.key == cur:
+            cur_rank = lg.rank or 0
+    for lg in rows:
+        rank = lg.rank or 0
+        lo = float(lg.minimum_xp or 0)
+        out.append({
+            "rank": rank, "key": lg.key, "name": lg.name,
+            "icon": lg.icon, "color": lg.color,
+            "min_xp": int(lo),
+            "max_xp": int(lg.maximum_xp) if lg.maximum_xp else None,
+            "coin": int(lg.reward_coin or 0),
+            "state": ("current" if rank == cur_rank
+                      else ("passed" if rank < cur_rank else "locked")),
+            "xp_left": max(0, int(round(lo - xp))) if rank > cur_rank else 0,
+        })
+    return {
+        "xp": int(round(xp)),
+        "current": gam.get("league"),
+        "next": gam.get("next_league"),
+        "percent": gam.get("league_percent"),
+        "to_next": gam.get("league_to_next"),
+        "max_league": gam.get("max_league"),
+        "coins": gam.get("coins"),
+        "leagues": out,
+        "note": ("Liga LIFETIME XP bo'yicha aniqlanadi — XP hech "
+                 "qachon kamaymaydi, ya'ni ligadan tushib "
+                 "ketmaysiz. Yangi ligaga chiqqaningizda mukofot "
+                 "coin avtomat qo'shiladi."),
+    }
+
+
 @router.get("/api/student/leaderboard")
 def student_leaderboard(scope: str = "group", period: str = "week",
                         db: Session = Depends(get_db),
@@ -2756,6 +2825,20 @@ def student_leaderboard(scope: str = "group", period: str = "week",
         elif rows:
             to_top10 = 0
 
+    # 2026-08-25: reytingda o'z ligangiz ham ko'rinsin — bola
+    # ligani reyting bilan bir joyda ko'radi (Jahongir: "biror joyda
+    # ligalar royxati va u yerda qaysi ligaga chiqqanligini
+    # korsatadigan joy yoq ekan").
+    try:
+        _g = _gam_card(db, s)
+        my_league = _g.get("league")
+        next_league = _g.get("next_league")
+        league_to_next = _g.get("league_to_next")
+        league_percent = _g.get("league_percent")
+    except Exception:
+        my_league = next_league = None
+        league_to_next = league_percent = 0
+
     return {
         "scope": scope,
         "period": period,
@@ -2763,6 +2846,10 @@ def student_leaderboard(scope: str = "group", period: str = "week",
         "podium": out[:3],
         "rows": out[3:],
         "me": me,
+        "league": my_league,
+        "next_league": next_league,
+        "league_to_next": league_to_next,
+        "league_percent": league_percent,
         "to_top10": to_top10,
         "total": len(rows),
         "hint": None if rows else (
@@ -3129,31 +3216,25 @@ def speaking_turn(payload: dict, db: Session = Depends(get_db),
 #  buni yashirmaydi, kartada "taxminiy" deb yoziladi.
 # =====================================================================
 
-# Har daraja BOSHIDAGI taxminiy IELTS bali (roles.ENG_LEVELS tartibida:
-# beginner, elementary, pre-inter, inter, upper, advanced, native) +
-# oxirgi nuqta 9.0. Daraja ichida chiziqli o'sadi.
-_IELTS_LADDER = [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.5, 9.0]
+# 2026-08-25 da qayta yozildi. Jahongir: "IELTS 6.5 TURGAN QIZGA
+# 72 kunda IELTS 9.0 olasan devoryabsan u faqat grammatika va lugat
+# ishlagan bu tomonda reading listeninglari yoq".
+#
+# ESKISI: band UMUMIY balldan chiziqli chiqardi — faqat lug'at
+# o'ynab ham 9.0 ga "yaqinlashib" borardi.
+# YANGISI: band OLTITA ko'nikmaning o'rtachasi. Reading nol bo'lsa,
+# o'rtacha ham ko'tarilmaydi — muddat ham realroq chiqadi.
 IELTS_MIN, IELTS_MAX = 3.0, 9.0
 
 
-def _points_to_band(points: float) -> float:
-    per = roles.PRACTICE_POINTS_PER_LEVEL
-    seg = len(_IELTS_LADDER) - 1  # 7 segment
-    idx = min(seg - 1, int(points // per))
-    frac = min(1.0, (points - idx * per) / per)
-    band = _IELTS_LADDER[idx] + frac * (_IELTS_LADDER[idx + 1]
-                                        - _IELTS_LADDER[idx])
-    return min(9.0, band)
-
-
 def _band_to_points(band: float) -> float:
-    per = roles.PRACTICE_POINTS_PER_LEVEL
-    band = min(9.0, max(_IELTS_LADDER[0], band))
-    for i in range(len(_IELTS_LADDER) - 1):
-        lo, hi = _IELTS_LADDER[i], _IELTS_LADDER[i + 1]
-        if band <= hi:
-            return (i + (band - lo) / (hi - lo)) * per
-    return (len(_IELTS_LADDER) - 1) * per
+    """Shu bandga chiqish uchun kerakli JAMI ball.
+
+    Band — o'rtacha, ya'ni HAR ko'nikma shu darajaga chiqishi kerak:
+    bitta ko'nikmaga kerakli ball x ko'nikmalar soni."""
+    band = min(9.0, max(IELTS_MIN, float(band)))
+    need_score = roles.score_for_band(band)
+    return roles.points_for_score(need_score) * len(roles.SKILL_KEYS)
 
 
 def _goal_out(db, s) -> dict:
@@ -3163,7 +3244,8 @@ def _goal_out(db, s) -> dict:
 
     card = _skills_card(db, s.id)
     pts = float(card["overall"]["points"] or 0)
-    cur_band = round(_points_to_band(pts) * 2) / 2  # 0.5 ga yaxlitlanadi
+    # Band endi ko'nikmalar o'rtachasidan (yuqoridagi izohga qarang)
+    cur_band = float(card["ielts"]["band"])
     out = {"target": target, "band": cur_band,
            "level": card["overall"]["level"]["label"],
            "points": int(pts), "done": False,

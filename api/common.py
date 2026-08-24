@@ -3439,20 +3439,29 @@ def _level_for_points(points: int) -> dict:
     AYNAN shu zinadan yuradi (roles.ENG_LEVELS,
     roles.PRACTICE_POINTS_PER_LEVEL) — ikki xil hisob-kitob bo'lib
     ketmasligi uchun."""
-    per = roles.PRACTICE_POINTS_PER_LEVEL
-    idx = min(len(roles.ENG_LEVELS) - 1, int(points) // per)
+    # 2026-08-25: zina endi CHIZIQLI EMAS. Jahongir: "har bir
+    # darajalar orasi 500XP bu juda oson bolib qolyabdi".
+    # Yuqoriga chiqqan sari qadam kattalashadi (roles.ENG_LEVEL_POINTS).
+    pts = int(points)
+    idx = roles.level_index_for(pts)
     cur = roles.ENG_LEVELS[idx]
     is_last = idx >= len(roles.ENG_LEVELS) - 1
-    in_level = int(points) - idx * per
+    lo = cur["need"]
     nxt = None if is_last else roles.ENG_LEVELS[idx + 1]
+    hi = nxt["need"] if nxt else lo
+    span = max(1, hi - lo)
+    in_level = pts - lo
     return {
-        "points": int(points),
+        "points": pts,
         "level": cur,
         "max_level": is_last,
+        "level_from": lo,
+        "level_to": None if is_last else hi,
         "next": None if is_last else {
             "label": nxt["label"], "ielts": nxt["ielts"], "cefr": nxt["cefr"],
-            "points_left": per - in_level,
-            "progress_percent": round(in_level * 100 / per, 1),
+            "points_left": max(0, hi - pts),
+            "need": hi,
+            "progress_percent": round(min(100.0, in_level * 100 / span), 1),
         },
     }
 
@@ -3475,7 +3484,10 @@ def _skill_points(db: Session, student_id: int) -> dict:
     for skill, correct in rows:
         if skill in out:
             out[skill] += int(correct or 0)
-    vocab = (db.query(func.count(models.VocabAttempt.id))
+    # 2026-08-25: ILGARI har to'g'ri urinish 1 ball edi — bitta
+    # so'zni qayta-qayta o'ynab ball yig'ib bo'lardi va shu sababli
+    # "Lug'at 100" juda oson chiqardi. Endi ALOHIDA so'z sanaladi.
+    vocab = (db.query(func.count(func.distinct(models.VocabAttempt.word_id)))
              .filter(models.VocabAttempt.student_id == student_id,
                      models.VocabAttempt.correct == 1).scalar() or 0)
     out["vocabulary"] += int(vocab)
@@ -3510,7 +3522,9 @@ def _skills_card(db: Session, student_id: int) -> dict:
         func.coalesce(func.sum(models.ExerciseResult.correct), 0))
         .filter(models.ExerciseResult.student_id == student_id)
         .scalar() or 0)
-    vocab = (db.query(func.count(models.VocabAttempt.id))
+    # 2026-08-25: takroriy urinishlar emas, ALOHIDA so'z sanaladi —
+    # aks holda bitta so'zni qayta-qayta o'ynab daraja ko'tarilardi.
+    vocab = (db.query(func.count(func.distinct(models.VocabAttempt.word_id)))
              .filter(models.VocabAttempt.student_id == student_id,
                      models.VocabAttempt.correct == 1).scalar() or 0)
     gram = (db.query(func.count(
@@ -3524,17 +3538,86 @@ def _skills_card(db: Session, student_id: int) -> dict:
     per_skill = _skill_points(db, student_id)
     overall = _level_for_points(
         int(total_ex) + int(vocab) + int(gram) + int(prac))
-    return {
-        "overall": overall,
-        "skills": [{
+    avail = _skill_available(db)
+    skills = []
+    for k in roles.SKILL_KEYS:
+        pts = per_skill[k]
+        score = roles.skill_score(pts)
+        have = avail.get(k, 0)
+        skills.append({
             "key": k,
             "label": roles.SKILL_LABELS[k],
             "tone": roles.SKILL_TONE[k],
-            **_level_for_points(per_skill[k]),
-        } for k in roles.SKILL_KEYS],
+            # 2026-08-25: 0-100 ball va IELTS band
+            "score": score,
+            "band": roles.ielts_band(score),
+            "cefr": roles.score_cefr(score),
+            # Mashq zaxirasi: bola hammasini yechib bo'lgan bo'lsa
+            # "tepasi" bizning kontentimizga tiralgani ko'rinadi.
+            "available": have,
+            "coverage": (round(min(100.0, pts * 100 / have), 1)
+                         if have else 0.0),
+            **_level_for_points(pts),
+        })
+    bands = [x["band"] for x in skills]
+    return {
+        "overall": overall,
+        "skills": skills,
+        "ielts": {
+            # Jahongir: "hamma skillarni qoshib ortachasini
+            # chiqarganda uni IELTS balli kelib chiqsin"
+            "band": roles.ielts_overall(bands),
+            "skills": [{"key": x["key"], "label": x["label"],
+                        "score": x["score"], "band": x["band"],
+                        "cefr": x["cefr"]} for x in skills],
+            "weakest": min(skills, key=lambda x: x["score"])["label"],
+            "scale": [{"score": lo, "band": b}
+                      for lo, b in roles.IELTS_BANDS],
+        },
         "points_per_level": roles.PRACTICE_POINTS_PER_LEVEL,
         "levels": roles.ENG_LEVELS,
     }
+
+
+# Mashq zaxirasi (har ko'nikmada nechta mashq BOR). Kontent kamdan-kam
+# o'zgaradi — 10 daqiqaga keshlanadi, har so'rovda sanalmaydi.
+_AVAIL_CACHE: dict = {"at": None, "data": None}
+
+
+def _skill_available(db: Session) -> dict:
+    from datetime import datetime as _dt
+    now = _dt.utcnow()
+    if (_AVAIL_CACHE["data"] is not None and _AVAIL_CACHE["at"]
+            and (now - _AVAIL_CACHE["at"]).total_seconds() < 600):
+        return _AVAIL_CACHE["data"]
+    out = {k: 0 for k in roles.SKILL_KEYS}
+    try:
+        out["vocabulary"] = (db.query(func.count(models.VocabWord.id))
+                             .filter(models.VocabWord.is_active == 1)
+                             .scalar() or 0)
+        gram = db.query(func.count(models.GrammarQuestion.id)).scalar() or 0
+        out["grammar"] = gram
+        rows = (db.query(models.PracticeItem.skill,
+                         func.count(models.PracticeItem.id))
+                .filter(models.PracticeItem.is_active == 1)
+                .group_by(models.PracticeItem.skill).all())
+        # ielts_* mashqlari ham o'z ko'nikmasiga sanaladi
+        alias = {"ielts_listening": "listening", "ielts_reading": "reading"}
+        for skill, cnt in rows:
+            key = alias.get(skill, skill)
+            if key in out:
+                out[key] += int(cnt or 0)
+        out["reading"] += (db.query(func.count(models.ReadingQuestion.id))
+                           .scalar() or 0)
+        # listening va writing mashqlari grammatika jumlalaridan ham
+        # tuziladi — ular ham zaxiraga kiradi
+        out["listening"] += gram
+        out["writing"] += gram
+    except Exception:
+        db.rollback()
+    _AVAIL_CACHE["at"] = now
+    _AVAIL_CACHE["data"] = out
+    return out
 
 def _student_of_user(db: Session, user: models.User) -> models.Student | None:
     """Foydalanuvchi hisobiga bog'langan o'quvchi.
@@ -5563,6 +5646,7 @@ __all__ = [
     "_level_for_points",
     "_skill_points",
     "_skills_card",
+    "_skill_available",
     "_student_of_user",
     "_student_payments",
     "_student_ranks",

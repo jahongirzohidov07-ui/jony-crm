@@ -232,6 +232,15 @@ try:
 except Exception:
     pass
 
+# IELTS listening 4-blok: delayed / modification / distractor
+try:
+    from sqlalchemy.orm import Session as _VS18
+    from ielts_seed4 import seed_ielts4
+    with _VS18(engine) as _db18:
+        seed_ielts4(_db18)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -595,34 +595,42 @@ def practice_levels(skill: str,
 # =====================================================================
 IELTS_SKILL = "ielts_listening"
 IELTS_PARTS = [
-    {"kind": "ielts_spell", "title": "Spelling — nomlar",
+    # 2026-08-25, Jahongir: "bolim nomlarini men aytgan nomlar bilan
+    # qilasan Trap nomlar bilan" — sarlavhalar imtihon atamasi,
+    # tagida o'zbekcha izoh.
+    {"kind": "ielts_spell", "title": "Spelling Names",
      "hint": "Britaniya shaharlari, ko'chalari va familiyalari "
              "harflab aytiladi"},
-    {"kind": "ielts_number", "title": "Raqamlar",
+    {"kind": "ielts_number", "title": "Number Practice",
      "hint": "Telefon, karta, narx, yil — bittalab aytiladi"},
-    {"kind": "ielts_mixed", "title": "Aralash — postcode va kodlar",
-     "hint": "Harf va raqam aralash keladi"},
-    # 2026-08-24, Jahongir: "hafta kunlari, soat nechidaligi, qancha
-    # vaqt davom etishi, nechi km yurishi... 100ta bolsa yetadi"
-    {"kind": "ielts_detail", "title": "Ma'lumot ilib olish",
+    {"kind": "ielts_mixed", "title": "Spelling Mixed",
+     "hint": "Postcode va kodlar: harf va raqam aralash keladi"},
+    {"kind": "ielts_detail", "title": "Detail Practice",
      "hint": "Hafta kuni, soat, davomiylik, masofa, narx — qisqa "
              "dialogdan aniq javobni topish"},
-    # "multiple answer trapi uchun alohida qism qilib... bir emas
-    # 2-3ta mos javob aytib chalgitish mashqidan 100ta bolsin"
-    {"kind": "ielts_trap", "title": "Chalg'ituvchi javoblar",
+    {"kind": "ielts_trap", "title": "Multiple Answers Trap",
      "hint": "Audioda 2-3 ta o'xshash qiymat aytiladi — savol "
              "aynan qaysinisini so'rayotganini topish"},
-    # 2026-08-24, Jahongir: "exact word trap qopqoni... siz notogri
-    # variantdagi bor so'zlarni audioda eshitib qolasiz lekin u
-    # javob savolga togri kelmaydi"
-    {"kind": "ielts_exact", "title": "So'z tuzog'i (A/B/C)",
+    {"kind": "ielts_exact", "title": "Exact Word Trap",
      "hint": "Noto'g'ri variantlarning so'zlari audioda aynan "
              "eshitiladi — to'g'risi esa boshqacha aytiladi"},
+    # 2026-08-25 qo'shildi
+    {"kind": "ielts_delayed", "title": "Delayed Response Trap",
+     "hint": "Javob kechiktiriladi — o'tkazib yubordimmi deb "
+             "shoshmang, oxirigacha tinglang"},
+    {"kind": "ielts_modif", "title": "Modification Trap",
+     "hint": "Aytilgan javob keyin to'g'rilanadi — 'sorry, I mean', "
+             "'actually', 'no, wait'"},
+    {"kind": "ielts_distract", "title": "Distractor Trap",
+     "hint": "although / but / however va don't / isn't / unlikely — "
+             "chalg'ituvchi gap va inkor"},
 ]
+
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
-IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap",
-                     "ielts_exact")
+IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap", "ielts_exact",
+                     "ielts_delayed", "ielts_modif",
+                     "ielts_distract")
 # Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
 IELTS_CHOICE = ("ielts_exact",)
 

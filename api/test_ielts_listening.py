@@ -55,7 +55,8 @@ parts = {p["kind"]: p for p in r.json()["parts"]}
 # 2026-08-24: 4- va 5-mashq qo'shildi (ma'lumot ilib olish,
 # chalg'ituvchi javoblar) - endi beshta.
 # 2026-08-24: 6-mashq — exact word trap (A/B/C)
-ck("oltita mashq", len(parts), 6)
+# 2026-08-25: yana uchta tuzoq — delayed / modification / distractor
+ck("to'qqizta mashq", len(parts), 9)
 ck("tartib: spelling birinchi", parts["ielts_spell"]["no"], 1)
 ck("tartib: raqam ikkinchi", parts["ielts_number"]["no"], 2)
 ck("tartib: aralash uchinchi", parts["ielts_mixed"]["no"], 3)
@@ -160,7 +161,7 @@ ck("count cheklangan", len(r.json()["items"]) <= 60, True)
 print("\n=== 9. 4- VA 5-MASHQ (2026-08-24) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("endi 6 ta mashq", len(parts), 6)
+ck("endi 9 ta mashq", len(parts), 9)
 ck("4-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 4)
 ck("5-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 5)
 ck(f"detail 100 ta ({parts['ielts_detail']['total']})",
@@ -304,6 +305,110 @@ for it in (db.query(models.PracticeItem)
     pos[pl["options"].index(it.answer)] += 1
 ck("A da ham, B da ham, C da ham javob bor",
    all(v >= 20 for v in pos.values()), True)
+
+
+print("\n=== 15. UCH YANGI TUZOQ (2026-08-25) ===")
+r = c.get("/api/student/ielts/listening/parts", headers=H)
+parts = {p["kind"]: p for p in r.json()["parts"]}
+NEW = {"ielts_delayed": ("Delayed Response Trap", 7),
+       "ielts_modif": ("Modification Trap", 8),
+       "ielts_distract": ("Distractor Trap", 9)}
+for k, (title, no) in NEW.items():
+    ck(f"{title} ro'yxatda", parts[k]["title"], title)
+    ck(f"  tartib raqami", parts[k]["no"], no)
+    ck(f"  100 ta ({parts[k]['total']})", parts[k]["total"] >= 100,
+       True)
+ck("eski bo'lim nomlari ham trap atamasi bilan",
+   parts["ielts_exact"]["title"], "Exact Word Trap")
+ck("multiple answers ham", parts["ielts_trap"]["title"],
+   "Multiple Answers Trap")
+
+print("\n=== 16. DELAYED: JAVOB HAQIQATAN KECH KELADI ===")
+late_bad = []
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_delayed").all()):
+    say = json.loads(it.payload)["say"].lower()
+    pos = say.rfind(it.answer.lower())
+    if pos < len(say) * 0.55:
+        late_bad.append(it.answer)
+ck("hammasida javob ikkinchi yarmida", late_bad[:3], [])
+r = c.get("/api/student/ielts/listening/round"
+          "?kind=ielts_delayed&count=40", headers=H)
+di = r.json()["items"]
+ck("savol bor", all(x.get("prompt") for x in di), True)
+ck("javob mijozga ketmaydi",
+   any("answer" in x or "expected" in x for x in di), False)
+
+print("\n=== 17. MODIFICATION: TUZATISH BELGISI BOR ===")
+# Tuzatish/yumshatish signallari — "well," va "although" ham
+# aynan shu vazifani bajaradi ("well, 5.30 on this day")
+MARK = ("sorry", "actually", "no,", "not ", "hang on", "wait",
+        "could we", "instead", "i mean", "oh", "well,", "although")
+bad = []
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_modif").all()):
+    say = json.loads(it.payload)["say"].lower()
+    if not any(m in say for m in MARK):
+        bad.append(say[:50])
+ck("hammasida tuzatish signali bor", bad[:3], [])
+
+print("\n=== 18. DISTRACTOR: QARAMA-QARSHILIK YOKI INKOR ===")
+CON = ("although", "but ", "however", "even though", "while ")
+NEG = ("don't", "isn't", "wouldn't", "unlikely", "not really",
+       "hardly")
+n_con = n_neg = 0
+bad = []
+for it in (db.query(models.PracticeItem)
+           .filter(models.PracticeItem.kind == "ielts_distract").all()):
+    say = json.loads(it.payload)["say"].lower()
+    has_c = any(m in say for m in CON)
+    has_n = any(m in say for m in NEG)
+    if has_c:
+        n_con += 1
+    elif has_n:
+        n_neg += 1
+    else:
+        bad.append(say[:50])
+ck("hammasi ikki turdan biriga kiradi", bad[:3], [])
+ck(f"contrast ({n_con}) va negation ({n_neg}) ikkalasi ham bor",
+   n_con >= 40 and n_neg >= 40, True)
+
+print("\n=== 19. TUZOQ JAVOBI RAD ETILADI ===")
+# Jahongir misoli: "Although Monday is possible, Tuesday would be
+# much better" -> Monday chalg'ituvchi
+it = (db.query(models.PracticeItem)
+      .filter(models.PracticeItem.kind == "ielts_distract",
+              models.PracticeItem.answer == "Tuesday").first())
+ck("contrast misoli bor", it is not None, True)
+if it:
+    say = json.loads(it.payload)["say"]
+    ck("audioda chalg'ituvchi kun ham bor",
+       sum(1 for d in ("Monday", "Tuesday", "Wednesday", "Thursday",
+                       "Friday", "Saturday", "Sunday")
+           if d in say) >= 2, True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}", "answer": "Tuesday"})
+    ck("to'g'ri javob qabul qilinadi", r.json()["correct"], True)
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{it.id}", "answer": "Monday"})
+    ck("chalg'ituvchi rad etiladi", r.json()["correct"], False)
+    ck("izohda tuzoq nomi bor",
+       "DISTRACTOR TRAP" in (r.json().get("explain") or ""), True)
+
+# negation: "I don't think the meeting is on X. It's on Y."
+neg = None
+for it2 in (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.kind == "ielts_distract")
+            .all()):
+    if "i don't think the meeting" in json.loads(
+            it2.payload)["say"].lower():
+        neg = it2
+        break
+ck("negation misoli bor", neg is not None, True)
+if neg:
+    r = c.post("/api/student/ielts/listening/answer", headers=H,
+               json={"ref": f"pi:{neg.id}", "answer": neg.answer})
+    ck("inkordan keyingi javob to'g'ri", r.json()["correct"], True)
 
 print("\n" + ("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

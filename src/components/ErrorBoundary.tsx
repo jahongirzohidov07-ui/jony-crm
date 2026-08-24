@@ -2,6 +2,30 @@ import { Component } from "react";
 import type { ErrorInfo, ReactNode } from "react";
 
 /**
+ * YANGI VERSIYA XATOSI (2026-08-24, Jahongir: "oxirgi paytlar
+ * shunaqa holatlar kop uchrayabdi").
+ *
+ * Deploy bo'lgach ochiq turgan sahifa eski JS bo'laklarini
+ * qidiradi va topolmaydi. Bu DASTUR XATOSI EMAS — shunchaki
+ * versiya yangilangan. Uni ajratib olamiz: foydalanuvchiga
+ * qo'rqinchli "xatolik" o'rniga "yangilanmoqda" deymiz va
+ * sahifani o'zimiz yangilaymiz.
+ */
+function isVersionError(e: Error | null): boolean {
+  const m = ((e?.message || "") + " " + (e?.name || "")).toLowerCase();
+  return (
+    m.includes("dynamically imported module") ||
+    m.includes("failed to fetch dynamically") ||
+    m.includes("importing a module script failed") ||
+    m.includes("loading chunk") ||
+    m.includes("loading css chunk") ||
+    m.includes("chunkloaderror")
+  );
+}
+
+const RELOAD_KEY = "jonyos_chunk_reload";
+
+/**
  * OQ EKRANNI TO'XTATADI (2026-08-14, Jahongir: "bitta JS xatosi
  * butun ekranni oq qilib qo'yadi, xodim nima qilishni bilmaydi.
  * togrla").
@@ -44,6 +68,18 @@ export default class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error("[JonyOS] ushlangan xato:", error, info);
     this.setState({ info: (info?.componentStack || "").slice(0, 2000) });
+    // Versiya yangilangan bo'lsa — o'zimiz yangilaymiz (bir marta,
+    // aylanib qolmasligi uchun bayroq bilan).
+    if (isVersionError(error)) {
+      try {
+        if (!sessionStorage.getItem(RELOAD_KEY)) {
+          sessionStorage.setItem(RELOAD_KEY, "1");
+          setTimeout(() => window.location.reload(), 600);
+        }
+      } catch {
+        /* sessionStorage yopiq bo'lsa - jim o'tamiz */
+      }
+    }
   }
 
   private retry = () => {
@@ -104,12 +140,19 @@ export default class ErrorBoundary extends Component<Props, State> {
             </div>
             <div className="min-w-0">
               <h2 className="text-base font-semibold text-slate-900">
-                Bu bo'limni ochishda xatolik yuz berdi
+                {isVersionError(error)
+                  ? "Dastur yangilandi"
+                  : "Bu bo'limni ochishda xatolik yuz berdi"}
               </h2>
               <p className="mt-1 text-sm text-slate-600">
-                Ma'lumotlaringizga hech narsa bo'lmadi - hech nima
-                o'chmadi va o'zgarmadi. Quyidagi tugmani bosib qayta
-                urinib ko'ring.
+                {isVersionError(error)
+                  ? "Yangi versiya chiqdi — sahifa o'zi yangilanmoqda. "
+                    + "Bir necha soniya kuting yoki \"Sahifani "
+                    + "yangilash\"ni bosing. Ma'lumotlaringizga hech "
+                    + "narsa bo'lmadi."
+                  : "Ma'lumotlaringizga hech narsa bo'lmadi - hech nima "
+                    + "o'chmadi va o'zgarmadi. Quyidagi tugmani bosib "
+                    + "qayta urinib ko'ring."}
               </p>
             </div>
           </div>

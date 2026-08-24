@@ -793,6 +793,217 @@ def ielts_listening_answer(payload: dict = Body(default={}),
             "xp": xp_given}
 
 
+# =====================================================================
+#  IELTS READING (2026-08-25)
+#
+#  Jahongir: "mana bu reading uchun TRUE/FALSE/NOT GIVEN savollari va
+#  javoblari, lekin bu yerda osondan qiyinga qarab qoyilmagan va
+#  tiplar ham bor shuni true false ichiga tiplar bilan boshida
+#  orgatib o'rganishga eng zor samarali qilib qoy... keyin amna
+#  oxirida question types hammasini toliq tashladim... hozircha
+#  bo'limlar ochib qo'ysang bo'ladi".
+#
+#  QILINGANI:
+#   1. Reading'ning 12 TURI ham bo'lim bo'lib ochildi (rasmdagi
+#      ro'yxat bo'yicha). Ikkitasi — TFNG va YNNG — mashqlar bilan
+#      to'ldirildi, qolganlari "Tez orada" holatida turadi.
+#   2. TFNG/YNNG ichida 5 BOSQICH: kirish -> NOT GIVEN tushunchasi ->
+#      parafraz -> TIP qopqonlari -> haqiqiy imtihon savollari.
+#      Kitobdagi savollar hammasi real imtihondan olingani uchun
+#      ular ENG OXIRIGA qo'yildi, oldiga o'zimiz tuzgan osonroq
+#      kirish mashqlari qo'shildi.
+#   3. Har mashqning boshida QOIDALAR (Tip 15..30) o'qitiladi va
+#      javobdan keyingi izohda qaysi qoida ishlagani aytiladi.
+# =====================================================================
+READING_SKILL = "ielts_reading"
+READING_TYPES = [
+    # (kind, title, hint) — kind None bo'lsa mashq hali yo'q
+    {"kind": None, "title": "Short answer",
+     "hint": "Matndan 1-3 so'z bilan qisqa javob yozish"},
+    {"kind": None, "title": "Multiple Choice",
+     "hint": "A/B/C/D variantlardan to'g'risini tanlash"},
+    {"kind": None, "title": "Summary Completion",
+     "hint": "Qisqacha mazmundagi bo'sh joylarni to'ldirish"},
+    {"kind": None, "title": "Matching Sentences",
+     "hint": "Gap boshini to'g'ri davomiga ulash"},
+    {"kind": None, "title": "Sentence Completion",
+     "hint": "Gapni matndagi so'zlar bilan tugatish"},
+    {"kind": "read_tfng", "title": "True / False / Not Given",
+     "hint": "FAKT: matn tasdiqlaydimi, rad etadimi yoki umuman "
+             "yozilmaganmi"},
+    {"kind": "read_ynng", "title": "Yes / No / Not Given",
+     "hint": "MUALLIF FIKRI: shunday deb hisoblaydimi, teskarisini "
+             "aytadimi yoki fikr bildirmaganmi"},
+    {"kind": None, "title": "Matching Headings",
+     "hint": "Har bir xatboshiga mos sarlavha topish"},
+    {"kind": None, "title": "Labelling a Diagram",
+     "hint": "Chizma qismlarini matndagi nom bilan belgilash"},
+    {"kind": None, "title": "Matching Names",
+     "hint": "Fikrni uni aytgan olim/muallif bilan moslash"},
+    {"kind": None, "title": "Matching Information to Paragraphs",
+     "hint": "Berilgan ma'lumot qaysi xatboshida — shuni topish"},
+    {"kind": None, "title": "Table Completion",
+     "hint": "Jadvaldagi bo'sh kataklarni to'ldirish"},
+]
+READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
+
+
+def _read_solved(db, student_id):
+    return {r for (r,) in
+            db.query(func.distinct(models.SkillAttempt.ref))
+            .filter(models.SkillAttempt.student_id == student_id,
+                    models.SkillAttempt.skill == "reading",
+                    models.SkillAttempt.correct == 1).all()}
+
+
+@router.get("/api/student/ielts/reading/parts")
+def ielts_reading_parts(db: Session = Depends(get_db),
+                        user=Depends(require_role(roles.STUDENT))):
+    """Reading'ning 12 turi. Mashqi bor turlarda progress ko'rinadi."""
+    s = _me(db, user)
+    solved = _read_solved(db, s.id)
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == READING_SKILL,
+                    models.PracticeItem.is_active == 1).all())
+    by_kind = {}
+    for r in rows:
+        by_kind.setdefault(r.kind, []).append(r)
+    out = []
+    for i, t in enumerate(READING_TYPES, 1):
+        items = by_kind.get(t["kind"] or "", [])
+        done = sum(1 for r in items if f"pi:{r.id}" in solved)
+        out.append({
+            "no": i, "kind": t["kind"], "title": t["title"],
+            "hint": t["hint"], "total": len(items), "solved": done,
+            "ready": bool(t["kind"] and items),
+            "percent": round(done * 100 / len(items)) if items else 0,
+        })
+    return {"parts": out}
+
+
+@router.get("/api/student/ielts/reading/tips")
+def ielts_reading_tips(kind: str,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.STUDENT))):
+    """Mashq boshida o'qitiladigan QOIDALAR + bosqichlar xaritasi."""
+    if kind not in READING_KINDS:
+        raise HTTPException(404, "Bunday mashq yo'q")
+    from reading_ielts_seed import TF_TIPS, YN_TIPS, STEP_TITLES
+    src = TF_TIPS if kind == "read_tfng" else YN_TIPS
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == READING_SKILL,
+                    models.PracticeItem.kind == kind,
+                    models.PracticeItem.is_active == 1).all())
+    steps = {}
+    for r in rows:
+        try:
+            st = int(json.loads(r.payload).get("step", 1))
+        except Exception:
+            st = 1
+        steps[st] = steps.get(st, 0) + 1
+    return {
+        "kind": kind,
+        "title": next(t["title"] for t in READING_TYPES
+                      if t["kind"] == kind),
+        "tips": [{"title": a, "body": b, "example": c}
+                 for a, b, c in src],
+        "steps": [{"step": k, "title": STEP_TITLES.get(k, ""),
+                   "total": v} for k, v in sorted(steps.items())],
+    }
+
+
+@router.get("/api/student/ielts/reading/round")
+def ielts_reading_round(kind: str, count: int = 10,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(roles.STUDENT))):
+    """Bitta mashg'ulot: OSONDAN QIYINGA (bosqich -> tartib)."""
+    s = _me(db, user)
+    if kind not in READING_KINDS:
+        raise HTTPException(404, "Bunday mashq yo'q")
+    n = max(1, min(int(count or 10), 60))
+    rows = (db.query(models.PracticeItem)
+            .filter(models.PracticeItem.skill == READING_SKILL,
+                    models.PracticeItem.kind == kind,
+                    models.PracticeItem.is_active == 1).all())
+    if not rows:
+        raise HTTPException(400, "Mashqlar hali yuklanmagan")
+    solved = _read_solved(db, s.id)
+
+    def key(r):
+        pl = json.loads(r.payload)
+        return (int(pl.get("step", 1)), int(pl.get("order", 0)))
+
+    fresh = sorted([r for r in rows if f"pi:{r.id}" not in solved],
+                   key=key)
+    done = sorted([r for r in rows if f"pi:{r.id}" in solved], key=key)
+    picked = (fresh + done)[:n]
+    items = []
+    for r in picked:
+        pl = json.loads(r.payload)
+        items.append({
+            "ref": f"pi:{r.id}", "kind": r.kind,
+            "passage": pl.get("passage"), "prompt": pl.get("prompt"),
+            "options": pl.get("options"),
+            "step": pl.get("step", 1),
+            "step_title": pl.get("step_title", ""),
+            "tip": pl.get("tip"),
+            "solved": f"pi:{r.id}" in solved,
+        })
+    return {"kind": kind, "items": items,
+            "title": next(t["title"] for t in READING_TYPES
+                          if t["kind"] == kind)}
+
+
+@router.post("/api/student/ielts/reading/answer")
+def ielts_reading_answer(payload: dict = Body(default={}),
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    """Javob tekshiruvi — FAQAT serverda."""
+    s = _me(db, user)
+    ref = str(payload.get("ref") or "")
+    pfx, _, sid = ref.partition(":")
+    if pfx != "pi" or not sid.isdigit():
+        raise HTTPException(400, "Noto'g'ri mashq kaliti")
+    it = db.query(models.PracticeItem).get(int(sid))
+    if not it or not it.is_active or it.skill != READING_SKILL:
+        raise HTTPException(404, "Mashq topilmadi")
+    given = str(payload.get("answer") or "").strip()
+    ok = given.upper() == (it.answer or "").strip().upper()
+
+    was = (db.query(models.SkillAttempt.id)
+           .filter(models.SkillAttempt.student_id == s.id,
+                   models.SkillAttempt.skill == "reading",
+                   models.SkillAttempt.ref == ref,
+                   models.SkillAttempt.correct == 1)
+           .first() is not None)
+    db.add(models.SkillAttempt(
+        student_id=s.id, skill="reading", ref=ref,
+        correct=1 if ok else 0, answer=given[:300], date=date.today()))
+    db.commit()
+
+    tip = ""
+    try:
+        tip = json.loads(it.payload).get("tip") or ""
+    except Exception:
+        pass
+    xp_given = 0.0
+    if ok and not was:
+        try:
+            res = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT,
+                source_type="practice_reading", source_id=it.id,
+                reason="IELTS reading mashqi",
+                idempotency_key=f"PRACT:reading:{s.id}:{ref}")
+            if res.get("ok"):
+                xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+        except Exception:
+            db.rollback()
+    return {"correct": ok, "expected": it.answer,
+            "explain": it.explain, "tip": tip,
+            "first_time": ok and not was, "xp": xp_given}
+
+
 @router.get("/api/student/skills")
 def student_skills(db: Session = Depends(get_db),
                    user=Depends(require_role(roles.STUDENT))):

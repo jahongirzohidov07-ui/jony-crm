@@ -45,8 +45,12 @@ const PARTS: {
     desc: "3 matn · 40 savol · 60 daqiqa. T/F/NG, sarlavha " +
       "moslash, bo'sh joy to'ldirish.",
     icon: "/jsicons/learn-reading.png",
-    href: "/student/practice/reading",
-    hint: "Hozircha: C1/C2 darajali reading mashqlari",
+    // 2026-08-25, Jahongir: "hozircha bo'limlar ochib qo'ysang
+    // bo'ladi" — 12 savol turi ro'yxati shu sahifada, TFNG va
+    // YNNG mashqlari to'liq ishlaydi.
+    href: "/student/ielts/reading",
+    hint: "12 savol turi · True/False/Not Given va Yes/No/Not Given "
+      + "mashqlari tayyor",
   },
   {
     key: "writing", title: "IELTS Writing",

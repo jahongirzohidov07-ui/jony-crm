@@ -250,6 +250,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — TFNG va YNNG (2026-08-25, Jahongir: "tiplar bilan
+# boshida orgatib ... bundan ham osonroqlarini tuzib kirish uchun
+# boshlanishiga qoygin"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS20
+    from reading_ielts_seed import seed_reading_ielts
+    with _VS20(engine) as _db20:
+        seed_reading_ielts(_db20)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -950,8 +950,16 @@ function RoleSwitcher() {
 function ProfileRolePicker() {
   const { user } = useAuth();
   const myRoles = user?.roles ?? [];
-  const current = getActiveRole() || user?.role || "";
-  if (myRoles.length < 2) return null;
+  const picked = getActiveRole();
+  const current = picked || user?.role || "";
+  // 2026-08-25, Jahongir: "ustoz lavozimiga otsa manager lavozimi
+  // yoqolib qolibdi kira olmayabdi ekan". Endi tanlangan lavozim
+  // ro'yxatda bo'lmasa ham u qo'shiladi va tanlagich lavozim
+  // tanlangan bo'lsa HAR DOIM ko'rinadi — xodim qamalib qolmaydi.
+  const opts = [...myRoles];
+  if (current && !opts.some((r) => r.key === current))
+    opts.push({ key: current, label: current });
+  if (opts.length < 2 && !picked) return null;
   return (
     <div className="border-t border-slate-100 px-4 py-2.5">
       <p className="text-[11px] text-slate-400 mb-1.5">Lavozim</p>
@@ -963,10 +971,21 @@ function ProfileRolePicker() {
         }}
         className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-sm bg-white"
       >
-        {myRoles.map((r) => (
+        {opts.map((r) => (
           <option key={r.key} value={r.key}>{r.label}</option>
         ))}
       </select>
+      {picked && picked !== user?.role && (
+        <button
+          onClick={() => {
+            setActiveRole(null);
+            window.location.href = "/";
+          }}
+          className="mt-1.5 text-[11px] text-brand-600 font-medium"
+        >
+          Asosiy lavozimga qaytish
+        </button>
+      )}
     </div>
   );
 }

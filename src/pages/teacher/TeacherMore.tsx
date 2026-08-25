@@ -150,8 +150,15 @@ export default function TeacherMore() {
 function RoleSwitchCard() {
   const { user } = useAuth();
   const myRoles = user?.roles ?? [];
-  const current = getActiveRole() || user?.role || "";
-  if (myRoles.length < 2) return null;
+  const picked = getActiveRole();
+  const current = picked || user?.role || "";
+  // 2026-08-25: ustoz kabinetiga o'tgan xodim boshqa lavozimiga
+  // QAYTA OLISHI shart — shuning uchun tanlangan lavozim ro'yxatga
+  // majburan qo'shiladi va karta har doim ko'rinadi.
+  const opts = [...myRoles];
+  if (current && !opts.some((r) => r.key === current))
+    opts.push({ key: current, label: current });
+  if (opts.length < 2 && !picked) return null;
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-brand-200 p-4">
       <p className="text-sm font-bold text-slate-800 mb-1">Lavozim</p>
@@ -166,10 +173,21 @@ function RoleSwitchCard() {
         }}
         className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm bg-white"
       >
-        {myRoles.map((r) => (
+        {opts.map((r) => (
           <option key={r.key} value={r.key}>{r.label}</option>
         ))}
       </select>
+      {picked && picked !== user?.role && (
+        <button
+          onClick={() => {
+            setActiveRole(null);
+            window.location.href = "/";
+          }}
+          className="mt-2 w-full rounded-xl border border-slate-200 py-2 text-[12px] font-semibold text-brand-600"
+        >
+          Asosiy lavozimga qaytish
+        </button>
+      )}
     </div>
   );
 }

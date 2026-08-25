@@ -103,6 +103,10 @@ def get_current_user(
         allowed = {r.role for r in db.query(models.UserRole)
                    .filter(models.UserRole.user_id == user.id).all()}
         if want in allowed:
+            # 2026-08-25: almashtirishdan OLDIN to'liq ro'yxatni
+            # yozib qo'yamiz — keyin u hech qayerda qisqarmaydi.
+            user._all_roles = [user.role] + [
+                r for r in sorted(allowed) if r != user.role]
             user._primary_role = user.role
             user.role = want
     return user

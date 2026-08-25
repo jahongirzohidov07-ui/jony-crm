@@ -848,7 +848,26 @@ def _user_roles(db, user: models.User) -> list:
     cached = getattr(user, "_all_roles", None)
     if cached is not None:
         return cached
-    out = [user.role] if user.role else []
+    # 2026-08-25 TUZATISH. Jahongir: "ustoz lavozimiga otsa manager
+    # lavozimi yoqolib qolibdi kira olmayabdi ekan".
+    #
+    # SABAB: lavozim almashtirilganda auth.py so'rov davomida
+    # user.role ni tanlangan lavozimga o'zgartiradi (asosiysi
+    # _primary_role ga saqlanadi). Bu yerda esa ro'yxat FAQAT
+    # user.role dan boshlanardi — ya'ni ustozga o'tgan zahoti
+    # asosiy lavozim (manager/filial rahbari) ro'yxatdan tushib
+    # qolardi. Natijada ekrandagi tanlagich yo'qolib, xodim
+    # ustoz kabinetida qamalib qolardi.
+    #
+    # Endi ro'yxat ASOSIY lavozimdan boshlanadi va tanlangani ham
+    # albatta qo'shiladi — qaysi lavozimda turgan bo'lsa ham ro'yxat
+    # to'liq qoladi.
+    out = []
+    prim = getattr(user, "_primary_role", None)
+    if prim and prim in roles.ALL_ROLES:
+        out.append(prim)
+    if user.role and user.role not in out:
+        out.append(user.role)
     try:
         for ur in (db.query(models.UserRole)
                    .filter(models.UserRole.user_id == user.id).all()):

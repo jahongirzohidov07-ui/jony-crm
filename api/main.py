@@ -294,6 +294,16 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Short-answer Questions (2026-08-25, Jahongir:
+# "bitta text shundan aniq savol beriladi topishga"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS24
+    from reading_short_seed import seed_reading_short
+    with _VS24(engine) as _db24:
+        seed_reading_short(_db24)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

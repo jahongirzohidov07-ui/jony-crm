@@ -308,9 +308,29 @@ export default function StudentIeltsReading() {
             <p className="text-[11px] font-semibold text-slate-500 mb-1.5">
               {q.instruction || "Question"}
             </p>
-            <p className="text-[14px] font-medium text-slate-900 leading-relaxed">
-              {q.prompt}
-            </p>
+            {!q.questions && (
+              <p className="text-[14px] font-medium text-slate-900 leading-relaxed">
+                {q.prompt}
+              </p>
+            )}
+
+            {/* --- Short answer: savollar ro'yxati (2026-08-25) --- */}
+            {!q.options && q.questions && (
+              <div className="mt-3 space-y-1">
+                {q.questions.map((qq: string, i: number) => {
+                  const active = i + 1 === q.q_no;
+                  return (
+                    <p key={i}
+                       className={`text-[12.5px] leading-snug rounded px-1.5 py-1 ${
+                         active
+                           ? "text-slate-900 font-semibold bg-amber-50"
+                           : "text-slate-400"}`}>
+                      {i + 1}. {qq}
+                    </p>
+                  );
+                })}
+              </div>
+            )}
 
             {/* --- Flow-chart: qutilar va strelkalar (2026-08-25) --- */}
             {!q.options && q.flow && (
@@ -415,7 +435,7 @@ export default function StudentIeltsReading() {
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck={false}
-                  placeholder={q.flow ? "Matndan 1-2 so'z yozing" : "Matndan bitta so'z yozing"}
+                  placeholder={q.flow || q.questions ? "Matndan 1-2 so'z yozing" : "Matndan bitta so'z yozing"}
                   className={`w-full rounded-xl border px-3 py-3 text-[15px] ${
                     result
                       ? result.correct

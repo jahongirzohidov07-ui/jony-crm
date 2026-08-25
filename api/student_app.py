@@ -834,8 +834,9 @@ def ielts_listening_answer(payload: dict = Body(default={}),
 READING_SKILL = "ielts_reading"
 READING_TYPES = [
     # (kind, title, hint) — kind None bo'lsa mashq hali yo'q
-    {"kind": None, "title": "Short answer",
-     "hint": "Matndan 1-3 so'z bilan qisqa javob yozish"},
+    {"kind": "read_short", "title": "Short answer",
+     "hint": "Matn bo'yicha to'g'ridan-to'g'ri savol — javob "
+             "matndan, 2 so'zdan oshmaydi"},
     {"kind": None, "title": "Multiple Choice",
      "hint": "A/B/C/D variantlardan to'g'risini tanlash"},
     {"kind": "read_summary", "title": "Summary Completion",
@@ -871,13 +872,20 @@ READING_TYPES = [
 READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
 # Javob YOZIB beriladigan turlar (variant tanlanmaydi)
 READING_TYPED = ("read_table", "read_summary",
-                 "read_flow")
+                 "read_flow", "read_short")
 
 
 def _read_norm(t: str) -> str:
     """Yozma javobni solishtirish uchun: registr, tinish belgisi,
-    defis va bo'sh joy e'tiborsiz."""
+    defis va bo'sh joy e'tiborsiz.
+
+    2026-08-25: boshidagi artikl ham tashlanadi — IELTS'da "a
+    festival" va "festival" ikkalasi ham to'g'ri sanaladi."""
     t = (t or "").strip().lower()
+    for art in ("a ", "an ", "the "):
+        if t.startswith(art):
+            t = t[len(art):]
+            break
     for ch in " ,.;:'\u2019-\u2013\u2014":
         t = t.replace(ch, "")
     return t
@@ -933,6 +941,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_flow":
         from reading_flow_seed import FLOW_TIPS
         src = FLOW_TIPS
+    elif kind == "read_short":
+        from reading_short_seed import SHORT_TIPS
+        src = SHORT_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -955,7 +966,7 @@ def ielts_reading_tips(kind: str,
         "steps": [{"step": k,
                     "title": (f"{k}-daraja"
                               if kind in ("read_table", "read_summary",
-                                          "read_flow")
+                                          "read_flow", "read_short")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }
@@ -1008,6 +1019,8 @@ def ielts_reading_round(kind: str, count: int = 10,
             "summary": pl.get("summary"),
             "flow_title": pl.get("flow_title"),
             "flow": pl.get("flow"),
+            "questions": pl.get("questions"),
+            "q_no": pl.get("q_no"),
             "instruction": pl.get("instruction"),
             "solved": f"pi:{r.id}" in solved,
         })

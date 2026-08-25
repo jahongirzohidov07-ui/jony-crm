@@ -158,8 +158,8 @@ ck("Summary Completion tayyor",
    parts["Summary Completion"]["ready"], True)
 ck("elementlar soni", parts["Summary Completion"]["total"], len(rows))
 # 2026-08-25: Flow-chart Completion ham qo'shildi -> beshta
-ck("endi 5 ta tur to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 5)
+ck("endi 6 ta tur to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]), 6)
 
 print("\n=== 8. QOIDALAR ===")
 t = c.get(f"/api/student/ielts/reading/tips?kind={K}",

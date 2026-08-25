@@ -283,6 +283,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Flow-chart Completion (2026-08-25, Jahongir:
+# "Flowchart completion uchun misol ... buni 5-ga qoyda undan
+# oldingilarni sal osonlashtirib"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS23
+    from reading_flow_seed import seed_reading_flow
+    with _VS23(engine) as _db23:
+        seed_reading_flow(_db23)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

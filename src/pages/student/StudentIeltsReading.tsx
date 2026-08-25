@@ -312,6 +312,37 @@ export default function StudentIeltsReading() {
               {q.prompt}
             </p>
 
+            {/* --- Flow-chart: qutilar va strelkalar (2026-08-25) --- */}
+            {!q.options && q.flow && (
+              <div className="mt-3">
+                {q.flow_title && (
+                  <p className="text-[13px] font-bold text-slate-900 mb-2">
+                    {q.flow_title}
+                  </p>
+                )}
+                <div className="flex flex-col items-stretch">
+                  {q.flow.map((bx: string, i: number) => {
+                    const active = bx.includes("______");
+                    return (
+                      <div key={i}>
+                        <div className={`rounded-lg border px-2.5 py-2 text-[12.5px] leading-snug text-center ${
+                          active
+                            ? "border-amber-400 bg-amber-50 text-slate-900 font-medium"
+                            : "border-slate-300 bg-white text-slate-700"}`}>
+                          {bx}
+                        </div>
+                        {i < q.flow.length - 1 && (
+                          <p className="text-center text-slate-400 text-[13px] leading-none py-0.5">
+                            ↓
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* --- Summary Completion: xulosa qutisi (2026-08-25) --- */}
             {!q.options && q.summary && (
               <div className="mt-3 rounded-xl border-2 border-slate-300 p-3">
@@ -384,7 +415,7 @@ export default function StudentIeltsReading() {
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck={false}
-                  placeholder="Matndan bitta so'z yozing"
+                  placeholder={q.flow ? "Matndan 1-2 so'z yozing" : "Matndan bitta so'z yozing"}
                   className={`w-full rounded-xl border px-3 py-3 text-[15px] ${
                     result
                       ? result.correct

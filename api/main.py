@@ -304,6 +304,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Labelling a Diagram (2026-08-25, Jahongir:
+# "samalyotni 15ga, elektric revolutionni 10tga qoysang").
+# Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS25
+    from reading_label_seed import seed_reading_label
+    with _VS25(engine) as _db25:
+        seed_reading_label(_db25)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

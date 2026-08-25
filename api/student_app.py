@@ -858,8 +858,10 @@ READING_TYPES = [
      "hint": "Voqealar yoki jarayon ketma-ketligini matndagi "
              "so'zlar bilan to'ldirish — tartib eng kuchli "
              "yordamchi"},
-    {"kind": None, "title": "Labelling a Diagram",
-     "hint": "Chizma qismlarini matndagi nom bilan belgilash"},
+    {"kind": "read_label", "title": "Labelling a Diagram",
+     "hint": "Chizma qismlaridagi yorliqlarni matndan olingan "
+             "so'z bilan to'ldirish — tartib yo'q, qism nomi "
+             "yo'l ko'rsatadi"},
     {"kind": None, "title": "Matching Names",
      "hint": "Fikrni uni aytgan olim/muallif bilan moslash"},
     {"kind": None, "title": "Matching Information to Paragraphs",
@@ -872,7 +874,7 @@ READING_TYPES = [
 READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
 # Javob YOZIB beriladigan turlar (variant tanlanmaydi)
 READING_TYPED = ("read_table", "read_summary",
-                 "read_flow", "read_short")
+                 "read_flow", "read_short", "read_label")
 
 
 def _read_norm(t: str) -> str:
@@ -944,6 +946,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_short":
         from reading_short_seed import SHORT_TIPS
         src = SHORT_TIPS
+    elif kind == "read_label":
+        from reading_label_seed import LABEL_TIPS
+        src = LABEL_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -966,7 +971,8 @@ def ielts_reading_tips(kind: str,
         "steps": [{"step": k,
                     "title": (f"{k}-daraja"
                               if kind in ("read_table", "read_summary",
-                                          "read_flow", "read_short")
+                                          "read_flow", "read_short",
+                                          "read_label")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }
@@ -1021,6 +1027,8 @@ def ielts_reading_round(kind: str, count: int = 10,
             "flow": pl.get("flow"),
             "questions": pl.get("questions"),
             "q_no": pl.get("q_no"),
+            "figure": pl.get("figure"),
+            "labels": pl.get("labels"),
             "instruction": pl.get("instruction"),
             "solved": f"pi:{r.id}" in solved,
         })

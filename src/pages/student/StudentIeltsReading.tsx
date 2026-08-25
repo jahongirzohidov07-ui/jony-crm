@@ -314,6 +314,29 @@ export default function StudentIeltsReading() {
               </p>
             )}
 
+            {/* --- Diagram labelling: chizma yorliqlari (2026-08-25) --- */}
+            {!q.options && q.labels && (
+              <div className="mt-3 rounded-xl border-2 border-dashed border-slate-300 p-3">
+                <p className="text-[12px] font-bold text-slate-500 text-center mb-2 uppercase tracking-wide">
+                  {q.figure}
+                </p>
+                <div className="space-y-1.5">
+                  {q.labels.map((ln: string, i: number) => {
+                    const active = ln.includes("______");
+                    return (
+                      <p key={i}
+                         className={`text-[12.5px] leading-snug rounded px-2 py-1.5 border ${
+                           active
+                             ? "text-slate-900 font-medium bg-amber-50 border-amber-300"
+                             : "text-slate-500 border-slate-200"}`}>
+                        {ln}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* --- Short answer: savollar ro'yxati (2026-08-25) --- */}
             {!q.options && q.questions && (
               <div className="mt-3 space-y-1">
@@ -435,7 +458,7 @@ export default function StudentIeltsReading() {
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck={false}
-                  placeholder={q.flow || q.questions ? "Matndan 1-2 so'z yozing" : "Matndan bitta so'z yozing"}
+                  placeholder={q.flow || q.questions || q.labels ? "Matndan 1-2 so'z yozing" : "Matndan bitta so'z yozing"}
                   className={`w-full rounded-xl border px-3 py-3 text-[15px] ${
                     result
                       ? result.correct

@@ -53,6 +53,12 @@ def _me(db: Session, user: models.User) -> models.Student:
             403, "Bu bo'lim faqat o'quvchilar uchun. Hisobingiz "
                  "o'quvchi kartasiga bog'lanmagan — administratorga "
                  "murojaat qiling.")
+    # 2026-08-25: muzlatilgan/chiqib ketgan o'quvchida ESKI TOKEN ham
+    # ishlamasin — aks holda bola chiqmagan bo'lsa ilovada qolib
+    # ketardi.
+    why = roles.student_app_block_reason(s.status)
+    if why:
+        raise HTTPException(403, why)
     return s
 
 

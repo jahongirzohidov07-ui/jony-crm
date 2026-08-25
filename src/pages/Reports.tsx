@@ -1220,6 +1220,10 @@ function StudentAppTab() {
     ["Oxirgi 30 kunda kirgan", d.active_30d, "text-brand-700"],
     ["7 kunda mashq qilgan", d.practice_7d, "text-violet-600"],
     ["30 kunda mashq qilgan", d.practice_30d, "text-violet-600"],
+    // 2026-08-25
+    ["14+ kundan beri kirmagan", d.idle_count ?? 0, "text-amber-600"],
+    ["Ilovasi yopilgan (muzlatilgan/ketgan)", d.blocked ?? 0,
+     "text-slate-500"],
   ] as [string, number, string][];
 
   return (
@@ -1270,6 +1274,126 @@ function StudentAppTab() {
         </div>
       </div>
 
+      {/* =============== 2026-08-25 QO'SHIMCHALARI ==============
+          Jahongir: "nechtasi har kun kiryabdi nechtasi faol shunaqa
+          nechtasi qaysi darajaga keldi shunaqa korsatkichlar kerak" */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {/* --- daraja taqsimoti --- */}
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-1">
+            Qaysi darajaga kelgan
+          </p>
+          <p className="text-xs text-slate-400 mb-2">
+            Ilovada yig'ilgan mashq ballari bo'yicha
+          </p>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={d.levels || []}>
+              <XAxis dataKey="cefr" tick={{ fontSize: 11 }} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
+              <Tooltip
+                formatter={(v: Any) => [`${v} o'quvchi`, ""]}
+                labelFormatter={(v: Any) => {
+                  const it = (d.levels || []).find((x: Any) => x.cefr === v);
+                  return it ? `${it.label} · ${it.cefr}` : v;
+                }} />
+              <Bar dataKey="students" name="O'quvchi" fill="#7c3aed"
+                   radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* --- kunlik faollik zinasi --- */}
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-1">
+            30 kunda necha kun ishlagan
+          </p>
+          <p className="text-xs text-slate-400 mb-3">
+            O'rtacha faol kun: <b>{d.active_days_avg ?? 0}</b> (mashq
+            qilganlar orasida)
+          </p>
+          <div className="space-y-2">
+            {(d.activity || []).map((a: Any) => {
+              const pct = d.total ? Math.round(a.students * 100 / d.total) : 0;
+              const color = a.key === "daily" ? "bg-emerald-500"
+                : a.key === "often" ? "bg-brand-500"
+                : a.key === "rare" ? "bg-amber-400"
+                : a.key === "touch" ? "bg-orange-400" : "bg-red-400";
+              return (
+                <div key={a.key}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-600">{a.label}</span>
+                    <span className="text-slate-800 font-semibold">
+                      {a.students} <span className="text-slate-400">
+                        ({pct}%)</span>
+                    </span>
+                  </div>
+                  <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div className={`h-full rounded-full ${color}`}
+                         style={{ width: `${Math.max(pct, 1)}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* --- ko'nikma kesimi --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <p className="text-sm font-semibold text-slate-800 mb-1">
+          Ko'nikmalar kesimi (barcha o'quvchilar o'rtachasi)
+        </p>
+        <p className="text-xs text-slate-400 mb-3">
+          Qaysi ko'nikmaga umuman tegilmayotganini shu jadval
+          ko'rsatadi — kontent va dars rejasi shunga qarab tuziladi.
+        </p>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-xs text-slate-400 border-b border-slate-100">
+              <th className="py-2 font-medium">Ko'nikma</th>
+              <th className="py-2 text-right font-medium">O'rtacha ball</th>
+              <th className="py-2 text-right font-medium">Taxminiy IELTS</th>
+              <th className="py-2 text-right font-medium">Umuman tegmagan</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {(d.skills || []).map((k: Any) => (
+              <tr key={k.key}>
+                <td className="py-2 text-slate-800">{k.label}</td>
+                <td className="py-2 text-right font-semibold">
+                  {k.avg_score}
+                </td>
+                <td className="py-2 text-right text-slate-600">
+                  {k.band > 0 ? k.band.toFixed(1) : "—"}
+                </td>
+                <td className="py-2 text-right text-red-600">
+                  {k.untouched}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* --- liga taqsimoti --- */}
+      {(d.leagues || []).length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-2">
+            Liga taqsimoti
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {d.leagues.map((l: Any) => (
+              <div key={l.rank}
+                   className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2">
+                <span className="text-lg">{l.icon}</span>
+                <span className="text-xs text-slate-600">{l.name}</span>
+                <b className="text-sm text-slate-900">{l.students}</b>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-xl border border-slate-200 p-4">
         <p className="text-sm font-semibold text-slate-800 mb-2">
           Filial kesimida
@@ -1299,6 +1423,36 @@ function StudentAppTab() {
           </tbody>
         </table>
       </div>
+
+      {(d.idle_list || []).length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <p className="text-sm font-semibold text-slate-800 mb-1">
+            Kirgan, lekin 14+ kundan beri yo'q ({d.idle_count})
+          </p>
+          <p className="text-xs text-slate-400 mb-3">
+            Ilovani tashlab ketganlar — bu ko'pincha markazdan ham
+            ketish belgisi. Eng uzoq yo'qolganlar tepada.
+          </p>
+          <div className="max-h-80 overflow-y-auto">
+            <table className="w-full text-sm">
+              <tbody className="divide-y divide-slate-100">
+                {d.idle_list.map((st: Any) => (
+                  <tr key={st.id}>
+                    <td className="py-1.5 text-slate-800">{st.name}</td>
+                    <td className="py-1.5 text-slate-500">{st.branch}</td>
+                    <td className="py-1.5 text-right text-slate-500">
+                      {st.phone || "—"}
+                    </td>
+                    <td className="py-1.5 text-right text-amber-600 font-semibold">
+                      {st.days} kun
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-xl border border-slate-200 p-4">
         <p className="text-sm font-semibold text-slate-800 mb-1">

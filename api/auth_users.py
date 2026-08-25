@@ -94,6 +94,18 @@ def login(payload: schemas.LoginRequest, request: Request,
         raise HTTPException(status_code=401, detail="Login yoki parol noto'g'ri")
     if not user.is_active:
         raise HTTPException(status_code=401, detail="Bu hisob faolsizlantirilgan")
+    # MUZLATILGAN / CHIQIB KETGAN O'QUVCHI ILOVAGA KIRMAYDI
+    # (2026-08-25, Jahongir: "akkaunti muzlatilsa yoki darsdan chiqib
+    # ketsa bu appga kirmay qolishi kerak"). Hisob O'CHIRILMAYDI —
+    # holat qaytsa kirish o'zi tiklanadi.
+    if user.role == roles.STUDENT:
+        _st = (db.query(models.Student)
+               .filter(models.Student.user_id == user.id).first())
+        if _st:
+            _why = roles.student_app_block_reason(_st.status)
+            if _why:
+                _login_record(db, payload.username, ip, True)
+                raise HTTPException(status_code=403, detail=_why)
     _login_record(db, payload.username, ip, True)
     token = create_access_token(
         {"sub": user.username},

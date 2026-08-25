@@ -1125,6 +1125,33 @@ STUDENT_STATUS_LABELS = dict(STUDENT_STATUSES)
 # Markazda hisobga olinadigan (arxivga tushmagan) holatlar
 STUDENT_OPEN_STATUSES = ["active", "trial", "frozen", "left"]
 
+# JONY STUDENT ILOVASIGA KIRISH HUQUQI (2026-08-25).
+# Jahongir: "akkaunti muzlatilsa yoki darsdan chiqib ketsa bu appga
+# kirmay qolishi kerak".
+# Muzlatilgan, chiqib ketgan va arxivdagilar ilovaga kira olmaydi.
+# Tekshiruv HOLAT bo'yicha ishlaydi (hisob o'chirilmaydi) — o'quvchi
+# qaytib faollashsa, ilova o'zi ochiladi, qo'lda hech nima qilish
+# shart emas va bironta ma'lumot yo'qolmaydi.
+STUDENT_APP_STATUSES = ["active", "trial"]
+STUDENT_APP_BLOCK_TEXT = {
+    "frozen": ("Hisobingiz vaqtincha muzlatilgan. O'qish qayta "
+               "boshlanganda ilova o'zi ochiladi."),
+    "left": ("Siz guruhdan chiqarilgansiz. Qayta qo'shilganingizda "
+             "ilova o'zi ochiladi."),
+    "archived": ("Hisobingiz arxivga o'tkazilgan. Savollar bo'lsa "
+                 "administratorga murojaat qiling."),
+}
+STUDENT_APP_BLOCK_DEFAULT = ("Ilova hozircha yopiq. Administratorga "
+                             "murojaat qiling.")
+
+
+def student_app_block_reason(status: str) -> str | None:
+    """O'quvchi ilovaga kira oladimi? Kira olmasa — sababi."""
+    if (status or "") in STUDENT_APP_STATUSES:
+        return None
+    return STUDENT_APP_BLOCK_TEXT.get(
+        status or "", STUDENT_APP_BLOCK_DEFAULT)
+
 SUBJECTS = [
     ("english", "Ingliz tili"),
     ("russian", "Rus tili"),

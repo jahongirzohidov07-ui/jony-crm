@@ -342,6 +342,156 @@ def report_student_app_usage(
             daily.append({"day": dd.isoformat(),
                           "users": m.get(dd.isoformat(), 0)})
 
+    # =================================================================
+    #  2026-08-25 QO'SHIMCHALARI
+    #  Jahongir: "nechta o'quvchi akkauntiga kirdi ulandi, nechtasi
+    #  hali umuman kirib kormadi, nechtasi har kun kiryabdi nechtasi
+    #  faol shunaqa nechtasi qaysi darajaga keldi shunaqa
+    #  korsatkichlar kerak".
+    #
+    #  Hammasi TO'PLAM so'rovlar bilan olinadi (har o'quvchi uchun
+    #  alohida so'rov YO'Q) — Neon trafigi oshmasin.
+    # =================================================================
+    sid_set = set(sids)
+
+    def _bulk(q):
+        return {int(k): int(v or 0) for k, v in q.all() if k in sid_set}
+
+    pts_ex = _bulk(db.query(
+        models.ExerciseResult.student_id,
+        func.coalesce(func.sum(models.ExerciseResult.correct), 0))
+        .filter(models.ExerciseResult.student_id.in_(sids))
+        .group_by(models.ExerciseResult.student_id)) if sids else {}
+    pts_voc = _bulk(db.query(
+        models.VocabAttempt.student_id,
+        func.count(func.distinct(models.VocabAttempt.word_id)))
+        .filter(models.VocabAttempt.student_id.in_(sids),
+                models.VocabAttempt.correct == 1)
+        .group_by(models.VocabAttempt.student_id)) if sids else {}
+    pts_gr = _bulk(db.query(
+        models.GrammarAttempt.student_id,
+        func.count(func.distinct(models.GrammarAttempt.question_id)))
+        .filter(models.GrammarAttempt.student_id.in_(sids),
+                models.GrammarAttempt.correct == 1)
+        .group_by(models.GrammarAttempt.student_id)) if sids else {}
+    # Ko'nikma kesimi: (o'quvchi, ko'nikma) -> alohida to'g'ri javob
+    per_skill = {}
+    if sids:
+        for sid, skill, cnt in (db.query(
+                models.SkillAttempt.student_id, models.SkillAttempt.skill,
+                func.count(func.distinct(models.SkillAttempt.ref)))
+                .filter(models.SkillAttempt.student_id.in_(sids),
+                        models.SkillAttempt.correct == 1)
+                .group_by(models.SkillAttempt.student_id,
+                          models.SkillAttempt.skill).all()):
+            if sid in sid_set:
+                per_skill.setdefault(int(sid), {})[skill] = int(cnt or 0)
+
+    # ---- DARAJA TAQSIMOTI -------------------------------------------
+    lvl_count = {lv["key"]: 0 for lv in roles.ENG_LEVELS}
+    total_points = {}
+    for sid in sids:
+        p = (pts_ex.get(sid, 0) + pts_voc.get(sid, 0) + pts_gr.get(sid, 0)
+             + sum(per_skill.get(sid, {}).values()))
+        total_points[sid] = p
+        lvl_count[roles.ENG_LEVELS[roles.level_index_for(p)]["key"]] += 1
+    levels = [{"key": lv["key"], "label": lv["label"], "cefr": lv["cefr"],
+               "students": lvl_count[lv["key"]]} for lv in roles.ENG_LEVELS]
+
+    # ---- KO'NIKMA KESIMI: o'rtacha 0-100 ball -----------------------
+    skill_rows = []
+    for k in roles.SKILL_KEYS:
+        vals = []
+        for sid in sids:
+            if k == "vocabulary":
+                p = pts_voc.get(sid, 0)
+            elif k == "grammar":
+                p = pts_gr.get(sid, 0)
+            else:
+                p = per_skill.get(sid, {}).get(k, 0)
+            vals.append(roles.skill_score(p))
+        avg = round(sum(vals) / len(vals), 1) if vals else 0.0
+        skill_rows.append({
+            "key": k, "label": roles.SKILL_LABELS[k],
+            "avg_score": avg, "band": roles.ielts_band(avg),
+            # shu ko'nikmaga umuman tegmaganlar
+            "untouched": sum(1 for v in vals if v <= 0),
+        })
+
+    # ---- KUNLIK FAOLLIK: 30 kunda necha kun ishlagan -----------------
+    days_by_student = {}
+    if sids:
+        for tbl, extra in ((models.VocabAttempt, None),
+                           (models.GrammarAttempt, None),
+                           (models.SkillAttempt, None)):
+            q = (db.query(tbl.student_id, func.date(tbl.created_at))
+                 .filter(tbl.student_id.in_(sids),
+                         tbl.created_at >= d30).distinct())
+            for sid, dd in q.all():
+                if sid in sid_set and dd:
+                    days_by_student.setdefault(int(sid), set()).add(str(dd))
+    BANDS = [
+        ("daily", "Deyarli har kuni (25+ kun)", 25, 999),
+        ("often", "Tez-tez (10-24 kun)", 10, 24),
+        ("rare", "Kamdan-kam (3-9 kun)", 3, 9),
+        ("touch", "1-2 kun", 1, 2),
+        ("none", "30 kunda umuman ishlamagan", 0, 0),
+    ]
+    activity = []
+    for key, label, lo, hi in BANDS:
+        n = sum(1 for sid in sids
+                if lo <= len(days_by_student.get(sid, ())) <= hi)
+        activity.append({"key": key, "label": label, "students": n})
+    active_days_avg = (round(sum(len(v) for v in days_by_student.values())
+                             / max(1, len(days_by_student)), 1)
+                       if days_by_student else 0.0)
+
+    # ---- LIGA TAQSIMOTI ---------------------------------------------
+    leagues = []
+    try:
+        lg_rows = (db.query(models.XpLeague.name, models.XpLeague.icon,
+                            models.XpLeague.rank,
+                            func.count(models.StudentGamification.id))
+                   .outerjoin(models.StudentGamification,
+                              models.StudentGamification.current_league_id
+                              == models.XpLeague.id)
+                   .filter(models.XpLeague.is_active == 1)
+                   .group_by(models.XpLeague.name, models.XpLeague.icon,
+                             models.XpLeague.rank)
+                   .order_by(models.XpLeague.rank).all())
+        leagues = [{"name": n, "icon": ic, "rank": r, "students": int(cnt or 0)}
+                   for n, ic, r, cnt in lg_rows]
+    except Exception:
+        db.rollback()
+
+    # ---- UZOQ KIRMAGANLAR (ilgari kirgan, 14+ kun yo'q) -------------
+    d14 = datetime.combine(today - timedelta(days=14), dtime.min)
+    idle_rows = []
+    for st, uname in pairs:
+        ll = last_login.get(uname) if uname else None
+        if ll and ll < d14:
+            idle_rows.append({
+                "id": st.id, "name": st.full_name,
+                "branch": branches.get(st.branch_id, "—"),
+                "phone": st.phone,
+                "last_login": ll.date().isoformat(),
+                "days": (today - ll.date()).days,
+            })
+    idle_rows.sort(key=lambda x: -x["days"])
+
+    # ---- ILOVASI YOPILGANLAR (muzlatilgan / chiqib ketgan) ----------
+    blocked = 0
+    try:
+        blocked = (db.query(func.count(models.Student.id))
+                   .join(models.User,
+                         models.User.id == models.Student.user_id)
+                   .filter(models.Student.status.notin_(
+                       roles.STUDENT_APP_STATUSES))
+                   .filter(models.Student.status.in_(
+                       roles.STUDENT_OPEN_STATUSES)).scalar() or 0)
+    except Exception:
+        db.rollback()
+
     return {
         "total": total,
         "with_account": total - no_account,
@@ -356,6 +506,15 @@ def report_student_app_usage(
                             key=lambda x: -x["total"]),
         "daily_logins": daily,
         "never_list": sorted(never_rows, key=lambda x: x["name"])[:300],
+        # 2026-08-25 qo'shimchalari
+        "levels": levels,
+        "skills": skill_rows,
+        "activity": activity,
+        "active_days_avg": active_days_avg,
+        "leagues": leagues,
+        "idle_list": idle_rows[:300],
+        "idle_count": len(idle_rows),
+        "blocked": int(blocked),
     }
 
 

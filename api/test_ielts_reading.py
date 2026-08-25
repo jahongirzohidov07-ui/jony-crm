@@ -80,10 +80,10 @@ for want in ("Short answer", "Multiple Choice", "Summary Completion",
              "Table Completion"):
     ck(f"ro'yxatda: {want}", want in titles, True)
 ready = [p for p in parts if p["ready"]]
-# 2026-08-25: Table Completion ham qo'shildi -> uchta tayyor
-ck("hozircha 3 tasi to'ldirilgan", len(ready), 3)
-ck("qolgan 9 tasi 'tez orada'",
-   len([p for p in parts if not p["ready"]]), 9)
+# 2026-08-25: Table + Summary Completion qo'shildi -> to'rtta tayyor
+ck("hozircha 4 tasi to'ldirilgan", len(ready), 4)
+ck("qolgan 8 tasi 'tez orada'",
+   len([p for p in parts if not p["ready"]]), 8)
 by_kind = {p["kind"]: p for p in parts if p["kind"]}
 
 print("\n=== 2. MASHQLAR SONI ===")

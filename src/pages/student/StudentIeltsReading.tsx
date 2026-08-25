@@ -312,6 +312,33 @@ export default function StudentIeltsReading() {
               {q.prompt}
             </p>
 
+            {/* --- Summary Completion: xulosa qutisi (2026-08-25) --- */}
+            {!q.options && q.summary && (
+              <div className="mt-3 rounded-xl border-2 border-slate-300 p-3">
+                {q.summary_title && (
+                  <p className="text-[13px] font-bold text-slate-900 mb-2">
+                    {q.summary_title}
+                  </p>
+                )}
+                <div className="space-y-1.5">
+                  {q.summary.map((ln: string, i: number) => {
+                    const bullet = ln.trim().startsWith("•");
+                    const active = ln.includes("______");
+                    return (
+                      <p key={i}
+                         className={`text-[12.5px] leading-relaxed ${
+                           bullet ? "pl-3" : ""} ${
+                           active
+                             ? "text-slate-900 font-medium bg-amber-50 rounded px-1.5 py-1"
+                             : "text-slate-600"}`}>
+                        {ln}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* --- Table Completion: jadval + yozma javob --- */}
             {!q.options && q.headers && (
               <div className="mt-3 -mx-4 px-4 overflow-x-auto">

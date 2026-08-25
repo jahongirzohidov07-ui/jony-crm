@@ -272,6 +272,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Summary Completion (2026-08-25, Jahongir: "bu
+# summary completion turi shunga ham 100ta mashq ber. Butun textdan
+# xulosani textdagi so'zlar bilan to'ldirish"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS22
+    from reading_summary_seed import seed_reading_summary
+    with _VS22(engine) as _db22:
+        seed_reading_summary(_db22)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -838,8 +838,9 @@ READING_TYPES = [
      "hint": "Matndan 1-3 so'z bilan qisqa javob yozish"},
     {"kind": None, "title": "Multiple Choice",
      "hint": "A/B/C/D variantlardan to'g'risini tanlash"},
-    {"kind": None, "title": "Summary Completion",
-     "hint": "Qisqacha mazmundagi bo'sh joylarni to'ldirish"},
+    {"kind": "read_summary", "title": "Summary Completion",
+     "hint": "BUTUN matnning xulosasini matndagi so'zlar bilan "
+             "to'ldirish — har bo'shliq matnning boshqa joyidan"},
     {"kind": None, "title": "Matching Sentences",
      "hint": "Gap boshini to'g'ri davomiga ulash"},
     {"kind": None, "title": "Sentence Completion",
@@ -865,7 +866,7 @@ READING_TYPES = [
 ]
 READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
 # Javob YOZIB beriladigan turlar (variant tanlanmaydi)
-READING_TYPED = ("read_table",)
+READING_TYPED = ("read_table", "read_summary")
 
 
 def _read_norm(t: str) -> str:
@@ -921,6 +922,9 @@ def ielts_reading_tips(kind: str,
     if kind == "read_table":
         from reading_table_seed import TABLE_TIPS
         src = TABLE_TIPS
+    elif kind == "read_summary":
+        from reading_summary_seed import SUMMARY_TIPS
+        src = SUMMARY_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -941,7 +945,8 @@ def ielts_reading_tips(kind: str,
         "tips": [{"title": a, "body": b, "example": c}
                  for a, b, c in src],
         "steps": [{"step": k,
-                    "title": (f"{k}-daraja" if kind == "read_table"
+                    "title": (f"{k}-daraja"
+                              if kind in ("read_table", "read_summary")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }
@@ -990,6 +995,8 @@ def ielts_reading_round(kind: str, count: int = 10,
             "rows": pl.get("rows"),
             "gap_no": pl.get("gap_no"),
             "in_table": pl.get("in_table"),
+            "summary_title": pl.get("summary_title"),
+            "summary": pl.get("summary"),
             "instruction": pl.get("instruction"),
             "solved": f"pi:{r.id}" in solved,
         })

@@ -326,6 +326,16 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Multiple Choice (2026-08-25, Jahongir: "buni
+# 20-25 orasiga qoyvorasan"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS27
+    from reading_mcq_seed import seed_reading_mcq
+    with _VS27(engine) as _db27:
+        seed_reading_mcq(_db27)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

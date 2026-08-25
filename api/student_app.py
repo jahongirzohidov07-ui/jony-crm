@@ -854,8 +854,9 @@ READING_TYPES = [
     {"kind": "read_short", "title": "Short answer",
      "hint": "Matn bo'yicha to'g'ridan-to'g'ri savol — javob "
              "matndan, 2 so'zdan oshmaydi"},
-    {"kind": None, "title": "Multiple Choice",
-     "hint": "A/B/C/D variantlardan to'g'risini tanlash"},
+    {"kind": "read_mcq", "title": "Multiple Choice",
+     "hint": "A/B/C/D — to'rt variantning hammasi matndagi "
+             "so'zlardan yasalgan, faqat bittasi to'g'ri"},
     {"kind": "read_summary", "title": "Summary Completion",
      "hint": "BUTUN matnning xulosasini matndagi so'zlar bilan "
              "to'ldirish — har bo'shliq matnning boshqa joyidan"},
@@ -970,6 +971,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_head":
         from reading_head_seed import HEAD_TIPS
         src = HEAD_TIPS
+    elif kind == "read_mcq":
+        from reading_mcq_seed import MCQ_TIPS
+        src = MCQ_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -993,7 +997,8 @@ def ielts_reading_tips(kind: str,
                     "title": (f"{k}-daraja"
                               if kind in ("read_table", "read_summary",
                                           "read_flow", "read_short",
-                                          "read_label", "read_head")
+                                          "read_label", "read_head",
+                                          "read_mcq")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }

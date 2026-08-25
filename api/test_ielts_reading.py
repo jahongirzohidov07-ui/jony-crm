@@ -80,9 +80,10 @@ for want in ("Short answer", "Multiple Choice", "Summary Completion",
              "Table Completion"):
     ck(f"ro'yxatda: {want}", want in titles, True)
 ready = [p for p in parts if p["ready"]]
-ck("hozircha 2 tasi to'ldirilgan", len(ready), 2)
-ck("qolgan 10 tasi 'tez orada'",
-   len([p for p in parts if not p["ready"]]), 10)
+# 2026-08-25: Table Completion ham qo'shildi -> uchta tayyor
+ck("hozircha 3 tasi to'ldirilgan", len(ready), 3)
+ck("qolgan 9 tasi 'tez orada'",
+   len([p for p in parts if not p["ready"]]), 9)
 by_kind = {p["kind"]: p for p in parts if p["kind"]}
 
 print("\n=== 2. MASHQLAR SONI ===")
@@ -290,7 +291,12 @@ RS.seed_reading_ielts(db)
 n2 = db.query(models.PracticeItem).filter(
     models.PracticeItem.skill == RS.SKILL).count()
 ck("qayta seed dublikat yaratmaydi", n2, n1)
-ck("bazada build_rows bilan bir xil", n1, len(rows))
+# Bazada Table Completion mashqlari ham bor — TFNG/YNNG qismini
+# alohida sanaymiz (2026-08-25).
+n_tf_yn = db.query(models.PracticeItem).filter(
+    models.PracticeItem.skill == RS.SKILL,
+    models.PracticeItem.kind.in_((RS.TF_KIND, RS.YN_KIND))).count()
+ck("bazada build_rows bilan bir xil", n_tf_yn, len(rows))
 
 print("\n=== 17. ESKI MASHQLAR BUZILMAGAN ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)

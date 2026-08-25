@@ -858,10 +858,23 @@ READING_TYPES = [
      "hint": "Fikrni uni aytgan olim/muallif bilan moslash"},
     {"kind": None, "title": "Matching Information to Paragraphs",
      "hint": "Berilgan ma'lumot qaysi xatboshida — shuni topish"},
-    {"kind": None, "title": "Table Completion",
-     "hint": "Jadvaldagi bo'sh kataklarni to'ldirish"},
+    {"kind": "read_table", "title": "Table Completion",
+     "hint": "Jadvaldagi bo'sh katakni matndan olingan BITTA so'z "
+             "bilan to'ldirish — asosiy ko'nikma paraffrazni "
+             "ko'rish"},
 ]
 READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
+# Javob YOZIB beriladigan turlar (variant tanlanmaydi)
+READING_TYPED = ("read_table",)
+
+
+def _read_norm(t: str) -> str:
+    """Yozma javobni solishtirish uchun: registr, tinish belgisi,
+    defis va bo'sh joy e'tiborsiz."""
+    t = (t or "").strip().lower()
+    for ch in " ,.;:'\u2019-\u2013\u2014":
+        t = t.replace(ch, "")
+    return t
 
 
 def _read_solved(db, student_id):
@@ -905,7 +918,11 @@ def ielts_reading_tips(kind: str,
     if kind not in READING_KINDS:
         raise HTTPException(404, "Bunday mashq yo'q")
     from reading_ielts_seed import TF_TIPS, YN_TIPS, STEP_TITLES
-    src = TF_TIPS if kind == "read_tfng" else YN_TIPS
+    if kind == "read_table":
+        from reading_table_seed import TABLE_TIPS
+        src = TABLE_TIPS
+    else:
+        src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
             .filter(models.PracticeItem.skill == READING_SKILL,
                     models.PracticeItem.kind == kind,
@@ -923,8 +940,10 @@ def ielts_reading_tips(kind: str,
                       if t["kind"] == kind),
         "tips": [{"title": a, "body": b, "example": c}
                  for a, b, c in src],
-        "steps": [{"step": k, "title": STEP_TITLES.get(k, ""),
-                   "total": v} for k, v in sorted(steps.items())],
+        "steps": [{"step": k,
+                    "title": (f"{k}-daraja" if kind == "read_table"
+                              else STEP_TITLES.get(k, "")),
+                    "total": v} for k, v in sorted(steps.items())],
     }
 
 
@@ -963,6 +982,15 @@ def ielts_reading_round(kind: str, count: int = 10,
             "step": pl.get("step", 1),
             "step_title": pl.get("step_title", ""),
             "tip": pl.get("tip"),
+            # Table Completion uchun (2026-08-25). DIQQAT: paraffraz
+            # bu yerda YUBORILMAYDI — u matndagi javob iborasini
+            # o'z ichiga oladi, ya'ni javobni oshkor qilardi.
+            "title": pl.get("title"),
+            "headers": pl.get("headers"),
+            "rows": pl.get("rows"),
+            "gap_no": pl.get("gap_no"),
+            "in_table": pl.get("in_table"),
+            "instruction": pl.get("instruction"),
             "solved": f"pi:{r.id}" in solved,
         })
     return {"kind": kind, "items": items,
@@ -984,7 +1012,14 @@ def ielts_reading_answer(payload: dict = Body(default={}),
     if not it or not it.is_active or it.skill != READING_SKILL:
         raise HTTPException(404, "Mashq topilmadi")
     given = str(payload.get("answer") or "").strip()
-    ok = given.upper() == (it.answer or "").strip().upper()
+    if it.kind in READING_TYPED:
+        # Yozib javob beriladigan turlar (Table Completion va h.k.):
+        # registr, tinish belgisi va defis e'tiborsiz. Ma'no muhim,
+        # imlo mayda-chuydasi emas.
+        ok = _read_norm(given) == _read_norm(it.answer) or (
+            bool(it.alt) and _read_norm(given) == _read_norm(it.alt))
+    else:
+        ok = given.upper() == (it.answer or "").strip().upper()
 
     was = (db.query(models.SkillAttempt.id)
            .filter(models.SkillAttempt.student_id == s.id,
@@ -997,9 +1032,13 @@ def ielts_reading_answer(payload: dict = Body(default={}),
         correct=1 if ok else 0, answer=given[:300], date=date.today()))
     db.commit()
 
-    tip = ""
+    tip, para = "", None
     try:
-        tip = json.loads(it.payload).get("tip") or ""
+        _pl = json.loads(it.payload)
+        tip = _pl.get("tip") or ""
+        # 2026-08-25, Jahongir: "javoblar tushuntirilganda readingda
+        # doim paraphraselarni korsatib tushuntirish kerak"
+        para = _pl.get("paraphrase")
     except Exception:
         pass
     xp_given = 0.0
@@ -1017,6 +1056,7 @@ def ielts_reading_answer(payload: dict = Body(default={}),
             db.rollback()
     return {"correct": ok, "expected": it.answer,
             "explain": it.explain, "tip": tip,
+            "paraphrase": para, "alt": it.alt,
             "first_time": ok and not was, "xp": xp_given}
 
 

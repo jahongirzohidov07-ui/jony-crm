@@ -46,6 +46,8 @@ export default function StudentIeltsReading() {
   const [idx, setIdx] = useState(0);
   const [result, setResult] = useState<Any>(null);
   const [picked, setPicked] = useState("");
+  // 2026-08-25: Table Completion'da javob YOZILADI (variant yo'q)
+  const [typed, setTyped] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const [score, setScore] = useState({ ok: 0, xp: 0 });
@@ -64,6 +66,7 @@ export default function StudentIeltsReading() {
     setD(null);
     setIdx(0);
     setPicked("");
+    setTyped("");
     setResult(null);
     setScore({ ok: 0, xp: 0 });
     setFinished(false);
@@ -80,7 +83,7 @@ export default function StudentIeltsReading() {
   const autoNext = useAutoNext(() => next());
 
   async function submit(choice: string) {
-    if (!q || busy || result) return;
+    if (!q || busy || result || !choice.trim()) return;
     setBusy(true);
     setPicked(choice);
     try {
@@ -111,6 +114,7 @@ export default function StudentIeltsReading() {
     }
     setIdx(idx + 1);
     setPicked("");
+    setTyped("");
     setResult(null);
   }
 
@@ -285,7 +289,7 @@ export default function StudentIeltsReading() {
           <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-semibold text-slate-500">
-                Passage
+                {q.title || "Passage"}
               </span>
               <span
                 className={`text-[10px] font-bold px-2 py-0.5 rounded ${
@@ -295,18 +299,83 @@ export default function StudentIeltsReading() {
                 {q.step}-bosqich · {q.step_title}
               </span>
             </div>
-            <p className="text-[13.5px] text-slate-800 leading-relaxed">
+            <p className="text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-line">
               {q.passage}
             </p>
           </div>
 
           <div className="bg-white rounded-xl border border-slate-200 p-4 mt-3">
             <p className="text-[11px] font-semibold text-slate-500 mb-1.5">
-              Question
+              {q.instruction || "Question"}
             </p>
             <p className="text-[14px] font-medium text-slate-900 leading-relaxed">
               {q.prompt}
             </p>
+
+            {/* --- Table Completion: jadval + yozma javob --- */}
+            {!q.options && q.headers && (
+              <div className="mt-3 -mx-4 px-4 overflow-x-auto">
+                <table className="w-full text-[11.5px] border-collapse">
+                  <thead>
+                    <tr>
+                      {q.headers.map((h: string) => (
+                        <th key={h}
+                            className="border border-slate-200 bg-slate-50 px-2 py-1.5 text-left font-semibold text-slate-600">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(q.rows || []).map((r: string[], ri: number) => (
+                      <tr key={ri}>
+                        {r.map((cvalue: string, ci: number) => (
+                          <td key={ci}
+                              className={`border border-slate-200 px-2 py-1.5 align-top ${
+                                cvalue.includes("______")
+                                  ? "bg-amber-50 text-slate-900 font-medium"
+                                  : "text-slate-700"}`}>
+                            {cvalue}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {!q.options && (
+              <div className="mt-3.5">
+                <input
+                  value={typed}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") submit(typed);
+                  }}
+                  disabled={!!result || busy}
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  placeholder="Matndan bitta so'z yozing"
+                  className={`w-full rounded-xl border px-3 py-3 text-[15px] ${
+                    result
+                      ? result.correct
+                        ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                        : "border-red-300 bg-red-50 text-red-700"
+                      : "border-slate-200"}`}
+                />
+                {!result && (
+                  <button
+                    onClick={() => submit(typed)}
+                    disabled={busy || !typed.trim()}
+                    className="w-full mt-2 rounded-xl bg-brand-600 py-2.5 text-sm font-semibold text-white disabled:opacity-40"
+                  >
+                    Tekshirish
+                  </button>
+                )}
+              </div>
+            )}
 
             <div className="space-y-1.5 mt-3.5">
               {(q.options || []).map((o: string) => {
@@ -363,6 +432,29 @@ export default function StudentIeltsReading() {
                   </span>
                 )}
               </div>
+              {/* 2026-08-25, Jahongir: "javoblar tushuntirilganda
+                  readingda doim paraphraselarni korsatib tushuntirish
+                  kerak" — paraffraz alohida, ko'zga tashlanadigan
+                  blokda turadi. */}
+              {result.paraphrase && (
+                <div className="mt-2 rounded-lg bg-white border border-slate-200 p-2.5">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                    Paraffraz
+                  </p>
+                  <p className="text-[12.5px] text-slate-800 mt-1">
+                    Jadvalda:{" "}
+                    <b className="text-brand-700">
+                      {result.paraphrase.table}
+                    </b>
+                  </p>
+                  <p className="text-[12.5px] text-slate-800">
+                    Matnda:{" "}
+                    <b className="text-emerald-700">
+                      {result.paraphrase.passage}
+                    </b>
+                  </p>
+                </div>
+              )}
               <p className="text-[12.5px] text-slate-700 mt-1.5 leading-relaxed">
                 {result.explain}
               </p>

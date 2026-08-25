@@ -261,6 +261,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Table Completion (2026-08-25, Jahongir: "Table
+# Completion qilaylik ... paraphraselar topish skillari rivojlanishi
+# kerak"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS21
+    from reading_table_seed import seed_reading_table
+    with _VS21(engine) as _db21:
+        seed_reading_table(_db21)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

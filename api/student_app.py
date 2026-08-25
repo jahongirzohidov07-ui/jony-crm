@@ -379,7 +379,15 @@ def student_home(db: Session = Depends(get_db),
             "coins": gam.get("coins"),
             "lifetime_xp": gam.get("lifetime_xp"),
             "level": gam.get("level"),
+            # 2026-08-25, Jahongir: "ligasini ham bosh sahifani
+            # qayerigadur qo'shish kerak" — bosh sahifada liga
+            # kartasi chiqishi uchun keyingi liga va qolgan XP ham
+            # yuboriladi.
             "league": gam.get("league"),
+            "next_league": gam.get("next_league"),
+            "league_percent": gam.get("league_percent"),
+            "league_to_next": gam.get("league_to_next"),
+            "max_league": gam.get("max_league"),
         },
         "streak": _award_and_get_streak(db, s.id),
         "today": {"answered": int(solved_today), "correct": int(correct_today)},
@@ -1540,8 +1548,9 @@ def student_profile(db: Session = Depends(get_db),
             "points": k["points"], "available": k["available"],
             "coverage": k["coverage"],
         } for k in skills["skills"]],
-        "radar_note": ("44 ball = B2 (IELTS 6.0), 70 = C1 (7.5), "
-                       "95 = C2 (9.0)"),
+        # 2026-08-25, Jahongir: "shu joyi kerak emas 44 ball = B2
+        # (IELTS 6.0) - 70 = C1 (7.5) - 95 = C2 (9.0)"
+        "radar_note": "Har ko'nikma bo'yicha hozirgi darajangiz",
         "ielts": skills["ielts"],
         # 2026-08-25: liga profilda ham ko'rinsin (Jahongir: "hamma
         # kerakli joylarga qoshgin shu narsalari bilmayabdi")

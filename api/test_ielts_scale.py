@@ -171,7 +171,11 @@ pf = r.json()
 ck("profilda ielts bloki bor", "ielts" in pf, True)
 ck("radar bali endi CEFR zinasidan",
    all("band" in x and "cefr" in x for x in pf["radar"]), True)
-ck("radar izohida 44/70/95 bor", "44" in pf["radar_note"], True)
+# 2026-08-25, Jahongir: "shu joyi kerak emas 44 ball = B2 (IELTS
+# 6.0) - 70 = C1 (7.5) - 95 = C2 (9.0)" — shkala izohi olib tashlandi
+ck("radar izohida shkala raqamlari YO'Q",
+   any(x in pf["radar_note"] for x in ("44", "70", "95")), False)
+ck("radar izohi bo'sh emas", bool(pf["radar_note"]), True)
 ck("profilda liga ko'rinadi", "league" in pf, True)
 
 print("\n=== 9. LIGALAR RO'YXATI O'QUVCHIGA OCHIQ ===")
@@ -195,6 +199,18 @@ ck("qulflanganlarda 'yana X XP' bor",
    all(x["xp_left"] > 0 for x in lg["leagues"]
        if x["state"] == "locked"), True)
 ck("izoh matni bor", bool(lg["note"]), True)
+
+print("\n=== 9b. BOSH SAHIFADA HAM LIGA BOR ===")
+# Jahongir: "ligasini ham bosh sahifani qayerigadur qo'shish kerak"
+r = c.get("/api/student/home", headers=H)
+ck("home 200", r.status_code, 200)
+g = r.json().get("gamification") or {}
+ck("bosh sahifada liga bor", bool(g.get("league")), True)
+ck("liga nomi va ikonkasi bor",
+   bool((g.get("league") or {}).get("name")
+        and (g.get("league") or {}).get("icon")), True)
+ck("keyingi ligagacha XP ham keladi", "league_to_next" in g, True)
+ck("progress foizi ham keladi", "league_percent" in g, True)
 
 print("\n=== 10. REYTINGDA HAM LIGA KO'RINADI ===")
 r = c.get("/api/student/leaderboard?scope=all&period=all", headers=H)

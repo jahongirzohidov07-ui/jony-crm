@@ -63,8 +63,13 @@ export default function StudentHome() {
   const cont = d.continue;
   const firstName = (d.name || "").split(" ").slice(-1)[0] || d.name;
   const pct = ov?.next ? Math.round(ov.next.progress_percent) : 100;
-  const perLevel = 500;
+  // 2026-08-25: daraja oralig'i endi har darajada har xil — 500 deb
+  // qotirib qo'yish noto'g'ri edi (roles.ENG_LEVEL_POINTS).
+  const lvFrom = ov?.level_from ?? 0;
+  const lvTo = ov?.next?.need ?? ov?.level_to ?? lvFrom;
+  const perLevel = Math.max(1, lvTo - lvFrom);
   const inLevel = ov?.next ? perLevel - ov.next.points_left : perLevel;
+  const lg = d.gamification?.league;
   const balance = d.balance;
   const xp = d.gamification?.lifetime_xp ?? 0;
 
@@ -315,6 +320,53 @@ export default function StudentHome() {
             <p className="text-xs text-slate-400 mt-1">Streak</p>
           </Link>
         </div>
+
+        {/* ================================ LIGA (2026-08-25) ==== */}
+        {/* Jahongir: "ligasini ham bosh sahifani qayerigadur qo'shish
+            kerak" — coin ligaga ko'tarilganda beriladi, shuning
+            uchun liga bosh sahifada, XP kartasining yonida turadi. */}
+        {lg && (
+          <Link
+            to="/student/leagues"
+            className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
+            style={card}
+          >
+            <span className="text-[30px] leading-none shrink-0">
+              {lg.icon}
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] text-slate-400">Ligangiz</p>
+              <p className="text-white font-extrabold text-[17px] truncate">
+                {lg.name}
+              </p>
+              {d.gamification?.next_league && (
+                <>
+                  <div className="h-1.5 rounded-full bg-slate-700/60 overflow-hidden mt-1.5">
+                    <div
+                      className="h-full rounded-full bg-amber-400"
+                      style={{
+                        width: `${Math.max(
+                          d.gamification.league_percent || 0, 3)}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    {d.gamification.next_league.name} ligasigacha{" "}
+                    <b className="text-amber-300">
+                      {fmtNum(d.gamification.league_to_next || 0)} XP
+                    </b>
+                  </p>
+                </>
+              )}
+              {d.gamification?.max_league && (
+                <p className="text-[11px] text-amber-300 mt-1">
+                  Eng yuqori liga 🏆
+                </p>
+              )}
+            </div>
+            <ChevronRight size={18} className="text-slate-500 shrink-0" />
+          </Link>
+        )}
 
         {/* ===================== MAQSAD: IELTS (GoalCard) ======== */}
         <GoalCard />

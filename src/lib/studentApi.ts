@@ -107,6 +107,11 @@ export interface StudentHome {
     lifetime_xp: number;
     level: number;
     league: { name: string; icon: string; color: string } | null;
+    /** 2026-08-25: bosh sahifadagi liga kartasi uchun. */
+    next_league?: { name: string; icon: string; color: string } | null;
+    league_percent?: number;
+    league_to_next?: number;
+    max_league?: boolean;
   };
   streak: number;
   today: { answered: number; correct: number };

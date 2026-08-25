@@ -140,8 +140,9 @@ export default function StudentRoadmap() {
             ))}
           </div>
 
+          {/* 2026-08-25, Jahongir: "shu joyi kerak emas" — shkala
+              izohi olib tashlandi. */}
           <p className="text-[11px] text-slate-500 mt-2.5 leading-relaxed">
-            44 ball = B2 (IELTS 6.0) · 70 = C1 (7.5) · 95 = C2 (9.0).
             Eng zaif tomoningiz — <b className="text-amber-300">
             {d.ielts.weakest}</b>.
           </p>

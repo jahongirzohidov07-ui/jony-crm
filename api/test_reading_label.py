@@ -130,8 +130,8 @@ parts = {p["title"]: p for p in r.json()["parts"]}
 ck("Labelling a Diagram tayyor",
    parts["Labelling a Diagram"]["ready"], True)
 ck("elementlar", parts["Labelling a Diagram"]["total"], len(rows))
-ck("7 tur to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 7)
+ck("8 tur to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]), 8)
 
 print("\n=== 7. QOIDALAR ===")
 t = c.get(f"/api/student/ielts/reading/tips?kind={K}",

@@ -519,8 +519,25 @@ def _ielts_gate(db: Session, student_id: int) -> dict:
     keys = [x["key"] for x in roles.ENG_LEVELS]
     idx = keys.index(lv.get("key")) if lv.get("key") in keys else 0
     need = roles.ENG_LEVELS[4]          # upper_intermediate
+    # 2026-08-25, Jahongir: "men iphonedan appni korib ozim
+    # tekshirib kormoqchiman". Yangi ball shkalasidan keyin
+    # Upper-Intermediate uchun 6000 ball kerak — sinov uchun
+    # ochiq o'quvchi qolmadi. Shuning uchun TEST FILIALIDAGI
+    # o'quvchilarga bo'lim doim ochiq. Haqiqiy filiallarda qoida
+    # o'zgarmaydi.
+    test_branch = False
+    try:
+        st = db.query(models.Student).get(student_id)
+        if st and st.branch_id:
+            bname = (db.query(models.Branch.name)
+                     .filter(models.Branch.id == st.branch_id)
+                     .scalar() or "")
+            test_branch = "test" in bname.strip().lower()
+    except Exception:
+        db.rollback()
     return {
-        "unlocked": idx >= 4,
+        "unlocked": idx >= 4 or test_branch,
+        "test_branch": test_branch,
         "level_label": lv.get("label"),
         "need_label": ("Intermediate darajasini tugatganingizda "
                        "ochiladi"),
@@ -852,8 +869,9 @@ READING_TYPES = [
     {"kind": "read_ynng", "title": "Yes / No / Not Given",
      "hint": "MUALLIF FIKRI: shunday deb hisoblaydimi, teskarisini "
              "aytadimi yoki fikr bildirmaganmi"},
-    {"kind": None, "title": "Matching Headings",
-     "hint": "Har bir xatboshiga mos sarlavha topish"},
+    {"kind": "read_head", "title": "Matching Headings",
+     "hint": "Har xatboshining ASOSIY G'OYASIGA mos sarlavha "
+             "tanlash — sarlavhalar ortiqcha beriladi"},
     {"kind": "read_flow", "title": "Flow-chart Completion",
      "hint": "Voqealar yoki jarayon ketma-ketligini matndagi "
              "so'zlar bilan to'ldirish — tartib eng kuchli "
@@ -949,6 +967,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_label":
         from reading_label_seed import LABEL_TIPS
         src = LABEL_TIPS
+    elif kind == "read_head":
+        from reading_head_seed import HEAD_TIPS
+        src = HEAD_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -972,7 +993,7 @@ def ielts_reading_tips(kind: str,
                     "title": (f"{k}-daraja"
                               if kind in ("read_table", "read_summary",
                                           "read_flow", "read_short",
-                                          "read_label")
+                                          "read_label", "read_head")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }
@@ -1029,6 +1050,8 @@ def ielts_reading_round(kind: str, count: int = 10,
             "q_no": pl.get("q_no"),
             "figure": pl.get("figure"),
             "labels": pl.get("labels"),
+            "paragraphs": pl.get("paragraphs"),
+            "para": pl.get("para"),
             "instruction": pl.get("instruction"),
             "solved": f"pi:{r.id}" in solved,
         })

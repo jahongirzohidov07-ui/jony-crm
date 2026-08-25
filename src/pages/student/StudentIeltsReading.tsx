@@ -299,9 +299,24 @@ export default function StudentIeltsReading() {
                 {q.step}-bosqich · {q.step_title}
               </span>
             </div>
-            <p className="text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-line">
-              {q.passage}
-            </p>
+            {q.paragraphs ? (
+              /* Matching Headings: so'ralayotgan xatboshi ajratiladi */
+              <div className="space-y-2">
+                {q.paragraphs.map((pp: Any) => (
+                  <p key={pp.letter}
+                     className={`text-[13px] leading-relaxed rounded px-2 py-1.5 ${
+                       pp.letter === q.para
+                         ? "bg-amber-50 border border-amber-300 text-slate-900"
+                         : "text-slate-600"}`}>
+                    <b className="mr-1">{pp.letter}.</b>{pp.text}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[13.5px] text-slate-800 leading-relaxed whitespace-pre-line">
+                {q.passage}
+              </p>
+            )}
           </div>
 
           <div className="bg-white rounded-xl border border-slate-200 p-4 mt-3">
@@ -496,7 +511,7 @@ export default function StudentIeltsReading() {
                     key={o}
                     disabled={!!result || busy}
                     onClick={() => submit(o)}
-                    className={`w-full flex items-center gap-2.5 border rounded-xl p-3 text-left text-sm font-semibold active:scale-[0.99] ${cls}`}
+                    className={`w-full flex items-start gap-2.5 border rounded-xl p-3 text-left text-[13px] font-semibold leading-snug active:scale-[0.99] ${cls}`}
                   >
                     <span className="flex-1">{o}</span>
                     {result && isRight && (

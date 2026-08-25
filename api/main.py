@@ -315,6 +315,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Matching Headings (2026-08-25, Jahongir:
+# "bu misollarni 25-ga qoy undan oldingilarni osonroq qil").
+# Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS26
+    from reading_head_seed import seed_reading_head
+    with _VS26(engine) as _db26:
+        seed_reading_head(_db26)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

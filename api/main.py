@@ -336,6 +336,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Pick from a List (2026-08-26, Jahongir: "bitta
+# savolga 2ta togri javobni 5ta variant ichidan tanlash kerak
+# bo'ladi ... buni ham osondan qiyinga qil"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS28
+    from reading_pick_seed import seed_pick
+    with _VS28(engine) as _db28:
+        seed_pick(_db28)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

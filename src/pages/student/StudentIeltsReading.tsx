@@ -28,6 +28,10 @@ type Any = any;
  * matn, 5-bosqich haqiqiy imtihon savoli.
  */
 
+/* Backend reading_pick_seed.SEP bilan bir xil bo'lishi SHART —
+   ikkita javob shu belgi bilan ulanadi. */
+const PICK_SEP = " ||| ";
+
 const STEP_COLOR: Record<number, string> = {
   1: "bg-emerald-50 text-emerald-700",
   2: "bg-sky-50 text-sky-700",
@@ -48,6 +52,10 @@ export default function StudentIeltsReading() {
   const [picked, setPicked] = useState("");
   // 2026-08-25: Table Completion'da javob YOZILADI (variant yo'q)
   const [typed, setTyped] = useState("");
+  // 2026-08-26, Jahongir: "bitta savolga 2ta togri javobni 5ta
+  // variant ichidan tanlash kerak bo'ladi" — Pick from a List
+  // uchun tanlanganlar ro'yxati (q.pick = 2 bo'lganda ishlaydi).
+  const [multi, setMulti] = useState<string[]>([]);
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const [score, setScore] = useState({ ok: 0, xp: 0 });
@@ -67,6 +75,7 @@ export default function StudentIeltsReading() {
     setIdx(0);
     setPicked("");
     setTyped("");
+    setMulti([]);
     setResult(null);
     setScore({ ok: 0, xp: 0 });
     setFinished(false);
@@ -81,6 +90,23 @@ export default function StudentIeltsReading() {
   const items: Any[] = d?.items || [];
   const q = items[idx];
   const autoNext = useAutoNext(() => next());
+  // Pick from a List: nechta javob kerak (server aytadi, odatda 2)
+  const need = Number(q?.pick || 1);
+  // Javob bir nechta bo'lsa, to'g'ri variantlar ro'yxati
+  const rightSet: string[] = result?.expected
+    ? String(result.expected).split(PICK_SEP).map((x: string) => x.trim())
+    : [];
+
+  function toggleMulti(o: string) {
+    if (result || busy) return;
+    setMulti((m) =>
+      m.includes(o)
+        ? m.filter((x) => x !== o)
+        : m.length >= need
+          ? m
+          : [...m, o],
+    );
+  }
 
   async function submit(choice: string) {
     if (!q || busy || result || !choice.trim()) return;
@@ -115,6 +141,7 @@ export default function StudentIeltsReading() {
     setIdx(idx + 1);
     setPicked("");
     setTyped("");
+    setMulti([]);
     setResult(null);
   }
 
@@ -493,10 +520,23 @@ export default function StudentIeltsReading() {
               </div>
             )}
 
+            {/* 2026-08-26: Pick from a List — ikkita javob tanlanadi.
+                Ikkitasi to'planmaguncha "Tekshirish" faol emas, chunki
+                IELTS'da bittasini topish ball bermaydi. */}
+            {need > 1 && !result && (
+              <p className="mt-3.5 text-[11.5px] font-bold text-slate-500">
+                {q.instruction || "Choose TWO letters, A-E."} —{" "}
+                <span className={multi.length === need ? "text-emerald-600" : "text-amber-600"}>
+                  {multi.length}/{need} tanlandi
+                </span>
+              </p>
+            )}
+
             <div className="space-y-1.5 mt-3.5">
               {(q.options || []).map((o: string) => {
-                const isPicked = picked === o;
-                const isRight = result && result.expected === o;
+                const isPicked =
+                  need > 1 ? multi.includes(o) : picked === o;
+                const isRight = result && rightSet.includes(o);
                 let cls =
                   "border-slate-200 bg-white text-slate-800";
                 if (result) {
@@ -505,14 +545,30 @@ export default function StudentIeltsReading() {
                   else if (isPicked)
                     cls = "border-red-300 bg-red-50 text-red-700";
                   else cls = "border-slate-200 bg-white text-slate-400";
+                } else if (isPicked) {
+                  cls = "border-brand-500 bg-brand-50 text-brand-800";
                 }
                 return (
                   <button
                     key={o}
                     disabled={!!result || busy}
-                    onClick={() => submit(o)}
+                    onClick={() => {
+                      if (need > 1) return toggleMulti(o);
+                      submit(o);
+                    }}
                     className={`w-full flex items-start gap-2.5 border rounded-xl p-3 text-left text-[13px] font-semibold leading-snug active:scale-[0.99] ${cls}`}
                   >
+                    {need > 1 && (
+                      <span
+                        className={`mt-0.5 w-4 h-4 rounded border-2 shrink-0 flex items-center justify-center ${
+                          isPicked
+                            ? "border-brand-500 bg-brand-500"
+                            : "border-slate-300"
+                        }`}
+                      >
+                        {isPicked && <Check size={11} className="text-white" />}
+                      </span>
+                    )}
                     <span className="flex-1">{o}</span>
                     {result && isRight && (
                       <Check size={16} className="text-emerald-600 shrink-0" />
@@ -524,6 +580,16 @@ export default function StudentIeltsReading() {
                 );
               })}
             </div>
+
+            {need > 1 && !result && (
+              <button
+                onClick={() => submit(multi.join(PICK_SEP))}
+                disabled={busy || multi.length !== need}
+                className="w-full mt-2.5 rounded-xl bg-brand-600 py-2.5 text-sm font-semibold text-white disabled:opacity-40"
+              >
+                Tekshirish
+              </button>
+            )}
           </div>
 
           {result && (
@@ -540,7 +606,9 @@ export default function StudentIeltsReading() {
                     result.correct ? "text-emerald-700" : "text-amber-800"
                   }`}
                 >
-                  {result.correct ? "To'g'ri!" : `To'g'risi: ${result.expected}`}
+                  {result.correct
+                    ? "To'g'ri!"
+                    : `To'g'risi: ${String(result.expected).split(PICK_SEP).join("  +  ")}`}
                 </span>
                 {result.tip && (
                   <span className="text-[10px] font-bold text-slate-600 bg-white border border-slate-200 rounded px-1.5 py-0.5">

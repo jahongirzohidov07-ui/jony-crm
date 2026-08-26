@@ -857,6 +857,9 @@ READING_TYPES = [
     {"kind": "read_mcq", "title": "Multiple Choice",
      "hint": "A/B/C/D — to'rt variantning hammasi matndagi "
              "so'zlardan yasalgan, faqat bittasi to'g'ri"},
+    {"kind": "read_pick", "title": "Pick from a List",
+     "hint": "Beshta variantdan IKKITASI to'g'ri — ikkalasini ham "
+             "topmasa savol hisobga olinmaydi"},
     {"kind": "read_summary", "title": "Summary Completion",
      "hint": "BUTUN matnning xulosasini matndagi so'zlar bilan "
              "to'ldirish — har bo'shliq matnning boshqa joyidan"},
@@ -974,6 +977,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_mcq":
         from reading_mcq_seed import MCQ_TIPS
         src = MCQ_TIPS
+    elif kind == "read_pick":
+        from reading_pick_seed import PICK_TIPS
+        src = PICK_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -998,7 +1004,7 @@ def ielts_reading_tips(kind: str,
                               if kind in ("read_table", "read_summary",
                                           "read_flow", "read_short",
                                           "read_label", "read_head",
-                                          "read_mcq")
+                                          "read_mcq", "read_pick")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }
@@ -1058,6 +1064,8 @@ def ielts_reading_round(kind: str, count: int = 10,
             "paragraphs": pl.get("paragraphs"),
             "para": pl.get("para"),
             "instruction": pl.get("instruction"),
+            # Pick from a List: nechta javob tanlanishi kerak (2)
+            "pick": pl.get("pick"),
             "solved": f"pi:{r.id}" in solved,
         })
     return {"kind": kind, "items": items,
@@ -1085,6 +1093,19 @@ def ielts_reading_answer(payload: dict = Body(default={}),
         # imlo mayda-chuydasi emas.
         ok = _read_norm(given) == _read_norm(it.answer) or (
             bool(it.alt) and _read_norm(given) == _read_norm(it.alt))
+    elif it.kind == "read_pick":
+        # 2026-08-26, Jahongir: "bitta savolga 2ta togri javobni
+        # 5ta variant ichidan tanlash kerak bo'ladi".
+        # Tanlash TARTIBI ahamiyatsiz — to'plam sifatida
+        # solishtiriladi. Ikkalasi ham to'g'ri bo'lsagina hisobga
+        # olinadi (IELTS qoidasi: yarim ball yo'q).
+        from reading_pick_seed import SEP as _PSEP
+
+        def _pset(t):
+            return {x.strip().upper()
+                    for x in (t or "").split(_PSEP.strip()) if x.strip()}
+
+        ok = bool(_pset(given)) and _pset(given) == _pset(it.answer)
     else:
         ok = given.upper() == (it.answer or "").strip().upper()
 

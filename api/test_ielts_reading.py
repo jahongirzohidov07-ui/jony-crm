@@ -70,7 +70,7 @@ r = c.get("/api/student/ielts/reading/parts", headers=H)
 ck("status 200", r.status_code, 200)
 parts = r.json()["parts"]
 # 2026-08-25: Flow-chart Completion 13-tur bo'lib qo'shildi
-ck("13 ta savol turi", len(parts), 13)
+ck("14 ta savol turi", len(parts), 14)
 titles = [p["title"] for p in parts]
 for want in ("Short answer", "Multiple Choice", "Summary Completion",
              "Matching Sentences", "Sentence Completion",
@@ -82,7 +82,7 @@ for want in ("Short answer", "Multiple Choice", "Summary Completion",
     ck(f"ro'yxatda: {want}", want in titles, True)
 ready = [p for p in parts if p["ready"]]
 # 2026-08-25: Table + Summary Completion qo'shildi -> to'rtta tayyor
-ck("hozircha 9 tasi to'ldirilgan", len(ready), 9)
+ck("hozircha 10 tasi to'ldirilgan", len(ready), 10)
 ck("qolgan 4 tasi 'tez orada'",
    len([p for p in parts if not p["ready"]]), 4)
 by_kind = {p["kind"]: p for p in parts if p["kind"]}

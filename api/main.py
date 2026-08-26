@@ -415,6 +415,16 @@ try:
 except Exception:
     pass
 
+# Writing "qayta tuzish" 2-to'plam (2026-08-26, Jahongir: "10ta
+# tanlasa 10ta berish kerak"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS36
+    from writing_seed2 import seed_writing2
+    with _VS36(engine) as _db36:
+        seed_writing2(_db36)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

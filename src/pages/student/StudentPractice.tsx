@@ -206,14 +206,20 @@ export default function StudentPractice() {
       // skript va to'g'ri javobni o'qishga ulguradi.
       const mult = skill === "reading" ? 3
         : skill === "listening" && !r.correct ? 2.5 : 1;
-      autoNext.schedule(
-        mult *
-          autoNextDelay({
-            correct: !!r.correct,
-            hasAnswer: !!r.expected,
-            hasExtra,
-          }),
-      );
+      // 2026-08-26, Jahongir: "davom etish tugmasini bossagina
+      // keyingisiga o'tishi kerak". Writing'da XATO javobdan keyin
+      // avtomatik o'tish YO'Q — bola tushuntirishni o'qib bo'lib,
+      // o'zi tugmani bosadi. To'g'ri javobda avvalgidek.
+      const holdForReading = skill === "writing" && !r.correct;
+      if (!holdForReading)
+        autoNext.schedule(
+          mult *
+            autoNextDelay({
+              correct: !!r.correct,
+              hasAnswer: !!r.expected,
+              hasExtra,
+            }),
+        );
     } catch {
       /* toast */
     } finally {
@@ -1077,9 +1083,26 @@ export default function StudentPractice() {
                       To'g'ri javob: <b>{result.expected}</b>
                     </p>
                   )}
+                {/* 2026-08-26, Jahongir: "nega u yozgan javob xato
+                    va nega togri javob togriligini tushuntirish
+                    kerak". Avval o'z javobi ko'rsatiladi, keyin
+                    xato TURI aytiladi. */}
+                {!result.correct && result.why && (
+                  <div className="mt-2 rounded-lg bg-white/70 border border-red-200 p-2.5">
+                    {result._mine && (
+                      <p className="text-[12px] text-slate-600">
+                        Siz yozdingiz:{" "}
+                        <b className="text-red-700">{result._mine}</b>
+                      </p>
+                    )}
+                    <p className="text-[12.5px] text-slate-800 mt-1 leading-relaxed">
+                      {result.why}
+                    </p>
+                  </div>
+                )}
                 {result.explain && (
-                  <p className="text-xs text-slate-500 mt-1">
-                    {result.explain}
+                  <p className="text-xs text-slate-500 mt-1.5">
+                    <b>Qoida:</b> {result.explain}
                   </p>
                 )}
                 {(q.kind?.startsWith("listen") || q.kind === "speak_repeat") &&
@@ -1092,7 +1115,11 @@ export default function StudentPractice() {
                   onClick={next}
                   className="w-full mt-2.5 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold"
                 >
-                  {idx + 1 >= items.length ? "Yakunlash" : "Keyingisi"}
+                  {idx + 1 >= items.length
+                    ? "Yakunlash"
+                    : skill === "writing" && !result.correct
+                      ? "Tushundim, davom etish"
+                      : "Keyingisi"}
                   {autoNext.secsLeft > 0 ? ` (${autoNext.secsLeft})` : ""}
                 </button>
               </div>

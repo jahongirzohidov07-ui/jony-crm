@@ -37,6 +37,29 @@ export default function StudentGamePlay() {
   const [feedback, setFeedback] = useState<AnswerResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  /* 2026-08-26, Jahongir: "100ta sozni qildi ichida 10ta soz xato
+     bolsa, oxirida xato qilganlarni yana bir martadan korsatsin
+     ishlab korsin yaana bir marta."
+
+     Xato qilingan so'zlar yig'ilib boradi va asosiy aylanish
+     tugagach ULAR BILAN ikkinchi bosqich boshlanadi. Ikkinchi
+     bosqichdagi natija alohida sanaladi — bola nechtasini
+     tuzatganini ko'radi. */
+  const [wrongIds, setWrongIds] = useState<number[]>([]);
+  const [phase, setPhase] = useState<"main" | "bridge" | "retry">(
+    "main",
+  );
+  const [fixed, setFixed] = useState(0);
+
+  /* Hozir ko'rsatilayotgan ro'yxat: asosiy aylanish yoki xatolar
+     ustida ishlash. */
+  const list = (() => {
+    if (!round) return [];
+    if (phase !== "retry") return round.items;
+    return round.items.filter(
+      (it) => it.word_id && wrongIds.includes(it.word_id),
+    );
+  })();
 
   const load = useCallback(() => {
     setErr("");
@@ -45,6 +68,9 @@ export default function StudentGamePlay() {
     setCorrectCount(0);
     setFeedback(null);
     setDone(false);
+    setWrongIds([]);
+    setPhase("main");
+    setFixed(0);
     api
       .get<VocabRound>(
         `/student/vocab/round?game=${game}&language=${lang}${
@@ -67,7 +93,7 @@ export default function StudentGamePlay() {
    * chiqmasin (o'yin ravon ketsin); ball baribir yoziladi. */
   async function answer(value: string, wordId?: number, silent = false) {
     if (!round || busy || (feedback && !silent)) return;
-    const item = round.items[idx];
+    const item = list[idx];
     const wid = wordId ?? item.word_id;
     if (!wid) return;
     setBusy(true);
@@ -80,7 +106,13 @@ export default function StudentGamePlay() {
         // yuboramiz, chunki to'g'riligini SERVER hal qiladi.
         shown: item.shown,
       });
-      if (res.correct) setCorrectCount((c) => c + 1);
+      if (res.correct) {
+        if (phase === "retry") setFixed((f) => f + 1);
+        else setCorrectCount((c) => c + 1);
+      } else if (wid) {
+        // Xato qilingan so'z oxirida qayta so'raladi.
+        setWrongIds((w) => (w.includes(wid) ? w : [...w, wid]));
+      }
       if (!silent) {
         setFeedback(res);
         // 2026-08-21, Jahongir: "Lugatda variantni tanlaganda davom
@@ -107,8 +139,23 @@ export default function StudentGamePlay() {
     autoNext.cancel();
     setFeedback(null);
     if (!round) return;
-    if (idx + 1 >= round.items.length) setDone(true);
-    else setIdx((i) => i + 1);
+    if (idx + 1 < list.length) {
+      setIdx((i) => i + 1);
+      return;
+    }
+    // Asosiy aylanish tugadi. Xato qilingan so'zlar bo'lsa —
+    // ular bilan ikkinchi bosqich.
+    if (phase === "main" && wrongIds.length > 0) {
+      setPhase("bridge");
+      return;
+    }
+    setDone(true);
+  }
+
+  function startRetry() {
+    setPhase("retry");
+    setIdx(0);
+    setFeedback(null);
   }
 
   if (err)
@@ -124,6 +171,38 @@ export default function StudentGamePlay() {
       </Shell>
     );
 
+  /* Asosiy aylanish tugadi, lekin xato qilingan so'zlar bor —
+     ikkinchi bosqichga o'tish ekrani. */
+  if (phase === "bridge") {
+    return (
+      <Shell title={round.label}>
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
+          <p className="text-5xl mb-2">🔁</p>
+          <p className="text-lg font-bold text-slate-900">
+            {correctCount} / {round.items.length} to'g'ri
+          </p>
+          <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+            <b>{wrongIds.length} ta so'z</b>da xato qildingiz. Endi
+            faqat o'shalarni yana bir marta ishlab chiqamiz — eng
+            yaxshi eslab qolish shu.
+          </p>
+          <button
+            onClick={startRetry}
+            className="mt-5 w-full py-3 rounded-xl bg-amber-500 text-white text-sm font-semibold"
+          >
+            Xatolar ustida ishlash ({wrongIds.length})
+          </button>
+          <button
+            onClick={() => setDone(true)}
+            className="mt-2 w-full py-3 rounded-xl border border-slate-200 text-slate-500 text-sm font-medium"
+          >
+            Keyinroq
+          </button>
+        </div>
+      </Shell>
+    );
+  }
+
   if (done) {
     const pct = Math.round((correctCount / round.items.length) * 100);
     return (
@@ -138,6 +217,13 @@ export default function StudentGamePlay() {
           <p className="text-sm text-slate-500 mt-1">
             {pct}% to'g'ri · +{correctCount} ball
           </p>
+          {wrongIds.length > 0 && (
+            <p className="text-[12.5px] text-slate-600 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              {phase === "retry"
+                ? `Xatolar ustida ishladingiz: ${wrongIds.length} tadan ${fixed} tasini tuzatdingiz.`
+                : `${wrongIds.length} ta so'zda xato qoldi — keyingi safar shulardan boshlang.`}
+            </p>
+          )}
           <button
             onClick={load}
             className="mt-5 w-full py-3 rounded-xl bg-brand-600 text-white text-sm font-medium flex items-center justify-center gap-2"
@@ -156,15 +242,20 @@ export default function StudentGamePlay() {
     );
   }
 
-  const item = round.items[idx];
-  const progress = ((idx + (feedback ? 1 : 0)) / round.items.length) * 100;
+  const item = list[idx];
+  const progress = ((idx + (feedback ? 1 : 0)) / (list.length || 1)) * 100;
 
   return (
     <Shell title={round.label}>
       <div className="mb-4">
         <div className="flex justify-between text-[11px] text-slate-500 mb-1">
           <span>
-            {idx + 1} / {round.items.length}
+            {idx + 1} / {list.length}
+            {phase === "retry" && (
+              <span className="ml-1.5 text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
+                xatolar ustida
+              </span>
+            )}
           </span>
           <span>{correctCount} to'g'ri</span>
         </div>

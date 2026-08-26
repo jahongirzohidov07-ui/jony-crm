@@ -2125,6 +2125,103 @@ def _word_overlap(a: str, b: str) -> float:
     return match / max(len(wa), len(wb))
 
 
+def _lev(a: str, b: str) -> int:
+    """Ikki so'z orasidagi tahrir masofasi (imlo xatosini tutish)."""
+    if a == b:
+        return 0
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1,
+                           prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+
+def _same_stem(a: str, b: str) -> bool:
+    """'go/goes/going/went' kabi bir so'zning boshqa shakli."""
+    if a == b:
+        return False
+    for suf in ("ing", "ed", "es", "s", "d"):
+        if a.endswith(suf) and a[:-len(suf)] == b:
+            return True
+        if b.endswith(suf) and b[:-len(suf)] == a:
+            return True
+    IRR = [("go", "went", "gone", "goes"), ("be", "is", "are", "was",
+           "were", "been"), ("have", "has", "had"),
+           ("do", "does", "did", "done"), ("make", "made"),
+           ("take", "took", "taken"), ("write", "wrote", "written"),
+           ("see", "saw", "seen"), ("come", "came"),
+           ("get", "got", "gotten"), ("give", "gave", "given"),
+           ("eat", "ate", "eaten"), ("buy", "bought"),
+           ("think", "thought"), ("bring", "brought"),
+           ("teach", "taught"), ("say", "said"), ("tell", "told")]
+    for grp in IRR:
+        if a in grp and b in grp:
+            return True
+    return False
+
+
+def _writing_feedback(given: str, expected: str) -> str:
+    """NEGA xato — o'quvchining javobini to'g'risi bilan so'zma-so'z
+    taqqoslab, o'zbekcha tushuntirish qaytaradi.
+
+    2026-08-26, Jahongir: "Writingda notogri javob yozsa togri gapni
+    korsatib nega u yozgan javob xato va nega togri javob togriligini
+    tushuntirish kerak."
+
+    Faqat "noto'g'ri" deyish bola uchun foydasiz — u xatosining
+    turini bilmasa, ertaga ham xuddi shu xatoni qiladi. Shuning
+    uchun xato TURI aniqlanadi: tartib, tushib qolgan so'z, ortiqcha
+    so'z, imlo yoki so'z shakli."""
+    import collections as _c
+    g = _norm_loose(given).split()
+    e = _norm_loose(expected).split()
+    if not g:
+        return ("Javob bo'sh qoldi. Ingliz tilida gap tuzganda "
+                "hech bo'lmasa ega va fe'l bo'lishi shart.")
+    if g == e:
+        return ""
+    if sorted(g) == sorted(e):
+        return ("So'zlarni to'g'ri tanlagansiz, lekin TARTIBI "
+                "noto'g'ri. Ingliz tilida tartib qat'iy: "
+                "EGA -> FE'L -> TO'LDIRUVCHI, payt va joy esa "
+                "oxirida keladi.")
+    cg, ce = _c.Counter(g), _c.Counter(e)
+    missing = list((ce - cg).elements())
+    extra = list((cg - ce).elements())
+    parts = []
+    # bitta so'z boshqasiga almashib qolgan
+    if len(missing) == 1 and len(extra) == 1:
+        m, x = missing[0], extra[0]
+        if _same_stem(x, m):
+            return (f"So'zni to'g'ri tanlagansiz, lekin SHAKLI "
+                    f"noto'g'ri: «{x}» emas, «{m}» bo'lishi kerak. "
+                    f"Ingliz tilida fe'l zamon va shaxsga qarab "
+                    f"o'zgaradi.")
+        if _lev(x, m) <= 2:
+            return (f"IMLO xatosi: «{x}» deb yozibsiz, to'g'risi "
+                    f"«{m}». Ma'no to'g'ri, lekin imtihonda imlo "
+                    f"ham baholanadi.")
+        return (f"«{x}» o'rniga «{m}» kerak edi — bu yerda aynan "
+                f"shu so'z ishlatiladi.")
+    if missing and not extra:
+        parts.append("tushib qolgan so'z(lar): "
+                     + ", ".join(f"«{w}»" for w in missing[:5]))
+    if extra and not missing:
+        parts.append("ortiqcha so'z(lar): "
+                     + ", ".join(f"«{w}»" for w in extra[:5]))
+    if missing and extra:
+        parts.append("tushib qolgan: "
+                     + ", ".join(f"«{w}»" for w in missing[:4]))
+        parts.append("ortiqcha: "
+                     + ", ".join(f"«{w}»" for w in extra[:4]))
+    if not parts:
+        return "Javob to'g'ri gapdan farq qilyapti."
+    return "Sizning javobingizda " + "; ".join(parts) + "."
+
+
 GRAMMAR_LANGS = ("en", "ru", "de", "ko")
 
 
@@ -2491,8 +2588,11 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
                     xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
             except Exception:
                 db.rollback()
+        # 2026-08-26: xato bo'lsa NEGA xato ekanini ham aytamiz.
+        why = ("" if ok or it.kind not in ("write_transform",)
+               else _writing_feedback(given, expected or ""))
         return {"correct": ok, "expected": expected,
-                "explain": explain,
+                "explain": explain, "why": why,
                 "first_time": ok and not was, "xp": xp_given}
 
     if kind == "word":
@@ -2546,7 +2646,13 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
         except Exception:
             db.rollback()
 
+    # 2026-08-26, Jahongir: "Writingda notogri javob yozsa togri
+    # gapni korsatib nega u yozgan javob xato va nega togri javob
+    # togriligini tushuntirish kerak."
+    why = ("" if ok or skill != "writing"
+           else _writing_feedback(payload.answer or "", expected or ""))
     return {"correct": ok, "expected": expected, "explain": explain,
+            "why": why,
             "first_time": ok and not was, "xp": xp_given}
 
 

@@ -101,3 +101,27 @@ def test_yangi_marker():
     src = open("reading_seed.py", encoding="utf-8").read()
     assert '"reading_v3"' in src
     assert '("reading_v2", SEED + SEED2)' in src
+
+
+def test_ekran_count_ni_yuboradi():
+    """2026-08-26. Ekran reading uchun count'ni ATAYLAB
+    yubormasdi (`kind !== "read_mcq"` sharti), shuning uchun server
+    standart 8 taga qaytardi va 10/20/30 tanlash ishlamasdi."""
+    fe = open("../src/pages/student/StudentPractice.tsx",
+              encoding="utf-8").read()
+    assert 'if (cnt) parts.push(`count=${cnt}`);' in fe
+    # Eski shart KODDA qolmasin (izohda eslatib turishi mumkin).
+    kod = "\n".join(l for l in fe.split("\n")
+                    if not l.strip().startswith("//"))
+    assert 'kind !== "read_mcq"' not in kod
+
+
+def test_ekran_yangi_matnni_bildiradi():
+    """Bir mashg'ulotda bir nechta matn bo'lgani uchun matn
+    almashganda ochiq aytilishi kerak."""
+    fe = open("../src/pages/student/StudentPractice.tsx",
+              encoding="utf-8").read()
+    assert "const newText =" in fe
+    assert "Yangi matn boshlandi" in fe
+    assert "items[idx - 1]?.text?.title !== q.text.title" in fe
+

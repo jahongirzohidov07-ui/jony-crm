@@ -162,8 +162,15 @@ export default function StudentPractice() {
     if (!oldKinds.includes(kind)) parts.push(`kind=${kind}`);
     if (skill === "listening") parts.push(`language=${lang}`);
     if (needLevel && level) parts.push(`level=${level}`);
-    // Mashqlar soni (2026-08-24: "mashqlarni ham kopaytir")
-    if (cnt && kind !== "read_mcq") parts.push(`count=${cnt}`);
+    // Mashqlar soni (2026-08-24: "mashqlarni ham kopaytir").
+    //
+    // 2026-08-26 TUZATISH. Bu yerda `kind !== "read_mcq"` sharti
+    // turgan edi, ya'ni READING uchun count UMUMAN yuborilmasdi va
+    // server standart 8 taga qaytardi. Shuning uchun 10, 20 yoki
+    // 30 tanlansa ham har doim 8 ta chiqardi.
+    // Jahongir: "savollar sonini 40taga oshirdik degan eding, lekin
+    // baribir 8ta turibdi". Shart olib tashlandi.
+    if (cnt) parts.push(`count=${cnt}`);
     const q = parts.length ? `?${parts.join("&")}` : "";
     api
       .get<Any>(`/student/practice/${skill}/round${q}`)
@@ -180,6 +187,11 @@ export default function StudentPractice() {
 
   const items: Any[] = d?.items || [];
   const q = items[idx];
+  /* Joriy savolning matni oldingisidan boshqami — shuni bilsak,
+     ekranda "yangi matn" deb ogohlantira olamiz. */
+  const newText =
+    !!q?.text?.title &&
+    (idx === 0 || items[idx - 1]?.text?.title !== q.text.title);
 
   // Javobdan keyin o'zi keyingi savolga o'tadi (2026-08-18, Jahongir:
   // "shu narsa avtomat otsin keyingisiga"). Tugma qoladi — sanoq bilan.
@@ -544,7 +556,20 @@ export default function StudentPractice() {
             2026-08-26: bitta mashg'ulotda endi BIR NECHTA matn
             bo'lishi mumkin, shuning uchun joriy savolning o'z
             matni ko'rsatiladi (q.text). Eski javoblarda u yo'q —
-            unda avvalgidek d.text ishlatiladi. */}
+            unda avvalgidek d.text ishlatiladi.
+
+            Jahongir: "4ta savoldan keyin umuman boshqa text
+            savollari ketishni boshladi, lekin ekranda u text menga
+            korinmadi". Endi matn almashganda ochiq yozib
+            qo'yiladi, aks holda bola eski matndan javob qidiradi. */}
+        {!finished && kind && (q?.text || d?.text) && newText && (
+          <div className="rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 flex items-center gap-2">
+            <span className="text-base">📄</span>
+            <p className="text-[12.5px] font-semibold text-amber-800">
+              Yangi matn boshlandi — quyidagini o'qing
+            </p>
+          </div>
+        )}
         {!finished && kind && (q?.text || d?.text) && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <div className="flex items-baseline justify-between mb-1.5">

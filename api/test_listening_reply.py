@@ -12,12 +12,50 @@ import listening_reply_seed as R
 
 
 def test_soni():
+    """100 ta o'zimiznikidan + 104 ta kitobdan (Multilevel Master
+    audioskripti, Part 1, 1-13 mashqlar)."""
     rows = R.build_rows()
-    assert len(rows) == 100, len(rows)
+    assert len(rows) == 204, len(rows)
+    own = [r for r in rows if not r[2]["book"]]
+    book = [r for r in rows if r[2]["book"]]
+    assert len(own) == 100, len(own)
+    assert len(book) == 104, len(book)
     per = {}
-    for k, st, pl, a, e, al, pa in rows:
+    for k, st, pl, a, e, al, pa in own:
         per[st] = per.get(st, 0) + 1
     assert per == {1: 20, 2: 20, 3: 20, 4: 20, 5: 20}, per
+
+
+def test_kitob_gaplari_aynan():
+    """Audioskriptdagi gaplar o'zgartirilmasin."""
+    rows = {r[2]["say"] for r in R.build_rows() if r[2]["book"]}
+    kerak = [
+        "How are you?",
+        "Shall I retell the text?",
+        "We went to Berlin last weekend.",
+        "Bread is not taken with fork, is it?",
+        "You go in for sports, don't you?",
+        "Shall we have a snack lunch in a pub for a change?",
+        "How far is it to Manchester?",
+    ]
+    yoq = [x for x in kerak if x not in rows]
+    assert not yoq, yoq
+
+
+def test_kitob_izohida_manba_bor():
+    for k, st, pl, a, expl, *_ in R.build_rows():
+        if pl["book"]:
+            assert "audioskript" in expl.lower(), (st, expl)
+
+
+def test_kitobniki_keyin_keladi():
+    """Bir bosqich ichida avval o'zimizniki (tayyorgarlik), keyin
+    kitobniki (haqiqiy imtihon gapi)."""
+    for k, st, pl, *_ in R.build_rows():
+        if pl["book"]:
+            assert pl["order"] >= 100, (st, pl["order"])
+        else:
+            assert pl["order"] < 100, (st, pl["order"])
 
 
 def test_har_savolda_3_variant():
@@ -34,8 +72,9 @@ def test_javob_harflari_tekis():
     cnt = {"A": 0, "B": 0, "C": 0}
     for k, st, pl, ans, *_ in R.build_rows():
         cnt[ans[0]] += 1
+    tot = sum(cnt.values())
     for c, n in cnt.items():
-        assert 28 <= n <= 39, (c, n, cnt)
+        assert 0.28 <= n / tot <= 0.39, (c, n, cnt)
 
 
 def test_aytilgan_gap_ekranda_korinmaydi():

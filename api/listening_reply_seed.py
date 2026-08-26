@@ -445,6 +445,405 @@ SETS.append(S(5, [
 
 
 # =====================================================================
+#  KITOBDAN OLINGAN QISM (2026-08-26)
+#
+#  Jahongir "AUDIOSCRIPT_MultilevelMaster_Listening.pdf" ni yubordi.
+#  Part 1'da 50 ta mashq, 383 ta gap bor. Quyida 1-13 mashqlardagi
+#  gaplar AYNAN o'sha kitobdan olingan — ya'ni o'quvchi haqiqiy
+#  imtihon gaplarini eshitadi.
+#
+#  VARIANTLAR HAQIDA. Kitobning o'zi skaner qilingan, javob kaliti
+#  yo'q. 1-mashq va 2-mashqning boshidagi variantlar Jahongir
+#  yuborgan rasmdan aynan olindi. Qolganlariga variantlar shu yerda
+#  yozildi — chunki kalitsiz variantni taxmin qilish noto'g'ri
+#  kontent yaratardi. Gap KITOBNIKI, variant BIZNIKI.
+#
+#  BITTA TUZATISH. Kitobda "Turn the left and go straight" deb
+#  yozilgan — bu grammatik xato. O'quv materialida xato ingliz tili
+#  qolmasligi kerak, shuning uchun "Turn left and go straight" deb
+#  to'g'rilandi.
+# =====================================================================
+BOOK_SETS = []
+
+# ---- 1-4 mashqlar -> 2-bosqich --------------------------------
+BOOK_SETS.append(S(2, [
+    ("How are you?", ["I am well.", "Not, fine.", "Yes, good."], 0,
+     "«How» savoliga Yes bilan javob berilmaydi."),
+    ("Did you do your homework?",
+     ["Of course, please.", "No, I forgot.", "Yes, I will."], 1,
+     "«Did» — o'tgan zamon, C esa kelasi zamon."),
+    ("How can I go to the train station?",
+     ["Here you are.", "Turn left and go straight.",
+      "You never go there."], 1,
+     "A — narsa uzatilganda aytiladi."),
+    ("Would you like a cup of tea?",
+     ["Yes, I like", "Actually, I won't", "No, thanks"], 2,
+     "A chala: «like» obyekt talab qiladi. Taklifga javob — "
+     "«Yes, please» yoki «No, thanks»."),
+    ("What is the time now?",
+     ["Yes, this is", "Sorry, I don't have a watch",
+      "No, it is not."], 1, "Wh- savolga Yes/No javob bo'lmaydi."),
+    ("Shall I retell the text?",
+     ["Yes, you will. You can only translate it.",
+      "Do, please. You can only translate it.",
+      "No, you needn't. You can only translate it."], 2,
+     "«faqat tarjima qilasan» deyilyapti — demak qayta so'zlab "
+     "berish SHART EMAS: needn't."),
+    ("What did you think of the film?",
+     ["It was OK.", "Let's go tomorrow.", "So did I."], 0,
+     "«What did you think of...?» = fikringiz qanday. C — "
+     "«I liked it» kabi gapga javob bo'lardi."),
+    ("We went to Berlin last weekend.",
+     ["How did you get there?", "Yes, last weekend was rainy.",
+      "And, what about you?"], 0,
+     "Bu XABAR, savol emas — javob qiziqish bildirish."),
+]))
+
+BOOK_SETS.append(S(2, [
+    ("Is 'copying someone's homework' cheating?",
+     ["Sure, you can copy in the exam.", "No, it isn't an exam.",
+      "Yes, definitely."], 2, ""),
+    ("Why, Ann! Are you reading without light? "
+     "Turn on the lamp, please.",
+     ["Oh, yes, it's far from here.", "Oh, no, I am too hungry.",
+      "Oh, yes, it's getting dark."], 2, ""),
+    ("Look, Gill, the rain has stopped.",
+     ["Let's go out then.", "Yes, I stopped it.",
+      "No, it will rain."], 0, ""),
+    ("I was told an interesting story yesterday.",
+     ["Really? Tell me about it.", "Yes, I told you.",
+      "No, it wasn't interesting."], 0,
+     "B — kim aytganini almashtirib yuborgan."),
+    ("How many times have you been in South Africa?",
+     ["Only once.", "Yes, many times I have.", "For two weeks."], 0,
+     "C — «How long?» savolining javobi."),
+    ("Will you cook sumalak this year?",
+     ["Of course I will.", "Yes, I cooked.", "No, I am cooking."],
+     0, "Savol KELASI zamonda."),
+    ("Mary is out now.",
+     ["Shall I call back later?", "Yes, she is in.",
+      "No, I am out too."], 0, "Telefon suhbati."),
+    ("I think Nick will let us go to the park.",
+     ["I hope so.", "Yes, he let us.", "No, I don't let you."], 0,
+     ""),
+]))
+
+BOOK_SETS.append(S(2, [
+    ("May I watch what you are doing?",
+     ["Yes, of course.", "Yes, I watch.", "No, I am watching."], 0,
+     ""),
+    ("Oh, I must water the plants.",
+     ["Don't worry, I've already done it.", "Yes, water is there.",
+      "No, you mustn't."], 0,
+     "C — «mustn't» taqiq degani, bu yerda mos emas."),
+    ("I'm sorry for keeping you waiting for such a long time.",
+     ["That's all right.", "Yes, you kept me.",
+      "Thank you very much."], 0, ""),
+    ("Where is the smoking room?",
+     ["It's on the first floor.", "Yes, you can smoke.",
+      "I don't smoke."], 0,
+     "C — mavzuga tegishli, lekin savolga javob emas."),
+    ("Have you got any books by Furqat?",
+     ["I'm afraid we haven't.", "Yes, I did.", "No, I don't got."],
+     0, "«Have you got...?» -> «I have» / «I haven't»."),
+    ("Bread is not taken with fork, is it?",
+     ["No, it isn't.", "Yes, it is not.", "No, it is."], 0,
+     "Inkor question tag: rozilik — «No, it isn't»."),
+    ("Who had an exam last week?",
+     ["The third-year students.", "Yes, they had.",
+      "It was on Monday."], 0,
+     "«Who?» — odam so'raladi. C — «When?» javobi."),
+    ("Where did you stay when you went to the Fergana?",
+     ["At my uncle's house.", "By train.", "For five days."], 0,
+     "B — «How?», C — «How long?» javoblari."),
+]))
+
+BOOK_SETS.append(S(2, [
+    ("Who fell ill?", ["My younger brother.", "Yes, he fell.",
+                       "Last Tuesday."], 0, ""),
+    ("My parents want to speak to you.",
+     ["When would it be convenient?", "Yes, I spoke to them.",
+      "No, they don't want."], 0, ""),
+    ("Excuse me, sir.", ["Yes, how can I help you?",
+                         "No, I am not sir.", "You are excused."], 0,
+     ""),
+    ("Could you pass me the salt, please?",
+     ["Here you are.", "Yes, I could.", "No, I don't pass."], 0,
+     "B savolni so'zma-so'z tushungan — bu SO'ROV."),
+    ("Coffee, sir?", ["Yes, please.", "Yes, it is coffee.",
+                      "No, I am sir."], 0, ""),
+    ("How long has she been with you?",
+     ["About three years.", "Yes, a long time.", "She is very tall."],
+     0, "C — «How tall?» bilan adashtirgan."),
+    ("You go in for sports, don't you?",
+     ["Yes, I play tennis.", "Yes, I don't.", "No, I go."], 0,
+     "«go in for sports» = sport bilan shug'ullanmoq."),
+    ("Can I borrow your map of Khiva?",
+     ["Sure, take it.", "Yes, I borrowed it.", "No, I can."], 0,
+     ""),
+]))
+
+# ---- 5-8 mashqlar -> 3-bosqich --------------------------------
+BOOK_SETS.append(S(3, [
+    ("Do you think we'll have good weather?",
+     ["I hope so.", "Yes, I think.", "No, it was good."], 0,
+     "B chala — «I think so» bo'lishi kerak edi."),
+    ("Who is a sailor?", ["My cousin Bekzod.", "Yes, he is.",
+                          "On a big ship."], 0, ""),
+    ("It's time for lunch.", ["I'm coming.", "Yes, it is time.",
+                              "What time is it?"], 0,
+     "C — vaqtni so'rayapti, lekin vaqt allaqachon aytildi."),
+    ("Would you like a drink?", ["Just water, thanks.",
+                                 "Yes, I drink.", "No, I would."], 0,
+     ""),
+    ("How much was your new shirt?",
+     ["Only fifteen pounds.", "Yes, it was much.",
+      "It's dark blue."], 0, "C — «What colour?» javobi."),
+    ("I'm very sorry.", ["Never mind.", "Yes, you are.",
+                         "Thank you."], 0, ""),
+    ("Do you speak English?", ["A little, yes.", "Yes, I am.",
+                               "No, I speak."], 0,
+     "B — yordamchi fe'l mos emas."),
+    ("John's broken this plate.",
+     ["Has he? What a pity.", "Yes, he break it.",
+      "No, the plate is fine."], 0, ""),
+]))
+
+BOOK_SETS.append(S(3, [
+    ("Is this your watch?", ["No, it's my brother's.",
+                             "Yes, I watch.", "It's ten o'clock."],
+     0, "C — «watch» so'zini soat deb tushungan qopqon."),
+    ("Can I have a sandwich?", ["Certainly, which one?",
+                               "Yes, I can.", "No, I have one."], 0,
+     ""),
+    ("How many people were in the cafe?",
+     ["About twenty.", "Yes, a lot.", "It was very noisy."], 0, ""),
+    ("We're from London.", ["Oh, which part?", "Yes, you are.",
+                            "No, I am not."], 0, ""),
+    ("Who's that man with the green sweater?",
+     ["He's our new teacher.", "Yes, that's him.",
+      "The sweater is nice."], 0, ""),
+    ("Where's Amanda gone?", ["To the library, I think.",
+                              "Yes, she has gone.", "An hour ago."],
+     0, "C — «When?» javobi."),
+    ("I hate shopping.", ["So do I.", "So am I.",
+                          "Neither do I hate."], 0,
+     "«hate» oddiy fe'l -> do."),
+    ("How long did the journey take?",
+     ["Nearly four hours.", "Yes, it was long.", "By plane."], 0,
+     ""),
+]))
+
+BOOK_SETS.append(S(3, [
+    ("The room costs $55 a night.",
+     ["That's more than I expected.", "Yes, it costs.",
+      "No, I have $55."], 0, ""),
+    ("Are you sure the match starts at two?",
+     ["Yes, I checked the ticket.", "Yes, I sure.",
+      "No, it is a match."], 0, ""),
+    ("I saw the new Spielberg film last night.",
+     ["Was it any good?", "Yes, I see it.",
+      "No, I will see it last night."], 0, ""),
+    ("How did the accident happen?",
+     ["A car ran into a bus.", "Yes, it happened.",
+      "Near the market."], 0, "C — «Where?» javobi."),
+    ("Hello, I'd like to speak to Mr Green, please.",
+     ["I'll put you through.", "Yes, he speaks.",
+      "No, I am Mr Green."], 0,
+     "«put you through» = ulab qo'yaman."),
+    ("May I leave now?", ["Yes, you may.", "Yes, I leave.",
+                          "No, you needn't leave."], 0,
+     "C — ruxsat so'ralyapti, «needn't» esa majburiyat haqida."),
+    ("Let's listen to this new CD.",
+     ["Good idea.", "Yes, I listened.", "No, I am listening."], 0,
+     ""),
+    ("I'd like two tickets for tonight.",
+     ["I'm afraid we're sold out.", "Yes, you would.",
+      "No, tonight is fine."], 0, ""),
+]))
+
+BOOK_SETS.append(S(3, [
+    ("What time did the meeting end?",
+     ["At half past five.", "Yes, it ended.", "It lasted two hours."],
+     0, "C — «How long?» javobi."),
+    ("I can't do this maths problem.",
+     ["Shall I help you?", "Yes, you can't.", "No, I can do it."], 0,
+     ""),
+    ("Do you like Jane's new flat?",
+     ["Yes, it's lovely.", "Yes, I like.", "No, she likes it."], 0,
+     "B chala."),
+    ("How did you go to Madrid?", ["We flew.", "Yes, we went.",
+                                   "For a week."], 0, ""),
+    ("I really must go now!", ["See you soon then.",
+                               "Yes, you mustn't.", "No, you go."], 0,
+     ""),
+    ("Is Mike still doing this homework?",
+     ["Yes, he hasn't finished.", "Yes, he did.",
+      "No, he is doing it."], 0, "C o'zini inkor qiladi."),
+    ("I can't understand this letter.",
+     ["Let me have a look.", "Yes, I understand.",
+      "No, the letter is fine."], 0, ""),
+    ("Are you sure the film starts at 10?",
+     ["Actually, it's half past ten.", "Yes, I am sure film.",
+      "No, I saw the film."], 0, ""),
+]))
+
+# ---- 9-11 mashqlar -> 4-bosqich -------------------------------
+BOOK_SETS.append(S(4, [
+    ("I don't think I can come to the concert.",
+     ["Oh, that's a shame.", "Yes, you can come.",
+      "Neither can I come."], 0, ""),
+    ("Let's have supper now.", ["I'm not hungry yet.",
+                                "Yes, I had supper.",
+                                "No, we don't have."], 0, ""),
+    ("Have you shut the windows?", ["Yes, all of them.",
+                                    "Yes, I shut them tomorrow.",
+                                    "No, I do."], 0, ""),
+    ("My street is too noisy.", ["Why don't you move?",
+                                 "Yes, it is a street.",
+                                 "No, my street is quiet."], 0, ""),
+    ("Can I speak to John, please?", ["Speaking.", "Yes, I can.",
+                                      "No, John speaks."], 0,
+     "«Speaking» = men o'zim gapiryapman."),
+    ("$500 is too expensive.", ["I'll give you a discount.",
+                                "Yes, it is $500.",
+                                "No, it is cheap for me."], 0, ""),
+    ("I've got an appointment with my doctor today.",
+     ["I hope it's nothing serious.", "Yes, you have got.",
+      "No, the doctor is today."], 0, ""),
+    ("Would you like anything else?", ["No, that's all, thanks.",
+                                       "Yes, I would like.",
+                                       "No, I like anything."], 0,
+     "B chala."),
+]))
+
+BOOK_SETS.append(S(4, [
+    ("When is your mother's birthday?", ["On the fifth of May.",
+                                         "Yes, it is her birthday.",
+                                         "She is fifty."], 0, ""),
+    ("Shall we go to the shops now?", ["Let's wait until it stops "
+                                       "raining.", "Yes, we shall go "
+                                       "shops.", "No, I went."], 0,
+     ""),
+    ("It's my sister's birthday tomorrow!",
+     ["What are you going to buy her?", "Yes, it was yesterday.",
+      "No, my birthday is tomorrow."], 0, ""),
+    ("Mary will help the teacher.", ["That's very kind of her.",
+                                     "Yes, she helped.",
+                                     "No, the teacher helps Mary."],
+     0, ""),
+    ("I would like to see the doctor.", ["Do you have an "
+                                         "appointment?",
+                                         "Yes, you would.",
+                                         "No, the doctor sees you."],
+     0, ""),
+    ("Shall we leave now?", ["In five minutes, if that's all right.",
+                             "Yes, we left.", "No, I leave you."], 0,
+     ""),
+    ("Anything else?", ["That's everything, thank you.",
+                        "Yes, anything.", "No, something else."], 0,
+     ""),
+    ("When will lunch be ready?", ["In about ten minutes.",
+                                   "Yes, it will.",
+                                   "In the kitchen."], 0,
+     "C — «Where?» javobi."),
+]))
+
+BOOK_SETS.append(S(4, [
+    ("It's very hot in here.", ["Shall I open a window?",
+                                "Yes, it is here.",
+                                "No, it is cold outside."], 0, ""),
+    ("Have you met Henry before?", ["No, I don't think we have.",
+                                    "Yes, I meet him.",
+                                    "No, I will meet him before."],
+     0, ""),
+    ("Do you like visiting museums?", ["Not really, I find them "
+                                       "boring.", "Yes, I visit.",
+                                       "No, I liked it."], 0, ""),
+    ("I've broken my glasses.", ["Can they be repaired?",
+                                 "Yes, I broke them.",
+                                 "No, the glasses are fine."], 0,
+     ""),
+    ("John's going to London.", ["When does he leave?",
+                                 "Yes, he went.",
+                                 "No, London is far."], 0,
+     "«is going» — kelasi zamon, B esa o'tgan."),
+    ("When do you study?", ["Usually in the evening.",
+                            "Yes, I study.", "At the university."],
+     0, "C — «Where?» javobi."),
+    ("Do you like my new shoes?", ["They really suit you.",
+                                   "Yes, I like.", "No, they are "
+                                   "my shoes."], 0, ""),
+    ("Be careful.", ["Don't worry, I will.", "Yes, I am careful "
+                     "yesterday.", "No, you be careful."], 0, ""),
+]))
+
+# ---- 12-13 mashqlar -> 5-bosqich ------------------------------
+BOOK_SETS.append(S(5, [
+    ("I hate basketball.", ["Neither do I.", "So do I.",
+                            "Yes, I hate you."], 1,
+     "Inkor MA'NOLI gap, lekin shakli TASDIQ («I hate») — shuning "
+     "uchun «So do I». «Neither» faqat «don't/can't» kabi inkor "
+     "shakldan keyin keladi."),
+    ("Can you give me some money?", ["How much do you need?",
+                                     "Yes, I can money.",
+                                     "No, you give me."], 0, ""),
+    ("Let's walk to the park.", ["It's too far, let's take a bus.",
+                                 "Yes, I walked.",
+                                 "No, the park walks."], 0, ""),
+    ("When did you arrive?", ["Only ten minutes ago.",
+                              "Yes, I arrived.", "By taxi."], 0, ""),
+    ("Shall I open the door?", ["Yes, please do.", "Yes, I shall.",
+                                "No, I opened it tomorrow."], 0, ""),
+    ("I got a letter from Paul this morning.", ["What did he say?",
+                                                "Yes, I got it.",
+                                                "No, Paul got a "
+                                                "letter."], 0, ""),
+    ("How's your sister?", ["Much better, thanks.",
+                            "She is my sister.",
+                            "Yes, she is."], 0,
+     "«How is...?» = ahvoli qanday."),
+    ("How far is it to Manchester?", ["About sixty miles.",
+                                      "Yes, it is far.",
+                                      "Two hours by train."], 0,
+     "C — vaqt, savol esa MASOFA so'rayapti. Ikkalasi ham ishonarli "
+     "ko'rinadi — «How far» va «How long» ni ajratish shart."),
+]))
+
+BOOK_SETS.append(S(5, [
+    ("Could you give me the butter?", ["Here you are.",
+                                       "Yes, I could.",
+                                       "No, the butter is here."], 0,
+     ""),
+    ("John hates shopping.", ["So does my brother.",
+                             "So do my brother.",
+                             "Neither does he."], 0,
+     "B — «does» kerak, «do» emas. Uchinchi shaxs birlik."),
+    ("I've already done my homework.", ["That was quick!",
+                                        "Yes, you have done.",
+                                        "No, do it now."], 0, ""),
+    ("What's the date today?", ["The twelfth of March.",
+                                "It's Tuesday.", "Yes, it is today."],
+     0, "B — «What day?» javobi. Date va day ni ajrating."),
+    ("Nick, have you got anything special for tonight?",
+     ["Nothing at all, why?", "Yes, tonight is special.",
+      "No, I got it."], 0, ""),
+    ("Shall we have a snack lunch in a pub for a change?",
+     ["Why not? I'm tired of the canteen.",
+      "Yes, we had lunch there.", "No, I don't have change."], 0,
+     "«for a change» = xilma-xillik uchun; C uni «mayda pul» deb "
+     "tushungan."),
+    ("Would you like a cup of tea?", ["I'd love one, thanks.",
+                                      "Yes, I like tea.",
+                                      "No, I would."], 0,
+     "B — savol TAKLIF, «tea yoqadimi» degani emas."),
+    ("Do you mind if I turn the television off?",
+     ["Not at all, nobody is watching.", "Yes, turn it off.",
+      "No, I mind."], 0, ""),
+]))
+
+
+# =====================================================================
 #  QURISH
 # =====================================================================
 def _remap(note, shift):
@@ -469,7 +868,13 @@ def build_rows():
     to'g'ri javob A/B/C bo'ylab teng tarqaladi."""
     out = []
     n = 0
-    for st in SETS:
+    # SETS — o'zimiz tuzgan, sof bosqichma-bosqich mashqlar.
+    # BOOK_SETS — Multilevel Master audioscriptidan olingan HAQIQIY
+    # imtihon gaplari. Ular bir xil bosqich ichida o'zimiznikidan
+    # KEYIN keladi (order 100 dan boshlanadi), ya'ni bola avval
+    # tayyorlanadi, keyin haqiqiy imtihon gapini eshitadi.
+    for src, base, book in ((SETS, 0, False), (BOOK_SETS, 100, True)):
+      for si, st in enumerate(src):
         step = st["step"]
         for i, (say, opts, ci, note) in enumerate(st["items"], 1):
             assert len(opts) == 3, (step, i)
@@ -484,6 +889,9 @@ def build_rows():
             expl = f"To'g'ri javob: {LET[ci2]}. Eshitilgan gap: «{say}»."
             if note2:
                 expl += " " + note2
+            if book:
+                expl += (" (Gap Multilevel Master audioskriptidan "
+                         "olingan — haqiqiy imtihon materiali.)")
             out.append((
                 KIND, step,
                 {"say": say,
@@ -499,7 +907,8 @@ def build_rows():
                  "gap_ms": 2000,
                  "options": labelled,
                  "step": step,
-                 "order": i,
+                 "order": base + si * 10 + i,
+                 "book": book,
                  "hint": HINT,
                  # DIQQAT: "prompt" YUBORILMAYDI — aytilgan gap
                  # ekranda ko'rinmasligi kerak, aks holda tinglash

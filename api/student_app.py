@@ -642,6 +642,9 @@ IELTS_PARTS = [
     {"kind": "cefr_speaker", "title": "Matching Speakers",
      "hint": "Besh kishi gapiradi — har biriga yettita fikrdan "
              "mos kelganini tanlash (ikkitasi ortiqcha)"},
+    {"kind": "cefr_extract", "title": "Three Extracts",
+     "hint": "Uchta suhbat — har biriga ikkita A/B/C savol; "
+             "munosabat va fikr so'raladi"},
     {"kind": "ielts_spell", "title": "Spelling Names",
      "hint": "Britaniya shaharlari, ko'chalari va familiyalari "
              "harflab aytiladi"},
@@ -677,13 +680,14 @@ IELTS_PARTS = [
 
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
-IELTS_WITH_PROMPT = ("cefr_speaker",
+IELTS_WITH_PROMPT = ("cefr_speaker", "cefr_extract",
                      "ielts_detail", "ielts_trap", "ielts_exact",
                      "ielts_delayed", "ielts_modif",
                      "ielts_distract", "ielts_reorder",
                      "ielts_combo")
 # Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
-IELTS_CHOICE = ("ielts_exact", "ielts_reply", "cefr_speaker")
+IELTS_CHOICE = ("ielts_exact", "ielts_reply", "cefr_speaker",
+                "cefr_extract")
 
 
 def _ielts_norm(t: str) -> str:

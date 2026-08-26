@@ -379,6 +379,15 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 5-qism — Three Extracts (2026-08-26). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS32
+    from listening_extract_seed import seed_extract
+    with _VS32(engine) as _db32:
+        seed_extract(_db32)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

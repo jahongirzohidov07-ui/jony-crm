@@ -137,8 +137,10 @@ def test_qoidalar():
 def test_backend_ulangan():
     src = open("student_app.py", encoding="utf-8").read()
     assert '"kind": "read_sentence", "title": "Sentence Completion"' in src
-    # Javob YOZILADI (variant tanlanmaydi) — READING_TYPED ichida
-    assert '"read_sentence")' in src
+    # Javob YOZILADI (variant tanlanmaydi) — READING_TYPED ichida.
+    # Ro'yxat o'sib boryapti, shuning uchun qattiq satr emas.
+    i = src.index("READING_TYPED = (")
+    assert "read_sentence" in src[i:src.index(")", i)]
     assert 'from reading_sentence_seed import SENTENCE_TIPS' in src
     m = open("main.py", encoding="utf-8").read()
     assert 'from reading_sentence_seed import seed_sentence' in m

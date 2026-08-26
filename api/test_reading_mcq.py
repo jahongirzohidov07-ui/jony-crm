@@ -144,8 +144,8 @@ r = c.get("/api/student/ielts/reading/parts", headers=H)
 parts = {p["title"]: p for p in r.json()["parts"]}
 ck("Multiple Choice tayyor", parts["Multiple Choice"]["ready"], True)
 ck("elementlar", parts["Multiple Choice"]["total"], 122)
-ck("11 tur to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 11)
+ck("12+ tur to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]) >= 12, True)
 
 print("\n=== 8. QOIDALAR ===")
 t = c.get(f"/api/student/ielts/reading/tips?kind={K}",

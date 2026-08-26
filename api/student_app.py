@@ -883,6 +883,11 @@ def ielts_listening_answer(payload: dict = Body(default={}),
 READING_SKILL = "ielts_reading"
 READING_TYPES = [
     # (kind, title, hint) — kind None bo'lsa mashq hali yo'q
+    # CEFR Reading 1-qism (2026-08-26, Jahongir: "bu esa CEFR
+    # reading barcha qismlar savoli").
+    {"kind": "cefr_word", "title": "Word From the Text",
+     "hint": "Bo'shliqqa BITTA so'z — u shu matnning boshqa "
+             "joyida albatta bor (CEFR 1-qism)"},
     {"kind": "read_short", "title": "Short answer",
      "hint": "Matn bo'yicha to'g'ridan-to'g'ri savol — javob "
              "matndan, 2 so'zdan oshmaydi"},
@@ -931,7 +936,7 @@ READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
 # Javob YOZIB beriladigan turlar (variant tanlanmaydi)
 READING_TYPED = ("read_table", "read_summary",
                  "read_flow", "read_short", "read_label",
-                 "read_sentence")
+                 "read_sentence", "cefr_word")
 
 
 def _read_norm(t: str) -> str:
@@ -1018,6 +1023,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_sentence":
         from reading_sentence_seed import SENTENCE_TIPS
         src = SENTENCE_TIPS
+    elif kind == "cefr_word":
+        from cefr_read_gap_seed import CEFR_WORD_TIPS
+        src = CEFR_WORD_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -1043,7 +1051,8 @@ def ielts_reading_tips(kind: str,
                                           "read_flow", "read_short",
                                           "read_label", "read_head",
                                           "read_mcq", "read_pick",
-                                          "read_sentence")
+                                          "read_sentence",
+                                          "cefr_word")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }

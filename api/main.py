@@ -425,6 +425,15 @@ try:
 except Exception:
     pass
 
+# CEFR Reading 1-qism — Word From the Text (2026-08-26). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS37
+    from cefr_read_gap_seed import seed_cefr_word
+    with _VS37(engine) as _db37:
+        seed_cefr_word(_db37)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

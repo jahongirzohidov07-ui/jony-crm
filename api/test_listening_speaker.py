@@ -11,6 +11,14 @@ Bu tur uch xil buzilishi mumkin:
 import listening_speaker_seed as S
 
 
+def _in_choice(kind):
+    """IELTS_CHOICE ro'yxati ichida shu tur bormi. Ro'yxat har
+    yangi CEFR qismida o'sadi, shuning uchun qattiq satr emas."""
+    src = open("student_app.py", encoding="utf-8").read()
+    i = src.index("IELTS_CHOICE = (")
+    return kind in src[i:src.index(")", i)]
+
+
 def test_soni():
     rows = S.build_rows()
     assert len(rows) == 100, len(rows)
@@ -90,7 +98,7 @@ def test_bosqichlar():
 def test_backend_ulangan():
     src = open("student_app.py", encoding="utf-8").read()
     assert '"kind": "cefr_speaker"' in src
-    assert '"cefr_speaker")' in src          # IELTS_CHOICE
+    assert _in_choice("cefr_speaker")
     assert 'IELTS_WITH_PROMPT = ("cefr_speaker",' in src
     m = open("main.py", encoding="utf-8").read()
     assert "from listening_speaker_seed import seed_speaker" in m

@@ -645,6 +645,9 @@ IELTS_PARTS = [
     {"kind": "cefr_note", "title": "Note Completion",
      "hint": "Ma'ruza eshitiladi — qaydnomadagi bo'shliqqa BITTA "
              "so'z yoki raqam yoziladi"},
+    {"kind": "cefr_gap", "title": "Sentence Completion",
+     "hint": "Uzun ma'ruza — oltita gapdagi bo'shliqqa BITTA so'z "
+             "yoki raqam yoziladi"},
     {"kind": "cefr_extract", "title": "Three Extracts",
      "hint": "Uchta suhbat — har biriga ikkita A/B/C savol; "
              "munosabat va fikr so'raladi"},
@@ -684,6 +687,7 @@ IELTS_PARTS = [
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
 IELTS_WITH_PROMPT = ("cefr_speaker", "cefr_extract", "cefr_note",
+                     "cefr_gap",
                      "ielts_detail", "ielts_trap", "ielts_exact",
                      "ielts_delayed", "ielts_modif",
                      "ielts_distract", "ielts_reorder",

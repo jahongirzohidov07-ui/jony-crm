@@ -397,6 +397,15 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 6-qism — Sentence Completion (2026-08-26).
+try:
+    from sqlalchemy.orm import Session as _VS34
+    from listening_gap_seed import seed_gap
+    with _VS34(engine) as _db34:
+        seed_gap(_db34)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

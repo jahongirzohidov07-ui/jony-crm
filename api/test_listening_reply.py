@@ -11,6 +11,14 @@ Test ikkalasini ham tutadi.
 import listening_reply_seed as R
 
 
+def _in_choice(kind):
+    """IELTS_CHOICE ro'yxati ichida shu tur bormi. Ro'yxat har
+    yangi CEFR qismida o'sadi, shuning uchun qattiq satr emas."""
+    src = open("student_app.py", encoding="utf-8").read()
+    i = src.index("IELTS_CHOICE = (")
+    return kind in src[i:src.index(")", i)]
+
+
 def test_soni():
     """100 ta o'zimiznikidan + 104 ta kitobdan (Multilevel Master
     audioskripti, Part 1, 1-13 mashqlar)."""
@@ -121,7 +129,7 @@ def test_izohda_gap_va_harf_bor():
 def test_backend_ulangan():
     src = open("student_app.py", encoding="utf-8").read()
     assert '"kind": "ielts_reply"' in src
-    assert 'IELTS_CHOICE = ("ielts_exact", "ielts_reply")' in src
+    assert _in_choice("ielts_reply")
     assert '"plays": pl.get("plays", 1)' in src
     m = open("main.py", encoding="utf-8").read()
     assert "from listening_reply_seed import seed_reply" in m

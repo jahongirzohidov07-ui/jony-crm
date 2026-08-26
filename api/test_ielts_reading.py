@@ -305,7 +305,9 @@ ck("bazada build_rows bilan bir xil", n_tf_yn, len(rows))
 print("\n=== 17. ESKI MASHQLAR BUZILMAGAN ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 ck("listening parts hali ishlaydi", r.status_code, 200)
-ck("listening 11 mashq", len(r.json()["parts"]), 11)
+# 2026-08-26: CEFR qismlari qo'shilib boryapti — qattiq son
+# emas, kamida shuncha bo'lsin.
+ck("listening 11+ mashq", len(r.json()["parts"]) >= 11, True)
 r = c.get("/api/student/practice/reading/levels", headers=H)
 ck("daraja bo'limlari ishlaydi", r.status_code, 200)
 

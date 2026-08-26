@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { BookOpen, Check, ChevronDown, X } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
@@ -42,6 +42,11 @@ const STEP_COLOR: Record<number, string> = {
 
 export default function StudentIeltsReading() {
   const { kind } = useParams();
+  // 2026-08-26: mashqdan chiqqanda O'SHA imtihon ro'yxatiga
+  // qaytish kerak (IELTS mashqi -> IELTS ro'yxati).
+  const [sp] = useSearchParams();
+  const exam = sp.get("exam") === "cefr" ? "cefr" : "ielts";
+  const backHref = `/student/ielts/reading?exam=${exam}`;
   const [tips, setTips] = useState<Any>(null);
   const [open, setOpen] = useState<number | null>(0);
   const [phase, setPhase] = useState<"tips" | "count" | "play">("tips");
@@ -152,7 +157,7 @@ export default function StudentIeltsReading() {
       {/* -------------------------------------------- sarlavha */}
       <div className="flex items-center gap-2.5 text-white">
         <Link
-          to="/student/ielts/reading"
+          to={backHref}
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
           style={card}
         >
@@ -685,7 +690,7 @@ export default function StudentIeltsReading() {
               Qoidalarni takrorlash
             </button>
             <Link
-              to="/student/ielts/reading"
+              to={backHref}
               className="block w-full rounded-xl border border-slate-200 py-2.5 text-sm font-semibold text-slate-600"
             >
               Bo'limga qaytish

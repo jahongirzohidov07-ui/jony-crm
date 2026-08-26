@@ -74,6 +74,9 @@ const StudentLayout = lazy(() => import("./pages/student/StudentLayout"));
 const StudentHome = lazy(() => import("./pages/student/StudentHome"));
 const StudentGames = lazy(() => import("./pages/student/StudentGames"));
 const StudentIelts = lazy(() => import("./pages/student/StudentIelts"));
+const StudentExamSkills = lazy(
+  () => import("./pages/student/StudentExamSkills"),
+);
 const StudentIeltsListening = lazy(
   () => import("./pages/student/StudentIeltsListening"),
 );
@@ -200,6 +203,9 @@ function AppRoutes() {
           <Route index element={<StudentHome />} />
           <Route path="games" element={<StudentGames />} />
           <Route path="ielts" element={<StudentIelts />} />
+          {/* 2026-08-26: har imtihon o'z ichiga kiradi */}
+          <Route path="ielts/exam/:exam"
+                 element={<StudentExamSkills />} />
           <Route path="ielts/listening"
                  element={<StudentIeltsListeningHome />} />
           <Route path="ielts/listening/:kind"

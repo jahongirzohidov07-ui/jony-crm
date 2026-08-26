@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Check, Volume2, X } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
@@ -80,6 +80,11 @@ function speak(text: string, rate: number, times = 1, gapMs = 1500) {
 
 export default function StudentIeltsListening() {
   const { kind } = useParams();
+  // 2026-08-26: mashqdan chiqqanda O'SHA imtihon ro'yxatiga
+  // qaytish kerak, umumiy bosh sahifaga emas.
+  const [sp] = useSearchParams();
+  const exam = sp.get("exam") === "cefr" ? "cefr" : "ielts";
+  const backHref = `/student/ielts/listening?exam=${exam}`;
   const [d, setD] = useState<Any>(null);
   const [idx, setIdx] = useState(0);
   const [typed, setTyped] = useState("");
@@ -171,7 +176,7 @@ export default function StudentIeltsListening() {
       {/* -------------------------------------------- sarlavha */}
       <div className="flex items-center gap-2.5 text-white">
         <Link
-          to="/student/ielts"
+          to={backHref}
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
           style={card}
         >
@@ -441,7 +446,7 @@ export default function StudentIeltsListening() {
               Yana mashq
             </button>
             <Link
-              to="/student/ielts"
+              to={backHref}
               className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-semibold text-slate-300"
               style={card}
             >

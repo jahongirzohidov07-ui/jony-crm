@@ -45,14 +45,14 @@ export default function StudentIeltsListeningHome() {
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
-          to="/student/ielts"
+          to={`/student/ielts/exam/${exam}`}
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
           style={card}
         >
           <ArrowLeft size={18} />
         </Link>
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
-          CEFR / IELTS
+          {isCefr ? "CEFR Multilevel" : "IELTS"}
         </p>
         <img src="/jsicons/learn-listening.png" alt=""
              className="w-10 h-10 shrink-0" />
@@ -95,7 +95,7 @@ export default function StudentIeltsListeningHome() {
             {parts.map((p: Any) => (
               <Link
                 key={p.kind}
-                to={`/student/ielts/listening/${p.kind}`}
+                to={`/student/ielts/listening/${p.kind}?exam=${exam}`}
                 className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
                 style={card}
               >

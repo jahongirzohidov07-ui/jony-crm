@@ -64,10 +64,15 @@ def test_both_ikkala_royxatda():
 
 
 def test_ekranda_cefr_kartalari_bor():
-    fe = open("../src/pages/student/StudentIelts.tsx",
+    """2026-08-26: kartalar examsConfig.ts ga ko'chdi.
+
+    Jahongir: "IELTS va CEFR alohida tursin". Endi CEFR o'z
+    bo'limida — muhimi, unga yo'l BOR bo'lishi.
+    """
+    fe = open("../src/pages/student/examsConfig.ts",
               encoding="utf-8").read()
-    assert "CEFR Listening (Multilevel)" in fe
-    assert "CEFR Reading (Multilevel)" in fe
+    assert "CEFR Listening" in fe
+    assert "CEFR Reading" in fe
     assert "/student/ielts/listening?exam=cefr" in fe
     assert "/student/ielts/reading?exam=cefr" in fe
 

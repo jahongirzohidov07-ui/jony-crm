@@ -136,7 +136,12 @@ def test_qoidalar():
 
 def test_backend_ulangan():
     src = open("student_app.py", encoding="utf-8").read()
-    assert '"kind": "read_sentence", "title": "Sentence Completion"' in src
+    # 2026-08-26: qatordagi maydonlar orasiga "exam" qo'shildi,
+    # shuning uchun yonma-yonlik emas, BITTA QATORDA borligi
+    # tekshiriladi.
+    qator = [q for q in src.splitlines() if '"read_sentence"' in q
+             and '"Sentence Completion"' in q]
+    assert qator, "READING_TYPES ichida read_sentence topilmadi"
     # Javob YOZILADI (variant tanlanmaydi) — READING_TYPED ichida.
     # Ro'yxat o'sib boryapti, shuning uchun qattiq satr emas.
     i = src.index("READING_TYPED = (")

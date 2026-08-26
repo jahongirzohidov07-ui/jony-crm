@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
@@ -23,13 +23,21 @@ export default function StudentIeltsListeningHome() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
 
+  /* 2026-08-26, Jahongir: "hozir men CEFR mashqarni qayerdan
+     kiraman yoqku". CEFR qismlari IELTS ro'yxati ichida qolib
+     ketgan edi. Endi bir xil sahifa ikki rejimda ishlaydi:
+     ?exam=cefr bo'lsa faqat CEFR qismlari ko'rinadi. */
+  const [sp] = useSearchParams();
+  const exam = sp.get("exam") === "cefr" ? "cefr" : "ielts";
+  const isCefr = exam === "cefr";
+
   useEffect(() => {
     api
-      .get<Any>("/student/ielts/listening/parts")
+      .get<Any>("/student/ielts/listening/parts?exam=" + exam)
       .then((r) => setParts(r.parts || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [exam]);
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
 
@@ -51,12 +59,15 @@ export default function StudentIeltsListeningHome() {
       </div>
 
       <h1 className="text-[30px] font-extrabold text-white leading-tight mt-3">
-        IELTS Listening
+        {isCefr ? "CEFR Listening" : "IELTS Listening"}
       </h1>
       <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
-        4 qism · 40 savol · 30 daqiqa. Audio bir marta eshittiriladi —
-        shuning uchun ism, raqam va postcodeni birinchi eshitishda
-        ilib olish kerak.
+        {isCefr
+          ? "Multilevel (CEFR) imtihoni: 6 qism. Har gap ikki marta " +
+            "aytiladi — matnlar haqiqiy imtihon kitobidan olingan."
+          : "4 qism · 40 savol · 30 daqiqa. Audio bir marta " +
+            "eshittiriladi — ism, raqam va postcodeni birinchi " +
+            "eshitishda ilib olish kerak."}
       </p>
 
       {err && (

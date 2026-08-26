@@ -53,6 +53,26 @@ const PARTS: {
       + "mashqlari tayyor",
   },
   {
+    // 2026-08-26, Jahongir: "hozir men CEFR mashqarni qayerdan
+    // kiraman yoqku". CEFR qismlari IELTS ro'yxati ichida qolib
+    // ketgan edi — endi alohida ikki karta.
+    key: "cefr_listening", title: "CEFR Listening (Multilevel)",
+    desc: "6 qism · javob berish, qaydnoma, so'zlovchilar, xarita, " +
+      "parchalar va gap to'ldirish.",
+    icon: "/jsicons/learn-listening.png",
+    href: "/student/ielts/listening?exam=cefr",
+    hint: "Matnlar Multilevel Master audioskriptidan · har gap "
+      + "ikki marta aytiladi",
+  },
+  {
+    key: "cefr_reading", title: "CEFR Reading (Multilevel)",
+    desc: "5 qism · 35 savol · 60 daqiqa. Matndan so'z topish, " +
+      "e'lonlarga moslash, sarlavha, T/F/No Info va A/B/C/D.",
+    icon: "/jsicons/learn-reading.png",
+    href: "/student/ielts/reading?exam=cefr",
+    hint: "Beshala qism ham to'liq ishlaydi",
+  },
+  {
     key: "writing", title: "IELTS Writing",
     desc: "Task 1 (grafik/jadval tavsifi) va Task 2 (esse) · " +
       "60 daqiqa.",

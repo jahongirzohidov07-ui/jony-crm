@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ChevronRight, Lock } from "lucide-react";
 import { JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
@@ -25,13 +25,21 @@ export default function StudentIeltsReadingHome() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
 
+  /* 2026-08-26, Jahongir: "hozir men CEFR mashqarni qayerdan
+     kiraman yoqku". CEFR qismlari IELTS ro'yxati ichida qolib
+     ketgan edi. Endi bir xil sahifa ikki rejimda ishlaydi:
+     ?exam=cefr bo'lsa faqat CEFR qismlari ko'rinadi. */
+  const [sp] = useSearchParams();
+  const exam = sp.get("exam") === "cefr" ? "cefr" : "ielts";
+  const isCefr = exam === "cefr";
+
   useEffect(() => {
     api
-      .get<Any>("/student/ielts/reading/parts")
+      .get<Any>("/student/ielts/reading/parts?exam=" + exam)
       .then((r) => setParts(r.parts || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [exam]);
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const ready = parts.filter((p: Any) => p.ready);
@@ -55,11 +63,14 @@ export default function StudentIeltsReadingHome() {
       </div>
 
       <h1 className="text-[30px] font-extrabold text-white leading-tight mt-3">
-        IELTS Reading
+        {isCefr ? "CEFR Reading" : "IELTS Reading"}
       </h1>
       <p className="text-[13px] text-slate-400 mt-2 leading-relaxed">
-        3 matn · 40 savol · 60 daqiqa. Imtihonda 12 xil savol turi
-        uchraydi — quyida hammasi ro'yxat qilingan.
+        {isCefr
+          ? "Multilevel (CEFR) imtihoni: 5 qism · 35 savol · 60 " +
+            "daqiqa. Quyida har qismning o'z mashqlari."
+          : "3 matn · 40 savol · 60 daqiqa. Imtihonda 12 xil savol " +
+            "turi uchraydi — quyida hammasi ro'yxat qilingan."}
       </p>
 
       {err && <p className="text-sm text-red-400 mt-4">{err}</p>}

@@ -635,55 +635,55 @@ IELTS_PARTS = [
     # savollari shunaqa bo'ladi bitta gap aytadi yoki savol shunga
     # mos reply tanlash kerak bo'ladi" — shuning uchun ro'yxatning
     # BOSHIDA turadi.
-    {"kind": "ielts_reply", "title": "Choose the Correct Reply",
+    {"kind": "ielts_reply", "exam": "cefr", "title": "Choose the Correct Reply",
      "hint": "Bitta gap eshitiladi (ikki marta) — uchta javobdan "
              "mos kelganini tanlash"},
     # CEFR 3-qism (2026-08-26)
-    {"kind": "cefr_speaker", "title": "Matching Speakers",
+    {"kind": "cefr_speaker", "exam": "cefr", "title": "Matching Speakers",
      "hint": "Besh kishi gapiradi — har biriga yettita fikrdan "
              "mos kelganini tanlash (ikkitasi ortiqcha)"},
-    {"kind": "cefr_note", "title": "Note Completion",
+    {"kind": "cefr_note", "exam": "cefr", "title": "Note Completion",
      "hint": "Ma'ruza eshitiladi — qaydnomadagi bo'shliqqa BITTA "
              "so'z yoki raqam yoziladi"},
-    {"kind": "cefr_gap", "title": "Sentence Completion",
+    {"kind": "cefr_gap", "exam": "cefr", "title": "Sentence Completion",
      "hint": "Uzun ma'ruza — oltita gapdagi bo'shliqqa BITTA so'z "
              "yoki raqam yoziladi"},
-    {"kind": "cefr_map", "title": "Map Labelling",
+    {"kind": "cefr_map", "exam": "cefr", "title": "Map Labelling",
      "hint": "Ekranda xarita — ma'ruzachi aytgan joylarni A-H "
              "harflari bilan moslashtirish (ortiqchalari bilan)"},
-    {"kind": "cefr_extract", "title": "Three Extracts",
+    {"kind": "cefr_extract", "exam": "cefr", "title": "Three Extracts",
      "hint": "Uchta suhbat — har biriga ikkita A/B/C savol; "
              "munosabat va fikr so'raladi"},
-    {"kind": "ielts_spell", "title": "Spelling Names",
+    {"kind": "ielts_spell", "exam": "ielts", "title": "Spelling Names",
      "hint": "Britaniya shaharlari, ko'chalari va familiyalari "
              "harflab aytiladi"},
-    {"kind": "ielts_number", "title": "Number Practice",
+    {"kind": "ielts_number", "exam": "ielts", "title": "Number Practice",
      "hint": "Telefon, karta, narx, yil — bittalab aytiladi"},
-    {"kind": "ielts_mixed", "title": "Spelling Mixed",
+    {"kind": "ielts_mixed", "exam": "ielts", "title": "Spelling Mixed",
      "hint": "Postcode va kodlar: harf va raqam aralash keladi"},
-    {"kind": "ielts_detail", "title": "Detail Practice",
+    {"kind": "ielts_detail", "exam": "ielts", "title": "Detail Practice",
      "hint": "Hafta kuni, soat, davomiylik, masofa, narx — qisqa "
              "dialogdan aniq javobni topish"},
-    {"kind": "ielts_trap", "title": "Multiple Answers Trap",
+    {"kind": "ielts_trap", "exam": "ielts", "title": "Multiple Answers Trap",
      "hint": "Audioda 2-3 ta o'xshash qiymat aytiladi — savol "
              "aynan qaysinisini so'rayotganini topish"},
-    {"kind": "ielts_exact", "title": "Exact Word Trap",
+    {"kind": "ielts_exact", "exam": "ielts", "title": "Exact Word Trap",
      "hint": "Noto'g'ri variantlarning so'zlari audioda aynan "
              "eshitiladi — to'g'risi esa boshqacha aytiladi"},
     # 2026-08-25 qo'shildi
-    {"kind": "ielts_delayed", "title": "Delayed Response Trap",
+    {"kind": "ielts_delayed", "exam": "ielts", "title": "Delayed Response Trap",
      "hint": "Javob kechiktiriladi — o'tkazib yubordimmi deb "
              "shoshmang, oxirigacha tinglang"},
-    {"kind": "ielts_modif", "title": "Modification Trap",
+    {"kind": "ielts_modif", "exam": "ielts", "title": "Modification Trap",
      "hint": "Aytilgan javob keyin to'g'rilanadi — 'sorry, I mean', "
              "'actually', 'no, wait'"},
-    {"kind": "ielts_distract", "title": "Distractor Trap",
+    {"kind": "ielts_distract", "exam": "ielts", "title": "Distractor Trap",
      "hint": "although / but / however va don't / isn't / unlikely — "
              "chalg'ituvchi gap va inkor"},
-    {"kind": "ielts_reorder", "title": "Word Reorder Trap",
+    {"kind": "ielts_reorder", "exam": "ielts", "title": "Word Reorder Trap",
      "hint": "Savoldagi so'zlar tartibi audioda boshqacha keladi — "
              "oxirgi bo'lak birinchi aytilishi mumkin"},
-    {"kind": "ielts_combo", "title": "Combination Trap",
+    {"kind": "ielts_combo", "exam": "ielts", "title": "Combination Trap",
      "hint": "Ikki-uch qopqon birga — haqiqiy imtihondagi kabi"},
 ]
 
@@ -717,8 +717,23 @@ def _ielts_norm(t: str) -> str:
     return t
 
 
+def _exam_parts(rows, exam):
+    """CEFR va IELTS bo'limlarini ajratish (2026-08-26).
+
+    Jahongir: "hozir men CEFR mashqarni qayerdan kiraman yoqku."
+    CEFR qismlari IELTS ro'yxati ichida qolib ketgan edi va
+    alohida kirish yo'q edi. Endi har qism qaysi imtihonga
+    tegishli ekani belgilangan; "both" — format ikkalasida ham
+    bir xil (masalan True/False/Not Given)."""
+    if exam not in ("ielts", "cefr"):
+        return rows
+    return [r for r in rows
+            if r.get("exam", "ielts") in (exam, "both")]
+
+
 @router.get("/api/student/ielts/listening/parts")
-def ielts_listening_parts(db: Session = Depends(get_db),
+def ielts_listening_parts(exam: str | None = None,
+                          db: Session = Depends(get_db),
                           user=Depends(require_role(roles.STUDENT))):
     """Uch mashqning ro'yxati: nechta element va nechtasi bajarilgan."""
     s = _me(db, user)
@@ -734,12 +749,13 @@ def ielts_listening_parts(db: Session = Depends(get_db),
     for r in rows:
         by_kind.setdefault(r.kind, []).append(r)
     out = []
-    for i, part in enumerate(IELTS_PARTS, 1):
+    for i, part in enumerate(_exam_parts(IELTS_PARTS, exam), 1):
         items = by_kind.get(part["kind"], [])
         done = sum(1 for r in items if f"pi:{r.id}" in solved)
         out.append({
             "no": i, "kind": part["kind"], "title": part["title"],
             "hint": part["hint"], "total": len(items), "solved": done,
+            "exam": part.get("exam", "ielts"),
             "percent": round(done * 100 / len(items)) if items else 0,
         })
     return {"parts": out}
@@ -885,52 +901,52 @@ READING_TYPES = [
     # (kind, title, hint) — kind None bo'lsa mashq hali yo'q
     # CEFR Reading 1-qism (2026-08-26, Jahongir: "bu esa CEFR
     # reading barcha qismlar savoli").
-    {"kind": "cefr_word", "title": "Word From the Text",
+    {"kind": "cefr_word", "exam": "cefr", "title": "Word From the Text",
      "hint": "Bo'shliqqa BITTA so'z — u shu matnning boshqa "
              "joyida albatta bor (CEFR 1-qism)"},
-    {"kind": "cefr_match", "title": "Matching People to Texts",
+    {"kind": "cefr_match", "exam": "cefr", "title": "Matching People to Texts",
      "hint": "Sakkizta e'londan har odamga mos kelganini tanlash "
              "— uchtasi ortiqcha (CEFR 2-qism)"},
-    {"kind": "read_short", "title": "Short answer",
+    {"kind": "read_short", "exam": "ielts", "title": "Short answer",
      "hint": "Matn bo'yicha to'g'ridan-to'g'ri savol — javob "
              "matndan, 2 so'zdan oshmaydi"},
-    {"kind": "read_mcq", "title": "Multiple Choice",
+    {"kind": "read_mcq", "exam": "both", "title": "Multiple Choice",
      "hint": "A/B/C/D — to'rt variantning hammasi matndagi "
              "so'zlardan yasalgan, faqat bittasi to'g'ri"},
-    {"kind": "read_pick", "title": "Pick from a List",
+    {"kind": "read_pick", "exam": "ielts", "title": "Pick from a List",
      "hint": "Beshta variantdan IKKITASI to'g'ri — ikkalasini ham "
              "topmasa savol hisobga olinmaydi"},
-    {"kind": "read_summary", "title": "Summary Completion",
+    {"kind": "read_summary", "exam": "ielts", "title": "Summary Completion",
      "hint": "BUTUN matnning xulosasini matndagi so'zlar bilan "
              "to'ldirish — har bo'shliq matnning boshqa joyidan"},
-    {"kind": None, "title": "Matching Sentences",
+    {"kind": None, "exam": "ielts", "title": "Matching Sentences",
      "hint": "Gap boshini to'g'ri davomiga ulash"},
-    {"kind": "read_sentence", "title": "Sentence Completion",
+    {"kind": "read_sentence", "exam": "ielts", "title": "Sentence Completion",
      "hint": "Alohida gaplardagi bo'shliqni matndagi so'z bilan "
              "to'ldirish — ma'no ham, GRAMMATIKA ham to'g'ri "
              "bo'lishi shart"},
-    {"kind": "read_tfng", "title": "True / False / Not Given",
+    {"kind": "read_tfng", "exam": "both", "title": "True / False / Not Given",
      "hint": "FAKT: matn tasdiqlaydimi, rad etadimi yoki umuman "
              "yozilmaganmi"},
-    {"kind": "read_ynng", "title": "Yes / No / Not Given",
+    {"kind": "read_ynng", "exam": "ielts", "title": "Yes / No / Not Given",
      "hint": "MUALLIF FIKRI: shunday deb hisoblaydimi, teskarisini "
              "aytadimi yoki fikr bildirmaganmi"},
-    {"kind": "read_head", "title": "Matching Headings",
+    {"kind": "read_head", "exam": "both", "title": "Matching Headings",
      "hint": "Har xatboshining ASOSIY G'OYASIGA mos sarlavha "
              "tanlash — sarlavhalar ortiqcha beriladi"},
-    {"kind": "read_flow", "title": "Flow-chart Completion",
+    {"kind": "read_flow", "exam": "ielts", "title": "Flow-chart Completion",
      "hint": "Voqealar yoki jarayon ketma-ketligini matndagi "
              "so'zlar bilan to'ldirish — tartib eng kuchli "
              "yordamchi"},
-    {"kind": "read_label", "title": "Labelling a Diagram",
+    {"kind": "read_label", "exam": "ielts", "title": "Labelling a Diagram",
      "hint": "Chizma qismlaridagi yorliqlarni matndan olingan "
              "so'z bilan to'ldirish — tartib yo'q, qism nomi "
              "yo'l ko'rsatadi"},
-    {"kind": None, "title": "Matching Names",
+    {"kind": None, "exam": "ielts", "title": "Matching Names",
      "hint": "Fikrni uni aytgan olim/muallif bilan moslash"},
-    {"kind": None, "title": "Matching Information to Paragraphs",
+    {"kind": None, "exam": "ielts", "title": "Matching Information to Paragraphs",
      "hint": "Berilgan ma'lumot qaysi xatboshida — shuni topish"},
-    {"kind": "read_table", "title": "Table Completion",
+    {"kind": "read_table", "exam": "ielts", "title": "Table Completion",
      "hint": "Jadvaldagi bo'sh katakni matndan olingan BITTA so'z "
              "bilan to'ldirish — asosiy ko'nikma paraffrazni "
              "ko'rish"},
@@ -967,7 +983,8 @@ def _read_solved(db, student_id):
 
 
 @router.get("/api/student/ielts/reading/parts")
-def ielts_reading_parts(db: Session = Depends(get_db),
+def ielts_reading_parts(exam: str | None = None,
+                        db: Session = Depends(get_db),
                         user=Depends(require_role(roles.STUDENT))):
     """Reading'ning 12 turi. Mashqi bor turlarda progress ko'rinadi."""
     s = _me(db, user)
@@ -979,13 +996,14 @@ def ielts_reading_parts(db: Session = Depends(get_db),
     for r in rows:
         by_kind.setdefault(r.kind, []).append(r)
     out = []
-    for i, t in enumerate(READING_TYPES, 1):
+    for i, t in enumerate(_exam_parts(READING_TYPES, exam), 1):
         items = by_kind.get(t["kind"] or "", [])
         done = sum(1 for r in items if f"pi:{r.id}" in solved)
         out.append({
             "no": i, "kind": t["kind"], "title": t["title"],
             "hint": t["hint"], "total": len(items), "solved": done,
             "ready": bool(t["kind"] and items),
+            "exam": t.get("exam", "ielts"),
             "percent": round(done * 100 / len(items)) if items else 0,
         })
     return {"parts": out}

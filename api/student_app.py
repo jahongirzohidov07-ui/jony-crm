@@ -888,6 +888,9 @@ READING_TYPES = [
     {"kind": "cefr_word", "title": "Word From the Text",
      "hint": "Bo'shliqqa BITTA so'z — u shu matnning boshqa "
              "joyida albatta bor (CEFR 1-qism)"},
+    {"kind": "cefr_match", "title": "Matching People to Texts",
+     "hint": "Sakkizta e'londan har odamga mos kelganini tanlash "
+             "— uchtasi ortiqcha (CEFR 2-qism)"},
     {"kind": "read_short", "title": "Short answer",
      "hint": "Matn bo'yicha to'g'ridan-to'g'ri savol — javob "
              "matndan, 2 so'zdan oshmaydi"},
@@ -1026,6 +1029,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "cefr_word":
         from cefr_read_gap_seed import CEFR_WORD_TIPS
         src = CEFR_WORD_TIPS
+    elif kind == "cefr_match":
+        from cefr_read_match_seed import CEFR_MATCH_TIPS
+        src = CEFR_MATCH_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -1052,7 +1058,7 @@ def ielts_reading_tips(kind: str,
                                           "read_label", "read_head",
                                           "read_mcq", "read_pick",
                                           "read_sentence",
-                                          "cefr_word")
+                                          "cefr_word", "cefr_match")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }

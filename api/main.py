@@ -434,6 +434,15 @@ try:
 except Exception:
     pass
 
+# CEFR Reading 2-qism — Matching People to Texts (2026-08-26).
+try:
+    from sqlalchemy.orm import Session as _VS38
+    from cefr_read_match_seed import seed_cefr_match
+    with _VS38(engine) as _db38:
+        seed_cefr_match(_db38)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

@@ -406,6 +406,15 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 4-qism — Map Labelling (2026-08-26).
+try:
+    from sqlalchemy.orm import Session as _VS35
+    from listening_map_seed import seed_map
+    with _VS35(engine) as _db35:
+        seed_map(_db35)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

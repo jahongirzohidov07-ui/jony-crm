@@ -648,6 +648,9 @@ IELTS_PARTS = [
     {"kind": "cefr_gap", "title": "Sentence Completion",
      "hint": "Uzun ma'ruza — oltita gapdagi bo'shliqqa BITTA so'z "
              "yoki raqam yoziladi"},
+    {"kind": "cefr_map", "title": "Map Labelling",
+     "hint": "Ekranda xarita — ma'ruzachi aytgan joylarni A-H "
+             "harflari bilan moslashtirish (ortiqchalari bilan)"},
     {"kind": "cefr_extract", "title": "Three Extracts",
      "hint": "Uchta suhbat — har biriga ikkita A/B/C savol; "
              "munosabat va fikr so'raladi"},
@@ -687,14 +690,14 @@ IELTS_PARTS = [
 # Savol matni ko'rsatiladigan turlar (bularda javob matn maydoniga
 # yoziladi, lekin ekranda SAVOL ham turishi shart).
 IELTS_WITH_PROMPT = ("cefr_speaker", "cefr_extract", "cefr_note",
-                     "cefr_gap",
+                     "cefr_gap", "cefr_map",
                      "ielts_detail", "ielts_trap", "ielts_exact",
                      "ielts_delayed", "ielts_modif",
                      "ielts_distract", "ielts_reorder",
                      "ielts_combo")
 # Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
 IELTS_CHOICE = ("ielts_exact", "ielts_reply", "cefr_speaker",
-                "cefr_extract")
+                "cefr_extract", "cefr_map")
 
 
 def _ielts_norm(t: str) -> str:
@@ -786,6 +789,8 @@ def ielts_listening_round(kind: str, count: int = 10,
             # (CEFR: har gap ikki marta aytiladi)
             "plays": pl.get("plays", 1),
             "gap_ms": pl.get("gap_ms", 1500),
+            # CEFR 4-qism — xarita (matn ko'rinishida)
+            "figure": pl.get("figure"),
             # Savol matni — faqat savolli turlarda (javob EMAS)
             "prompt": (pl.get("prompt")
                        if r.kind in IELTS_WITH_PROMPT else None),

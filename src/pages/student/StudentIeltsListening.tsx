@@ -303,6 +303,17 @@ export default function StudentIeltsListening() {
               </div>
             )}
 
+            {/* XARITA (2026-08-26 — CEFR 4-qism). Monoshirina
+                shrift bilan chiziladi, aks holda katakchalar
+                siljib ketadi. */}
+            {q.figure && (
+              <div className="mt-3 rounded-lg border border-slate-200 bg-white px-2 py-2.5 overflow-x-auto">
+                <pre className="text-[10.5px] leading-[1.35] font-mono text-slate-800 whitespace-pre">
+{q.figure}
+                </pre>
+              </div>
+            )}
+
             {/* A/B/C VARIANTLARI (2026-08-24 — exact word trap).
                 Bu turda javob yozilmaydi, tanlanadi. To'g'ri javob
                 serverdan faqat tanlovdan KEYIN keladi. */}

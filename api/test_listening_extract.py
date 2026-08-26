@@ -68,7 +68,8 @@ def test_bosqichlar():
 def test_backend_ulangan():
     src = open("student_app.py", encoding="utf-8").read()
     assert '"kind": "cefr_extract"' in src
-    assert '"cefr_extract")' in src
+    i = src.index("IELTS_CHOICE = (")
+    assert "cefr_extract" in src[i:src.index(")", i)]
     assert 'IELTS_WITH_PROMPT = ("cefr_speaker", "cefr_extract",' in src
     m = open("main.py", encoding="utf-8").read()
     assert "from listening_extract_seed import seed_extract" in m

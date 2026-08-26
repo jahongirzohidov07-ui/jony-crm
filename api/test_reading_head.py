@@ -129,8 +129,8 @@ parts = {p["title"]: p for p in r.json()["parts"]}
 ck("Matching Headings tayyor",
    parts["Matching Headings"]["ready"], True)
 ck("elementlar", parts["Matching Headings"]["total"], len(rows))
-ck("10 tur to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 10)
+ck("11 tur to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]), 11)
 
 print("\n=== 6. QOIDALAR ===")
 t = c.get(f"/api/student/ielts/reading/tips?kind={K}",

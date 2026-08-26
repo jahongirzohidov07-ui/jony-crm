@@ -347,6 +347,17 @@ try:
 except Exception:
     pass
 
+# IELTS Reading — Sentence Completion (2026-08-26, Jahongir:
+# "keyingisi sentence completion bu shundan ham 100ta" — namuna
+# "READING #20. The honey badger"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS29
+    from reading_sentence_seed import seed_sentence
+    with _VS29(engine) as _db29:
+        seed_sentence(_db29)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

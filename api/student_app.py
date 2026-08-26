@@ -865,8 +865,10 @@ READING_TYPES = [
              "to'ldirish — har bo'shliq matnning boshqa joyidan"},
     {"kind": None, "title": "Matching Sentences",
      "hint": "Gap boshini to'g'ri davomiga ulash"},
-    {"kind": None, "title": "Sentence Completion",
-     "hint": "Gapni matndagi so'zlar bilan tugatish"},
+    {"kind": "read_sentence", "title": "Sentence Completion",
+     "hint": "Alohida gaplardagi bo'shliqni matndagi so'z bilan "
+             "to'ldirish — ma'no ham, GRAMMATIKA ham to'g'ri "
+             "bo'lishi shart"},
     {"kind": "read_tfng", "title": "True / False / Not Given",
      "hint": "FAKT: matn tasdiqlaydimi, rad etadimi yoki umuman "
              "yozilmaganmi"},
@@ -896,7 +898,8 @@ READING_TYPES = [
 READING_KINDS = {t["kind"] for t in READING_TYPES if t["kind"]}
 # Javob YOZIB beriladigan turlar (variant tanlanmaydi)
 READING_TYPED = ("read_table", "read_summary",
-                 "read_flow", "read_short", "read_label")
+                 "read_flow", "read_short", "read_label",
+                 "read_sentence")
 
 
 def _read_norm(t: str) -> str:
@@ -980,6 +983,9 @@ def ielts_reading_tips(kind: str,
     elif kind == "read_pick":
         from reading_pick_seed import PICK_TIPS
         src = PICK_TIPS
+    elif kind == "read_sentence":
+        from reading_sentence_seed import SENTENCE_TIPS
+        src = SENTENCE_TIPS
     else:
         src = TF_TIPS if kind == "read_tfng" else YN_TIPS
     rows = (db.query(models.PracticeItem)
@@ -1004,7 +1010,8 @@ def ielts_reading_tips(kind: str,
                               if kind in ("read_table", "read_summary",
                                           "read_flow", "read_short",
                                           "read_label", "read_head",
-                                          "read_mcq", "read_pick")
+                                          "read_mcq", "read_pick",
+                                          "read_sentence")
                               else STEP_TITLES.get(k, "")),
                     "total": v} for k, v in sorted(steps.items())],
     }

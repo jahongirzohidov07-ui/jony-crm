@@ -133,8 +133,8 @@ ck("Flow-chart Completion bor", "Flow-chart Completion" in parts, True)
 ck("tayyor", parts["Flow-chart Completion"]["ready"], True)
 ck("elementlar", parts["Flow-chart Completion"]["total"], len(rows))
 ck("endi 14 ta tur ro'yxatda", len(r.json()["parts"]), 14)
-ck("10 tasi to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 10)
+ck("11 tasi to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]), 11)
 
 print("\n=== 8. QOIDALAR ===")
 t = c.get(f"/api/student/ielts/reading/tips?kind={K}",

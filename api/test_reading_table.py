@@ -135,8 +135,8 @@ ck("Table Completion tayyor", parts["Table Completion"]["ready"], True)
 ck("100 ta element", parts["Table Completion"]["total"], 100)
 # 2026-08-25: Summary Completion ham qo'shildi -> to'rtta tayyor
 # 2026-08-25: Flow-chart Completion ham qo'shildi -> beshta
-ck("endi 10 ta tur to'ldirilgan",
-   sum(1 for p in r.json()["parts"] if p["ready"]), 10)
+ck("endi 11 ta tur to'ldirilgan",
+   sum(1 for p in r.json()["parts"] if p["ready"]), 11)
 
 print("\n=== 8. QOIDALAR PARAFFRAZNI O'RGATADI ===")
 r = c.get(f"/api/student/ielts/reading/tips?kind={K}", headers=H)

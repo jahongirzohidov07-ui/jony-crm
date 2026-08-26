@@ -95,8 +95,17 @@ def _hrefs():
 
 
 def test_havolalar_exam_tegiga_mos():
+    """?exam= li havola O'Z imtihoniga ishora qilishi kerak.
+
+    2026-08-26: CEFR Writing o'z bo'limiga ega bo'ldi
+    (/student/cefr/writing) — unda ?exam= yo'q, chunki u
+    umumiy reading/listening ro'yxatidan foydalanmaydi.
+    """
     for key, h in _hrefs():
-        assert h.endswith("?exam=" + key), (key, h)
+        if "?exam=" in h:
+            assert h.endswith("?exam=" + key), (key, h)
+        else:
+            assert h.startswith("/student/"), h
 
 
 def test_har_havola_mashq_qaytaradi():
@@ -104,11 +113,28 @@ def test_har_havola_mashq_qaytaradi():
     import student_app as sa
     for key, h in _hrefs():
         m = re.match(r"/student/ielts/(listening|reading)\?exam=", h)
-        assert m, h
+        if not m:
+            continue
         rows = (sa.IELTS_PARTS if m.group(1) == "listening"
                 else sa.READING_TYPES)
         qism = sa._exam_parts(rows, key)
         assert len(qism) >= 2, (h, len(qism))
+
+
+def test_cefr_writing_havolasi_tirik():
+    """CEFR Writing kartasi bosilganda bo'sh ekran chiqmasin."""
+    import cefr_writing_guide as g
+    import cefr_writing_drills as d
+    import cefr_writing_tasks as t
+    cfg = _read("examsConfig.ts")
+    assert "/student/cefr/writing" in cfg
+    with open(os.path.join(SRC, "..", "..", "App.tsx"),
+              encoding="utf-8") as f:
+        app = f.read()
+    assert 'path="cefr/writing"' in app
+    assert len(g.GUIDE) >= 10
+    assert sum(d.counts().values()) >= 150
+    assert len(t.PART1) + len(t.PART2) >= 25
 
 
 def test_ikkala_imtihonda_ham_qism_bor():

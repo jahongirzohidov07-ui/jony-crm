@@ -77,6 +77,21 @@ const StudentIelts = lazy(() => import("./pages/student/StudentIelts"));
 const StudentExamSkills = lazy(
   () => import("./pages/student/StudentExamSkills"),
 );
+const StudentCefrWriting = lazy(
+  () => import("./pages/student/StudentCefrWriting"),
+);
+const StudentCefrWritingGuide = lazy(
+  () => import("./pages/student/StudentCefrWritingGuide"),
+);
+const StudentCefrWritingDrill = lazy(
+  () => import("./pages/student/StudentCefrWritingDrill"),
+);
+const StudentCefrWritingTasks = lazy(
+  () => import("./pages/student/StudentCefrWritingTasks"),
+);
+const StudentCefrWritingExam = lazy(
+  () => import("./pages/student/StudentCefrWritingExam"),
+);
 const StudentIeltsListening = lazy(
   () => import("./pages/student/StudentIeltsListening"),
 );
@@ -206,6 +221,17 @@ function AppRoutes() {
           {/* 2026-08-26: har imtihon o'z ichiga kiradi */}
           <Route path="ielts/exam/:exam"
                  element={<StudentExamSkills />} />
+          {/* CEFR Writing — o'rganish / mashq / imtihon */}
+          <Route path="cefr/writing"
+                 element={<StudentCefrWriting />} />
+          <Route path="cefr/writing/guide/:key"
+                 element={<StudentCefrWritingGuide />} />
+          <Route path="cefr/writing/drill/:kind"
+                 element={<StudentCefrWritingDrill />} />
+          <Route path="cefr/writing/tasks/:part"
+                 element={<StudentCefrWritingTasks />} />
+          <Route path="cefr/writing/task/:tid"
+                 element={<StudentCefrWritingExam />} />
           <Route path="ielts/listening"
                  element={<StudentIeltsListeningHome />} />
           <Route path="ielts/listening/:kind"

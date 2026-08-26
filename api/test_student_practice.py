@@ -47,9 +47,14 @@ H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'9989
 
 print("=== SEEDLAR ===")
 # 2026-08-24: har darajaga matn qo'shildi (12 -> 24, savol 48 -> 96)
+# 2026-08-26: qattiq raqam o'rniga "kamida" tekshiruvi.
+# Kontent doim qo'shilib boradi (24 -> 60 matn), shuning uchun
+# aniq songa bog'lash har yangi mashqda soxta ogohlantirish
+# beraveradi. Muhimi — seed ISHLAGANI va kamaymagani.
 ck("reading matnlari yuklangan",
-   db.query(models.ReadingText).count(), 24)
-ck("reading savollari", db.query(models.ReadingQuestion).count(), 96)
+   db.query(models.ReadingText).count() >= 24, True)
+ck("reading savollari",
+   db.query(models.ReadingQuestion).count() >= 96, True)
 
 print("\n=== READING ===")
 r = c.get("/api/student/practice/reading/round", headers=H)

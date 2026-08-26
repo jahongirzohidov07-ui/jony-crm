@@ -3676,3 +3676,319 @@ def goal_set(payload: dict, db: Session = Depends(get_db),
     gam.ielts_target = target or None
     db.commit()
     return _goal_out(db, s)
+
+
+# =================================================================
+#  CEFR MULTILEVEL WRITING (2026-08-26)
+#
+#  Jahongir: "CEFR writing yozishni o'rganish uchun bu qism
+#  mukammal bo'lsin va skillarni improve qilish eng samarali
+#  bo'lsin."
+#
+#  UCH QATLAM:
+#    1) /guide   — tuzilma, iboralar, IZOHLANGAN namuna xatlar
+#    2) /drill   — mayda ko'nikmalar, AVTOMAT tekshiriladi
+#    3) /submit  — to'liq yozuv: avtomat tekshiruv + AI ekspert
+#
+#  KONTENT BAZADA EMAS. Qo'llanma, mashq va vazifalar Python
+#  fayllarida turadi. Sabab: bular o'zgarmas matn, har so'rovda
+#  bazani bezovta qilishning hojati yo'q. Neon trafigi ham
+#  tejaladi. Bazaga faqat O'QUVCHI NATIJASI yoziladi.
+#
+#  YOZUVLAR SkillAttempt jadvalida:
+#    mashq   -> ref = "cw:<kind>:<idx>"
+#    to'liq  -> ref = "cwrite:<task_id>:<part>", answer = JSON
+#  Yangi jadval ochilmadi — migratsiya xavfi nolga tushdi.
+# =================================================================
+from cefr_writing_guide import GUIDE_BY_KEY, parts_summary as _cw_parts
+import cefr_writing_drills as _cwd
+import cefr_writing_tasks as _cwt
+
+
+def _cw_solved(db: Session, sid: int, prefix: str) -> set:
+    rows = (db.query(models.SkillAttempt.ref)
+            .filter(models.SkillAttempt.student_id == sid,
+                    models.SkillAttempt.skill == "writing",
+                    models.SkillAttempt.correct == 1,
+                    models.SkillAttempt.ref.like(prefix + "%"))
+            .distinct().all())
+    return {r[0] for r in rows}
+
+
+@router.get("/api/student/cefr/writing/home")
+def cw_home(db: Session = Depends(get_db),
+            user=Depends(require_role(roles.STUDENT))):
+    """Bosh ekran: uch qatlam va har birining holati."""
+    s = _me(db, user)
+    done = _cw_solved(db, s.id, "cw:")
+    drills = []
+    for m in _cwd.DRILL_META:
+        tot = len(_cwd.items(m["kind"]))
+        sv = len([r for r in done if r.startswith("cw:" + m["kind"] + ":")])
+        drills.append({**m, "total": tot, "solved": sv})
+    wrote = _cw_solved(db, s.id, "cwrite:")
+    return {
+        "guide": _cw_parts(),
+        "drills": drills,
+        "tasks": {
+            "part1": len(_cwt.PART1),
+            "part2": len(_cwt.PART2),
+            "written": len(wrote),
+        },
+        "format": [
+            {"part": "1.1", "level": "B1", "kind": "Informal email",
+             "words": "50", "minutes": 7},
+            {"part": "1.2", "level": "B2", "kind": "Formal email",
+             "words": "120-150", "minutes": 23},
+            {"part": "2", "level": "C1",
+             "kind": "Blog post / Forum post / Article",
+             "words": "180-200", "minutes": 30},
+        ],
+    }
+
+
+@router.get("/api/student/cefr/writing/guide/{key}")
+def cw_guide(key: str, user=Depends(require_role(roles.STUDENT))):
+    g = GUIDE_BY_KEY.get(key)
+    if not g:
+        raise HTTPException(404, "Bunday xat turi yo'q")
+    return g
+
+
+@router.get("/api/student/cefr/writing/drill")
+def cw_drill(kind: str, count: int = 10,
+             db: Session = Depends(get_db),
+             user=Depends(require_role(roles.STUDENT))):
+    """Mashq to'plami.
+
+    HALI ISHLANMAGANLAR BIRINCHI. O'quvchi qayta kirganda o'sha
+    mashqlarni ko'raverishi mumkin edi; endi avval yangilari,
+    tugagach eskilari qaytadi.
+    """
+    s = _me(db, user)
+    rows = _cwd.items(kind)
+    if not rows:
+        raise HTTPException(404, "Bunday mashq turi yo'q")
+    done = _cw_solved(db, s.id, "cw:" + kind + ":")
+    fresh = [r for r in rows if f"cw:{kind}:{r['idx']}" not in done]
+    old = [r for r in rows if f"cw:{kind}:{r['idx']}" in done]
+    pick = (fresh + old)[:max(1, min(int(count or 10), 40))]
+    out = []
+    for r in pick:
+        q = {"idx": r["idx"], "kind": r["kind"], "prompt": r["prompt"]}
+        if "options" in r:
+            q["options"] = r["options"]
+        if "pieces" in r:
+            q["pieces"] = r["pieces"]
+        out.append(q)
+    return {"kind": kind, "items": out, "total": len(rows),
+            "solved": len(done)}
+
+
+@router.post("/api/student/cefr/writing/drill/answer")
+def cw_drill_answer(payload: dict, db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.STUDENT))):
+    """Mashq javobini tekshirish. {kind, idx, answer}"""
+    s = _me(db, user)
+    kind = str(payload.get("kind") or "")
+    idx = int(payload.get("idx") or 0)
+    rows = _cwd.items(kind)
+    it = next((r for r in rows if r["idx"] == idx), None)
+    if not it:
+        raise HTTPException(404, "Mashq topilmadi")
+
+    given = payload.get("answer")
+    if it["kind"] == "w_phrase":
+        ok = _norm_loose(str(given or "")) == _norm_loose(it["answer"])
+        expected = it["answer"]
+    elif it["kind"] == "w_order":
+        want = it["answer"]
+        got = given if isinstance(given, list) else []
+        ok = list(got) == list(want)
+        expected = " -> ".join(
+            it["pieces"][k]["role"] for k in _cwd_order_index(it))
+    else:
+        try:
+            ok = int(given) == int(it["answer"])
+        except (TypeError, ValueError):
+            ok = False
+        expected = it["options"][it["answer"]]
+
+    ref = f"cw:{kind}:{idx}"
+    was = (db.query(models.SkillAttempt.id)
+           .filter(models.SkillAttempt.student_id == s.id,
+                   models.SkillAttempt.skill == "writing",
+                   models.SkillAttempt.ref == ref,
+                   models.SkillAttempt.correct == 1).first() is not None)
+    db.add(models.SkillAttempt(
+        student_id=s.id, skill="writing", ref=ref,
+        correct=1 if ok else 0, answer=str(given)[:300],
+        date=date.today()))
+    db.commit()
+    xp = 0.0
+    if ok and not was:
+        try:
+            res = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT,
+                source_type="practice_writing", source_id=idx,
+                reason="CEFR Writing mashqi",
+                idempotency_key=f"PRACT:writing:{s.id}:{ref}")
+            if res.get("ok"):
+                xp = float(roles.GRAMMAR_XP_PER_CORRECT)
+        except Exception:
+            db.rollback()
+    return {"correct": ok, "expected": expected,
+            "explain": it.get("explain", ""),
+            "first_time": ok and not was, "xp": xp}
+
+
+def _cwd_order_index(it: dict) -> list:
+    """w_order: to'g'ri bosish ketma-ketligi.
+
+    answer[k] — k-o'rinda turishi kerak bo'lgan bo'lakning
+    `pieces` ichidagi raqami. Ya'ni ro'yxatning o'zi to'g'ri
+    ketma-ketlik.
+    """
+    return list(it["answer"])
+
+
+@router.get("/api/student/cefr/writing/tasks")
+def cw_tasks(part: str = "1", db: Session = Depends(get_db),
+             user=Depends(require_role(roles.STUDENT))):
+    """Imtihon vazifalari ro'yxati (matnsiz — faqat sarlavha)."""
+    s = _me(db, user)
+    done = _cw_solved(db, s.id, "cwrite:")
+    if part == "2":
+        return {"part": "2", "items": [
+            {"id": t["id"], "type": t["type"],
+             "title": t["prompt"][:70] + "…",
+             "done": any(r.startswith("cwrite:" + t["id"]) for r in done)}
+            for t in _cwt.PART2]}
+    return {"part": "1", "items": [
+        {"id": t["id"], "type": t["type"], "title": t["topic"],
+         "from": t["context_from"],
+         "done": any(r.startswith("cwrite:" + t["id"]) for r in done)}
+        for t in _cwt.PART1]}
+
+
+@router.get("/api/student/cefr/writing/task/{tid}")
+def cw_task(tid: str, user=Depends(require_role(roles.STUDENT))):
+    """Bitta vazifa.
+
+    NAMUNA JAVOB QAYTARILMAYDI. O'quvchi avval o'zi yozishi
+    kerak — namuna faqat topshirgandan keyin ko'rinadi. Aks
+    holda ko'chirib yozish yo'li ochiq qoladi.
+    """
+    t = next((x for x in _cwt.PART1 if x["id"] == tid), None)
+    if t:
+        return {
+            "id": t["id"], "part": "1", "topic": t["topic"],
+            "type": t["type"], "from": t["context_from"],
+            "context": t["context"],
+            "t11": {"prompt": t["t11"]["prompt"],
+                    "bullets": [b["label"] for b in t["t11"]["bullets"]],
+                    "words": [45, 70], "minutes": 7, "level": "B1"},
+            "t12": {"prompt": t["t12"]["prompt"],
+                    "bullets": [b["label"] for b in t["t12"]["bullets"]],
+                    "words": [120, 150], "minutes": 23, "level": "B2"},
+        }
+    t = next((x for x in _cwt.PART2 if x["id"] == tid), None)
+    if not t:
+        raise HTTPException(404, "Vazifa topilmadi")
+    return {"id": t["id"], "part": "2", "type": t["type"],
+            "prompt": t["prompt"], "words": [180, 200],
+            "minutes": 30, "level": "C1"}
+
+
+_CW_SYSTEM = (
+    "You are a strict but encouraging CEFR Multilevel writing "
+    "examiner. The student is Uzbek and studies at Jony Academy. "
+    "Reply ONLY in Uzbek (latin script). Never invent praise. "
+    "Structure your reply EXACTLY like this and nothing else:\n"
+    "DARAJA: <A2/B1/B2/C1 dan biri>\n"
+    "KUCHLI: <bitta aniq jumla — nimani yaxshi qilgan>\n"
+    "1) <eng muhim xato — qaysi so'z/gapda, va qanday tuzatish>\n"
+    "2) <ikkinchi xato — xuddi shunday>\n"
+    "3) <uchinchi xato — xuddi shunday>\n"
+    "TUZATILGAN: <o'quvchining ENG ZAIF bitta gapini olib, "
+    "to'g'irlangan variantini yozing (ingliz tilida)>\n"
+    "Do not add anything after TUZATILGAN."
+)
+
+
+@router.post("/api/student/cefr/writing/submit")
+def cw_submit(payload: dict, db: Session = Depends(get_db),
+              user=Depends(require_role(roles.STUDENT))):
+    """To'liq yozuvni topshirish. {task_id, part, text}
+
+    IKKI QAVATLI BAHO:
+      1) Avtomat tekshiruv — HAR DOIM ishlaydi. So'z soni, band
+         qamrovi, ochilish/yopilish, uslub, abzatslar.
+      2) AI ekspert — daraja va uchta aniq tuzatish. Kalit yo'q
+         yoki tarmoq uzilgan bo'lsa, birinchi qavat baribir
+         to'liq javob beradi. Mashq hech qachon "hech narsa
+         bo'lmadi" holatida tugamaydi.
+    """
+    s = _me(db, user)
+    tid = str(payload.get("task_id") or "")
+    part = str(payload.get("part") or "1.1")
+    text = str(payload.get("text") or "").strip()
+    if len(text) < 20:
+        raise HTTPException(400, "Matn juda qisqa")
+    text = text[:6000]
+
+    t1 = next((x for x in _cwt.PART1 if x["id"] == tid), None)
+    t2 = next((x for x in _cwt.PART2 if x["id"] == tid), None)
+    if not (t1 or t2):
+        raise HTTPException(404, "Vazifa topilmadi")
+
+    if t2:
+        res = _cwt.check_part2(text, t2["type"])
+        model = t2.get("model") or ""
+        prompt = t2["prompt"]
+        part = "2"
+    else:
+        part = "1.2" if part == "1.2" else "1.1"
+        res = _cwt.check(text, _cwt.spec_for(part, t1))
+        model = t1["model11"] if part == "1.1" else t1["model12"]
+        prompt = (t1["t11"] if part == "1.1" else t1["t12"])["prompt"]
+
+    # --- AI ekspert (ixtiyoriy qavat) -----------------------
+    ai, ai_err = "", ""
+    try:
+        ask = (f"TASK ({part}): {prompt}\n\n"
+               f"STUDENT'S ANSWER:\n{text}")
+        ai = _ai_reply(_CW_SYSTEM, [{"role": "user", "content": ask}])
+        ai = (ai or "").strip()[:2000]
+    except Exception as e:
+        ai_err = str(e)[:120]
+
+    ref = f"cwrite:{tid}:{part}"
+    try:
+        db.add(models.SkillAttempt(
+            student_id=s.id, skill="writing", ref=ref,
+            correct=1 if res["score"] >= 70 else 0,
+            answer=json.dumps({"score": res["score"], "words": res["words"],
+                               "text": text[:2500]}, ensure_ascii=False)[:4000],
+            date=date.today()))
+        db.commit()
+    except Exception:
+        db.rollback()
+
+    xp = 0.0
+    if res["score"] >= 70:
+        try:
+            r = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT * 5,
+                source_type="practice_writing", source_id=0,
+                reason="CEFR Writing to'liq yozuv",
+                idempotency_key=f"CWRITE:{s.id}:{ref}")
+            if r.get("ok"):
+                xp = float(roles.GRAMMAR_XP_PER_CORRECT * 5)
+        except Exception:
+            db.rollback()
+
+    return {**res, "model": model, "ai": ai, "ai_error": ai_err,
+            "xp": xp}

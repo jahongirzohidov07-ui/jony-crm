@@ -43,9 +43,13 @@ H = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'9989
 print("=== SEED ===")
 # 2026-08-24: B2/C1/C2 darajalari (91 -> 118), keyin IELTS
 # listening bloki (+159) — bu yerda faqat 4 ko'nikma sanaladi.
-ck("118 ta 4-ko'nikma elementi", db.query(models.PracticeItem)
+# 2026-08-26: qattiq raqam o'rniga "kamida". Mashqlar soni
+# doim o'sadi (118 -> 275), aniq songa bog'lash faqat soxta
+# ogohlantirish beradi.
+ck("4-ko'nikma elementlari 118+", db.query(models.PracticeItem)
    .filter(models.PracticeItem.skill.in_(
-       ("reading", "listening", "writing", "speaking"))).count(), 118)
+       ("reading", "listening", "writing", "speaking")))
+   .count() >= 118, True)
 ck("IELTS listening bloki 150+",
    db.query(models.PracticeItem)
    .filter(models.PracticeItem.skill == "ielts_listening")

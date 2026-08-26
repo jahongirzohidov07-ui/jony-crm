@@ -123,9 +123,12 @@ export const EXAMS: ExamDef[] = [
       {
         key: "writing",
         title: "CEFR Writing",
-        desc: "Task 1 (rasmiy xat yoki elektron pochta) va Task 2 "
-          + "(mavzu bo'yicha esse) · 60 daqiqa.",
+        desc: "Part 1.1 do'stga (B1, 50 so'z) · Part 1.2 rasmiy xat "
+          + "(B2, 120-150) · Part 2 blog/forum/maqola (C1, 180-200).",
         icon: "/jsicons/learn-writing.png",
+        href: "/student/cefr/writing",
+        hint: "Qo'llanma + 186 mashq + 42 vazifa · yozganingiz "
+          + "avtomat tekshiriladi",
       },
       {
         key: "speaking",

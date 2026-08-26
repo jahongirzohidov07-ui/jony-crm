@@ -57,10 +57,13 @@ parts = {p["kind"]: p for p in r.json()["parts"]}
 # 2026-08-24: 6-mashq — exact word trap (A/B/C)
 # 2026-08-25: yana uchta tuzoq — delayed / modification / distractor
 # 2026-08-25: Word Reorder va Combination — jami 11 mashq
-ck("o'n bitta mashq", len(parts), 11)
-ck("tartib: spelling birinchi", parts["ielts_spell"]["no"], 1)
-ck("tartib: raqam ikkinchi", parts["ielts_number"]["no"], 2)
-ck("tartib: aralash uchinchi", parts["ielts_mixed"]["no"], 3)
+# 2026-08-26: CEFR 1-qism (Choose the Correct Reply) boshiga
+# qo'shildi, shuning uchun hamma tartib raqami bittaga surildi.
+ck("o'n ikkita mashq", len(parts), 12)
+ck("tartib: CEFR reply birinchi", parts["ielts_reply"]["no"], 1)
+ck("tartib: spelling ikkinchi", parts["ielts_spell"]["no"], 2)
+ck("tartib: raqam uchinchi", parts["ielts_number"]["no"], 3)
+ck("tartib: aralash to'rtinchi", parts["ielts_mixed"]["no"], 4)
 for k in ("ielts_spell", "ielts_number", "ielts_mixed"):
     ck(f"{k}: 50+ mashq ({parts[k]['total']})",
        parts[k]["total"] >= 50, True)
@@ -162,9 +165,9 @@ ck("count cheklangan", len(r.json()["items"]) <= 60, True)
 print("\n=== 9. 4- VA 5-MASHQ (2026-08-24) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("endi 11 ta mashq", len(parts), 11)
-ck("4-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 4)
-ck("5-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 5)
+ck("endi 12 ta mashq", len(parts), 12)
+ck("5-mashq: ma'lumot ilib olish", parts["ielts_detail"]["no"], 5)
+ck("6-mashq: chalg'ituvchi javoblar", parts["ielts_trap"]["no"], 6)
 ck(f"detail 100 ta ({parts['ielts_detail']['total']})",
    parts["ielts_detail"]["total"] >= 100, True)
 ck(f"trap 100 ta ({parts['ielts_trap']['total']})",
@@ -231,7 +234,7 @@ if wd:
 print("\n=== 11. EXACT WORD TRAP (A/B/C) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-ck("6-mashq ro'yxatda", parts["ielts_exact"]["no"], 6)
+ck("7-mashq ro'yxatda", parts["ielts_exact"]["no"], 7)
 ck(f"100 ta ({parts['ielts_exact']['total']})",
    parts["ielts_exact"]["total"] >= 100, True)
 
@@ -311,9 +314,9 @@ ck("A da ham, B da ham, C da ham javob bor",
 print("\n=== 15. UCH YANGI TUZOQ (2026-08-25) ===")
 r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
-NEW = {"ielts_delayed": ("Delayed Response Trap", 7),
-       "ielts_modif": ("Modification Trap", 8),
-       "ielts_distract": ("Distractor Trap", 9)}
+NEW = {"ielts_delayed": ("Delayed Response Trap", 8),
+       "ielts_modif": ("Modification Trap", 9),
+       "ielts_distract": ("Distractor Trap", 10)}
 for k, (title, no) in NEW.items():
     ck(f"{title} ro'yxatda", parts[k]["title"], title)
     ck(f"  tartib raqami", parts[k]["no"], no)
@@ -417,7 +420,7 @@ r = c.get("/api/student/ielts/listening/parts", headers=H)
 parts = {p["kind"]: p for p in r.json()["parts"]}
 ck("nomi to'g'ri", parts["ielts_reorder"]["title"],
    "Word Reorder Trap")
-ck("tartib raqami", parts["ielts_reorder"]["no"], 10)
+ck("tartib raqami", parts["ielts_reorder"]["no"], 11)
 ck(f"100 ta ({parts['ielts_reorder']['total']})",
    parts["ielts_reorder"]["total"] >= 100, True)
 
@@ -489,7 +492,7 @@ if it:
 
 print("\n=== 21. COMBINATION TRAP ===")
 ck("nomi to'g'ri", parts["ielts_combo"]["title"], "Combination Trap")
-ck("tartib raqami", parts["ielts_combo"]["no"], 11)
+ck("tartib raqami", parts["ielts_combo"]["no"], 12)
 ck(f"100 ta ({parts['ielts_combo']['total']})",
    parts["ielts_combo"]["total"] >= 100, True)
 

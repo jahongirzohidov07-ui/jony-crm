@@ -358,6 +358,17 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 1-qism — Choose the Correct Reply (2026-08-26,
+# Jahongir: "bitta gap aytadi yoki savol shunga mos reply tanlash
+# kerak bo'ladi ... umumiy 100ta"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS30
+    from listening_reply_seed import seed_reply
+    with _VS30(engine) as _db30:
+        seed_reply(_db30)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

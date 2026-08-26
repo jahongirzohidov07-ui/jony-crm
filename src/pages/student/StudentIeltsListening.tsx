@@ -29,7 +29,44 @@ const RATE_LABEL = (r: number) =>
   r <= 0.6 ? "juda sekin" : r <= 0.7 ? "sekin"
     : r <= 0.8 ? "o'rtacha" : r <= 0.9 ? "tezroq" : "imtihon tezligi";
 
-function speak(text: string, rate: number) {
+/* 2026-08-26, Jahongir: "2 marta aytiladi CEFRdagi barcha
+   listeninglar". Yuborgan audiosi o'lchandi: har gap ikki marta
+   o'qiladi, orasida jimlik bor. Shuning uchun speak() endi necha
+   marta o'qishni va oradagi jimlikni ham oladi. Kutayotgan taymer
+   alohida saqlanadi, aks holda "yana eshitish" bosilganda eski
+   takror yangisining ustiga chiqib ketardi. */
+let replayTimer: number | undefined;
+
+function stopSpeaking() {
+  if (replayTimer) window.clearTimeout(replayTimer);
+  replayTimer = undefined;
+  try {
+    stopSpeaking();
+  } catch {
+    /* brauzer qo'llamasa — jim o'tamiz */
+  }
+}
+
+function speak(text: string, rate: number, times = 1, gapMs = 1500) {
+  try {
+    stopSpeaking();
+    let left = Math.max(1, times);
+    const say = () => {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-GB";
+      u.rate = rate;
+      u.volume = 1;
+      u.onend = () => {
+        left -= 1;
+        if (left > 0) replayTimer = window.setTimeout(say, gapMs);
+      };
+      window.speechSynthesis.speak(u);
+    };
+    say();
+    return;
+  } catch {
+    /* pastdagi eski yo'l ishlaydi */
+  }
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
@@ -73,7 +110,7 @@ export default function StudentIeltsListening() {
   }, [kind, cnt]);
 
   useEffect(load, [load]);
-  useEffect(() => () => window.speechSynthesis?.cancel(), []);
+  useEffect(() => () => stopSpeaking(), []);
 
   const items: Any[] = d?.items || [];
   const q = items[idx];
@@ -84,7 +121,7 @@ export default function StudentIeltsListening() {
     if (!q || result) return;
     setPlays(1);
     setSlow(false);
-    speak(q.say, q.rate);
+    speak(q.say, q.rate, q.plays || 1, q.gap_ms || 1500);
     if (q.options) return;   // tanlovli turda klaviatura kerak emas
     const t = setTimeout(() => inputRef.current?.focus(), 300);
     return () => clearTimeout(t);
@@ -117,7 +154,7 @@ export default function StudentIeltsListening() {
 
   function next() {
     autoNext.cancel();
-    window.speechSynthesis?.cancel();
+    stopSpeaking();
     if (idx + 1 >= items.length) {
       setFinished(true);
       return;
@@ -175,8 +212,8 @@ export default function StudentIeltsListening() {
           </p>
           <div className="space-y-1.5">
             {[
-              [10, "10 ta", "Qisqa mashq — 3-4 daqiqa"],
-              [20, "20 ta", "O'rtacha — 7-8 daqiqa"],
+              [8, "8 ta", "Bitta CEFR mashg'uloti"],
+              [16, "16 ta", "Ikki mashg'ulot — 7-8 daqiqa"],
               [50, "50 ta", "To'liq blok — imtihon tezligigacha"],
             ].map(([n, lbl, hint]) => (
               <button
@@ -213,12 +250,18 @@ export default function StudentIeltsListening() {
             <button
               onClick={() => {
                 setPlays((p) => p + 1);
-                speak(q.say, slow ? Math.max(0.5, q.rate - 0.25) : q.rate);
+                speak(q.say, slow ? Math.max(0.5, q.rate - 0.25) : q.rate,
+                      q.plays || 1, q.gap_ms || 1500);
               }}
               className="w-full py-6 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center gap-2 text-amber-700 font-semibold text-sm active:scale-[0.99]"
             >
               <Volume2 size={22} />
               {plays === 0 ? "Eshitish" : "Yana eshitish"}
+              {(q.plays || 1) > 1 && (
+                <span className="text-[11px] font-normal opacity-70">
+                  ({q.plays} marta aytiladi)
+                </span>
+              )}
             </button>
             <div className="flex items-center justify-between mt-2">
               <p className="text-[11px] text-slate-400">
@@ -229,7 +272,8 @@ export default function StudentIeltsListening() {
                 onClick={() => {
                   setSlow((v) => !v);
                   setPlays((p) => p + 1);
-                  speak(q.say, !slow ? Math.max(0.5, q.rate - 0.25) : q.rate);
+                  speak(q.say, !slow ? Math.max(0.5, q.rate - 0.25) : q.rate,
+                    q.plays || 1, q.gap_ms || 1500);
                 }}
                 className={`text-[11px] font-medium rounded-full px-2.5 py-1 border ${
                   slow

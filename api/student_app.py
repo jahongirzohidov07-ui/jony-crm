@@ -631,6 +631,13 @@ IELTS_PARTS = [
     # 2026-08-25, Jahongir: "bolim nomlarini men aytgan nomlar bilan
     # qilasan Trap nomlar bilan" — sarlavhalar imtihon atamasi,
     # tagida o'zbekcha izoh.
+    # 2026-08-26, Jahongir: "CEFR birinchi qismi listening
+    # savollari shunaqa bo'ladi bitta gap aytadi yoki savol shunga
+    # mos reply tanlash kerak bo'ladi" — shuning uchun ro'yxatning
+    # BOSHIDA turadi.
+    {"kind": "ielts_reply", "title": "Choose the Correct Reply",
+     "hint": "Bitta gap eshitiladi (ikki marta) — uchta javobdan "
+             "mos kelganini tanlash"},
     {"kind": "ielts_spell", "title": "Spelling Names",
      "hint": "Britaniya shaharlari, ko'chalari va familiyalari "
              "harflab aytiladi"},
@@ -671,7 +678,7 @@ IELTS_WITH_PROMPT = ("ielts_detail", "ielts_trap", "ielts_exact",
                      "ielts_distract", "ielts_reorder",
                      "ielts_combo")
 # Variantli (A/B/C) turlar — javob yozilmaydi, tanlanadi
-IELTS_CHOICE = ("ielts_exact",)
+IELTS_CHOICE = ("ielts_exact", "ielts_reply")
 
 
 def _ielts_norm(t: str) -> str:
@@ -759,6 +766,10 @@ def ielts_listening_round(kind: str, count: int = 10,
             "ref": f"pi:{r.id}", "kind": r.kind,
             "say": pl["say"], "rate": pl.get("rate", 0.8),
             "step": pl.get("step", 1), "hint": pl.get("hint"),
+            # Nechta marta ketma-ket o'qiladi va orasidagi jimlik
+            # (CEFR: har gap ikki marta aytiladi)
+            "plays": pl.get("plays", 1),
+            "gap_ms": pl.get("gap_ms", 1500),
             # Savol matni — faqat savolli turlarda (javob EMAS)
             "prompt": (pl.get("prompt")
                        if r.kind in IELTS_WITH_PROMPT else None),

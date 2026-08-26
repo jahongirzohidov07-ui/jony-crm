@@ -2295,18 +2295,46 @@ def practice_round(skill: str, kind: str | None = None,
         texts.sort(key=lambda t: sum(
             1 for q in qs_by_text.get(t.id, [])
             if f"read:{q.id}" not in solved), reverse=True)
-        tx = texts[0] if texts else None
-        qs = qs_by_text.get(tx.id, [])
+        # 2026-08-26, Jahongir: "10ta tanlasa 10ta bo'lsinda, 20ta
+        # tanlasa 20ta bo'lsin nega hammasida faqat 4ta chiqryabdi."
+        #
+        # SABABI shu yerda edi: avval FAQAT BITTA matn tanlanardi
+        # (texts[0]) va uning to'rtta savoli qaytarilardi. count
+        # parametri umuman o'qilmasdi, shuning uchun 10 ham, 20 ham,
+        # 30 ham bir xil — 4 ta chiqardi.
+        #
+        # Endi matnlar ketma-ket qo'shiladi, kerakli songa yetguncha.
+        # Bir matnning savollari birga turadi (bola matnni o'qib,
+        # keyin uning savollariga javob beradi), lekin bitta
+        # mashg'ulotda bir nechta matn bo'lishi mumkin.
+        n = int(count or 0) or PRACTICE_ROUND
+        n = max(1, min(n, 60))
+        items = []
+        for tx in texts:
+            body = {"title": tx.title, "level": tx.level,
+                    "body": tx.body}
+            for q in qs_by_text.get(tx.id, []):
+                items.append({
+                    "ref": f"read:{q.id}", "kind": "read_mcq",
+                    "prompt": q.prompt,
+                    "options": _shuffled(json.loads(q.options)),
+                    "solved": f"read:{q.id}" in solved,
+                    # Har savol O'Z matni bilan keladi.
+                    "text": body,
+                })
+            if len(items) >= n:
+                break
+        items = items[:n]
         return {
             "skill": skill,
-            "text": {"title": tx.title, "level": tx.level,
-                     "body": tx.body},
-            "items": [{
-                "ref": f"read:{q.id}", "kind": "read_mcq",
-                "prompt": q.prompt,
-                "options": _shuffled(json.loads(q.options)),
-                "solved": f"read:{q.id}" in solved,
-            } for q in qs],
+            # Eski mijozlar uchun birinchi matn (yangi ekran har
+            # savolning o'z matnini ko'rsatadi).
+            "text": items[0]["text"] if items else None,
+            "items": items,
+            # Shu darajada umuman nechta savol bor — ekran
+            # "hammasi shu" deb ayta olishi uchun.
+            "available": sum(len(qs_by_text.get(t.id, []))
+                             for t in texts),
         }
 
     if skill == "writing":

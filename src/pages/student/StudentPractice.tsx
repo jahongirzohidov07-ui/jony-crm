@@ -534,23 +534,27 @@ export default function StudentPractice() {
           </div>
         )}
 
-        {/* Reading matni (read_mcq va read_tfng) */}
-        {!finished && kind && d?.text && (
+        {/* Reading matni (read_mcq va read_tfng).
+            2026-08-26: bitta mashg'ulotda endi BIR NECHTA matn
+            bo'lishi mumkin, shuning uchun joriy savolning o'z
+            matni ko'rsatiladi (q.text). Eski javoblarda u yo'q —
+            unda avvalgidek d.text ishlatiladi. */}
+        {!finished && kind && (q?.text || d?.text) && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <div className="flex items-baseline justify-between mb-1.5">
               <p className="text-sm font-semibold text-slate-800">
-                {d.text.title}
+                {(q?.text || d.text).title}
               </p>
               <span className="text-[10px] font-bold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded">
-                {d.text.level}
+                {(q?.text || d.text).level}
               </span>
             </div>
             <p className="text-sm text-slate-700 leading-relaxed">
-              {tappable(d.text.body)}
+              {tappable((q?.text || d.text).body)}
             </p>
             <div className="flex items-center gap-2 mt-3">
               <button
-                onClick={() => speak(d.text.body, 0.95)}
+                onClick={() => speak((q?.text || d.text).body, 0.95)}
                 className="flex items-center gap-1.5 text-xs font-medium text-sky-600 bg-sky-50 px-3 py-1.5 rounded-lg"
               >
                 <Volume2 size={13} />

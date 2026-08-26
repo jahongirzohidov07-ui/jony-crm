@@ -3992,3 +3992,389 @@ def cw_submit(payload: dict, db: Session = Depends(get_db),
 
     return {**res, "model": model, "ai": ai, "ai_error": ai_err,
             "xp": xp}
+
+
+# =================================================================
+#  MULTILEVEL SPEAKING (2026-08-26)
+#
+#  Jahongir: "speaking savol chiqadi u diktafonni bosib javobni
+#  yuboradi va tahlil qilinib javob keladigan bo'lishi kerak."
+#  "Multilevel Free Mock olsayam bo'lsin bahosini chiqarib bersin"
+#  "0-75 orasida ballini hisoblab chiqarib berishing kerak"
+#
+#  OQIM: savol -> mikrofon -> vaqt avtomat ketadi va avtomat
+#  o'chadi -> transkript -> tahlil -> ball.
+#
+#  TRANSKRIPT IKKI YO'L BILAN OLINADI:
+#    1) Brauzerning o'z nutq tanish moduli (Chrome/Android) —
+#       tez, bepul, serverga yuk tushmaydi. Asosiy yo'l.
+#    2) Brauzer qo'llab-quvvatlamasa (iOS Safari) — audio
+#       serverga yuboriladi va Gemini uni matnga aylantiradi.
+#  Ikkalasi ham ishlamasa, o'quvchiga aniq sabab aytiladi.
+#
+#  BAHO HAM IKKI QAVAT (Writing bo'limidagidek):
+#    1) Avtomat tahlil — HAR DOIM ishlaydi. Nutq hajmi, savol
+#       qamrovi, bog'lovchilar, murakkab tuzilmalar, 3-qismda
+#       FOR/AGAINST muvozanati. Bulardan taxminiy ball chiqadi.
+#    2) AI ekspert — rasmiy RATING SCALE bo'yicha blok ballari.
+#       Ishlasa, uning bahosi ustun turadi.
+# =================================================================
+import speaking_cefr_format as _spf
+import speaking_cefr_seed as _sps
+import speaking_cefr_guide as _spg
+
+_SP_SETS = {"p11": _sps.P11, "p12": _sps.P12,
+            "p2": _sps.P2, "p3": _sps.P3}
+
+
+def _sp_task(part: str, idx: int) -> dict:
+    """Bitta vazifa to'plamini ekranga tayyor holda beradi."""
+    rows = _SP_SETS.get(part) or []
+    if not rows:
+        raise HTTPException(404, "Bunday qism yo'q")
+    i = idx % len(rows)
+    r = rows[i]
+    meta = _spf.PART_BY_KEY[part]
+    out = {"part": part, "idx": i, "total": len(rows),
+           "level": meta["level"], "prep": meta["prep"],
+           "intro": meta["intro"], "title": meta["title"]}
+    if part == "p3":
+        out.update({"topic": r["topic"], "for": r["for"],
+                    "against": r["against"],
+                    "questions": [r["topic"]],
+                    "seconds": [meta["seconds"][0]]})
+    elif part == "p2":
+        out.update({"topic": r["topic"], "scene": r["scene"],
+                    "img": r.get("img", ""),
+                    "questions": r["q"],
+                    "seconds": [meta["seconds"][0]]})
+    elif part == "p12":
+        out.update({"topic": r["topic"], "scene_a": r["a"],
+                    "scene_b": r["b"], "img_a": r.get("img_a", ""),
+                    "img_b": r.get("img_b", ""),
+                    "questions": r["q"], "seconds": meta["seconds"]})
+    else:
+        out.update({"topic": r["topic"], "questions": r["q"],
+                    "seconds": meta["seconds"]})
+    return out
+
+
+@router.get("/api/student/cefr/speaking/home")
+def sp_home(db: Session = Depends(get_db),
+            user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    rows = (db.query(models.SkillAttempt)
+            .filter(models.SkillAttempt.student_id == s.id,
+                    models.SkillAttempt.skill == "speaking",
+                    models.SkillAttempt.ref.like("cspmock:%"))
+            .order_by(models.SkillAttempt.id.desc()).limit(10).all())
+    mocks = []
+    for r in rows:
+        try:
+            d = json.loads(r.answer or "{}")
+        except Exception:
+            continue
+        mocks.append({"date": str(r.date), "score": d.get("score"),
+                      "level": d.get("level")})
+    best = max((m["score"] or 0) for m in mocks) if mocks else 0
+    done = {x[0] for x in (
+        db.query(models.SkillAttempt.ref)
+        .filter(models.SkillAttempt.student_id == s.id,
+                models.SkillAttempt.skill == "speaking",
+                models.SkillAttempt.ref.like("csp:%")).distinct().all())}
+    parts = []
+    for p in _spf.PARTS:
+        n = len(_SP_SETS[p["key"]])
+        sv = len([r for r in done if r.startswith("csp:" + p["key"] + ":")])
+        parts.append({**p, "sets": n, "answered": sv})
+    return {"parts": parts, "mocks": mocks, "best": best,
+            "levels": [{"from": lo, "to": hi, "level": nm, "desc": d}
+                       for lo, hi, nm, d in _spf.LEVELS],
+            "score_max": _spf.SCALE_MAX, "raw_max": _spf.RAW_MAX}
+
+
+@router.get("/api/student/cefr/speaking/guide/{key}")
+def sp_guide(key: str, user=Depends(require_role(roles.STUDENT))):
+    g = _spg.GUIDE.get(key)
+    if not g:
+        raise HTTPException(404, "Bunday qism yo'q")
+    meta = _spf.PART_BY_KEY[key]
+    band = _spf.BANDS[meta["block"]]
+    return {**g, "meta": meta,
+            "band": {"title": band["title"], "max": band["max"],
+                     "scale": [{"point": p, "label": v[0], "why": v[1]}
+                               for p, v in sorted(band["scale"].items(),
+                                                  reverse=True)]}}
+
+
+@router.get("/api/student/cefr/speaking/task")
+def sp_task(part: str, idx: int = 0,
+            user=Depends(require_role(roles.STUDENT))):
+    return _sp_task(part, int(idx or 0))
+
+
+def _sp_stt(audio_b64: str, mime: str = "audio/webm") -> str:
+    """Audio -> matn (Gemini). Brauzer nutqni tanimaganda ishlatiladi."""
+    import base64 as _b64
+    import httpx
+    gem = (os.getenv("GEMINI_API_KEY") or os.getenv("JonyTeacher")
+           or os.getenv("JONYTEACHER") or "").strip()
+    if not gem:
+        raise RuntimeError("no-key")
+    raw = audio_b64.split(",")[-1]
+    if len(_b64.b64decode(raw + "==", validate=False)) > 6_000_000:
+        raise ValueError("audio juda katta")
+    model = getattr(_ai_reply, "_good", None) or "gemini-flash-latest"
+    r = httpx.post(
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model}:generateContent",
+        headers={"x-goog-api-key": gem},
+        json={"contents": [{"role": "user", "parts": [
+            {"text": "Transcribe this English speech exactly. "
+                     "Output ONLY the transcript, no comments."},
+            {"inlineData": {"mimeType": mime, "data": raw}}]}]},
+        timeout=60)
+    r.raise_for_status()
+    c = r.json()["candidates"][0]["content"]["parts"]
+    return " ".join(p.get("text", "") for p in c).strip()
+
+
+_SP_SYSTEM = (
+    "You are an official examiner for the Uzbek Multilevel English "
+    "speaking exam. You will receive the task and a transcript of "
+    "the candidate's spoken answer. Apply the official rating scale "
+    "for the given block. Reply ONLY in Uzbek (latin script), in "
+    "EXACTLY this format and nothing else:\n"
+    "BALL: <a single integer from 0 to {max}>\n"
+    "KUCHLI: <one concrete sentence about what the candidate did well>\n"
+    "1) <most important weakness, quoting the candidate's own words, "
+    "and how to fix it>\n"
+    "2) <second weakness, same style>\n"
+    "3) <third weakness, same style>\n"
+    "YAXSHIROQ: <take ONE weak sentence the candidate said and write "
+    "a stronger English version of it>\n"
+    "Be strict: the transcript may contain speech-recognition errors, "
+    "so ignore spelling and punctuation and judge only grammar, "
+    "vocabulary range, cohesion and whether the questions were "
+    "answered. Never award the top point automatically."
+)
+
+
+def _sp_ai(block: str, task_text: str, transcript: str) -> tuple:
+    """AI ekspert bahosi. (ball|None, matn, xato) qaytaradi."""
+    mx = _spf.BANDS[block]["max"]
+    sysmsg = _SP_SYSTEM.replace("{max}", str(mx))
+    desc = "\n".join(
+        f"{p} = {v[0]}: {v[1]}"
+        for p, v in sorted(_spf.BANDS[block]["scale"].items(),
+                           reverse=True))
+    ask = (f"BLOCK: {_spf.BANDS[block]['title']}\n"
+           f"OFFICIAL SCALE:\n{desc}\n\n"
+           f"TASK:\n{task_text}\n\nTRANSCRIPT:\n{transcript}")
+    try:
+        out = (_ai_reply(sysmsg, [{"role": "user", "content": ask}])
+               or "").strip()[:1800]
+    except Exception as e:
+        return None, "", str(e)[:120]
+    m = _re_sp.search(r"BALL\s*[:\-]?\s*(\d+)", out)
+    pt = None
+    if m:
+        pt = max(0, min(int(m.group(1)), mx))
+    return pt, out, ""
+
+
+import re as _re_sp
+
+
+def _sp_eval(part: str, task: dict, qi: int, transcript: str,
+             seconds: int) -> dict:
+    """Bitta javobni tahlil qilib, ball va maslahat beradi."""
+    meta = _spf.PART_BY_KEY[part]
+    block = meta["block"]
+    qs = task["questions"]
+    if part in ("p11", "p12"):
+        qs = [qs[qi]] if 0 <= qi < len(qs) else qs
+    kw = {}
+    if part == "p3":
+        kw = {"for_list": task["for"], "against_list": task["against"]}
+    a = _spg.analyse(transcript, seconds, qs, **kw)
+    tips = _spg.tips(a, block)
+    auto = _spg.estimate_point(block, a)
+    task_text = "\n".join(qs)
+    if part == "p3":
+        task_text += ("\nFOR: " + "; ".join(task["for"])
+                      + "\nAGAINST: " + "; ".join(task["against"]))
+    ai_pt, ai_txt, ai_err = _sp_ai(block, task_text, transcript)
+    point = ai_pt if ai_pt is not None else auto
+    lab, why = _spf.band_label(block, point)
+    return {"analysis": a, "tips": tips, "auto_point": auto,
+            "point": point, "max": _spf.BANDS[block]["max"],
+            "band_label": lab, "band_why": why, "block": block,
+            "ai": ai_txt, "ai_error": ai_err,
+            "from_ai": ai_pt is not None}
+
+
+@router.post("/api/student/cefr/speaking/answer")
+def sp_answer(payload: dict, db: Session = Depends(get_db),
+              user=Depends(require_role(roles.STUDENT))):
+    """Bitta savolga javobni tahlil qilish.
+
+    {part, idx, qi, seconds, transcript} yoki transcript o'rniga
+    {audio, mime} — server o'zi matnga aylantiradi.
+    """
+    s = _me(db, user)
+    part = str(payload.get("part") or "p11")
+    idx = int(payload.get("idx") or 0)
+    qi = int(payload.get("qi") or 0)
+    secs = int(payload.get("seconds") or 30)
+    text = str(payload.get("transcript") or "").strip()
+    stt_err = ""
+    if not text and payload.get("audio"):
+        try:
+            text = _sp_stt(str(payload["audio"]),
+                           str(payload.get("mime") or "audio/webm"))
+        except Exception as e:
+            stt_err = str(e)[:150]
+    if not text:
+        raise HTTPException(
+            400, "Nutq matnga aylanmadi. " + (stt_err or
+                 "Mikrofonga balandroq gapiring yoki Chrome'da urinib "
+                 "ko'ring."))
+    text = text[:6000]
+
+    task = _sp_task(part, idx)
+    res = _sp_eval(part, task, qi, text, secs)
+
+    ref = f"csp:{part}:{idx}:{qi}"
+    try:
+        db.add(models.SkillAttempt(
+            student_id=s.id, skill="speaking", ref=ref,
+            correct=1 if res["point"] >= 3 else 0,
+            answer=json.dumps({"p": res["point"],
+                               "t": text[:1500]},
+                              ensure_ascii=False)[:3000],
+            date=date.today()))
+        db.commit()
+    except Exception:
+        db.rollback()
+    xp = 0.0
+    if res["point"] >= 3:
+        try:
+            r = award_xp(
+                db, student_id=s.id, event_code="PRACTICE_CORRECT",
+                amount=roles.GRAMMAR_XP_PER_CORRECT * 2,
+                source_type="practice_speaking", source_id=idx,
+                reason="Multilevel Speaking mashqi",
+                idempotency_key=f"CSP:{s.id}:{ref}")
+            if r.get("ok"):
+                xp = float(roles.GRAMMAR_XP_PER_CORRECT * 2)
+        except Exception:
+            db.rollback()
+    return {**res, "transcript": text, "xp": xp, "stt_error": stt_err}
+
+
+@router.get("/api/student/cefr/speaking/mock")
+def sp_mock(seed: int = 0, user=Depends(require_role(roles.STUDENT))):
+    """To'liq Free Mock to'plami — har qismdan bitta vazifa."""
+    import random as _rnd
+    rr = _rnd.Random(int(seed) or int(datetime.utcnow().timestamp()))
+    return {"seed": rr.randint(1, 10 ** 6),
+            "tasks": [_sp_task(p["key"], rr.randrange(
+                len(_SP_SETS[p["key"]]))) for p in _spf.PARTS],
+            "format": [{"part": p["part"], "level": p["level"],
+                        "questions": p["questions"],
+                        "seconds": p["seconds"], "prep": p["prep"]}
+                       for p in _spf.PARTS]}
+
+
+@router.post("/api/student/cefr/speaking/mock/score")
+def sp_mock_score(payload: dict, db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.STUDENT))):
+    """Mock natijasi: 0-75 ball va CEFR darajasi.
+
+    {items: [{part, idx, qi, seconds, transcript}, ...]}
+
+    Bir blokda bir nechta javob bo'lsa (1.1 va 1.2 da uchtadan),
+    ularning transkripti BIRLASHTIRILADI va blok BIR MARTA
+    baholanadi — rasmiy shkala aynan shunday ishlaydi ("Responses
+    to all three questions are on topic ...").
+    """
+    s = _me(db, user)
+    items = payload.get("items") or []
+    if not isinstance(items, list) or not items:
+        raise HTTPException(400, "Javoblar yo'q")
+
+    by_block: dict = {}
+    for it in items[:12]:
+        part = str(it.get("part") or "p11")
+        if part not in _spf.PART_BY_KEY:
+            continue
+        blk = _spf.PART_BY_KEY[part]["block"]
+        d = by_block.setdefault(blk, {"part": part,
+                                      "idx": int(it.get("idx") or 0),
+                                      "texts": [], "qis": [],
+                                      "secs": 0})
+        d["texts"].append(str(it.get("transcript") or "").strip())
+        d["qis"].append(int(it.get("qi") or 0))
+        d["secs"] += int(it.get("seconds") or 0)
+
+    points, detail = {}, []
+    for blk, d in by_block.items():
+        text = " ".join(t for t in d["texts"] if t).strip()
+        if not text:
+            points[blk] = 0
+            detail.append({"block": blk, "point": 0, "tips": [],
+                           "ai": "", "transcript": ""})
+            continue
+        task = _sp_task(d["part"], d["idx"])
+        qs = task["questions"]
+        kw = {"for_list": task["for"],
+              "against_list": task["against"]} if d["part"] == "p3" else {}
+        a = _spg.analyse(text, d["secs"] or 30, qs, **kw)
+        auto = _spg.estimate_point(blk, a)
+        task_text = "\n".join(qs)
+        if d["part"] == "p3":
+            task_text += ("\nFOR: " + "; ".join(task["for"])
+                          + "\nAGAINST: " + "; ".join(task["against"]))
+        ai_pt, ai_txt, _e = _sp_ai(blk, task_text, text)
+        pt = ai_pt if ai_pt is not None else auto
+        points[blk] = pt
+        lab, why = _spf.band_label(blk, pt)
+        detail.append({"block": blk, "part": d["part"], "point": pt,
+                       "max": _spf.BANDS[blk]["max"], "label": lab,
+                       "why": why, "tips": _spg.tips(a, blk),
+                       "analysis": a, "ai": ai_txt,
+                       "from_ai": ai_pt is not None,
+                       "transcript": text[:1200]})
+
+    res = _spf.build_result(points)
+    res["detail"] = detail
+
+    ref = f"cspmock:{int(datetime.utcnow().timestamp())}"
+    try:
+        db.add(models.SkillAttempt(
+            student_id=s.id, skill="speaking", ref=ref,
+            correct=1 if res["score"] >= 30 else 0,
+            answer=json.dumps({"score": res["score"],
+                               "level": res["level"],
+                               "raw": res["raw"],
+                               "points": points},
+                              ensure_ascii=False)[:2000],
+            date=date.today()))
+        db.commit()
+    except Exception:
+        db.rollback()
+    xp = 0.0
+    try:
+        r = award_xp(
+            db, student_id=s.id, event_code="PRACTICE_CORRECT",
+            amount=roles.GRAMMAR_XP_PER_CORRECT * 10,
+            source_type="practice_speaking", source_id=0,
+            reason="Multilevel Speaking Mock",
+            idempotency_key=f"CSPMOCK:{s.id}:{ref}")
+        if r.get("ok"):
+            xp = float(roles.GRAMMAR_XP_PER_CORRECT * 10)
+    except Exception:
+        db.rollback()
+    res["xp"] = xp
+    return res

@@ -98,7 +98,14 @@ def test_xato_turlari_aniqlanadi():
 
 def test_endpoint_why_qaytaradi():
     src = open("student_app.py", encoding="utf-8").read()
-    assert src.count('"why": why') == 2, "ikkala tarmoqda ham kerak"
+    # 2026-08-26: aniq son o'rniga MAQSADGA qaraymiz — writing
+    # javobining IKKALA tarmog'ida ham "why" qaytishi kerak.
+    # Aniq songa bog'lash mo'rt edi: Speaking bo'limida ham
+    # "why" maydoni paydo bo'lishi bilan test yiqilib qoldi,
+    # holbuki writing joyida turgan edi.
+    i = src.index("def practice_answer(")
+    blok = src[i:src.index("\n@router", i)]
+    assert blok.count('"why": why') == 2, "ikkala tarmoqda ham kerak"
     assert "_writing_feedback(given, expected" in src
     assert 'skill != "writing"' in src
 

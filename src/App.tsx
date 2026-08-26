@@ -92,6 +92,15 @@ const StudentCefrWritingTasks = lazy(
 const StudentCefrWritingExam = lazy(
   () => import("./pages/student/StudentCefrWritingExam"),
 );
+const StudentCefrSpeaking = lazy(
+  () => import("./pages/student/StudentCefrSpeaking"),
+);
+const StudentCefrSpeakingPart = lazy(
+  () => import("./pages/student/StudentCefrSpeakingPart"),
+);
+const StudentCefrSpeakingMock = lazy(
+  () => import("./pages/student/StudentCefrSpeakingMock"),
+);
 const StudentIeltsListening = lazy(
   () => import("./pages/student/StudentIeltsListening"),
 );
@@ -232,6 +241,13 @@ function AppRoutes() {
                  element={<StudentCefrWritingTasks />} />
           <Route path="cefr/writing/task/:tid"
                  element={<StudentCefrWritingExam />} />
+          {/* Multilevel Speaking — mashq va Free Mock */}
+          <Route path="cefr/speaking"
+                 element={<StudentCefrSpeaking />} />
+          <Route path="cefr/speaking/part/:key"
+                 element={<StudentCefrSpeakingPart />} />
+          <Route path="cefr/speaking/mock"
+                 element={<StudentCefrSpeakingMock />} />
           <Route path="ielts/listening"
                  element={<StudentIeltsListeningHome />} />
           <Route path="ielts/listening/:kind"

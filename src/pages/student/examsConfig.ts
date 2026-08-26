@@ -133,9 +133,12 @@ export const EXAMS: ExamDef[] = [
       {
         key: "speaking",
         title: "CEFR Speaking",
-        desc: "3 qism · suhbat, rasm tavsifi va taqqoslash, "
-          + "mavzu bo'yicha fikr bildirish.",
+        desc: "4 qism · shaxsiy savollar (A1-A2), rasm taqqoslash "
+          + "(B1), abstrakt mavzu (B2), tarafdor/qarshi dalil (C1).",
         icon: "/jsicons/learn-jony-teacher.png",
+        href: "/student/cefr/speaking",
+        hint: "Free Mock · diktafon o'zi o'chadi · 0-75 ball va "
+          + "CEFR darajasi",
       },
     ],
   },

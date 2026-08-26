@@ -121,6 +121,23 @@ def test_har_havola_mashq_qaytaradi():
         assert len(qism) >= 2, (h, len(qism))
 
 
+def test_cefr_speaking_havolasi_tirik():
+    """Speaking kartasi bosilganda bo'sh ekran chiqmasin."""
+    import speaking_cefr_format as f
+    import speaking_cefr_seed as sd
+    import speaking_cefr_guide as sg
+    cfg = _read("examsConfig.ts")
+    assert "/student/cefr/speaking" in cfg
+    with open(os.path.join(SRC, "..", "..", "App.tsx"),
+              encoding="utf-8") as fh:
+        app = fh.read()
+    assert 'path="cefr/speaking"' in app
+    assert 'path="cefr/speaking/mock"' in app
+    assert len(f.PARTS) == 4
+    assert len(sg.GUIDE) == 4
+    assert len(sd.P11) + len(sd.P12) + len(sd.P2) + len(sd.P3) >= 100
+
+
 def test_cefr_writing_havolasi_tirik():
     """CEFR Writing kartasi bosilganda bo'sh ekran chiqmasin."""
     import cefr_writing_guide as g

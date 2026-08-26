@@ -388,6 +388,15 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 2-qism — Note Completion (2026-08-26). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS33
+    from listening_note_seed import seed_note
+    with _VS33(engine) as _db33:
+        seed_note(_db33)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

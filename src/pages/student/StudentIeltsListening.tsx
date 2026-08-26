@@ -294,7 +294,10 @@ export default function StudentIeltsListening() {
                 <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">
                   Savol
                 </p>
-                <p className="text-sm font-medium text-slate-800 mt-0.5">
+                {/* 2026-08-26: CEFR 2- va 6-qismda savol o'rniga
+                    BUTUN qaydnoma turadi va u ko'p qatorli. Shuning
+                    uchun qator ko'chishi saqlanadi. */}
+                <p className="text-sm font-medium text-slate-800 mt-0.5 whitespace-pre-line leading-relaxed">
                   {q.prompt}
                 </p>
               </div>

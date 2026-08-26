@@ -369,6 +369,16 @@ try:
 except Exception:
     pass
 
+# CEFR Listening 3-qism — Matching Speakers (2026-08-26, Jahongir:
+# "endi qolgan partlarga ham 100tadan tuzib qoy"). Idempotent.
+try:
+    from sqlalchemy.orm import Session as _VS31
+    from listening_speaker_seed import seed_speaker
+    with _VS31(engine) as _db31:
+        seed_speaker(_db31)
+except Exception:
+    pass
+
 # C1/C2 ingliz + ru/de/ko grammatika (2026-08-24, idempotent)
 try:
     from sqlalchemy.orm import Session as _VS14

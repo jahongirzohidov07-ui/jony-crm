@@ -34,7 +34,20 @@ router = APIRouter()
 
 @router.get("/api/branches", response_model=List[schemas.BranchOut])
 def list_branches(db: Session = Depends(get_db), user=Depends(get_current_user)):
-    return db.query(models.Branch).order_by(models.Branch.name).all()
+    """Filial ro'yxati (tepadagi tanlagich shundan oladi).
+
+    2026-08-27, Jahongir: "marhaboga test filial, Stech korsatmasin
+    Stech umuman alohida markaz".
+
+    Shuning uchun ro'yxat endi xodimga qarab filtrlanadi: asoschi
+    hammasini ko'radi, o'sha filialda ishlaydigan odam o'z filialini
+    ko'radi, qolganlarga hamkor markaz va test filiali
+    ko'rsatilmaydi. Server tomonda ham berkitilgan (scope_to_branch),
+    ya'ni manzilga qo'lda yozib ham ochib bo'lmaydi."""
+    from common import hidden_branch_ids
+    hide = set(hidden_branch_ids(db, user))
+    return [b for b in db.query(models.Branch)
+            .order_by(models.Branch.name).all() if b.id not in hide]
 
 @router.post("/api/branches", response_model=schemas.BranchOut)
 def create_branch(

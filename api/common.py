@@ -934,10 +934,112 @@ def partner_branch_ids(db) -> list:
     return _PARTNER_IDS
 
 
+_TEST_IDS = None
+
+
+def test_branch_ids(db) -> list:
+    """MASHQ (test) filiallari.
+
+    2026-08-27, Jahongir: "marhaboga test filial, Stech korsatmasin".
+
+    Test filiali xodimlarni o'rgatish uchun ochilgan — unda soxta
+    o'quvchi va soxta lid bor. Uning raqamlari hisobotga tushsa,
+    real ko'rsatkich buziladi.
+
+    Belgisi NOM bo'yicha aniqlanadi ("Test" bilan boshlanadi) —
+    tizimda allaqachon shu qoida ishlatilgan (leads.py, ochiq
+    filial ro'yxati). Keyinchalik alohida ustun kerak bo'lsa,
+    faqat SHU funksiya o'zgaradi."""
+    global _TEST_IDS
+    if _TEST_IDS is None:
+        try:
+            _TEST_IDS = [b.id for b in db.query(models.Branch).all()
+                         if (b.name or "").strip().lower().startswith("test")]
+        except Exception:
+            return []
+    return _TEST_IDS
+
+
+def _home_branches(db, user: models.User) -> set:
+    """Xodimning O'Z ish joyi: asosiy filial."""
+    out = set()
+    if getattr(user, "branch_id", None):
+        out.add(user.branch_id)
+    return out
+
+
+def hidden_branch_ids(db, user: models.User) -> list:
+    """Xodimga TANLAGICHDA ko'rinmasligi kerak bo'lgan filiallar.
+
+    2026-08-27, Jahongir: "marhaboga test filial, Stech korsatmasin
+    Stech umuman alohida markaz".
+
+    QOIDA:
+      - ASOSCHI hammasini ko'radi;
+      - o'sha filial xodimning ASOSIY ish joyi bo'lsa — ko'rinadi
+        (Stech'da ishlaydigan Husayn Stech'ni ko'rishi kerak);
+      - qolganlarga hamkor markaz (Stech) va test filiali
+        ko'rsatilmaydi.
+
+    ASOSIY ish joyi bo'yicha tekshiriladi, "biriktirilgan filiallar"
+    bo'yicha emas. Sabab: xodim mashq uchun test filialiga
+    vaqtinchalik biriktirilgan bo'lishi mumkin — bu uning kundalik
+    hisobotiga soxta raqam qo'shishi kerak emas.
+    """
+    if getattr(user, "role", None) == roles.FOUNDER:
+        return []
+    hide = set(partner_branch_ids(db)) | set(test_branch_ids(db))
+    return sorted(hide - _home_branches(db, user))
+
+
+def aggregate_skip_ids(db, user: models.User) -> list:
+    """"Barcha filiallar" YIG'INDISIGA qo'shilmaydigan filiallar.
+
+    Bu ro'yxat HAMMAGA, shu jumladan ASOSCHIGA ham tegishli:
+      - hamkor markaz (Stech) — 2026-08-15, Jahongir: "uni men
+        umuman boshqarmayman, faqat asoschi sifatida 40% ulushim
+        bor". Uning aylanmasi Jony Academy yig'indisiga
+        qo'shilmasligi kerak;
+      - test filiali — 2026-08-27: unda soxta o'quvchi va soxta lid
+        bor, ular real ko'rsatkichni buzadi.
+
+    Xodimning O'Z ish joyi bundan mustasno: Stech'da ishlaydigan
+    odam "barcha filiallar" rejimida o'z o'quvchilarini ko'rishi
+    kerak.
+    """
+    skip = set(partner_branch_ids(db)) | set(test_branch_ids(db))
+    return sorted(skip - _home_branches(db, user))
+
+
+def blocked_branch_ids(db, user: models.User) -> list:
+    """Server QAT'IY yopadigan filiallar (tanlab ham ochilmaydi).
+
+    Faqat HAMKOR markaz — u boshqa biznesning ma'lumoti.
+
+    Test filiali bu ro'yxatga KIRMAYDI: interaktiv o'rgatuvchi
+    (guide.py) mashq paytida global filialni ataylab test filialiga
+    o'tkazadi. Uni qat'iy yopsak, o'rgatuvchi bo'sh ekran
+    ko'rsatardi. Test filiali tanlagichda ko'rinmaydi va UMUMIY
+    yig'indiga qo'shilmaydi — shuning o'zi yetarli.
+    """
+    if getattr(user, "role", None) == roles.FOUNDER:
+        return []
+    return sorted(set(partner_branch_ids(db)) - _home_branches(db, user))
+
+
+def visible_branch_ids(db, user: models.User) -> list:
+    """Xodim tanlay oladigan filiallar (tanlagich ro'yxati uchun)."""
+    hide = set(hidden_branch_ids(db, user))
+    return [b.id for b in db.query(models.Branch)
+            .order_by(models.Branch.name).all() if b.id not in hide]
+
+
 def reset_partner_cache():
-    """Filial hamkorligi o'zgarganda chaqiriladi."""
+    """Filial hamkorligi yoki nomi o'zgarganda chaqiriladi."""
     global _PARTNER_IDS
     _PARTNER_IDS = None
+    global _TEST_IDS
+    _TEST_IDS = None
 
 
 def scope_to_branch(query, model, user: models.User, branch_id=None):
@@ -959,14 +1061,32 @@ def scope_to_branch(query, model, user: models.User, branch_id=None):
         if branch_id and branch_id in allowed:
             return query.filter(model.branch_id == branch_id)
         return query.filter(model.branch_id.in_(allowed or [-1]))
-    if branch_id and hasattr(model, "branch_id"):
+    # 2026-08-27: yashirin filial (hamkor Stech, test) — tanlab ham
+    # ko'rib bo'lmaydi. Avval faqat "barcha filiallar" rejimida
+    # chiqarib tashlanardi, lekin tanlagichdan tanlansa ochilib
+    # ketaverardi.
+    if not hasattr(model, "branch_id"):
+        return query
+    if branch_id:
+        # Hamkor markazni tanlab ham ochib bo'lmaydi
+        if branch_id in blocked_branch_ids(query.session, user):
+            return query.filter(model.branch_id == -1)
         return query.filter(model.branch_id == branch_id)
-    # "Barcha filiallar" - hamkorniki aralashmasin
-    if hasattr(model, "branch_id"):
-        skip = partner_branch_ids(query.session)
-        if skip:
-            return query.filter(or_(model.branch_id.is_(None),
-                                    model.branch_id.notin_(skip)))
+    # "Barcha filiallar" — hamkor markaz ham, TEST filiali ham
+    # yig'indiga qo'shilmaydi. Test filialida soxta o'quvchi va
+    # soxta lid bor; ular real ko'rsatkichni buzadi (aynan shu
+    # sabab marketologda 49 ta lid ko'rinardi).
+    #
+    # DIQQAT: bu yerda hidden_branch_ids EMAS, aggregate_skip_ids
+    # ishlatiladi. Farqi: asoschi tanlagichda Stech'ni KO'RADI
+    # (tanlab, alohida qaray oladi), lekin uning raqami umumiy
+    # yig'indiga QO'SHILMAYDI. Ikkalasini bitta ro'yxat qilib
+    # qo'ysam, asoschining umumiy tushumiga Stech puli qo'shilib
+    # ketardi — test_courses_partner aynan shuni tutdi.
+    skip = aggregate_skip_ids(query.session, user)
+    if skip:
+        return query.filter(or_(model.branch_id.is_(None),
+                                model.branch_id.notin_(skip)))
     return query
 
 def _smm_user(db: Session, branch_id: int | None = None) -> models.User | None:
@@ -2943,7 +3063,8 @@ def _card(label: str, value, hint: str = None, tone: str = "plain",
     return {"label": label, "value": value, "hint": hint,
             "tone": tone, "link": link}
 
-def _my_teacher_cards(db: Session, user: models.User) -> list:
+def _my_teacher_cards(db: Session, user: models.User,
+                      branch_id: int | None = None) -> list:
     t = _teacher_of_user(db, user)
     if not t:
         return []
@@ -3006,16 +3127,16 @@ def _grade_card(db: Session, t: models.Teacher) -> dict:
         tone = "brand"
     return _card("Darajam", st["grade_label"], hint, tone, "/my-career")
 
-def _my_sales_cards(db: Session, user: models.User) -> list:
+def _my_sales_cards(db: Session, user: models.User,
+                    branch_id: int | None = None) -> list:
     today = date.today()
     m_start, m_end = billing.month_bounds(today.year, today.month)
     d0 = datetime.combine(m_start, datetime.min.time())
 
-    mine = db.query(models.Lead).filter(
-        models.Lead.created_at >= d0)
-    if user.branch_id:
-        mine = mine.filter(_branch_in(db, user, models.Lead.branch_id))
-    leads = mine.all()
+    # 2026-08-27: bu yerda ham tanlagich e'tiborsiz qolgan edi.
+    leads = scope_to_branch(
+        db.query(models.Lead), models.Lead, user, branch_id
+    ).filter(models.Lead.created_at >= d0).all()
     converted = [l for l in leads if l.stage == "converted"]
 
     # O'zi qabul qilgan pul
@@ -3024,7 +3145,7 @@ def _my_sales_cards(db: Session, user: models.User) -> list:
         models.Payment.created_by == user.full_name,
         models.Payment.created_at >= d0).all()
 
-    debt_q = scope_to_branch(db.query(models.Student), models.Student, user)
+    debt_q = scope_to_branch(db.query(models.Student), models.Student, user, branch_id)
     debtors = [s for s in debt_q.filter(
         models.Student.status.in_(["active", "trial"])).all()
         if student_balance(db, s.id) < 0]
@@ -3042,7 +3163,8 @@ def _my_sales_cards(db: Session, user: models.User) -> list:
               .replace(",", " ") + " so'm", "bad", "/finance"),
     ]
 
-def _my_hr_cards(db: Session, user: models.User) -> list:
+def _my_hr_cards(db: Session, user: models.User,
+                 branch_id: int | None = None) -> list:
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
     d0 = datetime.combine(m_start, datetime.min.time())
@@ -3081,12 +3203,13 @@ def _my_hr_cards(db: Session, user: models.User) -> list:
               "amber" if soon else "plain", "/hr"),
     ]
 
-def _my_academic_cards(db: Session, user: models.User) -> list:
+def _my_academic_cards(db: Session, user: models.User,
+                       branch_id: int | None = None) -> list:
     today = date.today()
-    groups = scope_to_branch(db.query(models.Group), models.Group, user).all()
+    groups = scope_to_branch(db.query(models.Group), models.Group, user, branch_id).all()
     rooms = {r.id: r for r in db.query(models.Room).all()}
     students = scope_to_branch(db.query(models.Student), models.Student,
-                               user).all()
+                               user, branch_id).all()
 
     weak = 0
     for g in groups:
@@ -3112,7 +3235,8 @@ def _my_academic_cards(db: Session, user: models.User) -> list:
               "bad" if weak else "good", "/academic"),
     ]
 
-def _my_exam_cards(db: Session, user: models.User) -> list:
+def _my_exam_cards(db: Session, user: models.User,
+                   branch_id: int | None = None) -> list:
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
     exams = db.query(models.Exam).filter(models.Exam.date >= m_start).all()
@@ -3125,11 +3249,12 @@ def _my_exam_cards(db: Session, user: models.User) -> list:
         _card("O'tkazilgan", len(done), None, "good", "/audit"),
     ]
 
-def _my_facility_cards(db: Session, user: models.User) -> list:
-    assets = scope_to_branch(db.query(models.Asset), models.Asset, user).all()
+def _my_facility_cards(db: Session, user: models.User,
+                       branch_id: int | None = None) -> list:
+    assets = scope_to_branch(db.query(models.Asset), models.Asset, user, branch_id).all()
     broken = [a for a in assets if a.condition in ("repair", "broken")]
     low = [c for c in scope_to_branch(
-        db.query(models.Consumable), models.Consumable, user).all()
+        db.query(models.Consumable), models.Consumable, user, branch_id).all()
         if c.min_qty is not None and c.qty <= c.min_qty]
     reqs = db.query(models.PurchaseRequest).filter(
         models.PurchaseRequest.status == "open").count()
@@ -3228,15 +3353,32 @@ def _smm_sales_state(db: Session, branch_id, year: int, month: int) -> dict:
     }
 
 
-def _my_marketing_cards(db: Session, user: models.User) -> list:
+def _my_marketing_cards(db: Session, user: models.User,
+                        branch_id: int | None = None) -> list:
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
     d0 = datetime.combine(m_start, datetime.min.time())
-    leads = db.query(models.Lead).filter(models.Lead.created_at >= d0).all()
+    # 2026-08-27 TUZATISH. Jahongir: "Marhabo mamatqulova shu qizimiz
+    # dashboardga kriganda 49ta lid korinyabdi, hamma filiallni
+    # tanlasa, zafarni tanlasa ham shu chiqyabdi unga togri chiqarsin
+    # filiallar boyicha ham".
+    #
+    # Sabab shu yerda edi: lidlar HECH QANDAY filial filtrisiz
+    # sanalardi. Ya'ni raqamga test filialining soxta lidlari ham,
+    # hamkor markaz (Stech) lidlari ham qo'shilib ketardi va
+    # tepadagi tanlagich umuman ta'sir qilmasdi.
+    #
+    # Endi uchala raqam ham scope_to_branch orqali o'tadi: u rol
+    # huquqini ham, tanlangan filialni ham, yashirin filiallarni ham
+    # bir joyda hal qiladi.
+    leads = scope_to_branch(
+        db.query(models.Lead), models.Lead, user, branch_id
+    ).filter(models.Lead.created_at >= d0).all()
     conv = [l for l in leads if l.stage == "converted"]
-    spend = sum(e.amount for e in db.query(models.Expense).filter(
-        models.Expense.category == "ads",
-        models.Expense.date >= m_start).all())
+    spend = sum(e.amount for e in scope_to_branch(
+        db.query(models.Expense), models.Expense, user, branch_id
+    ).filter(models.Expense.category == "ads",
+             models.Expense.date >= m_start).all())
     cards = [
         _card("Shu oy lidlar", len(leads), None, "brand", "/marketing"),
         _card("O'quvchiga aylandi", len(conv), None, "good", "/marketing"),
@@ -3248,13 +3390,17 @@ def _my_marketing_cards(db: Session, user: models.User) -> list:
     # SOTUV REJASI VA BONUS (Jahongir, 2026-08-11): reja/fakt, foiz,
     # bonus jadval bo'yicha + yangi to'lovlar soni va o'quvchilar soni
     try:
-        st8 = _smm_sales_state(db, user.branch_id, today.year, today.month)
+        # Reja/fakt ham TANLANGAN filial bo'yicha (avval doim
+        # xodimning o'z filiali olinardi — shuning uchun
+        # sarlavhada "Maktab", tanlagichda "Zafar" turardi).
+        st8 = _smm_sales_state(db, branch_id or user.branch_id,
+                               today.year, today.month)
         if st8["percent"] is None:
             # Joriy oyda reja yo'q - keyingi oydan boshlanayotgan
             # bo'lsa (masalan, sentabrdan) shuni ko'rsatamiz
             ny, nm = ((today.year + 1, 1) if today.month == 12
                       else (today.year, today.month + 1))
-            nxt = _smm_sales_state(db, user.branch_id, ny, nm)
+            nxt = _smm_sales_state(db, branch_id or user.branch_id, ny, nm)
             if nxt["plan"]:
                 cards.append(_card(
                     f"Sotuv rejasi ({roles.UZ_MONTHS[nm - 1].lower()})",
@@ -3287,7 +3433,8 @@ def _my_marketing_cards(db: Session, user: models.User) -> list:
         pass
     return cards
 
-def _my_finance_cards(db: Session, user: models.User) -> list:
+def _my_finance_cards(db: Session, user: models.User,
+                      branch_id: int | None = None) -> list:
     today = date.today()
     period = today.isoformat()[:7]
     m_start, m_end = billing.month_bounds(today.year, today.month)
@@ -5706,6 +5853,11 @@ __all__ = [
     "perms_for",
     "scope_to_branch",
     "partner_branch_ids",
+    "test_branch_ids",
+    "hidden_branch_ids",
+    "blocked_branch_ids",
+    "aggregate_skip_ids",
+    "visible_branch_ids",
     "reset_partner_cache",
     "student_balance",
     "to_student_out",

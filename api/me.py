@@ -237,13 +237,44 @@ _MY_CARDS = {
     roles.ACCOUNTANT: _my_finance_cards,
 }
 
+def _branch_label(db: Session, user, branch_id) -> str | None:
+    """Kartalar qaysi filial bo'yicha ekani — bir qatorda.
+
+    Yozuv RAQAMGA mos bo'lishi shart. Avval bu yerda doim xodimning
+    o'z filiali yozilardi: tanlagichda "Zafar" turgan, sarlavhada
+    esa "Maktab" — Jahongir aynan shuni ko'rgan.
+    """
+    if branch_id:
+        b = db.query(models.Branch).get(branch_id)
+        if b:
+            return b.name
+    # Filial tanlanmagan: raqamlar bir nechta filialdan yig'ilgan
+    # bo'lsa, shuni ochiq aytamiz.
+    try:
+        from common import visible_branch_ids
+        n = len(visible_branch_ids(db, user))
+    except Exception:
+        n = 1
+    if n > 1:
+        return "Barcha filiallar"
+    return user.branch.name if user.branch else None
+
+
 @router.get("/api/me/dashboard")
 def my_dashboard(
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(get_current_user),
 ):
     """Xodimning O'Z dashboardi. Har bir rol o'ziga tegishli raqamni
-    ko'radi — birovning ishi uni chalg'itmaydi."""
+    ko'radi — birovning ishi uni chalg'itmaydi.
+
+    2026-08-27, Jahongir: "hamma filiallni tanlasa, zafarni tanlasa
+    ham shu chiqyabdi unga togri chiqarsin filiallar boyicha ham".
+
+    Sabab shu yerda edi: endpoint filial parametrini UMUMAN qabul
+    qilmasdi. Tepadagi tanlagich boshqa sahifalarni o'zgartirardi-yu,
+    "Mening ishim" kartalari qotib turardi."""
     # AVTOMAT: tug'ilgan kun va yubiley eslatmalari. HR hisobiga kirgan
     # zahoti vazifa paydo bo'ladi — hech kim tugma bosmaydi.
     if user.role in roles.STAFF_DATES_ACCESS:
@@ -259,7 +290,7 @@ def my_dashboard(
         db.rollback()
 
     builder = _MY_CARDS.get(user.role)
-    cards = builder(db, user) if builder else []
+    cards = builder(db, user, branch_id) if builder else []
 
     # Vazifalar — hammada bor
     my_tasks = (db.query(models.Task)
@@ -274,7 +305,10 @@ def my_dashboard(
         "role": user.role,
         "role_label": roles.UZ_LABELS.get(user.role, user.role),
         "full_name": user.full_name,
-        "branch": user.branch.name if user.branch else None,
+        # Sarlavhada TANLANGAN filial nomi turadi. Avval doim
+        # xodimning o'z filiali chiqardi — tanlagichda "Zafar",
+        # sarlavhada "Maktab" bo'lib chalkashtirardi.
+        "branch": _branch_label(db, user, branch_id),
         "cards": cards,
         "tasks": {
             "open": len(open_tasks),

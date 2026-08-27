@@ -35,8 +35,15 @@ const MONTHS = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
 
 export function ContentPlan() {
   const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  // 2026-08-28, Jahongir: "shu OY TANLASH EMAS, eng oldingilari
+  // bo'yicha SANA bo'yicha eng yaqinlari bo'yicha KETMA-KETLIKDA
+  // tursin". Standart holat — HAMMASI, sana tartibida. Oy tanlash
+  // olib tashlanmadi, lekin endi ixtiyoriy filtr bo'lib qoldi:
+  // yuklangan post qaysi oyga tushganini topolmay qolish holati
+  // takrorlanmasin.
+  const [pick, setPick] = useState("all");   // "all" | "YYYY-MM"
+  const year = pick === "all" ? now.getFullYear() : Number(pick.slice(0, 4));
+  const month = pick === "all" ? now.getMonth() + 1 : Number(pick.slice(5));
   const [d, setD] = useState<Any>(null);
   const [open, setOpen] = useState<number | null>(null);
   const [busy, setBusy] = useState<number | "all" | null>(null);
@@ -45,9 +52,11 @@ export function ContentPlan() {
   const [preview, setPreview] = useState<Any>(null);
 
   const load = useCallback(() => {
-    api.get<Any>(`/smm/plan?year=${year}&month=${month}`)
-      .then(setD).catch(() => setD(null));
-  }, [year, month]);
+    const q = pick === "all"
+      ? "/smm/plan"
+      : `/smm/plan?scope=month&year=${year}&month=${month}`;
+    api.get<Any>(q).then(setD).catch(() => setD(null));
+  }, [pick, year, month]);
   useEffect(load, [load, tick]);
 
   const save = async (id: number, patch: Any) => {
@@ -87,7 +96,9 @@ export function ContentPlan() {
     setMsg("");
     try {
       const r = await api.post<Any>(
-        `/smm/fetch-all?year=${year}&month=${month}`, {});
+        pick === "all"
+          ? "/smm/fetch-all"
+          : `/smm/fetch-all?year=${year}&month=${month}`, {});
       const why = (r.reasons || [])
         .map((x: Any) => `${x.count} ta — ${x.note}`).join("; ");
       setMsg(`${r.updated} ta yangilandi`
@@ -103,15 +114,46 @@ export function ContentPlan() {
      qo'shish serverless to'plamini og'irlashtiradi. Brouzerda esa
      xlsx kutubxonasi allaqachon bor (hisobot yuklab olish uchun).
      Avval "ko'rib chiqish", keyin haqiqiy import. */
+  /** Matndan oyni topish: "Sentabr 2026", "sentyabr", "09.2026". */
+  const guessMonth = (text: string): [number, number] | null => {
+    const t = (text || "").toLowerCase();
+    const AL = [
+      ["yanvar", "январ", "january"], ["fevral", "феврал", "february"],
+      ["mart", "март", "march"], ["aprel", "апрел", "april"],
+      ["may", "май"], ["iyun", "июн", "june"],
+      ["iyul", "июл", "july"], ["avgust", "август", "august"],
+      ["sentabr", "sentyabr", "сентябр", "september"],
+      ["oktabr", "oktyabr", "октябр", "october"],
+      ["noyabr", "ноябр", "november"], ["dekabr", "декабр", "december"],
+    ];
+    let mm = 0;
+    AL.forEach((names, i) => {
+      if (!mm && names.some((n) => t.includes(n))) mm = i + 1;
+    });
+    if (!mm) return null;
+    const ym = t.match(/20\d{2}/);
+    return [ym ? Number(ym[0]) : now.getFullYear(), mm];
+  };
+
   const pickFile = async (file: File) => {
     setMsg("Fayl o'qilmoqda…");
     try {
       const XLSX = await import("xlsx");
-      const wb = XLSX.read(await file.arrayBuffer(), { type: "array" });
+      // cellDates: Excel sanalari raqam emas, HAQIQIY sana bo'lib
+      // kelsin. Aks holda "45900" kabi raqam kun deb o'qilardi.
+      const wb = XLSX.read(await file.arrayBuffer(),
+        { type: "array", cellDates: true });
       let best: Any[] = [];
+      let bestSheet = "";
+      const iso = (v: Any) =>
+        v instanceof Date
+          ? new Date(v.getTime() - v.getTimezoneOffset() * 60000)
+            .toISOString().slice(0, 10)
+          : v;
       for (const name of wb.SheetNames) {
         const aoa: Any[][] = XLSX.utils.sheet_to_json(wb.Sheets[name],
-          { header: 1, blankrows: false, defval: "" });
+          { header: 1, blankrows: false, defval: "", raw: false,
+            cellDates: true } as Any);
         const hi = aoa.findIndex((r: Any[]) =>
           r.some((c: Any) => String(c).trim().toLowerCase() === "sana"));
         if (hi < 0) continue;
@@ -119,20 +161,46 @@ export function ContentPlan() {
         const rows = aoa.slice(hi + 1)
           .filter((r: Any[]) => String(r[0] ?? "").trim())
           .map((r: Any[]) => Object.fromEntries(
-            hdr.map((h: string, i: number) => [h, r[i] ?? ""])));
-        if (rows.length > best.length) best = rows;
+            hdr.map((h: string, i: number) => [h, iso(r[i] ?? "")])));
+        if (rows.length > best.length) { best = rows; bestSheet = name; }
       }
       if (best.length === 0) {
         setMsg("Faylda «Sana» ustuni topilmadi. Kontent-plan varag'i "
           + "sarlavhalari: Sana, Vaqt, Platforma, Mavzu…");
         return;
       }
+      // QAYSI OYGA. 2026-08-28 da tuzatilgan xato: avval bu ekrandagi
+      // tanlagichdan olinardi va sentabr rejasi avgustga tushib
+      // ketgan edi. Endi tartib: faylning o'zidagi to'liq sana ->
+      // varaq nomi -> fayl nomi -> oxirgi chora sifatida tanlagich.
+      const firstDate = String(best[0]?.Sana ?? best[0]?.sana ?? "");
+      let ty = year, tm = month, qayerdan = "tanlagichdan";
+      const m0 = firstDate.match(/^(20\d{2})-(\d{2})-\d{2}/);
+      if (m0) {
+        ty = Number(m0[1]); tm = Number(m0[2]); qayerdan = "fayldagi sanadan";
+      } else {
+        const g = guessMonth(bestSheet) || guessMonth(file.name);
+        if (g) { [ty, tm] = g; qayerdan = "fayl nomidan"; }
+      }
       const r = await api.post<Any>("/smm/plan/import",
-        { year, month, rows: best, dry_run: true });
-      setPreview({ ...r, rows: best });
+        { year: ty, month: tm, rows: best, dry_run: true });
+      setPreview({ ...r, rows: best, ty, tm, qayerdan, file: file.name });
       setMsg("");
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Fayl o'qilmadi");
+    }
+  };
+
+  /** Nishon oy o'zgartirilganda oldindan ko'rishni qayta hisoblash. */
+  const repreview = async (ty: number, tm: number) => {
+    if (!preview) return;
+    try {
+      const r = await api.post<Any>("/smm/plan/import",
+        { year: ty, month: tm, rows: preview.rows, dry_run: true });
+      setPreview({ ...preview, ...r, rows: preview.rows, ty, tm,
+                   qayerdan: "qo'lda tanlandi" });
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
     }
   };
 
@@ -141,10 +209,12 @@ export function ContentPlan() {
     setBusy("all");
     try {
       const r = await api.post<Any>("/smm/plan/import",
-        { year, month, rows: preview.rows, dry_run: false });
+        { year: preview.ty, month: preview.tm,
+          rows: preview.rows, dry_run: false });
       setMsg(`${r.added} ta post qo'shildi`
         + (r.skipped ? `, ${r.skipped} tasi allaqachon bor edi` : ""));
       setPreview(null);
+      setPick("all");        // yangi qatorlar darrov ko\'rinsin
       setTick((k) => k + 1);
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Xatolik");
@@ -154,6 +224,10 @@ export function ContentPlan() {
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
 
   const rows: Any[] = d.rows || [];
+  // Ro'yxatda o'tgan kunlar qayerdan boshlanadi (chegara chizig'i uchun)
+  const firstPast = pick === "all"
+    ? rows.findIndex((r) => r.date && d.today && r.date < d.today)
+    : -1;
   const published = rows.filter((r) => r.post_url);
   const withMetric = rows.filter((r) => r.metrics?.views);
 
@@ -161,14 +235,15 @@ export function ContentPlan() {
     <div>
       {/* --- boshqaruv --- */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
-        <select value={month} onChange={(e) => setMonth(Number(e.target.value))}
+        <select value={pick} onChange={(e) => setPick(e.target.value)}
           className="px-3 py-2 rounded-lg border border-slate-200 text-sm">
-          {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
-        </select>
-        <select value={year} onChange={(e) => setYear(Number(e.target.value))}
-          className="px-3 py-2 rounded-lg border border-slate-200 text-sm">
-          {[now.getFullYear() + 1, now.getFullYear(), now.getFullYear() - 1]
-            .map((y) => <option key={y} value={y}>{y}</option>)}
+          <option value="all">Barchasi (sana bo'yicha)</option>
+          {(d.months || []).map((m: Any) => (
+            <option key={`${m.year}-${m.month}`}
+              value={`${m.year}-${String(m.month).padStart(2, "0")}`}>
+              {m.label} ({m.count})
+            </option>
+          ))}
         </select>
         <span className="text-sm text-slate-500">
           {rows.length} ta post · {published.length} tasida havola ·{" "}
@@ -208,6 +283,33 @@ export function ContentPlan() {
             <p className="text-sm font-medium text-slate-800">
               Faylda {preview.will_add + preview.skipped} qator topildi
             </p>
+            {/* QAYSI OYGA TUSHADI — ochiq ko'rsatiladi. Avval bu
+                yashirin edi va sentabr rejasi bilinmay avgustga
+                yozilib ketgan edi (2026-08-28). */}
+            <span className="text-[12px] px-2 py-0.5 rounded-full
+                             bg-brand-100 text-brand-800 font-medium">
+              {MONTHS[(preview.tm || 1) - 1]} {preview.ty} ga
+            </span>
+            <select
+              value={`${preview.ty}-${String(preview.tm).padStart(2, "0")}`}
+              onChange={(e) => repreview(Number(e.target.value.slice(0, 4)),
+                                         Number(e.target.value.slice(5)))}
+              className="px-2 py-1 rounded-lg border border-slate-300 text-[12px]"
+            >
+              {[-1, 0, 1, 2].map((off) => {
+                const dt = new Date(now.getFullYear(), now.getMonth() + off, 1);
+                const v = `${dt.getFullYear()}-${String(dt.getMonth() + 1)
+                  .padStart(2, "0")}`;
+                return (
+                  <option key={v} value={v}>
+                    {MONTHS[dt.getMonth()]} {dt.getFullYear()}
+                  </option>
+                );
+              })}
+            </select>
+            <span className="text-[11px] text-slate-500">
+              ({preview.qayerdan})
+            </span>
             <span className="text-[12px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
               {preview.will_add} ta qo'shiladi
             </span>
@@ -285,11 +387,35 @@ export function ContentPlan() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
+            {rows.map((r, i) => (
               <>
-                <tr key={r.id} className="border-t border-slate-100 hover:bg-slate-50/60">
+                {/* O'TGAN KUNLAR CHEGARASI. Ro'yxat sana bo'yicha:
+                    tepada kelayotganlar (eng yaqini birinchi), pastda
+                    o'tganlar. Chegara ko'rinib tursin — aks holda
+                    "bugun qayerda?" degan savol qoladi. */}
+                {i === firstPast && firstPast > -1 && (
+                  <tr key="past-line">
+                    <td colSpan={16}
+                      className="px-4 py-1.5 bg-slate-50 text-[11px] font-semibold
+                                 text-slate-400 border-t border-slate-200">
+                      ——— o'tgan kunlar ———
+                    </td>
+                  </tr>
+                )}
+                <tr key={r.id} className={"border-t border-slate-100 hover:bg-slate-50/60"
+                  + (r.date === d.today ? " bg-brand-50/60" : "")}>
                   <td className="px-2.5 py-2 whitespace-nowrap tabular-nums">
-                    {r.date?.slice(8)}-{MONTHS[month - 1].slice(0, 3).toLowerCase()}
+                    {/* Oy nomi QATORNING O'Z sanasidan — tanlagichdan
+                        emas. Barcha oylar birga ko'rsatilganda
+                        tanlagichnikini olsa hamma qator "Sentabr"
+                        bo'lib chiqib ketardi. */}
+                    {r.date ? `${r.date.slice(8)}-${MONTHS[Number(r.date.slice(5, 7)) - 1]
+                      .slice(0, 3).toLowerCase()}` : "-"}
+                    {r.date === d.today && (
+                      <span className="ml-1 text-[10px] text-brand-600 font-bold">
+                        bugun
+                      </span>
+                    )}
                   </td>
                   <td className="px-2.5 py-2 text-slate-500">{r.weekday}</td>
                   <td className="px-2.5 py-2 tabular-nums text-slate-500">{r.time}</td>
@@ -363,8 +489,13 @@ export function ContentPlan() {
             {rows.length === 0 && (
               <tr>
                 <td colSpan={16} className="px-4 py-10 text-center text-slate-400 text-sm">
-                  Bu oyda kontent yo'q. «Kontent taqvimi» bo'limidan
-                  qo'shing yoki o'tgan oydagi postdan nusxa oling.
+                  {pick === "all"
+                    ? "Hali birorta post yo'q. «Excel'dan yuklash» tugmasi "
+                      + "orqali kontent-planni yuklang yoki «Kontent taqvimi» "
+                      + "bo'limidan qo'ling bilan qo'shing."
+                    : "Bu oyda kontent yo'q. Yuqoridagi tanlagichdan "
+                      + "«Barchasi» ni tanlab ko'ring — post boshqa oyga "
+                      + "tushgan bo'lishi mumkin."}
                 </td>
               </tr>
             )}

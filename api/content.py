@@ -1930,19 +1930,46 @@ def _plan_row(db: Session, c: models.Content, m=None,
 
 @router.get("/api/smm/plan")
 def smm_plan(year: int | None = None, month: int | None = None,
-             branch_id: int | None = None,
+             branch_id: int | None = None, scope: str = "all",
              db: Session = Depends(get_db),
              user=Depends(require_role(*roles.SMM_ACCESS))):
-    """Oylik kontent-plan — Excel jadvalining aynan o'zi."""
+    """Kontent-plan — Excel jadvalining aynan o'zi.
+
+    2026-08-28, Jahongir: "qara men excel fayl qilib yukladim
+    sentabrnikini lekin menda ko'rinmayabdi. shu OY TANLASH EMAS,
+    eng oldingilari bo'yicha SANA bo'yicha eng yaqinlari bo'yicha
+    KETMA-KETLIKDA tursin".
+
+    Shuning uchun endi standart holat — OY FILTRI YO'Q: butun reja
+    bitta ro'yxatda, sana bo'yicha. Bugundan boshlanadi (eng
+    yaqinlari tepada), o'tgan kunlar pastda teskari tartibda.
+    Sabab: SMM menejerga "ertaga nima chiqadi" kerak, "sentabrda
+    nima bor edi" emas.
+
+    Oy tanlash kerak bo'lsa scope="month" bilan eski xatti-harakat
+    saqlanib qoldi (hisobot va eksport uchun) — hech narsa
+    yo'qolmadi."""
     today = roles.local_today()
     y, m = year or today.year, month or today.month
-    start, end = billing.month_bounds(y, m)
     q = scope_to_branch(db.query(models.Content), models.Content,
                         user, branch_id)
-    rows = (q.filter(models.Content.planned_date >= start,
-                     models.Content.planned_date <= end)
-            .order_by(models.Content.planned_date,
-                      models.Content.planned_time).all())
+    if scope == "month":
+        start, end = billing.month_bounds(y, m)
+        rows = (q.filter(models.Content.planned_date >= start,
+                         models.Content.planned_date <= end)
+                .order_by(models.Content.planned_date,
+                          models.Content.planned_time).all())
+    else:
+        rows = q.order_by(models.Content.planned_date,
+                          models.Content.planned_time).all()
+        # KETMA-KETLIK: bugun va keyingi kunlar OLDINDA (eng yaqini
+        # birinchi), o'tganlar ORQADA (eng yaqin o'tgani birinchi).
+        # Sanasi yo'qlar eng oxirida - ular hali rejalashtirilmagan.
+        kel = [c for c in rows if c.planned_date and c.planned_date >= today]
+        otgan = [c for c in rows if c.planned_date and c.planned_date < today]
+        sanasiz = [c for c in rows if not c.planned_date]
+        otgan.reverse()
+        rows = kel + otgan + sanasiz
     mets = {x.content_id: x for x in db.query(models.ContentMetric)
             .filter(models.ContentMetric.content_id
                     .in_([c.id for c in rows] or [-1])).all()}
@@ -1950,9 +1977,20 @@ def smm_plan(year: int | None = None, month: int | None = None,
     unames = {u.id: u.full_name for u in db.query(models.User)
               .filter(models.User.id.in_(uids or [-1])).all()}
     out = [_plan_row(db, c, mets.get(c.id), unames) for c in rows]
+    # Qaysi oylarda post bor — tanlagich uchun (bo'sh oy ko'rsatilmasin)
+    oylar = sorted({(c.planned_date.year, c.planned_date.month)
+                    for c in rows if c.planned_date}, reverse=True)
     return {
         "year": y, "month": m,
+        "scope": scope,
         "month_label": roles.UZ_MONTHS[m - 1],
+        "today": today.isoformat(),
+        "months": [{"year": yy, "month": mm,
+                    "label": f"{roles.UZ_MONTHS[mm - 1]} {yy}",
+                    "count": sum(1 for c in rows if c.planned_date
+                                 and (c.planned_date.year,
+                                      c.planned_date.month) == (yy, mm))}
+                   for yy, mm in oylar],
         "rows": out,
         "meta": {
             "platforms": roles.SOCIAL_PLATFORMS,
@@ -2063,14 +2101,20 @@ def fetch_content_metrics(cid: int, db: Session = Depends(get_db),
 def fetch_all_metrics(year: int | None = None, month: int | None = None,
                       db: Session = Depends(get_db),
                       user=Depends(require_role(*roles.SMM_ACCESS))):
-    """Oydagi HAMMA e'lon qilingan postning natijasini yangilaydi."""
-    today = roles.local_today()
-    y, m = year or today.year, month or today.month
-    start, end = billing.month_bounds(y, m)
-    rows = (db.query(models.Content)
-            .filter(models.Content.planned_date >= start,
-                    models.Content.planned_date <= end,
-                    models.Content.post_url.isnot(None)).all())
+    """E'lon qilingan postlarning natijasini yangilaydi.
+
+    2026-08-28: oy berilmasa — HAMMASI. Kontent-plan endi oy bo'yicha
+    emas, sana bo'yicha ketma-ketlikda ko'rsatiladi, shuning uchun
+    "Natijalarni yangilash" ham ekrandagi hamma postni qamrashi
+    kerak edi (avval jimgina faqat joriy oyni yangilardi)."""
+    q = db.query(models.Content).filter(models.Content.post_url.isnot(None))
+    if year or month:
+        today = roles.local_today()
+        y, m = year or today.year, month or today.month
+        start, end = billing.month_bounds(y, m)
+        q = q.filter(models.Content.planned_date >= start,
+                     models.Content.planned_date <= end)
+    rows = q.all()
     ok, fail, notes = 0, 0, {}
     for c in rows:
         if not (c.post_url or "").strip():
@@ -2299,11 +2343,13 @@ def import_plan(payload: dict = Body(...),
     if len(rows) > 200:
         raise HTTPException(400, "Bir martada 200 qatordan ko'p bo'lmasin")
 
-    start, end = billing.month_bounds(y, m)
+    # DUBL TEKSHIRUVI endi bitta oy bilan chegaralanmaydi: faylda
+    # to'liq sana bo'lsa qatorlar boshqa oyga tushishi mumkin.
+    # Chegara 13 oy — butun bazani tortmaslik uchun.
+    ufq = date(y, m, 1) - timedelta(days=400)
     have = {(c.planned_date, (c.title or "").strip().lower())
             for c in db.query(models.Content)
-            .filter(models.Content.planned_date >= start,
-                    models.Content.planned_date <= end).all()}
+            .filter(models.Content.planned_date >= ufq).all()}
 
     def _g(r, *names):
         for n in names:
@@ -2313,16 +2359,59 @@ def import_plan(payload: dict = Body(...),
                     return str(v).strip() if v is not None else ""
         return ""
 
-    def _day(txt):
-        """'1-sen', '14', '2026-09-14' -> oyning kuni."""
+    # OY QAYERDAN OLINADI — 2026-08-28 da tuzatilgan JIDDIY XATO.
+    #
+    # Jahongir: "qara men excel fayl qilib yukladim SENTABRnikini
+    # lekin menda ko'rinmayabdi". Sabab: import oyni FAYLDAN emas,
+    # ekrandagi tanlagichdan olardi. U avgustda turgan edi -> sentabr
+    # rejasi AVGUSTGA yozilib ketdi va sentabr bo'sh qoldi.
+    #
+    # Endi tartib shunday:
+    #   1) Qatordagi sana TO'LIQ bo'lsa (2026-09-14 yoki Excel
+    #      raqamli sanasi) — o'sha sana AYNAN olinadi;
+    #   2) faqat kun bo'lsa ("14", "1-sen") — nishon oy qo'llanadi.
+    # Ya'ni faylda to'liq sana bo'lsa, tanlagich unga TA'SIR QILMAYDI.
+    _EXCEL_EPOCH = date(1899, 12, 30)     # Excel sanani shundan sanaydi
+
+    def _full_date(txt):
+        """To'liq sana chiqara olsak — o'shani qaytaradi, aks holda None."""
         t = str(txt or "").strip()
         if not t:
             return None
-        if len(t) >= 10 and t[4] == "-":
+        # ISO: 2026-09-14 yoki 2026-09-14T00:00:00
+        if len(t) >= 10 and t[4] == "-" and t[7] == "-":
             try:
-                return date.fromisoformat(t[:10]).day
+                return date.fromisoformat(t[:10])
             except ValueError:
                 pass
+        # 14.09.2026 / 14/09/2026
+        for sep in (".", "/"):
+            parts = t.split(sep)
+            if len(parts) == 3 and all(x.strip().isdigit() for x in parts):
+                dd, mm, yy = (int(x) for x in parts)
+                if yy > 1900 and 1 <= mm <= 12:
+                    try:
+                        return date(yy, mm, dd)
+                    except ValueError:
+                        pass
+        # Excel raqamli sana (45900 kabi). Faqat ishonchli oraliqda:
+        # 40000-60000 ~ 2009-2064. Kichik raqamlar oddiy KUN bo'ladi.
+        try:
+            n = float(t)
+            if 40000 <= n <= 60000:
+                return _EXCEL_EPOCH + timedelta(days=int(n))
+        except ValueError:
+            pass
+        return None
+
+    def _day(txt):
+        """'1-sen', '14', '2026-09-14' -> oyning kuni."""
+        f = _full_date(txt)
+        if f is not None:
+            return f.day
+        t = str(txt or "").strip()
+        if not t:
+            return None
         digits = ""
         for ch in t:
             if ch.isdigit():
@@ -2340,15 +2429,21 @@ def import_plan(payload: dict = Body(...),
         if not isinstance(r, dict):
             continue
         title = _g(r, "Mavzu", "Post mavzusi", "Title")
-        dnum = _day(_g(r, "Sana", "Date"))
-        if not title or not dnum:
-            if title or _g(r, "Sana"):
-                bad.append({"row": i + 1, "why": "sana yoki mavzu yo'q"})
-            continue
-        try:
-            pd = date(y, m, dnum)
-        except ValueError:
-            bad.append({"row": i + 1, "why": f"{dnum}-kun bu oyda yo'q"})
+        sana_raw = _g(r, "Sana", "Date")
+        pd = _full_date(sana_raw)        # faylda to'liq sana bormi?
+        if pd is None:
+            dnum = _day(sana_raw)
+            if not title or not dnum:
+                if title or sana_raw:
+                    bad.append({"row": i + 1, "why": "sana yoki mavzu yo'q"})
+                continue
+            try:
+                pd = date(y, m, dnum)
+            except ValueError:
+                bad.append({"row": i + 1, "why": f"{dnum}-kun bu oyda yo'q"})
+                continue
+        elif not title:
+            bad.append({"row": i + 1, "why": "mavzu yo'q"})
             continue
         if (pd, title.strip().lower()) in have:
             skipped.append({"date": pd.isoformat(), "title": title})

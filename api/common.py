@@ -504,12 +504,32 @@ def _backfill_public_ids():
     finally:
         db.close()
 
-SCHEMA_STAMP = "stamp_2026_08_24"  # grammar_questions.language
-# MUHIM: YANGI JADVAL qo'shsangiz shu satrni ALBATTA yangilang.
-# Sababi: ensure_tables() sxema "tayyor" deb belgilangan bo'lsa
-# hech nima yaratmaydi (sovuq start tezligi uchun). Stamp
-# o'zgarmasa jonli bazada yangi jadval YARATILMAY qoladi va
-# so'rov "relation ... does not exist" bilan yiqiladi.
+# ---------------------------------------------------------------
+#  SXEMA SHTAMPI
+#
+#  Sovuq start tez bo'lishi uchun jadval va ustunlar HAR SAFAR
+#  tekshirilmaydi: bazada shu shtamp yozuvi bo'lsa, sxema "tayyor"
+#  deb hisoblanadi va migratsiyalar UMUMAN ishlamaydi.
+#
+#  2026-08-28 — SHU YERDA JIDDIY XATO BO'LDI. Kontent-plan uchun
+#  0010 migratsiyasi qo'shildi, lekin shtamp qo'lda yangilanmadi.
+#  Natijada jonli bazada yangi ustunlar yaratilmadi va contents
+#  jadvaliga har qanday so'rov "no such column: contents.proof"
+#  bilan yiqildi — butun SMM bo'limi ochilmay qoldi.
+#
+#  Shuning uchun shtamp endi QO'LDA yozilmaydi: u oxirgi
+#  migratsiya nomidan avtomat quriladi. Yangi migratsiya
+#  qo'shilishi bilan shtamp o'zi o'zgaradi va migratsiyalar
+#  albatta ishga tushadi. Odam esdan chiqarishi mumkin, kod yo'q.
+#
+#  _STAMP_MANUAL faqat MIGRATSIYASIZ o'zgarish uchun (masalan
+#  yangi JADVAL qo'shilsa — uni create_all yaratadi, migratsiya
+#  kerak emas). Shunda shu sanani yangilash kifoya.
+# ---------------------------------------------------------------
+_STAMP_MANUAL = "2026_08_28"
+SCHEMA_STAMP = "stamp_%s_%s" % (
+    _STAMP_MANUAL,
+    migrations.MIGRATIONS[-1][0] if migrations.MIGRATIONS else "0")
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda

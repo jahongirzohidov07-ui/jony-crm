@@ -484,6 +484,27 @@ export default function StudentProfile() {
         </Link>
       </div>
 
+      {/* -------------------------------- DO'STINGNI OLIB KEL
+          2026-08-28, Jahongir: "referallar holati ko'rinib turishi
+          kerak". Karta 2x2 to'rdan TASHQARIDA va kengroq — bu
+          dastur bolaga pul tejaydi, ko'zga tashlanishi kerak. */}
+      <Link to="/student/referral"
+        className="block rounded-2xl p-4 bg-gradient-to-r from-violet-600 to-brand-600
+                   active:scale-[0.98] transition">
+        <div className="flex items-center gap-3">
+          <span className="text-[30px] shrink-0">🎁</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">
+              Do'stingni olib kel
+            </p>
+            <p className="text-[12px] text-white/85 leading-snug">
+              1 ta do'st — 10%, 5 ta do'st — o'qish BEPUL
+            </p>
+          </div>
+          <ChevronRight size={18} className="text-white/80 shrink-0" />
+        </div>
+      </Link>
+
       {/* ------------------------------------------------ CHIQISH */}
       <button
         onClick={logout}

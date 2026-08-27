@@ -432,6 +432,11 @@ def convert_lead(
         address=lead.address,
         school=lead.school,
         school_grade=lead.grade,
+        # REFERAL (2026-08-28): lid kimning havolasidan kelgan bo'lsa,
+        # bog'lanish o'quvchi kartasiga KO'CHADI. Aks holda bola to'lov
+        # qilganda "kim olib keldi" savoli javobsiz qolardi va
+        # chegirma hech qachon berilmasdi.
+        referred_by_student_id=getattr(lead, "referrer_student_id", None),
     )
     db.add(student)
     db.flush()

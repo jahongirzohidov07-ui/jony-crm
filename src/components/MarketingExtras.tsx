@@ -577,6 +577,110 @@ export function NotifyTab() {
   );
 }
 
+// ============================== Do'st taklifi dasturi (2026-08-28)
+// Jahongir: "referallar holati ko'rinib turishi kerak". Bu YANGI
+// dastur — ilovadagi havola orqali. Pastdagi eski jadval esa
+// QO'LDA yoziladigan "kim kimni olib keldi" (u ham qoladi:
+// hech narsa o'chirilmaydi).
+type RefProgram = {
+  period: string;
+  rows: {
+    student_id: number; name: string; code: string; branch: string | null;
+    leads: number; students: number; paid_this_period: number;
+    level: number; percent: number; earned: number;
+  }[];
+  totals: {
+    inviters: number; leads: number; students: number; paid: number;
+    earned_sum: number; discount_sum: number; discount_count: number;
+  };
+  ladder: { n: number; percent: number }[];
+};
+
+function ReferralProgramPanel() {
+  const [d, setD] = useState<RefProgram | null>(null);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    api.get<RefProgram>("/referral-program")
+      .then(setD)
+      .catch((e) => setErr(e?.message || ""));
+  }, []);
+
+  if (err) return null;
+  if (!d) return <p className="text-sm text-slate-400 py-4">Yuklanmoqda...</p>;
+
+  const money = (n: number) =>
+    (Math.round(n) || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+
+  return (
+    <div className="mb-7">
+      <h3 className="text-sm font-bold text-slate-800 mb-1">
+        Do'st taklifi dasturi (ilova havolasi)
+      </h3>
+      <p className="text-xs text-slate-500 mb-3">
+        {d.period} · o'quvchi havolasi orqali kelganlar. Chegirma:
+        {d.ladder.map((l) => ` ${l.n}-do'st ${l.percent}%`).join(" ·")}.
+        Foizlar qo'shilmaydi.
+      </p>
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+        <Box label="Havola tarqatganlar" value={String(d.totals.inviters)}
+             tone="brand" />
+        <Box label="Kelgan lidlar" value={String(d.totals.leads)} />
+        <Box label="O'quvchi bo'ldi" value={String(d.totals.students)} />
+        <Box label="Shu oyda to'ladi" value={String(d.totals.paid)}
+             hint="chegirma shundan hisoblanadi" />
+        <Box label="Ishlab topilgan chegirma"
+             value={money(d.totals.earned_sum) + " so'm"}
+             hint={`${d.totals.discount_count} ta qatorda ` +
+                   `${money(d.totals.discount_sum)} so'm shu oyga`} />
+      </div>
+      {d.rows.length === 0 ? (
+        <p className="text-xs text-slate-400 py-3">
+          Hali hech kim havolasidan odam olib kelmagan.
+        </p>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-slate-200">
+          <table className="w-full text-xs">
+            <thead className="bg-slate-50 text-slate-500">
+              <tr>
+                <th className="text-left px-3 py-2">O'quvchi</th>
+                <th className="text-left px-3 py-2">Filial</th>
+                <th className="text-right px-3 py-2">Lid</th>
+                <th className="text-right px-3 py-2">O'quvchi</th>
+                <th className="text-right px-3 py-2">Shu oyda to'ladi</th>
+                <th className="text-right px-3 py-2">Daraja</th>
+                <th className="text-right px-3 py-2">Chegirma</th>
+              </tr>
+            </thead>
+            <tbody>
+              {d.rows.map((r) => (
+                <tr key={r.student_id} className="border-t border-slate-100">
+                  <td className="px-3 py-2 font-medium text-slate-800">
+                    {r.name}
+                    <span className="text-slate-400 ml-1.5">{r.code}</span>
+                  </td>
+                  <td className="px-3 py-2 text-slate-500">{r.branch || "-"}</td>
+                  <td className="px-3 py-2 text-right">{r.leads}</td>
+                  <td className="px-3 py-2 text-right">{r.students}</td>
+                  <td className="px-3 py-2 text-right font-semibold">
+                    {r.paid_this_period}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    {r.percent ? `${r.percent}%` : "-"}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    {r.earned ? money(r.earned) + " so'm" : "-"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ========================================================== Referral
 export function ReferralTab() {
   const [d, setD] = useState<ReferralReport | null>(null);
@@ -585,10 +689,16 @@ export function ReferralTab() {
     api.get<ReferralReport>("/referrals").then(setD);
   }, []);
 
-  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
-
   return (
     <div>
+      <ReferralProgramPanel />
+      <h3 className="text-sm font-bold text-slate-800 mb-3">
+        Qo'lda kiritilgan referrallar
+      </h3>
+      {!d ? (
+        <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>
+      ) : (
+      <div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         <Box label="Olib kelganlar" value={String(d.inviters)} tone="brand" />
         <Box
@@ -661,6 +771,8 @@ export function ReferralTab() {
         <Gift size={11} className="mt-0.5 shrink-0" />
         {d.hint}
       </p>
+      </div>
+      )}
     </div>
   );
 }

@@ -298,7 +298,12 @@ LEAD_SOURCES = [
     # 2026-08-13, Jahongir: "saytimizga ariza qoldirsa avtomat JonyOS
     # ga ... lid bolib tushsin va manbasi website bo'ladigan qil"
     "website",    # Sayt (jonyacademy.uz) formasi
-    "referral",   # Tanish orqali
+    "referral",   # Tanish orqali (qo'lda kiritilgan)
+    # 2026-08-28, Jahongir: "o'quvchiga maxsus link beriladi ... shu
+    # link orqali ... adminlarga so'rov boradi yangi lid bo'lib".
+    # ALOHIDA manba: "tanish orqali" bilan aralashsa, referal
+    # dasturining haqiqiy samarasi ko'rinmay qoladi.
+    "app_referral",  # Do'st taklifi (Jony Student ilovasi havolasi)
     "ads",        # Reklama
     "other",      # Boshqa
 ]
@@ -311,6 +316,7 @@ LEAD_SOURCE_DEFAULT_STAGE = {
     "telegram": "new",
     "website": "new",
     "referral": "new",
+    "app_referral": "new",
     "ads": "new",
     "other": "new",
 }
@@ -682,6 +688,7 @@ LEAD_SOURCE_LABELS = {
     "telegram": "Telegram",
     "website": "Sayt (jonyacademy.uz)",
     "referral": "Tanish orqali",
+    "app_referral": "Do'st taklifi (ilova)",
     "ads": "Reklama",
     "other": "Boshqa",
 }
@@ -692,6 +699,7 @@ MARKETING_CHANNEL_LABELS = {
     "telegram": "Telegram",
     "website": "Sayt",
     "referral": "Tanish orqali",
+    "app_referral": "Do'st taklifi (ilova)",
     "ads": "Reklama (boshqa)",
     "other": "Boshqa",
 }
@@ -1313,12 +1321,78 @@ DISCOUNT_TYPES = [
     ("individual", "Individual ruxsat", "Asoschi shaxsan ruxsat bergan"),
     ("coin_shop", "Jony Shop (coinga)",
      "O'quvchi o'z coinига do'kondan sotib olgan"),
+    ("app_referral", "Do'st taklifi (avtomat)",
+     "Havola orqali kelgan do'sti to'lov qilgani uchun - tizim o'zi qo'yadi"),
 ]
 DISCOUNT_TYPE_LABELS = {k: lbl for k, lbl, _ in DISCOUNT_TYPES}
 DISCOUNT_TYPE_HINTS = {k: h for k, _, h in DISCOUNT_TYPES}
 
 # Qaysi chegirmani tizim o'zi boshqaradi - qo'lda tegilmaydi.
-AUTO_DISCOUNT_TYPES = ["family", "coin_shop"]
+AUTO_DISCOUNT_TYPES = ["family", "coin_shop", "app_referral"]
+
+# ======================================================================
+#  REFERAL DASTURI  (2026-08-28, Jahongir)
+# ======================================================================
+#
+#  Jahongirning so'zi bilan:
+#    "o'quvchiga maxsus link beriladi ... u o'quvchi ro'yxatdan o'tadi
+#     va adminlarga so'rov boradi yangi lid bo'lib, lidni obrabotka
+#     qilib guruhga qo'yib to'lov qilgandan keyin 10% chegirma oladi,
+#     2-do'sti uchun esa 30%, 3-do'sti uchun esa 50% ... 4-do'sti
+#     uchun 75%, 5-do'sti uchun 100%"
+#    "yani bitta olib kelsa shu 10% bo'ladi 2-do'stiga esa 30% bo'ladi
+#     QO'SHILMAYDI 10+30=40% bo'lmaydi"
+#    "faqat 1 oy bepul, to'laganlargina hisobga olinadi, 2 oy emas SHU
+#     OY ichida qilaylik"
+#    "oilaviy chegirmasi bo'lsa o'sha to'laydigan summadan 10% foiz
+#     hisoblanib ketaveradi"
+#
+#  Uchta qoida shu yerda, bitta joyda turadi - kod bo'ylab tarqalib
+#  ketmasin:
+#
+#  1) PILLAPOYA QO'SHILMAYDI. Daraja oldingisini ALMASHTIRADI.
+#     2 ta do'st = 30% (10+30=40 EMAS).
+REFERRAL_LADDER = {1: 10.0, 2: 30.0, 3: 50.0, 4: 75.0, 5: 100.0}
+REFERRAL_MAX_LEVEL = 5
+
+#  2) OYNA - BIR OY. Do'st SHU OY ichida to'lasa hisobga olinadi.
+#     Keyingi oy hisob noldan boshlanadi.
+REFERRAL_WINDOW = "month"
+
+#  3) MUKOFOT - BIR OYGA. Chegirma bitta oyga beriladi, keyin tugaydi.
+REFERRAL_REWARD_MONTHS = 1
+
+#  4) BOSHQA CHEGIRMA BILAN QANDAY QO'SHILADI. Foiz oylik narxdan
+#     emas, o'quvchi HAQIQATDA TO'LAYDIGAN summadan olinadi. Ya'ni
+#     oilaviy 20% bo'lsa: 500 000 -> 400 000 -> referal 10% -> 40 000
+#     chegirma -> 360 000 to'laydi. Jami 28%, 30% emas.
+REFERRAL_ON_PAYABLE = True
+
+# Do'st qaysi bosqichda ekani (o'quvchiga ko'rinadigan matn).
+REFERRAL_STAGE_LABELS = {
+    "invited": "Ro'yxatdan o'tdi",
+    "processing": "Admin bog'lanmoqda",
+    "enrolled": "Guruhga qo'shildi",
+    "paid": "To'lov qildi - hisobga olindi",
+    "expired": "Muddati o'tdi (boshqa oyda)",
+}
+
+def referral_percent(n_paid: int) -> float:
+    """Shu oyda TO'LAGAN do'stlar soniga qarab foiz.
+
+    Qo'shilmaydi: 3 ta do'st = 50%, (10+30+50)=90% EMAS."""
+    if n_paid <= 0:
+        return 0.0
+    return REFERRAL_LADDER[min(int(n_paid), REFERRAL_MAX_LEVEL)]
+
+
+def referral_next_hint(n_paid: int) -> str:
+    """Keyingi darajagacha nima qilish kerakligi - ilovada ko'rinadi."""
+    if n_paid >= REFERRAL_MAX_LEVEL:
+        return "Eng yuqori daraja - bu oy to'liq bepul!"
+    nxt = int(n_paid) + 1
+    return (f"Yana 1 ta do'st to'lov qilsa - {REFERRAL_LADDER[nxt]:.0f}% "
+            f"chegirma ({nxt}-do'st)")
 
 # DO'KON CHEGIRMASI QAYSI OYGA TUSHADI.
 #

@@ -102,6 +102,7 @@ import notifications as _r_notifications
 import nps as _r_nps
 import parents as _r_parents
 import student_app as _r_student_app
+import referral_api as _r_referral
 import students as _r_students
 import support as _r_support
 import system as _r_system
@@ -139,6 +140,7 @@ app.include_router(_r_notifications.router)
 app.include_router(_r_nps.router)
 app.include_router(_r_parents.router)
 app.include_router(_r_student_app.router)
+app.include_router(_r_referral.router)
 app.include_router(_r_students.router)
 app.include_router(_r_support.router)
 app.include_router(_r_system.router)

@@ -91,6 +91,20 @@ MIGRATIONS = [
         "ALTER TABLE content_metrics ADD COLUMN fetched_at TIMESTAMP",
         "ALTER TABLE content_metrics ADD COLUMN fetch_note VARCHAR",
     ]),
+    # 2026-08-28, Jahongir: "o'quvchiga maxsus link beriladi ... u
+    # o'quvchi ro'yxatdan o'tadi va adminlarga so'rov boradi yangi lid
+    # bo'lib". Referal uchun uchta bog'lanish kerak.
+    ("0011_referral", [
+        "ALTER TABLE students ADD COLUMN ref_code VARCHAR",
+        "ALTER TABLE students ADD COLUMN referred_by_student_id INTEGER",
+        "ALTER TABLE leads ADD COLUMN referrer_student_id INTEGER",
+        "CREATE UNIQUE INDEX IF NOT EXISTS ix_students_ref_code "
+        "ON students (ref_code)",
+        "CREATE INDEX IF NOT EXISTS ix_students_referred_by "
+        "ON students (referred_by_student_id)",
+        "CREATE INDEX IF NOT EXISTS ix_leads_referrer "
+        "ON leads (referrer_student_id)",
+    ]),
 ]
 
 

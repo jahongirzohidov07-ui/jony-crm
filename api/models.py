@@ -396,6 +396,18 @@ class Student(Base):
     # o'tganda ko'tariladi.
     subject = Column(String, nullable=True)
     level = Column(String, nullable=True)
+    # ---- REFERAL (2026-08-28, Jahongir: "o'quvchiga maxsus link
+    # beriladi ... do'sti to'lov qilgandan keyin chegirma oladi") ----
+    # ref_code — do'stga yuboriladigan havoladagi qisqa kod
+    # (jonyos.uz/r/JONY-7KQ2). public_id emas: u ichki raqam va
+    # tashqariga chiqmasligi kerak. Kod O'ZGARMAYDI — bola linkni
+    # bir marta tarqatib, keyin ham ishlab tursin.
+    ref_code = Column(String, unique=True, index=True, nullable=True)
+    # Kim taklif qilgan. Lid orqali ham topsa bo'lardi, lekin to'g'ridan
+    # to'g'ri ustun bo'lgani ancha ishonchli: lid arxivlansa yoki
+    # birlashtirilsa ham bog'lanish yo'qolmaydi.
+    referred_by_student_id = Column(Integer, ForeignKey("students.id"),
+                                    nullable=True, index=True)
     # O'quvchining o'z hisobiga bog'lanish. Bo'lsa — u kirib coin
     # balansini ko'radi va sovg'a so'ray oladi.
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
@@ -548,6 +560,10 @@ class Lead(Base):
     content_id = Column(Integer, ForeignKey("contents.id"),
                         nullable=True, index=True)
     campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=True)
+    # REFERAL: qaysi o'quvchining havolasidan kelgan (2026-08-28).
+    # Shu ustun bo'lmasa "kim olib keldi" savoli javobsiz qoladi.
+    referrer_student_id = Column(Integer, ForeignKey("students.id"),
+                                 nullable=True, index=True)
     social_message_id = Column(Integer, nullable=True)
     converted_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
     created_by = Column(String, nullable=True)
@@ -556,7 +572,14 @@ class Lead(Base):
 
     branch = relationship("Branch")
     assigned_user = relationship("User")
-    converted_student = relationship("Student")
+    # 2026-08-28: leads -> students ga endi IKKITA yo'l bor
+    # (converted_student_id va referrer_student_id), shuning uchun
+    # SQLAlchemy'ga qaysi ustun ekanini aniq aytish SHART. Aytilmasa
+    # butun model qatlami ishga tushmaydi.
+    converted_student = relationship("Student",
+                                     foreign_keys=[converted_student_id])
+    referrer_student = relationship("Student",
+                                    foreign_keys=[referrer_student_id])
 
 
 class Expense(Base):

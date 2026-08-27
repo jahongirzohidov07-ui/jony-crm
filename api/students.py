@@ -1390,6 +1390,40 @@ def add_payment(
         except Exception:
             pass
 
+    # ---------------------------------------------------------------
+    #  REFERAL (2026-08-28, Jahongir: "guruhga qo'yib to'lov qilgandan
+    #  keyin 10% chegirma oladi"). Bu o'quvchi kimningdir havolasi
+    #  orqali kelgan bo'lsa — o'sha odamning chegirmasi SHU YERDA,
+    #  to'lov paytida hisoblanadi. Kechikkan hisob yo'q: bola to'lasa,
+    #  do'sti chegirmani darrov ko'radi.
+    #
+    #  on_payment() HECH QACHON xato tashlamaydi: referal muammosi
+    #  tufayli to'lov qabul qilish yiqilishi mumkin emas.
+    # ---------------------------------------------------------------
+    if payload.kind == "payment" and amount > 0:
+        try:
+            import referral as _ref
+            res = _ref.on_payment(db, s)
+            if res.get("ok") and res.get("friends"):
+                ref = db.query(models.Student).get(res["referrer_id"])
+                if ref is not None and ref.telegram_chat_id:
+                    try:
+                        notify.send(
+                            ref.telegram_chat_id,
+                            "🎉 Do'stingiz to'lov qildi!\n"
+                            f"Sizda endi {res['percent']:.0f}% chegirma "
+                            f"({res['friends']}-do'st).\n"
+                            f"Summa: {int(res['amount']):,} so'm"
+                            .replace(",", " ")
+                            + f"\nQaysi oyga: {res['period']}")
+                    except Exception:
+                        pass
+        except Exception:
+            try:
+                db.rollback()
+            except Exception:
+                pass
+
     db.refresh(payment)
     return payment
 

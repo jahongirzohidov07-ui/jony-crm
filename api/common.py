@@ -2250,16 +2250,25 @@ def _expire_discounts(db: Session) -> int:
         db.commit()
     return n
 
-def _student_discount_percent(db: Session, s: models.Student) -> float:
+def _student_discount_percent(db: Session, s: models.Student,
+                              skip_kinds=()) -> float:
     """O'quvchining jami chegirma foizi: oilaviy (avtomat) + tasdiqlangan
-    chegirmalar. Chegara MAX_TOTAL_DISCOUNT_PERCENT."""
-    total = _family_discount_percent(db, s)
+    chegirmalar. Chegara MAX_TOTAL_DISCOUNT_PERCENT.
+
+    skip_kinds — hisobga OLINMAYDIGAN turlar. Referal dvigateliga kerak
+    (2026-08-28, Jahongir: "oilaviy chegirmasi bo'lsa o'sha to'laydigan
+    summadan 10% foiz hisoblanib ketaveradi"): referal foizi
+    "boshqa chegirmalardan keyingi" summadan olinadi, shuning uchun
+    dvigatel o'z chegirmasini chiqarib tashlab hisoblashi kerak. Aks
+    holda o'z-o'ziga bog'liq halqa hosil bo'lardi."""
+    total = 0.0 if "family" in skip_kinds else _family_discount_percent(db, s)
     rows = (db.query(models.Discount)
             .filter(models.Discount.student_id == s.id,
                     models.Discount.status == "active").all())
     fee = s.group.monthly_fee if s.group else 0.0
     for d in rows:
-        if d.kind == "family" or not _discount_alive(d):
+        if d.kind == "family" or d.kind in skip_kinds \
+                or not _discount_alive(d):
             continue
         if d.percent:
             total += d.percent
@@ -2419,6 +2428,12 @@ def _activate_student(db: Session, s: models.Student, *, on: date,
     if lead:
         lead.stage = "converted"
         lead.converted_student_id = s.id
+        # REFERAL: bu yo'l orqali kelgan o'quvchida ham bog'lanish
+        # saqlansin (o'quvchi avval qo'lda ochilib, keyin lid bilan
+        # bog'langan bo'lishi mumkin).
+        if getattr(lead, "referrer_student_id", None) \
+                and not getattr(s, "referred_by_student_id", None):
+            s.referred_by_student_id = lead.referrer_student_id
 
     audit.log(db, user, entity="student", action="activate", entity_id=s.id,
               entity_label=s.full_name, field="status",
@@ -5132,11 +5147,16 @@ def _shop_discount_sum(db: Session, s, d) -> float:
     return round(fee * pct / 100.0, 0)
 
 
-def _apply_shop_discounts(db: Session, period: str = None) -> int:
-    """Balansga tushirilmagan do'kon chegirmalarini tushiradi.
-    Faqat o'sha oyning hisobi mavjud o'quvchilarga."""
+def _apply_shop_discounts(db: Session, period: str = None,
+                          kind: str = "coin_shop") -> int:
+    """Balansga tushirilmagan avtomat chegirmalarni tushiradi.
+    Faqat o'sha oyning hisobi mavjud o'quvchilarga.
+
+    kind — qaysi tur ("coin_shop" do'kon, "app_referral" do'st taklifi).
+    Bitta yo'l ikkalasiga xizmat qiladi: balansga tushirish mantig'i
+    ikki joyda takrorlanib, keyin bir-biridan uzoqlashib ketmasin."""
     q = (db.query(models.Discount)
-         .filter(models.Discount.kind == "coin_shop",
+         .filter(models.Discount.kind == kind,
                  models.Discount.status == "active",
                  models.Discount.applied_at.is_(None)))
     if period:
@@ -5157,10 +5177,14 @@ def _apply_shop_discounts(db: Session, period: str = None) -> int:
         amount = _shop_discount_sum(db, s, d)
         if amount <= 0:
             continue
+        who = ("Do'st taklifi (avtomat)" if kind == "app_referral"
+               else "Jony Shop (coin)")
+        what = ("Do'st taklifi chegirmasi" if kind == "app_referral"
+                else "Jony Shop chegirmasi")
         db.add(models.Payment(
             student_id=d.student_id, amount=abs(amount), kind="discount",
-            period=d.period, created_by="Jony Shop (coin)",
-            note=f"{d.period} - Jony Shop chegirmasi ({d.reason})"))
+            period=d.period, created_by=who,
+            note=f"{d.period} - {what} ({d.reason})"))
         d.applied_at = datetime.utcnow()
         made += 1
     if made:

@@ -62,6 +62,8 @@ const MySchedule = lazy(() => import("./pages/MySchedule"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
 const Parent = lazy(() => import("./pages/Parent"));
 const Apply = lazy(() => import("./pages/Apply"));
+// Do'st ko'radigan marketing sahifasi — loginsiz (2026-08-28)
+const Referral = lazy(() => import("./pages/Referral"));
 const ParentHome = lazy(() => import("./pages/ParentHome"));
 const ParentPayments = lazy(() => import("./pages/ParentPayments"));
 const ParentGamification = lazy(() => import("./pages/ParentGamification"));
@@ -123,6 +125,8 @@ const StudentLeaderboard = lazy(
 );
 const StudentProfile = lazy(() => import("./pages/student/StudentProfile"));
 const StudentShop = lazy(() => import("./pages/student/StudentShop"));
+const StudentReferral = lazy(
+  () => import("./pages/student/StudentReferral"));
 const StudentRoadmap = lazy(() => import("./pages/student/StudentRoadmap"));
 const StudentSettings = lazy(() => import("./pages/student/StudentSettings"));
 const StudentPayments = lazy(() => import("./pages/student/StudentPayments"));
@@ -206,6 +210,8 @@ function AppRoutes() {
             ma'lumotni bir marta yuklab, Outlet orqali beradi. */}
         {/* Ochiq ariza formasi — loginsiz (2026-08-12) */}
         <Route path="/apply" element={<Apply />} />
+        {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
+        <Route path="/r/:code" element={<Referral />} />
         <Route path="/parent/:token" element={<Parent />}>
           <Route index element={<ParentHome />} />
           <Route path="payments" element={<ParentPayments />} />
@@ -270,6 +276,7 @@ function AppRoutes() {
           <Route path="grammar/:topic" element={<StudentGrammarPlay />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="shop" element={<StudentShop />} />
+          <Route path="referral" element={<StudentReferral />} />
           <Route path="roadmap" element={<StudentRoadmap />} />
           <Route path="settings" element={<StudentSettings />} />
           <Route path="payments" element={<StudentPayments />} />

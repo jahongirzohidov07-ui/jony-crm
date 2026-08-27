@@ -3200,6 +3200,24 @@ CONTENT_PILLARS = [
      "Narxi qimmat, vaqtim yo'q, natija qachon bo'ladi"),
     ("culture", "Brand Culture", "slate",
      "Tarix, qadriyat, jamoa, missiya, muhit"),
+    # 2026-08-27: Jahongirning kontent-plan jadvalidagi yo'nalishlar.
+    # Eskilari O'CHIRILMADI — ular bilan yozilgan kontent buzilmasin.
+    ("env", "Muhit va jarayon", "cyan",
+     "Koridor, tanaffus, dars jarayoni — JONY = MUHIT"),
+    ("dayx", "DAY X", "amber",
+     "Yillik poyga: Umra, iPhone, kompyuter"),
+    ("useful", "Foydali ta'lim", "sky",
+     "IELTS/CEFR maslahat, trap, so'z, mini-dars"),
+    ("system", "Ta'lim tizimi", "indigo",
+     "Daraja testi, unit-test, joylashuv, nazorat"),
+    ("team", "Ustozlar va jamoa", "violet",
+     "Ustoz-serial, metod, jamoa"),
+    ("stories", "Natijalar va hikoyalar", "emerald",
+     "O'quvchi natijasi va uning yo'li"),
+    ("app", "Student App", "blue",
+     "Rayonda yagona ilova — imkoniyatlari"),
+    ("offer", "To'g'ridan-to'g'ri taklif", "rose",
+     "Qabul, joy soni, muddat, narx"),
 ]
 PILLAR_LABELS = {k: lbl for k, lbl, _t, _d in CONTENT_PILLARS}
 PILLAR_TONE = {k: t for k, _l, t, _d in CONTENT_PILLARS}
@@ -3210,10 +3228,89 @@ PILLAR_TONE = {k: t for k, _l, t, _d in CONTENT_PILLARS}
 FUNNEL_STAGES = [
     ("tofu", "Tanilish"),
     ("mofu", "Ishonch"),
-    ("bofu", "Qaror"),
-    ("retention", "Tavsiya"),
+    ("bofu", "Sotuv"),
+    ("retention", "G'amxo'rlik"),
+    # 2026-08-27: jadvalda alohida bosqich — o'quvchi do'stiga
+    # tavsiya qiladigan kontent (referral tizimining asosi).
+    ("advocacy", "Tavsiya"),
 ]
 FUNNEL_LABELS = dict(FUNNEL_STAGES)
+
+
+# =====================================================================
+#  EXCEL KONTENT-PLANNI IMPORT QILISH XARITASI (2026-08-27)
+#
+#  Jahongir tayyor jadvalni yubordi va u O'ZBEKCHA so'zlar bilan
+#  to'ldirilgan ("Muhit va jarayon", "Tanilish", "Reels-reportaj").
+#  Tizim ichida esa kalitlar ishlatiladi. Shu xarita ikkalasini
+#  bog'laydi.
+#
+#  QOIDA: xarita KENG bo'lsin. SMM keyingi oyda "Reels — reportaj"
+#  deb yozib qo'ysa ham tanilishi kerak, aks holda import har oy
+#  qo'lda tuzatishga aylanadi.
+# =====================================================================
+IMPORT_PILLARS = {
+    "muhit va jarayon": "env", "muhit": "env", "jarayon": "env",
+    "day x": "dayx", "dayx": "dayx",
+    "foydali ta'lim": "useful", "foydali talim": "useful",
+    "ta'lim tizimi": "system", "talim tizimi": "system",
+    "ustozlar va jamoa": "team", "ustozlar": "team", "jamoa": "team",
+    "natijalar va hikoyalar": "stories", "natijalar": "stories",
+    "student app": "app", "app": "app", "ilova": "app",
+    "muammolar va e'tirozlar": "objection", "e'tirozlar": "objection",
+    "to'g'ridan-to'g'ri taklif": "offer", "taklif": "offer",
+    "sotuv": "sales", "brend": "culture", "brand culture": "culture",
+}
+IMPORT_FUNNELS = {
+    "tanilish": "tofu", "tanishtirish": "tofu",
+    "ishonch": "mofu", "qiziqtirish": "mofu",
+    "sotuv": "bofu", "qaror": "bofu",
+    "g'amxo'rlik": "retention", "gamxorlik": "retention",
+    "saqlab qolish": "retention",
+    "tavsiya": "advocacy",
+}
+IMPORT_GOALS = {
+    "qamrov": "awareness", "tanilish": "awareness",
+    "ishonch": "trust",
+    "muloqot": "community", "community": "community",
+    "sotuv": "sales", "lead": "lead", "murojaat": "lead",
+    "tadbir": "event", "referral": "referral",
+}
+IMPORT_FORMATS = [
+    # (matnda shu bo'lsa, format shu bo'ladi) — tartib MUHIM:
+    # avval aniqrog'i tekshiriladi.
+    ("karusel", "carousel"), ("carousel", "carousel"),
+    ("stories", "story"), ("story", "story"),
+    ("intervyu", "testimonial"), ("testimonial", "testimonial"),
+    ("live", "live"), ("efir", "live"),
+    ("maqola", "article"), ("post", "static"),
+    ("reels", "reels"),
+    ("video", "long_video"),
+]
+
+
+def import_key(value, table, default=None):
+    """O'zbekcha matndan tizim kalitini topadi."""
+    t = str(value or "").strip().lower()
+    if not t:
+        return default
+    if t in table:
+        return table[t]
+    for k, v in table.items():          # qismiy moslik
+        if k in t:
+            return v
+    return default
+
+
+def import_format(value, default="reels"):
+    t = str(value or "").strip().lower()
+    if not t:
+        return default
+    for needle, key in IMPORT_FORMATS:
+        if needle in t:
+            # "Video (15 daqiqa)" uzun video, "Reels-demo" — reels
+            return key
+    return default
 
 # =====================================================================
 #  SSENARIY SHABLONLARI (2026-08-27)

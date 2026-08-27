@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   Copy, RefreshCw, Link2, FileText, Check, X, Plus,
-  TrendingUp, AlertTriangle, ChevronDown,
+  TrendingUp, AlertTriangle, ChevronDown, Upload,
 } from "lucide-react";
 import { api } from "../lib/api";
 
@@ -42,6 +42,7 @@ export function ContentPlan() {
   const [busy, setBusy] = useState<number | "all" | null>(null);
   const [msg, setMsg] = useState("");
   const [tick, setTick] = useState(0);
+  const [preview, setPreview] = useState<Any>(null);
 
   const load = useCallback(() => {
     api.get<Any>(`/smm/plan?year=${year}&month=${month}`)
@@ -97,6 +98,59 @@ export function ContentPlan() {
     } finally { setBusy(null); }
   };
 
+  /* EXCEL IMPORT (2026-08-27).
+     Fayl BROUZERDA o'qiladi — serverda Excel kutubxonasi yo'q va uni
+     qo'shish serverless to'plamini og'irlashtiradi. Brouzerda esa
+     xlsx kutubxonasi allaqachon bor (hisobot yuklab olish uchun).
+     Avval "ko'rib chiqish", keyin haqiqiy import. */
+  const pickFile = async (file: File) => {
+    setMsg("Fayl o'qilmoqda…");
+    try {
+      const XLSX = await import("xlsx");
+      const wb = XLSX.read(await file.arrayBuffer(), { type: "array" });
+      let best: Any[] = [];
+      for (const name of wb.SheetNames) {
+        const aoa: Any[][] = XLSX.utils.sheet_to_json(wb.Sheets[name],
+          { header: 1, blankrows: false, defval: "" });
+        const hi = aoa.findIndex((r: Any[]) =>
+          r.some((c: Any) => String(c).trim().toLowerCase() === "sana"));
+        if (hi < 0) continue;
+        const hdr = aoa[hi].map((c: Any) => String(c).trim());
+        const rows = aoa.slice(hi + 1)
+          .filter((r: Any[]) => String(r[0] ?? "").trim())
+          .map((r: Any[]) => Object.fromEntries(
+            hdr.map((h: string, i: number) => [h, r[i] ?? ""])));
+        if (rows.length > best.length) best = rows;
+      }
+      if (best.length === 0) {
+        setMsg("Faylda «Sana» ustuni topilmadi. Kontent-plan varag'i "
+          + "sarlavhalari: Sana, Vaqt, Platforma, Mavzu…");
+        return;
+      }
+      const r = await api.post<Any>("/smm/plan/import",
+        { year, month, rows: best, dry_run: true });
+      setPreview({ ...r, rows: best });
+      setMsg("");
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Fayl o'qilmadi");
+    }
+  };
+
+  const doImport = async () => {
+    if (!preview) return;
+    setBusy("all");
+    try {
+      const r = await api.post<Any>("/smm/plan/import",
+        { year, month, rows: preview.rows, dry_run: false });
+      setMsg(`${r.added} ta post qo'shildi`
+        + (r.skipped ? `, ${r.skipped} tasi allaqachon bor edi` : ""));
+      setPreview(null);
+      setTick((k) => k + 1);
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(null); }
+  };
+
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
 
   const rows: Any[] = d.rows || [];
@@ -121,6 +175,15 @@ export function ContentPlan() {
           {withMetric.length} tasida natija
         </span>
         <div className="flex-1" />
+        <label className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium cursor-pointer hover:bg-slate-50">
+          <Upload size={14} /> Excel'dan yuklash
+          <input type="file" accept=".xlsx,.xls" className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) pickFile(f);
+              e.target.value = "";
+            }} />
+        </label>
         <button
           onClick={fetchAll}
           disabled={busy === "all" || published.length === 0}
@@ -135,6 +198,74 @@ export function ContentPlan() {
         <div className="mb-3 px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-[13px] text-slate-700 flex items-start gap-2">
           <span className="flex-1">{msg}</span>
           <button onClick={() => setMsg("")}><X size={14} /></button>
+        </div>
+      )}
+
+      {/* --- import: ko'rib chiqish --- */}
+      {preview && (
+        <div className="mb-4 rounded-xl border border-brand-300 bg-brand-50/50 p-4">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <p className="text-sm font-medium text-slate-800">
+              Faylda {preview.will_add + preview.skipped} qator topildi
+            </p>
+            <span className="text-[12px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+              {preview.will_add} ta qo'shiladi
+            </span>
+            {preview.skipped > 0 && (
+              <span className="text-[12px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">
+                {preview.skipped} tasi allaqachon bor
+              </span>
+            )}
+            {(preview.bad || []).length > 0 && (
+              <span className="text-[12px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                {preview.bad.length} qator tushunarsiz
+              </span>
+            )}
+            <div className="flex-1" />
+            <button onClick={() => setPreview(null)}
+              className="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-600 text-sm">
+              Bekor
+            </button>
+            <button onClick={doImport}
+              disabled={busy === "all" || !preview.will_add}
+              className="px-4 py-1.5 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-40">
+              Qo'shish
+            </button>
+          </div>
+          <div className="max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white">
+            <table className="w-full text-[12px]">
+              <tbody>
+                {(preview.preview || []).map((r: Any, i: number) => (
+                  <tr key={i} className="border-b border-slate-50">
+                    <td className="px-2 py-1 text-slate-400 tabular-nums w-24 whitespace-nowrap">
+                      {r.date?.slice(5)} {r.time}
+                    </td>
+                    <td className="px-2 py-1 text-slate-800">{r.title}</td>
+                    <td className="px-2 py-1 text-slate-500 w-36">{r.pillar}</td>
+                    <td className="px-2 py-1 text-slate-500 w-20">{r.funnel}</td>
+                    <td className="px-2 py-1 text-slate-500 w-24">{r.fmt}</td>
+                    <td className="px-2 py-1 w-32">
+                      {r.owner ? (
+                        <span className={r.owner_found ? "text-slate-600" : "text-amber-600"}>
+                          {r.owner}{r.owner_found ? "" : " (topilmadi)"}
+                        </span>
+                      ) : <span className="text-slate-300">—</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {(preview.bad || []).length > 0 && (
+            <p className="text-[12px] text-amber-700 mt-2">
+              Tushunarsiz qatorlar:{" "}
+              {preview.bad.map((b: Any) => `${b.row}-qator (${b.why})`).join(", ")}
+            </p>
+          )}
+          <p className="text-[11px] text-slate-500 mt-2">
+            Mas'ul ismi topilmasa post baribir qo'shiladi — izohga
+            yoziladi va keyin qo'lda biriktiriladi.
+          </p>
         </div>
       )}
 

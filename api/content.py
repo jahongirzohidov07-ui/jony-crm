@@ -8,7 +8,8 @@ import json
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import (APIRouter, Body, Depends, FastAPI, HTTPException,
+                     Request)
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
@@ -2254,3 +2255,183 @@ def content_analytics(months: int = 3, branch_id: int | None = None,
         "by_weekday": by_day, "by_hour": by_hour,
         "top": top, "weak": weak, "tips": tips,
     }
+
+
+# =====================================================================
+#  EXCEL KONTENT-PLANNI IMPORT QILISH (2026-08-27)
+#
+#  Jahongir: tayyor Excel bor, uni qo'lda ko'chirish 30 qatorlik ish.
+#
+#  FAYL BROUZERDA O'QILADI. Sabab: serverda Excel kutubxonasi yo'q
+#  va uni qo'shish serverless to'plamini og'irlashtiradi. Brouzerda
+#  esa xlsx kutubxonasi allaqachon bor (hisobot yuklab olish uchun).
+#  Shuning uchun bu yerga TAYYOR qatorlar keladi.
+#
+#  IKKI BOSQICH: avval dry_run=1 bilan ko'rib chiqiladi ("nima
+#  qo'shiladi, nima o'tkazib yuboriladi"), keyin haqiqiy import.
+#  Pul emas, lekin 30 qatorni ko'r-ko'rona bazaga yozish yaxshi
+#  odat emas.
+#
+#  TAKROR QO'SHILMAYDI: shu sana + shu mavzu allaqachon bo'lsa,
+#  qator O'TKAZIB YUBORILADI. Import ikki marta bosilsa ham
+#  kontent ikkilanmaydi.
+# =====================================================================
+
+@router.post("/api/smm/plan/import")
+def import_plan(payload: dict = Body(...),
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.SMM_ACCESS))):
+    """{year, month, rows: [...], dry_run: bool, branch_id}
+
+    rows — Excel sarlavhalari bilan: "Sana", "Vaqt", "Platforma",
+    "Auditoriya segmenti", "Kontent ustuni", "Voronka bosqichi",
+    "Maqsad", "Mavzu", "Hook (1-jumla)", "Asosiy fikr", "Dalil",
+    "Format", "CTA", "Mas'ul", "Syomka sanasi", "Kutilayotgan KPI".
+    """
+    today = roles.local_today()
+    y = int(payload.get("year") or today.year)
+    m = int(payload.get("month") or today.month)
+    dry = bool(payload.get("dry_run"))
+    branch_id = payload.get("branch_id") or user.branch_id
+    rows = payload.get("rows") or []
+    if not isinstance(rows, list):
+        raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
+    if len(rows) > 200:
+        raise HTTPException(400, "Bir martada 200 qatordan ko'p bo'lmasin")
+
+    start, end = billing.month_bounds(y, m)
+    have = {(c.planned_date, (c.title or "").strip().lower())
+            for c in db.query(models.Content)
+            .filter(models.Content.planned_date >= start,
+                    models.Content.planned_date <= end).all()}
+
+    def _g(r, *names):
+        for n in names:
+            for k in r:
+                if str(k).strip().lower() == n.strip().lower():
+                    v = r[k]
+                    return str(v).strip() if v is not None else ""
+        return ""
+
+    def _day(txt):
+        """'1-sen', '14', '2026-09-14' -> oyning kuni."""
+        t = str(txt or "").strip()
+        if not t:
+            return None
+        if len(t) >= 10 and t[4] == "-":
+            try:
+                return date.fromisoformat(t[:10]).day
+            except ValueError:
+                pass
+        digits = ""
+        for ch in t:
+            if ch.isdigit():
+                digits += ch
+            elif digits:
+                break
+        return int(digits) if digits else None
+
+    users_by_name = {}
+    for u in db.query(models.User).filter(models.User.is_active == 1).all():
+        users_by_name[(u.full_name or "").strip().lower()] = u.id
+
+    plan, skipped, bad = [], [], []
+    for i, r in enumerate(rows):
+        if not isinstance(r, dict):
+            continue
+        title = _g(r, "Mavzu", "Post mavzusi", "Title")
+        dnum = _day(_g(r, "Sana", "Date"))
+        if not title or not dnum:
+            if title or _g(r, "Sana"):
+                bad.append({"row": i + 1, "why": "sana yoki mavzu yo'q"})
+            continue
+        try:
+            pd = date(y, m, dnum)
+        except ValueError:
+            bad.append({"row": i + 1, "why": f"{dnum}-kun bu oyda yo'q"})
+            continue
+        if (pd, title.strip().lower()) in have:
+            skipped.append({"date": pd.isoformat(), "title": title})
+            continue
+
+        fmt_raw = _g(r, "Format")
+        owner_raw = _g(r, "Mas'ul", "Masul", "Owner")
+        oid = None
+        for nm, uid in users_by_name.items():
+            if nm and nm.split()[0] in owner_raw.lower():
+                oid = uid
+                break
+        sd = _day(_g(r, "Syomka sanasi", "Syomka"))
+        item = {
+            "title": title[:300],
+            "planned_date": pd,
+            "planned_time": _g(r, "Vaqt", "Time") or None,
+            "platform": _g(r, "Platforma", "Platform") or None,
+            "audience": _g(r, "Auditoriya segmenti", "Auditoriya") or None,
+            "pillar": roles.import_key(_g(r, "Kontent ustuni"),
+                                       roles.IMPORT_PILLARS),
+            "funnel": roles.import_key(_g(r, "Voronka bosqichi"),
+                                       roles.IMPORT_FUNNELS),
+            "goal": roles.import_key(_g(r, "Maqsad"), roles.IMPORT_GOALS),
+            "hook": _g(r, "Hook (1-jumla)", "Hook") or None,
+            "message": _g(r, "Asosiy fikr", "Message") or None,
+            "proof": _g(r, "Dalil", "Proof") or None,
+            "fmt": roles.import_format(fmt_raw),
+            "cta": _g(r, "CTA") or None,
+            "owner_id": oid,
+            "owner_raw": owner_raw or None,
+            "shoot_date": (date(y, m, sd)
+                           if sd and 1 <= sd <= 31 else None),
+            "kpi_target": _g(r, "Kutilayotgan KPI", "KPI") or None,
+            "fmt_raw": fmt_raw or None,
+        }
+        plan.append(item)
+
+    if dry:
+        return {
+            "dry_run": True, "year": y, "month": m,
+            "will_add": len(plan), "skipped": len(skipped),
+            "bad": bad,
+            "preview": [{
+                "date": x["planned_date"].isoformat(),
+                "time": x["planned_time"], "title": x["title"],
+                "pillar": roles.PILLAR_LABELS.get(x["pillar"], "—"),
+                "funnel": roles.FUNNEL_LABELS.get(x["funnel"], "—"),
+                "fmt": roles.FORMAT_LABELS.get(x["fmt"], x["fmt"]),
+                "owner": x["owner_raw"],
+                "owner_found": bool(x["owner_id"]),
+            } for x in plan[:60]],
+            "skipped_rows": skipped[:20],
+        }
+
+    made = []
+    for x in plan:
+        note = None
+        if x["fmt_raw"] and x["fmt_raw"].lower() not in (
+                roles.FORMAT_LABELS.get(x["fmt"], "") or "").lower():
+            # Asl so'z saqlanadi: "Reels-reportaj" degan aniqlik
+            # yo'qolmasin.
+            note = f"Format (asl matn): {x['fmt_raw']}"
+        if x["owner_raw"] and not x["owner_id"]:
+            note = ((note + " · ") if note else "") \
+                + f"Mas'ul: {x['owner_raw']}"
+        c = models.Content(
+            title=x["title"], planned_date=x["planned_date"],
+            planned_time=x["planned_time"], platform=x["platform"],
+            audience=x["audience"], pillar=x["pillar"],
+            funnel=x["funnel"], goal=x["goal"], fmt=x["fmt"],
+            hook=x["hook"], message=x["message"], proof=x["proof"],
+            cta=x["cta"], owner_id=x["owner_id"],
+            shoot_date=x["shoot_date"], kpi_target=x["kpi_target"],
+            branch_id=branch_id, status="idea", note=note,
+            created_by=user.full_name,
+        )
+        db.add(c)
+        made.append(c)
+    db.commit()
+    for c in made:
+        if not c.content_id:
+            c.content_id = _content_code(c)
+    db.commit()
+    return {"added": len(made), "skipped": len(skipped), "bad": bad,
+            "year": y, "month": m}

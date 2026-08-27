@@ -676,7 +676,7 @@ def report_teacher_payroll(
 def report_funnel(
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.MARKETING_REPORTS)),
 ):
     """Ikki qismli voronka:
 
@@ -1696,7 +1696,7 @@ def analytics_cac(
     months: int = 12,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.MARKETING_REPORTS)),
 ):
     """Oylar bo'yicha CAC: reklamaga ketgan pul / o'sha oyda BIRINCHI
     marta to'lagan o'quvchilar soni. Pastda LTV/CAC nisbati - 3 dan
@@ -2851,7 +2851,7 @@ def analytics_acquisition(
     months: int = 12,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.MARKETING_REPORTS)),
 ):
     """Manba bo'yicha voronka, konversiya, pul va marketing qaytimi."""
     today = roles.local_today()
@@ -3020,7 +3020,7 @@ def analytics_lifecycle(
     months: int = 24,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.LTV_ACCESS)),
+    user=Depends(require_role(*roles.MARKETING_REPORTS)),
 ):
     """Necha oydan keyin ketishadi + qaytib kelganlar + uyqudagilar.
 
@@ -3784,7 +3784,7 @@ def analytics_sources(
     months: int = 12,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+    user=Depends(require_role(*roles.MARKETING_REPORTS)),
 ):
     """Lid va o'quvchilar QAYERDAN kelgani (pie chart uchun).
 

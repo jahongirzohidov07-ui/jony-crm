@@ -58,6 +58,7 @@ import {
   TEACHER_MENU,
   BRANCH_SWITCH,
   ALL_BRANCH_ROLES,
+  SMM_MANAGER,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
@@ -259,7 +260,12 @@ export default function Layout() {
   if (can(user?.role, CASH_ACCESS)) {
     items = [...items, { to: "/finance", label: "Moliya", icon: Wallet }];
   }
-  if (can(user?.role, FINANCE_ACCESS)) {
+  // 2026-08-27, Jahongir: "Smm mutaxasisi uchun hisobotlardan va
+  // analitikadan qismida unga kerakli foydali boladiganlari
+  // korsatilsin." Marketologda bu ikki band umuman yo'q edi.
+  // Sahifalar ichida u faqat marketingga tegishli bo'limlarni
+  // ko'radi (Reports.tsx / Analitika.tsx dagi tab filtri).
+  if (can(user?.role, FINANCE_ACCESS) || user?.role === SMM_MANAGER) {
     items = [
       ...items,
       { to: "/reports", label: "Hisobotlar", icon: BarChart3 },

@@ -1261,6 +1261,7 @@ def billing_month(
 def smm_sales_plan_list(
     year: int | None = None,
     month: int | None = None,
+    branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*(list(roles.FULL_ACCESS)
                                 + [roles.FINANCE_DIRECTOR,
@@ -1272,14 +1273,37 @@ def smm_sales_plan_list(
     (o'z panelida ham xuddi shu raqamlar chiqadi)."""
     today = roles.local_today()
     y, m = year or today.year, month or today.month
+
+    # 2026-08-27, Jahongir: "har bir filial rejasi va barchasini
+    # korsatish kerak". Avval marketolog FAQAT o'z filialini
+    # ko'rardi va tepadagi tanlagich ishlamasdi.
+    hide = set(hidden_branch_ids(db, user))
     q = db.query(models.Branch).order_by(models.Branch.name)
-    if user.role == roles.SMM_MANAGER and user.branch_id:
-        q = q.filter(models.Branch.id == user.branch_id)
+    if branch_id:
+        q = q.filter(models.Branch.id == branch_id)
     rows = []
     for b in q.all():
+        if b.id in hide:
+            continue
         st = _smm_sales_state(db, b.id, y, m)
         rows.append({"branch_id": b.id, "branch": b.name, **st})
-    return {"year": y, "month": m, "rows": rows,
+
+    # JAMI qatori — "barchasini ko'rsatish". Foiz yig'indidan qayta
+    # hisoblanadi (filiallar foizining o'rtachasi emas): reja katta
+    # filialda bajarilmasa, umumiy foiz ham pasayishi kerak.
+    total = None
+    if len(rows) > 1:
+        plan = sum(float(r.get("plan") or 0) for r in rows)
+        fact = sum(float(r.get("fact") or 0) for r in rows)
+        total = {
+            "branch": "JAMI", "plan": plan, "fact": fact,
+            "percent": round(fact / plan * 100, 1) if plan else None,
+            "new_payments_count": sum(int(r.get("new_payments_count") or 0)
+                                      for r in rows),
+            "students_now": sum(int(r.get("students_now") or 0)
+                                for r in rows),
+        }
+    return {"year": y, "month": m, "rows": rows, "total": total,
             "scale": [{"min": mn, "bonus": bo, "label": lb}
                       for mn, bo, lb in roles.SMM_SALES_BONUS],
             "can_edit": user.role in tuple(roles.FULL_ACCESS)
@@ -1923,8 +1947,22 @@ def get_plan(year: int | None = None, granularity: str = "month",
     # FILIAL KESIMI (2026-08-11, Jahongir): har filialga alohida reja.
     # FULL_ACCESS (asoschi, filial rahbari) filial tanlaydi yoki
     # UMUMIY yig'indini ko'radi; qolgan xodimlarga o'z filiali.
+    # 2026-08-27, Jahongir: "reja va fakt ham filialga qarab
+    # o'zgarishi kerak, har bir filial rejasi va barchasini
+    # korsatish kerak."
+    #
+    # Avval FULL_ACCESS bo'lmagan HAMMA xodimga branch_id majburan
+    # o'z filialiga almashtirilardi. Marketolog butun tashkilotni
+    # ko'radigan rol bo'lsa ham, tepadagi tanlagich unga umuman
+    # ta'sir qilmasdi — "Zafar" tanlansa ham "Maktab" raqami
+    # chiqaverardi.
     full_access = user.role in tuple(roles.FULL_ACCESS)
-    if not full_access:
+    org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
+    if not (full_access or org_wide):
+        branch_id = user.branch_id or None
+    elif branch_id and branch_id in blocked_branch_ids(db, user):
+        # Hamkor markazni ko'rish huquqi yo'q — o'z ko'rinishiga
+        # qaytariladi.
         branch_id = user.branch_id or None
     tq = db.query(models.PlanTarget).filter(
         models.PlanTarget.year == year)
@@ -2044,10 +2082,14 @@ def get_plan(year: int | None = None, granularity: str = "month",
         "branch_id": branch_id,
         "avg_check": avg_check,
         "auto_plans": ["revenue", "expenses", "profit"],
+        # Filial tanlagichi: butun tashkilotni ko'radigan rollarga
+        # ham chiqadi (avval faqat FULL_ACCESS ko'rardi). Yashirin
+        # filiallar (hamkor markaz, test) ro'yxatga tushmaydi.
         "branches": ([{"id": b.id, "name": b.name}
                       for b in db.query(models.Branch)
-                      .order_by(models.Branch.name).all()]
-                     if full_access else []),
+                      .order_by(models.Branch.name).all()
+                      if b.id not in set(hidden_branch_ids(db, user))]
+                     if (full_access or org_wide) else []),
         "is_total": branch_id is None,
         "plan_raw": plan_map,
         "hint": ("Reja yil boshida oy kesimida tuziladi; hafta va kun "

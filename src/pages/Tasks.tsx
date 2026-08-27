@@ -219,6 +219,15 @@ export default function Tasks() {
                     >
                       {t.status_label}
                     </span>
+                    {/* 2026-08-27: kechikish endi ALOHIDA chip.
+                        Avval u statusni bosib ketardi va "Jarayonda"
+                        deb belgilangan vazifa ekranda "Kechikdi"
+                        bo'lib turardi. */}
+                    {t.overdue && (
+                      <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                        Kechikdi
+                      </span>
+                    )}
                     {t.priority !== "normal" && (
                       <span
                         className={`text-xs font-medium ${

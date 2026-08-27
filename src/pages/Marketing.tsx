@@ -18,10 +18,10 @@ import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "smm" | "journey" | "funnel" | "channels" | "romi" | "rfm"
-  | "notify" | "referral" | "ads" | "social" | "salesplan";
+  | "referral" | "ads" | "social" | "salesplan";
 
 import {
-  RomiTab, RfmTab, NotifyTab, ReferralTab,
+  RomiTab, RfmTab, ReferralTab,
 } from "../components/MarketingExtras";
 import Smm from "./Smm";
 
@@ -31,7 +31,9 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "channels", label: "Kanallar va CAC" },
   { key: "romi", label: "ROMI" },
   { key: "rfm", label: "RFM segmentlar" },
-  { key: "notify", label: "Xabarnomalar" },
+  // 2026-08-27, Jahongir: "shu joyda xabarnomalar unga kerak
+  // emas. umuman." — Xabarnomalar navbati marketolog ishi
+  // emas, u boshqa joydan boshqariladi.
   { key: "referral", label: "Referral" },
   { key: "ads", label: "Reklama ko'rsatkichlari" },
   { key: "social", label: "Ijtimoiy tarmoqlar" },
@@ -1015,8 +1017,6 @@ export default function Marketing() {
         <div className="-mx-8 -my-2">
           <Smm />
         </div>
-      ) : tab === "notify" ? (
-        <NotifyTab />
       ) : tab === "referral" ? (
         <ReferralTab />
       ) : tab === "ads" ? (
@@ -1050,6 +1050,11 @@ function SalesPlanTab() {
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [d, setD] = useState<{
     rows: SalesPlanRow[]; can_edit: boolean;
+    /* 2026-08-27: "barchasini ko'rsatish" — filiallar yig'indisi */
+    total: {
+      branch: string; plan: number; fact: number; percent: number | null;
+      new_payments_count: number; students_now: number;
+    } | null;
     scale: { min: number; bonus: number; label: string }[];
   } | null>(null);
   const [editing, setEditing] = useState<number | null>(null);
@@ -1171,6 +1176,36 @@ function SalesPlanTab() {
                 </tr>
               );
             })}
+            {/* JAMI — Jahongir: "har bir filial rejasi va
+                barchasini korsatish kerak" */}
+            {d.total && (
+              <tr className="border-t-2 border-slate-300 bg-slate-50 font-semibold">
+                <td className="px-4 py-2.5 text-slate-900">{d.total.branch}</td>
+                <td className="px-3 py-2.5 text-right tabular-nums">
+                  {d.total.plan ? formatSom(d.total.plan) : "—"}
+                </td>
+                <td className="px-3 py-2.5 text-right tabular-nums">
+                  {formatSom(d.total.fact)}
+                </td>
+                <td className={`px-3 py-2.5 text-right tabular-nums ${
+                  d.total.percent == null ? "text-slate-400"
+                    : d.total.percent >= 100 ? "text-emerald-600"
+                    : d.total.percent >= 80 ? "text-amber-600"
+                    : "text-rose-600"}`}>
+                  {d.total.percent == null ? "—" : `${d.total.percent}%`}
+                </td>
+                <td className="px-3 py-2.5 text-slate-400 text-xs">
+                  barcha filiallar
+                </td>
+                <td className="px-3 py-2.5 text-right text-slate-400">—</td>
+                <td className="px-3 py-2.5 text-right tabular-nums">
+                  {d.total.new_payments_count}
+                </td>
+                <td className="px-3 py-2.5 text-right tabular-nums">
+                  {d.total.students_now}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

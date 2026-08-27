@@ -15,7 +15,9 @@ import {
   type SalesWindow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, can } from "../lib/roles";
+import {
+  FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, SMM_MANAGER, can,
+} from "../lib/roles";
 import { MONTHS } from "../lib/expenses";
 import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
@@ -39,6 +41,19 @@ const TABS: { key: Tab; label: string }[] = [
   // ko'rinishida berish kerak"
   { key: "app", label: "Student app" },
 ];
+
+/**
+ * MARKETOLOG UCHUN (2026-08-27).
+ *
+ * Jahongir: "Smm mutaxasisi uchun hisobotlardan va analitikadan
+ * qismida unga kerakli foydali boladiganlari korsatilsin."
+ *
+ * Marketolog ishiga tegishlisi — sotuv voronkasi (lid qayerda
+ * to'xtayapti) va sotuv menejerlari natijasi (kim lidni o'quvchiga
+ * aylantiryapti). Oyliklar, ustoz intizomi va adminlar KPI'si unga
+ * kerak emas.
+ */
+const SMM_TABS: Tab[] = ["funnel", "sales"];
 
 /** Katta summalarni o'qishga oson qilib qisqartiradi: 12 400 000 -> "12.4 mln". */
 function short(n: number): string {
@@ -1136,10 +1151,17 @@ export default function Reports() {
   // o'zgarmadi.
   const finance = can(user?.role, FINANCE_ACCESS);
   const payrollOnly = !finance && can(user?.role, PAYROLL_VIEW);
-  const tabs = finance ? TABS : TABS.filter((t) => t.key === "payroll");
-  const [tab, setTab] = useState<Tab>(finance ? "payroll" : "payroll");
+  // 2026-08-27: marketolog ham kiradi, lekin faqat marketing
+  // hisobotlarini ko'radi (SMM_TABS).
+  const smm = !finance && user?.role === SMM_MANAGER;
+  const tabs = finance
+    ? TABS
+    : smm
+      ? TABS.filter((t) => SMM_TABS.includes(t.key))
+      : TABS.filter((t) => t.key === "payroll");
+  const [tab, setTab] = useState<Tab>(smm ? "funnel" : "payroll");
 
-  if (!finance && !payrollOnly) {
+  if (!finance && !payrollOnly && !smm) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -1153,7 +1175,9 @@ export default function Reports() {
     <div className="p-8 max-w-6xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1">Hisobotlar</h1>
       <p className="text-sm text-slate-500 mb-5">
-        Oyliklar, ustoz intizomi, sotuv voronkasi va adminlar KPI'si
+        {smm
+          ? "Sotuv voronkasi va sotuv menejerlari natijasi"
+          : "Oyliklar, ustoz intizomi, sotuv voronkasi va adminlar KPI'si"}
       </p>
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">

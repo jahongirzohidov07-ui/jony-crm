@@ -71,7 +71,13 @@ def list_tasks(
 
     rows = [_task_out(db, t) for t in q.all()]
     if status_filter:
-        rows = [r for r in rows if r["status"] == status_filter]
+        # 2026-08-27: "Kechikdi" endi status emas, BELGI. Shuning
+        # uchun uni alohida filtrlaymiz — qolgan statuslar esa
+        # vazifaning haqiqiy holati bo'yicha topiladi.
+        if status_filter == "late":
+            rows = [r for r in rows if r["late"]]
+        else:
+            rows = [r for r in rows if r["status"] == status_filter]
 
     # Muhimi tepada: kechikkan → shoshilinch → yaqin muddat
     rows.sort(key=lambda r: (
@@ -82,8 +88,12 @@ def list_tasks(
 
     counts = {}
     for t in q.all():
-        st = _task_status(t)
-        counts[st] = counts.get(st, 0) + 1
+        counts[t.status] = counts.get(t.status, 0) + 1
+        # Kechikkan vazifa O'Z statusida ham sanaladi, "Kechikdi"
+        # tabida ham. Avval u faqat "late" bo'lib sanalardi va
+        # "Jarayonda" tabi doim 0 ko'rsatardi.
+        if _task_late(t):
+            counts["late"] = counts.get("late", 0) + 1
 
     return {
         "rows": rows,

@@ -2449,13 +2449,34 @@ def _task_checklist(t: models.Task) -> list:
     except Exception:
         return []
 
+def _task_late(t: models.Task) -> bool:
+    """Muddati o'tgan va hali yopilmaganmi."""
+    return bool(t.deadline and t.deadline < date.today()
+                and t.status not in roles.TASK_CLOSED)
+
+
 def _task_status(t: models.Task) -> str:
-    """AVTOMAT: muddati o'tgan va yopilmagan vazifa "Kechikdi" bo'ladi.
-    Hech kim qo'lda belgilashi shart emas."""
-    if t.status in roles.TASK_CLOSED:
-        return t.status
-    if t.deadline and t.deadline < date.today():
-        return "late"
+    """Vazifaning HAQIQIY holati.
+
+    2026-08-27 TUZATISH. Jahongir: "vazifalar bo'limida jarayondaga
+    o'tkizsa jarayonga o'tmayabdi vazifa, tekshriildiga otkizsayam
+    o'tmayabdi. qayta ishlashgayam otmayabdi, faqat bajarildiga
+    ishlayabdi, bekor qilindi ishladi qolgani ishlamayabdi."
+
+    Sabab shu funksiyada edi. U muddati o'tgan har qanday ochiq
+    vazifani "late" deb QAYTARARDI va haqiqiy statusni butunlay
+    bosib ketardi:
+        Jarayonda    -> ekranda "Kechikdi"  -> Jarayonda tabida yo'q
+        Tekshiruvda  -> ekranda "Kechikdi"  -> Tekshiruvda tabida yo'q
+        Qayta ishlash-> ekranda "Kechikdi"  -> o'sha tabda yo'q
+    Bajarildi va Bekor qilindi esa TASK_CLOSED ichida bo'lgani
+    uchun bosilmasdi — shuning uchun "faqat o'sha ikkitasi
+    ishlayapti" deb ko'rinardi. Aslida status BAZAGA yozilgan edi,
+    ekran uni ko'rsatmasdi.
+
+    Endi kechikish ALOHIDA belgi (overdue/late), status esa o'zi
+    bo'lib qoladi. Qizil "Kechikdi" chipi baribir ko'rinadi.
+    """
     return t.status
 
 def _task_out(db: Session, t: models.Task) -> dict:
@@ -2475,8 +2496,7 @@ def _task_out(db: Session, t: models.Task) -> dict:
         "branch": t.branch.name if t.branch else None,
         "deadline": t.deadline.isoformat() if t.deadline else None,
         "days_left": days,
-        "overdue": bool(t.deadline and t.deadline < date.today()
-                        and t.status not in roles.TASK_CLOSED),
+        "overdue": _task_late(t),
         "priority": t.priority,
         "priority_label": roles.TASK_PRIORITY_LABELS.get(t.priority, t.priority),
         "priority_rank": roles.TASK_PRIORITY_RANK.get(t.priority, 2),
@@ -2484,6 +2504,9 @@ def _task_out(db: Session, t: models.Task) -> dict:
         "status_label": roles.TASK_STATUS_LABELS.get(st, st),
         "status_tone": roles.TASK_STATUS_TONE.get(st, "slate"),
         "stored_status": t.status,
+        # "late" endi status emas, BELGI. Ekran uni alohida qizil
+        # chip qilib ko'rsatadi va "Kechikdi" filtri shunga qaraydi.
+        "late": _task_late(t),
         "source": t.source,
         "source_label": roles.TASK_SOURCE_LABELS.get(t.source, t.source),
         "meeting": t.meeting,
@@ -3429,6 +3452,41 @@ def _my_marketing_cards(db: Session, user: models.User,
         cards.append(_card(
             "Hozirgi o'quvchilar", st8["students_now"],
             "faol o'quvchilar soni", "plain", "/students"))
+    except Exception:
+        pass
+
+    # IJTIMOIY TARMOQ OBUNACHILARI (2026-08-27).
+    # Jahongir: "SMMda ijtimoiy tarmoqlardagi obunachilar soni ham
+    # dashboardda korinib tursin."
+    #
+    # DIQQAT: bu yerda TARMOQQA CHIQILMAYDI. /api/social sahifasi
+    # ochilganda obunachilar o'zi yangilanadi va bazaga yoziladi;
+    # dashboard esa faqat OXIRGI yozuvni o'qiydi. Aks holda har bir
+    # dashboard ochilishi Instagram/Telegram'ga so'rov yuborardi va
+    # sahifa sekinlashardi.
+    try:
+        for key, label in roles.SOCIAL_PLATFORMS:
+            last = (db.query(models.SocialStat)
+                    .filter(models.SocialStat.platform == key)
+                    .order_by(models.SocialStat.date.desc(),
+                              models.SocialStat.id.desc()).first())
+            if not last:
+                continue
+            # O'sish: 30 kun oldingi o'lchov bilan solishtiriladi
+            was = (db.query(models.SocialStat)
+                   .filter(models.SocialStat.platform == key,
+                           models.SocialStat.date
+                           <= last.date - timedelta(days=30))
+                   .order_by(models.SocialStat.date.desc()).first())
+            hint = last.date.isoformat() if last.date else None
+            if was:
+                d = last.followers - was.followers
+                hint = (f"30 kunda {'+' if d >= 0 else ''}{d}"
+                        + (f" · {hint}" if hint else ""))
+            cards.append(_card(
+                f"{label} obunachilar", last.followers, hint,
+                "brand" if not was or last.followers >= was.followers
+                else "amber", "/marketing"))
     except Exception:
         pass
     return cards
@@ -5829,6 +5887,10 @@ __all__ = [
     "_task_checklist",
     "_task_out",
     "_task_status",
+    # 2026-08-27: __all__ ga qo'shilmagani uchun finance.py da
+    # NameError chiqib, "Sotuv rejasi va bonus" tabi ochilmasdi.
+    "_smm_sales_state",
+    "_task_late",
     "_teacher_age",
     "_teacher_earned",
     "_teacher_exam_results",

@@ -102,8 +102,11 @@ def nps_submit(payload: dict, db: Session = Depends(get_db),
     return {"ok": True}
 
 
+# 2026-08-27: marketolog ham ko'radi — NPS mijoz ovozi, u
+# reklamada va referral tizimida to'g'ridan-to'g'ri ishlatiladi.
 _NPS_VIEW = tuple(dict.fromkeys(
-    tuple(roles.FINANCE_ACCESS) + (roles.ACADEMIC_HEAD, roles.HR_MANAGER)))
+    tuple(roles.FINANCE_ACCESS)
+    + (roles.ACADEMIC_HEAD, roles.HR_MANAGER, roles.SMM_MANAGER)))
 
 
 @router.get("/api/nps/summary")

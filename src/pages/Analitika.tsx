@@ -27,7 +27,9 @@ import {
   type GeographyReport,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FINANCE_ACCESS, FOUNDER, can } from "../lib/roles";
+import {
+  FINANCE_ACCESS, FOUNDER, SMM_MANAGER, can,
+} from "../lib/roles";
 import { groupColor, MONTHS } from "../lib/expenses";
 import { subjectLine } from "../lib/subjects";
 import { formatSom, formatPeriodLabel } from "../lib/format";
@@ -62,6 +64,24 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "hayot", label: "Hayot davri" },
   { key: "nps", label: "NPS" },
   { key: "tarix", label: "Tarix (o'quvchilar soni)" },
+];
+
+/**
+ * MARKETOLOG UCHUN (2026-08-27).
+ *
+ * Jahongir: "unga kerakli foydali boladiganlari korsatilsin."
+ *
+ * Marketing savollariga javob beradigan bo'limlar:
+ *   manba      — o'quvchi qayerdan keladi (eng muhimi)
+ *   geo        — qaysi mahalla va maktabdan (reklamani qayerga qo'yish)
+ *   hayot      — o'quvchi hayot davri
+ *   churn      — nega ketishadi (xabar va taklifni shunga moslash)
+ *   nps        — mijoz ovozi, referral uchun asos
+ *   tolganlik  — qaysi filialda joy bor (qayerga lid haydash kerak)
+ * Foyda-zarar, oyliklar va xarajat tahlili KIRMAYDI.
+ */
+const SMM_TABS: Tab[] = [
+  "manba", "geo", "hayot", "churn", "nps", "tolganlik",
 ];
 
 function short(n: number): string {
@@ -1583,20 +1603,29 @@ function HistoryTab() {
 
 export default function Analitika() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("bi");
+  // 2026-08-27: marketolog ham kiradi, lekin faqat marketing
+  // bo'limlarini ko'radi. /analytics/summary ichida foyda-zarar
+  // bor — u marketologga so'ralmaydi ham (403 bo'lardi).
+  const finance = can(user?.role, FINANCE_ACCESS);
+  const smm = !finance && user?.role === SMM_MANAGER;
+  const visibleTabs = smm
+    ? TABS.filter((t) => SMM_TABS.includes(t.key))
+    : TABS;
+  const [tab, setTab] = useState<Tab>(smm ? "manba" : "bi");
   const [months, setMonths] = useState(12);
   const [data, setData] = useState<AnalyticsSummary | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (smm) { setLoading(false); return; }   // umumiy BI so'ralmaydi
     setLoading(true);
     api
       .get<AnalyticsSummary>(`/analytics/summary?months=${months}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [months]);
+  }, [months, smm]);
 
-  if (!can(user?.role, FINANCE_ACCESS)) {
+  if (!finance && !smm) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -1612,11 +1641,13 @@ export default function Analitika() {
         <PieIcon size={20} className="text-brand-600" /> Analitika
       </h1>
       <p className="text-sm text-slate-500 mb-5">
-        Qaror qabul qilish uchun kerak bo'ladigan ko'rsatkichlar
+        {smm
+          ? "Manba, hudud, hayot davri, ketish sabablari va NPS"
+          : "Qaror qabul qilish uchun kerak bo'ladigan ko'rsatkichlar"}
       </p>
 
       <div className="flex gap-1 mb-6 border-b border-slate-200 overflow-x-auto">
-        {TABS.map((t) => (
+        {visibleTabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
@@ -1635,18 +1666,18 @@ export default function Analitika() {
         <RangePicker months={months} setMonths={setMonths} />
       )}
 
-      {loading || !data ? (
+      {loading || (!data && !smm) ? (
         <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
       ) : (
         <>
           {tab === "bi" && <BiPanel />}
       {tab === "akademik" && <AcademicTab />}
           {tab === "tolganlik" && <FillTab />}
-          {tab === "biznes" && <BusinessTab data={data} />}
+          {tab === "biznes" && data && <BusinessTab data={data} />}
           {tab === "sifat" && <QualityTab />}
-          {tab === "xarajat" && <ExpenseTab data={data} />}
+          {tab === "xarajat" && data && <ExpenseTab data={data} />}
           {tab === "oquvchi" && <LtvTab />}
-          {tab === "ustoz" && <TeacherTab data={data} />}
+          {tab === "ustoz" && data && <TeacherTab data={data} />}
           {tab === "ltv" && <LtvFullReport />}
           {tab === "churn" && <ChurnReport />}
           {tab === "imtihon" && <ExamReport />}

@@ -2293,6 +2293,18 @@ REFERRAL_MONTHS = 1              # necha oy amal qiladi
 # berilib ketardi.
 REFERRAL_MIN_PAYMENT = 1
 
+# MARKETOLOGGA FOYDALI HISOBOTLAR (2026-08-27).
+#
+# Jahongir: "Smm mutaxasisi uchun hisobotlardan va analitikadan
+# qismida unga kerakli foydali boladiganlari korsatilsin."
+#
+# Bu ro'yxatga FAQAT marketing ishiga kerak bo'lgan hisobotlar
+# kiradi: lid manbalari, jalb qilish voronkasi, hayot davri, sotuv
+# voronkasi va bitta lid narxi (CAC). Foyda-zarar, oyliklar va
+# xodimlar KPI'si bu yerga KIRMAYDI — ular marketolog ishi emas
+# va pul ma'lumoti keraksiz joyga tarqalmasligi kerak.
+MARKETING_REPORTS = FINANCE_ACCESS + [SMM_MANAGER, SALES_HEAD]
+
 MARKETING_ANALYTICS = FULL_ACCESS + [SMM_MANAGER, SALES_HEAD,
                                      FINANCE_DIRECTOR]
 

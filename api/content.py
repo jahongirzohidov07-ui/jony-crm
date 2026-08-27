@@ -1838,3 +1838,419 @@ def smm_report_get(rid: int, db: Session = Depends(get_db),
     d["frozen"] = True
     return d
 
+
+
+# =====================================================================
+#  KONTENT-PLAN (2026-08-27)
+#
+#  Jahongir "idealniy kontent plan" deb Excel yubordi va aytdi:
+#  "sen ham SMMdagi kontent planni shunaqa qism bo'limilarni bo'lishi
+#  kerak va ichiga ssearniysi scriptini yozadigan ham bo'lishi kerak
+#  SMM manager kirib shuni kopya qilishga oson bo'lsin, ozgartirishga
+#  oson bo'lsin va shu video joylangangandan keyin linkini joylashi
+#  kerak link orqali avtomat nechta korildi nechta koment like repost
+#  bolgani avtomat hisoboti unga korinsin kuchli tahlil qilsa
+#  ob'ladi."
+#
+#  Uch narsa:
+#    /api/smm/plan           — Excel ustunlari tartibida oylik jadval
+#    /api/content/{id}/copy  — bir bosishda nusxa (tez to'ldirish)
+#    /api/content/{id}/fetch — LINKDAN avtomat natija
+#    /api/smm/content-analytics — nima ishlayapti, nima yo'q
+# =====================================================================
+import content_fetch as _cf
+
+
+def _plan_row(db: Session, c: models.Content, m=None,
+              users: dict | None = None) -> dict:
+    """Bitta qator — Jahongir jadvalidagi ustunlar tartibida."""
+    if users is None:
+        users = {}
+        if c.owner_id:
+            u = db.query(models.User).get(c.owner_id)
+            if u:
+                users[c.owner_id] = u.full_name
+    d = c.planned_date
+    kun = roles.UZ_WEEKDAYS[d.weekday()][:2] if d else None
+    er = 0.0
+    if m:
+        w = roles.ENGAGEMENT_WEIGHT_MAP
+        score = ((m.likes or 0) * w["like"] + (m.comments or 0) * w["comment"]
+                 + (m.saves or 0) * w["save"] + (m.shares or 0) * w["share"]
+                 + (m.dms or 0) * w["dm"])
+        base = m.reach or m.views or 0
+        er = round(score / base * 100, 2) if base else 0.0
+    return {
+        "id": c.id, "content_id": c.content_id,
+        "date": d.isoformat() if d else None,
+        "weekday": kun,
+        "time": c.planned_time,
+        "platform": c.platform,
+        "audience": c.audience,
+        "pillar": c.pillar,
+        "pillar_label": roles.PILLAR_LABELS.get(c.pillar, c.pillar),
+        "funnel": c.funnel,
+        "funnel_label": roles.FUNNEL_LABELS.get(c.funnel, c.funnel),
+        "goal": c.goal,
+        "goal_label": roles.GOAL_LABELS.get(c.goal, c.goal),
+        "title": c.title,
+        "hook": c.hook,
+        "message": c.message,
+        "proof": c.proof,
+        "fmt": c.fmt,
+        "fmt_label": roles.FORMAT_LABELS.get(c.fmt, c.fmt),
+        "cta": c.cta,
+        "owner": users.get(c.owner_id),
+        "owner_id": c.owner_id,
+        "shoot_date": c.shoot_date.isoformat() if c.shoot_date else None,
+        "status": c.status,
+        "status_label": roles.CONTENT_STATUS_LABELS.get(c.status, c.status),
+        "status_tone": roles.CONTENT_STATUS_TONE.get(c.status, "slate"),
+        "kpi_target": c.kpi_target,
+        "conclusion": c.conclusion,
+        "series": c.series,
+        "script": c.script,
+        "caption": c.caption,
+        "hashtags": c.hashtags,
+        "post_url": c.post_url,
+        "published_at": (c.published_at.isoformat()
+                         if c.published_at else None),
+        "metrics": ({
+            "views": m.views or 0, "reach": m.reach or 0,
+            "likes": m.likes or 0, "comments": m.comments or 0,
+            "shares": m.shares or 0, "saves": m.saves or 0,
+            "er": er,
+            "source": m.source or "manual",
+            "fetched_at": m.fetched_at.isoformat() if m.fetched_at else None,
+            "note": m.fetch_note,
+        } if m else None),
+    }
+
+
+@router.get("/api/smm/plan")
+def smm_plan(year: int | None = None, month: int | None = None,
+             branch_id: int | None = None,
+             db: Session = Depends(get_db),
+             user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Oylik kontent-plan — Excel jadvalining aynan o'zi."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+    q = scope_to_branch(db.query(models.Content), models.Content,
+                        user, branch_id)
+    rows = (q.filter(models.Content.planned_date >= start,
+                     models.Content.planned_date <= end)
+            .order_by(models.Content.planned_date,
+                      models.Content.planned_time).all())
+    mets = {x.content_id: x for x in db.query(models.ContentMetric)
+            .filter(models.ContentMetric.content_id
+                    .in_([c.id for c in rows] or [-1])).all()}
+    uids = {c.owner_id for c in rows if c.owner_id}
+    unames = {u.id: u.full_name for u in db.query(models.User)
+              .filter(models.User.id.in_(uids or [-1])).all()}
+    out = [_plan_row(db, c, mets.get(c.id), unames) for c in rows]
+    return {
+        "year": y, "month": m,
+        "month_label": roles.UZ_MONTHS[m - 1],
+        "rows": out,
+        "meta": {
+            "platforms": roles.SOCIAL_PLATFORMS,
+            "pillars": [{"key": k, "label": lbl, "tone": t, "hint": h}
+                        for k, lbl, t, h in roles.CONTENT_PILLARS],
+            "funnels": [{"key": k, "label": lbl}
+                        for k, lbl in roles.FUNNEL_STAGES],
+            "goals": [{"key": k, "label": lbl}
+                      for k, lbl, _mm in roles.CONTENT_GOALS],
+            "formats": [{"key": k, "label": lbl}
+                        for k, lbl in roles.CONTENT_FORMATS],
+            "statuses": [{"key": k, "label": lbl, "tone": t}
+                         for k, lbl, t in roles.CONTENT_STATUSES],
+        },
+    }
+
+
+@router.post("/api/content/{cid}/copy")
+def copy_content(cid: int, payload: dict | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Kontentni NUSXALASH.
+
+    Jahongir: "kopya qilishga oson bo'lsin". Seriyali kontentda
+    (Ustoz-serial №1, №2, №3) faqat mavzu o'zgaradi — qolgani bir
+    xil. Nusxa yangi sana bilan ochiladi va holati "G'oya"ga
+    qaytadi: bu YANGI ish, tayyor deb belgilanib qolmasin.
+    """
+    src = db.query(models.Content).get(cid)
+    if not src:
+        raise HTTPException(404, "Kontent topilmadi")
+    p = payload or {}
+    new_date = p.get("planned_date")
+    c = models.Content(
+        title=(p.get("title") or (src.title + " (nusxa)"))[:300],
+        platform=src.platform, fmt=src.fmt, pillar=src.pillar,
+        goal=src.goal, funnel=src.funnel, audience=src.audience,
+        branch_id=src.branch_id, course=src.course,
+        campaign_id=src.campaign_id, series=src.series,
+        status="idea",
+        planned_date=(date.fromisoformat(new_date) if new_date
+                      else src.planned_date),
+        planned_time=src.planned_time,
+        owner_id=src.owner_id, copywriter_id=src.copywriter_id,
+        designer_id=src.designer_id, videographer_id=src.videographer_id,
+        editor_id=src.editor_id,
+        problem=src.problem, message=src.message, hook=src.hook,
+        proof=src.proof, location=src.location,
+        participants=src.participants, props=src.props,
+        duration=src.duration, music=src.music,
+        design_format=src.design_format, cta=src.cta,
+        references=src.references,
+        script=src.script, caption=src.caption,
+        hashtags=src.hashtags, story_text=src.story_text,
+        on_video_text=src.on_video_text,
+        kpi_target=src.kpi_target,
+        priority=src.priority, created_by=user.full_name,
+        # NUSXAGA KO'CHMAYDIGANLAR: havola, natija, xulosa, e'lon
+        # vaqti. Ular AYNAN o'sha postniki edi.
+    )
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    # Kod id ma'lum bo'lgandan keyin beriladi (mavjud qoida)
+    if not c.content_id:
+        c.content_id = _content_code(c)
+        db.commit()
+    return _plan_row(db, c, None)
+
+
+@router.post("/api/content/{cid}/fetch")
+def fetch_content_metrics(cid: int, db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Post havolasidan natijani AVTOMAT olish.
+
+    Qo'lda kiritilgan raqamlar ustidan yozilmaydi: agar avval qo'lda
+    kiritilgan bo'lsa va avtomat 0 qaytarsa, eskisi qoladi.
+    """
+    c = db.query(models.Content).get(cid)
+    if not c:
+        raise HTTPException(404, "Kontent topilmadi")
+    if not (c.post_url or "").strip():
+        raise HTTPException(400, "Avval post havolasini kiriting")
+
+    data, note = _cf.fetch(c.post_url)
+    m = (db.query(models.ContentMetric)
+         .filter(models.ContentMetric.content_id == cid).first())
+    if not m:
+        m = models.ContentMetric(content_id=cid)
+        db.add(m)
+    m.fetch_note = note[:250] if note else None
+    m.fetched_at = datetime.utcnow()
+    if data:
+        for k in ("views", "reach", "likes", "comments", "shares", "saves"):
+            v = int(data.get(k) or 0)
+            if v:                      # 0 bo'lsa eskisiga tegmaymiz
+                setattr(m, k, v)
+        m.source = "auto"
+        m.updated_by = "avtomat"
+    db.commit()
+    db.refresh(m)
+    return {"ok": bool(data), "note": note,
+            "platform": _cf.platform_of(c.post_url),
+            "metrics": _plan_row(db, c, m)["metrics"]}
+
+
+@router.post("/api/smm/fetch-all")
+def fetch_all_metrics(year: int | None = None, month: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Oydagi HAMMA e'lon qilingan postning natijasini yangilaydi."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+    rows = (db.query(models.Content)
+            .filter(models.Content.planned_date >= start,
+                    models.Content.planned_date <= end,
+                    models.Content.post_url.isnot(None)).all())
+    ok, fail, notes = 0, 0, {}
+    for c in rows:
+        if not (c.post_url or "").strip():
+            continue
+        data, note = _cf.fetch(c.post_url)
+        met = (db.query(models.ContentMetric)
+               .filter(models.ContentMetric.content_id == c.id).first())
+        if not met:
+            met = models.ContentMetric(content_id=c.id)
+            db.add(met)
+        met.fetched_at = datetime.utcnow()
+        met.fetch_note = note[:250] if note else None
+        if data:
+            for k in ("views", "reach", "likes", "comments",
+                      "shares", "saves"):
+                v = int(data.get(k) or 0)
+                if v:
+                    setattr(met, k, v)
+            met.source = "auto"
+            met.updated_by = "avtomat"
+            ok += 1
+        else:
+            fail += 1
+            notes[note] = notes.get(note, 0) + 1
+    db.commit()
+    return {"updated": ok, "failed": fail,
+            "reasons": [{"note": k, "count": v} for k, v in notes.items()]}
+
+
+@router.get("/api/smm/content-analytics")
+def content_analytics(months: int = 3, branch_id: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.SMM_ACCESS))):
+    """KUCHLI TAHLIL — nima ishlayapti, nima yo'q.
+
+    Jahongir: "kuchli tahlil qilsa ob'ladi."
+
+    Savol "nechta ko'rish bo'ldi" emas. Savol shu: KEYINGI OY NIMANI
+    KO'PROQ QILISH KERAK. Shuning uchun har kesim (ustun, format,
+    platforma, voronka, hafta kuni, soat) bo'yicha O'RTACHA ko'rish
+    va O'RTACHA faollik hisoblanadi — jami emas.
+
+    NEGA O'RTACHA: jami raqam faqat "nechta post qilingani"ni
+    ko'rsatadi. 10 ta o'rtacha post 2 ta zo'r postdan ko'p yig'adi
+    va noto'g'ri xulosa beradi.
+
+    Kamida 2 ta post bo'lgan kesimlargina taqqoslanadi — bitta
+    tasodifiy post butun yo'nalishni "eng zo'r" qilib ko'rsatmasin.
+    """
+    today = roles.local_today()
+    since = today - timedelta(days=30 * max(1, min(months, 12)))
+    q = scope_to_branch(db.query(models.Content), models.Content,
+                        user, branch_id)
+    rows = (q.filter(models.Content.planned_date >= since,
+                     models.Content.status == "published").all())
+    ids = [c.id for c in rows]
+    mets = {x.content_id: x for x in db.query(models.ContentMetric)
+            .filter(models.ContentMetric.content_id.in_(ids or [-1])).all()}
+
+    w = roles.ENGAGEMENT_WEIGHT_MAP
+
+    def _score(m):
+        return ((m.likes or 0) * w["like"] + (m.comments or 0) * w["comment"]
+                + (m.saves or 0) * w["save"] + (m.shares or 0) * w["share"]
+                + (m.dms or 0) * w["dm"])
+
+    items = []
+    for c in rows:
+        m = mets.get(c.id)
+        if not m:
+            continue
+        base = m.reach or m.views or 0
+        if not base:
+            continue
+        items.append({
+            "id": c.id, "title": c.title,
+            "date": c.planned_date.isoformat() if c.planned_date else None,
+            "views": m.views or 0, "reach": m.reach or 0,
+            "likes": m.likes or 0, "comments": m.comments or 0,
+            "shares": m.shares or 0, "saves": m.saves or 0,
+            "er": round(_score(m) / base * 100, 2),
+            "pillar": c.pillar, "fmt": c.fmt, "platform": c.platform,
+            "funnel": c.funnel, "audience": c.audience,
+            "weekday": (c.planned_date.weekday()
+                        if c.planned_date else None),
+            "hour": int((c.planned_time or "0:00").split(":")[0] or 0),
+            "url": c.post_url,
+        })
+
+    def _cut(key, labels=None):
+        agg = {}
+        for it in items:
+            k = it.get(key)
+            if k in (None, ""):
+                continue
+            d = agg.setdefault(k, {"n": 0, "views": 0, "er": 0.0})
+            d["n"] += 1
+            d["views"] += it["views"]
+            d["er"] += it["er"]
+        out = []
+        for k, d in agg.items():
+            out.append({
+                "key": k,
+                "label": (labels or {}).get(k, k),
+                "count": d["n"],
+                "avg_views": round(d["views"] / d["n"]),
+                "avg_er": round(d["er"] / d["n"], 2),
+            })
+        out.sort(key=lambda x: -x["avg_views"])
+        return out
+
+    by_pillar = _cut("pillar", roles.PILLAR_LABELS)
+    by_fmt = _cut("fmt", roles.FORMAT_LABELS)
+    by_platform = _cut("platform")
+    by_funnel = _cut("funnel", roles.FUNNEL_LABELS)
+    by_day = _cut("weekday", {i: roles.UZ_WEEKDAYS[i] for i in range(7)})
+    by_hour = _cut("hour", {h: f"{h:02d}:00" for h in range(24)})
+
+    n = len(items)
+    avg_v = round(sum(i["views"] for i in items) / n) if n else 0
+    avg_er = round(sum(i["er"] for i in items) / n, 2) if n else 0.0
+    top = sorted(items, key=lambda x: -x["views"])[:5]
+    weak = sorted(items, key=lambda x: x["views"])[:5]
+
+    # ---- Xulosa: nima qilish kerak -------------------------------
+    tips = []
+
+    def _best(rows_, nom, birlik="ko'rish"):
+        good = [r for r in rows_ if r["count"] >= 2]
+        if len(good) < 2:
+            return
+        b, wst = good[0], good[-1]
+        if b["avg_views"] >= wst["avg_views"] * 1.4:
+            tips.append({
+                "kind": "good",
+                "text": (f"{nom}: «{b['label']}» o'rtacha {b['avg_views']} "
+                         f"{birlik} beryapti — «{wst['label']}» dan "
+                         f"{round(b['avg_views'] / max(1, wst['avg_views']), 1)} "
+                         f"barobar ko'p. Keyingi oyda «{b['label']}» "
+                         f"ulushini oshiring."),
+            })
+
+    _best(by_pillar, "Kontent ustuni")
+    _best(by_fmt, "Format")
+    _best(by_day, "Hafta kuni")
+    _best(by_platform, "Platforma")
+
+    er_rows = [r for r in by_pillar if r["count"] >= 2]
+    if er_rows:
+        be = max(er_rows, key=lambda r: r["avg_er"])
+        if be["avg_er"] > avg_er * 1.3 and be["avg_er"] > 0:
+            tips.append({
+                "kind": "good",
+                "text": (f"Eng jonli muloqot «{be['label']}» da: faollik "
+                         f"{be['avg_er']}% (o'rtacha {avg_er}%). Izoh va "
+                         f"ulashish kerak bo'lganda shu yo'nalishdan "
+                         f"foydalaning."),
+            })
+
+    no_metric = sum(1 for c in rows if c.id not in mets)
+    if no_metric:
+        tips.append({
+            "kind": "warn",
+            "text": (f"{no_metric} ta e'lon qilingan postda natija yo'q. "
+                     f"Havolani qo'ying va «Natijani yangilash» ni "
+                     f"bosing — tahlil shularsiz to'liq emas."),
+        })
+    if n and n < 5:
+        tips.append({
+            "kind": "warn",
+            "text": ("Taqqoslash uchun ma'lumot hali kam "
+                     f"({n} ta post). Xulosa 10-15 postdan keyin "
+                     "ishonchli bo'ladi."),
+        })
+
+    return {
+        "months": months, "count": n,
+        "avg_views": avg_v, "avg_er": avg_er,
+        "total_views": sum(i["views"] for i in items),
+        "by_pillar": by_pillar, "by_format": by_fmt,
+        "by_platform": by_platform, "by_funnel": by_funnel,
+        "by_weekday": by_day, "by_hour": by_hour,
+        "top": top, "weak": weak, "tips": tips,
+    }

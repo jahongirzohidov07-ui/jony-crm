@@ -2059,6 +2059,25 @@ class Content(Base):
     references = Column(Text, nullable=True)
     deadline = Column(Date, nullable=True)
 
+    # KONTENT-PLAN USTUNLARI (2026-08-27).
+    # Jahongir "idealniy kontent plan" deb Excel yubordi; unda
+    # bizda bo'lmagan to'rt ustun bor edi. Ular shu yerda:
+    #   proof      — DALIL: fikrni nima tasdiqlaydi (raqam, natija,
+    #                sertifikat). Dalilsiz post ishonch bermaydi.
+    #   shoot_date — SYOMKA sanasi. Joylash sanasidan boshqa: bir
+    #                kunda bir necha post uchun birga suratga olinadi
+    #                ("batch №1").
+    #   kpi_target — KUTILAYOTGAN natija ("8k ko'rish, 100 ulashish").
+    #                Fakt bilan solishtirish uchun.
+    #   conclusion — XULOSA: nima ishladi, nima ishlamadi. Keyingi
+    #                oyning rejasi shundan tug'iladi.
+    proof = Column(Text, nullable=True)
+    shoot_date = Column(Date, nullable=True)
+    kpi_target = Column(String, nullable=True)
+    conclusion = Column(Text, nullable=True)
+    # Seriya: "Ustoz-serial №1", "Bekobod hayoti №2" kabi turkumlar
+    series = Column(String, nullable=True, index=True)
+
     # ---- Matn (joriy versiya) ----
     script = Column(Text, nullable=True)
     caption = Column(Text, nullable=True)
@@ -2253,6 +2272,16 @@ class ContentMetric(Base):
     profile_visits = Column(Integer, default=0)
     link_clicks = Column(Integer, default=0)
     dms = Column(Integer, default=0)
+    # AVTOMAT YIG'ISH (2026-08-27). Jahongir: "link orqali avtomat
+    # nechta korildi nechta koment like repost bolgani avtomat
+    # hisoboti unga korinsin."
+    #   source     — "manual" yoki "auto"
+    #   fetched_at — oxirgi marta qachon olingani
+    #   fetch_note — olinmasa SABABI (masalan TikTok ochiq API
+    #                bermaydi). Jim turgan xato eng yomoni.
+    source = Column(String, default="manual")
+    fetched_at = Column(DateTime, nullable=True)
+    fetch_note = Column(String, nullable=True)
     updated_by = Column(String, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)

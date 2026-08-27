@@ -3204,13 +3204,132 @@ CONTENT_PILLARS = [
 PILLAR_LABELS = {k: lbl for k, lbl, _t, _d in CONTENT_PILLARS}
 PILLAR_TONE = {k: t for k, _l, t, _d in CONTENT_PILLARS}
 
+# 2026-08-27: nomlar Jahongirning kontent-plan jadvalidagidek —
+# "Tanilish / Ishonch / Qaror / Tavsiya". KALITLAR o'zgarmadi,
+# shuning uchun eski kontent yozuvlari buzilmaydi.
 FUNNEL_STAGES = [
-    ("tofu", "Tanishtirish (TOFU)"),
-    ("mofu", "Qiziqtirish (MOFU)"),
-    ("bofu", "Qaror (BOFU)"),
-    ("retention", "Saqlab qolish"),
+    ("tofu", "Tanilish"),
+    ("mofu", "Ishonch"),
+    ("bofu", "Qaror"),
+    ("retention", "Tavsiya"),
 ]
 FUNNEL_LABELS = dict(FUNNEL_STAGES)
+
+# =====================================================================
+#  SSENARIY SHABLONLARI (2026-08-27)
+#
+#  Jahongir: "ichiga ssearniysi scriptini yozadigan ham bo'lishi
+#  kerak SMM manager kirib shuni kopya qilishga oson bo'lsin,
+#  ozgartirishga oson bo'lsin."
+#
+#  Bo'sh oynaga qarab turish — kontentni sekinlashtiradigan asosiy
+#  narsa. Shuning uchun formatga qarab TAYYOR SKELET beriladi:
+#  SMM boshlaydi-yu, nolga qaramaydi. Skelet vaqt bilan bo'lingan,
+#  chunki Reels'da 3 soniyada ushlamasang odam ketadi.
+# =====================================================================
+SCRIPT_TEMPLATES = {
+    "reels": """[0-3 s] HOOK — ekranda katta yozuv, ovozda savol
+{hook}
+
+[3-8 s] MUAMMO — tomoshabin o'zini tanisin
+...
+
+[8-20 s] YECHIM — asosiy fikr
+{message}
+
+[20-35 s] DALIL — raqam, natija, sertifikat, jonli lavha
+{proof}
+
+[35-45 s] CTA — bitta aniq harakat
+{cta}
+
+--- SUR'AT ---
+Kadr almashishi: har 2-3 soniyada
+Ekrandagi yozuv: HOOK va CTA majburiy
+Musiqa: trend, ovoz ustidan past
+""",
+    "carousel": """SLAYD 1 — HOOK (faqat shu o'qiladi, qolgani shunga bog'liq)
+{hook}
+
+SLAYD 2 — muammo
+...
+
+SLAYD 3-5 — yechim bosqichma-bosqich
+{message}
+
+SLAYD 6 — DALIL (raqam yoki natija)
+{proof}
+
+SLAYD 7 — CTA
+{cta}
+
+--- QOIDA ---
+Har slaydda BITTA fikr. 2 qatordan oshmasin.
+""",
+    "story": """1-STORY — e'tibor (savol yoki kutilmagan kadr)
+{hook}
+
+2-STORY — mazmun
+{message}
+
+3-STORY — interaktiv stiker (so'rovnoma / savol / test)
+...
+
+4-STORY — CTA + havola
+{cta}
+""",
+    "static": """RASMDAGI YOZUV (5 so'zdan oshmasin):
+{hook}
+
+MATN (caption):
+1-jumla — ilgak: {hook}
+2-3-jumla — asosiy fikr: {message}
+4-jumla — dalil: {proof}
+Oxirgi jumla — CTA: {cta}
+""",
+    "testimonial": """[0-5 s] KIM — ism, natija, bir jumlada
+...
+
+[5-15 s] OLDIN qanday edi
+...
+
+[15-30 s] NIMA O'ZGARDI — aniq raqam bilan
+{proof}
+
+[30-40 s] KIMGA TAVSIYA QILADI
+{cta}
+
+--- QOIDA ---
+Yodlangan matn EMAS. Savol beriladi, javob tabiiy chiqadi.
+""",
+    "long_video": """[0-15 s] KIRISH — nima haqida va nega qolish kerak
+{hook}
+
+[15 s - 2 daq] 1-QISM
+{message}
+
+[2-4 daq] 2-QISM — dalil va misollar
+{proof}
+
+[4-5 daq] XULOSA + CTA
+{cta}
+""",
+}
+SCRIPT_DEFAULT = SCRIPT_TEMPLATES["reels"]
+
+
+def script_template(fmt: str, **kw) -> str:
+    """Formatga mos ssenariy skeleti. Brief maydonlari o'rniga
+    qo'yiladi; bo'sh bo'lsa "..." qoladi."""
+    tpl = SCRIPT_TEMPLATES.get(fmt or "", SCRIPT_DEFAULT)
+    safe = {k: (str(v).strip() or "...") for k, v in kw.items()}
+    for need in ("hook", "message", "proof", "cta"):
+        safe.setdefault(need, "...")
+    try:
+        return tpl.format(**safe)
+    except Exception:
+        return tpl
+
 
 # ---- Kim tasdiqlaydi ----
 # Kontent turiga qarab tasdiqlovchi o'zi aniqlanadi — SMM kimga

@@ -79,6 +79,18 @@ MIGRATIONS = [
         # 2026-08-12: yashirin (individual) chegirma
         "ALTER TABLE discounts ADD COLUMN hidden INTEGER",
     ]),
+    # 2026-08-27: kontent-plan Excel jadvalidagi ustunlar va
+    # postlar natijasini LINK orqali avtomat yig'ish belgilari.
+    ("0010_content_plan", [
+        "ALTER TABLE contents ADD COLUMN proof TEXT",
+        "ALTER TABLE contents ADD COLUMN shoot_date DATE",
+        "ALTER TABLE contents ADD COLUMN kpi_target VARCHAR",
+        "ALTER TABLE contents ADD COLUMN conclusion TEXT",
+        "ALTER TABLE contents ADD COLUMN series VARCHAR",
+        "ALTER TABLE content_metrics ADD COLUMN source VARCHAR",
+        "ALTER TABLE content_metrics ADD COLUMN fetched_at TIMESTAMP",
+        "ALTER TABLE content_metrics ADD COLUMN fetch_note VARCHAR",
+    ]),
 ]
 
 

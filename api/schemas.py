@@ -1603,6 +1603,15 @@ class ContentCreate(BaseModel):
     priority: Optional[str] = None
     needs_consent: Optional[bool] = None
     note: Optional[str] = None
+    # 2026-08-27: kontent-plan (Excel) ustunlari
+    hook: Optional[str] = None
+    message: Optional[str] = None
+    proof: Optional[str] = None
+    cta: Optional[str] = None
+    shoot_date: Optional[_dt.date] = None
+    kpi_target: Optional[str] = None
+    series: Optional[str] = None
+    script: Optional[str] = None
 
 
 class ContentUpdate(BaseModel):
@@ -1648,6 +1657,18 @@ class ContentUpdate(BaseModel):
     needs_consent: Optional[bool] = None
     consent_ok: Optional[bool] = None
     note: Optional[str] = None
+    # 2026-08-27: kontent-plan ustunlari. Bular sxemada yo'q edi va
+    # PUT so'rovi 200 qaytarardi-yu, maydonlarni JIMGINA tashlab
+    # yuborardi — test aynan shuni tutdi.
+    proof: Optional[str] = None
+    shoot_date: Optional[_dt.date] = None
+    kpi_target: Optional[str] = None
+    conclusion: Optional[str] = None
+    series: Optional[str] = None
+    planned_date: Optional[_dt.date] = None
+    # Havola: SMM post joylagach shu yerga qo'yadi va natija
+    # avtomat olinadi.
+    post_url: Optional[str] = None
 
 
 class ContentStatus(BaseModel):

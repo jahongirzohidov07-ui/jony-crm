@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Megaphone, AlertTriangle, Plus, X, Info, Calendar,
   Lightbulb, Inbox, ExternalLink, MessageSquare, TrendingUp,
-  Palette, Image, BookOpen, BarChart3,
+  Palette, Image, BookOpen, BarChart3, Table2,
 } from "lucide-react";
 import {
   api, type ContentMeta, type ContentList, type ContentRow,
@@ -15,6 +15,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "../components/Time24Input";
+import { ContentPlan, ContentAnalytics } from "../components/ContentPlan";
 import {
   SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, INBOX_ACCESS, can,
 } from "../lib/roles";
@@ -34,12 +35,18 @@ const TONE: Record<string, string> = {
   brown: "bg-yellow-800/20 text-yellow-900",
 };
 
-type Tab = "dashboard" | "calendar" | "inbox" | "attribution"
-  | "ideas" | "requests" | "brand" | "media" | "kb" | "report";
+type Tab = "dashboard" | "calendar" | "plan" | "canalytics" | "inbox"
+  | "attribution" | "ideas" | "requests" | "brand" | "media" | "kb"
+  | "report";
 
 const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "dashboard", label: "Bugun", icon: Megaphone },
   { key: "calendar", label: "Kontent taqvimi", icon: Calendar },
+  // 2026-08-27, Jahongir Excel kontent-planini yubordi: oy bir
+  // ko'zda ko'rinadigan jadval + ichida ssenariy + havoladan
+  // avtomat natija.
+  { key: "plan", label: "Kontent-plan", icon: Table2 },
+  { key: "canalytics", label: "Kontent tahlili", icon: TrendingUp },
   { key: "inbox", label: "Murojaatlar", icon: MessageSquare },
   { key: "attribution", label: "Natija", icon: TrendingUp },
   { key: "ideas", label: "G'oyalar", icon: Lightbulb },
@@ -101,6 +108,8 @@ export default function Smm() {
 
       {tab === "dashboard" && <DashboardTab />}
       {tab === "calendar" && <CalendarTab />}
+      {tab === "plan" && <ContentPlan />}
+      {tab === "canalytics" && <ContentAnalytics />}
       {tab === "inbox" && <InboxTab />}
       {tab === "attribution" && <AttributionTab />}
       {tab === "report" && <ReportTab />}

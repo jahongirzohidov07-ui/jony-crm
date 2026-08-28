@@ -167,6 +167,83 @@ ck("bazadagi hamma post ro'yxatda",
 ck("  soni", jami, 9)
 
 
+# =====================================================================
+print("\n=== 5. FILIALSIZ KONTENT — JAHONGIRNING HOLATI ===")
+# =====================================================================
+# "baribir ko'rinmayabdi excel jadval yuklasam ham" (2026-08-28).
+#
+# Sabab: asoschining o'zida filial yo'q, shuning uchun Excel'dan
+# yuklangan qatorlar FILIALSIZ saqlanardi. Tepadagi tanlagichda esa
+# "Bekobod 1" turgan edi va filialsiz qatorlar filtrdan o'tmasdi.
+# Ekran bo'm-bo'sh, ma'lumot esa joyida.
+b2 = models.Branch(name="Zafar")
+db.add(b2); db.commit()
+common.reset_partner_cache()
+
+asos = models.User(username="asoschi_plan",
+                   password_hash=hash_password("jonyjony"),
+                   role=roles.FOUNDER, full_name="Asoschi",
+                   branch_id=None, is_active=1)
+db.add(asos); db.commit()
+HA = {"Authorization": "Bearer " + c.post(
+    "/api/auth/login",
+    json={"username": "asoschi_plan", "password": "jonyjony"}
+).json()["access_token"]}
+
+# Asoschi filial tanlamasdan yuklaydi -> qator FILIALSIZ qoladi
+c.post("/api/smm/plan/import", headers=HA, json={
+    "year": 2026, "month": 11, "rows": [
+        {"Sana": "2026-11-03", "Mavzu": "Filialsiz post"}],
+    "dry_run": False})
+fs = db.query(models.Content).filter(
+    models.Content.title == "Filialsiz post").first()
+ck("filialsiz post yaratildi", fs.branch_id, None)
+
+ck("BARCHA FILIALLARda ko'rinadi",
+   "Filialsiz post" in [x["title"] for x in
+                        c.get("/api/smm/plan", headers=HA).json()["rows"]],
+   True)
+ck("BEKOBOD tanlansa ham ko'rinadi",
+   "Filialsiz post" in [x["title"] for x in c.get(
+       "/api/smm/plan?branch_id=%d" % b.id, headers=HA).json()["rows"]],
+   True)
+ck("ZAFAR tanlansa ham ko'rinadi",
+   "Filialsiz post" in [x["title"] for x in c.get(
+       "/api/smm/plan?branch_id=%d" % b2.id, headers=HA).json()["rows"]],
+   True)
+ck("filialga bog'langan SMM ham ko'radi",
+   "Filialsiz post" in [x["title"] for x in
+                        c.get("/api/smm/plan", headers=H).json()["rows"]],
+   True)
+
+# Filial tanlab yuklasa — o'sha filialga yoziladi
+c.post("/api/smm/plan/import", headers=HA, json={
+    "year": 2026, "month": 11, "branch_id": b2.id, "rows": [
+        {"Sana": "2026-11-04", "Mavzu": "Zafar posti"}],
+    "dry_run": False})
+zp = db.query(models.Content).filter(
+    models.Content.title == "Zafar posti").first()
+ck("filial berilsa — o'shanga yoziladi", zp.branch_id, b2.id)
+ck("  Bekobodda KO'RINMAYDI",
+   "Zafar posti" in [x["title"] for x in c.get(
+       "/api/smm/plan?branch_id=%d" % b.id, headers=HA).json()["rows"]],
+   False)
+ck("  Zafarda ko'rinadi",
+   "Zafar posti" in [x["title"] for x in c.get(
+       "/api/smm/plan?branch_id=%d" % b2.id, headers=HA).json()["rows"]],
+   True)
+
+# PUL ma'lumotida filialsizlik OCHILIB KETMASIN — chegara saqlansin
+sf = models.Student(full_name="Filialsiz Talaba", branch_id=None,
+                    status="active")
+db.add(sf); db.commit()
+st_rows = c.get("/api/students?branch_id=%d" % b.id, headers=HA).json()
+names = [x["full_name"] for x in (st_rows if isinstance(st_rows, list)
+                                  else st_rows.get("rows", []))]
+ck("filialsiz O'QUVCHI esa oshkor bo'lmadi (pul chegarasi joyida)",
+   "Filialsiz Talaba" in names, False)
+
+
 print("\n" + "=" * 60)
 if fails:
     print("YIQILGAN TEKSHIRUVLAR:", len(fails))

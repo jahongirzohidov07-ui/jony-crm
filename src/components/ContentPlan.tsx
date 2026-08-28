@@ -3,7 +3,7 @@ import {
   Copy, RefreshCw, Link2, FileText, Check, X, Plus,
   TrendingUp, AlertTriangle, ChevronDown, Upload,
 } from "lucide-react";
-import { api } from "../lib/api";
+import { api, getGlobalBranch } from "../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -114,6 +114,16 @@ export function ContentPlan() {
      qo'shish serverless to'plamini og'irlashtiradi. Brouzerda esa
      xlsx kutubxonasi allaqachon bor (hisobot yuklab olish uchun).
      Avval "ko'rib chiqish", keyin haqiqiy import. */
+  /** Yuklanayotgan reja QAYSI FILIALGA yozilsin — tepadagi
+   *  tanlagichdan. Avval bu hech qayerdan olinmasdi va asoschi
+   *  yuklaganda qatorlar FILIALSIZ saqlanardi; tanlagichda esa
+   *  "Bekobod 1" turgani uchun ular ro'yxatga tushmasdi
+   *  (2026-08-28 — sentabr rejasi shuning uchun "yo'q" edi). */
+  const branchNow = () => {
+    const b = getGlobalBranch();
+    return b ? Number(b) : null;
+  };
+
   /** Matndan oyni topish: "Sentabr 2026", "sentyabr", "09.2026". */
   const guessMonth = (text: string): [number, number] | null => {
     const t = (text || "").toLowerCase();
@@ -183,7 +193,8 @@ export function ContentPlan() {
         if (g) { [ty, tm] = g; qayerdan = "fayl nomidan"; }
       }
       const r = await api.post<Any>("/smm/plan/import",
-        { year: ty, month: tm, rows: best, dry_run: true });
+        { year: ty, month: tm, rows: best, dry_run: true,
+          branch_id: branchNow() });
       setPreview({ ...r, rows: best, ty, tm, qayerdan, file: file.name });
       setMsg("");
     } catch (e) {
@@ -196,7 +207,8 @@ export function ContentPlan() {
     if (!preview) return;
     try {
       const r = await api.post<Any>("/smm/plan/import",
-        { year: ty, month: tm, rows: preview.rows, dry_run: true });
+        { year: ty, month: tm, rows: preview.rows, dry_run: true,
+          branch_id: branchNow() });
       setPreview({ ...preview, ...r, rows: preview.rows, ty, tm,
                    qayerdan: "qo'lda tanlandi" });
     } catch (e) {
@@ -210,7 +222,8 @@ export function ContentPlan() {
     try {
       const r = await api.post<Any>("/smm/plan/import",
         { year: preview.ty, month: preview.tm,
-          rows: preview.rows, dry_run: false });
+          rows: preview.rows, dry_run: false,
+          branch_id: branchNow() });
       setMsg(`${r.added} ta post qo'shildi`
         + (r.skipped ? `, ${r.skipped} tasi allaqachon bor edi` : ""));
       setPreview(null);

@@ -1951,8 +1951,11 @@ def smm_plan(year: int | None = None, month: int | None = None,
     yo'qolmadi."""
     today = roles.local_today()
     y, m = year or today.year, month or today.month
+    # keep_unset: filialsiz post UMUMIY kontent — har filialda
+    # ko'rinadi. Aks holda Excel'dan yuklangan reja "yo'q" bo'lib
+    # qolardi (2026-08-28).
     q = scope_to_branch(db.query(models.Content), models.Content,
-                        user, branch_id)
+                        user, branch_id, keep_unset=True)
     if scope == "month":
         start, end = billing.month_bounds(y, m)
         rows = (q.filter(models.Content.planned_date >= start,
@@ -2166,8 +2169,11 @@ def content_analytics(months: int = 3, branch_id: int | None = None,
     """
     today = roles.local_today()
     since = today - timedelta(days=30 * max(1, min(months, 12)))
+    # keep_unset: filialsiz post UMUMIY kontent — har filialda
+    # ko'rinadi. Aks holda Excel'dan yuklangan reja "yo'q" bo'lib
+    # qolardi (2026-08-28).
     q = scope_to_branch(db.query(models.Content), models.Content,
-                        user, branch_id)
+                        user, branch_id, keep_unset=True)
     rows = (q.filter(models.Content.planned_date >= since,
                      models.Content.status == "published").all())
     ids = [c.id for c in rows]

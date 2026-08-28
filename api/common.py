@@ -1062,7 +1062,8 @@ def reset_partner_cache():
     _TEST_IDS = None
 
 
-def scope_to_branch(query, model, user: models.User, branch_id=None):
+def scope_to_branch(query, model, user: models.User, branch_id=None,
+                    keep_unset: bool = False):
     """Filialga bo'yicha cheklash.
 
     Uch xil cheklash bor va ular aralashmasligi kerak:
@@ -1074,12 +1075,31 @@ def scope_to_branch(query, model, user: models.User, branch_id=None):
          hamkor markaz raqamlari CHIQARIB TASHLANADI. U alohida
          biznes; tanlab ko'rish mumkin, lekin umumiy yig'indiga
          qo'shilmaydi.
+
+    keep_unset (2026-08-28) — FILIALSIZ yozuvlar ham ko'rinsinmi.
+
+    Standart holat: YO'Q. Pulga tegadigan narsalarda (o'quvchi,
+    to'lov, xarajat) filialsiz yozuv chiqib qolsa, bir filial
+    boshqasining raqamini ko'rib qolardi.
+
+    Lekin KONTENT boshqacha: post umuman markazniki, bitta
+    filialniki emas. Aynan shu farq tufayli Jahongirning sentabr
+    kontent-plani ko'rinmay qoldi — u Excelni yuklaganda qatorlar
+    filialsiz saqlangan, tanlagichda esa "Bekobod 1" turgan edi va
+    filialsiz qatorlar filtrdan o'tmagan. Ro'yxat bo'm-bo'sh
+    ko'rindi, ma'lumot esa joyida edi.
     """
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         allowed = _user_branch_ids(query.session, user)
         # O'z filiallaridan bittasini tanlab ko'rishi mumkin
         if branch_id and branch_id in allowed:
+            if keep_unset:
+                return query.filter(or_(model.branch_id == branch_id,
+                                        model.branch_id.is_(None)))
             return query.filter(model.branch_id == branch_id)
+        if keep_unset:
+            return query.filter(or_(model.branch_id.in_(allowed or [-1]),
+                                    model.branch_id.is_(None)))
         return query.filter(model.branch_id.in_(allowed or [-1]))
     # 2026-08-27: yashirin filial (hamkor Stech, test) — tanlab ham
     # ko'rib bo'lmaydi. Avval faqat "barcha filiallar" rejimida
@@ -1091,6 +1111,9 @@ def scope_to_branch(query, model, user: models.User, branch_id=None):
         # Hamkor markazni tanlab ham ochib bo'lmaydi
         if branch_id in blocked_branch_ids(query.session, user):
             return query.filter(model.branch_id == -1)
+        if keep_unset:
+            return query.filter(or_(model.branch_id == branch_id,
+                                    model.branch_id.is_(None)))
         return query.filter(model.branch_id == branch_id)
     # "Barcha filiallar" — hamkor markaz ham, TEST filiali ham
     # yig'indiga qo'shilmaydi. Test filialida soxta o'quvchi va

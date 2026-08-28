@@ -3065,8 +3065,24 @@ def import_batches(db: Session = Depends(get_db),
             .filter(models.AuditLog.entity == "student",
                     models.AuditLog.action == "import")
             .order_by(models.AuditLog.id.desc()).limit(30).all())
+
+    # GURUHNI SHU YERDA TOPAMIZ. Auditda guruh raqami saqlanmagan
+    # (yorliq "Elena rus tili: 167 ta o'quvchi" ko'rinishida), lekin
+    # brauzerga raqam kerak. Nom bo'yicha topib beramiz — shunda
+    # oyna guruhlar ro'yxatisiz ham ishlaydi (2026-08-28, Jahongir:
+    # "tanlab bo'lmayabdi" — ro'yxat bo'sh kelgan edi).
+    by_name = {}
+    for g in db.query(models.Group).all():
+        by_name.setdefault((g.name or "").strip().lower(), g)
+
     out = []
     for a in rows:
+        nom = str(a.entity_label or "").split(":")[0].strip()
+        g = (db.query(models.Group).get(a.entity_id)
+             if a.entity_id else None) or by_name.get(nom.lower())
+        if g is not None and not _in_user_branches(db, user, g.branch_id,
+                                                   null_ok=True):
+            continue                      # boshqa filial — ko'rsatilmaydi
         out.append({
             "id": a.id,
             "label": a.entity_label,
@@ -3074,6 +3090,8 @@ def import_batches(db: Session = Depends(get_db),
             "who": a.user_name,
             "at": a.created_at.isoformat() if a.created_at else None,
             "branch_id": getattr(a, "branch_id", None),
+            "group_id": g.id if g is not None else None,
+            "group": g.name if g is not None else nom,
         })
     return {"rows": out}
 
@@ -3279,6 +3297,9 @@ def import_students(payload: schemas.StudentImportIn,
         results.append({"name": name, "status": "ok"})
     db.commit()
     audit.log(db, user, entity="student", action="import",
+              # entity_id — GURUH raqami. Keyin "importni bekor qilish"
+              # oynasi guruhni nom bo'yicha izlamasin (2026-08-28).
+              entity_id=g.id,
               entity_label=f"{g.name}: {created} ta o'quvchi",
               new_value=created, branch_id=g.branch_id, commit=True)
     return {"created": created, "group": g.name, "results": results}

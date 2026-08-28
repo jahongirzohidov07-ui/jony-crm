@@ -266,20 +266,33 @@ export default function Students() {
   // 2026-08-28, Jahongir: "guruhga o'quvchi import qilib 167 ta
   // o'quvchini kirgizvoribman ADASHIB, nima qilsam bo'ladi"
   const [showUndo, setShowUndo] = useState(false);
+  const [loadErr, setLoadErr] = useState("");
   const [editing, setEditing] = useState<Student | null>(null);
 
   function load() {
     setLoading(true);
+    setLoadErr("");
     const query = q ? `?q=${encodeURIComponent(q)}` : "";
-    Promise.all([
+    // 2026-08-28: allSettled — avval Promise.all edi va BITTA so'rov
+    // yiqilsa uchalasi ham yozilmasdi. Natijada sahifa "0 / 0" bo'lib,
+    // guruh tanlagichi ham bo'sh qolardi va sababi ko'rinmasdi
+    // (Jahongir: "tanlab bo'lmayabdi").
+    Promise.allSettled([
       api.get<Student[]>(`/students${query}`),
       api.get<Group[]>("/groups"),
       api.get<Branch[]>("/branches"),
     ])
       .then(([s, g, b]) => {
-        setStudents(s);
-        setGroups(g);
-        setBranches(b);
+        const bad: string[] = [];
+        if (s.status === "fulfilled") setStudents(s.value);
+        else bad.push("o'quvchilar");
+        if (g.status === "fulfilled") setGroups(g.value);
+        else bad.push("guruhlar");
+        if (b.status === "fulfilled") setBranches(b.value);
+        else bad.push("filiallar");
+        setLoadErr(bad.length
+          ? `Yuklanmadi: ${bad.join(", ")}. Sahifani yangilab ko'ring.`
+          : "");
       })
       .finally(() => setLoading(false));
   }
@@ -498,6 +511,11 @@ export default function Students() {
         </table>
       </div>
 
+      {loadErr && (
+        <p className="mb-3 text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+          {loadErr}
+        </p>
+      )}
       {showImport && (
         <ImportStudentsModal
           groups={groups}
@@ -785,6 +803,15 @@ function ImportUndoModal({ groups, isFounder, onClose, onDone }: {
   onClose: () => void;
   onDone: () => void;
 }) {
+  // OYNA O'ZI RO'YXAT OLADI. 2026-08-28, Jahongir: "tanlab
+  // bo'lmayabdi" — tanlagich bo'm-bo'sh edi, chunki oyna sahifadan
+  // uzatilgan ro'yxatga tayangan, sahifadagi yuklash esa yiqilgan
+  // edi. Endi oyna hech kimga bog'liq emas: o'zi so'raydi va
+  // qidiruv maydoni bilan keladi (guruh ko'p bo'lsa ro'yxatdan
+  // topish qiyin).
+  const [myGroups, setMyGroups] = useState<Group[]>(groups || []);
+  const [gq, setGq] = useState("");
+  const [batches, setBatches] = useState<any[]>([]);
   const [groupId, setGroupId] = useState("");
   const [d, setD] = useState<any>(null);
   const [busy, setBusy] = useState(false);
@@ -794,6 +821,24 @@ function ImportUndoModal({ groups, isFounder, onClose, onDone }: {
 
   const som = (n: number) =>
     (Math.round(Math.abs(n)) || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+
+  useEffect(() => {
+    api.fresh<Group[]>("/groups")
+      .then((g) => { if (g && g.length) setMyGroups(g); })
+      .catch(() => { /* sahifadan kelgani qoladi */ });
+    // Oxirgi importlar — "Elena rus tili · 167 ta" bo'lib chiqadi,
+    // shundan bir bosishda tanlash mumkin.
+    api.fresh<{ rows: any[] }>("/student-imports")
+      .then((r) => setBatches(r?.rows || []))
+      .catch(() => setBatches([]));
+  }, []);
+
+  const shown = myGroups.filter((g) => {
+    if (!gq.trim()) return true;
+    const t = gq.trim().toLowerCase();
+    return (g.name || "").toLowerCase().includes(t)
+      || (g.branch?.name || "").toLowerCase().includes(t);
+  });
 
   async function look(gid: string) {
     setGroupId(gid);
@@ -866,19 +911,68 @@ function ImportUndoModal({ groups, isFounder, onClose, onDone }: {
           </div>
         ) : (
           <div className="space-y-4">
+            {/* OXIRGI IMPORTLAR — eng tez yo'l */}
+            {batches.length > 0 && !groupId && (
+              <div>
+                <p className="text-xs font-medium text-slate-500 mb-1.5">
+                  Oxirgi importlar
+                </p>
+                <div className="space-y-1.5 max-h-32 overflow-auto">
+                  {batches.slice(0, 6).map((bt) => {
+                    // group_id endi serverdan keladi — guruhlar
+                    // ro'yxati bo'sh bo'lsa ham tugma ishlaydi.
+                    const gid = bt.group_id;
+                    return (
+                      <button key={bt.id} disabled={!gid}
+                        onClick={() => gid && look(String(gid))}
+                        className="w-full text-left rounded-lg border border-slate-200
+                                   hover:border-brand-400 px-3 py-2 text-xs
+                                   disabled:opacity-50">
+                        <span className="font-medium text-slate-800">
+                          {bt.label}
+                        </span>
+                        <span className="text-slate-400">
+                          {" "}· {bt.who}
+                          {bt.at ? ` · ${String(bt.at).slice(0, 10)}` : ""}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Qaysi guruhga adashib import qilingan
               </label>
-              <select value={groupId} onChange={(e) => look(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white">
-                <option value="">— guruhni tanlang —</option>
-                {groups.map((g) => (
-                  <option key={g.id} value={g.id}>
-                    {g.name}{g.branch ? ` · ${g.branch.name}` : ""}
-                  </option>
-                ))}
-              </select>
+              {myGroups.length === 0 ? (
+                <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                  Guruhlar ro'yxati yuklanmadi. Sahifani yangilab
+                  (F5) qayta urinib ko'ring.
+                </p>
+              ) : (
+                <>
+                  <input
+                    value={gq}
+                    onChange={(e) => setGq(e.target.value)}
+                    placeholder="Guruh nomi bo'yicha qidirish…"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mb-1.5"
+                  />
+                  <select value={groupId} onChange={(e) => look(e.target.value)}
+                    size={gq ? Math.min(8, shown.length + 1) : undefined}
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white">
+                    <option value="">
+                      — guruhni tanlang ({shown.length} ta) —
+                    </option>
+                    {shown.map((g) => (
+                      <option key={g.id} value={g.id}>
+                        {g.name}{g.branch ? ` · ${g.branch.name}` : ""}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
             </div>
 
             {busy && !d && (

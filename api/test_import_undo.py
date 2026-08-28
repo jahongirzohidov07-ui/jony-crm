@@ -256,6 +256,19 @@ bat = c.get("/api/student-imports", headers=HF).json()
 ck("importlar ro'yxati ochiladi", len(bat["rows"]) >= 1, True)
 ck("  qaysi guruh va nechta ekani ko'rinadi",
    "Elena rus tili" in (bat["rows"][0]["label"] or ""), True)
+# 2026-08-28: guruh RAQAMI ham qaytadi — oyna guruhlar ro'yxatisiz
+# ham ishlashi kerak (Jahongir: "tanlab bo'lmayabdi").
+ck("  guruh raqami ham beriladi", bat["rows"][0]["group_id"], g.id)
+ck("  guruh nomi alohida", bat["rows"][0]["group"], "Elena rus tili")
+
+# ESKI YOZUVLARDA guruh raqami yo'q — nom bo'yicha topilishi kerak
+eski = (db.query(models.AuditLog)
+        .filter(models.AuditLog.action == "import").first())
+eski.entity_id = None
+db.commit()
+bat2 = c.get("/api/student-imports", headers=HF).json()
+ck("eski yozuvda ham guruh nomdan topiladi",
+   bat2["rows"][-1]["group_id"], g.id)
 
 
 print("\n" + "=" * 60)

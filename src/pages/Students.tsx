@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Plus, Search, X, Download, Pencil, FileUp } from "lucide-react";
+import { Plus, Search, X, Download, Pencil, FileUp, Undo2, AlertTriangle,
+  Shield } from "lucide-react";
 import {
   api, getGlobalBranch, type Student, type Group, type Branch,
 } from "../lib/api";
@@ -262,6 +263,9 @@ export default function Students() {
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  // 2026-08-28, Jahongir: "guruhga o'quvchi import qilib 167 ta
+  // o'quvchini kirgizvoribman ADASHIB, nima qilsam bo'ladi"
+  const [showUndo, setShowUndo] = useState(false);
   const [editing, setEditing] = useState<Student | null>(null);
 
   function load() {
@@ -333,6 +337,18 @@ export default function Students() {
                 className="flex items-center gap-2 bg-white border border-slate-300 hover:border-brand-300 text-slate-700 rounded-lg px-4 py-2 text-sm font-medium"
               >
                 <FileUp size={15} /> Excel'dan import
+              </button>
+              {/* 2026-08-28: adashib import qilingan bo'lsa —
+                  bir joyda bekor qilish. Avval faqat birma-bir
+                  o'chirish yo'li bor edi (167 ta uchun bir necha
+                  soatlik ish va yo'lda haqiqiy o'quvchini
+                  o'chirib yuborish xavfi). */}
+              <button
+                onClick={() => setShowUndo(true)}
+                title="Adashib import qilingan o'quvchilarni qaytarish"
+                className="flex items-center gap-2 bg-white border border-slate-300 hover:border-red-300 hover:text-red-700 text-slate-600 rounded-lg px-4 py-2 text-sm font-medium"
+              >
+                <Undo2 size={15} /> Importni bekor qilish
               </button>
               <button
                 onClick={() => setShowAdd(true)}
@@ -490,6 +506,14 @@ export default function Students() {
             setShowImport(false);
             load();
           }}
+        />
+      )}
+      {showUndo && (
+        <ImportUndoModal
+          groups={groups}
+          isFounder={user?.role === "founder"}
+          onClose={() => setShowUndo(false)}
+          onDone={() => { setShowUndo(false); load(); }}
         />
       )}
       {showAdd && (
@@ -733,6 +757,251 @@ function ImportStudentsModal({
             >
               {busy ? "Qo'shilmoqda..." : `${rows.length} ta o'quvchini qo'shish`}
             </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * IMPORTNI BEKOR QILISH (2026-08-28).
+ *
+ * Jahongir: "hozir Elena rus tili ... filialdagi guruhga o'quvchi
+ * import qilib 167 ta o'quvchini kirgizvoribman ADASHIB, nima
+ * qilsam bo'ladi"
+ *
+ * Oyna ataylab IKKI QADAM: avval RO'YXAT (hech narsaga tegilmaydi),
+ * keyin tasdiq. Va u ikki narsani ochiq ko'rsatadi:
+ *   · nechta o'quvchi qaytariladi;
+ *   · nechtasi HIMOYALANGAN (to'lovi, yo'qlamasi, coini bor) — ular
+ *     haqiqiy bo'lishi mumkin va TEGILMAYDI.
+ */
+function ImportUndoModal({ groups, isFounder, onClose, onDone }: {
+  groups: Group[];
+  isFounder: boolean;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const [groupId, setGroupId] = useState("");
+  const [d, setD] = useState<any>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [mode, setMode] = useState<"archive" | "delete">("archive");
+  const [done, setDone] = useState<any>(null);
+
+  const som = (n: number) =>
+    (Math.round(Math.abs(n)) || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+
+  async function look(gid: string) {
+    setGroupId(gid);
+    setD(null);
+    setErr("");
+    if (!gid) return;
+    setBusy(true);
+    try {
+      setD(await api.post<any>("/students/import-undo",
+        { group_id: Number(gid), dry_run: true }));
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Ochib bo'lmadi");
+    } finally { setBusy(false); }
+  }
+
+  async function run() {
+    if (!d) return;
+    setBusy(true);
+    setErr("");
+    try {
+      const r = await api.post<any>("/students/import-undo", {
+        group_id: Number(groupId), mode,
+        ids: d.rows.map((x: any) => x.id), dry_run: false,
+      });
+      setDone(r);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Bajarilmadi");
+    } finally { setBusy(false); }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4 py-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-auto p-6">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="font-semibold text-slate-900 flex items-center gap-2">
+            <Undo2 size={17} /> Importni bekor qilish
+          </h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-4">
+          Adashib import qilingan o'quvchilarni bir joyda qaytaradi.
+          To'lovi, yo'qlamasi yoki coini bor o'quvchiga TEGILMAYDI.
+        </p>
+
+        {done ? (
+          <div>
+            <p className="text-sm font-medium text-emerald-700 mb-2">
+              ✓ {done.done} ta o'quvchi{" "}
+              {done.mode === "delete" ? "butunlay o'chirildi" : "arxivga o'tkazildi"}
+            </p>
+            {done.protected > 0 && (
+              <p className="text-xs text-slate-600 mb-3">
+                {done.protected} ta o'quvchi himoyalangani uchun joyida
+                qoldirildi — ularni o'quvchi kartasidan qo'lda ko'ring.
+              </p>
+            )}
+            {done.removed && Object.keys(done.removed).length > 0 && (
+              <p className="text-xs text-slate-500 mb-3">
+                Tozalangan yozuvlar:{" "}
+                {Object.entries(done.removed)
+                  .map(([k, v]) => `${k}: ${v}`).join(", ")}
+              </p>
+            )}
+            <button onClick={onDone}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium">
+              Tayyor
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Qaysi guruhga adashib import qilingan
+              </label>
+              <select value={groupId} onChange={(e) => look(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white">
+                <option value="">— guruhni tanlang —</option>
+                {groups.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}{g.branch ? ` · ${g.branch.name}` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {busy && !d && (
+              <p className="text-sm text-slate-400">Tekshirilmoqda…</p>
+            )}
+
+            {d && (
+              <>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="rounded-lg border border-slate-200 p-3">
+                    <p className="text-[11px] text-slate-500">Guruhda jami</p>
+                    <p className="text-lg font-semibold">{d.total}</p>
+                  </div>
+                  <div className="rounded-lg border border-red-200 bg-red-50 p-3">
+                    <p className="text-[11px] text-red-600">Qaytariladi</p>
+                    <p className="text-lg font-semibold text-red-700">
+                      {d.can_undo}
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+                    <p className="text-[11px] text-emerald-700">Himoyalangan</p>
+                    <p className="text-lg font-semibold text-emerald-800">
+                      {d.protected}
+                    </p>
+                  </div>
+                </div>
+
+                {d.charges > 0 && (
+                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 flex gap-2">
+                    <AlertTriangle size={15} className="text-amber-600 shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-800 leading-relaxed">
+                      Bu import <b>{d.charges} ta avtomat hisob</b> ham
+                      yaratgan — bu {som(d.fake_debt)} so'mlik SOXTA QARZ
+                      bo'lib moliyada turibdi. Bekor qilinganda u ham
+                      tozalanadi.
+                    </p>
+                  </div>
+                )}
+
+                {d.protected > 0 && (
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3">
+                    <p className="text-xs font-medium text-emerald-800 flex items-center gap-1.5 mb-1">
+                      <Shield size={13} /> Bularga tegilmaydi
+                    </p>
+                    <div className="max-h-24 overflow-auto">
+                      {d.protected_rows.map((x: any) => (
+                        <p key={x.id} className="text-[11px] text-emerald-900">
+                          {x.name} — {x.activity.join(", ")}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="border border-slate-200 rounded-lg max-h-52 overflow-auto">
+                  <table className="w-full text-xs">
+                    <tbody>
+                      {d.rows.slice(0, 300).map((x: any) => (
+                        <tr key={x.id} className="border-b border-slate-50">
+                          <td className="px-3 py-1.5 text-slate-800">{x.name}</td>
+                          <td className="px-3 py-1.5 text-slate-400">{x.phone}</td>
+                          <td className="px-3 py-1.5 text-slate-400 text-right">
+                            {x.enrolled_date}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">
+                    Nima qilinsin
+                  </label>
+                  <div className="space-y-1.5">
+                    <label className="flex items-start gap-2 text-sm">
+                      <input type="radio" checked={mode === "archive"}
+                        onChange={() => setMode("archive")} className="mt-1" />
+                      <span>
+                        <b>Arxivga o'tkazish</b>
+                        <span className="block text-xs text-slate-500">
+                          Yozuvlar saqlanadi, keyin qaytarsa bo'ladi. Guruhdan
+                          chiqariladi, soxta qarz tozalanadi.
+                        </span>
+                      </span>
+                    </label>
+                    <label className={"flex items-start gap-2 text-sm "
+                      + (isFounder ? "" : "opacity-50")}>
+                      <input type="radio" checked={mode === "delete"}
+                        disabled={!isFounder}
+                        onChange={() => setMode("delete")} className="mt-1" />
+                      <span>
+                        <b>Butunlay o'chirish</b>
+                        <span className="block text-xs text-slate-500">
+                          {isFounder
+                            ? "Bazadan butunlay olib tashlanadi. Qaytarib bo'lmaydi."
+                            : "Faqat asoschida. Sizda arxivga o'tkazish bor."}
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {err && (
+                  <p className="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">
+                    {err}
+                  </p>
+                )}
+
+                <button onClick={run} disabled={busy || d.can_undo === 0}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-40">
+                  {busy ? "Bajarilmoqda…"
+                    : `${d.can_undo} ta o'quvchini ${
+                      mode === "delete" ? "butunlay o'chirish" : "arxivga o'tkazish"}`}
+                </button>
+              </>
+            )}
+
+            {err && !d && (
+              <p className="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">
+                {err}
+              </p>
+            )}
           </div>
         )}
       </div>

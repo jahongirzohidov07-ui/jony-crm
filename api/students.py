@@ -7,9 +7,11 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import (APIRouter, Body, Depends, FastAPI, HTTPException,
+                     Request)
 from fastapi.responses import JSONResponse
-from sqlalchemy import delete as sa_delete, func, or_, text, update as sa_update
+from sqlalchemy import (delete as sa_delete, func, func as sa_func, or_,
+                        select as sa_select, text, update as sa_update)
 from sqlalchemy.orm import Session
 
 import audit
@@ -2949,6 +2951,266 @@ def pay_link(student_id: int, amount: float = 0,
             f"?service_id={click_s}&merchant_id={click_m}"
             f"&amount={int(amt)}&transaction_param={s.public_id or s.id}")
     return {"enabled": True, "amount": amt, "links": links}
+
+# =====================================================================
+#  IMPORTNI BEKOR QILISH  (2026-08-28)
+# =====================================================================
+#
+#  Jahongir: "hozir Elena rus tili ... filialdagi guruhga o'quvchi
+#  import qilib 167 ta o'quvchini kirgizvoribman ADASHIB, nima
+#  qilsam bo'ladi"
+#
+#  Import 167 ta qator yaratdi. Ularni birma-bir o'chirish — bir
+#  necha soatlik ish va yo'lda haqiqiy o'quvchini ham o'chirib
+#  yuborish xavfi bor. Shuning uchun BATAFSIL, ORQAGA QAYTARIB
+#  BO'LADIGAN yo'l:
+#
+#   1) OLDIN KO'RSATADI. Hech narsaga tegmasdan ro'yxat chiqadi:
+#      kim, qachon kiritilgan, tarixi bormi.
+#   2) TARIXI BORINI TEGMAYDI. To'lovi, yo'qlamasi, coini, imtihoni
+#      yoki ilova faolligi bo'lgan o'quvchi HIMOYALANGAN — u
+#      haqiqiy odam bo'lishi mumkin. U alohida ro'yxatda chiqadi
+#      va qo'lda hal qilinadi.
+#   3) FAQAT TASDIQLANGANINI QAYTARADI. Haqiqiy bajarishda server
+#      o'zi tanlamaydi: brauzer aynan qaysi ID larni tasdiqlagan
+#      bo'lsa, o'shalarni oladi.
+#   4) IKKI BOSQICH. Standart — ARXIVGA (qaytarib bo'ladi). Butunlay
+#      o'chirish faqat asoschida va faqat tarixsizlar uchun.
+#
+# ODAM QILGAN ish bo'lgan jadvallar. Bittasi ham bo'lsa —
+# o'quvchi HIMOYALANADI, bekor qilinmaydi.
+_ACTIVITY_TABLES = [
+    ("attendances", "yo'qlama"),
+    ("coin_entries", "coin"),
+    ("exam_results", "imtihon"),
+    ("vocab_attempts", "ilovada mashq"),
+    ("discounts", "chegirma"),
+]
+
+
+def _student_activity(db: Session, ids: list) -> tuple:
+    """Qaysi o'quvchida qanday iz bor.
+
+    ENG NOZIK JOY — HISOB (charge) IZ EMAS.
+
+    Xato import qilinganda tizim har bir yangi o'quvchiga o'zi oylik
+    HISOB yozadi (kind="charge", ya'ni qarz). Agar shuni ham "tarixi
+    bor" deb hisoblasak, 167 tasining HAMMASI himoyalanib qolardi va
+    bekor qilish umuman ishlamasdi — aynan shu holat test paytida
+    chiqdi.
+
+    Shuning uchun to'lov jadvali TURI bo'yicha ajratiladi:
+      · charge  — tizim o'zi yozgan hisob, ODAM QILGAN ish emas ->
+                  iz emas, o'quvchi bilan birga tozalanadi;
+      · payment/discount/refund — HAQIQIY pul harakati -> iz,
+                  o'quvchi himoyalanadi.
+
+    N+1 bo'lmasin: 167 ta o'quvchi x 6 jadval = 1000 ta so'rov
+    bo'lib ketardi. Har jadvalga bitta guruhlangan so'rov."""
+    out: dict = {i: [] for i in ids}
+    charges: dict = {i: 0 for i in ids}
+    if not ids:
+        return out, charges
+    tables = {t.name: t for t in models.Base.metadata.sorted_tables}
+
+    # 1) To'lovlar — TURI bilan
+    pt = tables.get("payments")
+    if pt is not None and "student_id" in pt.columns:
+        col = pt.columns["student_id"]
+        try:
+            rows = db.execute(
+                sa_select(col, pt.columns["kind"], sa_func.count())
+                .where(col.in_(ids)).group_by(col, pt.columns["kind"])).all()
+        except Exception:
+            db.rollback()
+            rows = []
+        for sid, kind, n in rows:
+            if sid not in out or not n:
+                continue
+            if (kind or "") == "charge":
+                charges[sid] = charges.get(sid, 0) + n
+            else:
+                nom = {"payment": "to'lov", "discount": "chegirma",
+                       "refund": "qaytarish"}.get(kind or "", kind or "yozuv")
+                out[sid].append(f"{nom}: {n}")
+
+    # 2) Qolgan jadvallar
+    for tname, label in _ACTIVITY_TABLES:
+        t = tables.get(tname)
+        if t is None or "student_id" not in t.columns:
+            continue
+        col = t.columns["student_id"]
+        try:
+            rows = db.execute(
+                sa_select(col, sa_func.count()).where(col.in_(ids))
+                .group_by(col)).all()
+        except Exception:
+            db.rollback()
+            continue
+        for sid, n in rows:
+            if sid in out and n:
+                out[sid].append(f"{label}: {n}")
+    return out, charges
+
+
+# DIQQAT — YO'L NOMI. "/api/students/import-batches" BO'LMAYDI:
+# GET /api/students/{student_id} faylda yuqoriroqda turibdi va
+# "import-batches" ni o'quvchi raqami deb qabul qilib oladi (test
+# aynan shuni tutdi). Shuning uchun alohida nom.
+@router.get("/api/student-imports")
+def import_batches(db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """Oxirgi importlar ro'yxati — auditdan o'qiladi."""
+    rows = (db.query(models.AuditLog)
+            .filter(models.AuditLog.entity == "student",
+                    models.AuditLog.action == "import")
+            .order_by(models.AuditLog.id.desc()).limit(30).all())
+    out = []
+    for a in rows:
+        out.append({
+            "id": a.id,
+            "label": a.entity_label,
+            "count": a.new_value,
+            "who": a.user_name,
+            "at": a.created_at.isoformat() if a.created_at else None,
+            "branch_id": getattr(a, "branch_id", None),
+        })
+    return {"rows": out}
+
+
+@router.post("/api/students/import-undo")
+def import_undo(payload: dict = Body(...),
+                db: Session = Depends(get_db),
+                user=Depends(require_role(*roles.FREEZE_ROLES))):
+    """{group_id, ids?, mode: "archive"|"delete", dry_run}
+
+    dry_run (standart) — HECH NARSAGA TEGMAYDI, faqat ro'yxat.
+    """
+    gid = payload.get("group_id")
+    g = db.query(models.Group).get(int(gid)) if gid else None
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if not _in_user_branches(db, user, g.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+
+    mode = str(payload.get("mode") or "archive")
+    dry = payload.get("dry_run", True)
+    only = payload.get("ids")
+    only = {int(x) for x in only} if only else None
+
+    rows = db.query(models.Student).filter(in_group(g.id)).all()
+    act, charges = _student_activity(db, [s.id for s in rows])
+
+    free, kept = [], []
+    for s in rows:
+        item = {
+            "id": s.id,
+            "public_id": s.public_id,
+            "name": s.full_name,
+            "phone": s.phone,
+            "status": s.status,
+            "enrolled_date": (s.enrolled_date.isoformat()
+                              if s.enrolled_date else None),
+            "activity": act.get(s.id) or [],
+            "charges": charges.get(s.id, 0),
+            "balance": student_balance(db, s.id),
+        }
+        (kept if item["activity"] else free).append(item)
+
+    if dry:
+        qarz = round(sum(x["balance"] for x in free if x["balance"] < 0), 0)
+        return {
+            "dry_run": True,
+            "group": g.name,
+            "group_id": g.id,
+            "branch_id": g.branch_id,
+            "total": len(rows),
+            "can_undo": len(free),
+            "protected": len(kept),
+            # XATO IMPORT PULGA HAM TEGADI: tizim har bir yangi
+            "charges": sum(x["charges"] for x in free),
+            "fake_debt": qarz,
+            "rows": free,
+            "protected_rows": kept,
+            "hint": ("Tarixi bor o'quvchilar (to'lov, yo'qlama, coin, "
+                     "imtihon) TEGILMAYDI — ular haqiqiy bo'lishi "
+                     "mumkin. Tizim o'zi yozgan oylik hisob esa iz "
+                     "hisoblanmaydi va o'quvchi bilan birga tozalanadi."),
+        }
+
+    # ---- HAQIQIY BAJARISH ----
+    if mode == "delete" and user.role != roles.FOUNDER:
+        raise HTTPException(403, "Butunlay o'chirish faqat asoschida. "
+                                 "Arxivga o'tkazish esa sizda ochiq.")
+    if only:
+        # Server O'ZI tanlamaydi: tasdiqlanmagan ID qabul qilinmaydi.
+        #
+        # Bu tekshiruv TANLOVDAN OLDIN turishi shart. Aks holda
+        # himoyalangan o'quvchi berilganda "hech kim tanlanmadi"
+        # degan tushunarsiz javob chiqardi — nima uchun rad
+        # etilgani bilinmasdi (test shuni tutdi).
+        himoya = {x["id"]: x["name"] for x in kept}
+        yomon = only - {x["id"] for x in free}
+        if yomon:
+            kim = [himoya[i] for i in list(yomon)[:3] if i in himoya]
+            nega = ("tarixi bor (to'lov/yo'qlama/coin)" if kim
+                    else "bu guruhda emas")
+            raise HTTPException(
+                400, f"{len(yomon)} ta o'quvchi bekor qilinmaydi — {nega}"
+                     + (": " + ", ".join(kim) if kim else "")
+                     + ". Ular haqiqiy o'quvchi bo'lishi mumkin.")
+    target = [x for x in free if only is None or x["id"] in only]
+    if not target:
+        raise HTTPException(400, "Bekor qilinadigan o'quvchi tanlanmadi")
+
+    today = roles.local_today()
+    done, removed_all = 0, {}
+    for x in target:
+        s = db.query(models.Student).get(x["id"])
+        if s is None:
+            continue
+        if mode == "delete":
+            rem = _purge_student_children(db, s.id)
+            for k, v in rem.items():
+                removed_all[k] = removed_all.get(k, 0) + v
+            db.delete(s)
+        else:
+            # ARXIVGA. Hech narsa yo'qolmaydi — qaytarib bo'ladi.
+            #
+            # LEKIN AVTOMAT HISOB (charge) OLIB TASHLANADI. Aks holda
+            # arxivdagi 167 ta soxta o'quvchi filialning qarzida
+            # turib qolardi va moliya raqami buzilardi. Bu odam
+            # yozgan yozuv emas — tizim o'zi qo'ygan hisob.
+            n_ch = db.query(models.Payment).filter(
+                models.Payment.student_id == s.id,
+                models.Payment.kind == "charge").delete(
+                synchronize_session=False)
+            if n_ch:
+                removed_all["hisob (charge)"] = \
+                    removed_all.get("hisob (charge)", 0) + n_ch
+            s.status = "archived"
+            s.left_date = s.left_date or today
+            s.group_id = None
+            s.note = ((s.note + " · ") if s.note else "")                 + f"Xato import — bekor qilindi ({today.isoformat()})"
+            db.query(models.StudentGroupLink).filter(
+                models.StudentGroupLink.student_id == s.id,
+                models.StudentGroupLink.group_id == g.id).update(
+                {"active": 0})
+        done += 1
+
+    detail = ", ".join(f"{k}:{v}" for k, v in sorted(removed_all.items()))
+    audit.log(db, user, entity="student", action="import_undo",
+              entity_label=f"{g.name}: {done} ta o'quvchi",
+              new_value=done, branch_id=g.branch_id,
+              old_value=("butunlay o'chirildi" if mode == "delete"
+                         else "arxivga o'tkazildi")
+                        + (f" ({detail})" if detail else ""),
+              note="; ".join(f"{x['public_id'] or x['id']} {x['name']}"
+                             for x in target[:200]))
+    db.commit()
+    return {"ok": True, "mode": mode, "done": done,
+            "protected": len(kept), "removed": removed_all}
+
 
 @router.post("/api/students/import")
 def import_students(payload: schemas.StudentImportIn,

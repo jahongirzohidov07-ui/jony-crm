@@ -462,6 +462,20 @@ def update_user(
 
     if payload.full_name is not None:
         target.full_name = payload.full_name
+    # ESKI LAVOZIM YO'QOLMAYDI (2026-08-29, Jahongir: "menejerdan
+    # ustozga o'tgandan keyin almashtira olmay qolibdi").
+    #
+    # SABAB: tahrirlash oynasi qo'shimcha lavozimlar ro'yxatidan
+    # ASOSIY lavozimni chiqarib yuboradi (u ikki marta turmasin
+    # uchun). Asosiy lavozim "filial rahbari"dan "ustoz"ga
+    # o'zgartirilganda esa ro'yxatda faqat "ustoz" qolgan edi ->
+    # filtrdan keyin ro'yxat BO'SH bo'lib ketdi -> odam ustoz
+    # kabinetida qamalib qoldi, qaytishga tanlagich yo'q.
+    #
+    # Endi eski asosiy lavozim AVTOMAT qo'shimchaga o'tadi. Odam
+    # lavozimini almashtirganda avvalgisini yo'qotmaydi — ikkalasida
+    # ham ishlayveradi (aynan Nodirbek va Go'zalning holati).
+    _old_role = target.role
     if payload.role is not None:
         target.role = payload.role
     if payload.branch_id is not None:
@@ -504,9 +518,20 @@ def update_user(
     # Ko'p filial ro'yxati yuborilgan bo'lsa — sinxronlaymiz
     if _new_bids is not None:
         _sync_user_branches(db, target, _new_bids or [])
-    # Qo'shimcha lavozimlar yuborilgan bo'lsa — sinxronlaymiz
-    if "extra_roles" in given:
-        _sync_user_roles(db, target, given.get("extra_roles") or [])
+    # Qo'shimcha lavozimlar yuborilgan bo'lsa — sinxronlaymiz.
+    # Eski asosiy lavozim HAR DOIM ro'yxatga qo'shiladi (yuqoridagi
+    # izohga qarang) — brauzer uni yuborishni unutgan bo'lsa ham.
+    _extra = list(given.get("extra_roles") or []) \
+        if "extra_roles" in given else None
+    if _old_role and _old_role != target.role \
+            and _old_role in roles.ALL_ROLES:
+        if _extra is None:
+            _extra = [r.role for r in db.query(models.UserRole)
+                      .filter(models.UserRole.user_id == target.id).all()]
+        if _old_role not in _extra:
+            _extra.append(_old_role)
+    if _extra is not None:
+        _sync_user_roles(db, target, _extra)
 
     # Ustoz/support kartasi bilan ikki tomonlama sinxron: ism va
     # faollik ikkala bo'limda bir xil tursin. Rol keyin o'qituvchiga

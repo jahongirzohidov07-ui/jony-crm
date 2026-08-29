@@ -643,6 +643,80 @@ try:
 except Exception:
     pass
 
+
+# =====================================================================
+#  IKKI LAVOZIM TIKLASH (2026-08-29)
+# =====================================================================
+#  Jahongir: "Stretinko filial rahbari va ustoz Nodirbek Abdulatipov
+#  bitta odam, lavozim o'zgartirish ishlamayabdi — menejerdan ustozga
+#  o'tgandan keyin ALMASHTIRA OLMAY QOLIBDI. Xuddi shunday Go'zal
+#  Xozidova o'quv bo'limi rahbari va Zafar filialda ustoz — shunaqa
+#  edi."
+#
+#  Sabab auth_users.py da tuzatildi (eski asosiy lavozim endi avtomat
+#  qo'shimchaga o'tadi). Lekin ikkalasining yozuvi ALLAQACHON buzilgan:
+#  qo'shimcha lavozimi o'chib ketgan va ular bitta lavozimda qamalib
+#  qolgan. Shu yerda tiklanadi.
+#
+#  Qoida yo'nalishga bog'liq emas: qaysi lavozim asosiy bo'lsa ham,
+#  JUFTLIKDAGI IKKINCHISI qo'shimcha bo'lib turadi. Ya'ni bundan
+#  keyin ikki tomonga ham erkin almashtiradi.
+#
+#  Idempotent: necha marta ishga tushsa ham dubl chiqmaydi. Hech
+#  narsa o'chirilmaydi — faqat yetishmayotgani qo'shiladi.
+_DUAL_STAFF = [
+    ("Nodirbek Abdulatipov", (roles.BRANCH_MANAGER, roles.TEACHER)),
+    ("Go'zal Zohidova", (roles.ACADEMIC_HEAD, roles.TEACHER)),
+]
+
+try:
+    from sqlalchemy.orm import Session as _VS29
+    from common import _seed_done as _sd29, _seed_mark as _sm29
+    from legacy_quality_seed import _norm as _n29
+    with _VS29(engine) as _db29:
+        # Birinchi o'rnatish (dual_role_setup_v1) hali bo'lmagan
+        # bo'lsa — tiklash kerak emas, o'sha o'zi qo'yadi. Shu
+        # tekshiruv bo'lmasa ikkalasi bir-birining ustiga yozardi.
+        if _sd29(_db29, "dual_role_setup_v1") \
+                and not _sd29(_db29, "dual_role_repair_v1"):
+            def _k29(nm):
+                return " ".join(sorted(_n29(x) for x in (nm or "").split()
+                                       if _n29(x)))
+            _all29 = _db29.query(models.User).filter(
+                models.User.is_active == 1).all()
+            _fixed = 0
+            for _nm, _pair in _DUAL_STAFF:
+                _key = _k29(_nm)
+                for _u in _all29:
+                    if _k29(_u.full_name) != _key:
+                        continue
+                    if _u.role not in _pair:
+                        continue          # boshqa lavozimga o'tgan
+                    _other = _pair[0] if _u.role == _pair[1] else _pair[1]
+                    _have = _db29.query(models.UserRole).filter(
+                        models.UserRole.user_id == _u.id,
+                        models.UserRole.role == _other).count()
+                    if _have:
+                        continue
+                    _db29.add(models.UserRole(user_id=_u.id, role=_other))
+                    _fixed += 1
+                    try:
+                        audit.log(_db29, None, entity="user",
+                                  action="role_repair", entity_id=_u.id,
+                                  entity_label=_u.full_name,
+                                  old_value=_u.role,
+                                  new_value=f"{_u.role} (+{_other})",
+                                  note="Ikki lavozim tiklandi: qo'shimcha "
+                                       "lavozim yo'qolib qolgan edi")
+                    except Exception:
+                        pass
+            if _fixed:
+                _db29.commit()
+            _sm29(_db29, "dual_role_repair_v1")
+except Exception:
+    pass
+
+
 # IKKI LAVOZIMLI XODIMLAR (2026-08-12, Jahongir): "Nodir Abdulatipov
 # ham ustoz ham filial rahbari... Go'zal Zoxidova ham ustoz ham o'quv
 # bo'limi rahbari - lavozim almashtirish funksiyasi berilsin".

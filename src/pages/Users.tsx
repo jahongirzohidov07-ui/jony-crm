@@ -188,7 +188,19 @@ function UserForm({
             <select
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
               value={role}
-              onChange={(e) => setRole(e.target.value)}
+              onChange={(e) => {
+                // 2026-08-29, Jahongir: "menejerdan ustozga o'tgandan
+                // keyin almashtira olmay qolibdi". Asosiy lavozim
+                // almashtirilganda ESKISI qo'shimchalarga o'tadi —
+                // aks holda pastdagi filtr uni tashlab yuborar va
+                // odam yangi lavozimda qamalib qolardi.
+                const eski = role;
+                setRole(e.target.value);
+                if (eski && eski !== e.target.value) {
+                  setExtraRoles((p) =>
+                    p.includes(eski) ? p : [...p, eski]);
+                }
+              }}
             >
               {roles.map((r) => (
                 <option key={r} value={r}>

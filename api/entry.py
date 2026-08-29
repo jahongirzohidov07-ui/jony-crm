@@ -2335,6 +2335,51 @@ if _orig_att_grid is not None:
                     })
         else:
             data["students"] = act
+
+        # =============================================================
+        #  KETGANNING DUMINI JADVALDAN HAM OLIB TASHLASH (2026-08-29)
+        # =============================================================
+        #  Jahongir: "chiqib ketgan kunida oxirida ... oxirgi 2ta dars
+        #  kelmagan va chiqib ketgan, shu kelmagan darsini ayirib
+        #  tashlash kerak, YO'QLAMASI YO'QOLISHI KERAK, chunki u chiqib
+        #  ketgan, ustozga oylik yozilishi kerak emas"
+        #
+        #  Pul tomoni billing.py da kesilgan. Ekranda ham ko'rinmasin —
+        #  aks holda "hisobda yo'q, lekin jadvalda qizil ✗ turibdi"
+        #  degan chalkashlik qoladi va odam qайси biriga ishonishni
+        #  bilmaydi.
+        #
+        #  Yozuv O'CHIRILMAYDI: bazada joyida qoladi, faqat shu
+        #  jadvalda ko'rsatilmaydi.
+        try:
+            import billing as _bl
+            ids = [x["id"] for x in data["students"]]
+            cut = _bl.attendance_cutoff(db, ids, group_id)
+            if cut:
+                les = {l["id"]: l.get("date")
+                       for l in (data.get("lessons") or [])}
+                marks = data.get("marks") or {}
+                qoldi = {}
+                for k, v in marks.items():
+                    try:
+                        lid, sid = (int(p) for p in k.split(":"))
+                    except (ValueError, AttributeError):
+                        qoldi[k] = v
+                        continue
+                    stop = cut.get(sid)
+                    d = les.get(lid)
+                    if stop is not None and d and str(d) > str(stop):
+                        continue          # ketganning dumi — chiqmaydi
+                    qoldi[k] = v
+                data["marks"] = qoldi
+                # Qatorga chegara sanasi yoziladi — UI tushuntirib
+                # bersin ("15-avg dan keyin hisobga olinmaydi").
+                for x in data["students"]:
+                    st = cut.get(x["id"])
+                    if st is not None and str(st) > "1900-01-01":
+                        x["counted_until"] = str(st)
+        except Exception:
+            pass
         return data
 
 

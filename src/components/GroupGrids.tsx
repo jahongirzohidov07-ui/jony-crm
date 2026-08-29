@@ -488,6 +488,20 @@ export function AttendanceTab({
                       boshqa guruhga o'tgan
                     </span>
                   )}
+                  {/* 2026-08-29, Jahongir: "chiqib ketgan ... oxirgi
+                      2ta dars kelmagan ... shu kelmagan darsini
+                      ayirib tashlash kerak". Kataklar allaqachon
+                      bo'sh — bu yozuv NEGA bo'shligini aytadi, aks
+                      holda "yo'qlama qani?" degan savol qolardi. */}
+                  {(s as unknown as { counted_until?: string })
+                    .counted_until && (
+                    <span className="ml-2 text-[10px] text-slate-400">
+                      {(s as unknown as { counted_until: string })
+                        .counted_until.slice(8)}-
+                      {(s as unknown as { counted_until: string })
+                        .counted_until.slice(5, 7)} gacha hisoblangan
+                    </span>
+                  )}
                 </td>
                 {grid.lessons.map((ls) => {
                   const key = `${ls.id}:${s.id}`;

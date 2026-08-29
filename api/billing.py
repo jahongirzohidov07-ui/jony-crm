@@ -75,6 +75,15 @@ def billable_lessons_for_student(
     effective_start = start
     if student.enrolled_date and student.enrolled_date > start:
         effective_start = student.enrolled_date
+    # KETGANNING DUMI (2026-08-29, Jahongir: "eng oxirgi kelgan
+    # darsigacha pul hisoblanishi, undan keyin 1ta kelmaydimi 2ta
+    # kelmaydimi olib tashlanishi kerak"). Chiqib ketgan o'quvchida
+    # oy oxiri emas, OXIRGI KELGAN DARS chegara bo'ladi.
+    stop = attendance_cutoff(db, [student.id], group.id).get(student.id)
+    if stop is not None:
+        if stop < effective_start:
+            return 0                      # umuman kelmagan
+        end = min(end, stop)
     if effective_start > end:
         return 0
     held = held_lessons_query(db, group.id, effective_start, end).count()
@@ -281,6 +290,114 @@ class GradeIndex:
         return group.teacher_rate_per_student or 0
 
 
+# =====================================================================
+#  KETGANNING DUMI  (2026-08-29)
+# =====================================================================
+#
+#  Jahongir: "chiqib ketgan kunida oxirida masalan Mahbubahon turibdi
+#  oxirgi 2ta dars kelmagan va chiqib ketgan, shu kelmagan darsini
+#  ayirib tashlash kerak, yo'qlamasi yo'qolishi kerak, chunki u chiqib
+#  ketgan ustozga oylik yozilishi kerak emas, AVTOMAT yo'q bo'lishi
+#  kerak. Admin noto'g'ri kundan chiqarvorgan bo'lsa ham ENG OXIRGI
+#  KELGAN DARSIGACHA pul hisoblanishi, undan keyin 1ta kelmaydimi 2ta
+#  kelmaydimi olib tashlanishi kerak"
+#
+#  QOIDA. O'quvchi guruhdan CHIQQAN bo'lsa (arxiv, muzlatilgan yoki
+#  shu guruhdan chiqarilgan), uning OXIRGI KELGAN darsidan KEYINGI
+#  yo'qlama yozuvlari hech qayerda sanalmaydi:
+#     · ustoz oyligiga qo'shilmaydi,
+#     · o'quvchining hisobiga (pul) qo'shilmaydi,
+#     · yo'qlama jadvalida ko'rinmaydi.
+#
+#  NEGA SANA EMAS, OXIRGI KELGAN DARS. Admin chiqarish sanasini
+#  noto'g'ri qo'yishi mumkin (kech qo'ygan, esdan chiqargan). Oxirgi
+#  kelgan dars esa YOLG'ON GAPIRMAYDI: bola kelgan bo'lsa — kelgan.
+#  Shuning uchun chegara sanadan emas, faktdan olinadi.
+#
+#  HECH NARSA O'CHIRILMAYDI. Yo'qlama yozuvlari bazada joyida qoladi
+#  (tarix uchun), faqat HISOBGA OLINMAYDI.
+#
+#  DIQQAT — FAOL O'QUVCHIGA TEGMAYDI. Hozir o'qiyotgan bola oxirgi 2
+#  darsga kelmagan bo'lsa, u baribir to'laydi va ustoz haqini oladi.
+#  Kesish FAQAT guruhdan chiqqanlarga qo'llanadi.
+_OPEN_STATUSES = ("active", "trial")
+_NEVER = date(1900, 1, 1)      # umuman kelmagan — hech narsa sanalmaydi
+
+
+def attendance_cutoff(db: Session, student_ids, group_id=None) -> dict:
+    """{student_id: shu sanagacha sanaladi}. Faqat CHIQQANLAR uchun.
+
+    Ro'yxatda bo'lmagan o'quvchiga chegara yo'q — u to'liq sanaladi."""
+    ids = [int(i) for i in set(student_ids or []) if i]
+    if not ids:
+        return {}
+
+    rows = (db.query(models.Student.id, models.Student.status)
+            .filter(models.Student.id.in_(ids)).all())
+    closed = {sid for sid, st in rows if st not in _OPEN_STATUSES}
+
+    # SHU GURUHDAN chiqarilganlar ham (statusi "active" bo'lsa ham —
+    # ular boshqa guruhga o'tgan bo'lishi mumkin).
+    if group_id:
+        left_links = (db.query(models.StudentGroupLink.student_id)
+                      .filter(models.StudentGroupLink.student_id.in_(ids),
+                              models.StudentGroupLink.group_id == group_id,
+                              models.StudentGroupLink.active == 0).all())
+        closed |= {r[0] for r in left_links}
+        # Bog'lanish jadvali to'ldirilmagan bo'lsa: asosiy guruhi
+        # boshqa bo'lgan va shu guruhda faol bog'lanishi yo'q o'quvchi.
+        alive = {r[0] for r in
+                 db.query(models.StudentGroupLink.student_id)
+                 .filter(models.StudentGroupLink.student_id.in_(ids),
+                         models.StudentGroupLink.group_id == group_id,
+                         models.StudentGroupLink.active == 1).all()}
+        prim = {sid for sid, in
+                db.query(models.Student.id)
+                .filter(models.Student.id.in_(ids),
+                        models.Student.group_id == group_id).all()}
+        closed |= (set(ids) - alive - prim)
+
+    if not closed:
+        return {}
+
+    last = dict(
+        db.query(models.Attendance.student_id, func.max(models.Lesson.date))
+        .join(models.Lesson, models.Lesson.id == models.Attendance.lesson_id)
+        .filter(models.Attendance.student_id.in_(list(closed)),
+                models.Attendance.present.in_([1, 2]))
+        .group_by(models.Attendance.student_id).all())
+    return {sid: (last.get(sid) or _NEVER) for sid in closed}
+
+
+def countable_attendance(db: Session, lessons, group_id=None) -> dict:
+    """{lesson_id: sanaladigan yo'qlama soni}.
+
+    lesson_student_count() ning to'plam varianti, ketganlarning dumi
+    kesilgan holda. Bitta so'rovda oladi — N+1 bo'lmasin."""
+    lessons = list(lessons)
+    if not lessons:
+        return {}
+    by_id = {l.id: l for l in lessons}
+    rows = []
+    ids = list(by_id)
+    CHUNK = 900
+    for i in range(0, len(ids), CHUNK):
+        rows += (db.query(models.Attendance.lesson_id,
+                          models.Attendance.student_id)
+                 .filter(models.Attendance.lesson_id.in_(ids[i:i + CHUNK]))
+                 .all())
+    cut = attendance_cutoff(db, {sid for _, sid in rows}, group_id)
+    out = {lid: 0 for lid in by_id}
+    for lid, sid in rows:
+        stop = cut.get(sid)
+        les = by_id.get(lid)
+        if stop is not None and les is not None and les.date \
+                and les.date > stop:
+            continue                      # ketganning dumi — sanalmaydi
+        out[lid] = out.get(lid, 0) + 1
+    return out
+
+
 def attendance_counts(db: Session, lesson_ids) -> dict:
     """Har darsda nechta yo'qlama bor — BITTA so'rovda.
     lesson_student_count() ning to'plam varianti."""
@@ -421,9 +538,15 @@ def lesson_student_count(db: Session, lesson: models.Lesson) -> int:
     hisoblanmaydi" deb va'da beradi, hisob shu va'daga mos bo'lishi
     shart. Keldi (1), kech keldi (2) va kelmadi (0) — hammasi
     BELGILANGAN yoqlama, hammasi sanaladi: o'quvchi kelmasa ham shu
-    dars uchun to'laydi, demak ustoz ham haqini oladi."""
-    return (db.query(models.Attendance)
-            .filter(models.Attendance.lesson_id == lesson.id).count())
+    dars uchun to'laydi, demak ustoz ham haqini oladi.
+
+    BITTA ISTISNO (2026-08-29): guruhdan CHIQIB KETGAN o'quvchining
+    oxirgi kelgan darsidan keyingi yozuvlari sanalmaydi — u endi
+    o'qimayapti, to'lamaydi ham (yuqoridagi "ketganning dumi"
+    izohiga qarang)."""
+    return countable_attendance(db, [lesson],
+                                getattr(lesson, "group_id", None)
+                                ).get(lesson.id, 0)
 
 
 def compute_teacher_payroll(
@@ -459,6 +582,9 @@ def compute_teacher_payroll(
     # ishlab topdi. Stavka dars sanasi bo'yicha olinadi.
     cache: dict = {}
     mcache: dict = {}
+    # KETGANNING DUMI KESILADI (2026-08-29). Bitta so'rovda — avval
+    # har dars uchun alohida COUNT ketardi (N+1).
+    n_by_lesson = countable_attendance(db, lessons, group.id)
     by_teacher: dict[Optional[int], dict] = {}
     for lesson in lessons:
         if lesson.teacher_id is None:
@@ -470,7 +596,7 @@ def compute_teacher_payroll(
         per_student = cache[key]
         rate = per_attendance_rate_m(db, group, lesson.date, per_student,
                                      mcache)
-        n = lesson_student_count(db, lesson)
+        n = n_by_lesson.get(lesson.id, 0)
 
         row = by_teacher.setdefault(lesson.teacher_id, {
             "taught_lessons": 0, "attendances": 0, "amount": 0.0,

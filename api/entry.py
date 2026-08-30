@@ -7573,10 +7573,22 @@ def freeze_student_v2(student_id: int, payload: dict = Body(...),
         raise HTTPException(
             400, f"Muzlatish sanasi {_FZ_BACK_DAYS} kundan eski bo'lmasin")
     note = (payload.get("note") or None)
+    # MUZLATISH SABABI ro'yxatdan (2026-08-30, Jahongir: "muzlatish
+    # sabablari statistikasi ham kerak"). Noto'g'ri kod kelsa —
+    # yozilmaydi, "other" ham emas: statistikaga yolg'on kirmasin.
+    rcode = (payload.get("reason") or "").strip()
+    if rcode and rcode not in roles.FREEZE_REASON_LABELS:
+        raise HTTPException(400, "Muzlatish sababi ro'yxatdan tanlansin")
 
     st.status = "frozen"
     st.frozen_until = until
-    st.frozen_note = note
+    st.frozen_reason = rcode or None
+    # Izohda sabab nomi ham qolsin — eski ekranlar frozen_note ni
+    # o'qiydi, ular uchun hech narsa o'zgarmasin.
+    lbl = roles.FREEZE_REASON_LABELS.get(rcode)
+    st.frozen_note = (f"{lbl} — {note}" if (lbl and note)
+                      else (lbl or note))
+    note = st.frozen_note
     try:
         M._freeze_task(db, st, until, note)
     except Exception:

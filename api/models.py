@@ -391,6 +391,11 @@ class Student(Base):
     # Muzlatish: qachon qaytadi va nima uchun
     frozen_until = Column(Date, nullable=True)
     frozen_note = Column(String, nullable=True)
+    # MUZLATISH SABABI ro'yxatdan (2026-08-30, Jahongir: "muzlatish
+    # sabablari statistikasi ham kerak"). frozen_note erkin izoh
+    # bo'lib qoladi — u statistikaga yaramaydi, har kim har xil
+    # yozadi. Kod esa roles.FREEZE_REASONS dan.
+    frozen_reason = Column(String, nullable=True, index=True)
     # Hozirgi darajasi. Guruhga qo'shishda mos kelishi tekshiriladi.
     # Guruhga birinchi qo'shilganda avtomat to'ldiriladi, imtihondan
     # o'tganda ko'tariladi.

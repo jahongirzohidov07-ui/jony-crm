@@ -54,6 +54,8 @@ export function StudentRowMenu({
   const [freezing, setFreezing] = useState(false);
   const [fUntil, setFUntil] = useState("");
   const [fNote, setFNote] = useState("");
+  // Muzlatish sababi — ro'yxatdan (2026-08-30, statistika uchun)
+  const [fReason, setFReason] = useState("");
   const [fFrom, setFFrom] = useState(() => {
     const d = new Date();
     const p = (n: number) => String(n).padStart(2, "0");
@@ -166,11 +168,16 @@ export function StudentRowMenu({
 
   const freeze = () => {
     if (!fUntil) { setErr("Qaytish sanasini belgilang"); return; }
+    // 2026-08-30, Jahongir: "muzlatish sabablari statistikasi ham
+    // kerak". Sabab ro'yxatdan tanlanmasa statistika yig'ilmaydi —
+    // shuning uchun majburiy.
+    if (!fReason) { setErr("Muzlatish sababini tanlang"); return; }
     run(async () => {
       const r = await api.post<{ adjust?: { lessons: number;
         old: number; new: number } | null }>(
         `/students/${student.id}/freeze`,
         { until: fUntil, from_date: fFrom || null,
+          reason: fReason || null,
           note: fNote || null });
       const a = r && r.adjust;
       if (a) {
@@ -208,22 +215,29 @@ export function StudentRowMenu({
   };
 
   // KETISH SABABI — MAJBURIY (2026-08-24, Jahongir: "ketish
-  // sababini majburiy qil"). Ilgari erkin matn edi va analitikada
-  // hammasi "noma'lum" bo'lib qolardi. Endi ro'yxat backend'dagi
-  // roles.LEAVE_REASONS bilan AYNAN bir xil — statistika shundan
-  // yig'iladi. Qo'shimcha izohni pastda yozish mumkin.
-  const REMOVE_REASONS: [string, string][] = [
-    ["price", "Narx qimmat"],
-    ["teacher", "Ustozdan norozi"],
-    ["schedule", "Vaqti to'g'ri kelmadi"],
-    ["distance", "Uzoq"],
-    ["result", "Natija ko'rmadi"],
-    ["moved", "Ko'chib ketdi"],
-    ["finished", "Kursni tugatdi"],
-    ["competitor", "Boshqa markazga ketdi"],
-    ["family", "Oilaviy sabab"],
-    ["unknown", "Sababi noma'lum"],
-  ];
+  // sababini majburiy qil").
+  //
+  // 2026-08-30 IKKI O'ZGARISH:
+  //  1) RO'YXAT SERVERDAN. Ilgari u shu yerda QAYTA YOZILGAN edi
+  //     va izohda "backend bilan aynan bir xil" deb turardi.
+  //     Bunday nusxa albatta ajralib ketadi — bugun aynan shu
+  //     sabab adminlar KPI'sida eski mantiq jonli saytda ishlab
+  //     turgan edi. Endi manba bitta: /api/meta/reasons.
+  //  2) RADIO EMAS, RO'YXAT. Jahongir: "sabab tanlash LIST
+  //     ko'rinishida bo'lsin, bo'lmasa ko'rinmay ketyabdi" — 12 ta
+  //     radio oynadan chiqib ketardi.
+  const [reasonList, setReasonList] = useState<[string, string][]>([]);
+  const [freezeList, setFreezeList] = useState<[string, string][]>([]);
+  useEffect(() => {
+    api.get<{ leave: { key: string; label: string }[];
+              freeze: { key: string; label: string }[] }>("/meta/reasons")
+      .then((m) => {
+        setReasonList((m.leave || []).map((x) => [x.key, x.label]));
+        setFreezeList((m.freeze || []).map((x) => [x.key, x.label]));
+      })
+      .catch(() => { /* ro'yxat kelmasa tugma bosilmaydi */ });
+  }, []);
+  const REMOVE_REASONS = reasonList;
   const [removing, setRemoving] = useState(false);
   const [rReason, setRReason] = useState("");
   const [rOther, setROther] = useState("");
@@ -391,24 +405,18 @@ export function StudentRowMenu({
               (qaysi ustozdan, qaysi sababdan ko'p ketyapti).
             </p>
             <div className="space-y-1.5 mb-3">
-              {REMOVE_REASONS.map(([k, lbl]) => (
-                <label
-                  key={k}
-                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer ${
-                    rReason === k
-                      ? "border-brand-500 bg-brand-50 text-brand-800"
-                      : "border-slate-200 text-slate-700 hover:border-slate-300"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="rm-reason"
-                    checked={rReason === k}
-                    onChange={() => setRReason(k)}
-                  />
-                  {lbl}
-                </label>
-              ))}
+              <select
+                value={rReason}
+                onChange={(e) => setRReason(e.target.value)}
+                className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white ${
+                  rReason ? "border-brand-400" : "border-slate-300"
+                }`}
+              >
+                <option value="">— sababni tanlang —</option>
+                {REMOVE_REASONS.map(([k, lbl]) => (
+                  <option key={k} value={k}>{lbl}</option>
+                ))}
+              </select>
               {/* Kategoriya tanlangach — ixtiyoriy izoh. Tanlov
                   o'rnini bosmaydi, uni to'ldiradi. */}
               {rReason && (
@@ -600,9 +608,21 @@ export function StudentRowMenu({
                 onChange={(e) => { setFUntil(e.target.value);
                   if (!fPrev) loadPrev(fFrom); }}
                 className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-1.5" />
+              {/* SABAB RO'YXATDAN (2026-08-30). Ilgari erkin matn edi
+                  va har kim har xil yozardi — statistika yig'ib
+                  bo'lmasdi. */}
+              <select value={fReason}
+                onChange={(e) => setFReason(e.target.value)}
+                className={`w-full border rounded-lg px-2 py-1.5 text-sm mb-1.5 bg-white ${
+                  fReason ? "border-sky-400" : "border-slate-300"}`}>
+                <option value="">— muzlatish sababi —</option>
+                {freezeList.map(([k, lbl]) => (
+                  <option key={k} value={k}>{lbl}</option>
+                ))}
+              </select>
               <input value={fNote}
                 onChange={(e) => setFNote(e.target.value)}
-                placeholder="Sabab (ixtiyoriy)"
+                placeholder="Qo'shimcha izoh (ixtiyoriy)"
                 className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm mb-2" />
               <p className="text-[11px] text-slate-400 mb-2">
                 Shu sanada adminlarga "aloqaga chiqing" vazifasi tushadi.
@@ -612,7 +632,7 @@ export function StudentRowMenu({
                   className="flex-1 text-sm text-slate-500 py-1.5">
                   Bekor
                 </button>
-                <button onClick={freeze} disabled={busy || !fUntil}
+                <button onClick={freeze} disabled={busy || !fUntil || !fReason}
                   className="flex-1 bg-sky-600 text-white rounded-lg py-1.5 text-sm font-medium disabled:opacity-40">
                   Muzlatish
                 </button>

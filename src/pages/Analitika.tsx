@@ -41,7 +41,7 @@ import ExamReport from "../components/ExamReport";
 
 type Tab = "bi" | "akademik" | "tolganlik" | "biznes" | "ltv" | "churn" | "sifat" | "xarajat" | "tarix"
   | "oquvchi" | "ustoz" | "sigim" | "geo" | "imtihon" | "manba" | "nps"
-  | "hayot";
+  | "hayot" | "sabab" | "yigish" | "adminstat";
 
 const TABS: { key: Tab; label: string }[] = [
   // 2026-08-20, Jahongir: "analitik bo'limini eng zor BI
@@ -53,6 +53,13 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "biznes", label: "Biznes ko'rsatkichlari" },
   { key: "ltv", label: "LTV" },
   { key: "churn", label: "Ketish (churn)" },
+  // 2026-08-30, Jahongir: "ketish sabablari statistikasi ham bo'lsa
+  // ... muzlatish sabablari statistikasi ham kerak"
+  { key: "sabab", label: "Ketish va muzlatish sabablari" },
+  // "har oy qaysi filial nechi foiz eski to'lov rejasi bajardi"
+  { key: "yigish", label: "To'lov yig'ish (oylar)" },
+  // "har bir admin yangi to'lov bo'yicha ham statistikasi"
+  { key: "adminstat", label: "Adminlar: yangi mijoz" },
   { key: "sifat", label: "Ta'lim sifati" },
   { key: "xarajat", label: "Xarajatlar tahlili" },
   { key: "oquvchi", label: "O'quvchi qiymati (LTV)" },
@@ -1680,6 +1687,9 @@ export default function Analitika() {
           {tab === "ustoz" && data && <TeacherTab data={data} />}
           {tab === "ltv" && <LtvFullReport />}
           {tab === "churn" && <ChurnReport />}
+          {tab === "sabab" && <ReasonStats />}
+          {tab === "yigish" && <CollectionHistory />}
+          {tab === "adminstat" && <AdminHistory />}
           {tab === "imtihon" && <ExamReport />}
           {tab === "sigim" && <CapacityTab />}
           {tab === "tarix" && <HistoryTab />}
@@ -1842,6 +1852,488 @@ function GeoTab({ months }: { months: number }) {
         Reklamani qayerga qo'yish kerakligini shu jadval ko'rsatadi: eng ko'p
         lid keladigan joy emas, eng ko'p O'QUVCHIGA aylanadigan joy muhim.
       </p>
+    </div>
+  );
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* =====================================================================
+ *  KETISH VA MUZLATISH SABABLARI  (2026-08-30)
+ *
+ *  Jahongir: "ketish sabablari statistikasi ham bo'lsa, bizda yo'q
+ *  bo'lsa qo'sh uniyam, muzlatish sabablari statistikasi ham kerak"
+ *
+ *  Ikkalasi bitta ekranda: rahbar "nega ketyapti va nega muzlatyapti"
+ *  degan savolga bir joyda javob topsin.
+ *
+ *  ENG MUHIM AJRATISH: Jony School maktabimizga o'tgan va kursni
+ *  tugatgan bola YO'QOTISH EMAS. Ular alohida ko'rsatiladi, aks
+ *  holda churn raqami haqiqatdan yomonroq chiqadi.
+ * ===================================================================*/
+function ReasonStats() {
+  const [months, setMonths] = useState(12);
+  const [d, setD] = useState<any>(null);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    setD(null);
+    api.get<any>(`/analytics/reason-stats?months=${months}`)
+      .then(setD)
+      .catch((e) => setErr(e?.message || "Yuklanmadi"));
+  }, [months]);
+
+  if (err) return <p className="text-sm text-red-600 py-6">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+  const lv = d.leave, fz = d.freeze;
+  const pct = (n: number, t: number) => (t ? Math.round(n / t * 100) : 0);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center gap-2">
+        {[3, 6, 12, 24].map((m) => (
+          <button key={m} onClick={() => setMonths(m)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+              months === m ? "bg-brand-600 text-white"
+                : "bg-white border border-slate-200 text-slate-600"}`}>
+            {m} oy
+          </button>
+        ))}
+      </div>
+
+      {/* ---- KETISH ---- */}
+      <div>
+        <h3 className="text-base font-bold text-slate-900 mb-1">
+          Ketish sabablari
+        </h3>
+        <p className="text-xs text-slate-500 mb-3">{d.hint}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div className="rounded-xl border border-slate-200 bg-white p-4">
+            <p className="text-xs text-slate-500">Jami ketgan</p>
+            <p className="text-2xl font-bold text-slate-900">{lv.total}</p>
+          </div>
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+            <p className="text-xs text-red-600">Haqiqiy yo'qotish</p>
+            <p className="text-2xl font-bold text-red-700">{lv.real}</p>
+          </div>
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+            <p className="text-xs text-emerald-700">Yo'qotish emas</p>
+            <p className="text-2xl font-bold text-emerald-800">
+              {lv.not_churn}
+            </p>
+            <p className="text-[11px] text-emerald-700 mt-0.5">
+              Jony School + kursni tugatgan
+            </p>
+          </div>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <p className="text-xs text-amber-700">Bizga bog'liq</p>
+            <p className="text-2xl font-bold text-amber-800">
+              {lv.controllable}
+            </p>
+            <p className="text-[11px] text-amber-700 mt-0.5">
+              shularni kamaytirish mumkin
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-4">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">Sabab</th>
+                <th className="text-left px-4 py-2.5 font-medium">Turi</th>
+                <th className="text-right px-4 py-2.5 font-medium">Soni</th>
+                <th className="text-left px-4 py-2.5 font-medium w-40">Ulushi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lv.rows.length === 0 && (
+                <tr><td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                  Bu davrda hech kim ketmagan.
+                </td></tr>
+              )}
+              {lv.rows.map((r: any) => (
+                <tr key={r.key} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5 text-slate-800">
+                    {r.label}
+                    {r.controllable && (
+                      <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                        bizga bog'liq
+                      </span>
+                    )}
+                    {!r.churn && (
+                      <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">
+                        yo'qotish emas
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-2.5 text-slate-500 text-xs">
+                    {r.group_label}
+                  </td>
+                  <td className="px-4 py-2.5 text-right font-semibold">
+                    {r.count}
+                  </td>
+                  <td className="px-4 py-2.5">
+                    <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                      <div className={`h-full ${r.churn ? "bg-red-400" : "bg-emerald-400"}`}
+                        style={{ width: `${pct(r.count, lv.total)}%` }} />
+                    </div>
+                    <span className="text-[11px] text-slate-400">
+                      {pct(r.count, lv.total)}%
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {lv.by_branch.length > 0 && (
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-2.5 font-medium">Filial</th>
+                  <th className="text-right px-4 py-2.5 font-medium">Ketgan</th>
+                  <th className="text-right px-4 py-2.5 font-medium">
+                    Haqiqiy yo'qotish
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {lv.by_branch.map((b: any) => (
+                  <tr key={b.branch} className="border-t border-slate-100">
+                    <td className="px-4 py-2.5 text-slate-800">{b.branch}</td>
+                    <td className="px-4 py-2.5 text-right">{b.total}</td>
+                    <td className="px-4 py-2.5 text-right font-semibold text-red-700">
+                      {b.real}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* ---- MUZLATISH ---- */}
+      <div>
+        <h3 className="text-base font-bold text-slate-900 mb-1">
+          Muzlatish sabablari
+        </h3>
+        <p className="text-xs text-slate-500 mb-3">
+          Hozir muzlatilganlar. Pul qiyinchiligi, darsga kelmaslik va
+          vaqt to'g'ri kelmasligi — ketish xavfi yuqori belgilar.
+        </p>
+        <div className="grid grid-cols-2 gap-3 mb-4 max-w-md">
+          <div className="rounded-xl border border-slate-200 bg-white p-4">
+            <p className="text-xs text-slate-500">Muzlatilgan</p>
+            <p className="text-2xl font-bold text-slate-900">{fz.total}</p>
+          </div>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <p className="text-xs text-amber-700">Ketish xavfi bor</p>
+            <p className="text-2xl font-bold text-amber-800">{fz.risk}</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">Sabab</th>
+                <th className="text-left px-4 py-2.5 font-medium">Turi</th>
+                <th className="text-right px-4 py-2.5 font-medium">Soni</th>
+                <th className="text-left px-4 py-2.5 font-medium w-40">Ulushi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fz.rows.length === 0 && (
+                <tr><td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                  Hozir muzlatilgan o'quvchi yo'q.
+                </td></tr>
+              )}
+              {fz.rows.map((r: any) => (
+                <tr key={r.key} className="border-t border-slate-100">
+                  <td className="px-4 py-2.5 text-slate-800">
+                    {r.label}
+                    {r.risk && (
+                      <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                        xavf
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-2.5 text-slate-500 text-xs">
+                    {r.group_label}
+                  </td>
+                  <td className="px-4 py-2.5 text-right font-semibold">
+                    {r.count}
+                  </td>
+                  <td className="px-4 py-2.5">
+                    <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                      <div className={`h-full ${r.risk ? "bg-amber-400" : "bg-sky-400"}`}
+                        style={{ width: `${pct(r.count, fz.total)}%` }} />
+                    </div>
+                    <span className="text-[11px] text-slate-400">
+                      {pct(r.count, fz.total)}%
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* =====================================================================
+ *  TO'LOV YIG'ISH — OYLAR KESIMIDA  (2026-08-30)
+ *
+ *  Jahongir: "har oy qaysi filial nechi foiz eski to'lov rejasi
+ *  bajardi statistika ketishi kerak ... eski davrnikini ham
+ *  statistikaga qo'shib olaverasan"
+ *
+ *  Eski yillar import qilinsa (to'lov o'sha sana bilan), ular
+ *  AVTOMAT qo'shiladi — bu ekranda hech nima o'zgartirish kerak emas.
+ * ===================================================================*/
+function CollectionHistory() {
+  const [months, setMonths] = useState(12);
+  const [d, setD] = useState<any>(null);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    setD(null);
+    api.get<any>(`/analytics/collection-history?months=${months}`)
+      .then(setD)
+      .catch((e) => setErr(e?.message || "Yuklanmadi"));
+  }, [months]);
+
+  const som = (n: number) =>
+    (Math.round(n) || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+  const tone = (p: number | null) =>
+    p === null ? "text-slate-400"
+      : p >= 95 ? "text-emerald-600"
+        : p >= 85 ? "text-slate-800" : "text-red-600";
+
+  if (err) return <p className="text-sm text-red-600 py-6">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center gap-2">
+        {[6, 12, 24, 36].map((m) => (
+          <button key={m} onClick={() => setMonths(m)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+              months === m ? "bg-brand-600 text-white"
+                : "bg-white border border-slate-200 text-slate-600"}`}>
+            {m} oy
+          </button>
+        ))}
+        <span className="text-xs text-slate-500">{d.hint}</span>
+      </div>
+
+      {d.summary.length > 0 && (
+        <div>
+          <h3 className="text-sm font-bold text-slate-800 mb-2">
+            Filiallar — davr bo'yicha
+          </h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {d.summary.map((b: any) => (
+              <div key={b.branch}
+                className="rounded-xl border border-slate-200 bg-white p-4">
+                <p className="text-xs text-slate-500">{b.branch}</p>
+                <p className={`text-2xl font-bold ${tone(b.percent)}`}>
+                  {b.percent === null ? "—" : `${b.percent}%`}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-1">
+                  {som(b.fact)} / {som(b.plan)}
+                </p>
+                {b.best !== null && (
+                  <p className="text-[11px] text-slate-400">
+                    eng yaxshi {b.best}% · eng past {b.worst}%
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium">Oy</th>
+              <th className="text-left px-4 py-2.5 font-medium">Filial</th>
+              <th className="text-right px-4 py-2.5 font-medium">Reja</th>
+              <th className="text-right px-4 py-2.5 font-medium">Tushdi</th>
+              <th className="text-right px-4 py-2.5 font-medium">Foiz</th>
+              <th className="text-right px-4 py-2.5 font-medium">
+                Yangi mijozdan
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.months.length === 0 && (
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-slate-400">
+                Ma'lumot yo'q.
+              </td></tr>
+            )}
+            {d.months.map((m: any) => (
+              <>
+                <tr key={m.month} className="border-t-2 border-slate-200 bg-slate-50/60">
+                  <td className="px-4 py-2 font-semibold text-slate-800">
+                    {m.label}
+                  </td>
+                  <td className="px-4 py-2 text-slate-500 text-xs">JAMI</td>
+                  <td className="px-4 py-2 text-right">{som(m.plan)}</td>
+                  <td className="px-4 py-2 text-right">{som(m.fact)}</td>
+                  <td className={`px-4 py-2 text-right font-bold ${tone(m.percent)}`}>
+                    {m.percent === null ? "—" : `${m.percent}%`}
+                  </td>
+                  <td className="px-4 py-2 text-right text-slate-500">
+                    {som(m.new_revenue)}
+                  </td>
+                </tr>
+                {m.branches.map((b: any) => (
+                  <tr key={`${m.month}-${b.branch}`} className="border-t border-slate-100">
+                    <td className="px-4 py-2"></td>
+                    <td className="px-4 py-2 text-slate-700">{b.branch}</td>
+                    <td className="px-4 py-2 text-right text-slate-500">
+                      {som(b.plan)}
+                    </td>
+                    <td className="px-4 py-2 text-right text-slate-500">
+                      {som(b.fact)}
+                    </td>
+                    <td className={`px-4 py-2 text-right font-medium ${tone(b.percent)}`}>
+                      {b.percent === null ? "—" : `${b.percent}%`}
+                    </td>
+                    <td className="px-4 py-2 text-right text-slate-400">
+                      {som(b.new_revenue)}
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
+/* =====================================================================
+ *  ADMINLAR: YANGI MIJOZ — OYLAR KESIMIDA  (2026-08-30)
+ *
+ *  Jahongir: "har bir admin yangi to'lov bo'yicha ham statistikasi
+ *  ketishi kerak, O'ZIDA HAM bu statistikalar ko'rinishi kerak"
+ *
+ *  Shu sababli ekran adminning o'ziga ham ochiq — u faqat o'z
+ *  qatorini ko'radi (chegara serverda).
+ * ===================================================================*/
+function AdminHistory() {
+  const [months, setMonths] = useState(12);
+  const [d, setD] = useState<any>(null);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    setD(null);
+    api.get<any>(`/analytics/admin-history?months=${months}`)
+      .then(setD)
+      .catch((e) => setErr(e?.message || "Yuklanmadi"));
+  }, [months]);
+
+  const som = (n: number) =>
+    (Math.round(n) || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+
+  if (err) return <p className="text-sm text-red-600 py-6">{err}</p>;
+  if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+
+  const best = Math.max(1, ...d.rows.flatMap((r: any) =>
+    r.cells.map((c: any) => c.clients)));
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center gap-2">
+        {[6, 12, 24].map((m) => (
+          <button key={m} onClick={() => setMonths(m)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+              months === m ? "bg-brand-600 text-white"
+                : "bg-white border border-slate-200 text-slate-600"}`}>
+            {m} oy
+          </button>
+        ))}
+        <span className="text-xs text-slate-500">{d.hint}</span>
+      </div>
+      {d.mine && (
+        <p className="text-xs text-brand-700 bg-brand-50 border border-brand-200 rounded-lg px-3 py-2">
+          Bu — sizning shaxsiy statistikangiz.
+        </p>
+      )}
+
+      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium sticky left-0 bg-slate-50">
+                Xodim
+              </th>
+              {d.months.map((m: any) => (
+                <th key={m.key} className="text-center px-2 py-2.5 font-medium whitespace-nowrap">
+                  {m.label}
+                </th>
+              ))}
+              <th className="text-right px-4 py-2.5 font-medium">Jami</th>
+              <th className="text-right px-4 py-2.5 font-medium">O'rtacha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.rows.length === 0 && (
+              <tr><td colSpan={d.months.length + 3}
+                className="px-4 py-6 text-center text-slate-400">
+                Ma'lumot yo'q.
+              </td></tr>
+            )}
+            {d.rows.map((r: any) => (
+              <tr key={r.user_id} className="border-t border-slate-100">
+                <td className="px-4 py-2.5 sticky left-0 bg-white">
+                  <span className="text-slate-800">{r.full_name}</span>
+                  {r.branch && (
+                    <span className="block text-[11px] text-slate-400">
+                      {r.branch}
+                    </span>
+                  )}
+                </td>
+                {r.cells.map((c: any) => (
+                  <td key={c.month} className="px-2 py-2.5 text-center">
+                    <span
+                      className={`inline-block min-w-[28px] rounded px-1.5 py-0.5 text-xs font-semibold ${
+                        c.clients === 0 ? "text-slate-300"
+                          : c.clients >= best * 0.75
+                            ? "bg-emerald-100 text-emerald-800"
+                            : "bg-slate-100 text-slate-700"}`}
+                      title={`${som(c.revenue)} so'm`}
+                    >
+                      {c.clients || "—"}
+                    </span>
+                  </td>
+                ))}
+                <td className="px-4 py-2.5 text-right font-bold text-slate-900">
+                  {r.total_clients}
+                  <span className="block text-[11px] font-normal text-slate-400">
+                    {som(r.total_revenue)}
+                  </span>
+                </td>
+                <td className="px-4 py-2.5 text-right text-slate-600">
+                  {r.avg_per_month}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

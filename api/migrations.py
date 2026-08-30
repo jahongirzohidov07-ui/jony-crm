@@ -105,6 +105,14 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_leads_referrer "
         "ON leads (referrer_student_id)",
     ]),
+    # 2026-08-30, Jahongir: "muzlatish sabablari statistikasi ham
+    # kerak" — sabab endi ro'yxatdan tanlanadi va shu ustunga
+    # yoziladi (erkin izoh frozen_note da qoladi).
+    ("0012_freeze_reason", [
+        "ALTER TABLE students ADD COLUMN frozen_reason VARCHAR",
+        "CREATE INDEX IF NOT EXISTS ix_students_frozen_reason "
+        "ON students (frozen_reason)",
+    ]),
 ]
 
 

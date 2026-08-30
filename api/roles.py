@@ -2212,6 +2212,19 @@ LEAVE_REASONS = [
     ("finished", "Kursni tugatdi", "good"),
     ("competitor", "Boshqa markazga ketdi", "quality"),
     ("family", "Oilaviy sabab", "external"),
+    # 2026-08-30, Jahongir: "o'quv markazdan ketish sababi ichiga
+    # JONY SCHOOL MAKTABIGA O'TDI va BOSHQA XUSUSIY MAKTABGA O'TDI
+    # sabablarini ham qo'shish kerak".
+    #
+    # Ikkalasi ham "maktabga o'tdi", lekin biznes uchun YERU-OSMON
+    # farq qiladi:
+    #   · Jony School — BIZNING maktabimiz. Bola markazdan chiqdi,
+    #     lekin kompaniyadan chiqmadi. Bu yo'qotish EMAS, ichki
+    #     ko'chish. Shuning uchun alohida guruh: "internal".
+    #   · Boshqa xususiy maktab — haqiqiy yo'qotish, lekin bizga
+    #     bog'liq emas (ota-ona ta'lim shaklini almashtirdi).
+    ("jony_school", "Jony School maktabimizga o'tdi", "internal"),
+    ("private_school", "Boshqa xususiy maktabga o'tdi", "external"),
     ("unknown", "Sababi noma'lum", "unknown"),
 ]
 LEAVE_REASON_LABELS = {k: lbl for k, lbl, _ in LEAVE_REASONS}
@@ -2219,6 +2232,57 @@ LEAVE_REASON_GROUP = {k: g for k, _, g in LEAVE_REASONS}
 
 # Bizga bog'liq sabablar - shularni kamaytirish mumkin
 CONTROLLABLE_REASONS = ["teacher", "result", "competitor", "schedule"]
+
+# Sabab guruhlarining nomlari — statistikada shu bilan ko'rinadi
+LEAVE_GROUP_LABELS = {
+    "money": "Pul",
+    "quality": "Sifat (bizga bog'liq)",
+    "logistics": "Qulaylik",
+    "external": "Tashqi sabab",
+    "internal": "Ichki ko'chish (yo'qotish emas)",
+    "good": "Yaxshi yakun",
+    "unknown": "Noma'lum",
+}
+
+# YO'QOTISH DEB HISOBLANMAYDIGANLAR. Kursni tugatgan bola ham,
+# Jony School maktabimizga o'tgan bola ham "ketgan" emas —
+# churn foizini bularsiz ko'rish kerak, aks holda raqam
+# haqiqatdan yomonroq ko'rinadi.
+NOT_CHURN_REASONS = ["finished", "jony_school"]
+
+
+# =====================================================================
+#  Muzlatish sabablari (2026-08-30, Jahongir: "muzlatish sabablari
+#  statistikasi ham kerak")
+#
+#  Ilgari muzlatishda faqat erkin izoh bor edi — har kim har xil
+#  yozardi va statistika yig'ib bo'lmasdi. Endi ro'yxat, izoh esa
+#  qo'shimcha bo'lib qoladi.
+# =====================================================================
+FREEZE_REASONS = [
+    ("vacation", "Ta'til / dam olish", "planned"),
+    ("illness", "Kasallik", "external"),
+    ("money", "Vaqtincha pul qiyinchiligi", "money"),
+    ("school_load", "Maktab/universitet yuklamasi", "logistics"),
+    ("exam_period", "Imtihon davri", "logistics"),
+    ("travel", "Safar / boshqa shaharda", "external"),
+    ("schedule", "Dars vaqti to'g'ri kelmadi", "logistics"),
+    ("absent", "Darsga kelmagani uchun (avtomat)", "risk"),
+    ("family", "Oilaviy sabab", "external"),
+    ("other", "Boshqa sabab", "unknown"),
+]
+FREEZE_REASON_LABELS = {k: lbl for k, lbl, _ in FREEZE_REASONS}
+FREEZE_REASON_GROUP = {k: g for k, _, g in FREEZE_REASONS}
+FREEZE_GROUP_LABELS = {
+    "planned": "Rejali",
+    "external": "Tashqi sabab",
+    "money": "Pul",
+    "logistics": "Qulaylik",
+    "risk": "Xavf belgisi",
+    "unknown": "Noma'lum",
+}
+# Ketish xavfi yuqori bo'lgan muzlatishlar — bularni kuzatish kerak
+FREEZE_RISK_REASONS = ["money", "absent", "schedule"]
 
 
 # =====================================================================

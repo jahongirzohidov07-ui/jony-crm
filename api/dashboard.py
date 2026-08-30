@@ -3908,3 +3908,374 @@ def analytics_sources(
                  "'Lidsiz qo'shilgan' — CRMga to'g'ridan-to'g'ri "
                  "kiritilgan o'quvchilar (manbasi yozilmagan)."),
     }
+
+
+# =====================================================================
+#  SABABLAR RO'YXATI VA STATISTIKASI  (2026-08-30)
+# =====================================================================
+#
+#  Jahongir: "o'quv markazdan ketish sababi ichiga Jony School
+#  maktabiga o'tdi va boshqa xususiy maktabga o'tdi sabablarini ham
+#  qo'shish kerak, SABAB TANLASH LIST KO'RINISHIDA BO'LSIN bo'lmasa
+#  ko'rinmay ketyabdi, keyin KETISH SABABLARI STATISTIKASI ham bo'lsa,
+#  bizda yo'q bo'lsa qo'sh uniyam, MUZLATISH SABABLARI STATISTIKASI
+#  ham kerak"
+#
+#  RO'YXAT SERVERDAN BERILADI. Ilgari ketish sabablari brauzerda
+#  QAYTA YOZILGAN edi (StudentRowMenu.tsx ichida) va izohda "backend
+#  bilan aynan bir xil" deb yozib qo'yilgandi. Bunday nusxa albatta
+#  ajralib ketadi — bugun adminlar KPI'sida aynan shu sabab jonli
+#  saytda eski mantiq ishlab turgan edi. Endi manba bitta.
+@router.get("/api/meta/reasons")
+def meta_reasons(user=Depends(get_current_user)):
+    """Ketish va muzlatish sabablari ro'yxati — ekranlar shundan
+    to'ldiriladi, hech qayerda qayta yozilmaydi."""
+    return {
+        "leave": [{"key": k, "label": lbl, "group": g,
+                   "controllable": k in roles.CONTROLLABLE_REASONS,
+                   "churn": k not in roles.NOT_CHURN_REASONS}
+                  for k, lbl, g in roles.LEAVE_REASONS],
+        "freeze": [{"key": k, "label": lbl, "group": g,
+                    "risk": k in roles.FREEZE_RISK_REASONS}
+                   for k, lbl, g in roles.FREEZE_REASONS],
+        "leave_groups": roles.LEAVE_GROUP_LABELS,
+        "freeze_groups": roles.FREEZE_GROUP_LABELS,
+    }
+
+
+@router.get("/api/analytics/reason-stats")
+def reason_stats(months: int = 12, branch_id: int = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.LTV_ACCESS))):
+    """KETISH va MUZLATISH sabablari statistikasi — oylar kesimida.
+
+    Ikkalasi bitta javobda: rahbar "nega ketyapti va nega
+    muzlatyapti" degan savolga bitta ekranda javob topsin."""
+    today = roles.local_today()
+    first = date(today.year, today.month, 1)
+    for _ in range(max(1, int(months)) - 1):
+        first = (first - timedelta(days=1)).replace(day=1)
+
+    q = scope_to_branch(db.query(models.Student), models.Student,
+                        user, branch_id)
+    students = q.all()
+    sids = [s.id for s in students]
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+
+    lv = {}
+    if sids:
+        for r in (db.query(models.LeaveReason)
+                  .filter(models.LeaveReason.student_id.in_(sids)).all()):
+            lv[r.student_id] = r
+
+    def _mk(d):
+        return f"{d.year:04d}-{d.month:02d}"
+
+    # ---- KETISH ----
+    left = [s for s in students if s.left_date and s.left_date >= first]
+    by_reason, by_month, by_branch = {}, {}, {}
+    for s in left:
+        r = lv.get(s.id)
+        key = (r.reason if r and r.reason else "unknown")
+        if key not in roles.LEAVE_REASON_LABELS:
+            key = "unknown"
+        row = by_reason.setdefault(key, {
+            "key": key,
+            "label": roles.LEAVE_REASON_LABELS.get(key, key),
+            "group": roles.LEAVE_REASON_GROUP.get(key, "unknown"),
+            "group_label": roles.LEAVE_GROUP_LABELS.get(
+                roles.LEAVE_REASON_GROUP.get(key, "unknown"), "—"),
+            "controllable": key in roles.CONTROLLABLE_REASONS,
+            "churn": key not in roles.NOT_CHURN_REASONS,
+            "count": 0,
+        })
+        row["count"] += 1
+        m = _mk(s.left_date)
+        by_month.setdefault(m, {"month": m, "total": 0, "reasons": {}})
+        by_month[m]["total"] += 1
+        by_month[m]["reasons"][key] = by_month[m]["reasons"].get(key, 0) + 1
+        bn = bnames.get(s.branch_id, "Filialsiz")
+        by_branch.setdefault(bn, {"branch": bn, "total": 0, "real": 0})
+        by_branch[bn]["total"] += 1
+        if key not in roles.NOT_CHURN_REASONS:
+            by_branch[bn]["real"] += 1
+
+    # ---- MUZLATISH ----
+    frozen = [s for s in students if s.status == "frozen"]
+    fz = {}
+    for s in frozen:
+        key = (getattr(s, "frozen_reason", None) or "").strip()
+        if key not in roles.FREEZE_REASON_LABELS:
+            key = "other"
+        row = fz.setdefault(key, {
+            "key": key,
+            "label": roles.FREEZE_REASON_LABELS.get(key, key),
+            "group": roles.FREEZE_REASON_GROUP.get(key, "unknown"),
+            "group_label": roles.FREEZE_GROUP_LABELS.get(
+                roles.FREEZE_REASON_GROUP.get(key, "unknown"), "—"),
+            "risk": key in roles.FREEZE_RISK_REASONS,
+            "count": 0,
+        })
+        row["count"] += 1
+
+    lv_rows = sorted(by_reason.values(), key=lambda r: -r["count"])
+    fz_rows = sorted(fz.values(), key=lambda r: -r["count"])
+    real_left = sum(r["count"] for r in lv_rows if r["churn"])
+    return {
+        "from": first.isoformat(),
+        "months": months,
+        "leave": {
+            "total": len(left),
+            # Jony School va "kursni tugatdi" — yo'qotish emas
+            "real": real_left,
+            "not_churn": len(left) - real_left,
+            "controllable": sum(r["count"] for r in lv_rows
+                                if r["controllable"]),
+            "rows": lv_rows,
+            "by_month": [by_month[m] for m in sorted(by_month)],
+            "by_branch": sorted(by_branch.values(),
+                                key=lambda r: -r["total"]),
+        },
+        "freeze": {
+            "total": len(frozen),
+            "risk": sum(r["count"] for r in fz_rows if r["risk"]),
+            "rows": fz_rows,
+        },
+        "hint": ("Jony School maktabimizga o'tgan va kursni tugatgan "
+                 "o'quvchilar YO'QOTISH deb hisoblanmaydi — ular "
+                 "alohida ko'rsatilgan."),
+    }
+
+
+# =====================================================================
+#  YIG'ISH VA ADMIN STATISTIKASI — OYLAR KESIMIDA  (2026-08-30)
+# =====================================================================
+#
+#  Jahongir: "har oy qaysi filial nechi foiz eski to'lov rejasi
+#  bajardi STATISTIKA ketishi kerak analitika bo'limida, men senga
+#  keyin eski yillarnikini tashlayman shundan ham eski davrnikini
+#  ham statistikaga qo'shib olaverasan, keyin HAR BIR ADMIN YANGI
+#  TO'LOV bo'yicha ham statistikasi ketishi kerak, o'zida ham bu
+#  statistikalar ko'rinishi kerak"
+#
+#  Bitta joyda ikkita savol: "qaysi filial qarzni yaxshi yig'yapti"
+#  va "qaysi admin ko'p yangi mijoz olib kelyapti". Ikkalasi ham
+#  OYLAR bo'yicha — bir oylik raqam hech narsa demaydi, TREND
+#  qaror keltiradi.
+#
+#  ESKI DAVR. To'lovlar bazaga qanday sana bilan kiritilgan bo'lsa,
+#  statistika ham o'shani oladi. Ya'ni eski yillar import qilinsa
+#  (created_at o'sha davr bilan), ular AVTOMAT qo'shiladi — hech
+#  qanday qo'shimcha ish kerak emas.
+def _month_list(months: int):
+    """Oxirgi N oy: [(yil, oy, "YYYY-MM"), ...] — eskidan yangiga."""
+    today = roles.local_today()
+    out = []
+    y, m = today.year, today.month
+    for _ in range(max(1, int(months))):
+        out.append((y, m, f"{y:04d}-{m:02d}"))
+        y, m = (y - 1, 12) if m == 1 else (y, m - 1)
+    return list(reversed(out))
+
+
+@router.get("/api/analytics/collection-history")
+def collection_history(months: int = 12, branch_id: int = None,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(*roles.LTV_ACCESS))):
+    """HAR OY QAYSI FILIAL NECHA FOIZ eski to'lov rejasini bajardi.
+
+    Reja = shu oyda ESKI o'quvchilarga hisoblangan summa.
+    Fakt = shulardan haqiqatda tushgan pul.
+    Yangi mijozning birinchi to'lovi bu foizga KIRMAYDI — u
+    alohida o'lchov (pastdagi admin statistikasi)."""
+    per = _month_list(months)
+    first_month = billing.month_bounds(per[0][0], per[0][1])[0]
+    last_month = billing.month_bounds(per[-1][0], per[-1][1])[1]
+    lo, hi = _utc_window(first_month, last_month)
+
+    q = scope_to_branch(db.query(models.Student), models.Student,
+                        user, branch_id)
+    students = q.all()
+    sbranch = {s.id: s.branch_id for s in students}
+    sids = set(sbranch)
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+
+    first_paid = _first_payment_dates(db)
+
+    # Bitta so'rovda — oyma-oy aylanma qilsak N ta so'rov bo'lardi
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.created_at >= lo,
+                    models.Payment.created_at <= hi,
+                    models.Payment.kind.in_(["charge", "payment"]))
+            .all())
+
+    cells: dict = {}
+    for p in rows:
+        if p.student_id not in sids:
+            continue
+        d = p.created_at
+        if d is None:
+            continue
+        key = f"{d.year:04d}-{d.month:02d}"
+        bid = sbranch.get(p.student_id)
+        cell = cells.setdefault((key, bid), {"plan": 0.0, "fact": 0.0,
+                                             "new": 0.0})
+        first = first_paid.get(p.student_id)
+        # Yangi mijoz — shu oyda birinchi marta to'lagan
+        yangi = first is not None and f"{first.year:04d}-{first.month:02d}" == key
+        if p.kind == "charge":
+            if not yangi:
+                cell["plan"] += abs(p.amount)
+        else:
+            if yangi:
+                cell["new"] += p.amount
+            else:
+                cell["fact"] += p.amount
+
+    bids = sorted({b for (_k, b) in cells} | {s.branch_id for s in students},
+                  key=lambda x: (x is None, x))
+    out_months = []
+    for _y, _m, key in per:
+        brows = []
+        tp = tf = tn = 0.0
+        for bid in bids:
+            c = cells.get((key, bid))
+            if not c or (c["plan"] == 0 and c["fact"] == 0
+                         and c["new"] == 0):
+                continue
+            pct = round(c["fact"] / c["plan"] * 100, 1) if c["plan"] else None
+            brows.append({
+                "branch_id": bid,
+                "branch": bnames.get(bid, "Filialsiz"),
+                "plan": round(c["plan"], 0),
+                "fact": round(c["fact"], 0),
+                "percent": pct,
+                "new_revenue": round(c["new"], 0),
+            })
+            tp += c["plan"]; tf += c["fact"]; tn += c["new"]
+        brows.sort(key=lambda r: -(r["percent"] or 0))
+        out_months.append({
+            "month": key,
+            "label": f"{roles.UZ_MONTHS[int(key[5:]) - 1]} {key[:4]}",
+            "plan": round(tp, 0), "fact": round(tf, 0),
+            "percent": round(tf / tp * 100, 1) if tp else None,
+            "new_revenue": round(tn, 0),
+            "branches": brows,
+        })
+
+    # Filial kesimida umumiy o'rtacha — kim barqaror yig'yapti
+    per_branch: dict = {}
+    for m in out_months:
+        for b in m["branches"]:
+            r = per_branch.setdefault(b["branch"], {
+                "branch": b["branch"], "plan": 0.0, "fact": 0.0,
+                "months": 0, "best": None, "worst": None})
+            r["plan"] += b["plan"]; r["fact"] += b["fact"]; r["months"] += 1
+            if b["percent"] is not None:
+                if r["best"] is None or b["percent"] > r["best"]:
+                    r["best"] = b["percent"]
+                if r["worst"] is None or b["percent"] < r["worst"]:
+                    r["worst"] = b["percent"]
+    summary = sorted(
+        [{**r, "percent": round(r["fact"] / r["plan"] * 100, 1)
+          if r["plan"] else None} for r in per_branch.values()],
+        key=lambda r: -(r["percent"] or 0))
+
+    return {
+        "months": out_months,
+        "summary": summary,
+        "hint": ("Foiz = tushgan / hisoblangan (faqat ESKI o'quvchilar). "
+                 "Yangi mijozning birinchi to'lovi bu foizga kirmaydi — "
+                 "u adminning shaxsiy ko'rsatkichi."),
+    }
+
+
+@router.get("/api/analytics/admin-history")
+def admin_history(months: int = 12, branch_id: int = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(get_current_user)):
+    """HAR BIR ADMIN yangi to'lov statistikasi — oylar kesimida.
+
+    Jahongir: "har bir admin yangi to'lov bo'yicha ham statistikasi
+    ketishi kerak, O'ZIDA HAM bu statistikalar ko'rinishi kerak".
+
+    Shuning uchun bu yo'l KENG ochiq (get_current_user), lekin
+    ichkarida qattiq chegara bor: rahbariyat hammani ko'radi,
+    admin esa FAQAT O'ZINI."""
+    per = _month_list(months)
+    first_month = billing.month_bounds(per[0][0], per[0][1])[0]
+    last_month = billing.month_bounds(per[-1][0], per[-1][1])[1]
+    lo, hi = _utc_window(first_month, last_month)
+
+    boss = user.role in tuple(roles.FULL_ACCESS) + (roles.FINANCE_DIRECTOR,
+                                                    roles.SALES_HEAD)
+    admins = db.query(models.User).filter(
+        models.User.role.in_((roles.SALES_MANAGER, roles.ADMINISTRATOR)),
+        models.User.is_active == 1)
+    if not boss:
+        admins = admins.filter(models.User.id == user.id)
+    elif branch_id:
+        admins = admins.filter(models.User.branch_id == branch_id)
+    admins = admins.order_by(models.User.full_name).all()
+    if not admins:
+        return {"months": [], "rows": [], "mine": bool(not boss)}
+
+    def _nk(x):
+        return " ".join((x or "").lower().replace("'", "").split())
+
+    by_name = {}
+    for a in admins:
+        by_name.setdefault(_nk(a.full_name), a.id)
+
+    first_paid = _first_payment_dates(db)
+    pays = (db.query(models.Payment)
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.created_at >= lo,
+                    models.Payment.created_at <= hi).all())
+
+    grid: dict = {}
+    for p in pays:
+        first = first_paid.get(p.student_id)
+        if first is None or p.created_at is None:
+            continue
+        key = f"{p.created_at.year:04d}-{p.created_at.month:02d}"
+        if f"{first.year:04d}-{first.month:02d}" != key:
+            continue                       # yangi mijoz emas
+        uid = by_name.get(_nk(p.created_by))
+        if uid is None:
+            continue
+        cell = grid.setdefault((uid, key), {"clients": set(), "sum": 0.0})
+        cell["clients"].add(p.student_id)
+        cell["sum"] += p.amount
+
+    keys = [k for _y, _m, k in per]
+    rows = []
+    for a in admins:
+        cells = []
+        tot_c = tot_s = 0
+        for k in keys:
+            c = grid.get((a.id, k))
+            n = len(c["clients"]) if c else 0
+            s_ = round(c["sum"], 0) if c else 0
+            cells.append({"month": k, "clients": n, "revenue": s_})
+            tot_c += n
+            tot_s += s_
+        best = max((x["clients"] for x in cells), default=0)
+        rows.append({
+            "user_id": a.id, "full_name": a.full_name,
+            "branch": a.branch.name if a.branch else None,
+            "cells": cells,
+            "total_clients": tot_c, "total_revenue": tot_s,
+            "avg_per_month": round(tot_c / len(keys), 1) if keys else 0,
+            "best_month": best,
+        })
+    rows.sort(key=lambda r: -r["total_clients"])
+    return {
+        "months": [{"key": k,
+                    "label": f"{roles.UZ_MONTHS[int(k[5:]) - 1]} {k[:4]}"}
+                   for k in keys],
+        "rows": rows,
+        "mine": bool(not boss),
+        "hint": ("Yangi mijoz — birinchi marta to'lov qilgan o'quvchi. "
+                 "Kim to'lovni qabul qilgan bo'lsa, o'shanga yoziladi."),
+    }

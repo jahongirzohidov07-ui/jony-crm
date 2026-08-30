@@ -113,6 +113,22 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_students_frozen_reason "
         "ON students (frozen_reason)",
     ]),
+    # 2026-08-30, Jahongir: "lidni o'chirishni ham sabablar qo'shib
+    # qo'y". Lid endi o'chirilmaydi — leads_deleted jadvaliga
+    # ko'chiriladi (DeletedPayment bilan bir xil yo'l).
+    #
+    # DIQQAT — SHTAMP. Jadvalning O'ZINI create_all yaratadi, lekin
+    # u FAQAT shtamp o'zgarganda ishga tushadi (main.py:
+    # "if not _schema_ready()"). Shtamp esa oxirgi migratsiyadan
+    # quriladi. Ya'ni migratsiyasiz yangi jadval qo'shilsa, u jonli
+    # bazada UMUMAN yaratilmasdi va bo'lim 500 bergan bo'lardi.
+    # Shu qator aynan shuning uchun turibdi.
+    ("0013_lead_delete_reason", [
+        "CREATE INDEX IF NOT EXISTS ix_leads_deleted_reason "
+        "ON leads_deleted (reason)",
+        "CREATE INDEX IF NOT EXISTS ix_leads_deleted_at "
+        "ON leads_deleted (deleted_at)",
+    ]),
 ]
 
 

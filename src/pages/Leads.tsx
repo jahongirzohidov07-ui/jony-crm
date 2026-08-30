@@ -658,13 +658,49 @@ export default function Leads() {
     }
   }
 
-  async function remove(lead: Lead) {
-    if (!confirm(`"${lead.full_name}" lidini o'chirasizmi?`)) return;
+  // LIDNI O'CHIRISH — SABAB BILAN (2026-08-30, Jahongir: "lidni
+  // o'chirishni ham sabablar qo'shib qo'y, ichida ADASHIB KIRITILIB
+  // YUBORILIBDI bo'lsin").
+  //
+  // Nega muhim: "adashib kiritilgan" yozuv umuman lid EMAS edi, uni
+  // yo'qotish deb sanash statistikani buzadi. "Qiziqmadi" esa
+  // haqiqiy yo'qotish. Ikkalasini ajratmasak, voronka yolg'on
+  // gapiradi.
+  //
+  // Yozuv o'chmaydi — arxivga ko'chadi va kerak bo'lsa qaytariladi.
+  const [delLead, setDelLead] = useState<Lead | null>(null);
+  const [delReason, setDelReason] = useState("");
+  const [delNote, setDelNote] = useState("");
+  const [delList, setDelList] = useState<
+    { key: string; label: string; real_loss: boolean }[]>([]);
+  const [delBusy, setDelBusy] = useState(false);
+
+  useEffect(() => {
+    api.get<{ rows: { key: string; label: string; real_loss: boolean }[] }>(
+      "/leads/delete-reasons")
+      .then((r) => setDelList(r.rows || []))
+      .catch(() => setDelList([]));
+  }, []);
+
+  function remove(lead: Lead) {
+    setDelLead(lead);
+    setDelReason("");
+    setDelNote("");
+  }
+
+  async function confirmRemove() {
+    if (!delLead || !delReason) return;
+    setDelBusy(true);
     try {
-      await api.delete(`/leads/${lead.id}`);
-      setLeads((prev) => prev.filter((l) => l.id !== lead.id));
+      const q = `reason=${encodeURIComponent(delReason)}`
+        + (delNote.trim() ? `&note=${encodeURIComponent(delNote.trim())}` : "");
+      await api.delete(`/leads/${delLead.id}?${q}`);
+      setLeads((prev) => prev.filter((l) => l.id !== delLead.id));
+      setDelLead(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setDelBusy(false);
     }
   }
 
@@ -684,6 +720,58 @@ export default function Leads() {
 
   return (
     <div className="p-8">
+      {delLead && (
+        <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+            <h2 className="font-semibold text-slate-900 mb-1">
+              Lidni o'chirish
+            </h2>
+            <p className="text-sm text-slate-600 mb-1">
+              <b>{delLead.full_name}</b>
+              {delLead.phone ? ` · ${delLead.phone}` : ""}
+            </p>
+            <p className="text-[11px] text-slate-500 mb-3">
+              Yozuv arxivga ko'chadi — kerak bo'lsa qaytariladi.
+              Sabab statistika uchun majburiy.
+            </p>
+            <select
+              value={delReason}
+              onChange={(e) => setDelReason(e.target.value)}
+              className={`w-full rounded-lg border px-3 py-2.5 text-sm bg-white mb-2 ${
+                delReason ? "border-brand-400" : "border-slate-300"}`}
+            >
+              <option value="">— o'chirish sababini tanlang —</option>
+              {delList.map((r) => (
+                <option key={r.key} value={r.key}>{r.label}</option>
+              ))}
+            </select>
+            {delReason && !(delList.find((r) => r.key === delReason)
+              ?.real_loss) && (
+              <p className="text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 mb-2">
+                Bu yozuv haqiqiy lid emas edi — voronka statistikasida
+                yo'qotish deb sanalmaydi.
+              </p>
+            )}
+            <input
+              value={delNote}
+              onChange={(e) => setDelNote(e.target.value)}
+              placeholder="Qo'shimcha izoh (ixtiyoriy)"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm mb-3"
+            />
+            <div className="flex gap-2">
+              <button onClick={() => setDelLead(null)}
+                className="flex-1 rounded-lg border border-slate-300 py-2 text-sm text-slate-600">
+                Bekor
+              </button>
+              <button onClick={confirmRemove}
+                disabled={!delReason || delBusy}
+                className="flex-1 rounded-lg bg-red-600 text-white py-2 text-sm font-medium disabled:opacity-40">
+                {delBusy ? "O'chirilmoqda…" : "O'chirish"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Lidlar</h1>

@@ -3943,6 +3943,40 @@ def meta_reasons(user=Depends(get_current_user)):
     }
 
 
+def _deleted_lead_stats(db: Session, user, first, branch_id=None) -> dict:
+    """O'chirilgan lidlar sabab kesimida."""
+    try:
+        q = db.query(models.DeletedLead).filter(
+            models.DeletedLead.restored_at.is_(None))
+        if first:
+            q = q.filter(models.DeletedLead.deleted_at
+                         >= datetime.combine(first, datetime.min.time()))
+        if branch_id:
+            q = q.filter(models.DeletedLead.branch_id == branch_id)
+        elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+            q = q.filter(models.DeletedLead.branch_id == user.branch_id)
+        rows = q.all()
+    except Exception:
+        db.rollback()
+        return {"total": 0, "real": 0, "rows": []}
+    agg = {}
+    for r in rows:
+        key = r.reason if r.reason in roles.LEAD_DELETE_LABELS else "other"
+        a = agg.setdefault(key, {
+            "key": key,
+            "label": roles.LEAD_DELETE_LABELS.get(key, key),
+            "real_loss": key in roles.LEAD_DELETE_REAL,
+            "count": 0,
+        })
+        a["count"] += 1
+    out = sorted(agg.values(), key=lambda r: -r["count"])
+    return {
+        "total": len(rows),
+        "real": sum(r["count"] for r in out if r["real_loss"]),
+        "rows": out,
+    }
+
+
 @router.get("/api/analytics/reason-stats")
 def reason_stats(months: int = 12, branch_id: int = None,
                  db: Session = Depends(get_db),
@@ -4041,6 +4075,11 @@ def reason_stats(months: int = 12, branch_id: int = None,
             "risk": sum(r["count"] for r in fz_rows if r["risk"]),
             "rows": fz_rows,
         },
+        # ---- O'CHIRILGAN LIDLAR (2026-08-30) ----
+        # Jahongir: "lidni o'chirishni ham sabablar qo'shib qo'y".
+        # "Adashib kiritilgan" va "dubl" — bular umuman lid EMAS edi,
+        # shuning uchun HAQIQIY YO'QOTISHdan ajratib ko'rsatiladi.
+        "leads": _deleted_lead_stats(db, user, first, branch_id),
         "hint": ("Jony School maktabimizga o'tgan va kursni tugatgan "
                  "o'quvchilar YO'QOTISH deb hisoblanmaydi — ular "
                  "alohida ko'rsatilgan."),

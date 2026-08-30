@@ -341,16 +341,109 @@ def update_lead(
     db.refresh(lead)
     return lead
 
+@router.get("/api/leads/delete-reasons")
+def lead_delete_reasons(user=Depends(get_current_user)):
+    """O'chirish sabablari ro'yxati — ekran shundan to'ldiriladi."""
+    return {"rows": [{"key": k, "label": lbl, "real_loss": real}
+                     for k, lbl, real in roles.LEAD_DELETE_REASONS]}
+
+
 @router.delete("/api/leads/{lead_id}")
 def delete_lead(
     lead_id: int,
+    reason: str = None,
+    note: str = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.FULL_ACCESS)),
 ):
+    """Lidni o'chirish — SABAB BILAN va ARXIVGA (2026-08-30).
+
+    Jahongir: "lidni o'chirishni ham sabablar qo'shib qo'y, ichida
+    ADASHIB KIRITILIB YUBORILIBDI bo'lsin".
+
+    Ilgari lid butunlay o'chib ketardi: na yozuvi, na sababi
+    qolardi. Endi yozuv leads_deleted ga ko'chiriladi — kim, qachon,
+    nima sababdan. Voronka va hisobotlar leads jadvalidan chiqadi,
+    shuning uchun ular bir zarra o'zgarmaydi.
+
+    SABAB MAJBURIY: "adashib kiritilgan" bilan "qiziqmadi" ni
+    ajratmasak, statistika yolg'on gapiradi — birinchisi umuman lid
+    emas edi, ikkinchisi haqiqiy yo'qotish."""
     lead = _get_lead_in_scope(db, lead_id, user)
+    code = (reason or "").strip()
+    if code not in roles.LEAD_DELETE_LABELS:
+        raise HTTPException(
+            400, "O'chirish sababini ro'yxatdan tanlang — statistika "
+                 "shu asosda yig'iladi")
+
+    db.add(models.DeletedLead(
+        lead_id=lead.id, public_id=lead.public_id,
+        full_name=lead.full_name, phone=lead.phone,
+        source=lead.source, stage=lead.stage,
+        branch_id=lead.branch_id,
+        assigned_user_id=lead.assigned_user_id,
+        note=lead.note, created_by=lead.created_by,
+        created_at=lead.created_at,
+        reason=code, reason_note=(note or "").strip() or None,
+        deleted_by=user.full_name))
+    audit.log(db, user, entity="lead", action="delete",
+              entity_id=lead.id, entity_label=lead.full_name,
+              branch_id=lead.branch_id,
+              old_value=f"{lead.full_name} ({lead.phone or '—'})",
+              new_value=roles.LEAD_DELETE_LABELS[code],
+              note=(note or None))
     db.delete(lead)
     db.commit()
-    return {"ok": True}
+    return {"ok": True, "reason": roles.LEAD_DELETE_LABELS[code]}
+
+
+@router.get("/api/leads/deleted")
+def deleted_leads(limit: int = 200, db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.LEAD_ACCESS))):
+    """O'chirilgan lidlar arxivi — hech narsa yo'qolmagani ko'rinsin."""
+    q = db.query(models.DeletedLead).filter(
+        models.DeletedLead.restored_at.is_(None))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        q = q.filter(models.DeletedLead.branch_id == user.branch_id)
+    rows = q.order_by(models.DeletedLead.id.desc()).limit(
+        max(1, min(int(limit), 500))).all()
+    return {"rows": [{
+        "id": r.id, "lead_id": r.lead_id, "public_id": r.public_id,
+        "full_name": r.full_name, "phone": r.phone,
+        "source": roles.LEAD_SOURCE_LABELS.get(r.source, r.source),
+        "stage": r.stage,
+        "reason": r.reason,
+        "reason_label": roles.LEAD_DELETE_LABELS.get(r.reason, r.reason),
+        "real_loss": r.reason in roles.LEAD_DELETE_REAL,
+        "reason_note": r.reason_note,
+        "deleted_by": r.deleted_by,
+        "deleted_at": r.deleted_at.isoformat() if r.deleted_at else None,
+    } for r in rows]}
+
+
+@router.post("/api/leads/deleted/{row_id}/restore")
+def restore_lead(row_id: int, db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.FULL_ACCESS))):
+    """Xato o'chirilgan lidni qaytarish. Bir bosishda."""
+    r = db.query(models.DeletedLead).get(row_id)
+    if r is None or r.restored_at is not None:
+        raise HTTPException(404, "Yozuv topilmadi yoki allaqachon qaytarilgan")
+    lead = models.Lead(
+        full_name=r.full_name, phone=r.phone,
+        source=r.source or "other", stage=r.stage or "new",
+        branch_id=r.branch_id, assigned_user_id=r.assigned_user_id,
+        note=r.note, created_by=r.created_by,
+        created_at=r.created_at)
+    db.add(lead); db.commit(); db.refresh(lead)
+    _ensure_public_id(db, "lead", lead)
+    r.restored_at = datetime.utcnow()
+    r.restored_by = user.full_name
+    audit.log(db, user, entity="lead", action="restore",
+              entity_id=lead.id, entity_label=lead.full_name,
+              branch_id=lead.branch_id,
+              new_value="arxivdan qaytarildi")
+    db.commit()
+    return {"ok": True, "lead_id": lead.id}
 
 @router.post("/api/leads/{lead_id}/convert", response_model=schemas.StudentOut)
 def convert_lead(

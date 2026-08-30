@@ -3393,6 +3393,45 @@ class DeletedPayment(Base):
     restored_by = Column(String, nullable=True)
 
 
+class DeletedLead(Base):
+    """O'CHIRILGAN LID ARXIVI (2026-08-30).
+
+    Jahongir: "lidni o'chirishni ham sabablar qo'shib qo'y, ichida
+    adashib kiritilib yuborilibdi bo'lsin".
+
+    Ilgari lid BUTUNLAY o'chib ketardi — na yozuvi, na sababi
+    qolardi. Endi DeletedPayment bilan bir xil yo'l: yozuv leads
+    jadvalidan olinadi va shu yerga ko'chiriladi.
+
+    Nega alohida jadval, nega "o'chirilgan" bayrog'i emas: voronka,
+    konversiya va marketing hisobotlari leads jadvalining o'zidan
+    chiqadi. Bayroq qo'yilsa, uni filtrlashni unutgan BITTA so'rov
+    ham butun statistikani buzardi (adashib kiritilgan lid
+    voronkada turib qolardi). Arxivga ko'chirilganda esa hech
+    qanday hisobot o'zgarmaydi — xato qilish imkoniyati yo'q."""
+    __tablename__ = "leads_deleted"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lead_id = Column(Integer, index=True, nullable=False)
+    public_id = Column(String, nullable=True)
+    full_name = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    source = Column(String, nullable=True)
+    stage = Column(String, nullable=True)
+    branch_id = Column(Integer, nullable=True, index=True)
+    assigned_user_id = Column(Integer, nullable=True)
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, nullable=True)
+    # --- o'chirish tafsiloti ---
+    reason = Column(String, nullable=True, index=True)   # roles.LEAD_DELETE_REASONS
+    reason_note = Column(String, nullable=True)          # erkin izoh
+    deleted_by = Column(String, nullable=True)
+    deleted_at = Column(DateTime, default=datetime.utcnow, index=True)
+    restored_at = Column(DateTime, nullable=True)
+    restored_by = Column(String, nullable=True)
+
+
 class PaymentFixRequest(Base):
     """TO'LOVNI TUZATISH SO'ROVI (2026-08-15).
 

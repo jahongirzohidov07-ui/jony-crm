@@ -265,6 +265,75 @@ ck("asoschida esa 'faqat o'zim' emas",
          headers=HF).json()["mine"], False)
 
 
+# =====================================================================
+print("\n=== 7. LIDNI O'CHIRISH — SABAB BILAN ===")
+# =====================================================================
+# Jahongir: "lidni o'chirishni ham sabablar qo'shib qo'y, ichida
+# ADASHIB KIRITILIB YUBORILIBDI bo'lsin"
+dr = c.get("/api/leads/delete-reasons", headers=HF).json()
+keys = {x["key"]: x for x in dr["rows"]}
+ck("'adashib kiritilgan' sababi bor", keys["mistake"]["label"],
+   "Adashib kiritib yuborilgan")
+ck("  u YO'QOTISH deb sanalmaydi", keys["mistake"]["real_loss"], False)
+ck("dubl ham yo'qotish emas", keys["duplicate"]["real_loss"], False)
+ck("'qiziqmadi' esa haqiqiy yo'qotish",
+   keys["not_interested"]["real_loss"], True)
+
+
+def lid(nom):
+    l = models.Lead(full_name=nom, phone="+998900000001", source="phone",
+                    stage="new", branch_id=b1.id, created_by="test")
+    db.add(l); db.commit(); db.refresh(l)
+    return l
+
+
+l1, l2, l3 = lid("Adashgan Lid"), lid("Qiziqmagan Lid"), lid("Dubl Lid")
+n_before = db.query(models.Lead).count()
+
+bad = c.delete(f"/api/leads/{l1.id}")
+ck("loginsiz o'chirib bo'lmaydi", bad.status_code in (401, 403), True)
+bad2 = c.delete(f"/api/leads/{l1.id}", headers=HF)
+ck("SABABSIZ o'chirib bo'lmaydi", bad2.status_code, 400)
+ck("  sababi tushuntiriladi", "sababini" in bad2.json()["detail"], True)
+bad3 = c.delete(f"/api/leads/{l1.id}?reason=yoq-sabab", headers=HF)
+ck("ro'yxatdan tashqari sabab rad etiladi", bad3.status_code, 400)
+ck("  hech biri o'chmadi", db.query(models.Lead).count(), n_before)
+
+ok = c.delete(f"/api/leads/{l1.id}?reason=mistake&note=xato bosildi",
+              headers=HF)
+ck("sabab bilan o'chadi", ok.status_code, 200)
+ck("  javobda sabab nomi", ok.json()["reason"], "Adashib kiritib yuborilgan")
+c.delete(f"/api/leads/{l2.id}?reason=not_interested", headers=HF)
+c.delete(f"/api/leads/{l3.id}?reason=duplicate", headers=HF)
+ck("uchtasi ham lidlar ro'yxatidan chiqdi",
+   db.query(models.Lead).count(), n_before - 3)
+
+# HECH NARSA YO'QOLMAYDI — arxivda
+arx = c.get("/api/leads/deleted", headers=HF).json()["rows"]
+ck("arxivda uchtasi ham bor", len(arx), 3)
+a1 = [x for x in arx if x["full_name"] == "Adashgan Lid"][0]
+ck("  kim o'chirgani yozilgan", a1["deleted_by"], "Jahongir")
+ck("  izoh saqlangan", a1["reason_note"], "xato bosildi")
+ck("  telefoni ham turibdi", a1["phone"], "+998900000001")
+ck("  yo'qotish emas deb belgilangan", a1["real_loss"], False)
+
+# QAYTARISH
+res = c.post(f"/api/leads/deleted/{a1['id']}/restore", headers=HF)
+ck("xato o'chirilgan lid qaytariladi", res.status_code, 200)
+ck("  lidlar soni tiklandi", db.query(models.Lead).count(), n_before - 2)
+ck("  ikkinchi marta qaytarib bo'lmaydi",
+   c.post(f"/api/leads/deleted/{a1['id']}/restore",
+          headers=HF).status_code, 404)
+
+# STATISTIKA
+r = c.get("/api/analytics/reason-stats?months=12", headers=HF).json()
+ld = r["leads"]
+ck("statistikada 2 ta o'chirilgan lid", ld["total"], 2)
+ck("  1 tasi HAQIQIY yo'qotish (qiziqmadi)", ld["real"], 1)
+ck("  dubl yo'qotish deb sanalmadi",
+   [x["real_loss"] for x in ld["rows"] if x["key"] == "duplicate"], [False])
+
+
 print("\n" + "=" * 60)
 if fails:
     print("YIQILGAN TEKSHIRUVLAR:", len(fails))

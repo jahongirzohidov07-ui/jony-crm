@@ -2286,6 +2286,33 @@ FREEZE_RISK_REASONS = ["money", "absent", "schedule"]
 
 
 # =====================================================================
+#  LIDNI O'CHIRISH SABABLARI (2026-08-30, Jahongir: "lidni
+#  o'chirishni ham sabablar qo'shib qo'y, ichida ADASHIB KIRITILIB
+#  YUBORILIBDI bo'lsin")
+#
+#  NEGA MUHIM. Lid o'chirilganda voronka statistikasi o'zgaradi.
+#  "Adashib kiritilgan" yozuv — umuman lid EMAS edi, uni yo'qotish
+#  deb sanash noto'g'ri. Dubl ham shunday. Qolganlari esa haqiqiy
+#  lid bo'lgan va yo'qolgan — ular kuzatilishi kerak.
+#
+#  Shuning uchun uchinchi ustun: bu HAQIQIY YO'QOTISHMI.
+LEAD_DELETE_REASONS = [
+    ("mistake", "Adashib kiritib yuborilgan", False),
+    ("duplicate", "Dubl (allaqachon bazada bor)", False),
+    ("test", "Sinov / tekshiruv yozuvi", False),
+    ("spam", "Spam yoki soxta ariza", False),
+    ("wrong_number", "Telefon raqami noto'g'ri", True),
+    ("no_answer", "Ko'p marta ko'tarmadi", True),
+    ("not_interested", "Qiziqmadi", True),
+    ("competitor", "Boshqa markazni tanladi", True),
+    ("other", "Boshqa sabab", True),
+]
+LEAD_DELETE_LABELS = {k: lbl for k, lbl, _ in LEAD_DELETE_REASONS}
+# Statistikada "haqiqiy yo'qotilgan lid" deb sanaladiganlar
+LEAD_DELETE_REAL = [k for k, _l, real in LEAD_DELETE_REASONS if real]
+
+
+# =====================================================================
 #  ROMI — reklama samaradorligi
 #  ROMI = (kanal keltirgan foyda - kanal xarajati) / kanal xarajati x 100
 # =====================================================================

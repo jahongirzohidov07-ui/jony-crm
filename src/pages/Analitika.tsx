@@ -2016,6 +2016,73 @@ function ReasonStats() {
         )}
       </div>
 
+      {/* ---- O'CHIRILGAN LIDLAR ---- */}
+      {d.leads && d.leads.total > 0 && (
+        <div>
+          <h3 className="text-base font-bold text-slate-900 mb-1">
+            O'chirilgan lidlar
+          </h3>
+          <p className="text-xs text-slate-500 mb-3">
+            "Adashib kiritilgan" va "dubl" — bular umuman lid emas edi,
+            shuning uchun yo'qotish deb sanalmaydi. Yozuvlar arxivda
+            turadi, kerak bo'lsa qaytariladi.
+          </p>
+          <div className="grid grid-cols-2 gap-3 mb-4 max-w-md">
+            <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <p className="text-xs text-slate-500">O'chirilgan</p>
+              <p className="text-2xl font-bold text-slate-900">
+                {d.leads.total}
+              </p>
+            </div>
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+              <p className="text-xs text-red-600">Haqiqiy yo'qotilgan lid</p>
+              <p className="text-2xl font-bold text-red-700">
+                {d.leads.real}
+              </p>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-6">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-2.5 font-medium">Sabab</th>
+                  <th className="text-right px-4 py-2.5 font-medium">Soni</th>
+                  <th className="text-left px-4 py-2.5 font-medium w-40">
+                    Ulushi
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {d.leads.rows.map((r: any) => (
+                  <tr key={r.key} className="border-t border-slate-100">
+                    <td className="px-4 py-2.5 text-slate-800">
+                      {r.label}
+                      {!r.real_loss && (
+                        <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">
+                          yo'qotish emas
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-semibold">
+                      {r.count}
+                    </td>
+                    <td className="px-4 py-2.5">
+                      <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                        <div className={`h-full ${r.real_loss ? "bg-red-400" : "bg-emerald-400"}`}
+                          style={{ width: `${pct(r.count, d.leads.total)}%` }} />
+                      </div>
+                      <span className="text-[11px] text-slate-400">
+                        {pct(r.count, d.leads.total)}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* ---- MUZLATISH ---- */}
       <div>
         <h3 className="text-base font-bold text-slate-900 mb-1">

@@ -985,9 +985,14 @@ export interface AdminKpi {
   collected: number;
   collection_percent: number;
   collection_bonus: number;
+  // 2026-08-30: yangi mijoz endi SHAXSIY — faqat shu admin qabul
+  // qilganlari. Filial yig'indisi solishtirish uchun alohida keladi.
   new_clients: number;
   new_client_revenue: number;
   new_client_bonus: number;
+  branch_new_clients?: number;
+  branch_new_revenue?: number;
+  unassigned_new_clients?: number;
   total: number;
 }
 

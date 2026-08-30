@@ -1074,12 +1074,25 @@ def admin_kpi(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.KPI_VIEW)),
 ):
+    return compute_admin_kpi(db, user, year, month)
+
+
+def compute_admin_kpi(db: Session, user, year: int, month: int,
+                      admin_roles=None):
+    """Adminlar KPI hisobi — BITTA joyda.
+
+    2026-08-30: bu hisob ilgari IKKI joyda edi (dashboard.py va
+    entry.py dagi admin_kpi_v2). Ikkalasi bir xil bo'lishi kerak
+    edi, lekin biri o'zgartirilganda ikkinchisi eskiligicha qolib
+    ketdi va jonli saytda ESKI mantiq ishlab turdi. Endi mantiq
+    shu funksiyada, ikkala yo'l ham shuni chaqiradi."""
+    admin_roles = tuple(admin_roles or (roles.SALES_MANAGER,))
     start, end = billing.month_bounds(year, month)
     period = _period_key(year, month)
     start_dt, end_dt = _utc_window(start, end)
 
     admins = db.query(models.User).filter(
-        models.User.role == roles.SALES_MANAGER,
+        models.User.role.in_(admin_roles),
         models.User.is_active == 1,
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
@@ -1092,6 +1105,33 @@ def admin_kpi(
     students = db.query(models.Student).all()
     student_branch = {s.id: s.branch_id for s in students}
 
+    # =================================================================
+    #  IKKI XIL O'LCHOV (2026-08-30, Jahongir)
+    # =================================================================
+    #  "eski to'lovlarni yig'ish umumiy FILIALLAR KESIMIDA foizda
+    #   hisoblanadi, lekin yangi to'lovlar bu INDIVIDUAL KPI bo'ladi
+    #   shuning uchun u KIM YANGI TO'LOV QILDIRSA O'ZIGA hisoblanishi
+    #   kerak"
+    #
+    #  ESKI TO'LOVLAR — FILIAL ishi. Qarzni yig'ish jamoaviy:
+    #  qo'ng'iroq bir kishi qiladi, pulni boshqasi qabul qiladi.
+    #  Shuning uchun foiz filial bo'yicha qoladi (o'zgarmadi).
+    #
+    #  YANGI MIJOZ — SHAXSIY ish. Yangi odamni kim ko'ndirib, kim
+    #  birinchi to'lovini qabul qilgan bo'lsa — bonus o'shaniki.
+    #  Avval bu ham filialga yig'ilardi va bir filialdagi ikkala
+    #  admin ham bir xil 39 tani ko'rardi.
+    #
+    #  KIM QABUL QILGANI to'lovning created_by ustunidan olinadi —
+    #  u to'lovni kiritgan xodimning ismi. Ism bo'yicha moslash
+    #  ishonchli bo'lishi uchun ikkala tomon ham bir xil tozalanadi.
+    def _nk(x):
+        return " ".join((x or "").lower().replace("'", "").split())
+
+    by_name = {}
+    for a in admins:
+        by_name.setdefault(_nk(a.full_name), a.id)
+
     # Filial ko'rsatkichlarini bir marta hisoblaymiz.
     stats = {}
     for a in admins:
@@ -1103,7 +1143,12 @@ def admin_kpi(
                 if s.branch_id == a.branch_id and s.status == "active"),
             "expected": 0.0, "collected": 0.0,
             "new_clients": set(), "new_revenue": 0.0,
+            # Kimga ham tegishli bo'lmagan yangi mijozlar (masalan
+            # asoschi yoki moliyachi qabul qilgan) — ochiq ko'rsatiladi
+            "new_other": set(),
         }
+    # Har bir admin uchun SHAXSIY yangi mijozlar
+    mine = {a.id: {"clients": set(), "revenue": 0.0} for a in admins}
 
     # "Tushishi kerak" bo'lgan pul - shu oyda hisoblangan summalar.
     # Faqat ESKI o'quvchilar bo'yicha: yangi mijozning birinchi to'lovi
@@ -1134,9 +1179,17 @@ def admin_kpi(
             continue
         first = first_paid.get(p.student_id)
         if first is not None and first >= start_dt:
-            # Birinchi marta to'lagan - yangi mijoz
+            # Birinchi marta to'lagan - YANGI MIJOZ.
+            # Filial yig'indisi (umumiy manzara uchun) saqlanadi,
+            # lekin BONUS shaxsiy hisobdan chiqadi.
             st["new_clients"].add(p.student_id)
             st["new_revenue"] += p.amount
+            uid = by_name.get(_nk(p.created_by))
+            if uid is not None:
+                mine[uid]["clients"].add(p.student_id)
+                mine[uid]["revenue"] += p.amount
+            else:
+                st["new_other"].add(p.student_id)
         else:
             st["collected"] += p.amount
 
@@ -1146,7 +1199,8 @@ def admin_kpi(
         pct = (round(st["collected"] / st["expected"] * 100, 1)
                if st["expected"] else 0.0)
         col_bonus = _collection_bonus(db, st["active_students"], pct)
-        new_count = len(st["new_clients"])
+        # YANGI MIJOZ — SHAXSIY. Bonus faqat o'zi qabul qilganlaridan.
+        new_count = len(mine[a.id]["clients"])
         new_bonus = _new_client_bonus(db, new_count)
         fix = a.fix_salary or 0.0
 
@@ -1162,8 +1216,14 @@ def admin_kpi(
             active_students=st["active_students"],
             expected=st["expected"], collected=st["collected"],
             collection_percent=pct, collection_bonus=col_bonus,
-            new_clients=new_count, new_client_revenue=st["new_revenue"],
+            new_clients=new_count,
+            new_client_revenue=mine[a.id]["revenue"],
             new_client_bonus=new_bonus,
+            # Filialda jami nechta yangi mijoz bo'lgani — solishtirish
+            # uchun. Bonusga ta'sir qilmaydi, faqat manzara.
+            branch_new_clients=len(st["new_clients"]),
+            branch_new_revenue=st["new_revenue"],
+            unassigned_new_clients=len(st["new_other"]),
             total=fix + col_bonus + new_bonus,
         ))
     return schemas.AdminKpiResult(period=period, rows=rows)

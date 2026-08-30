@@ -1881,95 +1881,21 @@ _drop_route("/api/kpi/admins", "GET")
 @app.get("/api/kpi/admins", response_model=schemas.AdminKpiResult)
 def admin_kpi_v2(year: int, month: int, db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.KPI_VIEW))):
-    """Eski to'lovlarni yig'ish — jamoaviy bonus: filialdagi UMUMIY
-    yig'ilgan summa bilan o'lchanadi (mas'ul xodimga bo'linmaydi).
-    Bir filialda ikkita admin bo'lsa, ikkalasiga ham to'liq bonus.
-    Administrator (qabul) roli ham ro'yxatga kiradi."""
-    start, end = _billing.month_bounds(year, month)
-    period = M._period_key(year, month)
-    start_dt, end_dt = M._utc_window(start, end)
+    """Adminlar KPI. Farqi bittagina: ro'yxatga "Administrator (qabul)"
+    roli ham kiradi. Hisobning O'ZI dashboard.compute_admin_kpi da.
 
-    admins = db.query(models.User).filter(
-        models.User.role.in_(_ADMIN_ROLES),
-        models.User.is_active == 1,
-    )
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        admins = admins.filter(models.User.branch_id == user.branch_id)
-    admins = admins.order_by(models.User.full_name).all()
-    if not admins:
-        return schemas.AdminKpiResult(period=period, rows=[])
+    2026-08-30 — BU YERDA NUSXA TURGAN EDI. Hisob ikki joyda
+    takrorlangani uchun dashboard.py tuzatilganda jonli saytda
+    baribir ESKI mantiq ishlab turdi (yangi mijoz filial bo'yicha
+    yig'ilardi). Endi nusxa yo'q: bitta manba, ikkala yo'l ham
+    shuni chaqiradi.
 
-    first_paid = M._first_payment_dates(db)
-    students = db.query(models.Student).all()
-    student_branch = {s.id: s.branch_id for s in students}
-
-    stats: dict = {}
-    for a in admins:
-        if a.branch_id in stats:
-            continue
-        stats[a.branch_id] = {
-            "active_students": sum(
-                1 for s in students
-                if s.branch_id == a.branch_id and s.status == "active"),
-            "expected": 0.0, "collected": 0.0,
-            "new_clients": set(), "new_revenue": 0.0,
-        }
-
-    charges = db.query(models.Payment).filter(
-        models.Payment.kind == "charge",
-        models.Payment.created_at >= start_dt,
-        models.Payment.created_at <= end_dt,
-    ).all()
-    for c in charges:
-        st = stats.get(student_branch.get(c.student_id))
-        if st is None:
-            continue
-        first = first_paid.get(c.student_id)
-        if first is None or first >= start_dt:
-            continue
-        st["expected"] += abs(c.amount)
-
-    pays = db.query(models.Payment).filter(
-        models.Payment.kind == "payment",
-        models.Payment.created_at >= start_dt,
-        models.Payment.created_at <= end_dt,
-    ).all()
-    for p in pays:
-        st = stats.get(student_branch.get(p.student_id))
-        if st is None:
-            continue
-        first = first_paid.get(p.student_id)
-        if first is not None and first >= start_dt:
-            st["new_clients"].add(p.student_id)
-            st["new_revenue"] += p.amount
-        else:
-            st["collected"] += p.amount
-
-    rows = []
-    for a in admins:
-        st = stats[a.branch_id]
-        pct = (round(st["collected"] / st["expected"] * 100, 1)
-               if st["expected"] else 0.0)
-        col_bonus = M._collection_bonus(db, st["active_students"], pct)
-        new_count = len(st["new_clients"])
-        new_bonus = M._new_client_bonus(db, new_count)
-        fix = a.fix_salary or 0.0
-        if (user.role not in
-                tuple(roles.FULL_ACCESS + [roles.FINANCE_DIRECTOR])
-                and a.id != user.id):
-            continue
-        rows.append(schemas.AdminKpi(
-            user_id=a.id, full_name=a.full_name, branch_id=a.branch_id,
-            branch=a.branch.name if a.branch else None,
-            fix_salary=fix,
-            active_students=st["active_students"],
-            expected=st["expected"], collected=st["collected"],
-            collection_percent=pct, collection_bonus=col_bonus,
-            new_clients=new_count, new_client_revenue=st["new_revenue"],
-            new_client_bonus=new_bonus,
-            total=fix + col_bonus + new_bonus,
-        ))
-    return schemas.AdminKpiResult(period=period, rows=rows)
+    ESKI TO'LOV yig'ish bonusi — JAMOAVIY (filial bo'yicha): bir
+    filialda ikkita admin bo'lsa, ikkalasiga ham to'liq bonus.
+    YANGI MIJOZ bonusi — SHAXSIY (Jahongir, 2026-08-30: "kim yangi
+    to'lov qildirsa o'ziga hisoblanishi kerak")."""
+    return M.compute_admin_kpi(db, user, year, month,
+                               admin_roles=_ADMIN_ROLES)
 
 
 # MyProfile ham shu hisobdan foydalanadi

@@ -829,9 +829,17 @@ function KpiTab({ canAdmin }: { canAdmin: boolean }) {
                   </p>
                 </div>
 
+                {/* 2026-08-30, Jahongir: "yangi to'lovlar bu
+                    INDIVIDUAL KPI bo'ladi, kim yangi to'lov qildirsa
+                    o'ziga hisoblanishi kerak". Endi bu raqam faqat
+                    shu adminning o'zi qabul qilganlari — filial
+                    yig'indisi pastda kichkina yozuvda turadi. */}
                 <div className="bg-slate-50 rounded-lg p-3">
                   <p className="text-xs text-slate-500">
                     Yangi mijoz · {r.new_clients} ta
+                    <span className="text-[10px] text-slate-400 ml-1">
+                      (o'zi)
+                    </span>
                   </p>
                   <p
                     className={`font-semibold ${
@@ -843,6 +851,14 @@ function KpiTab({ canAdmin }: { canAdmin: boolean }) {
                   <p className="text-xs text-slate-400 mt-1">
                     {short(r.new_client_revenue)} tushum
                   </p>
+                  {(r.branch_new_clients ?? 0) > r.new_clients && (
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      Filialda jami {r.branch_new_clients} ta
+                      {(r.unassigned_new_clients ?? 0) > 0
+                        ? ` · ${r.unassigned_new_clients} tasi boshqa xodim qabul qilgan`
+                        : ""}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

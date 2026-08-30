@@ -13,6 +13,7 @@ import {
   type StaffSalaryHistory,
   type MonthPayments,
   type StaffGrades,
+  type AdminKpiResult,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { MONTHS } from "../lib/expenses";
@@ -513,6 +514,12 @@ export function PayrollTab() {
 function StaffSalaryTable() {
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
+  // 2026-08-30, Jahongir: "ma'muriy xodimlar oyligi degan joyda
+  // BULAR HAM KO'RINISHI KERAK" — adminning KPI'si (fiks + eski
+  // to'lov yig'ish bonusi + o'zi olib kelgan yangi mijozlar bonusi).
+  // Ilgari bu faqat Hisobotlar > Adminlar KPI da turardi, oylik
+  // berayotgan odam ikki joyni ochib solishtirishga majbur edi.
+  const [kpi, setKpi] = useState<AdminKpiResult | null>(null);
   const [d, setD] = useState<{
     rows: {
       id: number; date: string; name: string; role_label: string;
@@ -528,6 +535,10 @@ function StaffSalaryTable() {
       .get<typeof d>(`/expenses/staff-salaries?year=${year}&month=${month}`)
       .then(setD)
       .catch(() => setD(null));
+    api
+      .get<AdminKpiResult>(`/kpi/admins?year=${year}&month=${month}`)
+      .then(setKpi)
+      .catch(() => setKpi(null));
   }, [year, month]);
 
   return (
@@ -540,6 +551,99 @@ function StaffSalaryTable() {
           {d ? `${d.count} ta to'lov · ${formatSom(d.total)}` : ""}
         </span>
       </div>
+
+      {/* ---- HISOBLANGAN OYLIK (KPI) ---- */}
+      {kpi && kpi.rows.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-sm font-bold text-slate-800 mb-1">
+            Hisoblangan oylik — administratorlar
+          </h3>
+          <p className="text-xs text-slate-500 mb-3">
+            Fiks + eski to'lovlarni yig'ish bonusi (filial ko'rsatkichi)
+            + o'zi olib kelgan yangi mijozlar bonusi (shaxsiy).
+          </p>
+          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+                <tr>
+                  <th className="text-left px-4 py-3 font-medium">Xodim</th>
+                  <th className="text-left px-4 py-3 font-medium">Filial</th>
+                  <th className="text-right px-4 py-3 font-medium">Fiks</th>
+                  <th className="text-right px-4 py-3 font-medium">
+                    Yig'ish
+                  </th>
+                  <th className="text-right px-4 py-3 font-medium">
+                    Yangi mijoz
+                  </th>
+                  <th className="text-right px-4 py-3 font-medium">Jami</th>
+                  <th className="text-right px-4 py-3 font-medium">Berildi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {kpi.rows.map((r) => {
+                  // Shu xodimga shu oyda haqiqatda berilgan oylik
+                  const berildi = (d?.rows || [])
+                    .filter((x) => x.name === r.full_name)
+                    .reduce((a, x) => a + x.amount, 0);
+                  return (
+                    <tr key={r.user_id} className="border-t border-slate-100">
+                      <td className="px-4 py-3 text-slate-800">
+                        {r.full_name}
+                      </td>
+                      <td className="px-4 py-3 text-slate-500">
+                        {r.branch || "—"}
+                      </td>
+                      <td className="px-4 py-3 text-right text-slate-600">
+                        {formatSom(r.fix_salary)}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className={r.collection_bonus > 0
+                          ? "text-emerald-600 font-medium" : "text-slate-400"}>
+                          {r.collection_bonus > 0
+                            ? `+${formatSom(r.collection_bonus)}` : "—"}
+                        </span>
+                        <span className="block text-[11px] text-slate-400">
+                          {r.collection_percent}% (filial)
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className={r.new_client_bonus > 0
+                          ? "text-emerald-600 font-medium" : "text-slate-400"}>
+                          {r.new_client_bonus > 0
+                            ? `+${formatSom(r.new_client_bonus)}` : "—"}
+                        </span>
+                        <span className="block text-[11px] text-slate-400">
+                          {r.new_clients} ta o'zi
+                          {(r.branch_new_clients ?? 0) > r.new_clients
+                            ? ` / ${r.branch_new_clients} filialda` : ""}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right font-semibold text-slate-900">
+                        {formatSom(r.total)}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className={berildi >= r.total && r.total > 0
+                          ? "text-emerald-600" : "text-slate-500"}>
+                          {berildi ? formatSom(berildi) : "—"}
+                        </span>
+                        {r.total > 0 && berildi < r.total && (
+                          <span className="block text-[11px] text-amber-600">
+                            {formatSom(r.total - berildi)} qoldi
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      <h3 className="text-sm font-bold text-slate-800 mb-3">
+        Berilgan oyliklar
+      </h3>
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-slate-500 text-xs uppercase">

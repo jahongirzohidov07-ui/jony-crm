@@ -855,8 +855,12 @@ class KpiRulesIn(BaseModel):
 class AdminKpi(BaseModel):
     """Bitta adminning bir oylik ish haqi hisobi.
 
-    Bonuslar FILIAL ko'rsatkichi bo'yicha - bir filialda ikkita admin
-    bo'lsa, ikkalasi ham to'liq bonusni oladi."""
+    ESKI TO'LOV yig'ish bonusi FILIAL ko'rsatkichi bo'yicha — qarz
+    yig'ish jamoaviy ish, bir filialdagi ikkala admin ham to'liq
+    bonusni oladi.
+
+    YANGI MIJOZ bonusi esa SHAXSIY (2026-08-30): kim birinchi
+    to'lovni qabul qilgan bo'lsa — o'shaniki."""
     user_id: int
     full_name: str
     branch_id: Optional[int] = None
@@ -871,8 +875,19 @@ class AdminKpi(BaseModel):
     collection_percent: float = 0
     collection_bonus: float = 0
 
+    # YANGI MIJOZ — SHAXSIY (2026-08-30, Jahongir: "yangi to'lovlar bu
+    # individual KPI bo'ladi ... kim yangi to'lov qildirsa o'ziga
+    # hisoblanishi kerak"). Quyidagi ikki maydon FAQAT shu adminning
+    # o'zi qabul qilgan yangi mijozlari.
     new_clients: int = 0       # birinchi marta to'lagan o'quvchilar
     new_client_revenue: float = 0
+    # Filialda JAMI nechta yangi mijoz bo'lgani — solishtirish uchun.
+    # Bonusga ta'sir qilmaydi.
+    branch_new_clients: int = 0
+    branch_new_revenue: float = 0
+    # Hech bir adminga tegishli bo'lmaganlari (asoschi/moliyachi
+    # qabul qilgan) — yo'qolib ketmasin, ko'rinib tursin.
+    unassigned_new_clients: int = 0
     new_client_bonus: float = 0
 
     total: float = 0

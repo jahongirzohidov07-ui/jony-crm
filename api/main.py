@@ -518,11 +518,25 @@ except Exception:
 
 # Muzlatilganlarning eski "kelmadi" yo'qlamalarini tozalash -
 # kelmagan o'quvchi uchun ustozga oylik hisoblanmasin (Jahongir)
+#
+# 2026-08-31 — KUNIGA BIR MARTA. Ilgari bu HAR SOVUQ STARTDA
+# ishlardi. Vercel'da har uyg'onish yangi jarayon: kuniga ~300
+# marta shu tozalash qayta ishga tushardi, holbuki natija bir xil.
+#
+# Nega butunlay to'xtatmadim: yangi muzlatishlarda tozalash
+# yo'qlama saqlanayotganda o'zi bo'ladi, lekin QO'LDA muzlatilgan
+# eski holatlar uchun bu kerak. Shuning uchun o'chirilmadi —
+# kunlik belgiga bog'landi. Xatti-harakat o'zgarmaydi, faqat
+# takrorlanmaydi.
 try:
     from sqlalchemy.orm import Session as _VS12
-    from common import _cleanup_frozen_absences
+    from common import _cleanup_frozen_absences, _seed_done, _seed_mark
+    from datetime import date as _d12
+    _k12 = "frozen_abs_" + _d12.today().isoformat()
     with _VS12(engine) as _db12:
-        _cleanup_frozen_absences(_db12)
+        if not _seed_done(_db12, _k12):
+            _cleanup_frozen_absences(_db12)
+            _seed_mark(_db12, _k12)
 except Exception:
     pass
 

@@ -154,7 +154,14 @@ r9 = c.get("/api/smm/plan?scope=month&year=2026&month=9", headers=H).json()
 t9 = [x["title"] for x in r9["rows"]]
 ck("sentabr tanlansa faqat sentabr", all(x["date"][:7] == "2026-09"
                                          for x in r9["rows"]), True)
-ck("  sentabrda 4 ta post", len(t9), 4)
+# SANAGA BOG'LIQ BO'LMASIN. Test 31-avgustda ishga tushsa,
+# "Ertaga" qatori sentabrga o'tib qoladi va qattiq raqam yiqiladi.
+# Shuning uchun kutilgan son bazadan hisoblanadi.
+_sent = db.query(models.Content).filter(
+    models.Content.planned_date >= date(2026, 9, 1),
+    models.Content.planned_date <= date(2026, 9, 30)).count()
+ck("  sentabrda hammasi chiqdi", len(t9), _sent)
+ck("  kamida 4 ta (fayldan yuklanganlar)", len(t9) >= 4, True)
 ck("  oy nomi to'g'ri", r9["month_label"].lower(), "sentabr")
 
 

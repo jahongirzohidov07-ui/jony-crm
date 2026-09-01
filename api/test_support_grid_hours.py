@@ -142,6 +142,38 @@ r = c.put(f"/api/groups/{g.id}/support-attendance", headers=Hs,
 ck("saqlash 200", r.status_code, 200)
 ck("soat endi 2", r.json()["session"]["hours"], 2.0)
 
+print("\n=== 1 / 2 / 3 SOAT — HAMMASI ISHLAYDI ===")
+# 2026-08-31, Jahongir: "soat o'zgartirish yo'q bo'lib qolibdi
+# supportlardan ... DOIMIY 1 SOAT EMAS-DA, ba'zida 2 soat ham
+# o'tishi mumkin, 3 SOAT HAM BOR".
+#
+# Ekranda soat bloki "kimdir keldi" belgilanmaguncha yashirin
+# edi — support uni ko'rmasdi. Blok endi doim turadi. Server
+# tomoni esa allaqachon to'g'ri ishlagan, quyida uch qiymat ham
+# aynan saqlanishi va QAYTA O'ZGARTIRILISHI tekshiriladi.
+for _h in (1, 2, 3):
+    r = c.put(f"/api/groups/{g.id}/support-attendance", headers=Hs,
+              json={"day": today.isoformat(), "marks": [],
+                    "start_time": "14:00", "hours": _h})
+    ck(f"{_h} soat saqlandi", r.json()["session"]["hours"], float(_h))
+    # Jadvalda ham o'sha soat ko'rinishi kerak
+    gr = c.get(f"/api/groups/{g.id}/support-attendance"
+               f"?year={today.year}&month={today.month}",
+               headers=Hs).json()
+    ck(f"  jadvalda ham {_h} soat",
+       gr["sessions"][today.isoformat()]["hours"], float(_h))
+    ck(f"  oy jamisi {_h} soat", gr["hours_total"], float(_h))
+
+# 3 soatdan keyin 1 ga QAYTARIB tushirish ham ishlashi kerak
+r = c.put(f"/api/groups/{g.id}/support-attendance", headers=Hs,
+          json={"day": today.isoformat(), "marks": [],
+                "start_time": "14:00", "hours": 1})
+ck("3 dan 1 ga qaytarildi", r.json()["session"]["hours"], 1.0)
+# Va yakuniy holat 2 soat bo'lsin (keyingi bo'limlar shunga tayanadi)
+c.put(f"/api/groups/{g.id}/support-attendance", headers=Hs,
+      json={"day": today.isoformat(), "marks": [],
+            "start_time": "14:00", "hours": 2})
+
 print("\n=== USTOZNING ASOSIY YO'QLAMASIGA TEGILMAGAN ===")
 ck("attendance jadvali BO'SH",
    db.query(models.Attendance).count(), 0)

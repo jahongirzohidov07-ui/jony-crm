@@ -367,11 +367,30 @@ export default function TeacherSession() {
               </div>
             ))}
 
-            {/* ---- Soat (Jahongir: qo'lda belgilanadi) ---- */}
-            {needSession && (
-              <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-3">
+            {/* ---- Soat (Jahongir: qo'lda belgilanadi) ----
+                2026-08-31, Jahongir: "soat o'zgartirish yo'q bo'lib
+                qolibdi supportlardan, 1 soatdan ko'p o'tsa avval
+                o'zgartirolardiyu. Doimiy 1 soat emas-da, ba'zida
+                2 soat ham o'tishi mumkin, 3 soat ham bor".
+
+                SABAB: blok "kimdir keldi" belgilangandan KEYIN
+                paydo bo'lardi. Support ekranni ochganda uni umuman
+                ko'rmasdi va "yo'qolib qolibdi" deb o'ylardi.
+
+                ENDI: kun tahrirlanadigan bo'lsa — blok DOIM turadi.
+                Hech kim belgilanmagan bo'lsa, pastda shu haqda
+                eslatma chiqadi (seans hisoblanmaydi), lekin soat
+                tanlagichning o'zi ko'rinib turadi. */}
+            {editable && (
+              <div className={`bg-white rounded-xl border p-4 space-y-3 ${
+                needSession ? "border-slate-200" : "border-slate-200 opacity-70"
+              }`}>
                 <p className="text-sm font-semibold text-slate-800">
                   Necha soat dars o'tdingiz
+                </p>
+                <p className="text-[11px] text-slate-400 -mt-2">
+                  Har seans bir xil emas — 1, 2 yoki 3 soat bo'lishi
+                  mumkin. Qancha o'tgan bo'lsangiz, shuni tanlang.
                 </p>
                 <div className="grid grid-cols-5 gap-1.5">
                   {steps.map((h) => (
@@ -420,6 +439,13 @@ export default function TeacherSession() {
                     placeholder="masalan 1.75"
                   />
                 </div>
+                {!needSession && (
+                  <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                    Hozircha hech kim &laquo;Keldi&raquo; deb belgilanmagan —
+                    bunday holatda seans hisoblanmaydi va oylikka kirmaydi.
+                    O&apos;quvchilarni belgilang.
+                  </p>
+                )}
                 <div>
                   <label className="block text-[11px] text-slate-500 mb-1">
                     Boshlanish vaqti

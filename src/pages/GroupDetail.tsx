@@ -24,6 +24,7 @@ import {
 } from "../components/GroupGrids";
 import { GroupHomeworkTab, GroupHistoryTab, GroupNotesTab } from "../components/GroupExtras";
 import { GroupSidebar } from "../components/GroupSidebar";
+import { MyGroupEditModal } from "../components/MyGroupEdit";
 import { GroupFormModal } from "./Groups";
 
 type GroupTab =
@@ -64,6 +65,10 @@ export default function GroupDetail() {
   const groupId = Number(id);
   const { user } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
+  // USTOZNING O'Z GURUHI (2026-09-01, Jahongir: "ustozlar o'zlarini
+  // guruhlarini edit qilishda ... huquqi bolsin"). Bu katta forma
+  // emas — faqat nom/daraja/vaqt/xona uchun tor oyna.
+  const [myEditOpen, setMyEditOpen] = useState(false);
   const [branches, setBranches] = useState<Branch[]>([]);
   const t = today();
 
@@ -91,12 +96,12 @@ export default function GroupDetail() {
   // Rahbar o'zi dars beradigan guruhda yo'qlama/baho qo'ya olmaydi —
   // yo'qlama pul hujjati, o'z oyligini o'zi yozib qo'ymasligi kerak.
   const [ownLock, setOwnLock] = useState<{
-    locked: boolean; reason: string | null;
+    locked: boolean; reason: string | null; own_group?: boolean;
   } | null>(null);
   useEffect(() => {
     if (!groupId) return;
     api
-      .get<{ locked: boolean; reason: string | null }>(
+      .get<{ locked: boolean; reason: string | null; own_group?: boolean }>(
         `/groups/${groupId}/my-access`,
       )
       .then(setOwnLock)
@@ -123,6 +128,10 @@ export default function GroupDetail() {
   const canGroupEdit =
     canFinance ||
     can(user?.role, [ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR]);
+  // Guruhning O'Z ustozi — rahbariyat ruxsati bo'lmasa ham qalamcha
+  // ko'rinadi, lekin u tor oynani ochadi (narx/ustoz/filialga
+  // tegmaydi).
+  const isOwnTeacher = Boolean(ownLock?.own_group);
 
   // Tezkor XP uchun guruhdagi o'quvchilar ro'yxati
   const [groupStudents, setGroupStudents] = useState<Student[]>([]);
@@ -324,7 +333,13 @@ export default function GroupDetail() {
       <div className="flex flex-col lg:flex-row gap-5 items-start">
         <GroupSidebar
           group={group}
-          onEdit={canGroupEdit ? () => setEditOpen(true) : undefined}
+          onEdit={
+            canGroupEdit
+              ? () => setEditOpen(true)
+              : isOwnTeacher
+                ? () => setMyEditOpen(true)
+                : undefined
+          }
         />
 
         <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
@@ -439,6 +454,14 @@ export default function GroupDetail() {
             setEditOpen(false);
             loadGroup();
           }}
+        />
+      )}
+
+      {myEditOpen && group && (
+        <MyGroupEditModal
+          groupId={group.id}
+          onClose={() => setMyEditOpen(false)}
+          onSaved={loadGroup}
         />
       )}
     </div>

@@ -8120,12 +8120,24 @@ def group_my_access(gid: int, db: Session = Depends(get_db),
     Frontend jurnalni shu javobga qarab yopadi — ochiladi, lekin
     katakchalar o'chirilgan bo'ladi va sabab yozib turadi."""
     locked = _own_locked(db, user, gid)
+    # "Bu guruh MENIKI" — ustoz o'z guruhining nomi, darajasi, vaqti
+    # va xonasini tahrirlashi uchun (2026-09-01, Jahongir). Frontend
+    # foydalanuvchining teacher_id sini bilmaydi, shuning uchun
+    # javobni server beradi. Qo'shimcha so'rov yo'q: bu manzil guruh
+    # sahifasi ochilganda allaqachon chaqiriladi.
+    own_group = False
+    _t = db.query(models.Teacher).filter(
+        models.Teacher.user_id == getattr(user, "id", None)).first()
+    if _t:
+        _g = db.query(models.Group).get(gid)
+        own_group = bool(_g and _g.teacher_id == _t.id)
     return {
         "group_id": gid,
         "locked": locked,
         "can_mark": (not locked) and (
             getattr(user, "role", None) in tuple(roles.TEACHING_STAFF)),
         "reason": _OWN_LOCK_MSG if locked else None,
+        "own_group": own_group,
     }
 
 

@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { api, type MyGroupList } from "../lib/api";
 import { formatDate } from "../lib/format";
+import { MyGroupEditModal, MyGroupEditButton } from "../components/MyGroupEdit";
 
 const HW_TONE: Record<string, string> = {
   emerald: "bg-emerald-100 text-emerald-700",
@@ -18,13 +19,16 @@ const HW_TONE: Record<string, string> = {
 export default function MyGroups() {
   const [d, setD] = useState<MyGroupList | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Qaysi guruh tahrirlanmoqda (2026-09-01, Jahongir so'radi)
+  const [editId, setEditId] = useState<number | null>(null);
 
-  useEffect(() => {
+  function load() {
     api
       .get<MyGroupList>("/me/groups")
       .then(setD)
       .catch((e) => setError(e instanceof Error ? e.message : "Xatolik"));
-  }, []);
+  }
+  useEffect(load, []);
 
   if (error)
     return <p className="text-sm text-slate-500 py-10 text-center">{error}</p>;
@@ -54,7 +58,10 @@ export default function MyGroups() {
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="font-medium text-slate-900 mb-0.5">{g.name}</p>
-                <ChevronRight size={16} className="text-slate-300 shrink-0" />
+                <div className="flex items-center gap-1 shrink-0">
+                  <MyGroupEditButton onClick={() => setEditId(g.id)} />
+                  <ChevronRight size={16} className="text-slate-300" />
+                </div>
               </div>
               <p className="text-xs text-slate-500 mb-3">
                 {[g.subject_label, g.level].filter(Boolean).join(" · ") || "—"}
@@ -107,6 +114,14 @@ export default function MyGroups() {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+
+      {editId != null && (
+        <MyGroupEditModal
+          groupId={editId}
+          onClose={() => setEditId(null)}
+          onSaved={load}
+        />
+      )}
     </div>
   );
 }

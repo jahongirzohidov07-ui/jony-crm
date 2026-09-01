@@ -261,6 +261,22 @@ class GroupUpdate(BaseModel):
     price_manual: Optional[bool] = None
 
 
+class MyGroupEdit(BaseModel):
+    """USTOZ o'z guruhida o'zgartira oladigan YAGONA maydonlar
+    (2026-09-01, Jahongir: "ustozlar o'zlarini guruhlarini edit
+    qilishda guruh nomini o'zgartirish darajasini va vaqtini
+    o'zgartirish xonasini ozgartirish huquqi bolsin").
+
+    Ro'yxat ATAYLAB tor: narx, ustoz stavkasi, ustozning o'zi, filial,
+    dars kunlari va boshqalar bu yerda umuman yo'q. Shuning uchun
+    ustoz qo'lda so'rov yasab yuborsa ham, o'sha maydonlar Pydantic
+    darajasida tashlab yuboriladi — server ularni ko'rmaydi."""
+    name: Optional[str] = None
+    level: Optional[str] = None
+    lesson_time: Optional[str] = None
+    room_id: Optional[int] = None
+
+
 class GroupOut(GroupCreate):
     model_config = ConfigDict(from_attributes=True)
     id: int

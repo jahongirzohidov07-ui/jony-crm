@@ -1055,6 +1055,164 @@ def my_groups(db: Session = Depends(get_db),
                  "bu yerda ham, manzil qatoridan ham ochilmaydi."),
     }
 
+@router.put("/api/me/groups/{group_id}")
+def update_my_group(group_id: int, payload: schemas.MyGroupEdit,
+                    force: bool = False,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.SELF_STATS))):
+    """USTOZ O'Z GURUHINI TAHRIRLAYDI — faqat 4 ta maydon.
+
+    2026-09-01, Jahongir: "ustozlar o'zlarini guruhlarini edit
+    qilishda guruh nomini o'zgartirish darajasini va vaqtini
+    o'zgartirish xonasini ozgartirish huquqi bolsin".
+
+    Ruxsat: nom, daraja, dars vaqti, xona. Boshqa hech nima —
+    narx, ustoz stavkasi, ustozning o'zi, filial, dars kunlari,
+    boshlanish sanasi — bu yerdan o'zgarmaydi (schemas.MyGroupEdit
+    ularni umuman qabul qilmaydi).
+
+    Guruh BOSHQA ustozniki bo'lsa 403. Support ustoz biriktirilgan
+    guruhini ham tahrirlay olmaydi — u guruhning egasi emas.
+
+    Vaqt yoki xona o'zgarsa jadval to'qnashuvi tekshiriladi.
+    Xona bandligi va ustozning ikki joyda bo'lishi "block" —
+    ustoz uni force bilan ham aylanib o'tolmaydi. Faqat
+    ogohlantirishlar (masalan darslar orasidagi bo'shliq)
+    tasdiqlansa o'tadi.
+
+    Har bir o'zgarish AUDITga yoziladi: rahbariyat kim guruh nomini
+    yoki vaqtini o'zgartirganini ko'rib turadi."""
+    t = _my_teacher_or_404(db, user)
+    group = db.query(models.Group).get(group_id)
+    if not group:
+        raise HTTPException(404, "Guruh topilmadi")
+    if group.teacher_id != t.id:
+        raise HTTPException(
+            403, "Bu guruh sizniki emas — faqat o'zingizning "
+                 "guruhingizni tahrirlay olasiz.")
+
+    fields = payload.model_dump(exclude_unset=True)
+    if not fields:
+        raise HTTPException(400, "O'zgartirish uchun hech nima "
+                                 "yuborilmadi")
+
+    # --- Nom ---------------------------------------------------------
+    if "name" in fields:
+        name = (fields["name"] or "").strip()
+        if not name:
+            raise HTTPException(400, "Guruh nomi bo'sh bo'lmasin")
+        if len(name) > 120:
+            raise HTTPException(400, "Guruh nomi juda uzun (120 belgi)")
+        fields["name"] = name
+
+    # --- Daraja ------------------------------------------------------
+    if "level" in fields:
+        lvl = (fields["level"] or "").strip() or None
+        if lvl and not roles.level_valid(group.subject, lvl):
+            raise HTTPException(
+                400, "Bu daraja guruhning faniga tegishli emas")
+        fields["level"] = lvl
+
+    # --- Dars vaqti --------------------------------------------------
+    if "lesson_time" in fields:
+        tm = (fields["lesson_time"] or "").strip() or None
+        if tm:
+            start, _end = _group_slot(
+                type("T", (), {"lesson_time": tm})())
+            if not start:
+                raise HTTPException(
+                    400, "Dars vaqti noto'g'ri. Namuna: 09:00")
+        fields["lesson_time"] = tm
+
+    # --- Xona --------------------------------------------------------
+    if "room_id" in fields and fields["room_id"]:
+        room = db.query(models.Room).get(fields["room_id"])
+        if not room:
+            raise HTTPException(400, "Bunday xona yo'q")
+        # Xona BOSHQA filialniki bo'lmasin — ustoz o'z filialidagi
+        # xonalardan tanlaydi.
+        if (room.branch_id and group.branch_id
+                and room.branch_id != group.branch_id):
+            raise HTTPException(
+                400, "Bu xona boshqa filialga tegishli")
+
+    # Vaqt yoki xona tegilsa — jadval to'qnashuvi
+    if "lesson_time" in fields or "room_id" in fields:
+        _raise_if_blocked(
+            _check_schedule(
+                db, group_id=group.id, teacher_id=group.teacher_id,
+                room_id=fields.get("room_id", group.room_id),
+                lesson_days=group.lesson_days,
+                lesson_time=fields.get("lesson_time", group.lesson_time)),
+            force=force)
+
+    audit.log_changes(db, user, entity="group", obj=group,
+                      changes=fields, label_attr="name",
+                      note="Ustoz o'z guruhini tahrirladi")
+    for k, v in fields.items():
+        setattr(group, k, v)
+    # Eski matnli "room" maydoni yangi xona bilan mos qolsin — aks
+    # holda ba'zi ro'yxatlarda eski xona nomi ko'rinib turadi.
+    if "room_id" in fields:
+        r = (db.query(models.Room).get(fields["room_id"])
+             if fields["room_id"] else None)
+        group.room = r.name if r else None
+    db.commit()
+    db.refresh(group)
+    rooms = {r.id: r.name for r in db.query(models.Room).all()}
+    return {
+        "ok": True,
+        "id": group.id,
+        "name": group.name,
+        "level": group.level,
+        "lesson_time": group.lesson_time,
+        "room_id": group.room_id,
+        "room": rooms.get(group.room_id) or group.room,
+    }
+
+
+@router.get("/api/me/groups/{group_id}/edit-options")
+def my_group_edit_options(group_id: int,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.SELF_STATS))):
+    """Tahrir oynasi uchun tayyor ro'yxatlar: guruh fanidagi
+    darajalar, dars vaqtlari va SHU FILIALdagi xonalar.
+
+    Ustozga /api/rooms ochiq bo'lsa ham, bu yerda ro'yxat guruhning
+    filialiga qarab kesiladi va bitta so'rovda keladi."""
+    t = _my_teacher_or_404(db, user)
+    group = db.query(models.Group).get(group_id)
+    if not group:
+        raise HTTPException(404, "Guruh topilmadi")
+    if group.teacher_id != t.id:
+        raise HTTPException(403, "Bu guruh sizniki emas")
+
+    rq = db.query(models.Room)
+    if group.branch_id:
+        rq = rq.filter(or_(models.Room.branch_id == group.branch_id,
+                           models.Room.branch_id.is_(None)))
+    rooms = [{"id": r.id, "name": r.name, "capacity": r.capacity}
+             for r in rq.order_by(models.Room.name).all()]
+    return {
+        "subject": group.subject,
+        "subject_label": roles.SUBJECT_LABELS.get(group.subject or "",
+                                                  group.subject),
+        "levels": [{"key": k, "label": lbl} for k, lbl
+                   in roles.SUBJECT_LEVELS.get(group.subject or "", [])],
+        "lesson_times": [
+            {"start": x, "label": roles.lesson_time_range(x)}
+            for x in roles.LESSON_START_TIMES],
+        "rooms": rooms,
+        "current": {
+            "name": group.name, "level": group.level,
+            "lesson_time": group.lesson_time, "room_id": group.room_id,
+        },
+        "hint": ("Faqat nom, daraja, dars vaqti va xona "
+                 "o'zgartiriladi. Narx, ustoz va filial rahbariyatda "
+                 "qoladi."),
+    }
+
+
 @router.get("/api/me/students")
 def my_students(group_id: int | None = None, q: str | None = None,
                 db: Session = Depends(get_db),

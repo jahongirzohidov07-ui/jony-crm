@@ -156,6 +156,19 @@ LEAD_ACCESS = FULL_ACCESS + [
 DASHBOARD_ONLY = [SMM_MANAGER]
 
 # Butun tashkilot bo'yicha ko'radigan rollar (filialga bog'lanmagan).
+# MASHQ (TEST) FILIALINI TANLAGICHDA KO'RADIGANLAR
+#
+# 2026-08-31, Jahongir: "test filial HR rahbariga ko'rinsin, u
+# ishlatib ko'radi tekshiradi".
+#
+# Asoschi hammasini ko'radi (u alohida tekshiriladi). HR rahbari
+# xodimlarni o'rgatadi va yangi bo'limlarni sinaydi — mashq
+# filiali unga kerak.
+#
+# Bu ro'yxat FAQAT ko'rinishga ta'sir qiladi. Test filialining
+# soxta raqamlari umumiy yig'indiga baribir qo'shilmaydi.
+TEST_BRANCH_VIEW = [HR_MANAGER]
+
 ORG_WIDE_ROLES = [
     FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, HR_MANAGER, SMM_MANAGER,
     ACADEMIC_HEAD, SALES_HEAD, HEAD_EXAMINER, HEAD_SUPPORT,

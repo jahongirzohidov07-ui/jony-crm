@@ -1005,10 +1005,27 @@ def hidden_branch_ids(db, user: models.User) -> list:
     bo'yicha emas. Sabab: xodim mashq uchun test filialiga
     vaqtinchalik biriktirilgan bo'lishi mumkin — bu uning kundalik
     hisobotiga soxta raqam qo'shishi kerak emas.
+
+    ISTISNO — HR RAHBARI (2026-08-31, Jahongir: "test filial HR
+    rahbariga ko'rinsin, u ishlatib ko'radi tekshiradi"). HR
+    xodimlarni o'rgatadi va yangi bo'limlarni sinab ko'radi —
+    mashq filiali unga ish quroli.
+
+    Hamkor markaz (Stech) esa unga BARIBIR yopiq: u boshqa
+    biznesning puli, o'rganishga aloqasi yo'q.
+
+    DIQQAT — YIG'INDIGA TA'SIR QILMAYDI. Bu ro'yxat faqat
+    TANLAGICH uchun. Test filialining soxta raqamlari "barcha
+    filiallar" yig'indisiga baribir qo'shilmaydi — u alohida
+    ro'yxat (aggregate_skip_ids) bilan boshqariladi va u
+    o'zgarmadi. Ya'ni HR test filialini ochib ko'ra oladi,
+    lekin uning raqami hech kimning hisobotini buzmaydi.
     """
     if getattr(user, "role", None) == roles.FOUNDER:
         return []
-    hide = set(partner_branch_ids(db)) | set(test_branch_ids(db))
+    hide = set(partner_branch_ids(db))
+    if getattr(user, "role", None) not in roles.TEST_BRANCH_VIEW:
+        hide |= set(test_branch_ids(db))
     return sorted(hide - _home_branches(db, user))
 
 

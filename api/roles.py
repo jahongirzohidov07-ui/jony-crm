@@ -1050,6 +1050,22 @@ REFUND_VIEW = list(dict.fromkeys(
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
 COIN_ADMIN = FULL_ACCESS
 
+# COIN BALANSINI TO'G'RILASH (qalamcha) — asoschi va FILIAL RAHBARI.
+#
+# 2026-09-01, Jahongir: "filial rahbarlari balansni tahrirlash huquqi
+# bormi yoq bolsa shu tahrirlash huquqi bolsin".
+#
+# PUL balansi filial rahbariga allaqachon ochiq edi (CASH_ACCESS —
+# yozuv qo'shish, PAYMENT_EDIT — summani tahrirlash). Yopiq bo'lgani
+# COIN balansi edi: u faqat asoschida turardi. Endi filial rahbari
+# ham to'g'rilaydi, lekin FAQAT O'Z FILIALI o'quvchisiga (server
+# tekshiradi).
+#
+# Bu ATAYLAB alohida ro'yxat: COIN_ADMIN = FULL_ACCESS bilan bir xil
+# obyekt bo'lgani uchun (entry.py unga HR menejerni qo'shadi), unga
+# tayanib qolsak, huquq bilmagan holda HR ga ham o'tib ketardi.
+COIN_BALANCE_EDIT = [FOUNDER, BRANCH_MANAGER]
+
 # ---- Adminlar (sotuv menejeri) KPI ------------------------------------
 # Admin ish haqi = fiks oylik + eski to'lovlarni yig'ish bonusi +
 # yangi mijoz bonusi. Ikkala bonus ham FILIAL ko'rsatkichi bo'yicha

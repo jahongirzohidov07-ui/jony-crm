@@ -22,7 +22,7 @@ import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
   REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can,
   HR_MANAGER,
-  FREEZE_ROLES,
+  FREEZE_ROLES, COIN_BALANCE_EDIT,
 } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
@@ -168,12 +168,17 @@ function ProfileCard({
           <Coins size={14} />
           <span className="font-semibold">{coins}</span>
           <span className="text-xs opacity-70">coin</span>
-          {/* COIN TAHRIRLASH — FAQAT ASOSCHI (2026-08-15, Jahongir:
-              "faqatgina asoschida coinlarni tahrirlaydigan funksiya
-              qoshib ber coin oldida bitta qalamcha bilan yetadi").
+          {/* COIN TAHRIRLASH — asoschi va FILIAL RAHBARI.
+              2026-08-15, Jahongir: "faqatgina asoschida coinlarni
+              tahrirlaydigan funksiya qoshib ber coin oldida bitta
+              qalamcha bilan yetadi".
+              2026-09-01, Jahongir: "filial rahbarlari balansni
+              tahrirlash huquqi bormi yoq bolsa shu tahrirlash huquqi
+              bolsin" — filial rahbari qo'shildi; server uni o'z
+              filiali o'quvchisi bilan cheklaydi.
               Eski yozuvlar o'chmaydi: farq tuzatish yozuvi bo'lib
               qo'shiladi, tarix va sabab saqlanadi. */}
-          {user?.role === FOUNDER && (
+          {can(user?.role, COIN_BALANCE_EDIT) && (
             <button
               onClick={async () => {
                 const v = prompt(
@@ -203,7 +208,7 @@ function ProfileCard({
                   alert(e instanceof Error ? e.message : "Xatolik");
                 }
               }}
-              title="Coin balansini to'g'rilash (faqat asoschi)"
+              title="Coin balansini to'g'rilash"
               className="ml-0.5 p-0.5 rounded hover:bg-amber-100"
             >
               <Pencil size={12} />

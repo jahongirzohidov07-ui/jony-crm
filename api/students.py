@@ -297,11 +297,16 @@ def set_coin_balance(
     student_id: int,
     payload: schemas.CoinSetIn,
     db: Session = Depends(get_db),
-    user=Depends(require_role(roles.FOUNDER)),
+    user=Depends(require_role(*roles.COIN_BALANCE_EDIT)),
 ):
-    """COIN BALANSINI TO'G'RILASH — FAQAT ASOSCHI (2026-08-15,
-    Jahongir: "faqatgina asoschida coinlarni tahrirlaydigan funksiya
-    qoshib ber coin oldida bitta qalamcha bilan yetadi").
+    """COIN BALANSINI TO'G'RILASH — asoschi va FILIAL RAHBARI.
+
+    2026-08-15, Jahongir: "faqatgina asoschida coinlarni
+    tahrirlaydigan funksiya qoshib ber coin oldida bitta qalamcha
+    bilan yetadi".
+    2026-09-01, Jahongir: "filial rahbarlari balansni tahrirlash
+    huquqi bormi yoq bolsa shu tahrirlash huquqi bolsin" — filial
+    rahbari ham qo'shildi, lekin FAQAT O'Z FILIALI o'quvchisiga.
 
     Eski yozuvlar O'CHIRILMAYDI. Balans yozuvlar yig'indisidan
     chiqadi, shuning uchun to'g'rilash FARQ yozuvi bo'lib qo'shiladi:
@@ -310,6 +315,10 @@ def set_coin_balance(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
+    # Filial rahbari o'z filialidan tashqariga chiqmaydi (pul
+    # tahririda ham xuddi shu qoida — finance.edit_payment).
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
     want = int(payload.balance)
     if want < 0:
         raise HTTPException(400, "Coin manfiy bo'lishi mumkin emas")
@@ -321,7 +330,8 @@ def set_coin_balance(
     reason = (payload.note or "").strip()
     entry = models.CoinEntry(
         student_id=student_id, amount=diff, source="admin_fix",
-        note=(f"Asoschi to'g'riladi: {now} -> {want}"
+        note=(f"{roles.UZ_LABELS.get(user.role, user.role)} "
+              f"to'g'riladi: {now} -> {want}"
               + (f". Sabab: {reason}" if reason else "")),
         created_by=user.full_name)
     db.add(entry)

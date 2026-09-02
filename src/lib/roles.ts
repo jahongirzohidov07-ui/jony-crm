@@ -139,6 +139,18 @@ export const USER_ADMIN = [FOUNDER];
 export const FINANCE_ACCESS = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT];
 
 /**
+ * Coin balansini to'g'rilash (o'quvchi kartasidagi qalamcha).
+ *
+ * 2026-09-01, Jahongir: "filial rahbarlari balansni tahrirlash
+ * huquqi bormi yoq bolsa shu tahrirlash huquqi bolsin".
+ *
+ * PUL balansi filial rahbariga allaqachon ochiq edi (CASH_ACCESS va
+ * PAYMENT_EDIT). Yopiq bo'lgani COIN balansi edi. Server filial
+ * rahbarini O'Z FILIALI o'quvchisi bilan cheklaydi.
+ */
+export const COIN_BALANCE_EDIT = [FOUNDER, BRANCH_MANAGER];
+
+/**
  * Kassa: pul qabul qilish, qarzdorlar, to'lov foizi.
  * Administrator shu ishni qiladi — lekin FOYDANI ko'rmaydi.
  */

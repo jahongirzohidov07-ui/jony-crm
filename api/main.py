@@ -1112,3 +1112,34 @@ try:
                       f"o'z kuniga qaytarildi")
 except Exception:
     pass
+
+
+# ---------------------------------------------------------------------------
+# KO'CHIRILGANDAN KEYIN ESKI GURUHDA QOLIB KETGANLAR (2026-09-03)
+#
+# Jahongir: "bir o'quvchini boshqa guruhga o'tkizish qilsa eski
+# guruhida qolyabdi ekan shunaqami unaqa bolsa togrlash kerak".
+#
+# move-group endpointida bog'lanish jadvalidan YANGI guruh yopilardi
+# (detach_group(db, s, g.id)) — eskisi esa faol qolib ketardi.
+# Ro'yxatlar in_group() orqali ikkala manbani ham o'qigani uchun
+# o'quvchi eski guruhda ham turaverardi. Endpoint tuzatildi, bu yerda
+# esa allaqachon shunday bo'lib qolganlar to'g'rilanadi.
+#
+# Faqat ANIQ holat tuzatiladi: group_id bor, lekin o'sha guruh uchun
+# faol bog'lanish yo'q, boshqa guruhga esa bor. Haqiqiy ikki guruhli
+# o'quvchilarga TEGILMAYDI.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS31
+    from common import _seed_done as _sd31, _seed_mark as _sm31
+    from students import fix_stale_group_links as _fix31
+    with _VS31(engine) as _db31:
+        if not _sd31(_db31, "stale_group_link_fix_v1"):
+            _n31 = _fix31(_db31)
+            _sm31(_db31, "stale_group_link_fix_v1")
+            if _n31:
+                print(f"[seed] {_n31} ta o'quvchining eski guruh "
+                      f"bog'lanishi yopildi")
+except Exception:
+    pass

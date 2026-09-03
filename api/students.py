@@ -1467,6 +1467,49 @@ def activate_student(
     db.commit()
     return {"ok": True, "status": s.status}
 
+def fix_stale_group_links(db: Session) -> int:
+    """KO'CHIRILGANDAN KEYIN ESKI GURUHDA QOLIB KETGANLARNI TUZATADI.
+
+    2026-09-03, Jahongir: "bir o'quvchini boshqa guruhga o'tkizish
+    qilsa eski guruhida qolyabdi ekan".
+
+    Buzuq yozuvning ANIQ BELGISI: o'quvchining group_id si bor,
+    lekin O'SHA guruh uchun faol bog'lanish YO'Q, ayni paytda
+    BOSHQA guruhga faol bog'lanishi bor. Bu faqat eski (xato)
+    ko'chirishdan keyin yuz beradi — chunki u paytda yangi guruh
+    uchun bog'lanish umuman ochilmasdi.
+
+    Haqiqiy ikki guruhli o'quvchida asosiy guruhning bog'lanishi
+    HAR DOIM bo'ladi, shuning uchun ular bu shartga tushmaydi va
+    ularga TEGILMAYDI.
+
+    Yozuv o'chirilmaydi: eski bog'lanish active=0 bo'ladi, yangisi
+    ochiladi. Tuzatilganlar sonini qaytaradi (idempotent)."""
+    n = 0
+    rows = (db.query(models.StudentGroupLink)
+            .filter(models.StudentGroupLink.active == 1).all())
+    by_student: dict = {}
+    for l in rows:
+        by_student.setdefault(l.student_id, []).append(l)
+    for sid, links in by_student.items():
+        s = db.query(models.Student).get(sid)
+        if not s or not s.group_id:
+            continue
+        if any(l.group_id == s.group_id for l in links):
+            continue          # asosiy guruh bog'langan — sog'lom
+        # group_id boshqa guruhni ko'rsatyapti, bog'lanish esa eskisida
+        for l in links:
+            detach_group(db, s, l.group_id)
+        link = attach_group(db, s, s.group_id)
+        if link is not None:
+            link.is_primary = 1
+
+        n += 1
+    if n:
+        db.commit()
+    return n
+
+
 @router.post("/api/students/{student_id}/move-group")
 def move_student_group(
     student_id: int,
@@ -1506,6 +1549,40 @@ def move_student_group(
     # Filial guruh bilan birga o'zgaradi - aks holda hisobotlar chalkashadi.
     if g.branch_id:
         s.branch_id = g.branch_id
+
+    # ------------------------------------------------------------------
+    # BOG'LANISH JADVALI (student_groups) — 2026-09-03 TUZATISH
+    #
+    # Jahongir: "bir o'quvchini boshqa guruhga o'tkizish qilsa eski
+    # guruhida qolyabdi ekan".
+    #
+    # Sabab: bu yerda pastda `detach_group(db, s, g.id)` turardi —
+    # ya'ni YANGI guruhning bog'lanishi yopilardi. ESKI guruhniki
+    # esa faol qolib ketardi. Ro'yxatlar in_group() orqali ikkala
+    # manbani ham o'qigani uchun o'quvchi ESKI guruhda ham,
+    # yangisida ham ko'rinaverardi.
+    #
+    # Tartib o'quvchi kartasidagi to'g'ri yo'l bilan bir xil
+    # (update_student): AVVAL yangisini qo'shamiz, KEYIN eskisini
+    # yopamiz. Teskarisi qilinsa detach_group() ichidagi
+    # sync_primary_group() group_id ni eski guruhga qaytarib
+    # yuborishi mumkin.
+    #
+    # Yozuv O'CHIRILMAYDI — eski bog'lanish active=0 bo'lib,
+    # chiqqan sanasi bilan tarixda qoladi.
+    # ------------------------------------------------------------------
+    link = attach_group(db, s, g.id, user)
+    if old_group is not None and old_group.id != g.id:
+        detach_group(db, s, old_group.id)
+    # Ko'chirilgan guruh ASOSIY bo'lsin (ko'p guruhli o'quvchida ham)
+    if link is not None:
+        for other in (db.query(models.StudentGroupLink)
+                      .filter(models.StudentGroupLink.student_id == s.id,
+                              models.StudentGroupLink.group_id != g.id)
+                      .all()):
+            other.is_primary = 0
+        link.is_primary = 1
+    s.group_id = g.id
     db.commit()
 
     # MOLIYA: oy o'rtasida ko'chsa, shu oyning hisobi ikkiga bo'linib
@@ -1519,12 +1596,6 @@ def move_student_group(
     except Exception:
         db.rollback()
 
-    # Bog'lanish jadvalidan ham yopamiz (2026-08-17)
-    try:
-        detach_group(db, s, g.id)
-        db.commit()
-    except Exception:
-        db.rollback()
     return {"ok": True, "group_id": g.id, "group": g.name,
             "recharge": recharge}
 

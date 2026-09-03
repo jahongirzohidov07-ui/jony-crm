@@ -99,6 +99,15 @@ export default function MyStudents() {
         </p>
       )}
 
+      {/* MUZLATILGANLAR (2026-09-03, Jahongir: "ustozlarga muzlatilgan
+          o'quvchilari korinsin faqat yoqlamasi chiqmasin") */}
+      {(d.frozen ?? 0) > 0 && (
+        <p className="text-sm rounded-lg px-3 py-2 mb-4 bg-sky-50 border border-sky-200 text-sky-800">
+          {d.frozen} ta o'quvchi muzlatilgan — ro'yxatda turadi, lekin
+          davomat jadvaliga tushmaydi va ularga yo'qlama qo'yilmaydi.
+        </p>
+      )}
+
       {msg && (
         <p className="text-sm rounded-lg px-3 py-2 mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800">
           {msg}
@@ -148,14 +157,37 @@ export default function MyStudents() {
             {rows.map((s) => (
               <tr
                 key={s.id}
-                className={s.at_risk ? "bg-amber-50/40" : undefined}
+                className={
+                  s.status === "frozen"
+                    ? "bg-sky-50/40"
+                    : s.at_risk
+                      ? "bg-amber-50/40"
+                      : undefined
+                }
               >
                 <td className="px-4 py-2.5">
-                  <p className="font-medium text-slate-900">{s.full_name}</p>
-                  {s.enrolled_date && (
-                    <p className="text-xs text-slate-400">
-                      {formatDate(s.enrolled_date)} dan
+                  <p className="font-medium text-slate-900 flex items-center gap-1.5">
+                    {s.full_name}
+                    {/* MUZLATILGAN (2026-09-03, Jahongir: "ustozlarga
+                        muzlatilgan o'quvchilari korinsin faqat
+                        yoqlamasi chiqmasin"). Ro'yxatda turadi,
+                        lekin davomat jadvaliga tushmaydi. */}
+                    {s.status === "frozen" && (
+                      <span className="text-[10px] uppercase tracking-wide bg-sky-50 text-sky-600 border border-sky-200 px-1.5 py-0.5 rounded">
+                        muzlatilgan
+                      </span>
+                    )}
+                  </p>
+                  {s.status === "frozen" ? (
+                    <p className="text-xs text-sky-600">
+                      Yo'qlamada chiqmaydi
                     </p>
+                  ) : (
+                    s.enrolled_date && (
+                      <p className="text-xs text-slate-400">
+                        {formatDate(s.enrolled_date)} dan
+                      </p>
+                    )
                   )}
                 </td>
                 <td className="px-3 py-2.5 text-slate-500">

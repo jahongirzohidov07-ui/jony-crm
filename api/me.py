@@ -1229,15 +1229,22 @@ def my_students(group_id: int | None = None, q: str | None = None,
 
     query = db.query(models.Student).filter(
         models.Student.group_id.in_(list(gid_map.keys()) or [-1]))
-    # MUZLATILGAN O'QUVCHI USTOZGA KO'RINMAYDI (2026-08-10, Jahongir:
-    # "muzlatilgan o'quvchilar o'qituvchilarga ko'rinmasin, yo'qlama
-    # baho qo'yib bo'lmasin"). Davomat jadvalida va yo'qlama
-    # ekranida ular allaqachon chiqmaydi — ro'yxatda esa hamon
-    # turardi va ustoz "nega belgilay olmayapman" deb chalkashardi.
-    # Rahbariyat (o'quv bo'limi, HR) ular ro'yxatini boshqa
-    # bo'limlarda ko'raveradi.
-    if user.role in (roles.TEACHER, roles.SUPPORT_TEACHER):
-        query = query.filter(models.Student.status != "frozen")
+    # MUZLATILGAN O'QUVCHI USTOZGA KO'RINADI (2026-09-03, Jahongir:
+    # "ustozlarga muzlatilgan o'quvchilari korinsin faqat yoqlamasi
+    # chiqmasin").
+    #
+    # 2026-08-10 da qoida boshqacha edi ("muzlatilgan o'quvchilar
+    # o'qituvchilarga ko'rinmasin") va ular ro'yxatdan butunlay
+    # olib tashlangan edi. Lekin shunda ustoz bolaning qayerga
+    # yo'qolganini bilmay qolardi. Endi ular RO'YXATDA turadi va
+    # "Muzlatilgan" deb belgilanadi — ustoz kimlar qaytishini
+    # ko'rib turadi.
+    #
+    # ASOSIY QOIDA O'ZGARMADI: yo'qlama — ish haqi hujjati, shuning
+    # uchun muzlatilgan o'quvchi DAVOMAT JADVALIGA umuman
+    # tushmaydi va unga yo'qlama ham, baho ham qo'yib bo'lmaydi
+    # (entry.py dagi "MUZLATILGAN O'QUVCHI YO'QLAMADA HECH KIMGA
+    # KO'RINMASIN" bloki — u yerga tegilmadi).
     if group_id:
         query = query.filter(models.Student.group_id == group_id)
     if q:
@@ -1329,13 +1336,16 @@ def my_students(group_id: int | None = None, q: str | None = None,
         "at_risk": sum(1 for r in rows if r["at_risk"]),
         "homework_low": sum(1 for r in rows if r["homework_low"]),
         "homework_threshold": roles.HOMEWORK_RISK_PERCENT,
+        # Muzlatilganlar soni — ekranda alohida eslatma chiqadi
+        "frozen": sum(1 for r in rows if r["status"] == "frozen"),
         "hint": _my_students_hint(),
     }
 
 def _my_students_hint() -> str:
     return ("Faqat sizning o'quvchilaringiz. To'lov va balans "
             "ko'rsatilmaydi — bu administrator va moliya bo'limining "
-            "ishi.")
+            "ishi. Muzlatilganlar ro'yxatda turadi, lekin davomat "
+            "jadvaliga tushmaydi — ularga yo'qlama qo'yilmaydi.")
 
 
 @router.post("/api/me/students/{student_id}/coin-deduct")

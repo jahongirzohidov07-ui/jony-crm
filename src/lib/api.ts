@@ -4535,6 +4535,8 @@ export interface MyStudentList {
   hint: string;
   homework_low?: number;
   homework_threshold?: number;
+  /** Muzlatilganlar soni — ro'yxatda turadi, yo'qlamaga chiqmaydi. */
+  frozen?: number;
 }
 
 export interface RescheduleQuota {

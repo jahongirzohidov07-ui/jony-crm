@@ -4,7 +4,6 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Download, Phone, Pencil } from "lucide-react";
 import { api, type Group, type GroupProgress, type Student } from "../lib/api";
-import { useAuth } from "../lib/AuthContext";
 import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -114,7 +113,6 @@ export function GroupSidebar({
   group: Group;
   onEdit?: () => void;
 }) {
-  const { user } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
@@ -136,20 +134,20 @@ export function GroupSidebar({
     }
   }
 
-  // Ustozga muzlatilgan o'quvchi ko'rinmasin — aks holda unga ham
-  // yo'qlama qo'yib yuborilishi mumkin, bu esa oylikka noto'g'ri
-  // ta'sir qiladi.
-  const isTeacher = user?.role === "teacher";
-
+  // MUZLATILGAN O'QUVCHI USTOZGA HAM KO'RINADI (2026-09-03,
+  // Jahongir: "ustozlarga muzlatilgan o'quvchilari korinsin faqat
+  // yoqlamasi chiqmasin").
+  //
+  // Ilgari bu yerda ustoz uchun muzlatilganlar ro'yxatdan
+  // filtrlanardi. Endi ular ko'k nuqta va "Muzlatilgan" belgisi
+  // bilan turadi — ustoz kim qaytishini biladi. Yo'qlamaga esa
+  // ular baribir tushmaydi: davomat jadvalini server beradi va
+  // muzlatilganlar u yerdan chiqarilgan.
   function load() {
     setLoading(true);
     api
       .get<Student[]>(`/students?group_id=${group.id}`)
-      .then((rows) =>
-        setStudents(
-          isTeacher ? rows.filter((s) => s.status !== "frozen") : rows
-        )
-      )
+      .then(setStudents)
       .finally(() => setLoading(false));
   }
 

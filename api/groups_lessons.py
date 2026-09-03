@@ -190,6 +190,69 @@ _CAP_MONTHS = {8: "end", 12: "end", 1: "start"}
 _AUTO_REST_SINCE = date(2026, 9, 1)
 
 
+def dam_kun_nomi(db: Session, d: date) -> str | None:
+    """Shu sana DAM KUNImi? Dam bo'lsa nomini qaytaradi.
+
+    Ikki manba: har yilgi qat'iy sanalar (_FIXED_DAM — 1-sentabr,
+    8-mart, 25-may) va qo'lda belgilangan dam kunlari (Holiday).
+    Qat'iy sanalar faqat yangi o'quv yilidan (_AUTO_REST_SINCE)
+    boshlab hisoblanadi — _auto_rest bilan bir xil qoida."""
+    if d >= _AUTO_REST_SINCE and (d.month, d.day) in _FIXED_DAM:
+        return _FIXED_DAM[(d.month, d.day)]
+    h = db.query(models.Holiday).filter(models.Holiday.date == d).first()
+    return h.name if h else None
+
+
+def fix_reschedules_onto_holidays(db: Session) -> int:
+    """DAM KUNIGA KO'CHIRILIB YO'QOLGAN DARSLARNI QAYTARADI.
+
+    2026-09-03, Jahongir: "negadur 5-kundan boshlanyabdi darslar
+    lekin 3-kundan boshlanishi kerak, balkim boshqa shunaqa holatlar
+    ham bordir".
+
+    Dars dam kuniga ko'chirilsa u yerda avtomat BEKOR bo'ladi, asl
+    kunida esa qaytadan yaratilmaydi (`vacated` qoidasi) — ya'ni
+    dars butunlay yo'qoladi. Bu funksiya shunday ko'chirishlarni
+    orqaga qaytaradi.
+
+    HECH NARSA O'CHIRILMAYDI: ko'chirish yozuvi "bekor qilindi"
+    bo'lib qoladi, sababi bilan. O'tilgan yoki yo'qlamasi bor
+    darsga umuman tegilmaydi — u ish haqi hujjati.
+
+    Qaytarilgan darslar sonini qaytaradi (idempotent: ikkinchi
+    chaqiruvda 0)."""
+    n = 0
+    for r in (db.query(models.LessonReschedule)
+              .filter(models.LessonReschedule.status.in_(
+                  roles.RESCHEDULE_DONE)).all()):
+        if not r.to_date or not r.from_date:
+            continue
+        if not dam_kun_nomi(db, r.to_date):
+            continue                      # maqsad kun dam emas
+        ls = (db.query(models.Lesson)
+              .filter(models.Lesson.group_id == r.group_id,
+                      models.Lesson.date == r.to_date).first())
+        if ls is not None and not ls.held:
+            marked = db.query(models.Attendance).filter(
+                models.Attendance.lesson_id == ls.id).count()
+            back = (db.query(models.Lesson)
+                    .filter(models.Lesson.group_id == r.group_id,
+                            models.Lesson.date == r.from_date).first())
+            if not marked and back is None:
+                ls.date = r.from_date
+                ls.cancelled = 0
+                ls.cancel_note = None
+                ls.note = (ls.note or "").replace(
+                    "\u00b7 ko'chirildi", "").strip() or None
+        r.status = "cancelled"
+        r.decision_note = ("Avtomat qaytarildi: maqsad kun dam kuni "
+                           "edi, dars yo'qolib qolgan edi")
+        n += 1
+    if n:
+        db.commit()
+    return n
+
+
 def _lesson_marked(db: Session, L: models.Lesson) -> bool:
     return bool(L.held) or (
         db.query(models.Attendance)
@@ -1529,6 +1592,39 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         raise HTTPException(400, "O'tib ketgan sanaga surib bo'lmaydi")
     if payload.to_date == payload.from_date:
         raise HTTPException(400, "Yangi sana eskisidan farq qilishi kerak")
+
+    # DAM KUNIGA KO'CHIRIB BO'LMAYDI (2026-09-03, Jahongir: "negadur
+    # 5-kundan boshlanyabdi darslar lekin 3-kundan boshlanishi kerak").
+    #
+    # "Best Kids" guruhida 3-sentabr darsi 1-sentabrga ko'chirilgan
+    # edi. 1-sentabr esa har yilgi qat'iy dam kuni — jadval o'zi
+    # sinxronlanganda o'sha dars avtomat BEKOR qilindi. Natijada
+    # dars ikki tomondan ham yo'qoldi: 3-sentabrda yo'q (u yerdan
+    # ko'chirilgan), 1-sentabrda ham yo'q (dam kuni). Guruh oyda 12
+    # o'rniga 11 dars bilan qolgan va buni hech kim sezmagan.
+    #
+    # Endi bunday ko'chirish saqlanmaydi — sabab aytiladi.
+    _dam = dam_kun_nomi(db, payload.to_date)
+    if _dam:
+        raise HTTPException(
+            400, f"{payload.to_date.strftime('%d.%m.%Y')} — dam kuni "
+                 f"({_dam}). Darsni dam kuniga ko'chirib bo'lmaydi: u "
+                 f"o'sha kuni avtomat bekor bo'ladi va dars butunlay "
+                 f"yo'qoladi. Boshqa kun tanlang.")
+
+    # Maqsad kunda ALLAQACHON bekor qilingan dars tursa ham xuddi
+    # shunday yo'qolish bo'ladi.
+    _dst = db.query(models.Lesson).filter(
+        models.Lesson.group_id == gid,
+        models.Lesson.date == payload.to_date,
+        models.Lesson.cancelled == 1).first()
+    if _dst:
+        raise HTTPException(
+            400, f"{payload.to_date.strftime('%d.%m.%Y')} kuni bu "
+                 f"guruhning darsi bekor qilingan"
+                 + (f" ({_dst.cancel_note})" if _dst.cancel_note else "")
+                 + ". Darsni u yerga ko'chirsangiz yo'qoladi — "
+                   "boshqa kun tanlang.")
     if not manager and payload.from_date < today:
         raise HTTPException(400, "O'tib ketgan darsni ko'chirib bo'lmaydi")
 

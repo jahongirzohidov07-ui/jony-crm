@@ -1078,3 +1078,37 @@ try:
             _sm18(_db18, "league_coin_rescale_fix_v2")
 except Exception:
     pass
+
+
+# ---------------------------------------------------------------------------
+# DAM KUNIGA KO'CHIRILIB YO'QOLGAN DARSLARNI QAYTARISH (2026-09-03)
+#
+# Jahongir: "negadur 5-kundan boshlanyabdi darslar lekin 3-kundan
+# boshlanishi kerak, balkim boshqa shunaqa holatlar ham bordir nega
+# unaqa boldi".
+#
+# "Best Kids" guruhida 3-sentabr darsi 1-sentabrga ko'chirilgan edi.
+# 1-sentabr esa har yilgi qat'iy dam kuni (_FIXED_DAM) — jadval
+# sinxronlanganda o'sha dars avtomat BEKOR bo'ldi. Natijada dars ikki
+# tomondan ham yo'qoldi: 3-sentabrda yo'q (u yerdan ko'chirilgan,
+# `vacated` qoidasi yangisini yaratmaydi), 1-sentabrda ham yo'q
+# (bekor). Guruh oyda 12 o'rniga 11 dars bilan qoldi.
+#
+# Bu yerda o'sha holat ORQAGA QAYTARILADI: dars o'z kuniga qaytadi,
+# ko'chirish yozuvi esa "bekor qilindi" bo'lib TURADI — o'chirilmaydi,
+# tarix va sabab saqlanadi. Kelgusida bunday ko'chirishning o'zi
+# taqiqlangan (groups_lessons.group_reschedule ichida tekshiruv bor).
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS30
+    from common import _seed_done as _sd30, _seed_mark as _sm30
+    from groups_lessons import fix_reschedules_onto_holidays as _fix30
+    with _VS30(engine) as _db30:
+        if not _sd30(_db30, "resched_onto_holiday_fix_v1"):
+            _n30 = _fix30(_db30)
+            _sm30(_db30, "resched_onto_holiday_fix_v1")
+            if _n30:
+                print(f"[seed] dam kuniga ko'chirilgan {_n30} ta dars "
+                      f"o'z kuniga qaytarildi")
+except Exception:
+    pass

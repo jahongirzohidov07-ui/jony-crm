@@ -2311,29 +2311,90 @@ if _orig_att_grid is not None:
 
 # =====================================================================
 #  ADMINISTRATOR ROLLARI BITTA BO'LDI
-#  "Administrator" va "Administrator (qabul)" amalda bir xil ish edi.
-#  Eski hisoblar sales_manager'ga ko'chiriladi, tanlov ro'yxatidan
-#  esa "qabul" varianti olib tashlanadi.
+#
+#  "Administrator" (sales_manager) va "Administrator (qabul)"
+#  (administrator) amalda bir xil ish edi, lekin huquqlari bir xil
+#  emasdi — masalan muzlatilgan o'quvchini faollashtirishni faqat
+#  birinchisi qila olardi. Ekranda esa ikkalasi ham "Administrator"
+#  bo'lib ko'rinardi va kim nima qila olishini hech kim bilmasdi.
+#
+#  2026-09-03, Jahongir: "unda shu 2ta administratorni bitta qil,
+#  sales managerga birlashtir, hozirgi bor xodimlar hammasi shu admin
+#  turiga o'tsin, kimdur administrator (qabul) turgan bo'lsa nargi
+#  turiga o'tsin".
+#
+#  Uch qism:
+#    1) TANLOVDAN OLIB TASHLASH — endi yangi xodimga bu rolni berib
+#       bo'lmaydi (ilgari faqat ALL_ROLES tozalangan edi, tanlov
+#       ro'yxatlarida esa qolib ketgan va ikkita bir xil
+#       "Administrator" ko'rinardi);
+#    2) MAVJUD XODIMLARNI KO'CHIRISH — asosiy rol ham, qo'shimcha
+#       rollar ham (dual-role);
+#    3) XAVFSIZLIK TO'RI — biror yozuv qolib ketsa ham huquqi
+#       sales_manager bilan AYNAN bir xil bo'ladi.
 # =====================================================================
 roles.UZ_LABELS[roles.ADMINISTRATOR] = "Administrator"
+
+# 1) Tanlov ro'yxatlaridan olib tashlaymiz.
+#    DIQQAT: STAFF_ROLES ga TEGILMAYDI — u tanlov ro'yxati emas,
+#    RUXSAT ro'yxati va roles.py da IDEA_SUBMIT hamda
+#    SALARY_SELF_VIEW aynan o'sha obyektga ishora qiladi. Uni
+#    o'zgartirsak, qolib ketgan administrator g'oya yubora olmay
+#    va o'z oyligini ko'ra olmay qolardi.
 roles.ALL_ROLES[:] = [r for r in roles.ALL_ROLES
                       if r != roles.ADMINISTRATOR]
+for _nm2 in ("STAFF_ASSIGNABLE_ROLES", "HR_ASSIGNABLE_ROLES",
+             "BRANCH_ASSIGNABLE_ROLES"):
+    _cur = getattr(roles, _nm2, None)
+    if isinstance(_cur, list) and roles.ADMINISTRATOR in _cur:
+        setattr(roles, _nm2,
+                [r for r in _cur if r != roles.ADMINISTRATOR])
 for _i, _grp in enumerate(roles.ROLE_GROUPS):
     if _grp[0] == "sales":
         roles.ROLE_GROUPS[_i] = (
             _grp[0], _grp[1],
             [r for r in _grp[2] if r != roles.ADMINISTRATOR])
 
+# 3) Qolib ketgan yozuv bo'lsa ham huquqi sales_manager bilan bir xil.
+#    Quyidagi ro'yxatlarda sales_manager bor edi, administrator esa
+#    yo'q — aynan shu farq "nega u qila olmayapti" degan savolni
+#    keltirib chiqargan edi.
+for _nm in ("ACADEMIC_VIEW", "FILL_ACCESS", "FREEZE_ROLES", "PLAN_VIEW",
+            "REFUND_REQUEST", "REFUND_VIEW"):
+    _v = getattr(roles, _nm, None)
+    if isinstance(_v, list) and roles.SALES_MANAGER in _v \
+            and roles.ADMINISTRATOR not in _v:
+        _v.append(roles.ADMINISTRATOR)
+
 
 def _merge_admin_roles() -> None:
-    """Bir martalik ko'chirish. Takror chaqirilsa hech narsa qilmaydi."""
+    """2) Mavjud xodimlarni ko'chirish. Idempotent — ikkinchi
+    chaqiruvda hech narsa qilmaydi.
+
+    Asosiy rol ham, qo'shimcha rollar (dual-role) ham ko'chiriladi.
+    Xodimda allaqachon sales_manager qo'shimcha roli bo'lsa, eski
+    administrator qatori DUBL bo'lib qolmasligi uchun olib
+    tashlanadi — huquqi o'sha-o'sha qoladi, hech narsa yo'qolmaydi."""
     db = _SessionLocal()
     try:
         n = (db.query(models.User)
              .filter(models.User.role == roles.ADMINISTRATOR)
              .update({models.User.role: roles.SALES_MANAGER},
                      synchronize_session=False))
-        if n:
+        m = 0
+        _UR = getattr(models, "UserRole", None)
+        if _UR is not None:
+            for _r in (db.query(_UR)
+                       .filter(_UR.role == roles.ADMINISTRATOR).all()):
+                _dup = (db.query(_UR)
+                        .filter(_UR.user_id == _r.user_id,
+                                _UR.role == roles.SALES_MANAGER).first())
+                if _dup is not None:
+                    db.delete(_r)
+                else:
+                    _r.role = roles.SALES_MANAGER
+                m += 1
+        if n or m:
             db.commit()
     except Exception:
         db.rollback()

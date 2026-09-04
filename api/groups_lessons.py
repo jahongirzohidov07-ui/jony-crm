@@ -684,6 +684,15 @@ def save_attendance(
             st.frozen_note = (f"{roles.AUTO_FREEZE_ABSENCES} darsga "
                               "ketma-ket kelmadi — avtomuzlatildi")
             _freeze_task(db, st, None, st.frozen_note)
+            # XABAR: ustozga ham, adminga ham (2026-09-03, Jahongir:
+            # "qaysidur o'quvchi avtomat muzlatilsa, o'qituvchiga
+            # xabar borsin, adminga ham xabar borsin"). Ilgari faqat
+            # administratorga jimgina vazifa tushardi va ustoz
+            # bolaning ro'yxatdan chiqib ketganini bilmasdi.
+            try:
+                auto_freeze_notify(db, st, lesson.group)
+            except Exception:
+                pass
             db.commit()
             audit.log(db, None, entity="student", action="auto_freeze",
                       entity_id=st.id, entity_label=st.full_name,

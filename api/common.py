@@ -5502,6 +5502,107 @@ def _founder_name_fix(db: Session):
         f.full_name = "Asoschi"
         db.commit()
 
+def auto_freeze_notify(db, st: models.Student, group=None) -> dict:
+    """AVTOMAT MUZLATILGANDA XABAR (2026-09-03).
+
+    Jahongir: "keyin qaysidur o'quvchi avtomat muzlatilsa,
+    o'qituvchiga xabar borsin, adminga ham xabar borsin".
+
+    Ilgari avtomuzlatishda faqat administratorga jimgina vazifa
+    tushardi. Ustoz esa umuman bilmasdi: bola ikki hafta
+    ko'rinmay qolsa ham, ro'yxatdan chiqib ketgani unga hech
+    qayerda aytilmasdi.
+
+    Endi ikkalasiga ham xabar boradi:
+      USTOZGA — o'z vazifalarida ko'rinadigan yozuv (guruh ustozi
+                va, bo'lsa, biriktirilgan support ustoz);
+      ADMINGA — o'sha filial administratoriga vazifa (bu qism
+                _freeze_task orqali avvaldan bor edi).
+    Telegram ulangan bo'lsa, ikkalasiga darrov xabar ham ketadi.
+
+    Xabar MATNI ataylab qisqa va aniq: kim, qaysi guruh, nechta
+    dars, va nima qilish kerak.
+
+    Hech narsa majburiy emas: Telegram ulanmagan bo'lsa ham,
+    ustozning akkaunti bo'lmasa ham amal to'xtamaydi — vazifa
+    baribir qo'yiladi."""
+    out = {"teacher_task": 0, "telegram": 0}
+    gname = getattr(group, "name", None) or "guruh"
+    day = roles.local_today()
+    title = (f"Avtomuzlatildi: {st.full_name} — "
+             f"{day.strftime('%d.%m.%Y')}")
+    body = (f"{st.full_name} ({gname}) ketma-ket "
+            f"{roles.AUTO_FREEZE_ABSENCES} darsga kelmadi va avtomat "
+            f"MUZLATILDI. O'sha darslarning yo'qlamasi bekor qilindi "
+            f"— ular oylikka kirmaydi.\n"
+            f"O'quvchi endi davomat jadvalida chiqmaydi. Ota-onasi "
+            f"bilan bog'lanib, sababini bilib bering — qaytadigan "
+            f"bo'lsa administrator uni qayta faollashtiradi.")
+
+    # --- USTOZ (va support ustoz) ---
+    uids = []
+    try:
+        tid = getattr(group, "teacher_id", None)
+        if tid:
+            t = db.query(models.Teacher).get(tid)
+            if t and t.user_id:
+                uids.append(t.user_id)
+        gid = getattr(group, "id", None)
+        _SA = getattr(models, "SupportAssignment", None)
+        if gid and _SA is not None:
+            for a in db.query(_SA).filter(_SA.group_id == gid).all():
+                sup_uid = getattr(a, "user_id", None)
+                if sup_uid and sup_uid not in uids:
+                    uids.append(sup_uid)
+    except Exception:
+        pass
+    # DIQQAT: _hr_task_for() sarlavha bo'yicha dubl tekshiradi —
+    # ustozga qo'yilgandan keyin supportga o'sha sarlavha bilan
+    # ikkinchisi qo'yilmasdi. Shuning uchun bu yerda dubl HAR BIR
+    # ODAM uchun alohida tekshiriladi: ikkalasi ham xabarni oladi,
+    # lekin bir odamga ikki marta tushmaydi.
+    for uid in uids:
+        try:
+            if db.query(models.Task).filter(
+                    models.Task.title == title,
+                    models.Task.assignee_id == uid).first():
+                continue
+            task = models.Task(
+                title=title, description=body, assignee_id=uid,
+                branch_id=st.branch_id,
+                deadline=day + timedelta(days=2),
+                priority="high", source="manual", created_by="Tizim")
+            db.add(task)
+            db.flush()
+            _ensure_public_id(db, "task", task)
+            out["teacher_task"] += 1
+        except Exception:
+            pass
+
+    # --- TELEGRAM (ustoz + shu filial administratori) ---
+    try:
+        import notify
+        if notify.enabled():
+            who = list(uids)
+            for u in (db.query(models.User)
+                      .filter(models.User.role.in_(
+                          [roles.ADMINISTRATOR, roles.SALES_MANAGER]),
+                          models.User.is_active == 1,
+                          models.User.branch_id == st.branch_id).all()):
+                if u.id not in who:
+                    who.append(u.id)
+            text_ = f"JONYOS — AVTOMUZLATISH\n\n{body}"
+            for u in (db.query(models.User)
+                      .filter(models.User.id.in_(who or [-1]),
+                              models.User.telegram_chat_id.isnot(None))
+                      .all()):
+                if notify.send(u.telegram_chat_id, text_):
+                    out["telegram"] += 1
+    except Exception:
+        pass
+    return out
+
+
 def _freeze_task(db, st: models.Student, until, note):
     days = max((until - roles.local_today()).days, 1) if until else 1
     body = (f"{st.full_name} muzlatildi."
@@ -5885,6 +5986,7 @@ __all__ = [
     "_founder_name_fix",
     "_fraud_alert",
     "_freeze_task",
+    "auto_freeze_notify",
     "_gam_card",
     "_in_user_branches",
     "_get_group_in_scope",

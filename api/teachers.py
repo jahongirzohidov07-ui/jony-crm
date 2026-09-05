@@ -273,6 +273,25 @@ def teacher_salary(
     card["can_pay"] = user.role in tuple(roles.SALARY_PAY)
     return card
 
+@router.get("/api/teachers/{teacher_id}/finance")
+def teacher_finance(
+    teacher_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SALARY_SELF_VIEW)),
+):
+    """Ustozning oylik TARIXI (oylar bo'yicha) — rahbar ustoz kartasidan
+    ko'radi, ustoz faqat o'zinikini (2026-09-05)."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    if user.role in (roles.TEACHER, roles.SUPPORT_TEACHER):
+        me = _teacher_of_user(db, user)
+        if not me or me.id != teacher_id:
+            raise HTTPException(403, "Faqat o'z oyligingizni ko'ra olasiz")
+    out = _finance_ledger(db, t)
+    out["can_pay"] = user.role in tuple(roles.SALARY_PAY)
+    return out
+
 @router.post("/api/teachers/{teacher_id}/payments")
 def pay_teacher(
     teacher_id: int,

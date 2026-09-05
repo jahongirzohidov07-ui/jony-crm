@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   BookMarked, CalendarDays, ChevronRight, ClipboardCheck, ClipboardList,
-  Layers, MessageSquareWarning, PieChart, Timer, TrendingUp, Trophy,
+  Layers, MessageSquareWarning, PieChart, Timer, TrendingUp, Trophy, Wallet,
   Users,
 } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
@@ -53,6 +53,8 @@ const SECTIONS = [
         hint: "Support seanslarini yozish", supportOnly: true },
       { to: "/teacher/salary", label: "Darslarim va oyligim", icon: Timer,
         hint: "Ishlab topganim va balans" },
+      { to: "/teacher/finance", label: "Moliya", icon: Wallet,
+        hint: "Oyliklar tarixi: oylar bo'yicha olgan va qoldiq" },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart,
         hint: "Guruhlaringiz o'zlashtirishi" },
       { to: "/my-career", label: "Karyera yo'lim", icon: TrendingUp,

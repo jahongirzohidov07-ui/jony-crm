@@ -25,6 +25,7 @@ const Groups = lazy(() => import("./pages/Groups"));
 const GroupDetail = lazy(() => import("./pages/GroupDetail"));
 const MyExams = lazy(() => import("./pages/MyExams"));
 const MySessions = lazy(() => import("./pages/MySessions"));
+const MyFinance = lazy(() => import("./pages/MyFinance"));
 const SupportSchedule = lazy(() => import("./pages/SupportSchedule"));
 const Plan = lazy(() => import("./pages/Plan"));
 const Teachers = lazy(() => import("./pages/Teachers"));
@@ -151,6 +152,7 @@ const StudentGrammarPlay = lazy(
 // jadval, barcha bo'limlar).
 const TeacherLayout = lazy(() => import("./pages/teacher/TeacherLayout"));
 const TeacherSalary = lazy(() => import("./pages/teacher/TeacherSalary"));
+const TeacherFinancePage = lazy(() => import("./pages/teacher/TeacherFinance"));
 const TeacherToday = lazy(() => import("./pages/teacher/TeacherToday"));
 const TeacherLesson = lazy(() => import("./pages/teacher/TeacherLesson"));
 const TeacherWeek = lazy(() => import("./pages/teacher/TeacherWeek"));
@@ -300,6 +302,7 @@ function AppRoutes() {
           <Route path="session" element={<TeacherSession />} />
           <Route path="vocab" element={<TeacherVocab />} />
           <Route path="salary" element={<TeacherSalary />} />
+          <Route path="finance" element={<TeacherFinancePage />} />
           <Route path="more" element={<TeacherMore />} />
           <Route path="profile" element={<TeacherProfile />} />
         </Route>
@@ -324,6 +327,7 @@ function AppRoutes() {
           <Route path="groups/:id" element={<GroupDetail />} />
           <Route path="my-exams" element={<MyExams />} />
           <Route path="my-sessions" element={<MySessions />} />
+          <Route path="my-finance" element={<MyFinance />} />
           <Route path="support-schedule" element={<SupportSchedule />} />
           <Route path="plan" element={<Plan />} />
           <Route path="teachers" element={<Teachers />} />

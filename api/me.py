@@ -105,6 +105,23 @@ def my_salary(
     card["can_pay"] = False
     return card
 
+@router.get("/api/my/finance")
+def my_finance(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SALARY_SELF_VIEW)),
+):
+    """Ustozning MOLIYA bo'limi: oylar bo'yicha oylik tarixi —
+    ishlab topgan, olgan, qoldiq, yig'ilib boruvchi balans
+    (2026-09-05, Jahongir: "oyliklar tarixi bo'lsin")."""
+    if _is_volunteer(db, user):
+        return {"volunteer": True, "hint": _VOLUNTEER_HINT}
+    t = _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(404, "Sizga bog'langan ustoz yozuvi topilmadi")
+    out = _finance_ledger(db, t)
+    out["can_pay"] = False
+    return out
+
 @router.get("/api/me/career")
 def my_career(
     db: Session = Depends(get_db),

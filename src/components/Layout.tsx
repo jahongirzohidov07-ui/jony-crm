@@ -369,6 +369,9 @@ export default function Layout() {
       { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
       { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck },
+      // MOLIYA (2026-09-05, Jahongir: "ustozlarda moliya bo'limi
+      // qo'shilib ... oyliklar tarixi bo'lsin") — oylar bo'yicha tarix
+      { to: "/my-finance", label: "Moliya", icon: Wallet },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
     items = TEACHER_MENU
@@ -384,6 +387,7 @@ export default function Layout() {
       { to: "/my-groups", label: "Guruhlarim", icon: Layers },
       { to: "/my-students", label: "O'quvchilarim", icon: AcademicIcon },
       { to: "/my-sessions", label: "Darslarim va oyligim", icon: Timer },
+      { to: "/my-finance", label: "Moliya", icon: Wallet },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
     ];
   }

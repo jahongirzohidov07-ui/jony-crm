@@ -2416,6 +2416,38 @@ export interface SalaryCard {
   can_pay: boolean;
 }
 
+/** Ustozning MOLIYA bo'limi — oylar bo'yicha oylik tarixi (2026-09-05). */
+export interface TeacherFinanceMonth {
+  period: string;            // "2026-08"
+  is_current: boolean;
+  lessons: number;
+  attendances: number;
+  earned: number;
+  paid: number;
+  paid_advance: number;
+  paid_salary: number;
+  paid_correction: number;
+  left: number;              // earned - paid (shu oy)
+  balance_after: number;     // shu oy oxiridagi yig'ilib boruvchi balans
+  by_group: SalaryGroupRow[];
+  payments: SalaryPaymentRow[];
+}
+
+export interface TeacherFinance {
+  teacher_id: number;
+  full_name: string;
+  branch?: string | null;
+  since: string;
+  month: string;
+  earned_total: number;
+  paid_total: number;
+  balance: number;
+  months: TeacherFinanceMonth[];
+  can_pay: boolean;
+  volunteer?: boolean;
+  hint?: string;
+}
+
 export interface PayrollRow {
   teacher_id: number;
   full_name: string;

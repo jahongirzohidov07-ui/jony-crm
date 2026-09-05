@@ -3197,6 +3197,110 @@ def _salary_card(db: Session, t: models.Teacher) -> dict:
         } for p in pays],
     }
 
+def _finance_ledger(db: Session, t: models.Teacher) -> dict:
+    """USTOZNING MOLIYA BO'LIMI — oylar bo'yicha oylik tarixi.
+
+    2026-09-05, Jahongir: "ustozlarda moliya bo'limi qo'shilib oldin
+    olgan oyliklari har oylik oyliklar o'sha yerga hisoblanib borsin
+    oyliklar tarixi bo'lsin".
+
+    Har oy uchun: yo'qlamadan ISHLAB TOPGAN (o'sha oyning darslari,
+    o'sha kundagi stavka bilan), OLGAN (avans/oylik/tuzatish — to'lov
+    sanasi bo'yicha), QOLDIQ (ishlab topgan - olgan) va shu oy
+    oxiridagi YIG'ILIB BORUVCHI BALANS. Ro'yxat ustoz birinchi dars
+    o'tgan yoki birinchi pul olgan oydan hozirgi oygacha, bo'sh oylar
+    ham ko'rinadi (0 bilan) — tarix uzilmasin.
+
+    Hisob _salary_card / oyliklar sahifasi bilan AYNAN bir manbadan
+    (_teacher_earned + TeacherPayment), shuning uchun raqamlar hamma
+    joyda bir xil. Hech narsa saqlanmaydi — har safar qayta
+    hisoblanadi, yo'qlama tuzatilsa tarix ham o'zi to'g'rilanadi."""
+    today = date.today()
+    ctx = billing.PayrollContext(db)
+    ctx.prefetch([t.id])
+    all_time = _teacher_earned(db, t.id, ctx=ctx)
+
+    pays = (db.query(models.TeacherPayment)
+            .filter(models.TeacherPayment.teacher_id == t.id)
+            .order_by(models.TeacherPayment.paid_on,
+                      models.TeacherPayment.id).all())
+
+    months = {p["period"] for p in all_time["by_period"]}
+    months |= {p.paid_on.isoformat()[:7] for p in pays if p.paid_on}
+    cur = today.isoformat()[:7]
+    if not months:
+        months = {cur}
+    first = min(months)
+    fy, fm = int(first[:4]), int(first[5:7])
+    seq = []
+    y, m = fy, fm
+    while (y, m) <= (today.year, today.month):
+        seq.append((y, m))
+        m += 1
+        if m > 12:
+            y, m = y + 1, 1
+    # Kelajakka yozilgan to'lov bo'lsa (oldindan berilgan) — u ham chiqsin
+    for per in sorted(months):
+        py, pm = int(per[:4]), int(per[5:7])
+        if (py, pm) > (today.year, today.month) and (py, pm) not in seq:
+            seq.append((py, pm))
+
+    pays_by_month: dict = {}
+    for p in pays:
+        if p.paid_on:
+            pays_by_month.setdefault(p.paid_on.isoformat()[:7], []).append(p)
+
+    rows = []
+    earned_cum = 0.0
+    paid_cum = 0.0
+    for (y, m) in seq:
+        per = f"{y:04d}-{m:02d}"
+        ms, me = billing.month_bounds(y, m)
+        e = _teacher_earned(db, t.id, since=ms, until=me, ctx=ctx)
+        plist = pays_by_month.get(per, [])
+        by_kind = {"advance": 0.0, "salary": 0.0, "correction": 0.0}
+        for p in plist:
+            by_kind[p.kind if p.kind in by_kind else "correction"] += \
+                (p.amount or 0)
+        paid = round(sum(p.amount or 0 for p in plist), 2)
+        earned_cum += e["amount"]
+        paid_cum += paid
+        rows.append({
+            "period": per,
+            "is_current": per == cur,
+            "lessons": e["lessons"],
+            "attendances": e["attendances"],
+            "earned": e["amount"],
+            "paid": paid,
+            "paid_advance": round(by_kind["advance"], 2),
+            "paid_salary": round(by_kind["salary"], 2),
+            "paid_correction": round(by_kind["correction"], 2),
+            "left": round(e["amount"] - paid, 2),
+            "balance_after": round(earned_cum - paid_cum, 2),
+            "by_group": e["by_group"],
+            "payments": [{
+                "id": p.id, "amount": p.amount, "kind": p.kind,
+                "kind_label": roles.TEACHER_PAYMENT_LABELS.get(p.kind, p.kind),
+                "date": p.paid_on.isoformat() if p.paid_on else None,
+                "period": p.period, "note": p.note, "by": p.created_by,
+            } for p in plist],
+        })
+    rows.reverse()          # eng yangi oy tepada
+
+    total_paid = round(sum(p.amount or 0 for p in pays), 2)
+    return {
+        "teacher_id": t.id,
+        "full_name": t.full_name,
+        "branch": t.branch.name if t.branch else None,
+        "since": f"{fy:04d}-{fm:02d}",
+        "month": cur,
+        "earned_total": all_time["amount"],
+        "paid_total": total_paid,
+        "balance": round(all_time["amount"] - total_paid, 2),
+        "months": rows,
+    }
+
+
 def _grade_row_out(g: models.TeacherGrade, counts: dict | None = None) -> dict:
     return {
         "key": g.key, "label": g.label, "order_no": g.order_no,
@@ -6146,6 +6250,7 @@ __all__ = [
     "_reschedule_usage",
     "_rule_cap_hit",
     "_salary_card",
+    "_finance_ledger",
     "_schema_bootstrap",
     "_seed_brand",
     "_seed_hr_structure",

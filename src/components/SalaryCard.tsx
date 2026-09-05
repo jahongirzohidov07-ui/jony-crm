@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { api, type SalaryCard as Card } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { TeacherFinance } from "./TeacherFinance";
 
 /**
  * Ustoz ish haqi kartasi.
@@ -24,6 +25,8 @@ export function SalaryCard({
   const [form, setForm] = useState(false);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
+  // OYLAR TARIXI (2026-09-05): shu oy / butun tarix o'rtasida almashish
+  const [hist, setHist] = useState(false);
 
   function load() {
     setLoading(true);
@@ -226,25 +229,55 @@ export function SalaryCard({
     </div>
   );
 
-  if (!onClose) return body;
+  const histToggle = (
+    <div className="flex gap-1 bg-slate-100 rounded-lg p-0.5">
+      {[
+        { k: false, l: "Shu oy" },
+        { k: true, l: "Oylar tarixi" },
+      ].map((o) => (
+        <button
+          key={String(o.k)}
+          onClick={() => setHist(o.k)}
+          className={`px-3 py-1 rounded-md text-xs font-medium transition ${
+            hist === o.k ? "bg-white shadow text-slate-900" : "text-slate-500"
+          }`}
+        >
+          {o.l}
+        </button>
+      ))}
+    </div>
+  );
+  const histBody = hist
+    ? <TeacherFinance teacherId={teacherId} self={self} />
+    : body;
+
+  if (!onClose) {
+    return (
+      <div className="space-y-4">
+        <div className="flex justify-end">{histToggle}</div>
+        {histBody}
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-start justify-center z-50 p-4 pt-12 overflow-y-auto">
       <div className="bg-white rounded-xl w-full max-w-3xl shadow-xl">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-          <div>
-            <h3 className="font-semibold text-slate-900">
+        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-slate-900 truncate">
               {c?.full_name ?? "Ish haqi"}
             </h3>
             <p className="text-xs text-slate-500">
               Yoqlamadan avtomat hisoblanadi
             </p>
           </div>
+          {histToggle}
           <button onClick={onClose} className="text-slate-400">
             <X size={18} />
           </button>
         </div>
-        <div className="p-5">{body}</div>
+        <div className="p-5">{histBody}</div>
       </div>
     </div>
   );

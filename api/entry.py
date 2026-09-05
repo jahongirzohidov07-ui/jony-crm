@@ -8784,3 +8784,472 @@ def pd_person(user_id: int, db: Session = Depends(get_db),
             "done": len([r for r in req if r["done"]]),
             "percent": (round(sum(r["percent"] for r in req) / len(req))
                         if req else 0)}
+
+# =====================================================================
+#  ADAPTIV INGLIZ TILI DIAGNOSTIKASI — LID UCHUN (_PT_*)
+#
+#  Odam markazga keladi yoki telefoniga havola olib, 50 savollik
+#  testni ishlaydi. Har savolga 30 soniya. Test ADAPTIV: to'g'ri
+#  javob — keyingi savol qiyinroq, xato — osonroq. Shu sababli 360
+#  savollik bankdan har kishiga o'z yo'li tushadi, variant "qaysi
+#  varaqni oldi"ga bog'liq emas.
+#
+#  Natija Empower (2nd ed.) tilida chiqadi: "B1, Unit 4 dan boshlang" —
+#  chunki markaz shu kitobdan o'tadi. Daraja lidga o'zi yoziladi.
+#
+#  Havola BIR MARTALIK: ochilgach 48 soat amal qiladi, tugagach yoki
+#  muddati o'tgach qayta ishlamaydi. Sessiya serverda yuritiladi —
+#  javoblar brauzerda emas, shuning uchun sahifani yangilash yoki
+#  "orqaga" bosish savolni qaytarmaydi.
+# =====================================================================
+import json as _pt_json          # noqa: E402
+import random as _pt_random      # noqa: E402
+import secrets as _pt_secrets    # noqa: E402
+from datetime import datetime as _pt_dt, timedelta as _pt_td  # noqa: E402
+
+from fastapi import Request as _pt_Request  # noqa: E402
+from sqlalchemy import Column as _ptC, Integer as _ptI, String as _ptS, \
+    Float as _ptF, DateTime as _ptDT, Text as _ptT  # noqa: E402
+
+from pt_bank import PT_BANK, PT_LEVELS, PT_UNITS  # noqa: E402
+
+_PT_N = 50                     # savollar soni
+_PT_SECS = 30                  # bir savolga soniya
+_PT_GRACE = 4                  # tarmoq kechikishi uchun qo'shimcha
+_PT_TTL_H = 48                 # havola amal qilish muddati
+_PT_START_D = 24               # boshlang'ich qiyinlik: B1 Unit 1
+_PT_MAX_D = len(PT_LEVELS) * 12 - 1
+_PT_BY_D = {}
+for _q in PT_BANK:
+    _PT_BY_D.setdefault(PT_LEVELS.index(_q["level"]) * 12 + _q["unit"] - 1,
+                        []).append(_q)
+_PT_BY_ID = {q["id"]: q for q in PT_BANK}
+_PT_ROLES = list(dict.fromkeys(list(roles.LEAD_ACCESS)))
+
+if getattr(models, "PlacementSession", None) is None:
+    class PlacementSession(_Base):
+        __tablename__ = "placement_sessions"
+        __table_args__ = {"extend_existing": True}
+
+        id = _ptC(_ptI, primary_key=True, index=True)
+        token = _ptC(_ptS, unique=True, index=True)
+        lead_id = _ptC(_ptI, index=True)
+        name = _ptC(_ptS)
+        phone = _ptC(_ptS)
+        mode = _ptC(_ptS, default="link")            # link | office
+        status = _ptC(_ptS, default="new", index=True)  # new|running|done|expired
+        branch_id = _ptC(_ptI)
+        created_by = _ptC(_ptS)
+        created_at = _ptC(_ptDT, default=_pt_dt.utcnow)
+        expires_at = _ptC(_ptDT)
+        started_at = _ptC(_ptDT)
+        finished_at = _ptC(_ptDT)
+        cur_d = _ptC(_ptI, default=_PT_START_D)
+        step = _ptC(_ptI, default=6)
+        cur_qid = _ptC(_ptI)
+        cur_sent_at = _ptC(_ptDT)
+        cur_shuffle = _ptC(_ptS)                       # "2,0,3,1"
+        asked = _ptC(_ptT, default="[]")               # [qid,...]
+        answers = _ptC(_ptT, default="[]")             # [{qid,d,ok,secs}]
+        level = _ptC(_ptS)
+        unit = _ptC(_ptI)
+        score = _ptC(_ptI, default=0)
+        ability = _ptC(_ptF)
+        per_level = _ptC(_ptT)
+
+    models.PlacementSession = PlacementSession
+    _Base.metadata.create_all(bind=_engine, tables=[PlacementSession.__table__])
+
+_PTS = models.PlacementSession
+
+
+# ---- Yordamchilar ---------------------------------------------------
+def _pt_now():
+    return _pt_dt.utcnow()
+
+
+def _pt_load(s):
+    try:
+        asked = _pt_json.loads(s.asked or "[]")
+    except ValueError:
+        asked = []
+    try:
+        answers = _pt_json.loads(s.answers or "[]")
+    except ValueError:
+        answers = []
+    return asked, answers
+
+
+def _pt_pick(d: int, asked: set, up: bool = True):
+    """d ga eng yaqin, hali berilmagan savol. Avval shu unit, keyin
+    qo'shni unitlar — yo'nalish bo'yicha (ko'tarilayotgan bo'lsa
+    avval yuqoriroq unit)."""
+    d = max(0, min(_PT_MAX_D, d))
+    for off in range(0, _PT_MAX_D + 1):
+        for cand in ((d + off, d - off) if up else (d - off, d + off)):
+            if cand < 0 or cand > _PT_MAX_D:
+                continue
+            pool = [q for q in _PT_BY_D.get(cand, []) if q["id"] not in asked]
+            if pool:
+                return _pt_random.choice(pool), cand
+    return None, d
+
+
+def _pt_next_d(d: int, ok: bool, step: int, answers: list):
+    """To'g'ri — yuqoriga, xato — pastga. Yo'nalish o'zgargan sari
+    qadam kichrayadi (6 → 4 → 3 → 2), lekin 2 dan tushmaydi."""
+    if len(answers) >= 2 and answers[-1]["ok"] != answers[-2]["ok"]:
+        step = max(2, step - 1 if step <= 4 else step - 2)
+    nd = d + step if ok else d - step
+    return max(0, min(_PT_MAX_D, nd)), step
+
+
+def _pt_serve(s, q):
+    """Savolni yuboradi: variantlar aralashtiriladi, to'g'risi
+    serverda qoladi."""
+    order = list(range(4))
+    _pt_random.shuffle(order)
+    s.cur_qid = q["id"]
+    s.cur_sent_at = _pt_now()
+    s.cur_shuffle = ",".join(str(x) for x in order)
+    asked, _ = _pt_load(s)
+    asked.append(q["id"])
+    s.asked = _pt_json.dumps(asked)
+    return {"qid": q["id"], "no": len(asked), "total": _PT_N,
+            "q": q["q"], "opts": [q["opts"][i] for i in order],
+            "secs": _PT_SECS}
+
+
+def _pt_finish(s):
+    """Yakuniy baho: oxirgi 20 savolning qiyinlik o'rtachasi (to'g'ri
+    javob berilgan qiyinlik yuqoriroq vazn oladi) → daraja va unit."""
+    _, answers = _pt_load(s)
+    tail = answers[-20:] if len(answers) > 20 else answers
+    if not tail:
+        ability = 0.0
+    elif all(a["ok"] for a in tail):
+        # shift: hammasi to'g'ri — eng yuqori yetgan nuqtadan ham yuqori
+        ability = max(a["d"] for a in answers if a["ok"]) + 1
+    elif not any(a["ok"] for a in tail):
+        ability = min(a["d"] for a in answers if not a["ok"]) - 1
+    else:
+        # to'g'ri javob — shu nuqtadan biroz yuqori, xato — biroz past
+        vals = [a["d"] + 2 if a["ok"] else a["d"] - 2 for a in tail]
+        ability = sum(vals) / len(vals)
+    ability = max(0.0, min(float(_PT_MAX_D), ability))
+    li = int(ability // 12)
+    unit = int(round(ability - li * 12)) + 1
+    if unit > 12:
+        unit = 12
+    per = {}
+    for a in answers:
+        lv = PT_LEVELS[int(a["d"] // 12)]
+        p = per.setdefault(lv, {"ok": 0, "n": 0})
+        p["n"] += 1
+        p["ok"] += 1 if a["ok"] else 0
+    s.level = PT_LEVELS[li]
+    s.unit = unit
+    s.ability = round(ability, 2)
+    s.score = sum(1 for a in answers if a["ok"])
+    s.per_level = _pt_json.dumps(per)
+    s.status = "done"
+    s.finished_at = _pt_now()
+    s.cur_qid = None
+
+
+def _pt_result(s) -> dict:
+    try:
+        per = _pt_json.loads(s.per_level or "{}")
+    except ValueError:
+        per = {}
+    lv = s.level or "A1"
+    unit = int(s.unit or 1)
+    topic = PT_UNITS.get(lv, [""] * 12)[unit - 1] if 1 <= unit <= 12 else ""
+    # Tavsiya: unit 1-2 bo'lsa kitob boshidan; 11-12 bo'lsa keyingi
+    # daraja boshidan ham o'ylab ko'rish mumkin
+    nxt = None
+    if unit >= 11 and PT_LEVELS.index(lv) < len(PT_LEVELS) - 1:
+        nxt = PT_LEVELS[PT_LEVELS.index(lv) + 1]
+    return {
+        "level": lv, "unit": unit, "topic": topic,
+        "score": int(s.score or 0), "total": _PT_N, "ability": s.ability,
+        "per_level": [{"level": k, "ok": v["ok"], "n": v["n"],
+                       "pct": round(v["ok"] * 100 / v["n"]) if v["n"] else 0}
+                      for k, v in per.items()],
+        "book": f"Empower {lv}",
+        "advice": (f"Empower {lv}, Unit {unit} dan boshlash tavsiya etiladi"
+                   + (f" (yoki Empower {nxt} boshidan)." if nxt else ".")),
+        "note": ("Bu test grammatika va so'z boyligini o'lchaydi. Speaking "
+                 "va Writing sinov darsda tekshiriladi."),
+    }
+
+
+def _pt_out(s, db=None) -> dict:
+    d = {"id": s.id, "token": s.token, "lead_id": s.lead_id, "name": s.name,
+         "phone": s.phone, "mode": s.mode, "status": s.status,
+         "created_by": s.created_by,
+         "created_at": s.created_at.isoformat() if s.created_at else None,
+         "expires_at": s.expires_at.isoformat() if s.expires_at else None,
+         "finished_at": s.finished_at.isoformat() if s.finished_at else None,
+         "answered": len(_pt_load(s)[1])}
+    if s.status == "done":
+        d["result"] = _pt_result(s)
+    return d
+
+
+def _pt_base_url(request) -> str:
+    host = (request.headers.get("x-forwarded-host")
+            or request.headers.get("host") or "jony-crm.vercel.app")
+    proto = request.headers.get("x-forwarded-proto") or "https"
+    return f"{proto}://{host}"
+
+
+def _pt_expire_if_needed(s) -> bool:
+    if s.status in ("new", "running") and s.expires_at and s.expires_at < _pt_now():
+        s.status = "expired"
+        return True
+    return False
+
+
+# ---- Xodim: sessiya ochish, ro'yxat ---------------------------------
+@app.post("/api/placement/sessions")
+def pt_create(request: _pt_Request, payload: dict = Body(...),
+              db: Session = Depends(get_db),
+              user=Depends(require_role(*_PT_ROLES))):
+    """Lid uchun test: office (shu yerda ishlaydi) yoki link (telefonga)."""
+    lead = None
+    lid = payload.get("lead_id")
+    if lid:
+        lead = db.query(models.Lead).get(int(lid))
+        if lead is None:
+            raise HTTPException(404, "Lid topilmadi")
+    name = str(payload.get("name") or (lead.full_name if lead else "")).strip()
+    phone = str(payload.get("phone") or (lead.phone if lead else "") or "").strip()
+    if not name:
+        raise HTTPException(400, "Ism kiriting")
+    mode = "office" if str(payload.get("mode") or "link") == "office" else "link"
+    # Bitta lidga ochiq sessiya bo'lsa — o'shani qaytaramiz
+    if lead is not None:
+        old = (db.query(_PTS).filter(_PTS.lead_id == lead.id,
+                                     _PTS.status.in_(("new", "running"))).first())
+        if old is not None and not _pt_expire_if_needed(old):
+            base = _pt_base_url(request)
+            return {"ok": True, "session": _pt_out(old),
+                    "url": f"{base}/placement.html?t={old.token}", "reused": True}
+    s = _PTS(token=_pt_secrets.token_urlsafe(18), lead_id=lead.id if lead else None,
+             name=name[:120], phone=phone[:40] or None, mode=mode,
+             branch_id=getattr(user, "branch_id", None),
+             created_by=getattr(user, "full_name", None) or user.username,
+             expires_at=_pt_now() + _pt_td(hours=_PT_TTL_H))
+    db.add(s)
+    db.commit()
+    db.refresh(s)
+    audit.log(db, user, entity="placement", action="create", entity_id=s.id,
+              entity_label=name, new_value=mode, commit=True)
+    base = _pt_base_url(request)
+    return {"ok": True, "session": _pt_out(s),
+            "url": f"{base}/placement.html?t={s.token}", "reused": False}
+
+
+@app.get("/api/placement/sessions")
+def pt_list(limit: int = 50, lead_id: int | None = None,
+            db: Session = Depends(get_db),
+            user=Depends(require_role(*_PT_ROLES))):
+    q = db.query(_PTS)
+    if lead_id:
+        q = q.filter(_PTS.lead_id == int(lead_id))
+    rows = q.order_by(_PTS.id.desc()).limit(max(1, min(300, int(limit)))).all()
+    changed = False
+    for s in rows:
+        changed = _pt_expire_if_needed(s) or changed
+    if changed:
+        db.commit()
+    return {"rows": [_pt_out(s) for s in rows],
+            "levels": PT_LEVELS, "n": _PT_N, "secs": _PT_SECS}
+
+
+@app.get("/api/placement/sessions/{sid}")
+def pt_get(sid: int, db: Session = Depends(get_db),
+           user=Depends(require_role(*_PT_ROLES))):
+    s = db.query(_PTS).get(sid)
+    if s is None:
+        raise HTTPException(404, "Sessiya topilmadi")
+    d = _pt_out(s)
+    _, answers = _pt_load(s)
+    d["answers"] = [{**a, "level": PT_LEVELS[int(a["d"] // 12)],
+                     "unit": int(a["d"] % 12) + 1,
+                     "q": _PT_BY_ID.get(a["qid"], {}).get("q")} for a in answers]
+    return d
+
+
+@app.delete("/api/placement/sessions/{sid}")
+def pt_delete(sid: int, db: Session = Depends(get_db),
+              user=Depends(require_role(*_PT_ROLES))):
+    s = db.query(_PTS).get(sid)
+    if s is None:
+        raise HTTPException(404, "Sessiya topilmadi")
+    db.delete(s)
+    db.commit()
+    return {"ok": True}
+
+
+# ---- Ochiq (loginsiz): test o'zi ------------------------------------
+def _pt_public(db, token: str):
+    s = db.query(_PTS).filter(_PTS.token == token).first()
+    if s is None:
+        raise HTTPException(404, "Havola noto'g'ri yoki o'chirilgan")
+    if _pt_expire_if_needed(s):
+        db.commit()
+    return s
+
+
+@app.get("/api/public/placement/{token}")
+def pt_state(token: str, db: Session = Depends(get_db)):
+    s = _pt_public(db, token)
+    out = {"name": s.name, "status": s.status, "n": _PT_N, "secs": _PT_SECS,
+           "answered": len(_pt_load(s)[1])}
+    if s.status == "done":
+        out["result"] = _pt_result(s)
+    elif s.status == "running" and s.cur_qid:
+        q = _PT_BY_ID[s.cur_qid]
+        order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
+        left = _PT_SECS
+        if s.cur_sent_at:
+            left = max(0, _PT_SECS - int((_pt_now() - s.cur_sent_at).total_seconds()))
+        out["question"] = {"qid": q["id"], "no": len(_pt_load(s)[0]),
+                           "total": _PT_N, "q": q["q"],
+                           "opts": [q["opts"][i] for i in order], "secs": left}
+    return out
+
+
+@app.post("/api/public/placement/{token}/start")
+def pt_start(token: str, payload: dict = Body(default={}),
+             db: Session = Depends(get_db)):
+    s = _pt_public(db, token)
+    if s.status == "expired":
+        raise HTTPException(410, "Havola muddati tugagan")
+    if s.status == "done":
+        raise HTTPException(409, "Test allaqachon yakunlangan")
+    if s.status == "running" and s.cur_qid:
+        return pt_state(token, db)
+    if payload.get("name") and not s.name:
+        s.name = str(payload["name"]).strip()[:120]
+    s.status = "running"
+    s.started_at = s.started_at or _pt_now()
+    s.expires_at = _pt_now() + _pt_td(hours=_PT_TTL_H)
+    q, d = _pt_pick(s.cur_d or _PT_START_D, set())
+    s.cur_d = d
+    qd = _pt_serve(s, q)
+    db.commit()
+    return {"status": "running", "name": s.name, "question": qd}
+
+
+@app.post("/api/public/placement/{token}/answer")
+def pt_answer(token: str, payload: dict = Body(...),
+              db: Session = Depends(get_db)):
+    s = _pt_public(db, token)
+    if s.status != "running" or not s.cur_qid:
+        raise HTTPException(409, "Faol savol yo'q")
+    try:
+        qid = int(payload.get("qid") or 0)
+    except (TypeError, ValueError):
+        qid = 0
+    if qid != s.cur_qid:
+        # eski savolga javob — hozirgi savolni qaytaramiz
+        return pt_state(token, db)
+    q = _PT_BY_ID[qid]
+    order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
+    choice = payload.get("choice")
+    secs = int((_pt_now() - s.cur_sent_at).total_seconds()) if s.cur_sent_at else 0
+    timed_out = secs > _PT_SECS + _PT_GRACE or choice is None
+    ok = False
+    if not timed_out:
+        try:
+            ok = order[int(choice)] == q["a"]
+        except (TypeError, ValueError, IndexError):
+            ok = False
+    asked, answers = _pt_load(s)
+    answers.append({"qid": qid, "d": int(s.cur_d or 0), "ok": bool(ok),
+                    "secs": min(secs, _PT_SECS + _PT_GRACE),
+                    "t": bool(timed_out)})
+    s.answers = _pt_json.dumps(answers)
+    nd, step = _pt_next_d(int(s.cur_d or 0), ok, int(s.step or 6), answers)
+    s.step = step
+    if len(answers) >= _PT_N:
+        _pt_finish(s)
+        _pt_apply_to_lead(db, s)
+        db.commit()
+        return {"status": "done", "result": _pt_result(s)}
+    nq, d = _pt_pick(nd, set(asked), up=ok)
+    if nq is None:
+        _pt_finish(s)
+        _pt_apply_to_lead(db, s)
+        db.commit()
+        return {"status": "done", "result": _pt_result(s)}
+    s.cur_d = d
+    qd = _pt_serve(s, nq)
+    db.commit()
+    return {"status": "running", "question": qd, "last_ok": ok}
+
+
+def _pt_apply_to_lead(db, s) -> None:
+    """Natija lidga: darajasi izohga yoziladi (ustun bo'lmasa ham
+    yo'qolmaydi) va lid ro'yxatida 'placement' bo'lib chiqadi."""
+    if not s.lead_id:
+        return
+    lead = db.query(models.Lead).get(s.lead_id)
+    if lead is None:
+        return
+    r = _pt_result(s)
+    tag = f"[Diagnostika] {r['level']}, Unit {r['unit']} — {r['score']}/{r['total']}"
+    note = lead.note or ""
+    if "[Diagnostika]" in note:
+        lines = [ln for ln in note.split("\n") if "[Diagnostika]" not in ln]
+        note = "\n".join(lines).strip()
+    lead.note = (tag + ("\n" + note if note else ""))[:2000]
+    try:
+        if hasattr(lead, "level"):
+            lead.level = r["level"]
+    except Exception:
+        pass
+
+
+# ---- Lid ro'yxatida daraja ------------------------------------------
+_pt_leads_v1 = _find_endpoint("/api/leads", "GET")
+if _pt_leads_v1 is not None:
+    _drop_route("/api/leads", "GET")
+
+    @app.get("/api/leads")
+    def list_leads_pt(stage: str | None = None, branch_id: int | None = None,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(*roles.LEAD_ACCESS))):
+        rows = _pt_leads_v1(stage=stage, branch_id=branch_id, db=db, user=user)
+        out = []
+        for x in rows or []:
+            if isinstance(x, dict):
+                out.append(dict(x))
+            elif hasattr(x, "model_dump"):
+                out.append(x.model_dump())
+            else:
+                try:
+                    out.append(schemas.LeadOut.model_validate(x).model_dump())
+                except Exception:
+                    out.append({"id": getattr(x, "id", None),
+                                "full_name": getattr(x, "full_name", None)})
+        ids = [r.get("id") for r in out if r.get("id")]
+        if ids:
+            done = {}
+            for s in (db.query(_PTS).filter(_PTS.lead_id.in_(ids),
+                                            _PTS.status == "done")
+                      .order_by(_PTS.id.asc()).all()):
+                done[s.lead_id] = _pt_result(s) | {"session_id": s.id,
+                                                   "date": (s.finished_at or s.created_at).date().isoformat()}
+            open_ = {}
+            for s in (db.query(_PTS).filter(_PTS.lead_id.in_(ids),
+                                            _PTS.status.in_(("new", "running"))).all()):
+                open_[s.lead_id] = {"session_id": s.id, "status": s.status,
+                                    "token": s.token}
+            for r in out:
+                r["placement"] = done.get(r.get("id"))
+                r["placement_open"] = open_.get(r.get("id"))
+        return out

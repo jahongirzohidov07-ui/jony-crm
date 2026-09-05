@@ -1,0 +1,252 @@
+import { useEffect, useState } from "react";
+import { X, Copy, Send, Play, Link as LinkIcon, GraduationCap, Trash2 } from "lucide-react";
+import { api } from "../lib/api";
+
+// Ingliz tili diagnostik testi — Lidlar sahifasining tepasida.
+// Lid tanlanadi → "Shu yerda" (test shu qurilmada ochiladi) yoki
+// "Havola" (telefoniga bir martalik havola). Natija lidga o'zi tushadi:
+// daraja + Empower kitobi va uniti.
+
+type Any = any;
+const inp = "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm";
+
+export function PlacementBadge({ lead }: { lead: Any }) {
+  const p = lead?.placement;
+  const o = lead?.placement_open;
+  if (p) {
+    return (
+      <span title={`${p.book} · Unit ${p.unit} · ${p.score}/${p.total} · ${p.date}`}
+            className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 rounded px-1.5 py-0.5 text-[11px] font-semibold">
+        <GraduationCap size={11} /> {p.level} · U{p.unit}
+      </span>
+    );
+  }
+  if (o) {
+    return (
+      <span className="inline-block bg-amber-50 text-amber-700 rounded px-1.5 py-0.5 text-[11px]">
+        {o.status === "running" ? "test ishlanmoqda" : "havola yuborilgan"}
+      </span>
+    );
+  }
+  return null;
+}
+
+export default function PlacementBar({ leads, onChanged }: {
+  leads: Any[]; onChanged: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [rows, setRows] = useState<Any[]>([]);
+  const [showAll, setShowAll] = useState(false);
+
+  function loadRows() {
+    api.get<Any>("/placement/sessions?limit=12").then((r) => setRows(r.rows || [])).catch(() => {});
+  }
+  useEffect(() => { loadRows(); }, []);
+
+  const done = rows.filter((r) => r.status === "done");
+  const live = rows.filter((r) => r.status === "running" || r.status === "new");
+
+  return (
+    <div className="mb-5 rounded-xl border border-indigo-100 bg-indigo-50/50 p-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2 text-sm font-medium text-indigo-900">
+          <GraduationCap size={16} /> Ingliz tili diagnostikasi
+          <span className="text-xs font-normal text-indigo-700/70">50 savol · 30 s · adaptiv · Empower A1–C1</span>
+        </div>
+        <button onClick={() => setOpen(true)}
+                className="ml-auto flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-700">
+          <Play size={14} /> Test boshlash
+        </button>
+        <button onClick={() => { setShowAll((v) => !v); loadRows(); }}
+                className="rounded-lg border border-indigo-200 bg-white px-3 py-1.5 text-sm text-indigo-800">
+          Natijalar {done.length > 0 && `(${done.length})`}
+        </button>
+      </div>
+      {live.length > 0 && (
+        <p className="mt-2 text-xs text-amber-700">
+          Kutilmoqda: {live.map((r) => r.name + (r.status === "running" ? ` (${r.answered}/50)` : "")).join(", ")}
+        </p>
+      )}
+      {showAll && (
+        <div className="mt-3 rounded-lg border border-slate-200 bg-white">
+          {rows.length === 0 && <p className="p-3 text-xs text-slate-400">Hali test ishlanmagan</p>}
+          {rows.map((r) => (
+            <ResultRow key={r.id} r={r} onDelete={() => {
+              if (!confirm(`${r.name} — test yozuvini o'chirasizmi?`)) return;
+              api.delete(`/placement/sessions/${r.id}`).then(() => { loadRows(); onChanged(); }).catch(() => {});
+            }} />
+          ))}
+        </div>
+      )}
+      {open && (
+        <StartModal leads={leads} onClose={() => setOpen(false)}
+                    onDone={() => { loadRows(); onChanged(); }} />
+      )}
+    </div>
+  );
+}
+
+function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
+  const [more, setMore] = useState(false);
+  const res = r.result;
+  const st: Record<string, string> = {
+    done: "bg-emerald-50 text-emerald-700", running: "bg-amber-50 text-amber-700",
+    new: "bg-slate-100 text-slate-600", expired: "bg-red-50 text-red-600" };
+  const stL: Record<string, string> = { done: "Tugadi", running: "Ishlanmoqda", new: "Havola yuborildi", expired: "Muddati o'tdi" };
+  return (
+    <div className="border-b border-slate-100 last:border-0 px-3 py-2 text-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="font-medium text-slate-800">{r.name}</span>
+        <span className="text-xs text-slate-400">{r.phone}</span>
+        <span className={`rounded px-1.5 py-0.5 text-[11px] ${st[r.status] || ""}`}>{stL[r.status] || r.status}</span>
+        {res && (
+          <button onClick={() => setMore((v) => !v)}
+                  className="ml-auto rounded bg-indigo-50 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+            {res.level} · Empower {res.level} U{res.unit} · {res.score}/{res.total}
+          </button>
+        )}
+        {!res && <span className="ml-auto text-xs text-slate-400">{r.mode === "office" ? "shu yerda" : "havola"} · {r.created_by}</span>}
+        <button onClick={onDelete} className="text-slate-300 hover:text-red-500"><Trash2 size={13} /></button>
+      </div>
+      {more && res && (
+        <div className="mt-2 rounded-lg bg-slate-50 p-2 text-xs text-slate-700">
+          <p className="font-medium">{res.advice}</p>
+          <p className="text-slate-500">Unit mavzusi: {res.topic}</p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {(res.per_level || []).map((x: Any) => (
+              <span key={x.level} className="rounded bg-white border border-slate-200 px-1.5 py-0.5">
+                {x.level}: {x.ok}/{x.n} ({x.pct}%)
+              </span>
+            ))}
+          </div>
+          <p className="mt-1 text-slate-400">{res.note} · {r.finished_at?.slice(0, 16).replace("T", " ")}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StartModal({ leads, onClose, onDone }: {
+  leads: Any[]; onClose: () => void; onDone: () => void;
+}) {
+  const [q, setQ] = useState("");
+  const [lead, setLead] = useState<Any>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [link, setLink] = useState<Any>(null);
+  const [copied, setCopied] = useState(false);
+
+  const hits = q.trim().length >= 2
+    ? leads.filter((l) => (l.full_name || "").toLowerCase().includes(q.trim().toLowerCase())
+        || (l.phone || "").includes(q.trim())).slice(0, 8)
+    : [];
+
+  async function create(mode: "office" | "link") {
+    if (!lead) { setErr("Avval lidni tanlang"); return; }
+    setBusy(true); setErr("");
+    try {
+      const r = await api.post<Any>("/placement/sessions", { lead_id: lead.id, mode });
+      if (mode === "office") {
+        window.open(r.url, "_blank", "noopener");
+        onDone();
+        onClose();
+      } else {
+        setLink(r);
+        onDone();
+      }
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  }
+
+  function copy() {
+    navigator.clipboard?.writeText(link.url).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); });
+  }
+  const tgText = `Assalomu alaykum, ${lead?.full_name || ""}! Jony Academy ingliz tili darajasini aniqlash testi. 50 savol, har biriga 30 soniya. Havola bir marta ishlaydi: `;
+  const tgUrl = link ? `https://t.me/share/url?url=${encodeURIComponent(link.url)}&text=${encodeURIComponent(tgText)}` : "";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4" onClick={onClose}>
+      <div className="w-full max-w-md rounded-xl bg-white p-5 shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-semibold text-slate-900">Diagnostik test</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
+        </div>
+
+        {!link && (
+          <div className="space-y-3">
+            {!lead ? (
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-500">Lid</label>
+                <input value={q} onChange={(e) => setQ(e.target.value)} className={inp}
+                       placeholder="Ism yoki telefon..." autoFocus />
+                {hits.length > 0 && (
+                  <div className="mt-1 max-h-48 overflow-y-auto rounded-lg border border-slate-200">
+                    {hits.map((l) => (
+                      <button key={l.id} onClick={() => setLead(l)}
+                              className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-slate-50">
+                        <span>{l.full_name}</span>
+                        <span className="text-xs text-slate-400">{l.phone}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {q.trim().length >= 2 && hits.length === 0 && (
+                  <p className="mt-1 text-xs text-slate-400">Topilmadi — avval "Yangi lid" orqali qo'shing.</p>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
+                <div>
+                  <p className="font-medium text-slate-800">{lead.full_name}</p>
+                  <p className="text-xs text-slate-500">{lead.phone}</p>
+                </div>
+                <button onClick={() => setLead(null)} className="text-xs text-slate-400 hover:text-slate-600">o'zgartirish</button>
+              </div>
+            )}
+            {lead?.placement && (
+              <p className="text-xs text-amber-700">
+                Bu lid testni ishlagan: {lead.placement.level} · Unit {lead.placement.unit} ({lead.placement.date}). Yangi test eskisini almashtirmaydi — ikkalasi ham saqlanadi.
+              </p>
+            )}
+            {err && <p className="text-sm text-red-600">{err}</p>}
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => create("office")} disabled={busy || !lead}
+                      className="flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 py-2.5 text-sm text-white disabled:opacity-50">
+                <Play size={14} /> Shu yerda ishlatish
+              </button>
+              <button onClick={() => create("link")} disabled={busy || !lead}
+                      className="flex items-center justify-center gap-1.5 rounded-lg border border-indigo-200 bg-white py-2.5 text-sm text-indigo-800 disabled:opacity-50">
+                <LinkIcon size={14} /> Havola yuborish
+              </button>
+            </div>
+            <p className="text-xs text-slate-400">
+              "Shu yerda" — test yangi oynada ochiladi, planshet/kompyuterni odamga berasiz.
+              "Havola" — bir martalik, 48 soat amal qiladi, telefonida ishlaydi.
+            </p>
+          </div>
+        )}
+
+        {link && (
+          <div className="space-y-3">
+            <p className="text-sm text-slate-700">
+              <span className="font-medium">{lead?.full_name}</span> uchun bir martalik havola{link.reused ? " (avvalgisi — hali ishlanmagan)" : ""}:
+            </p>
+            <div className="break-all rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-700">{link.url}</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={copy} className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 py-2 text-sm">
+                <Copy size={14} /> {copied ? "Nusxalandi ✓" : "Nusxalash"}
+              </button>
+              <a href={tgUrl} target="_blank" rel="noopener"
+                 className="flex items-center justify-center gap-1.5 rounded-lg bg-sky-500 py-2 text-sm text-white">
+                <Send size={14} /> Telegram
+              </a>
+            </div>
+            <p className="text-xs text-slate-400">Natija tugashi bilan lid kartasida ko'rinadi.</p>
+            <button onClick={onClose} className="w-full rounded-lg bg-slate-900 py-2 text-sm text-white">Yopish</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -38,6 +38,7 @@ import { PaymentCalendarTab } from "../components/PaymentCalendar";
 import { MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 import { PayImportTab } from "../components/PayImport";
+import { CashDayCard } from "../components/CashDay";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
 
@@ -294,6 +295,10 @@ function CashflowTab() {
 
   return (
     <div>
+      {/* BUGUNGI TUSHUM (2026-09-05, Jahongir): kim to'ladi, qancha,
+          naqd/Click/terminal — kunlik kassa oylik jadvalning tepasida. */}
+      <CashDayCard reloadKey={reloadKey} />
+
       {/* --- Sana tanlash --- */}
       <div className="flex flex-wrap items-center gap-2 mb-5">
         <select

@@ -1423,6 +1423,103 @@ def _payment_first_dates(db: Session) -> dict:
     )
     return {sid: dt for sid, dt in rows}
 
+@router.get("/api/reports/cash-day")
+def cash_day(
+    day: str | None = None,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.CASHFLOW_ACCESS)),
+):
+    """BUGUNGI TUSHUM (2026-09-05).
+
+    Jahongir: "moliya bo'limida ... bugungi tushumlarni kim toladi
+    qancha va qanchasi klik yoki terminal shularni ham korsatadigan
+    joy kerak".
+
+    Bir kunning kassasi: usullar kesimida jami (naqd / Click /
+    terminal / boshqa), nechta to'lov, har bir to'lov alohida (vaqt,
+    kim, qancha, usul, kim qabul qildi, yangi/eski) va qabul qiluvchi
+    xodim kesimida yig'indi. Kun Toshkent vaqti bo'yicha olinadi —
+    created_at UTC da saqlanadi, shuning uchun oyna suriladi
+    (_utc_window), aks holda kechqurungi to'lovlar ertangi kunga
+    tushib qolardi.
+
+    Filial: rahbariyat tanlagan filial bo'yicha, xodim — o'z filiali."""
+    try:
+        d = date.fromisoformat(day) if day else roles.local_today()
+    except ValueError:
+        raise HTTPException(400, "Sana noto'g'ri (YYYY-MM-DD)")
+    d0, d1 = _utc_window(d, d)
+
+    pq = (db.query(models.Payment, models.Student)
+          .join(models.Student,
+                models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= d0,
+                  models.Payment.created_at <= d1))
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        pq = pq.filter(_branch_in(db, user, models.Student.branch_id))
+    elif branch_id:
+        pq = pq.filter(models.Student.branch_id == branch_id)
+
+    first_dates = _payment_first_dates(db)
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+
+    by_method = {m: {"amount": 0.0, "count": 0}
+                 for m in roles.PAYMENT_METHODS}
+    by_receiver: dict = {}
+    rows = []
+    total = 0.0
+    new_cnt = new_sum = 0
+    for p, st in pq.order_by(models.Payment.created_at.desc()).all():
+        method = p.method if p.method in by_method else "cash"
+        by_method[method]["amount"] += p.amount
+        by_method[method]["count"] += 1
+        total += p.amount
+        is_new = first_dates.get(st.id) == p.created_at
+        if is_new:
+            new_cnt += 1
+            new_sum += p.amount
+        who = p.created_by or "—"
+        r = by_receiver.setdefault(who, {"name": who, "amount": 0.0,
+                                         "count": 0})
+        r["amount"] += p.amount
+        r["count"] += 1
+        local_t = (p.created_at + off) if p.created_at else None
+        rows.append({
+            "id": p.id,
+            "time": local_t.strftime("%H:%M") if local_t else None,
+            "student_id": st.id,
+            "student": st.full_name,
+            "group": st.group.name if st.group else None,
+            "amount": p.amount,
+            "method": method,
+            "method_label": roles.PAYMENT_METHOD_LABELS.get(method, method),
+            "received_by": p.created_by,
+            "branch": branches.get(st.branch_id) or "—",
+            "is_new": is_new,
+            "note": p.note,
+        })
+
+    return {
+        "date": d.isoformat(),
+        "total": round(total, 2),
+        "count": len(rows),
+        "by_method": [{
+            "method": m, "label": roles.PAYMENT_METHOD_LABELS.get(m, m),
+            "amount": round(v["amount"], 2), "count": v["count"],
+        } for m, v in by_method.items()],
+        "new_count": new_cnt,
+        "new_sum": round(new_sum, 2),
+        "old_count": len(rows) - new_cnt,
+        "old_sum": round(total - new_sum, 2),
+        "by_receiver": sorted(by_receiver.values(),
+                              key=lambda x: -x["amount"]),
+        "rows": rows,
+    }
+
+
 @router.get("/api/reports/cashflow-ledger")
 def cashflow_ledger(
     year: int,

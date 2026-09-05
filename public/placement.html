@@ -193,9 +193,15 @@
       if (r.question) renderQ(r.question);
     } catch (e) {
       busy = false;
+      // Sessiya o'chirilgan / tugagan / muddati o'tgan — qayta urinmaymiz
+      if (/Havola|yakunlangan|Faol savol|muddati/i.test(e.message)) {
+        cur = null; stopTimer();
+        msg('Test to\'xtatildi', e.message + '. Administratordan yangi havola so\'rang.');
+        return;
+      }
       $('qerr').textContent = e.message + ' — qayta urinib ko\'ring';
       document.querySelectorAll('.opt').forEach(b => b.disabled = false);
-      // vaqt tugagan bo'lsa qayta so'raymiz
+      // vaqt tugagan bo'lsa (tarmoq uzilgan) qayta so'raymiz
       if (choice === null) setTimeout(() => answer(null), 1500);
     }
   }

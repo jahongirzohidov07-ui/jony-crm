@@ -670,6 +670,7 @@ export function StaffTab() {
             role: editing.role,
             branch_id: editing.branch_id ?? null,
             branch_ids: editing.branch_ids ?? undefined,
+            extra_roles: editing.extra_roles ?? undefined,
             is_active: editing.is_active,
             fix_salary: editing.fix_salary ?? null,
             phone: editing.phone ?? null,
@@ -679,10 +680,15 @@ export function StaffTab() {
           submitLabel="Saqlash"
           onCancel={() => setEditing(null)}
           onSubmit={async (data) => {
+            // 2026-09-05: ko'p filial va qo'shimcha lavozimlar ham
+            // SAQLANSIN — ilgari faqat birinchi filial ketardi, qolgan
+            // belgilanganlar yo'qolardi ("filial biriktira olmayapti").
             await api.put(`/users/${editing.id}`, {
               full_name: data.full_name,
               role: data.role,
               branch_id: data.branch_id,
+              branch_ids: data.branch_ids,
+              extra_roles: data.extra_roles,
               is_active: data.is_active,
               fix_salary: data.fix_salary ?? null,
               phone: data.phone ?? null,

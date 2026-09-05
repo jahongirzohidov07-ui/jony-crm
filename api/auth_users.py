@@ -399,9 +399,15 @@ def update_user(
     # butun tizimni egallab olishi mumkin bo'lardi.
     # HR hammaning hisobini boshqaradi, LEKIN filial rahbariniki emas:
     # parolini almashtirib filialni egallab olishning oldi olinadi.
+    # DIQQAT (2026-09-05): tahrirlash oynasi is_active ni HAR DOIM
+    # yuboradi (o'zgarmagan bo'lsa ham). Shuning uchun faqat HAQIQIY
+    # o'zgarish tekshiriladi — aks holda HR filial rahbarining
+    # telefonini yoki filialini ham tuzata olmasdi.
+    _active_change = (payload.is_active is not None
+                      and bool(payload.is_active) != bool(target.is_active))
     if user.role == roles.HR_MANAGER \
             and target.role in (roles.FOUNDER, roles.BRANCH_MANAGER) \
-            and (payload.password or payload.is_active is not None):
+            and (payload.password or _active_change):
         raise HTTPException(
             403, "Asoschi va filial rahbari hisobini (parol, faollik) "
                  "faqat asoschi boshqaradi")
@@ -419,7 +425,16 @@ def update_user(
     # Rol yoki filial O'ZGARAYOTGAN bo'lsagina huquq tekshiriladi. Aks
     # holda telefon raqamini tuzatish ham "rol berish" hisoblanib,
     # HR bloklanib qolardi.
-    if new_role != target.role or new_branch_id != target.branch_id:
+    if new_role != target.role:
+        _guard_role_assignment(user, new_role, new_branch_id)
+    elif new_branch_id != target.branch_id \
+            and user.role != roles.HR_MANAGER:
+        # Rol o'zgarmayapti, faqat filial. HR uchun bu ERKIN
+        # (2026-09-05, Jahongir: "HR bo'limi rahbari xodimlarga filial
+        # biriktira olsin") — filial rahbarini ham boshqa filialga
+        # o'tkaza oladi, bu unga hech qanday huquq qo'shmaydi.
+        # Filial rahbari uchun esa eski tekshiruv qoladi: u faqat
+        # o'z filialida, faqat ruxsat etilgan rollarni boshqaradi.
         _guard_role_assignment(user, new_role, new_branch_id)
 
     # Maosh alohida huquq: filial rahbari xodim kartasini tahrirlaydi,

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ingliz tili darajasini aniqlash — Jony Academy</title>
+<style>
+  :root { --bg:#0f172a; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --brand:#4f46e5; --brand2:#4338ca; --ok:#059669; --bad:#dc2626; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif; background: linear-gradient(160deg,#eef2ff 0%,#f8fafc 60%); color:var(--ink); min-height:100vh; }
+  .wrap { max-width:560px; margin:0 auto; padding:20px 16px 40px; }
+  .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .logo { font-weight:800; letter-spacing:.3px; color:var(--brand); }
+  .logo span { color:var(--ink); font-weight:600; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:0 8px 30px rgba(15,23,42,.06); }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { line-height:1.55; margin:8px 0; color:#334155; }
+  .muted { color:var(--muted); font-size:13px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; width:100%; padding:14px 18px; border-radius:12px; border:0; background:var(--brand); color:#fff; font-size:16px; font-weight:600; cursor:pointer; }
+  .btn:active { background:var(--brand2); }
+  .btn[disabled] { opacity:.5; cursor:default; }
+  .rules { display:grid; gap:8px; margin:14px 0 18px; }
+  .rule { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:#334155; }
+  .rule b { color:var(--brand); min-width:26px; }
+  .prog { display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); margin-bottom:8px; }
+  .bar { height:6px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:16px; }
+  .bar i { display:block; height:100%; background:var(--brand); width:0; transition:width .3s; }
+  .timer { position:relative; height:8px; background:#fee2e2; border-radius:99px; overflow:hidden; margin:0 0 18px; }
+  .timer i { display:block; height:100%; background:var(--bad); width:100%; transition:width 1s linear; }
+  .timer.calm { background:#dcfce7; } .timer.calm i { background:var(--ok); }
+  .tnum { font-variant-numeric:tabular-nums; font-weight:700; }
+  .q { font-size:19px; line-height:1.5; margin:0 0 16px; font-weight:600; }
+  .opts { display:grid; gap:10px; }
+  .opt { text-align:left; padding:14px 16px; border-radius:12px; border:1.5px solid var(--line); background:#fff; font-size:16px; cursor:pointer; display:flex; gap:12px; align-items:center; }
+  .opt .k { width:26px; height:26px; border-radius:50%; background:#eef2ff; color:var(--brand); font-weight:700; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:none; }
+  .opt:active { border-color:var(--brand); background:#eef2ff; }
+  .opt[disabled] { opacity:.6; }
+  .lvl { font-size:56px; font-weight:800; color:var(--brand); line-height:1; margin:6px 0; }
+  .book { font-size:18px; font-weight:700; margin:4px 0 2px; }
+  .topic { color:var(--muted); font-size:14px; }
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
+  .stat { background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:10px 12px; }
+  .stat b { display:block; font-size:20px; }
+  .stat span { font-size:12px; color:var(--muted); }
+  .lv { display:flex; align-items:center; gap:8px; font-size:13px; margin:6px 0; }
+  .lv .n { width:34px; font-weight:700; }
+  .lv .b { flex:1; height:8px; background:#e2e8f0; border-radius:99px; overflow:hidden; }
+  .lv .b i { display:block; height:100%; background:var(--brand); }
+  .lv .p { width:60px; text-align:right; color:var(--muted); }
+  .adv { background:#eef2ff; border-radius:12px; padding:12px 14px; margin:14px 0; font-weight:600; color:#3730a3; }
+  .err { color:var(--bad); font-size:14px; margin-top:10px; }
+  .center { text-align:center; }
+  .hidden { display:none; }
+  @media (min-width:600px){ .wrap{padding-top:40px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="logo">JONY <span>Academy</span></div><div class="muted">Ingliz tili · daraja testi</div></div>
+
+  <!-- Boshlash -->
+  <div id="s-start" class="card hidden">
+    <h1 id="hello">Assalomu alaykum!</h1>
+    <p>Bu qisqa test ingliz tili darajangizni aniqlaydi va qaysi kitobdan boshlash kerakligini aytadi.</p>
+    <div class="rules">
+      <div class="rule"><b>50</b><div>savol — har biri 4 variantli, bitta to'g'ri javob.</div></div>
+      <div class="rule"><b>30 s</b><div>har savolga. Vaqt tugasa, savol xato hisoblanadi va keyingisi chiqadi.</div></div>
+      <div class="rule"><b>↕</b><div>Test moslashuvchan: to'g'ri javob bersangiz keyingi savol qiyinroq, xato bo'lsa osonroq bo'ladi. Shuning uchun xatolar tabiiy — xavotirlanmang.</div></div>
+      <div class="rule"><b>1×</b><div>Havola bir marta ishlaydi. Boshlagach oxirigacha ishlang; orqaga qaytib bo'lmaydi.</div></div>
+    </div>
+    <button class="btn" id="btn-start">Testni boshlash</button>
+    <p class="muted center" style="margin-top:12px">Taxminan 15–20 daqiqa. Lug'atdan foydalanmang — natija noto'g'ri chiqadi.</p>
+  </div>
+
+  <!-- Savol -->
+  <div id="s-q" class="card hidden">
+    <div class="prog"><span id="pno">1 / 50</span><span class="tnum" id="tleft">30 s</span></div>
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="timer calm" id="tbar"><i id="tfill"></i></div>
+    <div class="q" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+    <div class="err" id="qerr"></div>
+  </div>
+
+  <!-- Natija -->
+  <div id="s-done" class="card hidden center">
+    <p class="muted" id="dname"></p>
+    <h1>Sizning darajangiz</h1>
+    <div class="lvl" id="rlevel">B1</div>
+    <div class="book" id="rbook">Empower B1 · Unit 4</div>
+    <div class="topic" id="rtopic"></div>
+    <div class="adv" id="radvice"></div>
+    <div class="stats">
+      <div class="stat"><b id="rscore">0/50</b><span>to'g'ri javob</span></div>
+      <div class="stat"><b id="rbest">—</b><span>eng yuqori tasdiqlangan</span></div>
+    </div>
+    <div id="rlevels" style="text-align:left"></div>
+    <p class="muted" id="rnote"></p>
+    <p class="muted">Natija Jony Academy'ga yuborildi. Guruhga yozilish uchun administrator siz bilan bog'lanadi.</p>
+  </div>
+
+  <!-- Xato / muddat -->
+  <div id="s-msg" class="card hidden center">
+    <h1 id="mtitle">Havola ishlamadi</h1>
+    <p id="mtext"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const token = new URLSearchParams(location.search).get('t') || '';
+  const $ = (id) => document.getElementById(id);
+  const show = (id) => { ['s-start','s-q','s-done','s-msg'].forEach(x => $(x).classList.toggle('hidden', x !== id)); };
+  const api = (path, opts) => fetch('/api/public/placement/' + encodeURIComponent(token) + path, Object.assign({
+    headers: { 'Content-Type': 'application/json' } }, opts || {})).then(async (r) => {
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.detail || ('Xato ' + r.status));
+      return d;
+    });
+
+  let cur = null, timer = null, left = 0, busy = false, total = 50;
+
+  function msg(title, text) { $('mtitle').textContent = title; $('mtext').textContent = text; show('s-msg'); }
+
+  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+  function startTimer(secs) {
+    stopTimer();
+    left = secs;
+    const full = cur.secs || 30;
+    const paint = () => {
+      $('tleft').textContent = left + ' s';
+      $('tfill').style.width = Math.max(0, left / full * 100) + '%';
+      $('tbar').classList.toggle('calm', left > 10);
+    };
+    paint();
+    timer = setInterval(() => {
+      left -= 1;
+      paint();
+      if (left <= 0) { stopTimer(); answer(null); }
+    }, 1000);
+  }
+
+  function renderQ(q) {
+    cur = q;
+    total = q.total || 50;
+    $('pno').textContent = q.no + ' / ' + total;
+    $('pbar').style.width = ((q.no - 1) / total * 100) + '%';
+    $('qtext').textContent = q.q;
+    $('qerr').textContent = '';
+    const box = $('opts'); box.innerHTML = '';
+    q.opts.forEach((t, i) => {
+      const b = document.createElement('button');
+      b.className = 'opt';
+      b.innerHTML = '<span class="k">' + 'ABCD'[i] + '</span><span></span>';
+      b.lastChild.textContent = t;
+      b.onclick = () => answer(i);
+      box.appendChild(b);
+    });
+    show('s-q');
+    startTimer(q.secs != null ? q.secs : 30);
+    window.scrollTo(0, 0);
+  }
+
+  function renderDone(name, r) {
+    $('dname').textContent = name ? name : '';
+    $('rlevel').textContent = r.level;
+    $('rbook').textContent = r.book + ' · Unit ' + r.unit;
+    $('rtopic').textContent = r.topic ? ('Unit mavzusi: ' + r.topic) : '';
+    $('radvice').textContent = r.advice;
+    $('rscore').textContent = r.score + '/' + r.total;
+    const okLv = (r.per_level || []).filter(x => x.pct >= 60).map(x => x.level);
+    $('rbest').textContent = okLv.length ? okLv[okLv.length - 1] : (r.level || '—');
+    const order = ['A1','A2','B1','B1+','B2','C1'];
+    const rows = (r.per_level || []).slice().sort((a, b) => order.indexOf(a.level) - order.indexOf(b.level));
+    $('rlevels').innerHTML = rows.map(x =>
+      '<div class="lv"><span class="n">' + x.level + '</span><span class="b"><i style="width:' + x.pct + '%"></i></span><span class="p">' + x.ok + '/' + x.n + '</span></div>'
+    ).join('');
+    $('rnote').textContent = r.note || '';
+    show('s-done');
+  }
+
+  async function answer(choice) {
+    if (busy || !cur) return;
+    busy = true;
+    stopTimer();
+    document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+    try {
+      const r = await api('/answer', { method: 'POST', body: JSON.stringify({ qid: cur.qid, choice: choice }) });
+      busy = false;
+      if (r.status === 'done') { cur = null; renderDone(null, r.result); return; }
+      if (r.question) renderQ(r.question);
+    } catch (e) {
+      busy = false;
+      $('qerr').textContent = e.message + ' — qayta urinib ko\'ring';
+      document.querySelectorAll('.opt').forEach(b => b.disabled = false);
+      // vaqt tugagan bo'lsa qayta so'raymiz
+      if (choice === null) setTimeout(() => answer(null), 1500);
+    }
+  }
+
+  async function start() {
+    $('btn-start').disabled = true;
+    try {
+      const r = await api('/start', { method: 'POST', body: JSON.stringify({}) });
+      if (r.status === 'done') renderDone(r.name, r.result);
+      else renderQ(r.question);
+    } catch (e) {
+      $('btn-start').disabled = false;
+      msg('Boshlab bo\'lmadi', e.message);
+    }
+  }
+
+  async function init() {
+    if (!token) { msg('Havola noto\'g\'ri', 'Test havolasi to\'liq emas. Administratordan yangi havola so\'rang.'); return; }
+    try {
+      const st = await api('');
+      if (st.status === 'expired') { msg('Havola muddati tugagan', 'Bu havola 48 soat amal qilardi. Administratordan yangi havola so\'rang.'); return; }
+      if (st.status === 'done') { renderDone(st.name, st.result); return; }
+      if (st.status === 'running' && st.question) { renderQ(st.question); return; }
+      $('hello').textContent = st.name ? ('Assalomu alaykum, ' + st.name + '!') : 'Assalomu alaykum!';
+      show('s-start');
+    } catch (e) {
+      msg('Havola ishlamadi', e.message);
+    }
+  }
+
+  $('btn-start').onclick = start;
+  window.addEventListener('beforeunload', (e) => { if (cur) { e.preventDefault(); e.returnValue = ''; } });
+  init();
+})();
+</script>
+</body>
+</html>

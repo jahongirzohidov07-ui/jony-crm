@@ -5885,6 +5885,20 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
           .filter(models.User.id.in_(uids or [-1]),
                   models.User.is_active == 1,
                   models.User.role == roles.SUPPORT_TEACHER).all()}
+    # USTOZ KARTASI HAM FAOL BO'LSIN (2026-09-03, Jahongir: "NUR
+    # guruhidan Dostonni olib tashlay olmayabman"). Dostonbekning
+    # akkaunti faol edi, lekin ustoz KARTASI 02.09 da yopilgan —
+    # shuning uchun u tanlov ro'yxatiga chiqmasdi (ro'yxat kartadan
+    # olinadi), bu tozalash esa faqat akkauntga qarab "sog'lom" deb
+    # o'tkazib yuborardi. Endi ikkalasi ham tekshiriladi: karta
+    # yo'q yoki yopiq bo'lsa — biriktirish bo'shatiladi.
+    # Faqat YOPIQ karta stale hisoblanadi. Kartasi umuman yo'q eski
+    # yozuvlarga tegilmaydi — ular haqida aniq ma'lumot yo'q.
+    if ok:
+        closed = {t.user_id for t in db.query(models.Teacher)
+                  .filter(models.Teacher.user_id.in_(list(ok)),
+                          models.Teacher.is_active == 0).all()}
+        ok = ok - closed
     stale = [r for r in rows if r.user_id not in ok]
     if not stale:
         return 0

@@ -196,11 +196,31 @@ def update_teacher(
     branch_ids = given.pop("branch_ids", None)
     if branch_ids:
         given["branch_id"] = branch_ids[0]
+    _was_active = bool(teacher.is_active)
     for k, v in given.items():
         setattr(teacher, k, v)
     if branch_ids is not None:
         _sync_teacher_branches(db, teacher, branch_ids or [])
     _sync_teacher_left_date(teacher)
+
+    # SUPPORT KARTASI BO'SHATILSA GURUHLARI AVTOMAT BO'SHASIN
+    # (2026-09-03, Jahongir: "NUR guruhidan Dostonni olib tashlay
+    # olmayabman ... Akkaunt udalit qilinsa, yoki faol bo'lmasa
+    # guruhdan avtomat chiqsin").
+    #
+    # Ilgari bu faqat XODIM (users) sahifasidan bo'shatilganda
+    # ishlardi. Ustoz KARTASI orqali bo'shatilsa (aynan Dostonbek
+    # bilan shunday bo'lgan: karta 02.09 da yopilgan, akkaunt esa
+    # faol qolgan) biriktirish guruhda osilib qolardi va tanlov
+    # ro'yxatida u yo'q bo'lgani uchun olib tashlab ham
+    # bo'lmasdi.
+    if _was_active and not teacher.is_active and teacher.user_id:
+        _lu = db.query(models.User).get(teacher.user_id)
+        if _lu is not None and _lu.role == roles.SUPPORT_TEACHER:
+            try:
+                _release_support_groups(db, _lu, "ishdan bo'shatildi")
+            except Exception:
+                pass
 
     # Daraja o'zgarsa - tarixga yoziladi va guruh stavkalari yangilanadi.
     if new_grade and new_grade != teacher.grade:
@@ -221,6 +241,16 @@ def delete_teacher(
     teacher = db.query(models.Teacher).get(teacher_id)
     if not teacher:
         raise HTTPException(404, "O'qituvchi topilmadi")
+    # Karta o'chirilsa ham support biriktirishlari bo'shasin
+    # (2026-09-03, Jahongir: "Akkaunt udalit qilinsa ... guruhdan
+    # avtomat chiqsin").
+    if teacher.user_id:
+        _lu = db.query(models.User).get(teacher.user_id)
+        if _lu is not None and _lu.role == roles.SUPPORT_TEACHER:
+            try:
+                _release_support_groups(db, _lu, "kartasi o'chirildi")
+            except Exception:
+                pass
     db.delete(teacher)
     db.commit()
     return {"ok": True}

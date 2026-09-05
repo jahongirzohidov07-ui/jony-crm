@@ -14,6 +14,7 @@ import {
 import type { LeadSource, LeadStage } from "../lib/leads";
 import { PhoneInput, formatPhone } from "../components/PhoneInput";
 import { PickList, useReference } from "../components/PickList";
+import PlacementBar, { PlacementBadge } from "../components/PlacementBar";
 
 // ---------------------------------------------------------------- modal ----
 function LeadForm({
@@ -554,6 +555,7 @@ function LeadCard({
         <span className="inline-block bg-slate-100 text-slate-500 rounded px-1.5 py-0.5 text-[11px]">
           {sourceLabel(lead.source)}
         </span>
+        <PlacementBadge lead={lead} />
         {lead.assigned_user && (
           <span className="inline-block bg-brand-50 text-brand-700 rounded px-1.5 py-0.5 text-[11px] truncate max-w-[110px]">
             {lead.assigned_user.full_name}
@@ -787,6 +789,7 @@ export default function Leads() {
         </button>
       </div>
 
+      <PlacementBar leads={leads} onChanged={load} />
       {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
       {loading && <p className="text-slate-400 text-sm">Yuklanmoqda...</p>}
 

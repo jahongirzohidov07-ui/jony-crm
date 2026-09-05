@@ -3139,83 +3139,60 @@ def _teacher_of_user(db: Session, user: models.User) -> models.Teacher | None:
         return t
     return None
 
-def _salary_card(db: Session, t: models.Teacher) -> dict:
-    """Ustozning ish haqi kartasi: ishlab topgan, olgan, balans."""
-    today = date.today()
-    m_start, _m_end = billing.month_bounds(today.year, today.month)
+_UZ_MONTHS = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+              "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"]
 
-    ctx = billing.PayrollContext(db)          # 3 hisob, 1 marta o'qish
-    ctx.prefetch([t.id])
-    all_time = _teacher_earned(db, t.id, ctx=ctx)
-    this_month = _teacher_earned(db, t.id, since=m_start, ctx=ctx)
-    paid_all = _teacher_paid(db, t.id, ctx=ctx)
-    paid_month = _teacher_paid(db, t.id, since=m_start, ctx=ctx)
 
-    balance = round(all_time["amount"] - paid_all, 2)
+def _month_title(period: str) -> str:
+    """"2026-08" -> "Avgust 2026"."""
+    try:
+        y, m = int(period[:4]), int(period[5:7])
+        return f"{_UZ_MONTHS[m - 1]} {y}"
+    except Exception:
+        return period
 
-    pays = (db.query(models.TeacherPayment)
-            .filter(models.TeacherPayment.teacher_id == t.id)
-            .order_by(models.TeacherPayment.paid_on.desc()).limit(50).all())
 
-    # O'tgan oylardan qolgan farq: bu oyning boshigacha bo'lgan balans
-    prev_earned = _teacher_earned(db, t.id, until=m_start - timedelta(days=1),
-                                  ctx=ctx)
-    prev_paid = _teacher_paid(db, t.id, until=m_start - timedelta(days=1),
-                              ctx=ctx)
-    carry = round(prev_earned["amount"] - prev_paid, 2)
+def _month_name(period: str) -> str:
+    """"2026-08" -> "Avgust"."""
+    try:
+        return _UZ_MONTHS[int(period[5:7]) - 1]
+    except Exception:
+        return period
 
+
+def _pay_out(p: models.TeacherPayment) -> dict:
     return {
-        "teacher_id": t.id,
-        "full_name": t.full_name,
-        "branch": t.branch.name if t.branch else None,
-        # Shu oy
-        "month": today.isoformat()[:7],
-        "earned_month": this_month["amount"],
-        "paid_month": paid_month,
-        "lessons_month": this_month["lessons"],
-        "attendances_month": this_month["attendances"],
-        # Umumiy balans
-        "earned_total": all_time["amount"],
-        "paid_total": paid_all,
-        "balance": balance,
-        # O'tgan oylardan kelgan farq: musbat - biz qarzdormiz,
-        # manfiy - ustoz ortiqcha olgan
-        "carry": carry,
-        "carry_label": (
-            "O'tgan oylardan qarzimiz" if carry > 0
-            else "O'tgan oyda ortiqcha berilgan" if carry < 0
-            else "O'tgan oylar yopilgan"),
-        # Avans chegarasi: ishlab topganidan ortiq berilmaydi
-        "advance_available": max(0.0, balance),
-        "by_group": this_month["by_group"],
-        "by_period": all_time["by_period"][-12:],
-        "payments": [{
-            "id": p.id, "amount": p.amount, "kind": p.kind,
-            "kind_label": roles.TEACHER_PAYMENT_LABELS.get(p.kind, p.kind),
-            "date": p.paid_on.isoformat() if p.paid_on else None,
-            "period": p.period, "note": p.note, "by": p.created_by,
-        } for p in pays],
+        "id": p.id, "amount": p.amount, "kind": p.kind,
+        "kind_label": roles.TEACHER_PAYMENT_LABELS.get(p.kind, p.kind),
+        "date": p.paid_on.isoformat() if p.paid_on else None,
+        "period": p.period, "note": p.note, "by": p.created_by,
     }
 
-def _finance_ledger(db: Session, t: models.Teacher) -> dict:
-    """USTOZNING MOLIYA BO'LIMI — oylar bo'yicha oylik tarixi.
 
-    2026-09-05, Jahongir: "ustozlarda moliya bo'limi qo'shilib oldin
-    olgan oyliklari har oylik oyliklar o'sha yerga hisoblanib borsin
-    oyliklar tarixi bo'lsin".
+def _month_ledger(db: Session, t: models.Teacher) -> dict:
+    """USTOZ OYLIGINING OYLAR BO'YICHA DAFTARI — bitta manba.
 
-    Har oy uchun: yo'qlamadan ISHLAB TOPGAN (o'sha oyning darslari,
-    o'sha kundagi stavka bilan), OLGAN (avans/oylik/tuzatish — to'lov
-    sanasi bo'yicha), QOLDIQ (ishlab topgan - olgan) va shu oy
-    oxiridagi YIG'ILIB BORUVCHI BALANS. Ro'yxat ustoz birinchi dars
-    o'tgan yoki birinchi pul olgan oydan hozirgi oygacha, bo'sh oylar
-    ham ko'rinadi (0 bilan) — tarix uzilmasin.
+    Karta ("Darslarim va oyligim"), dashboard kartalari va Moliya
+    bo'limi shu yerdan oladi, shuning uchun raqamlar hamma joyda bir xil.
 
-    Hisob _salary_card / oyliklar sahifasi bilan AYNAN bir manbadan
-    (_teacher_earned + TeacherPayment), shuning uchun raqamlar hamma
-    joyda bir xil. Hech narsa saqlanmaydi — har safar qayta
-    hisoblanadi, yo'qlama tuzatilsa tarix ham o'zi to'g'rilanadi."""
+    2026-09-05, Jahongir: "balans bilan o'tgan oyniki va bu oyniki ham
+    turishi kerakda chunki otgan oy hali berilmasdan yangi oy
+    boshlanganda ikkalasi qoshilsa balansda ustozlar bir oyniki deb
+    oylab qolyabdi".
+
+    NAVBAT QOIDASI (FIFO). Berilgan pul HAR DOIM ENG ESKI berilmagan
+    oyning oyligiga yoziladi: avgust oyligi 5-sentabrda berilsa, u
+    AVGUSTNIKI hisoblanadi (sentabrniki emas). Shunda:
+      - "O'tgan oy qoldig'i" — o'tgan oy oyligining hali berilmagan qismi;
+      - "Bu oy qoldig'i"     — shu oyda ishlab topilganning berilmagan qismi;
+      - "Balans"             — ikkalasining (va undan oldingilarning) yig'indisi.
+    Umumiy balans (ishlab topgan - olgan) bu qoidadan o'zgarmaydi — faqat
+    qaysi oyga tegishli ekani aniq bo'ladi. Hamma oylar yopilib ortiqcha
+    berilgan bo'lsa, ortiqcha to'lov o'z oyiga manfiy qoldiq bo'lib yoziladi.
+
+    Hech narsa saqlanmaydi: har safar yo'qlamadan qayta hisoblanadi."""
     today = date.today()
+    cur = today.isoformat()[:7]
     ctx = billing.PayrollContext(db)
     ctx.prefetch([t.id])
     all_time = _teacher_earned(db, t.id, ctx=ctx)
@@ -3227,77 +3204,207 @@ def _finance_ledger(db: Session, t: models.Teacher) -> dict:
 
     months = {p["period"] for p in all_time["by_period"]}
     months |= {p.paid_on.isoformat()[:7] for p in pays if p.paid_on}
-    cur = today.isoformat()[:7]
-    if not months:
-        months = {cur}
+    months.add(cur)
     first = min(months)
     fy, fm = int(first[:4]), int(first[5:7])
     seq = []
     y, m = fy, fm
-    while (y, m) <= (today.year, today.month):
-        seq.append((y, m))
+    last = max(months)
+    ly, lm = max((today.year, today.month), (int(last[:4]), int(last[5:7])))
+    while (y, m) <= (ly, lm):
+        seq.append(f"{y:04d}-{m:02d}")
         m += 1
         if m > 12:
             y, m = y + 1, 1
-    # Kelajakka yozilgan to'lov bo'lsa (oldindan berilgan) — u ham chiqsin
-    for per in sorted(months):
-        py, pm = int(per[:4]), int(per[5:7])
-        if (py, pm) > (today.year, today.month) and (py, pm) not in seq:
-            seq.append((py, pm))
 
-    pays_by_month: dict = {}
-    for p in pays:
-        if p.paid_on:
-            pays_by_month.setdefault(p.paid_on.isoformat()[:7], []).append(p)
-
-    rows = []
-    earned_cum = 0.0
-    paid_cum = 0.0
-    for (y, m) in seq:
-        per = f"{y:04d}-{m:02d}"
+    rows: dict = {}
+    for per in seq:
+        y, m = int(per[:4]), int(per[5:7])
         ms, me = billing.month_bounds(y, m)
         e = _teacher_earned(db, t.id, since=ms, until=me, ctx=ctx)
-        plist = pays_by_month.get(per, [])
-        by_kind = {"advance": 0.0, "salary": 0.0, "correction": 0.0}
-        for p in plist:
-            by_kind[p.kind if p.kind in by_kind else "correction"] += \
-                (p.amount or 0)
-        paid = round(sum(p.amount or 0 for p in plist), 2)
-        earned_cum += e["amount"]
-        paid_cum += paid
-        rows.append({
+        rows[per] = {
             "period": per,
+            "title": _month_title(per),
             "is_current": per == cur,
             "lessons": e["lessons"],
             "attendances": e["attendances"],
             "earned": e["amount"],
-            "paid": paid,
-            "paid_advance": round(by_kind["advance"], 2),
-            "paid_salary": round(by_kind["salary"], 2),
-            "paid_correction": round(by_kind["correction"], 2),
-            "left": round(e["amount"] - paid, 2),
-            "balance_after": round(earned_cum - paid_cum, 2),
             "by_group": e["by_group"],
-            "payments": [{
-                "id": p.id, "amount": p.amount, "kind": p.kind,
-                "kind_label": roles.TEACHER_PAYMENT_LABELS.get(p.kind, p.kind),
-                "date": p.paid_on.isoformat() if p.paid_on else None,
-                "period": p.period, "note": p.note, "by": p.created_by,
-            } for p in plist],
-        })
-    rows.reverse()          # eng yangi oy tepada
+            # shu oyda QO'LGA TEKKAN pul (sana bo'yicha) — ma'lumot uchun
+            "paid_in_month": 0.0,
+            "paid_advance": 0.0, "paid_salary": 0.0, "paid_correction": 0.0,
+            # shu OY OYLIGI uchun berilgan (navbat qoidasi bilan)
+            "paid_for": 0.0,
+            "payments": [],       # shu oy oyligiga yozilgan to'lovlar
+        }
+
+    # --- navbat qoidasi: har to'lov eng eski berilmagan oyga ---------
+    need = {per: float(rows[per]["earned"]) for per in seq}
+
+    def _put(per, p, amount, split):
+        rows[per]["paid_for"] += amount
+        need[per] -= amount
+        d = _pay_out(p)
+        d["applied"] = round(amount, 2)
+        d["split"] = split
+        rows[per]["payments"].append(d)
+
+    for p in pays:
+        a = float(p.amount or 0)
+        pm = p.paid_on.isoformat()[:7] if p.paid_on else cur
+        home = pm if pm in rows else seq[-1]
+        r0 = rows[home]
+        r0["paid_in_month"] += a
+        k = p.kind if p.kind in ("advance", "salary", "correction") \
+            else "correction"
+        r0[f"paid_{k}"] += a
+        if a <= 0:
+            # Manfiy tuzatish — o'z oyiga (qoldiq shuncha oshadi)
+            _put(home, p, a, False)
+            continue
+        whole = a
+        for per in seq:
+            if need[per] <= 0.005:
+                continue
+            take = min(a, need[per])
+            _put(per, p, take, abs(take - whole) > 0.005)
+            a -= take
+            if a <= 0.005:
+                break
+        if a > 0.005:
+            # Hamma oylar yopilgan — ortiqcha berilgan, o'z oyiga
+            _put(home, p, a, abs(a - whole) > 0.005)
+
+    out = []
+    for per in seq:
+        r = rows[per]
+        for k in ("paid_in_month", "paid_advance", "paid_salary",
+                  "paid_correction", "paid_for"):
+            r[k] = round(r[k], 2)
+        r["left"] = round(r["earned"] - r["paid_for"], 2)
+        out.append(r)
 
     total_paid = round(sum(p.amount or 0 for p in pays), 2)
+    return {
+        "months": out,                   # xronologik (eski -> yangi)
+        "by_period_map": rows,
+        "all_time": all_time,
+        "pays": pays,
+        "earned_total": all_time["amount"],
+        "paid_total": total_paid,
+        "balance": round(all_time["amount"] - total_paid, 2),
+        "since": seq[0],
+        "current": cur,
+    }
+
+
+def _balance_split(led: dict) -> dict:
+    """Balansni "o'tgan oy / bu oy / undan oldingi" ga ajratadi."""
+    months = led["months"]
+    cur = led["current"]
+    idx = [m["period"] for m in months].index(cur)
+    this = months[idx]
+    prev = months[idx - 1] if idx >= 1 else None
+    older_left = round(sum(m["left"] for m in months[:max(0, idx - 1)]), 2)
+    # Kelajak oylariga (oldindan berilgan) yozilganlar ham balansda
+    future_left = round(sum(m["left"] for m in months[idx + 1:]), 2)
+    month_left = this["left"]
+    prev_left = prev["left"] if prev else 0.0
+    parts = []
+    if older_left:
+        parts.append(f"oldingi oylar {older_left:,.0f}")
+    if prev:
+        parts.append(f"{_month_name(prev['period'])} {prev_left:,.0f}")
+    parts.append(f"{_month_name(cur)} {month_left:,.0f}")
+    if future_left:
+        parts.append(f"oldindan {future_left:,.0f}")
+    label = " + ".join(parts).replace(",", " ")
+    return {
+        "prev_period": prev["period"] if prev else None,
+        "prev_title": prev["title"] if prev else None,
+        "prev_earned": prev["earned"] if prev else 0.0,
+        "prev_paid_for": prev["paid_for"] if prev else 0.0,
+        "prev_left": prev_left,
+        "month_paid_for": this["paid_for"],
+        "month_left": month_left,
+        "older_left": older_left,
+        "future_left": future_left,
+        "balance_label": label,
+    }
+
+
+def _salary_card(db: Session, t: models.Teacher) -> dict:
+    """Ustozning ish haqi kartasi: ishlab topgan, olgan, balans.
+
+    2026-09-05: balans yonida O'TGAN OY va BU OY qoldig'i alohida
+    (navbat qoidasi — _month_ledger izohiga qarang)."""
+    led = _month_ledger(db, t)
+    cur = led["current"]
+    this = led["by_period_map"][cur]
+    split = _balance_split(led)
+    balance = led["balance"]
+    pays = list(reversed(led["pays"]))[:50]        # eng yangisi tepada
+
+    # Eski maydon saqlanadi: bu oy boshigacha bo'lgan farq (sana bo'yicha)
+    prev_months = [m for m in led["months"] if m["period"] < cur]
+    carry = round(sum(m["earned"] for m in prev_months)
+                  - sum(m["paid_in_month"] for m in prev_months), 2)
+
     return {
         "teacher_id": t.id,
         "full_name": t.full_name,
         "branch": t.branch.name if t.branch else None,
-        "since": f"{fy:04d}-{fm:02d}",
+        # Shu oy
         "month": cur,
-        "earned_total": all_time["amount"],
-        "paid_total": total_paid,
-        "balance": round(all_time["amount"] - total_paid, 2),
-        "months": rows,
+        "month_title": this["title"],
+        "earned_month": this["earned"],
+        "paid_month": this["paid_in_month"],
+        "lessons_month": this["lessons"],
+        "attendances_month": this["attendances"],
+        # Umumiy balans
+        "earned_total": led["earned_total"],
+        "paid_total": led["paid_total"],
+        "balance": balance,
+        # BALANS AJRATMASI: o'tgan oy / bu oy (navbat qoidasi)
+        **split,
+        # O'tgan oylardan kelgan farq (sana bo'yicha) — eski maydon
+        "carry": carry,
+        "carry_label": (
+            "O'tgan oylardan qarzimiz" if carry > 0
+            else "O'tgan oyda ortiqcha berilgan" if carry < 0
+            else "O'tgan oylar yopilgan"),
+        # Avans chegarasi: ishlab topganidan ortiq berilmaydi
+        "advance_available": max(0.0, balance),
+        "by_group": this["by_group"],
+        "by_period": led["all_time"]["by_period"][-12:],
+        "payments": [_pay_out(p) for p in pays],
+    }
+
+
+def _finance_ledger(db: Session, t: models.Teacher) -> dict:
+    """USTOZNING MOLIYA BO'LIMI — oylar bo'yicha oylik tarixi.
+
+    2026-09-05, Jahongir: "ustozlarda moliya bo'limi qo'shilib oldin
+    olgan oyliklari har oylik oyliklar o'sha yerga hisoblanib borsin
+    oyliklar tarixi bo'lsin".
+
+    Har oy: ISHLAB TOPGAN (o'sha oyning darslari, o'sha kundagi stavka),
+    SHU OY OYLIGI UCHUN BERILGAN (navbat qoidasi — _month_ledger),
+    QOLDIQ, va shu oy oyligiga yozilgan to'lovlar ro'yxati. Eng yangi
+    oy tepada; bo'sh oylar ham ko'rinadi — tarix uzilmasin."""
+    led = _month_ledger(db, t)
+    split = _balance_split(led)
+    return {
+        "teacher_id": t.id,
+        "full_name": t.full_name,
+        "branch": t.branch.name if t.branch else None,
+        "since": led["since"],
+        "month": led["current"],
+        "earned_total": led["earned_total"],
+        "paid_total": led["paid_total"],
+        "balance": led["balance"],
+        **split,
+        "months": [dict(m) for m in reversed(led["months"])],
     }
 
 
@@ -3361,13 +3468,15 @@ def _my_teacher_cards(db: Session, user: models.User,
     if not t:
         return []
     today = date.today()
-    m_start, _e = billing.month_bounds(today.year, today.month)
-    ctx = billing.PayrollContext(db)          # 2 hisob, 1 marta o'qish
-    ctx.prefetch([t.id])
-    earned = _teacher_earned(db, t.id, since=m_start, ctx=ctx)
-    paid = _teacher_paid(db, t.id, since=m_start, ctx=ctx)
-    balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
-                    - _teacher_paid(db, t.id, ctx=ctx), 2)
+    # Karta bilan bir xil manba (2026-09-05): balans yonida o'tgan oy /
+    # bu oy qoldig'i alohida ko'rinadi — "bir oyniki" deb o'ylamasin.
+    led = _month_ledger(db, t)
+    this = led["by_period_map"][led["current"]]
+    split = _balance_split(led)
+    earned = {"amount": this["earned"], "lessons": this["lessons"],
+              "attendances": this["attendances"]}
+    paid = this["paid_in_month"]
+    balance = led["balance"]
 
     gids = [g.id for g in db.query(models.Group).filter(
         models.Group.teacher_id == t.id).all()]
@@ -3387,9 +3496,10 @@ def _my_teacher_cards(db: Session, user: models.User,
               "brand", "/teachers"),
         _card("Olgan puli", paid, "avans va oylik"),
         _card("Balans", balance,
-              "sizga berilishi kerak" if balance > 0
-              else "ortiqcha olingan" if balance < 0 else "hisob yopilgan",
-              "good" if balance > 0 else "bad" if balance < 0 else "plain"),
+              split["balance_label"] if balance
+              else "hisob yopilgan",
+              "good" if balance > 0 else "bad" if balance < 0 else "plain",
+              "/teachers"),
         _card("Guruhlarim", len(gids), f"{students} ta o'quvchi", "plain",
               "/groups"),
         _card("Bugungi darslar", len(todays),
@@ -6251,6 +6361,10 @@ __all__ = [
     "_rule_cap_hit",
     "_salary_card",
     "_finance_ledger",
+    "_month_ledger",
+    "_balance_split",
+    "_month_name",
+    "_month_title",
     "_schema_bootstrap",
     "_seed_brand",
     "_seed_hr_structure",

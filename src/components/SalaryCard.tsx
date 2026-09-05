@@ -48,7 +48,12 @@ export function SalaryCard({
     <p className="text-sm text-slate-500 py-6">{vol.hint}</p>
   ) : !c ? null : (
     <div className="space-y-5">
-      {/* --- Asosiy raqamlar --- */}
+      {/* --- Asosiy raqamlar ---
+          2026-09-05, Jahongir: "balans bilan o'tgan oyniki va bu oyniki
+          ham turishi kerak ... ustozlar bir oyniki deb o'ylab qolyabdi".
+          Shuning uchun balans yonida O'TGAN OY va BU OY qoldig'i alohida.
+          Berilgan pul eng eski berilmagan oyga yoziladi (navbat qoidasi):
+          avgust oyligi sentabrda berilsa — avgustniki. */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <Box
           label="Shu oy ishlab topgan"
@@ -57,29 +62,46 @@ export function SalaryCard({
           tone="brand"
         />
         <Box
-          label="Shu oy olgan"
-          value={formatSom(c.paid_month)}
-          hint="avans va oylik"
+          label={`O'tgan oy${c.prev_title ? ` — ${c.prev_title.split(" ")[0]}` : ""} qoldig'i`}
+          value={formatSom(c.prev_left ?? 0)}
+          hint={
+            !c.prev_period
+              ? "o'tgan oy yo'q"
+              : (c.prev_earned ?? 0) === 0 && (c.prev_left ?? 0) === 0
+                ? "dars bo'lmagan"
+                : (c.prev_left ?? 0) === 0
+                  ? `${formatSom(c.prev_earned ?? 0)} — to'liq berilgan`
+                  : `${formatSom(c.prev_earned ?? 0)} dan ${formatSom(c.prev_paid_for ?? 0)} berilgan`
+          }
+          tone={(c.prev_left ?? 0) > 0 ? "good" : (c.prev_left ?? 0) < 0 ? "bad" : "plain"}
         />
         <Box
-          label="Balans"
+          label={`Bu oy${c.month_title ? ` — ${c.month_title.split(" ")[0]}` : ""} qoldig'i`}
+          value={formatSom(c.month_left ?? c.balance)}
+          hint={
+            c.earned_month === 0 && (c.month_left ?? 0) === 0
+              ? "hali yo'qlama yo'q"
+              : `${formatSom(c.earned_month)} dan ${formatSom(c.month_paid_for ?? 0)} berilgan`
+          }
+          tone={(c.month_left ?? 0) > 0 ? "good" : (c.month_left ?? 0) < 0 ? "bad" : "plain"}
+        />
+        <Box
+          label="Balans (jami)"
           value={formatSom(c.balance)}
           hint={
-            c.balance > 0
-              ? "sizga berilishi kerak"
-              : c.balance < 0
-                ? "ortiqcha olingan"
-                : "hisob yopilgan"
+            c.balance === 0
+              ? "hisob yopilgan"
+              : (c.balance_label ?? (c.balance > 0 ? "sizga berilishi kerak" : "ortiqcha olingan"))
           }
           tone={c.balance > 0 ? "good" : c.balance < 0 ? "bad" : "plain"}
         />
-        <Box
-          label="O'tgan oylardan"
-          value={formatSom(c.carry)}
-          hint={c.carry_label}
-          tone={c.carry > 0 ? "good" : c.carry < 0 ? "bad" : "plain"}
-        />
       </div>
+      <p className="text-xs text-slate-400 -mt-2">
+        Shu oyda qo'lga tekkan: <span className="text-slate-600">{formatSom(c.paid_month)}</span>
+        {" "}(avans va oylik) · balans = o'tgan oy qoldig'i + bu oy qoldig'i
+        {(c.older_left ?? 0) !== 0 && ` · undan oldingi oylardan ${formatSom(c.older_left ?? 0)}`}
+        {(c.future_left ?? 0) !== 0 && ` · oldindan berilgan ${formatSom(c.future_left ?? 0)}`}
+      </p>
 
       {/* --- Formula --- */}
       {c.by_group.length > 0 && (

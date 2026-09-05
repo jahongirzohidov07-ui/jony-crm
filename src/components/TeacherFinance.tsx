@@ -12,11 +12,19 @@ import { formatSom, formatDate } from "../lib/format";
  * olgan oyliklari har oylik oyliklar o'sha yerga hisoblanib borsin
  * oyliklar tarixi bo'lsin".
  *
- * Har oy: ishlab topgan (yo'qlamadan) · olgan (avans/oylik) · qoldiq ·
- * shu oy oxiridagi balans. Oy bosilsa — guruhlar kesimi va o'sha oyda
- * olingan pullar ro'yxati. Hech narsa saqlanmaydi: server har safar
- * yo'qlamadan qayta hisoblaydi, shuning uchun bu yerdagi raqam
- * "Darslarim va oyligim" va rahbarning Oyliklar sahifasi bilan bir xil.
+ * Har oy: ishlab topgan (yo'qlamadan) · shu oy oyligi uchun berilgan ·
+ * qoldiq. Oy bosilsa — guruhlar kesimi va shu oy oyligiga yozilgan
+ * pullar ro'yxati.
+ *
+ * NAVBAT QOIDASI (2026-09-05, Jahongir: "balans bilan o'tgan oyniki va
+ * bu oyniki ham turishi kerak ... ustozlar bir oyniki deb o'ylab
+ * qolyabdi"): berilgan pul eng eski berilmagan oyning oyligiga yoziladi
+ * — avgust oyligi sentabrda berilsa, avgustniki. Shunda har oyning
+ * qoldig'i aniq, balans = oylar qoldiqlarining yig'indisi.
+ *
+ * Hech narsa saqlanmaydi: server har safar yo'qlamadan qayta
+ * hisoblaydi, shuning uchun raqam "Darslarim va oyligim" va rahbarning
+ * Oyliklar sahifasi bilan bir xil.
  */
 const MONTHS = [
   "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
@@ -64,21 +72,30 @@ export function TeacherFinance({
   if (d.volunteer) return <p className="text-sm text-slate-500 py-6">{d.hint}</p>;
 
   const months = d.months ?? [];
-  const withActivity = months.filter((m) => m.earned || m.paid).length;
+  const withActivity = months.filter((m) => m.earned || m.paid_for || m.paid_in_month).length;
 
   return (
     <div className="space-y-4">
       {/* --- Umumiy --- */}
       <div className="grid grid-cols-3 gap-2">
-        <Stat label="Balans" value={formatSom(d.balance)}
-          hint={d.balance > 0 ? "sizga berilishi kerak"
-            : d.balance < 0 ? "ortiqcha olingan" : "hisob yopilgan"}
+        <Stat label="Balans (jami)" value={formatSom(d.balance)}
+          hint={d.balance === 0 ? "hisob yopilgan" : d.balance_label}
           tone={d.balance > 0 ? "good" : d.balance < 0 ? "bad" : "plain"} />
-        <Stat label="Jami ishlab topgan" value={formatSom(d.earned_total)}
-          hint={`${monthTitle(d.since)} dan beri`} tone="brand" />
-        <Stat label="Jami olgan" value={formatSom(d.paid_total)}
-          hint="avans va oyliklar" />
+        <Stat
+          label={`O'tgan oy${d.prev_title ? ` — ${d.prev_title.split(" ")[0]}` : ""} qoldig'i`}
+          value={formatSom(d.prev_left ?? 0)}
+          hint={d.prev_period ? "berilmagan qismi" : "o'tgan oy yo'q"}
+          tone={(d.prev_left ?? 0) > 0 ? "good" : (d.prev_left ?? 0) < 0 ? "bad" : "plain"} />
+        <Stat
+          label={`Bu oy — ${monthTitle(d.month).split(" ")[0]} qoldig'i`}
+          value={formatSom(d.month_left ?? 0)}
+          hint="berilmagan qismi"
+          tone={(d.month_left ?? 0) > 0 ? "good" : (d.month_left ?? 0) < 0 ? "bad" : "plain"} />
       </div>
+      <p className="text-[11px] text-slate-400 -mt-2">
+        Jami ishlab topgan {formatSom(d.earned_total)} ({monthTitle(d.since)} dan beri) ·
+        jami olgan {formatSom(d.paid_total)}
+      </p>
 
       {/* --- Oylar --- */}
       <div>
@@ -97,12 +114,11 @@ export function TeacherFinance({
         ) : (
           <div className="rounded-xl border border-slate-200 overflow-hidden divide-y divide-slate-100">
             {!compact && (
-              <div className="grid grid-cols-[1.3fr_1fr_1fr_1fr_1fr_20px] gap-2 px-3 py-2 bg-slate-50 text-[11px] font-medium text-slate-500">
+              <div className="grid grid-cols-[1.3fr_1fr_1fr_1fr_20px] gap-2 px-3 py-2 bg-slate-50 text-[11px] font-medium text-slate-500">
                 <span>Oy</span>
                 <span className="text-right">Ishlab topgan</span>
-                <span className="text-right">Olgan</span>
+                <span className="text-right">Shu oy uchun berilgan</span>
                 <span className="text-right">Qoldiq</span>
-                <span className="text-right">Balans</span>
                 <span />
               </div>
             )}
@@ -123,8 +139,10 @@ export function TeacherFinance({
         <Info size={12} className="mt-0.5 shrink-0" />
         <span>
           "Ishlab topgan" — o'sha oyning yo'qlamalaridan, o'sha kundagi
-          stavka bilan. "Olgan" — to'lov sanasi bo'yicha. "Balans" — shu
-          oy oxirigacha yig'ilgan farq (musbat: sizga berilishi kerak).
+          stavka bilan. Berilgan pul har doim eng eski berilmagan oyning
+          oyligiga yoziladi (avgust oyligi sentabrda berilsa — avgustniki).
+          "Qoldiq" — o'sha oy oyligining hali berilmagan qismi; balans —
+          qoldiqlar yig'indisi.
         </span>
       </p>
     </div>
@@ -139,12 +157,9 @@ function MonthRow({
   compact: boolean;
   onToggle: () => void;
 }) {
-  const empty = !m.earned && !m.paid;
+  const empty = !m.earned && !m.paid_for && !m.paid_in_month;
   const leftTone =
     m.left > 0 ? "text-emerald-700" : m.left < 0 ? "text-red-700" : "text-slate-500";
-  const balTone =
-    m.balance_after > 0 ? "text-emerald-700"
-      : m.balance_after < 0 ? "text-red-700" : "text-slate-500";
 
   return (
     <div className={empty ? "opacity-60" : ""}>
@@ -153,14 +168,14 @@ function MonthRow({
         className={`w-full text-left px-3 py-2.5 hover:bg-slate-50 transition ${
           compact
             ? "flex items-center gap-2"
-            : "grid grid-cols-[1.3fr_1fr_1fr_1fr_1fr_20px] gap-2 items-center"
+            : "grid grid-cols-[1.3fr_1fr_1fr_1fr_20px] gap-2 items-center"
         }`}
       >
         {compact ? (
           <>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-slate-800">
-                {monthTitle(m.period)}
+                {m.title || monthTitle(m.period)}
                 {m.is_current && (
                   <span className="ml-1.5 text-[10px] font-normal text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">
                     hozirgi
@@ -176,7 +191,7 @@ function MonthRow({
                 {formatSom(m.earned)}
               </p>
               <p className="text-[11px] text-slate-500">
-                olgan {formatSom(m.paid)} ·{" "}
+                berilgan {formatSom(m.paid_for)} ·{" "}
                 <span className={leftTone}>
                   {m.left >= 0 ? "qoldiq" : "ortiqcha"} {formatSom(Math.abs(m.left))}
                 </span>
@@ -189,7 +204,7 @@ function MonthRow({
           <>
             <div>
               <p className="text-sm font-medium text-slate-800">
-                {monthTitle(m.period)}
+                {m.title || monthTitle(m.period)}
                 {m.is_current && (
                   <span className="ml-1.5 text-[10px] font-normal text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">
                     hozirgi
@@ -204,13 +219,10 @@ function MonthRow({
               {formatSom(m.earned)}
             </span>
             <span className="text-right text-sm text-slate-700">
-              {formatSom(m.paid)}
+              {formatSom(m.paid_for)}
             </span>
             <span className={`text-right text-sm font-medium ${leftTone}`}>
               {formatSom(m.left)}
-            </span>
-            <span className={`text-right text-sm font-medium ${balTone}`}>
-              {formatSom(m.balance_after)}
             </span>
             {open ? <ChevronUp size={16} className="text-slate-400" />
               : <ChevronDown size={16} className="text-slate-400" />}
@@ -222,8 +234,8 @@ function MonthRow({
         <div className="px-3 pb-3 space-y-3 bg-slate-50/60">
           {compact && (
             <div className="grid grid-cols-2 gap-2 pt-1">
-              <Mini label="Qoldiq (shu oy)" value={formatSom(m.left)} cls={leftTone} />
-              <Mini label="Balans (oy oxirida)" value={formatSom(m.balance_after)} cls={balTone} />
+              <Mini label="Shu oy uchun berilgan" value={formatSom(m.paid_for)} cls="text-slate-800" />
+              <Mini label="Qoldiq" value={formatSom(m.left)} cls={leftTone} />
             </div>
           )}
 
@@ -264,17 +276,16 @@ function MonthRow({
             <div className="flex items-center gap-1.5 mb-1">
               <Wallet size={12} className="text-slate-400" />
               <p className="text-[11px] font-medium text-slate-500">
-                Olingan pullar
+                Shu oy oyligi uchun berilgan pullar
               </p>
-              {m.paid > 0 && (
+              {m.paid_in_month > 0 && (
                 <span className="text-[11px] text-slate-400">
-                  · avans {formatSom(m.paid_advance)} · oylik {formatSom(m.paid_salary)}
-                  {m.paid_correction ? ` · tuzatish ${formatSom(m.paid_correction)}` : ""}
+                  · shu oyda qo'lga tekkan {formatSom(m.paid_in_month)}
                 </span>
               )}
             </div>
             {m.payments.length === 0 ? (
-              <p className="text-[11px] text-slate-400">Bu oyda pul olinmagan</p>
+              <p className="text-[11px] text-slate-400">Bu oy oyligi uchun hali pul berilmagan</p>
             ) : (
               <div className="space-y-1">
                 {m.payments.map((p) => (
@@ -284,7 +295,14 @@ function MonthRow({
                       {p.date ? formatDate(p.date) : "—"}
                     </span>
                     <span className="text-slate-500 w-14 shrink-0">{p.kind_label}</span>
-                    <span className="font-medium text-slate-900">{formatSom(p.amount)}</span>
+                    <span className="font-medium text-slate-900">
+                      {formatSom(p.applied)}
+                      {p.split && (
+                        <span className="text-slate-400 font-normal">
+                          {" "}({formatSom(p.amount)} dan)
+                        </span>
+                      )}
+                    </span>
                     {p.note && (
                       <span className="text-slate-400 truncate flex-1">{p.note}</span>
                     )}

@@ -2406,6 +2406,18 @@ export interface SalaryCard {
   earned_total: number;
   paid_total: number;
   balance: number;
+  // BALANS AJRATMASI (2026-09-05): o'tgan oy / bu oy qoldig'i alohida
+  month_title?: string;
+  prev_period?: string | null;
+  prev_title?: string | null;
+  prev_earned?: number;
+  prev_paid_for?: number;
+  prev_left?: number;
+  month_paid_for?: number;
+  month_left?: number;
+  older_left?: number;
+  future_left?: number;
+  balance_label?: string;
   carry: number;
   carry_label: string;
   advance_available: number;
@@ -2419,18 +2431,19 @@ export interface SalaryCard {
 /** Ustozning MOLIYA bo'limi — oylar bo'yicha oylik tarixi (2026-09-05). */
 export interface TeacherFinanceMonth {
   period: string;            // "2026-08"
+  title: string;             // "Avgust 2026"
   is_current: boolean;
   lessons: number;
   attendances: number;
   earned: number;
-  paid: number;
+  paid_in_month: number;     // shu oyda qo'lga tekkan (sana bo'yicha)
   paid_advance: number;
   paid_salary: number;
   paid_correction: number;
-  left: number;              // earned - paid (shu oy)
-  balance_after: number;     // shu oy oxiridagi yig'ilib boruvchi balans
+  paid_for: number;          // shu OY OYLIGI uchun berilgan (navbat qoidasi)
+  left: number;              // earned - paid_for
   by_group: SalaryGroupRow[];
-  payments: SalaryPaymentRow[];
+  payments: (SalaryPaymentRow & { applied: number; split: boolean })[];
 }
 
 export interface TeacherFinance {
@@ -2442,6 +2455,13 @@ export interface TeacherFinance {
   earned_total: number;
   paid_total: number;
   balance: number;
+  prev_period?: string | null;
+  prev_title?: string | null;
+  prev_left: number;
+  month_left: number;
+  older_left: number;
+  future_left: number;
+  balance_label: string;
   months: TeacherFinanceMonth[];
   can_pay: boolean;
   volunteer?: boolean;

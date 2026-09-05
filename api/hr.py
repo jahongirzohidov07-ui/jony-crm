@@ -11,7 +11,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 import audit
 import billing
@@ -463,14 +463,21 @@ def payroll_overview(
     period = f"{y:04d}-{m:02d}"
 
     q = scope_to_branch(db.query(models.Teacher), models.Teacher, user, branch_id)
-    teachers = q.filter(models.Teacher.is_active == 1).all()
+    teachers = (q.filter(models.Teacher.is_active == 1)
+                .options(joinedload(models.Teacher.branch)).all())
+
+    # 2026-09-05, Jahongir: "shunaqa yuklashlar juda sekin bolyabdi" —
+    # 72 ustoz x 2 hisob x har dars 6-8 so'rov = Vercel 504 edi. Endi
+    # hamma dars, yo'qlama va to'lov BIR MARTA o'qiladi, hisob xotirada.
+    ctx = billing.PayrollContext(db)
+    ctx.prefetch([t.id for t in teachers])
 
     rows = []
     for t in teachers:
-        e = _teacher_earned(db, t.id, since=start, until=end)
-        paid = _teacher_paid(db, t.id, since=start, until=end)
-        card_balance = round(_teacher_earned(db, t.id)["amount"]
-                             - _teacher_paid(db, t.id), 2)
+        e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+        paid = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
+        card_balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
+                             - _teacher_paid(db, t.id, ctx=ctx), 2)
         if e["amount"] == 0 and paid == 0:
             continue
         rows.append({

@@ -534,6 +534,280 @@ def attendance_counts(db: Session, lesson_ids) -> dict:
     return out
 
 
+
+# =====================================================================
+#  OYLIK SAHIFASI TEZLIGI (2026-09-05, Jahongir: "shunaqa yuklashlar
+#  juda sekin bolyabdi")
+#
+#  Muammo: Hisobotlar → Oyliklar → Ustozlar oyligi 72 ta ustoz uchun
+#  _teacher_earned() ni 2 martadan chaqiradi, u esa HAR DARS uchun
+#  grade_on() (1 so'rov) + lesson_student_count() (5-6 so'rov) +
+#  month_divisor() (oyiga 1 so'rov) qilardi. Butun tarix bo'yicha bu
+#  o'n minglab so'rov — Vercel 504 (FUNCTION_INVOCATION_TIMEOUT).
+#
+#  Yechim: hamma narsa BIR MARTA, to'plam bo'lib o'qiladi (PayrollContext),
+#  hisob-kitob xotirada. MANTIQ AYNAN O'ZGARMAGAN:
+#    - countable_attendance_many() har dars uchun
+#      countable_attendance(db, [dars], dars.group_id) bilan bir xil son;
+#    - GradeIndex.per_student() rate_per_student() bilan bir xil;
+#    - month_divisor() keshi oldindan xuddi o'sha so'rov natijasi bilan
+#      to'ldiriladi.
+#  test_payroll_speed.py eski va yangi yo'lni sintetik ma'lumotda
+#  solishtiradi (bir xil natija, so'rovlar soni bir necha barobar kam).
+# =====================================================================
+_CHUNK = 900
+
+
+def _chunks(seq, n: int = _CHUNK):
+    seq = list(seq)
+    for i in range(0, len(seq), n):
+        yield seq[i:i + n]
+
+
+def attendance_cutoff_many(db: Session, per_group: dict) -> dict:
+    """{group_id: {student_id: shu sanagacha sanaladi}}.
+
+    attendance_cutoff() ning ko'p guruhli varianti: har guruh uchun
+    javob attendance_cutoff(db, ids, group_id) bilan AYNAN bir xil,
+    faqat so'rovlar guruhlar bo'ylab birlashtirilgan (5 ta so'rov
+    o'rniga guruh soniga bog'liq bo'lmagan ~5 ta)."""
+    per_group = {gid: {int(i) for i in (ids or []) if i}
+                 for gid, ids in per_group.items()}
+    all_ids = sorted({i for ids in per_group.values() for i in ids})
+    if not all_ids:
+        return {gid: {} for gid in per_group}
+
+    status_closed: set = set()
+    prim_of: dict = {}
+    for chunk in _chunks(all_ids):
+        rows = (db.query(models.Student.id, models.Student.status,
+                         models.Student.group_id)
+                .filter(models.Student.id.in_(chunk)).all())
+        for sid, st, gid in rows:
+            if st not in _OPEN_STATUSES:
+                status_closed.add(sid)
+            prim_of[sid] = gid
+
+    gids = [g for g in per_group if g]
+    left: set = set()
+    alive: set = set()
+    if gids:
+        for chunk in _chunks(all_ids):
+            rows = (db.query(models.StudentGroupLink.student_id,
+                             models.StudentGroupLink.group_id,
+                             models.StudentGroupLink.active)
+                    .filter(models.StudentGroupLink.student_id.in_(chunk),
+                            models.StudentGroupLink.group_id.in_(gids))
+                    .all())
+            for sid, gid, act in rows:
+                if act == 0:
+                    left.add((sid, gid))
+                elif act == 1:
+                    alive.add((sid, gid))
+
+    closed_by_group: dict = {}
+    closed_all: set = set()
+    for gid, ids in per_group.items():
+        closed = ids & status_closed
+        if gid:
+            closed |= {s for s in ids if (s, gid) in left}
+            # Bog'lanish jadvali to'ldirilmagan bo'lsa: asosiy guruhi
+            # boshqa bo'lgan va shu guruhda faol bog'lanishi yo'q o'quvchi.
+            closed |= {s for s in ids
+                       if (s, gid) not in alive and prim_of.get(s) != gid}
+        closed_by_group[gid] = closed
+        closed_all |= closed
+
+    last: dict = {}
+    for chunk in _chunks(sorted(closed_all)):
+        rows = (db.query(models.Attendance.student_id,
+                         func.max(models.Lesson.date))
+                .join(models.Lesson,
+                      models.Lesson.id == models.Attendance.lesson_id)
+                .filter(models.Attendance.student_id.in_(chunk),
+                        models.Attendance.present.in_([1, 2]))
+                .group_by(models.Attendance.student_id).all())
+        for sid, d in rows:
+            last[sid] = d
+    return {gid: {sid: (last.get(sid) or _NEVER) for sid in closed}
+            for gid, closed in closed_by_group.items()}
+
+
+def countable_attendance_many(db: Session, lessons) -> dict:
+    """{lesson_id: sanaladigan yo'qlama soni} — ko'p guruh uchun birdan.
+
+    Har dars uchun javob countable_attendance(db, [dars], dars.group_id)
+    bilan aynan bir xil. Farqi: so'rovlar soni darslar/guruhlar soniga
+    emas, faqat ma'lumot hajmiga bog'liq."""
+    lessons = list(lessons)
+    if not lessons:
+        return {}
+    by_id = {l.id: l for l in lessons}
+    ids = list(by_id)
+    out = {lid: 0 for lid in by_id}
+
+    # 1) xom sonlar — har darsda nechta yo'qlama yozuvi bor
+    for lid, n in attendance_counts(db, ids).items():
+        if lid in out:
+            out[lid] = int(n or 0)
+
+    # 2) qaysi guruh darslarida qaysi o'quvchi uchraydi
+    per_group: dict = {}
+    for chunk in _chunks(ids):
+        rows = (db.query(models.Lesson.group_id, models.Attendance.student_id)
+                .join(models.Lesson,
+                      models.Lesson.id == models.Attendance.lesson_id)
+                .filter(models.Attendance.lesson_id.in_(chunk))
+                .distinct().all())
+        for gid, sid in rows:
+            per_group.setdefault(gid, set()).add(sid)
+    if not per_group:
+        return out
+
+    # 3) chiqqanlarning chegaralari (guruh bo'yicha)
+    cut = attendance_cutoff_many(db, per_group)
+    closed_all = sorted({sid for c in cut.values() for sid in c})
+    if not closed_all:
+        return out
+
+    # 4) faqat chiqqanlarning yozuvlari — dumini kesish.
+    #    Chegarasi eng erta bo'lganlardan boshlab bo'laklanadi, har
+    #    bo'lakda "sana > shu bo'lakning eng erta chegarasi" sharti
+    #    ortiqcha qatorlarni o'qimaslik uchun.
+    stop_min: dict = {}
+    for c in cut.values():
+        for sid, stop in c.items():
+            if sid not in stop_min or stop < stop_min[sid]:
+                stop_min[sid] = stop
+    closed_all.sort(key=lambda s: stop_min.get(s) or _NEVER)
+    gids = [g for g in per_group if g]
+    gcond = models.Lesson.group_id.in_(gids) if gids else None
+    if None in per_group or 0 in per_group:
+        nul = models.Lesson.group_id.is_(None) | (models.Lesson.group_id == 0)
+        gcond = nul if gcond is None else (gcond | nul)
+    for chunk in _chunks(closed_all):
+        q = (db.query(models.Attendance.lesson_id, models.Attendance.student_id)
+             .join(models.Lesson,
+                   models.Lesson.id == models.Attendance.lesson_id)
+             .filter(models.Attendance.student_id.in_(chunk)))
+        if gcond is not None:
+            q = q.filter(gcond)
+        floor = stop_min.get(chunk[0]) or _NEVER
+        if floor > _NEVER:
+            q = q.filter(models.Lesson.date > floor)
+        for lid, sid in q.all():
+            les = by_id.get(lid)
+            if les is None:
+                continue
+            stop = cut.get(les.group_id, {}).get(sid)
+            if stop is not None and les.date and les.date > stop:
+                out[lid] -= 1              # ketganning dumi — sanalmaydi
+    return out
+
+
+class PayrollContext:
+    """Oylik hisoblash uchun bir marta o'qiladigan ma'lumotlar.
+
+    _teacher_earned() shu orqali ishlaydi: guruhlar, daraja tarixi,
+    oy bo'luvchisi keshi va har dars uchun sanaladigan yo'qlama soni.
+    Bir nechta ustoz uchun (oyliklar sahifasi) prefetch() bilan hamma
+    darslar va to'lovlar ham bir yo'la o'qiladi."""
+
+    def __init__(self, db: Session):
+        self.db = db
+        self.groups = {g.id: g for g in db.query(models.Group).all()}
+        self.grades = GradeIndex(db)
+        self.mcache: dict = {}
+        self.counts: dict = {}
+        self._lessons: Optional[dict] = None
+        self._payments: Optional[dict] = None
+
+    # --- darslar ---------------------------------------------------
+    @staticmethod
+    def _lesson_q(db: Session):
+        return db.query(models.Lesson.id, models.Lesson.group_id,
+                        models.Lesson.teacher_id, models.Lesson.date)
+
+    def prefetch(self, teacher_ids) -> None:
+        ids = sorted({int(t) for t in teacher_ids if t})
+        self._lessons = {t: [] for t in ids}
+        self._payments = {t: [] for t in ids}
+        for chunk in _chunks(ids):
+            rows = (self._lesson_q(self.db)
+                    .filter(models.Lesson.teacher_id.in_(chunk),
+                            models.Lesson.held == 1)
+                    .order_by(models.Lesson.date, models.Lesson.id).all())
+            for r in rows:
+                self._lessons.setdefault(r.teacher_id, []).append(r)
+            pays = (self.db.query(models.TeacherPayment.teacher_id,
+                                  models.TeacherPayment.paid_on,
+                                  models.TeacherPayment.amount)
+                    .filter(models.TeacherPayment.teacher_id.in_(chunk))
+                    .order_by(models.TeacherPayment.id).all())
+            for p in pays:
+                self._payments.setdefault(p.teacher_id, []).append(p)
+        all_rows = [r for rows in self._lessons.values() for r in rows]
+        self.count_for(all_rows)
+        self.prefill_divisors(all_rows)
+
+    def lessons(self, teacher_id: int, since: Optional[date],
+                until: date) -> list:
+        """_teacher_earned() dagi so'rov bilan bir xil to'plam:
+        held=1, sana <= until, (since bo'lsa) sana >= since."""
+        if self._lessons is not None and teacher_id in self._lessons:
+            return [l for l in self._lessons[teacher_id]
+                    if l.date is not None and l.date <= until
+                    and (since is None or l.date >= since)]
+        q = (self._lesson_q(self.db)
+             .filter(models.Lesson.teacher_id == teacher_id,
+                     models.Lesson.held == 1,
+                     models.Lesson.date <= until))
+        if since:
+            q = q.filter(models.Lesson.date >= since)
+        return q.order_by(models.Lesson.date, models.Lesson.id).all()
+
+    # --- to'lovlar -------------------------------------------------
+    def payments(self, teacher_id: int):
+        """None — oldindan o'qilmagan (chaqiruvchi o'zi so'raydi)."""
+        if self._payments is None:
+            return None
+        return self._payments.get(teacher_id, [])
+
+    # --- yo'qlama sonlari -----------------------------------------
+    def count_for(self, lessons) -> dict:
+        missing = [l for l in lessons if l.id not in self.counts]
+        if missing:
+            self.counts.update(countable_attendance_many(self.db, missing))
+        return self.counts
+
+    # --- oy bo'luvchisi -------------------------------------------
+    def prefill_divisors(self, lessons) -> None:
+        """month_divisor() keshini xuddi o'sha so'rov natijasi bilan
+        oldindan to'ldiradi — oy/guruh boshiga 1 so'rov o'rniga 1 ta."""
+        keys = {(l.group_id, l.date.year, l.date.month) for l in lessons
+                if l.group_id and l.date and l.date >= SALARY_DIVISOR_SINCE
+                and l.group_id in self.groups}
+        keys -= set(self.mcache)
+        if not keys:
+            return
+        agg: dict = {}
+        for chunk in _chunks(sorted({k[0] for k in keys})):
+            rows = (self.db.query(models.Lesson.group_id, models.Lesson.date)
+                    .filter(models.Lesson.group_id.in_(chunk),
+                            (models.Lesson.cancelled.is_(None))
+                            | (models.Lesson.cancelled == 0)).all())
+            for gid, d in rows:
+                if d:
+                    k = (gid, d.year, d.month)
+                    agg[k] = agg.get(k, 0) + 1
+        for k in keys:
+            g = self.groups.get(k[0])
+            std = int(g.standard_lessons_per_month or 12)
+            if std <= 0:
+                std = 12
+            self.mcache[k] = max(std, int(agg.get(k, 0)))
+
+
 def rate_per_student(db: Session, group: models.Group,
                      teacher_id: Optional[int], on_date: date,
                      rates: Optional[dict] = None) -> float:

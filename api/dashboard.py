@@ -628,11 +628,14 @@ def report_teacher_payroll(
         tq = tq.filter(models.Teacher.id == me.id)
 
     rows = []
-    for t in tq.all():
-        e = _teacher_earned(db, t.id, since=start, until=end)
+    teachers = tq.all()
+    ctx = billing.PayrollContext(db)          # bir marta o'qish (2026-09-05)
+    ctx.prefetch([t.id for t in teachers])
+    for t in teachers:
+        e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
         if e["amount"] == 0:
             continue
-        paid = _teacher_paid(db, t.id, since=start, until=end)
+        paid = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
         rows.append({
             "teacher_id": t.id,
             "full_name": t.full_name,

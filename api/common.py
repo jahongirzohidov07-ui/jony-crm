@@ -2597,8 +2597,81 @@ def _task_out(db: Session, t: models.Task) -> dict:
     }
 
 def _teacher_earned(db: Session, teacher_id: int, *,
-                    since: date = None, until: date = None) -> dict:
+                    since: date = None, until: date = None,
+                    ctx: "billing.PayrollContext | None" = None) -> dict:
     """Ustozning berilgan davrda ishlab topgan puli.
+
+    until berilmasa — BUGUNGACHA. Ya'ni ustoz oy o'rtasida kirsa,
+    "shu kungacha ishlab topganim" ni ko'radi.
+
+    2026-09-05 (Jahongir: "shunaqa yuklashlar juda sekin bolyabdi"):
+    dars boshiga 6-8 ta so'rov o'rniga hamma narsa to'plam bo'lib
+    o'qiladi (billing.PayrollContext). Natija _teacher_earned_legacy()
+    bilan AYNAN bir xil — test_payroll_speed.py isbotlaydi. Bir nechta
+    ustoz/davr uchun chaqirilganda bitta ctx ni bo'lishib ishlatish
+    yana tezroq."""
+    until = until or date.today()
+    if ctx is None:
+        ctx = billing.PayrollContext(db)
+    lessons = ctx.lessons(teacher_id, since, until)
+    counts = ctx.count_for(lessons)
+    ctx.prefill_divisors(lessons)
+
+    total = 0.0
+    attendances = 0
+    by_group: dict[int, dict] = {}
+    by_period: dict[str, dict] = {}
+
+    for l in lessons:
+        g = ctx.groups.get(l.group_id)
+        if not g:
+            continue
+        # Stavka dars SANASIGA qarab olinadi: ustoz keyin ko'tarilgan
+        # bo'lsa ham o'tgan oyning darslari eski narxda qoladi.
+        per_student = ctx.grades.per_student(g, l.teacher_id, l.date)
+        rate = billing.per_attendance_rate_m(db, g, l.date, per_student,
+                                             ctx.mcache)
+        n = counts.get(l.id, 0)
+        amount = n * rate
+        total += amount
+        attendances += n
+
+        gr = by_group.setdefault(l.group_id, {
+            "group_id": l.group_id, "group": g.name,
+            "rate_per_student_month": per_student,
+            "standard_lessons": g.standard_lessons_per_month or 12,
+            "rate": rate, "lessons": 0, "attendances": 0, "amount": 0.0,
+        })
+        gr["lessons"] += 1
+        gr["attendances"] += n
+        gr["amount"] += amount
+        gr["rate"] = rate
+        gr["rate_per_student_month"] = per_student
+
+        per = l.date.isoformat()[:7]
+        pr = by_period.setdefault(per, {
+            "period": per, "lessons": 0, "attendances": 0, "amount": 0.0,
+        })
+        pr["lessons"] += 1
+        pr["attendances"] += n
+        pr["amount"] += amount
+
+    return {
+        "amount": round(total, 2),
+        "attendances": attendances,
+        "lessons": len(lessons),
+        "by_group": sorted(by_group.values(), key=lambda r: -r["amount"]),
+        "by_period": sorted(by_period.values(), key=lambda r: r["period"]),
+    }
+
+
+def _teacher_earned_legacy(db: Session, teacher_id: int, *,
+                    since: date = None, until: date = None) -> dict:
+    """ESKI (dars boshiga so'rov) yo'l — faqat test_payroll_speed.py
+    yangi yo'l bilan solishtirish uchun saqlangan. Ishlab chiqarishda
+    _teacher_earned() ishlaydi.
+
+    Ustozning berilgan davrda ishlab topgan puli.
 
     until berilmasa — BUGUNGACHA. Ya'ni ustoz oy o'rtasida kirsa,
     "shu kungacha ishlab topganim" ni ko'radi."""
@@ -3016,7 +3089,20 @@ def _set_grade(db: Session, t: models.Teacher, to_key: str, *,
     return ev
 
 def _teacher_paid(db: Session, teacher_id: int, *,
-                  since: date = None, until: date = None) -> float:
+                  since: date = None, until: date = None,
+                  ctx: "billing.PayrollContext | None" = None) -> float:
+    rows = ctx.payments(teacher_id) if ctx is not None else None
+    if rows is not None:
+        # prefetch() qilingan — xotiradan, so'rovsiz. Shart SQL bilan
+        # bir xil: paid_on bo'sh bo'lsa sana filtri uni tashlab ketadi.
+        tot = 0.0
+        for p in rows:
+            if since and (p.paid_on is None or p.paid_on < since):
+                continue
+            if until and (p.paid_on is None or p.paid_on > until):
+                continue
+            tot += p.amount or 0
+        return round(tot, 2)
     q = db.query(models.TeacherPayment).filter(
         models.TeacherPayment.teacher_id == teacher_id)
     if since:
@@ -3058,10 +3144,12 @@ def _salary_card(db: Session, t: models.Teacher) -> dict:
     today = date.today()
     m_start, _m_end = billing.month_bounds(today.year, today.month)
 
-    all_time = _teacher_earned(db, t.id)
-    this_month = _teacher_earned(db, t.id, since=m_start)
-    paid_all = _teacher_paid(db, t.id)
-    paid_month = _teacher_paid(db, t.id, since=m_start)
+    ctx = billing.PayrollContext(db)          # 3 hisob, 1 marta o'qish
+    ctx.prefetch([t.id])
+    all_time = _teacher_earned(db, t.id, ctx=ctx)
+    this_month = _teacher_earned(db, t.id, since=m_start, ctx=ctx)
+    paid_all = _teacher_paid(db, t.id, ctx=ctx)
+    paid_month = _teacher_paid(db, t.id, since=m_start, ctx=ctx)
 
     balance = round(all_time["amount"] - paid_all, 2)
 
@@ -3070,8 +3158,10 @@ def _salary_card(db: Session, t: models.Teacher) -> dict:
             .order_by(models.TeacherPayment.paid_on.desc()).limit(50).all())
 
     # O'tgan oylardan qolgan farq: bu oyning boshigacha bo'lgan balans
-    prev_earned = _teacher_earned(db, t.id, until=m_start - timedelta(days=1))
-    prev_paid = _teacher_paid(db, t.id, until=m_start - timedelta(days=1))
+    prev_earned = _teacher_earned(db, t.id, until=m_start - timedelta(days=1),
+                                  ctx=ctx)
+    prev_paid = _teacher_paid(db, t.id, until=m_start - timedelta(days=1),
+                              ctx=ctx)
     carry = round(prev_earned["amount"] - prev_paid, 2)
 
     return {
@@ -3168,10 +3258,12 @@ def _my_teacher_cards(db: Session, user: models.User,
         return []
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
-    earned = _teacher_earned(db, t.id, since=m_start)
-    paid = _teacher_paid(db, t.id, since=m_start)
-    balance = round(_teacher_earned(db, t.id)["amount"]
-                    - _teacher_paid(db, t.id), 2)
+    ctx = billing.PayrollContext(db)          # 2 hisob, 1 marta o'qish
+    ctx.prefetch([t.id])
+    earned = _teacher_earned(db, t.id, since=m_start, ctx=ctx)
+    paid = _teacher_paid(db, t.id, since=m_start, ctx=ctx)
+    balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
+                    - _teacher_paid(db, t.id, ctx=ctx), 2)
 
     gids = [g.id for g in db.query(models.Group).filter(
         models.Group.teacher_id == t.id).all()]

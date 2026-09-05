@@ -799,6 +799,8 @@ def teacher_overview(teacher_id: int,
 
     # Oxirgi 6 oy: oylik va o'quvchilar soni
     months = []
+    ctx = billing.PayrollContext(db)          # 6 hisob, 1 marta o'qish
+    ctx.prefetch([t.id])
     for i in range(5, -1, -1):
         y, m = today.year, today.month - i
         while m <= 0:
@@ -806,7 +808,8 @@ def teacher_overview(teacher_id: int,
         s = date(y, m, 1)
         e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
         earned = _teacher_earned(db, t.id, since=s,
-                                 until=min(e, today + timedelta(days=1)))
+                                 until=min(e, today + timedelta(days=1)),
+                                 ctx=ctx)
         cnt = (db.query(models.Attendance.student_id)
                .join(models.Lesson,
                      models.Lesson.id == models.Attendance.lesson_id)

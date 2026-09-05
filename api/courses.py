@@ -395,3 +395,188 @@ def cancel_price_change(chid: int, db: Session = Depends(get_db),
         raise HTTPException(403, "Bu kurs boshqa filialga tegishli")
     db.delete(ch); db.commit()
     return {"ok": True}
+
+
+# =====================================================================
+#  SENTABR 2026 NARX QOIDASI (2026-09-05)
+#
+#  Jahongir: "Avgustda o'qiganlar yani toliq qatnashgan yoki 480 ming
+#  tolaganlar uchun narxlar o'zgarishsiz ketadi deganman, sentabrdan
+#  yozilganlar uchun esa 540,000dan bo'lishi kerak stretinko filialdan
+#  tashqari, IT filialdan tashqari shunaqa, stretinkoda esa barchasi
+#  420,000 so'm. Shuning uchun 480ming dagilarni o'zgarishsin
+#  qoladiganlar shunaqa bo'lib qolishi kerak bir korib chiqib xato
+#  ketganlar bo'lsa togrlab chiqish kerak".
+#
+#  Jonli bazani tekshirganda (682 ta sentabr hisobi):
+#    - 65 ta guruh hamon 40 000/dars (480 000) da — yangi kelganlar
+#      ham 480 000 bilan hisoblanardi (1 ta topildi: Ubaydullaev
+#      Elmurod, 04.09 da kelgan);
+#    - Stretinkoda 2 ta guruh (Stariki, Nevada) 40 000 da — 2 ta
+#      o'quvchi 480 000 bilan hisoblangan, 420 000 bo'lishi kerak edi;
+#    - 33 ta yangi o'quvchi hali hisoblanmagan — faollashganda
+#      GURUH narxi olinadi, demak guruh narxi to'g'ri bo'lishi shart.
+#
+#  Qoida uch qadamda, TARTIB MUHIM:
+#    1) ESKILARNI QULFLASH — 1-sentabrgacha kelgan (yoki avgustda
+#       hisoblangan) faol o'quvchilar hozirgi guruh narxida (40 000)
+#       qulflanadi. Muzlatilgan/ketganga qulf qo'yilmaydi — qaytsa
+#       yangi narxda (mavjud qoida).
+#    2) GURUH NARXLARI — Stretinko: 35 000 (420 000); qolgan
+#       filiallar: 40 000 -> 45 000 (540 000). Stetch (IT, hamkor)
+#       ga tegilmaydi. Boshqa (g'alati) narxdagi guruhlarga
+#       tegilmaydi — ular ataylab qo'yilgan bo'lishi mumkin.
+#    3) XATO HISOBLARNI TUZATISH — sentabr uchun "standart oy" (12
+#       dars, chegirmasiz) hisoblangan, lekin qoida bo'yicha boshqa
+#       summa bo'lishi kerak bo'lganlarga FARQ yozuvi qo'shiladi
+#       (eski yozuv o'chirilmaydi): yangi o'quvchi 480 000 ->
+#       +60 000; Stretinko 480 000 -> -60 000.
+#
+#  Idempotent (SeedMark), hech narsa o'chirilmaydi, hammasi auditga
+#  yoziladi.
+# =====================================================================
+SEPT_2026_NEW_UNIT = 45000.0       # 540 000 / 12
+SEPT_2026_OLD_UNIT = 40000.0       # 480 000 / 12
+SEPT_2026_STRETINKO_UNIT = 35000.0 # 420 000 / 12
+SEPT_2026_CUTOFF = date(2026, 9, 1)
+SEPT_2026_PERIOD = "2026-09"
+_SEPT_SKIP_BRANCHES = ("stetch", "stech")   # IT hamkor filial
+
+
+def _branch_kind(name: str) -> str:
+    n = (name or "").strip().lower()
+    if n.startswith("stretinko"):
+        return "stretinko"
+    if n in _SEPT_SKIP_BRANCHES or "stech" in n or "stetch" in n:
+        return "skip"
+    return "main"
+
+
+def apply_sept_2026_pricing(db: Session, today: date = None) -> dict:
+    """Yuqoridagi qoidani bir marta qo'llaydi. Qaytaradi: nima qilindi."""
+    today = today or roles.local_today()
+    out = {"locked": 0, "groups_up": 0, "groups_stretinko": 0,
+           "fixed_new": 0, "fixed_stretinko": 0, "skipped_groups": 0}
+    branches = {b.id: _branch_kind(b.name) for b in
+                db.query(models.Branch).all()}
+    groups = db.query(models.Group).all()
+
+    # Avgustda hisoblanganlar — "eski" belgisi uchun
+    aug_ids = {sid for (sid,) in db.query(models.Payment.student_id)
+               .filter(models.Payment.kind == "charge",
+                       models.Payment.period == "2026-08").all()}
+
+    def is_old(st: models.Student) -> bool:
+        if st.id in aug_ids:
+            return True
+        return bool(st.enrolled_date and st.enrolled_date < SEPT_2026_CUTOFF)
+
+    # ---- 1) ESKILARNI QULFLASH (faqat asosiy filiallar) ----
+    for g in groups:
+        kind = branches.get(g.branch_id, "main")
+        if kind != "main":
+            continue
+        if round(g.lesson_price or 0) != SEPT_2026_OLD_UNIT:
+            continue          # 40 000 bo'lmagan guruh — qoidadan tashqari
+        for st in (db.query(models.Student)
+                   .filter(models.Student.group_id == g.id,
+                           models.Student.status == "active",
+                           models.Student.locked_lesson_price.is_(None))
+                   .all()):
+            if not is_old(st):
+                continue
+            st.locked_lesson_price = SEPT_2026_OLD_UNIT
+            st.locked_price_at = datetime.utcnow()
+            st.locked_price_note = ("Sentabr 2026: avgustda o'qigan — "
+                                    "480 000 saqlab qolindi")
+            out["locked"] += 1
+    db.flush()
+
+    # ---- 2) GURUH NARXLARI ----
+    for g in groups:
+        kind = branches.get(g.branch_id, "main")
+        cur = round(g.lesson_price or 0)
+        if kind == "skip":
+            out["skipped_groups"] += 1
+            continue
+        if kind == "stretinko":
+            if cur != SEPT_2026_STRETINKO_UNIT:
+                if cur == SEPT_2026_OLD_UNIT:
+                    g.lesson_price = SEPT_2026_STRETINKO_UNIT
+                    g.monthly_fee = SEPT_2026_STRETINKO_UNIT * (
+                        g.standard_lessons_per_month or 12)
+                    out["groups_stretinko"] += 1
+                else:
+                    out["skipped_groups"] += 1
+            continue
+        # asosiy filiallar
+        if cur == SEPT_2026_OLD_UNIT:
+            g.lesson_price = SEPT_2026_NEW_UNIT
+            g.monthly_fee = SEPT_2026_NEW_UNIT * (
+                g.standard_lessons_per_month or 12)
+            out["groups_up"] += 1
+        elif cur != SEPT_2026_NEW_UNIT:
+            out["skipped_groups"] += 1
+    db.flush()
+
+    # ---- 3) SENTABR HISOBLARINI TUZATISH ----
+    # Faqat ANIQ holat: bitta charge, 12 dars, standart oy, 480 000.
+    charges = (db.query(models.Payment, models.Student)
+               .join(models.Student,
+                     models.Payment.student_id == models.Student.id)
+               .filter(models.Payment.kind == "charge",
+                       models.Payment.period == SEPT_2026_PERIOD).all())
+    by_student: dict = {}
+    for p, st in charges:
+        by_student.setdefault(st.id, []).append((p, st))
+    for sid, items in by_student.items():
+        if len(items) != 1:
+            continue                      # allaqachon tuzatilgan/bo'lingan
+        p, st = items[0]
+        if round(abs(p.amount)) != SEPT_2026_OLD_UNIT * 12:
+            continue                      # 480 000 emas — chegirma/qisman
+        g = st.group
+        if g is None:
+            continue
+        kind = branches.get(g.branch_id, "main")
+        if kind == "skip":
+            continue
+        # Chegirmasi bor o'quvchiga tegmaymiz (summasi 480 000 bo'lsa ham
+        # chegirma alohida yozuv bo'lishi mumkin) — qo'lda ko'riladi
+        try:
+            from common import _student_discount_percent
+            if _student_discount_percent(db, st):
+                continue
+        except Exception:
+            pass
+        want = None
+        why = None
+        if kind == "stretinko":
+            want = SEPT_2026_STRETINKO_UNIT * 12
+            why = "Stretinko: barcha 420 000"
+        elif not is_old(st):
+            want = SEPT_2026_NEW_UNIT * 12
+            why = "sentabrdan kelgan: 540 000"
+        if want is None or round(want) == SEPT_2026_OLD_UNIT * 12:
+            continue
+        # Tizimdagi qoida bilan bir xil (_fz_set, edit_payment): oyning
+        # hisoblangan qatori JOYIDA to'g'rilanadi, eski summa auditda
+        # qoladi. Ikkinchi qator ochilmaydi — boshqa hisob-kitoblar
+        # "bir oyga bitta hisob" deb ishlaydi.
+        old_amt = p.amount
+        p.amount = -want
+        p.note = ((p.note or "") + f" · narx tuzatish ({why}): "
+                  f"{int(SEPT_2026_OLD_UNIT * 12):,} -> {int(want):,}"
+                  ).replace(",", " ")
+        p.updated_at = datetime.utcnow()
+        audit.log(db, None, entity="payment", action="update",
+                  entity_id=p.id, entity_label=st.full_name,
+                  field="amount", old_value=old_amt, new_value=-want,
+                  note=f"Sentabr 2026 narx qoidasi: {why}",
+                  branch_id=st.branch_id)
+        if kind == "stretinko":
+            out["fixed_stretinko"] += 1
+        else:
+            out["fixed_new"] += 1
+    db.commit()
+    return out

@@ -1167,3 +1167,27 @@ try:
                       f"stavkasi tarixga yozildi")
 except Exception:
     pass
+
+
+# ---------------------------------------------------------------------------
+# SENTABR 2026 NARX QOIDASI (2026-09-05) — bir martalik
+#
+# Jahongir: "Avgustda o'qiganlar ... 480 ming tolaganlar uchun narxlar
+# o'zgarishsiz ketadi, sentabrdan yozilganlar uchun esa 540,000dan
+# bo'lishi kerak stretinko filialdan tashqari, IT filialdan tashqari,
+# stretinkoda esa barchasi 420,000 so'm ... xato ketganlar bo'lsa
+# togrlab chiqish kerak".
+#
+# Tafsilot va tartib — courses.apply_sept_2026_pricing() ichida.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS33
+    from common import _seed_done as _sd33, _seed_mark as _sm33
+    from courses import apply_sept_2026_pricing as _sept33
+    with _VS33(engine) as _db33:
+        if not _sd33(_db33, "sept_2026_pricing_v1"):
+            _r33 = _sept33(_db33)
+            _sm33(_db33, "sept_2026_pricing_v1")
+            print(f"[seed] sentabr 2026 narx qoidasi: {_r33}")
+except Exception:
+    pass

@@ -129,6 +129,14 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_leads_deleted_at "
         "ON leads_deleted (deleted_at)",
     ]),
+    # 2026-09-03: daraja stavkasi tarixi (teacher_grade_rates). Jadval
+    # create_all orqali yaratiladi — bu qator SCHEMA_STAMP ni ko'tarib,
+    # jonli bazada create_all ishlashini ta'minlaydi (yangi jadval ham
+    # migratsiya talab qiladi, aks holda hech qachon yaratilmaydi).
+    ("0014_grade_rate_history", [
+        "CREATE INDEX IF NOT EXISTS ix_tgr_grade_eff "
+        "ON teacher_grade_rates (grade_key, effective_from)",
+    ]),
 ]
 
 

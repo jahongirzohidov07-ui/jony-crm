@@ -148,6 +148,32 @@ class Teacher(Base):
     groups = relationship("Group", back_populates="teacher")
 
 
+class TeacherGradeRate(Base):
+    """DARAJA STAVKASI TARIXI (2026-09-03).
+
+    Jahongir: "men tepadagi 80-160gacha bo'lgan summani 20,000dan
+    oshirmoqchiman sentabrdan ustozlarniki".
+
+    Ilgari stavka faqat teacher_grades.rate_per_student ustunida
+    turardi — u o'zgartirilsa, O'TGAN OYLARNING oyligi ham yangi
+    stavkada qayta hisoblanib ko'rinardi (avgust allaqachon eski
+    narxda to'langan bo'lsa ham). Endi har o'zgarish "qaysi oydan"
+    sanasi bilan shu yerga yoziladi va oylik hisobi dars sanasida
+    amalda bo'lgan stavkani oladi.
+
+    Yozuv o'chirilmaydi — tarix bo'lib qoladi."""
+    __tablename__ = "teacher_grade_rates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    grade_key = Column(String, index=True, nullable=False)
+    rate_per_student = Column(Float, nullable=False)
+    # Shu sanadan (oyning 1-kuni) amal qiladi
+    effective_from = Column(Date, index=True, nullable=False)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class TeacherGrade(Base):
     """Daraja jadvali. Hujjatdagi raqamlar bir marta shu yerga tushadi,
     keyin asoschi o'zgartiradi - kod ularga tegmaydi."""

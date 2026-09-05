@@ -527,9 +527,29 @@ def career_map(
     order = {g: i for i, g in enumerate(roles.GRADE_ORDER)}
     rows.sort(key=lambda r: (-order.get(r["grade"], 0), r["full_name"]))
 
+    # STAVKA TARIXI (2026-09-03): har daraja uchun "qaysi oydan qancha"
+    # ro'yxati — ekranda ko'rinadi, o'zgartirish oyni so'raydi.
+    hist: dict = {}
+    try:
+        for r in (db.query(models.TeacherGradeRate)
+                  .order_by(models.TeacherGradeRate.grade_key,
+                            models.TeacherGradeRate.effective_from).all()):
+            hist.setdefault(r.grade_key, []).append({
+                "from": r.effective_from.isoformat(),
+                "rate": r.rate_per_student,
+                "note": r.note, "by": r.created_by,
+            })
+    except Exception:
+        db.rollback()
+    grades_out = []
+    for g in _grade_rows(db):
+        row = _grade_row_out(g, counts)
+        row["rate_history"] = hist.get(g.key, [])
+        grades_out.append(row)
+
     return {
         "rows": rows,
-        "grades": [_grade_row_out(g, counts) for g in _grade_rows(db)],
+        "grades": grades_out,
         "ready": [r for r in rows if r["ready"]],
         "at_risk": [r for r in rows if r["should_demote"]],
         "remediation": [r for r in rows if r["in_remediation"]],
@@ -560,8 +580,28 @@ def update_grade(
     if not g:
         raise HTTPException(404, "Daraja topilmadi")
     given = payload.model_dump(exclude_unset=True)
+    eff = given.pop("effective_from", None)
     rate_changed = ("rate_per_student" in given
                     and given["rate_per_student"] != g.rate_per_student)
+    old_rate = g.rate_per_student
+
+    # STAVKA TARIXI (2026-09-03, Jahongir: "80-160gacha bo'lgan summani
+    # 20,000dan oshirmoqchiman SENTABRDAN"). Yangi stavka faqat
+    # tanlangan oydan amal qiladi; oldingi oylar eski stavkada qoladi.
+    # Tartib muhim: AVVAL eski stavka tarixga (bo'lmasa) yoziladi,
+    # KEYIN yangisi — aks holda o'tmish "hozirgi" ga tushib ketardi.
+    if rate_changed:
+        eff = billing.month_start(eff or roles.local_today())
+        billing.ensure_rate_history(db, g.key, old_rate)
+        billing.record_grade_rate(
+            db, g.key, given["rate_per_student"], eff,
+            by=user.full_name,
+            note=f"{old_rate} -> {given['rate_per_student']}")
+        audit.log(db, user, entity="teacher", action="salary_change",
+                  entity_label=g.label, field="rate_per_student",
+                  old_value=old_rate, new_value=given["rate_per_student"],
+                  note=f"{eff.strftime('%m.%Y')} dan")
+
     for k, v in given.items():
         setattr(g, k, v)
     db.commit()
@@ -574,7 +614,8 @@ def update_grade(
                 models.Teacher.grade == key).all():
             touched += _sync_group_rates(db, t, g.rate_per_student or 0)
         db.commit()
-    return {"ok": True, "groups_updated": touched}
+    return {"ok": True, "groups_updated": touched,
+            "effective_from": eff.isoformat() if rate_changed else None}
 
 def _minutes(t: str) -> int | None:
     return roles.time_to_minutes(t)

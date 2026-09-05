@@ -158,7 +158,13 @@ ck("coin baribir 0", coins(s1.id), 0)
 print("\n=== 4. MUZLATILGAN O'QUVCHI ===")
 r = c.get("/api/me/students", headers=H)
 names = [x["full_name"] for x in r.json()["rows"]]
-ck("ustozning ro'yxatida muzlatilgan YO'Q", "Muzlagan Bola" in names, False)
+# 2026-09-03, Jahongir: "ustozlarga muzlatilgan o'quvchilari korinsin
+# faqat yoqlamasi chiqmasin" — RO'YXATDA endi KO'RINADI (belgilangan
+# holda), DAVOMATDA esa hamon yo'q (pastda tekshiriladi).
+ck("ustozning ro'yxatida muzlatilgan KO'RINADI", "Muzlagan Bola" in names, True)
+_muz = [x for x in r.json()["rows"] if x["full_name"] == "Muzlagan Bola"]
+ck("...va muzlatilgan deb belgilangan",
+   _muz[0]["status"] if _muz else None, "frozen")
 ck("faol o'quvchi esa bor", "Kelgan Bola" in names, True)
 
 r = c.get(f"/api/groups/{g.id}/attendance?year={today.year}&month={today.month}",

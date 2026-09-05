@@ -200,6 +200,9 @@ class GradeUpdate(BaseModel):
     min_age: Optional[int] = None
     min_skill: Optional[float] = None
     level_pass_percent: Optional[float] = None
+    # STAVKA QAYSI OYDAN AMAL QILADI (2026-09-03). Bo'sh bo'lsa —
+    # joriy oyning 1-kunidan. O'tgan oylar eski stavkada qoladi.
+    effective_from: Optional[_dt.date] = None
 
 
 class GradeSet(BaseModel):

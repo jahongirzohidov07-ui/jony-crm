@@ -1143,3 +1143,27 @@ try:
                       f"bog'lanishi yopildi")
 except Exception:
     pass
+
+
+# ---------------------------------------------------------------------------
+# STAVKA TARIXI — BOSHLANG'ICH YOZUV (2026-09-03)
+#
+# Jahongir: "80-160gacha bo'lgan summani 20,000dan oshirmoqchiman
+# sentabrdan". Stavka oshirilishidan OLDIN hozirgi (eski) stavkalar
+# tarixga 1900-01-01 bilan yoziladi — shunda avgust va undan oldingi
+# oylar eski stavkada qoladi, yangisi tanlangan oydan ishlaydi.
+# Idempotent: tarixi bor darajaga tegilmaydi.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS32
+    from common import _seed_done as _sd32, _seed_mark as _sm32
+    import billing as _b32
+    with _VS32(engine) as _db32:
+        if not _sd32(_db32, "grade_rate_history_v1"):
+            _n32 = _b32.backfill_grade_rate_history(_db32)
+            _sm32(_db32, "grade_rate_history_v1")
+            if _n32:
+                print(f"[seed] {_n32} ta darajaning boshlang'ich "
+                      f"stavkasi tarixga yozildi")
+except Exception:
+    pass

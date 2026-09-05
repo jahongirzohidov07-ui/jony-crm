@@ -3226,6 +3226,8 @@ export interface GradeRow {
   level_pass_percent?: number | null;
   tone: string;
   teachers: number;
+  /** Stavka tarixi: qaysi oydan qancha (2026-09-03). */
+  rate_history?: { from: string; rate: number; note?: string | null; by?: string | null }[];
 }
 
 export interface GradeMissing {

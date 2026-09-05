@@ -191,11 +191,75 @@ def _log_db_error(db: Session, where: str, exc: Exception) -> None:
               # bu yerda qila oladigan boshqa ishonchli narsa qolmaydi.
 
 
-def grade_rates(db: Session) -> dict:
-    """Daraja -> bir o'quvchidan oylik summa."""
+# =====================================================================
+#  STAVKA TARIXI (2026-09-03)
+#
+#  Jahongir: "men tepadagi 80-160gacha bo'lgan summani 20,000dan
+#  oshirmoqchiman sentabrdan ustozlarniki".
+#
+#  Ilgari grade_rates() har doim BUGUNGI jadvalni qaytarardi. Daraja
+#  (grade_on) tarixdan olinardi-yu, stavka SUMMASI bugungi bo'lgani
+#  uchun stavka o'zgartirilsa o'tgan oylarning oyligi ham yangi
+#  narxda qayta hisoblanib ko'rinardi. Ekrandagi "o'tgan oylar eski
+#  stavkada qoladi" va'dasi amalda bajarilmasdi (avgust oyligi
+#  saqlanmagan edi).
+#
+#  Endi RateTable — oddiy dict (hozirgi stavkalar, eski chaqiruvlar
+#  o'zgarmaydi) + .on(daraja, sana): shu sanada amalda bo'lgan
+#  stavka. Tarix teacher_grade_rates jadvalida, har yozuv "qaysi
+#  oydan" bilan.
+# =====================================================================
+class RateTable(dict):
+    """Daraja -> hozirgi stavka (dict) + .on(daraja, sana) tarix."""
+
+    def __init__(self, current: dict, history=()):
+        super().__init__(current)
+        self.hist: dict = {}
+        for key, eff, rate in sorted(history, key=lambda x: (x[0], x[1])):
+            self.hist.setdefault(key, []).append((eff, rate))
+
+    def on(self, grade, on_date):
+        """Shu sanada amalda bo'lgan stavka. Tarix bo'lmasa — hozirgi.
+
+        Tarix bor, lekin hamma yozuvi sanadan KEYIN bo'lsa ham
+        hozirgi qaytadi — shuning uchun update_grade() yangi yozuvdan
+        oldin eski stavkani 1900-01-01 bilan yozib qo'yadi (o'tmish
+        aniq bo'lsin)."""
+        if grade is None:
+            return None
+        rows = self.hist.get(grade)
+        if not rows:
+            return self.get(grade)
+        found = None
+        for eff, rate in rows:
+            if eff <= on_date:
+                found = rate
+            else:
+                break
+        return found if found is not None else self.get(grade)
+
+
+def _rate_on(rates, grade, on_date):
+    """rates RateTable bo'lsa sanaga qarab, oddiy dict bo'lsa hozirgi."""
+    if hasattr(rates, "on"):
+        return rates.on(grade, on_date)
+    return rates.get(grade)
+
+
+def grade_rates(db: Session):
+    """Daraja -> bir o'quvchidan oylik summa (RateTable, dict kabi)."""
     try:
-        return {g.key: (g.rate_per_student or 0)
-                for g in db.query(models.TeacherGrade).all()}
+        current = {g.key: (g.rate_per_student or 0)
+                   for g in db.query(models.TeacherGrade).all()}
+        hist = []
+        try:
+            hist = [(r.grade_key, r.effective_from, r.rate_per_student or 0)
+                    for r in db.query(models.TeacherGradeRate).all()]
+        except SQLAlchemyError as e:
+            # Jadval hali yo'q bo'lsa — tarixsiz, eski xatti-harakat
+            db.rollback()
+            _log_db_error(db, "grade_rates.history", e)
+        return RateTable(current, hist)
     except SQLAlchemyError as e:
         # Faqat DB-darajasidagi xatolar (aloqa uzilishi, jadval
         # muammosi va h.k.) yutiladi - avvalgi "except Exception" hatto
@@ -205,7 +269,62 @@ def grade_rates(db: Session) -> dict:
         # guruhning qo'lda kiritilgan narxiga tushadi) - farqi shuki
         # endi bu holat KO'RINADI.
         _log_db_error(db, "grade_rates", e)
-        return {}
+        return RateTable({})
+
+
+_RATE_EPOCH = date(1900, 1, 1)
+
+
+def month_start(d: date) -> date:
+    return d.replace(day=1)
+
+
+def ensure_rate_history(db: Session, grade_key: str, current_rate) -> bool:
+    """Darajaning tarixi bo'sh bo'lsa, HOZIRGI stavkasini 1900-01-01
+    bilan yozadi — o'tmish aniq bo'lsin. Yozuv bo'lsa hech nima
+    qilmaydi. Qaytaradi: yozildimi."""
+    has = (db.query(models.TeacherGradeRate)
+           .filter(models.TeacherGradeRate.grade_key == grade_key).first())
+    if has is not None:
+        return False
+    db.add(models.TeacherGradeRate(
+        grade_key=grade_key, rate_per_student=float(current_rate or 0),
+        effective_from=_RATE_EPOCH, note="Boshlang'ich stavka",
+        created_by="Tizim"))
+    db.flush()
+    return True
+
+
+def record_grade_rate(db: Session, grade_key: str, rate: float,
+                      effective_from: date, by: str = None,
+                      note: str = None):
+    """Yangi stavkani tarixga yozadi. O'sha oy uchun yozuv bo'lsa —
+    yangilanadi (xato kiritilgan bo'lsa tuzatish mumkin), o'chirilmaydi."""
+    eff = month_start(effective_from)
+    row = (db.query(models.TeacherGradeRate)
+           .filter(models.TeacherGradeRate.grade_key == grade_key,
+                   models.TeacherGradeRate.effective_from == eff).first())
+    if row is None:
+        row = models.TeacherGradeRate(grade_key=grade_key,
+                                      effective_from=eff)
+        db.add(row)
+    row.rate_per_student = float(rate or 0)
+    row.created_by = by
+    row.note = note
+    db.flush()
+    return row
+
+
+def backfill_grade_rate_history(db: Session) -> int:
+    """Bir martalik: hamma darajaning hozirgi stavkasini tarixga
+    boshlang'ich yozuv sifatida qo'yadi. Idempotent."""
+    n = 0
+    for g in db.query(models.TeacherGrade).all():
+        if ensure_rate_history(db, g.key, g.rate_per_student):
+            n += 1
+    if n:
+        db.commit()
+    return n
 
 
 def grade_on(db: Session, teacher_id: int, on_date: date) -> Optional[str]:
@@ -284,7 +403,7 @@ class GradeIndex:
         """rate_per_student() bilan bir xil."""
         if getattr(group, "rate_manual", 0):
             return group.teacher_rate_per_student or 0
-        v = self.rates.get(self.on(teacher_id, on_date))
+        v = _rate_on(self.rates, self.on(teacher_id, on_date), on_date)
         if v:
             return v
         return group.teacher_rate_per_student or 0
@@ -427,7 +546,7 @@ def rate_per_student(db: Session, group: models.Group,
         return group.teacher_rate_per_student or 0
     if rates is None:
         rates = grade_rates(db)
-    v = rates.get(grade_on(db, teacher_id, on_date))
+    v = _rate_on(rates, grade_on(db, teacher_id, on_date), on_date)
     if v:
         return v
     # Daraja jadvali hali to'lmagan bo'lsa - eski xatti-harakat

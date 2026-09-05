@@ -326,6 +326,12 @@ function GradeForm({
   onClose: () => void;
   onSaved: () => void;
 }) {
+  // STAVKA QAYSI OYDAN (2026-09-03, Jahongir: "80-160gacha bo'lgan
+  // summani 20,000dan oshirmoqchiman SENTABRDAN"). Yangi stavka
+  // faqat shu oydan amal qiladi; o'tgan oylar eski stavkada qoladi.
+  const [effMonth, setEffMonth] = useState(
+    new Date().toISOString().slice(0, 7),
+  );
   const [f, setF] = useState({
     rate_per_student: String(row.rate_per_student ?? ""),
     min_months: String(row.min_months ?? ""),
@@ -355,6 +361,7 @@ function GradeForm({
         `/career/grades/${row.key}`,
         {
           rate_per_student: num(f.rate_per_student),
+          effective_from: effMonth ? `${effMonth}-01` : null,
           min_months: num(f.min_months),
           min_groups: num(f.min_groups),
           max_groups: num(f.max_groups),
@@ -421,6 +428,37 @@ function GradeForm({
             label="Bir o'quvchidan (so'm)"
             hint="oylik shundan hisoblanadi"
           />
+          <div>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              Yangi stavka qaysi oydan
+            </label>
+            <input
+              type="month"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              value={effMonth}
+              onChange={(e) => setEffMonth(e.target.value)}
+            />
+            <p className="text-xs text-slate-400 mt-0.5">
+              o'tgan oylar eski stavkada qoladi
+            </p>
+          </div>
+          {(row.rate_history?.length ?? 0) > 0 && (
+            <div className="col-span-2 rounded-lg bg-slate-50 border border-slate-200 px-3 py-2">
+              <p className="text-[11px] font-medium text-slate-500 mb-1">
+                Stavka tarixi
+              </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-slate-600">
+                {row.rate_history!.map((h) => (
+                  <span key={h.from}>
+                    {h.from < "1901-01-01"
+                      ? "boshidan"
+                      : h.from.slice(0, 7).split("-").reverse().join(".") + " dan"}
+                    : <b>{Math.round(h.rate).toLocaleString("ru-RU")}</b>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
           <F k="min_months" label="Eng kam tajriba (oy)" />
           <F k="min_groups" label="Eng kam guruh" />
           <F k="max_groups" label="Eng ko'p guruh" />

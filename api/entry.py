@@ -6600,6 +6600,13 @@ def _mc_charge_full(db: Session, today, deadline=None) -> tuple:
             # ESKI NARX HIMOYASI: o'quvchida qulflangan narx bo'lsa
             # o'sha ishlaydi (2026-08-15)
             full = roles.money(_billing.student_lesson_price(s, g) * std)
+            # CHEGIRMA (2026-09-06). Ilgari avtomat yechim chegirmani
+            # UMUMAN ko'rmasdi: oilaviy 10%, xodim farzandi va
+            # individual chegirmalar faqat faollashtirish/muzlatish/
+            # ko'chirish qayta hisoblarida ishlardi. Natijada chegirmali
+            # o'quvchidan oy boshida TO'LIQ narx yechilardi va admin
+            # qo'lda tuzatishga majbur bo'lardi.
+            full = _mc_after_discount(db, s, full)
             if full <= 0:
                 continue
             # Shu oy ichida qo'shilgan bo'lsa — faollashtirish yozuvi
@@ -6625,6 +6632,97 @@ def _mc_charge_full(db: Session, today, deadline=None) -> tuple:
             db.rollback()
             finished = False
     return n, finished
+
+
+def _dt_now():
+    from datetime import datetime as _d
+    return _d.utcnow()
+
+
+def _mc_after_discount(db: Session, s, amount: float) -> float:
+    """Chegirma qo'llangan summa (2026-09-06).
+
+    Jahongir: "toglrla hamma aytganingni" — auditda topilgan xato:
+    avtomat oylik yechim chegirmani hisobga olmasdi. Endi bitta joyda:
+    oilaviy + tasdiqlangan chegirmalar foizi (common._student_discount_percent
+    — u chegaralarni ham o'zi qo'llaydi) ayiriladi. Xato bo'lsa summa
+    O'ZGARMAY qaytadi: chegirma o'qilmagani uchun pul yo'qolmasin."""
+    try:
+        disc = float(M._student_discount_percent(db, s) or 0)
+    except Exception:
+        return amount
+    if disc <= 0:
+        return amount
+    return roles.money(amount * (1 - min(disc, 100.0) / 100.0))
+
+
+def _mc_expected(db: Session, s, g, std: int) -> float:
+    """Shu oy uchun kutilayotgan to'liq hisob (chegirma bilan)."""
+    return _mc_after_discount(
+        db, s, roles.money(_billing.student_lesson_price(s, g) * (std or 12)))
+
+
+def fix_discount_charges(db: Session, period: str = None,
+                         apply: bool = True) -> dict:
+    """Chegirma hisobga olinmay yechilgan oylik hisoblarni to'g'rilaydi.
+
+    FAQAT avtomat yozuvlar (created_by = _MC_BY) va faqat _MC_FROM dan
+    keyingi oylar ko'riladi. Qator O'CHIRILMAYDI — summa JOYIDA
+    to'g'rilanadi (tizimdagi boshqa tuzatishlar bilan bir xil qoida:
+    _fz_set, edit_payment, sentabr narx qoidasi), eski summa auditda
+    qoladi. Kamaytirish ham, oshirish ham mumkin emas — faqat
+    chegirmasiz yozilgan qatorni chegirmali summaga tushiradi
+    (ya'ni o'quvchi foydasiga)."""
+    out = {"period": period, "checked": 0, "fixed": 0, "sum": 0.0,
+           "rows": []}
+    if period is None:
+        _t = roles.local_today()
+        period = _mc_key(_t.year, _t.month)
+    if period < _MC_FROM:
+        return out
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.period == period,
+                    models.Payment.kind == "charge",
+                    models.Payment.created_by == _MC_BY).all())
+    for p in rows:
+        s = db.query(models.Student).get(p.student_id)
+        if s is None or s.group is None:
+            continue
+        out["checked"] += 1
+        g = s.group
+        std = int(g.standard_lessons_per_month or 12) or 12
+        full = roles.money(_billing.student_lesson_price(s, g) * std)
+        want = _mc_after_discount(db, s, full)
+        # Faqat "chegirmasiz yozilgan" holat: hozirgi summa to'liq
+        # narxga teng, kutilgani esa undan kam.
+        if want >= full - 0.5:
+            continue
+        if abs(abs(p.amount) - full) > 0.5:
+            continue          # boshqa sabab bilan o'zgartirilgan — tegmaymiz
+        diff = roles.money(full - want)
+        out["rows"].append({
+            "student_id": s.id, "name": s.full_name,
+            "branch": s.branch.name if s.branch else None,
+            "old": roles.money(full), "new": roles.money(want),
+            "back": diff,
+        })
+        out["fixed"] += 1
+        out["sum"] = roles.money(out["sum"] + diff)
+        if not apply:
+            continue
+        old_amt = p.amount
+        p.amount = -want
+        p.note = ((p.note or "") + f" · chegirma tuzatildi: "
+                  f"{int(full):,} -> {int(want):,}").replace(",", " ")
+        p.updated_at = _dt_now()
+        audit.log(db, None, entity="payment", action="update",
+                  entity_id=p.id, entity_label=s.full_name,
+                  field="amount", old_value=old_amt, new_value=-want,
+                  note="Avtomat oylik yechimda chegirma qo'llanmagan edi",
+                  branch_id=s.branch_id)
+    if apply and out["fixed"]:
+        db.commit()
+    return out
 
 
 def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
@@ -6665,7 +6763,7 @@ def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
         price = _billing.student_lesson_price(s, g)
         held = _B.billable_lessons_for_student(
             db, s, g, prev_end.year, prev_end.month)
-        actual = roles.money(price * held)
+        actual = _mc_after_discount(db, s, roles.money(price * held))
         back = roles.money(abs(p.amount) - actual)
         if back < 1:
             continue
@@ -9253,3 +9351,31 @@ if _pt_leads_v1 is not None:
                 r["placement"] = done.get(r.get("id"))
                 r["placement_open"] = open_.get(r.get("id"))
         return out
+
+
+# =====================================================================
+#  CHEGIRMASIZ YECHILGAN OYLIK HISOBLARNI TO'G'RILASH (2026-09-06)
+#
+#  Jahongir: "togrla hamma aytganingni" — auditda topilgan xato:
+#  avtomat oylik yechim (_mc_charge_full) chegirmani UMUMAN ko'rmasdi,
+#  chegirmali o'quvchidan to'liq narx yechilardi. Kod tuzatildi; bu
+#  yerda ALLAQACHON yechilgan qatorlar to'g'rilanadi: summa JOYIDA
+#  kamayadi (qator o'chirilmaydi), eski qiymat auditda qoladi.
+#  Har oy uchun alohida belgi — keyingi oyda yangisi bilan ishlaydi.
+# =====================================================================
+try:
+    from sqlalchemy.orm import Session as _VS34
+    from common import _seed_done as _sd34, _seed_mark as _sm34
+    from database import engine as _EN34
+    with _VS34(_EN34) as _db34:
+        _t34 = roles.local_today()
+        _key34 = f"disc_charge_fix_{_t34.year:04d}-{_t34.month:02d}"
+        if not _sd34(_db34, _key34):
+            _r34 = fix_discount_charges(_db34)
+            _sm34(_db34, _key34)
+            if _r34.get("fixed"):
+                print(f"[seed] chegirmasiz yechilgan hisoblar: "
+                      f"{_r34['fixed']}/{_r34['checked']}, "
+                      f"qaytarildi {_r34['sum']:,.0f}")
+except Exception:
+    pass

@@ -1106,6 +1106,47 @@ def create_discount(
     db.commit()
     return _discount_out(db, d)
 
+def _recharge_current_month(db: Session, st: models.Student) -> bool:
+    """Shu oyning AVTOMAT hisob qatorini chegirma bilan qayta yozadi.
+
+    Qator o'chirilmaydi — summa joyida to'g'rilanadi (tizimdagi umumiy
+    qoida), eski summa auditda qoladi. Faqat kamaytiradi: chegirma
+    berilgani uchun o'quvchidan ortiqcha yechilgani qaytariladi."""
+    try:
+        import entry as _E
+    except Exception:
+        return False
+    today = roles.local_today()
+    period = f"{today.year:04d}-{today.month:02d}"
+    g = st.group
+    if g is None:
+        return False
+    p = (db.query(models.Payment)
+         .filter(models.Payment.student_id == st.id,
+                 models.Payment.period == period,
+                 models.Payment.kind == "charge",
+                 models.Payment.created_by == getattr(_E, "_MC_BY", ""))
+         .first())
+    if p is None:
+        return False
+    std = int(g.standard_lessons_per_month or 12) or 12
+    want = _E._mc_expected(db, st, g, std)
+    if want >= abs(p.amount) - 0.5:
+        return False
+    old_amt = p.amount
+    p.amount = -want
+    p.note = ((p.note or "") + f" · chegirma qo'llandi: "
+              f"{int(abs(old_amt)):,} -> {int(want):,}").replace(",", " ")
+    p.updated_at = datetime.utcnow()
+    audit.log(db, None, entity="payment", action="update", entity_id=p.id,
+              entity_label=st.full_name, field="amount",
+              old_value=old_amt, new_value=-want,
+              note="Chegirma tasdiqlandi — shu oy hisobi qayta yozildi",
+              branch_id=st.branch_id)
+    db.commit()
+    return True
+
+
 @router.post("/api/discounts/{discount_id}/approve")
 def approve_discount(
     discount_id: int,
@@ -1156,6 +1197,15 @@ def approve_discount(
         sib = db.query(models.Student).get(d.referrer_student_id)
         if st and sib:
             _do_family_link(db, st, sib, user.username)
+    # CHEGIRMA TASDIQLANSA — SHU OY HISOBI DARROV TO'G'RILANADI
+    # (2026-09-06). Ilgari tasdiq faqat statusni o'zgartirardi: oy
+    # boshida yechilgan to'liq summa o'z holicha qolib, o'quvchi
+    # chegirmaga ega bo'lsa ham qarzdor bo'lib turaverardi.
+    if payload.approve and st:
+        try:
+            _recharge_current_month(db, st)
+        except Exception:
+            db.rollback()
     audit.log(db, user, entity="discount",
               action="approve" if payload.approve else "reject",
               entity_id=d.id, entity_label=st.full_name if st else "—",

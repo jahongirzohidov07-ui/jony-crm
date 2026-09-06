@@ -1260,6 +1260,11 @@ def add_payment(
 
     # Pul har doim butun so'm — kasr qoldiqlari yig'ilib ketmasin
     amount = roles.money(payload.amount)
+    # 0 so'mlik yozuv (2026-09-06 audit): hisobga hech narsa qo'shmaydi,
+    # lekin "yangi mijoz" statistikasini buzadi va ro'yxatni chalg'itadi.
+    if not amount:
+        raise HTTPException(400, "Summani kiriting — 0 so'mlik yozuv "
+                                 "saqlanmaydi")
     if payload.kind in ("charge", "discount") and amount > 0:
         # charges/discounts reduce balance, so store as negative internally
         amount = -abs(amount)

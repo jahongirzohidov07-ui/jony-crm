@@ -279,7 +279,7 @@ def add_manual_coins(
     user=Depends(require_role(*roles.COIN_ADMIN)),
 ):
     """Qo'lda coin berish yoki yechish (tanlov, tadbir, jarima va h.k.)."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if payload.amount == 0:
@@ -419,6 +419,13 @@ def list_students(
     db: Session = Depends(get_db),
     user=Depends(get_current_user),
 ):
+    # O'QUVCHI VA OTA-ONA BU RO'YXATNI KO'RMAYDI (2026-09-06 auditi).
+    # Ilgari bu yo'l faqat "kirgan bo'lsa bo'ldi" edi: o'quvchi o'z
+    # tokeni bilan filialidagi barcha o'quvchi ismi, telefoni va
+    # BALANSINI olishi mumkin edi. O'quvchi ilovasi bu yo'ldan
+    # foydalanmaydi — u /api/student/* yo'llari bilan ishlaydi.
+    if user.role in (roles.STUDENT, roles.PARENT):
+        raise HTTPException(403, "Bu ro'yxat sizga ochiq emas")
     backfill_missing_ids(db, "student", models.Student)
     # Guruhsiz + qarzsiz "Chiqib ketgan"lar ro'yxatda osilib qolmasin
     try:
@@ -520,6 +527,15 @@ def get_student(
     s = db.query(models.Student).get(student_id)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
+    # O'quvchi faqat O'ZINING kartasini ko'radi (2026-09-06 auditi);
+    # ota-ona umuman bu yo'ldan emas, maxsus havola bilan kiradi.
+    if user.role == roles.PARENT:
+        raise HTTPException(403, "Bu ma'lumot sizga ochiq emas")
+    if user.role == roles.STUDENT:
+        _me = (db.query(models.Student)
+               .filter(models.Student.user_id == user.id).first())
+        if not _me or _me.id != s.id:
+            raise HTTPException(403, "Bu ma'lumot sizga ochiq emas")
     out = schemas.StudentDetail.model_validate(s)
     if user.role in tuple(roles.OWN_GROUPS_ONLY):
         # Ustozga: o'z o'quvchisi bo'lsagina, pulsiz
@@ -1227,7 +1243,7 @@ def add_payment(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.CASH_ACCESS)),
 ):
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
 
@@ -1455,7 +1471,7 @@ def activate_student(
     Guruhga qo'shilgan o'quvchi avtomat faol bo'lmaydi - avval sinov
     darsida turadi. Faollashtirish shu tugma orqali, ongli ravishda
     bo'ladi: shundan keyingina u hisob-kitobga to'liq kiradi."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if s.status == "active":
@@ -1525,7 +1541,7 @@ def move_student_group(
 ):
     """Boshqa guruhga o'tkazadi. group_id bo'sh bo'lsa - guruhdan
     chiqaradi, lekin o'quvchi bazada qoladi (to'lov tarixi saqlanadi)."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
 
@@ -1682,7 +1698,7 @@ def student_add_group(
     PUL MANTIG'IGA TEGILMAYDI — oylik hisob hozircha asosiy guruh
     bo'yicha chiqadi. Ikki fan uchun hisob va 10% chegirma keyingi
     bosqichda, Jahongir qoidani aytgach qo'shiladi."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     gid = (payload or {}).get("group_id")
@@ -1768,7 +1784,7 @@ def remove_student_from_group(
          qarzi BOR   -> "Chiqib ketgan" bo'lib Qarzdorlar ro'yxatida
          qoladi, qarz to'liq to'langach AVTOMAT arxivga o'tadi.
     """
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if not s.group_id:
@@ -2668,7 +2684,7 @@ def set_leave_reason(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.TEACHING_STAFF)),
 ):
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if payload.reason not in roles.LEAVE_REASON_LABELS:
@@ -2711,7 +2727,7 @@ def link_student_account(
 ):
     """O'quvchiga kirish hisobi ochish. Shundan keyin u kirib coin
     balansini ko'radi va sovg'a so'ray oladi."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if db.query(models.User).filter(
@@ -2758,7 +2774,7 @@ def freeze_student(student_id: int, payload: schemas.FreezeIn,
                    user=Depends(require_role(*roles.FREEZE_ROLES))):
     """O'quvchini muzlatish. Qaytish sanasi MAJBURIY — shu sanada
     adminlarga 'aloqaga chiqing' vazifasi tushadi."""
-    st = db.query(models.Student).get(student_id)
+    st = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not st:
         raise HTTPException(404, "O'quvchi topilmadi")
     if payload.until <= roles.local_today():
@@ -2778,7 +2794,7 @@ def freeze_student(student_id: int, payload: schemas.FreezeIn,
 def student_to_trial(student_id: int, db: Session = Depends(get_db),
                      user=Depends(require_role(*roles.FREEZE_ROLES))):
     """Faol o'quvchini sinov darsiga qaytarish."""
-    st = db.query(models.Student).get(student_id)
+    st = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not st:
         raise HTTPException(404, "O'quvchi topilmadi")
     if st.status != "active":
@@ -2794,7 +2810,7 @@ def student_to_lead(student_id: int, db: Session = Depends(get_db),
                     user=Depends(require_role(*roles.FREEZE_ROLES))):
     """Faollashtirilmagan (sinovdagi) talabani lidlar doskasiga
     qaytarish."""
-    st = db.query(models.Student).get(student_id)
+    st = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not st:
         raise HTTPException(404, "O'quvchi topilmadi")
     if st.status != "trial":
@@ -2933,7 +2949,7 @@ def student_telegram(student_id: int, db: Session = Depends(get_db),
 def notify_debt(student_id: int, db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.CASH_ACCESS))):
     """Qarzdorlik eslatmasi — admin tugma bosganda ota-onaga boradi."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     if not s.telegram_chat_id:
@@ -2996,7 +3012,7 @@ def parent_link_regenerate(student_id: int, db: Session = Depends(get_db),
     """Eski havolani DARHOL bekor qiladi (endi ishlamaydi) va yangisini
     yaratadi. Token noto'g'ri odamga ketgan yoki muddati tugagan
     bo'lsa ishlatiladi."""
-    s = db.query(models.Student).get(student_id)
+    s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
     had_old = bool(s.parent_token)

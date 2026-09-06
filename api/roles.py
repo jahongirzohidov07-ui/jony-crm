@@ -1048,7 +1048,11 @@ REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER]
 REFUND_VIEW = list(dict.fromkeys(
     REFUND_REQUEST + REFUND_APPROVE + [SALES_HEAD]))
 # Sovg'a ro'yxati, coin qoidasi va qo'lda coin berish - faqat rahbariyat.
-COIN_ADMIN = FULL_ACCESS
+# NUSXA (list(...)), alias EMAS — 2026-09-06 auditi: entry.py bu
+# ro'yxatga HR menejerni qo'shadi; alias bo'lganida HR bilmagan holda
+# FULL_ACCESS ga (LC UP pul importi, shtat tasdig'i va h.k.) ega
+# bo'lib qolardi. Endi coin huquqi coin bilan cheklanadi.
+COIN_ADMIN = list(FULL_ACCESS)
 
 # COIN BALANSINI TO'G'RILASH (qalamcha) — asoschi va FILIAL RAHBARI.
 #
@@ -5609,6 +5613,9 @@ def password_ok(pw: str) -> bool:
 
 # Brute-force himoyasi: shu oynada shuncha xato — vaqtincha blok.
 LOGIN_MAX_FAILS = 5
+# Bitta IP dan (2026-09-06): bir markazdan bir nechta xodim kiradi,
+# shuning uchun chegara kattaroq — lekin cheksiz emas.
+LOGIN_MAX_FAILS_IP = 30
 LOGIN_WINDOW_MIN = 15
 
 # Ota-ona havolasi (login-siz, faqat token bilan): shuncha kundan

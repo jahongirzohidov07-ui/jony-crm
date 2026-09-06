@@ -39,7 +39,7 @@ from database import Base, engine, get_db, SessionLocal
 # ularni `main` modulidan kutadi. ----
 from auth_users import _guard_role_assignment, _smm_new_staff_task, _sync_user_branches
 from branches_rooms import _room_out
-from common import _cleanup_stale_support_assignments, _branch_in, _in_user_branches, _charge_from_activation, _charge_skipped, _check_enrolment, _check_teacher_load, _ensure_public_id, _ensure_teacher_card, _get_group_in_scope, _group_students, _hr_task_for, _lessons_left_in_month, _period_key, _raise_if_blocked, _student_discount_percent, _support_month, _sync_student_left_date, _teacher_of_user, _time_to_min, _utc_window, backfill_missing_ids, scope_to_branch, student_balance
+from common import _cleanup_stale_support_assignments, _branch_in, _in_user_branches, _charge_from_activation, _charge_skipped, _check_enrolment, _check_teacher_load, _ensure_public_id, _ensure_teacher_card, _get_group_in_scope, _get_student_in_scope, _group_students, _hr_task_for, _lessons_left_in_month, _period_key, _raise_if_blocked, _student_discount_percent, _support_month, _sync_student_left_date, _teacher_of_user, _time_to_min, _utc_window, backfill_missing_ids, scope_to_branch, student_balance
 from dashboard import _collection_bonus, _first_payment_dates, _new_client_bonus, _payment_first_dates, admin_kpi, compute_admin_kpi
 from groups_lessons import _sync_scheduled_lessons
 from inventory import _check_stock
@@ -60,9 +60,25 @@ if not _schema_ready():
 
 app = FastAPI(title="JonyOS API — Jony Academy boshqaruv tizimi")
 
+# CORS — faqat o'z domenlarimiz (2026-09-06 xavfsizlik auditi).
+# Ilgari allow_origins=["*"] + credentials edi: istalgan sayt
+# brauzerdagi sessiya bilan so'rov yubora olardi.
+_ALLOWED_ORIGINS = [
+    "https://jonyos.uz", "https://www.jonyos.uz",
+    "https://jony-crm.vercel.app",
+    "https://jonyacademy.uz", "https://www.jonyacademy.uz",
+    "https://jonyschool.uz", "https://www.jonyschool.uz",
+    "http://localhost:5173", "http://127.0.0.1:5173",
+]
+for _extra in (os.environ.get("EXTRA_ORIGINS") or "").split(","):
+    _extra = _extra.strip()
+    if _extra:
+        _ALLOWED_ORIGINS.append(_extra)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tighten before real deployment
+    allow_origins=_ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app",   # preview deploylar
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -34,7 +34,13 @@ router = APIRouter()
 
 def _login_guard(db: Session, username: str, ip: str = ""):
     """Brute-force himoyasi: 15 daqiqada 5 marta xato parol —
-    vaqtincha blok. Muvaffaqiyatli kirish hisoblagichni tozalaydi."""
+    vaqtincha blok. Muvaffaqiyatli kirish hisoblagichni tozalaydi.
+
+    2026-09-06 auditi: ilgari hisob FAQAT login bo'yicha yuritilardi.
+    Shunda bitta kompyuterdan turli loginlarga standart parolni
+    ("jonyjony") cheksiz sinab ko'rish mumkin edi. Endi BIR IP dan
+    kelgan xato urinishlar ham sanaladi (chegara kattaroq — bir
+    markazdan bir nechta xodim kiradi, ular xalaqit qilmasin)."""
     since = datetime.utcnow() - timedelta(minutes=roles.LOGIN_WINDOW_MIN)
     fails = db.query(models.LoginAttempt).filter(
         models.LoginAttempt.username == username,
@@ -44,6 +50,15 @@ def _login_guard(db: Session, username: str, ip: str = ""):
         raise HTTPException(
             429, f"Ko'p noto'g'ri urinish. {roles.LOGIN_WINDOW_MIN} "
                  "daqiqadan keyin qayta urinib ko'ring.")
+    if ip:
+        ip_fails = db.query(models.LoginAttempt).filter(
+            models.LoginAttempt.ip == ip,
+            models.LoginAttempt.success == 0,
+            models.LoginAttempt.created_at >= since).count()
+        if ip_fails >= roles.LOGIN_MAX_FAILS_IP:
+            raise HTTPException(
+                429, f"Ko'p noto'g'ri urinish. {roles.LOGIN_WINDOW_MIN} "
+                     "daqiqadan keyin qayta urinib ko'ring.")
 
 def _login_record(db: Session, username: str, ip: str, success: bool):
     try:
@@ -119,8 +134,17 @@ def login(payload: schemas.LoginRequest, request: Request,
         _ensure_month_charges(db, budget_s=5.0)
     except Exception:
         pass
+    # STANDART PAROL — MAJBURIY ALMASHTIRISH (2026-09-06).
+    # Login = telefon raqami (ochiq ma'lumot), parol esa hisob
+    # ochilganda "jonyjony" bo'ladi. Xodim uni almashtirmaguncha
+    # hisobiga har kim kirishi mumkin. Endi ilova birinchi ekranda
+    # parol so'raydi. O'quvchi/ota-ona bundan mustasno: ularning
+    # hisobi avtomat ochiladi va ichida pul/boshqaruv yo'q.
+    _must = (user.role not in (roles.STUDENT, roles.PARENT)
+             and verify_password(roles.DEFAULT_PASSWORD, user.password_hash))
     return schemas.Token(
-        access_token=token, role=user.role, full_name=user.full_name, branch_id=user.branch_id
+        access_token=token, role=user.role, full_name=user.full_name,
+        branch_id=user.branch_id, must_change_password=bool(_must),
     )
 
 @router.put("/api/auth/recovery-code")

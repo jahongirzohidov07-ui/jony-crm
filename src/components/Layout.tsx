@@ -80,7 +80,11 @@ const navItems = [
  */
 const FOUNDER_MOVED = ["/students", "/groups", "/users"];
 
-function ChangePasswordModal({ onClose }: { onClose: () => void }) {
+function ChangePasswordModal({ onClose, forced = false }: {
+  onClose: () => void;
+  /** Standart parol bilan kirilgan — yopib bo'lmaydi (2026-09-06) */
+  forced?: boolean;
+}) {
   const [current, setCurrent] = useState("");
   const [next, setNext] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -118,10 +122,21 @@ function ChangePasswordModal({ onClose }: { onClose: () => void }) {
       <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-slate-900">Parolni almashtirish</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
-            <X size={18} />
-          </button>
+          {!forced && (
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+              <X size={18} />
+            </button>
+          )}
         </div>
+
+        {forced && !done && (
+          <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200
+                        rounded-lg px-3 py-2 mb-3">
+            Hisobingizda standart parol turibdi. Login — telefon raqamingiz,
+            ya'ni uni har kim biladi. Davom etish uchun yangi parol
+            qo'ying.
+          </p>
+        )}
 
         {done ? (
           <div className="space-y-3">
@@ -198,6 +213,15 @@ export default function Layout() {
   const navigate = useNavigate();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showRecoveryModal, setShowRecoveryModal] = useState(false);
+  // STANDART PAROL: login javobida must_change_password kelgan bo'lsa
+  // (2026-09-06 xavfsizlik auditi) — oyna majburiy ochiladi.
+  const [forcePw, setForcePw] = useState(() => {
+    try {
+      return localStorage.getItem("jony_must_change_pw") === "1";
+    } catch {
+      return false;
+    }
+  });
 
   function onLogout() {
     logout();
@@ -564,8 +588,17 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      {showPasswordModal && (
-        <ChangePasswordModal onClose={() => setShowPasswordModal(false)} />
+      {(showPasswordModal || forcePw) && (
+        <ChangePasswordModal
+          forced={forcePw && !showPasswordModal}
+          onClose={() => {
+            setShowPasswordModal(false);
+            setForcePw(false);
+            try {
+              localStorage.removeItem("jony_must_change_pw");
+            } catch { /* e'tiborsiz */ }
+          }}
+        />
       )}
       {showRecoveryModal && (
         <RecoveryModal onClose={() => setShowRecoveryModal(false)} />

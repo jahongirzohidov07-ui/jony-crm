@@ -118,7 +118,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role: string;
         full_name: string;
         branch_id: number | null;
+        must_change_password?: boolean;
       }>("/auth/login", { username, password, remember });
+      // STANDART PAROL — MAJBURIY ALMASHTIRISH (2026-09-06 xavfsizlik
+      // auditi): login = telefon raqami, parol esa hisob ochilganda
+      // "jonyjony". Almashtirilmagan bo'lsa ilova birinchi ekranda
+      // so'raydi (Layout.tsx dagi parol oynasi ochiladi).
+      try {
+        if (res.must_change_password) {
+          localStorage.setItem("jony_must_change_pw", "1");
+        } else {
+          localStorage.removeItem("jony_must_change_pw");
+        }
+      } catch { /* localStorage yopiq bo'lsa — e'tiborsiz */ }
       setToken(res.access_token, remember);
       const u = { full_name: res.full_name, role: res.role, branch_id: res.branch_id };
       sessionStorage.removeItem("jony_crm_user");

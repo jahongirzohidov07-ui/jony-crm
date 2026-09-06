@@ -899,6 +899,24 @@ def _user_roles(db, user: models.User) -> list:
     return out
 
 
+def _get_student_in_scope(db, student_id: int, user: models.User):
+    """O'quvchini FILIAL CHEGARASI bilan oladi (2026-09-06 auditi).
+
+    Ilgari o'quvchiga oid amallar (to'lov kiritish, muzlatish,
+    faollashtirish, coin, qarz eslatmasi...) faqat rolni tekshirardi:
+    filial admini boshqa filial o'quvchisining ID sini yozib ish
+    ko'rishi mumkin edi. Guruhlar uchun bunday qorovul allaqachon bor
+    edi (_get_group_in_scope) — endi o'quvchilar uchun ham bitta joyda.
+
+    Filialsiz o'quvchi (endi kiritilgan) hammaga ochiq — null_ok=True."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    return s
+
+
 def _in_user_branches(db, user: models.User, branch_id,
                       null_ok: bool = False) -> bool:
     """Shu filial foydalanuvchiga tegishlimi (asosiy YOKI qo'shimcha).
@@ -6309,6 +6327,7 @@ __all__ = [
     "auto_freeze_notify",
     "_gam_card",
     "_in_user_branches",
+    "_get_student_in_scope",
     "_get_group_in_scope",
     "_grade_after",
     "_grade_card",

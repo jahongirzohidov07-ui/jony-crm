@@ -3025,9 +3025,8 @@ _drop_route("/api/students/{student_id}/activate", "POST")
 def activate_student_v2(student_id: int, payload: dict | None = None,
                         db: Session = Depends(get_db),
                         user=Depends(require_role(*roles.FREEZE_ROLES))):
-    s = db.query(models.Student).get(student_id)
-    if not s:
-        raise HTTPException(404, "O'quvchi topilmadi")
+    # FILIAL CHEGARASI (2026-09-06 auditi)
+    s = M._get_student_in_scope(db, student_id, user)
     if s.status == "active":
         raise HTTPException(400, "Bu o'quvchi allaqachon faol")
 
@@ -3711,9 +3710,8 @@ if _cur_move_group is not None:
                               force: bool = False,
                               db: Session = Depends(get_db),
                               user=Depends(require_role(*roles.FREEZE_ROLES))):
-        s = db.query(models.Student).get(student_id)
-        if not s:
-            raise HTTPException(404, "O'quvchi topilmadi")
+        # FILIAL CHEGARASI (2026-09-06 auditi)
+        s = M._get_student_in_scope(db, student_id, user)
         if payload.group_id:
             g = db.query(models.Group).get(payload.group_id)
             if g and s.branch_id and g.branch_id and \
@@ -7716,9 +7714,8 @@ def freeze_student_v2(student_id: int, payload: dict = Body(...),
     `from_date` — qaysi kundan muzlatiladi (bo'sh bo'lsa bugundan).
     Shu sanagacha o'tilgan darslar hisoblanib, oyning hisoblangan
     to'lovi to'g'rilanadi. `until` — qachon qaytadi (majburiy)."""
-    st = db.query(models.Student).get(student_id)
-    if not st:
-        raise HTTPException(404, "O'quvchi topilmadi")
+    # FILIAL CHEGARASI (2026-09-06 auditi)
+    st = M._get_student_in_scope(db, student_id, user)
     today = roles.local_today()
     until = _fz_date(payload.get("until"), "Qaytish sanasi")
     if until is None:
@@ -7805,9 +7802,8 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
 
     Muzlatilgan o'quvchi qaytganda: shu kundan oy oxirigacha qolgan
     darslar hisoblanib, oyning hisoblangan to'loviga qo'shiladi."""
-    s = db.query(models.Student).get(student_id)
-    if not s:
-        raise HTTPException(404, "O'quvchi topilmadi")
+    # FILIAL CHEGARASI (2026-09-06 auditi)
+    s = M._get_student_in_scope(db, student_id, user)
     if s.status == "active":
         raise HTTPException(400, "Bu o'quvchi allaqachon faol")
 

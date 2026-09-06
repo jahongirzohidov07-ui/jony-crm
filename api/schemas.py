@@ -63,6 +63,9 @@ class Token(BaseModel):
     role: str
     full_name: str
     branch_id: Optional[int] = None
+    # Standart parol ("jonyjony") bilan kirgan XODIM — ilova darrov
+    # parol almashtirishni so'raydi (2026-09-06 xavfsizlik auditi).
+    must_change_password: bool = False
 
 
 class UserOut(BaseModel):

@@ -522,6 +522,22 @@ def update_user(
     if payload.is_active is not None:
         was = target.is_active
         target.is_active = int(payload.is_active)
+        # USTOZ KARTASI BILAN SINXRON (2026-09-06 auditi). Ilgari
+        # xodim hisobi bo'shatilsa ustoz kartasi faol qolaverardi
+        # (yoki teskarisi) — Dostonbek holati aynan shundan chiqqan:
+        # karta yopiq, akkaunt faol, guruhda osilib qolgan.
+        if was != target.is_active:
+            try:
+                _tc = (db.query(models.Teacher)
+                       .filter(models.Teacher.user_id == target.id).first())
+                if _tc is not None and int(_tc.is_active or 0) != int(target.is_active):
+                    _tc.is_active = int(target.is_active)
+                    if not target.is_active:
+                        _tc.left_date = _tc.left_date or date.today()
+                    else:
+                        _tc.left_date = None
+            except Exception:
+                pass
         # Ishdan bo'shatilganda sana avtomat qo'yiladi va toifasi
         # belgilanmagan bo'lsa "neytral" bo'lib turadi - keyin HR
         # arxivdan o'zgartiradi.

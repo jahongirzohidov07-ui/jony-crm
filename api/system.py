@@ -157,6 +157,29 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
             db.rollback()
         except Exception:
             pass
+    # KUNIGA BIR MARTA ISHLASHI KERAK BO'LGAN, LEKIN "KIMDIR SAHIFANI
+    # OCHSA" ISHLAYDIGAN QOIDALAR (2026-09-06 auditi). Endi ular
+    # cron'da ham yuradi — hech kim sahifani ochmasa ham bajariladi.
+    # Har biri alohida try: biri yiqilsa qolgani ishlayveradi.
+    for _name, _fn in (
+        # Ustoz darajasi: ko'tarish/tushirish qoidalari. Ilgari faqat
+        # Karyera sahifasi ochilganda ishlardi.
+        ("grade_rules", lambda: __import__("hr")._apply_grade_rules(db)),
+        # Muddati tugagan / holati o'zgargan chegirmalar
+        ("expire_discounts", lambda: _expire_discounts(db)),
+        # Ketish xavfi: bayroq + administratorga shoshilinch vazifa
+        ("risk_scan", lambda: _risk_scan(db)),
+        # Bo'shatilgan support biriktirishlari
+        ("stale_support", lambda: _cleanup_stale_support_assignments(db)),
+    ):
+        try:
+            _fn()
+        except Exception:
+            try:
+                db.rollback()
+            except Exception:
+                pass
+
     bkp = {}
     try:
         import backup as _bkp

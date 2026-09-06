@@ -6661,9 +6661,15 @@ def _risk_scan(db: Session) -> int:
                   db.query(models.RiskFlag)
                   .filter(models.RiskFlag.active == 1).all()}
 
+    # KIMGA VAZIFA TUSHADI (2026-09-06 auditi tuzatdi).
+    # Ilgari faqat roles.ADMINISTRATOR qidirilardi. 2026-09-03 da
+    # ikkita "Administrator" roli birlashtirilib, hamma xodim
+    # SALES_MANAGER ga o'tkazilgan edi — natijada bayroq qo'yilardi,
+    # lekin VAZIFA HECH KIMGA tushmasdi (jimgina yo'qolardi).
+    _ADMIN_ROLES_RISK = (roles.SALES_MANAGER, roles.ADMINISTRATOR)
     admins: dict = {}
     for u in (db.query(models.User)
-              .filter(models.User.role == roles.ADMINISTRATOR,
+              .filter(models.User.role.in_(_ADMIN_ROLES_RISK),
                       models.User.is_active == 1).all()):
         admins.setdefault(u.branch_id, []).append(u)
 

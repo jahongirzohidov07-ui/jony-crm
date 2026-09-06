@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-  Check, Ear, Mic, PenLine, RotateCcw, Sparkles, Volume2, X,
+  Check, Ear, GraduationCap, Mic, PenLine, RotateCcw, Sparkles,
+  Volume2, X,
 } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
@@ -526,6 +527,28 @@ export default function StudentPractice() {
                 </button>
               ))}
             </div>
+            {/* JONY TEACHER — AI SUHBAT (2026-09-06 auditi: ekran bor
+                edi, lekin unga hech qayerdan havola yo'q edi). */}
+            {skill === "speaking" && (
+              <Link
+                to="/student/speaking"
+                className="w-full flex items-center gap-3 rounded-xl p-3.5 mb-2
+                           bg-gradient-to-r from-teal-600 to-teal-500 text-white
+                           active:scale-[0.99] transition"
+              >
+                <div className="w-9 h-9 rounded-lg bg-white/20 flex items-center
+                                justify-center shrink-0">
+                  <GraduationCap size={18} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold">Jony Teacher bilan suhbat</p>
+                  <p className="text-[11px] opacity-90">
+                    AI ustoz savol beradi — siz gapirasiz
+                  </p>
+                </div>
+              </Link>
+            )}
+
             <div className="space-y-1.5">
               {(KINDS[skill || ""] || [])
                 .filter(

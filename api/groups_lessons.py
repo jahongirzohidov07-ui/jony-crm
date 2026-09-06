@@ -1053,8 +1053,25 @@ def update_group(
 
     if "price_manual" in fields:
         fields["price_manual"] = 1 if fields["price_manual"] else 0
+    # PUL MAYDONLARI AUDITGA YOZILADI (2026-09-06 auditi: guruh narxi
+    # va ustoz stavkasi tahriri hech qayerda qayd etilmasdi — kim
+    # o'zgartirgani keyin topib bo'lmasdi).
+    _money_fields = ("lesson_price", "monthly_fee", "teacher_rate_per_student",
+                     "standard_lessons_per_month", "rate_manual",
+                     "price_manual", "course_id")
+    _before = {k: getattr(group, k, None) for k in _money_fields}
     for k, v in fields.items():
         setattr(group, k, v)
+    for k in _money_fields:
+        if k in fields and _before.get(k) != getattr(group, k, None):
+            try:
+                audit.log(db, user, entity="group", action="update",
+                          entity_id=group.id, entity_label=group.name,
+                          field=k, old_value=_before.get(k),
+                          new_value=getattr(group, k, None),
+                          branch_id=group.branch_id)
+            except Exception:
+                pass
     # KURS TANLANGANDA narx kursdan olinadi (2026-08-15). Faqat kurs
     # yoki narx belgisi o'zgarganda - qolgan tahrirlarga tegmaymiz.
     if ("course_id" in fields or "price_manual" in fields) \

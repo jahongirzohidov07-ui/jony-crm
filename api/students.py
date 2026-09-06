@@ -290,6 +290,17 @@ def add_manual_coins(
     db.add(entry)
     db.commit()
     db.refresh(entry)
+    # AUDIT (2026-09-06 auditi: qo'lda coin berish/yechish hech qayerda
+    # qayd etilmasdi — coin pulga aylanadi, iz qolishi shart).
+    try:
+        audit.log(db, user, entity="student", action="update",
+                  entity_id=s.id, entity_label=s.full_name,
+                  field="coin", old_value=None, new_value=payload.amount,
+                  note=(payload.note or "Qo'lda coin"),
+                  branch_id=s.branch_id)
+        db.commit()
+    except Exception:
+        db.rollback()
     return entry
 
 @router.put("/api/students/{student_id}/coins")
@@ -1565,6 +1576,27 @@ def move_student_group(
               entity_label=s.full_name, field="group",
               old_value=s.group.name if s.group else None, new_value=g.name,
               branch_id=s.branch_id)
+    # NARX QULFI QAYTA KO'RILADI (2026-09-06 auditi).
+    # Qulflangan narx ("eski narx himoyasi") o'quvchi BOSHQA narxli
+    # guruhga o'tganda ham saqlanib qolardi: 40 000 lik guruhdan
+    # 45 000 lik guruhga o'tsa ham eski narx davom etardi. Endi qulf
+    # faqat SHU guruh narxiga teng bo'lsagina qoladi; boshqacha
+    # bo'lsa olib tashlanadi (yangi guruh narxi ishlaydi) va audit
+    # yoziladi. Qulfni ataylab qo'yish yo'li (narx qulfi tugmasi)
+    # o'z joyida qoladi — kerak bo'lsa qayta qo'yiladi.
+    try:
+        _lock = getattr(s, "locked_lesson_price", None)
+        _newp = float(g.lesson_price or 0)
+        if _lock is not None and _newp and abs(float(_lock) - _newp) > 0.5:
+            audit.log(db, user, entity="student", action="update",
+                      entity_id=s.id, entity_label=s.full_name,
+                      field="locked_lesson_price", old_value=_lock,
+                      new_value=None, branch_id=s.branch_id,
+                      note=f"Guruh almashdi ({g.name}) — narx qulfi olib "
+                           f"tashlandi, yangi guruh narxi ishlaydi")
+            s.locked_lesson_price = None
+    except Exception:
+        pass
     old_group = s.group
     s.group_id = g.id
     # Filial guruh bilan birga o'zgaradi - aks holda hisobotlar chalkashadi.

@@ -38,7 +38,10 @@ export default function StudentReferral() {
   const [copied, setCopied] = useState("");
 
   useEffect(() => {
-    api.get<any>("/api/student/referral")
+    // 2026-09-06: manzil "/api/student/referral" yozilgan edi, api.get
+    // esa o'zi "/api" qo'shadi -> "/api/api/..." -> 404. Sahifa hech
+    // qachon ochilmagan.
+    api.get<any>("/student/referral")
       .then(setD)
       .catch((e) => setErr(e?.message || "Yuklab bo'lmadi"));
   }, []);

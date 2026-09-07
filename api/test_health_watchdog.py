@@ -61,12 +61,18 @@ db.add(models.SupportAssignment(user_id=su.id, group_id=g.id))
 db.commit()
 
 print("=== 1. Baza qorovuli ===")
+# Oddiy so'rov — bazaga TEGMAYDI (Neon bekorga uyg'onmasin)
 r = client.get("/api/health")
 ck("health 200", r.status_code, 200)
+ck("oddiy so'rov bazani uyg'otmaydi", r.json().get("db"), "skipped")
+# Cron chaqirsa — bazani tekshiradi
+r = client.get("/api/health", headers={"user-agent": "vercel-cron/1.0"})
 d = r.json()
-ck("bazani tekshiradi", d.get("db"), "ok")
+ck("cron: bazani tekshiradi", d.get("db"), "ok")
 ck("holat ok", d.get("status"), "ok")
 ck("javob vaqti o'lchanadi", isinstance(d.get("ms"), int), True)
+ck("qo'lda ?db_check=1 bilan ham",
+   client.get("/api/health?db_check=1").json().get("db"), "ok")
 
 print("\n=== 2. Baza yiqilsa — iz qoladi ===")
 before = db.query(models.ErrorLog).count()

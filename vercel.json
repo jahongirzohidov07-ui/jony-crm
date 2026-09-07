@@ -15,7 +15,7 @@
     },
     {
       "path": "/api/health",
-      "schedule": "*/5 3-17 * * *"
+      "schedule": "0,30 3-15 * * *"
     }
   ],
   "rewrites": [

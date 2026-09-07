@@ -55,7 +55,7 @@ def bootstrap(key: str, db: Session = Depends(get_db)):
     return {"ok": True, "message": "Admin user created"}
 
 @router.get("/api/health")
-def health(db: Session = Depends(get_db)):
+def health(request: Request, db: Session = Depends(get_db), db_check: int = 0):
     """Tiriklik tekshiruvi + BAZA QOROVULI (2026-09-06).
 
     Jahongir: "har 2 kunda bir vercel o'chib qolyabdi nima qilish
@@ -73,6 +73,18 @@ def health(db: Session = Depends(get_db)):
     bo'ladi — taxmin qilib o'tirilmaydi."""
     t0 = _time.monotonic()
     out = {"status": "ok", "time": datetime.utcnow().isoformat()}
+    # BAZAGA TEGISHNI CHEKLASH (2026-09-07, Jahongir: "bir oyda qancha
+    # pul ketadi" tekshiruvidan keyin). Neon FAQAT UYG'OQ turgan vaqti
+    # uchun pul oladi (o'tgan oy: 207 CU-soat = $21.97) va 5 daqiqa
+    # so'rovsiz qolsa o'zi uxlaydi. Shuning uchun bu yo'l bazani
+    # BEKORGA uyg'otmasligi kerak: baza faqat CRON chaqirganda (yoki
+    # ?db_check=1 bilan qo'lda) tekshiriladi. Oddiy "sayt tirikmi"
+    # so'rovi bazaga umuman tegmaydi.
+    _ua = (request.headers.get("user-agent") or "").lower()
+    if not (db_check or _ua.startswith("vercel-cron/")):
+        out["db"] = "skipped"
+        out["ms"] = int((_time.monotonic() - t0) * 1000)
+        return out
     try:
         db.execute(text("SELECT 1"))
         out["db"] = "ok"

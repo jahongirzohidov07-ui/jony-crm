@@ -586,30 +586,44 @@ def payroll_diag(
             if not g:
                 continue
             gl = [l for l in lessons if l.group_id == gid]
-            rate, per_student = billing.lesson_rate(db, g, gl[0], rates,
-                                                    mcache)
-            divisor = billing.month_divisor(db, g, gl[0].date, mcache)
+            # NARX HAR DARS UCHUN alohida — ustoz oy o'rtasida darajasi
+            # ko'tarilgan bo'lsa, oldingi darslar eski narxda qoladi.
+            # Shu sabab /api/payroll bilan aynan bir xil chiqadi.
+            l_rate: dict = {}
+            l_std: dict = {}
+            per_last = 0.0
+            for l in gl:
+                r_, ps_ = billing.lesson_rate(db, g, l, rates, mcache)
+                l_rate[l.id] = r_
+                std_ = int(g.standard_lessons_per_month or 12) or 12
+                l_std[l.id] = (ps_ or 0) / std_
+                per_last = ps_
+            divisor = billing.month_divisor(db, g, gl[-1].date, mcache)
             std = int(g.standard_lessons_per_month or 12)
-            planned = (db.query(func.count(models.Lesson.id))
-                       .filter(models.Lesson.group_id == gid,
-                               models.Lesson.date >= start,
-                               models.Lesson.date <= end,
-                               (models.Lesson.cancelled.is_(None))
-                               | (models.Lesson.cancelled == 0)
-                               ).scalar() or 0)
-            rate_std = (per_student or 0) / std if std else 0.0
+            all_month = (db.query(models.Lesson.date, models.Lesson.held,
+                                  models.Lesson.cancelled)
+                         .filter(models.Lesson.group_id == gid,
+                                 models.Lesson.date >= start,
+                                 models.Lesson.date <= end).all())
+            planned = sum(1 for _, _, c in all_month if not c)
+            dates = [d for d, _, c in all_month if not c]
+            dup = len(dates) - len(set(dates))
 
             raw_a = sum(int(raw.get(l.id) or 0) for l in gl)
             cnt_a = sum(int(cnt.get(l.id) or 0) for l in gl)
-            t_now += cnt_a * rate
-            t_raw += raw_a * rate
-            t_std += cnt_a * rate_std
+            amt_now = sum(int(cnt.get(l.id) or 0) * l_rate[l.id] for l in gl)
+            amt_raw = sum(int(raw.get(l.id) or 0) * l_rate[l.id] for l in gl)
+            amt_std = sum(int(cnt.get(l.id) or 0) * l_std[l.id] for l in gl)
+            t_now += amt_now
+            t_raw += amt_raw
+            t_std += amt_std
 
             # --- o'quvchi kesimida teshiklar (o'chirilgan yo'qlama) ---
             in_g = set()
             for l in gl:
                 in_g |= set(marks.get(l.id, {}))
             holes = []
+            tail_v = mid_v = 0.0
             tail_n = mid_n = 0
             for sid in in_g:
                 got = [l for l in gl if sid in marks.get(l.id, {})]
@@ -622,8 +636,10 @@ def payroll_diag(
                 mid = [l for l in miss if first_d < l.date < last_d]
                 if not tail and not mid:
                     continue
-                tail_n += len(tail)
-                mid_n += len(mid)
+                tv = sum(l_rate[l.id] for l in tail)
+                mv = sum(l_rate[l.id] for l in mid)
+                tail_n += len(tail); mid_n += len(mid)
+                tail_v += tv; mid_v += mv
                 holes.append({
                     "student_id": sid,
                     "name": names.get(sid),
@@ -632,7 +648,7 @@ def payroll_diag(
                     "last_mark": last_d.isoformat(),
                     "missing_after_last": len(tail),
                     "missing_inside": len(mid),
-                    "lost": round((len(tail) + len(mid)) * rate, 2),
+                    "lost": round(tv + mv, 2),
                 })
             holes.sort(key=lambda r: -r["lost"])
 
@@ -640,9 +656,9 @@ def payroll_diag(
             cut = billing.attendance_cutoff(db, in_g, gid)
             cut_rows = []
             for sid, stop in cut.items():
-                n = sum(1 for l in gl
-                        if sid in marks.get(l.id, {}) and l.date > stop)
-                if not n:
+                hit = [l for l in gl
+                       if sid in marks.get(l.id, {}) and l.date > stop]
+                if not hit:
                     continue
                 cut_rows.append({
                     "student_id": sid,
@@ -650,27 +666,30 @@ def payroll_diag(
                     "status": stats.get(sid),
                     "last_present": (stop.isoformat()
                                      if stop.year > 1900 else None),
-                    "excluded": n,
-                    "lost": round(n * rate, 2),
+                    "excluded": len(hit),
+                    "lost": round(sum(l_rate[l.id] for l in hit), 2),
                 })
             cut_rows.sort(key=lambda r: -r["lost"])
 
             g_out.append({
                 "group_id": gid, "group": g.name,
-                "rate_per_student_month": per_student,
+                "rate_per_student_month": per_last,
                 "standard_lessons": std,
                 "planned_lessons": int(planned),
+                "duplicate_lesson_rows": int(dup),
                 "divisor": divisor,
-                "rate": round(rate, 2),
-                "rate_if_standard": round(rate_std, 2),
+                "rate": round(l_rate[gl[-1].id], 2),
+                "rate_if_standard": round(l_std[gl[-1].id], 2),
                 "held_lessons": len(gl),
                 "attendances_raw": raw_a,
                 "attendances_counted": cnt_a,
-                "amount_now": round(cnt_a * rate, 2),
-                "lost_cutoff": round((raw_a - cnt_a) * rate, 2),
-                "lost_deleted_tail": round(tail_n * rate, 2),
-                "lost_deleted_inside": round(mid_n * rate, 2),
-                "lost_divisor": round(cnt_a * (rate_std - rate), 2),
+                "amount_now": round(amt_now, 2),
+                "lost_cutoff": round(amt_raw - amt_now, 2),
+                "lost_deleted_tail": round(tail_v, 2),
+                "lost_deleted_inside": round(mid_v, 2),
+                "deleted_tail_marks": tail_n,
+                "deleted_inside_marks": mid_n,
+                "lost_divisor": round(amt_std - amt_now, 2),
                 "cut_students": cut_rows[:40],
                 "hole_students": holes[:40],
             })

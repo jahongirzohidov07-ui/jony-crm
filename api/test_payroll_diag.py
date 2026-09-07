@@ -200,6 +200,39 @@ d4 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
 ck("bir xil", d4["teachers"][0]["amount_now"], row4["earned"])
 
 print()
+print("=== 7. Daraja oy o'rtasida ko'tarilsa ham /api/payroll bilan mos ===")
+# Ustoz 5-avgustdan boshqa darajaga o'tdi: 5-avgustgacha darslar eski
+# narxda, keyingilari yangi narxda. Diagnostika ham SHU tartibda
+# hisoblashi shart (ilgari butun oyga bitta narx olinardi).
+g.rate_manual = 0
+db.commit()
+db.add(models.TeacherGradeEvent(teacher_id=t.id, to_grade="junior",
+                                effective_from=date(2026, 1, 1)))
+db.add(models.TeacherGradeEvent(teacher_id=t.id, to_grade="expert",
+                                effective_from=date(2026, 8, 5)))
+db.commit()
+p7 = client.get("/api/payroll?year=2026&month=8", headers=H).json()
+row7 = [r for r in p7["rows"] if r["teacher_id"] == t.id][0]
+d7 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
+                headers=H).json()
+ck("oy ichida narx o'zgarsa ham amount_now bir xil",
+   d7["teachers"][0]["amount_now"], row7["earned"])
+ck("guruh summasi ham bir xil",
+   d7["teachers"][0]["groups"][0]["amount_now"],
+   round(row7["groups"][0]["amount"], 2))
+
+print()
+print("=== 8. Bir kunda ikkita dars yozuvi bo'lsa — ko'rsatiladi ===")
+dbl = models.Lesson(group_id=g.id, date=date(2026, 8, 13), teacher_id=t.id,
+                    held=0)
+db.add(dbl); db.commit()
+d8 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
+                headers=H).json()
+ck("dublikat dars yozuvi topildi",
+   d8["teachers"][0]["groups"][0]["duplicate_lesson_rows"], 1)
+ck("bo'luvchi 14 ga chiqdi", d8["teachers"][0]["groups"][0]["divisor"], 14)
+
+print()
 print("XULOSA: " + ("HAMMASI O'TDI" if not fails
                     else f"{len(fails)} ta xato: {fails}"))
 sys.exit(1 if fails else 0)

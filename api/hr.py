@@ -505,6 +505,201 @@ def payroll_overview(
         "can_pay": user.role in tuple(roles.SALARY_PAY),
     }
 
+@router.get("/api/payroll/diag")
+def payroll_diag(
+    year: int,
+    month: int,
+    teacher_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """NEGA O'TGAN OYNING OYLIGI O'ZGARDI? — faqat O'QIYDI.
+
+    2026-09-07, Jahongir: "31-avgust men oyliklarni screenshot qilib
+    oldim va oyliklarni tolagani moliyachiga berdim, lekin bugun kirib
+    qarasam avgust oyliklari kamayib qolgan".
+
+    Sabab: oylik hech qayerda SAQLANMAYDI — sahifa har ochilganda
+    yo'qlamalardan qaytadan hisoblanadi. Shuning uchun oy yopilgandan
+    KEYIN bo'lgan har qanday o'zgarish o'tgan oyning raqamini ham
+    o'zgartiradi:
+      1) "ketganning dumi" — o'quvchi keyin guruhdan chiqarilsa/arxivga
+         o'tsa, uning oxirgi kelgan darsidan keyingi yo'qlamalari
+         hisobdan chiqadi (o'tgan oydagilari ham);
+      2) o'chirilgan yo'qlama — avtomuzlatish va muzlatilganlarni
+         tozalash oxirgi 3 ta "kelmadi" yozuvini BAZADAN o'chiradi;
+      3) oy bo'luvchisi — oyga dars qo'shilsa bitta yo'qlama narxi
+         tushadi (160 000/12 = 13 333 → 160 000/13 = 12 308).
+
+    Bu endpoint uchalasini ham raqamlab beradi. Hech narsa
+    o'zgartirmaydi, hech narsa o'chirmaydi."""
+    start, end = billing.month_bounds(year, month)
+    q = db.query(models.Teacher).filter(models.Teacher.is_active == 1)
+    if teacher_id:
+        q = q.filter(models.Teacher.id == teacher_id)
+    teachers = q.order_by(models.Teacher.full_name).all()
+
+    rates = billing.grade_rates(db)
+    out = []
+    for t in teachers:
+        lessons = (db.query(models.Lesson)
+                   .filter(models.Lesson.teacher_id == t.id,
+                           models.Lesson.held == 1,
+                           models.Lesson.date >= start,
+                           models.Lesson.date <= end)
+                   .order_by(models.Lesson.date).all())
+        if not lessons:
+            continue
+        ids = [l.id for l in lessons]
+        raw = billing.attendance_counts(db, ids)
+        cnt = billing.countable_attendance_many(db, lessons)
+
+        gids = {l.group_id for l in lessons if l.group_id}
+        groups = {g.id: g for g in db.query(models.Group)
+                  .filter(models.Group.id.in_(gids)).all()} if gids else {}
+
+        marks: dict = {}          # (gid, sid) -> {lesson_id: present}
+        sids: set = set()
+        for chunk in billing._chunks(ids):
+            rows = (db.query(models.Attendance.lesson_id,
+                             models.Attendance.student_id,
+                             models.Attendance.present)
+                    .filter(models.Attendance.lesson_id.in_(chunk)).all())
+            for lid, sid, pr in rows:
+                sids.add(sid)
+                marks.setdefault(lid, {})[sid] = pr
+        names = {}
+        stats = {}
+        for chunk in billing._chunks(sorted(sids)):
+            for sid, nm, stt in (db.query(models.Student.id,
+                                          models.Student.full_name,
+                                          models.Student.status)
+                                 .filter(models.Student.id.in_(chunk)).all()):
+                names[sid] = nm
+                stats[sid] = stt
+
+        mcache: dict = {}
+        t_now = t_raw = t_std = 0.0
+        g_out = []
+        for gid in sorted(gids):
+            g = groups.get(gid)
+            if not g:
+                continue
+            gl = [l for l in lessons if l.group_id == gid]
+            rate, per_student = billing.lesson_rate(db, g, gl[0], rates,
+                                                    mcache)
+            divisor = billing.month_divisor(db, g, gl[0].date, mcache)
+            std = int(g.standard_lessons_per_month or 12)
+            planned = (db.query(func.count(models.Lesson.id))
+                       .filter(models.Lesson.group_id == gid,
+                               models.Lesson.date >= start,
+                               models.Lesson.date <= end,
+                               (models.Lesson.cancelled.is_(None))
+                               | (models.Lesson.cancelled == 0)
+                               ).scalar() or 0)
+            rate_std = (per_student or 0) / std if std else 0.0
+
+            raw_a = sum(int(raw.get(l.id) or 0) for l in gl)
+            cnt_a = sum(int(cnt.get(l.id) or 0) for l in gl)
+            t_now += cnt_a * rate
+            t_raw += raw_a * rate
+            t_std += cnt_a * rate_std
+
+            # --- o'quvchi kesimida teshiklar (o'chirilgan yo'qlama) ---
+            in_g = set()
+            for l in gl:
+                in_g |= set(marks.get(l.id, {}))
+            holes = []
+            tail_n = mid_n = 0
+            for sid in in_g:
+                got = [l for l in gl if sid in marks.get(l.id, {})]
+                if not got:
+                    continue
+                first_d = min(l.date for l in got)
+                last_d = max(l.date for l in got)
+                miss = [l for l in gl if sid not in marks.get(l.id, {})]
+                tail = [l for l in miss if l.date > last_d]
+                mid = [l for l in miss if first_d < l.date < last_d]
+                if not tail and not mid:
+                    continue
+                tail_n += len(tail)
+                mid_n += len(mid)
+                holes.append({
+                    "student_id": sid,
+                    "name": names.get(sid),
+                    "status": stats.get(sid),
+                    "marked": len(got),
+                    "last_mark": last_d.isoformat(),
+                    "missing_after_last": len(tail),
+                    "missing_inside": len(mid),
+                    "lost": round((len(tail) + len(mid)) * rate, 2),
+                })
+            holes.sort(key=lambda r: -r["lost"])
+
+            # --- "ketganning dumi" bilan kesilganlar ---
+            cut = billing.attendance_cutoff(db, in_g, gid)
+            cut_rows = []
+            for sid, stop in cut.items():
+                n = sum(1 for l in gl
+                        if sid in marks.get(l.id, {}) and l.date > stop)
+                if not n:
+                    continue
+                cut_rows.append({
+                    "student_id": sid,
+                    "name": names.get(sid),
+                    "status": stats.get(sid),
+                    "last_present": (stop.isoformat()
+                                     if stop.year > 1900 else None),
+                    "excluded": n,
+                    "lost": round(n * rate, 2),
+                })
+            cut_rows.sort(key=lambda r: -r["lost"])
+
+            g_out.append({
+                "group_id": gid, "group": g.name,
+                "rate_per_student_month": per_student,
+                "standard_lessons": std,
+                "planned_lessons": int(planned),
+                "divisor": divisor,
+                "rate": round(rate, 2),
+                "rate_if_standard": round(rate_std, 2),
+                "held_lessons": len(gl),
+                "attendances_raw": raw_a,
+                "attendances_counted": cnt_a,
+                "amount_now": round(cnt_a * rate, 2),
+                "lost_cutoff": round((raw_a - cnt_a) * rate, 2),
+                "lost_deleted_tail": round(tail_n * rate, 2),
+                "lost_deleted_inside": round(mid_n * rate, 2),
+                "lost_divisor": round(cnt_a * (rate_std - rate), 2),
+                "cut_students": cut_rows[:40],
+                "hole_students": holes[:40],
+            })
+
+        g_out.sort(key=lambda r: -r["amount_now"])
+        out.append({
+            "teacher_id": t.id, "full_name": t.full_name,
+            "amount_now": round(t_now, 2),
+            "lost_cutoff": round(t_raw - t_now, 2),
+            "lost_deleted": round(sum(r["lost_deleted_tail"]
+                                      + r["lost_deleted_inside"]
+                                      for r in g_out), 2),
+            "lost_divisor": round(t_std - t_now, 2),
+            "would_be_before": round(
+                t_raw + sum(r["lost_deleted_tail"] + r["lost_deleted_inside"]
+                            for r in g_out) + (t_std - t_now), 2),
+            "groups": g_out,
+        })
+    out.sort(key=lambda r: -(r["lost_cutoff"] + r["lost_deleted"]
+                             + r["lost_divisor"]))
+    return {
+        "period": f"{year:04d}-{month:02d}",
+        "teachers": out,
+        "total_now": round(sum(r["amount_now"] for r in out), 2),
+        "total_lost_cutoff": round(sum(r["lost_cutoff"] for r in out), 2),
+        "total_lost_deleted": round(sum(r["lost_deleted"] for r in out), 2),
+        "total_lost_divisor": round(sum(r["lost_divisor"] for r in out), 2),
+    }
+
 @router.get("/api/career")
 def career_map(
     branch_id: int | None = None,

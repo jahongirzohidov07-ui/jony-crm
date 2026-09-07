@@ -15,6 +15,8 @@ from sqlalchemy.orm import Session
 import audit
 import billing
 import migrations
+import time as _time
+
 import models
 import notify
 import roles
@@ -53,8 +55,72 @@ def bootstrap(key: str, db: Session = Depends(get_db)):
     return {"ok": True, "message": "Admin user created"}
 
 @router.get("/api/health")
-def health():
-    return {"status": "ok", "time": datetime.utcnow().isoformat()}
+def health(db: Session = Depends(get_db)):
+    """Tiriklik tekshiruvi + BAZA QOROVULI (2026-09-06).
+
+    Jahongir: "har 2 kunda bir vercel o'chib qolyabdi nima qilish
+    kerak". Vercel hisobida limit muammosi yo'q (o'tgan oy: 10 soat
+    CPU, $4.76 — $20 lik kreditdan ancha past), demak uzilish
+    ko'pincha BAZA tomonidan bo'ladi. Ilgari bu yo'l bazaga umuman
+    tegmasdi — shuning uchun "sayt ishlayaptimi" degan savolga
+    ishonchli javob bermasdi va uzilish IZSIZ o'tib ketardi.
+
+    Endi cron har 5 daqiqada shu yerni chaqirganda:
+      · bazaga eng arzon so'rov (SELECT 1) yuboriladi;
+      · javob bermasa — ErrorLog ga yoziladi va (Telegram ulangan
+        bo'lsa) asoschiga xabar ketadi: qachon, qaysi sabab.
+    Shunda keyingi safar "nega o'chdi" degan savolga aniq javob
+    bo'ladi — taxmin qilib o'tirilmaydi."""
+    t0 = _time.monotonic()
+    out = {"status": "ok", "time": datetime.utcnow().isoformat()}
+    try:
+        db.execute(text("SELECT 1"))
+        out["db"] = "ok"
+    except Exception as e:
+        out["status"] = "db_error"
+        out["db"] = type(e).__name__
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        _health_alarm(db, e)
+    out["ms"] = int((_time.monotonic() - t0) * 1000)
+    return out
+
+
+def _health_alarm(db, exc) -> None:
+    """Baza javob bermadi — izini qoldiramiz va asoschiga aytamiz."""
+    msg = f"{type(exc).__name__}: {exc}"[:900]
+    try:
+        db.rollback()
+    except Exception:
+        pass
+    try:
+        db.add(models.ErrorLog(path="/api/health", method="GET",
+                               user_name="qorovul (cron)", detail=msg))
+        db.commit()
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+    try:
+        import notify
+        if not notify.enabled():
+            return
+        when = roles.to_local(datetime.utcnow()).strftime("%d.%m.%Y %H:%M")
+        text_ = ("JONYOS - BAZA JAVOB BERMAYAPTI\n"
+                 f"Vaqt: {when}\n\n{msg}\n\n"
+                 "Sayt shu payt ishlamayotgan bo'lishi mumkin. "
+                 "Sabab odatda bazada (Neon) — kvota yoki ulanish "
+                 "chegarasi.")
+        for u in (db.query(models.User)
+                  .filter(models.User.role == roles.FOUNDER,
+                          models.User.is_active == 1,
+                          models.User.telegram_chat_id.isnot(None)).all()):
+            notify.send(u.telegram_chat_id, text_)
+    except Exception:
+        pass
 
 @router.get("/api/reference")
 def reference_lists(

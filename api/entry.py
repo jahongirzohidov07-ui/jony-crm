@@ -377,13 +377,18 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
                                  "allaqachon kiritilgan")
 
     row = models.SupportSession(
-        teacher_id=t.id, group_id=g.id, date=d,
+        teacher_id=t.id, group_id=g.id, branch_id=g.branch_id, date=d,
         start_time=payload.start_time.strip(),
         end_time=end_time,
         minutes=minutes,
         students_count=payload.students_count,
         note=(payload.note or "").strip() or None,
-        created_by=user.full_name)
+        # created_by — SON (users.id), ISM EMAS. 2026-09-06: bu yerda
+        # user.full_name yozilardi va Postgres har safar xato berardi
+        # ("invalid input syntax for type integer") — support soatini
+        # SAQLAY OLMASDI (jonli xato jurnalida 12 marta, 8 xodimda).
+        # me.py va yo'qlamadan avtomat yozuvda to'g'ri edi.
+        created_by=user.id)
     db.add(row)
     db.commit()
     return {"ok": True, "id": row.id, "minutes": minutes}

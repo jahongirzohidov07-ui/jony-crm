@@ -357,18 +357,29 @@ export function ExamOrderQueueTab() {
         <span className="px-2 py-1 rounded-lg text-xs font-medium bg-emerald-100 text-emerald-700">
           {d.accepted} qabul qilingan
         </span>
+        {!filter && (
+          <span className="text-[11px] text-slate-400">
+            o'tkazilganlar tanlagichda
+          </span>
+        )}
         <div className="flex-1" />
+        {/* 2026-09-07, Jahongir: "bo'lingan testlarni betdan o'chirsa
+            bo'ladimi, yangi testlar tepada emas paaastda ko'p ketarkan".
+            Sukut bo'yicha faqat OCHIQ so'rovlar ko'rinadi (yangi +
+            qabul qilingan), yangilari tepada. O'tkazilganlar
+            o'chirilmaydi — shu tanlagichdan ochiladi. */}
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="border border-slate-300 rounded-lg px-2 py-1.5 text-sm"
         >
-          <option value="">Barchasi</option>
+          <option value="">Ochiq so'rovlar</option>
           {d.statuses.map((s) => (
             <option key={s.key} value={s.key}>
               {s.label}
             </option>
           ))}
+          <option value="all">Barchasi (tarix bilan)</option>
         </select>
       </div>
 

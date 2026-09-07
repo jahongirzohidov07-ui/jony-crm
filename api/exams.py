@@ -627,12 +627,43 @@ def exam_orders_queue(status: str | None = None,
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         q = q.filter(models.ExamOrder.branch_id.in_(
             _user_branch_ids(db, user) or [-1]))
-    if status:
+    # SUKUT BO'YICHA FAQAT OCHIQ SO'ROVLAR (2026-09-07, Jahongir:
+    # "bo'lingan testlarni betdan o'chirsa bo'ladimi, yangi testlar
+    # tepada emas paaastda ko'p ketarkan, noqulay bo'lyapti").
+    # HECH NARSA O'CHIRILMAYDI — o'tkazilgan/rad etilgan so'rovlar
+    # bazada qoladi va "O'tkazildi" filtri yoki "Barchasi" bilan
+    # ochiladi. Ro'yxat esa kundalik ishga kerakli qismini
+    # ko'rsatadi: yangi va qabul qilinganlar.
+    if status == "all":
+        pass
+    elif status:
         q = q.filter(models.ExamOrder.status == status)
+    else:
+        q = q.filter(models.ExamOrder.status.in_(roles.EXAM_ORDER_OPEN))
     rows = q.order_by(models.ExamOrder.date, models.ExamOrder.id).limit(
         200).all()
     out = [_exam_order_out(db, o) for o in rows]
     today = roles.local_today()
+
+    # TARTIB: YANGI SO'ROVLAR ENG TEPADA (2026-09-07).
+    # Ilgari ro'yxat faqat sana bo'yicha o'sish tartibida edi —
+    # eski, allaqachon yopilgan so'rovlar tepani egallab, yangi
+    # tushgan so'rov pastda qolib ketardi.
+    #   1) yangi (qabul qilinmagan) — sanasi yaqinlari birinchi
+    #      (bugun/ertaga bo'ladigani eng tepada);
+    #   2) qabul qilinganlar — sanasi yaqinlari birinchi;
+    #   3) yopilganlar (o'tkazildi, rad etildi, bekor) — eng
+    #      yangisi birinchi.
+    _rank = {"new": 0, "accepted": 1}
+    def _sort_key(r):
+        grp = _rank.get(r["status"], 2)
+        d = r.get("date") or ""
+        if grp == 2:
+            # yopilganlar: eng yangisi tepada (sana teskari)
+            return (grp, tuple(-ord(c) for c in d), -r["id"])
+        return (grp, tuple(ord(c) for c in d), r["id"])
+    out.sort(key=_sort_key)
+
     return {
         "rows": out,
         "new": sum(1 for r in out if r["status"] == "new"),

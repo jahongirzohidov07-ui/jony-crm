@@ -854,7 +854,8 @@ def ielts_listening_answer(payload: dict = Body(default={}),
     db.add(models.SkillAttempt(
         student_id=s.id, skill="listening", ref=ref,
         correct=1 if ok else 0, answer=given[:300], date=date.today()))
-    db.commit()
+    if not (ok and not was):     # XP bo'lsa commit'ni award_xp qiladi
+        db.commit()
 
     xp_given = 0.0
     if ok and not was:
@@ -1443,12 +1444,23 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
 
 @router.post("/api/student/vocab/answer")
 def vocab_answer(payload: schemas.VocabAnswerIn,
+                 want_skills: int = 0,
                  db: Session = Depends(get_db),
                  user=Depends(require_role(roles.STUDENT))):
     """Bitta javobni yozadi va to'g'ri bo'lsa ball/XP beradi.
 
     To'g'riligini SERVER hal qiladi (mijozning "correct: true" degan
-    so'ziga ishonmaymiz) — so'z bazadan olinadi va solishtiriladi."""
+    so'ziga ishonmaymiz) — so'z bazadan olinadi va solishtiriladi.
+
+    DARAJA KARTASI FAQAT SO'RALGANDA (2026-09-07). Ilgari har javobda
+    _skills_card() hisoblanardi — u o'quvchining BARCHA urinishlari
+    bo'yicha 5 ta yig'indi so'rovi qiladi va o'quvchi qancha ko'p
+    mashq qilsa, shuncha qimmatlashadi. Ilova esa bu maydonni
+    UMUMAN ishlatmaydi (mashq ekranlarida daraja ko'rsatilmaydi —
+    u "Asosiy" va "Profil" sahifalarida alohida so'raladi). Kuniga
+    ~2400 javob x 5 og'ir so'rov bekorga ketardi va Neon hisobini
+    (bazaning uyg'oq turgan vaqti) shishirardi. Kerak bo'lsa
+    ?want_skills=1 bilan so'raladi — javob mazmuni o'zgarmaydi."""
     s = _me(db, user)
     if payload.game not in roles.VOCAB_GAME_KEYS:
         raise HTTPException(400, "Bunday o'yin yo'q")
@@ -1478,7 +1490,10 @@ def vocab_answer(payload: schemas.VocabAnswerIn,
         student_id=s.id, word_id=w.id, game=payload.game,
         correct=1 if ok else 0, answer=(payload.answer or "")[:200],
         date=date.today()))
-    db.commit()
+    # To'g'ri javobda commit'ni award_xp qiladi — ikki marta
+    # tasdiqlash (ikki tarmoq borishi) shart emas (2026-09-07).
+    if not ok:
+        db.commit()
 
     xp_given = 0.0
     if ok:
@@ -1503,7 +1518,7 @@ def vocab_answer(payload: schemas.VocabAnswerIn,
                      if payload.game in ("uz_en", "spelling", "scramble")
                      else w.translation),
         "xp": xp_given,
-        "skills": _skills_card(db, s.id),
+        "skills": _skills_card(db, s.id) if want_skills else None,
     }
 
 
@@ -2606,7 +2621,8 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
             student_id=s.id, skill=skill, ref=payload.ref,
             correct=1 if ok else 0,
             answer=given[:300], date=date.today()))
-        db.commit()
+        if not (ok and not was):   # XP bo'lsa commit'ni award_xp qiladi
+            db.commit()
         xp_given = 0.0
         if ok and not was:
             try:
@@ -2663,7 +2679,8 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
         student_id=s.id, skill=skill, ref=payload.ref,
         correct=1 if ok else 0,
         answer=(payload.answer or "")[:300], date=date.today()))
-    db.commit()
+    if not (ok and not was):     # XP bo'lsa commit'ni award_xp qiladi
+        db.commit()
 
     xp_given = 0.0
     if ok and not was:
@@ -2980,7 +2997,10 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
         student_id=s.id, question_id=q.id,
         correct=1 if ok else 0,
         answer=(payload.answer or "")[:300], date=date.today()))
-    db.commit()
+    # XP beriladigan holatda commit'ni award_xp qiladi — ikki marta
+    # tasdiqlash shart emas (2026-09-07, Neon compute tejash).
+    if not (ok and not was_solved):
+        db.commit()
 
     xp_given = 0.0
     if ok and not was_solved:

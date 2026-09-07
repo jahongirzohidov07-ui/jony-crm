@@ -159,7 +159,9 @@ print("\n=== JAVOB BERISH (ball SERVERDA hisoblanadi) ===")
 # Bazadagi birinchi so'z (JonyLugatBot bazasi katta-kichik harf
 # aralash, shuning uchun aniq nom bo'yicha qidirilmaydi).
 w = db.query(models.VocabWord).order_by(models.VocabWord.id).first()
-r = client.post("/api/student/vocab/answer", headers=H1,
+# 2026-09-07: daraja kartasi endi har javobda YUBORILMAYDI (Neon
+# compute tejash) — kerak bo'lsa ?want_skills=1 bilan so'raladi.
+r = client.post("/api/student/vocab/answer?want_skills=1", headers=H1,
                 json={"word_id": w.id, "game": "en_uz",
                       "answer": w.translation})
 ck("status 200", r.status_code, 200)

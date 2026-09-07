@@ -185,7 +185,9 @@ export interface AnswerResult {
   correct: boolean;
   expected: string;
   xp: number;
-  skills: SkillsCard;
+  /** 2026-09-07: mashq paytida YUBORILMAYDI (bazani bekorga
+   *  yuklamaslik uchun) — kerak bo'lsa ?want_skills=1 bilan. */
+  skills?: SkillsCard | null;
 }
 
 export interface VocabStats {

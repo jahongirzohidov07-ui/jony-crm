@@ -469,12 +469,38 @@ def payroll_overview(
     # 2026-09-05, Jahongir: "shunaqa yuklashlar juda sekin bolyabdi" —
     # 72 ustoz x 2 hisob x har dars 6-8 so'rov = Vercel 504 edi. Endi
     # hamma dars, yo'qlama va to'lov BIR MARTA o'qiladi, hisob xotirada.
+    # OYLIK MUHRI (2026-09-07, Jahongir: "otgan oy muhransin").
+    # Tugab bo'lgan oy birinchi ochilishida muhrlanadi va shundan
+    # keyin raqami o'zgarmaydi — keyingi muzlatish/chiqarish/dars
+    # yozuvi o'tgan oyga ta'sir qilmaydi.
+    sealed_at = None
+    try:
+        seals = _seal_rows(db, period)
+        if not seals and _period_closed(period):
+            _seal_month(db, y, m, by="avtomat (oy yopildi)")
+            seals = _seal_rows(db, period)
+    except Exception:
+        db.rollback()
+        seals = {}
+
     ctx = billing.PayrollContext(db)
     ctx.prefetch([t.id for t in teachers])
 
     rows = []
     for t in teachers:
         e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+        sl = seals.get(t.id)
+        if sl is not None:
+            try:
+                e = {"amount": float(sl.amount or 0),
+                     "attendances": int(sl.attendances or 0),
+                     "lessons": int(sl.lessons or 0),
+                     "by_group": json.loads(sl.groups_json or "[]")}
+                if sl.sealed_at and (sealed_at is None
+                                     or sl.sealed_at > sealed_at):
+                    sealed_at = sl.sealed_at
+            except Exception:
+                pass
         paid = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
         card_balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
                              - _teacher_paid(db, t.id, ctx=ctx), 2)
@@ -484,6 +510,7 @@ def payroll_overview(
             "teacher_id": t.id,
             "full_name": t.full_name,
             "branch": t.branch.name if t.branch else None,
+            "sealed": sl is not None,
             "lessons": e["lessons"],
             "attendances": e["attendances"],
             "earned": e["amount"],
@@ -500,10 +527,33 @@ def payroll_overview(
         "earned": round(sum(r["earned"] for r in rows), 2),
         "paid": round(sum(r["paid"] for r in rows), 2),
         "left": round(sum(r["left"] for r in rows), 2),
+        "sealed": bool(seals),
+        "sealed_at": sealed_at.isoformat() if sealed_at else None,
+        "can_reseal": user.role == roles.FOUNDER,
         "kinds": [{"key": k, "label": lbl, "hint": h}
                   for k, lbl, h in roles.TEACHER_PAYMENT_KINDS],
         "can_pay": user.role in tuple(roles.SALARY_PAY),
     }
+
+
+@router.post("/api/payroll/reseal")
+def payroll_reseal(
+    year: int,
+    month: int,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(roles.FOUNDER)),
+):
+    """MUHRNI QAYTA HISOBLASH — faqat asoschi.
+
+    2026-09-07, Jahongir: "otgan oy muhransin". Muhr odatda o'zgarmaydi.
+    Lekin o'tgan oyning yo'qlamasi ataylab to'g'rilangan bo'lsa, asoschi
+    shu tugma bilan raqamni yangilay oladi. Eski qiymat O'CHIRILMAYDI —
+    auditga "oylik muhri YYYY-MM: eski -> yangi" bo'lib yoziladi."""
+    r = _seal_month(db, year, month, by=f"qayta: {user.full_name}",
+                    force=True, user=user)
+    if r.get("skipped") == -1:
+        raise HTTPException(400, "Faqat tugab bo'lgan oyni muhrlash mumkin")
+    return r
 
 @router.get("/api/payroll/diag")
 def payroll_diag(

@@ -249,6 +249,10 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         ("risk_scan", lambda: _risk_scan(db)),
         # Bo'shatilgan support biriktirishlari
         ("stale_support", lambda: _cleanup_stale_support_assignments(db)),
+        # OYLIK MUHRI (2026-09-07, Jahongir: "otgan oy muhransin"):
+        # tugab bo'lgan oylar bir marta muhrlanadi va keyin
+        # o'zgarmaydi. Idempotent — muhri borga tegilmaydi.
+        ("payroll_seal", lambda: _seal_closed_months(db)),
     ):
         try:
             _fn()

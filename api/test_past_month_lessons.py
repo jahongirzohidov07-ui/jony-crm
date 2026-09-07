@@ -156,19 +156,19 @@ ck("bo'sh yozuvlar qo'shildi (eski holat)", ghost > 10, True)
 
 p2 = client.get(f"/api/payroll?year={PY}&month={PM}", headers=H).json()
 row2 = [r2 for r2 in p2["rows"] if r2["teacher_id"] == t.id][0]
-ck("oylik KAMAYIB ketdi (muammoning o'zi)",
-   round(row2["earned"]) < 1_600_000, True)
+# 2026-09-07, Jahongir: "bosh yoqlama sanalmaydi" — bo'sh dars
+# yozuvlari yopilgan oyning bo'luvchisiga KIRMAYDI, shuning uchun
+# oylik o'zgarmaydi.
+ck("oylik KAMAYMADI", round(row2["earned"]), 1_600_000)
 
 d2 = client.get(f"/api/payroll/diag?year={PY}&month={PM}"
                 f"&teacher_id={t.id}", headers=H).json()
 tt = d2["teachers"][0]
 gg = tt["groups"][0]
 ck("bo'sh dars yozuvlari sanaldi", gg["empty_lesson_rows"], ghost)
-ck("hozirgi bo'luvchi", gg["divisor"], 13 + ghost)
-ck("haqiqiy bo'luvchi (o'tilgan darslar)", gg["divisor_if_real"], 13)
-ck("tuzatilsa qancha qaytadi",
-   round(tt["gain_if_fixed"]), 1_600_000 - round(row2["earned"]))
-ck("tuzatilsa 1 600 000 bo'ladi", round(tt["amount_if_real"]), 1_600_000)
+ck("bo'luvchi o'tilgan darslar soni", gg["divisor"], 13)
+ck("haqiqiy bo'luvchi bilan bir xil", gg["divisor_if_real"], 13)
+ck("tuzatiladigan narsa qolmadi", tt["gain_if_fixed"], 0)
 
 print()
 print("=== 5. Bo'sh yozuvlar HECH QAYERGA yo'qolmadi ===")

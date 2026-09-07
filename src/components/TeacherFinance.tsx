@@ -181,6 +181,14 @@ function MonthRow({
                     hozirgi
                   </span>
                 )}
+                {m.sealed && (
+                  <span
+                    title="Oy yopilgan — bu raqam endi o'zgarmaydi"
+                    className="ml-1.5 text-[10px] font-normal text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded"
+                  >
+                    muhrlangan
+                  </span>
+                )}
               </p>
               <p className="text-[11px] text-slate-500">
                 {m.lessons} dars · {m.attendances} yo'qlama
@@ -208,6 +216,14 @@ function MonthRow({
                 {m.is_current && (
                   <span className="ml-1.5 text-[10px] font-normal text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">
                     hozirgi
+                  </span>
+                )}
+                {m.sealed && (
+                  <span
+                    title="Oy yopilgan — bu raqam endi o'zgarmaydi"
+                    className="ml-1.5 text-[10px] font-normal text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded"
+                  >
+                    muhrlangan
                   </span>
                 )}
               </p>

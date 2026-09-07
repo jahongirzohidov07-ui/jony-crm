@@ -1129,9 +1129,18 @@ def update_group(
     # PUL MAYDONLARI AUDITGA YOZILADI (2026-09-06 auditi: guruh narxi
     # va ustoz stavkasi tahriri hech qayerda qayd etilmasdi — kim
     # o'zgartirgani keyin topib bo'lmasdi).
+    #
+    # 2026-09-07 (Jahongir: "auditga sen aytgan narsa qoshilsin"):
+    # JADVAL maydonlari ham yoziladi. Guruhning dars kunlari
+    # (lesson_days) o'zgarishi o'tgan oyning oyligiga ham ta'sir
+    # qiladi — jadval bo'yicha yangi dars yozuvlari paydo bo'lib,
+    # oylik bo'luvchisi o'zgarib ketardi. Kim, qachon, nimadan nimaga
+    # o'zgartirgani endi ko'rinadi.
     _money_fields = ("lesson_price", "monthly_fee", "teacher_rate_per_student",
                      "standard_lessons_per_month", "rate_manual",
-                     "price_manual", "course_id")
+                     "price_manual", "course_id",
+                     "lesson_days", "lesson_time", "teacher_id",
+                     "start_date", "end_date", "branch_id", "room_id")
     _before = {k: getattr(group, k, None) for k in _money_fields}
     for k, v in fields.items():
         setattr(group, k, v)

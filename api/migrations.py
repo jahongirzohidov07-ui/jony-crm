@@ -137,6 +137,14 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_tgr_grade_eff "
         "ON teacher_grade_rates (grade_key, effective_from)",
     ]),
+    # 2026-09-07 (Jahongir: "otgan oy muhransin"): oylik muhri
+    # (payroll_seals). Jadvalni create_all yaratadi — bu qator
+    # SCHEMA_STAMP ni ko'tarib, jonli bazada yaratilishini
+    # ta'minlaydi (yuqoridagi 0013 izohiga qarang).
+    ("0015_payroll_seal", [
+        "CREATE INDEX IF NOT EXISTS ix_payroll_seals_period "
+        "ON payroll_seals (period)",
+    ]),
 ]
 
 

@@ -3883,3 +3883,43 @@ class Holiday(Base):
     name = Column(String, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  OYLIK MUHRI (2026-09-07)
+#
+#  Jahongir: "taklifing menga maqul otgan oy muhransin".
+#
+#  Ustoz oyligi hech qayerda saqlanmasdi — sahifa har ochilganda
+#  yo'qlamalardan qayta hisoblanardi. Shuning uchun oy yopilgandan
+#  KEYIN bo'lgan har qanday o'zgarish (o'quvchi muzlashi, guruhdan
+#  chiqishi, dars yozuvi qo'shilishi) O'TGAN oyning raqamini ham
+#  o'zgartirardi — 31-avgustdagi skrinshot bilan bugungi raqam mos
+#  kelmay qolgan edi.
+#
+#  Endi: oy tugagach raqam BIR MARTA muhrlanadi va o'zgarmaydi.
+#  Muhr o'chirilmaydi — faqat asoschi ataylab "qayta hisobla" desa
+#  yangilanadi va eski qiymati auditda qoladi.
+# =====================================================================
+class PayrollSeal(Base):
+    """Bir ustozning bir oylik muhrlangan oyligi."""
+    __tablename__ = "payroll_seals"
+
+    id = Column(Integer, primary_key=True, index=True)
+    period = Column(String, nullable=False, index=True)      # "YYYY-MM"
+    teacher_id = Column(Integer, ForeignKey("teachers.id"),
+                        nullable=False, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    amount = Column(Float, nullable=False, default=0)
+    attendances = Column(Integer, default=0)
+    lessons = Column(Integer, default=0)
+    groups_json = Column(Text, nullable=True)
+    sealed_at = Column(DateTime, default=datetime.utcnow)
+    sealed_by = Column(String, nullable=True)
+    # Qayta hisoblangan bo'lsa — nechanchi marta va qachon
+    revision = Column(Integer, default=1)
+    note = Column(Text, nullable=True)
+
+    __table_args__ = (
+        UniqueConstraint("period", "teacher_id", name="uq_seal_period_teacher"),
+    )

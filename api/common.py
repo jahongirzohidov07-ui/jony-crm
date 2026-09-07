@@ -3187,6 +3187,116 @@ def _pay_out(p: models.TeacherPayment) -> dict:
     }
 
 
+# =====================================================================
+#  OYLIK MUHRI (2026-09-07)
+#
+#  Jahongir: "taklifing menga maqul otgan oy muhransin".
+#
+#  Muammo: oylik hech qayerda saqlanmasdi — har safar yo'qlamadan
+#  qayta hisoblanardi, shuning uchun oy yopilgandan keyingi har qanday
+#  o'zgarish o'tgan oyning raqamini ham o'zgartirardi (31-avgustdagi
+#  skrinshot bilan bugungi raqam mos kelmay qolgan edi).
+#
+#  Endi: oy tugagach raqam BIR MARTA muhrlanadi (PayrollSeal) va
+#  keyin o'zgarmaydi. Muhr HECH QACHON o'chirilmaydi — asoschi
+#  ataylab "qayta hisobla" desagina yangilanadi, eski qiymati esa
+#  auditda qoladi.
+# =====================================================================
+def _period_closed(period: str) -> bool:
+    """"YYYY-MM" tugab bo'lgan oymi?"""
+    try:
+        y, m = int(period[:4]), int(period[5:7])
+    except Exception:
+        return False
+    t = roles.local_today()
+    return (y, m) < (t.year, t.month)
+
+
+def _seal_rows(db: Session, period: str, teacher_ids=None) -> dict:
+    """{teacher_id: PayrollSeal} — shu oyning muhrlari."""
+    q = db.query(models.PayrollSeal).filter(
+        models.PayrollSeal.period == period)
+    if teacher_ids:
+        ids = [int(i) for i in teacher_ids]
+        if not ids:
+            return {}
+        q = q.filter(models.PayrollSeal.teacher_id.in_(ids))
+    try:
+        return {r.teacher_id: r for r in q.all()}
+    except Exception:
+        db.rollback()
+        return {}
+
+
+def _seal_month(db: Session, year: int, month: int, *, by: str = "avtomat",
+                force: bool = False, user=None) -> dict:
+    """Shu oyni muhrlaydi. Idempotent: muhri bor ustozga tegilmaydi
+    (force=True bo'lsa qayta hisoblab, eski qiymatni auditga yozadi).
+
+    Faqat TUGAB BO'LGAN oy muhrlanadi — joriy oy hali davom etyapti."""
+    period = f"{year:04d}-{month:02d}"
+    out = {"period": period, "sealed": 0, "updated": 0, "skipped": 0}
+    if not _period_closed(period):
+        out["skipped"] = -1          # joriy/kelasi oy — muhrlanmaydi
+        return out
+    start, end = billing.month_bounds(year, month)
+    teachers = db.query(models.Teacher).all()
+    have = _seal_rows(db, period)
+    if not force:
+        teachers = [t for t in teachers if t.id not in have]
+    if not teachers:
+        return out
+    ctx = billing.PayrollContext(db)
+    ctx.prefetch([t.id for t in teachers])
+    for t in teachers:
+        try:
+            e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+            if not e["lessons"] and not e["amount"]:
+                continue
+            old = have.get(t.id)
+            payload = json.dumps(e["by_group"], ensure_ascii=False)
+            if old is None:
+                db.add(models.PayrollSeal(
+                    period=period, teacher_id=t.id, branch_id=t.branch_id,
+                    amount=e["amount"], attendances=e["attendances"],
+                    lessons=e["lessons"], groups_json=payload,
+                    sealed_by=by, revision=1))
+                out["sealed"] += 1
+            elif round(old.amount or 0, 2) != round(e["amount"], 2):
+                audit.log(db, user, entity="teacher", action="update",
+                          entity_id=t.id, entity_label=t.full_name,
+                          field=f"oylik muhri {period}",
+                          old_value=old.amount, new_value=e["amount"],
+                          note="Muhr qayta hisoblandi", commit=False)
+                old.amount = e["amount"]
+                old.attendances = e["attendances"]
+                old.lessons = e["lessons"]
+                old.groups_json = payload
+                old.sealed_at = datetime.utcnow()
+                old.sealed_by = by
+                old.revision = (old.revision or 1) + 1
+                out["updated"] += 1
+            db.commit()
+        except Exception:
+            db.rollback()
+    return out
+
+
+def _seal_closed_months(db: Session, back: int = 6) -> dict:
+    """Muhrlanmagan tugagan oylarni muhrlaydi (kunlik cron uchun)."""
+    t = roles.local_today()
+    y, m = t.year, t.month
+    res = {"months": []}
+    for _ in range(max(1, back)):
+        m -= 1
+        if m < 1:
+            y, m = y - 1, 12
+        r = _seal_month(db, y, m)
+        if r.get("sealed"):
+            res["months"].append(r)
+    return res
+
+
 def _month_ledger(db: Session, t: models.Teacher) -> dict:
     """USTOZ OYLIGINING OYLAR BO'YICHA DAFTARI — bitta manba.
 
@@ -3235,15 +3345,37 @@ def _month_ledger(db: Session, t: models.Teacher) -> dict:
         if m > 12:
             y, m = y + 1, 1
 
+    # MUHRLANGAN OYLAR (2026-09-07, Jahongir: "otgan oy muhransin").
+    # Tugagan oyning raqami bir marta muhrlanadi va keyin o'zgarmaydi.
+    seals: dict = {}
+    try:
+        for r in (db.query(models.PayrollSeal)
+                  .filter(models.PayrollSeal.teacher_id == t.id).all()):
+            seals[r.period] = r
+    except Exception:
+        db.rollback()
+
     rows: dict = {}
     for per in seq:
         y, m = int(per[:4]), int(per[5:7])
         ms, me = billing.month_bounds(y, m)
         e = _teacher_earned(db, t.id, since=ms, until=me, ctx=ctx)
+        sl = seals.get(per)
+        if sl is not None:
+            try:
+                e = {"amount": float(sl.amount or 0),
+                     "attendances": int(sl.attendances or 0),
+                     "lessons": int(sl.lessons or 0),
+                     "by_group": json.loads(sl.groups_json or "[]")}
+            except Exception:
+                pass
         rows[per] = {
             "period": per,
             "title": _month_title(per),
             "is_current": per == cur,
+            "sealed": sl is not None,
+            "sealed_at": (sl.sealed_at.isoformat()
+                          if sl is not None and sl.sealed_at else None),
             "lessons": e["lessons"],
             "attendances": e["attendances"],
             "earned": e["amount"],
@@ -6380,6 +6512,10 @@ __all__ = [
     "_rule_cap_hit",
     "_salary_card",
     "_finance_ledger",
+    "_period_closed",
+    "_seal_rows",
+    "_seal_month",
+    "_seal_closed_months",
     "_month_ledger",
     "_balance_split",
     "_month_name",

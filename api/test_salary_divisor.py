@@ -7,6 +7,15 @@ tasdiqlayman 13 ta darsni toliq o'tsa 160,000 oladi".
 
 Qoida: bir yo'qlama = oylik stavka / max(12, shu oydagi rejadagi dars
 soni). Faqat 2026-avgustdan; o'tgan oylar eski qoidada.
+
+2026-09-07 ANIQLASHTIRILDI (Jahongir: "bosh yoqlama sanalmaydi, lekin
+yo'q qilganlari kech qoldilar sanaladi"). TUGAB BO'LGAN oyda bo'luvchi
+faqat HAQIQATDA o'tilgan darslarni sanaydi: butunlay bo'sh (bironta
+ham belgisi yo'q) dars yozuvi hisobga kirmaydi. Sabab — davomat
+jadvali o'tgan oy uchun ochilganda bo'sh darslar avtomat yaratilib,
+o'tgan oyning oyligini o'zidan o'zi kamaytirardi. "Kelmadi" va "kech
+keldi" — belgilangan yo'qlama, ular avvalgidek sanaladi. Joriy oyda
+hech narsa o'zgarmagan: rejadagi darslar sanalaveradi.
 """
 import os, sys
 from datetime import date
@@ -84,8 +93,27 @@ r = c.get(f"/api/reports/teacher-salary-detail?year={Y}&month={M}",
 row = r["rows"][0]
 by = {x["student"]: x for x in row["students"]}
 
-print("\n=== 1. 13 darslik oy: 11 dars = 160000 x 11/13 ===")
-ck("Bola Bir", by["Bola Bir"]["amount"], round(160000 * 11 / 13, 2))
+print("\n=== 1. Yopilgan oy: 2 ta BO'SH dars sanalmaydi ===")
+# 13 reja, 11 tasi o'tilgan, 2 tasi butunlay bo'sh (belgisi yo'q).
+# Bo'luvchi = max(12, 11) = 12 -> 160000 x 11/12.
+ck("Bola Bir", by["Bola Bir"]["amount"], round(160000 * 11 / 12, 2))
+
+print("\n=== 1b. Bo'sh darsga 'kelmadi' qo'yilsa — SANALADI ===")
+db = SessionLocal()
+_eid = (db.query(models.Lesson.id)
+        .filter(models.Lesson.group_id == 1,
+                models.Lesson.held == 0)
+        .order_by(models.Lesson.date).first()[0])
+db.close()
+_r = c.put(f"/api/lessons/{_eid}/attendance", headers=H,
+           json={"marks": [{"student_id": 1, "present": False}]})
+ck("kelmadi belgilandi", _r.status_code, 200)
+# endi 12 ta belgilangan dars -> bo'luvchi 12, o'quvchida 12 ta belgi
+# (11 keldi + 1 kelmadi) -> aynan to'liq stavka
+r1b = c.get(f"/api/reports/teacher-salary-detail?year={Y}&month={M}",
+            headers=H).json()
+by1b = {x["student"]: x for x in r1b["rows"][0]["students"]}
+ck("kelmadi ham sanaladi", by1b["Bola Bir"]["amount"], 160000.0)
 
 print("\n=== 2. 12 darslik oy: to'liq = aynan 160 000 (o'zgarmadi) ===")
 ck("Bola Ikki", by["Bola Ikki"]["amount"], 160000.0)

@@ -55,6 +55,14 @@ def tok(u, p="x"):
     ).json()["access_token"]}
 
 
+def reseal():
+    """Avgust — YOPILGAN oy, ya'ni MUHRLANGAN (2026-09-07). Test
+    ma'lumotni o'zgartirgandan keyin muhrni ataylab yangilaydi —
+    aks holda /api/payroll eski muhrni qaytaradi (aynan shu himoya
+    uchun qilingan)."""
+    client.post("/api/payroll/reseal?year=2026&month=8", headers=H)
+
+
 db = SessionLocal()
 b = models.Branch(name="Zafar"); db.add(b); db.commit()
 u_f = models.User(username="asos", password_hash=hash_password("x"),
@@ -119,6 +127,7 @@ db.query(models.StudentGroupLink).filter_by(student_id=S[0].id).update(
     {"active": 0})
 db.commit()
 
+reseal()
 p1 = client.get("/api/payroll?year=2026&month=8", headers=H).json()
 row1 = [r for r in p1["rows"] if r["teacher_id"] == t.id][0]
 ck("oylik 30 000 ga kamaydi (3 yo'qlama x 10 000)",
@@ -141,6 +150,7 @@ for l in LES[-3:]:
 S[1].status = "frozen"
 db.commit()
 
+reseal()
 p2 = client.get("/api/payroll?year=2026&month=8", headers=H).json()
 row2 = [r for r in p2["rows"] if r["teacher_id"] == t.id][0]
 ck("oylik yana 30 000 ga kamaydi", row2["earned"], 660_000)
@@ -161,7 +171,9 @@ db.add(l13); db.commit()
 for s in S[2:]:
     db.add(models.Attendance(student_id=s.id, lesson_id=l13.id, present=1))
 db.commit()
-# endi bo'luvchi 13: yo'qlama narxi 120 000/13 = 9230.77
+# O'TILGAN dars qo'shildi — u sanaladi, bo'luvchi 13 bo'ladi:
+# yo'qlama narxi 120 000/13 = 9230.77
+reseal()
 d3 = client.get("/api/payroll/diag?year=2026&month=8", headers=H).json()
 tr3 = [r for r in d3["teachers"] if r["teacher_id"] == t.id][0]
 gg = tr3["groups"][0]
@@ -169,6 +181,27 @@ ck("bo'luvchi 13 bo'ldi", gg["divisor"], 13)
 ck("yo'qlama narxi 9230.77", gg["rate"], 9230.77)
 ck("standart bo'yicha bo'lsa 10 000", gg["rate_if_standard"], 10_000.0)
 ck("bo'luvchidan yo'qotish 0 dan katta", tr3["lost_divisor"] > 0, True)
+
+print()
+print("=== 3b. BO'SH dars yozuvi bo'luvchiga KIRMAYDI ===")
+# 2026-09-07, Jahongir: "bosh yoqlama sanalmaydi". Yopilgan oyga
+# qo'shilgan bo'sh (yo'qlamasiz) dars oylikni kamaytirmasligi shart.
+reseal()
+before = client.get("/api/payroll?year=2026&month=8", headers=H).json()
+amt_before = [r for r in before["rows"] if r["teacher_id"] == t.id][0]["earned"]
+for dd in (14, 15, 16):
+    db.add(models.Lesson(group_id=g.id, date=date(2026, 8, dd),
+                         teacher_id=t.id, held=0, created_by="avtomat"))
+db.commit()
+after = client.get("/api/payroll?year=2026&month=8", headers=H).json()
+amt_after = [r for r in after["rows"] if r["teacher_id"] == t.id][0]["earned"]
+ck("oylik o'zgarmadi", amt_after, amt_before)
+d3b = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
+                 headers=H).json()
+g3b = d3b["teachers"][0]["groups"][0]
+ck("bo'sh yozuvlar sanaldi", g3b["empty_lesson_rows"], 3)
+ck("bo'luvchi hamon 13", g3b["divisor"], 13)
+ck("tuzatiladigan narsa qolmadi", d3b["teachers"][0]["gain_if_fixed"], 0)
 
 print()
 print("=== 4. Diagnostika HECH NARSANI o'zgartirmaydi ===")
@@ -193,6 +226,7 @@ ck("ustozga yopiq", r.status_code, 403)
 
 print()
 print("=== 6. amount_now hamisha /api/payroll bilan bir xil ===")
+reseal()
 p4 = client.get("/api/payroll?year=2026&month=8", headers=H).json()
 row4 = [r for r in p4["rows"] if r["teacher_id"] == t.id][0]
 d4 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
@@ -211,6 +245,7 @@ db.add(models.TeacherGradeEvent(teacher_id=t.id, to_grade="junior",
 db.add(models.TeacherGradeEvent(teacher_id=t.id, to_grade="expert",
                                 effective_from=date(2026, 8, 5)))
 db.commit()
+reseal()
 p7 = client.get("/api/payroll?year=2026&month=8", headers=H).json()
 row7 = [r for r in p7["rows"] if r["teacher_id"] == t.id][0]
 d7 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
@@ -230,7 +265,9 @@ d8 = client.get("/api/payroll/diag?year=2026&month=8&teacher_id=%d" % t.id,
                 headers=H).json()
 ck("dublikat dars yozuvi topildi",
    d8["teachers"][0]["groups"][0]["duplicate_lesson_rows"], 1)
-ck("bo'luvchi 14 ga chiqdi", d8["teachers"][0]["groups"][0]["divisor"], 14)
+# Dublikat BO'SH (yo'qlamasiz) — yopilgan oyda bo'luvchiga kirmaydi
+ck("bo'sh dublikat bo'luvchini oshirmadi",
+   d8["teachers"][0]["groups"][0]["divisor"], 13)
 
 print()
 print("XULOSA: " + ("HAMMASI O'TDI" if not fails

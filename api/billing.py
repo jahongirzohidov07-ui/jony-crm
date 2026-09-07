@@ -790,16 +790,31 @@ class PayrollContext:
         keys -= set(self.mcache)
         if not keys:
             return
+        # month_divisor() BILAN AYNAN BIR XIL: tugab bo'lgan oyda
+        # faqat o'tilgan (yoki yo'qlamasi bor) darslar sanaladi,
+        # joriy/kelasi oyda esa rejadagilarning hammasi.
         agg: dict = {}
         for chunk in _chunks(sorted({k[0] for k in keys})):
-            rows = (self.db.query(models.Lesson.group_id, models.Lesson.date)
+            rows = (self.db.query(models.Lesson.group_id, models.Lesson.date,
+                                  models.Lesson.held, models.Lesson.id)
                     .filter(models.Lesson.group_id.in_(chunk),
                             (models.Lesson.cancelled.is_(None))
                             | (models.Lesson.cancelled == 0)).all())
-            for gid, d in rows:
-                if d:
-                    k = (gid, d.year, d.month)
-                    agg[k] = agg.get(k, 0) + 1
+            unheld = [r[3] for r in rows if not r[2]]
+            marked: set = set()
+            for ch2 in _chunks(unheld):
+                for (lid,) in (self.db.query(models.Attendance.lesson_id)
+                               .filter(models.Attendance.lesson_id.in_(ch2))
+                               .distinct().all()):
+                    marked.add(lid)
+            for gid, d, held, lid in rows:
+                if not d:
+                    continue
+                k = (gid, d.year, d.month)
+                if month_closed(month_bounds(d.year, d.month)[1]) \
+                        and not held and lid not in marked:
+                    continue                 # bo'sh dars — sanalmaydi
+                agg[k] = agg.get(k, 0) + 1
         for k in keys:
             g = self.groups.get(k[0])
             std = int(g.standard_lessons_per_month or 12)
@@ -870,6 +885,44 @@ def per_attendance_rate(group: models.Group,
 SALARY_DIVISOR_SINCE = date(2026, 8, 1)
 
 
+# =====================================================================
+#  YOPILGAN OYDA BO'SH DARS SANALMAYDI (2026-09-07)
+#
+#  Jahongir: "bosh yoqlama sanalmaydi, lekin yo'q qilganlari kech
+#  qoldilar sanaladi".
+#
+#  Muammo: davomat jadvali ochilganda guruh jadvali bo'yicha bo'sh
+#  (held=0, yo'qlamasiz) darslar yaratilardi — o'tgan oy uchun ham.
+#  Ular pulga kirmasa ham BO'LUVCHIGA kirardi, ya'ni o'tgan oyning
+#  oyligi o'zidan o'zi kamayardi: 160 000/13 = 12 308 o'rniga
+#  160 000/25 = 6 400.
+#
+#  Endi: TUGAB BO'LGAN oyda bo'luvchi faqat HAQIQATDA o'tilgan
+#  darslarni sanaydi (held=1 yoki yo'qlamasi bor). "Kelmadi" va "kech
+#  keldi" — belgilangan yo'qlama, ular avvalgidek sanaladi. Kamida 12
+#  qoidasi o'zgarmadi. Joriy va kelasi oyda hech narsa o'zgarmagan:
+#  rejadagi darslar sanalaveradi, oylik oy davomida sakramaydi.
+# =====================================================================
+def month_closed(end: date) -> bool:
+    """Shu oy tugab bo'ldimi (joriy oydan oldinmi)?"""
+    try:
+        import roles as _r
+        t = _r.local_today()
+    except Exception:
+        t = date.today()
+    return end < date(t.year, t.month, 1)
+
+
+def held_or_marked():
+    """SQL sharti: dars O'TILGAN yoki yo'qlamasi bor.
+
+    "Kelmadi" va "kech keldi" ham BELGILANGAN yo'qlama — ular sanaladi.
+    Sanalmaydigan narsa faqat butunlay bo'sh dars yozuvi."""
+    from sqlalchemy import exists as _exists
+    return (models.Lesson.held == 1) | _exists().where(
+        models.Attendance.lesson_id == models.Lesson.id)
+
+
 def month_divisor(db: Session, group: models.Group, on_date: date,
                   cache: Optional[dict] = None) -> int:
     """Shu oy uchun oylik stavka bo'linadigan dars soni."""
@@ -883,13 +936,16 @@ def month_divisor(db: Session, group: models.Group, on_date: date,
         return cache[key]
     start, end = month_bounds(on_date.year, on_date.month)
     try:
-        n = (db.query(func.count(models.Lesson.id))
+        q = (db.query(func.count(models.Lesson.id))
              .filter(models.Lesson.group_id == group.id,
                      models.Lesson.date >= start,
                      models.Lesson.date <= end,
                      # Bekor qilingan (dam kuni) dars REJAGA kirmaydi
                      (models.Lesson.cancelled.is_(None))
-                     | (models.Lesson.cancelled == 0)).scalar() or 0)
+                     | (models.Lesson.cancelled == 0)))
+        if month_closed(end):
+            q = q.filter(held_or_marked())
+        n = q.scalar() or 0
     except SQLAlchemyError as e:
         _log_db_error(db, "month_divisor", e)
         n = 0

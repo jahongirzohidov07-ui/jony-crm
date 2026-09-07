@@ -2433,6 +2433,10 @@ export interface TeacherFinanceMonth {
   period: string;            // "2026-08"
   title: string;             // "Avgust 2026"
   is_current: boolean;
+  // Oy tugagach raqam BIR MARTA muhrlanadi va keyin o'zgarmaydi
+  // (2026-09-07, Jahongir: "otgan oy muhransin").
+  sealed?: boolean;
+  sealed_at?: string | null;
   lessons: number;
   attendances: number;
   earned: number;
@@ -2472,6 +2476,7 @@ export interface PayrollRow {
   teacher_id: number;
   full_name: string;
   branch?: string | null;
+  sealed?: boolean;
   lessons: number;
   attendances: number;
   earned: number;
@@ -2488,6 +2493,9 @@ export interface PayrollOverview {
   earned: number;
   paid: number;
   left: number;
+  sealed?: boolean;
+  sealed_at?: string | null;
+  can_reseal?: boolean;
   kinds: { key: string; label: string; hint: string }[];
   can_pay: boolean;
 }

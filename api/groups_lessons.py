@@ -35,6 +35,62 @@ router = APIRouter()
 _WEEKDAY_INDEX = {"mon": 0, "tue": 1, "wed": 2, "thu": 3,
                   "fri": 4, "sat": 5, "sun": 6}
 
+# =====================================================================
+#  DARSNI XAVFSIZ O'CHIRISH (2026-09-07)
+#
+#  Jahongir (ustoz shikoyati bilan): "ustoz aytyabdi yoqlama qoyib
+#  bolmayabdi deb nega bunaqa bolyabdi".
+#
+#  Sabab: jadval sinxronlanayotganda "jadvalga mos kelmaydi" deb bo'sh
+#  dars o'chirilardi, lekin darsga BOG'LANGAN jadvallar to'liq
+#  tekshirilmasdi. Postgres FK ni rad etardi:
+#      ForeignKeyViolation: ... "xp_transactions_lesson_id_fkey"
+#      ForeignKeyViolation: ... "lesson_reschedules_lesson_id_fkey"
+#  va butun /api/groups/{id}/attendance 500 bilan yiqilardi — ustoz
+#  telefonida "Tarmoq bilan bog'lanib bo'lmadi" chiqardi, yo'qlama
+#  qo'yib bo'lmasdi.
+#
+#  Endi ikki qavat himoya:
+#   1) darsga yo'qlama, baho, XP yoki ko'chirish yozuvi bog'langan
+#      bo'lsa — umuman tegilmaydi (guruhi boshqa bo'lsa ham);
+#   2) baribir kutilmagan bog'lanish chiqsa — o'sha bitta o'chirish
+#      SAVEPOINT bilan orqaga qaytariladi, dars joyida qoladi va
+#      sahifa ochilaveradi. Hech qachon 500 bo'lmaydi.
+# =====================================================================
+def _lesson_linked(db: Session, lesson_id: int) -> bool:
+    """Darsga bog'langan yozuv bormi (o'chirib bo'lmaydi)."""
+    for M, col in ((models.Attendance, models.Attendance.lesson_id),
+                   (models.DailyGrade, models.DailyGrade.lesson_id),
+                   (models.XpTransaction, models.XpTransaction.lesson_id),
+                   (models.LessonReschedule,
+                    models.LessonReschedule.lesson_id)):
+        try:
+            if db.query(M.id).filter(col == lesson_id).first():
+                return True
+        except Exception:
+            return True               # shubha bo'lsa — tegmaymiz
+    return False
+
+
+def _safe_delete_lesson(db: Session, ls) -> bool:
+    """Darsni o'chiradi; bog'lanish chiqsa — o'chirmaydi, lekin
+    so'rovni ham yiqitmaydi."""
+    if _lesson_linked(db, ls.id):
+        return False
+    sp = db.begin_nested()
+    try:
+        db.delete(ls)
+        db.flush()
+        sp.commit()
+        return True
+    except Exception:
+        try:
+            sp.rollback()
+        except Exception:
+            pass
+        return False
+
+
 def _sync_scheduled_lessons(db: Session, group: models.Group,
                             start: date, end: date) -> None:
     """Guruhning dars kunlari ("mon,wed,fri") bo'yicha shu oydagi barcha
@@ -68,24 +124,19 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
             by_date[ls.date] = ls
             continue
         def _busy(l):
-            if l.held:
-                return True
-            if db.query(models.Attendance).filter(
-                    models.Attendance.lesson_id == l.id).count() > 0:
-                return True
-            # Ko'chirish tarixi bog'langan darsni o'chirib bo'lmaydi
-            # (FK): 2026-08-12, "koreys tilida" guruhi 2 kun 500 berdi.
-            return db.query(models.LessonReschedule).filter(
-                models.LessonReschedule.lesson_id == l.id).count() > 0
+            # O'tilgan dars yoki bog'langan yozuvi bori (yo'qlama, baho,
+            # XP, ko'chirish) — pul/ta'lim hujjati, tegilmaydi.
+            return bool(l.held) or _lesson_linked(db, l.id)
         loser = None
         if not _busy(ls):
             loser = ls
         elif not _busy(prev):
             loser = prev
             by_date[ls.date] = ls
-        if loser is not None:
-            db.delete(loser)
+        if loser is not None and _safe_delete_lesson(db, loser):
             dup_removed = True
+        elif loser is not None:
+            by_date[loser.date] = by_date.get(loser.date) or loser
         else:
             # ikkalasi ham band — qo'l bilan ko'rish kerak, tegmaymiz
             pass
@@ -170,14 +221,7 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
              and (ls.date.weekday() not in wanted
                   or ls.date < lo or ls.date > hi)]
     for ls in stale:
-        has_data = (
-            db.query(models.Attendance)
-            .filter(models.Attendance.lesson_id == ls.id).first()
-            or db.query(models.DailyGrade)
-            .filter(models.DailyGrade.lesson_id == ls.id).first()
-        )
-        if not has_data:
-            db.delete(ls)
+        if _safe_delete_lesson(db, ls):
             changed = True
 
     if changed:

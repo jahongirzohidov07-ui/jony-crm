@@ -118,8 +118,37 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     lo = max(start, group.start_date) if group.start_date else start
     hi = min(end, group.end_date) if group.end_date else end
 
+    # =================================================================
+    #  YOPILGAN OYGA YANGI DARS YARATILMAYDI (2026-09-07)
+    #
+    #  Jahongir: "31-avgust men oyliklarni screenshot qilib oldim ...
+    #  bugun kirib qarasam avgust oyliklari kamayib qolgan".
+    #
+    #  Sabab shu yerda edi: kimdir sentabrda AVGUST davomat jadvalini
+    #  ochsa, bu funksiya guruhning lesson_days'i bo'yicha avgustning
+    #  yetishmayotgan KUNLARINI ham yaratardi (held=0, bo'sh). Bo'sh
+    #  dars pulga kirmaydi, LEKIN oylik bo'luvchisiga kiradi
+    #  (billing.month_divisor shu oydagi bekor qilinmagan barcha dars
+    #  yozuvlarini sanaydi). Natijada "IELTS 1.0" da 13 ta dars 25 ta
+    #  bo'lib ko'rinib, bir yo'qlama narxi 160 000/13 = 12 308 dan
+    #  160 000/25 = 6 400 ga tushdi — ustozning O'TGAN oyligi o'zidan
+    #  o'zi kamaydi. Ya'ni "o'tgan oy jadvaliga qarash" oylikni
+    #  kamaytirardi.
+    #
+    #  Endi: tugab bo'lgan oyga yangi dars yozuvi YARATILMAYDI. Joriy
+    #  va kelasi oylarda hammasi avvalgidek (yangi guruh oy o'rtasida
+    #  ochilsa, shu oyning o'tgan kunlari baribir yaratiladi).
+    #  Mavjud yozuvlarga tegilmaydi — hech narsa o'chirilmaydi.
+    # =================================================================
+    #  MUHIM: `wanted` ning o'zi bo'shatilmaydi — aks holda pastdagi
+    #  "jadvalga mos kelmaydi" tozalashi o'tgan oyning BARCHA bo'sh
+    #  darslarini o'chirib yuborardi. Hech narsa o'chirilmasin degan
+    #  qoida shu yerda ham amal qiladi: faqat YARATISH to'xtaydi.
+    _t = roles.local_today()
+    _closed_month = end < date(_t.year, _t.month, 1)
+
     changed = False
-    if wanted:
+    if wanted and not _closed_month:
         d = lo
         while d <= hi:
             # Bo'shatilgan kunga yangi dars qo'yilmaydi — dars u yerdan

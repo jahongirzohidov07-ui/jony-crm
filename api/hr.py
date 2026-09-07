@@ -579,7 +579,7 @@ def payroll_diag(
                 stats[sid] = stt
 
         mcache: dict = {}
-        t_now = t_raw = t_std = 0.0
+        t_now = t_raw = t_std = t_real = 0.0
         g_out = []
         for gid in sorted(gids):
             g = groups.get(gid)
@@ -600,23 +600,39 @@ def payroll_diag(
                 per_last = ps_
             divisor = billing.month_divisor(db, g, gl[-1].date, mcache)
             std = int(g.standard_lessons_per_month or 12)
-            all_month = (db.query(models.Lesson.date, models.Lesson.held,
-                                  models.Lesson.cancelled)
+            all_month = (db.query(models.Lesson.id, models.Lesson.date,
+                                  models.Lesson.held, models.Lesson.cancelled)
                          .filter(models.Lesson.group_id == gid,
                                  models.Lesson.date >= start,
                                  models.Lesson.date <= end).all())
-            planned = sum(1 for _, _, c in all_month if not c)
-            dates = [d for d, _, c in all_month if not c]
+            planned = sum(1 for _, _, _, c in all_month if not c)
+            dates = [d for _, d, _, c in all_month if not c]
             dup = len(dates) - len(set(dates))
+            # BO'SH DARS YOZUVI: bekor qilinmagan, o'tilmagan va bironta
+            # ham yo'qlamasi yo'q. Aynan shular oy bo'luvchisini shishirib
+            # ustozning o'tgan oyligini kamaytiradi.
+            live = {lid for lid, _, h, c in all_month if not c and h}
+            m_ids = [lid for lid, _, _, c in all_month if not c]
+            if m_ids:
+                for chunk in billing._chunks(m_ids):
+                    for (lid,) in (db.query(models.Attendance.lesson_id)
+                                   .filter(models.Attendance.lesson_id
+                                           .in_(chunk)).distinct().all()):
+                        live.add(lid)
+            empty_n = len(m_ids) - len(live)
+            div_real = max(std, len(live))
 
             raw_a = sum(int(raw.get(l.id) or 0) for l in gl)
             cnt_a = sum(int(cnt.get(l.id) or 0) for l in gl)
             amt_now = sum(int(cnt.get(l.id) or 0) * l_rate[l.id] for l in gl)
             amt_raw = sum(int(raw.get(l.id) or 0) * l_rate[l.id] for l in gl)
             amt_std = sum(int(cnt.get(l.id) or 0) * l_std[l.id] for l in gl)
+            amt_real = sum(int(cnt.get(l.id) or 0)
+                           * (l_std[l.id] * std / div_real) for l in gl)
             t_now += amt_now
             t_raw += amt_raw
             t_std += amt_std
+            t_real += amt_real
 
             # --- o'quvchi kesimida teshiklar (o'chirilgan yo'qlama) ---
             in_g = set()
@@ -676,8 +692,12 @@ def payroll_diag(
                 "rate_per_student_month": per_last,
                 "standard_lessons": std,
                 "planned_lessons": int(planned),
+                "empty_lesson_rows": int(empty_n),
                 "duplicate_lesson_rows": int(dup),
                 "divisor": divisor,
+                "divisor_if_real": div_real,
+                "amount_if_real": round(amt_real, 2),
+                "gain_if_fixed": round(amt_real - amt_now, 2),
                 "rate": round(l_rate[gl[-1].id], 2),
                 "rate_if_standard": round(l_std[gl[-1].id], 2),
                 "held_lessons": len(gl),
@@ -703,6 +723,9 @@ def payroll_diag(
                                       + r["lost_deleted_inside"]
                                       for r in g_out), 2),
             "lost_divisor": round(t_std - t_now, 2),
+            "empty_lesson_rows": sum(r["empty_lesson_rows"] for r in g_out),
+            "amount_if_real": round(t_real, 2),
+            "gain_if_fixed": round(t_real - t_now, 2),
             "would_be_before": round(
                 t_raw + sum(r["lost_deleted_tail"] + r["lost_deleted_inside"]
                             for r in g_out) + (t_std - t_now), 2),
@@ -717,6 +740,8 @@ def payroll_diag(
         "total_lost_cutoff": round(sum(r["lost_cutoff"] for r in out), 2),
         "total_lost_deleted": round(sum(r["lost_deleted"] for r in out), 2),
         "total_lost_divisor": round(sum(r["lost_divisor"] for r in out), 2),
+        "total_gain_if_fixed": round(sum(r["gain_if_fixed"] for r in out), 2),
+        "total_empty_lesson_rows": sum(r["empty_lesson_rows"] for r in out),
     }
 
 @router.get("/api/career")

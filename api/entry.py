@@ -254,11 +254,21 @@ def list_groups(branch_id: int | None = None,
         .filter(models.Student.status == "active",
                 models.Student.group_id.isnot(None))
         .group_by(models.Student.group_id).all())
+    # MUZLATILGANLAR ALOHIDA (2026-09-08, Jahongir: "ichidagi
+    # o'quvchini ochirib tashlasayam ochmayabdi"). Ular yuqoridagi
+    # songa kirmaydi — shuning uchun guruh "[0]" ko'rinib turib
+    # o'chirilmasdi va sababi ko'rinmasdi.
+    frozen = dict(
+        db.query(models.Student.group_id, func.count(models.Student.id))
+        .filter(models.Student.status == "frozen",
+                models.Student.group_id.isnot(None))
+        .group_by(models.Student.group_id).all())
     sup_map = _group_support_map(db, [g.id for g in groups])
     out = []
     for g in groups:
         item = schemas.GroupOut.model_validate(g)
         item.student_count = counts.get(g.id, 0)
+        item.frozen_count = frozen.get(g.id, 0)
         item.support_label = sup_map.get(g.id)
         out.append(item)
     return out

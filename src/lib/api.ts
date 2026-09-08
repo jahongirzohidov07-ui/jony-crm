@@ -490,6 +490,8 @@ export interface Group {
   teacher?: Teacher;
   branch?: Branch;
   student_count: number;
+  /** Muzlatilganlar — student_count ga kirmaydi (2026-09-08). */
+  frozen_count?: number;
   end_date?: string | null;
   room_id?: number | null;
   capacity?: number | null;

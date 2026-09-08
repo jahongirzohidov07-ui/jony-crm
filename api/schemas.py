@@ -290,6 +290,9 @@ class GroupOut(GroupCreate):
     teacher: Optional[TeacherOut] = None
     branch: Optional[BranchOut] = None
     student_count: int = 0
+    # MUZLATILGANLAR (2026-09-08): student_count ga kirmaydi, lekin
+    # guruhda turishadi va guruhni o'chirishga to'sqinlik qiladi.
+    frozen_count: int = 0
     # 1 — stavka qo'lda kiritilgan (darajadan avtomat emas)
     rate_manual: Optional[int] = None
     # Guruhga biriktirilgan support ustoz(lar) nomi — ro'yxatda ko'rinadi

@@ -108,9 +108,18 @@ export default function StudentLevelTest() {
           hasExtra: false,
         }));
       }
-    } catch {
+    } catch (e) {
+      // 2026-09-08, Jahongir: "tanlab bo'lmayabdi ekan xatolik bor
+      // ekan". Ilgari xato JIMGINA yutilardi: o'quvchi javobni bosardi,
+      // ekranda hech narsa o'zgarmasdi va u "tugma ishlamayapti" deb
+      // o'ylardi. Endi sabab yoziladi va qayta urinish mumkin.
       setFb(null);
       setPicked(null);
+      setErr(
+        e instanceof Error && e.message
+          ? e.message
+          : "Javob yuborilmadi — internetni tekshirib, qaytadan bosing",
+      );
     } finally {
       setBusy(false);
     }

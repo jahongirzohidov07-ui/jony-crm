@@ -969,10 +969,23 @@ def list_groups(branch_id: Optional[int] = None,
         .filter(models.Student.status == "active",
                 models.Student.group_id.isnot(None))
         .group_by(models.Student.group_id).all())
+    # MUZLATILGANLAR ALOHIDA (2026-09-08, Jahongir: "ichidagi
+    # o'quvchini ochirib tashlasayam ochmayabdi"). Ular yuqoridagi
+    # songa kirmaydi, lekin guruhda turishadi va guruhni o'chirishga
+    # to'sqinlik qiladi — endi ro'yxatda ham ko'rinadi.
+    frozen = dict(
+        db.query(models.Student.group_id, func.count(models.Student.id))
+        .filter(models.Student.status == "frozen",
+                models.Student.group_id.isnot(None))
+        .group_by(models.Student.group_id).all())
     out = []
     for g in groups:
         item = schemas.GroupOut.model_validate(g)
         item.student_count = counts.get(g.id, 0)
+        try:
+            item.frozen_count = frozen.get(g.id, 0)
+        except Exception:
+            pass
         out.append(item)
     return out
 
@@ -1192,13 +1205,60 @@ def delete_group(
     if not _in_user_branches(db, user, group.branch_id, null_ok=True):
         raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
 
-    n_students = db.query(models.Student).filter(
-        in_group(group.id)).count()
-    if n_students:
+    # =================================================================
+    #  KIM HAQIQATAN TO'SIB TURIBDI (2026-09-08)
+    #
+    #  Jahongir: "ichidagi o'quvchini ochirib tashlasayam ochmayabdi".
+    #
+    #  Muammo: ro'yxatdagi qavs ichidagi son FAQAT FAOL o'quvchilarni
+    #  sanardi, o'chirish tekshiruvi esa HAMMASINI — muzlatilgan va
+    #  arxivdagilarni ham. Shuning uchun guruh "[0]" ko'rinib turib
+    #  "Guruhda 10 ta o'quvchi bor" deb rad etardi: ular ro'yxatda
+    #  ko'rinmagani uchun foydalanuvchi ularni chiqarib ham bo'lmasdi.
+    #
+    #  Endi:
+    #   - TIRIK o'quvchi (faol, sinovda, muzlatilgan) — to'sadi, lekin
+    #     xabarda qaysi holatda nechtaligi aniq yoziladi;
+    #   - ARXIV/KETGAN — tarix, to'smaydi: guruhdan uziladi (group_id
+    #     bo'shatiladi, bog'lanish nofaol qilinadi). O'quvchi
+    #     O'CHIRILMAYDI, har biri auditga yoziladi.
+    # =================================================================
+    _LIVE = ("active", "trial", "frozen")
+    live = (db.query(models.Student)
+            .filter(in_group(group.id),
+                    models.Student.status.in_(_LIVE)).all())
+    if live:
+        by = {}
+        for st in live:
+            by[st.status] = by.get(st.status, 0) + 1
+        _uz = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan"}
+        parts = ", ".join(f"{_uz.get(k, k)} {v} ta" for k, v in by.items())
         raise HTTPException(
-            400, f"Guruhda {n_students} ta o'quvchi bor. Avval ularni "
-                 "boshqa guruhga ko'chiring yoki arxivlang — keyin "
-                 "guruhni o'chirasiz.")
+            400, f"Guruhda {len(live)} ta o'quvchi bor ({parts}). "
+                 "Muzlatilganlar guruhlar ro'yxatidagi songa kirmaydi — "
+                 "shuning uchun ko'rinmasligi mumkin. O'quvchilar "
+                 "sahifasida shu guruhni tanlab, ularni boshqa guruhga "
+                 "ko'chiring yoki arxivlang, keyin guruhni o'chirasiz.")
+
+    # Arxiv/ketganlar — guruhdan uziladi (o'chirilmaydi)
+    old_ones = db.query(models.Student).filter(in_group(group.id)).all()
+    for st in old_ones:
+        try:
+            if st.group_id == group.id:
+                st.group_id = None
+            db.query(models.StudentGroupLink).filter(
+                models.StudentGroupLink.student_id == st.id,
+                models.StudentGroupLink.group_id == group.id).update(
+                {"active": 0}, synchronize_session=False)
+            audit.log(db, user, entity="student", action="group_remove",
+                      entity_id=st.id, entity_label=st.full_name,
+                      field="group", old_value=group.name, new_value=None,
+                      note=("Guruh o'chirildi — arxivdagi o'quvchi "
+                            "guruhdan uzildi, yozuvi saqlanib qoldi"),
+                      branch_id=st.branch_id, commit=False)
+        except Exception:
+            pass
+    db.flush()
 
     lesson_ids = [lid for (lid,) in db.query(models.Lesson.id).filter(
         models.Lesson.group_id == group.id).all()]
@@ -1217,19 +1277,67 @@ def delete_group(
             models.Lesson.id.in_(lesson_ids)).delete(
             synchronize_session=False)
 
-    # Yordamchi bog'lanishlar ham tozalanadi
+    # -----------------------------------------------------------------
+    #  QOLGAN BOG'LANISHLAR (2026-09-08). Guruhga 17 ta jadval
+    #  bog'langan — biri qolib ketsa Postgres FK bilan rad etadi va
+    #  sahifa 500 beradi. Shuning uchun:
+    #   - bo'shatib bo'ladigan (nullable) yozuvlar UZILADI, o'zi qoladi;
+    #   - bo'shatib bo'lmaydiganlar (imtihon, buyurtma, ko'chirish,
+    #     o'rinbosar, oylik) — TARIX, ular bo'lsa guruh o'chirilmaydi
+    #     va foydalanuvchiga nima to'sib turgani aytiladi.
+    # -----------------------------------------------------------------
     try:
         db.query(models.SupportAssignment).filter(
             models.SupportAssignment.group_id == group.id).delete(
             synchronize_session=False)
+        db.query(models.StudentGroupLink).filter(
+            models.StudentGroupLink.group_id == group.id).delete(
+            synchronize_session=False)
     except Exception:
-        pass
+        db.rollback()
+    for _M in (models.Contract, models.Complaint, models.TeacherRating,
+               models.LeaveReason, models.XpTransaction,
+               models.LessonObservation, models.BookOrder,
+               models.SupportSession):
+        try:
+            db.query(_M).filter(_M.group_id == group.id).update(
+                {"group_id": None}, synchronize_session=False)
+        except Exception:
+            db.rollback()
+    db.flush()
+
+    hard = []
+    for _M, _nom in ((models.Exam, "imtihon"),
+                     (models.ExamOrder, "imtihon buyurtmasi"),
+                     (models.LessonReschedule, "dars ko'chirish"),
+                     (models.Substitution, "o'rinbosar ustoz"),
+                     (models.TeacherPayout, "ustoz oyligi")):
+        try:
+            n = db.query(_M).filter(_M.group_id == group.id).count()
+            if n:
+                hard.append(f"{_nom}: {n} ta")
+        except Exception:
+            db.rollback()
+    if hard:
+        db.rollback()
+        raise HTTPException(
+            400, "Bu guruhda tarix yozuvlari bor (" + ", ".join(hard)
+                 + ") — ular hujjat, o'chirib bo'lmaydi. Guruh "
+                   "yakunlangan bo'lsa, tugash sanasini qo'yib qo'ying.")
 
     audit.log(db, user, entity="group", action="delete",
               entity_id=group.id, entity_label=group.name,
-              old_value=group.name, branch_id=group.branch_id)
-    db.delete(group)
-    db.commit()
+              old_value=group.name, branch_id=group.branch_id,
+              commit=False)
+    try:
+        db.delete(group)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise HTTPException(
+            400, "Guruhni o'chirib bo'lmadi — unga bog'langan yozuvlar "
+                 "qolgan. Guruh yakunlangan bo'lsa, tugash sanasini "
+                 "qo'yib qo'ying: u ro'yxatda tarix bo'lib qoladi.")
     return {"ok": True}
 
 @router.get("/api/groups/{group_id}/lessons", response_model=List[schemas.LessonOut])

@@ -733,6 +733,14 @@ export default function Groups() {
                       {g.name}
                     </Link>
                     <span className="text-slate-400 ml-1.5">[{g.student_count}]</span>
+                    {!!g.frozen_count && (
+                      <span
+                        title="Muzlatilgan o'quvchilar — songa kirmaydi, lekin guruhda turishadi"
+                        className="ml-1.5 text-[10px] text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded"
+                      >
+                        +{g.frozen_count} muzlatilgan
+                      </span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right text-slate-600 whitespace-nowrap">
                     {formatSom(g.monthly_fee)}

@@ -123,10 +123,18 @@ def _new_state() -> dict:
 # ------------------------- savol tuzuvchilar -------------------------
 
 def _mk_grammar(db, level, asked):
+    # FAQAT INGLIZ TILI (2026-09-08, Jahongir: "daraja aniqlash testi
+    # ingliz tilida olinganda koreys tili savoli ham chiqib qolyabdi").
+    # GrammarQuestion.language: NULL = ingliz (eski yozuvlar), ru/de/ko
+    # esa boshqa tillar grammatikasi. Bu filtr yo'q edi — shuning uchun
+    # ingliz testiga koreys/rus/nemis savollari aralashib ketardi va
+    # o'quvchi javob bera olmasdi.
     qs = (db.query(models.GrammarQuestion)
           .filter(models.GrammarQuestion.is_active == 1,
                   models.GrammarQuestion.level == level,
-                  models.GrammarQuestion.kind == "fill").all())
+                  models.GrammarQuestion.kind == "fill",
+                  (models.GrammarQuestion.language == "en")
+                  | (models.GrammarQuestion.language.is_(None))).all())
     qs = [q for q in qs if f"g:{q.id}" not in asked]
     if not qs:
         return None
@@ -139,12 +147,25 @@ def _mk_grammar(db, level, asked):
                         "hint": "Bo'sh joyga mosini tanlang"}}
 
 
+def _latin_word(w: str) -> bool:
+    """So'z lotin alifbosidami? (2026-09-08 himoyasi)
+
+    Til belgisi noto'g'ri qo'yilgan yozuv ingliz to'plamiga tushib
+    qolmasin: koreys (hangul), rus/kirill, arab, xitoy harflari bo'lsa
+    bu so'z ingliz tili emas."""
+    for ch in (w or ""):
+        if ord(ch) > 0x24F:          # lotin va lotin kengaytmasidan tashqari
+            return False
+    return True
+
+
 def _vocab_pool(db, level):
-    return (db.query(models.VocabWord)
+    rows = (db.query(models.VocabWord)
             .filter(models.VocabWord.is_active == 1,
                     models.VocabWord.level == level,
                     (models.VocabWord.language == "en")
                     | (models.VocabWord.language.is_(None))).all())
+    return [w for w in rows if _latin_word(w.word)]
 
 
 def _mk_vocab(db, level, asked, listen=False):
@@ -154,9 +175,20 @@ def _mk_vocab(db, level, asked, listen=False):
     if len(pool) < 1 or len(words) < 4:
         return None
     w = random.choice(pool)
-    wrong = random.sample(
-        [x.translation for x in words
-         if x.id != w.id and x.translation != w.translation], 3)
+    # VARIANTLAR TAKRORLANMASIN (2026-09-08): ikki xil so'zning
+    # tarjimasi bir xil bo'lsa, ro'yxatda bir xil ikki tugma chiqardi —
+    # o'quvchi qaysi birini bosishni bilmasdi.
+    seen = {w.translation.strip().lower()}
+    uniq = []
+    for x in words:
+        k = (x.translation or "").strip().lower()
+        if x.id == w.id or not k or k in seen:
+            continue
+        seen.add(k)
+        uniq.append(x.translation)
+    if len(uniq) < 3:
+        return None
+    wrong = random.sample(uniq, 3)
     opts = wrong + [w.translation]
     random.shuffle(opts)
     payload = {"kind": "listen" if listen else "mcq",

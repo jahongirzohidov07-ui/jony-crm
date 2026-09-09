@@ -22,6 +22,16 @@ import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
  * ko'rinishi ham serverning javobiga qarab chiziladi — telefondagi
  * kodni o'zgartirib ball yig'ib bo'lmaydi.
  */
+/** Roundda nechta SO'Z borligi.
+ *
+ * 2026-09-09: juftlash o'yinida bitta "item" — bu bitta taxta va
+ * uning ichida bir nechta so'z bor. Shuning uchun natijani
+ * "5 / 12 taxta" emas, "48 / 60 so'z" deb ko'rsatish uchun
+ * so'zlarni qo'shib sanaymiz. Qolgan o'yinlarda har item = 1 so'z. */
+function countWords(items: RoundItem[]) {
+  return items.reduce((n, it) => n + (it.left?.length || 1), 0);
+}
+
 export default function StudentGamePlay() {
   const { game = "en_uz" } = useParams();
   // Unit tanlangan bo'lsa o'yin faqat shu unit so'zlaridan (2026-08-10)
@@ -179,7 +189,7 @@ export default function StudentGamePlay() {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
           <p className="text-5xl mb-2">🔁</p>
           <p className="text-lg font-bold text-slate-900">
-            {correctCount} / {round.items.length} to'g'ri
+            {correctCount} / {countWords(round.items)} to'g'ri
           </p>
           <p className="text-sm text-slate-600 mt-2 leading-relaxed">
             <b>{wrongIds.length} ta so'z</b>da xato qildingiz. Endi
@@ -204,7 +214,8 @@ export default function StudentGamePlay() {
   }
 
   if (done) {
-    const pct = Math.round((correctCount / round.items.length) * 100);
+    const total = countWords(round.items);
+    const pct = total ? Math.round((correctCount / total) * 100) : 0;
     return (
       <Shell title={round.label}>
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
@@ -212,7 +223,7 @@ export default function StudentGamePlay() {
             {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
           </p>
           <p className="text-2xl font-bold text-slate-900">
-            {correctCount} / {round.items.length}
+            {correctCount} / {total}
           </p>
           <p className="text-sm text-slate-500 mt-1">
             {pct}% to'g'ri · +{correctCount} ball
@@ -289,10 +300,15 @@ export default function StudentGamePlay() {
           <Scramble item={item} onAnswer={answer} disabled={!!feedback} />
         )}
         {round.game === "match" && (
+          /* key={idx} — yangi taxtada tanlov/yechilganlar tozalansin.
+             onFinish -> next(): oxirgi taxtadan keyingina o'yin
+             tugaydi (2026-09-09). */
           <Match
+            key={idx}
             item={item}
             onPair={(text, wordId) => answer(text, wordId, true)}
-            onFinish={() => setDone(true)}
+            onFinish={next}
+            last={idx + 1 >= list.length}
           />
         )}
       </div>
@@ -618,10 +634,13 @@ function Match({
   item,
   onPair,
   onFinish,
+  last = true,
 }: {
   item: RoundItem;
   onPair: (text: string, wordId: number) => void;
   onFinish: () => void;
+  /** Shu oxirgi taxtami — tugma yozuvi shunga qarab o'zgaradi. */
+  last?: boolean;
 }) {
   const [pickedLeft, setPickedLeft] = useState<number | null>(null);
   const [solved, setSolved] = useState<number[]>([]);
@@ -692,7 +711,7 @@ function Match({
           onClick={onFinish}
           className="mt-4 w-full py-3 rounded-xl bg-emerald-600 text-white text-sm font-medium"
         >
-          Hammasi juftlandi! Yakunlash 🎉
+          {last ? "Hammasi juftlandi! Yakunlash 🎉" : "Davom etish →"}
         </button>
       )}
     </div>

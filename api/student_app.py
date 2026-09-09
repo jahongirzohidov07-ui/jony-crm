@@ -1265,11 +1265,38 @@ def _round_choice(words, pool, forward: bool):
     return out
 
 
-def _round_match(words):
-    left = [{"word_id": w.id, "text": w.word} for w in words]
-    right = [{"word_id": w.id, "text": w.translation} for w in words]
-    random.shuffle(right)
-    return [{"left": left, "right": right}]
+MATCH_BOARD = 5          # bitta juftlash taxtasidagi juftlar soni
+
+
+def _round_match(words, per_board: int = MATCH_BOARD):
+    """Juftlash o'yini uchun TAXTALAR ro'yxati.
+
+    2026-09-09, Jahongir: "Juftlar oyini lugatda app da nechta
+    tanlasa ham 5ta gina chiqyabdi shuni togrlab qoy tanlaganicha
+    chiqsin."
+
+    Ilgari bu funksiya faqat BITTA taxta qaytarardi va chaqirilishida
+    so'zlar 5 taga kesib tashlanardi — 60 ta so'z tanlansa ham
+    o'quvchi 5 tasini ko'rardi. Endi tanlangan so'zlarning HAMMASI
+    keladi, faqat telefon ekraniga sig'sin deb 5 taligi taxtalarga
+    bo'linadi va o'yin taxtama-taxta davom etadi.
+
+    Oxirida bitta so'z ortib qolsa — u alohida taxta bo'lmaydi
+    (bitta juftni "juftlash" ma'nosiz), oldingi taxtaga qo'shiladi."""
+    per_board = max(2, int(per_board))
+    boards: list[list] = []
+    for i in range(0, len(words), per_board):
+        boards.append(list(words[i:i + per_board]))
+    if len(boards) > 1 and len(boards[-1]) < 2:
+        boards[-2].extend(boards.pop())
+
+    out = []
+    for chunk in boards:
+        left = [{"word_id": w.id, "text": w.word} for w in chunk]
+        right = [{"word_id": w.id, "text": w.translation} for w in chunk]
+        random.shuffle(right)
+        out.append({"left": left, "right": right})
+    return out
 
 
 def _round_truefalse(words, pool):
@@ -1424,7 +1451,7 @@ def vocab_round(game: str = "en_uz", level: str | None = None,
     elif game == "uz_en":
         items = _round_choice(words, pool, forward=False)
     elif game == "match":
-        items = _round_match(words[:min(5, len(words))])
+        items = _round_match(words)
     elif game == "truefalse":
         items = _round_truefalse(words, pool)
     elif game == "scramble":

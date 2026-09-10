@@ -706,6 +706,9 @@ export interface Exam {
   title?: string | null;
   date: string;
   max_score?: number | null;
+  /** O'tish balli (foizda) — test yaratilganda sozlamadan muhrlangan.
+   *  Eski testlarda va Mock'da null (2026-09-10). */
+  pass_percent?: number | null;
   created_by?: string | null;
   created_at: string;
   result_count: number;
@@ -753,6 +756,16 @@ export interface CoinEntry {
   note?: string | null;
   created_by?: string | null;
   created_at: string;
+}
+
+/** TEST TURI BO'YICHA O'TISH BALLI (2026-09-10, Jahongir: "Maksimal
+ *  ball bor o'tish balli yo'qku" → "test turi boyivha sozlamalarda
+ *  bir marta, foizda"). Mock ro'yxatda yo'q — u IELTS band bilan. */
+export interface ExamPassRule {
+  id?: number;
+  kind: string;
+  percent: number;
+  label?: string | null;
 }
 
 export interface ExamCoinRule {

@@ -7,6 +7,7 @@ import {
   type Reward,
   type Redemption,
   type ExamCoinRule,
+  type ExamPassRule,
   type Branch,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
@@ -805,6 +806,104 @@ function RewardsTab({ canAdmin }: { canAdmin: boolean }) {
   );
 }
 
+// -------------------------------------------------- O'tish balli ----
+/**
+ * TEST TURI BO'YICHA O'TISH BALLI (2026-09-10).
+ *
+ * Jahongir: "Maksimal ball bor o'tish balli yo'qku" → "test turi
+ * boyivha sozlamalarda bir marta, foizda olchanadi, 65% unit testda
+ * 60% esa mid va end courselarda".
+ *
+ * Mock yo'q: u IELTS band bilan baholanadi.
+ *
+ * MUHIM: bu yerdagi raqam faqat BUNDAN KEYIN ochiladigan testlarga
+ * tegishli. Har imtihon o'z o'tish ballini yaratilganda muhrlab
+ * oladi, shuning uchun o'tib ketgan testlarning natijasi va ustoz
+ * ko'rsatkichi qayta hisoblanib ketmaydi.
+ */
+function PassMarkBox({ canAdmin }: { canAdmin: boolean }) {
+  const [rules, setRules] = useState<ExamPassRule[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    api.get<ExamPassRule[]>("/exam-pass-rules").then(setRules).catch(() => {});
+  }, []);
+
+  async function save() {
+    setSaving(true);
+    setError(null);
+    try {
+      const updated = await api.put<ExamPassRule[]>(
+        "/exam-pass-rules",
+        rules.map((r) => ({ kind: r.kind, percent: Number(r.percent) })),
+      );
+      setRules(updated);
+      setSaved(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (rules.length === 0) return null;
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6">
+      <h3 className="font-semibold text-slate-900 mb-1">O'tish balli</h3>
+      <p className="text-sm text-slate-500 mb-3">
+        Test turi bo'yicha, foizda. Shu foizdan yuqorisi — "o'tdi".
+      </p>
+      <div className="flex flex-wrap gap-4">
+        {rules.map((r, i) => (
+          <div key={r.kind}>
+            <label className="block text-xs font-medium text-slate-500 mb-1">
+              {r.label || r.kind}
+            </label>
+            <div className="flex items-center gap-1">
+              <input
+                type="number"
+                min={1}
+                max={100}
+                disabled={!canAdmin}
+                className="w-24 rounded-lg border border-slate-300 px-2 py-1.5 text-sm disabled:bg-slate-50"
+                value={r.percent}
+                onChange={(e) => {
+                  setRules(rules.map((x, idx) =>
+                    idx === i ? { ...x, percent: Number(e.target.value) } : x));
+                  setSaved(false);
+                }}
+              />
+              <span className="text-slate-400">%</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      {canAdmin && (
+        <div className="flex items-center gap-3 mt-4">
+          <button
+            onClick={save}
+            disabled={saving}
+            className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60"
+          >
+            {saving ? "Saqlanmoqda..." : "Saqlash"}
+          </button>
+          {saved && <span className="text-sm text-emerald-600">Saqlandi</span>}
+        </div>
+      )}
+      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+      <p className="text-xs text-slate-400 mt-3">
+        Faqat bundan keyin ochiladigan testlarga ta'sir qiladi — har test
+        o'z o'tish ballini yaratilganda saqlab oladi, shuning uchun o'tib
+        ketgan natijalar va ustoz ko'rsatkichi o'zgarmaydi. Mock testda
+        o'tish balli yo'q: u IELTS band bilan baholanadi.
+      </p>
+    </div>
+  );
+}
+
 // ------------------------------------------------------ Coin qoidasi ----
 function RulesTab({ canAdmin }: { canAdmin: boolean }) {
   const [rules, setRules] = useState<ExamCoinRule[]>([]);
@@ -842,6 +941,8 @@ function RulesTab({ canAdmin }: { canAdmin: boolean }) {
 
   return (
     <div className="max-w-2xl">
+      <PassMarkBox canAdmin={canAdmin} />
+
       <p className="text-sm text-slate-500 mb-4">
         Imtihon natijasi shu jadval bo'yicha coinga aylanadi. O'quvchining
         foizi qaysi bosqichdan o'tsa, o'sha bosqichning coini beriladi.

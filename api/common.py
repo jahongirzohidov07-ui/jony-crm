@@ -49,6 +49,9 @@ def _ensure_new_columns():
         "ALTER TABLE exams ADD COLUMN approved_at DATE",
         "ALTER TABLE exams ADD COLUMN retake_of_id INTEGER",
         "ALTER TABLE exams ADD COLUMN note TEXT",
+        # O'tish balli (2026-09-10). Eski testlarda NULL qoladi —
+        # ular avvalgi chegaralarda hisoblanaveradi, tarix o'zgarmaydi.
+        "ALTER TABLE exams ADD COLUMN pass_percent FLOAT",
         # Eski imtihonlar allaqachon o'tkazilgan - ular "done".
         "UPDATE exams SET status = 'done' WHERE status IS NULL",
         "ALTER TABLE groups ADD COLUMN room_id INTEGER",
@@ -322,6 +325,17 @@ def _ensure_new_columns():
                                                coins=coins))
                 db.add(models.ExamCoinRule(
                     min_percent=-999, coins=0, kind="__migr_v2__"))
+                db.commit()
+
+            # O'TISH BALLI (2026-09-10, Jahongir: "test turi boyivha
+            # sozlamalarda bir marta ... 65% unit testda 60% esa mid
+            # va end courselarda"). Bir marta seed qilinadi; keyin
+            # asoschi o'zgartirsa, qayta yozib yuborilmaydi.
+            _have_pass = {r.kind for r in
+                          db.query(models.ExamPassRule).all()}
+            if not _have_pass:
+                for _k, _p in roles.DEFAULT_EXAM_PASS.items():
+                    db.add(models.ExamPassRule(kind=_k, percent=_p))
                 db.commit()
 
             # Adminlar KPI qoidalari ham xuddi shunday: bir marta
@@ -1329,7 +1343,11 @@ def _exam_summary(db: Session, exam: models.Exam) -> schemas.ExamOut:
     return schemas.ExamOut(
         id=exam.id, group_id=exam.group_id, kind=exam.kind,
         unit_no=exam.unit_no, title=exam.title, date=exam.date,
-        max_score=exam.max_score, created_by=exam.created_by,
+        max_score=exam.max_score,
+        # O'tish balli (2026-09-10): test yaratilganda muhrlangan
+        # qiymat. Eski testlarda va Mock'da null.
+        pass_percent=getattr(exam, "pass_percent", None),
+        created_by=exam.created_by,
         created_at=exam.created_at,
         result_count=len([r for r in exam.results if not r.absent]),
         avg_percent=round(sum(r.percent for r in scored) / len(scored), 1)

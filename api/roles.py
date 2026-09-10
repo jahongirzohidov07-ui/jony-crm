@@ -1856,6 +1856,40 @@ GRADE_MIN_EXAMS = 2            # kamida shuncha test o'tkazilgan bo'lsin
 # Hujjatda alohida aytilmagan - shu qiymatdan boshlanadi va Karyera
 # bo'limidan o'zgartiriladi.
 LEVEL_PASS_PERCENT = 60.0
+
+# =====================================================================
+#  IMTIHON O'TISH BALLI — TEST TURI BO'YICHA (2026-09-10)
+# =====================================================================
+#  Jahongir: "Maksimal ball bor o'tish balli yo'qku" -> "test turi
+#  boyivha sozlamalarda bir marta, foizda olchanadi, 65% unit testda
+#  60% esa mid va end courselarda".
+#
+#  Bu — birinchi ishga tushirishdagi STANDART qiymat. Keyin asoschi
+#  Gamification -> Coin qoidasi sahifasidan o'zgartiradi.
+#
+#  Mock yo'q: u IELTS band bilan baholanadi, o'tish foizi qo'llanmaydi.
+DEFAULT_EXAM_PASS = {"unit": 65.0, "mid": 60.0, "end": 60.0}
+
+#  ESKI TESTLAR uchun chegara (pass_percent muhrlanmagan yozuvlar).
+#  Ular yaratilgan paytda alohida maydon yo'q edi va ikki xil qotirilgan
+#  raqam ishlagan: hisobotda 65%, sertifikatda LEVEL_PASS_PERCENT.
+#  Tarix o'zgarmasligi uchun ular o'sha holicha qoldiriladi.
+LEGACY_EXAM_PASS_REPORT = 65.0
+
+
+def exam_pass_percent(exam, default: float | None = None):
+    """Bitta imtihonning o'tish foizi.
+
+    Muhrlangan bo'lsa — o'sha; bo'lmasa (eski test) — `default`.
+    Mock uchun None: band bilan baholanadi."""
+    if exam is None:
+        return default
+    if getattr(exam, "kind", None) == "mock":
+        return None
+    v = getattr(exam, "pass_percent", None)
+    return default if v is None else v
+
+
 # "Oylik test o'rtachasi" qancha kunlik oynada olinadi
 TEST_WINDOW_DAYS = 30
 # O'quvchilarning bosqichdan o'tishi qancha oy orqaga qarab hisoblanadi

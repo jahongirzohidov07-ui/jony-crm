@@ -937,11 +937,26 @@ def create_exam(
     # darrov tasdiqlangan bo'ladi: u baribir keyingi bosishda tasdiqlar
     # edi. Ustoz yaratsa - qoralama bo'lib turadi va examiner ko'radi.
     approver = user.role in tuple(roles.EXAM_APPROVE)
+
+    # O'TISH BALLINI MUHRLASH (2026-09-10, Jahongir: "Maksimal ball
+    # bor o'tish balli yo'qku" -> "test turi boyivha sozlamalarda bir
+    # marta"). Sozlamadagi qiymat shu yerda ko'chirib olinadi va
+    # imtihonda qoladi: keyin sozlama o'zgarsa, allaqachon
+    # o'tkazilgan testning "o'tdi/o'tmadi"si o'zgarib ketmaydi.
+    # Mock — IELTS band, o'tish foizi qo'llanmaydi.
+    _pass = None
+    if payload.kind != "mock":
+        _rule = (db.query(models.ExamPassRule)
+                 .filter(models.ExamPassRule.kind == payload.kind).first())
+        _pass = _rule.percent if _rule else \
+            roles.DEFAULT_EXAM_PASS.get(payload.kind)
+
     exam = models.Exam(
         group_id=group_id, kind=payload.kind,
         unit_no=payload.unit_no if payload.kind == "unit" else None,
         title=payload.title, date=payload.date,
         max_score=payload.max_score if payload.kind != "mock" else None,
+        pass_percent=_pass,
         status="approved" if approver else "draft",
         approved_by=user.full_name if approver else None,
         approved_at=date.today() if approver else None,

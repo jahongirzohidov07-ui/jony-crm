@@ -252,10 +252,14 @@ def save_exam_results(
         _g = db.query(models.Group).get(exam.group_id)
         _lvl = ((_g.level or "").strip() or None) if _g else None
         _lvl_label = _lvl or (exam.title or "Kurs yakuni")
+        # O'TISH BALLI (2026-09-10): imtihonda muhrlangan bo'lsa —
+        # o'sha. Eski testlarda maydon yo'q edi, ular avvalgidek
+        # LEVEL_PASS_PERCENT bilan hisoblanadi (tarix o'zgarmaydi).
+        _need = roles.exam_pass_percent(exam, roles.LEVEL_PASS_PERCENT)
         for _r in exam.results:
             if _r.absent or _r.percent is None:
                 continue
-            if _r.percent < roles.LEVEL_PASS_PERCENT:
+            if _need is not None and _r.percent < _need:
                 continue
             _dup = (db.query(models.Certificate)
                     .filter(models.Certificate.student_id == _r.student_id,
@@ -378,6 +382,76 @@ def save_exam_retake(
         students=[schemas.GridStudent(id=s.id, full_name=s.full_name,
                                       status=s.status) for s in students],
     )
+
+
+# =====================================================================
+#  O'TISH BALLI — TEST TURI BO'YICHA (2026-09-10)
+# =====================================================================
+#  Jahongir: "Maksimal ball bor o'tish balli yo'qku" -> "test turi
+#  boyivha sozlamalarda bir marta, foizda olchanadi, 65% unit testda
+#  60% esa mid va end courselarda".
+#
+#  Mock ro'yxatda yo'q: u IELTS band bilan baholanadi.
+_PASS_KINDS = [k for k in roles.EXAM_KINDS if k != "mock"]
+
+
+def _pass_rules(db: Session):
+    rows = {r.kind: r for r in db.query(models.ExamPassRule).all()}
+    out = []
+    for k in _PASS_KINDS:
+        r = rows.get(k)
+        out.append(schemas.ExamPassRuleOut(
+            id=r.id if r else 0, kind=k,
+            percent=(r.percent if r
+                     else roles.DEFAULT_EXAM_PASS.get(k, 60.0)),
+            label=roles.EXAM_KIND_LABELS.get(k, k)))
+    return out
+
+
+@router.get("/api/exam-pass-rules",
+            response_model=List[schemas.ExamPassRuleOut])
+def list_pass_rules(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+):
+    return _pass_rules(db)
+
+
+@router.put("/api/exam-pass-rules",
+            response_model=List[schemas.ExamPassRuleOut])
+def replace_pass_rules(
+    payload: List[schemas.ExamPassRuleIn],
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.COIN_ADMIN)),
+):
+    """O'tish ballini turlar bo'yicha saqlaydi.
+
+    ALLAQACHON O'TKAZILGAN testlarga ta'sir QILMAYDI: har imtihon o'z
+    o'tish ballini yaratilgan paytda muhrlab oladi. Bu yerdagi raqam
+    faqat BUNDAN KEYIN ochiladigan testlar uchun."""
+    for r in payload:
+        if r.kind not in _PASS_KINDS:
+            raise HTTPException(
+                400, "O'tish balli faqat Unit / Mid / End uchun "
+                     "belgilanadi (Mock IELTS band bilan baholanadi)")
+        if not (0 < r.percent <= 100):
+            raise HTTPException(400, "O'tish balli 1-100% oralig'ida "
+                                     "bo'lishi kerak")
+    for r in payload:
+        row = (db.query(models.ExamPassRule)
+               .filter(models.ExamPassRule.kind == r.kind).first())
+        if row is None:
+            row = models.ExamPassRule(kind=r.kind, percent=r.percent)
+            db.add(row)
+        else:
+            row.percent = r.percent
+        row.updated_by = user.full_name
+        row.updated_at = datetime.utcnow()
+    db.commit()
+    audit.log(db, user, entity="exam_pass_rule", action="update",
+              note="; ".join(f"{r.kind}={r.percent}%" for r in payload),
+              commit=True)
+    return _pass_rules(db)
 
 
 @router.get("/api/exam-coin-rules", response_model=List[schemas.ExamCoinRuleOut])
@@ -702,10 +776,18 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
 
     # AVTOMAT: qabul qilinishi bilan imtihon tayyor bo'ladi —
     # examiner alohida "imtihon yarat" tugmasini bosmaydi
+    # O'tish balli sozlamadan olinib, shu imtihonda muhrlanadi
+    # (2026-09-10). Mock — band bilan baholanadi, foiz qo'llanmaydi.
+    _pass = None
+    if o.kind != "mock":
+        _r = (db.query(models.ExamPassRule)
+              .filter(models.ExamPassRule.kind == o.kind).first())
+        _pass = _r.percent if _r else roles.DEFAULT_EXAM_PASS.get(o.kind)
+
     ex = models.Exam(
         group_id=o.group_id, kind=o.kind, unit_no=o.unit_no,
         title=roles.exam_title(o.kind, o.unit_no),
-        date=o.date, status="approved",
+        date=o.date, status="approved", pass_percent=_pass,
         approved_by=user.full_name, approved_at=roles.local_today(),
         note=f"Buyurtma {o.public_id}",
         created_by=user.full_name,

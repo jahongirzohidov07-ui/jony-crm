@@ -6984,13 +6984,21 @@ def exam_report(start: str | None = None, end: str | None = None,
         if teacher_id and tid != teacher_id:
             continue
         mx = float(e.max_score or 100)
+        # O'TISH BALLI (2026-09-10, Jahongir: "test turi boyivha
+        # sozlamalarda bir marta"). Har imtihon o'z chegarasini
+        # yaratilganda muhrlab oladi. Eski testlarda maydon yo'q —
+        # ular avvalgi 65% da qoladi, ya'ni bu hisobotdagi tarixiy
+        # raqamlar o'zgarmaydi.
+        need = roles.exam_pass_percent(e, roles.LEGACY_EXAM_PASS_REPORT)
+        if need is None:      # mock — band bilan baholanadi
+            need = roles.LEGACY_EXAM_PASS_REPORT
         for r in (e.results or []):
             if r.absent:
                 continue
             pct = _exr_pct(r, mx)
             if pct is None:
                 continue
-            ok = pct >= _EXR_PASS
+            ok = pct >= need
             tot += 1
             psum += pct
             if ok:
@@ -7038,8 +7046,21 @@ def exam_report(start: str | None = None, end: str | None = None,
                       "otish_foizi": round(v["otgan"] * 100.0 / n, 1)})
     tlist.sort(key=lambda x: -x["otish_foizi"])
     lim = max(20, min(int(limit or 300), 2000))
+    # Endi chegara test turiga qarab (Sozlama: Gamification -> Coin
+    # qoidasi). Sarlavhada shuni ko'rsatamiz; eski `pass_mark` maydoni
+    # o'z joyida qoldi, chunki uni boshqa ekranlar ham o'qishi mumkin.
+    _rules = {r.kind: r.percent
+              for r in db.query(models.ExamPassRule).all()}
+    _labels = " · ".join(
+        f"{roles.EXAM_KIND_LABELS.get(k, k)} {_rules.get(k, p):g}%"
+        for k, p in roles.DEFAULT_EXAM_PASS.items())
     return {
         "pass_mark": _EXR_PASS,
+        "pass_rules": [
+            {"kind": k, "label": roles.EXAM_KIND_LABELS.get(k, k),
+             "percent": _rules.get(k, p)}
+            for k, p in roles.DEFAULT_EXAM_PASS.items()],
+        "pass_label": _labels,
         "start": str(d1), "end": str(d2),
         "cards": {
             "guruh": len(gstat),

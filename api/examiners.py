@@ -157,6 +157,10 @@ def create_retake(
         title=(src.title or examTitleFallback(src)) + " (qayta)",
         date=payload.date or date.today(),
         max_score=src.max_score, status="approved",
+        # Qayta imtihon ASL imtihonning o'tish balli bilan olinadi —
+        # aks holda bir xil testning ikki urinishi ikki xil chegarada
+        # baholanardi (2026-09-10).
+        pass_percent=src.pass_percent,
         approved_by=user.full_name, approved_at=date.today(),
         retake_of_id=src.id, note=payload.note,
         created_by=user.full_name)

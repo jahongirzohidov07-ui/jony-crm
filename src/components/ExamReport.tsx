@@ -8,8 +8,13 @@ import { api } from "../lib/api";
  * Imtihonlar hisoboti — markaz bo'yicha umumiy ko'rinish.
  *
  * Tepada 6 ta karta, ostida 4 kesim: guruhlar, talabalar, ustozlar va
- * yiqilganlar. O'tish chegarasi serverdan keladi (hozir 65%) — imtihonda
- * alohida "o'tish bali" maydoni yo'q, shuning uchun bitta umumiy chegara.
+ * yiqilganlar.
+ *
+ * O'TISH CHEGARASI (2026-09-10 dan): test TURIGA qarab (Sozlama:
+ * Gamification → Coin qoidasi → O'tish balli). Har imtihon o'z
+ * chegarasini yaratilgan paytda muhrlab oladi, shuning uchun sozlama
+ * o'zgarsa ham eski hisobot raqamlari o'zgarmaydi. Chegarasi
+ * muhrlanmagan eski testlar avvalgi 65% da qoladi.
  */
 
 type Card = {
@@ -29,7 +34,10 @@ type SRow = {
   ball: number | null; foiz: number; otdi: boolean;
 };
 type Data = {
-  pass_mark: number; start: string; end: string; cards: Card;
+  pass_mark: number;
+  /** Test turi bo'yicha o'tish balli (2026-09-10). */
+  pass_label?: string | null;
+  start: string; end: string; cards: Card;
   groups: GRow[]; teachers: TRow[]; students: SRow[]; failed: SRow[];
 };
 
@@ -175,8 +183,10 @@ export default function ExamReport() {
 
       {data && (
         <p className="text-xs text-slate-500">
-          O'tish chegarasi: {data.pass_mark}% — shundan yuqorisi «o'tgan»
-          hisoblanadi. Imtihonga kelmaganlar hisobga olinmaydi.
+          O'tish chegarasi: {data.pass_label || `${data.pass_mark}%`} — shundan
+          yuqorisi «o'tgan» hisoblanadi. Imtihonga kelmaganlar hisobga
+          olinmaydi. Har test o'z chegarasini yaratilgan paytdagi
+          sozlamadan oladi.
         </p>
       )}
 

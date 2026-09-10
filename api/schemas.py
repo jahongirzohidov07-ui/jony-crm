@@ -720,6 +720,9 @@ class ExamOut(BaseModel):
     title: Optional[str] = None
     date: date
     max_score: Optional[float] = None
+    # O'tish balli (foizda), test yaratilganda muhrlangan. Eski
+    # testlarda va Mock'da null (2026-09-10).
+    pass_percent: Optional[float] = None
     created_by: Optional[str] = None
     created_at: datetime
     # Ro'yxatda ko'rsatish uchun qisqa xulosa
@@ -770,6 +773,18 @@ class CoinBalance(BaseModel):
     balance: int
     earned: int
     spent: int
+
+
+class ExamPassRuleIn(BaseModel):
+    """Test turi bo'yicha o'tish balli (foizda). Mock kiritilmaydi."""
+    kind: str
+    percent: float
+
+
+class ExamPassRuleOut(ExamPassRuleIn):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    label: Optional[str] = None
 
 
 class ExamCoinRuleIn(BaseModel):

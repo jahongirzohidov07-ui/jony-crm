@@ -734,6 +734,14 @@ class Exam(Base):
     date = Column(Date, nullable=False, default=date.today)
     # Unit/mid/end uchun maksimal ball. Mock uchun band ishlatiladi.
     max_score = Column(Float, nullable=True)
+    # O'TISH BALLI (2026-09-10, Jahongir: "Maksimal ball bor o'tish
+    # balli yo'qku"). Foizda. Qiymat test YARATILGANDA sozlamadan
+    # (ExamPassRule) ko'chirib olinadi va shu yerda MUHRLANADI —
+    # keyinchalik sozlama o'zgarsa, allaqachon o'tkazilgan testlarning
+    # "o'tdi/o'tmadi"si va ustoz ko'rsatkichi o'zgarib ketmaydi
+    # (narx qulfi bilan bir xil mantiq).
+    # NULL = eski testlar: ular avvalgi qotirilgan chegaralarda qoladi.
+    pass_percent = Column(Float, nullable=True)
     # Tasdiqlash: examiner test tuzadi, keyin tasdiqlaydi, keyin
     # o'tkaziladi. Tasdiqlanmagan testga natija kiritib bo'lmaydi.
     status = Column(String, default="draft")
@@ -796,6 +804,29 @@ class ExamResult(Base):
 
     exam = relationship("Exam", back_populates="results")
     student = relationship("Student")
+
+
+class ExamPassRule(Base):
+    """TEST TURI BO'YICHA O'TISH BALLI (2026-09-10).
+
+    Jahongir: "Maksimal ball bor o'tish balli yo'qku" -> "test turi
+    boyivha sozlamalarda bir marta, foizda olchanadi, 65% unit testda
+    60% esa mid va end courselarda".
+
+    Bitta tur - bitta qator. Mock uchun qator yo'q: u IELTS band bilan
+    baholanadi, o'tish foizi qo'llanmaydi.
+
+    Bu jadval faqat STANDART qiymat beradi: test yaratilganda qiymat
+    Exam.pass_percent ga ko'chiriladi va o'sha yerda muhrlanadi.
+    Shuning uchun bu yerdagi raqamni o'zgartirish o'tib ketgan
+    testlarning natijasini qayta hisoblab yubormaydi."""
+    __tablename__ = "exam_pass_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, unique=True, index=True, nullable=False)
+    percent = Column(Float, nullable=False)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow)
 
 
 class ExamCoinRule(Base):

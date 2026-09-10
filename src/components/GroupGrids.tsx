@@ -7,6 +7,7 @@ import {
   type Exam,
   type ExamDetail,
   type ExamKind,
+  type ExamPassRule,
 } from "../lib/api";
 import {
   EXAM_KINDS,
@@ -958,6 +959,18 @@ function ExamForm({
   const [maxScore, setMaxScore] = useState("50");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // O'TISH BALLI (2026-09-10, Jahongir: "Maksimal ball bor o'tish
+  // balli yo'qku"). Bu yerda TAHRIRLANMAYDI — sozlamada test turi
+  // bo'yicha bir marta belgilanadi (Gamification -> Coin qoidasi),
+  // shu yerda faqat ko'rinib turadi, ustoz nima kutilayotganini
+  // bilsin. Test ochilganda shu foiz imtihonga muhrlanadi.
+  const [passRules, setPassRules] = useState<ExamPassRule[]>([]);
+  useEffect(() => {
+    api.get<ExamPassRule[]>("/exam-pass-rules")
+      .then(setPassRules)
+      .catch(() => {});
+  }, []);
+  const passPercent = passRules.find((r) => r.kind === kind)?.percent;
 
   async function save() {
     setSaving(true);
@@ -1057,11 +1070,22 @@ function ExamForm({
             )}
           </div>
 
-          {kind === "mock" && (
+          {kind === "mock" ? (
             <p className="text-xs text-slate-400">
               Mock testda ball emas, IELTS band (0–{MOCK_MAX_BAND}) kiritiladi.
+              O'tish balli qo'llanmaydi.
             </p>
-          )}
+          ) : passPercent != null ? (
+            <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+              O'tish balli: <b className="text-slate-700">{passPercent}%</b>
+              {maxScore && Number(maxScore) > 0 && (
+                <> — ya'ni {Math.ceil((Number(maxScore) * passPercent) / 100)}{" "}
+                  ball va undan yuqorisi</>
+              )}
+              . Sozlamada test turi bo'yicha belgilanadi (Gamification →
+              Coin qoidasi) va shu test uchun saqlanib qoladi.
+            </p>
+          ) : null}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 

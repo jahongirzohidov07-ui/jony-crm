@@ -4008,9 +4008,25 @@ def support_attendance_grid(group_id: int, year: int, month: int,
     mine = user.id if user.role == roles.SUPPORT_TEACHER else None
     days = _support_dates(db, g, year, month, only_user=mine)
 
-    students = M._group_students(db, group_id)
-    if user.role in (roles.TEACHER,) + _SUP_ROLES:
-        students = [s for s in students if s.status != "frozen"]
+    # =================================================================
+    #  KIM JADVALDA TURADI (2026-09-10)
+    # =================================================================
+    #  Jahongir: "Ustoz supportlarda muzlatilgan arxiv o'quvchilaram
+    #  yo'qlamada chiqib turibdi filtrlanmayabdi".
+    #
+    #  Ustoz yo'qlamasida (attendance_grid_v2) bu qoida allaqachon bor
+    #  va ROLGA BOG'LIQ EMAS: yo'qlama — ish haqi hujjati, muzlatilgan
+    #  yoki guruhdan chiqib ketgan odamga yangi belgi qo'yilmasligi
+    #  kerak. Support yo'qlamasida esa filtr faqat ustoz/support
+    #  rollariga qo'llanardi va "frozen"dan boshqasini umuman
+    #  ushlamasdi — arxiv va ketganlar hammaga chiqib turardi.
+    #
+    #  Endi bu yerda ham xuddi ustoznikidek: jadvalda faqat FAOL
+    #  o'quvchilar. Ma'lumot O'CHIRILMAYDI — yozuvlar bazada joyida,
+    #  faqat shu jadvalda ko'rsatilmaydi.
+    _SKIP = ("frozen", "archived", "left")
+    students = [s for s in M._group_students(db, group_id)
+                if s.status not in _SKIP]
 
     marks = {}
     if days:

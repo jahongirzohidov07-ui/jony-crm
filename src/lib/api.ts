@@ -4538,6 +4538,11 @@ export interface MyGroup {
   level?: string | null;
   days?: string | null;
   time?: string | null;
+  /** "support" — vaqt support menejer biriktirgan seansdan olingan
+   *  (guruhning asosiy dars vaqti EMAS); "group" — guruhniki. */
+  time_source?: "support" | "group" | null;
+  /** Support uchun vaqt hali biriktirilmagan bo'lsa — tushuntirish. */
+  time_note?: string | null;
   room?: string | null;
   students: number;
   started_on?: string | null;

@@ -72,9 +72,25 @@ export default function MyGroups() {
                   <Users size={14} className="text-slate-400 shrink-0" />
                   {g.students} o'quvchi
                 </p>
+                {/* SUPPORT SOATI (2026-09-10, Jahongir: "Supportlarga
+                    asosiy dars vaqti korinyabdi men belgilagan support
+                    soati emas"). Support uchun bu yerda GURUHNING dars
+                    vaqti emas, support menejer biriktirgan seans
+                    vaqti turadi. Biriktirilmagan bo'lsa — "—" o'rniga
+                    nima qilish kerakligi yoziladi. */}
                 <p className="flex items-center gap-2">
                   <Clock size={14} className="text-slate-400 shrink-0" />
-                  {[g.days, g.time].filter(Boolean).join(" · ") || "—"}
+                  {[g.days, g.time].filter(Boolean).join(" · ") ||
+                    (g.time_note ? (
+                      <span className="text-amber-600">{g.time_note}</span>
+                    ) : (
+                      "—"
+                    ))}
+                  {g.time_source === "support" && (g.days || g.time) && (
+                    <span className="text-[11px] text-slate-400">
+                      support
+                    </span>
+                  )}
                 </p>
                 {g.room && (
                   <p className="flex items-center gap-2">

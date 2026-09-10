@@ -1035,6 +1035,41 @@ def my_groups(db: Session = Depends(get_db),
     groups = _cabinet_groups(db, user, t)
     today = date.today()
 
+    # =================================================================
+    #  SUPPORT SOATI — MENEJER BIRIKTIRGANI (2026-09-10)
+    # =================================================================
+    #  Jahongir: "Supportlarga asosiy dars vaqti korinyabdi men
+    #  belgilagan support soati emas, yani o'zlari otadigan soat emas,
+    #  Birinchi ikkinchi guruh bir vaqtdrk koʻrinyabdi aslida bittasi
+    #  2dan avval 2dan keyin ikkinchisi" va "support darslarni menejer
+    #  biriktirgan shundan tortvol malumot".
+    #
+    #  Sabab: karta g.lesson_days / g.lesson_time — GURUHNING asosiy
+    #  dars vaqtini ko'rsatardi. Support darsi esa alohida vaqtda
+    #  o'tadi va u SupportAssignment (days/start/end) da turadi —
+    #  aynan support menejer biriktirganda tanlagan kun va soat.
+    #  Shuning uchun ikkala guruh bir xil "14:00" bo'lib chiqardi:
+    #  ko'rsatilayotgani supportniki emas, guruhnikiydi.
+    #
+    #  Endi support uchun vaqt FAQAT biriktiruvdan olinadi. Biriktiruvda
+    #  vaqt qo'yilmagan bo'lsa — guruh vaqtiga "tushib ketmaydi"
+    #  (o'sha eski chalkashlik qaytardi), balki ochiq aytiladi.
+    sup_slot: dict = {}
+    if user.role == roles.SUPPORT_TEACHER:
+        for a in (db.query(models.SupportAssignment)
+                  .filter(models.SupportAssignment.user_id == user.id,
+                          models.SupportAssignment.group_id.isnot(None))
+                  .all()):
+            if a.start and a.end:
+                tm = f"{a.start}–{a.end}"
+            else:
+                tm = a.start or a.end or None
+            prev = sup_slot.get(a.group_id)
+            # Bir guruhga bir necha biriktiruv bo'lsa — vaqti borini
+            # olamiz (bo'sh yozuv to'g'risini yashirib qo'ymasin).
+            if prev is None or (tm and not prev.get("time")):
+                sup_slot[a.group_id] = {"days": a.days or None, "time": tm}
+
     rooms = {r.id: r.name for r in db.query(models.Room).all()}
     out = []
     for g in groups:
@@ -1049,13 +1084,26 @@ def my_groups(db: Session = Depends(get_db),
                .filter(models.Lesson.group_id == g.id,
                        models.Lesson.date > today)
                .order_by(models.Lesson.date).first())
+        slot = sup_slot.get(g.id) if user.role == roles.SUPPORT_TEACHER \
+            else None
+        if user.role == roles.SUPPORT_TEACHER:
+            g_days, g_time = (slot or {}).get("days"), (slot or {}).get("time")
+            time_note = (None if g_time else
+                         "Support vaqti belgilanmagan — support "
+                         "menejer biriktirishi kerak")
+        else:
+            g_days, g_time, time_note = g.lesson_days, g.lesson_time, None
         out.append({
             "id": g.id, "public_id": g.public_id, "name": g.name,
             "subject": g.subject,
             "subject_label": roles.SUBJECT_LABELS.get(g.subject or "",
                                                       g.subject),
             "level": getattr(g, "level", None),
-            "days": g.lesson_days, "time": g.lesson_time,
+            "days": g_days, "time": g_time,
+            # Support uchun ko'rsatilgan vaqt GURUHNIKI emas, o'ziniki
+            "time_source": "support" if user.role == roles.SUPPORT_TEACHER
+                           else "group",
+            "time_note": time_note,
             "room": rooms.get(g.room_id) or g.room,
             "students": len(students),
             "started_on": (g.start_date.isoformat()

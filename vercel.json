@@ -2,12 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/main.py": {
-      "maxDuration": 30,
-      "memory": 3008
+      "maxDuration": 30
     },
     "api/entry.py": {
-      "maxDuration": 30,
-      "memory": 3008
+      "maxDuration": 30
     }
   },
   "crons": [

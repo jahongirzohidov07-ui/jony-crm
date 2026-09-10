@@ -552,10 +552,93 @@ def _backfill_public_ids():
 #  qo'shildi, lekin migratsiya yozilmagani uchun shtamp o'zgarmadi.
 #  Natijada jonli bazada ular yaratilmadi va imtihonga tegadigan har
 #  qanday so'rov yiqildi. Shtamp sanasi shuning uchun ko'tarildi.
+#
+#  2026-09-10 (KECHQURUN) — SHTAMP ENDI ODAMGA BOG'LIQ EMAS.
+#  Yuqoridagi ikki avariya bir xil sababdan bo'ldi: shtamp faqat
+#  MIGRATSIYA nomiga bog'langan edi, migratsiyasiz o'zgarish (yangi
+#  jadval yoki ALTER bilan qo'shilgan ustun) esa uni qimirlatmasdi
+#  va odam _STAMP_MANUAL ni yangilashni unutardi.
+#
+#  Endi shtampga MODEL BARMOQ IZI qo'shiladi: hamma jadval va ustun
+#  nomlaridan hisoblangan qisqa xesh. Modelga bitta ustun qo'shilsa
+#  xesh o'zi o'zgaradi -> shtamp o'zgaradi -> migratsiya va
+#  create_all albatta ishlaydi. Unutish imkoni yo'q.
+#
+#  Barmoq izi FAQAT nomlardan olinadi (tur, uzunlik, tartib emas) —
+#  ular bazaning haqiqiy holatini belgilaydi va SQLite/Postgres da
+#  bir xil chiqadi, ya'ni har deployda bekorga o'zgarib ketmaydi.
 _STAMP_MANUAL = "2026_09_10"
-SCHEMA_STAMP = "stamp_%s_%s" % (
+_STAMP_BASE = "stamp_%s_%s" % (
     _STAMP_MANUAL,
     migrations.MIGRATIONS[-1][0] if migrations.MIGRATIONS else "0")
+
+_STAMP_CACHE: dict = {"v": None}
+
+
+#  MUHIM: barmoq izi Base.metadata dan OLINMAYDI. Sabab —
+#  jadvallar faqat models.py da emas, entry.py / guide.py /
+#  level_test.py da ham e'lon qilingan. Vercel'da har fayl alohida
+#  funksiya bo'lgani uchun metadata'da nechta jadval borligi qaysi
+#  modul import qilinganiga qarab 154 ham, 167 ham bo'ladi. U holda
+#  ikki funksiya ikki xil shtamp hisoblab, bir-birining shtampini
+#  "eski" deb bilib, HAR sovuq startda to'liq bootstrap yugurtirardi
+#  (aynan biz qochayotgan Neon trafigi).
+#
+#  Shuning uchun xesh MANBA FAYLLARDAN olinadi: papkadagi har bir
+#  .py fayl ichida `__tablename__` bo'lsa — o'shandan jadval nomlari
+#  va ustun nomlari regex bilan sug'urib olinadi. Natija import
+#  tartibiga umuman bog'liq emas, va yangi model fayli qo'shilsa
+#  o'zi topiladi. Izoh/route o'zgarishi xeshga ta'sir qilmaydi.
+_MODEL_SIG_RE = None
+
+
+def _model_signature_bytes() -> bytes:
+    global _MODEL_SIG_RE
+    if _MODEL_SIG_RE is None:
+        import re as _re
+        _MODEL_SIG_RE = _re.compile(
+            rb'^[ \t]*(?:__tablename__[ \t]*=[ \t]*["\']([A-Za-z0-9_]+)'
+            rb'|([A-Za-z0-9_]+)[ \t]*=[ \t]*(?:sa\.|sqlalchemy\.)?Column\()',
+            _re.M)
+    d = os.path.dirname(os.path.abspath(__file__))
+    chunks = []
+    try:
+        names = sorted(os.listdir(d))
+    except Exception:
+        return b""
+    for n in names:
+        if not n.endswith(".py") or n.startswith("test_"):
+            continue
+        try:
+            with open(os.path.join(d, n), "rb") as f:
+                data = f.read()
+        except Exception:
+            continue
+        if b"__tablename__" not in data:
+            continue
+        chunks.append(n.encode("utf-8"))
+        for m in _MODEL_SIG_RE.finditer(data):
+            chunks.append(m.group(1) or m.group(2) or b"")
+    return b"|".join(chunks)
+
+
+def models_fingerprint() -> str:
+    """Model sxemasining qisqa, barqaror xeshi.
+
+    Import tartibiga bog'liq emas: manba fayllardan o'qiladi."""
+    import hashlib
+    return hashlib.sha1(_model_signature_bytes()).hexdigest()[:10]
+
+
+def schema_stamp() -> str:
+    """Joriy sxema shtampi. Bir jarayonda bir marta hisoblanadi."""
+    if _STAMP_CACHE["v"] is None:
+        _STAMP_CACHE["v"] = _STAMP_BASE + "_" + models_fingerprint()
+    return _STAMP_CACHE["v"]
+
+
+# Eski nom — tashqi kod va testlar uchun qoldirildi.
+SCHEMA_STAMP = _STAMP_BASE
 
 # ---------------------------------------------------------------
 #  SOVUQ START TEZLIGI  (2026-08-14, Jahongir: "Har sovuq startda
@@ -598,7 +681,7 @@ def _schema_ready() -> bool:
         row = db.execute(
             text("SELECT 1 FROM schema_migrations "
                  "WHERE version = :v LIMIT 1"),
-            {"v": SCHEMA_STAMP}).first()
+            {"v": schema_stamp()}).first()
         ok = row is not None
     except Exception:
         # Jadval hali yo'q (yangi baza) yoki baza javob bermadi —
@@ -616,6 +699,86 @@ def _schema_ready() -> bool:
     return ok
 
 
+#  AVTOMAT USTUN QO'SHISH (2026-09-10)
+#
+#  Ilgari yangi ustun qo'shilsa, uni QO'LDA _ensure_new_columns()
+#  ro'yxatiga ALTER qatori qilib yozish kerak edi. Odam unutsa —
+#  jonli bazada ustun paydo bo'lmasdi va o'sha jadvalga tegadigan
+#  har qanday so'rov 500 qaytarardi (28-avgust: contents.proof,
+#  10-sentabr: exams.pass_percent).
+#
+#  Endi kod modeldagi ustunlarni bazadagilar bilan o'zi solishtiradi
+#  va yetishmayotganini o'zi qo'shadi. Faqat SEKIN yo'lda (shtamp
+#  o'zgarganda) ishlaydi, ya'ni har sovuq startda emas — Neon
+#  trafigiga ta'siri yo'q.
+#
+#  Ustun ataylab NULL bo'ladigan qilib qo'shiladi: mavjud qatorlarda
+#  qiymat yo'q, NOT NULL qo'yilsa ALTER yiqilardi. Ma'lumot
+#  o'chirilmaydi, faqat qo'shiladi.
+def _db_columns_map() -> dict:
+    """Bazadagi hamma jadval va ustun nomlari.
+
+    Postgres'da BITTA so'rov bilan olinadi. Jadval-jadval
+    so'rasak 167 ta borib-kelish bo'lardi — sovuq startni
+    og'irlashtiradi va aynan shu narsadan qochyapmiz."""
+    out: dict = {}
+    try:
+        if engine.dialect.name == "postgresql":
+            with engine.connect() as cx:
+                rows = cx.execute(text(
+                    "SELECT table_name, column_name "
+                    "FROM information_schema.columns "
+                    "WHERE table_schema = current_schema()")).all()
+            for tname, cname in rows:
+                out.setdefault(tname, set()).add(cname)
+            return out
+        from sqlalchemy import inspect as _sa_inspect
+        insp = _sa_inspect(engine)
+        for tname in insp.get_table_names():
+            try:
+                out[tname] = {c["name"] for c in insp.get_columns(tname)}
+            except Exception:
+                pass
+    except Exception:
+        return out
+    return out
+
+
+def _auto_add_missing_columns(tables=None) -> list:
+    added: list = []
+    have_map = _db_columns_map()
+    if not have_map:
+        return added
+    if tables is None:
+        items = list(Base.metadata.tables.values())
+    else:
+        items = list(tables)
+    q = engine.dialect.identifier_preparer.quote
+    for table in items:
+        tname = getattr(table, "name", None)
+        if not tname or tname not in have_map:
+            continue
+        have = have_map[tname]
+        for col in table.columns:
+            if col.name in have:
+                continue
+            try:
+                ddl = col.type.compile(dialect=engine.dialect)
+            except Exception:
+                continue
+            sql = "ALTER TABLE %s ADD COLUMN %s %s" % (
+                q(tname), q(col.name), ddl)
+            try:
+                with engine.begin() as cx:
+                    cx.execute(text(sql))
+                added.append(tname + "." + col.name)
+            except Exception:
+                pass
+    if added:
+        print("[schema] avtomat qo'shilgan ustunlar: " + ", ".join(added))
+    return added
+
+
 def ensure_tables(tables):
     """Kichik yordamchi: sxema tayyor bo'lsa hech nima qilmaydi.
     entry.py'dagi "yangi jadval qo'shish" bloklari shuni chaqiradi —
@@ -623,8 +786,15 @@ def ensure_tables(tables):
     tekshiruv so'rovi ketardi."""
     if _schema_ready() and _SCHEMA_BOOT_OK:
         return
+    tables = list(tables)
     try:
-        Base.metadata.create_all(bind=engine, tables=list(tables))
+        Base.metadata.create_all(bind=engine, tables=tables)
+    except Exception:
+        pass
+    # Jadval allaqachon bor, lekin unga yangi ustun qo'shilgan
+    # bo'lsa — create_all buni sezmaydi, shuning uchun alohida.
+    try:
+        _auto_add_missing_columns(tables)
     except Exception:
         pass
 
@@ -636,7 +806,7 @@ def _schema_bootstrap():
     try:
         try:
             done = db.query(models.SchemaMigration).filter(
-                models.SchemaMigration.version == SCHEMA_STAMP).first()
+                models.SchemaMigration.version == schema_stamp()).first()
         except Exception:
             done = None
         if done:
@@ -645,7 +815,21 @@ def _schema_bootstrap():
         _ensure_new_columns()
         _backfill_public_ids()
         migrations.run(db)
-        db.add(models.SchemaMigration(version=SCHEMA_STAMP))
+        # Yangi jadvallar create_all bilan yaratiladi — barmoq izi
+        # o'zgargan bo'lsa (yangi model qo'shilgan) shu yerda albatta
+        # bajariladi, aks holda jadval hech qachon paydo bo'lmasdi.
+        try:
+            Base.metadata.create_all(bind=engine)
+        except Exception:
+            pass
+        # Mavjud jadvalga qo'shilgan yangi ustunlarni create_all
+        # ko'rmaydi — ularni o'zimiz solishtirib qo'shamiz. Shu
+        # bilan "migratsiya yozishni unutdim" xatosi tugaydi.
+        try:
+            _auto_add_missing_columns()
+        except Exception:
+            pass
+        db.add(models.SchemaMigration(version=schema_stamp()))
         db.commit()
         _SCHEMA_OK = True
     except Exception:
@@ -6486,6 +6670,8 @@ __all__ = [
     "GRID_START_MIN",
     "PUBLIC_ID_PREFIX",
     "SCHEMA_STAMP",
+    "schema_stamp",
+    "models_fingerprint",
     "_schema_ready",
     "ensure_tables",
     "_PERM_CACHE",

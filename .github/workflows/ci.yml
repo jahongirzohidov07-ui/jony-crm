@@ -23,6 +23,21 @@ jobs:
         run: |
           python -c "import main; print('main.py import OK')"
           python -c "import roles, models, schemas, billing, audit, notify, migrations; print('modules OK')"
+      # SXEMA QO'RIQCHISI — har push'da, [deploy] bo'lmasa ham.
+      # 28-avgust va 10-sentabrdagi avariyalar ikkalasi ham
+      # "modelga ustun qo'shdim, jonli bazada paydo bo'lmadi"
+      # sababidan edi. Shu qadam qizil bo'lsa — deploy qilmaymiz.
+      - name: Schema guard (hamma jadval va ustun)
+        working-directory: api
+        env:
+          DATABASE_URL: "sqlite:////tmp/ci_schema.db"
+        run: python test_schema_all_tables.py
+      - name: Schema stamp guard
+        working-directory: api
+        env:
+          DATABASE_URL: "sqlite:////tmp/ci_stamp.db"
+        run: |
+          if [ -f test_schema_stamp.py ]; then python test_schema_stamp.py; fi
       - name: Guard tests
         working-directory: api
         env:

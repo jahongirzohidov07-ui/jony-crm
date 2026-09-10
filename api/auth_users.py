@@ -19,6 +19,7 @@ import models
 import notify
 import roles
 import schemas
+from auth import client_ip as _client_ip
 from auth import (
     create_access_token,
     get_current_user,
@@ -76,8 +77,7 @@ def _login_record(db: Session, username: str, ip: str, success: bool):
 @router.post("/api/auth/login", response_model=schemas.Token)
 def login(payload: schemas.LoginRequest, request: Request,
           db: Session = Depends(get_db)):
-    ip = (request.headers.get("x-forwarded-for") or
-          (request.client.host if request.client else "") or "")[:64]
+    ip = _client_ip(request)
     _login_guard(db, payload.username, ip)
     user = db.query(models.User).filter(models.User.username == payload.username).first()
     # TELEFON-LOGIN MOSLASHUVI (2026-08-10, Jahongir: "apkdan raqam
@@ -170,8 +170,7 @@ def recover_password(payload: schemas.RecoverIn, request: Request,
                      db: Session = Depends(get_db)):
     """Parolni tiklash kodi bilan almashtirish (faqat asoschi hisobi).
     Login himoyasi bilan bir xil blok qoidasi amal qiladi."""
-    ip = (request.headers.get("x-forwarded-for") or
-          (request.client.host if request.client else "") or "")[:64]
+    ip = _client_ip(request)
     _login_guard(db, payload.username, ip)
     user = db.query(models.User).filter(
         models.User.username == payload.username,

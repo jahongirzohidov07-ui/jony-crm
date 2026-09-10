@@ -21,6 +21,7 @@ import models
 import notify
 import roles
 import schemas
+import auth as _auth_mod
 from auth import (
     create_access_token,
     get_current_user,
@@ -73,6 +74,12 @@ def health(request: Request, db: Session = Depends(get_db), db_check: int = 0):
     bo'ladi — taxmin qilib o'tirilmaydi."""
     t0 = _time.monotonic()
     out = {"status": "ok", "time": datetime.utcnow().isoformat()}
+    # 2026-09-10 audit: JONY_CRM_SECRET qo'yilmagan bo'lsa tizim kodda
+    # ochiq turgan default kalit bilan ishlaydi — uni bilgan odam o'ziga
+    # asoschi tokeni yasab oladi. Buni JIM o'tkazib yubormaymiz: cron
+    # har 5 daqiqada shu yerni chaqiradi, secret_ok=false darrov
+    # ko'rinadi.
+    out["secret_ok"] = not getattr(_auth_mod, "SECRET_IS_DEFAULT", False)
     # BAZAGA TEGISHNI CHEKLASH (2026-09-07, Jahongir: "bir oyda qancha
     # pul ketadi" tekshiruvidan keyin). Neon FAQAT UYG'OQ turgan vaqti
     # uchun pul oladi (o'tgan oy: 207 CU-soat = $21.97) va 5 daqiqa

@@ -7,12 +7,28 @@ from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
+from sqlalchemy.orm.attributes import set_committed_value
 
 from database import get_db
 import models
 
 # In production this should come from an environment variable.
-SECRET_KEY = os.environ.get("JONY_CRM_SECRET", "dev-secret-change-me-before-deploy")
+_DEFAULT_SECRET = "dev-secret-change-me-before-deploy"
+SECRET_KEY = os.environ.get("JONY_CRM_SECRET") or _DEFAULT_SECRET
+# 2026-09-10 audit: ilgari default kalit JIMGINA ishlatilaverardi. Kalit
+# kodda ochiq turgani uchun uni bilgan odam o'ziga asoschi tokeni yasab
+# olardi. Endi holat aniq ko'rinadi:
+#   SECRET_STRICT  — jonli muhitda (Vercel yoki Postgres) default kalit
+#                    ishlatilyapti: /api/health secret_ok=false beradi.
+#   SECRET_ENFORCE — JONY_SECRET_ENFORCE=1 qo'yilsa, token BERILMAYDI
+#                    ham, QABUL QILINMAYDI ham (ikkala tomon yopiladi).
+SECRET_IS_DEFAULT = SECRET_KEY == _DEFAULT_SECRET
+SECRET_STRICT = SECRET_IS_DEFAULT and (
+    bool(os.environ.get("VERCEL"))
+    or not os.environ.get("DATABASE_URL", "sqlite").startswith("sqlite"))
+SECRET_ENFORCE = SECRET_STRICT and os.environ.get("JONY_SECRET_ENFORCE") == "1"
+SECRET_ERROR = ("Xavfsizlik kaliti (JONY_CRM_SECRET) o'rnatilmagan — "
+                "Vercel Environment Variables'ga qo'shib, qayta deploy qiling")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 12  # 12 soat
 
@@ -55,6 +71,8 @@ def create_access_token(data: dict, minutes: int | None = None) -> str:
     """minutes berilmasa odatiy 12 soat. "Eslab qolish" bilan
     kirilganda login yo'li uzoqroq muddat beradi (60 kun) -
     o'quvchi ilovani har ochganda qayta kirib o'tirmasin."""
+    if SECRET_ENFORCE:
+        raise HTTPException(status_code=503, detail=SECRET_ERROR)
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(
         minutes=minutes or ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -71,6 +89,8 @@ def get_current_user(
         detail="Login ma'lumotlari noto'g'ri yoki muddati tugagan",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    if SECRET_ENFORCE:
+        raise HTTPException(status_code=503, detail=SECRET_ERROR)
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: Optional[str] = payload.get("sub")
@@ -108,7 +128,13 @@ def get_current_user(
             user._all_roles = [user.role] + [
                 r for r in sorted(allowed) if r != user.role]
             user._primary_role = user.role
-            user.role = want
+            # 2026-09-10 audit: user.role = want DEB YOZIB BO'LMAYDI —
+            # bu bazaga bog'langan ustun, obyekt "iflos" bo'lib qoladi va
+            # endpoint db.commit() qilganda ASOSIY lavozim bazada butunlay
+            # almashib ketardi. set_committed_value qiymatni xuddi bazadan
+            # o'qilgandek qo'yadi: so'rov davomida hamma tekshiruv to'g'ri
+            # ishlaydi, lekin hech qachon saqlanmaydi.
+            set_committed_value(user, "role", want)
     return user
 
 
@@ -125,3 +151,29 @@ def require_role(*roles: str):
         return user
 
     return checker
+
+
+def client_ip(request) -> str:
+    """Mijozning HAQIQIY IP'si.
+
+    2026-09-10 audit: ilgari x-forwarded-for XOM holda (yoki uning
+    BIRINCHI qiymati) olinardi. Bu sarlavhani mijozning o'zi yozib
+    yuborishi mumkin — ya'ni har safar soxta IP qo'yib, IP bo'yicha
+    qo'yilgan istalgan cheklovni cheksiz aylanib o'tsa bo'lardi.
+
+    Endi tartib shunday:
+      1) Vercel o'zi qo'yadigan sarlavhalar — mijoz ularni almashtira
+         olmaydi (Vercel kiruvchi x-vercel-* ni o'chirib tashlaydi);
+      2) bo'lmasa XFF'ning ENG OXIRGI qiymati — uni bizga eng yaqin
+         proksi qo'shadi, mijoz emas. (Birinchi qiymat — aynan mijoz
+         yozib yuborgani, shuning uchun unga ishonib bo'lmaydi.)
+    """
+    h = request.headers
+    for name in ("x-vercel-forwarded-for", "x-real-ip"):
+        v = (h.get(name) or "").strip()
+        if v:
+            return v[:64]
+    xff = (h.get("x-forwarded-for") or "").strip()
+    if xff:
+        return xff.split(",")[-1].strip()[:64]
+    return ((request.client.host if request.client else "") or "")[:64]

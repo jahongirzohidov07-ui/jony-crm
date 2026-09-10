@@ -55,20 +55,30 @@ def _my_group_ids(db: Session, user: models.User, t: models.Teacher) -> list:
     return [g.id for g in _cabinet_groups(db, user, t)]
 
 
-def _lesson_card(db: Session, ls: models.Lesson, g: models.Group) -> dict:
-    """Bitta dars kartasi: nechta o'quvchi, nechtasi belgilangan."""
+def _lesson_card(db: Session, ls: models.Lesson, g: models.Group,
+                 slots=None) -> dict:
+    """Bitta dars kartasi: nechta o'quvchi, nechtasi belgilangan.
+
+    VAQT (2026-09-10, Jahongir: "haliyam supportlarni oz darsi vaqti
+    emas asosiy dars vaqti korinyabdi"): support uchun kartada
+    GURUHNING asosiy dars vaqti emas, support menejer biriktirgan
+    seans vaqti turadi. `slots` — common.support_slot_map() natijasi;
+    oddiy ustozda None bo'ladi va hech narsa o'zgarmaydi."""
     students = [s for s in (g.students or [])
                 if s.status in ("active", "trial")]
     marked = (db.query(func.count(models.Attendance.id))
               .filter(models.Attendance.lesson_id == ls.id).scalar() or 0)
     graded = (db.query(func.count(models.DailyGrade.id))
               .filter(models.DailyGrade.lesson_id == ls.id).scalar() or 0)
+    _days, _time, _src, _note = group_time_for(slots, g)
     return {
         "lesson_id": ls.id,
         "group_id": g.id,
         "group": g.name,
         "level": getattr(g, "level", None),
-        "time": g.lesson_time,
+        "time": _time,
+        "time_source": _src,
+        "time_note": _note,
         "date": ls.date.isoformat(),
         "held": bool(ls.held),
         "students": len(students),
@@ -91,6 +101,7 @@ def teacher_today(day: str | None = None,
     t = _me_teacher(db, user)
     on = date.fromisoformat(day) if day else roles.local_today()
     gids = _my_group_ids(db, user, t)
+    slots = support_slot_map(db, user)
     if not gids:
         return {"date": on.isoformat(), "lessons": [], "groups": 0,
                 "students": 0, "pending": 0,
@@ -101,7 +112,7 @@ def teacher_today(day: str | None = None,
             .filter(models.Lesson.group_id.in_(gids),
                     models.Lesson.date == on)
             .order_by(models.Group.lesson_time, models.Group.name).all())
-    lessons = [_lesson_card(db, ls, g) for ls, g in rows]
+    lessons = [_lesson_card(db, ls, g, slots) for ls, g in rows]
 
     # Oxirgi 7 kunda yo'qlamasi qo'yilmagan darslar — ustoz esidan
     # chiqargan bo'lsa ko'rinib tursin (oylik shundan hisoblanadi).
@@ -114,7 +125,7 @@ def teacher_today(day: str | None = None,
                         models.Lesson.date < on,
                         models.Lesson.held == 0)
                 .order_by(models.Lesson.date.desc()).limit(20).all())
-    missed = [_lesson_card(db, ls, g) for ls, g in old_rows]
+    missed = [_lesson_card(db, ls, g, slots) for ls, g in old_rows]
 
     total_students = (db.query(func.count(models.Student.id))
                       .filter(models.Student.group_id.in_(gids),
@@ -174,7 +185,8 @@ def teacher_lesson(lesson_id: int,
         "group": g.name,
         "level": getattr(g, "level", None),
         "date": ls.date.isoformat(),
-        "time": g.lesson_time,
+        # Support uchun bu yerda ham o'z seans vaqti (2026-09-10)
+        "time": group_time_for(support_slot_map(db, user), g)[1],
         "editable": editable,
         "readonly_reason": why,
         "students": [{
@@ -195,6 +207,7 @@ def teacher_week(db: Session = Depends(get_db),
     """Shu haftaning dars jadvali — kun bo'yicha guruhlangan."""
     t = _me_teacher(db, user)
     gids = _my_group_ids(db, user, t)
+    slots = support_slot_map(db, user)
     today = roles.local_today()
     start = today - timedelta(days=today.weekday())
     end = start + timedelta(days=6)
@@ -210,7 +223,8 @@ def teacher_week(db: Session = Depends(get_db),
             .order_by(models.Lesson.date, models.Group.lesson_time).all())
     by_day: dict = {}
     for ls, g in rows:
-        by_day.setdefault(ls.date, []).append(_lesson_card(db, ls, g))
+        by_day.setdefault(ls.date, []).append(
+            _lesson_card(db, ls, g, slots))
 
     names = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba",
              "Juma", "Shanba", "Yakshanba"]
@@ -243,8 +257,12 @@ def teacher_support_options(db: Session = Depends(get_db),
               .filter(models.Group.id.in_(gids or [-1]))
               .order_by(models.Group.name).all()) if gids else []
     return {
+        # Support seansi uchun tanlov: bu yerda ham GURUHNING dars
+        # vaqti emas, supportning o'z biriktirilgan vaqti (2026-09-10).
         "groups": [{"id": g.id, "name": g.name,
-                    "lesson_time": g.lesson_time} for g in groups],
+                    "lesson_time": group_time_for(
+                        support_slot_map(db, user), g)[1]}
+                   for g in groups],
         "hour_steps": roles.SUPPORT_SESSION_HOUR_STEPS,
         "min_hours": roles.SUPPORT_SESSION_MIN_HOURS,
         "max_hours": roles.SUPPORT_SESSION_MAX_HOURS,
@@ -382,6 +400,7 @@ def teacher_home(db: Session = Depends(get_db),
     """Bosh ekran: bugungi ish + qisqa ko'rsatkichlar."""
     t = _me_teacher(db, user)
     gids = _my_group_ids(db, user, t)
+    slots = support_slot_map(db, user)
     today = roles.local_today()
 
     students = (db.query(func.count(models.Student.id))
@@ -404,7 +423,7 @@ def teacher_home(db: Session = Depends(get_db),
                   .filter(models.Lesson.group_id.in_(gids),
                           models.Lesson.date == today)
                   .order_by(models.Group.lesson_time).all()) if gids else []
-    lessons = [_lesson_card(db, ls, g) for ls, g in today_rows]
+    lessons = [_lesson_card(db, ls, g, slots) for ls, g in today_rows]
 
     return {
         "teacher": t.full_name,

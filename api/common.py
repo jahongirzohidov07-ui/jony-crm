@@ -5109,6 +5109,64 @@ def _support_assigned_groups(db: Session, user) -> list:
     return (db.query(models.Group).filter(models.Group.id.in_(gids))
             .order_by(models.Group.name).all())
 
+# =====================================================================
+#  SUPPORT O'Z SOATI — BITTA MANBA (2026-09-10)
+# =====================================================================
+#  Jahongir: "Supportlarga asosiy dars vaqti korinyabdi men belgilagan
+#  support soati emas" va keyin yana: "haliyam supportlarni oz darsi
+#  vaqti emas asosiy dars vaqti korinyabdi".
+#
+#  Birinchi urinishda faqat "Guruhlarim" (/api/me/groups) tuzatilgan
+#  edi. Lekin support kunlik ishini JONY TEACHER ilovasida qiladi
+#  (/api/teacher/today, /week, /home, /support-options) — u yerda
+#  vaqt hamon guruhning asosiy dars vaqtidan olinardi. Shuning uchun
+#  qoida endi SHU YERDA, bitta joyda turadi va hamma ekran shundan
+#  o'qiydi: yana bir ekran unutilib qolmasin.
+#
+#  Manba: SupportAssignment (days/start/end) — support menejer
+#  biriktirganda tanlagan kun va soat.
+SUPPORT_TIME_NOTE = ("Support vaqti belgilanmagan — support menejer "
+                     "biriktirishi kerak")
+
+
+def support_slot_map(db: Session, user):
+    """Support uchun {group_id: {"days", "time"}}.
+
+    Support BO'LMASA — None (ya'ni "guruhning o'z vaqti ishlatilsin")."""
+    if getattr(user, "role", None) != roles.SUPPORT_TEACHER:
+        return None
+    out: dict = {}
+    for a in (db.query(models.SupportAssignment)
+              .filter(models.SupportAssignment.user_id == user.id,
+                      models.SupportAssignment.group_id.isnot(None)).all()):
+        if a.start and a.end:
+            tm = f"{a.start}–{a.end}"
+        else:
+            tm = a.start or a.end or None
+        prev = out.get(a.group_id)
+        # Bir guruhga bir necha biriktiruv bo'lsa — vaqti borini olamiz
+        if prev is None or (tm and not prev.get("time")):
+            out[a.group_id] = {"days": a.days or None, "time": tm}
+    return out
+
+
+def group_time_for(slots, g):
+    """(days, time, source, note).
+
+    slots is None  -> oddiy ustoz/xodim: guruhning o'z dars vaqti.
+    slots is dict  -> support: FAQAT biriktiruvdagi vaqt. Biriktiruvda
+                      vaqt yo'q bo'lsa guruh vaqtiga tushib ketmaydi
+                      (aynan shu chalkashlik shikoyatga sabab bo'lgan),
+                      balki izoh chiqadi."""
+    if slots is None:
+        return (getattr(g, "lesson_days", None),
+                getattr(g, "lesson_time", None), "group", None)
+    s = slots.get(getattr(g, "id", None)) or {}
+    tm = s.get("time")
+    return (s.get("days"), tm, "support",
+            None if tm else SUPPORT_TIME_NOTE)
+
+
 def _cabinet_groups(db: Session, user, t) -> list:
     """Kabinet guruhlari: ustozga o'z guruhlari, support teacherga —
     biriktirilganlari."""
@@ -6426,6 +6484,9 @@ __all__ = [
     "_book_out",
     "_branch_scope_ids",
     "_cabinet_groups",
+    "support_slot_map",
+    "group_time_for",
+    "SUPPORT_TIME_NOTE",
     "_card",
     "_charge_from_activation",
     "_charge_skipped",

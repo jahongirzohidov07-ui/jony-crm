@@ -1054,21 +1054,11 @@ def my_groups(db: Session = Depends(get_db),
     #  Endi support uchun vaqt FAQAT biriktiruvdan olinadi. Biriktiruvda
     #  vaqt qo'yilmagan bo'lsa — guruh vaqtiga "tushib ketmaydi"
     #  (o'sha eski chalkashlik qaytardi), balki ochiq aytiladi.
-    sup_slot: dict = {}
-    if user.role == roles.SUPPORT_TEACHER:
-        for a in (db.query(models.SupportAssignment)
-                  .filter(models.SupportAssignment.user_id == user.id,
-                          models.SupportAssignment.group_id.isnot(None))
-                  .all()):
-            if a.start and a.end:
-                tm = f"{a.start}–{a.end}"
-            else:
-                tm = a.start or a.end or None
-            prev = sup_slot.get(a.group_id)
-            # Bir guruhga bir necha biriktiruv bo'lsa — vaqti borini
-            # olamiz (bo'sh yozuv to'g'risini yashirib qo'ymasin).
-            if prev is None or (tm and not prev.get("time")):
-                sup_slot[a.group_id] = {"days": a.days or None, "time": tm}
+    #
+    #  2026-09-10 (ikkinchi bosqich): qoida common.py ga ko'chirildi —
+    #  Jony Teacher ilovasi ham xuddi shu manbadan o'qiydi, aks holda
+    #  bitta ekran tuzalib, ikkinchisi eskicha qolib ketardi.
+    sup_slot = support_slot_map(db, user)
 
     rooms = {r.id: r.name for r in db.query(models.Room).all()}
     out = []
@@ -1084,15 +1074,7 @@ def my_groups(db: Session = Depends(get_db),
                .filter(models.Lesson.group_id == g.id,
                        models.Lesson.date > today)
                .order_by(models.Lesson.date).first())
-        slot = sup_slot.get(g.id) if user.role == roles.SUPPORT_TEACHER \
-            else None
-        if user.role == roles.SUPPORT_TEACHER:
-            g_days, g_time = (slot or {}).get("days"), (slot or {}).get("time")
-            time_note = (None if g_time else
-                         "Support vaqti belgilanmagan — support "
-                         "menejer biriktirishi kerak")
-        else:
-            g_days, g_time, time_note = g.lesson_days, g.lesson_time, None
+        g_days, g_time, t_src, time_note = group_time_for(sup_slot, g)
         out.append({
             "id": g.id, "public_id": g.public_id, "name": g.name,
             "subject": g.subject,
@@ -1101,8 +1083,7 @@ def my_groups(db: Session = Depends(get_db),
             "level": getattr(g, "level", None),
             "days": g_days, "time": g_time,
             # Support uchun ko'rsatilgan vaqt GURUHNIKI emas, o'ziniki
-            "time_source": "support" if user.role == roles.SUPPORT_TEACHER
-                           else "group",
+            "time_source": t_src,
             "time_note": time_note,
             "room": rooms.get(g.room_id) or g.room,
             "students": len(students),

@@ -202,6 +202,11 @@ export function LessonRow({
           {l.marked}/{l.students} belgilangan
           {l.graded > 0 ? ` · ${l.graded} baho` : ""}
         </p>
+        {/* Support uchun vaqt biriktirilmagan bo'lsa — jim turmasin,
+            nima qilish kerakligi yozilsin (2026-09-10). */}
+        {l.time_note && (
+          <p className="text-[11px] text-amber-600 mt-0.5">{l.time_note}</p>
+        )}
       </div>
       <ChevronRight size={17} className="text-slate-300 shrink-0" />
     </Link>

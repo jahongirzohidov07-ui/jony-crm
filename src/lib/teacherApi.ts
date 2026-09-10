@@ -10,7 +10,12 @@ export interface LessonCard {
   group_id: number;
   group: string;
   level: string | null;
+  /** Support uchun bu GURUHNING dars vaqti emas — support menejer
+   *  biriktirgan seans vaqti (2026-09-10). */
   time: string | null;
+  time_source?: "support" | "group" | null;
+  /** Support vaqti biriktirilmagan bo'lsa — tushuntirish. */
+  time_note?: string | null;
   date: string;
   held: boolean;
   students: number;

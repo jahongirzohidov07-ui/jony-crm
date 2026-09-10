@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, CalendarDays, Wallet } from "lucide-react";
 import { api } from "../lib/api";
 import { formatSom } from "../lib/format";
+import {
+  sliceByReceiver,
+  type CashDayData,
+} from "../lib/cashDaySlice";
 
 /**
  * BUGUNGI TUSHUM (2026-09-05).
@@ -19,33 +23,18 @@ import { formatSom } from "../lib/format";
  * kesimida jami va soni (Naqd / Click / Terminal), yangi/eski, kim
  * qabul qilgani kesimi va har bir to'lov: vaqt, kim, guruh, summa,
  * usul, qabul qilgan xodim.
+ *
+ * ADMIN KESIMI (2026-09-10). Jahongir: "shu joyini adminni
+ * tanlanadigan qilib bering. opam/Mavluda opa qancha naqt qancha
+ * clickdan pul olgani chiqib turadigan qilib 1talab hisoblab
+ * chiqishyaptikan hozir". "Qabul qildi" chiplari endi tugma —
+ * bosilsa tepadagi kartalar (Jami / Naqd / Click / Terminal /
+ * Yangi-eski) va pastdagi ro'yxat faqat o'sha xodim bo'yicha
+ * qayta hisoblanadi. Qayta bosilsa yoki "Hammasi" bosilsa —
+ * hammasiga qaytadi. Hisob frontendda (lib/cashDaySlice.ts):
+ * endpoint kunning hamma to'lovini `rows` da beradi, shuning uchun
+ * yangi so'rov shart emas — Neon trafigi ortmaydi.
  */
-
-interface CashDayData {
-  date: string;
-  total: number;
-  count: number;
-  by_method: { method: string; label: string; amount: number; count: number }[];
-  new_count: number;
-  new_sum: number;
-  old_count: number;
-  old_sum: number;
-  by_receiver: { name: string; amount: number; count: number }[];
-  rows: {
-    id: number;
-    time: string | null;
-    student_id: number;
-    student: string;
-    group: string | null;
-    amount: number;
-    method: string;
-    method_label: string;
-    received_by: string | null;
-    branch: string;
-    is_new: boolean;
-    note: string | null;
-  }[];
-}
 
 const METHOD_TONE: Record<string, string> = {
   cash: "bg-emerald-50 text-emerald-700 border-emerald-200",
@@ -81,6 +70,8 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
   const [open, setOpen] = useState(true);
+  // Tanlangan xodim (by_receiver dagi nom). null — hammasi.
+  const [who, setWho] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -90,9 +81,19 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
       .then(setData)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
       .finally(() => setLoading(false));
+    // Kun almashsa tanlov tushadi: kechagi admin bugun ishlamagan
+    // bo'lishi mumkin, "0" ko'rsatib turgani chalg'itardi.
+    setWho(null);
   }, [day, reloadKey]);
 
   const today = isoToday();
+  // who = null bo'lsa backend raqamlari o'zgarishsiz qaytadi.
+  const view = data ? sliceByReceiver(data, who) : null;
+  const visibleMethods = new Set(
+    (data?.by_method || [])
+      .filter((m) => m.method !== "other" || m.count > 0)
+      .map((m) => m.method),
+  );
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 mb-5">
@@ -150,19 +151,24 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
       )}
       {err && <p className="px-4 py-4 text-sm text-red-600">{err}</p>}
 
-      {!loading && data && (
+      {!loading && data && view && (
         <>
-          {/* Jami + usullar */}
+          {/* Jami + usullar — tanlangan xodim bo'yicha (yoki hammasi) */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 px-4 py-4">
             <div className="rounded-lg bg-slate-900 text-white px-3 py-2.5">
-              <p className="text-[11px] opacity-70">Jami tushum</p>
-              <p className="text-lg font-semibold leading-tight">
-                {formatSom(data.total)}
+              <p className="text-[11px] opacity-70">
+                {who ? `Jami — ${who}` : "Jami tushum"}
               </p>
-              <p className="text-[11px] opacity-70">{data.count} ta to'lov</p>
+              <p className="text-lg font-semibold leading-tight">
+                {formatSom(view.total)}
+              </p>
+              <p className="text-[11px] opacity-70">{view.count} ta to'lov</p>
             </div>
-            {data.by_method
-              .filter((m) => m.method !== "other" || m.count > 0)
+            {view.by_method
+              // Ko'rinadigan usullar to'plami kun bo'yicha aniqlanadi
+              // (data), tanlovga qarab emas — aks holda admin
+              // tanlanganda kartalar soni o'zgarib, joylashuv sakrardi.
+              .filter((m) => visibleMethods.has(m.method))
               .map((m) => (
                 <div
                   key={m.method}
@@ -180,36 +186,67 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
             <div className="rounded-lg border border-slate-200 px-3 py-2.5">
               <p className="text-[11px] text-slate-500">Yangi / eski</p>
               <p className="text-sm font-semibold text-slate-800 leading-tight">
-                {data.new_count} / {data.old_count}
+                {view.new_count} / {view.old_count}
               </p>
               <p className="text-[11px] text-slate-500">
-                {formatSom(data.new_sum)} / {formatSom(data.old_sum)}
+                {formatSom(view.new_sum)} / {formatSom(view.old_sum)}
               </p>
             </div>
           </div>
 
-          {/* Kim qabul qildi */}
+          {/* Kim qabul qildi — bosilsa shu xodim kesimiga o'tadi */}
           {data.by_receiver.length > 0 && (
             <div className="px-4 pb-3 flex flex-wrap gap-2">
               <span className="text-[11px] text-slate-400 self-center">
                 Qabul qildi:
               </span>
-              {data.by_receiver.map((r) => (
-                <span
-                  key={r.name}
-                  className="text-xs bg-slate-50 border border-slate-200 rounded-full px-2.5 py-1 text-slate-700"
+              {data.by_receiver.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setWho(null)}
+                  className={`text-xs rounded-full px-2.5 py-1 border transition ${
+                    who === null
+                      ? "bg-slate-900 border-slate-900 text-white"
+                      : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
+                  }`}
                 >
-                  {r.name} — <b>{formatSom(r.amount)}</b>{" "}
-                  <span className="text-slate-400">({r.count})</span>
-                </span>
-              ))}
+                  Hammasi
+                </button>
+              )}
+              {data.by_receiver.map((r) => {
+                const on = who === r.name;
+                return (
+                  <button
+                    key={r.name}
+                    type="button"
+                    aria-pressed={on}
+                    // Tanlangani qayta bosilsa — hammasiga qaytadi.
+                    onClick={() => setWho(on ? null : r.name)}
+                    className={`text-xs rounded-full px-2.5 py-1 border transition ${
+                      on
+                        ? "bg-brand-600 border-brand-600 text-white"
+                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                    }`}
+                    title={
+                      on ? "Hammasiga qaytish" : `Faqat ${r.name} bo'yicha`
+                    }
+                  >
+                    {r.name} — <b>{formatSom(r.amount)}</b>{" "}
+                    <span className={on ? "opacity-70" : "text-slate-400"}>
+                      ({r.count})
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
 
-          {/* Ro'yxat */}
-          {data.rows.length === 0 ? (
+          {/* Ro'yxat — tanlangan xodim bo'yicha */}
+          {view.rows.length === 0 ? (
             <p className="px-4 pb-4 text-sm text-slate-400">
-              Bu kunda to'lov yo'q.
+              {who
+                ? `${who} bu kunda to'lov qabul qilmagan.`
+                : "Bu kunda to'lov yo'q."}
             </p>
           ) : (
             <>
@@ -217,7 +254,8 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
                 onClick={() => setOpen(!open)}
                 className="w-full text-left px-4 py-2 text-xs text-slate-500 border-t border-slate-100 hover:bg-slate-50"
               >
-                {open ? "▾" : "▸"} Kim to'ladi — {data.rows.length} ta
+                {open ? "▾" : "▸"} Kim to'ladi — {view.rows.length} ta
+                {who && ` (${who})`}
               </button>
               {open && (
                 <div className="overflow-x-auto">
@@ -234,7 +272,7 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {data.rows.map((r) => (
+                      {view.rows.map((r) => (
                         <tr key={r.id}>
                           <td className="px-4 py-2 text-slate-500 tabular-nums">
                             {r.time || "—"}

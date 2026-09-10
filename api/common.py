@@ -331,6 +331,13 @@ def _ensure_new_columns():
             # sozlamalarda bir marta ... 65% unit testda 60% esa mid
             # va end courselarda"). Bir marta seed qilinadi; keyin
             # asoschi o'zgartirsa, qayta yozib yuborilmaydi.
+            # Jadval albatta mavjud bo'lsin: yangi jadval faqat
+            # create_all bilan yaratiladi, migratsiya bilan emas.
+            try:
+                models.ExamPassRule.__table__.create(bind=engine,
+                                                     checkfirst=True)
+            except Exception:
+                pass
             _have_pass = {r.kind for r in
                           db.query(models.ExamPassRule).all()}
             if not _have_pass:
@@ -540,7 +547,12 @@ def _backfill_public_ids():
 #  yangi JADVAL qo'shilsa — uni create_all yaratadi, migratsiya
 #  kerak emas). Shunda shu sanani yangilash kifoya.
 # ---------------------------------------------------------------
-_STAMP_MANUAL = "2026_08_28"
+#  2026-09-10 — AYNAN SHU XATO QAYTARILDI. "O'tish balli" ishida
+#  yangi JADVAL (exam_pass_rules) va yangi USTUN (exams.pass_percent)
+#  qo'shildi, lekin migratsiya yozilmagani uchun shtamp o'zgarmadi.
+#  Natijada jonli bazada ular yaratilmadi va imtihonga tegadigan har
+#  qanday so'rov yiqildi. Shtamp sanasi shuning uchun ko'tarildi.
+_STAMP_MANUAL = "2026_09_10"
 SCHEMA_STAMP = "stamp_%s_%s" % (
     _STAMP_MANUAL,
     migrations.MIGRATIONS[-1][0] if migrations.MIGRATIONS else "0")

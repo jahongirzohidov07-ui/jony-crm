@@ -217,6 +217,45 @@ ck("avtomat qaytarildi", "updated_by" in _epr_cols(), True)
 
 db.close()
 
+print("\n=== 7b. entry.py JADVALLARI HAM TUZALADI (11-sent avariya) ===")
+# BUGUNGI AVARIYANING AYNAN O'ZI. placement_sessions jadvali
+# models.py da emas, entry.py da e'lon qilinadi. main.py import
+# bo'layotganda u Base.metadata da hali YO'Q. Ilgari shtamp
+# o'shanda yozilardi — natijada entry.py jadvallarining yangi
+# ustunlari jonli bazaga hech qachon qo'shilmasdi va Lidlar
+# sahifasi 500 qaytardi.
+#
+# Endi shtampni entry.py oxiridagi seal_schema() yozadi.
+db3 = SessionLocal()
+
+
+def _ps_cols():
+    return [r[1] for r in db3.execute(
+        sa.text("PRAGMA table_info(placement_sessions)")).all()]
+
+
+ck("placement_sessions entry.py da e'lon qilingan",
+   "placement_sessions" in common.Base.metadata.tables, True)
+db3.execute(sa.text("ALTER TABLE placement_sessions DROP COLUMN sec_state"))
+db3.execute(sa.text(
+    "DELETE FROM schema_migrations WHERE version LIKE 'stamp_%'"))
+db3.commit()
+ck("taqlid: sec_state yo'q", "sec_state" in _ps_cols(), False)
+
+common._SCHEMA_OK = None
+common._SCHEMA_BOOT_OK = False
+common._SCHEMA_PENDING = False
+common._schema_bootstrap()
+ck("bootstrapdan keyin shtamp hali YOZILMAGAN",
+   common._SCHEMA_PENDING, True)
+common.seal_schema()
+ck("seal_schema ustunni qaytardi", "sec_state" in _ps_cols(), True)
+_row = db3.execute(sa.text(
+    "SELECT COUNT(*) FROM schema_migrations WHERE version = :v"),
+    {"v": common.schema_stamp()}).scalar()
+ck("shtamp seal_schema dan keyin yozildi", _row, 1)
+db3.close()
+
 print("\n=== 8. BOOTSTRAP OG'IR EMASMI (deploy paytidagi 500lar) ===")
 # 11-sentabr: sxema o'zgargan deploydan keyin ~3 daqiqa davomida
 # foydalanuvchilar 500 ko'rdi. Sabab — create_all() 167 ta

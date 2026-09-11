@@ -592,7 +592,10 @@ def _backfill_public_ids():
 #  Barmoq izi FAQAT nomlardan olinadi (tur, uzunlik, tartib emas) —
 #  ular bazaning haqiqiy holatini belgilaydi va SQLite/Postgres da
 #  bir xil chiqadi, ya'ni har deployda bekorga o'zgarib ketmaydi.
-_STAMP_MANUAL = "2026_09_10"
+# 2026-09-11 — ko'tarildi: placement_sessions.sec / sec_state
+# ustunlari jonli bazaga qo'shilmay qolgan edi (seal_schema izohiga
+# qarang). Shtamp ko'tarilmasa, tuzatish jonli bazaga yetib bormasdi.
+_STAMP_MANUAL = "2026_09_11"
 _STAMP_BASE = "stamp_%s_%s" % (
     _STAMP_MANUAL,
     migrations.MIGRATIONS[-1][0] if migrations.MIGRATIONS else "0")
@@ -882,6 +885,50 @@ def ensure_tables(tables):
     except Exception:
         pass
 
+_SCHEMA_PENDING: bool = False
+
+
+def seal_schema() -> bool:
+    """Sxema tekshiruvini YAKUNLAB, shtampni yozadi.
+
+    entry.py o'z jadvallarini (placement_sessions, library_items,
+    pd_videos va b.) e'lon qilib bo'lgach chaqiriladi. Shundagina
+    Base.metadata TO'LIQ bo'ladi va yetishmayotgan jadval/ustunlar
+    haqiqatan ham topiladi.
+
+    11-sentabrdagi avariya aynan shu sababdan edi: bootstrap
+    main.py import paytida ishlab, shtampni yozib qo'yardi; entry.py
+    jadvallari esa keyin e'lon qilinardi va ularning yangi ustunlari
+    hech qachon qo'shilmasdi."""
+    global _SCHEMA_PENDING, _SCHEMA_OK
+    if not _SCHEMA_PENDING:
+        return False
+    _SCHEMA_PENDING = False
+    try:
+        _create_missing_tables()
+    except Exception:
+        pass
+    try:
+        _auto_add_missing_columns()
+    except Exception:
+        pass
+    db = SessionLocal()
+    try:
+        db.add(models.SchemaMigration(version=schema_stamp()))
+        db.commit()
+        _SCHEMA_OK = True
+        print("[schema] shtamp yozildi: " + schema_stamp())
+        return True
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        return False
+    finally:
+        db.close()
+
+
 def _schema_bootstrap():
     global _SCHEMA_OK
     if _schema_ready():
@@ -920,8 +967,19 @@ def _schema_bootstrap():
             _auto_add_missing_columns()
         except Exception:
             pass
-        db.add(models.SchemaMigration(version=schema_stamp()))
-        db.commit()
+        # SHTAMP SHU YERDA YOZILMAYDI — seal_schema() yozadi.
+        #
+        # 2026-09-11 (avariya): placement_sessions jadvali entry.py da
+        # e'lon qilinadi, ya'ni main.py import bo'layotganda u hali
+        # Base.metadata da YO'Q. Shu sababli yangi ustunlar (sec,
+        # sec_state) jonli bazaga qo'shilmay qoldi va Lidlar sahifasi
+        # 500 qaytardi. Shtampni esa bootstrap yozib qo'ygani uchun
+        # keyingi urinishlar ham "hammasi joyida" deb o'tib ketardi.
+        #
+        # Endi shtamp faqat entry.py o'z jadvallarini e'lon qilib
+        # bo'lgach yoziladi — ya'ni tekshiruv TO'LIQ modelda o'tadi.
+        global _SCHEMA_PENDING
+        _SCHEMA_PENDING = True
         _SCHEMA_OK = True
     except Exception:
         try:
@@ -6763,6 +6821,7 @@ __all__ = [
     "SCHEMA_STAMP",
     "schema_stamp",
     "models_fingerprint",
+    "seal_schema",
     "_schema_ready",
     "ensure_tables",
     "_PERM_CACHE",

@@ -9869,3 +9869,23 @@ try:
                       f"qaytarildi {_r34['sum']:,.0f}")
 except Exception:
     pass
+
+
+# =====================================================================
+#  SXEMA MUHRI — ENG OXIRIDA (2026-09-11)
+#
+#  Shu qatorga yetib kelganda entry.py o'zining HAMMA jadvalini
+#  (placement_sessions, library_items, pd_videos, staff_grades ...)
+#  e'lon qilib bo'lgan bo'ladi. Ya'ni Base.metadata endi TO'LIQ.
+#  seal_schema() yetishmayotgan jadval/ustunlarni oxirgi marta
+#  tekshiradi va shundan keyingina shtampni yozadi.
+#
+#  Nega shunday: bugun placement_sessions ga ikkita yangi ustun
+#  qo'shdim, lekin shtampni main.py import paytida yozilgani uchun
+#  ular jonli bazada paydo bo'lmadi va Lidlar sahifasi 500 qaytardi.
+#  Shtamp oxirida yozilsa, bunday bo'lishi mumkin emas.
+try:
+    from common import seal_schema as _seal_schema
+    _seal_schema()
+except Exception:
+    pass

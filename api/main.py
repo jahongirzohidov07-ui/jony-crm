@@ -55,7 +55,11 @@ from content import _period_range, _smm_kpi
 from common import _schema_bootstrap, _schema_ready  # noqa: E402
 
 if not _schema_ready():
-    Base.metadata.create_all(bind=engine)
+    # 2026-09-11: bu yerda ilgari Base.metadata.create_all(engine)
+    # ham turardi — ya'ni 167 jadval uchun reflection so'rovlari
+    # IKKI marta ketardi (bu yerda va _schema_bootstrap ichida).
+    # Endi faqat bootstrap chaqiriladi, u jadvallarni bitta
+    # so'rov bilan solishtirib, faqat yo'g'ini yaratadi.
     _schema_bootstrap()
 
 app = FastAPI(title="JonyOS API — Jony Academy boshqaruv tizimi")

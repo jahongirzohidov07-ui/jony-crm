@@ -217,5 +217,47 @@ ck("avtomat qaytarildi", "updated_by" in _epr_cols(), True)
 
 db.close()
 
+print("\n=== 8. BOOTSTRAP OG'IR EMASMI (deploy paytidagi 500lar) ===")
+# 11-sentabr: sxema o'zgargan deploydan keyin ~3 daqiqa davomida
+# foydalanuvchilar 500 ko'rdi. Sabab — create_all() 167 ta
+# jadvalning HAR BIRI uchun bazaga alohida so'rov yuborardi va
+# birinchi so'rov 30 soniyalik chegaradan oshib ketardi.
+#
+# Endi jadvallar BITTA so'rov bilan solishtiriladi. Shu test
+# o'sha yaxshilanishni qo'riqlaydi: sxema joyida bo'lsa,
+# bootstrap bazaga ko'p bormasligi kerak.
+db2 = SessionLocal()
+bind = db2.get_bind()
+# FAQAT shtamp qatorini o'chiramiz. Migratsiya tarixini ham
+# o'chirsak, ular qaytadan yugurib ALTER yuborardi — jonli bazada
+# esa migratsiya tarixi hech qachon o'chirilmaydi.
+db2.execute(sa.text(
+    "DELETE FROM schema_migrations WHERE version LIKE 'stamp_%'"))
+db2.commit()
+db2.close()
+
+seen = {"n": 0, "ddl": 0}
+
+
+def _count(conn, cursor, statement, params, context, executemany):
+    seen["n"] += 1
+    s = (statement or "").lstrip().upper()
+    if s.startswith("ALTER TABLE") or s.startswith("CREATE TABLE"):
+        seen["ddl"] += 1
+
+
+sa.event.listen(bind, "before_cursor_execute", _count)
+common._SCHEMA_OK = None
+common._SCHEMA_BOOT_OK = False
+common._schema_bootstrap()
+sa.event.remove(bind, "before_cursor_execute", _count)
+
+n_tables = len(common.Base.metadata.tables)
+print(f"     (jadval: {n_tables}, jami so'rov: {seen['n']}, "
+      f"ALTER/CREATE: {seen['ddl']})")
+# Sxema joyida bo'lsa bitta ham ALTER/CREATE ketmasligi kerak.
+# Ilgari bu yerda 199 ta ALTER "xato, e'tiborsiz" bilan tugardi.
+ck("keraksiz ALTER/CREATE yo'q", seen["ddl"], 0)
+
 print("\n" + ("HAMMASI O'TDI" if not fails else "XATO: " + ", ".join(fails)))
 sys.exit(1 if fails else 0)

@@ -30,7 +30,7 @@ from auth import (
 )
 from database import Base, engine, get_db, SessionLocal
 
-def _ensure_new_columns():
+def _ensure_new_columns(cols=None):
     """create_all() faqat yo'q jadvalni yaratadi - mavjud jadvalga yangi
     ustun qo'shmaydi. Shuning uchun keyin qo'shilgan ustunlarni shu yerda
     qo'lda qo'shamiz. Har safar ishga tushganda bajariladi, lekin ustun
@@ -297,12 +297,37 @@ def _ensure_new_columns():
         "ALTER TABLE students ADD COLUMN frozen_until DATE",
         "ALTER TABLE students ADD COLUMN frozen_note VARCHAR",
     ]
+    # 2026-09-11 — TEZLIK. Bu ro'yxat 199 ta gapga yetdi va har biri
+    # bazaga alohida borib kelardi. Ustunlarning deyarli hammasi
+    # allaqachon mavjud, ya'ni 199 ta so'rovning 199 tasi ham
+    # "xato, e'tiborsiz qoldirildi" bilan tugardi. Neon'da bu ~6
+    # soniya — sxema o'zgargan deployda birinchi so'rov shu sababdan
+    # ham 30 soniyalik chegaraga yaqinlashardi.
+    #
+    # Endi bazadagi ustunlar BITTA so'rov bilan olinadi va mavjud
+    # ustunni qo'shishga urinilmaydi. Natija aynan bir xil, faqat
+    # ancha tez. UPDATE gaplari avvalgidek bajariladi.
+    import re as _re_ens
+    _add_rx = _re_ens.compile(
+        r'^\s*ALTER\s+TABLE\s+"?([A-Za-z0-9_]+)"?\s+ADD\s+COLUMN\s+'
+        r'"?([A-Za-z0-9_]+)"?', _re_ens.I)
+    try:
+        _have = cols if cols is not None else _db_columns_map()
+    except Exception:
+        _have = {}
+    _skipped = 0
     for stmt in statements:
+        m = _add_rx.match(stmt)
+        if m and m.group(2) in _have.get(m.group(1), set()):
+            _skipped += 1
+            continue
         try:
             with engine.begin() as conn:
                 conn.execute(text(stmt))
         except Exception:
             pass
+    if _skipped:
+        print("[schema] mavjud ustunlar o'tkazib yuborildi: %d" % _skipped)
 
     # Imtihon coin qoidasi bo'sh bo'lsa, boshlang'ich jadvalni qo'yamiz -
     # asoschi uni keyin Gamification bo'limidan o'zgartiradi.
@@ -801,6 +826,46 @@ def _auto_add_missing_columns(tables=None) -> list:
     return added
 
 
+def _create_missing_tables(tables=None, cols=None) -> list:
+    """Yetishmayotgan jadvallarni yaratadi.
+
+    MUHIM: create_all() ni butun metadata ustidan chaqirmaymiz —
+    u 167 ta jadvalning HAR BIRI uchun bazadan alohida "bu jadval
+    bormi?" deb so'raydi, ya'ni 167 marta Neon'ga borib keladi.
+    Sxema o'zgargan deploydan keyin birinchi so'rov shuning uchun
+    30 soniyalik chegaradan oshib 500 qaytarardi (11-sentabr:
+    ~3 daqiqa davomida foydalanuvchilar xato ko'rdi).
+
+    Endi bazadagi jadvallar ro'yxati BITTA so'rov bilan olinadi va
+    faqat yo'qlari yaratiladi — odatda bittasi ham yo'q."""
+    items = (list(Base.metadata.tables.values()) if tables is None
+             else list(tables))
+    try:
+        have = set((cols if cols is not None
+                    else _db_columns_map()).keys())
+    except Exception:
+        have = None
+    try:
+        if have is None:
+            Base.metadata.create_all(bind=engine, tables=items)
+            return []
+        need = [t for t in items if getattr(t, "name", None) not in have]
+        if need:
+            Base.metadata.create_all(bind=engine, tables=need)
+            names = sorted(t.name for t in need)
+            if len(names) <= 12:
+                print("[schema] yangi jadval: " + ", ".join(names))
+            else:
+                print("[schema] yangi jadval: %d ta" % len(names))
+        return need
+    except Exception:
+        try:
+            Base.metadata.create_all(bind=engine, tables=items)
+        except Exception:
+            pass
+        return []
+
+
 def ensure_tables(tables):
     """Kichik yordamchi: sxema tayyor bo'lsa hech nima qilmaydi.
     entry.py'dagi "yangi jadval qo'shish" bloklari shuni chaqiradi —
@@ -809,10 +874,7 @@ def ensure_tables(tables):
     if _schema_ready() and _SCHEMA_BOOT_OK:
         return
     tables = list(tables)
-    try:
-        Base.metadata.create_all(bind=engine, tables=tables)
-    except Exception:
-        pass
+    _create_missing_tables(tables)
     # Jadval allaqachon bor, lekin unga yangi ustun qo'shilgan
     # bo'lsa — create_all buni sezmaydi, shuning uchun alohida.
     try:
@@ -834,16 +896,23 @@ def _schema_bootstrap():
         if done:
             _SCHEMA_OK = True
             return
-        _ensure_new_columns()
+        # TARTIB MUHIM: avval jadvallar, keyin migratsiyalar.
+        # Migratsiyalar mavjud jadvallar ustida ishlaydi — bo'sh
+        # bazada ular yiqilsa, quyidagi qadamlarga umuman
+        # yetib borilmasdi.
+        #
+        # Bazadagi ustunlar xaritasi BIR MARTA olinadi va ikkala
+        # qadamga uzatiladi — Postgres'da bu bitta so'rov.
+        try:
+            _cols = _db_columns_map()
+        except Exception:
+            _cols = None
+        _made = _create_missing_tables(cols=_cols)
+        if _made:
+            _cols = None            # yangi jadvallar qo'shildi
+        _ensure_new_columns(cols=_cols)
         _backfill_public_ids()
         migrations.run(db)
-        # Yangi jadvallar create_all bilan yaratiladi — barmoq izi
-        # o'zgargan bo'lsa (yangi model qo'shilgan) shu yerda albatta
-        # bajariladi, aks holda jadval hech qachon paydo bo'lmasdi.
-        try:
-            Base.metadata.create_all(bind=engine)
-        except Exception:
-            pass
         # Mavjud jadvalga qo'shilgan yangi ustunlarni create_all
         # ko'rmaydi — ularni o'zimiz solishtirib qo'shamiz. Shu
         # bilan "migratsiya yozishni unutdim" xatosi tugaydi.

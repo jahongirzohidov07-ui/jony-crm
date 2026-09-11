@@ -8958,8 +8958,21 @@ from sqlalchemy import Column as _ptC, Integer as _ptI, String as _ptS, \
     Float as _ptF, DateTime as _ptDT, Text as _ptT  # noqa: E402
 
 from pt_bank import PT_BANK, PT_LEVELS, PT_UNITS  # noqa: E402
+from pt_vocab_bank import VOCAB_BY_ID, VOCAB_BY_LEVEL  # noqa: E402
+from pt_read_bank import READ_BY_ID, READ_BY_LEVEL  # noqa: E402
+from pt_listen_bank import LISTEN_BY_ID, LISTEN_BY_LEVEL  # noqa: E402
 
-_PT_N = 50                     # savollar soni
+# 2026-09-11 — Jahongir: "grammar 30ta qolsin uzogi bilan grammar
+# savoli" + "ichiga reading va listening lar ham qosha olmaysanmi".
+#
+# Grammatika 50 dan 30 ga tushdi: hisob-kitobga ko'ra 30 ta savol
+# aniq darajaga tushish ehtimolini ~80% beradi (50 ta ~85%), farq
+# kichik, lekin qolgan uch bo'limga joy ochiladi.
+#
+# BO'LIMLAR TARTIBI ATAYLAB SHUNDAY: grammatika BIRINCHI. Lid testni
+# yarmida tashlab ketsa ham guruhga joylashtirish uchun kerak bo'lgan
+# hamma narsa (daraja + unit) qo'lda bo'ladi.
+_PT_N = 30                     # grammatika savollari soni
 _PT_SECS = 30                  # bir savolga soniya
 _PT_GRACE = 4                  # tarmoq kechikishi uchun qo'shimcha
 _PT_TTL_H = 48                 # havola amal qilish muddati
@@ -8971,6 +8984,23 @@ for _q in PT_BANK:
                         []).append(_q)
 _PT_BY_ID = {q["id"]: q for q in PT_BANK}
 _PT_ROLES = list(dict.fromkeys(list(roles.LEAD_ACCESS)))
+
+# ---- Yangi bo'limlar (2026-09-11) -----------------------------------
+#  Har bo'lim bir xil "daraja zinasi" bo'yicha ishlaydi: yaxshi
+#  javob — bir pog'ona tepaga, yomon javob — bir pog'ona pastga.
+#  Boshlang'ich pog'ona grammatika natijasidan olinadi — ya'ni
+#  lidni bejiz A1 dan boshlab charchatmaymiz.
+_PT_SECTIONS = ("grammar", "vocab", "reading", "listening")
+_PT_SEC_LABEL = {"grammar": "Grammatika", "vocab": "Lug'at",
+                 "reading": "Reading", "listening": "Listening"}
+_PT_SEC_N = {"vocab": 10, "reading": 5, "listening": 6}
+_PT_VOCAB_SECS = 60
+_PT_LISTEN_SECS = 90
+_PT_LISTEN_PLAYS = 2
+_PT_LMAX = len(PT_LEVELS) - 1
+_PT_BANKS = {"vocab": (VOCAB_BY_LEVEL, VOCAB_BY_ID),
+             "reading": (READ_BY_LEVEL, READ_BY_ID),
+             "listening": (LISTEN_BY_LEVEL, LISTEN_BY_ID)}
 
 if getattr(models, "PlacementSession", None) is None:
     class PlacementSession(_Base):
@@ -9002,6 +9032,12 @@ if getattr(models, "PlacementSession", None) is None:
         score = _ptC(_ptI, default=0)
         ability = _ptC(_ptF)
         per_level = _ptC(_ptT)
+        # 2026-09-11 — yangi bo'limlar. Ikkalasi ham nullable:
+        # eski sessiyalarda bo'sh qoladi va ular avvalgidek
+        # grammatika natijasi bilan ishlayveradi (hech narsa
+        # yo'qolmaydi).
+        sec = _ptC(_ptS)                               # joriy bo'lim
+        sec_state = _ptC(_ptT)                         # JSON
 
     models.PlacementSession = PlacementSession
     _Base.metadata.create_all(bind=_engine, tables=[PlacementSession.__table__])
@@ -9061,7 +9097,9 @@ def _pt_serve(s, q):
     asked, _ = _pt_load(s)
     asked.append(q["id"])
     s.asked = _pt_json.dumps(asked)
-    return {"qid": q["id"], "no": len(asked), "total": _PT_N,
+    return {"kind": "grammar", "section": "grammar",
+            "section_label": _PT_SEC_LABEL["grammar"],
+            "qid": q["id"], "no": len(asked), "total": _PT_N,
             "q": q["q"], "opts": [q["opts"][i] for i in order],
             "secs": _PT_SECS}
 
@@ -9103,6 +9141,377 @@ def _pt_finish(s):
     s.cur_qid = None
 
 
+# =====================================================================
+#  BO'LIM MASHINASI (2026-09-11) — vocab / reading / listening
+#
+#  Har bo'lim daraja zinasida yuradi (A1..C1). Boshlang'ich pog'ona
+#  grammatika natijasidan olinadi. Yaxshi javob — tepaga, yomon —
+#  pastga. Yakuniy daraja: har savoldagi pog'onaning o'rtachasi,
+#  javob sifatiga qarab yarim pog'ona surilgan holda.
+#
+#  Holat BITTA JSON ustunda (sec_state) saqlanadi — shunda jadvalga
+#  o'nlab ustun qo'shish shart emas va eski sessiyalar buzilmaydi.
+#  To'g'ri javoblar bu yerda ham faqat serverda qoladi.
+# =====================================================================
+def _pt_sec_state(s) -> dict:
+    try:
+        st = _pt_json.loads(s.sec_state or "{}")
+    except (ValueError, TypeError):
+        st = {}
+    return st if isinstance(st, dict) else {}
+
+
+def _pt_sec_save(s, st) -> None:
+    s.sec_state = _pt_json.dumps(st)
+
+
+def _pt_start_li(s) -> int:
+    """Boshlang'ich pog'ona — grammatika darajasi."""
+    try:
+        return max(0, min(_PT_LMAX, PT_LEVELS.index(s.level)))
+    except (ValueError, TypeError):
+        return 2
+
+
+def _pt_sec_pick(sec: str, li: int, used: set):
+    """li pog'onasiga eng yaqin, hali berilmagan savol."""
+    by_level = _PT_BANKS[sec][0]
+    li = max(0, min(_PT_LMAX, li))
+    for off in range(0, _PT_LMAX + 1):
+        for cand in (li + off, li - off):
+            if cand < 0 or cand > _PT_LMAX:
+                continue
+            pool = [x for x in by_level.get(PT_LEVELS[cand], [])
+                    if x["id"] not in used]
+            if pool:
+                return _pt_random.choice(pool), cand
+    return None, li
+
+
+def _pt_sec_secs(sec: str, item) -> int:
+    if sec == "vocab":
+        return _PT_VOCAB_SECS
+    if sec == "reading":
+        return int(item.get("secs") or 90)
+    return _PT_LISTEN_SECS
+
+
+def _pt_sec_payload(sec: str, item, cur: dict, no: int, left: int) -> dict:
+    """Mijozga ketadigan savol. To'g'ri javob HECH QACHON qo'shilmaydi."""
+    base = {"kind": sec, "qid": item["id"], "no": no,
+            "total": _PT_SEC_N[sec], "section": sec,
+            "section_label": _PT_SEC_LABEL[sec], "secs": left,
+            "full_secs": _pt_sec_secs(sec, item)}
+    if sec == "vocab":
+        w = cur["w"]
+        d = cur["d"]
+        base["words"] = [item["words"][i] for i in w]
+        base["defs"] = [item["defs"][j][0] for j in d]
+        return base
+    if sec == "reading":
+        base["text"] = item["text"]
+        base["qs"] = [{"q": item["qs"][i]["q"],
+                       "opts": [item["qs"][i]["opts"][k]
+                                for k in cur["o"][i]]}
+                      for i in range(len(item["qs"]))]
+        return base
+    base["script"] = item["script"]
+    base["rate"] = item.get("rate") or 1.0
+    base["plays"] = _PT_LISTEN_PLAYS
+    base["q"] = item["q"]
+    base["opts"] = [item["opts"][k] for k in cur["o"]]
+    return base
+
+
+def _pt_sec_serve(s, sec: str, item, li: int) -> dict:
+    """Yangi savolni tayyorlaydi: variantlar aralashtiriladi."""
+    cur = {"id": item["id"], "li": li, "sent": _pt_now().isoformat()}
+    if sec == "vocab":
+        w = list(range(len(item["words"])))
+        d = list(range(len(item["defs"])))
+        _pt_random.shuffle(w)
+        _pt_random.shuffle(d)
+        cur["w"], cur["d"] = w, d
+    elif sec == "reading":
+        o = []
+        for q in item["qs"]:
+            p = list(range(len(q["opts"])))
+            _pt_random.shuffle(p)
+            o.append(p)
+        cur["o"] = o
+    else:
+        p = list(range(len(item["opts"])))
+        _pt_random.shuffle(p)
+        cur["o"] = p
+    st = _pt_sec_state(s)
+    sst = st.setdefault(sec, {"li": li, "done": []})
+    sst["li"] = li
+    sst["cur"] = cur
+    _pt_sec_save(s, st)
+    no = len(sst.get("done") or []) + 1
+    return _pt_sec_payload(sec, item, cur, no, _pt_sec_secs(sec, item))
+
+
+def _pt_sec_left(sec: str, item, cur: dict) -> int:
+    full = _pt_sec_secs(sec, item)
+    try:
+        sent = _pt_dt.fromisoformat(cur.get("sent") or "")
+    except (ValueError, TypeError):
+        return full
+    return max(0, full - int((_pt_now() - sent).total_seconds()))
+
+
+def _pt_sec_grade(sec: str, item, cur: dict, payload: dict):
+    """(olingan ball, eng ko'p ball). Vaqt tugagan bo'lsa — 0."""
+    mx = 3 if sec == "vocab" else (len(item.get("qs", [])) if sec == "reading"
+                                   else 1)
+    full = _pt_sec_secs(sec, item)
+    try:
+        sent = _pt_dt.fromisoformat(cur.get("sent") or "")
+        late = (_pt_now() - sent).total_seconds() > full + _PT_GRACE
+    except (ValueError, TypeError):
+        late = False
+    if late:
+        return 0, mx, True
+    got = 0
+    if sec == "vocab":
+        picks = payload.get("picks") or []
+        for j, dj in enumerate(cur["d"]):
+            try:
+                k = int(picks[j])
+                if cur["w"][k] == item["defs"][dj][1]:
+                    got += 1
+            except (TypeError, ValueError, IndexError):
+                pass
+    elif sec == "reading":
+        picks = payload.get("picks") or []
+        for i, q in enumerate(item["qs"]):
+            try:
+                if cur["o"][i][int(picks[i])] == q["a"]:
+                    got += 1
+            except (TypeError, ValueError, IndexError):
+                pass
+    else:
+        try:
+            if cur["o"][int(payload.get("choice"))] == item["a"]:
+                got = 1
+        except (TypeError, ValueError, IndexError):
+            got = 0
+    return got, mx, False
+
+
+def _pt_sec_next_li(li: int, got: int, mx: int) -> int:
+    """Yarmidan ko'p — tepaga, yarmidan kam — pastga, roppa-rosa
+    yarmi — o'sha joyda."""
+    if got * 2 > mx:
+        li += 1
+    elif got * 2 < mx:
+        li -= 1
+    return max(0, min(_PT_LMAX, li))
+
+
+def _pt_sec_level(sst: dict) -> str:
+    """Bo'lim yakuniy darajasi.
+
+    MUHIM: hamma savolning o'rtachasi OLINMAYDI. Bo'lim boshida
+    test hali darajani QIDIRAYOTGAN bo'ladi — agar lid A1 dan
+    boshlanib C1 gacha ko'tarilsa, yo'ldagi past pog'onalar
+    o'rtachani pastga tortib, C1 bilgan odamga B2 chiqarib qo'yardi.
+    Shuning uchun faqat OXIRGI yarmi — ya'ni test qayerga
+    o'rnashgani — hisobga olinadi. Bu grammatika bo'limidagi
+    mantiqning aynan o'zi (u ham oxirgi savollarga qaraydi).
+
+    Hammasi to'g'ri bo'lsa — yetgan eng yuqori pog'onadan ham
+    yuqori; hammasi xato bo'lsa — eng pastidan ham past."""
+    done = sst.get("done") or []
+    if not done:
+        return None
+
+    def _mx(a):
+        return max(1, int(a.get("max") or 1))
+
+    def _contrib(a):
+        return (float(a.get("li") or 0)
+                + (float(a.get("score") or 0) / _mx(a) - 0.5))
+
+    if all(int(a.get("score") or 0) >= _mx(a) for a in done):
+        ab = max(float(a.get("li") or 0) for a in done) + 0.5
+    elif all(int(a.get("score") or 0) == 0 for a in done):
+        ab = min(float(a.get("li") or 0) for a in done) - 0.5
+    else:
+        vals = [_contrib(a) for a in done]
+        k = max(3, len(vals) // 2)
+        tail = vals[-k:]
+        ab = sum(tail) / len(tail)
+    return PT_LEVELS[max(0, min(_PT_LMAX, int(round(ab))))]
+
+
+def _pt_next_section(sec: str):
+    i = _PT_SECTIONS.index(sec) if sec in _PT_SECTIONS else 0
+    return _PT_SECTIONS[i + 1] if i + 1 < len(_PT_SECTIONS) else None
+
+
+def _pt_open_section(s, sec: str):
+    """Bo'limni ochadi va birinchi savolini beradi. Bank bo'sh
+    bo'lsa — keyingisiga o'tadi."""
+    while sec:
+        li = _pt_start_li(s)
+        item, li = _pt_sec_pick(sec, li, set())
+        if item is not None:
+            s.sec = sec
+            return _pt_sec_serve(s, sec, item, li)
+        sec = _pt_next_section(sec)
+    s.sec = "done"
+    return None
+
+
+def _pt_all_done(s) -> None:
+    s.sec = "done"
+    s.status = "done"
+    s.finished_at = _pt_now()
+    s.cur_qid = None
+
+
+def _pt_break(db, s, sec_done: dict, nxt: str) -> dict:
+    """Bo'limlar orasidagi tanaffus.
+
+    MUHIM: keyingi savol SHU YERDA berilmaydi. Aks holda lid tanaffus
+    ekranida o'tirganda savol soati allaqachon ketayotgan bo'lardi va
+    u vaqtini bekorga yo'qotardi. Savol faqat "Davom etish" bosilgach
+    (/start orqali) beriladi."""
+    if not nxt:
+        _pt_all_done(s)
+        _pt_apply_to_lead(db, s)
+        db.commit()
+        return {"status": "done", "result": _pt_result(s)}
+    s.sec = nxt
+    s.status = "running"
+    s.finished_at = None
+    s.cur_qid = None
+    db.commit()
+    return {"status": "break", "section_done": sec_done,
+            "next": nxt, "next_label": _PT_SEC_LABEL[nxt],
+            "next_total": _PT_SEC_N.get(nxt)}
+
+
+def _pt_after_grammar(db, s) -> dict:
+    """Grammatika tugadi: natija hisoblanadi va DARROV lidga yoziladi
+    — lid qolgan bo'limlarni tashlab ketsa ham joylashtirish uchun
+    hamma narsa bo'ladi."""
+    _pt_finish(s)                      # daraja + unit hisoblanadi
+    _pt_apply_to_lead(db, s)
+    return _pt_break(db, s, {"key": "grammar",
+                             "label": _PT_SEC_LABEL["grammar"],
+                             "level": s.level, "unit": s.unit},
+                     _pt_next_section("grammar"))
+
+
+def _pt_sec_answer(db, s, payload: dict) -> dict:
+    """Yangi bo'limlardagi javob."""
+    sec = s.sec
+    st = _pt_sec_state(s)
+    sst = st.get(sec) or {}
+    cur = sst.get("cur")
+    if not cur:
+        raise HTTPException(409, "Faol savol yo'q")
+    item = _PT_BANKS[sec][1].get(cur["id"])
+    if item is None:
+        raise HTTPException(409, "Faol savol yo'q")
+    try:
+        qid = int(payload.get("qid") or 0)
+    except (TypeError, ValueError):
+        qid = 0
+    if qid and qid != cur["id"]:
+        return _pt_state_dict(s)       # eski savol — hozirgisini beramiz
+    got, mx, late = _pt_sec_grade(sec, item, cur, payload)
+    done = sst.setdefault("done", [])
+    done.append({"id": cur["id"], "li": int(cur["li"]), "score": got,
+                 "max": mx, "t": bool(late)})
+    li = _pt_sec_next_li(int(cur["li"]), got, mx)
+    sst["li"] = li
+    sst.pop("cur", None)
+    used = {a["id"] for a in done}
+    nxt_item = None
+    if len(done) < _PT_SEC_N[sec]:
+        nxt_item, li = _pt_sec_pick(sec, li, used)
+    if nxt_item is not None:
+        st[sec] = sst
+        _pt_sec_save(s, st)
+        q = _pt_sec_serve(s, sec, nxt_item, li)
+        db.commit()
+        return {"status": "running", "question": q}
+    # bo'lim tugadi
+    sst["level"] = _pt_sec_level(sst)
+    st[sec] = sst
+    _pt_sec_save(s, st)
+    return _pt_break(db, s, {"key": sec, "label": _PT_SEC_LABEL[sec],
+                             "level": sst.get("level")},
+                     _pt_next_section(sec))
+
+
+def _pt_sec_skip(db, s) -> dict:
+    """Listening bo'limini o'tkazib yuborish — faqat brauzerda ovoz
+    ishlamagan holat uchun. Jazo yo'q: natijada "tekshirilmadi" deb
+    yoziladi, taxminiy daraja qo'yilmaydi."""
+    sec = s.sec
+    if sec != "listening":
+        raise HTTPException(400, "Bu bo'limni o'tkazib bo'lmaydi")
+    st = _pt_sec_state(s)
+    sst = st.get(sec) or {"li": _pt_start_li(s), "done": []}
+    sst["skipped"] = True
+    sst["level"] = None
+    sst.pop("cur", None)
+    st[sec] = sst
+    _pt_sec_save(s, st)
+    return _pt_break(db, s, {"key": sec, "label": _PT_SEC_LABEL[sec],
+                             "level": None, "skipped": True},
+                     _pt_next_section(sec))
+
+
+def _pt_state_dict(s) -> dict:
+    """Joriy holat — qaysi bo'limda bo'lsa ham."""
+    out = {"name": s.name, "status": s.status, "n": _PT_N,
+           "secs": _PT_SECS, "answered": len(_pt_load(s)[1]),
+           "section": s.sec or "grammar"}
+    if s.status == "done":
+        out["result"] = _pt_result(s)
+        return out
+    if s.status != "running":
+        return out
+    sec = s.sec or "grammar"
+    if sec == "grammar" and s.cur_qid:
+        q = _PT_BY_ID[s.cur_qid]
+        order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
+        left = _PT_SECS
+        if s.cur_sent_at:
+            left = max(0, _PT_SECS
+                       - int((_pt_now() - s.cur_sent_at).total_seconds()))
+        out["question"] = {"kind": "grammar", "qid": q["id"],
+                           "no": len(_pt_load(s)[0]), "total": _PT_N,
+                           "section": "grammar",
+                           "section_label": _PT_SEC_LABEL["grammar"],
+                           "q": q["q"],
+                           "opts": [q["opts"][i] for i in order],
+                           "secs": left, "full_secs": _PT_SECS}
+    elif sec in _PT_BANKS:
+        sst = _pt_sec_state(s).get(sec) or {}
+        cur = sst.get("cur")
+        item = _PT_BANKS[sec][1].get(cur["id"]) if cur else None
+        if item is not None:
+            out["question"] = _pt_sec_payload(
+                sec, item, cur, len(sst.get("done") or []) + 1,
+                _pt_sec_left(sec, item, cur))
+    if "question" not in out:
+        # Tanaffusda (yoki sahifa yangilangan) — savol hali
+        # berilmagan. Mijoz "Davom etish" bosib /start ga murojaat
+        # qiladi, soat o'shanda boshlanadi.
+        out["status"] = "break"
+        out["next"] = sec
+        out["next_label"] = _PT_SEC_LABEL.get(sec, "")
+        out["next_total"] = _PT_SEC_N.get(sec)
+    return out
+
+
 def _pt_result(s) -> dict:
     try:
         per = _pt_json.loads(s.per_level or "{}")
@@ -9116,17 +9525,41 @@ def _pt_result(s) -> dict:
     nxt = None
     if unit >= 11 and PT_LEVELS.index(lv) < len(PT_LEVELS) - 1:
         nxt = PT_LEVELS[PT_LEVELS.index(lv) + 1]
+    # Ko'nikmalar kesimi (2026-09-11). Bo'lim tugallanmagan bo'lsa
+    # "—" ko'rsatiladi: taxmin qilib raqam yozmaymiz.
+    st = _pt_sec_state(s)
+    skills = [{"key": "grammar", "label": _PT_SEC_LABEL["grammar"],
+               "level": lv, "n": len(_pt_load(s)[1]),
+               "done": True, "skipped": False}]
+    for _k in ("vocab", "reading", "listening"):
+        _sst = st.get(_k) or {}
+        _done = _sst.get("done") or []
+        _sk = bool(_sst.get("skipped"))
+        skills.append({
+            "key": _k, "label": _PT_SEC_LABEL[_k],
+            "level": _sst.get("level") or (None if _sk else
+                                           _pt_sec_level(_sst)),
+            "n": len(_done), "total": _PT_SEC_N[_k],
+            "done": len(_done) >= _PT_SEC_N[_k], "skipped": _sk})
+    _li = [PT_LEVELS.index(x["level"]) for x in skills
+           if x.get("level") in PT_LEVELS]
+    overall = PT_LEVELS[int(round(sum(_li) / len(_li)))] if _li else lv
     return {
         "level": lv, "unit": unit, "topic": topic,
-        "score": int(s.score or 0), "total": _PT_N, "ability": s.ability,
+        "score": int(s.score or 0), "total": len(_pt_load(s)[1]) or _PT_N,
+        "ability": s.ability,
         "per_level": [{"level": k, "ok": v["ok"], "n": v["n"],
                        "pct": round(v["ok"] * 100 / v["n"]) if v["n"] else 0}
                       for k, v in per.items()],
         "book": f"Empower {lv}",
+        "skills": skills,
+        "overall": overall,
         "advice": (f"Empower {lv}, Unit {unit} dan boshlash tavsiya etiladi"
                    + (f" (yoki Empower {nxt} boshidan)." if nxt else ".")),
-        "note": ("Bu test grammatika va so'z boyligini o'lchaydi. Speaking "
-                 "va Writing sinov darsda tekshiriladi."),
+        "note": ("Guruhga joylashtirish grammatika darajasi bo'yicha "
+                 "bo'ladi. Reading va Listening ustozga qo'shimcha "
+                 "ma'lumot uchun. Speaking va Writing sinov darsda "
+                 "tekshiriladi."),
     }
 
 
@@ -9137,7 +9570,9 @@ def _pt_out(s, db=None) -> dict:
          "created_at": s.created_at.isoformat() if s.created_at else None,
          "expires_at": s.expires_at.isoformat() if s.expires_at else None,
          "finished_at": s.finished_at.isoformat() if s.finished_at else None,
-         "answered": len(_pt_load(s)[1])}
+         "answered": len(_pt_load(s)[1]),
+         "section": s.sec or "grammar",
+         "section_label": _PT_SEC_LABEL.get(s.sec or "grammar", "—")}
     if s.status == "done":
         d["result"] = _pt_result(s)
     return d
@@ -9251,21 +9686,7 @@ def _pt_public(db, token: str):
 
 @app.get("/api/public/placement/{token}")
 def pt_state(token: str, db: Session = Depends(get_db)):
-    s = _pt_public(db, token)
-    out = {"name": s.name, "status": s.status, "n": _PT_N, "secs": _PT_SECS,
-           "answered": len(_pt_load(s)[1])}
-    if s.status == "done":
-        out["result"] = _pt_result(s)
-    elif s.status == "running" and s.cur_qid:
-        q = _PT_BY_ID[s.cur_qid]
-        order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
-        left = _PT_SECS
-        if s.cur_sent_at:
-            left = max(0, _PT_SECS - int((_pt_now() - s.cur_sent_at).total_seconds()))
-        out["question"] = {"qid": q["id"], "no": len(_pt_load(s)[0]),
-                           "total": _PT_N, "q": q["q"],
-                           "opts": [q["opts"][i] for i in order], "secs": left}
-    return out
+    return _pt_state_dict(_pt_public(db, token))
 
 
 @app.post("/api/public/placement/{token}/start")
@@ -9276,11 +9697,26 @@ def pt_start(token: str, payload: dict = Body(default={}),
         raise HTTPException(410, "Havola muddati tugagan")
     if s.status == "done":
         raise HTTPException(409, "Test allaqachon yakunlangan")
-    if s.status == "running" and s.cur_qid:
-        return pt_state(token, db)
+    if s.status == "running":
+        sec = s.sec or "grammar"
+        st = _pt_state_dict(s)
+        if st.get("question"):
+            return st           # savol allaqachon berilgan — o'shani
+        if sec in _PT_BANKS:
+            # Tanaffusdan keyin "Davom etish": savol SHU YERDA
+            # beriladi, soat ham shu yerdan boshlanadi.
+            q = _pt_open_section(s, sec)
+            if q is None:
+                _pt_all_done(s)
+                _pt_apply_to_lead(db, s)
+                db.commit()
+                return {"status": "done", "result": _pt_result(s)}
+            db.commit()
+            return {"status": "running", "name": s.name, "question": q}
     if payload.get("name") and not s.name:
         s.name = str(payload["name"]).strip()[:120]
     s.status = "running"
+    s.sec = "grammar"
     s.started_at = s.started_at or _pt_now()
     s.expires_at = _pt_now() + _pt_td(hours=_PT_TTL_H)
     q, d = _pt_pick(s.cur_d or _PT_START_D, set())
@@ -9294,7 +9730,14 @@ def pt_start(token: str, payload: dict = Body(default={}),
 def pt_answer(token: str, payload: dict = Body(...),
               db: Session = Depends(get_db)):
     s = _pt_public(db, token)
-    if s.status != "running" or not s.cur_qid:
+    if s.status != "running":
+        raise HTTPException(409, "Faol savol yo'q")
+    # Yangi bo'limlar (lug'at / reading / listening) alohida yuriladi.
+    if (s.sec or "grammar") in _PT_BANKS:
+        if payload.get("skip_section"):
+            return _pt_sec_skip(db, s)
+        return _pt_sec_answer(db, s, payload)
+    if not s.cur_qid:
         raise HTTPException(409, "Faol savol yo'q")
     try:
         qid = int(payload.get("qid") or 0)
@@ -9322,16 +9765,10 @@ def pt_answer(token: str, payload: dict = Body(...),
     nd, step = _pt_next_d(int(s.cur_d or 0), ok, int(s.step or 6), answers)
     s.step = step
     if len(answers) >= _PT_N:
-        _pt_finish(s)
-        _pt_apply_to_lead(db, s)
-        db.commit()
-        return {"status": "done", "result": _pt_result(s)}
+        return _pt_after_grammar(db, s)
     nq, d = _pt_pick(nd, set(asked), up=ok)
     if nq is None:
-        _pt_finish(s)
-        _pt_apply_to_lead(db, s)
-        db.commit()
-        return {"status": "done", "result": _pt_result(s)}
+        return _pt_after_grammar(db, s)
     s.cur_d = d
     qd = _pt_serve(s, nq)
     db.commit()
@@ -9348,6 +9785,11 @@ def _pt_apply_to_lead(db, s) -> None:
         return
     r = _pt_result(s)
     tag = f"[Diagnostika] {r['level']}, Unit {r['unit']} — {r['score']}/{r['total']}"
+    # Ko'nikmalar tugagan bo'lsa ular ham yoziladi (2026-09-11).
+    _sk = [f"{x['label']} {x['level']}" for x in (r.get("skills") or [])
+           if x.get("key") != "grammar" and x.get("level")]
+    if _sk:
+        tag += " · " + ", ".join(_sk)
     note = lead.note or ""
     if "[Diagnostika]" in note:
         lines = [ln for ln in note.split("\n") if "[Diagnostika]" not in ln]

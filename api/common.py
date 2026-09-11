@@ -589,23 +589,34 @@ _STAMP_CACHE: dict = {"v": None}
 #  va ustun nomlari regex bilan sug'urib olinadi. Natija import
 #  tartibiga umuman bog'liq emas, va yangi model fayli qo'shilsa
 #  o'zi topiladi. Izoh/route o'zgarishi xeshga ta'sir qilmaydi.
-_MODEL_SIG_RE = None
+#  2026-09-11 — TAXALLUSLI IMPORT TUZATILDI.
+#  entry.py ustunlarni `Column` deb emas, `_ptC` deb e'lon qiladi:
+#      from sqlalchemy import Column as _ptC, Integer as _ptI
+#      sec = _ptC(_ptS)
+#  Oldingi regex faqat "Column(" ni qidirgani uchun entry.py dagi
+#  YANGI USTUNLARNI UMUMAN KO'RMASDI — ya'ni shtamp qimirlamasdi va
+#  biz endigina yopgan teshik qaytadan ochilib qolardi.
+#  Endi har fayl uchun Column'ning taxalluslari import qatorlaridan
+#  topib olinadi. test_schema_all_tables.py bu narsani ALOHIDA
+#  tekshiradi: modeldagi har bir ustun barmoq iziga tushganmi.
+def _model_column_aliases(data: bytes) -> list:
+    import re as _re
+    out = ["Column"]
+    for m in _re.finditer(rb'\bColumn\s+as\s+([A-Za-z_][A-Za-z0-9_]*)',
+                          data):
+        out.append(m.group(1).decode("ascii"))
+    return sorted(set(out), key=len, reverse=True)
 
 
-def _model_signature_bytes() -> bytes:
-    global _MODEL_SIG_RE
-    if _MODEL_SIG_RE is None:
-        import re as _re
-        _MODEL_SIG_RE = _re.compile(
-            rb'^[ \t]*(?:__tablename__[ \t]*=[ \t]*["\']([A-Za-z0-9_]+)'
-            rb'|([A-Za-z0-9_]+)[ \t]*=[ \t]*(?:sa\.|sqlalchemy\.)?Column\()',
-            _re.M)
+def _model_signature_tokens() -> list:
+    """Model fayllaridagi jadval va ustun nomlari (tartibi bilan)."""
+    import re as _re
     d = os.path.dirname(os.path.abspath(__file__))
-    chunks = []
+    out = []
     try:
         names = sorted(os.listdir(d))
     except Exception:
-        return b""
+        return out
     for n in names:
         if not n.endswith(".py") or n.startswith("test_"):
             continue
@@ -616,10 +627,21 @@ def _model_signature_bytes() -> bytes:
             continue
         if b"__tablename__" not in data:
             continue
-        chunks.append(n.encode("utf-8"))
-        for m in _MODEL_SIG_RE.finditer(data):
-            chunks.append(m.group(1) or m.group(2) or b"")
-    return b"|".join(chunks)
+        alt = b"|".join(_re.escape(a.encode("ascii"))
+                        for a in _model_column_aliases(data))
+        rx = _re.compile(
+            rb'^[ \t]*(?:__tablename__[ \t]*=[ \t]*["\']([A-Za-z0-9_]+)'
+            rb'|([A-Za-z0-9_]+)[ \t]*=[ \t]*'
+            rb'(?:[A-Za-z_][A-Za-z0-9_]*\.)?(?:' + alt + rb')\()',
+            _re.M)
+        out.append(n)
+        for m in rx.finditer(data):
+            out.append((m.group(1) or m.group(2) or b"").decode("utf-8"))
+    return out
+
+
+def _model_signature_bytes() -> bytes:
+    return "|".join(_model_signature_tokens()).encode("utf-8")
 
 
 def models_fingerprint() -> str:

@@ -82,6 +82,27 @@ finally:
 ck("yangi ustundan keyin xesh boshqacha", fp2 != fp, True)
 ck("fayl qaytarilgach xesh ham qaytadi", common.models_fingerprint(), fp)
 
+print("\n=== 3a. BARMOQ IZI HAR BIR USTUNNI KO'RADIMI ===")
+# 2026-09-11: entry.py ustunlarni `_ptC(...)` deb e'lon qiladi
+# (Column taxallus bilan import qilingan). Skaner buni ko'rmay
+# qoldi va placement_sessions.sec / sec_state ustunlari barmoq
+# iziga TUSHMADI — ya'ni shtamp qimirlamasdi. Xuddi 28-avgust va
+# 10-sentabrdagi avariyalarning o'zi qaytardi.
+#
+# Shuning uchun eng muhim tekshiruv shu: modeldagi HAR BIR jadval
+# va HAR BIR ustun nomi skaner topgan ro'yxatda bormi.
+_tok = set(common._model_signature_tokens())
+_miss_t = [t for t in sorted(common.Base.metadata.tables) if t not in _tok]
+_miss_c = []
+for _tn in sorted(common.Base.metadata.tables):
+    for _c in common.Base.metadata.tables[_tn].columns:
+        if _c.name not in _tok:
+            _miss_c.append(_tn + "." + _c.name)
+ck("skaner ko'rmagan JADVAL", _miss_t, [])
+ck("skaner ko'rmagan USTUN", _miss_c, [])
+ck("placement_sessions.sec ko'rindi", "sec" in _tok, True)
+ck("placement_sessions.sec_state ko'rindi", "sec_state" in _tok, True)
+
 print("\n=== 3b. IMPORT TARTIBIGA BOG'LIQ EMAS ===")
 # Vercel'da main.py va entry.py alohida funksiya. Ular bir xil
 # shtamp hisoblashi shart, aks holda har biri ikkinchisining

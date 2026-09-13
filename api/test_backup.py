@@ -201,6 +201,22 @@ print("\n=== 9. Telegram: bot yo'q bo'lsa jimgina o'tadi ===")
 db = SessionLocal()
 res = B.daily_backup_to_telegram(db)
 ck("yiqilmadi, sabab qaytardi", "skipped" in res, True)
+
+print("\n=== 10. Baza Telegram uchun juda katta — zip umuman yasalmaydi ===")
+# Jonli bazada zip 50 MB dan oshadi va Telegram rad etadi. U holda
+# butun bazani har kuni o'qish — bekor sarf. Hajm oldindan tekshiriladi.
+_orig_size, _orig_build = B._db_size_bytes, B.build_backup
+_built = []
+B._db_size_bytes = lambda _db: 600 * 1024 * 1024
+B.build_backup = lambda *a, **k: _built.append(1) or _orig_build(*a, **k)
+try:
+    res = B.daily_backup_to_telegram(db)
+finally:
+    B._db_size_bytes, B.build_backup = _orig_size, _orig_build
+ck("katta baza — o'tkazib yuborildi", "katta" in str(res.get("skipped")), True)
+ck("zip yasalmadi (resurs sarflanmadi)", len(_built), 0)
+ck("hajm javobda ko'rinadi", res.get("db_mb"), 600)
+ck("SQLite'da hajm cheklovi yo'q", B._db_size_bytes(db), 0)
 db.close()
 
 print("\n" + ("HAMMASI OK" if not fails

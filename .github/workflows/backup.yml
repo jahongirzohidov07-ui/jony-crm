@@ -1,19 +1,34 @@
 # KUNLIK BAZA ZAXIRASI (2026-08-12, Jahongir: "baza zaxirasi... shuni
 # hal qil"). Har kuni Toshkent vaqti bilan ~04:00 da butun Postgres
-# bazadan pg_dump olinadi va GitHub artefakt sifatida saqlanadi:
-#   - kunlik nusxa 30 kun turadi
-#   - har dushanba kungisi 90 kun turadi
+# bazadan pg_dump olinadi va GitHub artefakt sifatida saqlanadi.
+#
+# FAQAT ENG OXIRGI NUSXA SAQLANADI (2026-09-13, Jahongir: "pul
+# ketmasligi kerak"). Bepul GitHub hisobida artefaktlar uchun 500 MB
+# joy bor, kvota tugasa yuklash BLOKLANADI. Siqilgan nusxa 264 MB,
+# eski sozlama esa 30 kunlik + 90 kunlik haftalik nusxa to'plab ~8 GB
+# qilardi — 2-3 kunda to'xtab qolardi. Endi: yangi nusxa yuklanadi,
+# keyin eskilari o'chiriladi (hech qachon nusxasiz qolinmaydi).
+# Uzoqroq orqaga qaytish uchun Neon'ning o'z "Instant restore"i bor.
+#
 # ISHLASHI UCHUN BIR MARTALIK SOZLASH KERAK:
 #   GitHub repo -> Settings -> Secrets and variables -> Actions ->
 #   New repository secret -> nomi: DATABASE_URL, qiymati: Vercel'dagi
 #   DATABASE_URL (Vercel -> jony-crm -> Settings -> Environment
 #   Variables ichidan nusxa olinadi).
-# Tiklash: artefaktni yuklab olib: psql "$DATABASE_URL" < dump.sql
+# Tiklash: artefaktni yuklab olib: gunzip -c jonyos_*.sql.gz | psql "$DATABASE_URL"
 name: DB Backup
 on:
   schedule:
     - cron: "0 23 * * *"   # 23:00 UTC = 04:00 Toshkent
   workflow_dispatch:
+
+permissions:
+  actions: write     # eski artefaktlarni o'chirish uchun
+  contents: read
+
+concurrency:
+  group: db-backup
+  cancel-in-progress: false
 
 jobs:
   backup:
@@ -33,6 +48,25 @@ jobs:
           wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - 2>/dev/null
           sudo apt-get update -qq
           sudo apt-get install -y -qq postgresql-client-17
+      # Qaysi jadval qancha joy egallayotgani. Faqat NOM va HAJM chiqadi —
+      # hech qanday shaxsiy ma'lumot logga tushmaydi. Yiqilsa ham zaxira
+      # to'xtamaydi.
+      - name: Jadval hajmlari
+        continue-on-error: true
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          PSQL=/usr/lib/postgresql/17/bin/psql
+          $PSQL "$DATABASE_URL" -X -P footer=off -c "SELECT pg_size_pretty(pg_database_size(current_database())) AS baza_jami"
+          $PSQL "$DATABASE_URL" -X -P footer=off -c "
+            SELECT c.relname AS jadval,
+                   pg_size_pretty(pg_total_relation_size(c.oid)) AS hajm,
+                   c.reltuples::bigint AS taxminiy_qator
+            FROM pg_class c
+            JOIN pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind = 'r' AND n.nspname = 'public'
+            ORDER BY pg_total_relation_size(c.oid) DESC
+            LIMIT 25"
       - name: Dump
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -43,19 +77,28 @@ jobs:
           ls -lh jonyos_*.sql.gz
           # bo'sh dump = xato (baza ulanmagan bo'lishi mumkin)
           [ $(stat -c%s jonyos_${STAMP}.sql.gz) -gt 10000 ] || { echo "::error::Dump juda kichik!"; exit 1; }
-      - name: Upload daily (30 kun)
+      # retention-days: 2 — o'chirish qadami biror sabab bilan ishlamasa
+      # ham nusxalar to'planib qolmasin (ehtiyot chorasi).
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: jonyos-db-daily-${{ github.run_id }}
           path: jonyos_*.sql.gz
-          retention-days: 30
-      - name: Weekly artifact
-        id: wk
-        run: echo "dow=$(date -u +%u)" >> "$GITHUB_OUTPUT"
-      - name: Upload weekly copy
-        if: steps.wk.outputs.dow == '1'
-        uses: actions/upload-artifact@v4
-        with:
-          name: jonyos-db-weekly-${{ github.run_id }}
-          path: jonyos_*.sql.gz
-          retention-days: 90
+          retention-days: 2
+      # Yangi nusxa YUKLANGANDAN KEYIN eskilari o'chiriladi — shunda
+      # hech qachon nusxasiz qolinmaydi.
+      - name: Eski nusxalarni o'chirish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          gh api "repos/$REPO/actions/artifacts?per_page=100" --paginate \
+            --jq ".artifacts[] | select(.name | startswith(\"jonyos-db-\")) | select(.workflow_run.id != $RUN_ID) | .id" |
+          while read -r id; do
+            [ -n "$id" ] || continue
+            gh api -X DELETE "repos/$REPO/actions/artifacts/$id" && echo "o'chirildi: $id"
+          done
+          echo "--- qolgan nusxalar ---"
+          gh api "repos/$REPO/actions/artifacts?per_page=100" \
+            --jq '.artifacts[] | select(.name | startswith("jonyos-db-")) | "\(.name)  \(.size_in_bytes/1048576|floor) MB"'

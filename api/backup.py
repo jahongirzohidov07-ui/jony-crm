@@ -57,6 +57,33 @@ SKIP_TABLES = {"login_attempts", "error_logs"}
 # kutilmaganda ulkan jadval butun jarayonni to'xtatib qo'ymasin).
 MAX_ROWS_PER_TABLE = 400_000
 
+# TELEGRAM CHEGARASI (2026-09-13). Bot 50 MB dan katta hujjatni qabul
+# qilmaydi. Jonli baza bundan ancha katta (GitHub'dagi siqilgan pg_dump
+# 264 MB): rasm va fayllar bazada base64 bo'lib turadi, ular deyarli
+# siqilmaydi. Ilgari kunlik cron har kuni butun bazani Vercel xotirasiga
+# o'qib zip yasar, keyin Telegram rad etar va send_document jimgina
+# False qaytarardi — resurs bekorga ketardi, zaxira esa bo'lmasdi.
+# Endi baza katta bo'lsa zip umuman yasalmaydi; to'liq zaxirani
+# GitHub Actions (.github/workflows/backup.yml) oladi.
+TG_MAX_BYTES = 49 * 1024 * 1024
+TG_DB_LIMIT_BYTES = 200 * 1024 * 1024
+
+
+def _db_size_bytes(db: Session) -> int:
+    """Postgres'da bazaning diskdagi hajmi. SQLite'da 0 (cheklov yo'q)."""
+    try:
+        if db.get_bind().dialect.name != "postgresql":
+            return 0
+        from sqlalchemy import text as _t
+        return int(db.execute(
+            _t("SELECT pg_database_size(current_database())")).scalar() or 0)
+    except Exception:
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        return 0
+
 
 def _json_default(o):
     if isinstance(o, (datetime, date)):
@@ -341,6 +368,12 @@ def daily_backup_to_telegram(db: Session) -> dict:
     key = f"bkp_{today.isoformat()}"
     if _seed_done(db, key):
         return {"skipped": "bugun yuborilgan"}
+    size = _db_size_bytes(db)
+    if size > TG_DB_LIMIT_BYTES:
+        return {"skipped": (f"baza {size // 1048576} MB — Telegram 50 MB dan "
+                            "kattasini qabul qilmaydi; to'liq zaxira GitHub "
+                            "Actions'da olinadi"),
+                "db_mb": size // 1048576}
     if not notify.enabled():
         return {"skipped": "TELEGRAM_BOT_TOKEN yo'q"}
 
@@ -353,6 +386,10 @@ def daily_backup_to_telegram(db: Session) -> dict:
         return {"skipped": "asoschining Telegram chati bog'lanmagan"}
 
     fname, blob, manifest = build_backup(db)
+    if len(blob) > TG_MAX_BYTES:
+        return {"skipped": (f"zaxira {len(blob) // 1048576} MB — Telegram "
+                            "50 MB dan kattasini qabul qilmaydi"),
+                "kb": len(blob) // 1024}
     caption = (f"JonyOS zaxira — {manifest['date']}\n"
                f"{len(manifest['tables'])} jadval, "
                f"{manifest['total_rows']} qator, "

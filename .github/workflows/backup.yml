@@ -67,6 +67,19 @@ jobs:
             WHERE c.relkind = 'r' AND n.nspname = 'public'
             ORDER BY pg_total_relation_size(c.oid) DESC
             LIMIT 25"
+          # practice_items — tayyor mashqlar banki. Kod ~3 ming qator
+          # yaratadi, bazada esa 1,28 mln bor. Tur bo'yicha jami va NOYOB
+          # soni: farq = dublikat. Faqat tur nomlari va sonlar chiqadi.
+          $PSQL "$DATABASE_URL" -X -P footer=off -c "
+            SELECT skill, kind, count(*) AS jami,
+                   count(DISTINCT md5(payload || '|' || answer)) AS noyob,
+                   pg_size_pretty(sum(pg_column_size(payload) + pg_column_size(answer)
+                     + coalesce(pg_column_size(alt),0) + coalesce(pg_column_size(explain),0))::bigint) AS hajm,
+                   min(id) AS birinchi_id, max(id) AS oxirgi_id
+            FROM practice_items
+            GROUP BY skill, kind
+            ORDER BY count(*) DESC
+            LIMIT 40"
       - name: Dump
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

@@ -838,15 +838,21 @@ def seed_sentence(db):
     """Idempotent: bor bo'lsa qayta yozmaydi (hech narsa o'chmaydi)."""
     import json
     import models
+    # 2026-09-13: TEKSHIRUV ISHLAMAGAN EDI. r.level bazada MATN ("1"),
+    # build_rows() esa SON (1) beradi — ("1", 1) != (1, 1), shuning
+    # uchun har sovuq startda 100 ta nusxa qayta yozilardi. Jonli bazada
+    # shu 4 turdan 1,3 mln qator (2 GB) to'plangan edi. Ikkala tomon
+    # ham matnga keltiriladi; bazadan faqat kerakli ustunlar o'qiladi.
     have = {
-        (r.level, json.loads(r.payload).get("order"))
-        for r in db.query(models.PracticeItem)
+        (str(lv), json.loads(pl).get("order"))
+        for lv, pl in db.query(models.PracticeItem.level,
+                               models.PracticeItem.payload)
         .filter(models.PracticeItem.skill == SKILL,
                 models.PracticeItem.kind == KIND).all()}
     n = 0
     for kind, level, payload, answer, explain, alt, para in \
             build_rows():
-        if (level, payload["order"]) in have:
+        if (str(level), payload["order"]) in have:
             continue
         if para:
             payload["paraphrase"] = para

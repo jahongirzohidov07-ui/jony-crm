@@ -1,0 +1,83 @@
+# PRACTICE_ITEMS DUBLIKATLARINI TOZALASH — BIR MARTALIK (2026-09-13).
+#
+# 4 ta seed (read_pick, read_sentence, cefr_word, cefr_match) har sovuq
+# startda o'sha 100 ta mashqni qayta yozgan: tekshiruv bazadagi "1"
+# (matn) ni build_rows() dagi 1 (son) bilan solishtirgan. Natijada
+# 1,3 mln qator (~2 GB), noyobi atigi 400 ta.
+#
+# FAQAT QO'LDA ishga tushadi. apply=false (standart) — HECH NARSA
+# O'ZGARMAYDI, faqat hisobot. apply=true bo'lsa bitta tranzaksiyada:
+#   1) har bir bir xil mashq guruhidan eng kichik id saqlanadi;
+#   2) o'quvchi urinishlari (skill_attempts.ref = "pi:<id>") saqlanadigan
+#      id ga ko'chiriladi — hech kimning yechgan mashqi yo'qolmaydi;
+#   3) dublikatlar o'chiriladi; keyin VACUUM FULL diskni bo'shatadi.
+# Oldin DB Backup ishlagan bo'lishi kerak (artefaktda to'liq nusxa).
+name: Practice dedupe (bir martalik)
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "true = haqiqatan tozalash; false = faqat hisobot"
+        required: true
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-backup
+  cancel-in-progress: false
+
+jobs:
+  dedupe:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      PSQL: /usr/lib/postgresql/17/bin/psql
+    steps:
+      - name: Install psql 17
+        run: |
+          sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - 2>/dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17
+      - name: Hisobot (hech narsa o'zgarmaydi)
+        run: |
+          cat > report.sql <<'SQL'
+          CREATE TEMP TABLE pi_map AS
+            SELECT id, 'pi:' || id AS ref,
+                   min(id) OVER (PARTITION BY skill, kind, md5(payload || '|' || answer)) AS keep_id
+            FROM practice_items;
+          DELETE FROM pi_map WHERE id = keep_id;
+          CREATE INDEX ON pi_map (ref);
+          SELECT pg_size_pretty(pg_database_size(current_database())) AS baza_hozir,
+                 pg_size_pretty(pg_total_relation_size('practice_items')) AS practice_items_hozir;
+          SELECT (SELECT count(*) FROM practice_items) AS jami_qator,
+                 (SELECT count(*) FROM pi_map) AS ochiriladigan_dublikat,
+                 (SELECT count(*) FROM practice_items) - (SELECT count(*) FROM pi_map) AS qoladigan;
+          SELECT count(*) AS kochiriladigan_urinish,
+                 count(DISTINCT sa.student_id) AS tegishli_oquvchi
+            FROM skill_attempts sa JOIN pi_map m ON sa.ref = m.ref;
+          SQL
+          $PSQL "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -P footer=off -f report.sql
+      - name: Tozalash (faqat apply=true)
+        if: ${{ github.event.inputs.apply == 'true' }}
+        run: |
+          cat > apply.sql <<'SQL'
+          BEGIN;
+          CREATE TEMP TABLE pi_map AS
+            SELECT id, 'pi:' || id AS ref,
+                   min(id) OVER (PARTITION BY skill, kind, md5(payload || '|' || answer)) AS keep_id
+            FROM practice_items;
+          DELETE FROM pi_map WHERE id = keep_id;
+          CREATE INDEX ON pi_map (ref);
+          CREATE INDEX ON pi_map (id);
+          UPDATE skill_attempts sa SET ref = 'pi:' || m.keep_id
+            FROM pi_map m WHERE sa.ref = m.ref;
+          DELETE FROM practice_items p USING pi_map m WHERE p.id = m.id;
+          SELECT count(*) AS qolgan_qator FROM practice_items;
+          COMMIT;
+          SQL
+          $PSQL "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -P footer=off -f apply.sql
+          $PSQL "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -c "VACUUM (FULL, ANALYZE) practice_items"
+          $PSQL "$DATABASE_URL" -X -P footer=off -c "SELECT pg_size_pretty(pg_database_size(current_database())) AS baza_keyin, pg_size_pretty(pg_total_relation_size('practice_items')) AS practice_items_keyin"

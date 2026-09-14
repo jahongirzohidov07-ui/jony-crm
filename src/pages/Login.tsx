@@ -47,9 +47,10 @@ export default function Login() {
       else localStorage.removeItem("jonyos_last_login");
       if (password === "jonyjony") {
         alert(
-          "Siz standart parol bilan kirdingiz.\\n\\nXavfsizlik uchun " +
-            "parolni o'zgartirib olishni tavsiya qilamiz: " +
-            "Profil → Parolni o'zgartirish."
+          "Siz standart parol bilan kirdingiz.\n\n" +
+            (u?.role === "student"
+              ? "Parolni o'zgartirish uchun o'quv markazi administratoriga murojaat qiling."
+              : "Xavfsizlik uchun Profil → Parolni o'zgartirish bo'limida parolni yangilang.")
         );
       }
       // Har kim O'Z ilovasiga tushadi: o'quvchi -> Jony Student,

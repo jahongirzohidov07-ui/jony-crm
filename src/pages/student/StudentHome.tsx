@@ -1,3 +1,4 @@
+import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -168,9 +169,10 @@ export default function StudentHome() {
                 {ov?.level?.label || "—"}
               </p>
               <p className="text-[15px] text-white/85 mt-1">
-                Daraja XP <b className="text-white">{fmtNum(inLevel)}</b>
+                Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>
                 <span className="text-white/70"> / {perLevel}</span>
               </p>
+              <StudentXpHelp />
               <div className="flex items-center gap-2.5 mt-2.5">
                 <div className="h-2.5 flex-1 rounded-full bg-white/25 overflow-hidden">
                   <div
@@ -188,7 +190,7 @@ export default function StudentHome() {
               {ov?.next ? (
                 <>
                   {ov.next.label}'gacha{" "}
-                  <b className="text-sky-200">{ov.next.points_left} XP</b> qoldi
+                  <b className="text-sky-200">{ov.next.points_left} ball</b> qoldi
                 </>
               ) : (
                 "Eng yuqori darajadasiz 🏆"

@@ -1,3 +1,4 @@
+import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Camera, Check, ChevronRight, LogOut, Settings,
@@ -50,6 +51,10 @@ type Profile = {
   ielts?: Ielts;
   league?: { name: string; icon: string; color: string } | null;
   xp?: number;
+  writing_progress?: {
+    submitted: number;
+    latest: { format_score: number | null; expert_status: string } | null;
+  };
   coins?: number;
   streak?: number;
   balance?: number;
@@ -302,9 +307,10 @@ export default function StudentProfile() {
         </div>
 
         <p className="text-sm text-white/85 mt-4">
-          Daraja XP <b className="text-white">{fmtNum(inLevel)}</b>
+          Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>
           <span className="text-white/60"> / {fmtNum(per)}</span>
         </p>
+              <StudentXpHelp />
         <div className="flex items-center gap-2.5 mt-2">
           <div className="h-2.5 flex-1 rounded-full bg-white/20 overflow-hidden">
             <div className="h-full rounded-full bg-white"
@@ -315,7 +321,7 @@ export default function StudentProfile() {
         {lv?.next && (
           <p className="text-[13px] text-white/75 mt-2">
             {lv.next.label}'gacha{" "}
-            <b className="text-sky-300">{lv.next.points_left} XP</b> qoldi
+            <b className="text-sky-300">{lv.next.points_left} ball</b> qoldi
           </p>
         )}
       </div>
@@ -376,6 +382,25 @@ export default function StudentProfile() {
       )}
 
       {/* ------------------------------------------------ liga */}
+      {!!d.writing_progress?.submitted && (
+        <div className="rounded-2xl border p-4 text-slate-200" style={card}>
+          <p className="font-bold text-white">Writing natijangiz saqlandi</p>
+          <p className="text-sm mt-1">Topshirilgan yozuvlar: {d.writing_progress.submitted}</p>
+          {d.writing_progress.latest?.format_score != null && (
+            <p className="text-sm">Oxirgi format bahosi: {d.writing_progress.latest.format_score}/100</p>
+          )}
+          <p className="text-xs mt-2 text-slate-300">
+            {d.writing_progress.latest?.expert_status === "available"
+              ? "Ekspert tahlili topshiriq natijasida ko'rsatildi."
+              : d.writing_progress.latest?.expert_status === "unavailable"
+                ? "Ekspert bahosi olinmadi. Keyinroq topshiriqni qayta yuborishingiz mumkin."
+                : "Bu eski yozuv uchun ekspert holati saqlanmagan."}
+            {" "}Format bahosi IELTS bali emas. Ko'nikma shkalasi yig'ilgan mashq ballariga asoslanadi;
+            dastlabki natijalar yaxlitlanganda 0 ko'rinishi mumkin.
+          </p>
+        </div>
+      )}
+
       <Link to="/student/leagues"
             className="flex items-center gap-3 rounded-2xl border p-4"
             style={card}>

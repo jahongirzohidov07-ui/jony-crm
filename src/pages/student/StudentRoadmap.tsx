@@ -1,3 +1,4 @@
+import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Lock } from "lucide-react";
@@ -188,8 +189,9 @@ export default function StudentRoadmap() {
               {cur?.label} · {cur?.cefr}
             </p>
             <p className="text-sm text-white/85 mt-1">
-              Daraja XP <b className="text-white">{fmtNum(inLevel)}</b>/{per}
+              Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>/{per}
             </p>
+              <StudentXpHelp />
             <div className="flex items-center gap-2.5 mt-2">
               <div className="h-2.5 flex-1 rounded-full bg-white/25 overflow-hidden">
                 <div className="h-full rounded-full bg-white"
@@ -204,7 +206,7 @@ export default function StudentRoadmap() {
             {next ? (
               <>
                 {next.label}'gacha{" "}
-                <b className="text-sky-200">{per - inLevel} XP</b>
+                <b className="text-sky-200">{per - inLevel} ball</b>
               </>
             ) : "Eng yuqori daraja 🏆"}
           </p>

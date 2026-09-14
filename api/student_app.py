@@ -1763,6 +1763,29 @@ def student_certificates(db: Session = Depends(get_db),
     return {"rows": rows, "count": len(rows)}
 
 
+def _writing_progress(db: Session, student_id: int) -> dict:
+    attempts = db.query(models.SkillAttempt).filter(
+        models.SkillAttempt.student_id == student_id,
+        models.SkillAttempt.skill == "writing",
+        models.SkillAttempt.ref.like("cwrite:%"))
+    submitted = attempts.with_entities(
+        func.count(func.distinct(models.SkillAttempt.ref))).scalar() or 0
+    latest = attempts.order_by(models.SkillAttempt.id.desc()).first()
+    result = {"submitted": int(submitted), "latest": None}
+    if latest:
+        try:
+            answer = json.loads(latest.answer or "{}")
+            if not isinstance(answer, dict):
+                answer = {}
+        except (ValueError, TypeError):
+            answer = {}
+        result["latest"] = {
+            "format_score": answer.get("score"),
+            "expert_status": answer.get("expert_status", "unknown"),
+        }
+    return result
+
+
 @router.get("/api/student/profile")
 def student_profile(db: Session = Depends(get_db),
                     user=Depends(require_role(roles.STUDENT))):
@@ -1806,6 +1829,7 @@ def student_profile(db: Session = Depends(get_db),
         # (IELTS 6.0) - 70 = C1 (7.5) - 95 = C2 (9.0)"
         "radar_note": "Har ko'nikma bo'yicha hozirgi darajangiz",
         "ielts": skills["ielts"],
+        "writing_progress": _writing_progress(db, s.id),
         # 2026-08-25: liga profilda ham ko'rinsin (Jahongir: "hamma
         # kerakli joylarga qoshgin shu narsalari bilmayabdi")
         "league": gam.get("league"),
@@ -3368,10 +3392,15 @@ teacher — not an AI model.
 Topic of this conversation: {topic}."""
 
 
-def _ai_reply(system: str, messages: list[dict]) -> str:
+def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> str:
     """LLM'ga murojaat. OPENAI_API_KEY yoki GEMINI_API_KEY dan birini
     ishlatadi. Testda shu funksiya almashtiriladi (monkeypatch)."""
     import httpx
+
+    # Chat uses text/teacher; exam callers use content/assistant.
+    messages = [{"role": m.get("role", "user"),
+                 "text": m.get("text", m.get("content", ""))}
+                for m in messages]
 
     oai = (os.getenv("OPENAI_API_KEY") or "").strip()
     # 2026-08-18: Jahongir kalitni Vercel'da "JonyTeacher" nomi bilan
@@ -3386,10 +3415,10 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
             headers={"Authorization": f"Bearer {oai}"},
             json={
                 "model": os.getenv("SPEAKING_MODEL", "gpt-4o-mini"),
-                "max_tokens": 160,
+                "max_tokens": max_tokens,
                 "temperature": 0.7,
                 "messages": [{"role": "system", "content": system}] + [
-                    {"role": ("assistant" if m["role"] == "teacher"
+                    {"role": ("assistant" if m["role"] in ("teacher", "assistant")
                               else "user"),
                      "content": m["text"]} for m in messages],
             },
@@ -3400,7 +3429,7 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
 
     if gem:
         contents = [
-            {"role": ("model" if m["role"] == "teacher" else "user"),
+            {"role": ("model" if m["role"] in ("teacher", "assistant") else "user"),
              "parts": [{"text": m["text"]}]} for m in messages]
         # GEMINI QOIDASI: suhbat "user"dan boshlanishi SHART. Ikkinchi
         # xabardan boshlab tarix Teacher salomlashuvi bilan boshlanadi
@@ -3456,7 +3485,7 @@ def _ai_reply(system: str, messages: list[dict]) -> str:
         for model in order:
             body = {
                 "systemInstruction": {"parts": [{"text": system}]},
-                "generationConfig": {"maxOutputTokens": 300,
+                "generationConfig": {"maxOutputTokens": max(300, max_tokens),
                                      "temperature": 0.7},
                 "contents": contents,
             }
@@ -4012,10 +4041,11 @@ def cw_submit(payload: dict, db: Session = Depends(get_db),
     try:
         ask = (f"TASK ({part}): {prompt}\n\n"
                f"STUDENT'S ANSWER:\n{text}")
-        ai = _ai_reply(_CW_SYSTEM, [{"role": "user", "content": ask}])
+        ai = _ai_reply(_CW_SYSTEM, [{"role": "user", "text": ask}],
+                       max_tokens=800)
         ai = (ai or "").strip()[:2000]
     except Exception as e:
-        ai_err = str(e)[:120]
+        ai_err = "Ekspert bahosi hozir mavjud emas. Keyinroq qayta urinib ko'ring."
 
     ref = f"cwrite:{tid}:{part}"
     try:
@@ -4023,6 +4053,7 @@ def cw_submit(payload: dict, db: Session = Depends(get_db),
             student_id=s.id, skill="writing", ref=ref,
             correct=1 if res["score"] >= 70 else 0,
             answer=json.dumps({"score": res["score"], "words": res["words"],
+                               "expert_status": "available" if ai else "unavailable",
                                "text": text[:2500]}, ensure_ascii=False)[:4000],
             date=date.today()))
         db.commit()

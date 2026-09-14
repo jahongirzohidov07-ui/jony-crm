@@ -48,6 +48,7 @@ const TimetableGrid = lazy(() => import("./pages/TimetableGrid"));
 const Archive = lazy(() => import("./pages/Archive"));
 const Tasks = lazy(() => import("./pages/Tasks"));
 const Inventory = lazy(() => import("./pages/Inventory"));
+const Events = lazy(() => import("./pages/Events"));
 const Permissions = lazy(() => import("./pages/Permissions"));
 const MyProfile = lazy(() => import("./pages/MyProfile"));
 const MyCoins = lazy(() => import("./pages/MyCoins"));
@@ -181,8 +182,12 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
  * chunki xodim vositalari unga ko'rinmasligi kerak. */
 function RequireStaff({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
+  const { pathname } = useLocation();
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === "student") return <Navigate to="/student" replace />;
+  // Event menejerning bosh sahifasi — Tadbirlar (Dashboard unga yopiq).
+  if (user.role === "event_manager" && pathname === "/")
+    return <Navigate to="/events" replace />;
   return <>{children}</>;
 }
 
@@ -348,6 +353,7 @@ function AppRoutes() {
           <Route path="archive" element={<Archive />} />
           <Route path="tasks" element={<Tasks />} />
           <Route path="inventory" element={<Inventory />} />
+          <Route path="events" element={<Events />} />
           <Route path="academic" element={<Academic />} />
           <Route path="hr" element={<Hr />} />
           <Route path="marketing" element={<Marketing />} />

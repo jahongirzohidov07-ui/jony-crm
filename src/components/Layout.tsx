@@ -32,7 +32,7 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search, Smartphone , Sparkles , BookOpen, Clapperboard } from "lucide-react";
+ Search, Smartphone , Sparkles , BookOpen, Clapperboard, PartyPopper } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -59,6 +59,8 @@ import {
   BRANCH_SWITCH,
   ALL_BRANCH_ROLES,
   SMM_MANAGER,
+  EVENTS_ACCESS,
+  EVENT_MANAGER,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
@@ -367,6 +369,15 @@ export default function Layout() {
   }
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];
+  }
+  // TADBIRLAR (2026-09-14): tug'ilgan kunlar va tadbirlar.
+  if (can(user?.role, EVENTS_ACCESS)) {
+    items = [...items, { to: "/events", label: "Tadbirlar", icon: PartyPopper }];
+  }
+  // Event menejerga o'quv va moliya bo'limlari kerak emas — ochsa ham
+  // ruxsat xatosi chiqardi. Menyuda faqat o'z ishi qoladi.
+  if (user?.role === EVENT_MANAGER) {
+    items = items.filter((i) => i.to === "/events");
   }
   if (user?.role === FOUNDER) {
     items = [

@@ -27,6 +27,7 @@ export const HEAD_EXAMINER = "head_examiner";
 // ---- Qo'llab-quvvatlash ----
 export const HR_MANAGER = "hr_manager";
 export const FACILITY_MANAGER = "facility_manager";
+export const EVENT_MANAGER = "event_manager";
 
 // ---- Tashqi ----
 export const PARENT = "parent";
@@ -50,6 +51,7 @@ export const UZ_LABELS: Record<string, string> = {
   [HEAD_EXAMINER]: "Examinerlar boshlig'i",
   [HR_MANAGER]: "HR menejer",
   [FACILITY_MANAGER]: "Xo'jalik ishlari menejeri",
+  [EVENT_MANAGER]: "Event menejer (tadbirlar)",
   [PARENT]: "Ota-ona",
   [STUDENT]: "O'quvchi",
 };
@@ -60,7 +62,7 @@ export const ALL_ROLES = [
   FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, BRANCH_MANAGER,
   SALES_HEAD, SALES_MANAGER, SMM_MANAGER,
   ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
-  EXAMINER, HEAD_EXAMINER, HR_MANAGER, FACILITY_MANAGER,
+  EXAMINER, HEAD_EXAMINER, HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER,
   PARENT, STUDENT,
 ];
 
@@ -73,7 +75,7 @@ export const ROLE_GROUPS: { key: string; label: string; roles: string[] }[] = [
     roles: [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
             EXAMINER, HEAD_EXAMINER] },
   { key: "support", label: "Qo'llab-quvvatlash",
-    roles: [HR_MANAGER, FACILITY_MANAGER] },
+    roles: [HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER] },
   { key: "external", label: "Tashqi", roles: [PARENT, STUDENT] },
 ];
 
@@ -137,6 +139,10 @@ export const STAFF_VIEWERS = [...FULL_ACCESS, HR_MANAGER, FINANCE_DIRECTOR];
 export const USER_ADMIN = [FOUNDER];
 
 export const FINANCE_ACCESS = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT];
+
+/** Tadbirlar va tug'ilgan kunlar (2026-09-14) — backend roles.EVENTS_* bilan bir xil. */
+export const EVENTS_ACCESS = [...FULL_ACCESS, EVENT_MANAGER, HR_MANAGER, SMM_MANAGER];
+export const EVENTS_MANAGE = [...FULL_ACCESS, EVENT_MANAGER];
 
 /**
  * Coin balansini to'g'rilash (o'quvchi kartasidagi qalamcha).
@@ -248,6 +254,7 @@ export const PERMISSION_ADMIN = [FOUNDER];
 export const ORG_WIDE_ROLES = [
   FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, HR_MANAGER, SMM_MANAGER,
   ACADEMIC_HEAD, SALES_HEAD, HEAD_EXAMINER, HEAD_SUPPORT, FACILITY_MANAGER,
+  EVENT_MANAGER,
 ];
 
 /** Faqat umumiy statistikani ko'radiganlar. */
@@ -277,7 +284,7 @@ export const HR_ASSIGNABLE_ROLES = [
   TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
   SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
   SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
-  HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
+  HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER, EVENT_MANAGER,
 ];
 
 /** Xodim sifatida qo'lda tayinlanadigan rollar (ota-ona/o'quvchisiz). */

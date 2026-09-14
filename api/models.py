@@ -3954,3 +3954,32 @@ class PayrollSeal(Base):
     __table_args__ = (
         UniqueConstraint("period", "teacher_id", name="uq_seal_period_teacher"),
     )
+
+
+class Event(Base):
+    """TADBIR (2026-09-14): bayram, tanlov, ekskursiya, bitiruv va h.k.
+
+    Event menejer rejalashtiradi va holatini yuritadi. Filialsiz
+    tadbir — butun markazniki (masalan, umumiy bayram)."""
+    __tablename__ = "events"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    kind = Column(String, default="other")            # roles.EVENT_KINDS
+    event_date = Column(Date, nullable=False, index=True)
+    start_time = Column(String, nullable=True)         # "17:00"
+    place = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    audience = Column(String, nullable=True)           # kimlar uchun
+    budget = Column(Float, nullable=True)
+    status = Column(String, default="planned", index=True)  # roles.EVENT_STATUSES
+    responsible_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+    branch = relationship("Branch")
+    responsible = relationship("User", foreign_keys=[responsible_id])

@@ -33,7 +33,8 @@ HEAD_EXAMINER = "head_examiner"         # Examinerlar boshlig'i
 
 # ---- Qo'llab-quvvatlash ----------------------------------------------
 HR_MANAGER = "hr_manager"               # HR menejer
-FACILITY_MANAGER = "facility_manager"   # Xo'jalik ishlari menejeri
+FACILITY_MANAGER = "facility_manager"
+EVENT_MANAGER = "event_manager"         # Tadbirlar menejeri (event manager)   # Xo'jalik ishlari menejeri
 
 # ---- Tashqi foydalanuvchilar -----------------------------------------
 PARENT = "parent"                       # Ota-ona
@@ -56,6 +57,7 @@ ALL_ROLES = [
     HEAD_EXAMINER,
     HR_MANAGER,
     FACILITY_MANAGER,
+    EVENT_MANAGER,
     PARENT,
     STUDENT,
 ]
@@ -78,6 +80,7 @@ UZ_LABELS = {
     HEAD_EXAMINER: "Examinerlar boshlig'i",
     HR_MANAGER: "HR menejer",
     FACILITY_MANAGER: "Xo'jalik ishlari menejeri",
+    EVENT_MANAGER: "Event menejer (tadbirlar)",
     PARENT: "Ota-ona",
     STUDENT: "O'quvchi",
 }
@@ -92,7 +95,7 @@ ROLE_GROUPS = [
     ("academic", "O'quv bo'limi",
      [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
       EXAMINER, HEAD_EXAMINER]),
-    ("support", "Qo'llab-quvvatlash", [HR_MANAGER, FACILITY_MANAGER]),
+    ("support", "Qo'llab-quvvatlash", [HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER]),
     ("external", "Tashqi", [PARENT, STUDENT]),
 ]
 
@@ -172,7 +175,7 @@ TEST_BRANCH_VIEW = [HR_MANAGER]
 ORG_WIDE_ROLES = [
     FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT, HR_MANAGER, SMM_MANAGER,
     ACADEMIC_HEAD, SALES_HEAD, HEAD_EXAMINER, HEAD_SUPPORT,
-    FACILITY_MANAGER,
+    FACILITY_MANAGER, EVENT_MANAGER,
 ]
 
 # ---- To'lov usullari --------------------------------------------------
@@ -2033,6 +2036,7 @@ RESOURCES = [
     ("inventory", "Ombor va aktivlar", "Boshqaruv"),
     ("branches", "Filiallar", "Boshqaruv"),
     ("reports", "Hisobotlar", "Boshqaruv"),
+    ("events", "Tadbirlar va tug'ilgan kunlar", "Boshqaruv"),
     ("audit", "Audit", "Boshqaruv"),
     ("permissions", "Ruxsatlar", "Boshqaruv"),
 ]
@@ -2163,6 +2167,10 @@ DEFAULT_MATRIX: dict = {
     FACILITY_MANAGER: {
         "dashboard": V, "timetable": V, "tasks": VCE,
         "inventory": ALL_P, "expenses": VC, "branches": V,
+    },
+    EVENT_MANAGER: {
+        "tasks": VCE, "events": ALL_P, "students": V, "staff": V,
+        "branches": V,
     },
     # Ota-ona va o'quvchi - faqat o'ziga tegishlini ko'radi.
     # Bu chegara kodda ham qattiq turadi: matritsani ochib qo'yish
@@ -4539,7 +4547,7 @@ HR_ASSIGNABLE_ROLES = [
     TEACHER, SUPPORT_TEACHER, EXAMINER, ADMINISTRATOR,
     SALES_MANAGER, SMM_MANAGER, ACCOUNTANT, FACILITY_MANAGER,
     SALES_HEAD, ACADEMIC_HEAD, FINANCE_DIRECTOR,
-    HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER,
+    HEAD_EXAMINER, HEAD_SUPPORT, HR_MANAGER, EVENT_MANAGER,
 ]
 
 # Xodim sifatida QO'LDA tayinlanadigan rollar (ota-ona/o'quvchisiz).
@@ -5666,3 +5674,33 @@ def money(x) -> float:
     kasr qoldig'i yig'ilib ketmasligi uchun yozishdan oldin shu
     yordamchidan o'tkaziladi."""
     return float(round(x or 0))
+
+
+# =====================================================================
+# TADBIRLAR VA TUG'ILGAN KUNLAR (2026-09-14)
+#
+# Jahongir: "event manager degan lavozim qoshib qoygin eventlarni
+# tashkil qilish tugilgan kunlar avtomat korinib turishi kerak".
+# Tug'ilgan kunlar qo'lda kiritilmaydi — o'quvchi va xodim kartasidagi
+# birth_date dan har safar yangidan hisoblanadi.
+# =====================================================================
+EVENTS_ACCESS = FULL_ACCESS + [EVENT_MANAGER, HR_MANAGER, SMM_MANAGER]
+EVENTS_MANAGE = FULL_ACCESS + [EVENT_MANAGER]
+BIRTHDAY_HORIZON = 30            # standart: 30 kun oldindan ko'rsatiladi
+EVENT_KINDS = [
+    ("holiday", "Bayram"),
+    ("birthday", "Tug'ilgan kun tabrigi"),
+    ("contest", "Tanlov / olimpiada"),
+    ("trip", "Sayohat / ekskursiya"),
+    ("party", "Kecha / bitiruv"),
+    ("seminar", "Seminar / master-klass"),
+    ("other", "Boshqa"),
+]
+EVENT_KIND_LABELS = dict(EVENT_KINDS)
+EVENT_STATUSES = [
+    ("planned", "Rejada", "slate"),
+    ("preparing", "Tayyorlanmoqda", "sky"),
+    ("done", "O'tkazildi", "emerald"),
+    ("cancelled", "Bekor qilindi", "rose"),
+]
+EVENT_STATUS_LABELS = {k: lbl for k, lbl, _ in EVENT_STATUSES}

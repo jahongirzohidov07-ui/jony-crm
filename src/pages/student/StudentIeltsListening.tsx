@@ -220,6 +220,7 @@ export default function StudentIeltsListening() {
               [8, "8 ta", "Bitta CEFR mashg'uloti"],
               [16, "16 ta", "Ikki mashg'ulot — 7-8 daqiqa"],
               [50, "50 ta", "To'liq blok — imtihon tezligigacha"],
+              [0, "Hammasi", "Shu turdagi barcha mashqlar — osondan qiyinga"],
             ].map(([n, lbl, hint]) => (
               <button
                 key={String(n)}
@@ -227,7 +228,7 @@ export default function StudentIeltsListening() {
                 className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 text-left active:scale-[0.99]"
               >
                 <div className="w-11 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 text-sm font-extrabold">
-                  {n}
+                  {n === 0 ? "∞" : n}
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-slate-800">{lbl}</p>

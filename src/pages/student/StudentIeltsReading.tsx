@@ -287,6 +287,7 @@ export default function StudentIeltsReading() {
               [10, "10 ta", "Qisqa mashq — 5-6 daqiqa"],
               [20, "20 ta", "O'rtacha — 12-15 daqiqa"],
               [40, "40 ta", "To'liq blok — imtihon hajmi"],
+              [0, "Hammasi", "Shu turdagi barcha savollar — osondan qiyinga"],
             ].map(([n, lbl, hint]) => (
               <button
                 key={String(n)}
@@ -297,7 +298,7 @@ export default function StudentIeltsReading() {
                 className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 text-left active:scale-[0.99]"
               >
                 <div className="w-11 h-9 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center shrink-0 text-sm font-extrabold">
-                  {n}
+                  {n === 0 ? "∞" : n}
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-slate-800">{lbl}</p>

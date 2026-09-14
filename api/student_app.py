@@ -773,7 +773,10 @@ def ielts_listening_round(kind: str, count: int = 10,
     s = _me(db, user)
     if kind not in {p["kind"] for p in IELTS_PARTS}:
         raise HTTPException(404, "Bunday mashq yo'q")
-    n = max(1, min(int(count or 10), 60))
+    # count=0 — "Hammasi" (2026-09-14, Jahongir: "8ta 16ta 50ta mashq
+    # ... hammasi deganiyam kerak"): shu turdagi BARCHA mashqlar.
+    # Eslatma: `count or 10` 0 ni 10 ga aylantirib yuborardi.
+    n = None if count == 0 else max(1, min(int(count or 10), 60))
     rows = (db.query(models.PracticeItem)
             .filter(models.PracticeItem.skill == IELTS_SKILL,
                     models.PracticeItem.kind == kind,
@@ -1091,7 +1094,10 @@ def ielts_reading_round(kind: str, count: int = 10,
     s = _me(db, user)
     if kind not in READING_KINDS:
         raise HTTPException(404, "Bunday mashq yo'q")
-    n = max(1, min(int(count or 10), 60))
+    # count=0 — "Hammasi" (2026-09-14, Jahongir: "8ta 16ta 50ta mashq
+    # ... hammasi deganiyam kerak"): shu turdagi BARCHA mashqlar.
+    # Eslatma: `count or 10` 0 ni 10 ga aylantirib yuborardi.
+    n = None if count == 0 else max(1, min(int(count or 10), 60))
     rows = (db.query(models.PracticeItem)
             .filter(models.PracticeItem.skill == READING_SKILL,
                     models.PracticeItem.kind == kind,

@@ -1,6 +1,8 @@
 fastapi==0.140.1
 uvicorn==0.51.0
 SQLAlchemy==2.0.51
+# SQLAlchemy'ning bog'liqligi. 3.5.6 da Linux wheel yo'q — Vercel build yiqiladi (2026-09-14)
+greenlet==3.5.5
 python-jose==3.5.0
 bcrypt==5.0.0
 pydantic==2.13.4

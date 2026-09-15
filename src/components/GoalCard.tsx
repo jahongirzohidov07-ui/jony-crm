@@ -1,3 +1,4 @@
+import { StudentLoadError } from "./StudentLoading";
 import { StudentIcon } from "./StudentIcon";
 import { useEffect, useState } from "react";
 import { Pencil, Clock3 } from "lucide-react";
@@ -15,15 +16,17 @@ function duration(days: number) {
 
 export function GoalCard() {
   const [g, setG] = useState<Goal | null>(null);
+  const [reload, setReload] = useState(0);
+  const [loadError, setLoadError] = useState("");
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [band, setBand] = useState(6.5);
   const [daily, setDaily] = useState(2);
-  useEffect(() => { let active = true;
-    api.get<Goal>("/student/goal").then(r => { if (active) { setG(r); setBand(r.target || 6.5); setDaily(r.study_plan?.daily_hours || 2); } }).catch(() => {});
+  useEffect(() => { let active = true; setLoadError("");
+    api.fresh<Goal>("/student/goal").then(r => { if (active) { setG(r); setBand(r.target || 6.5); setDaily(r.study_plan?.daily_hours || 2); } }).catch(e => { if (active) setLoadError(e instanceof Error ? e.message : "Maqsad yuklanmadi"); });
     return () => { active = false; };
-  }, []);
+  }, [reload]);
   async function save() {
     if (busy) return;
     setBusy(true); setError("");
@@ -34,7 +37,8 @@ export function GoalCard() {
     finally { setBusy(false); }
   }
   function edit() { setBand(g?.target || 6.5); setDaily(g?.study_plan?.daily_hours || 2); setError(""); setEditing(true); }
-  if (!g) return null;
+  if (!g && loadError) return <StudentLoadError message={loadError} onRetry={() => { setLoadError(""); setReload(n => n + 1); }} />;
+  if (!g) return <div className="student-panel rounded-2xl p-4 text-sm text-slate-600" role="status">Maqsad rejasi yuklanmoqda…</div>;
   const p = g.study_plan;
   return <section className="student-panel student-pattern rounded-2xl p-4" aria-label="IELTS tayyorgarlik rejasi">
     <div className="flex items-center gap-2">
@@ -60,7 +64,7 @@ export function GoalCard() {
       </div> : <p className="mt-3 text-sm text-slate-600">IELTS 8.5–9.0 uchun soat me’yori hali belgilanmagan. Shaxsiy reja uchun ustozingiz bilan maslahatlashing.</p>}
       <details className="mt-3 text-xs text-slate-600"><summary className="cursor-pointer min-h-11 flex items-center text-blue-700 font-semibold">Hisob qanday qilinadi?</summary>
         <p>Noldan boshlab jami: A1 — 105, A2 — 330, B1 — 780, B1+ — 1080, B2 — 1380, C1 — 2000 soat.</p>
-        <p className="mt-2">B2 (IELTS 5.5–6.5) va C1 (7.0–8.0) uchun tegishli bosqichning to‘liq soat me’yori olinadi. Hozirgi ko‘nikmalar bahosi asosida qolgan soatlar taxmin qilinadi va kunlik vaqtga bo‘linadi. Bu o‘lchangan o‘qish vaqti emas.</p>
+        <p className="mt-2">IELTS 6.5 — 1380, IELTS 8.0 — 2000 soat. Oraliq ballar uchun soatlar mutanosib hisoblanadi. Hozirgi ko‘nikmalar bahosi asosida qolgan soatlar taxmin qilinadi va kunlik vaqtga bo‘linadi. Bu o‘lchangan o‘qish vaqti emas.</p>
         <p className="mt-2">XP muddatga aylantirilmaydi. Oy 30 kun deb olinadi. Bu Jony Academy tayyorgarlik rejasi, IELTS natijasi kafolati emas.</p>
       </details>
     </>}

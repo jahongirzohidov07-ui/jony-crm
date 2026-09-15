@@ -1,5 +1,5 @@
 import { StudentSymbol, type StudentSymbolName } from "../../components/StudentSymbol";
-import { StudentLoading } from "../../components/StudentLoading";
+import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -63,6 +63,7 @@ export default function StudentSettings() {
   }, []);
 
   async function save() {
+    if (!p || busy) return;
     setBusy(true);
     setErr("");
     try {
@@ -76,8 +77,8 @@ export default function StudentSettings() {
     }
   }
 
-  if (!p && !err)
-    return <StudentLoading />;
+  if (!p && err) return <StudentLoadError message={err} />;
+  if (!p) return <StudentLoading />;
 
 
 

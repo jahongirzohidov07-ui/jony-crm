@@ -111,3 +111,28 @@ test('logout clears saved identity and private writing drafts', () => {
   a.clearToken(); assert.equal(a.getToken(),null); assert.equal(e.sessionStorage.getItem('jony_crm_user'),null);
   assert.equal(d.readWritingDraft('task','1.1').text,'');
 });
+
+
+test('unread notifications survive first visit and same-day new arrivals, isolated by student', () => {
+  const e=environment(), n=e.load('studentNotifications');
+  const feed={student_id:1,items:[{id:'exam:1',date:'2026-09-15'}]};
+  assert.equal(n.hasUnreadNotifications(feed),true);
+  assert.equal(n.hasUnreadNotifications(feed),true,'reading feed must not mark anything read');
+  n.markNotificationsRead(1,feed.items);
+  assert.equal(n.hasUnreadNotifications(feed),false);
+  assert.equal(n.hasUnreadNotifications({...feed,student_id:2}),true);
+  assert.equal(n.hasUnreadNotifications({...feed,items:[...feed.items,{id:'exam:2',date:'2026-09-15'}]}),true);
+  e.reload(); assert.equal(e.load('studentNotifications').hasUnreadNotifications(feed),false);
+});
+test('notification state ignores legacy shared timestamp and tolerates corrupt or unavailable storage', () => {
+  const e=environment(), n=e.load('studentNotifications');
+  e.localStorage.setItem('jonyos_notif_seen','2099-01-01');
+  e.localStorage.setItem('jonyos_notif_read:1','invalid-json');
+  const feed={student_id:1,items:[{id:'reward:2'}]};
+  assert.equal(n.hasUnreadNotifications(feed),true);
+  e.localStorage.getItem=()=>{throw Error('blocked');};
+  e.localStorage.setItem=()=>{throw Error('blocked');};
+  n.markNotificationsRead(1,feed.items);
+  assert.equal(n.hasUnreadNotifications(feed),false);
+  assert.equal(n.hasUnreadNotifications({...feed,student_id:2}),true);
+});

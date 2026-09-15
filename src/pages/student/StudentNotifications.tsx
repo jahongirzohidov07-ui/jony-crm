@@ -77,7 +77,7 @@ export default function StudentNotifications() {
         </h1>
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className="student-notification-filters flex gap-2 mt-4">
         {([["all", "Barchasi"], ["new", "O'qilmagan"],
            ["reward", "Mukofotlar"]] as const).map(([k, l]) => (
           <button key={k} onClick={() => setFilt(k)}

@@ -138,6 +138,8 @@
 .student-notification-date { grid-column: 2; }
 .student-notification-heading h1 { font-size: clamp(23px, 6vw, 28px); overflow-wrap: anywhere; }
 .student-notification-heading > span { display: none; }
+.student-notification-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.student-notification-filters button { padding: 10px 4px; font-size: 12px; min-height: 44px; min-width: 0; }
 .student-lesson-heading { padding: 12px; border-radius: 20px; margin-bottom: 18px; }
 .student-loading-bar { height: 5px; border-radius: 9px; background: linear-gradient(90deg, #85e5ff, #fff, #85e5ff); background-size: 200% 100%; animation: student-loading 1.4s linear infinite; }
 @keyframes student-loading { to { background-position: -200% 0; } }
@@ -170,6 +172,9 @@
 .student-study-card :is(.text-white, .text-slate-200, .text-slate-300) { color: #15284e; }
 .student-study .student-study-card :is(.text-slate-400, .text-slate-500) { color: #526585; }
 .student-study-card :is(.text-brand-300, .text-emerald-200, .text-emerald-300) { color: #087556; }
+.student-study-card .text-emerald-100 { color: #087556; }
+.student-study-card :is(.text-amber-200, .text-amber-300) { color: #925400; }
+.student-study-card :is(.text-rose-200, .text-rose-300, .text-red-200, .text-red-300) { color: #b51b44; }
 .student-study-card :is(.bg-brand-600, .bg-brand-500) { color: white; }
 .student-study-card :is(p, li, pre) { font-size: 14px; line-height: 1.65; }
 .student-study button { min-height: 44px; }

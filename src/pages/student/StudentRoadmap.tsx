@@ -1,5 +1,5 @@
+import { StudentLevelBadge } from "../../components/StudentLevelBadge";
 import { StudentLoading } from "../../components/StudentLoading";
-import { StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -171,12 +171,7 @@ export default function StudentRoadmap() {
            style={{ background:
              "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)" }}>
         <div className="flex items-center gap-4">
-          <div className="relative w-[80px] h-[90px] shrink-0">
-            <StudentIcon name="level" className="w-full h-full" />
-            <span className="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold text-white pt-1">
-              {cur?.cefr}
-            </span>
-          </div>
+          <StudentLevelBadge level={cur?.cefr} size={80} />
           <div className="min-w-0 flex-1">
             <p className="text-[24px] font-extrabold text-white leading-tight truncate">
               {cur?.label} · {cur?.cefr}

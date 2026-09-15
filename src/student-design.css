@@ -183,3 +183,7 @@
 .student-study .student-panel :is(p, li, pre) { font-size: 14px; line-height: 1.6; }
 @media (max-width: 359px) { .student-symbol { width: 36px; height: 36px; } .student-topic-card { padding: 12px; } }
 @media (prefers-reduced-motion: reduce) { .student-loading-bar { animation: none; } }
+
+.student-level-badge { position: relative; display: inline-block; flex-shrink: 0; vertical-align: middle; }
+.student-level-badge > .student-icon { display: block; }
+.student-level-badge-label { position: absolute; left: 52.5%; top: 40%; transform: translate(-50%, -50%); color: #fff; font-weight: 800; font-style: normal; line-height: 1; letter-spacing: 0; white-space: nowrap; text-align: center; text-shadow: 0 2px 3px #00328a80; }

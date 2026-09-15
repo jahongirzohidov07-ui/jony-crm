@@ -1,5 +1,6 @@
+import { hasUnreadNotifications, type NotificationFeed } from "../../lib/studentNotifications";
 import { StudentLevelBadge } from "../../components/StudentLevelBadge";
-import { StudentLoading } from "../../components/StudentLoading";
+import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentIcon } from "../../components/StudentIcon";
 import { StudentImage } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
@@ -38,10 +39,9 @@ export default function StudentHome() {
 
   useEffect(() => {
     api
-      .get<{ latest: string | null }>("/student/notifications")
+      .get<NotificationFeed>("/student/notifications")
       .then((r) => {
-        const seen = localStorage.getItem("jonyos_notif_seen") || "";
-        setHasNew(!!r.latest && r.latest > seen);
+        setHasNew(hasUnreadNotifications(r));
       })
       .catch(() => {});
   }, []);
@@ -55,7 +55,7 @@ export default function StudentHome() {
 
   if (err)
     return (
-      <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>
+      <StudentLoadError message={err} />
     );
   if (!d)
     return (

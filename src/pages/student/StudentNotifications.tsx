@@ -1,3 +1,4 @@
+import { readNotifications, markNotificationsRead } from "../../lib/studentNotifications";
 import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
@@ -14,26 +15,26 @@ type Any = any;
  *
  * 2026-08-21: "bildirishnomalar.png" dizayni bo'yicha to'q temada
  * qayta terildi. Mantiq o'zgarmadi: /student/notifications, oxirgi
- * ko'rilgan vaqt localStorage'da.
+ * O‘qilgan xabar IDlari har bir o‘quvchi uchun alohida saqlanadi.
  */
 export default function StudentNotifications() {
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
   const [filt, setFilt] = useState<"all" | "new" | "reward">("all");
-  const seenBefore = localStorage.getItem("jonyos_notif_seen") || "";
+  const [readIds, setReadIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     api
       .get<Any>("/student/notifications")
       .then((r) => {
         setD(r);
-        if (r.latest) localStorage.setItem("jonyos_notif_seen", r.latest);
+        setReadIds(readNotifications(r.student_id));
       })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, []);
 
   const items: Any[] = (d?.items || []).filter((n: Any) => {
-    if (filt === "new") return seenBefore && n.date && n.date > seenBefore;
+    if (filt === "new") return !readIds.has(n.id);
     if (filt === "reward") return n.kind === "reward";
     return true;
   });
@@ -89,12 +90,17 @@ export default function StudentNotifications() {
         ))}
       </div>
 
+      {d?.items?.some((n: Any) => !readIds.has(n.id)) && <button
+        onClick={() => setReadIds(markNotificationsRead(d.student_id, d.items))}
+        className="mt-3 min-h-11 px-3 rounded-xl border border-blue-400 text-blue-100 text-sm font-semibold">
+        Barchasini o‘qilgan deb belgilash
+      </button>}
       {err && <p className="text-sm text-red-400 mt-4">{err}</p>}
 
       {d && items.length === 0 && (
         <div className="rounded-2xl border p-8 text-center mt-4" style={card}>
           <Bell size={28} className="mx-auto text-slate-500 mb-2" />
-          <p className="text-sm text-slate-400">Hozircha bildirishnoma yo'q</p>
+          <p className="text-sm text-slate-400">{filt === "new" ? "O‘qilmagan bildirishnoma yo‘q" : "Hozircha bildirishnoma yo‘q"}</p>
         </div>
       )}
 
@@ -105,7 +111,7 @@ export default function StudentNotifications() {
           </p>
           <div className="space-y-2.5">
             {rows.map((n: Any) => {
-              const isNew = seenBefore && n.date && n.date > seenBefore;
+              const isNew = !readIds.has(n.id);
               return (
                 <div key={n.id}
                   className="student-notification-card rounded-2xl border p-4 grid gap-3"

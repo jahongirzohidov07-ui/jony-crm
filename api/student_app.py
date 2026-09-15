@@ -2176,7 +2176,7 @@ def student_notifications(db: Session = Depends(get_db),
         })
 
     items.sort(key=lambda x: x["date"] or "", reverse=True)
-    return {"items": items,
+    return {"student_id": s.id, "items": items,
             "latest": items[0]["date"] if items else None}
 
 

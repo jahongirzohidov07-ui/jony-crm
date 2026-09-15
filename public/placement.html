@@ -124,15 +124,17 @@
     <p class="muted" id="dname"></p>
     <h1>Sizning darajangiz</h1>
     <div class="lvl" id="rlevel">B1</div>
-    <div class="book" id="rbook">Empower B1 · Unit 4</div>
+    <div class="book" id="rbook">Step 3 — B1 darajasi · Unit 4</div>
     <div class="topic" id="rtopic"></div>
     <div class="adv" id="radvice"></div>
+    <a class="btn" id="rreport" href="#" target="_blank" rel="noopener" style="margin:14px 0 4px;text-decoration:none">📄 Batafsil hisobotni ochish va yuklab olish</a>
     <div id="rskills" style="text-align:left;margin:16px 0"></div>
     <div class="stats">
       <div class="stat"><b id="rscore">0/30</b><span>grammatikada to'g'ri</span></div>
       <div class="stat"><b id="rbest">—</b><span>umumiy daraja</span></div>
     </div>
     <div id="rlevels" style="text-align:left"></div>
+    <div id="rtopics" style="text-align:left;margin-top:16px"></div>
     <p class="muted" id="rnote"></p>
     <p class="muted">Natija Jony Academy'ga yuborildi. Guruhga yozilish uchun administrator siz bilan bog'lanadi.</p>
   </div>
@@ -384,6 +386,16 @@
     $('dname').textContent = name ? name : '';
     $('rlevel').textContent = r.level;
     $('rbook').textContent = r.book + ' · Unit ' + r.unit;
+    $('rreport').href = '/placement-report.html?t=' + encodeURIComponent(token);
+    const tps = r.topics || [];
+    $('rtopics').innerHTML = tps.length ? ('<p style="font-weight:700;margin:0 0 8px">Mavzular bo\'yicha natija</p>' +
+      tps.map((t) => {
+        const c = t.pct >= 75 ? 'var(--ok)' : (t.pct >= 50 ? '#d97706' : 'var(--bad)');
+        const nm = String(t.topic).replace(/[&<>]/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));
+        return '<div class="lv"><span class="n" style="min-width:120px">' + t.level + ' · ' + nm + '</span>'
+          + '<span class="b"><i style="width:' + t.pct + '%;background:' + c + '"></i></span>'
+          + '<span class="p" style="color:' + c + ';font-weight:700">' + t.pct + '%</span></div>';
+      }).join('')) : '';
     $('rtopic').textContent = r.topic ? ('Unit mavzusi: ' + r.topic) : '';
     $('radvice').textContent = r.advice;
     $('rscore').textContent = r.score + '/' + r.total;

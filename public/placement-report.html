@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ingliz tili darajasi — hisobot · Jony Academy</title>
+<link rel="icon" href="/favicon.png">
+<!--
+  DIAGNOSTIKA HISOBOTI (2026-09-15, Jahongir: "test chuqur tahlil
+  mavzular kesimida natijalarni foiz korinishida bersin va uni print
+  qilib yuklab olishga ham chiroyli dizayn marketing bolishi kerak uni
+  borib boshqalarga korsatsin").
+  A4 varaqqa mo'ljallangan: "Yuklab olish" -> brauzerning chop etish
+  oynasi -> "PDF sifatida saqlash". Kitob nomi hech qayerda yo'q —
+  faqat markaz bosqichlari (Step 1..4, IELTS) va CEFR darajasi.
+-->
+<style>
+  :root { --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --brand:#4f46e5; --brand2:#312e81; --ok:#059669; --mid:#d97706; --bad:#dc2626; --soft:#eef2ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#e2e8f0; color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .actions { max-width:210mm; margin:16px auto 0; padding:0 16px; display:flex; gap:8px; flex-wrap:wrap; }
+  .actions button { border:0; border-radius:10px; padding:11px 16px; font-size:15px; font-weight:600; cursor:pointer; background:var(--brand); color:#fff; }
+  .actions button.ghost { background:#fff; color:var(--brand); border:1px solid #c7d2fe; }
+  .sheet { width:210mm; max-width:100%; min-height:297mm; margin:16px auto 32px; background:#fff; box-shadow:0 20px 60px rgba(15,23,42,.18); position:relative; overflow:hidden; }
+  .hero { background:linear-gradient(135deg,#312e81 0%,#4f46e5 55%,#7c3aed 100%); color:#fff; padding:28px 32px 30px; position:relative; }
+  .hero::after { content:""; position:absolute; right:-60px; top:-60px; width:240px; height:240px; border-radius:50%; background:rgba(255,255,255,.08); }
+  .hero::before { content:""; position:absolute; right:60px; bottom:-90px; width:180px; height:180px; border-radius:50%; background:rgba(255,255,255,.06); }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.14em; font-size:13px; opacity:.95; }
+  .brand img { width:28px; height:28px; border-radius:8px; background:#fff; }
+  .hero h1 { margin:18px 0 4px; font-size:26px; line-height:1.2; }
+  .hero .who { font-size:15px; opacity:.85; }
+  .main { display:grid; grid-template-columns:170px 1fr; gap:22px; align-items:center; margin-top:22px; position:relative; z-index:1; }
+  .ring { width:170px; height:170px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:conic-gradient(#a5f3fc var(--p,0%), rgba(255,255,255,.18) 0); }
+  .ring > div { width:138px; height:138px; border-radius:50%; background:#312e81; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .ring b { font-size:46px; line-height:1; }
+  .ring span { font-size:12px; opacity:.8; margin-top:4px; }
+  .step { font-size:30px; font-weight:800; }
+  .adv { margin-top:8px; background:rgba(255,255,255,.12); border-radius:12px; padding:10px 14px; font-size:14px; line-height:1.5; }
+  .body { padding:24px 32px 110px; }
+  h2 { font-size:15px; text-transform:uppercase; letter-spacing:.08em; color:var(--brand2); margin:22px 0 10px; }
+  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .card { border:1px solid var(--line); border-radius:14px; padding:12px; }
+  .card .l { font-size:12px; color:var(--muted); }
+  .card .v { font-size:22px; font-weight:800; margin:2px 0 6px; color:var(--brand); }
+  .card .v.none { font-size:14px; color:var(--muted); font-weight:600; }
+  .bar { height:7px; border-radius:99px; background:#f1f5f9; overflow:hidden; }
+  .bar i { display:block; height:100%; border-radius:99px; }
+  .ladder { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
+  .rung { border-radius:12px; padding:10px 6px; text-align:center; background:#f8fafc; border:1px solid var(--line); }
+  .rung b { display:block; font-size:18px; }
+  .rung span { font-size:11px; color:var(--muted); }
+  .rung.on { background:var(--brand); border-color:var(--brand); color:#fff; box-shadow:0 8px 20px rgba(79,70,229,.35); }
+  .rung.on span { color:#e0e7ff; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); padding:6px 8px; border-bottom:1px solid var(--line); }
+  td { padding:7px 8px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+  td.lv { white-space:nowrap; color:var(--muted); font-size:12px; }
+  td.pc { width:34%; }
+  .pcrow { display:flex; align-items:center; gap:8px; }
+  .pcrow .bar { flex:1; }
+  .pcrow b { width:40px; text-align:right; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .box { border-radius:14px; padding:12px 14px; font-size:13px; line-height:1.55; }
+  .box.ok { background:#ecfdf5; border:1px solid #a7f3d0; }
+  .box.bad { background:#fef2f2; border:1px solid #fecaca; }
+  .box p { margin:0 0 4px; font-weight:700; }
+  .box ul { margin:0; padding-left:18px; }
+  .legend { font-size:11px; color:var(--muted); margin-top:6px; }
+  .foot { position:absolute; left:0; right:0; bottom:0; background:#0f172a; color:#cbd5e1; padding:16px 32px; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:12px; }
+  .foot b { color:#fff; font-size:14px; }
+  .state { max-width:560px; margin:60px auto; background:#fff; border-radius:16px; padding:24px; text-align:center; }
+  @media (max-width: 720px) {
+    .hero, .body { padding-left:18px; padding-right:18px; }
+    .main { grid-template-columns:1fr; justify-items:center; text-align:center; }
+    .cards { grid-template-columns:repeat(2,1fr); }
+    .ladder { grid-template-columns:repeat(3,1fr); }
+    .two { grid-template-columns:1fr; }
+    .foot { position:static; flex-direction:column; text-align:center; }
+    .body { padding-bottom:24px; }
+    .sheet { min-height:0; }
+  }
+  @page { size:A4; margin:0; }
+  @media print {
+    body { background:#fff; }
+    .actions { display:none; }
+    .sheet { margin:0; box-shadow:none; width:210mm; min-height:297mm; }
+    tr, .card, .box { break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="actions" id="actions" hidden>
+  <button id="bprint">📄 PDF qilib yuklab olish / chop etish</button>
+  <button class="ghost" id="bshare">🔗 Ulashish</button>
+</div>
+<div id="root"><div class="state">Yuklanmoqda...</div></div>
+
+<script>
+(function () {
+  const token = new URLSearchParams(location.search).get('t') || '';
+  const $root = document.getElementById('root');
+  const LADDER = [['A1','Step 1'],['A2','Step 2'],['B1','Step 3'],['B1+','Step 4'],['B2','IELTS'],['C1','IELTS']];
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const tone = (p) => p >= 75 ? 'var(--ok)' : (p >= 50 ? 'var(--mid)' : 'var(--bad)');
+  const bar = (p) => '<div class="bar"><i style="width:' + Math.max(0, Math.min(100, p || 0)) + '%;background:' + tone(p) + '"></i></div>';
+  const fmtDate = (iso) => {
+    if (!iso) return '';
+    const d = new Date(iso.endsWith('Z') ? iso : iso + 'Z');
+    const m = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+    return d.getDate() + '-' + m[d.getMonth()] + ' ' + d.getFullYear();
+  };
+  const fail = (msg) => { $root.innerHTML = '<div class="state">' + esc(msg) + '</div>'; };
+
+  if (!token) return fail("Havola noto'g'ri.");
+  fetch('/api/public/placement/' + encodeURIComponent(token))
+    .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+    .then((d) => {
+      if (d.status !== 'done' || !d.result) return fail("Test hali yakunlanmagan — natija test tugagach chiqadi.");
+      render(d);
+    })
+    .catch(() => fail("Hisobot topilmadi yoki havola o'chirilgan."));
+
+  function render(d) {
+    const r = d.result;
+    const idx = LADDER.findIndex((x) => x[0] === r.level);
+    const topics = r.topics || [];
+    const skills = (r.skills || []).map((s) => {
+      const lvl = s.skipped ? '<div class="v none">tekshirilmadi</div>'
+        : (s.level ? '<div class="v">' + esc(s.level) + '</div>' : '<div class="v none">tugallanmadi</div>');
+      const pct = (s.pct == null || s.skipped) ? '' : bar(s.pct) + '<div class="legend">' + s.pct + '% to\'g\'ri</div>';
+      return '<div class="card"><div class="l">' + esc(s.label) + '</div>' + lvl + pct + '</div>';
+    }).join('');
+    const ladder = LADDER.map((x, i) =>
+      '<div class="rung' + (i === idx ? ' on' : '') + '"><b>' + x[0] + '</b><span>' + x[1] + '</span></div>').join('');
+    const rows = topics.map((t) =>
+      '<tr><td class="lv">' + esc(t.step) + ' · ' + esc(t.level) + '</td><td>' + esc(t.topic) + '</td>'
+      + '<td class="lv">' + t.ok + '/' + t.n + '</td>'
+      + '<td class="pc"><div class="pcrow">' + bar(t.pct) + '<b style="color:' + tone(t.pct) + '">' + t.pct + '%</b></div></td></tr>').join('');
+    const list = (arr) => arr.length ? '<ul>' + arr.slice(0, 6).map((t) => '<li>' + esc(t.topic) + ' <span style="color:var(--muted)">(' + t.pct + '%)</span></li>').join('') + '</ul>' : '<div style="color:var(--muted)">—</div>';
+
+    $root.innerHTML =
+      '<div class="sheet">'
+      + '<div class="hero">'
+      +   '<div class="brand"><img src="/favicon.png" alt="">JONY ACADEMY</div>'
+      +   '<h1>Ingliz tili darajasi<br>diagnostika hisoboti</h1>'
+      +   '<div class="who">' + esc(d.name || '') + (d.finished_at ? ' · ' + fmtDate(d.finished_at) : '') + '</div>'
+      +   '<div class="main">'
+      +     '<div class="ring" style="--p:' + (r.grammar_pct || 0) + '%"><div><b>' + esc(r.level) + '</b><span>CEFR darajasi</span></div></div>'
+      +     '<div><div class="step">' + esc(r.book) + '</div>'
+      +       '<div style="opacity:.85;margin-top:4px">Grammatikada ' + r.score + '/' + r.total + ' to\'g\'ri · ' + (r.grammar_pct || 0) + '%'
+      +       (r.overall_label ? ' · Umumiy: ' + esc(r.overall_label) : '') + '</div>'
+      +       '<div class="adv">' + esc(r.advice) + '</div></div>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="body">'
+      +   '<h2>Ko\'nikmalar</h2><div class="cards">' + skills + '</div>'
+      +   '<h2>Daraja zinapoyasi</h2><div class="ladder">' + ladder + '</div>'
+      +   (rows ? '<h2>Mavzular bo\'yicha tahlil</h2><table><thead><tr><th>Bosqich</th><th>Mavzu</th><th>Savol</th><th>Natija</th></tr></thead><tbody>' + rows + '</tbody></table>'
+      +     '<div class="legend">Yashil — 75% va yuqori, sariq — 50–74%, qizil — 50% dan past. Test adaptiv: savollar javoblarga qarab qiyinlashadi yoki osonlashadi.</div>' : '')
+      +   '<h2>Xulosa</h2><div class="two">'
+      +     '<div class="box ok"><p>💪 Kuchli tomonlar</p>' + list(r.strong || []) + '</div>'
+      +     '<div class="box bad"><p>🎯 Ustida ishlash kerak</p>' + list(r.weak || []) + '</div>'
+      +   '</div>'
+      +   (r.note ? '<div class="legend" style="margin-top:12px">' + esc(r.note) + '</div>' : '')
+      + '</div>'
+      + '<div class="foot"><div><b>Jony Academy</b><br>Ingliz tili — Step 1 dan IELTS gacha</div>'
+      +   '<div style="text-align:right">Guruhga yozilish uchun administratorimiz<br>siz bilan bog\'lanadi · jonyos.uz</div></div>'
+      + '</div>';
+    document.getElementById('actions').hidden = false;
+    document.title = (d.name ? d.name + ' — ' : '') + 'ingliz tili darajasi · Jony Academy';
+  }
+
+  document.getElementById('bprint').onclick = () => window.print();
+  document.getElementById('bshare').onclick = () => {
+    const url = location.href;
+    if (navigator.share) { navigator.share({ title: document.title, url }).catch(() => {}); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+      .then(() => { document.getElementById('bshare').textContent = '✓ Havola nusxalandi'; })
+      .catch(() => prompt('Havolani nusxalang:', url));
+  };
+})();
+</script>
+</body>
+</html>

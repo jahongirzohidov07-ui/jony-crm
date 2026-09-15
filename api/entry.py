@@ -8940,8 +8940,9 @@ def pd_person(user_id: int, db: Session = Depends(get_db),
 #  savollik bankdan har kishiga o'z yo'li tushadi, variant "qaysi
 #  varaqni oldi"ga bog'liq emas.
 #
-#  Natija Empower (2nd ed.) tilida chiqadi: "B1, Unit 4 dan boshlang" —
-#  chunki markaz shu kitobdan o'tadi. Daraja lidga o'zi yoziladi.
+#  Natija markaz bosqichlari tilida chiqadi: "Step 3 — B1 darajasi,
+#  Unit 4 dan boshlang". Kitob nomi hech qayerda ko'rsatilmaydi
+#  (2026-09-15). Daraja lidga o'zi yoziladi.
 #
 #  Havola BIR MARTALIK: ochilgach 48 soat amal qiladi, tugagach yoki
 #  muddati o'tgach qayta ishlamaydi. Sessiya serverda yuritiladi —
@@ -9475,6 +9476,8 @@ def _pt_state_dict(s) -> dict:
            "section": s.sec or "grammar"}
     if s.status == "done":
         out["result"] = _pt_result(s)
+        out["finished_at"] = (s.finished_at.isoformat()
+                              if s.finished_at else None)
         return out
     if s.status != "running":
         return out
@@ -9512,6 +9515,39 @@ def _pt_state_dict(s) -> dict:
     return out
 
 
+# NATIJA KITOB NOMISIZ (2026-09-15, Jahongir: "umuman empower
+# demasin ... Step 1 - A1 darajasi, Step 2 A2 darajasi shunaqa qib
+# korsatsin qaysi kitobdan otayotganimiz bilinmasin"). Markaz
+# bosqichlari: Step 1..4, undan keyin IELTS.
+_PT_STEP = {"A1": "Step 1", "A2": "Step 2", "B1": "Step 3",
+            "B1+": "Step 4", "B2": "IELTS", "C1": "IELTS"}
+
+
+def _pt_step_label(lv) -> str:
+    return f"{_PT_STEP.get(lv, lv)} — {lv} darajasi" if lv else "—"
+
+
+def _pt_topics(s) -> list:
+    """Grammatika MAVZULAR kesimida: har mavzuda nechta savol, nechtasi
+    to'g'ri, foizi (2026-09-15, Jahongir: "test chuqur tahlil mavzular
+    kesimida natijalarni foiz korinishida bersin")."""
+    _, answers = _pt_load(s)
+    agg = {}
+    for a in answers:
+        li = max(0, min(len(PT_LEVELS) - 1, int(a["d"] // 12)))
+        u = int(a["d"] % 12)
+        lv = PT_LEVELS[li]
+        names = PT_UNITS.get(lv) or []
+        p = agg.setdefault((li, u), {
+            "level": lv, "step": _PT_STEP.get(lv, lv), "unit": u + 1,
+            "topic": names[u] if u < len(names) else f"Unit {u + 1}",
+            "ok": 0, "n": 0})
+        p["n"] += 1
+        p["ok"] += 1 if a["ok"] else 0
+    return [dict(p, pct=round(p["ok"] * 100 / p["n"]))
+            for _k, p in sorted(agg.items())]
+
+
 def _pt_result(s) -> dict:
     try:
         per = _pt_json.loads(s.per_level or "{}")
@@ -9528,22 +9564,32 @@ def _pt_result(s) -> dict:
     # Ko'nikmalar kesimi (2026-09-11). Bo'lim tugallanmagan bo'lsa
     # "—" ko'rsatiladi: taxmin qilib raqam yozmaymiz.
     st = _pt_sec_state(s)
+    _g_ans = _pt_load(s)[1]
+    _g_n = len(_g_ans)
+    # Foiz javoblarning o'zidan: eski sessiyalarda score ustuni javoblar
+    # soniga mos kelmasligi mumkin (100% dan oshib ketmasin)
+    grammar_pct = (round(sum(1 for a in _g_ans if a.get("ok")) * 100 / _g_n)
+                   if _g_n else 0)
     skills = [{"key": "grammar", "label": _PT_SEC_LABEL["grammar"],
-               "level": lv, "n": len(_pt_load(s)[1]),
+               "level": lv, "n": _g_n, "pct": grammar_pct,
                "done": True, "skipped": False}]
     for _k in ("vocab", "reading", "listening"):
         _sst = st.get(_k) or {}
         _done = _sst.get("done") or []
         _sk = bool(_sst.get("skipped"))
+        _mx = sum(float(x.get("max") or 0) for x in _done)
         skills.append({
             "key": _k, "label": _PT_SEC_LABEL[_k],
             "level": _sst.get("level") or (None if _sk else
                                            _pt_sec_level(_sst)),
+            "pct": (round(sum(float(x.get("score") or 0) for x in _done)
+                          * 100 / _mx) if _mx else None),
             "n": len(_done), "total": _PT_SEC_N[_k],
             "done": len(_done) >= _PT_SEC_N[_k], "skipped": _sk})
     _li = [PT_LEVELS.index(x["level"]) for x in skills
            if x.get("level") in PT_LEVELS]
     overall = PT_LEVELS[int(round(sum(_li) / len(_li)))] if _li else lv
+    topics = _pt_topics(s)
     return {
         "level": lv, "unit": unit, "topic": topic,
         "score": int(s.score or 0), "total": len(_pt_load(s)[1]) or _PT_N,
@@ -9551,11 +9597,18 @@ def _pt_result(s) -> dict:
         "per_level": [{"level": k, "ok": v["ok"], "n": v["n"],
                        "pct": round(v["ok"] * 100 / v["n"]) if v["n"] else 0}
                       for k, v in per.items()],
-        "book": f"Empower {lv}",
+        # "book" kaliti eski ekranlar uchun qoldi — endi kitob nomi emas
+        "book": _pt_step_label(lv),
+        "step": _PT_STEP.get(lv, lv),
         "skills": skills,
         "overall": overall,
-        "advice": (f"Empower {lv}, Unit {unit} dan boshlash tavsiya etiladi"
-                   + (f" (yoki Empower {nxt} boshidan)." if nxt else ".")),
+        "overall_label": _pt_step_label(overall),
+        "grammar_pct": grammar_pct,
+        "topics": topics,
+        "strong": [t for t in topics if t["n"] >= 2 and t["pct"] >= 75],
+        "weak": [t for t in topics if t["pct"] < 50],
+        "advice": (f"{_pt_step_label(lv)}, Unit {unit} dan boshlash tavsiya etiladi"
+                   + (f" (yoki {_pt_step_label(nxt)} boshidan)." if nxt else ".")),
         "note": ("Guruhga joylashtirish grammatika darajasi bo'yicha "
                  "bo'ladi. Reading va Listening ustozga qo'shimcha "
                  "ma'lumot uchun. Speaking va Writing sinov darsda "

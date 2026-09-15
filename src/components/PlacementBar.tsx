@@ -5,7 +5,8 @@ import { api } from "../lib/api";
 // Ingliz tili diagnostik testi — Lidlar sahifasining tepasida.
 // Lid tanlanadi → "Shu yerda" (test shu qurilmada ochiladi) yoki
 // "Havola" (telefoniga bir martalik havola). Natija lidga o'zi tushadi:
-// daraja + Empower kitobi va uniti.
+// bosqich (Step 1..4 / IELTS), CEFR darajasi va uniti. Kitob nomi
+// ko'rsatilmaydi (2026-09-15).
 
 type Any = any;
 const inp = "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm";
@@ -51,7 +52,7 @@ export default function PlacementBar({ leads, onChanged }: {
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2 text-sm font-medium text-indigo-900">
           <GraduationCap size={16} /> Ingliz tili diagnostikasi
-          <span className="text-xs font-normal text-indigo-700/70">50 savol · 30 s · adaptiv · Empower A1–C1</span>
+          <span className="text-xs font-normal text-indigo-700/70">50 savol · 30 s · adaptiv · Step 1 – IELTS (A1–C1)</span>
         </div>
         <button onClick={() => setOpen(true)}
                 className="ml-auto flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-700">
@@ -102,8 +103,14 @@ function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
         {res && (
           <button onClick={() => setMore((v) => !v)}
                   className="ml-auto rounded bg-indigo-50 px-2 py-0.5 text-xs font-semibold text-indigo-700">
-            {res.level} · Empower {res.level} U{res.unit} · {res.score}/{res.total}
+            {res.book} · U{res.unit} · {res.score}/{res.total}
           </button>
+        )}
+        {res && r.token && (
+          <a href={`/placement-report.html?t=${encodeURIComponent(r.token)}`} target="_blank" rel="noopener"
+             className="rounded border border-indigo-200 px-2 py-0.5 text-xs text-indigo-700 hover:bg-indigo-50">
+            Hisobot
+          </a>
         )}
         {!res && <span className="ml-auto text-xs text-slate-400">{r.mode === "office" ? "shu yerda" : "havola"} · {r.created_by}</span>}
         <button onClick={onDelete} className="text-slate-300 hover:text-red-500"><Trash2 size={13} /></button>
@@ -112,6 +119,19 @@ function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
         <div className="mt-2 rounded-lg bg-slate-50 p-2 text-xs text-slate-700">
           <p className="font-medium">{res.advice}</p>
           <p className="text-slate-500">Unit mavzusi: {res.topic}</p>
+          {(res.topics || []).length > 0 && (
+            <div className="mt-1 space-y-0.5">
+              {(res.topics || []).map((t: Any) => (
+                <div key={`${t.level}-${t.unit}`} className="flex items-center gap-2">
+                  <span className="w-12 shrink-0 text-slate-400">{t.level}</span>
+                  <span className="flex-1 truncate">{t.topic}</span>
+                  <span className={`w-10 text-right font-semibold ${
+                    t.pct >= 75 ? "text-emerald-600" : t.pct >= 50 ? "text-amber-600" : "text-red-600"
+                  }`}>{t.pct}%</span>
+                </div>
+              ))}
+            </div>
+          )}
           <div className="mt-1 flex flex-wrap gap-2">
             {(res.per_level || []).map((x: Any) => (
               <span key={x.level} className="rounded bg-white border border-slate-200 px-1.5 py-0.5">

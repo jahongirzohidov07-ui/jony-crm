@@ -1,4 +1,5 @@
 import { pushToast } from "./toast";
+import { clearWritingDrafts } from "./studentWritingDrafts";
 
 const TOKEN_KEY = "jony_crm_token";
 
@@ -14,6 +15,8 @@ export function getToken(): string | null {
 }
 
 export function setToken(token: string, remember = false) {
+  if (token !== getToken()) clearWritingDrafts();
+  invalidate();
   if (remember) {
     localStorage.setItem(TOKEN_KEY, token);
     sessionStorage.removeItem(TOKEN_KEY);
@@ -25,6 +28,9 @@ export function setToken(token: string, remember = false) {
 
 export function clearToken() {
   invalidate(); // chiqishda boshqa xodimga eski ma'lumot ko'rinmasin
+  clearWritingDrafts();
+  sessionStorage.removeItem("jony_crm_user");
+  localStorage.removeItem("jony_crm_user");
   sessionStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(TOKEN_KEY);
 }
@@ -139,10 +145,14 @@ function cacheable(path: string): boolean {
 export function invalidate(prefix?: string) {
   if (!prefix) {
     getCache.clear();
+    inFlight.clear();
     return;
   }
   for (const k of [...getCache.keys()]) {
     if (k.startsWith(prefix)) getCache.delete(k);
+  }
+  for (const k of [...inFlight.keys()]) {
+    if (k.startsWith(prefix)) inFlight.delete(k);
   }
 }
 
@@ -182,11 +192,14 @@ async function request<T>(
   if (isGet && cacheable(path)) {
     const p = doRequest<T>(path, options)
       .then((data) => {
-        getCache.set(path, { at: Date.now(), ttl: ttlFor(path), data });
+        // A write, account change or newer refresh may have superseded this GET.
+        if (inFlight.get(path) === p) {
+          getCache.set(path, { at: Date.now(), ttl: ttlFor(path), data });
+        }
         return data;
       })
       .finally(() => {
-        inFlight.delete(path);
+        if (inFlight.get(path) === p) inFlight.delete(path);
       });
     inFlight.set(path, p as Promise<unknown>);
     return p;
@@ -243,9 +256,17 @@ async function doRequest<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {
+  const context = { token: getToken(), role: activeRole };
   await acquire();
   try {
-    return await doRequestInner<T>(path, options);
+    if (context.token !== getToken() || context.role !== activeRole) {
+      throw new ApiError("Hisob o'zgardi, so'rov bekor qilindi");
+    }
+    const data = await doRequestInner<T>(path, options, context);
+    if (context.token !== getToken() || context.role !== activeRole) {
+      throw new ApiError("Hisob o'zgardi, so'rov bekor qilindi");
+    }
+    return data;
   } finally {
     release();
   }
@@ -253,14 +274,15 @@ async function doRequest<T>(
 
 async function doRequestInner<T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  context = { token: getToken(), role: activeRole }
 ): Promise<T> {
-  const token = getToken();
+  const token = context.token;
   const headers: Record<string, string> = {
     ...(options.body ? { "Content-Type": "application/json" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     // Qaysi lavozimda ishlayotgani (ko'p lavozimli xodim uchun)
-    ...(activeRole ? { "X-Active-Role": activeRole } : {}),
+    ...(context.role ? { "X-Active-Role": context.role } : {}),
   };
 
   let res: Response;
@@ -271,6 +293,11 @@ async function doRequestInner<T>(
     // va h.k.) — bularda ham hech narsa ko'rsatilmasdan qolmasin.
     pushToast("Tarmoq bilan bog'lanib bo'lmadi. Internetni tekshiring.");
     throw new ApiError("Tarmoq bilan bog'lanib bo'lmadi");
+  }
+
+  // A response belonging to a previous login must never log out the new user.
+  if (token !== getToken() || context.role !== activeRole) {
+    throw new ApiError("Hisob o'zgardi, so'rov bekor qilindi");
   }
 
   // MUHIM (2026-08-10): /auth/ so'rovlari bu yerda USHLANMAYDI.

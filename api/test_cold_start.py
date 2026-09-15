@@ -16,7 +16,7 @@ bajarishga emas. 275 ming so'rovga 12h45m = bittasiga o'rtacha
 167 ms; issiq so'rov esa 25 ms. Farq — uyg'onishlar.
 
 SHUNING UCHUN IKKI CHORA:
-  1) /api/health ga har 5 daqiqada cron (vercel.json) — funksiya
+  1) /api/health ga ish soatlarida har 30 daqiqada cron (vercel.json) — funksiya
      uxlab qolmaydi, uyg'onish soni keskin kamayadi;
   2) startdagi takroriy ishlar kunlik belgiga bog'landi.
 
@@ -71,8 +71,8 @@ r = c.get("/api/health")
 ck("ochiq (login talab qilmaydi)", r.status_code, 200)
 ck("javobi to'g'ri", r.json().get("status"), "ok")
 ck("BAZAGA UMUMAN TEGMAYDI", _Q[0], 0)
-# Cron har 5 daqiqada uradi. Agar kimdir bu yo'lga baza so'rovi
-# qo'shsa, kuniga 180 ta ortiqcha so'rov paydo bo'ladi — shuning
+# Cron ish soatlarida har 30 daqiqada uradi. Bu yo'lga baza
+# so'rovi qo'shilsa, takroriy ortiqcha so'rovlar paydo bo'ladi — shuning
 # uchun nol talab qilinadi.
 
 
@@ -84,7 +84,7 @@ vj = json.load(open(os.path.join(
     "vercel.json"), encoding="utf-8"))
 crons = {x["path"]: x["schedule"] for x in vj.get("crons", [])}
 ck("/api/health uchun cron bor", "/api/health" in crons, True)
-ck("  har 5 daqiqada", crons.get("/api/health", "").startswith("*/5"), True)
+ck("  ish soatlarida har 30 daqiqada", crons.get("/api/health", ""), "0,30 3-15 * * *")
 ck("kunlik cron ham joyida", "/api/cron/daily" in crons, True)
 
 

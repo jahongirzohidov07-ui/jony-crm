@@ -1786,6 +1786,15 @@ def _writing_progress(db: Session, student_id: int) -> dict:
     return result
 
 
+def _profile_skill_extremes(skills: list) -> tuple:
+    """Use the radar scale for both summary cards, including their ordering."""
+    ranked = sorted(skills, key=lambda skill: skill["score"])
+    if not ranked:
+        return None, None
+    return tuple({"label": skill["label"], "score": skill["score"]}
+                 for skill in (ranked[0], ranked[-1]))
+
+
 @router.get("/api/student/profile")
 def student_profile(db: Session = Depends(get_db),
                     user=Depends(require_role(roles.STUDENT))):
@@ -1793,16 +1802,9 @@ def student_profile(db: Session = Depends(get_db),
     g = db.query(models.Group).get(s.group_id) if s.group_id else None
     skills = _skills_card(db, s.id)
     gam = _gam_card(db, s)
-    per = roles.PRACTICE_POINTS_PER_LEVEL
     badges = _badges(db, s)
     certs = len(_cert_rows(db, s))
-    _sk = sorted(skills["skills"], key=lambda k: k["points"])
-    weakest = ({"label": _sk[0]["label"],
-                "score": min(100, round(_sk[0]["points"] * 100 / per))}
-               if _sk else None)
-    strongest = ({"label": _sk[-1]["label"],
-                  "score": min(100, round(_sk[-1]["points"] * 100 / per))}
-                 if _sk else None)
+    weakest, strongest = _profile_skill_extremes(skills["skills"])
     return {
         "full_name": s.full_name,
         "first_name": s.first_name,

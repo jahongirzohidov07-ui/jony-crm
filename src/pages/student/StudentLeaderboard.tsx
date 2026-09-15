@@ -120,7 +120,7 @@ export default function StudentLeaderboard() {
         )}
       </div>
 
-      <div className="flex items-start gap-3 mt-3">
+      <div className="student-leaderboard-heading flex items-start gap-3 mt-3">
         <div className="flex-1 min-w-0">
           <h1 className="text-[36px] font-extrabold text-white leading-none">
             Reyting

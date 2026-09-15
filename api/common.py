@@ -94,6 +94,7 @@ def _ensure_new_columns(cols=None):
         # Maqsad IELTS balli (2026-08-18, keyinroq: "nechi XP emas
         # IELTS nechi olmoqchiligi bolishi kerak")
         "ALTER TABLE student_gamification ADD COLUMN ielts_target FLOAT",
+        "ALTER TABLE student_gamification ADD COLUMN study_hours_per_day INTEGER",
         # Darsni bekor qilish / dam kunlari (2026-08-19)
         "ALTER TABLE lessons ADD COLUMN cancelled INTEGER",
         "ALTER TABLE lessons ADD COLUMN cancel_note VARCHAR",

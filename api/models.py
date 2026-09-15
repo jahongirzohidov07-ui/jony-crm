@@ -1876,6 +1876,7 @@ class StudentGamification(Base):
     # 2026-08-18 (Jahongir: "nechi XP emas IELTS nechi olmoqchiligi
     # bolishi kerak") - maqsad endi IELTS ballida saqlanadi.
     ielts_target = Column(Float, nullable=True)
+    study_hours_per_day = Column(Integer, nullable=True)
     last_xp_at = Column(DateTime, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)

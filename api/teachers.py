@@ -1034,8 +1034,15 @@ def teacher_salary_detail(
     y, m = year or today.year, month or today.month
     start, end = billing.month_bounds(y, m)
 
-    tq = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
-                         branch_id)
+    # FILIAL — GURUH bo'yicha (2026-09-15): asosiy filiali boshqa bo'lgan
+    # ustoz ham shu filialdagi darslari bilan chiqadi.
+    branches = _payroll_branches(db, user, branch_id)
+    if branches is None:
+        tq = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
+                             branch_id)
+    else:
+        tq = db.query(models.Teacher).filter(models.Teacher.id.in_(
+            list(_payroll_teacher_ids(db, branches, start, end)) or [-1]))
     if teacher_id:
         tq = tq.filter(models.Teacher.id == teacher_id)
     teachers = tq.filter(models.Teacher.is_active == 1).all()
@@ -1048,6 +1055,15 @@ def teacher_salary_detail(
                        models.Lesson.held == 1,
                        models.Lesson.date >= start,
                        models.Lesson.date <= end).all())
+    names = {b.id: b.name for b in db.query(models.Branch).all()}
+    if branches is not None:
+        _bg = {g for (g,) in db.query(models.Group.id)
+               .filter(models.Group.branch_id.in_(list(branches))).all()}
+        lessons = [l for l in lessons if l.group_id in _bg]
+        # Shu filialda darsi bo'lmagan ustoz ro'yxatda turmasin
+        _taught = {l.teacher_id for l in lessons}
+        teachers = [t for t in teachers
+                    if t.id in _taught or t.branch_id in branches]
     if not lessons:
         return {"period": f"{y:04d}-{m:02d}",
                 "rows": [{"teacher_id": t.id, "teacher": t.full_name,
@@ -1117,7 +1133,10 @@ def teacher_salary_detail(
         rows.append({
             "teacher_id": t.id,
             "teacher": t.full_name,
-            "branch": t.branch.name if t.branch else None,
+            "branch": _payroll_branch_label(
+                t, [getattr(groups.get(l.group_id), "branch_id", None)
+                    for l in lessons if l.teacher_id == t.id],
+                names, branches),
             "lessons": tot_lessons.get(t.id, 0),
             "attendances": att,
             "students_count": len(st_rows),

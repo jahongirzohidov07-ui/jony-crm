@@ -462,9 +462,19 @@ def payroll_overview(
     start, end = billing.month_bounds(y, m)
     period = f"{y:04d}-{m:02d}"
 
-    q = scope_to_branch(db.query(models.Teacher), models.Teacher, user, branch_id)
+    # FILIAL — GURUH bo'yicha (2026-09-15, Jahongir: "Elena ustoz 2-3ta
+    # filialda ishlaydi lekin bekobod 2 filialda avgust oyligini korsam
+    # yelena chiqmadi"). Asosiy filiali boshqa bo'lsa ham, shu filialda
+    # dars o'tgan ustoz chiqadi — summasi shu filial guruhlaridan.
+    branches = _payroll_branches(db, user, branch_id)
+    if branches is None:
+        q = scope_to_branch(db.query(models.Teacher), models.Teacher, user, branch_id)
+    else:
+        q = db.query(models.Teacher).filter(models.Teacher.id.in_(
+            list(_payroll_teacher_ids(db, branches, start, end)) or [-1]))
     teachers = (q.filter(models.Teacher.is_active == 1)
                 .options(joinedload(models.Teacher.branch)).all())
+    names = {b.id: b.name for b in db.query(models.Branch).all()}
 
     # 2026-09-05, Jahongir: "shunaqa yuklashlar juda sekin bolyabdi" —
     # 72 ustoz x 2 hisob x har dars 6-8 so'rov = Vercel 504 edi. Endi
@@ -501,7 +511,11 @@ def payroll_overview(
                     sealed_at = sl.sealed_at
             except Exception:
                 pass
-        paid = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
+        e = _earned_in_branches(e, ctx.groups, branches)
+        paid_all = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
+        if branches is not None and e["amount"] == 0:
+            continue          # shu filialda bu oy darsi yo'q
+        paid = _paid_share(paid_all, e["amount"], e["total_amount"])
         card_balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
                              - _teacher_paid(db, t.id, ctx=ctx), 2)
         if e["amount"] == 0 and paid == 0:
@@ -509,7 +523,9 @@ def payroll_overview(
         rows.append({
             "teacher_id": t.id,
             "full_name": t.full_name,
-            "branch": t.branch.name if t.branch else None,
+            "branch": _payroll_branch_label(
+                t, [getattr(ctx.groups.get(g.get("group_id")), "branch_id", None)
+                    for g in e["by_group"]], names, branches),
             "sealed": sl is not None,
             "lessons": e["lessons"],
             "attendances": e["attendances"],

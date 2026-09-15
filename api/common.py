@@ -1797,6 +1797,106 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
         total += counts.get(l.id, 0) * rate
     return round(total, 2)
 
+
+# ---------------------------------------------------------------------
+#  KO'P FILIALLI USTOZ OYLIGI (2026-09-15)
+#
+#  Jahongir: "Elena ustoz 2-3ta filialda ishlaydi lekin men bekobod 2
+#  filialda avgust oyligini korsam yelena chiqmadi lekin dars otgan".
+#
+#  Sabab: oylik ro'yxatlari ustozni USTOZ KARTASIDAGI ASOSIY filial
+#  (Teacher.branch_id) bo'yicha tanlardi. Asosiy filiali boshqa bo'lgan
+#  ustoz tanlangan filialda dars o'tgan bo'lsa ham ro'yxatga kirmasdi;
+#  "barcha filiallar"da esa butun oyligi asosiy filialiga yozilardi.
+#  Foyda-zarar hisobi (_payroll_total) esa guruh filialidan yurardi —
+#  ikki raqam bir-biriga mos kelmasdi.
+#
+#  Endi qoida bitta: oylik GURUH FILIALIGA tegishli. Filial tanlansa,
+#  shu filial guruhlarida dars o'tgan har bir ustoz chiqadi va unga
+#  faqat shu filial guruhlaridan hisoblangan summa ko'rsatiladi.
+# ---------------------------------------------------------------------
+def _payroll_branches(db: Session, user, branch_id=None):
+    """Oylik qaysi filiallar bo'yicha ko'rsatiladi.
+
+    None — cheklov yo'q (butun tashkilot, filial tanlanmagan).
+    set — faqat shu filiallar guruhlari."""
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        allowed = set(_user_branch_ids(db, user))
+        if branch_id and branch_id in allowed:
+            return {branch_id}
+        return allowed or {-1}
+    if branch_id:
+        if branch_id in blocked_branch_ids(db, user):
+            return {-1}
+        return {branch_id}
+    return None
+
+
+def _payroll_teacher_ids(db: Session, branches, start: date,
+                         end: date) -> set:
+    """Tanlangan filiallarga tegishli ustozlar: shu davrda shu filial
+    guruhida dars o'tganlar + kartasida shu filial (asosiy yoki
+    qo'shimcha) turganlar."""
+    ids = set()
+    gids = [g for (g,) in db.query(models.Group.id)
+            .filter(models.Group.branch_id.in_(list(branches))).all()]
+    for chunk in billing._chunks(gids):
+        ids |= {t for (t,) in db.query(models.Lesson.teacher_id)
+                .filter(models.Lesson.group_id.in_(chunk),
+                        models.Lesson.held == 1,
+                        models.Lesson.date >= start,
+                        models.Lesson.date <= end,
+                        models.Lesson.teacher_id.isnot(None))
+                .distinct().all()}
+    ids |= {t for (t,) in db.query(models.Teacher.id)
+            .filter(models.Teacher.branch_id.in_(list(branches))).all()}
+    ids |= {t for (t,) in db.query(models.TeacherBranch.teacher_id)
+            .filter(models.TeacherBranch.branch_id.in_(list(branches))).all()}
+    return ids
+
+
+def _earned_in_branches(e: dict, groups: dict, branches) -> dict:
+    """_teacher_earned() natijasidan faqat tanlangan filiallar
+    guruhlarini qoldiradi. branches=None bo'lsa — o'zgarishsiz.
+    "total_amount" — ustozning shu oydagi BARCHA filiallardagi summasi
+    (to'lovni filialga ulush bo'yicha taqsimlash uchun)."""
+    if branches is None:
+        return dict(e, total_amount=e["amount"])
+    keep = [g for g in e["by_group"]
+            if getattr(groups.get(g.get("group_id")), "branch_id", None)
+            in branches]
+    return dict(e,
+                by_group=keep,
+                amount=round(sum(g["amount"] for g in keep), 2),
+                attendances=sum(g["attendances"] for g in keep),
+                lessons=sum(g["lessons"] for g in keep),
+                total_amount=e["amount"])
+
+
+def _paid_share(paid: float, part: float, whole: float) -> float:
+    """Ustozga berilgan pul filiallarga ishlagan ulushi bo'yicha
+    bo'linadi: bir odamning to'lovi ikki filial ro'yxatida ikki marta
+    to'liq chiqib qolmasin."""
+    if not whole or part >= whole:
+        return round(paid, 2)
+    return round(paid * part / whole, 2)
+
+
+def _payroll_branch_label(t, group_branch_ids, names: dict, branches):
+    """Oylik qatoridagi "Filial" yozuvi. Filial tanlanganda — dars
+    o'tilgan guruh filiali; asosiy filiali boshqa bo'lsa qavsda."""
+    home = names.get(t.branch_id)
+    if branches is None:
+        return home
+    got = sorted({names.get(b) for b in group_branch_ids} - {None})
+    if not got:
+        return home
+    label = ", ".join(got)
+    if home and home not in got:
+        label += f" (asosiy: {home})"
+    return label
+
+
 def _problem(key: str, message: str) -> dict:
     return {
         "key": key,
@@ -6928,6 +7028,11 @@ __all__ = [
     "_observation_out",
     "_onboarding_rows",
     "_payroll_total",
+    "_payroll_branches",
+    "_payroll_teacher_ids",
+    "_earned_in_branches",
+    "_paid_share",
+    "_payroll_branch_label",
     "_period_bounds",
     "_period_key",
     "_perm_overrides",

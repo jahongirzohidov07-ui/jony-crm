@@ -612,8 +612,16 @@ def report_teacher_payroll(
     period = _period_key(year, month)
     start, end = billing.month_bounds(year, month)
 
-    tq = scope_to_branch(db.query(models.Teacher), models.Teacher,
-                         user, branch_id)
+    # FILIAL — GURUH bo'yicha (2026-09-15): ustozning asosiy filiali
+    # boshqa bo'lsa ham, tanlangan filialda dars o'tgan bo'lsa chiqadi
+    # va unga faqat shu filial guruhlari summasi yoziladi.
+    branches = _payroll_branches(db, user, branch_id)
+    if branches is None:
+        tq = scope_to_branch(db.query(models.Teacher), models.Teacher,
+                             user, branch_id)
+    else:
+        tq = db.query(models.Teacher).filter(models.Teacher.id.in_(
+            list(_payroll_teacher_ids(db, branches, start, end)) or [-1]))
 
     # O'qituvchi faqat O'ZINING oyligini ko'radi - hamkasbining maoshi
     # unga ko'rinmaydi.
@@ -625,21 +633,30 @@ def report_teacher_payroll(
             return {"period": period, "rows": [], "teacher_count": 0,
                     "total": 0.0, "paid": 0.0, "unpaid": 0.0,
                     "own_only": True}
-        tq = tq.filter(models.Teacher.id == me.id)
+        # O'z oyligi — hamma filialdagi darslari bilan
+        tq = db.query(models.Teacher).filter(models.Teacher.id == me.id)
+        branches = None
 
     rows = []
     teachers = tq.all()
     ctx = billing.PayrollContext(db)          # bir marta o'qish (2026-09-05)
     ctx.prefetch([t.id for t in teachers])
+    names = {b.id: b.name for b in db.query(models.Branch).all()}
     for t in teachers:
-        e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+        e = _earned_in_branches(
+            _teacher_earned(db, t.id, since=start, until=end, ctx=ctx),
+            ctx.groups, branches)
         if e["amount"] == 0:
             continue
-        paid = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
+        paid = _paid_share(
+            _teacher_paid(db, t.id, since=start, until=end, ctx=ctx),
+            e["amount"], e["total_amount"])
         rows.append({
             "teacher_id": t.id,
             "full_name": t.full_name,
-            "branch": t.branch.name if t.branch else None,
+            "branch": _payroll_branch_label(
+                t, [getattr(ctx.groups.get(g["group_id"]), "branch_id", None)
+                    for g in e["by_group"]], names, branches),
             "groups": [{
                 "group_id": g["group_id"],
                 "group": g["group"],

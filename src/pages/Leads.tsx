@@ -15,6 +15,7 @@ import type { LeadSource, LeadStage } from "../lib/leads";
 import { PhoneInput, formatPhone } from "../components/PhoneInput";
 import { PickList, useReference } from "../components/PickList";
 import PlacementBar, { PlacementBadge } from "../components/PlacementBar";
+import { CommentThread } from "../components/CommentThread";
 
 // ---------------------------------------------------------------- modal ----
 function LeadForm({
@@ -125,7 +126,9 @@ function LeadForm({
         address: address || null,
         school: school || null,
         grade: grade || null,
-        note: note || null,
+        // Tahrirlashda izoh tarixga alohida yoziladi — birinchi izoh
+        // ustidan yozilib ketmasin
+        ...(editing ? {} : { note: note || null }),
         branch_id: branchId ? Number(branchId) : null,
         assigned_user_id: assignedId ? Number(assignedId) : null,
       };
@@ -360,18 +363,31 @@ function LeadForm({
             </div>
           )}
 
-          <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">
-              Izoh (ixtiyoriy)
-            </label>
-            <textarea
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-              rows={2}
-              value={note ?? ""}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Masalan: kechqurungi guruhni so'radi"
-            />
-          </div>
+          {editing ? (
+            // Tahrirlashda — izohlar tarixi: har izoh alohida, raqamlangan
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Izohlar
+              </label>
+              <CommentThread
+                path={`/leads/${initial!.id}/comments`}
+                placeholder="Masalan: qayta qo'ng'iroq qilindi, kechqurungi guruhni so'radi"
+              />
+            </div>
+          ) : (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Izoh (ixtiyoriy)
+              </label>
+              <textarea
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                rows={2}
+                value={note ?? ""}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Masalan: kechqurungi guruhni so'radi"
+              />
+            </div>
+          )}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 

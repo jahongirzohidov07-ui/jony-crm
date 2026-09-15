@@ -37,6 +37,7 @@ import { printXReceipt, printCertificate } from "../lib/receipt";
 import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
 import { StudentModal } from "./Students";
+import { CommentThread, type CommentList } from "../components/CommentThread";
 
 const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
@@ -226,6 +227,7 @@ function ProfileCard({
         >
           {STATUS_LABEL[student.status] || student.status}
         </div>
+        <StatusBy studentId={student.id} status={student.status} />
       </div>
 
       <div className="divide-y divide-slate-100">
@@ -1361,52 +1363,37 @@ function NoteTab({
   student: StudentDetailType;
   onSaved: () => void;
 }) {
+  // IZOHLAR TARIXI (2026-09-15): bitta maydon o'rniga raqamlangan
+  // ro'yxat — oldingilari saqlanadi, muzlatish/faollashtirish ham
+  // kim qilgani bilan shu yerda.
   const { user } = useAuth();
   const canEdit = can(user?.role, [...TEACHING_STAFF, HR_MANAGER]);
-  const [text, setText] = useState(student.note ?? "");
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function save() {
-    setSaving(true);
-    setError(null);
-    try {
-      await api.put(`/students/${student.id}`, { note: text || null });
-      setSaved(true);
-      onSaved();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Xatolik");
-    } finally {
-      setSaving(false);
-    }
-  }
-
   return (
     <div className="max-w-2xl">
-      <textarea
-        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm min-h-[160px] disabled:bg-slate-50"
-        value={text}
-        disabled={!canEdit}
-        onChange={(e) => {
-          setText(e.target.value);
-          setSaved(false);
-        }}
-        placeholder="O'quvchi haqida eslatma: nimaga e'tibor berish kerak, ota-ona bilan nima gaplashildi..."
+      <CommentThread
+        path={`/students/${student.id}/comments`}
+        canWrite={canEdit}
+        onAdded={onSaved}
+        placeholder="O'quvchi haqida izoh: nimaga e'tibor berish kerak, ota-ona bilan nima gaplashildi..."
       />
-      {canEdit && (
-        <div className="flex items-center gap-3 mt-3">
-          <button
-            onClick={save}
-            disabled={saving}
-            className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60"
-          >
-            {saving ? "Saqlanmoqda..." : "Saqlash"}
-          </button>
-          {saved && <span className="text-sm text-emerald-600">Saqlandi</span>}
-        </div>
-      )}
-      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+    </div>
+  );
+}
+
+// Sarlavhada: oxirgi holatni kim o'zgartirgani (muzlatdi, faollashtirdi...)
+function StatusBy({ studentId, status }: { studentId: number; status: string }) {
+  const [last, setLast] = useState<CommentList["last_status"]>(null);
+  useEffect(() => {
+    api
+      .get<CommentList>(`/students/${studentId}/comments`)
+      .then((d) => setLast(d.last_status))
+      .catch(() => setLast(null));
+  }, [studentId, status]);
+  if (!last) return null;
+  return (
+    <div className="rounded-lg px-3 py-1.5 text-xs text-slate-500 bg-slate-50 flex items-center">
+      {last.title}: <span className="font-medium text-slate-700 ml-1">{last.by}</span>
+      {last.date ? ` · ${formatDateTime(last.date, false)}` : ""}
     </div>
   );
 }

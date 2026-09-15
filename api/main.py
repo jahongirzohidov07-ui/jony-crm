@@ -106,6 +106,7 @@ import auth_users as _r_auth_users
 import branches_rooms as _r_branches_rooms
 import complaints as _r_complaints
 import events as _r_events
+import comments as _r_comments
 import content as _r_content
 import dashboard as _r_dashboard
 import examiners as _r_examiners
@@ -145,6 +146,7 @@ app.include_router(_r_auth_users.router)
 app.include_router(_r_branches_rooms.router)
 app.include_router(_r_complaints.router)
 app.include_router(_r_events.router)
+app.include_router(_r_comments.router)
 app.include_router(_r_content.router)
 app.include_router(_r_dashboard.router)
 app.include_router(_r_examiners.router)

@@ -3983,3 +3983,18 @@ class Event(Base):
 
     branch = relationship("Branch")
     responsible = relationship("User", foreign_keys=[responsible_id])
+
+
+class Comment(Base):
+    """Izohlar tarixi: o'quvchi yoki lid kartasidagi har bir izoh alohida
+    qator (2026-09-15). O'chirilmaydi va tahrirlanmaydi — LC UP'dagidek
+    oldingilari saqlanib, raqamlangan ro'yxatda turadi."""
+    __tablename__ = "comments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    entity = Column(String, nullable=False, index=True)      # student | lead
+    entity_id = Column(Integer, nullable=False, index=True)
+    text = Column(Text, nullable=False)
+    author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    author_name = Column(String, nullable=True)              # o'sha paytdagi ism
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)

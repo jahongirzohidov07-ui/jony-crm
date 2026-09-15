@@ -1,7 +1,7 @@
 import {
   createContext, useContext, useEffect, useState, type ReactNode,
 } from "react";
-import { api, getToken, setToken, clearToken } from "./api";
+import { api, getToken, setToken, clearToken, setActiveRole, setGlobalBranch } from "./api";
 
 export interface AuthBranch {
   id: number;
@@ -45,10 +45,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => {
     // Eslab qolish yoqilgan bo'lsa foydalanuvchi localStorage'da
     // turadi - ilova qayta ochilganda ham darhol ichkarida bo'ladi.
-    const saved =
-      sessionStorage.getItem("jony_crm_user") ??
-      localStorage.getItem("jony_crm_user");
-    return saved ? JSON.parse(saved) : null;
+    try {
+      if (!getToken()) return null;
+      const saved = sessionStorage.getItem("jony_crm_user") ?? localStorage.getItem("jony_crm_user");
+      const parsed = saved ? JSON.parse(saved) : null;
+      return parsed && typeof parsed.role === "string" && typeof parsed.full_name === "string" ? parsed : null;
+    } catch { return null; }
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -131,6 +133,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           localStorage.removeItem("jony_must_change_pw");
         }
       } catch { /* localStorage yopiq bo'lsa — e'tiborsiz */ }
+      setActiveRole(null);
+      setGlobalBranch(null);
       setToken(res.access_token, remember);
       const u = { full_name: res.full_name, role: res.role, branch_id: res.branch_id };
       sessionStorage.removeItem("jony_crm_user");
@@ -157,6 +161,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   function logout() {
     clearToken();
+    setActiveRole(null);
+    setGlobalBranch(null);
     sessionStorage.removeItem("jony_crm_user");
     localStorage.removeItem("jony_crm_user");
     setUser(null);

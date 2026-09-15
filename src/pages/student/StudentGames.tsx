@@ -43,6 +43,10 @@ const BAR: Record<string, string> = {
   violet: "#7C5CF0", emerald: "#10B981", amber: "#F59E0B",
   sky: "#22B8F0", rose: "#EF4444", teal: "#14B8A6",
 };
+const LABEL: Record<string, string> = {
+  violet: "#6540bf", emerald: "#047857", amber: "#a15c00",
+  sky: "#0369a1", rose: "#b91c1c", teal: "#0f766e",
+};
 
 export default function StudentGames() {
   const [d, setD] = useState<Learn | null>(null);
@@ -156,7 +160,7 @@ export default function StudentGames() {
               <ChevronRight size={17} className="text-slate-300 shrink-0" />
             </div>
             <div className="flex items-center gap-2 mt-1.5">
-              <b className="text-sm shrink-0" style={{ color: BAR[s.tone] || "#1A6FE4" }}>
+              <b className="text-sm shrink-0" style={{ color: LABEL[s.tone] || "#1A6FE4" }}>
                 {s.percent}%
               </b>
               <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
@@ -176,7 +180,7 @@ export default function StudentGames() {
           background:
             "linear-gradient(120deg,#2B50E0,#4A56EC 55%,#7B5CF0)",
         }}>
-        <div className="flex items-center gap-4">
+        <div className="student-level-test-card flex items-center gap-4">
           <StudentImage src="/jsicons/learn-exam.png" alt=""
                className="w-14 h-14 shrink-0" />
           <div className="min-w-0 flex-1">

@@ -15,6 +15,16 @@ import student_app as app
 
 
 class WritingRegression(unittest.TestCase):
+    def test_profile_cards_use_radar_scores_not_raw_points(self):
+        weak, strong = app._profile_skill_extremes([
+            {"label": "Vocabulary", "score": 8, "points": 125},
+            {"label": "Grammar", "score": 12, "points": 50},
+            {"label": "Writing", "score": 0, "points": 0},
+        ])
+        self.assertEqual(weak, {"label": "Writing", "score": 0})
+        self.assertEqual(strong, {"label": "Grammar", "score": 12})
+        self.assertEqual(app._profile_skill_extremes([]), (None, None))
+
     def setUp(self):
         self.engine = create_engine("sqlite:///:memory:")
         models.SkillAttempt.__table__.create(self.engine)

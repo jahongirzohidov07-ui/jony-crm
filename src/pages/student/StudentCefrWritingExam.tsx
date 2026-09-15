@@ -1,3 +1,4 @@
+import { readWritingDraft, saveWritingDraft, removeWritingDraft, writingSecondsLeft } from "../../lib/studentWritingDrafts";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Clock, X, AlertTriangle } from "lucide-react";
@@ -36,19 +37,27 @@ export default function StudentCefrWritingExam() {
   const [text, setText] = useState("");
   const [left, setLeft] = useState(0);
   const [running, setRunning] = useState(false);
+  const [deadline, setDeadline] = useState<number | null>(null);
   const [res, setRes] = useState<Any>(null);
   const [busy, setBusy] = useState(false);
   const [showModel, setShowModel] = useState(false);
   const tick = useRef<number | null>(null);
 
   useEffect(() => {
+    let active = true;
+    setT(null); setErr(""); setRes(null); setRunning(false); setDeadline(null);
     api
       .get<Any>("/student/cefr/writing/task/" + tid)
       .then((r) => {
-        setT(r);
-        setSub(r.part === "2" ? "2" : "1.1");
+        if (!active) return;
+        const part = r.part === "2" ? "2" : "1.1";
+        const draft = readWritingDraft(tid, part);
+        setT(r); setSub(part); setText(draft.text);
+        setDeadline(draft.deadline); setRunning(draft.deadline !== null);
+        setLeft(draft.deadline ? writingSecondsLeft(draft.deadline) : 0);
       })
-      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+      .catch((e) => { if (active) setErr(e instanceof Error ? e.message : "Xatolik"); });
+    return () => { active = false; };
   }, [tid]);
 
   const spec: Any =
@@ -60,34 +69,49 @@ export default function StudentCefrWritingExam() {
   }, []);
   useEffect(() => stop, [stop]);
 
-  const start = () => {
-    if (!spec) return;
-    setLeft(spec.minutes * 60);
-    setRunning(true);
+  useEffect(() => {
     stop();
-    tick.current = window.setInterval(() => {
-      setLeft((s) => (s <= 1 ? 0 : s - 1));
-    }, 1000);
+    if (!running || deadline === null) return;
+    const update = () => {
+      const remaining = writingSecondsLeft(deadline);
+      setLeft(remaining);
+      if (remaining === 0) stop();
+    };
+    tick.current = window.setInterval(update, 1000);
+    update();
+    return stop;
+  }, [deadline, running, stop]);
+
+  const start = () => {
+    if (!spec || busy) return;
+    const end = Date.now() + spec.minutes * 60_000;
+    setDeadline(end); setLeft(spec.minutes * 60); setRunning(true);
+    saveWritingDraft(tid, sub, { text, deadline: end });
+  };
+  const editText = (value: string) => {
+    setText(value);
+    saveWritingDraft(tid, sub, { text: value, deadline });
   };
 
   const words = (text.match(/[A-Za-z][A-Za-z'’-]*/g) || []).length;
   const lo = spec?.words?.[0] || 0;
   const hi = spec?.words?.[1] || 0;
   const wColor =
-    words === 0 ? "#64748B"
+    words === 0 ? "#B6C6E7"
       : words < lo ? "#F59E0B"
         : words > hi ? "#FB7185" : "#34D399";
 
   const submit = async () => {
     if (busy || !t) return;
     setBusy(true);
-    stop();
-    setRunning(false);
+    setErr("");
     try {
       const r = await api.post<Any>("/student/cefr/writing/submit", {
         task_id: t.id, part: sub, text,
       });
       setRes(r);
+      stop(); setRunning(false); setDeadline(null);
+      removeWritingDraft(tid, sub);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Xatolik");
     } finally {
@@ -95,18 +119,18 @@ export default function StudentCefrWritingExam() {
     }
   };
 
-  const reset = (nx: "1.1" | "1.2" | "2") => {
-    setSub(nx);
-    setText("");
-    setRes(null);
-    setShowModel(false);
-    setRunning(false);
-    setLeft(0);
+  const reset = (nx: "1.1" | "1.2" | "2", clear = false) => {
+    if (busy || (!clear && nx === sub)) return;
     stop();
+    if (clear) removeWritingDraft(tid, nx);
+    const draft = readWritingDraft(tid, nx);
+    setSub(nx); setText(draft.text); setErr(""); setRes(null); setShowModel(false);
+    setDeadline(draft.deadline); setRunning(draft.deadline !== null);
+    setLeft(draft.deadline ? writingSecondsLeft(draft.deadline) : 0);
   };
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
-  if (err)
+  if (err && !t)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!t)
     return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
@@ -115,9 +139,10 @@ export default function StudentCefrWritingExam() {
   const ss = String(left % 60).padStart(2, "0");
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-writing-exam max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
+          aria-label="Topshiriqlar ro'yxatiga qaytish"
           to={`/student/cefr/writing/tasks/${t.part === "2" ? "2" : "1"}`}
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
           style={card}
@@ -133,11 +158,15 @@ export default function StudentCefrWritingExam() {
       </div>
 
       {/* --- 1.1 / 1.2 almashtirgich --- */}
+      {err && <p role="alert" className="mt-3 rounded-xl bg-red-50 text-red-700 p-3 text-sm">{err}. Matningiz saqlangan — qayta urinib ko'ring.</p>}
+
       {t.part === "1" && (
         <div className="flex gap-2 mt-3">
           {(["1.1", "1.2"] as const).map((p) => (
             <button
               key={p}
+              disabled={busy}
+              aria-pressed={sub === p}
               onClick={() => reset(p)}
               className="flex-1 rounded-xl px-3 py-2 text-[12px] font-bold border"
               style={{
@@ -232,8 +261,10 @@ export default function StudentCefrWritingExam() {
       {!res && (
         <>
           <textarea
+            aria-label="Yozma javobingiz"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => editText(e.target.value)}
+            disabled={busy}
             rows={14}
             placeholder={
               sub === "1.1"
@@ -362,7 +393,7 @@ export default function StudentCefrWritingExam() {
 
           <div className="flex gap-2">
             <button
-              onClick={() => reset(sub)}
+              onClick={() => reset(sub, true)}
               className="flex-1 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-bold text-white"
             >
               Qayta yozish

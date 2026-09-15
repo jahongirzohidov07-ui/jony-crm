@@ -114,3 +114,17 @@
 .student-shop-promo > img { width: 54px; }
 .student-shop-promo > button { justify-self: end; }
 .student-app h1 { font-size: clamp(26px, 7.6vw, 34px); }
+
+/* Keep exam instructions readable and controls comfortable on phones. */
+.student-writing-exam > div:not(.student-writing-result) .text-slate-500,
+.student-writing-exam > p.text-slate-500 { color: #b6c6e7; }
+.student-writing-exam > div:not(.student-writing-result) :is(p, li) { font-size: 14px; }
+.student-writing-exam > p { font-size: 12px; }
+.student-writing-exam button, .student-writing-exam a { min-height: 44px; }
+.student-writing-exam a:has(> svg:only-child) { min-width: 44px; }
+.student-level-test-card { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; }
+.student-level-test-card > span:last-child { grid-column: 2; justify-self: start; }
+.student-skill-card > div > p { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+.student-leaderboard-heading { flex-direction: column; }
+.student-leaderboard-heading > div:last-child { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; text-align: left; }
+.student-leaderboard-heading > div:last-child > p { margin-top: 0; }

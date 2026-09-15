@@ -234,6 +234,7 @@ export default function StudentProfile() {
         </div>
         <Link
           to="/student/settings"
+          aria-label="Profil sozlamalari"
           className="w-11 h-11 rounded-xl border flex items-center justify-center text-white shrink-0"
           style={card}
         >
@@ -299,7 +300,7 @@ export default function StudentProfile() {
                 🛡 {lv?.level?.label} · {lv?.level?.cefr}
               </span>
               {d.group && (
-                <span className="px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold truncate max-w-[130px]">
+                <span className="px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold whitespace-normal break-words max-w-full">
                   {d.group}
                 </span>
               )}
@@ -421,7 +422,7 @@ export default function StudentProfile() {
           <p className="text-[22px] font-extrabold text-slate-900">
             English Skills
           </p>
-          <p className="text-xs text-slate-400 mt-0.5">{d.radar_note}</p>
+          <p className="text-xs text-slate-600 mt-0.5">{d.radar_note}</p>
 
           <RadarChart data={d.radar} />
 
@@ -432,7 +433,7 @@ export default function StudentProfile() {
               </span>
               <div className="min-w-0">
                 <p className="text-[11px] text-emerald-700">Eng kuchli</p>
-                <p className="text-sm font-bold text-emerald-700 truncate">
+                <p className="text-sm font-bold text-emerald-700 break-words">
                   {d.strongest?.label}{" "}
                   <span className="text-[17px]">{d.strongest?.score}</span>
                 </p>
@@ -444,7 +445,7 @@ export default function StudentProfile() {
               </span>
               <div className="min-w-0">
                 <p className="text-[11px] text-red-600">Rivojlantirish</p>
-                <p className="text-sm font-bold text-red-600 truncate">
+                <p className="text-sm font-bold text-red-600 break-words">
                   {d.weakest?.label}{" "}
                   <span className="text-[17px]">{d.weakest?.score}</span>
                 </p>

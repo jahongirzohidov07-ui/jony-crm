@@ -59,6 +59,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci || npm install
+      - name: Student regression tests
+        run: node --test scripts/test-student-regressions.cjs
       - name: Type check (Vercel bilan bir xil)
         run: npx tsc -b
       - name: Build

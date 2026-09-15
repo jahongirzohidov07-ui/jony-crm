@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ChevronRight, ChevronLeft, Lock } from "lucide-react";
@@ -91,7 +92,7 @@ export default function StudentExamSkills() {
         <div className="rounded-2xl border p-5 mt-5 text-center" style={card}>
           <div
             className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center"
-            style={{ background: "#111C4B" }}
+            style={{ background: "#0c2258" }}
           >
             <Lock size={24} className="text-amber-400" />
           </div>
@@ -122,7 +123,7 @@ export default function StudentExamSkills() {
       </Link>
 
       <div className="flex items-center gap-3 mt-3">
-        <img src={def.icon} alt="" className="w-12 h-12 shrink-0" />
+        <StudentImage src={def.icon} alt="" className="w-12 h-12 shrink-0" />
         <div className="min-w-0">
           <h1 className="text-[30px] font-extrabold text-white leading-none">
             {def.title}
@@ -139,7 +140,7 @@ export default function StudentExamSkills() {
           const st = stats[s.key];
           const body = (
             <>
-              <img src={s.icon} alt="" className="w-11 h-11 shrink-0" />
+              <StudentImage src={s.icon} alt="" className="w-11 h-11 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-white font-bold text-[15px]">{s.title}</p>
                 <p className="text-[12px] text-slate-400 leading-snug mt-0.5">

@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Save, X } from "lucide-react";
@@ -65,7 +66,7 @@ export default function StudentSettings() {
     return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
 
   const Section = ({ icon, title, children }: any) => (
-    <div className="bg-white rounded-3xl p-4">
+    <div className="student-panel bg-white rounded-3xl p-4">
       <p className="flex items-center gap-2.5 text-[19px] font-extrabold text-slate-900 mb-1">
         <span className="w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center text-[16px]">
           {icon}
@@ -81,7 +82,7 @@ export default function StudentSettings() {
       <div className="flex items-center gap-2.5">
         <Link to="/student/profile"
           className="w-10 h-10 rounded-xl border flex items-center justify-center text-white shrink-0"
-          style={{ background: "#111C4B", borderColor: "#223070" }}>
+          style={{ background: "#0c2258", borderColor: "#35538c" }}>
           <ArrowLeft size={18} />
         </Link>
         <div className="flex-1 flex items-center justify-center gap-2.5">
@@ -114,12 +115,12 @@ export default function StudentSettings() {
       )}
 
       {/* ---------------------------------------- foydalanuvchi */}
-      <div className="rounded-3xl p-4 flex items-center gap-4"
+      <div className="student-hero student-pattern rounded-3xl p-4 flex items-center gap-4"
            style={{ background:
              "linear-gradient(110deg,#14257C,#1D2F8E 70%)" }}>
         <div className="w-[74px] h-[74px] rounded-full bg-brand-600 border-4 border-brand-400/70 overflow-hidden flex items-center justify-center shrink-0">
           {p?.photo ? (
-            <img src={p.photo} alt="" className="w-full h-full object-cover" />
+            <StudentImage src={p.photo} alt="" className="w-full h-full object-cover" />
           ) : (
             <span className="text-[28px] font-extrabold text-white">
               {(p?.first_name || p?.full_name || "?").charAt(0)}

@@ -211,7 +211,7 @@ export default function StudentCefrWritingDrill() {
               if (isPick && res.correct) { bg = "#0C3A2A"; bd = "#1B8A5A"; }
               else if (isPick) { bg = "#3A1220"; bd = "#8A2540"; }
               else if (isRight) { bg = "#0C3A2A"; bd = "#1B8A5A"; }
-            } else if (isPick) { bg = "#111C4B"; bd = "#2B3B8A"; }
+            } else if (isPick) { bg = "#0c2258"; bd = "#2B3B8A"; }
             return (
               <button
                 key={i}
@@ -271,7 +271,7 @@ export default function StudentCefrWritingDrill() {
                   onClick={() => setSeq((s) => [...s, i])}
                   className="w-full text-left rounded-2xl border px-3.5 py-2.5"
                   style={{
-                    background: at >= 0 ? "#111C4B" : JSA.card,
+                    background: at >= 0 ? "#0c2258" : JSA.card,
                     borderColor: at >= 0 ? "#2B3B8A" : JSA.cardBorder,
                     opacity: at >= 0 ? 0.55 : 1,
                   }}

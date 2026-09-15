@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronRight, Play } from "lucide-react";
@@ -49,7 +50,7 @@ export default function StudentCefrSpeaking() {
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
           CEFR Multilevel
         </p>
-        <img src="/jsicons/learn-jony-teacher.png" alt=""
+        <StudentImage src="/jsicons/learn-jony-teacher.png" alt=""
              className="w-10 h-10 shrink-0" />
       </div>
 
@@ -61,7 +62,7 @@ export default function StudentCefrSpeaking() {
       <Link
         to="/student/cefr/speaking/mock"
         className="block rounded-2xl border p-4 mt-4"
-        style={{ background: "#111C4B", borderColor: "#2B3B8A" }}
+        style={{ background: "#0c2258", borderColor: "#2B3B8A" }}
       >
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-2xl bg-brand-600 flex items-center justify-center shrink-0">
@@ -123,7 +124,7 @@ export default function StudentCefrSpeaking() {
             style={card}
           >
             <div className="w-11 h-11 rounded-2xl flex flex-col items-center justify-center shrink-0"
-                 style={{ background: "#111C4B" }}>
+                 style={{ background: "#0c2258" }}>
               <span className="text-[13px] font-extrabold text-white leading-none">
                 {p.part}
               </span>

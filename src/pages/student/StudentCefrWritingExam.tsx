@@ -242,7 +242,7 @@ export default function StudentCefrWritingExam() {
                   ? "Dear Sir or Madam,\n\nI am writing to ..."
                   : "Yozishni boshlang…"
             }
-            className="w-full mt-3 rounded-2xl border px-3.5 py-3 text-[13.5px] text-white leading-relaxed outline-none resize-y"
+            className="student-writing-input w-full mt-3 rounded-2xl border px-3.5 py-3 text-[16px] text-slate-900 leading-relaxed outline-none resize-y"
             style={{ background: JSA.card, borderColor: JSA.cardBorder }}
           />
           <button
@@ -260,7 +260,7 @@ export default function StudentCefrWritingExam() {
 
       {/* --- natija --- */}
       {res && (
-        <div className="mt-3 space-y-2.5">
+        <div className="student-writing-result mt-3 space-y-2.5">
           <div className="rounded-2xl border p-4 text-center" style={card}>
             <p
               className="text-[40px] font-extrabold leading-none"

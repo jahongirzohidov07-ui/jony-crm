@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, Lock } from "lucide-react";
 import { JSA, XpHex } from "../../components/Jsa";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { api } from "../../lib/api";
 import { fmtNum, type LeaguesCard } from "../../lib/studentApi";
 
@@ -67,7 +67,7 @@ export default function StudentLeagues() {
       </p>
 
       {/* ------------------------------------------ hozirgi liga */}
-      <div className="rounded-3xl p-5 mt-4"
+      <div className="student-hero student-pattern rounded-3xl p-5 mt-4"
            style={{ background:
              "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)" }}>
         <div className="flex items-center gap-4">

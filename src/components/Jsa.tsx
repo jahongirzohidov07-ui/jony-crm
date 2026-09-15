@@ -1,3 +1,4 @@
+import { StudentIcon } from "./StudentIcon";
 import { BrandIcon } from "./BrandIcon";
 
 /**
@@ -11,16 +12,16 @@ import { BrandIcon } from "./BrandIcon";
 
 /** To'q fonda ishlatiladigan ranglar - dizayndan pipetka bilan. */
 export const JSA = {
-  bg: "#0A1233",          // sahifa foni (to'q navy)
-  card: "#111C4B",        // to'q karta
-  cardBorder: "#223070",  // karta chegarasi
+  bg: "#020d38",          // sahifa foni (to'q navy)
+  card: "#0c2258",        // to'q karta
+  cardBorder: "#35538c",  // karta chegarasi
   nav: "#0C163E",         // pastki menyu
 };
 
 /** Chap yuqoridagi logo: ko'k kvadrat + JONY STUDENT APP. */
 export function JsaLogo({ small = false }: { small?: boolean }) {
   return (
-    <div className="flex items-center gap-2.5 min-w-0">
+    <div className="student-logo flex items-center gap-2.5 min-w-0">
       <BrandIcon size={small ? 34 : 42} />
       <div className="leading-none">
         <p className={`font-extrabold tracking-tight text-white ${
@@ -38,16 +39,7 @@ export function JsaLogo({ small = false }: { small?: boolean }) {
 
 /** XP olti burchak nishoni (dizayndagi ko'k hexagon). */
 export function XpHex({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 1.5 21 6.75v10.5L12 22.5 3 17.25V6.75Z"
-        fill="#1A6FE4" stroke="#5EA0F2" strokeWidth="1.2"
-      />
-      <text x="12" y="15.5" textAnchor="middle" fontSize="8.5"
-            fontWeight="800" fill="#fff">XP</text>
-    </svg>
-  );
+  return <StudentIcon name="xp" size={size} />;
 }
 
 /** Yuqori o'ngdagi XP kartochkasi. */

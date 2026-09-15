@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Award, Lock } from "lucide-react";
@@ -28,7 +29,7 @@ export default function StudentCertificates() {
   }, []);
 
   const rows: Any[] = d?.rows || [];
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
@@ -41,7 +42,7 @@ export default function StudentCertificates() {
         <span className="text-[15px] font-semibold text-brand-300 flex-1">
           Profil
         </span>
-        <img src="/jsicons/learn-certificate.png" alt="" className="w-12 h-12" />
+        <StudentImage src="/jsicons/learn-certificate.png" alt="" className="w-12 h-12" />
       </div>
 
       <h1 className="text-[34px] font-extrabold text-white leading-none mt-3">
@@ -55,7 +56,7 @@ export default function StudentCertificates() {
 
       {/* ------------------------------------ birinchi sertifikat */}
       {d && rows.length === 0 && (
-        <div className="bg-white rounded-3xl p-5 mt-4 text-center">
+        <div className="student-panel bg-white rounded-3xl p-5 mt-4 text-center">
           <div className="mx-auto max-w-[300px] rounded-2xl border-[6px] border-slate-200 bg-slate-50 p-5 relative">
             <div className="flex items-center justify-center gap-1.5">
               <BrandIcon size={22} />

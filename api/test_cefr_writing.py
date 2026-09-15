@@ -317,13 +317,15 @@ def test_backend_ulangan():
 
 def test_ai_ishlamasa_ham_baho_beriladi():
     """AI kaliti yo'q bo'lsa ham avtomat tekshiruv to'liq ishlaydi."""
-    src = open("student_app.py", encoding="utf-8").read()
-    i = src.index("def cw_submit(")
-    blok = src[i:]
-    assert "except Exception as e:" in blok
-    assert 'ai_err = str(e)' in blok
-    # natija AI'siz ham qaytadi
-    assert 'return {**res,' in blok
+    # Exercise actual persistence and fallback, rather than requiring
+    # provider exception details to be leaked to the student.
+    import unittest
+    from test_student_writing_progress import WritingRegression
+    suite = unittest.TestSuite([
+        WritingRegression("test_submission_saves_expert_success_and_failure")])
+    result = unittest.TestResult()
+    suite.run(result)
+    assert result.wasSuccessful(), (result.errors, result.failures)
 
 
 def test_ekranlar_bor():

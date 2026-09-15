@@ -1,9 +1,11 @@
+import { StudentImage, StudentIcon } from "../../components/StudentIcon";
+import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Camera, Check, ChevronRight, LogOut, Settings,
   TrendingUp, X } from "lucide-react";
 import { BrandIcon } from "../../components/BrandIcon";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { useAuth } from "../../lib/AuthContext";
 import { api } from "../../lib/api";
 import { fmtNum, type LevelProgress } from "../../lib/studentApi";
@@ -50,6 +52,10 @@ type Profile = {
   ielts?: Ielts;
   league?: { name: string; icon: string; color: string } | null;
   xp?: number;
+  writing_progress?: {
+    submitted: number;
+    latest: { format_score: number | null; expert_status: string } | null;
+  };
   coins?: number;
   streak?: number;
   balance?: number;
@@ -213,7 +219,7 @@ export default function StudentProfile() {
   // 2026-08-20: "profil.png" dizayni bo'yicha TO'Q temada qayta
   // terildi (Jahongir: "1ga 1 qilib ber"). Radar, rasm yuklash,
   // to'lov va chiqish mantig'i o'zgarmadi.
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8 space-y-4">
@@ -263,14 +269,14 @@ export default function StudentProfile() {
       )}
 
       {/* -------------------------------------- FOYDALANUVCHI KARTASI */}
-      <div className="rounded-3xl p-5"
+      <div className="student-hero student-pattern rounded-3xl p-5"
            style={{ background:
              "linear-gradient(120deg,#16267A 0%,#1D2F8E 60%,#3A2F9E 100%)" }}>
         <div className="flex items-center gap-4">
           <label className="relative shrink-0 cursor-pointer">
             <div className="w-[88px] h-[88px] rounded-full bg-brand-600 border-4 border-brand-400/70 overflow-hidden flex items-center justify-center">
               {d.photo ? (
-                <img src={d.photo} alt="" className="w-full h-full object-cover" />
+                <StudentImage src={d.photo} alt="" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-[34px] font-extrabold text-white">
                   {(d.first_name || d.full_name || "?").charAt(0)}
@@ -285,7 +291,7 @@ export default function StudentProfile() {
           </label>
 
           <div className="min-w-0 flex-1">
-            <p className="text-[26px] font-extrabold text-white truncate">
+            <p className="text-[23px] font-extrabold text-white break-words leading-tight">
               {d.first_name || d.full_name}
             </p>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -302,9 +308,10 @@ export default function StudentProfile() {
         </div>
 
         <p className="text-sm text-white/85 mt-4">
-          Daraja XP <b className="text-white">{fmtNum(inLevel)}</b>
+          Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>
           <span className="text-white/60"> / {fmtNum(per)}</span>
         </p>
+              <StudentXpHelp />
         <div className="flex items-center gap-2.5 mt-2">
           <div className="h-2.5 flex-1 rounded-full bg-white/20 overflow-hidden">
             <div className="h-full rounded-full bg-white"
@@ -315,7 +322,7 @@ export default function StudentProfile() {
         {lv?.next && (
           <p className="text-[13px] text-white/75 mt-2">
             {lv.next.label}'gacha{" "}
-            <b className="text-sky-300">{lv.next.points_left} XP</b> qoldi
+            <b className="text-sky-300">{lv.next.points_left} ball</b> qoldi
           </p>
         )}
       </div>
@@ -324,7 +331,7 @@ export default function StudentProfile() {
       {/* 2026-08-25, Jahongir: "hamma skillarni qoshib ortachasini
           chiqarganda uni IELTS balli kelib chiqsin". */}
       {d.ielts && (
-        <div className="bg-white rounded-3xl p-4">
+        <div className="student-panel bg-white rounded-3xl p-4">
           <div className="flex items-center gap-3">
             <div className="w-[64px] h-[64px] rounded-2xl bg-slate-900 flex flex-col items-center justify-center shrink-0">
               <b className="text-white text-[20px] leading-none">
@@ -376,6 +383,25 @@ export default function StudentProfile() {
       )}
 
       {/* ------------------------------------------------ liga */}
+      {!!d.writing_progress?.submitted && (
+        <div className="rounded-2xl border p-4 text-slate-200" style={card}>
+          <p className="font-bold text-white">Writing natijangiz saqlandi</p>
+          <p className="text-sm mt-1">Topshirilgan yozuvlar: {d.writing_progress.submitted}</p>
+          {d.writing_progress.latest?.format_score != null && (
+            <p className="text-sm">Oxirgi format bahosi: {d.writing_progress.latest.format_score}/100</p>
+          )}
+          <p className="text-xs mt-2 text-slate-300">
+            {d.writing_progress.latest?.expert_status === "available"
+              ? "Ekspert tahlili topshiriq natijasida ko'rsatildi."
+              : d.writing_progress.latest?.expert_status === "unavailable"
+                ? "Ekspert bahosi olinmadi. Keyinroq topshiriqni qayta yuborishingiz mumkin."
+                : "Bu eski yozuv uchun ekspert holati saqlanmagan."}
+            {" "}Format bahosi IELTS bali emas. Ko'nikma shkalasi yig'ilgan mashq ballariga asoslanadi;
+            dastlabki natijalar yaxlitlanganda 0 ko'rinishi mumkin.
+          </p>
+        </div>
+      )}
+
       <Link to="/student/leagues"
             className="flex items-center gap-3 rounded-2xl border p-4"
             style={card}>
@@ -391,7 +417,7 @@ export default function StudentProfile() {
 
       {/* -------------------------------------- ENGLISH SKILLS (oq) */}
       {d.radar && d.radar.length > 0 && (
-        <div className="bg-white rounded-3xl p-4">
+        <div className="student-panel bg-white rounded-3xl p-4">
           <p className="text-[22px] font-extrabold text-slate-900">
             English Skills
           </p>
@@ -433,7 +459,7 @@ export default function StudentProfile() {
         <Link to="/student/shop?tab=badges"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">🏆</span>
+          <StudentIcon name="trophy" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">Yutuqlar</p>
             <p className="text-[15px] font-extrabold text-brand-300">
@@ -459,7 +485,7 @@ export default function StudentProfile() {
         <Link to="/student/certificates"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">🎖️</span>
+          <StudentIcon name="certificate" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">Sertifikatlar</p>
             <p className="text-[15px] font-extrabold text-brand-300">
@@ -472,7 +498,7 @@ export default function StudentProfile() {
         <Link to="/student/payments"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">👛</span>
+          <StudentIcon name="wallet" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">To'lovlar</p>
             <p className={`text-[15px] font-extrabold truncate ${
@@ -492,7 +518,7 @@ export default function StudentProfile() {
         className="block rounded-2xl p-4 bg-gradient-to-r from-violet-600 to-brand-600
                    active:scale-[0.98] transition">
         <div className="flex items-center gap-3">
-          <span className="text-[30px] shrink-0">🎁</span>
+          <StudentIcon name="gift" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">
               Do'stingni olib kel

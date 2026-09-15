@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { formatDate } from "../../lib/format";
 import { Link } from "react-router-dom";
@@ -37,7 +38,7 @@ export default function StudentNotifications() {
   });
 
   const today = new Date().toISOString().slice(0, 10);
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
   const ICON: Record<string, string> = {
     payment: "/jsicons/profile-payment.png",
     reward: "/jsicons/game-reward.png",
@@ -105,7 +106,7 @@ export default function StudentNotifications() {
                 <div key={n.id}
                   className="rounded-2xl border p-3.5 flex items-center gap-3"
                   style={card}>
-                  <img src={ICON[n.kind] || "/jsicons/profile-notifications.png"}
+                  <StudentImage src={ICON[n.kind] || "/jsicons/profile-notifications.png"}
                        alt="" className="w-12 h-12 shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="text-[15px] font-bold text-white flex items-center gap-2">

@@ -1,3 +1,4 @@
+import "../student-design.css";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, LockKeyhole, ShieldCheck, UserRound } from "lucide-react";
@@ -47,9 +48,10 @@ export default function Login() {
       else localStorage.removeItem("jonyos_last_login");
       if (password === "jonyjony") {
         alert(
-          "Siz standart parol bilan kirdingiz.\\n\\nXavfsizlik uchun " +
-            "parolni o'zgartirib olishni tavsiya qilamiz: " +
-            "Profil → Parolni o'zgartirish."
+          "Siz standart parol bilan kirdingiz.\n\n" +
+            (u?.role === "student"
+              ? "Parolni o'zgartirish uchun o'quv markazi administratoriga murojaat qiling."
+              : "Xavfsizlik uchun Profil → Parolni o'zgartirish bo'limida parolni yangilang.")
         );
       }
       // Har kim O'Z ilovasiga tushadi: o'quvchi -> Jony Student,
@@ -77,7 +79,7 @@ export default function Login() {
   // kirganda eski oq oyna o'zgarmagan.
   if (isStudentApp()) {
     return (
-      <div className="min-h-screen px-4 py-10 flex flex-col justify-center"
+      <div className="student-app student-login min-h-screen px-4 py-10 flex flex-col justify-center"
            style={{ background:
              "radial-gradient(120% 90% at 50% 0%,#1B3FA8 0%,#122a80 40%,#0A1550 75%,#070E38 100%)" }}>
         <div className="w-full max-w-sm mx-auto">
@@ -96,7 +98,7 @@ export default function Login() {
           </p>
 
           <form onSubmit={onSubmit}
-                className="mt-7 bg-white/95 rounded-3xl p-5 shadow-[0_0_60px_rgba(43,80,224,0.55)] space-y-4">
+                className="student-panel student-pattern mt-7 bg-white/95 rounded-3xl p-5 shadow-[0_0_60px_rgba(43,80,224,0.55)] space-y-4">
             <div>
               <label className="block text-[17px] font-bold text-slate-900 mb-2">
                 Login

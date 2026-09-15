@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, Volume2, X } from "lucide-react";
@@ -146,7 +147,7 @@ export default function StudentLevelTest() {
 
       <div className="max-w-md mx-auto px-4 mt-4 space-y-3 pb-10">
         {err && (
-          <div className="bg-white rounded-xl border border-red-200 p-4">
+          <div className="student-panel bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>
           </div>
         )}
@@ -161,7 +162,7 @@ export default function StudentLevelTest() {
                   "linear-gradient(120deg,#2B50E0,#4A56EC 55%,#7B5CF0)",
               }}
             >
-              <img
+              <StudentImage
                 src="/jsicons/learn-exam.png"
                 alt=""
                 className="w-14 h-14 mb-3"
@@ -187,7 +188,7 @@ export default function StudentLevelTest() {
               {(["grammar", "vocabulary", "reading", "listening"] as const).map(
                 (k) => (
                   <div key={k} className="flex items-center gap-3 py-2">
-                    <img src={SEC_ICONS[k]} alt="" className="w-9 h-9" />
+                    <StudentImage src={SEC_ICONS[k]} alt="" className="w-9 h-9" />
                     <div className="flex-1">
                       <p className="text-[13px] font-semibold text-white capitalize">
                         {k}
@@ -237,7 +238,7 @@ export default function StudentLevelTest() {
         {phase === "quiz" && qq && (
           <>
             <div className="flex items-center gap-2.5">
-              <img
+              <StudentImage
                 src={SEC_ICONS[q.section] || SEC_ICONS.grammar}
                 alt=""
                 className="w-9 h-9"
@@ -266,7 +267,7 @@ export default function StudentLevelTest() {
               />
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm p-4">
+            <div className="student-panel bg-white rounded-2xl shadow-sm p-4">
               {qq.kind === "read" && (
                 <div className="mb-3 border border-slate-200 rounded-xl p-3 max-h-52 overflow-y-auto">
                   <p className="text-[12px] font-bold text-slate-800 mb-1">
@@ -369,7 +370,7 @@ export default function StudentLevelTest() {
                   className="rounded-2xl p-3.5"
                   style={{ background: JSA.card, border: `1px solid ${JSA.cardBorder}` }}
                 >
-                  <img src={SEC_ICONS[k]} alt="" className="w-8 h-8 mb-2" />
+                  <StudentImage src={SEC_ICONS[k]} alt="" className="w-8 h-8 mb-2" />
                   <p className="text-[12px] text-slate-400 capitalize">{k}</p>
                   <p
                     className="text-[20px] font-extrabold"

@@ -169,7 +169,7 @@ export default function StudentIeltsListening() {
     setResult(null);
   }
 
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
@@ -200,14 +200,14 @@ export default function StudentIeltsListening() {
       </h1>
 
       {err && (
-        <div className="bg-white rounded-xl border border-red-200 p-4 mt-4">
+        <div className="student-panel bg-white rounded-xl border border-red-200 p-4 mt-4">
           <p className="text-sm text-red-600">{err}</p>
         </div>
       )}
 
       {/* -------------------------------------- nechta mashq */}
       {cnt === null && (
-        <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+        <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-4">
           <p className="text-sm font-semibold text-slate-800 mb-1">
             Nechta mashq qilamiz?
           </p>
@@ -243,7 +243,7 @@ export default function StudentIeltsListening() {
       {/* ------------------------------------------- mashq */}
       {!finished && q && (
         <>
-          <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+          <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-semibold text-slate-500">
                 {q.hint}
@@ -313,7 +313,7 @@ export default function StudentIeltsListening() {
                 shrift bilan chiziladi, aks holda katakchalar
                 siljib ketadi. */}
             {q.figure && (
-              <div className="mt-3 rounded-lg border border-slate-200 bg-white px-2 py-2.5 overflow-x-auto">
+              <div className="student-panel mt-3 rounded-lg border border-slate-200 bg-white px-2 py-2.5 overflow-x-auto">
                 <pre className="text-[10.5px] leading-[1.35] font-mono text-slate-800 whitespace-pre">
 {q.figure}
                 </pre>

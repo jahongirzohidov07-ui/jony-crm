@@ -1,3 +1,5 @@
+import { StudentIcon } from "../../components/StudentIcon";
+import { StudentImage } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +8,7 @@ import {
 } from "lucide-react";
 import { getLang, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { NpsCard } from "../../components/NpsCard";
 import { GoalCard } from "../../components/GoalCard";
 import { JsaLogo, XpHex, JSA } from "../../components/Jsa";
@@ -23,8 +25,7 @@ import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
  * IELTS maqsad, davom etish - hammasi avvalgi joyidan olinadi.
  */
 
-const MISSION_ICON = ["bg-sky-500", "bg-violet-500", "bg-orange-400"];
-const MISSION_EMOJI = ["🅰️", "📝", "🎧"];
+const MISSION_ICONS = ["vocabulary", "grammar", "listening"] as const;
 
 export default function StudentHome() {
   const [d, setD] = useState<Home | null>(null);
@@ -109,7 +110,7 @@ export default function StudentHome() {
             className="w-11 h-11 rounded-full bg-brand-600 border-2 border-brand-400 overflow-hidden flex items-center justify-center shrink-0"
           >
             {d.photo ? (
-              <img src={d.photo} alt="" className="w-full h-full object-cover" />
+              <StudentImage src={d.photo} alt="" className="w-full h-full object-cover" />
             ) : (
               <span className="text-base font-bold text-white">
                 {d.name?.charAt(0) || "?"}
@@ -140,7 +141,7 @@ export default function StudentHome() {
 
         {/* ======================================= DARAJA KARTASI */}
         <div
-          className="rounded-3xl p-5 relative overflow-hidden"
+          className="student-hero student-pattern rounded-3xl p-5 relative overflow-hidden"
           style={{
             background:
               "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)",
@@ -149,16 +150,7 @@ export default function StudentHome() {
           <div className="flex items-center gap-4">
             {/* Qalqon */}
             <div className="relative w-[86px] h-[96px] shrink-0">
-              <svg viewBox="0 0 64 72" className="w-full h-full drop-shadow-lg">
-                <defs>
-                  <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stopColor="#7FB2FF" />
-                    <stop offset="1" stopColor="#2D5BE8" />
-                  </linearGradient>
-                </defs>
-                <path d="M32 2 L60 12 V38 C60 54 46 65 32 70 C18 65 4 54 4 38 V12 Z"
-                      fill="url(#shield)" stroke="#BFD8FF" strokeWidth="2.5" />
-              </svg>
+              <StudentIcon name="level" className="w-full h-full" />
               <span className="absolute inset-0 flex items-center justify-center text-[26px] font-extrabold text-white pt-1">
                 {ov?.level?.cefr || "—"}
               </span>
@@ -208,11 +200,9 @@ export default function StudentHome() {
 
         {/* ====================================== BUGUNGI MISSIYA */}
         {daily && (
-          <div className="bg-white rounded-3xl p-4">
+          <div className="student-panel student-pattern bg-white rounded-3xl p-4">
             <div className="flex items-center gap-3">
-              <span className="w-11 h-11 rounded-full bg-sky-50 flex items-center justify-center text-[22px] shrink-0">
-                🎯
-              </span>
+              <StudentIcon name="mission" size={48} />
               <p className="text-[19px] font-extrabold text-slate-900 flex-1">
                 Bugungi missiya
               </p>
@@ -245,11 +235,7 @@ export default function StudentHome() {
                   to={t.href}
                   className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-3"
                 >
-                  <span
-                    className={`w-9 h-9 rounded-xl ${MISSION_ICON[i % 3]} flex items-center justify-center text-[15px] shrink-0`}
-                  >
-                    {MISSION_EMOJI[i % 3]}
-                  </span>
+                  <StudentIcon name={MISSION_ICONS[i % 3]} size={36} />
                   <span className="text-[15px] font-semibold text-slate-800 flex-1 min-w-0 truncate">
                     {t.title}
                   </span>
@@ -285,7 +271,7 @@ export default function StudentHome() {
         )}
 
         {/* ============================== COIN / XP / STREAK ===== */}
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="student-home-stats grid grid-cols-3 gap-2.5">
           <Link
             to="/student/shop"
             className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
@@ -314,7 +300,7 @@ export default function StudentHome() {
             className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
             style={card}
           >
-            <span className="text-[26px] leading-none">🔥</span>
+            <StudentIcon name="streak" size={32} />
             <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
               {d.streak}{" "}
               <span className="text-sm font-semibold text-slate-400">kun</span>
@@ -386,9 +372,7 @@ export default function StudentHome() {
             className="block bg-white rounded-3xl p-4 active:scale-[0.99] transition"
           >
             <div className="flex items-center gap-3">
-              <span className="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center text-[22px] shrink-0">
-                📓
-              </span>
+              <StudentIcon name="grammar" size={48} />
               <div className="min-w-0 flex-1">
                 <p className="text-[17px] font-extrabold text-slate-900 truncate">
                   {cont.title}

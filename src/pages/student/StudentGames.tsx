@@ -1,3 +1,4 @@
+import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -65,14 +66,14 @@ export default function StudentGames() {
   // 2x ga oshir" — endi har daraja 200 XP (backend roles.XP_PER_LEVEL).
   const level = Math.floor((d.lifetime_xp || 0) / 200) + 1;
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
-  const pill = "flex items-center gap-1.5 rounded-2xl border px-3 py-2 shrink-0";
+  const pill = "flex items-center justify-center gap-1 rounded-xl border px-1.5 py-2 min-w-0";
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
       {/* ------------------------------------------------ sarlavha */}
       <div className="flex items-center gap-2">
         <div className="flex-1 min-w-0"><JsaLogo /></div>
-        <img src="/jsicons/game-xp.png" alt="XP" className="w-12 h-12" />
+        <StudentImage src="/jsicons/game-xp.png" alt="XP" className="w-12 h-12" />
       </div>
 
       <h1 className="text-[38px] font-extrabold text-white leading-none mt-3">
@@ -83,25 +84,25 @@ export default function StudentGames() {
       </p>
 
       {/* ------------------------------------------- stat pilllari */}
-      <div className="flex gap-2 mt-4 overflow-x-auto pb-1 -mx-4 px-4">
+      <div className="student-learn-stats grid grid-cols-2 min-[380px]:grid-cols-4 gap-2 mt-4">
         <span className={pill} style={card}>
-          <img src="/jsicons/game-level.png" alt="" className="w-6 h-6" />
+          <StudentImage src="/jsicons/game-level.png" alt="" className="w-6 h-6" />
           <b className="text-white text-sm whitespace-nowrap">{level}-daraja</b>
         </span>
         <span className={pill} style={card}>
-          <img src="/jsicons/game-xp.png" alt="" className="w-6 h-6" />
+          <StudentImage src="/jsicons/game-xp.png" alt="" className="w-6 h-6" />
           <b className="text-white text-sm whitespace-nowrap">
             {fmtNum(d.lifetime_xp)} <span className="text-brand-300">XP</span>
           </b>
         </span>
         <span className={pill} style={card}>
-          <img src="/jsicons/game-coin.png" alt="" className="w-6 h-6" />
+          <StudentImage src="/jsicons/game-coin.png" alt="" className="w-6 h-6" />
           <b className="text-white text-sm whitespace-nowrap">
             {fmtNum(d.coins)} <span className="text-slate-400">Coin</span>
           </b>
         </span>
         <span className={pill} style={card}>
-          <img src="/jsicons/game-streak.png" alt="" className="w-6 h-6" />
+          <StudentImage src="/jsicons/game-streak.png" alt="" className="w-6 h-6" />
           <b className="text-white text-sm whitespace-nowrap">
             {d.streak} kun
           </b>
@@ -110,91 +111,43 @@ export default function StudentGames() {
 
       {/* -------------------------------------- Bugungi missiya */}
       {daily && (
-        <div className="bg-white rounded-3xl p-4 mt-4 flex items-center gap-4">
-          <img src="/jsicons/game-mission.png" alt="" className="w-16 h-16 shrink-0" />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <p className="text-[19px] font-extrabold text-slate-900 flex-1">
-                Bugungi missiya
-              </p>
-              <span className="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold shrink-0">
-                ⭐ +{daily.reward_xp} XP
-              </span>
-            </div>
-            <p className="text-[26px] font-extrabold text-slate-900 leading-none mt-1">
-              <span className="text-brand-600">{daily.done}</span>
-              <span className="text-slate-400 text-[20px]"> / {daily.total}</span>
-            </p>
-            <div className="h-2.5 rounded-full bg-slate-100 mt-2 overflow-hidden">
-              <div className="h-full bg-brand-600 rounded-full"
-                   style={{ width: `${daily.percent}%` }} />
-            </div>
-            <p className="text-[13px] text-slate-500 mt-1.5">
-              {daily.all_done
-                ? "Bugungi missiya bajarildi! 🎉"
-                : `Yana ${daily.total - daily.done} ta mashq qoldi`}
-            </p>
+        <div className="student-panel student-pattern bg-white rounded-3xl p-4 mt-4">
+          <div className="flex items-center gap-2 mb-3">
+            <StudentIcon name="mission" size={44} />
+            <h2 className="text-lg font-extrabold flex-1">Bugungi missiya</h2>
+            <b className="text-sm text-emerald-700">{daily.done}/{daily.total}</b>
+          </div>
+          <div className="divide-y divide-slate-100">
+            {daily.tasks.map((task, i) => <Link key={task.key} to={task.href} className="flex items-center gap-2 py-2.5">
+              <StudentIcon name={(["vocabulary", "grammar", "listening"] as const)[i % 3]} size={34} />
+              <span className="text-sm font-semibold flex-1">{task.title}</span>
+              <b className={`text-xs ${task.done ? "text-emerald-600" : "text-slate-500"}`}>{task.done_count}/{task.target}</b>
+              <span aria-label={task.done ? "Bajarildi" : "Bajarilmagan"} className={`w-6 h-6 rounded-full grid place-items-center ${task.done ? "bg-emerald-500 text-white" : "border-2 border-slate-300"}`}>{task.done ? "✓" : ""}</span>
+            </Link>)}
           </div>
         </div>
       )}
 
       {/* ----------------------------------------- Davom ettirish */}
       {cont && (
-        <div className="bg-white rounded-3xl p-4 mt-3 flex items-center gap-4">
-          <img src="/jsicons/learn-listening.png" alt=""
-               className="w-14 h-14 shrink-0" />
+        <Link to={cont.href} className="student-hero student-pattern rounded-2xl p-4 mt-3 flex items-center gap-3 text-white">
+          <StudentIcon name="grammar" size={52} />
           <div className="min-w-0 flex-1">
-            <p className="text-[19px] font-extrabold text-slate-900">
-              Davom ettirish
-            </p>
-            <p className="text-sm text-slate-500 mt-0.5 truncate">
-              {cont.subtitle} <span className="text-brand-600">•</span>{" "}
-              {cont.title}
-            </p>
-            <div className="flex items-center gap-2 mt-1.5">
-              <b className="text-brand-600 text-sm">{cont.percent}%</b>
-              <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
-                <div className="h-full bg-brand-600 rounded-full"
-                     style={{ width: `${cont.percent}%` }} />
-              </div>
-            </div>
+            <p className="text-base font-extrabold">O'rganishni davom ettirish</p>
+            <p className="text-xs text-white/85 mt-1">{cont.subtitle} · {cont.title}</p>
+            <div className="h-1.5 rounded-full bg-white/20 mt-2 overflow-hidden"><div className="h-full rounded-full bg-sky-300" style={{width: `${cont.percent}%`}} /></div>
           </div>
-          <Link to={cont.href}
-            className="px-4 py-3 rounded-xl bg-brand-600 text-white text-sm font-bold shrink-0">
-            Davom etish
-          </Link>
-        </div>
+          <ChevronRight size={22} />
+        </Link>
       )}
 
-      {/* ------------------------------------------- Daraja testi */}
-      <Link to="/student/level-test"
-        className="block rounded-3xl p-4 mt-3 text-white"
-        style={{
-          background:
-            "linear-gradient(120deg,#2B50E0,#4A56EC 55%,#7B5CF0)",
-        }}>
-        <div className="flex items-center gap-4">
-          <img src="/jsicons/learn-exam.png" alt=""
-               className="w-14 h-14 shrink-0" />
-          <div className="min-w-0 flex-1">
-            <p className="text-[19px] font-extrabold">Daraja testi</p>
-            <p className="text-[12.5px] text-white/80 mt-0.5 leading-snug">
-              Grammar, Vocabulary, Reading va Listening bo'yicha aniq
-              darajangizni aniqlang
-            </p>
-          </div>
-          <span className="px-3.5 py-2.5 rounded-xl bg-white/15 text-sm font-bold shrink-0">
-            Boshlash
-          </span>
-        </div>
-      </Link>
-
       {/* --------------------------------------------- bo'limlar */}
-      <div className="grid grid-cols-2 gap-3 mt-3">
+      <h2 className="text-lg font-bold text-white mt-5">Til ko'nikmalari</h2>
+      <div className="grid grid-cols-2 gap-2 mt-3">
         {d.sections.map((s) => (
           <Link key={s.key} to={s.href}
-            className="bg-white rounded-3xl p-4 active:scale-[0.98] transition">
-            <img src={SEC_ICON[s.key] || "/jsicons/learn-lesson.png"} alt=""
+            className="student-panel student-skill-card bg-white rounded-2xl p-3 active:scale-[0.98] transition">
+            <StudentImage src={SEC_ICON[s.key] || "/jsicons/learn-lesson.png"} alt=""
                  className="w-12 h-12" />
             <div className="flex items-center mt-2">
               <p className="text-[17px] font-extrabold text-slate-900 flex-1 truncate">
@@ -216,12 +169,35 @@ export default function StudentGames() {
         ))}
       </div>
 
+      {/* ------------------------------------------- Daraja testi */}
+      <Link to="/student/level-test"
+        className="block rounded-3xl p-4 mt-3 text-white"
+        style={{
+          background:
+            "linear-gradient(120deg,#2B50E0,#4A56EC 55%,#7B5CF0)",
+        }}>
+        <div className="flex items-center gap-4">
+          <StudentImage src="/jsicons/learn-exam.png" alt=""
+               className="w-14 h-14 shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[19px] font-extrabold">Daraja testi</p>
+            <p className="text-[12.5px] text-white/80 mt-0.5 leading-snug">
+              Grammar, Vocabulary, Reading va Listening bo'yicha aniq
+              darajangizni aniqlang
+            </p>
+          </div>
+          <span className="px-3.5 py-2.5 rounded-xl bg-white/15 text-sm font-bold shrink-0">
+            Boshlash
+          </span>
+        </div>
+      </Link>
+
       {/* ---- CEFR / IELTS (2026-08-24, Jahongir: "alohida bo'lim
            ochilishi kerak... intermediate tugatganda ochiladigan") */}
       {d.ielts && (
         <Link to={d.ielts.href || "/student/ielts"}
           className="flex items-center gap-3 rounded-3xl p-4 mt-3 bg-white active:scale-[0.98] transition">
-          <img src="/jsicons/learn-exam.png" alt="" className="w-12 h-12 shrink-0" />
+          <StudentImage src="/jsicons/learn-exam.png" alt="" className="w-12 h-12 shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-[17px] font-extrabold text-slate-900">
               CEFR / IELTS

@@ -1,3 +1,4 @@
+import { StudentIcon, type StudentIconName } from "../../components/StudentIcon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -393,22 +394,23 @@ export default function StudentPractice() {
         <div className="flex items-center gap-2.5">
           <Link to="/student/games"
             className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
-            style={{ background: "#111C4B", borderColor: "#223070" }}>
+            style={{ background: "#0c2258", borderColor: "#35538c" }}>
             <X size={18} />
           </Link>
-          <p className="text-[15px] font-extrabold tracking-wide flex-1">
+          <p className="text-[13px] font-extrabold tracking-wide flex-1 min-w-0">
             JONY STUDENT APP
           </p>
           <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold shrink-0"
-                style={{ background: "#111C4B", borderColor: "#223070" }}>
-            ⬡ +10 XP
+                style={{ background: "#0c2258", borderColor: "#35538c" }}>
+            <StudentIcon name="xp" size={16} /> +10 XP
           </span>
           <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold text-amber-300 shrink-0"
-                style={{ background: "#111C4B", borderColor: "#5c4a15" }}>
-            🪙 +3 Coin
+                style={{ background: "#0c2258", borderColor: "#5c4a15" }}>
+            <StudentIcon name="coin" size={16} /> +3 Coin
           </span>
         </div>
-        <div className="flex items-center gap-2 mt-3 mb-1">
+        <div className="student-hero student-pattern rounded-2xl p-3 flex items-center gap-2 mt-3 mb-1 flex-wrap">
+          <StudentIcon name={({reading:"reading",listening:"listening",writing:"writing",speaking:"speaking"} as Record<string, StudentIconName>)[skill || ""] || "grammar"} size={42} />
           <p className="text-[22px] font-extrabold shrink-0">
             {!finished && kind && items.length > 0
               ? <>{Math.min(idx + 1, items.length)}
@@ -425,14 +427,14 @@ export default function StudentPractice() {
           {kind && (
             <button onClick={() => setKind(null)}
               className="text-[11px] font-medium rounded-full px-2.5 py-1 border text-slate-300 shrink-0"
-              style={{ background: "#111C4B", borderColor: "#223070" }}>
+              style={{ background: "#0c2258", borderColor: "#35538c" }}>
               turni almashtirish
             </button>
           )}
           {needLevel && level && (
             <button onClick={() => { setKind(null); setLevel(null); }}
               className="text-[11px] font-bold rounded-full px-2.5 py-1 border text-brand-300 shrink-0"
-              style={{ background: "#111C4B", borderColor: "#223070" }}
+              style={{ background: "#0c2258", borderColor: "#35538c" }}
               title="Darajani almashtirish">
               {level}
             </button>
@@ -442,7 +444,7 @@ export default function StudentPractice() {
 
       <div className="max-w-md mx-auto px-4 mt-3 space-y-3 pb-8">
         {err && (
-          <div className="bg-white rounded-xl border border-red-200 p-4">
+          <div className="student-panel bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>
             <button
               onClick={() => (kind === null ? setErr("") : load())}
@@ -455,7 +457,7 @@ export default function StudentPractice() {
 
         {/* ---- DARAJA TANLASH (2026-08-24) ---- */}
         {needLevel && level === null && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-1">
               Darajangizni tanlang
             </p>
@@ -507,7 +509,7 @@ export default function StudentPractice() {
 
         {/* ---- TUR TANLASH ---- */}
         {kind === null && (!needLevel || level !== null) && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Qaysi turdagi mashqni xohlaysiz?
             </p>
@@ -594,7 +596,7 @@ export default function StudentPractice() {
           </div>
         )}
         {!finished && kind && (q?.text || d?.text) && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <div className="flex items-baseline justify-between mb-1.5">
               <p className="text-sm font-semibold text-slate-800">
                 {(q?.text || d.text).title}
@@ -654,7 +656,7 @@ export default function StudentPractice() {
         )}
 
         {finished && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 text-center">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-6 text-center">
             <Sparkles size={36} className="mx-auto text-amber-500 mb-2" />
             <p className="text-2xl font-bold text-slate-900">
               {score.ok}/{items.length}
@@ -681,7 +683,8 @@ export default function StudentPractice() {
         )}
 
         {!finished && kind && q && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <div className="text-center mb-4"><StudentIcon name={({reading:"reading",listening:"listening",writing:"writing",speaking:"speaking"} as Record<string, StudentIconName>)[skill || ""] || "grammar"} size={86} /></div>
             {/* ---- LISTENING: diktant (eski) ---- */}
             {["listen_type", "listen_choice", "listen_dictation"].includes(
               q.kind,

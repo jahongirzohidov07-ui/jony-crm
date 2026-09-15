@@ -122,7 +122,7 @@ export default function StudentCefrWritingGuide() {
                 onClick={() => setShow(show === i ? null : i)}
                 className="w-full text-left rounded-xl px-2.5 py-2 border"
                 style={{
-                  background: show === i ? "#111C4B" : "transparent",
+                  background: show === i ? "#0c2258" : "transparent",
                   borderColor: show === i ? "#2B3B8A" : "rgba(255,255,255,.07)",
                 }}
               >

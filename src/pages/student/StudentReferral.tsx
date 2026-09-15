@@ -1,6 +1,8 @@
+import { JsaLogo } from "../../components/Jsa";
+import { StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import {
-  Gift, Copy, Check, Share2, Users, Clock, TrendingUp, Info,
+  Copy, Check, Share2, Users, Clock, TrendingUp, Info,
 } from "lucide-react";
 import { api } from "../../lib/api";
 
@@ -80,12 +82,13 @@ export default function StudentReferral() {
   const lvl = d.level as number;
 
   return (
-    <div className="p-4 pb-24 space-y-4">
+    <div className="max-w-md mx-auto p-4 pb-8 space-y-4">
+      <JsaLogo />
       {/* ---- 1. HOLAT ---- */}
-      <div className="rounded-3xl bg-gradient-to-br from-violet-600 to-brand-600 p-5 text-white shadow-lg">
+      <div className="student-hero student-pattern rounded-3xl bg-gradient-to-br from-violet-600 to-brand-600 p-5 text-white shadow-lg">
         <div className="flex items-center gap-2 mb-3">
-          <Gift size={18} />
-          <span className="text-sm font-semibold">Do'stingni olib kel</span>
+          <StudentIcon name="gift" size={46} />
+          <h1 className="text-xl font-bold">Do'stingni olib kel</h1>
         </div>
         <p className="text-4xl font-extrabold leading-none">
           {d.percent}%
@@ -111,7 +114,7 @@ export default function StudentReferral() {
       </div>
 
       {/* ---- 2. HAVOLA ---- */}
-      <div className="rounded-2xl bg-white border border-slate-200 p-4">
+      <div className="student-panel rounded-2xl bg-white border border-slate-200 p-4">
         <p className="text-sm font-bold text-slate-900 mb-1">Sening havolang</p>
         <p className="text-xs text-slate-500 mb-3">
           Shu havolani do'stingga yubor. U ariza qoldirsa, sen bilan
@@ -147,7 +150,7 @@ export default function StudentReferral() {
       </div>
 
       {/* ---- 3. PILLAPOYA ---- */}
-      <div className="rounded-2xl bg-white border border-slate-200 p-4">
+      <div className="student-panel rounded-2xl bg-white border border-slate-200 p-4">
         <p className="text-sm font-bold text-slate-900 mb-3">Chegirma pillapoyasi</p>
         <div className="space-y-2">
           {d.ladder.map((s: any) => {
@@ -188,7 +191,7 @@ export default function StudentReferral() {
       </div>
 
       {/* ---- 4. DO'STLAR ---- */}
-      <div className="rounded-2xl bg-white border border-slate-200 p-4">
+      <div className="student-panel rounded-2xl bg-white border border-slate-200 p-4">
         <div className="flex items-center justify-between mb-3">
           <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
             <Users size={16} /> Taklif qilganlaring
@@ -250,7 +253,7 @@ export default function StudentReferral() {
 
       {/* ---- TARIX ---- */}
       {d.history.length > 0 ? (
-        <div className="rounded-2xl bg-white border border-slate-200 p-4">
+        <div className="student-panel rounded-2xl bg-white border border-slate-200 p-4">
           <p className="text-sm font-bold text-slate-900 mb-2">
             Olgan chegirmalaring
           </p>

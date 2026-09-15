@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Crown, Lock } from "lucide-react";
 import { api } from "../../lib/api";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { XpHex, JSA } from "../../components/Jsa";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 import { getLang, LANGS } from "../../lib/lang";

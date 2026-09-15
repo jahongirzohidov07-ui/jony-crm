@@ -1,3 +1,4 @@
+import { StudentIcon } from "../../components/StudentIcon";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, RotateCcw, Sparkles, X } from "lucide-react";
@@ -142,22 +143,23 @@ export default function StudentGrammarPlay() {
         <div className="flex items-center gap-2.5">
           <Link to="/student/grammar"
             className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
-            style={{ background: "#171238", borderColor: "#2f2670" }}>
+            style={{ background: "#0c2258", borderColor: "#35538c" }}>
             <X size={18} />
           </Link>
-          <p className="text-[15px] font-extrabold tracking-wide flex-1">
+          <p className="text-[13px] font-extrabold tracking-wide flex-1 min-w-0">
             JONY STUDENT APP
           </p>
           <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold shrink-0"
-                style={{ background: "#241d52", borderColor: "#4a3d99" }}>
-            ⬡ +9 XP
+                style={{ background: "#0c2258", borderColor: "#35538c" }}>
+            <StudentIcon name="xp" size={16} /> +9 XP
           </span>
           <span className="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 border text-[12px] font-bold text-amber-300 shrink-0"
-                style={{ background: "#241d52", borderColor: "#5c4a15" }}>
-            🪙 +5 Coin
+                style={{ background: "#0c2258", borderColor: "#5c4a15" }}>
+            <StudentIcon name="coin" size={16} /> +5 Coin
           </span>
         </div>
-        <div className="flex items-center gap-2.5 mt-3 mb-1">
+        <div className="student-hero student-pattern rounded-2xl p-3 flex items-center gap-2.5 mt-3 mb-1">
+          <StudentIcon name="grammar" size={44} />
           {!finished && items.length > 0 ? (
             <>
               <p className="text-[24px] font-extrabold shrink-0">
@@ -178,7 +180,7 @@ export default function StudentGrammarPlay() {
 
       <div className="max-w-md mx-auto px-4 mt-3 space-y-3 pb-8">
         {err && (
-          <div className="bg-white rounded-xl border border-red-200 p-4">
+          <div className="student-panel bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>
             <button onClick={load} className="mt-2 text-sm font-medium text-violet-600">
               Qayta urinish
@@ -188,7 +190,7 @@ export default function StudentGrammarPlay() {
 
         {/* ---- YAKUN ---- */}
         {finished && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 text-center">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-6 text-center">
             <Sparkles size={36} className="mx-auto text-violet-500 mb-2" />
             <p className="text-2xl font-bold text-slate-900">
               {score.ok}/{items.length}
@@ -217,7 +219,7 @@ export default function StudentGrammarPlay() {
 
         {/* ---- MASHQLAR SONINI TANLASH ---- */}
         {kind !== null && cnt === null && !err && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Nechta mashq ishlaysiz?
             </p>
@@ -254,7 +256,7 @@ export default function StudentGrammarPlay() {
 
         {/* ---- MASHQ TURINI TANLASH ---- */}
         {kind === null && !err && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Qaysi turdagi mashqni xohlaysiz?
             </p>
@@ -292,7 +294,7 @@ export default function StudentGrammarPlay() {
 
         {/* ---- SAVOL ---- */}
         {!finished && q && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-[11px] font-semibold text-violet-500 uppercase tracking-wide mb-2">
               {q.kind === "fill"
                 ? "Bo'sh joyni to'ldiring"
@@ -302,7 +304,7 @@ export default function StudentGrammarPlay() {
                     ? "Matnni to'ldiring"
                     : "So'zlardan jumla tuzing"}
             </p>
-            <p className="text-base font-medium text-slate-900 leading-relaxed mb-4 whitespace-pre-line">
+            <p className="text-xl font-bold text-slate-900 leading-relaxed mb-4 whitespace-pre-line">
               {q.prompt}
             </p>
 

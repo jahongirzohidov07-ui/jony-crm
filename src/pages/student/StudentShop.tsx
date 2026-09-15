@@ -1,3 +1,5 @@
+import { JsaLogo } from "../../components/Jsa";
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -5,7 +7,7 @@ import {
   ShoppingCart, Flame, Trophy, Lock, BookOpen, Star, Calendar, Award,
   Target, Clock, ArrowLeft, Gift, Percent,
 } from "lucide-react";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { formatDate } from "../../lib/format";
 import { api, type MyCoins, type RewardItem } from "../../lib/api";
 
@@ -239,7 +241,7 @@ export default function StudentShop() {
         key={r.id}
         onClick={() => can && setAsk(r)}
         className={`text-left bg-white rounded-2xl p-3 flex flex-col transition ${
-          can ? "active:scale-[0.99]" : "opacity-60"
+          can ? "active:scale-[0.99]" : "cursor-default"
         }`}
         style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.06)" }}
       >
@@ -252,7 +254,7 @@ export default function StudentShop() {
             </span>
           )}
           {img ? (
-            <img
+            <StudentImage
               src={img}
               alt=""
               className="max-h-[96px] max-w-full object-contain"
@@ -300,16 +302,17 @@ export default function StudentShop() {
   };
 
   /* --------------------------------------------------------- ekran */
-  const darkView = view !== "shop";
+  const darkView = true;
   return (
     <div className="min-h-screen"
-         style={{ background: darkView ? "#0A1233" : "#F7FAFE" }}>
+         style={{ background: "transparent" }}>
       <div className="max-w-md mx-auto px-4 pt-5 pb-6">
+        <div className="mb-5"><JsaLogo /></div>
         {/* ----------------------------------------- sarlavha qatori */}
         <div className="flex items-start justify-between mb-4">
           {view === "shop" ? (
-            <h1 className="text-[26px] font-extrabold text-slate-900 leading-tight">
-              Coin do'koni
+            <h1 className="text-[26px] font-extrabold text-white leading-tight">
+              Jony Shop
             </h1>
           ) : (
             <button
@@ -355,10 +358,10 @@ export default function StudentShop() {
         {/* -------------------------------------- ko'k balans kartasi */}
         {(view === "shop" || view === "history") && (
           <div
-            className="relative rounded-[20px] px-5 py-5 overflow-hidden"
+            className="student-hero student-pattern relative rounded-[20px] px-5 py-5 overflow-hidden"
             style={{ background: "#1A6EE4" }}
           >
-            <img
+            <StudentImage
               src="/shop/coins.png"
               alt=""
               className="absolute right-2 top-1/2 -translate-y-1/2 w-[168px] pointer-events-none select-none"
@@ -405,7 +408,7 @@ export default function StudentShop() {
           <>
             {/* promo blok */}
             <div
-              className="mt-4 rounded-[18px] px-5 py-4 flex items-center gap-2"
+              className="student-shop-promo mt-4 rounded-[18px] px-5 py-4 flex items-center gap-2"
               style={{ background: "#EBF2FE" }}
             >
               <div className="min-w-0 flex-1">
@@ -416,7 +419,7 @@ export default function StudentShop() {
                   Mashqlarni bajaring va ko'proq coin oling
                 </p>
               </div>
-              <img
+              <StudentImage
                 src="/shop/gift.png"
                 alt=""
                 className="w-[92px] shrink-0 -my-1"
@@ -477,7 +480,7 @@ export default function StudentShop() {
 
             {/* bo'lim sarlavhasi */}
             <div className="mt-5 flex items-center">
-              <h2 className="text-[21px] font-extrabold text-slate-900 flex-1">
+              <h2 className="text-[21px] font-extrabold text-white flex-1">
                 {cat || q ? "Sovrinlar" : "Mashhur sovrinlar"}
               </h2>
               {(cat || q) && (
@@ -513,7 +516,7 @@ export default function StudentShop() {
               <div
                 key={h.id}
                 className="rounded-2xl border p-3.5 flex items-center gap-3"
-                style={{ background: "#111C4B", borderColor: "#223070" }}
+                style={{ background: "#0c2258", borderColor: "#35538c" }}
               >
                 <span
                   className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[17px] font-bold ${
@@ -570,7 +573,7 @@ export default function StudentShop() {
           <div className="mt-4 space-y-2">
             {d.orders.length === 0 && (
               <div className="rounded-2xl border p-8 text-center"
-                   style={{ background: "#111C4B", borderColor: "#223070" }}>
+                   style={{ background: "#0c2258", borderColor: "#35538c" }}>
                 <ShoppingBag size={28} className="mx-auto text-slate-500 mb-2" />
                 <p className="text-sm text-slate-400">
                   Hali hech narsa olmagansiz
@@ -627,7 +630,7 @@ export default function StudentShop() {
             ))}
             {d.orders.length > 0 && (
               <div className="rounded-2xl border p-3.5 flex items-center gap-3"
-                   style={{ background: "#111C4B", borderColor: "#223070" }}>
+                   style={{ background: "#0c2258", borderColor: "#35538c" }}>
                 <span className="w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0 text-sm font-bold">
                   i
                 </span>
@@ -776,7 +779,7 @@ export default function StudentShop() {
           >
             <div className="flex items-center gap-3 mb-3">
               {rewardImage(ask) ? (
-                <img
+                <StudentImage
                   src={rewardImage(ask)!}
                   alt=""
                   className="w-14 h-14 object-contain shrink-0"

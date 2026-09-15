@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronRight, PenLine } from "lucide-react";
@@ -95,7 +96,7 @@ export default function StudentCefrWriting() {
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
           CEFR Multilevel
         </p>
-        <img src="/jsicons/learn-writing.png" alt=""
+        <StudentImage src="/jsicons/learn-writing.png" alt=""
              className="w-10 h-10 shrink-0" />
       </div>
 

@@ -1,9 +1,10 @@
+import { StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Lock } from "lucide-react";
 import { api } from "../../lib/api";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { XpHex, JSA } from "../../components/Jsa";
 import { fmtNum, type SkillsCard } from "../../lib/studentApi";
 
@@ -62,7 +63,7 @@ export default function StudentRoadmap() {
         <span className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 border shrink-0"
               style={card}>
           <XpHex size={16} />
-          <b className="text-white text-sm">{fmtNum(points)} XP</b>
+          <b className="text-white text-sm">{fmtNum(points)} ball</b>
         </span>
       </div>
 
@@ -71,7 +72,7 @@ export default function StudentRoadmap() {
       </h1>
       <p className="text-[15px] mt-2">
         <span className="text-slate-400">Jami</span>{" "}
-        <b className="text-brand-400">{fmtNum(points)} XP</b>
+        <b className="text-brand-400">{fmtNum(points)} ball</b>
       </p>
 
       {/* --------------------------------------- Coin/XP farqi */}
@@ -87,7 +88,7 @@ export default function StudentRoadmap() {
              style={{ borderColor: "#1E2A5E" }}>
           <XpHex size={24} />
           <p className="text-[15px] text-white">
-            <b>XP</b> <span className="text-slate-400">— daraja oshiradi</span>
+            <b>XP</b> <span className="text-slate-400">— reyting va liga uchun</span>
           </p>
         </div>
       </div>
@@ -165,21 +166,12 @@ export default function StudentRoadmap() {
       </Link>
 
       {/* ------------------------------------ joriy daraja kartasi */}
-      <div className="rounded-3xl p-5 mt-4"
+      <div className="student-hero student-pattern rounded-3xl p-5 mt-4"
            style={{ background:
              "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)" }}>
         <div className="flex items-center gap-4">
           <div className="relative w-[80px] h-[90px] shrink-0">
-            <svg viewBox="0 0 64 72" className="w-full h-full drop-shadow-lg">
-              <defs>
-                <linearGradient id="shield2" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#7FB2FF" />
-                  <stop offset="1" stopColor="#2D5BE8" />
-                </linearGradient>
-              </defs>
-              <path d="M32 2 L60 12 V38 C60 54 46 65 32 70 C18 65 4 54 4 38 V12 Z"
-                    fill="url(#shield2)" stroke="#BFD8FF" strokeWidth="2.5" />
-            </svg>
+            <StudentIcon name="level" className="w-full h-full" />
             <span className="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold text-white pt-1">
               {cur?.cefr}
             </span>

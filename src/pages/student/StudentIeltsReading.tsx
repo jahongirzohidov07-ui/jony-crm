@@ -150,7 +150,7 @@ export default function StudentIeltsReading() {
     setResult(null);
   }
 
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
@@ -177,7 +177,7 @@ export default function StudentIeltsReading() {
       </div>
 
       {err && (
-        <div className="bg-white rounded-xl border border-red-200 p-4 mt-4">
+        <div className="student-panel bg-white rounded-xl border border-red-200 p-4 mt-4">
           <p className="text-sm text-red-600">{err}</p>
         </div>
       )}
@@ -185,7 +185,7 @@ export default function StudentIeltsReading() {
       {/* ---------------------------------------- 1) QOIDALAR */}
       {phase === "tips" && tips && (
         <>
-          <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+          <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-4">
             <p className="text-sm font-semibold text-slate-800">
               Avval qoidalarni o'qing
             </p>
@@ -236,7 +236,7 @@ export default function StudentIeltsReading() {
           </div>
 
           {(tips.steps || []).length > 0 && (
-            <div className="bg-white rounded-xl border border-slate-200 p-4 mt-3">
+            <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-3">
               <p className="text-sm font-semibold text-slate-800 mb-2">
                 Mashq bosqichlari
               </p>
@@ -275,7 +275,7 @@ export default function StudentIeltsReading() {
 
       {/* ------------------------------------- 2) nechta mashq */}
       {phase === "count" && (
-        <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+        <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-4">
           <p className="text-sm font-semibold text-slate-800 mb-1">
             Nechta savol ishlaymiz?
           </p>
@@ -319,7 +319,7 @@ export default function StudentIeltsReading() {
       {/* ----------------------------------------- 3) MASHQ */}
       {phase === "play" && !finished && q && (
         <>
-          <div className="bg-white rounded-xl border border-slate-200 p-4 mt-4">
+          <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-semibold text-slate-500">
                 {q.title || "Passage"}
@@ -352,7 +352,7 @@ export default function StudentIeltsReading() {
             )}
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-4 mt-3">
+          <div className="student-panel bg-white rounded-xl border border-slate-200 p-4 mt-3">
             <p className="text-[11px] font-semibold text-slate-500 mb-1.5">
               {q.instruction || "Question"}
             </p>
@@ -627,7 +627,7 @@ export default function StudentIeltsReading() {
                   kerak" — paraffraz alohida, ko'zga tashlanadigan
                   blokda turadi. */}
               {result.paraphrase && (
-                <div className="mt-2 rounded-lg bg-white border border-slate-200 p-2.5">
+                <div className="student-panel mt-2 rounded-lg bg-white border border-slate-200 p-2.5">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                     Paraffraz
                   </p>
@@ -661,7 +661,7 @@ export default function StudentIeltsReading() {
 
       {/* -------------------------------------------- yakun */}
       {phase === "play" && finished && (
-        <div className="bg-white rounded-xl border border-slate-200 p-5 mt-4 text-center">
+        <div className="student-panel bg-white rounded-xl border border-slate-200 p-5 mt-4 text-center">
           <p className="text-sm font-semibold text-slate-800">
             Mashq tugadi
           </p>

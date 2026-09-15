@@ -1,0 +1,116 @@
+/* Approved Jony Student design. Scoped to the student experience. */
+.student-app {
+  --student-blue: #1a6fe4;
+  --student-navy: #020d38;
+  min-height: 100dvh;
+  background: radial-gradient(ellipse at 80% 12%, #073b9b55, transparent 46%), linear-gradient(165deg, #020a2c, #03164f 70%, #02113e);
+  color: #e6edff;
+  isolation: isolate;
+  padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+.student-content { position: relative; min-height: 70dvh; }
+.student-content::before, .student-login::before {
+  content: ""; position: absolute; pointer-events: none;
+  top: 0; right: max(0px, calc((100% - 448px) / 2)); width: 210px; height: 65px;
+  background: url('/student-design/pattern.png') right top / 600px auto repeat-x;
+  opacity: .2; z-index: -1; mask-image: linear-gradient(120deg, transparent, #000);
+}
+.student-app h1 { letter-spacing: -.035em; line-height: 1.15; }
+.student-app h1, .student-app h2 { text-wrap: balance; }
+.student-app :is(button, a, input, textarea, select, summary):focus-visible {
+  outline: 3px solid #50caff; outline-offset: 3px;
+}
+.student-app :is(input, textarea, select) { font-size: max(16px, 1em); }
+.student-app button:disabled { cursor: not-allowed; }
+.student-app button:not(:disabled), .student-app a { -webkit-tap-highlight-color: transparent; }
+.student-panel {
+  background-image: linear-gradient(145deg, #fff, #f7f9ff);
+  border: 1px solid #dce7ff; border-radius: 22px;
+  box-shadow: 0 7px 25px #00092522, inset 0 1px 0 #fff;
+  color: #101c40;
+}
+.student-pattern { position: relative; isolation: isolate; }
+.student-pattern::after {
+  content: ""; position: absolute; pointer-events: none; bottom: 3px; right: 8px;
+  width: min(65%, 250px); height: 13px;
+  background: url('/student-design/pattern.png') right center / 450px auto repeat-x;
+  opacity: .16; z-index: -1;
+}
+.student-hero {
+  position: relative; isolation: isolate; border: 1px solid #85baffaa;
+  background: radial-gradient(ellipse at 0 0, #40aeff99, transparent 65%), linear-gradient(120deg, #0751d9, #003acf 60%, #753bf0) !important;
+  box-shadow: 0 8px 30px #034cff35, inset 0 1px 12px #b1d7ff44;
+}
+.student-hero::after { opacity: .3; }
+.student-icon {
+  display: inline-block; flex-shrink: 0; vertical-align: middle;
+  background-image: url('/student-design/icons-3d.png'); background-size: 400% 400%; background-repeat: no-repeat;
+  filter: drop-shadow(0 3px 3px #00134d20);
+}
+.student-app .bg-brand-600 {
+  background-image: linear-gradient(135deg, #169aff, #0055f5 70%);
+  box-shadow: inset 0 1px 0 #ffffff55, 0 3px 10px #0055f522;
+}
+.student-app .h-2\.5 > .bg-white { background: linear-gradient(#8eeeff, #1ebfff 48%, #0070ff); box-shadow: 0 0 8px #39cbff; }
+.student-nav {
+  background: linear-gradient(180deg, #031039f5, #020a2cfa);
+  border-color: #668eff45; backdrop-filter: blur(18px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.student-nav a { min-height: 62px; color: #c0cbea; }
+.student-nav [aria-current="page"] { color: #50caff; }
+.student-nav-icon { width: 48px; height: 34px; border-radius: 17px; display: grid; place-items: center; }
+.student-nav [aria-current="page"] .student-nav-icon {
+  color: white; background: linear-gradient(135deg, #00aaff, #0046f3);
+  border: 1px solid #4ed5ff; box-shadow: 0 0 15px #007aff66, inset 0 1px 2px #a5edff99;
+}
+.student-nav [aria-current="page"] svg { fill: #ffffff30; }
+.student-xp-help { font-size: 11px; color: #e0eaff; margin-top: 5px; }
+.student-xp-help summary { cursor: pointer; min-height: 24px; display: flex; align-items: center; gap: 4px; }
+.student-xp-help summary::before { content: 'ⓘ'; font-size: 13px; }
+.student-xp-help[open] { background: #02113a55; padding: 7px 10px; border-radius: 10px; }
+.student-xp-help p { line-height: 1.6; margin-top: 5px; }
+.student-login { position: relative; padding-bottom: 40px; }
+.student-login > div { position: relative; }
+.student-content > .max-w-md, .student-content > div > .max-w-md { padding-top: 22px; }
+.student-home-stats > a { display: grid; grid-template-columns: auto 1fr; column-gap: 7px; align-items: center; }
+.student-home-stats > a > :first-child { grid-row: span 2; }
+.student-home-stats > a > p { margin-top: 0; }
+.student-home-stats > a > p:last-child { grid-column: 2; margin-top: 4px; }
+.student-continue > div { flex-wrap: wrap; }
+.student-continue > div > span:last-child { margin-left: auto; }
+.student-game-progress { color: #c2d3fa; }
+.student-skill-card { display: grid; grid-template-columns: 43px minmax(0, 1fr); gap: 3px 6px; align-items: center; }
+.student-skill-card > .student-icon { grid-row: span 2; width: 43px; height: 48px; }
+.student-skill-card > div { margin-top: 0; min-width: 0; }
+.student-skill-card > div > p { font-size: 13px; }
+.student-skill-card > div > b { font-size: 11px; }
+.student-skill-card > div > svg { display: none; }
+.student-writing-input { background: #fff !important; color: #14224a; border-color: #ccd9f7 !important; min-height: 260px; box-shadow: 0 5px 20px #00092522; }
+.student-writing-result > div[style] { background: #fff !important; border-color: #dce7ff !important; border-radius: 22px; color: #14224a; }
+.student-writing-result > div[style] :is(.text-white, .text-slate-200, .text-slate-300, .text-emerald-100) { color: #14224a; }
+.student-writing-result > div[style] .text-slate-400 { color: #64748b; }
+@media (max-width: 359px) {
+  .student-logo { gap: 6px; }
+  .student-logo img { width: 30px !important; height: 30px !important; }
+  .student-logo p { font-size: 11px; white-space: nowrap; }
+  .student-app .max-w-md { padding-left: 12px; padding-right: 12px; }
+  .student-home-stats > a { padding: 10px 6px; column-gap: 3px; }
+  .student-home-stats .student-icon { width: 25px !important; height: 25px !important; }
+  .student-app h1 { font-size: 27px; }
+  .student-nav a { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .student-app *, .student-app *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+.student-learn-stats b { font-size: 11px; white-space: normal; overflow-wrap: anywhere; }
+.student-learn-stats .student-icon { width: 20px; height: 20px; }
+.student-app .overflow-x-auto { scrollbar-width: none; }
+.student-app .overflow-x-auto::-webkit-scrollbar { display: none; }
+.student-shop-promo { display: grid; grid-template-columns: 54px 1fr; }
+.student-shop-promo > div { grid-column: 1 / -1; }
+.student-shop-promo > img { width: 54px; }
+.student-shop-promo > button { justify-self: end; }
+.student-app h1 { font-size: clamp(26px, 7.6vw, 34px); }

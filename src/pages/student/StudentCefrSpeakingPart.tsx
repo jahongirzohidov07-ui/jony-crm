@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, X, AlertTriangle, Clock } from "lucide-react";
@@ -283,7 +284,7 @@ export default function StudentCefrSpeakingPart() {
                       RASM {lb}
                     </p>
                     {im ? (
-                      <img src={im} alt="" className="w-full rounded-xl" />
+                      <StudentImage src={im} alt="" className="w-full rounded-xl" />
                     ) : (
                       <p className="text-[12px] text-slate-300 leading-relaxed">
                         {sc}
@@ -297,7 +298,7 @@ export default function StudentCefrSpeakingPart() {
             <div className="rounded-2xl border p-3 mt-3" style={card}>
               <p className="text-[10px] font-bold text-brand-300 mb-1">RASM</p>
               {t.img ? (
-                <img src={t.img} alt="" className="w-full rounded-xl" />
+                <StudentImage src={t.img} alt="" className="w-full rounded-xl" />
               ) : (
                 <p className="text-[12px] text-slate-300 leading-relaxed">
                   {t.scene}

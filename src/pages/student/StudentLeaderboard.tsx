@@ -1,7 +1,8 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowUp, Clock, Crown, Gift, Info } from "lucide-react";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { JsaLogo, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
@@ -50,7 +51,7 @@ function Avatar({ row, size, ring }: { row: Row; size: number; ring: string }) {
       style={{ width: size, height: size }}
     >
       {row.photo ? (
-        <img src={row.photo} alt="" className="w-full h-full object-cover" />
+        <StudentImage src={row.photo} alt="" className="w-full h-full object-cover" />
       ) : (
         <span className="font-extrabold text-white"
               style={{ fontSize: size * 0.4 }}>
@@ -286,7 +287,7 @@ export default function StudentLeaderboard() {
 
       {/* --------------------------------- SIZNING O'RNINGIZ (oq) */}
       {d && !d.hint && d.me && (
-        <div className="bg-white rounded-3xl p-4 mt-4">
+        <div className="student-panel bg-white rounded-3xl p-4 mt-4">
           <p className="text-[17px] font-extrabold text-slate-900 mb-3">
             Sizning o'rningiz
           </p>

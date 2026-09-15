@@ -1,3 +1,4 @@
+import { StudentIcon } from "../../components/StudentIcon";
 import {
   useCallback, useEffect, useState,
   type FormEvent, type ReactNode,
@@ -186,7 +187,7 @@ export default function StudentGamePlay() {
   if (phase === "bridge") {
     return (
       <Shell title={round.label}>
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
+        <div className="student-panel bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
           <p className="text-5xl mb-2">🔁</p>
           <p className="text-lg font-bold text-slate-900">
             {correctCount} / {countWords(round.items)} to'g'ri
@@ -218,7 +219,7 @@ export default function StudentGamePlay() {
     const pct = total ? Math.round((correctCount / total) * 100) : 0;
     return (
       <Shell title={round.label}>
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
+        <div className="student-panel bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
           <p className="text-5xl mb-2">
             {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
           </p>
@@ -259,7 +260,7 @@ export default function StudentGamePlay() {
   return (
     <Shell title={round.label}>
       <div className="mb-4">
-        <div className="flex justify-between text-[11px] text-slate-500 mb-1">
+        <div className="student-game-progress flex justify-between text-[11px] mb-1">
           <span>
             {idx + 1} / {list.length}
             {phase === "retry" && (
@@ -278,7 +279,8 @@ export default function StudentGamePlay() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <div className="student-panel bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+        <div className="text-center mb-3"><StudentIcon name="vocabulary" size={76} /></div>
         {round.game === "flashcard" && (
           <Flashcard item={item} onAnswer={answer} disabled={!!feedback} />
         )}

@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, Lock } from "lucide-react";
@@ -50,7 +51,7 @@ export default function StudentIelts() {
         <div className="flex-1 min-w-0">
           <JsaLogo />
         </div>
-        <img src="/jsicons/learn-exam.png" alt="" className="w-12 h-12" />
+        <StudentImage src="/jsicons/learn-exam.png" alt="" className="w-12 h-12" />
       </div>
 
       <h1 className="text-[34px] font-extrabold text-white leading-none mt-3">
@@ -64,7 +65,7 @@ export default function StudentIelts() {
         <div className="rounded-2xl border p-5 mt-5 text-center" style={card}>
           <div
             className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center"
-            style={{ background: "#111C4B" }}
+            style={{ background: "#0c2258" }}
           >
             <Lock size={24} className="text-amber-400" />
           </div>
@@ -94,7 +95,7 @@ export default function StudentIelts() {
                 className="flex items-center gap-3 rounded-2xl border p-4"
                 style={card}
               >
-                <img src={e.icon} alt="" className="w-12 h-12 shrink-0" />
+                <StudentImage src={e.icon} alt="" className="w-12 h-12 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="text-white font-bold text-[17px]">

@@ -1,5 +1,6 @@
+import { StudentIcon } from "./StudentIcon";
 import { useEffect, useState } from "react";
-import { Pencil, Target } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { api } from "../lib/api";
 
 /**
@@ -65,9 +66,9 @@ export function GoalCard() {
   /* ─── Maqsad qo'yilmagan / tahrirlash ─── */
   if (!g.target || editing) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="student-panel student-pattern bg-white rounded-xl border border-slate-200 p-4">
         <div className="flex items-center gap-2 mb-1.5">
-          <Target size={17} className="text-violet-600" />
+          <StudentIcon name="mission" size={38} />
           <p className="text-[14px] font-bold text-slate-900">
             IELTS maqsadingiz nechchi?
           </p>
@@ -123,9 +124,9 @@ export function GoalCard() {
 
   /* ─── Yo'lda ─── */
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
+    <div className="student-panel student-pattern bg-white rounded-xl border border-slate-200 p-4">
       <div className="flex items-center gap-2">
-        <Target size={17} className="text-violet-600" />
+        <StudentIcon name="mission" size={38} />
         <p className="text-[14px] font-bold text-slate-900">
           Maqsad: IELTS {fmtBand(g.target)}
         </p>

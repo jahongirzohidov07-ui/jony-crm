@@ -1,5 +1,7 @@
+import "../../student-design.css";
+import { studentTabFor } from "../../lib/studentNavigation";
 import { useEffect } from "react";
-import { NavLink, Outlet, Navigate, useLocation } from "react-router-dom";
+import { Link, Outlet, Navigate, useLocation } from "react-router-dom";
 import { Home, BookOpen, Trophy, Gift, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 import { isStudentApp } from "../../lib/appMode";
@@ -24,22 +26,19 @@ import { isStudentApp } from "../../lib/appMode";
  */
 
 const TABS = [
-  { to: "/student", end: true, icon: Home, label: "Asosiy",
-    tone: "text-brand-600 bg-brand-50" },
-  { to: "/student/games", end: false, icon: BookOpen, label: "O'rganish",
-    tone: "text-emerald-600 bg-emerald-50" },
-  { to: "/student/leaderboard", end: false, icon: Trophy, label: "Reyting",
-    tone: "text-amber-600 bg-amber-50" },
+  { to: "/student", icon: Home, label: "Asosiy" },
+  { to: "/student/games", icon: BookOpen, label: "O'rganish" },
+  { to: "/student/leaderboard", icon: Trophy, label: "Reyting" },
   // Dizaynda (shop.png, 2026-08-20) faol "Mukofotlar" ko'k rangda -
   // do'kon ekrani bilan bir xil bo'lsin.
-  { to: "/student/shop", end: false, icon: Gift, label: "Mukofotlar",
-    tone: "text-brand-600 bg-brand-50" },
-  { to: "/student/profile", end: false, icon: User, label: "Profil",
-    tone: "text-sky-600 bg-sky-50" },
+  { to: "/student/shop", icon: Gift, label: "Mukofotlar" },
+  { to: "/student/profile", icon: User, label: "Profil" },
 ];
 
 export default function StudentLayout() {
   const { user, logout } = useAuth();
+  const path = useLocation().pathname;
+  const activeTab = studentTabFor(path);
 
   // PWA: "Jony Student" nomi bilan uy ekraniga o'rnatiladi. Manifest
   // faqat shu bo'limda ulanadi — xodimlar paneli o'zicha qoladi.
@@ -70,54 +69,17 @@ export default function StudentLayout() {
   }
   if (user.role !== "student") return <Navigate to="/" replace />;
 
-  // TO'Q KO'K TEMA (2026-08-20, Jahongir: "Jony Student appning
-  // dizaynini toliq tashladim papkada 1ga 1 qilib ber"). Dizayn
-  // berilgan 5 asosiy ekran to'q navy fonda; ichki sahifalar
-  // (mashqlar, sozlamalar, to'lovlar...) hali eski och temada -
-  // ularning matni to'q fonda ko'rinmay qolmasligi uchun fon
-  // marshrutga qarab tanlanadi. Do'kon o'z fonini o'zi qo'yadi.
-  const path = useLocation().pathname;
-  // 2026-08-21: dizayn to'plami to'liq keldi - endi deyarli barcha
-  // sahifalar to'q temada. Faqat do'kon (o'z och foni bor) tashqarida.
-  const dark = path !== "/student/shop";
   return (
-    <div className="min-h-screen pb-24"
-         style={{ background: dark ? "#0A1233" : "#F1F5F9" }}>
-      <Outlet />
-
-      <nav
-        className="fixed bottom-0 inset-x-0 z-40 pb-safe border-t"
-        style={{ background: "rgba(10,17,46,0.97)", borderColor: "#1D2A63" }}
-      >
+    <div className="student-app" data-design-version="jony-2026-09">
+      <main className="student-content" id="student-content"><Outlet /></main>
+      <nav aria-label="Asosiy menyu" className="student-nav fixed bottom-0 inset-x-0 z-40 border-t">
         <div className="max-w-md mx-auto grid grid-cols-5 pt-1.5 pb-1">
           {TABS.map((t) => (
-            <NavLink
-              key={t.to}
-              to={t.to}
-              end={t.end}
-              className="flex flex-col items-center gap-1 py-1 text-[11px] font-medium"
-            >
-              {({ isActive }) => (
-                <>
-                  <span
-                    className={`flex items-center justify-center w-12 h-8 rounded-2xl transition ${
-                      isActive ? "bg-brand-600 text-white" : "text-slate-400"
-                    }`}
-                  >
-                    <t.icon size={19} />
-                  </span>
-                  <span
-                    className={
-                      isActive
-                        ? "text-brand-400 font-semibold"
-                        : "text-slate-400"
-                    }
-                  >
-                    {t.label}
-                  </span>
-                </>
-              )}
-            </NavLink>
+            <Link key={t.to} to={t.to} aria-current={activeTab === t.to ? "page" : undefined}
+              className="flex flex-col items-center gap-1 py-1 text-[11px] font-medium">
+              <span className="student-nav-icon"><t.icon size={23} strokeWidth={1.8} /></span>
+              <span>{t.label}</span>
+            </Link>
           ))}
         </div>
       </nav>

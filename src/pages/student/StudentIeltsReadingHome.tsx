@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ChevronRight, Lock } from "lucide-react";
@@ -58,7 +59,7 @@ export default function StudentIeltsReadingHome() {
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
           {isCefr ? "CEFR Multilevel" : "IELTS"}
         </p>
-        <img src="/jsicons/learn-reading.png" alt=""
+        <StudentImage src="/jsicons/learn-reading.png" alt=""
              className="w-10 h-10 shrink-0" />
       </div>
 
@@ -168,7 +169,7 @@ export default function StudentIeltsReadingHome() {
         className="flex items-center gap-3 rounded-2xl border p-4 mt-4"
         style={card}
       >
-        <img src="/jsicons/learn-reading.png" alt=""
+        <StudentImage src="/jsicons/learn-reading.png" alt=""
              className="w-10 h-10 shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="text-[14px] font-bold text-white">

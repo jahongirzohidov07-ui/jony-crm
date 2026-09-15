@@ -1,10 +1,11 @@
+import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Camera, Check, ChevronRight, LogOut, Settings,
   TrendingUp, X } from "lucide-react";
 import { BrandIcon } from "../../components/BrandIcon";
-import { CoinIcon } from "../../components/CoinIcon";
+import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { useAuth } from "../../lib/AuthContext";
 import { api } from "../../lib/api";
 import { fmtNum, type LevelProgress } from "../../lib/studentApi";
@@ -218,7 +219,7 @@ export default function StudentProfile() {
   // 2026-08-20: "profil.png" dizayni bo'yicha TO'Q temada qayta
   // terildi (Jahongir: "1ga 1 qilib ber"). Radar, rasm yuklash,
   // to'lov va chiqish mantig'i o'zgarmadi.
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8 space-y-4">
@@ -268,14 +269,14 @@ export default function StudentProfile() {
       )}
 
       {/* -------------------------------------- FOYDALANUVCHI KARTASI */}
-      <div className="rounded-3xl p-5"
+      <div className="student-hero student-pattern rounded-3xl p-5"
            style={{ background:
              "linear-gradient(120deg,#16267A 0%,#1D2F8E 60%,#3A2F9E 100%)" }}>
         <div className="flex items-center gap-4">
           <label className="relative shrink-0 cursor-pointer">
             <div className="w-[88px] h-[88px] rounded-full bg-brand-600 border-4 border-brand-400/70 overflow-hidden flex items-center justify-center">
               {d.photo ? (
-                <img src={d.photo} alt="" className="w-full h-full object-cover" />
+                <StudentImage src={d.photo} alt="" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-[34px] font-extrabold text-white">
                   {(d.first_name || d.full_name || "?").charAt(0)}
@@ -290,7 +291,7 @@ export default function StudentProfile() {
           </label>
 
           <div className="min-w-0 flex-1">
-            <p className="text-[26px] font-extrabold text-white truncate">
+            <p className="text-[23px] font-extrabold text-white break-words leading-tight">
               {d.first_name || d.full_name}
             </p>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -330,7 +331,7 @@ export default function StudentProfile() {
       {/* 2026-08-25, Jahongir: "hamma skillarni qoshib ortachasini
           chiqarganda uni IELTS balli kelib chiqsin". */}
       {d.ielts && (
-        <div className="bg-white rounded-3xl p-4">
+        <div className="student-panel bg-white rounded-3xl p-4">
           <div className="flex items-center gap-3">
             <div className="w-[64px] h-[64px] rounded-2xl bg-slate-900 flex flex-col items-center justify-center shrink-0">
               <b className="text-white text-[20px] leading-none">
@@ -416,7 +417,7 @@ export default function StudentProfile() {
 
       {/* -------------------------------------- ENGLISH SKILLS (oq) */}
       {d.radar && d.radar.length > 0 && (
-        <div className="bg-white rounded-3xl p-4">
+        <div className="student-panel bg-white rounded-3xl p-4">
           <p className="text-[22px] font-extrabold text-slate-900">
             English Skills
           </p>
@@ -458,7 +459,7 @@ export default function StudentProfile() {
         <Link to="/student/shop?tab=badges"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">🏆</span>
+          <StudentIcon name="trophy" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">Yutuqlar</p>
             <p className="text-[15px] font-extrabold text-brand-300">
@@ -484,7 +485,7 @@ export default function StudentProfile() {
         <Link to="/student/certificates"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">🎖️</span>
+          <StudentIcon name="certificate" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">Sertifikatlar</p>
             <p className="text-[15px] font-extrabold text-brand-300">
@@ -497,7 +498,7 @@ export default function StudentProfile() {
         <Link to="/student/payments"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>
-          <span className="text-[30px] shrink-0">👛</span>
+          <StudentIcon name="wallet" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">To'lovlar</p>
             <p className={`text-[15px] font-extrabold truncate ${
@@ -517,7 +518,7 @@ export default function StudentProfile() {
         className="block rounded-2xl p-4 bg-gradient-to-r from-violet-600 to-brand-600
                    active:scale-[0.98] transition">
         <div className="flex items-center gap-3">
-          <span className="text-[30px] shrink-0">🎁</span>
+          <StudentIcon name="gift" size={40} />
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold text-white">
               Do'stingni olib kel

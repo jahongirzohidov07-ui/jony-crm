@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowDownLeft, ArrowUpRight, ChevronRight, Percent } from "lucide-react";
@@ -34,7 +35,7 @@ export default function StudentPayments() {
     return true;
   });
   const bal = d?.balance ?? 0;
-  const card = { background: "#111C4B", borderColor: "#223070" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   // Sana bo'yicha guruhlaymiz (dizayndagidek "17-avgust" sarlavhalari)
   const groups: [string, Any[]][] = [];
@@ -59,10 +60,10 @@ export default function StudentPayments() {
       </div>
 
       {/* ------------------------------------------ hamyon kartasi */}
-      <div className="rounded-3xl p-5 mt-4 flex items-center gap-4"
+      <div className="student-hero student-pattern rounded-3xl p-5 mt-4 flex items-center gap-4"
            style={{ background:
              "linear-gradient(115deg,#1B3FA8 0%,#2D4FD0 55%,#7B5CF0 100%)" }}>
-        <img src="/jsicons/shop-wallet.png" alt=""
+        <StudentImage src="/jsicons/shop-wallet.png" alt=""
              className="w-[76px] h-[76px] shrink-0" />
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-bold text-white/80 tracking-wide">
@@ -144,7 +145,7 @@ export default function StudentPayments() {
 
       <div className="rounded-2xl border p-4 mt-4 flex items-center gap-3"
            style={card}>
-        <img src="/jsicons/auth-protected.png" alt="" className="w-11 h-11" />
+        <StudentImage src="/jsicons/auth-protected.png" alt="" className="w-11 h-11" />
         <p className="text-[14px] text-slate-300">
           <b className="text-white">Hisob va to'lovlar</b><br />
           avtomatik solishtiriladi.

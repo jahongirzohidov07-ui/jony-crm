@@ -1,3 +1,4 @@
+import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -64,7 +65,7 @@ export default function StudentVocab() {
   });
 
   // Yashil tema kartasi (dizaynda lug'at yashil ohangda)
-  const card = { background: "#0E1F32", borderColor: "#1E3A4E" };
+  const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8"
@@ -73,7 +74,7 @@ export default function StudentVocab() {
       <div className="flex items-center gap-2.5">
         <Link to="/student/games"
           className="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0"
-          style={{ background: "#0F5132" }}>
+          style={{ background: "#1242a0" }}>
           <ArrowLeft size={18} />
         </Link>
         <p className="text-[15px] font-bold text-slate-300 flex-1">O'rganish</p>
@@ -89,14 +90,14 @@ export default function StudentVocab() {
       <div className="flex items-end gap-3 mt-3">
         <div className="flex-1 min-w-0">
           <h1 className="text-[30px] font-extrabold text-white leading-tight">
-            JONY STUDENT APP
+            Lug'at
           </h1>
           <span className="mt-2 inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-semibold text-white"
                 style={card}>
             <Flag code={lang} size={17} /> {langMeta.label}
           </span>
         </div>
-        <img src="/jsicons/learn-vocabulary.png" alt=""
+        <StudentImage src="/jsicons/learn-vocabulary.png" alt=""
              className="w-[74px] h-[74px] shrink-0" />
       </div>
 
@@ -110,19 +111,19 @@ export default function StudentVocab() {
             </p>
             <p className="text-[11px] text-slate-400 mt-1.5">to'g'ri javob</p>
           </div>
-          <div className="border-l" style={{ borderColor: "#1E3A4E" }}>
+          <div className="border-l" style={{ borderColor: "#35538c" }}>
             <p className="text-[24px] font-extrabold text-white leading-none">
               {fmtNum(st.total)}
             </p>
             <p className="text-[11px] text-slate-400 mt-1.5">urinish</p>
           </div>
-          <div className="border-l" style={{ borderColor: "#1E3A4E" }}>
+          <div className="border-l" style={{ borderColor: "#35538c" }}>
             <p className="text-[24px] font-extrabold text-emerald-400 leading-none">
               {st.percent}%
             </p>
             <p className="text-[11px] text-slate-400 mt-1.5">aniqlik</p>
           </div>
-          <div className="border-l" style={{ borderColor: "#1E3A4E" }}>
+          <div className="border-l" style={{ borderColor: "#35538c" }}>
             <p className="text-[24px] font-extrabold text-white leading-none">
               🔥{st.streak}
             </p>
@@ -136,8 +137,8 @@ export default function StudentVocab() {
       {/* ------------------------------------------ umumiy mashq */}
       <button
         onClick={() => setPicker("")}
-        className="w-full mt-3 rounded-2xl p-4 flex items-center gap-3 text-left active:scale-[0.99] transition"
-        style={{ background: "linear-gradient(100deg,#12B76A,#039855)" }}
+        className="student-hero student-pattern w-full mt-3 rounded-2xl p-4 flex items-center gap-3 text-left active:scale-[0.99] transition"
+        style={{ background: "linear-gradient(120deg,#078cff,#0049ef,#6940ed)" }}
       >
         <span className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-[22px] shrink-0">
           🔀
@@ -175,7 +176,7 @@ export default function StudentVocab() {
            ["solid", "Mustahkam"]] as const).map(([k, l]) => (
           <button key={k} onClick={() => setFilt(k)}
             className={`flex-1 py-2.5 rounded-full text-sm font-bold transition ${
-              filt === k ? "bg-emerald-600 text-white" : "text-slate-300 border"}`}
+              filt === k ? "bg-brand-600 text-white" : "text-slate-300 border"}`}
             style={filt === k ? undefined : card}>
             {l}
           </button>

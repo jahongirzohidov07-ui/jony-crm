@@ -292,6 +292,38 @@ def teacher_finance(
     out["can_pay"] = user.role in tuple(roles.SALARY_PAY)
     return out
 
+
+# Boshqa ustozning oyligini o'quvchi kesimida ko'ra oladiganlar
+_BREAKDOWN_MANAGERS = tuple(dict.fromkeys(
+    tuple(roles.FINANCE_ACCESS) + tuple(roles.SALARY_VIEW_ALL)
+    + (roles.ACADEMIC_HEAD, roles.HR_MANAGER)))
+
+
+@router.get("/api/teachers/{teacher_id}/salary-breakdown")
+def teacher_salary_breakdown(
+    teacher_id: int,
+    year: int | None = None,
+    month: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SALARY_SELF_VIEW)),
+):
+    """Bir oylik oylik TO'LIQ: filial -> guruh -> o'quvchi (2026-09-15,
+    Jahongir: "oqituvchilarga oyligini aynan qaysi oquvchi nechta
+    kelgan toliq hisoboti ... oziniki korinsin"). Ustoz faqat o'zinikini,
+    rahbariyat istalgan ustoznikini ko'radi."""
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Ustoz topilmadi")
+    if user.role not in _BREAKDOWN_MANAGERS:
+        me = _teacher_of_user(db, user)
+        if not me or me.id != teacher_id:
+            raise HTTPException(403, "Faqat o'z oyligingizni ko'ra olasiz")
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    if not 1 <= m <= 12:
+        raise HTTPException(400, "Oy noto'g'ri")
+    return _salary_breakdown(db, t, y, m)
+
 @router.post("/api/teachers/{teacher_id}/payments")
 def pay_teacher(
     teacher_id: int,

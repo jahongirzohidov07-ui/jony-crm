@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { api, type TeacherFinance as Fin, type TeacherFinanceMonth } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { SalaryBreakdown } from "./SalaryBreakdown";
 
 /**
  * USTOZNING MOLIYA BO'LIMI — oylar bo'yicha oylik tarixi.
@@ -126,6 +127,7 @@ export function TeacherFinance({
               <MonthRow
                 key={m.period}
                 m={m}
+                teacherId={teacherId ?? d.teacher_id}
                 open={open === m.period}
                 compact={compact}
                 onToggle={() => setOpen(open === m.period ? null : m.period)}
@@ -150,9 +152,10 @@ export function TeacherFinance({
 }
 
 function MonthRow({
-  m, open, compact, onToggle,
+  m, teacherId, open, compact, onToggle,
 }: {
   m: TeacherFinanceMonth;
+  teacherId?: number;
   open: boolean;
   compact: boolean;
   onToggle: () => void;
@@ -255,8 +258,10 @@ function MonthRow({
             </div>
           )}
 
-          {/* Guruhlar kesimi */}
-          {m.by_group.length > 0 ? (
+          {/* To'liq hisobot: filial -> guruh -> o'quvchi (2026-09-15) */}
+          {teacherId && (m.earned || m.lessons) ? (
+            <SalaryBreakdown teacherId={teacherId} period={m.period} compact={compact} />
+          ) : m.by_group.length > 0 ? (
             <div>
               <p className="text-[11px] font-medium text-slate-500 mb-1">
                 Qanday hisoblandi

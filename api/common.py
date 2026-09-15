@@ -1897,6 +1897,160 @@ def _payroll_branch_label(t, group_branch_ids, names: dict, branches):
     return label
 
 
+def _salary_breakdown(db: Session, t, year: int, month: int) -> dict:
+    """USTOZ OYLIGI TO'LIQ: filial -> guruh -> o'quvchi (2026-09-15).
+
+    Jahongir: "oqituvchilarga oyligini aynan qaysi oquvchi nechta kelgan
+    toliq hisoboti oquvchilar kesimida guruhlar kesimida oziniki
+    korinsin ... 2ta filialda ishlasa filiallar kesimida korinsin".
+
+    Hisob _teacher_earned() bilan AYNAN bir xil qoidadan yuradi:
+      - har belgi (keldi ham, kelmadi ham) = 1 yo'qlama x dars kunidagi
+        narx (billing.per_attendance_rate_m);
+      - guruhdan chiqqan o'quvchining oxirgi kelgan kunidan KEYINGI
+        belgilari sanalmaydi (billing.attendance_cutoff_many) — ular
+        "not_counted" bo'lib ko'rsatiladi, yashirilmaydi."""
+    start, end = billing.month_bounds(year, month)
+    period = f"{year:04d}-{month:02d}"
+    ctx = billing.PayrollContext(db)
+    ctx.prefetch([t.id])
+    lessons = [l for l in ctx.lessons(t.id, start, end)
+               if ctx.groups.get(l.group_id)]
+    ctx.prefill_divisors(lessons)
+    by_id = {l.id: l for l in lessons}
+
+    marks = []                                  # (dars, o'quvchi, belgi)
+    for chunk in billing._chunks(list(by_id)):
+        for lid, sid, pr in (db.query(models.Attendance.lesson_id,
+                                      models.Attendance.student_id,
+                                      models.Attendance.present)
+                             .filter(models.Attendance.lesson_id.in_(chunk))
+                             .all()):
+            marks.append((by_id[lid], sid, pr))
+    per_group: dict = {}
+    for les, sid, _pr in marks:
+        per_group.setdefault(les.group_id, set()).add(sid)
+    cut = billing.attendance_cutoff_many(db, per_group) if per_group else {}
+
+    students: dict = {}
+    for chunk in billing._chunks(sorted({sid for _l, sid, _p in marks})):
+        for s in (db.query(models.Student.id, models.Student.full_name,
+                           models.Student.status)
+                  .filter(models.Student.id.in_(chunk)).all()):
+            students[s.id] = s
+    names = {b.id: b.name for b in db.query(models.Branch).all()}
+
+    rates: dict = {}
+
+    def rate_of(les):
+        if les.id not in rates:
+            g = ctx.groups[les.group_id]
+            ps = ctx.grades.per_student(g, les.teacher_id, les.date)
+            rates[les.id] = (billing.per_attendance_rate_m(
+                db, g, les.date, ps, ctx.mcache), ps)
+        return rates[les.id]
+
+    branches: dict = {}
+
+    def group_box(g):
+        br = branches.setdefault(g.branch_id, {
+            "branch_id": g.branch_id,
+            "branch": names.get(g.branch_id) or "Filialsiz",
+            "amount": 0.0, "attendances": 0, "lessons": 0,
+            "not_counted": 0, "groups": {}})
+        return br, br["groups"].setdefault(g.id, {
+            "group_id": g.id, "group": g.name, "rate": 0.0,
+            "rate_per_student_month": 0.0,
+            "standard_lessons": g.standard_lessons_per_month or 12,
+            "lessons": 0, "attendances": 0, "not_counted": 0,
+            "amount": 0.0, "students": {}})
+
+    for les in lessons:
+        g = ctx.groups[les.group_id]
+        br, gr = group_box(g)
+        gr["lessons"] += 1
+        br["lessons"] += 1
+        gr["rate"], gr["rate_per_student_month"] = rate_of(les)
+
+    for les, sid, pr in marks:
+        g = ctx.groups[les.group_id]
+        br, gr = group_box(g)
+        rate, _ps = rate_of(les)
+        st = students.get(sid)
+        row = gr["students"].setdefault(sid, {
+            "student_id": sid,
+            "student": st.full_name if st else f"#{sid}",
+            "status": st.status if st else None,
+            "present": 0, "absent": 0, "counted": 0, "not_counted": 0,
+            "amount": 0.0})
+        if pr in (1, 2):
+            row["present"] += 1
+        else:
+            row["absent"] += 1
+        stop = cut.get(les.group_id, {}).get(sid)
+        if stop is not None and les.date and les.date > stop:
+            row["not_counted"] += 1
+            gr["not_counted"] += 1
+            br["not_counted"] += 1
+            continue
+        row["counted"] += 1
+        row["amount"] += rate
+        gr["attendances"] += 1
+        gr["amount"] += rate
+        br["attendances"] += 1
+        br["amount"] += rate
+
+    flat: dict = {}
+    out_branches = []
+    for br in sorted(branches.values(), key=lambda b: -b["amount"]):
+        groups_out = []
+        for gr in sorted(br["groups"].values(), key=lambda x: -x["amount"]):
+            st_rows = sorted(gr["students"].values(),
+                             key=lambda x: (-x["amount"], x["student"]))
+            for r in st_rows:
+                r["amount"] = round(r["amount"], 2)
+                f = flat.setdefault(r["student_id"], {
+                    "student_id": r["student_id"], "student": r["student"],
+                    "status": r["status"], "present": 0, "absent": 0,
+                    "counted": 0, "not_counted": 0, "amount": 0.0,
+                    "groups": [], "branches": []})
+                for k in ("present", "absent", "counted", "not_counted",
+                          "amount"):
+                    f[k] += r[k]
+                if gr["group"] not in f["groups"]:
+                    f["groups"].append(gr["group"])
+                if br["branch"] not in f["branches"]:
+                    f["branches"].append(br["branch"])
+            groups_out.append(dict(gr, amount=round(gr["amount"], 2),
+                                   students=st_rows))
+        out_branches.append(dict(br, amount=round(br["amount"], 2),
+                                 groups=groups_out))
+    flat_rows = sorted(
+        (dict(f, amount=round(f["amount"], 2),
+              groups=", ".join(f["groups"]),
+              branches=", ".join(f["branches"])) for f in flat.values()),
+        key=lambda x: (-x["amount"], x["student"]))
+
+    seal = _seal_rows(db, period, [t.id]).get(t.id)
+    amount = round(sum(b["amount"] for b in out_branches), 2)
+    return {
+        "teacher_id": t.id,
+        "full_name": t.full_name,
+        "period": period,
+        "title": _month_title(period),
+        "sealed": seal is not None,
+        "sealed_amount": (round(float(seal.amount or 0), 2)
+                          if seal is not None else None),
+        "amount": amount,
+        "attendances": sum(b["attendances"] for b in out_branches),
+        "lessons": len(lessons),
+        "not_counted": sum(b["not_counted"] for b in out_branches),
+        "multi_branch": len(out_branches) > 1,
+        "branches": out_branches,
+        "students": flat_rows,
+    }
+
+
 def _problem(key: str, message: str) -> dict:
     return {
         "key": key,
@@ -7033,6 +7187,7 @@ __all__ = [
     "_earned_in_branches",
     "_paid_share",
     "_payroll_branch_label",
+    "_salary_breakdown",
     "_period_bounds",
     "_period_key",
     "_perm_overrides",

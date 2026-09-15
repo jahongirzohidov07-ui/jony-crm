@@ -2425,6 +2425,59 @@ export interface SalaryGroupRow {
   amount: number;
 }
 
+/** Oylik to'liq: filial -> guruh -> o'quvchi (2026-09-15). */
+export interface SalaryBreakdownStudent {
+  student_id: number;
+  student: string;
+  status?: string | null;
+  present: number;
+  absent: number;
+  counted: number;       // oylikka sanalgan belgilar
+  not_counted: number;   // guruhdan chiqqanidan keyingi belgilar
+  amount: number;
+  groups?: string;
+  branches?: string;
+}
+
+export interface SalaryBreakdownGroup {
+  group_id: number;
+  group: string;
+  rate: number;
+  rate_per_student_month: number;
+  standard_lessons: number;
+  lessons: number;
+  attendances: number;
+  not_counted: number;
+  amount: number;
+  students: SalaryBreakdownStudent[];
+}
+
+export interface SalaryBreakdownBranch {
+  branch_id: number | null;
+  branch: string;
+  amount: number;
+  attendances: number;
+  lessons: number;
+  not_counted: number;
+  groups: SalaryBreakdownGroup[];
+}
+
+export interface SalaryBreakdown {
+  teacher_id: number;
+  full_name: string;
+  period: string;
+  title: string;
+  sealed: boolean;
+  sealed_amount: number | null;
+  amount: number;
+  attendances: number;
+  lessons: number;
+  not_counted: number;
+  multi_branch: boolean;
+  branches: SalaryBreakdownBranch[];
+  students: SalaryBreakdownStudent[];
+}
+
 export interface SalaryPaymentRow {
   id: number;
   amount: number;

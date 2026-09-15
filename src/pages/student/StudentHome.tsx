@@ -1,3 +1,4 @@
+import { StudentLevelBadge } from "../../components/StudentLevelBadge";
 import { StudentLoading } from "../../components/StudentLoading";
 import { StudentIcon } from "../../components/StudentIcon";
 import { StudentImage } from "../../components/StudentIcon";
@@ -150,12 +151,7 @@ export default function StudentHome() {
         >
           <div className="flex items-center gap-4">
             {/* Qalqon */}
-            <div className="relative w-[86px] h-[96px] shrink-0">
-              <StudentIcon name="level" className="w-full h-full" />
-              <span className="absolute inset-0 flex items-center justify-center text-[26px] font-extrabold text-white pt-1">
-                {ov?.level?.cefr || "—"}
-              </span>
-            </div>
+            <StudentLevelBadge level={ov?.level?.cefr} size={86} />
 
             <div className="min-w-0 flex-1">
               <p className="text-[27px] font-extrabold text-white leading-tight truncate">

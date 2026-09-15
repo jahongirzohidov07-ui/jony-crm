@@ -3398,6 +3398,9 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
     """LLM'ga murojaat. OPENAI_API_KEY yoki GEMINI_API_KEY dan birini
     ishlatadi. Testda shu funksiya almashtiriladi (monkeypatch)."""
     import httpx
+    import time as _clock
+    from teacher_response import generation_config, response_text
+    deadline = _clock.monotonic() + 22
 
     # Chat uses text/teacher; exam callers use content/assistant.
     messages = [{"role": m.get("role", "user"),
@@ -3412,22 +3415,29 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
            or os.getenv("JONYTEACHER") or "").strip()
 
     if oai:
-        r = httpx.post(
-            "https://api.openai.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {oai}"},
-            json={
-                "model": os.getenv("SPEAKING_MODEL", "gpt-4o-mini"),
-                "max_tokens": max_tokens,
-                "temperature": 0.7,
-                "messages": [{"role": "system", "content": system}] + [
-                    {"role": ("assistant" if m["role"] in ("teacher", "assistant")
-                              else "user"),
-                     "content": m["text"]} for m in messages],
-            },
-            timeout=25,
-        )
-        r.raise_for_status()
-        return r.json()["choices"][0]["message"]["content"].strip()
+        try:
+            r = httpx.post(
+                "https://api.openai.com/v1/chat/completions",
+                headers={"Authorization": f"Bearer {oai}"},
+                json={
+                    "model": os.getenv("SPEAKING_MODEL", "gpt-4o-mini"),
+                    "max_tokens": max_tokens,
+                    "temperature": 0.7,
+                    "messages": [{"role": "system", "content": system}] + [
+                        {"role": ("assistant" if m["role"] in ("teacher", "assistant")
+                                  else "user"),
+                         "content": m["text"]} for m in messages],
+                },
+                timeout=12,
+            )
+            r.raise_for_status()
+            reply = (r.json()["choices"][0]["message"].get("content") or "").strip()
+            if not reply:
+                raise ValueError("OpenAI empty reply")
+            return reply
+        except Exception:
+            if not gem:
+                raise
 
     if gem:
         contents = [
@@ -3453,7 +3463,7 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                 lr = httpx.get(
                     "https://generativelanguage.googleapis.com/v1beta/"
                     "models?pageSize=200",
-                    headers={"x-goog-api-key": gem}, timeout=15)
+                    headers={"x-goog-api-key": gem}, timeout=4)
                 lr.raise_for_status()
                 avail = []
                 for m in lr.json().get("models", []):
@@ -3461,7 +3471,7 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                     if ("generateContent" in
                             (m.get("supportedGenerationMethods") or [])
                             and nm.startswith("gemini")
-                            and "embedding" not in nm):
+                            and not any(kind in nm for kind in ("embedding", "image", "audio", "tts", "robotics"))):
                         avail.append(nm)
                 _ai_reply._avail = avail  # type: ignore
             except Exception:
@@ -3485,23 +3495,24 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                 order.append(n)
         errs = []
         for model in order:
+            if _clock.monotonic() >= deadline - 1:
+                break
             body = {
                 "systemInstruction": {"parts": [{"text": system}]},
-                "generationConfig": {"maxOutputTokens": max(300, max_tokens),
-                                     "temperature": 0.7},
+                "generationConfig": generation_config(model, max_tokens),
                 "contents": contents,
             }
-            for attempt in (1, 2):
+            for attempt in (1,):
                 try:
                     r = httpx.post(
                         f"https://generativelanguage.googleapis.com/"
                         f"v1beta/models/{model}:generateContent",
                         headers={"x-goog-api-key": gem},
-                        json=body, timeout=20)
+                        json=body, timeout=max(1, min(8, deadline - _clock.monotonic())))
                     r.raise_for_status()
+                    reply = response_text(r.json())
                     _ai_reply._good = model  # type: ignore
-                    return (r.json()["candidates"][0]["content"]
-                            ["parts"][0]["text"].strip())
+                    return reply
                 except Exception as e:
                     detail = ""
                     try:
@@ -3511,12 +3522,8 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                     errs.append(f"{model}#{attempt}: {e} {detail}")
                     status = getattr(getattr(e, "response", None),
                                      "status_code", None)
-                    if status in (503, 429) and attempt == 1:
-                        # Band yoki daqiqalik kvota — bir oz kutib
-                        # o'sha modelga yana bir urinish
-                        import time as _t
-                        _t.sleep(1.5)
-                        continue
+                    if status in (401, 403):
+                        raise LookupError(f"Gemini authentication rejected ({status})") from e
                     break        # boshqa xato - keyingi modelga
         # Hammasi kvota (429) bo'lsa — bolaga tushunarli alohida xabar
         if errs and all("429" in x for x in errs):

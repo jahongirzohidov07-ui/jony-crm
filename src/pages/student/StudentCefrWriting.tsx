@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -46,7 +47,7 @@ export default function StudentCefrWriting() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const g1 = (d.guide || []).filter((g: Any) => g.part === "1.1");
   const g2 = (d.guide || []).filter((g: Any) => g.part === "1.2");
@@ -66,7 +67,7 @@ export default function StudentCefrWriting() {
           <Link
             key={g.key}
             to={`/student/cefr/writing/guide/${g.key}`}
-            className="flex items-center gap-3 rounded-2xl border p-3.5"
+            className="student-study-card flex items-center gap-3 rounded-2xl border p-3.5"
             style={card}
           >
             <div className="flex-1 min-w-0">
@@ -84,7 +85,7 @@ export default function StudentCefrWriting() {
   );
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
           to="/student/ielts/exam/cefr"
@@ -105,7 +106,7 @@ export default function StudentCefrWriting() {
       </h1>
 
       {/* --- imtihon formati ------------------------------- */}
-      <div className="rounded-2xl border p-3.5 mt-4" style={card}>
+      <div className="student-study-card rounded-2xl border p-3.5 mt-4" style={card}>
         <p className="text-[12px] font-bold text-white mb-2">
           Imtihon formati
         </p>
@@ -140,7 +141,7 @@ export default function StudentCefrWriting() {
       </p>
       <div className="space-y-2">
         <Link to="/student/cefr/writing/tasks/1"
-              className="flex items-center gap-3 rounded-2xl border p-4"
+              className="student-study-card flex items-center gap-3 rounded-2xl border p-4"
               style={card}>
           <PenLine size={20} className="text-brand-300 shrink-0" />
           <div className="flex-1 min-w-0">
@@ -158,7 +159,7 @@ export default function StudentCefrWriting() {
           <ChevronRight size={16} className="text-slate-500 shrink-0" />
         </Link>
         <Link to="/student/cefr/writing/tasks/2"
-              className="flex items-center gap-3 rounded-2xl border p-4"
+              className="student-study-card flex items-center gap-3 rounded-2xl border p-4"
               style={card}>
           <PenLine size={20} className="text-brand-300 shrink-0" />
           <div className="flex-1 min-w-0">
@@ -185,7 +186,7 @@ export default function StudentCefrWriting() {
           <Link
             key={m.kind}
             to={`/student/cefr/writing/drill/${m.kind}`}
-            className="flex items-center gap-3 rounded-2xl border p-3.5"
+            className="student-study-card flex items-center gap-3 rounded-2xl border p-3.5"
             style={card}
           >
             <div className="flex-1 min-w-0">

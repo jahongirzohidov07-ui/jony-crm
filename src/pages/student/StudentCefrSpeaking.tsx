@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -35,10 +36,10 @@ export default function StudentCefrSpeaking() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
           to="/student/ielts/exam/cefr"
@@ -85,7 +86,7 @@ export default function StudentCefrSpeaking() {
       </Link>
 
       {/* --- ball shkalasi --- */}
-      <div className="rounded-2xl border p-3.5 mt-3" style={card}>
+      <div className="student-study-card rounded-2xl border p-3.5 mt-3" style={card}>
         <p className="text-[12px] font-bold text-white mb-2">
           Ball va daraja ({d.score_max} balldan)
         </p>
@@ -120,11 +121,11 @@ export default function StudentCefrSpeaking() {
           <Link
             key={p.key}
             to={`/student/cefr/speaking/part/${p.key}`}
-            className="flex items-center gap-3 rounded-2xl border p-3.5"
+            className="student-study-card flex items-center gap-3 rounded-2xl border p-3.5"
             style={card}
           >
             <div className="w-11 h-11 rounded-2xl flex flex-col items-center justify-center shrink-0"
-                 style={{ background: "#0c2258" }}>
+                 style={{ background: "#dbeafe" }}>
               <span className="text-[13px] font-extrabold text-white leading-none">
                 {p.part}
               </span>
@@ -156,7 +157,7 @@ export default function StudentCefrSpeaking() {
           <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mt-5 mb-1.5">
             Oldingi mocklar
           </p>
-          <div className="rounded-2xl border p-3.5" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5" style={card}>
             {d.mocks.map((m: Any, i: number) => (
               <div key={i} className="flex items-center gap-2 py-1 text-[12px]">
                 <span className="flex-1 text-slate-400">{m.date}</span>

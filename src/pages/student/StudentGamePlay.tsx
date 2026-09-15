@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentIcon } from "../../components/StudentIcon";
 import {
   useCallback, useEffect, useState,
@@ -178,7 +179,7 @@ export default function StudentGamePlay() {
   if (!round)
     return (
       <Shell title="Mashq">
-        <p className="text-sm text-slate-400 text-center py-16">Yuklanmoqda…</p>
+        <StudentLoading />
       </Shell>
     );
 

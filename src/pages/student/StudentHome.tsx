@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentIcon } from "../../components/StudentIcon";
 import { StudentImage } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
@@ -57,7 +58,7 @@ export default function StudentHome() {
     );
   if (!d)
     return (
-      <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>
+      <StudentLoading />
     );
 
   const ov = d.overall;

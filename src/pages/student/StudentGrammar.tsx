@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Crown, Lock } from "lucide-react";
@@ -91,7 +92,7 @@ export default function StudentGrammar() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d || !info)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const cur = info.lv[sel];

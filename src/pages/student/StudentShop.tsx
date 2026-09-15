@@ -1,10 +1,11 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { JsaLogo } from "../../components/Jsa";
-import { StudentImage } from "../../components/StudentIcon";
+import { StudentImage, StudentIcon, type StudentIconName } from "../../components/StudentIcon";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Check, X, ShoppingBag, AlertCircle, ChevronRight, Search,
-  ShoppingCart, Flame, Trophy, Lock, BookOpen, Star, Calendar, Award,
+  ShoppingCart, Flame, Trophy, Lock,
   Target, Clock, ArrowLeft, Gift, Percent,
 } from "lucide-react";
 import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
@@ -58,9 +59,9 @@ type Ach = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const BADGE_ICON: Record<string, any> = {
-  flame: Flame, book: BookOpen, check: Check, star: Star,
-  calendar: Calendar, award: Award,
+const BADGE_ICON: Record<string, StudentIconName> = {
+  flame: "streak", book: "vocabulary", check: "mission", star: "xp",
+  calendar: "level", award: "certificate",
 };
 
 const BADGE_TONE: Record<string, string> = {
@@ -173,7 +174,7 @@ export default function StudentShop() {
 
   useEffect(() => {
     if (view === "badges" && !ach) {
-      api.get<Ach>("/student/achievements").then(setAch).catch(() => {});
+      api.get<Ach>("/student/achievements").then(setAch).catch((e) => setErr(e instanceof Error ? e.message : "Yutuqlarni yuklab bo‘lmadi"));
     }
   }, [view, ach]);
 
@@ -209,7 +210,7 @@ export default function StudentShop() {
   if (err && !d)
     return <p className="text-sm text-slate-500 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const rewards = d.rewards.filter(
     (r) =>
@@ -643,8 +644,8 @@ export default function StudentShop() {
         )}
 
         {/* ================================================== YUTUQLAR */}
-        {view === "badges" && !ach && (
-          <p className="text-sm text-slate-400 text-center py-10">Yuklanmoqda…</p>
+        {view === "badges" && !ach && !err && (
+          <StudentLoading />
         )}
         {view === "badges" && ach && (
           <div className="mt-4 space-y-4">
@@ -699,7 +700,7 @@ export default function StudentShop() {
             {ach.next && (
               <div className="bg-brand-50 border border-brand-200 rounded-2xl p-3.5 flex items-center gap-3">
                 <Target size={18} className="text-brand-600 shrink-0" />
-                <p className="text-sm text-brand-800 flex-1">
+                <p className="text-sm text-blue-900 flex-1">
                   Keyingi yutuq: <b>{ach.next.label}</b> — yana {ach.next.left} ta
                 </p>
               </div>
@@ -707,7 +708,7 @@ export default function StudentShop() {
 
             <div className="flex items-center gap-2 px-1">
               <Trophy size={16} className="text-brand-600" />
-              <p className="text-[15px] font-bold text-slate-900 flex-1">Yutuqlar</p>
+              <p className="text-[19px] font-bold text-white flex-1">Yutuqlar</p>
               <span className="text-sm text-slate-400">
                 {ach.done}/{ach.total}
               </span>
@@ -715,11 +716,11 @@ export default function StudentShop() {
 
             <div className="grid grid-cols-2 gap-2.5">
               {ach.badges.map((b) => {
-                const Icon = BADGE_ICON[b.icon] || Trophy;
+                const badgeIcon = BADGE_ICON[b.icon] || "trophy";
                 return (
                   <div
                     key={b.key}
-                    className="rounded-2xl bg-white p-3.5"
+                    className="student-panel student-badge-card rounded-2xl bg-white p-3.5"
                     style={{ boxShadow: "0 1px 3px rgba(15,23,42,0.05)" }}
                   >
                     <span
@@ -729,16 +730,16 @@ export default function StudentShop() {
                           : "bg-slate-100 text-slate-300"
                       }`}
                     >
-                      <Icon size={20} />
+                      <StudentIcon name={badgeIcon} size={44} />
                     </span>
                     <p
                       className={`text-sm font-bold mt-2 ${
-                        b.done ? "text-slate-900" : "text-slate-400"
+                        b.done ? "text-slate-900" : "text-slate-700"
                       }`}
                     >
                       {b.label}
                     </p>
-                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                    <p className="text-[12px] text-slate-600 mt-0.5 leading-snug">
                       {b.hint}
                     </p>
                     {!b.done && (

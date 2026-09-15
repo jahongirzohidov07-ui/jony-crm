@@ -172,7 +172,7 @@ export default function StudentIeltsListening() {
   const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       {/* -------------------------------------------- sarlavha */}
       <div className="flex items-center gap-2.5 text-white">
         <Link
@@ -429,7 +429,7 @@ export default function StudentIeltsListening() {
 
       {/* ------------------------------------------ yakun */}
       {finished && (
-        <div className="rounded-2xl border p-6 mt-4 text-center" style={card}>
+        <div className="student-study-card rounded-2xl border p-6 mt-4 text-center" style={card}>
           <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/15 flex items-center justify-center">
             <Check size={26} className="text-emerald-400" />
           </div>
@@ -448,7 +448,7 @@ export default function StudentIeltsListening() {
             </button>
             <Link
               to={backHref}
-              className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-semibold text-slate-300"
+              className="student-study-card flex-1 rounded-xl border px-4 py-2.5 text-sm font-semibold text-slate-300"
               style={card}
             >
               Bo'limga qaytish

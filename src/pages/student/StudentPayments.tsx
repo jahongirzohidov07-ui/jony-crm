@@ -1,3 +1,4 @@
+import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -44,6 +45,9 @@ export default function StudentPayments() {
     const g = groups.find((x) => x[0] === label);
     if (g) g[1].push(r); else groups.push([label, [r]]);
   }
+
+  if (!d && err) return <StudentLoadError message={err} />;
+  if (!d) return <StudentLoading />;
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">

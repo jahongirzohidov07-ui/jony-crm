@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -42,7 +43,7 @@ export default function StudentIelts() {
     );
   if (!gate)
     return (
-      <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>
+      <StudentLoading />
     );
 
   return (

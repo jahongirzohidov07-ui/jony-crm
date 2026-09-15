@@ -1,3 +1,4 @@
+import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -30,6 +31,9 @@ export default function StudentCertificates() {
 
   const rows: Any[] = d?.rows || [];
   const card = { background: "#0c2258", borderColor: "#35538c" };
+
+  if (!d && err) return <StudentLoadError message={err} />;
+  if (!d) return <StudentLoading />;
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">

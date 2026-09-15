@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -47,7 +48,7 @@ export default function StudentIeltsReadingHome() {
   const soon = parts.filter((p: Any) => !p.ready);
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
           to={`/student/ielts/exam/${exam}`}
@@ -76,12 +77,12 @@ export default function StudentIeltsReadingHome() {
 
       {err && <p className="text-sm text-red-400 mt-4">{err}</p>}
       {loading && (
-        <p className="text-sm text-slate-500 mt-6">Yuklanmoqda…</p>
+        <StudentLoading />
       )}
 
       {ready.length > 0 && (
         <>
-          <div className="rounded-2xl border p-4 mt-5" style={card}>
+          <div className="student-study-card rounded-2xl border p-4 mt-5" style={card}>
             <p className="text-white font-bold text-[15px]">
               Ochiq mashqlar
             </p>
@@ -97,7 +98,7 @@ export default function StudentIeltsReadingHome() {
               <Link
                 key={p.kind}
                 to={`/student/ielts/reading/${p.kind}?exam=${exam}`}
-                className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
+                className="student-study-card flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
                 style={card}
               >
                 <div className="w-10 h-10 rounded-xl bg-sky-400/15 text-sky-300 flex items-center justify-center shrink-0 text-[15px] font-extrabold">
@@ -131,7 +132,7 @@ export default function StudentIeltsReadingHome() {
 
       {soon.length > 0 && (
         <>
-          <div className="rounded-2xl border p-4 mt-4" style={card}>
+          <div className="student-study-card rounded-2xl border p-4 mt-4" style={card}>
             <p className="text-white font-bold text-[15px]">
               Qolgan savol turlari
             </p>
@@ -143,7 +144,7 @@ export default function StudentIeltsReadingHome() {
             {soon.map((p: Any) => (
               <div
                 key={p.no}
-                className="flex items-center gap-3 rounded-2xl border p-3.5 opacity-75"
+                className="student-study-card flex items-center gap-3 rounded-2xl border p-3.5 opacity-75"
                 style={card}
               >
                 <div className="w-9 h-9 rounded-xl bg-slate-700/40 text-slate-400 flex items-center justify-center shrink-0 text-[13px] font-bold">
@@ -166,7 +167,7 @@ export default function StudentIeltsReadingHome() {
 
       <Link
         to="/student/practice/reading"
-        className="flex items-center gap-3 rounded-2xl border p-4 mt-4"
+        className="student-study-card flex items-center gap-3 rounded-2xl border p-4 mt-4"
         style={card}
       >
         <StudentImage src="/jsicons/learn-reading.png" alt=""

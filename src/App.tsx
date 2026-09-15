@@ -10,6 +10,7 @@ import { AuthProvider, useAuth } from "./lib/AuthContext";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
 import { ToastHost } from "./components/ToastHost";
+import { StudentLoading } from "./components/StudentLoading";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 /**
@@ -164,6 +165,10 @@ const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
 import { GuideProvider } from "./components/guide/GuideProvider";
 
 function PageLoader() {
+  const { pathname } = useLocation();
+  if (pathname === "/student" || pathname.startsWith("/student/")) {
+    return <div className="student-app"><StudentLoading /></div>;
+  }
   return (
     <div className="flex items-center justify-center py-24">
       <p className="text-sm text-slate-400">Yuklanmoqda…</p>

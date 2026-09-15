@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, Lock } from "lucide-react";
@@ -35,7 +36,7 @@ export default function StudentLeagues() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const earned = d.leagues
     .filter((l) => l.state === "passed" || l.state === "current")

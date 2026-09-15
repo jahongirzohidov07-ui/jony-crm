@@ -128,3 +128,53 @@
 .student-leaderboard-heading { flex-direction: column; }
 .student-leaderboard-heading > div:last-child { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; text-align: left; }
 .student-leaderboard-heading > div:last-child > p { margin-top: 0; }
+
+.student-loading { max-width: 448px; margin: auto; padding: 48px 20px; text-align: center; }
+.student-app .text-brand-200 { color: #c4dcff; }
+.student-app .text-brand-300 { color: #a3c8ff; }
+.student-app .text-brand-800 { color: #173e85; }
+.student-app .border-brand-200 { border-color: #c4dcff; }
+.student-notification-card { grid-template-columns: 44px minmax(0, 1fr); background-image: linear-gradient(135deg, #153876, #0c2258); }
+.student-notification-date { grid-column: 2; }
+.student-notification-heading h1 { font-size: clamp(23px, 6vw, 28px); overflow-wrap: anywhere; }
+.student-notification-heading > span { display: none; }
+.student-lesson-heading { padding: 12px; border-radius: 20px; margin-bottom: 18px; }
+.student-loading-bar { height: 5px; border-radius: 9px; background: linear-gradient(90deg, #85e5ff, #fff, #85e5ff); background-size: 200% 100%; animation: student-loading 1.4s linear infinite; }
+@keyframes student-loading { to { background-position: -200% 0; } }
+.student-symbol { display: inline-grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: 13px; color: white; background: linear-gradient(145deg, #43c5ff, #0660e7); border: 1px solid #ffffff80; box-shadow: inset 0 2px 3px #ffffff66, 0 4px 8px #0652bb26; }
+.student-symbol svg { filter: drop-shadow(0 2px 1px #00367050); }
+.student-symbol-violet { background: linear-gradient(145deg, #ba83ff, #7437da); }
+.student-symbol-amber { background: linear-gradient(145deg, #ffce56, #d77700); }
+.student-symbol-green { background: linear-gradient(145deg, #50deb7, #078064); }
+.student-topic-card { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.student-settings button { min-height: 44px; }
+.student-settings .student-symbol { width: 34px; height: 34px; border-radius: 11px; }
+.student-badge-card { position: relative; }
+.student-badge-card .text-slate-400 { color: #64748b; }
+.student-study { --study-ink: #15284e; }
+.student-study .truncate { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+.student-study p, .student-study li { font-size: 14px; line-height: 1.65; }
+.student-study :is(.text-slate-400, .text-slate-500) { color: #b6c9ed; }
+.student-study :is(.bg-white, .student-panel, .student-study-card) :is(.text-slate-400, .text-slate-500) { color: #526585; }
+.student-study > h1 { margin-bottom: 16px; }
+.student-study > :is(p, div) > .text-slate-500,
+.student-study > p.text-slate-500 { color: #b6c9ed; }
+.student-study > p { font-size: 14px; line-height: 1.65; }
+.student-study-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(145deg, #fff, #edf4ff) !important;
+  border-color: #c5dcff !important; border-radius: 22px;
+  box-shadow: 0 8px 25px #00082430; color: var(--study-ink);
+}
+.student-study-card::after { content: ''; position: absolute; pointer-events: none; right: 8px; bottom: 5px; width: 160px; height: 12px; background: url('/student-design/pattern.png') right center / 410px auto; opacity: .1; z-index: -1; }
+.student-study-card :is(.text-white, .text-slate-200, .text-slate-300) { color: #15284e; }
+.student-study .student-study-card :is(.text-slate-400, .text-slate-500) { color: #526585; }
+.student-study-card :is(.text-brand-300, .text-emerald-200, .text-emerald-300) { color: #087556; }
+.student-study-card :is(.bg-brand-600, .bg-brand-500) { color: white; }
+.student-study-card :is(p, li, pre) { font-size: 14px; line-height: 1.65; }
+.student-study button { min-height: 44px; }
+.student-study a:has(> svg:only-child) { min-width: 44px; min-height: 44px; }
+.student-study .student-panel :is(.text-slate-400, .text-slate-500) { color: #526585; }
+.student-study .student-panel :is(p, li, pre) { font-size: 14px; line-height: 1.6; }
+@media (max-width: 359px) { .student-symbol { width: 36px; height: 36px; } .student-topic-card { padding: 12px; } }
+@media (prefers-reduced-motion: reduce) { .student-loading-bar { animation: none; } }

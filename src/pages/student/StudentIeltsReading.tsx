@@ -153,7 +153,7 @@ export default function StudentIeltsReading() {
   const card = { background: "#0c2258", borderColor: "#35538c" };
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       {/* -------------------------------------------- sarlavha */}
       <div className="flex items-center gap-2.5 text-white">
         <Link

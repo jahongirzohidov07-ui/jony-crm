@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
@@ -204,7 +205,7 @@ export default function StudentProfile() {
     );
   if (!d)
     return (
-      <p className="text-sm text-slate-400 text-center py-20">Yuklanmoqda…</p>
+      <StudentLoading />
     );
 
   const lv = d.level;

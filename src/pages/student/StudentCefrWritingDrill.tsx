@@ -1,3 +1,5 @@
+import { StudentLoading } from "../../components/StudentLoading";
+import { StudentIcon } from "../../components/StudentIcon";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, X } from "lucide-react";
@@ -33,6 +35,7 @@ export default function StudentCefrWritingDrill() {
   const [seq, setSeq] = useState<number[]>([]);
   const [res, setRes] = useState<Any>(null);
   const [right, setRight] = useState(0);
+  const [metaLoading, setMetaLoading] = useState(true);
   const [meta, setMeta] = useState<Any>({});
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -51,10 +54,12 @@ export default function StudentCefrWritingDrill() {
   }, [kind, count]);
 
   useEffect(() => {
+    setMetaLoading(true);
     api
       .get<Any>(`/student/cefr/writing/drill?kind=${kind}&count=1`)
       .then((r) => setMeta({ total: r.total, solved: r.solved }))
-      .catch(() => undefined);
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"))
+      .finally(() => setMetaLoading(false));
   }, [kind]);
 
   const q = items[idx];
@@ -88,7 +93,7 @@ export default function StudentCefrWritingDrill() {
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
 
   const Head = (
-    <div className="flex items-center gap-2.5 text-white">
+    <div className="student-lesson-heading student-hero student-pattern flex items-center gap-2.5 text-white">
       <Link
         to="/student/cefr/writing"
         className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
@@ -99,15 +104,19 @@ export default function StudentCefrWritingDrill() {
       <p className="text-[15px] font-extrabold tracking-wide flex-1">
         CEFR Writing mashqi
       </p>
-    </div>
+    <StudentIcon name="writing" size={42} />
+      </div>
   );
 
   /* ---------- boshlanish ekrani ---------- */
+  if (metaLoading && !started) return <StudentLoading />;
+  if (err && !started) return <div role="alert" className="max-w-md mx-auto p-5"><p className="student-panel p-5 text-red-700">{err}</p><Link to="/student/cefr/writing" className="block text-center mt-4 text-white">Mashqlar ro‘yxatiga qaytish</Link></div>;
+
   if (!started)
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
         {Head}
-        <div className="rounded-2xl border p-4 mt-4" style={card}>
+        <div className="student-study-card rounded-2xl border p-4 mt-4" style={card}>
           <p className="text-white font-bold text-[15px]">
             Nechta mashq ishlaysiz?
           </p>
@@ -144,9 +153,9 @@ export default function StudentCefrWritingDrill() {
   /* ---------- yakun ---------- */
   if (!q)
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
         {Head}
-        <div className="rounded-2xl border p-5 mt-4 text-center" style={card}>
+        <div className="student-study-card rounded-2xl border p-5 mt-4 text-center" style={card}>
           <p className="text-[34px] font-extrabold text-white">
             {right}/{items.length}
           </p>
@@ -165,7 +174,7 @@ export default function StudentCefrWritingDrill() {
             </button>
             <Link
               to="/student/cefr/writing"
-              className="flex-1 rounded-xl border px-4 py-2.5 text-sm font-semibold text-slate-300"
+              className="student-study-card flex-1 rounded-xl border px-4 py-2.5 text-sm font-semibold text-slate-300"
               style={card}
             >
               Bo'limga
@@ -177,7 +186,7 @@ export default function StudentCefrWritingDrill() {
 
   /* ---------- savol ---------- */
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       {Head}
       <div className="flex items-center gap-2 mt-3">
         <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
@@ -191,7 +200,7 @@ export default function StudentCefrWritingDrill() {
         </span>
       </div>
 
-      <div className="rounded-2xl border p-4 mt-3" style={card}>
+      <div className="student-study-card rounded-2xl border p-4 mt-3" style={card}>
         <p className="text-[13.5px] text-slate-100 leading-relaxed whitespace-pre-line">
           {q.prompt}
         </p>

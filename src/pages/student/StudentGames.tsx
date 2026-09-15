@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -62,7 +63,7 @@ export default function StudentGames() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const cont = d.continue;
   const daily = d.daily;

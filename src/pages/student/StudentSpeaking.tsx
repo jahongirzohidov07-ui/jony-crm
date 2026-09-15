@@ -1,3 +1,4 @@
+import { StudentSymbol, type StudentSymbolName } from "../../components/StudentSymbol";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -22,15 +23,15 @@ type Any = any;
  * beriladi (o'chirsa bo'ladi). Har mazmunli javob +1 XP (kuniga 10).
  */
 
-const TOPICS = [
-  { key: "My day", label: "🌞 Mening kunim" },
-  { key: "My family", label: "👨‍👩‍👧 Oilam" },
-  { key: "School", label: "🏫 Maktab" },
-  { key: "Hobbies", label: "⚽ Sevimli mashg'ulot" },
-  { key: "Food", label: "🍕 Ovqatlar" },
-  { key: "Travel", label: "✈️ Sayohat" },
-  { key: "Animals", label: "🐱 Hayvonlar" },
-  { key: "Free talk", label: "💬 Erkin suhbat" },
+const TOPICS: { key: string; label: string; icon: StudentSymbolName }[] = [
+  { key: "My day", icon: "day", label: "Mening kunim" },
+  { key: "My family", icon: "family", label: "Oilam" },
+  { key: "School", icon: "school", label: "Maktab" },
+  { key: "Hobbies", icon: "hobbies", label: "Sevimli mashg'ulot" },
+  { key: "Food", icon: "food", label: "Ovqatlar" },
+  { key: "Travel", icon: "travel", label: "Sayohat" },
+  { key: "Animals", icon: "animals", label: "Hayvonlar" },
+  { key: "Free talk", icon: "chat", label: "Erkin suhbat" },
 ];
 
 type Msg = { role: "teacher" | "student"; text: string };
@@ -195,7 +196,7 @@ export default function StudentSpeaking() {
         <div className="student-panel bg-white rounded-3xl p-4 mt-4">
           <div className="flex items-center gap-3">
             <span className="w-11 h-11 rounded-full bg-violet-100 flex items-center justify-center text-[20px] shrink-0">
-              💬
+              <StudentSymbol name="chat" tone="violet" />
             </span>
             <p className="text-[19px] font-extrabold text-slate-900">
               Qaysi mavzuda gaplashamiz?
@@ -216,9 +217,10 @@ export default function StudentSpeaking() {
         <div className="grid grid-cols-2 gap-3 mt-3">
           {TOPICS.map((t, i) => (
             <button key={t.key} onClick={() => start(t.key)}
-              className={`bg-white rounded-3xl p-4 text-left active:scale-[0.98] transition ${
+              className={`student-panel student-topic-card bg-white rounded-3xl p-4 text-left active:scale-[0.98] transition ${
                 i === 0 ? "ring-2 ring-violet-500 shadow-[0_0_22px_rgba(124,92,240,0.45)]" : ""}`}>
-              <p className="text-[16px] font-extrabold text-slate-900 leading-snug">
+              <StudentSymbol name={t.icon} tone={(["blue", "violet", "amber", "green"] as const)[i % 4]} />
+              <p className="text-[15px] font-extrabold text-slate-900 leading-snug">
                 {t.label}
               </p>
               {i === 0 && (

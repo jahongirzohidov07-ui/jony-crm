@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -87,13 +88,13 @@ export default function StudentCefrSpeakingPart() {
   if (err && !g)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!g || !t)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const multi = key === "p11" || key === "p12";
   const secs = multi ? t.seconds[qi] : t.seconds[0];
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
           to="/student/cefr/speaking"
@@ -132,7 +133,7 @@ export default function StudentCefrSpeakingPart() {
       {/* ============ O'RGANISH ============ */}
       {tab === "learn" && (
         <>
-          <div className="rounded-2xl border p-3.5 mt-3" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5 mt-3" style={card}>
             <p className="text-[12.5px] text-slate-300 leading-relaxed">
               {g.idea}
             </p>
@@ -178,7 +179,7 @@ export default function StudentCefrSpeakingPart() {
           </p>
           <div className="space-y-2">
             {Object.entries(g.phrases).map(([k, arr]: Any) => (
-              <div key={k} className="rounded-2xl border p-3" style={card}>
+              <div key={k} className="student-study-card rounded-2xl border p-3" style={card}>
                 <p className="text-[11px] font-bold text-brand-300 mb-1">
                   {k}
                 </p>
@@ -199,7 +200,7 @@ export default function StudentCefrSpeakingPart() {
           <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mt-4 mb-1.5">
             Namuna javob
           </p>
-          <div className="rounded-2xl border p-3.5" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5" style={card}>
             <p className="text-[11.5px] text-slate-400 italic leading-relaxed">
               {g.sample_q}
             </p>
@@ -218,7 +219,7 @@ export default function StudentCefrSpeakingPart() {
           <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mt-4 mb-1.5">
             Rasmiy baholash — {g.band.title}
           </p>
-          <div className="rounded-2xl border p-3.5" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5" style={card}>
             {g.band.scale.map((b: Any) => (
               <div key={b.point} className="flex gap-2 py-1">
                 <span className="w-5 shrink-0 text-[13px] font-extrabold text-brand-300 text-center">
@@ -236,7 +237,7 @@ export default function StudentCefrSpeakingPart() {
             ))}
           </div>
 
-          <div className="rounded-2xl border p-3.5 mt-3" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5 mt-3" style={card}>
             <p className="text-[12px] font-bold text-rose-300 mb-1.5">
               Eng ko'p uchraydigan xato
             </p>
@@ -279,7 +280,7 @@ export default function StudentCefrSpeakingPart() {
             <div className="grid grid-cols-1 gap-2 mt-3">
               {[["A", t.scene_a, t.img_a], ["B", t.scene_b, t.img_b]].map(
                 ([lb, sc, im]: Any) => (
-                  <div key={lb} className="rounded-2xl border p-3" style={card}>
+                  <div key={lb} className="student-study-card rounded-2xl border p-3" style={card}>
                     <p className="text-[10px] font-bold text-brand-300 mb-1">
                       RASM {lb}
                     </p>
@@ -295,7 +296,7 @@ export default function StudentCefrSpeakingPart() {
             </div>
           )}
           {key === "p2" && (
-            <div className="rounded-2xl border p-3 mt-3" style={card}>
+            <div className="student-study-card rounded-2xl border p-3 mt-3" style={card}>
               <p className="text-[10px] font-bold text-brand-300 mb-1">RASM</p>
               {t.img ? (
                 <StudentImage src={t.img} alt="" className="w-full rounded-xl" />
@@ -312,7 +313,7 @@ export default function StudentCefrSpeakingPart() {
           )}
 
           {/* savol(lar) */}
-          <div className="rounded-2xl border p-3.5 mt-2.5" style={card}>
+          <div className="student-study-card rounded-2xl border p-3.5 mt-2.5" style={card}>
             {key === "p3" ? (
               <>
                 <p className="text-[14px] font-bold text-white leading-snug">
@@ -387,9 +388,7 @@ export default function StudentCefrSpeakingPart() {
                   Tayyorgarlik vaqtini boshlash ({t.prep} soniya)
                 </button>
               ) : (
-                <div
-                  className="flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5"
-                  style={card}
+                <div className="student-study-card flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5" style={card}
                 >
                   <Clock size={14} className="text-amber-400" />
                   <span className="text-[13px] font-bold text-white tabular-nums">
@@ -422,7 +421,7 @@ export default function StudentCefrSpeakingPart() {
           {/* natija */}
           {res && (
             <div className="mt-3 space-y-2.5">
-              <div className="rounded-2xl border p-4 text-center" style={card}>
+              <div className="student-study-card rounded-2xl border p-4 text-center" style={card}>
                 <p className="text-[40px] font-extrabold text-white leading-none">
                   {res.point}
                   <span className="text-[18px] text-slate-500">/{res.max}</span>
@@ -446,7 +445,7 @@ export default function StudentCefrSpeakingPart() {
                 )}
               </div>
 
-              <div className="rounded-2xl border p-3.5" style={card}>
+              <div className="student-study-card rounded-2xl border p-3.5" style={card}>
                 <p className="text-[12px] font-bold text-white mb-2">
                   Tahlil
                 </p>
@@ -474,7 +473,7 @@ export default function StudentCefrSpeakingPart() {
               </div>
 
               {res.ai && (
-                <div className="rounded-2xl border p-3.5" style={card}>
+                <div className="student-study-card rounded-2xl border p-3.5" style={card}>
                   <p className="text-[12px] font-bold text-white mb-1.5">
                     Ekspert izohi
                   </p>
@@ -484,7 +483,7 @@ export default function StudentCefrSpeakingPart() {
                 </div>
               )}
 
-              <div className="rounded-2xl border p-3.5" style={card}>
+              <div className="student-study-card rounded-2xl border p-3.5" style={card}>
                 <p className="text-[12px] font-bold text-white mb-1.5">
                   Siz aytgan matn
                 </p>

@@ -1,8 +1,9 @@
+import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { formatDate } from "../../lib/format";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Bell, ChevronRight } from "lucide-react";
+import { ArrowLeft, Bell } from "lucide-react";
 import { api } from "../../lib/api";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -56,9 +57,12 @@ export default function StudentNotifications() {
     if (g) g[1].push(n); else groups.push([label, [n]]);
   }
 
+  if (!d && err) return <StudentLoadError message={err} />;
+  if (!d) return <StudentLoading />;
+
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8">
-      <div className="flex items-center gap-2.5">
+      <div className="student-notification-heading flex items-center gap-2.5">
         <Link to="/student"
           className="w-10 h-10 rounded-xl border flex items-center justify-center text-white shrink-0"
           style={card}>
@@ -104,7 +108,7 @@ export default function StudentNotifications() {
               const isNew = seenBefore && n.date && n.date > seenBefore;
               return (
                 <div key={n.id}
-                  className="rounded-2xl border p-3.5 flex items-center gap-3"
+                  className="student-notification-card rounded-2xl border p-4 grid gap-3"
                   style={card}>
                   <StudentImage src={ICON[n.kind] || "/jsicons/profile-notifications.png"}
                        alt="" className="w-12 h-12 shrink-0" />
@@ -113,18 +117,17 @@ export default function StudentNotifications() {
                       {isNew && (
                         <span className="w-2 h-2 rounded-full bg-brand-400 shrink-0" />
                       )}
-                      <span className="truncate">{n.title}</span>
+                      <span className="break-words">{n.title}</span>
                     </p>
-                    <p className="text-[13px] text-slate-400 mt-0.5 line-clamp-2">
+                    <p className="text-[14px] text-slate-200 mt-1 leading-relaxed break-words">
                       {n.body}
                     </p>
                   </div>
                   {n.date && (
-                    <span className="text-[12px] text-slate-500 shrink-0">
+                    <span className="text-[12px] text-blue-200 student-notification-date">
                       {(n.date || "").slice(11, 16) || formatDate(n.date)}
                     </span>
                   )}
-                  <ChevronRight size={16} className="text-slate-500 shrink-0" />
                 </div>
               );
             })}

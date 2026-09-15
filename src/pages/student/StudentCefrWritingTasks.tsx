@@ -1,3 +1,4 @@
+import { StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight } from "lucide-react";
@@ -25,8 +26,8 @@ export default function StudentCefrWritingTasks() {
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
-      <div className="flex items-center gap-2.5 text-white">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-lesson-heading student-hero student-pattern flex items-center gap-2.5 text-white">
         <Link
           to="/student/cefr/writing"
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
@@ -37,6 +38,7 @@ export default function StudentCefrWritingTasks() {
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
           {part === "2" ? "Part 2 — C1" : "Part 1 — ikki xat"}
         </p>
+      <StudentIcon name="writing" size={42} />
       </div>
 
       <p className="text-[12px] text-slate-400 mt-3 leading-relaxed">
@@ -52,7 +54,7 @@ export default function StudentCefrWritingTasks() {
           <Link
             key={t.id}
             to={`/student/cefr/writing/task/${t.id}`}
-            className="flex items-center gap-3 rounded-2xl border p-3.5"
+            className="student-study-card flex items-center gap-3 rounded-2xl border p-3.5"
             style={card}
           >
             <div className="flex-1 min-w-0">

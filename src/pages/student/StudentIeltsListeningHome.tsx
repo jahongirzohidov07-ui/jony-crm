@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -43,7 +44,7 @@ export default function StudentIeltsListeningHome() {
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <div className="flex items-center gap-2.5 text-white">
         <Link
           to={`/student/ielts/exam/${exam}`}
@@ -75,13 +76,13 @@ export default function StudentIeltsListeningHome() {
         <p className="text-sm text-red-400 mt-4">{err}</p>
       )}
       {loading && (
-        <p className="text-sm text-slate-500 mt-6">Yuklanmoqda…</p>
+        <StudentLoading />
       )}
 
       {/* ---- Asosiy ko'nikmalar: 3 ta mashq ---- */}
       {parts.length > 0 && (
         <>
-          <div className="rounded-2xl border p-4 mt-5" style={card}>
+          <div className="student-study-card rounded-2xl border p-4 mt-5" style={card}>
             <p className="text-white font-bold text-[15px]">
               Asosiy ko'nikmalar
             </p>
@@ -97,7 +98,7 @@ export default function StudentIeltsListeningHome() {
               <Link
                 key={p.kind}
                 to={`/student/ielts/listening/${p.kind}?exam=${exam}`}
-                className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
+                className="student-study-card flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
                 style={card}
               >
                 <div className="w-10 h-10 rounded-xl bg-amber-400/15 text-amber-300 flex items-center justify-center shrink-0 text-[15px] font-extrabold">
@@ -130,7 +131,7 @@ export default function StudentIeltsListeningHome() {
       )}
 
       {/* ---- To'liq test qismlari ---- */}
-      <div className="rounded-2xl border p-4 mt-4" style={card}>
+      <div className="student-study-card rounded-2xl border p-4 mt-4" style={card}>
         <p className="text-white font-bold text-[15px]">
           To'liq test qismlari
         </p>
@@ -163,7 +164,7 @@ export default function StudentIeltsListeningHome() {
 
       <Link
         to="/student/practice/listening"
-        className="flex items-center gap-3 rounded-2xl border p-4 mt-3"
+        className="student-study-card flex items-center gap-3 rounded-2xl border p-4 mt-3"
         style={card}
       >
         <StudentImage src="/jsicons/learn-listening.png" alt=""

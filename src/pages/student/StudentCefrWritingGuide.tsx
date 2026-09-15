@@ -1,3 +1,5 @@
+import { StudentIcon } from "../../components/StudentIcon";
+import { StudentLoading } from "../../components/StudentLoading";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, X } from "lucide-react";
@@ -38,11 +40,11 @@ export default function StudentCefrWritingGuide() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!g)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
-      <div className="flex items-center gap-2.5 text-white">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-lesson-heading student-hero student-pattern flex items-center gap-2.5 text-white">
         <Link
           to="/student/cefr/writing"
           className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
@@ -53,6 +55,7 @@ export default function StudentCefrWritingGuide() {
         <p className="text-[15px] font-extrabold tracking-wide flex-1">
           CEFR Writing
         </p>
+      <StudentIcon name="writing" size={42} />
       </div>
 
       <h1 className="text-[24px] font-extrabold text-white leading-tight mt-3">
@@ -63,7 +66,7 @@ export default function StudentCefrWritingGuide() {
         {g.minutes} daqiqa
       </p>
 
-      <div className="rounded-2xl border p-3.5 mt-3" style={card}>
+      <div className="student-study-card rounded-2xl border p-3.5 mt-3" style={card}>
         <p className="text-[12px] text-slate-300 leading-relaxed">
           <b className="text-white">Qachon keladi.</b> {g.when}
         </p>
@@ -78,7 +81,7 @@ export default function StudentCefrWritingGuide() {
       </p>
       <div className="space-y-2">
         {g.steps.map((s: Any, i: number) => (
-          <div key={i} className="rounded-2xl border p-3.5" style={card}>
+          <div key={i} className="student-study-card rounded-2xl border p-3.5" style={card}>
             <div className="flex items-start gap-2">
               <span className="w-5 h-5 shrink-0 rounded-full bg-brand-600 text-white text-[11px] font-bold flex items-center justify-center mt-0.5">
                 {i + 1}
@@ -108,7 +111,7 @@ export default function StudentCefrWritingGuide() {
       <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mt-5 mb-1.5">
         Namuna xat — har abzatsi izohi bilan
       </p>
-      <div className="rounded-2xl border p-3.5" style={card}>
+      <div className="student-study-card rounded-2xl border p-3.5" style={card}>
         <p className="text-[11.5px] text-slate-400 leading-relaxed italic">
           {g.model.task}
         </p>
@@ -145,7 +148,7 @@ export default function StudentCefrWritingGuide() {
 
       {/* --- shart / xato -------------------------------- */}
       <div className="grid grid-cols-1 gap-2 mt-4">
-        <div className="rounded-2xl border p-3.5" style={card}>
+        <div className="student-study-card rounded-2xl border p-3.5" style={card}>
           <p className="text-[12px] font-bold text-emerald-300 mb-1.5">
             Bo'lishi shart
           </p>
@@ -156,7 +159,7 @@ export default function StudentCefrWritingGuide() {
             </p>
           ))}
         </div>
-        <div className="rounded-2xl border p-3.5" style={card}>
+        <div className="student-study-card rounded-2xl border p-3.5" style={card}>
           <p className="text-[12px] font-bold text-rose-300 mb-1.5">
             Eng ko'p uchraydigan xato
           </p>

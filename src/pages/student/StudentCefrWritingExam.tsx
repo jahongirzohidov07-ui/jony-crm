@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { readWritingDraft, saveWritingDraft, removeWritingDraft, writingSecondsLeft } from "../../lib/studentWritingDrafts";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -133,7 +134,7 @@ export default function StudentCefrWritingExam() {
   if (err && !t)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!t)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   const mm = String(Math.floor(left / 60)).padStart(2, "0");
   const ss = String(left % 60).padStart(2, "0");

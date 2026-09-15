@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -131,16 +132,16 @@ export default function StudentCefrSpeakingMock() {
   if (err && !mock)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!mock)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   /* ---------- NATIJA ---------- */
   if (res) {
     const cl = res.score >= 65 ? "#34D399" : res.score >= 51 ? "#60A5FA"
       : res.score >= 30 ? "#FBBF24" : "#FB7185";
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
         {Head}
-        <div className="rounded-2xl border p-5 mt-4 text-center" style={card}>
+        <div className="student-study-card rounded-2xl border p-5 mt-4 text-center" style={card}>
           <p className="text-[56px] font-extrabold leading-none"
              style={{ color: cl }}>
             {res.score}
@@ -167,7 +168,7 @@ export default function StudentCefrSpeakingMock() {
         <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mt-4 mb-1.5">
           Blok bo'yicha
         </p>
-        <div className="rounded-2xl border p-3.5" style={card}>
+        <div className="student-study-card rounded-2xl border p-3.5" style={card}>
           {res.blocks.map((b: Any) => (
             <div key={b.block} className="py-1.5">
               <div className="flex items-center gap-2">
@@ -189,7 +190,7 @@ export default function StudentCefrSpeakingMock() {
         </div>
 
         {(res.detail || []).map((d: Any, i: number) => (
-          <div key={i} className="rounded-2xl border p-3.5 mt-2.5" style={card}>
+          <div key={i} className="student-study-card rounded-2xl border p-3.5 mt-2.5" style={card}>
             <p className="text-[12px] font-bold text-white mb-2">
               {d.part === "p11" ? "Part 1.1" : d.part === "p12" ? "Part 1.2"
                 : d.part === "p2" ? "Part 2" : "Part 3"}
@@ -238,9 +239,9 @@ export default function StudentCefrSpeakingMock() {
   /* ---------- BOSHLANISH ---------- */
   if (at < 0)
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
         {Head}
-        <div className="rounded-2xl border p-4 mt-4" style={card}>
+        <div className="student-study-card rounded-2xl border p-4 mt-4" style={card}>
           <p className="text-white font-bold text-[15px]">
             Imtihon tartibi
           </p>
@@ -283,9 +284,9 @@ export default function StudentCefrSpeakingMock() {
   /* ---------- YAKUN ---------- */
   if (at >= steps.length)
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
         {Head}
-        <div className="rounded-2xl border p-5 mt-4 text-center" style={card}>
+        <div className="student-study-card rounded-2xl border p-5 mt-4 text-center" style={card}>
           <p className="text-white font-bold text-[16px]">
             Hamma savollarga javob berildi
           </p>
@@ -312,7 +313,7 @@ export default function StudentCefrSpeakingMock() {
     : t.part === "p2" ? "2" : "3";
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       {Head}
       <div className="flex items-center gap-2 mt-3">
         <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
@@ -331,7 +332,7 @@ export default function StudentCefrSpeakingMock() {
         <div className="grid grid-cols-1 gap-2 mt-2">
           {[["A", t.scene_a, t.img_a], ["B", t.scene_b, t.img_b]].map(
             ([lb, sc, im]: Any) => (
-              <div key={lb} className="rounded-2xl border p-3" style={card}>
+              <div key={lb} className="student-study-card rounded-2xl border p-3" style={card}>
                 <p className="text-[10px] font-bold text-brand-300 mb-1">
                   RASM {lb}
                 </p>
@@ -342,14 +343,14 @@ export default function StudentCefrSpeakingMock() {
         </div>
       )}
       {t.part === "p2" && (
-        <div className="rounded-2xl border p-3 mt-2" style={card}>
+        <div className="student-study-card rounded-2xl border p-3 mt-2" style={card}>
           <p className="text-[10px] font-bold text-brand-300 mb-1">RASM</p>
           {t.img ? <StudentImage src={t.img} alt="" className="w-full rounded-xl" />
             : <p className="text-[12px] text-slate-300 leading-relaxed">{t.scene}</p>}
         </div>
       )}
 
-      <div className="rounded-2xl border p-3.5 mt-2.5" style={card}>
+      <div className="student-study-card rounded-2xl border p-3.5 mt-2.5" style={card}>
         {t.part === "p3" ? (
           <>
             <p className="text-[14px] font-bold text-white leading-snug">

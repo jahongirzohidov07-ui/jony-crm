@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -202,7 +203,7 @@ export default function StudentLeaderboard() {
 
       {err && <p className="text-sm text-red-400 mt-4">{err}</p>}
       {!d && !err && (
-        <p className="text-sm text-slate-500 text-center py-12">Yuklanmoqda…</p>
+        <StudentLoading />
       )}
 
       {/* ------------------------------------------- bo'sh holat */}

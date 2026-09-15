@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -66,7 +67,7 @@ export default function StudentExamSkills() {
 
   if (!def)
     return (
-      <div className="max-w-md mx-auto px-4 py-20 text-center">
+      <div className="student-study max-w-md mx-auto px-4 py-20 text-center">
         <p className="text-sm text-slate-400">Bunday imtihon topilmadi.</p>
         <Link
           to="/student/ielts"
@@ -83,13 +84,13 @@ export default function StudentExamSkills() {
     );
   if (!gate)
     return (
-      <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>
+      <StudentLoading />
     );
 
   if (!gate.unlocked)
     return (
-      <div className="max-w-md mx-auto px-4 pt-5 pb-8">
-        <div className="rounded-2xl border p-5 mt-5 text-center" style={card}>
+      <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
+        <div className="student-study-card rounded-2xl border p-5 mt-5 text-center" style={card}>
           <div
             className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center"
             style={{ background: "#0c2258" }}
@@ -114,7 +115,7 @@ export default function StudentExamSkills() {
     );
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-5 pb-8">
+    <div className="student-study max-w-md mx-auto px-4 pt-5 pb-8">
       <Link
         to="/student/ielts"
         className="inline-flex items-center gap-1 text-[13px] text-slate-400"
@@ -161,7 +162,7 @@ export default function StudentExamSkills() {
             <Link
               key={s.key}
               to={s.href}
-              className="flex items-center gap-3 rounded-2xl border p-4"
+              className="student-study-card flex items-center gap-3 rounded-2xl border p-4"
               style={card}
             >
               {body}
@@ -170,7 +171,7 @@ export default function StudentExamSkills() {
           ) : (
             <div
               key={s.key}
-              className="flex items-center gap-3 rounded-2xl border p-4 opacity-80"
+              className="student-study-card flex items-center gap-3 rounded-2xl border p-4 opacity-80"
               style={card}
             >
               {body}

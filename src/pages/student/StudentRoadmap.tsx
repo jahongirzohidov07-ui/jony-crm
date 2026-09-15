@@ -1,3 +1,4 @@
+import { StudentLoading } from "../../components/StudentLoading";
 import { StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
@@ -30,7 +31,7 @@ export default function StudentRoadmap() {
   if (err)
     return <p className="text-sm text-slate-400 text-center py-20 px-6">{err}</p>;
   if (!d)
-    return <p className="text-sm text-slate-500 text-center py-20">Yuklanmoqda…</p>;
+    return <StudentLoading />;
 
   // 2026-08-25: zina endi chiziqli emas — har darajaning O'Z chegarasi
   // bor (lv.need). Jahongir: "har bir darajalar orasi 500XP bu juda

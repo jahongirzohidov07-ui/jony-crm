@@ -40,6 +40,8 @@ export default function StudentSpeaking() {
   const [topic, setTopic] = useState<string | null>(null);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [busy, setBusy] = useState(false);
+  const [retryTurn, setRetryTurn] = useState<{ history: Msg[]; topic: string } | null>(null);
+  const turnId = useRef(0);
   const [err, setErr] = useState("");
   const [listening, setListening] = useState(false);
   const [voiceOn, setVoiceOn] = useState(true);
@@ -59,6 +61,7 @@ export default function StudentSpeaking() {
   }, [msgs, busy]);
 
   useEffect(() => () => {
+    turnId.current += 1;
     window.speechSynthesis?.cancel();
     try { recRef.current?.abort(); } catch { /* bo'sh */ }
   }, []);
@@ -86,23 +89,29 @@ export default function StudentSpeaking() {
   }
 
   async function turn(history: Msg[], chosenTopic: string) {
+    const id = ++turnId.current;
     setBusy(true);
     setErr("");
+    setRetryTurn(null);
     try {
       const r = await api.post<Any>("/student/speaking", {
         topic: chosenTopic,
         messages: history,
       });
-      const reply = String(r.reply || "");
+      if (id !== turnId.current) return;
+      const reply = String(r.reply || "").trim();
+      if (!reply) throw new Error("Jony Teacher javobi bo‘sh keldi. Qayta urinib ko‘ring.");
       setMsgs([...history, { role: "teacher", text: reply }]);
       setXpToday(r.xp_today ?? null);
       if (r.xp_cap) setXpCap(r.xp_cap);
       speak(reply);
     } catch (e) {
+      if (id !== turnId.current) return;
       setErr(e instanceof Error ? e.message : "Xatolik");
+      setRetryTurn({ history, topic: chosenTopic });
       setMsgs(history);
     } finally {
-      setBusy(false);
+      if (id === turnId.current) setBusy(false);
     }
   }
 
@@ -149,9 +158,13 @@ export default function StudentSpeaking() {
       setListening(false);
       sendSpoken(t);
     };
-    rec.onerror = () => setListening(false);
+    rec.onerror = (e: Any) => {
+      setListening(false);
+      const errors: Record<string, string> = { "not-allowed": "Mikrofonga ruxsat berilmagan. Brauzer sozlamalaridan ruxsat bering.", "audio-capture": "Mikrofon topilmadi. Qurilmani tekshiring.", "no-speech": "Ovoz eshitilmadi. Mikrofonni bosib yana gapiring.", "network": "Ovozni aniqlash xizmati javob bermadi. Internetni tekshirib qayta urinib ko‘ring." };
+      if (e.error !== "aborted") setErr(errors[e.error] || "Ovozni aniqlab bo‘lmadi. Qayta urinib ko‘ring.");
+    };
     rec.onend = () => setListening(false);
-    rec.start();
+    try { rec.start(); } catch { setListening(false); setErr("Mikrofonni ishga tushirib bo‘lmadi. Qayta urinib ko‘ring."); }
   }
 
   /* ═══════════════ MAVZU TANLASH (speaking.png, 2026-08-21:
@@ -246,7 +259,7 @@ export default function StudentSpeaking() {
       <div className="px-4 pt-4 pb-3 shrink-0 text-white border-b"
            style={{ borderColor: "#1D2A63" }}>
         <div className="max-w-md mx-auto flex items-center gap-2.5">
-          <button onClick={() => { setTopic(null); setMsgs([]); }}
+          <button onClick={() => { turnId.current += 1; window.speechSynthesis?.cancel(); recRef.current?.abort(); setListening(false); setBusy(false); setRetryTurn(null); setErr(""); setTopic(null); setMsgs([]); }} aria-label="Mavzularga qaytish"
             className="p-1 -ml-1 text-white/85">
             <ArrowLeft size={19} />
           </button>
@@ -255,7 +268,7 @@ export default function StudentSpeaking() {
           <div className="min-w-0 flex-1">
             <p className="text-[15px] font-bold leading-tight">Jony Teacher</p>
             <p className="text-[11px] truncate">
-              <span className="text-emerald-400">● Onlayn</span>{"  "}
+              <span className={err ? "text-amber-300" : "text-emerald-400"}>{err ? "● Ulanish xatosi" : busy ? "● Javob tayyorlanmoqda" : "● Suhbat"}</span>{"  "}
               <span className="text-white/60">
               {TOPICS.find((t) => t.key === topic)?.label || topic}
               {xpToday !== null && ` · Bugun +${xpToday}/${xpCap} XP`}
@@ -305,6 +318,7 @@ export default function StudentSpeaking() {
               {err}
             </p>
           )}
+          {retryTurn && !busy && <button onClick={() => turn(retryTurn.history, retryTurn.topic)} className="min-h-11 px-5 py-3 rounded-xl bg-brand-600 text-white font-bold">Qayta urinish</button>}
           <div ref={endRef} />
         </div>
       </div>
@@ -315,7 +329,7 @@ export default function StudentSpeaking() {
       <div className="shrink-0 px-3 pt-3 pb-[max(0.875rem,env(safe-area-inset-bottom))] border-t"
            style={{ borderColor: "#1D2A63" }}>
         <div className="max-w-md mx-auto flex flex-col items-center gap-2">
-          <button onClick={startMic} disabled={busy}
+          <button onClick={startMic} disabled={busy || !!retryTurn} aria-label={listening ? "Yozishni to‘xtatish" : "Mikrofonni yoqish"}
             className={`w-24 h-24 rounded-full flex items-center justify-center transition ${
               listening
                 ? "bg-red-500 text-white animate-pulse"

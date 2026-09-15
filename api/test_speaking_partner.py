@@ -13,11 +13,12 @@ almashtiriladi. Tekshiriladigani BIZNING qoidalar:
   - suhbat boshida Teacher o'zi savol bilan boshlaydi.
 """
 import os, sys
-os.environ["DATABASE_URL"] = "sqlite:////tmp/speakpart.db"
-os.environ.pop("OPENAI_API_KEY", None)
-os.environ.pop("GEMINI_API_KEY", None)
-if os.path.exists("/tmp/speakpart.db"):
-    os.remove("/tmp/speakpart.db")
+import tempfile
+from pathlib import Path
+_temp = tempfile.TemporaryDirectory(prefix="jony-speaking-")
+os.environ["DATABASE_URL"] = "sqlite:///" + str(Path(_temp.name) / "test.db").replace("\\", "/")
+for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "JonyTeacher", "JONYTEACHER"):
+    os.environ.pop(key, None)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fastapi.testclient import TestClient          # noqa: E402
 import main, models, roles                         # noqa: E402
@@ -144,4 +145,7 @@ ck("asoschiga yopiq (bu bola ekrani)", r.status_code, 403)
 
 print("\n" + ("HAMMASI JOYIDA" if not fails
               else f"MUAMMO: {len(fails)} ta -> {fails}"))
+from database import engine
+engine.dispose()
+_temp.cleanup()
 sys.exit(1 if fails else 0)

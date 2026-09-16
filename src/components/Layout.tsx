@@ -204,7 +204,12 @@ function ChangePasswordModal({ onClose, forced = false }: {
 /** Xodim o'z loginini almashtiradi (2026-09-16, Jahongir: "loginni ham
  *  har bir xodim ... edit qila olsin"). Token ichida login turadi —
  *  server yangi token qaytaradi, shu zahoti saqlanadi. */
-function ChangeUsernameModal({ onClose }: { onClose: () => void }) {
+export function ChangeUsernameModal({
+  onClose, onDone,
+}: {
+  onClose: () => void;
+  onDone?: (login: string) => void;
+}) {
   const [currentLogin, setCurrentLogin] = useState("");
   const [next, setNext] = useState("");
   const [password, setPassword] = useState("");
@@ -240,6 +245,7 @@ function ChangeUsernameModal({ onClose }: { onClose: () => void }) {
       // Qaysi omborda turgan bo'lsa ("eslab qolish"), o'shanga yoziladi
       setToken(r.access_token, localStorage.getItem("jony_crm_token") !== null);
       setDone(r.username);
+      onDone?.(r.username);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
     } finally {

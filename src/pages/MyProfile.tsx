@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   UserCircle, Wallet, Clock, TrendingUp,
-  BookOpen, PlayCircle, ExternalLink,
+  BookOpen, PlayCircle, ExternalLink, KeyRound,
 } from "lucide-react";
 import {
   api, type MyProfile as Profile, type LibraryList,
@@ -10,6 +10,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 import TelegramLink from "../components/TelegramLink";
 import MyFunctions from "../components/guide/MyFunctions";
+import { ChangeUsernameModal } from "../components/Layout";
 
 const PART_TONE: Record<string, string> = {
   fix: "bg-slate-100 text-slate-700",
@@ -28,6 +29,7 @@ export default function MyProfile() {
   const [p, setP] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [loginEdit, setLoginEdit] = useState(false);
 
   const load = () => {
     setLoading(true);
@@ -90,6 +92,30 @@ export default function MyProfile() {
           </p>
         </div>
       </div>
+
+      {/* --- Kirish ma'lumotlari (2026-09-16, Jahongir: "loginni ham har
+          bir xodim edit qila olsin") --- */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4 flex items-center gap-3">
+        <KeyRound size={16} className="text-slate-400 shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-slate-500">Login</p>
+          <p className="text-sm font-medium text-slate-900 truncate">
+            {p.username}
+          </p>
+        </div>
+        <button
+          onClick={() => setLoginEdit(true)}
+          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+        >
+          Loginni o'zgartirish
+        </button>
+      </div>
+      {loginEdit && (
+        <ChangeUsernameModal
+          onClose={() => setLoginEdit(false)}
+          onDone={(login) => setP((x) => (x ? { ...x, username: login } : x))}
+        />
+      )}
 
       {/* --- Telegram (2026-08-15): zaxira va xato ogohlantirishi --- */}
       <TelegramLink />

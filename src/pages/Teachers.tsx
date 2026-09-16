@@ -751,7 +751,7 @@ export default function Teachers() {
                             onClick={() => setAccountFor(t)}
                             title={
                               t.login
-                                ? `Login: ${t.login} — yangi parol berish`
+                                ? `Login: ${t.login} — login / parolni o'zgartirish`
                                 : "Akkaunt ochish (login va parol)"
                             }
                             className={`mr-2 ${
@@ -884,6 +884,35 @@ function AccountModal({
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const hasAccount = !!teacher.login;
+  // Loginni shu yerning o'zida almashtirish (2026-09-16, Jahongir:
+  // "login o'zgartirib bo'lmadiku ... HR edit qila olsin")
+  const [login, setLogin] = useState(teacher.login ?? "");
+  const [newLogin, setNewLogin] = useState(teacher.login ?? "");
+  const [loginMsg, setLoginMsg] = useState<string | null>(null);
+
+  async function saveLogin() {
+    const v = newLogin.trim();
+    if (!teacher.user_id || v === login) return;
+    if (!/^[A-Za-z0-9._@-]{3,40}$/.test(v)) {
+      setError("Login 3-40 belgi bo'lsin: lotin harflari, raqamlar va "
+        + ". _ - @ belgilari, probelsiz");
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    setLoginMsg(null);
+    try {
+      const r = await api.put<{ username: string }>(
+        `/users/${teacher.user_id}`, { username: v });
+      setLogin(r.username);
+      setNewLogin(r.username);
+      setLoginMsg("Login saqlandi. Ustoz endi shu login bilan kiradi.");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function run(reset: boolean) {
     setBusy(true);
@@ -930,10 +959,30 @@ function AccountModal({
             {hasAccount ? (
               <>
                 <div className="bg-slate-50 rounded-lg p-3 mb-3">
-                  <p className="text-xs text-slate-500 mb-0.5">Login</p>
-                  <p className="font-mono text-sm text-slate-900">
-                    {teacher.login}
-                  </p>
+                  <p className="text-xs text-slate-500 mb-1">Login</p>
+                  {teacher.user_id ? (
+                    <div className="flex gap-2">
+                      <input
+                        value={newLogin}
+                        onChange={(e) => setNewLogin(e.target.value)}
+                        autoCapitalize="none"
+                        spellCheck={false}
+                        className="flex-1 min-w-0 rounded-lg border border-slate-300 bg-white px-2 py-1.5 font-mono text-sm"
+                      />
+                      <button
+                        onClick={saveLogin}
+                        disabled={busy || newLogin.trim() === login}
+                        className="rounded-lg bg-brand-600 text-white px-3 text-xs font-medium disabled:opacity-40"
+                      >
+                        Saqlash
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="font-mono text-sm text-slate-900">{login}</p>
+                  )}
+                  {loginMsg && (
+                    <p className="text-xs text-emerald-700 mt-1.5">{loginMsg}</p>
+                  )}
                 </div>
                 <p className="text-sm text-slate-600 mb-4">
                   Bu ustozda akkaunt bor. Parol shifrlangan — uni ko'rish

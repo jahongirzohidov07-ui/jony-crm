@@ -120,8 +120,19 @@ ck("HR asoschi loginiga tegolmaydi",
    upd(Hhr, founder.id, username="boss").status_code, 403)
 ck("HR filial rahbari loginiga tegolmaydi",
    upd(Hhr, bm.id, username="rahbar2").status_code, 403)
-ck("HR o'z loginini kartadan emas, menyudan o'zgartiradi",
-   upd(Hhr, hr.id, username="hr2").status_code, 400)
+r = upd(Hhr, hr.id, username="hr.menejer")
+ck("HR o'z loginini kartadan ham o'zgartiradi", r.status_code, 200)
+nt = r.headers.get("X-New-Token")
+ck("javob sarlavhasida yangi token", bool(nt), True)
+ck("eski token endi ishlamaydi",
+   c.get("/api/auth/me", headers=Hhr).status_code, 401)
+Hhr = H(nt)
+ck("yangi token ishlaydi",
+   c.get("/api/auth/me", headers=Hhr).json()["username"], "hr.menejer")
+r = upd(Hhr, t.id, username="anvar.u")
+ck("boshqa xodimda yangi token berilmaydi",
+   (r.status_code, r.headers.get("X-New-Token")), (200, None))
+r = upd(Hhr, t.id, username="anvar")
 
 print("\n=== BOSHQA ROLLAR ===")
 Hf = H(login("asoschi").json()["access_token"])

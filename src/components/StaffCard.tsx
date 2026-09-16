@@ -175,7 +175,19 @@ export function StaffCard({
             </div>
 
             <div className="p-5">
-              {tab === "umumiy" && <Summary c={card} />}
+              {tab === "umumiy" && (
+                <Summary
+                  c={card}
+                  canEditLogin={
+                    canEdit &&
+                    card.role !== "founder" &&
+                    !(user?.role === "hr_manager" &&
+                      card.role === "branch_manager")
+                  }
+                  userId={userId}
+                  onDone={load}
+                />
+              )}
               {tab === "tarix" && (
                 <Events userId={userId} canEdit={canEdit} onDone={load} />
               )}
@@ -203,13 +215,127 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
-function Summary({ c }: { c: Card }) {
+/** Login — kartaning o'zida tahrirlanadi (2026-09-16, Jahongir:
+ *  "login o'zgartirib bo'lmadiku, edit qila olsin akkaunt egasi va HR"). */
+function LoginRow({
+  userId, login, canEdit, onDone,
+}: {
+  userId: number;
+  login: string;
+  canEdit: boolean;
+  onDone: () => void;
+}) {
+  const [edit, setEdit] = useState(false);
+  const [val, setVal] = useState(login);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  async function save() {
+    const v = val.trim();
+    if (v === login) {
+      setEdit(false);
+      return;
+    }
+    if (!/^[A-Za-z0-9._@-]{3,40}$/.test(v)) {
+      setErr("3-40 belgi: lotin harflari, raqamlar va . _ - @, probelsiz");
+      return;
+    }
+    setBusy(true);
+    setErr("");
+    try {
+      await api.put(`/users/${userId}`, { username: v });
+      setEdit(false);
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (!edit) {
+    return (
+      <Row
+        label="Login"
+        value={
+          <span className="inline-flex items-center gap-2">
+            {login}
+            {canEdit && (
+              <button
+                onClick={() => {
+                  setVal(login);
+                  setEdit(true);
+                }}
+                className="text-xs text-brand-600 hover:underline"
+              >
+                o'zgartirish
+              </button>
+            )}
+          </span>
+        }
+      />
+    );
+  }
+  return (
+    <div className="py-1.5 border-b border-slate-50">
+      <span className="text-xs text-slate-500">Login</span>
+      <div className="flex gap-1.5 mt-1">
+        <input
+          value={val}
+          onChange={(e) => setVal(e.target.value)}
+          autoFocus
+          autoCapitalize="none"
+          spellCheck={false}
+          className="flex-1 min-w-0 rounded-lg border border-slate-300 px-2 py-1 text-sm"
+        />
+        <button
+          onClick={save}
+          disabled={busy}
+          className="rounded-lg bg-brand-600 text-white px-3 py-1 text-xs font-medium disabled:opacity-50"
+        >
+          Saqlash
+        </button>
+        <button
+          onClick={() => {
+            setEdit(false);
+            setErr("");
+          }}
+          className="rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-600"
+        >
+          Bekor
+        </button>
+      </div>
+      {err ? (
+        <p className="text-xs text-red-600 mt-1">{err}</p>
+      ) : (
+        <p className="text-xs text-slate-400 mt-1">
+          Saqlangach xodim tizimga yangi login bilan kiradi.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function Summary({
+  c, canEditLogin, userId, onDone,
+}: {
+  c: Card;
+  canEditLogin: boolean;
+  userId: number;
+  onDone: () => void;
+}) {
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div>
         <p className="text-xs font-medium text-slate-700 mb-2">
           Shaxsiy ma'lumot
         </p>
+        <LoginRow
+          userId={userId}
+          login={c.username}
+          canEdit={canEditLogin}
+          onDone={onDone}
+        />
         <Row label="Lavozim" value={c.position} />
         <Row label="Rol" value={c.role_label} />
         <Row label="Filial" value={c.branch || "—"} />

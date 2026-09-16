@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import Response
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
@@ -231,6 +232,23 @@ def _clean_username(db: Session, name: str, exclude_id: int) -> str:
     return name
 
 
+def _renewed_token(request: Request, username: str) -> str:
+    """Login o'zgarganda yangi token: token ichida login (sub) turadi.
+    Eski tokenning qolgan muddati saqlanadi ("eslab qolish" ham)."""
+    minutes = None
+    try:
+        from jose import jwt as _jwt
+        tok = (request.headers.get("authorization") or "").split(" ", 1)[-1]
+        exp = _jwt.get_unverified_claims(tok).get("exp")
+        if exp:
+            left = int((datetime.utcfromtimestamp(exp)
+                        - datetime.utcnow()).total_seconds() // 60)
+            minutes = max(left, 60)
+    except Exception:
+        minutes = None
+    return create_access_token({"sub": username}, minutes=minutes)
+
+
 @router.put("/api/auth/me/username")
 def change_own_username(
     payload: schemas.ChangeUsernameRequest,
@@ -252,26 +270,14 @@ def change_own_username(
     old = user.username
     if new == old:
         raise HTTPException(400, "Yangi login eskisi bilan bir xil")
-    minutes = None
-    try:
-        from jose import jwt as _jwt
-        tok = (request.headers.get("authorization") or "").split(" ", 1)[-1]
-        exp = _jwt.get_unverified_claims(tok).get("exp")
-        if exp:
-            left = int((datetime.utcfromtimestamp(exp)
-                        - datetime.utcnow()).total_seconds() // 60)
-            minutes = max(left, 60)
-    except Exception:
-        minutes = None
+    token = _renewed_token(request, new)
     user.username = new
     db.commit()
     audit.log(db, user, entity="user", action="update",
               entity_id=user.id, entity_label=user.full_name,
               field="username", old_value=old, new_value=new,
               note="xodim o'z loginini almashtirdi", commit=True)
-    return {"ok": True, "username": new,
-            "access_token": create_access_token({"sub": new},
-                                                minutes=minutes)}
+    return {"ok": True, "username": new, "access_token": token}
 
 def _guard_role_assignment(
     requester: models.User, target_role: str, target_branch_id: Optional[int]
@@ -450,6 +456,8 @@ def create_user(
 def update_user(
     user_id: int,
     payload: schemas.UserUpdate,
+    request: Request,
+    response: Response,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(
         *(list(roles.STAFF_EDIT) + [roles.HEAD_SUPPORT]))),
@@ -491,10 +499,6 @@ def update_user(
     if payload.username is not None \
             and payload.username.strip() != target.username:
         _new_username = _clean_username(db, payload.username, target.id)
-        if target.id == user.id:
-            raise HTTPException(
-                400, "O'z loginingizni profil menyusidagi \"Loginni "
-                     "almashtirish\" orqali o'zgartiring")
     if user.role == roles.HR_MANAGER \
             and target.role in (roles.FOUNDER, roles.BRANCH_MANAGER) \
             and (payload.password or _active_change or _new_username):
@@ -577,6 +581,12 @@ def update_user(
         # Token ichida login turadi — xodim keyingi so'rovda qayta
         # kirishi kerak bo'ladi (yangi login bilan). Bu kutilgan holat.
         target.username = _new_username
+        # O'z loginini kartadan o'zgartirsa ham tizimdan chiqib
+        # ketmasin (2026-09-16): brauzer yangi tokenni shu
+        # sarlavhadan olib saqlaydi (src/lib/api.ts).
+        if target.id == user.id:
+            response.headers["X-New-Token"] = _renewed_token(
+                request, _new_username)
     # ESKI LAVOZIM YO'QOLMAYDI (2026-08-29, Jahongir: "menejerdan
     # ustozga o'tgandan keyin almashtira olmay qolibdi").
     #

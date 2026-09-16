@@ -266,11 +266,22 @@ async function doRequest<T>(
     if (context.token !== getToken() || context.role !== activeRole) {
       throw new ApiError("Hisob o'zgardi, so'rov bekor qilindi");
     }
+    // Xodim O'Z loginini o'zgartirdi — server yangi token berdi
+    // (token ichida login turadi). Tekshiruvdan KEYIN almashtiramiz,
+    // aks holda shu so'rovning o'zi "hisob o'zgardi" deb bekor bo'lardi.
+    if (renewedToken) {
+      const t = renewedToken;
+      renewedToken = null;
+      setToken(t, localStorage.getItem(TOKEN_KEY) !== null);
+    }
     return data;
   } finally {
     release();
   }
 }
+
+// Server "X-New-Token" sarlavhasi bilan bergan yangi token (2026-09-16)
+let renewedToken: string | null = null;
 
 async function doRequestInner<T>(
   path: string,
@@ -312,6 +323,9 @@ async function doRequestInner<T>(
     window.location.href = "/login";
     throw new Error("Sessiya tugadi, qayta kiring");
   }
+
+  const newToken = res.headers.get("X-New-Token");
+  if (res.ok && newToken) renewedToken = newToken;
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));

@@ -117,9 +117,9 @@ export function TeacherFinance({
             {!compact && (
               <div className="grid grid-cols-[1.3fr_1fr_1fr_1fr_20px] gap-2 px-3 py-2 bg-slate-50 text-[11px] font-medium text-slate-500">
                 <span>Oy</span>
-                <span className="text-right">Ishlab topgan</span>
-                <span className="text-right">Shu oy uchun berilgan</span>
-                <span className="text-right">Qoldiq</span>
+                <span className="text-right">Oylik (hisoblangan)</span>
+                <span className="text-right">Shu oy oyligidan berildi</span>
+                <span className="text-right">Qoldi</span>
                 <span />
               </div>
             )}
@@ -197,16 +197,29 @@ function MonthRow({
                 {m.lessons} dars · {m.attendances} yo'qlama
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-semibold text-slate-900">
-                {formatSom(m.earned)}
-              </p>
-              <p className="text-[11px] text-slate-500">
-                berilgan {formatSom(m.paid_for)} ·{" "}
-                <span className={leftTone}>
-                  {m.left >= 0 ? "qoldiq" : "ortiqcha"} {formatSom(Math.abs(m.left))}
-                </span>
-              </p>
+            {/* Oylik va berilgan pul YONMA-YON (2026-09-16, Jahongir:
+                "oyligi qancha edi qancha berildi yonma yon") */}
+            <div className="grid grid-cols-3 gap-2 text-right shrink-0">
+              <div>
+                <p className="text-[10px] text-slate-400">Oylik</p>
+                <p className="text-xs font-semibold text-slate-900 whitespace-nowrap">
+                  {formatSom(m.earned)}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-400">Berildi</p>
+                <p className="text-xs font-semibold text-slate-700 whitespace-nowrap">
+                  {formatSom(m.paid_for)}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-400">
+                  {m.left >= 0 ? "Qoldi" : "Ortiqcha"}
+                </p>
+                <p className={`text-xs font-semibold whitespace-nowrap ${leftTone}`}>
+                  {formatSom(Math.abs(m.left))}
+                </p>
+              </div>
             </div>
             {open ? <ChevronUp size={16} className="text-slate-400" />
               : <ChevronDown size={16} className="text-slate-400" />}

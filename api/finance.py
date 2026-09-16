@@ -48,15 +48,99 @@ def _get_expense_in_scope(db: Session, expense_id: int, user: models.User) -> mo
 def list_expenses(
     year: Optional[int] = None,
     month: Optional[int] = None,
+    with_teacher: int = 0,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
-    """Xarajatlar ro'yxati. year/month berilsa - o'sha oy uchun."""
+    """Xarajatlar ro'yxati. year/month berilsa - o'sha oy uchun.
+
+    with_teacher=1 (2026-09-16, Jahongir: "ustozni tanlab oylik
+    berganimni kiritsam ... ustoz oyligi kategoriyasi ketishi kerak va
+    ustozni ismi korinishi kerak"): ustozlarga berilgan pul
+    (TeacherPayment) ham "Ustoz oyligi" qatori bo'lib, ismi bilan
+    qo'shiladi. Bunday qatorning id si MANFIY — u xarajat jadvalida
+    emas, ustozning oylik kartasida turadi (foyda-zararga ikki marta
+    tushmasin)."""
     q = scope_to_branch(db.query(models.Expense), models.Expense, user)
+    start = end = None
     if year and month:
         start, end = billing.month_bounds(year, month)
         q = q.filter(models.Expense.date >= start, models.Expense.date <= end)
-    return q.order_by(models.Expense.date.desc(), models.Expense.id.desc()).all()
+    rows = q.order_by(models.Expense.date.desc(), models.Expense.id.desc()).all()
+    if not with_teacher:
+        return rows
+
+    branches = _payroll_branches(db, user, None)
+    extra = set()
+    if branches is not None:
+        extra = {tb.teacher_id for tb in db.query(models.TeacherBranch)
+                 .filter(models.TeacherBranch.branch_id.in_(list(branches)))}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    kinds = {k: lbl for k, lbl, _h in roles.TEACHER_PAYMENT_KINDS}
+    tq = db.query(models.TeacherPayment)
+    if start and end:
+        tq = tq.filter(models.TeacherPayment.paid_on >= start,
+                       models.TeacherPayment.paid_on <= end)
+    out = [schemas.ExpenseOut.model_validate(e) for e in rows]
+    for p in tq.all():
+        t = teachers.get(p.teacher_id)
+        if t is None:
+            continue
+        if (branches is not None and t.branch_id not in branches
+                and t.id not in extra):
+            continue
+        label = kinds.get(p.kind, "oylik").lower()
+        out.append(schemas.ExpenseOut(
+            id=-p.id, date=p.paid_on, category="teacher_salary",
+            amount=p.amount,
+            note=f"{t.full_name} — {label}" + (f" · {p.note}" if p.note else ""),
+            branch_id=t.branch_id,
+            branch=(schemas.BranchOut.model_validate(t.branch)
+                    if t.branch else None),
+            channel=None, method=p.method, created_by=p.created_by,
+            created_at=p.created_at or datetime.utcnow(),
+            teacher_id=t.id))
+    out.sort(key=lambda e: e.date, reverse=True)
+    return out
+
+
+def _linked_teacher(db: Session, user_id) -> models.Teacher | None:
+    """Xodim akkaunti ustozga bog'langanmi — bog'langan bo'lsa unga
+    beriladigan pul USTOZ oyligi (TeacherPayment), ma'muriy xarajat emas."""
+    if not user_id:
+        return None
+    return (db.query(models.Teacher)
+            .filter(models.Teacher.user_id == user_id).first())
+
+
+def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
+                 on: date, method: str | None, note: str | None,
+                 period: str | None, via: str):
+    """Ustozga berilgan pulni oylik kartasiga yozadi."""
+    if user.role not in tuple(roles.SALARY_PAY):
+        raise HTTPException(403, "Oylik berish huquqi yo'q")
+    t = db.query(models.Teacher).get(teacher_id)
+    if not t:
+        raise HTTPException(404, "Xodim topilmadi")
+    tp = models.TeacherPayment(
+        teacher_id=t.id, amount=abs(amount), kind="salary",
+        period=period or on.isoformat()[:7],
+        paid_on=on, method=method or "cash",
+        note=note, created_by=user.full_name)
+    db.add(tp); db.commit(); db.refresh(tp)
+    audit.log(db, user, entity="teacher", action="salary_change",
+              entity_id=t.id, entity_label=t.full_name,
+              branch_id=t.branch_id, field="Oylik",
+              new_value=f"{abs(amount):,.0f}".replace(",", " "),
+              note=via, commit=True)
+    # Javob shakli bir xil bo'lishi uchun "soxta" xarajat qaytaramiz
+    return schemas.ExpenseOut(
+        id=-tp.id, date=tp.paid_on, category="teacher_salary",
+        amount=tp.amount, note=f"{t.full_name} — oylik",
+        branch_id=t.branch_id, branch=None, channel=None,
+        method=tp.method, created_by=tp.created_by,
+        created_at=tp.created_at or datetime.utcnow(),
+        teacher_id=t.id)
 
 @router.get("/api/expenses/staff")
 def expense_staff_list(
@@ -77,9 +161,26 @@ def expense_staff_list(
     """
     tq = scope_to_branch(db.query(models.Teacher), models.Teacher, user,
                          branch_id)
-    teachers = tq.filter(models.Teacher.is_active == 1).all()
+    tmap = {t.id: t for t in tq.filter(models.Teacher.is_active == 1).all()}
     uq = scope_to_branch(db.query(models.User), models.User, user, branch_id)
     users = uq.filter(models.User.is_active == 1).all()
+    # USTOZ HAR DOIM USTOZ BO'LIB CHIQADI (2026-09-16): asosiy filiali
+    # boshqa bo'lsa (qo'shimcha filial) yoki akkaunti shu filialda
+    # turgan bo'lsa ham. Aks holda u oddiy xodim bo'lib tanlanib,
+    # pul "Ma'muriy xodim oyligi"ga tushib qolardi.
+    branches = _payroll_branches(db, user, branch_id)
+    if branches is not None:
+        extra = [tb.teacher_id for tb in db.query(models.TeacherBranch)
+                 .filter(models.TeacherBranch.branch_id.in_(list(branches)))]
+        for t in (db.query(models.Teacher)
+                  .filter(models.Teacher.id.in_(extra or [-1]),
+                          models.Teacher.is_active == 1).all()):
+            tmap.setdefault(t.id, t)
+    for t in (db.query(models.Teacher)
+              .filter(models.Teacher.user_id.in_([u.id for u in users] or [-1]),
+                      models.Teacher.is_active == 1).all()):
+        tmap.setdefault(t.id, t)
+    teachers = list(tmap.values())
 
     rows = []
     linked = set()
@@ -177,34 +278,24 @@ def create_expense(
     branch_id = (payload.branch_id if payload.branch_id is not None
                  else user.branch_id)
 
+    # Ustozning AKKAUNTI tanlangan bo'lsa ham — bu ustoz oyligi
+    # (2026-09-16).
+    if payload.staff_user_id and not payload.teacher_id:
+        linked = _linked_teacher(db, payload.staff_user_id)
+        if linked:
+            payload.teacher_id = linked.id
+            payload.staff_user_id = None
+
     # ---- OYLIK: ustozga berilsa, ustozning oylik kartasiga yoziladi.
     # Xarajatlar jadvaliga QO'SHILMAYDI: P&L da ustozlar oyligi
     # TeacherPayment dan allaqachon hisoblanadi, aks holda ikki marta
     # ketardi.
     if payload.teacher_id:
-        if user.role not in tuple(roles.SALARY_PAY):
-            raise HTTPException(403, "Oylik berish huquqi yo'q")
-        t = db.query(models.Teacher).get(payload.teacher_id)
-        if not t:
-            raise HTTPException(404, "Xodim topilmadi")
-        tp = models.TeacherPayment(
-            teacher_id=t.id, amount=abs(payload.amount), kind="salary",
-            period=payload.period or payload.date.isoformat()[:7],
-            paid_on=payload.date, method=payload.method or "cash",
-            note=payload.note, created_by=user.full_name)
-        db.add(tp); db.commit(); db.refresh(tp)
-        audit.log(db, user, entity="teacher", action="salary_change",
-                  entity_id=t.id, entity_label=t.full_name,
-                  branch_id=t.branch_id, field="Oylik",
-                  new_value=f"{payload.amount:,.0f}".replace(",", " "),
-                  note="Moliya > Xarajatlar orqali", commit=True)
-        # Javob shakli bir xil bo'lishi uchun "soxta" xarajat qaytaramiz
-        return schemas.ExpenseOut(
-            id=-tp.id, date=tp.paid_on, category="teacher_salary",
-            amount=tp.amount, note=f"{t.full_name} — oylik",
-            branch_id=t.branch_id, branch=None, channel=None,
-            method=tp.method, created_by=tp.created_by,
-            created_at=tp.created_at or datetime.utcnow())
+        return _pay_teacher(db, user, payload.teacher_id,
+                            amount=payload.amount, on=payload.date,
+                            method=payload.method, note=payload.note,
+                            period=payload.period,
+                            via="Moliya > Xarajatlar orqali")
 
     # ---- KITOB/MARKER va boshqa sanaladigan mahsulot: ombor kirimi
     cons = None
@@ -278,6 +369,42 @@ def update_expense(
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
     data = payload.model_dump(exclude_unset=True)
+    tid = data.pop("teacher_id", None)
+    sid = data.pop("staff_user_id", None)
+    period = data.pop("period", None)
+    if sid and not tid:
+        linked = _linked_teacher(db, sid)
+        if linked:
+            tid, sid = linked.id, None
+
+    # USTOZ OYLIGIGA KO'CHIRISH (2026-09-16): "Ma'muriy xodim oyligi"
+    # bo'lib xato kiritilgan pul tahrirlashda ustoz tanlansa — ustozning
+    # oylik kartasiga o'tadi, xarajat jadvalidan chiqadi (ikki marta
+    # hisoblanmasin). Eski izoh saqlanadi.
+    if tid:
+        out = _pay_teacher(
+            db, user, tid,
+            amount=data.get("amount") or exp.amount,
+            on=data.get("date") or exp.date,
+            method=data.get("method") or exp.method,
+            note=data.get("note", exp.note),
+            period=period,
+            via=f"Xarajatdan ko'chirildi (#{exp.id})")
+        audit.log(db, user, entity="expense", action="delete",
+                  entity_id=exp.id, entity_label=exp.note or exp.category,
+                  field=exp.category, old_value=exp.amount,
+                  branch_id=exp.branch_id,
+                  note="Ustoz oyligiga ko'chirildi")
+        db.delete(exp)
+        db.commit()
+        return out
+    if sid:
+        if user.role not in tuple(roles.SALARY_PAY):
+            raise HTTPException(403, "Oylik berish huquqi yo'q")
+        if not db.query(models.User).get(sid):
+            raise HTTPException(404, "Xodim topilmadi")
+        data["staff_user_id"] = sid
+
     if "category" in data and data["category"] not in roles.EXPENSE_CATEGORIES:
         raise HTTPException(400, "Noto'g'ri xarajat turi")
     if "amount" in data:

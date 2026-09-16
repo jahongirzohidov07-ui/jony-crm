@@ -670,7 +670,10 @@ export interface Lead {
 }
 
 export interface Expense {
+  /** Manfiy bo'lsa — ustozga berilgan pul (TeacherPayment) */
   id: number;
+  teacher_id?: number | null;
+  staff_user_id?: number | null;
   date: string; // YYYY-MM-DD
   category: string;
   amount: number;
@@ -1195,13 +1198,25 @@ export interface LedgerRow {
   note?: string | null;
 }
 
+export interface CashflowMonth {
+  period: string;
+  title: string;
+  kirim: number;
+  chiqim: number;
+  kassa: number;
+  count: number;
+}
+
 export interface CashflowLedger {
   period: string;
+  /** Oraliq tanlanganda — oxirgi oy (2026-09-16) */
+  period_to?: string;
   kirim: CashMethodBlock;
   chiqim: CashMethodBlock;
   kassa: CashMethodBlock;
   new_payments: { count: number; amount: number };
   old_payments: { count: number; amount: number };
+  months?: CashflowMonth[];
   rows: LedgerRow[];
 }
 

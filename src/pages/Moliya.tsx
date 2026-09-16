@@ -257,13 +257,34 @@ function CashflowTab() {
   const [editing, setEditing] = useState<PayEditTarget | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
+  // DAVR (2026-09-16, Jahongir: "faqat 1 oylikni koryabmiz shuni 2-3
+  // oylikni toliq yillikni korsa boladigan qilib bergin").
+  // 1 — bitta oy; 3/6 — tanlangan oy bilan tugaydigan oxirgi N oy;
+  // 12 — tanlangan yilning yanvar–dekabri; 0 — erkin oraliq.
+  const [span, setSpan] = useState<1 | 3 | 6 | 12 | 0>(1);
+  const [fromY, setFromY] = useState(now.getFullYear());
+  const [fromM, setFromM] = useState(1);
+  const range = (() => {
+    if (span === 1) return null;
+    if (span === 12) return { fy: year, fm: 1, ty: year, tm: 12 };
+    if (span === 0) return { fy: fromY, fm: fromM, ty: year, tm: month };
+    const t = year * 12 + (month - 1) - (span - 1);
+    return { fy: Math.floor(t / 12), fm: (t % 12) + 1, ty: year, tm: month };
+  })();
+  const qs = range
+    ? `year=${range.fy}&month=${range.fm}&to_year=${range.ty}&to_month=${range.tm}`
+    : `year=${year}&month=${month}`;
+  const periodLabel = range
+    ? `${MONTHS[range.fm - 1]} ${range.fy} — ${MONTHS[range.tm - 1]} ${range.ty}`
+    : `${MONTHS[month - 1]} ${year}`;
+
   useEffect(() => {
     setLoading(true);
     api
-      .get<CashflowLedger>(`/reports/cashflow-ledger?year=${year}&month=${month}`)
+      .get<CashflowLedger>(`/reports/cashflow-ledger?${qs}`)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [year, month, reloadKey]);
+  }, [qs, reloadKey]);
 
   useEffect(() => {
     api
@@ -279,7 +300,7 @@ function CashflowTab() {
     filter === "all" ? data.rows : data.rows.filter((r) => r.direction === filter);
 
   function exportRows() {
-    exportToExcel(`kassa-${year}-${String(month).padStart(2, "0")}`, "Kassa",
+    exportToExcel(`kassa-${data!.period}${data!.period_to && data!.period_to !== data!.period ? `_${data!.period_to}` : ""}`, "Kassa",
       data!.rows.map((r) => ({
         Sana: r.date,
         Summa: r.amount,
@@ -299,19 +320,59 @@ function CashflowTab() {
           naqd/Click/terminal — kunlik kassa oylik jadvalning tepasida. */}
       <CashDayCard reloadKey={reloadKey} />
 
-      {/* --- Sana tanlash --- */}
+      {/* --- Davr tanlash --- */}
       <div className="flex flex-wrap items-center gap-2 mb-5">
-        <select
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-          className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
-        >
-          {MONTHS.map((m, i) => (
-            <option key={m} value={i + 1}>
-              {m}
-            </option>
+        <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5">
+          {([
+            [1, "Oy"], [3, "3 oy"], [6, "6 oy"], [12, "Yil"], [0, "Oraliq"],
+          ] as const).map(([k, l]) => (
+            <button
+              key={k}
+              onClick={() => setSpan(k)}
+              className={`px-2.5 py-1.5 rounded-md text-xs font-medium ${
+                span === k ? "bg-brand-600 text-white" : "text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              {l}
+            </button>
           ))}
-        </select>
+        </div>
+        {span === 0 && (
+          <>
+            <select
+              value={fromM}
+              onChange={(e) => setFromM(Number(e.target.value))}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {MONTHS.map((m, i) => (
+                <option key={m} value={i + 1}>{m}</option>
+              ))}
+            </select>
+            <select
+              value={fromY}
+              onChange={(e) => setFromY(Number(e.target.value))}
+              className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+            <span className="text-sm text-slate-400">dan</span>
+          </>
+        )}
+        {span !== 12 && (
+          <select
+            value={month}
+            onChange={(e) => setMonth(Number(e.target.value))}
+            className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+          >
+            {MONTHS.map((m, i) => (
+              <option key={m} value={i + 1}>
+                {m}
+              </option>
+            ))}
+          </select>
+        )}
         <select
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
@@ -323,6 +384,11 @@ function CashflowTab() {
             </option>
           ))}
         </select>
+        {span !== 1 && (
+          <span className="text-sm text-slate-500">
+            {span === 0 ? "gacha · " : ""}{periodLabel}
+          </span>
+        )}
         <div className="flex-1" />
         {/* Kirim-chiqim ro'yxatining o'zida ham to'lov qabul qilinadi -
             administrator sahifa almashtirmasin. */}
@@ -346,6 +412,47 @@ function CashflowTab() {
           oyligi yoqlamadan avtomat hisoblanib, chiqimga qo'shilgan.
         </Note>
       </div>
+
+      {/* --- Oylar kesimi (oraliq tanlanganda) --- */}
+      {data.months && data.months.length > 1 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-5">
+          <p className="text-sm font-medium text-slate-700">Oylar kesimida</p>
+          <p className="text-xs text-slate-400 mb-3">{periodLabel}</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-xs text-slate-500 border-b border-slate-100">
+                  <th className="text-left py-2">Oy</th>
+                  <th className="text-right">Kirim</th>
+                  <th className="text-right">Chiqim</th>
+                  <th className="text-right">Kassa</th>
+                  <th className="text-right">Yozuv</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.months.map((m) => (
+                  <tr key={m.period} className="border-b border-slate-50">
+                    <td className="py-2 text-slate-700">{m.title}</td>
+                    <td className="text-right tabular-nums text-emerald-700">{formatSom(m.kirim)}</td>
+                    <td className="text-right tabular-nums text-red-700">{formatSom(m.chiqim)}</td>
+                    <td className={`text-right tabular-nums font-medium ${m.kassa < 0 ? "text-red-700" : "text-slate-900"}`}>
+                      {formatSom(m.kassa)}
+                    </td>
+                    <td className="text-right text-slate-400">{m.count}</td>
+                  </tr>
+                ))}
+                <tr className="font-semibold">
+                  <td className="py-2">Jami</td>
+                  <td className="text-right tabular-nums text-emerald-700">{formatSom(data.kirim.total)}</td>
+                  <td className="text-right tabular-nums text-red-700">{formatSom(data.chiqim.total)}</td>
+                  <td className="text-right tabular-nums">{formatSom(data.kassa.total)}</td>
+                  <td className="text-right text-slate-400">{data.rows.length}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* --- Kassa daftari --- */}
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
@@ -376,7 +483,7 @@ function CashflowTab() {
 
         {rows.length === 0 ? (
           <p className="text-sm text-slate-400 py-10 text-center">
-            Bu oyda yozuv yo'q
+            Bu davrda yozuv yo'q
           </p>
         ) : (
           <div className="overflow-x-auto">
@@ -905,7 +1012,13 @@ function ExpenseForm({
             <label className="block text-xs font-medium text-slate-500 mb-2">
               Xarajat turi
             </label>
-            {categoriesByGroup().map((g) => (
+            {/* Xodim oyligi faqat "Oylik" orqali, ism tanlab (2026-09-16) —
+                ism izohga qo'lda yozilsa ustoz oyligi ham shu turga tushib
+                qolardi. Farrosh/qorovul (akkaunti yo'q) shu yerda qoladi. */}
+            {categoriesByGroup()
+              .map((g) => ({ ...g, items: g.items.filter((c) => c.key !== "admin_salary") }))
+              .filter((g) => g.items.length > 0)
+              .map((g) => (
               <div key={g.key} className="mb-2.5">
                 <p className="text-[11px] uppercase tracking-wide text-slate-400 mb-1">
                   {g.label}
@@ -1118,7 +1231,7 @@ function ExpensesTab() {
   function load() {
     setLoading(true);
     api
-      .get<Expense[]>(`/expenses?year=${year}&month=${month}`)
+      .get<Expense[]>(`/expenses?year=${year}&month=${month}&with_teacher=1`)
       .then(setItems)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
@@ -1143,7 +1256,9 @@ function ExpensesTab() {
     if (!confirm(`${categoryLabel(e.category)} — ${formatSom(e.amount)} o'chirilsinmi?`))
       return;
     try {
-      await api.delete(`/expenses/${e.id}`);
+      // Manfiy id — ustozga berilgan pul, u ustozning oylik kartasida
+      if (e.id < 0) await api.delete(`/teacher-payments/${-e.id}`);
+      else await api.delete(`/expenses/${e.id}`);
       setItems((prev) => prev.filter((x) => x.id !== e.id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Xatolik");
@@ -1243,12 +1358,19 @@ function ExpensesTab() {
                     {formatSom(e.amount)}
                   </td>
                   <td className="px-4 py-3 text-right whitespace-nowrap">
-                    <button
-                      onClick={() => setEditing(e)}
-                      className="text-slate-400 hover:text-brand-600 mr-2"
-                    >
-                      <Pencil size={15} />
-                    </button>
+                    {e.id < 0 ? (
+                      <span
+                        className="inline-block w-[15px] mr-2"
+                        title="Ustoz oyligi — ustozning oylik kartasidan tahrirlanadi"
+                      />
+                    ) : (
+                      <button
+                        onClick={() => setEditing(e)}
+                        className="text-slate-400 hover:text-brand-600 mr-2"
+                      >
+                        <Pencil size={15} />
+                      </button>
+                    )}
                     <button
                       onClick={() => remove(e)}
                       className="text-slate-300 hover:text-red-500"
@@ -1264,8 +1386,12 @@ function ExpensesTab() {
       )}
 
       <Note>
-        Ustozlar ish haqi bu yerga kiritilmaydi — u yoqlama asosida avtomatik
-        hisoblanadi va foyda-zarar hisobotiga o'zi qo'shiladi.
+        Ustozga oylik "Oylik" tugmasi orqali ustozni tanlab beriladi — u shu
+        ro'yxatda "Ustoz oyligi" bo'lib ismi bilan ko'rinadi va ustozning
+        oylik kartasiga tushadi. Foyda-zarardagi ustozlar ish haqi esa
+        yo'qlamadan avtomatik hisoblanadi, shuning uchun ikki marta ayirilmaydi.
+        Xato "Ma'muriy xodim oyligi" bo'lib kiritilgan bo'lsa — qalamchani
+        bosib, ustozni tanlang: pul ustoz oyligiga ko'chadi.
       </Note>
 
       {showNew && (

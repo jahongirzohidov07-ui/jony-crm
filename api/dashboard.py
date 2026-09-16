@@ -1544,14 +1544,32 @@ def cash_day(
 def cashflow_ledger(
     year: int,
     month: int,
+    to_year: int | None = None,
+    to_month: int | None = None,
     branch_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.CASHFLOW_ACCESS)),
 ):
-    """Bir oylik kassa daftari: har bir kirim va chiqim alohida qator.
+    """Kassa daftari: har bir kirim va chiqim alohida qator.
     Tepasida - Kirim / Chiqim / Kassa jadvali usullar kesimida, va
-    yangi/eski to'lovlar soni bilan summasi."""
+    yangi/eski to'lovlar soni bilan summasi.
+
+    ORALIQ (2026-09-16, Jahongir: "cashflow pul oqimini, faqat 1
+    oylikni koryabmiz shuni 2-3 oylikni toliq yillikni korsa boladigan
+    qilib bergin"): to_year/to_month berilsa — year/month oyidan
+    to_year/to_month oyigacha (ko'pi bilan 24 oy). "months" — har oy
+    kirim/chiqim/kassa jamlanmasi."""
     start, end = billing.month_bounds(year, month)
+    if to_year and to_month:
+        if not 1 <= to_month <= 12:
+            raise HTTPException(400, "Oy noto'g'ri")
+        s2, e2 = billing.month_bounds(to_year, to_month)
+        if s2 < start:
+            start = s2               # teskari tanlangan — almashtiramiz
+        else:
+            end = e2
+        if (end.year - start.year) * 12 + end.month - start.month > 23:
+            raise HTTPException(400, "Ko'pi bilan 24 oylik oraliq tanlang")
     d0, d1 = _utc_window(start, end)
 
     # --- Kirimlar ---
@@ -1664,13 +1682,34 @@ def cashflow_ledger(
 
     kassa = {m: kirim[m] - chiqim[m] for m in roles.PAYMENT_METHODS}
 
+    # Oylar kesimi — oraliqdagi har oy (bo'sh oy ham) alohida qator
+    per_month: dict = {}
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        key = f"{y:04d}-{m:02d}"
+        per_month[key] = {"period": key, "title": _month_title(key),
+                          "kirim": 0.0, "chiqim": 0.0, "count": 0}
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    for r in rows:
+        pm = per_month.get(r["date"][:7])
+        if pm is None:
+            continue
+        pm["kirim" if r["direction"] == "in" else "chiqim"] += r["amount"]
+        pm["count"] += 1
+    months_out = [dict(v, kirim=round(v["kirim"], 2),
+                       chiqim=round(v["chiqim"], 2),
+                       kassa=round(v["kirim"] - v["chiqim"], 2))
+                  for v in per_month.values()]
+
     return {
-        "period": period,
+        "period": _period_key(start.year, start.month),
+        "period_to": _period_key(end.year, end.month),
         "kirim": block(kirim),
         "chiqim": block(chiqim),
         "kassa": block(kassa),
         "new_payments": {"count": new_cnt, "amount": new_sum},
         "old_payments": {"count": old_cnt, "amount": old_sum},
+        "months": months_out,
         "rows": rows,
     }
 

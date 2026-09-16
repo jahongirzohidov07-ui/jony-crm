@@ -56,6 +56,9 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
   { key: "admin_salary", label: "Ma'muriy xodim oyligi", group: "admin_salary" },
   { key: "support_salary", label: "Farrosh / qorovul", group: "admin_salary" },
   { key: "salary", label: "Xodimlar oyligi (eski)", group: "admin_salary", legacy: true },
+  // Ustozga berilgan pul — ro'yxatda ko'rinadi, formada tanlanmaydi
+  // (Oylik -> ustozni tanlash orqali yoziladi).
+  { key: "teacher_salary", label: "Ustoz oyligi", group: "teacher_salary", legacy: true },
 
   { key: "ads", label: "Reklama", group: "marketing" },
   { key: "tax", label: "Soliq", group: "tax" },

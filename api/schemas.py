@@ -562,6 +562,11 @@ class ExpenseUpdate(BaseModel):
     branch_id: Optional[int] = None
     channel: Optional[str] = None
     method: Optional[str] = None
+    # Tahrirlashda xodim tanlansa (2026-09-16): ustoz bo'lsa pul
+    # ustozning oylik kartasiga ko'chadi.
+    teacher_id: Optional[int] = None
+    staff_user_id: Optional[int] = None
+    period: Optional[str] = None
 
 
 class ExpenseOut(BaseModel):
@@ -580,6 +585,8 @@ class ExpenseOut(BaseModel):
     staff_user_id: Optional[int] = None
     qty: Optional[float] = None
     consumable_id: Optional[int] = None
+    # Ustozga berilgan pul (TeacherPayment) — ro'yxatda "Ustoz oyligi"
+    teacher_id: Optional[int] = None
 
 
 class DashboardStats(BaseModel):

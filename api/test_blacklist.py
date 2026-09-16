@@ -61,7 +61,9 @@ def add(body, h=HR):
 def new_cand(name, phone=None):
     r = c.post("/api/candidates", headers=HR, json={
         "full_name": name, "phone": phone, "position": "sales",
-        "branch_id": b.id})
+        # bir odam ataylab qayta qo'shiladi — takror ogohlantirishi
+        # bu testning mavzusi emas (test_candidate_dup.py)
+        "branch_id": b.id, "force": True})
     assert r.status_code == 200, r.text
     return r.json()["id"]
 

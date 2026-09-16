@@ -361,9 +361,12 @@ def list_candidates(
     rows = qq.order_by(models.Candidate.created_at.desc()).all()
     # QORA RO'YXAT belgisi (2026-09-16) — bitta so'rov bilan
     _bl = _blacklist.hit_map(db, [(c.id, c.full_name, c.phone) for c in rows])
+    # TAKRORIY NOMZOD (2026-09-16): shu odamning boshqa arizalari soni
+    _same, _ = _person_index(db)
     return [{
         "id": c.id, "full_name": c.full_name, "phone": c.phone,
         "blacklist": _bl.get(c.id),
+        "other_applications": len(_same.get(c.id, ())),
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
         # QAYSI ISHGA kelgani va (ustoz bo'lsa) QAYSI FANDAN
@@ -565,6 +568,9 @@ def get_candidate(
         "phone": c.phone,
         "blacklist": _blacklist.hit_brief(
             _blacklist.find_hit(db, c.full_name, c.phone)),
+        # Shu odamning boshqa arizalari (2026-09-16)
+        "history": _history_rows(
+            db, _same_person_ids(db, c.full_name, c.phone, exclude_id=c.id)),
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
         # Ariza savollari (2026-08-15) — qo'lda kiritilsa ham,
@@ -763,6 +769,15 @@ def create_candidate(
     user=Depends(require_role(*roles.HR_ACCESS)),
 ):
     data = payload.model_dump()
+    force = data.pop("force", False)
+    # TAKRORIY NOMZOD (2026-09-16): shu odam avval ham kelgan bo'lsa —
+    # yangi yozuv ochishdan oldin HR ga ko'rsatamiz
+    if not force:
+        _dups = _same_person_ids(db, payload.full_name, payload.phone)
+        if _dups:
+            return {"duplicate": True,
+                    "history": _history_rows(db, _dups),
+                    "message": "Bu odam avval ham ariza bergan"}
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         data["branch_id"] = user.branch_id
     # Fan faqat USTOZ uchun ma'noga ega (2026-08-15). Boshqa lavozim
@@ -1244,6 +1259,189 @@ def _find_duplicates(db: Session, name: str | None,
                     models.CandidateApplication.candidate_id == c.id).count(),
             })
     return out
+
+
+# ---------------------------------------------------------------------
+#  TAKRORIY NOMZOD (2026-09-16, taklif #1: "bir odam har safar yangi
+#  nomzod bo'lib tushyapti — avval ham ariza bergan, oxirgisi rad
+#  etilgan deb ko'rsatish va birlashtirish").
+#
+#  Bir odam: telefon (oxirgi 9 raqam) bir xil bo'lsa. Telefonlardan
+#  biri yo'q bo'lsa — ism-familiya (so'zlar tartibi farqsiz). Ikkala
+#  tomonda telefon bo'lib, farq qilsa — bu ISMDOSH, boshqa odam.
+# ---------------------------------------------------------------------
+def _person_index(db: Session):
+    """Barcha nomzodlar bo'yicha bitta indeks: {id: set(boshqa_idlar)}."""
+    rows = db.query(models.Candidate.id, models.Candidate.full_name,
+                    models.Candidate.phone).all()
+    by_phone, by_name, keys = {}, {}, {}
+    for cid, name, phone in rows:
+        pk = roles.blacklist_phone_key(phone)
+        nk = roles.blacklist_name_key(name)
+        keys[cid] = (pk, nk)
+        if pk:
+            by_phone.setdefault(pk, set()).add(cid)
+        if nk:
+            by_name.setdefault(nk, []).append((cid, pk))
+    out = {}
+    for cid, (pk, nk) in keys.items():
+        same = set(by_phone.get(pk, ())) if pk else set()
+        for oid, opk in (by_name.get(nk, ()) if nk else ()):
+            if not pk or not opk:
+                same.add(oid)
+        same.discard(cid)
+        out[cid] = same
+    return out, keys
+
+
+def _same_person_ids(db: Session, full_name, phone, exclude_id=None) -> list:
+    pk = roles.blacklist_phone_key(phone)
+    nk = roles.blacklist_name_key(full_name)
+    if not (pk or nk):
+        return []
+    ids = []
+    for cid, name, ph in db.query(models.Candidate.id,
+                                  models.Candidate.full_name,
+                                  models.Candidate.phone).all():
+        if cid == exclude_id:
+            continue
+        opk = roles.blacklist_phone_key(ph)
+        if pk and opk:
+            if pk == opk:
+                ids.append(cid)
+        elif nk and roles.blacklist_name_key(name) == nk:
+            ids.append(cid)
+    return ids
+
+
+def _history_rows(db: Session, ids) -> list:
+    """Shu odamning boshqa arizalari — yangisi tepada."""
+    if not ids:
+        return []
+    cands = (db.query(models.Candidate)
+             .filter(models.Candidate.id.in_(list(ids))).all())
+    apps = {}
+    for a in (db.query(models.CandidateApplication)
+              .filter(models.CandidateApplication.candidate_id.in_(
+                  list(ids)))
+              .order_by(models.CandidateApplication.id).all()):
+        apps[a.candidate_id] = a          # eng oxirgi ariza
+    stages = dict(getattr(roles, "CANDIDATE_STAGES", []))
+    out = []
+    for c in sorted(cands, key=lambda x: x.created_at or datetime.min,
+                    reverse=True):
+        a = apps.get(c.id)
+        reason = None
+        if a and a.reject_reason:
+            reason = roles.REJECT_LABELS.get(a.reject_reason, a.reject_reason)
+            if a.reject_note:
+                reason = f"{reason}: {a.reject_note}"
+        elif c.reject_reason:
+            reason = c.reject_reason
+        out.append({
+            "id": c.id,
+            "full_name": c.full_name,
+            "phone": c.phone,
+            "created_at": c.created_at.isoformat() if c.created_at else None,
+            "stage": c.stage,
+            "stage_label": stages.get(c.stage, c.stage),
+            "role_label": _cand_role(c)[0],
+            "subject": _cand_role(c)[1],
+            "vacancy": c.vacancy.title if c.vacancy else None,
+            "branch": c.branch.name if c.branch else None,
+            "reject_reason": reason,
+            "hired_date": c.hired_date.isoformat() if c.hired_date else None,
+            "closed_date": c.closed_date.isoformat() if c.closed_date else None,
+        })
+    return out
+
+
+def _pretty_phone(p) -> str:
+    d = "".join(ch for ch in str(p or "") if ch.isdigit())
+    if len(d) == 9:
+        return f"+998 {d[:2]} {d[2:5]} {d[5:7]} {d[7:]}"
+    return str(p or "")
+
+
+# Birlashtirishda bo'sh bo'lsa to'ldiriladigan maydonlar
+_MERGE_FILL = (
+    "phone", "vacancy_id", "branch_id", "cv", "experience_years",
+    "workplaces", "certificates", "language_level", "native_language",
+    "expected_salary", "trial_score", "interview_score", "strengths",
+    "weaknesses", "reference_note", "position", "subject", "address",
+    "birth_date_text", "education", "marital", "socials", "work_duration",
+)
+
+
+@router.post("/api/candidates/{cid}/merge")
+def merge_candidate(cid: int, payload: dict,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.HR_ACCESS))):
+    """source_id nomzodni cid ga QO'SHADI: arizalari, suhbatlari,
+    takliflari, baholari va fayllari ko'chadi, bo'sh maydonlar
+    to'ldiriladi, izohi saqlanadi — keyin ikkinchi yozuv o'chadi."""
+    try:
+        src_id = int(payload.get("source_id"))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Qaysi nomzod qo'shilishini tanlang")
+    if src_id == cid:
+        raise HTTPException(400, "Nomzodni o'ziga qo'shib bo'lmaydi")
+    dst = db.query(models.Candidate).get(cid)
+    src = db.query(models.Candidate).get(src_id)
+    if not dst or not src:
+        raise HTTPException(404, "Nomzod topilmadi")
+
+    moved = {}
+    for model, name in ((models.CandidateApplication, "arizalar"),
+                        (models.Interview, "suhbatlar"),
+                        (models.Offer, "takliflar"),
+                        (models.LessonObservation, "baholar")):
+        n = (db.query(model).filter(model.candidate_id == src.id)
+             .update({model.candidate_id: dst.id},
+                     synchronize_session=False))
+        if n:
+            moved[name] = n
+    n = (db.query(models.Attachment)
+         .filter(models.Attachment.entity == "candidate",
+                 models.Attachment.entity_id == src.id)
+         .update({models.Attachment.entity_id: dst.id},
+                 synchronize_session=False))
+    if n:
+        moved["fayllar"] = n
+    (db.query(models.HrBlacklist)
+     .filter(models.HrBlacklist.candidate_id == src.id)
+     .update({models.HrBlacklist.candidate_id: dst.id},
+             synchronize_session=False))
+
+    filled = []
+    for f in _MERGE_FILL:
+        if getattr(dst, f, None) in (None, "") \
+                and getattr(src, f, None) not in (None, ""):
+            setattr(dst, f, getattr(src, f))
+            filled.append(f)
+    when = (src.created_at.date().isoformat()
+            if src.created_at else "?")
+    tag = (f"[{roles.local_today().isoformat()}] Birlashtirildi: "
+           f"{when} dagi arizasi (#{src.id}, {src.full_name}"
+           f"{', ' + _pretty_phone(src.phone) if src.phone else ''})")
+    if src.note:
+        tag += "\n" + src.note
+    dst.note = (dst.note + "\n\n" + tag) if dst.note else tag
+    # Eng eski ariza sanasi saqlansin — "qachondan beri bizni biladi"
+    if src.created_at and dst.created_at and src.created_at < dst.created_at:
+        dst.created_at = src.created_at
+    label = src.full_name
+    db.flush()
+    db.delete(src)
+    db.commit()
+    audit.log(db, user, entity="candidate", action="merge",
+              entity_id=dst.id, entity_label=dst.full_name,
+              old_value=f"#{src_id} {label}",
+              new_value=", ".join(f"{k}: {v}" for k, v in moved.items())
+              or "birlashtirildi",
+              note=("to'ldirildi: " + ", ".join(filled)) if filled else None,
+              commit=True)
+    return {"ok": True, "id": dst.id, "moved": moved, "filled": filled}
 
 @router.get("/api/ats/pipeline")
 def ats_pipeline(vacancy_id: int | None = None,

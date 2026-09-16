@@ -11,6 +11,7 @@ import {
 import {
   api, type Vacancy, type Candidate, type HrFunnel, type Branch,
   type LibraryList, type LibraryItem, type LibraryPeople,
+  type CandidateHistoryRow,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { AtsBoard } from "../components/AtsBoard";
@@ -39,6 +40,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { PenaltyPointsTab } from "../components/PenaltyPoints";
 import { HrBlacklistTab, BlacklistBadge } from "../components/HrBlacklist";
+import { DuplicateCandidateDialog } from "../components/CandidateHistory";
 import { exportToExcel } from "../lib/exportXlsx";
 import { HrVacancyReport } from "../components/HrVacancyReport";
 
@@ -407,7 +409,9 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
     setModal(true);
   };
 
-  const save = async () => {
+  const [dupRows, setDupRows] = useState<CandidateHistoryRow[] | null>(null);
+
+  const save = async (force = false) => {
     if (!form.full_name.trim()) {
       setErr("Ism-familiya kiritilishi shart");
       return;
@@ -440,7 +444,17 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
     try {
       if (editing)
         await api.put(`/candidates/${editing.id}`, bodyWithDate);
-      else await api.post("/candidates", bodyWithDate);
+      else {
+        const r = await api.post<{ duplicate?: boolean;
+                                   history?: CandidateHistoryRow[] }>(
+          "/candidates", { ...bodyWithDate, force });
+        // Bu odam avval ham kelgan — HR qaror qilsin (2026-09-16)
+        if (r?.duplicate) {
+          setDupRows(r.history || []);
+          return;
+        }
+      }
+      setDupRows(null);
       setModal(false);
       load();
     } catch (e: unknown) {
@@ -669,6 +683,14 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                       {c.full_name}
                     </button>
                     <BlacklistBadge hit={c.blacklist} />
+                    {!!c.other_applications && (
+                      <span
+                        title="Bu odam avval ham ariza bergan — kartada tarixi"
+                        className="ml-1.5 inline-block px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-semibold align-middle"
+                      >
+                        {c.other_applications + 1}-ariza
+                      </span>
+                    )}
                   </td>
                   <td className="text-slate-500">{formatPhone(c.phone) || "—"}</td>
                   <td className="text-slate-600">
@@ -1014,7 +1036,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             </div>
             <div className="flex gap-2 mt-5">
               <button
-                onClick={save}
+                onClick={() => save()}
                 className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
               >
                 Saqlash
@@ -1028,6 +1050,18 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             </div>
           </div>
         </div>
+      )}
+      {dupRows && (
+        <DuplicateCandidateDialog
+          rows={dupRows}
+          onOpen={(cid) => {
+            setDupRows(null);
+            setModal(false);
+            setCard(cid);
+          }}
+          onForce={() => save(true)}
+          onClose={() => setDupRows(null)}
+        />
       )}
     </div>
   );

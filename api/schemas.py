@@ -1031,6 +1031,8 @@ class CandidateCreate(BaseModel):
     work_duration: Optional[str] = None
     workplaces: Optional[str] = None
     experience_years: Optional[float] = None
+    # Takroriy nomzod ogohlantirishini ko'rib, baribir yangisini ochish
+    force: bool = False
 
 
 class CandidateUpdate(BaseModel):

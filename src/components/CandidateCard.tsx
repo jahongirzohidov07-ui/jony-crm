@@ -8,6 +8,7 @@ import { Attachments } from "./Attachments";
 import { ObservationList } from "./LessonRubric";
 import { CandidateGrowth } from "./CandidateGrowth";
 import { AddToBlacklist, BlacklistBanner } from "./HrBlacklist";
+import { CandidateHistoryList } from "./CandidateHistory";
 import { useAuth } from "../lib/AuthContext";
 import { BLACKLIST_MANAGE, can } from "../lib/roles";
 
@@ -29,13 +30,15 @@ export function CandidateCard({
   const { user } = useAuth();
   const canBlacklist = can(user?.role, BLACKLIST_MANAGE);
   const [blAdd, setBlAdd] = useState(false);
+  // "Avvalgi arizalari"dan boshqa kartaga shu oynaning o'zida o'tiladi
+  const [curId, setCurId] = useState(id);
   const [c, setC] = useState<Card | null>(null);
   const [f, setF] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [ok, setOk] = useState(false);
 
   function load() {
-    api.get<Card>(`/candidates/${id}`).then((d) => {
+    api.get<Card>(`/candidates/${curId}`, true).then((d) => {
       setC(d);
       setF({
         cv: d.cv ?? "",
@@ -54,7 +57,24 @@ export function CandidateCard({
       });
     });
   }
-  useEffect(load, [id]);
+  useEffect(load, [curId]);
+
+  async function merge(row: { id: number; created_at?: string | null;
+                              full_name: string }) {
+    if (!c) return;
+    if (!confirm(
+      `${row.full_name} (${row.created_at?.slice(0, 10) || "?"}) arizasi ` +
+      `shu kartaga qo'shilsinmi?\n\nArizalari, suhbatlari, baholari va ` +
+      `fayllari shu yerga ko'chadi, bo'sh maydonlar to'ldiriladi, ikkinchi ` +
+      `yozuv o'chadi. Buni ortga qaytarib bo'lmaydi.`)) return;
+    try {
+      await api.post(`/candidates/${c.id}/merge`, { source_id: row.id });
+      load();
+      onSaved?.();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    }
+  }
 
   function set(k: string, v: string) {
     setF({ ...f, [k]: v });
@@ -82,7 +102,7 @@ export function CandidateCard({
         "/hr/options/language_level",
         { label: label.trim() }
       );
-      await api.put(`/candidates/${id}`, { language_level: row.key });
+      await api.put(`/candidates/${curId}`, { language_level: row.key });
       load();
     } catch (e) {
       alert(e instanceof Error ? e.message : "Qo'shib bo'lmadi");
@@ -91,7 +111,7 @@ export function CandidateCard({
 
   async function save() {
     setSaving(true);
-    await api.put(`/candidates/${id}`, {
+    await api.put(`/candidates/${curId}`, {
       cv: f.cv || null,
       experience_years: f.experience_years ? Number(f.experience_years) : null,
       workplaces: f.workplaces || null,
@@ -166,6 +186,20 @@ export function CandidateCard({
         ) : (
           <div className="p-5 space-y-5">
             <BlacklistBanner hit={c.blacklist} />
+
+            {/* TAKRORIY NOMZOD (2026-09-16) */}
+            {!!c.history?.length && (
+              <div className="rounded-xl border border-amber-300 bg-amber-50/60 p-4">
+                <p className="text-sm font-semibold text-amber-800 mb-1">
+                  Avval ham ariza bergan — {c.history.length} marta
+                </p>
+                <CandidateHistoryList
+                  rows={c.history}
+                  onOpen={(hid) => setCurId(hid)}
+                  onMerge={canEdit ? merge : undefined}
+                />
+              </div>
+            )}
 
             {/* ARIZA MA'LUMOTLARI (2026-09-16, Jahongir: "nomzod haqidagi
                 to'liq ma'lumotlarni ruchka editni bosmasa bilib bo'lmayabdi,
@@ -253,9 +287,9 @@ export function CandidateCard({
               <p className="text-xs font-medium text-slate-700 mb-2">
                 Sinov darsi baholashi
               </p>
-              <CandidateGrowth candidateId={id} />
+              <CandidateGrowth key={curId} candidateId={curId} />
               <div className="h-4" />
-              <ObservationList candidateId={id} canAdd={canEdit} />
+              <ObservationList key={curId} candidateId={curId} canAdd={canEdit} />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
@@ -411,7 +445,7 @@ export function CandidateCard({
               <p className="text-xs font-medium text-slate-700 mb-2 flex items-center gap-1.5">
                 <FileText size={13} /> Fayllar — rasm, sertifikat, CV
               </p>
-              <Attachments entity="candidate" entityId={id} />
+              <Attachments key={curId} entity="candidate" entityId={curId} />
             </div>
 
             {canEdit && (

@@ -1247,11 +1247,30 @@ export interface BlacklistHit {
   added_by?: string | null;
 }
 
+/** Shu odamning avvalgi arizasi (2026-09-16, takroriy nomzod). */
+export interface CandidateHistoryRow {
+  id: number;
+  full_name: string;
+  phone?: string | null;
+  created_at?: string | null;
+  stage: string;
+  stage_label: string;
+  role_label?: string | null;
+  subject?: string | null;
+  vacancy?: string | null;
+  branch?: string | null;
+  reject_reason?: string | null;
+  hired_date?: string | null;
+  closed_date?: string | null;
+}
+
 export interface Candidate {
   id: number;
   full_name: string;
   phone?: string | null;
   blacklist?: BlacklistHit | null;
+  /** Shu odamning boshqa arizalari soni */
+  other_applications?: number;
   vacancy_id?: number | null;
   vacancy?: string | null;
   /** Qaysi ishga kelgan: vakansiya nomi yoki tanlagan lavozimi. */
@@ -2219,6 +2238,7 @@ export interface CandidateCard {
   full_name: string;
   phone?: string | null;
   blacklist?: BlacklistHit | null;
+  history?: CandidateHistoryRow[];
   vacancy?: string | null;
   /** Ariza savollari (onlayn ariza bilan bir xil) */
   role_label?: string | null;

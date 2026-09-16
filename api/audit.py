@@ -35,6 +35,9 @@ ACTIONS = {
     "cancel": "Bekor qilindi",
     "att_mark": "Yo'qlama belgilandi",
     "att_remove": "Yo'qlama olib tashlandi",
+    # 2026-09-16
+    "merge": "Birlashtirildi",
+    "import": "Import qilindi",
 }
 
 # Kuzatiladigan obyektlar.
@@ -59,6 +62,12 @@ ENTITIES = {
     # bolib qolibdi... audit bolimida kimga qanday yoqlama qoygani
     # korinadimi" — endi yo'qlama ham auditda.
     "attendance": "Yo'qlama",
+    # 2026-09-16: HR bo'limlari
+    "candidate": "Nomzod",
+    "conduct": "Na'munali xodim",
+    "hr_blacklist": "Qora ro'yxat",
+    "support_adjustment": "Support jarimasi",
+    "examiner_adjustment": "Examiner jarimasi",
 }
 
 

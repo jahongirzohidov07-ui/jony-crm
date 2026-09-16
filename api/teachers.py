@@ -726,6 +726,8 @@ def teacher_account_create(tid: int, db: Session = Depends(get_db),
     if not t:
         raise HTTPException(404, "Ustoz topilmadi")
     _head_support_guard(db, user, t)
+    import blacklist as _bl   # QORA RO'YXAT (2026-09-16)
+    _bl.guard_hire(db, t.full_name, t.phone)
 
     st = _account_state(db, t)
     if st["has_account"]:

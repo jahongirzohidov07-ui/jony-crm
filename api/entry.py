@@ -967,6 +967,10 @@ def create_user_v2(payload: _UserCreate2,
             and not M._in_user_branches(db, user, payload.branch_id):
         raise HTTPException(403, "Faqat o'z filialingizga xodim "
                                  "qo'sha olasiz")
+    # QORA RO'YXAT (2026-09-16): xodim sifatida ochib bo'lmaydi
+    if payload.role not in roles.EXTERNAL_ROLES:
+        import blacklist as _bl
+        _bl.guard_hire(db, payload.full_name, payload.phone)
     if db.query(models.User).filter(
             models.User.username == username).first():
         raise HTTPException(400, "Bu login band — bu raqam bilan akkaunt "

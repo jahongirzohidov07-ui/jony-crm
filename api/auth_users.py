@@ -415,6 +415,9 @@ def create_user(
             and not _in_user_branches(db, user, payload.branch_id):
         raise HTTPException(403, "Faqat o'z filialingizga xodim "
                                  "qo'sha olasiz")
+    if payload.role not in roles.EXTERNAL_ROLES:
+        import blacklist as _bl
+        _bl.guard_hire(db, payload.full_name, payload.phone)
     if db.query(models.User).filter(models.User.username == payload.username).first():
         raise HTTPException(400, "Bu login band, boshqasini tanlang")
     if not roles.password_ok(payload.password):
@@ -555,6 +558,13 @@ def update_user(
         raise HTTPException(403, "Faqat o'z filialingiz xodimlarini tahrirlay olasiz")
     if target.id == user.id and payload.is_active is False:
         raise HTTPException(400, "O'zingizni faolsizlantira olmaysiz")
+    # QORA RO'YXAT (2026-09-16): bo'shatilgan xodimni qaytarib bo'lmaydi
+    if payload.is_active and not target.is_active \
+            and target.role not in roles.EXTERNAL_ROLES:
+        import blacklist as _bl
+        _bl.guard_hire(db, target.full_name,
+                       payload.phone if payload.phone is not None
+                       else target.phone)
 
     # O'zgarishlarni qo'llashdan OLDIN yozib olamiz.
     audit.log_changes(

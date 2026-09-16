@@ -5870,3 +5870,44 @@ def conduct_sanction(remaining: float, role) -> dict | None:
             return {"level": level, "limit": limit,
                     "text": t_text if teacher else o_text}
     return None
+
+
+# =====================================================================
+#  HR: QORA RO'YXAT (2026-09-16, Jahongir: "o'quv markaz qora
+#  ro'yxatini shakllantir hr bo'limi uchun, bu bo'limga tushgan
+#  nomzodlar boshqa ishga olinmasin").
+#
+#  Odam telefon raqami (oxirgi 9 raqam) va ism-familiyasi bo'yicha
+#  tanib olinadi. Qora ro'yxatdagi odamni hech bir yo'l bilan ishga
+#  olib bo'lmaydi: nomzodni "ishga olindi"ga o'tkazish, taklif berish,
+#  xodim hisobi ochish, ustozga akkaunt berish, bo'shatilgan xodimni
+#  qaytarish — hammasi to'xtatiladi. Ro'yxatdan chiqarish ham sabab
+#  bilan va tarixda qoladi.
+# =====================================================================
+BLACKLIST_CATEGORIES = [
+    ("discipline", "Intizom buzilishi"),
+    ("theft", "O'g'irlik / moddiy zarar"),
+    ("fraud", "Aldov / soxta hujjat"),
+    ("conflict", "Janjal / hurmatsizlik"),
+    ("left_bad", "Yomon sharoitda ishdan ketgan"),
+    ("other", "Boshqa"),
+]
+BLACKLIST_CATEGORY_LABELS = dict(BLACKLIST_CATEGORIES)
+# Ko'radi: asoschi, HR va filial rahbari (u ham xodim oladi).
+# Qo'shadi / chiqaradi: faqat asoschi va HR.
+BLACKLIST_MANAGE = [FOUNDER, HR_MANAGER]
+BLACKLIST_VIEW = [FOUNDER, HR_MANAGER, BRANCH_MANAGER]
+
+
+def blacklist_phone_key(phone) -> str | None:
+    """Telefonning oxirgi 9 raqami: +998 90 123-45-67 va 901234567 bir xil."""
+    digits = "".join(ch for ch in str(phone or "") if ch.isdigit())
+    return digits[-9:] if len(digits) >= 9 else None
+
+
+def blacklist_name_key(name) -> str | None:
+    """Ism-familiya kaliti: katta-kichik harf, apostrof turlari, bo'shliq
+    va so'zlar tartibi farq qilmaydi ("Ali Valiyev" = "valiyev  ali")."""
+    table = str.maketrans({c: "'" for c in "’‘ʻʼ`´"})
+    words = str(name or "").translate(table).lower().split()
+    return " ".join(sorted(words)) if len(words) >= 2 else None

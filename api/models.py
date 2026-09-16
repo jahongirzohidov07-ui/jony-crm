@@ -3292,6 +3292,32 @@ class ConductViolation(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class HrBlacklist(Base):
+    """HR qora ro'yxati (2026-09-16). Bu yerdagi odam ishga olinmaydi.
+
+    Odam telefon (phone_key — oxirgi 9 raqam) va ism (name_key) bo'yicha
+    tanib olinadi. Yozuv O'CHIRILMAYDI: ro'yxatdan chiqarilganda
+    is_active=0 bo'ladi va kim, qachon, nega chiqargani saqlanadi."""
+    __tablename__ = "hr_blacklist"
+
+    id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String, nullable=False)
+    phone = Column(String, nullable=True)
+    phone_key = Column(String, nullable=True, index=True)
+    name_key = Column(String, nullable=True, index=True)
+    category = Column(String, nullable=False, default="other")
+    reason = Column(Text, nullable=False)
+    candidate_id = Column(Integer, nullable=True, index=True)
+    user_id = Column(Integer, nullable=True, index=True)
+    is_active = Column(Integer, nullable=False, default=1, index=True)
+    added_by = Column(String, nullable=True)
+    added_by_id = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    removed_by = Column(String, nullable=True)
+    removed_at = Column(DateTime, nullable=True)
+    remove_reason = Column(Text, nullable=True)
+
+
 class PlanTarget(Base):
     """Yillik reja — bitta ko'rsatkichning bitta oydagi Reja qiymati.
 

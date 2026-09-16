@@ -388,6 +388,11 @@ export const SUPPORT_PENALTY_SET = [FOUNDER, HR_MANAGER];
  *  (qaysi bo'lim va kim ko'rinishini server aytadi). */
 export const CONDUCT_VIEW = [HR_MANAGER, HEAD_EXAMINER, HEAD_SUPPORT];
 
+/** HR qora ro'yxati (2026-09-16) — backend roles.BLACKLIST_*.
+ *  Ko'radi: asoschi, HR, filial rahbari. Qo'shadi/chiqaradi: asoschi, HR. */
+export const BLACKLIST_VIEW = [FOUNDER, HR_MANAGER, BRANCH_MANAGER];
+export const BLACKLIST_MANAGE = [FOUNDER, HR_MANAGER];
+
 // Yillik Reja/Fakt jadvali kimga ko'rinadi
 export const PLAN_VIEW = [
   FOUNDER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER,

@@ -16,7 +16,7 @@ import { AtsBoard } from "../components/AtsBoard";
 import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
 import {
   HR_ACCESS, HR_CANDIDATE_VIEW, can, ALL_ROLES, roleLabel,
-  EXAMINER_PENALTY_SET, SUPPORT_PENALTY_SET,
+  EXAMINER_PENALTY_SET, SUPPORT_PENALTY_SET, BLACKLIST_VIEW,
 } from "../lib/roles";
 import {
   CANDIDATE_STAGES, CANDIDATE_SOURCES, APPLY_POSITIONS,
@@ -37,6 +37,7 @@ import {
 import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { PenaltyPointsTab } from "../components/PenaltyPoints";
+import { HrBlacklistTab, BlacklistBadge } from "../components/HrBlacklist";
 import { exportToExcel } from "../lib/exportXlsx";
 import { HrVacancyReport } from "../components/HrVacancyReport";
 
@@ -44,7 +45,7 @@ type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacanci
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
-  | "penalty";
+  | "penalty" | "blacklist";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -67,6 +68,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "onbsteps", label: "Onboarding" },
   // 2026-09-16, Jahongir: examiner va supportlardan jarima ball ayirish
   { key: "penalty", label: "Jarima ballari" },
+  // 2026-09-16, Jahongir: "o'quv markaz qora ro'yxatini shakllantir"
+  { key: "blacklist", label: "Qora ro'yxat" },
 ];
 
 function Stat({
@@ -647,6 +650,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     >
                       {c.full_name}
                     </button>
+                    <BlacklistBadge hit={c.blacklist} />
                   </td>
                   <td className="text-slate-500">{c.phone || "—"}</td>
                   <td className="text-slate-600">
@@ -1294,7 +1298,8 @@ export default function Hr() {
   const canPenalize = can(user?.role, EXAMINER_PENALTY_SET)
     || can(user?.role, SUPPORT_PENALTY_SET);
   const visibleTabs = fullHr
-    ? TABS.filter((t) => t.key !== "penalty" || canPenalize)
+    ? TABS.filter((t) => (t.key !== "penalty" || canPenalize)
+        && (t.key !== "blacklist" || can(user?.role, BLACKLIST_VIEW)))
     : TABS.filter((t) => ["candidates", "calendar", "rubric"]
         .includes(t.key));
   const activeTab = visibleTabs.some((t) => t.key === tab)
@@ -1345,6 +1350,7 @@ export default function Hr() {
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
       {activeTab === "penalty" && <PenaltyPointsTab />}
+      {activeTab === "blacklist" && <HrBlacklistTab />}
     </div>
   );
 }

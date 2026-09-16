@@ -4,6 +4,7 @@ import {
   ClipboardList, HandCoins,
 } from "lucide-react";
 import { api } from "../lib/api";
+import { BlacklistBadge } from "./HrBlacklist";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "./Time24Input";
 
@@ -103,6 +104,7 @@ export function AtsBoard() {
                   >
                     <p className="text-sm font-medium text-slate-900 truncate">
                       {r.candidate}
+                      <BlacklistBadge hit={r.blacklist} />
                     </p>
                     {/* Vakansiya ochilmagan bo'lsa ham qaysi ishga
                         kelgani ko'rinsin (2026-08-15) */}
@@ -349,6 +351,7 @@ function AppModal({
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
             <h3 className="font-semibold text-slate-900">{d.candidate}</h3>
+            <BlacklistBadge hit={d.blacklist} />
             <span
               className={`px-2 py-0.5 rounded text-[11px] font-medium ${
                 TONE[d.stage_tone] || TONE.slate

@@ -30,6 +30,7 @@ from auth import (
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
+import blacklist as _blacklist
 
 router = APIRouter()
 
@@ -356,8 +357,11 @@ def list_candidates(
     qq = qq.options(_sel(models.Candidate.vacancy),
                     _sel(models.Candidate.branch))
     rows = qq.order_by(models.Candidate.created_at.desc()).all()
+    # QORA RO'YXAT belgisi (2026-09-16) — bitta so'rov bilan
+    _bl = _blacklist.hit_map(db, [(c.id, c.full_name, c.phone) for c in rows])
     return [{
         "id": c.id, "full_name": c.full_name, "phone": c.phone,
+        "blacklist": _bl.get(c.id),
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
         # QAYSI ISHGA kelgani va (ustoz bo'lsa) QAYSI FANDAN
@@ -557,6 +561,8 @@ def get_candidate(
         "id": c.id,
         "full_name": c.full_name,
         "phone": c.phone,
+        "blacklist": _blacklist.hit_brief(
+            _blacklist.find_hit(db, c.full_name, c.phone)),
         "vacancy_id": c.vacancy_id,
         "vacancy": c.vacancy.title if c.vacancy else None,
         # Ariza savollari (2026-08-15) — qo'lda kiritilsa ham,
@@ -812,6 +818,13 @@ def update_candidate(
         setattr(c, k, val)
     if c.position and c.position != "teacher":
         c.subject = None            # fan faqat ustoz uchun
+    # QORA RO'YXAT (2026-09-16): ishga olib bo'lmaydi
+    if c.stage == "hired" and before != "hired":
+        try:
+            _blacklist.guard_hire(db, c.full_name, c.phone)
+        except HTTPException:
+            db.rollback()
+            raise
     _sync_candidate_dates(c)
     account = None
     if c.stage == "hired" and before != "hired":
@@ -1015,8 +1028,10 @@ def candidate_evaluation(
     }
 
 def _app_out(db: Session, a: models.CandidateApplication,
-             full: bool = False) -> dict:
+             full: bool = False, _bl_entries: list | None = None) -> dict:
     c = db.query(models.Candidate).get(a.candidate_id)
+    if _bl_entries is None:
+        _bl_entries = _blacklist.active_entries(db)
     v = db.query(models.Vacancy).get(a.vacancy_id) if a.vacancy_id else None
     br = db.query(models.Branch).get(a.branch_id) if a.branch_id else None
     owner = db.query(models.User).get(a.owner_id) if a.owner_id else None
@@ -1031,6 +1046,9 @@ def _app_out(db: Session, a: models.CandidateApplication,
         "candidate_id": a.candidate_id,
         "candidate": c.full_name if c else None,
         "phone": c.phone if c else None,
+        "blacklist": (_blacklist.hit_brief(
+            _blacklist.match(_bl_entries, c.full_name, c.phone))
+            if c and _bl_entries is not None else None),
         "vacancy_id": a.vacancy_id,
         "vacancy": v.title if v else None,
         # Vakansiya ochilmagan bo'lsa ham QAYSI ISHGA kelgani
@@ -1250,7 +1268,8 @@ def ats_pipeline(vacancy_id: int | None = None,
         q = q.filter(models.CandidateApplication.vacancy_id == vacancy_id)
     if stage:
         q = q.filter(models.CandidateApplication.stage == stage)
-    rows = [_app_out(db, a) for a in
+    _bl_entries = _blacklist.active_entries(db)
+    rows = [_app_out(db, a, _bl_entries=_bl_entries) for a in
             q.order_by(models.CandidateApplication.id.desc()).limit(500).all()]
 
     columns = []
@@ -1396,6 +1415,12 @@ def ats_application_move(aid: int, payload: schemas.ApplicationMove,
     # "nega odam topilmayapti" degan savolga javob beradi
     if payload.stage == "rejected" and not payload.reason:
         raise HTTPException(400, "Rad etish sababini tanlang")
+
+    # QORA RO'YXAT (2026-09-16): ishga olish ham, taklif bosqichi ham yo'q
+    if payload.stage in ("offer", "hired"):
+        _c = db.query(models.Candidate).get(a.candidate_id)
+        if _c:
+            _blacklist.guard_hire(db, _c.full_name, _c.phone)
 
     today = roles.local_today()
     since = a.stage_since or (a.created_at.date() if a.created_at else today)
@@ -1751,6 +1776,9 @@ def offer_create(payload: schemas.OfferIn,
         raise HTTPException(400, "Yopilgan arizaga taklif berilmaydi")
     if not payload.salary or payload.salary <= 0:
         raise HTTPException(400, "Ish haqini kiriting")
+    _oc = db.query(models.Candidate).get(a.candidate_id)
+    if _oc:
+        _blacklist.guard_hire(db, _oc.full_name, _oc.phone)
 
     # Ochiq taklif borligida yangisi ochilmaydi — avval eskisini yoping
     prev = db.query(models.Offer).filter(
@@ -1809,6 +1837,12 @@ def offer_action(oid: int, payload: schemas.OfferAction,
                           "decline", "expire") and \
             user.role not in tuple(roles.OFFER_CREATE):
         raise HTTPException(403, "Ruxsat yo'q")
+    # QORA RO'YXAT (2026-09-16): taklif oldinga yurmaydi
+    if payload.action in ("submit", "approve", "send", "accept"):
+        _a = db.query(models.CandidateApplication).get(o.application_id)
+        _c = db.query(models.Candidate).get(_a.candidate_id) if _a else None
+        if _c:
+            _blacklist.guard_hire(db, _c.full_name, _c.phone)
 
     o.status = nxt
     now = datetime.utcnow()

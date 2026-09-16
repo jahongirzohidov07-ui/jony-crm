@@ -5,6 +5,9 @@ import { formatSom } from "../lib/format";
 import { Attachments } from "./Attachments";
 import { ObservationList } from "./LessonRubric";
 import { CandidateGrowth } from "./CandidateGrowth";
+import { AddToBlacklist, BlacklistBanner } from "./HrBlacklist";
+import { useAuth } from "../lib/AuthContext";
+import { BLACKLIST_MANAGE, can } from "../lib/roles";
 
 /**
  * Nomzod kartasi. Qaror qabul qilish uchun kerak bo'lgan hammasi bitta
@@ -21,6 +24,9 @@ export function CandidateCard({
   onClose: () => void;
   onSaved?: () => void;
 }) {
+  const { user } = useAuth();
+  const canBlacklist = can(user?.role, BLACKLIST_MANAGE);
+  const [blAdd, setBlAdd] = useState(false);
   const [c, setC] = useState<Card | null>(null);
   const [f, setF] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
@@ -126,15 +132,38 @@ export function CandidateCard({
               {[c?.vacancy, c?.branch, c?.phone].filter(Boolean).join(" · ")}
             </p>
           </div>
-          <button onClick={onClose} className="text-slate-400">
-            <X size={18} />
-          </button>
+          <div className="flex items-center gap-2">
+            {c && !c.blacklist && canBlacklist && (
+              <button
+                onClick={() => setBlAdd(true)}
+                className="text-xs px-2.5 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100"
+              >
+                Qora ro'yxatga
+              </button>
+            )}
+            <button onClick={onClose} className="text-slate-400">
+              <X size={18} />
+            </button>
+          </div>
         </div>
+        {blAdd && c && (
+          <AddToBlacklist
+            candidateId={c.id}
+            name={c.full_name}
+            onClose={() => setBlAdd(false)}
+            onDone={() => {
+              setBlAdd(false);
+              load();
+              onSaved?.();
+            }}
+          />
+        )}
 
         {!c ? (
           <p className="text-sm text-slate-400 p-8">Yuklanmoqda...</p>
         ) : (
           <div className="p-5 space-y-5">
+            <BlacklistBanner hit={c.blacklist} />
             {/* Ballar - eng muhimi tepada */}
             <div className="grid grid-cols-3 gap-3">
               <Score

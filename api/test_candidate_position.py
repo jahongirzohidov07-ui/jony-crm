@@ -109,7 +109,12 @@ ck("fan bo'yicha (qismiy moslik)", len(r.json()), 1)
 r = c.get("/api/candidates?source=alumni", headers=F)
 ck("manba bo'yicha", len(r.json()), 1)
 r = c.get(f"/api/candidates?branch_id={B2}", headers=F)
-ck("filial bo'yicha", len(r.json()), 1)
+# 2026-09-16: filial tanlanganda FILIALSIZ nomzodlar (onlayn ariza) ham
+# ko'rinadi — "filial belgilamay ariza to'ldirsa HRga ko'rinmayabdi".
+# Ya'ni: B2 nomzodi + filialsiz onlayn ariza = 2.
+ck("filial bo'yicha (+ filialsiz ariza)", len(r.json()), 2)
+ck("boshqa filial nomzodi chiqmaydi",
+   all(x["branch_id"] in (B2, None) for x in r.json()), True)
 r = c.get("/api/candidates?q=Aliyeva", headers=F)
 ck("ism bo'yicha qidiruv", len(r.json()), 1)
 r = c.get("/api/candidates?q=930591606", headers=F)

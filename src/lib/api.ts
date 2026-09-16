@@ -1237,10 +1237,21 @@ export interface Vacancy {
   hired_count: number;
 }
 
+/** HR qora ro'yxatidagi moslik (2026-09-16) — nomzod yonida chiqadi. */
+export interface BlacklistHit {
+  id: number;
+  category: string;
+  category_label: string;
+  reason: string;
+  added_at?: string | null;
+  added_by?: string | null;
+}
+
 export interface Candidate {
   id: number;
   full_name: string;
   phone?: string | null;
+  blacklist?: BlacklistHit | null;
   vacancy_id?: number | null;
   vacancy?: string | null;
   /** Qaysi ishga kelgan: vakansiya nomi yoki tanlagan lavozimi. */
@@ -2207,6 +2218,7 @@ export interface CandidateCard {
   id: number;
   full_name: string;
   phone?: string | null;
+  blacklist?: BlacklistHit | null;
   vacancy?: string | null;
   stage: string;
   stage_label: string;

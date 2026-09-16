@@ -8,6 +8,8 @@ import {
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
+import { BLACKLIST_MANAGE, can } from "../lib/roles";
+import { AddToBlacklist } from "./HrBlacklist";
 
 const ICON: Record<string, typeof Award> = {
   training: GraduationCap,
@@ -44,6 +46,7 @@ export function StaffCard({
   const [tab, setTab] = useState<Tab>("umumiy");
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [blAdd, setBlAdd] = useState(false);
 
   // Asoschi kartasi bu yerdan bo'shatilmaydi; HR esa filial
   // rahbariga tegolmaydi (server ham shuni tekshiradi).
@@ -140,12 +143,34 @@ export function StaffCard({
                   Ishga qaytarish
                 </button>
               ))}
+            {/* Bo'shatilgan xodimni qora ro'yxatga (2026-09-16) */}
+            {card && !card.is_active && card.role !== "founder"
+              && can(user?.role, BLACKLIST_MANAGE) && (
+              <button
+                onClick={() => setBlAdd(true)}
+                className="text-xs px-3 py-1.5 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Qora ro'yxatga
+              </button>
+            )}
             <button onClick={onClose} className="text-slate-400">
               <X size={18} />
             </button>
           </div>
         </div>
 
+        {blAdd && card && (
+          <AddToBlacklist
+            userId={userId}
+            name={card.full_name}
+            onClose={() => setBlAdd(false)}
+            onDone={() => {
+              setBlAdd(false);
+              alert(`${card.full_name} qora ro'yxatga qo'shildi. Uni endi `
+                + "ishga qaytarib bo'lmaydi.");
+            }}
+          />
+        )}
         {loading ? (
           <p className="text-sm text-slate-400 p-8">Yuklanmoqda...</p>
         ) : !card ? (

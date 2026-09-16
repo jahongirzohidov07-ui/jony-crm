@@ -1441,7 +1441,7 @@ export default function StudentDetail() {
     );
 
   return (
-    <div className="p-8">
+    <div className="px-3 pb-3 pt-7 sm:p-8">
       <Link
         to="/students"
         className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-4"
@@ -1449,7 +1449,10 @@ export default function StudentDetail() {
         <ArrowLeft size={15} /> Talabalarga qaytish
       </Link>
 
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+      {/* Telefonda o'ng panel ekran eniga teng bo'lsin — aks holda keng
+          jadvallar butun sahifani yonga surib yuborardi (GroupDetail
+          bilan bir xil tuzatish, 2026-09-16). */}
+      <div className="flex flex-col lg:flex-row gap-3 sm:gap-5 items-stretch lg:items-start">
         <div className="w-full lg:w-80 shrink-0">
           <ProfileCard
             student={student}
@@ -1460,7 +1463,7 @@ export default function StudentDetail() {
           />
         </div>
 
-        <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
+        <div className="w-full lg:flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-3 sm:p-5">
           <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
             {TABS.map((t) => (
               <button

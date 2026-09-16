@@ -371,11 +371,13 @@ export function AttendanceTab({
         )}
       </p>
 
+      {/* TELEFON (2026-09-16): ism ustuni ixcham va yopishqoq — yonga
+          surganda ismlar joyida qoladi, kataklarga joy yetadi. */}
       <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white">
         <table data-guide="attendance-grid" className="text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50">
-              <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">
+              <th className="sticky left-0 z-20 bg-slate-50 text-left px-2 sm:px-4 py-3 font-medium text-xs uppercase text-slate-500 w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-[200px] sm:max-w-none border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)]">
                 Talabalar
               </th>
               {grid.lessons.map((ls) => {
@@ -468,7 +470,7 @@ export function AttendanceTab({
                 }`}
               >
                 <td
-                  className={`sticky left-0 z-10 px-4 py-2.5 whitespace-nowrap border-r border-slate-200 ${
+                  className={`sticky left-0 z-10 px-2 sm:px-4 py-2.5 text-xs sm:text-sm leading-snug break-words w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-0 sm:max-w-none sm:whitespace-nowrap border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)] ${
                     frozen
                       ? "bg-sky-50 text-sky-700"
                       : gone
@@ -872,7 +874,7 @@ export function GradesTab({
         <table className="text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50">
-              <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">
+              <th className="sticky left-0 z-20 bg-slate-50 text-left px-2 sm:px-4 py-3 font-medium text-xs uppercase text-slate-500 w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-[200px] sm:max-w-none border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)]">
                 Talabalar
               </th>
               {grid.lessons.map((ls) => (
@@ -896,7 +898,7 @@ export function GradesTab({
               const rowCoins = rowScores.reduce((a, b) => a + b, 0);
               return (
                 <tr key={s.id} className="border-t border-slate-100">
-                  <td className="sticky left-0 z-10 bg-white px-4 py-2.5 text-slate-800 whitespace-nowrap border-r border-slate-200">
+                  <td className="sticky left-0 z-10 bg-white px-2 sm:px-4 py-2.5 text-xs sm:text-sm leading-snug break-words text-slate-800 w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-0 sm:max-w-none sm:whitespace-nowrap border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)]">
                     <span className="text-slate-400 mr-2 text-xs">{i + 1}</span>
                     {s.full_name}
                   </td>
@@ -1758,7 +1760,7 @@ export function SupportAttendanceTab({
         <table className="text-sm border-collapse">
           <thead>
             <tr className="bg-slate-50">
-              <th className="sticky left-0 z-10 bg-slate-50 text-left px-4 py-3 font-medium text-xs uppercase text-slate-500 min-w-[200px] border-r border-slate-200">
+              <th className="sticky left-0 z-20 bg-slate-50 text-left px-2 sm:px-4 py-3 font-medium text-xs uppercase text-slate-500 w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-[200px] sm:max-w-none border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)]">
                 Talabalar
               </th>
               {grid.days.map((d) => (
@@ -1776,7 +1778,7 @@ export function SupportAttendanceTab({
           <tbody>
             {grid.students.map((s, i) => (
               <tr key={s.id} className="border-t border-slate-100">
-                <td className="sticky left-0 z-10 bg-white px-4 py-2.5 text-slate-800 whitespace-nowrap border-r border-slate-200">
+                <td className="sticky left-0 z-10 bg-white px-2 sm:px-4 py-2.5 text-xs sm:text-sm leading-snug break-words text-slate-800 w-[130px] min-w-[130px] max-w-[130px] sm:w-auto sm:min-w-0 sm:max-w-none sm:whitespace-nowrap border-r border-slate-200 shadow-[2px_0_4px_-2px_rgba(15,23,42,0.15)]">
                   <span className="text-slate-400 mr-2 text-xs">{i + 1}</span>
                   {s.full_name}
                 </td>

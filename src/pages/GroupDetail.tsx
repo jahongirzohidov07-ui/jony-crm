@@ -321,7 +321,7 @@ export default function GroupDetail() {
   const yearOptions = [t.year - 1, t.year, t.year + 1];
 
   return (
-    <div className="p-8">
+    <div className="px-3 pb-3 pt-7 sm:p-8">
       <Link
         to="/groups"
         className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-4"
@@ -329,8 +329,14 @@ export default function GroupDetail() {
         <ArrowLeft size={15} /> Guruhlarga qaytish
       </Link>
 
-      {/* Chapda guruh ma'lumoti va o'quvchilar, o'ngda davomat jadvali */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+      {/* Chapda guruh ma'lumoti va o'quvchilar, o'ngda davomat jadvali.
+          TELEFONDA (2026-09-16, Jahongir: "yo'qlama qo'yish uchun yonga
+          sursa ismlar ko'rinmay ketyapti"): ustun rejimida items-start
+          bo'lsa o'ng panel ekranga siqilmay, jadval kengligiga (~1000px)
+          cho'zilardi — butun sahifa yonga surilib, ism ustuni ekrandan
+          chiqib ketardi. Endi telefonda panel ekran eniga teng, jadval
+          esa o'z ichida suriladi va ismlar joyida turadi. */}
+      <div className="flex flex-col lg:flex-row gap-3 sm:gap-5 items-stretch lg:items-start">
         <GroupSidebar
           group={group}
           onEdit={
@@ -342,7 +348,7 @@ export default function GroupDetail() {
           }
         />
 
-        <div className="flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-5">
+        <div className="w-full lg:flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-3 sm:p-5">
           <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
             {GROUP_TABS.map((tb) => (
               <button

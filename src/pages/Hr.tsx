@@ -38,6 +38,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
 import { PenaltyPointsTab } from "../components/PenaltyPoints";
 import { exportToExcel } from "../lib/exportXlsx";
+import { HrVacancyReport } from "../components/HrVacancyReport";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
@@ -49,7 +50,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
   { key: "ats", label: "Ishga olish quvuri" },
   { key: "lifecycle", label: "Hayotiy sikl" },
-  { key: "funnel", label: "HR voronka" },
+  { key: "funnel", label: "HR analitika" },
   { key: "workforce", label: "Shtat rejasi" },
   { key: "requests", label: "Xodim so'rovlari" },
   { key: "hrvacancies", label: "Vakansiyalar (yangi)" },
@@ -107,15 +108,37 @@ function FunnelTab() {
       .finally(() => setLoading(false));
   }, [months]);
 
+  const monthPicker = (
+    <div className="flex gap-1 mb-5">
+      {[3, 6, 12, 24].map((m) => (
+        <button
+          key={m}
+          onClick={() => setMonths(m)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
+            months === m
+              ? "bg-brand-50 border-brand-400 text-brand-700"
+              : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+          }`}
+        >
+          {m} oy
+        </button>
+      ))}
+    </div>
+  );
+
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
 
   if (data.total === 0) {
     return (
-      <p className="text-sm text-slate-400 py-10 text-center">
-        Bu davrda nomzod kiritilmagan. "Nomzodlar" bo'limidan qo'shing —
-        voronka shundan keyin chiqadi.
-      </p>
+      <div>
+        {monthPicker}
+        <HrVacancyReport months={months} />
+        <p className="text-sm text-slate-400 py-10 text-center">
+          Bu davrda nomzod kiritilmagan. "Nomzodlar" bo'limidan qo'shing —
+          voronka shundan keyin chiqadi.
+        </p>
+      </div>
     );
   }
 
@@ -127,22 +150,12 @@ function FunnelTab() {
 
   return (
     <div>
-      <div className="flex gap-1 mb-5">
-        {[3, 6, 12, 24].map((m) => (
-          <button
-            key={m}
-            onClick={() => setMonths(m)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
-              months === m
-                ? "bg-brand-50 border-brand-400 text-brand-700"
-                : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-            }`}
-          >
-            {m} oy
-          </button>
-        ))}
-      </div>
+      {monthPicker}
 
+      {/* Vakansiya kesimi: necha kunda yopildi, nechta nomzoddan nechtasi olindi */}
+      <HrVacancyReport months={months} />
+
+      <p className="text-base font-semibold text-slate-900 mb-3">Nomzodlar voronkasi</p>
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
         <Stat label="Jami nomzod" value={String(data.total)} icon={Users} />
         <Stat label="Ishga olindi" value={String(data.hired)} tone="green" icon={UserCheck} />

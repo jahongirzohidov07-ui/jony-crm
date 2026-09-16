@@ -1249,6 +1249,60 @@ export interface HrFunnel {
   sources: { key: string; label: string; total: number; hired: number; percent: number }[];
 }
 
+/** Vakansiyalar analitikasi (2026-09-16): yopilish muddati va konversiya. */
+export interface HrVacancySummary {
+  label?: string;
+  vacancies: number;
+  open: number;
+  closed: number;
+  filled: number;
+  avg_days_to_close: number | null;
+  median_days_to_close: number | null;
+  fastest: number | null;
+  slowest: number | null;
+  avg_open_age: number | null;
+  overdue: number;
+  candidates: number;
+  interviewed: number;
+  hired: number;
+  conversion: number;
+  interview_rate: number;
+  candidates_per_hire: number | null;
+}
+
+export interface HrVacancyRow {
+  id: number;
+  public_id?: string | null;
+  title: string;
+  position?: string | null;
+  branch: string;
+  status: string;
+  status_label: string;
+  closed: boolean;
+  filled: boolean;
+  close_reason?: string | null;
+  opened_on: string | null;
+  closed_on: string | null;
+  target_close: string | null;
+  days: number | null;
+  overdue: boolean;
+  headcount: number;
+  candidates: number;
+  interviewed: number;
+  hired: number;
+  first_hire_days: number | null;
+  conversion: number;
+}
+
+export interface HrVacancyReport {
+  months: number;
+  summary: HrVacancySummary;
+  by_position: HrVacancySummary[];
+  by_branch: HrVacancySummary[];
+  rows: HrVacancyRow[];
+  hint: string;
+}
+
 // ------------------------------------------------------ Marketing ----
 export interface MarketingChannel {
   channel: string;

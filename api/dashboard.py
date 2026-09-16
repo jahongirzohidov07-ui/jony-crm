@@ -1736,6 +1736,185 @@ def hr_funnel(
         "sources": sources,
     }
 
+# ---------------------------------------------------------------------
+#  VAKANSIYALAR ANALITIKASI (2026-09-16)
+#
+#  Jahongir: "HR bitta vakansiyani nechi kunda yopayotganligini
+#  hisobotlarda analitikasi kerak, nechta nomzoddan nechtasi ishga
+#  olinayotganligi ham kerak".
+#
+#  Yopilish muddati = vakansiya ochilgan kundan (opened_on, bo'lmasa
+#  yaratilgan kun) yopilgan kungacha. O'rtacha muddatga faqat XODIM
+#  TOPILIB yopilganlar kiradi — "ehtiyoj qolmadi" bilan yopilgani
+#  ko'rsatkichni buzmasin. Nomzodlar quvurdagi arizalardan (bir odam
+#  bir vakansiyada bir marta), arizasi yo'q eski nomzodlar ham qo'shiladi.
+# ---------------------------------------------------------------------
+_VAC_CLOSED = ("closed", "cancelled", "filled")
+_VAC_FILLED_REASONS = ("filled", "internal")
+
+
+def _median(xs):
+    xs = sorted(xs)
+    if not xs:
+        return None
+    mid = len(xs) // 2
+    return float(xs[mid]) if len(xs) % 2 else round((xs[mid - 1] + xs[mid]) / 2, 1)
+
+
+@router.get("/api/reports/hr-vacancies")
+def hr_vacancy_report(
+    months: int = 12,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.HR_ACCESS)),
+):
+    """Har vakansiya necha kunda yopildi va nechta nomzoddan nechtasi
+    ishga olindi; lavozim va filial kesimida."""
+    months = max(1, min(months, 36))
+    today = roles.local_today()
+    since = today - timedelta(days=int(months * 30.44))
+    flow = {k: i for i, k in enumerate(roles.APPLICATION_FLOW)}
+    reach_interview = flow["interview"]
+
+    def opened(v):
+        return v.opened_on or (v.created_at.date() if v.created_at else None)
+
+    keep = []
+    for v in scope_to_branch(db.query(models.Vacancy), models.Vacancy,
+                             user, branch_id).all():
+        if v.status in _VAC_CLOSED:
+            end_d = v.closed_at or opened(v)
+            if end_d and end_d < since:
+                continue          # davrdan oldin yopilgan
+        elif v.status in ("draft", "pending"):
+            continue              # hali e'lon qilinmagan
+        keep.append(v)
+    vids = [v.id for v in keep]
+
+    A = models.CandidateApplication
+    apps = db.query(A).filter(A.vacancy_id.in_(vids or [-1])).all()
+    reached: dict = {}
+    for chunk in billing._chunks([a.id for a in apps]):
+        for aid, st in (db.query(models.ApplicationStageLog.application_id,
+                                 models.ApplicationStageLog.to_stage)
+                        .filter(models.ApplicationStageLog.application_id
+                                .in_(chunk)).all()):
+            reached[aid] = max(reached.get(aid, -1), flow.get(st, -1))
+
+    per: dict = {vid: {} for vid in vids}   # vakansiya -> nomzod -> holat
+    for a in apps:
+        d = per[a.vacancy_id].setdefault(a.candidate_id, {
+            "reach": -1, "hired": False, "hired_on": None})
+        d["reach"] = max(d["reach"], flow.get(a.stage, -1),
+                         reached.get(a.id, -1))
+        if a.stage == "hired":
+            d["hired"] = True
+            d["hired_on"] = a.closed_at or a.stage_since
+    for c in (db.query(models.Candidate)
+              .filter(models.Candidate.vacancy_id.in_(vids or [-1])).all()):
+        if c.id in per[c.vacancy_id]:
+            continue
+        st = roles.CANDIDATE_TO_APPLICATION.get(c.stage or "", "")
+        per[c.vacancy_id][c.id] = {
+            "reach": flow.get(st, -1), "hired": c.stage == "hired",
+            "hired_on": c.hired_date}
+
+    names = {b.id: b.name for b in db.query(models.Branch).all()}
+    old_status = dict(roles.VACANCY_STATUSES)
+    rows = []
+    for v in keep:
+        o = opened(v)
+        closed = v.status in _VAC_CLOSED
+        end_d = (v.closed_at or today) if closed else today
+        cands = list(per[v.id].values())
+        n = len(cands)
+        hired = sum(1 for c in cands if c["hired"])
+        hire_days = sorted((c["hired_on"] - o).days for c in cands
+                           if c["hired"] and c["hired_on"] and o)
+        filled = closed and (v.status == "filled" or hired > 0
+                             or v.close_reason in _VAC_FILLED_REASONS)
+        t = v.target_close
+        rows.append({
+            "id": v.id,
+            "public_id": v.public_id,
+            "title": v.title,
+            "position": roles.UZ_LABELS.get(v.role) if v.role else None,
+            "branch": names.get(v.branch_id) or "Umumiy",
+            "status": v.status,
+            "status_label": (roles.VACANCY_STATE_LABELS.get(v.status)
+                             or old_status.get(v.status, v.status)),
+            "closed": closed,
+            "filled": bool(filled),
+            "close_reason": (roles.CLOSE_REASON_LABELS.get(v.close_reason)
+                             if closed and v.close_reason else None),
+            "opened_on": o.isoformat() if o else None,
+            "closed_on": v.closed_at.isoformat() if closed and v.closed_at else None,
+            "target_close": t.isoformat() if t else None,
+            "days": (end_d - o).days if o else None,
+            "overdue": bool(t and ((not closed and today > t)
+                                   or (closed and v.closed_at and v.closed_at > t))),
+            "headcount": v.headcount or 1,
+            "candidates": n,
+            "interviewed": sum(1 for c in cands if c["reach"] >= reach_interview),
+            "hired": hired,
+            "first_hire_days": hire_days[0] if hire_days else None,
+            "conversion": round(hired / n * 100, 1) if n else 0.0,
+        })
+    # Ochiqlar tepada (eng uzoq ochiq turgani birinchi), keyin eng
+    # yangi yopilganlar
+    rows.sort(key=lambda r: (r["closed"],
+                             -(r["days"] or 0) if not r["closed"]
+                             else -(date.fromisoformat(r["closed_on"]).toordinal()
+                                    if r["closed_on"] else 0)))
+
+    def summarize(rs):
+        done = [r["days"] for r in rs
+                if r["closed"] and r["filled"] and r["days"] is not None]
+        opens = [r for r in rs if not r["closed"]]
+        c = sum(r["candidates"] for r in rs)
+        h = sum(r["hired"] for r in rs)
+        i = sum(r["interviewed"] for r in rs)
+        return {
+            "vacancies": len(rs),
+            "open": len(opens),
+            "closed": sum(1 for r in rs if r["closed"]),
+            "filled": len(done),
+            "avg_days_to_close": round(sum(done) / len(done), 1) if done else None,
+            "median_days_to_close": _median(done),
+            "fastest": min(done) if done else None,
+            "slowest": max(done) if done else None,
+            "avg_open_age": (round(sum(r["days"] or 0 for r in opens) / len(opens), 1)
+                             if opens else None),
+            "overdue": sum(1 for r in opens if r["overdue"]),
+            "candidates": c,
+            "interviewed": i,
+            "hired": h,
+            "conversion": round(h / c * 100, 1) if c else 0.0,
+            "interview_rate": round(i / c * 100, 1) if c else 0.0,
+            "candidates_per_hire": round(c / h, 1) if h else None,
+        }
+
+    def by(key):
+        groups: dict = {}
+        for r in rows:
+            groups.setdefault(key(r), []).append(r)
+        out = [dict(summarize(rs), label=k) for k, rs in groups.items()]
+        out.sort(key=lambda x: (-x["vacancies"], x["label"]))
+        return out
+
+    return {
+        "months": months,
+        "summary": summarize(rows),
+        "by_position": by(lambda r: r["position"] or r["title"]),
+        "by_branch": by(lambda r: r["branch"]),
+        "rows": rows,
+        "hint": ("Yopilish muddati — vakansiya ochilgan kundan yopilgan "
+                 "kungacha. O'rtachaga faqat xodim topilib yopilganlar "
+                 "kiradi. Konversiya — shu vakansiyaga kelgan nomzodlardan "
+                 "necha foizi ishga olingani."),
+    }
+
+
 def _marketing_spend(db: Session, user, start: date, end: date,
                      branch_id=None) -> dict:
     """Kanal kesimida reklama xarajati. Kanal ko'rsatilmagan reklama

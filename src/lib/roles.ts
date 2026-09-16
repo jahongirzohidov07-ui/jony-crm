@@ -379,8 +379,10 @@ export const EXAMINER_PENALTY_SET = [
 export const SUPPORT_PENALTY_SET = [FOUNDER, HR_MANAGER];
 
 /** Na'munali xodim (intizom balli) — backend roles.CONDUCT_VIEW.
- *  Faqat HR ko'radi va o'zgartiradi (Jahongir, 2026-09-16). */
-export const CONDUCT_VIEW = [HR_MANAGER];
+ *  HR — hammani; examinerlar boshlig'i — examinerlarni, support
+ *  rahbari — supportlarni. Rahbarlarning o'zini faqat HR baholaydi
+ *  (qaysi bo'lim va kim ko'rinishini server aytadi). */
+export const CONDUCT_VIEW = [HR_MANAGER, HEAD_EXAMINER, HEAD_SUPPORT];
 
 // Yillik Reja/Fakt jadvali kimga ko'rinadi
 export const PLAN_VIEW = [

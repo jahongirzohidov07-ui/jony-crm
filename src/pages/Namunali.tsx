@@ -1,10 +1,13 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
-  Award, Download, Trash2, ChevronDown, ChevronRight, Search, Info,
+  Award, Download, Trash2, ChevronDown, ChevronRight, Search, Info, Upload,
 } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { CONDUCT_VIEW, can } from "../lib/roles";
+import {
+  CONDUCT_VIEW, HEAD_EXAMINER, HEAD_SUPPORT, can,
+} from "../lib/roles";
+import { ConductImport } from "../components/ConductImport";
 import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
@@ -108,7 +111,12 @@ function History({ userId, year }: { userId: number; year: number }) {
 export default function Namunali() {
   const { user } = useAuth();
   const now = new Date();
-  const [section, setSection] = useState<Section>("staff");
+  // Rahbar faqat o'z bo'limini ko'radi — shundan boshlanadi
+  const [section, setSection] = useState<Section>(
+    user?.role === HEAD_EXAMINER ? "examiner"
+      : user?.role === HEAD_SUPPORT ? "support" : "staff",
+  );
+  const [showImport, setShowImport] = useState(false);
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [q, setQ] = useState("");
@@ -277,6 +285,11 @@ export default function Namunali() {
       </p>
 
       {/* ---- Bo'limlar ---- */}
+      {d?.sections?.length === 1 && (
+        <p className="text-sm font-semibold text-brand-700 border-b border-slate-200 pb-2.5 mb-5">
+          {d.sections[0].label}
+        </p>
+      )}
       {d?.sections?.length > 1 && (
         <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
           {d.sections.map((s: Any) => (
@@ -334,14 +347,30 @@ export default function Namunali() {
         >
           <Info size={14} /> Qoidalar va jazolar
         </button>
-        <button
-          onClick={exportXlsx}
-          disabled={!rows.length}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-40 ml-auto"
-        >
-          <Download size={14} /> Excel
-        </button>
+        <div className="flex gap-2 ml-auto">
+          {d?.can_import && (
+            <button
+              onClick={() => setShowImport(true)}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+            >
+              <Upload size={14} /> Excel'dan import
+            </button>
+          )}
+          <button
+            onClick={exportXlsx}
+            disabled={!rows.length}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+          >
+            <Download size={14} /> Excel
+          </button>
+        </div>
       </div>
+      {showImport && (
+        <ConductImport
+          onClose={() => setShowImport(false)}
+          onDone={load}
+        />
+      )}
 
       {/* ---- Qoidalar ---- */}
       {showRules && rules && (
@@ -668,7 +697,7 @@ export default function Namunali() {
                         )}
                       </td>
                       <td className="px-3 py-2 text-right">
-                        {d.can_manage && (
+                        {e.can_delete && (
                           <button
                             onClick={() => remove(e)}
                             title="O'chirish"

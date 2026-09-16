@@ -58,6 +58,7 @@ sug = mk("sugdiyona", roles.TEACHER, "Sug'diyona Toshtemirova")
 sar = mk("sardor", roles.SALES_MANAGER, "Sardor Mirzamuratov")
 exm = mk("exam", roles.EXAMINER, "Sardor Examiner")
 sup = mk("sup", roles.SUPPORT_TEACHER, "Sevinch Support")
+hs = mk("supboshliq", roles.HEAD_SUPPORT)
 
 H = login("hr")
 Y = 2026
@@ -129,7 +130,7 @@ ck("examiner o'z bo'limida",
    ["Boshliq", "Sardor Examiner"])
 ck("support o'z bo'limida",
    [x["name"] for x in board("support").json()["rows"]],
-   ["Sevinch Support"])
+   ["Sevinch Support", "Supboshliq"])
 ck("HR uchala bo'limni ko'radi",
    [s["key"] for s in r.json()["sections"]],
    ["staff", "support", "examiner"])
@@ -184,10 +185,15 @@ ck("xayfsan 0 ball", add(sar, "reprimand", "2026-06-03", points=0,
 ck("asoschiga yozib bo'lmaydi", add(founder, "late", "2026-06-03")
    .status_code, 404)
 
-print("\n=== RUXSATLAR: FAQAT HR ===")
-# 2026-09-16, Jahongir: "faqat HR ko'rib o'zgartira olsin"
+print("\n=== RUXSATLAR ===")
+# 2026-09-16, Jahongir: "examiner boshlig'i examinerlarni, support manager
+# esa supportlarni jarima ball qo'shsin, o'zlarini esa HR baholasin"
 ck("HR examinerga yozadi", add(exm, "late", "2026-06-03").status_code, 200)
-for who in ("asoschi", "boshliq", "rahbar"):
+ck("HR examinerlar boshlig'iga yozadi",
+   add(hx, "late", "2026-06-03").status_code, 200)
+ck("HR support rahbariga yozadi",
+   add(hs, "late", "2026-06-03").status_code, 200)
+for who in ("asoschi", "rahbar"):
     h = login(who)
     for sec in ("staff", "support", "examiner"):
         ck(f"{who} {sec} ko'rolmaydi", board(sec, h=h).status_code, 403)
@@ -197,6 +203,100 @@ for who in ("asoschi", "boshliq", "rahbar"):
        c.delete(f"/api/conduct/{cid}", headers=h).status_code, 403)
     ck(f"{who} tarixni ko'rolmaydi",
        c.get(f"/api/conduct/user/{sar.id}", headers=h).status_code, 403)
+
+HX, HS = login("boshliq"), login("supboshliq")
+r = board("examiner", h=HX)
+ck("boshliq examinerlarni ko'radi", r.status_code, 200)
+ck("boshliqqa faqat oddiy examinerlar (o'zi yo'q)",
+   [x["name"] for x in r.json()["rows"]], ["Sardor Examiner"])
+ck("boshliqqa faqat examiner bo'limi",
+   [s["key"] for s in r.json()["sections"]], ["examiner"])
+ck("boshliq import qilolmaydi (bayroq)", r.json()["can_import"], False)
+ck("boshliq xodimlarni ko'rolmaydi", board("staff", h=HX).status_code, 403)
+ck("boshliq supportlarni ko'rolmaydi",
+   board("support", h=HX).status_code, 403)
+r = add(exm, "badge", "2026-06-04", h=HX)
+ck("boshliq examinerga yozadi", r.status_code, 200)
+ck("boshliq o'z yozuvini o'chiradi",
+   c.delete(f"/api/conduct/{r.json()['id']}", headers=HX).status_code, 200)
+ck("boshliq o'ziga yozolmaydi", add(hx, "late", "2026-06-04", h=HX)
+   .status_code, 403)
+ck("boshliq xodimga yozolmaydi", add(sar, "late", "2026-06-04", h=HX)
+   .status_code, 403)
+ck("boshliq supportga yozolmaydi", add(sup, "late", "2026-06-04", h=HX)
+   .status_code, 403)
+ck("boshliq o'z tarixini ko'rolmaydi",
+   c.get(f"/api/conduct/user/{hx.id}", headers=HX).status_code, 403)
+ck("boshliq examiner tarixini ko'radi",
+   c.get(f"/api/conduct/user/{exm.id}", headers=HX).status_code, 200)
+ck("boshliq HR yozgan xodim yozuvini o'chirolmaydi",
+   c.delete(f"/api/conduct/{cid}", headers=HX).status_code, 403)
+
+hr_exm = add(exm, "manual", "2026-06-05").json()["id"]
+ck("boshliq HR yozgan examiner yozuvini o'chirolmaydi",
+   c.delete(f"/api/conduct/{hr_exm}", headers=HX).status_code, 403)
+lg = {e["id"]: e for e in board("examiner", month=6, h=HX).json()["log"]}
+ck("boshliqqa HR yozuvida o'chirish tugmasi yo'q",
+   lg[hr_exm]["can_delete"], False)
+ck("HR o'chiradi", c.delete(f"/api/conduct/{hr_exm}", headers=H)
+   .status_code, 200)
+
+r = board("support", h=HS)
+ck("support rahbari supportlarni ko'radi",
+   [x["name"] for x in r.json()["rows"]], ["Sevinch Support"])
+ck("support rahbari supportga yozadi",
+   add(sup, "manual", "2026-06-04", h=HS).status_code, 200)
+ck("support rahbari o'ziga yozolmaydi",
+   add(hs, "manual", "2026-06-04", h=HS).status_code, 403)
+ck("support rahbari examinerga yozolmaydi",
+   add(exm, "manual", "2026-06-04", h=HS).status_code, 403)
+ck("support rahbari examinerlarni ko'rolmaydi",
+   board("examiner", h=HS).status_code, 403)
+r = c.post("/api/conduct/import", headers=HS, json={"items": []})
+ck("support rahbari import qilolmaydi", r.status_code, 403)
+ck("HR bo'limida rahbarlar ko'rinadi",
+   sorted(x["name"] for x in board("support").json()["rows"]),
+   ["Sevinch Support", "Supboshliq"])
+
+print("\n=== EXCEL IMPORT ===")
+items = [
+    {"name": "Irina  Tuzikova ", "kind": "late", "date": "2026-02-02"},
+    {"name": "Irina Tuzikova", "kind": "late", "date": "2026-02-03"},
+    {"name": "Irina Tuzikova", "kind": "reprimand", "date": "2026-01-01",
+     "points": 5},
+    {"name": "Sarvar mob", "kind": "badge", "date": "2026-02-02"},
+    {"name": "Noma'lum Odam", "kind": "badge", "date": "2026-02-02"},
+]
+irina = mk("irina", roles.ADMINISTRATOR, "Irina Tuzikova")
+sarvar = mk("sarvar", roles.ADMINISTRATOR, "Sarvar mobilograf")
+r = c.post("/api/conduct/import", headers=H, json={"items": items})
+ck("oldindan ko'rish 200", r.status_code, 200)
+st = {n["name"]: n["status"] for n in r.json()["names"]}
+ck("bo'shliqlar farq qilmaydi", st["Irina Tuzikova"], "matched")
+ck("qisqa ism topilmaydi", st["Sarvar mob"], "unmatched")
+ck("qo'shiladi (hali saqlanmagan)", (r.json()["to_add"], r.json()["added"]),
+   (3, 0))
+ck("saqlanmadi", c.get(f"/api/conduct/user/{irina.id}?year={Y}",
+                       headers=H).json()["items"], [])
+mp = {"Sarvar mob": sarvar.id, "Noma'lum Odam": 0}
+r = c.post("/api/conduct/import", headers=H,
+           json={"items": items, "mapping": mp, "apply": True})
+ck("import 200", r.status_code, 200)
+ck("4 ta qo'shildi", r.json()["added"], 4)
+st = {n["name"]: n["status"] for n in r.json()["names"]}
+ck("qo'lda moslandi", st["Sarvar mob"], "mapped")
+ck("o'tkazib yuborildi", st["Noma'lum Odam"], "skipped")
+h = c.get(f"/api/conduct/user/{irina.id}?year={Y}", headers=H).json()
+ck("Irina: 1 + 2 + xayfsan 5", h["year_minus"], 8)
+ck("import belgisi", h["items"][0]["note"], "Excel'dan import")
+r = c.post("/api/conduct/import", headers=H,
+           json={"items": items, "mapping": mp, "apply": True})
+ck("qayta import takrorlamaydi", (r.json()["added"], r.json()["already"]),
+   (0, 4))
+r = c.post("/api/conduct/import", headers=H, json={"items": [
+    {"name": "Irina Tuzikova", "kind": "late",
+     "date": (date.today() + timedelta(days=3)).isoformat()}]})
+ck("kelajak sana rad", r.status_code, 400)
 
 print()
 if fails:

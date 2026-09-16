@@ -5774,10 +5774,23 @@ def conduct_section(role) -> str | None:
     return "staff"
 
 
-# Kim ko'radi va yozadi: FAQAT HR (2026-09-16, Jahongir: "faqat HR
-# ko'rib o'zgartira olsin"). Asoschi ham, bo'lim boshliqlari ham yo'q.
+# Kim ko'radi va yozadi (2026-09-16, Jahongir):
+#   - HR — hamma bo'limda, hammani ("faqat HR ko'rib o'zgartira olsin");
+#   - examinerlar boshlig'i — faqat oddiy examinerlarni, support rahbari —
+#     faqat oddiy supportlarni ("examiner boshlig'i examinerlarni, support
+#     manager esa supportlarni jarima ball qo'shsin");
+#   - rahbarlarning O'ZINI faqat HR baholaydi ("o'zlarini esa HR
+#     baholasin"). Asoschi bu bo'limda yo'q.
 CONDUCT_MANAGE_ALL = [HR_MANAGER]
-CONDUCT_SECTION_MANAGERS: dict = {}
+CONDUCT_SECTION_MANAGERS = {
+    "examiner": [HEAD_EXAMINER],
+    "support": [HEAD_SUPPORT],
+}
+# Rahbar kimni baholaydi: bo'lim -> baholanadigan rollar
+CONDUCT_HEAD_TARGETS = {
+    "examiner": [EXAMINER],
+    "support": [SUPPORT_TEACHER],
+}
 CONDUCT_VIEW = list(dict.fromkeys(
     CONDUCT_MANAGE_ALL
     + [r for rs in CONDUCT_SECTION_MANAGERS.values() for r in rs]))
@@ -5787,6 +5800,17 @@ def conduct_sections_for(role) -> list:
     if role in CONDUCT_MANAGE_ALL:
         return [k for k, _ in CONDUCT_SECTIONS]
     return [k for k, rs in CONDUCT_SECTION_MANAGERS.items() if role in rs]
+
+
+def conduct_can_rate(role, target_role) -> bool:
+    """role egasi target_role egasiga ball yoza/ko'ra oladimi."""
+    sec = conduct_section(target_role)
+    if not sec:
+        return False
+    if role in CONDUCT_MANAGE_ALL:
+        return True
+    return (role in CONDUCT_SECTION_MANAGERS.get(sec, [])
+            and target_role in CONDUCT_HEAD_TARGETS.get(sec, []))
 
 
 def conduct_points(kind, nth: int) -> float:

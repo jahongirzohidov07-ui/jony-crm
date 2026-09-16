@@ -60,8 +60,15 @@ def _scored(rows: list) -> list:
     return out
 
 
-def _entry_out(v, nth, pts, names: dict) -> dict:
+def _can_delete(user, v) -> bool:
+    """HR hammasini, rahbar faqat o'zi yozganini o'chiradi."""
+    return (user.role in tuple(roles.CONDUCT_MANAGE_ALL)
+            or v.created_by_id == user.id)
+
+
+def _entry_out(v, nth, pts, names: dict, user=None) -> dict:
     return {
+        "can_delete": bool(user and _can_delete(user, v)),
         "id": v.id,
         "user_id": v.user_id,
         "name": names.get(v.user_id, "—"),
@@ -108,6 +115,13 @@ def _check_section(user, section: str) -> None:
         raise HTTPException(403, "Bu bo'limga ruxsatingiz yo'q")
 
 
+def _check_target(user, target) -> None:
+    """Rahbar faqat o'z bo'limidagi oddiy xodimni baholaydi; rahbarlarni
+    (o'zini ham) faqat HR baholaydi."""
+    if not roles.conduct_can_rate(user.role, target.role):
+        raise HTTPException(403, "Bu xodimni faqat HR baholaydi")
+
+
 @router.get("/api/conduct")
 def conduct_board(section: str = "staff", year: int | None = None,
                   month: int | None = None, branch_id: int | None = None,
@@ -121,7 +135,8 @@ def conduct_board(section: str = "staff", year: int | None = None,
     m = today.month if month is None else month
     if m < 0 or m > 12:
         raise HTTPException(400, "Noto'g'ri oy")
-    users = _section_users(db, section, branch_id)
+    users = [u for u in _section_users(db, section, branch_id)
+             if roles.conduct_can_rate(user.role, u.role)]
     names = {u.id: u.full_name for u in users}
     scored = _scored(_year_rows(db, list(names), y))
 
@@ -135,7 +150,7 @@ def conduct_board(section: str = "staff", year: int | None = None,
         if not m or v.date.month == m:
             s["month"] += pts
             s["counts"][v.kind] += 1
-            log.append(_entry_out(v, nth, pts, names))
+            log.append(_entry_out(v, nth, pts, names, user))
     log.sort(key=lambda e: (e["date"], e["id"]), reverse=True)
 
     rows = []
@@ -167,6 +182,7 @@ def conduct_board(section: str = "staff", year: int | None = None,
         "log": log,
         "rules": _rules(),
         "can_manage": True,
+        "can_import": user.role in tuple(roles.CONDUCT_MANAGE_ALL),
     }
 
 
@@ -179,7 +195,7 @@ def conduct_user_history(user_id: int, year: int | None = None,
     sec = roles.conduct_section(u.role) if u else None
     if not sec:
         raise HTTPException(404, "Xodim topilmadi")
-    _check_section(user, sec)
+    _check_target(user, u)
     y = year or roles.local_today().year
     scored = _scored(_year_rows(db, [u.id], y))
     names = {u.id: u.full_name}
@@ -207,7 +223,7 @@ def conduct_add(payload: schemas.ConductIn, db: Session = Depends(get_db),
            and target.role in _STAFF_ROLES else None)
     if not sec:
         raise HTTPException(404, "Xodim topilmadi")
-    _check_section(user, sec)
+    _check_target(user, target)
     kind = payload.kind
     note = (payload.note or "").strip() or None
     points = None
@@ -254,8 +270,11 @@ def conduct_delete(violation_id: int, db: Session = Depends(get_db),
     if not v:
         raise HTTPException(404, "Yozuv topilmadi")
     target = db.query(models.User).get(v.user_id)
-    sec = roles.conduct_section(target.role) if target else "staff"
-    _check_section(user, sec or "staff")
+    if target:
+        _check_target(user, target)
+    if not _can_delete(user, v):
+        raise HTTPException(403, "Bu yozuvni faqat HR yoki uni yozgan "
+                                 "rahbar o'chiradi")
     label = target.full_name if target else "—"
     info = (f"{roles.CONDUCT_KIND_LABELS.get(v.kind, v.kind)}, "
             f"{v.date.isoformat()}")
@@ -267,3 +286,129 @@ def conduct_delete(violation_id: int, db: Session = Depends(get_db),
               branch_id=target.branch_id if target else None,
               old_value=info, note=note, commit=True)
     return {"ok": True}
+
+
+# ---------------------------------------------------------------------
+#  EXCEL'DAN IMPORT (2026-09-16, Jahongir: "Exceldagi ma'lumotlarni ham
+#  qo'shib ber"). Faylni brauzer o'qiydi va yozuvlar ro'yxatini yuboradi;
+#  server ismlarni xodimlarga moslaydi. Avval apply=false — HR natijani
+#  ko'radi va mos kelmagan ismni qo'lda tanlaydi; so'ng apply=true.
+#  Qayta import qilinsa, oldin import qilingan yozuvlar TAKRORLANMAYDI.
+# ---------------------------------------------------------------------
+IMPORT_NOTE = "Excel'dan import"
+_APOS = str.maketrans({c: "'" for c in "\u2019\u2018\u02bb\u02bc`\u00b4"})
+
+
+def _norm_name(s) -> str:
+    return " ".join(str(s or "").translate(_APOS).lower().split())
+
+
+@router.post("/api/conduct/import")
+def conduct_import(payload: schemas.ConductImportIn,
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.CONDUCT_MANAGE_ALL))):
+    items = payload.items
+    if len(items) > 5000:
+        raise HTTPException(400, "Bir martada 5000 tadan ko'p yozuv bo'lmasin")
+    today = roles.local_today()
+    lim = roles.CONDUCT_REPRIMAND_MAX
+    for it in items:
+        if it.kind == roles.CONDUCT_REPRIMAND:
+            if not it.points or abs(it.points) > lim:
+                raise HTTPException(400, f"{it.name}: xayfsan bali noto'g'ri")
+        elif it.kind not in roles.CONDUCT_STEPS:
+            raise HTTPException(400, f"Noma'lum tur: {it.kind}")
+        if it.date > today:
+            raise HTTPException(400, f"{it.name}: kelajak sana ({it.date})")
+
+    staff = [u for u in db.query(models.User)
+             .filter(models.User.is_active == 1,
+                     models.User.role.in_(_STAFF_ROLES))
+             .order_by(models.User.full_name).all()
+             if roles.conduct_section(u.role)]
+    by_id = {u.id: u for u in staff}
+    by_norm = defaultdict(list)
+    for u in staff:
+        by_norm[_norm_name(u.full_name)].append(u)
+    mapping = {_norm_name(k): v for k, v in (payload.mapping or {}).items()}
+
+    names, resolved = {}, {}
+    for it in items:
+        key = _norm_name(it.name)
+        if not key or key in names:
+            if key:
+                names[key]["count"] += 1
+            continue
+        row = {"name": " ".join(str(it.name).split()), "count": 1,
+               "user_id": None, "user_name": None, "status": "unmatched"}
+        if key in mapping:
+            uid = mapping[key]
+            if not uid:
+                row["status"] = "skipped"
+            elif uid in by_id:
+                row.update(user_id=uid, user_name=by_id[uid].full_name,
+                           status="mapped")
+            else:
+                raise HTTPException(400, f"{row['name']}: xodim topilmadi")
+        else:
+            cand = by_norm.get(key, [])
+            if len(cand) == 1:
+                row.update(user_id=cand[0].id, user_name=cand[0].full_name,
+                           status="matched")
+            elif len(cand) > 1:
+                row["status"] = "ambiguous"
+        names[key] = row
+        if row["user_id"]:
+            resolved[key] = row["user_id"]
+
+    def k_of(uid, kind, d, pts):
+        return (uid, kind, d, round(float(pts), 2) if pts is not None else None)
+
+    incoming = defaultdict(int)
+    for it in items:
+        uid = resolved.get(_norm_name(it.name))
+        if uid:
+            pts = it.points if it.kind == roles.CONDUCT_REPRIMAND else None
+            incoming[k_of(uid, it.kind, it.date, pts)] += 1
+    existing = defaultdict(int)
+    if resolved:
+        for v in (db.query(models.ConductViolation)
+                  .filter(models.ConductViolation.user_id.in_(
+                      set(resolved.values())),
+                      models.ConductViolation.note.like(IMPORT_NOTE + "%"))
+                  .all()):
+            existing[k_of(v.user_id, v.kind, v.date, v.points)] += 1
+
+    to_add = {k: n - existing[k] for k, n in incoming.items()
+              if n > existing[k]}
+    total_new = sum(to_add.values())
+    already = sum(incoming.values()) - total_new
+    added = 0
+    if payload.apply and to_add:
+        for (uid, kind, d, pts), n in to_add.items():
+            for _ in range(n):
+                db.add(models.ConductViolation(
+                    user_id=uid, date=d, kind=kind, points=pts,
+                    note=(IMPORT_NOTE + ": xayfsan"
+                          if kind == roles.CONDUCT_REPRIMAND else IMPORT_NOTE),
+                    created_by=user.full_name, created_by_id=user.id))
+                added += 1
+        db.commit()
+        audit.log(db, user, entity="conduct", action="import",
+                  entity_label="Na'munali xodim",
+                  new_value=f"{added} ta yozuv", note=IMPORT_NOTE,
+                  commit=True)
+
+    return {
+        "names": sorted(names.values(),
+                        key=lambda r: (r["status"] in ("matched", "mapped"),
+                                       r["name"])),
+        "users": [{"id": u.id, "name": u.full_name,
+                   "role_label": roles.UZ_LABELS.get(u.role, u.role)}
+                  for u in staff],
+        "total": len(items),
+        "to_add": total_new,
+        "already": already,
+        "added": added,
+        "applied": bool(payload.apply),
+    }

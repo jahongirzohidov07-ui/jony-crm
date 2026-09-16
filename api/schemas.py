@@ -1,6 +1,6 @@
 import datetime as _dt
 from datetime import date, datetime
-from typing import Optional, List
+from typing import Optional, List, Dict
 from pydantic import BaseModel, ConfigDict
 
 
@@ -2373,6 +2373,21 @@ class ConductIn(BaseModel):
     date: Optional[_dt.date] = None
     note: Optional[str] = None
     points: Optional[float] = None      # faqat xayfsan uchun
+
+
+class ConductImportItem(BaseModel):
+    name: str
+    kind: str
+    date: _dt.date
+    points: Optional[float] = None      # faqat xayfsan uchun
+
+
+class ConductImportIn(BaseModel):
+    """Na'munali xodim: Excel jadvalidan import (HR)."""
+    items: List[ConductImportItem]
+    # Excel'dagi ism -> xodim id (0 — bu ismni o'tkazib yuborish)
+    mapping: Dict[str, int] = {}
+    apply: bool = False
 
 
 class PlanItemIn(BaseModel):

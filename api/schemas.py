@@ -57,6 +57,12 @@ class ChangePasswordRequest(BaseModel):
     new_password: str
 
 
+class ChangeUsernameRequest(BaseModel):
+    """Xodim o'z loginini almashtiradi (joriy parol bilan)."""
+    current_password: str
+    new_username: str
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
@@ -127,6 +133,8 @@ class UserUpdate(BaseModel):
     # Ishdan bo'shatish: qanday ajrashildi va sababi
     exit_type: Optional[str] = None      # green | neutral | red
     exit_reason: Optional[str] = None
+    # Login (2026-09-16): HR / xodimlar boshqaruvchisi o'zgartiradi
+    username: Optional[str] = None
     password: Optional[str] = None
     fix_salary: Optional[float] = None
     phone: Optional[str] = None

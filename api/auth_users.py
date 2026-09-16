@@ -216,6 +216,63 @@ def change_own_password(
               note="foydalanuvchi o'z parolini almashtirdi", commit=True)
     return {"ok": True}
 
+
+def _clean_username(db: Session, name: str, exclude_id: int) -> str:
+    """Yangi loginni tekshiradi: qoida va bandlik (katta-kichik harf
+    farqsiz — "Ali" va "ali" ikki xil odam bo'lib chalkashmasin)."""
+    name = (name or "").strip()
+    if not roles.username_ok(name):
+        raise HTTPException(400, roles.USERNAME_RULE_TEXT)
+    taken = (db.query(models.User.id)
+             .filter(func.lower(models.User.username) == name.lower(),
+                     models.User.id != exclude_id).first())
+    if taken:
+        raise HTTPException(400, "Bu login band, boshqasini tanlang")
+    return name
+
+
+@router.put("/api/auth/me/username")
+def change_own_username(
+    payload: schemas.ChangeUsernameRequest,
+    request: Request,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user),
+):
+    """Xodim o'z loginini almashtiradi (2026-09-16, Jahongir: "loginni
+    ham har bir xodim va HR edit qila olsin").
+
+    Token ichida login (sub) turadi — shuning uchun almashtirilgach
+    yangi token qaytariladi, aks holda odam darhol tizimdan chiqib
+    ketardi. Eski token muddati saqlanadi ("eslab qolish" ham)."""
+    if user.role in tuple(roles.EXTERNAL_ROLES):
+        raise HTTPException(403, "Loginni faqat xodimlar o'zgartiradi")
+    if not verify_password(payload.current_password, user.password_hash):
+        raise HTTPException(400, "Joriy parol noto'g'ri")
+    new = _clean_username(db, payload.new_username, user.id)
+    old = user.username
+    if new == old:
+        raise HTTPException(400, "Yangi login eskisi bilan bir xil")
+    minutes = None
+    try:
+        from jose import jwt as _jwt
+        tok = (request.headers.get("authorization") or "").split(" ", 1)[-1]
+        exp = _jwt.get_unverified_claims(tok).get("exp")
+        if exp:
+            left = int((datetime.utcfromtimestamp(exp)
+                        - datetime.utcnow()).total_seconds() // 60)
+            minutes = max(left, 60)
+    except Exception:
+        minutes = None
+    user.username = new
+    db.commit()
+    audit.log(db, user, entity="user", action="update",
+              entity_id=user.id, entity_label=user.full_name,
+              field="username", old_value=old, new_value=new,
+              note="xodim o'z loginini almashtirdi", commit=True)
+    return {"ok": True, "username": new,
+            "access_token": create_access_token({"sub": new},
+                                                minutes=minutes)}
+
 def _guard_role_assignment(
     requester: models.User, target_role: str, target_branch_id: Optional[int]
 ):
@@ -428,12 +485,22 @@ def update_user(
     # telefonini yoki filialini ham tuzata olmasdi.
     _active_change = (payload.is_active is not None
                       and bool(payload.is_active) != bool(target.is_active))
+    # Login ham parol kabi kirish kaliti (2026-09-16) — xuddi shu
+    # himoyalar ostida turadi.
+    _new_username = None
+    if payload.username is not None \
+            and payload.username.strip() != target.username:
+        _new_username = _clean_username(db, payload.username, target.id)
+        if target.id == user.id:
+            raise HTTPException(
+                400, "O'z loginingizni profil menyusidagi \"Loginni "
+                     "almashtirish\" orqali o'zgartiring")
     if user.role == roles.HR_MANAGER \
             and target.role in (roles.FOUNDER, roles.BRANCH_MANAGER) \
-            and (payload.password or _active_change):
+            and (payload.password or _active_change or _new_username):
         raise HTTPException(
-            403, "Asoschi va filial rahbari hisobini (parol, faollik) "
-                 "faqat asoschi boshqaradi")
+            403, "Asoschi va filial rahbari hisobini (login, parol, "
+                 "faollik) faqat asoschi boshqaradi")
     if target.role == roles.FOUNDER and user.role != roles.FOUNDER:
         raise HTTPException(403, "Asoschi kartasini faqat asoschi "
                                  "tahrirlaydi")
@@ -477,7 +544,13 @@ def update_user(
     audit.log_changes(
         db, user, entity="user", obj=target,
         changes={k: v for k, v in payload.model_dump(exclude_unset=True).items()
-                 if k != "password"})
+                 if k not in ("password", "username")})
+    if _new_username:
+        audit.log(db, user, entity="user", action="update",
+                  entity_id=target.id, entity_label=target.full_name,
+                  field="username", old_value=target.username,
+                  new_value=_new_username, note="Login o'zgartirildi",
+                  branch_id=target.branch_id)
     if payload.password:
         audit.log(db, user, entity="user", action="update", entity_id=target.id,
                   entity_label=target.full_name, field="password",
@@ -500,6 +573,10 @@ def update_user(
 
     if payload.full_name is not None:
         target.full_name = payload.full_name
+    if _new_username:
+        # Token ichida login turadi — xodim keyingi so'rovda qayta
+        # kirishi kerak bo'ladi (yangi login bilan). Bu kutilgan holat.
+        target.username = _new_username
     # ESKI LAVOZIM YO'QOLMAYDI (2026-08-29, Jahongir: "menejerdan
     # ustozga o'tgandan keyin almashtira olmay qolibdi").
     #

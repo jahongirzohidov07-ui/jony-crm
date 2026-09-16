@@ -105,6 +105,13 @@ function UserForm({
       setError("Ism-familiyani kiriting");
       return;
     }
+    const login = username.trim();
+    if (isEdit && login !== (initial?.username ?? "")
+        && !/^[A-Za-z0-9._@-]{3,40}$/.test(login)) {
+      setError("Login 3-40 belgi bo'lsin: lotin harflari, raqamlar va "
+        + ". _ - @ belgilari, probelsiz");
+      return;
+    }
     if (!role) {
       setError("Rolni tanlang");
       return;
@@ -113,7 +120,11 @@ function UserForm({
     setError(null);
     try {
       await onSubmit({
-        username: isEdit ? undefined : username.trim() || undefined,
+        // Tahrirlashda login faqat O'ZGARGAN bo'lsa yuboriladi (2026-09-16)
+        username: isEdit
+          ? (username.trim() !== (initial?.username ?? "")
+            ? username.trim() : undefined)
+          : username.trim() || undefined,
         password: password || undefined,
         full_name: fullName,
         role,
@@ -154,6 +165,28 @@ function UserForm({
               autoFocus
             />
           </div>
+
+          {/* 2026-09-16, Jahongir: "loginni ham ... HR edit qila olsin" */}
+          {isEdit && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Login
+              </label>
+              <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="off"
+                autoCapitalize="none"
+                spellCheck={false}
+              />
+              {username.trim() !== (initial?.username ?? "") && (
+                <p className="text-xs text-amber-700 mt-1">
+                  Saqlangach xodim tizimga yangi login bilan kiradi.
+                </p>
+              )}
+            </div>
+          )}
 
           {!isEdit && (
             <div>
@@ -694,6 +727,7 @@ export function StaffTab() {
               phone: data.phone ?? null,
               birth_date: data.birth_date ?? null,
               hired_date: data.hired_date ?? null,
+              ...(data.username ? { username: data.username } : {}),
               ...(data.password ? { password: data.password } : {}),
             });
             setEditing(null);

@@ -5666,6 +5666,22 @@ def password_ok(pw: str) -> bool:
             and any(c.isdigit() for c in pw))
 
 
+# LOGIN (2026-09-16, Jahongir: "loginni ham har bir xodim va HR edit
+# qila olsin"). Telefon raqam ham login bo'la oladi, shuning uchun
+# faqat raqamdan iborat login ham to'g'ri.
+USERNAME_MIN = 3
+USERNAME_MAX = 40
+USERNAME_RULE_TEXT = ("Login 3-40 belgi bo'lsin: lotin harflari, raqamlar "
+                      "va . _ - @ belgilari, probelsiz")
+
+
+def username_ok(name: str) -> bool:
+    import re as _re
+    return bool(_re.fullmatch(
+        r"[A-Za-z0-9._@-]{%d,%d}" % (USERNAME_MIN, USERNAME_MAX),
+        name or ""))
+
+
 # Brute-force himoyasi: shu oynada shuncha xato — vaqtincha blok.
 LOGIN_MAX_FAILS = 5
 # Bitta IP dan (2026-09-06): bir markazdan bir nechta xodim kiradi,

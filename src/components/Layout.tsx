@@ -66,6 +66,7 @@ import {
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
+  setToken,
 } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 import { PasswordInput } from "./PasswordInput";
@@ -200,6 +201,122 @@ function ChangePasswordModal({ onClose, forced = false }: {
   );
 }
 
+/** Xodim o'z loginini almashtiradi (2026-09-16, Jahongir: "loginni ham
+ *  har bir xodim ... edit qila olsin"). Token ichida login turadi —
+ *  server yangi token qaytaradi, shu zahoti saqlanadi. */
+function ChangeUsernameModal({ onClose }: { onClose: () => void }) {
+  const [currentLogin, setCurrentLogin] = useState("");
+  const [next, setNext] = useState("");
+  const [password, setPassword] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<{ username: string }>("/auth/me", true)
+      .then((r) => setCurrentLogin(r.username))
+      .catch(() => {});
+  }, []);
+
+  async function submit() {
+    const login = next.trim();
+    if (!/^[A-Za-z0-9._@-]{3,40}$/.test(login)) {
+      setError("Login 3-40 belgi bo'lsin: lotin harflari, raqamlar va "
+        + ". _ - @ belgilari, probelsiz");
+      return;
+    }
+    if (!password) {
+      setError("Tasdiqlash uchun joriy parolni kiriting");
+      return;
+    }
+    setSaving(true);
+    setError(null);
+    try {
+      const r = await api.put<{ username: string; access_token: string }>(
+        "/auth/me/username",
+        { current_password: password, new_username: login },
+      );
+      // Qaysi omborda turgan bo'lsa ("eslab qolish"), o'shanga yoziladi
+      setToken(r.access_token, localStorage.getItem("jony_crm_token") !== null);
+      setDone(r.username);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-slate-900">Loginni almashtirish</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+            <X size={18} />
+          </button>
+        </div>
+        {done ? (
+          <div className="space-y-3">
+            <p className="text-sm text-green-700">
+              Login yangilandi. Endi tizimga <b>{done}</b> bilan kirasiz.
+            </p>
+            <button
+              onClick={onClose}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium"
+            >
+              Yopish
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Hozirgi login
+              </label>
+              <p className="text-sm font-medium text-slate-800 px-1">
+                {currentLogin || "…"}
+              </p>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Yangi login
+              </label>
+              <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={next}
+                onChange={(e) => setNext(e.target.value)}
+                autoFocus
+                autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Joriy parol (tasdiqlash uchun)
+              </label>
+              <PasswordInput
+                value={password}
+                onChange={setPassword}
+                autoComplete="current-password"
+              />
+            </div>
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <button
+              onClick={submit}
+              disabled={saving}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium mt-1 disabled:opacity-60"
+            >
+              {saving ? "Saqlanmoqda..." : "Saqlash"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Layout() {
   const { user, logout } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
@@ -216,6 +333,7 @@ export default function Layout() {
   }, []);
   const navigate = useNavigate();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showRecoveryModal, setShowRecoveryModal] = useState(false);
   // STANDART PAROL: login javobida must_change_password kelgan bo'lsa
   // (2026-09-06 xavfsizlik auditi) — oyna majburiy ochiladi.
@@ -562,6 +680,18 @@ export default function Layout() {
                 <KeyRound size={15} />
                 Parolni almashtirish
               </button>
+              {user?.role !== STUDENT && user?.role !== PARENT && (
+                <button
+                  onClick={() => {
+                    setProfileOpen(false);
+                    setShowUsernameModal(true);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+                >
+                  <UserCog size={15} />
+                  Loginni almashtirish
+                </button>
+              )}
               {user?.role === FOUNDER && (
                 <button
                   onClick={() => {
@@ -616,6 +746,9 @@ export default function Layout() {
             } catch { /* e'tiborsiz */ }
           }}
         />
+      )}
+      {showUsernameModal && (
+        <ChangeUsernameModal onClose={() => setShowUsernameModal(false)} />
       )}
       {showRecoveryModal && (
         <RecoveryModal onClose={() => setShowRecoveryModal(false)} />

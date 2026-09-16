@@ -416,9 +416,57 @@ def support_salary_list(year: int | None = None, month: int | None = None,
         "total": round(sum(r["salary"] for r in rows), 0),
         "min": roles.SUPPORT_PAY_MIN, "max": roles.SUPPORT_PAY_MAX,
         "hint": ("Oylik seanslardan avtomat: (soat x 0.30 + o'quvchi "
-                 "x 0.20 + test koef x 0.50) x 10 000, "
+                 "x 0.20 + test koef x 0.50 − jarima ballari) x 10 000, "
                  "chegara 400 000 — 1 500 000."),
+        "can_penalize": user.role in tuple(roles.SUPPORT_PENALTY_SET),
     }
+
+@router.post("/api/support-adjustments")
+def add_support_adjustment(payload: schemas.SupportAdjustIn,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *roles.SUPPORT_PENALTY_SET))):
+    """Support teacherdan jarima ball ayirish (2026-09-16): sabab majburiy."""
+    target = db.query(models.User).get(payload.user_id)
+    if not target or target.role != roles.SUPPORT_TEACHER:
+        raise HTTPException(404, "Support teacher topilmadi")
+    if not (payload.reason or "").strip():
+        raise HTTPException(400, "Sababni yozing — ball sababsiz ayirilmaydi")
+    if payload.points <= 0 or payload.points > 500:
+        raise HTTPException(400, "Ball 0 dan katta va 500 dan kichik bo'lsin")
+    d = payload.date or roles.local_today()
+    if d > roles.local_today():
+        raise HTTPException(400, "Kelajak sanaga jarima qo'yib bo'lmaydi")
+    a = models.SupportAdjustment(
+        user_id=target.id, points=round(payload.points, 2),
+        reason=payload.reason.strip(), date=d,
+        created_by=user.full_name)
+    db.add(a)
+    db.commit()
+    audit.log(db, user, entity="support_adjustment", action="create",
+              entity_id=a.id, entity_label=target.full_name,
+              branch_id=target.branch_id,
+              new_value=f"-{a.points} ball", note=a.reason, commit=True)
+    return {"ok": True, "id": a.id}
+
+@router.delete("/api/support-adjustments/{adj_id}")
+def delete_support_adjustment(adj_id: int, db: Session = Depends(get_db),
+                              user=Depends(require_role(
+                                  *roles.SUPPORT_PENALTY_SET))):
+    """Xato qo'yilgan jarimani bekor qilish — auditga yoziladi."""
+    a = db.query(models.SupportAdjustment).get(adj_id)
+    if not a:
+        raise HTTPException(404, "Jarima topilmadi")
+    target = db.query(models.User).get(a.user_id)
+    label, pts, reason = (target.full_name if target else "—",
+                          a.points, a.reason)
+    db.delete(a)
+    db.commit()
+    audit.log(db, user, entity="support_adjustment", action="delete",
+              entity_id=adj_id, entity_label=label,
+              branch_id=target.branch_id if target else None,
+              old_value=f"-{pts} ball", note=reason, commit=True)
+    return {"ok": True}
 
 @router.get("/api/support-teachers/{teacher_id}/groups")
 def support_teacher_groups(teacher_id: int, db: Session = Depends(get_db),

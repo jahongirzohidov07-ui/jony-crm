@@ -5333,14 +5333,21 @@ def support_result_coef(percent) -> float:
         else SUPPORT_RESULT_BANDS[-1][2]
 
 
-def support_salary(hours: float, students: int, percent) -> dict:
+def support_salary(hours: float, students: int, percent,
+                   minus: float = 0.0) -> dict:
     """Formula bitta joyda — kartada ham, ro'yxatda ham, testda ham
-    aynan shu hisob."""
+    aynan shu hisob.
+
+    minus — HR ayirgan jarima ballari (SupportAdjustment). Ball
+    oylikka aylantirilishidan OLDIN ayiriladi, examinerdagi kabi."""
     coef = support_result_coef(percent)
     h_part = round(hours * SUPPORT_HOURS_W, 2)
     s_part = round(students * SUPPORT_STUDENTS_W, 2)
     r_part = round(coef * SUPPORT_RESULT_W, 2)
-    raw = round((h_part + s_part + r_part) * SUPPORT_PAY_UNIT, 0)
+    gross = round(h_part + s_part + r_part, 2)
+    minus = round(max(0.0, float(minus or 0)), 2)
+    net = round(max(0.0, gross - minus), 2)
+    raw = round(net * SUPPORT_PAY_UNIT, 0)
     clamped = min(max(raw, SUPPORT_PAY_MIN), SUPPORT_PAY_MAX)
     return {
         "hours": round(hours, 2),
@@ -5351,7 +5358,9 @@ def support_salary(hours: float, students: int, percent) -> dict:
         "hours_part": h_part,
         "students_part": s_part,
         "result_part": r_part,
-        "points": round(h_part + s_part + r_part, 2),
+        "gross_points": gross,
+        "adjustment_points": minus,
+        "points": net,
         "raw": raw,
         "salary": clamped,
         "clamped_min": raw < SUPPORT_PAY_MIN,
@@ -5411,6 +5420,10 @@ EXAMINER_TIER_LABELS = {
 # Jarima qo'yish va qo'lda ball ayirish — bo'lim boshliqlari
 # (Exam, HR, O'quv bo'limi) va asoschi. ESLATMAdagi qoida.
 EXAMINER_PENALTY_SET = [FOUNDER, HEAD_EXAMINER, HR_MANAGER, ACADEMIC_HEAD]
+# Support teacherdan jarima ball ayirish (2026-09-16, Jahongir: "HR
+# uchun ham examiner ham supportlardan ayirish uchun jarima ball
+# bo'limi"). Examinerlar boshlig'i supportga tegmaydi.
+SUPPORT_PENALTY_SET = [FOUNDER, HR_MANAGER]
 # Barcha examinerlar ro'yxatini kim ko'radi
 EXAMINER_SALARY_VIEW = list(dict.fromkeys(
     SALARY_VIEW_ALL + [ACADEMIC_HEAD, HEAD_EXAMINER]))

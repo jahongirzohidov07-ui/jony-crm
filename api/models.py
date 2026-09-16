@@ -3249,6 +3249,22 @@ class ExaminerAdjustment(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class SupportAdjustment(Base):
+    """Support teacherdan jarima ball ayirish — ExaminerAdjustment ning
+    egizagi (2026-09-16). HR kamchilik aniqlasa, ball oylikka
+    aylantirilishidan oldin ayiriladi. Sabab majburiy."""
+    __tablename__ = "support_adjustments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    date = Column(Date, nullable=False, default=date.today, index=True)
+    points = Column(Float, nullable=False)      # ayiriladigan ball (musbat)
+    reason = Column(Text, nullable=False)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class PlanTarget(Base):
     """Yillik reja — bitta ko'rsatkichning bitta oydagi Reja qiymati.
 

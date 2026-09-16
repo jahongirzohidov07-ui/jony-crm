@@ -2358,6 +2358,14 @@ class ExaminerAdjustIn(BaseModel):
     date: Optional[_dt.date] = None
 
 
+class SupportAdjustIn(BaseModel):
+    """Support teacherdan jarima ball ayirish."""
+    user_id: int
+    points: float
+    reason: str
+    date: Optional[_dt.date] = None
+
+
 class PlanItemIn(BaseModel):
     metric: str
     month: int

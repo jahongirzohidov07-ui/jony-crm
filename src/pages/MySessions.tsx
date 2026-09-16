@@ -251,6 +251,21 @@ export default function MySessions() {
         <p className="text-xs text-slate-400 mt-2">
           {d.formula} = {Number(d.raw).toLocaleString().replace(/,/g, " ")}
         </p>
+        {/* HR ayirgan jarima ballari (2026-09-16) */}
+        {d.adjustments?.length > 0 && (
+          <div className="mt-3 border-t border-slate-100 pt-2">
+            <p className="text-xs font-medium text-slate-600 mb-1">
+              Jarima ballari: −{d.adjustment_points}
+            </p>
+            {d.adjustments.map((a: Any) => (
+              <p key={a.id} className="text-xs text-slate-500">
+                <span className="text-red-600 font-medium">−{a.points}</span>
+                {" "}— {a.reason}
+                <span className="text-slate-400"> · {a.date}</span>
+              </p>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ---- Junior teacher yo'li ---- */}

@@ -16,6 +16,7 @@ import { AtsBoard } from "../components/AtsBoard";
 import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
 import {
   HR_ACCESS, HR_CANDIDATE_VIEW, can, ALL_ROLES, roleLabel,
+  EXAMINER_PENALTY_SET, SUPPORT_PENALTY_SET,
 } from "../lib/roles";
 import {
   CANDIDATE_STAGES, CANDIDATE_SOURCES, APPLY_POSITIONS,
@@ -35,12 +36,14 @@ import {
 } from "../components/HrCore";
 import { formatSom, formatDate } from "../lib/format";
 import { Attachments } from "../components/Attachments";
+import { PenaltyPointsTab } from "../components/PenaltyPoints";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
-  | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps";
+  | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
+  | "penalty";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -61,6 +64,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "library", label: "Kutubxona" },
   // 2026-08-20, Jahongir: "hamma xodimga xar xilda onboarding"
   { key: "onbsteps", label: "Onboarding" },
+  // 2026-09-16, Jahongir: examiner va supportlardan jarima ball ayirish
+  { key: "penalty", label: "Jarima ballari" },
 ];
 
 function Stat({
@@ -1272,8 +1277,11 @@ export default function Hr() {
      ustoz nomzodini ko'rib, sinov darsini baholaydi (2026-08-16).
      Shuning uchun unga faqat ikkita tab ochiladi. */
   const fullHr = can(user?.role, HR_ACCESS);
+  // Jarima ballari faqat ball ayira oladiganlarga (filial rahbari emas)
+  const canPenalize = can(user?.role, EXAMINER_PENALTY_SET)
+    || can(user?.role, SUPPORT_PENALTY_SET);
   const visibleTabs = fullHr
-    ? TABS
+    ? TABS.filter((t) => t.key !== "penalty" || canPenalize)
     : TABS.filter((t) => ["candidates", "calendar", "rubric"]
         .includes(t.key));
   const activeTab = visibleTabs.some((t) => t.key === tab)
@@ -1323,6 +1331,7 @@ export default function Hr() {
       {activeTab === "nps" && <NpsTab />}
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
+      {activeTab === "penalty" && <PenaltyPointsTab />}
     </div>
   );
 }

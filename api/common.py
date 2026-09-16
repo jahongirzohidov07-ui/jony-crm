@@ -6035,20 +6035,38 @@ def _support_month(db: Session, teacher_id: int, year: int,
     students = sum(r.students_count or 0 for r in rows)
     gids = sorted({r.group_id for r in rows if r.group_id})
     pct = _support_group_percent(db, gids, start, end)
-    calc = roles.support_salary(hours, students, pct)
+    # HR ayirgan jarima ballari (2026-09-16)
+    t = db.query(models.Teacher).get(teacher_id)
+    adjs = []
+    if t and t.user_id:
+        adjs = (db.query(models.SupportAdjustment)
+                .filter(models.SupportAdjustment.user_id == t.user_id,
+                        models.SupportAdjustment.date >= start,
+                        models.SupportAdjustment.date <= end)
+                .order_by(models.SupportAdjustment.date,
+                          models.SupportAdjustment.id).all())
+    adj_total = round(sum(a.points or 0 for a in adjs), 2)
+    calc = roles.support_salary(hours, students, pct, minus=adj_total)
     gnames = {g.id: g.name for g in db.query(models.Group)
               .filter(models.Group.id.in_(gids or [-1])).all()}
+    formula = (f"({calc['hours']} soat x "
+               f"{roles.SUPPORT_HOURS_W} + {calc['students']} "
+               f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
+               f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}")
+    if adj_total:
+        formula += f" − {adj_total} jarima"
+    formula += f") x {roles.SUPPORT_PAY_UNIT:,}"
     return {
         "period": f"{year:04d}-{month:02d}",
         "sessions": [_support_session_out(db, r) for r in rows],
         "session_count": len(rows),
         "groups": [{"id": i, "name": gnames.get(i)} for i in gids],
         **calc,
-        "formula": (f"({calc['hours']} soat x "
-                    f"{roles.SUPPORT_HOURS_W} + {calc['students']} "
-                    f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
-                    f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}) "
-                    f"x {roles.SUPPORT_PAY_UNIT:,}".replace(",", " ")),
+        "adjustments": [
+            {"id": a.id, "date": a.date.isoformat(), "points": a.points,
+             "reason": a.reason, "created_by": a.created_by}
+            for a in adjs],
+        "formula": formula.replace(",", " "),
         "min": roles.SUPPORT_PAY_MIN,
         "max": roles.SUPPORT_PAY_MAX,
     }

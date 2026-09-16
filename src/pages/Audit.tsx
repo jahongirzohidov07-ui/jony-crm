@@ -14,14 +14,16 @@ import { ExaminerPayTab, ExaminerPayAdminTab } from "./ExaminerPay";
 import {
   AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel, EXAM_ORDER_ACCEPT,
   EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW, TEACHING_STAFF,
+  EXAMINER_PENALTY_SET,
 } from "../lib/roles";
+import { PenaltyPointsTab } from "../components/PenaltyPoints";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 import ComplaintsPage from "./Complaints";
 
 type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist"
-  | "errors" | "complaints";
+  | "penalty" | "errors" | "complaints";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -755,6 +757,9 @@ export default function Audit() {
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
     { key: "pay", label: "Oyligim", show: showPay },
     { key: "paylist", label: "Examiner oyliklari", show: showPayList },
+    // 2026-09-16: examinerlar boshlig'i examinerlardan jarima ball ayiradi
+    { key: "penalty", label: "Jarima ballari",
+      show: can(user?.role, EXAMINER_PENALTY_SET) },
     { key: "complaints", label: "Shikoyatlar", show: showComplaints },
     { key: "errors", label: "Tizim xatolari", show: user?.role === "founder" },
   ];
@@ -798,6 +803,7 @@ export default function Audit() {
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "pay" && <ExaminerPayTab />}
       {tab === "paylist" && <ExaminerPayAdminTab />}
+      {tab === "penalty" && <PenaltyPointsTab only="examiner" />}
       {tab === "complaints" && <ComplaintsPage />}
       {tab === "errors" && <ErrorsTab />}
     </div>

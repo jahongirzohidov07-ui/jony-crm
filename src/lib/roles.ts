@@ -370,6 +370,14 @@ export const EXAMINER_SALARY_VIEW = [
   FOUNDER, HR_MANAGER, FINANCE_DIRECTOR, ACADEMIC_HEAD, HEAD_EXAMINER,
 ];
 
+/** Jarima ballari (2026-09-16) — backend roles.EXAMINER_PENALTY_SET /
+ *  SUPPORT_PENALTY_SET bilan bir xil. Examinerlar boshlig'i faqat
+ *  examinerdan, HR ham examinerdan, ham supportdan ayiradi. */
+export const EXAMINER_PENALTY_SET = [
+  FOUNDER, HEAD_EXAMINER, HR_MANAGER, ACADEMIC_HEAD,
+];
+export const SUPPORT_PENALTY_SET = [FOUNDER, HR_MANAGER];
+
 // Yillik Reja/Fakt jadvali kimga ko'rinadi
 export const PLAN_VIEW = [
   FOUNDER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER,

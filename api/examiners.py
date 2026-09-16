@@ -310,6 +310,24 @@ def add_examiner_adjustment(payload: schemas.ExaminerAdjustIn,
               new_value=f"-{a.points} ball", note=a.reason, commit=True)
     return {"ok": True, "id": a.id}
 
+@router.delete("/api/examiner-adjustments/{adj_id}")
+def delete_examiner_adjustment(adj_id: int, db: Session = Depends(get_db),
+                               user=Depends(require_role(
+                                   *roles.EXAMINER_PENALTY_SET))):
+    """Xato ayirilgan ballni bekor qilish (2026-09-16) — auditga yoziladi."""
+    a = db.query(models.ExaminerAdjustment).get(adj_id)
+    if not a:
+        raise HTTPException(404, "Jarima topilmadi")
+    target = db.query(models.User).get(a.user_id)
+    label, pts, reason = (target.full_name if target else "—",
+                          a.points, a.reason)
+    db.delete(a)
+    db.commit()
+    audit.log(db, user, entity="examiner_adjustment", action="delete",
+              entity_id=adj_id, entity_label=label,
+              old_value=f"-{pts} ball", note=reason, commit=True)
+    return {"ok": True}
+
 @router.get("/api/examiners/salary")
 def examiner_salary_list(year: int | None = None, month: int | None = None,
                          db: Session = Depends(get_db),

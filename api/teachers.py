@@ -358,6 +358,7 @@ def pay_teacher(
         period=payload.period or date.today().isoformat()[:7],
         paid_on=payload.date or date.today(),
         method=payload.method, note=payload.note,
+        branch_id=_pay_branch(db, user, t, payload.branch_id),
         created_by=user.full_name)
     db.add(p); db.commit(); db.refresh(p)
     audit.log(db, user, entity="teacher", action="salary_change",

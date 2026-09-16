@@ -1652,10 +1652,14 @@ def cashflow_ledger(
                   models.TeacherPayment.teacher_id == models.Teacher.id)
             .filter(models.TeacherPayment.paid_on >= start,
                     models.TeacherPayment.paid_on <= end))
+    # Pul qaysi filialdan berilgan bo'lsa — o'sha filial kassasidan
+    # chiqadi (2026-09-16); eski yozuvda — ustozning asosiy filiali.
+    _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
+                               models.Teacher.branch_id)
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        tp_q = tp_q.filter(_branch_in(db, user, models.Teacher.branch_id))
+        tp_q = tp_q.filter(_tp_branch.in_(_user_branch_ids(db, user) or [-1]))
     elif branch_id:
-        tp_q = tp_q.filter(models.Teacher.branch_id == branch_id)
+        tp_q = tp_q.filter(_tp_branch == branch_id)
     for tp, t in tp_q.all():
         m_ = getattr(tp, "method", None) or "cash"
         if m_ not in chiqim:
@@ -1670,7 +1674,7 @@ def cashflow_ledger(
             "student_id": None,
             "method": m_,
             "direction": "out",
-            "branch": branches.get(t.branch_id) or "—",
+            "branch": branches.get(tp.branch_id or t.branch_id) or "—",
             "category": "teacher_salary",
             "note": getattr(tp, "note", None),
         })

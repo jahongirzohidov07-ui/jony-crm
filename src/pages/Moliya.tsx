@@ -21,7 +21,8 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER } from "../lib/roles";
+  FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER,
+  SALARY_PAY } from "../lib/roles";
 import Debtors from "./Debtors";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
@@ -1252,6 +1253,18 @@ function ExpensesTab() {
   }, {});
   const groupRows = Object.entries(byGroup).sort((a, b) => b[1] - a[1]);
 
+  // Ustozga berilgan pulning filialini to'g'rilash (2026-09-16):
+  // ilgari asosiy filialga yozilib qolganlar uchun.
+  const canPay = can(user?.role, SALARY_PAY);
+  async function moveBranch(e: Expense, branchId: number) {
+    try {
+      await api.put(`/teacher-payments/${-e.id}/branch`, { branch_id: branchId });
+      load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Xatolik");
+    }
+  }
+
   async function remove(e: Expense) {
     if (!confirm(`${categoryLabel(e.category)} — ${formatSom(e.amount)} o'chirilsinmi?`))
       return;
@@ -1353,7 +1366,22 @@ function ExpensesTab() {
                     {groupLabel(categoryGroup(e.category))}
                   </td>
                   <td className="px-4 py-3 text-slate-500">{e.note || "—"}</td>
-                  <td className="px-4 py-3 text-slate-500">{e.branch?.name || "—"}</td>
+                  <td className="px-4 py-3 text-slate-500">
+                    {e.id < 0 && canPay && branches.length > 1 ? (
+                      <select
+                        value={e.branch_id ?? ""}
+                        onChange={(ev) => moveBranch(e, Number(ev.target.value))}
+                        title="Qaysi filialdan berilgan — o'zgartirish mumkin"
+                        className="rounded-md border border-slate-200 bg-white px-1.5 py-1 text-sm text-slate-600"
+                      >
+                        {branches.map((b) => (
+                          <option key={b.id} value={b.id}>{b.name}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      e.branch?.name || "—"
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-right font-medium text-slate-800">
                     {formatSom(e.amount)}
                   </td>

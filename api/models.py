@@ -1601,6 +1601,12 @@ class TeacherPayment(Base):
     paid_on = Column(Date, nullable=False, default=date.today)
     method = Column(String, nullable=True)
     note = Column(String, nullable=True)
+    # QAYSI FILIALDAN berildi (2026-09-16, Jahongir: "2ta filialda
+    # ishlaydigan xodimlarni oyligi qaysi filialdan turib kiritsa o'sha
+    # filialga tushsin"). Bo'sh bo'lsa (eski yozuv) — ustozning asosiy
+    # filiali hisoblanadi.
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

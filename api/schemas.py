@@ -1458,6 +1458,12 @@ class TeacherPaymentCreate(BaseModel):
     date: Optional[_dt.date] = None
     method: Optional[str] = None
     note: Optional[str] = None
+    # Qaysi filialdan berildi (2026-09-16)
+    branch_id: Optional[int] = None
+
+
+class TeacherPaymentBranchIn(BaseModel):
+    branch_id: int
 
 
 # ------------------------------------------------------- Qarzdorlar

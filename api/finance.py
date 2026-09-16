@@ -49,6 +49,7 @@ def list_expenses(
     year: Optional[int] = None,
     month: Optional[int] = None,
     with_teacher: int = 0,
+    branch_id: Optional[int] = None,
     db: Session = Depends(get_db),
     user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
@@ -61,7 +62,9 @@ def list_expenses(
     qo'shiladi. Bunday qatorning id si MANFIY — u xarajat jadvalida
     emas, ustozning oylik kartasida turadi (foyda-zararga ikki marta
     tushmasin)."""
-    q = scope_to_branch(db.query(models.Expense), models.Expense, user)
+    # Tepada tanlangan filial ham hisobga olinadi (2026-09-16)
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user,
+                        branch_id)
     start = end = None
     if year and month:
         start, end = billing.month_bounds(year, month)
@@ -70,11 +73,8 @@ def list_expenses(
     if not with_teacher:
         return rows
 
-    branches = _payroll_branches(db, user, None)
-    extra = set()
-    if branches is not None:
-        extra = {tb.teacher_id for tb in db.query(models.TeacherBranch)
-                 .filter(models.TeacherBranch.branch_id.in_(list(branches)))}
+    branches = _payroll_branches(db, user, branch_id)
+    bmap = {b.id: b for b in db.query(models.Branch).all()}
     teachers = {t.id: t for t in db.query(models.Teacher).all()}
     kinds = {k: lbl for k, lbl, _h in roles.TEACHER_PAYMENT_KINDS}
     tq = db.query(models.TeacherPayment)
@@ -86,17 +86,19 @@ def list_expenses(
         t = teachers.get(p.teacher_id)
         if t is None:
             continue
-        if (branches is not None and t.branch_id not in branches
-                and t.id not in extra):
+        # Pul qaysi filialdan berilgan bo'lsa — o'sha filialniki.
+        # Eski yozuvda filial yo'q — ustozning asosiy filiali.
+        bid = p.branch_id or t.branch_id
+        if branches is not None and bid not in branches:
             continue
         label = kinds.get(p.kind, "oylik").lower()
         out.append(schemas.ExpenseOut(
             id=-p.id, date=p.paid_on, category="teacher_salary",
             amount=p.amount,
             note=f"{t.full_name} — {label}" + (f" · {p.note}" if p.note else ""),
-            branch_id=t.branch_id,
-            branch=(schemas.BranchOut.model_validate(t.branch)
-                    if t.branch else None),
+            branch_id=bid,
+            branch=(schemas.BranchOut.model_validate(bmap[bid])
+                    if bid in bmap else None),
             channel=None, method=p.method, created_by=p.created_by,
             created_at=p.created_at or datetime.utcnow(),
             teacher_id=t.id))
@@ -115,8 +117,9 @@ def _linked_teacher(db: Session, user_id) -> models.Teacher | None:
 
 def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
                  on: date, method: str | None, note: str | None,
-                 period: str | None, via: str):
-    """Ustozga berilgan pulni oylik kartasiga yozadi."""
+                 period: str | None, via: str, branch_id=None):
+    """Ustozga berilgan pulni oylik kartasiga yozadi — tanlangan
+    filialga (common._pay_branch)."""
     if user.role not in tuple(roles.SALARY_PAY):
         raise HTTPException(403, "Oylik berish huquqi yo'q")
     t = db.query(models.Teacher).get(teacher_id)
@@ -127,6 +130,7 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
         teacher_id=t.id, amount=abs(amount), kind="salary",
         period=period or on.isoformat()[:7],
         paid_on=on, method=method or "cash",
+        branch_id=_pay_branch(db, user, t, branch_id),
         note=note, created_by=user.full_name)
     db.add(tp); db.commit(); db.refresh(tp)
     audit.log(db, user, entity="teacher", action="salary_change",
@@ -138,7 +142,7 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
     return schemas.ExpenseOut(
         id=-tp.id, date=tp.paid_on, category="teacher_salary",
         amount=tp.amount, note=f"{t.full_name} — oylik",
-        branch_id=t.branch_id, branch=None, channel=None,
+        branch_id=tp.branch_id, branch=None, channel=None,
         method=tp.method, created_by=tp.created_by,
         created_at=tp.created_at or datetime.utcnow(),
         teacher_id=t.id)
@@ -296,6 +300,7 @@ def create_expense(
                             amount=payload.amount, on=payload.date,
                             method=payload.method, note=payload.note,
                             period=payload.period,
+                            branch_id=branch_id,
                             via="Moliya > Xarajatlar orqali")
 
     # ---- KITOB/MARKER va boshqa sanaladigan mahsulot: ombor kirimi
@@ -391,6 +396,7 @@ def update_expense(
             method=data.get("method") or exp.method,
             note=data.get("note", exp.note),
             period=period,
+            branch_id=data.get("branch_id") or exp.branch_id,
             via=f"Xarajatdan ko'chirildi (#{exp.id})")
         audit.log(db, user, entity="expense", action="delete",
                   entity_id=exp.id, entity_label=exp.note or exp.category,
@@ -1704,6 +1710,37 @@ def billing_collection(
         "rows": rows,
         "by_admin": admins,
     }
+
+@router.put("/api/teacher-payments/{payment_id}/branch")
+def set_teacher_payment_branch(
+    payment_id: int,
+    payload: schemas.TeacherPaymentBranchIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SALARY_PAY)),
+):
+    """Ustozga berilgan pulning FILIALINI to'g'rilash (2026-09-16) —
+    ilgari asosiy filialga yozilib qolgan yozuvlar uchun."""
+    p = db.query(models.TeacherPayment).get(payment_id)
+    if not p:
+        raise HTTPException(404, "Topilmadi")
+    t = db.query(models.Teacher).get(p.teacher_id)
+    if t is not None:
+        _check_pay_scope(db, user, teacher=t)
+    if not db.query(models.Branch).get(payload.branch_id):
+        raise HTTPException(404, "Filial topilmadi")
+    if (user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id
+            and payload.branch_id not in _user_branch_ids(db, user)):
+        raise HTTPException(403, "Bu filial sizga tegishli emas")
+    old = p.branch_id or (t.branch_id if t else None)
+    p.branch_id = payload.branch_id
+    db.commit()
+    audit.log(db, user, entity="teacher", action="update",
+              entity_id=p.teacher_id,
+              entity_label=t.full_name if t else "—",
+              field="Ustoz to'lovi filiali", old_value=old,
+              new_value=payload.branch_id, commit=True)
+    return {"ok": True, "branch_id": p.branch_id}
+
 
 @router.delete("/api/teacher-payments/{payment_id}")
 def delete_teacher_payment(

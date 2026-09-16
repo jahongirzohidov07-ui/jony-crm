@@ -230,6 +230,8 @@ def _ensure_new_columns(cols=None):
         "ALTER TABLE expenses ADD COLUMN staff_user_id INTEGER",
         "ALTER TABLE expenses ADD COLUMN qty FLOAT",
         "ALTER TABLE expenses ADD COLUMN consumable_id INTEGER",
+        # Ustozga berilgan pul qaysi filialdan (2026-09-16)
+        "ALTER TABLE teacher_payments ADD COLUMN branch_id INTEGER",
         # LTV hisoboti uchun - o'quvchi qachon ketgani.
         "ALTER TABLE students ADD COLUMN left_date DATE",
         # Arxivdagi eski o'quvchilarda ketgan sana yo'q edi; ularni
@@ -1902,6 +1904,24 @@ def _check_pay_scope(db: Session, user, teacher=None, staff_user=None) -> None:
             .filter(models.UserBranch.user_id == staff_user.id)}
         if not (br & allowed):
             raise HTTPException(403, "Bu xodim boshqa filialga tegishli")
+
+
+def _pay_branch(db: Session, user, t, branch_id=None):
+    """Ustozga berilgan pul QAYSI FILIALGA yoziladi (2026-09-16).
+
+    1) Formada tanlangan filial (tepadagi filial yoki "Barcha
+       filiallar"da qo'lda tanlangani);
+    2) bo'lmasa — pulni kiritgan xodimning filiali;
+    3) bo'lmasa — ustozning asosiy filiali.
+    Filialga bog'langan xodim faqat o'z filiallaridan birini tanlay oladi."""
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
+        allowed = _user_branch_ids(db, user)
+        if branch_id and int(branch_id) in allowed:
+            return int(branch_id)
+        return user.branch_id
+    if branch_id:
+        return int(branch_id)
+    return t.branch_id
 
 
 def _payroll_branch_label(t, group_branch_ids, names: dict, branches):
@@ -7229,6 +7249,7 @@ __all__ = [
     "_payroll_branch_label",
     "_salary_breakdown",
     "_check_pay_scope",
+    "_pay_branch",
     "_period_bounds",
     "_period_key",
     "_perm_overrides",

@@ -40,6 +40,7 @@ const DevelopmentAdmin = lazy(
   () => import("./pages/DevelopmentAdmin"),
 );
 const Hr = lazy(() => import("./pages/Hr"));
+const Namunali = lazy(() => import("./pages/Namunali"));
 const Marketing = lazy(() => import("./pages/Marketing"));
 const Ceo = lazy(() => import("./pages/Ceo"));
 const Audit = lazy(() => import("./pages/Audit"));
@@ -361,6 +362,7 @@ function AppRoutes() {
           <Route path="events" element={<Events />} />
           <Route path="academic" element={<Academic />} />
           <Route path="hr" element={<Hr />} />
+          <Route path="namunali" element={<Namunali />} />
           <Route path="marketing" element={<Marketing />} />
           <Route path="gamification" element={<Gamification />} />
           <Route path="branches" element={<Branches />} />

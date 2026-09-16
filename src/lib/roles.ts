@@ -378,6 +378,11 @@ export const EXAMINER_PENALTY_SET = [
 ];
 export const SUPPORT_PENALTY_SET = [FOUNDER, HR_MANAGER];
 
+/** Na'munali xodim (intizom balli) — backend roles.CONDUCT_VIEW.
+ *  Examinerlar boshlig'i faqat "Na'munali examiner" bo'limini ko'radi
+ *  (qaysi bo'limlar ochiqligini server aytadi). */
+export const CONDUCT_VIEW = [FOUNDER, HR_MANAGER, HEAD_EXAMINER];
+
 // Yillik Reja/Fakt jadvali kimga ko'rinadi
 export const PLAN_VIEW = [
   FOUNDER, SMM_MANAGER, SALES_HEAD, SALES_MANAGER, BRANCH_MANAGER,

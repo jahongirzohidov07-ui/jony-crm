@@ -32,7 +32,8 @@ import {
   Menu,
   Bell,
   Settings as SettingsIcon,
- Search, Smartphone , Sparkles , BookOpen, Clapperboard, PartyPopper } from "lucide-react";
+ Search, Smartphone , Sparkles , BookOpen, Clapperboard, PartyPopper,
+  Award } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -43,6 +44,7 @@ import {
   FINANCE_ACCESS,
   TEACHING_STAFF,
   HR_CANDIDATE_VIEW,
+  CONDUCT_VIEW,
   MARKETING_ACCESS,
   AUDIT_VIEW,
   ACADEMIC_VIEW,
@@ -348,6 +350,10 @@ export default function Layout() {
   // "Dars baholash" tablari ochiladi (Hr.tsx ichida cheklangan).
   if (can(user?.role, HR_CANDIDATE_VIEW)) {
     items = [...items, { to: "/hr", label: "HR", icon: Briefcase }];
+  }
+  // 2026-09-16, Jahongir: "Na'munali xodim" — intizom balli (100 dan)
+  if (can(user?.role, CONDUCT_VIEW)) {
+    items = [...items, { to: "/namunali", label: "Na'munali xodim", icon: Award }];
   }
   // SHIKOYATLAR - 2026-08-22, Jahongir: "Shikoyatlar bo'limini audit
   // bo'limi ichiga qo'shib ber". Endi u Audit ichida TAB. Menyuda

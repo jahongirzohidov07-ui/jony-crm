@@ -105,6 +105,7 @@ import guide as _r_guide
 import auth_users as _r_auth_users
 import branches_rooms as _r_branches_rooms
 import complaints as _r_complaints
+import conduct as _r_conduct
 import events as _r_events
 import comments as _r_comments
 import content as _r_content
@@ -145,6 +146,7 @@ app.include_router(_r_guide.router)
 app.include_router(_r_auth_users.router)
 app.include_router(_r_branches_rooms.router)
 app.include_router(_r_complaints.router)
+app.include_router(_r_conduct.router)
 app.include_router(_r_events.router)
 app.include_router(_r_comments.router)
 app.include_router(_r_content.router)

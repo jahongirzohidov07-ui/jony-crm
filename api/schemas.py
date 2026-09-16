@@ -2366,6 +2366,15 @@ class SupportAdjustIn(BaseModel):
     date: Optional[_dt.date] = None
 
 
+class ConductIn(BaseModel):
+    """Na'munali xodim: qoidabuzarlik yozish."""
+    user_id: int
+    kind: str
+    date: Optional[_dt.date] = None
+    note: Optional[str] = None
+    points: Optional[float] = None      # faqat xayfsan uchun
+
+
 class PlanItemIn(BaseModel):
     metric: str
     month: int

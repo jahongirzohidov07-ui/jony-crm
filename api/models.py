@@ -3265,6 +3265,27 @@ class SupportAdjustment(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class ConductViolation(Base):
+    """Na'munali xodim: bitta qoidabuzarlik yozuvi (2026-09-16).
+
+    Ayiriladigan ball SAQLANMAYDI — u oy ichidagi tartib raqamidan
+    (1-marta, 2-marta ...) hisoblanadi, Excel'dagi kabi. Shunda eski
+    yozuv o'chirilsa, keyingilarining bali o'zi to'g'rilanadi.
+    Faqat "xayfsan" turida ball qo'lda yoziladi (points)."""
+    __tablename__ = "conduct_violations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False,
+                     index=True)
+    date = Column(Date, nullable=False, index=True)
+    kind = Column(String, nullable=False)
+    points = Column(Float, nullable=True)       # faqat xayfsan uchun
+    note = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_by_id = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class PlanTarget(Base):
     """Yillik reja — bitta ko'rsatkichning bitta oydagi Reja qiymati.
 

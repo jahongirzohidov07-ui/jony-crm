@@ -5717,3 +5717,104 @@ EVENT_STATUSES = [
     ("cancelled", "Bekor qilindi", "rose"),
 ]
 EVENT_STATUS_LABELS = {k: lbl for k, lbl, _ in EVENT_STATUSES}
+
+
+# =====================================================================
+#  NA'MUNALI XODIM — INTIZOM BALLI (2026-09-16)
+#
+#  Jahongir yuborgan "Na'munali xodim.xlsx" jadvali tizimga ko'chirildi.
+#  Har xodim yilni 100 ball bilan boshlaydi. Qoidabuzarlik yozilganda
+#  ball ayiriladi; bir xil qoidabuzarlik SHU OYNING ICHIDA takrorlansa
+#  jarima oshib boradi (1-marta, 2-marta ... 5-marta va undan keyin
+#  hammasi 5-martaniki). Keyingi oy hisob yana 1-martadan boshlanadi,
+#  lekin ayirilgan ball yil davomida yig'ilib boradi.
+#
+#  Excel bilan bir xil: ball oylikka TA'SIR QILMAYDI — bu intizom
+#  ko'rsatkichi, pastga tushsa jazo jadvali ishlaydi.
+# =====================================================================
+CONDUCT_START_POINTS = 100
+
+# (kalit, nomi, 1..5-marta ayiriladigan ball)
+CONDUCT_KINDS = [
+    ("late", "Kech kelish", (1, 2, 3, 4, 5)),
+    ("conflict_cause", "Ziddiyat — sababchi", (4, 6, 8, 10, 20)),
+    ("conflict_part", "Ziddiyat — qatnashchi", (2, 4, 6, 10, 20)),
+    ("badge", "Beyjik taqmaslik", (1, 2, 3, 4, 5)),
+    ("manual", "Manualga amal qilmaslik", (1, 1, 2, 3, 5)),
+]
+CONDUCT_STEPS = {k: steps for k, _, steps in CONDUCT_KINDS}
+# Excel'dagi "xayfsan uchun" ustuni: ball qo'lda yoziladi. Manfiy son
+# ball QAYTARADI (Excel'da -1 yozilgan qatorlar shunday ishlagan).
+CONDUCT_REPRIMAND = "reprimand"
+CONDUCT_REPRIMAND_MAX = 50
+CONDUCT_KIND_LABELS = {k: lbl for k, lbl, _ in CONDUCT_KINDS}
+CONDUCT_KIND_LABELS[CONDUCT_REPRIMAND] = "Xayfsan (qo'lda ball)"
+
+# Bo'limlar: support va examinerlar alohida, qolgan hamma xodim birinchisida
+CONDUCT_SECTIONS = [
+    ("staff", "Na'munali xodim"),
+    ("support", "Na'munali support"),
+    ("examiner", "Na'munali examiner"),
+]
+CONDUCT_SECTION_LABELS = dict(CONDUCT_SECTIONS)
+CONDUCT_SECTION_ROLES = {
+    "support": [SUPPORT_TEACHER, HEAD_SUPPORT],
+    "examiner": [EXAMINER, HEAD_EXAMINER],
+}
+# Asoschi ro'yxatga kirmaydi — u baholovchi, baholanuvchi emas
+CONDUCT_EXCLUDED = [FOUNDER] + EXTERNAL_ROLES
+
+
+def conduct_section(role) -> str | None:
+    if not role or role in CONDUCT_EXCLUDED:
+        return None
+    for key, rs in CONDUCT_SECTION_ROLES.items():
+        if role in rs:
+            return key
+    return "staff"
+
+
+# Kim yozadi: asoschi va HR — hamma bo'limda; examinerlar boshlig'i —
+# faqat examinerlarga (jarima ballaridagi qoida bilan bir xil).
+CONDUCT_MANAGE_ALL = [FOUNDER, HR_MANAGER]
+CONDUCT_SECTION_MANAGERS = {"examiner": [HEAD_EXAMINER]}
+CONDUCT_VIEW = list(dict.fromkeys(
+    CONDUCT_MANAGE_ALL
+    + [r for rs in CONDUCT_SECTION_MANAGERS.values() for r in rs]))
+
+
+def conduct_sections_for(role) -> list:
+    if role in CONDUCT_MANAGE_ALL:
+        return [k for k, _ in CONDUCT_SECTIONS]
+    return [k for k, rs in CONDUCT_SECTION_MANAGERS.items() if role in rs]
+
+
+def conduct_points(kind, nth: int) -> float:
+    """Oy ichidagi nechanchi qoidabuzarlik -> ayiriladigan ball."""
+    steps = CONDUCT_STEPS.get(kind)
+    if not steps:
+        return 0.0
+    n = min(max(int(nth or 1), 1), len(steps))
+    return float(steps[n - 1])
+
+
+# JAZO jadvali (Excel "Jazo" varag'i): qolgan ball shu chegaraga
+# tushsa yoki undan pastga tushsa. Pastdan yuqoriga tekshiriladi.
+# (chegara, daraja, ustoz uchun, boshqa xodimlar uchun)
+CONDUCT_SANCTIONS = [
+    (-50, "dismiss", "Xodim bilan xayrlashiladi",
+     "Xodim bilan xayrlashiladi"),
+    (0, "severe", "Darajasi 2 taga tushiriladi va xayfsan beriladi",
+     "Xayfsan beriladi"),
+    (30, "demote", "Darajasi 1 taga tushiriladi", "Xayfsan beriladi"),
+    (50, "warning", "Ogohlantirish beriladi", "Ogohlantiriladi"),
+]
+
+
+def conduct_sanction(remaining: float, role) -> dict | None:
+    teacher = role == TEACHER
+    for limit, level, t_text, o_text in CONDUCT_SANCTIONS:
+        if remaining <= limit:
+            return {"level": level, "limit": limit,
+                    "text": t_text if teacher else o_text}
+    return None

@@ -319,8 +319,11 @@ def list_candidates(
     2026-08-15, Jahongir: "keyin filtr ham qoyib bersan shu yerga
     nomzodlar kopayganda topish osonlashadi". Qidiruv ism va telefon
     bo'yicha; qolgan filtrlar birga ishlaydi (VA mantig'i)."""
+    # Filial tanlanganda ham FILIALSIZ nomzodlar (filial belgilamay
+    # ariza to'ldirganlar) ko'rinsin — ats_pipeline bilan bir xil
+    # qoida (2026-09-16: "nomzod HRga ko'rinmayabdi").
     qq = scope_to_branch(db.query(models.Candidate), models.Candidate,
-                         user, branch_id)
+                         user, branch_id, keep_unset=True)
     # O'quv bo'limi rahbariga faqat USTOZ nomzodlari (2026-08-16)
     if _teacher_only(user):
         qq = qq.filter(or_(models.Candidate.position == "teacher",

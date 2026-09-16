@@ -111,7 +111,10 @@ export const BRANCH_SWITCH = [
  * Backend allaqachon shunday ishlaydi (roles.ORG_WIDE_ROLES) — bu
  * ro'yxat frontenddagi qamalib qolishni ochadi.
  */
-export const ALL_BRANCH_ROLES = [FOUNDER, HEAD_EXAMINER];
+// 2026-09-16, Jahongir: "HR lavozimi uchun barcha filiallar degan
+// qismni qo'yib ber" — HR biriktirilgan filialga qamalib qolgani
+// uchun filial belgilamay ariza to'ldirgan nomzodlar unga ko'rinmasdi.
+export const ALL_BRANCH_ROLES = [FOUNDER, HEAD_EXAMINER, HR_MANAGER];
 export const TEACHING_STAFF = [
   ...FULL_ACCESS,
   SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,

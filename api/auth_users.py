@@ -224,6 +224,12 @@ def _clean_username(db: Session, name: str, exclude_id: int) -> str:
     name = (name or "").strip()
     if not roles.username_ok(name):
         raise HTTPException(400, roles.USERNAME_RULE_TEXT)
+    # "demo." bilan boshlanadigan loginlar demo ma'lumot hisoblanadi va
+    # demo tozalanganda O'CHIRIB yuboriladi (demo_seed.py). Haqiqiy
+    # xodimga bunday login berilsa, akkaunti yo'qolib qolardi.
+    if name.lower().startswith("demo."):
+        raise HTTPException(400, "\"demo.\" bilan boshlanadigan login "
+                                 "faqat demo ma'lumot uchun")
     taken = (db.query(models.User.id)
              .filter(func.lower(models.User.username) == name.lower(),
                      models.User.id != exclude_id).first())
@@ -498,6 +504,12 @@ def update_user(
     _new_username = None
     if payload.username is not None \
             and payload.username.strip() != target.username:
+        # O'quvchi/ota-ona logini (telefon raqami) bu yerdan o'zgarmaydi:
+        # "kim ilovaga kirgan" statistikasi login bo'yicha yuritiladi.
+        if target.role in tuple(roles.EXTERNAL_ROLES):
+            raise HTTPException(
+                403, "O'quvchi va ota-ona loginini bu yerdan "
+                     "o'zgartirib bo'lmaydi")
         _new_username = _clean_username(db, payload.username, target.id)
     if user.role == roles.HR_MANAGER \
             and target.role in (roles.FOUNDER, roles.BRANCH_MANAGER) \

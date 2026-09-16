@@ -134,6 +134,31 @@ ck("boshqa xodimda yangi token berilmaydi",
    (r.status_code, r.headers.get("X-New-Token")), (200, None))
 r = upd(Hhr, t.id, username="anvar")
 
+print("\n=== XAVFSIZLIK ===")
+ck("demo. loginini berib bo'lmaydi (demo tozalashda o'chardi)",
+   upd(Hhr, t.id, username="Demo.anvar").status_code, 400)
+ck("o'quvchi loginini kartadan o'zgartirib bo'lmaydi",
+   upd(Hhr, stu.id, username="oquvchi_yangi").status_code, 403)
+
+print("\n=== BOG'LANGAN MA'LUMOTLAR O'ZGARMAYDI ===")
+# Oylik, natija, davomat — hammasi user_id orqali. Login almashsa ham
+# o'sha yozuvlar o'sha odamda qoladi.
+tc = models.Teacher(full_name="Anvar", branch_id=b.id, user_id=t.id,
+                    is_active=1)
+db.add(tc); db.commit()
+db.add(models.SupportAdjustment(user_id=t.id, points=3, reason="test"))
+db.add(models.ConductViolation(user_id=t.id, date=roles.local_today(),
+                               kind="late"))
+db.commit()
+ck("login almashdi", upd(Hhr, t.id, username="anvar.oxirgi").status_code, 200)
+db.expire_all()
+ck("ustoz kartasi o'sha xodimda",
+   db.query(models.Teacher).get(tc.id).user_id, t.id)
+ck("jarima o'sha xodimda", db.query(models.SupportAdjustment)
+   .filter_by(user_id=t.id).count(), 1)
+ck("intizom yozuvi o'sha xodimda", db.query(models.ConductViolation)
+   .filter_by(user_id=t.id).count(), 1)
+
 print("\n=== BOSHQA ROLLAR ===")
 Hf = H(login("asoschi").json()["access_token"])
 ck("asoschi filial rahbari loginini o'zgartiradi",
@@ -143,7 +168,7 @@ ck("support rahbari support loginini o'zgartiradi",
    upd(Hhs, sup.id, username="sup_aziza").status_code, 200)
 ck("support rahbari ustoz loginiga tegolmaydi",
    upd(Hhs, t.id, username="anvar3").status_code, 403)
-Ht = H(login("anvar").json()["access_token"])
+Ht = H(login("anvar.oxirgi").json()["access_token"])
 ck("ustoz boshqa xodim loginiga tegolmaydi",
    upd(Ht, sup.id, username="xx_yy").status_code, 403)
 

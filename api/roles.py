@@ -5774,10 +5774,10 @@ def conduct_section(role) -> str | None:
     return "staff"
 
 
-# Kim yozadi: asoschi va HR — hamma bo'limda; examinerlar boshlig'i —
-# faqat examinerlarga (jarima ballaridagi qoida bilan bir xil).
-CONDUCT_MANAGE_ALL = [FOUNDER, HR_MANAGER]
-CONDUCT_SECTION_MANAGERS = {"examiner": [HEAD_EXAMINER]}
+# Kim ko'radi va yozadi: FAQAT HR (2026-09-16, Jahongir: "faqat HR
+# ko'rib o'zgartira olsin"). Asoschi ham, bo'lim boshliqlari ham yo'q.
+CONDUCT_MANAGE_ALL = [HR_MANAGER]
+CONDUCT_SECTION_MANAGERS: dict = {}
 CONDUCT_VIEW = list(dict.fromkeys(
     CONDUCT_MANAGE_ALL
     + [r for rs in CONDUCT_SECTION_MANAGERS.values() for r in rs]))

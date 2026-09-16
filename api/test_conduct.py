@@ -184,24 +184,19 @@ ck("xayfsan 0 ball", add(sar, "reprimand", "2026-06-03", points=0,
 ck("asoschiga yozib bo'lmaydi", add(founder, "late", "2026-06-03")
    .status_code, 404)
 
-print("\n=== RUXSATLAR ===")
-HX, BM = login("boshliq"), login("rahbar")
-ck("filial rahbari ko'rolmaydi", board(h=BM).status_code, 403)
-ck("filial rahbari yozolmaydi", add(sar, "late", "2026-06-03", h=BM)
-   .status_code, 403)
-ck("boshliq xodimlarni ko'rolmaydi", board(h=HX).status_code, 403)
-ck("boshliq examinerlarni ko'radi", board("examiner", h=HX).status_code, 200)
-ck("boshliqqa faqat examiner bo'limi",
-   [s["key"] for s in board("examiner", h=HX).json()["sections"]],
-   ["examiner"])
-ck("boshliq examinerga yozadi", add(exm, "late", "2026-06-03", h=HX)
-   .status_code, 200)
-ck("boshliq xodimga yozolmaydi", add(sar, "late", "2026-06-03", h=HX)
-   .status_code, 403)
-ck("boshliq xodim yozuvini o'chirolmaydi",
-   c.delete(f"/api/conduct/{cid}", headers=HX).status_code, 403)
-ck("boshliq xodim tarixini ko'rolmaydi",
-   c.get(f"/api/conduct/user/{sar.id}", headers=HX).status_code, 403)
+print("\n=== RUXSATLAR: FAQAT HR ===")
+# 2026-09-16, Jahongir: "faqat HR ko'rib o'zgartira olsin"
+ck("HR examinerga yozadi", add(exm, "late", "2026-06-03").status_code, 200)
+for who in ("asoschi", "boshliq", "rahbar"):
+    h = login(who)
+    for sec in ("staff", "support", "examiner"):
+        ck(f"{who} {sec} ko'rolmaydi", board(sec, h=h).status_code, 403)
+    ck(f"{who} yozolmaydi", add(exm, "late", "2026-06-03", h=h)
+       .status_code, 403)
+    ck(f"{who} o'chirolmaydi",
+       c.delete(f"/api/conduct/{cid}", headers=h).status_code, 403)
+    ck(f"{who} tarixni ko'rolmaydi",
+       c.get(f"/api/conduct/user/{sar.id}", headers=h).status_code, 403)
 
 print()
 if fails:

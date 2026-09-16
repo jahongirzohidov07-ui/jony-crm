@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { CONDUCT_VIEW, HEAD_EXAMINER, can } from "../lib/roles";
+import { CONDUCT_VIEW, can } from "../lib/roles";
 import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
 
@@ -108,9 +108,7 @@ function History({ userId, year }: { userId: number; year: number }) {
 export default function Namunali() {
   const { user } = useAuth();
   const now = new Date();
-  const [section, setSection] = useState<Section>(
-    user?.role === HEAD_EXAMINER ? "examiner" : "staff",
-  );
+  const [section, setSection] = useState<Section>("staff");
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [q, setQ] = useState("");
@@ -124,7 +122,11 @@ export default function Namunali() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
+  const allowed = can(user?.role, CONDUCT_VIEW);
   const load = () => {
+    // Ruxsati yo'q odamga so'rov yubormaymiz — aks holda "ruxsat yo'q"
+    // degan ortiqcha xabar chiqadi
+    if (!allowed) return;
     setErr("");
     api
       .get<Any>(
@@ -135,7 +137,7 @@ export default function Namunali() {
         setErr(e instanceof Error ? e.message : "Xatolik");
       });
   };
-  useEffect(load, [section, year, month]);
+  useEffect(load, [section, year, month, allowed]);
   useEffect(() => {
     setOpen(null);
     setF((p) => ({ ...p, user_id: "" }));
@@ -180,7 +182,7 @@ export default function Namunali() {
     return { nth, pts };
   }, [f, log, kinds, isRep, year, month]);
 
-  if (!can(user?.role, CONDUCT_VIEW)) {
+  if (!allowed) {
     return (
       <p className="text-sm text-slate-500 py-10 text-center">
         Bu bo'limga ruxsatingiz yo'q.

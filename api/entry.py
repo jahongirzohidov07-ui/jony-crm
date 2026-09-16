@@ -2465,10 +2465,13 @@ _SALARY_KINDS = [("salary", "Oylik"), ("advance", "Avans"),
 _SALARY_KIND_LABELS = dict(_SALARY_KINDS)
 
 # Oyliklarni Moliya bo'limida ko'radigan va to'laydiganlar
+# Administrator bu ro'yxatlarda YO'Q (2026-09-16): u oylikni Xarajatlar
+# -> Oylik orqali o'z filialiga beradi, hammaning oyligini ko'rmaydi.
+_SALARY_PAY_ORG = [r for r in roles.SALARY_PAY if r != roles.ADMINISTRATOR]
 _PAYROLL_VIEW = list(dict.fromkeys(
-    list(roles.SALARY_PAY) + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
-                              roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
-_PAYROLL_PAY = list(roles.SALARY_PAY)
+    _SALARY_PAY_ORG + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
+                       roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
+_PAYROLL_PAY = list(_SALARY_PAY_ORG)
 
 
 def _staff_paid(db: Session, user_id: int, period: str | None = None):

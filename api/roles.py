@@ -1721,7 +1721,11 @@ TEACHER_PAYMENT_LABELS = {k: lbl for k, lbl, _ in TEACHER_PAYMENT_KINDS}
 # aylanib o'tolmaydi: aks holda ustoz ketib qolsa pul qaytmaydi.
 ADVANCE_LIMIT_OF_EARNED = 1.0
 
-SALARY_PAY = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
+# Administrator ham oylik beradi (2026-09-16, Jahongir: "administratorga
+# oylik berish huquqini ber") — faqat O'Z filiali ustoz/xodimlariga
+# (common._check_pay_scope). Hamma oyliklar ro'yxatini ko'rish
+# (PAYROLL_VIEW) unga ochilmaydi.
+SALARY_PAY = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT, ADMINISTRATOR]
 # O'zining oyligini har bir ustoz ko'radi
 SALARY_SELF_VIEW = STAFF_ROLES
 

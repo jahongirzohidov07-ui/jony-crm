@@ -122,6 +122,7 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
     t = db.query(models.Teacher).get(teacher_id)
     if not t:
         raise HTTPException(404, "Xodim topilmadi")
+    _check_pay_scope(db, user, teacher=t)
     tp = models.TeacherPayment(
         teacher_id=t.id, amount=abs(amount), kind="salary",
         period=period or on.isoformat()[:7],
@@ -316,6 +317,7 @@ def create_expense(
             raise HTTPException(404, "Xodim topilmadi")
         if user.role not in tuple(roles.SALARY_PAY):
             raise HTTPException(403, "Oylik berish huquqi yo'q")
+        _check_pay_scope(db, user, staff_user=su)
         staff_name = su.full_name or su.username
 
     note = payload.note
@@ -401,8 +403,10 @@ def update_expense(
     if sid:
         if user.role not in tuple(roles.SALARY_PAY):
             raise HTTPException(403, "Oylik berish huquqi yo'q")
-        if not db.query(models.User).get(sid):
+        su = db.query(models.User).get(sid)
+        if not su:
             raise HTTPException(404, "Xodim topilmadi")
+        _check_pay_scope(db, user, staff_user=su)
         data["staff_user_id"] = sid
 
     if "category" in data and data["category"] not in roles.EXPENSE_CATEGORIES:
@@ -1711,6 +1715,8 @@ def delete_teacher_payment(
     if not p:
         raise HTTPException(404, "Topilmadi")
     t = db.query(models.Teacher).get(p.teacher_id)
+    if t is not None:
+        _check_pay_scope(db, user, teacher=t)
     audit.log(db, user, entity="teacher", action="delete", entity_id=p.teacher_id,
               entity_label=t.full_name if t else "—",
               field="Ustoz to'lovi",

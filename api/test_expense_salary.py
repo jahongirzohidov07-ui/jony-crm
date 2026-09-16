@@ -40,6 +40,7 @@ other = models.Teacher(full_name="Boshqa filial ustozi", branch_id=b2.id,
                        is_active=1)
 db.add_all([t, sup, other]); db.commit()
 TID = t.id
+OTHER_TID = other.id
 db.add_all([
     models.User(username="asos", full_name="Asoschi", role="founder",
                 password_hash=hash_password("x"), is_active=1),
@@ -144,14 +145,26 @@ r7 = c.post("/api/expenses", headers=F, json={
     "method": "cash", "branch_id": BID})
 ck("qabul qilindi", r7.status_code, 200)
 
-print("\n=== 8. Oylik berish huquqi yo'qlarga ruxsat yo'q ===")
+# 2026-09-16, Jahongir: "administratorga oylik berish huquqini ber" —
+# administrator oylik beradi, lekin faqat O'Z filialiga.
+print("\n=== 8. Administrator — faqat o'z filialiga oylik beradi ===")
 A = {"Authorization": "Bearer " + c.post(
     "/api/auth/login", json={"username": "adm", "password": "x"}
 ).json()["access_token"]}
 r8 = c.post("/api/expenses", headers=A, json={
     "date": TODAY, "category": "admin_salary", "amount": 100000,
     "staff_user_id": ADMIN_UID, "branch_id": BID})
-ck("administrator oylik bera olmaydi", r8.status_code, 403)
+ck("administrator o'z filiali xodimiga oylik bera oladi", r8.status_code, 200)
+r9 = c.post("/api/expenses", headers=A, json={
+    "date": TODAY, "category": "admin_salary", "amount": 100000,
+    "teacher_id": OTHER_TID, "branch_id": BID})
+ck("boshqa filial ustoziga bera olmaydi", r9.status_code, 403)
+r10 = c.post("/api/expenses", headers=A, json={
+    "date": TODAY, "category": "admin_salary", "amount": 100000,
+    "teacher_id": TID, "branch_id": BID})
+ck("o'z filiali ustoziga bera oladi", r10.status_code, 200)
+ck("oyliklar sahifasi administratorga yopiq",
+   c.get("/api/payroll", headers=A).status_code, 403)
 
 print()
 if fails:

@@ -1882,6 +1882,28 @@ def _paid_share(paid: float, part: float, whole: float) -> float:
     return round(paid * part / whole, 2)
 
 
+def _check_pay_scope(db: Session, user, teacher=None, staff_user=None) -> None:
+    """Filialga bog'langan xodim (administrator, filial rahbari) faqat
+    O'Z filiali ustozi yoki xodimiga pul beradi (2026-09-16, Jahongir:
+    "administratorga oylik berish huquqini ber"). Qo'shimcha filial
+    (teacher_branches / user_branches) ham hisobga olinadi."""
+    if user.role in tuple(roles.ORG_WIDE_ROLES) or not user.branch_id:
+        return
+    allowed = set(_user_branch_ids(db, user))
+    if teacher is not None:
+        br = {teacher.branch_id} | {
+            tb.branch_id for tb in db.query(models.TeacherBranch)
+            .filter(models.TeacherBranch.teacher_id == teacher.id)}
+        if not (br & allowed):
+            raise HTTPException(403, "Bu ustoz boshqa filialga tegishli")
+    if staff_user is not None:
+        br = {staff_user.branch_id} | {
+            ub.branch_id for ub in db.query(models.UserBranch)
+            .filter(models.UserBranch.user_id == staff_user.id)}
+        if not (br & allowed):
+            raise HTTPException(403, "Bu xodim boshqa filialga tegishli")
+
+
 def _payroll_branch_label(t, group_branch_ids, names: dict, branches):
     """Oylik qatoridagi "Filial" yozuvi. Filial tanlanganda — dars
     o'tilgan guruh filiali; asosiy filiali boshqa bo'lsa qavsda."""
@@ -7206,6 +7228,7 @@ __all__ = [
     "_paid_share",
     "_payroll_branch_label",
     "_salary_breakdown",
+    "_check_pay_scope",
     "_period_bounds",
     "_period_key",
     "_perm_overrides",

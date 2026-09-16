@@ -336,6 +336,7 @@ def pay_teacher(
     t = db.query(models.Teacher).get(teacher_id)
     if not t:
         raise HTTPException(404, "Ustoz topilmadi")
+    _check_pay_scope(db, user, teacher=t)
     if payload.kind not in roles.TEACHER_PAYMENT_LABELS:
         raise HTTPException(400, "Noto'g'ri to'lov turi")
     if not payload.amount or payload.amount <= 0:

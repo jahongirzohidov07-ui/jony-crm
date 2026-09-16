@@ -72,6 +72,23 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "blacklist", label: "Qora ro'yxat" },
 ];
 
+/** Nomzod formasidagi maydon: SAVOL doim tepada turadi (2026-09-16,
+ *  Jahongir: "katakda nima so'ralgani ham tursin tepada") — qiymat
+ *  yozilgach placeholder yo'qolib, nima haqida ekani bilinmay qolardi. */
+function FormField({ label, children }: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="block text-xs font-medium text-slate-500 mb-1">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
 function Stat({
   label, value, hint, icon: Icon, tone = "slate",
 }: {
@@ -751,18 +768,23 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
               </p>
             )}
             <div className="space-y-3">
+              <FormField label="Ism familiya">
               <input
                 value={form.full_name}
                 onChange={(e) => setForm({ ...form, full_name: e.target.value })}
                 placeholder="Ism familiya"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
+              <FormField label="Telefon">
               <input
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 placeholder="Telefon"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
+              <FormField label="Vakansiya">
               <select
                 value={form.vacancy_id}
                 onChange={(e) => setForm({ ...form, vacancy_id: e.target.value })}
@@ -775,8 +797,10 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </option>
                 ))}
               </select>
+              </FormField>
               {/* Vakansiya ochilmagan bo'lsa ham QAYSI ISHGA kelgani
                   bilinib tursin (2026-08-15). Ustoz bo'lsa — fani. */}
+              <FormField label="Lavozim">
               <select
                 value={form.position}
                 onChange={(e) => setForm({ ...form, position: e.target.value })}
@@ -789,8 +813,10 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </option>
                 ))}
               </select>
+              </FormField>
               {form.position === "teacher" && (
                 <>
+                  <FormField label="Qaysi fandan?">
                   <input
                     value={form.subject}
                     onChange={(e) =>
@@ -799,6 +825,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     placeholder="Qaysi fandan? (Ingliz tili, Matematika…)"
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                   />
+                  </FormField>
+                  <FormField label="Qancha vaqt ustoz bo'lib ishlagan? (yil)">
                   <input
                     type="number"
                     min="0"
@@ -810,6 +838,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     placeholder="Qancha vaqt ustoz bo'lib ishlagan? (yil)"
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                   />
+                  </FormField>
                 </>
               )}
 
@@ -825,27 +854,32 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </span>
                 </p>
               </div>
+              <FormField label="Yashash manzili">
               <input
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
                 placeholder="Yashash manzili"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
               <div className="grid grid-cols-2 gap-3">
+                <FormField label="Tug'ilgan sana">
                 <input
                   value={form.birth_date}
                   onChange={(e) =>
                     setForm({ ...form, birth_date: e.target.value })
                   }
                   placeholder="Tug'ilgan sana"
-                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 />
+                </FormField>
+                <FormField label="Oilaviy holati">
                 <select
                   value={form.marital}
                   onChange={(e) =>
                     setForm({ ...form, marital: e.target.value })
                   }
-                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 >
                   <option value="">Oilaviy holati</option>
                   {APPLY_MARITAL.map((m) => (
@@ -854,7 +888,9 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     </option>
                   ))}
                 </select>
+                </FormField>
               </div>
+              <FormField label="Ma'lumoti">
               <input
                 value={form.education}
                 onChange={(e) =>
@@ -863,6 +899,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 placeholder="Ma'lumoti (maktab raqami yoki bitirgan joyi)"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
+              <FormField label="Avvalgi ish joylari">
               <textarea
                 value={form.workplaces}
                 onChange={(e) =>
@@ -872,12 +910,16 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 placeholder="Avvalgi ish joylari (lavozim, qancha vaqt)"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
+              <FormField label="Ijtimoiy tarmoqlar">
               <input
                 value={form.socials}
                 onChange={(e) => setForm({ ...form, socials: e.target.value })}
                 placeholder="Ijtimoiy tarmoqlar (Instagram, Telegram…)"
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
+              <FormField label="Qancha vaqt ishlamoqchi?">
               <select
                 value={form.work_duration}
                 onChange={(e) =>
@@ -892,11 +934,13 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </option>
                 ))}
               </select>
+              </FormField>
               <div className="grid grid-cols-2 gap-3">
+                <FormField label="Bosqich">
                 <select
                   value={form.stage}
                   onChange={(e) => setForm({ ...form, stage: e.target.value })}
-                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 >
                   {CANDIDATE_STAGES.map((s) => (
                     <option key={s.key} value={s.key}>
@@ -904,10 +948,12 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     </option>
                   ))}
                 </select>
+                </FormField>
+                <FormField label="Manba">
                 <select
                   value={form.source}
                   onChange={(e) => setForm({ ...form, source: e.target.value })}
-                  className="px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 >
                   {CANDIDATE_SOURCES.map((s) => (
                     <option key={s.key} value={s.key}>
@@ -915,7 +961,9 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     </option>
                   ))}
                 </select>
+                </FormField>
               </div>
+              <FormField label="Filial">
               <select
                 value={form.branch_id}
                 onChange={(e) => setForm({ ...form, branch_id: e.target.value })}
@@ -928,6 +976,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </option>
                 ))}
               </select>
+              </FormField>
+              <FormField label="Izoh">
               <textarea
                 value={form.note}
                 onChange={(e) => setForm({ ...form, note: e.target.value })}
@@ -935,6 +985,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 rows={3}
                 className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
               />
+              </FormField>
 
               {/* Fayllar faqat SAQLANGAN nomzodga biriktiriladi -
                   yangi nomzodda hali ID yo'q. */}

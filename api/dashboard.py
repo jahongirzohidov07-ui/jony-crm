@@ -4160,10 +4160,12 @@ def _geo_stats(db: Session, branch_id=None) -> dict:
 
     lq = db.query(models.Lead.address)
     lsq = db.query(models.Lead.school)
+    # Sinovdagilar ham shu markaz o'quvchisi (2026-09-16: liddan
+    # aylantirilgan o'quvchi endi avval "sinov"da turadi)
     sq = db.query(models.Student.address).filter(
-        models.Student.status == "active")
+        models.Student.status.in_(("active", "trial")))
     ssq = db.query(models.Student.school).filter(
-        models.Student.status == "active")
+        models.Student.status.in_(("active", "trial")))
     if branch_id:
         lq = lq.filter(models.Lead.branch_id == branch_id)
         lsq = lsq.filter(models.Lead.branch_id == branch_id)

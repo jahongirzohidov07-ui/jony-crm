@@ -354,7 +354,11 @@ def delete_lead(
     reason: str = None,
     note: str = None,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_role(*roles.FULL_ACCESS)),
+    # 2026-09-16, Jahongir: "lidlarni ochiradigan qilib ber lid ochirib
+    # bolmayabdi" — ilgari faqat asoschi/filial rahbari o'chira olardi,
+    # administrator 403 olardi. Endi lid bilan ishlaydigan hamma (o'z
+    # filialidagini, sabab bilan).
+    user: models.User = Depends(require_role(*roles.LEAD_ACCESS)),
 ):
     """Lidni o'chirish — SABAB BILAN va ARXIVGA (2026-08-30).
 
@@ -519,7 +523,12 @@ def convert_lead(
         group_id=payload.group_id,
         branch_id=lead.branch_id,
         enrolled_date=payload.enrolled_date or date.today(),
-        status="active",
+        # SINOV DARSI (2026-09-16, Jahongir: "liddan o'quvchiga
+        # o'tkizganda sinov darsi bo'lib tushsin"). Ilgari darrov "faol"
+        # bo'lardi, lekin hech qanday oylik yechilmasdi. Endi sinovda
+        # turadi: 3 ta darsga kelsa yoki to'lov qilsa AVTOMAT faollashadi
+        # va faollashgan kundan oylik yechiladi (_maybe_auto_activate).
+        status="trial",
         note=student_note,
         # Kartada ham ko'rinsin — faqat eslatmada qolib ketmasin
         address=lead.address,

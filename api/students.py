@@ -1982,23 +1982,28 @@ def leave_preview(
 def restore_student(
     student_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FREEZE_ROLES)),
+    user=Depends(require_role(*roles.STUDENT_RESTORE)),
 ):
     """Arxivdagi o'quvchini qayta tiklaydi — o'quvchilar qaytib kelishi
-    mumkin. Holati FAOL bo'ladi, guruh esa bo'sh qoladi: keyin qo'lda
-    kerakli guruhga qo'shiladi."""
-    s = db.query(models.Student).get(student_id)
-    if not s:
-        raise HTTPException(404, "O'quvchi topilmadi")
+    mumkin. Guruh bo'sh qoladi: keyin qo'lda kerakli guruhga qo'shiladi.
+
+    2026-09-16: administrator ham tiklaydi (o'z filialidagini). Holati
+    SINOV bo'ladi (ilgari darrov "faol" edi): qaytgan o'quvchi 3 ta
+    darsga kelsa yoki to'lov qilsa, QAYTGAN kunidan faollashadi va
+    oylik shu kundan yechiladi — oy o'rtasida qaytganidan butun oy
+    yechilib qolmasin."""
+    s = _get_student_in_scope(db, student_id, user)
     if s.status not in ("archived", roles.STUDENT_LEFT):
         raise HTTPException(400, "Bu o'quvchi arxivda emas")
-    s.status = "active"
+    old = s.status
+    s.status = "trial"
     s.archive_when_paid = 0
     _sync_student_left_date(s)
     audit.log(db, user, entity="student", action="restore", entity_id=s.id,
               entity_label=s.full_name, field="status",
-              old_value="archived", new_value="active",
-              note="Arxivdan qayta tiklandi", branch_id=s.branch_id)
+              old_value=old, new_value="trial",
+              note="Arxivdan qayta tiklandi (sinov darsiga)",
+              branch_id=s.branch_id)
     db.commit()
     return {"ok": True, "status": s.status}
 

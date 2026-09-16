@@ -148,7 +148,8 @@ db.close()
 print("\n=== 7. Chiqib ketganni qayta tiklash mumkin ===")
 r = c.post(f"/api/students/{TOLAGAN}/restore", headers=H)
 ck("tiklandi", r.status_code, 200)
-ck("faol bo'ldi", r.json()["status"], "active")
+# 2026-09-16: tiklangan o'quvchi sinovga qaytadi
+ck("sinovga qaytdi", r.json()["status"], "trial")
 
 print("\n=== 8. Hisob yozuvi yo'q bo'lsa yiqilmaydi ===")
 db = SessionLocal()

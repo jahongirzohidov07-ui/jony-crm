@@ -891,8 +891,10 @@ ck("qayta tiklash OK", client.post(
     f"/api/students/{SB18}/restore", json={},
     headers=ASOS2).status_code, 200)
 st = client.get(f"/api/students/{SB18}", headers=ASOS2).json()
-ck("tiklangan: faol, guruhsiz", (st["status"], st.get("group")),
-   ("active", None))
+# 2026-09-16: tiklangan o'quvchi SINOVGA qaytadi (qaytgan kunidan
+# faollashib, shu kundan oylik yechilishi uchun)
+ck("tiklangan: sinovda, guruhsiz", (st["status"], st.get("group")),
+   ("trial", None))
 ck("arxivda emasni tiklash 400", client.post(
     f"/api/students/{SB18}/restore", json={},
     headers=ASOS2).status_code, 400)

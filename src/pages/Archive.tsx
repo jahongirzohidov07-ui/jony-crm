@@ -76,7 +76,8 @@ function StudentsTab() {
   // Butunlay o'chirishni tasdiqlash oynasi (faqat asoschi)
   const [purging, setPurging] = useState<{ id: number; name: string } | null>(null);
   // O'quvchilar qaytib kelishi mumkin — qayta tiklash huquqi
-  const canRestore = can(user?.role, FREEZE_ROLES);
+  // 2026-09-16: administrator ham tiklaydi (api roles.STUDENT_RESTORE)
+  const canRestore = can(user?.role, FREEZE_ROLES) || user?.role === "administrator";
   // 2026-08-22, Jahongir: "arxivdagilarni ochirishni faqat menga qoshib
   // ber" — butunlay o'chirish tarixni ham yo'q qiladi, shuning uchun
   // tugma faqat asoschida ko'rinadi (backend ham FOUNDER bilan yopiq).

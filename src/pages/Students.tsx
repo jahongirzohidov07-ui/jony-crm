@@ -363,13 +363,22 @@ export default function Students() {
               >
                 <Undo2 size={15} /> Importni bekor qilish
               </button>
-              <button
-                onClick={() => setShowAdd(true)}
-                className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
-              >
-                <Plus size={16} />
-                Yangi talaba
-              </button>
+              {/* 2026-09-16, Jahongir: "oquvchini qoshish mumkin bolmasin
+                  faqat liddan qoshish mumkin bo'lsin" — asoschidan
+                  boshqalar Lidlar orqali qo'shadi. */}
+              {user?.role === "founder" ? (
+                <button
+                  onClick={() => setShowAdd(true)}
+                  className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
+                >
+                  <Plus size={16} />
+                  Yangi talaba
+                </button>
+              ) : (
+                <span className="text-xs text-slate-500 max-w-[14rem]">
+                  Yangi o'quvchi faqat <b>Lidlar</b> bo'limidan qo'shiladi
+                </span>
+              )}
             </>
           )}
         </div>

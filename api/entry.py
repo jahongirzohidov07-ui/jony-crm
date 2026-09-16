@@ -2064,6 +2064,13 @@ if _cur_create_student is not None:
                           db: Session = Depends(get_db),
                           user=Depends(require_role(
                               *(tuple(roles.TEACHING_STAFF) + (_HRM,))))):
+        # FAQAT LIDDAN (2026-09-16, Jahongir: "oquvchini qoshish mumkin
+        # bolmasin faqat liddan qoshish mumkin bo'lsin")
+        if user.role not in tuple(roles.STUDENT_CREATE):
+            raise HTTPException(
+                403, "Yangi o'quvchi faqat Lidlar bo'limi orqali qo'shiladi: "
+                     "lid kiriting va \"O'quvchiga aylantirish\" tugmasini "
+                     "bosing.")
         return _cur_create_student(payload=payload, force=force,
                                    db=db, user=user)
 
@@ -2945,7 +2952,62 @@ def _charge_from_activation_v2(db, s, since, user=None):
     return {"lessons": n, "amount": amount, "discount": disc}
 
 
-M._charge_from_activation = _charge_from_activation_v2
+def _charge_months_after(db, s, since, user=None) -> list:
+    """Faollashish oyidan KEYINGI oylar (joriy oygacha) — yechilmagan
+    bo'lsa, to'liq standart oylik (2026-09-16, Jahongir: "faol
+    qilganingda faollashtirilgan kundan boshlab oylik tolovni yechib
+    olish kerak, bazi o'quvchilar faol bolsa ham pul yechilmayabdi").
+
+    Nega kerak: sinov darsi o'tgan oyda boshlanib, 3-darsi shu oyga
+    tushsa, faollashish sanasi — o'tgan oy. Shu oyning 1-kunidagi
+    avtomat yechimda esa o'quvchi hali sinovda edi. Natijada faqat
+    o'tgan oy yechilib, shu oy butunlay yechilmay qolardi."""
+    if not s.group_id or not s.group:
+        return []
+    today = roles.local_today()
+    g = s.group
+    std = int(g.standard_lessons_per_month or 12) or 12
+    y, m = since.year, since.month
+    out = []
+    while True:
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+        if (y, m) > (today.year, today.month):
+            break
+        period = M._period_key(y, m)
+        if period < _MC_FROM:
+            continue
+        if _mc_has_charge(db, s.id, period) or M._charge_skipped(db, s.id, period):
+            continue
+        full = _mc_after_discount(
+            db, s, roles.money(_billing.student_lesson_price(s, g) * std))
+        if full <= 0:
+            continue
+        db.add(models.Payment(
+            student_id=s.id, amount=-full, kind="charge",
+            note=f"{g.name} — {period}: {std} dars (standart oy, faollashganda)",
+            created_by=_MC_BY, period=period))
+        out.append({"period": period, "amount": full, "lessons": std})
+    return out
+
+
+def _charge_from_activation_v3(db, s, since, user=None):
+    """Faollashgan kundan shu oy oxirigacha (v2) + keyingi yechilmagan
+    oylar joriy oygacha."""
+    res = _charge_from_activation_v2(db, s, since, user)
+    extra = _charge_months_after(db, s, since, user)
+    if not extra:
+        return res
+    base = res or {"lessons": 0, "amount": 0.0, "discount": 0}
+    return {
+        "lessons": base["lessons"] + sum(x["lessons"] for x in extra),
+        "amount": base["amount"] + sum(x["amount"] for x in extra),
+        "discount": base.get("discount", 0),
+        "months": ([since.isoformat()[:7]] if res else [])
+                  + [x["period"] for x in extra],
+    }
+
+
+M._charge_from_activation = _charge_from_activation_v3
 
 
 # --- Oylik hisob-kitob ---
@@ -6666,6 +6728,70 @@ def _mc_charge_full(db: Session, today, deadline=None) -> tuple:
     return n, finished
 
 
+def _mc_charge_missed(db: Session, today) -> list:
+    """XAVFSIZLIK TO'RI (2026-09-16, Jahongir: "bazi o'quvchilar faol
+    bolsa ham pul yechilmayabdi shuni togrla").
+
+    Faol, guruhi bor, lekin SHU OY uchun hech qanday hisob yozilmagan
+    o'quvchilar. Ular quyidagi yo'llardan paydo bo'lardi: liddan
+    to'g'ridan-to'g'ri "faol" qilib ochilgan (oylik yechilmagan), oy
+    boshidagi avtomat yechimdan KEYIN faollashgan va h.k.
+
+      - shu oy qo'shilgan (enrolled_date) — qo'shilgan kunidan oy
+        oxirigacha (faollashtirish qoidasi);
+      - oldinroq qo'shilgan — to'liq standart oy (oy boshidagi avtomat
+        yechim qoidasi), lekin faqat guruhi shu oy allaqachon
+        ishlangan bo'lsa (aks holda buni _mc_charge_full o'zi qiladi).
+
+    Asoschi o'chirgan yechim (ChargeSkip) QAYTA YOZILMAYDI."""
+    from common import _seed_done as _sd
+    period = _mc_key(today.year, today.month)
+    if period < _MC_FROM:
+        return []
+    charged = (db.query(models.Payment.student_id)
+               .filter(models.Payment.kind == "charge",
+                       models.Payment.period == period))
+    skipped = (db.query(models.ChargeSkip.student_id)
+               .filter(models.ChargeSkip.period == period))
+    students = (db.query(models.Student)
+                .filter(models.Student.status == "active",
+                        models.Student.group_id.isnot(None),
+                        models.Student.id.notin_(charged),
+                        models.Student.id.notin_(skipped))
+                .all())
+    done = []
+    for s in students:
+        g = s.group
+        if g is None:
+            continue
+        res = None
+        if s.enrolled_date and _mc_key(
+                s.enrolled_date.year, s.enrolled_date.month) == period:
+            res = _charge_from_activation_v2(db, s, s.enrolled_date, None)
+        elif _sd(db, f"mcf_{period}_g{g.id}"):
+            std = int(g.standard_lessons_per_month or 12) or 12
+            full = _mc_after_discount(
+                db, s, roles.money(_billing.student_lesson_price(s, g) * std))
+            if full > 0:
+                db.add(models.Payment(
+                    student_id=s.id, amount=-full, kind="charge",
+                    note=f"{g.name} — {period}: {std} dars (standart oy, avtomat)",
+                    created_by=_MC_BY, period=period))
+                res = {"amount": full}
+        if res:
+            done.append({"student_id": s.id, "name": s.full_name,
+                         "amount": roles.money(res["amount"])})
+    if done:
+        db.commit()
+        audit.log(db, None, entity="payment", action="create",
+                  entity_label=f"{period}: yechilmay qolgan oyliklar",
+                  new_value=len(done),
+                  note=", ".join(f"{d['name']} {int(d['amount'])}"
+                                 for d in done[:40]),
+                  commit=True)
+    return done
+
+
 def _dt_now():
     from datetime import datetime as _d
     return _d.utcnow()
@@ -6844,9 +6970,11 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # YANGI guruh ham hisoblanishi kerak. Har guruh alohida
     # belgilanadi (mcf_<oy>_g<id>), qaytarish esa oyiga bir marta.
     refund_key = f"mcr_{period}"
+    # Yechilmay qolganlarni tekshirish — kuniga bir marta (2026-09-16)
+    missed_key = f"mcm_{today.isoformat()}"
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
-    if not todo and _sd(db, refund_key):
+    if not todo and _sd(db, refund_key) and _sd(db, missed_key):
         return {"yechildi": 0, "qaytarildi": 0, "tugagan": True}
 
     pg = False
@@ -6876,6 +7004,13 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
             n1, ok1 = _mc_charge_full(db, today, deadline)
         except Exception:
             db.rollback(); ok1 = False
+        n3 = 0
+        if ok1 and not _sd(db, missed_key):
+            try:
+                n3 = len(_mc_charge_missed(db, today))
+                _sm(db, missed_key)
+            except Exception:
+                db.rollback()
         try:
             db.commit()
         except Exception:
@@ -6888,7 +7023,8 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 db.commit()
             except Exception:
                 pass
-    return {"yechildi": n1, "qaytarildi": n2, "tugagan": ok1 and ok2}
+    return {"yechildi": n1, "qaytarildi": n2, "tutib_qolindi": n3,
+            "tugagan": ok1 and ok2}
 
 
 def _mc_install():
@@ -7748,7 +7884,8 @@ def _fz_set(db: Session, s, period: str, lessons: int, why: str, user):
 def _fz_activation_charge(db: Session, s, on: date, user):
     """Faollashtirish to'lovi — deploy'dagi v2 bo'lsa o'shani, bo'lmasa
     asosiy moduldagisini chaqiradi."""
-    fn = globals().get("_charge_from_activation_v2")
+    fn = (globals().get("_charge_from_activation_v3")
+          or globals().get("_charge_from_activation_v2"))
     if fn is None:
         fn = getattr(M, "_charge_from_activation", None)
     if fn is None:

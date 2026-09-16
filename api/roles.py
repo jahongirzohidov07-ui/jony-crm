@@ -5614,6 +5614,14 @@ BUDGET_DEPARTMENT_LABELS = {
 # O'quvchini muzlatish/faollashtirish/ko'chirish — faqat shu rollar.
 # Ustoz va support teacher BUNDAY amallarni qila olmaydi.
 FREEZE_ROLES = [FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER]
+# Arxivdagi o'quvchini qayta tiklash — administrator ham (2026-09-16,
+# Jahongir: "Arxivdagi o'quvchilarni qayta tiklashni administratorlarga
+# ochib ber"). Faqat o'z filialidagini.
+STUDENT_RESTORE = FREEZE_ROLES + [ADMINISTRATOR]
+# Yangi o'quvchi FAQAT liddan qo'shiladi (2026-09-16, Jahongir:
+# "oquvchini qoshish mumkin bolmasin faqat liddan qoshish mumkin
+# bo'lsin"). To'g'ridan-to'g'ri qo'shish — faqat asoschi (favqulodda).
+STUDENT_CREATE = [FOUNDER]
 # Support teacherni guruhga biriktirish
 SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD, HR_MANAGER]
 # Ketma-ket nechta darsga kelmasa avtomat muzlatiladi

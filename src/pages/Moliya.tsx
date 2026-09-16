@@ -297,8 +297,15 @@ function CashflowTab() {
   if (loading) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
   if (!data) return null;
 
-  const rows =
-    filter === "all" ? data.rows : data.rows.filter((r) => r.direction === filter);
+  // ENG YANGISI TEPADA, RAQAM BILAN (2026-09-16, Jahongir: "oy boshi
+  // pastda oy oxiri tepada bolishi kerak shunda yangi kiritilgan boshida
+  // turadi ... har bir tranzaksiyada raqam qoshilsin"). Raqam oy
+  // boshidan sanaladi (1 — eng eski), shuning uchun yangi yozuv
+  // qo'shilganda eskilarining raqami o'zgarmaydi.
+  const numbered = data.rows.map((r, i) => ({ ...r, no: i + 1 }));
+  const rows = (filter === "all"
+    ? numbered
+    : numbered.filter((r) => r.direction === filter)).slice().reverse();
 
   function exportRows() {
     exportToExcel(`kassa-${data!.period}${data!.period_to && data!.period_to !== data!.period ? `_${data!.period_to}` : ""}`, "Kassa",
@@ -491,6 +498,7 @@ function CashflowTab() {
             <table className="w-full text-sm">
               <thead className="bg-slate-50">
                 <tr className="text-xs text-slate-500">
+                  <th className="text-right pl-3 pr-1 py-2 w-12">№</th>
                   <th className="text-left px-4 py-2 w-28">Sana</th>
                   <th className="text-right w-36 pr-6">Summa</th>
                   <th className="text-left pl-2">Izoh</th>
@@ -513,6 +521,9 @@ function CashflowTab() {
                       key={r.id}
                       className={`border-t border-white ${bg} ${fg} transition`}
                     >
+                      <td className="pl-3 pr-1 py-2 text-right text-xs tabular-nums opacity-60">
+                        {r.no}
+                      </td>
                       <td className="px-4 py-2">{formatDate(r.date)}</td>
                       <td className="text-right font-medium tabular-nums pr-6">
                         {inRow ? "+" : "−"}

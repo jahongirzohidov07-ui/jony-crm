@@ -3,7 +3,7 @@ import { Plus, X, Trash2, UserPlus, Phone, GripVertical } from "lucide-react";
 import { api, getGlobalBranch } from "../lib/api";
 import type { Lead, Branch, StaffOption, Group } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { FULL_ACCESS, LEAD_ACCESS, can } from "../lib/roles";
+import { LEAD_ACCESS, can } from "../lib/roles";
 import {
   LEAD_STAGES,
   LEAD_SOURCES,
@@ -655,7 +655,8 @@ export default function Leads() {
   }, []);
 
   const allowed = can(user?.role, LEAD_ACCESS);
-  const canDelete = can(user?.role, FULL_ACCESS);
+  // 2026-09-16: lid bilan ishlaydigan hamma o'chira oladi (sabab bilan)
+  const canDelete = can(user?.role, LEAD_ACCESS);
 
   async function moveTo(lead: Lead, stage: LeadStage) {
     if (lead.stage === stage) return;

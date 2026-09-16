@@ -21,6 +21,14 @@ function statusDot(status: string, balance: number) {
   return { color: "bg-emerald-500", title: "Faol" };
 }
 
+const STATUS_UZ: Record<string, string> = {
+  active: "Faol",
+  trial: "Sinov darsida",
+  frozen: "Muzlatilgan",
+  left: "Chiqib ketgan",
+  archived: "Arxiv",
+};
+
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <p className="text-sm text-slate-600">
@@ -256,22 +264,59 @@ export function GroupSidebar({
                   ) : (
                     <span className="w-2.5 h-2.5 shrink-0" title="Sinovda" />
                   )}
-                  <Link
-                    to={`/students/${s.id}`}
-                    className={`text-[13px] whitespace-nowrap ${
-                      frozen
-                        ? "text-sky-600 font-medium hover:text-sky-700"
-                        : "text-slate-800 hover:text-brand-700"
-                    }`}
-                    title={frozen ? "Muzlatilgan" : undefined}
-                  >
-                    {s.full_name}
-                    {frozen && (
-                      <span className="ml-1.5 text-[10px] uppercase tracking-wide bg-sky-50 text-sky-600 px-1.5 py-0.5 rounded">
-                        muz
+                  {/* BALANS ISM USTIDA (2026-09-16, Jahongir: "ismini ustiga
+                      mishkani korsatkichini olib kelganda balansi qarzi
+                      korinsin ichiga kirib o'tirish bo'lmasin") */}
+                  <span className="relative group/name">
+                    <Link
+                      to={`/students/${s.id}`}
+                      className={`text-[13px] whitespace-nowrap ${
+                        frozen
+                          ? "text-sky-600 font-medium hover:text-sky-700"
+                          : "text-slate-800 hover:text-brand-700"
+                      }`}
+                    >
+                      {s.full_name}
+                      {frozen && (
+                        <span className="ml-1.5 text-[10px] uppercase tracking-wide bg-sky-50 text-sky-600 px-1.5 py-0.5 rounded">
+                          muz
+                        </span>
+                      )}
+                    </Link>
+                    <span
+                      role="tooltip"
+                      className="pointer-events-none absolute left-0 top-full z-30 mt-1 hidden w-56 rounded-lg border border-slate-200 bg-white p-2.5 text-xs shadow-lg group-hover/name:block"
+                    >
+                      <span className="block font-medium text-slate-800 truncate">
+                        {s.full_name}
                       </span>
-                    )}
-                  </Link>
+                      <span className="mt-1 flex justify-between gap-2">
+                        <span className="text-slate-500">Holati</span>
+                        <span className="text-slate-700">{STATUS_UZ[s.status] || s.status}</span>
+                      </span>
+                      <span className="mt-0.5 flex justify-between gap-2">
+                        <span className="text-slate-500">
+                          {s.balance < 0 ? "Qarzi" : "Balansi"}
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            s.balance < 0
+                              ? "text-red-600"
+                              : s.balance > 0
+                              ? "text-emerald-600"
+                              : "text-slate-700"
+                          }`}
+                        >
+                          {formatSom(Math.abs(s.balance))}
+                        </span>
+                      </span>
+                      {s.balance < 0 && (
+                        <span className="mt-1 block text-[11px] text-red-500">
+                          To'lashi kerak
+                        </span>
+                      )}
+                    </span>
+                  </span>
                   {s.phone && (
                     <span className="text-[11px] text-slate-400 shrink-0 ml-auto hidden sm:flex items-center gap-1">
                       <Phone size={10} />

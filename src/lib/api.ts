@@ -2220,6 +2220,16 @@ export interface CandidateCard {
   phone?: string | null;
   blacklist?: BlacklistHit | null;
   vacancy?: string | null;
+  /** Ariza savollari (onlayn ariza bilan bir xil) */
+  role_label?: string | null;
+  position?: string | null;
+  subject?: string | null;
+  address?: string | null;
+  birth_date_text?: string | null;
+  education?: string | null;
+  marital_label?: string | null;
+  socials?: string | null;
+  work_duration?: string | null;
   stage: string;
   stage_label: string;
   source: string;

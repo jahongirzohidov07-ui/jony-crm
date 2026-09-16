@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { X, Save, FileText, Plus } from "lucide-react";
 import { api, type CandidateCard as Card } from "../lib/api";
-import { formatSom } from "../lib/format";
+import { formatSom, formatDate } from "../lib/format";
+import { candidateSourceLabel } from "../lib/hr";
 import { Attachments } from "./Attachments";
 import { ObservationList } from "./LessonRubric";
 import { CandidateGrowth } from "./CandidateGrowth";
@@ -164,6 +165,65 @@ export function CandidateCard({
         ) : (
           <div className="p-5 space-y-5">
             <BlacklistBanner hit={c.blacklist} />
+
+            {/* ARIZA MA'LUMOTLARI (2026-09-16, Jahongir: "nomzod haqidagi
+                to'liq ma'lumotlarni ruchka editni bosmasa bilib bo'lmayabdi,
+                ismi ustiga bosganda ham chiqsin"). */}
+            <div className="rounded-xl border border-slate-200 p-4">
+              <p className="text-xs font-medium text-slate-700 mb-2">
+                Ariza ma'lumotlari
+              </p>
+              <div className="grid gap-x-6 sm:grid-cols-2">
+                <Info
+                  label="Lavozim"
+                  value={[c.role_label, c.subject].filter(Boolean).join(" · ")}
+                />
+                <Info label="Vakansiya" value={c.vacancy} />
+                <Info label="Telefon" value={c.phone} />
+                <Info label="Filial" value={c.branch} />
+                <Info label="Bosqich" value={c.stage_label} />
+                <Info label="Manba" value={candidateSourceLabel(c.source)} />
+                <Info
+                  label="Ariza sanasi"
+                  value={c.created_at ? formatDate(c.created_at) : null}
+                />
+                <Info label="Tug'ilgan sana" value={c.birth_date_text} />
+                <Info label="Oilaviy holati" value={c.marital_label} />
+                <Info label="Yashash manzili" value={c.address} />
+                <Info label="Ma'lumoti" value={c.education} />
+                <Info label="Ijtimoiy tarmoqlar" value={c.socials} />
+                <Info label="Qancha vaqt ishlamoqchi" value={c.work_duration} />
+                <Info
+                  label="Tajriba"
+                  value={c.experience_years != null
+                    ? `${c.experience_years} yil` : null}
+                />
+                {c.reject_reason && (
+                  <Info label="Rad etish sababi" value={c.reject_reason} />
+                )}
+              </div>
+              {c.workplaces && (
+                <Info label="Avvalgi ish joylari" value={c.workplaces} block />
+              )}
+              {c.note && <Info label="Izoh" value={c.note} block />}
+            </div>
+
+            <div className="rounded-xl border border-slate-200 p-4">
+              <p className="text-xs font-medium text-slate-700 mb-2">
+                Rasm va hujjatlar
+              </p>
+              <Attachments
+                entity="candidate"
+                entityId={c.id}
+                compact
+                kinds={[
+                  { key: "photo", label: "Rasm" },
+                  { key: "certificate", label: "Sertifikat" },
+                  { key: "resume", label: "Rezyume" },
+                  { key: "document", label: "Hujjat" },
+                ]}
+              />
+            </div>
             {/* Ballar - eng muhimi tepada */}
             <div className="grid grid-cols-3 gap-3">
               <Score
@@ -474,6 +534,22 @@ function Area({
           {value || "—"}
         </p>
       )}
+    </div>
+  );
+}
+
+/** Kartadagi faqat o'qiladigan qator: savol tepada, javob ostida. */
+function Info({ label, value, block = false }: {
+  label: string;
+  value?: string | null;
+  block?: boolean;
+}) {
+  return (
+    <div className={`py-1.5 border-b border-slate-50 ${block ? "mt-1" : ""}`}>
+      <p className="text-[11px] text-slate-400">{label}</p>
+      <p className="text-sm text-slate-800 whitespace-pre-line break-words">
+        {value && String(value).trim() ? value : "—"}
+      </p>
     </div>
   );
 }

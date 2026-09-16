@@ -75,3 +75,11 @@ export function formatPhone(v?: string | null): string {
   if (d.length !== 9) return v;
   return `+998 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5, 7)} ${d.slice(7)}`;
 }
+
+/** Qo'ng'iroq havolasi: bazadagi "901234567" -> "tel:+998901234567". */
+export function telHref(v?: string | null): string {
+  const d = (v || "").replace(/\D/g, "");
+  if (d.length === 9) return `tel:+998${d}`;
+  if (d.length === 12 && d.startsWith("998")) return `tel:+${d}`;
+  return `tel:${v || ""}`;
+}

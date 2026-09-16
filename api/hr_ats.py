@@ -342,6 +342,8 @@ def list_candidates(
     if q and len(q.strip()) >= 2:
         t = q.strip()
         digits = "".join(ch for ch in t if ch.isdigit())
+        if len(digits) >= 12 and digits.startswith("998"):
+            digits = digits[3:]      # telefon bazada 9 raqam (2026-09-16)
         conds = [models.Candidate.full_name.ilike(f"%{t}%")]
         if len(digits) >= 3:
             # Telefon bazada "+998 90 123 45 67" ko'rinishida ham
@@ -1936,7 +1938,8 @@ def public_apply(payload: dict, db: Session = Depends(get_db)):
     # Takror bosishdan himoya: bir xil telefon + ism 24 soat ichida
     day_ago = datetime.utcnow() - timedelta(hours=24)
     dup = (db.query(models.Candidate)
-           .filter(models.Candidate.phone == phone,
+           .filter(models.Candidate.phone.in_(
+                       {phone, roles.normalize_phone(phone)}),
                    models.Candidate.created_at >= day_ago).count())
     if dup:
         return {"ok": True, "already": True}

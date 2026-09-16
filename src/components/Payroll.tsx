@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "./PhoneInput";
 import { TeacherPayrollTab, SalaryDetailTab } from "./TeacherPayroll";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
@@ -849,7 +850,7 @@ export function MonthPaymentsTab() {
                   <td className="px-3 py-2.5">
                     <p className="text-slate-900">{r.student}</p>
                     {r.phone && (
-                      <p className="text-xs text-slate-400">{r.phone}</p>
+                      <p className="text-xs text-slate-400">{formatPhone(r.phone)}</p>
                     )}
                   </td>
                   <td className="px-3 py-2.5 text-right font-medium text-emerald-600 whitespace-nowrap">

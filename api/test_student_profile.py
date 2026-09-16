@@ -59,7 +59,8 @@ Hb = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'bos
 print("=== PROFIL O'QISH ===")
 r = c.get("/api/student/profile", headers=Hs)
 ck("status 200", r.status_code, 200)
-ck("telefon faqat ko'rsatiladi", r.json()["phone"], "998901112233")
+# 2026-09-16: telefon bazada bitta formatda (9 raqam)
+ck("telefon faqat ko'rsatiladi", r.json()["phone"], "901112233")
 
 print("\n=== TO'G'RI ISM QABUL QILINADI ===")
 r = c.put("/api/student/profile", headers=Hs,

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "./PhoneInput";
 import { Ban, Search, X, UserX, AlertTriangle } from "lucide-react";
 import { api, type BlacklistHit } from "../lib/api";
 import { formatDate } from "../lib/format";
@@ -308,7 +309,7 @@ export function HrBlacklistTab() {
                     )}
                   </td>
                   <td className="px-3 py-2.5 text-slate-600 whitespace-nowrap">
-                    {r.phone || "—"}
+                    {formatPhone(r.phone) || "—"}
                   </td>
                   <td className="px-3 py-2.5 text-slate-700 min-w-[200px]">
                     <span className="text-xs font-medium text-red-700">

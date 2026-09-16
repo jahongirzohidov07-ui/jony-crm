@@ -1,4 +1,5 @@
 import { StudentSymbol, type StudentSymbolName } from "../../components/StudentSymbol";
+import { formatPhone } from "../../components/PhoneInput";
 import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
@@ -193,7 +194,7 @@ export default function StudentSettings() {
           <span className="text-[15px] font-semibold text-slate-800 flex-1">
             Login
           </span>
-          <span className="text-[15px] text-slate-500">{p?.phone || "—"}</span>
+          <span className="text-[15px] text-slate-500">{formatPhone(p?.phone) || "—"}</span>
         </div>
       </Section>
 

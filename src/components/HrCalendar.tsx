@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { formatPhone, telHref } from "./PhoneInput";
 import {
   CalendarDays, ChevronLeft, ChevronRight, Clock, MapPin, Phone,
   User as UserIcon, X,
@@ -267,11 +268,11 @@ export function HrCalendar() {
                     )}
                     {r.phone && (
                       <a
-                        href={`tel:${r.phone}`}
+                        href={telHref(r.phone)}
                         className="flex items-center gap-1 underline"
                       >
                         <Phone size={12} />
-                        {r.phone}
+                        {formatPhone(r.phone)}
                       </a>
                     )}
                   </div>

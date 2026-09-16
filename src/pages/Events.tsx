@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { formatPhone } from "../components/PhoneInput";
 import { PartyPopper, Cake, Copy, Check, Plus, Pencil, Trash2, X, CalendarDays } from "lucide-react";
 import { api } from "../lib/api";
 
@@ -218,7 +219,7 @@ function BirthdaysTab() {
                 <div className="min-w-0 flex-1">
                   <p className="font-medium text-slate-800 truncate">{r.full_name}</p>
                   <p className="text-xs text-slate-500 truncate">
-                    {r.who_label}{r.sub ? ` · ${r.sub}` : ""}{r.branch ? ` · ${r.branch}` : ""}{r.phone ? ` · ${r.phone}` : ""}
+                    {r.who_label}{r.sub ? ` · ${r.sub}` : ""}{r.branch ? ` · ${r.branch}` : ""}{r.phone ? ` · ${formatPhone(r.phone)}` : ""}
                   </p>
                 </div>
                 <div className="text-right">

@@ -12,7 +12,7 @@ import {
   sourceLabel,
 } from "../lib/leads";
 import type { LeadSource, LeadStage } from "../lib/leads";
-import { PhoneInput, formatPhone } from "../components/PhoneInput";
+import { PhoneInput, formatPhone, telHref } from "../components/PhoneInput";
 import { PickList, useReference } from "../components/PickList";
 import PlacementBar, { PlacementBadge } from "../components/PlacementBar";
 import { CommentThread } from "../components/CommentThread";
@@ -540,7 +540,7 @@ function LeadCard({
           </p>
           {lead.phone && (
             <a
-              href={`tel:${lead.phone}`}
+              href={telHref(lead.phone)}
               onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1 text-xs text-slate-500 hover:text-brand-600 mt-0.5"
             >
@@ -747,7 +747,7 @@ export default function Leads() {
             </h2>
             <p className="text-sm text-slate-600 mb-1">
               <b>{delLead.full_name}</b>
-              {delLead.phone ? ` · ${delLead.phone}` : ""}
+              {delLead.phone ? ` · ${formatPhone(delLead.phone)}` : ""}
             </p>
             <p className="text-[11px] text-slate-500 mb-3">
               Yozuv arxivga ko'chadi — kerak bo'lsa qaytariladi.

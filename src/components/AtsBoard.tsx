@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "./PhoneInput";
 import {
   Info, X, AlertTriangle, ChevronRight, Plus, CalendarClock,
   ClipboardList, HandCoins,
@@ -372,7 +373,7 @@ function AppModal({
         <p className="text-xs text-slate-400 mb-3">
           {d.public_id} · {d.role_label || d.vacancy
             || "lavozim ko'rsatilmagan"}
-          {d.subject ? ` · ${d.subject}` : ""} · {d.phone || "—"}
+          {d.subject ? ` · ${d.subject}` : ""} · {formatPhone(d.phone) || "—"}
         </p>
 
         <div className="h-1.5 bg-slate-100 rounded-full mb-4 overflow-hidden">

@@ -157,6 +157,12 @@ ck("asoschini qo'shib bo'lmaydi",
         "reason": "Sabab yetarli uzun"}).status_code, 400)
 
 print("\n=== ONLAYN ARIZA ===")
+# Qo'lda qo'shilgan nomzodlar "kecha" kiritilgan bo'lsin — aks holda
+# onlayn ariza 24 soatlik "takror bosish" himoyasiga tushadi
+from datetime import datetime as _dt, timedelta as _td
+db.query(models.Candidate).update(
+    {models.Candidate.created_at: _dt.utcnow() - _td(days=2)})
+db.commit()
 photo = "data:image/jpeg;base64," + "A" * 200
 r = c.post("/api/apply", json={"full_name": "Karimov Aziz Olimovich",
                                "phone": "+998901112233", "position": "sales",

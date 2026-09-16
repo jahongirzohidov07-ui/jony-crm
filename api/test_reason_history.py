@@ -314,7 +314,8 @@ ck("arxivda uchtasi ham bor", len(arx), 3)
 a1 = [x for x in arx if x["full_name"] == "Adashgan Lid"][0]
 ck("  kim o'chirgani yozilgan", a1["deleted_by"], "Jahongir")
 ck("  izoh saqlangan", a1["reason_note"], "xato bosildi")
-ck("  telefoni ham turibdi", a1["phone"], "+998900000001")
+# 2026-09-16: telefon bazada bitta formatda (9 raqam)
+ck("  telefoni ham turibdi", a1["phone"], "900000001")
 ck("  yo'qotish emas deb belgilangan", a1["real_loss"], False)
 
 # QAYTARISH

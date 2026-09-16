@@ -753,7 +753,7 @@ function ImportStudentsModal({
                       {rows.map((r, i) => (
                         <tr key={i}>
                           <td className="px-3 py-1.5 text-slate-800">{r.full_name}</td>
-                          <td className="px-3 py-1.5 text-slate-600">{r.phone}</td>
+                          <td className="px-3 py-1.5 text-slate-600">{formatPhone(r.phone)}</td>
                           <td className="px-3 py-1.5 text-slate-500 max-w-[12rem] truncate">
                             {r.address}
                           </td>
@@ -1042,7 +1042,7 @@ function ImportUndoModal({ groups, isFounder, onClose, onDone }: {
                       {d.rows.slice(0, 300).map((x: any) => (
                         <tr key={x.id} className="border-b border-slate-50">
                           <td className="px-3 py-1.5 text-slate-800">{x.name}</td>
-                          <td className="px-3 py-1.5 text-slate-400">{x.phone}</td>
+                          <td className="px-3 py-1.5 text-slate-400">{formatPhone(x.phone)}</td>
                           <td className="px-3 py-1.5 text-slate-400 text-right">
                             {x.enrolled_date}
                           </td>

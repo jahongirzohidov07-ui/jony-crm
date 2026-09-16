@@ -176,7 +176,9 @@ ck("kalendar oralig'i ishlaydi", r.status_code, 200)
 rows = r.json()["rows"]
 ck("ikkala yozuv ham bor", len(rows), 2)
 ck("nomzod ismi kalendarda", rows[0]["candidate"], "Kalendar Nomzod")
-ck("telefoni ham", rows[0]["phone"], "+998907778899")
+# 2026-09-16: telefon bazada bitta formatda (9 raqam) — sayt
+# "+998 90 777 88 99" qilib ko'rsatadi (formatPhone)
+ck("telefoni ham", rows[0]["phone"], "907778899")
 
 o = (_d.today() - _td(days=1)).isoformat()
 r = c.post(f"/api/candidates/{KID}/schedule", headers=H,

@@ -1180,11 +1180,13 @@ def _ensure_student_account(db, s) -> str | None:
     from auth import hash_password
     if not s or s.user_id:
         return None
-    raw = (s.phone or s.parent_phone or "")
-    digits = "".join(ch for ch in raw if ch.isdigit())
-    if len(digits) < 7:
+    digits, variants = roles.phone_login(s.phone or s.parent_phone)
+    if not digits:
         return None
-    if db.query(models.User).filter(models.User.username == digits).first():
+    # Ikkala ko'rinish ham tekshiriladi: 901234567 va 998901234567 —
+    # bir o'quvchiga ikkinchi hisob ochilmasin (2026-09-16)
+    if db.query(models.User).filter(
+            models.User.username.in_(variants)).first():
         return None
     try:
         u = models.User(
@@ -6859,12 +6861,11 @@ def _backfill_student_accounts(db) -> int:
 
     made, no_phone = 0, []
     for st in rows:
-        raw = (st.phone or st.parent_phone or "")
-        digits = "".join(ch for ch in raw if ch.isdigit())
-        if len(digits) < 7:
+        digits, variants = roles.phone_login(st.phone or st.parent_phone)
+        if not digits:
             no_phone.append(st)
             continue
-        if digits in taken:
+        if variants & taken:
             continue
         u = models.User(
             username=digits,
@@ -6877,7 +6878,7 @@ def _backfill_student_accounts(db) -> int:
         db.add(u)
         db.flush()
         st.user_id = u.id
-        taken.add(digits)
+        taken.update(variants)
         made += 1
     db.commit()
 

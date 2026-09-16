@@ -101,7 +101,8 @@ r = client.put(f"/api/users/{bm.id}",
 ck("filial rahbari → Yangiyo'l (is_active o'zgarmagan): 200",
    r.status_code, 200)
 ck("  filiali Yangiyo'l", r.json()["branch_id"], b3.id)
-ck("  telefon ham saqlandi", r.json().get("phone"), "+998901112233")
+# 2026-09-16: telefon bazada bitta formatda (9 raqam)
+ck("  telefon ham saqlandi", r.json().get("phone"), "901112233")
 
 print("\n=== 3. Xavfsizlik chegarasi O'ZGARMADI ===")
 r = client.put(f"/api/users/{bm.id}", json={"is_active": False}, headers=H)

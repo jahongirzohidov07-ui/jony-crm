@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { formatPhone } from "./PhoneInput";
 import { NavLink, Outlet, useNavigate, Link } from "react-router-dom";
 import { BrandIcon } from "./BrandIcon";
 import {
@@ -999,7 +1000,7 @@ function GlobalSearch() {
               </p>
               <p className="text-xs text-slate-400">
                 {s.group || "guruhsiz"} · {s.status_label}
-                {s.phone ? ` · ${s.phone}` : ""}
+                {s.phone ? ` · ${formatPhone(s.phone)}` : ""}
               </p>
             </button>
           ))}

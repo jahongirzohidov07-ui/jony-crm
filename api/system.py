@@ -260,6 +260,10 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         # tugab bo'lgan oylar bir marta muhrlanadi va keyin
         # o'zgarmaydi. Idempotent — muhri borga tegilmaydi.
         ("payroll_seal", lambda: _seal_closed_months(db)),
+        # Telefon raqamlari bitta formatda (2026-09-16) — tugagan
+        # bo'lsa bir zumda qaytadi
+        ("phone_norm", lambda: __import__("phones").normalize_existing(
+            db, budget_s=20.0)),
     ):
         try:
             _fn()
@@ -321,6 +325,10 @@ def global_student_search(q: str, branch_id: int | None = None,
     # "global qidiruvda nomer yozsa ham nomer bilan qidirsa ham
     # bo'ladigan qilgin").
     digits = "".join(ch for ch in q if ch.isdigit())
+    # Telefon bazada 9 raqam (2026-09-16): "+998 90 ..." deb qidirilsa
+    # ham topilsin
+    if len(digits) >= 12 and digits.startswith("998"):
+        digits = digits[3:]
 
     def _dig(col):
         e = col

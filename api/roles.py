@@ -5081,6 +5081,50 @@ INTERVIEWERS = ATS_MANAGE + [BRANCH_MANAGER, HEAD_EXAMINER, EXAMINER]
 DUPLICATE_DAYS = 365
 
 
+def normalize_phone(phone):
+    """TELEFONNI BITTA FORMATGA KELTIRISH (2026-09-16).
+
+    Bazada raqamlar aralash yotardi: "+998 90 123-45-67", "998901234567",
+    "901234567". Sayt (PhoneInput) esa 9 raqamni saqlaydi va chiroyli
+    ko'rsatadi. Endi hamma joyda shu bitta qoida:
+      - O'zbekiston raqami -> 9 raqam: "901234567";
+      - boshqa davlat yoki tushunarsiz qiymat -> O'ZGARTIRILMAYDI
+        (ma'lumot yo'qolmasin);
+      - bo'sh qiymat -> None."""
+    if phone is None:
+        return None
+    s = str(phone).strip()
+    if not s:
+        return None
+    d = "".join(ch for ch in s if ch.isdigit())
+    if len(d) == 12 and d.startswith("998"):
+        return d[3:]
+    if len(d) == 9 and not s.lstrip().startswith("+"):
+        return d
+    if len(d) == 9 and s.lstrip().startswith("+998"):
+        return d
+    return s
+
+
+def phone_login(phone):
+    """Telefondan login yasash (o'quvchi hisobi) — (login, band_tekshiruv).
+
+    Telefon bazada 9 raqam bo'lib turadi (normalize_phone), lekin
+    o'quvchi loginlari tarixan "998901234567" ko'rinishida ochilgan.
+    Bir odamga ikkinchi hisob ochilib qolmasligi uchun login doim
+    "998..." bo'ladi va bandlik IKKALA ko'rinish bo'yicha tekshiriladi.
+    Kirishda ikkalasi ham qabul qilinadi (auth_users.login)."""
+    d = "".join(ch for ch in str(phone or "") if ch.isdigit())
+    if len(d) == 12 and d.startswith("998"):
+        d = d[3:]
+    if len(d) == 9:
+        login = "998" + d
+        return login, {login, d}
+    if len(d) >= 7:
+        return d, {d}
+    return None, set()
+
+
 def phone_key(phone) -> str:
     """Telefonni solishtirish uchun raqamga keltiradi: +998 90 123-45-67
     va 901234567 bir xil odam."""

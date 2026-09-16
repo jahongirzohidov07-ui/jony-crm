@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "./PhoneInput";
 import { X, Copy, Send, Play, Link as LinkIcon, GraduationCap, Trash2 } from "lucide-react";
 import { api } from "../lib/api";
 
@@ -98,7 +99,7 @@ function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
     <div className="border-b border-slate-100 last:border-0 px-3 py-2 text-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-medium text-slate-800">{r.name}</span>
-        <span className="text-xs text-slate-400">{r.phone}</span>
+        <span className="text-xs text-slate-400">{formatPhone(r.phone)}</span>
         <span className={`rounded px-1.5 py-0.5 text-[11px] ${st[r.status] || ""}`}>{stL[r.status] || r.status}</span>
         {res && (
           <button onClick={() => setMore((v) => !v)}
@@ -206,7 +207,7 @@ function StartModal({ leads, onClose, onDone }: {
                       <button key={l.id} onClick={() => setLead(l)}
                               className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-slate-50">
                         <span>{l.full_name}</span>
-                        <span className="text-xs text-slate-400">{l.phone}</span>
+                        <span className="text-xs text-slate-400">{formatPhone(l.phone)}</span>
                       </button>
                     ))}
                   </div>
@@ -219,7 +220,7 @@ function StartModal({ leads, onClose, onDone }: {
               <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
                 <div>
                   <p className="font-medium text-slate-800">{lead.full_name}</p>
-                  <p className="text-xs text-slate-500">{lead.phone}</p>
+                  <p className="text-xs text-slate-500">{formatPhone(lead.phone)}</p>
                 </div>
                 <button onClick={() => setLead(null)} className="text-xs text-slate-400 hover:text-slate-600">o'zgartirish</button>
               </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "../components/PhoneInput";
 import { TeacherOverviewModal, SupportGroupsModal, TeacherGroupsModal } from "../components/TeacherOverview";
 import {
   Plus, X, UserMinus, UserCheck, Pencil, KeyRound, Copy, Check,
@@ -692,7 +693,7 @@ export default function Teachers() {
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{t.phone || "—"}</td>
+                    <td className="px-4 py-3 text-slate-600">{formatPhone(t.phone) || "—"}</td>
                     <td className="px-4 py-3 text-slate-600">{subjectLabel(t.subject) || "—"}</td>
                     <td className="px-4 py-3">
                       {t.kind === "support" ? (
@@ -1235,7 +1236,7 @@ function ImportTeachersModal({
                       {rows.map((r, i) => (
                         <tr key={i}>
                           <td className="px-3 py-1.5 text-slate-800">{r.full_name}</td>
-                          <td className="px-3 py-1.5 text-slate-600">{r.phone}</td>
+                          <td className="px-3 py-1.5 text-slate-600">{formatPhone(r.phone)}</td>
                           <td className="px-3 py-1.5 text-slate-500">{r.birth_date}</td>
                           <td className="px-3 py-1.5 text-slate-400 max-w-[16rem] truncate">
                             {r.note}

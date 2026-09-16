@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "../components/PhoneInput";
 import {
   Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip,
   XAxis, YAxis,
@@ -1481,7 +1482,7 @@ function StudentAppTab() {
                     <td className="py-1.5 text-slate-800">{st.name}</td>
                     <td className="py-1.5 text-slate-500">{st.branch}</td>
                     <td className="py-1.5 text-right text-slate-500">
-                      {st.phone || "—"}
+                      {formatPhone(st.phone) || "—"}
                     </td>
                     <td className="py-1.5 text-right text-amber-600 font-semibold">
                       {st.days} kun
@@ -1510,7 +1511,7 @@ function StudentAppTab() {
                   <td className="py-1.5 text-slate-800">{st.name}</td>
                   <td className="py-1.5 text-slate-500">{st.branch}</td>
                   <td className="py-1.5 text-right text-slate-500">
-                    {st.phone || st.login || "—"}
+                    {formatPhone(st.phone) || st.login || "—"}
                   </td>
                 </tr>
               ))}

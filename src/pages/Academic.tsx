@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "../components/PhoneInput";
 import { Link } from "react-router-dom";
 import {
   GraduationCap, DoorOpen, Plus, Trash2, Pencil, X,
@@ -1142,7 +1143,7 @@ function SupportTab({ canAssign }: { canAssign: boolean }) {
                     </Link>
                     {st.parent_phone && (
                       <span className="block text-xs text-slate-400">
-                        {st.parent_phone}
+                        {formatPhone(st.parent_phone)}
                       </span>
                     )}
                   </td>

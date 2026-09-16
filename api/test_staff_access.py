@@ -86,7 +86,8 @@ print("\n=== 2. KARTANI KIM TAHRIRLAYDI ===")
 r = client.put(f"/api/users/{UID['ustoz']}", headers=HR,
                json={"phone": "998901112233"})
 ck("HR telefonni tahrirladi", r.status_code, 200)
-ck("raqam saqlandi", r.json()["phone"], "998901112233")
+# 2026-09-16: telefon bazada bitta formatda (9 raqam)
+ck("raqam saqlandi", r.json()["phone"], "901112233")
 
 r = client.put(f"/api/users/{UID['ustoz']}", headers=HR,
                json={"fix_salary": 3500000})

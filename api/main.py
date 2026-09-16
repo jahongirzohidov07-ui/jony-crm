@@ -106,6 +106,9 @@ import auth_users as _r_auth_users
 import branches_rooms as _r_branches_rooms
 import complaints as _r_complaints
 import blacklist as _r_blacklist
+# Telefon raqamlari bitta formatda (2026-09-16) — model hodisalari shu
+# import bilan ulanadi, shuning uchun routerlardan oldin turadi.
+import phones as _phones  # noqa: F401
 import conduct as _r_conduct
 import events as _r_events
 import comments as _r_comments
@@ -203,6 +206,14 @@ try:
     from common import _seed_hr_structure
     with _HS(engine) as _db3:
         _seed_hr_structure(_db3)
+except Exception:
+    pass
+# Eski telefon raqamlarini bir marta tozalash — 4 soniyalik ulush,
+# tugamasa keyingi ishga tushishda va kunlik cron'da davom etadi.
+try:
+    from sqlalchemy.orm import Session as _PS
+    with _PS(engine) as _db_ph:
+        _phones.normalize_existing(_db_ph, budget_s=4.0)
 except Exception:
     pass
 # Jony Student: lug'at o'yinlari birinchi kundanoq ishlashi uchun

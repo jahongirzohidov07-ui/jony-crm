@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "../components/PhoneInput";
 import { useSearchParams } from "react-router-dom";
 import {
   Plus, Trash2, Pencil, Users, UserCheck, Clock, Briefcase, X,
@@ -669,7 +670,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     </button>
                     <BlacklistBadge hit={c.blacklist} />
                   </td>
-                  <td className="text-slate-500">{c.phone || "—"}</td>
+                  <td className="text-slate-500">{formatPhone(c.phone) || "—"}</td>
                   <td className="text-slate-600">
                     {c.role_label ? (
                       <>

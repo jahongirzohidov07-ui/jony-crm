@@ -62,11 +62,17 @@ def list_parents(
     query = scope_to_branch(db.query(models.Parent), models.Parent, user)
     if q:
         like = f"%{q}%"
-        query = query.filter(
-            (models.Parent.full_name.ilike(like))
-            | (models.Parent.phone.ilike(like))
-            | (models.Parent.public_id.ilike(like))
-        )
+        conds = (models.Parent.full_name.ilike(like)
+                 | models.Parent.phone.ilike(like)
+                 | models.Parent.public_id.ilike(like))
+        # Telefon bazada 9 raqam bo'lib turadi (2026-09-16) — qidiruvdagi
+        # probel/+998 ni olib tashlab ham solishtiramiz
+        digits = "".join(ch for ch in q if ch.isdigit())
+        if len(digits) >= 4:
+            if len(digits) >= 12 and digits.startswith("998"):
+                digits = digits[3:]
+            conds = conds | models.Parent.phone.ilike(f"%{digits}%")                 | models.Parent.phone2.ilike(f"%{digits}%")
+        query = query.filter(conds)
     rows = query.order_by(models.Parent.full_name).all()
     kids = {}
     if rows:

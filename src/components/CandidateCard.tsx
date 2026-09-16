@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatPhone } from "./PhoneInput";
 import { X, Save, FileText, Plus } from "lucide-react";
 import { api, type CandidateCard as Card } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
@@ -130,7 +131,7 @@ export function CandidateCard({
               {c?.full_name ?? "Nomzod"}
             </h3>
             <p className="text-xs text-slate-500">
-              {[c?.vacancy, c?.branch, c?.phone].filter(Boolean).join(" · ")}
+              {[c?.vacancy, c?.branch, formatPhone(c?.phone)].filter(Boolean).join(" · ")}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -179,7 +180,7 @@ export function CandidateCard({
                   value={[c.role_label, c.subject].filter(Boolean).join(" · ")}
                 />
                 <Info label="Vakansiya" value={c.vacancy} />
-                <Info label="Telefon" value={c.phone} />
+                <Info label="Telefon" value={formatPhone(c.phone)} />
                 <Info label="Filial" value={c.branch} />
                 <Info label="Bosqich" value={c.stage_label} />
                 <Info label="Manba" value={candidateSourceLabel(c.source)} />

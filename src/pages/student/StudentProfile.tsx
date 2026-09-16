@@ -1,4 +1,5 @@
 import { StudentLoading } from "../../components/StudentLoading";
+import { formatPhone } from "../../components/PhoneInput";
 import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
@@ -546,7 +547,7 @@ export default function StudentProfile() {
       </button>
 
       <p className="text-[11px] text-slate-500 text-center pt-1">
-        Jony Student · {d.phone}
+        Jony Student · {formatPhone(d.phone)}
       </p>
     </div>
   );

@@ -1971,54 +1971,121 @@ def group_history(group_id: int, db: Session = Depends(get_db),
     o'rinbosarliklar, imtihonlar va boshqa o'zgarishlar."""
     g = _get_group_in_scope(db, group_id, user)
     events = []
-    for s in db.query(models.Student).filter(
-            in_group(group_id)).all():
+    # KIM QILGANI (2026-09-17, Jahongir: "guruhlarda shularni kim
+    # qoygani korinmayapti"). Har voqeaga "by" qo'shiladi: o'quvchi
+    # voqealari audit jurnalidan, dars/imtihon yozuvlari o'z
+    # ustunlaridan olinadi. Hammasi bittadan so'rov bilan (N+1 yo'q).
+    studs = db.query(models.Student).filter(in_group(group_id)).all()
+    sids = [s.id for s in studs]
+    last_join, last_freeze = {}, {}
+    if sids:
+        for a in (db.query(models.AuditLog)
+                  .filter(models.AuditLog.entity == "student",
+                          models.AuditLog.entity_id.in_(sids),
+                          models.AuditLog.action.in_(
+                              ("group_move", "create", "freeze")))
+                  .order_by(models.AuditLog.id).all()):
+            if a.action == "freeze":
+                last_freeze[a.entity_id] = a
+            elif a.action == "create" or (
+                    a.field != "branch" and a.new_value == g.name):
+                last_join[a.entity_id] = a
+
+    uids = set()
+    rescheds = db.query(models.LessonReschedule).filter(
+        models.LessonReschedule.group_id == group_id).all()
+    subs = db.query(models.Substitution).filter(
+        models.Substitution.group_id == group_id).all()
+    for r in rescheds:
+        uids.update(x for x in (r.requested_by, r.decided_by) if x)
+    for sub in subs:
+        if sub.created_by:
+            uids.add(sub.created_by)
+    unames = ({u.id: u.full_name or u.username for u in
+               db.query(models.User).filter(models.User.id.in_(uids))}
+              if uids else {})
+    tids = {sub.substitute_teacher_id for sub in subs
+            if sub.substitute_teacher_id}
+    tnames = ({t.id: t.full_name for t in
+               db.query(models.Teacher).filter(models.Teacher.id.in_(tids))}
+              if tids else {})
+
+    def _who(a):
+        return (a.user_name or a.username) if a else None
+
+    for s in studs:
         if s.enrolled_date:
             events.append({"date": s.enrolled_date.isoformat(),
                            "kind": "join", "icon": "user",
-                           "text": f"{s.full_name} guruhga qo'shildi"})
+                           "text": f"{s.full_name} guruhga qo'shildi",
+                           "by": _who(last_join.get(s.id))})
         if s.status == "frozen":
             events.append({"date": (s.frozen_until or
                                     roles.local_today()).isoformat(),
                            "kind": "freeze", "icon": "snow",
                            "text": f"{s.full_name} muzlatilgan"
                            + (f" (qaytishi {s.frozen_until.isoformat()})"
-                              if s.frozen_until else "")})
-    for r in db.query(models.LessonReschedule).filter(
-            models.LessonReschedule.group_id == group_id).all():
+                              if s.frozen_until else ""),
+                           "by": _who(last_freeze.get(s.id))})
+    _rs = {"approved": "tasdiqlangan", "pending": "kutilmoqda",
+           "rejected": "rad etilgan"}
+    for r in rescheds:
+        by = unames.get(r.requested_by)
+        if r.decided_by and r.decided_by != r.requested_by:
+            by = ((by + ", " if by else "")
+                  + f"tasdiqladi: {unames.get(r.decided_by, '—')}")
+        elif r.auto_approved:
+            by = (by + " (avtomat tasdiqlangan)" if by
+                  else "avtomat tasdiqlangan")
         events.append({
             "date": (r.from_date or roles.local_today()).isoformat(),
             "kind": "move", "icon": "move",
             "text": f"Dars ko'chirildi: {r.from_date} → {r.to_date}"
-                    + (f" ({r.status})" if r.status else "")})
-    for sub in db.query(models.Substitution).filter(
-            models.Substitution.group_id == group_id).all():
-        t = db.query(models.Teacher).get(sub.substitute_teacher_id) \
-            if sub.substitute_teacher_id else None
+                    + (f" ({_rs.get(r.status, r.status)})"
+                       if r.status else ""),
+            "by": by})
+    for sub in subs:
         events.append({
             "date": sub.lesson_date.isoformat() if sub.lesson_date
             else roles.local_today().isoformat(),
             "kind": "sub", "icon": "swap",
             "text": "O'rinbosarlik: "
-                    + (t.full_name if t else "ochiq taklif")
-                    + f" ({sub.status})"})
+                    + tnames.get(sub.substitute_teacher_id, "ochiq taklif")
+                    + f" ({sub.status})",
+            "by": unames.get(sub.created_by)})
     for e in db.query(models.Exam).filter(
             models.Exam.group_id == group_id).all():
+        by = e.created_by
+        if e.approved_by and e.approved_by != e.created_by:
+            by = ((by + ", " if by else "")
+                  + f"tasdiqladi: {e.approved_by}")
         events.append({
             "date": e.date.isoformat(), "kind": "exam", "icon": "exam",
             "text": (e.title or roles.EXAM_KIND_LABELS.get(e.kind, e.kind))
-                    + f" — {e.status}"})
+                    + f" — {e.status}",
+            "by": by})
+    _fl = {"level": "Daraja", "teacher_id": "O'qituvchi",
+           "lesson_price": "Dars narxi", "monthly_fee": "Oylik narx",
+           "lesson_days": "Dars kunlari", "lesson_time": "Dars vaqti",
+           "start_date": "Boshlanish sanasi", "end_date": "Tugash sanasi",
+           "branch_id": "Filial", "room_id": "Xona", "name": "Nomi",
+           "course_id": "Kurs", "support_id": "Support"}
+    _al = {"update": "O'zgartirildi", "create": "Yaratildi",
+           "delete": "O'chirildi"}
     for a in (db.query(models.AuditLog)
               .filter(models.AuditLog.entity == "group",
                       models.AuditLog.entity_id == group_id)
               .order_by(models.AuditLog.id.desc()).limit(40).all()):
+        head = (f"{_fl.get(a.field, a.field)} o'zgartirildi" if a.field
+                else _al.get(a.action, a.action))
+        change = (f"{a.old_value or '—'} → {a.new_value or '—'}"
+                  if (a.old_value or a.new_value) else "")
         events.append({
             "date": a.created_at.date().isoformat() if a.created_at
             else roles.local_today().isoformat(),
             "kind": "audit", "icon": "edit",
-            "text": f"{a.action}: {a.field or ''} "
-                    f"{a.old_value or ''} → {a.new_value or ''}".strip()
-                    + (f" ({a.user_name})" if a.user_name else "")})
+            "text": (f"{head}: {change}" if change else head),
+            "by": _who(a)})
     events.sort(key=lambda e: e["date"], reverse=True)
     return {"group": g.name, "events": events[:120]}
 

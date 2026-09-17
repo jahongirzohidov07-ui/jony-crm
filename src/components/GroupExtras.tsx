@@ -165,7 +165,13 @@ export function GroupHistoryTab({ groupId }: { groupId: number }) {
           </span>
           <div className="min-w-0">
             <p className="text-sm text-slate-700">{e.text}</p>
-            <p className="text-xs text-slate-400">{e.date}</p>
+            <p className="text-xs text-slate-400">
+              {e.date}
+              {/* kim qilgani (2026-09-17) */}
+              <span className="ml-2 text-slate-500">
+                · {e.by ? <>Kim: <b className="font-medium">{e.by}</b></> : "kim qilgani yozilmagan"}
+              </span>
+            </p>
           </div>
         </div>
       ))}

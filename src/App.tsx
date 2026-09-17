@@ -48,6 +48,7 @@ const Complaints = lazy(() => import("./pages/Complaints"));
 const Academic = lazy(() => import("./pages/Academic"));
 const TimetableGrid = lazy(() => import("./pages/TimetableGrid"));
 const Archive = lazy(() => import("./pages/Archive"));
+const DiscountsPage = lazy(() => import("./pages/DiscountsPage"));
 const Tasks = lazy(() => import("./pages/Tasks"));
 const Inventory = lazy(() => import("./pages/Inventory"));
 const Events = lazy(() => import("./pages/Events"));
@@ -357,6 +358,7 @@ function AppRoutes() {
           <Route path="audit" element={<Audit />} />
           <Route path="timetable" element={<TimetableGrid />} />
           <Route path="archive" element={<Archive />} />
+          <Route path="discounts" element={<DiscountsPage />} />
           <Route path="tasks" element={<Tasks />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="events" element={<Events />} />

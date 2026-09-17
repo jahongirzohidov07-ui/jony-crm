@@ -34,7 +34,7 @@ import {
   Bell,
   Settings as SettingsIcon,
  Search, Smartphone , Sparkles , BookOpen, Clapperboard, PartyPopper,
-  Award } from "lucide-react";
+  Award, Percent } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -64,6 +64,7 @@ import {
   SMM_MANAGER,
   EVENTS_ACCESS,
   EVENT_MANAGER,
+  DISCOUNT_REQUEST,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
@@ -497,6 +498,10 @@ export default function Layout() {
   // Vazifalar endi tepada, qo'ng'iroqcha yonida turadi — menyuda emas.
   if (can(user?.role, INVENTORY_VIEW)) {
     items = [...items, { to: "/inventory", label: "Ombor", icon: Package }];
+  }
+  // CHEGIRMALAR (2026-09-17): chegirmadagi o'quvchilar alohida bo'limda
+  if (can(user?.role, DISCOUNT_REQUEST)) {
+    items = [...items, { to: "/discounts", label: "Chegirmalar", icon: Percent }];
   }
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];

@@ -1159,6 +1159,105 @@ def list_discounts(
         "pending": sum(1 for d in rows if d.status == "pending"),
     }
 
+@router.get("/api/discounts/overview")
+def discounts_overview(
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
+):
+    """CHEGIRMALAR BO'LIMI (2026-09-17, Jahongir: "chegirmalar degan
+    bo'limni ham qo'shish kerak ... chegirmadagilar korinishi kerak").
+
+    Hamma chegirmalar bitta ro'yxatda: o'quvchi, guruh, filial, turi,
+    miqdori, OYIGA taxminan qancha kamaytirishi, kim so'ragan/tasdiqlagan.
+    Filial kesimi o'quvchi orqali. So'rovlar partiyalab (N+1 yo'q)."""
+    _expire_discounts(db)
+    studs = {s.id: s for s in scope_to_branch(
+        db.query(models.Student), models.Student, user, branch_id).all()}
+    rows = []
+    if studs:
+        rows = (db.query(models.Discount)
+                .filter(models.Discount.student_id.in_(list(studs)))
+                .order_by(models.Discount.created_at.desc()).all())
+    gids = {s.group_id for s in studs.values() if s.group_id}
+    groups = ({g.id: g for g in db.query(models.Group)
+               .filter(models.Group.id.in_(gids))} if gids else {})
+    branches = {b.id: b.name for b in db.query(models.Branch).all()}
+    refs = {d.referrer_student_id for d in rows if d.referrer_student_id}
+    ref_names = ({s.id: s.full_name for s in db.query(models.Student)
+                  .filter(models.Student.id.in_(refs))} if refs else {})
+    today = roles.local_today()
+
+    def _fee(s, g):
+        if not g:
+            return 0
+        std = g.standard_lessons_per_month or 0
+        if s.locked_lesson_price and std:
+            return int(s.locked_lesson_price * std)
+        return int(g.monthly_fee or (g.lesson_price or 0) * std or 0)
+
+    out = []
+    for d in rows:
+        s = studs.get(d.student_id)
+        g = groups.get(s.group_id) if s and s.group_id else None
+        fee = _fee(s, g)
+        monthly = (int(d.amount or 0)
+                   or int(round(fee * (d.percent or 0) / 100)))
+        alive = _discount_alive(d, today)
+        out.append({
+            "id": d.id,
+            "student_id": d.student_id,
+            "student_name": s.full_name if s else "—",
+            "student_status": s.status if s else None,
+            "phone": s.phone if s else None,
+            "group_id": g.id if g else None,
+            "group": g.name if g else None,
+            "branch": branches.get(s.branch_id) if s else None,
+            "kind": d.kind,
+            "kind_label": roles.DISCOUNT_TYPE_LABELS.get(d.kind, d.kind),
+            "percent": d.percent,
+            "amount": d.amount,
+            "fee": fee,
+            "monthly": monthly,
+            "reason": d.reason,
+            "referrer_name": ref_names.get(d.referrer_student_id),
+            "start_date": d.start_date.isoformat() if d.start_date else None,
+            "end_date": d.end_date.isoformat() if d.end_date else None,
+            "status": d.status,
+            "status_label": roles.DISCOUNT_STATUS_LABELS.get(d.status,
+                                                             d.status),
+            "alive": alive,
+            "requested_by": d.requested_by,
+            "approved_by": d.approved_by,
+            "approved_at": (d.approved_at.isoformat()
+                            if d.approved_at else None),
+            "cancelled_reason": d.cancelled_reason,
+            "created_at": d.created_at.isoformat() if d.created_at else None,
+        })
+    live = [r for r in out if r["alive"]]
+    by_kind = {}
+    for r in live:
+        k = by_kind.setdefault(r["kind"], {"kind": r["kind"],
+                                           "label": r["kind_label"],
+                                           "count": 0, "monthly": 0})
+        k["count"] += 1
+        k["monthly"] += r["monthly"]
+    return {
+        "rows": out,
+        "summary": {
+            "students": len({r["student_id"] for r in live}),
+            "active": len(live),
+            "monthly": sum(r["monthly"] for r in live),
+            "pending": sum(1 for r in out if r["status"] == "pending"),
+            "by_kind": sorted(by_kind.values(), key=lambda x: -x["monthly"]),
+        },
+        "types": [{"key": k, "label": lbl}
+                  for k, lbl, _h in roles.DISCOUNT_TYPES],
+        "statuses": [{"key": k, "label": lbl}
+                     for k, lbl in roles.DISCOUNT_STATUSES],
+        "can_approve": user.role in roles.DISCOUNT_APPROVE,
+    }
+
 @router.post("/api/discounts")
 def create_discount(
     payload: schemas.DiscountCreate,

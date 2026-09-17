@@ -377,6 +377,10 @@ EXAM_VIEW = EXAM_ACCESS + [BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER]
 
 # Testni TASDIQLASH - faqat examiner va asoschi.
 EXAM_APPROVE = EXAM_ACCESS
+# Imtihonni TAHRIRLASH (sana, nom, unit, maksimal ball) va O'CHIRISH
+# (2026-09-17, Jahongir: "examiner testlarni edit qilish va o'chirishni
+# examinerlar boshlig'iga qo'shib ber"). Oddiy examiner va ustozda yo'q.
+EXAM_EDIT = [FOUNDER, BRANCH_MANAGER, HEAD_EXAMINER]
 
 # ---- Support teacher --------------------------------------------------
 SUPPORT_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER,

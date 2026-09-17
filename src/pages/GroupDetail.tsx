@@ -13,7 +13,7 @@ import {
   type Student,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { TEACHING_STAFF, FINANCE_ACCESS, can, ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER } from "../lib/roles";
+import { TEACHING_STAFF, FINANCE_ACCESS, EXAM_EDIT, can, ACADEMIC_HEAD, HR_MANAGER, SALES_MANAGER, ADMINISTRATOR, TEACHER, SUPPORT_TEACHER } from "../lib/roles";
 import { exportToExcel } from "../lib/exportXlsx";
 import { QuickXp } from "../components/XpAdmin";
 import {
@@ -434,7 +434,7 @@ export default function GroupDetail() {
           <ExamsTab
             groupId={group.id}
             canEdit={canExamManage}
-            canDelete={canFinance}
+            canDelete={can(user?.role, EXAM_EDIT)}
           />
         </>
       )}

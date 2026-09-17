@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, X, Plus, Trash2, Coins, CalendarClock, Clock, Minus } from "lucide-react";
+import { Check, X, Plus, Trash2, Pencil, Coins, CalendarClock, Clock, Minus } from "lucide-react";
 import {
   api,
   type AttendanceGrid,
@@ -947,18 +947,24 @@ export function GradesTab({
 // --------------------------------------------------------- Imtihonlar ----
 function ExamForm({
   groupId,
+  exam,
   onClose,
   onCreated,
 }: {
   groupId: number;
+  /** Berilsa — mavjud testni TAHRIRLASH (2026-09-17). */
+  exam?: Exam;
   onClose: () => void;
   onCreated: () => void;
 }) {
   const today = new Date().toISOString().slice(0, 10);
-  const [kind, setKind] = useState<ExamKind>("unit");
-  const [unitNo, setUnitNo] = useState("1");
-  const [date, setDate] = useState(today);
-  const [maxScore, setMaxScore] = useState("50");
+  const [kind, setKind] = useState<ExamKind>(exam?.kind ?? "unit");
+  const [unitNo, setUnitNo] = useState(String(exam?.unit_no ?? 1));
+  const [date, setDate] = useState(exam?.date ?? today);
+  const [maxScore, setMaxScore] = useState(
+    exam?.max_score != null ? String(exam.max_score) : "50"
+  );
+  const [title, setTitle] = useState(exam?.title ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // O'TISH BALLI (2026-09-10, Jahongir: "Maksimal ball bor o'tish
@@ -972,18 +978,25 @@ function ExamForm({
       .then(setPassRules)
       .catch(() => {});
   }, []);
-  const passPercent = passRules.find((r) => r.kind === kind)?.percent;
+  const passPercent = exam
+    ? exam.pass_percent ?? undefined
+    : passRules.find((r) => r.kind === kind)?.percent;
 
   async function save() {
     setSaving(true);
     setError(null);
     try {
-      await api.post(`/groups/${groupId}/exams`, {
+      const body = {
         kind,
         unit_no: kind === "unit" ? Number(unitNo) : null,
         date,
         max_score: kind === "mock" ? null : Number(maxScore),
-      });
+      };
+      if (exam) {
+        await api.put(`/exams/${exam.id}`, { ...body, title: title.trim() });
+      } else {
+        await api.post(`/groups/${groupId}/exams`, body);
+      }
       onCreated();
       onClose();
     } catch (e) {
@@ -997,7 +1010,9 @@ function ExamForm({
     <div className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-slate-900">Yangi test</h2>
+          <h2 className="font-semibold text-slate-900">
+            {exam ? "Testni tahrirlash" : "Yangi test"}
+          </h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={18} />
           </button>
@@ -1025,6 +1040,20 @@ function ExamForm({
               ))}
             </div>
           </div>
+
+          {exam && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Nomi (ixtiyoriy)
+              </label>
+              <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                value={title}
+                placeholder={examTitle({ ...exam, title: null, kind, unit_no: Number(unitNo) })}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+          )}
 
           {kind === "unit" && (
             <div>
@@ -1089,6 +1118,13 @@ function ExamForm({
             </p>
           ) : null}
 
+          {exam && exam.result_count > 0 && (
+            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              Natijalar kiritilgan: maksimal ball o'zgarsa foiz va coinlar
+              qayta hisoblanadi.
+            </p>
+          )}
+
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
@@ -1096,7 +1132,7 @@ function ExamForm({
             disabled={saving}
             className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 text-sm font-medium mt-1 disabled:opacity-60"
           >
-            {saving ? "Saqlanmoqda..." : "Yaratish"}
+            {saving ? "Saqlanmoqda..." : exam ? "Saqlash" : "Yaratish"}
           </button>
         </div>
       </div>
@@ -1373,6 +1409,7 @@ export function ExamsTab({
   const [loading, setLoading] = useState(true);
   const [showNew, setShowNew] = useState(false);
   const [openId, setOpenId] = useState<number | null>(null);
+  const [editing, setEditing] = useState<Exam | null>(null);
 
   function load() {
     setLoading(true);
@@ -1458,15 +1495,28 @@ export function ExamsTab({
                   </td>
                   <td className="px-4 py-3 text-right">
                     {canDelete && (
-                      <button
-                        onClick={(ev) => {
-                          ev.stopPropagation();
-                          remove(e);
-                        }}
-                        className="text-slate-300 hover:text-red-500"
-                      >
-                        <Trash2 size={15} />
-                      </button>
+                      <span className="inline-flex items-center gap-3">
+                        <button
+                          title="Tahrirlash"
+                          onClick={(ev) => {
+                            ev.stopPropagation();
+                            setEditing(e);
+                          }}
+                          className="text-slate-300 hover:text-brand-600"
+                        >
+                          <Pencil size={15} />
+                        </button>
+                        <button
+                          title="O'chirish"
+                          onClick={(ev) => {
+                            ev.stopPropagation();
+                            remove(e);
+                          }}
+                          className="text-slate-300 hover:text-red-500"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </span>
                     )}
                   </td>
                 </tr>
@@ -1480,6 +1530,14 @@ export function ExamsTab({
         <ExamForm
           groupId={groupId}
           onClose={() => setShowNew(false)}
+          onCreated={load}
+        />
+      )}
+      {editing && (
+        <ExamForm
+          groupId={groupId}
+          exam={editing}
+          onClose={() => setEditing(null)}
           onCreated={load}
         />
       )}

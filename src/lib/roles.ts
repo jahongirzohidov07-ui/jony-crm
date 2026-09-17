@@ -195,6 +195,8 @@ export const ACADEMIC_VIEW = [
 export const EXAM_ACCESS = [FOUNDER, EXAMINER, HEAD_EXAMINER];
 /** Imtihon buyurtmasini kim qabul qiladi. */
 export const EXAM_ORDER_ACCEPT = EXAM_ACCESS;
+/** Testni tahrirlash va o'chirish (2026-09-17) — api/roles.py EXAM_EDIT. */
+export const EXAM_EDIT = [FOUNDER, BRANCH_MANAGER, HEAD_EXAMINER];
 export const EXAM_VIEW = [
   ...EXAM_ACCESS,
   BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER,

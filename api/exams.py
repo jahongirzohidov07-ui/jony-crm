@@ -94,15 +94,133 @@ def get_exam(
 def delete_exam(
     exam_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.FULL_ACCESS)),
+    user=Depends(require_role(*roles.EXAM_EDIT)),
 ):
     """Imtihon o'chirilsa, u bergan coinlar ham qaytariladi."""
     exam = _exam_in_scope(db, exam_id, user)
+    # Qayta imtihonlari shu testga bog'langan — bog'lanish uziladi
+    if db.query(models.Exam).filter(
+            models.Exam.retake_of_id == exam.id).count():
+        (db.query(models.Exam)
+         .filter(models.Exam.retake_of_id == exam.id)
+         .update({models.Exam.retake_of_id: None},
+                 synchronize_session=False))
+    label = exam.title or roles.exam_title(exam.kind, exam.unit_no)
+    n_res = len(exam.results)
+    ex_date = exam.date.isoformat() if exam.date else ""
+    grp = db.query(models.Group).get(exam.group_id)
     for r in exam.results:
         _drop_coin_entry(db, "exam", r.id)
     db.delete(exam)
     db.commit()
+    audit.log(db, user, entity="exam", action="delete", entity_id=exam_id,
+              entity_label=f"{label} — {grp.name if grp else ''}".strip(" —"),
+              branch_id=grp.branch_id if grp else None,
+              old_value=f"{ex_date}, "
+                        f"{n_res} ta natija",
+              commit=True)
     return {"ok": True}
+
+
+def _free_student_ids(db: Session, student_ids: list) -> set:
+    """100% chegirmali o'quvchilar — coin olmaydi (save_exam_results
+    bilan bir xil qoida)."""
+    out = set()
+    if student_ids:
+        for d in (db.query(models.Discount)
+                  .filter(models.Discount.student_id.in_(student_ids),
+                          models.Discount.status == "active",
+                          models.Discount.percent >= 100).all()):
+            if _discount_alive(d):
+                out.add(d.student_id)
+    return out
+
+
+@router.put("/api/exams/{exam_id}", response_model=schemas.ExamOut)
+def update_exam(
+    exam_id: int,
+    payload: schemas.ExamUpdate,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.EXAM_EDIT)),
+):
+    """Imtihonni tahrirlash (2026-09-17): nomi, sanasi, turi, unit
+    raqami va maksimal ball. Maksimal ball o'zgarsa kiritilgan
+    natijalarning foizi va coini QAYTA hisoblanadi."""
+    exam = _exam_in_scope(db, exam_id, user)
+    data = payload.model_dump(exclude_unset=True)
+    scored = [r for r in exam.results if not r.absent
+              and (r.score is not None or r.band is not None)]
+
+    new_kind = data.get("kind", exam.kind)
+    if new_kind not in roles.EXAM_KINDS:
+        raise HTTPException(400, "Noto'g'ri test turi")
+    if new_kind != exam.kind and scored and \
+            ("mock" in (new_kind, exam.kind)):
+        raise HTTPException(
+            400, "Natija kiritilgan testni Mock'ga (yoki Mock'dan) "
+                 "o'tkazib bo'lmaydi — baholash usuli boshqa")
+    new_unit = data.get("unit_no", exam.unit_no)
+    if new_kind == "unit":
+        if not new_unit or not (1 <= new_unit <= roles.UNIT_COUNT):
+            raise HTTPException(
+                400, f"Unit raqami 1-{roles.UNIT_COUNT} oralig'ida bo'lishi kerak")
+    else:
+        new_unit = None
+    new_max = data.get("max_score", exam.max_score)
+    if new_kind == "mock":
+        new_max = None
+    elif not new_max or new_max <= 0:
+        raise HTTPException(400, "Maksimal ballni kiriting")
+    if new_max is not None:
+        over = [r for r in scored if r.score is not None and r.score > new_max]
+        if over:
+            raise HTTPException(
+                400, f"{len(over)} ta o'quvchining bali {new_max:g} dan "
+                     f"yuqori — avval natijalarni tuzating")
+    new_date = data.get("date", exam.date)
+    if not new_date:
+        raise HTTPException(400, "Sanani kiriting")
+
+    changes = {}
+    for f, v in (("kind", new_kind), ("unit_no", new_unit),
+                 ("title", (data.get("title", exam.title) or None)),
+                 ("date", new_date), ("max_score", new_max)):
+        if getattr(exam, f) != v:
+            changes[f] = v
+    if not changes:
+        return _exam_summary(db, exam)
+    audit.log_changes(db, user, entity="exam", obj=exam, changes=changes,
+                      label_attr="title",
+                      note=roles.exam_title(exam.kind, exam.unit_no))
+    for f, v in changes.items():
+        setattr(exam, f, v)
+
+    # Maksimal ball yoki sana o'zgardi — foiz, hisobga kirishi (yo'qlama
+    # sanagacha sanaladi) va coin qayta hisoblanadi
+    if ("max_score" in changes or "date" in changes) and new_max:
+        free = _free_student_ids(db, [r.student_id for r in scored])
+        counted = _counted_ids(db, exam, [r.student_id for r in exam.results])
+        for r in exam.results:
+            r.counted = 1 if r.student_id in counted else 0
+        for r in scored:
+            if r.score is None:
+                continue
+            r.percent = round(r.score / new_max * 100, 1)
+            if not r.counted or r.student_id in free:
+                r.coins = 0
+                _drop_coin_entry(db, "exam", r.id)
+                continue
+            r.coins = _coins_for_percent(db, r.percent, exam.kind)
+            _sync_coin_entry(
+                db, student_id=r.student_id, source="exam", ref_id=r.id,
+                amount=r.coins,
+                note=f"{roles.EXAM_KIND_LABELS.get(exam.kind, exam.kind)}"
+                     f" - {r.percent}%",
+                created_by=user.full_name,
+            )
+    db.commit()
+    db.refresh(exam)
+    return _exam_summary(db, exam)
 
 @router.put("/api/exams/{exam_id}/results", response_model=schemas.ExamDetail)
 def save_exam_results(

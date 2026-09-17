@@ -28,6 +28,9 @@ from auth import (
     require_role,
     verify_password,
     SECRET_KEY,
+    founder_like,
+    has_role,
+    is_partner_head,
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -550,7 +553,8 @@ def update_user(
     # lekin oylik raqamiga tegmaydi.
     if payload.fix_salary is not None \
             and payload.fix_salary != target.fix_salary \
-            and user.role not in roles.SALARY_EDIT:
+            and user.role not in roles.SALARY_EDIT \
+            and not is_partner_head(user):
         raise HTTPException(403, "Fiks oylikni o'zgartirish huquqi "
                                  "sizda yo'q")
     if user.role == roles.BRANCH_MANAGER \

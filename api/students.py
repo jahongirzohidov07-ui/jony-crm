@@ -28,6 +28,9 @@ from auth import (
     require_role,
     verify_password,
     SECRET_KEY,
+    founder_like,
+    has_role,
+    is_partner_head,
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -1312,7 +1315,8 @@ def add_payment(
     # faqat ikki lavozimda va auditda izi qoladi.
     when = None
     if payload.date:
-        if user.role not in (roles.FOUNDER, roles.FINANCE_DIRECTOR):
+        if (user.role not in (roles.FOUNDER, roles.FINANCE_DIRECTOR)
+                and not founder_like(user)):
             raise HTTPException(
                 403, "O'tgan sana bilan to'lov kiritishni faqat asoschi "
                      "va moliya direktori qila oladi")

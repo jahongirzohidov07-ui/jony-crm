@@ -26,6 +26,9 @@ from auth import (
     require_role,
     verify_password,
     SECRET_KEY,
+    founder_like,
+    has_role,
+    is_partner_head,
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -504,7 +507,8 @@ def delete_payment(
         # Avto-oylikni faqat ASOSCHI o'chiradi. O'chirilgach shu oy
         # uchun QAYTA hisoblanmaydi (skip belgisi qo'yiladi) — kerak
         # bo'lsa qo'lda "Hisoblash" yozuvi kiritiladi.
-        if user.role != roles.FOUNDER:
+        # Hamkor markaz rahbari o'z filialida asoschi kabi (2026-09-17)
+        if not founder_like(user):
             raise HTTPException(
                 403, "Avtomatik hisoblangan oylikni faqat asoschi "
                      "o'chira oladi")
@@ -515,7 +519,7 @@ def delete_payment(
 
     # PUL KIRIMI (to'lov) va refund yozuvini faqat ASOSCHI o'chiradi —
     # kassadagi xato ham asoschi nazorati ostida to'g'rilanadi.
-    if p.kind in ("payment", "refund") and user.role != roles.FOUNDER:
+    if p.kind in ("payment", "refund") and not founder_like(user):
         raise HTTPException(
             403, "To'lov (pul kirimi) yozuvini faqat asoschi o'chiradi")
 
@@ -909,15 +913,19 @@ def list_deleted_payments(
 def restore_deleted_payment(
     row_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(roles.FOUNDER)),
+    user=Depends(require_role(roles.FOUNDER, roles.PARTNER_HEAD)),
 ):
-    """Xato o'chirilgan yozuvni qaytarish. Faqat asoschi.
+    """Xato o'chirilgan yozuvni qaytarish. Faqat asoschi (va o'z
+    filialida hamkor markaz rahbari, 2026-09-17).
 
     Bir marta qaytarilgan yozuv ikkinchi marta qaytarilmaydi -
     aks holda bitta to'lov ikki nusxa bo'lib qolardi."""
     r = db.query(models.DeletedPayment).get(row_id)
     if not r:
         raise HTTPException(404, "Arxivda bunday yozuv yo'q")
+    if (user.role != roles.FOUNDER
+            and r.branch_id not in _user_branch_ids(db, user)):
+        raise HTTPException(403, "Bu yozuv boshqa filialga tegishli")
     if r.restored_at:
         raise HTTPException(400, "Bu yozuv allaqachon qaytarilgan")
     if r.student_id and db.query(models.Payment).filter(
@@ -1023,9 +1031,9 @@ def _refund_out(db, r: "models.RefundRequest") -> dict:
 def create_refund(payload: schemas.RefundCreate,
                   db: Session = Depends(get_db),
                   user=Depends(require_role(*roles.REFUND_REQUEST))):
-    s = db.query(models.Student).get(payload.student_id)
-    if not s:
-        raise HTTPException(404, "O'quvchi topilmadi")
+    # filial chegarasi (2026-09-17): hamkor markaz rahbari faqat o'z
+    # filiali o'quvchisiga refund so'raydi
+    s = _get_student_in_scope(db, payload.student_id, user)
     amount = roles.money(payload.amount)
     if amount <= 0:
         raise HTTPException(400, "Summa noldan katta bo'lsin")
@@ -1153,7 +1161,7 @@ def list_discounts(
                      for k, lbl in roles.DISCOUNT_STATUSES],
         # Asoschiga 100% gacha ruxsat (2026-08-12), qolganlarga 50%
         "max_percent": (roles.DISCOUNT_ABSOLUTE_CAP
-                        if user.role == roles.FOUNDER
+                        if founder_like(user)
                         else roles.MAX_TOTAL_DISCOUNT_PERCENT),
         "can_approve": user.role in roles.DISCOUNT_APPROVE,
         "pending": sum(1 for d in rows if d.status == "pending"),
@@ -1295,7 +1303,10 @@ def create_discount(
     if not can_approve_now:
         cap = roles.DISCOUNT_ABSOLUTE_CAP
     else:
-        cap = (roles.DISCOUNT_ABSOLUTE_CAP if user.role == roles.FOUNDER
+        cap = (roles.DISCOUNT_ABSOLUTE_CAP
+               if user.role == roles.FOUNDER
+               or (is_partner_head(user)
+                   and _in_user_branches(db, user, st.branch_id))
                else roles.MAX_TOTAL_DISCOUNT_PERCENT)
     now = _student_discount_percent(db, st)
     add = payload.percent or 0
@@ -1403,8 +1414,10 @@ def approve_discount(
         if not add and d.amount and st.group and st.group.monthly_fee:
             add = d.amount / st.group.monthly_fee * 100
         now = _student_discount_percent(db, st)
+        _own = (is_partner_head(user)
+                and _in_user_branches(db, user, st.branch_id))
         if (now + add > roles.MAX_TOTAL_DISCOUNT_PERCENT
-                and user.role != roles.FOUNDER):
+                and user.role != roles.FOUNDER and not _own):
             raise HTTPException(
                 400,
                 f"Jami chegirma {roles.MAX_TOTAL_DISCOUNT_PERCENT:.0f}% "
@@ -2260,7 +2273,7 @@ def get_plan(year: int | None = None, granularity: str = "month",
     if granularity not in ("month", "week", "day"):
         granularity = "month"
     secs = (list(roles.PLAN_SECTION_LABELS)
-            if user.role == roles.FOUNDER
+            if founder_like(user)
             else roles.plan_sections_for(user.role))
     wins = _plan_windows(year, granularity, month)
     # FILIAL KESIMI (2026-08-11, Jahongir): har filialga alohida reja.
@@ -2277,7 +2290,8 @@ def get_plan(year: int | None = None, granularity: str = "month",
     # chiqaverardi.
     full_access = user.role in tuple(roles.FULL_ACCESS)
     org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
-    if not (full_access or org_wide):
+    if not (full_access or org_wide) or is_partner_head(user):
+        # Hamkor markaz rahbari faqat O'Z markazi rejasini ko'radi
         branch_id = user.branch_id or None
     elif branch_id and branch_id in blocked_branch_ids(db, user):
         # Hamkor markazni ko'rish huquqi yo'q — o'z ko'rinishiga
@@ -2396,7 +2410,7 @@ def get_plan(year: int | None = None, granularity: str = "month",
         "sundays": [i for i, w in enumerate(wins)
                     if granularity == "day" and w[1].weekday() == 6],
         "rows": rows,
-        "can_edit": user.role in tuple(roles.PLAN_EDIT)
+        "can_edit": has_role(user, roles.PLAN_EDIT)
         and branch_id is not None,
         "branch_id": branch_id,
         "avg_check": avg_check,
@@ -2408,7 +2422,8 @@ def get_plan(year: int | None = None, granularity: str = "month",
                       for b in db.query(models.Branch)
                       .order_by(models.Branch.name).all()
                       if b.id not in set(hidden_branch_ids(db, user))]
-                     if (full_access or org_wide) else []),
+                     if (full_access or org_wide)
+                     and not is_partner_head(user) else []),
         "is_total": branch_id is None,
         "plan_raw": plan_map,
         "hint": ("Reja yil boshida oy kesimida tuziladi; hafta va kun "
@@ -2422,6 +2437,8 @@ def plan_suggest(year: int, growth: int = roles.PLAN_DEFAULT_GROWTH,
                  db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.PLAN_EDIT))):
     """O'tgan yil fakti + o'sish foizi — yangi reja uchun taklif."""
+    if is_partner_head(user):
+        branch_id = user.branch_id
     growth = max(0, min(100, growth))
     out = {}
     for key, label, sec, kind, auto in roles.PLAN_METRICS:
@@ -2455,6 +2472,10 @@ def save_plan(year: int, payload: schemas.PlanSaveIn,
                  "kiritiladi")
     if not db.query(models.Branch).get(branch_id):
         raise HTTPException(404, "Filial topilmadi")
+    if (user.role != roles.FOUNDER
+            and not _in_user_branches(db, user, branch_id)):
+        raise HTTPException(403, "Faqat o'z filialingiz rejasini "
+                                 "kirita olasiz")
     n = 0
     for it in payload.items:
         # revenue/expenses/profit endi AVTOMAT hisoblanadi - qo'lda
@@ -2579,18 +2600,38 @@ def finance_break_even(year: int | None = None, month: int | None = None,
                  "narxi - bir o'quvchiga o'zgaruvchan xarajat)."),
     }
 
+def _own_branch_ids(db: Session, user):
+    """Filialga bog'langan (ORG_WIDE bo'lmagan) xodim uchun uning
+    filiallari; butun tashkilotni ko'radiganlarga None (2026-09-17)."""
+    if user.role in tuple(roles.ORG_WIDE_ROLES) or not user.branch_id:
+        return None
+    return _user_branch_ids(db, user) or [-1]
+
+
+def _pay_scoped(q, own):
+    """Payment so'rovini o'quvchi filiali bo'yicha cheklaydi."""
+    if own is None:
+        return q
+    q = q.join(models.Student,
+               models.Student.id == models.Payment.student_id)
+    return q.filter(models.Student.branch_id.in_(own))
+
+
 def _fin_month(db: Session, user, y: int, m: int) -> dict:
     """Bir oyning asosiy moliyaviy raqamlari (overview uchun)."""
+    own = _own_branch_ids(db, user)
     start, end = billing.month_bounds(y, m)
     period = f"{y:04d}-{m:02d}"
     methods = _income_by_method(db, user, start, end, None)
     collected = round(sum(methods.values()), 0)
     d0, d1 = _utc_window(start, end)
-    disc = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+    disc = abs(_pay_scoped(db.query(func.coalesce(
+                   func.sum(models.Payment.amount), 0)), own)
                .filter(models.Payment.kind == "discount",
                        models.Payment.created_at >= d0,
                        models.Payment.created_at < d1).scalar() or 0)
-    refunds = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+    refunds = abs(_pay_scoped(db.query(func.coalesce(
+                      func.sum(models.Payment.amount), 0)), own)
                   .filter(models.Payment.kind == "payment",
                           models.Payment.amount < 0,
                           models.Payment.created_at >= d0,
@@ -2601,7 +2642,8 @@ def _fin_month(db: Session, user, y: int, m: int) -> dict:
                     if roles.EXPENSE_CATEGORY_GROUP.get(c) == "tax"), 0)
     fixed = round(sum(a for c, a in by_cat.items()
                       if roles.expense_is_fixed(c)), 0)
-    charges = abs(db.query(func.coalesce(func.sum(models.Payment.amount), 0))
+    charges = abs(_pay_scoped(db.query(func.coalesce(
+                      func.sum(models.Payment.amount), 0)), own)
                   .filter(models.Payment.kind == "charge",
                           models.Payment.period == period).scalar() or 0)
     net_income = round(collected - refunds, 0)
@@ -2620,7 +2662,8 @@ def _fin_month(db: Session, user, y: int, m: int) -> dict:
 @router.get("/api/finance/overview")
 def finance_overview(db: Session = Depends(get_db),
                      user=Depends(require_role(roles.FOUNDER,
-                                               roles.FINANCE_DIRECTOR))):
+                                               roles.FINANCE_DIRECTOR,
+                                               roles.PARTNER_HEAD))):
     """Asoschi va moliya direktori uchun bosh sahifa: 10 karta, har
     birida joriy summa, oylik reja, bajarilish %, o'tgan oyga farq,
     holat rangi va bosilganda batafsil tarkib."""
@@ -2632,15 +2675,24 @@ def finance_overview(db: Session = Depends(get_db),
 
     # Rejalar (Reja va Fakt bo'limidan)
     plan_year = y if m >= 9 else y - 1
-    plans = {t.metric: t.value for t in db.query(models.PlanTarget).filter(
+    own = _own_branch_ids(db, user)
+    _pq = db.query(models.PlanTarget).filter(
         models.PlanTarget.year == plan_year,
-        models.PlanTarget.month == m).all()}
+        models.PlanTarget.month == m)
+    if own is not None:
+        _pq = _pq.filter(models.PlanTarget.branch_id.in_(own))
+    plans = {}
+    for t in _pq.all():
+        if own is None:
+            plans[t.metric] = t.value
+        else:
+            plans[t.metric] = (plans.get(t.metric) or 0) + (t.value or 0)
     p_rev, p_exp, p_prof = (plans.get("revenue"), plans.get("expenses"),
                             plans.get("profit"))
 
     # Qarzdorlik: balansi manfiy o'quvchilar
-    bal = (db.query(models.Payment.student_id,
-                    func.sum(models.Payment.amount))
+    bal = (_pay_scoped(db.query(models.Payment.student_id,
+                                func.sum(models.Payment.amount)), own)
            .group_by(models.Payment.student_id).all())
     debtors = [(sid, b) for sid, b in bal if (b or 0) < -1000]
     total_debt = round(sum(-b for _, b in debtors), 0)
@@ -2925,6 +2977,11 @@ def finance_budget(year: int | None = None, month: int | None = None,
     month = month or today.month
     lines = db.query(models.BudgetLine).filter(
         models.BudgetLine.year == year).all()
+    # Hamkor markaz rahbari faqat O'Z markazi budjetini ko'radi
+    # (2026-09-17) — Jony Academy raqamlari unga ko'rinmaydi.
+    ph_bid = user.branch_id if is_partner_head(user) else None
+    if ph_bid:
+        lines = [l for l in lines if l.branch_id == ph_bid]
 
     def plan_of(m, kind, cat=None, br=None):
         return round(sum(
@@ -2944,10 +3001,11 @@ def finance_budget(year: int | None = None, month: int | None = None,
         p_exp = round(sum(l.amount for l in lines
                           if l.month == m and l.kind == "expense"), 0)
         done = s <= today
-        f_inc = _plan_fakt(db, "revenue", s, e) if done else None
+        f_inc = _plan_fakt(db, "revenue", s, e, ph_bid) if done else None
         if done:
-            et, _bc = _expenses_total(db, user, s, e, None)
-            pr = _payroll_total(db, user, f"{yy:04d}-{m:02d}", None) or 0
+            et, _bc = _expenses_total(db, user, s, e, ph_bid)
+            pr = _payroll_total(db, user, f"{yy:04d}-{m:02d}",
+                                ph_bid) or 0
             f_exp = round(et + pr, 0)
         else:
             f_exp = None
@@ -2969,9 +3027,9 @@ def finance_budget(year: int | None = None, month: int | None = None,
     # ---- Oylik: tanlangan oy kategoriyalar kesimida ----
     yy = roles.plan_month_year(year, month)
     s, e = _month_win(yy, month)
-    _t, by_cat = _expenses_total(db, user, s, e, None)
+    _t, by_cat = _expenses_total(db, user, s, e, ph_bid)
     payroll = round(_payroll_total(db, user, f"{yy:04d}-{month:02d}",
-                                   None) or 0, 0)
+                                   ph_bid) or 0, 0)
     cats = []
     all_cats = set(roles.EXPENSE_CATEGORIES) | set(by_cat) | {
         l.category for l in lines
@@ -3002,7 +3060,10 @@ def finance_budget(year: int | None = None, month: int | None = None,
     # ---- Filial kesimi (tanlangan oy) ----
     d0, d1 = _utc_window(s, e)
     br_rows = []
-    for b in db.query(models.Branch).all():
+    _bq = db.query(models.Branch)
+    if ph_bid:
+        _bq = _bq.filter(models.Branch.id == ph_bid)
+    for b in _bq.all():
         f_exp_b = round(db.query(func.coalesce(
             func.sum(models.Expense.amount), 0)).filter(
             models.Expense.branch_id == b.id,
@@ -3060,7 +3121,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
         "months": roles.PLAN_MONTHS, "yearly": yearly, "monthly": monthly,
         "branches": br_rows, "departments": dep_rows,
         "forecast": forecast,
-        "can_edit": user.role in tuple(roles.BUDGET_EDIT),
+        "can_edit": has_role(user, roles.BUDGET_EDIT),
         "expense_categories": [
             {"key": c, "label": roles.EXPENSE_CATEGORY_LABELS[c]}
             for c in roles.EXPENSE_CATEGORIES],

@@ -21,7 +21,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, FOUNDER,
+  FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, founderLike,
   SALARY_PAY } from "../lib/roles";
 import Debtors from "./Debtors";
 import {
@@ -1912,7 +1912,7 @@ function DeletedPaymentsTab() {
   const { user } = useAuth();
   const [rows, setRows] = useState<DeletedPay[] | null>(null);
   const [busy, setBusy] = useState<number | null>(null);
-  const isFounder = user?.role === FOUNDER;
+  const isFounder = founderLike(user?.role);
 
   const load = () => {
     api

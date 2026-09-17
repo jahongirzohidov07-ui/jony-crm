@@ -138,12 +138,40 @@ def get_current_user(
     return user
 
 
+_PARTNER_HEAD = "partner_head"   # roles.PARTNER_HEAD (virtual belgi)
+
+
+def is_partner_head(user) -> bool:
+    """Hamkor markaz (Stech) rahbarimi — asosiy filiali hamkor bo'lgan
+    filial rahbari (2026-09-17). Faqat O'Z filialida asoschi kabi
+    ishlaydi; boshqa filial ma'lumoti unga baribir yopiq."""
+    if getattr(user, "role", None) != "branch_manager":
+        return False
+    b = getattr(user, "branch", None)
+    return bool(b is not None and getattr(b, "is_partner", 0))
+
+
+def has_role(user, allowed) -> bool:
+    """user.role ro'yxatdami. Ro'yxatda roles.PARTNER_HEAD bo'lsa,
+    hamkor markaz rahbari ham o'tadi."""
+    allowed = tuple(allowed)
+    r = getattr(user, "role", None)
+    return r in allowed or (_PARTNER_HEAD in allowed
+                            and is_partner_head(user))
+
+
+def founder_like(user) -> bool:
+    """Asoschi yoki hamkor markaz rahbari. FAQAT allaqachon filial
+    bo'yicha tekshirilgan (o'z filialidagi) yozuvlar uchun ishlatiladi."""
+    return getattr(user, "role", None) == "founder" or is_partner_head(user)
+
+
 def require_role(*roles: str):
     """Dependency factory: restrict an endpoint to specific roles.
     Example: Depends(require_role("owner"))"""
 
     def checker(user: models.User = Depends(get_current_user)) -> models.User:
-        if user.role not in roles:
+        if not has_role(user, roles):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Bu amal uchun ruxsatingiz yo'q",

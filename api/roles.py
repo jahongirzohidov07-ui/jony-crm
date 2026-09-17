@@ -16,6 +16,13 @@ FOUNDER = "founder"                     # Asoschi - to'liq huquq
 FINANCE_DIRECTOR = "finance_director"   # Moliya direktori
 ACCOUNTANT = "accountant"               # Buxgalter
 BRANCH_MANAGER = "branch_manager"       # Filial rahbari
+# HAMKOR MARKAZ RAHBARI (2026-09-17, Jahongir: "Stetchga doir barcha
+# narsa va funksiyalar moliyaviy hammasi ochiladigan bolsin").
+# Bu HAQIQIY rol emas — VIRTUAL belgi: asosiy filiali hamkor markaz
+# (Stech) bo'lgan filial rahbari. Ro'yxatga qo'shilsa, o'sha amal unga
+# ham ochiladi (auth.has_role). Ma'lumoti baribir faqat o'z filiali
+# bilan cheklanadi — u ORG_WIDE emas.
+PARTNER_HEAD = "partner_head"
 
 # ---- Sotuv va marketing ----------------------------------------------
 SALES_HEAD = "sales_head"               # Sotuv rahbari
@@ -1050,7 +1057,7 @@ ENG_LEVELS = [
 assert [x["need"] for x in ENG_LEVELS] == ENG_LEVEL_POINTS
 
 
-REFUND_REQUEST = [SALES_MANAGER, FOUNDER]
+REFUND_REQUEST = [SALES_MANAGER, FOUNDER, PARTNER_HEAD]
 REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER]
 REFUND_VIEW = list(dict.fromkeys(
     REFUND_REQUEST + REFUND_APPROVE + [SALES_HEAD]))
@@ -5160,7 +5167,7 @@ OFFER_FINAL = ["accepted", "declined", "expired", "withdrawn"]
 
 # Kim tuzadi, kim tasdiqlaydi. Taklifda PUL bor — tasdiqsiz chiqmaydi.
 OFFER_CREATE = HR_FULL
-OFFER_APPROVE = [FOUNDER, FINANCE_DIRECTOR]
+OFFER_APPROVE = [FOUNDER, FINANCE_DIRECTOR, PARTNER_HEAD]
 # Nomzod javobini kutish muddati
 OFFER_VALID_DAYS = 5
 
@@ -5602,7 +5609,7 @@ PLAN_SECTION_ROLES = {
 # korinsin SMM chilarda")
 PLAN_SMM_EXTRA = ("new_payments", "students")
 
-PLAN_EDIT = [FOUNDER]
+PLAN_EDIT = [FOUNDER, PARTNER_HEAD]
 PLAN_VIEW = list(dict.fromkeys(
     r for rs in PLAN_SECTION_ROLES.values() for r in rs))
 # O'quv yili oylari tartibi va choraklar
@@ -5639,7 +5646,7 @@ def expense_is_fixed(category: str) -> bool:
 
 
 # ------------------------------------------------ Budjet va kalendar ----
-BUDGET_EDIT = [FOUNDER, FINANCE_DIRECTOR]
+BUDGET_EDIT = [FOUNDER, FINANCE_DIRECTOR, PARTNER_HEAD]
 PAYMENT_DUE_KINDS = [
     ("salary", "Maosh"),
     ("rent", "Ijara"),

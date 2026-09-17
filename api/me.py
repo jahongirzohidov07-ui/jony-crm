@@ -19,6 +19,7 @@ import models
 import notify
 import roles
 import schemas
+from auth import is_partner_head as _is_partner_head
 from auth import (
     create_access_token,
     get_current_user,
@@ -221,6 +222,9 @@ def my_identity(db: Session = Depends(get_db),
         # Volontyor support/examiner - "Mening oyligim" umuman
         # ko'rinmasin (Jahongir)
         "salary_hidden": _is_volunteer(db, user),
+        # Hamkor markaz (Stech) rahbari — o'z markazida asoschi kabi
+        # (2026-09-17). Frontend shu bo'yicha tugmalarni ochadi.
+        "partner_head": _is_partner_head(user),
     }
 
 @router.get("/api/me/permissions")

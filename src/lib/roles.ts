@@ -9,6 +9,17 @@ export const FOUNDER = "founder";
 export const FINANCE_DIRECTOR = "finance_director";
 export const ACCOUNTANT = "accountant";
 export const BRANCH_MANAGER = "branch_manager";
+/** HAMKOR MARKAZ (Stech) RAHBARI — haqiqiy rol emas, virtual belgi
+ * (2026-09-17, api roles.PARTNER_HEAD). Ro'yxatda bo'lsa, asosiy
+ * filiali hamkor markaz bo'lgan filial rahbari ham o'tadi. */
+export const PARTNER_HEAD = "partner_head";
+let _partnerHead = false;
+export function setPartnerHead(v: boolean) {
+  _partnerHead = v;
+}
+export function isPartnerHead(): boolean {
+  return _partnerHead;
+}
 
 // ---- Sotuv va marketing ----
 export const SALES_HEAD = "sales_head";
@@ -132,7 +143,7 @@ export const SUPPORT_TT_VIEW = [
 ];
 
 /** Refund: sotuv menejeri so'raydi, rahbar/moliyachi tasdiqlaydi. */
-export const REFUND_REQUEST = [SALES_MANAGER, FOUNDER];
+export const REFUND_REQUEST = [SALES_MANAGER, FOUNDER, PARTNER_HEAD];
 export const REFUND_APPROVE = [BRANCH_MANAGER, FINANCE_DIRECTOR, FOUNDER];
 
 /** Xodimlar ro'yxatini ko'ra oladiganlar. */
@@ -270,7 +281,14 @@ export const ORG_WIDE_ROLES = [
 export const DASHBOARD_ONLY = [SMM_MANAGER];
 
 export function can(role: string | undefined, allowed: string[]): boolean {
-  return !!role && allowed.includes(role);
+  if (!role) return false;
+  return allowed.includes(role)
+    || (_partnerHead && role === BRANCH_MANAGER && allowed.includes(PARTNER_HEAD));
+}
+
+/** Asoschi yoki (o'z markazida) hamkor markaz rahbari. */
+export function founderLike(role: string | undefined): boolean {
+  return role === FOUNDER || (_partnerHead && role === BRANCH_MANAGER);
 }
 
 export function roleLabel(role: string | undefined): string {

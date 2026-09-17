@@ -27,6 +27,9 @@ from auth import (
     require_role,
     verify_password,
     SECRET_KEY,
+    founder_like,
+    has_role,
+    is_partner_head,
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -169,7 +172,10 @@ def staff_card(
         raise HTTPException(403, "Bu kartani ko'rishga ruxsatingiz yo'q")
 
     show_salary = (user.role in tuple(roles.SALARY_VIEW_ALL)
-                   or user.id == user_id)
+                   or user.id == user_id
+                   # hamkor markaz rahbari — o'z markazi xodimlari maoshi
+                   or (is_partner_head(user)
+                       and _in_user_branches(db, user, emp.branch_id)))
 
     events = (db.query(models.StaffEvent)
               .filter(models.StaffEvent.user_id == user_id).all())

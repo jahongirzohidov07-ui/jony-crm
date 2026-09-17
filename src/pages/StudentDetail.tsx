@@ -20,7 +20,7 @@ import { formatSom, formatDate, formatTime, formatDateTime, formatDayMonth } fro
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
-  REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can,
+  REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can, founderLike,
   HR_MANAGER,
   FREEZE_ROLES, COIN_BALANCE_EDIT,
 } from "../lib/roles";
@@ -534,7 +534,7 @@ function PaymentsTab({
       alert(e instanceof Error ? e.message : "Xatolik");
     }
   }
-  const isFounder = user?.role === FOUNDER;
+  const isFounder = founderLike(user?.role);
   // Refund: sotuv so'raydi, rahbar/moliyachi tasdiqlaydi
   const canAskRefund = can(user?.role, REFUND_REQUEST);
   const canApproveRefund = can(user?.role, REFUND_APPROVE);
@@ -618,7 +618,7 @@ function PaymentsTab({
   // to'lov kirgizish funksiyasi qoshilsin, aynan o'quvchini profilida
   // tolovlar qismida yangi yozuv kiritish degan joyda").
   const canBackdate =
-    user?.role === FOUNDER || user?.role === FINANCE_DIRECTOR;
+    founderLike(user?.role) || user?.role === FINANCE_DIRECTOR;
   const [payDate, setPayDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);

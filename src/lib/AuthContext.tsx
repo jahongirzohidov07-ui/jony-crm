@@ -2,6 +2,7 @@ import {
   createContext, useContext, useEffect, useState, type ReactNode,
 } from "react";
 import { api, getToken, setToken, clearToken, setActiveRole, setGlobalBranch } from "./api";
+import { setPartnerHead } from "./roles";
 
 export interface AuthBranch {
   id: number;
@@ -25,6 +26,8 @@ interface AuthUser {
   roles?: AuthRole[];
   /** Volontyor support/examiner - "Mening oyligim" ko'rinmaydi. */
   salary_hidden?: boolean;
+  /** Hamkor markaz (Stech) rahbari — o'z markazida asoschi kabi. */
+  partner_head?: boolean;
 }
 
 interface AuthContextValue {
@@ -54,6 +57,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // can() shu belgiga qaraydi — render paytida sinxron o'rnatiladi,
+  // shunda birinchi chizishdayoq tugmalar to'g'ri chiqadi.
+  setPartnerHead(!!user?.partner_head);
 
   // Keshdagi ism/rol eskirib qolmasin: har ochilishda serverdan
   // yangilab olamiz (masalan, ism serverda o'zgartirilgan bo'lsa).
@@ -75,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         branches?: AuthBranch[];
         roles?: AuthRole[];
         salary_hidden?: boolean;
+        partner_head?: boolean;
       }>("/me")
       .then((r) => {
         const u = {
@@ -84,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           branches: r.branches ?? [],
           roles: r.roles ?? [],
           salary_hidden: r.salary_hidden ?? false,
+          partner_head: r.partner_head ?? false,
         };
         // Qaysi omborda saqlangan bo'lsa, o'shani yangilaymiz
         (localStorage.getItem("jony_crm_user")
@@ -97,7 +105,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           prev.branch_id === u.branch_id &&
           (prev.branches?.length ?? 0) === u.branches.length &&
           (prev.roles?.length ?? 0) === u.roles.length &&
-          (prev.salary_hidden ?? false) === u.salary_hidden
+          (prev.salary_hidden ?? false) === u.salary_hidden &&
+          (prev.partner_head ?? false) === u.partner_head
             ? prev
             : u,
         );

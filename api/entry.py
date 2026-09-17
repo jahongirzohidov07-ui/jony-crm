@@ -707,6 +707,7 @@ import re as _re
 from sqlalchemy import inspect as _sa_inspect, text as _sa_text
 
 from auth import hash_password as _hash_pw
+from auth import has_role as _has_role, is_partner_head as _is_ph
 from database import engine as _engine
 
 # --- support_assignments jadvaliga ustunlar (idempotent ALTER) ---
@@ -7345,7 +7346,7 @@ def budget_meta(year: int | None = None, db: Session = Depends(get_db),
         "approved": {str(k): v for k, v in _bud_approved(db, y).items()},
         "can_approve": user.role in tuple(_BUD_APPROVE_ROLES),
         "can_unlock": user.role in tuple(_BUD_UNLOCK_ROLES),
-        "can_edit": user.role in tuple(roles.BUDGET_EDIT),
+        "can_edit": _has_role(user, roles.BUDGET_EDIT),
         "next": {
             "year": nay,
             "month": nm,
@@ -7420,6 +7421,9 @@ def budget_copy(payload: dict = Body(...), db: Session = Depends(get_db),
     k = 1.0 + growth / 100.0
     src = db.query(models.BudgetLine).filter(
         models.BudgetLine.year == from_y).all()
+    # Hamkor markaz rahbari faqat O'Z markazi qatorlarini ko'chiradi
+    if _is_ph(user):
+        src = [x for x in src if x.branch_id == user.branch_id]
     if not src:
         raise HTTPException(400, "Tanlangan yilda budjet yo'q")
     locked = set(_bud_approved(db, to_y).keys())
@@ -7466,6 +7470,10 @@ def save_budget_locked(year: int, payload: schemas.BudgetSaveIn,
     for it in payload.items:
         if it.kind not in ("income", "expense") or not (1 <= it.month <= 12):
             raise HTTPException(400, "Noto'g'ri budjet qatori")
+        # Hamkor markaz rahbari (2026-09-17) budjetni faqat O'Z markaziga
+        # yozadi — Jony Academy qatorlariga tegolmaydi.
+        if _is_ph(user):
+            it.branch_id = user.branch_id
         if it.month in locked:
             raise HTTPException(
                 400, f"{roles.UZ_MONTHS[it.month - 1]} tasdiqlangan — "

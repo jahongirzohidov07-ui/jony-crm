@@ -27,6 +27,9 @@ from auth import (
     require_role,
     verify_password,
     SECRET_KEY,
+    founder_like,
+    has_role,
+    is_partner_head,
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -1959,7 +1962,7 @@ def offers_list(application_id: int | None = None,
         "statuses": [{"key": k, "label": l, "tone": t}
                      for k, l, t in roles.OFFER_STATUSES],
         "valid_days": roles.OFFER_VALID_DAYS,
-        "can_approve": user.role in tuple(roles.OFFER_APPROVE),
+        "can_approve": has_role(user, roles.OFFER_APPROVE),
         "hint": ("Taklif tasdiqsiz yuborilmaydi — unda pul bor. "
                  "Muzokarada eski taklif o'chirilmaydi, yangi versiya "
                  "ochiladi."),
@@ -2022,6 +2025,10 @@ def offer_action(oid: int, payload: schemas.OfferAction,
     o = db.query(models.Offer).get(oid)
     if not o:
         raise HTTPException(404, "Taklif topilmadi")
+    # Hamkor markaz rahbari faqat O'Z markazi taklifini boshqaradi
+    if (is_partner_head(user)
+            and not _in_user_branches(db, user, o.branch_id)):
+        raise HTTPException(403, "Bu taklif boshqa filialga tegishli")
 
     nxt = roles.offer_next(o.status, payload.action)
     if not nxt:
@@ -2031,7 +2038,7 @@ def offer_action(oid: int, payload: schemas.OfferAction,
 
     # Tasdiqlash faqat asoschi/moliya — taklifda pul bor
     if payload.action in ("approve", "reject") and \
-            user.role not in tuple(roles.OFFER_APPROVE):
+            not has_role(user, roles.OFFER_APPROVE):
         raise HTTPException(403, "Taklifni faqat rahbariyat tasdiqlaydi")
     if payload.action in ("submit", "send", "withdraw", "accept",
                           "decline", "expire") and \

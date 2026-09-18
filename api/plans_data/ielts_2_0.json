@@ -58,11 +58,16 @@
     ],
     [
      12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
      "Writing / speaking mini-vazifa",
      "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
     ],
     [
-     19,
+     7,
      "Xatolar ustida ishlash + takror",
      "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
     ],
@@ -841,7 +846,78 @@
      "20 so'z V3 + tarjima, 5 daqiqa",
      "2 coin"
     ]
-   ]
+   ],
+   "reading": {
+    "title": "Sardor Rashidov — Uzbek goals he has scored",
+    "text": [
+     "Sardor Rashidov was born in 1991 in Tashkent. He has played for Bunyodkor, Al-Jazira and Qatar SC, and he has scored more than 30 goals for the national team of Uzbekistan. Fans have called him \"the magician\" because of his dribbling.",
+     "Has he ever played in Europe? No, he hasn't. But he has beaten many European players in Asian competitions, and he has won the league in three countries. He has never given up: in 2019 he broke his leg, but he has come back and has played again for Uzbekistan.",
+     "\"I have made mistakes and I have lost finals,\" he says, \"but I have never stopped working.\" Young players have learned one thing from him: talent is not enough — you have to work every day."
+    ],
+    "glossary": [
+     "national team — terma jamoa",
+     "magician — sehrgar",
+     "dribbling — to'pni olib yurish",
+     "competition — musobaqa",
+     "league — liga",
+     "give up — taslim bo'lmoq",
+     "come back — qaytmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Present Perfect toping",
+      "type": "find",
+      "instr": "Matndan 6 ta \"has/have + V3\"",
+      "items": [
+       "played",
+       "scored",
+       "called",
+       "beaten",
+       "broken / come back",
+       "never stopped"
+      ],
+      "answers": [
+       "He has played for Bunyodkor, Al-Jazira and Qatar SC.",
+       "He has scored more than 30 goals.",
+       "Fans have called him \"the magician\".",
+       "He has beaten many European players.",
+       "He broke his leg, but he has come back.",
+       "I have never stopped working."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "He has played in Europe.",
+       "He has won the league in three countries.",
+       "He broke his arm in 2019."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (leg)"
+      ]
+     },
+     {
+      "title": "Have you ever…?",
+      "type": "write",
+      "instr": "Rashidov haqida 3 ta \"Has he ever…?\" savoli va javobi",
+      "items": [
+       "Europe",
+       "leg",
+       "final"
+      ],
+      "answers": [
+       "Has he ever played in Europe? — No, he hasn't.",
+       "Has he ever broken his leg? — Yes, he has (in 2019).",
+       "Has he ever lost a final? — Yes, he has."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda). Kitobda 1-dars uchun reading yo'q — bu qo'shimcha."
+   }
   },
   {
    "no": 2,
@@ -4199,77 +4275,77 @@
     ]
    ],
    "reading": {
-    "title": "Topic 1. A Restaurant for Change",
+    "title": "Islam Makhachev — he has been training since he was ten",
     "text": [
-     "Jamie Oliver wants to change people's lives and he is using food to do it. Oliver, a chef, is well-known for sharing his secrets of cooking healthy food through his magazine, cookbooks, and television shows. He is also changing lives through his Italian restaurant, Fifteen.",
-     "Fifteen started in London, England, as a place to train young adults to work in a kitchen. Oliver's idea was to create a professional kitchen that can help young people get a fresh start and a chance to become professional chefs. Every September, a new group of 18- to 24-year-olds start work at Fifteen. When they start, they are usually not qualified for a restaurant job, but that will change quickly.",
-     "In the 12 months of training, the student chefs study cooking at college and get hands-on training at the restaurant. Besides learning kitchen skills, they learn the importance of using fresh ingredients and how to create their own recipes. The students also learn how to manage money and deal with difficult customers. Overall, the program encourages them to believe in themselves.",
-     "The restaurant's name, Fifteen, comes from the number of students the restaurant had when it started in 2002. Today, Oliver has three of these restaurants, and a few hundred students have finished the program. Around 90 percent of the graduates are still working in the food industry. Some own restaurants or work in some of the best kitchens around the world. Others are now starring in their own TV shows."
+     "Islam Makhachev was born in 1991 in Dagestan. He has been training in wrestling and sambo since he was ten years old, and he has been friends with Khabib Nurmagomedov since childhood — they grew up in the same gym, with Khabib's father as their coach.",
+     "For many years Islam was \"Khabib's friend\". Since 2015 he has been fighting in the UFC, and he has been winning almost every fight. In 2022 he became the lightweight champion, and he has been defending the title ever since. Experts have been calling him the best fighter in the world.",
+     "His training day is hard on the body. He has been getting up at 6 am for years. He runs in the mountains, wrestles for two hours, and then works with his hands and legs in the gym. \"My knees and my back have been hurting for ten years,\" he jokes, \"but my head is fine.\"",
+     "Islam has been visiting Uzbekistan since 2019 and has many fans in Tashkent. He says the same thing to every young fighter: \"Don't look for a shortcut. I have been working every day for twenty years — that is the only secret.\""
     ],
     "glossary": [
-     "chef — oshpaz",
-     "well-known — mashhur",
-     "qualified — malakali",
-     "hands-on training — amaliy mashg'ulot",
-     "ingredients — masalliqlar",
-     "recipe — retsept",
-     "deal with — bilan ishlamoq/hal qilmoq",
-     "encourage — ruhlantirmoq",
-     "graduate — bitiruvchi",
-     "food industry — oziq-ovqat sohasi"
+     "wrestling — kurash",
+     "coach — murabbiy",
+     "lightweight — yengil vazn",
+     "defend a title — unvonni himoya qilmoq",
+     "expert — mutaxassis",
+     "joke — hazillashmoq",
+     "shortcut — qisqa yo'l",
+     "secret — sir"
     ],
     "tasks": [
+     {
+      "title": "Present Perfect Continuous toping",
+      "type": "find",
+      "instr": "Matndan 6 ta \"has/have been + V-ing\"",
+      "items": [
+       "training",
+       "fighting",
+       "defending",
+       "getting up",
+       "hurting",
+       "working"
+      ],
+      "answers": [
+       "He has been training in wrestling and sambo since he was ten.",
+       "Since 2015 he has been fighting in the UFC.",
+       "He has been defending the title ever since.",
+       "He has been getting up at 6 am for years.",
+       "My knees and my back have been hurting for ten years.",
+       "I have been working every day for twenty years."
+      ]
+     },
      {
       "title": "True / False",
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "Jamie Oliver is a chef.",
-       "Fifteen started in Italy.",
-       "The training lasts 12 months.",
-       "Students only learn cooking.",
-       "Most graduates have left the food industry."
+       "Islam and Khabib trained in the same gym as children.",
+       "He became champion in 2015.",
+       "He gets up at 8 am.",
+       "He has visited Uzbekistan."
       ],
       "answers": [
        "True",
-       "False (London)",
-       "True",
-       "False (money, customers too)",
-       "False (90% still working)"
+       "False (2022)",
+       "False (6 am)",
+       "True"
       ]
      },
      {
-      "title": "Savollar",
+      "title": "Tana a'zolari",
       "type": "short",
-      "instr": "Qisqa javob",
+      "instr": "Matnda qaysi tana a'zolari tilga olingan? Uning \"siri\" nima?",
       "items": [
-       "Why is the restaurant called Fifteen?",
-       "Who can join the program?",
-       "How many restaurants does Oliver have now?",
-       "Name two things students learn besides cooking."
+       "body parts",
+       "secret"
       ],
       "answers": [
-       "Because it had 15 students when it started (2002).",
-       "18- to 24-year-olds.",
-       "Three.",
-       "Managing money; dealing with difficult customers."
-      ]
-     },
-     {
-      "title": "Present Perfect toping",
-      "type": "find",
-      "instr": "Matndan Present Perfect / \"still\" bilan gaplarni toping va tarjima qiling",
-      "items": [
-       "have finished",
-       "still"
-      ],
-      "answers": [
-       "a few hundred students have finished the program",
-       "Around 90 percent of the graduates are still working"
+       "knees, back, hands, legs, head",
+       "Working every day for twenty years — no shortcut."
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 1 (sinfda); Topic 2–10 — uyga (hafta davomida)."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 1–10 — uyga (hafta davomida)."
    },
    "listening": {
     "audios": "Audio 1 (2.0 audio fayllari hali papkada yo'q — ustoz skriptni 2 marta o'qib beradi)",
@@ -5153,78 +5229,75 @@
     ]
    ],
    "reading": {
-    "title": "Topic 20. Three experiences I have had",
+    "title": "Hasanboy Dusmatov — he has won everything, and he is still boxing",
     "text": [
-     "Dear Sir / Madam, I would like to apply for the job of tour leader for your Overland Africa tours. I have had lots of useful experience for this role.",
-     "I have spent five months backpacking around Africa. In 2018, I visited Ethiopia, Kenya and Tanzania. I used local transport and organised my own accommodation, food and visas. I enjoyed meeting local people, learning about local traditions and visiting natural parks. This trip taught me to be independent and to organise travel arrangements.",
-     "I have also worked as a leader at a children's summer camp in the south of England. I worked there in 2017. I led activities for children aged 9–12, including football, climbing and campfire songs. For this work, I received training in climbing instruction and first aid. I learned how to be helpful and positive, and how to help people make friends.",
-     "Finally, I have completed the Active Youth Challenge. I did this while I was at high school in 2016. I volunteered at a social club for the elderly, learned car mechanics by myself, and organised a four-day camping and hiking trip in the Scottish mountains. This experience taught me about camping equipment and how to deal with problems like bad weather and getting lost.",
-     "I believe I have lots of useful experience to work as an Overland Tour Guide. I would love the opportunity to tell you more about my skills at an interview. Yours faithfully, Nicholas Rigby"
+     "Hasanboy Dusmatov was born in 1993 in Andijan. He is small — only 1.60 metres — but he has been boxing since he was eight, and he has won more titles than almost any Uzbek athlete.",
+     "In 2016, in Rio, he won Olympic gold in the light flyweight division and was given the Val Barker Trophy — the prize for the best boxer of the whole Olympics. Since then he has been fighting at the highest level for years: he has won the Asian Games, the World Championships (2023) and a second Olympic gold in Paris (2024).",
+     "How has he been doing it for so long? Discipline. He has been wearing the same simple training clothes for years: a T-shirt, shorts and old trainers. \"I don't need new sneakers to win,\" he says. He has been getting up at 5 am, running 10 km and then boxing for three hours — every day, for more than fifteen years.",
+     "He has also been helping young boxers in Andijan. A new boxing hall has opened there, and Hasanboy has been coaching children on Saturdays. \"I have won a lot,\" he says, \"but I have been learning something new every single day.\""
     ],
     "glossary": [
-     "apply for — ariza bermoq",
-     "backpacking — ryukzak bilan sayohat",
-     "accommodation — turar joy",
-     "independent — mustaqil",
-     "first aid — birinchi tibbiy yordam",
-     "volunteer — ko'ngilli bo'lmoq",
-     "the elderly — keksalar",
-     "equipment — jihoz",
-     "deal with — bilan kurashmoq",
-     "opportunity — imkoniyat"
+     "division — vazn toifasi",
+     "trophy — kubok",
+     "discipline — intizom",
+     "highest level — eng yuqori daraja",
+     "hall — zal",
+     "coach (v) — murabbiylik qilmoq"
     ],
     "tasks": [
      {
-      "title": "Zamonni toping",
-      "type": "find",
-      "instr": "Har tajriba ikki gap bilan berilgan: PP (umumiy) + Past Simple (tafsilot). Uchta juftni yozing",
+      "title": "PP yoki PPC?",
+      "type": "sort",
+      "instr": "Gaplarni natija (PP) yoki jarayon (PPC) deb belgilang",
       "items": [
-       "Africa",
-       "camp",
-       "challenge"
+       "He has been boxing since he was eight.",
+       "He has won more titles than almost any Uzbek athlete.",
+       "He has been wearing the same training clothes for years.",
+       "A new boxing hall has opened.",
+       "He has been coaching children on Saturdays.",
+       "I have won a lot."
       ],
       "answers": [
-       "I have spent five months backpacking… / In 2018, I visited Ethiopia…",
-       "I have also worked as a leader… / I worked there in 2017.",
-       "I have completed the Active Youth Challenge. / I did this … in 2016."
+       "PPC",
+       "PP",
+       "PPC",
+       "PP",
+       "PPC",
+       "PP"
       ]
      },
      {
-      "title": "Savollar",
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Hasanboy is very tall.",
+       "He won the Val Barker Trophy in 2016.",
+       "He buys new sneakers for every fight.",
+       "He has two Olympic gold medals."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Kiyim va tartib",
       "type": "short",
-      "instr": "Qisqa javob",
+      "instr": "Matndan",
       "items": [
-       "What job is Nicholas applying for?",
-       "Which countries did he visit in 2018?",
-       "What training did he receive at the camp?",
-       "Name two things he learned from the Scottish trip."
+       "What does he wear for training?",
+       "What is his daily routine?"
       ],
       "answers": [
-       "Tour leader (Overland Africa tours).",
-       "Ethiopia, Kenya and Tanzania.",
-       "Climbing instruction and first aid.",
-       "Camping equipment; dealing with bad weather / getting lost."
-      ]
-     },
-     {
-      "title": "Rasmiy xat qolipi",
-      "type": "find",
-      "instr": "Xatdagi 4 rasmiy iborani toping",
-      "items": [
-       "opening",
-       "purpose",
-       "closing",
-       "sign-off"
-      ],
-      "answers": [
-       "Dear Sir / Madam",
-       "I would like to apply for…",
-       "I would love the opportunity to…",
-       "Yours faithfully"
+       "A T-shirt, shorts and old trainers.",
+       "Gets up at 5 am, runs 10 km, boxes for three hours."
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 20 (sinfda); Topic 12–19 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 12–20 — uyga."
    },
    "listening": {
     "audios": "Audio 11–20 (fayllar hali yo'q — ustoz skriptni o'qiydi)",
@@ -6089,43 +6162,49 @@
     ]
    ],
    "reading": {
-    "title": "Topic 25. Why aren't babies born on certain days?",
+    "title": "Messi or Ronaldo — who is better?",
     "text": [
-     "Do you know anyone whose birthday is Christmas Day? You may know a few, but actually, having a birthday on that day is quite rare.",
-     "December 25th is the least common birthday in the USA, Australia and New Zealand. Between 30% and 40% fewer babies are born on this day than on the peak days. In England, Wales and Ireland, Christmas Day is the second rarest day for a birthday. There, the fewest birthdays are on December 26th, the national holiday called Boxing Day. In the USA, the four least common birthdays are Christmas, New Year, Thanksgiving and Independence Day.",
-     "So why does this happen? A third of babies in the USA are born by caesarean. Doctors can plan the date for these operations. They don't schedule them for the national holidays because they want to be celebrating, not working.",
-     "Some times of year are more common for birthdays than others. In the USA and New Zealand, the most popular month is September. In the UK, it's September or early October. Many babies are conceived in the cold winter months when days are short. In countries further north than the UK, like Norway and Russia, the peak months are earlier: in July or August.",
-     "Think about your birthday. Is it at a common time of year? Would you prefer your birthday to be at a different time of year?"
+     "For twenty years, football fans have argued about one question: who is better, Lionel Messi or Cristiano Ronaldo? Let's compare them.",
+     "Ronaldo is taller than Messi — 1.87 m against 1.70 m — and he is more muscular and more athletic. He is two years older, and he is faster in a straight line. Messi is shorter and slimmer, but he is quicker with the ball and more creative. Many coaches say Messi's left foot is more dangerous than any other foot in history.",
+     "Ronaldo has scored more goals than Messi — more than 900 — but Messi has given more assists and has won more trophies with his national team, including the World Cup in 2022. Ronaldo is more popular on social media: he has more followers than anyone else in the world. Messi is quieter and more modest; he doesn't talk as much as Ronaldo.",
+     "Their characters are different too. Ronaldo is more confident and more ambitious; he says, \"I am the best.\" Messi is as talented as Ronaldo, but he is shyer and lets his game speak. As Ronaldo himself said: \"We are not friends, but we are not enemies. We have made each other better.\" Uzbek fans are divided: in Tashkent you will find as many Messi shirts as Ronaldo shirts!"
     ],
     "glossary": [
-     "rare — kam uchraydigan",
-     "the least common — eng kam uchraydigan",
-     "fewer — kamroq",
-     "peak — eng yuqori nuqta",
-     "schedule — rejalashtirmoq",
-     "celebrate — nishonlamoq",
-     "common — keng tarqalgan",
-     "further north — shimolroqda",
-     "prefer — afzal ko'rmoq"
+     "argue — bahslashmoq",
+     "compare — taqqoslamoq",
+     "muscular — mushakdor",
+     "creative — ijodkor",
+     "assist — golli uzatma",
+     "trophy — kubok",
+     "national team — terma jamoa",
+     "modest — kamtar",
+     "enemy — dushman",
+     "divided — ikkiga bo'lingan"
     ],
     "tasks": [
      {
-      "title": "Taqqoslash so'zlarini toping",
+      "title": "Comparative toping",
       "type": "find",
-      "instr": "Matndan 5 ta comparative/superlative so'z toping va tarjima qiling",
+      "instr": "Matndan 8 ta taqqoslash shakli (-er / more / as…as)",
       "items": [
-       "fewer",
-       "the least common",
-       "more common",
-       "further north",
-       "earlier"
+       "taller",
+       "more muscular",
+       "quicker",
+       "more creative",
+       "more goals",
+       "more popular",
+       "as talented as",
+       "as many as"
       ],
       "answers": [
-       "fewer babies — kamroq chaqaloq",
-       "eng kam uchraydigan",
-       "ko'proq uchraydigan",
-       "shimolroqda",
-       "ertaroq"
+       "Ronaldo is taller than Messi.",
+       "He is more muscular and more athletic.",
+       "Messi is quicker with the ball.",
+       "…and more creative.",
+       "Ronaldo has scored more goals than Messi.",
+       "Ronaldo is more popular on social media.",
+       "Messi is as talented as Ronaldo.",
+       "As many Messi shirts as Ronaldo shirts."
       ]
      },
      {
@@ -6133,33 +6212,31 @@
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "Christmas Day is the least common birthday in the USA.",
-       "In England, the fewest birthdays are on December 25th.",
-       "Doctors plan caesarean operations on holidays.",
-       "September is the most popular birth month in the USA."
+       "Messi is taller than Ronaldo.",
+       "Ronaldo has scored more goals.",
+       "Messi has more followers on social media.",
+       "Ronaldo says he and Messi are enemies."
       ],
       "answers": [
-       "True",
-       "False (December 26th)",
        "False",
-       "True"
+       "True",
+       "False",
+       "False"
       ]
      },
      {
-      "title": "Savol",
+      "title": "Sizning fikringiz",
       "type": "short",
-      "instr": "Qisqa javob",
+      "instr": "3 gap: kim yaxshiroq va nega (comparative bilan)",
       "items": [
-       "Why are there fewer babies born on national holidays?",
-       "Which months are the peak months in Norway and Russia?"
+       "opinion"
       ],
       "answers": [
-       "Doctors don't schedule operations then (they want to celebrate).",
-       "July or August."
+       "Erkin: \"I think … is better because he is more …\""
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 25 (sinfda); Topic 21–24 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 21–25 — uyga."
    }
   },
   {
@@ -6998,44 +7075,48 @@
     ]
    ],
    "reading": {
-    "title": "Topic 23. The man with the most world records",
+    "title": "Abdukodir Khusanov — the most expensive Uzbek footballer ever",
     "text": [
-     "Ashrita Furman is a record-breaking record-breaker: he has set more records than anyone else in the world! In the last 40 years, he has established more than 600 records!",
-     "As a child, Ashrita loved reading the Guinness Book of World Records. He wanted to be in it too. But he thought people had to be good at sports to be in the book. He wasn't a good athlete. He felt his dream would never come true.",
-     "Later in life, Ashrita learned meditation, and with this, he learned that nothing is impossible. He tested this idea in 1978 by entering a 24-hour bike race in New York. Without any training, Ashrita came third! After that, he started thinking about breaking records again. He did 27,000 jumping jacks in 6 hours 45 minutes and became a record holder in 1980.",
-     "Today, Ashrita has a long list of records, including: walking the furthest distance with a bike on his chin, cycling the longest distance with a bottle on his head and lighting the most candles on a birthday cake. He says his favourite record was \"the longest distance on a pogo stick\" — 11.5 miles near Mount Fuji. The most difficult record was \"the most forward rolls\": in 10 hours 30 minutes, he did 8,341 of them.",
-     "If you want to break a world record too, Ashrita gives this advice: \"Choose something you enjoy because you will need to practise. And don't give up. Your mind will tell you that something is impossible, but it isn't.\""
+     "In January 2025, Manchester City paid 40 million euros for a 20-year-old defender from Tashkent. His name is Abdukodir Khusanov, and he became the most expensive Uzbek footballer in history — and the first Uzbek to play in the English Premier League.",
+     "Khusanov was born in 2004. His father was a professional footballer, and Abdukodir started at the Bunyodkor academy — one of the best football schools in Uzbekistan. At 18 he moved to Belarus, and a year later to Lens in France, where he became the most reliable defender in the team. Scouts called him the fastest and the strongest young defender in the league.",
+     "What is his character like? His coaches say he is the calmest player on the pitch and the most hard-working in training. He is also the most modest: after his first match for Manchester City he said, \"I made mistakes, but I will learn.\" He is the youngest player in the team, and one of the most popular with the fans, who call him \"Khusi\".",
+     "For Uzbek teenagers he is the biggest football star of their generation. Thousands of boys in Tashkent now dream of the same road: the Bunyodkor academy today, the Premier League tomorrow."
     ],
     "glossary": [
-     "set / break a record — rekord o'rnatmoq / yangilamoq",
-     "establish — o'rnatmoq",
-     "athlete — sportchi",
-     "come true — ro'yobga chiqmoq",
-     "meditation — meditatsiya",
-     "jumping jacks — sakrash mashqi",
-     "record holder — rekordchi",
-     "furthest — eng uzoq",
-     "forward roll — oldinga umbaloq",
-     "give up — taslim bo'lmoq"
+     "defender — himoyachi",
+     "expensive — qimmat",
+     "academy — akademiya",
+     "scout — iste'dod qidiruvchi",
+     "league — liga",
+     "pitch — maydon",
+     "modest — kamtar",
+     "generation — avlod",
+     "dream of — orzu qilmoq"
     ],
     "tasks": [
      {
       "title": "Superlative toping",
       "type": "find",
-      "instr": "Matndan 5 ta superlative toping",
+      "instr": "Matndan 8 ta superlative",
       "items": [
-       "most",
-       "furthest",
-       "longest",
-       "most difficult",
-       "more than"
+       "most expensive",
+       "best",
+       "most reliable",
+       "fastest / strongest",
+       "calmest",
+       "most hard-working",
+       "most modest",
+       "youngest / biggest"
       ],
       "answers": [
-       "the most world records / the most candles / the most forward rolls",
-       "the furthest distance",
-       "the longest distance",
-       "the most difficult record",
-       "more records than anyone else (comparative)"
+       "the most expensive Uzbek footballer in history",
+       "one of the best football schools in Uzbekistan",
+       "the most reliable defender in the team",
+       "the fastest and the strongest young defender",
+       "the calmest player on the pitch",
+       "the most hard-working in training",
+       "the most modest",
+       "the youngest player in the team / the biggest football star"
       ]
      },
      {
@@ -7043,33 +7124,31 @@
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "Ashrita was a good athlete as a child.",
-       "He came third in a 24-hour bike race in 1978.",
-       "His favourite record was the most forward rolls.",
-       "He has set more than 600 records."
+       "Manchester City paid 40 million euros for him.",
+       "He started at the Pakhtakor academy.",
+       "He played in France before England.",
+       "He is the oldest player in the team."
       ],
       "answers": [
-       "False",
        "True",
-       "False (pogo stick)",
-       "True"
+       "False (Bunyodkor)",
+       "True",
+       "False (youngest)"
       ]
      },
      {
-      "title": "Savol",
+      "title": "Xarakter",
       "type": "short",
-      "instr": "Qisqa javob",
+      "instr": "Matnda uning xarakteri qanday tasvirlangan? (3 sifat)",
       "items": [
-       "What did Ashrita learn from meditation?",
-       "What is his advice for breaking a record?"
+       "character"
       ],
       "answers": [
-       "That nothing is impossible.",
-       "Choose something you enjoy, practise, don't give up."
+       "calm, hard-working, modest"
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 23 (sinfda); Topic 22, 24 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 22–24 — uyga."
    }
   },
   {
@@ -7915,80 +7994,77 @@
     ]
    ],
    "reading": {
-    "title": "Topic 26. Frogs in love: Romeo and Juliet",
+    "title": "Eldor Shomurodov — the striker who had never given up",
     "text": [
-     "Romeo the frog spent ten years alone in a museum in Bolivia. He is a Sehuencas frog, and for a long time, scientists at the museum thought that Romeo was the only Sehuencas frog in the world. A lot of these frogs have died because of deforestation, and a deadly disease has taken the lives of many others. The scientists wanted to find a mate for Romeo. They even set up a profile for him on a dating website!",
-     "In 2018, some scientists went to the Bolivian forests to look for a partner for Romeo. They looked in many streams, but they couldn't find any frogs. They grew tired, wet and disappointed. They decided to check one more stream before going home. And then, they found a Sehuencas frog beside a waterfall. They returned the next day and found four more frogs, two male and two female. One of the females was the right age to mate. The conservationists called her Juliet.",
-     "The scientists didn't let Romeo and Juliet meet at first. They needed to check that Juliet didn't have a disease. But finally, they put the two frogs together. At first, Romeo seemed nervous, but soon he swam to Juliet and did a funny dance, shaking his toes.",
-     "Juliet hasn't laid any eggs yet, but scientists hope she will. For frogs to mate, the temperature and the water quality must be perfect. They also only mate when it is raining, so the scientists had to put special rain equipment in their tank. And they are happy that Romeo isn't lonely anymore!"
+     "Eldor Shomurodov was born in 1995 in Jarkurgan, Surkhandarya. By the time he was 18, he had already played for Bunyodkor, and by 2017 he had moved to Russia. But the real story began in 2020, when Genoa in Italy bought him: he became the first Uzbek footballer in Serie A.",
+     "His first year in Italy was hard. Before he scored his first goal, he had missed many chances, and Italian newspapers had written that he was \"not ready\". Then he got injured: he had been playing with a knee problem for weeks, and doctors told him to stop. By the time he recovered, the season had almost ended.",
+     "In 2021 Roma bought him for 17 million euros — the biggest transfer for an Uzbek player at that time. Under coach José Mourinho he won the UEFA Conference League in 2022. Nobody from Uzbekistan had won a European trophy before him.",
+     "In 2025 Shomurodov did something even bigger: he scored the goals that took Uzbekistan to its first ever World Cup. \"Before that match I hadn't slept for two nights,\" he said. \"But I had promised my father that one day Uzbekistan would play at the World Cup. Now we will.\""
     ],
     "glossary": [
-     "mate — juft (n)",
-     "juftlashmoq (v)",
-     "deforestation — o'rmonlarning kesilishi",
-     "deadly disease — o'ldiruvchi kasallik",
-     "stream — soy",
-     "disappointed — hafsalasi pir bo'lgan",
-     "waterfall — sharshara",
-     "conservationist — tabiatni muhofaza qiluvchi",
-     "lay eggs — tuxum qo'ymoq",
-     "equipment — jihoz",
-     "lonely — yolg'iz"
+     "striker — hujumchi",
+     "chance — imkoniyat",
+     "injured — jarohatlangan",
+     "recover — sog'aymoq",
+     "season — mavsum",
+     "transfer — transfer",
+     "trophy — kubok",
+     "promise — va'da bermoq"
     ],
     "tasks": [
      {
-      "title": "Voqealar tartibi",
-      "type": "order",
-      "instr": "6 voqeani to'g'ri tartibga qo'ying (1–6)",
+      "title": "Past Perfect toping",
+      "type": "find",
+      "instr": "Matndan 6 ta \"had + V3\"",
       "items": [
-       "Scientists found Juliet beside a waterfall.",
-       "Romeo lived alone in the museum for ten years.",
-       "Scientists went to the forests in 2018.",
-       "They checked that Juliet had no disease.",
-       "Romeo did a funny dance.",
-       "Scientists put rain equipment in the tank."
+       "played",
+       "moved",
+       "missed",
+       "written",
+       "won",
+       "slept / promised"
       ],
       "answers": [
-       "3",
-       "1",
-       "2",
-       "4",
-       "5",
-       "6"
+       "By the time he was 18, he had already played for Bunyodkor.",
+       "By 2017 he had moved to Russia.",
+       "Before he scored his first goal, he had missed many chances.",
+       "Italian newspapers had written that he was \"not ready\".",
+       "Nobody from Uzbekistan had won a European trophy before him.",
+       "I hadn't slept for two nights. / I had promised my father…"
       ]
      },
      {
-      "title": "Past Perfect bilan qayta yozing",
-      "type": "write",
-      "instr": "Matndagi ikki voqeani Past Perfect bilan bog'lang",
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
       "items": [
-       "ten years / find Juliet",
-       "check disease / meet",
-       "look in many streams / find"
+       "He was the first Uzbek in Serie A.",
+       "His first year in Italy was easy.",
+       "He won the Conference League with Roma.",
+       "Uzbekistan had played at the World Cup before 2025."
       ],
       "answers": [
-       "By the time they found Juliet, Romeo had lived alone for ten years.",
-       "Before Romeo and Juliet met, the scientists had checked that Juliet had no disease.",
-       "They had looked in many streams before they found a frog."
+       "True",
+       "False",
+       "True",
+       "False"
       ]
      },
      {
-      "title": "Savol",
+      "title": "Sog'liq",
       "type": "short",
-      "instr": "Qisqa javob",
+      "instr": "Matndan",
       "items": [
-       "Why have many Sehuencas frogs died?",
-       "When do these frogs mate?",
-       "Has Juliet laid eggs?"
+       "What was his injury?",
+       "What did doctors tell him?"
       ],
       "answers": [
-       "Deforestation and a deadly disease.",
-       "Only when it is raining (perfect temperature and water).",
-       "Not yet."
+       "A knee problem.",
+       "To stop playing."
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 26 (sinfda); Topic 27–29 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 26–29 — uyga."
    }
   },
   {
@@ -8827,42 +8903,43 @@
     ]
    ],
    "reading": {
-    "title": "Topic 28. Ancient robots",
+    "title": "BTS — by 2030 they will have changed music forever",
     "text": [
-     "What do you think of when you read the word 'robot'? Many people think about big machines in car factories or futuristic monsters in films. Few of us think about the past. But people were building incredible machines with human abilities hundreds of years ago!",
-     "For example, Egyptian texts from 1100 BC mention moving statues which 'chose' the next king. None of these statues exists, but probably they were built using the ancient Egyptians' mechanical technology.",
-     "Another ancient robot was a big robotic arm called \"The Claw\". The ancient Greek writer Polybius wrote about it in 213 BC. When a Roman ship came close, the arm picked up the front of the ship and lifted it into the air. Then the boat fell backwards into the sea and sank.",
-     "Another Greek inventor, Philon of Byzantium, built a female robot at about the same time. If someone placed a cup in her hand, it mixed water and wine to make a drink. But the robot wasn't popular because people didn't need robots to work. They had lots of slaves.",
-     "The famous artist Leonardo da Vinci loved designing robots. One of his robots was a lion. He built it for the king of France in 1515. It could walk and present flowers! In 2009, engineers used the plans to build it again. It worked perfectly. Although modern technology has moved on, these historical robots still amaze people today."
+     "BTS is a group of seven singers from South Korea: RM, Jin, Suga, J-Hope, Jimin, V and Jungkook. They started in 2013, when almost nobody was excited about a small company from Seoul. Today they are the most popular music group in the world, and millions of their fans — the \"ARMY\" — live in Uzbekistan too.",
+     "Why do people love them? Because their songs are about real emotions: anxiety before exams, loneliness, fear of the future, and the joy of being young. \"Love yourself,\" they tell their fans. In 2018 they spoke at the United Nations, and RM said: \"No matter who you are, where you're from — speak yourself.\"",
+     "The members have been very open about their feelings. Suga has talked about depression; Jungkook has said he was nervous and embarrassed before his first concerts. Fans say this honesty makes them feel less lonely.",
+     "By 2030, BTS will have been together for 17 years. All seven will have finished their military service, and the group will have released new albums. Experts say that by then they will have sold more than 100 million records. And their fans in Tashkent are sure: by 2030, BTS will have played a concert in Uzbekistan!"
     ],
     "glossary": [
-     "ancient — qadimiy",
-     "ability — qobiliyat",
-     "statue — haykal",
-     "mechanical — mexanik",
-     "inventor — ixtirochi",
-     "slave — qul",
-     "design — loyihalamoq",
-     "present — taqdim qilmoq",
-     "amaze — hayratlantirmoq",
-     "move on — oldinga ketmoq"
+     "excited — hayajonlangan",
+     "fan — muxlis",
+     "anxiety — xavotir",
+     "loneliness — yolg'izlik",
+     "joy — quvonch",
+     "United Nations — BMT",
+     "honesty — halollik",
+     "military service — harbiy xizmat",
+     "release — chiqarmoq",
+     "record — yozuv (albom)"
     ],
     "tasks": [
      {
-      "title": "Robot — yil — kim",
-      "type": "table",
-      "instr": "Jadvalni to'ldiring",
+      "title": "Future Perfect toping",
+      "type": "find",
+      "instr": "Matndan 5 ta \"will have + V3\"",
       "items": [
-       "moving statues",
-       "The Claw",
-       "female robot that mixed drinks",
-       "lion robot"
+       "been together",
+       "finished",
+       "released",
+       "sold",
+       "played"
       ],
       "answers": [
-       "Egypt, 1100 BC",
-       "Greece (Polybius), 213 BC",
-       "Philon of Byzantium",
-       "Leonardo da Vinci, 1515 (rebuilt 2009)"
+       "By 2030, BTS will have been together for 17 years.",
+       "All seven will have finished their military service.",
+       "The group will have released new albums.",
+       "They will have sold more than 100 million records.",
+       "BTS will have played a concert in Uzbekistan."
       ]
      },
      {
@@ -8870,35 +8947,31 @@
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "The Egyptian statues still exist today.",
-       "The Claw lifted Roman ships out of the water.",
-       "Philon's robot was very popular.",
-       "Engineers rebuilt da Vinci's lion in 2009."
+       "BTS has five members.",
+       "They spoke at the United Nations in 2018.",
+       "Their songs are only about love.",
+       "By 2030 they will have been together for 17 years."
       ],
       "answers": [
-       "False",
+       "False (seven)",
        "True",
-       "False (people had slaves)",
+       "False",
        "True"
       ]
      },
      {
-      "title": "Kelajak haqida",
-      "type": "write",
-      "instr": "Matnga asoslanib 3 ta Future Perfect gap: \"By 2100, robots will have …\"",
+      "title": "His-tuyg'ular",
+      "type": "short",
+      "instr": "Matndan 6 ta his-tuyg'u so'zini toping",
       "items": [
-       "jobs",
-       "homes",
-       "history"
+       "feelings"
       ],
       "answers": [
-       "By 2100, robots will have taken over many jobs.",
-       "By 2100, every home will have got a robot.",
-       "By then, people will have forgotten that robots are ancient!"
+       "excited, anxiety, loneliness, fear, joy, nervous, embarrassed, lonely"
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 28 (sinfda); Topic 29–30 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 29–30 — uyga."
    }
   },
   {
@@ -9733,60 +9806,56 @@
     ]
    ],
    "reading": {
-    "title": "Topic 30. The Rock Garden of Chandigarh",
+    "title": "Al-Farghani — the Uzbek scholar who measured the Nile",
     "text": [
-     "In Chandigarh, a city in northeast India, there is an amazing garden. There are tall rocks and small paths between them. There are waterfalls, pools, and hundreds of sculptures. The sculptures are surprising because they are all made from rubbish, like plastic jewellery, bottles, broken pots, sinks and pieces of electrical equipment.",
-     "The garden has a surprising history too because it was built in secret! A man called Nek Chand started building the garden in 1957. He chose some land in a forest near the city. Nobody was allowed to build here, so Nek knew that people wouldn't see him there. Then he started to collect rubbish and make the sculptures.",
-     "Nek's project was illegal, but for 18 years, nobody found it. However, in 1975, some government officials discovered it. By that time, the garden was nearly 49,000 m² in size. The government tried to destroy the garden, but when the people in the city heard about it, they wanted to keep it.",
-     "In 1976 it became a public park. After that, Nek Chand received a salary so that he could work in the garden full-time, and fifty more people were employed to work there with him. In 1990, the local government tried to build a road through the park, but local people protested, and their plan failed.",
-     "Now, a charity manages the garden. Five thousand visitors visit this special place each day. Volunteers, workers, and local children still work here. If you like, you can volunteer here too!"
+     "Ahmad al-Farghani was born around 800 in Fergana. In Europe he is known as Alfraganus. Before he became famous, he had studied in his home region; after he had finished his education, he moved to Baghdad, where the best scientists of the world were working at the House of Wisdom.",
+     "There he wrote \"Elements of Astronomy\". As soon as the book reached Europe, it became a textbook. It was translated into Latin in the 12th century, and by the time Columbus sailed to America in 1492, European sailors had been using Farghani's numbers for 300 years. Columbus himself read his book — and made a mistake with the units, which is why he thought the Earth was smaller than it is!",
+     "After Farghani had lived in Baghdad for many years, the ruler sent him to Egypt. There, in 861, he built the Nilometer in Cairo — an instrument to measure the level of the River Nile. Farmers used it to know when the water would rise. It still stands today; since it was built, it has been repaired many times, but the idea is the same.",
+     "Farghani died around 870. Today there is a monument to him in Fergana and another one in Cairo, next to the Nilometer — an Uzbek scholar between two countries, twelve centuries after his birth."
     ],
     "glossary": [
-     "path — so'qmoq",
-     "sculpture — haykal",
-     "rubbish — axlat",
-     "in secret — yashirincha",
-     "be allowed — ruxsat berilmoq",
-     "illegal — noqonuniy",
-     "official — amaldor",
-     "destroy — buzmoq",
-     "employ — ishga olmoq",
-     "protest — norozilik bildirmoq",
-     "charity — xayriya tashkiloti"
+     "scholar — olim",
+     "education — ta'lim",
+     "textbook — darslik",
+     "translate — tarjima qilmoq",
+     "sailor — dengizchi",
+     "unit — o'lchov birligi",
+     "ruler — hukmdor",
+     "instrument — asbob",
+     "level — sath",
+     "rise — ko'tarilmoq",
+     "monument — haykal",
+     "century — asr"
     ],
     "tasks": [
      {
-      "title": "Vaqt chizig'i",
-      "type": "order",
-      "instr": "Yillarni voqealar bilan bog'lang",
+      "title": "Bog'lovchilarni toping",
+      "type": "find",
+      "instr": "Matndan before / after / by the time / as soon as / since bilan gaplar",
       "items": [
-       "1957",
-       "1975",
-       "1976",
-       "1990"
+       "before",
+       "after",
+       "as soon as",
+       "by the time",
+       "since"
       ],
       "answers": [
-       "Nek Chand started building the garden.",
-       "Government officials discovered it.",
-       "It became a public park.",
-       "The government tried to build a road; people protested."
+       "Before he became famous, he had studied in his home region.",
+       "After he had finished his education, he moved to Baghdad.",
+       "As soon as the book reached Europe, it became a textbook.",
+       "By the time Columbus sailed to America, sailors had been using his numbers for 300 years.",
+       "Since it was built, it has been repaired many times."
       ]
      },
      {
-      "title": "Bog'lovchi bilan",
-      "type": "write",
-      "instr": "Matn asosida gap tuzing",
+      "title": "Mamlakatlar",
+      "type": "short",
+      "instr": "Matnda qaysi mamlakat/shaharlar tilga olingan? Millat sifatini yozing",
       "items": [
-       "by the time / 1975",
-       "after / 1976",
-       "as soon as / people heard",
-       "since / 1976"
+       "places"
       ],
       "answers": [
-       "By the time officials discovered it in 1975, Nek had worked in secret for 18 years.",
-       "After the garden had become a public park, Nek received a salary.",
-       "As soon as people heard about the plan, they protested.",
-       "The garden has been a public park since 1976."
+       "Fergana (Uzbekistan — Uzbek), Baghdad (Iraq — Iraqi), Europe (European), Latin, America (American), Egypt / Cairo (Egyptian)"
       ]
      },
      {
@@ -9794,20 +9863,20 @@
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "The sculptures are made from rubbish.",
-       "Nek Chand had permission to build the garden.",
-       "The garden was discovered after 18 years.",
-       "The road through the park was built in 1990."
+       "Al-Farghani was born in Fergana.",
+       "Columbus never read his book.",
+       "The Nilometer was built in Baghdad.",
+       "The Nilometer still exists."
       ],
       "answers": [
        "True",
        "False",
-       "True",
-       "False (the plan failed)"
+       "False (Cairo, Egypt)",
+       "True"
       ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 30 (sinfda); Topic 31–32 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 31–32 — uyga."
    }
   },
   {
@@ -10664,39 +10733,54 @@
     ]
    ],
    "reading": {
-    "title": "Topic 31. Growing up poor",
+    "title": "Lewis Hamilton — the race in the rain",
     "text": [
-     "My name is Mike, and I was born in a very poor neighbourhood in Los Angeles. When I was little, my mother took care of my brother and me because my father had left before I came to this world. My mother had to work two jobs that didn't pay much. She had to work very hard so that we could have food, clothes and a place to live.",
-     "Every day, she usually arrived home very late, and she was exhausted. Still, she always cooked nice meals for us, played with us, and made sure that we did our homework. She always insisted on how important it was to get a good education. She couldn't finish school because she got pregnant with me when she was just a teenager. \"I couldn't finish school, and that's why I must work so hard now,\" she often said.",
-     "Children were very violent in my neighbourhood. There was a lot of crime and drugs. It wasn't easy to be a good student there. The other children hated you if you got good grades, so I wasn't very popular. The only positive thing about living in that place is that you needed to be very clever to survive, and that helped me later in life.",
-     "Finally, my brother and I finished high school. I went to university because I was a very good basketball player, and basketball paid for my university degree. On the day of my graduation, my mother was in tears. And she was in tears again the day I showed her our new apartment, away from the neighbourhood. Now she doesn't have to work two jobs anymore, and I take care of her."
+     "Lewis Hamilton was born in 1985 in England. His father worked three jobs so that his son could race karts, and by the age of ten Lewis had been racing for four years. Today he has won seven Formula 1 world championships — more than anyone in history, together with Michael Schumacher.",
+     "Many of his greatest victories happened in bad weather. Drivers hate rain: the road is slippery, the tyres don't work, and visibility is almost zero. But Hamilton loves it. In Silverstone in 2008, it had been raining heavily for hours before the race started. Other drivers had been sliding off the track all morning. Hamilton won by more than a minute — the biggest gap in twenty years.",
+     "In Brazil in 2008, the situation was even more dramatic. It had been drizzling all afternoon, and in the last laps a downpour started. Hamilton had been driving in sixth place for a long time, but he needed fifth to become champion. On the final corner of the final lap, he passed one more car — and became the youngest champion in history at that time.",
+     "\"I had been dreaming about that day since I was six,\" he said. Today, when the forecast says \"rain\", his fans smile: they know it is Hamilton weather."
     ],
     "glossary": [
-     "neighbourhood — mahalla",
-     "take care of — g'amxo'rlik qilmoq",
-     "exhausted — holdan toygan",
-     "insist — qat'iy turmoq",
-     "violent — zo'ravon",
-     "crime — jinoyat",
-     "grades — baholar",
-     "survive — omon qolmoq",
-     "degree — diplom",
-     "in tears — ko'zida yosh bilan"
+     "race — poyga",
+     "kart — kart (kichik poyga mashinasi)",
+     "victory — g'alaba",
+     "slippery — sirpanchiq",
+     "visibility — ko'rish masofasi",
+     "slide off — sirpanib chiqib ketmoq",
+     "track — trassa",
+     "gap — farq",
+     "lap — aylanish",
+     "corner — burilish"
     ],
     "tasks": [
      {
-      "title": "Past Perfect / Continuous toping",
+      "title": "Past Perfect Continuous toping",
       "type": "find",
-      "instr": "Matndan yoki matn asosida \"had\" bilan gaplar",
+      "instr": "Matndan 5 ta \"had been + V-ing\"",
       "items": [
-       "father",
-       "mother / work",
-       "school"
+       "racing",
+       "raining",
+       "sliding",
+       "drizzling / driving",
+       "dreaming"
       ],
       "answers": [
-       "My father had left before I came to this world.",
-       "By the time Mike went to university, his mother had been working two jobs for years.",
-       "She hadn't finished school because she had got pregnant as a teenager."
+       "By the age of ten Lewis had been racing for four years.",
+       "It had been raining heavily for hours before the race started.",
+       "Other drivers had been sliding off the track all morning.",
+       "It had been drizzling all afternoon. / Hamilton had been driving in sixth place.",
+       "I had been dreaming about that day since I was six."
+      ]
+     },
+     {
+      "title": "Ob-havo so'zlari",
+      "type": "short",
+      "instr": "Matndan 6 ta ob-havo so'zi",
+      "items": [
+       "weather"
+      ],
+      "answers": [
+       "rain, raining heavily, slippery, drizzling, downpour, forecast"
       ]
      },
      {
@@ -10704,35 +10788,20 @@
       "type": "tf",
       "instr": "Matnga ko'ra",
       "items": [
-       "Mike's father took care of the family.",
-       "His mother worked two jobs.",
-       "Good students were popular in his neighbourhood.",
-       "Basketball paid for his university."
+       "Hamilton's father had one job.",
+       "He has won seven championships.",
+       "Drivers love racing in the rain.",
+       "In Brazil 2008 he needed fifth place."
       ],
       "answers": [
-       "False",
+       "False (three)",
        "True",
        "False",
        "True"
       ]
-     },
-     {
-      "title": "Savol",
-      "type": "short",
-      "instr": "Qisqa javob",
-      "items": [
-       "Why couldn't his mother finish school?",
-       "What was the only positive thing about the neighbourhood?",
-       "What does Mike do for his mother now?"
-      ],
-      "answers": [
-       "She got pregnant as a teenager.",
-       "You needed to be very clever to survive.",
-       "He takes care of her; she doesn't work two jobs."
-      ]
      }
     ],
-    "book_ref": "Reading book IELTS 2.0: Topic 31 (sinfda); Topic 32–33 — uyga."
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 32–33 — uyga."
    },
    "listening": {
     "audios": "Audio 21–30 (fayllar hali yo'q — ustoz ob-havo ma'lumotini o'qiydi)",

@@ -424,9 +424,101 @@ Yoko (21) ………… to work five days a week. Where (22) ………… Yoko an
     ],
 }
 
+
+U5_IMG = "/exam-img/step1-u5/"
+HOME_A_G = ["a TV", "a shower", "a pillow", "a bed", "a towel", "a bath",
+            "a blanket"]
+
+STEP1_UNIT5 = {
+    "level": "step1", "kind": "unit", "unit_no": 5,
+    "title": "Step 1 · Unit 5 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["There isn’t one.", "Yes, there is.", "It’s lovely."], "A"),
+                _c("", ["Yes, thank you.", "They’re lovely.", "Yes, of course."], "C"),
+                _c("", ["Yes, there are.", "It’s in this street.", "Certainly."], "B"),
+                _c("", ["No, sorry, it isn’t.", "Yes, there are – in this street.", "Thank you."], "B"),
+                _c("", ["Can you help please?", "Yes, there is.", "It’s in the next street."], "C"),
+                _c("", ["Yes, I do.", "Yes, there is.", "Who’s this?"], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · In a hotel room",
+            "instructions": "Choose the word to match the picture.",
+            "questions": [
+                _c("", HOME_A_G, "F", image=U5_IMG + "q7.jpg"),
+                _c("", HOME_A_G, "D", image=U5_IMG + "q8.jpg"),
+                _c("", HOME_A_G, "B", image=U5_IMG + "q9.jpg"),
+                _c("", HOME_A_G, "E", image=U5_IMG + "q10.jpg"),
+                _c("", HOME_A_G, "A", image=U5_IMG + "q11.jpg"),
+                _c("", HOME_A_G, "C", image=U5_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Places",
+            "instructions": "Look at the pictures of places. What are the "
+                            "missing letters? Some letters are already "
+                            "there. Write the whole word.",
+            "questions": [
+                _t("r _ _ _ _ _ _ _ _ _", "restaurant", "estaurant",
+                   image=U5_IMG + "q13.jpg"),
+                _t("b _ _ _ _", "beach", "each", image=U5_IMG + "q14.jpg"),
+                _t("s _ _ _", "shop", "hop", image=U5_IMG + "q15.jpg"),
+                _t("c _ _ _ _ _", "cinema", "inema", image=U5_IMG + "q16.jpg"),
+                _t("h _ _ _ _ _ _ _", "hospital", "ospital",
+                   image=U5_IMG + "q17.jpg"),
+                _t("s _ _ _ _ _ _ _   p _ _ _", "swimming pool",
+                   "wimming ool", image=U5_IMG + "q18.jpg"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about Diana and her town. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """Diana’s Town
+
+My name is Diana. I live in Grandford with my family. Grandford is a small town in England. (19) ………… lots of beautiful old houses in Grandford. (20) ………… a lovely hotel – I work there – and lots of good shops and cafés too. (21) ………… a big swimming pool in Grandford and some very good schools but (22) ………… a university. I like my town. Where do you live? (23) ………… a university in your town? (24) ………… any swimming pools in your town?""",
+            "questions": [
+                _c("", ["They are", "There is", "There are"], "C"),
+                _c("", ["There is", "They are", "There are"], "A"),
+                _c("", ["It is", "There is", "There are"], "B"),
+                _c("", ["there aren’t", "it isn’t", "there isn’t"], "C"),
+                _c("", ["Is there", "Is it", "Are there"], "A"),
+                _c("", ["Has it", "Are there", "Is there"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about a city. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("There ............ a nice restaurant in the city.",
+                   ["am", "is", "are"], "B"),
+                _c("............ are three good hotels in the city.",
+                   ["It", "They", "There"], "C"),
+                _c("There ............ two banks on Main Street.",
+                   ["has", "is", "are"], "C"),
+                _c("............ a swimming pool near the hotel?",
+                   ["Is there", "Are there", "Is it"], "A"),
+                _c("............ many car parks in the centre of the city.",
+                   ["They aren’t", "There isn’t", "There aren’t"], "C"),
+                _c("............ any good restaurants on Main Street?",
+                   ["Is there", "Are there", "Are they"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
     ("exam_tpl_step1_unit3", STEP1_UNIT3),
     ("exam_tpl_step1_unit4", STEP1_UNIT4),
+    ("exam_tpl_step1_unit5", STEP1_UNIT5),
 ]

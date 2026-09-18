@@ -14422,6 +14422,2786 @@
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 46–50 — uyga (tanlab)."
    }
+  },
+  {
+   "no": 17,
+   "title": "Indirect vs Direct Questions",
+   "grammar_topic": "BILVOSITA SAVOLLAR (Could you tell me… / Do you know… / I wonder…)",
+   "vocab_topic": "At school (maktabda)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 17 – Indirect vs direct questions (jadval); AT SCHOOL WORDS; Reading — Al-Xorazmiy (Jony Academy matni).",
+   "objectives": [
+    "Bilvosita savol iboralarini bilish: Could you tell me / Do you know / I wonder / I'd like to know / Can you remember.",
+    "Wh-savolni bilvosita shaklga o'tkazish (so'z tartibi gapdek; do/does/did yo'q).",
+    "Yes/No savolni if / whether bilan bilvosita qilish.",
+    "Maktab CORE 20 bilan fanlar, xonalar va jihozlar haqida muloyim savollar berish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "At school (maktabda) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz notanish odam rolida: \"Where is the library?\" (qo'pol) — \"Excuse me, could you tell me where the library is?\" (muloyim). Farq: so'z tartibi va ohang."
+    ],
+    [
+     8,
+     "Kahoot — During vs while, if vs unless",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — During vs while, if vs unless lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Direct — Question word + Auxiliary + S + Verb? (What time does the movie start?); Indirect — Phrase + Question word + S + Verb (Could you tell me what time the movie starts?). Yes/No savolda if/whether. Yordamchi do/does/did yo'qoladi; tartib gapdek."
+    ],
+    [
+     12,
+     "At school (maktabda) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Bevosita: \"Where is the gym?\" — bilvosita: \"Could you tell me where the gym is?\" — ega fe'ldan OLDIN, savol tartibi yo'q.",
+     "Present/Past Simple'da do/does/did yo'qoladi: \"When does the lesson start?\" → \"Do you know when the lesson starts?\"",
+     "Yes/No savol → if / whether: \"Is the library open?\" → \"Do you know if the library is open?\"",
+     "Oxiridagi belgi: ibora savol bo'lsa (Could you tell me…?) — \"?\", gap bo'lsa (I wonder…) — \".\"."
+    ],
+    "formulas": [
+     [
+      "Bevosita",
+      "Question word + Auxiliary + S + V?",
+      "What time does the movie start?",
+      "Kino soat nechida boshlanadi?"
+     ],
+     [
+      "Bilvosita",
+      "Ibora + Question word + S + V",
+      "Could you tell me what time the movie starts?",
+      "Kino nechida boshlanishini ayta olasizmi?"
+     ],
+     [
+      "be bilan",
+      "Ibora + Wh + S + be",
+      "Do you know where the library is?",
+      "Kutubxona qayerdaligini bilasizmi?"
+     ],
+     [
+      "Yes/No",
+      "Ibora + if/whether + S + V",
+      "Do you know if the lab is open today?",
+      "Laboratoriya bugun ochiqmi, bilasizmi?"
+     ],
+     [
+      "I wonder",
+      "I wonder + Wh/if + S + V.",
+      "I wonder why the teacher is late.",
+      "O'qituvchi nega kech qolganiga qiziqyapman."
+     ],
+     [
+      "O'tgan zamon",
+      "Ibora + Wh + S + V2",
+      "Can you remember what the homework was?",
+      "Uyga vazifa nima edi, eslaysizmi?"
+     ]
+    ],
+    "presentation": [
+     [
+      "Could you tell me where the principal's office is?",
+      "It's on the second floor, next to the library."
+     ],
+     [
+      "Do you know what time the PE lesson starts?",
+      "It starts at ten."
+     ],
+     [
+      "Can you tell me if the computer lab is open?",
+      "Yes, it's open until six."
+     ],
+     [
+      "I wonder who our new maths teacher is.",
+      "I think it's Mr Karimov."
+     ],
+     [
+      "Do you know whether we have a test tomorrow?",
+      "Yes, we have a history test."
+     ],
+     [
+      "Could you tell me how much the textbook costs?",
+      "It costs 80,000 sums."
+     ],
+     [
+      "Can you remember what the homework was?",
+      "We had to read chapter five."
+     ],
+     [
+      "Do you know why the cafeteria is closed?",
+      "Because they are painting it."
+     ],
+     [
+      "I'd like to know how many students are in the class.",
+      "There are twenty."
+     ],
+     [
+      "Could you tell me where I can find a calculator?",
+      "You can borrow one from the librarian."
+     ]
+    ],
+    "notes": [
+     "Muloyim so'rov iboralari: Could you tell me…? / Do you know…? / Would you mind telling me…? / I'd like to know… / I wonder…",
+     "\"whether\" rasmiyroq, \"if\" og'zaki — ikkalasi ham to'g'ri.",
+     "Bilvosita savolda \"will\" qoladi: Do you know when the bus will come?",
+     "Maktab so'zlari: subject (fan), facility (sharoit), supplies (jihoz), staff (xodimlar)."
+    ],
+    "mistakes": [
+     [
+      "Could you tell me where is the library?",
+      "Could you tell me where the library is?",
+      "Ega fe'ldan oldin."
+     ],
+     [
+      "Do you know when does the lesson start?",
+      "Do you know when the lesson starts?",
+      "does yo'qoladi, -s qo'shiladi."
+     ],
+     [
+      "I wonder is he a teacher.",
+      "I wonder if he is a teacher.",
+      "Yes/No → if/whether."
+     ],
+     [
+      "Can you tell me what did she say?",
+      "Can you tell me what she said?",
+      "did yo'qoladi, V2."
+     ],
+     [
+      "Do you know where can I buy a ruler?",
+      "Do you know where I can buy a ruler?",
+      "can egadan keyin."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — fanlar va sinf jihozlari; STRONG — maktab xonalari va xodimlar; SUPER — o'quv qurollari va jarayon so'zlari.",
+     "Har so'zga bilvosita savol: \"Could you tell me where the … is?\" / \"Do you know if we have … today?\""
+    ],
+    "core": [
+     [
+      "subject",
+      "fan",
+      "Could you tell me which subject you like most?",
+      "Qaysi fanni ko'proq yoqtirishingizni ayta olasizmi?",
+      "ˈsəbʤɪkt"
+     ],
+     [
+      "maths / mathematics",
+      "matematika",
+      "Do you know who invented algebra? — Al-Khwarizmi!",
+      "Algebrani kim ixtiro qilganini bilasizmi? — Al-Xorazmiy!",
+      ""
+     ],
+     [
+      "science",
+      "tabiiy fanlar",
+      "I wonder if science is harder than history.",
+      "Tabiiy fanlar tarixdan qiyinroqmi, qiziq.",
+      "saɪəns"
+     ],
+     [
+      "history",
+      "tarix",
+      "Do you know when the history test is?",
+      "Tarix testi qachonligini bilasizmi?",
+      "ˈhɪstəri"
+     ],
+     [
+      "geography",
+      "geografiya",
+      "Could you tell me where the geography room is?",
+      "Geografiya xonasi qayerdaligini ayta olasizmi?",
+      "ʤiˈɑgrəfi"
+     ],
+     [
+      "literature",
+      "adabiyot",
+      "I'd like to know what we read in literature.",
+      "Adabiyotda nima o'qishimizni bilmoqchiman.",
+      "ˈlɪtərəʧər"
+     ],
+     [
+      "PE (physical education)",
+      "jismoniy tarbiya",
+      "Do you know if PE is in the gym today?",
+      "Bugun jismoniy tarbiya zaldami, bilasizmi?",
+      ""
+     ],
+     [
+      "art",
+      "san'at (rasm)",
+      "Can you tell me what we need for art?",
+      "San'at darsiga nima kerakligini ayta olasizmi?",
+      "ɑrt"
+     ],
+     [
+      "music",
+      "musiqa",
+      "I wonder who teaches music this year.",
+      "Bu yil musiqani kim o'qitadi, qiziq.",
+      "mˈjuzɪk"
+     ],
+     [
+      "foreign language",
+      "chet tili",
+      "Do you know which foreign language she studies?",
+      "U qaysi chet tilini o'rganishini bilasizmi?",
+      "ˈfɔrən ˈlæŋgwɪʤ"
+     ],
+     [
+      "computer science",
+      "informatika",
+      "Could you tell me where the computer science lab is?",
+      "Informatika laboratoriyasi qayerda, ayta olasizmi?",
+      "kəmˈpjutər saɪəns"
+     ],
+     [
+      "desk",
+      "parta",
+      "Do you know whose desk this is?",
+      "Bu kimning partasi, bilasizmi?",
+      "dɛsk"
+     ],
+     [
+      "whiteboard",
+      "oq doska",
+      "Can you tell me why the whiteboard is dirty?",
+      "Doska nega iflos, ayta olasizmi?",
+      "ˈwaɪtbɔːd"
+     ],
+     [
+      "marker",
+      "marker",
+      "Do you know where the markers are?",
+      "Markerlar qayerda, bilasizmi?",
+      "ˈmɑːkə"
+     ],
+     [
+      "eraser",
+      "o'chirg'ich",
+      "Could you tell me if there is an eraser?",
+      "O'chirg'ich bormi, ayta olasizmi?",
+      "ɪˈreɪsər"
+     ],
+     [
+      "notebook",
+      "daftar",
+      "I wonder where I left my notebook.",
+      "Daftarimni qayerda qoldirdim, qiziq.",
+      "ˈnəʊtbʊk"
+     ],
+     [
+      "textbook",
+      "darslik",
+      "Do you know how much the textbook costs?",
+      "Darslik qancha turishini bilasizmi?",
+      "ˈtɛkstˌbʊk"
+     ],
+     [
+      "calculator",
+      "kalkulyator",
+      "Can you tell me whether we can use a calculator?",
+      "Kalkulyator ishlatsa bo'ladimi, ayta olasizmi?",
+      "ˈkælkjəˌleɪtər"
+     ],
+     [
+      "ruler",
+      "chizg'ich",
+      "Do you know who took my ruler?",
+      "Chizg'ichimni kim olganini bilasizmi?",
+      "ˈrulər"
+     ],
+     [
+      "timetable",
+      "dars jadvali",
+      "Could you tell me what the timetable is for Monday?",
+      "Dushanbadagi jadval qanday, ayta olasizmi?",
+      "ˈtaɪmteɪbl"
+     ]
+    ],
+    "strong": [
+     [
+      "library (school)",
+      "kutubxona",
+      "Do you know when the library closes?",
+      "Kutubxona qachon yopilishini bilasizmi?",
+      "ˈlaɪbrɛˌri (skul)"
+     ],
+     [
+      "gym / gymnasium",
+      "sport zali",
+      "Could you tell me where the gym is?",
+      "Sport zali qayerda, ayta olasizmi?",
+      "ʤɪm  ʤɪmˈneɪziəm"
+     ],
+     [
+      "playground",
+      "o'yin maydonchasi",
+      "I wonder if the playground is open.",
+      "Maydoncha ochiqmi, qiziq.",
+      "ˈpleɪˌgraʊnd"
+     ],
+     [
+      "cafeteria / canteen",
+      "oshxona",
+      "Do you know what the cafeteria serves today?",
+      "Bugun oshxonada nima bor, bilasizmi?",
+      "ˌkæfəˈtɪriə  kænˈtin"
+     ],
+     [
+      "laboratory / lab",
+      "laboratoriya",
+      "Can you tell me if the lab has new equipment?",
+      "Laboratoriyada yangi jihoz bormi, ayta olasizmi?",
+      "ˈlæbrəˌtɔri  læb"
+     ],
+     [
+      "auditorium / assembly hall",
+      "majlislar zali",
+      "Do you know where the assembly hall is?",
+      "Majlislar zali qayerda, bilasizmi?",
+      "ˌɔdəˈtɔriəm  əˈsɛmbli hɔl"
+     ],
+     [
+      "sports field",
+      "sport maydoni",
+      "I wonder whether the sports field is wet.",
+      "Sport maydoni ho'lmi, qiziq.",
+      "spɔrts fild"
+     ],
+     [
+      "swimming pool",
+      "suzish havzasi",
+      "Could you tell me if the school has a pool?",
+      "Maktabda havza bormi, ayta olasizmi?",
+      "sˈwɪmɪŋ pul"
+     ],
+     [
+      "principal / headteacher",
+      "direktor",
+      "Do you know who the principal is?",
+      "Direktor kimligini bilasizmi?",
+      ""
+     ],
+     [
+      "librarian",
+      "kutubxonachi",
+      "Can you tell me whether the librarian is in?",
+      "Kutubxonachi joyidami, ayta olasizmi?",
+      "laɪˈbrɛˌriən"
+     ],
+     [
+      "coach",
+      "murabbiy",
+      "I wonder how long the coach has worked here.",
+      "Murabbiy bu yerda qancha ishlagan, qiziq.",
+      "koʊʧ"
+     ],
+     [
+      "classmate",
+      "sinfdosh",
+      "Do you know where my classmates are?",
+      "Sinfdoshlarim qayerda, bilasizmi?",
+      "ˈklæsˌmeɪt"
+     ],
+     [
+      "tutor",
+      "repetitor",
+      "Could you tell me how much a tutor costs?",
+      "Repetitor qancha turadi, ayta olasizmi?",
+      "ˈtutər"
+     ],
+     [
+      "counsellor",
+      "maslahatchi (psixolog)",
+      "Do you know if the school has a counsellor?",
+      "Maktabda maslahatchi bormi, bilasizmi?",
+      "ˈkaʊnsələr"
+     ],
+     [
+      "janitor / caretaker",
+      "farrosh, qorovul",
+      "I wonder where the caretaker keeps the keys.",
+      "Qorovul kalitlarni qayerda saqlaydi, qiziq.",
+      "ˈʤænətər  ˈkɛrˌteɪkər"
+     ],
+     [
+      "bulletin board",
+      "e'lonlar taxtasi",
+      "Can you tell me what's on the bulletin board?",
+      "E'lonlar taxtasida nima bor, ayta olasizmi?",
+      "ˈbʊlɪtən bɔrd"
+     ],
+     [
+      "poster",
+      "plakat",
+      "Do you know who made this poster?",
+      "Bu plakatni kim qilganini bilasizmi?",
+      "ˈpoʊstər"
+     ],
+     [
+      "chalk",
+      "bo'r",
+      "Could you tell me where the chalk is?",
+      "Bo'r qayerda, ayta olasizmi?",
+      "ʧɔk"
+     ],
+     [
+      "blackboard",
+      "qora doska",
+      "I wonder why we still have a blackboard.",
+      "Nega hali ham qora doskamiz bor, qiziq.",
+      "ˈblækˌbɔrd"
+     ],
+     [
+      "backpack (school)",
+      "maktab ryukzagi",
+      "Do you know whose backpack this is?",
+      "Bu kimning ryukzagi, bilasizmi?",
+      "ˈbækˌpæk (skul)"
+     ]
+    ],
+    "super": [
+     [
+      "highlighter",
+      "marker-qalam (rangli)",
+      "Do you know if I can borrow your highlighter?",
+      "Markeringni olib tursam bo'ladimi, bilasizmi?",
+      ""
+     ],
+     [
+      "folder",
+      "papka",
+      "Could you tell me which folder the tests are in?",
+      "Testlar qaysi papkada, ayta olasizmi?",
+      "ˈfoʊldər"
+     ],
+     [
+      "glue stick",
+      "yelim-qalam",
+      "I wonder where the glue stick has gone.",
+      "Yelim qayoqqa ketdi, qiziq.",
+      "glu stɪk"
+     ],
+     [
+      "stationery",
+      "kanselyariya",
+      "Do you know where they sell stationery?",
+      "Kanselyariya qayerda sotilishini bilasizmi?",
+      "ˈsteɪʃəˌnɛri"
+     ],
+     [
+      "homework",
+      "uyga vazifa",
+      "Can you remember what the homework was?",
+      "Uyga vazifa nima edi, eslaysizmi?",
+      "ˈhəʊmwɜːk"
+     ],
+     [
+      "assignment",
+      "topshiriq",
+      "Could you tell me when the assignment is due?",
+      "Topshiriq qachongacha, ayta olasizmi?",
+      "əˈsaɪnmənt"
+     ],
+     [
+      "grade / mark",
+      "baho",
+      "Do you know what grade I got?",
+      "Qanday baho olganimni bilasizmi?",
+      "greɪd  mɑrk"
+     ],
+     [
+      "exam",
+      "imtihon",
+      "I wonder how hard the exam will be.",
+      "Imtihon qanchalik qiyin bo'ladi, qiziq.",
+      "ɪgˈzæm"
+     ],
+     [
+      "term / semester",
+      "chorak / semestr",
+      "Do you know when the term ends?",
+      "Chorak qachon tugashini bilasizmi?",
+      "tərm  səˈmɛstər"
+     ],
+     [
+      "break",
+      "tanaffus",
+      "Could you tell me how long the break is?",
+      "Tanaffus qancha, ayta olasizmi?",
+      "breɪk"
+     ],
+     [
+      "uniform (school)",
+      "maktab formasi",
+      "Do you know if we must wear a uniform?",
+      "Forma kiyish shartmi, bilasizmi?",
+      "ˈjunəˌfɔrm (skul)"
+     ],
+     [
+      "register / attendance",
+      "davomat",
+      "I wonder who takes the register.",
+      "Davomatni kim oladi, qiziq.",
+      "ˈrɛʤɪstər  əˈtɛndəns"
+     ],
+     [
+      "detention",
+      "jazo darsi (darsdan keyin qoldirish)",
+      "Do you know why he got detention?",
+      "U nega jazoga qolganini bilasizmi?",
+      "dɪˈtɛnʃən"
+     ],
+     [
+      "scholarship",
+      "stipendiya, grant",
+      "Could you tell me how to get a scholarship?",
+      "Grantni qanday olish mumkin, ayta olasizmi?",
+      "ˈskɑlərˌʃɪp"
+     ],
+     [
+      "graduate (v)",
+      "bitirmoq",
+      "Do you know when she graduated?",
+      "U qachon bitirganini bilasizmi?",
+      "ˈgræʤəˌweɪt (vi)"
+     ],
+     [
+      "curriculum",
+      "o'quv dasturi",
+      "I wonder what's in the new curriculum.",
+      "Yangi o'quv dasturida nima bor, qiziq.",
+      "kərˈɪkjələm"
+     ],
+     [
+      "extracurricular",
+      "darsdan tashqari",
+      "Can you tell me which extracurricular clubs there are?",
+      "Qanday to'garaklar borligini ayta olasizmi?",
+      "ˌɛkstrəkərˈɪkjələr"
+     ],
+     [
+      "revise",
+      "takrorlamoq",
+      "Do you know how much I should revise?",
+      "Qancha takrorlashim kerakligini bilasizmi?",
+      "rɪˈvaɪz"
+     ],
+     [
+      "cheat",
+      "ko'chirmoq (aldamoq)",
+      "I wonder if anyone cheated in the test.",
+      "Testda kimdir ko'chirdimi, qiziq.",
+      "ʧit"
+     ],
+     [
+      "algebra",
+      "algebra",
+      "Could you tell me who invented algebra?",
+      "Algebrani kim ixtiro qilgan, ayta olasizmi?",
+      "ˈælʤəbrə"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Bilvosita savolga o'tkazing",
+     "type": "rewrite",
+     "instr": "\"Could you tell me…\" bilan",
+     "items": [
+      "Where is the library?",
+      "What time does the lesson start?",
+      "How much does the textbook cost?",
+      "When did the term begin?",
+      "Who is the new coach?",
+      "Why was the gym closed?"
+     ],
+     "answers": [
+      "Could you tell me where the library is?",
+      "Could you tell me what time the lesson starts?",
+      "Could you tell me how much the textbook costs?",
+      "Could you tell me when the term began?",
+      "Could you tell me who the new coach is?",
+      "Could you tell me why the gym was closed?"
+     ]
+    },
+    {
+     "title": "if / whether",
+     "type": "rewrite",
+     "instr": "Yes/No savolni \"Do you know if/whether…\" bilan",
+     "items": [
+      "Is the lab open?",
+      "Does she teach maths?",
+      "Did they finish the test?",
+      "Will we have PE tomorrow?",
+      "Can I use a calculator?"
+     ],
+     "answers": [
+      "Do you know if the lab is open?",
+      "Do you know whether she teaches maths?",
+      "Do you know if they finished the test?",
+      "Do you know whether we will have PE tomorrow?",
+      "Do you know if I can use a calculator?"
+     ]
+    },
+    {
+     "title": "Bevosita shaklga qaytaring",
+     "type": "rewrite",
+     "instr": "Bilvosita → bevosita",
+     "items": [
+      "I wonder where the principal's office is.",
+      "Do you know when the bus leaves?",
+      "Could you tell me what she said?",
+      "I'd like to know if the pool is heated.",
+      "Can you remember who took the register?"
+     ],
+     "answers": [
+      "Where is the principal's office?",
+      "When does the bus leave?",
+      "What did she say?",
+      "Is the pool heated?",
+      "Who took the register?"
+     ]
+    },
+    {
+     "title": "Yangi o'quvchi",
+     "type": "speaking",
+     "instr": "Rollarda: yangi o'quvchi 6 muloyim savol beradi (xonalar, jadval, fanlar), sinfdosh javob beradi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "Excuse me, could you tell me where the cafeteria is?",
+      "Do you know what time the first lesson starts?",
+      "Can you tell me if we have PE today?",
+      "I wonder who teaches computer science.",
+      "Do you know whether we need a calculator for maths?",
+      "Could you tell me where I can buy a notebook?"
+     ],
+     "note": "Ustoz so'z tartibini kuzatadi (\"where is the…\" xatosi)."
+    },
+    {
+     "title": "Maktab lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the room where you do experiments",
+      "the person who runs the school",
+      "the place where you eat at school",
+      "the paper with your lessons and times",
+      "the person who helps you find books",
+      "work you do at home for school"
+     ],
+     "answers": [
+      "laboratory",
+      "principal",
+      "cafeteria",
+      "timetable",
+      "librarian",
+      "homework"
+     ],
+     "box": [
+      "laboratory",
+      "principal",
+      "cafeteria",
+      "timetable",
+      "librarian",
+      "homework"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Could you tell me where is the gym?",
+      "Do you know when does the test start?",
+      "I wonder is she a teacher.",
+      "Can you tell me what did he say?",
+      "Do you know where can I find the coach?"
+     ],
+     "answers": [
+      "Could you tell me where the gym is?",
+      "Do you know when the test starts?",
+      "I wonder if she is a teacher.",
+      "Can you tell me what he said?",
+      "Do you know where I can find the coach?"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 17 jadvalini 3 marta; AT SCHOOL 47 so'zni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 51–55 dan bittasi; matnga 5 ta bilvosita savol",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Muloyim savollar",
+     "type": "write",
+     "instr": "10 ta bilvosita savol: maktab, shahar, do'kon haqida (5 ta Wh, 5 ta if/whether)",
+     "answers": "Erkin; so'z tartibi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Kutubxona qayerdaligini ayta olasizmi?",
+      "Dars soat nechida boshlanishini bilasizmi?",
+      "Ertaga imtihon bormi, bilasizmi?",
+      "U nima deganini eslaysizmi?",
+      "Algebrani kim ixtiro qilganiga qiziqyapman."
+     ],
+     "answers": [
+      "Could you tell me where the library is?",
+      "Do you know what time the lesson starts?",
+      "Do you know if there is an exam tomorrow?",
+      "Can you remember what she/he said?",
+      "I wonder who invented algebra."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "SCHOOL CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Food",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "School og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Al-Khwarizmi — the father of algebra",
+    "text": [
+     "Do you know where the word \"algorithm\" comes from? It comes from the name of a scientist who was born in Khorezm, in today's Uzbekistan, around the year 780. His name was Muhammad ibn Musa al-Khwarizmi.",
+     "Al-Khwarizmi worked in Baghdad at the House of Wisdom — the biggest library and research centre of its time. Scholars from many countries worked there, and the ruler paid them to translate and write books. Al-Khwarizmi wrote a book called \"Al-Jabr\", and this is where the word \"algebra\" comes from. In the book he explained how to solve equations step by step. Before him, nobody had written such clear rules.",
+     "He also wrote a book about Indian numbers — 1, 2, 3 … and zero. Europeans learned these numbers from his book, and that is why we call them \"Arabic numerals\" today. Without them, there would be no computers, no phones and no internet. Every time you use a calculator, you are using his ideas.",
+     "Al-Khwarizmi also made a map of the world and a table of the positions of stars. He died around 850. Today, if you ask a mathematician who the father of algebra is, they will tell you: Al-Khwarizmi from Khorezm. There is a monument to him in Khiva and Urgench, and a crater on the Moon is named after him."
+    ],
+    "glossary": [
+     "algorithm — algoritm",
+     "scholar — olim",
+     "research — tadqiqot",
+     "translate — tarjima qilmoq",
+     "equation — tenglama",
+     "step by step — bosqichma-bosqich",
+     "numeral — raqam",
+     "position — joylashuv",
+     "monument — haykal",
+     "crater — krater",
+     "be named after — nomi bilan atalmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Bilvosita savol bilan",
+      "type": "write",
+      "instr": "Matn asosida 5 ta bilvosita savol tuzing va javob bering",
+      "items": [
+       "where / born",
+       "what / algorithm",
+       "where / work",
+       "if / zero",
+       "what / Moon"
+      ],
+      "answers": [
+       "Could you tell me where Al-Khwarizmi was born? — In Khorezm.",
+       "Do you know where the word \"algorithm\" comes from? — From his name.",
+       "Can you tell me where he worked? — At the House of Wisdom in Baghdad.",
+       "Do you know if he wrote about zero? — Yes, in his book on Indian numbers.",
+       "I wonder what is named after him on the Moon. — A crater."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Al-Khwarizmi was born in Baghdad.",
+       "The word \"algebra\" comes from his book \"Al-Jabr\".",
+       "Europeans learned Indian numbers from his book.",
+       "He never made maps."
+      ],
+      "answers": [
+       "False (Khorezm)",
+       "True",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Fikr",
+      "type": "short",
+      "instr": "O'z fikringiz (2 gap)",
+      "items": [
+       "Why is Al-Khwarizmi important for computers today?",
+       "Which subject at school uses his ideas most?"
+      ],
+      "answers": [
+       "Algorithms and numerals come from his work.",
+       "Maths / computer science."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 51–55 — uyga (tanlab)."
+   }
+  },
+  {
+   "no": 18,
+   "title": "Wish Sentences",
+   "grammar_topic": "WISH (+ Past Simple / Past Continuous / Past Perfect / would / could / to-infinitive)",
+   "vocab_topic": "Shopping (xarid)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 18 – Wish sentences (6 qatorli jadval); SHOPPING WORDS; Reading — Elon Musk (Jony Academy matni); Audio 41–50.",
+   "objectives": [
+    "wish + Past Simple / Past Continuous bilan hozirgi afsusni aytish.",
+    "wish + Past Perfect bilan o'tgan afsusni aytish.",
+    "wish + would (norozilik) va wish + could (imkoniyat) farqini bilish.",
+    "Xarid CORE 20 bilan do'kon, chegirma va onlayn xarid haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Shopping (xarid) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"I wish I had a million dollars. I wish it were Friday. I wish I hadn't eaten so much.\" — o'quvchilar har biriga \"Me too!\" yoki o'z wish'i."
+    ],
+    [
+     8,
+     "Kahoot — Indirect questions",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Indirect questions lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 6 qator: hozirgi holat → wish + Past Simple; hozir bo'layotgan → wish + Past Continuous; o'tgan → wish + Past Perfect; boshqa odam/narsa o'zgarsin → wish + would; qila olsam → wish + could; xohlamoq (rasmiy) → wish + to V."
+    ],
+    [
+     12,
+     "Shopping (xarid) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "I wish + Past Simple — HOZIR boshqacha bo'lishini xohlash: \"I wish I had a big house\" (uyim yo'q). \"were\" hamma uchun: I wish I were taller.",
+     "I wish + Past Continuous — hozir bo'layotgan ish boshqacha bo'lsa: \"I wish it were raining right now.\"",
+     "I wish + Past Perfect — O'TGANNI o'zgartirish (bo'lmaydi): \"I wish I hadn't eaten so much cake.\"",
+     "I wish + would — boshqa odam/narsa o'zgarishini xohlash (norozilik): \"I wish he would stop interrupting me.\"",
+     "I wish + could — qila olmagan narsani qila olsam: \"She wishes she could travel.\" I wish + to V = want (rasmiy): \"I wish to speak with the manager.\""
+    ],
+    "formulas": [
+     [
+      "Hozirgi holat",
+      "wish + Past Simple",
+      "I wish I had a big house. / I wish I were taller.",
+      "Qaniydi katta uyim bo'lsa. / Qaniydi balandroq bo'lsam."
+     ],
+     [
+      "Hozir bo'layotgan",
+      "wish + Past Continuous",
+      "I wish it were raining right now.",
+      "Qaniydi hozir yomg'ir yog'ayotgan bo'lsa."
+     ],
+     [
+      "O'tgan",
+      "wish + Past Perfect",
+      "I wish I hadn't eaten so much cake.",
+      "Qaniydi shuncha tort yemaganimda."
+     ],
+     [
+      "Boshqa odam o'zgarsin",
+      "wish + S + would + V1",
+      "I wish he would stop interrupting me.",
+      "Qaniydi u gapimni bo'lishni to'xtatsa."
+     ],
+     [
+      "Qila olsam",
+      "wish + could + V1",
+      "She wishes she could travel around the world.",
+      "Qaniydi u dunyo bo'ylab sayohat qila olsa."
+     ],
+     [
+      "Xohlamoq (rasmiy)",
+      "wish + to + V1",
+      "I wish to speak with the manager.",
+      "Menejer bilan gaplashmoqchiman."
+     ]
+    ],
+    "presentation": [
+     [
+      "What do you wish you had?",
+      "I wish I had a new phone."
+     ],
+     [
+      "Do you wish you were somewhere else now?",
+      "Yes, I wish I were at the shopping centre."
+     ],
+     [
+      "What do you wish you hadn't bought?",
+      "I wish I hadn't bought those expensive trainers."
+     ],
+     [
+      "What do you wish your brother would do?",
+      "I wish he would stop borrowing my clothes."
+     ],
+     [
+      "Do you wish you could buy anything you want?",
+      "Yes, I wish I could buy a car."
+     ],
+     [
+      "I wish it weren't raining — I want to go shopping.",
+      "Me too. I wish the sun were shining."
+     ],
+     [
+      "What do you wish you had known before the sale?",
+      "I wish I had known about the discount earlier."
+     ],
+     [
+      "Do you wish shops were open 24 hours?",
+      "Yes, I wish they were open all night."
+     ],
+     [
+      "What do you wish to buy this month?",
+      "I wish to buy a laptop."
+     ],
+     [
+      "Do you wish prices would go down?",
+      "Of course I wish they would!"
+     ]
+    ],
+    "notes": [
+     "wish + Past Simple = hozir (Past emas!); wish + Past Perfect = o'tgan.",
+     "\"I wish I would\" — xato; o'zi haqida \"could\": I wish I could sing.",
+     "If only = wish, kuchliroq: If only I had more money!",
+     "Xarid so'zlari: discount (chegirma), refund (pulni qaytarish), receipt (chek), bargain (arzon xarid)."
+    ],
+    "mistakes": [
+     [
+      "I wish I have a car.",
+      "I wish I had a car.",
+      "wish + Past Simple."
+     ],
+     [
+      "I wish I would be taller.",
+      "I wish I were taller.",
+      "O'zi haqida would emas."
+     ],
+     [
+      "I wish I didn't buy it yesterday.",
+      "I wish I hadn't bought it yesterday.",
+      "O'tgan → Past Perfect."
+     ],
+     [
+      "I wish she stops talking.",
+      "I wish she would stop talking.",
+      "Boshqa odam → would."
+     ],
+     [
+      "I wish I can fly.",
+      "I wish I could fly.",
+      "could."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — do'kon va xarid asosiy so'zlari; STRONG — chegirma, qaytarish, xizmat; SUPER — biznes-savdo so'zlari (supply, demand, inventory).",
+     "Har so'zga wish gapi: \"I wish the discount were bigger.\" / \"I wish I hadn't lost the receipt.\""
+    ],
+    "core": [
+     [
+      "shop / store",
+      "do'kon",
+      "I wish the shop were open now.",
+      "Qaniydi do'kon hozir ochiq bo'lsa.",
+      "ʃɑp  stɔr"
+     ],
+     [
+      "shopping centre / mall",
+      "savdo markazi",
+      "I wish we had a mall in our town.",
+      "Qaniydi shahrimizda savdo markazi bo'lsa.",
+      "ˈʃɑpɪŋ ˈsɛntər  mɔl"
+     ],
+     [
+      "grocery store",
+      "oziq-ovqat do'koni",
+      "I wish the grocery store were closer.",
+      "Qaniydi oziq-ovqat do'koni yaqinroq bo'lsa.",
+      "ˈgroʊsəri stɔr"
+     ],
+     [
+      "department store",
+      "universal do'kon",
+      "I wish I had gone to the department store yesterday.",
+      "Qaniydi kecha universal do'konga borganimda.",
+      "dɪˈpɑrtmənt stɔr"
+     ],
+     [
+      "customer",
+      "mijoz",
+      "The customer wishes to see the manager.",
+      "Mijoz menejerni ko'rmoqchi.",
+      "ˈkəstəmər"
+     ],
+     [
+      "shop assistant",
+      "sotuvchi",
+      "I wish the shop assistant would help me.",
+      "Qaniydi sotuvchi menga yordam bersa.",
+      "ʃɑp əˈsɪstənt"
+     ],
+     [
+      "price",
+      "narx",
+      "I wish prices were lower.",
+      "Qaniydi narxlar pastroq bo'lsa.",
+      "praɪs"
+     ],
+     [
+      "discount",
+      "chegirma",
+      "I wish I had known about the discount.",
+      "Qaniydi chegirmadan xabarim bo'lganida.",
+      "ˈdɪskaʊnt"
+     ],
+     [
+      "sale",
+      "sotuv, chegirmali savdo",
+      "I wish the sale would start earlier.",
+      "Qaniydi chegirmali savdo ertaroq boshlansa.",
+      "seɪl"
+     ],
+     [
+      "receipt",
+      "chek",
+      "I wish I hadn't lost the receipt.",
+      "Qaniydi chekni yo'qotmaganimda.",
+      "rɪˈsit"
+     ],
+     [
+      "refund",
+      "pulni qaytarish",
+      "I wish they would give me a refund.",
+      "Qaniydi ular pulimni qaytarishsa.",
+      "ˈriˌfənd"
+     ],
+     [
+      "exchange (v/n)",
+      "almashtirmoq",
+      "I wish I could exchange these shoes.",
+      "Qaniydi bu tuflini almashtira olsam.",
+      ""
+     ],
+     [
+      "cash",
+      "naqd pul",
+      "I wish I had brought cash.",
+      "Qaniydi naqd pul olib kelganimda.",
+      "kæʃ"
+     ],
+     [
+      "credit card",
+      "kredit karta",
+      "I wish my card worked here.",
+      "Qaniydi kartam bu yerda ishlasa.",
+      "ˈkrɛdɪt kɑrd"
+     ],
+     [
+      "checkout",
+      "kassa",
+      "I wish the checkout queue were shorter.",
+      "Qaniydi kassa navbati qisqaroq bo'lsa.",
+      "ˈʧɛˌkaʊt"
+     ],
+     [
+      "trolley / cart",
+      "aravacha",
+      "I wish I had taken a trolley.",
+      "Qaniydi aravacha olganimda.",
+      "ˈtrɑli  kɑrt"
+     ],
+     [
+      "shopping list",
+      "xarid ro'yxati",
+      "I wish I had written a shopping list.",
+      "Qaniydi xarid ro'yxatini yozganimda.",
+      "ˈʃɑpɪŋ lɪst"
+     ],
+     [
+      "budget",
+      "byudjet",
+      "I wish my budget were bigger.",
+      "Qaniydi byudjetim kattaroq bo'lsa.",
+      "ˈbəʤɪt"
+     ],
+     [
+      "brand",
+      "brend",
+      "I wish this brand weren't so expensive.",
+      "Qaniydi bu brend bunchalik qimmat bo'lmasa.",
+      "brænd"
+     ],
+     [
+      "bargain",
+      "arzon xarid",
+      "I wish I had found a bargain like yours.",
+      "Qaniydi men ham seniki kabi arzon narsa topganimda.",
+      "ˈbɑrgɪn"
+     ]
+    ],
+    "strong": [
+     [
+      "fitting room",
+      "kiyib ko'rish xonasi",
+      "I wish the fitting room were free.",
+      "Qaniydi kiyib ko'rish xonasi bo'sh bo'lsa.",
+      "ˈfɪtɪŋ rum"
+     ],
+     [
+      "window shopping",
+      "do'kon oynasidan tomosha",
+      "I wish I could stop window shopping and buy something.",
+      "Qaniydi tomosha qilishni to'xtatib biror narsa ola olsam.",
+      "ˈwɪndoʊ ˈʃɑpɪŋ"
+     ],
+     [
+      "coupon",
+      "kupon",
+      "I wish I had used the coupon.",
+      "Qaniydi kuponni ishlatganimda.",
+      "ˈkuˌpɔn"
+     ],
+     [
+      "special offer",
+      "maxsus taklif",
+      "I wish the special offer were still on.",
+      "Qaniydi maxsus taklif hali ham bo'lsa.",
+      "ˈspɛʃəl ˈɔfər"
+     ],
+     [
+      "seasonal sale",
+      "mavsumiy chegirma",
+      "I wish the seasonal sale lasted longer.",
+      "Qaniydi mavsumiy chegirma uzoqroq davom etsa.",
+      "ˈsizənəl seɪl"
+     ],
+     [
+      "clearance sale",
+      "tozalash (oxirgi) chegirmasi",
+      "I wish I had gone to the clearance sale.",
+      "Qaniydi tozalash chegirmasiga borganimda.",
+      "ˈklɪrəns seɪl"
+     ],
+     [
+      "delivery",
+      "yetkazib berish",
+      "I wish delivery were free.",
+      "Qaniydi yetkazib berish bepul bo'lsa.",
+      "dɪˈlɪvəri"
+     ],
+     [
+      "shipping",
+      "jo'natish (yetkazish)",
+      "I wish shipping didn't take two weeks.",
+      "Qaniydi jo'natish ikki hafta davom etmasa.",
+      "ˈʃɪpɪŋ"
+     ],
+     [
+      "warranty / guarantee",
+      "kafolat",
+      "I wish the phone had a longer warranty.",
+      "Qaniydi telefonning kafolati uzunroq bo'lsa.",
+      "ˈwɔrənti  ˌgɛrənˈti"
+     ],
+     [
+      "customer service",
+      "mijozlarga xizmat",
+      "I wish customer service would answer faster.",
+      "Qaniydi mijozlarga xizmat tezroq javob bersa.",
+      "ˈkəstəmər ˈsərvɪs"
+     ],
+     [
+      "product",
+      "mahsulot",
+      "I wish this product were available.",
+      "Qaniydi bu mahsulot mavjud bo'lsa.",
+      "ˈprɑdəkt"
+     ],
+     [
+      "consumer",
+      "iste'molchi",
+      "Consumers wish prices would stop rising.",
+      "Iste'molchilar narxlar o'sishdan to'xtashini istaydi.",
+      "kənˈsumər"
+     ],
+     [
+      "online marketplace",
+      "onlayn bozor",
+      "I wish I had ordered it from the online marketplace.",
+      "Qaniydi uni onlayn bozordan buyurtma qilganimda.",
+      "ˈɔnˌlaɪn ˈmɑrkɪtˌpleɪs"
+     ],
+     [
+      "shopping app",
+      "xarid ilovasi",
+      "I wish the shopping app worked properly.",
+      "Qaniydi xarid ilovasi to'g'ri ishlasa.",
+      "ˈʃɑpɪŋ æp"
+     ],
+     [
+      "outlet",
+      "autlet (chegirmali brend do'koni)",
+      "I wish there were an outlet nearby.",
+      "Qaniydi yaqinda autlet bo'lsa.",
+      "ˈaʊˌtlɛt"
+     ],
+     [
+      "catalogue",
+      "katalog",
+      "I wish I could see the catalogue online.",
+      "Qaniydi katalogni onlayn ko'ra olsam.",
+      "ˈkætəˌlɔg"
+     ],
+     [
+      "economical / budget-friendly",
+      "tejamkor, arzon",
+      "I wish there were a more economical option.",
+      "Qaniydi tejamkorroq varianti bo'lsa.",
+      ""
+     ],
+     [
+      "try on (shopping)",
+      "kiyib ko'rmoq",
+      "I wish I had tried it on before buying.",
+      "Qaniydi sotib olishdan oldin kiyib ko'rganimda.",
+      "traɪ ɔn (ˈʃɑpɪŋ)"
+     ],
+     [
+      "return (v)",
+      "qaytarmoq",
+      "I wish I could return it.",
+      "Qaniydi uni qaytara olsam.",
+      "rɪˈtərn (vi)"
+     ],
+     [
+      "queue",
+      "navbat",
+      "I wish there weren't such a long queue.",
+      "Qaniydi bunchalik uzun navbat bo'lmasa.",
+      "kju"
+     ]
+    ],
+    "super": [
+     [
+      "supply",
+      "taklif, ta'minot",
+      "I wish the supply were bigger.",
+      "Qaniydi ta'minot ko'proq bo'lsa.",
+      "səˈplaɪ"
+     ],
+     [
+      "demand",
+      "talab",
+      "I wish demand for our product would grow.",
+      "Qaniydi mahsulotimizga talab o'ssa.",
+      "dɪˈmænd"
+     ],
+     [
+      "inventory / stock",
+      "ombordagi tovar",
+      "I wish this size were in stock.",
+      "Qaniydi bu o'lcham omborda bo'lsa.",
+      "ˌɪnvənˈtɔri  stɑk"
+     ],
+     [
+      "bulk purchase",
+      "ulgurji (ko'p miqdorda) xarid",
+      "I wish we had made a bulk purchase.",
+      "Qaniydi ulgurji xarid qilganimizda.",
+      "bəlk ˈpərʧəs"
+     ],
+     [
+      "retail",
+      "chakana savdo",
+      "Retail prices are higher than wholesale.",
+      "Chakana narx ulgurjidan yuqori.",
+      "ˈriˌteɪl"
+     ],
+     [
+      "wholesale",
+      "ulgurji savdo",
+      "I wish I could buy wholesale.",
+      "Qaniydi ulgurji sotib ola olsam.",
+      "ˈhoʊlˌseɪl"
+     ],
+     [
+      "afford",
+      "sotib olishga qurbi yetmoq",
+      "I wish I could afford that laptop.",
+      "Qaniydi o'sha noutbukni sotib olishga qurbim yetsa.",
+      "əˈfɔrd"
+     ],
+     [
+      "overpriced",
+      "haddan tashqari qimmat",
+      "I wish this café weren't so overpriced.",
+      "Qaniydi bu kafe bunchalik qimmat bo'lmasa.",
+      "ˈoʊvərˌpraɪst"
+     ],
+     [
+      "value for money",
+      "pulga arziydigan",
+      "I wish everything were such good value for money.",
+      "Qaniydi hamma narsa shunday pulga arzisa.",
+      "ˈvælju fər ˈməni"
+     ],
+     [
+      "impulse buying",
+      "o'ylamay xarid qilish",
+      "I wish I could stop impulse buying.",
+      "Qaniydi o'ylamay xarid qilishni to'xtata olsam.",
+      "ˌɪmˈpəls baɪɪŋ"
+     ],
+     [
+      "haggle / bargain (v)",
+      "savdolashmoq",
+      "I wish I had haggled at the bazaar.",
+      "Qaniydi bozorda savdolashganimda.",
+      "ˈhægəl  ˈbɑrgɪn (vi)"
+     ],
+     [
+      "counterfeit / fake",
+      "soxta",
+      "I wish I hadn't bought a fake.",
+      "Qaniydi soxta narsa sotib olmaganimda.",
+      "ˈkaʊnərˌfɪt  feɪk"
+     ],
+     [
+      "loyalty card",
+      "doimiy mijoz kartasi",
+      "I wish I had a loyalty card here.",
+      "Qaniydi bu yerda doimiy mijoz kartam bo'lsa.",
+      "ˈlɔɪəlti kɑrd"
+     ],
+     [
+      "instalments",
+      "bo'lib to'lash",
+      "I wish I could pay in instalments.",
+      "Qaniydi bo'lib to'lay olsam.",
+      ""
+     ],
+     [
+      "cashier",
+      "kassir",
+      "I wish the cashier would hurry up.",
+      "Qaniydi kassir tezroq bo'lsa.",
+      "kæˈʃɪr"
+     ],
+     [
+      "label / price tag",
+      "yorliq, narx yorlig'i",
+      "I wish the price tags were clearer.",
+      "Qaniydi narx yorliqlari aniqroq bo'lsa.",
+      "ˈleɪbəl  praɪs tæg"
+     ],
+     [
+      "second-hand (shopping)",
+      "ishlatilgan",
+      "I wish I had bought a second-hand bike.",
+      "Qaniydi ishlatilgan velosiped olganimda.",
+      ""
+     ],
+     [
+      "fashion show",
+      "moda ko'rgazmasi",
+      "I wish I could go to a fashion show.",
+      "Qaniydi moda ko'rgazmasiga bora olsam.",
+      "ˈfæʃən ʃoʊ"
+     ],
+     [
+      "out of stock",
+      "sotilib ketgan, yo'q",
+      "I wish it weren't out of stock.",
+      "Qaniydi u sotilib ketmagan bo'lsa.",
+      "aʊt əv stɑk"
+     ],
+     [
+      "shopaholic",
+      "xaridga berilgan odam",
+      "I wish I weren't such a shopaholic.",
+      "Qaniydi bunchalik xaridga berilgan bo'lmasam.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "wish + qaysi zamon?",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni to'g'ri shaklda",
+     "items": [
+      "I wish I ___ (have) more money.",
+      "I wish I ___ (not / buy) that jacket last week.",
+      "I wish it ___ (be) sunny now.",
+      "I wish he ___ (stop) shouting.",
+      "I wish I ___ (can) speak French.",
+      "I wish we ___ (not / spend) so much yesterday.",
+      "I wish the shop ___ (be) open on Sundays.",
+      "I wish you ___ (listen) to me!"
+     ],
+     "answers": [
+      "had",
+      "hadn't bought",
+      "were",
+      "would stop",
+      "could",
+      "hadn't spent",
+      "were",
+      "would listen"
+     ]
+    },
+    {
+     "title": "Vaziyat → wish",
+     "type": "rewrite",
+     "instr": "Vaziyatni wish gapiga aylantiring",
+     "items": [
+      "I don't have a car.",
+      "I bought the wrong size.",
+      "It's raining and I want to go shopping.",
+      "My sister keeps taking my things.",
+      "I can't afford the new phone.",
+      "The queue is very long."
+     ],
+     "answers": [
+      "I wish I had a car.",
+      "I wish I hadn't bought the wrong size. / I wish I had bought the right size.",
+      "I wish it weren't raining.",
+      "I wish my sister would stop taking my things.",
+      "I wish I could afford the new phone.",
+      "I wish the queue weren't so long."
+     ]
+    },
+    {
+     "title": "Hozirmi, o'tganmi?",
+     "type": "choose",
+     "instr": "wish gapi nima haqida: hozir (H) / o'tgan (O') / boshqa odam (B)",
+     "items": [
+      "I wish I had a bigger flat.",
+      "I wish I hadn't lost the receipt.",
+      "I wish they would deliver faster.",
+      "I wish I were at the mall now.",
+      "I wish I had used the coupon.",
+      "I wish the shop assistant would smile."
+     ],
+     "answers": [
+      "H",
+      "O'",
+      "B",
+      "H",
+      "O'",
+      "B"
+     ]
+    },
+    {
+     "title": "Xarid afsuslari",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 wish gapi — 2 hozir, 2 o'tgan, 1 would, 1 could — xarid haqida",
+     "items": [
+      "now 1",
+      "now 2",
+      "past 1",
+      "past 2",
+      "would",
+      "could"
+     ],
+     "answers": [
+      "I wish I had more pocket money.",
+      "I wish clothes were cheaper.",
+      "I wish I hadn't bought those trainers.",
+      "I wish I had waited for the sale.",
+      "I wish shops would stay open later.",
+      "I wish I could buy everything online."
+     ]
+    },
+    {
+     "title": "Do'konda muammo",
+     "type": "dialog",
+     "instr": "Rollarda: mijoz (refund / exchange / receipt / warranty), sotuvchi",
+     "items": [
+      "customer 1",
+      "assistant 1",
+      "customer 2",
+      "assistant 2",
+      "customer 3"
+     ],
+     "answers": [
+      "I'd like a refund, please. The phone doesn't work.",
+      "Do you have the receipt?",
+      "I wish I had kept it… but I have the warranty card.",
+      "OK. Would you like an exchange or a refund?",
+      "An exchange, please. I wish I had chosen the black one anyway!"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I wish I have a new phone.",
+      "I wish I didn't buy it yesterday.",
+      "I wish I would be rich.",
+      "I wish she stops talking.",
+      "I wish I can afford it."
+     ],
+     "answers": [
+      "I wish I had a new phone.",
+      "I wish I hadn't bought it yesterday.",
+      "I wish I were rich.",
+      "I wish she would stop talking.",
+      "I wish I could afford it."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 18 jadvalini (6 qator) 3 marta; SHOPPING 38 so'zni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 56–60 dan bittasi; 5 notanish so'z + 3 wish gapi",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "10 ta wish",
+     "type": "write",
+     "instr": "4 hozir, 3 o'tgan, 2 would, 1 could — xarid va pul haqida",
+     "answers": "Erkin; zamonlar."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Qaniydi ko'proq pulim bo'lsa.",
+      "Qaniydi o'sha kurtkani sotib olmaganimda.",
+      "Qaniydi u shovqin qilishni to'xtatsa.",
+      "Qaniydi fransuz tilida gapira olsam.",
+      "Qaniydi hozir yakshanba bo'lsa."
+     ],
+     "answers": [
+      "I wish I had more money.",
+      "I wish I hadn't bought that jacket.",
+      "I wish he/she would stop making noise.",
+      "I wish I could speak French.",
+      "I wish it were Sunday now."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "SHOPPING CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — School",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 6 qator)",
+     "1 daqiqada 1 / 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Shopping og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Elon Musk — \"I wish I had started earlier\"",
+    "text": [
+     "Elon Musk was born in 1971 in South Africa. As a boy, he read books all day and taught himself to write computer programs. At 12, he sold his first video game for 500 dollars. He wishes he had kept a copy of it — today it would be a museum piece!",
+     "At 17 he moved to Canada with almost no money, and later to the USA. In 1995 he started his first internet company with his brother. They didn't have a flat, so they slept in the office and showered at the gym. Four years later, they sold the company for 300 million dollars.",
+     "Musk then created PayPal, an online payment system. When eBay bought it in 2002, he became very rich. Many people wish they could stop working after that. But Musk used almost all of his money to start two new companies: SpaceX (rockets) and Tesla (electric cars). Both nearly went bankrupt in 2008. \"I wish I hadn't been so close to losing everything,\" he said later, \"but I would do it again.\"",
+     "Today Tesla is the most valuable car company in the world, and SpaceX rockets fly to the space station. Musk also bought Twitter and renamed it X. Many young people in Uzbekistan wish they could work for him — or become like him. His advice: \"If something is important enough, you should do it even if you are afraid.\""
+    ],
+    "glossary": [
+     "teach yourself — mustaqil o'rganmoq",
+     "copy — nusxa",
+     "payment — to'lov",
+     "go bankrupt — bankrot bo'lmoq",
+     "valuable — qimmatli",
+     "rename — qayta nomlamoq",
+     "rocket — raketa",
+     "space station — kosmik stansiya",
+     "afraid — qo'rqqan",
+     "museum piece — muzey eksponati"
+    ],
+    "tasks": [
+     {
+      "title": "wish gaplarini toping",
+      "type": "find",
+      "instr": "Matndan 4 ta wish gapi; har birining turini ayting",
+      "items": [
+       "past 1",
+       "could",
+       "past 2",
+       "could 2"
+      ],
+      "answers": [
+       "He wishes he had kept a copy of it. (o'tgan — Past Perfect)",
+       "Many people wish they could stop working. (imkoniyat — could)",
+       "I wish I hadn't been so close to losing everything. (o'tgan)",
+       "Young people wish they could work for him. (could)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Musk sold his first game at 12.",
+       "In 1995 he had a big flat in the USA.",
+       "eBay bought PayPal in 2002.",
+       "Tesla and SpaceX were always successful."
+      ],
+      "answers": [
+       "True",
+       "False (slept in the office)",
+       "True",
+       "False (nearly bankrupt in 2008)"
+      ]
+     },
+     {
+      "title": "Sening wish'laring",
+      "type": "write",
+      "instr": "Matn asosida 3 ta wish gapi (1 hozir, 1 o'tgan, 1 could)",
+      "items": [
+       "now",
+       "past",
+       "could"
+      ],
+      "answers": [
+       "I wish I had a company like Tesla.",
+       "I wish I had learned programming at 12.",
+       "I wish I could visit SpaceX."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 56–60 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 41–50 (fayllar hali yo'q — ustoz skriptni o'qiydi)",
+    "intro": [
+     "Skript: \"Hi, I'm Dilnoza and I'm a shopaholic! Last Saturday I went to the mall with 500,000 sums. First I bought trainers with a 30 percent discount. Then I saw a jacket — I wish I hadn't bought it, because it doesn't fit. I lost the receipt, so I can't get a refund. I wish the shop assistant had told me about the seasonal sale — it starts next week! Now I have 20,000 sums left. I wish I were better with money.\"",
+     "1-tinglash: Dilnoza nechta narsa oldi? 2-tinglash: raqamlar va wish gaplar."
+    ],
+    "tasks": [
+     {
+      "title": "Raqam va wish",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "She went to the mall with ___ sums.",
+       "The trainers had a ___ percent discount.",
+       "She wishes she hadn't bought the ___.",
+       "She can't get a refund because she lost the ___.",
+       "The seasonal sale starts ___.",
+       "She has ___ sums left."
+      ],
+      "answers": [
+       "500,000",
+       "30",
+       "jacket",
+       "receipt",
+       "next week",
+       "20,000"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 19,
+   "title": "Infinitive of Purpose",
+   "grammar_topic": "MAQSAD INFINITIVI (to + V1 / in order to / so as to / so that)",
+   "vocab_topic": "Confusing words (chalkash so'zlar)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 3 — 14–19-darslar (savollar, conditionals 2–3, during/while, if/unless, indirect questions, wish, infinitive of purpose; crime, travel, food, school, shopping, confusing words)",
+   "book_ref": "Student's book IELTS 2.0: Lesson 19 – Infinitive of purpose (jadval); CONFUSING WORDS; Reading — Mirzo Ulug'bek (Jony Academy matni); Audio 51–60.",
+   "objectives": [
+    "Maqsadni to + V1 / in order to / so as to bilan aytish.",
+    "so that + gap va for + ot shakllarini farqlash.",
+    "Inkor maqsad: in order not to / so as not to.",
+    "20 juft chalkash so'zni (accept/except, advice/advise…) farqlab ishlatish; Progress test 3 ga tayyorlanish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Confusing words (chalkash so'zlar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Why do you come to Jony Academy?\" — \"To learn English!\" — \"Why do you learn English?\" — \"In order to get 7.0.\" Doskaga: to + V1 = maqsad."
+    ],
+    [
+     8,
+     "Kahoot — Wish sentences",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Wish sentences lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Sentence + to + verb (He went to the gym to work out); Sentence + in order to + verb (She studies hard in order to pass the exam). Qo'shimcha: so as to (rasmiy), so that + S + can/could/will (gap bilan), for + ot (I went out for bread). Inkor: in order not to / so as not to."
+    ],
+    [
+     12,
+     "Confusing words (chalkash so'zlar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Maqsad savoli \"Why? / What for?\" — javob: to + V1: \"He went to the gym to work out.\"",
+     "in order to / so as to — rasmiyroq, yozma: \"She studies hard in order to pass the exam.\"",
+     "so that + gap: \"I saved money so that I could buy a laptop.\" (ega o'zgarsa yoki modal kerak bo'lsa).",
+     "for + ot: \"I went to the shop for bread\" (for + ot; \"for to buy\" — xato).",
+     "Inkor: \"I left early in order not to be late\" / \"so as not to be late\" (\"to not be\" — og'zaki, yozma emas)."
+    ],
+    "formulas": [
+     [
+      "to + V1",
+      "S + V + to + V1",
+      "He went to the gym to work out.",
+      "U mashq qilish uchun sport zaliga bordi."
+     ],
+     [
+      "in order to",
+      "S + V + in order to + V1",
+      "She studies hard in order to pass the exam.",
+      "U imtihondan o'tish uchun qattiq o'qiydi."
+     ],
+     [
+      "so as to",
+      "S + V + so as to + V1 (rasmiy)",
+      "He left early so as to catch the train.",
+      "U poyezdga ulgurish uchun erta chiqdi."
+     ],
+     [
+      "so that",
+      "S + V + so that + S + can/could/will",
+      "I saved money so that I could buy a laptop.",
+      "Noutbuk sotib ola olishim uchun pul yig'dim."
+     ],
+     [
+      "for + ot",
+      "S + V + for + noun",
+      "I went to the shop for bread.",
+      "Non uchun do'konga bordim."
+     ],
+     [
+      "Inkor",
+      "in order not to / so as not to + V1",
+      "I whispered so as not to wake the baby.",
+      "Chaqaloqni uyg'otmaslik uchun pichirladim."
+     ]
+    ],
+    "presentation": [
+     [
+      "Why do you learn English?",
+      "I learn English to get a good job."
+     ],
+     [
+      "Why did Ulugh Beg build an observatory?",
+      "He built it in order to study the stars."
+     ],
+     [
+      "Why did you go to the bazaar?",
+      "I went there for vegetables."
+     ],
+     [
+      "Why are you saving money?",
+      "I'm saving money so that I can buy a laptop."
+     ],
+     [
+      "Why did she leave so early?",
+      "She left early so as not to miss the bus."
+     ],
+     [
+      "Why do you use a dictionary?",
+      "To check the meaning of new words."
+     ],
+     [
+      "Why did they call the doctor?",
+      "They called him in order to get advice."
+     ],
+     [
+      "Why do you write a shopping list?",
+      "So that I don't forget anything."
+     ],
+     [
+      "Why did he go to the gym?",
+      "To work out and get fit."
+     ],
+     [
+      "Why did you accept the offer?",
+      "I accepted it to gain experience."
+     ]
+    ],
+    "notes": [
+     "Maqsad = \"…uchun\" (nima uchun qilyapman). Sabab = \"because\" (nima uchun bo'ldi). \"I study because I want a job\" (sabab) vs \"I study to get a job\" (maqsad).",
+     "\"for + V-ing\" — narsaning vazifasi: \"A knife is for cutting\" (odam maqsadi emas).",
+     "so that + can (hozir/kelajak) / could (o'tgan).",
+     "Chalkash so'zlar: talaffuz yoki imlo yaqin, ma'no boshqa: accept (qabul qilmoq) / except (tashqari); advice (ot) / advise (fe'l); quiet (jim) / quite (ancha)."
+    ],
+    "mistakes": [
+     [
+      "I went to the shop for to buy bread.",
+      "I went to the shop to buy bread. / for bread.",
+      "for + ot yoki to + V1."
+     ],
+     [
+      "I study hard for pass the exam.",
+      "I study hard to pass the exam.",
+      "to + V1."
+     ],
+     [
+      "She left early so that not to be late.",
+      "She left early so as not to be late. / so that she wouldn't be late.",
+      "Inkor shakli."
+     ],
+     [
+      "I called him for asking a question.",
+      "I called him to ask a question.",
+      "Odam maqsadi → to + V1."
+     ],
+     [
+      "Everyone came accept Ali.",
+      "Everyone came except Ali.",
+      "except = tashqari."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — eng ko'p chalkashadigan 20 juft (imlo/talaffuz); STRONG — ma'no yaqin juftlar; SUPER — IELTS'da tez uchraydigan juftlar.",
+     "Har juftga bittadan gap; keyin maqsad gapi: \"I use a dictionary to check confusing words.\""
+    ],
+    "core": [
+     [
+      "accept",
+      "qabul qilmoq",
+      "I accepted the job to gain experience.",
+      "Tajriba orttirish uchun ishni qabul qildim.",
+      "əkˈsɛpt"
+     ],
+     [
+      "except",
+      "…dan tashqari",
+      "Everyone came except Ali.",
+      "Alidan tashqari hamma keldi.",
+      "ɪkˈsɛpt"
+     ],
+     [
+      "expect",
+      "kutmoq, umid qilmoq",
+      "I expect to pass the test.",
+      "Testdan o'tishni kutyapman.",
+      "ɪkˈspɛkt"
+     ],
+     [
+      "affect (v)",
+      "ta'sir qilmoq",
+      "Weather affects my mood.",
+      "Ob-havo kayfiyatimga ta'sir qiladi.",
+      "əˈfɛkt (vi)"
+     ],
+     [
+      "effect (n)",
+      "ta'sir, natija",
+      "Coffee has a strong effect on me.",
+      "Qahva menga kuchli ta'sir qiladi.",
+      "ˈifɛkt (ɛn)"
+     ],
+     [
+      "advice (n)",
+      "maslahat",
+      "I asked for advice in order to choose a course.",
+      "Kurs tanlash uchun maslahat so'radim.",
+      "ədˈvaɪs (ɛn)"
+     ],
+     [
+      "advise (v)",
+      "maslahat bermoq",
+      "The teacher advised me to read more.",
+      "Ustoz ko'proq o'qishni maslahat berdi.",
+      "ədˈvaɪz (vi)"
+     ],
+     [
+      "breath (n)",
+      "nafas",
+      "Take a deep breath.",
+      "Chuqur nafas ol.",
+      "brɛθ (ɛn)"
+     ],
+     [
+      "breathe (v)",
+      "nafas olmoq",
+      "Open the window to breathe fresh air.",
+      "Toza havo olish uchun derazani och.",
+      "brið (vi)"
+     ],
+     [
+      "lose",
+      "yo'qotmoq; yutqazmoq",
+      "Don't lose your keys.",
+      "Kalitlaringni yo'qotma.",
+      "luz"
+     ],
+     [
+      "loose",
+      "bo'sh, keng",
+      "These jeans are too loose.",
+      "Bu jinsi juda keng.",
+      "lus"
+     ],
+     [
+      "than",
+      "…dan (taqqoslash)",
+      "Maths is harder than history.",
+      "Matematika tarixdan qiyinroq.",
+      "ðən"
+     ],
+     [
+      "then",
+      "keyin; u holda",
+      "First read, then answer.",
+      "Avval o'qi, keyin javob ber.",
+      "ðɛn"
+     ],
+     [
+      "quiet",
+      "jim, sokin",
+      "Be quiet in order to hear the audio.",
+      "Audioni eshitish uchun jim bo'l.",
+      "kwaɪət"
+     ],
+     [
+      "quite",
+      "ancha, juda",
+      "The test was quite easy.",
+      "Test ancha oson edi.",
+      "kwaɪt"
+     ],
+     [
+      "desert",
+      "cho'l",
+      "Camels live in the desert.",
+      "Tuyalar cho'lda yashaydi.",
+      "ˈdɛzərt"
+     ],
+     [
+      "dessert",
+      "shirinlik",
+      "We ordered ice cream for dessert.",
+      "Shirinlikka muzqaymoq buyurdik.",
+      "dɪˈzərt"
+     ],
+     [
+      "piece",
+      "bo'lak",
+      "Give me a piece of cake.",
+      "Menga bir bo'lak tort ber.",
+      "pis"
+     ],
+     [
+      "peace",
+      "tinchlik",
+      "We all want peace.",
+      "Hammamiz tinchlik istaymiz.",
+      "pis"
+     ],
+     [
+      "lie – lay – lain",
+      "yotmoq",
+      "I lay down to rest.",
+      "Dam olish uchun yotdim.",
+      "laɪ"
+     ]
+    ],
+    "strong": [
+     [
+      "lay – laid – laid",
+      "qo'ymoq; (tuxum) qo'ymoq",
+      "Lay the book on the table.",
+      "Kitobni stolga qo'y.",
+      "leɪ"
+     ],
+     [
+      "loss (n)",
+      "yo'qotish",
+      "The team's loss was a surprise.",
+      "Jamoaning yutqazishi kutilmagan edi.",
+      "lɔs (ɛn)"
+     ],
+     [
+      "lost (adj)",
+      "yo'qolgan, adashgan",
+      "We got lost in the old city.",
+      "Eski shaharda adashib qoldik.",
+      ""
+     ],
+     [
+      "assure",
+      "ishontirmoq (kimnidir)",
+      "I assure you it's safe.",
+      "Ishontirib aytaman, bu xavfsiz.",
+      "əˈʃʊr"
+     ],
+     [
+      "ensure",
+      "ta'minlamoq, ishonch hosil qilmoq",
+      "Check twice to ensure there are no mistakes.",
+      "Xato yo'qligiga ishonch hosil qilish uchun ikki marta tekshir.",
+      "ɪnˈʃʊr"
+     ],
+     [
+      "image",
+      "tasvir, rasm",
+      "The image on the screen was clear.",
+      "Ekrandagi tasvir aniq edi.",
+      "ˈɪmɪʤ"
+     ],
+     [
+      "imagine",
+      "tasavvur qilmoq",
+      "Imagine you are in London.",
+      "Londondasan deb tasavvur qil.",
+      "ˌɪˈmæʤən"
+     ],
+     [
+      "emigrate",
+      "(o'z mamlakatidan) ko'chib ketmoq",
+      "They emigrated from Uzbekistan in 2010.",
+      "Ular 2010-da O'zbekistondan ko'chib ketishdi.",
+      "ˈɛməˌgreɪt"
+     ],
+     [
+      "immigrate",
+      "(boshqa mamlakatga) ko'chib kelmoq",
+      "He immigrated to Canada to find work.",
+      "U ish topish uchun Kanadaga ko'chib keldi.",
+      "ˈɪməˌgreɪt"
+     ],
+     [
+      "through",
+      "orqali",
+      "We walked through the park.",
+      "Bog' orqali yurdik.",
+      "θru"
+     ],
+     [
+      "though",
+      "garchi; lekin",
+      "It was cold, though sunny.",
+      "Sovuq edi, garchi quyoshli bo'lsa ham.",
+      "ðoʊ"
+     ],
+     [
+      "thought",
+      "fikr; o'yladi",
+      "I had a thought. / I thought about it.",
+      "Bir fikr keldi. / Bu haqda o'yladim.",
+      "θɔt"
+     ],
+     [
+      "thorough",
+      "atroflicha, puxta",
+      "Do a thorough check.",
+      "Puxta tekshiruv o'tkaz.",
+      "θəroʊ"
+     ],
+     [
+      "tough",
+      "qiyin; qattiq",
+      "The exam was tough.",
+      "Imtihon qiyin edi.",
+      "təf"
+     ],
+     [
+      "throughout",
+      "davomida, hamma yerida",
+      "It rained throughout the day.",
+      "Kun davomida yomg'ir yog'di.",
+      "θruaʊt"
+     ],
+     [
+      "borrow",
+      "qarzga olmoq",
+      "Can I borrow your pen?",
+      "Ruchkangni olib tursam bo'ladimi?",
+      "ˈbɑˌroʊ"
+     ],
+     [
+      "lend",
+      "qarzga bermoq",
+      "I'll lend you my notes to help you revise.",
+      "Takrorlashingga yordam berish uchun konspektimni beraman.",
+      "lɛnd"
+     ],
+     [
+      "bring",
+      "olib kelmoq",
+      "Bring your book to class.",
+      "Kitobingni sinfga olib kel.",
+      "brɪŋ"
+     ],
+     [
+      "take",
+      "olib ketmoq",
+      "Take an umbrella so as not to get wet.",
+      "Ho'l bo'lmaslik uchun soyabon ol.",
+      "teɪk"
+     ],
+     [
+      "say / tell",
+      "demoq / aytmoq (kimgadir)",
+      "She said hello. / She told me the news.",
+      "U salom dedi. / U menga yangilikni aytdi.",
+      "seɪ  tɛl"
+     ]
+    ],
+    "super": [
+     [
+      "principal / principle",
+      "direktor / tamoyil",
+      "The principal explained the school's principles.",
+      "Direktor maktab tamoyillarini tushuntirdi.",
+      "ˈprɪnsəpəl  ˈprɪnsəpəl"
+     ],
+     [
+      "stationary / stationery",
+      "harakatsiz / kanselyariya",
+      "The car was stationary. / I bought stationery.",
+      "Mashina turgan edi. / Kanselyariya oldim.",
+      "ˈsteɪʃəˌnɛri  ˈsteɪʃəˌnɛri"
+     ],
+     [
+      "weather / whether",
+      "ob-havo / …mi, yoki",
+      "I don't know whether the weather will be good.",
+      "Ob-havo yaxshi bo'ladimi, bilmayman.",
+      "ˈwɛðər  ˈwɛðər"
+     ],
+     [
+      "their / there / they're",
+      "ularning / u yerda / ular …",
+      "They're there with their bags.",
+      "Ular u yerda sumkalari bilan.",
+      "ðɛr  ðɛr  ðɛr"
+     ],
+     [
+      "its / it's",
+      "uning / bu … (it is)",
+      "It's a dog. Its name is Rex.",
+      "Bu it. Uning ismi Reks.",
+      "ɪts  ɪts"
+     ],
+     [
+      "your / you're",
+      "sening / sen … (you are)",
+      "You're late. Your bus has gone.",
+      "Kech qolding. Avtobusing ketdi.",
+      "jʊr  jʊr"
+     ],
+     [
+      "practice (n) / practise (v)",
+      "mashq / mashq qilmoq",
+      "Practice makes perfect — practise every day.",
+      "Mashq mukammallik keltiradi — har kuni mashq qil.",
+      "ˈpræktɪs (ɛn)  ˈpræktɪs (vi)"
+     ],
+     [
+      "compliment / complement",
+      "maqtov / to'ldiruvchi",
+      "She paid me a compliment.",
+      "U meni maqtadi.",
+      "ˈkɑmpləmɛnt  ˈkɑmpləmənt"
+     ],
+     [
+      "historic / historical",
+      "tarixiy ahamiyatli / tarixga oid",
+      "Registan is a historic place.",
+      "Registon — tarixiy ahamiyatga ega joy.",
+      "hɪˈstɔrɪk  hɪˈstɔrɪkəl"
+     ],
+     [
+      "economic / economical",
+      "iqtisodiy / tejamkor",
+      "An economical car saves money.",
+      "Tejamkor mashina pul tejaydi.",
+      "ˌɛkəˈnɑmɪk  ˌɛkəˈnɑmɪkəl"
+     ],
+     [
+      "sensible / sensitive",
+      "oqilona / sezgir, ta'sirchan",
+      "Be sensible; she is very sensitive.",
+      "Oqilona bo'l; u juda ta'sirchan.",
+      "ˈsɛnsəbəl  ˈsɛnsɪtɪv"
+     ],
+     [
+      "fun / funny",
+      "qiziqarli / kulgili",
+      "The trip was fun; the film was funny.",
+      "Sayohat qiziqarli edi; kino kulgili edi.",
+      "fən  ˈfəni"
+     ],
+     [
+      "hard / hardly",
+      "qattiq, qiyin / deyarli …mas",
+      "I work hard. / I hardly work.",
+      "Qattiq ishlayman. / Deyarli ishlamayman.",
+      "hɑrd  ˈhɑrdli"
+     ],
+     [
+      "late / lately",
+      "kech / oxirgi paytlarda",
+      "He came late. / He has been tired lately.",
+      "U kech keldi. / Oxirgi paytlarda charchagan.",
+      "leɪt  ˈleɪtli"
+     ],
+     [
+      "rise / raise",
+      "ko'tarilmoq / ko'tarmoq",
+      "Prices rise. / They raised prices.",
+      "Narxlar ko'tariladi. / Ular narxni ko'tardi.",
+      "raɪz  reɪz"
+     ],
+     [
+      "remember / remind",
+      "eslamoq / eslatmoq",
+      "Remind me to remember the keys.",
+      "Kalitlarni eslashimni eslat.",
+      "rɪˈmɛmbər  riˈmaɪnd"
+     ],
+     [
+      "job / work",
+      "ish (lavozim, sanaladi) / ish (umumiy)",
+      "I have a good job; I work a lot.",
+      "Yaxshi ishim bor; ko'p ishlayman.",
+      "ʤɑb  wərk"
+     ],
+     [
+      "watch / see / look at",
+      "tomosha qilmoq / ko'rmoq / qaramoq",
+      "Watch TV, see a friend, look at the board.",
+      "Televizor ko'r, do'stni ko'r, doskaga qara.",
+      "wɔʧ  si  lʊk æt"
+     ],
+     [
+      "fewer / less",
+      "kamroq (sanaladigan) / kamroq (sanalmaydigan)",
+      "Fewer students, less time.",
+      "Kamroq o'quvchi, kamroq vaqt.",
+      "fjuər  lɛs"
+     ],
+     [
+      "beside / besides",
+      "yonida / …dan tashqari, bundan tashqari",
+      "Sit beside me. Besides, it's free.",
+      "Yonimga o'tir. Bundan tashqari, bepul.",
+      "ˌbiˈsaɪd  ˌbiˈsaɪdz"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Maqsadni ayting",
+     "type": "gap",
+     "instr": "to + V1 bilan gapni tugating",
+     "items": [
+      "I went to the library ___ (borrow a book).",
+      "She saved money ___ (buy a laptop).",
+      "He went to the gym ___ (work out).",
+      "We called the hotel ___ (book a room).",
+      "They left early ___ (catch the train).",
+      "I use a dictionary ___ (check new words)."
+     ],
+     "answers": [
+      "to borrow a book",
+      "to buy a laptop",
+      "to work out",
+      "to book a room",
+      "to catch the train",
+      "to check new words"
+     ]
+    },
+    {
+     "title": "in order to / so that / for",
+     "type": "choose",
+     "instr": "To'g'ri shaklni tanlang",
+     "items": [
+      "I went to the shop ___ bread.",
+      "I went to the shop ___ buy bread.",
+      "I saved money ___ I could travel.",
+      "She whispered ___ not to wake the baby.",
+      "He studies hard ___ pass IELTS.",
+      "We need a map ___ we don't get lost."
+     ],
+     "answers": [
+      "for",
+      "to / in order to",
+      "so that",
+      "so as",
+      "in order to",
+      "so that"
+     ]
+    },
+    {
+     "title": "Chalkash so'zlar",
+     "type": "choose",
+     "instr": "To'g'ri so'zni tanlang",
+     "items": [
+      "Everyone passed accept / except Bobur.",
+      "Can you give me some advice / advise?",
+      "The room was quiet / quite.",
+      "It's hotter today than / then yesterday.",
+      "We had ice cream for desert / dessert.",
+      "Take a deep breath / breathe.",
+      "My jeans are lose / loose.",
+      "Coffee has a strong affect / effect on me."
+     ],
+     "answers": [
+      "except",
+      "advice",
+      "quiet",
+      "than",
+      "dessert",
+      "breath",
+      "loose",
+      "effect"
+     ]
+    },
+    {
+     "title": "Nega?",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 ta \"Why do you…?\" savoli — javob maqsad infinitivi bilan (turli shakllar)",
+     "items": [
+      "learn English",
+      "go to the gym",
+      "save money",
+      "use the internet",
+      "read books",
+      "go to the bazaar"
+     ],
+     "answers": [
+      "To get a good job.",
+      "In order to stay fit.",
+      "So that I can buy a phone.",
+      "To find information.",
+      "So as to improve my vocabulary.",
+      "For fresh fruit."
+     ]
+    },
+    {
+     "title": "Ulug'bek nega?",
+     "type": "write",
+     "instr": "Matn asosida (reading) 4 ta maqsad gapi",
+     "items": [
+      "observatory",
+      "madrasa",
+      "catalogue",
+      "invited"
+     ],
+     "answers": [
+      "Ulugh Beg built the observatory to study the stars.",
+      "He built madrasas in order to teach science.",
+      "He made a star catalogue so that scientists could use it.",
+      "He invited scientists to Samarkand to work together."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I went there for to see him.",
+      "She studies for pass the exam.",
+      "I left early so that not to be late.",
+      "He gave me a good advise.",
+      "Be quite, please."
+     ],
+     "answers": [
+      "I went there to see him.",
+      "She studies to pass the exam.",
+      "I left early so as not to be late.",
+      "He gave me good advice.",
+      "Be quiet, please."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 19 jadvalini 3 marta; CONFUSING WORDS 35 juftni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Progress test 3 ga tayyorgarlik",
+     "type": "review",
+     "instr": "14–19-dars jadvallari + 6 lug'atdan CORE 20; Kahoot 14–18 (jonyos.uz)",
+     "answers": "Test: 20 formula + 40 so'z + 10 tarjima + matn."
+    },
+    {
+     "title": "Mening maqsadlarim",
+     "type": "write",
+     "instr": "8 gap: to (3), in order to (2), so that (2), for + ot (1) — o'qish va kelajak haqida",
+     "answers": "Erkin."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men yaxshi ish topish uchun ingliz tili o'rganaman.",
+      "U poyezdga ulgurish uchun erta chiqdi.",
+      "Noutbuk sotib ola olishim uchun pul yig'yapman.",
+      "Ulug'bek yulduzlarni o'rganish uchun rasadxona qurdi.",
+      "Alidan tashqari hamma keldi."
+     ],
+     "answers": [
+      "I learn English to get a good job.",
+      "She/He left early in order to catch the train.",
+      "I'm saving money so that I can buy a laptop.",
+      "Ulugh Beg built an observatory to study the stars.",
+      "Everyone came except Ali."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CONFUSING WORDS CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 juft + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Shopping",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Confusing words og'zaki",
+     "20 juft + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Mirzo Ulugh Beg — the king who counted the stars",
+    "text": [
+     "Mirzo Ulugh Beg was born in 1394. He was the grandson of Amir Temur, and at 15 he became the ruler of Samarkand. But he was not a typical king. He loved mathematics and astronomy more than war. He built madrasas in Samarkand and Bukhara in order to teach science, and he wrote above the door of one of them: \"Seeking knowledge is the duty of every Muslim man and woman.\"",
+     "In 1420 he built a huge observatory on a hill near Samarkand. He built it to study the stars and planets. The main instrument was a giant curve, 40 metres long, cut into the rock. Ulugh Beg and his scientists used it to measure the positions of the stars. In order to do this, they worked for years, every clear night.",
+     "The result was a catalogue of 1,018 stars — the most accurate in the world for 200 years. Ulugh Beg also measured the length of the year: 365 days, 6 hours, 10 minutes and 8 seconds. Today we know the real number — and he was wrong by less than one minute! Europeans didn't reach this accuracy until the 17th century.",
+     "Sadly, in 1449 he was killed, and his observatory was destroyed. For hundreds of years, nobody knew where it was. In 1908, an archaeologist found the underground part of the giant curve. Today you can visit it in Samarkand. There is also a crater on the Moon named after Ulugh Beg — like Al-Khwarizmi and Al-Beruni."
+    ],
+    "glossary": [
+     "grandson — nabira",
+     "ruler — hukmdor",
+     "astronomy — astronomiya",
+     "duty — burch",
+     "observatory — rasadxona",
+     "instrument — asbob",
+     "curve — yoy",
+     "measure — o'lchamoq",
+     "accurate — aniq",
+     "accuracy — aniqlik",
+     "archaeologist — arxeolog",
+     "underground — yer osti"
+    ],
+    "tasks": [
+     {
+      "title": "Maqsad gaplarini toping",
+      "type": "find",
+      "instr": "Matndan 4 ta maqsad infinitivi",
+      "items": [
+       "madrasas",
+       "observatory",
+       "curve",
+       "years"
+      ],
+      "answers": [
+       "He built madrasas … in order to teach science.",
+       "He built it to study the stars and planets.",
+       "They used it to measure the positions of the stars.",
+       "In order to do this, they worked for years."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Ulugh Beg was Amir Temur's son.",
+       "He became ruler at 15.",
+       "His star catalogue had 1,018 stars.",
+       "The observatory was found in 1449."
+      ],
+      "answers": [
+       "False (grandson)",
+       "True",
+       "True",
+       "False (1908)"
+      ]
+     },
+     {
+      "title": "Raqamlar",
+      "type": "short",
+      "instr": "Matndan",
+      "items": [
+       "How long was the giant curve?",
+       "How accurate was his year?",
+       "For how many years was his catalogue the most accurate?"
+      ],
+      "answers": [
+       "40 metres",
+       "Wrong by less than one minute",
+       "200 years"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 61–65 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 51–60 (fayllar hali yo'q — ustoz skriptni o'qiydi)",
+    "intro": [
+     "Skript: \"Hi, I'm Jasur, a student from Samarkand. Every summer I work as a guide at the Ulugh Beg observatory. I do it to practise my English and to earn some money for university. Tourists come from all over the world in order to see the giant curve. I always tell them: Ulugh Beg measured the year with a mistake of less than a minute — without a computer! I'm saving my money so that I can study astronomy in Tashkent.\"",
+     "1-tinglash: Jasur qayerda ishlaydi? 2-tinglash: maqsadlar."
+    ],
+    "tasks": [
+     {
+      "title": "Maqsadlar",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Jasur works as a guide to practise his ___ and to earn ___.",
+       "Tourists come in order to see the ___ ___.",
+       "Ulugh Beg's mistake was less than a ___.",
+       "Jasur is saving money so that he can study ___ in ___."
+      ],
+      "answers": [
+       "English, money",
+       "giant curve",
+       "minute",
+       "astronomy, Tashkent"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

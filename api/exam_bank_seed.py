@@ -515,10 +515,120 @@ My name is Diana. I live in Grandford with my family. Grandford is a small town 
     ],
 }
 
+
+STEP1_UNIT6 = {
+    "level": "step1", "kind": "unit", "unit_no": 6,
+    "title": "Step 1 · Unit 6 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["What's your address?", "I'd like a cup of tea, please.", "That's great, thanks."], "C"),
+                _c("", ["Here you are.", "Thanks, but I'm fine.", "But it's really nice."], "B"),
+                _c("", ["Don't worry, it's OK.", "I'll come with you.", "Would you like a biscuit?"], "A"),
+                _c("", ["There isn't a shop near here.", "No, it's OK, thanks.", "It's very expensive."], "B"),
+                _c("", ["Don't worry, I'll come with you.", "No, it's OK, thanks.", "That's great, thanks."], "A"),
+                _c("", ["No sorry, there isn't.", "Thanks, but I'm fine.", "Would you like one?"], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Jobs",
+            "instructions": "Read the sentences about jobs and daily life. "
+                            "Choose the best answer, A, B or C, for each "
+                            "space.",
+            "questions": [
+                _c("Sarah is a ............ for a large hotel - she welcomes people "
+                   "and answers the telephone.", ["receptionist", "chef", "student"], "A"),
+                _c("Jo is a ............ in a busy restaurant and she loves her job.",
+                   ["student", "shop assistant", "waitress"], "C"),
+                _c("My uncle knows the names of all the streets in my town because "
+                   "he is a ............ .", ["chef", "taxi driver", "teacher"], "B"),
+                _c("Does your maths ............ live near the school?",
+                   ["doctor", "waiter", "teacher"], "C"),
+                _c("Lisa doesn't sit down at work because she's a ............ .",
+                   ["shop assistant", "taxi driver", "bank worker"], "A"),
+                _c("Carlos is a ............ – he makes cars.",
+                   ["business student", "receptionist", "factory worker"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Daily life",
+            "instructions": "Read the sentences about daily life. What are the "
+                            "missing words? The first letter is already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("My mother doesn’t h _ _ _  d _ _ _ _ _ because she isn't hungry "
+                   "– she usually has a big lunch.", "have dinner", "ave inner"),
+                _t("Adam and Tom sometimes g _  t _  w _ _ _ together on the bus "
+                   "in the morning.", "go to work", "o o ork"),
+                _t("After a long day in the shop, Nadia and Ben f _ _ _ _ _ work "
+                   "at 6.00 at night.", "finish", "inish"),
+                _t("My friends always g _ _  u _ early every morning – at about 6.00.",
+                   "get up", "et p"),
+                _t("My parents always h _ _ _  c _ _ _ _ _ to drink at 11 o'clock "
+                   "in the morning and tea at 3 o'clock.", "have coffee", "ave offee"),
+                _t("What time does Tim s _ _ _ _  w _ _ _ in the factory in the "
+                   "morning?", "start work", "tart ork"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the conversation between Rob and Zoe. Zoe "
+                            "has a sister, Clare. Rob asks about Clare's life. "
+                            "Choose the best answer (A, B or C) for each space.",
+            "passage": """Rob: What does your sister do?
+Zoe: Clare? She's a teacher but she (19) ………… in a school.
+Rob: Where does she work?
+Zoe: In a university in the USA.
+Rob: (20) ………… the university have lots of students?
+Zoe: Yes (21) ………… – about 20,000. She (22) ………… every day but she loves it.
+Rob: (23) ………… and see her sometimes?
+Zoe: Yes, but she doesn't have a lot of holiday. She has another job – she's a waitress in a small restaurant.
+Rob: Really? That's interesting.
+Zoe: She (24) ………… it, but she needs the money.
+Rob: Oh, and where's the university?
+Zoe: In Los Angeles.
+Rob: Fantastic!""",
+            "questions": [
+                _c("", ["don’t work", "not work", "doesn’t work"], "C"),
+                _c("", ["Does", "Do", "Is"], "A"),
+                _c("", ["it can", "it does", "it is"], "B"),
+                _c("", ["doesn't teach", "don't teach", "not teach"], "A"),
+                _c("", ["Do you go", "Does she go", "When you go"], "A"),
+                _c("", ["don’t like", "doesn't like", "not like"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about daily life. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "questions": [
+                _c("Jill ............ her work because it's boring.",
+                   ["doesn’t like", "don’t like", "like"], "A"),
+                _c("Oh, this is a chocolate ice cream but Gina ............ eat chocolate.",
+                   ["not", "don’t", "doesn't"], "C"),
+                _c("David is a university student but ............ usually have "
+                   "lunch at the university.", ["there isn’t", "he isn’t", "he doesn’t"], "C"),
+                _c("Does your father get up early to go to work? ............",
+                   ["Yes, he does.", "Yes, he gets up.", "Yes, he is."], "A"),
+                _c("When ............ home in the evening?",
+                   ["you get", "do you get", "you do get"], "B"),
+                _c("Does the film start at 9.00 p.m.? Yes, ............ .",
+                   ["it is", "it does", "it starts"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
     ("exam_tpl_step1_unit3", STEP1_UNIT3),
     ("exam_tpl_step1_unit4", STEP1_UNIT4),
     ("exam_tpl_step1_unit5", STEP1_UNIT5),
+    ("exam_tpl_step1_unit6", STEP1_UNIT6),
 ]

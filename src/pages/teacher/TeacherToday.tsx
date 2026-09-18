@@ -3,6 +3,7 @@ import { formatDayMonth } from "../../lib/format";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle, CheckCircle2, ChevronRight, Clock, Timer, Users,
+  BookOpen, Play, Send, ClipboardCheck, X, LifeBuoy, Undo2,
 } from "lucide-react";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/AuthContext";
@@ -76,6 +77,7 @@ export default function TeacherToday() {
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-9 space-y-4">
+        {!isSupport && plan?.english !== false && <GuideCard />}
         <div className="grid grid-cols-3 gap-3">
           <Stat value={String(d.groups)} label="Guruh" />
           <Stat value={String(d.students)} label="O'quvchi" />
@@ -230,6 +232,35 @@ export function LessonRow({
   );
 }
 
+/** 4 qadamli yo'riqnoma — bir marta ko'rsatiladi (yopilsa qayta chiqmaydi).
+ *  Jahongir: "oson bo'lsin ko'rishga tushunishga, dovdirab yurmasin ustozlar". */
+function GuideCard() {
+  const KEY = "jony_teacher_guide_v1";
+  const [open, setOpen] = useState(() => { try { return !localStorage.getItem(KEY); } catch { return true; } });
+  if (!open) return null;
+  const steps = [
+    { icon: BookOpen, t: "Guruhni rejaga bog'lang", d: "Bir marta: daraja va qaysi darsdan boshlashni tanlang." },
+    { icon: Play, t: "Darsni boshlang", d: "Bosqichlar, taymer va material — bitta oynada. Proyektor rejimi bor." },
+    { icon: Send, t: "Topshiriq yuboring", d: "Rejadan tanlang — o'quvchi ilovasida darhol paydo bo'ladi, testlar o'zi tekshiriladi." },
+    { icon: ClipboardCheck, t: "Writing/speaking'ni tekshiring", d: "Tayyor mezon va izohlar — 1 daqiqa." },
+  ];
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-brand-100 p-4 relative">
+      <button onClick={() => { try { localStorage.setItem(KEY, "1"); } catch { /* */ } setOpen(false); }}
+              className="absolute top-3 right-3 text-slate-400" aria-label="Yopish"><X size={16} /></button>
+      <p className="text-sm font-semibold text-slate-900 mb-2">Qanday ishlaydi — 4 qadam</p>
+      <ol className="space-y-2">
+        {steps.map((st, i) => (
+          <li key={i} className="flex items-start gap-3">
+            <span className="w-7 h-7 rounded-full bg-brand-50 text-brand-700 flex items-center justify-center shrink-0 text-xs font-bold">{i + 1}</span>
+            <div><p className="text-sm font-medium text-slate-800 flex items-center gap-1.5"><st.icon size={14} className="text-brand-600" /> {st.t}</p><p className="text-xs text-slate-500">{st.d}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 /** Dars kartasining ostidagi reja bloki + katta "Darsni boshlash". */
 function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
   item?: PlanItem; courses: { course: string; title: string; total: number }[];
@@ -250,7 +281,8 @@ function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
   if (!item.plan) {
     return (
       <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 py-3 -mt-1">
-        <p className="text-xs text-slate-500 mb-2">Bu guruh hali daraja rejasiga bog'lanmagan. Tanlang:</p>
+        <p className="text-sm font-medium text-slate-800">1-qadam: guruhni rejaga bog'lang</p>
+        <p className="text-xs text-slate-500 mb-2">Daraja va qaysi darsdan boshlashni tanlang — bir marta.</p>
         <div className="flex gap-2">
           <select value={course} onChange={(e) => setCourse(e.target.value)} className="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 bg-white">
             {courses.map((c) => <option key={c.course} value={c.course}>{c.title}</option>)}
@@ -263,33 +295,45 @@ function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
     );
   }
   const p = item.plan;
+  const pct = Math.round(100 * (p.next_lesson_no - 1) / Math.max(1, p.total));
+  const running = item.run && item.run.status !== "finished";
+  const finished = item.run?.status === "finished";
   return (
-    <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 py-3 -mt-1 space-y-2">
-      <div className="text-xs text-slate-500">{p.course_title} · {p.next_lesson_no}/{p.total}</div>
-      <div className="text-sm font-semibold text-slate-800">{p.next_lesson_no}-dars — {p.next_title ?? "…"}</div>
-      {p.next_vocab && <div className="text-xs text-slate-500">Lug'at: {p.next_vocab}</div>}
-      {p.carry.length > 0 && (
-        <div className="text-xs bg-amber-50 text-amber-800 rounded-lg px-2 py-1.5">
-          Oldingi darsdan ko'chgan: {p.carry.join("; ")}
-        </div>
-      )}
-      {item.homework_missing.length > 0 && (
-        <div className="text-xs bg-rose-50 text-rose-700 rounded-lg px-2 py-1.5">
-          Uy vazifasini bajarmagan: {item.homework_missing.join(", ")}
-        </div>
-      )}
-      {item.help_needed.length > 0 && (
-        <div className="text-xs bg-sky-50 text-sky-700 rounded-lg px-2 py-1.5">
-          Yordam kerak: {item.help_needed.map((h) => `${h.name} (${h.why})`).join(", ")}
-        </div>
-      )}
-      {item.pending_checks > 0 ? (
-        <Link to="/teacher/check" className="block text-xs bg-violet-50 text-violet-700 rounded-lg px-2 py-1.5">Tekshirishni kutayotgan writing/speaking: <b>{item.pending_checks}</b> →</Link>
-      ) : <div className="text-[11px] text-slate-400">Tekshirishni kutayotgan ish yo'q</div>}
+    <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 pt-3 pb-4 -mt-1">
+      <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+        <span>{p.course_title}</span>
+        <span>{p.next_lesson_no - 1}/{p.total} o'tildi</span>
+      </div>
+      <div className="h-1 bg-slate-100 rounded-full mb-2"><div className="h-full bg-brand-500 rounded-full" style={{ width: `${pct}%` }} /></div>
+      <p className="text-xs text-slate-500">Bugungi mavzu</p>
+      <p className="text-base font-semibold text-slate-900 leading-snug">{p.next_lesson_no}-dars — {p.next_title ?? "…"}</p>
+      {p.next_vocab && <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1"><BookOpen size={12} /> {p.next_vocab}</p>}
+      <div className="mt-2 space-y-1.5">
+        {p.carry.length > 0 && <Chip tone="amber" icon={Undo2} label="Oldingi darsdan ko'chgan" text={p.carry.join("; ")} />}
+        {item.homework_missing.length > 0 && <Chip tone="rose" icon={AlertTriangle} label="Uy vazifasini bajarmagan" text={item.homework_missing.join(", ")} />}
+        {item.help_needed.length > 0 && <Chip tone="sky" icon={LifeBuoy} label="Yordam kerak" text={item.help_needed.map((h) => `${h.name} (${h.why})`).join(", ")} />}
+        {item.pending_checks > 0 && (
+          <Link to="/teacher/check" className="block"><Chip tone="violet" icon={ClipboardCheck} label="Tekshirishni kutmoqda" text={`${item.pending_checks} ta writing/speaking →`} /></Link>
+        )}
+        {!p.carry.length && !item.homework_missing.length && !item.help_needed.length && !item.pending_checks && (
+          <p className="text-[11px] text-emerald-600 flex items-center gap-1"><CheckCircle2 size={12} /> Hammasi joyida — boshlash mumkin</p>
+        )}
+      </div>
       <Link to={`/teacher-run/${lessonId}`}
-            className={`block text-center rounded-xl py-3 text-base font-bold text-white ${item.run?.status === "finished" ? "bg-slate-400" : "bg-emerald-600 active:scale-[0.99]"}`}>
-        {item.run ? (item.run.status === "finished" ? `Dars yakunlangan (${item.run.done}/${item.run.total})` : `Darsni davom ettirish (${item.run.done}/${item.run.total})`) : "▶ Darsni boshlash"}
+            className={`mt-3 flex items-center justify-center gap-2 rounded-xl py-3.5 text-base font-bold text-white shadow-sm active:scale-[0.99] ${finished ? "bg-slate-400" : "bg-emerald-600"}`}>
+        <Play size={18} />
+        {finished ? `Dars yakunlangan (${item.run!.done}/${item.run!.total})` : running ? `Darsni davom ettirish (${item.run!.done}/${item.run!.total})` : "Darsni boshlash"}
       </Link>
+    </div>
+  );
+}
+
+function Chip({ tone, icon: Icon, label, text }: { tone: "amber" | "rose" | "sky" | "violet"; icon: typeof Undo2; label: string; text: string }) {
+  const cls = { amber: "bg-amber-50 text-amber-800", rose: "bg-rose-50 text-rose-700", sky: "bg-sky-50 text-sky-700", violet: "bg-violet-50 text-violet-700" }[tone];
+  return (
+    <div className={`text-xs rounded-lg px-2.5 py-1.5 flex items-start gap-1.5 ${cls}`}>
+      <Icon size={13} className="mt-0.5 shrink-0" />
+      <span><b>{label}:</b> {text}</span>
     </div>
   );
 }

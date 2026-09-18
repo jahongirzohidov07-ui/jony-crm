@@ -66,6 +66,7 @@ export default function TeacherRun() {
   const [picked, setPicked] = useState<Record<string, boolean>>({});
   const [dueDays, setDueDays] = useState(2);
   const [sent, setSent] = useState("");
+  const [stagesOpen, setStagesOpen] = useState(false);   // telefonda ro'yxatni ochish
 
   useEffect(() => {
     api.post<Run>(`/lessons/${lessonId}/run`).then((r) => { setRun(r); setNotes(r.notes || ""); })
@@ -187,6 +188,23 @@ export default function TeacherRun() {
       <div className={`grid ${proj ? "md:grid-cols-[260px_1fr]" : "md:grid-cols-[320px_1fr]"} gap-4 p-4 max-w-7xl mx-auto`}>
         {/* ---- Bosqichlar ---- */}
         <aside className="space-y-2">
+          {/* Telefon uchun: joriy bosqich kartasi (ro'yxat yig'ilgan) */}
+          {!proj && (
+            <div className="md:hidden bg-brand-600 text-white rounded-2xl p-4">
+              <div className="text-[11px] opacity-80">Hozirgi bosqich · {run.current + 1}/{run.total}</div>
+              <div className="font-semibold text-base leading-snug">{cur?.title}</div>
+              {cur?.desc && <div className="text-xs opacity-90 mt-1">{cur.desc}</div>}
+              <div className="flex items-center gap-2 mt-3">
+                {run.status === "running" && (
+                  <button onClick={nextStage} className="flex-1 bg-white text-brand-700 rounded-xl py-2.5 text-sm font-bold flex items-center justify-center gap-1">
+                    <Check size={16} /> Bajarildi → keyingisi
+                  </button>
+                )}
+                <button onClick={() => setStagesOpen(!stagesOpen)} className="bg-white/15 rounded-xl px-3 py-2.5 text-sm">{stagesOpen ? "Yashir" : "Ro'yxat"}</button>
+              </div>
+            </div>
+          )}
+          <div className={`${stagesOpen || proj ? "" : "hidden md:block"} space-y-2`}>
           <div className="text-xs font-semibold text-slate-500 uppercase">Dars bosqichlari</div>
           {run.stages.map((s, i) => (
             <div key={i} onClick={() => !proj && goTo(i)}
@@ -204,10 +222,11 @@ export default function TeacherRun() {
             </div>
           ))}
           {!proj && run.status === "running" && (
-            <button onClick={nextStage} className="w-full bg-brand-600 text-white rounded-xl py-2.5 text-sm font-semibold flex items-center justify-center gap-1">
+            <button onClick={nextStage} className="hidden md:flex w-full bg-brand-600 text-white rounded-xl py-2.5 text-sm font-semibold items-center justify-center gap-1">
               Bosqich bajarildi → keyingisi <ChevronRight size={16} />
             </button>
           )}
+          </div>
           {!proj && (
             <>
               <div className="text-xs font-semibold text-slate-500 uppercase mt-4 flex items-center gap-1"><Users size={13} /> O'quvchilar ({run.students?.length ?? 0})</div>
@@ -245,10 +264,10 @@ export default function TeacherRun() {
 
         {/* ---- Material ---- */}
         <main>
-          <div className="flex gap-1 border-b border-slate-200 mb-3 overflow-x-auto">
+          <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1">
             {TABS.map((t) => (
               <button key={t.key} onClick={() => setTab(t.key)}
-                      className={`px-3 py-2 text-sm whitespace-nowrap border-b-2 -mb-px ${tab === t.key ? "border-brand-600 text-brand-700 font-medium" : "border-transparent text-slate-500"}`}>{t.label}</button>
+                      className={`px-3.5 py-2 text-sm whitespace-nowrap rounded-full border ${tab === t.key ? "bg-brand-600 text-white border-brand-600" : "bg-white text-slate-600 border-slate-200"}`}>{t.label}</button>
             ))}
           </div>
           {!P && <p className="text-sm text-slate-500">Reja matni topilmadi.</p>}

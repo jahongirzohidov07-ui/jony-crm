@@ -4683,6 +4683,358 @@ Ben""",
     ],
 }
 
+
+# ---------------------------------------------- STEP 2 / STEP 3 MID-COURSE
+# Manba: Jony Academy'ning o'z testlari ("Step 2.0 MID-Course listening /
+# reading", "STEP 3.0 Listening / Reading Mid-Course") + "ANSWERS 2-3.pdf".
+# Listening 1–20, Reading 21–45 (fayldagi raqamlar shunga surilgan).
+TRUE_FALSE = ["True", "False"]
+YES_NO_UP = ["YES", "NO"]
+ABCD = ["A", "B", "C", "D"]
+
+STEP2_MID = {
+    "level": "step2", "kind": "mid", "unit_no": None,
+    "title": "Step 2 · Mid-course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1",
+            "instructions": "What is the most liked thing? For each person, "
+                            "choose A, B or C.",
+            "questions": [
+                _c("EMELY", ["Good friends", "Night Life", "Summer is great"], "A"),
+                _c("BRUCE", ["City is big", "Noise and traffic", "Night life"], "C"),
+                _c("DALORES", ["Quiet place", "Restaurants", "Comfortable seating places"], "A"),
+                _c("WILLIAM", ["City is small", "Very safe", "Attractive views"], "B"),
+                _c("CONNIE", ["Cheap shops", "Street markets", "Kind people"], "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2",
+            "instructions": "Is the given information true or false?",
+            "questions": [
+                _c("Last week was snowy. Now the weather is going to be cloudy and it can "
+                   "reach minus 10 degrees tonight.", TRUE_FALSE, "B"),
+                _c("Strong wind, but rain is not going to fall.", TRUE_FALSE, "B"),
+                _c("Strong winter storm, snowy weather and minus 15 degrees.", TRUE_FALSE, "A"),
+                _c("Sunny, hot, dry air and 30 degrees of hot.", TRUE_FALSE, "A"),
+                _c("Sun shines, 26 degrees, no wind, but it can be much colder tonight.",
+                   TRUE_FALSE, "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3",
+            "instructions": "What did they do last weekend? Choose the correct "
+                            "answer A, B or C.",
+            "questions": [
+                _c("", ["Went to dancing", "Went to his girlfriend’s home", "Watched TV at home"], "C"),
+                _c("", ["Went to the attractive park", "Met with beautiful girl",
+                        "Went out with his girlfriend"], "B"),
+                _c("", ["Went to bodybuilding championship", "Stayed at the gym for a long time",
+                        "Has not attended to the gym"], "B"),
+                _c("", ["Spent time with his nephews",
+                        "Was exhausted about not going to computer gaming",
+                        "Listened to pop music a lot"], "A"),
+                _c("", ["Saw great movie", "Went out with his boyfriend",
+                        "Went to the theatre with her brother"], "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 4",
+            "instructions": "Do they buy the items? Choose YES if they decided to "
+                            "buy or NO if they decided not to buy.",
+            "questions": [
+                _c("Item 1", YES_NO_UP, "B"),
+                _c("Item 2", YES_NO_UP, "B"),
+                _c("Item 3", YES_NO_UP, "A"),
+                _c("Item 4", YES_NO_UP, "A"),
+                _c("Item 5", YES_NO_UP, "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1 · Notices",
+            "instructions": "Read the sentences. Which notice (A – G) matches "
+                            "each sentence?",
+            "passage": """A   No shoes, no entry.
+B   Quiet, please! Exam in progress.
+C   Student ID required for discount.
+D   Beware of wet floor.
+E   Parking for customers only.
+F   No photography allowed.
+G   Emergency exit – do not block.""",
+            "questions": [
+                _c("Walk carefully, because the floor is slippery.", A_G, "D"),
+                _c("You cannot take pictures in this area.", A_G, "F"),
+                _c("If you are not buying anything, do not leave your car here.", A_G, "E"),
+                _c("You cannot go in without wearing shoes.", A_G, "A"),
+                _c("Do not stand in the way of the back exit.", A_G, "G"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Sophia",
+            "instructions": "Read the sentences about a student called Sophia, "
+                            "and choose the correct answer for each gap.",
+            "questions": [
+                _c("Sophia is from Spain, but she ……… at a school in Paris.",
+                   ["is", "has", "studies"], "C"),
+                _c("Sophia enjoys ……… music in her free time.", ["playing", "doing", "making"], "A"),
+                _c("Sophia was excited because she received a high ……… on her project.",
+                   ["exam", "score", "homework"], "B"),
+                _c("Sophia plans to go ……… with her friends this weekend.",
+                   ["swimming", "run", "tennis"], "A"),
+                _c("Sophia has ……… many famous museums in Paris.", ["visited", "seen", "gone"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · Emma Richards",
+            "instructions": "Read the text about Emma Richards and answer the "
+                            "questions.",
+            "passage": """Emma Richards
+
+Emma Richards dreamed of becoming a doctor, but she chose a different path. She became a professional cyclist and won medals in world championships. Now, she writes books about her adventures.
+Last summer, Emma and her teammate, Lucy, cycled through the Andes Mountains. They followed the route of a famous explorer, Maria Reiche, who traveled there 70 years ago. The Andes have steep roads and thin air, making cycling very difficult.
+Before the trip, they asked a local guide, Carlos, for advice. He told them:
+- Bikes: Check the brakes and tires daily. A broken bike in the mountains is dangerous.
+- Food: Eat small meals often. Energy bars and nuts are best.
+- Routine: Start cycling at sunrise (5:30 AM), rest every 2 hours, and stop by 4:00 PM. Never ride in the dark!""",
+            "questions": [
+                _c("Why did Emma cycle in the Andes?",
+                   ["To test her strength in thin air", "To visit her friend Carlos",
+                    "To copy Maria Reiche’s journey"], "C"),
+                _c("What was the most important thing about their bikes?",
+                   ["They had to be lightweight.", "They needed daily checks.",
+                    "They had to be expensive."], "B"),
+                _c("What did Carlos say about food?",
+                   ["Eat large meals twice a day.", "Drink lots of water but avoid snacks.",
+                    "Carry energy bars and nuts."], "C"),
+                _c("What advice did Carlos give about their routine?",
+                   ["Cycle only in the morning.", "Rest every 2 hours and stop by 4:00 PM.",
+                    "Ride faster to finish before sunset."], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · The Sunshine Beach Hotel",
+            "instructions": "Read the text about a hotel and choose the correct "
+                            "answer for each gap.",
+            "passage": """The Sunshine Beach Hotel
+
+Are you planning a fun holiday? Do you want to enjoy sunny beaches and delicious food? Then, (35) ……… don’t you visit the Sunshine Beach Hotel? We (36) ……… make your holiday unforgettable!
+Here’s what our guests say:
+‘The Sunshine Beach Hotel has the (37) ……… beautiful views I have ever seen!’
+‘The rooms were clean, and the staff were very kind.’
+‘The restaurant food was tasty, and the waiters were (38) ……… helpful.’
+‘I didn’t like swimming before, (39) ……… now I love it thanks to the hotel’s warm pool!’""",
+            "questions": [
+                _c("", ["why", "when", "how"], "A"),
+                _c("", ["will", "should", "might"], "A"),
+                _c("", ["more", "most", "much"], "B"),
+                _c("", ["never", "sometimes", "very"], "C"),
+                _c("", ["or", "but", "because"], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 5 · Eat Your Vegetables!",
+            "instructions": "Read the text and choose the correct answer for "
+                            "each gap.",
+            "passage": """Eat Your Vegetables!
+
+Doctors say vegetables are very good for you. They have many vitamins that help your body (40) ……… strong. For example, carrots help your (41) ……… see better in the dark!
+You should eat vegetables every day. They can be raw, cooked, or in soups. But don’t (42) ……… them too long, or they lose their vitamins.
+Vegetables also help you stay at a healthy (43) ……… . They have few calories but make you feel full. Try to eat different colors—green, red, and orange vegetables are all (44) ……… for you.
+Remember: fresh vegetables are best, but frozen ones are good (45) ……… !""",
+            "questions": [
+                _c("", ["be", "make", "stay"], "C"),
+                _c("", ["eyes", "hands", "ears"], "A"),
+                _c("", ["wash", "cook", "open"], "B"),
+                _c("", ["age", "weight", "size"], "B"),
+                _c("", ["bad", "sweet", "important"], "C"),
+                _c("", ["too", "so", "well"], "A"),
+            ],
+        },
+    ],
+}
+
+STEP3_MID = {
+    "level": "step3", "kind": "mid", "unit_no": None,
+    "title": "Step 3 · Mid-course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1 · The United Kingdom",
+            "instructions": "You will hear the recording about the United "
+                            "Kingdom. Choose the correct answer for each "
+                            "question.",
+            "questions": [
+                _c("Why do many tourists visit the UK, according to the text?",
+                   ["To study at university", "To learn about British culture and visit museums",
+                    "To go skiing in the mountains", "To enjoy tropical beaches"], "B"),
+                _c("What can visitors do in Scotland, as mentioned in the text?",
+                   ["See a famous bridge", "Go shopping in Glasgow",
+                    "Visit a castle on a hill in Edinburgh", "Take a boat to Northern Ireland"], "C"),
+                _c("What is one reason people carry umbrellas in the UK?",
+                   ["It is often very windy", "The sun is too strong",
+                    "The weather can change quickly and it might rain",
+                    "It’s part of British tradition"], "C"),
+                _c("Which area is recommended for people who enjoy nature?",
+                   ["London City Centre", "Snowdonia and the Lake District",
+                    "Manchester United Stadium", "Edinburgh Castle"], "B"),
+                _c("Which of the following is NOT true about the UK?",
+                   ["The UK includes four countries", "The main language spoken is English",
+                    "The UK is in southern Europe", "The capital city is London"], "C"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2 · Shopping",
+            "instructions": "You will hear a woman telling about her shopping "
+                            "experience. Choose the correct answers.",
+            "questions": [
+                _c("How much were the organic tomatoes per kilogram?", ["$2", "$3", "$4", "$5"], "C"),
+                _c("How many kilograms of tomatoes did the person buy?",
+                   ["1 kg", "2 kg", "3 kg", "4 kg"], "B"),
+                _c("How much did the fresh basil cost?", ["$1", "$2", "$3", "$4"], "B"),
+                _c("Where did the person meet their friend after shopping?",
+                   ["At the market", "At a café", "At home", "At a friend's house"], "B"),
+                _c("What did the person and their friend talk about?",
+                   ["Weekend plans", "Favorite movies", "Recipes", "Travel destinations"], "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3 · Mike's trip",
+            "instructions": "You will hear a boy named Mike talking about his "
+                            "next trip plan. Choose the correct answer.",
+            "questions": [
+                _c("How many countries will Mike visit?", ["One", "Two", "Three", "Four"], "C"),
+                _c("What is the first place Mike will visit?",
+                   ["Athens", "Barcelona", "Rome", "Paris"], "B"),
+                _c("What food does Mike want to try in Rome?",
+                   ["Moussaka and souvlaki", "Paella and tapas", "Pizza and gelato",
+                    "Croissants and cheese"], "C"),
+                _c("Why does Mike want to visit Athens?",
+                   ["For a business trip", "To see the beaches", "To attend a wedding",
+                    "Because he loves Greek mythology"], "D"),
+                _c("What is Mike planning to do during his trip?",
+                   ["Take photos and make memories", "Study at university",
+                    "Visit only museums", "Go skiing"], "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 4 · Max's blog",
+            "instructions": "You will hear Okeyo Max talking about his blog. "
+                            "Choose the correct answer.",
+            "questions": [
+                _c("Why did Okeyo Max start his blog?",
+                   ["To earn money from writing", "To share his travel experiences only",
+                    "For fun during his free time", "Because he had to do it for school"], "C"),
+                _c("How often does Max try to post on his blog?",
+                   ["Every day", "Once a week", "Once a month", "Every two weeks"], "B"),
+                _c("What topic did Max write about last week?",
+                   ["His trip to the mountains", "Learning new words", "His favorite book",
+                    "His fear of public speaking"], "D"),
+                _c("How does Max say blogging helps his English?",
+                   ["He listens to podcasts and copies them",
+                    "He only writes in his native language",
+                    "He uses the blog to practice vocabulary and grammar",
+                    "He takes online grammar courses"], "C"),
+                _c("What is Max’s future plan for his blog?",
+                   ["Stop blogging completely",
+                    "Turn it into a YouTube channel or small business",
+                    "Publish a printed magazine", "Focus only on writing stories"], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1 · Future Cities",
+            "instructions": "Read the text. Fill in each gap with ONE word. You "
+                            "must use a word which is somewhere in the rest of "
+                            "the text.",
+            "passage": """FUTURE CITIES
+
+In the future, cities will be different. These (21) ………… will be even more amazing. There will be many buildings and these (22) ………… will be even more amazing and taller. There will be self-driving cars. These (23) ………… will run on sustainable energy. There will also be spaces like parks and gardens. These (24) ………… will help to keep the air clean. We will use holograms to talk instead of computers. You can (25) ………… to a person from another part of the world as if he's in front of you. Future cities will be safer. There will be robots patrolling around and these (26) ………… will not need sleep or rest and work unstoppably.""",
+            "questions": [
+                _t("", "cities"),
+                _t("", "buildings"),
+                _t("", "cars"),
+                _t("", "spaces"),
+                _t("", "talk"),
+                _t("", "robots"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Why Sleep Matters",
+            "instructions": "Read the text. Is the information true (YES) or "
+                            "wrong (NO)?",
+            "passage": """Why Sleep Matters
+
+Getting enough sleep is just as important as eating healthy or exercising. While we sleep, our bodies repair muscles and our brains organize memories. Adults need 7-9 hours of sleep each night, while teenagers need even more. Lack of sleep can lead to problems like difficulty concentrating, mood changes, and even weight gain. To sleep better, experts recommend keeping a regular schedule, avoiding screens before bed, and making your bedroom dark and quiet. A short nap (20-30 minutes) can also help refresh your mind during the day.""",
+            "questions": [
+                _c("Sleep helps the brain process memories.", YES_NO, "A"),
+                _c("Teenagers require less sleep than adults.", YES_NO, "B"),
+                _c("Not getting enough sleep can affect your mood.", YES_NO, "A"),
+                _c("Using phones before bed improves sleep quality.", YES_NO, "B"),
+                _c("A 45-minute nap is ideal for daytime energy.", YES_NO, "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Why Sleep Matters (gaps)",
+            "instructions": "Fill the gaps with ONLY ONE WORD from the text "
+                            "above.",
+            "questions": [
+                _t("Getting enough sleep is just as important as eating ………… or exercising.",
+                   "healthy"),
+                _t("While we sleep, our bodies repair ………… and our brains organize memories.",
+                   "muscles"),
+                _t("Lack of sleep can lead to problems like difficulty concentrating, mood "
+                   "changes, and even ………… gain.", "weight"),
+                _t("To sleep better, experts recommend avoiding ………… before bed.", "screens"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · The Best Way to Learn a Language",
+            "instructions": "Read the text and questions below. For each "
+                            "question, choose the correct answer A, B or C.",
+            "passage": """The Best Way to Learn a Language
+
+Some people believe the best way to learn a language is to live in a country where it is spoken. Maria Kovac, a Hungarian student, tried this method when she moved to France. She thought being surrounded by French speakers would help her learn quickly. However, she found it difficult at first because people spoke too fast, and she felt embarrassed making mistakes. After six months, her French improved, but she admits it was a stressful experience.
+Others prefer studying in language schools. Ahmed Salem, an Egyptian engineer, took evening classes to learn German. He liked having a teacher who corrected his mistakes and classmates to practice with. However, he sometimes felt tired after work and missed lessons. Ahmed says language schools are good, but you need a lot of free time.
+Today, many people use language apps like Duolingo or Babbel. These apps are convenient because you can study anytime, anywhere. Sofia Petrov, a Russian teenager, learned basic English this way. She enjoyed the games and rewards, but she thinks apps are not enough for serious learning. "You need real conversations," she says.
+In my opinion, the best method depends on your goals. If you need to learn fast, living abroad might work. If you want steady progress, a language school could be better. For busy people, apps are a good start. Why not try a mix of all three?""",
+            "questions": [
+                _c("Why did Maria Kovac move to France?",
+                   ["To study at a university", "To learn French faster by living there",
+                    "To visit famous tourist places"], "B"),
+                _c("What was Ahmed's main problem with language school?",
+                   ["The classes were too expensive",
+                    "He often missed lessons because he was tired after work",
+                    "The teacher spoke too fast"], "B"),
+                _c("What does Sofia Petrov think about language apps?",
+                   ["They are perfect for becoming fluent",
+                    "They are fun but not enough without real conversations",
+                    "They are too difficult for beginners"], "B"),
+                _c("How long did it take Maria to improve her French?",
+                   ["1 month", "6 months", "2 years"], "B"),
+                _c("What does the writer recommend for language learning?",
+                   ["Using only apps", "Trying a mix of methods", "Avoiding living abroad"], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · Staying Safe in the Sun",
+            "instructions": "Read the text and choose the correct answer A, B "
+                            "or C for each gap.",
+            "passage": """Staying Safe in the Sun
+
+Sunburn is a common problem, especially in summer. There are several things (41) ………… can harm your skin, including strong sunlight and sunbeds.
+Usually, sunburn makes your skin red and painful, but sometimes it may (42) ………… blisters or fever. People with fair skin (43) ………… be especially careful because they burn more easily. If your skin peels or the pain is (44) ………… , see a doctor immediately.
+To protect yourself, use sunscreen with high SPF and try to (45) ………… staying in direct sunlight between 11am and 3pm.""",
+            "questions": [
+                _c("", ["who", "that", "what"], "B"),
+                _c("", ["do", "have", "cause"], "C"),
+                _c("", ["might", "should", "must"], "B"),
+                _c("", ["serious", "ugly", "tired"], "A"),
+                _c("", ["avoid", "miss", "refuse"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4724,4 +5076,6 @@ TEMPLATES = [
     ("exam_tpl_step3_unit11", STEP3_UNIT11),
     ("exam_tpl_step3_unit12", STEP3_UNIT12),
     ("exam_tpl_step3_end", STEP3_END),
+    ("exam_tpl_step2_mid", STEP2_MID),
+    ("exam_tpl_step3_mid", STEP3_MID),
 ]

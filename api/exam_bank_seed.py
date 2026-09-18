@@ -4122,6 +4122,124 @@ Barbara""",
     ],
 }
 
+
+STEP3_UNIT10 = {
+    "level": "step3", "kind": "unit", "unit_no": 10,
+    "title": "Step 3 · Unit 10 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Of course – what seems to be the problem?", "I’ve changed my mind.", "This isn’t what I ordered."], "A"),
+                _c("", ["I’d like to exchange it for something else.", "I’ve changed my mind.", "I’ll replace it immediately."], "C"),
+                _c("", ["Could I speak to the manager, please?", "Sorry, just one more thing.", "I’m terribly sorry."], "C"),
+                _c("", ["Who’s next, please?", "Just a moment.", "Is there anything else I can help you with?"], "B"),
+                _c("", ["Do you have a receipt?", "How can I help you?", "Do you have anything cheaper?"], "A"),
+                _c("", ["I’ll ask someone to look at that for you right away.", "It’s a bit slow.", "I’d like to make a complaint."], "A"),
+                _c("", ["Oh dear, really?", "It’s not very polite.", "That’s very kind."], "C"),
+                _c("", ["I’m terribly sorry.", "I’ll give you a full refund.", "It doesn’t work."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Values",
+            "instructions": "Read the sentences about values. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("I’m trying to eat healthily but I really ............ a pizza tonight.",
+                   ["look after", "feel like", "come round"], "B"),
+                _c("Raymond has ............ making a decision about which car to buy until "
+                   "next week.", ["come round", "put off", "looked after"], "B"),
+                _c("He ............ her invitation to the party.",
+                   ["turned on", "turned off", "turned down"], "C"),
+                _c("Nina forgot to ............ an important message, but she doesn’t want to "
+                   "tell anybody.", ["pass on", "put off", "join in"], "A"),
+                _c("Oh no, I forgot to ............ Jennie’s plant and now it’s dead.",
+                   ["look after", "look for", "look at"], "A"),
+                _c("Michael and Miriam have ............ because they had a huge argument "
+                   "last week.", ["turned down", "joined in", "broken up"], "C"),
+                _c("Do you think it’s wrong to carry ............ driving when you see an "
+                   "accident?", ["off", "over", "on"], "C"),
+                _c("Why don’t you ............ in our game; it’ll be fun.",
+                   ["get", "join", "come"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Values",
+            "instructions": "Read the sentences about values. The first letter "
+                            "is already there. Write the whole word.",
+            "questions": [
+                _t("Customers should not need to wait for more than 20 minutes for their "
+                   "pizza d _ _ _ _ _ _ _ .", "delivery", "elivery"),
+                _t("Poor service can spoil customers’ e _ _ _ _ _ _ _ _ of a meal in a "
+                   "restaurant.", "enjoyment", "njoyment"),
+                _t("Your d _ _ _ _ _ _ _ _ _ _ of the film was so interesting I decided to "
+                   "see it myself.", "description", "escription"),
+                _t("I don’t like waiting in a q _ _ _ _ for more than five minutes.",
+                   "queue", "ueue"),
+                _t("If you’re late, you should give an e _ _ _ _ _ _ _ _ _ _ .",
+                   "explanation", "xplanation"),
+                _t("Do you always make a c _ _ _ _ _ _ _ _ when you aren’t happy with "
+                   "something you’ve bought?", "complaint", "omplaint"),
+                _t("There isn’t a good c _ _ _ _ _ of shops in this town – we need to go "
+                   "somewhere bigger.", "choice", "hoice"),
+                _t("Have you made a d _ _ _ _ _ _ _ about which job to take?",
+                   "decision", "ecision"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read an email about a visit to a restaurant. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """Hi Phil
+
+Can you recommend a good restaurant for my Mum's birthday next month? I know we'd regret it if we (25) ………… the same restaurant as last year. It was terrible!
+There were so many problems. First, there were (26) ………… waiters so we had to wait a long time for our food. Then, when it came, the food was (27) ………… cold to eat. There was (28) ………… salt in it as well. I think if they used less, (29) ………… be much nicer. There wasn't (30) ………… water on the table, so we ordered some drinks, but the waiter forgot our order and we had to ask him three times.
+Honestly, I never want to go back there again. Where (31) ………… go, if you were me? You would make my Mum very happy if we (32) ………… a good Italian restaurant. Can you email me soon, so I can book a table? Thanks!
+Betty""",
+            "questions": [
+                _c("", ["choose", "chose", "didn’t choose"], "B"),
+                _c("", ["not enough", "not much", "any"], "A"),
+                _c("", ["too much", "a lot of", "too"], "C"),
+                _c("", ["too much", "too many", "how much"], "A"),
+                _c("", ["the food would", "would the food", "the food wouldn’t"], "A"),
+                _c("", ["some", "any", "no"], "B"),
+                _c("", ["were you", "you would", "would you"], "C"),
+                _c("", ["could find", "will find", "wouldn’t find"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("I only go to the cinema to see good films.\n"
+                   "I wouldn't go to the cinema if it ………… a good film.",
+                   "wasn’t", "was not", "wasn’t showing", "was not showing"),
+                _t("There was no fresh fruit for breakfast at the hotel.\n"
+                   "The hotel didn't offer ………… fresh fruit for breakfast.", "any"),
+                _t("When there aren't many shop assistants, managers should serve customers.\n"
+                   "When there are only ………… shop assistants, managers should serve customers.",
+                   "a few", "few"),
+                _t("I don't think I would steal paper from work because I would feel bad.\n"
+                   "If ………… paper from work, I would feel bad.", "I stole"),
+                _t("It wouldn't be right to complain in a restaurant, unless the service was bad.\n"
+                   "I ………… in a restaurant if the service was good.",
+                   "wouldn’t complain", "would not complain"),
+                _t("This dessert has a lot of sugar in it and I don't like it.\n"
+                   "There is ………… sugar in this dessert.", "too much"),
+                _t("People drive faster than they should sometimes.\n"
+                   "Sometimes people drive ………… fast.", "too"),
+                _t("I could eat there, but it’s very expensive.\n"
+                   "If I ………… there, it would be very expensive.", "ate"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4159,4 +4277,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit7", STEP3_UNIT7),
     ("exam_tpl_step3_unit8", STEP3_UNIT8),
     ("exam_tpl_step3_unit9", STEP3_UNIT9),
+    ("exam_tpl_step3_unit10", STEP3_UNIT10),
 ]

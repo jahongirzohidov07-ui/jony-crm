@@ -120,7 +120,7 @@ ck("guruh o'quvchilari 4", len(gr[0]["students"]), 4)
 
 # --- O'yin ochish: guruh majburiy, kamida 20 savol
 ck("guruhsiz ochilmaydi", c.post("/api/live/games", json={
-    "course": "ielts_1_0", "lesson_no": 23}, headers=T).status_code, 422)
+    "course": "ielts_1_0", "lesson_no": 23}, headers=T).status_code, 400)
 ck("boshqa ustoz guruhi bilan ochilmaydi", c.post("/api/live/games", json={
     "course": "ielts_1_0", "lesson_no": 23, "group_id": G2}, headers=T).status_code, 403)
 r = c.post("/api/live/games", json={"course": "ielts_1_0", "lesson_no": 23, "group_id": G1,

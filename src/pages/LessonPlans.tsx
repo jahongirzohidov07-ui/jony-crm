@@ -380,6 +380,31 @@ function VocabTab({ L, course }: { L: Lesson; course: string }) {
   );
 }
 
+/** Javobni bo'sh joyning O'RNIDA ko'rsatadi (2026-09-18, Jahongir:
+ * "javob yonida emas qoyiladigan joyida korinsin"). Bir nechta bo'sh joy
+ * bo'lsa javob " / " bo'yicha bo'linadi; bo'sh joy bo'lmasa — oxiriga. */
+function fillBlank(item: string, answer: string): React.ReactNode {
+  const parts = item.split(/_{2,}|…{2,}|\.{4,}/);
+  if (parts.length < 2) {
+    return <>{item} <span className="text-emerald-700 font-medium">→ {answer}</span></>;
+  }
+  const answers = parts.length > 2 && answer.includes(" / ") ? answer.split(" / ") : [answer];
+  return (
+    <>
+      {parts.map((p, k) => (
+        <span key={k}>
+          {p}
+          {k < parts.length - 1 && (
+            <span className="text-emerald-700 font-semibold border-b border-emerald-500 px-0.5">
+              {answers[k] ?? answers[answers.length - 1]}
+            </span>
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
+
 function ExList({ list }: { list: Ex[] }) {
   const [show, setShow] = useState<Record<number, boolean>>({});
   return (
@@ -400,10 +425,10 @@ function ExList({ list }: { list: Ex[] }) {
           {ex.box && <div className="text-xs bg-slate-50 rounded px-2 py-1 mt-2 text-slate-600">{ex.box.join(" · ")}</div>}
           {ex.items && (
             <ol className="list-decimal pl-5 text-sm text-slate-800 mt-2 space-y-0.5">
-              {ex.items.map((it, j) => (
-                <li key={j}>{it}{show[i] && Array.isArray(ex.answers) && ex.answers[j] !== undefined && (
-                  <span className="text-emerald-700 font-medium"> → {ex.answers[j]}</span>)}</li>
-              ))}
+              {ex.items.map((it, j) => {
+                const ans = show[i] && Array.isArray(ex.answers) ? ex.answers[j] : undefined;
+                return <li key={j}>{ans !== undefined ? fillBlank(it, ans) : it}</li>;
+              })}
             </ol>
           )}
           {show[i] && (!ex.items || !Array.isArray(ex.answers)) && ex.answers && (

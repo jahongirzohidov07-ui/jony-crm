@@ -258,7 +258,7 @@ MODES = {"vocab": "Lug'at (CORE 20)", "vocab40": "Lug'at (40 so'z)",
 class GameIn(BaseModel):
     course: str
     lesson_no: int
-    group_id: int              # ustoz O'Z guruhini tanlaydi (coin uchun)
+    group_id: Optional[int] = None   # ustoz O'Z guruhini tanlaydi (coin uchun)
     mode: str = "mixed"
     count: int = 20            # kamida 20 savol (Jahongir)
     seconds: int = 20
@@ -341,6 +341,9 @@ def create_game(body: GameIn, db: Session = Depends(get_db),
     if body.mode not in MODES:
         raise HTTPException(400, "Rejim noto'g'ri")
     L = _lesson(body.course, body.lesson_no)
+    # Eski (keshlangan) sahifa guruhsiz yuborsa — 422 o'rniga tushunarli xabar
+    if not body.group_id:
+        raise HTTPException(400, "Guruhni tanlang (sahifani yangilang — Ctrl+F5)")
     group = _get_group_in_scope(db, body.group_id, user)
     # Kamida 20 savol (2026-09-18, Jahongir: "savollar soni kamida 20ta
     # bo'lishi kerak"). Dars shuncha savol bermasa — lug'atning 40

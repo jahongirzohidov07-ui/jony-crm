@@ -14220,6 +14220,2873 @@
      }
     ]
    }
+  },
+  {
+   "no": 16,
+   "title": "Reported speech (positive)",
+   "grammar_topic": "REPORTED SPEECH — darak gaplar: zamon siljishi (Present → Past, Past → Past Perfect, will → would, can → could, may → might) + olmosh, vaqt/joy so'zlari o'zgarishi",
+   "vocab_topic": "Essential Words 16 — Family, generations and upbringing (oila, avlodlar va tarbiya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 16 – Reported speech (positive) (jadval: 8 zamon siljishi); Essential Words 16; Speaking sample: Family; Audio 81–85 (ustoz skripti); Reading — Zulfiya (Jony Academy matni).",
+   "objectives": [
+    "Darak gapni bilvosita nutqqa o'tkazish: zamon bir qadam orqaga (backshift).",
+    "Olmosh va vaqt/joy so'zlarini o'zgartirish (now → then, tomorrow → the next day).",
+    "say / tell / explain / admit / claim — reporting fe'llari; tell + ob'ekt.",
+    "Oila va avlodlar Essential Words 16 bilan Speaking \"Family\" va Task 2 \"family roles\" mavzularida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 16 — Family, generations and upbringing (oila, avlodlar va tarbiya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz bir o'quvchiga shivirlaydi: \"I love my grandmother.\" O'quvchi sinfga: \"She said she loved her grandmother.\" Zanjir: har o'quvchi oldingisining gapini reported qiladi."
+    ],
+    [
+     8,
+     "Kahoot — Linking verbs",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Linking verbs lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Present Simple → Past Simple (\"I work hard\" → he worked hard); Present Continuous → Past Continuous; Present Perfect → Past Perfect; Past Simple → Past Perfect (\"I lost my key\" → had lost); Past Continuous → Past Perfect Continuous; will → would; can → could; may → might. Qo'shimcha: olmoshlar (I → he/she, my → his/her), vaqt so'zlari (now → then, today → that day, yesterday → the day before, tomorrow → the next day, here → there, this → that), say vs tell (tell + kimga), must → had to, umumiy haqiqat o'zgarmaydi."
+    ],
+    [
+     12,
+     "Essential Words 16 — Family, generations and upbringing (oila, avlodlar va tarbiya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "BACKSHIFT — reporting fe'l o'tgan zamonda (said, told) bo'lsa, ichki gap bir qadam ORQAGA: Present Simple → Past Simple; Present Continuous → Past Continuous; Present Perfect → Past Perfect; Past Simple → Past Perfect; Past Continuous → Past Perfect Continuous.",
+     "MODALLAR: will → would; can → could; may → might; must → had to; should/could/might/would — o'zgarmaydi.",
+     "OLMOSH: \"I\" → he/she; \"we\" → they; \"my\" → his/her; \"you\" → me/us (kim bilan gaplashganiga qarab).",
+     "VAQT/JOY: now → then; today → that day; yesterday → the day before; tomorrow → the next/following day; last week → the week before; next year → the following year; here → there; this → that; ago → before.",
+     "SAY vs TELL: said (that) + gap; told + KIMGA + (that) + gap. \"He said he was tired.\" / \"He told me he was tired.\"",
+     "Umumiy haqiqat va hozir ham to'g'ri gap — backshift shart emas: \"She said the Earth goes round the Sun.\""
+    ],
+    "formulas": [
+     [
+      "Present Simple → Past Simple",
+      "S + said (that) + S + V2",
+      "He said, \"I work hard.\" → He said he worked hard.",
+      "U qattiq ishlashini aytdi."
+     ],
+     [
+      "Present Continuous → Past Continuous",
+      "S + said + S + was/were + V-ing",
+      "She said, \"I am studying.\" → She said she was studying.",
+      "U o'qiyotganini aytdi."
+     ],
+     [
+      "Present Perfect / Past Simple → Past Perfect",
+      "S + said + S + had + V3",
+      "\"We have finished.\" → They said they had finished. / \"I lost my key.\" → I said I had lost my key.",
+      "Ular tugatganini aytishdi. / Kalitimni yo'qotganimni aytdim."
+     ],
+     [
+      "Past Continuous → Past Perfect Continuous",
+      "S + said + S + had been + V-ing",
+      "\"I was watching TV.\" → He said he had been watching TV.",
+      "U TV ko'rayotgan bo'lganini aytdi."
+     ],
+     [
+      "will / can / may → would / could / might",
+      "S + said + S + would/could/might + V1",
+      "\"I will call you.\" → She said she would call me. / \"I can swim.\" → He said he could swim. / \"I may come.\" → She said she might come.",
+      "U menga qo'ng'iroq qilishini aytdi. / U suza olishini aytdi. / U kelishi mumkinligini aytdi."
+     ],
+     [
+      "Vaqt so'zlari + tell",
+      "S + told + OB'EKT + (that) + gap; now → then, tomorrow → the next day",
+      "\"I'll see you here tomorrow.\" → She told me she would see me there the next day.",
+      "U meni ertasi kuni o'sha yerda ko'rishini aytdi."
+     ]
+    ],
+    "presentation": [
+     [
+      "What did Zulfiya say about her poems?",
+      "She said she wrote for the women of Uzbekistan."
+     ],
+     [
+      "What did your grandmother tell you?",
+      "She told me she had raised six children alone."
+     ],
+     [
+      "What did he say about his family?",
+      "He said his family was living in Bukhara."
+     ],
+     [
+      "What did they say about the wedding?",
+      "They said they had already sent the invitations."
+     ],
+     [
+      "What did she say about tomorrow?",
+      "She said she would visit her parents the next day."
+     ],
+     [
+      "What did your father say about swimming?",
+      "He said he could swim when he was five."
+     ],
+     [
+      "What did the teacher say about the poet?",
+      "She said Zulfiya might be the most loved poet in Uzbekistan."
+     ],
+     [
+      "What did he say he was doing yesterday?",
+      "He said he had been helping his mother."
+     ],
+     [
+      "What did she say about the Earth?",
+      "She said the Earth goes round the Sun. (umumiy haqiqat)"
+     ],
+     [
+      "What did your brother tell you last week?",
+      "He told me he had found a job in Tashkent."
+     ]
+    ],
+    "notes": [
+     "Reporting fe'l HOZIRGI zamonda (says, tells) — backshift yo'q: \"He says he is tired.\"",
+     "\"that\" tushirilishi mumkin; \"tell\" har doim ob'ekt bilan (told me), \"say\" ob'ektsiz (said to me — mumkin, lekin kam).",
+     "Past Perfect ichki gapda o'zgarmaydi (had lost → had lost).",
+     "Essential Words 16: upbringing, generation gap, extended family, sibling, ancestor, heritage, nurture, discipline, bond, breadwinner."
+    ],
+    "mistakes": [
+     [
+      "He said me he was tired.",
+      "He told me he was tired. / He said he was tired.",
+      "say + ob'ekt emas; tell + ob'ekt."
+     ],
+     [
+      "She said she will come.",
+      "She said she would come.",
+      "will → would."
+     ],
+     [
+      "He said he has finished.",
+      "He said he had finished.",
+      "Present Perfect → Past Perfect."
+     ],
+     [
+      "She said she is studying now.",
+      "She said she was studying then.",
+      "now → then."
+     ],
+     [
+      "They told that they had left.",
+      "They told me that they had left. / They said that they had left.",
+      "tell + ob'ekt."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — oila va tarbiya asoslari (upbringing, generation gap, sibling…); STRONG — oila roli va jamiyat; SUPER — Zulfiya, she'riyat va Task 2 birikmalari (nuclear vs extended family, role model).",
+     "Har so'zga reported gap: \"My grandmother said that upbringing mattered more than money.\""
+    ],
+    "core": [
+     [
+      "upbringing (4.0)",
+      "tarbiya (bolalikdagi)",
+      "She said her upbringing had made her strong.",
+      "U tarbiyasi uni kuchli qilganini aytdi.",
+      ""
+     ],
+     [
+      "generation (4.0)",
+      "avlod",
+      "He said his generation was different from ours.",
+      "U o'z avlodi biznikidan farq qilishini aytdi.",
+      ""
+     ],
+     [
+      "generation gap (4.0)",
+      "avlodlar orasidagi tafovut",
+      "My father said the generation gap was growing.",
+      "Otam avlodlar tafovuti o'sib borayotganini aytdi.",
+      ""
+     ],
+     [
+      "extended family (4.0)",
+      "katta (kengaytirilgan) oila",
+      "She said she lived with her extended family.",
+      "U katta oilasi bilan yashashini aytdi.",
+      ""
+     ],
+     [
+      "nuclear family (4.0)",
+      "kichik (yadro) oila",
+      "They said nuclear families were becoming common in cities.",
+      "Ular shaharlarda kichik oilalar ko'payib borayotganini aytishdi.",
+      ""
+     ],
+     [
+      "sibling (4.0)",
+      "aka-uka / opa-singil",
+      "He told me he had four siblings.",
+      "U menga to'rtta aka-uka va opa-singli borligini aytdi.",
+      ""
+     ],
+     [
+      "ancestor (4.0)",
+      "ajdod",
+      "Grandfather said our ancestors had come from Khiva.",
+      "Bobom ajdodlarimiz Xivadan kelganini aytdi.",
+      ""
+     ],
+     [
+      "heritage (family) (4.0)",
+      "meros (oilaviy/madaniy)",
+      "She said heritage was something you protect, not sell.",
+      "U meros — sotiladigan emas, himoya qilinadigan narsa ekanini aytdi.",
+      ""
+     ],
+     [
+      "nurture",
+      "parvarish qilmoq (tarbiyalab o'stirmoq)",
+      "Zulfiya said a poem must be nurtured like a child.",
+      "Zulfiya she'rni boladek parvarish qilish kerakligini aytdi.",
+      "ˈnərʧər"
+     ],
+     [
+      "discipline (family) (4.0)",
+      "intizom",
+      "My mother said discipline was a form of love.",
+      "Onam intizom — sevgining bir shakli ekanini aytdi.",
+      ""
+     ],
+     [
+      "bond (family)",
+      "rishta",
+      "He said the bond between brothers could not be broken.",
+      "U aka-ukalar rishtasini uzib bo'lmasligini aytdi.",
+      "bɑnd (ˈfæməli)"
+     ],
+     [
+      "breadwinner",
+      "oila boquvchisi",
+      "She said she had become the breadwinner after her husband died.",
+      "U turmush o'rtog'i vafotidan keyin oila boquvchisi bo'lganini aytdi.",
+      "ˈbrɛdˌwɪnər"
+     ],
+     [
+      "household (4.0)",
+      "xonadon",
+      "They said the household was run by grandmother.",
+      "Ular xonadonni buvi boshqarishini aytishdi.",
+      ""
+     ],
+     [
+      "role model (family) (4.0)",
+      "ibrat namunasi",
+      "She told her daughters that they would be role models one day.",
+      "U qizlariga bir kun ibrat namunasi bo'lishlarini aytdi.",
+      ""
+     ],
+     [
+      "tradition (4.0)",
+      "an'ana",
+      "He said the tradition was passed from mother to daughter.",
+      "U an'ana onadan qizga o'tishini aytdi.",
+      ""
+     ],
+     [
+      "respect for elders",
+      "kattalarga hurmat",
+      "Grandmother said respect for elders was the first lesson.",
+      "Buvim kattalarga hurmat — birinchi dars ekanini aytdi.",
+      "rɪˈspɛkt fər ˈɛldərz"
+     ],
+     [
+      "single parent (4.0)",
+      "yolg'iz ota / ona",
+      "She said being a single parent had taught her patience.",
+      "U yolg'iz ona bo'lish unga sabrni o'rgatganini aytdi.",
+      ""
+     ],
+     [
+      "childhood (4.0)",
+      "bolalik",
+      "He said his childhood had been poor but happy.",
+      "U bolaligi kambag'al, lekin baxtli bo'lganini aytdi.",
+      ""
+     ],
+     [
+      "adolescence",
+      "o'smirlik",
+      "The doctor said adolescence was the hardest stage.",
+      "Shifokor o'smirlik eng qiyin bosqich ekanini aytdi.",
+      "ˌædəˈlɛsəns"
+     ],
+     [
+      "mother tongue / motherland",
+      "ona tili / ona yurt",
+      "Zulfiya said she had written every poem for her motherland.",
+      "Zulfiya har she'rini ona yurti uchun yozganini aytdi.",
+      "ˈməðər təŋ  ˈməðərˌlænd"
+     ]
+    ],
+    "strong": [
+     [
+      "widow",
+      "beva ayol",
+      "She said she had been a widow at 29.",
+      "U 29 yoshida beva bo'lganini aytdi.",
+      "ˈwɪdoʊ"
+     ],
+     [
+      "orphan (4.0)",
+      "yetim",
+      "He said the war had left thousands of orphans.",
+      "U urush minglab yetim qoldirganini aytdi.",
+      ""
+     ],
+     [
+      "foster / adopt (4.0)",
+      "vasiylikka olmoq / farzandlikka olmoq",
+      "They said they would adopt a second child the next year.",
+      "Ular keyingi yili ikkinchi bolani farzandlikka olishlarini aytishdi.",
+      ""
+     ],
+     [
+      "inherit / inheritance (4.0)",
+      "meros olmoq / meros",
+      "She said she had inherited her mother's courage.",
+      "U onasining jasoratini meros olganini aytdi.",
+      ""
+     ],
+     [
+      "family values (4.0)",
+      "oilaviy qadriyatlar",
+      "The minister said family values were changing.",
+      "Vazir oilaviy qadriyatlar o'zgarayotganini aytdi.",
+      ""
+     ],
+     [
+      "parenting (4.0)",
+      "ota-onalik (tarbiya)",
+      "Experts said parenting styles affected confidence.",
+      "Mutaxassislar tarbiya uslublari ishonchga ta'sir qilishini aytishdi.",
+      ""
+     ],
+     [
+      "strict / lenient (4.0)",
+      "qattiqqo'l / yumshoq",
+      "He said his father had been strict but fair.",
+      "U otasi qattiqqo'l, lekin adolatli bo'lganini aytdi.",
+      ""
+     ],
+     [
+      "spoil (a child)",
+      "erkalatib buzmoq",
+      "Grandmother said she might spoil the baby a little.",
+      "Buvim chaqaloqni biroz erkalatishi mumkinligini aytdi.",
+      "spɔɪl (ə ʧaɪld)"
+     ],
+     [
+      "dependent / independent (4.0)",
+      "qaram / mustaqil",
+      "She said her children had become independent early.",
+      "U bolalari erta mustaqil bo'lganini aytdi.",
+      ""
+     ],
+     [
+      "elderly care",
+      "keksalarni parvarishlash",
+      "They said elderly care was the family's duty, not the state's.",
+      "Ular keksalarni parvarishlash davlatniki emas, oila burchi ekanini aytishdi.",
+      "ˈɛldərli kɛr"
+     ],
+     [
+      "nursing home",
+      "qariyalar uyi",
+      "He said he would never send his mother to a nursing home.",
+      "U onasini hech qachon qariyalar uyiga yubormasligini aytdi.",
+      "ˈnərsɪŋ hoʊm"
+     ],
+     [
+      "mahalla",
+      "mahalla",
+      "She said the mahalla had raised her as much as her parents.",
+      "U mahalla uni ota-onasi kabi tarbiyalaganini aytdi.",
+      ""
+     ],
+     [
+      "arranged marriage",
+      "ota-ona tanlagan nikoh",
+      "My aunt said arranged marriages were rarer now.",
+      "Xolam ota-ona tanlagan nikohlar endi kamroq ekanini aytdi.",
+      "əreɪnʤd ˈmɛrɪʤ"
+     ],
+     [
+      "divorce rate (4.0)",
+      "ajralishlar darajasi",
+      "The report said the divorce rate had doubled.",
+      "Hisobotda ajralishlar ikki baravar oshgani aytilgan.",
+      ""
+     ],
+     [
+      "birth rate (4.0)",
+      "tug'ilish darajasi",
+      "Economists said the birth rate was falling in cities.",
+      "Iqtisodchilar shaharlarda tug'ilish pasayayotganini aytishdi.",
+      ""
+     ],
+     [
+      "ageing population (4.0)",
+      "qariyotgan aholi",
+      "Japan said its ageing population was its biggest challenge.",
+      "Yaponiya qariyotgan aholi eng katta muammosi ekanini aytdi.",
+      ""
+     ],
+     [
+      "work-life balance (4.0)",
+      "ish va hayot muvozanati",
+      "She said work-life balance was impossible with three children.",
+      "U uch bola bilan ish-hayot muvozanati imkonsiz ekanini aytdi.",
+      ""
+     ],
+     [
+      "quality time",
+      "sifatli vaqt (oila bilan)",
+      "He said quality time mattered more than money.",
+      "U sifatli vaqt puldan muhimroq ekanini aytdi.",
+      "kˈwɑləti taɪm"
+     ],
+     [
+      "peer influence (4.0)",
+      "tengdoshlar ta'siri",
+      "Teachers said peer influence was stronger than parents' at 15.",
+      "O'qituvchilar 15 yoshda tengdoshlar ta'siri ota-onanikidan kuchli ekanini aytishdi.",
+      ""
+     ],
+     [
+      "maternal / paternal",
+      "onalik / otalik (tomonidan)",
+      "She said her maternal grandmother had taught her poetry.",
+      "U ona tomonidan buvisi unga she'riyatni o'rgatganini aytdi.",
+      "məˈtərnəl  pəˈtərnəl"
+     ]
+    ],
+    "super": [
+     [
+      "Zulfiya (poet)",
+      "Zulfiya (shoira)",
+      "Zulfiya said she had become a poet because of her mother's songs.",
+      "Zulfiya onasining qo'shiqlari tufayli shoira bo'lganini aytdi.",
+      ""
+     ],
+     [
+      "Hamid Olimjon",
+      "Hamid Olimjon",
+      "She said Hamid Olimjon had been her husband and her first reader.",
+      "U Hamid Olimjon turmush o'rtog'i va birinchi o'quvchisi bo'lganini aytdi.",
+      ""
+     ],
+     [
+      "Degrez (Tashkent)",
+      "Degrez (Toshkent mahallasi)",
+      "She said she had grown up in Degrez, a mahalla of craftsmen.",
+      "U hunarmandlar mahallasi Degrezda o'sganini aytdi.",
+      ""
+     ],
+     [
+      "poetess",
+      "shoira",
+      "Critics said the poetess wrote like a mother and a soldier at once.",
+      "Tanqidchilar shoira bir vaqtda ona va askar kabi yozishini aytishdi.",
+      ""
+     ],
+     [
+      "verse (poetry)",
+      "she'r (misra)",
+      "She said every verse had been paid for with tears.",
+      "U har misra ko'z yosh bilan to'langanini aytdi.",
+      "vərs (ˈpoʊətri)"
+     ],
+     [
+      "grief",
+      "qayg'u",
+      "She said grief had taught her more than joy.",
+      "U qayg'u quvonchdan ko'proq o'rgatganini aytdi.",
+      "grif"
+     ],
+     [
+      "car accident, 1944",
+      "1944-yilgi avtohalokat",
+      "The family said the car accident in 1944 had changed everything.",
+      "Oila 1944-yilgi avtohalokat hamma narsani o'zgartirganini aytdi.",
+      "kɑr ˈæksədənt, 1944"
+     ],
+     [
+      "raise children alone",
+      "bolalarni yolg'iz o'stirmoq",
+      "She told her son she would raise them alone and never remarry.",
+      "U o'g'liga ularni yolg'iz o'stirishini va qayta turmush qurmasligini aytdi.",
+      "reɪz ˈʧɪldrən əˈloʊn"
+     ],
+     [
+      "\"Hulkar\" (daughter)",
+      "Hulkar (qizi)",
+      "Hulkar said her mother had written at night after the housework.",
+      "Hulkar onasi uy ishlaridan keyin kechasi yozganini aytdi.",
+      ""
+     ],
+     [
+      "\"Saodat\" magazine",
+      "\"Saodat\" jurnali",
+      "She said she had edited \"Saodat\" for many years.",
+      "U \"Saodat\"ni ko'p yil tahrir qilganini aytdi.",
+      ""
+     ],
+     [
+      "women's voice",
+      "ayollar ovozi",
+      "Readers said Zulfiya had been the voice of Uzbek women.",
+      "O'quvchilar Zulfiya o'zbek ayollarining ovozi bo'lganini aytishdi.",
+      "ˈwɪmənz vɔɪs"
+     ],
+     [
+      "Zulfiya State Prize",
+      "Zulfiya nomidagi Davlat mukofoti",
+      "The ministry said the Zulfiya Prize would go to talented girls every year.",
+      "Vazirlik Zulfiya mukofoti har yili iste'dodli qizlarga berilishini aytdi.",
+      ""
+     ],
+     [
+      "Hero of Uzbekistan",
+      "O'zbekiston Qahramoni",
+      "The president said she had been made a Hero of Uzbekistan in 2004.",
+      "Prezident u 2004-da O'zbekiston Qahramoni bo'lganini aytdi.",
+      "ˈhɪroʊ əv uzˈbɛkɪˌstæn"
+     ],
+     [
+      "lullaby",
+      "alla",
+      "She said her mother's lullabies had been her first poetry.",
+      "U onasining allalari birinchi she'riyati bo'lganini aytdi.",
+      "ˈlələˌbaɪ"
+     ],
+     [
+      "loyalty (family)",
+      "sadoqat",
+      "She said loyalty to one man had been her choice, not her duty.",
+      "U bir kishiga sadoqat burch emas, tanlovi bo'lganini aytdi.",
+      "ˈlɔɪəlti (ˈfæməli)"
+     ],
+     [
+      "mourning",
+      "motam",
+      "Friends said her mourning had lasted a lifetime.",
+      "Do'stlar uning motami umr bo'yi davom etganini aytishdi.",
+      "ˈmɔrnɪŋ"
+     ],
+     [
+      "craftsman",
+      "hunarmand",
+      "She said her father, a craftsman, had made her first notebook.",
+      "U hunarmand otasi birinchi daftarini yasab berganini aytdi.",
+      "ˈkræftsmən"
+     ],
+     [
+      "translate poetry",
+      "she'r tarjima qilmoq",
+      "She said she had translated Pushkin and Lesya Ukrainka into Uzbek.",
+      "U Pushkin va Lesya Ukrainkani o'zbekchaga tarjima qilganini aytdi.",
+      "trænzˈleɪt ˈpoʊətri"
+     ],
+     [
+      "matriarch",
+      "oila onasi (boshlig'i)",
+      "Neighbours said she had been the matriarch of the whole street.",
+      "Qo'shnilar u butun ko'chaning onasi bo'lganini aytishdi.",
+      "ˈmeɪtriˌɑrk"
+     ],
+     [
+      "\"I will not weep\"",
+      "\"Yig'lamayman\"",
+      "She said she would not weep, because her children were watching.",
+      "U yig'lamasligini aytdi, chunki bolalari qarab turardi.",
+      "\"aɪ wɪl nɑt wip\""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Bilvosita nutqqa",
+     "type": "rewrite",
+     "instr": "said / told bilan",
+     "items": [
+      "He said, \"I work hard.\"",
+      "She said, \"I am studying.\"",
+      "They said, \"We have finished.\"",
+      "I said, \"I lost my key.\"",
+      "He said, \"I was watching TV.\"",
+      "She said, \"I will call you.\"",
+      "He said, \"I can swim.\"",
+      "She said, \"I may come.\""
+     ],
+     "answers": [
+      "He said he worked hard.",
+      "She said she was studying.",
+      "They said they had finished.",
+      "I said I had lost my key.",
+      "He said he had been watching TV.",
+      "She said she would call me.",
+      "He said he could swim.",
+      "She said she might come."
+     ]
+    },
+    {
+     "title": "Vaqt va joy so'zlari",
+     "type": "rewrite",
+     "instr": "Olmosh va vaqt so'zlarini o'zgartiring",
+     "items": [
+      "\"I'll see you here tomorrow,\" she told me.",
+      "\"We moved to this house last year,\" he said.",
+      "\"My mother is cooking now,\" she said.",
+      "\"I met my wife two years ago,\" he said.",
+      "\"I can't come today,\" she told us."
+     ],
+     "answers": [
+      "She told me she would see me there the next day.",
+      "He said they had moved to that house the year before.",
+      "She said her mother was cooking then.",
+      "He said he had met his wife two years before.",
+      "She told us she couldn't come that day."
+     ]
+    },
+    {
+     "title": "say yoki tell",
+     "type": "choose",
+     "instr": "To'g'risini tanlang",
+     "items": [
+      "He said / told me he was tired.",
+      "She said / told she would come.",
+      "They said / told us the truth.",
+      "Grandmother said / told that family came first.",
+      "He said / told to me he had left."
+     ],
+     "answers": [
+      "told",
+      "said",
+      "told",
+      "said",
+      "said"
+     ]
+    },
+    {
+     "title": "IELTS Speaking — Family",
+     "type": "speaking",
+     "instr": "Juftlikda: oilangizdan biror kishi aytgan 6 gapni reported qiling",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "My grandmother said she had raised six children alone.",
+      "My father told me that discipline was a form of love.",
+      "My mother said she would always support me.",
+      "My brother said he could not live without football.",
+      "My aunt said the generation gap was growing.",
+      "My grandfather said our ancestors had come from Khiva."
+     ]
+    },
+    {
+     "title": "Oila lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the way a child is raised",
+      "a brother or sister",
+      "family including grandparents, aunts, uncles",
+      "the person who earns the family's money",
+      "a person you are descended from",
+      "difference in views between young and old"
+     ],
+     "answers": [
+      "upbringing",
+      "sibling",
+      "extended family",
+      "breadwinner",
+      "ancestor",
+      "generation gap"
+     ],
+     "box": [
+      "upbringing",
+      "sibling",
+      "extended family",
+      "breadwinner",
+      "ancestor",
+      "generation gap"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He said me he was tired.",
+      "She said she will come.",
+      "He said he has finished.",
+      "She said she is studying now.",
+      "They told that they had left."
+     ],
+     "answers": [
+      "He told me he was tired.",
+      "She said she would come.",
+      "He said he had finished.",
+      "She said she was studying then.",
+      "They said that they had left."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 16 jadvalini 3 marta (8 siljish); Essential Words 16 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Oila hikoyasi",
+     "type": "write",
+     "instr": "Oilangizdagi katta yoshli kishi bilan suhbat — 10 gapini reported speech'da yozing (kamida 5 xil zamon siljishi)",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Oila inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"In many countries, elderly parents are cared for by their children. Is this a positive or negative development?\" — kamida 4 reported gap (\"Experts say/said…\") va 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U qattiq ishlashini aytdi.",
+      "U o'qiyotganini aytdi.",
+      "Ular tugatganini aytishdi.",
+      "U menga qo'ng'iroq qilishini aytdi.",
+      "U suza olishini aytdi."
+     ],
+     "answers": [
+      "He said he worked hard.",
+      "She said she was studying.",
+      "They said they had finished.",
+      "She said she would call me.",
+      "He said he could swim."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 16 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "8 siljish: direct + reported + tarjima, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 15",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 8 siljish, 2 ga bo'lib)",
+     "1 daqiqada 1 / 2 daqiqada 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 16 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Zulfiya — the poet who said she would not weep",
+    "text": [
+     "Zulfiya Isroilova was born in 1915 in Degrez, a mahalla of craftsmen in old Tashkent. Her father cast iron pots; her mother sang. Years later Zulfiya said that her mother's lullabies had been her first poetry, and that her father had made her first notebook with his own hands. She published her first poems at 17 and told a friend that she would write for the women of Uzbekistan, because nobody else was.",
+     "In 1935 she married the poet Hamid Olimjon. They had two children, and she said later that those nine years had been the happiest of her life. Then, in July 1944, Hamid Olimjon was killed in a car accident. Zulfiya was 29. Relatives told her she should remarry; she said she would raise the children alone, and she did. Her daughter Hulkar remembered that her mother had written every night after the housework was finished, and that she had never once cried in front of them. \"I will not weep,\" one of her most famous poems begins, \"because my children are watching.\"",
+     "Grief made her famous, but she refused to stay in it. She edited the women's magazine \"Saodat\" for thirty years, translated Pushkin and Lesya Ukrainka into Uzbek, and travelled to India, Egypt and Japan as a poet of the East. Readers said that she wrote like a mother and a soldier at the same time.",
+     "She died in 1996. In 1999 Uzbekistan created the Zulfiya State Prize for gifted girls, and in 2004 she was named a Hero of Uzbekistan. Her granddaughter said recently that the family still kept the iron pot her father had made — and the notebook. \"She told us,\" the granddaughter said, \"that a family is not the people who live in the house. It is the people you refuse to forget.\""
+    ],
+    "glossary": [
+     "cast (iron) — quymoq (cho'yan)",
+     "lullaby — alla",
+     "publish — nashr etmoq",
+     "relative — qarindosh",
+     "remarry — qayta turmush qurmoq",
+     "weep — yig'lamoq",
+     "grief — qayg'u",
+     "edit — tahrir qilmoq",
+     "gifted — iste'dodli",
+     "refuse — rad etmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Bilvosita gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta reported speech gapi",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8"
+      ],
+      "answers": [
+       "Zulfiya said that her mother's lullabies had been her first poetry.",
+       "Her father had made her first notebook with his own hands.",
+       "She told a friend that she would write for the women of Uzbekistan.",
+       "She said later that those nine years had been the happiest of her life.",
+       "Relatives told her she should remarry.",
+       "She said she would raise the children alone.",
+       "Hulkar remembered that her mother had written every night.",
+       "Readers said that she wrote like a mother and a soldier. / The granddaughter said that the family still kept the iron pot."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Her father was a singer.",
+       "Hamid Olimjon died in 1944.",
+       "She remarried after two years.",
+       "She translated Pushkin into Uzbek."
+      ],
+      "answers": [
+       "False (cast iron pots)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Oila lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta oila so'zi; oxirgi gapdagi oila ta'rifi",
+      "items": [
+       "words",
+       "definition"
+      ],
+      "answers": [
+       "mahalla, father, mother, lullabies, married, children, relatives, remarry, daughter, granddaughter, family",
+       "A family is the people you refuse to forget, not just the people who live in the house."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Speaking sample: Family, Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 81–85 (fayllar yo'q — ustoz IELTS Section 1 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Interviewer: I'm collecting family stories. What did your grandmother tell you? — Woman: She said she had come to Tashkent in 1966, after the earthquake. She told me she had lived in a tent for eight months. — Any advice? — She said family came first and that money would follow. She also said she would never move again — and she didn't; she lived in the same house for 50 years. — How many grandchildren? — She said she had fourteen and that she could name every birthday.\"",
+     "1-tinglash: kim, qachon? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Came to Tashkent in ___, after the ___",
+       "Lived in a tent for ___ months",
+       "Advice: family came ___; money would ___",
+       "Same house for ___ years; ___ grandchildren"
+      ],
+      "answers": [
+       "1966; earthquake",
+       "eight",
+       "first; follow",
+       "50; fourteen"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 17,
+   "title": "Reported speech (questions)",
+   "grammar_topic": "REPORTED QUESTIONS — Yes/No savol: asked + if/whether + S + V (backshift); Wh-savol: asked + wh-word + S + V (darak tartibi, do/does/did yo'q)",
+   "vocab_topic": "Essential Words 17 — History, civilisation and knowledge (tarix, sivilizatsiya va bilim)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 17 – Reported speech (question) (2 jadval: if/whether; wh-word); Essential Words 17; Audio 86–90 (ustoz skripti); Reading — Imam al-Bukhari (Jony Academy matni).",
+   "objectives": [
+    "Yes/No savollarni if/whether bilan, Wh-savollarni wh-word bilan bilvosita nutqqa o'tkazish.",
+    "Savol tartibini darak tartibiga aylantirish (do/does/did tushadi, ega fe'ldan oldin).",
+    "ask / wonder / want to know / enquire — reporting fe'llari.",
+    "Tarix va sivilizatsiya Essential Words 17 bilan o'tmish haqida savol-javob va Task 2 \"history in schools\" mavzusi."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 17 — History, civilisation and knowledge (tarix, sivilizatsiya va bilim) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz o'quvchidan: \"Do you like history?\" O'quvchi sinfga: \"The teacher asked me if I liked history.\" Keyin: \"Where were you born?\" → \"She asked me where I had been born.\" — savol tartibi darak tartibiga o'tadi."
+    ],
+    [
+     8,
+     "Kahoot — Reported speech (positive)",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Reported speech (positive) lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvallari: 1) Yes/No: reporting verb + if/whether + subject + zamon siljigan fe'l (\"Do you like coffee?\" → He asked if I liked coffee; \"Are you busy?\" → She asked whether I was busy; \"Will he come?\" → They asked if he would come). 2) Wh-: reporting verb + wh-word + subject + fe'l (\"Where do you live?\" → She asked where I lived; \"What is your name?\" → The teacher asked what my name was; \"Why did he leave early?\" → They asked why he had left early; \"How can I do this?\" → She asked how she could do that). Qoidalar: savol belgisi yo'q, do/does/did tushadi, so'z tartibi darak, backshift 16-darsdagidek, wanted to know / wondered / enquired ham reporting fe'l."
+    ],
+    [
+     12,
+     "Essential Words 17 — History, civilisation and knowledge (tarix, sivilizatsiya va bilim) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "YES/NO SAVOL → asked + IF / WHETHER + ega + fe'l (backshift): \"Do you like coffee?\" → He asked if I liked coffee. \"Are you busy?\" → She asked whether I was busy. \"Will he come?\" → They asked if he would come.",
+     "WH-SAVOL → asked + WH-WORD + ega + fe'l (DARAK tartibi): \"Where do you live?\" → She asked where I lived. \"What is your name?\" → The teacher asked what my name was. \"Why did he leave early?\" → They asked why he had left early. \"How can I do this?\" → She asked how she could do that.",
+     "SO'Z TARTIBI: savoldagi inversiya yo'qoladi: \"is your name\" → \"your name was\"; do/does/did yordamchisi tushadi: \"did he leave\" → \"he had left\".",
+     "Savol belgisi (?) yo'q; olmosh va vaqt so'zlari 16-darsdagidek o'zgaradi (this → that, now → then).",
+     "REPORTING FE'LLAR: asked (me), wanted to know, wondered, enquired, was curious."
+    ],
+    "formulas": [
+     [
+      "Yes/No (Present)",
+      "S + asked + if/whether + S + V2",
+      "\"Do you like coffee?\" he asked. → He asked if I liked coffee.",
+      "U mendan qahva yoqadimi deb so'radi."
+     ],
+     [
+      "Yes/No (be)",
+      "S + asked + whether + S + was/were",
+      "\"Are you busy?\" she asked. → She asked whether I was busy.",
+      "U mendan bandmisiz deb so'radi."
+     ],
+     [
+      "Yes/No (will)",
+      "S + asked + if + S + would + V1",
+      "\"Will he come?\" they asked. → They asked if he would come.",
+      "Ular u keladimi deb so'rashdi."
+     ],
+     [
+      "Wh- (Present)",
+      "S + asked + wh-word + S + V2",
+      "\"Where do you live?\" → She asked where I lived. / \"What is your name?\" → The teacher asked what my name was.",
+      "U mendan qayerda yashashimni so'radi. / O'qituvchi ismim nima deb so'radi."
+     ],
+     [
+      "Wh- (Past → Past Perfect)",
+      "S + asked + wh-word + S + had + V3",
+      "\"Why did he leave early?\" → They asked why he had left early.",
+      "Ular nega u erta ketganini so'rashdi."
+     ],
+     [
+      "Wh- (modal)",
+      "S + asked + wh-word + S + could/would + V1",
+      "\"How can I do this?\" → She asked how she could do that.",
+      "U buni qanday qilsa bo'lishini so'radi."
+     ]
+    ],
+    "presentation": [
+     [
+      "What did the student ask Bukhari?",
+      "He asked whether every hadith was true."
+     ],
+     [
+      "What did they ask about his memory?",
+      "They asked how he could remember 600,000 reports."
+     ],
+     [
+      "What did the visitor ask?",
+      "She asked where the imam had been born."
+     ],
+     [
+      "What did your teacher ask you?",
+      "He asked if I had read about the Samanids."
+     ],
+     [
+      "What did the tourist want to know?",
+      "He wanted to know why Bukhara was called \"the dome of Islam\"."
+     ],
+     [
+      "What did the journalist ask?",
+      "She asked when the mausoleum had been built."
+     ],
+     [
+      "What did the child ask?",
+      "He asked whether the imam would come back."
+     ],
+     [
+      "What did the examiner ask you?",
+      "She asked what I knew about Amir Temur."
+     ],
+     [
+      "What did you wonder?",
+      "I wondered how people had travelled without maps."
+     ],
+     [
+      "What did the guide ask the group?",
+      "He asked if we could see the Ark from there."
+     ]
+    ],
+    "notes": [
+     "if = whether (whether — rasmiyroq; \"whether … or not\" bilan).",
+     "Wh-savolda wh-word saqlanadi; \"if\" qo'shilmaydi: \"asked where I lived\" (asked if where — xato).",
+     "Ega — savol so'zining o'zi bo'lsa tartib o'zgarmaydi: \"Who called?\" → She asked who had called.",
+     "Essential Words 17: civilisation, empire, dynasty, manuscript, chronicle, archaeology, artefact, legacy, era, decline."
+    ],
+    "mistakes": [
+     [
+      "He asked me did I like coffee.",
+      "He asked me if I liked coffee.",
+      "do/did tushadi; if kerak."
+     ],
+     [
+      "She asked where did I live.",
+      "She asked where I lived.",
+      "Darak tartibi."
+     ],
+     [
+      "They asked if he will come.",
+      "They asked if he would come.",
+      "will → would."
+     ],
+     [
+      "The teacher asked what was my name.",
+      "The teacher asked what my name was.",
+      "Ega + fe'l tartibi."
+     ],
+     [
+      "She asked me that I was busy.",
+      "She asked me whether I was busy.",
+      "Savol → if/whether (that emas)."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — tarix va sivilizatsiya asoslari (civilisation, empire, era…); STRONG — tarixiy manba va tadqiqot; SUPER — Imom Buxoriy, hadis ilmi va Task 2 birikmalari (learn from history, cultural legacy).",
+     "Har so'zga reported savol: \"The guide asked whether we knew which dynasty had built the Ark.\""
+    ],
+    "core": [
+     [
+      "civilisation (4.0)",
+      "sivilizatsiya",
+      "The guide asked which civilisation had built the city.",
+      "Gid shaharni qaysi sivilizatsiya qurganini so'radi.",
+      ""
+     ],
+     [
+      "empire (4.0)",
+      "imperiya",
+      "She asked how large the empire had been.",
+      "U imperiya qanchalik katta bo'lganini so'radi.",
+      ""
+     ],
+     [
+      "dynasty",
+      "sulola",
+      "He asked whether the Samanid dynasty had ruled Bukhara.",
+      "U Somoniylar sulolasi Buxoroni boshqarganmi deb so'radi.",
+      "ˈdaɪnəsti"
+     ],
+     [
+      "era (4.0)",
+      "davr",
+      "The student asked what era the manuscript came from.",
+      "Talaba qo'lyozma qaysi davrdan ekanini so'radi.",
+      ""
+     ],
+     [
+      "century (4.0)",
+      "asr",
+      "They asked in which century the imam had lived.",
+      "Ular imom qaysi asrda yashaganini so'rashdi.",
+      ""
+     ],
+     [
+      "ancient (4.0)",
+      "qadimiy",
+      "I wondered how ancient the walls were.",
+      "Devorlar qanchalik qadimiy ekanini o'yladim.",
+      ""
+     ],
+     [
+      "medieval",
+      "o'rta asrlarga oid",
+      "She asked if medieval Bukhara had had a library.",
+      "U o'rta asr Buxorosida kutubxona bo'lganmi deb so'radi.",
+      "mɪˈdjivəl"
+     ],
+     [
+      "manuscript (history)",
+      "qo'lyozma",
+      "He asked where the manuscript was kept.",
+      "U qo'lyozma qayerda saqlanishini so'radi.",
+      "ˈmænjəˌskrɪpt (ˈhɪstəri)"
+     ],
+     [
+      "chronicle",
+      "yilnoma (solnoma)",
+      "The professor asked who had written the chronicle.",
+      "Professor yilnomani kim yozganini so'radi.",
+      "ˈkrɑnɪkəl"
+     ],
+     [
+      "archaeology / archaeologist (4.0)",
+      "arxeologiya / arxeolog",
+      "They asked what the archaeologists had found.",
+      "Ular arxeologlar nima topganini so'rashdi.",
+      ""
+     ],
+     [
+      "artefact (4.0)",
+      "(tarixiy) buyum",
+      "She asked whether the artefacts were real.",
+      "U buyumlar haqiqiymi deb so'radi.",
+      ""
+     ],
+     [
+      "heritage (history) (4.0)",
+      "meros",
+      "The minister asked how we would protect our heritage.",
+      "Vazir merosimizni qanday himoya qilishimizni so'radi.",
+      ""
+     ],
+     [
+      "legacy (4.0)",
+      "meros (qoldirilgan iz)",
+      "The journalist asked what legacy Bukhari had left.",
+      "Jurnalist Buxoriy qanday meros qoldirganini so'radi.",
+      ""
+     ],
+     [
+      "historian (4.0)",
+      "tarixchi",
+      "I asked the historian if the story was true.",
+      "Tarixchidan hikoya haqiqatmi deb so'radim.",
+      ""
+     ],
+     [
+      "source (historical) (4.0)",
+      "manba",
+      "The teacher asked which sources we had used.",
+      "O'qituvchi qaysi manbalardan foydalanganimizni so'radi.",
+      ""
+     ],
+     [
+      "evidence (history)",
+      "dalil",
+      "She asked what evidence supported the date.",
+      "U sanani qanday dalil tasdiqlashini so'radi.",
+      "ˈɛvədəns (ˈhɪstəri)"
+     ],
+     [
+      "conquer / conquest (4.0)",
+      "zabt etmoq / istilo",
+      "He asked when the Arabs had conquered Bukhara.",
+      "U arablar Buxoroni qachon zabt etganini so'radi.",
+      ""
+     ],
+     [
+      "decline (4.0)",
+      "tanazzul",
+      "They asked why the empire had declined.",
+      "Ular imperiya nega tanazzulga yuz tutganini so'rashdi.",
+      ""
+     ],
+     [
+      "scholar (history)",
+      "olim",
+      "The child asked whether the scholar had ever been wrong.",
+      "Bola olim hech xato qilganmi deb so'radi.",
+      "ˈskɑlər (ˈhɪstəri)"
+     ],
+     [
+      "Silk Road (history)",
+      "Ipak yo'li",
+      "She asked how long the Silk Road journey had taken.",
+      "U Ipak yo'li safari qancha vaqt olganini so'radi.",
+      "sɪlk roʊd (ˈhɪstəri)"
+     ]
+    ],
+    "strong": [
+     [
+      "hadith",
+      "hadis",
+      "The student asked how many hadiths the book contained.",
+      "Talaba kitobda nechta hadis borligini so'radi.",
+      ""
+     ],
+     [
+      "authentic / authenticity",
+      "ishonchli (sahih) / ishonchlilik",
+      "He asked whether every report was authentic.",
+      "U har bir rivoyat ishonchlimi deb so'radi.",
+      "əˈθɛnɪk  ˌɔθənˈtɪsɪti"
+     ],
+     [
+      "chain of narrators",
+      "roviylar zanjiri",
+      "She asked what a chain of narrators was.",
+      "U roviylar zanjiri nima ekanini so'radi.",
+      "ʧeɪn əv ˈnɛˌreɪtərz"
+     ],
+     [
+      "memorise (4.0)",
+      "yod olmoq",
+      "They asked how he had memorised so much.",
+      "Ular u shuncha narsani qanday yod olganini so'rashdi.",
+      ""
+     ],
+     [
+      "compile",
+      "tuzmoq (to'plamoq)",
+      "I asked how long it had taken to compile the collection.",
+      "To'plamni tuzish qancha vaqt olganini so'radim.",
+      "kəmˈpaɪl"
+     ],
+     [
+      "verify (4.0)",
+      "tekshirmoq (tasdiqlamoq)",
+      "The imam asked if the story could be verified.",
+      "Imom hikoyani tekshirish mumkinmi deb so'radi.",
+      ""
+     ],
+     [
+      "reliable / unreliable (4.0)",
+      "ishonchli / ishonchsiz",
+      "She asked which narrators were unreliable.",
+      "U qaysi roviylar ishonchsiz ekanini so'radi.",
+      ""
+     ],
+     [
+      "oral tradition",
+      "og'zaki an'ana",
+      "He asked whether oral tradition could be trusted.",
+      "U og'zaki an'anaga ishonsa bo'ladimi deb so'radi.",
+      "ˈɔrəl trəˈdɪʃən"
+     ],
+     [
+      "pilgrim (history)",
+      "ziyoratchi",
+      "The guide asked how many pilgrims visited each year.",
+      "Gid har yili nechta ziyoratchi kelishini so'radi.",
+      "ˈpɪlgrɪm (ˈhɪstəri)"
+     ],
+     [
+      "mausoleum",
+      "maqbara",
+      "They asked when the mausoleum had been restored.",
+      "Ular maqbara qachon ta'mirlanganini so'rashdi.",
+      "ˌmɔsəˈliəm"
+     ],
+     [
+      "Samanid",
+      "Somoniylar (sulolasi)",
+      "She asked if the Samanids had spoken Persian.",
+      "U Somoniylar forscha gaplashganmi deb so'radi.",
+      ""
+     ],
+     [
+      "golden age (4.0)",
+      "oltin asr",
+      "The lecturer asked why the 9th century was called a golden age.",
+      "Ma'ruzachi IX asr nega oltin asr deyilishini so'radi.",
+      ""
+     ],
+     [
+      "Abbasid caliphate",
+      "Abbosiylar xalifaligi",
+      "He asked how far the Abbasid caliphate had stretched.",
+      "U Abbosiylar xalifaligi qanchalik cho'zilganini so'radi.",
+      ""
+     ],
+     [
+      "exile",
+      "surgun",
+      "They asked why the imam had been sent into exile.",
+      "Ular imom nega surgunga yuborilganini so'rashdi.",
+      "ˈɛkˌsaɪl"
+     ],
+     [
+      "governor",
+      "hokim",
+      "She asked what the governor had demanded.",
+      "U hokim nima talab qilganini so'radi.",
+      "ˈgəvərnər"
+     ],
+     [
+      "integrity (4.0)",
+      "halollik (butunlik)",
+      "The student asked whether integrity had cost him his home.",
+      "Talaba halollik unga uyini yo'qottirganmi deb so'radi.",
+      ""
+     ],
+     [
+      "critical thinking (4.0)",
+      "tanqidiy fikrlash",
+      "The teacher asked how Bukhari's method taught critical thinking.",
+      "O'qituvchi Buxoriy usuli tanqidiy fikrlashni qanday o'rgatishini so'radi.",
+      ""
+     ],
+     [
+      "primary / secondary source (4.0)",
+      "birlamchi / ikkilamchi manba",
+      "She asked if the chronicle was a primary source.",
+      "U yilnoma birlamchi manbami deb so'radi.",
+      ""
+     ],
+     [
+      "restore / restoration (4.0)",
+      "tiklamoq / tiklash",
+      "I asked who had paid for the restoration.",
+      "Tiklash uchun kim pul to'laganini so'radim.",
+      ""
+     ],
+     [
+      "commemorate",
+      "xotirlamoq (nishonlamoq)",
+      "They asked how Uzbekistan commemorated him.",
+      "Ular O'zbekiston uni qanday xotirlashini so'rashdi.",
+      "kəˈmɛmərˌeɪt"
+     ]
+    ],
+    "super": [
+     [
+      "Imam al-Bukhari",
+      "Imom Buxoriy",
+      "The tourist asked who Imam al-Bukhari had been.",
+      "Turist Imom Buxoriy kim bo'lganini so'radi.",
+      ""
+     ],
+     [
+      "Sahih al-Bukhari",
+      "\"Sahih al-Buxoriy\"",
+      "She asked why Sahih al-Bukhari was so respected.",
+      "U \"Sahih al-Buxoriy\" nega shunchalik hurmat qilinishini so'radi.",
+      ""
+     ],
+     [
+      "600,000 reports",
+      "600 000 rivoyat",
+      "They asked how one man could have checked 600,000 reports.",
+      "Ular bir odam 600 000 rivoyatni qanday tekshirganini so'rashdi.",
+      ""
+     ],
+     [
+      "7,000 chosen",
+      "7 000 tanlangan",
+      "He asked how many had been chosen — about 7,000.",
+      "U nechtasi tanlanganini so'radi — 7 000 ga yaqin.",
+      ""
+     ],
+     [
+      "blind as a child",
+      "bolaligida ko'r",
+      "The child asked whether the imam had really been blind as a boy.",
+      "Bola imom bolaligida rostdan ko'r bo'lganmi deb so'radi.",
+      "blaɪnd ɛz ə ʧaɪld"
+     ],
+     [
+      "sixteen years of travel",
+      "o'n olti yillik sayohat",
+      "I asked where his sixteen years of travel had taken him.",
+      "O'n olti yillik sayohati uni qayerlarga olib borganini so'radim.",
+      "ˈsɪkˈstin jɪrz əv ˈtrævəl"
+     ],
+     [
+      "Mecca, Baghdad, Cairo",
+      "Makka, Bag'dod, Qohira",
+      "She asked if he had studied in Mecca, Baghdad and Cairo.",
+      "U Makka, Bag'dod va Qohirada o'qiganmi deb so'radi.",
+      "ˈmɛkə, ˈbægdæd, ˈkaɪroʊ"
+     ],
+     [
+      "photographic memory",
+      "fotografik xotira",
+      "They asked whether his memory had really been photographic.",
+      "Ular xotirasi rostdan fotografikmi deb so'rashdi.",
+      "ˌfoʊtəˈgræfɪk ˈmɛməri"
+     ],
+     [
+      "test of Baghdad",
+      "Bag'dod sinovi",
+      "The professor asked what had happened at the test of Baghdad.",
+      "Professor Bag'dod sinovida nima bo'lganini so'radi.",
+      "tɛst əv ˈbægdæd"
+     ],
+     [
+      "100 mixed hadiths",
+      "100 aralashtirilgan hadis",
+      "He asked how Bukhari had corrected 100 deliberately mixed hadiths.",
+      "U Buxoriy ataylab aralashtirilgan 100 hadisni qanday tuzatganini so'radi.",
+      ""
+     ],
+     [
+      "refuse the governor",
+      "hokimga rad javobi bermoq",
+      "She asked why he had refused to teach the governor's sons privately.",
+      "U nega hokimning o'g'illariga xususiy dars berishdan bosh tortganini so'radi.",
+      "ˈrɛfˌjuz ðə ˈgəvərnər"
+     ],
+     [
+      "Khartank (Samarkand)",
+      "Xartang (Samarqand)",
+      "They asked where Khartank was.",
+      "Ular Xartang qayerda ekanini so'rashdi.",
+      ""
+     ],
+     [
+      "died in 870",
+      "870-da vafot etgan",
+      "I asked in which year he had died — 870.",
+      "Qaysi yili vafot etganini so'radim — 870.",
+      "daɪd ɪn 870"
+     ],
+     [
+      "memorial complex",
+      "yodgorlik majmuasi",
+      "The guide asked whether we had visited the memorial complex.",
+      "Gid yodgorlik majmuasiga borganmizmi deb so'radi.",
+      "məˈmɔriəl ˈkɑmplɛks"
+     ],
+     [
+      "\"dome of Islam\"",
+      "\"Islom gumbazi\"",
+      "He asked why Bukhara was called the dome of Islam.",
+      "U Buxoro nega Islom gumbazi deyilishini so'radi.",
+      "\"doʊm əv ˌɪsˈlɑm\""
+     ],
+     [
+      "Ark of Bukhara",
+      "Buxoro Arki",
+      "She asked how old the Ark was.",
+      "U Ark necha yoshda ekanini so'radi.",
+      ""
+     ],
+     [
+      "Ismail Samani mausoleum",
+      "Ismoil Somoniy maqbarasi",
+      "They asked when the Ismail Samani mausoleum had been built.",
+      "Ular Ismoil Somoniy maqbarasi qachon qurilganini so'rashdi.",
+      ""
+     ],
+     [
+      "pilgrimage site",
+      "ziyoratgoh",
+      "I asked how many people visited the pilgrimage site each year.",
+      "Ziyoratgohga har yili necha kishi kelishini so'radim.",
+      "ˈpɪlgrəmɪʤ saɪt"
+     ],
+     [
+      "knowledge is a chain",
+      "bilim — zanjir",
+      "He asked what \"knowledge is a chain\" meant.",
+      "U \"bilim — zanjir\" nimani anglatishini so'radi.",
+      "ˈnɑlɪʤ ɪz ə ʧeɪn"
+     ],
+     [
+      "scientific method (history)",
+      "ilmiy usul (tarixda)",
+      "The historian asked whether Bukhari's method could be called scientific.",
+      "Tarixchi Buxoriy usulini ilmiy deb atasa bo'ladimi deb so'radi.",
+      "ˌsaɪənˈtɪfɪk ˈmɛθəd (ˈhɪstəri)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Yes/No savollar",
+     "type": "rewrite",
+     "instr": "asked + if/whether",
+     "items": [
+      "\"Do you like coffee?\" he asked.",
+      "\"Are you busy?\" she asked.",
+      "\"Will he come?\" they asked.",
+      "\"Have you read the book?\" the teacher asked.",
+      "\"Can you remember the date?\" he asked.",
+      "\"Did the imam live in Bukhara?\" she asked."
+     ],
+     "answers": [
+      "He asked if I liked coffee.",
+      "She asked whether I was busy.",
+      "They asked if he would come.",
+      "The teacher asked whether I had read the book.",
+      "He asked if I could remember the date.",
+      "She asked whether the imam had lived in Bukhara."
+     ]
+    },
+    {
+     "title": "Wh-savollar",
+     "type": "rewrite",
+     "instr": "asked + wh-word + darak tartibi",
+     "items": [
+      "\"Where do you live?\" she asked.",
+      "\"What is your name?\" the teacher asked.",
+      "\"Why did he leave early?\" they asked.",
+      "\"How can I do this?\" she asked.",
+      "\"When was the mausoleum built?\" the tourist asked.",
+      "\"Who wrote the chronicle?\" he asked."
+     ],
+     "answers": [
+      "She asked where I lived.",
+      "The teacher asked what my name was.",
+      "They asked why he had left early.",
+      "She asked how she could do that.",
+      "The tourist asked when the mausoleum had been built.",
+      "He asked who had written the chronicle."
+     ]
+    },
+    {
+     "title": "To'g'ridan-to'g'ri savolga qaytaring",
+     "type": "rewrite",
+     "instr": "Reported → direct",
+     "items": [
+      "He asked if I liked history.",
+      "She asked where the manuscript was kept.",
+      "They asked whether we would visit Bukhara.",
+      "The guide asked how long we had been in Uzbekistan.",
+      "I asked why the empire had declined."
+     ],
+     "answers": [
+      "\"Do you like history?\"",
+      "\"Where is the manuscript kept?\"",
+      "\"Will you visit Bukhara?\"",
+      "\"How long have you been in Uzbekistan?\"",
+      "\"Why did the empire decline?\""
+     ]
+    },
+    {
+     "title": "Tarix intervyusi",
+     "type": "speaking",
+     "instr": "Juftlikda: A — tarixchi, B — jurnalist. B 6 savol beradi, A javob beradi; keyin B sinfga savollarini reported qiladi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I asked her which civilisation she found most interesting.",
+      "I asked if the Samanids had built the Ark.",
+      "I asked how archaeologists dated artefacts.",
+      "I asked whether history should be compulsory at school.",
+      "I asked what legacy Amir Temur had left.",
+      "I asked when she had become a historian."
+     ]
+    },
+    {
+     "title": "Tarix lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a family of rulers",
+      "an object from the past found by archaeologists",
+      "a written record of events in order",
+      "a large group of countries ruled by one ruler",
+      "something handed down from the past",
+      "a period of history"
+     ],
+     "answers": [
+      "dynasty",
+      "artefact",
+      "chronicle",
+      "empire",
+      "legacy",
+      "era"
+     ],
+     "box": [
+      "dynasty",
+      "artefact",
+      "chronicle",
+      "empire",
+      "legacy",
+      "era"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He asked me did I like coffee.",
+      "She asked where did I live.",
+      "They asked if he will come.",
+      "The teacher asked what was my name.",
+      "She asked me that I was busy."
+     ],
+     "answers": [
+      "He asked me if I liked coffee.",
+      "She asked where I lived.",
+      "They asked if he would come.",
+      "The teacher asked what my name was.",
+      "She asked me whether I was busy."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 17 ikkala jadvalini 3 marta; Essential Words 17 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Tarix savollari",
+     "type": "write",
+     "instr": "Bobo-buvingizga 8 savol bering (4 yes/no, 4 wh-); keyin savollar va javoblarini reported speech'da yozing",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Tarix inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Some people think history is a waste of time at school. To what extent do you agree?\" — kamida 3 reported savol (\"Critics ask whether…\") va 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U mendan qahva yoqadimi deb so'radi.",
+      "U mendan bandmisiz deb so'radi.",
+      "U mendan qayerda yashashimni so'radi.",
+      "O'qituvchi ismim nima deb so'radi.",
+      "Ular nega u erta ketganini so'rashdi."
+     ],
+     "answers": [
+      "He asked if I liked coffee.",
+      "She asked whether I was busy.",
+      "She asked where I lived.",
+      "The teacher asked what my name was.",
+      "They asked why he had left early."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 17 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "7 savol (3 yes/no + 4 wh-): direct + reported + tarjima, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 16",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob 2 jadvali)",
+     "1 daqiqada 2 / 3–4 / 2 daqiqada 6–8 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 17 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Imam al-Bukhari — the boy from Bukhara who asked whether every story was true",
+    "text": [
+     "Muhammad ibn Ismail was born in Bukhara in 810. His father died when he was a baby, and as a small child he lost his sight; his mother later said that she had prayed every night until it returned. By ten he was memorising hadiths — reports of what the Prophet had said and done — and by sixteen he had left for Mecca with his mother and brother. He did not come home for sixteen years.",
+     "In every city — Mecca, Medina, Baghdad, Damascus, Cairo — he did the same thing. He listened to a scholar, and then he asked questions. He asked who had told the scholar the story, and who had told that person, and whether each of them had actually met. He asked whether the narrator had been known for honesty, and if his memory had been reliable in old age. If one link in the chain was weak, he rejected the report. In this way he examined about 600,000 reports and kept around 7,000. The book he made from them, Sahih al-Bukhari, is still considered the most authentic collection in the Muslim world.",
+     "Scholars in Baghdad once tested him. Ten men each read him ten hadiths with the chains deliberately mixed up. They asked him whether he recognised them. He said he did not — and then he repeated all one hundred, correcting every error from memory. Nobody asked him again.",
+     "Back in Bukhara, the governor asked whether the imam would teach his sons privately at the palace. Bukhari asked why the governor's sons should not sit with everyone else. For that answer he was sent into exile, and he died in 870 in Khartank, a village near Samarkand. His mausoleum there is now one of the largest memorial complexes in Uzbekistan. Historians say that his method — ask who said it, ask how they knew — was a scientific method centuries before the word existed."
+    ],
+    "glossary": [
+     "sight — ko'rish qobiliyati",
+     "pray — duo qilmoq",
+     "report — rivoyat",
+     "narrator — roviy",
+     "link — halqa",
+     "reject — rad etmoq",
+     "deliberately — ataylab",
+     "recognise — tanimoq",
+     "privately — xususiy",
+     "exile — surgun"
+    ],
+    "tasks": [
+     {
+      "title": "Bilvosita savollarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta reported question",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8"
+      ],
+      "answers": [
+       "He asked who had told the scholar the story.",
+       "He asked who had told that person.",
+       "He asked whether each of them had actually met.",
+       "He asked whether the narrator had been known for honesty.",
+       "He asked if his memory had been reliable in old age.",
+       "They asked him whether he recognised them.",
+       "The governor asked whether the imam would teach his sons privately.",
+       "Bukhari asked why the governor's sons should not sit with everyone else."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "He was born in Samarkand.",
+       "He kept about 7,000 of 600,000 reports.",
+       "He failed the test in Baghdad.",
+       "He was sent into exile for refusing the governor."
+      ],
+      "answers": [
+       "False (Bukhara)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Tarix lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta tarix/ilm so'zi; uning usuli 1 gapda",
+      "items": [
+       "words",
+       "method"
+      ],
+      "answers": [
+       "memorising, hadiths, scholar, narrator, chain, authentic, collection, exile, mausoleum, historians, method",
+       "Ask who said it and how they knew, and reject any report with a weak link in the chain."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Practice test Reading — uyga."
+   },
+   "listening": {
+    "audios": "Audio 86–90 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the Imam al-Bukhari memorial complex. Visitors often ask us how old the site is: the first mausoleum was built in the 16th century, and the present complex opened in 1998. People ask whether they can enter the mosque — yes, but shoes off. They ask how many visitors we receive: about 2,000 a day in summer. Someone asked me this morning if the library was open; it is, from 9 to 5, with 3,000 manuscripts. And children always ask where the imam was born — in Bukhara, 250 kilometres to the west.\"",
+     "1-tinglash: 5 ta savol nima haqida? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "First mausoleum: ___ century; complex opened: ___",
+       "Visitors per day in summer: about ___",
+       "Library: ___ to ___; ___ manuscripts",
+       "Bukhara is ___ km to the ___"
+      ],
+      "answers": [
+       "16th; 1998",
+       "2,000",
+       "9; 5; 3,000",
+       "250; west"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 18,
+   "title": "Reported speech (imperatives)",
+   "grammar_topic": "REPORTED IMPERATIVES — told/asked + object + to V1 (buyruq/iltimos); told/warned + object + not to V1 (taqiq); advised + object + to V1 (maslahat); suggested + V-ing (taklif); + ordered, begged, reminded, encouraged, forbade",
+   "vocab_topic": "Essential Words 18 — Leadership, teamwork and management (rahbarlik, jamoa ishi va boshqaruv)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 18 – Reported speech (imperative) (jadval: buyruq, taqiq, iltimos, maslahat, taklif); Essential Words 18; Audio 91–95 (ustoz skripti); Reading — Pep Guardiola (Jony Academy matni).",
+   "objectives": [
+    "Buyruq, taqiq, iltimos, maslahat, taklifni bilvosita nutqqa o'tkazish: to V1 / not to V1 / V-ing.",
+    "Reporting fe'l tanlash: told, asked, warned, advised, suggested, ordered, begged, reminded, encouraged, forbade, offered, promised, refused.",
+    "suggest + V-ing / suggest (that) + S + V1 — to-infinitive EMAS.",
+    "Rahbarlik va jamoa Essential Words 18 bilan murabbiy/menejer ko'rsatmalarini reported qilish; Task 2 \"leadership\" mavzusi."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 18 — Leadership, teamwork and management (rahbarlik, jamoa ishi va boshqaruv) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz buyruq beradi: \"Open the window.\" O'quvchi: \"The teacher told me to open the window.\" \"Don't shout.\" → \"She told us not to shout.\" \"Let's take a break.\" → \"She suggested taking a break.\" — buyruq → to V1, taqiq → not to V1, taklif → V-ing."
+    ],
+    [
+     8,
+     "Kahoot — Reported speech (questions)",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Reported speech (questions) lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Buyruq — told/asked + object + to + V1 (\"Open the window\" → He told me to open the window); Taqiq — told/warned + object + not to + V1 (\"Don't shout\" → She told me not to shout); Iltimos — asked/requested + object + to + V1 (\"Please sit down\" → The teacher asked us to sit down); Maslahat — advised + object + to + V1 (\"You should drink water\" → He advised me to drink water); Taklif — suggested + V-ing (\"Let's take a break\" → She suggested taking a break). Qo'shimcha: ordered, commanded (kuchli buyruq), begged (yolvorish), reminded (eslatish), encouraged (rag'batlantirish), forbade (taqiqlash), warned … not to, suggested (that) + S + (should) + V1, offered + to V1, promised + to V1, refused + to V1."
+    ],
+    [
+     12,
+     "Essential Words 18 — Leadership, teamwork and management (rahbarlik, jamoa ishi va boshqaruv) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "BUYRUQ → told / ordered + KIMGA + TO + V1: \"Open the window.\" → He told me to open the window.",
+     "TAQIQ → told / warned + KIMGA + NOT TO + V1: \"Don't shout.\" → She told me not to shout. / \"Don't touch it, it's hot!\" → He warned me not to touch it.",
+     "ILTIMOS → asked / requested / begged + KIMGA + TO + V1: \"Please sit down.\" → The teacher asked us to sit down.",
+     "MASLAHAT → advised / recommended + KIMGA + TO + V1: \"You should drink water.\" → He advised me to drink water.",
+     "TAKLIF → suggested + V-ING (ob'ektsiz!): \"Let's take a break.\" → She suggested taking a break. Yoki suggested (that) we (should) take a break.",
+     "BOSHQALAR: reminded me to…, encouraged me to…, forbade me to…, offered to help (o'zi), promised to come (o'zi), refused to go (o'zi), agreed to wait (o'zi)."
+    ],
+    "formulas": [
+     [
+      "Buyruq",
+      "S + told/ordered + O + to + V1",
+      "\"Open the window,\" he said. → He told me to open the window.",
+      "U menga derazani ochishni buyurdi."
+     ],
+     [
+      "Taqiq",
+      "S + told/warned + O + not to + V1",
+      "\"Don't shout,\" she said. → She told me not to shout.",
+      "U menga baqirmaslikni aytdi."
+     ],
+     [
+      "Iltimos",
+      "S + asked/requested/begged + O + to + V1",
+      "\"Please sit down,\" the teacher said. → The teacher asked us to sit down.",
+      "O'qituvchi bizdan o'tirishni iltimos qildi."
+     ],
+     [
+      "Maslahat",
+      "S + advised/recommended + O + to + V1",
+      "\"You should drink water,\" he said. → He advised me to drink water.",
+      "U menga suv ichishni maslahat berdi."
+     ],
+     [
+      "Taklif",
+      "S + suggested + V-ing / suggested (that) + S + V1",
+      "\"Let's take a break,\" she said. → She suggested taking a break.",
+      "U tanaffus qilishni taklif qildi."
+     ],
+     [
+      "O'zi bajaradigan",
+      "S + offered/promised/refused/agreed + to + V1",
+      "\"I'll help you.\" → He offered to help me. / \"I won't go.\" → She refused to go.",
+      "U menga yordam berishni taklif qildi. / U borishdan bosh tortdi."
+     ]
+    ],
+    "presentation": [
+     [
+      "What did the coach tell the players?",
+      "He told them to press high and to pass quickly."
+     ],
+     [
+      "What did he warn them about?",
+      "He warned them not to lose the ball in their own half."
+     ],
+     [
+      "What did the captain ask the referee?",
+      "He asked him to check the video."
+     ],
+     [
+      "What did the doctor advise the striker?",
+      "She advised him to rest for two weeks."
+     ],
+     [
+      "What did the manager suggest?",
+      "He suggested training in the morning."
+     ],
+     [
+      "What did your boss tell you yesterday?",
+      "She told me to finish the report by Friday."
+     ],
+     [
+      "What did Guardiola say to Messi in 2008?",
+      "He told him to play as a false nine."
+     ],
+     [
+      "What did the club remind the fans?",
+      "They reminded them not to bring flares."
+     ],
+     [
+      "What did the captain promise?",
+      "He promised to win the next match."
+     ],
+     [
+      "What did the coach encourage the young player to do?",
+      "He encouraged him to take risks."
+     ]
+    ],
+    "notes": [
+     "tell/ask/advise/warn/order — ob'ekt SHART: told ME to…; suggest — ob'ektsiz: suggested going (suggested me to go — xato).",
+     "\"Don't\" → not to (to not emas): told me not to shout.",
+     "Buyruqda \"please\" tushadi, ma'no asked bilan beriladi.",
+     "Essential Words 18: leadership, delegate, motivate, strategy, initiative, accountability, mentor, consensus, morale, decisive."
+    ],
+    "mistakes": [
+     [
+      "He told me open the window.",
+      "He told me to open the window.",
+      "to + V1."
+     ],
+     [
+      "She told me to not shout.",
+      "She told me not to shout.",
+      "not to."
+     ],
+     [
+      "He suggested me to take a break.",
+      "He suggested taking a break. / He suggested that I take a break.",
+      "suggest + V-ing / that-clause."
+     ],
+     [
+      "The teacher said us to sit down.",
+      "The teacher told/asked us to sit down.",
+      "say + ob'ekt + to V1 emas."
+     ],
+     [
+      "He advised to drink water.",
+      "He advised me to drink water.",
+      "advise + ob'ekt."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — rahbarlik va jamoa asoslari (leadership, delegate, motivate…); STRONG — boshqaruv atamalari; SUPER — Gvardiola, futbol taktikasi va Task 2 birikmalari (lead by example, team spirit).",
+     "Har so'zga reported buyruq: \"The coach told the team to keep possession.\" / \"He advised young managers to delegate.\""
+    ],
+    "core": [
+     [
+      "leadership (4.0)",
+      "rahbarlik",
+      "The coach told us that leadership meant serving the team.",
+      "Murabbiy bizga rahbarlik jamoaga xizmat qilish ekanini aytdi.",
+      ""
+     ],
+     [
+      "leader (4.0)",
+      "rahbar (yetakchi)",
+      "He advised every leader to listen first.",
+      "U har bir rahbarga avval tinglashni maslahat berdi.",
+      ""
+     ],
+     [
+      "teamwork (4.0)",
+      "jamoa ishi",
+      "She reminded us to value teamwork over talent.",
+      "U bizga iste'doddan ko'ra jamoa ishini qadrlashni eslatdi.",
+      ""
+     ],
+     [
+      "delegate",
+      "vakolat bermoq (ishni topshirmoq)",
+      "The manager told me to delegate more.",
+      "Menejer menga ko'proq vakolat berishni aytdi.",
+      "ˈdɛləˌgeɪt"
+     ],
+     [
+      "motivate / motivation (4.0)",
+      "rag'batlantirmoq / motivatsiya",
+      "He encouraged the players to motivate each other.",
+      "U o'yinchilarni bir-birini rag'batlantirishga undadi.",
+      ""
+     ],
+     [
+      "strategy (4.0)",
+      "strategiya",
+      "Guardiola asked the team to trust the strategy.",
+      "Gvardiola jamoadan strategiyaga ishonishni so'radi.",
+      ""
+     ],
+     [
+      "tactic (4.0)",
+      "taktika",
+      "He warned them not to change tactics under pressure.",
+      "U ularni bosim ostida taktikani o'zgartirmaslikka ogohlantirdi.",
+      ""
+     ],
+     [
+      "goal / objective (4.0)",
+      "maqsad",
+      "The boss told us to set one objective for the month.",
+      "Boshliq bizga oy uchun bitta maqsad qo'yishni aytdi.",
+      ""
+     ],
+     [
+      "initiative (4.0)",
+      "tashabbus",
+      "She encouraged everyone to take the initiative.",
+      "U hammani tashabbus ko'rsatishga undadi.",
+      ""
+     ],
+     [
+      "responsibility (4.0)",
+      "mas'uliyat",
+      "He reminded the captain to take responsibility.",
+      "U sardorga mas'uliyatni zimmasiga olishni eslatdi.",
+      ""
+     ],
+     [
+      "accountability",
+      "hisobdorlik (javobgarlik)",
+      "The club asked managers to accept accountability for results.",
+      "Klub menejerlardan natijalar uchun hisobdorlikni qabul qilishni so'radi.",
+      "əˈkaʊntəˌbɪlɪti"
+     ],
+     [
+      "decision-making (4.0)",
+      "qaror qabul qilish",
+      "He advised us to slow down our decision-making.",
+      "U bizga qaror qabul qilishni sekinlashtirishni maslahat berdi.",
+      ""
+     ],
+     [
+      "decisive",
+      "qat'iyatli",
+      "The coach told the goalkeeper to be decisive.",
+      "Murabbiy darvozabonga qat'iyatli bo'lishni aytdi.",
+      "dɪˈsaɪsɪv"
+     ],
+     [
+      "mentor (4.0)",
+      "ustoz (murabbiy-maslahatchi)",
+      "Cruyff, his mentor, told him to keep the ball.",
+      "Ustozi Kroyff unga to'pni saqlashni aytdi.",
+      ""
+     ],
+     [
+      "communication (team) (4.0)",
+      "muloqot (jamoada)",
+      "She asked us to improve communication on the pitch.",
+      "U bizdan maydonda muloqotni yaxshilashni so'radi.",
+      ""
+     ],
+     [
+      "morale",
+      "ruhiy holat (jamoa kayfiyati)",
+      "He suggested celebrating small wins to lift morale.",
+      "U ruhiy holatni ko'tarish uchun kichik g'alabalarni nishonlashni taklif qildi.",
+      "məræl"
+     ],
+     [
+      "discipline (team) (4.0)",
+      "intizom",
+      "The captain warned the young players not to break discipline.",
+      "Sardor yosh o'yinchilarni intizomni buzmaslikka ogohlantirdi.",
+      ""
+     ],
+     [
+      "feedback (4.0)",
+      "fikr-mulohaza (qayta aloqa)",
+      "The manager asked us to give honest feedback.",
+      "Menejer bizdan halol fikr bildirishni so'radi.",
+      ""
+     ],
+     [
+      "cooperate / cooperation (4.0)",
+      "hamkorlik qilmoq / hamkorlik",
+      "He told the two departments to cooperate.",
+      "U ikki bo'limga hamkorlik qilishni aytdi.",
+      ""
+     ],
+     [
+      "performance (4.0)",
+      "ko'rsatkich (ishlash)",
+      "She advised him to measure performance weekly.",
+      "U unga ko'rsatkichni har hafta o'lchashni maslahat berdi.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "delegate authority",
+      "vakolat topshirmoq",
+      "He advised new managers to delegate authority early.",
+      "U yangi menejerlarga vakolatni erta topshirishni maslahat berdi.",
+      "ˈdɛləˌgeɪt əˈθɔrəti"
+     ],
+     [
+      "consensus",
+      "umumiy kelishuv (konsensus)",
+      "The chairman asked the board to reach a consensus.",
+      "Rais kengashdan umumiy kelishuvga kelishni so'radi.",
+      "kənˈsɛnsəs"
+     ],
+     [
+      "hierarchy (4.0)",
+      "ierarxiya",
+      "He suggested flattening the hierarchy.",
+      "U ierarxiyani yassilashtirishni taklif qildi.",
+      ""
+     ],
+     [
+      "micromanage",
+      "mayda-chuydagacha nazorat qilmoq",
+      "She warned him not to micromanage his staff.",
+      "U uni xodimlarini mayda-chuydagacha nazorat qilmaslikka ogohlantirdi.",
+      "ˌmaɪkroʊˈmænɪʤ"
+     ],
+     [
+      "empower (team)",
+      "imkoniyat (kuch) bermoq",
+      "Guardiola told his assistants to empower the players.",
+      "Gvardiola yordamchilariga o'yinchilarga imkoniyat berishni aytdi.",
+      "ɪmˈpaʊər (tim)"
+     ],
+     [
+      "lead by example",
+      "shaxsiy namuna bilan yetaklamoq",
+      "The captain was told to lead by example.",
+      "Sardorga shaxsiy namuna bilan yetaklash aytildi.",
+      "lɛd baɪ ɪgˈzæmpəl"
+     ],
+     [
+      "team spirit",
+      "jamoa ruhi",
+      "He reminded them that team spirit had won the title.",
+      "U ularga jamoa ruhi chempionlikni yutganini eslatdi.",
+      "tim ˈspɪrɪt"
+     ],
+     [
+      "conflict resolution (4.0)",
+      "nizolarni hal qilish",
+      "HR advised managers to learn conflict resolution.",
+      "HR menejerlarga nizolarni hal qilishni o'rganishni maslahat berdi.",
+      ""
+     ],
+     [
+      "vision (4.0)",
+      "ko'rish (uzoq maqsad)",
+      "He asked the club to share his vision.",
+      "U klubdan o'z ko'rishini baham ko'rishni so'radi.",
+      ""
+     ],
+     [
+      "adapt / adaptable (4.0)",
+      "moslashmoq / moslashuvchan",
+      "The coach told us to adapt to every opponent.",
+      "Murabbiy bizga har raqibga moslashishni aytdi.",
+      ""
+     ],
+     [
+      "innovation (management) (4.0)",
+      "innovatsiya",
+      "She encouraged the team to reward innovation.",
+      "U jamoani innovatsiyani mukofotlashga undadi.",
+      ""
+     ],
+     [
+      "pressure (leadership) (4.0)",
+      "bosim",
+      "He advised the captain to enjoy the pressure.",
+      "U sardorga bosimdan zavqlanishni maslahat berdi.",
+      ""
+     ],
+     [
+      "burnout (management)",
+      "kuyib bitish",
+      "The doctor warned the manager not to ignore burnout.",
+      "Shifokor menejerni kuyib bitishga e'tiborsiz bo'lmaslikka ogohlantirdi.",
+      "ˈbərˌnaʊt (ˈmænɪʤmənt)"
+     ],
+     [
+      "recruit / recruitment (4.0)",
+      "ishga olmoq / ishga olish",
+      "The board told him to recruit younger players.",
+      "Kengash unga yoshroq o'yinchilarni olishni aytdi.",
+      ""
+     ],
+     [
+      "promote / promotion (4.0)",
+      "lavozimini oshirmoq / ko'tarilish",
+      "She promised to promote him within a year.",
+      "U bir yil ichida uni lavozimda ko'tarishga va'da berdi.",
+      ""
+     ],
+     [
+      "resign / resignation (4.0)",
+      "iste'foga chiqmoq / iste'fo",
+      "He refused to resign after one bad season.",
+      "U bitta yomon mavsumdan keyin iste'foga chiqishdan bosh tortdi.",
+      ""
+     ],
+     [
+      "succession",
+      "vorislik (o'rinbosar tayyorlash)",
+      "The owner asked him to plan his succession.",
+      "Egasi undan vorisligini rejalashtirishni so'radi.",
+      "səkˈsɛʃən"
+     ],
+     [
+      "stakeholder",
+      "manfaatdor tomon",
+      "She reminded us to inform every stakeholder.",
+      "U bizga har bir manfaatdor tomonni xabardor qilishni eslatdi.",
+      "ˈsteɪˌkhoʊldər"
+     ],
+     [
+      "work ethic",
+      "mehnatga munosabat",
+      "Guardiola told young players to copy Messi's work ethic.",
+      "Gvardiola yosh o'yinchilarga Messining mehnatga munosabatiga taqlid qilishni aytdi.",
+      "wərk ˈɛθɪk"
+     ],
+     [
+      "charisma / charismatic",
+      "jozibadorlik / jozibali",
+      "Critics said a leader did not need charisma, only clarity.",
+      "Tanqidchilar rahbarga jozibadorlik emas, aniqlik kerakligini aytishdi.",
+      "kərˈɪzmə  kɛrɪzˈmætɪk"
+     ]
+    ],
+    "super": [
+     [
+      "Pep Guardiola",
+      "Pep Gvardiola",
+      "Guardiola told his players to pass the ball fifteen times before shooting.",
+      "Gvardiola o'yinchilariga zarbadan oldin to'pni o'n besh marta uzatishni aytdi.",
+      "pɛp gɑrdiˈoʊlə"
+     ],
+     [
+      "Johan Cruyff",
+      "Yoxan Kroyff",
+      "Cruyff told the young Pep to play with his head, not his legs.",
+      "Kroyff yosh Pepga oyoq bilan emas, bosh bilan o'ynashni aytdi.",
+      ""
+     ],
+     [
+      "La Masia",
+      "La Masiya (Barselona akademiyasi)",
+      "La Masia coaches told every boy to control the ball first.",
+      "La Masiya murabbiylari har bolaga avval to'pni nazorat qilishni aytdi.",
+      ""
+     ],
+     [
+      "tiki-taka",
+      "tiki-taka (qisqa uzatmalar uslubi)",
+      "Journalists asked him to explain tiki-taka; he refused to use the word.",
+      "Jurnalistlar undan tiki-takani tushuntirishni so'rashdi; u so'zni ishlatishdan bosh tortdi.",
+      ""
+     ],
+     [
+      "possession",
+      "to'pga egalik",
+      "He ordered the team to keep possession even at 3–0.",
+      "U jamoaga hatto 3–0 da ham to'pga egalik qilishni buyurdi.",
+      "pəˈzɛʃən"
+     ],
+     [
+      "false nine",
+      "\"soxta to'qqizinchi\"",
+      "He told Messi to play as a false nine — and won six trophies in 2009.",
+      "U Messiga soxta to'qqizinchi bo'lib o'ynashni aytdi — va 2009-da oltita sovrin yutdi.",
+      "fɔls naɪn"
+     ],
+     [
+      "sextuple (six trophies)",
+      "oltita sovrin (bir yilda)",
+      "Nobody had told a coach to win six trophies in one year; he did it anyway.",
+      "Hech kim murabbiyga bir yilda oltita sovrin yutishni aytmagan; u baribir qildi.",
+      ""
+     ],
+     [
+      "Bayern Munich",
+      "Bavariya Myunxen",
+      "Bayern asked him to bring his style to Germany.",
+      "Bavariya undan uslubini Germaniyaga olib kelishni so'radi.",
+      ""
+     ],
+     [
+      "Manchester City",
+      "Manchester Siti",
+      "City asked him to win the Champions League; he did in 2023.",
+      "Siti undan Chempionlar ligasini yutishni so'radi; u 2023-da yutdi.",
+      "ˈmænˌʧɛstər ˈsɪti"
+     ],
+     [
+      "treble",
+      "uchlik (bir mavsumda 3 sovrin)",
+      "He reminded the players not to celebrate until the treble was complete.",
+      "U o'yinchilarga uchlik tugamaguncha nishonlamaslikni eslatdi.",
+      "ˈtrɛbəl"
+     ],
+     [
+      "inverted full-back",
+      "ichkariga kiruvchi himoyachi",
+      "He told his full-backs to move into midfield.",
+      "U chekka himoyachilariga yarim himoyaga kirishni aytdi.",
+      ""
+     ],
+     [
+      "high press",
+      "yuqori bosim (pressing)",
+      "He warned the forwards not to stop pressing for even five seconds.",
+      "U hujumchilarni hatto besh soniya ham pressingni to'xtatmaslikka ogohlantirdi.",
+      "haɪ prɛs"
+     ],
+     [
+      "positional play",
+      "pozitsion o'yin",
+      "Positional play means the coach tells every player where to stand.",
+      "Pozitsion o'yin — murabbiy har o'yinchiga qayerda turishni aytadi.",
+      ""
+     ],
+     [
+      "obsessive",
+      "obsessiv (haddan tashqari berilgan)",
+      "Players said he asked them to watch videos even on holiday.",
+      "O'yinchilar u ta'tilda ham video ko'rishni so'raganini aytishdi.",
+      "əbˈsɛsɪv"
+     ],
+     [
+      "Sarabia (Pep's father)",
+      "Sarabiya (Pepning otasi)",
+      "His father, a bricklayer, told him to finish what he started.",
+      "G'isht teruvchi otasi unga boshlagan ishini tugatishni aytgan.",
+      ""
+     ],
+     [
+      "Santpedor",
+      "Santpedor (Kataloniya)",
+      "The village of Santpedor asked him to keep his childhood home.",
+      "Santpedor qishlog'i undan bolalik uyini saqlab qolishni so'radi.",
+      ""
+     ],
+     [
+      "manage upwards",
+      "yuqoriga (rahbariyatga) ta'sir qilmoq",
+      "He advised young coaches to learn to manage upwards.",
+      "U yosh murabbiylarga rahbariyat bilan ishlashni o'rganishni maslahat berdi.",
+      "ˈmænɪʤ ˈəpwərdz"
+     ],
+     [
+      "sabbatical",
+      "uzoq ta'til (dam yili)",
+      "In 2012 he told Barcelona he needed a sabbatical.",
+      "2012-da u Barselonaga uzoq ta'til kerakligini aytdi.",
+      "səˈbætɪkəl"
+     ],
+     [
+      "\"win, but play well\"",
+      "\"yut, lekin chiroyli o'yna\"",
+      "Cruyff told him to win, but to play well first.",
+      "Kroyff unga yutishni, lekin avval chiroyli o'ynashni aytdi.",
+      "\"wɪn, bət pleɪ wɛl\""
+     ],
+     [
+      "philosophy (football)",
+      "falsafa (futbolda)",
+      "He asked the board not to sign players who did not fit the philosophy.",
+      "U kengashdan falsafaga mos kelmaydigan o'yinchilarni olmaslikni so'radi.",
+      "fəˈlɑsəfi (ˈfʊtˌbɔl)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Buyruq va iltimoslar",
+     "type": "rewrite",
+     "instr": "told / asked + object + to V1",
+     "items": [
+      "\"Open the window,\" he said to me.",
+      "\"Please sit down,\" the teacher said to us.",
+      "\"Pass the ball quickly,\" the coach said to the players.",
+      "\"Please help me with the report,\" she said to him.",
+      "\"Finish the work by Friday,\" the boss said to me."
+     ],
+     "answers": [
+      "He told me to open the window.",
+      "The teacher asked us to sit down.",
+      "The coach told the players to pass the ball quickly.",
+      "She asked him to help her with the report.",
+      "The boss told me to finish the work by Friday."
+     ]
+    },
+    {
+     "title": "Taqiqlar",
+     "type": "rewrite",
+     "instr": "told / warned + object + not to V1",
+     "items": [
+      "\"Don't shout,\" she said to me.",
+      "\"Don't touch it — it's hot!\" he said to the child.",
+      "\"Don't lose the ball in your own half,\" the coach said.",
+      "\"Don't be late tomorrow,\" the manager said to us.",
+      "\"Don't micromanage your staff,\" she said to him."
+     ],
+     "answers": [
+      "She told me not to shout.",
+      "He warned the child not to touch it.",
+      "The coach warned us not to lose the ball in our own half.",
+      "The manager told us not to be late the next day.",
+      "She warned him not to micromanage his staff."
+     ]
+    },
+    {
+     "title": "Maslahat va taklif",
+     "type": "rewrite",
+     "instr": "advised + object + to V1 / suggested + V-ing",
+     "items": [
+      "\"You should drink water,\" he said to me.",
+      "\"Let's take a break,\" she said.",
+      "\"You should rest for two weeks,\" the doctor said to the striker.",
+      "\"Let's train in the morning,\" the manager said.",
+      "\"You should delegate more,\" my mentor said to me."
+     ],
+     "answers": [
+      "He advised me to drink water.",
+      "She suggested taking a break.",
+      "The doctor advised the striker to rest for two weeks.",
+      "The manager suggested training in the morning.",
+      "My mentor advised me to delegate more."
+     ]
+    },
+    {
+     "title": "Reporting fe'lni tanlang",
+     "type": "choose",
+     "instr": "told / asked / warned / advised / suggested / offered / promised / refused / reminded",
+     "items": [
+      "\"I'll help you carry it.\" → He ___ to help me carry it.",
+      "\"I'll definitely come.\" → She ___ to come.",
+      "\"I won't sign that.\" → He ___ to sign it.",
+      "\"Don't forget to lock the door.\" → She ___ me to lock the door.",
+      "\"Careful — the floor is wet.\" → He ___ us not to slip.",
+      "\"Why don't we go by train?\" → She ___ going by train.",
+      "\"You should see a doctor.\" → He ___ me to see a doctor.",
+      "\"Could you open the window?\" → She ___ me to open the window."
+     ],
+     "answers": [
+      "offered",
+      "promised",
+      "refused",
+      "reminded",
+      "warned",
+      "suggested",
+      "advised",
+      "asked"
+     ]
+    },
+    {
+     "title": "Murabbiy ko'rsatmalari",
+     "type": "speaking",
+     "instr": "Juftlikda: A — murabbiy/menejer (6 ko'rsatma: buyruq, taqiq, iltimos, maslahat, taklif, eslatma), B sinfga reported qiladi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "The coach told us to press high.",
+      "He warned us not to argue with the referee.",
+      "He asked us to arrive at 8.",
+      "He advised us to sleep eight hours.",
+      "He suggested watching the video together.",
+      "He reminded us to bring our boots."
+     ]
+    },
+    {
+     "title": "Rahbarlik lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "to give part of your work or power to someone else",
+      "a plan to achieve a long-term goal",
+      "the confidence and enthusiasm of a group",
+      "an experienced person who guides a younger one",
+      "the ability to make decisions quickly",
+      "being answerable for results"
+     ],
+     "answers": [
+      "delegate",
+      "strategy",
+      "morale",
+      "mentor",
+      "decisive",
+      "accountability"
+     ],
+     "box": [
+      "delegate",
+      "strategy",
+      "morale",
+      "mentor",
+      "decisive",
+      "accountability"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He told me open the window.",
+      "She told me to not shout.",
+      "He suggested me to take a break.",
+      "The teacher said us to sit down.",
+      "He advised to drink water."
+     ],
+     "answers": [
+      "He told me to open the window.",
+      "She told me not to shout.",
+      "He suggested taking a break.",
+      "The teacher told us to sit down.",
+      "He advised me to drink water."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 18 jadvalini 3 marta; Essential Words 18 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "16–18 reported speech to'plami",
+     "type": "rewrite",
+     "instr": "15 gap: 5 darak, 5 savol, 5 buyruq/taklif — hammasini reported speech'da (16–18-dars jadvallari)",
+     "items": [
+      "\"I am tired,\" she said.",
+      "\"Where is the station?\" he asked.",
+      "\"Don't be late,\" the coach said to us.",
+      "\"Let's start early,\" she said.",
+      "\"Can you swim?\" they asked me."
+     ],
+     "answers": [
+      "She said she was tired.",
+      "He asked where the station was.",
+      "The coach told us not to be late.",
+      "She suggested starting early.",
+      "They asked me if I could swim."
+     ]
+    },
+    {
+     "title": "Rahbarlik inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Some people believe leaders are born; others think leadership can be learned. Discuss both views.\" — kamida 4 reported gap va 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U menga derazani ochishni buyurdi.",
+      "U menga baqirmaslikni aytdi.",
+      "O'qituvchi bizdan o'tirishni iltimos qildi.",
+      "U menga suv ichishni maslahat berdi.",
+      "U tanaffus qilishni taklif qildi."
+     ],
+     "answers": [
+      "He told me to open the window.",
+      "She told me not to shout.",
+      "The teacher asked us to sit down.",
+      "He advised me to drink water.",
+      "She suggested taking a break."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 18 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "5 qolip: formula + direct + reported, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 17",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 5 qolip)",
+     "1 daqiqada 2 / 3 / 2 daqiqada 6 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 18 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Pep Guardiola — the coach who told Messi to play in the wrong position",
+    "text": [
+     "Josep \"Pep\" Guardiola was born in 1971 in Santpedor, a village in Catalonia. His father was a bricklayer who told him to finish everything he started. At 13 he joined La Masia, Barcelona's academy, where the coaches told every boy to control the ball before he did anything else. Johan Cruyff, the club's manager, saw the thin teenager and told him to play with his head, not his legs. Guardiola became the midfielder around whom Cruyff's \"Dream Team\" was built.",
+     "In 2008 Barcelona asked him to manage the first team. He was 37 and had coached only the reserves. In his first meeting he told the players to run more than any opponent, warned them not to keep the ball for the sake of it, and asked them to pass fifteen times before shooting. Then, before a match against Real Madrid in 2009, he told Lionel Messi — a winger — to play in the centre as a \"false nine\". Barcelona won 6–2. That year the club won six trophies, something no team had ever done; journalists asked him to explain his system, and he refused to use the word tiki-taka, which he said meant \"passing with no purpose\".",
+     "He left in 2012, telling the club he needed a sabbatical. Bayern Munich asked him to bring his ideas to Germany; Manchester City then asked him to do the same in England, and in 2023 the club won the treble, including its first Champions League. Players describe him as obsessive: he reminded them to watch match videos even on holiday, and once advised a defender to move into midfield when the team had the ball — the \"inverted full-back\", now copied everywhere.",
+     "Asked what leadership meant, he pointed to Cruyff. \"He told me to win,\" Guardiola said, \"but he told me to play well first. Everything I ask my players to do comes from that sentence.\""
+    ],
+    "glossary": [
+     "bricklayer — g'isht teruvchi",
+     "academy — akademiya",
+     "reserves — dublyorlar jamoasi",
+     "for the sake of it — shunchaki",
+     "winger — chekka hujumchi",
+     "trophy — sovrin",
+     "purpose — maqsad",
+     "sabbatical — uzoq ta'til",
+     "obsessive — obsessiv (haddan tashqari berilgan)",
+     "copy — nusxa ko'chirmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Bilvosita buyruqlarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta reported imperative",
+      "items": [
+       "told + to (1)",
+       "told + to (2)",
+       "told + to (3)",
+       "asked + to (1)",
+       "warned + not to",
+       "asked + to (2)",
+       "reminded + to",
+       "advised + to"
+      ],
+      "answers": [
+       "His father told him to finish everything he started.",
+       "The coaches told every boy to control the ball.",
+       "Cruyff told him to play with his head, not his legs.",
+       "Barcelona asked him to manage the first team.",
+       "He warned them not to keep the ball for the sake of it.",
+       "He asked them to pass fifteen times before shooting.",
+       "He reminded them to watch match videos even on holiday.",
+       "He advised a defender to move into midfield."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Guardiola's father was a football coach.",
+       "Barcelona won six trophies in 2009.",
+       "He likes the word \"tiki-taka\".",
+       "Manchester City won the treble in 2023."
+      ],
+      "answers": [
+       "False (bricklayer)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Rahbarlik lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta rahbarlik/jamoa so'zi; Kroyffning gapi (reported)",
+      "items": [
+       "words",
+       "sentence"
+      ],
+      "answers": [
+       "manager, coach, team, players, system, leadership, trophies, opponent, obsessive, midfield",
+       "Cruyff told him to win, but to play well first."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Practice test Reading — uyga."
+   },
+   "listening": {
+    "audios": "Audio 91–95 (fayllar yo'q — ustoz IELTS Section 3 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Tutor: How was the leadership workshop? — Student: Useful. The trainer told us to set three goals, not ten. She warned us not to micromanage — she said one manager had lost half his team that way. — Anything practical? — She asked us to give feedback within 24 hours and advised us to praise in public and correct in private. She suggested holding stand-up meetings of 15 minutes. — And homework? — She reminded us to read chapter four and told us not to bring laptops next time.\"",
+     "1-tinglash: nechta ko'rsatma? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Set ___ goals, not ___",
+       "Give feedback within ___ hours",
+       "Praise in ___, correct in ___",
+       "Stand-up meetings: ___ minutes; read chapter ___"
+      ],
+      "answers": [
+       "three; ten",
+       "24",
+       "public; private",
+       "15; four"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

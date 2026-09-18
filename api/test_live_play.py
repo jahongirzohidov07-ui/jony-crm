@@ -112,7 +112,7 @@ for tier, mn in (("20", 20), ("40", 40), ("60", 60)):
 ck("lug'at PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/23/vocab.pdf", headers=tok("hr")).status_code, 403)
 # Faqat ingliz tili ustozlariga (Jahongir: "barcha ingliz til ustozlariga
 # chiqsin boshqa ustozlarga chiqmasin")
-ck("rus tili ustoziga reja yopiq", c.get("/api/plans", headers=tok("rus")).status_code, 403)
+ck("rus tili ustoziga ham reja ochiq (2026-09-18)", c.get("/api/plans", headers=tok("rus")).status_code, 200)
 ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)
 ck("me: rus ustozi bayrog'i", c.get("/api/me", headers=tok("rus")).json().get("english_teacher"), False)
 

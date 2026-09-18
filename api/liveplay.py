@@ -125,10 +125,11 @@ def _level(course: str, title: str, cefr: str) -> dict:
 
 
 def _english_only(db, user):
-    """Ingliz tili rejalari — faqat ingliz tili ustozlariga (boshqa til
-    ustozlariga o'zlarining rejasi tuzilganda ochiladi)."""
-    if not is_english_teacher(db, user):
-        raise HTTPException(403, "Bu bo'lim hozircha faqat ingliz tili ustozlari uchun")
+    """Dars rejalari BARCHA ustozlarga ochiq (2026-09-18, Jahongir:
+    "Hammasiga ochilaversin rus til ingliz qilib otirmasdan ustozmi
+    hammasiga ochilsin"). Fan bo'yicha cheklov olib tashlandi; rol
+    cheklovi (TEACHING_ACCESS) endpoint'da qoladi."""
+    return None
 
 
 @router.get("/api/plans")

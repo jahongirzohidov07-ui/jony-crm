@@ -462,7 +462,8 @@ export default function Layout() {
   // TEACHING_ACCESS bilan bir xil (examiner, administrator ham) —
   // ilgari ACADEMIC_VIEW ichida turgani uchun ba'zi ustozlarga
   // chiqmasdi (2026-09-18, "Shirinabonu ko'rinmayabdi deyabdi").
-  if (can(user?.role, TEACHING_STAFF) && user?.english_teacher !== false) {
+  // 2026-09-18: fan bo'yicha cheklov olib tashlandi — barcha ustozlarga.
+  if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu

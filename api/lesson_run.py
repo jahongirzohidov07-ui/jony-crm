@@ -194,7 +194,8 @@ def plan_today(day: Optional[str] = None, db: Session = Depends(get_db),
                                .filter(models.Assignment.group_id == g.id, models.Assignment.auto == 0,
                                        models.AssignmentSubmission.status == "submitted").count()),
         })
-    return {"date": on.isoformat(), "items": items, "english": is_english_teacher(db, user),
+    return {"date": on.isoformat(), "items": items, "english": True,  # 2026-09-18: rejalar barcha ustozlarga
+           
             "courses": [{"course": c, "title": f"{tt} ({cefr})", "total": _course_len(c)}
                         for c, tt, cefr in LEVELS if _load_course(c)]}
 

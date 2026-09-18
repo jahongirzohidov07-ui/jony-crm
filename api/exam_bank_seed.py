@@ -1271,6 +1271,112 @@ Love, Sally""",
     ],
 }
 
+
+U12_IMG = "/exam-img/step1-u12/"
+
+STEP1_UNIT12 = {
+    "level": "step1", "kind": "unit", "unit_no": 12,
+    "title": "Step 1 · Unit 12 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Thank you.", "Maybe you’re right.", "No, sorry, I’m going to a party."], "C"),
+                _c("", ["I’d love to come. Thank you.", "I think you’re right.", "Which platform is it?"], "A"),
+                _c("", ["Yes, it is.", "Are you free on Friday?", "Great, come on Friday."], "C"),
+                _c("", ["I agree.", "Sorry, I’m busy then, but Sunday’s OK.", "It’s very nice."], "B"),
+                _c("", ["Yes, please.", "Don’t worry, it’s OK.", "Sure."], "C"),
+                _c("", ["Here you are.", "Thanks, but I’m fine.", "Great!"], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Things to do",
+            "instructions": "Look at the pictures. What are the missing "
+                            "letters? Some letters are already there. Write "
+                            "the whole words.",
+            "questions": [
+                _t("d _  y _ _ _  h _ _ _ _ _ _ _ _", "do your homework",
+                   "o our omework", image=U12_IMG + "q7.jpg"),
+                _t("g _  to the  b _ _ _ _", "go to the beach", "o each",
+                   "o to the each", image=U12_IMG + "q8.jpg"),
+                _t("u _ _  a  c _ _ _ _ _ _ _", "use a computer", "se omputer",
+                   "se a omputer", image=U12_IMG + "q9.jpg"),
+                _t("d _  the  w _ _ _ _ _ _", "do the washing", "o ashing",
+                   "o the ashing", image=U12_IMG + "q10.jpg"),
+                _t("v _ _ _ _  a  m _ _ _ _ _", "visit a museum", "isit useum",
+                   "isit a useum", image=U12_IMG + "q11.jpg"),
+                _t("c _ _ _ _  a  r _ _ _", "clean a room", "lean oom",
+                   "lean a oom", image=U12_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Future plans",
+            "instructions": "Read the sentences about future plans. What are "
+                            "the missing words? The first letter is already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("I’m going to go to a New Year party in New York on 31st "
+                   "D _ _ _ _ _ _ _ .", "December", "ecember"),
+                _t("There are no tickets for Thursday so let’s go "
+                   "o _  F _ _ _ _ _ .", "on Friday", "n riday"),
+                _t("F _ _ _ _ _ _ _ is going to be a busy month, so I can’t see "
+                   "you until March.", "February", "ebruary"),
+                _t("I’m having lunch at the moment but you can come and see me "
+                   "t _ _ _  a _ _ _ _ _ _ _ _ .", "this afternoon", "his fternoon"),
+                _t("Her birthday’s on the fourth of May, but the party’s a day "
+                   "later on the f _ _ _ _ .", "fifth", "ifth"),
+                _t("My birthday is n _ _ _  S _ _ _ _ _ _ _ but I’m going to "
+                   "have my party on Sunday.", "next Saturday", "ext aturday"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read an interview with James Edwards about his "
+                            "job. Choose the best answer, A, B or C, for each "
+                            "space.",
+            "passage": """A holiday in the Sahara
+
+Interviewer: James, you take people on unusual and exciting holidays. Where’s the next one?
+James: Well, for the first time, I (19) ………… going to take people to the Sahara desert.
+Interviewer: Great! How many people (20) ………… going to be on this trip?
+James: About 10 people on holiday and lots of other people to help.
+Interviewer: And how (21) ………… going to travel? By car?
+James: Oh, no! We’re going to (22) …………!
+Interviewer: Oh! And what about sleeping?
+James: Well, we (23) ………… going to sleep in hotels! The tourists all sleep in a big tent. There’s water in the Sahara for washing.
+Interviewer: And (24) ………… going to enjoy that?
+James: Oh yes! People love holidays like this. They think they’re fantastic!""",
+            "questions": [
+                _c("", ["’s", "’m", "’re"], "B"),
+                _c("", ["is", "are", "am"], "B"),
+                _c("", ["you’re", "you are", "are you"], "C"),
+                _c("", ["walking", "walk", "walks"], "B"),
+                _c("", ["aren’t", "can’t", "don’t"], "A"),
+                _c("", ["they aren’t", "they are", "are they"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about future plans. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "questions": [
+                _c("We’re going to ............ a party on Saturday.", ["had", "have", "having"], "B"),
+                _c("Rebecca ............ going to go out with Peter because he’s too boring.",
+                   ["isn’t", "doesn’t", "can’t"], "A"),
+                _c("I’m ............ read this book at the weekend.",
+                   ["going to", "go to", "going"], "A"),
+                _c("Claire, ............ going to meet Chris later?", ["you", "you are", "are you"], "C"),
+                _c("............ they going to invite Rashid to the party?", ["Have", "Do", "Are"], "C"),
+                _c("Who ............ going to go to London this weekend?", ["am", "is", "are"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1284,4 +1390,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit9", STEP1_UNIT9),
     ("exam_tpl_step1_unit10", STEP1_UNIT10),
     ("exam_tpl_step1_unit11", STEP1_UNIT11),
+    ("exam_tpl_step1_unit12", STEP1_UNIT12),
 ]

@@ -4358,6 +4358,125 @@ She contacted a friend, James Smith, a science teacher at a nearby university, a
     ],
 }
 
+
+STEP3_UNIT12 = {
+    "level": "step3", "kind": "unit", "unit_no": 12,
+    "title": "Step 3 · Unit 12 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Absolutely, swimming isn’t good.", "No, I can’t swim.", "Definitely, swimming is fantastic."], "C"),
+                _c("", ["I don’t think so – they’re very exciting!", "Oh dear – I’m sorry.", "Oh no – are they interesting?"], "A"),
+                _c("", ["That’s right.", "I’m afraid not.", "Is now a good time?"], "A"),
+                _c("", ["I’m fine, thanks.", "It’s alright.", "That’s true."], "C"),
+                _c("", ["I’m sorry, but I don’t think so.", "Oh dear, never mind.", "Oh well, it’s not your fault."], "A"),
+                _c("", ["It’s fine.", "Exactly.", "I’m sorry."], "B"),
+                _c("", ["You’re absolutely right, it is really boring.", "I’m sorry, but it is boring.", "Oh please, it is boring."], "A"),
+                _c("", ["I’m afraid not.", "I’m not sure about that.", "I’m sorry, but no."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Animals and people",
+            "instructions": "Read the sentences about animals and people. "
+                            "Choose the missing word A, B or C for each space.",
+            "questions": [
+                _c("I love honey, so I think ............ are great!",
+                   ["parrots", "mosquitoes", "bees"], "C"),
+                _c("My sister is quite ............ and never lets me play with her dog.",
+                   ["reliable", "fair", "selfish"], "C"),
+                _c("Whales are very ............ animals and like to swim in groups.",
+                   ["patient", "sociable", "serious"], "B"),
+                _c("My grandma had a pet ............ which she taught to speak.",
+                   ["spider", "parrot", "tiger"], "B"),
+                _c("To work with animals, you need to be ............ and not show that you "
+                   "are scared.", ["shy", "confident", "anxious"], "B"),
+                _c("My mother is very ............ and loves drawing pictures.",
+                   ["sensible", "creative", "generous"], "B"),
+                _c("Although ............ live in the sea, they aren’t fish.",
+                   ["tigers", "gorillas", "whales"], "C"),
+                _c("I rode on a ............ when I was on holiday in Morocco.",
+                   ["parrot", "bee", "camel"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Animals and people",
+            "instructions": "Read the descriptions of some words about animals "
+                            "and people. The first letter is already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("This animal is a large, strong cat.   t _ _ _ _", "tiger", "iger"),
+                _t("This small insect bites you and drinks your blood.   m _ _ _ _ _ _ _",
+                   "mosquito", "osquito"),
+                _t("A person who tells the truth is this.   h _ _ _ _ _", "honest", "onest"),
+                _t("This is a small animal which has eight legs.   s _ _ _ _ _",
+                   "spider", "pider"),
+                _t("This is a large African animal like a monkey.   g _ _ _ _ _ _",
+                   "gorilla", "orilla"),
+                _t("You are this if you don’t mind waiting for things.   p _ _ _ _ _ _",
+                   "patient", "atient"),
+                _t("This is someone who does not worry about things very much.   "
+                   "e _ _ _  g _ _ _ _", "easy-going", "easy going", "asy oing"),
+                _t("This is someone who always makes good decisions.   s _ _ _ _ _ _ _",
+                   "sensible", "ensible"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about a whale that saved a woman’s "
+                            "life. Choose the best answer (A, B or C) for each "
+                            "space.",
+            "passage": """The whale that saved a woman's life
+
+Some years ago, a Chinese zoo organised a special diving competition. They (25) ………… the people who wanted to enter the competition to dive into a pool where there were some whales. The water was 7 metres deep and very cold and they had to stay there as long as possible without breathing. 26-year-old Yang Yun was a confident diver, but she (26) ………… ever dived in such cold, deep water before. When Yun had (27) ………… in the pool for a few minutes, she found that she couldn't move her legs. Later, Yun said that she had felt very anxious and afraid at that moment. But then a whale called Mila, which (28) ………… at the zoo for some time and was sociable with humans, swam towards Yun. Mila had (29) ………… that Yun was in trouble, and wanted to help her.
+When the people around the pool saw Mila pushing Yun out of the water, they understood that the whale had saved the woman. Yun later told journalists that she had (30) ………… that there was 'an incredible force' pushing her up, but that she (31) ………… realised it was a whale. And she said that she (32) ………… never going to forget Mila - the whale that saved her life.""",
+            "questions": [
+                _c("", ["explained", "told", "said"], "B"),
+                _c("", ["has", "had", "hadn’t"], "C"),
+                _c("", ["been", "was", "being"], "A"),
+                _c("", ["has lived", "lived", "had lived"], "C"),
+                _c("", ["saw", "seen", "see"], "B"),
+                _c("", ["knew", "known", "knowing"], "B"),
+                _c("", ["didn’t", "hadn’t", "hasn’t"], "B"),
+                _c("", ["had", "did", "was"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("My brother told me he had seen the match two days ago.\n"
+                   "‘I ………… the match two days ago.’", "saw"),
+                _t("My husband went to work before I got home.\n"
+                   "When I got home, my husband had already ………… to work.", "gone"),
+                _t("My brother forgot to invite anyone to his party.\n"
+                   "My brother’s party was terrible because he ………… forgotten to invite anyone.",
+                   "had", "’d"),
+                _t("Mum said she could help me with the shopping.\n"
+                   "‘I ………… with the shopping,’ said my mum.", "can help", "can help you"),
+                _t("My grandparents said they weren’t going because it was raining.\n"
+                   "‘We ………… going because it is raining,’ said my grandparents.",
+                   "are not", "aren’t"),
+                _t("I asked my cousin Poppy if she’d look after my dog.\n"
+                   "‘Poppy, ………… look after my dog?’ I asked.",
+                   "will you", "would you", "could you", "can you"),
+                _t("Ned was pleased to hear he was the winner of the animal photography "
+                   "competition.\n"
+                   "Ned was pleased to hear that ………… won the animal photography competition.",
+                   "he’d", "he had"),
+                _t("It was Rosie’s first visit to a zoo, so she was very excited.\n"
+                   "Rosie ………… a zoo before, so she was very excited.",
+                   "hadn’t visited", "had not visited", "had never visited", "’d never visited"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4397,4 +4516,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit9", STEP3_UNIT9),
     ("exam_tpl_step3_unit10", STEP3_UNIT10),
     ("exam_tpl_step3_unit11", STEP3_UNIT11),
+    ("exam_tpl_step3_unit12", STEP3_UNIT12),
 ]

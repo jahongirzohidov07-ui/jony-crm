@@ -17202,6 +17202,2775 @@
      }
     ]
    }
+  },
+  {
+   "no": 20,
+   "title": "Modal Verbs: have to, need, must, should",
+   "grammar_topic": "MODAL FE'LLAR — HAVE TO / NEED (TO) / MUST / SHOULD",
+   "vocab_topic": "Home and buildings (uy va binolar)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 20 – Modal verbs (ikki jadval); HOME AND BUILDINGS; Reading — Amir Temur (Jony Academy matni).",
+   "objectives": [
+    "have to / must / need to / should farqini (majburiyat kuchi va manbai) bilish.",
+    "don't have to (shart emas) va mustn't (taqiq) farqini aniq ajratish.",
+    "Modal fe'llarni tasdiq, inkor, savolda tuzish; o'tgan zamon: had to.",
+    "Uy va binolar CORE 20 bilan uy tasviri va ijara suhbati tuzish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Home and buildings (uy va binolar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz sinf qoidalarini aytadi: \"You must switch off your phone. You should do your homework. You don't have to stand up. You needn't shout.\" — o'quvchilar kuchini baholaydi: qaysi eng qattiq?"
+    ],
+    [
+     8,
+     "Kahoot — Progress test 3 natijalari + infinitive of purpose",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Progress test 3 natijalari + infinitive of purpose lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvallari: HAVE TO (tashqi majburiyat; don't have to = shart emas; Do you have to…?), NEED TO / needn't, MUST (ichki/qoidaviy majburiyat; mustn't = taqiq!), SHOULD (maslahat; shouldn't). Doskada shkala: must → have to → need to → should."
+    ],
+    [
+     12,
+     "Home and buildings (uy va binolar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "HAVE TO — tashqi majburiyat (qoida, ish, boshqa odam): \"I have to finish this report by tomorrow.\" O'tgan: had to; kelajak: will have to.",
+     "MUST — kuchli majburiyat, ko'pincha o'zim/qonun: \"You must follow the safety guidelines.\" MUSTN'T = TAQIQ: \"You mustn't smoke here.\"",
+     "DON'T HAVE TO / NEEDN'T = shart emas (ixtiyoriy): \"She doesn't have to do it.\"",
+     "SHOULD — maslahat, to'g'ri ish: \"You should apologize for your mistake.\" shouldn't = qilmagan ma'qul."
+    ],
+    "formulas": [
+     [
+      "Have to",
+      "S + have/has to + V1 / don't/doesn't have to / Do/Does + S + have to?",
+      "I have to finish this report by tomorrow. / She doesn't have to do it. / Do you have to go there?",
+      "Men hisobotni ertagacha tugatishim shart. / U buni qilishi shart emas. / U yerga borishing shartmi?"
+     ],
+     [
+      "Must",
+      "S + must + V1",
+      "You must follow the safety guidelines.",
+      "Xavfsizlik qoidalariga rioya qilishing shart."
+     ],
+     [
+      "Mustn't (taqiq)",
+      "S + mustn't + V1",
+      "You mustn't touch the wires.",
+      "Simlarga tegish mumkin emas."
+     ],
+     [
+      "Need to",
+      "S + need to + V1 / needn't + V1",
+      "We need to paint the walls. / You needn't come early.",
+      "Devorlarni bo'yashimiz kerak. / Erta kelishing shart emas."
+     ],
+     [
+      "Should",
+      "S + should/shouldn't + V1 / Should + S + V1?",
+      "You should apologize for your mistake. / Should I call the landlord?",
+      "Xatong uchun kechirim so'rashing kerak. / Uy egasiga qo'ng'iroq qilaymi?"
+     ],
+     [
+      "O'tgan / kelajak",
+      "had to / will have to",
+      "We had to move last year. / You will have to pay a deposit.",
+      "O'tgan yili ko'chishimizga to'g'ri keldi. / Garov puli to'lashingga to'g'ri keladi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Do you have to pay rent every month?",
+      "Yes, I have to pay it on the first."
+     ],
+     [
+      "Must tenants sign a lease?",
+      "Yes, they must sign it before moving in."
+     ],
+     [
+      "Should we paint the living room white?",
+      "Yes, you should — it'll look bigger."
+     ],
+     [
+      "Do I have to pay a deposit?",
+      "Yes, you have to pay one month's rent."
+     ],
+     [
+      "Can I keep a dog in the flat?",
+      "No, you mustn't keep pets here."
+     ],
+     [
+      "Do we need to fix the roof now?",
+      "No, you don't have to; it can wait until summer."
+     ],
+     [
+      "What should I do if the lock breaks?",
+      "You should call the landlord."
+     ],
+     [
+      "Did you have to move last year?",
+      "Yes, we had to move because of my job."
+     ],
+     [
+      "Must I take off my shoes?",
+      "Yes, in Uzbek homes you must take off your shoes."
+     ],
+     [
+      "Will we have to renovate the kitchen?",
+      "Yes, you'll have to renovate it soon."
+     ]
+    ],
+    "notes": [
+     "must — yozma qoidalar va kuchli shaxsiy fikr; have to — kundalik majburiyat (og'zaki ko'proq).",
+     "mustn't ≠ don't have to: mustn't = taqiq, don't have to = ixtiyoriy.",
+     "should = maslahat; ought to = should (rasmiy); had better = kuchli maslahat (aks holda muammo).",
+     "Uy so'zlari: landlord (uy egasi), tenant (ijarachi), lease (ijara shartnomasi), mortgage (ipoteka)."
+    ],
+    "mistakes": [
+     [
+      "You don't must smoke here.",
+      "You mustn't smoke here.",
+      "must inkori — mustn't."
+     ],
+     [
+      "I must to go now.",
+      "I must go now.",
+      "must + V1 (to yo'q)."
+     ],
+     [
+      "She has to not pay.",
+      "She doesn't have to pay.",
+      "have to inkori do/does bilan."
+     ],
+     [
+      "You mustn't come early — it's optional.",
+      "You don't have to come early.",
+      "Ixtiyoriy → don't have to."
+     ],
+     [
+      "Do you must work?",
+      "Do you have to work? / Must you work?",
+      "Savol shakli."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — uy turlari va qismlari; STRONG — ijara va qurilish so'zlari; SUPER — arxitektura va zamonaviy uy so'zlari.",
+     "Har so'zga modal gap: \"You must lock the door.\" / \"Tenants have to pay a deposit.\""
+    ],
+    "core": [
+     [
+      "apartment / flat",
+      "kvartira",
+      "You have to pay rent for the flat monthly.",
+      "Kvartira ijarasini har oy to'lashing kerak.",
+      "əˈpɑrtmənt  flæt"
+     ],
+     [
+      "house",
+      "uy",
+      "We should buy a house with a garden.",
+      "Bog'li uy sotib olishimiz kerak.",
+      "haʊs"
+     ],
+     [
+      "villa",
+      "villa, hashamatli uy",
+      "Villas by the sea must be expensive.",
+      "Dengiz bo'yidagi villalar qimmat bo'lsa kerak.",
+      "ˈvɪlə"
+     ],
+     [
+      "cottage",
+      "kichik qishloq uyi, dala hovli",
+      "You don't have to be rich to rent a cottage.",
+      "Dala hovli ijaraga olish uchun boy bo'lish shart emas.",
+      "ˈkɒtɪdʒ"
+     ],
+     [
+      "mansion",
+      "saroy-uy, katta hashamatli uy",
+      "The mansion has twenty rooms.",
+      "Bu hashamatli uyda yigirma xona bor.",
+      "ˈmænʃən"
+     ],
+     [
+      "skyscraper",
+      "osmono'par bino",
+      "You must take the lift in a skyscraper.",
+      "Osmono'par binoda liftga chiqishing kerak.",
+      "ˈskaɪˌskreɪpər"
+     ],
+     [
+      "high-rise",
+      "ko'p qavatli bino",
+      "High-rise flats need good lifts.",
+      "Ko'p qavatli uylarga yaxshi lift kerak.",
+      ""
+     ],
+     [
+      "roof",
+      "tom",
+      "We have to repair the roof before winter.",
+      "Qishdan oldin tomni ta'mirlashimiz kerak.",
+      "rʊf"
+     ],
+     [
+      "rooftop",
+      "tom usti (maydon)",
+      "You should see the city from the rooftop.",
+      "Shaharni tom ustidan ko'rishing kerak.",
+      "ˈrufˌtɑp"
+     ],
+     [
+      "attic",
+      "chordoq",
+      "You mustn't store petrol in the attic.",
+      "Chordoqda benzin saqlash mumkin emas.",
+      "ˈætɪk"
+     ],
+     [
+      "basement",
+      "yerto'la, podval",
+      "The basement needs a light.",
+      "Yerto'laga chiroq kerak.",
+      "ˈbeɪsmənt"
+     ],
+     [
+      "balcony",
+      "balkon",
+      "You shouldn't hang heavy things on the balcony.",
+      "Balkonga og'ir narsa osmaslik kerak.",
+      "ˈbælkəni"
+     ],
+     [
+      "hallway",
+      "koridor, dahliz",
+      "You should keep the hallway clear.",
+      "Dahlizni bo'sh saqlash kerak.",
+      "ˈhɔlˌweɪ"
+     ],
+     [
+      "staircase",
+      "zinapoya",
+      "Children mustn't run on the staircase.",
+      "Bolalar zinapoyada yugurmasligi kerak.",
+      "ˈstɛrˌkeɪs"
+     ],
+     [
+      "window",
+      "deraza",
+      "You have to close the windows at night.",
+      "Kechasi derazalarni yopishing kerak.",
+      "ˈwɪndoʊ"
+     ],
+     [
+      "door",
+      "eshik",
+      "Must I lock the door?",
+      "Eshikni qulflashim shartmi?",
+      "dɔr"
+     ],
+     [
+      "lock",
+      "qulf; qulflamoq",
+      "You need to change the lock.",
+      "Qulfni almashtirishing kerak.",
+      "lɑk"
+     ],
+     [
+      "landlord",
+      "uy egasi (ijaraga beruvchi)",
+      "You should call the landlord about the leak.",
+      "Suv oqishi haqida uy egasiga qo'ng'iroq qilishing kerak.",
+      "ˈlænˌdlɔrd"
+     ],
+     [
+      "tenant",
+      "ijarachi",
+      "Tenants have to pay on time.",
+      "Ijarachilar vaqtida to'lashi kerak.",
+      "ˈtɛnənt"
+     ],
+     [
+      "rent",
+      "ijara haqi; ijaraga olmoq",
+      "How much do you have to pay for rent?",
+      "Ijaraga qancha to'lashing kerak?",
+      "rɛnt"
+     ]
+    ],
+    "strong": [
+     [
+      "lease",
+      "ijara shartnomasi",
+      "You must sign a lease for one year.",
+      "Bir yillik ijara shartnomasini imzolashing shart.",
+      "lis"
+     ],
+     [
+      "deposit",
+      "garov puli",
+      "Do I have to pay a deposit?",
+      "Garov puli to'lashim shartmi?",
+      "dɪˈpɑzət"
+     ],
+     [
+      "mortgage",
+      "ipoteka",
+      "We had to take a mortgage to buy the flat.",
+      "Kvartira olish uchun ipoteka olishimizga to'g'ri keldi.",
+      "ˈmɔrgɪʤ"
+     ],
+     [
+      "down payment",
+      "boshlang'ich to'lov",
+      "You need to save for a down payment.",
+      "Boshlang'ich to'lov uchun pul yig'ishing kerak.",
+      "daʊn ˈpeɪmənt"
+     ],
+     [
+      "property",
+      "mulk, ko'chmas mulk",
+      "Property in the centre is expensive.",
+      "Markazdagi mulk qimmat.",
+      "ˈprɑpərti"
+     ],
+     [
+      "real estate",
+      "ko'chmas mulk (soha)",
+      "Real estate agents must know the law.",
+      "Rieltorlar qonunni bilishi shart.",
+      "ril ɛˈsteɪt"
+     ],
+     [
+      "renovation",
+      "ta'mirlash, rekonstruksiya",
+      "The renovation will have to wait.",
+      "Ta'mirlash kutib turishiga to'g'ri keladi.",
+      "ˌrɛnəˈveɪʃən"
+     ],
+     [
+      "renovate",
+      "ta'mirlamoq",
+      "We should renovate the bathroom first.",
+      "Avval hammomni ta'mirlashimiz kerak.",
+      "ˈrɛnəˌveɪt"
+     ],
+     [
+      "interior",
+      "ichki bezak, interyer",
+      "You don't have to spend much on the interior.",
+      "Interyerga ko'p sarflash shart emas.",
+      "ˌɪnˈtɪriər"
+     ],
+     [
+      "facade",
+      "bino old tomoni (fasad)",
+      "The facade must be repainted.",
+      "Fasadni qayta bo'yash kerak.",
+      "fəˈsɑd"
+     ],
+     [
+      "foundation",
+      "poydevor",
+      "The foundation has to be strong.",
+      "Poydevor mustahkam bo'lishi kerak.",
+      "faʊnˈdeɪʃən"
+     ],
+     [
+      "chimney",
+      "mo'ri",
+      "You should clean the chimney every year.",
+      "Mo'rini har yili tozalash kerak.",
+      "ˈʧɪmni"
+     ],
+     [
+      "gutter",
+      "tarnov",
+      "The gutter needs to be fixed.",
+      "Tarnovni tuzatish kerak.",
+      "ˈgətər"
+     ],
+     [
+      "patio / deck",
+      "hovli maydonchasi (yog'och/tosh)",
+      "We should have dinner on the patio.",
+      "Kechki ovqatni hovli maydonchasida qilishimiz kerak.",
+      "ˈpætiˌoʊ  dɛk"
+     ],
+     [
+      "foyer / entrance hall",
+      "kirish zali",
+      "Visitors must wait in the foyer.",
+      "Tashrif buyuruvchilar kirish zalida kutishi kerak.",
+      "fɔɪər  ˈɛntrəns hɔl"
+     ],
+     [
+      "neighbour",
+      "qo'shni",
+      "You should be polite to your neighbours.",
+      "Qo'shnilarga muloyim bo'lish kerak.",
+      "ˈneɪbə"
+     ],
+     [
+      "inspection",
+      "tekshiruv (ko'rik)",
+      "The flat has to pass an inspection.",
+      "Kvartira tekshiruvdan o'tishi kerak.",
+      "ˌɪnˈspɛkʃən"
+     ],
+     [
+      "housing",
+      "uy-joy",
+      "Housing is a big problem in cities.",
+      "Shaharlarda uy-joy — katta muammo.",
+      "ˈhaʊzɪŋ"
+     ],
+     [
+      "residential",
+      "turar joy (hudud)",
+      "You mustn't build a factory in a residential area.",
+      "Turar joy hududida zavod qurish mumkin emas.",
+      "ˌrɛzɪˈdɛnʃəl"
+     ],
+     [
+      "urban",
+      "shahar (sifat)",
+      "Urban life is fast.",
+      "Shahar hayoti tez.",
+      "ˈərbən"
+     ]
+    ],
+    "super": [
+     [
+      "townhouse",
+      "qatorli ikki-uch qavatli uy",
+      "Townhouses share walls with neighbours.",
+      "Qatorli uylar qo'shnilar bilan umumiy devorga ega.",
+      "ˈtaʊnˌhaʊs"
+     ],
+     [
+      "bungalow",
+      "bir qavatli uy",
+      "Old people should live in a bungalow — no stairs.",
+      "Keksalar bir qavatli uyda yashagani ma'qul — zina yo'q.",
+      "ˈbəŋgəˌloʊ"
+     ],
+     [
+      "duplex",
+      "ikki oilali uy",
+      "We rent half of a duplex.",
+      "Biz ikki oilali uyning yarmini ijaraga olganmiz.",
+      "ˈduˌplɛks"
+     ],
+     [
+      "mobile home",
+      "ko'chma uy",
+      "You don't have to build a mobile home.",
+      "Ko'chma uyni qurish shart emas.",
+      "ˈmoʊbəl hoʊm"
+     ],
+     [
+      "architect",
+      "arxitektor",
+      "You should ask an architect before building.",
+      "Qurishdan oldin arxitektordan so'rash kerak.",
+      "ˈɑrkəˌtɛkt"
+     ],
+     [
+      "architectural",
+      "arxitekturaga oid",
+      "Registan is an architectural masterpiece.",
+      "Registon — arxitektura durdonasi.",
+      "ˌɑrkəˈtɛkʧərəl"
+     ],
+     [
+      "design (home)",
+      "dizayn, loyiha",
+      "The design must include a big kitchen.",
+      "Loyihada katta oshxona bo'lishi shart.",
+      "dɪˈzaɪn (hoʊm)"
+     ],
+     [
+      "custom-built",
+      "buyurtma asosida qurilgan",
+      "A custom-built house costs more.",
+      "Buyurtma uy qimmatroq turadi.",
+      ""
+     ],
+     [
+      "sustainable",
+      "barqaror, ekologik",
+      "New buildings should be sustainable.",
+      "Yangi binolar ekologik bo'lishi kerak.",
+      "səˈsteɪnəbəl"
+     ],
+     [
+      "energy-efficient",
+      "energiya tejaydigan",
+      "You should buy energy-efficient windows.",
+      "Energiya tejaydigan derazalar olish kerak.",
+      ""
+     ],
+     [
+      "homeownership",
+      "uy egaligi",
+      "Homeownership needs a stable income.",
+      "Uy egasi bo'lish uchun barqaror daromad kerak.",
+      "ˈhoʊˌmoʊnərˌʃɪp"
+     ],
+     [
+      "rental",
+      "ijara (uy)",
+      "Rentals in the centre must be booked early.",
+      "Markazdagi ijara uylarni erta band qilish kerak.",
+      "ˈrɛntəl"
+     ],
+     [
+      "estate agent",
+      "rieltor",
+      "You needn't use an estate agent.",
+      "Rieltor xizmatidan foydalanish shart emas.",
+      "ɛˈsteɪt ˈeɪʤənt"
+     ],
+     [
+      "brick",
+      "g'isht",
+      "Brick houses last longer.",
+      "G'ishtli uylar uzoqroq turadi.",
+      "brɪk"
+     ],
+     [
+      "concrete",
+      "beton",
+      "Skyscrapers are made of concrete and steel.",
+      "Osmono'par binolar beton va po'latdan quriladi.",
+      "ˈkɑnkrit"
+     ],
+     [
+      "ceiling",
+      "shift",
+      "The ceiling has to be repainted.",
+      "Shiftni qayta bo'yash kerak.",
+      "ˈsilɪŋ"
+     ],
+     [
+      "floor (level)",
+      "qavat",
+      "We live on the fifth floor.",
+      "Biz beshinchi qavatda yashaymiz.",
+      "flɔr (ˈlɛvəl)"
+     ],
+     [
+      "lift / elevator",
+      "lift",
+      "You mustn't use the lift in a fire.",
+      "Yong'inda liftdan foydalanish mumkin emas.",
+      "lɪft  ˈɛləˌveɪtər"
+     ],
+     [
+      "garage",
+      "garaj",
+      "You should keep your bike in the garage.",
+      "Velosipedni garajda saqlash kerak.",
+      "gərɑʒ"
+     ],
+     [
+      "fence",
+      "devor-to'siq, panjara",
+      "We need to repair the fence.",
+      "Panjarani tuzatishimiz kerak.",
+      "fɛns"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Modal tanlang",
+     "type": "choose",
+     "instr": "must / mustn't / have to / don't have to / should",
+     "items": [
+      "You ___ smoke in the building — it's forbidden.",
+      "I ___ pay the rent by the fifth — it's the rule.",
+      "You ___ pay a deposit — the landlord doesn't ask for one.",
+      "You ___ see a doctor about that cough.",
+      "Tenants ___ sign the lease before moving in.",
+      "We ___ hurry — we have plenty of time.",
+      "You ___ leave the door open at night.",
+      "I think you ___ paint the room a lighter colour."
+     ],
+     "answers": [
+      "mustn't",
+      "have to",
+      "don't have to",
+      "should",
+      "must",
+      "don't have to",
+      "mustn't",
+      "should"
+     ]
+    },
+    {
+     "title": "mustn't yoki don't have to",
+     "type": "choose",
+     "instr": "Taqiq (T) yoki shart emas (SE)?",
+     "items": [
+      "You mustn't park here.",
+      "You don't have to park here — there's space over there.",
+      "Children mustn't play on the staircase.",
+      "You don't have to clean the flat today.",
+      "You mustn't break the lease."
+     ],
+     "answers": [
+      "T",
+      "SE",
+      "T",
+      "SE",
+      "T"
+     ]
+    },
+    {
+     "title": "Savol va inkor",
+     "type": "rewrite",
+     "instr": "Gapni savol va inkorga aylantiring",
+     "items": [
+      "She has to pay a deposit.",
+      "We must renovate the roof.",
+      "You should call the landlord.",
+      "They had to move last year."
+     ],
+     "answers": [
+      "Does she have to pay a deposit? / She doesn't have to pay a deposit.",
+      "Must we renovate the roof? / We mustn't renovate… (taqiq) → We needn't renovate the roof.",
+      "Should I call the landlord? / You shouldn't call the landlord.",
+      "Did they have to move last year? / They didn't have to move last year."
+     ]
+    },
+    {
+     "title": "Uy qoidalari",
+     "type": "speaking",
+     "instr": "Juftlikda: yangi ijarachi uchun 6 qoida (must ×2, mustn't ×2, have to, should)",
+     "items": [
+      "must 1",
+      "must 2",
+      "mustn't 1",
+      "mustn't 2",
+      "have to",
+      "should"
+     ],
+     "answers": [
+      "You must pay the rent on the first of the month.",
+      "You must lock the door when you go out.",
+      "You mustn't keep pets.",
+      "You mustn't make noise after 11 pm.",
+      "You have to pay for electricity yourself.",
+      "You should call me if something breaks."
+     ]
+    },
+    {
+     "title": "Uyimni tasvirlash",
+     "type": "write",
+     "instr": "6 gap: uyingiz (turi, qavat, xonalar, balkon) + 2 modal (\"we have to…\", \"you should…\")",
+     "items": [
+      "type",
+      "rooms",
+      "rule",
+      "advice"
+     ],
+     "answers": [
+      "We live in a flat on the fourth floor of a high-rise.",
+      "It has three rooms, a kitchen and a balcony.",
+      "We have to take off our shoes at the door.",
+      "You should visit us — the view from the balcony is great."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "You don't must park here.",
+      "I must to go home.",
+      "She has to not pay.",
+      "Do you must work on Sunday?",
+      "You should to call the landlord."
+     ],
+     "answers": [
+      "You mustn't park here.",
+      "I must go home.",
+      "She doesn't have to pay.",
+      "Do you have to work on Sunday?",
+      "You should call the landlord."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 20 ikkala jadvalini 3 marta; HOME AND BUILDINGS 47 so'zni tarjimasi bilan ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 66–70 dan bittasi; 5 notanish so'z + 3 modal gap",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Uyimizning qoidalari",
+     "type": "write",
+     "instr": "8 gap: must (2), mustn't (2), have to (2), should (2) — uydagi qoidalar",
+     "answers": "Erkin."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ijara haqini har oyning birinchi kuni to'lashim kerak.",
+      "Bu yerda chekish mumkin emas.",
+      "Garov puli to'lash shart emas.",
+      "Uy egasiga qo'ng'iroq qilishing kerak.",
+      "O'tgan yili ko'chishimizga to'g'ri keldi."
+     ],
+     "answers": [
+      "I have to pay the rent on the first of every month.",
+      "You mustn't smoke here.",
+      "You don't have to pay a deposit.",
+      "You should call the landlord.",
+      "We had to move last year."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "HOME CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Confusing words",
+     "20 juft, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob: have to — 4 marta; must/should — jadval)",
+     "1 daqiqa",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Home og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Amir Temur — the ruler who built Samarkand",
+    "text": [
+     "Amir Temur was born in 1336 near Shahrisabz. By 1370 he had become the ruler of Samarkand, and in the next thirty years he created one of the largest empires in history. But today people remember him not only as a general. They remember him as a builder.",
+     "Temur believed that a capital city must be beautiful. He brought the best architects, builders and artists from every country he visited — from Iran, India, Syria and Turkey — and they had to work in Samarkand. \"If you doubt our power, look at our buildings,\" he said. Under his rule, the builders built the Bibi-Khanym Mosque, the Shah-i-Zinda complex, and the Ak-Saray palace in Shahrisabz. Its entrance was 40 metres high — visitors had to walk through the biggest door in the world.",
+     "Temur's rules were strict. Builders must not stop working, even at night; when Bibi-Khanym was being built, the workers had to use elephants to carry the stones. But he also said that a ruler should protect scientists, poets and craftsmen. He built roads, bridges and caravanserais so that traders could travel safely.",
+     "Temur died in 1405 and is buried in the Gur-Emir mausoleum in Samarkand. Its blue dome became the model for many buildings in Central Asia and even in India — the Taj Mahal has the same shape. If you visit Samarkand today, you don't have to be a historian to feel his power: you should simply stand in Registan Square and look up."
+    ],
+    "glossary": [
+     "empire — imperiya",
+     "general — sarkarda",
+     "builder — quruvchi",
+     "doubt — shubha qilmoq",
+     "mosque — masjid",
+     "palace — saroy",
+     "entrance — kirish",
+     "strict — qattiq",
+     "craftsman — hunarmand",
+     "trader — savdogar",
+     "mausoleum — maqbara",
+     "dome — gumbaz"
+    ],
+    "tasks": [
+     {
+      "title": "Modal fe'llarni toping",
+      "type": "find",
+      "instr": "Matndan 5 ta modal gap toping",
+      "items": [
+       "must",
+       "had to 1",
+       "must not",
+       "should",
+       "don't have to"
+      ],
+      "answers": [
+       "A capital city must be beautiful.",
+       "They had to work in Samarkand.",
+       "Builders must not stop working, even at night.",
+       "A ruler should protect scientists, poets and craftsmen.",
+       "You don't have to be a historian to feel his power."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Temur was born in Samarkand.",
+       "He brought architects from other countries.",
+       "The Ak-Saray entrance was 40 metres high.",
+       "The Taj Mahal has a different shape from Gur-Emir."
+      ],
+      "answers": [
+       "False (near Shahrisabz)",
+       "True",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Binolar",
+      "type": "short",
+      "instr": "Matndan 5 bino nomini yozing va qayerdaligini ayting",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "answers": [
+       "Bibi-Khanym Mosque — Samarkand",
+       "Shah-i-Zinda — Samarkand",
+       "Ak-Saray palace — Shahrisabz",
+       "Gur-Emir mausoleum — Samarkand",
+       "Registan Square — Samarkand"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 66–70 — uyga (tanlab)."
+   }
+  },
+  {
+   "no": 21,
+   "title": "Passive Voice (Simple)",
+   "grammar_topic": "MAJHUL NISBAT — PRESENT / PAST / FUTURE SIMPLE PASSIVE (be + V3)",
+   "vocab_topic": "Ages and stages of life (yosh va hayot bosqichlari)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 21 – Passive voice simple (jadval); AGES AND STAGES; Reading — Alisher Navoiy (Jony Academy matni).",
+   "objectives": [
+    "Active gapni passive'ga o'tkazish: ob'ekt egaga aylanadi, be + V3, bajaruvchi \"by\" bilan yoki tushiriladi.",
+    "Present / Past / Future Simple Passive'ni tasdiq, inkor va savolda tuzish.",
+    "Passive qachon kerak: bajaruvchi noma'lum / muhim emas / aniq.",
+    "Hayot bosqichlari CORE 20 bilan biografiya aytib berish (was born, was raised, was educated)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Ages and stages of life (yosh va hayot bosqichlari) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Somebody built this school in 1995.\" → \"This school was built in 1995.\" Kim qurgani muhim emas — NIMA bo'lgani muhim. Doskaga: be + V3."
+    ],
+    [
+     8,
+     "Kahoot — Modal verbs",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Modal verbs lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Present Simple Passive — S + am/is/are + V3 (Schools are built every year); Past Simple Passive — S + was/were + V3 (The hospital was built last year); Future Simple Passive — S + will be + V3 (The hotel will be built next year). \"by + bajaruvchi\" ixtiyoriy."
+    ],
+    [
+     12,
+     "Ages and stages of life (yosh va hayot bosqichlari) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Active: \"People speak English here\" → Passive: \"English is spoken here\". Ob'ekt (English) — yangi ega; fe'l — be + V3.",
+     "be zamonni ko'rsatadi: is/are (hozir), was/were (o'tgan), will be (kelajak). V3 o'zgarmaydi.",
+     "Bajaruvchi kerak bo'lsa — by: \"The poem was written by Navoi.\" Noma'lum/muhim emas bo'lsa — tushiriladi.",
+     "Biografiyada passive ko'p: was born, was raised, was educated, was called, is remembered."
+    ],
+    "formulas": [
+     [
+      "Present Simple",
+      "S + am/is/are + V3",
+      "Schools are built every year.",
+      "Har yili maktablar quriladi."
+     ],
+     [
+      "Past Simple",
+      "S + was/were + V3",
+      "The hospital was built last year.",
+      "Kasalxona o'tgan yili qurilgan."
+     ],
+     [
+      "Future Simple",
+      "S + will be + V3",
+      "The hotel will be built next year.",
+      "Mehmonxona kelasi yil quriladi."
+     ],
+     [
+      "Inkor",
+      "S + be + not + V3",
+      "The letter wasn't sent.",
+      "Xat jo'natilmadi."
+     ],
+     [
+      "Savol",
+      "Be + S + V3?",
+      "Was Navoi born in Herat?",
+      "Navoiy Hirotda tug'ilganmi?"
+     ],
+     [
+      "by bilan",
+      "S + be + V3 + by + bajaruvchi",
+      "\"Khamsa\" was written by Alisher Navoi.",
+      "\"Xamsa\" Alisher Navoiy tomonidan yozilgan."
+     ]
+    ],
+    "presentation": [
+     [
+      "Where were you born?",
+      "I was born in Fergana."
+     ],
+     [
+      "Where was Navoi born?",
+      "He was born in Herat in 1441."
+     ],
+     [
+      "Is Uzbek spoken in Afghanistan?",
+      "Yes, it is spoken by millions there."
+     ],
+     [
+      "Who was \"Khamsa\" written by?",
+      "It was written by Navoi."
+     ],
+     [
+      "When was your school built?",
+      "It was built in 2005."
+     ],
+     [
+      "Are children raised by grandparents in your family?",
+      "Yes, many children are raised by grandparents."
+     ],
+     [
+      "Will the new metro line be opened next year?",
+      "Yes, it will be opened in spring."
+     ],
+     [
+      "Was the exam cancelled?",
+      "No, it wasn't cancelled."
+     ],
+     [
+      "How are teenagers educated in Uzbekistan?",
+      "They are educated at school until 18."
+     ],
+     [
+      "Is plov cooked every Thursday in your family?",
+      "Yes, it is cooked every Thursday!"
+     ]
+    ],
+    "notes": [
+     "Passive faqat ob'ektli (transitive) fe'llarda: \"arrive, happen, sleep\" — passive bo'lmaydi.",
+     "Ikki ob'ektli fe'llar: \"She was given a prize\" / \"A prize was given to her\".",
+     "Modal bilan passive: must be done, can be seen, should be finished (20-dars bilan bog'lang).",
+     "Yosh bosqichlari: infancy → childhood → adolescence → adulthood → middle age → old age."
+    ],
+    "mistakes": [
+     [
+      "The book was wrote by Navoi.",
+      "The book was written by Navoi.",
+      "V3."
+     ],
+     [
+      "English is speak here.",
+      "English is spoken here.",
+      "be + V3."
+     ],
+     [
+      "He born in 1441.",
+      "He was born in 1441.",
+      "was born."
+     ],
+     [
+      "The bridge was built next year.",
+      "The bridge will be built next year.",
+      "Kelajak → will be."
+     ],
+     [
+      "The letter was sent by yesterday.",
+      "The letter was sent yesterday.",
+      "by — bajaruvchi uchun."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — hayot bosqichlari va yosh guruhlari; STRONG — rivojlanish so'zlari; SUPER — kattalik va keksalik so'zlari.",
+     "Har so'zga passive gap: \"Children are taught to read in childhood.\" / \"He was raised by his grandmother.\""
+    ],
+    "core": [
+     [
+      "be born",
+      "tug'ilmoq",
+      "Navoi was born in 1441.",
+      "Navoiy 1441-yilda tug'ilgan.",
+      "bi bɔrn"
+     ],
+     [
+      "infant",
+      "go'dak",
+      "Infants are fed every three hours.",
+      "Go'daklar har uch soatda ovqatlantiriladi.",
+      "ˈɪnfənt"
+     ],
+     [
+      "infancy",
+      "go'daklik",
+      "In infancy, children are cared for by their mothers.",
+      "Go'daklikda bolalarga onalari g'amxo'rlik qiladi.",
+      "ˈɪnfənsi"
+     ],
+     [
+      "toddler",
+      "kichkintoy (1–3 yosh)",
+      "Toddlers are watched all the time.",
+      "Kichkintoylar doim kuzatib turiladi.",
+      "ˈtɑdlər"
+     ],
+     [
+      "childhood",
+      "bolalik",
+      "Childhood is remembered as the happiest time.",
+      "Bolalik eng baxtli davr sifatida eslanadi.",
+      "ˈʧaɪlˌdhʊd"
+     ],
+     [
+      "kid",
+      "bola",
+      "Kids are taught to read at six.",
+      "Bolalarga oltida o'qish o'rgatiladi.",
+      "kɪd"
+     ],
+     [
+      "kindergarten",
+      "bolalar bog'chasi",
+      "Kids are sent to kindergarten at three.",
+      "Bolalar uchda bog'chaga yuboriladi.",
+      "ˈkɪndəɡɑːtn"
+     ],
+     [
+      "primary / elementary school",
+      "boshlang'ich maktab",
+      "Children are taught by one teacher in primary school.",
+      "Boshlang'ich maktabda bolalarni bitta o'qituvchi o'qitadi.",
+      "ˈpraɪˌmɛri  ˌɛləˈmɛnʧri skul"
+     ],
+     [
+      "teenager",
+      "o'smir (13–19)",
+      "Teenagers are influenced by their friends.",
+      "O'smirlarga do'stlari ta'sir qiladi.",
+      "ˈtiˌneɪʤər"
+     ],
+     [
+      "adolescence / teenage years",
+      "o'smirlik",
+      "Adolescence is called the most difficult stage.",
+      "O'smirlik eng qiyin bosqich deyiladi.",
+      "ˌædəˈlɛsəns  ˈtiˌneɪʤ jɪrz"
+     ],
+     [
+      "puberty",
+      "balog'at yoshi",
+      "Puberty is reached at around 12–14.",
+      "Balog'at yoshiga 12–14 da erishiladi.",
+      "ˈpjubərti"
+     ],
+     [
+      "adult",
+      "katta yoshli, voyaga yetgan",
+      "Adults are expected to work.",
+      "Kattalardan ishlash kutiladi.",
+      "ˈædəlt"
+     ],
+     [
+      "adulthood",
+      "voyaga yetganlik",
+      "Adulthood is reached at 18.",
+      "Voyaga yetish 18 da bo'ladi.",
+      "əˈdəlˌthʊd"
+     ],
+     [
+      "young adulthood",
+      "yoshlik (18–30)",
+      "Many decisions are made in young adulthood.",
+      "Ko'p qarorlar yoshlikda qabul qilinadi.",
+      "jəŋ əˈdəlˌthʊd"
+     ],
+     [
+      "middle age",
+      "o'rta yosh (40–60)",
+      "Middle age is often called the golden time of a career.",
+      "O'rta yosh ko'pincha karyeraning oltin davri deyiladi.",
+      "ˈmɪdəl eɪʤ"
+     ],
+     [
+      "old age",
+      "keksalik",
+      "Old age is respected in Uzbekistan.",
+      "O'zbekistonda keksalik hurmat qilinadi.",
+      "oʊld eɪʤ"
+     ],
+     [
+      "senior citizen",
+      "keksa fuqaro",
+      "Senior citizens are given free bus passes.",
+      "Keksa fuqarolarga bepul avtobus yo'llanmasi beriladi.",
+      "ˈsinjər ˈsɪtɪzən"
+     ],
+     [
+      "retirement",
+      "nafaqa (davri)",
+      "Retirement is planned years before.",
+      "Nafaqa yillar oldin rejalashtiriladi.",
+      "rɪˈtaɪərmənt"
+     ],
+     [
+      "retire",
+      "nafaqaga chiqmoq",
+      "Teachers are retired at 60.",
+      "O'qituvchilar 60 da nafaqaga chiqariladi.",
+      "ˌriˈtaɪər"
+     ],
+     [
+      "generation (life)",
+      "avlod",
+      "Traditions are passed from generation to generation.",
+      "An'analar avloddan avlodga o'tkaziladi.",
+      "ˌʤɛnərˈeɪʃən (laɪf)"
+     ]
+    ],
+    "strong": [
+     [
+      "grow up",
+      "ulg'aymoq",
+      "He was raised in Herat and grew up speaking two languages.",
+      "U Hirotda o'sgan va ikki tilda gapirib ulg'aygan.",
+      "groʊ əp"
+     ],
+     [
+      "raise / bring up",
+      "tarbiyalab o'stirmoq",
+      "She was brought up by her grandmother.",
+      "Uni buvisi tarbiyalab o'stirgan.",
+      "reɪz  brɪŋ əp"
+     ],
+     [
+      "be educated",
+      "ta'lim olmoq",
+      "Navoi was educated in Herat and Samarkand.",
+      "Navoiy Hirot va Samarqandda ta'lim olgan.",
+      "bi ˈɛʤəˌkeɪtɪd"
+     ],
+     [
+      "development",
+      "rivojlanish",
+      "Brain development is completed at about 25.",
+      "Miya rivojlanishi taxminan 25 da tugaydi.",
+      "dɪˈvɛləpmənt"
+     ],
+     [
+      "milestone",
+      "muhim bosqich (hayotda)",
+      "First steps are called a milestone.",
+      "Ilk qadamlar muhim bosqich deyiladi.",
+      "ˈmaɪlˌstoʊn"
+     ],
+     [
+      "growth spurt",
+      "tez o'sish davri",
+      "A growth spurt is seen at 13–15.",
+      "Tez o'sish davri 13–15 da kuzatiladi.",
+      "groʊθ spərt"
+     ],
+     [
+      "maturity",
+      "yetuklik",
+      "Maturity isn't measured by age.",
+      "Yetuklik yosh bilan o'lchanmaydi.",
+      "məˈʧʊrəti"
+     ],
+     [
+      "independence",
+      "mustaqillik",
+      "Independence is gained after university.",
+      "Mustaqillikka universitetdan keyin erishiladi.",
+      "ˌɪndɪˈpɛndəns"
+     ],
+     [
+      "identity",
+      "shaxsiyat, kimlik",
+      "Identity is formed in the teenage years.",
+      "Shaxsiyat o'smirlikda shakllanadi.",
+      "aɪˈdɛntəˌti"
+     ],
+     [
+      "self-discovery",
+      "o'zini kashf etish",
+      "Travel is used for self-discovery.",
+      "Sayohat o'zini kashf etish uchun ishlatiladi.",
+      ""
+     ],
+     [
+      "career progression",
+      "karyera o'sishi",
+      "Career progression is decided by results.",
+      "Karyera o'sishi natijalar bilan belgilanadi.",
+      "kərɪr prəˈgrɛʃən"
+     ],
+     [
+      "midlife crisis",
+      "o'rta yosh inqirozi",
+      "A midlife crisis is often joked about.",
+      "O'rta yosh inqirozi haqida ko'p hazil qilinadi.",
+      "ˈmɪˌdlaɪf ˈkraɪsəs"
+     ],
+     [
+      "parenting",
+      "ota-onalik",
+      "Parenting is learned by doing.",
+      "Ota-onalik amalda o'rganiladi.",
+      "ˈpɛrəntɪŋ"
+     ],
+     [
+      "grandparent",
+      "buvi/buva",
+      "Grandparents are respected in our culture.",
+      "Madaniyatimizda buvi-buvalar hurmat qilinadi.",
+      "ˈgrændˌpɛrənt"
+     ],
+     [
+      "wisdom",
+      "donolik",
+      "Wisdom is gained through experience.",
+      "Donolikka tajriba orqali erishiladi.",
+      "ˈwɪzdəm"
+     ],
+     [
+      "life lesson",
+      "hayot saboqi",
+      "Life lessons are taught by mistakes.",
+      "Hayot saboqlarini xatolar o'rgatadi.",
+      "laɪf ˈlɛsən"
+     ],
+     [
+      "golden years",
+      "keksalikning oltin yillari",
+      "The golden years are spent with family.",
+      "Keksalik yillari oila bilan o'tkaziladi.",
+      "ˈgoʊldən jɪrz"
+     ],
+     [
+      "ageing process",
+      "qarish jarayoni",
+      "The ageing process is slowed by sport.",
+      "Qarish jarayoni sport bilan sekinlashtiriladi.",
+      ""
+     ],
+     [
+      "life stage",
+      "hayot bosqichi",
+      "Each life stage is marked by a celebration.",
+      "Har bir hayot bosqichi bayram bilan nishonlanadi.",
+      "laɪf steɪʤ"
+     ],
+     [
+      "coming of age",
+      "balog'atga yetish, voyaga yetish",
+      "Coming of age is celebrated at 18.",
+      "Voyaga yetish 18 da nishonlanadi.",
+      "ˈkəmɪŋ əv eɪʤ"
+     ]
+    ],
+    "super": [
+     [
+      "cognitive development",
+      "aqliy rivojlanish",
+      "Cognitive development is studied by psychologists.",
+      "Aqliy rivojlanish psixologlar tomonidan o'rganiladi.",
+      "ˈkɑgnɪtɪv dɪˈvɛləpmənt"
+     ],
+     [
+      "emotional development",
+      "hissiy rivojlanish",
+      "Emotional development is supported by family.",
+      "Hissiy rivojlanish oila tomonidan qo'llab-quvvatlanadi.",
+      "ˈiˌmoʊʃənəl dɪˈvɛləpmənt"
+     ],
+     [
+      "social development",
+      "ijtimoiy rivojlanish",
+      "Social development is helped by school.",
+      "Ijtimoiy rivojlanishga maktab yordam beradi.",
+      "ˈsoʊʃəl dɪˈvɛləpmənt"
+     ],
+     [
+      "physical development",
+      "jismoniy rivojlanish",
+      "Physical development is improved by sport.",
+      "Jismoniy rivojlanish sport bilan yaxshilanadi.",
+      "ˈfɪzɪkəl dɪˈvɛləpmənt"
+     ],
+     [
+      "hormonal changes",
+      "gormonal o'zgarishlar",
+      "Hormonal changes are experienced in puberty.",
+      "Gormonal o'zgarishlar balog'at yoshida boshdan kechiriladi.",
+      "ˈhɔrˌmoʊnəl ˈʧeɪnʤɪz"
+     ],
+     [
+      "learning curve",
+      "o'rganish egri chizig'i (tezligi)",
+      "A steep learning curve is expected in the first year.",
+      "Birinchi yilda tez o'rganish kutiladi.",
+      "ˈlərnɪŋ kərv"
+     ],
+     [
+      "personal growth",
+      "shaxsiy o'sish",
+      "Personal growth is measured by habits.",
+      "Shaxsiy o'sish odatlar bilan o'lchanadi.",
+      "ˈpərsɪnəl groʊθ"
+     ],
+     [
+      "self-awareness",
+      "o'zini anglash",
+      "Self-awareness is developed through reflection.",
+      "O'zini anglash fikr yuritish orqali rivojlanadi.",
+      ""
+     ],
+     [
+      "fulfilment",
+      "qoniqish, to'kislik",
+      "Fulfilment is found in helping others.",
+      "Qoniqish boshqalarga yordamda topiladi.",
+      ""
+     ],
+     [
+      "reflection",
+      "mulohaza, o'ylab ko'rish",
+      "Time for reflection is needed at every stage.",
+      "Har bosqichda mulohaza uchun vaqt kerak.",
+      "rɪˈflɛkʃən"
+     ],
+     [
+      "professional development",
+      "kasbiy rivojlanish",
+      "Courses are offered for professional development.",
+      "Kasbiy rivojlanish uchun kurslar taklif qilinadi.",
+      "prəˈfɛʃənəl dɪˈvɛləpmənt"
+     ],
+     [
+      "financial milestone",
+      "moliyaviy bosqich",
+      "The first salary is called a financial milestone.",
+      "Birinchi maosh moliyaviy bosqich deyiladi.",
+      "ˌfaɪˈnænʃəl ˈmaɪlˌstoʊn"
+     ],
+     [
+      "elderly (the)",
+      "keksalar",
+      "The elderly are cared for at home in Uzbekistan.",
+      "O'zbekistonda keksalarga uyda g'amxo'rlik qilinadi.",
+      "ˈɛldərli (ðə)"
+     ],
+     [
+      "nursing home",
+      "qariyalar uyi",
+      "Nursing homes are rarely used here.",
+      "Bu yerda qariyalar uyidan kam foydalaniladi.",
+      "ˈnərsɪŋ hoʊm"
+     ],
+     [
+      "pension",
+      "nafaqa puli",
+      "Pensions are paid monthly.",
+      "Nafaqa har oy to'lanadi.",
+      "ˈpɛnʃən"
+     ],
+     [
+      "lifespan",
+      "umr uzunligi",
+      "Human lifespan has been extended by medicine.",
+      "Inson umri tibbiyot bilan uzaytirildi.",
+      "ˈlaɪfˌspæn"
+     ],
+     [
+      "newborn (stage)",
+      "yangi tug'ilgan",
+      "Newborns are checked by a doctor.",
+      "Yangi tug'ilganlar shifokor tomonidan tekshiriladi.",
+      "ˈnubɔrn (steɪʤ)"
+     ],
+     [
+      "schoolchild",
+      "maktab o'quvchisi",
+      "Schoolchildren are given free books.",
+      "Maktab o'quvchilariga bepul kitob beriladi.",
+      "ˈskuˌlʧaɪld"
+     ],
+     [
+      "youth",
+      "yoshlik; yoshlar",
+      "Youth is wasted on the young, they say.",
+      "Yoshlik yoshlarga isrof bo'ladi, deyishadi.",
+      "juθ"
+     ],
+     [
+      "in one's twenties / thirties",
+      "yigirma / o'ttiz yoshlarida",
+      "Most people are married in their twenties here.",
+      "Bu yerda ko'pchilik yigirma yoshlarida turmush quradi.",
+      "ɪn wənz tˈwɛntiz  ˈθərtiz"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Passive'ga o'tkazing",
+     "type": "rewrite",
+     "instr": "Active → Passive (zamonni saqlang)",
+     "items": [
+      "People speak Uzbek in Afghanistan.",
+      "Navoi wrote \"Khamsa\" in 1485.",
+      "They will open the new school next year.",
+      "Grandparents raise many children here.",
+      "Somebody stole my bike.",
+      "The teacher gives homework every day.",
+      "They built this mosque in 1404.",
+      "We will celebrate his 18th birthday on Friday."
+     ],
+     "answers": [
+      "Uzbek is spoken in Afghanistan.",
+      "\"Khamsa\" was written by Navoi in 1485.",
+      "The new school will be opened next year.",
+      "Many children are raised by grandparents here.",
+      "My bike was stolen.",
+      "Homework is given every day.",
+      "This mosque was built in 1404.",
+      "His 18th birthday will be celebrated on Friday."
+     ]
+    },
+    {
+     "title": "be + V3",
+     "type": "gap",
+     "instr": "To'g'ri shaklda",
+     "items": [
+      "Navoi ___ (bear) in Herat.",
+      "Plov ___ (cook) every Thursday.",
+      "The results ___ (announce) tomorrow.",
+      "These poems ___ (read) all over the world.",
+      "The old bridge ___ (destroy) in 1990.",
+      "The letters ___ (not / send) yet.",
+      "___ English ___ (teach) in every school?",
+      "___ the museum ___ (open) last year?"
+     ],
+     "answers": [
+      "was born",
+      "is cooked",
+      "will be announced",
+      "are read",
+      "was destroyed",
+      "are not sent / haven't been sent",
+      "Is … taught",
+      "Was … opened"
+     ]
+    },
+    {
+     "title": "by kerakmi?",
+     "type": "choose",
+     "instr": "Bajaruvchini qoldiring yoki tushiring",
+     "items": [
+      "Somebody cleaned the room.",
+      "Navoi wrote this poem.",
+      "People speak English here.",
+      "A famous architect designed the palace."
+     ],
+     "answers": [
+      "The room was cleaned. (by tushiriladi)",
+      "This poem was written by Navoi. (by qoladi)",
+      "English is spoken here. (tushiriladi)",
+      "The palace was designed by a famous architect. (qoladi)"
+     ]
+    },
+    {
+     "title": "Mening biografiyam",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 passive gap o'zingiz haqida (was born, was raised, was named, was taught, was given, will be…)",
+     "items": [
+      "born",
+      "named",
+      "raised",
+      "taught",
+      "given",
+      "future"
+     ],
+     "answers": [
+      "I was born in Andijan in 2009.",
+      "I was named after my grandfather.",
+      "I was raised by my parents and grandmother.",
+      "I was taught to read at five.",
+      "I was given a bike on my tenth birthday.",
+      "I hope I will be accepted to university."
+     ]
+    },
+    {
+     "title": "Hayot bosqichlari",
+     "type": "order",
+     "instr": "Bosqichlarni tartiblang (1–8)",
+     "items": [
+      "adulthood",
+      "infancy",
+      "old age",
+      "childhood",
+      "adolescence",
+      "toddler years",
+      "middle age",
+      "young adulthood"
+     ],
+     "answers": [
+      "6",
+      "1",
+      "8",
+      "3",
+      "4",
+      "2",
+      "7",
+      "5"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The poem was wrote by Navoi.",
+      "He born in 1441.",
+      "English is speak here.",
+      "The school will built next year.",
+      "The letter was sent by yesterday."
+     ],
+     "answers": [
+      "The poem was written by Navoi.",
+      "He was born in 1441.",
+      "English is spoken here.",
+      "The school will be built next year.",
+      "The letter was sent yesterday."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 21 jadvalini 3 marta; AGES AND STAGES 50 so'zni tarjimasi bilan ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 71–75 dan bittasi; 5 passive gap toping",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Mashhur inson biografiyasi",
+     "type": "write",
+     "instr": "8 passive gap: sevimli mashhur odam (was born, was raised, was educated, is known, was given, will be remembered…)",
+     "answers": "Erkin; be + V3."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Navoiy 1441-yilda Hirotda tug'ilgan.",
+      "Bu she'r Navoiy tomonidan yozilgan.",
+      "Bu yerda o'zbek tilida gapiriladi.",
+      "Yangi maktab kelasi yil quriladi.",
+      "Uni buvisi tarbiyalab o'stirgan."
+     ],
+     "answers": [
+      "Navoi was born in Herat in 1441.",
+      "This poem was written by Navoi.",
+      "Uzbek is spoken here.",
+      "The new school will be built next year.",
+      "She/He was raised by her/his grandmother."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "AGES AND STAGES CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Home",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Ages and stages og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Alisher Navoi — the poet whose words are still read",
+    "text": [
+     "Alisher Navoi was born in Herat in 1441. He was raised in a family of officials, and his childhood was spent close to the palace. His friend from school was Husayn Bayqara, who later became the ruler of Herat. Navoi was educated in Herat, Mashhad and Samarkand, and by the age of 15 he was already known as a poet.",
+     "In the 15th century, most poetry in Central Asia was written in Persian. Turkic — the language of the people — was considered a language of the street, not of literature. Navoi changed this. His poems were written in Old Uzbek (Chagatai), and he proved that this language was as rich as Persian. His most famous work, \"Khamsa\" (Five Poems), was finished in 1485. More than 26,000 lines were written for it.",
+     "Navoi was also a minister. Under him, schools, hospitals, mosques and bridges were built in Herat — more than 300 buildings. Poor students were given money, and artists were supported. He never married and had no children; he said his books were his children.",
+     "Navoi died in 1501. Today his name is given to a city, a region, a metro station, a theatre and the national library of Uzbekistan. His poems are still read at weddings and at school, and his words are quoted every day: \"If you are a human, you must not be indifferent to people's troubles.\""
+    ],
+    "glossary": [
+     "official — amaldor",
+     "ruler — hukmdor",
+     "be considered — hisoblanmoq",
+     "prove — isbotlamoq",
+     "rich (language) — boy",
+     "line — misra",
+     "minister — vazir",
+     "support — qo'llab-quvvatlamoq",
+     "quote — iqtibos keltirmoq",
+     "indifferent — befarq",
+     "trouble — tashvish"
+    ],
+    "tasks": [
+     {
+      "title": "Passive gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 6 ta passive gap",
+      "items": [
+       "born",
+       "raised",
+       "educated",
+       "written",
+       "built",
+       "read"
+      ],
+      "answers": [
+       "Navoi was born in Herat in 1441.",
+       "He was raised in a family of officials.",
+       "Navoi was educated in Herat, Mashhad and Samarkand.",
+       "His poems were written in Old Uzbek.",
+       "Schools, hospitals, mosques and bridges were built in Herat.",
+       "His poems are still read at weddings and at school."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Navoi's school friend became the ruler of Herat.",
+       "Most poetry in the 15th century was written in Turkic.",
+       "\"Khamsa\" was finished in 1485.",
+       "Navoi had five children."
+      ],
+      "answers": [
+       "True",
+       "False (Persian)",
+       "True",
+       "False (no children)"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why was Navoi's choice of language important?",
+       "How many buildings were built under him?",
+       "What is named after him today?"
+      ],
+      "answers": [
+       "He proved Old Uzbek was as rich as Persian for literature.",
+       "More than 300.",
+       "A city, a region, a metro station, a theatre, the national library."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 71–75 — uyga (tanlab)."
+   }
+  },
+  {
+   "no": 22,
+   "title": "Passive Voice (Continuous)",
+   "grammar_topic": "MAJHUL NISBAT — PRESENT / PAST CONTINUOUS PASSIVE (be + being + V3)",
+   "vocab_topic": "Money (pul va moliya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 22 – Passive voice continuous (jadval); MONEY WORDS (50); Reading — Lionel Messi (Jony Academy matni); Audio 61–70.",
+   "objectives": [
+    "Present Continuous Passive (hozir bajarilayotgan ish) va Past Continuous Passive (o'tgan paytda bajarilayotgan) ni tuzish.",
+    "Simple passive va continuous passive farqini bilish.",
+    "Pul CORE 20 bilan bank, maosh va byudjet haqida gapirish (is being paid, was being spent).",
+    "Reading: Messi — pul va karyera haqida passive gaplar."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Money (pul va moliya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz derazadan ko'rsatadi: \"Look — the road is being repaired.\" Doskaga: is being + V3. \"Yesterday at 5, the road was being repaired too.\""
+    ],
+    [
+     8,
+     "Kahoot — Passive voice simple",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Passive voice simple lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Present Continuous Passive — S + am/is/are + being + V3 (The hospital is being built); Past Continuous Passive — S + was/were + being + V3 (The hotel was being built); Future Continuous Passive — ishlatilmaydi (N/A). Simple passive bilan solishtirish: is built (umuman) — is being built (hozir jarayonda)."
+    ],
+    [
+     12,
+     "Money (pul va moliya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Present Continuous Passive — HOZIR bajarilayotgan ish, bajaruvchi muhim emas: \"The hospital is being built\" (hozir qurilyapti).",
+     "Past Continuous Passive — o'tgan paytda bajarilayotgan edi: \"At 5 pm the hotel was being built.\"",
+     "Formula: be (zamonda) + being + V3. \"being\" o'zgarmaydi.",
+     "Future Continuous Passive ishlatilmaydi — o'rniga Future Simple Passive: \"will be built\"."
+    ],
+    "formulas": [
+     [
+      "Present Continuous Passive",
+      "S + am/is/are + being + V3",
+      "The hospital is being built.",
+      "Kasalxona qurilyapti."
+     ],
+     [
+      "Past Continuous Passive",
+      "S + was/were + being + V3",
+      "The hotel was being built when I came.",
+      "Men kelganimda mehmonxona qurilayotgan edi."
+     ],
+     [
+      "Inkor",
+      "S + be + not + being + V3",
+      "The money isn't being spent wisely.",
+      "Pul oqilona sarflanmayapti."
+     ],
+     [
+      "Savol",
+      "Be + S + being + V3?",
+      "Is your salary being paid on time?",
+      "Maoshing vaqtida to'lanyaptimi?"
+     ],
+     [
+      "Simple vs Continuous",
+      "is paid (har oy) — is being paid (hozir)",
+      "Salaries are paid monthly. / Your salary is being paid now.",
+      "Maosh har oy to'lanadi. / Maoshing hozir to'lanyapti."
+     ],
+     [
+      "Future (N/A)",
+      "will be + V3 (Future Continuous Passive yo'q)",
+      "The new bank will be opened in May.",
+      "Yangi bank mayda ochiladi."
+     ]
+    ],
+    "presentation": [
+     [
+      "What is being built near your house?",
+      "A new bank is being built."
+     ],
+     [
+      "Is your salary being paid on time?",
+      "Yes, it's being paid on the fifth every month."
+     ],
+     [
+      "What was being discussed at the meeting?",
+      "The budget was being discussed."
+     ],
+     [
+      "Is the money being spent on education?",
+      "Yes, most of it is being spent on schools."
+     ],
+     [
+      "Was the road being repaired when you passed?",
+      "Yes, it was being repaired."
+     ],
+     [
+      "Are prices being raised again?",
+      "Unfortunately, they are being raised."
+     ],
+     [
+      "Is Messi still being paid a huge salary?",
+      "Yes, he's being paid millions."
+     ],
+     [
+      "Why was the shop being closed early?",
+      "Because the cash was being counted."
+     ],
+     [
+      "Is your loan being paid off?",
+      "Yes, it's being paid off every month."
+     ],
+     [
+      "What is being done about inflation?",
+      "New laws are being prepared."
+     ]
+    ],
+    "notes": [
+     "\"being\" — faqat continuous passive'da; simple passive'da yo'q (is built ≠ is being built).",
+     "Ko'pincha \"now / at the moment / still / currently\" bilan; o'tgan: \"when / while / at 5 pm\".",
+     "Pul so'zlari: salary (oylik), wage (kunlik/soatlik haqi), income (daromad), loan (kredit), debt (qarz), interest (foiz).",
+     "Listening: bank e'lonlarida passive ko'p (\"Your account is being updated\")."
+    ],
+    "mistakes": [
+     [
+      "The road is been repaired.",
+      "The road is being repaired.",
+      "being."
+     ],
+     [
+      "The house is building now.",
+      "The house is being built now.",
+      "Passive → is being + V3."
+     ],
+     [
+      "The money was being spend.",
+      "The money was being spent.",
+      "V3."
+     ],
+     [
+      "The bank will be being opened.",
+      "The bank will be opened.",
+      "Future Continuous Passive yo'q."
+     ],
+     [
+      "Is your salary paying now?",
+      "Is your salary being paid now?",
+      "Passive savol."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kundalik pul so'zlari; STRONG — bank va daromad; SUPER — iqtisod va investitsiya (kitob ro'yxati).",
+     "Har so'zga passive gap: \"Cash is being counted.\" / \"The loan was being paid off.\""
+    ],
+    "core": [
+     [
+      "money",
+      "pul",
+      "The money is being counted now.",
+      "Pul hozir sanalyapti.",
+      "ˈməni"
+     ],
+     [
+      "currency",
+      "valyuta, pul birligi",
+      "The currency is being changed at the bank.",
+      "Valyuta bankda almashtirilyapti.",
+      "ˈkərənsi"
+     ],
+     [
+      "cash (money)",
+      "naqd pul",
+      "Cash is being used less and less.",
+      "Naqd pul tobora kamroq ishlatilyapti.",
+      "kæʃ (ˈməni)"
+     ],
+     [
+      "coin",
+      "tanga",
+      "Old coins are being collected by my uncle.",
+      "Eski tangalar amakim tomonidan yig'ilyapti.",
+      "kɔɪn"
+     ],
+     [
+      "banknote",
+      "qog'oz pul",
+      "New banknotes are being printed.",
+      "Yangi qog'oz pullar chop etilyapti.",
+      "ˈbæŋkˌnoʊt"
+     ],
+     [
+      "bank account",
+      "bank hisobi",
+      "My account is being checked.",
+      "Hisobim tekshirilyapti.",
+      "bæŋk əˈkaʊnt"
+     ],
+     [
+      "savings",
+      "jamg'arma",
+      "My savings are being kept in the bank.",
+      "Jamg'armam bankda saqlanyapti.",
+      "ˈseɪvɪŋz"
+     ],
+     [
+      "salary",
+      "oylik maosh",
+      "Salaries are being paid today.",
+      "Maoshlar bugun to'lanyapti.",
+      "ˈsæləri"
+     ],
+     [
+      "wage",
+      "ish haqi (soatlik/haftalik)",
+      "Wages were being raised last year.",
+      "O'tgan yili ish haqi oshirilayotgan edi.",
+      "weɪʤ"
+     ],
+     [
+      "income",
+      "daromad",
+      "Our income is being spent on rent.",
+      "Daromadimiz ijaraga sarflanyapti.",
+      "ˈɪnˌkəm"
+     ],
+     [
+      "spend – spent – spent",
+      "sarflamoq",
+      "Too much is being spent on clothes.",
+      "Kiyimga juda ko'p sarflanyapti.",
+      "spɛnd"
+     ],
+     [
+      "save",
+      "tejamoq, jamg'armoq",
+      "Money is being saved for a car.",
+      "Mashina uchun pul yig'ilyapti.",
+      "seɪv"
+     ],
+     [
+      "earn",
+      "ishlab topmoq",
+      "How much is being earned per month?",
+      "Oyiga qancha topilyapti?",
+      "ərn"
+     ],
+     [
+      "pay",
+      "to'lamoq",
+      "The bill is being paid by my father.",
+      "Hisobni dadam to'layapti.",
+      "peɪ"
+     ],
+     [
+      "borrow (money)",
+      "qarz olmoq",
+      "Money was being borrowed from friends.",
+      "Do'stlardan qarz olinayotgan edi.",
+      "ˈbɑˌroʊ (ˈməni)"
+     ],
+     [
+      "lend (money)",
+      "qarz bermoq",
+      "Money is being lent at 20% interest.",
+      "Pul 20% foiz bilan qarzga berilyapti.",
+      "lɛnd (ˈməni)"
+     ],
+     [
+      "loan",
+      "kredit, ssuda",
+      "The loan is being paid off.",
+      "Kredit to'lab borilyapti.",
+      "loʊn"
+     ],
+     [
+      "debt",
+      "qarz",
+      "Debts were being collected by the bank.",
+      "Qarzlar bank tomonidan undirilayotgan edi.",
+      "dɛt"
+     ],
+     [
+      "budget (money)",
+      "byudjet",
+      "The family budget is being planned.",
+      "Oila byudjeti rejalashtirilyapti.",
+      "ˈbəʤɪt (ˈməni)"
+     ],
+     [
+      "price (money)",
+      "narx",
+      "Prices are being raised again.",
+      "Narxlar yana oshirilyapti.",
+      "praɪs (ˈməni)"
+     ]
+    ],
+    "strong": [
+     [
+      "deposit (bank)",
+      "omonat",
+      "Deposits are being accepted at 15%.",
+      "Omonatlar 15% bilan qabul qilinyapti.",
+      "dɪˈpɑzət (bæŋk)"
+     ],
+     [
+      "withdrawal",
+      "pul yechish",
+      "A withdrawal is being processed.",
+      "Pul yechish amalga oshirilyapti.",
+      "wɪθˈdrɔəl"
+     ],
+     [
+      "ATM",
+      "bankomat",
+      "The ATM is being repaired.",
+      "Bankomat ta'mirlanyapti.",
+      "ˈeɪˌtiˈɛm"
+     ],
+     [
+      "debit card",
+      "debet (plastik) karta",
+      "My debit card is being replaced.",
+      "Plastik kartam almashtirilyapti.",
+      "ˈdɛbɪt kɑrd"
+     ],
+     [
+      "payment",
+      "to'lov",
+      "Payments are being made online.",
+      "To'lovlar onlayn qilinyapti.",
+      "ˈpeɪmənt"
+     ],
+     [
+      "transaction",
+      "tranzaksiya, o'tkazma",
+      "The transaction is being checked.",
+      "O'tkazma tekshirilyapti.",
+      "trænˈzækʃən"
+     ],
+     [
+      "exchange rate",
+      "valyuta kursi",
+      "The exchange rate is being watched by everyone.",
+      "Valyuta kursini hamma kuzatyapti.",
+      "ɪksˈʧeɪnʤ reɪt"
+     ],
+     [
+      "interest rate",
+      "foiz stavkasi",
+      "Interest rates are being lowered.",
+      "Foiz stavkalari pasaytirilyapti.",
+      "ˈɪntəˌrɛst reɪt"
+     ],
+     [
+      "interest",
+      "foiz (daromad)",
+      "Interest is being paid monthly.",
+      "Foiz har oy to'lanyapti.",
+      "ˈɪntəˌrɛst"
+     ],
+     [
+      "investment",
+      "investitsiya, sarmoya",
+      "Investments are being made in schools.",
+      "Maktablarga sarmoya kiritilyapti.",
+      "ˌɪnˈvɛstmənt"
+     ],
+     [
+      "invest",
+      "sarmoya kiritmoq",
+      "Money was being invested in property.",
+      "Pul ko'chmas mulkka kiritilayotgan edi.",
+      "ˌɪnˈvɛst"
+     ],
+     [
+      "profit",
+      "foyda",
+      "Profit is being shared between partners.",
+      "Foyda hamkorlar orasida bo'lishilyapti.",
+      "ˈprɑfɪt"
+     ],
+     [
+      "revenue",
+      "tushum",
+      "Revenue is being counted at the end of the day.",
+      "Tushum kun oxirida sanalyapti.",
+      "ˈrɛvəˌnu"
+     ],
+     [
+      "earnings",
+      "ishlab topilgan pul",
+      "Messi's earnings are being reported by the press.",
+      "Messining daromadlari matbuotda yoritilyapti.",
+      "ˈərnɪŋz"
+     ],
+     [
+      "mortgage (money)",
+      "ipoteka",
+      "The mortgage is being paid over 20 years.",
+      "Ipoteka 20 yil davomida to'lanyapti.",
+      "ˈmɔrgɪʤ (ˈməni)"
+     ],
+     [
+      "financial planning",
+      "moliyaviy reja",
+      "Financial planning is being taught at school.",
+      "Moliyaviy rejalashtirish maktabda o'qitilyapti.",
+      "ˌfaɪˈnænʃəl ˈplænɪŋ"
+     ],
+     [
+      "budgeting",
+      "byudjet tuzish",
+      "Budgeting is being learned by teenagers.",
+      "Byudjet tuzishni o'smirlar o'rganyapti.",
+      "ˈbəʤɪtɪŋ"
+     ],
+     [
+      "credit score",
+      "kredit reytingi",
+      "Credit scores are being checked by banks.",
+      "Kredit reytinglari banklar tomonidan tekshirilyapti.",
+      "ˈkrɛdɪt skɔr"
+     ],
+     [
+      "insurance (money)",
+      "sug'urta",
+      "Insurance is being sold online.",
+      "Sug'urta onlayn sotilyapti.",
+      "ˌɪnˈʃʊrəns (ˈməni)"
+     ],
+     [
+      "financial literacy",
+      "moliyaviy savodxonlik",
+      "Financial literacy is being improved.",
+      "Moliyaviy savodxonlik oshirilyapti.",
+      "ˌfaɪˈnænʃəl ˈlɪtərəsi"
+     ]
+    ],
+    "super": [
+     [
+      "inflation",
+      "inflyatsiya",
+      "Inflation is being controlled by the central bank.",
+      "Inflyatsiya markaziy bank tomonidan nazorat qilinyapti.",
+      "ˌɪnˈfleɪʃən"
+     ],
+     [
+      "deflation",
+      "deflyatsiya",
+      "Deflation was being discussed in 2009.",
+      "2009-da deflyatsiya muhokama qilinayotgan edi.",
+      "dɪˈfleɪʃən"
+     ],
+     [
+      "recession",
+      "iqtisodiy inqiroz",
+      "A recession is being predicted.",
+      "Inqiroz bashorat qilinyapti.",
+      "ˌriˈsɛʃən"
+     ],
+     [
+      "economic growth",
+      "iqtisodiy o'sish",
+      "Economic growth is being measured every year.",
+      "Iqtisodiy o'sish har yili o'lchanadi.",
+      "ˌɛkəˈnɑmɪk groʊθ"
+     ],
+     [
+      "stock market",
+      "fond birjasi",
+      "The stock market is being watched closely.",
+      "Fond birjasi diqqat bilan kuzatilyapti.",
+      "stɑk ˈmɑrkɪt"
+     ],
+     [
+      "bond",
+      "obligatsiya",
+      "Bonds are being sold by the government.",
+      "Obligatsiyalar hukumat tomonidan sotilyapti.",
+      "bɑnd"
+     ],
+     [
+      "assets",
+      "aktivlar, mol-mulk",
+      "The company's assets are being counted.",
+      "Kompaniya aktivlari sanalyapti.",
+      "ˈæˌsɛts"
+     ],
+     [
+      "liabilities",
+      "majburiyatlar, qarzlar",
+      "Liabilities are being reduced.",
+      "Majburiyatlar kamaytirilyapti.",
+      "ˌlaɪəˈbɪlɪtiz"
+     ],
+     [
+      "net worth",
+      "sof boylik",
+      "Messi's net worth is being estimated at over a billion.",
+      "Messining sof boyligi milliarddan ortiq deb baholanyapti.",
+      "nɛt wərθ"
+     ],
+     [
+      "bankruptcy",
+      "bankrotlik",
+      "Bankruptcy is being avoided by the club.",
+      "Klub bankrotlikdan qochyapti.",
+      "ˈbæŋkrəptsi"
+     ],
+     [
+      "debt repayment",
+      "qarzni to'lash",
+      "Debt repayment is being planned.",
+      "Qarzni to'lash rejalashtirilyapti.",
+      "dɛt riˈpeɪmənt"
+     ],
+     [
+      "retirement fund",
+      "pensiya jamg'armasi",
+      "The retirement fund is being managed by the state.",
+      "Pensiya jamg'armasi davlat tomonidan boshqarilyapti.",
+      "rɪˈtaɪərmənt fənd"
+     ],
+     [
+      "mutual fund",
+      "investitsiya fondi",
+      "Mutual funds are being offered to students.",
+      "Investitsiya fondlari talabalarga taklif qilinyapti.",
+      "mˈjuʧuəl fənd"
+     ],
+     [
+      "commodity",
+      "tovar (xom ashyo)",
+      "Commodities like gold are being bought.",
+      "Oltin kabi tovarlar sotib olinyapti.",
+      "kəˈmɑdəti"
+     ],
+     [
+      "tax",
+      "soliq",
+      "Taxes are being collected online.",
+      "Soliqlar onlayn yig'ilyapti.",
+      "tæks"
+     ],
+     [
+      "fine (money)",
+      "jarima",
+      "A fine is being charged for late payment.",
+      "Kech to'lov uchun jarima olinyapti.",
+      "faɪn (ˈməni)"
+     ],
+     [
+      "sponsor",
+      "homiy",
+      "Messi is being sponsored by Adidas.",
+      "Messiga Adidas homiylik qilyapti.",
+      "ˈspɑnsər"
+     ],
+     [
+      "contract",
+      "shartnoma",
+      "A new contract is being negotiated.",
+      "Yangi shartnoma muhokama qilinyapti.",
+      "ˈkɑnˌtrækt"
+     ],
+     [
+      "transfer fee",
+      "transfer to'lovi",
+      "The transfer fee was being discussed for months.",
+      "Transfer to'lovi oylab muhokama qilinayotgan edi.",
+      "ˈtrænsfər fi"
+     ],
+     [
+      "charity donation",
+      "xayriya ehsoni",
+      "Donations are being made to children's hospitals.",
+      "Bolalar kasalxonalariga ehsonlar qilinyapti.",
+      "ˈʧɛrɪti doʊˈneɪʃən"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Continuous passive",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan (hozir yoki o'tgan)",
+     "items": [
+      "The road ___ (repair) at the moment.",
+      "The money ___ (count) when the manager came.",
+      "New banknotes ___ (print) now.",
+      "The budget ___ (discuss) at 5 pm yesterday.",
+      "___ your salary ___ (pay) on time these days?",
+      "The loan ___ (not / pay off) last year.",
+      "Prices ___ (raise) again this month.",
+      "The ATM ___ (fix) when I arrived."
+     ],
+     "answers": [
+      "is being repaired",
+      "was being counted",
+      "are being printed",
+      "was being discussed",
+      "Is … being paid",
+      "wasn't being paid off",
+      "are being raised",
+      "was being fixed"
+     ]
+    },
+    {
+     "title": "Simple yoki Continuous passive",
+     "type": "choose",
+     "instr": "To'g'risini tanlang",
+     "items": [
+      "Salaries are paid / are being paid on the fifth every month.",
+      "Look! The bank is robbed / is being robbed!",
+      "The bridge was built / was being built in 1990.",
+      "When I passed, the shop was painted / was being painted.",
+      "English is spoken / is being spoken in many countries.",
+      "My card is replaced / is being replaced right now."
+     ],
+     "answers": [
+      "are paid",
+      "is being robbed",
+      "was built",
+      "was being painted",
+      "is spoken",
+      "is being replaced"
+     ]
+    },
+    {
+     "title": "Active → Passive",
+     "type": "rewrite",
+     "instr": "Continuous zamonlarda",
+     "items": [
+      "They are building a new bank.",
+      "The bank was counting the money at 6.",
+      "Somebody is repairing the ATM.",
+      "The club was paying him millions.",
+      "We are planning the family budget."
+     ],
+     "answers": [
+      "A new bank is being built.",
+      "The money was being counted at 6.",
+      "The ATM is being repaired.",
+      "He was being paid millions by the club.",
+      "The family budget is being planned."
+     ]
+    },
+    {
+     "title": "Shahrimizda nima qilinyapti?",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap \"… is being built / repaired / opened …\" — shahringizdagi hozirgi ishlar",
+     "items": [
+      "road",
+      "school",
+      "park",
+      "metro",
+      "prices",
+      "bank"
+     ],
+     "answers": [
+      "The main road is being repaired.",
+      "A new school is being built near my house.",
+      "The park is being cleaned.",
+      "A metro station is being opened.",
+      "Prices are being raised in the bazaar.",
+      "The old bank is being renovated."
+     ]
+    },
+    {
+     "title": "Pul lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "money you get every month for work",
+      "money you borrow from a bank",
+      "money you keep for the future",
+      "money you owe",
+      "extra money the bank pays on savings",
+      "the plan of how you spend money"
+     ],
+     "answers": [
+      "salary",
+      "loan",
+      "savings",
+      "debt",
+      "interest",
+      "budget"
+     ],
+     "box": [
+      "salary",
+      "loan",
+      "savings",
+      "debt",
+      "interest",
+      "budget"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The road is been repaired.",
+      "The house is building now.",
+      "The money was being spend.",
+      "The bank will be being opened.",
+      "Is your salary paying now?"
+     ],
+     "answers": [
+      "The road is being repaired.",
+      "The house is being built now.",
+      "The money was being spent.",
+      "The bank will be opened.",
+      "Is your salary being paid now?"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 22 jadvalini 3 marta; MONEY 50 so'zni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 76–80 dan bittasi; 5 passive gap toping",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Shahrim hozir",
+     "type": "write",
+     "instr": "8 gap: Present Continuous Passive (5), Past Continuous Passive (3) — shahringizdagi ishlar",
+     "answers": "Erkin; be + being + V3."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Yo'l hozir ta'mirlanyapti.",
+      "Men kelganimda pul sanalayotgan edi.",
+      "Narxlar yana oshirilyapti.",
+      "Maoshing vaqtida to'lanyaptimi?",
+      "Messiga yiliga 50 million dollar to'lanyapti."
+     ],
+     "answers": [
+      "The road is being repaired now.",
+      "The money was being counted when I came.",
+      "Prices are being raised again.",
+      "Is your salary being paid on time?",
+      "Messi is being paid 50 million dollars a year."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "MONEY CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Ages and stages",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Money og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Lionel Messi — the boy who was paid in hormones",
+    "text": [
+     "Lionel Messi was born in 1987 in Rosario, Argentina. When he was 11, doctors found that he had a growth problem. The treatment cost 1,000 dollars a month, and his family couldn't pay. Clubs in Argentina said no. But in 2000, Barcelona said yes: Messi's treatment was paid by the club, and the first contract was being written on a paper napkin in a café!",
+     "Messi moved to Spain at 13. While he was being trained at Barcelona's academy, he was often homesick. But he worked hard. At 17 he played his first match, and soon he was being watched by the whole world. He played for Barcelona for 21 years and scored 672 goals. In 2021 the club had financial problems: too much money was being spent, and Messi had to leave. He cried at his last press conference.",
+     "Today Messi plays for Inter Miami in the USA, where he is being paid more than 50 million dollars a year. He has won the World Cup (2022) and the Ballon d'Or eight times — more than any other player. His net worth is being estimated at over one billion dollars.",
+     "But Messi is also known for his charity. Millions of dollars are being donated by his foundation to children's hospitals, and sick children are being helped every year. \"Money is being given to me because of football,\" he says, \"so it should be given back to people.\""
+    ],
+    "glossary": [
+     "growth — o'sish",
+     "treatment — davolash",
+     "contract — shartnoma",
+     "napkin — salfetka",
+     "homesick — uyni sog'ingan",
+     "press conference — matbuot anjumani",
+     "financial — moliyaviy",
+     "net worth — sof boylik",
+     "foundation — jamg'arma",
+     "donate — ehson qilmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Passive gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 6 ta passive (simple va continuous)",
+      "items": [
+       "simple 1",
+       "continuous 1",
+       "continuous 2",
+       "continuous 3",
+       "continuous 4",
+       "continuous 5"
+      ],
+      "answers": [
+       "Messi's treatment was paid by the club.",
+       "The first contract was being written on a paper napkin.",
+       "While he was being trained at Barcelona's academy…",
+       "Too much money was being spent.",
+       "He is being paid more than 50 million dollars a year.",
+       "Millions of dollars are being donated by his foundation."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Messi's family could pay for his treatment.",
+       "He moved to Spain at 13.",
+       "He left Barcelona because of money problems at the club.",
+       "He has won the Ballon d'Or five times."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True",
+       "False (eight)"
+      ]
+     },
+     {
+      "title": "Raqamlar",
+      "type": "short",
+      "instr": "Matndan",
+      "items": [
+       "How much did the treatment cost a month?",
+       "How many goals did he score for Barcelona?",
+       "How much is he paid a year at Inter Miami?"
+      ],
+      "answers": [
+       "1,000 dollars",
+       "672",
+       "more than 50 million dollars"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 76–80 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 61–70 (fayllar hali yo'q — ustoz bank e'lonini o'qiydi)",
+    "intro": [
+     "Skript: \"Dear customers, welcome to Jony Bank. Please note: the ATM near the entrance is being repaired today. Cash is being accepted at counters 2 and 3. Your accounts are being updated tonight, so online payments will not be available from 11 pm to 1 am. Salaries are being paid on the 5th as usual. Loans are being offered at 18 percent this month. Thank you.\"",
+     "1-tinglash: nima ta'mirlanyapti? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "E'lon",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "The ___ near the entrance is being repaired.",
+       "Cash is being accepted at counters ___ and ___.",
+       "Online payments will not be available from ___ to ___.",
+       "Salaries are being paid on the ___.",
+       "Loans are being offered at ___ percent."
+      ],
+      "answers": [
+       "ATM",
+       "2, 3",
+       "11 pm, 1 am",
+       "5th",
+       "18"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

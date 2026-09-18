@@ -1171,6 +1171,106 @@ Anna""",
     ],
 }
 
+
+U11_IMG = "/exam-img/step1-u11/"
+ACTIVITY_A_G = ["ride a bike", "cook dinner", "drive a car", "play tennis",
+                "ride a horse", "play cards", "run"]
+
+STEP1_UNIT11 = {
+    "level": "step1", "kind": "unit", "unit_no": 11,
+    "title": "Step 1 · Unit 11 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Yes, it’s in this street.", "How can I help?", "It’s really nice."], "C"),
+                _c("", ["I’m not so sure.", "How are you?", "Yes, please."], "A"),
+                _c("", ["Don’t worry, it’s OK.", "Can I look around?", "I don’t think it’s a good idea."], "C"),
+                _c("", ["Oh, not bad, thanks.", "Yes, I agree.", "Sure, no problem."], "B"),
+                _c("", ["I don’t think so.", "I’m sorry, I can’t.", "No, it’s OK, thanks."], "A"),
+                _c("", ["That’s great, thanks.", "I think you’re right.", "Yes, that’s a good idea."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Activities",
+            "instructions": "Choose the words to match the picture.",
+            "questions": [
+                _c("", ACTIVITY_A_G, "F", image=U11_IMG + "q7.jpg"),
+                _c("", ACTIVITY_A_G, "C", image=U11_IMG + "q8.jpg"),
+                _c("", ACTIVITY_A_G, "E", image=U11_IMG + "q9.jpg"),
+                _c("", ACTIVITY_A_G, "A", image=U11_IMG + "q10.jpg"),
+                _c("", ACTIVITY_A_G, "G", image=U11_IMG + "q11.jpg"),
+                _c("", ACTIVITY_A_G, "D", image=U11_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Life events",
+            "instructions": "Look at the pictures of life events. What are the "
+                            "missing letters? Some letters are already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("g _ _  m _ _ _ _ _ _", "get married", "et arried",
+                   image=U11_IMG + "q13.jpg"),
+                _t("h _ _ _  a  b _ _ _", "have a baby", "ave baby", "ave aby",
+                   image=U11_IMG + "q14.jpg"),
+                _t("g _  to  s _ _ _ _ _", "go to school", "o chool",
+                   image=U11_IMG + "q15.jpg"),
+                _t("f _ _ _ _ _  u _ _ _ _ _ _ _ _ _", "finish university",
+                   "inish niversity", image=U11_IMG + "q16.jpg"),
+                _t("g _ _ _  u _", "grow up", "row p", image=U11_IMG + "q17.jpg"),
+                _t("s _ _ _  w _ _ _ _ _ _", "stop working", "top orking",
+                   image=U11_IMG + "q18.jpg"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email from Sally to a friend. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "passage": """Working in a hotel
+From: Sally
+To: Philip
+
+Dear Philip
+
+How are you? Did you finish university last month and are you looking for a job now? Well, why don’t you come and work with (19) ………… at the hotel? I love working there! I think there’s a job in the kitchen, but it’s not a good job for you because you (20) ………… cook very well. Sorry, but it’s true!
+Do you want to be a receptionist? That’s my job. It’s really interesting. I speak three languages so I (21) ………… talk to people from different countries. What about you? (22) ………… any other languages?
+I work with some very friendly people. Do you want to come to the hotel tomorrow night and meet (23) …………? We usually all go out for a meal together – would you like to come with (24) …………? We always have a lot of fun!
+
+See you tomorrow at about 6 o’clock?
+Love, Sally""",
+            "questions": [
+                _c("", ["me", "I", "my"], "A"),
+                _c("", ["can", "not", "can’t"], "C"),
+                _c("", ["can", "cannot", "do"], "A"),
+                _c("", ["You can speak", "Can you speak", "You can’t speak"], "B"),
+                _c("", ["them", "it", "they"], "A"),
+                _c("", ["we", "her", "us"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about people. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("Your husband is very nice, where did you meet ............?",
+                   ["him", "you", "he"], "A"),
+                _c("Mary and Peter go to your school, do you know ............?",
+                   ["us", "them", "they"], "B"),
+                _c("I love this book, I first read ............ at university.",
+                   ["her", "them", "it"], "C"),
+                _c("Rodolfo can sing really well but he can’t ............ .",
+                   ["dancing", "dance", "to dance"], "B"),
+                _c("Sally, ............ play the piano?", ["you can", "can you", "can"], "B"),
+                _c("Yes, she ............ speak French very well.", ["can", "can’t", "do"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1183,4 +1283,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit8", STEP1_UNIT8),
     ("exam_tpl_step1_unit9", STEP1_UNIT9),
     ("exam_tpl_step1_unit10", STEP1_UNIT10),
+    ("exam_tpl_step1_unit11", STEP1_UNIT11),
 ]

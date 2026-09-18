@@ -81,14 +81,16 @@ function LevelList() {
                 <div className="font-semibold text-slate-900">{lv.title} <span className="text-slate-400 font-normal">({lv.cefr})</span></div>
                 <div className="text-xs text-slate-500">
                   {lv.lessons.length ? `${lv.lessons.length} dars` : "Mavzular hali kiritilmagan"}
-                  {lv.lessons.length > 0 && !lv.ready && " · reja tayyorlanmoqda"}
+                  {lv.lessons.length > 0 && !lv.ready && (lv.ready_count > 0 ? ` · ${lv.ready_count}/${lv.lessons.length} tayyor` : " · reja tayyorlanmoqda")}
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2 text-xs">
               {lv.ready
                 ? <span className="bg-emerald-50 text-emerald-700 rounded px-2 py-0.5">Tayyor</span>
-                : <span className="bg-slate-100 text-slate-500 rounded px-2 py-0.5">Tez orada</span>}
+                : lv.ready_count > 0
+                  ? <span className="bg-amber-50 text-amber-700 rounded px-2 py-0.5">{lv.ready_count} dars tayyor</span>
+                  : <span className="bg-slate-100 text-slate-500 rounded px-2 py-0.5">Tez orada</span>}
               <ChevronRight size={16} className="text-slate-400" />
             </div>
           </Link>

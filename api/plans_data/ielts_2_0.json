@@ -1,0 +1,847 @@
+{
+ "course": "ielts_2_0",
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Present Perfect",
+   "grammar_topic": "PRESENT PERFECT (have/has + V3)",
+   "vocab_topic": "Narrative verbs (hikoya fe'llari, V1–V2–V3)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 1 – Present Perfect (jadval + kombinatsiya + mashqlar).",
+   "objectives": [
+    "Present Perfect qolipini (have/has + V3) tasdiq, inkor va savolda tuza olish.",
+    "\"ever / never / been to\" bilan hayotiy tajriba haqida gapira olish.",
+    "20 ta hikoya fe'lining V1–V2–V3 shakllarini yoddan bilish (CORE).",
+    "Kombinatsiya: formula → gap → tarjima 1 daqiqada 4 marta."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Narrative verbs (hikoya fe'llari, V1–V2–V3) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "\"What have you done today?\" — ustoz 3 o'quvchidan so'raydi, javoblarni doskaga yozadi (I have eaten…, I have come…)."
+    ],
+    [
+     8,
+     "Kahoot — IELTS 1.0 yakuni — Past Simple",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — IELTS 1.0 yakuni — Past Simple lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+have/has+V3 → Negative haven't/hasn't+V3 → Question Have/Has+S+V3. Har qatorda misol + tarjima, keyin o'quvchi o'zi misol tuzadi."
+    ],
+    [
+     12,
+     "Narrative verbs (hikoya fe'llari, V1–V2–V3) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     19,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Present Perfect — o'tgan zamonda bo'lgan, lekin natijasi HOZIR ko'rinadigan ish. Vaqt aytilmaydi: \"I have lost my key\" (kalitim yo'q — hozir).",
+     "Past Simple'dan farqi: Past Simple'da vaqt aniq (yesterday, in 2020), Present Perfect'da vaqt muhim emas — natija muhim.",
+     "have/has — yordamchi; asosiy fe'l 3-shaklda (V3). Regular: V+ed; irregular — jadvaldan yod olinadi (bugungi lug'at)."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + have/has + V3",
+      "I have started my business recently.",
+      "Men yaqinda biznesimni boshladim."
+     ],
+     [
+      "Inkor",
+      "S + haven't/hasn't + V3",
+      "We haven't finished yet.",
+      "Biz hali tugatganimiz yo'q."
+     ],
+     [
+      "Savol",
+      "Have/Has + S + V3?",
+      "Have you ever been to Tashkent?",
+      "Qachondir Toshkentda bo'lganmisan?"
+     ],
+     [
+      "Tajriba",
+      "S + have/has + ever/never + V3",
+      "She has never eaten sushi.",
+      "U hech qachon sushi yemagan."
+     ],
+     [
+      "been / gone",
+      "have been to = borib kelgan; have gone to = ketgan (hali u yerda)",
+      "He has gone to London.",
+      "U Londonga ketgan (hali qaytmagan)."
+     ],
+     [
+      "Qisqa javob",
+      "Yes, I have. / No, I haven't.",
+      "Has she called? — Yes, she has.",
+      "U qo'ng'iroq qildimi? — Ha."
+     ]
+    ],
+    "presentation": [
+     [
+      "Have you ever broken a bone?",
+      "Yes, I have. I have broken my arm."
+     ],
+     [
+      "Has your teacher come?",
+      "No, she hasn't come yet."
+     ],
+     [
+      "What have you eaten today?",
+      "I have eaten plov."
+     ],
+     [
+      "Have they finished the test?",
+      "Yes, they have finished it."
+     ],
+     [
+      "Has he ever seen the sea?",
+      "No, he has never seen the sea."
+     ],
+     [
+      "Have you done your homework?",
+      "Yes, I have done it."
+     ],
+     [
+      "Where has Ali gone?",
+      "He has gone to the bank."
+     ],
+     [
+      "Have you been to Samarkand?",
+      "Yes, I have been there twice."
+     ],
+     [
+      "Has it rained today?",
+      "No, it hasn't rained."
+     ],
+     [
+      "How many books have you read this year?",
+      "I have read five books."
+     ]
+    ],
+    "notes": [
+     "Vaqt so'zi bo'lsa (yesterday, last week, ago, in 2019) — Past Simple, Present Perfect emas.",
+     "Present Perfect bilan yuradigan so'zlar: ever, never, just, already, yet, recently, so far, today, this week.",
+     "\"been to\" — borib qaytgan; \"gone to\" — hali qaytmagan. Ustoz doskada ikkita rasm bilan ko'rsatadi.",
+     "Irregular V3 — kombinatsiya bilan emas, lug'at bilan yodlanadi: bugungi CORE 20 shu maqsadda."
+    ],
+    "mistakes": [
+     [
+      "I have went to school.",
+      "I have gone to school.",
+      "V3 kerak: go – went – GONE."
+     ],
+     [
+      "She have finished.",
+      "She has finished.",
+      "He/She/It → HAS."
+     ],
+     [
+      "I have seen him yesterday.",
+      "I saw him yesterday.",
+      "\"yesterday\" bor — Past Simple."
+     ],
+     [
+      "Have you ever been in London?",
+      "Have you ever been TO London?",
+      "\"been to\"."
+     ],
+     [
+      "He has been to Paris, he isn't here.",
+      "He has gone to Paris.",
+      "Hali qaytmagan → gone."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — hikoyalarda eng ko'p uchraydigan irregular fe'llar (3 shakli bilan). STRONG +20 va SUPER +20 — kuchli o'quvchi uchun.",
+     "Har so'z: V1 – V2 – V3 aytiladi, so'ng Present Perfect gap: \"I have ___\". Ovoz chiqarib, xor bilan 2 marta.",
+     "Normativ: ustoz V1 aytadi — o'quvchi V2, V3 + tarjima."
+    ],
+    "core": [
+     [
+      "begin – began – begun",
+      "boshlamoq",
+      "The film has already begun.",
+      "Kino allaqachon boshlangan.",
+      "bɪˈgɪn"
+     ],
+     [
+      "break – broke – broken",
+      "sindirmoq",
+      "Who has broken the window?",
+      "Oynani kim sindirgan?",
+      "breɪk"
+     ],
+     [
+      "bring – brought – brought",
+      "olib kelmoq",
+      "I have brought my book.",
+      "Men kitobimni olib keldim.",
+      "brɪŋ"
+     ],
+     [
+      "buy – bought – bought",
+      "sotib olmoq",
+      "She has bought a new phone.",
+      "U yangi telefon sotib oldi.",
+      "baɪ"
+     ],
+     [
+      "catch – caught – caught",
+      "tutmoq; ulgurmoq",
+      "We have caught the bus.",
+      "Biz avtobusga ulgurdik.",
+      "kæʧ"
+     ],
+     [
+      "choose – chose – chosen",
+      "tanlamoq",
+      "Have you chosen a university?",
+      "Universitet tanladingmi?",
+      "ʧuz"
+     ],
+     [
+      "come – came – come",
+      "kelmoq",
+      "The guests have come.",
+      "Mehmonlar keldi.",
+      "kəm"
+     ],
+     [
+      "do – did – done",
+      "qilmoq",
+      "I have done my homework.",
+      "Uyga vazifamni qildim.",
+      "du"
+     ],
+     [
+      "eat – ate – eaten",
+      "yemoq",
+      "He has eaten all the cake.",
+      "U tortni to'liq yeb qo'ydi.",
+      "it"
+     ],
+     [
+      "fall – fell – fallen",
+      "yiqilmoq",
+      "The child has fallen off the bike.",
+      "Bola velosipeddan yiqildi.",
+      "fɔl"
+     ],
+     [
+      "find – found – found",
+      "topmoq",
+      "I have found my keys!",
+      "Kalitlarimni topdim!",
+      "faɪnd"
+     ],
+     [
+      "forget – forgot – forgotten",
+      "unutmoq",
+      "She has forgotten his name.",
+      "U uning ismini unutgan.",
+      "fərˈgɛt"
+     ],
+     [
+      "get – got – got",
+      "olmoq; bo'lmoq",
+      "We have got a letter.",
+      "Biz xat oldik.",
+      "gɪt"
+     ],
+     [
+      "give – gave – given",
+      "bermoq",
+      "They have given me a present.",
+      "Ular menga sovg'a berishdi.",
+      "gɪv"
+     ],
+     [
+      "go – went – gone",
+      "bormoq",
+      "Dad has gone to work.",
+      "Dadam ishga ketgan.",
+      "goʊ"
+     ],
+     [
+      "hear – heard – heard",
+      "eshitmoq",
+      "Have you heard the news?",
+      "Yangilikni eshitdingmi?",
+      "hir"
+     ],
+     [
+      "know – knew – known",
+      "bilmoq",
+      "I have known her for years.",
+      "Men uni yillardan beri bilaman.",
+      "noʊ"
+     ],
+     [
+      "leave – left – left",
+      "tark etmoq; qoldirmoq",
+      "The train has left.",
+      "Poyezd ketib bo'ldi.",
+      "liv"
+     ],
+     [
+      "lose – lost – lost",
+      "yo'qotmoq",
+      "He has lost his wallet.",
+      "U hamyonini yo'qotgan.",
+      "luz"
+     ],
+     [
+      "make – made – made",
+      "yasamoq; qilmoq",
+      "Mum has made a cake.",
+      "Oyim tort pishirdi.",
+      "meɪk"
+     ]
+    ],
+    "strong": [
+     [
+      "meet – met – met",
+      "uchrashmoq",
+      "I have met your brother.",
+      "Men akang bilan uchrashganman.",
+      "mit"
+     ],
+     [
+      "pay – paid – paid",
+      "to'lamoq",
+      "Have you paid for the tickets?",
+      "Chiptalarga pul to'ladingmi?",
+      "peɪ"
+     ],
+     [
+      "put – put – put",
+      "qo'ymoq",
+      "Where have you put my bag?",
+      "Sumkamni qayerga qo'yding?",
+      "pʊt"
+     ],
+     [
+      "read – read – read",
+      "o'qimoq",
+      "She has read this book twice.",
+      "U bu kitobni ikki marta o'qigan.",
+      "rɛd"
+     ],
+     [
+      "ride – rode – ridden",
+      "minmoq (velosiped, ot)",
+      "Have you ever ridden a horse?",
+      "Qachondir ot minganmisan?",
+      "raɪd"
+     ],
+     [
+      "run – ran – run",
+      "yugurmoq",
+      "He has run a marathon.",
+      "U marafon yugurgan.",
+      "rən"
+     ],
+     [
+      "say – said – said",
+      "demoq",
+      "What has she said?",
+      "U nima dedi?",
+      "seɪ"
+     ],
+     [
+      "see – saw – seen",
+      "ko'rmoq",
+      "I have seen this film.",
+      "Men bu kinoni ko'rganman.",
+      "si"
+     ],
+     [
+      "sell – sold – sold",
+      "sotmoq",
+      "They have sold their car.",
+      "Ular mashinasini sotib yuborishdi.",
+      "sɛl"
+     ],
+     [
+      "send – sent – sent",
+      "jo'natmoq",
+      "I have sent the email.",
+      "Emailni jo'natdim.",
+      "sɛnd"
+     ],
+     [
+      "sing – sang – sung",
+      "kuylamoq",
+      "She has sung at a concert.",
+      "U konsertda kuylagan.",
+      "sɪŋ"
+     ],
+     [
+      "sit – sat – sat",
+      "o'tirmoq",
+      "We have sat here for an hour.",
+      "Biz bu yerda bir soatdan beri o'tiribmiz.",
+      "sɪt"
+     ],
+     [
+      "sleep – slept – slept",
+      "uxlamoq",
+      "The baby has slept well.",
+      "Chaqaloq yaxshi uxladi.",
+      "slip"
+     ],
+     [
+      "speak – spoke – spoken",
+      "gapirmoq",
+      "Have you spoken to the boss?",
+      "Boshliq bilan gaplashdingmi?",
+      "spik"
+     ],
+     [
+      "spend – spent – spent",
+      "sarflamoq",
+      "I have spent all my money.",
+      "Men hamma pulimni sarfladim.",
+      "spɛnd"
+     ],
+     [
+      "take – took – taken",
+      "olmoq",
+      "Someone has taken my pen.",
+      "Kimdir ruchkamni olib ketibdi.",
+      "teɪk"
+     ],
+     [
+      "tell – told – told",
+      "aytmoq",
+      "I have told you the truth.",
+      "Men senga haqiqatni aytdim.",
+      "tɛl"
+     ],
+     [
+      "think – thought – thought",
+      "o'ylamoq",
+      "I have thought about it.",
+      "Men bu haqda o'ylab ko'rdim.",
+      "θɪŋk"
+     ],
+     [
+      "win – won – won",
+      "yutmoq",
+      "Our team has won the match.",
+      "Jamoamiz o'yinda g'alaba qozondi.",
+      "wɪn"
+     ],
+     [
+      "write – wrote – written",
+      "yozmoq",
+      "She has written three letters.",
+      "U uchta xat yozdi.",
+      "raɪt"
+     ]
+    ],
+    "super": [
+     [
+      "build – built – built",
+      "qurmoq",
+      "They have built a new bridge.",
+      "Ular yangi ko'prik qurishdi.",
+      "bɪld"
+     ],
+     [
+      "cut – cut – cut",
+      "kesmoq",
+      "I have cut my finger.",
+      "Barmog'imni kesib oldim.",
+      "kət"
+     ],
+     [
+      "draw – drew – drawn",
+      "chizmoq",
+      "He has drawn a beautiful picture.",
+      "U chiroyli rasm chizgan.",
+      "drɔ"
+     ],
+     [
+      "drink – drank – drunk",
+      "ichmoq",
+      "Have you drunk your tea?",
+      "Choyingni ichdingmi?",
+      "drɪŋk"
+     ],
+     [
+      "drive – drove – driven",
+      "haydamoq",
+      "She has driven for ten years.",
+      "U o'n yildan beri mashina haydaydi.",
+      "draɪv"
+     ],
+     [
+      "feel – felt – felt",
+      "his qilmoq",
+      "I have never felt so happy.",
+      "Hech qachon bunchalik baxtli bo'lmaganman.",
+      "fil"
+     ],
+     [
+      "fly – flew – flown",
+      "uchmoq",
+      "Have you ever flown to Dubai?",
+      "Dubayga uchib borganmisan?",
+      "flaɪ"
+     ],
+     [
+      "grow – grew – grown",
+      "o'smoq; o'stirmoq",
+      "The tree has grown a lot.",
+      "Daraxt ancha o'sgan.",
+      "groʊ"
+     ],
+     [
+      "hide – hid – hidden",
+      "yashirmoq",
+      "The cat has hidden under the bed.",
+      "Mushuk karavot tagiga yashiringan.",
+      "haɪd"
+     ],
+     [
+      "hold – held – held",
+      "ushlamoq; o'tkazmoq",
+      "We have held three meetings.",
+      "Biz uchta yig'ilish o'tkazdik.",
+      "hoʊld"
+     ],
+     [
+      "keep – kept – kept",
+      "saqlamoq",
+      "I have kept all his letters.",
+      "Men uning hamma xatlarini saqlaganman.",
+      "kip"
+     ],
+     [
+      "lend – lent – lent",
+      "qarz bermoq",
+      "He has lent me his laptop.",
+      "U menga noutbukini berib turdi.",
+      "lɛnd"
+     ],
+     [
+      "ring – rang – rung",
+      "jiringlamoq; qo'ng'iroq qilmoq",
+      "The bell has rung.",
+      "Qo'ng'iroq chalindi.",
+      "rɪŋ"
+     ],
+     [
+      "steal – stole – stolen",
+      "o'g'irlamoq",
+      "Someone has stolen my bike.",
+      "Kimdir velosipedimni o'g'irlagan.",
+      "stil"
+     ],
+     [
+      "swim – swam – swum",
+      "suzmoq",
+      "I have swum in the sea.",
+      "Men dengizda suzganman.",
+      "swɪm"
+     ],
+     [
+      "teach – taught – taught",
+      "o'rgatmoq",
+      "She has taught English for years.",
+      "U yillardan beri ingliz tili o'rgatadi.",
+      "tiʧ"
+     ],
+     [
+      "throw – threw – thrown",
+      "otmoq",
+      "He has thrown the ball away.",
+      "U to'pni uloqtirib yubordi.",
+      "θroʊ"
+     ],
+     [
+      "understand – understood – understood",
+      "tushunmoq",
+      "I have understood the rule.",
+      "Men qoidani tushundim.",
+      "ˌəndərˈstænd"
+     ],
+     [
+      "wake – woke – woken",
+      "uyg'onmoq",
+      "The baby has woken up.",
+      "Chaqaloq uyg'ondi.",
+      "weɪk"
+     ],
+     [
+      "wear – wore – worn",
+      "kiymoq",
+      "I have worn this shirt twice.",
+      "Bu ko'ylakni ikki marta kiyganman.",
+      "wɛr"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "V3 jadvali",
+     "type": "table",
+     "instr": "V2 va V3 shaklini yozing (CORE 20)",
+     "items": [
+      "begin",
+      "break",
+      "bring",
+      "catch",
+      "choose",
+      "eat",
+      "fall",
+      "forget",
+      "give",
+      "lose"
+     ],
+     "answers": [
+      "began – begun",
+      "broke – broken",
+      "brought – brought",
+      "caught – caught",
+      "chose – chosen",
+      "ate – eaten",
+      "fell – fallen",
+      "forgot – forgotten",
+      "gave – given",
+      "lost – lost"
+     ],
+     "note": "2 daqiqa; juftlikda tekshiriladi."
+    },
+    {
+     "title": "Natija gapi",
+     "type": "write",
+     "instr": "Vaziyatga qarab Present Perfect gap tuzing (kitob A mashqi)",
+     "items": [
+      "Ann's hair was dirty. Now it's clean. (wash)",
+      "Tom was 80 kg. Now he's 70. (lose weight)",
+      "Bill can't walk; his leg is in plaster. (break)",
+      "My sister is looking for her pen. (lose)",
+      "Mary is on holiday in France. (go)",
+      "Mrs Smith has got a lot of packages. (buy)",
+      "I can't eat anything now. (eat too much)",
+      "Tony needs a holiday. (work / hard / this year)"
+     ],
+     "answers": [
+      "Ann has washed her hair.",
+      "Tom has lost weight.",
+      "Bill has broken his leg.",
+      "She has lost her pen.",
+      "Mary has gone to France.",
+      "She has bought a lot of things.",
+      "I have eaten too much.",
+      "Tony has worked hard this year."
+     ]
+    },
+    {
+     "title": "have yoki has",
+     "type": "gap",
+     "instr": "Bo'sh joyga have / has / haven't / hasn't qo'ying",
+     "items": [
+      "I ___ finished my homework.",
+      "She ___ never been to London.",
+      "They ___ (not) arrived yet.",
+      "___ you ever eaten sushi?",
+      "He ___ (not) called me today.",
+      "We ___ known each other since 2020.",
+      "___ it stopped raining?",
+      "My parents ___ bought a new house."
+     ],
+     "answers": [
+      "have",
+      "has",
+      "haven't",
+      "Have",
+      "hasn't",
+      "have",
+      "Has",
+      "have"
+     ]
+    },
+    {
+     "title": "Have you ever…?",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 ta \"Have you ever…?\" savoli bering, javob \"Yes, I have — I … (Past Simple)\" yoki \"No, I have never…\"",
+     "items": [
+      "be / abroad",
+      "ride / a camel",
+      "lose / your phone",
+      "win / a prize",
+      "meet / a famous person",
+      "break / a bone"
+     ],
+     "answers": [
+      "Have you ever been abroad?",
+      "Have you ever ridden a camel?",
+      "Have you ever lost your phone?",
+      "Have you ever won a prize?",
+      "Have you ever met a famous person?",
+      "Have you ever broken a bone?"
+     ],
+     "note": "Ustoz 2 juftlikni sinfga eshittiradi; V3 xatolari doskaga."
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato — toping va tuzating",
+     "items": [
+      "I have went to the shop.",
+      "She have seen this film.",
+      "We have visit Bukhara.",
+      "Has they finished?",
+      "He has been in Paris twice.",
+      "I have broke my phone."
+     ],
+     "answers": [
+      "I have gone to the shop.",
+      "She has seen this film.",
+      "We have visited Bukhara.",
+      "Have they finished?",
+      "He has been to Paris twice.",
+      "I have broken my phone."
+     ]
+    },
+    {
+     "title": "been yoki gone",
+     "type": "choose",
+     "instr": "been / gone — to'g'risini tanlang",
+     "items": [
+      "Ali isn't here. He has ___ to the market.",
+      "I have ___ to Samarkand three times.",
+      "Where's Mum? She has ___ out.",
+      "They have ___ to Turkey. They came back yesterday."
+     ],
+     "answers": [
+      "gone",
+      "been",
+      "gone",
+      "been"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 1: A (10 gap) va B mashqlarini daftarga bajaring",
+     "answers": "Kitob javoblari; keyingi darsda tekshiriladi."
+    },
+    {
+     "title": "V1–V2–V3",
+     "type": "table",
+     "instr": "CORE 20 fe'lning 3 shaklini 3 marta yozing (yod olish)",
+     "answers": "Lug'at ro'yxati bo'yicha."
+    },
+    {
+     "title": "10 gap",
+     "type": "write",
+     "instr": "Bugun/bu hafta qilgan 5 ish (tasdiq) va qilmagan 5 ish (inkor) — Present Perfect",
+     "answers": "Erkin; have/has + V3 tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan ingliz tiliga",
+     "items": [
+      "Men hech qachon Londonda bo'lmaganman.",
+      "U hozirgina kelgan.",
+      "Ular hali chipta sotib olishmadi.",
+      "Sen qachondir samolyotda uchganmisan?",
+      "Biz bu kinoni ko'rganmiz."
+     ],
+     "answers": [
+      "I have never been to London.",
+      "She/He has just come.",
+      "They haven't bought the tickets yet.",
+      "Have you ever flown on a plane?",
+      "We have seen this film."
+     ]
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20: V1–V2–V3 + tarjima, 1.5 daqiqa — Jony Student ilovasiga ovozli yuboring",
+     "answers": "Ustoz tinglab baholaydi (1 coin)."
+    },
+    {
+     "title": "Kahoot tayyorgarlik",
+     "type": "prep",
+     "instr": "Keyingi dars boshida Kahoot: shu dars lug'ati + formulalar — takrorlang",
+     "answers": "—"
+    }
+   ],
+   "normativ": [
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Narrative verbs og'zaki",
+     "CORE 20: V1–V2–V3 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ],
+    [
+     "Yozma normativ (keyingi dars)",
+     "20 so'z V3 + tarjima, 5 daqiqa",
+     "2 coin"
+    ]
+   ]
+  }
+ ]
+}

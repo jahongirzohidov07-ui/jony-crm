@@ -103,15 +103,25 @@ LEVELS = [
 
 
 def _level(course: str, title: str, cefr: str) -> dict:
-    full = _load_course(course)
-    if full:
-        lessons = [dict(_summary(L), ready=True) for L in full["lessons"]]
-    else:
-        outline = _load_course("outline_" + course)
-        lessons = [dict(L, ready=False) for L in (outline or {}).get("lessons", [])]
+    """To'liq reja (ielts_X.json) + mavzular ro'yxati (outline_*.json)
+    birlashtiriladi: tayyor darslar 'ready', qolganlari faqat mavzu.
+    Shunda 2.0 darslari tayyor bo'lgani sari saytga chiqadi (2026-09-18)."""
+    full = _load_course(course) or {"lessons": []}
+    outline = _load_course("outline_" + course) or {"lessons": []}
+    ready = {int(L["no"]): dict(_summary(L), ready=True) for L in full["lessons"]}
+    lessons = []
+    seen = set()
+    for L in outline["lessons"]:
+        no = int(L["no"])
+        lessons.append(ready.get(no) or dict(L, ready=False))
+        seen.add(no)
+    for no in sorted(ready):
+        if no not in seen:
+            lessons.append(ready[no])
+    lessons.sort(key=lambda L: int(L["no"]))
     return {"course": course, "title": title, "cefr": cefr,
-            "ready": bool(full), "lessons": lessons,
-            "ready_count": sum(1 for L in lessons if L.get("ready"))}
+            "ready": bool(lessons) and all(L.get("ready") for L in lessons),
+            "lessons": lessons, "ready_count": len(ready)}
 
 
 def _english_only(db, user):

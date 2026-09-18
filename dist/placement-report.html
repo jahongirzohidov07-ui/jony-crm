@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ingliz tili darajasi — hisobot · Jony Academy</title>
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  DIAGNOSTIKA HISOBOTI (2026-09-15, Jahongir: "test chuqur tahlil
+  mavzular kesimida natijalarni foiz korinishida bersin va uni print
+  qilib yuklab olishga ham chiroyli dizayn marketing bolishi kerak uni
+  borib boshqalarga korsatsin").
+  Bitta A4 varaq (210x297 mm). "Yuklab olish" -> chop etish oynasi ->
+  "PDF sifatida saqlash". Kitob nomi hech qayerda yo'q — faqat markaz
+  bosqichlari (Step 1..4, IELTS) va CEFR darajasi. Ranglar — JonyOS
+  brend ko'ki (#1A6FE4).
+-->
+<style>
+  :root {
+    --navy:#0B1B3F; --navy2:#12306B; --brand:#1A6FE4; --brand2:#3882E8; --sky:#D6E5FA; --ice:#EFF5FD;
+    --gold:#F5B83D; --ink:#0F172A; --text:#334155; --muted:#64748B; --line:#E2E8F0;
+    --ok:#10B981; --mid:#F59E0B; --bad:#EF4444;
+    --head:"Manrope","Segoe UI",Arial,sans-serif; --body:"Inter","Segoe UI",Arial,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; }
+  body { background:#CBD5E1; color:var(--ink); font-family:var(--body); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .actions { max-width:210mm; margin:18px auto 0; padding:0 12px; display:flex; gap:8px; flex-wrap:wrap; }
+  .actions button { font-family:var(--head); border:0; border-radius:12px; padding:12px 18px; font-size:15px; font-weight:700; cursor:pointer; background:var(--brand); color:#fff; box-shadow:0 6px 18px rgba(26,111,228,.35); }
+  .actions button.ghost { background:#fff; color:var(--brand); box-shadow:none; border:1px solid var(--sky); }
+
+  .sheet { width:210mm; height:297mm; margin:18px auto 40px; background:#fff; position:relative; overflow:hidden; box-shadow:0 30px 80px rgba(11,27,63,.25); display:flex; flex-direction:column; }
+
+  /* ---------- HERO ---------- */
+  .hero { position:relative; color:#fff; padding:26px 34px 24px; background:
+      radial-gradient(120% 140% at 100% 0%, #2F80F0 0%, rgba(47,128,240,0) 55%),
+      linear-gradient(135deg, #0B1B3F 0%, #12306B 55%, #1A6FE4 130%); }
+  .hero svg.deco { position:absolute; right:0; top:0; width:100%; height:100%; pointer-events:none; }
+  .top { display:flex; justify-content:space-between; align-items:center; position:relative; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--head); font-weight:800; letter-spacing:.18em; font-size:12px; }
+  .brand img { width:30px; height:30px; border-radius:9px; box-shadow:0 4px 12px rgba(0,0,0,.25); }
+  .tag { font-family:var(--head); font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; border:1px solid rgba(255,255,255,.35); border-radius:99px; padding:6px 12px; background:rgba(255,255,255,.08); }
+  .herogrid { display:grid; grid-template-columns:1fr 196px; gap:18px; align-items:center; margin-top:20px; position:relative; }
+  .eyebrow { font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#9CC3F7; }
+  .name { font-family:var(--head); font-size:34px; font-weight:800; line-height:1.08; margin:6px 0 4px; letter-spacing:-.02em; }
+  .date { font-size:13px; color:#C7DBF7; }
+  .step { display:inline-flex; align-items:center; gap:10px; margin-top:14px; background:#fff; color:var(--navy); border-radius:14px; padding:9px 14px 9px 9px; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+  .step .s { font-family:var(--head); background:var(--brand); color:#fff; font-weight:800; font-size:14px; border-radius:9px; padding:6px 10px; }
+  .step .l { font-family:var(--head); font-weight:800; font-size:16px; }
+  .advice { margin-top:12px; display:flex; gap:10px; align-items:flex-start; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:10px 13px; font-size:13px; line-height:1.5; color:#E6EEFB; }
+  .advice b { color:var(--gold); font-family:var(--head); }
+  .gauge { position:relative; width:196px; height:196px; }
+  .gauge svg { width:196px; height:196px; transform:rotate(-90deg); }
+  .gauge .c { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .gauge .lv { font-family:var(--head); font-size:58px; font-weight:800; line-height:1; letter-spacing:-.03em; }
+  .gauge .cap { font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#9CC3F7; margin-top:4px; font-weight:600; }
+  .gauge .pc { margin-top:6px; font-family:var(--head); font-weight:700; font-size:13px; background:rgba(245,184,61,.18); color:var(--gold); border-radius:99px; padding:3px 10px; }
+
+  /* ---------- BODY ---------- */
+  .body { padding:18px 34px 0; flex:1; display:flex; flex-direction:column; gap:14px; }
+  .sec { display:flex; align-items:center; gap:10px; margin:0 0 9px; }
+  .sec h2 { margin:0; font-family:var(--head); font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--navy); white-space:nowrap; }
+  .sec i { flex:1; height:1px; background:linear-gradient(90deg,var(--sky),rgba(214,229,250,0)); }
+  .sec span { font-size:11px; color:var(--muted); white-space:nowrap; }
+
+  .skills { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .sk { border:1px solid var(--line); border-radius:16px; padding:11px 12px 12px; background:linear-gradient(180deg,#fff, var(--ice)); }
+  .sk .t { display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-weight:600; }
+  .sk .t em { font-style:normal; font-size:15px; }
+  .sk .v { display:flex; align-items:baseline; gap:6px; margin:4px 0 8px; }
+  .sk .v b { font-family:var(--head); font-size:24px; font-weight:800; color:var(--navy); letter-spacing:-.02em; }
+  .sk .v span { font-family:var(--head); font-size:13px; font-weight:700; }
+  .sk .v.none b { font-size:14px; color:var(--muted); font-weight:700; }
+
+  .bar { height:7px; border-radius:99px; background:#E9EEF5; overflow:hidden; }
+  .bar i { display:block; height:100%; border-radius:99px; }
+
+  .ladder { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; align-items:end; height:92px; margin-bottom:4px; }
+  .rung { border-radius:12px 12px 6px 6px; background:var(--ice); border:1px solid var(--sky); display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding:6px 4px 7px; position:relative; }
+  .rung b { font-family:var(--head); font-size:15px; font-weight:800; color:var(--navy2); }
+  .rung span { font-size:10px; color:var(--muted); font-weight:600; }
+  .rung.past { background:#DCEBFE; }
+  .rung.on { background:linear-gradient(180deg,#3882E8,#1A6FE4); border-color:#1A6FE4; box-shadow:0 10px 22px rgba(26,111,228,.35); }
+  .rung.on b, .rung.on span { color:#fff; }
+  .rung .you { position:absolute; top:-22px; left:50%; transform:translateX(-50%); white-space:nowrap; font-family:var(--head); font-size:10px; font-weight:800; color:var(--navy); background:var(--gold); border-radius:99px; padding:3px 8px; }
+  .rung .you::after { content:""; position:absolute; left:50%; bottom:-4px; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--gold); border-bottom:0; }
+
+  .topics { display:grid; grid-template-columns:1fr 1fr; column-gap:18px; row-gap:0; }
+  .tp { display:grid; grid-template-columns:38px 1fr 64px 36px; align-items:center; gap:8px; padding:5px 0; border-bottom:1px dashed #E5EAF1; font-size:11.5px; }
+  .tp .lvl { font-family:var(--head); font-weight:800; font-size:10px; color:var(--brand); background:var(--ice); border-radius:6px; text-align:center; padding:2px 0; }
+  .tp .nm { color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tp .p { font-family:var(--head); font-weight:800; text-align:right; }
+  .legend { display:flex; gap:14px; font-size:10.5px; color:var(--muted); margin-top:7px; }
+  .legend i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+
+  .sum { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .box { border-radius:16px; padding:11px 14px; font-size:12px; line-height:1.55; }
+  .box.ok { background:#ECFDF5; border:1px solid #A7F3D0; }
+  .box.bad { background:#FFF7ED; border:1px solid #FED7AA; }
+  .box h3 { margin:0 0 4px; font-family:var(--head); font-size:13px; font-weight:800; color:var(--navy); }
+  .box ul { margin:0; padding-left:16px; color:var(--text); }
+  .box li span { color:var(--muted); }
+
+  .foot { margin-top:auto; background:var(--navy); color:#C7D4EA; padding:13px 34px; display:flex; justify-content:space-between; align-items:center; gap:14px; font-size:11px; }
+  .foot b { font-family:var(--head); color:#fff; font-size:14px; letter-spacing:.02em; }
+  .foot .site { font-family:var(--head); font-weight:800; color:#fff; background:var(--brand); border-radius:99px; padding:6px 12px; font-size:12px; }
+  .note { font-size:10px; color:var(--muted); padding:0 34px 10px; line-height:1.45; }
+
+  .state { max-width:560px; margin:60px auto; background:#fff; border-radius:16px; padding:24px; text-align:center; font-family:var(--body); }
+
+  /* Faqat telefon EKRANI uchun: chop etishda A4 kengligi (794px) bu
+     qoidaga tushib qolmasin */
+  @media screen and (max-width: 700px) {
+    .sheet { width:auto; height:auto; margin:12px; }
+    .hero, .body { padding-left:18px; padding-right:18px; }
+    .note { padding-left:18px; padding-right:18px; }
+    .herogrid { grid-template-columns:1fr; justify-items:center; text-align:center; }
+    .herogrid > div:first-child { order:2; }
+    .skills { grid-template-columns:repeat(2,1fr); }
+    .topics { grid-template-columns:1fr; }
+    .sum { grid-template-columns:1fr; }
+    .foot { flex-direction:column; text-align:center; padding:14px 18px; }
+  }
+  @page { size:A4; margin:0; }
+  @media print {
+    body { background:#fff; }
+    .actions { display:none; }
+    .sheet { margin:0; box-shadow:none; width:210mm; height:297mm; }
+  }
+</style>
+</head>
+<body>
+<div class="actions" id="actions" hidden>
+  <button id="bprint">📄 PDF qilib yuklab olish</button>
+  <button class="ghost" id="bshare">🔗 Ulashish</button>
+</div>
+<div id="root"><div class="state">Yuklanmoqda...</div></div>
+
+<script>
+(function () {
+  const token = new URLSearchParams(location.search).get('t') || '';
+  const $root = document.getElementById('root');
+  const LADDER = [['A1','Step 1'],['A2','Step 2'],['B1','Step 3'],['B1+','Step 4'],['B2','IELTS'],['C1','IELTS']];
+  const ICON = { grammar:'✍️', vocab:'📚', reading:'📖', listening:'🎧' };
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const tone = (p) => p >= 75 ? 'var(--ok)' : (p >= 50 ? 'var(--mid)' : 'var(--bad)');
+  const clamp = (p) => Math.max(0, Math.min(100, Math.round(p || 0)));
+  const bar = (p) => '<div class="bar"><i style="width:' + clamp(p) + '%;background:' + tone(p) + '"></i></div>';
+  const fmtDate = (iso) => {
+    if (!iso) return '';
+    const d = new Date(/Z|[+-]\d\d:\d\d$/.test(iso) ? iso : iso + 'Z');
+    const m = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+    return d.getDate() + '-' + m[d.getMonth()] + ' ' + d.getFullYear() + '-yil';
+  };
+  const fail = (msg) => { $root.innerHTML = '<div class="state">' + esc(msg) + '</div>'; };
+
+  if (!token) return fail("Havola noto'g'ri.");
+  fetch('/api/public/placement/' + encodeURIComponent(token))
+    .then((r) => r.ok ? r.json() : Promise.reject(r.status))
+    .then((d) => {
+      if (d.status !== 'done' || !d.result) return fail("Test hali yakunlanmagan — natija test tugagach chiqadi.");
+      render(d);
+    })
+    .catch(() => fail("Hisobot topilmadi yoki havola o'chirilgan."));
+
+  function gauge(level, pct) {
+    const R = 84, C = 2 * Math.PI * R, off = C * (1 - clamp(pct) / 100);
+    return '<div class="gauge"><svg viewBox="0 0 196 196" aria-hidden="true">'
+      + '<defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5B83D"/><stop offset="1" stop-color="#FFE3A3"/></linearGradient></defs>'
+      + '<circle cx="98" cy="98" r="' + R + '" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)" stroke-width="12"/>'
+      + '<circle cx="98" cy="98" r="' + R + '" fill="none" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"/>'
+      + '</svg><div class="c"><div class="lv">' + esc(level) + '</div><div class="cap">CEFR darajasi</div>'
+      + '<div class="pc">' + clamp(pct) + '% grammatika</div></div></div>';
+  }
+
+  function render(d) {
+    const r = d.result;
+    const idx = LADDER.findIndex((x) => x[0] === r.level);
+    const stepName = r.step || (idx >= 0 ? LADDER[idx][1] : '');
+    const skills = (r.skills || []).map((s) => {
+      const has = !s.skipped && s.level;
+      const v = has
+        ? '<div class="v"><b>' + esc(s.level) + '</b>' + (s.pct != null ? '<span style="color:' + tone(s.pct) + '">' + clamp(s.pct) + '%</span>' : '') + '</div>'
+        : '<div class="v none"><b>' + (s.skipped ? 'tekshirilmadi' : 'tugallanmadi') + '</b></div>';
+      return '<div class="sk"><div class="t">' + esc(s.label) + '<em>' + (ICON[s.key] || '') + '</em></div>' + v
+        + (has && s.pct != null ? bar(s.pct) : '<div class="bar"></div>') + '</div>';
+    }).join('');
+    const ladder = LADDER.map((x, i) => {
+      const h = 38 + i * 10;
+      const cls = i === idx ? ' on' : (i < idx ? ' past' : '');
+      return '<div class="rung' + cls + '" style="height:' + h + 'px">'
+        + (i === idx ? '<div class="you">Siz shu yerdasiz</div>' : '')
+        + '<b>' + x[0] + '</b><span>' + x[1] + '</span></div>';
+    }).join('');
+    const topics = (r.topics || []).slice(0, 16);
+    const trows = topics.map((t) =>
+      '<div class="tp"><span class="lvl">' + esc(t.level) + '</span><span class="nm" title="' + esc(t.topic) + '">' + esc(t.topic) + '</span>'
+      + bar(t.pct) + '<span class="p" style="color:' + tone(t.pct) + '">' + clamp(t.pct) + '%</span></div>').join('');
+    const list = (arr, empty) => arr.length
+      ? '<ul>' + arr.slice(0, 4).map((t) => '<li>' + esc(t.topic) + ' <span>· ' + clamp(t.pct) + '%</span></li>').join('') + '</ul>'
+      : '<div style="color:var(--muted)">' + empty + '</div>';
+
+    $root.innerHTML =
+      '<div class="sheet">'
+      + '<section class="hero">'
+      +   '<svg class="deco" viewBox="0 0 800 330" preserveAspectRatio="none" aria-hidden="true">'
+      +     '<circle cx="760" cy="40" r="170" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="2"/>'
+      +     '<circle cx="760" cy="40" r="240" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="2"/>'
+      +     '<path d="M0 300 C 200 250, 420 330, 800 270 L800 330 L0 330 Z" fill="rgba(255,255,255,.04)"/>'
+      +   '</svg>'
+      +   '<div class="top"><div class="brand"><img src="/favicon.png" alt="">JONY ACADEMY</div><div class="tag">Diagnostika hisoboti</div></div>'
+      +   '<div class="herogrid"><div>'
+      +     '<div class="eyebrow">Ingliz tili darajasi</div>'
+      +     '<div class="name">' + esc(d.name || 'O\'quvchi') + '</div>'
+      +     '<div class="date">' + (d.finished_at ? fmtDate(d.finished_at) + ' · ' : '') + 'Adaptiv test · Grammatika ' + r.score + '/' + r.total + '</div>'
+      +     '<div class="step"><span class="s">' + esc(stepName) + '</span><span class="l">' + esc(r.level) + ' darajasi</span></div>'
+      +     '<div class="advice"><span>🎯</span><div><b>Tavsiya:</b> ' + esc(r.advice) + '</div></div>'
+      +   '</div>' + gauge(r.level, r.grammar_pct) + '</div>'
+      + '</section>'
+      + '<section class="body">'
+      +   '<div><div class="sec"><h2>Ko\'nikmalar</h2><i></i><span>daraja va to\'g\'ri javoblar ulushi</span></div><div class="skills">' + skills + '</div></div>'
+      +   '<div style="padding-top:14px"><div class="sec"><h2>Daraja zinapoyasi</h2><i></i><span>Step 1 dan IELTS gacha</span></div><div class="ladder">' + ladder + '</div></div>'
+      +   (trows ? '<div><div class="sec"><h2>Mavzular bo\'yicha tahlil</h2><i></i><span>' + topics.length + ' ta mavzu</span></div><div class="topics">' + trows + '</div>'
+      +     '<div class="legend"><span><i style="background:var(--ok)"></i>75% va yuqori</span><span><i style="background:var(--mid)"></i>50–74%</span><span><i style="background:var(--bad)"></i>50% dan past</span></div></div>' : '')
+      +   '<div><div class="sec"><h2>Xulosa</h2><i></i></div><div class="sum">'
+      +     '<div class="box ok"><h3>💪 Kuchli tomonlar</h3>' + list(r.strong || [], 'Hali aniqlanmadi — ko\'proq savol kerak') + '</div>'
+      +     '<div class="box bad"><h3>🚀 O\'sish nuqtalari</h3>' + list(r.weak || [], 'Zaif mavzu topilmadi') + '</div>'
+      +   '</div></div>'
+      + '</section>'
+      + '<div class="note">Test adaptiv: har bir javobdan keyin savol qiyinlashadi yoki osonlashadi, shuning uchun natija shaxsiy darajangizni ko\'rsatadi. Speaking va Writing sinov darsida baholanadi.</div>'
+      + '<footer class="foot"><div><b>Jony Academy</b><br>Ingliz tili — Step 1 dan IELTS gacha</div>'
+      +   '<div style="text-align:center">Guruhga yozilish uchun administratorimiz<br>siz bilan bog\'lanadi</div>'
+      +   '<span class="site">jonyos.uz</span></footer>'
+      + '</div>';
+    document.getElementById('actions').hidden = false;
+    document.title = (d.name ? d.name + ' — ' : '') + 'ingliz tili darajasi · Jony Academy';
+  }
+
+  document.getElementById('bprint').onclick = () => window.print();
+  document.getElementById('bshare').onclick = () => {
+    const url = location.href;
+    if (navigator.share) { navigator.share({ title: document.title, url }).catch(() => {}); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+      .then(() => { document.getElementById('bshare').textContent = '✓ Havola nusxalandi'; })
+      .catch(() => prompt('Havolani nusxalang:', url));
+  };
+})();
+</script>
+</body>
+</html>

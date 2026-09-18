@@ -1,1 +1,0 @@
-var e={sky:`bg-sky-500`,violet:`bg-violet-500`,emerald:`bg-emerald-500`,amber:`bg-amber-500`,rose:`bg-rose-500`,teal:`bg-teal-500`,slate:`bg-slate-400`},t=e=>Number(e||0).toLocaleString().replace(/,/g,` `);export{t as n,e as t};

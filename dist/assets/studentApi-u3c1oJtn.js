@@ -1,0 +1,1 @@
+var e=e=>Number(e||0).toLocaleString().replace(/,/g,` `);export{e as t};

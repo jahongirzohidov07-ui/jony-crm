@@ -1,42 +1,138 @@
 <!doctype html>
 <html lang="uz">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jony Student</title>
-  <!-- APK QURISH UCHUN STATIK SAHIFA (2026-08-10).
-       Muammo: student.webmanifest faqat /student ochilgach JS orqali
-       ulanardi, /student esa loginsiz /login ga yo'naltiradi - shuning
-       uchun PWABuilder kabi tashqi vositalar manifestni topa olmasdi.
-       Bu sahifa manifestni STATIK bog'laydi - APK qurish vositalari
-       shu manzilni tahlil qiladi. Oddiy foydalanuvchiga ham foydali:
-       ilovaga kirish tugmasi bor. -->
-  <link rel="manifest" href="/student.webmanifest" />
-  <link rel="icon" href="/favicon.png" />
-  <meta name="theme-color" content="#1A6FE4" />
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,sans-serif;
-         min-height:100vh;display:flex;align-items:center;
-         justify-content:center;background:#f8fafc}
-    .card{text-align:center;padding:32px}
-    img{width:96px;height:96px;border-radius:22px}
-    h1{font-size:22px;color:#0f172a;margin:16px 0 6px}
-    p{color:#64748b;font-size:14px;margin:0 0 20px}
-    a{display:inline-block;background:#1A6FE4;color:#fff;
-      text-decoration:none;padding:13px 34px;border-radius:12px;
-      font-weight:600;font-size:15px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Jony Student — ilovani o'rnatish</title>
+
+<!-- ILOVANI TARQATISH SAHIFASI.
+     Dastlab (2026-08-10) bu sahifa faqat APK qurish vositalari
+     manifestni topa olishi uchun yaratilgan edi: /student loginsiz
+     /login ga yo'naltiradi va PWABuilder manifestni ko'rmasdi.
+
+     2026-08-16: Jahongir "student appni yuklab olish havolasi va QR
+     kod ber" dedi. Endi bu sahifa o'quvchiga ham ko'rsatiladi —
+     QR kod aynan shu manzilga olib keladi. Shuning uchun bu yerda
+     o'rnatish yo'riqnomasi bor: Android va iPhone alohida, chunki
+     ikkisida "uy ekraniga qo'shish" boshqacha joyda turadi. -->
+<link rel="manifest" href="/student.webmanifest" />
+<link rel="icon" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#1A6FE4" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<meta property="og:title" content="Jony Student" />
+<meta property="og:description" content="Jony Academy o'quvchisi uchun: darslar, baholar, coinlar va lug'at o'yinlari" />
+<meta property="og:image" content="https://jonyos.uz/pwa-512.png" />
+<meta property="og:url" content="https://jonyos.uz/student-app.html" />
+
+<style>
+  :root{--b:#1A6FE4}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f8fafc;color:#0f172a;
+       font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+  .top{background:var(--b);color:#fff;padding:34px 20px 56px;text-align:center}
+  .top img{width:88px;height:88px;border-radius:22px;background:#fff;padding:6px}
+  h1{font-size:26px;margin:14px 0 4px;font-weight:800}
+  .sub{font-size:14px;color:#d6e7ff;margin:0}
+  .wrap{max-width:460px;margin:-38px auto 0;padding:0 16px 48px}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;
+        padding:18px;margin-bottom:12px}
+  .cta{display:block;background:var(--b);color:#fff;text-decoration:none;
+       text-align:center;padding:16px;border-radius:14px;font-weight:700;
+       font-size:16px}
+  .cta:active{background:#1559b8}
+  h2{font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  ol{margin:0;padding-left:20px;color:#334155;font-size:14px;line-height:1.75}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;
+        background:#fff;border:1px solid #e2e8f0;border-radius:14px;
+        padding:5px;margin-bottom:12px}
+  .tabs button{border:0;background:transparent;padding:10px;
+        border-radius:10px;font-size:14px;font-weight:600;color:#64748b;
+        cursor:pointer;font-family:inherit}
+  .tabs button.on{background:var(--b);color:#fff}
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+  .feat div{background:#fff;border:1px solid #e2e8f0;border-radius:12px;
+        padding:12px;font-size:13px;color:#334155}
+  .feat b{display:block;font-size:20px;margin-bottom:4px}
+  .note{font-size:12px;color:#64748b;line-height:1.6;margin:10px 2px 0}
+  a.link{color:var(--b)}
+  footer{text-align:center;font-size:12px;color:#94a3b8;padding:6px 0 0}
+</style>
 </head>
 <body>
-  <div class="card">
-    <img src="/pwa-192.png" alt="Jony Student" />
-    <h1>Jony Student</h1>
-    <p>Lug'at o'yinlari, darajalar va reyting</p>
-    <a href="/student">Ilovaga kirish</a>
+
+<div class="top">
+  <img src="/pwa-512.png" alt="Jony Student" />
+  <h1>Jony Student</h1>
+  <p class="sub">Jony Academy o'quvchilari uchun ilova</p>
+</div>
+
+<div class="wrap">
+
+  <div class="card" style="padding:14px">
+    <a class="cta" href="/student">Ilovaga kirish</a>
+    <p class="note" style="text-align:center;margin-top:10px">
+      Login va parolni o'quv markaz beradi
+    </p>
   </div>
-  <script>
-    if ("serviceWorker" in navigator)
-      navigator.serviceWorker.register("/sw.js").catch(function(){});
-  </script>
+
+  <div class="feat">
+    <div><b>🎯</b>Kunlik maqsad va streak</div>
+    <div><b>🪙</b>Coin va Mukofotlar do'koni</div>
+    <div><b>🏆</b>Guruh va filial reytingi</div>
+    <div><b>📊</b>Davomat, baho, to'lov</div>
+  </div>
+
+  <div class="tabs">
+    <button id="tA" class="on" onclick="pick('a')">Android</button>
+    <button id="tI" onclick="pick('i')">iPhone</button>
+  </div>
+
+  <div class="card" id="stepA">
+    <h2>📱 Android — uy ekraniga qo'shish</h2>
+    <ol>
+      <li>Bu sahifani <b>Chrome</b>da oching.</li>
+      <li>O'ng yuqoridagi <b>⋮</b> tugmasini bosing.</li>
+      <li><b>"Ilovani o'rnatish"</b> yoki <b>"Bosh ekranga qo'shish"</b>ni tanlang.</li>
+      <li>Uy ekranida <b>Jony Student</b> belgisi paydo bo'ladi.</li>
+    </ol>
+  </div>
+
+  <div class="card" id="stepI" style="display:none">
+    <h2>🍎 iPhone — uy ekraniga qo'shish</h2>
+    <ol>
+      <li>Bu sahifani <b>Safari</b>da oching (Chrome'da ishlamaydi).</li>
+      <li>Pastdagi <b>Ulashish</b> belgisini bosing (yuqoriga o'q).</li>
+      <li>Pastga suring va <b>"Bosh ekranga qo'shish"</b>ni tanlang.</li>
+      <li>O'ng yuqorida <b>Qo'shish</b>ni bosing.</li>
+    </ol>
+  </div>
+
+  <p class="note">
+    Ilova telefon xotirasini deyarli egallamaydi va o'zi yangilanadi —
+    Play Market'dan yuklash shart emas. Savol bo'lsa administratorga
+    murojaat qiling.
+  </p>
+  <p class="note">
+    <a class="link" href="/privacy.html">Maxfiylik siyosati</a>
+  </p>
+
+  <footer>© 2026 Jony Academy</footer>
+</div>
+
+<script>
+  function pick(k){
+    document.getElementById('stepA').style.display = k==='a' ? '' : 'none';
+    document.getElementById('stepI').style.display = k==='i' ? '' : 'none';
+    document.getElementById('tA').className = k==='a' ? 'on' : '';
+    document.getElementById('tI').className = k==='i' ? 'on' : '';
+  }
+  // iPhone bo'lsa darrov iOS yo'riqnomasi ochilsin
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) pick('i');
+  if ("serviceWorker" in navigator)
+    navigator.serviceWorker.register("/sw.js").catch(function(){});
+</script>
 </body>
 </html>

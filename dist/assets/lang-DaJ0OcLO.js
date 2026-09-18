@@ -1,0 +1,1 @@
+var e=[{code:`en`,label:`Ingliz tili`},{code:`ru`,label:`Rus tili`},{code:`de`,label:`Nemis tili`},{code:`ko`,label:`Koreys tili`}];function t(){let t=localStorage.getItem(`jonyos_lang`)||`en`;return e.some(e=>e.code===t)?t:`en`}function n(e){localStorage.setItem(`jonyos_lang`,e)}export{t as n,n as r,e as t};

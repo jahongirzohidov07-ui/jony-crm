@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ingliz tili darajasini aniqlash — Jony Academy</title>
+<style>
+  :root { --bg:#0f172a; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --brand:#4f46e5; --brand2:#4338ca; --ok:#059669; --bad:#dc2626; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif; background: linear-gradient(160deg,#eef2ff 0%,#f8fafc 60%); color:var(--ink); min-height:100vh; }
+  .wrap { max-width:560px; margin:0 auto; padding:20px 16px 40px; }
+  .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .logo { font-weight:800; letter-spacing:.3px; color:var(--brand); }
+  .logo span { color:var(--ink); font-weight:600; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:0 8px 30px rgba(15,23,42,.06); }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { line-height:1.55; margin:8px 0; color:#334155; }
+  .muted { color:var(--muted); font-size:13px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; width:100%; padding:14px 18px; border-radius:12px; border:0; background:var(--brand); color:#fff; font-size:16px; font-weight:600; cursor:pointer; }
+  .btn:active { background:var(--brand2); }
+  .btn[disabled] { opacity:.5; cursor:default; }
+  .btn.ghost { background:#eef2ff; color:var(--brand); }
+  .btn.small { width:auto; padding:10px 16px; font-size:14px; }
+  .rules { display:grid; gap:8px; margin:14px 0 18px; }
+  .rule { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:#334155; }
+  .rule b { color:var(--brand); min-width:42px; }
+  .prog { display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); margin-bottom:8px; }
+  .sec { font-weight:700; color:var(--brand); }
+  .bar { height:6px; background:#e2e8f0; border-radius:99px; overflow:hidden; margin-bottom:16px; }
+  .bar i { display:block; height:100%; background:var(--brand); width:0; transition:width .3s; }
+  .timer { position:relative; height:8px; background:#fee2e2; border-radius:99px; overflow:hidden; margin:0 0 18px; }
+  .timer i { display:block; height:100%; background:var(--bad); width:100%; transition:width 1s linear; }
+  .timer.calm { background:#dcfce7; } .timer.calm i { background:var(--ok); }
+  .tnum { font-variant-numeric:tabular-nums; font-weight:700; }
+  .q { font-size:19px; line-height:1.5; margin:0 0 16px; font-weight:600; }
+  .opts { display:grid; gap:10px; }
+  .opt { text-align:left; padding:14px 16px; border-radius:12px; border:1.5px solid var(--line); background:#fff; font-size:16px; cursor:pointer; display:flex; gap:12px; align-items:center; width:100%; }
+  .opt .k { width:26px; height:26px; border-radius:50%; background:#eef2ff; color:var(--brand); font-weight:700; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:none; }
+  .opt:active, .opt.sel { border-color:var(--brand); background:#eef2ff; }
+  .opt[disabled] { opacity:.6; }
+  /* Lug'at bloki */
+  .words { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+  .word { background:#f1f5f9; border:1px solid var(--line); border-radius:10px; padding:8px 12px; font-size:15px; font-weight:600; }
+  .word i { color:var(--brand); font-style:normal; margin-right:6px; }
+  .defrow { border:1.5px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+  .defrow .dt { font-size:16px; margin-bottom:8px; }
+  .defrow select { width:100%; padding:11px 12px; font-size:16px; border-radius:10px; border:1.5px solid var(--line); background:#fff; color:var(--ink); }
+  /* Reading */
+  .passage { background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-size:16px; line-height:1.65; margin-bottom:16px; white-space:pre-wrap; }
+  .rq { margin-bottom:14px; }
+  .rq .rqt { font-weight:600; margin-bottom:8px; font-size:16px; }
+  /* Listening */
+  .play { display:flex; align-items:center; gap:12px; background:#eef2ff; border-radius:14px; padding:16px; margin-bottom:16px; }
+  .play button { border:0; background:var(--brand); color:#fff; width:52px; height:52px; border-radius:50%; font-size:22px; cursor:pointer; flex:none; }
+  .play button[disabled] { opacity:.4; }
+  .play .pt { font-size:14px; color:#3730a3; font-weight:600; }
+  .skipbox { margin-top:14px; text-align:center; }
+  .skipbox button { background:none; border:0; color:var(--muted); font-size:13px; text-decoration:underline; cursor:pointer; }
+  /* Natija */
+  .lvl { font-size:56px; font-weight:800; color:var(--brand); line-height:1; margin:6px 0; }
+  .book { font-size:18px; font-weight:700; margin:4px 0 2px; }
+  .topic { color:var(--muted); font-size:14px; }
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
+  .stat { background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:10px 12px; }
+  .stat b { display:block; font-size:20px; }
+  .stat span { font-size:12px; color:var(--muted); }
+  .sk { display:flex; align-items:center; justify-content:space-between; border:1px solid var(--line); border-radius:12px; padding:11px 14px; margin-bottom:8px; }
+  .sk .n { font-weight:600; }
+  .sk .v { font-weight:800; color:var(--brand); font-size:18px; }
+  .sk .v.none { color:var(--muted); font-size:14px; font-weight:600; }
+  .lv { display:flex; align-items:center; gap:8px; font-size:13px; margin:6px 0; }
+  .lv .n { width:34px; font-weight:700; }
+  .lv .b { flex:1; height:8px; background:#e2e8f0; border-radius:99px; overflow:hidden; }
+  .lv .b i { display:block; height:100%; background:var(--brand); }
+  .lv .p { width:60px; text-align:right; color:var(--muted); }
+  .adv { background:#eef2ff; border-radius:12px; padding:12px 14px; margin:14px 0; font-weight:600; color:#3730a3; }
+  .err { color:var(--bad); font-size:14px; margin-top:10px; }
+  .center { text-align:center; }
+  .hidden { display:none; }
+  @media (min-width:600px){ .wrap{padding-top:40px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="logo">JONY <span>Academy</span></div><div class="muted">Ingliz tili · daraja testi</div></div>
+
+  <!-- Boshlash -->
+  <div id="s-start" class="card hidden">
+    <h1 id="hello">Assalomu alaykum!</h1>
+    <p>Bu test ingliz tili darajangizni aniqlaydi va qaysi kitobdan boshlash kerakligini aytadi.</p>
+    <div class="rules">
+      <div class="rule"><b>1</b><div><b>Grammatika</b> — 30 savol. Eng muhim qismi: guruhingiz shu bo'yicha tanlanadi.</div></div>
+      <div class="rule"><b>2</b><div><b>Lug'at</b> — 10 blok. Har blokda 6 ta so'z va 3 ta ta'rif, mosini topasiz.</div></div>
+      <div class="rule"><b>3</b><div><b>Reading</b> — 5 ta qisqa matn.</div></div>
+      <div class="rule"><b>4</b><div><b>Listening</b> — 6 ta yozuv. Ovozni tinglaysiz (naushnik tavsiya etiladi).</div></div>
+      <div class="rule"><b>↕</b><div>Test moslashuvchan: to'g'ri javob bersangiz keyingisi qiyinroq, xato bo'lsa osonroq bo'ladi. Xatolar tabiiy — xavotirlanmang.</div></div>
+      <div class="rule"><b>1×</b><div>Havola bir marta ishlaydi. Orqaga qaytib bo'lmaydi.</div></div>
+    </div>
+    <button class="btn" id="btn-start">Testni boshlash</button>
+    <p class="muted center" style="margin-top:12px">Taxminan 25 daqiqa. Lug'atdan yoki tarjimondan foydalanmang — natija noto'g'ri chiqadi va sizga mos bo'lmagan guruhga tushasiz.</p>
+  </div>
+
+  <!-- Savol -->
+  <div id="s-q" class="card hidden">
+    <div class="prog"><span><span class="sec" id="psec"></span> <span id="pno"></span></span><span class="tnum" id="tleft"></span></div>
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="timer calm" id="tbar"><i id="tfill"></i></div>
+    <div id="qbody"></div>
+    <div class="err" id="qerr"></div>
+  </div>
+
+  <!-- Bo'limlar orasi -->
+  <div id="s-break" class="card hidden center">
+    <h1 id="bktitle">Bo'lim tugadi</h1>
+    <div class="adv" id="bkres"></div>
+    <p id="bknext"></p>
+    <button class="btn" id="btn-next">Davom etish</button>
+    <p class="muted" style="margin-top:12px">Tayyor bo'lganingizda bosing — vaqt shundan keyin boshlanadi.</p>
+  </div>
+
+  <!-- Natija -->
+  <div id="s-done" class="card hidden center">
+    <p class="muted" id="dname"></p>
+    <h1>Sizning darajangiz</h1>
+    <div class="lvl" id="rlevel">B1</div>
+    <div class="book" id="rbook">Step 3 — B1 darajasi · Unit 4</div>
+    <div class="topic" id="rtopic"></div>
+    <div class="adv" id="radvice"></div>
+    <a class="btn" id="rreport" href="#" target="_blank" rel="noopener" style="margin:14px 0 4px;text-decoration:none">📄 Batafsil hisobotni ochish va yuklab olish</a>
+    <div id="rskills" style="text-align:left;margin:16px 0"></div>
+    <div class="stats">
+      <div class="stat"><b id="rscore">0/30</b><span>grammatikada to'g'ri</span></div>
+      <div class="stat"><b id="rbest">—</b><span>umumiy daraja</span></div>
+    </div>
+    <div id="rlevels" style="text-align:left"></div>
+    <div id="rtopics" style="text-align:left;margin-top:16px"></div>
+    <p class="muted" id="rnote"></p>
+    <p class="muted">Natija Jony Academy'ga yuborildi. Guruhga yozilish uchun administrator siz bilan bog'lanadi.</p>
+  </div>
+
+  <!-- Xato / muddat -->
+  <div id="s-msg" class="card hidden center">
+    <h1 id="mtitle">Havola ishlamadi</h1>
+    <p id="mtext"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const token = new URLSearchParams(location.search).get('t') || '';
+  const $ = (id) => document.getElementById(id);
+  const SCREENS = ['s-start','s-q','s-break','s-done','s-msg'];
+  const show = (id) => { SCREENS.forEach(x => $(x).classList.toggle('hidden', x !== id)); };
+  const api = (path, opts) => fetch('/api/public/placement/' + encodeURIComponent(token) + path, Object.assign({
+    headers: { 'Content-Type': 'application/json' } }, opts || {})).then(async (r) => {
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.detail || ('Xato ' + r.status));
+      return d;
+    });
+
+  let cur = null, timer = null, left = 0, busy = false, plays = 0;
+  const hasTTS = typeof window.speechSynthesis !== 'undefined'
+              && typeof window.SpeechSynthesisUtterance !== 'undefined';
+
+  function msg(title, text) { $('mtitle').textContent = title; $('mtext').textContent = text; show('s-msg'); }
+  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+  function stopAudio() { try { window.speechSynthesis.cancel(); } catch (e) {} }
+
+  function startTimer(secs, full) {
+    stopTimer();
+    left = secs;
+    const span = full || secs || 30;
+    const paint = () => {
+      $('tleft').textContent = left + ' s';
+      $('tfill').style.width = Math.max(0, left / span * 100) + '%';
+      $('tbar').classList.toggle('calm', left > 10);
+    };
+    paint();
+    timer = setInterval(() => {
+      left -= 1; paint();
+      if (left <= 0) { stopTimer(); submit(true); }
+    }, 1000);
+  }
+
+  // ---- Savol turlari ------------------------------------------------
+  function optButtons(opts, onPick) {
+    const box = document.createElement('div');
+    box.className = 'opts';
+    opts.forEach((t, i) => {
+      const b = document.createElement('button');
+      b.className = 'opt';
+      b.innerHTML = '<span class="k">' + 'ABCD'[i] + '</span><span></span>';
+      b.lastChild.textContent = t;
+      b.onclick = () => onPick(i, b, box);
+      box.appendChild(b);
+    });
+    return box;
+  }
+
+  function renderGrammarLike(q) {
+    const body = $('qbody');
+    body.innerHTML = '';
+    if (q.kind === 'listening') {
+      const pl = document.createElement('div');
+      pl.className = 'play';
+      pl.innerHTML = '<button id="btn-play">&#9658;</button><div><div class="pt" id="ptxt">Tinglash uchun bosing</div><div class="muted" id="pleft"></div></div>';
+      body.appendChild(pl);
+      plays = 0;
+      const maxPlays = q.plays || 2;
+      const upd = () => {
+        $('pleft').textContent = 'Qolgan tinglash: ' + (maxPlays - plays);
+        $('btn-play').disabled = plays >= maxPlays;
+      };
+      $('btn-play').onclick = () => {
+        if (plays >= maxPlays) return;
+        plays += 1; upd();
+        $('ptxt').textContent = 'Tinglanyapti...';
+        try {
+          stopAudio();
+          const u = new SpeechSynthesisUtterance(q.script);
+          u.lang = 'en-US';
+          u.rate = q.rate || 1;
+          u.onend = () => { $('ptxt').textContent = 'Tugadi'; };
+          u.onerror = () => { $('ptxt').textContent = 'Ovoz chiqmadi'; };
+          window.speechSynthesis.speak(u);
+        } catch (e) { $('ptxt').textContent = 'Ovoz chiqmadi'; }
+      };
+      upd();
+    }
+    const qt = document.createElement('div');
+    qt.className = 'q';
+    qt.textContent = q.q;
+    body.appendChild(qt);
+    body.appendChild(optButtons(q.opts, (i) => send({ qid: q.qid, choice: i })));
+    if (q.kind === 'listening') {
+      const sb = document.createElement('div');
+      sb.className = 'skipbox';
+      const b = document.createElement('button');
+      b.textContent = hasTTS ? 'Ovoz chiqmayapti — bu bo\'limni o\'tkazib yuborish'
+                             : 'Brauzerda ovoz yo\'q — bu bo\'limni o\'tkazib yuborish';
+      b.onclick = () => {
+        if (!confirm('Listening bo\'limi o\'tkazib yuborilsinmi? Natijada "tekshirilmadi" deb yoziladi.')) return;
+        send({ skip_section: true });
+      };
+      sb.appendChild(b);
+      body.appendChild(sb);
+    }
+  }
+
+  function renderVocab(q) {
+    const body = $('qbody');
+    body.innerHTML = '';
+    const h = document.createElement('div');
+    h.className = 'q';
+    h.textContent = 'Har bir ta\'rifga mos so\'zni tanlang.';
+    body.appendChild(h);
+    const ws = document.createElement('div');
+    ws.className = 'words';
+    q.words.forEach((w, i) => {
+      const e = document.createElement('span');
+      e.className = 'word';
+      e.innerHTML = '<i>' + (i + 1) + '</i>';
+      e.appendChild(document.createTextNode(w));
+      ws.appendChild(e);
+    });
+    body.appendChild(ws);
+    q.defs.forEach((d, j) => {
+      const row = document.createElement('div');
+      row.className = 'defrow';
+      const dt = document.createElement('div');
+      dt.className = 'dt';
+      dt.textContent = d;
+      row.appendChild(dt);
+      const sel = document.createElement('select');
+      sel.id = 'vsel' + j;
+      const o0 = document.createElement('option');
+      o0.value = ''; o0.textContent = '— tanlang —';
+      sel.appendChild(o0);
+      q.words.forEach((w, i) => {
+        const o = document.createElement('option');
+        o.value = String(i);
+        o.textContent = (i + 1) + '. ' + w;
+        sel.appendChild(o);
+      });
+      row.appendChild(sel);
+      body.appendChild(row);
+    });
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = 'Keyingisi';
+    btn.onclick = () => submit(false);
+    body.appendChild(btn);
+  }
+
+  function renderReading(q) {
+    const body = $('qbody');
+    body.innerHTML = '';
+    const p = document.createElement('div');
+    p.className = 'passage';
+    p.textContent = q.text;
+    body.appendChild(p);
+    q.qs.forEach((rq, i) => {
+      const box = document.createElement('div');
+      box.className = 'rq';
+      const t = document.createElement('div');
+      t.className = 'rqt';
+      t.textContent = (i + 1) + '. ' + rq.q;
+      box.appendChild(t);
+      box.appendChild(optButtons(rq.opts, (k, b, grp) => {
+        Array.prototype.forEach.call(grp.children, (x) => x.classList.remove('sel'));
+        b.classList.add('sel');
+        grp.dataset.pick = String(k);
+      }));
+      body.appendChild(box);
+    });
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = 'Keyingisi';
+    btn.onclick = () => submit(false);
+    body.appendChild(btn);
+  }
+
+  function collect() {
+    if (!cur) return {};
+    if (cur.kind === 'vocab') {
+      const picks = cur.defs.map((_, j) => {
+        const v = ($('vsel' + j) || {}).value;
+        return v === '' || v == null ? null : parseInt(v, 10);
+      });
+      return { qid: cur.qid, picks: picks };
+    }
+    if (cur.kind === 'reading') {
+      const grps = document.querySelectorAll('#qbody .rq .opts');
+      const picks = Array.prototype.map.call(grps, (g) =>
+        g.dataset.pick != null ? parseInt(g.dataset.pick, 10) : null);
+      return { qid: cur.qid, picks: picks };
+    }
+    return { qid: cur.qid, choice: null };
+  }
+
+  function submit(auto) {
+    if (!cur) return;
+    if (!auto && (cur.kind === 'vocab' || cur.kind === 'reading')) {
+      const p = collect().picks || [];
+      if (p.some((x) => x == null)) {
+        $('qerr').textContent = 'Hammasini tanlang (yoki vaqt tugashini kuting).';
+        return;
+      }
+    }
+    send(collect());
+  }
+
+  function renderQ(q) {
+    cur = q;
+    stopAudio();
+    $('psec').textContent = q.section_label || '';
+    $('pno').textContent = q.no + ' / ' + q.total;
+    $('pbar').style.width = ((q.no - 1) / q.total * 100) + '%';
+    $('qerr').textContent = '';
+    if (q.kind === 'vocab') renderVocab(q);
+    else if (q.kind === 'reading') renderReading(q);
+    else renderGrammarLike(q);
+    show('s-q');
+    startTimer(q.secs != null ? q.secs : 30, q.full_secs || q.secs || 30);
+    window.scrollTo(0, 0);
+  }
+
+  function renderBreak(d) {
+    cur = null; stopTimer(); stopAudio();
+    const sd = d.section_done || {};
+    $('bktitle').textContent = (sd.label || 'Bo\'lim') + ' tugadi';
+    if (sd.skipped) $('bkres').textContent = 'Bu bo\'lim o\'tkazib yuborildi.';
+    else if (sd.key === 'grammar') $('bkres').textContent = 'Natija: ' + sd.level + ', Unit ' + sd.unit;
+    else if (sd.level) $('bkres').textContent = 'Natija: ' + sd.level;
+    else $('bkres').textContent = 'Saqlandi.';
+    $('bknext').textContent = 'Keyingi bo\'lim: ' + (d.next_label || '')
+      + (d.next_total ? ' (' + d.next_total + ' ta)' : '');
+    $('btn-next').disabled = false;
+    show('s-break');
+    window.scrollTo(0, 0);
+  }
+
+  function renderDone(name, r) {
+    cur = null; stopTimer(); stopAudio();
+    $('dname').textContent = name ? name : '';
+    $('rlevel').textContent = r.level;
+    $('rbook').textContent = r.book + ' · Unit ' + r.unit;
+    $('rreport').href = '/placement-report.html?t=' + encodeURIComponent(token);
+    const tps = r.topics || [];
+    $('rtopics').innerHTML = tps.length ? ('<p style="font-weight:700;margin:0 0 8px">Mavzular bo\'yicha natija</p>' +
+      tps.map((t) => {
+        const c = t.pct >= 75 ? 'var(--ok)' : (t.pct >= 50 ? '#d97706' : 'var(--bad)');
+        const nm = String(t.topic).replace(/[&<>]/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));
+        return '<div class="lv"><span class="n" style="min-width:120px">' + t.level + ' · ' + nm + '</span>'
+          + '<span class="b"><i style="width:' + t.pct + '%;background:' + c + '"></i></span>'
+          + '<span class="p" style="color:' + c + ';font-weight:700">' + t.pct + '%</span></div>';
+      }).join('')) : '';
+    $('rtopic').textContent = r.topic ? ('Unit mavzusi: ' + r.topic) : '';
+    $('radvice').textContent = r.advice;
+    $('rscore').textContent = r.score + '/' + r.total;
+    $('rbest').textContent = r.overall || r.level || '—';
+    $('rskills').innerHTML = (r.skills || []).map((s) => {
+      const v = s.skipped ? '<span class="v none">tekshirilmadi</span>'
+        : (s.level ? '<span class="v">' + s.level + '</span>'
+                   : '<span class="v none">tugallanmadi</span>');
+      return '<div class="sk"><span class="n">' + s.label + '</span>' + v + '</div>';
+    }).join('');
+    const order = ['A1','A2','B1','B1+','B2','C1'];
+    const rows = (r.per_level || []).slice().sort((a, b) => order.indexOf(a.level) - order.indexOf(b.level));
+    $('rlevels').innerHTML = rows.map(x =>
+      '<div class="lv"><span class="n">' + x.level + '</span><span class="b"><i style="width:' + x.pct + '%"></i></span><span class="p">' + x.ok + '/' + x.n + '</span></div>'
+    ).join('');
+    $('rnote').textContent = r.note || '';
+    show('s-done');
+    window.scrollTo(0, 0);
+  }
+
+  function apply(d, name) {
+    if (d.status === 'done') { renderDone(name || d.name, d.result); return; }
+    if (d.status === 'break') { renderBreak(d); return; }
+    if (d.question) { renderQ(d.question); return; }
+    msg('Test to\'xtatildi', 'Savol topilmadi. Administratordan yangi havola so\'rang.');
+  }
+
+  async function send(body) {
+    if (busy || !cur) return;
+    busy = true;
+    stopTimer(); stopAudio();
+    document.querySelectorAll('#qbody button, #qbody select').forEach(b => b.disabled = true);
+    try {
+      const r = await api('/answer', { method: 'POST', body: JSON.stringify(body) });
+      busy = false;
+      apply(r);
+    } catch (e) {
+      busy = false;
+      if (/Havola|yakunlangan|Faol savol|muddati/i.test(e.message)) {
+        cur = null;
+        msg('Test to\'xtatildi', e.message + '. Administratordan yangi havola so\'rang.');
+        return;
+      }
+      $('qerr').textContent = e.message + ' — qayta urinib ko\'ring';
+      document.querySelectorAll('#qbody button, #qbody select').forEach(b => b.disabled = false);
+    }
+  }
+
+  async function go(btn) {
+    if (btn) btn.disabled = true;
+    try {
+      const r = await api('/start', { method: 'POST', body: JSON.stringify({}) });
+      apply(r, r.name);
+    } catch (e) {
+      if (btn) btn.disabled = false;
+      msg('Boshlab bo\'lmadi', e.message);
+    }
+  }
+
+  async function init() {
+    if (!token) { msg('Havola noto\'g\'ri', 'Test havolasi to\'liq emas. Administratordan yangi havola so\'rang.'); return; }
+    try {
+      const st = await api('');
+      if (st.status === 'expired') { msg('Havola muddati tugagan', 'Bu havola 48 soat amal qilardi. Administratordan yangi havola so\'rang.'); return; }
+      if (st.status === 'done') { renderDone(st.name, st.result); return; }
+      if (st.status === 'running' && st.question) { renderQ(st.question); return; }
+      if (st.status === 'break') { renderBreak(st); return; }
+      $('hello').textContent = st.name ? ('Assalomu alaykum, ' + st.name + '!') : 'Assalomu alaykum!';
+      show('s-start');
+    } catch (e) {
+      msg('Havola ishlamadi', e.message);
+    }
+  }
+
+  $('btn-start').onclick = () => go($('btn-start'));
+  $('btn-next').onclick = () => go($('btn-next'));
+  window.addEventListener('beforeunload', (e) => { if (cur) { e.preventDefault(); e.returnValue = ''; } });
+  init();
+})();
+</script>
+</body>
+</html>

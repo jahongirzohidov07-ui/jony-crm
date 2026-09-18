@@ -10762,6 +10762,948 @@
      }
     ]
    }
+  },
+  {
+   "no": 13,
+   "title": "Future Perfect Continuous + Revision",
+   "grammar_topic": "FUTURE PERFECT CONTINUOUS (will have been + V-ing) + 7–12-darslar takrori",
+   "vocab_topic": "Revision — vaqt ifodalari va perfect zamon so'zlari",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 2 — 7–13-darslar (comparative/superlative, Past/Future Perfect (Continuous), bog'lovchilar; appearance, character, health, emotions, countries, weather)",
+   "book_ref": "Student's book IELTS 2.0: Lesson 13 – Future Perfect Continuous (jadval); takror jadvallar 7–12; Audio 31–40.",
+   "objectives": [
+    "will have been + V-ing qolipini tuzish; \"by + kelajak nuqta + for + davr\" bilan ishlatish.",
+    "Oltita perfect zamonni bitta jadvalda ko'rish va farqlash (natija — jarayon; o'tgan — hozir — kelajak).",
+    "Progress test 2 uchun 7–12-dars formulalari va lug'atini takrorlash.",
+    "Vaqt ifodalari (so far, by then, lately, in the meantime…) bilan to'g'ri zamon tanlash."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Revision — vaqt ifodalari va perfect zamon so'zlari CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "\"By the end of this course, how long will you have been studying at Jony Academy?\" — har o'quvchi: \"I will have been studying for … months.\""
+    ],
+    [
+     8,
+     "Kahoot — Past Perfect Continuous",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Past Perfect Continuous lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+will have been+Ving → Negative won't have been+Ving → Question will+S+have been+Ving. Keyin doskada 6 perfect zamon jadvali: Present/Past/Future × Simple/Continuous — o'quvchilar formulani o'zlari to'ldiradi."
+    ],
+    [
+     12,
+     "Revision — vaqt ifodalari va perfect zamon so'zlari — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Future Perfect Continuous — kelajakdagi nuqtaga kelib QANCHA VAQT davom etgan bo'lishini aytadi: \"By 2027 I will have been studying English for 3 years.\"",
+     "Formula: will have been + V-ing. Ko'pincha: by + vaqt / by the time + Present Simple + for + davr.",
+     "Perfect oilasi: Present Perfect (have V3) — PPC (have been Ving); Past Perfect (had V3) — PPC (had been Ving); Future Perfect (will have V3) — FPC (will have been Ving).",
+     "Qoida bitta: SIMPLE = natija/son; CONTINUOUS = jarayon/qancha vaqt."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + will have been + V-ing",
+      "I will have been studying English for 2 years by 2027.",
+      "2027-yilga kelib 2 yildan beri ingliz tili o'rganayotgan bo'laman."
+     ],
+     [
+      "Inkor",
+      "S + won't have been + V-ing",
+      "I won't have been waiting for two hours by the time they come.",
+      "Ular kelguncha ikki soat kutayotgan bo'lmayman."
+     ],
+     [
+      "Savol",
+      "Will + S + have been + V-ing?",
+      "Will you have been working for that company for 2 years by 2027?",
+      "2027-ga kelib o'sha kompaniyada 2 yil ishlayotgan bo'lasanmi?"
+     ],
+     [
+      "Takror: Present Perfect / PPC",
+      "have + V3 / have been + V-ing",
+      "I have written 3 letters. / I have been writing all day.",
+      "3 ta xat yozdim. / Kun bo'yi yozyapman."
+     ],
+     [
+      "Takror: Past Perfect / PPC",
+      "had + V3 / had been + V-ing",
+      "I had written 3 letters by noon. / I had been writing for 2 hours when you called.",
+      "Tushgacha 3 xat yozgan edim. / Sen qo'ng'iroq qilganingda 2 soatdan beri yozayotgan edim."
+     ],
+     [
+      "Takror: Future Perfect / FPC",
+      "will have + V3 / will have been + V-ing",
+      "By 5 I will have written 3 letters. / By 5 I will have been writing for 3 hours.",
+      "5 gacha 3 xat yozib bo'laman. / 5 ga kelib 3 soatdan beri yozayotgan bo'laman."
+     ]
+    ],
+    "presentation": [
+     [
+      "How long will you have been learning English by next summer?",
+      "I will have been learning it for three years."
+     ],
+     [
+      "Will you have been living here for ten years by 2030?",
+      "Yes, I will have been living here for exactly ten years."
+     ],
+     [
+      "By the time the coach comes, how long will the team have been training?",
+      "They will have been training for an hour."
+     ],
+     [
+      "How long has Ronaldo been playing football?",
+      "He has been playing professionally since 2002."
+     ],
+     [
+      "By 2027, how long will he have been playing?",
+      "He will have been playing for 25 years."
+     ],
+     [
+      "Had you been studying long before the test started?",
+      "I had been studying for two hours."
+     ],
+     [
+      "How many countries have you visited so far?",
+      "I have visited two so far."
+     ],
+     [
+      "By the end of the year, how many books will you have read?",
+      "I will have read ten books."
+     ],
+     [
+      "What had you been doing before the lesson?",
+      "I had been revising the formulas."
+     ],
+     [
+      "Which is harder — Past Perfect or Future Perfect?",
+      "For me, Future Perfect Continuous is the hardest!"
+     ]
+    ],
+    "notes": [
+     "FPC kam ishlatiladi, lekin IELTS Writing/Speaking'da \"By 2030 I will have been working…\" chiroyli ball beradi.",
+     "\"by the time\" — Present Simple bilan (will emas); \"by then\" = o'sha vaqtga kelib.",
+     "Vaqt ifodalari: so far / lately / recently / yet → Present Perfect; by the time / before / when (o'tgan) → Past Perfect; by 2030 / by then → Future Perfect.",
+     "Progress test 2: 7–12 jadvallari (20 formula), 6 lug'atdan 40 so'z, 10 tarjima, 1 kichik matn."
+    ],
+    "mistakes": [
+     [
+      "I will have been study for 2 years.",
+      "I will have been studying for 2 years.",
+      "been + V-ING."
+     ],
+     [
+      "By the time you will come, I will have been waiting.",
+      "By the time you come…",
+      "by the time + Present Simple."
+     ],
+     [
+      "I will have been known him for 10 years.",
+      "I will have known him for 10 years.",
+      "know — holat fe'li."
+     ],
+     [
+      "She will has been working.",
+      "She will have been working.",
+      "will + have."
+     ],
+     [
+      "By 2030 I have been living here for 20 years.",
+      "By 2030 I will have been living here…",
+      "Kelajak nuqta → will have been."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — perfect zamonlar bilan keladigan vaqt ifodalari; STRONG — bog'lovchi va ketma-ketlik so'zlari; SUPER — 7–12-darsdan eng qiyin 20 so'z takrori.",
+     "Har ifodaga o'quvchi mos zamon bilan gap tuzadi: \"so far → I have … so far\"."
+    ],
+    "core": [
+     [
+      "so far",
+      "hozirgacha",
+      "I have read 50 pages so far.",
+      "Hozirgacha 50 sahifa o'qidim.",
+      "soʊ fɑr"
+     ],
+     [
+      "lately / recently",
+      "oxirgi paytlarda",
+      "Have you seen any good films lately?",
+      "Oxirgi paytlarda yaxshi kino ko'rdingmi?",
+      "ˈleɪtli  ˈrisəntli"
+     ],
+     [
+      "by then",
+      "o'sha vaqtga kelib",
+      "Come at 8 — I will have finished by then.",
+      "8 da kel — o'shangacha tugatib bo'laman.",
+      "baɪ ðɛn"
+     ],
+     [
+      "by the time",
+      "…guncha",
+      "By the time you read this, I will have left.",
+      "Sen buni o'qiguncha men ketib bo'lgan bo'laman.",
+      "baɪ ðə taɪm"
+     ],
+     [
+      "in the meantime",
+      "shu orada",
+      "I'll cook; in the meantime, set the table.",
+      "Men ovqat pishiraman; shu orada dasturxon yoz.",
+      "ɪn ðə ˈminˌtaɪm"
+     ],
+     [
+      "ever since",
+      "o'shandan beri",
+      "We met in 2020 and have been friends ever since.",
+      "2020-da tanishdik va o'shandan beri do'stmiz.",
+      "ˈɛvər sɪns"
+     ],
+     [
+      "up to now / until now",
+      "hozirgacha",
+      "Up to now, nobody has complained.",
+      "Hozirgacha hech kim shikoyat qilmadi.",
+      "əp tɪ naʊ  ənˈtɪl naʊ"
+     ],
+     [
+      "for ages",
+      "juda uzoq vaqt",
+      "I haven't seen you for ages!",
+      "Seni ko'rmaganimga ancha bo'ldi!",
+      "fər ˈeɪʤɪz"
+     ],
+     [
+      "all day long",
+      "kun bo'yi",
+      "It has been raining all day long.",
+      "Kun bo'yi yomg'ir yog'yapti.",
+      "ɔl deɪ lɔŋ"
+     ],
+     [
+      "the whole week",
+      "butun hafta",
+      "She had been ill the whole week.",
+      "U butun hafta kasal edi.",
+      "ðə hoʊl wik"
+     ],
+     [
+      "just",
+      "hozirgina",
+      "The bus has just left.",
+      "Avtobus hozirgina ketdi.",
+      "ʤɪst"
+     ],
+     [
+      "already",
+      "allaqachon",
+      "They had already eaten when we arrived.",
+      "Biz kelganimizda ular allaqachon ovqatlanib bo'lgan edi.",
+      "ɔˈrɛdi"
+     ],
+     [
+      "yet",
+      "hali (inkor/savol)",
+      "Has the film started yet?",
+      "Kino boshlandimi hali?",
+      "jɛt"
+     ],
+     [
+      "still",
+      "haligacha",
+      "He still hasn't replied.",
+      "U haligacha javob bermadi.",
+      "stɪl"
+     ],
+     [
+      "before",
+      "oldin",
+      "I had never flown before that day.",
+      "O'sha kungacha hech uchmagan edim.",
+      "ˌbiˈfɔr"
+     ],
+     [
+      "after",
+      "keyin",
+      "After he had left, we talked.",
+      "U ketganidan keyin gaplashdik.",
+      "ˈæftər"
+     ],
+     [
+      "when",
+      "qachonki, …ganda",
+      "When I arrived, they had gone.",
+      "Men kelganimda ular ketib bo'lgan edi.",
+      "wɪn"
+     ],
+     [
+      "while",
+      "…yotganda, davomida",
+      "While I was cooking, he called.",
+      "Men ovqat pishirayotganimda u qo'ng'iroq qildi.",
+      "waɪl"
+     ],
+     [
+      "as soon as",
+      "…bilanoq",
+      "I'll call as soon as I land.",
+      "Qo'nishim bilanoq qo'ng'iroq qilaman.",
+      "ɛz sun ɛz"
+     ],
+     [
+      "how long",
+      "qancha vaqt(dan beri)",
+      "How long had you been waiting?",
+      "Qancha vaqt kutgan eding?",
+      "haʊ lɔŋ"
+     ]
+    ],
+    "strong": [
+     [
+      "first / then / finally",
+      "avval / keyin / nihoyat",
+      "First I woke up, then I had breakfast, finally I left.",
+      "Avval uyg'ondim, keyin nonushta qildim, nihoyat chiqdim.",
+      "fərst  ðɛn  ˈfaɪnəli"
+     ],
+     [
+      "meanwhile",
+      "ayni paytda",
+      "Meanwhile, the storm had been getting stronger.",
+      "Ayni paytda bo'ron kuchayib borgan edi.",
+      "ˈminˌwaɪl"
+     ],
+     [
+      "previously",
+      "avvalroq",
+      "He had previously worked in a bank.",
+      "U avvalroq bankda ishlagan edi.",
+      "ˈpriviəsli"
+     ],
+     [
+      "eventually",
+      "oxir-oqibat",
+      "Eventually, she recovered.",
+      "Oxir-oqibat u sog'aydi.",
+      "ɪˈvɛnʧəwəli"
+     ],
+     [
+      "afterwards",
+      "keyinchalik",
+      "Afterwards, we went for a walk.",
+      "Keyinchalik sayrga chiqdik.",
+      "ˈɑːftəwədz"
+     ],
+     [
+      "at that time",
+      "o'sha paytda",
+      "At that time, I had been living in Bukhara for a year.",
+      "O'sha paytda Buxoroda bir yildan beri yashayotgan edim.",
+      "æt ðət taɪm"
+     ],
+     [
+      "these days",
+      "bu kunlarda",
+      "These days everybody has been talking about AI.",
+      "Bu kunlarda hamma sun'iy intellekt haqida gapiryapti.",
+      "ðiz deɪz"
+     ],
+     [
+      "in ten years' time",
+      "o'n yildan keyin",
+      "In ten years' time I will have become a doctor.",
+      "O'n yildan keyin shifokor bo'lib bo'laman.",
+      "ɪn tɛn jɪrz' taɪm"
+     ],
+     [
+      "by the end of",
+      "…oxirigacha",
+      "By the end of the year, I will have saved $1000.",
+      "Yil oxirigacha 1000 dollar yig'ib bo'laman.",
+      "baɪ ðə ɛnd əv"
+     ],
+     [
+      "at last",
+      "nihoyat",
+      "At last, the rain has stopped.",
+      "Nihoyat yomg'ir to'xtadi.",
+      "æt læst"
+     ],
+     [
+      "once",
+      "bir marta; …gach",
+      "Once I had finished, I felt relieved.",
+      "Tugatgach, yengil tortdim.",
+      "wəns"
+     ],
+     [
+      "twice",
+      "ikki marta",
+      "I have been to Samarkand twice.",
+      "Samarqandda ikki marta bo'lganman.",
+      "twaɪs"
+     ],
+     [
+      "several times",
+      "bir necha marta",
+      "She has called several times.",
+      "U bir necha marta qo'ng'iroq qildi.",
+      "ˈsɛvərəl taɪmz"
+     ],
+     [
+      "the first time",
+      "birinchi marta",
+      "This is the first time I have eaten sushi.",
+      "Sushi yeyishim birinchi marta.",
+      "ðə fərst taɪm"
+     ],
+     [
+      "the last time",
+      "oxirgi marta",
+      "The last time I saw him was in May.",
+      "Uni oxirgi marta mayda ko'rgan edim.",
+      "ðə læst taɪm"
+     ],
+     [
+      "lifetime",
+      "umr davomida",
+      "In his lifetime, Ronaldo has scored over 900 goals.",
+      "Umri davomida Ronaldo 900 dan ortiq gol urgan.",
+      "ˈlaɪfˌtaɪm"
+     ],
+     [
+      "career",
+      "karyera, faoliyat",
+      "By 2027 he will have been playing for 25 years of his career.",
+      "2027-ga kelib u karyerasining 25 yilini o'ynayotgan bo'ladi.",
+      "kərɪr"
+     ],
+     [
+      "record",
+      "rekord",
+      "He has broken many records.",
+      "U ko'p rekordlarni yangilagan.",
+      "ˈrɛkərd"
+     ],
+     [
+      "achievement",
+      "yutuq",
+      "Her biggest achievement has been the Olympic gold.",
+      "Uning eng katta yutug'i — Olimpiya oltini.",
+      "əˈʧivmənt"
+     ],
+     [
+      "goal (aim)",
+      "maqsad",
+      "My goal is to get 7.0 by 2027.",
+      "Maqsadim — 2027-gacha 7.0 olish.",
+      "goʊl (eɪm)"
+     ]
+    ],
+    "super": [
+     [
+      "attractive (7)",
+      "o'ziga tortadigan",
+      "She is more attractive than her sister.",
+      "U singlisidan jozibaliroq.",
+      "əˈtræktɪv 7"
+     ],
+     [
+      "well-built (7)",
+      "baquvvat qomatli",
+      "He is the most well-built player.",
+      "U eng baquvvat o'yinchi.",
+      ""
+     ],
+     [
+      "reliable (8)",
+      "ishonchli",
+      "He is the most reliable friend.",
+      "U eng ishonchli do'st.",
+      "rɪˈlaɪəbəl 8"
+     ],
+     [
+      "stubborn (8)",
+      "o'jar",
+      "My brother is the most stubborn.",
+      "Ukam eng o'jar.",
+      "ˈstəbərn 8"
+     ],
+     [
+      "hospitable (8)",
+      "mehmondo'st",
+      "Uzbeks are the most hospitable people.",
+      "O'zbeklar eng mehmondo'st xalq.",
+      "ˈhɑˈspɪtəbəl 8"
+     ],
+     [
+      "symptom (9)",
+      "alomat",
+      "The symptoms had started a week before.",
+      "Alomatlar bir hafta oldin boshlangan edi.",
+      "ˈsɪmptəm 9"
+     ],
+     [
+      "recover (9)",
+      "sog'aymoq",
+      "She had recovered by Monday.",
+      "Dushanbagacha u sog'ayib ketgan edi.",
+      "rɪˈkəvər 9"
+     ],
+     [
+      "prescription (9)",
+      "retsept",
+      "The doctor had written a prescription.",
+      "Shifokor retsept yozgan edi.",
+      "prəˈskrɪpʃən 9"
+     ],
+     [
+      "relieved (10)",
+      "yengil tortgan",
+      "I'll be relieved when the test has finished.",
+      "Test tugagach yengil tortaman.",
+      "rɪˈlivd 10"
+     ],
+     [
+      "disappointed (10)",
+      "hafsalasi pir bo'lgan",
+      "He was disappointed with his score.",
+      "U balidan hafsalasi pir bo'ldi.",
+      "ˌdɪsəˈpɔɪnɪd 10"
+     ],
+     [
+      "anxious (10)",
+      "xavotirda",
+      "She is anxious about the results.",
+      "U natijalardan xavotirda.",
+      "ˈæŋʃəs 10"
+     ],
+     [
+      "citizen (11)",
+      "fuqaro",
+      "She became a citizen after five years.",
+      "U besh yildan keyin fuqaro bo'ldi.",
+      "ˈsɪtɪzən 11"
+     ],
+     [
+      "mother tongue (11)",
+      "ona tili",
+      "Uzbek is my mother tongue.",
+      "O'zbek tili — ona tilim.",
+      "ˈməðər təŋ 11"
+     ],
+     [
+      "abroad (11)",
+      "chet elda",
+      "I've never been abroad.",
+      "Hech qachon chet elda bo'lmaganman.",
+      "əˈbrɔd 11"
+     ],
+     [
+      "forecast (12)",
+      "ob-havo ma'lumoti",
+      "The forecast says rain tomorrow.",
+      "Ma'lumotga ko'ra ertaga yomg'ir.",
+      "ˈfɔrˌkæst 12"
+     ],
+     [
+      "thunderstorm (12)",
+      "momaqaldiroqli jala",
+      "A thunderstorm had been coming closer all afternoon.",
+      "Tushdan keyin momaqaldiroq yaqinlashib kelgan edi.",
+      "ˈθəndərˌstɔrm 12"
+     ],
+     [
+      "drought (12)",
+      "qurg'oqchilik",
+      "The drought had been going on for months.",
+      "Qurg'oqchilik oylab davom etgan edi.",
+      "draʊt 12"
+     ],
+     [
+      "freezing (12)",
+      "muzlatadigan sovuq",
+      "It had been freezing all night.",
+      "Tun bo'yi ayoz bo'lgan edi.",
+      "ˈfrizɪŋ 12"
+     ],
+     [
+      "professional",
+      "professional",
+      "He became a professional player at 17.",
+      "U 17 yoshida professional o'yinchi bo'ldi.",
+      "prəˈfɛʃənəl"
+     ],
+     [
+      "retire",
+      "nafaqaga chiqmoq; faoliyatni tugatmoq",
+      "By 2028 he will have retired.",
+      "2028-gacha u faoliyatini tugatgan bo'ladi.",
+      "ˌriˈtaɪər"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "will have been + V-ing",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan Future Perfect Continuous",
+     "items": [
+      "By 2027 I ___ (study) English for three years.",
+      "By the time the coach comes, they ___ (train) for an hour.",
+      "Next month she ___ (work) at the company for ten years.",
+      "By 6 o'clock we ___ (wait) for two hours.",
+      "How long ___ you ___ (live) here by 2030?",
+      "By the end of the match he ___ (run) for 90 minutes."
+     ],
+     "answers": [
+      "will have been studying",
+      "will have been training",
+      "will have been working",
+      "will have been waiting",
+      "will … have been living",
+      "will have been running"
+     ]
+    },
+    {
+     "title": "Oltita perfect zamon",
+     "type": "table",
+     "instr": "Bitta fe'l (write) bilan 6 zamon jadvalini to'ldiring",
+     "items": [
+      "Present Perfect",
+      "Present Perfect Continuous",
+      "Past Perfect",
+      "Past Perfect Continuous",
+      "Future Perfect",
+      "Future Perfect Continuous"
+     ],
+     "answers": [
+      "I have written",
+      "I have been writing",
+      "I had written",
+      "I had been writing",
+      "I will have written",
+      "I will have been writing"
+     ]
+    },
+    {
+     "title": "Zamonni tanlang (7–12 takror)",
+     "type": "choose",
+     "instr": "To'g'ri variantni tanlang",
+     "items": [
+      "I have read / had read 50 pages so far.",
+      "By the time we arrived, the film had started / has started.",
+      "By 2030 she will have finished / will finish university.",
+      "They had been waiting / have been waiting for an hour when the bus came.",
+      "He is taller / the tallest than his brother.",
+      "She is the most intelligent / more intelligent student in the class.",
+      "I haven't seen him since / for we graduated.",
+      "As soon as I finish / will finish, I'll call you."
+     ],
+     "answers": [
+      "have read",
+      "had started",
+      "will have finished",
+      "had been waiting",
+      "taller",
+      "the most intelligent",
+      "since",
+      "finish"
+     ]
+    },
+    {
+     "title": "Vaqt ifodasi → zamon",
+     "type": "match",
+     "instr": "Ifodaga mos zamonni yozing",
+     "items": [
+      "so far",
+      "by then (kelajak)",
+      "by the time I arrived",
+      "all day (hozirgacha)",
+      "for two hours when he came",
+      "for 3 years by 2027"
+     ],
+     "answers": [
+      "Present Perfect",
+      "Future Perfect",
+      "Past Perfect",
+      "Present Perfect Continuous",
+      "Past Perfect Continuous",
+      "Future Perfect Continuous"
+     ]
+    },
+    {
+     "title": "Mening 2030-yilim",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — 3 ta Future Perfect, 3 ta Future Perfect Continuous",
+     "items": [
+      "study",
+      "work",
+      "English",
+      "live",
+      "travel",
+      "sport"
+     ],
+     "answers": [
+      "By 2030 I will have graduated.",
+      "By 2030 I will have been working for two years.",
+      "By 2030 I will have got IELTS 7.0.",
+      "I will have been living in Tashkent for 20 years.",
+      "I will have visited five countries.",
+      "I will have been doing sport for ten years."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "By 2027 I will have been study here for 3 years.",
+      "By the time you will arrive, I will have been waiting for an hour.",
+      "I will have been knowing him for 10 years.",
+      "She will has been working here for a year.",
+      "He is the most tall player in the team."
+     ],
+     "answers": [
+      "…will have been studying…",
+      "By the time you arrive…",
+      "I will have known him for 10 years.",
+      "She will have been working…",
+      "He is the tallest player in the team."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Progress test 2 ga tayyorgarlik",
+     "type": "review",
+     "instr": "7–13-dars jadvallari (20 formula) va 6 lug'atdan CORE 20 — takror; Kahoot 7–12 (jonyos.uz)",
+     "answers": "Test: 20 formula + 40 so'z + 10 tarjima + kichik matn."
+    },
+    {
+     "title": "Reading Topic 33",
+     "type": "read",
+     "instr": "The Ice Hotel — kitobdagi 4 savolga javob; 5 ta superlative/comparative toping",
+     "answers": "1-b, 2-d, 3-c, 4 — restaurant/dining (kitob kaliti)."
+    },
+    {
+     "title": "Mening 2035-yilim",
+     "type": "write",
+     "instr": "10 gap: Future Perfect (4), Future Perfect Continuous (3), Past Perfect (3) — hayotingiz",
+     "answers": "Erkin; formulalar tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "2027-yilga kelib men uch yildan beri ingliz tili o'rganayotgan bo'laman.",
+      "Ronaldo 900 dan ortiq gol urgan.",
+      "U 18 yoshida allaqachon shartnoma imzolagan edi.",
+      "Kelasi oy u bu yerda o'n yil ishlayotgan bo'ladi.",
+      "Hozirgacha ikkita kitob o'qidim."
+     ],
+     "answers": [
+      "By 2027 I will have been learning English for three years.",
+      "Ronaldo has scored more than 900 goals.",
+      "He had already signed a contract by the age of 18.",
+      "Next month she/he will have been working here for ten years.",
+      "I have read two books so far."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Vaqt ifodalari CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "6 perfect zamon formulasi + har biriga 1 gap, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Weather",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "6 perfect zamon og'zaki",
+     "6 formula + 6 gap, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Cristiano Ronaldo — 25 years of football",
+    "text": [
+     "Cristiano Ronaldo was born in 1985 on the island of Madeira, Portugal. His family was poor, and he had been playing football in the streets for years before a big club noticed him. At 12, he left his family and moved to Lisbon to train at Sporting. He has said that he cried every night at first because he missed his mother.",
+     "By the time he was 18, he had already signed for Manchester United. Since then, he has played for Real Madrid, Juventus and Al-Nassr in Saudi Arabia. He has scored more than 900 goals in his career and has broken many records — more than anyone else in the history of the game.",
+     "Ronaldo is famous for his discipline. He has been training for more than five hours a day for over twenty years. He goes to bed early, eats very carefully and never gives up. \"Talent without work is nothing,\" he says.",
+     "He has also been generous. He has given money to hospitals and children's charities, and he has visited sick children many times. Millions of young people in Uzbekistan follow him online — he has more followers on social media than any other person in the world.",
+     "By 2027, Ronaldo will have been playing professional football for 25 years. Will he have retired by 2030? Nobody knows — but by then he will have been an example for young players for a whole generation."
+    ],
+    "glossary": [
+     "notice — payqamoq",
+     "sign for — klub bilan shartnoma tuzmoq",
+     "miss — sog'inmoq",
+     "score — gol urmoq",
+     "break a record — rekordni yangilamoq",
+     "discipline — intizom",
+     "give up — taslim bo'lmoq",
+     "generous — sahiy",
+     "charity — xayriya",
+     "follower — obunachi",
+     "generation — avlod"
+    ],
+    "tasks": [
+     {
+      "title": "Zamonlarni toping",
+      "type": "find",
+      "instr": "Matndan har biriga bittadan misol",
+      "items": [
+       "Past Perfect Continuous",
+       "Past Perfect",
+       "Present Perfect",
+       "Present Perfect Continuous",
+       "Future Perfect Continuous",
+       "Future Perfect"
+      ],
+      "answers": [
+       "he had been playing football in the streets for years before…",
+       "By the time he was 18, he had already signed…",
+       "He has scored more than 900 goals…",
+       "He has been training for more than five hours a day…",
+       "By 2027, Ronaldo will have been playing … for 25 years.",
+       "Will he have retired by 2030?"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Ronaldo was born in a rich family.",
+       "He moved to Lisbon at 12.",
+       "He has played for four big clubs.",
+       "He trains less than two hours a day."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True (Sporting, Man Utd, Real Madrid, Juventus, Al-Nassr)",
+       "False"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob va o'z fikringiz",
+      "items": [
+       "Why did he cry at night in Lisbon?",
+       "What does \"Talent without work is nothing\" mean for you?",
+       "How long will he have been playing by 2027?"
+      ],
+      "answers": [
+       "He missed his mother.",
+       "Erkin javob (2 gap).",
+       "25 years."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 33 (The Ice Hotel) — uyga."
+   },
+   "listening": {
+    "audios": "Audio 31–40 (fayllar hali yo'q — ustoz skriptni o'qiydi)",
+    "intro": [
+     "Skript: \"Ulugbek Rashitov was born in Tashkent in 2002. He had been training in taekwondo for twelve years before the Tokyo Olympics. In 2021, at only 19, he won Uzbekistan's first Olympic gold in taekwondo. Since then, he has been training even harder. In Paris 2024 he won gold again — the first Uzbek to win two Olympic golds. By 2028, he will have been competing for twenty years.\"",
+     "1-tinglash: qaysi sport? 2-tinglash: yillar va raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Raqamlar",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "He was born in ___.",
+       "He had been training for ___ years before Tokyo.",
+       "In Tokyo he was only ___.",
+       "In Paris ___ he won gold again.",
+       "By 2028 he will have been competing for ___ years."
+      ],
+      "answers": [
+       "2002",
+       "twelve",
+       "19",
+       "2024",
+       "twenty"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

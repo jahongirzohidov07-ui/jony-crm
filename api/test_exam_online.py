@@ -263,6 +263,19 @@ r = client.post(f"/api/exams/{EID}/online", headers=HE,
                 json={"template_id": TID})
 ck("examiner link ochdi", r.status_code, 200)
 TOKEN = r.json()["online"]["token"]
+ck("yangi link — kutish holati", r.json()["online"]["state"], "waiting")
+w = client.get(f"/api/public/exam/{TOKEN}").json()
+ck("kutishda savol yo'q, ro'yxat bor", (w["state"], len(w["parts"]), len(w["students"])),
+   ("waiting", 0, 4))
+ck("ustoz start bosa olmaydi",
+   client.post(f"/api/exams/{EID}/online/start", headers=HT,
+               json={"minutes": 40}).status_code, 403)
+r = client.post(f"/api/exams/{EID}/online/start", headers=HE,
+                json={"minutes": 40, "countdown": 0})
+ck("examiner start bosdi", r.json()["online"]["state"], "running")
+ck("qayta start bo'lmaydi",
+   client.post(f"/api/exams/{EID}/online/start", headers=HE,
+               json={"minutes": 40}).status_code, 400)
 d = client.get(f"/api/exams/{EID}", headers=H).json()
 ck("maksimal ball = 30", d["max_score"], 30)
 
@@ -400,6 +413,8 @@ EID2 = r.json()["id"]
 r = client.post(f"/api/exams/{EID2}/online", headers=HE,
                 json={"template_id": TID, "paper_max": 20})
 TOK2 = r.json()["online"]["token"]
+client.post(f"/api/exams/{EID2}/online/start", headers=HE,
+            json={"minutes": 40, "countdown": 0})
 d = client.get(f"/api/exams/{EID2}", headers=H).json()
 ck("maksimal 50 (30+20)", d["max_score"], 50)
 r = client.post(f"/api/public/exam/{TOK2}/submit", json={
@@ -456,6 +471,78 @@ ck("to'g'ri javobsiz rad",
    client.post("/api/exam-templates", headers=HB, json=bad).status_code, 400)
 ck("ishlatilgan test yashiriladi",
    client.delete(f"/api/exam-templates/{TID}", headers=HB).json()["hidden"], True)
+
+print("\n=== T. VAQTLI TEST: KUTISH, SANOQ, AVTOMATIK TOPSHIRISH ===")
+from datetime import datetime as _dt, timedelta as _td  # noqa: E402
+r = client.post(f"/api/groups/{GID}/exams", headers=H, json={
+    "kind": "unit", "unit_no": 1, "date": TODAY.isoformat(), "max_score": 30})
+EID3 = r.json()["id"]
+d = SessionLocal()  # K bo'limida yashirilgan Unit 1 testini qayta faollashtiramiz
+d.query(models.ExamTemplate).filter(models.ExamTemplate.id == TID).update(
+    {models.ExamTemplate.is_active: 1})
+d.commit()
+d.close()
+r = client.post(f"/api/exams/{EID3}/online", headers=HE, json={"template_id": TID})
+TOK3 = r.json()["online"]["token"]
+b1 = client.post(f"/api/public/exam/{TOK3}/begin", json={
+    "student_id": S["Aliyev Ali"], "photo": PHOTO})
+ck("kutishda kirish mumkin", b1.status_code, 200)
+KEY1 = b1.json()["key"]
+b2 = client.post(f"/api/public/exam/{TOK3}/begin", json={
+    "student_id": S["Karimova Kamola"], "photo": PHOTO})
+KEY2 = b2.json()["key"]
+on = client.get(f"/api/exams/{EID3}/online", headers=HE).json()
+ck("examiner: 2 kishi kutmoqda", on["online"]["in_progress"], 2)
+ck("kutishda saqlab bo'lmaydi",
+   client.post(f"/api/public/exam/{TOK3}/save",
+               json={"key": KEY1, "answers": {"x": 1}}).json()["ok"], False)
+r = client.post(f"/api/exams/{EID3}/online/start", headers=HE, json={"minutes": 30})
+ck("sanoq boshlandi", r.json()["online"]["state"], "countdown")
+w = client.get(f"/api/public/exam/{TOK3}").json()
+ck("sanoqda savollar hali yo'q", (w["state"], len(w["parts"])), ("countdown", 0))
+ck("tugash vaqti bor", bool(w["ends_at"]) and w["duration_min"] == 30, True)
+# Sanoqni o'tkazib yuboramiz
+d = SessionLocal()
+o3 = d.query(models.ExamOnline).filter(models.ExamOnline.exam_id == EID3).first()
+o3.started_at = _dt.utcnow() - _td(seconds=1)
+o3.ends_at = _dt.utcnow() + _td(minutes=30)
+d.commit()
+d.close()
+w = client.get(f"/api/public/exam/{TOK3}").json()
+ck("test ochildi — 30 savol", (w["state"], sum(len(p["questions"]) for p in w["parts"])),
+   ("running", 30))
+ck("javob saqlandi",
+   client.post(f"/api/public/exam/{TOK3}/save",
+               json={"key": KEY1, "answers": correct_answers(20)}).json()["ok"], True)
+client.post(f"/api/public/exam/{TOK3}/save",
+            json={"key": KEY2, "answers": correct_answers(10)})
+ck("begona kalit rad",
+   client.post(f"/api/public/exam/{TOK3}/save",
+               json={"key": "xxxxxxxxxxxxxx", "answers": {}}).status_code, 400)
+# Karimova o'zi topshiradi, Aliyevning sahifasi yopilib qoldi
+r = client.post(f"/api/public/exam/{TOK3}/submit",
+                json={"key": KEY2, "answers": correct_answers(12)})
+ck("qo'lda topshirdi", r.json()["ok"], True)
+# Examiner muddatidan oldin tugatadi; muhlat ham o'tdi
+r = client.post(f"/api/exams/{EID3}/online/stop", headers=HE)
+ck("examiner tugatdi", r.json()["online"]["state"], "finished")
+d = SessionLocal()
+o3 = d.query(models.ExamOnline).filter(models.ExamOnline.exam_id == EID3).first()
+o3.ends_at = _dt.utcnow() - _td(seconds=exam_online.GRACE_SEC + 5)
+d.commit()
+d.close()
+on = client.get(f"/api/exams/{EID3}/online", headers=HE).json()
+byname = {x["typed_name"]: x for x in on["submissions"]}
+ck("topshirmagan avtomatik yakunlandi — saqlangan 20 ta",
+   (byname["Aliyev Ali"]["status"], byname["Aliyev Ali"]["online_score"]),
+   ("placed", 20.0))
+ck("qo'lda topshirgan — 12", byname["Karimova Kamola"]["online_score"], 12.0)
+ck("hech kim kutmayapti", on["online"]["in_progress"], 0)
+ck("tugagandan keyin kirib bo'lmaydi",
+   client.post(f"/api/public/exam/{TOK3}/begin",
+               json={"student_id": S["Valiyev Vali"], "photo": PHOTO}).status_code, 410)
+ck("tugagandan keyin ro'yxat ham yo'q",
+   client.get(f"/api/public/exam/{TOK3}").json()["students"], [])
 
 print("\n=== L. ONLINE TOPSHIRILGAN IMTIHONNI O'CHIRISH ===")
 r = client.delete(f"/api/exams/{EID}", headers=HB)

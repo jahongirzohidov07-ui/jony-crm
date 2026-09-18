@@ -28,7 +28,7 @@ import json
 import re
 import secrets
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from types import SimpleNamespace
 from typing import List, Optional
 
@@ -56,6 +56,26 @@ PUBLISH_ROLES = list(dict.fromkeys(roles.EXAM_ACCESS + roles.EXAM_EDIT))
 PHOTO_MAX_CHARS = 400_000          # ~300KB rasm (frontend 480px ga kichraytiradi)
 _HITS: dict = {}
 _MAX_PER_HOUR = 300                # bitta sinf bitta Wi-Fi (bitta IP) dan kiradi
+COUNTDOWN_SEC = 10                 # "Start"dan keyin teskari sanoq
+GRACE_SEC = 90                     # vaqt tugagach avtomatik topshirish muhlati
+
+
+def timer_state(o) -> str:
+    """waiting — examiner hali Start bosmagan; countdown — teskari sanoq;
+    running — savollar ochiq; finished — vaqt tugadi."""
+    if not o or not o.started_at or not o.ends_at:
+        return "waiting"
+    now = datetime.utcnow()
+    if now < o.started_at:
+        return "countdown"
+    if now < o.ends_at:
+        return "running"
+    return "finished"
+
+
+def _iso(d):
+    # Server vaqti UTC — brauzer to'g'ri hisoblashi uchun "Z" bilan
+    return d.isoformat() + "Z" if d else None
 
 
 # ------------------------------------------------------------- yordamchi
@@ -488,6 +508,8 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
     exam = _exams._exam_in_scope(db, exam_id, user)
     group = db.query(models.Group).get(exam.group_id)
     o = _online_of(db, exam.id)
+    if o:
+        finalize_expired(db, o, exam)
     subs = (db.query(models.ExamSubmission)
             .options(undefer(models.ExamSubmission.photo))
             .filter(models.ExamSubmission.exam_id == exam.id)
@@ -521,6 +543,12 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "published_at": (o.published_at.isoformat()
                              if o.published_at else None),
             "published_by": o.published_by,
+            "state": timer_state(o),
+            "server_now": _iso(datetime.utcnow()),
+            "starts_at": _iso(o.started_at),
+            "ends_at": _iso(o.ends_at),
+            "duration_min": o.duration_min,
+            "in_progress": sum(1 for s in subs if s.status == "in_progress"),
         }
     return {"online": online, "group_level": lvl,
             "can_manage": user.role in RESULT_ROLES,
@@ -584,6 +612,55 @@ def toggle_online(exam_id: int, payload: OnlineToggle,
     if not o:
         raise HTTPException(404, "Link yo'q")
     o.is_open = 1 if payload.is_open else 0
+    db.commit()
+    return get_online(exam_id, db, user)
+
+
+class StartIn(BaseModel):
+    minutes: int
+    countdown: Optional[int] = None
+
+
+@router.post("/api/exams/{exam_id}/online/start")
+def start_online(exam_id: int, payload: StartIn, db: Session = Depends(get_db),
+                 user=Depends(require_role(*RESULT_ROLES))):
+    """Examiner vaqt belgilab testni boshlaydi: teskari sanoqdan keyin
+    savollar ochiladi, belgilangan vaqt tugagach hammasi avtomatik
+    topshiriladi."""
+    exam = _exams._exam_in_scope(db, exam_id, user)
+    o = _online_of(db, exam.id)
+    if not o:
+        raise HTTPException(404, "Link yo'q")
+    if not _exam_open_for_results(exam):
+        raise HTTPException(400, "Test tasdiqlanmagan yoki bekor qilingan")
+    if timer_state(o) in ("countdown", "running"):
+        raise HTTPException(400, "Test allaqachon boshlangan")
+    if not (1 <= payload.minutes <= 300):
+        raise HTTPException(400, "Vaqt 1 dan 300 daqiqagacha bo'lishi kerak")
+    cd = COUNTDOWN_SEC if payload.countdown is None else max(0, min(60, payload.countdown))
+    now = datetime.utcnow()
+    o.duration_min = payload.minutes
+    o.started_at = now + timedelta(seconds=cd)
+    o.ends_at = o.started_at + timedelta(minutes=payload.minutes)
+    o.is_open = 1
+    db.commit()
+    audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
+              entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
+              field="online_start", new_value=f"{payload.minutes} daqiqa",
+              commit=True)
+    return get_online(exam_id, db, user)
+
+
+@router.post("/api/exams/{exam_id}/online/stop")
+def stop_online(exam_id: int, db: Session = Depends(get_db),
+                user=Depends(require_role(*RESULT_ROLES))):
+    """Testni muddatidan oldin tugatish — hamma o'quvchida vaqt tugaydi
+    va javoblari avtomatik topshiriladi."""
+    exam = _exams._exam_in_scope(db, exam_id, user)
+    o = _online_of(db, exam.id)
+    if not o or timer_state(o) not in ("countdown", "running"):
+        raise HTTPException(400, "Test hozir ketmayapti")
+    o.ends_at = datetime.utcnow()
     db.commit()
     return get_online(exam_id, db, user)
 
@@ -748,47 +825,66 @@ def _public(db: Session, token: str):
 
 @router.get("/api/public/exam/{token}")
 def public_exam(token: str, db: Session = Depends(get_db)):
+    """Ochiq sahifa holati. Savollar faqat test ketayotganda beriladi —
+    examiner "Start" bosmaguncha o'quvchi kutib turadi (2026-09-18)."""
     o, exam = _public(db, token)
+    finalize_expired(db, o, exam)
     group = db.query(models.Group).get(exam.group_id)
     is_open = bool(o.is_open) and _exam_open_for_results(exam)
+    state = timer_state(o)
     parts = _load(o.parts)
     return {
         "title": exam.title or roles.exam_title(exam.kind, exam.unit_no),
         "group": group.name if group else "",
         "date": exam.date.isoformat() if exam.date else None,
         "is_open": is_open,
+        "state": state if is_open else "closed",
+        "server_now": _iso(datetime.utcnow()),
+        "starts_at": _iso(o.started_at),
+        "ends_at": _iso(o.ends_at),
+        "duration_min": o.duration_min,
         "q_count": int(o.online_max or 0),
         "paper_max": o.paper_max or 0,
         "students": [{"id": s.id, "name": s.full_name}
-                     for s in _roster(db, exam.group_id)] if is_open else [],
-        "parts": public_parts(parts) if is_open else [],
+                     for s in _roster(db, exam.group_id)]
+        if is_open and state != "finished" else [],
+        "parts": public_parts(parts) if is_open and state == "running" else [],
     }
 
 
-class SubmitIn(BaseModel):
+class BeginIn(BaseModel):
     student_id: Optional[int] = None
     name: Optional[str] = None
     photo: str
+
+
+class SaveIn(BaseModel):
+    key: str
     answers: dict
 
 
-@router.post("/api/public/exam/{token}/submit")
-def public_submit(token: str, payload: SubmitIn, request: Request,
-                  db: Session = Depends(get_db)):
-    ip = (request.headers.get("x-forwarded-for") or "").split(",")[0].strip() \
-        or (request.client.host if request.client else "")
-    if not _rate_ok(ip or "?"):
-        raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
-                                 "urinib ko'ring")
-    o, exam = _public(db, token)
-    if not o.is_open or not _exam_open_for_results(exam):
-        raise HTTPException(410, "Test yopilgan")
-    photo = payload.photo or ""
+class SubmitIn(BaseModel):
+    # Yangi tartib: begin'dan olingan kalit bilan
+    key: Optional[str] = None
+    answers: dict
+    # Eski tartib (kalitsiz) — keshlangan eski sahifalar uchun
+    student_id: Optional[int] = None
+    name: Optional[str] = None
+    photo: Optional[str] = None
+
+
+def _client_ip(request: Request) -> str:
+    return ((request.headers.get("x-forwarded-for") or "").split(",")[0].strip()
+            or (request.client.host if request.client else ""))
+
+
+def _identify(db: Session, exam, student_id, name, photo):
+    """Ro'yxatdan tanlangan yoki yozilgan ism + kamera rasmi."""
+    photo = photo or ""
     if not photo.startswith("data:image/") or len(photo) > PHOTO_MAX_CHARS:
         raise HTTPException(400, "Kameradan rasm oling")
     roster = {s.id: s for s in _roster(db, exam.group_id)}
-    student_id = payload.student_id
-    typed = (payload.name or "").strip()[:120] or None
+    typed = (name or "").strip()[:120] or None
     if student_id is not None and student_id not in roster:
         raise HTTPException(400, "Ro'yxatdan o'zingizni tanlang")
     if student_id is None:
@@ -799,38 +895,162 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
         same = [s.id for s in roster.values() if _norm(s.full_name) == want]
         if len(same) == 1:
             student_id = same[0]
+    if not typed and student_id in roster:
+        typed = roster[student_id].full_name
+    return student_id, typed, photo
 
-    parts = _load(o.parts)
-    answers = {str(k): v for k, v in (payload.answers or {}).items()}
-    score, total, detail = grade(parts, answers)
 
+def _finalize(db: Session, o, exam, sub, answers: dict, by: str = "Online test"):
+    """Topshiriqni baholab joylashtiradi (qo'lda topshirish ham, vaqt
+    tugab avtomatik topshirish ham shu yerdan)."""
+    answers = {str(k): v for k, v in (answers or {}).items()}
+    score, total, detail = grade(_load(o.parts), answers)
     status = "pending"
-    if student_id is not None:
+    if sub.student_id is not None:
         already = db.query(models.ExamSubmission).filter(
             models.ExamSubmission.exam_id == exam.id,
-            models.ExamSubmission.student_id == student_id,
-            models.ExamSubmission.status == "placed").first()
+            models.ExamSubmission.student_id == sub.student_id,
+            models.ExamSubmission.status == "placed",
+            models.ExamSubmission.id != sub.id).first()
         status = "duplicate" if already else "placed"
-    sub = models.ExamSubmission(
-        exam_id=exam.id,
-        student_id=student_id if status != "pending" else None,
-        typed_name=typed if typed else (roster[student_id].full_name
-                                        if student_id in roster else None),
-        photo=photo, answers=json.dumps(answers, ensure_ascii=False)[:20000],
-        detail=json.dumps(detail, ensure_ascii=False),
-        online_score=score, online_max=total, status=status, ip=ip[:64])
-    db.add(sub)
+    sub.answers = json.dumps(answers, ensure_ascii=False)[:20000]
+    sub.detail = json.dumps(detail, ensure_ascii=False)
+    sub.online_score = score
+    sub.online_max = total
+    sub.status = status
+    sub.submitted_at = datetime.utcnow()
+    if status != "placed" and status != "duplicate":
+        sub.student_id = None
+    if status == "placed":
+        sub.placed_by = by
+        sub.placed_at = datetime.utcnow()
     db.commit()
     if status == "placed":
-        sub.placed_by = "Online test"
-        sub.placed_at = datetime.utcnow()
-        db.commit()
         try:
             _write_result(db, exam, o, sub, _system_user())
         except HTTPException:
             # Masalan, maksimal ball keyin o'zgartirilgan — javob baribir
             # saqlangan, examiner ExamSheet'da ko'radi
             db.rollback()
+    return status
+
+
+def finalize_expired(db: Session, o, exam) -> int:
+    """Vaqt tugab (va kechikib keluvchilar uchun muhlat o'tib) hali
+    topshirilmagan ishlar SAQLANGAN javoblari bilan topshiriladi — kim
+    qancha belgilagan bo'lsa (Jahongir). Sahifa yopilib qolgan
+    o'quvchi ham natijasiz qolmaydi."""
+    if not o.ends_at or datetime.utcnow() < o.ends_at + timedelta(seconds=GRACE_SEC):
+        return 0
+    subs = (db.query(models.ExamSubmission)
+            .filter(models.ExamSubmission.exam_id == exam.id,
+                    models.ExamSubmission.status == "in_progress").all())
+    for s in subs:
+        _finalize(db, o, exam, s, _load_dict(s.answers), by="Vaqt tugadi (avtomat)")
+    return len(subs)
+
+
+def _load_dict(txt) -> dict:
+    try:
+        v = json.loads(txt or "{}")
+        return v if isinstance(v, dict) else {}
+    except Exception:
+        return {}
+
+
+def _sub_by_key(db: Session, exam, key: str):
+    if not key or len(key) < 10:
+        raise HTTPException(400, "Qaytadan kiring")
+    s = (db.query(models.ExamSubmission)
+         .filter(models.ExamSubmission.exam_id == exam.id,
+                 models.ExamSubmission.sub_key == key).first())
+    if not s:
+        raise HTTPException(400, "Qaytadan kiring")
+    return s
+
+
+def _can_answer(o) -> bool:
+    """Javob qabul qilinadimi: test ketyapti yoki tugaganiga hali
+    muhlat (GRACE_SEC) o'tmagan — avtomatik topshirish yetib kelsin."""
+    if not o.is_open or not o.started_at or not o.ends_at:
+        return False
+    now = datetime.utcnow()
+    return o.started_at <= now + timedelta(seconds=2) and \
+        now <= o.ends_at + timedelta(seconds=GRACE_SEC)
+
+
+@router.post("/api/public/exam/{token}/begin")
+def public_begin(token: str, payload: BeginIn, request: Request,
+                 db: Session = Depends(get_db)):
+    """O'quvchi o'zini tanitadi (ism + rasm) — test boshlanishini
+    kutib turadi. Kalit brauzerda saqlanadi."""
+    ip = _client_ip(request)
+    if not _rate_ok(ip or "?"):
+        raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
+                                 "urinib ko'ring")
+    o, exam = _public(db, token)
+    if not o.is_open or not _exam_open_for_results(exam) or \
+            timer_state(o) == "finished":
+        raise HTTPException(410, "Test yopilgan")
+    student_id, typed, photo = _identify(db, exam, payload.student_id,
+                                         payload.name, payload.photo)
+    sub = models.ExamSubmission(
+        exam_id=exam.id, student_id=student_id, typed_name=typed,
+        photo=photo, answers="{}", status="in_progress", ip=ip[:64],
+        online_max=o.online_max or 0, sub_key=secrets.token_urlsafe(16))
+    db.add(sub)
+    db.commit()
+    return {"ok": True, "key": sub.sub_key}
+
+
+@router.post("/api/public/exam/{token}/save")
+def public_save(token: str, payload: SaveIn, db: Session = Depends(get_db)):
+    """Javoblarni oraliqda saqlash — telefon o'chib qolsa ham yo'qolmasin."""
+    o, exam = _public(db, token)
+    s = _sub_by_key(db, exam, payload.key)
+    if s.status != "in_progress":
+        return {"ok": True, "submitted": True}
+    if not _can_answer(o):
+        return {"ok": False}
+    s.answers = json.dumps({str(k): v for k, v in (payload.answers or {}).items()},
+                           ensure_ascii=False)[:20000]
+    db.commit()
+    return {"ok": True}
+
+
+@router.post("/api/public/exam/{token}/submit")
+def public_submit(token: str, payload: SubmitIn, request: Request,
+                  db: Session = Depends(get_db)):
+    o, exam = _public(db, token)
+    if not _exam_open_for_results(exam):
+        raise HTTPException(410, "Test yopilgan")
+    if payload.key:
+        s = _sub_by_key(db, exam, payload.key)
+        if s.status == "in_progress":
+            if not _can_answer(o):
+                # Muhlat o'tib ketgan — saqlangan javoblar bilan yakunlanadi
+                answers = _load_dict(s.answers)
+            else:
+                answers = payload.answers
+            _finalize(db, o, exam, s, answers)
+        return {"ok": True, "paper_max": o.paper_max or 0,
+                "pending": s.status not in ("placed",)}
+    # Eski tartib (kalitsiz): faqat test ketayotganda
+    ip = _client_ip(request)
+    if not _rate_ok(ip or "?"):
+        raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
+                                 "urinib ko'ring")
+    if not _can_answer(o):
+        raise HTTPException(410, "Test yopilgan")
+    student_id, typed, photo = _identify(db, exam, payload.student_id,
+                                         payload.name, payload.photo)
+    sub = models.ExamSubmission(
+        exam_id=exam.id, student_id=student_id, typed_name=typed, photo=photo,
+        status="in_progress", ip=ip[:64], online_max=o.online_max or 0,
+        sub_key=secrets.token_urlsafe(16))
+    db.add(sub)
+    db.commit()
+    status = _finalize(db, o, exam, sub, payload.answers)
     # Ball o'quvchiga ko'rsatilmaydi — examiner tasdiqlagach e'lon
     # qilinadi (2026-09-18)
     return {"ok": True, "paper_max": o.paper_max or 0,

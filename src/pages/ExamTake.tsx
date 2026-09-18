@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BrandIcon } from "../components/BrandIcon";
 
@@ -9,7 +9,10 @@ import { BrandIcon } from "../components/BrandIcon";
  *
  * 1) ro'yxatdan o'zini tanlaydi (yo'q bo'lsa ismini yozadi);
  * 2) kameradan rasm oladi (galereyadan emas);
- * 3) testni yechadi — ball serverda hisoblanadi.
+ * 3) KUTADI — examiner vaqt belgilab "Start" bosganda teskari sanoq
+ *    bilan savollar ochiladi (2026-09-18);
+ * 4) testni yechadi — javoblar oraliqda serverga saqlanadi, vaqt
+ *    tugaganda belgilangan javoblar bilan avtomatik topshiriladi.
  * Havola: https://jonyos.uz/t/<token>
  */
 
@@ -29,17 +32,23 @@ type Part = {
   image?: string | null;
   questions: Q[];
 };
+type State = "waiting" | "countdown" | "running" | "finished" | "closed";
 type PublicExam = {
   title: string;
   group: string;
   date: string | null;
   is_open: boolean;
+  state: State;
+  server_now: string;
+  starts_at: string | null;
+  ends_at: string | null;
+  duration_min: number | null;
   q_count: number;
   paper_max: number;
   students: { id: number; name: string }[];
   parts: Part[];
 };
-type Done = { paper_max: number; pending: boolean };
+type Done = { paper_max: number; pending: boolean; auto?: boolean };
 
 const LETTERS = "ABCDEFGH";
 
@@ -75,11 +84,22 @@ function shrink(file: File): Promise<string> {
   });
 }
 
+function mmss(sec: number) {
+  const s = Math.max(0, Math.ceil(sec));
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, "0")}`;
+}
+
 export default function ExamTake() {
   const { token = "" } = useParams();
+  const api = `/api/public/exam/${encodeURIComponent(token)}`;
   const [exam, setExam] = useState<PublicExam | null>(null);
   const [loadErr, setLoadErr] = useState<string | null>(null);
-  const [step, setStep] = useState<"who" | "photo" | "test">("who");
+  // Server soati bilan farq (ms) — sanoq va taymer server vaqti bo'yicha
+  const [offset, setOffset] = useState(0);
+  const [now, setNow] = useState(Date.now());
+  const [key, setKey] = useState<string | null>(() => store(`exam:${token}:key`));
+  const [step, setStep] = useState<"who" | "photo">("who");
   const [studentId, setStudentId] = useState<number | null>(null);
   const [notListed, setNotListed] = useState(false);
   const [name, setName] = useState("");
@@ -90,23 +110,117 @@ export default function ExamTake() {
   );
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState<Done | null>(
-    () => store(`exam:${token}:done`)
-  );
+  const [done, setDone] = useState<Done | null>(() => store(`exam:${token}:done`));
+  const savedRef = useRef<string>("");
+  const submittingRef = useRef(false);
 
-  useEffect(() => {
-    fetch(`/api/public/exam/${encodeURIComponent(token)}`)
+  const load = useCallback(() => {
+    return fetch(api)
       .then(async (r) => {
         const j = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(j.detail || "Test topilmadi");
+        setOffset(Date.parse(j.server_now) - Date.now());
         setExam(j);
+        return j as PublicExam;
       })
-      .catch((e) => setLoadErr(e.message));
-  }, [token]);
+      .catch((e) => {
+        setLoadErr(e.message);
+        return null;
+      });
+  }, [api]);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  // Soniya sanagich
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 500);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     store(`exam:${token}:answers`, answers);
   }, [token, answers]);
+
+  const serverNow = now + offset;
+  const startsIn = exam?.starts_at ? (Date.parse(exam.starts_at) - serverNow) / 1000 : null;
+  const endsIn = exam?.ends_at ? (Date.parse(exam.ends_at) - serverNow) / 1000 : null;
+
+  // Kutish: examiner Start bosishini kuzatamiz (4 soniyada bir)
+  const state = exam?.state;
+  useEffect(() => {
+    if (done || !key || state !== "waiting") return;
+    const t = setInterval(load, 4000);
+    return () => clearInterval(t);
+  }, [done, key, state, load]);
+
+  // Sanoq tugadi — savollarni olamiz
+  useEffect(() => {
+    if (state === "countdown" && startsIn !== null && startsIn <= 0) load();
+  }, [state, startsIn, load]);
+
+  // Test ketyapti: 20 soniyada bir holatni yangilaymiz (examiner
+  // muddatidan oldin tugatishi mumkin)
+  useEffect(() => {
+    if (done || state !== "running") return;
+    const t = setInterval(load, 20000);
+    return () => clearInterval(t);
+  }, [done, state, load]);
+
+  const submit = useCallback(
+    async (auto = false) => {
+      if (!key || submittingRef.current) return;
+      submittingRef.current = true;
+      setSending(true);
+      setError(null);
+      try {
+        const r = await fetch(`${api}/submit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key, answers }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(j.detail || "Yuborib bo'lmadi");
+        const d: Done = { paper_max: j.paper_max, pending: j.pending, auto };
+        store(`exam:${token}:done`, d);
+        setDone(d);
+        window.scrollTo(0, 0);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Xatolik");
+        submittingRef.current = false;
+      } finally {
+        setSending(false);
+      }
+    },
+    [key, answers, api, token]
+  );
+
+  // Javoblarni 15 soniyada bir serverga saqlash — telefon o'chib qolsa ham
+  useEffect(() => {
+    if (done || !key || state !== "running") return;
+    const t = setInterval(() => {
+      const body = JSON.stringify(answers);
+      if (body === savedRef.current) return;
+      savedRef.current = body;
+      fetch(`${api}/save`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, answers }),
+      }).catch(() => {
+        savedRef.current = "";
+      });
+    }, 15000);
+    return () => clearInterval(t);
+  }, [done, key, state, answers, api]);
+
+  // Vaqt tugadi — belgilanganlari bilan avtomatik topshiriladi
+  useEffect(() => {
+    if (done || !key) return;
+    const timeUp =
+      (state === "running" && endsIn !== null && endsIn <= 0) || state === "finished";
+    if (timeUp) submit(true);
+  }, [done, key, state, endsIn, submit]);
 
   const students = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -129,42 +243,42 @@ export default function ExamTake() {
     }
   }
 
-  async function submit() {
-    if (!exam) return;
-    if (
-      answered < exam.q_count &&
-      !confirm(
-        `${exam.q_count - answered} ta savolga javob berilmagan. Baribir topshirasizmi?`
-      )
-    )
-      return;
+  async function begin() {
     setSending(true);
     setError(null);
     try {
-      const r = await fetch(
-        `/api/public/exam/${encodeURIComponent(token)}/submit`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            student_id: notListed ? null : studentId,
-            name: notListed ? name.trim() : null,
-            photo,
-            answers,
-          }),
-        }
-      );
+      const r = await fetch(`${api}/begin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          student_id: notListed ? null : studentId,
+          name: notListed ? name.trim() : null,
+          photo,
+        }),
+      });
       const j = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(j.detail || "Yuborib bo'lmadi");
-      const d: Done = { paper_max: j.paper_max, pending: j.pending };
-      store(`exam:${token}:done`, d);
-      setDone(d);
+      if (!r.ok) throw new Error(j.detail || "Kirib bo'lmadi");
+      store(`exam:${token}:key`, j.key);
+      setKey(j.key);
+      await load();
       window.scrollTo(0, 0);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
     } finally {
       setSending(false);
     }
+  }
+
+  function manualSubmit() {
+    if (
+      exam &&
+      answered < exam.q_count &&
+      !confirm(
+        `${exam.q_count - answered} ta savolga javob berilmagan. Baribir topshirasizmi?`
+      )
+    )
+      return;
+    submit(false);
   }
 
   const shell = (body: React.ReactNode) => (
@@ -202,7 +316,9 @@ export default function ExamTake() {
     return shell(
       <div className={`${card} text-center`}>
         <p className="text-4xl mb-2">✅</p>
-        <h1 className="text-lg font-bold text-slate-900 mb-1">Javoblaringiz qabul qilindi</h1>
+        <h1 className="text-lg font-bold text-slate-900 mb-1">
+          {done.auto ? "Vaqt tugadi — javoblaringiz topshirildi" : "Javoblaringiz qabul qilindi"}
+        </h1>
         {/* Ball bu yerda ko'rsatilmaydi — examiner tasdiqlagach e'lon
             qilinadi (2026-09-18, Jahongir) */}
         <p className="text-sm text-slate-600 my-3">
@@ -222,87 +338,91 @@ export default function ExamTake() {
       </div>
     );
 
-  if (!exam.is_open)
+  if (exam.state === "closed" || (exam.state === "finished" && !key))
     return shell(
       <div className={`${card} text-center`}>
         <p className="text-3xl mb-2">🔒</p>
-        <p className="text-slate-700">Test yopilgan. Examinerga murojaat qiling.</p>
-      </div>
-    );
-
-  if (step === "who")
-    return shell(
-      <div className={card}>
-        <h1 className="text-lg font-bold text-slate-900">Ro'yxatdan o'zingizni tanlang</h1>
-        <p className="text-xs text-slate-500 mb-3">
-          {exam.title} · {exam.q_count} ta savol
+        <p className="text-slate-700">
+          {exam.state === "finished" ? "Test vaqti tugagan." : "Test yopilgan."} Examinerga
+          murojaat qiling.
         </p>
-        {!notListed ? (
-          <>
-            {exam.students.length > 8 && (
-              <input
-                className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm mb-3"
-                placeholder="Qidirish..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            )}
-            <div className="grid gap-2">
-              {students.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setStudentId(s.id)}
-                  className={`text-left rounded-xl border px-4 py-3 text-sm font-medium transition ${
-                    studentId === s.id
-                      ? "border-brand-500 bg-brand-50 text-brand-800"
-                      : "border-slate-200 text-slate-700 hover:border-slate-300"
-                  }`}
-                >
-                  {s.name}
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={() => {
-                setNotListed(true);
-                setStudentId(null);
-              }}
-              className="w-full mt-3 text-sm text-slate-500 underline decoration-dotted"
-            >
-              Ro'yxatda yo'qman
-            </button>
-          </>
-        ) : (
-          <>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              Ism va familiyangiz
-            </label>
-            <input
-              autoFocus
-              className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Familiya Ism"
-            />
-            <button
-              onClick={() => setNotListed(false)}
-              className="w-full mt-3 text-sm text-slate-500 underline decoration-dotted"
-            >
-              ← Ro'yxatga qaytish
-            </button>
-          </>
-        )}
-        <button
-          disabled={notListed ? name.trim().length < 3 : !studentId}
-          onClick={() => setStep("photo")}
-          className="w-full mt-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-semibold disabled:opacity-50"
-        >
-          Davom etish
-        </button>
       </div>
     );
 
-  if (step === "photo")
+  // ------------------------------------------------ o'zini tanitish
+  if (!key) {
+    if (step === "who")
+      return shell(
+        <div className={card}>
+          <h1 className="text-lg font-bold text-slate-900">Ro'yxatdan o'zingizni tanlang</h1>
+          <p className="text-xs text-slate-500 mb-3">
+            {exam.title} · {exam.q_count} ta savol
+          </p>
+          {!notListed ? (
+            <>
+              {exam.students.length > 8 && (
+                <input
+                  className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm mb-3"
+                  placeholder="Qidirish..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              )}
+              <div className="grid gap-2">
+                {students.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => setStudentId(s.id)}
+                    className={`text-left rounded-xl border px-4 py-3 text-sm font-medium transition ${
+                      studentId === s.id
+                        ? "border-brand-500 bg-brand-50 text-brand-800"
+                        : "border-slate-200 text-slate-700 hover:border-slate-300"
+                    }`}
+                  >
+                    {s.name}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => {
+                  setNotListed(true);
+                  setStudentId(null);
+                }}
+                className="w-full mt-3 text-sm text-slate-500 underline decoration-dotted"
+              >
+                Ro'yxatda yo'qman
+              </button>
+            </>
+          ) : (
+            <>
+              <label className="block text-xs font-medium text-slate-600 mb-1">
+                Ism va familiyangiz
+              </label>
+              <input
+                autoFocus
+                className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Familiya Ism"
+              />
+              <button
+                onClick={() => setNotListed(false)}
+                className="w-full mt-3 text-sm text-slate-500 underline decoration-dotted"
+              >
+                ← Ro'yxatga qaytish
+              </button>
+            </>
+          )}
+          <button
+            disabled={notListed ? name.trim().length < 3 : !studentId}
+            onClick={() => setStep("photo")}
+            className="w-full mt-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-semibold disabled:opacity-50"
+          >
+            Davom etish
+          </button>
+        </div>
+      );
+
     return shell(
       <div className={card}>
         <h1 className="text-lg font-bold text-slate-900">Rasmingizni oling</h1>
@@ -329,35 +449,64 @@ export default function ExamTake() {
         </label>
         {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
         <button
-          disabled={!photo}
-          onClick={() => {
-            setStep("test");
-            window.scrollTo(0, 0);
-          }}
+          disabled={!photo || sending}
+          onClick={begin}
           className="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-semibold disabled:opacity-50"
         >
-          Testni boshlash
+          {sending ? "Kirilmoqda..." : "Tayyorman"}
         </button>
-        <button
-          onClick={() => setStep("who")}
-          className="w-full mt-2 text-sm text-slate-500"
-        >
+        <button onClick={() => setStep("who")} className="w-full mt-2 text-sm text-slate-500">
           ← Orqaga
         </button>
       </div>
     );
+  }
 
+  // ------------------------------------------------ kutish / sanoq
+  if (exam.state === "waiting" || exam.state === "countdown" || !exam.parts.length) {
+    const counting = exam.state === "countdown" && startsIn !== null && startsIn > 0;
+    return shell(
+      <div className={`${card} text-center py-10`}>
+        {counting ? (
+          <>
+            <p className="text-sm text-slate-500 mb-2">Test boshlanmoqda</p>
+            <p className="text-7xl font-extrabold text-brand-700 tabular-nums">
+              {Math.ceil(startsIn!)}
+            </p>
+          </>
+        ) : exam.state === "finished" ? (
+          <>
+            <p className="text-3xl mb-2">⏱</p>
+            <p className="text-slate-700">Vaqt tugadi — javoblaringiz topshirilmoqda…</p>
+          </>
+        ) : (
+          <>
+            <p className="text-4xl mb-3">⏳</p>
+            <h1 className="text-lg font-bold text-slate-900">Kuting, test hali boshlanmadi</h1>
+            <p className="text-sm text-slate-500 mt-2">
+              Examiner "Start" bosganda savollar shu yerda o'zi ochiladi.
+              Sahifani yopmang.
+            </p>
+            {exam.duration_min ? (
+              <p className="text-xs text-slate-400 mt-3">Vaqt: {exam.duration_min} daqiqa</p>
+            ) : null}
+          </>
+        )}
+      </div>
+    );
+  }
+
+  // ------------------------------------------------ test
+  const low = endsIn !== null && endsIn <= 60;
   return shell(
     <div className="space-y-4 pb-24">
       {exam.parts.map((p, pi) => (
         <div key={pi} className={card}>
           <h2 className="font-bold text-slate-900">{p.title}</h2>
           {p.instructions && (
-            <p className="text-sm text-slate-600 mt-1">{p.instructions}</p>
+            <p className="text-sm text-slate-600 mt-1 whitespace-pre-line">{p.instructions}</p>
           )}
-          {p.audio_url && (
-            <audio controls src={p.audio_url} className="w-full mt-3" />
-          )}
+          {p.audio_url && <audio controls src={p.audio_url} className="w-full mt-3" />}
           {p.image && (
             <img src={p.image} alt="" className="mt-3 w-full max-w-xl rounded-lg border border-slate-200" />
           )}
@@ -411,7 +560,7 @@ export default function ExamTake() {
                     autoCapitalize="off"
                     autoCorrect="off"
                     spellCheck={false}
-                    placeholder="To'liq so'zni yozing"
+                    placeholder="Javobni yozing"
                     onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
                   />
                 )}
@@ -423,12 +572,22 @@ export default function ExamTake() {
 
       <div className="fixed bottom-0 inset-x-0 bg-white/95 border-t border-slate-200 px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <span className="text-sm text-slate-600 whitespace-nowrap">
+          {endsIn !== null && (
+            <span
+              className={`text-lg font-bold tabular-nums ${
+                low ? "text-red-600" : "text-slate-800"
+              }`}
+              title="Qolgan vaqt"
+            >
+              ⏱ {mmss(endsIn)}
+            </span>
+          )}
+          <span className="text-sm text-slate-500 whitespace-nowrap">
             {answered} / {exam.q_count}
           </span>
           {error && <span className="text-xs text-red-600 flex-1 truncate">{error}</span>}
           <button
-            onClick={submit}
+            onClick={manualSubmit}
             disabled={sending}
             className="ml-auto bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-6 py-2.5 text-sm font-semibold disabled:opacity-60"
           >

@@ -4283,6 +4283,13 @@ class ExamOnline(Base):
     # qilib ber"). NULL — natijalar hali guruh testiga yozilmagan.
     published_at = Column(DateTime, nullable=True)
     published_by = Column(String, nullable=True)
+    # VAQTLI TEST (2026-09-18, Jahongir: "examiner vaqt belgilab start
+    # bosganda sekund teskari sanab test ochilsin ... vaqt tugagach
+    # avtomatik topshirilsin"). started_at — savollar ochiladigan payt
+    # (sanoqdan keyin), ends_at — tugash payti. NULL — hali kutish.
+    duration_min = Column(Integer, nullable=True)
+    started_at = Column(DateTime, nullable=True)
+    ends_at = Column(DateTime, nullable=True)
 
 
 class ExamSubmission(Base):
@@ -4305,6 +4312,9 @@ class ExamSubmission(Base):
     online_max = Column(Float, nullable=False, default=0)
     paper_score = Column(Float, nullable=True)      # Writing + Speaking
     status = Column(String, nullable=False, default="pending")
+    # in_progress — o'quvchi kirgan, test hali topshirilmagan; sub_key —
+    # uning brauzeridagi kalit (javoblarni oraliqda saqlash uchun)
+    sub_key = Column(String, nullable=True, index=True)
     ip = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)

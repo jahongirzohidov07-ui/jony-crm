@@ -61,6 +61,12 @@ export type OnlineData = {
     paper_max: number;
     published_at: string | null;
     published_by: string | null;
+    state: "waiting" | "countdown" | "running" | "finished";
+    server_now: string;
+    starts_at: string | null;
+    ends_at: string | null;
+    duration_min: number | null;
+    in_progress: number;
   } | null;
   group_level: string | null;
   can_manage: boolean;
@@ -83,7 +89,7 @@ export function useExamOnline(examId: number, enabled: boolean) {
   const isOpen = !!data?.online?.is_open;
   useEffect(() => {
     if (!enabled || !isOpen) return;
-    const t = setInterval(reload, 15000);
+    const t = setInterval(reload, 10000);
     return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examId, enabled, isOpen]);
@@ -247,6 +253,111 @@ export function AnswerSheetButton({
   );
 }
 
+function mmss(sec: number) {
+  const s = Math.max(0, Math.ceil(sec));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+
+/** VAQTLI TEST (2026-09-18, Jahongir: "examiner vaqt belgilab start
+ *  bosganda sekund teskari sanab test ochilsin ... vaqt tugagach
+ *  testlar yopilib qolsin"). O'quvchilar link orqali kirib kutadi. */
+function TimerControls({
+  examId,
+  data,
+  canManage,
+  run,
+  busy,
+}: {
+  examId: number;
+  data: NonNullable<OnlineData["online"]>;
+  canManage: boolean;
+  run: (fn: () => Promise<OnlineData>) => void;
+  busy: boolean;
+}) {
+  const [minutes, setMinutes] = useState(String(data.duration_min || 40));
+  const [now, setNow] = useState(Date.now());
+  const offset = Date.parse(data.server_now) - Date.now();
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const serverNow = now + offset;
+  const startsIn = data.starts_at ? (Date.parse(data.starts_at) - serverNow) / 1000 : 0;
+  const endsIn = data.ends_at ? (Date.parse(data.ends_at) - serverNow) / 1000 : 0;
+  let state = data.state;
+  if (state === "countdown" && startsIn <= 0) state = "running";
+  if (state === "running" && endsIn <= 0) state = "finished";
+
+  if (state === "countdown" || state === "running")
+    return (
+      <div className="flex flex-wrap items-center gap-3 rounded-lg bg-sky-50 text-sky-900 px-3 py-2 mb-3">
+        <span className="text-sm">
+          {state === "countdown" ? "Test boshlanmoqda:" : "Test ketyapti — qolgan vaqt:"}
+        </span>
+        <span className="text-xl font-bold tabular-nums">
+          {mmss(state === "countdown" ? startsIn : endsIn)}
+        </span>
+        {data.in_progress ? (
+          <span className="text-xs text-sky-700">yechmoqda: {data.in_progress}</span>
+        ) : null}
+        {canManage && (
+          <button
+            disabled={busy}
+            onClick={() => {
+              if (confirm("Test hozir hamma uchun tugatilsinmi? Javoblar avtomatik topshiriladi."))
+                run(() => api.post<OnlineData>(`/exams/${examId}/online/stop`, {}));
+            }}
+            className="ml-auto border border-sky-300 rounded-lg px-3 py-1.5 text-sm hover:bg-sky-100"
+          >
+            Tugatish
+          </button>
+        )}
+      </div>
+    );
+
+  return (
+    <div className="flex flex-wrap items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 mb-3">
+      <span className="text-sm text-slate-700">
+        {state === "finished"
+          ? "Test vaqti tugadi."
+          : `Kutmoqda: ${data.in_progress} o'quvchi — savollar Start bosilgach ochiladi.`}
+      </span>
+      {canManage && (
+        <span className="ml-auto flex items-center gap-2">
+          <input
+            type="number"
+            min={1}
+            max={300}
+            value={minutes}
+            onChange={(e) => setMinutes(e.target.value)}
+            className="w-20 rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            title="Test vaqti, daqiqa"
+          />
+          <span className="text-xs text-slate-500">daqiqa</span>
+          <button
+            disabled={busy || !Number(minutes)}
+            onClick={() => {
+              if (
+                state === "finished" &&
+                !confirm("Test qayta ochilsinmi? Hali topshirmaganlar yana kira oladi.")
+              )
+                return;
+              run(() =>
+                api.post<OnlineData>(`/exams/${examId}/online/start`, {
+                  minutes: Number(minutes),
+                })
+              );
+            }}
+            className="bg-sky-600 hover:bg-sky-700 text-white rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-60"
+          >
+            {state === "finished" ? "Qayta start" : "Start"}
+          </button>
+        </span>
+      )}
+    </div>
+  );
+}
+
 /** Link kartasi: yaratish, nusxa olish, ochish/yopish. */
 export function OnlineLinkCard({
   examId,
@@ -366,6 +477,15 @@ export function OnlineLinkCard({
   ).length;
   return (
     <div className="border border-slate-200 rounded-xl p-4 mb-4 bg-white">
+      {o.is_open && (
+        <TimerControls
+          examId={examId}
+          data={o}
+          canManage={data.can_manage}
+          run={run}
+          busy={busy}
+        />
+      )}
       {/* TASDIQLASH (2026-09-18): examiner tasdiqlaguncha natija guruh
           testiga yozilmaydi — ustoz, o'quvchi va ota-ona ko'rmaydi */}
       <div

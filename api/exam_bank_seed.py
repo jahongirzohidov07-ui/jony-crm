@@ -2875,6 +2875,177 @@ We're sure you have lots of questions, so here are answers to some of them:
     ],
 }
 
+
+S2END_IMG = "/exam-img/step2-end/"
+A_H = ["A", "B", "C", "D", "E", "F", "G", "H"]
+
+# Step 2 End of course: Listening 1–15 + Reading 16–40. Listening
+# faylida Part 4 (16–20) sahifasi yo'q edi — kelganda qo'shiladi.
+# Reading raqamlari 15 taga surilgan.
+STEP2_END = {
+    "level": "step2", "kind": "end", "unit_no": None,
+    "title": "Step 2 · End of course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1",
+            "instructions": "You will hear five short recordings. For each "
+                            "question, choose the correct picture. You will "
+                            "hear each recording twice.",
+            "questions": [
+                _c("Why has Chris got a headache?", ABC, "A", image=S2END_IMG + "l1.jpg"),
+                _c("What would the woman like to have?", ABC, "B", image=S2END_IMG + "l2.jpg"),
+                _c("Which man are they looking at?", ABC, "A", image=S2END_IMG + "l3.jpg"),
+                _c("What is the man going to buy at the supermarket?", ABC, "A",
+                   image=S2END_IMG + "l4.jpg"),
+                _c("What does Sally want to buy in town?", ABC, "C", image=S2END_IMG + "l5.jpg"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2",
+            "instructions": "You will hear a man talking to a friend about the "
+                            "transport he used on his holiday. What was the "
+                            "problem with each one? You will hear the "
+                            "conversation twice.",
+            "questions": [
+                _c("train", ["crowded", "dangerous", "dirty", "expensive", "late",
+                             "noisy", "slow", "uncomfortable"], "D"),
+                _c("scooter", ["crowded", "dangerous", "dirty", "expensive", "late",
+                               "noisy", "slow", "uncomfortable"], "B"),
+                _c("bus", ["crowded", "dangerous", "dirty", "expensive", "late",
+                           "noisy", "slow", "uncomfortable"], "G"),
+                _c("ferry", ["crowded", "dangerous", "dirty", "expensive", "late",
+                             "noisy", "slow", "uncomfortable"], "A"),
+                _c("helicopter", ["crowded", "dangerous", "dirty", "expensive", "late",
+                                  "noisy", "slow", "uncomfortable"], "F"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3",
+            "instructions": "You will hear a radio interview with a man called "
+                            "Tom, talking about a film he went to see this "
+                            "week. For each question choose the correct "
+                            "answer. You will hear the conversation twice.",
+            "questions": [
+                _c("Who did Tom go to the cinema with?",
+                   ["his grandfather", "his grandson", "his uncle"], "B"),
+                _c("What kind of music was in the film?", ["jazz", "pop", "rock"], "A"),
+                _c("What did the main actor want to be at first?",
+                   ["a director", "a photographer", "a pilot"], "C"),
+                _c("What did the actor do each day to get fit?",
+                   ["He went cycling.", "He played rugby.", "He went running."], "C"),
+                _c("Tom thinks the film",
+                   ["is going to be popular.", "is much too long.",
+                    "is really a children's film."], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1 · Notices",
+            "instructions": "Read the notices. Which notice (A – H) matches "
+                            "each sentence?",
+            "passage": """A   Wet paint. Please use side door.
+B   Turn off all mobiles inside the hospital.
+C   UNIVERSITY BOOKSTORE – Coffee Shop on first floor.
+D   No food in this shop.
+E   A1 Cinema – All tickets half price before 5pm.
+F   Watch your head when you come in.
+G   “Online Bookstore” – 20% off for all students.
+H   Hotel guests. To call an outside line, press “9”.""",
+            "questions": [
+                _c("You can't eat in here.", A_H, "D"),
+                _c("People at university can get things cheaper here.", A_H, "G"),
+                _c("You have to go another way into the building.", A_H, "A"),
+                _c("Take care here because you can hurt yourself.", A_H, "F"),
+                _c("In this place, you can only use your phone outside.", A_H, "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Albert",
+            "instructions": "Read the sentences about a student called Albert, "
+                            "and choose the correct answer for each gap.",
+            "questions": [
+                _c("Albert comes from Germany but he ………… at university in London.",
+                   ["is", "has", "does"], "A"),
+                _c("Albert loves ………… photographs when he’s not studying.",
+                   ["making", "having", "taking"], "C"),
+                _c("Albert was happy because he got a good ………… in his exam.",
+                   ["test", "mark", "note"], "B"),
+                _c("Albert is going to go ………… in the holiday with his brother.",
+                   ["golf", "exercises", "fishing"], "C"),
+                _c("Albert has ………… lots of interesting places in London.",
+                   ["seen", "looked", "watched"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · James Cracknell",
+            "instructions": "Read the text about James Cracknell and the "
+                            "questions below. For each question, choose the "
+                            "correct answer.",
+            "passage": """James Cracknell
+
+James Cracknell wanted to be a geography teacher, but never became one. Instead, he trained for the Olympic Games and won gold. He still loves sport, but these days he makes TV programmes about his travels.
+Last year he and his friend, Ben Fogle, decided to travel across the Arabian desert; a place with almost no food or water. They wanted to make the same trip as another traveller called William Thesiger. Thesiger made the trip eighty years before them.
+First, they had to buy some camels. It's a bit like buying a car – you need to check its health and age! But for James and Ben something else mattered more. They needed four camels, so the animals had to like each other. An angry camel is not a good idea in the desert!
+A friend, Masalan, who makes similar journeys, gave them good advice. Camels eat most kinds of green food, but there is little in the desert. He said that they really love a local fruit, as much as humans love chocolate, and to take a big bag of them. Masalan also told them to follow a daily routine: Get up at 4.30, feed the camels, make a fire, drink tea but not too much water, leave before 7.00. Ride the camels for 5 hours, walk for 3, and then ride for another 2.""",
+            "questions": [
+                _c("Why did James go to the Arabian desert?",
+                   ["to repeat someone else’s journey", "to meet an old friend who was there",
+                    "to try and live on little food and water"], "A"),
+                _c("The most important thing about each camel was that it",
+                   ["was friendly to the others in the group.", "liked being with both Ben and James.",
+                    "was healthy and was not too old."], "A"),
+                _c("What did Masalan say to James and Ben about food?",
+                   ["Give the camels the same food that you eat.",
+                    "Camels can find enough food in the desert.",
+                    "Carry lots of the camels’ favourite food."], "C"),
+                _c("What advice did Masalan give Ben and James about their routine?",
+                   ["Wake up at 7:00.", "Don’t sit on camels all day.",
+                    "Have either tea or water at breakfast."], "B"),
+                _c("What do we learn about Masalan?",
+                   ["He wanted to go with James and Ben.", "He knew about life in the desert.",
+                    "He has worked with camels all his life."], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · The Golf Alexander Hotel",
+            "instructions": "Read the text about a hotel and choose the correct "
+                            "answer for each gap.",
+            "passage": """The Golf Alexander Hotel
+
+Are you looking for a great place to stay? Do you need a relaxing holiday with amazing food and fantastic sports facilities? Then, (31) ………… are you waiting for? Come to the Golf Alexander Hotel. We (32) ………… give you your dream holiday!
+Just look at what our guests say about us!
+• 'The Golf Alexander Hotel has the (33) ………… comfortable beds I have ever slept on!'
+• 'We had a brilliant time and we are going to come back next year.'
+• 'The hotel staff were so friendly and (34) ………… happy to answer any of the questions we had.'
+• 'My daughter could not swim before we came here (35) ………… now she can and she loves it – thanks to the fantastic pool staff at the Golf Alexander Hotel.'""",
+            "questions": [
+                _c("", ["why", "where", "what"], "C"),
+                _c("", ["can", "want", "need"], "A"),
+                _c("", ["much", "most", "more"], "B"),
+                _c("", ["never", "always", "still"], "B"),
+                _c("", ["but", "because", "so"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 5 · Hi everyone!",
+            "instructions": "Read the text. Think of the word which best fits "
+                            "each gap. Write ONE word for each gap.",
+            "passage": """Hi everyone!
+I have just bought a new tablet and I (36) ………… like some advice about what apps to get. Could you help me?
+I already use my tablet for chatting with my family and friends and listening to music. However, I am (37) ………… to need it for work sometimes. (38) ………… you know a good app for downloading and working on documents?
+I also enjoy sport and I go running every week. Which app is (39) ………… best one for planning routes and for keeping an exercise diary? And how (40) ………… does it cost? Or is it free?
+Annie""",
+            "questions": [
+                _t("", "would", "’d"),
+                _t("", "going", "sure", "certain", "bound"),
+                _t("", "do"),
+                _t("", "the"),
+                _t("", "much"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2902,4 +3073,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit10", STEP2_UNIT10),
     ("exam_tpl_step2_unit11", STEP2_UNIT11),
     ("exam_tpl_step2_unit12", STEP2_UNIT12),
+    ("exam_tpl_step2_end", STEP2_END),
 ]

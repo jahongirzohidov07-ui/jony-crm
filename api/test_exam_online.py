@@ -136,6 +136,8 @@ u11 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 11]
 ck("Step 1 Unit 11 bor, 30 savol", [x["q_count"] for x in u11], [30])
 u12 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 12]
 ck("Step 1 Unit 12 bor, 30 savol", [x["q_count"] for x in u12], [30])
+end = [x for x in r.json() if x["level"] == "step1" and x["kind"] == "end"]
+ck("Step 1 End of course bor, 45 savol", [x["q_count"] for x in end], [45])
 t3 = client.get(f"/api/exam-templates/{u3[0]['id']}", headers=HE).json()
 q7 = t3["parts"][1]["questions"][0]
 ck("rasmli savol", q7["image"], "/exam-img/step1-u3/q7.jpg")

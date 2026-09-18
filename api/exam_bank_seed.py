@@ -1377,6 +1377,169 @@ James: Oh yes! People love holidays like this. They think they’re fantastic!""
     ],
 }
 
+
+END_IMG = "/exam-img/step1-end/"
+
+# End of course: Listening (1–20) + Reading (21–45) bitta testda —
+# Mid-course bilan bir xil tartib. Reading raqamlari 20 taga surilgan.
+STEP1_END = {
+    "level": "step1", "kind": "end", "unit_no": None,
+    "title": "Step 1 · End of course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1",
+            "instructions": "You will hear five short conversations. For each "
+                            "question, choose the correct picture. You will "
+                            "hear each conversation twice.",
+            "questions": [
+                _c("Where’s the man from?", ABC, "B", image=END_IMG + "l1.jpg"),
+                _c("How much was the woman’s dress?", ABC, "C", image=END_IMG + "l2.jpg"),
+                _c("What job does the woman do now?", ABC, "B", image=END_IMG + "l3.jpg"),
+                _c("How did Elena’s parents meet?", ABC, "C", image=END_IMG + "l4.jpg"),
+                _c("What’s Dermot going to do first?", ABC, "A", image=END_IMG + "l5.jpg"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2",
+            "instructions": "You will hear Jasper talking to a friend about the "
+                            "presents he bought for people in his family. "
+                            "Which present did Jasper buy for each person? "
+                            "Choose a letter A – G. You will hear the "
+                            "conversation twice.",
+            "image": END_IMG + "l_presents.jpg",
+            "questions": [
+                _c("wife", A_G, "D"),
+                _c("mother", A_G, "B"),
+                _c("son", A_G, "F"),
+                _c("sister", A_G, "A"),
+                _c("father", A_G, "G"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3",
+            "instructions": "You will hear a woman called Megan talking about "
+                            "her holiday in Dublin. For each question, choose "
+                            "the correct answer. You will hear the "
+                            "conversation twice.",
+            "questions": [
+                _c("When did Megan go to Dublin?",
+                   ["two months ago", "two weeks ago", "one week ago"], "A"),
+                _c("Megan went to Dublin in", ["spring.", "summer.", "autumn."], "C"),
+                _c("Why did Megan stay at the Camilla hotel?",
+                   ["It was big.", "It was very cheap.", "It was near the station."], "C"),
+                _c("Megan’s favourite meal was", ["breakfast.", "lunch.", "dinner."], "A"),
+                _c("What present did Megan buy for her brother?",
+                   ["a T-shirt", "a camera", "a book"], "B"),
+            ],
+        },
+        {
+            "title": "Listening · Part 4 · Henley Summer School",
+            "instructions": "You will hear a man called Andy talking about a "
+                            "summer school for teenage students. For each "
+                            "question, write the correct answer in the gap. "
+                            "You will hear the recording twice.",
+            "questions": [
+                _t("Students from: Italy, ____________ and Brazil", "Spain"),
+                _t("Kilometres from London: ____________",
+                   "25", "twenty-five", "twenty five", "25 km",
+                   "25 kilometres", "25 kilometre"),
+                _t("Month school opens: ____________", "June"),
+                _t("Subject of morning class: ____________", "English"),
+                _t("Time afternoon classes finish: ____________ o’clock",
+                   "4", "four", "4:00", "at 4", "at four", "at 4:00",
+                   "4 o’clock", "four o’clock"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1",
+            "instructions": "Read the sentences. Which picture is it? Choose a "
+                            "letter A – G.",
+            "image": END_IMG + "r_food.jpg",
+            "questions": [
+                _c("You go here to buy food.", A_G, "B"),
+                _c("You can cook here in your house.", A_G, "E"),
+                _c("We are going to cook this meat before we eat it.", A_G, "A"),
+                _c("There are lots of nice dishes on the menu here.", A_G, "G"),
+                _c("These people are going to cook your meal.", A_G, "D"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Carl",
+            "instructions": "Read the sentences about Carl, and choose the "
+                            "correct answer for each gap.",
+            "questions": [
+                _c("Carl is a student but he ………… at a hotel every Saturday.",
+                   ["works", "arrives", "watches"], "A"),
+                _c("Carl ………… up at 6 o’clock every Saturday.", ["has", "goes", "gets"], "C"),
+                _c("Carl ………… the cleaning in the hotel.", ["makes", "does", "uses"], "B"),
+                _c("In the hotel, it’s very hot in summer and very cold in ………… .",
+                   ["spring", "autumn", "winter"], "C"),
+                _c("Carl usually has a ………… of coffee with his friends after work.",
+                   ["cup", "plate", "spoon"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · Three cooks",
+            "instructions": "Read the text about three cooks and the questions "
+                            "below. For each question, choose the correct "
+                            "answer.",
+            "passage": """Matt
+Cooking was not important to me when I was young. My mum was a good cook but it was boring for me and we didn’t learn cooking at school. When I finished school, I worked on a boat. I went to Italy, Spain and Japan and I learned about different food. I came home, went to college and read all the new cookbooks. Then I got a job in a hotel restaurant. Next month my new restaurant will open in Paris!
+
+Antonio
+I love all food – Chinese, Russian, Brazilian! Mum and Dad both cooked great food when I was young and I liked helping them. There were no cooking lessons at my school but I always helped Mum cook dinner on Sundays. Then I found some of her cookbooks. They were over seventy years old and really interesting. Now I have my own school for students of cooking and sometimes I use Mum’s books in my lessons!
+
+James
+I didn’t like a lot of subjects at school. They were so boring! But I loved the cooking lessons. The teacher was great and we cooked lots of different things – fish, pizza, biscuits. We never read books! We visited new restaurants in town and ate food from different countries. Now I am a writer! I wrote my first book six years ago. It was about cooking for children, with lots of ideas. My next one is going to be about fish.""",
+            "questions": [
+                _c("Who learned to cook at home?", ["Matt", "Antonio", "James"], "B"),
+                _c("Who travelled to different countries?", ["Matt", "Antonio", "James"], "A"),
+                _c("Who is going to have a new restaurant soon?", ["Matt", "Antonio", "James"], "A"),
+                _c("Who writes books about cooking?", ["Matt", "Antonio", "James"], "C"),
+                _c("Who teaches cooking?", ["Matt", "Antonio", "James"], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · Holidays with my brother",
+            "instructions": "Read the text about a holiday and choose the "
+                            "correct answer for each gap.",
+            "passage": """Holidays with my brother
+
+Last year, I went to Italy with my brother. We (36) ………… around the country for three weeks. First, we went to the beach. We can swim quite well and we really enjoyed the hot weather. Then we went to the mountains. (37) ………… was no snow but it was cold. We walked to a beautiful village.
+Every morning we (38) ………… breakfast in the hotel. Then we bought food at a supermarket and made sandwiches for lunch. Every evening we ate at a different restaurant. Next year, in July, my brother and I (39) ………… drive to Spain on holiday. Holidays with (40) ………… are always great.""",
+            "questions": [
+                _c("", ["travelling", "travelled", "travels"], "B"),
+                _c("", ["There", "That", "They"], "A"),
+                _c("", ["having", "has", "had"], "C"),
+                _c("", ["are going", "going", "are going to"], "C"),
+                _c("", ["him", "he", "his"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 5 · Hi Molly!",
+            "instructions": "Read the text. Think of the word which best fits "
+                            "each gap. Write ONE word for each gap.",
+            "passage": """From: Susan
+To: Molly
+
+Hi Molly!
+How are you? I (41) ………… really enjoying university. My room has big windows. It’s beautiful! Yesterday evening, there was a party at my friend’s house. I met lots of interesting people. I met a nice boy. (42) ………… name is Ralph. He plays the guitar in a band.
+I’m very happy because you are (43) ………… to visit me next Friday. When (44) ………… your bus arrive at the bus station? I can meet you in the afternoon on Friday but (45) ………… meet in the morning, because I have classes then.
+Let’s go shopping on Saturday!
+Email soon.
+Susan""",
+            "questions": [
+                _t("", "am", "’m"),
+                _t("", "His"),
+                _t("", "going", "coming", "planning"),
+                _t("", "does", "will"),
+                _t("", "can’t", "cannot"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1391,4 +1554,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit10", STEP1_UNIT10),
     ("exam_tpl_step1_unit11", STEP1_UNIT11),
     ("exam_tpl_step1_unit12", STEP1_UNIT12),
+    ("exam_tpl_step1_end", STEP1_END),
 ]

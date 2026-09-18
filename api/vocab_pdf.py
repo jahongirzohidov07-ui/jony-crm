@@ -25,7 +25,7 @@ router = APIRouter()
 
 _ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
 BRAND = "JONY ACADEMY"
-CONTACT = "jonyacademy.uz · jonyos.uz · @JonyAcademybot"
+CONTACT = "+998 77 276 97 77 · +998 93 112 65 65 · jonyacademy.uz · @JonyAcademybot"
 AD = ("Jony Academy — ingliz tili, IELTS va Jony Student ilovasi bilan "
       "o'yin orqali o'rganish. Ro'yxatdan o'tish: jonyacademy.uz")
 TIERS = {"20": ("core",), "40": ("core", "strong"), "60": ("core", "strong", "super")}

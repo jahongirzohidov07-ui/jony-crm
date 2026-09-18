@@ -5507,6 +5507,3677 @@
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 26–35 — uyga (hafta davomida)."
    }
+  },
+  {
+   "no": 7,
+   "title": "Adverbs of Contrast",
+   "grammar_topic": "QARAMA-QARSHILIK BOG'LOVCHILARI (however / nevertheless / on the other hand / in contrast / whereas / while / still / yet)",
+   "vocab_topic": "Travel (sayohat — B1)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 7 – Adverbs of contrast (9 qatorli jadval); TRAVEL (Jony Academy ro'yxati — kitobda alohida sahifa yo'q); Reading — Zahiriddin Bobur (Jony Academy matni); kitob Topic 36–40 uyga.",
+   "objectives": [
+    "Qarama-qarshilik bog'lovchilarini uch guruhda ishlatish: gap boshida (However, …), gap o'rtasida (…, whereas …), bog'lovchi sifatida (…, yet …).",
+    "Tinish belgilari: However, + vergul; whereas oldidan vergul; nevertheless — rasmiy.",
+    "IELTS Writing 2 da \"on the other hand / in contrast / whereas\" bilan ikki tomonni taqqoslash.",
+    "Sayohat B1 CORE 20 bilan turizm afzallik/kamchiliklari haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Travel (sayohat — B1) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz doskaga: \"Tashkent is big. Bukhara is old.\" — o'quvchilar bog'laydi: \"Tashkent is big, whereas Bukhara is old.\" / \"Tashkent is big. However, Bukhara is more beautiful.\" Qaysi bog'lovchi gap ichida, qaysi gap boshida?"
+    ],
+    [
+     8,
+     "Kahoot — Adverbs of degree",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Adverbs of degree lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 9 qator: HOWEVER / NEVERTHELESS / ON THE OTHER HAND / IN CONTRAST / CONVERSELY / STILL — yangi gap boshida, vergul bilan; WHEREAS / WHILE — ikki gapni bitta gapga bog'laydi (vergul); YET — \"ammo\" (and/but kabi, vergul bilan). Writing uchun eng muhim bo'lovchilar."
+    ],
+    [
+     12,
+     "Travel (sayohat — B1) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "HOWEVER / NEVERTHELESS / STILL — \"biroq, shunga qaramay\": yangi gap boshida, vergul: \"The test was difficult. However, I passed it.\"",
+     "ON THE OTHER HAND / IN CONTRAST / CONVERSELY — ikki tomon/farq: \"Living in a city is convenient. On the other hand, it can be noisy.\"",
+     "WHEREAS / WHILE — bitta gap ichida farq: \"She enjoys classical music, whereas he prefers rock.\"",
+     "YET — \"ammo\" bog'lovchi: \"She is smart, yet she often makes mistakes.\" (but dan kuchliroq, rasmiy)."
+    ],
+    "formulas": [
+     [
+      "However",
+      "Gap 1. However, gap 2.",
+      "The test was difficult. However, I passed it.",
+      "Test qiyin edi. Biroq men undan o'tdim."
+     ],
+     [
+      "Nevertheless / Still",
+      "Gap 1. Nevertheless, gap 2. / Gap 1. Still, gap 2.",
+      "He was tired. Nevertheless, he continued working. / It was raining. Still, they went for a walk.",
+      "U charchagan edi. Shunga qaramay, ishlashda davom etdi. / Yomg'ir yog'ayotgan edi. Shunga qaramay, sayrga chiqishdi."
+     ],
+     [
+      "On the other hand",
+      "Gap 1. On the other hand, gap 2.",
+      "Living in a city is convenient. On the other hand, it can be noisy.",
+      "Shaharda yashash qulay. Boshqa tomondan, shovqinli bo'lishi mumkin."
+     ],
+     [
+      "In contrast / Conversely",
+      "Gap 1. In contrast, gap 2.",
+      "She is very shy. In contrast, her brother is outgoing.",
+      "U juda tortinchoq. Aksincha, ukasi kirishimli."
+     ],
+     [
+      "Whereas / While",
+      "Gap 1, whereas gap 2.",
+      "She enjoys classical music, whereas he prefers rock. / Some people like coffee, while others prefer tea.",
+      "U klassik musiqani yoqtiradi, holbuki u rokni afzal ko'radi. / Ba'zilar qahvani yoqtiradi, boshqalar esa choyni."
+     ],
+     [
+      "Yet",
+      "Gap 1, yet gap 2.",
+      "She is smart, yet she often makes mistakes.",
+      "U aqlli, ammo tez-tez xato qiladi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Is travelling abroad expensive?",
+      "Yes. However, it is worth every penny."
+     ],
+     [
+      "Do you prefer the mountains or the sea?",
+      "I love the mountains, whereas my sister prefers the beach."
+     ],
+     [
+      "Was the hotel good?",
+      "The room was small. Nevertheless, the staff were wonderful."
+     ],
+     [
+      "Is Samarkand better than Bukhara?",
+      "Samarkand is grander. On the other hand, Bukhara is quieter."
+     ],
+     [
+      "Did the trip go well?",
+      "The flight was delayed, yet we arrived on time."
+     ],
+     [
+      "Is package tourism good for Uzbekistan?",
+      "It brings money. In contrast, backpackers spend less but stay longer."
+     ],
+     [
+      "Why did Babur leave Fergana?",
+      "He lost his kingdom. Still, he never stopped writing."
+     ],
+     [
+      "Do tourists like Uzbek food?",
+      "Most love it, while some find it too heavy."
+     ],
+     [
+      "Is the visa process difficult?",
+      "It used to be. Conversely, now it takes five minutes online."
+     ],
+     [
+      "Is it worth visiting Khiva in summer?",
+      "It's very hot. Nevertheless, the old city is unforgettable."
+     ]
+    ],
+    "notes": [
+     "However — gapning boshida (However, …) yoki o'rtasida (…, however, …); \"but\" bilan bir gapda ishlatilmaydi.",
+     "whereas/while — faqat farq (qarama-qarshi ikki fakt), sabab emas.",
+     "Writing 2: har paragrafda kamida bitta contrast bog'lovchi: \"On the one hand, … On the other hand, …\"",
+     "Travel B1: itinerary, accommodation, sightseeing, cultural heritage, off the beaten track, package holiday, budget travel."
+    ],
+    "mistakes": [
+     [
+      "However I passed it.",
+      "However, I passed it.",
+      "Vergul."
+     ],
+     [
+      "She likes tea, however he likes coffee.",
+      "She likes tea. However, he likes coffee. / She likes tea, whereas he likes coffee.",
+      "However — yangi gap; bitta gapda whereas."
+     ],
+     [
+      "Whereas, she likes tea.",
+      "She likes coffee, whereas he likes tea.",
+      "Whereas ikki gapni bog'laydi."
+     ],
+     [
+      "But however, it was fine.",
+      "However, it was fine.",
+      "Ikkalasi birga emas."
+     ],
+     [
+      "It was cold, yet, we went out.",
+      "It was cold, yet we went out.",
+      "yet dan keyin vergul yo'q."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — sayohatning B1 otlari (itinerary, accommodation, heritage…); STRONG — turizm turlari va muammolar; SUPER — idiomalar (off the beaten track, travel light).",
+     "Har so'zga contrast gap: \"Package holidays are easy. However, they are expensive.\""
+    ],
+    "core": [
+     [
+      "tourism",
+      "turizm",
+      "Tourism brings money. However, it can damage old cities.",
+      "Turizm pul keltiradi. Biroq eski shaharlarga zarar yetkazishi mumkin.",
+      "ˈtʊˌrɪzəm"
+     ],
+     [
+      "tourist",
+      "turist",
+      "Tourists love Samarkand, whereas locals prefer quiet Shakhrisabz.",
+      "Turistlar Samarqandni yaxshi ko'radi, mahalliylar esa sokin Shahrisabzni.",
+      "ˈtʊrɪst"
+     ],
+     [
+      "itinerary (B1)",
+      "sayohat rejasi",
+      "The itinerary was full. Nevertheless, we rested a lot.",
+      "Reja to'la edi. Shunga qaramay, ko'p dam oldik.",
+      ""
+     ],
+     [
+      "accommodation (B1)",
+      "turar joy",
+      "Accommodation is cheap here. On the other hand, it's basic.",
+      "Bu yerda turar joy arzon. Boshqa tomondan, oddiy.",
+      ""
+     ],
+     [
+      "sightseeing (B1)",
+      "diqqatga sazovor joylarni ko'rish",
+      "Sightseeing is tiring, yet it's the best part of a trip.",
+      "Sayr charchatadi, ammo bu sayohatning eng yaxshi qismi.",
+      ""
+     ],
+     [
+      "cultural heritage",
+      "madaniy meros",
+      "Cultural heritage attracts visitors. In contrast, new buildings don't.",
+      "Madaniy meros mehmonlarni jalb qiladi. Aksincha, yangi binolar — yo'q.",
+      "ˈkəlʧərəl ˈhɛrɪtɪʤ"
+     ],
+     [
+      "destination (B1)",
+      "manzil",
+      "Dubai is a popular destination, while Khiva is still quiet.",
+      "Dubay mashhur manzil, Xiva esa hali ham sokin.",
+      ""
+     ],
+     [
+      "journey (B1)",
+      "safar, yo'l",
+      "The journey was long. Still, nobody complained.",
+      "Yo'l uzoq edi. Shunga qaramay, hech kim shikoyat qilmadi.",
+      ""
+     ],
+     [
+      "expedition",
+      "ekspeditsiya",
+      "Babur's expedition to India was dangerous, yet successful.",
+      "Boburning Hindistonga yurishi xavfli, ammo muvaffaqiyatli edi.",
+      "ˌɛkspəˈdɪʃən"
+     ],
+     [
+      "explorer",
+      "sayyoh-tadqiqotchi",
+      "Explorers travelled for years, whereas we fly in hours.",
+      "Sayyohlar yillab yurgan, biz esa soatlab uchamiz.",
+      "ɪkˈsplɔrər"
+     ],
+     [
+      "travel agent",
+      "sayohat agenti",
+      "A travel agent saves time. However, it costs more.",
+      "Sayohat agenti vaqt tejaydi. Biroq qimmatroq turadi.",
+      "ˈtrævəl ˈeɪʤənt"
+     ],
+     [
+      "package holiday",
+      "to'liq paket ta'til",
+      "Package holidays are easy. On the other hand, they are less flexible.",
+      "Paket ta'tillar oson. Boshqa tomondan, moslashuvchan emas.",
+      "ˈpækɪʤ ˈhɑlɪˌdeɪ"
+     ],
+     [
+      "budget travel",
+      "tejamkor sayohat",
+      "Budget travel is cheap, yet it can be uncomfortable.",
+      "Tejamkor sayohat arzon, ammo noqulay bo'lishi mumkin.",
+      "ˈbəʤɪt ˈtrævəl"
+     ],
+     [
+      "guided tour",
+      "gid bilan sayr",
+      "A guided tour is informative, whereas walking alone is free.",
+      "Gidli sayr ma'lumotli, yolg'iz yurish esa bepul.",
+      "ˈgaɪdɪd tʊr"
+     ],
+     [
+      "local (n)",
+      "mahalliy aholi vakili",
+      "Locals are friendly. Nevertheless, learn a few words of their language.",
+      "Mahalliy aholi do'stona. Shunga qaramay, ularning tilida bir necha so'z o'rgan.",
+      "ˈloʊkəl (ɛn)"
+     ],
+     [
+      "currency exchange",
+      "valyuta almashtirish",
+      "Currency exchange is easy at the airport. However, the rate is worse.",
+      "Aeroportda valyuta almashtirish oson. Biroq kurs yomonroq.",
+      "ˈkərənsi ɪksˈʧeɪnʤ"
+     ],
+     [
+      "travel insurance (B1)",
+      "sayohat sug'urtasi",
+      "Travel insurance seems expensive, yet it saves you in an emergency.",
+      "Sug'urta qimmat tuyuladi, ammo favqulodda holatda qutqaradi.",
+      ""
+     ],
+     [
+      "customs",
+      "bojxona",
+      "Customs was slow. Still, we caught our train.",
+      "Bojxona sekin edi. Shunga qaramay, poyezdga ulgurdik.",
+      "ˈkəstəmz"
+     ],
+     [
+      "landmark",
+      "mashhur yodgorlik, diqqatga sazovor joy",
+      "Registan is a landmark, while Chorsu is a living market.",
+      "Registon — yodgorlik, Chorsu esa tirik bozor.",
+      "ˈlændˌmɑrk"
+     ],
+     [
+      "souvenir (B1)",
+      "esdalik sovg'a",
+      "Souvenirs are nice. In contrast, photos are free.",
+      "Esdaliklar yaxshi. Aksincha, suratlar bepul.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "ecotourism",
+      "ekoturizm",
+      "Ecotourism protects nature, whereas mass tourism harms it.",
+      "Ekoturizm tabiatni asraydi, ommaviy turizm esa zarar yetkazadi.",
+      ""
+     ],
+     [
+      "mass tourism",
+      "ommaviy turizm",
+      "Mass tourism creates jobs. On the other hand, it creates rubbish.",
+      "Ommaviy turizm ish o'rinlari yaratadi. Boshqa tomondan, axlat ham.",
+      "mæs ˈtʊˌrɪzəm"
+     ],
+     [
+      "off the beaten track",
+      "odatiy yo'llardan chetda (kam odam boradigan)",
+      "We went off the beaten track. However, it was worth it.",
+      "Kam odam boradigan joyga bordik. Biroq bunga arzidi.",
+      "ɔf ðə ˈbitən træk"
+     ],
+     [
+      "travel light",
+      "kam yuk bilan sayohat qilmoq",
+      "Travel light, yet always take a jacket.",
+      "Kam yuk ol, ammo doim kurtka ol.",
+      "ˈtrævəl laɪt"
+     ],
+     [
+      "jet lag",
+      "vaqt zonasi charchog'i",
+      "Jet lag is hard. Nevertheless, drink water and walk.",
+      "Vaqt zonasi charchog'i og'ir. Shunga qaramay, suv ich va yur.",
+      "ʤɛt læg"
+     ],
+     [
+      "peak season / off-season",
+      "mavsum avji / mavsumdan tashqari",
+      "Peak season is crowded, whereas off-season is cheap.",
+      "Mavsum avjida gavjum, mavsumdan tashqari esa arzon.",
+      ""
+     ],
+     [
+      "book in advance",
+      "oldindan band qilmoq",
+      "Book in advance. Otherwise, hotels are full.",
+      "Oldindan band qil. Aks holda mehmonxonalar to'la.",
+      "bʊk ɪn ədˈvæns"
+     ],
+     [
+      "round trip / one-way",
+      "borish-qaytish / bir tomonlama",
+      "A round trip is cheaper, while a one-way ticket is flexible.",
+      "Borish-qaytish arzonroq, bir tomonlama esa moslashuvchan.",
+      "raʊnd trɪp  ˈwənˈweɪ"
+     ],
+     [
+      "stopover / layover",
+      "oraliq to'xtash",
+      "The stopover was 8 hours. Still, we saw Istanbul.",
+      "Oraliq to'xtash 8 soat edi. Shunga qaramay, Istanbulni ko'rdik.",
+      "ˈstɑˌpoʊvər  ˈleɪˌoʊvər"
+     ],
+     [
+      "delayed / cancelled",
+      "kechikkan / bekor qilingan",
+      "The flight was delayed, yet not cancelled.",
+      "Reys kechikdi, ammo bekor qilinmadi.",
+      "dɪˈleɪd  ˈkænsəld"
+     ],
+     [
+      "excursion (B1)",
+      "ekskursiya",
+      "The excursion was short. However, the guide was excellent.",
+      "Ekskursiya qisqa edi. Biroq gid a'lo darajada edi.",
+      ""
+     ],
+     [
+      "hospitality",
+      "mehmondo'stlik",
+      "Uzbek hospitality is famous, whereas hotels are still developing.",
+      "O'zbek mehmondo'stligi mashhur, mehmonxonalar esa hali rivojlanmoqda.",
+      "ˌhɑspəˈtæləti"
+     ],
+     [
+      "pilgrimage",
+      "ziyorat",
+      "Bukhara is a place of pilgrimage, while Tashkent is a business city.",
+      "Buxoro — ziyoratgoh, Toshkent esa biznes shahri.",
+      "ˈpɪlgrəmɪʤ"
+     ],
+     [
+      "nomad",
+      "ko'chmanchi",
+      "Nomads moved with the seasons, whereas farmers stayed.",
+      "Ko'chmanchilar fasl bilan ko'chgan, dehqonlar esa qolgan.",
+      "ˈnoʊˌmæd"
+     ],
+     [
+      "caravan",
+      "karvon",
+      "Caravans took months. In contrast, planes take hours.",
+      "Karvonlar oylab yurgan. Aksincha, samolyotlar soatlab.",
+      "ˈkɛrəˌvæn"
+     ],
+     [
+      "Silk Road",
+      "Buyuk Ipak yo'li",
+      "The Silk Road was dangerous, yet traders used it for centuries.",
+      "Ipak yo'li xavfli edi, ammo savdogarlar asrlar davomida undan foydalangan.",
+      "sɪlk roʊd"
+     ],
+     [
+      "memoir",
+      "memuar, xotiralar",
+      "Babur's memoir is honest, whereas most kings praised themselves.",
+      "Bobur xotiralari halol, aksariyat shohlar esa o'zini maqtagan.",
+      "ˈmɛmˌwɑr"
+     ],
+     [
+      "exile",
+      "surgun",
+      "Babur lived in exile. Nevertheless, he built an empire.",
+      "Bobur surgunda yashadi. Shunga qaramay, imperiya qurdi.",
+      "ˈɛkˌsaɪl"
+     ],
+     [
+      "homesick (B1)",
+      "uyni sog'ingan",
+      "He was homesick, yet he never returned.",
+      "U uyni sog'indi, ammo hech qaytmadi.",
+      ""
+     ],
+     [
+      "conquer",
+      "zabt etmoq",
+      "He conquered Kabul. However, he always dreamed of Fergana.",
+      "U Kobulni zabt etdi. Biroq doim Farg'onani orzu qildi.",
+      "ˈkɑŋkər"
+     ]
+    ],
+    "super": [
+     [
+      "wanderlust",
+      "sayohatga ishtiyoq",
+      "Wanderlust made him leave, whereas duty made him stay.",
+      "Sayohat ishtiyoqi uni ketishga undadi, burch esa qolishga.",
+      "ˈwɑndərˌləst"
+     ],
+     [
+      "bucket list (B1)",
+      "orzular ro'yxati",
+      "Japan is on my bucket list. However, it's expensive.",
+      "Yaponiya orzular ro'yxatimda. Biroq qimmat.",
+      ""
+     ],
+     [
+      "culture shock (B1)",
+      "madaniy shok",
+      "Culture shock is real, yet it passes in a week.",
+      "Madaniy shok haqiqiy, ammo bir haftada o'tadi.",
+      ""
+     ],
+     [
+      "tourist trap",
+      "turistlar uchun \"tuzoq\" (qimmat joy)",
+      "The café was a tourist trap. Nevertheless, the view was great.",
+      "Kafe turist tuzog'i edi. Shunga qaramay, manzara zo'r edi.",
+      "ˈtʊrɪst træp"
+     ],
+     [
+      "travel restrictions (B1)",
+      "sayohat cheklovlari",
+      "Restrictions have ended. In contrast, prices have risen.",
+      "Cheklovlar tugadi. Aksincha, narxlar oshdi.",
+      ""
+     ],
+     [
+      "domestic / international travel",
+      "ichki / xalqaro sayohat",
+      "Domestic travel is growing, while international travel is still costly.",
+      "Ichki sayohat o'syapti, xalqaro sayohat esa hali qimmat.",
+      "dəˈmɛstɪk  ˌɪnərˈnæʃənɑl ˈtrævəl"
+     ],
+     [
+      "carbon footprint",
+      "uglerod izi",
+      "Flying has a big carbon footprint, whereas trains are cleaner.",
+      "Uchish katta uglerod izi qoldiradi, poyezdlar esa tozaroq.",
+      "ˈkɑrbən ˈfʊtˌprɪnt"
+     ],
+     [
+      "sustainable tourism",
+      "barqaror turizm",
+      "Sustainable tourism is slow. Still, it's the future.",
+      "Barqaror turizm sekin. Shunga qaramay, bu kelajak.",
+      "səˈsteɪnəbəl ˈtʊˌrɪzəm"
+     ],
+     [
+      "overtourism",
+      "haddan tashqari turizm",
+      "Venice suffers from overtourism. Conversely, Karakalpakstan needs visitors.",
+      "Venetsiya ortiqcha turizmdan aziyat chekadi. Aksincha, Qoraqalpog'istonga mehmon kerak.",
+      ""
+     ],
+     [
+      "visa-free",
+      "vizasiz",
+      "Uzbekistan is visa-free for 90 countries now. However, some still need one.",
+      "O'zbekiston hozir 90 davlat uchun vizasiz. Biroq ba'zilarga hali kerak.",
+      ""
+     ],
+     [
+      "embassy",
+      "elchixona",
+      "The embassy was closed. Nevertheless, we got help online.",
+      "Elchixona yopiq edi. Shunga qaramay, onlayn yordam oldik.",
+      "ˈɛmbəsi"
+     ],
+     [
+      "accommodate",
+      "joylashtirmoq",
+      "The hotel accommodates 200 guests, yet it feels quiet.",
+      "Mehmonxona 200 mehmonni joylashtiradi, ammo sokin tuyuladi.",
+      "əˈkɑməˌdeɪt"
+     ],
+     [
+      "navigate",
+      "yo'l topmoq",
+      "Locals navigate easily, whereas tourists get lost.",
+      "Mahalliylar oson yo'l topadi, turistlar esa adashadi.",
+      "ˈnævəˌgeɪt"
+     ],
+     [
+      "detour (B1)",
+      "aylanma yo'l",
+      "We took a detour. However, we saw a beautiful village.",
+      "Aylanma yo'ldan bordik. Biroq chiroyli qishloqni ko'rdik.",
+      ""
+     ],
+     [
+      "scenery",
+      "manzara (tabiat)",
+      "The scenery was stunning, while the road was terrible.",
+      "Manzara hayratlanarli edi, yo'l esa dahshatli.",
+      "ˈsinəri"
+     ],
+     [
+      "remote",
+      "olis, chekka",
+      "Remote villages are peaceful. On the other hand, there's no internet.",
+      "Olis qishloqlar tinch. Boshqa tomondan, internet yo'q.",
+      "rɪˈmoʊt"
+     ],
+     [
+      "border crossing",
+      "chegara o'tish punkti",
+      "The border crossing took two hours. Still, it was friendly.",
+      "Chegaradan o'tish ikki soat oldi. Shunga qaramay, do'stona edi.",
+      "ˈbɔrdər ˈkrɔsɪŋ"
+     ],
+     [
+      "seasoned traveller",
+      "tajribali sayohatchi",
+      "A seasoned traveller packs light, whereas beginners take everything.",
+      "Tajribali sayohatchi kam yuk oladi, yangilar esa hamma narsani.",
+      "ˈsizənd ˈtrævələr"
+     ],
+     [
+      "throne",
+      "taxt",
+      "Babur lost his throne at 12, yet he won a bigger one at 43.",
+      "Bobur 12 yoshida taxtni yo'qotdi, ammo 43 da kattaroq taxtni qo'lga kiritdi.",
+      "θroʊn"
+     ],
+     [
+      "descendant (B1)",
+      "avlod",
+      "His descendants ruled India for 300 years, whereas he ruled for four.",
+      "Uning avlodlari Hindistonni 300 yil boshqargan, o'zi esa to'rt yil.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Bog'lovchini tanlang",
+     "type": "gap",
+     "instr": "however / whereas / nevertheless / on the other hand / yet",
+     "items": [
+      "The hotel was expensive. ___, the service was poor.",
+      "I love the sea, ___ my brother prefers the mountains.",
+      "It was raining hard. ___, we went sightseeing.",
+      "Package holidays are easy. ___, they are less flexible.",
+      "The flight was long, ___ nobody was tired.",
+      "Some tourists want luxury, ___ others want adventure."
+     ],
+     "answers": [
+      "However",
+      "whereas",
+      "Nevertheless",
+      "On the other hand",
+      "yet",
+      "while / whereas"
+     ]
+    },
+    {
+     "title": "Tinish belgilari",
+     "type": "rewrite",
+     "instr": "Gapni to'g'ri tinish belgilari bilan yozing",
+     "items": [
+      "The trip was tiring however it was fun.",
+      "She likes cities whereas he likes villages.",
+      "It was cold nevertheless we swam.",
+      "The ticket was cheap yet the seat was comfortable."
+     ],
+     "answers": [
+      "The trip was tiring. However, it was fun.",
+      "She likes cities, whereas he likes villages.",
+      "It was cold. Nevertheless, we swam.",
+      "The ticket was cheap, yet the seat was comfortable."
+     ]
+    },
+    {
+     "title": "Ikki tomon",
+     "type": "write",
+     "instr": "Har mavzuga \"On the one hand… On the other hand…\" juftligi",
+     "items": [
+      "travelling by plane",
+      "package holidays",
+      "travelling alone",
+      "peak season"
+     ],
+     "answers": [
+      "On the one hand, planes are fast. On the other hand, they are bad for the environment.",
+      "On the one hand, everything is organised. On the other hand, you can't change the plan.",
+      "On the one hand, you are free. On the other hand, it can be lonely.",
+      "On the one hand, the weather is good. On the other hand, everything is crowded."
+     ]
+    },
+    {
+     "title": "Ikki shahar",
+     "type": "speaking",
+     "instr": "Juftlikda: ikki shaharni taqqoslang — 6 gap, 6 xil contrast bog'lovchi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "Tashkent is modern, whereas Bukhara is ancient.",
+      "Bukhara is quiet. However, it's very hot in summer.",
+      "Tashkent has a metro. In contrast, Bukhara has no public transport.",
+      "Hotels are expensive in Tashkent, yet they are better.",
+      "Bukhara is far. Nevertheless, every tourist goes there.",
+      "Tashkent is for business, while Bukhara is for history."
+     ],
+     "note": "Ustoz vergul va gap boshi/o'rtasini kuzatadi."
+    },
+    {
+     "title": "Sayohat lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a plan of your trip day by day",
+      "a holiday where flight and hotel are sold together",
+      "a famous building or place everyone visits",
+      "tiredness after a long flight across time zones",
+      "a place few tourists go",
+      "a place that is expensive because tourists go there"
+     ],
+     "answers": [
+      "itinerary",
+      "package holiday",
+      "landmark",
+      "jet lag",
+      "off the beaten track",
+      "tourist trap"
+     ],
+     "box": [
+      "itinerary",
+      "package holiday",
+      "landmark",
+      "jet lag",
+      "off the beaten track",
+      "tourist trap"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "However I passed it.",
+      "She likes tea, however he likes coffee.",
+      "Whereas, she likes tea.",
+      "But however, it was fine.",
+      "It was cold, yet, we went out."
+     ],
+     "answers": [
+      "However, I passed it.",
+      "She likes tea, whereas he likes coffee.",
+      "She likes coffee, whereas he likes tea.",
+      "However, it was fine.",
+      "It was cold, yet we went out."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 7 jadvalini (9 qator) 3 marta; TRAVEL B1 ro'yxatidan CORE 20 + STRONG 20",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Reading Topic 36–40",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari; 5 notanish so'z; matndan 3 contrast bog'lovchi",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Ikki shahar — insho",
+     "type": "write",
+     "instr": "150 so'z: yashash uchun ikki shahar (Living in a big city vs a small town — Writing 4 ga tayyorgarlik); kamida 6 contrast bog'lovchi",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Test qiyin edi. Biroq men undan o'tdim.",
+      "U klassik musiqani yoqtiradi, akasi esa rokni.",
+      "Yomg'ir yog'ayotgan edi. Shunga qaramay, sayrga chiqdik.",
+      "Shaharda yashash qulay. Boshqa tomondan, shovqinli.",
+      "U aqlli, ammo tez-tez xato qiladi."
+     ],
+     "answers": [
+      "The test was difficult. However, I passed it.",
+      "She likes classical music, whereas her brother prefers rock.",
+      "It was raining. Nevertheless, we went for a walk.",
+      "Living in a city is convenient. On the other hand, it's noisy.",
+      "She/He is smart, yet she/he often makes mistakes."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "TRAVEL B1 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "9 bog'lovchi + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Health",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 9 qator)",
+     "2 daqiqada 1 / 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Travel og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Babur — the king who lost everything, yet wrote it all down",
+    "text": [
+     "Zahiriddin Muhammad Babur was born in 1483 in Andijan. He became the ruler of Fergana at 12, when his father died. However, his uncles and neighbours wanted his land, and by the age of 20 he had lost Fergana, won Samarkand twice and lost it twice. Most princes in his position gave up. Babur, nevertheless, kept moving.",
+     "In 1504 he crossed the mountains with a few hundred men and took Kabul. It was a small, poor city, whereas Samarkand had been the jewel of Asia. Still, Kabul became his home for twenty years. He planted gardens, wrote poems and studied the land. Then, in 1526, he led an expedition to India and defeated a much larger army at Panipat. He became the first Mughal emperor; his descendants ruled India for more than 300 years.",
+     "Babur is famous today mainly for one thing: his memoir, the \"Baburnama\". Kings usually praised themselves. In contrast, Babur wrote about his mistakes, his fears and his homesickness with complete honesty. He described every city, fruit, animal and river he saw — the book is a travel guide to Central Asia and India in the 16th century. He wrote it in Chagatai Turkic, the language of Navoi, yet it has been translated into more than 30 languages.",
+     "He died in Agra in 1530, only four years after his victory. He was rich and powerful. On the other hand, he was homesick to the end: \"The melons of Fergana,\" he wrote, \"I have never tasted anything like them.\""
+    ],
+    "glossary": [
+     "ruler — hukmdor",
+     "give up — taslim bo'lmoq",
+     "jewel — javohir",
+     "plant — ekmoq",
+     "defeat — mag'lub etmoq",
+     "emperor — imperator",
+     "memoir — xotiralar kitobi",
+     "praise — maqtamoq",
+     "honesty — halollik",
+     "homesick — uyni sog'ingan",
+     "melon — qovun"
+    ],
+    "tasks": [
+     {
+      "title": "Contrast bog'lovchilarini toping",
+      "type": "find",
+      "instr": "Matndan 7 ta",
+      "items": [
+       "However",
+       "nevertheless",
+       "whereas",
+       "Still",
+       "In contrast",
+       "yet",
+       "On the other hand"
+      ],
+      "answers": [
+       "However, his uncles and neighbours wanted his land.",
+       "Babur, nevertheless, kept moving.",
+       "It was a small, poor city, whereas Samarkand had been the jewel of Asia.",
+       "Still, Kabul became his home for twenty years.",
+       "In contrast, Babur wrote about his mistakes.",
+       "Yet it has been translated into more than 30 languages.",
+       "On the other hand, he was homesick to the end."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Babur became ruler at 12.",
+       "He won and lost Samarkand twice.",
+       "The Baburnama praises Babur like other royal books.",
+       "He ruled India for 30 years."
+      ],
+      "answers": [
+       "True",
+       "True",
+       "False",
+       "False (four)"
+      ]
+     },
+     {
+      "title": "Contrast bilan yozing",
+      "type": "write",
+      "instr": "Bobur haqida 3 gap — 3 xil bog'lovchi",
+      "items": [
+       "1",
+       "2",
+       "3"
+      ],
+      "answers": [
+       "He was a king, whereas he lived like a traveller.",
+       "He lost Fergana. However, he won India.",
+       "He was powerful, yet homesick."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 36–40 — uyga."
+   }
+  },
+  {
+   "no": 8,
+   "title": "Adverbs of Place",
+   "grammar_topic": "O'RIN RAVISHLARI (here / there / everywhere / somewhere / anywhere / nowhere / nearby / abroad / upstairs…)",
+   "vocab_topic": "History (tarix)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 8 – Adverbs of place (7 qatorli jadval); HISTORY (54 so'z); Reading — Jaloliddin Manguberdi (Jony Academy matni); kitob Topic 41–45 uyga.",
+   "objectives": [
+    "O'rin ravishlarini fe'ldan keyin / gap oxirida to'g'ri joylashtirish.",
+    "somewhere / anywhere / nowhere (tasdiq / savol-inkor / inkor ma'no) va everywhere.",
+    "Predlogsiz ravishlar: home, abroad, upstairs, downtown (\"go to home\" — xato).",
+    "Tarix CORE 20 bilan imperiya, jang va meros haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "History (tarix) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz kalitini yashiradi: \"I've put my keys somewhere. Are they here? There? Look everywhere! Nowhere? They must be nearby.\" — o'quvchilar ravishlarni doskaga yozadi."
+    ],
+    [
+     8,
+     "Kahoot — Adverbs of contrast",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Adverbs of contrast lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 7 qator: here / there / everywhere / somewhere / anywhere / nowhere / nearby — fe'ldan keyin (Verb + adverb). Qo'shimcha: abroad, upstairs/downstairs, indoors/outdoors, inside/outside, away, back, home (predlogsiz: go home, live abroad). O'rin ravishi odatda gap oxirida; urg'u uchun boshida: \"Here comes the bus.\""
+    ],
+    [
+     12,
+     "History (tarix) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "HERE / THERE — shu yerda / u yerda: \"She is here now.\" \"He is there waiting.\"",
+     "EVERYWHERE — hamma joyda; SOMEWHERE — qayerdadir (tasdiq); ANYWHERE — biror joyda (savol/inkor); NOWHERE — hech qayerda (inkor ma'no, fe'l tasdiq).",
+     "NEARBY — yaqinda: \"There is a bank nearby.\" Qo'shimcha: abroad, upstairs, downstairs, indoors, outdoors, inside, outside, away, back, home, downtown, far away.",
+     "O'rin: fe'ldan keyin (go there), ob'ektdan keyin (put it here), odatda vaqt ravishidan oldin: \"We went there yesterday.\""
+    ],
+    "formulas": [
+     [
+      "Here / There",
+      "S + V (+ O) + here/there",
+      "She is here now. / He is there waiting for you.",
+      "U hozir shu yerda. / U u yerda seni kutyapti."
+     ],
+     [
+      "Everywhere",
+      "S + V + everywhere",
+      "They looked everywhere, but they couldn't find the keys.",
+      "Ular hamma joydan qidirdi, lekin kalitlarni topa olmadi."
+     ],
+     [
+      "Somewhere / Anywhere",
+      "tasdiq → somewhere; savol/inkor → anywhere",
+      "I left my phone somewhere in the house. / Can you find this book anywhere?",
+      "Telefonimni uyning qayeridadir qoldirdim. / Bu kitobni biror joydan topa olasanmi?"
+     ],
+     [
+      "Nowhere",
+      "S + V + nowhere (fe'l tasdiq)",
+      "He had nowhere to go.",
+      "Uning boradigan joyi yo'q edi."
+     ],
+     [
+      "Nearby",
+      "S + V + nearby / there is … nearby",
+      "There is a bank nearby.",
+      "Yaqinda bank bor."
+     ],
+     [
+      "Predlogsiz",
+      "go home / live abroad / go upstairs / stay indoors",
+      "Jaloliddin lived abroad for years and never went home.",
+      "Jaloliddin yillar davomida chet elda yashadi va hech uyga qaytmadi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Where did the battle take place?",
+      "It took place here, near the river."
+     ],
+     [
+      "Is there a museum nearby?",
+      "Yes, there's one nearby — the history museum."
+     ],
+     [
+      "Where are the ruins of the old fortress?",
+      "They are somewhere in the hills."
+     ],
+     [
+      "Did the Mongols go everywhere?",
+      "Almost everywhere — from China to Europe."
+     ],
+     [
+      "Can I see the manuscript anywhere?",
+      "You can't see it anywhere; it's in London."
+     ],
+     [
+      "Where did Jaloliddin go after the battle?",
+      "He went abroad — to India, then to Iran."
+     ],
+     [
+      "Where was the emperor buried?",
+      "Nowhere — nobody knows where his grave is."
+     ],
+     [
+      "Is the artifact upstairs or downstairs?",
+      "It's upstairs, in the second hall."
+     ],
+     [
+      "Where do historians work?",
+      "Everywhere: in archives, in ruins, outdoors."
+     ],
+     [
+      "Did the army come back?",
+      "No, it never came back."
+     ]
+    ],
+    "notes": [
+     "Ikki ravish: joy + vaqt: \"We stayed there all day\" (there all day; all day there — kam).",
+     "\"Here comes…\" / \"There goes…\" — urg'u uchun inversiya: \"Here comes the teacher!\"",
+     "home, abroad, downtown, upstairs — predlogsiz: go home, fly abroad, walk downtown.",
+     "History lug'ati: era → empire/kingdom → dynasty → reign; battle, treaty, rebellion; phrasal: rule over, go through, carry on."
+    ],
+    "mistakes": [
+     [
+      "He went to home.",
+      "He went home.",
+      "home — predlogsiz."
+     ],
+     [
+      "I can't find it nowhere.",
+      "I can't find it anywhere.",
+      "Ikki inkor."
+     ],
+     [
+      "They live in abroad.",
+      "They live abroad.",
+      "abroad — predlogsiz."
+     ],
+     [
+      "She everywhere looked.",
+      "She looked everywhere.",
+      "Ravish fe'ldan keyin."
+     ],
+     [
+      "There is nearby a bank.",
+      "There is a bank nearby.",
+      "Ravish oxirida."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — tarixning asosiy otlari (era, empire, dynasty, battle…); STRONG — odamlar va hodisalar (emperor, conqueror, treaty, rebellion); SUPER — meros va phrasal verbs.",
+     "Har so'zga o'rin ravishi bilan gap: \"The empire spread everywhere.\" / \"The fortress stood nearby.\""
+    ],
+    "core": [
+     [
+      "era",
+      "davr (tarixiy)",
+      "The Timurid era began here, in Samarkand.",
+      "Temuriylar davri shu yerda, Samarqandda boshlangan.",
+      "ˈɪrə"
+     ],
+     [
+      "period (history)",
+      "davr",
+      "In that period, people travelled nowhere without a caravan.",
+      "O'sha davrda odamlar karvonsiz hech qayerga bormasdi.",
+      "ˈpɪriəd (ˈhɪstəri)"
+     ],
+     [
+      "ancient",
+      "qadimgi",
+      "Ancient coins are found everywhere in this valley.",
+      "Bu vodiyda hamma joyda qadimgi tangalar topiladi.",
+      "ˈeɪnʧənt"
+     ],
+     [
+      "medieval",
+      "o'rta asrlarga oid",
+      "Medieval walls still stand nearby.",
+      "O'rta asr devorlari hali ham yaqinda turibdi.",
+      "mɪˈdjivəl"
+     ],
+     [
+      "civilization",
+      "sivilizatsiya",
+      "Civilizations grew somewhere near big rivers.",
+      "Sivilizatsiyalar katta daryolar yaqinida qayerdadir o'sgan.",
+      "ˌsɪvəlɪˈzeɪʃən"
+     ],
+     [
+      "empire",
+      "imperiya",
+      "The Khorezm empire spread everywhere from the Caspian to India.",
+      "Xorazm imperiyasi Kaspiydan Hindistongacha hamma joyga yoyilgan.",
+      "ˈɛmpaɪər"
+     ],
+     [
+      "kingdom",
+      "qirollik",
+      "There was a small kingdom here before the Mongols.",
+      "Mo'g'ullardan oldin bu yerda kichik qirollik bo'lgan.",
+      "ˈkɪŋdəm"
+     ],
+     [
+      "dynasty",
+      "sulola",
+      "The dynasty ruled here for 200 years.",
+      "Sulola bu yerda 200 yil hukmronlik qilgan.",
+      "ˈdaɪnəsti"
+     ],
+     [
+      "reign",
+      "hukmronlik (davri)",
+      "During his reign, roads were built everywhere.",
+      "Uning hukmronligi davrida hamma joyda yo'llar qurildi.",
+      "reɪn"
+     ],
+     [
+      "revolution",
+      "inqilob",
+      "The revolution started somewhere in the north.",
+      "Inqilob shimolda qayerdadir boshlangan.",
+      "ˌrɛvəˈluʃən"
+     ],
+     [
+      "war",
+      "urush",
+      "War came here in 1219.",
+      "Urush bu yerga 1219-yilda keldi.",
+      "wɔr"
+     ],
+     [
+      "battle",
+      "jang",
+      "The battle took place nearby, on the Indus river.",
+      "Jang yaqinda, Hind daryosida bo'lgan.",
+      "ˈbætəl"
+     ],
+     [
+      "alliance",
+      "ittifoq",
+      "He looked everywhere for an alliance, but found none.",
+      "U ittifoq izlab hamma joyga bordi, lekin topmadi.",
+      "əˈlaɪəns"
+     ],
+     [
+      "treaty",
+      "(tinchlik) shartnomasi",
+      "The treaty was signed here.",
+      "Shartnoma shu yerda imzolangan.",
+      "ˈtriti"
+     ],
+     [
+      "rebellion / uprising",
+      "qo'zg'olon",
+      "The uprising spread everywhere in the region.",
+      "Qo'zg'olon mintaqada hamma joyga tarqaldi.",
+      "rɪˈbɛljən  ˈəˌpraɪzɪŋ"
+     ],
+     [
+      "invasion",
+      "bosqin",
+      "The Mongol invasion left nothing standing anywhere.",
+      "Mo'g'ul bosqini hech qayerda hech narsani tik qoldirmadi.",
+      "ˌɪnˈveɪʒən"
+     ],
+     [
+      "conqueror",
+      "istilochi",
+      "Conquerors came here from the east.",
+      "Istilochilar bu yerga sharqdan kelishgan.",
+      "ˈkɑŋkərər"
+     ],
+     [
+      "emperor",
+      "imperator",
+      "The emperor was buried somewhere unknown.",
+      "Imperator noma'lum joyga dafn etilgan.",
+      "ˈɛmpərər"
+     ],
+     [
+      "fortress",
+      "qal'a",
+      "The fortress stood there for 500 years.",
+      "Qal'a u yerda 500 yil turgan.",
+      "ˈfɔrtrəs"
+     ],
+     [
+      "cultural heritage (history)",
+      "madaniy meros",
+      "Cultural heritage is protected everywhere in Uzbekistan now.",
+      "Endi O'zbekistonda madaniy meros hamma joyda himoyalanadi.",
+      "ˈkəlʧərəl ˈhɛrɪtɪʤ (ˈhɪstəri)"
+     ]
+    ],
+    "strong": [
+     [
+      "monarchy",
+      "monarxiya",
+      "Monarchy existed here until 1920.",
+      "Monarxiya bu yerda 1920-gacha mavjud edi.",
+      "ˈmɑnɑrki"
+     ],
+     [
+      "republic",
+      "respublika",
+      "The republic was declared here in 1991.",
+      "Respublika shu yerda 1991-yilda e'lon qilingan.",
+      "riˈpəblɪk"
+     ],
+     [
+      "democracy",
+      "demokratiya",
+      "Democracy came to this region late.",
+      "Demokratiya bu mintaqaga kech keldi.",
+      "dɪˈmɑkrəsi"
+     ],
+     [
+      "colony",
+      "mustamlaka",
+      "The colony had no freedom anywhere.",
+      "Mustamlakada hech qayerda erkinlik yo'q edi.",
+      "ˈkɑləni"
+     ],
+     [
+      "colonization",
+      "mustamlakaga aylantirish",
+      "Colonization changed the map everywhere.",
+      "Mustamlakachilik xaritani hamma joyda o'zgartirdi.",
+      "ˌkɑlənɪˈzeɪʃən"
+     ],
+     [
+      "civil war",
+      "fuqarolar urushi",
+      "The civil war was fought here and abroad.",
+      "Fuqarolar urushi bu yerda ham, chet elda ham bo'lgan.",
+      "ˈsɪvəl wɔr"
+     ],
+     [
+      "slavery",
+      "qullik",
+      "Slavery existed almost everywhere in ancient times.",
+      "Qadimda qullik deyarli hamma joyda mavjud edi.",
+      "sˈleɪvəri"
+     ],
+     [
+      "expansion",
+      "kengayish",
+      "Expansion took the army far away from home.",
+      "Kengayish qo'shinni uydan uzoqqa olib ketdi.",
+      "ɪkˈspænʧən"
+     ],
+     [
+      "pharaoh",
+      "fir'avn",
+      "The pharaohs are buried there, near the Nile.",
+      "Fir'avnlar u yerga, Nil yaqiniga dafn etilgan.",
+      "ˈfɛroʊ"
+     ],
+     [
+      "knight",
+      "ritsar",
+      "Knights fought here in the Middle Ages.",
+      "Ritsarlar o'rta asrlarda bu yerda jang qilgan.",
+      "naɪt"
+     ],
+     [
+      "nobleman",
+      "zodagon",
+      "Noblemen lived upstairs; servants lived downstairs.",
+      "Zodagonlar yuqorida, xizmatkorlar pastda yashagan.",
+      "ˈnoʊbəlmən"
+     ],
+     [
+      "peasant",
+      "dehqon",
+      "Peasants worked outdoors all year.",
+      "Dehqonlar yil bo'yi tashqarida ishlagan.",
+      "ˈpɛzənt"
+     ],
+     [
+      "ambassador",
+      "elchi",
+      "The ambassador travelled abroad for a year.",
+      "Elchi bir yil chet elda yurdi.",
+      "æmˈbæsədər"
+     ],
+     [
+      "manuscript (history)",
+      "qo'lyozma",
+      "The manuscript is kept somewhere in Istanbul.",
+      "Qo'lyozma Istanbulda qayerdadir saqlanadi.",
+      "ˈmænjəˌskrɪpt (ˈhɪstəri)"
+     ],
+     [
+      "inscription",
+      "(toshdagi) yozuv",
+      "The inscription here is 800 years old.",
+      "Bu yerdagi yozuv 800 yoshda.",
+      "ˌɪnˈskrɪpʃən"
+     ],
+     [
+      "ruins",
+      "xarobalar",
+      "The ruins are nearby — a ten-minute walk.",
+      "Xarobalar yaqinda — o'n daqiqalik yo'l.",
+      "ruɪnz"
+     ],
+     [
+      "artifact",
+      "tarixiy buyum",
+      "Artifacts were found everywhere under the city.",
+      "Shahar ostidan hamma joyda tarixiy buyumlar topilgan.",
+      "ˈɑrtəˌfækt"
+     ],
+     [
+      "seal",
+      "muhr",
+      "The seal was found here, inside the wall.",
+      "Muhr shu yerda, devor ichidan topilgan.",
+      "siːl"
+     ],
+     [
+      "trade routes",
+      "savdo yo'llari",
+      "Trade routes went everywhere across Asia.",
+      "Savdo yo'llari Osiyo bo'ylab hamma joyga borgan.",
+      "treɪd rʊts"
+     ],
+     [
+      "turning point",
+      "burilish nuqtasi",
+      "The battle of Indus was a turning point in history.",
+      "Hind daryosidagi jang tarixda burilish nuqtasi bo'ldi.",
+      "ˈtərnɪŋ pɔɪnt"
+     ]
+    ],
+    "super": [
+     [
+      "make history",
+      "tarix yaratmoq",
+      "He made history here, at the Indus.",
+      "U shu yerda, Hind daryosida tarix yaratdi.",
+      "meɪk ˈhɪstəri"
+     ],
+     [
+      "go through",
+      "boshdan kechirmoq",
+      "The region went through wars everywhere.",
+      "Mintaqa hamma joyda urushlarni boshdan kechirdi.",
+      "goʊ θru"
+     ],
+     [
+      "call for",
+      "talab qilmoq, chorlamoq",
+      "He called for unity, but nobody anywhere answered.",
+      "U birlikka chorladi, lekin hech qayerdan javob bo'lmadi.",
+      "kɔl fər"
+     ],
+     [
+      "carry on",
+      "davom ettirmoq",
+      "He carried on fighting abroad for ten years.",
+      "U chet elda o'n yil kurashni davom ettirdi.",
+      "ˈkɛri ɔn"
+     ],
+     [
+      "rule over",
+      "hukmronlik qilmoq",
+      "The Khorezmshahs ruled over lands everywhere from Iran to Kazakhstan.",
+      "Xorazmshohlar Erondan Qozog'istongacha hamma joyda hukmronlik qilgan.",
+      "rul ˈoʊvər"
+     ],
+     [
+      "shape (v)",
+      "shakllantirmoq",
+      "Geography shaped history here.",
+      "Bu yerda geografiya tarixni shakllantirgan.",
+      "ʃeɪp (vi)"
+     ],
+     [
+      "archive",
+      "arxiv",
+      "The letters are somewhere in the archive.",
+      "Xatlar arxivda qayerdadir.",
+      "ˈɑrˌkaɪv"
+     ],
+     [
+      "chronicle",
+      "yilnoma",
+      "The chronicle was written far away, in Damascus.",
+      "Yilnoma uzoqda, Damashqda yozilgan.",
+      "ˈkrɑnɪkəl"
+     ],
+     [
+      "historian",
+      "tarixchi",
+      "Historians looked everywhere for his grave.",
+      "Tarixchilar uning qabrini hamma joydan qidirdi.",
+      "hɪˈstɔriən"
+     ],
+     [
+      "archaeologist (history)",
+      "arxeolog",
+      "Archaeologists dig nearby every summer.",
+      "Arxeologlar har yozda yaqinda qazishma o'tkazadi.",
+      "ˌɑrkiˈɑləʤɪst (ˈhɪstəri)"
+     ],
+     [
+      "excavation",
+      "qazishma",
+      "The excavation here found a medieval bath.",
+      "Bu yerdagi qazishmada o'rta asr hammomi topildi.",
+      "ˌɛkskəˈveɪʃən"
+     ],
+     [
+      "legend",
+      "afsona",
+      "There is a legend that he is still somewhere in the mountains.",
+      "U hali ham tog'larda qayerdadir degan afsona bor.",
+      "ˈlɛʤənd"
+     ],
+     [
+      "hero",
+      "qahramon",
+      "The hero was born here, in Khorezm.",
+      "Qahramon shu yerda, Xorazmda tug'ilgan.",
+      "ˈhɪroʊ"
+     ],
+     [
+      "sultan",
+      "sulton",
+      "The sultan lived nowhere for long — always on horseback.",
+      "Sulton hech qayerda uzoq yashamadi — doim ot ustida.",
+      "ˈsəltən"
+     ],
+     [
+      "siege",
+      "qamal",
+      "The siege of Urgench lasted six months.",
+      "Urganch qamali olti oy davom etdi.",
+      "siʤ"
+     ],
+     [
+      "retreat (v/n)",
+      "chekinmoq; chekinish",
+      "The army retreated somewhere south.",
+      "Qo'shin janubga qayergadir chekindi.",
+      ""
+     ],
+     [
+      "surrender",
+      "taslim bo'lmoq",
+      "He never surrendered anywhere.",
+      "U hech qayerda taslim bo'lmagan.",
+      "sərˈɛndər"
+     ],
+     [
+      "victory / defeat",
+      "g'alaba / mag'lubiyat",
+      "After the defeat he went abroad.",
+      "Mag'lubiyatdan keyin u chet elga ketdi.",
+      "ˈvɪktəri  dɪˈfit"
+     ],
+     [
+      "independence (history)",
+      "mustaqillik",
+      "Independence was celebrated everywhere in 1991.",
+      "1991-yilda mustaqillik hamma joyda nishonlandi.",
+      "ˌɪndɪˈpɛndəns (ˈhɪstəri)"
+     ],
+     [
+      "monument (history)",
+      "yodgorlik, haykal",
+      "His monument stands there, in Urgench.",
+      "Uning haykali u yerda, Urganchda turibdi.",
+      "ˈmɑnjəmənt (ˈhɪstəri)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "O'rin ravishini tanlang",
+     "type": "gap",
+     "instr": "here / there / everywhere / somewhere / anywhere / nowhere / nearby",
+     "items": [
+      "I've left my history book ___ in the classroom.",
+      "Is there a museum ___?",
+      "We looked ___, but the artifact was gone.",
+      "Come ___ and look at this inscription!",
+      "The ruins are over ___, behind the hill.",
+      "He had ___ to hide from the Mongols.",
+      "I can't find the manuscript ___.",
+      "Historians travel ___ to find documents."
+     ],
+     "answers": [
+      "somewhere",
+      "nearby / anywhere",
+      "everywhere",
+      "here",
+      "there",
+      "nowhere",
+      "anywhere",
+      "everywhere"
+     ]
+    },
+    {
+     "title": "Predlog kerakmi?",
+     "type": "choose",
+     "instr": "To'g'ri variantni tanlang",
+     "items": [
+      "He went to home / home after the battle.",
+      "They lived in abroad / abroad for years.",
+      "The museum is in downtown / downtown.",
+      "Go to upstairs / upstairs to see the seal.",
+      "We stayed in indoors / indoors because of the heat.",
+      "She came to here / here yesterday."
+     ],
+     "answers": [
+      "home",
+      "abroad",
+      "downtown",
+      "upstairs",
+      "indoors",
+      "here"
+     ]
+    },
+    {
+     "title": "So'z tartibi",
+     "type": "order",
+     "instr": "So'zlarni to'g'ri tartibda yozing",
+     "items": [
+      "everywhere / looked / they / for the keys",
+      "nearby / is / a fortress / there",
+      "yesterday / there / we / went",
+      "to go / had / he / nowhere",
+      "abroad / lived / the ambassador / for ten years"
+     ],
+     "answers": [
+      "They looked everywhere for the keys.",
+      "There is a fortress nearby.",
+      "We went there yesterday.",
+      "He had nowhere to go.",
+      "The ambassador lived abroad for ten years."
+     ]
+    },
+    {
+     "title": "Tarixiy sayohat",
+     "type": "speaking",
+     "instr": "Juftlikda: shahringizdagi tarixiy joy haqida 6 gap — 6 xil o'rin ravishi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "There is an old fortress nearby.",
+      "Tourists come here from everywhere.",
+      "Somewhere inside there is a museum.",
+      "You can't take photos anywhere in the museum.",
+      "The best view is upstairs.",
+      "Nowhere else in the city is so quiet."
+     ],
+     "note": "Ustoz \"to home / in abroad\" xatolarini kuzatadi."
+    },
+    {
+     "title": "Tarix lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a family of rulers",
+      "a large group of countries under one ruler",
+      "a fight between armies",
+      "an agreement between countries",
+      "a person who takes land by force",
+      "old broken buildings"
+     ],
+     "answers": [
+      "dynasty",
+      "empire",
+      "battle",
+      "treaty",
+      "conqueror",
+      "ruins"
+     ],
+     "box": [
+      "dynasty",
+      "empire",
+      "battle",
+      "treaty",
+      "conqueror",
+      "ruins"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He went to home.",
+      "I can't find it nowhere.",
+      "They live in abroad.",
+      "She everywhere looked.",
+      "There is nearby a bank."
+     ],
+     "answers": [
+      "He went home.",
+      "I can't find it anywhere.",
+      "They live abroad.",
+      "She looked everywhere.",
+      "There is a bank nearby."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 8 jadvalini 3 marta; HISTORY 54 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 41–45",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarixiy shaxs",
+     "type": "write",
+     "instr": "120 so'z: sevimli tarixiy shaxs — kamida 6 o'rin ravishi va 8 ta HISTORY so'zi",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ular kalitlarni hamma joydan qidirdi.",
+      "Yaqinda bank bor.",
+      "Uning boradigan joyi yo'q edi.",
+      "Men telefonimni qayerdadir qoldirdim.",
+      "U yillar davomida chet elda yashadi."
+     ],
+     "answers": [
+      "They looked everywhere for the keys.",
+      "There is a bank nearby.",
+      "He had nowhere to go.",
+      "I left my phone somewhere.",
+      "He/She lived abroad for years."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "HISTORY CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Travel",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 7 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "History og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Jaloliddin Manguberdi — the prince who had nowhere to go",
+    "text": [
+     "Jaloliddin Manguberdi was born in 1199 in Khorezm, the son of the Khorezmshah Muhammad II. His father ruled over a huge empire that spread everywhere from the Caspian Sea to India. Then, in 1219, Genghis Khan invaded. City after city fell; Bukhara, Samarkand and Urgench were destroyed. The Shah fled somewhere to the west and died on a small island in the Caspian. His son did not flee.",
+     "Jaloliddin gathered soldiers wherever he could and fought the Mongols here and there for eleven years. His most famous battle took place in 1221 on the banks of the Indus river, in today's Pakistan. His army was surrounded; there was nowhere to retreat. Jaloliddin rode his horse off a cliff into the river and swam across with his weapons. Genghis Khan, watching from the bank, said to his sons: \"A father should have a son like this.\"",
+     "He carried on fighting abroad — in India, Iran, Georgia and Iraq — always looking for allies, but he found none anywhere. In 1231 he was killed in the mountains of Kurdistan. Nobody knows where his grave is.",
+     "For 700 years his story lived only in chronicles. Today his monument stands in Urgench, his name is on an order of the Republic of Uzbekistan, and every schoolchild knows him as the man who never surrendered."
+    ],
+    "glossary": [
+     "rule over — hukmronlik qilmoq",
+     "invade — bosqin qilmoq",
+     "flee (fled) — qochmoq",
+     "gather — to'plamoq",
+     "surround — o'rab olmoq",
+     "retreat — chekinmoq",
+     "cliff — jarlik",
+     "weapon — qurol",
+     "ally — ittifoqchi",
+     "chronicle — yilnoma",
+     "order — orden",
+     "surrender — taslim bo'lmoq"
+    ],
+    "tasks": [
+     {
+      "title": "O'rin ravishlarini toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "everywhere",
+       "somewhere",
+       "wherever",
+       "here and there",
+       "nowhere",
+       "abroad",
+       "anywhere",
+       "there / where"
+      ],
+      "answers": [
+       "spread everywhere from the Caspian Sea to India",
+       "fled somewhere to the west",
+       "gathered soldiers wherever he could",
+       "fought the Mongols here and there",
+       "there was nowhere to retreat",
+       "carried on fighting abroad",
+       "he found none anywhere",
+       "his monument stands there, in Urgench / nobody knows where his grave is"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Jaloliddin's father died in Urgench.",
+       "The battle of the Indus was in 1221.",
+       "Genghis Khan praised Jaloliddin.",
+       "His grave is in Urgench."
+      ],
+      "answers": [
+       "False (on an island in the Caspian)",
+       "True",
+       "True",
+       "False (unknown)"
+      ]
+     },
+     {
+      "title": "Tarix lug'ati",
+      "type": "short",
+      "instr": "Matndan tarixga oid 6 so'z; nega u qahramon deb hisoblanadi (1 gap)",
+      "items": [
+       "words",
+       "why"
+      ],
+      "answers": [
+       "empire, invaded, battle, retreat, allies, chronicles, monument, surrendered",
+       "Because he never surrendered and fought for eleven years."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 41–45 — uyga."
+   }
+  },
+  {
+   "no": 9,
+   "title": "Like, As if, As though, Such as",
+   "grammar_topic": "LIKE / AS / AS IF / AS THOUGH / SUCH AS / THE SAME AS / JUST AS / UNLIKE / INSTEAD OF",
+   "vocab_topic": "Genetics (genetika)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 9 – Like, as if, as though, such as (8 qatorli jadval); GENETICS (49 so'z); Reading — Usain Bolt (Jony Academy matni); kitob Topic 46–50 uyga; Writing 4: Living in a big city vs. living in a small town.",
+   "objectives": [
+    "like (o'xshash) va as (sifatida/vazifa) farqini bilish.",
+    "as if / as though + gap: real (Present) va noreal (Past Simple, were) taqqoslash.",
+    "such as / the same as / just as / unlike / instead of ni to'g'ri qolipda ishlatish.",
+    "Genetika CORE 20 bilan irsiyat, gen va evolyutsiya haqida gapirish; Writing 4 (big city vs small town)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Genetics (genetika) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Bolt runs like a cheetah. He runs as if he had wings. He works as a coach now. Sports such as running need good genes.\" — o'quvchilar to'rt \"like/as\" so'zini farqlashga urinadi."
+    ],
+    [
+     8,
+     "Kahoot — Adverbs of place",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Adverbs of place lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 8 qator: LIKE + ot (o'xshash: like a professional); AS + ot (sifatida: as a teacher); AS IF / AS THOUGH + gap (xuddi …dek; Past Simple — real emas: as if he knew everything); SUCH AS + misollar; THE SAME AS; JUST AS; UNLIKE + ot (farqli o'laroq); INSTEAD OF + ot/V-ing (o'rniga)."
+    ],
+    [
+     12,
+     "Genetics (genetika) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "LIKE + ot/olmosh — \"kabi, o'xshab\": She dances like a professional. (u professional emas).",
+     "AS + ot — \"sifatida\" (haqiqiy vazifa): She works as a teacher. (u o'qituvchi).",
+     "AS IF / AS THOUGH + gap — \"xuddi …dek\": real: He looks as if he is tired; noreal: He talks as if he knew everything (bilmaydi) / as if he were a king.",
+     "SUCH AS — misollar: fruits such as apples. THE SAME AS — bir xil. JUST AS — xuddi … kabi (gap). UNLIKE — farqli o'laroq. INSTEAD OF — o'rniga (+ ot / V-ing)."
+    ],
+    "formulas": [
+     [
+      "As if / As though",
+      "S + V + as if + gap (Past Simple — noreal)",
+      "He talks as if he knew everything.",
+      "U xuddi hamma narsani biladigandek gapiradi."
+     ],
+     [
+      "Like",
+      "like + ot/olmosh",
+      "She dances like a professional.",
+      "U xuddi professionaldek raqsga tushadi."
+     ],
+     [
+      "As",
+      "as + ot (vazifa)",
+      "She works as a teacher.",
+      "U o'qituvchi sifatida ishlaydi."
+     ],
+     [
+      "Such as",
+      "such as + misol(lar)",
+      "I love fruits such as apples and bananas.",
+      "Olma va banan kabi mevalarni yaxshi ko'raman."
+     ],
+     [
+      "Same as / Just as",
+      "the same as + ot; just as + gap/ot",
+      "This jacket is the same as mine. / She sings just as her mother did.",
+      "Bu kurtka meniki bilan bir xil. / U xuddi onasi kuylagandek kuylaydi."
+     ],
+     [
+      "Unlike / Instead of",
+      "unlike + ot; instead of + ot/V-ing",
+      "Unlike his brother, he is very shy. / I'll have tea instead of coffee.",
+      "Akasidan farqli o'laroq, u juda tortinchoq. / Qahva o'rniga choy ichaman."
+     ]
+    ],
+    "presentation": [
+     [
+      "Why does he run like that?",
+      "He runs as if he had wings — but it's genetics and training."
+     ],
+     [
+      "Does she work as a scientist?",
+      "Yes, she works as a geneticist in a lab."
+     ],
+     [
+      "Do twins look the same?",
+      "Identical twins look the same as each other, unlike ordinary brothers."
+     ],
+     [
+      "Which traits are inherited?",
+      "Traits such as eye colour and height are inherited."
+     ],
+     [
+      "Why is he so fast?",
+      "He looks as though he was born to run."
+     ],
+     [
+      "Do you take after your father?",
+      "Yes, I laugh just as he does."
+     ],
+     [
+      "What do you eat instead of sugar?",
+      "I eat fruit instead of sweets."
+     ],
+     [
+      "Is a clone like a twin?",
+      "A clone is genetically the same as the original, like a twin born later."
+     ],
+     [
+      "Does DNA work like a code?",
+      "Yes, it works like a code with four letters."
+     ],
+     [
+      "Unlike humans, can some animals regrow limbs?",
+      "Yes, unlike us, salamanders can."
+     ]
+    ],
+    "notes": [
+     "like vs as: \"She works as a teacher\" (haqiqatan o'qituvchi) — \"She talks like a teacher\" (o'qituvchi emas, o'xshaydi).",
+     "as if + Past Simple — hozirgi noreal; as if + Past Perfect — o'tgan noreal: \"He looked as if he had seen a ghost.\"",
+     "Rasmiy uslubda \"as if he were\"; og'zakida \"as if he was\".",
+     "Genetics lug'ati: gene, DNA, chromosome, trait, heredity, mutation; dominant/recessive; natural selection."
+    ],
+    "mistakes": [
+     [
+      "She works like a teacher. (haqiqiy ish)",
+      "She works as a teacher.",
+      "Vazifa → as."
+     ],
+     [
+      "He runs as a cheetah.",
+      "He runs like a cheetah.",
+      "O'xshash → like."
+     ],
+     [
+      "He talks as if he knows everything. (noreal)",
+      "He talks as if he knew everything.",
+      "Noreal → Past Simple."
+     ],
+     [
+      "Fruits, such as: apples.",
+      "Fruits such as apples.",
+      "Ikki nuqta yo'q."
+     ],
+     [
+      "Instead of go, stay.",
+      "Instead of going, stay.",
+      "instead of + V-ing."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — genetikaning asosiy atamalari (gene, DNA, trait, heredity…); STRONG — jarayon va texnologiya (mutation, cloning, GMO); SUPER — hujayra va tibbiy atamalar.",
+     "Har so'zga taqqoslash gapi: \"DNA works like a code.\" / \"Traits such as height are inherited.\""
+    ],
+    "core": [
+     [
+      "gene",
+      "gen",
+      "A gene is like a recipe for one protein.",
+      "Gen — bitta oqsil uchun retsept kabi.",
+      "ʤin"
+     ],
+     [
+      "DNA",
+      "DNK",
+      "DNA works like a code with four letters.",
+      "DNK to'rt harfli kod kabi ishlaydi.",
+      "ˈdiˌɛˈneɪ"
+     ],
+     [
+      "chromosome",
+      "xromosoma",
+      "Humans have 46 chromosomes, unlike dogs, which have 78.",
+      "Odamda 46 xromosoma bor, itlarda esa, farqli o'laroq, 78.",
+      "ˈkroʊməˌzoʊm"
+     ],
+     [
+      "heredity",
+      "irsiyat",
+      "Heredity explains why you look like your parents.",
+      "Irsiyat nega ota-onangga o'xshashingni tushuntiradi.",
+      "hərˈɛdəti"
+     ],
+     [
+      "inherit (genetics)",
+      "irsiy olmoq",
+      "Traits such as eye colour are inherited.",
+      "Ko'z rangi kabi xususiyatlar irsiy o'tadi.",
+      "ˌɪnˈhɛrət (ʤəˈnɛtɪks)"
+     ],
+     [
+      "trait",
+      "xususiyat, belgi",
+      "Some traits, such as height, depend on many genes.",
+      "Bo'y kabi ba'zi xususiyatlar ko'p genlarga bog'liq.",
+      "treɪt"
+     ],
+     [
+      "mutation",
+      "mutatsiya",
+      "A mutation is like a typing mistake in the code.",
+      "Mutatsiya — koddagi yozuv xatosi kabi.",
+      "mjuˈteɪʃən"
+     ],
+     [
+      "genome",
+      "genom",
+      "The human genome is the same as a book of 3 billion letters.",
+      "Inson genomi 3 milliard harfli kitob bilan bir xil.",
+      "ˈʤiˌnoʊm"
+     ],
+     [
+      "genetic code",
+      "genetik kod",
+      "The genetic code is almost the same in all living things.",
+      "Genetik kod barcha tirik mavjudotlarda deyarli bir xil.",
+      "ʤəˈnɛtɪk koʊd"
+     ],
+     [
+      "dominant",
+      "dominant (ustun)",
+      "Brown eyes are dominant, unlike blue eyes.",
+      "Qo'ng'ir ko'z dominant, ko'k ko'zdan farqli o'laroq.",
+      "ˈdɑmənənt"
+     ],
+     [
+      "recessive",
+      "retsessiv (yashirin)",
+      "A recessive trait appears only if both parents pass it on.",
+      "Retsessiv belgi faqat ikkala ota-ona bersagina ko'rinadi.",
+      "rəˈsɛsɪv"
+     ],
+     [
+      "offspring",
+      "avlod, nasl",
+      "Offspring look like their parents but are never the same as them.",
+      "Nasl ota-onaga o'xshaydi, lekin ular bilan hech qachon bir xil emas.",
+      "ˈɔfˌsprɪŋ"
+     ],
+     [
+      "ancestor (genetics)",
+      "ajdod",
+      "We share ancestors with chimpanzees.",
+      "Biz shimpanzelar bilan umumiy ajdodlarga egamiz.",
+      "ˈænˌsɛstər (ʤəˈnɛtɪks)"
+     ],
+     [
+      "evolution",
+      "evolyutsiya",
+      "Evolution works just as a slow experiment does.",
+      "Evolyutsiya xuddi sekin tajriba kabi ishlaydi.",
+      "ˌɛvəˈluʃən"
+     ],
+     [
+      "natural selection",
+      "tabiiy tanlanish",
+      "Natural selection acts like a filter.",
+      "Tabiiy tanlanish filtr kabi ishlaydi.",
+      "ˈnæʧərəl səˈlɛkʃən"
+     ],
+     [
+      "organism",
+      "organizm",
+      "Every organism, such as a plant or a fish, has DNA.",
+      "O'simlik yoki baliq kabi har bir organizmda DNK bor.",
+      "ˈɔrgəˌnɪzəm"
+     ],
+     [
+      "cell",
+      "hujayra",
+      "A cell is like a small factory.",
+      "Hujayra — kichik zavod kabi.",
+      "sɛl"
+     ],
+     [
+      "clone",
+      "klon",
+      "A clone is genetically the same as the original.",
+      "Klon genetik jihatdan asl nusxa bilan bir xil.",
+      "kloʊn"
+     ],
+     [
+      "genetic disorder",
+      "genetik kasallik",
+      "Genetic disorders such as haemophilia are inherited.",
+      "Gemofiliya kabi genetik kasalliklar irsiy o'tadi.",
+      "ʤəˈnɛtɪk dɪˈsɔrdər"
+     ],
+     [
+      "genetic engineering",
+      "gen muhandisligi",
+      "Genetic engineering works as if scientists were editing a text.",
+      "Gen muhandisligi xuddi olimlar matnni tahrirlayotgandek ishlaydi.",
+      "ʤəˈnɛtɪk ˈɛnʤəˈnɪrɪŋ"
+     ]
+    ],
+    "strong": [
+     [
+      "allele",
+      "allel (gen varianti)",
+      "An allele is one version of a gene, like one spelling of a word.",
+      "Allel — genning bir varianti, so'zning bir imlosi kabi.",
+      "əˈlɛli"
+     ],
+     [
+      "genotype",
+      "genotip",
+      "Your genotype is the code; your phenotype is what we see.",
+      "Genotip — kod; fenotip — biz ko'radigan narsa.",
+      "ˈʤɛnəˌtaɪp"
+     ],
+     [
+      "phenotype",
+      "fenotip",
+      "Twins have the same genotype, unlike their phenotype, which can differ.",
+      "Egizaklarning genotipi bir xil, fenotipi esa, farqli o'laroq, farq qilishi mumkin.",
+      "ˈfinəˌtaɪp"
+     ],
+     [
+      "nucleus",
+      "yadro (hujayra)",
+      "The nucleus works like the office of the cell.",
+      "Yadro hujayraning ofisi kabi ishlaydi.",
+      "ˈnukliəs"
+     ],
+     [
+      "cloning",
+      "klonlash",
+      "Cloning sounds like science fiction, but Dolly the sheep was real.",
+      "Klonlash ilmiy fantastikaga o'xshaydi, lekin qo'y Dolli haqiqiy edi.",
+      "ˈkloʊnɪŋ"
+     ],
+     [
+      "heritable",
+      "irsiy o'tadigan",
+      "Heritable traits pass to offspring just as money does.",
+      "Irsiy belgilar xuddi pul kabi naslga o'tadi.",
+      "ˈhɛrətəbəl"
+     ],
+     [
+      "GMO",
+      "GMO (genetik o'zgartirilgan organizm)",
+      "GMO crops such as corn are common.",
+      "Makkajo'xori kabi GMO ekinlar keng tarqalgan.",
+      ""
+     ],
+     [
+      "hybrid",
+      "duragay",
+      "A mule is a hybrid, like a mix of a horse and a donkey.",
+      "Xachir — duragay, ot va eshakning aralashmasi kabi.",
+      "ˈhaɪbrɪd"
+     ],
+     [
+      "crossbreed",
+      "chatishtirmoq",
+      "Farmers crossbreed plants instead of waiting for nature.",
+      "Fermerlar tabiatni kutish o'rniga o'simliklarni chatishtiradi.",
+      ""
+     ],
+     [
+      "reproduction",
+      "ko'payish",
+      "Reproduction passes genes to the next generation.",
+      "Ko'payish genlarni keyingi avlodga o'tkazadi.",
+      "ˌriprəˈdəkʃən"
+     ],
+     [
+      "embryo",
+      "embrion",
+      "An embryo is the same as a plan of the future body.",
+      "Embrion — kelajakdagi tananing rejasi bilan bir xil.",
+      "ˈɛmbriˌoʊ"
+     ],
+     [
+      "fertilization",
+      "urug'lanish",
+      "Fertilization is like two halves of a code joining.",
+      "Urug'lanish — kodning ikki yarmi qo'shilishi kabi.",
+      "ˌfərtəlɪˈzeɪʃən"
+     ],
+     [
+      "stem cell",
+      "ildiz hujayra",
+      "Stem cells can become any cell, unlike normal cells.",
+      "Ildiz hujayralar, oddiy hujayralardan farqli o'laroq, har qanday hujayraga aylanishi mumkin.",
+      "stɛm sɛl"
+     ],
+     [
+      "sequence (n)",
+      "ketma-ketlik",
+      "Scientists read the DNA sequence like a text.",
+      "Olimlar DNK ketma-ketligini matn kabi o'qiydi.",
+      "ˈsikwəns (ɛn)"
+     ],
+     [
+      "genetic testing",
+      "genetik tekshiruv",
+      "Genetic testing works as if you were reading your own manual.",
+      "Genetik tekshiruv xuddi o'z qo'llanmangni o'qiyotgandek ishlaydi.",
+      "ʤəˈnɛtɪk ˈtɛstɪŋ"
+     ],
+     [
+      "gene therapy",
+      "gen terapiyasi",
+      "Gene therapy repairs genes instead of treating symptoms.",
+      "Gen terapiyasi alomatlarni davolash o'rniga genlarni tuzatadi.",
+      "ʤin ˈθɛrəpi"
+     ],
+     [
+      "variation",
+      "o'zgaruvchanlik",
+      "Variation in a population is like colours in a garden.",
+      "Populyatsiyadagi o'zgaruvchanlik bog'dagi ranglar kabi.",
+      "ˌvɛriˈeɪʃən"
+     ],
+     [
+      "biotechnology",
+      "biotexnologiya",
+      "Biotechnology uses cells as if they were factories.",
+      "Biotexnologiya hujayralarni xuddi zavod kabi ishlatadi.",
+      "ˌbaɪoʊˌtɛkˈnɑləʤi"
+     ],
+     [
+      "protein",
+      "oqsil",
+      "Proteins such as haemoglobin carry oxygen.",
+      "Gemoglobin kabi oqsillar kislorod tashiydi.",
+      "ˈproʊˌtin"
+     ],
+     [
+      "twin (genetics)",
+      "egizak",
+      "Identical twins are the same as natural clones.",
+      "Bir tuxumli egizaklar tabiiy klonlar bilan bir xil.",
+      "twɪn (ʤəˈnɛtɪks)"
+     ]
+    ],
+    "super": [
+     [
+      "enzyme",
+      "ferment",
+      "Enzymes work like scissors that cut DNA.",
+      "Fermentlar DNKni kesadigan qaychi kabi ishlaydi.",
+      "ˈɛnˌzaɪm"
+     ],
+     [
+      "replication (genetics)",
+      "replikatsiya (nusxalanish)",
+      "DNA replication is like photocopying a book.",
+      "DNK replikatsiyasi kitobni nusxalash kabi.",
+      "ˌrɛplɪˈkeɪʃən (ʤəˈnɛtɪks)"
+     ],
+     [
+      "carrier",
+      "tashuvchi (gen)",
+      "A carrier has the gene but, unlike a patient, no symptoms.",
+      "Tashuvchida gen bor, lekin bemordan farqli o'laroq, alomat yo'q.",
+      "ˈkɛriər"
+     ],
+     [
+      "mutant",
+      "mutant",
+      "Mutant plants such as seedless grapes are useful.",
+      "Urug'siz uzum kabi mutant o'simliklar foydali.",
+      "mˈjutənt"
+     ],
+     [
+      "screening (genetics)",
+      "skrining",
+      "Newborn screening works as a safety check.",
+      "Chaqaloq skriningi xavfsizlik tekshiruvi sifatida ishlaydi.",
+      "ˈskrinɪŋ (ʤəˈnɛtɪks)"
+     ],
+     [
+      "modification (genetics)",
+      "o'zgartirish",
+      "Genetic modification is the same as editing, not creating.",
+      "Genetik o'zgartirish yaratish emas, tahrirlash bilan bir xil.",
+      "ˌmɑdəfəˈkeɪʃən (ʤəˈnɛtɪks)"
+     ],
+     [
+      "adaptation (genetics)",
+      "moslashish",
+      "Adaptation happens just as training changes a body.",
+      "Moslashish xuddi mashq tanani o'zgartirgani kabi sodir bo'ladi.",
+      "ˌædəpˈteɪʃən (ʤəˈnɛtɪks)"
+     ],
+     [
+      "species",
+      "tur (biologik)",
+      "Species such as tigers are disappearing.",
+      "Yo'lbars kabi turlar yo'qolib bormoqda.",
+      "ˈspiʃiz"
+     ],
+     [
+      "fast-twitch fibre",
+      "tez qisqaruvchi mushak tolasi",
+      "Sprinters have fast-twitch fibres, unlike marathon runners.",
+      "Sprinterlarda, marafonchilardan farqli o'laroq, tez qisqaruvchi tolalar bor.",
+      ""
+     ],
+     [
+      "talent (genetics)",
+      "iste'dod",
+      "Talent is like a seed — it needs training to grow.",
+      "Iste'dod urug' kabi — o'sish uchun mashq kerak.",
+      "ˈtælənt (ʤəˈnɛtɪks)"
+     ],
+     [
+      "nature vs nurture",
+      "tabiat yoki tarbiya",
+      "The nature-vs-nurture debate is as old as science.",
+      "Tabiat-tarbiya bahsi fanning o'zi kabi qadimiy.",
+      "ˈneɪʧər ˈvərsəz ˈnərʧər"
+     ],
+     [
+      "identical",
+      "bir xil, aynan",
+      "Identical twins are like living clones.",
+      "Bir tuxumli egizaklar tirik klonlar kabi.",
+      "aɪˈdɛntɪkəl"
+     ],
+     [
+      "resemble",
+      "o'xshamoq",
+      "Children resemble their parents in traits such as voice.",
+      "Bolalar ovoz kabi belgilarda ota-onasiga o'xshaydi.",
+      "rɪˈzɛmbəl"
+     ],
+     [
+      "genetic diversity",
+      "genetik xilma-xillik",
+      "Genetic diversity is like insurance for a species.",
+      "Genetik xilma-xillik tur uchun sug'urta kabi.",
+      "ʤəˈnɛtɪk dɪˈvərsɪti"
+     ],
+     [
+      "ethics",
+      "axloq (etika)",
+      "Ethics in genetics is as important as science.",
+      "Genetikada etika fan kabi muhim.",
+      "ˈɛθɪks"
+     ],
+     [
+      "designer baby",
+      "\"dizayner\" chaqaloq",
+      "Designer babies sound like a film, but the question is real.",
+      "\"Dizayner\" chaqaloqlar kinoga o'xshaydi, lekin savol haqiqiy.",
+      "dɪˈzaɪnər ˈbeɪbi"
+     ],
+     [
+      "CRISPR",
+      "CRISPR (gen tahrirlash usuli)",
+      "CRISPR works like a text editor for DNA.",
+      "CRISPR DNK uchun matn muharriri kabi ishlaydi.",
+      ""
+     ],
+     [
+      "laboratory (genetics)",
+      "laboratoriya",
+      "She works as a researcher in a genetics laboratory.",
+      "U genetika laboratoriyasida tadqiqotchi sifatida ishlaydi.",
+      "ˈlæbrəˌtɔri (ʤəˈnɛtɪks)"
+     ],
+     [
+      "sprint",
+      "sprint (qisqa masofaga yugurish)",
+      "Bolt ran the sprint as if the track were downhill.",
+      "Bolt sprintni xuddi trassa pastga qiyalik bo'lgandek yugurdi.",
+      "sprɪnt"
+     ],
+     [
+      "world record",
+      "jahon rekordi",
+      "His world record is still the same as in 2009.",
+      "Uning jahon rekordi hali ham 2009-dagi bilan bir xil.",
+      "wərld ˈrɛkərd"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "like yoki as",
+     "type": "choose",
+     "instr": "To'g'risini tanlang",
+     "items": [
+      "She works like / as a geneticist.",
+      "He runs like / as a cheetah.",
+      "DNA works like / as a code.",
+      "My uncle worked like / as a doctor for 30 years.",
+      "You look like / as your mother.",
+      "Use this box like / as a table."
+     ],
+     "answers": [
+      "as",
+      "like",
+      "like",
+      "as",
+      "like",
+      "as"
+     ]
+    },
+    {
+     "title": "as if / as though",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan (real yoki noreal)",
+     "items": [
+      "He talks as if he ___ (know) everything — but he doesn't.",
+      "She looks as though she ___ (be) tired. (real)",
+      "Bolt ran as if he ___ (have) wings.",
+      "They act as if they ___ (be) scientists, but they are students.",
+      "It looks as if it ___ (be going to) rain. (real)",
+      "He spoke as though he ___ (see) a ghost. (o'tgan)"
+     ],
+     "answers": [
+      "knew",
+      "is",
+      "had",
+      "were",
+      "is going to",
+      "had seen"
+     ]
+    },
+    {
+     "title": "such as / the same as / unlike / instead of / just as",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos ibora",
+     "items": [
+      "Traits ___ height and eye colour are inherited.",
+      "Identical twins have ___ DNA ___ each other.",
+      "___ his brother, he is very tall.",
+      "Eat fruit ___ sweets.",
+      "She sings ___ her mother did.",
+      "Animals ___ salamanders can regrow limbs."
+     ],
+     "answers": [
+      "such as",
+      "the same … as",
+      "Unlike",
+      "instead of",
+      "just as",
+      "such as"
+     ]
+    },
+    {
+     "title": "Oila o'xshashligi",
+     "type": "speaking",
+     "instr": "Juftlikda: oilangizdagi o'xshashlik va farqlar — 6 gap, 6 xil qolip (like, unlike, the same as, just as, such as, as if)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I look like my father.",
+      "Unlike my sister, I have curly hair.",
+      "My eyes are the same as my mother's.",
+      "I laugh just as my grandfather did.",
+      "Traits such as height come from my dad's side.",
+      "My brother talks as if he were a professor!"
+     ]
+    },
+    {
+     "title": "Genetika lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the code of life inside every cell",
+      "a feature such as eye colour",
+      "a change in a gene",
+      "a copy of a living thing with the same genes",
+      "passing traits from parents to children",
+      "a gene version that always shows"
+     ],
+     "answers": [
+      "DNA",
+      "trait",
+      "mutation",
+      "clone",
+      "heredity",
+      "dominant"
+     ],
+     "box": [
+      "DNA",
+      "trait",
+      "mutation",
+      "clone",
+      "heredity",
+      "dominant"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "She works like a teacher. (haqiqiy ish)",
+      "He runs as a cheetah.",
+      "He talks as if he knows everything. (noreal)",
+      "Fruits, such as: apples.",
+      "Instead of go, stay."
+     ],
+     "answers": [
+      "She works as a teacher.",
+      "He runs like a cheetah.",
+      "He talks as if he knew everything.",
+      "Fruits such as apples.",
+      "Instead of going, stay."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 9 jadvalini (8 qator) 3 marta; GENETICS 49 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 46–50",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Writing 4",
+     "type": "write",
+     "instr": "\"Living in a big city vs. living in a small town\" — 180+ so'z; kamida 4 contrast bog'lovchi (7-dars) va 4 taqqoslash qolipi (like, unlike, such as, the same as)",
+     "answers": "Ustoz rubrika bilan baholaydi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U xuddi professionaldek raqsga tushadi.",
+      "U o'qituvchi sifatida ishlaydi.",
+      "U xuddi hamma narsani biladigandek gapiradi.",
+      "Akasidan farqli o'laroq, u juda tortinchoq.",
+      "Qahva o'rniga choy ichaman."
+     ],
+     "answers": [
+      "She dances like a professional.",
+      "She works as a teacher.",
+      "He talks as if he knew everything.",
+      "Unlike his brother, he is very shy.",
+      "I'll have tea instead of coffee."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "GENETICS CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — History",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 8 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Genetics og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Usain Bolt — born to run, or made to run?",
+    "text": [
+     "Usain Bolt was born in 1986 in a small village in Jamaica. As a boy he played cricket and football, just as every Jamaican child does, and he ran like the wind — but he didn't like training. His coach said he behaved as if the world record would come by itself.",
+     "It didn't, but something else did: at the Beijing Olympics in 2008 Bolt ran 100 metres in 9.69 seconds, and in Berlin in 2009 he set a world record of 9.58 seconds that nobody has beaten. He won eight Olympic gold medals and became the most famous sprinter in history. Unlike most sprinters, who are short and compact, Bolt is 1.95 m tall.",
+     "Scientists have studied him like a laboratory experiment. Genetics is part of the answer: Bolt has a large number of fast-twitch muscle fibres, a trait that is inherited, and a gene variant called ACTN3 that most top sprinters share. Many people in Jamaica have this \"speed gene\", as if the whole island were selected for running. But genes are not everything. Bolt trained six hours a day, ate 100 chicken nuggets in Beijing (he says!) and worked with the same coach for fifteen years.",
+     "Was he born to run or made to run? Scientists answer: both. \"Nature loads the gun,\" they say, \"and nurture pulls the trigger.\" Bolt retired in 2017 and now works as a businessman and a father — and he still jokes that his children run as though they had his legs."
+    ],
+    "glossary": [
+     "behave — o'zini tutmoq",
+     "set a record — rekord o'rnatmoq",
+     "compact — ixcham",
+     "muscle fibre — mushak tolasi",
+     "variant — variant",
+     "share — umumiy bo'lmoq",
+     "select — tanlamoq",
+     "nurture — tarbiya",
+     "trigger — tepki",
+     "retire — faoliyatni tugatmoq"
+    ],
+    "tasks": [
+     {
+      "title": "like / as / as if toping",
+      "type": "find",
+      "instr": "Matndan 8 ta taqqoslash qolipi",
+      "items": [
+       "just as",
+       "like 1",
+       "as if 1",
+       "unlike",
+       "like 2",
+       "as if 2",
+       "as",
+       "as though"
+      ],
+      "answers": [
+       "Just as every Jamaican child does.",
+       "He ran like the wind.",
+       "He behaved as if the world record would come by itself.",
+       "Unlike most sprinters, who are short and compact.",
+       "Scientists have studied him like a laboratory experiment.",
+       "As if the whole island were selected for running.",
+       "He works as a businessman and a father.",
+       "His children run as though they had his legs."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Bolt loved training as a boy.",
+       "His 9.58 record has been beaten.",
+       "Most top sprinters share the ACTN3 variant.",
+       "Scientists say only genes explain his speed."
+      ],
+      "answers": [
+       "False",
+       "False",
+       "True",
+       "False (both)"
+      ]
+     },
+     {
+      "title": "Genetika lug'ati",
+      "type": "short",
+      "instr": "Matndan genetikaga oid 5 so'z; \"Nature loads the gun, nurture pulls the trigger\" — o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "genetics, fast-twitch muscle fibres, trait, inherited, gene variant, selected, nature, nurture",
+       "Genes give the ability, but training makes it work."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 46–50 — uyga."
+   }
+  },
+  {
+   "no": 10,
+   "title": "Mixed Conditionals",
+   "grammar_topic": "ARALASH SHART GAPLAR (If + Past Perfect, would + V1 / If + Past Simple, would have + V3)",
+   "vocab_topic": "Virtual reality (virtual reallik)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 2 — 6–10-darslar (adverbs of degree/contrast/place, like/as if, mixed conditionals; health, travel, history, genetics, VR; Writing 3–4)",
+   "book_ref": "Student's book IELTS 3.0: Lesson 10 – Conditional mixed (2 qatorli jadval); VIRTUAL REALITY (41 so'z); Reading — Mark Zuckerberg (Jony Academy matni); kitob Topic 51–55 uyga.",
+   "objectives": [
+    "Mixed 1: o'tgan shart → hozirgi natija (If I had studied harder, I would be successful now).",
+    "Mixed 2: hozirgi holat → o'tgan natija (If he were more careful, he wouldn't have made that mistake).",
+    "2-, 3-tur va aralash shartlarni vaqt chizig'ida farqlash; \"now / yesterday\" ko'rsatkichlari.",
+    "VR CORE 20 bilan texnologiya va uning ta'siri haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Virtual reality (virtual reallik) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"If I had studied IT at university, I would be a programmer now.\" — vaqt chizig'i: shart o'tganda (had studied), natija hozir (would be). Keyin teskarisi: \"If I were rich, I would have bought a VR headset yesterday.\""
+    ],
+    [
+     8,
+     "Kahoot — Like, as if, as though, such as",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Like, as if, as though, such as lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Mixed 1 — shart o'tganda, natija hozir: If + Past Perfect, would + V1; Mixed 2 — shart hozir (doimiy holat), natija o'tganda: If + Past Simple, would have + V3. 2-tur (15-dars, 2.0) va 3-tur bilan solishtirish: vaqt chizig'ida qaysi yarmi qayerda."
+    ],
+    [
+     12,
+     "Virtual reality (virtual reallik) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Type 2: If + Past Simple, would + V1 — hozir/kelajak noreal. Type 3: If + Past Perfect, would have + V3 — o'tgan noreal.",
+     "MIXED 1 (o'tgan → hozir): \"If I had studied harder (o'tgan), I would be successful now (hozir).\"",
+     "MIXED 2 (hozir → o'tgan): \"If he were more careful (doimiy xarakter), he wouldn't have made that mistake (o'tgan).\"",
+     "Ko'rsatkichlar: now / today / still — hozirgi yarim; yesterday / last year / then — o'tgan yarim."
+    ],
+    "formulas": [
+     [
+      "Mixed 1",
+      "If + Past Perfect, S + would + V1 (now)",
+      "If I had studied harder, I would be successful now.",
+      "Ko'proq o'qiganimda, hozir muvaffaqiyatli bo'lardim."
+     ],
+     [
+      "Mixed 2",
+      "If + Past Simple, S + would have + V3 (then)",
+      "If he was/were more careful, he wouldn't have made that mistake.",
+      "U ehtiyotkorroq bo'lganida, o'sha xatoni qilmagan bo'lardi."
+     ],
+     [
+      "Takror: Type 2",
+      "If + Past Simple, would + V1",
+      "If I had a VR headset, I would play every day.",
+      "VR shlemim bo'lsa, har kuni o'ynardim."
+     ],
+     [
+      "Takror: Type 3",
+      "If + Past Perfect, would have + V3",
+      "If I had bought it last year, it would have been cheaper.",
+      "O'tgan yili olganimda, arzonroq bo'lardi."
+     ],
+     [
+      "Inkor / savol",
+      "If + … , S + wouldn't + V1 / Would + S + V1 if …?",
+      "If Zuckerberg hadn't left Harvard, would he be rich today?",
+      "Sukerberg Garvardni tashlamaganida, bugun boy bo'larmidi?"
+     ],
+     [
+      "Modal variant",
+      "could / might + V1 / have + V3",
+      "If I had learned to code, I could work in VR now.",
+      "Dasturlashni o'rganganimda, hozir VR sohasida ishlay olardim."
+     ]
+    ],
+    "presentation": [
+     [
+      "If you had started coding at 12, what would you be now?",
+      "If I had started at 12, I would be a developer now."
+     ],
+     [
+      "Would Zuckerberg be a billionaire if he hadn't built Facebook?",
+      "No, if he hadn't built it, he would probably be a professor."
+     ],
+     [
+      "If VR were cheaper, would you have bought a headset last year?",
+      "Yes, if it were cheaper, I would have bought one."
+     ],
+     [
+      "If you had known VR causes motion sickness, would you still use it?",
+      "I would use it less if I had known."
+     ],
+     [
+      "If you weren't so busy, would you have joined the VR club?",
+      "Yes, if I weren't so busy, I would have joined."
+     ],
+     [
+      "If they had invested in VR in 2014, where would they be now?",
+      "They would be rich now."
+     ],
+     [
+      "If she were braver, would she have tried the simulation?",
+      "She would have tried it if she were braver."
+     ],
+     [
+      "If the school had bought headsets, would lessons be different now?",
+      "Yes, lessons would be immersive now."
+     ],
+     [
+      "If I had listened to my teacher, would I be at university?",
+      "Yes, you would be there now."
+     ],
+     [
+      "If he weren't afraid of heights, would he have enjoyed the VR tour?",
+      "Definitely, he would have loved it."
+     ]
+    ],
+    "notes": [
+     "Mixed 1 eng ko'p uchraydi: o'tgan qaror → hozirgi hayot: \"If I hadn't come to Jony Academy, I wouldn't speak English now.\"",
+     "Mixed 2 — doimiy xarakter/holat (were, had, lived) → o'tgan voqea.",
+     "\"were\" hamma shaxs uchun rasmiy; \"was\" og'zaki.",
+     "VR lug'ati: headset, immersive, simulation, avatar, motion sickness, metaverse; sohalar: gaming, education, healthcare, pilot training."
+    ],
+    "mistakes": [
+     [
+      "If I had studied harder, I would have been successful now.",
+      "…I would be successful now.",
+      "\"now\" → would + V1."
+     ],
+     [
+      "If he would be careful, he wouldn't have made it.",
+      "If he were careful…",
+      "if-gapda would yo'q."
+     ],
+     [
+      "If I studied IT, I would be a programmer now. (o'tgan qaror)",
+      "If I had studied IT, I would be a programmer now.",
+      "O'tgan shart → Past Perfect."
+     ],
+     [
+      "If I had a car, I would have drove.",
+      "…I would have driven.",
+      "V3."
+     ],
+     [
+      "If she was more careful, she wouldn't make it yesterday.",
+      "…she wouldn't have made it yesterday.",
+      "O'tgan natija → would have + V3."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — VR asosiy so'zlari (headset, immersive, simulation…); STRONG — texnik va soha so'zlari; SUPER — muammolar va kelajak (motion sickness, metaverse).",
+     "Har so'zga aralash shart gapi: \"If I had bought a headset, I would be playing VR now.\""
+    ],
+    "core": [
+     [
+      "virtual reality (VR)",
+      "virtual reallik",
+      "If VR had existed in 1990, education would be different now.",
+      "VR 1990-da mavjud bo'lganida, ta'lim hozir boshqacha bo'lardi.",
+      ""
+     ],
+     [
+      "augmented reality (AR)",
+      "to'ldirilgan reallik",
+      "If phones weren't so powerful, AR wouldn't have become popular.",
+      "Telefonlar bunchalik kuchli bo'lmaganida, AR mashhur bo'lmasdi.",
+      "ɑgˈmɛntəd ˌriˈæləˌti (ɑr)"
+     ],
+     [
+      "simulation",
+      "simulyatsiya",
+      "If pilots hadn't used simulations, flying would be more dangerous now.",
+      "Uchuvchilar simulyatsiya ishlatmaganida, uchish hozir xavfliroq bo'lardi.",
+      "ˌsɪmjəˈleɪʃən"
+     ],
+     [
+      "headset",
+      "VR shlem (bosh qurilmasi)",
+      "If I had bought a headset last year, I would be an expert now.",
+      "O'tgan yili shlem olganimda, hozir mutaxassis bo'lardim.",
+      "ˈhɛdˌsɛt"
+     ],
+     [
+      "immersive",
+      "butunlay sho'ng'itadigan",
+      "If the game weren't so immersive, I wouldn't have played all night.",
+      "O'yin bunchalik sho'ng'itadigan bo'lmaganida, tun bo'yi o'ynamasdim.",
+      ""
+     ],
+     [
+      "3D (three-dimensional)",
+      "uch o'lchamli",
+      "If 3D graphics were cheaper, schools would have bought them.",
+      "3D grafika arzonroq bo'lganida, maktablar sotib olgan bo'lardi.",
+      ""
+     ],
+     [
+      "virtual world",
+      "virtual dunyo",
+      "If he had built a virtual world in 2010, he would be famous now.",
+      "U 2010-da virtual dunyo qurganida, hozir mashhur bo'lardi.",
+      "ˈvərʧuəl wərld"
+     ],
+     [
+      "avatar",
+      "avatar",
+      "If avatars looked real, people would have used them more.",
+      "Avatarlar haqiqiy ko'ringanida, odamlar ko'proq ishlatgan bo'lardi.",
+      "ˈævəˌtɑr"
+     ],
+     [
+      "interactive",
+      "interaktiv",
+      "If lessons had been interactive, I would remember more now.",
+      "Darslar interaktiv bo'lganida, hozir ko'proq eslardim.",
+      "ˌɪnərˈæktɪv"
+     ],
+     [
+      "motion sensor",
+      "harakat sezgichi",
+      "If the motion sensor weren't broken, the game would have worked.",
+      "Harakat sezgichi buzuq bo'lmaganida, o'yin ishlagan bo'lardi.",
+      "ˈmoʊʃən ˈsɛnsər"
+     ],
+     [
+      "controller",
+      "boshqaruv qurilmasi (joystik)",
+      "If I had charged the controller, we would be playing now.",
+      "Boshqaruvchini quvvatlaganimda, hozir o'ynayotgan bo'lardik.",
+      "kənˈtroʊlər"
+     ],
+     [
+      "device (VR)",
+      "qurilma",
+      "If devices were lighter, users wouldn't have complained.",
+      "Qurilmalar yengilroq bo'lganida, foydalanuvchilar shikoyat qilmasdi.",
+      ""
+     ],
+     [
+      "graphics",
+      "grafika",
+      "If the graphics had been better, the game would be a hit now.",
+      "Grafika yaxshiroq bo'lganida, o'yin hozir xit bo'lardi.",
+      "ˈgræfɪks"
+     ],
+     [
+      "resolution",
+      "aniqlik (ekran)",
+      "If the resolution were higher, my eyes wouldn't have hurt.",
+      "Aniqlik yuqoriroq bo'lganida, ko'zim og'rimasdi.",
+      "ˌrɛzəˈluʃən"
+     ],
+     [
+      "software (VR)",
+      "dasturiy ta'minot",
+      "If the software had been updated, it would work now.",
+      "Dastur yangilanganida, hozir ishlardi.",
+      ""
+     ],
+     [
+      "hardware (VR)",
+      "apparat qismi",
+      "If hardware weren't so expensive, VR would have spread faster.",
+      "Apparat bunchalik qimmat bo'lmaganida, VR tezroq tarqalgan bo'lardi.",
+      ""
+     ],
+     [
+      "realistic",
+      "haqiqatga yaqin",
+      "If the simulation had been realistic, pilots would be safer now.",
+      "Simulyatsiya haqiqiy bo'lganida, uchuvchilar hozir xavfsizroq bo'lardi.",
+      "ˌriəˈlɪstɪk"
+     ],
+     [
+      "gaming",
+      "o'yin sohasi",
+      "If gaming hadn't grown, VR wouldn't exist today.",
+      "O'yin sohasi o'smaganida, VR bugun mavjud bo'lmasdi.",
+      "ˈgeɪmɪŋ"
+     ],
+     [
+      "entertainment",
+      "ko'ngilochar soha",
+      "If entertainment were only TV, we would have got bored long ago.",
+      "Ko'ngilochar soha faqat TV bo'lganida, allaqachon zerikkan bo'lardik.",
+      "ˌɛnərˈteɪnmənt"
+     ],
+     [
+      "virtual tour",
+      "virtual sayohat",
+      "If I had taken the virtual tour, I would know the museum now.",
+      "Virtual sayohat qilganimda, hozir muzeyni bilardim.",
+      "ˈvərʧuəl tʊr"
+     ]
+    ],
+    "strong": [
+     [
+      "VR goggles",
+      "VR ko'zoynak",
+      "If the goggles weren't so heavy, I would have worn them longer.",
+      "Ko'zoynak bunchalik og'ir bo'lmaganida, uzoqroq taqqan bo'lardim.",
+      ""
+     ],
+     [
+      "display",
+      "displey, ekran",
+      "If the display had been brighter, we would see the details now.",
+      "Displey yorqinroq bo'lganida, hozir tafsilotlarni ko'rardik.",
+      "dɪˈspleɪ"
+     ],
+     [
+      "application (VR)",
+      "ilova",
+      "If the app were free, more students would have downloaded it.",
+      "Ilova bepul bo'lganida, ko'proq o'quvchi yuklab olgan bo'lardi.",
+      ""
+     ],
+     [
+      "artificial (VR)",
+      "sun'iy",
+      "If the artificial world felt real, nobody would have left.",
+      "Sun'iy dunyo haqiqiydek tuyulganida, hech kim chiqib ketmasdi.",
+      ""
+     ],
+     [
+      "education (VR)",
+      "ta'lim",
+      "If VR had entered education earlier, classes would be different now.",
+      "VR ta'limga ertaroq kirganida, darslar hozir boshqacha bo'lardi.",
+      ""
+     ],
+     [
+      "healthcare (VR)",
+      "sog'liqni saqlash",
+      "If healthcare used VR, doctors would have practised more.",
+      "Tibbiyot VR ishlatganida, shifokorlar ko'proq mashq qilgan bo'lardi.",
+      ""
+     ],
+     [
+      "surgery simulation",
+      "jarrohlik simulyatsiyasi",
+      "If surgeons had trained on simulations, mistakes would be fewer now.",
+      "Jarrohlar simulyatsiyada mashq qilganida, hozir xatolar kamroq bo'lardi.",
+      "ˈsərʤəri ˌsɪmjəˈleɪʃən"
+     ],
+     [
+      "pilot training",
+      "uchuvchilar tayyorlash",
+      "If pilot training were cheaper, more people would have become pilots.",
+      "Uchuvchi tayyorlash arzonroq bo'lganida, ko'proq odam uchuvchi bo'lardi.",
+      "ˈpaɪlət ˈtreɪnɪŋ"
+     ],
+     [
+      "military (VR)",
+      "harbiy",
+      "If the military hadn't funded VR, it would be less advanced now.",
+      "Harbiylar VR ni moliyalashtirmaganida, u hozir kamroq rivojlangan bo'lardi.",
+      ""
+     ],
+     [
+      "architecture (VR)",
+      "arxitektura",
+      "If architects used VR, clients would have understood the plans.",
+      "Arxitektorlar VR ishlatganida, mijozlar loyihani tushungan bo'lardi.",
+      ""
+     ],
+     [
+      "360-degree video",
+      "360 darajali video",
+      "If I had filmed a 360-degree video, you would be watching it now.",
+      "360 darajali video olganimda, hozir uni ko'rayotgan bo'larding.",
+      ""
+     ],
+     [
+      "motion sickness",
+      "harakat kasalligi (bosh aylanishi)",
+      "If I didn't get motion sickness, I would have finished the game.",
+      "Boshim aylanmaganida, o'yinni tugatgan bo'lardim.",
+      "ˈmoʊʃən ˈsɪknəs"
+     ],
+     [
+      "eye strain",
+      "ko'z charchog'i",
+      "If the screen were better, I wouldn't have had eye strain.",
+      "Ekran yaxshiroq bo'lganida, ko'zim charchamasdi.",
+      "aɪ streɪn"
+     ],
+     [
+      "isolation",
+      "ajralib qolish",
+      "If he hadn't spent all day in VR, he wouldn't feel isolated now.",
+      "U kun bo'yi VR da o'tirmaganida, hozir o'zini ajralgan his qilmasdi.",
+      "ˌaɪsəˈleɪʃən"
+     ],
+     [
+      "metaverse",
+      "metakoinot",
+      "If the metaverse had succeeded, we would be meeting there now.",
+      "Metakoinot muvaffaqiyatli bo'lganida, hozir o'sha yerda uchrashayotgan bo'lardik.",
+      ""
+     ],
+     [
+      "digital (VR)",
+      "raqamli",
+      "If everything were digital, books would have disappeared.",
+      "Hamma narsa raqamli bo'lganida, kitoblar yo'qolgan bo'lardi.",
+      ""
+     ],
+     [
+      "screen (VR)",
+      "ekran",
+      "If screens didn't tire our eyes, we would have read more.",
+      "Ekranlar ko'zni charchatmaganida, ko'proq o'qigan bo'lardik.",
+      ""
+     ],
+     [
+      "technology (VR)",
+      "texnologiya",
+      "If technology had stopped in 2000, we would have no VR now.",
+      "Texnologiya 2000-da to'xtaganida, hozir VR bo'lmasdi.",
+      ""
+     ],
+     [
+      "future (VR)",
+      "kelajak",
+      "If we could see the future, we would have invested in VR.",
+      "Kelajakni ko'ra olganimizda, VR ga sarmoya kiritgan bo'lardik.",
+      ""
+     ],
+     [
+      "tour (VR)",
+      "sayr, ekskursiya",
+      "If the tour were in VR, we would have visited ten museums today.",
+      "Ekskursiya VR da bo'lganida, bugun o'nta muzeyga borgan bo'lardik.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "social network",
+      "ijtimoiy tarmoq",
+      "If Zuckerberg hadn't built a social network, we would be using something else now.",
+      "Sukerberg ijtimoiy tarmoq qurmaganida, hozir boshqa narsa ishlatayotgan bo'lardik.",
+      "ˈsoʊʃəl ˈnɛtˌwərk"
+     ],
+     [
+      "platform",
+      "platforma",
+      "If the platform were smaller, it wouldn't have changed the world.",
+      "Platforma kichikroq bo'lganida, dunyoni o'zgartirmasdi.",
+      "ˈplætˌfɔrm"
+     ],
+     [
+      "user (tech)",
+      "foydalanuvchi",
+      "If users hadn't joined so fast, Facebook would still be a student site.",
+      "Foydalanuvchilar bunchalik tez qo'shilmaganida, Facebook hali ham talabalar sayti bo'lardi.",
+      "ˈjuzər (tɛk)"
+     ],
+     [
+      "privacy",
+      "shaxsiy hayot daxlsizligi",
+      "If privacy were protected better, people wouldn't have left the app.",
+      "Maxfiylik yaxshiroq himoyalanganida, odamlar ilovani tashlamasdi.",
+      "ˈpraɪvəsi"
+     ],
+     [
+      "data (tech)",
+      "ma'lumotlar",
+      "If companies hadn't collected data, ads would be less accurate now.",
+      "Kompaniyalar ma'lumot yig'maganida, reklamalar hozir kamroq aniq bo'lardi.",
+      "ˈdætə (tɛk)"
+     ],
+     [
+      "addiction (tech)",
+      "qaramlik",
+      "If VR weren't so addictive, parents wouldn't have worried.",
+      "VR bunchalik qaramlik keltirmaganida, ota-onalar xavotirlanmasdi.",
+      "əˈdɪkʃən (tɛk)"
+     ],
+     [
+      "dropout",
+      "o'qishni tashlagan",
+      "If he weren't a dropout, he would have got his degree in 2006.",
+      "U o'qishni tashlamaganida, 2006-da diplom olgan bo'lardi.",
+      "ˈdrɑˌpaʊt"
+     ],
+     [
+      "dormitory (dorm)",
+      "yotoqxona",
+      "If he hadn't lived in a dorm, he wouldn't have met his co-founders.",
+      "U yotoqxonada yashamaganida, hamkorlarini uchratmasdi.",
+      "ˈdɔrməˌtɔri (dɔrm)"
+     ],
+     [
+      "co-founder",
+      "hamasoschi",
+      "If the co-founders had stayed, the company would be different now.",
+      "Hamasoschilar qolganida, kompaniya hozir boshqacha bo'lardi.",
+      ""
+     ],
+     [
+      "launch (v)",
+      "ishga tushirmoq",
+      "If they had launched a year later, someone else would be the leader now.",
+      "Bir yil kech ishga tushirganlarida, hozir boshqa birov yetakchi bo'lardi.",
+      "lɔnʧ (vi)"
+     ],
+     [
+      "rebrand",
+      "qayta nomlamoq (brendni)",
+      "If Meta hadn't rebranded, people wouldn't talk about the metaverse.",
+      "Meta qayta nomlanmaganida, odamlar metakoinot haqida gapirmasdi.",
+      ""
+     ],
+     [
+      "invest in",
+      "…ga sarmoya kiritmoq",
+      "If he had invested in AI earlier, Meta would be ahead now.",
+      "U AI ga ertaroq sarmoya kiritganida, Meta hozir oldinda bo'lardi.",
+      "ˌɪnˈvɛst ɪn"
+     ],
+     [
+      "billion",
+      "milliard",
+      "If the company weren't worth a trillion, he wouldn't have lost billions in a day.",
+      "Kompaniya trillion turmaganida, u bir kunda milliardlab yo'qotmasdi.",
+      "ˈbɪljən"
+     ],
+     [
+      "bet (n/v)",
+      "tikish, garov; tavakkal",
+      "If the VR bet had worked, everyone would be wearing headsets now.",
+      "VR ga tikilgan tavakkal ish berganida, hozir hamma shlem taqib yurgan bo'lardi.",
+      ""
+     ],
+     [
+      "critic (tech)",
+      "tanqidchi",
+      "If critics were right, VR would have died years ago.",
+      "Tanqidchilar haq bo'lganida, VR yillar oldin o'lgan bo'lardi.",
+      "ˈkrɪtɪk (tɛk)"
+     ],
+     [
+      "prototype",
+      "prototip",
+      "If the prototype had worked, the product would be on sale now.",
+      "Prototip ishlaganida, mahsulot hozir sotuvda bo'lardi.",
+      "ˈproʊtoʊˌtaɪp"
+     ],
+     [
+      "haptic",
+      "tegish sezgisiga oid",
+      "If haptic gloves were cheap, VR would have felt real.",
+      "Tegish sezgili qo'lqoplar arzon bo'lganida, VR haqiqiy tuyulgan bo'lardi.",
+      ""
+     ],
+     [
+      "latency",
+      "kechikish (signal)",
+      "If latency were zero, nobody would have felt sick.",
+      "Kechikish nol bo'lganida, hech kim boshi aylanmasdi.",
+      "ˈleɪtənsi"
+     ],
+     [
+      "field of view",
+      "ko'rish maydoni",
+      "If the field of view had been wider, the world would look real now.",
+      "Ko'rish maydoni kengroq bo'lganida, dunyo hozir haqiqiy ko'rinardi.",
+      "fild əv vju"
+     ],
+     [
+      "early adopter",
+      "yangilikni birinchi qabul qiluvchi",
+      "If I were an early adopter, I would have bought VR in 2016.",
+      "Men birinchi qabul qiluvchilardan bo'lganimda, VR ni 2016-da olgan bo'lardim.",
+      "ˈərli əˈdɑptər"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Mixed 1",
+     "type": "gap",
+     "instr": "O'tgan shart → hozirgi natija",
+     "items": [
+      "If I ___ (learn) to code at school, I ___ (work) in IT now.",
+      "If she ___ (not / miss) the exam, she ___ (be) at university today.",
+      "If they ___ (invest) in VR in 2014, they ___ (be) rich now.",
+      "If he ___ (listen) to the doctor, he ___ (feel) better now.",
+      "If we ___ (buy) headsets last year, our lessons ___ (be) immersive now."
+     ],
+     "answers": [
+      "had learned / would work",
+      "hadn't missed / would be",
+      "had invested / would be",
+      "had listened / would feel",
+      "had bought / would be"
+     ]
+    },
+    {
+     "title": "Mixed 2",
+     "type": "gap",
+     "instr": "Hozirgi holat → o'tgan natija",
+     "items": [
+      "If he ___ (be) more careful, he ___ (not / make) that mistake.",
+      "If I ___ (not / get) motion sickness, I ___ (finish) the game.",
+      "If she ___ (live) in Tashkent, she ___ (come) to the VR event.",
+      "If VR ___ (be) cheaper, schools ___ (buy) it years ago.",
+      "If he ___ (not / be) so shy, he ___ (present) his prototype."
+     ],
+     "answers": [
+      "were / wouldn't have made",
+      "didn't get / would have finished",
+      "lived / would have come",
+      "were / would have bought",
+      "weren't / would have presented"
+     ]
+    },
+    {
+     "title": "Qaysi tur?",
+     "type": "sort",
+     "instr": "Type 2 / Type 3 / Mixed 1 / Mixed 2",
+     "items": [
+      "If I had a headset, I would play now.",
+      "If I had bought it, it would have been cheaper.",
+      "If I had bought it, I would be an expert now.",
+      "If I were richer, I would have bought it yesterday.",
+      "If he hadn't left Harvard, he would be a professor now.",
+      "If she weren't afraid, she would have tried the simulation."
+     ],
+     "answers": [
+      "Type 2",
+      "Type 3",
+      "Mixed 1",
+      "Mixed 2",
+      "Mixed 1",
+      "Mixed 2"
+     ]
+    },
+    {
+     "title": "Mening hayotim — boshqacha bo'lardi",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — 3 ta Mixed 1 (o'tgan qaror → hozir), 3 ta Mixed 2 (xarakter → o'tgan voqea)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "If I had started English at 7, I would speak fluently now.",
+      "If I hadn't come to Jony Academy, I wouldn't know 1,500 words now.",
+      "If my parents had moved to Tashkent, I would live there now.",
+      "If I were braver, I would have spoken at the event.",
+      "If I weren't so lazy, I would have finished the homework.",
+      "If I liked games more, I would have bought a VR headset."
+     ]
+    },
+    {
+     "title": "VR lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the device you wear on your head for VR",
+      "makes you feel you are inside the virtual world",
+      "a copy of a real situation for training",
+      "your character in a virtual world",
+      "feeling sick because of movement in VR",
+      "a shared virtual universe"
+     ],
+     "answers": [
+      "headset",
+      "immersive",
+      "simulation",
+      "avatar",
+      "motion sickness",
+      "metaverse"
+     ],
+     "box": [
+      "headset",
+      "immersive",
+      "simulation",
+      "avatar",
+      "motion sickness",
+      "metaverse"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "If I had studied harder, I would have been successful now.",
+      "If he would be careful, he wouldn't have made it.",
+      "If I studied IT, I would be a programmer now. (o'tgan qaror)",
+      "If I had a car, I would have drove.",
+      "If she was more careful, she wouldn't make it yesterday."
+     ],
+     "answers": [
+      "…I would be successful now.",
+      "If he were careful, he wouldn't have made it.",
+      "If I had studied IT, I would be a programmer now.",
+      "If I had a car, I would have driven.",
+      "…she wouldn't have made it yesterday."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 10 jadvalini 3 marta; VIRTUAL REALITY 41 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Progress test 2 ga tayyorgarlik",
+     "type": "review",
+     "instr": "6–10-dars jadvallari; 5 lug'atdan CORE 20; Writing 3–4; Kahoot 6–10 (jonyos.uz)",
+     "answers": "Test: formulalar, 50 so'z, 10 tarjima, reading, writing (180 so'z)."
+    },
+    {
+     "title": "Reading Topic 51–55",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "8 ta aralash shart",
+     "type": "write",
+     "instr": "4 Mixed 1 + 4 Mixed 2 — o'z hayotingiz haqida",
+     "answers": "Erkin; formulalar."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ko'proq o'qiganimda, hozir muvaffaqiyatli bo'lardim.",
+      "U ehtiyotkorroq bo'lganida, o'sha xatoni qilmagan bo'lardi.",
+      "U Garvardni tashlamaganida, hozir professor bo'lardi.",
+      "VR arzonroq bo'lganida, o'tgan yili olgan bo'lardim.",
+      "Eng katta xavf — hech qanday tavakkal qilmaslik."
+     ],
+     "answers": [
+      "If I had studied harder, I would be successful now.",
+      "If he were more careful, he wouldn't have made that mistake.",
+      "If he hadn't left Harvard, he would be a professor now.",
+      "If VR were cheaper, I would have bought it last year.",
+      "The biggest risk is not taking any risk."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "VR CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "4 shart turi formulasi + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Genetics",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali + 2/3-tur)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "VR og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Mark Zuckerberg — the ten-billion-dollar bet on virtual reality",
+    "text": [
+     "Mark Zuckerberg was born in 1984 in New York. He wrote his first program at 12, and at Harvard, in 2004, he built a website for students in his dormitory. It was called \"The Facebook\". If he had stayed at Harvard, he would probably be a computer science professor now. Instead, he dropped out, moved to California and launched the site to the world. By 2012 it had a billion users.",
+     "In 2014 Zuckerberg made a decision that surprised everybody: he paid two billion dollars for Oculus, a small company that made VR headsets. \"If we don't build the next platform,\" he said, \"someone else will.\" Critics laughed. Headsets were heavy, the graphics were poor, and many users got motion sickness. If the technology had been ready, VR would be everywhere now. It wasn't.",
+     "In 2021 he went further: he renamed the whole company Meta and promised a \"metaverse\" — a shared virtual world where people would work, study and meet as avatars. The company has spent more than fifty billion dollars on it. If he weren't so sure about the future, he would have stopped years ago. Many investors wish he had.",
+     "Today Meta's headsets are the most popular in the world, and millions of students use them for simulations, virtual tours and games. Was the bet right? Nobody knows yet. If the metaverse becomes real, Zuckerberg will be remembered as a visionary. If it doesn't, people will say that if he had put that money into AI earlier, Meta would be far ahead now. Either way, he says, \"the biggest risk is not taking any risk.\""
+    ],
+    "glossary": [
+     "dormitory — yotoqxona",
+     "drop out — o'qishni tashlamoq",
+     "launch — ishga tushirmoq",
+     "critic — tanqidchi",
+     "motion sickness — harakat kasalligi",
+     "rename — qayta nomlamoq",
+     "shared — umumiy",
+     "investor — investor",
+     "visionary — uzoqni ko'ruvchi",
+     "risk — xavf, tavakkal"
+    ],
+    "tasks": [
+     {
+      "title": "Shart gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 6 ta shart gapi va turini ayting",
+      "items": [
+       "Mixed 1 (1)",
+       "Type 1",
+       "Mixed 1 (2)",
+       "Mixed 2",
+       "Type 1 (2)",
+       "Mixed 1 (3)"
+      ],
+      "answers": [
+       "If he had stayed at Harvard, he would probably be a professor now. (Mixed 1)",
+       "If we don't build the next platform, someone else will. (Type 1)",
+       "If the technology had been ready, VR would be everywhere now. (Mixed 1)",
+       "If he weren't so sure about the future, he would have stopped years ago. (Mixed 2)",
+       "If the metaverse becomes real, he will be remembered as a visionary. (Type 1)",
+       "If he had put that money into AI earlier, Meta would be far ahead now. (Mixed 1)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Zuckerberg finished Harvard.",
+       "He bought Oculus in 2014.",
+       "Critics believed in VR from the start.",
+       "Meta has spent more than 50 billion on the metaverse."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Sizning tavakkalingiz",
+      "type": "write",
+      "instr": "3 gap: 1 Mixed 1, 1 Mixed 2, 1 Type 1 — o'zingiz yoki Sukerberg haqida",
+      "items": [
+       "Mixed 1",
+       "Mixed 2",
+       "Type 1"
+      ],
+      "answers": [
+       "If I had learned to code at 12, I would have my own app now.",
+       "If I were braver, I would have started a project last year.",
+       "If VR gets cheaper, I will buy a headset."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 51–55 — uyga."
+   }
   }
  ]
 }

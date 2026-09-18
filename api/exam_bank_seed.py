@@ -976,6 +976,106 @@ I love Spanish food – we (21) ………… to some great restaurants. They (22
     ],
 }
 
+
+U9_IMG = "/exam-img/step1-u9/"
+
+STEP1_UNIT9 = {
+    "level": "step1", "kind": "unit", "unit_no": 9,
+    "title": "Step 1 · Unit 9 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Of course.", "Don’t worry, it’s OK.", "They’re three pounds each."], "A"),
+                _c("", ["I’m sorry, I can’t.", "No, it’s OK, thanks.", "Thanks, but I’m fine."], "A"),
+                _c("", ["Here you are.", "Yes, I do.", "Sure, no problem."], "C"),
+                _c("", ["OK, no problem.", "Thanks, that’s really kind of you.", "It’s really nice."], "B"),
+                _c("", ["No, sorry, there aren’t.", "That’s great, thanks.", "Yes, certainly."], "C"),
+                _c("", ["That’s great, thanks.", "No, I can’t.", "Sorry, what’s the spelling?"], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Transport",
+            "instructions": "Look at the transport pictures. What are the "
+                            "missing letters? Some letters are already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("t _ _ _ _", "train", "rain", image=U9_IMG + "q7.jpg"),
+                _t("b _ _ _", "bike", "ike", image=U9_IMG + "q8.jpg"),
+                _t("g _ _  a  t _ _ _", "get a taxi", "et axi", image=U9_IMG + "q9.jpg"),
+                _t("t _ _ _  a  b _ _", "take a bus", "ake us", image=U9_IMG + "q10.jpg"),
+                _t("f _ _", "fly", "ly", image=U9_IMG + "q11.jpg"),
+                _t("d _ _ _ _", "drive", "rive", image=U9_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Weather",
+            "instructions": "Read the sentences about weather. What are the "
+                            "missing words? The first letter is already "
+                            "there. Write the whole word.",
+            "questions": [
+                _t("I wear a big coat when it’s really c _ _ _ .",
+                   "cold", "old", "cool", "ool"),
+                _t("It’s very grey and c _ _ _ _ _ today. I can’t see the sun.",
+                   "cloudy", "loudy"),
+                _t("We camped last night but it was really w _ _ _ _ so we "
+                   "didn’t sleep well.", "windy", "indy"),
+                _t("On our holiday it was hot and s _ _ _ _ so we went to the "
+                   "beach every day.", "sunny", "unny"),
+                _t("I went to Antarctica last year and there was lots of "
+                   "s _ _ _ so everything was white!", "snow", "now"),
+                _t("The four seasons are spring, summer, a _ _ _ _ _ and winter.",
+                   "autumn", "utumn"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read this interview with Angie about her holiday "
+                            "in India. Choose the best answer, A, B or C, for "
+                            "each space.",
+            "passage": """A holiday in India
+
+Interviewer: Where did you go on holiday last year?
+Angie: I went to India for the first time. It was great and I want to go back one day.
+Interviewer: Who (19) ………… to India with?
+Angie: My husband came with me. We flew from England and it took about 9 hours by plane. In India, (20) ………… but we took buses and trains to travel around. We met lots of friendly people.
+Interviewer: Where (21) …………?
+Angie: We stayed in hotels, which were all really good.
+Interviewer: (22) ………… in spring?
+Angie: Yes, so every day was warm and sunny. (23) ………… when we were there.
+Interviewer: Did you like the food?
+Angie: Yes, we did. We ate in our hotel some nights and other nights we ate in restaurants. (24) ………… time to see everything but it was a great holiday.""",
+            "questions": [
+                _c("", ["did you travel", "you travelled", "travelled"], "A"),
+                _c("", ["we drove", "we didn’t drive", "we did drive"], "B"),
+                _c("", ["do you stay", "did you stay", "you stayed"], "B"),
+                _c("", ["You didn’t go", "You went", "Did you go"], "C"),
+                _c("", ["It didn’t rain", "It rains", "Did it rain"], "A"),
+                _c("", ["We haven’t", "Did we have", "We didn’t have"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about travel. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("They didn’t ............ a bus to the station.", ["took", "take", "takes"], "B"),
+                _c("She didn’t ............ to the airport by train.", ["goes", "went", "go"], "C"),
+                _c("We ............ stay in a hotel on our summer holiday last year.",
+                   ["don’t", "doesn’t", "didn’t"], "C"),
+                _c("What ............ on holiday?",
+                   ["you saw", "did you see", "you didn’t see"], "B"),
+                _c("Did he ............ to the station?", ["drive", "drove", "drives"], "A"),
+                _c("Did she travel by plane? No, she ............ .", ["don’t", "didn’t", "did"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -986,4 +1086,5 @@ TEMPLATES = [
     ("exam_tpl_step1_mid", STEP1_MID),
     ("exam_tpl_step1_unit7", STEP1_UNIT7),
     ("exam_tpl_step1_unit8", STEP1_UNIT8),
+    ("exam_tpl_step1_unit9", STEP1_UNIT9),
 ]

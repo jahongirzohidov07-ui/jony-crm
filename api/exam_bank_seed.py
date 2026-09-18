@@ -3884,6 +3884,124 @@ So Michelle used to (29) ………… hard every day and got a place at Princeto
     ],
 }
 
+
+STEP3_UNIT8 = {
+    "level": "step3", "kind": "unit", "unit_no": 8,
+    "title": "Step 3 · Unit 8 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Long time no see!", "How nice.", "It doesn't matter."], "C"),
+                _c("", ["I can't do Wednesday.", "Why don't I deal with this?", "I had to work until 10 every night."], "C"),
+                _c("", ["Oh, dear. Really?", "No, there's no excuse.", "I'll just check."], "B"),
+                _c("", ["That's OK.", "I think you should.", "Are you busy?"], "A"),
+                _c("", ["That's good to hear.", "Well, it's not your fault.", "I don't think so."], "B"),
+                _c("", ["I don't think that's a good idea.", "Don't worry about it.", "Can I have a look?"], "B"),
+                _c("", ["Sorry. I meant to call you.", "I don't think that's a good idea.", "Well, how about Thursday?"], "A"),
+                _c("", ["What a relief.", "I suppose so.", "No really, it's fine."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Free time and interests",
+            "instructions": "Read the sentences about free time activities and "
+                            "interests. Choose the missing word A, B or C for "
+                            "each space.",
+            "questions": [
+                _c("I thought that that film was ............ by Robert Redford but I was wrong.",
+                   ["decided", "driven", "directed"], "C"),
+                _c("Are you watching that TV ............ about art that's on every "
+                   "Wednesday evening?", ["stage", "series", "scheme"], "B"),
+                _c("In the winter, lots of people go ............ and skiing in the mountains.",
+                   ["skateboarding", "windsurfing", "snowboarding"], "C"),
+                _c("The hills and mountains here are great for rock ............ .",
+                   ["climbing", "diving", "skating"], "A"),
+                _c("The new art gallery was ............ by a Scottish architect.",
+                   ["imagined", "directed", "designed"], "C"),
+                _c("If you like running, jumping and throwing, why not join the "
+                   "............ club?", ["athletics", "gymnastics", "ice hockey"], "A"),
+                _c("The first concert was ............ at the arts centre in 1979.",
+                   ["performed", "played", "passed"], "A"),
+                _c("People who go ............ can ride waves up to 20 metres high.",
+                   ["scuba diving", "surfing", "ice skating"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Free time activities",
+            "instructions": "Read the descriptions of some free time "
+                            "activities. The first letter is already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("When I went s _ _ _ _  d _ _ _ _ _ in the Red Sea, I saw lots of "
+                   "amazing fish.", "scuba diving", "cuba iving"),
+                _t("I'm reading a great n _ _ _ _ set in the future.", "novel", "ovel"),
+                _t("Kim and I love running and we go j _ _ _ _ _ _ in the park together "
+                   "every weekend.", "jogging", "ogging"),
+                _t("My boyfriend's very romantic — he often writes love p _ _ _ _ for me.",
+                   "poems", "oems"),
+                _t("The sea along the coast here is perfect for sports like "
+                   "w _ _ _ _ _ _ _ _ _ _ , sailing and waterskiing.",
+                   "windsurfing", "indsurfing"),
+                _t("I went i _ _  s _ _ _ _ _ _ on the lake this winter — it was wonderful.",
+                   "ice skating", "ce kating"),
+                _t("Jon's interested in a _ _ _ _ _ _ _ _ _ _ _ , so he reads a lot about "
+                   "both old and modern buildings.", "architecture", "rchitecture"),
+                _t("Can I take a p _ _ _ _ _ _ _ _ _ of you with my new camera?",
+                   "photograph", "hotograph"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the article about Daniel Johnson, a child "
+                            "artist. Choose the best answer (A, B or C) for "
+                            "each space.",
+            "passage": """The 11-year-old artist
+
+Daniel Johnson is an 11-year-old artist. Recently, one of his paintings (25) ………… sold for £30,000. The painting shows a winter snow scene near his home in Scotland, where the young artist has (26) ………… all his life. Daniel (27) ………… been an artist since he first started painting scenes of nature on a family holiday at the age of 5. His abilities (28) ………… quickly recognised by his parents and when his pictures were (29) ………… to art experts, they agreed the boy had something special.
+A local artist gave Daniel lessons and he learned fast, and got a lot of attention from the media. When his paintings go on sale, they (30) ………… bought for very large amounts of money by people from places like the USA and South Africa. Daniel's parents (31) ………… known for a long time that they need to make sure that he has a normal childhood. Daniel has always loved football, and has been a member of the school football team (32) ………… several years.""",
+            "questions": [
+                _c("", ["have", "were", "was"], "C"),
+                _c("", ["live", "lived", "living"], "B"),
+                _c("", ["is", "was", "has"], "C"),
+                _c("", ["were", "have", "are"], "A"),
+                _c("", ["show", "showing", "shown"], "C"),
+                _c("", ["are", "have", "was"], "A"),
+                _c("", ["have", "were", "are"], "A"),
+                _c("", ["since", "for", "during"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("JK Rowling wrote seven books about Harry Potter.\n"
+                   "The seven Harry Potter books ………… JK Rowling.", "were written by"),
+                _t("Someone stole the museum's most famous painting in 1931.\n"
+                   "The museum's most famous painting ………… in 1931.", "was stolen"),
+                _t("Michelangelo didn't paint the Mona Lisa.\n"
+                   "The Mona Lisa ………… Michelangelo.",
+                   "wasn't painted by", "was not painted by"),
+                _t("When did JK Rowling start writing novels?\n"
+                   "How ………… JK Rowling been a writer of novels?", "long has"),
+                _t("Nigel's love of music started when he was a young child.\n"
+                   "Nigel ………… since he was a young child.",
+                   "has loved music", "’s loved music"),
+                _t("They performed the play for the first time in 1858.\n"
+                   "The play ………… for the first time in 1858.", "was performed"),
+                _t("Peter became a professional musician in 2003.\n"
+                   "Peter's been a professional musician ………… 2003.", "since"),
+                _t("Maria was a teenager when she became an actor.\n"
+                   "Maria has been an actor ………… a teenager.", "since she was"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3919,4 +4037,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit5", STEP3_UNIT5),
     ("exam_tpl_step3_unit6", STEP3_UNIT6),
     ("exam_tpl_step3_unit7", STEP3_UNIT7),
+    ("exam_tpl_step3_unit8", STEP3_UNIT8),
 ]

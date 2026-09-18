@@ -1,0 +1,2774 @@
+{
+ "course": "ielts_3_0",
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Tenses Revision",
+   "grammar_topic": "12 ZAMON — TAKROR (Simple / Continuous / Perfect / Perfect Continuous × Present / Past / Future)",
+   "vocab_topic": "Learning (o'rganish va ta'lim)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 1 – Tenses revision (12 qatorli jadval); LEARNING (63 so'z); Reading — Ishoqxon Ibrat (Jony Academy matni); kitob Topic 1–5 uyga; Writing: Advantages and disadvantages of using public transport.",
+   "objectives": [
+    "12 zamon formulasini 3×4 jadvalda bir nafasda ayta olish.",
+    "Vaqt ko'rsatkichiga qarab zamonni tanlash (every day / now / yesterday / by 2030 / for two years…).",
+    "Bitta vaziyatni 4 zamon bilan ifodalash (I study / am studying / have studied / have been studying).",
+    "Ta'lim CORE 20 lug'ati bilan o'z o'qish uslubi haqida gapirish; Writing 1: advantages/disadvantages tuzilmasi."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Learning (o'rganish va ta'lim) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz bitta fe'l aytadi: \"learn\". O'quvchilar aylanib 12 zamonda gap tuzadi: I learn / I learned / I will learn / I am learning… Kim to'xtab qolsa — keyingisi davom etadi."
+    ],
+    [
+     8,
+     "Kahoot — IELTS 2.0 yakuni",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — IELTS 2.0 yakuni lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 12 qator: har zamon — formula — misol. Doskada 3×4 katak: qatorlar Present/Past/Future, ustunlar Simple/Continuous/Perfect/Perfect Continuous. O'quvchilar kataklarni o'zlari to'ldiradi, keyin kitob bilan solishtiradi."
+    ],
+    [
+     12,
+     "Learning (o'rganish va ta'lim) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "SIMPLE — fakt, odat, tugagan ish: reads / drove / will study.",
+     "CONTINUOUS — jarayon shu paytda: am learning / were sleeping / will be travelling.",
+     "PERFECT — nuqtagacha tugagan, natija: has read / had finished / will have finished.",
+     "PERFECT CONTINUOUS — nuqtagacha davom etgan jarayon: have been learning / had been sleeping / will have been waiting.",
+     "Qoida: Present — hozir; Past — o'tgan nuqta; Future — kelajak nuqta. Ustun ma'noni, qator vaqtni beradi."
+    ],
+    "formulas": [
+     [
+      "Present Simple / Continuous",
+      "S + V1(s) / S + am/is/are + V-ing",
+      "He reads a book every day. / I am learning English.",
+      "U har kuni kitob o'qiydi. / Men ingliz tili o'rganyapman."
+     ],
+     [
+      "Past Simple / Continuous",
+      "S + V2 / S + was/were + V-ing",
+      "She drove a car yesterday. / We were sleeping.",
+      "U kecha mashina haydadi. / Biz uxlayotgan edik."
+     ],
+     [
+      "Future Simple / Continuous",
+      "S + will + V1 / S + will be + V-ing",
+      "We will study hard next week. / We will be travelling around the world.",
+      "Kelasi hafta qattiq o'qiymiz. / Biz dunyo bo'ylab sayohat qilayotgan bo'lamiz."
+     ],
+     [
+      "Present Perfect / Perfect Continuous",
+      "S + have/has + V3 / S + have/has been + V-ing",
+      "He has read 10 books so far. / I have been learning English for 2 years.",
+      "U hozirgacha 10 kitob o'qidi. / Men 2 yildan beri ingliz tili o'rganyapman."
+     ],
+     [
+      "Past Perfect / Perfect Continuous",
+      "S + had + V3 / S + had been + V-ing",
+      "He had finished elementary level by 2020. / He had been sleeping for 2 hours by the time he arrived.",
+      "U 2020-gacha boshlang'ich darajani tugatgan edi. / U kelguncha 2 soat uxlayotgan edi."
+     ],
+     [
+      "Future Perfect / Perfect Continuous",
+      "S + will have + V3 / S + will have been + V-ing",
+      "We will have finished university by 2030. / I will have been waiting for 2 hours by noon.",
+      "2030-gacha universitetni tugatib bo'lamiz. / Tushgacha 2 soat kutayotgan bo'laman."
+     ]
+    ],
+    "presentation": [
+     [
+      "How do you usually learn new words?",
+      "I usually write them down and review them every evening."
+     ],
+     [
+      "What are you learning right now?",
+      "I'm revising the twelve tenses."
+     ],
+     [
+      "What did you learn yesterday?",
+      "I learned twenty phrasal verbs about studying."
+     ],
+     [
+      "What were you doing at 8 pm last night?",
+      "I was doing my homework."
+     ],
+     [
+      "What will you learn by the end of this course?",
+      "I will have learned more than 1,500 words."
+     ],
+     [
+      "How long have you been studying English?",
+      "I have been studying it for three years."
+     ],
+     [
+      "Had you studied any grammar before IELTS 2.0?",
+      "Yes, I had studied the basics at school."
+     ],
+     [
+      "Will you be studying at 9 tomorrow?",
+      "Yes, I'll be studying in the library."
+     ],
+     [
+      "How many lessons have you had so far?",
+      "I've had exactly one — this is the first!"
+     ],
+     [
+      "By 2030, how long will you have been learning English?",
+      "I will have been learning it for eight years."
+     ]
+    ],
+    "notes": [
+     "Vaqt ko'rsatkichlari: every day/usually → Present Simple; now/at the moment → Present Continuous; yesterday/ago/in 2020 → Past Simple; while/at 8 pm → Past Continuous; so far/already/yet/since/for → Present Perfect (Continuous); by the time + Past → Past Perfect; by 2030 → Future Perfect.",
+     "Holat fe'llari (know, believe, own, belong) continuous'da ishlatilmaydi.",
+     "Writing 1 tuzilmasi (advantages/disadvantages): kirish (1–2 gap) → afzalliklar (2 ta, misol bilan) → kamchiliklar (2 ta) → xulosa (o'z fikri). 150+ so'z. Bog'lovchilar: firstly, in addition, however, on the other hand, in conclusion.",
+     "Learning lug'ati ikki qatlam: akademik otlar (retention, curriculum) + phrasal verbs (look up, brush up on, catch up on)."
+    ],
+    "mistakes": [
+     [
+      "I am knowing the answer.",
+      "I know the answer.",
+      "know — holat fe'li."
+     ],
+     [
+      "She has studied here since two years.",
+      "She has studied here for two years.",
+      "for + davr."
+     ],
+     [
+      "By the time I arrived, the lesson started.",
+      "…the lesson had started.",
+      "Oldingi ish → Past Perfect."
+     ],
+     [
+      "I will learn 500 words by June. (tugallik)",
+      "I will have learned 500 words by June.",
+      "by + kelajak → Future Perfect."
+     ],
+     [
+      "He is reading books every day.",
+      "He reads books every day.",
+      "Odat → Present Simple."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — ta'lim jarayonining asosiy otlari va iboralari; STRONG — o'rganish strategiyalari; SUPER — phrasal verbs (look up, figure out, brush up on…).",
+     "Har so'zga o'quvchi o'zi tanlagan zamonda gap tuzadi va zamonni aytadi: \"I have been brushing up on my grammar — Present Perfect Continuous.\""
+    ],
+    "core": [
+     [
+      "memorization",
+      "yodlash",
+      "Memorization alone doesn't help — you need practice.",
+      "Faqat yodlash yordam bermaydi — mashq kerak.",
+      ""
+     ],
+     [
+      "comprehension",
+      "tushunish",
+      "My reading comprehension has improved this year.",
+      "Bu yil o'qib tushunishim yaxshilandi.",
+      "ˌkɑmpriˈhɛnʃən"
+     ],
+     [
+      "retention",
+      "eslab qolish (xotirada saqlash)",
+      "Sleep improves retention.",
+      "Uyqu eslab qolishni yaxshilaydi.",
+      "riˈtɛnʃən"
+     ],
+     [
+      "practice (n)",
+      "mashq, amaliyot",
+      "I do speaking practice every evening.",
+      "Har kuni kechqurun speaking mashq qilaman.",
+      "ˈpræktɪs (ɛn)"
+     ],
+     [
+      "concentration",
+      "diqqatni jamlash",
+      "My concentration is better in the morning.",
+      "Ertalab diqqatim yaxshiroq jamlanadi.",
+      "ˌkɑnsənˈtreɪʃən"
+     ],
+     [
+      "curriculum",
+      "o'quv dasturi",
+      "The curriculum has been changed this year.",
+      "Bu yil o'quv dasturi o'zgartirildi.",
+      "kərˈɪkjələm"
+     ],
+     [
+      "research",
+      "tadqiqot",
+      "She is doing research on learning methods.",
+      "U o'rganish usullari bo'yicha tadqiqot qilyapti.",
+      "ˈrisərʧ"
+     ],
+     [
+      "critical thinking",
+      "tanqidiy fikrlash",
+      "IELTS tests critical thinking, not memory.",
+      "IELTS xotirani emas, tanqidiy fikrlashni tekshiradi.",
+      "ˈkrɪtɪkəl ˈθɪŋkɪŋ"
+     ],
+     [
+      "problem-solving",
+      "muammo yechish",
+      "Problem-solving is a skill you develop by doing.",
+      "Muammo yechish — amalda rivojlanadigan ko'nikma.",
+      ""
+     ],
+     [
+      "note-taking",
+      "konspekt olish",
+      "Good note-taking saves time before exams.",
+      "Yaxshi konspekt imtihon oldidan vaqt tejaydi.",
+      ""
+     ],
+     [
+      "assessment",
+      "baholash",
+      "The teacher gives an assessment at the end of every unit.",
+      "Ustoz har bo'lim oxirida baholaydi.",
+      "əˈsɛsmənt"
+     ],
+     [
+      "examination",
+      "imtihon",
+      "I had been preparing for the examination for months.",
+      "Imtihonga oylab tayyorlangan edim.",
+      "ɪgˌzæməˈneɪʃən"
+     ],
+     [
+      "lifelong learning",
+      "umrbod ta'lim",
+      "Lifelong learning keeps the brain young.",
+      "Umrbod ta'lim miyani yosh saqlaydi.",
+      "ˈlaɪˈflɔŋ ˈlərnɪŋ"
+     ],
+     [
+      "active learning",
+      "faol o'rganish",
+      "Active learning means doing, not listening.",
+      "Faol o'rganish — tinglash emas, bajarish.",
+      "ˈæktɪv ˈlərnɪŋ"
+     ],
+     [
+      "self-directed learning",
+      "mustaqil (o'zi boshqaradigan) o'rganish",
+      "Self-directed learning needs discipline.",
+      "Mustaqil o'rganish intizom talab qiladi.",
+      ""
+     ],
+     [
+      "study techniques",
+      "o'qish usullari",
+      "Which study techniques have worked for you?",
+      "Qaysi o'qish usullari senga ish berdi?",
+      "ˈstədi tɛkˈniks"
+     ],
+     [
+      "study habits",
+      "o'qish odatlari",
+      "I have been building better study habits since January.",
+      "Yanvardan beri yaxshiroq o'qish odatlarini shakllantiryapman.",
+      "ˈstədi ˈhæbəts"
+     ],
+     [
+      "learning outcomes",
+      "o'rganish natijalari",
+      "Every lesson has clear learning outcomes.",
+      "Har darsning aniq natijalari bor.",
+      "ˈlərnɪŋ ˈaʊtˌkəmz"
+     ],
+     [
+      "learning environment",
+      "o'quv muhiti",
+      "A quiet learning environment helps concentration.",
+      "Sokin o'quv muhiti diqqatni jamlashga yordam beradi.",
+      "ˈlərnɪŋ ɪnˈvaɪrənmənt"
+     ],
+     [
+      "study schedule",
+      "o'qish jadvali",
+      "I will have followed my study schedule for a month by Friday.",
+      "Jumagacha bir oy jadvalimga amal qilgan bo'laman.",
+      "ˈstədi ˈskɛʤʊl"
+     ]
+    ],
+    "strong": [
+     [
+      "online learning",
+      "onlayn ta'lim",
+      "Online learning became popular in 2020.",
+      "Onlayn ta'lim 2020-da mashhur bo'ldi.",
+      "ˈɔnˌlaɪn ˈlərnɪŋ"
+     ],
+     [
+      "blended learning",
+      "aralash ta'lim (onlayn + sinf)",
+      "Jony Academy uses blended learning.",
+      "Jony Academy aralash ta'limdan foydalanadi.",
+      "ˈblɛndɪd ˈlərnɪŋ"
+     ],
+     [
+      "peer learning",
+      "tengdoshlardan o'rganish",
+      "Peer learning works well in pairs.",
+      "Tengdoshlardan o'rganish juftlikda yaxshi ishlaydi.",
+      "pɪr ˈlərnɪŋ"
+     ],
+     [
+      "independent study",
+      "mustaqil ta'lim",
+      "Independent study takes two hours a day.",
+      "Mustaqil ta'lim kuniga ikki soat oladi.",
+      "ˌɪndɪˈpɛndənt ˈstədi"
+     ],
+     [
+      "group study",
+      "guruhda o'qish",
+      "We had been doing group study before the test.",
+      "Testdan oldin guruhda o'qigan edik.",
+      "grup ˈstədi"
+     ],
+     [
+      "study materials",
+      "o'quv materiallari",
+      "All study materials are on the website.",
+      "Barcha o'quv materiallari saytda.",
+      "ˈstədi məˈtɪriəlz"
+     ],
+     [
+      "learning resources",
+      "o'quv resurslari",
+      "Free learning resources are everywhere online.",
+      "Bepul o'quv resurslari internetda to'lib yotibdi.",
+      "ˈlərnɪŋ ˈrisɔrsɪz"
+     ],
+     [
+      "expand your knowledge",
+      "bilimni kengaytirmoq",
+      "Reading expands your knowledge.",
+      "O'qish bilimni kengaytiradi.",
+      "ɪkˈspænd jʊr ˈnɑlɪʤ"
+     ],
+     [
+      "acquire new skills",
+      "yangi ko'nikmalar egallamoq",
+      "She has acquired new skills this year.",
+      "U bu yil yangi ko'nikmalar egalladi.",
+      "əkˈwaɪər nu skɪlz"
+     ],
+     [
+      "absorb information",
+      "ma'lumotni o'zlashtirmoq",
+      "Teenagers absorb information quickly.",
+      "O'smirlar ma'lumotni tez o'zlashtiradi.",
+      "əbˈzɔrb ˌɪnˌfɔrˈmeɪʃən"
+     ],
+     [
+      "grasp a concept",
+      "tushunchani anglamoq",
+      "I finally grasped the concept of Perfect tenses.",
+      "Nihoyat Perfect zamonlar tushunchasini angladim.",
+      "græsp ə ˈkɑnsɛpt"
+     ],
+     [
+      "retain knowledge",
+      "bilimni saqlab qolmoq",
+      "You retain knowledge better after sleep.",
+      "Uyqudan keyin bilim yaxshiroq saqlanadi.",
+      "rɪˈteɪn ˈnɑlɪʤ"
+     ],
+     [
+      "apply theoretical knowledge",
+      "nazariy bilimni qo'llamoq",
+      "Apply theoretical knowledge in real conversations.",
+      "Nazariy bilimni real suhbatlarda qo'lla.",
+      "əˈplaɪ ˌθiərˈɛtɪkəl ˈnɑlɪʤ"
+     ],
+     [
+      "conduct research",
+      "tadqiqot o'tkazmoq",
+      "Scientists conduct research for years.",
+      "Olimlar yillab tadqiqot o'tkazadi.",
+      "ˈkɑndəkt ˈrisərʧ"
+     ],
+     [
+      "take effective notes",
+      "samarali konspekt olmoq",
+      "I have been learning to take effective notes.",
+      "Samarali konspekt olishni o'rganyapman.",
+      "teɪk ˈifɛktɪv noʊts"
+     ],
+     [
+      "participate in discussions",
+      "muhokamalarda qatnashmoq",
+      "Participate in class discussions — it builds speaking.",
+      "Sinf muhokamalarida qatnash — bu speakingni rivojlantiradi.",
+      "pɑrˈtɪsəˌpeɪt ɪn dɪˈskəʃənz"
+     ],
+     [
+      "collaborate with peers",
+      "tengdoshlar bilan hamkorlik qilmoq",
+      "We collaborate with peers on projects.",
+      "Loyihalarda tengdoshlar bilan hamkorlik qilamiz.",
+      "kəˈlæbərˌeɪt wɪθ pɪrz"
+     ],
+     [
+      "seek feedback",
+      "fikr-mulohaza so'ramoq",
+      "Seek feedback from your teacher every week.",
+      "Har hafta ustozdan fikr so'ra.",
+      "sik ˈfidˌbæk"
+     ],
+     [
+      "overcome challenges",
+      "qiyinchiliklarni yengmoq",
+      "He has overcome many learning challenges.",
+      "U ko'p o'rganish qiyinchiliklarini yengdi.",
+      "ˈoʊvərˌkəm ˈʧælənʤɪz"
+     ],
+     [
+      "learning process",
+      "o'rganish jarayoni",
+      "Mistakes are part of the learning process.",
+      "Xatolar — o'rganish jarayonining bir qismi.",
+      "ˈlərnɪŋ ˈprɔˌsɛs"
+     ]
+    ],
+    "super": [
+     [
+      "look up",
+      "(lug'atdan) qidirib topmoq",
+      "Look up new words in a dictionary.",
+      "Yangi so'zlarni lug'atdan qidir.",
+      "lʊk əp"
+     ],
+     [
+      "figure out",
+      "tushunib yetmoq, yechimini topmoq",
+      "I figured out the rule myself.",
+      "Qoidani o'zim tushunib yetdim.",
+      "ˈfɪgjər aʊt"
+     ],
+     [
+      "take in",
+      "o'zlashtirmoq (ma'lumotni)",
+      "It's hard to take in so much at once.",
+      "Birdaniga shuncha narsani o'zlashtirish qiyin.",
+      "teɪk ɪn"
+     ],
+     [
+      "brush up on",
+      "(eski bilimni) yangilamoq",
+      "I'm brushing up on my grammar before the exam.",
+      "Imtihon oldidan grammatikamni yangilayapman.",
+      "brəʃ əp ɔn"
+     ],
+     [
+      "catch up on",
+      "(qoldirilganni) yetib olmoq",
+      "I had to catch up on two missed lessons.",
+      "Ikki qoldirilgan darsni yetib olishim kerak edi.",
+      "kæʧ əp ɔn"
+     ],
+     [
+      "keep up with",
+      "(boshqalardan) ortda qolmaslik",
+      "It's hard to keep up with the class after a holiday.",
+      "Ta'tildan keyin sinfdan ortda qolmaslik qiyin.",
+      "kip əp wɪθ"
+     ],
+     [
+      "set aside",
+      "(vaqt) ajratmoq",
+      "Set aside an hour a day for reading.",
+      "O'qish uchun kuniga bir soat ajrat.",
+      "sɛt əˈsaɪd"
+     ],
+     [
+      "break down",
+      "bo'laklarga ajratmoq (tahlil)",
+      "Break down the task into small steps.",
+      "Vazifani kichik qadamlarga ajrat.",
+      "breɪk daʊn"
+     ],
+     [
+      "make up",
+      "(qoldirilgan darsni) qoplamoq",
+      "You can make up the lesson on Saturday.",
+      "Darsni shanba kuni qoplashing mumkin.",
+      "meɪk əp"
+     ],
+     [
+      "sort out",
+      "tartibga solmoq, hal qilmoq",
+      "I sorted out my notes before the test.",
+      "Testdan oldin konspektlarimni tartibga soldim.",
+      "sɔrt aʊt"
+     ],
+     [
+      "work out",
+      "yechimini topmoq; hisoblab chiqmoq",
+      "We worked out the answer together.",
+      "Javobni birga topdik.",
+      "wərk aʊt"
+     ],
+     [
+      "read over",
+      "qayta o'qib chiqmoq",
+      "Read over your essay before you hand it in.",
+      "Insho topshirishdan oldin qayta o'qib chiq.",
+      "rɛd ˈoʊvər"
+     ],
+     [
+      "look into",
+      "o'rganib chiqmoq, tekshirmoq",
+      "The teacher will look into the problem.",
+      "Ustoz muammoni o'rganib chiqadi.",
+      "lʊk ˈɪntu"
+     ],
+     [
+      "opt for",
+      "tanlamoq",
+      "Many students opt for online courses.",
+      "Ko'p o'quvchilar onlayn kurslarni tanlaydi.",
+      "ɑpt fər"
+     ],
+     [
+      "get behind",
+      "ortda qolmoq",
+      "Don't get behind with your homework.",
+      "Uyga vazifadan ortda qolma.",
+      "gɪt bɪˈhaɪnd"
+     ],
+     [
+      "hand in",
+      "topshirmoq (ishni)",
+      "Hand in your essay by Friday.",
+      "Inshoni jumagacha topshir.",
+      "hænd ɪn"
+     ],
+     [
+      "drop out",
+      "(o'qishni) tashlab ketmoq",
+      "He dropped out of university in his second year.",
+      "U ikkinchi kursda universitetni tashlab ketdi.",
+      "drɔp aʊt"
+     ],
+     [
+      "go over",
+      "ko'rib chiqmoq, takrorlamoq",
+      "Let's go over the twelve tenses again.",
+      "O'n ikki zamonni yana ko'rib chiqaylik.",
+      "goʊ ˈoʊvər"
+     ],
+     [
+      "learning curve",
+      "o'rganish tezligi (egri chizig'i)",
+      "The learning curve for IELTS 3.0 is steep.",
+      "IELTS 3.0 da o'rganish tez va qiyin.",
+      "ˈlərnɪŋ kərv"
+     ],
+     [
+      "enhance learning abilities",
+      "o'rganish qobiliyatini oshirmoq",
+      "Sport enhances learning abilities.",
+      "Sport o'rganish qobiliyatini oshiradi.",
+      "ɛnˈhæns ˈlərnɪŋ əˈbɪləˌtiz"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "12 zamon jadvali",
+     "type": "table",
+     "instr": "\"study\" fe'li bilan 3×4 jadvalni to'ldiring",
+     "items": [
+      "Present Simple",
+      "Present Continuous",
+      "Present Perfect",
+      "Present Perfect Continuous",
+      "Past Simple",
+      "Past Continuous",
+      "Past Perfect",
+      "Past Perfect Continuous",
+      "Future Simple",
+      "Future Continuous",
+      "Future Perfect",
+      "Future Perfect Continuous"
+     ],
+     "answers": [
+      "I study",
+      "I am studying",
+      "I have studied",
+      "I have been studying",
+      "I studied",
+      "I was studying",
+      "I had studied",
+      "I had been studying",
+      "I will study",
+      "I will be studying",
+      "I will have studied",
+      "I will have been studying"
+     ]
+    },
+    {
+     "title": "Vaqt ko'rsatkichi → zamon",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni to'g'ri zamonda",
+     "items": [
+      "She ___ (review) her notes every evening.",
+      "Look! He ___ (take) notes on his phone.",
+      "I ___ (learn) 50 new words last week.",
+      "While I ___ (study), my brother was playing games.",
+      "We ___ (have) three tests so far this term.",
+      "I ___ (brush up on) my grammar since Monday.",
+      "By the time the exam started, she ___ (memorize) all the formulas.",
+      "He ___ (revise) for six hours when I called him.",
+      "By June I ___ (finish) IELTS 3.0.",
+      "This time tomorrow we ___ (sit) the test."
+     ],
+     "answers": [
+      "reviews",
+      "is taking",
+      "learned",
+      "was studying",
+      "have had",
+      "have been brushing up on",
+      "had memorized",
+      "had been revising",
+      "will have finished",
+      "will be sitting"
+     ]
+    },
+    {
+     "title": "Bitta vaziyat — to'rt zamon",
+     "type": "write",
+     "instr": "\"learn English\" bilan Present zamonlarning 4 tasi; farqni izohlang",
+     "items": [
+      "Simple",
+      "Continuous",
+      "Perfect",
+      "Perfect Continuous"
+     ],
+     "answers": [
+      "I learn English at Jony Academy. (odat)",
+      "I am learning English now. (hozir)",
+      "I have learned 1,500 words. (natija)",
+      "I have been learning English for three years. (davomiylik)"
+     ]
+    },
+    {
+     "title": "Zamonni aniqlang",
+     "type": "sort",
+     "instr": "Gapdagi zamonni yozing",
+     "items": [
+      "She had been studying for two hours when the lights went out.",
+      "By 2030 he will have been teaching for 20 years.",
+      "I have figured out the rule.",
+      "We were going over the notes at 9.",
+      "They will be taking the exam next week.",
+      "He dropped out in 2020."
+     ],
+     "answers": [
+      "Past Perfect Continuous",
+      "Future Perfect Continuous",
+      "Present Perfect",
+      "Past Continuous",
+      "Future Continuous",
+      "Past Simple"
+     ]
+    },
+    {
+     "title": "Mening o'qish usulim",
+     "type": "speaking",
+     "instr": "Juftlikda: o'qish odatlaringiz haqida 8 gap — kamida 6 xil zamon va 4 ta CORE so'z",
+     "items": [
+      "habit",
+      "now",
+      "past",
+      "perfect",
+      "perfect continuous",
+      "future"
+     ],
+     "answers": [
+      "I usually set aside an hour for independent study.",
+      "This month I'm working on my note-taking.",
+      "Last year I used to memorize everything — it didn't work.",
+      "I have acquired better study habits since then.",
+      "I have been reading every day for a month.",
+      "By June I will have finished the whole course."
+     ],
+     "note": "Ustoz zamon xatolarini kuzatadi; har o'quvchi 2 daqiqa."
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I am knowing the answer.",
+      "She has studied here since two years.",
+      "By the time I arrived, the lesson started.",
+      "He is reading books every day.",
+      "I will learn 500 words by June. (tugallik)"
+     ],
+     "answers": [
+      "I know the answer.",
+      "She has studied here for two years.",
+      "By the time I arrived, the lesson had started.",
+      "He reads books every day.",
+      "I will have learned 500 words by June."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 1 jadvalini (12 zamon) 3 marta ko'chiring; LEARNING so'zlaridan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 1–5",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic (IELTS formatidagi savollar bilan); har biriga javob kaliti bilan tekshiring va 3 notanish so'z yozing",
+     "answers": "Kitob kaliti; ustoz tekshiradi."
+    },
+    {
+     "title": "Writing 1",
+     "type": "write",
+     "instr": "\"Advantages and disadvantages of using public transport\" — 150+ so'z, 4 abzats (kirish, 2 afzallik, 2 kamchilik, xulosa); bog'lovchilar: firstly, in addition, however, in conclusion",
+     "answers": "Ustoz rubrika bilan baholaydi (tuzilma, grammatika, lug'at, bog'lovchilar)."
+    },
+    {
+     "title": "12 zamon — men haqimda",
+     "type": "write",
+     "instr": "12 gap, har zamonda bittadan, o'z o'qishingiz haqida",
+     "answers": "Erkin; formulalar."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men uch yildan beri ingliz tili o'rganyapman.",
+      "Ustoz kelguncha biz jadvalni yodlab bo'lgan edik.",
+      "2030-yilgacha universitetni tugatib bo'laman.",
+      "U har kuni kechqurun konspektlarini takrorlaydi.",
+      "Ertaga shu vaqtda biz test topshirayotgan bo'lamiz."
+     ],
+     "answers": [
+      "I have been learning English for three years.",
+      "By the time the teacher came, we had memorized the table.",
+      "I will have finished university by 2030.",
+      "She/He reviews her/his notes every evening.",
+      "This time tomorrow we will be taking the test."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "LEARNING CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "12 zamon formulasi + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Kombinatsiya (kitob: 12 zamon jadvali)",
+     "2 daqiqada 2 / 3 marta (1 marta warm-up)",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Learning og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ],
+    [
+     "Yozma normativ (keyingi dars)",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Ishaqkhan Ibrat — the man who taught himself six languages",
+    "text": [
+     "Ishaqkhan Ibrat was born in 1862 in To'raqo'rg'on, near Namangan. His mother was a teacher, and by the age of ten he had already learned to read and write in three alphabets. He studied at a madrasa in Kokand, but the old system disappointed him: students memorized texts for years without understanding them. \"Learning without comprehension is like carrying water in a basket,\" he wrote later.",
+     "In the 1890s Ibrat travelled to Istanbul, Cairo, Jeddah and India. While he was travelling, he was learning: by the time he returned, he had taught himself Arabic, Persian, Turkish, Hindi and Russian, and he had been studying English for two years. He wrote the first six-language dictionary in Turkestan.",
+     "When he came home, he opened a new-method school where children learned by understanding, not by memorization. He bought a printing press in 1908 — the first in the region — and printed textbooks himself. He also built a library that anyone could use. Many of his ideas — active learning, critical thinking, self-directed study — are exactly what modern schools are trying to do today.",
+     "Ibrat died in 1937. His house in To'raqo'rg'on is now a museum, and thousands of students visit it every year. If he were alive, he would probably be running an online school."
+    ],
+    "glossary": [
+     "alphabet — alifbo",
+     "madrasa — madrasa",
+     "disappoint — hafsalasini pir qilmoq",
+     "memorize — yodlamoq",
+     "comprehension — tushunish",
+     "basket — savat",
+     "dictionary — lug'at",
+     "new-method school — usuli jadid maktabi",
+     "printing press — bosmaxona",
+     "textbook — darslik"
+    ],
+    "tasks": [
+     {
+      "title": "Zamonlarni toping",
+      "type": "find",
+      "instr": "Matndan 8 xil zamonga bittadan misol",
+      "items": [
+       "Past Simple",
+       "Past Perfect",
+       "Past Continuous",
+       "Past Perfect Continuous",
+       "Present Simple",
+       "Present Continuous",
+       "Present Perfect (task)",
+       "Conditional / would"
+      ],
+      "answers": [
+       "Ishaqkhan Ibrat was born in 1862.",
+       "By the age of ten he had already learned to read and write.",
+       "While he was travelling, he was learning.",
+       "He had been studying English for two years.",
+       "His house is now a museum.",
+       "Modern schools are trying to do today.",
+       "Thousands of students have visited it. (o'zingiz tuzing)",
+       "If he were alive, he would probably be running an online school."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Ibrat learned three alphabets before he was ten.",
+       "He was happy with the madrasa system.",
+       "He wrote a six-language dictionary.",
+       "His printing press was the second in the region."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True",
+       "False (the first)"
+      ]
+     },
+     {
+      "title": "Learning lug'ati",
+      "type": "short",
+      "instr": "Matndan ta'limga oid 5 so'z/ibora toping va Ibratning asosiy g'oyasini bir gapda ayting",
+      "items": [
+       "words",
+       "idea"
+      ],
+      "answers": [
+       "comprehension, memorization, active learning, critical thinking, self-directed study",
+       "Learning must be understanding, not memorizing."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 1–5 (Educational standards, Travel and tourism, Work matters, Insomnia, Acupuncture) — uyga, IELTS formatida."
+   }
+  },
+  {
+   "no": 2,
+   "title": "Used to / Be used to",
+   "grammar_topic": "USED TO + V1 (o'tgan odat) vs BE/GET USED TO + V-ing (o'rganib qolgan)",
+   "vocab_topic": "Technology (texnologiya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 2 – Used to / to be used to (ikki jadval); TECHNOLOGY (54 so'z); Reading — Steve Jobs (Jony Academy matni); kitob Topic 6–10 uyga.",
+   "objectives": [
+    "used to + V1 bilan o'tgan odatlarni tasdiq, inkor va savolda aytish.",
+    "be used to + V-ing/ot bilan hozirgi o'rganib qolgan holatni aytish; get used to — jarayon.",
+    "Ikki qolipni chalkashtirmaslik: used to (o'tgan) — be used to (hozir), V1 — V-ing.",
+    "Texnologiya CORE 20 bilan o'zgarishlar haqida gapirish (people used to…, now we are used to…)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Technology (texnologiya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz eski telefon rasmini ko'rsatadi: \"People used to send SMS. Now we are used to sending voice messages.\" Savol: \"What did you use to do that you don't do now?\""
+    ],
+    [
+     8,
+     "Kahoot — Tenses revision",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Tenses revision lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvallari: USED TO + V1 (o'tmishda bo'lgan, hozir yo'q odat): I used to smoke / didn't use to / Did you use to…?; BE USED TO + V-ing (o'rganib qolgan holat): I am used to smoking / I'm not used to / Are you used to…? Qo'shimcha: GET USED TO + V-ing (o'rganib bormoq)."
+    ],
+    [
+     12,
+     "Technology (texnologiya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "USED TO + V1 — oldin bo'lgan, hozir yo'q odat/holat: \"I used to smoke\" (hozir chekmayman). Inkor: didn't use to; savol: Did you use to…?",
+     "BE USED TO + V-ing / ot — o'rganib qolgan, odatiy: \"I am used to smoking\" (menga odatiy). Inkor: am not used to; savol: Are you used to…?",
+     "GET USED TO + V-ing — o'rganib bormoq (jarayon): \"I'm getting used to online lessons.\"",
+     "Farq: used to → o'tgan zamon, V1; be/get used to → hozir, V-ing (to — predlog!)."
+    ],
+    "formulas": [
+     [
+      "Used to (tasdiq)",
+      "S + used to + V1",
+      "I used to smoke.",
+      "Men oldin chekardim."
+     ],
+     [
+      "Used to (inkor)",
+      "S + didn't use to + V1",
+      "I didn't use to drink coffee.",
+      "Men oldin qahva ichmasdim."
+     ],
+     [
+      "Used to (savol)",
+      "Did + S + use to + V1?",
+      "Did you use to smoke?",
+      "Oldin chekarmiding?"
+     ],
+     [
+      "Be used to (tasdiq)",
+      "S + be + used to + V-ing/ot",
+      "I am used to smoking. / I'm used to the noise.",
+      "Men chekishga o'rganib qolganman. / Shovqinga o'rganganman."
+     ],
+     [
+      "Be used to (inkor / savol)",
+      "S + be + not + used to + V-ing / Be + S + used to + V-ing?",
+      "I'm not used to drinking coffee. / Are you used to working online?",
+      "Qahva ichishga o'rganmaganman. / Onlayn ishlashga o'rganganmisan?"
+     ],
+     [
+      "Get used to",
+      "S + get/is getting + used to + V-ing",
+      "I'm getting used to the new app.",
+      "Yangi ilovaga o'rganib boryapman."
+     ]
+    ],
+    "presentation": [
+     [
+      "Did you use to have a phone at 10?",
+      "No, I didn't use to have one. I got my first phone at 13."
+     ],
+     [
+      "What did people use to do before the internet?",
+      "They used to write letters and read newspapers."
+     ],
+     [
+      "Are you used to studying online?",
+      "Yes, I'm used to it now — we did it for two years."
+     ],
+     [
+      "Did your parents use to play computer games?",
+      "No, they didn't use to. There were no computers."
+     ],
+     [
+      "Are you getting used to the new version of the app?",
+      "Slowly. I'm still not used to the new interface."
+     ],
+     [
+      "Did your grandfather use to watch TV?",
+      "He used to listen to the radio."
+     ],
+     [
+      "Are you used to typing fast?",
+      "Yes, I'm used to typing without looking."
+     ],
+     [
+      "What did you use to be afraid of?",
+      "I used to be afraid of robots. Now I talk to AI every day."
+     ],
+     [
+      "Is your grandmother used to smartphones?",
+      "She's getting used to video calls with us."
+     ],
+     [
+      "Did people use to think the internet was dangerous?",
+      "Yes, many people used to think so."
+     ]
+    ],
+    "notes": [
+     "used to — faqat o'tgan zamon; hozirgi odat uchun Present Simple + usually.",
+     "\"used to\" holat uchun ham: I used to be shy / There used to be a shop here.",
+     "be used to + ot ham bo'ladi: I'm used to the cold. get used to + V-ing: It takes time to get used to living abroad.",
+     "Texnologiya lug'ati: innovation, digitalization, AI, IoT, AR/VR, cutting-edge, user-friendly; phrasal: come up with, carry out, scale up, log in."
+    ],
+    "mistakes": [
+     [
+      "I use to play football. (o'tgan)",
+      "I used to play football.",
+      "used to (d bilan)."
+     ],
+     [
+      "I am used to play games.",
+      "I am used to playing games.",
+      "be used to + V-ing."
+     ],
+     [
+      "Did you used to smoke?",
+      "Did you use to smoke?",
+      "Did + use to."
+     ],
+     [
+      "I used to smoking.",
+      "I used to smoke. / I am used to smoking.",
+      "Ikki qolip aralashgan."
+     ],
+     [
+      "People are used to send letters before.",
+      "People used to send letters before.",
+      "O'tgan odat → used to."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — zamonaviy texnologiya otlari (innovation, AI, smart devices…); STRONG — kuchli sifat-birikmalar (cutting-edge, user-friendly); SUPER — phrasal verbs va sohaviy iboralar.",
+     "Har so'zga juft gap: \"People used to … / Now we are used to …\" — texnologiya o'zgarishi."
+    ],
+    "core": [
+     [
+      "innovation",
+      "innovatsiya, yangilik",
+      "Innovation used to take decades; now it takes months.",
+      "Innovatsiya oldin o'n yillar olardi; endi oylar.",
+      "ˌɪnəˈveɪʃən"
+     ],
+     [
+      "digitalization",
+      "raqamlashtirish",
+      "Banks are used to digitalization now.",
+      "Banklar endi raqamlashtirishga o'rganib qolgan.",
+      ""
+     ],
+     [
+      "artificial intelligence (AI)",
+      "sun'iy intellekt",
+      "We used to fear AI; now we are used to using it every day.",
+      "Oldin sun'iy intellektdan qo'rqardik; endi har kuni ishlatishga o'rganganmiz.",
+      "ˌɑrtəˈfɪʃəl ˌɪnˈtɛləʤəns (eɪaɪ)"
+     ],
+     [
+      "Internet of Things (IoT)",
+      "buyumlar interneti",
+      "Fridges didn't use to be connected to the internet.",
+      "Muzlatgichlar oldin internetga ulanmasdi.",
+      ""
+     ],
+     [
+      "augmented reality (AR)",
+      "to'ldirilgan reallik",
+      "AR glasses used to be science fiction.",
+      "AR ko'zoynaklar oldin ilmiy fantastika edi.",
+      "ɑgˈmɛntəd ˌriˈæləˌti (ɑr)"
+     ],
+     [
+      "virtual reality (VR)",
+      "virtual reallik",
+      "Are you used to VR headsets?",
+      "VR shlemlariga o'rganganmisan?",
+      ""
+     ],
+     [
+      "smart devices",
+      "aqlli qurilmalar",
+      "We are used to controlling smart devices by voice.",
+      "Aqlli qurilmalarni ovoz bilan boshqarishga o'rganganmiz.",
+      "smɑrt dɪˈvaɪsɪz"
+     ],
+     [
+      "nanotechnology",
+      "nanotexnologiya",
+      "Nanotechnology didn't use to exist.",
+      "Nanotexnologiya oldin mavjud emas edi.",
+      "ˌnænoʊˌtɛkˈnɑləˌʤi"
+     ],
+     [
+      "wearable technology",
+      "taqiladigan texnologiya",
+      "People are getting used to wearable technology like smartwatches.",
+      "Odamlar aqlli soat kabi taqiladigan texnologiyaga o'rganib boryapti.",
+      "ˈwɛrəbəl tɛkˈnɑləʤi"
+     ],
+     [
+      "sustainable technology",
+      "barqaror (ekologik) texnologiya",
+      "Sustainable technology used to be expensive.",
+      "Barqaror texnologiya oldin qimmat edi.",
+      "səˈsteɪnəbəl tɛkˈnɑləʤi"
+     ],
+     [
+      "technological advancement",
+      "texnologik taraqqiyot",
+      "Technological advancement has changed how we learn.",
+      "Texnologik taraqqiyot o'rganishimizni o'zgartirdi.",
+      "ˌtɛknəˈlɑʤɪkəl ədˈvænsmənt"
+     ],
+     [
+      "cutting-edge technology",
+      "eng ilg'or texnologiya",
+      "Cutting-edge technology used to be only for the military.",
+      "Eng ilg'or texnologiya oldin faqat harbiylar uchun edi.",
+      "ˈkətɪˌŋɛʤ tɛkˈnɑləʤi"
+     ],
+     [
+      "digital transformation",
+      "raqamli transformatsiya",
+      "Schools are going through digital transformation.",
+      "Maktablar raqamli transformatsiyani boshdan kechiryapti.",
+      "ˈdɪʤɪtəl ˌtrænsfərˈmeɪʃən"
+     ],
+     [
+      "technological breakthrough",
+      "texnologik yutuq (burilish)",
+      "The smartphone was a technological breakthrough.",
+      "Smartfon texnologik burilish edi.",
+      "ˌtɛknəˈlɑʤɪkəl ˈbreɪkθˌru"
+     ],
+     [
+      "emerging technologies",
+      "rivojlanayotgan texnologiyalar",
+      "Emerging technologies create new jobs.",
+      "Rivojlanayotgan texnologiyalar yangi ish o'rinlari yaratadi.",
+      "ˈimərʤɪŋ tɛkˈnɑləʤiz"
+     ],
+     [
+      "tech startup",
+      "texnologik startap",
+      "He used to work at a bank; now he runs a tech startup.",
+      "U oldin bankda ishlardi; endi startap yuritadi.",
+      "tɛk ˈstɑrˌtəp"
+     ],
+     [
+      "tech-savvy",
+      "texnologiyani yaxshi biladigan",
+      "Teenagers are more tech-savvy than their parents.",
+      "O'smirlar ota-onasidan ko'ra texnologiyani yaxshiroq biladi.",
+      ""
+     ],
+     [
+      "user-friendly interface",
+      "qulay interfeys",
+      "I'm not used to the new interface — it isn't user-friendly.",
+      "Yangi interfeysga o'rganmaganman — u qulay emas.",
+      ""
+     ],
+     [
+      "technology adoption",
+      "texnologiyani qabul qilish (o'zlashtirish)",
+      "Technology adoption used to be slow in villages.",
+      "Qishloqlarda texnologiyani o'zlashtirish oldin sekin edi.",
+      "tɛkˈnɑləʤi əˈdɑpʃən"
+     ],
+     [
+      "tech giants",
+      "texnologiya gigantlari",
+      "Tech giants like Apple didn't use to exist 50 years ago.",
+      "Apple kabi gigantlar 50 yil oldin yo'q edi.",
+      "tɛk ʤaɪənts"
+     ]
+    ],
+    "strong": [
+     [
+      "disruptive technology",
+      "inqilobiy (bozorni buzuvchi) texnologiya",
+      "Uber was a disruptive technology for taxis.",
+      "Uber taksi uchun inqilobiy texnologiya bo'ldi.",
+      "dɪsˈrəptɪv tɛkˈnɑləʤi"
+     ],
+     [
+      "revolutionary innovation",
+      "inqilobiy yangilik",
+      "The iPhone was a revolutionary innovation.",
+      "iPhone inqilobiy yangilik edi.",
+      "ˌrɛvəˈluʃəˌnɛri ˌɪnəˈveɪʃən"
+     ],
+     [
+      "tech-driven solutions",
+      "texnologiyaga asoslangan yechimlar",
+      "Farmers are getting used to tech-driven solutions.",
+      "Fermerlar texnologik yechimlarga o'rganib boryapti.",
+      ""
+     ],
+     [
+      "technological revolution",
+      "texnologik inqilob",
+      "We are living through a technological revolution.",
+      "Biz texnologik inqilob davrida yashayapmiz.",
+      "ˌtɛknəˈlɑʤɪkəl ˌrɛvəˈluʃən"
+     ],
+     [
+      "innovation ecosystem",
+      "innovatsion ekotizim",
+      "Tashkent is building an innovation ecosystem.",
+      "Toshkent innovatsion ekotizim quryapti.",
+      "ˌɪnəˈveɪʃən ˈikoʊˌsɪstəm"
+     ],
+     [
+      "tech industry",
+      "texnologiya sanoati",
+      "The tech industry used to be small in Uzbekistan.",
+      "O'zbekistonda texnologiya sanoati oldin kichik edi.",
+      "tɛk ˈɪndəstri"
+     ],
+     [
+      "innovation-driven economy",
+      "innovatsiyaga asoslangan iqtisodiyot",
+      "Korea became an innovation-driven economy.",
+      "Koreya innovatsiyaga asoslangan iqtisodiyotga aylandi.",
+      ""
+     ],
+     [
+      "technology-driven society",
+      "texnologiyaga asoslangan jamiyat",
+      "Are we used to living in a technology-driven society?",
+      "Texnologik jamiyatda yashashga o'rganganmizmi?",
+      ""
+     ],
+     [
+      "seamless integration",
+      "uzluksiz integratsiya",
+      "Users expect seamless integration between apps.",
+      "Foydalanuvchilar ilovalar o'rtasida uzluksiz integratsiya kutadi.",
+      "ˈsimləs ˌɪnəˈgreɪʃən"
+     ],
+     [
+      "future-proof technology",
+      "kelajakka chidamli texnologiya",
+      "Companies invest in future-proof technology.",
+      "Kompaniyalar kelajakka chidamli texnologiyaga sarmoya kiritadi.",
+      ""
+     ],
+     [
+      "high-tech industry",
+      "yuqori texnologiyali sanoat",
+      "High-tech industry needs educated workers.",
+      "Yuqori texnologiyali sanoatga bilimli ishchilar kerak.",
+      "ˌhaɪˈtɛk ˈɪndəstri"
+     ],
+     [
+      "innovative solutions",
+      "innovatsion yechimlar",
+      "Startups offer innovative solutions to old problems.",
+      "Startaplar eski muammolarga innovatsion yechimlar taklif qiladi.",
+      "ˈɪnəˌveɪtɪv səˈluʃənz"
+     ],
+     [
+      "tech entrepreneurship",
+      "texnologik tadbirkorlik",
+      "Tech entrepreneurship is popular among students.",
+      "Texnologik tadbirkorlik talabalar orasida mashhur.",
+      "tɛk ˌɑntrəprəˈnərʃɪp"
+     ],
+     [
+      "tech patent",
+      "texnologik patent",
+      "Apple owns thousands of tech patents.",
+      "Apple minglab patentga ega.",
+      "tɛk ˈpætənt"
+     ],
+     [
+      "technology transfer",
+      "texnologiya transferi",
+      "Technology transfer helps developing countries.",
+      "Texnologiya transferi rivojlanayotgan mamlakatlarga yordam beradi.",
+      "tɛkˈnɑləʤi ˈtrænsfər"
+     ],
+     [
+      "tech infrastructure",
+      "texnologik infratuzilma",
+      "Villages didn't use to have tech infrastructure.",
+      "Qishloqlarda oldin texnologik infratuzilma yo'q edi.",
+      "tɛk ˌɪnfrəˈstrəkʧər"
+     ],
+     [
+      "technological literacy",
+      "texnologik savodxonlik",
+      "Technological literacy is now as important as reading.",
+      "Texnologik savodxonlik endi o'qish kabi muhim.",
+      "ˌtɛknəˈlɑʤɪkəl ˈlɪtərəsi"
+     ],
+     [
+      "tech innovation hub",
+      "innovatsion markaz",
+      "IT Park is a tech innovation hub in Tashkent.",
+      "IT Park — Toshkentdagi innovatsion markaz.",
+      "tɛk ˌɪnəˈveɪʃən həb"
+     ],
+     [
+      "digital revolution",
+      "raqamli inqilob",
+      "The digital revolution started in the 1990s.",
+      "Raqamli inqilob 1990-yillarda boshlandi.",
+      "ˈdɪʤɪtəl ˌrɛvəˈluʃən"
+     ],
+     [
+      "tech ecosystem",
+      "texnologik ekotizim",
+      "A healthy tech ecosystem needs investors.",
+      "Sog'lom texnologik ekotizimga investorlar kerak.",
+      "tɛk ˈikoʊˌsɪstəm"
+     ]
+    ],
+    "super": [
+     [
+      "come up with",
+      "(g'oya) o'ylab topmoq",
+      "Jobs came up with the idea of a phone without buttons.",
+      "Jobs tugmasiz telefon g'oyasini o'ylab topdi.",
+      "kəm əp wɪθ"
+     ],
+     [
+      "carry out",
+      "amalga oshirmoq, o'tkazmoq",
+      "Engineers carry out thousands of tests.",
+      "Muhandislar minglab test o'tkazadi.",
+      "ˈkɛri aʊt"
+     ],
+     [
+      "bring about",
+      "(o'zgarishga) sabab bo'lmoq",
+      "The internet brought about a revolution in learning.",
+      "Internet ta'limda inqilobga sabab bo'ldi.",
+      "brɪŋ əˈbaʊt"
+     ],
+     [
+      "scale up",
+      "hajmini kengaytirmoq",
+      "Startups need money to scale up.",
+      "Startaplarga kengayish uchun pul kerak.",
+      "skeɪl əp"
+     ],
+     [
+      "break through",
+      "(to'siqni) yorib o'tmoq; kashfiyot qilmoq",
+      "Scientists broke through in battery technology.",
+      "Olimlar batareya texnologiyasida yutuqqa erishdi.",
+      "breɪk θru"
+     ],
+     [
+      "plug in",
+      "(tokka) ulamoq",
+      "Plug in the laptop before the lesson.",
+      "Darsdan oldin noutbukni tokka ula.",
+      "pləg ɪn"
+     ],
+     [
+      "optimize",
+      "optimallashtirmoq",
+      "Optimize your phone for battery life.",
+      "Telefoningni batareya uchun optimallashtir.",
+      "ˈɑptɪˌmaɪz"
+     ],
+     [
+      "hack into",
+      "(tizimga) buzib kirmoq",
+      "Someone hacked into the school system.",
+      "Kimdir maktab tizimiga buzib kirdi.",
+      "hæk ˈɪntu"
+     ],
+     [
+      "log in / log out",
+      "tizimga kirmoq / chiqmoq",
+      "Log in with your student ID.",
+      "Talaba ID bilan tizimga kir.",
+      "lɔg ɪn  lɔg aʊt"
+     ],
+     [
+      "sync up",
+      "sinxronlashtirmoq",
+      "Sync up your notes across devices.",
+      "Konspektlaringni qurilmalar bo'ylab sinxronlashtir.",
+      "sɪŋk əp"
+     ],
+     [
+      "set up (tech)",
+      "o'rnatmoq, sozlamoq",
+      "I used to ask my brother to set up my phone.",
+      "Oldin telefonimni sozlashni akamdan so'rardim.",
+      "sɛt əp (tɛk)"
+     ],
+     [
+      "back up",
+      "zaxira nusxa olmoq",
+      "Back up your files every week.",
+      "Fayllaringni har hafta zaxiralab qo'y.",
+      "bæk əp"
+     ],
+     [
+      "upgrade",
+      "yangilamoq (versiyani)",
+      "I'm getting used to the upgraded system.",
+      "Yangilangan tizimga o'rganib boryapman.",
+      "ˈəpˈgreɪd"
+     ],
+     [
+      "download / upload",
+      "yuklab olmoq / yuklamoq",
+      "Upload your essay to the platform.",
+      "Inshoni platformaga yukla.",
+      "ˈdaʊnˌloʊd  ˈəˌploʊd"
+     ],
+     [
+      "device",
+      "qurilma",
+      "How many devices are you used to using?",
+      "Nechta qurilma ishlatishga o'rganganmiz?",
+      "dɪˈvaɪs"
+     ],
+     [
+      "software / hardware",
+      "dasturiy / apparat ta'minoti",
+      "Software changes faster than hardware.",
+      "Dasturlar apparatdan tezroq o'zgaradi.",
+      "ˈsɔfˌwɛr  ˈhɑrdˌwɛr"
+     ],
+     [
+      "gadget",
+      "gadjet",
+      "My grandfather isn't used to gadgets.",
+      "Bobom gadjetlarga o'rganmagan.",
+      "ˈgæʤət"
+     ],
+     [
+      "automation",
+      "avtomatlashtirish",
+      "Automation used to scare workers.",
+      "Avtomatlashtirish oldin ishchilarni qo'rqitardi.",
+      "ɔtəˈmeɪʃən"
+     ],
+     [
+      "obsolete",
+      "eskirgan, ishlatilmaydigan",
+      "Floppy disks are obsolete.",
+      "Disketlar eskirgan.",
+      "ˌɑbsəˈlit"
+     ],
+     [
+      "breakthrough (n)",
+      "yutuq, burilish",
+      "Every breakthrough used to take a generation.",
+      "Har bir yutuq oldin bir avlod vaqtini olardi.",
+      "ˈbreɪkθˌru (ɛn)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "used to yoki be used to",
+     "type": "choose",
+     "instr": "To'g'ri shaklni tanlang",
+     "items": [
+      "People used to / are used to write letters before email.",
+      "I used to / am used to working online — I've done it for years.",
+      "Did you use to / Are you used to have a Nokia phone?",
+      "She isn't used to / didn't use to the new app yet.",
+      "My dad used to / is used to fix radios when he was young.",
+      "We're getting used to / used to studying with AI tools."
+     ],
+     "answers": [
+      "used to",
+      "am used to",
+      "Did you use to",
+      "isn't used to",
+      "used to",
+      "getting used to"
+     ]
+    },
+    {
+     "title": "Fe'l shakli",
+     "type": "gap",
+     "instr": "V1 yoki V-ing?",
+     "items": [
+      "I used to ___ (play) games all day.",
+      "I'm used to ___ (get up) early now.",
+      "He didn't use to ___ (like) technology.",
+      "Are you used to ___ (type) on a phone?",
+      "We're getting used to ___ (work) from home.",
+      "There used to ___ (be) a computer club here."
+     ],
+     "answers": [
+      "play",
+      "getting up",
+      "like",
+      "typing",
+      "working",
+      "be"
+     ]
+    },
+    {
+     "title": "Oldin va hozir",
+     "type": "rewrite",
+     "instr": "Ikki gapni \"used to … / now … are used to …\" qolipida birlashtiring",
+     "items": [
+      "People sent letters. Now they send messages.",
+      "I read paper books. Now I read on my phone.",
+      "My parents watched TV. Now they watch YouTube.",
+      "Students went to the library. Now they search online.",
+      "We paid with cash. Now we pay by phone."
+     ],
+     "answers": [
+      "People used to send letters; now they are used to sending messages.",
+      "I used to read paper books; now I'm used to reading on my phone.",
+      "My parents used to watch TV; now they're used to watching YouTube.",
+      "Students used to go to the library; now they're used to searching online.",
+      "We used to pay with cash; now we're used to paying by phone."
+     ]
+    },
+    {
+     "title": "Texnologiya o'zgarishlari",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — 3 ta \"used to\" (oila/shahar oldin), 3 ta \"be/get used to\" (hozir)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "My grandmother used to write letters to her sister.",
+      "There used to be only one TV channel.",
+      "People didn't use to have mobile phones.",
+      "Now I'm used to using three apps at once.",
+      "My mum is getting used to online banking.",
+      "We aren't used to being without the internet!"
+     ]
+    },
+    {
+     "title": "Texnologiya lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga ibora",
+     "items": [
+      "a new company that uses technology",
+      "good at using technology",
+      "easy to use (about an app)",
+      "the newest, most advanced technology",
+      "a big change caused by technology",
+      "to think of a new idea"
+     ],
+     "answers": [
+      "tech startup",
+      "tech-savvy",
+      "user-friendly",
+      "cutting-edge technology",
+      "technological breakthrough",
+      "come up with"
+     ],
+     "box": [
+      "tech startup",
+      "tech-savvy",
+      "user-friendly",
+      "cutting-edge technology",
+      "technological breakthrough",
+      "come up with"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I use to play football. (o'tgan)",
+      "I am used to play games.",
+      "Did you used to smoke?",
+      "People are used to send letters before.",
+      "She is getting used to work online."
+     ],
+     "answers": [
+      "I used to play football.",
+      "I am used to playing games.",
+      "Did you use to smoke?",
+      "People used to send letters before.",
+      "She is getting used to working online."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 2 ikkala jadvalini 3 marta; TECHNOLOGY 54 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 6–10",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — savollarga javob, kalit bilan tekshiring; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Oldin va hozir — mening oilam",
+     "type": "write",
+     "instr": "10 gap: used to (4), didn't use to (2), be used to (2), get used to (2)",
+     "answers": "Erkin; V1 / V-ing."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men oldin har kuni futbol o'ynardim.",
+      "U oldin qahva ichmasdi.",
+      "Erta turishga o'rganib qolganman.",
+      "Yangi ilovaga o'rganib boryapman.",
+      "Oldin bu yerda do'kon bor edi."
+     ],
+     "answers": [
+      "I used to play football every day.",
+      "She/He didn't use to drink coffee.",
+      "I'm used to getting up early.",
+      "I'm getting used to the new app.",
+      "There used to be a shop here."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "TECHNOLOGY CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Learning",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob: ikki jadval)",
+     "1 daqiqada 2 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Technology og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Steve Jobs — phones used to have buttons",
+    "text": [
+     "Steve Jobs was born in 1955 in San Francisco and was adopted as a baby. He used to be a difficult student: he didn't use to do his homework, and he dropped out of college after six months. But he used to sit in on classes that interested him — one of them was calligraphy, and years later that class gave the Mac its beautiful fonts.",
+     "In 1976 Jobs and his friend Steve Wozniak started Apple in a garage. Computers used to be huge machines for companies; the two Steves came up with a computer for ordinary people. Apple grew fast, but in 1985 Jobs was fired from his own company. \"It was the best thing that could have happened to me,\" he said later.",
+     "He came back in 1997, when Apple was almost bankrupt. In the next ten years he brought about three revolutions: the iPod (2001), the iPhone (2007) and the iPad (2010). Before the iPhone, phones used to have small buttons and tiny screens; people weren't used to touching a screen. Today we are so used to it that children try to touch the TV.",
+     "Jobs died in 2011. His advice to students is still quoted everywhere: \"Stay hungry, stay foolish.\" Uzbek startups at IT Park often say they are trying to do what Apple used to do in a garage — build something people don't know they need yet."
+    ],
+    "glossary": [
+     "adopt — asrab olmoq",
+     "sit in on — (darsda) qatnashmoq",
+     "calligraphy — kalligrafiya",
+     "font — shrift",
+     "garage — garaj",
+     "fire — ishdan bo'shatmoq",
+     "bankrupt — bankrot",
+     "tiny — juda kichik",
+     "quote — iqtibos keltirmoq"
+    ],
+    "tasks": [
+     {
+      "title": "used to / be used to toping",
+      "type": "find",
+      "instr": "Matndan 6 ta gap",
+      "items": [
+       "used to 1",
+       "didn't use to",
+       "used to 2",
+       "used to 3",
+       "weren't used to",
+       "are used to"
+      ],
+      "answers": [
+       "He used to be a difficult student.",
+       "He didn't use to do his homework.",
+       "Computers used to be huge machines for companies.",
+       "Phones used to have small buttons and tiny screens.",
+       "People weren't used to touching a screen.",
+       "Today we are so used to it that children try to touch the TV."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Jobs finished college.",
+       "Apple started in a garage in 1976.",
+       "Jobs was never fired from Apple.",
+       "The iPhone came out in 2007."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (1985)",
+       "True"
+      ]
+     },
+     {
+      "title": "Oldin va hozir",
+      "type": "write",
+      "instr": "Matn asosida 3 juft gap: \"… used to … / now … are used to …\"",
+      "items": [
+       "phones",
+       "computers",
+       "Jobs"
+      ],
+      "answers": [
+       "Phones used to have buttons; now we are used to touch screens.",
+       "Computers used to be for companies; now everyone is used to having one.",
+       "Jobs used to skip homework; now students are used to quoting him!"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 6–10 (Margaret Mee, Vitamins, Earthquakes, Space tourism, Life in space) — uyga."
+   }
+  },
+  {
+   "no": 3,
+   "title": "Question Tags",
+   "grammar_topic": "QUESTION TAGS (…, isn't he? / …, do they?)",
+   "vocab_topic": "Business (biznes)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 3 – Question tags (12 qatorli jadval); BUSINESS (52 so'z); Reading — Alisher Usmanov (Jony Academy matni); kitob Topic 11–15 uyga.",
+   "objectives": [
+    "Tag'ni gapning yordamchi fe'li va egasi (olmosh) bilan tuzish; tasdiq ↔ inkor.",
+    "Maxsus holatlar: aren't I, shall we, will you, nobody → they, there is → isn't there.",
+    "Ohang: ko'tariluvchi (haqiqiy savol) va tushuvchi (tasdiqlash) — speaking'da ishlatish.",
+    "Biznes CORE 20 bilan muzokara va biznes suhbati (You've closed the deal, haven't you?)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Business (biznes) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"You're tired, aren't you? It's Monday, isn't it? We don't have a test today, do we?\" — o'quvchilar faqat \"Yes, we are / No, it isn't\" bilan javob beradi. Savol: tag qanday tuzildi?"
+    ],
+    [
+     8,
+     "Kahoot — Used to / be used to",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Used to / be used to lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 12 qator: tasdiq gap → inkor tag; inkor gap → tasdiq tag; yordamchi fe'l gapdagi bilan bir xil (be / do / did / will / modal). Maxsus holatlar: I am → aren't I; Let's → shall we; buyruq → will you; nobody/nothing → tasdiq tag (do they?)."
+    ],
+    [
+     12,
+     "Business (biznes) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Tag = yordamchi fe'l + olmosh: \"He is a teacher, isn't he?\" \"They went home, didn't they?\"",
+     "Tasdiq gap → inkor tag; inkor gap → tasdiq tag.",
+     "Yordamchi fe'l gapdagi bilan bir xil: be → be; Present Simple → do/does; Past Simple → did; will; modals (can, must, should).",
+     "Maxsus: I am → aren't I?; Let's → shall we?; buyruq → will you?; nobody/nothing/never (inkor ma'no) → tasdiq tag; there is → isn't there?"
+    ],
+    "formulas": [
+     [
+      "Tasdiq → inkor tag",
+      "Positive sentence, + negative tag?",
+      "He is a teacher, isn't he?",
+      "U o'qituvchi, shunday emasmi?"
+     ],
+     [
+      "Inkor → tasdiq tag",
+      "Negative sentence, + positive tag?",
+      "He isn't a teacher, is he?",
+      "U o'qituvchi emas, shundaymi?"
+     ],
+     [
+      "Present / Past Simple",
+      "S + V(s), don't/doesn't + S? / S + V2, didn't + S?",
+      "He plays football, doesn't he? / They went to school, didn't they?",
+      "U futbol o'ynaydi, to'g'rimi? / Ular maktabga borishdi, shundaymi?"
+     ],
+     [
+      "Modals / will",
+      "S + modal + V, modal + not + S?",
+      "He can swim, can't he? / She will be there, won't she?",
+      "U suza oladi, to'g'rimi? / U o'sha yerda bo'ladi, shundaymi?"
+     ],
+     [
+      "Maxsus",
+      "I am → aren't I? / Let's → shall we? / buyruq → will you?",
+      "I am your friend, aren't I? / Let's go home, shall we? / Open the door, will you?",
+      "Men do'stingman, shunday emasmi? / Uyga boraylik, xo'pmi? / Eshikni och, xo'pmi?"
+     ],
+     [
+      "Inkor ma'noli so'zlar",
+      "Nobody/nothing/never…, + positive tag?",
+      "Nobody knows him, do they?",
+      "Uni hech kim bilmaydi, shundaymi?"
+     ]
+    ],
+    "presentation": [
+     [
+      "You run a business, don't you?",
+      "Yes, I do. I run a small online shop."
+     ],
+     [
+      "The deal was closed yesterday, wasn't it?",
+      "Yes, it was — we signed at 5 pm."
+     ],
+     [
+      "We should reduce costs, shouldn't we?",
+      "Yes, we should. The rent is too high."
+     ],
+     [
+      "Your company hasn't gone bankrupt, has it?",
+      "No, it hasn't. We're doing well."
+     ],
+     [
+      "Let's set a target for next month, shall we?",
+      "Good idea — 100 new customers."
+     ],
+     [
+      "You'll meet the deadline, won't you?",
+      "Of course I will."
+     ],
+     [
+      "The entrepreneur isn't from Tashkent, is he?",
+      "No, he's from Fergana."
+     ],
+     [
+      "Nobody has raised capital yet, have they?",
+      "No, they haven't. Investors are careful."
+     ],
+     [
+      "I'm the youngest in the company, aren't I?",
+      "Yes, you are — by five years."
+     ],
+     [
+      "Send me the financial statement, will you?",
+      "Sure, I'll send it now."
+     ]
+    ],
+    "notes": [
+     "Tag'da ega — faqat olmosh: \"Ali is here, isn't he?\" (isn't Ali — xato).",
+     "have — asosiy fe'l bo'lsa: \"You have a car, don't you?\" (haven't you — Britaniya, kam).",
+     "this/that → it; these/those → they: \"This is yours, isn't it?\"",
+     "Ohang: pastga tushsa — tasdiqlash (javob kutilmaydi); ko'tarilsa — haqiqiy savol."
+    ],
+    "mistakes": [
+     [
+      "He is a teacher, is he?",
+      "He is a teacher, isn't he?",
+      "Tasdiq → inkor tag."
+     ],
+     [
+      "They went home, didn't go they?",
+      "They went home, didn't they?",
+      "Tag = yordamchi + olmosh."
+     ],
+     [
+      "I am late, am not I?",
+      "I am late, aren't I?",
+      "aren't I."
+     ],
+     [
+      "Nobody came, didn't they?",
+      "Nobody came, did they?",
+      "Inkor ma'no → tasdiq tag."
+     ],
+     [
+      "Let's start, will we?",
+      "Let's start, shall we?",
+      "Let's → shall we."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — biznesning asosiy otlari va fe'l-birikmalari; STRONG — moliya va strategiya; SUPER — idiomalar va phrasal verbs (raise the bar, lay off, set up).",
+     "Har so'zga tag'li gap: \"You've boosted sales, haven't you?\" — juftlikda \"Yes, I have / No, I haven't\"."
+    ],
+    "core": [
+     [
+      "revenue",
+      "daromad (tushum)",
+      "Revenue grew last year, didn't it?",
+      "Daromad o'tgan yili o'sdi, shundaymi?",
+      "ˈrɛvəˌnu"
+     ],
+     [
+      "profit margin",
+      "foyda foizi",
+      "Our profit margin is 20%, isn't it?",
+      "Foyda foizimiz 20%, to'g'rimi?",
+      "ˈprɑfɪt ˈmɑrʤən"
+     ],
+     [
+      "market share",
+      "bozor ulushi",
+      "They have a big market share, don't they?",
+      "Ularning bozor ulushi katta, shundaymi?",
+      "ˈmɑrkɪt ʃɛr"
+     ],
+     [
+      "assets",
+      "aktivlar",
+      "The company's assets are worth millions, aren't they?",
+      "Kompaniya aktivlari millionlab turadi, to'g'rimi?",
+      "ˈæˌsɛts"
+     ],
+     [
+      "liabilities",
+      "majburiyatlar (qarzlar)",
+      "Liabilities shouldn't be higher than assets, should they?",
+      "Majburiyatlar aktivlardan ko'p bo'lmasligi kerak, shundaymi?",
+      "ˌlaɪəˈbɪlɪtiz"
+     ],
+     [
+      "turnover",
+      "aylanma (yillik savdo hajmi)",
+      "Turnover doubled in 2024, didn't it?",
+      "Aylanma 2024-da ikki baravar oshdi, to'g'rimi?",
+      "ˈtərˌnoʊvər"
+     ],
+     [
+      "stakeholder",
+      "manfaatdor tomon",
+      "Employees are stakeholders too, aren't they?",
+      "Xodimlar ham manfaatdor tomon, shundaymi?",
+      "ˈsteɪˌkhoʊldər"
+     ],
+     [
+      "cash flow",
+      "pul oqimi",
+      "Cash flow was a problem last month, wasn't it?",
+      "O'tgan oy pul oqimi muammo edi, to'g'rimi?",
+      "kæʃ floʊ"
+     ],
+     [
+      "entrepreneur",
+      "tadbirkor",
+      "Usmanov is an entrepreneur, isn't he?",
+      "Usmanov tadbirkor, shundaymi?",
+      "ˌɑntrəprəˈnʊr"
+     ],
+     [
+      "business model",
+      "biznes modeli",
+      "Their business model is subscription, isn't it?",
+      "Ularning biznes modeli — obuna, to'g'rimi?",
+      "ˈbɪznɪs ˈmɑdəl"
+     ],
+     [
+      "brand awareness",
+      "brend taniqliligi",
+      "Ads increase brand awareness, don't they?",
+      "Reklama brend taniqliligini oshiradi, shundaymi?",
+      "brænd əˈwɛrnəs"
+     ],
+     [
+      "customer loyalty",
+      "mijoz sadoqati",
+      "Customer loyalty takes years, doesn't it?",
+      "Mijoz sadoqati yillar talab qiladi, to'g'rimi?",
+      "ˈkəstəmər ˈlɔɪəlti"
+     ],
+     [
+      "decision-making",
+      "qaror qabul qilish",
+      "Decision-making should be fast in a startup, shouldn't it?",
+      "Startapda qaror qabul qilish tez bo'lishi kerak, shundaymi?",
+      "dɪˈsɪʒənˌmeɪkɪŋ"
+     ],
+     [
+      "product launch",
+      "mahsulot taqdimoti (chiqarilishi)",
+      "The product launch is on Friday, isn't it?",
+      "Mahsulot taqdimoti juma kuni, to'g'rimi?",
+      "ˈprɑdəkt lɔnʧ"
+     ],
+     [
+      "risk assessment",
+      "xavfni baholash",
+      "You did a risk assessment, didn't you?",
+      "Xavfni baholadingiz, shundaymi?",
+      "rɪsk əˈsɛsmənt"
+     ],
+     [
+      "boost sales",
+      "savdoni oshirmoq",
+      "The discount boosted sales, didn't it?",
+      "Chegirma savdoni oshirdi, to'g'rimi?",
+      "bust seɪlz"
+     ],
+     [
+      "close a deal",
+      "bitimni yakunlamoq",
+      "You've closed the deal, haven't you?",
+      "Bitimni yakunladingiz, shundaymi?",
+      "kloʊz ə dil"
+     ],
+     [
+      "meet a deadline",
+      "muddatga ulgurmoq",
+      "We'll meet the deadline, won't we?",
+      "Muddatga ulguramiz, to'g'rimi?",
+      "mit ə ˈdɛˌdlaɪn"
+     ],
+     [
+      "run a business",
+      "biznes yuritmoq",
+      "Running a business isn't easy, is it?",
+      "Biznes yuritish oson emas, shundaymi?",
+      "rən ə ˈbɪznɪs"
+     ],
+     [
+      "set a target",
+      "maqsad belgilamoq",
+      "Let's set a target for next quarter, shall we?",
+      "Kelasi chorak uchun maqsad belgilaylik, xo'pmi?",
+      "sɛt ə ˈtərgət"
+     ]
+    ],
+    "strong": [
+     [
+      "financial statement",
+      "moliyaviy hisobot",
+      "The financial statement is ready, isn't it?",
+      "Moliyaviy hisobot tayyor, shundaymi?",
+      "ˌfaɪˈnænʃəl ˈsteɪtmənt"
+     ],
+     [
+      "distribution channel",
+      "tarqatish kanali",
+      "Online is our main distribution channel, isn't it?",
+      "Onlayn — asosiy tarqatish kanalimiz, to'g'rimi?",
+      "ˌdɪstrəˈbjuʃən ˈʧænəl"
+     ],
+     [
+      "company policy",
+      "kompaniya siyosati",
+      "That's against company policy, isn't it?",
+      "Bu kompaniya siyosatiga zid, shundaymi?",
+      "ˈkəmpəˌni ˈpɑləsi"
+     ],
+     [
+      "stock market (business)",
+      "fond bozori",
+      "The stock market fell yesterday, didn't it?",
+      "Fond bozori kecha tushdi, to'g'rimi?",
+      "stɑk ˈmɑrkɪt (ˈbɪznɪs)"
+     ],
+     [
+      "generate revenue",
+      "daromad keltirmoq",
+      "The app generates revenue from ads, doesn't it?",
+      "Ilova reklamadan daromad keltiradi, shundaymi?",
+      "ˈʤɛnərˌeɪt ˈrɛvəˌnu"
+     ],
+     [
+      "go bankrupt (business)",
+      "bankrot bo'lmoq",
+      "The firm didn't go bankrupt, did it?",
+      "Firma bankrot bo'lmadi, shundaymi?",
+      "goʊ ˈbæŋkrəpt (ˈbɪznɪs)"
+     ],
+     [
+      "improve efficiency",
+      "samaradorlikni oshirmoq",
+      "Automation improves efficiency, doesn't it?",
+      "Avtomatlashtirish samaradorlikni oshiradi, to'g'rimi?",
+      "ˌɪmˈpruv ɪˈfɪʃənsi"
+     ],
+     [
+      "negotiate a contract",
+      "shartnoma bo'yicha muzokara qilmoq",
+      "You negotiated the contract yourself, didn't you?",
+      "Shartnomani o'zingiz muzokara qildingiz, shundaymi?",
+      "nɪˈgoʊʃiˌeɪt ə ˈkɑnˌtrækt"
+     ],
+     [
+      "strengthen a partnership",
+      "hamkorlikni mustahkamlamoq",
+      "The visit strengthened the partnership, didn't it?",
+      "Tashrif hamkorlikni mustahkamladi, to'g'rimi?",
+      "ˈstrɛŋθən ə ˈpɑrtnərˌʃɪp"
+     ],
+     [
+      "cost-effective",
+      "tejamkor, xarajatga arziydigan",
+      "Online ads are cost-effective, aren't they?",
+      "Onlayn reklama tejamkor, shundaymi?",
+      ""
+     ],
+     [
+      "in the long run",
+      "uzoq muddatda",
+      "Quality wins in the long run, doesn't it?",
+      "Uzoq muddatda sifat yutadi, to'g'rimi?",
+      "ɪn ðə lɔŋ rən"
+     ],
+     [
+      "take calculated risks",
+      "hisoblangan tavakkal qilmoq",
+      "Entrepreneurs take calculated risks, don't they?",
+      "Tadbirkorlar hisoblangan tavakkal qiladi, shundaymi?",
+      "teɪk ˈkælkjəˌleɪtɪd rɪsks"
+     ],
+     [
+      "reduce costs",
+      "xarajatlarni kamaytirmoq",
+      "We must reduce costs, mustn't we?",
+      "Xarajatlarni kamaytirishimiz shart, to'g'rimi?",
+      "rɪˈdus kɔsts"
+     ],
+     [
+      "competitive advantage",
+      "raqobat ustunligi",
+      "Speed is our competitive advantage, isn't it?",
+      "Tezlik — raqobat ustunligimiz, shundaymi?",
+      "kəmˈpɛtɪtɪv ædˈvæntɪʤ"
+     ],
+     [
+      "joint venture",
+      "qo'shma korxona",
+      "It's a joint venture with a Korean firm, isn't it?",
+      "Bu koreys firmasi bilan qo'shma korxona, to'g'rimi?",
+      "ʤɔɪnt ˈvɛnʧər"
+     ],
+     [
+      "raise capital",
+      "kapital jalb qilmoq",
+      "They raised capital last year, didn't they?",
+      "Ular o'tgan yili kapital jalb qildi, shundaymi?",
+      "reɪz ˈkæpɪtəl"
+     ],
+     [
+      "funding",
+      "moliyalashtirish",
+      "The startup got funding from IT Park, didn't it?",
+      "Startap IT Parkdan moliya oldi, to'g'rimi?",
+      "ˈfəndɪŋ"
+     ],
+     [
+      "recruitment",
+      "ishga qabul qilish",
+      "Recruitment starts in May, doesn't it?",
+      "Ishga qabul mayda boshlanadi, shundaymi?",
+      "rɪˈkrutmənt"
+     ],
+     [
+      "trademark",
+      "savdo belgisi",
+      "You registered the trademark, didn't you?",
+      "Savdo belgisini ro'yxatdan o'tkazdingiz, to'g'rimi?",
+      "ˈtreɪdˌmɑrk"
+     ],
+     [
+      "warehouse (business)",
+      "ombor",
+      "The warehouse is outside the city, isn't it?",
+      "Ombor shahar tashqarisida, shundaymi?",
+      "ˈwɛˌrhaʊs (ˈbɪznɪs)"
+     ]
+    ],
+    "super": [
+     [
+      "raise the bar",
+      "standartni ko'tarmoq",
+      "Uzum has raised the bar for delivery, hasn't it?",
+      "Uzum yetkazib berish standartini ko'tardi, shundaymi?",
+      "reɪz ðə bɑr"
+     ],
+     [
+      "think outside the box",
+      "noan'anaviy fikrlamoq",
+      "Good entrepreneurs think outside the box, don't they?",
+      "Yaxshi tadbirkorlar noan'anaviy fikrlaydi, to'g'rimi?",
+      "θɪŋk ˈaʊtˈsaɪd ðə bɑks"
+     ],
+     [
+      "lay off",
+      "ishdan bo'shatmoq (qisqartirish)",
+      "The company laid off 200 workers, didn't it?",
+      "Kompaniya 200 ishchini bo'shatdi, shundaymi?",
+      "leɪ ɔf"
+     ],
+     [
+      "set up (business)",
+      "(kompaniya) tashkil qilmoq",
+      "He set up his first company at 19, didn't he?",
+      "U birinchi kompaniyasini 19 da ochdi, to'g'rimi?",
+      "sɛt əp (ˈbɪznɪs)"
+     ],
+     [
+      "seal the deal",
+      "bitimni muhrlamoq (yakunlamoq)",
+      "A handshake sealed the deal, didn't it?",
+      "Qo'l siqish bitimni muhrladi, shundaymi?",
+      "sil ðə dil"
+     ],
+     [
+      "loss (business)",
+      "zarar",
+      "The loss wasn't big, was it?",
+      "Zarar katta emas edi, shundaymi?",
+      "lɔs (ˈbɪznɪs)"
+     ],
+     [
+      "promotion (marketing)",
+      "targ'ibot; lavozim ko'tarilishi",
+      "The promotion boosted sales, didn't it?",
+      "Targ'ibot savdoni oshirdi, to'g'rimi?",
+      "pərˈmoʊʃən (ˈmɑrkətɪŋ)"
+     ],
+     [
+      "pricing",
+      "narx belgilash",
+      "Pricing is the hardest decision, isn't it?",
+      "Narx belgilash — eng qiyin qaror, shundaymi?",
+      "ˈpraɪsɪŋ"
+     ],
+     [
+      "retail / wholesale",
+      "chakana / ulgurji savdo",
+      "Wholesale prices are lower, aren't they?",
+      "Ulgurji narxlar pastroq, to'g'rimi?",
+      "ˈriˌteɪl  ˈhoʊlˌseɪl"
+     ],
+     [
+      "supplier",
+      "yetkazib beruvchi",
+      "The supplier missed the deadline, didn't he?",
+      "Yetkazib beruvchi muddatga ulgurmadi, shundaymi?",
+      "səˈplaɪər"
+     ],
+     [
+      "competitor",
+      "raqobatchi",
+      "Competitors copy good ideas, don't they?",
+      "Raqobatchilar yaxshi g'oyalarni ko'chiradi, to'g'rimi?",
+      "kəmˈpɛtɪtər"
+     ],
+     [
+      "investor",
+      "investor",
+      "Investors want a clear business model, don't they?",
+      "Investorlar aniq biznes modelini xohlaydi, shundaymi?",
+      "ˌɪnˈvɛstər"
+     ],
+     [
+      "shareholder",
+      "aksiyador",
+      "Shareholders get part of the profit, don't they?",
+      "Aksiyadorlar foydaning bir qismini oladi, to'g'rimi?",
+      "ˈʃɛˌrhoʊldər"
+     ],
+     [
+      "merger",
+      "qo'shilish (kompaniyalar)",
+      "The merger created a tech giant, didn't it?",
+      "Qo'shilish texnologiya gigantini yaratdi, shundaymi?",
+      "ˈmərʤər"
+     ],
+     [
+      "acquisition",
+      "sotib olish (kompaniyani)",
+      "It was the biggest acquisition of the year, wasn't it?",
+      "Bu yilning eng katta xaridi edi, to'g'rimi?",
+      "ˌækwəˈzɪʃən"
+     ],
+     [
+      "CEO (chief executive officer)",
+      "bosh direktor",
+      "The CEO used to be an engineer, didn't he?",
+      "Bosh direktor oldin muhandis edi, shundaymi?",
+      "ˈsiˌiˈoʊ (ʧif ɪgˈzɛkjətɪv ˈɔfɪsər)"
+     ],
+     [
+      "headquarters",
+      "bosh ofis",
+      "The headquarters are in Tashkent, aren't they?",
+      "Bosh ofis Toshkentda, to'g'rimi?",
+      "ˈhɛdˌkɔrtərz"
+     ],
+     [
+      "outsourcing",
+      "autsorsing (tashqi pudrat)",
+      "Outsourcing reduces costs, doesn't it?",
+      "Autsorsing xarajatni kamaytiradi, shundaymi?",
+      "ˌaʊtˈsɔrsɪŋ"
+     ],
+     [
+      "bankruptcy (business)",
+      "bankrotlik",
+      "Bankruptcy isn't the end, is it?",
+      "Bankrotlik — oxiri emas, shundaymi?",
+      "ˈbæŋkrəptsi (ˈbɪznɪs)"
+     ],
+     [
+      "monopoly",
+      "monopoliya",
+      "A monopoly isn't good for customers, is it?",
+      "Monopoliya mijozlar uchun yaxshi emas, shundaymi?",
+      "məˈnɑpəli"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Tag qo'shing",
+     "type": "gap",
+     "instr": "Gapga to'g'ri tag",
+     "items": [
+      "She runs a business, ___?",
+      "They closed the deal, ___?",
+      "You aren't the CEO, ___?",
+      "We should reduce costs, ___?",
+      "He can negotiate well, ___?",
+      "The company will raise capital, ___?",
+      "I'm right, ___?",
+      "Let's set a target, ___?",
+      "Nobody has met the deadline, ___?",
+      "Send the report, ___?"
+     ],
+     "answers": [
+      "doesn't she",
+      "didn't they",
+      "are you",
+      "shouldn't we",
+      "can't he",
+      "won't it",
+      "aren't I",
+      "shall we",
+      "have they",
+      "will you"
+     ]
+    },
+    {
+     "title": "Tasdiqmi, inkormi?",
+     "type": "choose",
+     "instr": "To'g'ri tag'ni tanlang",
+     "items": [
+      "The market share is growing, is it / isn't it?",
+      "They haven't gone bankrupt, have they / haven't they?",
+      "There's a warehouse here, isn't there / isn't it?",
+      "This is your trademark, isn't this / isn't it?",
+      "Nothing was decided, was it / wasn't it?",
+      "You have a business plan, don't you / haven't you?"
+     ],
+     "answers": [
+      "isn't it",
+      "have they",
+      "isn't there",
+      "isn't it",
+      "was it",
+      "don't you"
+     ]
+    },
+    {
+     "title": "Zamonga qarab tag",
+     "type": "rewrite",
+     "instr": "Gapni tag bilan to'liq yozing (yordamchi fe'lga e'tibor)",
+     "items": [
+      "He is meeting the investors now.",
+      "They had signed the contract before noon.",
+      "She used to work at a bank.",
+      "We will have launched the product by May.",
+      "You must register the trademark.",
+      "The startup was funded by IT Park."
+     ],
+     "answers": [
+      "He is meeting the investors now, isn't he?",
+      "They had signed the contract before noon, hadn't they?",
+      "She used to work at a bank, didn't she?",
+      "We will have launched the product by May, won't we?",
+      "You must register the trademark, mustn't you?",
+      "The startup was funded by IT Park, wasn't it?"
+     ]
+    },
+    {
+     "title": "Muzokara",
+     "type": "dialog",
+     "instr": "Rollarda: ikki hamkor 6 ta tag'li gap bilan kelishuvga keladi (price, deadline, delivery, contract)",
+     "items": [
+      "A1",
+      "B1",
+      "A2",
+      "B2",
+      "A3",
+      "B3"
+     ],
+     "answers": [
+      "The price is 10,000 dollars, isn't it?",
+      "Yes, it is. But you'll pay in advance, won't you?",
+      "Half in advance. The deadline is June, isn't it?",
+      "Right. Delivery is free, isn't it?",
+      "Yes. We can sign today, can't we?",
+      "Let's seal the deal, shall we?"
+     ],
+     "note": "Ohang: tasdiqlashda pastga, savolda yuqoriga."
+    },
+    {
+     "title": "Biznes lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "money a company earns from sales",
+      "the part of the market a company has",
+      "a person who starts a business",
+      "to make people buy more",
+      "to finish an agreement successfully",
+      "what a company owes"
+     ],
+     "answers": [
+      "revenue",
+      "market share",
+      "entrepreneur",
+      "boost sales",
+      "close a deal",
+      "liabilities"
+     ],
+     "box": [
+      "revenue",
+      "market share",
+      "entrepreneur",
+      "boost sales",
+      "close a deal",
+      "liabilities"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He is a teacher, is he?",
+      "They went home, didn't go they?",
+      "I am late, am not I?",
+      "Nobody came, didn't they?",
+      "Let's start, will we?"
+     ],
+     "answers": [
+      "He is a teacher, isn't he?",
+      "They went home, didn't they?",
+      "I am late, aren't I?",
+      "Nobody came, did they?",
+      "Let's start, shall we?"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 3 jadvalini (12 qator) 3 marta; BUSINESS 52 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 11–15",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari, kalit bilan tekshirish; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "10 ta tag",
+     "type": "write",
+     "instr": "10 gap turli zamon va modallar bilan, har biriga tag (2 ta maxsus holat: aren't I / shall we)",
+     "answers": "Erkin; tag formulasi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U tadbirkor, shunday emasmi?",
+      "Ular bitimni yakunlashdi, to'g'rimi?",
+      "Sen bosh direktor emassan, shundaymi?",
+      "Maqsad belgilaylik, xo'pmi?",
+      "Hech kim muddatga ulgurmadi, shundaymi?"
+     ],
+     "answers": [
+      "He/She is an entrepreneur, isn't he/she?",
+      "They closed the deal, didn't they?",
+      "You aren't the CEO, are you?",
+      "Let's set a target, shall we?",
+      "Nobody met the deadline, did they?"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "BUSINESS CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Technology",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 12 qator)",
+     "2 daqiqada 1 / 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Business og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Alisher Usmanov — he started with nothing, didn't he?",
+    "text": [
+     "Alisher Usmanov was born in 1953 in Chust, a small town in Namangan region. He didn't come from a business family, did he? No — his father was a prosecutor. As a teenager Alisher was a fencer: he won championships in Uzbekistan and dreamed of the Olympics. He was tall and strong, wasn't he? Yes — 1.90 m and the best sabre fencer in the republic.",
+     "In the 1980s his life changed twice. First he spent six years in prison, and later the court said he had been innocent. Then, in the 1990s, he started his first businesses: he used to trade in plastic bags and cigarettes, and he set up a company that made packaging. He took calculated risks, didn't he? He did: he bought shares in steel and mining companies that nobody wanted, and in the 2000s they became worth billions.",
+     "Usmanov was also an early investor in technology. He raised capital for Facebook in 2009, when many people thought social media was a bubble, and he bought a share of Alibaba before it became a giant. \"You have to think outside the box, don't you?\" he once said. He also owned part of Arsenal football club for eleven years.",
+     "Today Usmanov is known in Uzbekistan mostly for charity: he has built schools, mosques and hospitals in Namangan and Tashkent, and he has paid for the restoration of historic buildings. He is still the president of the International Fencing Federation — sport didn't leave him, did it?"
+    ],
+    "glossary": [
+     "prosecutor — prokuror",
+     "fencer / fencing — qilichboz / qilichbozlik",
+     "sabre — shamshir (qilich)",
+     "innocent — aybsiz",
+     "trade in — savdo qilmoq",
+     "packaging — qadoqlash",
+     "share — aksiya",
+     "mining — kon sanoati",
+     "bubble — pufak (sun'iy o'sish)",
+     "restoration — ta'mirlash",
+     "federation — federatsiya"
+    ],
+    "tasks": [
+     {
+      "title": "Tag'larni toping",
+      "type": "find",
+      "instr": "Matndan 6 ta question tag va ularning tasdiq/inkor turini ayting",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6 (o'zingiz)"
+      ],
+      "answers": [
+       "He didn't come from a business family, did he? (inkor → tasdiq tag)",
+       "He was tall and strong, wasn't he? (tasdiq → inkor tag)",
+       "He took calculated risks, didn't he?",
+       "You have to think outside the box, don't you?",
+       "Sport didn't leave him, did it?",
+       "He is a generous man, isn't he?"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Usmanov's father was a businessman.",
+       "He was a champion fencer.",
+       "He invested in Facebook in 2009.",
+       "He never owned a football club."
+      ],
+      "answers": [
+       "False (prosecutor)",
+       "True",
+       "True",
+       "False (Arsenal)"
+      ]
+     },
+     {
+      "title": "Biznes lug'ati",
+      "type": "short",
+      "instr": "Matndan 5 ta biznes iborasini toping va ma'nosini ayting",
+      "items": [
+       "phrases"
+      ],
+      "answers": [
+       "set up a company, took calculated risks, bought shares, raised capital, think outside the box, early investor"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 11–15 (Advertising …) — uyga."
+   }
+  }
+ ]
+}

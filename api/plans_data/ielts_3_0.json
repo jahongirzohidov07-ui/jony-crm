@@ -9178,6 +9178,3701 @@
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 51–55 — uyga."
    }
+  },
+  {
+   "no": 11,
+   "title": "Distributive Pronouns 1",
+   "grammar_topic": "TAQSIMLOVCHI OLMOSHLAR 1 (each / every / either / neither)",
+   "vocab_topic": "Sport (sport — B1)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 11 – Distributive pronouns 1 (4 qatorli jadval); SPORT (76 so'z); Reading — Rustam Qosimjonov (Jony Academy matni); kitob Topic 56–60 uyga; Writing 5: Pros and cons of working from home.",
+   "objectives": [
+    "each / every (ko'p narsa) va either / neither (ikki narsa) ni to'g'ri tanlash.",
+    "Hammasi + birlik ot + birlik fe'l: each student has, every child needs, either road leads, neither option is.",
+    "each of / either of / neither of + ko'plik ot + birlik fe'l; \"each\" gap oxirida (They cost 5 dollars each).",
+    "Sport B1 CORE 20 bilan musobaqa va sportchilar haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Sport (sport — B1) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz ikki to'p ko'rsatadi: \"Either ball is fine. Neither ball is new. Each ball has a number. Every ball is round.\" — o'quvchilar: qaysi so'z ikkitaga, qaysi ko'pga?"
+    ],
+    [
+     8,
+     "Kahoot — Progress test 2 natijalari + mixed conditionals",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Progress test 2 natijalari + mixed conditionals lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 4 qator: EACH (guruhdagi har biri alohida), EVERY (guruhdagi hammasi umumiy) — + birlik ot + birlik fe'l; EITHER (ikkitadan biri / ikkalasi ham), NEITHER (ikkitadan hech biri) — + birlik ot + birlik fe'l. each of / either of / neither of + ko'plik ot (+ birlik fe'l)."
+    ],
+    [
+     12,
+     "Sport (sport — B1) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "EACH — har biri ALOHIDA (2 va undan ko'p): \"Each student has a book.\" (har biriga e'tibor).",
+     "EVERY — hammasi UMUMIY (3 va undan ko'p): \"Every child needs love.\" (hamma = all).",
+     "EITHER — ikkitadan biri (yoki ikkalasi ham): \"Either road leads to the city.\" Inkor bilan: \"I don't like either\" = neither.",
+     "NEITHER — ikkitadan hech biri: \"Neither option is good.\" (fe'l tasdiq!).",
+     "of bilan: each of the players, either of the two, neither of them — fe'l birlik (rasmiy)."
+    ],
+    "formulas": [
+     [
+      "Each",
+      "Each + birlik ot + birlik fe'l",
+      "Each student has a book.",
+      "Har bir talabaning kitobi bor."
+     ],
+     [
+      "Every",
+      "Every + birlik ot + birlik fe'l",
+      "Every child needs love.",
+      "Har bir bola mehrga muhtoj."
+     ],
+     [
+      "Either",
+      "Either + birlik ot + birlik fe'l",
+      "Either road leads to the city.",
+      "Ikkala yo'l ham (istalgani) shaharga olib boradi."
+     ],
+     [
+      "Neither",
+      "Neither + birlik ot + birlik fe'l",
+      "Neither option is good.",
+      "Ikki variantning hech biri yaxshi emas."
+     ],
+     [
+      "… of",
+      "each/either/neither of + ko'plik ot + birlik fe'l",
+      "Each of the players has a medal. / Neither of them was ready.",
+      "O'yinchilarning har birida medal bor. / Ularning hech biri tayyor emas edi."
+     ],
+     [
+      "each (oxirida) / every + vaqt",
+      "… + each; every + day/week/two years",
+      "The tickets cost 10 dollars each. / The Olympics are held every four years.",
+      "Chiptalar har biri 10 dollar. / Olimpiada har to'rt yilda o'tkaziladi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Does each player get a medal?",
+      "Yes, each player gets one."
+     ],
+     [
+      "Does every team have a captain?",
+      "Yes, every team has a captain."
+     ],
+     [
+      "Which court can we use?",
+      "Either court is free — choose one."
+     ],
+     [
+      "Who won, Ali or Bobur?",
+      "Neither of them won. It was a draw."
+     ],
+     [
+      "How often is the World Cup held?",
+      "Every four years."
+     ],
+     [
+      "Does each of the athletes train every day?",
+      "Yes, each of them trains six days a week."
+     ],
+     [
+      "Is either coach from Uzbekistan?",
+      "Neither coach is; both are from Korea."
+     ],
+     [
+      "How much are the tickets?",
+      "50,000 sums each."
+     ],
+     [
+      "Does every fan have a ticket?",
+      "Not every fan has one — some watch the broadcast."
+     ],
+     [
+      "Did either team play well?",
+      "Neither team played well in the first half."
+     ]
+    ],
+    "notes": [
+     "each — ikkita uchun ham bo'ladi (each hand); every — faqat 3+.",
+     "every + son: every two weeks, every 100 metres.",
+     "either … or / neither … nor (13-dars): \"Either Ali or Bobur is captain.\"",
+     "Sport lug'ati: athlete, opponent, referee, tournament, qualify, underdog/favourite, draw, sportsmanship, fair play."
+    ],
+    "mistakes": [
+     [
+      "Each students have a book.",
+      "Each student has a book.",
+      "Birlik ot + birlik fe'l."
+     ],
+     [
+      "Every of the players is here.",
+      "Every player is here. / Each of the players is here.",
+      "\"every of\" yo'q."
+     ],
+     [
+      "Neither options are good.",
+      "Neither option is good.",
+      "Birlik."
+     ],
+     [
+      "Either of the two teams are strong.",
+      "Either of the two teams is strong.",
+      "of + birlik fe'l (rasmiy)."
+     ],
+     [
+      "Neither team didn't score.",
+      "Neither team scored.",
+      "neither — inkor ma'no, fe'l tasdiq."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — sportning asosiy otlari (athlete, opponent, referee, tournament…); STRONG — natija va mashq so'zlari; SUPER — sport turlari va idiomalar (fair play, underdog).",
+     "Har so'zga taqsimlovchi olmosh bilan gap: \"Each athlete has a coach.\" / \"Neither team scored.\""
+    ],
+    "core": [
+     [
+      "athlete",
+      "sportchi",
+      "Each athlete has a personal coach.",
+      "Har bir sportchining shaxsiy murabbiyi bor.",
+      "ˈæθˌlit"
+     ],
+     [
+      "coach (sport)",
+      "murabbiy",
+      "Neither coach was happy with the result.",
+      "Ikkala murabbiy ham natijadan xursand emas edi.",
+      "koʊʧ (spɔrt)"
+     ],
+     [
+      "referee",
+      "hakam",
+      "Every referee makes mistakes.",
+      "Har bir hakam xato qiladi.",
+      "ˌrɛfərˈi"
+     ],
+     [
+      "spectator",
+      "tomoshabin",
+      "Each spectator gets a free flag.",
+      "Har bir tomoshabinga bepul bayroq beriladi.",
+      "ˈspɛkteɪtər"
+     ],
+     [
+      "opponent (sport)",
+      "raqib",
+      "Either opponent could win today.",
+      "Bugun ikkala raqibdan istalgani yutishi mumkin.",
+      "əˈpoʊnənt (spɔrt)"
+     ],
+     [
+      "captain",
+      "sardor",
+      "Every team needs a captain.",
+      "Har bir jamoaga sardor kerak.",
+      "ˈkæptən"
+     ],
+     [
+      "champion (sport)",
+      "chempion",
+      "Each champion started as a beginner.",
+      "Har bir chempion boshlovchi sifatida boshlagan.",
+      "ˈʧæmpiən (spɔrt)"
+     ],
+     [
+      "qualify",
+      "saralashdan o'tmoq",
+      "Neither team qualified for the final.",
+      "Ikkala jamoa ham finalga chiqmadi.",
+      "kˈwɑləˌfaɪ"
+     ],
+     [
+      "tournament",
+      "turnir",
+      "Every tournament has one winner.",
+      "Har bir turnirda bitta g'olib bo'ladi.",
+      "ˈtʊrnəmənt"
+     ],
+     [
+      "rival",
+      "raqib (doimiy)",
+      "Each rival respected the other.",
+      "Har bir raqib boshqasini hurmat qilardi.",
+      "ˈraɪvəl"
+     ],
+     [
+      "underdog",
+      "kuchsiz hisoblangan tomon",
+      "Every underdog dreams of a final.",
+      "Har bir \"kuchsiz\" final orzu qiladi.",
+      "ˈəndərˌdɔg"
+     ],
+     [
+      "favourite (sport)",
+      "favorit",
+      "Neither favourite reached the semi-final.",
+      "Ikkala favorit ham yarim finalga chiqmadi.",
+      "ˈfeɪvərɪt (spɔrt)"
+     ],
+     [
+      "score (n)",
+      "hisob",
+      "Each game had a different score.",
+      "Har bir o'yinning hisobi boshqacha edi.",
+      "skɔr (ɛn)"
+     ],
+     [
+      "draw (n)",
+      "durang",
+      "Either result — a win or a draw — is enough.",
+      "Ikkala natija ham — g'alaba yoki durang — yetarli.",
+      "drɔ (ɛn)"
+     ],
+     [
+      "victory (sport)",
+      "g'alaba",
+      "Every victory is built on training.",
+      "Har bir g'alaba mashq ustiga quriladi.",
+      "ˈvɪktəri (spɔrt)"
+     ],
+     [
+      "defeat (sport)",
+      "mag'lubiyat",
+      "Each defeat taught him something.",
+      "Har bir mag'lubiyat unga nimadir o'rgatdi.",
+      "dɪˈfit (spɔrt)"
+     ],
+     [
+      "medal",
+      "medal",
+      "Each athlete received a medal.",
+      "Har bir sportchi medal oldi.",
+      "ˈmɛdəl"
+     ],
+     [
+      "trophy (sport)",
+      "kubok",
+      "Neither club has won the trophy.",
+      "Ikkala klub ham kubokni yutmagan.",
+      "ˈtroʊfi (spɔrt)"
+     ],
+     [
+      "tactic",
+      "taktika",
+      "Every tactic has a weakness.",
+      "Har bir taktikaning zaif tomoni bor.",
+      "ˈtæktɪk"
+     ],
+     [
+      "strategy",
+      "strategiya",
+      "Each player follows the same strategy.",
+      "Har bir o'yinchi bir xil strategiyaga amal qiladi.",
+      "ˈstrætəʤi"
+     ]
+    ],
+    "strong": [
+     [
+      "drill",
+      "takroriy mashq",
+      "Each drill lasts ten minutes.",
+      "Har bir mashq o'n daqiqa davom etadi.",
+      "drɪl"
+     ],
+     [
+      "stretching",
+      "cho'zilish mashqlari",
+      "Every session starts with stretching.",
+      "Har bir mashg'ulot cho'zilish bilan boshlanadi.",
+      "ˈstrɛʧɪŋ"
+     ],
+     [
+      "reflex",
+      "refleks",
+      "Either player has fast reflexes.",
+      "Ikkala o'yinchining ham refleksi tez.",
+      "ˈriflɛks"
+     ],
+     [
+      "posture (sport)",
+      "tana holati",
+      "Each move needs correct posture.",
+      "Har bir harakat to'g'ri tana holatini talab qiladi.",
+      "ˈpɑsʧər (spɔrt)"
+     ],
+     [
+      "field / court / track / pool",
+      "maydon / kort / yugurish yo'li / basseyn",
+      "Every sport has its place: a field, a court, a track or a pool.",
+      "Har bir sportning o'z joyi bor: maydon, kort, yo'lak yoki basseyn.",
+      "fild  kɔrt  træk  pul"
+     ],
+     [
+      "equipment (sport)",
+      "jihozlar",
+      "Neither team had good equipment.",
+      "Ikkala jamoaning ham jihozi yaxshi emas edi.",
+      "ɪkˈwɪpmənt (spɔrt)"
+     ],
+     [
+      "league (sport)",
+      "liga",
+      "Each league has 16 teams.",
+      "Har bir ligada 16 jamoa bor.",
+      "lig (spɔrt)"
+     ],
+     [
+      "season (sport)",
+      "mavsum",
+      "Every season ends with a final.",
+      "Har bir mavsum final bilan tugaydi.",
+      "ˈsizən (spɔrt)"
+     ],
+     [
+      "foul",
+      "qoidabuzarlik",
+      "Each foul costs a point.",
+      "Har bir qoidabuzarlik bir ochkoga tushadi.",
+      "faʊl"
+     ],
+     [
+      "penalty",
+      "jarima zarbasi",
+      "Neither penalty was scored.",
+      "Ikkala jarima zarbasi ham urilmadi.",
+      "ˈpɛnəlti"
+     ],
+     [
+      "substitute",
+      "zaxira o'yinchi",
+      "Every team can use five substitutes.",
+      "Har bir jamoa beshta zaxira o'yinchini ishlatishi mumkin.",
+      "ˈsəbstəˌtut"
+     ],
+     [
+      "amateur / professional",
+      "havaskor / professional",
+      "Either player, amateur or professional, must follow the rules.",
+      "Havaskor bo'ladimi, professional bo'ladimi — har bir o'yinchi qoidaga amal qilishi kerak.",
+      "ˈæməˌʧər  prəˈfɛʃənəl"
+     ],
+     [
+      "doping",
+      "doping",
+      "Every athlete is tested for doping.",
+      "Har bir sportchi dopingga tekshiriladi.",
+      ""
+     ],
+     [
+      "sponsor (sport)",
+      "homiy",
+      "Neither club has a big sponsor.",
+      "Ikkala klubning ham katta homiysi yo'q.",
+      "ˈspɑnsər (spɔrt)"
+     ],
+     [
+      "broadcast",
+      "translyatsiya",
+      "Every final is broadcast live.",
+      "Har bir final jonli translyatsiya qilinadi.",
+      "ˈbrɔdˌkæst"
+     ],
+     [
+      "sportsmanship",
+      "sportcha xulq",
+      "Each champion shows sportsmanship.",
+      "Har bir chempion sportcha xulq ko'rsatadi.",
+      "ˈspɔrtsmənˌʃɪp"
+     ],
+     [
+      "fair play",
+      "halol o'yin",
+      "Every referee protects fair play.",
+      "Har bir hakam halol o'yinni himoya qiladi.",
+      "fɛr pleɪ"
+     ],
+     [
+      "rivalry",
+      "raqobat",
+      "The rivalry between either club is famous.",
+      "Ikkala klub o'rtasidagi raqobat mashhur.",
+      "ˈraɪvəlri"
+     ],
+     [
+      "discipline (sport)",
+      "intizom",
+      "Each athlete needs discipline.",
+      "Har bir sportchiga intizom kerak.",
+      "ˈdɪsəplən (spɔrt)"
+     ],
+     [
+      "grandmaster",
+      "grossmeyster",
+      "Every grandmaster began as a child.",
+      "Har bir grossmeyster bolalikdan boshlagan.",
+      "ˈgrændˈmæstər"
+     ]
+    ],
+    "super": [
+     [
+      "chess",
+      "shaxmat",
+      "Each chess game is a small war.",
+      "Har bir shaxmat o'yini — kichik urush.",
+      "ʧɛs"
+     ],
+     [
+      "knockout",
+      "yakunlovchi (chiqib ketish tizimi)",
+      "Neither player wants a knockout tournament.",
+      "Ikkala o'yinchi ham chiqib ketish turnirini xohlamaydi.",
+      "ˈnɑˌkaʊt"
+     ],
+     [
+      "tiebreak",
+      "qo'shimcha (taqsimlovchi) o'yin",
+      "Every tiebreak is decided in minutes.",
+      "Har bir taqsimlovchi o'yin daqiqalarda hal bo'ladi.",
+      ""
+     ],
+     [
+      "rating",
+      "reyting",
+      "Each grandmaster has a rating.",
+      "Har bir grossmeysterning reytingi bor.",
+      "ˈreɪtɪŋ"
+     ],
+     [
+      "title (sport)",
+      "unvon",
+      "Either title — champion or grandmaster — is hard to win.",
+      "Ikkala unvon ham — chempion yoki grossmeyster — qiyin qo'lga kiritiladi.",
+      "ˈtaɪtəl (spɔrt)"
+     ],
+     [
+      "defend a title",
+      "unvonni himoya qilmoq",
+      "Every champion must defend the title.",
+      "Har bir chempion unvonni himoya qilishi kerak.",
+      "dɪˈfɛnd ə ˈtaɪtəl"
+     ],
+     [
+      "comeback",
+      "qaytish (kuchli)",
+      "Each comeback needs courage.",
+      "Har bir qaytish jasorat talab qiladi.",
+      "ˈkəmˌbæk"
+     ],
+     [
+      "injury time",
+      "qo'shilgan vaqt",
+      "Neither goal was scored in injury time.",
+      "Ikkala gol ham qo'shilgan vaqtda urilmadi.",
+      "ˈɪnʤəri taɪm"
+     ],
+     [
+      "home / away",
+      "o'z maydonida / mehmonda",
+      "Every team plays each opponent home and away.",
+      "Har bir jamoa har bir raqib bilan o'z maydonida va mehmonda o'ynaydi.",
+      "hoʊm  əˈweɪ"
+     ],
+     [
+      "warm-up",
+      "isinish (mashq)",
+      "Each warm-up lasts 15 minutes.",
+      "Har bir isinish 15 daqiqa.",
+      ""
+     ],
+     [
+      "personal best",
+      "shaxsiy rekord",
+      "Every athlete chases a personal best.",
+      "Har bir sportchi shaxsiy rekordga intiladi.",
+      "ˈpərsɪnəl bɛst"
+     ],
+     [
+      "stamina",
+      "chidamlilik",
+      "Neither runner had enough stamina.",
+      "Ikkala yuguruvchining ham chidamliligi yetarli emas edi.",
+      "ˈstæmɪnə"
+     ],
+     [
+      "agility",
+      "chaqqonlik",
+      "Each judoka needs agility.",
+      "Har bir dzyudochiga chaqqonlik kerak.",
+      "əˈdʒɪləti"
+     ],
+     [
+      "endurance",
+      "bardosh, chidam",
+      "Every marathon tests endurance.",
+      "Har bir marafon chidamni sinaydi.",
+      "ɪnˈdjʊərəns"
+     ],
+     [
+      "concentration (sport)",
+      "diqqatni jamlash",
+      "Either mistake in chess comes from lost concentration.",
+      "Shaxmatdagi ikkala xato ham diqqat yo'qolishidan kelib chiqadi.",
+      "ˌkɑnsənˈtreɪʃən (spɔrt)"
+     ],
+     [
+      "opening (chess)",
+      "debyut",
+      "Each opening has a name.",
+      "Har bir debyutning nomi bor.",
+      "ˈoʊpənɪŋ (ʧɛs)"
+     ],
+     [
+      "checkmate",
+      "mot",
+      "Every game ends with checkmate or a draw.",
+      "Har bir o'yin mot yoki durang bilan tugaydi.",
+      "ˈʧɛkˌmeɪt"
+     ],
+     [
+      "FIDE",
+      "FIDE (Xalqaro shaxmat federatsiyasi)",
+      "Neither federation — FIDE or the national one — pays much.",
+      "Ikkala federatsiya ham — FIDE yoki milliy — ko'p to'lamaydi.",
+      "faɪd"
+     ],
+     [
+      "prodigy",
+      "vunderkind (iste'dodli bola)",
+      "Every prodigy needs a good coach.",
+      "Har bir vunderkindga yaxshi murabbiy kerak.",
+      "ˈprɑdəʤi"
+     ],
+     [
+      "underrated",
+      "qadri past baholangan",
+      "Each underrated player dreams of a surprise.",
+      "Har bir kam baholangan o'yinchi kutilmagan g'alabani orzu qiladi.",
+      "ˌəndərˈreɪtɪd"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "each / every / either / neither",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "___ player in the team has a number.",
+      "___ four years there is a World Cup.",
+      "There are two courts — ___ one is fine.",
+      "___ of the two boxers wanted to give up.",
+      "___ child needs sport.",
+      "She held a medal in ___ hand.",
+      "I don't like ___ team.",
+      "___ of the players has a coach."
+     ],
+     "answers": [
+      "Each / Every",
+      "Every",
+      "either",
+      "Neither",
+      "Every",
+      "each",
+      "either",
+      "Each"
+     ]
+    },
+    {
+     "title": "Fe'l shakli",
+     "type": "choose",
+     "instr": "To'g'ri fe'l",
+     "items": [
+      "Each athlete train / trains six days a week.",
+      "Every referee make / makes mistakes.",
+      "Neither team has / have qualified.",
+      "Either road lead / leads to the stadium.",
+      "Each of the players is / are ready.",
+      "Neither of them was / were injured."
+     ],
+     "answers": [
+      "trains",
+      "makes",
+      "has",
+      "leads",
+      "is",
+      "was"
+     ]
+    },
+    {
+     "title": "Ikkita yoki ko'p?",
+     "type": "sort",
+     "instr": "Har gapga \"2\" (either/neither) yoki \"ko'p\" (each/every) yozing va to'g'ri olmoshni tanlang",
+     "items": [
+      "There are two goalkeepers. ___ one can play.",
+      "The league has 16 teams. ___ team plays 30 games.",
+      "Ali or Bobur? ___ of them came.",
+      "___ fan in the stadium was singing.",
+      "Two options: ___ is good."
+     ],
+     "answers": [
+      "2 — Either",
+      "ko'p — Each/Every",
+      "2 — Neither",
+      "ko'p — Every",
+      "2 — Neither"
+     ]
+    },
+    {
+     "title": "Sport tanlash",
+     "type": "speaking",
+     "instr": "Juftlikda: ikki sport turini taqqoslang — 6 gap, hammasida each/every/either/neither",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "Either sport is good for health.",
+      "Each sport needs different equipment.",
+      "Every football team has 11 players.",
+      "Neither chess nor football is easy to master.",
+      "Each of my friends prefers football.",
+      "Every four years we watch the Olympics together."
+     ]
+    },
+    {
+     "title": "Sport lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the person who controls the game",
+      "the team nobody expects to win",
+      "a result where nobody wins",
+      "to earn a place in the next stage",
+      "a person who watches the game",
+      "playing honestly, by the rules"
+     ],
+     "answers": [
+      "referee",
+      "underdog",
+      "draw",
+      "qualify",
+      "spectator",
+      "fair play"
+     ],
+     "box": [
+      "referee",
+      "underdog",
+      "draw",
+      "qualify",
+      "spectator",
+      "fair play"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Each students have a book.",
+      "Every of the players is here.",
+      "Neither options are good.",
+      "Either of the two teams are strong.",
+      "Neither team didn't score."
+     ],
+     "answers": [
+      "Each student has a book.",
+      "Each of the players is here.",
+      "Neither option is good.",
+      "Either of the two teams is strong.",
+      "Neither team scored."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 11 jadvalini 3 marta; SPORT 76 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 56–60",
+     "type": "read",
+     "instr": "Kitobdagi 5 topic — IELTS savollari; 5 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Writing 5",
+     "type": "write",
+     "instr": "\"Pros and cons of working from home\" — 180+ so'z; kamida 5 taqsimlovchi olmosh (each, every, either, neither) va 3 contrast bog'lovchi",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Har bir talabaning kitobi bor.",
+      "Har bir bola mehrga muhtoj.",
+      "Ikkala yo'l ham shaharga olib boradi.",
+      "Ikki variantning hech biri yaxshi emas.",
+      "Ularning har birida medal bor."
+     ],
+     "answers": [
+      "Each student has a book.",
+      "Every child needs love.",
+      "Either road leads to the city.",
+      "Neither option is good.",
+      "Each of them has a medal."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "SPORT CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Virtual reality",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 4 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Sport og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Rustam Kasimdzhanov — the Uzbek who became world chess champion",
+    "text": [
+     "Rustam Kasimdzhanov was born in 1979 in Tashkent. Every child in his neighbourhood played football; Rustam played chess. Each evening his father set up the board, and by the age of 12 the boy was beating every adult in the club. At 19 he became a grandmaster.",
+     "In 2004 the World Chess Championship was held in Tripoli, Libya, as a knockout tournament: 128 players, and after each round half of them went home. Nobody expected the underdog from Uzbekistan to survive the first week. But he beat every opponent, including former champions, and in the final he faced Michael Adams of England. Each of the six classical games was hard; neither player could get a clear lead, and the match went to tiebreaks. Kasimdzhanov won — and became FIDE World Champion, the first and only from Central Asia.",
+     "He never won the title again, but every top player knows his name: he has been the second (assistant) of Viswanathan Anand and Fabiano Caruana, helping them prepare openings for their world championship matches. \"Either you work every day,\" he says, \"or you lose. There is no third option.\"",
+     "Today he lives in Germany, plays for Uzbekistan and coaches young players. In 2022 the Uzbek team, with an average age of 20, won the Chess Olympiad — and each of those young grandmasters says the same thing: Rustam showed us it was possible."
+    ],
+    "glossary": [
+     "neighbourhood — mahalla",
+     "set up the board — taxtani qo'ymoq",
+     "grandmaster — grossmeyster",
+     "knockout — chiqib ketish tizimi",
+     "round — bosqich",
+     "former — sobiq",
+     "lead — ustunlik",
+     "tiebreak — qo'shimcha o'yin",
+     "second (chess) — yordamchi",
+     "average age — o'rtacha yosh"
+    ],
+    "tasks": [
+     {
+      "title": "Taqsimlovchi olmoshlarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "every 1",
+       "each 1",
+       "every 2",
+       "each 2",
+       "every 3",
+       "each of",
+       "neither",
+       "either"
+      ],
+      "answers": [
+       "Every child in his neighbourhood played football.",
+       "Each evening his father set up the board.",
+       "The boy was beating every adult in the club.",
+       "After each round half of them went home.",
+       "He beat every opponent.",
+       "Each of the six classical games was hard.",
+       "Neither player could get a clear lead.",
+       "Either you work every day, or you lose."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Kasimdzhanov became a grandmaster at 12.",
+       "The 2004 championship was a knockout tournament.",
+       "He beat Adams in the classical games without tiebreaks.",
+       "He has helped other players prepare for world championships."
+      ],
+      "answers": [
+       "False (19)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Sport lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 sport so'zi; \"There is no third option\" — o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "grandmaster, tournament, underdog, opponent, champion, tiebreaks, coaches, Olympiad",
+       "You must work every single day or you will lose."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 56–60 — uyga."
+   }
+  },
+  {
+   "no": 12,
+   "title": "Distributive Pronouns 2",
+   "grammar_topic": "TAQSIMLOVCHI OLMOSHLAR 2 (any / both / all / none)",
+   "vocab_topic": "Social issues (ijtimoiy muammolar)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 12 – Distributive pronouns 2 (4 qatorli jadval); SOCIAL ISSUES (64 so'z); Reading — Malala Yousafzai (Jony Academy matni); kitob Topic 61–70 uyga.",
+   "objectives": [
+    "any / both / all / none ni son (2 yoki 3+) va ma'no bo'yicha to'g'ri tanlash.",
+    "Fe'l mosligi: both/all + ko'plik; any + birlik; none of + birlik (rasmiy) yoki ko'plik (og'zaki).",
+    "11–12-dars jadvali: each/every/either/neither/any/both/all/none — bitta xaritada.",
+    "Ijtimoiy muammolar CORE 20 bilan jamiyat masalalari haqida gapirish (IELTS Speaking 3)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Social issues (ijtimoiy muammolar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Both hands, all fingers, any finger, none of my rings.\" — ko'rsatib aytadi; o'quvchilar: qaysi so'z ikkitaga, qaysi ko'pga, qaysi inkorga?"
+    ],
+    [
+     8,
+     "Kahoot — Distributive pronouns 1",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Distributive pronouns 1 lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 4 qator: ANY (istalgan biri) + birlik ot + birlik fe'l; BOTH (ikkalasi) + ko'plik ot + ko'plik fe'l; ALL (hammasi) + ko'plik ot + ko'plik fe'l (all + sanalmas ot — birlik: all water is); NONE (hech biri) + of + ko'plik ot + birlik/ko'plik fe'l. 11-dars bilan solishtirish: neither (2) — none (3+); either (2) — any (3+); both (2) — all (3+)."
+    ],
+    [
+     12,
+     "Social issues (ijtimoiy muammolar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "ANY — istalgan biri (3+): \"Any student can answer.\" (+ birlik ot, birlik fe'l).",
+     "BOTH — ikkalasi: \"Both players are ready.\" (+ ko'plik ot, ko'plik fe'l). both of them / both the boys / both … and …",
+     "ALL — hammasi (3+): \"All students have passed.\" (+ ko'plik); all + sanalmas: \"All information is useful.\" all of us / all the money.",
+     "NONE — hech biri (3+): \"None of the books is available.\" (rasmiy — birlik; og'zaki — are). \"none\" yolg'iz ham: \"None came.\"",
+     "Juftlar: either/any, neither/none, both/all — 2 va 3+."
+    ],
+    "formulas": [
+     [
+      "Any",
+      "Any + birlik ot + birlik fe'l",
+      "Any student can answer the question.",
+      "Istalgan talaba bu savolga javob bera oladi."
+     ],
+     [
+      "Both",
+      "Both + ko'plik ot + ko'plik fe'l",
+      "Both players are ready.",
+      "Ikkala o'yinchi ham tayyor."
+     ],
+     [
+      "All",
+      "All + ko'plik ot + ko'plik fe'l / All + sanalmas + birlik",
+      "All students have passed the exam. / All poverty is a problem.",
+      "Barcha talabalar imtihondan o'tdi. / Har qanday qashshoqlik — muammo."
+     ],
+     [
+      "None",
+      "None of + ko'plik ot + birlik (rasmiy) / ko'plik fe'l",
+      "None of the books is available.",
+      "Kitoblarning hech biri mavjud emas."
+     ],
+     [
+      "2 va 3+",
+      "both / either / neither (2) — all / any / none (3+)",
+      "Both parents work. / All parents work. / Neither parent works. / None of the parents work.",
+      "Ikkala ota-ona ishlaydi. / Hamma ota-onalar ishlaydi. / Hech qaysi ota-ona ishlamaydi."
+     ],
+     [
+      "of bilan",
+      "both of / all of / none of / any of + olmosh/the + ot",
+      "Both of them agree. / All of the money was donated. / None of us knew.",
+      "Ikkalasi ham rozi. / Hamma pul ehson qilindi. / Hech birimiz bilmasdik."
+     ]
+    ],
+    "presentation": [
+     [
+      "Are both problems serious?",
+      "Yes, both poverty and unemployment are serious."
+     ],
+     [
+      "Do all citizens have equal rights?",
+      "All citizens should, but not all of them do."
+     ],
+     [
+      "Can any volunteer join the project?",
+      "Yes, any volunteer over 16 can join."
+     ],
+     [
+      "Did none of the leaders act?",
+      "None of them acted quickly."
+     ],
+     [
+      "Are both of your parents from Tashkent?",
+      "Both of them are from Fergana."
+     ],
+     [
+      "Is all the money going to charity?",
+      "All of it goes to the children's hospital."
+     ],
+     [
+      "Which of these issues matters most?",
+      "Any of them matters — but education is first."
+     ],
+     [
+      "Did all the activists agree?",
+      "None of them agreed at first, but both sides talked."
+     ],
+     [
+      "Is there any solution to bullying?",
+      "Any solution starts with awareness."
+     ],
+     [
+      "Do both of you volunteer?",
+      "Both of us do, every Saturday."
+     ]
+    ],
+    "notes": [
+     "both … and: \"Both poverty and hunger are problems.\" neither … nor / either … or — 13-dars.",
+     "all day / all night / all the time — vaqt iboralari.",
+     "\"none\" hech qachon \"no one\" bilan almashmaydi: none — narsalar/odamlar guruhidan; no one — odamlar.",
+     "Social issues lug'ati: poverty, inequality, discrimination, unemployment, human rights, refugee, awareness, tolerance."
+    ],
+    "mistakes": [
+     [
+      "Both player is ready.",
+      "Both players are ready.",
+      "Ko'plik ot va fe'l."
+     ],
+     [
+      "All student have passed.",
+      "All students have passed.",
+      "Ko'plik."
+     ],
+     [
+      "Any students can answer.",
+      "Any student can answer.",
+      "Birlik."
+     ],
+     [
+      "None of the book is available.",
+      "None of the books is available.",
+      "none of + ko'plik ot."
+     ],
+     [
+      "Both of the two options are bad, none of them. (2)",
+      "Neither of them is good.",
+      "2 → neither."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — asosiy ijtimoiy muammolar (poverty, inequality, discrimination…); STRONG — huquq va harakatlar (human rights, protest, reform); SUPER — yechim va qadriyatlar (welfare, tolerance, integration).",
+     "Har so'zga taqsimlovchi olmosh bilan gap: \"All children have the right to school.\" / \"None of the refugees had a home.\""
+    ],
+    "core": [
+     [
+      "poverty",
+      "qashshoqlik",
+      "All countries have some poverty.",
+      "Barcha mamlakatlarda qandaydir qashshoqlik bor.",
+      "ˈpɑvərti"
+     ],
+     [
+      "inequality",
+      "tengsizlik",
+      "Both income and gender inequality are growing.",
+      "Daromad va gender tengsizligi ikkalasi ham o'smoqda.",
+      "ˌɪnɪkˈwɑləti"
+     ],
+     [
+      "discrimination",
+      "kamsitish",
+      "None of the laws stopped discrimination.",
+      "Qonunlarning hech biri kamsitishni to'xtatmadi.",
+      "dɪˌskrɪməˈneɪʃən"
+     ],
+     [
+      "prejudice",
+      "xurofot, oldindan salbiy fikr",
+      "Any prejudice starts with ignorance.",
+      "Har qanday xurofot bilimsizlikdan boshlanadi.",
+      "ˈprɛʤədɪs"
+     ],
+     [
+      "stereotype",
+      "stereotip",
+      "Both stereotypes about girls are wrong.",
+      "Qizlar haqidagi ikkala stereotip ham noto'g'ri.",
+      "ˈstɛrioʊˌtaɪp"
+     ],
+     [
+      "minority / majority",
+      "ozchilik / ko'pchilik",
+      "All minorities deserve respect from the majority.",
+      "Barcha ozchiliklar ko'pchilikdan hurmatga loyiq.",
+      "məˈnɔrəti  məˈʤɔrəti"
+     ],
+     [
+      "unemployment",
+      "ishsizlik",
+      "None of the young people had work; unemployment was 30%.",
+      "Yoshlarning hech birida ish yo'q edi; ishsizlik 30% edi.",
+      "ˌənɪmˈplɔɪmənt"
+     ],
+     [
+      "homelessness",
+      "uysizlik",
+      "Both cities have a homelessness problem.",
+      "Ikkala shaharda ham uysizlik muammosi bor.",
+      "ˈhoʊmləsnəs"
+     ],
+     [
+      "hunger",
+      "ochlik",
+      "All hunger can be ended, experts say.",
+      "Mutaxassislar aytishicha, har qanday ochlikni tugatish mumkin.",
+      "ˈhəŋgər"
+     ],
+     [
+      "violence",
+      "zo'ravonlik",
+      "Any violence against children is a crime.",
+      "Bolalarga qarshi har qanday zo'ravonlik — jinoyat.",
+      "ˈvaɪələns"
+     ],
+     [
+      "bullying",
+      "bulling (zug'um)",
+      "Both schools have programmes against bullying.",
+      "Ikkala maktabda ham bullingga qarshi dasturlar bor.",
+      "ˈbʊliɪŋ"
+     ],
+     [
+      "harassment",
+      "ta'qib, tazyiq",
+      "None of the victims reported the harassment.",
+      "Jabrlanuvchilarning hech biri tazyiq haqida xabar bermadi.",
+      "hərˈæsmənt"
+     ],
+     [
+      "corruption (social)",
+      "korrupsiya",
+      "All corruption hurts the poor first.",
+      "Har qanday korrupsiya avval kambag'allarga zarar qiladi.",
+      "kərˈəpʃən (ˈsoʊʃəl)"
+     ],
+     [
+      "injustice / justice",
+      "adolatsizlik / adolat",
+      "Both girls fought against injustice.",
+      "Ikkala qiz ham adolatsizlikka qarshi kurashdi.",
+      "ˌɪnˈʤəstɪs  ˈʤəstɪs"
+     ],
+     [
+      "human rights",
+      "inson huquqlari",
+      "All people have human rights — any person, anywhere.",
+      "Barcha odamlar inson huquqlariga ega — har qanday odam, har qayerda.",
+      "ˈjumən raɪts"
+     ],
+     [
+      "equality",
+      "tenglik",
+      "None of us can ignore equality.",
+      "Hech birimiz tenglikni e'tiborsiz qoldira olmaymiz.",
+      "ɪkˈwɑləti"
+     ],
+     [
+      "activist",
+      "faol (kurashchi)",
+      "Both activists were arrested.",
+      "Ikkala faol ham hibsga olindi.",
+      "ˈæktɪvɪst"
+     ],
+     [
+      "awareness",
+      "xabardorlik",
+      "Any campaign starts with awareness.",
+      "Har qanday kampaniya xabardorlikdan boshlanadi.",
+      "əˈwɛrnəs"
+     ],
+     [
+      "community",
+      "jamoa, mahalla",
+      "All communities need a school.",
+      "Barcha mahallalarga maktab kerak.",
+      "kəmˈjunɪti"
+     ],
+     [
+      "society",
+      "jamiyat",
+      "Both society and government are responsible.",
+      "Jamiyat ham, hukumat ham mas'ul.",
+      "soʊˈsaɪɪti"
+     ]
+    ],
+    "strong": [
+     [
+      "racism / sexism",
+      "irqchilik / jinsiy kamsitish",
+      "None of the students accepted racism or sexism.",
+      "O'quvchilarning hech biri irqchilik yoki jinsiy kamsitishni qabul qilmadi.",
+      "ˈreɪˌsɪzəm  ˈsɛksɪzəm"
+     ],
+     [
+      "freedom",
+      "erkinlik",
+      "All freedom comes with responsibility.",
+      "Har qanday erkinlik mas'uliyat bilan keladi.",
+      "ˈfridəm"
+     ],
+     [
+      "protest",
+      "norozilik namoyishi",
+      "Both protests were peaceful.",
+      "Ikkala namoyish ham tinch o'tdi.",
+      "ˈproʊˌtɛst"
+     ],
+     [
+      "strike",
+      "ish tashlash",
+      "None of the workers joined the strike.",
+      "Ishchilarning hech biri ish tashlashga qo'shilmadi.",
+      "straɪk"
+     ],
+     [
+      "movement (social)",
+      "(ijtimoiy) harakat",
+      "Any movement needs a leader.",
+      "Har qanday harakatga yetakchi kerak.",
+      "ˈmuvmənt (ˈsoʊʃəl)"
+     ],
+     [
+      "reform",
+      "islohot",
+      "All reforms take time.",
+      "Barcha islohotlar vaqt oladi.",
+      "rɪˈfɔrm"
+     ],
+     [
+      "policy (social)",
+      "siyosat (davlat dasturi)",
+      "Both policies failed.",
+      "Ikkala siyosat ham muvaffaqiyatsiz bo'ldi.",
+      "ˈpɑləsi (ˈsoʊʃəl)"
+     ],
+     [
+      "citizen (social)",
+      "fuqaro",
+      "Every citizen — any citizen — can vote.",
+      "Har bir fuqaro — istalgan fuqaro — ovoz berishi mumkin.",
+      "ˈsɪtɪzən (ˈsoʊʃəl)"
+     ],
+     [
+      "population",
+      "aholi",
+      "All of the population was affected.",
+      "Butun aholi ta'sirlandi.",
+      "ˌpɑpjəˈleɪʃən"
+     ],
+     [
+      "overpopulation",
+      "aholi haddan ortiqligi",
+      "Both megacities suffer from overpopulation.",
+      "Ikkala megapolis ham ortiqcha aholidan aziyat chekadi.",
+      "ˌoʊvərˌpɑpjəˈleɪʃən"
+     ],
+     [
+      "immigration / emigration",
+      "immigratsiya / emigratsiya",
+      "Both immigration and emigration change a country.",
+      "Immigratsiya ham, emigratsiya ham mamlakatni o'zgartiradi.",
+      "ˌɪməˈgreɪʃən  ˌɛməˈgreɪʃən"
+     ],
+     [
+      "refugee",
+      "qochqin",
+      "None of the refugees had documents.",
+      "Qochqinlarning hech birida hujjat yo'q edi.",
+      "ˈrɛfjuʤi"
+     ],
+     [
+      "migrant",
+      "muhojir",
+      "All migrants send money home.",
+      "Barcha muhojirlar uyiga pul jo'natadi.",
+      "ˈmaɪgrənt"
+     ],
+     [
+      "addiction (social)",
+      "qaramlik",
+      "Any addiction destroys families.",
+      "Har qanday qaramlik oilalarni buzadi.",
+      "əˈdɪkʃən (ˈsoʊʃəl)"
+     ],
+     [
+      "mental health (social)",
+      "ruhiy salomatlik",
+      "Both schools now have mental health support.",
+      "Ikkala maktabda ham endi ruhiy salomatlik xizmati bor.",
+      "ˈmɛntəl hɛlθ (ˈsoʊʃəl)"
+     ],
+     [
+      "divorce (social)",
+      "ajrashish",
+      "None of the causes of divorce is simple.",
+      "Ajrashish sabablarining hech biri oddiy emas.",
+      "dɪˈvɔrs (ˈsoʊʃəl)"
+     ],
+     [
+      "child labour",
+      "bolalar mehnati",
+      "All child labour must end.",
+      "Har qanday bolalar mehnati tugatilishi kerak.",
+      "ʧaɪld ˈleɪbər"
+     ],
+     [
+      "illiteracy",
+      "savodsizlik",
+      "Illiteracy affects both boys and girls, but girls more.",
+      "Savodsizlik o'g'il bolalarga ham, qizlarga ham ta'sir qiladi, qizlarga ko'proq.",
+      "ˌɪˈlɪtərəsi"
+     ],
+     [
+      "wage gap",
+      "ish haqi tafovuti",
+      "Both countries have a wage gap.",
+      "Ikkala mamlakatda ham ish haqi tafovuti bor.",
+      "weɪʤ gæp"
+     ],
+     [
+      "welfare",
+      "ijtimoiy ta'minot",
+      "None of the families received welfare.",
+      "Oilalarning hech biri ijtimoiy yordam olmadi.",
+      "ˈwɛlˌfɛr"
+     ]
+    ],
+    "super": [
+     [
+      "charity (social)",
+      "xayriya",
+      "All the money went to charity.",
+      "Hamma pul xayriyaga ketdi.",
+      "ˈʧɛrɪti (ˈsoʊʃəl)"
+     ],
+     [
+      "donation",
+      "ehson",
+      "Any donation, big or small, helps.",
+      "Har qanday ehson — katta yoki kichik — yordam beradi.",
+      "doʊˈneɪʃən"
+     ],
+     [
+      "volunteer (social)",
+      "ko'ngilli",
+      "Both volunteers worked all night.",
+      "Ikkala ko'ngilli ham tun bo'yi ishladi.",
+      "ˌvɑlənˈtɪr (ˈsoʊʃəl)"
+     ],
+     [
+      "tolerance",
+      "bag'rikenglik",
+      "None of this is possible without tolerance.",
+      "Bularning hech biri bag'rikenglisiz mumkin emas.",
+      "ˈtɑlərəns"
+     ],
+     [
+      "diversity",
+      "xilma-xillik",
+      "All societies benefit from diversity.",
+      "Barcha jamiyatlar xilma-xillikdan foyda ko'radi.",
+      "dɪˈvərsɪti"
+     ],
+     [
+      "integration",
+      "integratsiya (jamiyatga qo'shilish)",
+      "Both language and work help integration.",
+      "Til ham, ish ham integratsiyaga yordam beradi.",
+      "ˌɪnəˈgreɪʃən"
+     ],
+     [
+      "censorship",
+      "senzura",
+      "Any censorship limits freedom.",
+      "Har qanday senzura erkinlikni cheklaydi.",
+      "ˈsɛnsərˌʃɪp"
+     ],
+     [
+      "asylum",
+      "boshpana",
+      "None of the families was given asylum.",
+      "Oilalarning hech biriga boshpana berilmadi.",
+      "əˈsaɪləm"
+     ],
+     [
+      "domestic violence",
+      "oiladagi zo'ravonlik",
+      "All domestic violence must be reported.",
+      "Har qanday oiladagi zo'ravonlik haqida xabar berilishi kerak.",
+      "dəˈmɛstɪk ˈvaɪələns"
+     ],
+     [
+      "suicide (social)",
+      "o'z joniga qasd",
+      "Both countries have suicide helplines.",
+      "Ikkala mamlakatda ham ishonch telefonlari bor.",
+      "ˈsuɪˌsaɪd (ˈsoʊʃəl)"
+     ],
+     [
+      "drug abuse",
+      "giyohvandlik",
+      "Any drug abuse should be treated, not punished.",
+      "Har qanday giyohvandlik jazolanmasligi, davolanishi kerak.",
+      "drəg əˈbjuz"
+     ],
+     [
+      "alcoholism",
+      "ichkilikbozlik",
+      "None of the treatments for alcoholism is quick.",
+      "Ichkilikbozlik davolarining hech biri tez emas.",
+      "ˈælkəˌhɔˌlɪzəm"
+     ],
+     [
+      "riot",
+      "g'alayon",
+      "Both riots started after the elections.",
+      "Ikkala g'alayon ham saylovdan keyin boshlandi.",
+      "raɪət"
+     ],
+     [
+      "crime rate",
+      "jinoyatchilik darajasi",
+      "All cities publish a crime rate.",
+      "Barcha shaharlar jinoyatchilik darajasini e'lon qiladi.",
+      "kraɪm reɪt"
+     ],
+     [
+      "education gap",
+      "ta'limdagi tafovut",
+      "Any education gap becomes an income gap.",
+      "Har qanday ta'lim tafovuti daromad tafovutiga aylanadi.",
+      "ˌɛʤəˈkeɪʃən gæp"
+     ],
+     [
+      "gender equality",
+      "gender tengligi",
+      "Both parents support gender equality.",
+      "Ikkala ota-ona ham gender tengligini qo'llab-quvvatlaydi.",
+      "ˈʤɛndər ɪkˈwɑləti"
+     ],
+     [
+      "right to education",
+      "ta'lim olish huquqi",
+      "All children have the right to education.",
+      "Barcha bolalar ta'lim olish huquqiga ega.",
+      "raɪt tɪ ˌɛʤəˈkeɪʃən"
+     ],
+     [
+      "speak out",
+      "ochiq gapirmoq (qarshi)",
+      "None of the girls dared to speak out — until Malala.",
+      "Qizlarning hech biri ochiq gapirishga jur'at etmadi — Malalagacha.",
+      "spik aʊt"
+     ],
+     [
+      "campaign (social)",
+      "kampaniya",
+      "Both campaigns raised awareness.",
+      "Ikkala kampaniya ham xabardorlikni oshirdi.",
+      "kæmˈpeɪn (ˈsoʊʃəl)"
+     ],
+     [
+      "Nobel Peace Prize",
+      "Nobel tinchlik mukofoti",
+      "Any winner of the Nobel Peace Prize becomes a global voice.",
+      "Nobel tinchlik mukofotining har qanday sovrindori global ovozga aylanadi.",
+      "noʊˈbɛl pis praɪz"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "any / both / all / none",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "___ citizen can vote at 18.",
+      "___ of my parents are teachers. (2)",
+      "___ children have the right to school.",
+      "___ of the refugees had a passport.",
+      "___ volunteer is welcome.",
+      "___ the money was donated.",
+      "___ sides agreed to talk. (2)",
+      "___ of us knew about the strike."
+     ],
+     "answers": [
+      "Any",
+      "Both",
+      "All",
+      "None",
+      "Any",
+      "All",
+      "Both",
+      "None"
+     ]
+    },
+    {
+     "title": "2 yoki 3+?",
+     "type": "choose",
+     "instr": "To'g'ri olmoshni tanlang",
+     "items": [
+      "I have two brothers. Both / All of them work abroad.",
+      "There are five candidates. Any / Either of them could win.",
+      "Neither / None of the two plans worked.",
+      "Neither / None of the ten students was late.",
+      "Both / All my three sisters are doctors.",
+      "Either / Any of these hundred books is useful."
+     ],
+     "answers": [
+      "Both",
+      "Any",
+      "Neither",
+      "None",
+      "All",
+      "Any"
+     ]
+    },
+    {
+     "title": "Fe'l mosligi",
+     "type": "choose",
+     "instr": "To'g'ri fe'l",
+     "items": [
+      "Both activists was / were arrested.",
+      "All poverty is / are a problem.",
+      "Any child need / needs love.",
+      "None of the laws has / have worked. (rasmiy)",
+      "All the students has / have passed.",
+      "Both of us is / are volunteers."
+     ],
+     "answers": [
+      "were",
+      "is",
+      "needs",
+      "has",
+      "have",
+      "are"
+     ]
+    },
+    {
+     "title": "Jamiyat muammolari",
+     "type": "speaking",
+     "instr": "Juftlikda: shahringizdagi 3 muammo — 6 gap, hammasida any/both/all/none va CORE so'zlar",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "All young people worry about unemployment.",
+      "Both the government and society must act.",
+      "None of the solutions is quick.",
+      "Any citizen can volunteer.",
+      "All of us can raise awareness.",
+      "Both education and justice matter."
+     ],
+     "note": "IELTS Speaking Part 3 uslubi: fikr + sabab + misol."
+    },
+    {
+     "title": "Ijtimoiy lug'at",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "not having enough money to live",
+      "treating people unfairly because of race, sex, etc.",
+      "a person who leaves their country because of war",
+      "money given to help others",
+      "the belief that everyone should be treated the same",
+      "hurting weaker people at school again and again"
+     ],
+     "answers": [
+      "poverty",
+      "discrimination",
+      "refugee",
+      "donation",
+      "equality",
+      "bullying"
+     ],
+     "box": [
+      "poverty",
+      "discrimination",
+      "refugee",
+      "donation",
+      "equality",
+      "bullying"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Both player is ready.",
+      "All student have passed.",
+      "Any students can answer.",
+      "None of the book is available.",
+      "Both of the two options are bad, none of them. (2)"
+     ],
+     "answers": [
+      "Both players are ready.",
+      "All students have passed.",
+      "Any student can answer.",
+      "None of the books is available.",
+      "Neither of them is good."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 12 jadvalini 3 marta; SOCIAL ISSUES 64 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 61–70",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Jamiyat muammosi — insho",
+     "type": "write",
+     "instr": "150 so'z: shahringizdagi bitta ijtimoiy muammo va yechim; kamida 6 taqsimlovchi olmosh (11–12-dars)",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Istalgan talaba bu savolga javob bera oladi.",
+      "Ikkala o'yinchi ham tayyor.",
+      "Barcha talabalar imtihondan o'tdi.",
+      "Kitoblarning hech biri mavjud emas.",
+      "Barcha bolalar ta'lim olish huquqiga ega."
+     ],
+     "answers": [
+      "Any student can answer the question.",
+      "Both players are ready.",
+      "All students have passed the exam.",
+      "None of the books is available.",
+      "All children have the right to education."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "SOCIAL ISSUES CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "8 taqsimlovchi olmosh (11–12) + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Sport",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali 11–12, 8 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Social issues og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Malala Yousafzai — all girls have the right to learn",
+    "text": [
+     "Malala Yousafzai was born in 1997 in the Swat valley in Pakistan. Her father ran a school, and both of her parents believed that all children — boys and girls — should study. But in 2007 the Taliban took control of the valley. They closed all girls' schools; none of the 50,000 girls in Swat could go to class.",
+     "Malala was 11. Any girl who spoke out was in danger, yet she started writing a blog for the BBC about life without school. Both her name and her face became known. In October 2012, gunmen stopped her school bus and shot her in the head. Neither the doctors in Pakistan nor the doctors in England were sure she would live. She did.",
+     "After her recovery she did not stop. She spoke at the United Nations on her 16th birthday: \"One child, one teacher, one book and one pen can change the world.\" In 2014 she became the youngest person ever to win the Nobel Peace Prize. Her fund has built schools in Pakistan, Nigeria and Syria, and all of its projects have one goal: 12 years of free education for every girl.",
+     "Today Malala has finished Oxford University and is married. She has visited many countries, and both students and presidents listen to her. \"I tell my story,\" she says, \"not because it is unique, but because it is not. It is the story of many girls.\" None of them, she believes, should be silent."
+    ],
+    "glossary": [
+     "valley — vodiy",
+     "take control — nazoratni qo'lga olmoq",
+     "speak out — ochiq gapirmoq",
+     "gunman — qurollangan odam",
+     "recovery — sog'ayish",
+     "fund — jamg'arma",
+     "goal — maqsad",
+     "unique — noyob",
+     "silent — jim"
+    ],
+    "tasks": [
+     {
+      "title": "Taqsimlovchi olmoshlarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta (11–12-dars)",
+      "items": [
+       "both 1",
+       "all 1",
+       "all 2 / none",
+       "any",
+       "both 2",
+       "neither … nor",
+       "all 3 / every",
+       "both 3 / none 2"
+      ],
+      "answers": [
+       "Both of her parents believed…",
+       "All children — boys and girls — should study.",
+       "They closed all girls' schools; none of the 50,000 girls could go to class.",
+       "Any girl who spoke out was in danger.",
+       "Both her name and her face became known.",
+       "Neither the doctors in Pakistan nor the doctors in England were sure.",
+       "All of its projects have one goal: … for every girl.",
+       "Both students and presidents listen to her. / None of them should be silent."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Malala's father was against girls' education.",
+       "She wrote a blog for the BBC at 11.",
+       "She won the Nobel Peace Prize at 17.",
+       "Her fund works only in Pakistan."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Ijtimoiy lug'at",
+      "type": "short",
+      "instr": "Matndan 5 ta ijtimoiy muammo/huquq so'zi; Malala nega o'z hikoyasini aytadi?",
+      "items": [
+       "words",
+       "why"
+      ],
+      "answers": [
+       "right to education, speak out, danger, free education, Nobel Peace Prize, silent",
+       "Because it is the story of many girls, not only hers."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 61–70 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 13,
+   "title": "Subject–Verb Agreement",
+   "grammar_topic": "EGA–KESIM MOSLIGI (the number of / a number of / none of / either…or / gerund / one of the…)",
+   "vocab_topic": "Personal development (shaxsiy rivojlanish)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 13 – Subject-verb agreement (6 qatorli jadval); PERSONAL DEVELOPMENT (70 so'z); Reading — Abdulla Avloniy (Jony Academy matni); kitob Topic 71–80 uyga; Writing 6: Online shopping: benefits and drawbacks.",
+   "objectives": [
+    "Murakkab egalar bilan fe'l shaklini to'g'ri tanlash (the number of / a number of / one of the).",
+    "Either…or / neither…nor — fe'l yaqin egaga mos (proximity rule).",
+    "Gerund va sanalmas otlar — birlik; some of / all of / none of — otga qarab.",
+    "Shaxsiy rivojlanish CORE 20 bilan odatlar, maqsad va o'sish haqida gapirish; Writing 6 (online shopping)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Personal development (shaxsiy rivojlanish) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz doskaga: \"The number of students ___ growing. A number of students ___ late.\" — sinf is/are ni tanlaydi. Nega farq? (the number = bitta son; a number of = ko'p odam)."
+    ],
+    [
+     8,
+     "Kahoot — Distributive pronouns 2",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Distributive pronouns 2 lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 6 qator: THE NUMBER OF + birlik fe'l; A NUMBER OF + ko'plik fe'l; NONE OF / SOME OF / ALL OF + ko'plik ot → ko'plik fe'l (og'zaki); EITHER … OR / NEITHER … NOR → fe'l yaqin turgan (B) egaga mos; GERUND (V-ing) ega → birlik fe'l; ONE OF THE + ko'plik ot → birlik fe'l. Qo'shimcha: sanalmas otlar (information, advice) — birlik; there is/are; collective nouns (team, family)."
+    ],
+    [
+     12,
+     "Personal development (shaxsiy rivojlanish) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "THE NUMBER OF + ko'plik ot + BIRLIK fe'l (son bitta): \"The number of students is increasing.\"",
+     "A NUMBER OF + ko'plik ot + KO'PLIK fe'l (= many): \"A number of students are late.\"",
+     "NONE / SOME / ALL / MOST OF + ko'plik ot → ko'plik fe'l; + sanalmas ot → birlik: \"Some of the water is cold.\"",
+     "EITHER … OR / NEITHER … NOR — fe'l OXIRGI egaga mos: \"Either John or his friends are coming.\" / \"Neither the students nor the teacher is here.\"",
+     "GERUND ega → birlik: \"Swimming is fun.\" ONE OF THE + ko'plik → birlik: \"One of the students is absent.\""
+    ],
+    "formulas": [
+     [
+      "The number of",
+      "The number of + ko'plik ot + birlik fe'l",
+      "The number of students is increasing.",
+      "Talabalar soni oshmoqda."
+     ],
+     [
+      "A number of",
+      "A number of + ko'plik ot + ko'plik fe'l",
+      "A number of students are late.",
+      "Bir qancha talaba kechikmoqda."
+     ],
+     [
+      "None / Some / All of",
+      "+ ko'plik ot + ko'plik fe'l",
+      "None of them are here. / Some of the habits are bad.",
+      "Ularning hech biri bu yerda emas. / Ba'zi odatlar yomon."
+     ],
+     [
+      "Either … or / Neither … nor",
+      "fe'l yaqin (oxirgi) egaga mos",
+      "Either John or his friends are coming. / Neither my friends nor I am ready.",
+      "Jon yoki uning do'stlari kelyapti. / Do'stlarim ham, men ham tayyor emasman."
+     ],
+     [
+      "Gerund",
+      "V-ing + birlik fe'l",
+      "Swimming is fun. / Reading every day builds knowledge.",
+      "Suzish qiziqarli. / Har kuni o'qish bilimni oshiradi."
+     ],
+     [
+      "One of the …",
+      "One of the + ko'plik ot + birlik fe'l",
+      "One of the students is absent.",
+      "Talabalardan biri yo'q."
+     ]
+    ],
+    "presentation": [
+     [
+      "Is the number of readers growing?",
+      "Yes, the number of readers is growing every year."
+     ],
+     [
+      "Are a number of students late today?",
+      "Yes, a number of them are late because of the rain."
+     ],
+     [
+      "Is one of your habits bad?",
+      "One of my habits is checking my phone too often."
+     ],
+     [
+      "Does journaling help?",
+      "Journaling helps a lot — writing every day is powerful."
+     ],
+     [
+      "Is either your mentor or your parents coming?",
+      "Either my mentor or my parents are coming."
+     ],
+     [
+      "Are all of your goals written down?",
+      "All of my goals are written in a notebook."
+     ],
+     [
+      "Is some of the advice useful?",
+      "Some of the advice is useful, but not all of it."
+     ],
+     [
+      "Does neither laziness nor fear stop you?",
+      "Neither fear nor laziness stops me now."
+     ],
+     [
+      "Is one of the keys to success discipline?",
+      "Yes, one of the keys is self-discipline."
+     ],
+     [
+      "Is the information about time management free?",
+      "Yes, the information is free online."
+     ]
+    ],
+    "notes": [
+     "Sanalmas otlar birlik: information, advice, knowledge, progress, feedback, homework — \"The advice is good.\"",
+     "Collective nouns: team, family, government — Britaniyada ko'plik ham (the team are), Amerikada birlik.",
+     "there is / there are — keyingi otga qarab: \"There is a mentor\" / \"There are a number of mentors\".",
+     "Personal development lug'ati: mindset, motivation, self-discipline, resilience, procrastination, work-life balance."
+    ],
+    "mistakes": [
+     [
+      "The number of students are increasing.",
+      "The number of students is increasing.",
+      "the number → birlik."
+     ],
+     [
+      "A number of students is late.",
+      "A number of students are late.",
+      "a number of → ko'plik."
+     ],
+     [
+      "One of the students are absent.",
+      "One of the students is absent.",
+      "one of → birlik."
+     ],
+     [
+      "Either John or his friends is coming.",
+      "Either John or his friends are coming.",
+      "Yaqin ega — friends."
+     ],
+     [
+      "The informations are useful.",
+      "The information is useful.",
+      "Sanalmas — birlik."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — shaxsiy rivojlanishning asosiy tushunchalari (mindset, motivation, habit…); STRONG — ko'nikma va xarakter (resilience, empathy, leadership); SUPER — ish-hayot va maqsad so'zlari.",
+     "Har so'zga murakkab ega bilan gap: \"One of the best habits is reading.\" / \"The number of my goals is five.\""
+    ],
+    "core": [
+     [
+      "self-improvement",
+      "o'zini takomillashtirish",
+      "Self-improvement is a daily job.",
+      "O'zini takomillashtirish — kundalik ish.",
+      "ˈsɛlfɪmˈpruvmənt"
+     ],
+     [
+      "growth (personal)",
+      "o'sish",
+      "The number of books you read shows your growth.",
+      "O'qigan kitoblaring soni o'sishingni ko'rsatadi.",
+      "groʊθ (ˈpərsɪnəl)"
+     ],
+     [
+      "mindset",
+      "fikrlash tarzi",
+      "One of the keys to success is a growth mindset.",
+      "Muvaffaqiyat kalitlaridan biri — o'sish fikrlash tarzi.",
+      "ˈmaɪndˌsɛt"
+     ],
+     [
+      "ambition",
+      "intilish, katta maqsad",
+      "Neither money nor fame is my ambition; knowledge is.",
+      "Na pul, na shuhrat — mening maqsadim bilim.",
+      "æmˈbɪʃən"
+     ],
+     [
+      "motivation",
+      "motivatsiya, ishtiyoq",
+      "A number of students lose motivation in winter.",
+      "Bir qancha o'quvchi qishda motivatsiyani yo'qotadi.",
+      "ˌmoʊtəˈveɪʃən"
+     ],
+     [
+      "determination",
+      "qat'iyat",
+      "Determination is stronger than talent.",
+      "Qat'iyat iste'doddan kuchli.",
+      "dɪˌtərməˈneɪʃən"
+     ],
+     [
+      "willpower",
+      "iroda kuchi",
+      "Some of my willpower disappears after 10 pm.",
+      "Iroda kuchimning bir qismi kech 10 dan keyin yo'qoladi.",
+      "ˈwɪlˌpaʊər"
+     ],
+     [
+      "confidence",
+      "o'ziga ishonch",
+      "Speaking in public builds confidence.",
+      "Jamoat oldida gapirish o'ziga ishonchni oshiradi.",
+      "ˈkɑnfədɛns"
+     ],
+     [
+      "self-esteem",
+      "o'z-o'zini hurmat qilish",
+      "Either praise or small wins raise self-esteem.",
+      "Maqtov yoki kichik g'alabalar o'z-o'zini hurmatni oshiradi.",
+      ""
+     ],
+     [
+      "habit (personal)",
+      "odat",
+      "One of my habits is reading before bed.",
+      "Odatlarimdan biri — uxlashdan oldin o'qish.",
+      "ˈhæbət (ˈpərsɪnəl)"
+     ],
+     [
+      "routine",
+      "kundalik tartib",
+      "A morning routine is the foundation of the day.",
+      "Ertalabki tartib — kunning poydevori.",
+      "ruˈtin"
+     ],
+     [
+      "productivity",
+      "samaradorlik",
+      "The number of hours doesn't equal productivity.",
+      "Soatlar soni samaradorlikka teng emas.",
+      "ˌproʊdəkˈtɪvɪti"
+     ],
+     [
+      "focus",
+      "diqqat (jamlash)",
+      "None of the apps improve focus like silence does.",
+      "Ilovalarning hech biri diqqatni sukunat kabi yaxshilamaydi.",
+      "ˈfoʊkɪs"
+     ],
+     [
+      "time management",
+      "vaqtni boshqarish",
+      "Time management is one of the skills schools don't teach.",
+      "Vaqtni boshqarish — maktab o'rgatmaydigan ko'nikmalardan biri.",
+      "taɪm ˈmænɪʤmənt"
+     ],
+     [
+      "priority",
+      "ustuvorlik",
+      "All of my priorities are written for the week.",
+      "Hafta uchun barcha ustuvorliklarim yozilgan.",
+      "praɪˈɔrəti"
+     ],
+     [
+      "procrastination",
+      "keyinga surish",
+      "Procrastination is the thief of time.",
+      "Keyinga surish — vaqt o'g'risi.",
+      "prəˌkræstəˈneɪʃən"
+     ],
+     [
+      "responsibility",
+      "mas'uliyat",
+      "Taking responsibility is the first step.",
+      "Mas'uliyatni olish — birinchi qadam.",
+      "riˌspɑnsəˈbɪləti"
+     ],
+     [
+      "patience",
+      "sabr",
+      "Neither talent nor money replaces patience.",
+      "Na iste'dod, na pul sabrning o'rnini bosadi.",
+      "ˈpeɪʃəns"
+     ],
+     [
+      "perseverance",
+      "qat'iy davom ettirish",
+      "Perseverance is what separates winners.",
+      "Qat'iy davom ettirish g'oliblarni ajratib turadi.",
+      "ˌpərsəˈvɪrəns"
+     ],
+     [
+      "resilience",
+      "(qiyinchilikka) bardosh",
+      "One of the best qualities is resilience.",
+      "Eng yaxshi fazilatlardan biri — bardosh.",
+      "rɪˈzɪljəns"
+     ]
+    ],
+    "strong": [
+     [
+      "self-awareness (personal)",
+      "o'zini anglash",
+      "Self-awareness is where all growth starts.",
+      "O'zini anglash — barcha o'sish boshlanadigan joy.",
+      ""
+     ],
+     [
+      "self-control",
+      "o'zini boshqarish",
+      "Some of the students lack self-control with phones.",
+      "Ba'zi o'quvchilarda telefon bilan o'zini boshqarish yetishmaydi.",
+      "ˌsɛlfkənˈtroʊl"
+     ],
+     [
+      "mindfulness",
+      "ongli yashash, hushyorlik",
+      "Practising mindfulness reduces stress.",
+      "Ongli yashashni mashq qilish stressni kamaytiradi.",
+      ""
+     ],
+     [
+      "journaling",
+      "kundalik yuritish",
+      "Journaling every night is my habit.",
+      "Har kecha kundalik yuritish — mening odatim.",
+      ""
+     ],
+     [
+      "leadership",
+      "yetakchilik",
+      "A number of leadership skills are learned by doing.",
+      "Bir qancha yetakchilik ko'nikmalari amalda o'rganiladi.",
+      "ˈlidərˌʃɪp"
+     ],
+     [
+      "empathy (personal)",
+      "hamdardlik",
+      "Neither leadership nor friendship works without empathy.",
+      "Na yetakchilik, na do'stlik hamdardliksiz ishlaydi.",
+      "ˈɛmpəθi (ˈpərsɪnəl)"
+     ],
+     [
+      "courage",
+      "jasorat",
+      "Courage is one of the things you can practise.",
+      "Jasorat — mashq qilsa bo'ladigan narsalardan biri.",
+      "kərɪʤ"
+     ],
+     [
+      "humility",
+      "kamtarlik",
+      "All great teachers have humility.",
+      "Barcha buyuk o'qituvchilarda kamtarlik bor.",
+      "hjuˈmɪlɪti"
+     ],
+     [
+      "gratitude (personal)",
+      "minnatdorlik",
+      "Writing three things of gratitude is enough.",
+      "Uchta minnatdorlik yozish yetarli.",
+      "ˈgrætəˌtud (ˈpərsɪnəl)"
+     ],
+     [
+      "optimism / pessimism",
+      "optimizm / pessimizm",
+      "Either optimism or pessimism shapes your day.",
+      "Optimizm yoki pessimizm kuningni shakllantiradi.",
+      "ˈɑptɪˌmɪzəm  ˈpɛsəˌmɪzəm"
+     ],
+     [
+      "failure / success",
+      "muvaffaqiyatsizlik / muvaffaqiyat",
+      "The number of failures before success is usually high.",
+      "Muvaffaqiyatdan oldingi muvaffaqiyatsizliklar soni odatda ko'p.",
+      "ˈfeɪljər  səkˈsɛs"
+     ],
+     [
+      "challenge (personal)",
+      "sinov, qiyinchilik",
+      "One of the challenges is staying consistent.",
+      "Qiyinchiliklardan biri — izchil qolish.",
+      "ˈʧælənʤ (ˈpərsɪnəl)"
+     ],
+     [
+      "obstacle",
+      "to'siq",
+      "None of the obstacles are permanent.",
+      "To'siqlarning hech biri doimiy emas.",
+      "ˈɑbstəkəl"
+     ],
+     [
+      "weakness / strength",
+      "zaif tomon / kuchli tomon",
+      "Knowing both your weaknesses and your strengths is wisdom.",
+      "Zaif va kuchli tomonlaringni bilish — donolik.",
+      "ˈwiknəs  strɛŋθ"
+     ],
+     [
+      "potential",
+      "salohiyat",
+      "A number of students never use their potential.",
+      "Bir qancha o'quvchi salohiyatini hech ishlatmaydi.",
+      "pəˈtɛnʃəl"
+     ],
+     [
+      "mentor",
+      "ustoz-maslahatchi",
+      "One of the best investments is a mentor.",
+      "Eng yaxshi sarmoyalardan biri — mentor.",
+      "ˈmɛnˌtɔr"
+     ],
+     [
+      "role model",
+      "ibrat namunasi",
+      "Avloni is one of the role models for teachers.",
+      "Avloniy — o'qituvchilar uchun ibrat namunalaridan biri.",
+      "roʊl ˈmɑdəl"
+     ],
+     [
+      "feedback (personal)",
+      "fikr-mulohaza",
+      "All feedback is useful if you listen.",
+      "Tinglasang, har qanday fikr-mulohaza foydali.",
+      "ˈfidˌbæk (ˈpərsɪnəl)"
+     ],
+     [
+      "self-discipline",
+      "o'z-o'zini intizomga solish",
+      "Self-discipline is freedom, not prison.",
+      "O'z-o'zini intizomga solish — qamoq emas, erkinlik.",
+      ""
+     ],
+     [
+      "work-life balance",
+      "ish-hayot muvozanati",
+      "Neither work nor rest alone gives balance.",
+      "Na ishning o'zi, na damning o'zi muvozanat beradi.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "vision (personal)",
+      "kelajak tasavvuri",
+      "A vision without a plan is a dream.",
+      "Rejasiz tasavvur — orzu.",
+      "ˈvɪʒən (ˈpərsɪnəl)"
+     ],
+     [
+      "purpose",
+      "hayotiy maqsad",
+      "Finding your purpose takes years.",
+      "Maqsadingni topish yillar oladi.",
+      "ˈpərpəs"
+     ],
+     [
+      "passion",
+      "ehtiros, sevimli ish",
+      "Neither passion nor talent is enough without work.",
+      "Na ehtiros, na iste'dod mehnatsiz yetarli.",
+      "ˈpæʃən"
+     ],
+     [
+      "accountability",
+      "javobgarlik (hisob berish)",
+      "An accountability partner is one of the best tools.",
+      "Hisob beradigan sherik — eng yaxshi vositalardan biri.",
+      "əˈkaʊntəˌbɪlɪti"
+     ],
+     [
+      "public speaking",
+      "jamoat oldida nutq",
+      "Public speaking is feared by a number of students.",
+      "Bir qancha o'quvchi jamoat oldida gapirishdan qo'rqadi.",
+      "ˈpəblɪk ˈspikɪŋ"
+     ],
+     [
+      "network (personal)",
+      "tanish-bilish doirasi",
+      "Your network is one of your assets.",
+      "Tanishlar doirang — aktivlaringdan biri.",
+      "ˈnɛtˌwərk (ˈpərsɪnəl)"
+     ],
+     [
+      "wisdom (personal)",
+      "donolik",
+      "Wisdom is knowing which advice to ignore.",
+      "Donolik — qaysi maslahatni e'tiborsiz qoldirishni bilish.",
+      "ˈwɪzdəm (ˈpərsɪnəl)"
+     ],
+     [
+      "inspiration",
+      "ilhom",
+      "Some of my inspiration comes from Avloni's books.",
+      "Ilhomimning bir qismi Avloniy kitoblaridan keladi.",
+      "ˌɪnspərˈeɪʃən"
+     ],
+     [
+      "laziness",
+      "dangasalik",
+      "Laziness is one of the enemies of growth.",
+      "Dangasalik — o'sish dushmanlaridan biri.",
+      "ˈleɪzinəs"
+     ],
+     [
+      "criticism",
+      "tanqid",
+      "Not all criticism is useful, but some of it is gold.",
+      "Har qanday tanqid ham foydali emas, lekin ba'zisi — oltin.",
+      "ˈkrɪtɪˌsɪzəm"
+     ],
+     [
+      "upbringing (personal)",
+      "tarbiya",
+      "Upbringing shapes character more than school does.",
+      "Tarbiya xarakterni maktabdan ko'ra ko'proq shakllantiradi.",
+      "ˈəpˌbrɪŋɪŋ (ˈpərsɪnəl)"
+     ],
+     [
+      "moral",
+      "axloqiy",
+      "Either moral or practical lessons are in every story.",
+      "Har bir hikoyada axloqiy yoki amaliy saboq bor.",
+      "ˈmɔrəl"
+     ],
+     [
+      "enlightenment",
+      "ma'rifat",
+      "Enlightenment was the goal of the Jadids.",
+      "Ma'rifat jadidlarning maqsadi edi.",
+      "ˌɛnˈlaɪtənmənt"
+     ],
+     [
+      "educator",
+      "pedagog, ma'rifatchi",
+      "A number of educators followed Avloni.",
+      "Bir qancha pedagog Avloniyga ergashdi.",
+      "ˈɛʤəˌkeɪtər"
+     ],
+     [
+      "textbook (personal)",
+      "darslik",
+      "One of his textbooks is still read today.",
+      "Uning darsliklaridan biri bugun ham o'qiladi.",
+      "ˈtɛkstˌbʊk (ˈpərsɪnəl)"
+     ],
+     [
+      "playwright",
+      "dramaturg",
+      "Avloni was a playwright as well as a teacher.",
+      "Avloniy o'qituvchi bo'lish bilan birga dramaturg ham edi.",
+      "ˈpleɪˌraɪt"
+     ],
+     [
+      "theatre",
+      "teatr",
+      "Theatre was one of his tools for education.",
+      "Teatr uning ta'lim vositalaridan biri edi.",
+      "ˈθɪətə"
+     ],
+     [
+      "consistency",
+      "izchillik",
+      "Consistency beats intensity.",
+      "Izchillik shiddatdan ustun.",
+      "kənˈsɪstənsi"
+     ],
+     [
+      "comfort zone",
+      "qulaylik zonasi",
+      "None of the growth happens inside the comfort zone.",
+      "O'sishning hech biri qulaylik zonasi ichida bo'lmaydi.",
+      "ˈkəmfərt zoʊn"
+     ],
+     [
+      "milestone (personal)",
+      "muhim bosqich",
+      "Every milestone is one of many small steps.",
+      "Har bir muhim bosqich — ko'plab kichik qadamlardan biri.",
+      "ˈmaɪlˌstoʊn (ˈpərsɪnəl)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Fe'l shaklini tanlang",
+     "type": "choose",
+     "instr": "is / are / has / have",
+     "items": [
+      "The number of readers is / are growing.",
+      "A number of students is / are late.",
+      "One of my habits is / are journaling.",
+      "Swimming every morning is / are hard.",
+      "Either my mentor or my parents is / are coming.",
+      "None of the tips is / are new. (og'zaki)",
+      "The information about the course is / are online.",
+      "Neither the students nor the teacher has / have arrived."
+     ],
+     "answers": [
+      "is",
+      "are",
+      "is",
+      "is",
+      "are",
+      "are",
+      "is",
+      "has"
+     ]
+    },
+    {
+     "title": "Qoida yozing",
+     "type": "sort",
+     "instr": "Har gap qaysi qoidaga tegishli? (the number of / a number of / one of / gerund / either-or / uncountable)",
+     "items": [
+      "Reading builds knowledge.",
+      "One of the keys is discipline.",
+      "The number of goals is five.",
+      "A number of goals are unrealistic.",
+      "Either fear or laziness stops people.",
+      "The advice was useful."
+     ],
+     "answers": [
+      "gerund",
+      "one of",
+      "the number of",
+      "a number of",
+      "either-or (yaqin ega)",
+      "uncountable"
+     ]
+    },
+    {
+     "title": "Gapni to'ldiring",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan (Present Simple)",
+     "items": [
+      "The number of hours you sleep ___ (affect) your focus.",
+      "A number of habits ___ (take) months to build.",
+      "Neither money nor fame ___ (bring) purpose.",
+      "Either the mentor or the students ___ (choose) the topic.",
+      "Learning new skills ___ (keep) the brain young.",
+      "Some of the advice in this book ___ (be) old.",
+      "All of the exercises ___ (be) useful.",
+      "One of the students ___ (have) a growth mindset."
+     ],
+     "answers": [
+      "affects",
+      "take",
+      "brings",
+      "choose",
+      "keeps",
+      "is",
+      "are",
+      "has"
+     ]
+    },
+    {
+     "title": "Mening odatlarim",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — the number of / a number of / one of / gerund / either…or / none of",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "One of my best habits is reading every night.",
+      "The number of hours I study is three.",
+      "A number of my friends procrastinate.",
+      "Journaling helps me manage stress.",
+      "Either my mentor or my parents give me feedback.",
+      "None of my goals are impossible."
+     ]
+    },
+    {
+     "title": "Rivojlanish lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "putting things off until later",
+      "the ability to recover from problems",
+      "the way you think about yourself and the world",
+      "an experienced person who guides you",
+      "controlling yourself to do what you should",
+      "planning how to use your hours"
+     ],
+     "answers": [
+      "procrastination",
+      "resilience",
+      "mindset",
+      "mentor",
+      "self-discipline",
+      "time management"
+     ],
+     "box": [
+      "procrastination",
+      "resilience",
+      "mindset",
+      "mentor",
+      "self-discipline",
+      "time management"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The number of students are increasing.",
+      "A number of students is late.",
+      "One of the students are absent.",
+      "Either John or his friends is coming.",
+      "The informations are useful."
+     ],
+     "answers": [
+      "The number of students is increasing.",
+      "A number of students are late.",
+      "One of the students is absent.",
+      "Either John or his friends are coming.",
+      "The information is useful."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 13 jadvalini 3 marta; PERSONAL DEVELOPMENT 70 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 71–80",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Writing 6",
+     "type": "write",
+     "instr": "\"Online shopping: benefits and drawbacks\" — 180+ so'z; kamida 4 murakkab ega (the number of, a number of, one of the, gerund) va 3 contrast bog'lovchi",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Talabalar soni oshmoqda.",
+      "Bir qancha talaba kechikmoqda.",
+      "Talabalardan biri yo'q.",
+      "Suzish qiziqarli.",
+      "Jon yoki uning do'stlari kelyapti."
+     ],
+     "answers": [
+      "The number of students is increasing.",
+      "A number of students are late.",
+      "One of the students is absent.",
+      "Swimming is fun.",
+      "Either John or his friends are coming."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "PERSONAL DEVELOPMENT CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "6 moslik qoidasi + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Social issues",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 6 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Personal development og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Abdulla Avloni — \"Upbringing is a matter of life or death\"",
+    "text": [
+     "Abdulla Avloni was born in 1878 in Tashkent, in a family of craftsmen. Reading was his passion from childhood: one of his teachers said that the number of books the boy read in a year was higher than the whole class read together. At 20 he was already a teacher, and at 26 he opened his own school — a new-method school, where children learned by understanding, not by repeating.",
+     "Avloni believed that education is not only knowledge. In 1913 he wrote \"Turkiy Guliston yoxud Axloq\" (The Turkic Garden, or Ethics), a textbook about character: patience, courage, honesty, gratitude, humility and self-discipline. Its most famous sentence is still quoted in every Uzbek school: \"Upbringing is, for us, a matter of life or death, of salvation or destruction.\" A number of his ideas — daily habits, self-control, learning from mistakes — are exactly what modern books on personal development teach.",
+     "He was also a playwright and founded one of the first Uzbek theatres, because he thought that either a lesson or a play could change a person, and a play works faster. He wrote poems, published a newspaper and, after 1917, worked as a diplomat in Afghanistan and as a professor in Tashkent.",
+     "Avloni died in 1934. Neither fame nor money was his goal; teaching was. Today one of the largest pedagogical institutes in Tashkent is named after him, and none of his ideas has become old."
+    ],
+    "glossary": [
+     "craftsman — hunarmand",
+     "passion — ehtiros",
+     "new-method school — usuli jadid maktabi",
+     "ethics — axloq",
+     "character — xarakter",
+     "quote — iqtibos keltirmoq",
+     "salvation — najot",
+     "destruction — halokat",
+     "playwright — dramaturg",
+     "found — asos solmoq",
+     "diplomat — diplomat"
+    ],
+    "tasks": [
+     {
+      "title": "Ega–kesim mosligini toping",
+      "type": "find",
+      "instr": "Matndan 6 ta murakkab ega + fe'l",
+      "items": [
+       "one of",
+       "the number of",
+       "gerund",
+       "a number of",
+       "either … or",
+       "neither … nor / none of"
+      ],
+      "answers": [
+       "One of his teachers said…",
+       "The number of books the boy read … was higher…",
+       "Reading was his passion.",
+       "A number of his ideas … are exactly what modern books teach.",
+       "Either a lesson or a play could change a person.",
+       "Neither fame nor money was his goal. / None of his ideas has become old."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Avloni opened his own school at 20.",
+       "His 1913 book is about ethics and character.",
+       "He thought theatre could change people faster than lessons.",
+       "He worked as a diplomat in Iran."
+      ],
+      "answers": [
+       "False (26)",
+       "True",
+       "True",
+       "False (Afghanistan)"
+      ]
+     },
+     {
+      "title": "Rivojlanish lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta xarakter/rivojlanish so'zi; Avloniyning mashhur gapini o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "patience, courage, honesty, gratitude, humility, self-discipline, daily habits, self-control",
+       "Good upbringing decides whether a nation lives or dies."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 71–80 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 14,
+   "title": "-ing Clauses vs -ed Clauses",
+   "grammar_topic": "-ING va -ED (PARTICIPLE) GAPLAR (Walking down the street, … / Shocked by the news, …)",
+   "vocab_topic": "Artificial intelligence (sun'iy intellekt)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 3 — 11–14-darslar (distributive pronouns 1–2, subject–verb agreement, -ing/-ed clauses; sport, social issues, personal development, AI; Writing 5–6)",
+   "book_ref": "Student's book IELTS 3.0: Lesson 14 – -ing clauses vs -ed clauses (3 qatorli jadval); ARTIFICIAL INTELLIGENCE (58 so'z); Reading — Sam Altman (Jony Academy matni); kitob Topic 81–90 uyga.",
+   "objectives": [
+    "-ing clause bilan ikki gapni birlashtirish (bir vaqtda / sabab): Walking home, I saw…",
+    "-ed clause bilan passiv sabab/holat: Trained on data, the model learns…",
+    "Egalar mosligi qoidasi (dangling participle) va otdan keyingi qisqartirilgan relative clause (the model trained on…).",
+    "AI CORE 20 bilan texnologiya va uning ta'siri haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Artificial intelligence (sun'iy intellekt) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz ikki gapni birlashtiradi: \"She walked down the street. She saw a friend.\" → \"Walking down the street, she saw a friend.\" Keyin: \"He was shocked by the news. He couldn't speak.\" → \"Shocked by the news, he couldn't speak.\" Farq: kim bajaradi (-ing) — kimga bajariladi (-ed)?"
+    ],
+    [
+     8,
+     "Kahoot — Subject–verb agreement",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Subject–verb agreement lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 3 qator: -ING clause (faol harakat, bir vaqtda/sabab): V-ing + , asosiy gap; -ING ega sifatida: V-ing + birlik fe'l; -ED clause (passiv holat/sabab): V3 + , asosiy gap. Qoida: ikkala qismning egasi bir xil bo'lishi shart (dangling participle xatosi). Otdan keyin ham: \"the man standing there\", \"the data collected by AI\"."
+    ],
+    [
+     12,
+     "Artificial intelligence (sun'iy intellekt) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "-ING CLAUSE — ega o'zi bajaradi, asosiy gap bilan bir vaqtda yoki sabab: \"Walking down the street, she saw an old friend.\" (= While she was walking…) \"Feeling tired, I went to bed.\" (= Because I felt tired…)",
+     "-ING EGA SIFATIDA — gerund: \"Studying late at night is tiring.\" (+ birlik fe'l).",
+     "-ED CLAUSE — egaga nisbatan bajarilgan (passiv): \"Shocked by the news, he couldn't say a word.\" (= Because he was shocked…) \"Built in 2015, the model is old.\"",
+     "Otdan keyin: \"The student sitting there is Ali.\" (= who is sitting) / \"The data collected by sensors is huge.\" (= which was collected).",
+     "Ega bir xil bo'lishi shart: \"Walking home, the rain started\" — xato (yomg'ir yurmaydi)."
+    ],
+    "formulas": [
+     [
+      "-ing (bir vaqtda)",
+      "V-ing + , S + V",
+      "Walking down the street, she saw an old friend.",
+      "Ko'chada yurib, u eski do'stini ko'rdi."
+     ],
+     [
+      "-ing (sabab)",
+      "V-ing + , S + V",
+      "Knowing the answer, he raised his hand.",
+      "Javobni bilgani uchun u qo'lini ko'tardi."
+     ],
+     [
+      "-ing ega",
+      "V-ing + birlik fe'l",
+      "Studying late at night is tiring.",
+      "Tunda kech o'qish charchatadi."
+     ],
+     [
+      "-ed (passiv sabab/holat)",
+      "V3 + , S + V",
+      "Shocked by the news, he couldn't say a word.",
+      "Xabardan hayratga tushib, u bir og'iz so'z ayta olmadi."
+     ],
+     [
+      "Otdan keyin -ing",
+      "ot + V-ing …",
+      "The robot cleaning the room is new.",
+      "Xonani tozalayotgan robot yangi."
+     ],
+     [
+      "Otdan keyin -ed",
+      "ot + V3 …",
+      "The model trained on big data works better.",
+      "Katta ma'lumotda o'rgatilgan model yaxshiroq ishlaydi."
+     ]
+    ],
+    "presentation": [
+     [
+      "How did you learn about ChatGPT?",
+      "Reading the news, I saw an article about it."
+     ],
+     [
+      "Why did the company grow so fast?",
+      "Backed by Microsoft, it had enough money."
+     ],
+     [
+      "What does the model do?",
+      "Trained on billions of words, it predicts the next word."
+     ],
+     [
+      "Why was he fired in 2023?",
+      "Surprised by the decision, nobody could explain it."
+     ],
+     [
+      "Which student uses AI for homework?",
+      "The student sitting by the window does."
+     ],
+     [
+      "Is using AI for essays cheating?",
+      "Using AI to write the whole essay is cheating; using it to check grammar isn't."
+     ],
+     [
+      "How do self-driving cars see?",
+      "Equipped with sensors, they build a 3D map of the road."
+     ],
+     [
+      "Why did the chatbot give a wrong answer?",
+      "Trained on old data, it didn't know the new rule."
+     ],
+     [
+      "What do you feel when talking to a chatbot?",
+      "Talking to a chatbot, I sometimes forget it's a machine."
+     ],
+     [
+      "Which jobs are at risk?",
+      "Jobs based on repeating tasks are at risk."
+     ]
+    ],
+    "notes": [
+     "-ing = active (bajaruvchi), -ed = passive (bajarilgan): \"the developer writing code\" / \"the code written by the developer\".",
+     "Having + V3 — oldin tugagan ish: \"Having finished the test, we left.\"",
+     "Not + V-ing: \"Not knowing the rule, he made a mistake.\"",
+     "AI lug'ati: machine learning, neural network, algorithm, dataset, prompt, bias, generative AI, deepfake, regulation."
+    ],
+    "mistakes": [
+     [
+      "Walking home, the rain started.",
+      "Walking home, I got wet. / While I was walking home, the rain started.",
+      "Egalar bir xil bo'lishi kerak."
+     ],
+     [
+      "Shocking by the news, he cried.",
+      "Shocked by the news, he cried.",
+      "Passiv → -ed."
+     ],
+     [
+      "Trained on data, makes predictions.",
+      "Trained on data, the model makes predictions.",
+      "Asosiy gapda ega kerak."
+     ],
+     [
+      "The data collecting by AI is huge.",
+      "The data collected by AI is huge.",
+      "Passiv → -ed."
+     ],
+     [
+      "Studying late are tiring.",
+      "Studying late is tiring.",
+      "Gerund → birlik."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — AI asosiy tushunchalari (machine learning, algorithm, neural network…); STRONG — qo'llanish va texnika (chatbot, recognition, cloud); SUPER — xavf va tartibga solish (bias, deepfake, regulation).",
+     "Har so'zga participle clause bilan gap: \"Trained on data, the algorithm learns.\" / \"Using a chatbot, I saved an hour.\""
+    ],
+    "core": [
+     [
+      "artificial intelligence (AI)",
+      "sun'iy intellekt",
+      "Growing fast, artificial intelligence is changing every job.",
+      "Tez o'sib, sun'iy intellekt har bir kasbni o'zgartirmoqda.",
+      "ˌɑrtəˈfɪʃəl ˌɪnˈtɛləʤəns (eɪaɪ)"
+     ],
+     [
+      "machine learning",
+      "mashinali o'rganish",
+      "Based on machine learning, the app improves every day.",
+      "Mashinali o'rganishga asoslangan ilova har kuni yaxshilanadi.",
+      "məˈʃin ˈlərnɪŋ"
+     ],
+     [
+      "deep learning",
+      "chuqur o'rganish",
+      "Using deep learning, computers recognise faces.",
+      "Chuqur o'rganishdan foydalanib, kompyuterlar yuzlarni taniydi.",
+      "dip ˈlərnɪŋ"
+     ],
+     [
+      "neural network",
+      "neyron tarmoq",
+      "Inspired by the brain, a neural network has layers.",
+      "Miyadan ilhomlangan neyron tarmoq qatlamlarga ega.",
+      "ˈnʊrəl ˈnɛtˌwərk"
+     ],
+     [
+      "algorithm",
+      "algoritm",
+      "Written by humans, algorithms can still have bias.",
+      "Odamlar tomonidan yozilgan algoritmlarda ham noxolislik bo'lishi mumkin.",
+      "ˈælgərˌɪðəm"
+     ],
+     [
+      "data (AI)",
+      "ma'lumotlar",
+      "Collected from users, data trains the model.",
+      "Foydalanuvchilardan yig'ilgan ma'lumotlar modelni o'rgatadi.",
+      "ˈdætə (eɪaɪ)"
+     ],
+     [
+      "dataset",
+      "ma'lumotlar to'plami",
+      "Cleaned carefully, a dataset gives better results.",
+      "Ehtiyotkorlik bilan tozalangan ma'lumotlar to'plami yaxshiroq natija beradi.",
+      "ˈdeɪtəˌsɛt"
+     ],
+     [
+      "big data",
+      "katta ma'lumotlar",
+      "Analysing big data, companies predict what we buy.",
+      "Katta ma'lumotlarni tahlil qilib, kompaniyalar nima sotib olishimizni bashorat qiladi.",
+      "bɪg ˈdætə"
+     ],
+     [
+      "training (AI)",
+      "o'rgatish (modelni)",
+      "Training takes weeks, using thousands of computers.",
+      "O'rgatish minglab kompyuterlardan foydalanib, haftalar oladi.",
+      "ˈtreɪnɪŋ (eɪaɪ)"
+     ],
+     [
+      "pattern",
+      "naqsh, qonuniyat",
+      "Finding patterns is what AI does best.",
+      "Qonuniyatlarni topish — AI eng yaxshi qiladigan ish.",
+      "ˈpætərn"
+     ],
+     [
+      "prediction",
+      "bashorat",
+      "Based on patterns, predictions are often right.",
+      "Qonuniyatlarga asoslangan bashoratlar ko'pincha to'g'ri.",
+      "priˈdɪkʃən"
+     ],
+     [
+      "automation (AI)",
+      "avtomatlashtirish",
+      "Driven by automation, factories need fewer workers.",
+      "Avtomatlashtirish tufayli zavodlarga kamroq ishchi kerak.",
+      "ɔtəˈmeɪʃən (eɪaɪ)"
+     ],
+     [
+      "robotics",
+      "robototexnika",
+      "Combined with AI, robotics is growing fast.",
+      "AI bilan birlashgan robototexnika tez o'smoqda.",
+      "ˌroʊˈbɑtɪks"
+     ],
+     [
+      "chatbot",
+      "chat-bot",
+      "Asked a question, the chatbot answers in seconds.",
+      "Savol berilganda chat-bot soniyalarda javob beradi.",
+      ""
+     ],
+     [
+      "virtual assistant",
+      "virtual yordamchi",
+      "Speaking to a virtual assistant, you can set an alarm.",
+      "Virtual yordamchi bilan gaplashib, budilnik qo'yish mumkin.",
+      "ˈvərʧuəl əˈsɪstənt"
+     ],
+     [
+      "voice recognition",
+      "ovozni tanish",
+      "Using voice recognition, the phone types for you.",
+      "Ovozni tanishdan foydalanib, telefon sen uchun yozadi.",
+      "vɔɪs ˌrɛkɪgˈnɪʃən"
+     ],
+     [
+      "facial recognition",
+      "yuzni tanish",
+      "Installed at airports, facial recognition checks passports.",
+      "Aeroportlarga o'rnatilgan yuzni tanish pasportlarni tekshiradi.",
+      "ˈfeɪʃəl ˌrɛkɪgˈnɪʃən"
+     ],
+     [
+      "generative AI",
+      "generativ (yaratuvchi) AI",
+      "Trained on the internet, generative AI writes texts and draws pictures.",
+      "Internetda o'rgatilgan generativ AI matn yozadi va rasm chizadi.",
+      "ˈʤɛnərətɪv eɪaɪ"
+     ],
+     [
+      "prompt",
+      "so'rov (AI ga ko'rsatma)",
+      "Written clearly, a prompt gives a better answer.",
+      "Aniq yozilgan so'rov yaxshiroq javob beradi.",
+      "prɑmpt"
+     ],
+     [
+      "accuracy (AI)",
+      "aniqlik",
+      "Measured on tests, accuracy is 95%.",
+      "Testlarda o'lchangan aniqlik 95%.",
+      "ˈækjərəsi (eɪaɪ)"
+     ]
+    ],
+    "strong": [
+     [
+      "language model",
+      "til modeli",
+      "Trained on billions of words, a language model predicts the next word.",
+      "Milliardlab so'zda o'rgatilgan til modeli keyingi so'zni bashorat qiladi.",
+      "ˈlæŋgwɪʤ ˈmɑdəl"
+     ],
+     [
+      "natural language processing",
+      "tabiiy tilni qayta ishlash",
+      "Using natural language processing, AI understands Uzbek.",
+      "Tabiiy tilni qayta ishlashdan foydalanib, AI o'zbek tilini tushunadi.",
+      "ˈnæʧərəl ˈlæŋgwɪʤ ˈprɑsɛsɪŋ"
+     ],
+     [
+      "image recognition",
+      "tasvirni tanish",
+      "Applied to X-rays, image recognition finds diseases.",
+      "Rentgenga qo'llanilgan tasvirni tanish kasalliklarni topadi.",
+      "ˈɪmɪʤ ˌrɛkɪgˈnɪʃən"
+     ],
+     [
+      "computer vision",
+      "kompyuter ko'rishi",
+      "Equipped with computer vision, cars see the road.",
+      "Kompyuter ko'rishi bilan jihozlangan mashinalar yo'lni ko'radi.",
+      "kəmˈpjutər ˈvɪʒən"
+     ],
+     [
+      "input / output",
+      "kirish / chiqish (ma'lumot)",
+      "Given a good input, the model produces a good output.",
+      "Yaxshi kirish berilsa, model yaxshi natija beradi.",
+      "ˈɪnˌpʊt  ˈaʊtˌpʊt"
+     ],
+     [
+      "bias (AI)",
+      "noxolislik",
+      "Hidden in the data, bias leads to unfair decisions.",
+      "Ma'lumotda yashiringan noxolislik adolatsiz qarorlarga olib keladi.",
+      "baɪəs (eɪaɪ)"
+     ],
+     [
+      "ethics (AI)",
+      "axloq (etika)",
+      "Ignored for years, AI ethics is now a big topic.",
+      "Yillar davomida e'tiborsiz qolgan AI etikasi endi katta mavzu.",
+      "ˈɛθɪks (eɪaɪ)"
+     ],
+     [
+      "privacy (AI)",
+      "maxfiylik",
+      "Worried about privacy, many users delete their data.",
+      "Maxfiylikdan xavotirlangan ko'p foydalanuvchilar ma'lumotlarini o'chiradi.",
+      "ˈpraɪvəsi (eɪaɪ)"
+     ],
+     [
+      "data security",
+      "ma'lumotlar xavfsizligi",
+      "Protected by encryption, data security is stronger.",
+      "Shifrlash bilan himoyalangan ma'lumotlar xavfsizligi kuchliroq.",
+      "ˈdætə sɪˈkjʊrəti"
+     ],
+     [
+      "cybersecurity",
+      "kiberxavfsizlik",
+      "Attacked every day, banks invest in cybersecurity.",
+      "Har kuni hujumga uchraydigan banklar kiberxavfsizlikka sarmoya kiritadi.",
+      ""
+     ],
+     [
+      "surveillance",
+      "kuzatuv, nazorat",
+      "Watched by cameras, citizens worry about surveillance.",
+      "Kameralar kuzatayotgan fuqarolar nazoratdan xavotirda.",
+      "sərˈveɪləns"
+     ],
+     [
+      "self-driving car",
+      "o'zi boshqariladigan mashina",
+      "Guided by sensors, self-driving cars stop for pedestrians.",
+      "Sensorlar boshqaradigan mashinalar piyodalar uchun to'xtaydi.",
+      ""
+     ],
+     [
+      "cloud computing",
+      "bulutli hisoblash",
+      "Stored in the cloud, files are available anywhere.",
+      "Bulutda saqlangan fayllar har joyda mavjud.",
+      "klaʊd kəmˈpjutɪŋ"
+     ],
+     [
+      "developer (AI)",
+      "dasturchi",
+      "Working at night, developers fixed the bug.",
+      "Kechasi ishlab, dasturchilar xatoni tuzatishdi.",
+      "dɪˈvɛləpər (eɪaɪ)"
+     ],
+     [
+      "programming / code",
+      "dasturlash / kod",
+      "Written in Python, the code trains the model.",
+      "Python tilida yozilgan kod modelni o'rgatadi.",
+      "ˈproʊˌgræmɪŋ  koʊd"
+     ],
+     [
+      "search engine",
+      "qidiruv tizimi",
+      "Powered by AI, search engines answer questions directly.",
+      "AI bilan ishlaydigan qidiruv tizimlari savollarga to'g'ridan-to'g'ri javob beradi.",
+      "sərʧ ˈɪnʤən"
+     ],
+     [
+      "translation (AI)",
+      "tarjima",
+      "Done by AI, translation is fast but not perfect.",
+      "AI qilgan tarjima tez, lekin mukammal emas.",
+      "trænzˈleɪʃən (eɪaɪ)"
+     ],
+     [
+      "sensor (AI)",
+      "sensor, sezgich",
+      "Placed on the road, sensors count cars.",
+      "Yo'lga qo'yilgan sensorlar mashinalarni sanaydi.",
+      "ˈsɛnsər (eɪaɪ)"
+     ],
+     [
+      "drone",
+      "dron",
+      "Flying over the fields, drones check the crops.",
+      "Dalalar ustida uchib, dronlar ekinlarni tekshiradi.",
+      "droʊn"
+     ],
+     [
+      "autonomous",
+      "avtonom, mustaqil ishlaydigan",
+      "Working without people, autonomous robots deliver food.",
+      "Odamlarsiz ishlaydigan avtonom robotlar ovqat yetkazadi.",
+      "ɔˈtɑnəməs"
+     ]
+    ],
+    "super": [
+     [
+      "job displacement",
+      "ish o'rinlarini yo'qotish (texnologiya tufayli)",
+      "Replaced by machines, many workers fear job displacement.",
+      "Mashinalar o'rnini bosgan ko'p ishchilar ish o'rinlarini yo'qotishdan qo'rqadi.",
+      "ʤɑb dɪˈspleɪsmənt"
+     ],
+     [
+      "fake news",
+      "yolg'on yangilik",
+      "Spread by bots, fake news travels fast.",
+      "Botlar tarqatgan yolg'on yangilik tez tarqaladi.",
+      "feɪk nuz"
+     ],
+     [
+      "deepfake",
+      "dipfeyk (soxta video/audio)",
+      "Created by AI, a deepfake looks real.",
+      "AI yaratgan dipfeyk haqiqiy ko'rinadi.",
+      ""
+     ],
+     [
+      "misinformation",
+      "noto'g'ri ma'lumot",
+      "Shared millions of times, misinformation is dangerous.",
+      "Millionlab marta ulashilgan noto'g'ri ma'lumot xavfli.",
+      "ˌmɪsɪnfərˈmeɪʃən"
+     ],
+     [
+      "regulation (AI)",
+      "tartibga solish",
+      "Passed in 2024, the EU regulation limits AI use.",
+      "2024-da qabul qilingan YeI qoidasi AI ishlatishni cheklaydi.",
+      "ˌrɛgjəˈleɪʃən (eɪaɪ)"
+     ],
+     [
+      "replace (AI)",
+      "o'rnini bosmoq",
+      "Replacing humans in some jobs, AI creates others.",
+      "Ba'zi ishlarda odamlar o'rnini bosib, AI boshqalarini yaratadi.",
+      "ˌriˈpleɪs (eɪaɪ)"
+     ],
+     [
+      "intelligent",
+      "aqlli, idrokli",
+      "Called intelligent, the system still makes silly mistakes.",
+      "Aqlli deb atalgan tizim hali ham kulgili xatolar qiladi.",
+      "ˌɪnˈtɛləʤənt"
+     ],
+     [
+      "hacking (AI)",
+      "xakerlik",
+      "Protected badly, systems suffer from hacking.",
+      "Yomon himoyalangan tizimlar xakerlikdan aziyat chekadi.",
+      "ˈhækɪŋ (eɪaɪ)"
+     ],
+     [
+      "smart device (AI)",
+      "aqlli qurilma",
+      "Connected to the internet, smart devices listen all the time.",
+      "Internetga ulangan aqlli qurilmalar doim tinglaydi.",
+      "smɑrt dɪˈvaɪs (eɪaɪ)"
+     ],
+     [
+      "Internet of Things (AI)",
+      "buyumlar interneti",
+      "Linked together, devices form the Internet of Things.",
+      "Bir-biriga bog'langan qurilmalar buyumlar internetini hosil qiladi.",
+      "ˈɪntərˌnɛt əv θɪŋz (eɪaɪ)"
+     ],
+     [
+      "server",
+      "server",
+      "Located in data centres, servers run the models.",
+      "Ma'lumot markazlarida joylashgan serverlar modellarni ishlatadi.",
+      "ˈsərvər"
+     ],
+     [
+      "processor",
+      "protsessor",
+      "Designed for AI, new processors are faster.",
+      "AI uchun mo'ljallangan yangi protsessorlar tezroq.",
+      "ˈprɑˌsɛsər"
+     ],
+     [
+      "interface (AI)",
+      "interfeys",
+      "Made simple, the interface helps beginners.",
+      "Sodda qilingan interfeys yangi boshlovchilarga yordam beradi.",
+      "ˈɪnərˌfeɪs (eɪaɪ)"
+     ],
+     [
+      "task (AI)",
+      "vazifa",
+      "Given a task, the assistant completes it in seconds.",
+      "Vazifa berilgan yordamchi uni soniyalarda bajaradi.",
+      "tæsk (eɪaɪ)"
+     ],
+     [
+      "speech (AI)",
+      "nutq",
+      "Converted to text, speech becomes searchable.",
+      "Matnga aylantirilgan nutq qidiriladigan bo'ladi.",
+      "spiʧ (eɪaɪ)"
+     ],
+     [
+      "hallucination (AI)",
+      "\"gallyutsinatsiya\" (AI to'qigan noto'g'ri javob)",
+      "Asked about history, the chatbot gave a hallucination.",
+      "Tarix haqida so'ralgan chat-bot to'qima javob berdi.",
+      "həˌlusəˈneɪʃən (eɪaɪ)"
+     ],
+     [
+      "superintelligence",
+      "superintellekt",
+      "Feared by some scientists, superintelligence is still theory.",
+      "Ba'zi olimlar qo'rqadigan superintellekt hali nazariya.",
+      ""
+     ],
+     [
+      "non-profit",
+      "notijorat",
+      "Founded as a non-profit, the company later changed.",
+      "Notijorat sifatida tashkil etilgan kompaniya keyin o'zgardi.",
+      "ˌnɑnˈprɔfɪt"
+     ],
+     [
+      "co-found",
+      "birgalikda asos solmoq",
+      "Co-founded by Musk and Altman, OpenAI started in 2015.",
+      "Musk va Altman birgalikda asos solgan OpenAI 2015-da boshlangan.",
+      ""
+     ],
+     [
+      "board (of directors)",
+      "direktorlar kengashi",
+      "Surprised by the board, the whole company protested.",
+      "Kengashdan hayratlangan butun kompaniya norozilik bildirdi.",
+      "bɔrd (əv dɪˈrɛktərz)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "-ing yoki -ed",
+     "type": "choose",
+     "instr": "To'g'ri shaklni tanlang",
+     "items": [
+      "Walking / Walked to school, I met my teacher.",
+      "Shocking / Shocked by the result, she cried.",
+      "Training / Trained on big data, the model learns fast.",
+      "Not knowing / Not known the answer, he kept quiet.",
+      "The student sitting / sat by the window uses AI.",
+      "The data collecting / collected by sensors is huge.",
+      "Feeling / Felt tired, I went to bed early.",
+      "Building / Built in 2015, the company is young."
+     ],
+     "answers": [
+      "Walking",
+      "Shocked",
+      "Trained",
+      "Not knowing",
+      "sitting",
+      "collected",
+      "Feeling",
+      "Built"
+     ]
+    },
+    {
+     "title": "Ikki gapni birlashtiring",
+     "type": "rewrite",
+     "instr": "Participle clause bilan",
+     "items": [
+      "I was reading the news. I saw an article about AI.",
+      "He was surprised by the answer. He asked again.",
+      "The model was trained on old data. It made a mistake.",
+      "She knew the rule. She answered quickly.",
+      "The robot is cleaning the room. It is new.",
+      "The essay was written by AI. It was boring."
+     ],
+     "answers": [
+      "Reading the news, I saw an article about AI.",
+      "Surprised by the answer, he asked again.",
+      "Trained on old data, the model made a mistake.",
+      "Knowing the rule, she answered quickly.",
+      "The robot cleaning the room is new.",
+      "The essay written by AI was boring."
+     ]
+    },
+    {
+     "title": "Xato egani toping",
+     "type": "correct",
+     "instr": "Dangling participle — to'g'rilang",
+     "items": [
+      "Walking home, the rain started.",
+      "Trained for months, the results were good.",
+      "Using a chatbot, the essay was finished quickly.",
+      "Built in 2015, people like the app."
+     ],
+     "answers": [
+      "Walking home, I got caught in the rain.",
+      "Trained for months, the model gave good results.",
+      "Using a chatbot, I finished the essay quickly.",
+      "Built in 2015, the app is liked by people."
+     ]
+    },
+    {
+     "title": "AI va men",
+     "type": "speaking",
+     "instr": "Juftlikda: AI haqida 6 gap — 3 ta -ing clause, 3 ta -ed clause",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "Using ChatGPT, I check my grammar.",
+      "Worried about privacy, I don't share my photos.",
+      "Watching videos, I learned how neural networks work.",
+      "Trained on the internet, chatbots know a lot but not everything.",
+      "Not trusting deepfakes, I check the source.",
+      "Replaced by AI, some jobs will disappear — but new ones will appear."
+     ]
+    },
+    {
+     "title": "AI lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a computer program that talks to you",
+      "a set of rules a computer follows",
+      "the question or instruction you give to AI",
+      "a fake video made by AI",
+      "unfairness hidden in data or a model",
+      "AI that creates text, images or music"
+     ],
+     "answers": [
+      "chatbot",
+      "algorithm",
+      "prompt",
+      "deepfake",
+      "bias",
+      "generative AI"
+     ],
+     "box": [
+      "chatbot",
+      "algorithm",
+      "prompt",
+      "deepfake",
+      "bias",
+      "generative AI"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Walking home, the rain started.",
+      "Shocking by the news, he cried.",
+      "Trained on data, makes predictions.",
+      "The data collecting by AI is huge.",
+      "Studying late are tiring."
+     ],
+     "answers": [
+      "Walking home, I got wet.",
+      "Shocked by the news, he cried.",
+      "Trained on data, the model makes predictions.",
+      "The data collected by AI is huge.",
+      "Studying late is tiring."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 14 jadvalini 3 marta; ARTIFICIAL INTELLIGENCE 58 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Progress test 3 ga tayyorgarlik",
+     "type": "review",
+     "instr": "11–14-dars jadvallari; 4 lug'atdan CORE 20; Writing 5–6; Kahoot 11–14 (jonyos.uz)",
+     "answers": "Test: formulalar, 40 so'z, 10 tarjima, reading, writing (180 so'z)."
+    },
+    {
+     "title": "Reading Topic 81–90",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "AI va kelajak — insho",
+     "type": "write",
+     "instr": "150 so'z: AI ta'lim/ishga qanday ta'sir qiladi; kamida 4 -ing clause va 4 -ed clause",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ko'chada yurib, u eski do'stini ko'rdi.",
+      "Xabardan hayratga tushib, u hech narsa deya olmadi.",
+      "Tunda kech o'qish charchatadi.",
+      "Katta ma'lumotda o'rgatilgan model yaxshiroq ishlaydi.",
+      "Deraza yonida o'tirgan talaba AI ishlatadi."
+     ],
+     "answers": [
+      "Walking down the street, she saw an old friend.",
+      "Shocked by the news, he couldn't say a word.",
+      "Studying late at night is tiring.",
+      "The model trained on big data works better.",
+      "The student sitting by the window uses AI."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "AI CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Personal development",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 3 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "AI og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Sam Altman — the man who gave the world ChatGPT",
+    "text": [
+     "Sam Altman was born in 1985 in Chicago. Given his first computer at eight, he taught himself to program. Studying at Stanford, he started a company called Loopt at 19 — and, wanting to build it full-time, he dropped out. Later he ran Y Combinator, the famous startup school that helped companies such as Airbnb and Dropbox.",
+     "In 2015 Altman and Elon Musk co-founded OpenAI, a non-profit created to make sure that artificial intelligence would be safe for everyone. Trained on almost the whole internet, OpenAI's language models became better every year. Then, in November 2022, the company released ChatGPT. Used by 100 million people in two months, it became the fastest-growing app in history. Students in Tashkent, doctors in London and farmers in India were all typing prompts into the same chatbot.",
+     "In November 2023 something strange happened: Altman was fired by OpenAI's board. Shocked by the decision, almost all 700 employees threatened to leave. Five days later he was back. Asked what he had learned, he said: \"Build things people want, and take care of your team.\"",
+     "Altman says AI will change work more than the internet did. Worried about job displacement and deepfakes, he asks governments for regulation — of his own product. Not everyone trusts him; critics say a company growing this fast cannot regulate itself. But nobody argues with one fact: talking to a machine, we no longer feel surprised. That is his doing."
+    ],
+    "glossary": [
+     "program — dasturlamoq",
+     "drop out — o'qishni tashlamoq",
+     "startup — startap",
+     "non-profit — notijorat",
+     "release — chiqarmoq",
+     "employee — xodim",
+     "threaten — tahdid qilmoq",
+     "regulation — tartibga solish",
+     "critic — tanqidchi",
+     "trust — ishonmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Participle clause toping",
+      "type": "find",
+      "instr": "Matndan 5 ta -ing va 5 ta -ed clause",
+      "items": [
+       "-ed 1",
+       "-ing 1",
+       "-ing 2",
+       "-ed 2",
+       "-ed 3",
+       "-ed 4",
+       "-ed 5",
+       "-ing 3",
+       "-ing 4"
+      ],
+      "answers": [
+       "Given his first computer at eight, he taught himself to program.",
+       "Studying at Stanford, he started a company.",
+       "Wanting to build it full-time, he dropped out.",
+       "Trained on almost the whole internet, OpenAI's models became better.",
+       "Used by 100 million people in two months, it became the fastest-growing app.",
+       "Shocked by the decision, almost all 700 employees threatened to leave.",
+       "Asked what he had learned, he said…",
+       "Worried about job displacement … he asks governments… (-ed) / a company growing this fast (-ing)",
+       "Talking to a machine, we no longer feel surprised."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Altman finished Stanford.",
+       "OpenAI started as a non-profit in 2015.",
+       "ChatGPT reached 100 million users in two months.",
+       "Altman never returned to OpenAI after being fired."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "AI lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta AI so'zi; \"take care of your team\" — o'z fikringiz (1 gap)",
+      "items": [
+       "words",
+       "opinion"
+      ],
+      "answers": [
+       "program, artificial intelligence, language models, chatbot, prompts, job displacement, deepfakes, regulation",
+       "Erkin: \"A team that trusts its leader will follow him.\""
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 81–90 — uyga (hafta davomida)."
+   }
   }
  ]
 }

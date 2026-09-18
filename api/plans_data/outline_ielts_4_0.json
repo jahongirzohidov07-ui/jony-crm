@@ -1,0 +1,272 @@
+{
+ "course": "ielts_4_0",
+ "title": "IELTS 4.0",
+ "outline": true,
+ "lessons": [
+  {
+   "no": 1,
+   "title": "PREFIXES",
+   "grammar_topic": "PREFIXES",
+   "vocab_topic": "Essential Words 1",
+   "audios": "Audio 1-5",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 1"
+  },
+  {
+   "no": 2,
+   "title": "SUFFIXES",
+   "grammar_topic": "SUFFIXES",
+   "vocab_topic": "Essential Words 2",
+   "audios": "Audio 6-10",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 2"
+  },
+  {
+   "no": 3,
+   "title": "MODAL VERBS",
+   "grammar_topic": "MODAL VERBS",
+   "vocab_topic": "Essential Words 3",
+   "audios": "Audio 11-15",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 3"
+  },
+  {
+   "no": 4,
+   "title": "OTHER WAYS OF REFERING TO FUTURE",
+   "grammar_topic": "OTHER WAYS OF REFERING TO FUTURE",
+   "vocab_topic": "Essential Words 4",
+   "audios": "Audio 16-20",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 4"
+  },
+  {
+   "no": 5,
+   "title": "ADVERBIAL PHRASES",
+   "grammar_topic": "ADVERBIAL PHRASES",
+   "vocab_topic": "Essential Words 5",
+   "audios": "Audio 21-30",
+   "reading": false,
+   "test_after": "Progress test 1",
+   "words": 0
+  },
+  {
+   "no": 6,
+   "title": "BE ALLOWED TO, BE PERMITTED TO, BE SUPPOSED TO",
+   "grammar_topic": "BE ALLOWED TO, BE PERMITTED TO, BE SUPPOSED TO",
+   "vocab_topic": "Essential Words 6",
+   "audios": "Audio 31-35",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "sample essay 5"
+  },
+  {
+   "no": 7,
+   "title": "DEFINITE ARTICLE",
+   "grammar_topic": "DEFINITE ARTICLE",
+   "vocab_topic": "Essential Words 7",
+   "audios": "Audio 36-40",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "sample essay 6"
+  },
+  {
+   "no": 8,
+   "title": "HAD BETTER, WOULD RATHER, PREFER",
+   "grammar_topic": "HAD BETTER, WOULD RATHER, PREFER",
+   "vocab_topic": "Essential Words 8",
+   "audios": "Audio 41-45",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "sample essay 7"
+  },
+  {
+   "no": 9,
+   "title": "SEE SOMEBODY DO vs SEE SOMEBODY DOING",
+   "grammar_topic": "SEE SOMEBODY DO vs SEE SOMEBODY DOING",
+   "vocab_topic": "Essential Words 9",
+   "audios": "Audio 46-50",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 10,
+   "title": "ONE vs THE ONE",
+   "grammar_topic": "ONE vs THE ONE",
+   "vocab_topic": "Essential Words 10",
+   "audios": "Audio 51-55",
+   "reading": false,
+   "test_after": "Progress test 2",
+   "words": 0
+  },
+  {
+   "no": 11,
+   "title": "EMPHASIS",
+   "grammar_topic": "EMPHASIS",
+   "vocab_topic": "Essential Words 11",
+   "audios": "Audio 56-60",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 8"
+  },
+  {
+   "no": 12,
+   "title": "THE + ADJECTIVES",
+   "grammar_topic": "THE + ADJECTIVES",
+   "vocab_topic": "Essential Words 12",
+   "audios": "Audio 61-65",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 9"
+  },
+  {
+   "no": 13,
+   "title": "EVEN, IN CASE, AS LONG AS, PROVIDED/PROVIDING",
+   "grammar_topic": "EVEN, IN CASE, AS LONG AS, PROVIDED/PROVIDING",
+   "vocab_topic": "Essential Words 13",
+   "audios": "Audio 66-70",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 14,
+   "title": "REFERENCING",
+   "grammar_topic": "REFERENCING",
+   "vocab_topic": "Essential Words 14",
+   "audios": "Audio 71-75",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 15,
+   "title": "LINKING VERBS",
+   "grammar_topic": "LINKING VERBS",
+   "vocab_topic": "Essential Words 15",
+   "audios": "Audio 76-80",
+   "reading": false,
+   "test_after": "Progress test 3",
+   "words": 0,
+   "writing": "Sample essay 10"
+  },
+  {
+   "no": 16,
+   "title": "REPORTED SPEECH (POSITIVE)",
+   "grammar_topic": "REPORTED SPEECH (POSITIVE)",
+   "vocab_topic": "Essential Words 16",
+   "audios": "Audio 81-85",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 11"
+  },
+  {
+   "no": 17,
+   "title": "REPORTED SPEECH (QUESTION)",
+   "grammar_topic": "REPORTED SPEECH (QUESTION)",
+   "vocab_topic": "",
+   "audios": "Audio 86-90",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 12"
+  },
+  {
+   "no": 18,
+   "title": "REPORTED SPEECH (IMPERATIVE)",
+   "grammar_topic": "REPORTED SPEECH (IMPERATIVE)",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 13"
+  },
+  {
+   "no": 19,
+   "title": "PHRASAL VERBS - LOOK",
+   "grammar_topic": "PHRASAL VERBS - LOOK",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 20,
+   "title": "PHRASAL VERBS - GET",
+   "grammar_topic": "PHRASAL VERBS - GET",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "Progress test 4",
+   "words": 0
+  },
+  {
+   "no": 21,
+   "title": "PHRASAL VERBS - TAKE",
+   "grammar_topic": "PHRASAL VERBS - TAKE",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 14"
+  },
+  {
+   "no": 22,
+   "title": "PHRASAL VERBS - MAKE",
+   "grammar_topic": "PHRASAL VERBS - MAKE",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": "Sample essay 15"
+  },
+  {
+   "no": 23,
+   "title": "PHRASAL VERBS - TURN",
+   "grammar_topic": "PHRASAL VERBS - TURN",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 24,
+   "title": "PHRASAL VERBS - SET",
+   "grammar_topic": "PHRASAL VERBS - SET",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 25,
+   "title": "PHRASAL VERBS - PUT",
+   "grammar_topic": "PHRASAL VERBS - PUT",
+   "vocab_topic": "",
+   "audios": "",
+   "reading": false,
+   "test_after": "Exit test",
+   "words": 0
+  }
+ ]
+}

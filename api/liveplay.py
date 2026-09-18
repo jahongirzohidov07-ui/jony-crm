@@ -56,22 +56,12 @@ def _load_course(course: str) -> Optional[dict]:
         return json.load(f)
 
 
-def _courses() -> list:
-    out = []
-    if not os.path.isdir(_PLANS_DIR):
-        return out
-    for fn in sorted(os.listdir(_PLANS_DIR)):
-        if fn.endswith(".json"):
-            d = _load_course(fn[:-5])
-            if d:
-                out.append(d)
-    return out
-
-
 def _lesson(course: str, no: int) -> dict:
+    if course.startswith("outline_"):
+        raise HTTPException(404, "Kurs topilmadi")
     d = _load_course(course)
     if not d:
-        raise HTTPException(404, "Kurs topilmadi")
+        raise HTTPException(404, "Bu darajaning rejasi hali tayyorlanmoqda")
     for L in d["lessons"]:
         if int(L["no"]) == int(no):
             return L
@@ -91,11 +81,37 @@ def _summary(L: dict) -> dict:
     }
 
 
+# DARAJALAR RO'YXATI (2026-09-18, Jahongir: "IELTS 1.0 (A1) IELTS 2.0
+# (A2) qilib darajalarni ber ... IELTS 1.0 DAN 7.0 gacha bo'lishi
+# kerak"). To'liq reja bor daraja — ielts_X_Y.json; faqat mavzular
+# ro'yxati bor daraja — outline_ielts_X_Y.json (xlsx dan); qolganlari
+# hozircha bo'sh ("tayyorlanmoqda").
+LEVELS = [
+    ("ielts_1_0", "IELTS 1.0", "A1"),
+    ("ielts_2_0", "IELTS 2.0", "A2"),
+    ("ielts_3_0", "IELTS 3.0", "B1"),
+    ("ielts_4_0", "IELTS 4.0", "B1+"),
+    ("ielts_5_0", "IELTS 5.0", "B2"),
+    ("ielts_6_0", "IELTS 6.0", "B2+"),
+    ("ielts_7_0", "IELTS 7.0", "C1"),
+]
+
+
+def _level(course: str, title: str, cefr: str) -> dict:
+    full = _load_course(course)
+    if full:
+        lessons = [dict(_summary(L), ready=True) for L in full["lessons"]]
+    else:
+        outline = _load_course("outline_" + course)
+        lessons = [dict(L, ready=False) for L in (outline or {}).get("lessons", [])]
+    return {"course": course, "title": title, "cefr": cefr,
+            "ready": bool(full), "lessons": lessons,
+            "ready_count": sum(1 for L in lessons if L.get("ready"))}
+
+
 @router.get("/api/plans")
 def list_plans(user=Depends(require_role(*roles.TEACHING_ACCESS))):
-    return [{"course": d["course"], "title": d["title"],
-             "lessons": [_summary(L) for L in d["lessons"]]}
-            for d in _courses()]
+    return [_level(c, t, cefr) for c, t, cefr in LEVELS]
 
 
 @router.get("/api/plans/{course}/{no}")

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, Headphones, FileText } from "lucide-react";
+import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText } from "lucide-react";
 import { api } from "../lib/api";
 
 /**
@@ -13,8 +13,9 @@ import { api } from "../lib/api";
  */
 
 type Summary = { no: number; title: string; grammar_topic: string; vocab_topic: string;
-  test_after: string; audios: string; reading: boolean; words: number };
-type Course = { course: string; title: string; lessons: Summary[] };
+  test_after: string; audios: string; reading: boolean; words: number; ready: boolean; writing?: string };
+type Level = { course: string; title: string; cefr: string; ready: boolean;
+  ready_count: number; lessons: Summary[] };
 
 type Ex = { title: string; type?: string; instr?: string; items?: string[];
   answers?: string[] | string; note?: string; box?: string[] };
@@ -38,49 +39,109 @@ const MODES = [
   { key: "grammar", label: "Grammatika" },
 ];
 
+/** Daraja ro'yxati -> darslar ro'yxati -> dars (2026-09-18, Jahongir:
+ * "alohida list korinishida IELTS 1.0 (A1) IELTS 2.0 (A2) ... keyin
+ * kirganda list korinishida 1-dars - Shaping the mindset ..."). */
 export default function LessonPlans() {
   const { course, no } = useParams();
   if (course && no) return <LessonView course={course} no={Number(no)} />;
-  return <PlanList />;
+  if (course) return <LessonList course={course} />;
+  return <LevelList />;
 }
 
-function PlanList() {
-  const [courses, setCourses] = useState<Course[]>([]);
+function useLevels() {
+  const [levels, setLevels] = useState<Level[]>([]);
   const [err, setErr] = useState("");
   useEffect(() => {
-    api.get<Course[]>("/plans").then(setCourses).catch((e) => setErr(e.message));
+    api.get<Level[]>("/plans").then(setLevels).catch((e) => setErr(e.message));
   }, []);
+  return { levels, err };
+}
+
+function LevelList() {
+  const { levels, err } = useLevels();
   return (
-    <div className="p-6 md:p-8 max-w-6xl">
+    <div className="p-6 md:p-8 max-w-3xl">
       <h1 className="text-xl font-semibold text-slate-900 mb-1 flex items-center gap-2">
         <BookOpen size={20} className="text-brand-600" /> Dars rejalari
       </h1>
       <p className="text-sm text-slate-500 mb-5">
-        Har mavzu — bitta 120 daqiqalik dars: grammatika, 20/40/60 lug'at, mashqlar, reading,
-        listening, uyga vazifa. Har darsdan <b>jonli o'yin</b> (Kahoot uslubi) ochiladi.
+        Darajani tanlang. Har mavzu — bitta 120 daqiqalik dars: grammatika, 20/40/60 lug'at,
+        mashqlar, reading, listening, uyga vazifa va <b>jonli o'yin</b> (Kahoot uslubi).
       </p>
       {err && <div className="text-sm text-rose-600 mb-3">{err}</div>}
-      {courses.map((c) => (
-        <div key={c.course} className="mb-8">
-          <h2 className="font-semibold text-slate-800 mb-3">{c.title} · {c.lessons.length} dars</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {c.lessons.map((l) => (
-              <Link key={l.no} to={`/plans/${c.course}/${l.no}`}
-                    className="bg-white rounded-xl border border-slate-200 p-4 hover:border-brand-400 hover:shadow-sm transition">
-                <div className="text-xs text-slate-400 mb-1">Dars {l.no}</div>
-                <div className="font-semibold text-slate-900 leading-snug">{l.title}</div>
-                <div className="text-xs text-slate-500 mt-2">Lug'at: {l.vocab_topic}</div>
-                <div className="flex flex-wrap gap-1.5 mt-2 text-[11px]">
-                  <span className="bg-slate-100 text-slate-600 rounded px-1.5 py-0.5">{l.words} so'z</span>
-                  {l.reading && <span className="bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5">Reading</span>}
-                  {l.audios && <span className="bg-sky-50 text-sky-700 rounded px-1.5 py-0.5">Audio {l.audios}</span>}
-                  {l.test_after && <span className="bg-amber-50 text-amber-700 rounded px-1.5 py-0.5">{l.test_after}</span>}
+      <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        {levels.map((lv) => (
+          <Link key={lv.course} to={`/plans/${lv.course}`}
+                className="flex items-center justify-between px-4 py-3 hover:bg-slate-50">
+            <div className="flex items-center gap-3">
+              <span className="w-10 h-10 rounded-lg bg-brand-50 text-brand-700 font-bold flex items-center justify-center text-sm">{lv.cefr}</span>
+              <div>
+                <div className="font-semibold text-slate-900">{lv.title} <span className="text-slate-400 font-normal">({lv.cefr})</span></div>
+                <div className="text-xs text-slate-500">
+                  {lv.lessons.length ? `${lv.lessons.length} dars` : "Mavzular hali kiritilmagan"}
+                  {lv.lessons.length > 0 && !lv.ready && " · reja tayyorlanmoqda"}
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              {lv.ready
+                ? <span className="bg-emerald-50 text-emerald-700 rounded px-2 py-0.5">Tayyor</span>
+                : <span className="bg-slate-100 text-slate-500 rounded px-2 py-0.5">Tez orada</span>}
+              <ChevronRight size={16} className="text-slate-400" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LessonList({ course }: { course: string }) {
+  const { levels, err } = useLevels();
+  const lv = levels.find((l) => l.course === course);
+  if (err) return <div className="p-8 text-rose-600">{err}</div>;
+  if (!levels.length) return <div className="p-8 text-slate-500">Yuklanmoqda…</div>;
+  if (!lv) return <div className="p-8 text-slate-500">Daraja topilmadi.</div>;
+  return (
+    <div className="p-6 md:p-8 max-w-3xl">
+      <Link to="/plans" className="text-sm text-slate-500 hover:text-brand-600 flex items-center gap-1 mb-1">
+        <ArrowLeft size={14} /> Darajalar
+      </Link>
+      <h1 className="text-xl font-semibold text-slate-900 mb-1">{lv.title} <span className="text-slate-400 font-normal">({lv.cefr})</span></h1>
+      <p className="text-sm text-slate-500 mb-4">
+        {lv.lessons.length
+          ? `${lv.lessons.length} dars` + (lv.ready ? "" : " · to'liq reja tayyorlanmoqda, hozircha mavzular ro'yxati")
+          : "Bu daraja uchun mavzular hali kiritilmagan."}
+      </p>
+      <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+        {lv.lessons.map((l) => {
+          const inner = (
+            <>
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="w-9 shrink-0 text-sm font-semibold text-slate-400">{l.no}</span>
+                <div className="min-w-0">
+                  <div className={`font-medium ${l.ready ? "text-slate-900" : "text-slate-500"}`}>{l.no}-dars — {l.title}</div>
+                  <div className="text-xs text-slate-500 truncate">
+                    Lug'at: {l.vocab_topic || "—"}{l.audios ? ` · Audio ${l.audios}` : ""}{l.writing ? ` · ${l.writing}` : ""}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 text-[11px]">
+                {l.test_after && <span className="bg-amber-50 text-amber-700 rounded px-1.5 py-0.5">{l.test_after}</span>}
+                {l.ready
+                  ? <ChevronRight size={16} className="text-slate-400" />
+                  : <span className="bg-slate-100 text-slate-500 rounded px-1.5 py-0.5">tayyorlanmoqda</span>}
+              </div>
+            </>
+          );
+          return l.ready ? (
+            <Link key={l.no} to={`/plans/${course}/${l.no}`} className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-slate-50">{inner}</Link>
+          ) : (
+            <div key={l.no} className="flex items-center justify-between gap-3 px-4 py-3">{inner}</div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -125,8 +186,8 @@ function LessonView({ course, no }: { course: string; no: number }) {
     <div className="p-6 md:p-8 max-w-6xl">
       <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
         <div>
-          <Link to="/plans" className="text-sm text-slate-500 hover:text-brand-600 flex items-center gap-1 mb-1">
-            <ArrowLeft size={14} /> Barcha darslar
+          <Link to={`/plans/${course}`} className="text-sm text-slate-500 hover:text-brand-600 flex items-center gap-1 mb-1">
+            <ArrowLeft size={14} /> Darslar ro'yxati
           </Link>
           <h1 className="text-xl font-semibold text-slate-900">Dars {L.no} — {L.title}</h1>
           <div className="text-sm text-slate-500 mt-1">

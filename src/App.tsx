@@ -368,6 +368,7 @@ function AppRoutes() {
           <Route path="archive" element={<Archive />} />
           <Route path="discounts" element={<DiscountsPage />} />
           <Route path="plans" element={<LessonPlans />} />
+          <Route path="plans/:course" element={<LessonPlans />} />
           <Route path="plans/:course/:no" element={<LessonPlans />} />
           <Route path="tasks" element={<Tasks />} />
           <Route path="inventory" element={<Inventory />} />

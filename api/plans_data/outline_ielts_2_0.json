@@ -1,0 +1,257 @@
+{
+ "course": "ielts_2_0",
+ "title": "IELTS 2.0",
+ "outline": true,
+ "lessons": [
+  {
+   "no": 1,
+   "title": "PRESENT PERFECT vs PAST SIMPLE",
+   "grammar_topic": "PRESENT PERFECT vs PAST SIMPLE",
+   "vocab_topic": "narrative verbs",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 2,
+   "title": "HOW LONG: SINCE vs FOR",
+   "grammar_topic": "HOW LONG: SINCE vs FOR",
+   "vocab_topic": "birth",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 3,
+   "title": "BECAUSE + PRESENT PERFECT",
+   "grammar_topic": "BECAUSE + PRESENT PERFECT",
+   "vocab_topic": "marriage",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 4,
+   "title": "YET, STILL, ALREADY, JUST",
+   "grammar_topic": "YET, STILL, ALREADY, JUST",
+   "vocab_topic": "death",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 5,
+   "title": "PRESENT PERFECT CONTINUOUS",
+   "grammar_topic": "PRESENT PERFECT CONTINUOUS",
+   "vocab_topic": "Parts of body",
+   "audios": "1-10 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 6,
+   "title": "PRESENT PERFECT vs PRESENT PERFECT CONTINUOUS",
+   "grammar_topic": "PRESENT PERFECT vs PRESENT PERFECT CONTINUOUS",
+   "vocab_topic": "clothes",
+   "audios": "11-20 audios",
+   "reading": true,
+   "test_after": "Progress test 1",
+   "words": 0
+  },
+  {
+   "no": 7,
+   "title": "COMPARATIVE DEGREE",
+   "grammar_topic": "COMPARATIVE DEGREE",
+   "vocab_topic": "physical appearance",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 8,
+   "title": "SUPERLATIVE DEGREE",
+   "grammar_topic": "SUPERLATIVE DEGREE",
+   "vocab_topic": "character of people",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 9,
+   "title": "PAST PERFECT",
+   "grammar_topic": "PAST PERFECT",
+   "vocab_topic": "health and illness",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 10,
+   "title": "FUTURE PERFECT",
+   "grammar_topic": "FUTURE PERFECT",
+   "vocab_topic": "feelings",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 11,
+   "title": "BEFORE, AFTER, BY THE TIME, AS SOON AS",
+   "grammar_topic": "BEFORE, AFTER, BY THE TIME, AS SOON AS",
+   "vocab_topic": "countries/languages/ people",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 12,
+   "title": "PAST PERFECT CONTINOUS",
+   "grammar_topic": "PAST PERFECT CONTINOUS",
+   "vocab_topic": "weather",
+   "audios": "21-30 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 13,
+   "title": "FUTURE PERFECT CONTINOUS",
+   "grammar_topic": "FUTURE PERFECT CONTINOUS",
+   "vocab_topic": "revision",
+   "audios": "31-40 audios",
+   "reading": true,
+   "test_after": "Progress test 2",
+   "words": 0
+  },
+  {
+   "no": 14,
+   "title": "GENERAL QUESTION VS SPECIAL QUESTIONS",
+   "grammar_topic": "GENERAL QUESTION VS SPECIAL QUESTIONS",
+   "vocab_topic": "crime",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 15,
+   "title": "CONDITIONALS TYPE 2-3",
+   "grammar_topic": "CONDITIONALS TYPE 2-3",
+   "vocab_topic": "travelling",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 16,
+   "title": "DURING vs WHILE, IF vs UNLESS",
+   "grammar_topic": "DURING vs WHILE, IF vs UNLESS",
+   "vocab_topic": "food and drinks",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 17,
+   "title": "INDIRECT QUESTIONS",
+   "grammar_topic": "INDIRECT QUESTIONS",
+   "vocab_topic": "at school",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 18,
+   "title": "WISH SENTENCES",
+   "grammar_topic": "WISH SENTENCES",
+   "vocab_topic": "shopping",
+   "audios": "41-50 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 19,
+   "title": "INFINITIVE OF PURPOSE",
+   "grammar_topic": "INFINITIVE OF PURPOSE",
+   "vocab_topic": "confusing words",
+   "audios": "51-60 audios",
+   "reading": true,
+   "test_after": "Progress test 3",
+   "words": 0
+  },
+  {
+   "no": 20,
+   "title": "MODAL VERBS (HAVE TO, NEED MUST, SHOULD)",
+   "grammar_topic": "MODAL VERBS (HAVE TO, NEED MUST, SHOULD)",
+   "vocab_topic": "home and buildings",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 21,
+   "title": "PASSIVE VOICE (SIMPLE)",
+   "grammar_topic": "PASSIVE VOICE (SIMPLE)",
+   "vocab_topic": "ages and stages",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 22,
+   "title": "PASSIVE VOICE (CONTINUOUS)",
+   "grammar_topic": "PASSIVE VOICE (CONTINUOUS)",
+   "vocab_topic": "money",
+   "audios": "61-70 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 23,
+   "title": "PASSIVE VOICE (PERFECT)",
+   "grammar_topic": "PASSIVE VOICE (PERFECT)",
+   "vocab_topic": "on the road",
+   "audios": "71-80 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 24,
+   "title": "ADJECTIVES -ed vs -ing",
+   "grammar_topic": "ADJECTIVES -ed vs -ing",
+   "vocab_topic": "transport",
+   "audios": "81-90 audios",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 25,
+   "title": "REFLEXIVE PRONOUNS",
+   "grammar_topic": "REFLEXIVE PRONOUNS",
+   "vocab_topic": "revision",
+   "audios": "91-100 audios",
+   "reading": true,
+   "test_after": "Exit test",
+   "words": 0
+  }
+ ]
+}

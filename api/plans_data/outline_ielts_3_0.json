@@ -1,0 +1,257 @@
+{
+ "course": "ielts_3_0",
+ "title": "IELTS 3.0",
+ "outline": true,
+ "lessons": [
+  {
+   "no": 1,
+   "title": "TENSES REVISION",
+   "grammar_topic": "TENSES REVISION",
+   "vocab_topic": "LEARNING",
+   "audios": "AUDIO 1-10",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 2,
+   "title": "USED TO",
+   "grammar_topic": "USED TO",
+   "vocab_topic": "TECHNOLOGY",
+   "audios": "AUDIO 11-20",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 3,
+   "title": "QUESTION TAGS",
+   "grammar_topic": "QUESTION TAGS",
+   "vocab_topic": "BUSINESS",
+   "audios": "AUDIO 21-30",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 4,
+   "title": "INDEFINITE PRONOUNS",
+   "grammar_topic": "INDEFINITE PRONOUNS",
+   "vocab_topic": "SCIENCE",
+   "audios": "AUDIO 31-40",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 5,
+   "title": "MODAL+VERB+V3",
+   "grammar_topic": "MODAL+VERB+V3",
+   "vocab_topic": "ART",
+   "audios": "AUDIO 41-50",
+   "reading": true,
+   "test_after": "Progress test 1",
+   "words": 0
+  },
+  {
+   "no": 6,
+   "title": "ADVERBS OF DEGREE",
+   "grammar_topic": "ADVERBS OF DEGREE",
+   "vocab_topic": "HEALTH",
+   "audios": "AUDIO 51-55",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 7,
+   "title": "ADVERBS OF CONTRAST",
+   "grammar_topic": "ADVERBS OF CONTRAST",
+   "vocab_topic": "TRAVEL",
+   "audios": "AUDIO 56-60",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 8,
+   "title": "ADVERBS OF PLACE",
+   "grammar_topic": "ADVERBS OF PLACE",
+   "vocab_topic": "HISTORY",
+   "audios": "AUDIO 61-70",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 9,
+   "title": "LIKE, AS IF, AS THOUGH, FOR",
+   "grammar_topic": "LIKE, AS IF, AS THOUGH, FOR",
+   "vocab_topic": "GENETICS",
+   "audios": "AUDIO 71-80",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 10,
+   "title": "CONDITIONAL MIXED",
+   "grammar_topic": "CONDITIONAL MIXED",
+   "vocab_topic": "VIRTUAL REALITY",
+   "audios": "AUDIO 81-90",
+   "reading": true,
+   "test_after": "Progress test 2",
+   "words": 0
+  },
+  {
+   "no": 11,
+   "title": "DISTRIBUTIVE PRONOUNS 1",
+   "grammar_topic": "DISTRIBUTIVE PRONOUNS 1",
+   "vocab_topic": "SPORT",
+   "audios": "AUDIO 91-100",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 12,
+   "title": "DISTRIBUTE PRONOUNS 2",
+   "grammar_topic": "DISTRIBUTE PRONOUNS 2",
+   "vocab_topic": "Social Issues",
+   "audios": "AUDIO 101-105",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 13,
+   "title": "SUBJECT-VERB AGREEMENT",
+   "grammar_topic": "SUBJECT-VERB AGREEMENT",
+   "vocab_topic": "Personal Development",
+   "audios": "AUDIO 106-110",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 14,
+   "title": "ing CLAUSES vs -ed CLAUSES",
+   "grammar_topic": "ing CLAUSES vs -ed CLAUSES",
+   "vocab_topic": "Artificial Intelligence",
+   "audios": "AUDIO 111-120",
+   "reading": true,
+   "test_after": "Progress test 3",
+   "words": 0
+  },
+  {
+   "no": 15,
+   "title": "RELATIVE CLAUSES WITH WHO/WHICH",
+   "grammar_topic": "RELATIVE CLAUSES WITH WHO/WHICH",
+   "vocab_topic": "Cryptocurrency",
+   "audios": "AUDIO 121-125",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 16,
+   "title": "RELATIVE CLAUSE WITH WHICH VS WHERE",
+   "grammar_topic": "RELATIVE CLAUSE WITH WHICH VS WHERE",
+   "vocab_topic": "E-commerce",
+   "audios": "AUDIO 126-130",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 17,
+   "title": "ADJECTIVE CLAUSES (WHO, WHOSE, WHICH, WHERE)",
+   "grammar_topic": "ADJECTIVE CLAUSES (WHO, WHOSE, WHICH, WHERE)",
+   "vocab_topic": "Renewable Energy",
+   "audios": "AUDIO 131-135",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 18,
+   "title": "SUBJECT CLAUSES (THAT, HOW, WHOEVER, WHATEVER, WHETHER, WHAT",
+   "grammar_topic": "SUBJECT CLAUSES (THAT, HOW, WHOEVER, WHATEVER, WHETHER, WHAT",
+   "vocab_topic": "Financial Planning",
+   "audios": "AUDIO 136-140",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 19,
+   "title": "OBJECT CLAUSES (THAT, WHAT, WHERE, HOW)",
+   "grammar_topic": "OBJECT CLAUSES (THAT, WHAT, WHERE, HOW)",
+   "vocab_topic": "Climate Change",
+   "audios": "AUDIO 141-145",
+   "reading": true,
+   "test_after": "Progress test 4",
+   "words": 0
+  },
+  {
+   "no": 20,
+   "title": "GERUND / INFINITIVE",
+   "grammar_topic": "GERUND / INFINITIVE",
+   "vocab_topic": "Wildlife Conservation / Space Exploration",
+   "audios": "AUDIO 146-150",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 21,
+   "title": "GERUND/INFINITIVE AS SUBJECT",
+   "grammar_topic": "GERUND/INFINITIVE AS SUBJECT",
+   "vocab_topic": "Global Economy",
+   "audios": "AUDIO 156-160",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 22,
+   "title": "CAUSATIVE VOICE ( HAVE SMTH DONE)",
+   "grammar_topic": "CAUSATIVE VOICE ( HAVE SMTH DONE)",
+   "vocab_topic": "Organic Farming",
+   "audios": "AUDIO 161-165",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 23,
+   "title": "INDERECT QUESTIONS",
+   "grammar_topic": "INDERECT QUESTIONS",
+   "vocab_topic": "Literature Genres",
+   "audios": "AUDIO 166-170",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 24,
+   "title": "PARTICIPLE 1 VS PARTICIPLE 2",
+   "grammar_topic": "PARTICIPLE 1 VS PARTICIPLE 2",
+   "vocab_topic": "Film Genres",
+   "audios": "AUDIO 171-175",
+   "reading": true,
+   "test_after": "",
+   "words": 0
+  },
+  {
+   "no": 25,
+   "title": "FUTURE IN THE PAST",
+   "grammar_topic": "FUTURE IN THE PAST",
+   "vocab_topic": "N/A",
+   "audios": "AUDIO 176-180",
+   "reading": false,
+   "test_after": "Exit test",
+   "words": 0
+  }
+ ]
+}

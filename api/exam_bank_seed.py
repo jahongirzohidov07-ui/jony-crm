@@ -3770,6 +3770,120 @@ During the interview, you (31) ………… speak clearly and be relaxed. It is 
     ],
 }
 
+
+STEP3_UNIT7 = {
+    "level": "step3", "kind": "unit", "unit_no": 7,
+    "title": "Step 3 · Unit 7 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["What a relief.", "Oh, dear. Really?", "No, I don't think so."], "B"),
+                _c("", ["Phew, that's good to hear.", "Yes, I had a broken leg.", "No, I don't think so."], "C"),
+                _c("", ["I feel exhausted.", "Are you taking anything for the pain?", "Well, I usually go to the gym after work."], "B"),
+                _c("", ["What a relief.", "Yes, I've got a cold.", "Sure, Doctor."], "C"),
+                _c("", ["I can't get to sleep.", "Here, in this area.", "I feel sick."], "B"),
+                _c("", ["When did this problem start?", "What does it do?", "I've taken some aspirin."], "A"),
+                _c("", ["He's gone to the chemist.", "It really hurts when I walk.", "No, I don't think so."], "B"),
+                _c("", ["Where does it hurt?", "Do you do any exercise?", "Can I have a look?"], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Changes",
+            "instructions": "Read the sentences about changes. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("People often join a gym to ............ weight.", ["fall", "miss", "lose"], "C"),
+                _c("An old friend from school got in ............ with me last week.",
+                   ["well", "touch", "together"], "B"),
+                _c("In her first job, Alice got to ............ some important people.",
+                   ["know", "talk", "find"], "A"),
+                _c("Tom is a big man and often acts in roles as men who are slightly ............ .",
+                   ["great", "full", "overweight"], "C"),
+                _c("Don't stay in that job because you will never ............ rich.",
+                   ["get", "make", "bring"], "A"),
+                _c("People who eat cakes every day often ............ on weight.",
+                   ["get", "take", "put"], "C"),
+                _c("If you smoke 15 cigarettes a day, I think you're a ............ smoker now.",
+                   ["regular", "busy", "general"], "A"),
+                _c("They're so proud because their daughter's just got a ............ at "
+                   "Oxford University.", ["point", "place", "part"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Changes in people's lives",
+            "instructions": "Read the descriptions of some changes in people's "
+                            "lives. The first letter is already there. Write "
+                            "the whole words.",
+            "questions": [
+                _t("I've lost 5 kilos, but I didn't go on a d _ _ _ — I started running.",
+                   "diet", "iet"),
+                _t("Do you get p _ _ _ more money now than you used to in your old job?",
+                   "paid", "aid"),
+                _t("Leo wants to get f _ _ but he doesn't like doing exercise!", "fit", "it"),
+                _t("They were unhappily married for 15 years so they got d _ _ _ _ _ _ _ "
+                   "last year.", "divorced", "ivorced"),
+                _t("Max gets on w _ _ _ with all the other boys in his new school.",
+                   "well", "ell"),
+                _t("Amanda and Tim got t _ _ _ _ _ _ _ after they met at the tennis club.",
+                   "together", "ogether"),
+                _t("He's trying to g _ _ _  u _ smoking, but he started 10 years ago when "
+                   "he was 18.", "give up", "ive p"),
+                _t("It's easy to keep in s _ _ _ _ if you do sport regularly.",
+                   "shape", "hape"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about Michelle Obama. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "passage": """Michelle Obama
+
+Michelle LaVaughn Robinson was born in 1964 in Chicago, USA. She had a brother, Craig, who was older (25) ………… her and the family lived in a one-bedroom apartment in Chicago. They were a happy family who got on well together, but they (26) ………… to have a lot of money. However, the Robinson children learned two things from their parents: the first was that you must do the (27) ………… you can in school to get a good education and the second was that it's (28) ………… to work hard than to make a lot of money.
+So Michelle used to (29) ………… hard every day and got a place at Princeton University. She trained as a lawyer and used (30) ………… in a Chicago company, where she got to know her future husband, Barack Obama. They got married in 1992. However, after he became US President, she worked less often on her own career in order to support her husband. Michelle (31) ………… to be unknown but she has become one of the (32) ………… women in the world.""",
+            "questions": [
+                _c("", ["than", "as", "like"], "A"),
+                _c("", ["don't use", "not used", "didn't use"], "C"),
+                _c("", ["good", "better", "best"], "C"),
+                _c("", ["less important", "more important", "most important"], "B"),
+                _c("", ["studying", "study", "studied"], "B"),
+                _c("", ["work", "to working", "to work"], "C"),
+                _c("", ["uses", "used", "using"], "B"),
+                _c("", ["famous", "very famous", "most famous"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("For a healthier life, eating well is more important than anything else.\n"
+                   "The ………… thing for a healthy life is eating well.", "most important"),
+                _t("My grandfather was a smoker, but he stopped for health reasons.\n"
+                   "My grandfather ………… smoke, but he stopped for health reasons.",
+                   "used to"),
+                _t("Terry's diet was worse ten years ago.\n"
+                   "Terry's diet ………… now than it was ten years ago.", "is better"),
+                _t("In the 1950s, people thought less about what they ate.\n"
+                   "In the 1950s, people didn't ………… to think so much about what they ate.",
+                   "use"),
+                _t("I've never had such an easy job.\n"
+                   "This is ………… job I've had.", "the easiest"),
+                _t("Were gyms popular in the 1980s?\n"
+                   "Did many people ………… to go to the gym in the 1980s?", "use"),
+                _t("I'm 1.80 metres tall now, and my older brother is 1.81 metres.\n"
+                   "I'm almost ………… my older brother now.", "as tall as"),
+                _t("Aunt Sarah didn't live in New York before but she does now.\n"
+                   "Aunt Sarah ………… to live in New York.", "didn't use", "did not use"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3804,4 +3918,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit4", STEP3_UNIT4),
     ("exam_tpl_step3_unit5", STEP3_UNIT5),
     ("exam_tpl_step3_unit6", STEP3_UNIT6),
+    ("exam_tpl_step3_unit7", STEP3_UNIT7),
 ]

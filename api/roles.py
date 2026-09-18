@@ -836,6 +836,9 @@ TEACHING_ACCESS = FULL_ACCESS + [
     TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
     SALES_HEAD, SALES_MANAGER, ADMINISTRATOR, ACADEMIC_HEAD,
 ]
+# DARS REJALARI (2026-09-18, Jahongir: "supportlarga kerakmas, examinerlarga
+# ham kerakmas, adminlarga ham kerakmas") — ustozlar va rahbariyat.
+PLANS_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SALES_HEAD, SALES_MANAGER]
 # Davomat va baholash jurnalini KO'RISH: dars beruvchilar + HR.
 # HR belgilay olmaydi (yozish TEACHING_ACCESS/GRADE_EDIT da qoladi),
 # faqat xodimlarning darslari qanday ketayotganini kuzatadi.

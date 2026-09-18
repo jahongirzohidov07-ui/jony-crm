@@ -50,7 +50,7 @@ function ReportHome({ onOpen }: { onOpen: (id: number) => void }) {
   if (!d) return <div className="p-8 text-slate-500">Yuklanmoqda…</div>;
   return (
     <div className="p-6 md:p-8 max-w-6xl">
-      <h1 className="text-xl font-semibold text-slate-900 flex items-center gap-2 mb-1"><BarChart3 size={20} className="text-brand-600" /> O'quv hisoboti</h1>
+      <h1 className="text-xl font-semibold text-slate-900 flex items-center gap-2 mb-1"><BarChart3 size={20} className="text-brand-600" /> O'quvchilar o'zlashtirishi</h1>
       <p className="text-sm text-slate-500 mb-4">O'quvchi o'sishi va ishlarning o'z vaqtida bajarilishi bo'yicha (oxirgi 28 kun, {d.since} dan). Ustoz "necha marta kirdi" bilan baholanmaydi.</p>
 
       <div className="grid sm:grid-cols-3 gap-3 mb-5">

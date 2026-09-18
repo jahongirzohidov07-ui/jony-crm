@@ -44,6 +44,7 @@ import {
   LEAD_ACCESS,
   FINANCE_ACCESS,
   TEACHING_STAFF,
+  PLANS_ACCESS,
   HR_CANDIDATE_VIEW,
   CONDUCT_VIEW,
   MARKETING_ACCESS,
@@ -450,10 +451,9 @@ export default function Layout() {
   // Sotuv menejerining ishi sotuv — bu bo'lim unga ko'rinmaydi.
   if (can(user?.role, ACADEMIC_VIEW) && user?.role !== "sales_manager") {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
-    // O'quv hisoboti + o'zlashtirish xaritasi (2026-09-18, 5/8-bandlar)
-    if (user?.english_teacher !== false) {
-      items = [...items, { to: "/learning", label: "O'quv hisoboti", icon: BarChart3 }];
-    }
+    // O'quvchilar o'zlashtirishi (sobiq "O'quv hisoboti"; 2026-09-18,
+    // Jahongir: "oquvchilar o'zlashtirishi nomi bilan barcha ustozlarga").
+    items = [...items, { to: "/learning", label: "O'quvchilar o'zlashtirishi", icon: BarChart3 }];
   }
   // DARS REJALARI + jonli o'yin (2026-09-18, Jahongir: "saytgayam
   // qoy ... kahoot korinishidagi oyinlar ... har bir unitda").
@@ -463,7 +463,7 @@ export default function Layout() {
   // ilgari ACADEMIC_VIEW ichida turgani uchun ba'zi ustozlarga
   // chiqmasdi (2026-09-18, "Shirinabonu ko'rinmayabdi deyabdi").
   // 2026-09-18: fan bo'yicha cheklov olib tashlandi — barcha ustozlarga.
-  if (can(user?.role, TEACHING_STAFF)) {
+  if (can(user?.role, PLANS_ACCESS)) {
     items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu

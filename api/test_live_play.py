@@ -51,7 +51,13 @@ u_r = models.User(username="rus", password_hash=hash_password("x"),
                   full_name="Rus Ustoz", role=roles.TEACHER, branch_id=b1.id)
 db.add_all([u_t, u_o, u_r,
             models.User(username="hr", password_hash=hash_password("x"),
-                        full_name="HR", role=roles.HR_MANAGER, branch_id=b1.id)])
+                        full_name="HR", role=roles.HR_MANAGER, branch_id=b1.id),
+            models.User(username="sup", password_hash=hash_password("x"),
+                        full_name="Support", role=roles.SUPPORT_TEACHER, branch_id=b1.id),
+            models.User(username="exam", password_hash=hash_password("x"),
+                        full_name="Examiner", role=roles.EXAMINER, branch_id=b1.id),
+            models.User(username="adm", password_hash=hash_password("x"),
+                        full_name="Admin", role=roles.ADMINISTRATOR, branch_id=b1.id)])
 db.commit()
 t1 = models.Teacher(full_name="Ustoz", user_id=u_t.id, branch_id=b1.id, subject="english")
 t2 = models.Teacher(full_name="Boshqa Ustoz", user_id=u_o.id, branch_id=b1.id, subject="english")
@@ -114,6 +120,8 @@ ck("lug'at PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/23/vocab.pdf", headers=
 # Faqat ingliz tili ustozlariga (Jahongir: "barcha ingliz til ustozlariga
 # chiqsin boshqa ustozlarga chiqmasin")
 ck("rus tili ustoziga ham reja ochiq (2026-09-18)", c.get("/api/plans", headers=tok("rus")).status_code, 200)
+for _u in ("sup", "exam", "adm"):
+    ck(f"{_u}: dars rejalari yopiq", c.get("/api/plans", headers=tok(_u)).status_code, 403)
 ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)
 ck("me: rus ustozi bayrog'i", c.get("/api/me", headers=tok("rus")).json().get("english_teacher"), False)
 

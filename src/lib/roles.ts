@@ -133,6 +133,11 @@ export const TEACHING_STAFF = [
   EXAMINER, HEAD_EXAMINER, ACADEMIC_HEAD,
 ];
 
+/** Dars rejalari: ustozlar va rahbariyat (support, examiner, admin — yo'q). */
+export const PLANS_ACCESS = [
+  ...FULL_ACCESS, ACADEMIC_HEAD, TEACHER, SALES_HEAD, SALES_MANAGER,
+];
+
 /** Dars jadvali, davomat va baholashni KO'RA oladiganlar
  *  (HR belgilay olmaydi — faqat kuzatadi). */
 export const SCHEDULE_VIEW = [...TEACHING_STAFF, HR_MANAGER];

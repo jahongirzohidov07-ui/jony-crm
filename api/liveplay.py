@@ -134,14 +134,14 @@ def _english_only(db, user):
 
 @router.get("/api/plans")
 def list_plans(db: Session = Depends(get_db),
-               user=Depends(require_role(*roles.TEACHING_ACCESS))):
+               user=Depends(require_role(*roles.PLANS_ACCESS))):
     _english_only(db, user)
     return [_level(c, t, cefr) for c, t, cefr in LEVELS]
 
 
 @router.get("/api/plans/{course}/{no}")
 def get_plan(course: str, no: int, db: Session = Depends(get_db),
-             user=Depends(require_role(*roles.TEACHING_ACCESS))):
+             user=Depends(require_role(*roles.PLANS_ACCESS))):
     _english_only(db, user)
     return _lesson(course, no)
 

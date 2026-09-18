@@ -144,7 +144,7 @@ def build_vocab_pdf(L: dict, tier: str) -> bytes:
 
 @router.get("/api/plans/{course}/{no}/vocab.pdf")
 def vocab_pdf(course: str, no: int, tier: str = "20", db: Session = Depends(get_db),
-              user=Depends(require_role(*roles.TEACHING_ACCESS))):
+              user=Depends(require_role(*roles.PLANS_ACCESS))):
     _english_only(db, user)
     L = _lesson(course, no)
     tier = tier if tier in TIERS else "20"

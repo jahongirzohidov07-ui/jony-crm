@@ -136,7 +136,7 @@ ck("o'quvchida izoh + ball", (wr["submission"]["comment"], wr["submission"]["tea
 nt = c.get("/api/student/notifications", headers=S).json()["items"]
 ck("bildirishnoma: tekshirildi", any(n["title"] == "Tekshirildi" for n in nt), True)
 db = SessionLocal()
-ck("coin yozuvlari (assignment)", db.query(models.CoinEntry).filter(models.CoinEntry.source == "assignment").count(), 2)
+ck("coin yozuvlari (assignment): gap 100% + Bobur 100% + writing", db.query(models.CoinEntry).filter(models.CoinEntry.source == "assignment").count(), 3)
 db.close()
 
 # --- qoldirilgan dars: shaxsiy lug'at testi

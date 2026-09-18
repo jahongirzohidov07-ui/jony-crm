@@ -89,7 +89,8 @@ def alternatives(expected) -> list:
         return out
     e = str(expected or "")
     parts = re.split(r"\s*(?:/|;|\bor\b|\byoki\b)\s*", e)
-    return [norm(p) for p in parts if norm(p)]
+    # butun javob ('am / is' — ikki bo'sh joy) ham, har bir varianti ham qabul qilinadi
+    return [x for x in [norm(e)] + [norm(p) for p in parts] if x]
 
 
 def is_correct(kind: str, given, expected) -> bool:
@@ -567,9 +568,10 @@ def my_assignments(db: Session = Depends(get_db), user=Depends(require_role(role
     today = {}
     plan = db.query(models.GroupPlan).filter(models.GroupPlan.group_id == st.group_id).first() if st.group_id else None
     if plan:
-        run = (db.query(models.LessonRun).filter(models.LessonRun.group_id == st.group_id)
+        run = (db.query(models.LessonRun).filter(models.LessonRun.group_id == st.group_id,
+                                                 models.LessonRun.status == "running")
                .order_by(models.LessonRun.id.desc()).first())
-        no = run.lesson_no if run else plan.next_lesson_no
+        no = run.lesson_no if run else plan.next_lesson_no   # dars ketayotgan bo'lsa — o'sha, aks holda keyingi
         try:
             L = _lesson(plan.course, no)
             today = {"lesson_no": no, "title": L["title"], "grammar": L.get("grammar_topic"),

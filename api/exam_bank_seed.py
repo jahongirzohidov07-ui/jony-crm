@@ -4477,6 +4477,212 @@ When the people around the pool saw Mila pushing Yun out of the water, they unde
     ],
 }
 
+
+S3END_IMG = "/exam-img/step3-end/"
+YES_NO = ["Yes", "No"]
+
+# Step 3 End of course: Listening 1–20 + Reading 21–45. Reading
+# raqamlari 20 taga surilgan.
+STEP3_END = {
+    "level": "step3", "kind": "end", "unit_no": None,
+    "title": "Step 3 · End of course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1",
+            "instructions": "You will hear five short conversations. For each "
+                            "question, choose the correct picture. You will "
+                            "hear each conversation twice.",
+            "questions": [
+                _c("What did the man refuse to do?", ABC, "C", image=S3END_IMG + "l1.jpg"),
+                _c("What was the woman doing when her phone rang?", ABC, "A",
+                   image=S3END_IMG + "l2.jpg"),
+                _c("What has the man stopped doing recently?", ABC, "C",
+                   image=S3END_IMG + "l3.jpg"),
+                _c("How did the man travel around when he was on holiday?", ABC, "A",
+                   image=S3END_IMG + "l4.jpg"),
+                _c("Which person does the woman feel closest to?", ABC, "C",
+                   image=S3END_IMG + "l5.jpg"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2 · Cakes for Charity",
+            "instructions": "You will hear a woman on the radio talking about a "
+                            "charity event in her area. For each question, "
+                            "write the correct answer in the gap.\n"
+                            "Name of charity: Rose Children's Hospital. Helpers "
+                            "needed to make and sell cakes and arrange tables.",
+            "questions": [
+                _t("Date of cake sale: ____________",
+                   "the seventeenth July", "the seventeenth of July", "17th July",
+                   "17 July", "17th of July", "the 17th July", "the 17th of July",
+                   "17/07", "07/17", "July 17", "July 17th"),
+                _t("Place for stalls if wet: ____________",
+                   "the indoor market", "indoor market"),
+                _t("Time: 9.30 – ____________", "3.15", "15.15", "3:15", "15:15"),
+                _t("Money organisers hope to take: £ ____________",
+                   "£450.00", "£450", "450.00", "450", "four hundred and fifty",
+                   "four hundred and fifty pounds"),
+                _t("Money will be used for: ____________",
+                   "the garden play area", "garden play area"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3",
+            "instructions": "You will hear a woman called Karen talking about a "
+                            "journey she made. For each question, choose the "
+                            "correct answer A, B or C.",
+            "questions": [
+                _c("Why did Karen go to Jakarta?",
+                   ["to do a job", "to visit friends", "for a holiday"], "A"),
+                _c("How did Karen learn about Indonesia before she went there?",
+                   ["from the internet", "from a book", "from a friend's letter"], "A"),
+                _c("What did Karen dislike about Jakarta?",
+                   ["the weather", "the traffic", "the buildings"], "B"),
+                _c("What reminds Karen of Jakarta?",
+                   ["her photographs", "her sandals", "a sculpture"], "B"),
+                _c("When Karen returns to Indonesia, she's hoping to",
+                   ["visit a number of islands.", "see more of Jakarta.",
+                    "experience the rainy season."], "A"),
+            ],
+        },
+        {
+            "title": "Listening · Part 4",
+            "instructions": "You will hear a conversation between Alice and "
+                            "Mark, about celebrities. Decide if each sentence "
+                            "is correct or incorrect.",
+            "questions": [
+                _c("Mark and Alice both think famous people have a lot of advantages.",
+                   YES_NO, "B"),
+                _c("Alice and Mark agree about why celebrities wear dark glasses.",
+                   YES_NO, "B"),
+                _c("Mark turns down Alice's offer of a book.", YES_NO, "A"),
+                _c("Mark believes Alice would enjoy being a famous person.", YES_NO, "A"),
+                _c("Mark changes his opinion about being famous at the end.", YES_NO, "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1 · Notices",
+            "instructions": "Look at the text in each question. What does it "
+                            "say? Choose the correct answer A, B or C.",
+            "questions": [
+                _c("During the show,",
+                   ["no devices are allowed in the theatre.",
+                    "do not leave your phone switched on.",
+                    "the volume on your phone should be low."], "B",
+                   image=S3END_IMG + "r1.jpg"),
+                _c("", ["The company wants to know what you think of its services.",
+                        "If you have a complaint, you can tell staff at the ticket office.",
+                        "Go to the station office to hand in your comment forms."], "A",
+                   image=S3END_IMG + "r2.jpg"),
+                _c("", ["An earlier accident has caused a long traffic jam.",
+                        "Traffic is queuing because there are workers here.",
+                        "This part of the road is dangerous because there are no lights."],
+                   "B", image=S3END_IMG + "r3.jpg"),
+                _c("", ["The hotel needs people to start work now.",
+                        "If you are looking for a job, you might find one here.",
+                        "When the hotel opens, you can apply for work."], "B",
+                   image=S3END_IMG + "r4.jpg"),
+                _c("", ["Visit this website for information about the various loans you "
+                        "can apply for.",
+                        "You'll be able to borrow some money from this company if you "
+                        "contact them.",
+                        "BestDeal4Me loans are similar to those offered by other banks."],
+                   "A", image=S3END_IMG + "r5.jpg"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · The truth about telling lies",
+            "instructions": "Read the text to decide if each sentence is "
+                            "correct or incorrect.",
+            "passage": """The truth about telling lies
+
+Leonard Saxe, Ph.D., a psychology expert at Brandeis University, thinks that telling lies has been a part of everyday life for a long time. Yet it is only recently that it has become a topic for discussion among psychologists. Before that, lies were mainly things that religious leaders were concerned about.
+As psychologists look more closely at how honest we are, they are discovering that it is surprisingly common to tell lies. In 1996, Bella DePaulo, PhD., a psychologist at the University of Virginia, studied 147 people between the ages of 18 and 71 who had to keep a diary of all the lies they told over a period of a week. The results showed that most people told lies once or twice a day and that some types of relationships involve more lies than others. More untruths were told between teenagers and parents than between complete strangers.
+Though some lies can cause problems between people, others may actually make it easier for people to get on well. In DePaulo's group, one in every four of the lies were told to make another person feel better. In fact, lies in which people say they like someone or something more than they actually do ("Your cakes are the best") are about 10 to 20 times more common than lies in which people say they like someone less than they really do. When the researchers counted the lies, they didn't include the everyday, polite lies we say to each other, such as "I'm fine, thanks," when actually we don't feel well, or "No trouble at all", when really we are a bit annoyed.""",
+            "questions": [
+                _c("Lies have been studied in psychology for many years.", YES_NO, "B"),
+                _c("DePaulo asked a group of people to note down their lies for a whole week.",
+                   YES_NO, "A"),
+                _c("DePaulo discovered that lies were more likely between people who had "
+                   "only just met.", YES_NO, "B"),
+                _c("DePaulo realised that the purpose of most lies was to be kind.",
+                   YES_NO, "A"),
+                _c("The researchers in DePaulo's study treated all kinds of lies equally.",
+                   YES_NO, "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · How to Study",
+            "instructions": "Read the text and questions below. For each "
+                            "question, choose the correct answer.",
+            "passage": """How to Study – Online or in the Classroom?
+
+Some people prefer the traditional way of learning – in a classroom, with a teacher and other students. However, more people are turning to studying online. Gonzalo Lopez, who wanted to study business in English, was one of these. His first course was in a classroom, but he realised it might take longer to progress than he thought at first. He couldn’t afford to stay at college and so, having good IT skills, he began an online course. Gonzalo says his online teacher was good, but he doesn’t think studying on your own is as enjoyable as being with your friends in class.
+Muneera Farzath has another opinion. Sometimes she got to lessons early or stayed on after they finished, because she said it was difficult for her to study with so much happening in the classroom. She didn’t dislike the people in class with her, but says that studying online is more peaceful. Muneera also thinks there are advantages to studying alone with a teacher who has got time just for you. She says she’s a slow learner and the teacher has made some suggestions about maybe buying apps that would help her.
+After three months studying online, Gonzalo Lopez returned to study at college. Although he had thought the online and college courses were similar, Gonzalo, who is Spanish, found it difficult to study online in English. In the classroom, with English students, it was easier.
+My personal experience is of studying Arabic in a classroom and online. And I can see the advantages and disadvantages of each type of course. If it's possible for you, I'd recommend doing a bit of both. If you do this, you'll have the best chance of success.""",
+            "questions": [
+                _c("Why did Gonzalo change to an online course?",
+                   ["to learn technology skills", "to have longer lessons", "to save money"], "C"),
+                _c("What do we learn about Muneera’s time in the classroom?",
+                   ["She got annoyed with some students.", "She found it hard to concentrate.",
+                    "She had to leave the lessons early."], "B"),
+                _c("What does Muneera now have which she didn’t have before?",
+                   ["a personal one-to-one teacher", "some free apps for studying",
+                    "a chance to study more quickly"], "A"),
+                _c("What problem did Gonzalo have with online studying?",
+                   ["the subject", "the course", "the language"], "C"),
+                _c("Which statement explains the writer’s opinion?",
+                   ["Work hard and you’ll succeed using either way.",
+                    "A combination of the two ways of studying is best.",
+                    "Most people will turn to learning online in future."], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · Insect bites",
+            "instructions": "Read the text below and choose the correct answer "
+                            "for each gap.",
+            "passage": """Insect bites
+
+Insect bites are common and generally cause the skin to feel slightly uncomfortable. In the UK, there are a number of animals (36) ………… may bite humans, including mosquitoes and spiders.
+Usually, bites are not dangerous but sometimes a person may (37) ………… an allergy to the bite. People like this (38) ………… get in touch with a doctor immediately as it is important to get treatment quickly. If it is difficult to breathe or the symptoms are (39) ………… , then don't delay. Go to a hospital straight away.
+On most occasions, however, bites can be dealt with very easily at home. Wash the affected area of skin and try to (40) ………… touching it, even though it feels itchy.""",
+            "questions": [
+                _c("", ["who", "that", "what"], "B"),
+                _c("", ["do", "have", "make"], "B"),
+                _c("", ["might", "need", "must"], "C"),
+                _c("", ["serious", "ugly", "anxious"], "A"),
+                _c("", ["avoid", "miss", "refuse"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 5 · John and Ben",
+            "instructions": "Read the text. Think of the word which best fits "
+                            "each gap. Write ONE word for each gap.",
+            "passage": """From: John
+To: Ben
+Hi Ben
+How are you? I can't remember (41) ………… last time we got together. I'm hardly ever at home these days – too much work and (42) ………… enough time! I don't know whether you're free this Saturday. (43) ………… you are, do you want to come round and watch the football cup final with me?
+John
+
+From: Ben
+To: John
+Hi John
+Thanks for getting (44) ………… touch. I'd love to watch the football with you. I've arranged to visit my parents but I can put that off until next Saturday. Let's hope this game is better (45) ………… the last one we watched together. That was awful.
+See you Saturday.
+Ben""",
+            "questions": [
+                _t("", "the"),
+                _t("", "not", "never"),
+                _t("", "If"),
+                _t("", "in"),
+                _t("", "than"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4517,4 +4723,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit10", STEP3_UNIT10),
     ("exam_tpl_step3_unit11", STEP3_UNIT11),
     ("exam_tpl_step3_unit12", STEP3_UNIT12),
+    ("exam_tpl_step3_end", STEP3_END),
 ]

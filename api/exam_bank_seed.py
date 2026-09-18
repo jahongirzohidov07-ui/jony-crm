@@ -3405,6 +3405,132 @@ Fiona""",
     ],
 }
 
+
+STEP3_UNIT4 = {
+    "level": "step3", "kind": "unit", "unit_no": 4,
+    "title": "Step 3 · Unit 4 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["I know you can.", "Just a moment - I'll ask Tom.", "Nothing, I'm free."], "B"),
+                _c("", ["Yes, how about Tuesday?", "What time shall we come round?", "Hang on, I'll just check with Anna."], "C"),
+                _c("", ["Sorry, how about Friday?", "Sorry, this week's really busy for me.", "Sorry, I can't do Saturday."], "B"),
+                _c("", ["I think I'm next.", "We'll take it.", "I'll just check."], "C"),
+                _c("", ["Very good.", "That sounds nice.", "Well, thanks."], "B"),
+                _c("", ["What's the time?", "Is that OK for you?", "How about next week?"], "C"),
+                _c("", ["I agree with you.", "No, don’t worry.", "Yes, that’s right."], "B"),
+                _c("", ["Hang on a minute - let me see.", "I'm not sure - yes, I do.", "Actually, we will."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Going out",
+            "instructions": "Read the sentences about going out. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("Some of the streets in the village are very ............ , so we can't "
+                   "drive to the restaurant.", ["high", "low", "narrow"], "C"),
+                _c("It's not a good idea to wear ............ because we're going to walk "
+                   "to the cinema.", ["long socks", "trainers", "high heels"], "C"),
+                _c("I love going to the ............ cinema in the summer because you can "
+                   "look at the stars.", ["outdoor", "magnificent", "ordinary"], "A"),
+                _c("Our house is really ............ and everybody stops to take photos of "
+                   "it on their walks.", ["ordinary", "quiet", "pretty"], "C"),
+                _c("David never has time to ............ before going out so he's growing "
+                   "a beard.", ["get a new suit", "have a shave", "go to the hairdresser’s"], "B"),
+                _c("It's difficult to ............ when you've just walked for an hour in "
+                   "the rain.", ["have a new outfit", "look your best", "go to the shop"], "B"),
+                _c("We went to a party in a ............ house and there was no space to dance.",
+                   ["tiny", "huge", "peaceful"], "A"),
+                _c("Take your ............ with you because it might be cold on the beach "
+                   "this evening.", ["sweatshirt", "bracelet", "sandals"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Clothes and places",
+            "instructions": "Read the descriptions of some words about clothes "
+                            "and places. The first letter is already there. "
+                            "Write the whole word.",
+            "questions": [
+                _t("This is what you wear under your jeans, sweatshirt or other clothes.   "
+                   "u _ _ _ _ _ _ _ _", "underwear", "nderwear"),
+                _t("You can wear this when you go jogging.   t _ _ _ _ _ _ _ _",
+                   "tracksuit", "racksuit"),
+                _t("People often get a new one if they're going to a wedding.   o _ _ _ _ _",
+                   "outfit", "utfit"),
+                _t("It describes a building that is hundreds of years old.   a _ _ _ _ _ _",
+                   "ancient", "ncient"),
+                _t("If there's nothing special about a place, you can describe it as "
+                   "this.   o _ _ _ _ _ _ _", "ordinary", "rdinary"),
+                _t("You wear these on your feet in the summer.   s _ _ _ _ _ _",
+                   "sandals", "andals"),
+                _t("It describes a building that is not beautiful to look at.   u _ _ _",
+                   "ugly", "gly"),
+                _t("This word describes a place where there's no noise and you can "
+                   "relax.   p _ _ _ _ _ _ _", "peaceful", "eaceful"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email from a woman to her friend. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """To: Daniela
+From: Sophie
+Subject: This weekend
+
+It's great that (25) ………… coming to visit me this weekend. Have you decided yet which train you are going to catch? Let me know and (26) ………… you at the station. Then perhaps (27) ………… dinner somewhere in the town centre and go to the cinema.
+On Saturday evening there (28) ………… be a big concert in a park in the centre of town. Would you like to go? (29) ………… get tickets for us? Oh, and don't forget to bring flat shoes with you. I'd like to go for a long walk by the river on Sunday. It's lovely and peaceful there. But we (30) ………… if it's wet and horrible - we'll go to the gym instead.
+(31) ………… to go home on Sunday evening or Monday morning? My brother (32) ………… to do a course in your town next week. Perhaps you can travel back there together?
+See you very soon!
+Sophie""",
+            "questions": [
+                _c("", ["you’re", "you’ll", "you’re going to"], "A"),
+                _c("", ["I’m meeting", "I’ll meet", "I’m going to meet"], "B"),
+                _c("", ["we’re having", "we’re going to have", "we’ll have"], "C"),
+                _c("", ["is going to", "are going to", "is going"], "A"),
+                _c("", ["Have I", "Am I", "Shall I"], "C"),
+                _c("", ["don’t go", "not go", "won’t go"], "C"),
+                _c("", ["Will you", "Are you going", "Are you"], "B"),
+                _c("", ["is going", "will", "goes"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("Dan offered to carry my computer for me.\n"
+                   "Dan said: '………… carry your computer for you?'",
+                   "Shall I", "Can I", "Could I", "May I"),
+                _t("I know that John can't come to the meeting on Friday.\n"
+                   "I know that John ………… coming to the meeting on Friday.",
+                   "isn't", "is not", "won't be", "will not be"),
+                _t("Zoe's plan is to study French at university.\n"
+                   "Zoe is ………… study French at university.",
+                   "going to", "planning to", "intending to"),
+                _t("My idea is for us to start the meal with soup - what do you think?\n"
+                   "What do you think? - ………… start the meal with soup?", "Shall we"),
+                _t("Do you know what your outfit for the wedding on Saturday is going to be?\n"
+                   "What are you ………… for the wedding on Saturday?",
+                   "going to wear", "planning to wear", "intending to wear", "wearing"),
+                _t("We haven't done the shopping yet - what about doing it later?\n"
+                   "We haven't done the shopping yet - ………… do it later?",
+                   "Shall we", "Could we", "Can we"),
+                _t("I'm really tired so I don't want to go to the concert tonight.\n"
+                   "I’m ………… to the concert tonight because I'm really tired.",
+                   "not going", "not going to go"),
+                _t("Thomas offered to take me to the station tomorrow.\n"
+                   "'I ………… you to the station tomorrow,' said Thomas.",
+                   "’ll take", "will take", "can take", "could take"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3436,4 +3562,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit1", STEP3_UNIT1),
     ("exam_tpl_step3_unit2", STEP3_UNIT2),
     ("exam_tpl_step3_unit3", STEP3_UNIT3),
+    ("exam_tpl_step3_unit4", STEP3_UNIT4),
 ]

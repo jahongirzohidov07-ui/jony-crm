@@ -2644,6 +2644,120 @@ Now I can speak (31) ………… Japanese than before. Online lessons are fanta
     ],
 }
 
+
+STEP2_UNIT11 = {
+    "level": "step2", "kind": "unit", "unit_no": 11,
+    "title": "Step 2 · Unit 11 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["I agree.", "Yeah, me too.", "No problem."], "A"),
+                _c("", ["I agree.", "No, me neither!", "Yes, it was great!"], "C"),
+                _c("", ["Did you?", "Let me see.", "What did you think of it?"], "A"),
+                _c("", ["I liked it – how about you?", "I don't really agree.", "Did you think so?"], "A"),
+                _c("", ["Yes, maybe.", "Yeah, me too.", "Do you agree?"], "A"),
+                _c("", ["No, maybe not.", "No, me neither.", "No, not at all."], "B"),
+                _c("", ["Sure, no problem.", "I liked it – how about you?", "Yeah, me too!"], "C"),
+                _c("", ["Not at all.", "Me neither.", "I don't really agree."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Entertainment",
+            "instructions": "Read the sentences about entertainment. Choose the "
+                            "missing word (A, B or C) for each space.",
+            "questions": [
+                _c("Did you hear the ............ concert last night?",
+                   ["jazz", "singer", "musician"], "A"),
+                _c("That ............ is the best place to hear top musicians from "
+                   "around the world.", ["concert hall", "band", "classical music"], "A"),
+                _c("The violin player has ............ her arm, so she isn't in the "
+                   "orchestra this evening.", ["fallen", "broken", "grown"], "B"),
+                _c("Have you ever ............ that musician here before?",
+                   ["seen", "forgotten", "read"], "A"),
+                _c("I've downloaded all the band's albums, but I've never ............ "
+                   "this song before.", ["heard", "written", "caught"], "A"),
+                _c("Dan thinks ............ music is better than folk music.",
+                   ["rock", "role", "rest"], "A"),
+                _c("I've ............ some chocolates for us to share while we watch the film.",
+                   ["had", "eaten", "bought"], "C"),
+                _c("Do you want to go to the ............ with me?",
+                   ["band", "orchestra", "opera"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Music",
+            "instructions": "Read the sentences about music. What are the "
+                            "missing words? The first letter is already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("Teenagers usually prefer to listen to p _ _  m _ _ _ _ .",
+                   "pop music", "op usic"),
+                _t("I'm so excited, I've never b _ _ _ to a concert before.", "been", "een"),
+                _t("I love listening to d _ _ _ _  m _ _ _ _ when I do exercises.",
+                   "dance music", "ance usic"),
+                _t("Oh no! I've f _ _ _ _ _ _ _ _ my ticket for the concert!",
+                   "forgotten", "orgotten"),
+                _t("Peter has w _ _ _ _ _ _ a song for the band to play.", "written", "ritten"),
+                _t("I think that s _ _ _ _ _ has a great voice!", "singer", "inger"),
+                _t("Some people say c _ _ _ _ _ _ _ _  m _ _ _ _ is too slow and "
+                   "boring, but I like it.", "classical music", "lassical usic"),
+                _t("Philip has f _ _ _ _ all the way to Australia to see his "
+                   "favourite band.", "flown", "lown"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email from Melanie to her Australian "
+                            "friend, Bob. Choose the best word (A, B or C) for "
+                            "each space.",
+            "passage": """Email to Bob
+
+Hi Bob
+How are you? I'm sorry I (25) ………… for a long time! I want to tell you about a great evening I (26) ………… in London last week. I met my brother at the British Library. Have you ever (27) ………… there? It's very modern and my brother likes studying there. When the library closed, we went to a Japanese restaurant. Have you (28) ………… eaten Japanese food? I think it's delicious!
+After our meal, we (29) ………… a bus to his house, but walked to a café instead. We met some friends there and listened to some good jazz. You know (30) ………… to Australia – can you hear good music where you live? There have been some Australian films on at my local cinema and I liked the music in those. (31) ………… some interesting Australian musicians on the internet, but I've (32) ………… any Australian bands in London. Now I'm a bit sad because my brother isn't here. He's gone to Italy for three months to study art history.
+Come and visit me in England soon!
+Melanie""",
+            "questions": [
+                _c("", ["don't write", "haven't written", "didn't write"], "B"),
+                _c("", ["had", "have had", "have"], "A"),
+                _c("", ["gone", "been", "went"], "B"),
+                _c("", ["never", "once", "ever"], "C"),
+                _c("", ["didn't catch", "haven't caught", "don't catch"], "A"),
+                _c("", ["I haven't been", "have I been", "I haven't gone"], "A"),
+                _c("", ["I've also seen", "I also saw", "I also see"], "A"),
+                _c("", ["ever heard", "heard", "never heard"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about entertainment and having "
+                            "fun. Choose the best answer (A, B or C) for each "
+                            "space.",
+            "questions": [
+                _c("Last night ............ a fantastic meal.",
+                   ["John cooked", "John has cooked", "John cooks"], "A"),
+                _c("I have ............ met a famous actor.", ["ever", "never", "always"], "B"),
+                _c("Carolina ............ with us to the cinema yesterday because she's "
+                   "already seen the film.", ["didn't come", "hasn't come", "isn't coming"], "A"),
+                _c("This film ............ won a lot of prizes.", ["is", "has", "have"], "B"),
+                _c("............ the tickets yesterday?",
+                   ["Is Harry buying", "Has Harry bought", "Did Harry buy"], "C"),
+                _c("I've never seen an opera but my brother ............ one last week.",
+                   ["has seen", "saw", "hasn't seen"], "B"),
+                _c("I'm surprised that dancer has never ............ over doing that crazy "
+                   "jump – it's really difficult!", ["fell", "fallen", "fall"], "B"),
+                _c("Have you ............ heard a big band like this before?",
+                   ["ever", "once", "still"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2669,4 +2783,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit8", STEP2_UNIT8),
     ("exam_tpl_step2_unit9", STEP2_UNIT9),
     ("exam_tpl_step2_unit10", STEP2_UNIT10),
+    ("exam_tpl_step2_unit11", STEP2_UNIT11),
 ]

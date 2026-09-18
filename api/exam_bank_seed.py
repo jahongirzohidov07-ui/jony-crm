@@ -1076,6 +1076,101 @@ Angie: Yes, we did. We ate in our hotel some nights and other nights we ate in r
     ],
 }
 
+
+U10_IMG = "/exam-img/step1-u10/"
+HOUSE_A_G = ["bedroom", "door", "kitchen", "wall", "window", "living room",
+             "bathroom"]
+
+STEP1_UNIT10 = {
+    "level": "step1", "kind": "unit", "unit_no": 10,
+    "title": "Step 1 · Unit 10 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Shall we go on Sunday?", "The bus leaves in three minutes.", "What time’s the next bus to London?"], "C"),
+                _c("", ["No, sorry, there isn’t.", "It’s at 8.25.", "You change buses at Oxford."], "B"),
+                _c("", ["It’s stop 4, near the ticket office.", "The next bus is at 3.30.", "I can go with you."], "A"),
+                _c("", ["It’s platform 6.", "I’ll come with you.", "It leaves in three minutes."], "C"),
+                _c("", ["Oh, OK, I’ll do it then.", "No, you change at Manchester.", "Yes, please."], "B"),
+                _c("", ["Which platform is it?", "No, sorry, there isn’t.", "Can you spell that?"], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · In the house",
+            "instructions": "Choose the word to match the picture.",
+            "questions": [
+                _c("", HOUSE_A_G, "C", image=U10_IMG + "q7.jpg"),
+                _c("", HOUSE_A_G, "G", image=U10_IMG + "q8.jpg"),
+                _c("", HOUSE_A_G, "A", image=U10_IMG + "q9.jpg"),
+                _c("", HOUSE_A_G, "F", image=U10_IMG + "q10.jpg"),
+                _c("", HOUSE_A_G, "B", image=U10_IMG + "q11.jpg"),
+                _c("", HOUSE_A_G, "E", image=U10_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Places",
+            "instructions": "Read the sentences about places. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("I left my phone ............ a train.", ["on", "to", "at"], "A"),
+                _c("Let’s meet for lunch ............ a restaurant.", ["in", "to", "on"], "A"),
+                _c("Could you meet me ............ the airport, please?", ["on", "at", "to"], "B"),
+                _c("Marek’s ............ holiday in Norway.", ["on", "in", "at"], "A"),
+                _c("Laura’s ............ work now so please call later.", ["on", "at", "in"], "B"),
+                _c("I’m having breakfast in the garden but Paul’s still ............ bed.",
+                   ["at", "on", "in"], "C"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email about a holiday in Colombia. Choose "
+                            "the best answer, A, B or C, for each space.",
+            "passage": """On holiday in Colombia
+From: Anna
+To: Mimi
+
+Hi Mimi
+
+Hello from sunny Colombia! How are you? Are you at home today or (19) …………? I hope you’re well. Our holiday here in Colombia is great. Colombia is a beautiful country, and the people are really friendly.
+Right now, (20) ………… in a café, drinking a coffee. The weather was cloudy here yesterday, but today it’s warm and sunny, and (21) ………… . That’s good because I don’t like rain! The café is on the beach, so (22) ………… this email and I can see the sea at the same time. There are lots of people on the beach and some people (23) ………… . It’s a great view.
+We arrived in this town yesterday. We came by bus, which took four hours. (24) ………… in a hotel because it’s quite expensive, so we’re in a hostel for three nights. It’s lovely.
+
+See you soon.
+Anna""",
+            "questions": [
+                _c("", ["you work", "you’re working", "are you working"], "C"),
+                _c("", ["are we sitting", "we’re sitting", "we aren’t sitting"], "B"),
+                _c("", ["is it raining", "it isn’t raining", "it’s raining"], "B"),
+                _c("", ["I’m not writing", "am I writing", "I’m writing"], "C"),
+                _c("", ["swimming", "is swimming", "are swimming"], "C"),
+                _c("", ["Are we staying", "We’re not staying", "We are staying"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about here and now. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "questions": [
+                _c("I’ll call you later, we ............ having dinner now.", ["’re", "’s", "’m"], "A"),
+                _c("Hurry up, ............ for you at the bus stop.",
+                   ["are they waiting", "they aren’t waiting", "they’re waiting"], "C"),
+                _c("Sandro ............ cooking dinner at the moment.", ["’m", "’re", "’s"], "C"),
+                _c("............ now – why don’t we sit in the garden?",
+                   ["It isn’t raining now", "Is it raining", "It’s raining"], "A"),
+                _c("Sarah, what ............ at the moment?",
+                   ["you are doing", "are you doing", "you aren’t doing"], "B"),
+                _c("I ............ today because it’s the weekend.",
+                   ["not working", "’m not working", "isn’t working"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1087,4 +1182,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit7", STEP1_UNIT7),
     ("exam_tpl_step1_unit8", STEP1_UNIT8),
     ("exam_tpl_step1_unit9", STEP1_UNIT9),
+    ("exam_tpl_step1_unit10", STEP1_UNIT10),
 ]

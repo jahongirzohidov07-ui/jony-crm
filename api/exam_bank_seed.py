@@ -4240,6 +4240,124 @@ Betty""",
     ],
 }
 
+
+STEP3_UNIT11 = {
+    "level": "step3", "kind": "unit", "unit_no": 11,
+    "title": "Step 3 · Unit 11 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["OK, so down the stairs and turn left.", "That sounds lovely.", "We really must go."], "A"),
+                _c("", ["You’re right.", "I’ll ask someone to look at that right away.", "It’s on the right."], "C"),
+                _c("", ["Go through that door.", "I’ll just put you through.", "We really must go."], "A"),
+                _c("", ["It’s on the second floor.", "Ok, so it’s on the second floor?", "Right, I think I’ve got that."], "A"),
+                _c("", ["No, the third.", "Yes, the second floor.", "Right, I think I’ve got that."], "A"),
+                _c("", ["Is that OK for you?", "Long time no see!", "Right, I think I’ve got that!"], "C"),
+                _c("", ["So can I just check?", "It’s over there, by the cinema.", "Yes, the cash machine."], "B"),
+                _c("", ["No, the third floor.", "That’s right.", "Really, I’m fine."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Discovery and technology",
+            "instructions": "Read the sentences about discovery and technology. "
+                            "Choose the missing word A, B or C for each space.",
+            "questions": [
+                _c("I saw a really interesting ............ last night about computer games.",
+                   ["television programme", "science fiction", "TV screen"], "A"),
+                _c("Fred dropped his e-reader on the floor, but ............ it wasn’t damaged.",
+                   ["unfortunately", "accidentally", "luckily"], "C"),
+                _c("Emma’s invention was the best so, ............ , she won the competition.",
+                   ["on purpose", "as expected", "by chance"], "B"),
+                _c("I took out £20 from the ............ machine before I went shopping.",
+                   ["money", "pay", "cash"], "C"),
+                _c("The scientists weren’t looking for the new animal – they discovered it "
+                   "............ .", ["by chance", "as expected", "on purpose"], "A"),
+                _c("We saw a great science ............ film about visitors from another planet.",
+                   ["drama", "fiction", "history"], "B"),
+                _c("These new ............ are easier to read when you’re driving at night.",
+                   ["signs", "notices", "boards"], "A"),
+                _c("The robot costs nearly $1,000,000, so ............ not many people can "
+                   "afford one.", ["surprisingly", "amazingly", "unfortunately"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Discovery and technology",
+            "instructions": "Read the sentences about discovery and technology. "
+                            "The first letter is already there. Write the "
+                            "whole words.",
+            "questions": [
+                _t("The train journey was long and boring but f _ _ _ _ _ _ _ _ _ _ I had "
+                   "my e-reader with me.", "fortunately", "ortunately"),
+                _t("S _ _ _ _ _ _ _ _ _ _ _ , Otzi the Iceman’s body was almost complete, "
+                   "even after 5,000 years under the ice.", "surprisingly", "urprisingly"),
+                _t("Scientists who are looking for new medicines sometimes ask people to "
+                   "catch a cold o _  p _ _ _ _ _ _ .", "on purpose", "n urpose"),
+                _t("The new s _ _ _ _ _ _ _  c _ _ _ _ _ has an internet café and a lot "
+                   "of stores.", "shopping centre", "hopping entre", "shopping center"),
+                _t("I don’t use an a _ _ _ _ _ _  b _ _ _ because my friends’ details are "
+                   "in my phone.", "address book", "ddress ook"),
+                _t("I pressed the wrong button and a _ _ _ _ _ _ _ _ _ _ _ lost the "
+                   "computer game.", "accidentally", "ccidentally"),
+                _t("Let’s book our seats for the train online, not at the t _ _ _ _ _  "
+                   "o _ _ _ _ _ in the station.", "ticket office", "icket ffice"),
+                _t("Science programmes look best when you watch them on a large "
+                   "T _  s _ _ _ _ _ .", "TV screen", "V creen"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about the discovery of an unusual "
+                            "fish. Choose the best answer (A, B or C) for each "
+                            "space.",
+            "passage": """The fish that came back from the dead
+
+Do you know what coelacanths are? They are fish (25) ………… lived in the sea a long, long time ago. In fact, scientists used to think that they disappeared over 65 million years ago. But one day in 1938, Marjorie Courtenay-Latimer, a young woman (26) ………… worked in a museum in a small town in South Africa, received (27) ………… unexpected phone call. It was from a fisherman (28) ………… was called Captain Hendrik Goosen. Marjorie immediately got a taxi and went straight down to (29) ………… sea. There, in Captain Goosen's boat, she saw a very strange fish. Marjorie put the fish in the taxi, and took it back to (30) ………… museum.
+She contacted a friend, James Smith, a science teacher at a nearby university, and he immediately told her that it was a coelacanth. It soon became (31) ………… most famous fish in the world! Scientists gave it the name Latimeria chalumnae, and the place (32) ………… Marjorie first saw the fish is now known as Latimer's Landing.""",
+            "questions": [
+                _c("", ["what", "who", "which"], "C"),
+                _c("", ["that", "which", "where"], "A"),
+                _c("", ["an", "a", "any"], "A"),
+                _c("", ["where", "who", "what"], "B"),
+                _c("", ["some", "the", "a"], "B"),
+                _c("", ["a", "the", "those"], "B"),
+                _c("", ["a", "any", "the"], "C"),
+                _c("", ["who", "where", "which"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("No other job is as exciting as being a scientist.\n"
+                   "Being a scientist is ………… most exciting job in the world.", "the"),
+                _t("I enjoy working outside on my laptop when it’s sunny.\n"
+                   "I enjoy working outside on my laptop when ………… is shining.", "the sun"),
+                _t("All the classrooms have computers in them.\n"
+                   "Each classroom has ………… computer in it.", "a"),
+                _t("Ngo Van Tri is a scientist, and he discovered a new lizard.\n"
+                   "Ngo Van Tri is a scientist ………… discovered a new lizard.", "who", "that"),
+                _t("This is the mountain in Italy. Otzi the Iceman was found there.\n"
+                   "This is a mountain in Italy ………… Otzi the Iceman was found.",
+                   "where", "on which"),
+                _t("Scientists have invented a car and it can fly.\n"
+                   "Scientists have invented a car ………… can fly.", "that", "which"),
+                _t("Xi’an is a Chinese city. The Terracotta Army were discovered there.\n"
+                   "Xi’an is ………… Chinese city where the Terracotta Army were discovered.",
+                   "the"),
+                _t("I watched a film about some astronauts. They went to the moon.\n"
+                   "I watched a film about some astronauts ………… went to the moon.",
+                   "who", "that"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4278,4 +4396,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit8", STEP3_UNIT8),
     ("exam_tpl_step3_unit9", STEP3_UNIT9),
     ("exam_tpl_step3_unit10", STEP3_UNIT10),
+    ("exam_tpl_step3_unit11", STEP3_UNIT11),
 ]

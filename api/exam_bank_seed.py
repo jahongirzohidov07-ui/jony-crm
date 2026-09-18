@@ -3170,6 +3170,121 @@ We need to clean the apartment ourselves. (32) ………… that worry you? If I
     ],
 }
 
+
+STEP3_UNIT2 = {
+    "level": "step3", "kind": "unit", "unit_no": 2,
+    "title": "Step 3 · Unit 2 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Every 30 minutes.", "At 15.27.", "There’s a new one over there."], "B"),
+                _c("", ["It's just round the corner.", "Actually, there is one more thing.", "It was great to see you again."], "B"),
+                _c("", ["Yes, that’s right.", "Yes, of course.", "Yes, I can."], "B"),
+                _c("", ["Well, when do you want to travel?", "You can buy one at the ticket office.", "Where can I buy a ticket?"], "A"),
+                _c("", ["Yes, sure.", "Yes, you’re right.", "Yes, it is."], "A"),
+                _c("", ["From stop number 12.", "It's just over there.", "Every 20 minutes."], "C"),
+                _c("", ["Thank you for your help - you're very kind.", "That's great news, really great.", "Where's the bus station, please?"], "C"),
+                _c("", ["It's in ten minutes.", "It's one and a half hours.", "This is platform eight."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Travel and holidays",
+            "instructions": "Read the sentences about travel and holidays. "
+                            "Choose the missing word A, B or C for each space.",
+            "questions": [
+                _c("I want to ............ for two weeks in September, maybe to Thailand.",
+                   ["go out", "go away", "go on"], "B"),
+                _c("There was snow at the airport so there were long ............ for flights.",
+                   ["lifts", "breaks", "delays"], "C"),
+                _c("It's always a good idea to ............ your accommodation before you "
+                   "go on holiday.", ["order", "book", "ask"], "B"),
+                _c("Adam never takes a suitcase on holiday - he just puts some things in "
+                   "a small ............ .", ["backpack", "pocket", "luggage"], "A"),
+                _c("What a terrible journey - our car ............ twice and we were six "
+                   "hours late.", ["took off", "checked in", "broke down"], "C"),
+                _c("Flying makes me nervous so I close my eyes when the plane takes off "
+                   "or ............ .", ["finishes", "hits", "lands"], "C"),
+                _c("Guests who are leaving the hotel must ............ before 10.00.",
+                   ["check out", "check into", "check up"], "A"),
+                _c("Sorry I’m late – I ............ my train.", ["lost", "missed", "arrived"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Travel and holidays",
+            "instructions": "Read the sentences about travel and holidays. What "
+                            "are the missing words? The first letter is "
+                            "already there. Write the whole words.",
+            "questions": [
+                _t("Passengers at Gate 22 can b _ _ _ _ the plane to Amsterdam in ten "
+                   "minutes.", "board", "oard"),
+                _t("Jules decided to hitchhike in South America because he wanted to "
+                   "have an exciting a _ _ _ _ _ _ _ _ .", "adventure", "dventure"),
+                _t("How much money did you e _ _ _ _ _ _ _ at the bank before you went "
+                   "to the USA last year?", "exchange", "xchange"),
+                _t("Do I need a v _ _ _ or just a passport to visit your country?",
+                   "visa", "isa"),
+                _t("To remember my holidays, I always buy a s _ _ _ _ _ _ _ , like a "
+                   "picture, from everywhere I visit.", "souvenir", "ouvenir"),
+                _t("We'll get up early tomorrow so we can s _ _  o _ _ on our journey "
+                   "at 7 o'clock.", "set out", "set off", "et ut", "et ff"),
+                _t("We often forget to take a map so we g _ _  l _ _ _ when we visit "
+                   "new places.", "get lost", "et ost"),
+                _t("There was a long t _ _ _ _ _ _  j _ _ on the main road this morning "
+                   "because of bad weather.", "traffic jam", "raffic am"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read a young man's story about a journey. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """A lesson about luggage
+
+Two years ago, I went from London to Barcelona in Spain by train. I (25) ………… planning to stay in Spain for a year so I (26) ………… two big suitcases and a backpack. Why (27) ………… so much? I don't know.
+I changed trains in Paris. I had to go across the city by underground to another station. When I got off the train at my stop, I (28) ………… two suitcases, just one, and my backpack. I saw the second suitcase through the window of the train but the train was already moving. How silly of me!
+The journey to Barcelona was at night and I (29) ………… most of the way. Some people (30) ………… a noise but they didn't bother me. (31) ………… at me? Perhaps they were. When I woke up in the morning, my suitcase wasn't there! Now I only had my backpack. But I was lucky – everything I needed was in it. Did I miss my suitcases? No, (32) ………… . This journey taught me a useful lesson – now I never travel with a lot of luggage.""",
+            "questions": [
+                _c("", ["were", "am", "was"], "C"),
+                _c("", ["packed", "pack", "packing"], "A"),
+                _c("", ["I took", "did I take", "am I taking"], "B"),
+                _c("", ["am not carrying", "wasn’t carrying", "weren’t carrying"], "B"),
+                _c("", ["were sleeping", "am sleeping", "slept"], "C"),
+                _c("", ["was making", "is making", "were making"], "C"),
+                _c("", ["Were they laughing", "They were laughing", "Did they laugh"], "A"),
+                _c("", ["didn’t I", "I didn’t", "I did"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("The weather was dry when the plane took off.\n"
+                   "It ………… raining when the plane took off.", "wasn't", "was not"),
+                _t("They went to sleep before the train arrived.\n"
+                   "They ………… sleeping when the train arrived.", "were"),
+                _t("Emma didn't spend a lot of money on holiday but I did.\n"
+                   "I ………… a lot of money on holiday but Emma didn't.", "spent"),
+                _t("Frank bought twenty postcards yesterday - what about Eva?\n"
+                   "How many postcards ………… yesterday? Frank bought twenty.", "did Eva buy"),
+                _t("Can you tell me where you went on holiday last year?\n"
+                   "Where ………… on holiday last year?", "did you go"),
+                _t("The food in our hotel wasn't good.\n"
+                   "We ………… like the food in our hotel.", "didn't", "did not"),
+                _t("My parents felt ill but they went on the boat trip.\n"
+                   "My parents went on the boat trip, although they ………… feeling well.",
+                   "weren't", "were not"),
+                _t("Tell me what she was doing when she lost her ticket.\n"
+                   "What ………… when she lost her ticket - tell me.", "was she doing"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3199,4 +3314,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit12", STEP2_UNIT12),
     ("exam_tpl_step2_end", STEP2_END),
     ("exam_tpl_step3_unit1", STEP3_UNIT1),
+    ("exam_tpl_step3_unit2", STEP3_UNIT2),
 ]

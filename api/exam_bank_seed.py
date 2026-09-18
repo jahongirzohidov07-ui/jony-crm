@@ -2534,6 +2534,116 @@ At the moment (31) ………… walking to the centre of Recife with my friend. 
     ],
 }
 
+
+STEP2_UNIT10 = {
+    "level": "step2", "kind": "unit", "unit_no": 10,
+    "title": "Step 2 · Unit 10 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["You’re welcome.", "Great.", "Yes, of course."], "C"),
+                _c("", ["I’m fine, thanks.", "You poor thing.", "No problem."], "C"),
+                _c("", ["That looks great.", "Are you free on Friday?", "I’m sorry, I can’t."], "C"),
+                _c("", ["Yes, I’d love to.", "Yes. Exactly.", "Yes. It doesn’t matter."], "B"),
+                _c("", ["No, not at all.", "It’s right.", "That looks good."], "A"),
+                _c("", ["So, first I touch this button?", "It’s right.", "How can I help?"], "A"),
+                _c("", ["You’re welcome.", "Not at all.", "That’s right."], "B"),
+                _c("", ["It takes me to another screen – like this?", "A light comes on. Are you all right?", "So, that’s the answer. Are you sure?"], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Listening · Numbers",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the correct answer. You will hear "
+                            "each sentence twice.",
+            "questions": [
+                _c("How many emails did the company receive last week?", ["704", "714", "750"], "B"),
+                _c("How much did the man's tablet cost?", ["£390", "£395", "£399"], "C"),
+                _c("How many smartphones did the company sell last year?",
+                   ["5 million", "15 million", "50 million"], "C"),
+                _c("How many kilometres is it from London to Sydney?",
+                   ["16,900", "16,908", "16,980"], "C"),
+                _c("How many people visited the website yesterday?",
+                   ["420,000", "42,000", "4,200"], "A"),
+                _c("How many stars can you see in the photo?",
+                   ["84,500,000", "85,000,000", "85,000,500"], "A"),
+                _c("What was the population of the Maldives in 2012?",
+                   ["330,800", "338,000", "380,300"], "B"),
+                _c("What is the population of this area?",
+                   ["650,000,000", "615,000,000", "660,000,000"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Computers",
+            "instructions": "Read the sentences about computers. Choose the "
+                            "missing word (A, B or C) for each space.",
+            "questions": [
+                _c("I'm going to ............ all these documents in a file called "
+                   "'Holiday plans'.", ["sit", "save", "stay"], "B"),
+                _c("It can take a long time to ............ very large documents.",
+                   ["click", "download", "log into"], "B"),
+                _c("It wastes time if you ............ your emails more than three times a day.",
+                   ["choose", "check", "change"], "B"),
+                _c("If you ............ on the link in the email, you can see our holiday photos.",
+                   ["click", "get", "take"], "A"),
+                _c("Why don't you ............ our website to find out more information?",
+                   ["go", "visit", "click"], "B"),
+                _c("With Skype on my computer, I can ............ calls to my friend in Australia.",
+                   ["make", "meet", "mix"], "A"),
+                _c("My laptop is very slow – it is taking a long time to ............ this file.",
+                   ["download", "click", "charge"], "A"),
+                _c("How often do you ............ online to watch videos?", ["log", "make", "go"], "C"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the article about learning a language. "
+                            "Choose the best word (A, B or C) for each space.",
+            "passage": """How I learned Japanese
+
+I'm American and I learned Japanese online a few years ago. I wanted to learn a different language and Japanese was (25) ………… for my job as a hotel receptionist. I also thought Japanese was (26) ………… than other languages because of the alphabet. Lessons with a private teacher were (27) ………… than lessons at a college. Online lessons were (28) ………… way to learn, so I joined an online course. Online courses are becoming (29) ………… than before for this reason.
+The online lessons were easier than I thought. I could log into my computer at any time. I know Japanese is one of (30) ………… languages in the world but I really like it. I could learn anywhere and at any time – on the train to work, in the office at lunchtime, or at night.
+Now I can speak (31) ………… Japanese than before. Online lessons are fantastic and I am (32) ………… hotel receptionist I know!""",
+            "questions": [
+                _c("", ["the most useful", "less useful", "more useful than"], "A"),
+                _c("", ["more interesting", "the interesting", "the most interesting"], "A"),
+                _c("", ["so expensive", "expensive", "more expensive"], "C"),
+                _c("", ["cheaper", "the cheapest", "cheap"], "B"),
+                _c("", ["more popular", "popular", "very popular"], "A"),
+                _c("", ["harder", "hardest", "the hardest"], "C"),
+                _c("", ["better", "best", "good"], "A"),
+                _c("", ["happier than", "the happy", "the happiest"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about computers. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "questions": [
+                _c("Most tablets are ............ than a smartphone.", ["big", "bigger", "biggest"], "B"),
+                _c("The new smartphones are ............ expensive ones.", ["most", "much", "the most"], "C"),
+                _c("It's ............ to read a document on a tablet than on a smartphone.",
+                   ["easy", "easier", "easiest"], "B"),
+                _c("Many people say the ............ time to check emails is before you go to bed.",
+                   ["bad", "worse", "worst"], "C"),
+                _c("Tablets are ............ than smartphones because it is easier to watch "
+                   "films and read newspapers on them.", ["more useful", "most useful", "useful"], "A"),
+                _c("Some people think young people's spelling is ............ now because "
+                   "they text too much.", ["bad", "worse", "worst"], "B"),
+                _c("My father has ............ phone in our family – he bought it years ago!",
+                   ["the old", "the older", "the oldest"], "C"),
+                _c("The ............ expensive tablet in the shop costs over £1000!",
+                   ["most", "much", "more"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2558,4 +2668,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit7", STEP2_UNIT7),
     ("exam_tpl_step2_unit8", STEP2_UNIT8),
     ("exam_tpl_step2_unit9", STEP2_UNIT9),
+    ("exam_tpl_step2_unit10", STEP2_UNIT10),
 ]

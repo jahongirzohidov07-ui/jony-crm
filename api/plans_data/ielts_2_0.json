@@ -5252,6 +5252,1825 @@
      }
     ]
    }
+  },
+  {
+   "no": 7,
+   "title": "Comparative Degree",
+   "grammar_topic": "COMPARATIVE (-er than / more … than / as … as)",
+   "vocab_topic": "Physical appearance (tashqi ko'rinish)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 7 – Comparative degree (jadval, 45 gap, as…as 20 gap); ADJECTIVES OF APPEARANCE (47); Reading Topic 21–30.",
+   "objectives": [
+    "Qisqa sifatlarga -er, uzunlariga more qo'shib \"than\" bilan taqqoslash.",
+    "as … as / not as … as bilan tenglik va farqni aytish.",
+    "good/bad/far istisnolarini bilish; much/a bit bilan kuchaytirish.",
+    "Tashqi ko'rinish CORE 20 bilan odamlarni tasvirlash va taqqoslash."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Physical appearance (tashqi ko'rinish) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz ikki o'quvchini turg'izadi: \"Who is taller?\" — sinf javob beradi: \"Ali is taller than Bobur.\" Keyin \"Who is more talkative?\" — ikki bo'g'inli sifat."
+    ],
+    [
+     8,
+     "Kahoot — Progress test 1 natijalari + PP vs PPC",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Progress test 1 natijalari + PP vs PPC lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: 1 bo'g'in → adj+er+than; 2+ bo'g'in → more+adj+than; teng → as+adj+as. Imlo: big→bigger, happy→happier; istisno: good→better, bad→worse, far→further."
+    ],
+    [
+     12,
+     "Physical appearance (tashqi ko'rinish) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Bir bo'g'inli sifat: tall → taller than; big → bigger (undosh ikkilanadi); nice → nicer.",
+     "Ikki va undan ko'p bo'g'in: more difficult than, more beautiful than. -y bilan tugagan: happy → happier, easy → easier.",
+     "Istisno: good → better, bad → worse, far → further, little → less, much/many → more.",
+     "Tenglik: as tall as; farq: not as tall as (= shorter than). Kuchaytirish: much taller, a bit taller, far more expensive."
+    ],
+    "formulas": [
+     [
+      "1 bo'g'in",
+      "S + be + adj-er + than",
+      "Your house is bigger than ours.",
+      "Sening uying biznikidan kattaroq."
+     ],
+     [
+      "2+ bo'g'in",
+      "S + be + more + adj + than",
+      "Maths is more difficult than English.",
+      "Matematika ingliz tilidan qiyinroq."
+     ],
+     [
+      "Teng",
+      "X + be + as + adj + as + Y",
+      "My house is as old as your house.",
+      "Mening uyim seniking kabi eski."
+     ],
+     [
+      "Teng emas",
+      "X + be + not as + adj + as + Y",
+      "A lemon isn't as sweet as an orange.",
+      "Limon apelsindek shirin emas."
+     ],
+     [
+      "Istisno",
+      "good→better, bad→worse, far→further",
+      "My English is better than yours.",
+      "Mening ingliz tilim senikidan yaxshiroq."
+     ],
+     [
+      "Kuchaytirish",
+      "much / a lot / a bit + comparative",
+      "He is much taller than his brother.",
+      "U akasidan ancha baland."
+     ]
+    ],
+    "presentation": [
+     [
+      "Who is taller, you or your brother?",
+      "My brother is taller than me."
+     ],
+     [
+      "Is English more difficult than maths?",
+      "No, maths is more difficult than English."
+     ],
+     [
+      "Is your sister as tall as you?",
+      "Yes, she is as tall as me."
+     ],
+     [
+      "Which is bigger, Tashkent or Samarkand?",
+      "Tashkent is much bigger than Samarkand."
+     ],
+     [
+      "Is your hair longer than mine?",
+      "Yes, my hair is a bit longer than yours."
+     ],
+     [
+      "Who is more talkative in your family?",
+      "My mum is more talkative than my dad."
+     ],
+     [
+      "Is winter colder than autumn?",
+      "Yes, winter is much colder."
+     ],
+     [
+      "Is this phone better than the old one?",
+      "Yes, it's better and faster."
+     ],
+     [
+      "Is your friend as slim as you?",
+      "No, he isn't as slim as me."
+     ],
+     [
+      "Which city is further from here, Bukhara or Khiva?",
+      "Khiva is further than Bukhara."
+     ]
+    ],
+    "notes": [
+     "\"than\" dan keyin: than me / than I am — ikkalasi ham to'g'ri; og'zaki nutqda \"than me\".",
+     "Ikki bo'g'inli, -y/-er/-ow/-le bilan tugaganlar -er oladi: happier, cleverer, narrower, simpler.",
+     "\"as … as\" inkori — \"not as … as\" yoki \"not so … as\".",
+     "Tashqi ko'rinishni tasvirlash: He is tall and slim, with short dark hair. Taqqoslash: She looks younger than her sister."
+    ],
+    "mistakes": [
+     [
+      "She is more tall than me.",
+      "She is taller than me.",
+      "1 bo'g'in → -er."
+     ],
+     [
+      "This book is interestinger.",
+      "This book is more interesting.",
+      "3 bo'g'in → more."
+     ],
+     [
+      "He is taller that me.",
+      "He is taller than me.",
+      "than, that emas."
+     ],
+     [
+      "My car is more better.",
+      "My car is much better.",
+      "better allaqachon comparative."
+     ],
+     [
+      "She is as taller as me.",
+      "She is as tall as me.",
+      "as + oddiy sifat + as."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning ADJECTIVES OF APPEARANCE ro'yxatidan (chiroyli/tana tuzilishi); STRONG — soch, yuz, uslub; SUPER — iboralar (have a … nose).",
+     "Har so'zga taqqoslash: \"X is more attractive than Y\" / \"X is as slim as Y\". Ustoz mashhur odamlar rasmlari bilan ishlaydi."
+    ],
+    "core": [
+     [
+      "beautiful",
+      "chiroyli (ayol)",
+      "Her sister is more beautiful than her.",
+      "Opasi undan chiroyliroq.",
+      "ˈbjutəfəl"
+     ],
+     [
+      "handsome",
+      "kelishgan (erkak)",
+      "He is more handsome than his brother.",
+      "U akasidan kelishganroq.",
+      "ˈhænsəm"
+     ],
+     [
+      "attractive",
+      "o'ziga tortadigan",
+      "She is as attractive as her mother.",
+      "U onasi kabi jozibali.",
+      "əˈtræktɪv"
+     ],
+     [
+      "charming",
+      "maftunkor, yoqimli",
+      "The actor is more charming in real life.",
+      "Aktyor real hayotda yanada maftunkor.",
+      "ˈʧɑrmɪŋ"
+     ],
+     [
+      "gorgeous",
+      "juda go'zal",
+      "That dress looks gorgeous on you.",
+      "Bu ko'ylak senga juda yarashibdi.",
+      "ˈgɔrʤəs"
+     ],
+     [
+      "cute",
+      "dilbar, shirin",
+      "Puppies are cuter than kittens.",
+      "Kuchukchalar mushukchalardan shirinroq.",
+      "kjut"
+     ],
+     [
+      "stunning",
+      "hayratlanarli go'zal",
+      "The view is stunning.",
+      "Manzara hayratlanarli.",
+      "ˈstənɪŋ"
+     ],
+     [
+      "elegant",
+      "nafis, nozik didli",
+      "She is more elegant than her friends.",
+      "U dugonalaridan nafisroq.",
+      "ˈɛləgənt"
+     ],
+     [
+      "lovely",
+      "yoqimtoy, go'zal",
+      "Your baby is lovely.",
+      "Chaqalog'ingiz juda yoqimtoy.",
+      "ˈləvli"
+     ],
+     [
+      "muscular",
+      "mushakdor, baquvvat",
+      "Boxers are more muscular than runners.",
+      "Bokschilar yuguruvchilardan mushakdorroq.",
+      "ˈməskjələr"
+     ],
+     [
+      "fit",
+      "sog'lom, chiniqqan",
+      "I'm fitter than I was last year.",
+      "Men o'tgan yilgidan chiniqqanroqman.",
+      "fɪt"
+     ],
+     [
+      "athletic",
+      "sportcha, chaqqon",
+      "He is as athletic as his father.",
+      "U otasi kabi sportchi tanaga ega.",
+      "æθˈlɛtɪk"
+     ],
+     [
+      "slim",
+      "ozg'in, nozik",
+      "She is slimmer than her sister.",
+      "U singlisidan ozg'inroq.",
+      "slɪm"
+     ],
+     [
+      "slender",
+      "nozik, ingichka",
+      "Models are usually slender.",
+      "Modellar odatda nozik bo'ladi.",
+      "sˈlɛndər"
+     ],
+     [
+      "skinny",
+      "juda oriq",
+      "He looks skinnier than before.",
+      "U avvalgidan oriqroq ko'rinadi.",
+      "ˈskɪni"
+     ],
+     [
+      "plump",
+      "to'ladan kelgan",
+      "The baby is plump and healthy.",
+      "Chaqaloq to'la va sog'lom.",
+      "plʌmp"
+     ],
+     [
+      "stocky",
+      "pakana va baquvvat",
+      "Wrestlers are often stocky.",
+      "Kurashchilar ko'pincha pakana-baquvvat bo'ladi.",
+      "ˈstɑki"
+     ],
+     [
+      "well-built",
+      "baquvvat qomatli",
+      "He is more well-built than his friend.",
+      "U do'stidan baquvvatroq.",
+      ""
+     ],
+     [
+      "bald",
+      "kal",
+      "My uncle is balder than my dad.",
+      "Amakim dadamdan ko'ra kalroq.",
+      "bɔld"
+     ],
+     [
+      "youthful",
+      "yosh ko'rinadigan",
+      "She looks more youthful than her age.",
+      "U yoshidan yoshroq ko'rinadi.",
+      "ˈjuθfəl"
+     ]
+    ],
+    "strong": [
+     [
+      "freckled",
+      "sepkilli",
+      "Her face is more freckled in summer.",
+      "Yozda uning yuzi sepkilliroq bo'ladi.",
+      "ˈfrɛkəld"
+     ],
+     [
+      "rosy-cheeked",
+      "qizil yanoqli",
+      "The children are rosy-cheeked from the cold.",
+      "Bolalarning yanoqlari sovuqdan qizargan.",
+      ""
+     ],
+     [
+      "well-groomed",
+      "orasta, o'ziga qaraydigan",
+      "He is always well-groomed.",
+      "U doim orasta yuradi.",
+      ""
+     ],
+     [
+      "stylish",
+      "did bilan kiyinadigan",
+      "She is more stylish than her colleagues.",
+      "U hamkasblaridan didliroq kiyinadi.",
+      "ˈstaɪlɪʃ"
+     ],
+     [
+      "trendy",
+      "modaga mos",
+      "Trendy clothes are more expensive.",
+      "Modadagi kiyimlar qimmatroq.",
+      "ˈtrɛndi"
+     ],
+     [
+      "neat",
+      "ozoda, tartibli",
+      "His room is neater than mine.",
+      "Uning xonasi menikidan ozodaroq.",
+      "nit"
+     ],
+     [
+      "ordinary",
+      "oddiy, odatiy",
+      "He looks ordinary but he is very clever.",
+      "U oddiy ko'rinadi, lekin juda aqlli.",
+      "ˈɔrdəˌnɛri"
+     ],
+     [
+      "radiant",
+      "yuzidan nur yog'iladigan",
+      "The bride looked radiant.",
+      "Kelin nur sochib turardi.",
+      "ˈreɪˌdiənt"
+     ],
+     [
+      "graceful",
+      "nazokatli",
+      "Dancers are more graceful than footballers.",
+      "Raqqoslar futbolchilardan nazokatliroq.",
+      "ˈgreɪsfəl"
+     ],
+     [
+      "adorable",
+      "juda yoqimtoy",
+      "Her puppy is adorable.",
+      "Uning kuchukchasi juda yoqimtoy.",
+      "əˈdɔrəbəl"
+     ],
+     [
+      "tall",
+      "baland bo'yli",
+      "He is taller than his father.",
+      "U otasidan baland.",
+      "tɔl"
+     ],
+     [
+      "short",
+      "past bo'yli",
+      "I'm shorter than my sister.",
+      "Men opamdan pastroqman.",
+      "ʃɔrt"
+     ],
+     [
+      "medium height",
+      "o'rta bo'yli",
+      "She is of medium height.",
+      "U o'rta bo'yli.",
+      "ˈmidiəm haɪt"
+     ],
+     [
+      "overweight",
+      "ortiqcha vaznli",
+      "He is a bit overweight.",
+      "U biroz ortiqcha vaznli.",
+      "ˌoʊvərˈweɪt"
+     ],
+     [
+      "curly hair",
+      "jingalak soch",
+      "Her hair is curlier than mine.",
+      "Uning sochi menikidan jingalakroq.",
+      "ˈkərli hɛr"
+     ],
+     [
+      "straight hair",
+      "tekis soch",
+      "She has long straight hair.",
+      "Uning sochi uzun va tekis.",
+      "streɪt hɛr"
+     ],
+     [
+      "wavy hair",
+      "to'lqinsimon soch",
+      "He has wavy dark hair.",
+      "Uning sochi to'lqinsimon va qora.",
+      "ˈweɪvi hɛr"
+     ],
+     [
+      "blond(e)",
+      "sariq sochli",
+      "Her brother is blonder than her.",
+      "Ukasi undan sarg'ishroq sochli.",
+      ""
+     ],
+     [
+      "grey hair",
+      "oq (kulrang) soch",
+      "Dad has more grey hair than Mum.",
+      "Dadamda oyimdan ko'ra ko'proq oq soch bor.",
+      "greɪ hɛr"
+     ],
+     [
+      "thick hair",
+      "qalin soch",
+      "My hair is thicker than yours.",
+      "Mening sochim senikidan qalinroq.",
+      "θɪk hɛr"
+     ]
+    ],
+    "super": [
+     [
+      "have cute dimples",
+      "chiroyli kuldirgichi bo'lmoq",
+      "She has cute dimples when she smiles.",
+      "Kulganda uning chiroyli kuldirgichlari ko'rinadi.",
+      "hæv kjut ˈdɪmpəlz"
+     ],
+     [
+      "have sparkling eyes",
+      "chaqnab turadigan ko'zlari bo'lmoq",
+      "The child has sparkling eyes.",
+      "Bolaning ko'zlari chaqnab turadi.",
+      "hæv ˈspɑrkəlɪŋ aɪz"
+     ],
+     [
+      "have a button nose",
+      "puchuq burni bo'lmoq",
+      "The baby has a cute button nose.",
+      "Chaqaloqning chiroyli puchuq burni bor.",
+      "hæv ə ˈbətən noʊz"
+     ],
+     [
+      "have a friendly smile",
+      "do'stona tabassumi bo'lmoq",
+      "Our teacher has a friendly smile.",
+      "Ustozimizning do'stona tabassumi bor.",
+      "hæv ə ˈfrɛndli smaɪl"
+     ],
+     [
+      "have bushy eyebrows",
+      "qalin qoshlari bo'lmoq",
+      "He has bushier eyebrows than his brother.",
+      "Uning qoshlari akasinikidan qalinroq.",
+      "hæv ˈbʊʃi ˈaɪˌbraʊz"
+     ],
+     [
+      "have a dark complexion",
+      "qoracha bo'lmoq",
+      "She has a darker complexion than her sister.",
+      "U singlisidan qoracharoq.",
+      "hæv ə dɑrk kəmˈplɛkʃən"
+     ],
+     [
+      "have a crew cut",
+      "kalta soch (erkak) bo'lmoq",
+      "Soldiers have a crew cut.",
+      "Askarlar sochini kalta oldiradi.",
+      "hæv ə kru kət"
+     ],
+     [
+      "have a receding hairline",
+      "tepakal bo'la boshlamoq",
+      "He has a receding hairline.",
+      "U tepakal bo'la boshlagan.",
+      "hæv ə rɪˈsidɪŋ ˈhɛˌrlaɪn"
+     ],
+     [
+      "develop wrinkles",
+      "ajin paydo bo'lmoq",
+      "Grandma has developed deep wrinkles.",
+      "Buvimda chuqur ajinlar paydo bo'lgan.",
+      "dɪˈvɛləp ˈrɪŋkəlz"
+     ],
+     [
+      "have pimples",
+      "husnbuzari bo'lmoq",
+      "Teenagers often have pimples.",
+      "O'smirlarda ko'pincha husnbuzar bo'ladi.",
+      "hæv ˈpɪmpəlz"
+     ],
+     [
+      "ponytail",
+      "dumsimon soch turmagi",
+      "She wears her hair in a ponytail.",
+      "U sochini dum qilib bog'laydi.",
+      "ˈpoʊniˌteɪl"
+     ],
+     [
+      "fringe",
+      "peshona sochi",
+      "Her fringe is shorter than before.",
+      "Peshona sochi avvalgidan kaltaroq.",
+      "frɪnʤ"
+     ],
+     [
+      "glasses",
+      "ko'zoynak",
+      "He looks cleverer in glasses.",
+      "U ko'zoynakda aqlliroq ko'rinadi.",
+      "ˈglæsɪz"
+     ],
+     [
+      "scar",
+      "chandiq",
+      "He has a small scar on his chin.",
+      "Uning iyagida kichik chandiq bor.",
+      "skɑr"
+     ],
+     [
+      "tanned",
+      "qoraygan (quyoshdan)",
+      "She is more tanned after the holiday.",
+      "Ta'tildan keyin u qorayibroq qaytdi.",
+      "tænd"
+     ],
+     [
+      "pale",
+      "rangpar",
+      "You look paler than usual. Are you ill?",
+      "Odatdagidan rangparroqsan. Kasalmisan?",
+      "peɪl"
+     ],
+     [
+      "middle-aged",
+      "o'rta yoshli",
+      "A middle-aged man opened the door.",
+      "Eshikni o'rta yoshli kishi ochdi.",
+      "ˈmɪdəˌleɪgd"
+     ],
+     [
+      "elderly",
+      "keksa",
+      "The elderly lady is as active as her daughter.",
+      "Keksa ayol qizi kabi faol.",
+      "ˈɛldərli"
+     ],
+     [
+      "look like",
+      "o'xshamoq (ko'rinish)",
+      "You look like your mother.",
+      "Sen onangga o'xshaysan.",
+      "lʊk laɪk"
+     ],
+     [
+      "take after",
+      "tortmoq (xarakter/ko'rinish)",
+      "He takes after his father.",
+      "U otasiga tortgan.",
+      "teɪk ˈæftər"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Comparative yozing",
+     "type": "gap",
+     "instr": "Qavsdagi sifatning taqqoslash darajasini yozing (kitob 45 gap)",
+     "items": [
+      "The weather today is ___ than yesterday. (cold)",
+      "She is ___ than her sister. (tall)",
+      "This book is ___ than the one I read last week. (interesting)",
+      "The movie was ___ than I expected. (good)",
+      "My car is ___ than yours. (fast)",
+      "This task is ___ than the previous one. (difficult)",
+      "Her handwriting is ___ than yours. (neat)",
+      "The traffic is ___ than usual today. (bad)",
+      "She is feeling ___ today. (happy)",
+      "The hotel is ___ than the hostel. (expensive)"
+     ],
+     "answers": [
+      "colder",
+      "taller",
+      "more interesting",
+      "better",
+      "faster",
+      "more difficult",
+      "neater",
+      "worse",
+      "happier",
+      "more expensive"
+     ]
+    },
+    {
+     "title": "as … as",
+     "type": "rewrite",
+     "instr": "\"as … as\" bilan qayta yozing (kitob 8-dars E)",
+     "items": [
+      "Jack's English is worse than Sonia's.",
+      "Alper's bag is 3 kg. Ahmet's bag is 5 kg.",
+      "An orange is sweeter than a lemon.",
+      "Terry is 1.70 m. Jason is 1.70 m too.",
+      "Chinese is more difficult than French."
+     ],
+     "answers": [
+      "Jack's English isn't as good as Sonia's.",
+      "Alper's bag isn't as heavy as Ahmet's bag.",
+      "A lemon isn't as sweet as an orange.",
+      "Terry is as tall as Jason.",
+      "French isn't as difficult as Chinese."
+     ]
+    },
+    {
+     "title": "Jadval bo'yicha taqqoslang",
+     "type": "write",
+     "instr": "Miss Bennet 21 / 1.73 / 57 kg; James 23 / 1.82 / 76 kg; Tina 20 / 1.68 / 61 kg (kitob D)",
+     "items": [
+      "Miss Bennet / short / James",
+      "James / tall / his sister",
+      "Miss Bennet / old / Tina",
+      "Tina / young / Miss Bennet",
+      "Miss Bennet / slim / Tina",
+      "James / heavy / Miss Bennet"
+     ],
+     "answers": [
+      "Miss Bennet is shorter than James.",
+      "James is taller than his sister.",
+      "Miss Bennet is older than Tina.",
+      "Tina is younger than Miss Bennet.",
+      "Miss Bennet is slimmer than Tina.",
+      "James is heavier than Miss Bennet."
+     ]
+    },
+    {
+     "title": "Odamni tasvirlang",
+     "type": "speaking",
+     "instr": "Juftlikda: oila a'zosini tasvirlang (5 gap: bo'y, soch, ko'z, tana, uslub) va o'zingiz bilan taqqoslang",
+     "items": [
+      "height",
+      "hair",
+      "build",
+      "style",
+      "face"
+     ],
+     "answers": [
+      "My brother is taller than me.",
+      "He has shorter, curlier hair than me.",
+      "He is more muscular than me because he does sport.",
+      "I am more stylish than him.",
+      "We both have a friendly smile — I look like him."
+     ],
+     "note": "Ustoz \"more tall / taller that\" xatolarini kuzatadi."
+    },
+    {
+     "title": "Rasm bilan",
+     "type": "compare",
+     "instr": "Ustoz 2 mashhur odam rasmini ko'rsatadi; 6 taqqoslash gapi (3 ta -er, 3 ta more)",
+     "items": [
+      "old",
+      "tall",
+      "attractive",
+      "stylish",
+      "slim",
+      "famous"
+     ],
+     "answers": [
+      "A is older than B.",
+      "B is taller than A.",
+      "A is more attractive than B.",
+      "B is more stylish than A.",
+      "A is as slim as B.",
+      "B is more famous than A."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "She is more tall than me.",
+      "This exam was more easy.",
+      "He is taller that his father.",
+      "Your bag is more better than mine.",
+      "She is as slimmer as me."
+     ],
+     "answers": [
+      "She is taller than me.",
+      "This exam was easier.",
+      "He is taller than his father.",
+      "Your bag is better than mine.",
+      "She is as slim as me."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 7: 45 gap (comparative) va 20 gap (as…as) — daftarga",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 21–24",
+     "type": "read",
+     "instr": "Hafta davomida; Topic 21 (How my life has changed) dan 5 ta \"used to\" gapni ko'chiring",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Oilam taqqoslash",
+     "type": "write",
+     "instr": "8 gap: oila a'zolarini taqqoslang (4 ta -er, 3 ta more, 1 ta as…as)",
+     "answers": "Erkin; than / as…as tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Akam mendan balandroq.",
+      "Bu kitob o'sha kitobdan qiziqroq.",
+      "Ukam men kabi ozg'in.",
+      "Bugun havo kechagidan sovuqroq.",
+      "Uning ingliz tili menikidan yaxshiroq."
+     ],
+     "answers": [
+      "My brother is taller than me.",
+      "This book is more interesting than that one.",
+      "My brother is as slim as me.",
+      "The weather is colder today than yesterday.",
+      "His/Her English is better than mine."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "APPEARANCE CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Clothes",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Appearance yozma (kitob)",
+     "47 so'z tarjimasiga qarab inglizchasi, 6 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 25. Why aren't babies born on certain days?",
+    "text": [
+     "Do you know anyone whose birthday is Christmas Day? You may know a few, but actually, having a birthday on that day is quite rare.",
+     "December 25th is the least common birthday in the USA, Australia and New Zealand. Between 30% and 40% fewer babies are born on this day than on the peak days. In England, Wales and Ireland, Christmas Day is the second rarest day for a birthday. There, the fewest birthdays are on December 26th, the national holiday called Boxing Day. In the USA, the four least common birthdays are Christmas, New Year, Thanksgiving and Independence Day.",
+     "So why does this happen? A third of babies in the USA are born by caesarean. Doctors can plan the date for these operations. They don't schedule them for the national holidays because they want to be celebrating, not working.",
+     "Some times of year are more common for birthdays than others. In the USA and New Zealand, the most popular month is September. In the UK, it's September or early October. Many babies are conceived in the cold winter months when days are short. In countries further north than the UK, like Norway and Russia, the peak months are earlier: in July or August.",
+     "Think about your birthday. Is it at a common time of year? Would you prefer your birthday to be at a different time of year?"
+    ],
+    "glossary": [
+     "rare — kam uchraydigan",
+     "the least common — eng kam uchraydigan",
+     "fewer — kamroq",
+     "peak — eng yuqori nuqta",
+     "schedule — rejalashtirmoq",
+     "celebrate — nishonlamoq",
+     "common — keng tarqalgan",
+     "further north — shimolroqda",
+     "prefer — afzal ko'rmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Taqqoslash so'zlarini toping",
+      "type": "find",
+      "instr": "Matndan 5 ta comparative/superlative so'z toping va tarjima qiling",
+      "items": [
+       "fewer",
+       "the least common",
+       "more common",
+       "further north",
+       "earlier"
+      ],
+      "answers": [
+       "fewer babies — kamroq chaqaloq",
+       "eng kam uchraydigan",
+       "ko'proq uchraydigan",
+       "shimolroqda",
+       "ertaroq"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Christmas Day is the least common birthday in the USA.",
+       "In England, the fewest birthdays are on December 25th.",
+       "Doctors plan caesarean operations on holidays.",
+       "September is the most popular birth month in the USA."
+      ],
+      "answers": [
+       "True",
+       "False (December 26th)",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why are there fewer babies born on national holidays?",
+       "Which months are the peak months in Norway and Russia?"
+      ],
+      "answers": [
+       "Doctors don't schedule operations then (they want to celebrate).",
+       "July or August."
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 25 (sinfda); Topic 21–24 — uyga."
+   }
+  },
+  {
+   "no": 8,
+   "title": "Superlative Degree",
+   "grammar_topic": "SUPERLATIVE (the -est / the most …)",
+   "vocab_topic": "Character (xarakter sifatlari)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 8 – Superlative degree (jadval, A–C mashqlar); ADJECTIVES OF CHARACTER (71); Reading Topic 23.",
+   "objectives": [
+    "the -est / the most bilan eng yuqori darajani tuzish; \"in / of\" bilan guruhni aytish.",
+    "Comparative va superlative'ni bir matnda to'g'ri almashib ishlatish (kitob B matni).",
+    "Xarakter sifatlari CORE 20 bilan odamlarni tasvirlash: \"the most reliable person I know\".",
+    "Reading: Topic 23 (rekordlar) — the most / the longest / the furthest."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Character (xarakter sifatlari) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "\"Who is the tallest in the class?\" — hamma turadi, eng balandi topiladi. \"Who is the most talkative?\" — kulgi bilan."
+    ],
+    [
+     8,
+     "Kahoot — Comparative degree",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Comparative degree lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: 1 bo'g'in → the + adj + est; 2+ bo'g'in → the most + adj. \"in the world / in our class / of all\" bilan. Istisno: the best, the worst, the furthest."
+    ],
+    [
+     12,
+     "Character (xarakter sifatlari) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Superlative — uch va undan ko'p narsa ichida ENG: the tallest boy in the class.",
+     "1 bo'g'in: the + adj-est (the biggest — undosh ikkilanadi; the nicest). -y: the happiest.",
+     "2+ bo'g'in: the most + adj (the most beautiful). Istisno: the best, the worst, the furthest, the least, the most.",
+     "Superlative'dan keyin: in + joy/guruh (in the world, in our class), of + all (of all my friends). Ko'pincha Present Perfect bilan: \"the best film I have ever seen\"."
+    ],
+    "formulas": [
+     [
+      "1 bo'g'in",
+      "the + adj-est",
+      "Everest is the highest mountain in the world.",
+      "Everest — dunyodagi eng baland tog'."
+     ],
+     [
+      "2+ bo'g'in",
+      "the most + adj",
+      "I'm the most curious man in the world.",
+      "Men dunyodagi eng qiziquvchan odamman."
+     ],
+     [
+      "Istisno",
+      "the best / the worst / the furthest",
+      "She is the best student in our group.",
+      "U guruhimizdagi eng yaxshi o'quvchi."
+     ],
+     [
+      "in / of",
+      "superlative + in + joy / of + all",
+      "He is the oldest of all.",
+      "U hammadan katta."
+     ],
+     [
+      "ever bilan",
+      "the + superlative + I have ever + V3",
+      "This is the best film I have ever seen.",
+      "Bu men ko'rgan eng yaxshi kino."
+     ],
+     [
+      "one of",
+      "one of the + superlative + ko'plik",
+      "Tashkent is one of the biggest cities in Asia.",
+      "Toshkent — Osiyodagi eng katta shaharlardan biri."
+     ]
+    ],
+    "presentation": [
+     [
+      "Who is the tallest in your family?",
+      "My father is the tallest."
+     ],
+     [
+      "What is the most difficult subject for you?",
+      "Maths is the most difficult subject for me."
+     ],
+     [
+      "Which is the biggest city in Uzbekistan?",
+      "Tashkent is the biggest city."
+     ],
+     [
+      "Who is the most hard-working student in the class?",
+      "Dilnoza is the most hard-working."
+     ],
+     [
+      "What is the best film you have ever seen?",
+      "The best film I have ever seen is \"Inception\"."
+     ],
+     [
+      "Who is the funniest person you know?",
+      "My cousin is the funniest."
+     ],
+     [
+      "Which is the longest river in the world?",
+      "The Nile is the longest river."
+     ],
+     [
+      "What is the worst weather for you?",
+      "The worst weather is hot and humid."
+     ],
+     [
+      "Who is the most reliable friend you have?",
+      "Ali is the most reliable friend I have."
+     ],
+     [
+      "What's the most expensive thing you've bought?",
+      "The most expensive thing is my phone."
+     ]
+    ],
+    "notes": [
+     "Superlative'dan oldin har doim \"the\" (yoki my/his: my best friend).",
+     "Comparative — ikki narsa (than); superlative — uch va undan ko'p (the … in/of).",
+     "\"the most\" o'rniga \"the least\" — eng kam: the least expensive = the cheapest.",
+     "Xarakter so'zlarida juftlarni birga yodlang: reliable = trustworthy; hard-working = industrious; sociable = out-going."
+    ],
+    "mistakes": [
+     [
+      "He is the most tall in the class.",
+      "He is the tallest in the class.",
+      "1 bo'g'in → -est."
+     ],
+     [
+      "She is the best student of the class.",
+      "She is the best student in the class.",
+      "Guruh/joy → in."
+     ],
+     [
+      "It's the most good film.",
+      "It's the best film.",
+      "Istisno."
+     ],
+     [
+      "He is most intelligent student.",
+      "He is the most intelligent student.",
+      "\"the\" kerak."
+     ],
+     [
+      "This is the more interesting book of all.",
+      "This is the most interesting book of all.",
+      "3+ narsa → superlative."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitob ro'yxatidagi eng ko'p ishlatiladigan ijobiy sifatlar; STRONG — sinonim juftlar va kuchli so'zlar; SUPER — salbiy va murakkab sifatlar.",
+     "Har so'zga: \"the most … person I know is …\" — o'quvchi haqiqiy odamni aytadi."
+    ],
+    "core": [
+     [
+      "kind",
+      "mehribon",
+      "She is the kindest person in our family.",
+      "U oilamizdagi eng mehribon inson.",
+      "kaɪnd"
+     ],
+     [
+      "generous",
+      "sahiy",
+      "My grandfather was the most generous man I knew.",
+      "Bobom men bilgan eng sahiy odam edi.",
+      "ˈʤɛnərəs"
+     ],
+     [
+      "honest",
+      "rostgo'y, halol",
+      "Be honest — it's the best policy.",
+      "Rostgo'y bo'l — bu eng yaxshi yo'l.",
+      "ˈɑnəst"
+     ],
+     [
+      "hard-working",
+      "mehnatkash",
+      "He is the most hard-working student in the class.",
+      "U sinfdagi eng mehnatkash o'quvchi.",
+      "ˌhɑːd ˈwɜːkɪŋ"
+     ],
+     [
+      "reliable",
+      "ishonchli",
+      "She is the most reliable friend I have.",
+      "U mening eng ishonchli do'stim.",
+      "rɪˈlaɪəbəl"
+     ],
+     [
+      "loyal",
+      "sodiq",
+      "Dogs are the most loyal animals.",
+      "Itlar — eng sodiq hayvonlar.",
+      "ˈlɔɪəl"
+     ],
+     [
+      "responsible",
+      "mas'uliyatli",
+      "The oldest child is usually the most responsible.",
+      "To'ng'ich farzand odatda eng mas'uliyatli bo'ladi.",
+      "riˈspɑnsəbəl"
+     ],
+     [
+      "sociable",
+      "kirishimli",
+      "She is the most sociable person in the office.",
+      "U ofisdagi eng kirishimli odam.",
+      "ˈsoʊʃəbəl"
+     ],
+     [
+      "talkative",
+      "sergap",
+      "My aunt is the most talkative in the family.",
+      "Xolam oiladagi eng sergap.",
+      "ˈtɔkətɪv"
+     ],
+     [
+      "cheerful",
+      "quvnoq",
+      "He is the most cheerful boy I know.",
+      "U men bilgan eng quvnoq bola.",
+      "ˈʧɪrfəl"
+     ],
+     [
+      "patient",
+      "sabrli",
+      "Teachers must be the most patient people.",
+      "O'qituvchilar eng sabrli odamlar bo'lishi kerak.",
+      "ˈpeɪʃənt"
+     ],
+     [
+      "confident",
+      "o'ziga ishongan",
+      "She was the most confident speaker.",
+      "U eng o'ziga ishongan notiq edi.",
+      "ˈkɑnfədənt"
+     ],
+     [
+      "creative",
+      "ijodkor",
+      "He is the most creative designer here.",
+      "U bu yerdagi eng ijodkor dizayner.",
+      "kriˈeɪtɪv"
+     ],
+     [
+      "polite",
+      "muloyim, odobli",
+      "Be the politest person in the room.",
+      "Xonadagi eng odobli inson bo'l.",
+      "pəˈlaɪt"
+     ],
+     [
+      "punctual",
+      "vaqtida keladigan",
+      "The Japanese are famous for being the most punctual.",
+      "Yaponlar eng vaqtida keladigan xalq sifatida mashhur.",
+      "ˈpəŋkʧuəl"
+     ],
+     [
+      "ambitious",
+      "orzumand, shuhratparast",
+      "She is the most ambitious girl in the group.",
+      "U guruhdagi eng orzumand qiz.",
+      "æmˈbɪʃəs"
+     ],
+     [
+      "intelligent",
+      "aqlli",
+      "Who is the most intelligent person in history?",
+      "Tarixdagi eng aqlli inson kim?",
+      "ˌɪnˈtɛləʤənt"
+     ],
+     [
+      "easy-going",
+      "bag'rikeng, xotirjam",
+      "My best friend is the most easy-going person.",
+      "Eng yaqin do'stim — eng xotirjam odam.",
+      ""
+     ],
+     [
+      "funny",
+      "kulgili, hazilkash",
+      "He is the funniest boy in the class.",
+      "U sinfdagi eng hazilkash bola.",
+      "ˈfəni"
+     ],
+     [
+      "shy",
+      "uyatchan",
+      "I was the shyest child in the class.",
+      "Men sinfdagi eng uyatchan bola edim.",
+      "ʃaɪ"
+     ]
+    ],
+    "strong": [
+     [
+      "considerate / thoughtful",
+      "sermulohaza, e'tiborli",
+      "She is the most considerate nurse.",
+      "U eng e'tiborli hamshira.",
+      "kənˈsɪdərət  ˈθɔtfəl"
+     ],
+     [
+      "warm-hearted",
+      "mehribon, iliq qalbli",
+      "Grandma is the most warm-hearted person.",
+      "Buvim eng iliq qalbli inson.",
+      ""
+     ],
+     [
+      "supportive",
+      "qo'llab-quvvatlovchi",
+      "My parents are the most supportive.",
+      "Ota-onam eng qo'llab-quvvatlovchi.",
+      "səˈpɔrtɪv"
+     ],
+     [
+      "enthusiastic",
+      "ishtiyoqli, g'ayratli",
+      "He is the most enthusiastic player.",
+      "U eng ishtiyoqli o'yinchi.",
+      "ɪnˌθuziˈæstɪk"
+     ],
+     [
+      "energetic",
+      "serg'ayrat",
+      "Children are the most energetic in the morning.",
+      "Bolalar ertalab eng serg'ayrat bo'ladi.",
+      "ˌɛnərˈʤɛtɪk"
+     ],
+     [
+      "trustworthy",
+      "ishonsa bo'ladigan",
+      "He is the most trustworthy colleague.",
+      "U eng ishonchli hamkasb.",
+      "ˈtrəstˌwərði"
+     ],
+     [
+      "faithful",
+      "sodiq, vafodor",
+      "A faithful friend is the best gift.",
+      "Vafodor do'st — eng yaxshi sovg'a.",
+      "ˈfeɪθfəl"
+     ],
+     [
+      "industrious",
+      "mehnatsevar",
+      "Ants are the most industrious insects.",
+      "Chumolilar eng mehnatsevar hasharotlar.",
+      "ˌɪnˈdəstriəs"
+     ],
+     [
+      "respectful",
+      "hurmatli, hurmat qiladigan",
+      "Be respectful to the elderly.",
+      "Keksalarga hurmat bilan bo'l.",
+      "rɪˈspɛktfəl"
+     ],
+     [
+      "modest / humble",
+      "kamtar",
+      "The best people are often the most modest.",
+      "Eng yaxshi odamlar ko'pincha eng kamtar bo'ladi.",
+      "ˈmɑdəst  ˈhəmbəl"
+     ],
+     [
+      "calm",
+      "vazmin, bosiq",
+      "She stayed the calmest during the exam.",
+      "U imtihon paytida eng bosiq turdi.",
+      "kɑm"
+     ],
+     [
+      "curious",
+      "qiziquvchan",
+      "Children are the most curious learners.",
+      "Bolalar eng qiziquvchan o'rganuvchilar.",
+      "ˈkjʊriəs"
+     ],
+     [
+      "open-minded",
+      "dunyoqarashi keng",
+      "Travellers are usually the most open-minded.",
+      "Sayohatchilar odatda eng keng fikrli bo'ladi.",
+      ""
+     ],
+     [
+      "sincere",
+      "samimiy",
+      "Her smile is the most sincere.",
+      "Uning tabassumi eng samimiy.",
+      "sɪnˈsɪr"
+     ],
+     [
+      "mature",
+      "yetuk, pishgan",
+      "He is the most mature student in the group.",
+      "U guruhdagi eng yetuk o'quvchi.",
+      "məˈʧʊr"
+     ],
+     [
+      "flexible",
+      "moslashuvchan",
+      "The most flexible people succeed.",
+      "Eng moslashuvchan odamlar muvaffaqiyatga erishadi.",
+      "ˈflɛksəbəl"
+     ],
+     [
+      "hospitable",
+      "mehmondo'st",
+      "Uzbeks are among the most hospitable people.",
+      "O'zbeklar eng mehmondo'st xalqlardan.",
+      "ˈhɑˈspɪtəbəl"
+     ],
+     [
+      "quick-minded",
+      "tez fikrlaydigan",
+      "She is the most quick-minded in debates.",
+      "U bahslarda eng tez fikrlaydi.",
+      ""
+     ],
+     [
+      "versatile",
+      "serqirra",
+      "He is the most versatile actor of his generation.",
+      "U o'z avlodining eng serqirra aktyori.",
+      "ˈvərsətəl"
+     ],
+     [
+      "outgoing",
+      "tashqariga ochiq, kirishimli",
+      "The most outgoing student became class leader.",
+      "Eng kirishimli o'quvchi sinf sardori bo'ldi.",
+      "ˈaʊtˌgoʊɪŋ"
+     ]
+    ],
+    "super": [
+     [
+      "stingy",
+      "ziqna",
+      "He is the stingiest man in town.",
+      "U shahardagi eng ziqna odam.",
+      "ˈstɪnʤi"
+     ],
+     [
+      "rude / impolite",
+      "qo'pol",
+      "That was the rudest answer I've ever heard.",
+      "Bu men eshitgan eng qo'pol javob edi.",
+      "rud  ˌɪmpəˈlaɪt"
+     ],
+     [
+      "stubborn / obstinate",
+      "o'jar",
+      "My little brother is the most stubborn.",
+      "Ukam eng o'jar.",
+      "ˈstəbərn  ˈɑbstənət"
+     ],
+     [
+      "arrogant",
+      "dimog'dor, takabbur",
+      "The most arrogant people have the fewest friends.",
+      "Eng takabbur odamlarda do'st eng kam bo'ladi.",
+      "ˈɛrəgənt"
+     ],
+     [
+      "immature",
+      "yetilmagan, tajribasiz",
+      "He is the most immature in the group.",
+      "U guruhdagi eng yetilmagan.",
+      "ˌɪməˈtjʊr"
+     ],
+     [
+      "childish",
+      "bolalarcha",
+      "Stop being childish.",
+      "Bolalarcha qiliq qilma.",
+      "ˈʧaɪldɪʃ"
+     ],
+     [
+      "grumpy",
+      "tez jahli chiqadigan, to'ng",
+      "Grandad is the grumpiest in the morning.",
+      "Bobom ertalab eng to'ng bo'ladi.",
+      "ˈgrəmpi"
+     ],
+     [
+      "selfish",
+      "xudbin",
+      "The most selfish player never passes the ball.",
+      "Eng xudbin o'yinchi hech qachon to'pni uzatmaydi.",
+      "ˈsɛlfɪʃ"
+     ],
+     [
+      "naive",
+      "go'l, sodda",
+      "I was the most naive student in the group.",
+      "Men guruhdagi eng sodda o'quvchi edim.",
+      "naɪiv"
+     ],
+     [
+      "nosy",
+      "hamma narsaga burnini suqadigan",
+      "Our neighbour is the nosiest person on the street.",
+      "Qo'shnimiz ko'chadagi eng sinchkov odam.",
+      "ˈnoʊzi"
+     ],
+     [
+      "quarrelsome",
+      "janjalkash",
+      "The most quarrelsome students sit apart.",
+      "Eng janjalkash o'quvchilar alohida o'tiradi.",
+      "kˈwɔrəlsəm"
+     ],
+     [
+      "laid-back",
+      "beg'am, xotirjam",
+      "He is the most laid-back person I know.",
+      "U men bilgan eng beg'am odam.",
+      ""
+     ],
+     [
+      "blunt",
+      "to'g'riso'z (qo'pol darajada)",
+      "She is the bluntest critic.",
+      "U eng to'g'riso'z tanqidchi.",
+      "blənt"
+     ],
+     [
+      "meticulous",
+      "sinchkov, puxta",
+      "The most meticulous students make the fewest mistakes.",
+      "Eng puxta o'quvchilar eng kam xato qiladi.",
+      "məˈtɪkjələs"
+     ],
+     [
+      "erudite",
+      "bilimdon",
+      "He is the most erudite professor here.",
+      "U bu yerdagi eng bilimdon professor.",
+      "ˈɛrəˌdaɪt"
+     ],
+     [
+      "eager / avid",
+      "ishtiyoqi baland",
+      "She is the most eager reader in the class.",
+      "U sinfdagi eng ishtiyoqli kitobxon.",
+      "ˈigər  ˈævɪd"
+     ],
+     [
+      "bookworm",
+      "kitob jinnisi",
+      "My sister is the biggest bookworm at home.",
+      "Opam uydagi eng katta kitob jinnisi.",
+      "ˈbʊkˌwərm"
+     ],
+     [
+      "close-minded",
+      "tor fikrli",
+      "Close-minded people learn the least.",
+      "Tor fikrli odamlar eng kam o'rganadi.",
+      ""
+     ],
+     [
+      "patriotic",
+      "vatanparvar",
+      "He is the most patriotic man in the village.",
+      "U qishloqdagi eng vatanparvar odam.",
+      "ˌpeɪtriˈɑtɪk"
+     ],
+     [
+      "top-notch",
+      "eng zo'r, a'lo darajali",
+      "She is a top-notch teacher.",
+      "U a'lo darajali o'qituvchi.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Comparative yoki superlative",
+     "type": "gap",
+     "instr": "Qavsdagi sifatni to'g'ri darajada yozing (kitob A)",
+     "items": [
+      "Tom is ___ his brother. (old)",
+      "John is ___ boy in our class. (tall)",
+      "My room is ___ room in our house. (small)",
+      "Madonna is ___ Sandra. (popular)",
+      "My English is ___ your English. (good)",
+      "Elizabeth is ___ girl in our group. (beautiful)",
+      "What is ___ film on TV today? (funny)",
+      "The weather today is ___ the weather yesterday. (bad)"
+     ],
+     "answers": [
+      "older than",
+      "the tallest",
+      "the smallest",
+      "more popular than",
+      "better than",
+      "the most beautiful",
+      "the funniest",
+      "worse than"
+     ]
+    },
+    {
+     "title": "Ta'til matni",
+     "type": "gap",
+     "instr": "Matnni to'ldiring (kitob B): comparative yoki superlative",
+     "items": [
+      "My hotel room was ___ (small) the one in the photograph.",
+      "I think it was ___ (small) room in the hotel.",
+      "The beach was ___ (dirty) all the beaches on the island.",
+      "The food was ___ (expensive) I expected.",
+      "It was ___ (expensive) vase in the whole shop.",
+      "But ___ (bad) thing of all was that I lost my passport.",
+      "It was ___ (horrible) holiday of my life."
+     ],
+     "answers": [
+      "smaller than",
+      "the smallest",
+      "the dirtiest of",
+      "more expensive than",
+      "the most expensive",
+      "the worst",
+      "the most horrible"
+     ]
+    },
+    {
+     "title": "David / Tom / George",
+     "type": "write",
+     "instr": "David 25, 70 kg, 1.68, $800, 3 xona; Tom 30, 72 kg, 1.72, $1000, 4 xona; George 35, 75 kg, 1.80, $1500, 5 xona (kitob C)",
+     "items": [
+      "(young) David",
+      "(heavy) George",
+      "(tall) Tom / David",
+      "(tall) George",
+      "(much money) George / Tom",
+      "(big house) George"
+     ],
+     "answers": [
+      "David is younger than Tom and George.",
+      "George is the heaviest of all.",
+      "Tom is taller than David.",
+      "George is the tallest of all.",
+      "George gets more money than Tom.",
+      "George's house is the biggest of all."
+     ]
+    },
+    {
+     "title": "Xarakter: kim eng…?",
+     "type": "speaking",
+     "instr": "Juftlikda: \"Who is the most … person you know?\" — 6 savol, javobda sabab",
+     "items": [
+      "kind",
+      "talkative",
+      "hard-working",
+      "funny",
+      "reliable",
+      "stubborn"
+     ],
+     "answers": [
+      "Who is the kindest person you know? — My grandmother, because she helps everyone.",
+      "Who is the most talkative? — …",
+      "Who is the most hard-working? — …",
+      "Who is the funniest? — …",
+      "Who is the most reliable? — …",
+      "Who is the most stubborn? — …"
+     ],
+     "note": "Har javobda \"because\" bo'lsin; ustoz \"the most kind\" xatosini kuzatadi."
+    },
+    {
+     "title": "Ever bilan",
+     "type": "write",
+     "instr": "\"the + superlative + I have ever + V3\" qolipida 5 gap",
+     "items": [
+      "film / see",
+      "book / read",
+      "food / eat",
+      "place / visit",
+      "exam / take"
+     ],
+     "answers": [
+      "This is the best film I have ever seen.",
+      "It's the most interesting book I have ever read.",
+      "Plov is the most delicious food I have ever eaten.",
+      "Samarkand is the most beautiful place I have ever visited.",
+      "That was the hardest exam I have ever taken."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He is the most tall boy here.",
+      "She is the best student of our class.",
+      "This is most interesting book.",
+      "It's the goodest phone.",
+      "Ali is the tallest than Bobur."
+     ],
+     "answers": [
+      "He is the tallest boy here.",
+      "She is the best student in our class.",
+      "This is the most interesting book.",
+      "It's the best phone.",
+      "Ali is taller than Bobur."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 8: A, B, C, D, E — daftarga; CHARACTER 71 so'zni 1 marta ko'chiring",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 22, 24",
+     "type": "read",
+     "instr": "Topic 22 (Why do people collect?) — 5 sabab ro'yxati; Topic 24 — 5 notanish so'z",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Eng-eng",
+     "type": "write",
+     "instr": "8 gap: \"the … in my family / class / city\" (4 ta -est, 4 ta the most) + 2 gap \"I have ever\"",
+     "answers": "Erkin; the + superlative + in/of."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U sinfdagi eng aqlli o'quvchi.",
+      "Bu men ko'rgan eng yaxshi kino.",
+      "Toshkent — O'zbekistondagi eng katta shahar.",
+      "Bobom oilamizdagi eng sahiy odam.",
+      "Bu yilning eng sovuq kuni."
+     ],
+     "answers": [
+      "She/He is the most intelligent student in the class.",
+      "This is the best film I have ever seen.",
+      "Tashkent is the biggest city in Uzbekistan.",
+      "My grandfather is the most generous person in our family.",
+      "It's the coldest day of the year."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CHARACTER CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Appearance",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 6 / 8 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Character yozma (kitob)",
+     "71 so'z tarjimasiga qarab inglizchasi, 8 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 23. The man with the most world records",
+    "text": [
+     "Ashrita Furman is a record-breaking record-breaker: he has set more records than anyone else in the world! In the last 40 years, he has established more than 600 records!",
+     "As a child, Ashrita loved reading the Guinness Book of World Records. He wanted to be in it too. But he thought people had to be good at sports to be in the book. He wasn't a good athlete. He felt his dream would never come true.",
+     "Later in life, Ashrita learned meditation, and with this, he learned that nothing is impossible. He tested this idea in 1978 by entering a 24-hour bike race in New York. Without any training, Ashrita came third! After that, he started thinking about breaking records again. He did 27,000 jumping jacks in 6 hours 45 minutes and became a record holder in 1980.",
+     "Today, Ashrita has a long list of records, including: walking the furthest distance with a bike on his chin, cycling the longest distance with a bottle on his head and lighting the most candles on a birthday cake. He says his favourite record was \"the longest distance on a pogo stick\" — 11.5 miles near Mount Fuji. The most difficult record was \"the most forward rolls\": in 10 hours 30 minutes, he did 8,341 of them.",
+     "If you want to break a world record too, Ashrita gives this advice: \"Choose something you enjoy because you will need to practise. And don't give up. Your mind will tell you that something is impossible, but it isn't.\""
+    ],
+    "glossary": [
+     "set / break a record — rekord o'rnatmoq / yangilamoq",
+     "establish — o'rnatmoq",
+     "athlete — sportchi",
+     "come true — ro'yobga chiqmoq",
+     "meditation — meditatsiya",
+     "jumping jacks — sakrash mashqi",
+     "record holder — rekordchi",
+     "furthest — eng uzoq",
+     "forward roll — oldinga umbaloq",
+     "give up — taslim bo'lmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Superlative toping",
+      "type": "find",
+      "instr": "Matndan 5 ta superlative toping",
+      "items": [
+       "most",
+       "furthest",
+       "longest",
+       "most difficult",
+       "more than"
+      ],
+      "answers": [
+       "the most world records / the most candles / the most forward rolls",
+       "the furthest distance",
+       "the longest distance",
+       "the most difficult record",
+       "more records than anyone else (comparative)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Ashrita was a good athlete as a child.",
+       "He came third in a 24-hour bike race in 1978.",
+       "His favourite record was the most forward rolls.",
+       "He has set more than 600 records."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (pogo stick)",
+       "True"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "What did Ashrita learn from meditation?",
+       "What is his advice for breaking a record?"
+      ],
+      "answers": [
+       "That nothing is impossible.",
+       "Choose something you enjoy, practise, don't give up."
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 23 (sinfda); Topic 22, 24 — uyga."
+   }
   }
  ]
 }

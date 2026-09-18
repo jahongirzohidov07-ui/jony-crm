@@ -4765,6 +4765,4720 @@
      }
     ]
    }
+  },
+  {
+   "no": 6,
+   "title": "Be allowed to, Be permitted to, Be supposed to",
+   "grammar_topic": "BE ALLOWED TO (ruxsat) / BE PERMITTED TO (rasmiy ruxsat) / BE SUPPOSED TO (kutilgan, qoida bo'yicha)",
+   "vocab_topic": "Essential Words 6 — Law, rules and society (qonun, qoidalar va jamiyat)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 6 – Be allowed to, be permitted to, be supposed to (3 qatorli jadval); Essential Words 6; Sample essay 4 (TV and children — rules); Audio 31–35 (ustoz skripti); Reading — Nelson Mandela (Jony Academy matni).",
+   "objectives": [
+    "be allowed to / be permitted to / be supposed to farqini bilish va barcha zamonlarda tuzish.",
+    "can (ruxsat) → be allowed to (zamonlar); should → be supposed to (kutilgan) almashinuvi.",
+    "\"was supposed to\" — rejalashtirilgan, lekin bo'lmagan (\"I was supposed to call, but I forgot\").",
+    "Qonun va jamiyat Essential Words 6 bilan huquq, erkinlik va qoidalar haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 6 — Law, rules and society (qonun, qoidalar va jamiyat) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz sinf qoidalarini uch xil aytadi: \"You are allowed to use a dictionary. You are not permitted to use a phone. You are supposed to be here at 9.\" — farq: ruxsat / rasmiy ruxsat / kutilgan (lekin ba'zan bo'lmaydi)."
+    ],
+    [
+     8,
+     "Kahoot — Progress test 1 natijalari + adverbial phrases",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Progress test 1 natijalari + adverbial phrases lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: to be allowed to (ruxsat berilgan, imkon bor), to be permitted to (rasmiy ruxsat), to be supposed to (kutilgan, qoida bo'yicha — \"kerak edi, lekin…\"). Hammasi: S + am/is/are/was/were + … to + V1. Passiv modallar bilan bog'lanish: can → be allowed to (barcha zamonlarda); should → be supposed to."
+    ],
+    [
+     12,
+     "Essential Words 6 — Law, rules and society (qonun, qoidalar va jamiyat) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "BE ALLOWED TO + V1 — ruxsat berilgan (og'zaki, umumiy): \"He is allowed to stay out late.\" Inkor: isn't allowed to (taqiq).",
+     "BE PERMITTED TO + V1 — rasmiy ruxsat (qoida, hujjat): \"They were permitted to enter.\" Rasmiy e'lonlarda: \"Smoking is not permitted.\"",
+     "BE SUPPOSED TO + V1 — kutilgan, qoida bo'yicha shunday bo'lishi kerak: \"You are supposed to wear a uniform.\" O'tganda — bo'lmagan: \"I was supposed to call you (lekin qilmadim).\"",
+     "can (ruxsat) faqat Present; boshqa zamonlarda be allowed to: \"will be allowed to\", \"have been allowed to\"."
+    ],
+    "formulas": [
+     [
+      "Be allowed to",
+      "S + am/is/are/was/were + allowed to + V1",
+      "He is allowed to stay out late.",
+      "Unga kechgacha qolishga ruxsat berilgan."
+     ],
+     [
+      "Be permitted to",
+      "S + be + permitted to + V1 (rasmiy)",
+      "They were permitted to enter.",
+      "Ularga kirishga ruxsat berilgan edi."
+     ],
+     [
+      "Be supposed to",
+      "S + be + supposed to + V1",
+      "You are supposed to wear a uniform.",
+      "Sen forma kiyishing kerak (qoida)."
+     ],
+     [
+      "Inkor",
+      "S + be + not + allowed/permitted/supposed to + V1",
+      "Prisoners weren't allowed to read newspapers.",
+      "Mahbuslarga gazeta o'qishga ruxsat berilmagan."
+     ],
+     [
+      "Savol",
+      "Be + S + allowed/supposed to + V1?",
+      "Are we allowed to leave early? / What am I supposed to do?",
+      "Erta ketishga ruxsat bormi? / Men nima qilishim kerak?"
+     ],
+     [
+      "Zamonlar",
+      "will be allowed to / has been permitted to / was supposed to",
+      "Mandela was supposed to stay in prison for life.",
+      "Mandela umrbod qamoqda qolishi kerak edi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Are students allowed to use phones in the exam?",
+      "No, they aren't allowed to — it's against the rules."
+     ],
+     [
+      "Was Mandela permitted to have visitors?",
+      "Only one visitor every six months was permitted."
+     ],
+     [
+      "What are citizens supposed to do on election day?",
+      "They are supposed to vote."
+     ],
+     [
+      "Were black South Africans allowed to vote before 1994?",
+      "No, they weren't allowed to vote at all."
+     ],
+     [
+      "What was I supposed to bring?",
+      "You were supposed to bring your ID."
+     ],
+     [
+      "Is smoking permitted here?",
+      "Smoking is not permitted anywhere in the building."
+     ],
+     [
+      "Are children allowed to watch TV late?",
+      "They're allowed to watch until nine on weekdays."
+     ],
+     [
+      "Weren't you supposed to call me yesterday?",
+      "Yes, I was supposed to, but I forgot — sorry."
+     ],
+     [
+      "Will foreigners be allowed to work without a permit?",
+      "No, they'll still be permitted to work only with a permit."
+     ],
+     [
+      "What is a lawyer supposed to do?",
+      "A lawyer is supposed to defend the client, whatever the case."
+     ]
+    ],
+    "notes": [
+     "allowed — og'zaki; permitted — rasmiy (signs, laws); supposed — kutilgan (odat/qoida), ko'pincha real emas.",
+     "\"be supposed to\" hozirgi zamonda ham \"deyishadi\" ma'nosi: \"This film is supposed to be good.\"",
+     "let + odam + V1 = allow + odam + to V1: \"They let him go\" = \"He was allowed to go\".",
+     "Essential Words 6: legislation, citizenship, discrimination, apartheid, civil rights, freedom of speech, justice, equality before the law."
+    ],
+    "mistakes": [
+     [
+      "He is allowed stay late.",
+      "He is allowed to stay late.",
+      "allowed TO."
+     ],
+     [
+      "Students are supposed wearing uniforms.",
+      "Students are supposed to wear uniforms.",
+      "supposed to + V1."
+     ],
+     [
+      "I can go out yesterday.",
+      "I was allowed to go out yesterday.",
+      "O'tgan ruxsat → was allowed to."
+     ],
+     [
+      "You suppose to be here at 9.",
+      "You are supposed to be here at 9.",
+      "be + supposed."
+     ],
+     [
+      "Smoking is not allowed to.",
+      "Smoking is not allowed / permitted.",
+      "Ot ega bo'lsa \"to\" yo'q."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — qonun va jamiyat asoslari (legislation, rights, justice…); STRONG — jinoyat-jazo va fuqarolik; SUPER — Mandela va Task 2 birikmalari (abolish, oppression, reconciliation).",
+     "Har so'zga modal gap: \"Citizens are supposed to obey legislation.\" / \"Nobody is permitted to discriminate.\""
+    ],
+    "core": [
+     [
+      "legislation",
+      "qonunchilik",
+      "New legislation is supposed to protect workers.",
+      "Yangi qonunchilik ishchilarni himoya qilishi kerak.",
+      "ˌlɛʤəsˈleɪʃən"
+     ],
+     [
+      "law-abiding",
+      "qonunga bo'ysunuvchi",
+      "Law-abiding citizens are allowed to travel freely.",
+      "Qonunga bo'ysunuvchi fuqarolarga erkin sayohat qilishga ruxsat.",
+      ""
+     ],
+     [
+      "citizenship (4.0)",
+      "fuqarolik",
+      "He was not permitted to apply for citizenship.",
+      "Unga fuqarolik uchun ariza berishga ruxsat berilmadi.",
+      ""
+     ],
+     [
+      "civil rights",
+      "fuqarolik huquqlari",
+      "Everyone is supposed to enjoy civil rights.",
+      "Har kim fuqarolik huquqlaridan foydalanishi kerak.",
+      "ˈsɪvəl raɪts"
+     ],
+     [
+      "discrimination (4.0)",
+      "kamsitish",
+      "Employers aren't allowed to practise discrimination.",
+      "Ish beruvchilarga kamsitishga ruxsat yo'q.",
+      ""
+     ],
+     [
+      "apartheid",
+      "aparteid (irqiy ajratish)",
+      "Under apartheid, black people weren't permitted to vote.",
+      "Aparteid davrida qora tanlilarga ovoz berishga ruxsat berilmagan.",
+      "əˈpɑrˌtaɪt"
+     ],
+     [
+      "freedom of speech",
+      "so'z erkinligi",
+      "Citizens are supposed to have freedom of speech.",
+      "Fuqarolar so'z erkinligiga ega bo'lishi kerak.",
+      "ˈfridəm əv spiʧ"
+     ],
+     [
+      "justice (4.0)",
+      "adolat",
+      "A court is supposed to deliver justice.",
+      "Sud adolatni ta'minlashi kerak.",
+      ""
+     ],
+     [
+      "equality (4.0)",
+      "tenglik",
+      "Equality before the law means everyone is treated the same.",
+      "Qonun oldida tenglik — hamma bir xil munosabat ko'radi.",
+      ""
+     ],
+     [
+      "human rights (4.0)",
+      "inson huquqlari",
+      "Prisoners are permitted to have basic human rights.",
+      "Mahbuslarga asosiy inson huquqlari beriladi.",
+      ""
+     ],
+     [
+      "constitution",
+      "konstitutsiya",
+      "The constitution says what the state is allowed to do.",
+      "Konstitutsiya davlat nima qilishga ruxsatliligini aytadi.",
+      "ˌkɑnstəˈtuʃən"
+     ],
+     [
+      "democracy (4.0)",
+      "demokratiya",
+      "In a democracy, people are allowed to choose their leaders.",
+      "Demokratiyada odamlarga rahbarlarini tanlashga ruxsat beriladi.",
+      ""
+     ],
+     [
+      "election (4.0)",
+      "saylov",
+      "Citizens over 18 are permitted to vote in elections.",
+      "18 dan oshgan fuqarolarga saylovda ovoz berishga ruxsat.",
+      ""
+     ],
+     [
+      "vote (v/n)",
+      "ovoz bermoq; ovoz",
+      "Women weren't allowed to vote until 1918 in Britain.",
+      "Britaniyada ayollarga 1918-gacha ovoz berishga ruxsat berilmagan.",
+      ""
+     ],
+     [
+      "prison / imprisonment",
+      "qamoq / qamoq jazosi",
+      "Mandela was supposed to spend his life in prison.",
+      "Mandela umrini qamoqda o'tkazishi kerak edi.",
+      "ˈprɪzən  ˌɪmˈprɪzənmənt"
+     ],
+     [
+      "release (4.0)",
+      "ozod qilish",
+      "He was released in 1990 after 27 years.",
+      "U 27 yildan keyin 1990-da ozod qilindi.",
+      ""
+     ],
+     [
+      "protest (4.0)",
+      "norozilik namoyishi",
+      "Peaceful protests are permitted; violence is not.",
+      "Tinch namoyishlarga ruxsat; zo'ravonlikka — yo'q.",
+      ""
+     ],
+     [
+      "ban (v/n) (4.0)",
+      "taqiqlamoq; taqiq",
+      "The party was banned, so members weren't allowed to meet.",
+      "Partiya taqiqlangan edi, shuning uchun a'zolarga yig'ilishga ruxsat yo'q edi.",
+      ""
+     ],
+     [
+      "obey / break the law",
+      "qonunga bo'ysunmoq / qonunni buzmoq",
+      "You are supposed to obey the law even if you disagree.",
+      "Rozi bo'lmasang ham qonunga bo'ysunishing kerak.",
+      "oʊˈbeɪ  breɪk ðə lɔ"
+     ],
+     [
+      "penalty (4.0)",
+      "jazo, jarima",
+      "Those who break the rules are supposed to pay a penalty.",
+      "Qoidani buzganlar jarima to'lashi kerak.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "regulation (4.0)",
+      "qoida, tartib",
+      "Regulations say what is permitted on the road.",
+      "Qoidalar yo'lda nimaga ruxsat berilganini aytadi.",
+      ""
+     ],
+     [
+      "permit (n)",
+      "ruxsatnoma",
+      "Foreigners are permitted to work only with a permit.",
+      "Chet elliklarga faqat ruxsatnoma bilan ishlashga ruxsat.",
+      "ˈpərˌmɪt (ɛn)"
+     ],
+     [
+      "oppression",
+      "zulm",
+      "Under oppression, people aren't allowed to speak.",
+      "Zulm ostida odamlarga gapirishga ruxsat berilmaydi.",
+      "əˈprɛʃən"
+     ],
+     [
+      "segregation",
+      "ajratish (irqiy)",
+      "Segregation meant black children weren't allowed in white schools.",
+      "Ajratish qora tanli bolalarga oq maktablarga kirishga ruxsat berilmasligini anglatardi.",
+      "ˌsɛgrəˈgeɪʃən"
+     ],
+     [
+      "abolish",
+      "bekor qilmoq (qonunni)",
+      "Apartheid was abolished in 1994.",
+      "Aparteid 1994-da bekor qilindi.",
+      "əˈbɑlɪʃ"
+     ],
+     [
+      "reconciliation",
+      "yarashuv",
+      "Mandela was supposed to seek revenge; he chose reconciliation.",
+      "Mandela qasos olishi kerak edi; u yarashuvni tanladi.",
+      "ˌrɛkənˌsɪliˈeɪʃən"
+     ],
+     [
+      "activist (4.0)",
+      "faol",
+      "Activists weren't permitted to leave the country.",
+      "Faollarga mamlakatni tark etishga ruxsat berilmagan.",
+      ""
+     ],
+     [
+      "trial (4.0)",
+      "sud jarayoni",
+      "He was allowed to speak for four hours at his trial.",
+      "Sud jarayonida unga to'rt soat gapirishga ruxsat berildi.",
+      ""
+     ],
+     [
+      "sentence (law)",
+      "hukm",
+      "The sentence was supposed to be death; it became life.",
+      "Hukm o'lim bo'lishi kerak edi; umrbod qamoqqa aylandi.",
+      "ˈsɛntəns (lɔ)"
+     ],
+     [
+      "amnesty",
+      "amnistiya",
+      "Political prisoners were released under an amnesty.",
+      "Siyosiy mahbuslar amnistiya bilan ozod qilindi.",
+      "ˈæmnəsti"
+     ],
+     [
+      "majority rule",
+      "ko'pchilik hukmronligi",
+      "Majority rule was introduced in 1994.",
+      "Ko'pchilik hukmronligi 1994-da joriy etildi.",
+      "məˈʤɔrəti rul"
+     ],
+     [
+      "minority rights",
+      "ozchilik huquqlari",
+      "Minority rights are supposed to be protected in a democracy.",
+      "Demokratiyada ozchilik huquqlari himoyalanishi kerak.",
+      "məˈnɔrəti raɪts"
+     ],
+     [
+      "censorship (4.0)",
+      "senzura",
+      "Under censorship, journalists aren't allowed to publish freely.",
+      "Senzura ostida jurnalistlarga erkin nashr qilishga ruxsat berilmaydi.",
+      ""
+     ],
+     [
+      "jury",
+      "hakamlar hay'ati",
+      "A jury is supposed to be impartial.",
+      "Hakamlar hay'ati xolis bo'lishi kerak.",
+      "ˈʤʊri"
+     ],
+     [
+      "guilty / innocent (4.0)",
+      "aybdor / aybsiz",
+      "A person is supposed to be innocent until proven guilty.",
+      "Odam aybi isbotlanguncha aybsiz hisoblanishi kerak.",
+      ""
+     ],
+     [
+      "Nobel Peace Prize (4.0)",
+      "Nobel tinchlik mukofoti",
+      "Mandela was awarded the Nobel Peace Prize in 1993.",
+      "Mandela 1993-da Nobel tinchlik mukofotiga sazovor bo'ldi.",
+      ""
+     ],
+     [
+      "curfew",
+      "komendantlik soati",
+      "Nobody was allowed outside after the curfew.",
+      "Komendantlik soatidan keyin hech kimga tashqariga chiqishga ruxsat berilmagan.",
+      "ˈkərfju"
+     ],
+     [
+      "sanctions (4.0)",
+      "sanksiyalar",
+      "Sanctions were imposed until apartheid was abolished.",
+      "Aparteid bekor qilinguncha sanksiyalar joriy etilgan.",
+      ""
+     ],
+     [
+      "liberty",
+      "erkinlik (huquqiy)",
+      "Liberty means being allowed to live without fear.",
+      "Erkinlik — qo'rquvsiz yashashga ruxsat.",
+      "ˈlɪbərˌti"
+     ],
+     [
+      "rule of law",
+      "qonun ustuvorligi",
+      "Under the rule of law, even presidents are supposed to obey courts.",
+      "Qonun ustuvorligida hatto prezidentlar ham sudga bo'ysunishi kerak.",
+      "rul əv lɔ"
+     ]
+    ],
+    "super": [
+     [
+      "be entitled to",
+      "…ga haqli bo'lmoq",
+      "Every citizen is entitled to a fair trial.",
+      "Har bir fuqaro adolatli sudga haqli.",
+      "bi ɛnˈtaɪtəld tɪ"
+     ],
+     [
+      "be prohibited from",
+      "…dan taqiqlanmoq",
+      "Companies are prohibited from selling data without consent.",
+      "Kompaniyalarga roziliksiz ma'lumot sotish taqiqlangan.",
+      "bi proʊˈhɪbətəd frəm"
+     ],
+     [
+      "be exempt from",
+      "…dan ozod bo'lmoq",
+      "Students are exempt from military service.",
+      "Talabalar harbiy xizmatdan ozod.",
+      "bi ɪgˈzɛmpt frəm"
+     ],
+     [
+      "comply with",
+      "…ga rioya qilmoq",
+      "Businesses are supposed to comply with safety regulations.",
+      "Bizneslar xavfsizlik qoidalariga rioya qilishi kerak.",
+      "kəmˈplaɪ wɪθ"
+     ],
+     [
+      "enforce the law",
+      "qonunni ijro ettirmoq",
+      "The police are supposed to enforce the law fairly.",
+      "Politsiya qonunni adolatli ijro ettirishi kerak.",
+      "ɛnˈfɔrs ðə lɔ"
+     ],
+     [
+      "impose restrictions",
+      "cheklovlar joriy qilmoq",
+      "Governments are allowed to impose restrictions in emergencies.",
+      "Hukumatlarga favqulodda holatda cheklov joriy qilishga ruxsat.",
+      "ˌɪmˈpoʊz riˈstrɪkʃənz"
+     ],
+     [
+      "lift a ban",
+      "taqiqni bekor qilmoq",
+      "The ban on the ANC was lifted in 1990.",
+      "ANCga taqiq 1990-da bekor qilindi.",
+      "lɪft ə bæn"
+     ],
+     [
+      "serve a sentence",
+      "jazoni o'tamoq",
+      "He served 27 years of a life sentence.",
+      "U umrbod jazoning 27 yilini o'tadi.",
+      "sərv ə ˈsɛntəns"
+     ],
+     [
+      "political prisoner",
+      "siyosiy mahbus",
+      "Political prisoners weren't permitted to study at first.",
+      "Siyosiy mahbuslarga avvaliga o'qishga ruxsat berilmagan.",
+      "pəˈlɪtɪkəl ˈprɪzənər"
+     ],
+     [
+      "civil disobedience",
+      "fuqarolik itoatsizligi",
+      "Civil disobedience means breaking unjust laws peacefully.",
+      "Fuqarolik itoatsizligi — adolatsiz qonunlarni tinch yo'l bilan buzish.",
+      "ˈsɪvəl ˌdɪsəˈbidiəns"
+     ],
+     [
+      "racial equality",
+      "irqiy tenglik",
+      "Racial equality is supposed to be guaranteed by the constitution.",
+      "Irqiy tenglik konstitutsiya bilan kafolatlanishi kerak.",
+      "ˈreɪʃəl ɪkˈwɑləti"
+     ],
+     [
+      "universal suffrage",
+      "umumiy saylov huquqi",
+      "Universal suffrage means everyone is allowed to vote.",
+      "Umumiy saylov huquqi — hammaga ovoz berishga ruxsat.",
+      "ˌjunəˈvərsəl ˈsəfrɪʤ"
+     ],
+     [
+      "forgiveness",
+      "kechirim",
+      "Forgiveness, not revenge, rebuilt South Africa.",
+      "Qasos emas, kechirim Janubiy Afrikani qayta qurdi.",
+      "fərˈgɪvnəs"
+     ],
+     [
+      "revenge",
+      "qasos",
+      "He was expected to take revenge; he refused.",
+      "Undan qasos olish kutilardi; u rad etdi.",
+      "riˈvɛnʤ"
+     ],
+     [
+      "truth commission",
+      "haqiqat komissiyasi",
+      "The truth commission allowed victims to speak.",
+      "Haqiqat komissiyasi jabrlanganlarga gapirishga ruxsat berdi.",
+      "truθ kəˈmɪʃən"
+     ],
+     [
+      "inauguration",
+      "inauguratsiya (lavozimga kirishish)",
+      "At his inauguration in 1994, former enemies were permitted to sit together.",
+      "1994-dagi inauguratsiyasida sobiq dushmanlarga birga o'tirishga ruxsat berildi.",
+      "ˌɪˌnɔgjəˈreɪʃən"
+     ],
+     [
+      "national hero",
+      "milliy qahramon",
+      "Mandela is supposed to be the greatest national hero of Africa.",
+      "Mandela Afrikaning eng buyuk milliy qahramoni hisoblanadi.",
+      "ˈnæʃənəl ˈhɪroʊ"
+     ],
+     [
+      "labour camp",
+      "mehnat lageri",
+      "On Robben Island he wasn't allowed to stop breaking rocks.",
+      "Robben orolida unga tosh maydalashni to'xtatishga ruxsat berilmagan.",
+      "ˈleɪbər kæmp"
+     ],
+     [
+      "underground (political)",
+      "yashirin (siyosiy)",
+      "The party went underground because it wasn't permitted to exist.",
+      "Partiya mavjud bo'lishga ruxsat berilmagani uchun yashirin ishladi.",
+      "ˈəndərˌgraʊnd (pəˈlɪtɪkəl)"
+     ],
+     [
+      "long walk to freedom",
+      "erkinlik sari uzoq yo'l",
+      "\"Long Walk to Freedom\" is the title of his autobiography.",
+      "\"Erkinlik sari uzoq yo'l\" — uning avtobiografiyasi nomi.",
+      "lɔŋ wɔk tɪ ˈfridəm"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "allowed / permitted / supposed",
+     "type": "choose",
+     "instr": "Ma'noga qarab tanlang",
+     "items": [
+      "Students are allowed / supposed to use dictionaries. (ruxsat)",
+      "Smoking is not permitted / supposed in the building. (rasmiy)",
+      "You are supposed / allowed to be here at 9. (qoida, kutilgan)",
+      "I was supposed / permitted to call you, but I forgot.",
+      "Only staff are permitted / supposed to enter. (rasmiy)",
+      "Children are allowed / supposed to watch TV until nine. (ruxsat)"
+     ],
+     "answers": [
+      "allowed",
+      "permitted",
+      "supposed",
+      "supposed",
+      "permitted",
+      "allowed"
+     ]
+    },
+    {
+     "title": "Zamonlar",
+     "type": "gap",
+     "instr": "be allowed / permitted / supposed to — to'g'ri zamonda",
+     "items": [
+      "Yesterday we ___ (allow) leave early.",
+      "Next year foreigners ___ (permit) work without a permit.",
+      "Black South Africans ___ (not / allow) vote before 1994.",
+      "What ___ I ___ (suppose) do now?",
+      "Prisoners ___ (permit) one letter every six months.",
+      "You ___ (suppose) wear a uniform, but you didn't."
+     ],
+     "answers": [
+      "were allowed to",
+      "will be permitted to",
+      "weren't allowed to",
+      "am … supposed to",
+      "were permitted (to receive)",
+      "were supposed to"
+     ]
+    },
+    {
+     "title": "can / should → be allowed / supposed",
+     "type": "rewrite",
+     "instr": "Modalni almashtiring",
+     "items": [
+      "You can use a dictionary.",
+      "You should be here at 9. (qoida)",
+      "He couldn't leave the country. (ruxsat yo'q edi)",
+      "Nobody may smoke here. (rasmiy)",
+      "They let him go."
+     ],
+     "answers": [
+      "You are allowed to use a dictionary.",
+      "You are supposed to be here at 9.",
+      "He wasn't allowed to leave the country.",
+      "Nobody is permitted to smoke here.",
+      "He was allowed to go."
+     ]
+    },
+    {
+     "title": "Sinf / maktab qoidalari",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 qoida — allowed (2), not permitted (2), supposed (2)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "We are allowed to use dictionaries in reading tests.",
+      "We are allowed to leave at 8 on Fridays.",
+      "Phones are not permitted during lessons.",
+      "Eating is not permitted in the computer room.",
+      "We are supposed to do homework every day.",
+      "We are supposed to speak English in class — but we don't always!"
+     ]
+    },
+    {
+     "title": "Qonun lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "laws made by a parliament",
+      "treating people unfairly because of race, sex, etc.",
+      "the right to say what you think",
+      "to officially end a law or system",
+      "a person in prison for political reasons",
+      "the idea that everyone, even leaders, must obey the law"
+     ],
+     "answers": [
+      "legislation",
+      "discrimination",
+      "freedom of speech",
+      "abolish",
+      "political prisoner",
+      "rule of law"
+     ],
+     "box": [
+      "legislation",
+      "discrimination",
+      "freedom of speech",
+      "abolish",
+      "political prisoner",
+      "rule of law"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "He is allowed stay late.",
+      "Students are supposed wearing uniforms.",
+      "I can go out yesterday.",
+      "You suppose to be here at 9.",
+      "Smoking is not allowed to."
+     ],
+     "answers": [
+      "He is allowed to stay late.",
+      "Students are supposed to wear uniforms.",
+      "I was allowed to go out yesterday.",
+      "You are supposed to be here at 9.",
+      "Smoking is not allowed."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 6 jadvalini 3 marta; Essential Words 6 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 4",
+     "type": "write",
+     "instr": "\"Some think watching TV is bad for children; others believe it has educational value. Discuss both sides.\" — namunani tahlil qiling; 250 so'z; kamida 5 ta be allowed / supposed to (qoidalar haqida)",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Reading practice test — 20 daqiqa",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Unga kechgacha qolishga ruxsat berilgan.",
+      "Ularga kirishga ruxsat berilgan edi.",
+      "Sen forma kiyishing kerak. (qoida)",
+      "Men senga qo'ng'iroq qilishim kerak edi, lekin unutdim.",
+      "1994-gacha qora tanlilarga ovoz berishga ruxsat berilmagan."
+     ],
+     "answers": [
+      "He is allowed to stay out late.",
+      "They were permitted to enter.",
+      "You are supposed to wear a uniform.",
+      "I was supposed to call you, but I forgot.",
+      "Black people weren't allowed to vote before 1994."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 6 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "3 ibora × 4 zamon + gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 5",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 3 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 6 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Nelson Mandela — the prisoner who was supposed to die in jail",
+    "text": [
+     "Nelson Mandela was born in 1918 in a village in South Africa. Under the system called apartheid, black South Africans were not allowed to vote, were not permitted to live in white areas and were supposed to carry a pass at all times. Mandela, a young lawyer in Johannesburg, joined the African National Congress and organised protests. When the ANC was banned, he went underground; in 1962 he was arrested, and in 1964 he was sentenced to life imprisonment.",
+     "On Robben Island prisoners were permitted one letter and one visitor every six months. They were supposed to break rocks all day and were not allowed to talk while working. Mandela was expected to be forgotten. Instead, he studied law by correspondence, taught other prisoners and, after twenty years, was allowed to negotiate with the government — from his cell.",
+     "In 1990 he was released. Everyone was afraid of civil war: he was supposed to want revenge after 27 years. He chose reconciliation. In 1994, in the first election in which every citizen was allowed to vote, he became president. At his inauguration his former jailers were permitted to sit as guests of honour. A truth commission allowed victims and criminals to speak instead of fighting.",
+     "Mandela served only one term — he was allowed to stay, but he refused — and died in 2013. His autobiography, \"Long Walk to Freedom\", ends with a sentence every IELTS student ought to remember: \"To be free is not merely to cast off one's chains, but to live in a way that respects and enhances the freedom of others.\""
+    ],
+    "glossary": [
+     "pass — ruxsatnoma",
+     "ban — taqiqlamoq",
+     "underground — yashirin",
+     "sentence — hukm qilmoq",
+     "correspondence — sirtqi (o'qish)",
+     "negotiate — muzokara qilmoq",
+     "cell — kamera",
+     "civil war — fuqarolar urushi",
+     "revenge — qasos",
+     "jailer — qamoqxona nazoratchisi",
+     "term — muddat (lavozim)",
+     "cast off — uloqtirmoq",
+     "chains — kishanlar"
+    ],
+    "tasks": [
+     {
+      "title": "allowed / permitted / supposed toping",
+      "type": "find",
+      "instr": "Matndan 10 ta",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8",
+       "9",
+       "10"
+      ],
+      "answers": [
+       "Black South Africans were not allowed to vote.",
+       "…were not permitted to live in white areas.",
+       "…were supposed to carry a pass at all times.",
+       "Prisoners were permitted one letter and one visitor every six months.",
+       "They were supposed to break rocks all day.",
+       "…were not allowed to talk while working.",
+       "He was allowed to negotiate with the government.",
+       "He was supposed to want revenge.",
+       "Every citizen was allowed to vote.",
+       "His former jailers were permitted to sit as guests / he was allowed to stay."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Mandela was a doctor before prison.",
+       "Prisoners were allowed one visitor a month.",
+       "He became president in 1994.",
+       "He served two terms as president."
+      ],
+      "answers": [
+       "False (lawyer)",
+       "False (every six months)",
+       "True",
+       "False (one)"
+      ]
+     },
+     {
+      "title": "Qonun lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta so'z; Mandelaning erkinlik ta'rifi — o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "apartheid, vote, banned, arrested, sentenced, imprisonment, negotiate, election, reconciliation, truth commission",
+       "Freedom is living in a way that respects and increases other people's freedom, not just being unchained."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 4 (TV and children) va Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 31–35 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the city library. Members are allowed to borrow six books for three weeks. Laptops are permitted in the reading room, but phones are not. Children under twelve are supposed to be accompanied by an adult. Food is not permitted anywhere except the café on the ground floor. You are supposed to return books by the date on your receipt; late returns are charged 2,000 sums a day.\"",
+     "1-tinglash: nechta qoida? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Rules — note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Members are allowed to borrow ___ books for ___ weeks.",
+       "___ are permitted in the reading room; ___ are not.",
+       "Children under ___ are supposed to be with an adult.",
+       "Late returns cost ___ sums a day."
+      ],
+      "answers": [
+       "six, three",
+       "Laptops, phones",
+       "twelve",
+       "2,000"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 7,
+   "title": "Definite Article",
+   "grammar_topic": "ANIQ ARTIKL \"THE\" — qachon ishlatiladi va qachon yo'q (geografik nomlar, umumiy otlar, yagona narsalar, superlativ, muassasalar)",
+   "vocab_topic": "Essential Words 7 — Cities, geography and urbanisation (shaharlar, geografiya, urbanizatsiya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 7 – Definite article (qoidalar jadvali); Essential Words 7; Sample essay 8 (City vs countryside); Audio 36–40 (ustoz skripti); Reading — Mahmud Kashgari (Jony Academy matni).",
+   "objectives": [
+    "\"the\" ning 8 asosiy qoidasini va \"the\" yo'q 8 holatni bilish.",
+    "Geografik nomlar: daryo/dengiz/tog' tizmasi — the; shahar/davlat/ko'l/cho'qqi — the'siz (istisnolar: the UK, the Netherlands, the Gambia).",
+    "Writing Task 1/2 da artikl xatolarini kamaytirish (GRA balli): \"the number of\", \"in the world\", \"the majority of\".",
+    "Shahar va geografiya Essential Words 7 bilan Sample essay 8 (\"city vs countryside\") uchun til."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 7 — Cities, geography and urbanisation (shaharlar, geografiya, urbanizatsiya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz doskaga: \"___ Uzbekistan, ___ United Kingdom, ___ Amu Darya, ___ Tashkent, ___ Tian Shan, ___ Aral Sea, ___ Mount Everest\" — o'quvchilar \"the\" qo'yadi yoki qo'ymaydi. Nega daryo va dengizga bor, shahar va tog' cho'qqisiga yo'q?"
+    ],
+    [
+     8,
+     "Kahoot — Be allowed to, be permitted to, be supposed to",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Be allowed to, be permitted to, be supposed to lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Qoidalar: THE bilan — ikkinchi marta tilga olingan narsa, yagona narsalar (the sun, the internet), superlativ va tartib (the best, the first), daryo/dengiz/okean/tog' tizmasi/cho'l/orollar guruhi (the Nile, the Aral Sea, the Tian Shan, the Kyzylkum, the Maldives), \"United/Republic/Kingdom\" bo'lgan davlatlar (the UK, the USA, the UAE), muassasalar (the cinema, the bank), guruh sifatlari (the rich), o'nliklar (the 1990s). THE'siz — shahar, davlat, ko'l, tog' cho'qqisi, ko'cha, til, ovqat vaqti, umumiy ko'plik/sanalmas (Life is short), \"school/hospital/prison\" vazifasi ma'nosida."
+    ],
+    [
+     12,
+     "Essential Words 7 — Cities, geography and urbanisation (shaharlar, geografiya, urbanizatsiya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "THE — aniq, ma'lum narsa: ikkinchi marta (\"I saw a man. The man was tall\"); yagona (the sun, the moon, the internet, the government); superlativ/tartib (the biggest, the first, the same, the only).",
+     "GEOGRAFIYA — THE bilan: daryolar (the Amu Darya), dengiz/okean (the Aral Sea, the Pacific), tog' tizmalari (the Tian Shan, the Alps), cho'llar (the Kyzylkum), orollar guruhi (the Maldives), qutblar (the North Pole), \"United/Republic/Kingdom/States\" davlatlar (the UK, the USA, the Czech Republic), ko'plik davlatlar (the Netherlands, the Philippines).",
+     "THE'siz: davlatlar (Uzbekistan, France), shaharlar (Tashkent), ko'llar (Lake Baikal), cho'qqilar (Mount Everest), qit'alar (Asia), ko'chalar (Navoi Street), tillar (English), umumiy ma'no (Life is hard; Cities are noisy), ovqat/oy/kun (at lunch, in May, on Monday), vazifa ma'nosida (go to school/hospital/prison/bed).",
+     "Muassasa vs vazifa: \"go to the school\" (binoga) — \"go to school\" (o'qishga)."
+    ],
+    "formulas": [
+     [
+      "Ikkinchi marta / yagona",
+      "the + ot (ma'lum)",
+      "I visited a city. The city was Kashgar. / The sun rises in the east.",
+      "Bir shaharga bordim. O'sha shahar Qashqar edi. / Quyosh sharqdan chiqadi."
+     ],
+     [
+      "Superlativ / tartib",
+      "the + biggest / first / same / only",
+      "Tashkent is the biggest city in Central Asia.",
+      "Toshkent — Markaziy Osiyodagi eng katta shahar."
+     ],
+     [
+      "Geografiya — the",
+      "the + daryo / dengiz / tog' tizmasi / cho'l / orollar",
+      "the Amu Darya, the Aral Sea, the Tian Shan, the Kyzylkum, the Maldives",
+      "Amudaryo, Orol dengizi, Tyanshan, Qizilqum, Maldiv orollari"
+     ],
+     [
+      "Geografiya — the'siz",
+      "shahar / davlat / ko'l / cho'qqi / qit'a / ko'cha",
+      "Tashkent, Uzbekistan, Lake Baikal, Mount Everest, Asia, Navoi Street",
+      "Toshkent, O'zbekiston, Baykal ko'li, Everest, Osiyo, Navoiy ko'chasi"
+     ],
+     [
+      "Davlat nomlari — istisno",
+      "the + United / Republic / Kingdom / ko'plik",
+      "the UK, the USA, the UAE, the Czech Republic, the Netherlands",
+      "Buyuk Britaniya, AQSh, BAA, Chexiya, Niderlandiya"
+     ],
+     [
+      "Umumiy ma'no / vazifa",
+      "ot (the'siz)",
+      "Cities are noisy. / Children go to school. / He is in prison.",
+      "Shaharlar shovqinli. / Bolalar maktabga boradi. / U qamoqda."
+     ]
+    ],
+    "presentation": [
+     [
+      "Which is the longest river in Central Asia?",
+      "The Amu Darya is the longest."
+     ],
+     [
+      "Is Tashkent bigger than Almaty?",
+      "Yes, Tashkent is the biggest city in the region."
+     ],
+     [
+      "Where is the Kyzylkum desert?",
+      "It's between the Amu Darya and the Syr Darya."
+     ],
+     [
+      "Have you been to the UK or the USA?",
+      "I've been to the UK, but not to the USA."
+     ],
+     [
+      "Is life in cities better than in the countryside?",
+      "Life in cities is faster; the countryside is quieter."
+     ],
+     [
+      "Where did Kashgari draw his map?",
+      "In Baghdad, in the 1070s — the first map of the Turkic world."
+     ],
+     [
+      "Is Mount Everest in the Himalayas?",
+      "Yes, Everest is the highest peak in the Himalayas."
+     ],
+     [
+      "Do you go to school by bus?",
+      "I go to school on foot; the school is near my house."
+     ],
+     [
+      "Which is bigger, Lake Baikal or the Aral Sea?",
+      "Lake Baikal is deeper; the Aral Sea used to be bigger."
+     ],
+     [
+      "What is the population of the capital?",
+      "The population of the capital is about three million."
+     ]
+    ],
+    "notes": [
+     "\"the\" + superlativ doim: the most crowded city; \"the same / the only / the first / the last\".",
+     "Writing Task 1: \"the number of\", \"the percentage of\", \"the majority of\", \"in the world\", \"over the period\".",
+     "Muassasa nomlari: the Registan, the Kremlin, the Louvre (binolar) — lekin: Tashkent Airport, Oxford University (nomi bilan).",
+     "Essential Words 7: urbanisation, infrastructure, metropolis, congestion, overcrowding, rural, suburb, migration, landmark, population density."
+    ],
+    "mistakes": [
+     [
+      "The Uzbekistan is in the Asia.",
+      "Uzbekistan is in Asia.",
+      "Davlat va qit'a — the'siz."
+     ],
+     [
+      "Amu Darya is long river.",
+      "The Amu Darya is a long river.",
+      "Daryo — the; birinchi marta — a."
+     ],
+     [
+      "He is in the prison for theft.",
+      "He is in prison for theft.",
+      "Vazifa ma'nosida — the'siz."
+     ],
+     [
+      "The life in the cities is hard.",
+      "Life in cities is hard.",
+      "Umumiy ma'no — the'siz."
+     ],
+     [
+      "Tashkent is biggest city.",
+      "Tashkent is the biggest city.",
+      "Superlativ — the."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — shahar va geografiya asoslari (urbanisation, infrastructure, rural…); STRONG — shahar muammolari va rejalash; SUPER — Task 2 birikmalari (urban sprawl, population density, rural-urban migration) va Kashgari so'zlari.",
+     "Har so'zga artikl bilan gap: \"The infrastructure of the capital is the best in the country.\" / \"Rural areas lack infrastructure.\""
+    ],
+    "core": [
+     [
+      "urbanisation",
+      "urbanizatsiya",
+      "Urbanisation is the biggest change of the 21st century.",
+      "Urbanizatsiya — 21-asrning eng katta o'zgarishi.",
+      ""
+     ],
+     [
+      "infrastructure (4.0)",
+      "infratuzilma",
+      "The infrastructure of the capital is the best in the country.",
+      "Poytaxt infratuzilmasi mamlakatdagi eng yaxshisi.",
+      ""
+     ],
+     [
+      "metropolis",
+      "megapolis",
+      "Tashkent is the only metropolis in Uzbekistan.",
+      "Toshkent — O'zbekistondagi yagona megapolis.",
+      "məˈtrɑpələs"
+     ],
+     [
+      "congestion (4.0)",
+      "tirbandlik",
+      "Congestion is worst in the city centre.",
+      "Tirbandlik shahar markazida eng yomon.",
+      ""
+     ],
+     [
+      "overcrowding",
+      "haddan tashqari gavjumlik",
+      "Overcrowding is a problem in the biggest cities.",
+      "Gavjumlik eng katta shaharlarda muammo.",
+      "ˈoʊvərˌkraʊdɪŋ"
+     ],
+     [
+      "rural / urban (4.0)",
+      "qishloq / shahar (sifat)",
+      "Rural areas lack the services that urban areas have.",
+      "Qishloq hududlarida shahar hududlaridagi xizmatlar yetishmaydi.",
+      ""
+     ],
+     [
+      "suburb (4.0)",
+      "shahar chekkasi",
+      "The suburbs of Tashkent are growing fast.",
+      "Toshkent chekkalari tez o'smoqda.",
+      ""
+     ],
+     [
+      "migration (4.0)",
+      "migratsiya, ko'chish",
+      "Migration from the countryside fills the cities.",
+      "Qishloqdan ko'chish shaharlarni to'ldiradi.",
+      ""
+     ],
+     [
+      "landmark (4.0)",
+      "diqqatga sazovor joy",
+      "The Registan is the most famous landmark in Samarkand.",
+      "Registon — Samarqanddagi eng mashhur diqqatga sazovor joy.",
+      ""
+     ],
+     [
+      "population density",
+      "aholi zichligi",
+      "The population density of the Fergana Valley is the highest in the region.",
+      "Farg'ona vodiysi aholi zichligi mintaqada eng yuqori.",
+      "ˌpɑpjəˈleɪʃən ˈdɛnsɪti"
+     ],
+     [
+      "capital (city)",
+      "poytaxt",
+      "The capital is on the Chirchik River.",
+      "Poytaxt Chirchiq daryosi bo'yida.",
+      "ˈkæpɪtəl (ˈsɪti)"
+     ],
+     [
+      "region (4.0)",
+      "viloyat, mintaqa",
+      "The region between the Amu Darya and the Syr Darya is fertile.",
+      "Amudaryo va Sirdaryo orasidagi mintaqa unumdor.",
+      ""
+     ],
+     [
+      "climate (4.0)",
+      "iqlim",
+      "The climate of the Kyzylkum is dry.",
+      "Qizilqum iqlimi quruq.",
+      ""
+     ],
+     [
+      "desert (4.0)",
+      "cho'l",
+      "The Kyzylkum is the largest desert in Central Asia.",
+      "Qizilqum — Markaziy Osiyodagi eng katta cho'l.",
+      ""
+     ],
+     [
+      "valley",
+      "vodiy",
+      "The Fergana Valley is surrounded by the Tian Shan.",
+      "Farg'ona vodiysi Tyanshan bilan o'ralgan.",
+      "ˈvæli"
+     ],
+     [
+      "mountain range",
+      "tog' tizmasi",
+      "The Tian Shan is the mountain range in the east.",
+      "Tyanshan — sharqdagi tog' tizmasi.",
+      "ˈmaʊntən reɪnʤ"
+     ],
+     [
+      "border (4.0)",
+      "chegara",
+      "The border with Kazakhstan is the longest.",
+      "Qozog'iston bilan chegara — eng uzuni.",
+      ""
+     ],
+     [
+      "continent (4.0)",
+      "qit'a",
+      "Asia is the largest continent.",
+      "Osiyo — eng katta qit'a.",
+      ""
+     ],
+     [
+      "public transport (4.0)",
+      "jamoat transporti",
+      "Public transport in the capital is cheap.",
+      "Poytaxtda jamoat transporti arzon.",
+      ""
+     ],
+     [
+      "housing (4.0)",
+      "uy-joy",
+      "Housing in the centre is the most expensive.",
+      "Markazda uy-joy eng qimmat.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "urban sprawl",
+      "shaharning tarqalib kengayishi",
+      "Urban sprawl eats the farmland around the city.",
+      "Shaharning tarqalishi shahar atrofidagi ekin yerlarini yeydi.",
+      "ˈərbən sprɔl"
+     ],
+     [
+      "rural-urban migration",
+      "qishloqdan shaharga ko'chish",
+      "Rural-urban migration is the main cause of overcrowding.",
+      "Qishloqdan shaharga ko'chish — gavjumlikning asosiy sababi.",
+      ""
+     ],
+     [
+      "slum",
+      "xaroba mahalla",
+      "Slums grow where housing is unaffordable.",
+      "Xaroba mahallalar uy-joy qimmat joylarda o'sadi.",
+      "sləm"
+     ],
+     [
+      "cost of living (4.0)",
+      "yashash xarajatlari",
+      "The cost of living is highest in the capital.",
+      "Yashash xarajatlari poytaxtda eng yuqori.",
+      ""
+     ],
+     [
+      "amenities",
+      "qulayliklar (xizmatlar)",
+      "Rural areas have fewer amenities than the cities.",
+      "Qishloqlarda shaharlarga qaraganda qulayliklar kamroq.",
+      "əˈmɛnətiz"
+     ],
+     [
+      "commuter",
+      "(ishga) qatnovchi",
+      "Commuters fill the metro in the morning.",
+      "Qatnovchilar ertalab metroni to'ldiradi.",
+      "kəmˈjutər"
+     ],
+     [
+      "pollution (urban)",
+      "ifloslanish",
+      "Air pollution is worst in the winter.",
+      "Havo ifloslanishi qishda eng yomon.",
+      "pəˈluʃən (ˈərbən)"
+     ],
+     [
+      "green space",
+      "yashil hudud",
+      "Green space is the first thing cities lose.",
+      "Yashil hudud — shaharlar yo'qotadigan birinchi narsa.",
+      "grin speɪs"
+     ],
+     [
+      "urban planning",
+      "shaharsozlik",
+      "Urban planning decides where the roads go.",
+      "Shaharsozlik yo'llar qayerdan o'tishini belgilaydi.",
+      "ˈərbən ˈplænɪŋ"
+     ],
+     [
+      "high-rise (4.0)",
+      "ko'p qavatli",
+      "High-rise blocks solve the housing shortage.",
+      "Ko'p qavatli uylar uy-joy tanqisligini hal qiladi.",
+      ""
+     ],
+     [
+      "neighbourhood (4.0)",
+      "mahalla",
+      "The mahalla is the traditional neighbourhood of Uzbekistan.",
+      "Mahalla — O'zbekistonning an'anaviy mahallasi.",
+      ""
+     ],
+     [
+      "community (4.0)",
+      "jamoa",
+      "Community is stronger in the countryside.",
+      "Jamoa qishloqda kuchliroq.",
+      ""
+     ],
+     [
+      "isolation (rural)",
+      "ajralib qolganlik",
+      "Isolation is the main disadvantage of rural life.",
+      "Ajralib qolganlik — qishloq hayotining asosiy kamchiligi.",
+      "ˌaɪsəˈleɪʃən (ˈrʊrəl)"
+     ],
+     [
+      "tranquil",
+      "sokin",
+      "The countryside is tranquil; the city never sleeps.",
+      "Qishloq sokin; shahar hech uxlamaydi.",
+      "ˈtræŋkwɪl"
+     ],
+     [
+      "hustle and bustle",
+      "shovqin-suron (shahar hayoti)",
+      "Some people love the hustle and bustle of the city.",
+      "Ba'zilar shahar shovqin-suronini yaxshi ko'radi.",
+      "ˈhəsəl ənd ˈbəsəl"
+     ],
+     [
+      "cartographer",
+      "xaritashunos",
+      "Kashgari was the first cartographer of the Turkic world.",
+      "Qoshg'ariy — turkiy dunyoning birinchi xaritashunosi.",
+      ""
+     ],
+     [
+      "dictionary (4.0)",
+      "lug'at",
+      "His dictionary is the oldest of the Turkic languages.",
+      "Uning lug'ati — turkiy tillarning eng qadimgisi.",
+      ""
+     ],
+     [
+      "Silk Road (4.0)",
+      "Ipak yo'li",
+      "The Silk Road linked the cities of Central Asia to China.",
+      "Ipak yo'li Markaziy Osiyo shaharlarini Xitoy bilan bog'lagan.",
+      ""
+     ],
+     [
+      "nomadic",
+      "ko'chmanchi",
+      "Nomadic tribes lived in the steppes north of the Syr Darya.",
+      "Ko'chmanchi qabilalar Sirdaryodan shimoldagi dashtlarda yashagan.",
+      "noʊˈmædɪk"
+     ],
+     [
+      "settlement",
+      "aholi punkti, manzilgoh",
+      "The first settlements grew along the rivers.",
+      "Ilk manzilgohlar daryolar bo'ylab o'sgan.",
+      "ˈsɛtəlmənt"
+     ]
+    ],
+    "super": [
+     [
+      "the majority of",
+      "…ning ko'pchiligi",
+      "The majority of the population lives in the Fergana Valley and the capital.",
+      "Aholining ko'pchiligi Farg'ona vodiysi va poytaxtda yashaydi.",
+      "ðə məˈʤɔrəti əv"
+     ],
+     [
+      "the number of (4.0)",
+      "…soni",
+      "The number of cars in the capital has doubled.",
+      "Poytaxtda mashinalar soni ikki baravar oshdi.",
+      ""
+     ],
+     [
+      "in the world",
+      "dunyoda",
+      "Tashkent has the oldest metro in Central Asia and one of the most beautiful in the world.",
+      "Toshkentda Markaziy Osiyodagi eng qadimgi va dunyodagi eng go'zal metrolardan biri bor.",
+      "ɪn ðə wərld"
+     ],
+     [
+      "over the period",
+      "davr mobaynida",
+      "Over the period, the urban population rose from 40% to 51%.",
+      "Davr mobaynida shahar aholisi 40% dan 51% ga o'sdi.",
+      "ˈoʊvər ðə ˈpɪriəd"
+     ],
+     [
+      "the vast majority",
+      "katta ko'pchilik",
+      "The vast majority of commuters use the metro.",
+      "Qatnovchilarning katta ko'pchiligi metrodan foydalanadi.",
+      "ðə væst məˈʤɔrəti"
+     ],
+     [
+      "on the outskirts",
+      "shahar chekkasida",
+      "Housing on the outskirts is cheaper.",
+      "Shahar chekkasida uy-joy arzonroq.",
+      "ɔn ðə ˈaʊtˌskərts"
+     ],
+     [
+      "in the countryside",
+      "qishloqda",
+      "Life in the countryside is slower.",
+      "Qishloqda hayot sekinroq.",
+      "ɪn ðə ˈkəntriˌsaɪd"
+     ],
+     [
+      "the Middle East / the Far East",
+      "Yaqin Sharq / Uzoq Sharq",
+      "Kashgari's map put the Turkic lands, not the Middle East, at the centre.",
+      "Qoshg'ariy xaritasi markazga Yaqin Sharqni emas, turkiy yerlarni qo'ygan.",
+      "ðə ˈmɪdəl ist  ðə fɑr ist"
+     ],
+     [
+      "the equator / the North Pole",
+      "ekvator / Shimoliy qutb",
+      "The equator crosses Africa; the North Pole is ice.",
+      "Ekvator Afrikani kesib o'tadi; Shimoliy qutb — muz.",
+      "ðə ɪkˈweɪtər  ðə nɔrθ poʊl"
+     ],
+     [
+      "the Northern Hemisphere",
+      "Shimoliy yarimshar",
+      "Uzbekistan is in the Northern Hemisphere.",
+      "O'zbekiston Shimoliy yarimsharda.",
+      "ðə ˈnɔrðərn ˈhɛmɪsˌfɪr"
+     ],
+     [
+      "the Caspian Sea / the Aral Sea (4.0)",
+      "Kaspiy dengizi / Orol dengizi",
+      "The Aral Sea has almost disappeared; the Caspian is shrinking.",
+      "Orol dengizi deyarli yo'qoldi; Kaspiy kichraymoqda.",
+      ""
+     ],
+     [
+      "Lake Baikal / Mount Everest",
+      "Baykal ko'li / Everest",
+      "Lake Baikal is the deepest lake; Mount Everest is the highest peak.",
+      "Baykal — eng chuqur ko'l; Everest — eng baland cho'qqi.",
+      ""
+     ],
+     [
+      "the Netherlands / the Philippines",
+      "Niderlandiya / Filippin",
+      "The Netherlands and the Philippines take \"the\" because they are plural.",
+      "Niderlandiya va Filippin ko'plik bo'lgani uchun \"the\" oladi.",
+      "ðə ˈnɛðərləndz  ðə ˈfɪləˌpinz"
+     ],
+     [
+      "the UAE / the UK / the USA",
+      "BAA / Buyuk Britaniya / AQSh",
+      "Many Uzbeks work in the UAE.",
+      "Ko'p o'zbeklar BAAda ishlaydi.",
+      ""
+     ],
+     [
+      "the Registan / the Kremlin",
+      "Registon / Kreml",
+      "The Registan is the heart of Samarkand.",
+      "Registon — Samarqandning yuragi.",
+      ""
+     ],
+     [
+      "Diwan Lughat al-Turk",
+      "\"Devonu lug'otit turk\"",
+      "Diwan Lughat al-Turk is the first Turkic dictionary, written in the 1070s.",
+      "\"Devonu lug'otit turk\" — 1070-yillarda yozilgan birinchi turkiy lug'at.",
+      ""
+     ],
+     [
+      "the 11th century",
+      "11-asr",
+      "Kashgari lived in the 11th century, the golden age of the Karakhanids.",
+      "Qoshg'ariy 11-asrda, Qoraxoniylar oltin davrida yashagan.",
+      ""
+     ],
+     [
+      "world map",
+      "dunyo xaritasi",
+      "The world map in his book is circular, with Balasagun at the centre.",
+      "Kitobidagi dunyo xaritasi doira shaklida, markazida — Balasog'un.",
+      "wərld mæp"
+     ],
+     [
+      "tribe",
+      "qabila",
+      "He listed the tribes from the Caspian to China.",
+      "U Kaspiydan Xitoygacha bo'lgan qabilalarni sanab o'tgan.",
+      "traɪb"
+     ],
+     [
+      "dialect",
+      "sheva, lahja",
+      "The dictionary records the dialects of the steppes.",
+      "Lug'at dashtlarning shevalarini qayd etadi.",
+      "ˈdaɪəˌlɛkt"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "the yoki —",
+     "type": "gap",
+     "instr": "Bo'sh joyga \"the\" yoki hech narsa (—)",
+     "items": [
+      "___ Uzbekistan is in ___ Central Asia.",
+      "___ Amu Darya flows into ___ Aral Sea.",
+      "___ Tashkent is ___ biggest city in ___ region.",
+      "I have been to ___ UK and ___ France.",
+      "___ Tian Shan is a mountain range; ___ Mount Everest is a peak.",
+      "___ life in ___ cities is fast.",
+      "___ sun rises in ___ east.",
+      "He is in ___ prison; she works in ___ prison near ___ city."
+     ],
+     "answers": [
+      "—, —",
+      "The, the",
+      "—, the, the",
+      "the, —",
+      "The, —",
+      "—, —",
+      "The, the",
+      "—, the, the"
+     ]
+    },
+    {
+     "title": "Geografiya xaritasi",
+     "type": "sort",
+     "instr": "Har nomga \"the\" kerakmi? (the / —)",
+     "items": [
+      "Syr Darya",
+      "Lake Balkhash",
+      "Kyzylkum Desert",
+      "Samarkand",
+      "Pacific Ocean",
+      "Africa",
+      "Maldives",
+      "Netherlands",
+      "Navoi Street",
+      "Registan (bino)"
+     ],
+     "answers": [
+      "the",
+      "—",
+      "the",
+      "—",
+      "the",
+      "—",
+      "the",
+      "the",
+      "—",
+      "the"
+     ]
+    },
+    {
+     "title": "Writing Task 1",
+     "type": "rewrite",
+     "instr": "Artikl xatosini tuzating (grafik tavsifi)",
+     "items": [
+      "Number of cars rose over period.",
+      "Majority of population lives in capital.",
+      "Tashkent has highest density in country.",
+      "Percentage of urban population is 51%.",
+      "In 1990s, migration to cities increased."
+     ],
+     "answers": [
+      "The number of cars rose over the period.",
+      "The majority of the population lives in the capital.",
+      "Tashkent has the highest density in the country.",
+      "The percentage of urban population is 51%.",
+      "In the 1990s, migration to the cities increased."
+     ]
+    },
+    {
+     "title": "Shahar yoki qishloq?",
+     "type": "speaking",
+     "instr": "Juftlikda: IELTS Speaking Part 3 — 5 savol, javobda kamida 6 to'g'ri artikl va Essential so'zlar",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "Is life in the city better than in the countryside? — The city has the best amenities, but the countryside is tranquil.",
+      "What are the problems of urbanisation? — Congestion, overcrowding and the loss of green space.",
+      "Why do people move to the capital? — The majority come for jobs and infrastructure.",
+      "Should governments limit urban sprawl? — Yes, urban planning is the answer.",
+      "Which is the most important landmark in your city? — The Registan is the heart of Samarkand."
+     ]
+    },
+    {
+     "title": "Shahar lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the growth of cities as people move from the countryside",
+      "roads, bridges, water and electricity systems",
+      "too many cars on the roads",
+      "an area on the edge of a city where people live",
+      "the number of people per square kilometre",
+      "a person who travels to work every day"
+     ],
+     "answers": [
+      "urbanisation",
+      "infrastructure",
+      "congestion",
+      "suburb",
+      "population density",
+      "commuter"
+     ],
+     "box": [
+      "urbanisation",
+      "infrastructure",
+      "congestion",
+      "suburb",
+      "population density",
+      "commuter"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The Uzbekistan is in the Asia.",
+      "Amu Darya is long river.",
+      "He is in the prison for theft.",
+      "The life in the cities is hard.",
+      "Tashkent is biggest city."
+     ],
+     "answers": [
+      "Uzbekistan is in Asia.",
+      "The Amu Darya is a long river.",
+      "He is in prison for theft.",
+      "Life in cities is hard.",
+      "Tashkent is the biggest city."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 7 qoidalarini 3 marta; Essential Words 7 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 8",
+     "type": "write",
+     "instr": "\"Many people prefer to live in cities, while others enjoy life in the countryside. Pros and cons of both.\" — namunani tahlil qiling; 250 so'z; artikllar tekshiruvi (har \"the\" ni izohlang)",
+     "answers": "Ustoz Task 2 rubrikasi bilan (GRA — artikl)."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Reading practice test — 20 daqiqa",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Amudaryo Orol dengiziga quyiladi.",
+      "Toshkent — Markaziy Osiyodagi eng katta shahar.",
+      "Men Buyuk Britaniyada bo'lganman, AQShda — yo'q.",
+      "Shaharlarda hayot tez.",
+      "U o'g'rilik uchun qamoqda."
+     ],
+     "answers": [
+      "The Amu Darya flows into the Aral Sea.",
+      "Tashkent is the biggest city in Central Asia.",
+      "I have been to the UK, but not to the USA.",
+      "Life in cities is fast.",
+      "He is in prison for theft."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 7 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "8 \"the\" qoidasi + 8 \"the\"siz holat, har biriga misol, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 6",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob qoidalar jadvali)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 7 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Mahmud Kashgari — the man who drew the first map of the Turkic world",
+    "text": [
+     "Mahmud Kashgari was born around 1029 near Kashgar, a city on the Silk Road in the east of the Karakhanid state, which ruled the lands from the Syr Darya to the Tian Shan. He came from the ruling family, but a palace struggle forced him to leave. For fifteen years he travelled through the steppes, the deserts and the mountain valleys of Central Asia, living with the tribes and writing down their words.",
+     "In the 1070s, in Baghdad, he finished \"Diwan Lughat al-Turk\" — the first dictionary of the Turkic languages. It contains about 7,500 words, with examples from poems, proverbs and songs, and it records the dialects of dozens of tribes, from the Caspian Sea to China. Nobody before him had treated Turkic as a language worth studying next to Arabic.",
+     "The book also contains something unique: the first world map made by a Turk. It is circular, and at the centre is not Mecca or Baghdad but Balasagun, the Karakhanid capital in the Chu Valley. Around it are the cities of the Silk Road — Kashgar, Samarkand, Bukhara — the rivers, the deserts and the mountains, drawn with colours: green for seas, red for mountains, yellow for sand.",
+     "The manuscript was lost for eight centuries and found in Istanbul in 1914. Today Kashgari is honoured in Uzbekistan, Kazakhstan, Kyrgyzstan, Turkey and China, and his map is the first picture we have of the geography of the Turkic peoples — the cities, the rivers and the steppes that are still ours."
+    ],
+    "glossary": [
+     "struggle — kurash",
+     "steppe — dasht",
+     "tribe — qabila",
+     "write down — yozib olmoq",
+     "proverb — maqol",
+     "dialect — sheva",
+     "treat — munosabatda bo'lmoq",
+     "circular — doira shaklidagi",
+     "manuscript — qo'lyozma",
+     "honour — hurmatlamoq"
+    ],
+    "tasks": [
+     {
+      "title": "Artikllarni tekshiring",
+      "type": "find",
+      "instr": "Matndan 5 ta \"the\" bilan va 5 ta \"the\"siz geografik nom",
+      "items": [
+       "the",
+       "no the"
+      ],
+      "answers": [
+       "the Silk Road, the Syr Darya, the Tian Shan, the Caspian Sea, the Chu Valley, the Karakhanid state",
+       "Kashgar, Baghdad, Central Asia, Balasagun, Samarkand, Bukhara, Istanbul, Uzbekistan, China, Mecca"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Kashgari finished his dictionary in Kashgar.",
+       "The dictionary has about 7,500 words.",
+       "Baghdad is at the centre of his map.",
+       "The manuscript was found in Istanbul in 1914."
+      ],
+      "answers": [
+       "False (Baghdad)",
+       "True",
+       "False (Balasagun)",
+       "True"
+      ]
+     },
+     {
+      "title": "Geografiya lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta geografiya so'zi; xaritada nega Balasog'un markazda (1 gap)",
+      "items": [
+       "words",
+       "why"
+      ],
+      "answers": [
+       "steppes, deserts, mountain valleys, rivers, mountains, seas, capital, cities, map",
+       "Because it was the Karakhanid capital — he put the Turkic world, not the Arab world, at the centre."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 8 (City vs countryside) va Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 36–40 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the city tour. We start in the old town, near the Chorsu Bazaar, the oldest market in the capital. Then we take the metro — the first in Central Asia, opened in 1977 — to the Independence Square. From there a bus takes us to the Tashkent TV Tower, the tallest building in the country at 375 metres. The tour ends on the outskirts, at the Botanical Garden on the banks of the Chirchik River.\"",
+     "1-tinglash: nechta to'xtash joyi? 2-tinglash: raqamlar va artikllar."
+    ],
+    "tasks": [
+     {
+      "title": "Map / note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Start: the ___ Bazaar, the oldest market in the capital",
+       "The metro opened in ___",
+       "The TV Tower is ___ metres tall",
+       "The tour ends at the Botanical Garden on the ___ River"
+      ],
+      "answers": [
+       "Chorsu",
+       "1977",
+       "375",
+       "Chirchik"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 8,
+   "title": "Had better, Would rather, Prefer",
+   "grammar_topic": "HAD BETTER (tavsiya/ogohlantirish) / WOULD RATHER (afzal ko'rish — hozir) / PREFER (umumiy afzallik) + would rather + S + Past Simple",
+   "vocab_topic": "Essential Words 8 — Media, music and entertainment (media, musiqa, ko'ngilochar soha)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 8 – Had better, would rather, prefer (3 qatorli jadval); Essential Words 8; Speaking sample: Music; Audio 41–45 (ustoz skripti); Reading — Taylor Swift (Jony Academy matni).",
+   "objectives": [
+    "had better (tavsiya, kuchli) / would rather (hozirgi tanlov) / prefer (umumiy odat) ni to'g'ri qolipda ishlatish.",
+    "Inkor shakllar: had better not, would rather not, prefer not to.",
+    "would rather + boshqa ega + Past Simple (I'd rather you came early); prefer … to … / rather than.",
+    "Media va musiqa Essential Words 8 bilan Speaking \"Music\" mavzusi va media ta'siri haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 8 — Media, music and entertainment (media, musiqa, ko'ngilochar soha) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"You'd better switch off your phone (ogohlantirish). I'd rather listen to music than talk (hozirgi tanlov). I prefer live concerts to streaming (umumiy).\" — uch ma'no, uch qolip."
+    ],
+    [
+     8,
+     "Kahoot — Definite article",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Definite article lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: had better + V1 (yaxshisi… — tavsiya/ogohlantirish, aks holda muammo); would rather + V1 (+ than + V1) (afzal ko'raman — hozirgi/aniq tanlov); prefer + ot/V-ing + to + ot/V-ing (umumiy afzallik) / prefer + to V1 + rather than + V1. Qo'shimcha: would rather + boshqa ega + Past Simple (\"I'd rather you didn't smoke\"), had better not."
+    ],
+    [
+     12,
+     "Essential Words 8 — Media, music and entertainment (media, musiqa, ko'ngilochar soha) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "HAD BETTER + V1 — \"yaxshisi …, aks holda …\" — kuchli tavsiya/ogohlantirish (hozir/yaqin kelajak): \"You had better go now.\" Qisqa: 'd better; inkor: had better not.",
+     "WOULD RATHER + V1 — \"afzal ko'raman\" (aniq holat, hozir): \"I would rather stay home tonight.\" + than + V1: \"I'd rather read than watch TV.\" Inkor: would rather not.",
+     "WOULD RATHER + boshqa ega + PAST SIMPLE — boshqa odam qilishini xohlash: \"I'd rather you didn't post that.\" (hozir haqida).",
+     "PREFER — umumiy afzallik: prefer + ot/V-ing + to + ot/V-ing (\"I prefer reading to watching TV\"); prefer + to V1 + rather than + V1 (\"I prefer to listen rather than talk\"). would prefer to — aniq holat, muloyim."
+    ],
+    "formulas": [
+     [
+      "Had better",
+      "S + had better (+ not) + V1",
+      "You had better go now. / You'd better not be late.",
+      "Yaxshisi hozir ketsang bo'ladi. / Kech qolmaganing ma'qul."
+     ],
+     [
+      "Would rather",
+      "S + would rather (+ not) + V1 (+ than + V1)",
+      "I would rather stay home tonight. / I'd rather read than watch TV.",
+      "Bugun uyda qolishni afzal ko'raman. / TV ko'rishdan ko'ra o'qishni afzal ko'raman."
+     ],
+     [
+      "Would rather + boshqa ega",
+      "S + would rather + S2 + Past Simple",
+      "I'd rather you didn't post that photo.",
+      "O'sha suratni joylamaganing ma'qul."
+     ],
+     [
+      "Prefer + ot / V-ing",
+      "S + prefer + ot/V-ing + to + ot/V-ing",
+      "She prefers tea to coffee. / I prefer reading to watching TV.",
+      "U choyni qahvadan afzal ko'radi. / O'qishni TV ko'rishdan afzal ko'raman."
+     ],
+     [
+      "Prefer + to V1",
+      "S + prefer + to V1 + rather than + V1",
+      "I prefer to stream music rather than buy CDs.",
+      "Disk sotib olishdan ko'ra musiqani striming qilishni afzal ko'raman."
+     ],
+     [
+      "Would prefer",
+      "S + would prefer + to V1 (muloyim, aniq holat)",
+      "I'd prefer to sit near the stage.",
+      "Sahna yoniga o'tirishni afzal ko'rardim."
+     ]
+    ],
+    "presentation": [
+     [
+      "Would you rather go to a concert or watch it online?",
+      "I'd rather go to the concert — nothing beats live music."
+     ],
+     [
+      "Do you prefer pop to classical?",
+      "I prefer pop to classical, but I'd rather not listen to it all day."
+     ],
+     [
+      "Hadn't we better buy the tickets now?",
+      "Yes, we'd better buy them today; they'll sell out."
+     ],
+     [
+      "Would you rather I didn't play music while you study?",
+      "I'd rather you turned it down a little."
+     ],
+     [
+      "Do you prefer streaming or CDs?",
+      "I prefer streaming to CDs — it's cheaper."
+     ],
+     [
+      "Had Taylor Swift better re-record her albums?",
+      "She'd better — and she did, to own her music."
+     ],
+     [
+      "Would you rather read the news or watch it?",
+      "I'd rather read it than watch it; TV news is too dramatic."
+     ],
+     [
+      "Do you prefer to listen to music alone rather than with friends?",
+      "I prefer to listen alone; friends talk too much."
+     ],
+     [
+      "Hadn't you better check the source before sharing?",
+      "Yes, I'd better check it — fake news spreads fast."
+     ],
+     [
+      "Would you rather be famous or rich?",
+      "I'd rather be rich; fame ruins privacy."
+     ]
+    ],
+    "notes": [
+     "had better — hozirgi/kelajak holat, o'tgan emas; ma'nosi should'dan kuchli (\"aks holda muammo\").",
+     "would rather + V1 (to yo'q); prefer + to V1 yoki V-ing.",
+     "\"would rather + S2 + Past Simple\" — hozir/kelajak; o'tgan afsus: would rather + S2 + Past Perfect.",
+     "Essential Words 8: mass media, broadcast, streaming, censorship, sensationalism, celebrity culture, copyright, playlist, genre, fan base."
+    ],
+    "mistakes": [
+     [
+      "You had better to go.",
+      "You had better go.",
+      "had better + V1 (to yo'q)."
+     ],
+     [
+      "I would rather to stay.",
+      "I would rather stay.",
+      "would rather + V1."
+     ],
+     [
+      "I prefer tea than coffee.",
+      "I prefer tea to coffee.",
+      "prefer … TO."
+     ],
+     [
+      "I'd rather you don't post it.",
+      "I'd rather you didn't post it.",
+      "would rather + S2 + Past Simple."
+     ],
+     [
+      "You better go. (yozma)",
+      "You had better go. / You'd better go.",
+      "had kerak."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — media va musiqa asoslari (mass media, broadcast, streaming…); STRONG — media ta'siri va sanoat (sensationalism, fan base, royalties); SUPER — Swift va Task 2 birikmalari (invasion of privacy, media coverage).",
+     "Har so'zga qolip bilan gap: \"I'd rather stream than buy.\" / \"Journalists had better check the facts.\""
+    ],
+    "core": [
+     [
+      "mass media",
+      "ommaviy axborot vositalari",
+      "People had better not believe everything in the mass media.",
+      "Odamlar OAVdagi hamma narsaga ishonmagani ma'qul.",
+      "mæs ˈmidiə"
+     ],
+     [
+      "broadcast (4.0)",
+      "efirga uzatmoq; translyatsiya",
+      "I'd rather watch the broadcast live than a recording.",
+      "Yozuvdan ko'ra jonli translyatsiyani ko'rishni afzal ko'raman.",
+      ""
+     ],
+     [
+      "streaming",
+      "striming",
+      "Teenagers prefer streaming to buying albums.",
+      "O'smirlar albom sotib olishdan ko'ra strimingni afzal ko'radi.",
+      "ˈstrimɪŋ"
+     ],
+     [
+      "journalism / journalist (4.0)",
+      "jurnalistika / jurnalist",
+      "Journalists had better check facts before publishing.",
+      "Jurnalistlar nashrdan oldin faktlarni tekshirgani ma'qul.",
+      ""
+     ],
+     [
+      "headline (4.0)",
+      "sarlavha",
+      "I'd rather read the article than just the headline.",
+      "Faqat sarlavhani emas, maqolani o'qishni afzal ko'raman.",
+      ""
+     ],
+     [
+      "censorship (4.0)",
+      "senzura",
+      "Most people prefer free media to censorship.",
+      "Ko'pchilik senzuradan ko'ra erkin mediani afzal ko'radi.",
+      ""
+     ],
+     [
+      "sensationalism",
+      "shov-shuvga berilish",
+      "Tabloids prefer sensationalism to facts.",
+      "Tabloidlar faktlardan ko'ra shov-shuvni afzal ko'radi.",
+      "sɛnˈseɪʃənəˌlɪzəm"
+     ],
+     [
+      "celebrity culture",
+      "mashhurlar madaniyati",
+      "We had better teach children to question celebrity culture.",
+      "Bolalarga mashhurlar madaniyatiga tanqidiy qarashni o'rgatganimiz ma'qul.",
+      "səˈlɛbrɪti ˈkəlʧər"
+     ],
+     [
+      "fake news (4.0)",
+      "yolg'on yangilik",
+      "You'd better check the source — it may be fake news.",
+      "Manbani tekshirganing ma'qul — yolg'on yangilik bo'lishi mumkin.",
+      ""
+     ],
+     [
+      "copyright",
+      "mualliflik huquqi",
+      "Artists would rather own the copyright to their songs.",
+      "San'atkorlar qo'shiqlariga mualliflik huquqiga ega bo'lishni afzal ko'radi.",
+      "ˈkɑpiˌraɪt"
+     ],
+     [
+      "album / single",
+      "albom / singl",
+      "She'd rather release an album than a single.",
+      "U singldan ko'ra albom chiqarishni afzal ko'radi.",
+      "ˈælbəm  ˈsɪŋgəl"
+     ],
+     [
+      "genre (music)",
+      "janr",
+      "Which genre do you prefer, pop or rock?",
+      "Qaysi janrni afzal ko'rasan, pop yoki rok?",
+      "ˈʒɑnrə (mˈjuzɪk)"
+     ],
+     [
+      "lyrics",
+      "qo'shiq matni",
+      "I prefer songs with meaningful lyrics to dance tracks.",
+      "Raqs treklaridan ko'ra ma'noli matnli qo'shiqlarni afzal ko'raman.",
+      "ˈlɪrɪks"
+     ],
+     [
+      "audience (4.0)",
+      "tomoshabinlar, auditoriya",
+      "Performers had better respect their audience.",
+      "Ijrochilar auditoriyasini hurmat qilgani ma'qul.",
+      ""
+     ],
+     [
+      "fan base",
+      "muxlislar bazasi",
+      "A loyal fan base would rather pay for tickets than stream.",
+      "Sodiq muxlislar strimingdan ko'ra chiptaga pul to'lashni afzal ko'radi.",
+      "fæn beɪs"
+     ],
+     [
+      "live performance",
+      "jonli ijro",
+      "Most people prefer live performances to recordings.",
+      "Ko'pchilik yozuvlardan ko'ra jonli ijroni afzal ko'radi.",
+      "lɪv pərˈfɔrməns"
+     ],
+     [
+      "entertainment industry",
+      "ko'ngilochar sanoat",
+      "The entertainment industry had better adapt to streaming.",
+      "Ko'ngilochar sanoat strimingga moslashgani ma'qul.",
+      "ˌɛnərˈteɪnmənt ˈɪndəstri"
+     ],
+     [
+      "social media influence",
+      "ijtimoiy tarmoq ta'siri",
+      "Parents would rather limit social media influence on teenagers.",
+      "Ota-onalar o'smirlarga ijtimoiy tarmoq ta'sirini cheklashni afzal ko'radi.",
+      "ˈsoʊʃəl ˈmidiə ˈɪnfluəns"
+     ],
+     [
+      "advertising (4.0)",
+      "reklama",
+      "I'd rather pay for an app than watch advertising.",
+      "Reklama ko'rishdan ko'ra ilovaga pul to'lashni afzal ko'raman.",
+      ""
+     ],
+     [
+      "privacy (media)",
+      "shaxsiy hayot",
+      "Celebrities would rather keep their privacy.",
+      "Mashhurlar shaxsiy hayotini saqlashni afzal ko'radi.",
+      "ˈpraɪvəsi (ˈmidiə)"
+     ]
+    ],
+    "strong": [
+     [
+      "tabloid",
+      "tabloid (sariq matbuot)",
+      "I'd rather not read tabloids.",
+      "Tabloidlarni o'qimaslikni afzal ko'raman.",
+      "ˈtæblɔɪd"
+     ],
+     [
+      "press (the)",
+      "matbuot",
+      "The press had better respect the law.",
+      "Matbuot qonunni hurmat qilgani ma'qul.",
+      "prɛs (ðə)"
+     ],
+     [
+      "media coverage",
+      "media yoritishi",
+      "She'd rather have less media coverage of her private life.",
+      "U shaxsiy hayotining kamroq yoritilishini afzal ko'radi.",
+      "ˈmidiə ˈkəvərɪʤ"
+     ],
+     [
+      "invasion of privacy",
+      "shaxsiy hayotga aralashish",
+      "Paparazzi photos are an invasion of privacy.",
+      "Paparatsi suratlari — shaxsiy hayotga aralashish.",
+      "ˌɪnˈveɪʒən əv ˈpraɪvəsi"
+     ],
+     [
+      "paparazzi",
+      "paparatsi",
+      "Stars would rather the paparazzi left them alone.",
+      "Yulduzlar paparatsi ularni tinch qo'yishini afzal ko'radi.",
+      "ˌpɑpɑˈrɔˌzi"
+     ],
+     [
+      "royalties",
+      "ijodiy to'lovlar (royalti)",
+      "Musicians prefer royalties from streaming to nothing at all.",
+      "Musiqachilar hech narsadan ko'ra striming royaltisini afzal ko'radi.",
+      "ˈrɔɪəltiz"
+     ],
+     [
+      "record label",
+      "ovoz yozish kompaniyasi",
+      "Swift would rather own her masters than let a label own them.",
+      "Svift original yozuvlariga o'zi egalik qilishni afzal ko'radi.",
+      "ˈrɛkərd ˈleɪbəl"
+     ],
+     [
+      "re-record",
+      "qayta yozmoq (yozuvni)",
+      "She'd better re-record the albums, and she did.",
+      "U albomlarni qayta yozgani ma'qul edi, va u yozdi.",
+      ""
+     ],
+     [
+      "chart-topping",
+      "reytingda birinchi",
+      "Fans prefer her chart-topping songs to the early ones.",
+      "Muxlislar uning reytingda birinchi qo'shiqlarini dastlabkilaridan afzal ko'radi.",
+      ""
+     ],
+     [
+      "tour (music)",
+      "gastrol",
+      "I'd rather see her on tour than on TV.",
+      "Uni TVda emas, gastrolda ko'rishni afzal ko'raman.",
+      "tʊr (mˈjuzɪk)"
+     ],
+     [
+      "box office (4.0)",
+      "kassa daromadi",
+      "Concert films now beat action films at the box office.",
+      "Konsert filmlari endi kassada jangari filmlardan o'zib ketmoqda.",
+      ""
+     ],
+     [
+      "playlist",
+      "pleylist",
+      "I prefer making my own playlists to using the algorithm's.",
+      "Algoritmnikidan ko'ra o'z pleylistimni tuzishni afzal ko'raman.",
+      ""
+     ],
+     [
+      "subscription (media)",
+      "obuna",
+      "People would rather pay one subscription than ten.",
+      "Odamlar o'nta emas, bitta obunaga to'lashni afzal ko'radi.",
+      "səbˈskrɪpʃən (ˈmidiə)"
+     ],
+     [
+      "viral",
+      "viral (tez tarqalgan)",
+      "Content had better be short if it wants to go viral.",
+      "Viral bo'lishni xohlagan kontent qisqa bo'lgani ma'qul.",
+      "ˈvaɪrəl"
+     ],
+     [
+      "influencer",
+      "influenser",
+      "Brands prefer influencers to TV adverts now.",
+      "Brendlar endi TV reklamasidan ko'ra influenserlarni afzal ko'radi.",
+      ""
+     ],
+     [
+      "bias (media)",
+      "noxolislik",
+      "Readers had better recognise bias in the news.",
+      "O'quvchilar yangiliklardagi noxolislikni tanigani ma'qul.",
+      "baɪəs (ˈmidiə)"
+     ],
+     [
+      "objectivity",
+      "xolislik",
+      "I prefer objectivity to opinion in the news.",
+      "Yangiliklarda fikrdan ko'ra xolislikni afzal ko'raman.",
+      "ˌɑbʤɛkˈtɪvɪti"
+     ],
+     [
+      "misinformation (media)",
+      "noto'g'ri ma'lumot",
+      "Platforms had better remove misinformation quickly.",
+      "Platformalar noto'g'ri ma'lumotni tez olib tashlagani ma'qul.",
+      "ˌmɪsɪnfərˈmeɪʃən (ˈmidiə)"
+     ],
+     [
+      "songwriter",
+      "qo'shiq muallifi",
+      "She prefers writing her own songs to singing others'.",
+      "U boshqalarnikini kuylashdan ko'ra o'z qo'shiqlarini yozishni afzal ko'radi.",
+      "ˈsɔŋˌraɪtər"
+     ],
+     [
+      "Grammy Award",
+      "Gremmi mukofoti",
+      "She'd rather win a Grammy for songwriting than for singing.",
+      "U kuylash uchun emas, qo'shiq yozganlik uchun Gremmi olishni afzal ko'radi.",
+      "ˈgræmi əˈwɔrd"
+     ]
+    ],
+    "super": [
+     [
+      "freedom of the press (4.0)",
+      "matbuot erkinligi",
+      "Democracies had better protect freedom of the press.",
+      "Demokratiyalar matbuot erkinligini himoya qilgani ma'qul.",
+      ""
+     ],
+     [
+      "public interest",
+      "jamoat manfaati",
+      "Journalists prefer stories in the public interest to gossip.",
+      "Jurnalistlar g'iybatdan ko'ra jamoat manfaatidagi hikoyalarni afzal ko'radi.",
+      "ˈpəblɪk ˈɪntəˌrɛst"
+     ],
+     [
+      "role model (media)",
+      "ibrat namunasi",
+      "Stars had better remember that they are role models.",
+      "Yulduzlar ibrat namunasi ekanini eslagani ma'qul.",
+      "roʊl ˈmɑdəl (ˈmidiə)"
+     ],
+     [
+      "peer pressure",
+      "tengdoshlar bosimi",
+      "Teenagers would rather follow peer pressure than their parents.",
+      "O'smirlar ota-onasidan ko'ra tengdoshlar bosimiga ergashishni afzal ko'radi.",
+      "pɪr ˈprɛʃər"
+     ],
+     [
+      "short attention span (4.0)",
+      "qisqa diqqat davomiyligi",
+      "Platforms prefer short videos because of short attention spans.",
+      "Platformalar qisqa diqqat tufayli qisqa videolarni afzal ko'radi.",
+      ""
+     ],
+     [
+      "binge-watch",
+      "ketma-ket (to'xtamay) ko'rmoq",
+      "I'd rather binge-watch a series than watch one episode a week.",
+      "Haftasiga bir qism emas, serialni ketma-ket ko'rishni afzal ko'raman.",
+      ""
+     ],
+     [
+      "fandom",
+      "muxlislar jamoasi",
+      "Her fandom, the Swifties, would rather buy vinyl than stream.",
+      "Uning muxlislari — \"Swifties\" strimingdan ko'ra vinil sotib olishni afzal ko'radi.",
+      ""
+     ],
+     [
+      "master recording",
+      "asl (original) yozuv",
+      "An artist had better own the master recordings.",
+      "San'atkor asl yozuvlarga egalik qilgani ma'qul.",
+      "ˈmæstər rɪˈkɔrdɪŋ"
+     ],
+     [
+      "Eras Tour",
+      "\"Eras\" gastroli",
+      "The Eras Tour earned more than two billion dollars — the first tour to do so.",
+      "\"Eras\" gastroli ikki milliard dollardan ko'p daromad qildi — bunga erishgan birinchi gastrol.",
+      "ˈɪrəz tʊr"
+     ],
+     [
+      "economic impact",
+      "iqtisodiy ta'sir",
+      "Cities would rather host her concerts because of the economic impact.",
+      "Shaharlar iqtisodiy ta'siri tufayli uning konsertlarini o'tkazishni afzal ko'radi.",
+      "ˌɛkəˈnɑmɪk ˌɪmˈpækt"
+     ],
+     [
+      "songwriting credit",
+      "qo'shiq mualliflik huquqi (nomi)",
+      "She'd rather have a songwriting credit than a bigger fee.",
+      "U kattaroq to'lovdan ko'ra qo'shiq mualliflik nomini afzal ko'radi.",
+      "ˈsɔŋˌraɪtɪŋ ˈkrɛdɪt"
+     ],
+     [
+      "autobiographical",
+      "avtobiografik",
+      "Her lyrics are autobiographical, so fans prefer the album versions.",
+      "Uning matnlari avtobiografik, shuning uchun muxlislar albom versiyalarini afzal ko'radi.",
+      "ˌɔtəˌbaɪəˈgræfɪkəl"
+     ],
+     [
+      "country music",
+      "kantri musiqasi",
+      "She started in country music and would rather not be limited to one genre.",
+      "U kantri musiqasidan boshlagan va bitta janr bilan cheklanmaslikni afzal ko'radi.",
+      "ˈkəntri mˈjuzɪk"
+     ],
+     [
+      "reinvent oneself",
+      "o'zini qayta yaratmoq",
+      "Artists had better reinvent themselves every few years.",
+      "San'atkorlar har necha yilda o'zini qayta yaratgani ma'qul.",
+      "ˌriɪnˈvɛnt ˌwənˈsɛlf"
+     ],
+     [
+      "person of the year",
+      "yil odami",
+      "Time magazine named her Person of the Year in 2023.",
+      "Time jurnali uni 2023-da Yil odami deb e'lon qildi.",
+      "ˈpərsən əv ðə jɪr"
+     ],
+     [
+      "cultural phenomenon",
+      "madaniy hodisa",
+      "She is a cultural phenomenon, not just a singer.",
+      "U shunchaki qo'shiqchi emas, madaniy hodisa.",
+      "ˈkəlʧərəl fəˈnɑməˌnɑn"
+     ],
+     [
+      "ticket scalping",
+      "chiptalarni qayta sotish (chayqov)",
+      "Fans would rather governments banned ticket scalping.",
+      "Muxlislar hukumatlar chipta chayqovini taqiqlashini afzal ko'radi.",
+      "ˈtɪkɪt ˈskælpɪŋ"
+     ],
+     [
+      "stadium tour",
+      "stadion gastroli",
+      "I'd rather see a stadium tour than a small venue.",
+      "Kichik joydan ko'ra stadion gastrolini ko'rishni afzal ko'raman.",
+      "ˈsteɪdiəm tʊr"
+     ],
+     [
+      "merchandise",
+      "merch (rasmiy mahsulotlar)",
+      "Fans prefer official merchandise to fakes.",
+      "Muxlislar soxtadan ko'ra rasmiy merchni afzal ko'radi.",
+      "ˈmərʧənˌdaɪz"
+     ],
+     [
+      "legacy (music)",
+      "meros",
+      "She would rather be remembered for her songwriting than her fame.",
+      "U shuhrati emas, qo'shiq yozishi bilan eslanishni afzal ko'radi.",
+      "ˈlɛgəsi (mˈjuzɪk)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Qolipni tanlang",
+     "type": "choose",
+     "instr": "had better / would rather / prefer",
+     "items": [
+      "You had better / would rather check the source before sharing. (ogohlantirish)",
+      "I would rather / prefer stay home tonight. (hozirgi tanlov)",
+      "She prefers / would rather tea to coffee. (umumiy)",
+      "We'd better / 'd rather not be late — the concert starts at 8.",
+      "I prefer / would rather reading to watching TV.",
+      "I'd rather / prefer you didn't play music now."
+     ],
+     "answers": [
+      "had better",
+      "would rather",
+      "prefers",
+      "'d better",
+      "prefer",
+      "'d rather"
+     ]
+    },
+    {
+     "title": "To'g'ri shakl",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan",
+     "items": [
+      "You had better ___ (buy) the tickets today.",
+      "I would rather ___ (listen) than ___ (talk).",
+      "She prefers ___ (stream) to ___ (buy) CDs.",
+      "I prefer ___ (read) rather than ___ (watch) the news.",
+      "I'd rather you ___ (not / post) that photo.",
+      "We had better ___ (not / believe) the headline."
+     ],
+     "answers": [
+      "buy",
+      "listen / talk",
+      "streaming / buying",
+      "to read / watch",
+      "didn't post",
+      "not believe"
+     ]
+    },
+    {
+     "title": "Qayta yozing",
+     "type": "rewrite",
+     "instr": "Bir qolipdan boshqasiga",
+     "items": [
+      "I like live music more than recordings. (prefer)",
+      "I want to stay home tonight, not go out. (would rather)",
+      "You should check the facts, or you'll spread fake news. (had better)",
+      "I don't want you to share my photo. (would rather)",
+      "I choose streaming, not CDs. (prefer to … rather than)"
+     ],
+     "answers": [
+      "I prefer live music to recordings.",
+      "I'd rather stay home tonight than go out.",
+      "You had better check the facts.",
+      "I'd rather you didn't share my photo.",
+      "I prefer to stream rather than buy CDs."
+     ]
+    },
+    {
+     "title": "IELTS Speaking — Music",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 1–2 savollari — javobda prefer / would rather / had better",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "What kind of music do you prefer? — I prefer pop to classical, but I'd rather not listen all day.",
+      "Live or recorded? — I'd rather see a live performance than listen to a recording.",
+      "Do you buy music? — I prefer streaming to buying; it's cheaper.",
+      "Is fame good? — Stars had better protect their privacy.",
+      "Describe a singer you admire. — Taylor Swift: I'd rather she wrote more than toured."
+     ]
+    },
+    {
+     "title": "Media lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "TV, radio, newspapers and the internet together",
+      "news that is false but looks real",
+      "the legal right to your own song or book",
+      "reporting that exaggerates to shock people",
+      "listening to or watching content online without downloading",
+      "a person who influences followers online"
+     ],
+     "answers": [
+      "mass media",
+      "fake news",
+      "copyright",
+      "sensationalism",
+      "streaming",
+      "influencer"
+     ],
+     "box": [
+      "mass media",
+      "fake news",
+      "copyright",
+      "sensationalism",
+      "streaming",
+      "influencer"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "You had better to go.",
+      "I would rather to stay.",
+      "I prefer tea than coffee.",
+      "I'd rather you don't post it.",
+      "You better go. (yozma)"
+     ],
+     "answers": [
+      "You had better go.",
+      "I would rather stay.",
+      "I prefer tea to coffee.",
+      "I'd rather you didn't post it.",
+      "You had better go."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 8 jadvalini 3 marta; Essential Words 8 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Speaking sample — Music",
+     "type": "speaking",
+     "instr": "Kitobdagi \"Music\" namunani o'qing; Part 2 kartochka: \"Describe a singer you admire\" — 2 daqiqa ovozli yozuv, kamida 4 prefer / would rather",
+     "answers": "Ustoz Speaking rubrikasi bilan."
+    },
+    {
+     "title": "Media inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Celebrities have a responsibility to be role models. Agree or disagree?\" — kamida 6 Essential so'z va 4 qolip (had better…)",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Yaxshisi hozir ketsang bo'ladi.",
+      "Bugun uyda qolishni afzal ko'raman.",
+      "U choyni qahvadan afzal ko'radi.",
+      "O'sha suratni joylamaganing ma'qul.",
+      "San'atkorlar o'z qo'shiqlariga egalik qilishni afzal ko'radi."
+     ],
+     "answers": [
+      "You had better go now.",
+      "I would rather stay home tonight.",
+      "She prefers tea to coffee.",
+      "I'd rather you didn't post that photo.",
+      "Artists would rather own their songs."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 8 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "3 qolip × 3 shakl + gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 7",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 3 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 8 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Taylor Swift — she'd rather own her music than be owned by it",
+    "text": [
+     "Taylor Swift was born in 1989 in Pennsylvania. At 14 she told her parents that she would rather write songs in Nashville than stay at school in the suburbs, and the family moved. Her first album, country music written entirely by a teenager, came out in 2006. Record labels had told her she'd better wait until she was older; she preferred not to.",
+     "By 2015 she was the biggest pop star in the world. Then, in 2019, her old record label was sold, and with it the master recordings of her first six albums. Swift had asked to buy them herself; the label preferred to sell to someone else. Most artists would have accepted this. Swift did something unprecedented: she re-recorded all six albums as \"Taylor's Versions\", so that fans would rather stream her copies than the originals. It worked — the new versions topped the charts, and the old masters lost their value.",
+     "Her Eras Tour (2023–24) became the first tour in history to earn more than two billion dollars; economists measured its impact on the cities it visited, and Time magazine named her Person of the Year. Her fans, the Swifties, are famous for preferring vinyl records and stadium tickets to streaming.",
+     "Swift writes all her own songs, and most are autobiographical. \"You'd better write your own story,\" she told students at New York University, \"because if you don't, someone else will — and they'll get the copyright.\" Journalists would rather write about her boyfriends; she would rather they wrote about her songwriting."
+    ],
+    "glossary": [
+     "suburb — shahar chekkasi",
+     "record label — ovoz yozish kompaniyasi",
+     "master recording — asl yozuv",
+     "unprecedented — misli ko'rilmagan",
+     "top the charts — reytingda birinchi bo'lmoq",
+     "economist — iqtisodchi",
+     "vinyl — vinil plastinka",
+     "autobiographical — avtobiografik"
+    ],
+    "tasks": [
+     {
+      "title": "Qoliplarni toping",
+      "type": "find",
+      "instr": "Matndan had better / would rather / prefer bilan 8 gap",
+      "items": [
+       "would rather 1",
+       "had better 1",
+       "prefer 1",
+       "prefer 2",
+       "would rather 2",
+       "prefer 3",
+       "had better 2",
+       "would rather 3"
+      ],
+      "answers": [
+       "She would rather write songs in Nashville than stay at school.",
+       "Record labels had told her she'd better wait.",
+       "She preferred not to.",
+       "The label preferred to sell to someone else.",
+       "Fans would rather stream her copies than the originals.",
+       "Preferring vinyl records and stadium tickets to streaming.",
+       "You'd better write your own story.",
+       "Journalists would rather write about her boyfriends; she would rather they wrote about her songwriting."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Her first album came out when she was 21.",
+       "She was able to buy her old master recordings.",
+       "The Eras Tour earned more than two billion dollars.",
+       "She writes all her own songs."
+      ],
+      "answers": [
+       "False (2006, at 16)",
+       "False",
+       "True",
+       "True"
+      ]
+     },
+     {
+      "title": "Media lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta media/musiqa so'zi; \"write your own story\" maslahati — o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "record label, master recordings, re-recorded, charts, tour, streaming, vinyl, copyright, songwriting, journalists",
+       "Control your own work and story; otherwise others will own and tell it."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Speaking sample: Music, Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 41–45 (fayllar yo'q — ustoz IELTS Section 1 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Hello, Tashkent Arena box office. — Hi, I'd rather buy tickets for Saturday than Friday. — Saturday is nearly sold out; you'd better decide now. Standing is 300,000 sums, seated 500,000. — I prefer seated. Two, please. — Doors open at 6, the show starts at 8. You'd better arrive by 7 because of security. — Can I pay by card? — Card or cash. I'd rather you paid online to save time.\"",
+     "1-tinglash: qaysi kun? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Form completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Day: ___",
+       "Seated ticket: ___ sums; standing: ___",
+       "Doors open at ___; show starts at ___",
+       "Better arrive by ___ because of security"
+      ],
+      "answers": [
+       "Saturday",
+       "500,000; 300,000",
+       "6; 8",
+       "7"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 9,
+   "title": "See somebody do vs See somebody doing",
+   "grammar_topic": "SEZGI FE'LLARI + OB'EKT + V1 / V-ing (see / hear / watch / notice / feel somebody do — doing)",
+   "vocab_topic": "Essential Words 9 — Sport, achievement and competition (sport, yutuq va raqobat)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 9 – See somebody do vs see somebody doing (jadval); Essential Words 9; Speaking sample: Sports; Audio 46–50 (ustoz skripti); Reading — Ruslan Chagaev (Jony Academy matni).",
+   "objectives": [
+    "Sezgi fe'llari (see, hear, watch, notice, feel, listen to) + ob'ekt + V1 (to'liq harakat) va + V-ing (jarayon) farqini bilish.",
+    "Passiv shakl: was seen to do / was seen doing.",
+    "Sport voqealarini tasvirlash: \"I saw him score\" / \"I saw him training\".",
+    "Sport Essential Words 9 bilan Speaking \"Sports\" mavzusi va yutuq haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 9 — Sport, achievement and competition (sport, yutuq va raqobat) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz derazadan qaraydi: \"I saw a boy cross the street (boshidan oxirigacha). I saw a boy crossing the street (o'sha paytda, jarayonda).\" — farq: butun harakat yoki uning bir qismi."
+    ],
+    [
+     8,
+     "Kahoot — Had better, would rather, prefer",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Had better, would rather, prefer lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: see/hear/watch/notice/feel + ob'ekt + V1 — harakat butunlay ko'rilgan (boshidan oxirigacha) yoki takroriy (\"I saw him cross the street\"; \"We often see birds fly here\"); + ob'ekt + V-ing — harakat davom etayotgan paytda ko'rilgan (\"I saw him crossing the street\"; \"She saw them playing football\"). Passivda: He was seen to cross / He was seen crossing."
+    ],
+    [
+     12,
+     "Essential Words 9 — Sport, achievement and competition (sport, yutuq va raqobat) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "SEE + OB'EKT + V1 — harakat BUTUNLAY ko'rildi (boshidan oxirigacha) yoki takroriy odat: \"I saw him cross the street.\" / \"We often see birds fly here.\"",
+     "SEE + OB'EKT + V-ING — harakat DAVOM ETAYOTGAN paytda ko'rildi (bir qismi): \"I saw him crossing the street.\" / \"She saw them playing football.\"",
+     "Xuddi shunday: hear, watch, notice, feel, listen to, observe: \"I heard the bell ring\" (butun) / \"I heard someone singing\" (jarayon).",
+     "Passiv: V1 → to V1: \"He was seen to leave the ring.\" / V-ing qoladi: \"He was seen leaving the ring.\"",
+     "Ma'no farqi: \"I saw the match end\" (oxirini ko'rdim) — \"I saw the match ending\" (tugayotganida ko'rdim)."
+    ],
+    "formulas": [
+     [
+      "See + ob'ekt + V1",
+      "S + see/hear/watch + O + V1 (to'liq)",
+      "I saw him cross the street.",
+      "Uni ko'chani kesib o'tganini ko'rdim (boshidan oxirigacha)."
+     ],
+     [
+      "See + ob'ekt + V1 (odat)",
+      "S + often see + O + V1",
+      "We often see birds fly here.",
+      "Bu yerda qushlar uchishini tez-tez ko'ramiz."
+     ],
+     [
+      "See + ob'ekt + V-ing",
+      "S + see/hear/watch + O + V-ing (jarayon)",
+      "I saw him crossing the street.",
+      "Uni ko'chani kesib o'tayotganini ko'rdim."
+     ],
+     [
+      "Hear / notice / feel",
+      "S + hear/notice/feel + O + V1 / V-ing",
+      "I heard the bell ring. / I noticed him training.",
+      "Qo'ng'iroq chalinganini eshitdim. / Uni mashq qilayotganini payqadim."
+     ],
+     [
+      "Passiv",
+      "O + was seen/heard + to V1 / V-ing",
+      "He was seen to leave. / He was seen leaving.",
+      "U ketgani ko'rildi. / U ketayotganda ko'rildi."
+     ],
+     [
+      "Sport",
+      "I watched him score / I watched him boxing",
+      "I watched Chagaev knock out his opponent. / I watched him boxing for ten rounds.",
+      "Chagayev raqibini nokaut qilganini ko'rdim. / Uni o'n raund bokslashayotganini ko'rdim."
+     ]
+    ],
+    "presentation": [
+     [
+      "Did you see Chagaev win the title?",
+      "Yes, I saw him win it in 2007 — the whole fight."
+     ],
+     [
+      "Did you see him training this morning?",
+      "I saw him training at 6 when I passed the gym."
+     ],
+     [
+      "Did you hear the crowd shout?",
+      "I heard the crowd shouting for three rounds."
+     ],
+     [
+      "Have you ever watched a marathon runner finish?",
+      "I watched one finish last year — she collapsed at the line."
+     ],
+     [
+      "Did you notice the referee make a mistake?",
+      "I noticed him making mistakes all night."
+     ],
+     [
+      "Did you feel the stadium shake?",
+      "I felt it shaking when Uzbekistan scored."
+     ],
+     [
+      "Was he seen to leave the ring?",
+      "He was seen leaving the ring with a cut eye."
+     ],
+     [
+      "Do you often see children play football here?",
+      "Yes, we often see them play until dark."
+     ],
+     [
+      "Did you watch her lift the trophy?",
+      "I watched her lift it — and cry."
+     ],
+     [
+      "Did you hear him say he would retire?",
+      "I heard him saying it to a journalist."
+     ]
+    ],
+    "notes": [
+     "V1 — \"nima bo'ldi\" (natija, to'liq); V-ing — \"nima bo'layotgan edi\" (jarayon, bir lahza).",
+     "watch va listen to — odatda jarayon (V-ing) bilan tabiiyroq: \"I watched him boxing\".",
+     "can't help/stand + V-ing; \"I could see him coming\" (could bilan — V-ing).",
+     "Essential Words 9: achievement, opponent, title, defend, knockout, sportsmanship, underdog, comeback, discipline, stamina."
+    ],
+    "mistakes": [
+     [
+      "I saw him to cross the street.",
+      "I saw him cross the street.",
+      "Aktivda \"to\" yo'q."
+     ],
+     [
+      "I heard the bell to ring.",
+      "I heard the bell ring.",
+      "hear + O + V1."
+     ],
+     [
+      "I saw him crossed the street.",
+      "I saw him cross / crossing the street.",
+      "V1 yoki V-ing."
+     ],
+     [
+      "He was seen leave the ring.",
+      "He was seen to leave the ring.",
+      "Passivda to + V1."
+     ],
+     [
+      "I watched the whole fight ending.",
+      "I watched the whole fight end.",
+      "To'liq harakat → V1."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — sport va yutuq asoslari (achievement, opponent, title…); STRONG — musobaqa va xarakter so'zlari; SUPER — boks va Chagayev so'zlari, Task 2 birikmalari (competitive spirit, national pride).",
+     "Har so'zga see/hear + O + V1/V-ing gap: \"I saw the champion defend his title.\" / \"I heard the fans cheering.\""
+    ],
+    "core": [
+     [
+      "achievement (4.0)",
+      "yutuq",
+      "I watched him reach the biggest achievement of his life.",
+      "Uni hayotidagi eng katta yutuqqa erishganini ko'rdim.",
+      ""
+     ],
+     [
+      "opponent (4.0)",
+      "raqib",
+      "I saw his opponent fall in the fourth round.",
+      "Raqibi to'rtinchi raundda yiqilganini ko'rdim.",
+      ""
+     ],
+     [
+      "title (sport)",
+      "unvon",
+      "We watched Chagaev win the world title in 2007.",
+      "Chagayev 2007-da jahon unvonini yutganini ko'rdik.",
+      "ˈtaɪtəl (spɔrt)"
+     ],
+     [
+      "defend a title (4.0)",
+      "unvonni himoya qilmoq",
+      "I saw him defending his title twice.",
+      "Uni unvonini ikki marta himoya qilayotganini ko'rdim.",
+      ""
+     ],
+     [
+      "knockout (KO)",
+      "nokaut",
+      "The crowd saw him knock out the giant.",
+      "Olomon uni gigantni nokaut qilganini ko'rdi.",
+      "ˈnɑˌkaʊt (koʊ)"
+     ],
+     [
+      "sportsmanship (4.0)",
+      "sportcha xulq",
+      "I noticed him showing sportsmanship after the fight.",
+      "Jangdan keyin uni sportcha xulq ko'rsatayotganini payqadim.",
+      ""
+     ],
+     [
+      "underdog (4.0)",
+      "kuchsiz hisoblangan tomon",
+      "Everyone saw the underdog beat the champion.",
+      "Hamma kuchsiz hisoblangan tomon chempionni yengganini ko'rdi.",
+      ""
+     ],
+     [
+      "comeback (4.0)",
+      "qaytish (kuchli)",
+      "Fans watched him make a comeback at 34.",
+      "Muxlislar uni 34 yoshida qaytganini ko'rishdi.",
+      ""
+     ],
+     [
+      "discipline (4.0)",
+      "intizom",
+      "I saw him training with discipline every morning.",
+      "Uni har ertalab intizom bilan mashq qilayotganini ko'rdim.",
+      ""
+     ],
+     [
+      "stamina (4.0)",
+      "chidamlilik",
+      "We watched his stamina fade in the tenth round.",
+      "O'ninchi raundda chidamliligi so'nganini ko'rdik.",
+      ""
+     ],
+     [
+      "championship",
+      "chempionat",
+      "I heard them announce the championship result.",
+      "Chempionat natijasi e'lon qilinganini eshitdim.",
+      "ˈʧæmpiənˌʃɪp"
+     ],
+     [
+      "heavyweight",
+      "og'ir vazn",
+      "He was the first Uzbek heavyweight champion.",
+      "U birinchi o'zbek og'ir vazn chempioni edi.",
+      "ˈhɛviˌweɪt"
+     ],
+     [
+      "referee (4.0)",
+      "hakam",
+      "I noticed the referee stop the fight.",
+      "Hakam jangni to'xtatganini payqadim.",
+      ""
+     ],
+     [
+      "victory / defeat (4.0)",
+      "g'alaba / mag'lubiyat",
+      "I watched him accept defeat with dignity.",
+      "Uni mag'lubiyatni or-nomus bilan qabul qilganini ko'rdim.",
+      ""
+     ],
+     [
+      "training camp",
+      "mashq lageri",
+      "We saw the team leaving for the training camp.",
+      "Jamoani mashq lageriga ketayotganini ko'rdik.",
+      "ˈtreɪnɪŋ kæmp"
+     ],
+     [
+      "coach (4.0)",
+      "murabbiy",
+      "I heard the coach shouting instructions.",
+      "Murabbiyni ko'rsatmalar baqirayotganini eshitdim.",
+      ""
+     ],
+     [
+      "medal (4.0)",
+      "medal",
+      "I watched her receive the gold medal.",
+      "Uni oltin medal olganini ko'rdim.",
+      ""
+     ],
+     [
+      "record (sport) (4.0)",
+      "rekord",
+      "Thousands saw him break the record.",
+      "Minglab odam uni rekordni yangilaganini ko'rdi.",
+      ""
+     ],
+     [
+      "competitive",
+      "raqobatbardosh",
+      "I saw him becoming more competitive every year.",
+      "Uni har yili raqobatbardoshroq bo'layotganini ko'rdim.",
+      "kəmˈpɛtɪtɪv"
+     ],
+     [
+      "retire (sport) (4.0)",
+      "sportni tark etmoq",
+      "We heard him announce that he would retire.",
+      "Uni sportni tark etishini e'lon qilganini eshitdik.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "amateur / professional (4.0)",
+      "havaskor / professional",
+      "I watched him fight as an amateur before he turned professional.",
+      "Uni professional bo'lishdan oldin havaskor sifatida jang qilganini ko'rdim.",
+      ""
+     ],
+     [
+      "weight class",
+      "vazn toifasi",
+      "He moved up a weight class, and we saw him struggle.",
+      "U vazn toifasini oshirdi va biz uni qiynalganini ko'rdik.",
+      "weɪt klæs"
+     ],
+     [
+      "round (boxing)",
+      "raund",
+      "I saw him win the last three rounds.",
+      "Uni oxirgi uch raundni yutganini ko'rdim.",
+      "raʊnd (ˈbɑksɪŋ)"
+     ],
+     [
+      "punch / jab",
+      "zarba / to'g'ri zarba",
+      "I saw the punch land.",
+      "Zarba tekkanini ko'rdim.",
+      "pənʧ  ʤæb"
+     ],
+     [
+      "belt (title belt)",
+      "chempionlik kamari",
+      "We watched him lift the WBA belt.",
+      "Uni WBA kamarini ko'targanini ko'rdik.",
+      "bɛlt (ˈtaɪtəl bɛlt)"
+     ],
+     [
+      "unbeaten / undefeated",
+      "mag'lubiyatsiz",
+      "Fans saw him stay undefeated for years.",
+      "Muxlislar uni yillar davomida mag'lubiyatsiz qolganini ko'rishdi.",
+      "ənˈbitən  ˌəndɪˈfitɪd"
+     ],
+     [
+      "rival / rivalry (4.0)",
+      "raqib / raqobat",
+      "I heard the rivals insulting each other at the press conference.",
+      "Raqiblarni matbuot anjumanida bir-birini haqoratlayotganini eshitdim.",
+      ""
+     ],
+     [
+      "injury (4.0)",
+      "jarohat",
+      "I noticed him hiding an injury during the fight.",
+      "Uni jang paytida jarohatini yashirayotganini payqadim.",
+      ""
+     ],
+     [
+      "doping (4.0)",
+      "doping",
+      "Nobody saw him take anything illegal; he was clean.",
+      "Hech kim uni noqonuniy narsa qabul qilganini ko'rmagan; u toza edi.",
+      ""
+     ],
+     [
+      "sponsor (4.0)",
+      "homiy",
+      "We saw sponsors leave when he lost.",
+      "Yutqazganida homiylar ketganini ko'rdik.",
+      ""
+     ],
+     [
+      "national pride",
+      "milliy g'urur",
+      "I saw the whole country celebrating with national pride.",
+      "Butun mamlakat milliy g'urur bilan nishonlayotganini ko'rdim.",
+      "ˈnæʃənəl praɪd"
+     ],
+     [
+      "role model (sport)",
+      "ibrat namunasi",
+      "Children watch role models train and copy them.",
+      "Bolalar ibrat namunalarini mashq qilishini ko'rib, ularga taqlid qiladi.",
+      "roʊl ˈmɑdəl (spɔrt)"
+     ],
+     [
+      "determination (4.0)",
+      "qat'iyat",
+      "I saw determination in his eyes as he stood up.",
+      "U o'rnidan turganida ko'zlarida qat'iyatni ko'rdim.",
+      ""
+     ],
+     [
+      "perseverance (4.0)",
+      "qat'iy davom ettirish",
+      "We watched perseverance beat talent.",
+      "Qat'iy davom ettirish iste'dodni yengganini ko'rdik.",
+      ""
+     ],
+     [
+      "pressure (4.0)",
+      "bosim",
+      "I noticed him handling pressure calmly.",
+      "Uni bosimni xotirjam boshqarayotganini payqadim.",
+      ""
+     ],
+     [
+      "spectator (4.0)",
+      "tomoshabin",
+      "Spectators heard the bell ring for the last round.",
+      "Tomoshabinlar oxirgi raund qo'ng'irog'i chalinganini eshitdi.",
+      ""
+     ],
+     [
+      "Olympic Games (4.0)",
+      "Olimpiada o'yinlari",
+      "We watched him lose at the Olympics and win as a professional.",
+      "Uni Olimpiadada yutqazganini va professional sifatida yutganini ko'rdik.",
+      ""
+     ],
+     [
+      "qualify (4.0)",
+      "saralashdan o'tmoq",
+      "I saw the team qualify for the World Cup.",
+      "Jamoani Jahon chempionatiga chiqqanini ko'rdim.",
+      ""
+     ],
+     [
+      "tournament (4.0)",
+      "turnir",
+      "I watched the tournament final end in a draw.",
+      "Turnir finali durang bilan tugaganini ko'rdim.",
+      ""
+     ],
+     [
+      "sporting legend",
+      "sport afsonasi",
+      "Uzbekistan saw a sporting legend born in 2007.",
+      "O'zbekiston 2007-da sport afsonasi tug'ilganini ko'rdi.",
+      "ˈspɔrtɪŋ ˈlɛʤənd"
+     ]
+    ],
+    "super": [
+     [
+      "competitive spirit",
+      "raqobat ruhi",
+      "I saw his competitive spirit growing with every fight.",
+      "Uning raqobat ruhi har jangda o'sayotganini ko'rdim.",
+      "kəmˈpɛtɪtɪv ˈspɪrɪt"
+     ],
+     [
+      "against the odds",
+      "ehtimollarga qarshi",
+      "We watched him win against the odds in Germany.",
+      "Uni Germaniyada ehtimollarga qarshi yutganini ko'rdik.",
+      "əˈgɛnst ðə ɑdz"
+     ],
+     [
+      "pound-for-pound",
+      "vaznidan qat'i nazar eng yaxshi",
+      "Experts saw him become a pound-for-pound top ten boxer.",
+      "Mutaxassislar uni vaznidan qat'i nazar eng yaxshi o'nlikka kirganini ko'rishdi.",
+      ""
+     ],
+     [
+      "seven-foot giant",
+      "ikki metrli gigant",
+      "The world saw a 1.85 m man beat a seven-foot giant.",
+      "Dunyo 1,85 m odam ikki metrli gigantni yengganini ko'rdi.",
+      ""
+     ],
+     [
+      "White Tyson",
+      "\"Oq Tayson\" (laqab)",
+      "Fans saw why he was called \"White Tyson\".",
+      "Muxlislar nega uni \"Oq Tayson\" deyishganini ko'rishdi.",
+      "waɪt ˈtaɪsən"
+     ],
+     [
+      "hepatitis",
+      "gepatit",
+      "Doctors saw him fighting hepatitis for years.",
+      "Shifokorlar uni yillar davomida gepatit bilan kurashayotganini ko'rishdi.",
+      "ˌhɛpəˈtaɪtəs"
+     ],
+     [
+      "suspension",
+      "chetlatish (musobaqadan)",
+      "The suspension was lifted, and we saw him return.",
+      "Chetlatish bekor qilindi va biz uni qaytganini ko'rdik.",
+      "səˈspɛnʃən"
+     ],
+     [
+      "mandatory challenger",
+      "majburiy da'vogar",
+      "The champion was seen to avoid the mandatory challenger.",
+      "Chempion majburiy da'vogardan qochgani ko'rildi.",
+      "ˈmændəˌtɔri ˈʧælɪnʤər"
+     ],
+     [
+      "unanimous decision",
+      "bir ovozdan qaror",
+      "I heard the judges give a unanimous decision.",
+      "Hakamlar bir ovozdan qaror berganini eshitdim.",
+      "juˈnænəməs dɪˈsɪʒən"
+     ],
+     [
+      "split decision",
+      "ovozlar bo'lingan qaror",
+      "Fans saw him lose the belt on a split decision.",
+      "Muxlislar uni bo'lingan qaror bilan kamarni yo'qotganini ko'rishdi.",
+      "splɪt dɪˈsɪʒən"
+     ],
+     [
+      "ring walk",
+      "ringga chiqish",
+      "I watched his ring walk with the Uzbek flag.",
+      "Uning O'zbekiston bayrog'i bilan ringga chiqishini ko'rdim.",
+      "rɪŋ wɔk"
+     ],
+     [
+      "corner (boxing)",
+      "burchak (jamoa)",
+      "We heard his corner telling him to attack.",
+      "Uning burchagi hujum qilishni aytayotganini eshitdik.",
+      "ˈkɔrnər (ˈbɑksɪŋ)"
+     ],
+     [
+      "knocked down",
+      "yiqitilgan",
+      "I saw him get knocked down and stand up again.",
+      "Uni yiqitilganini va yana turganini ko'rdim.",
+      "nɑkt daʊn"
+     ],
+     [
+      "title fight",
+      "chempionlik jangi",
+      "Millions watched the title fight end in the twelfth round.",
+      "Millionlar chempionlik jangi o'n ikkinchi raundda tugaganini ko'rdi.",
+      "ˈtaɪtəl faɪt"
+     ],
+     [
+      "hall of fame",
+      "shon-sharaf zali",
+      "We saw him enter the Uzbek sporting hall of fame.",
+      "Uni O'zbekiston sport shon-sharaf zaliga kirganini ko'rdik.",
+      "hɔl əv feɪm"
+     ],
+     [
+      "mental toughness",
+      "ruhiy mustahkamlik",
+      "I noticed his mental toughness when he was hurt.",
+      "Jarohatlanganida uning ruhiy mustahkamligini payqadim.",
+      "ˈmɛntəl ˈtəfnəs"
+     ],
+     [
+      "sporting career",
+      "sport karyerasi",
+      "We watched his sporting career last twenty years.",
+      "Uning sport karyerasi yigirma yil davom etganini ko'rdik.",
+      "ˈspɔrtɪŋ kərɪr"
+     ],
+     [
+      "Andijan",
+      "Andijon",
+      "Andijan saw its boy become world champion.",
+      "Andijon o'z o'g'lini jahon chempioni bo'lganini ko'rdi.",
+      ""
+     ],
+     [
+      "inspire a generation",
+      "avlodni ilhomlantirmoq",
+      "We saw him inspire a generation of Uzbek boxers.",
+      "Uni o'zbek bokschilarining bir avlodini ilhomlantirganini ko'rdik.",
+      "ˌɪnˈspaɪr ə ˌʤɛnərˈeɪʃən"
+     ],
+     [
+      "walk away (retire)",
+      "(sportdan) ketmoq",
+      "Fans saw him walking away from boxing in 2019.",
+      "Muxlislar uni 2019-da boksdan ketayotganini ko'rishdi.",
+      "wɔk əˈweɪ (ˌriˈtaɪər)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "V1 yoki V-ing",
+     "type": "choose",
+     "instr": "Ma'noga qarab tanlang",
+     "items": [
+      "I saw him cross / crossing the street and go into the gym. (to'liq)",
+      "I saw him cross / crossing the street when I drove past. (jarayon)",
+      "We often see birds fly / flying here. (odat)",
+      "I heard the bell ring / ringing and stood up. (to'liq)",
+      "I heard someone sing / singing in the next room. (jarayon)",
+      "I watched him lift / lifting the belt. (to'liq)",
+      "I noticed him hide / hiding an injury during the fight. (jarayon)",
+      "She felt the ground shake / shaking for a minute. (jarayon)"
+     ],
+     "answers": [
+      "cross",
+      "crossing",
+      "fly",
+      "ring",
+      "singing",
+      "lift",
+      "hiding",
+      "shaking"
+     ]
+    },
+    {
+     "title": "Passiv",
+     "type": "rewrite",
+     "instr": "Gapni passivga aylantiring",
+     "items": [
+      "People saw him leave the ring.",
+      "Fans saw him training at 6 am.",
+      "They heard the coach shout instructions.",
+      "Someone noticed her crying after the fight.",
+      "Journalists heard him say he would retire."
+     ],
+     "answers": [
+      "He was seen to leave the ring.",
+      "He was seen training at 6 am.",
+      "The coach was heard to shout instructions.",
+      "She was noticed crying after the fight.",
+      "He was heard to say he would retire."
+     ]
+    },
+    {
+     "title": "Ikki gap",
+     "type": "write",
+     "instr": "Bitta vaziyat — ikki ma'no (V1 / V-ing)",
+     "items": [
+      "the match / end",
+      "him / knock out / the opponent",
+      "the crowd / shout",
+      "her / receive / the medal"
+     ],
+     "answers": [
+      "I saw the match end (oxirigacha). / I saw the match ending (tugayotganida).",
+      "I saw him knock out the opponent (to'liq). / I saw him knocking out the opponent (o'sha lahzada).",
+      "I heard the crowd shout (bir marta). / I heard the crowd shouting (davom etayotganda).",
+      "I watched her receive the medal. / I watched her receiving the medal."
+     ]
+    },
+    {
+     "title": "IELTS Speaking — Sports",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 2 \"Describe a sporting event you watched\" — 6 gap, see/hear/watch + O + V1/V-ing",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I watched Chagaev win the world title in 2007.",
+      "I saw him knock out a giant in the fourth round.",
+      "I heard the whole city celebrating that night.",
+      "I noticed him showing sportsmanship to his opponent.",
+      "I saw children training harder the next week.",
+      "I felt the country becoming proud of boxing."
+     ]
+    },
+    {
+     "title": "Sport lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the person you fight or play against",
+      "winning after a period of losing or absence",
+      "fair, polite behaviour in sport",
+      "the player or team expected to lose",
+      "the ability to keep going for a long time",
+      "to keep your title by winning again"
+     ],
+     "answers": [
+      "opponent",
+      "comeback",
+      "sportsmanship",
+      "underdog",
+      "stamina",
+      "defend a title"
+     ],
+     "box": [
+      "opponent",
+      "comeback",
+      "sportsmanship",
+      "underdog",
+      "stamina",
+      "defend a title"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I saw him to cross the street.",
+      "I heard the bell to ring.",
+      "I saw him crossed the street.",
+      "He was seen leave the ring.",
+      "I watched the whole fight ending."
+     ],
+     "answers": [
+      "I saw him cross the street.",
+      "I heard the bell ring.",
+      "I saw him cross the street.",
+      "He was seen to leave the ring.",
+      "I watched the whole fight end."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 9 jadvalini 3 marta; Essential Words 9 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Speaking sample — Sports",
+     "type": "speaking",
+     "instr": "Kitobdagi \"Sports\" namunani o'qing; Part 2: \"Describe a sporting event you watched\" — 2 daqiqa ovozli yozuv, kamida 5 see/hear/watch + O + V",
+     "answers": "Ustoz Speaking rubrikasi bilan."
+    },
+    {
+     "title": "Sport inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Professional athletes are paid too much. Agree or disagree?\" — kamida 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Uni ko'chani kesib o'tganini ko'rdim. (to'liq)",
+      "Uni ko'chani kesib o'tayotganini ko'rdim. (jarayon)",
+      "Bu yerda qushlar uchishini tez-tez ko'ramiz.",
+      "Qo'ng'iroq chalinganini eshitdim.",
+      "U ringni tark etgani ko'rildi."
+     ],
+     "answers": [
+      "I saw him cross the street.",
+      "I saw him crossing the street.",
+      "We often see birds fly here.",
+      "I heard the bell ring.",
+      "He was seen to leave the ring."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 9 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "6 sezgi fe'li × V1/V-ing + gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 8",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 9 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Ruslan Chagaev — the night Uzbekistan saw a giant fall",
+    "text": [
+     "Ruslan Chagaev was born in 1978 in Andijan. As a boy he watched his older brothers box in a small gym, and by 19 he had become an amateur world champion. He fought for Uzbekistan at the 2000 Olympics, and everyone expected to see him win a medal; instead they saw him lose early and, soon after, turn professional in Germany.",
+     "For seven years nobody saw him lose. Then, in April 2007, in Stuttgart, he faced Nikolay Valuev — the WBA heavyweight champion, a seven-foot giant weighing 145 kg who had never been beaten in 46 fights. Chagaev was 1.85 m and 30 kg lighter. Millions of Uzbeks stayed up until 3 a.m. to watch him fight. In the fourth round they saw him land a left hand that shook the giant; in the twelfth they heard the final bell ring and watched the judges give a majority decision — to Chagaev. Uzbekistan had its first world heavyweight champion, and Andijan saw its streets fill with people at dawn.",
+     "His career was never simple. Doctors had seen him fighting hepatitis B for years, and a suspension kept him out of the ring for months. He lost the belt in 2009, but in 2014, at 35, fans watched him make a comeback and win the WBA title again. He retired in 2019 with 34 wins.",
+     "Today young boxers in Andijan can be seen training in a gym that carries his name. \"I saw my brothers fight and I copied them,\" he says. \"Now I want children to see us and copy us — that's how a sport lives.\""
+    ],
+    "glossary": [
+     "amateur — havaskor",
+     "turn professional — professionalga aylanmoq",
+     "giant — gigant",
+     "weigh — vaznida bo'lmoq",
+     "land a punch — zarba tekkizmoq",
+     "majority decision — ko'pchilik qarori",
+     "hepatitis — gepatit",
+     "suspension — chetlatish",
+     "comeback — qaytish",
+     "copy — taqlid qilmoq"
+    ],
+    "tasks": [
+     {
+      "title": "see/hear/watch + O + V toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "watch + V1",
+       "see + V1 (1)",
+       "see + V1 (2)",
+       "see + V1 (3)",
+       "see + V1 (4)",
+       "hear + V1",
+       "see + V-ing",
+       "watch + V1 / be seen + V-ing"
+      ],
+      "answers": [
+       "He watched his older brothers box in a small gym.",
+       "Everyone expected to see him win a medal.",
+       "They saw him lose early.",
+       "Nobody saw him lose.",
+       "They saw him land a left hand.",
+       "They heard the final bell ring.",
+       "Doctors had seen him fighting hepatitis B.",
+       "Fans watched him make a comeback. / Young boxers can be seen training."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Chagaev won an Olympic medal in 2000.",
+       "Valuev was 30 kg heavier.",
+       "Chagaev won the 2007 fight by knockout.",
+       "He won the WBA title again in 2014."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (majority decision)",
+       "True"
+      ]
+     },
+     {
+      "title": "Sport lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta sport so'zi; Chagayevning \"sport qanday yashaydi\" fikri",
+      "items": [
+       "words",
+       "idea"
+      ],
+      "answers": [
+       "amateur, champion, professional, heavyweight, round, bell, judges, belt, comeback, title, retired",
+       "A sport lives when children watch champions and copy them."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Speaking sample: Sports, Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 46–50 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the National Boxing Centre. In the main hall you can watch athletes training from 7 to 10 every morning. Visitors often see champions spar with young boxers on Fridays. Please don't take photos while they are fighting. In the museum you'll see the belt Chagaev won in 2007 and hear the crowd cheering in the film about that night. The centre was opened in 2018 and trains 400 boxers.\"",
+     "1-tinglash: mashq vaqti? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Training can be watched from ___ to ___",
+       "Champions spar with young boxers on ___",
+       "Museum: the belt from ___",
+       "Opened in ___; trains ___ boxers"
+      ],
+      "answers": [
+       "7, 10",
+       "Fridays",
+       "2007",
+       "2018, 400"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 10,
+   "title": "One vs The one",
+   "grammar_topic": "ONE / ONES (noaniq o'rinbosar) vs THE ONE / THE ONES (aniq) + another / the other / others",
+   "vocab_topic": "Essential Words 10 — Consumerism, fashion and shopping (iste'molchilik, moda va xarid)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 2 — 6–10-darslar (be allowed/supposed to, definite article, had better/would rather/prefer, see somebody do/doing, one vs the one; Essential Words 6–10; Sample essay 3–4, 8)",
+   "book_ref": "Student's book IELTS 4.0: Lesson 10 – One vs the one (jadval); Essential Words 10; Sample essay 10 (Online shopping); Speaking sample: Shopping; Audio 51–55 (ustoz skripti); Reading — Rihanna (Jony Academy matni).",
+   "objectives": [
+    "one/ones (noaniq) va the one/the ones (aniq) ni to'g'ri ishlatish; ot takrorini oldini olish.",
+    "another / the other / others / the others farqi.",
+    "\"Which one?\" savollari va sifat + one (the red one, a bigger one).",
+    "Iste'molchilik Essential Words 10 bilan Sample essay 10 (\"online shopping\") va Speaking \"Shopping\" uchun til."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 10 — Consumerism, fashion and shopping (iste'molchilik, moda va xarid) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz ikki ruchka ko'rsatadi: \"I want one (istalgan bittasi). I want the one you're holding (aniq shu).\" Keyin: \"These shoes are nice. I'll take the red ones.\" — ones = ko'plik."
+    ],
+    [
+     8,
+     "Kahoot — See somebody do vs see somebody doing",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — See somebody do vs see somebody doing lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: ONE — noma'lum, umumiy bittasi (\"I want one, please\"; \"Give me one apple\"); THE ONE — ma'lum, aniq, oldin aytilgan yoki tanlangan (\"He is the one I was talking about\"; \"This is the one I like best\"). Qo'shimcha: ones (ko'plik), the ones, this/that one, which one?, another one / the other one / the others; one = odam (umumiy, rasmiy: \"One should…\")."
+    ],
+    [
+     12,
+     "Essential Words 10 — Consumerism, fashion and shopping (iste'molchilik, moda va xarid) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "ONE — otning o'rnini bosadi, NOMA'LUM: \"I want one, please.\" (bittasini); \"Give me one apple.\" (bitta olma).",
+     "THE ONE — ANIQ, ma'lum: \"He is the one I was talking about.\" / \"This is the one I like best.\" (relative clause yoki sifat bilan aniqlanadi).",
+     "ONES / THE ONES — ko'plik: \"I like the red ones.\" / \"The ones on sale are cheaper.\"",
+     "sifat + one: \"a bigger one\", \"the cheap one\"; this one / that one; which one(s)?",
+     "ANOTHER (yana bir, boshqa) / THE OTHER (ikkinchisi, qolgan bittasi) / OTHERS (boshqalar) / THE OTHERS (qolganlarning hammasi)."
+    ],
+    "formulas": [
+     [
+      "One — noaniq",
+      "one = a + ot (umumiy)",
+      "I want one, please. / Give me one apple.",
+      "Bittasini bering. / Menga bitta olma bering."
+     ],
+     [
+      "The one — aniq",
+      "the one + relative clause / sifat",
+      "He is the one I was talking about. / This is the one I like best.",
+      "U — men aytgan odam. / Bu — menga eng yoqqani."
+     ],
+     [
+      "Ones / the ones",
+      "ko'plik",
+      "These shoes are nice — I'll take the red ones. / The ones on sale are cheaper.",
+      "Bu tuflilar chiroyli — qizillarini olaman. / Chegirmadagilari arzonroq."
+     ],
+     [
+      "Sifat + one / which one",
+      "a/the + sifat + one; Which one?",
+      "Have you got a bigger one? / Which one do you prefer?",
+      "Kattarog'i bormi? / Qaysi birini afzal ko'rasan?"
+     ],
+     [
+      "Another / the other",
+      "another one (yana bir); the other one (ikkinchisi)",
+      "This bag is small — show me another one. / I'll take the other one.",
+      "Bu sumka kichik — boshqasini ko'rsating. / Ikkinchisini olaman."
+     ],
+     [
+      "Others / the others",
+      "others (boshqalar); the others (qolgan hammasi)",
+      "Some people love brands; others don't care. / I'll buy this one; the others are too expensive.",
+      "Ba'zilar brendni sevadi; boshqalarga farqi yo'q. / Buni olaman; qolganlari juda qimmat."
+     ]
+    ],
+    "presentation": [
+     [
+      "Do you need a new phone?",
+      "Yes, I need one — mine is broken."
+     ],
+     [
+      "Which phone do you want?",
+      "The one with the best camera."
+     ],
+     [
+      "Do you like these trainers?",
+      "I like the white ones, not the black ones."
+     ],
+     [
+      "Is this the dress you wanted?",
+      "No, the one I wanted was blue."
+     ],
+     [
+      "Have you got a cheaper one?",
+      "This is the cheapest one we have."
+     ],
+     [
+      "Which brand is the one Rihanna created?",
+      "Fenty is the one she created in 2017."
+     ],
+     [
+      "Do you buy things online or in shops?",
+      "Some things online; the ones I need to try on, in shops."
+     ],
+     [
+      "Do you want another bag?",
+      "No, I'll take the other one — the small one."
+     ],
+     [
+      "Do all consumers care about ethics?",
+      "Some do; others only care about price."
+     ],
+     [
+      "Is this the shop where you bought the jacket?",
+      "Yes, this is the one."
+     ]
+    ],
+    "notes": [
+     "one — sanaladigan ot o'rnida; sanalmas ot o'rnida ishlatilmaydi (\"some\" bilan: \"Do you want some?\").",
+     "\"the one\" har doim aniqlovchi bilan: the one I like / the red one / the one on the left.",
+     "one = umumiy odam (rasmiy Writing): \"One should save money.\"",
+     "Essential Words 10: consumerism, brand loyalty, impulse buying, disposable income, sustainable fashion, fast fashion, bargain, counterfeit."
+    ],
+    "mistakes": [
+     [
+      "I want the one, please. (noma'lum)",
+      "I want one, please.",
+      "Noma'lum → one."
+     ],
+     [
+      "He is one I was talking about.",
+      "He is the one I was talking about.",
+      "Aniq → the one."
+     ],
+     [
+      "I like the red one. (ko'plik tuflilar)",
+      "I like the red ones.",
+      "Ko'plik → ones."
+     ],
+     [
+      "Show me other one.",
+      "Show me another one. / Show me the other one.",
+      "another / the other."
+     ],
+     [
+      "Do you have a milk? — Yes, I have one.",
+      "Do you have any milk? — Yes, I have some.",
+      "Sanalmas → some."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — iste'molchilik va xarid asoslari (consumerism, brand loyalty, bargain…); STRONG — moda va marketing; SUPER — Rihanna va Task 2 birikmalari (ethical consumption, fast fashion, inclusive).",
+     "Har so'zga one/the one bilan gap: \"I don't buy fast fashion; I buy the ones that last.\""
+    ],
+    "core": [
+     [
+      "consumerism",
+      "iste'molchilik",
+      "Consumerism makes us buy one thing after another.",
+      "Iste'molchilik bizni birin-ketin narsa sotib olishga undaydi.",
+      "kənˈsumərˌɪzəm"
+     ],
+     [
+      "consumer (4.0)",
+      "iste'molchi",
+      "A smart consumer buys the one that lasts.",
+      "Aqlli iste'molchi uzoq xizmat qiladiganini sotib oladi.",
+      ""
+     ],
+     [
+      "brand loyalty",
+      "brendga sodiqlik",
+      "Brand loyalty means buying the same one every time.",
+      "Brendga sodiqlik — har safar bir xilini sotib olish.",
+      "brænd ˈlɔɪəlti"
+     ],
+     [
+      "impulse buying (4.0)",
+      "o'ylamay xarid qilish",
+      "Impulse buying: you see one and buy it in a minute.",
+      "O'ylamay xarid: bittasini ko'rasan-u, bir daqiqada olasan.",
+      ""
+     ],
+     [
+      "disposable income",
+      "erkin (sarflasa bo'ladigan) daromad",
+      "People with higher disposable income buy the expensive ones.",
+      "Erkin daromadi yuqori odamlar qimmatlarini oladi.",
+      "dɪˈspoʊzəbəl ˈɪnˌkəm"
+     ],
+     [
+      "fast fashion",
+      "tez moda (arzon, tez almashadigan)",
+      "Fast fashion sells cheap ones that last a season.",
+      "Tez moda bir mavsum chidaydigan arzonlarini sotadi.",
+      "fæst ˈfæʃən"
+     ],
+     [
+      "sustainable fashion",
+      "barqaror moda",
+      "Sustainable fashion asks: do you need another one?",
+      "Barqaror moda so'raydi: sizga yana bittasi kerakmi?",
+      "səˈsteɪnəbəl ˈfæʃən"
+     ],
+     [
+      "bargain (4.0)",
+      "arzon xarid",
+      "This one is a bargain — half price.",
+      "Bu — arzon xarid, yarim narx.",
+      ""
+     ],
+     [
+      "counterfeit (4.0)",
+      "soxta",
+      "The ones sold on the street are counterfeit.",
+      "Ko'chada sotiladiganlari soxta.",
+      ""
+     ],
+     [
+      "advertising campaign",
+      "reklama kampaniyasi",
+      "The campaign made everyone want one.",
+      "Kampaniya hammani bittasini xohlashga majbur qildi.",
+      "ˈædvərˌtaɪzɪŋ kæmˈpeɪn"
+     ],
+     [
+      "retail / retailer (4.0)",
+      "chakana savdo / sotuvchi",
+      "Online retailers sell the same ones cheaper.",
+      "Onlayn sotuvchilar xuddi shu narsalarni arzonroq sotadi.",
+      ""
+     ],
+     [
+      "purchase (n/v)",
+      "xarid; sotib olmoq",
+      "The one I purchased online arrived in two days.",
+      "Onlayn sotib olganim ikki kunda keldi.",
+      ""
+     ],
+     [
+      "materialism",
+      "materializm (moddiy narsaga berilish)",
+      "Materialism says: the one with more things wins.",
+      "Materializm deydi: kimning narsasi ko'p — o'sha yutadi.",
+      "məˈtɪriəˌlɪzəm"
+     ],
+     [
+      "status symbol",
+      "maqom belgisi",
+      "A luxury bag is a status symbol; a cheap one isn't.",
+      "Hashamatli sumka — maqom belgisi; arzoni — yo'q.",
+      "ˈstætəs ˈsɪmbəl"
+     ],
+     [
+      "luxury (4.0)",
+      "hashamat",
+      "Luxury brands sell the ones nobody needs but everyone wants.",
+      "Hashamatli brendlar hech kimga kerak bo'lmagan, lekin hamma xohlaydigan narsalarni sotadi.",
+      ""
+     ],
+     [
+      "affordable (4.0)",
+      "hamyonbop",
+      "Rihanna's makeup is the one that is affordable for everyone.",
+      "Rihannaning kosmetikasi — hamma uchun hamyonbop bo'lgani.",
+      ""
+     ],
+     [
+      "inclusive",
+      "inklyuziv (hammani qamrab oluvchi)",
+      "Fenty was the one that offered 40 shades — truly inclusive.",
+      "Fenty 40 rang taklif qilgani — chinakam inklyuziv edi.",
+      "ˌɪnˈklusɪv"
+     ],
+     [
+      "trend (4.0)",
+      "trend",
+      "Which trend is the one to follow this year?",
+      "Bu yil qaysi trendga ergashish kerak?",
+      ""
+     ],
+     [
+      "overconsumption",
+      "ortiqcha iste'mol",
+      "Overconsumption means buying another one when the old one works.",
+      "Ortiqcha iste'mol — eskisi ishlab turganda yana bittasini olish.",
+      "ˈoʊvərkənˌsəmpʃən"
+     ],
+     [
+      "value for money (4.0)",
+      "pulga arziydigan",
+      "The expensive one was better value for money.",
+      "Qimmati pulga ko'proq arzidi.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "window shopping (4.0)",
+      "do'kon oynasidan tomosha",
+      "Window shopping is looking at the ones you can't afford.",
+      "Do'kon oynasidan tomosha — sotib ola olmaydigan narsalarga qarash.",
+      ""
+     ],
+     [
+      "customer service (4.0)",
+      "mijozlarga xizmat",
+      "The shop with the best customer service is the one I return to.",
+      "Mijozlarga xizmati eng yaxshi do'kon — men qaytib boradiganim.",
+      ""
+     ],
+     [
+      "refund / return policy",
+      "pulni qaytarish / qaytarish siyosati",
+      "Return the one that doesn't fit within 14 days.",
+      "Mos kelmaganini 14 kun ichida qaytaring.",
+      "ˈriˌfənd  rɪˈtərn ˈpɑləsi"
+     ],
+     [
+      "discount / sale (4.0)",
+      "chegirma / sotuv",
+      "The ones on sale are last season's.",
+      "Chegirmadagilar — o'tgan mavsumniki.",
+      ""
+     ],
+     [
+      "peer pressure (shopping)",
+      "tengdoshlar bosimi",
+      "Teenagers buy the ones their friends have.",
+      "O'smirlar do'stlarida borini sotib oladi.",
+      "pɪr ˈprɛʃər (ˈʃɑpɪŋ)"
+     ],
+     [
+      "label (brand)",
+      "brend yorlig'i",
+      "Some people buy the label, not the product.",
+      "Ba'zilar mahsulotni emas, yorliqni sotib oladi.",
+      "ˈleɪbəl (brænd)"
+     ],
+     [
+      "designer (fashion)",
+      "dizayner (brend)",
+      "A designer bag costs ten times more than an ordinary one.",
+      "Dizayner sumkasi oddiysidan o'n baravar qimmat.",
+      "dɪˈzaɪnər (ˈfæʃən)"
+     ],
+     [
+      "second-hand / vintage",
+      "ishlatilgan / vintaj",
+      "Vintage clothes are the ones that were fashionable 30 years ago.",
+      "Vintaj kiyimlar — 30 yil oldin modada bo'lganlari.",
+      ""
+     ],
+     [
+      "ethical consumption",
+      "axloqiy iste'mol",
+      "Ethical consumption means choosing the one made fairly.",
+      "Axloqiy iste'mol — halol ishlab chiqarilganini tanlash.",
+      "ˈɛθɪkəl kənˈsəmʃən"
+     ],
+     [
+      "supply chain (4.0)",
+      "ta'minot zanjiri",
+      "Nobody sees the supply chain behind a five-dollar T-shirt.",
+      "Besh dollarlik futbolka ortidagi ta'minot zanjirini hech kim ko'rmaydi.",
+      ""
+     ],
+     [
+      "sweatshop",
+      "og'ir sharoitli fabrika",
+      "The cheap ones are often made in sweatshops.",
+      "Arzonlari ko'pincha og'ir sharoitli fabrikalarda tikiladi.",
+      "sˈwɛtˌʃɑp"
+     ],
+     [
+      "marketing (4.0)",
+      "marketing",
+      "Marketing turns a product into the one you \"need\".",
+      "Marketing mahsulotni \"kerak\" bo'lganiga aylantiradi.",
+      ""
+     ],
+     [
+      "target audience (4.0)",
+      "maqsadli auditoriya",
+      "Fenty's target audience was the one other brands ignored.",
+      "Fentining maqsadli auditoriyasi — boshqa brendlar e'tiborsiz qoldirgani edi.",
+      ""
+     ],
+     [
+      "product placement",
+      "mahsulot joylashtirish (reklama)",
+      "Product placement: the hero drinks one brand in every film.",
+      "Mahsulot joylashtirish: qahramon har filmda bitta brendni ichadi.",
+      "ˈprɑdəkt ˈpleɪsmənt"
+     ],
+     [
+      "loyalty card (4.0)",
+      "doimiy mijoz kartasi",
+      "A loyalty card makes you buy another one to get points.",
+      "Doimiy mijoz kartasi ball uchun yana bittasini oldiradi.",
+      ""
+     ],
+     [
+      "billionaire",
+      "milliarder",
+      "Rihanna is the one who became a billionaire from makeup, not music.",
+      "Rihanna — musiqadan emas, kosmetikadan milliarder bo'lgani.",
+      "ˌbɪljəˈnɛr"
+     ],
+     [
+      "entrepreneur (fashion)",
+      "tadbirkor",
+      "The singer became an entrepreneur; the one thing she didn't sell was her name.",
+      "Qo'shiqchi tadbirkorga aylandi; u sotmagan yagona narsa — nomi.",
+      "ˌɑntrəprəˈnʊr (ˈfæʃən)"
+     ],
+     [
+      "shade (makeup)",
+      "rang (tus)",
+      "Forty shades: everyone found the one that matched.",
+      "Qirq rang: hamma o'ziga mosini topdi.",
+      "ʃeɪd (ˈmeɪˌkəp)"
+     ],
+     [
+      "lingerie",
+      "ichki kiyim (ayollar)",
+      "Her lingerie brand is the one that uses models of every size.",
+      "Uning ichki kiyim brendi — har o'lchamdagi modellarni ishlatadigani.",
+      "ˈlɑnʒərˌeɪ"
+     ],
+     [
+      "empire (business)",
+      "imperiya (biznes)",
+      "She built an empire from the one idea: beauty for everyone.",
+      "U bitta g'oyadan imperiya qurdi: go'zallik hamma uchun.",
+      "ˈɛmpaɪər (ˈbɪznɪs)"
+     ]
+    ],
+    "super": [
+     [
+      "keep up with the Joneses",
+      "qo'shnilardan qolmaslik (ko'z-ko'z)",
+      "Keeping up with the Joneses means buying the one your neighbour has.",
+      "Qo'shnilardan qolmaslik — qo'shningda borini sotib olish.",
+      "kip əp wɪθ ðə ˈʤoʊnzɪz"
+     ],
+     [
+      "throwaway culture",
+      "tashlab yuborish madaniyati",
+      "Throwaway culture: use one, throw it away, buy another one.",
+      "Tashlab yuborish madaniyati: bittasini ishlat, tashla, yana bittasini ol.",
+      "θˈroʊəˌweɪ ˈkəlʧər"
+     ],
+     [
+      "planned obsolescence",
+      "ataylab eskirtirish",
+      "Planned obsolescence makes last year's one useless.",
+      "Ataylab eskirtirish o'tgan yilgisini foydasiz qiladi.",
+      "plænd ˌɑbsəˈlɛsəns"
+     ],
+     [
+      "conspicuous consumption",
+      "ko'z-ko'z iste'mol",
+      "Conspicuous consumption is buying the expensive one to be seen.",
+      "Ko'z-ko'z iste'mol — ko'rinish uchun qimmatini olish.",
+      "kənˈspɪkjuəs kənˈsəmʃən"
+     ],
+     [
+      "retail therapy",
+      "\"xarid terapiyasi\"",
+      "Retail therapy: buy one thing and feel better for an hour.",
+      "Xarid terapiyasi: bitta narsa ol, bir soat yaxshi his qil.",
+      "ˈriˌteɪl ˈθɛrəpi"
+     ],
+     [
+      "buyer's remorse",
+      "xariddan keyingi afsus",
+      "Buyer's remorse comes when the one you bought is useless.",
+      "Xariddan keyingi afsus sotib olganing foydasiz bo'lganda keladi.",
+      "baɪərz rɪˈmɔrs"
+     ],
+     [
+      "minimalism",
+      "minimalizm",
+      "Minimalism: own one good thing, not ten cheap ones.",
+      "Minimalizm: o'nta arzon emas, bitta yaxshi narsaga ega bo'l.",
+      "ˈmɪnəməˌlɪzəm"
+     ],
+     [
+      "brand ambassador",
+      "brend elchisi",
+      "A brand ambassador is the one whose face sells the product.",
+      "Brend elchisi — yuzi mahsulotni sotadigan odam.",
+      "brænd æmˈbæsədər"
+     ],
+     [
+      "beauty industry",
+      "go'zallik sanoati",
+      "The beauty industry ignored dark skin until one brand changed it.",
+      "Go'zallik sanoati bitta brend o'zgartirmaguncha qora teriga e'tibor bermagan.",
+      "ˈbjuti ˈɪndəstri"
+     ],
+     [
+      "market gap",
+      "bozor bo'shlig'i",
+      "Rihanna saw a market gap: the ones nobody made makeup for.",
+      "Rihanna bozor bo'shlig'ini ko'rdi: hech kim kosmetika qilmagan odamlar.",
+      "ˈmɑrkɪt gæp"
+     ],
+     [
+      "launch (product) (4.0)",
+      "(mahsulot) chiqarmoq",
+      "Fenty launched 40 shades on one day.",
+      "Fenty bir kunda 40 rang chiqardi.",
+      ""
+     ],
+     [
+      "sell out (4.0)",
+      "sotilib tugamoq",
+      "The darkest shades were the ones that sold out first.",
+      "Eng qora ranglar birinchi sotilib tugadi.",
+      ""
+     ],
+     [
+      "co-founder (4.0)",
+      "hamasoschi",
+      "LVMH was the co-founder; Rihanna was the one with the idea.",
+      "LVMH — hamasoschi; g'oya egasi — Rihanna.",
+      ""
+     ],
+     [
+      "stake (business)",
+      "ulush",
+      "She kept a 50% stake — the one decision that made her rich.",
+      "U 50% ulushni saqlab qoldi — uni boy qilgan yagona qaror.",
+      "steɪk (ˈbɪznɪs)"
+     ],
+     [
+      "net worth (4.0)",
+      "sof boylik",
+      "Her net worth passed a billion in 2021.",
+      "Uning sof boyligi 2021-da milliarddan oshdi.",
+      ""
+     ],
+     [
+      "Barbados",
+      "Barbados",
+      "Barbados is the one country that made her a national hero.",
+      "Barbados — uni milliy qahramon qilgan yagona mamlakat.",
+      "bɑrˈbeɪdoʊs"
+     ],
+     [
+      "national hero (4.0)",
+      "milliy qahramon",
+      "She was named a national hero when Barbados became a republic.",
+      "Barbados respublika bo'lganida u milliy qahramon deb e'lon qilindi.",
+      ""
+     ],
+     [
+      "diversify",
+      "diversifikatsiya qilmoq (turli sohaga kirmoq)",
+      "Singers who diversify into business are the ones who stay rich.",
+      "Biznesga kirgan qo'shiqchilar boy bo'lib qoladiganlari.",
+      "dɪˈvərsəˌfaɪ"
+     ],
+     [
+      "representation",
+      "vakillik (ko'rinish)",
+      "Representation matters: everyone wants to see one like themselves.",
+      "Vakillik muhim: hamma o'ziga o'xshaganini ko'rishni xohlaydi.",
+      "ˌrɛprəzɛnˈteɪʃən"
+     ],
+     [
+      "game-changer",
+      "o'yin qoidasini o'zgartiruvchi",
+      "Fenty Beauty was the one product that was a real game-changer.",
+      "Fenty Beauty — chinakam o'yin qoidasini o'zgartirgan yagona mahsulot.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "one / the one / ones / the ones",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos shakl",
+     "items": [
+      "I need a new phone. I'm going to buy ___ tomorrow.",
+      "Which phone? — ___ with the best camera.",
+      "These shoes are nice, but I prefer the black ___.",
+      "___ on sale are last season's.",
+      "Is this the bag you wanted? — No, ___ I wanted was blue.",
+      "Have you got a bigger ___?",
+      "Some people love brands; ___ don't care.",
+      "This one is small — show me ___."
+     ],
+     "answers": [
+      "one",
+      "The one",
+      "ones",
+      "The ones",
+      "the one",
+      "one",
+      "others",
+      "another one"
+     ]
+    },
+    {
+     "title": "another / the other / others / the others",
+     "type": "choose",
+     "instr": "To'g'risini tanlang",
+     "items": [
+      "This shirt is too small. Can I try another / the other one? (yana bir)",
+      "There are two colours. I'll take the other / another one. (ikkinchisi)",
+      "Some consumers buy on impulse; others / the others plan. (boshqalar, umumiy)",
+      "I'll keep this one; the others / others are too expensive. (qolgan hammasi)",
+      "Give me another / other apple, please."
+     ],
+     "answers": [
+      "another",
+      "the other",
+      "others",
+      "the others",
+      "another"
+     ]
+    },
+    {
+     "title": "Otni almashtiring",
+     "type": "rewrite",
+     "instr": "Takror otni one/ones bilan almashtiring",
+     "items": [
+      "I want a bag, a blue bag.",
+      "These trainers are cheaper than those trainers.",
+      "The shop I like is the shop on Navoi Street.",
+      "Do you want a big cup or a small cup?",
+      "The shades that sold out were the dark shades."
+     ],
+     "answers": [
+      "I want a bag, a blue one.",
+      "These trainers are cheaper than those ones.",
+      "The shop I like is the one on Navoi Street.",
+      "Do you want a big cup or a small one?",
+      "The shades that sold out were the dark ones."
+     ]
+    },
+    {
+     "title": "IELTS Speaking — Shopping",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 1–3 savollari — javobda one / the one / ones va Essential so'zlar",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "Do you enjoy shopping? — Only for the ones I really need; I hate impulse buying.",
+      "Online or in shops? — Online for most; in shops for the ones I must try on.",
+      "Which brand do you like? — The one with good value for money.",
+      "Is fast fashion bad? — Yes; I'd rather buy one good jacket than five cheap ones.",
+      "What was your last purchase? — A phone case — the one with my team's logo."
+     ]
+    },
+    {
+     "title": "Iste'mol lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "buying something suddenly without planning",
+      "cheap clothes made quickly to follow trends",
+      "a fake copy of a branded product",
+      "something bought at a very good price",
+      "money left after paying for essentials",
+      "always buying the same brand"
+     ],
+     "answers": [
+      "impulse buying",
+      "fast fashion",
+      "counterfeit",
+      "bargain",
+      "disposable income",
+      "brand loyalty"
+     ],
+     "box": [
+      "impulse buying",
+      "fast fashion",
+      "counterfeit",
+      "bargain",
+      "disposable income",
+      "brand loyalty"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I want the one, please. (noma'lum)",
+      "He is one I was talking about.",
+      "I like the red one. (ko'plik tuflilar)",
+      "Show me other one.",
+      "Do you have a milk? — Yes, I have one."
+     ],
+     "answers": [
+      "I want one, please.",
+      "He is the one I was talking about.",
+      "I like the red ones.",
+      "Show me another one.",
+      "Do you have any milk? — Yes, I have some."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 10 jadvalini 3 marta; Essential Words 10 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Progress test 2 ga tayyorgarlik",
+     "type": "review",
+     "instr": "6–10-dars jadvallari; Essential Words 6–10 dan CORE 20; Sample essay 3, 4, 8 mavzulari; Kahoot 6–10 (jonyos.uz)",
+     "answers": "Test: grammatika + 50 so'z + reading + Task 2."
+    },
+    {
+     "title": "Sample essay 10",
+     "type": "write",
+     "instr": "\"Online shopping is replacing traditional shopping. Positive or negative?\" — namunani tahlil qiling; 250 so'z; kamida 5 one/the one/ones va 8 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Bittasini bering.",
+      "U — men aytgan odam.",
+      "Qizillarini olaman.",
+      "Kattarog'i bormi?",
+      "Ba'zilar brendni sevadi; boshqalarga farqi yo'q."
+     ],
+     "answers": [
+      "I want one, please.",
+      "He is the one I was talking about.",
+      "I'll take the red ones.",
+      "Have you got a bigger one?",
+      "Some people love brands; others don't care."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 10 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "one / the one / ones / another / the other / others — har biriga 2 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 9",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 10 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Rihanna — the one who found a gap in the beauty market",
+    "text": [
+     "Robyn Rihanna Fenty was born in 1988 in Barbados, a small island in the Caribbean. At 16 she sang for an American producer who was on holiday there; he was the one who took her to New York. Within two years she had a number-one single, and by 2012 she was one of the biggest pop stars in the world.",
+     "Most stars sell perfume with their name on it. Rihanna wanted something else. She had noticed that makeup brands made foundation in ten or fifteen shades — and none of them were the ones that matched dark skin. Millions of women had the same problem: they could see products everywhere, but never the one made for them. In 2017 she launched Fenty Beauty with 40 shades on the first day. The darkest ones sold out within hours. Other brands copied her within a year; the industry called it \"the Fenty effect\".",
+     "She kept a 50% stake in the company — the one decision that made her a billionaire in 2021, richer than any other musician. Her lingerie brand, Savage X Fenty, uses models of every size and colour, because, she says, \"everyone wants to see one like themselves.\"",
+     "In 2021 Barbados became a republic, and Rihanna was named a national hero at the ceremony. She has not released an album since 2016; asked why, she smiled: \"I'd rather build the ones that last than another one that plays for three minutes.\""
+    ],
+    "glossary": [
+     "producer — prodyuser",
+     "single — singl",
+     "perfume — parfyum",
+     "foundation (makeup) — tonal krem",
+     "shade — rang (tus)",
+     "match — mos kelmoq",
+     "launch — chiqarmoq",
+     "stake — ulush",
+     "lingerie — ichki kiyim",
+     "republic — respublika",
+     "ceremony — marosim"
+    ],
+    "tasks": [
+     {
+      "title": "one / the one / ones toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "the one 1",
+       "one of",
+       "the ones 1",
+       "the one 2",
+       "the … ones",
+       "the one 3",
+       "one 1",
+       "the ones / another one"
+      ],
+      "answers": [
+       "He was the one who took her to New York.",
+       "She was one of the biggest pop stars in the world.",
+       "None of them were the ones that matched dark skin.",
+       "Never the one made for them.",
+       "The darkest ones sold out within hours.",
+       "The one decision that made her a billionaire.",
+       "Everyone wants to see one like themselves.",
+       "The ones that last / another one that plays for three minutes."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Rihanna was born in New York.",
+       "Fenty Beauty launched with 40 shades.",
+       "She sold her whole company to LVMH.",
+       "She has released three albums since 2016."
+      ],
+      "answers": [
+       "False (Barbados)",
+       "True",
+       "False (kept 50%)",
+       "False (none)"
+      ]
+     },
+     {
+      "title": "Iste'mol lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta so'z; \"the Fenty effect\" nima (1 gap)",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "makeup brands, foundation, shades, products, launched, sold out, industry, stake, billionaire, models",
+       "Other brands copied Fenty and started making products for every skin colour."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 10 (Online shopping) va Speaking sample: Shopping — uyga."
+   },
+   "listening": {
+    "audios": "Audio 51–55 (fayllar yo'q — ustoz IELTS Section 1 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Customer: I'm looking for a jacket. — Assistant: We have two: the blue one is 400,000 sums and the grey one 350,000. — Which one is warmer? — The grey one; the blue one is lighter. — I'll take the grey one. Do you have a bigger size? — This is the last one in medium; the others are small. — Can I return it? — Yes, within 14 days with the receipt.\"",
+     "1-tinglash: qaysi kurtka? 2-tinglash: narxlar."
+    ],
+    "tasks": [
+     {
+      "title": "Form completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Blue jacket: ___ sums; grey: ___",
+       "The warmer one is the ___ one",
+       "Size available: ___ (the last one)",
+       "Return within ___ days with the ___"
+      ],
+      "answers": [
+       "400,000; 350,000",
+       "grey",
+       "medium",
+       "14; receipt"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

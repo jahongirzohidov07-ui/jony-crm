@@ -4002,6 +4002,126 @@ A local artist gave Daniel lessons and he learned fast, and got a lot of attenti
     ],
 }
 
+
+STEP3_UNIT9 = {
+    "level": "step3", "kind": "unit", "unit_no": 9,
+    "title": "Step 3 · Unit 9 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["See you tomorrow.", "I'll ask him to call you.", "OK, no problem."], "C"),
+                _c("", ["OK, speak to you soon.", "We really must go.", "That's fantastic news."], "A"),
+                _c("", ["I'll just put you through.", "This is Kate Taylor speaking.", "My name's Mark, by the way."], "B"),
+                _c("", ["It's Martin here.", "Well, I'm a bit busy.", "Speak to you soon."], "B"),
+                _c("", ["I've got to go.", "I'm afraid he's not available.", "Is now a good time?"], "B"),
+                _c("", ["Yes?", "Nice to meet you.", "I'll just check."], "A"),
+                _c("", ["Has he got your number?", "Shall I ask him to call you back?", "Please tell him I called."], "C"),
+                _c("", ["Sorry, can I call you back?", "No, there's no excuse.", "Sorry, just one more thing."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Studying",
+            "instructions": "Read the sentences about studying. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("If you don't work hard, you might ............ your exams.",
+                   ["finish", "fail", "forget"], "B"),
+                _c("I want to be an accountant, so I need to ............ a degree in maths.",
+                   ["do", "make", "write"], "A"),
+                _c("When you are revising for an exam, you should ............ watching too "
+                   "much TV.", ["avoid", "miss", "refuse"], "A"),
+                _c("Shona's ............ for her exams, so she can't come to the cinema "
+                   "this evening.", ["failing", "revising", "taking"], "B"),
+                _c("I really ............ not finishing university.",
+                   ["decide", "manage", "regret"], "C"),
+                _c("Can you ............ asking a law student to write an essay about the "
+                   "stratosphere!", ["miss", "regret", "imagine"], "C"),
+                _c("It may ............ to be impossible to get a degree, but if you work "
+                   "hard, anything is possible.", ["want", "imagine", "seem"], "C"),
+                _c("It can be hard to ............ a place at a top university.",
+                   ["take", "get", "go"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Studying",
+            "instructions": "Read the sentences about studying. The first "
+                            "letter is already there. Write the whole word.",
+            "questions": [
+                _t("You don't need to study d _ _ _ _ at university to become a famous actor.",
+                   "drama", "rama"),
+                _t("To study m _ _ _ _ _ _ _ at university, you need to get very good "
+                   "marks in biology at school.", "medicine", "edicine"),
+                _t("A lot of people d _ _ _ _ _ _ studying law, but I love it.",
+                   "dislike", "islike"),
+                _t("We should a _ _ _ _ _ _ to meet so that we can talk about the project.",
+                   "arrange", "rrange"),
+                _t("I'm going to study e _ _ _ _ _ _ _ _ at university because I want to "
+                   "become a teacher.", "education", "ducation"),
+                _t("Alice studied e _ _ _ _ _ _ _ _ _ _ at university and now she's "
+                   "building bridges in Germany.", "engineering", "ngineering"),
+                _t("I r _ _ _ _ _ _ _ _ studying in the morning rather than late at night.",
+                   "recommend", "ecommend"),
+                _t("My little brother hates school and he r _ _ _ _ _ _ to do his homework!",
+                   "refuses", "efuses"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email about Barbara's plans for the "
+                            "future. Choose the best answer (A, B or C) for "
+                            "each space.",
+            "passage": """Email to Lee
+
+Hi Lee,
+Hope you're well. I'm sorry I haven't written for a few weeks, but I'm very busy revising for my exams at the moment. If (25) ………… them all, I'll get a place at university! I'd like to do a degree in art. I love painting and drawing, and can't imagine (26) ………… anything else! My mother often asks me, 'What kind of job (27) ………… get if you do a degree in art?' She seems (28) ………… I should study something more useful, but I'm sure I'll manage (29) ………… a job after university.
+My brother's studying engineering, and he's working hard at the moment too. If (30) ………… lucky, he'll get an exciting job abroad. Of course I'll be pleased for him, but I'll miss (31) ………… time with him.
+How are your family? I'm sure that even if (32) ………… come to Edinburgh this year, you'll be able to visit one day. That'll be so great!
+Write soon,
+Barbara""",
+            "questions": [
+                _c("", ["I'll pass", "I pass", "I'm passing"], "B"),
+                _c("", ["doing", "to do", "I do"], "A"),
+                _c("", ["will you", "won't you", "you will"], "A"),
+                _c("", ["thinking", "to think", "think"], "B"),
+                _c("", ["find", "to find", "finding"], "B"),
+                _c("", ["he's going to be", "he'll be", "he's"], "C"),
+                _c("", ["to spend", "spending", "spend"], "B"),
+                _c("", ["you'll", "you aren't", "you can't"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("I'm meeting my teacher in the library at ten o'clock.\n"
+                   "I've arranged ………… my teacher in the library at ten o'clock.", "to meet"),
+                _t("Louise doesn't want to live at home when she's at university.\n"
+                   "Louise wants to avoid ………… at home when she's at university.", "living"),
+                _t("I must revise for my exams, or I might fail them.\n"
+                   "If I ………… revise for my exams, I might fail them.", "don't", "do not"),
+                _t("Sarah's trying to save enough money to go travelling before she starts "
+                   "university.\n"
+                   "If Sarah has enough money, she ………… travelling before she starts university.",
+                   "will go", "’ll go", "might go", "may go"),
+                _t("Darren wants to get good marks, or he'll be unhappy.\n"
+                   "Darren ………… be happy if he gets bad marks.", "won't", "will not"),
+                _t("Jill says the library is the best place to study.\n"
+                   "Jill recommends ………… in the library.", "studying"),
+                _t("Geta's mother says: 'If you study law, you'll enjoy it!'\n"
+                   "Geta's mother says that if ………… law, she'll enjoy it.", "she studies"),
+                _t("Clara didn't work hard last year and now she is sorry.\n"
+                   "Clara regrets ………… hard last year.", "not working"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -4038,4 +4158,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit6", STEP3_UNIT6),
     ("exam_tpl_step3_unit7", STEP3_UNIT7),
     ("exam_tpl_step3_unit8", STEP3_UNIT8),
+    ("exam_tpl_step3_unit9", STEP3_UNIT9),
 ]

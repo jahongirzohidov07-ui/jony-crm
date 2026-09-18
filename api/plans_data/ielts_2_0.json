@@ -7071,6 +7071,1835 @@
     ],
     "book_ref": "Reading book IELTS 2.0: Topic 23 (sinfda); Topic 22, 24 — uyga."
    }
+  },
+  {
+   "no": 9,
+   "title": "Past Perfect",
+   "grammar_topic": "PAST PERFECT (had + V3) — o'tgandan ham oldin",
+   "vocab_topic": "Health (sog'liq)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 9 – Past Perfect (jadval, 40 gap); HEALTH WORDS; Reading Topic 26.",
+   "objectives": [
+    "had + V3 qolipini tasdiq, inkor va savolda tuzish.",
+    "Ikki o'tgan ish ichida OLDINGISINI Past Perfect bilan ko'rsatish (by the time / when / before / after).",
+    "Sog'liq CORE 20 so'zlari bilan kasallik va davolanish haqida gapirish.",
+    "Reading: Topic 26 (Romeo va Juliet — baqalar) — voqealar tartibi."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Health (sog'liq) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"When I arrived at school this morning, the lesson had already started.\" Doskaga vaqt chizig'i: 1) lesson started 2) I arrived. Qaysi biri OLDIN?"
+    ],
+    [
+     8,
+     "Kahoot — Superlative degree",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Superlative degree lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+had+V3 → Negative hadn't+V3 → Question Had+S+V3. \"by 2020 / by the time / when / before / already\" bilan; vaqt chizig'ida ikki o'tgan nuqta."
+    ],
+    [
+     12,
+     "Health (sog'liq) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Past Perfect — o'tgan zamondagi ikki ishdan OLDINGISI: \"By the time I arrived, they had already left\" (ular ketgan — oldin; men keldim — keyin).",
+     "Formula: had + V3 (hamma shaxs uchun had). Qisqa: I'd, he'd, hadn't.",
+     "Ko'pincha: by (the time), when, before, after, already, never … before, just.",
+     "Faqat bitta o'tgan ish bo'lsa — Past Simple. Past Perfect faqat ikkinchi o'tgan nuqta bilan solishtirganda."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + had + V3",
+      "I had started my business by 2020.",
+      "Men 2020-yilgacha biznesimni boshlagan edim."
+     ],
+     [
+      "Inkor",
+      "S + hadn't + V3",
+      "I hadn't started my business by 2020.",
+      "Men 2020-yilgacha biznesimni boshlamagan edim."
+     ],
+     [
+      "Savol",
+      "Had + S + V3?",
+      "Had you started your business by 2020?",
+      "2020-yilgacha biznesingni boshlagan edingmi?"
+     ],
+     [
+      "by the time",
+      "By the time + Past Simple, S + had + V3",
+      "By the time I arrived, they had already left.",
+      "Men kelguncha ular allaqachon ketishgan edi."
+     ],
+     [
+      "never … before",
+      "S + had never + V3 + before",
+      "She had never visited that city before her trip.",
+      "Sayohatidan oldin u o'sha shaharda hech bo'lmagan edi."
+     ],
+     [
+      "Sabab",
+      "Past Simple + because + had + V3",
+      "The store closed because they had sold everything.",
+      "Do'kon yopildi, chunki hamma narsani sotib bo'lishgan edi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Had the lesson started when you arrived?",
+      "Yes, it had already started."
+     ],
+     [
+      "Why was she so tired yesterday?",
+      "Because she hadn't slept the night before."
+     ],
+     [
+      "Had you ever been to hospital before last year?",
+      "No, I had never been to hospital before."
+     ],
+     [
+      "What had the doctor done before you arrived?",
+      "He had already seen five patients."
+     ],
+     [
+      "Why did he go to the doctor?",
+      "Because his cough hadn't stopped for two weeks."
+     ],
+     [
+      "Had they finished the operation by 10 o'clock?",
+      "Yes, they had finished it by 9.30."
+     ],
+     [
+      "Why couldn't you get in?",
+      "Because I had left my key at home."
+     ],
+     [
+      "Had you taken the medicine before the pain went away?",
+      "Yes, I had taken two tablets."
+     ],
+     [
+      "What had happened before the ambulance came?",
+      "He had fallen off his bike."
+     ],
+     [
+      "Had she recovered by the weekend?",
+      "No, she hadn't recovered yet."
+     ]
+    ],
+    "notes": [
+     "Tartib aniq bo'lsa (first … then / after … before) og'zaki nutqda Past Simple ham yetadi; yozma va imtihonda Past Perfect ishlatiladi.",
+     "\"after + Past Perfect, Past Simple\": After I had taken the medicine, I felt better.",
+     "\"when\" bilan: When I got there, they had already started (oldin boshlagan).",
+     "Sog'liq bilan: had caught a cold, had broken a leg, had recovered, had taken medicine."
+    ],
+    "mistakes": [
+     [
+      "By the time I arrived, they already left.",
+      "…they had already left.",
+      "Oldingi ish → Past Perfect."
+     ],
+     [
+      "She had went to the doctor.",
+      "She had gone to the doctor.",
+      "had + V3."
+     ],
+     [
+      "I had eaten breakfast yesterday. (yolg'iz)",
+      "I ate breakfast yesterday.",
+      "Bitta ish → Past Simple."
+     ],
+     [
+      "Had you finished when I called? — Yes, I did.",
+      "Yes, I had.",
+      "Qisqa javob had."
+     ],
+     [
+      "Before she found her keys, she had search for hours.",
+      "…she had searched for hours.",
+      "V3."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — sog'liq va kasallik asosiy so'zlari; STRONG — kasalliklar va davolash; SUPER — tibbiy va sog'lom turmush iboralari (kitob ro'yxati).",
+     "Har so'zga Past Perfect gap: \"By the time the doctor came, I had already taken the medicine.\""
+    ],
+    "core": [
+     [
+      "health",
+      "sog'liq",
+      "Health is more important than money.",
+      "Sog'liq puldan muhimroq.",
+      "hɛlθ"
+     ],
+     [
+      "healthy",
+      "sog'lom",
+      "He had always been healthy before the accident.",
+      "Hodisadan oldin u doim sog'lom edi.",
+      "ˈhɛlθi"
+     ],
+     [
+      "illness",
+      "kasallik",
+      "She had a long illness last year.",
+      "O'tgan yili u uzoq kasal bo'ldi.",
+      "ˈɪlnəs"
+     ],
+     [
+      "disease",
+      "kasallik (jiddiy)",
+      "Heart disease is common.",
+      "Yurak kasalligi keng tarqalgan.",
+      "dɪˈziz"
+     ],
+     [
+      "symptom",
+      "alomat",
+      "The symptoms had started a week before.",
+      "Alomatlar bir hafta oldin boshlangan edi.",
+      "ˈsɪmptəm"
+     ],
+     [
+      "fever / temperature",
+      "isitma",
+      "By evening, his fever had gone up.",
+      "Kechga borib uning isitmasi ko'tarilgan edi.",
+      "ˈfivər  ˈtɛmpərəʧər"
+     ],
+     [
+      "cough",
+      "yo'tal",
+      "The cough hadn't stopped for two weeks.",
+      "Yo'tal ikki haftadan beri to'xtamagan edi.",
+      "kɔf"
+     ],
+     [
+      "headache",
+      "bosh og'rig'i",
+      "I had had a headache all morning.",
+      "Ertalab bo'yi boshim og'rigan edi.",
+      "ˈhɛˌdeɪk"
+     ],
+     [
+      "catch a cold",
+      "shamollab qolmoq",
+      "He had caught a cold before the trip.",
+      "Sayohatdan oldin u shamollab qolgan edi.",
+      "kæʧ ə koʊld"
+     ],
+     [
+      "flu",
+      "gripp",
+      "Half the class had the flu.",
+      "Sinfning yarmi grippga chalingan edi.",
+      "flu"
+     ],
+     [
+      "pain",
+      "og'riq",
+      "The pain had gone by the morning.",
+      "Ertalabga borib og'riq o'tib ketgan edi.",
+      "peɪn"
+     ],
+     [
+      "injury",
+      "jarohat",
+      "The injury had healed by June.",
+      "Iyungacha jarohat bitib ketgan edi.",
+      "ˈɪnʤəri"
+     ],
+     [
+      "medicine",
+      "dori",
+      "Had you taken the medicine?",
+      "Dorini ichgan edingmi?",
+      "ˈmɛdəsən"
+     ],
+     [
+      "tablet / pill",
+      "tabletka",
+      "She had taken two tablets.",
+      "U ikkita tabletka ichgan edi.",
+      "ˈtæblət  pɪl"
+     ],
+     [
+      "prescription",
+      "retsept (dori)",
+      "The doctor had written a prescription.",
+      "Shifokor retsept yozgan edi.",
+      "prəˈskrɪpʃən"
+     ],
+     [
+      "treatment",
+      "davolash",
+      "The treatment had worked well.",
+      "Davolash yaxshi ta'sir qilgan edi.",
+      "ˈtritmənt"
+     ],
+     [
+      "recover",
+      "sog'aymoq",
+      "He had recovered by the weekend.",
+      "Dam olish kunigacha u sog'ayib ketgan edi.",
+      "rɪˈkəvər"
+     ],
+     [
+      "recovery",
+      "sog'ayish",
+      "Her recovery took a month.",
+      "Uning sog'ayishi bir oy davom etdi.",
+      "rɪˈkəvəri"
+     ],
+     [
+      "check-up",
+      "tibbiy ko'rik",
+      "I had a check-up last week.",
+      "O'tgan hafta tibbiy ko'rikdan o'tdim.",
+      "ˈʧɛˌkəp"
+     ],
+     [
+      "diagnosis",
+      "tashxis",
+      "The diagnosis was wrong at first.",
+      "Tashxis avvaliga noto'g'ri edi.",
+      "ˌdaɪəgˈnoʊsəs"
+     ]
+    ],
+    "strong": [
+     [
+      "fitness",
+      "jismoniy holat",
+      "His fitness had improved by summer.",
+      "Yozgacha uning jismoniy holati yaxshilangan edi.",
+      "ˈfɪtnəs"
+     ],
+     [
+      "exercise",
+      "jismoniy mashq",
+      "She had never done exercise before 30.",
+      "30 yoshgacha u hech mashq qilmagan edi.",
+      "ˈɛksərˌsaɪz"
+     ],
+     [
+      "nutrition",
+      "ovqatlanish, oziqlanish",
+      "Good nutrition prevents disease.",
+      "Yaxshi ovqatlanish kasallikning oldini oladi.",
+      "nuˈtrɪʃən"
+     ],
+     [
+      "hygiene",
+      "gigiyena",
+      "Hygiene had been poor in the old hospital.",
+      "Eski kasalxonada gigiyena yomon edi.",
+      "ˈhaɪˌʤin"
+     ],
+     [
+      "immunity",
+      "immunitet",
+      "Vaccines build immunity.",
+      "Emlash immunitet hosil qiladi.",
+      "ˌɪmˈjunɪti"
+     ],
+     [
+      "well-being",
+      "farovonlik, sog'-omonlik",
+      "Sleep is important for well-being.",
+      "Uyqu sog'-omonlik uchun muhim.",
+      "ˌwɛlˈbiɪŋ"
+     ],
+     [
+      "prevention",
+      "oldini olish",
+      "Prevention is better than cure.",
+      "Oldini olish davolashdan yaxshi.",
+      "priˈvɛnʃən"
+     ],
+     [
+      "infection",
+      "infeksiya",
+      "The infection had spread quickly.",
+      "Infeksiya tez tarqalgan edi.",
+      "ˌɪnˈfɛkʃən"
+     ],
+     [
+      "virus",
+      "virus",
+      "A new virus had appeared by 2020.",
+      "2020-yilga kelib yangi virus paydo bo'lgan edi.",
+      "ˈvaɪrəs"
+     ],
+     [
+      "bacteria",
+      "bakteriya",
+      "Bacteria cause many infections.",
+      "Bakteriyalar ko'p infeksiyalarga sabab bo'ladi.",
+      "bækˈtɪriə"
+     ],
+     [
+      "contagious",
+      "yuqumli",
+      "The flu is contagious.",
+      "Gripp yuqumli.",
+      "kənˈteɪʤəs"
+     ],
+     [
+      "epidemic",
+      "epidemiya",
+      "The epidemic had ended by spring.",
+      "Bahorgacha epidemiya tugagan edi.",
+      "ˌɛpɪˈdɛmɪk"
+     ],
+     [
+      "chronic",
+      "surunkali",
+      "He has a chronic back problem.",
+      "Unda surunkali bel muammosi bor.",
+      "ˈkrɑnɪk"
+     ],
+     [
+      "acute",
+      "o'tkir",
+      "Acute pain needs a doctor now.",
+      "O'tkir og'riqda darhol shifokor kerak.",
+      "əˈkjut"
+     ],
+     [
+      "medication",
+      "dori-darmon",
+      "Had she taken her medication?",
+      "U dorilarini ichgan edimi?",
+      "ˌmɛdəˈkeɪʃən"
+     ],
+     [
+      "mental health",
+      "ruhiy sog'liq",
+      "Mental health is as important as physical health.",
+      "Ruhiy sog'liq jismoniy sog'liq kabi muhim.",
+      "ˈmɛntəl hɛlθ"
+     ],
+     [
+      "physical health",
+      "jismoniy sog'liq",
+      "Sport improves physical health.",
+      "Sport jismoniy sog'liqni yaxshilaydi.",
+      "ˈfɪzɪkəl hɛlθ"
+     ],
+     [
+      "healthcare",
+      "sog'liqni saqlash",
+      "Healthcare had changed a lot by then.",
+      "O'shanda sog'liqni saqlash ancha o'zgargan edi.",
+      "ˈhɛlθˌkɛr"
+     ],
+     [
+      "sickness",
+      "kasallik, betoblik",
+      "He missed work because of sickness.",
+      "U betoblik tufayli ishga bormadi.",
+      "ˈsɪknəs"
+     ],
+     [
+      "complication",
+      "asorat",
+      "The complications had begun after the operation.",
+      "Asoratlar operatsiyadan keyin boshlangan edi.",
+      "ˌkɑmpləˈkeɪʃən"
+     ]
+    ],
+    "super": [
+     [
+      "follow a balanced diet",
+      "muvozanatli ovqatlanmoq",
+      "She had followed a balanced diet for years.",
+      "U yillar davomida muvozanatli ovqatlangan edi.",
+      "ˈfɑloʊ ə ˈbælənst daɪət"
+     ],
+     [
+      "lead a healthy lifestyle",
+      "sog'lom turmush tarzida yashamoq",
+      "He had led a healthy lifestyle before his illness.",
+      "Kasal bo'lishidan oldin u sog'lom turmush tarzida yashagan edi.",
+      "lɛd ə ˈhɛlθi ˈlaɪfˌstaɪl"
+     ],
+     [
+      "drink plenty of water",
+      "ko'p suv ichmoq",
+      "Doctors say: drink plenty of water.",
+      "Shifokorlar: ko'p suv iching, deyishadi.",
+      "drɪŋk ˈplɛnti əv ˈwɔtər"
+     ],
+     [
+      "strong immune system",
+      "kuchli immunitet",
+      "Sleep gives you a strong immune system.",
+      "Uyqu kuchli immunitet beradi.",
+      "strɔŋ ˌɪmˈjun ˈsɪstəm"
+     ],
+     [
+      "medical check-up",
+      "tibbiy tekshiruv",
+      "He hadn't had a medical check-up for years.",
+      "U yillar davomida tibbiy tekshiruvdan o'tmagan edi.",
+      "ˈmɛdɪkəl ˈʧɛˌkəp"
+     ],
+     [
+      "fitness routine",
+      "mashq rejimi",
+      "Her fitness routine had changed her body.",
+      "Mashq rejimi uning tanasini o'zgartirgan edi.",
+      "ˈfɪtnəs ruˈtin"
+     ],
+     [
+      "make lifestyle changes",
+      "turmush tarzini o'zgartirmoq",
+      "He made positive lifestyle changes after 40.",
+      "U 40 dan keyin turmush tarzini ijobiy o'zgartirdi.",
+      "meɪk ˈlaɪfˌstaɪl ˈʧeɪnʤɪz"
+     ],
+     [
+      "relapse",
+      "qaytalanish (kasallik)",
+      "The patient had a relapse in March.",
+      "Bemorda martda kasallik qaytalandi.",
+      "riˈlæps"
+     ],
+     [
+      "prognosis",
+      "prognoz (kasallik kechishi)",
+      "The prognosis is good.",
+      "Prognoz yaxshi.",
+      "prɑgˈnoʊsəs"
+     ],
+     [
+      "terminal",
+      "davolab bo'lmas",
+      "It was a terminal illness.",
+      "Bu davolab bo'lmas kasallik edi.",
+      "ˈtərmənəl"
+     ],
+     [
+      "syndrome",
+      "sindrom",
+      "The syndrome had no name until 1990.",
+      "1990-yilgacha bu sindromning nomi yo'q edi.",
+      "ˈsɪnˌdroʊm"
+     ],
+     [
+      "pathogen",
+      "kasallik qo'zg'atuvchi",
+      "Scientists found the pathogen.",
+      "Olimlar kasallik qo'zg'atuvchini topishdi.",
+      "ˈpæθəʤən"
+     ],
+     [
+      "pandemic",
+      "pandemiya",
+      "The pandemic had changed everything by 2021.",
+      "2021-ga kelib pandemiya hamma narsani o'zgartirgan edi.",
+      "pænˈdɛmɪk"
+     ],
+     [
+      "ailment",
+      "yengil kasallik",
+      "Colds are common ailments.",
+      "Shamollash — keng tarqalgan yengil kasallik.",
+      "ˈeɪlmənt"
+     ],
+     [
+      "disorder",
+      "buzilish, xastalik",
+      "Sleep disorders are common today.",
+      "Uyqu buzilishi bugun keng tarqalgan.",
+      "dɪˈsɔrdər"
+     ],
+     [
+      "vitality",
+      "shijoat, hayotiylik",
+      "Exercise had given him new vitality.",
+      "Mashqlar unga yangi shijoat bergan edi.",
+      "vaɪˈtæləti"
+     ],
+     [
+      "surgery / operation",
+      "jarrohlik, operatsiya",
+      "She had had surgery before she was ten.",
+      "O'n yoshga to'lmasidan u operatsiya bo'lgan edi.",
+      "ˈsərʤəri  ˌɑpərˈeɪʃən"
+     ],
+     [
+      "ambulance",
+      "tez yordam",
+      "The ambulance had arrived in five minutes.",
+      "Tez yordam besh daqiqada yetib kelgan edi.",
+      "ˈæmbjələns"
+     ],
+     [
+      "first aid",
+      "birinchi yordam",
+      "He had learned first aid at school.",
+      "U maktabda birinchi yordamni o'rgangan edi.",
+      "fərst eɪd"
+     ],
+     [
+      "An apple a day keeps the doctor away.",
+      "Kuniga bir olma — shifokorga hojat yo'q.",
+      "My grandmother always said: an apple a day keeps the doctor away.",
+      "Buvim doim: kuniga bir olma yesang, shifokor kerak bo'lmaydi, derdi.",
+      "ən ˈæpəl ə deɪ kips ðə ˈdɔktər əˈweɪ."
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "had + V3",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni Past Perfect'da yozing (kitob 40 gap)",
+     "items": [
+      "By the time I arrived, they ___ (already / leave).",
+      "She ___ (never / visit) that city before her last trip.",
+      "They ___ (not / complete) the project by the deadline.",
+      "Before she found her keys, she ___ (search) for hours.",
+      "When I got there, they ___ (already / start) the meeting.",
+      "She ___ (forget) to turn off the oven before she left.",
+      "The store closed because they ___ (sell) out of all items.",
+      "By the time they called, I ___ (already / go) to bed.",
+      "She ___ (never / try) that dish before last night.",
+      "Before the storm hit, they ___ (secure) all the windows."
+     ],
+     "answers": [
+      "had already left",
+      "had never visited",
+      "hadn't completed",
+      "had searched",
+      "had already started",
+      "had forgotten",
+      "had sold",
+      "had already gone",
+      "had never tried",
+      "had secured"
+     ]
+    },
+    {
+     "title": "Past Simple yoki Past Perfect",
+     "type": "gap",
+     "instr": "Ikkala fe'lni to'g'ri zamonda (kitob 11-dars A)",
+     "items": [
+      "They ___ (drink) tea after they ___ (finish) dinner.",
+      "When I ___ (arrive) at the party John ___ (already / go) home.",
+      "I ___ (buy) a new camera before I ___ (go) to London.",
+      "After he ___ (work) at the hospital for two years he ___ (decide) to give up the job.",
+      "I ___ just ___ (turn off) the lights when the telephone ___ (ring).",
+      "I ___ (worry) a lot about her before I ___ (hear) that she was safe."
+     ],
+     "answers": [
+      "drank / had finished",
+      "arrived / had already gone",
+      "had bought / went",
+      "had worked / decided",
+      "had just turned off / rang",
+      "had worried / heard"
+     ]
+    },
+    {
+     "title": "Vaqt chizig'i",
+     "type": "order",
+     "instr": "Ikki ishni tartiblang va bitta gap tuzing (Past Perfect + Past Simple)",
+     "items": [
+      "take the medicine / feel better",
+      "the doctor leave / we arrive",
+      "she break her leg / go to hospital",
+      "he catch a cold / the trip start",
+      "the pain stop / I call the doctor"
+     ],
+     "answers": [
+      "After I had taken the medicine, I felt better.",
+      "When we arrived, the doctor had already left.",
+      "She went to hospital because she had broken her leg.",
+      "He had caught a cold before the trip started.",
+      "By the time I called the doctor, the pain had stopped."
+     ]
+    },
+    {
+     "title": "Shifokorda — hikoya",
+     "type": "speaking",
+     "instr": "Juftlikda: oxirgi kasal bo'lganingiz haqida 5 gap; kamida 2 ta Past Perfect (\"By the time…\", \"…because I had…\")",
+     "items": [
+      "start",
+      "before",
+      "because",
+      "by the time",
+      "result"
+     ],
+     "answers": [
+      "Last winter I caught a bad cold.",
+      "I had never been so ill before.",
+      "I went to the doctor because the cough hadn't stopped.",
+      "By the time I got there, the doctor had seen ten patients.",
+      "After I had taken the medicine, I recovered in a week."
+     ]
+    },
+    {
+     "title": "Lug'at: mos so'z",
+     "type": "match",
+     "instr": "Ta'rifga so'z (HEALTH)",
+     "items": [
+      "a sign that you are ill",
+      "what the doctor says your illness is",
+      "to get better after an illness",
+      "a paper from the doctor for medicine",
+      "a general medical examination",
+      "an illness that passes from person to person"
+     ],
+     "answers": [
+      "symptom",
+      "diagnosis",
+      "recover",
+      "prescription",
+      "check-up",
+      "contagious"
+     ],
+     "box": [
+      "symptom",
+      "diagnosis",
+      "recover",
+      "prescription",
+      "check-up",
+      "contagious"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "By the time we arrived, the film already started.",
+      "He had went to the doctor.",
+      "I had a headache yesterday, so I had taken a pill.",
+      "Had she took the medicine?",
+      "After she had recover, she went back to work."
+     ],
+     "answers": [
+      "…the film had already started.",
+      "He had gone to the doctor.",
+      "…so I took a pill.",
+      "Had she taken the medicine?",
+      "After she had recovered…"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 9: 40 gap (Past Perfect); Lesson 11 A (Past Simple / Past Perfect) — daftarga",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 27–29",
+     "type": "read",
+     "instr": "Topic 28 (Ancient robots) — 4 robotni va yilini yozing; Topic 29 — 5 notanish so'z",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Kechagi kunim",
+     "type": "write",
+     "instr": "8 gap: \"By the time I …, I had already …\" (4), \"…because I had…\" (2), \"I had never … before\" (2)",
+     "answers": "Erkin; had + V3."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men kelguncha dars boshlanib bo'lgan edi.",
+      "U dorini ichmagan edi, shuning uchun sog'aymadi.",
+      "Sen o'shandan oldin kasalxonada bo'lganmiding?",
+      "Shifokor kelganda bemor uxlab qolgan edi.",
+      "Biz hech qachon bunday kasallikni ko'rmagan edik."
+     ],
+     "answers": [
+      "By the time I arrived, the lesson had started.",
+      "She/He hadn't taken the medicine, so she/he didn't recover.",
+      "Had you been to hospital before that?",
+      "When the doctor came, the patient had fallen asleep.",
+      "We had never seen such an illness before."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "HEALTH CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Character",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Health og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 26. Frogs in love: Romeo and Juliet",
+    "text": [
+     "Romeo the frog spent ten years alone in a museum in Bolivia. He is a Sehuencas frog, and for a long time, scientists at the museum thought that Romeo was the only Sehuencas frog in the world. A lot of these frogs have died because of deforestation, and a deadly disease has taken the lives of many others. The scientists wanted to find a mate for Romeo. They even set up a profile for him on a dating website!",
+     "In 2018, some scientists went to the Bolivian forests to look for a partner for Romeo. They looked in many streams, but they couldn't find any frogs. They grew tired, wet and disappointed. They decided to check one more stream before going home. And then, they found a Sehuencas frog beside a waterfall. They returned the next day and found four more frogs, two male and two female. One of the females was the right age to mate. The conservationists called her Juliet.",
+     "The scientists didn't let Romeo and Juliet meet at first. They needed to check that Juliet didn't have a disease. But finally, they put the two frogs together. At first, Romeo seemed nervous, but soon he swam to Juliet and did a funny dance, shaking his toes.",
+     "Juliet hasn't laid any eggs yet, but scientists hope she will. For frogs to mate, the temperature and the water quality must be perfect. They also only mate when it is raining, so the scientists had to put special rain equipment in their tank. And they are happy that Romeo isn't lonely anymore!"
+    ],
+    "glossary": [
+     "mate — juft (n)",
+     "juftlashmoq (v)",
+     "deforestation — o'rmonlarning kesilishi",
+     "deadly disease — o'ldiruvchi kasallik",
+     "stream — soy",
+     "disappointed — hafsalasi pir bo'lgan",
+     "waterfall — sharshara",
+     "conservationist — tabiatni muhofaza qiluvchi",
+     "lay eggs — tuxum qo'ymoq",
+     "equipment — jihoz",
+     "lonely — yolg'iz"
+    ],
+    "tasks": [
+     {
+      "title": "Voqealar tartibi",
+      "type": "order",
+      "instr": "6 voqeani to'g'ri tartibga qo'ying (1–6)",
+      "items": [
+       "Scientists found Juliet beside a waterfall.",
+       "Romeo lived alone in the museum for ten years.",
+       "Scientists went to the forests in 2018.",
+       "They checked that Juliet had no disease.",
+       "Romeo did a funny dance.",
+       "Scientists put rain equipment in the tank."
+      ],
+      "answers": [
+       "3",
+       "1",
+       "2",
+       "4",
+       "5",
+       "6"
+      ]
+     },
+     {
+      "title": "Past Perfect bilan qayta yozing",
+      "type": "write",
+      "instr": "Matndagi ikki voqeani Past Perfect bilan bog'lang",
+      "items": [
+       "ten years / find Juliet",
+       "check disease / meet",
+       "look in many streams / find"
+      ],
+      "answers": [
+       "By the time they found Juliet, Romeo had lived alone for ten years.",
+       "Before Romeo and Juliet met, the scientists had checked that Juliet had no disease.",
+       "They had looked in many streams before they found a frog."
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why have many Sehuencas frogs died?",
+       "When do these frogs mate?",
+       "Has Juliet laid eggs?"
+      ],
+      "answers": [
+       "Deforestation and a deadly disease.",
+       "Only when it is raining (perfect temperature and water).",
+       "Not yet."
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 26 (sinfda); Topic 27–29 — uyga."
+   }
+  },
+  {
+   "no": 10,
+   "title": "Future Perfect",
+   "grammar_topic": "FUTURE PERFECT (will have + V3) — kelajakdagi nuqtagacha tugagan ish",
+   "vocab_topic": "Feelings and emotions (his-tuyg'ular)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 10 – Future Perfect (jadval, A–C mashqlar); EMOTIONS; Reading Topic 28.",
+   "objectives": [
+    "will have + V3 qolipini tasdiq, inkor va savolda tuzish.",
+    "\"by + kelajak nuqta\" bilan o'sha vaqtgacha tugaydigan ishni aytish.",
+    "Past Perfect (had) va Future Perfect (will have) ni vaqt chizig'ida solishtirish.",
+    "His-tuyg'u CORE 20 bilan kayfiyat va hissiyotni ifodalash."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Feelings and emotions (his-tuyg'ular) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"By 2030 I will have finished university. And you?\" — har o'quvchi bitta \"By 2030 I will have …\" gapi aytadi."
+    ],
+    [
+     8,
+     "Kahoot — Past Perfect",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Past Perfect lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+will have+V3 → Negative won't have+V3 → Question Will+S+have+V3. \"by 2030 / by the time / by then / in ten years' time\" bilan; vaqt chizig'i: hozir → ish tugaydi → kelajak nuqta."
+    ],
+    [
+     12,
+     "Feelings and emotions (his-tuyg'ular) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Future Perfect — kelajakdagi bir nuqtaga kelib TUGAGAN bo'ladigan ish: \"By 2030, I will have finished university.\"",
+     "Formula: will have + V3 (hamma shaxs). Qisqa: I'll have finished; won't have finished.",
+     "Ko'pincha: by + vaqt (by 2030, by Monday, by then), by the time + Present Simple (\"by the time you arrive\").",
+     "Past Perfect — o'tgan nuqtagacha (had); Future Perfect — kelajak nuqtagacha (will have). Ikkalasi ham \"perfect\" — tugallangan."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + will have + V3",
+      "I will have finished university by 2030.",
+      "Men 2030-yilgacha universitetni tugatgan bo'laman."
+     ],
+     [
+      "Inkor",
+      "S + won't have + V3",
+      "I won't have finished university by 2030.",
+      "Men 2030-yilgacha universitetni tugatgan bo'lmayman."
+     ],
+     [
+      "Savol",
+      "Will + S + have + V3?",
+      "Will you have finished university by 2030?",
+      "2030-yilgacha universitetni tugatgan bo'lasanmi?"
+     ],
+     [
+      "by the time",
+      "By the time + Present Simple, S + will have + V3",
+      "By the time you arrive, the film will have started.",
+      "Sen kelguncha kino boshlanib bo'ladi."
+     ],
+     [
+      "Davr (by then)",
+      "S + will have + V3 + for + davr + by + vaqt",
+      "Next year they will have been married for 25 years.",
+      "Kelasi yil ular turmush qurganiga 25 yil bo'ladi."
+     ],
+     [
+      "Taxmin (hozir)",
+      "S + will have + V3 (ehtimol tugagan)",
+      "It's 9 pm — she will have arrived home by now.",
+      "Soat 9 — u hozirgacha uyga yetib borgan bo'lsa kerak."
+     ]
+    ],
+    "presentation": [
+     [
+      "Will you have finished your homework by 8 o'clock?",
+      "Yes, I will have finished it by then."
+     ],
+     [
+      "What will you have achieved by 2030?",
+      "I will have graduated and found a good job."
+     ],
+     [
+      "Will the film have started by the time we arrive?",
+      "Yes, it will have already started."
+     ],
+     [
+      "How long will they have been married next year?",
+      "They will have been married for 25 years."
+     ],
+     [
+      "Will you have learned English by the end of the course?",
+      "I hope I will have learned a lot."
+     ],
+     [
+      "Will he have spent all his money before the end of the holiday?",
+      "Probably he will have spent it all."
+     ],
+     [
+      "Will the world have changed by 2100?",
+      "Yes, computers will have taken over many jobs."
+     ],
+     [
+      "Will she have calmed down by tomorrow?",
+      "I think she will have calmed down."
+     ],
+     [
+      "Will you have read the book by Friday?",
+      "No, I won't have read it by Friday."
+     ],
+     [
+      "Will the rain have stopped by the match?",
+      "I hope it will have stopped."
+     ]
+    ],
+    "notes": [
+     "\"by\" — \"…gacha\": by Monday, by the end of the year, by then, by the time (+ Present Simple, will emas!).",
+     "Future Perfect + for: \"By June I will have worked here for five years.\"",
+     "Hozirgi taxmin uchun ham: \"They will have arrived by now\" (ehtimol yetib borishgan).",
+     "His-tuyg'u so'zlari: feel + sifat (feel anxious), be + sifat (be relieved), sabab bilan: \"relieved because the exam will have finished\"."
+    ],
+    "mistakes": [
+     [
+      "By the time you will arrive, we will have eaten.",
+      "By the time you arrive, we will have eaten.",
+      "by the time + Present Simple."
+     ],
+     [
+      "I will have finish by Monday.",
+      "I will have finished by Monday.",
+      "V3."
+     ],
+     [
+      "She will has left by then.",
+      "She will have left by then.",
+      "will + have (hamma shaxs)."
+     ],
+     [
+      "Will you have been finished?",
+      "Will you have finished?",
+      "will have + V3, been kerak emas."
+     ],
+     [
+      "I will finish it by 2030. (tugallik urg'usi)",
+      "I will have finished it by 2030.",
+      "Nuqtagacha tugash → Future Perfect."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — asosiy his-tuyg'ular (ot va sifat); STRONG — kuchli/nozik hissiyotlar; SUPER — murakkab so'zlar (kitob ro'yxati).",
+     "Har so'zga \"By the end of the course, I will have felt …\" yoki \"I feel … because …\" gapi."
+    ],
+    "core": [
+     [
+      "emotion",
+      "his-tuyg'u",
+      "Music brings out strong emotions.",
+      "Musiqa kuchli his-tuyg'ularni uyg'otadi.",
+      "ˈiˌmoʊʃən"
+     ],
+     [
+      "feeling",
+      "his, tuyg'u",
+      "I have a good feeling about the exam.",
+      "Imtihon haqida yaxshi hisim bor.",
+      "ˈfilɪŋ"
+     ],
+     [
+      "mood",
+      "kayfiyat",
+      "She is in a good mood today.",
+      "Bugun uning kayfiyati yaxshi.",
+      "mud"
+     ],
+     [
+      "happiness",
+      "baxt",
+      "Happiness is not about money.",
+      "Baxt pulda emas.",
+      "ˈhæpinəs"
+     ],
+     [
+      "happy",
+      "baxtli, xursand",
+      "By Friday I will have finished and I'll be happy.",
+      "Jumagacha tugatgan bo'laman va xursand bo'laman.",
+      "ˈhæpi"
+     ],
+     [
+      "sadness",
+      "g'amginlik",
+      "Sadness comes and goes.",
+      "G'amginlik kelib-ketadi.",
+      "ˈsædnəs"
+     ],
+     [
+      "sad",
+      "g'amgin",
+      "Why are you so sad?",
+      "Nega bunchalik g'amginsan?",
+      "sæd"
+     ],
+     [
+      "anger",
+      "jahl, g'azab",
+      "He couldn't control his anger.",
+      "U jahlini boshqara olmadi.",
+      "ˈæŋgər"
+     ],
+     [
+      "angry",
+      "jahli chiqqan",
+      "She will have calmed down — she won't be angry by tomorrow.",
+      "U tinchlanadi — ertagacha jahli qolmaydi.",
+      "ˈæŋgri"
+     ],
+     [
+      "joy",
+      "quvonch",
+      "Her face was full of joy.",
+      "Uning yuzi quvonchga to'la edi.",
+      "ʤɔɪ"
+     ],
+     [
+      "fear",
+      "qo'rquv",
+      "Fear of exams is common.",
+      "Imtihon qo'rquvi keng tarqalgan.",
+      "fɪr"
+     ],
+     [
+      "afraid / scared",
+      "qo'rqqan",
+      "Are you afraid of the dark?",
+      "Qorong'idan qo'rqasanmi?",
+      "əˈfreɪd  skɛrd"
+     ],
+     [
+      "excitement",
+      "hayajon, zavq",
+      "The excitement grew before the match.",
+      "O'yin oldidan hayajon oshdi.",
+      "ɪkˈsaɪtmənt"
+     ],
+     [
+      "excited",
+      "hayajonlangan, zavqlangan",
+      "I'm excited about the trip.",
+      "Sayohatdan hayajondaman.",
+      "ɪkˈsaɪtɪd"
+     ],
+     [
+      "anxiety",
+      "xavotir, bezovtalik",
+      "Exam anxiety is normal.",
+      "Imtihon xavotiri — oddiy hol.",
+      "æŋˈzaɪəti"
+     ],
+     [
+      "anxious / worried",
+      "xavotirda",
+      "She is anxious about the results.",
+      "U natijalardan xavotirda.",
+      "ˈæŋʃəs  ˈwərid"
+     ],
+     [
+      "surprised",
+      "hayron qolgan",
+      "I was surprised by the news.",
+      "Yangilikdan hayron qoldim.",
+      "səˈpraɪzd"
+     ],
+     [
+      "bored",
+      "zerikkan",
+      "The students looked bored.",
+      "O'quvchilar zerikkan ko'rinardi.",
+      "bɔrd"
+     ],
+     [
+      "tired",
+      "charchagan",
+      "By the end of the day I will have got tired.",
+      "Kun oxirigacha charchab qolgan bo'laman.",
+      "taɪərd"
+     ],
+     [
+      "relief",
+      "yengil tortish, taskin",
+      "What a relief — the exam is over!",
+      "Qanday yengillik — imtihon tugadi!",
+      "rɪˈlif"
+     ]
+    ],
+    "strong": [
+     [
+      "relieved",
+      "yengil tortgan",
+      "I'll be relieved when the test has finished.",
+      "Test tugagach yengil tortaman.",
+      "rɪˈlivd"
+     ],
+     [
+      "contentment",
+      "mamnunlik, qanoat",
+      "Contentment is quiet happiness.",
+      "Qanoat — sokin baxt.",
+      "kənˈtɛntmənt"
+     ],
+     [
+      "content",
+      "mamnun, qanoatli",
+      "He is content with his life.",
+      "U hayotidan mamnun.",
+      "ˈkɑntɛnt"
+     ],
+     [
+      "frustration",
+      "asabiylashish, umidsizlik",
+      "Frustration grows when nothing works.",
+      "Hech narsa yurishmasa asabiylashish oshadi.",
+      "frəˈstreɪʃən"
+     ],
+     [
+      "frustrated",
+      "asabiylashgan",
+      "I'm frustrated with this app.",
+      "Bu ilova meni asabiylashtiryapti.",
+      "ˈfrəˌstreɪtəd"
+     ],
+     [
+      "empathy",
+      "hamdardlik (his qilish)",
+      "Nurses need empathy.",
+      "Hamshiralarga hamdardlik kerak.",
+      "ˈɛmpəθi"
+     ],
+     [
+      "compassion",
+      "rahm-shafqat",
+      "She showed compassion to the poor.",
+      "U kambag'allarga shafqat ko'rsatdi.",
+      "kəmˈpæʃən"
+     ],
+     [
+      "guilt",
+      "aybdorlik hissi",
+      "He felt guilt after the lie.",
+      "Yolg'ondan keyin u o'zini aybdor his qildi.",
+      "gɪlt"
+     ],
+     [
+      "guilty",
+      "aybdor",
+      "I feel guilty about forgetting her birthday.",
+      "Tug'ilgan kunini unutganim uchun o'zimni aybdor his qilyapman.",
+      "ˈgɪlti"
+     ],
+     [
+      "gratitude",
+      "minnatdorlik",
+      "Write a letter of gratitude.",
+      "Minnatdorlik xati yozing.",
+      "ˈgrætəˌtud"
+     ],
+     [
+      "grateful",
+      "minnatdor",
+      "I'm grateful for your help.",
+      "Yordamingiz uchun minnatdorman.",
+      "ˈgreɪtfəl"
+     ],
+     [
+      "nostalgia",
+      "o'tgan kunlarni sog'inish",
+      "Old photos bring nostalgia.",
+      "Eski suratlar sog'inch uyg'otadi.",
+      "nɔˈstælʤə"
+     ],
+     [
+      "jealous",
+      "rashkchi, hasadgo'y",
+      "He is jealous of his brother's success.",
+      "U akasining yutug'iga hasad qiladi.",
+      "ˈʤɛləs"
+     ],
+     [
+      "lonely",
+      "yolg'iz (his)",
+      "She felt lonely in the new city.",
+      "Yangi shaharda u o'zini yolg'iz his qildi.",
+      "ˈloʊnli"
+     ],
+     [
+      "proud",
+      "faxrlanadigan",
+      "My parents will have been proud of me.",
+      "Ota-onam men bilan faxrlangan bo'ladi.",
+      "praʊd"
+     ],
+     [
+      "embarrassed",
+      "xijolat bo'lgan",
+      "I was embarrassed by my mistake.",
+      "Xatoimdan xijolat bo'ldim.",
+      "ɪmˈbɛrəst"
+     ],
+     [
+      "confused",
+      "chalkashgan, gangigan",
+      "The students were confused by the rule.",
+      "O'quvchilar qoidadan chalkashib qolishdi.",
+      "kənfˈjuzd"
+     ],
+     [
+      "disappointed",
+      "hafsalasi pir bo'lgan",
+      "He was disappointed with his score.",
+      "U balidan hafsalasi pir bo'ldi.",
+      "ˌdɪsəˈpɔɪnɪd"
+     ],
+     [
+      "nervous",
+      "asabiy, hayajonlangan",
+      "I'm nervous before exams.",
+      "Imtihon oldidan asabiylashaman.",
+      "ˈnərvəs"
+     ],
+     [
+      "calm (adj)",
+      "xotirjam",
+      "Stay calm and breathe.",
+      "Xotirjam bo'l va nafas ol.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "euphoria",
+      "eyforiya, o'ta shodlik",
+      "The fans were in euphoria after the win.",
+      "G'alabadan keyin muxlislar eyforiyada edi.",
+      "juˈfɔriə"
+     ],
+     [
+      "ecstatic",
+      "o'zida yo'q xursand",
+      "She was ecstatic about the news.",
+      "U yangilikdan o'zida yo'q xursand edi.",
+      "ɛkˈstætɪk"
+     ],
+     [
+      "elated",
+      "juda shod",
+      "He felt elated after the interview.",
+      "Suhbatdan keyin u juda shod edi.",
+      "ɪˈleɪtɪd"
+     ],
+     [
+      "blissful",
+      "baxtiyor, rohatbaxsh",
+      "They spent a blissful week by the sea.",
+      "Ular dengiz bo'yida baxtiyor bir hafta o'tkazishdi.",
+      "ˈblɪsfəl"
+     ],
+     [
+      "joyful",
+      "quvnoq, shod",
+      "It was a joyful celebration.",
+      "Bu quvnoq bayram edi.",
+      "ˈʤɔɪfəl"
+     ],
+     [
+      "resentment",
+      "alam, g'azab (ichki)",
+      "Resentment grew between the brothers.",
+      "Aka-ukalar orasida alam kuchaydi.",
+      "rɪˈzɛntmənt"
+     ],
+     [
+      "bitterness",
+      "achchiq alam",
+      "He spoke with bitterness about the past.",
+      "U o'tmish haqida achchiq alam bilan gapirdi.",
+      "ˈbɪtərnəs"
+     ],
+     [
+      "awe",
+      "hayrat (ulug'lik oldida)",
+      "We watched the mountains in awe.",
+      "Biz tog'larga hayrat bilan qaradik.",
+      "ɔ"
+     ],
+     [
+      "ambivalent",
+      "ikkilangan",
+      "I'm ambivalent about moving abroad.",
+      "Chet elga ko'chish borasida ikkilanyapman.",
+      "æmˈbɪvələnt"
+     ],
+     [
+      "sentiment",
+      "hissiyot, kayfiyat (umumiy)",
+      "Public sentiment has changed.",
+      "Jamoatchilik kayfiyati o'zgardi.",
+      "ˈsɛnəmənt"
+     ],
+     [
+      "overwhelmed",
+      "his-tuyg'u bosib ketgan",
+      "She was overwhelmed with gratitude.",
+      "Uni minnatdorlik hissi qamrab oldi.",
+      "ˌoʊvərˈwɛlmd"
+     ],
+     [
+      "thrilled",
+      "juda hayajonlangan (ijobiy)",
+      "I'm thrilled to be here.",
+      "Bu yerda bo'lganimdan juda xursandman.",
+      "θrɪld"
+     ],
+     [
+      "furious",
+      "g'azablangan",
+      "Dad was furious about the broken window.",
+      "Dadam singan oynadan g'azablandi.",
+      "fˈjʊriəs"
+     ],
+     [
+      "terrified",
+      "dahshatga tushgan",
+      "The child was terrified of the dog.",
+      "Bola itdan dahshatga tushdi.",
+      "ˈtɛrəˌfaɪd"
+     ],
+     [
+      "miserable",
+      "baxtsiz, ayanchli",
+      "He felt miserable after the exam.",
+      "Imtihondan keyin u o'zini baxtsiz his qildi.",
+      "ˈmɪzərəbəl"
+     ],
+     [
+      "hopeful",
+      "umidvor",
+      "I'm hopeful about the future.",
+      "Kelajakdan umidvorman.",
+      "ˈhoʊpfəl"
+     ],
+     [
+      "optimistic",
+      "optimistik, nekbin",
+      "She is optimistic about the results.",
+      "U natijalarga nekbin qaraydi.",
+      "ˌɑptɪˈmɪstɪk"
+     ],
+     [
+      "pessimistic",
+      "pessimistik, badbin",
+      "Don't be so pessimistic.",
+      "Bunchalik badbin bo'lma.",
+      "ˌpɛsəˈmɪstɪk"
+     ],
+     [
+      "sympathetic",
+      "hamdard",
+      "The teacher was sympathetic.",
+      "Ustoz hamdard bo'ldi.",
+      "ˌsɪmpəˈθɛtɪk"
+     ],
+     [
+      "indifferent",
+      "befarq",
+      "He seemed indifferent to the news.",
+      "U yangilikka befarq ko'rindi.",
+      "ˌɪnˈdɪfərənt"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "2100-yilda",
+     "type": "gap",
+     "instr": "WILL HAVE + V3 (kitob A)",
+     "items": [
+      "Life ___ (become) more automated by then.",
+      "Computers ___ (take over) many of the jobs people do today.",
+      "The earth's supplies of oil, coal and gas ___ (run out).",
+      "___ (scientists / find) other sources of energy?",
+      "How ___ education ___ (change)?",
+      "___ (we / find) a way to feed all the people in the world?"
+     ],
+     "answers": [
+      "will have become",
+      "will have taken over",
+      "will have run out",
+      "Will scientists have found",
+      "will … have changed",
+      "Will we have found"
+     ]
+    },
+    {
+     "title": "Vaziyatga qarab",
+     "type": "write",
+     "instr": "WILL HAVE + V3 bilan gapni tugating (kitob B)",
+     "items": [
+      "The film begins at 7.30; it's 7.20 and the trip takes 20 minutes. When they get there, … (the film / already / start)",
+      "Jim goes to bed at 11; Tom will visit at 11.30. When Tom arrives, … (Jim / go / to bed)",
+      "Tom is spending too much. Before the end of his holiday, … (he / spend / all his money)",
+      "Chuck came to Britain nearly three years ago. Next Monday … (he / be / here / exactly three years)",
+      "Next year is Ted and Amy's 25th anniversary. They … (be married) for 25 years."
+     ],
+     "answers": [
+      "the film will have already started.",
+      "Jim will have gone to bed.",
+      "he will have spent all his money.",
+      "he will have been here for exactly three years.",
+      "will have been married for 25 years."
+     ]
+    },
+    {
+     "title": "Future Perfect",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan (kitob C)",
+     "items": [
+      "By next February I ___ (write) my third book.",
+      "I hope you ___ (not / forget) my name by tomorrow.",
+      "By next week we ___ (redecorate) the house.",
+      "I hope it ___ (stop) raining before the match starts.",
+      "By this time next week I ___ (marry).",
+      "The tropical rain forests ___ (disappear) in thirty years."
+     ],
+     "answers": [
+      "will have written",
+      "won't have forgotten",
+      "will have redecorated",
+      "will have stopped",
+      "will have married",
+      "will have disappeared"
+     ]
+    },
+    {
+     "title": "By 2035 — mening hayotim",
+     "type": "speaking",
+     "instr": "Juftlikda: 5 ta \"By 2035 I will have …\" + his-tuyg'u (\"I'll be proud / relieved …\")",
+     "items": [
+      "study",
+      "work",
+      "family",
+      "travel",
+      "English"
+     ],
+     "answers": [
+      "By 2035 I will have graduated from university — I'll be proud.",
+      "I will have found a good job — I'll be content.",
+      "I will have got married — I'll be happy.",
+      "I will have visited ten countries — I'll be excited.",
+      "I will have got IELTS 7.0 — I'll be relieved!"
+     ],
+     "note": "Ustoz \"by the time you will…\" xatosini kuzatadi."
+    },
+    {
+     "title": "His-tuyg'uni toping",
+     "type": "match",
+     "instr": "Vaziyatga mos his-tuyg'u so'zi",
+     "items": [
+      "You passed a very hard exam.",
+      "Your friend forgot your birthday.",
+      "You must speak in front of 200 people tomorrow.",
+      "Your team won the final.",
+      "You broke your mum's favourite cup.",
+      "The lesson is very slow and long."
+     ],
+     "answers": [
+      "relieved / proud",
+      "disappointed",
+      "nervous / anxious",
+      "ecstatic / thrilled",
+      "guilty / embarrassed",
+      "bored"
+     ],
+     "box": [
+      "relieved",
+      "disappointed",
+      "nervous",
+      "ecstatic",
+      "guilty",
+      "bored"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "By the time you will come, I will have left.",
+      "She will have finish by 5.",
+      "They will has arrived by now.",
+      "I will have been finished the book by Friday.",
+      "We will finished the project by June."
+     ],
+     "answers": [
+      "By the time you come, I will have left.",
+      "She will have finished by 5.",
+      "They will have arrived by now.",
+      "I will have finished the book by Friday.",
+      "We will have finished the project by June."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 10: A, B, C — daftarga",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 29–30",
+     "type": "read",
+     "instr": "Topic 29 (carrom) — o'yin qoidalaridan 5 tasi; Topic 30 (Rock Garden) — yillar ro'yxati (1957, 1975, 1976, 1990)",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "2035-yilgacha",
+     "type": "write",
+     "instr": "8 gap: \"By 2035 I will have …\" (5 tasdiq, 1 inkor, 2 savol do'stingizga)",
+     "answers": "Erkin; will have + V3."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "2030-yilgacha men universitetni tugatgan bo'laman.",
+      "Sen kelguncha biz ovqatlanib bo'lamiz.",
+      "U ertagacha tinchlanib qolgan bo'ladi.",
+      "Kelasi yil ular turmush qurganiga 10 yil bo'ladi.",
+      "Jumagacha kitobni o'qib bo'lasanmi?"
+     ],
+     "answers": [
+      "By 2030 I will have finished university.",
+      "By the time you come, we will have eaten.",
+      "She/He will have calmed down by tomorrow.",
+      "Next year they will have been married for 10 years.",
+      "Will you have read the book by Friday?"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "EMOTIONS CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Health",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Emotions og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 28. Ancient robots",
+    "text": [
+     "What do you think of when you read the word 'robot'? Many people think about big machines in car factories or futuristic monsters in films. Few of us think about the past. But people were building incredible machines with human abilities hundreds of years ago!",
+     "For example, Egyptian texts from 1100 BC mention moving statues which 'chose' the next king. None of these statues exists, but probably they were built using the ancient Egyptians' mechanical technology.",
+     "Another ancient robot was a big robotic arm called \"The Claw\". The ancient Greek writer Polybius wrote about it in 213 BC. When a Roman ship came close, the arm picked up the front of the ship and lifted it into the air. Then the boat fell backwards into the sea and sank.",
+     "Another Greek inventor, Philon of Byzantium, built a female robot at about the same time. If someone placed a cup in her hand, it mixed water and wine to make a drink. But the robot wasn't popular because people didn't need robots to work. They had lots of slaves.",
+     "The famous artist Leonardo da Vinci loved designing robots. One of his robots was a lion. He built it for the king of France in 1515. It could walk and present flowers! In 2009, engineers used the plans to build it again. It worked perfectly. Although modern technology has moved on, these historical robots still amaze people today."
+    ],
+    "glossary": [
+     "ancient — qadimiy",
+     "ability — qobiliyat",
+     "statue — haykal",
+     "mechanical — mexanik",
+     "inventor — ixtirochi",
+     "slave — qul",
+     "design — loyihalamoq",
+     "present — taqdim qilmoq",
+     "amaze — hayratlantirmoq",
+     "move on — oldinga ketmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Robot — yil — kim",
+      "type": "table",
+      "instr": "Jadvalni to'ldiring",
+      "items": [
+       "moving statues",
+       "The Claw",
+       "female robot that mixed drinks",
+       "lion robot"
+      ],
+      "answers": [
+       "Egypt, 1100 BC",
+       "Greece (Polybius), 213 BC",
+       "Philon of Byzantium",
+       "Leonardo da Vinci, 1515 (rebuilt 2009)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "The Egyptian statues still exist today.",
+       "The Claw lifted Roman ships out of the water.",
+       "Philon's robot was very popular.",
+       "Engineers rebuilt da Vinci's lion in 2009."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (people had slaves)",
+       "True"
+      ]
+     },
+     {
+      "title": "Kelajak haqida",
+      "type": "write",
+      "instr": "Matnga asoslanib 3 ta Future Perfect gap: \"By 2100, robots will have …\"",
+      "items": [
+       "jobs",
+       "homes",
+       "history"
+      ],
+      "answers": [
+       "By 2100, robots will have taken over many jobs.",
+       "By 2100, every home will have got a robot.",
+       "By then, people will have forgotten that robots are ancient!"
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 28 (sinfda); Topic 29–30 — uyga."
+   }
   }
  ]
 }

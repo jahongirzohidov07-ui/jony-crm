@@ -377,7 +377,7 @@ function TemplateEditor({
                               )}
                             </div>
                           ))}
-                          {!readOnly && (q.options || []).length < 6 && (
+                          {!readOnly && (q.options || []).length < 8 && (
                             <button type="button"
                                     onClick={() => setQ(pi, qi, { options: [...(q.options || []), ""] })}
                                     className="text-xs text-brand-600 ml-5">+ variant</button>

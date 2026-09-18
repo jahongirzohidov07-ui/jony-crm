@@ -112,6 +112,8 @@ tpl = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 1]
 ck("Step 1 Unit 1 bor", len(tpl), 1)
 TID = tpl[0]["id"]
 ck("30 ta savol", tpl[0]["q_count"], 30)
+u2 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 2]
+ck("Step 1 Unit 2 bor, 30 savol", [x["q_count"] for x in u2], [30])
 full = client.get(f"/api/exam-templates/{TID}", headers=HE).json()
 QS = [q for p in full["parts"] for q in p["questions"]]
 ck("7-savol javobi", QS[6]["answer"][0], "the USA")

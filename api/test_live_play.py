@@ -102,6 +102,11 @@ ck("tayyor bo'lmagan dars 404", c.get("/api/plans/ielts_2_0/1", headers=T).statu
 r = c.get("/api/plans/ielts_1_0/23", headers=T)
 ck("plan 23 conjunctions", "CONJUNCTIONS" in r.json()["title"], True)
 ck("HR ga reja yopiq", c.get("/api/plans", headers=tok("hr")).status_code, 403)
+for tier, mn in (("20", 20), ("40", 40), ("60", 60)):
+    rp = c.get(f"/api/plans/ielts_1_0/23/vocab.pdf?tier={tier}", headers=T)
+    ck(f"lug'at PDF {tier}", (rp.status_code, rp.headers.get("content-type"), rp.content[:4] == b"%PDF",
+                             len(rp.content) > 20000), (200, "application/pdf", True, True))
+ck("lug'at PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/23/vocab.pdf", headers=tok("hr")).status_code, 403)
 # Faqat ingliz tili ustozlariga (Jahongir: "barcha ingliz til ustozlariga
 # chiqsin boshqa ustozlarga chiqmasin")
 ck("rus tili ustoziga reja yopiq", c.get("/api/plans", headers=tok("rus")).status_code, 403)

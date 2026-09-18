@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText } from "lucide-react";
-import { api } from "../lib/api";
+import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download } from "lucide-react";
+import { api, getToken } from "../lib/api";
 
 /**
  * DARS REJALARI (2026-09-18, Jahongir: "saytgayam qoy ... kahoot
@@ -249,7 +249,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
 
       {tab === "plan" && <PlanTab L={L} />}
       {tab === "grammar" && <GrammarTab L={L} />}
-      {tab === "vocab" && <VocabTab L={L} />}
+      {tab === "vocab" && <VocabTab L={L} course={course} />}
       {tab === "class" && <ExList list={L.class_ex} />}
       {tab === "reading" && <ReadingTab L={L} />}
       {tab === "listening" && <ListeningTab L={L} />}
@@ -318,8 +318,30 @@ function GrammarTab({ L }: { L: Lesson }) {
   );
 }
 
-function VocabTab({ L }: { L: Lesson }) {
+/** Lug'at PDF (2026-09-18, Jahongir: "20/40/60 ... har birni yuklab
+ * olish imkoniyati bo'lishi kerak, pdf shaklda"). Token bilan yuklab,
+ * brauzerga fayl sifatida beradi. */
+async function downloadPdf(path: string, filename: string) {
+  const token = getToken();
+  const res = await fetch(`/api${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  if (!res.ok) throw new Error("PDF tayyorlab bo'lmadi");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+function VocabTab({ L, course }: { L: Lesson; course: string }) {
   const V = L.vocab;
+  const [dl, setDl] = useState<string | null>(null);
+  const [dlErr, setDlErr] = useState("");
+  async function pdf(tier: "20" | "40" | "60") {
+    setDl(tier); setDlErr("");
+    try { await downloadPdf(`/plans/${course}/${L.no}/vocab.pdf?tier=${tier}`, `Dars ${L.no} - lugat ${tier}.pdf`); }
+    catch (e) { setDlErr((e as Error).message); }
+    finally { setDl(null); }
+  }
   const tiers: { key: "core" | "strong" | "super"; label: string; cls: string }[] = [
     { key: "core", label: "CORE 20 — hamma uchun", cls: "text-emerald-700" },
     { key: "strong", label: "STRONG +20 — kuchli o'quvchi (jami 40)", cls: "text-sky-700" },
@@ -329,6 +351,16 @@ function VocabTab({ L }: { L: Lesson }) {
   return (
     <>
       {V.how?.length > 0 && <p className="text-sm text-slate-600 mb-3">{V.how.join(" ")}</p>}
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <span className="text-xs text-slate-500 flex items-center gap-1"><Download size={14} /> PDF yuklab olish:</span>
+        {(["20", "40", "60"] as const).map((t) => (
+          <button key={t} onClick={() => pdf(t)} disabled={dl !== null}
+                  className="text-xs bg-white border border-slate-200 hover:border-brand-400 rounded-lg px-3 py-1.5 font-medium text-slate-700 disabled:opacity-50">
+            {dl === t ? "Tayyorlanmoqda…" : t === "20" ? "CORE 20" : t === "40" ? "40 so'z (CORE+STRONG)" : "60 so'z (hammasi)"}
+          </button>
+        ))}
+        {dlErr && <span className="text-xs text-rose-600">{dlErr}</span>}
+      </div>
       {tiers.map((t) => (
         <div key={t.key} className="bg-white rounded-xl border border-slate-200 mb-3">
           <button onClick={() => setOpen({ ...open, [t.key]: !open[t.key] })}

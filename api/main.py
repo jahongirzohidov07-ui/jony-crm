@@ -119,6 +119,7 @@ import exams as _r_exams
 import finance as _r_finance
 import gamification as _r_gamification
 import liveplay as _r_liveplay
+import vocab_pdf as _r_vocab_pdf
 import groups_lessons as _r_groups_lessons
 import hr as _r_hr
 import hr_ats as _r_hr_ats
@@ -162,6 +163,7 @@ app.include_router(_r_exams.router)
 app.include_router(_r_finance.router)
 app.include_router(_r_gamification.router)
 app.include_router(_r_liveplay.router)
+app.include_router(_r_vocab_pdf.router)
 app.include_router(_r_groups_lessons.router)
 app.include_router(_r_hr.router)
 app.include_router(_r_hr_ats.router)

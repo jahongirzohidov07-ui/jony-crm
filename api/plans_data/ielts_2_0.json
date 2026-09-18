@@ -3364,6 +3364,1894 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 5,
+   "title": "Present Perfect Continuous",
+   "grammar_topic": "PRESENT PERFECT CONTINUOUS (have/has been + V-ing)",
+   "vocab_topic": "Parts of the body (tana a'zolari)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 5 – Present Perfect Continuous (jadval); Lesson 6 A mashqi; BODY WORDS (40); Reading Topic 1–10.",
+   "objectives": [
+    "have/has been + V-ing qolipini tasdiq, inkor va savolda tuzish.",
+    "\"How long have you been …ing?\" savoliga for/since bilan javob berish.",
+    "Tana a'zolari CORE 20 ni bilish va \"My … has been hurting\" qolipida ishlatish.",
+    "Reading: Topic 1 (A Restaurant for Change) — asosiy fikr va tafsilot savollari."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Parts of the body (tana a'zolari) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz derazadan tashqariga qarab: \"It's wet. It has been raining.\" — o'quvchilar: \"Why are you tired?\" → \"I have been working all day.\" Doskaga: have been + V-ing."
+    ],
+    [
+     8,
+     "Kahoot — Yet, still, already, just",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Yet, still, already, just lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+have/has+been+Ving → Negative haven't/hasn't been+Ving → Question Have/Has+S+been+Ving. Har qatorga misol + tarjima; \"how long / for / since\" bilan bog'lanadi."
+    ],
+    [
+     12,
+     "Parts of the body (tana a'zolari) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Present Perfect Continuous — ish o'tganda boshlangan va HOZIRGACHA davom etyapti (yoki hozirgina to'xtadi, izi ko'rinadi).",
+     "Urg'u — jarayon va davomiylik: \"I have been waiting for two hours\" (2 soatdan beri kutyapman).",
+     "Present Perfect esa natijaga urg'u beradi: \"I have waited\" (kutdim — tugadi). Farqi 6-darsda chuqur o'rganiladi.",
+     "Holat fe'llari (know, like, have=ega bo'lmoq, be) continuous'da ishlatilmaydi: \"I have known him\" (has been knowing — xato)."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + have/has + been + V-ing",
+      "They've been waiting for hours.",
+      "Ular soatlab kutishyapti."
+     ],
+     [
+      "Inkor",
+      "S + haven't/hasn't + been + V-ing",
+      "She hasn't been singing for a long time.",
+      "U anchadan beri kuylamayapti."
+     ],
+     [
+      "Savol",
+      "Have/Has + S + been + V-ing?",
+      "Have you been watching the games?",
+      "O'yinlarni tomosha qilyapsanmi?"
+     ],
+     [
+      "How long",
+      "How long + have/has + S + been + V-ing?",
+      "How long have you been learning English?",
+      "Qanchadan beri ingliz tili o'rganyapsan?"
+     ],
+     [
+      "for / since",
+      "… been + V-ing + for davr / since nuqta",
+      "It has been raining since morning.",
+      "Ertalabdan beri yomg'ir yog'yapti."
+     ],
+     [
+      "Iz (natija ko'rinadi)",
+      "S + have/has + been + V-ing (sabab)",
+      "I'm tired because I've been running.",
+      "Charchaganman, chunki yugurib keldim."
+     ]
+    ],
+    "presentation": [
+     [
+      "How long have you been learning English?",
+      "I have been learning English for two years."
+     ],
+     [
+      "Why are your eyes red?",
+      "Because I have been reading all night."
+     ],
+     [
+      "Has it been raining?",
+      "Yes, it has been raining since morning."
+     ],
+     [
+      "How long has your leg been hurting?",
+      "It has been hurting for three days."
+     ],
+     [
+      "What have you been doing?",
+      "I have been cleaning the house."
+     ],
+     [
+      "Have you been waiting long?",
+      "No, I have only been waiting for five minutes."
+     ],
+     [
+      "Why is your hair wet?",
+      "I have been swimming."
+     ],
+     [
+      "How long has she been working here?",
+      "She has been working here since 2021."
+     ],
+     [
+      "Have they been playing football?",
+      "Yes, they have been playing all afternoon."
+     ],
+     [
+      "Why does your back hurt?",
+      "Because I have been sitting at the computer all day."
+     ]
+    ],
+    "notes": [
+     "for + davr, since + nuqta — 3-dars qoidasi shu yerda ham.",
+     "Holat fe'llari (know, believe, own, love) — Present Perfect Simple: \"I have known her for years\".",
+     "\"all day / all morning / lately / recently\" — Present Perfect Continuous bilan tez-tez keladi.",
+     "Tana a'zolari bilan: \"My head has been aching\" = \"I have had a headache\"."
+    ],
+    "mistakes": [
+     [
+      "I have been knowing him for years.",
+      "I have known him for years.",
+      "know — holat fe'li."
+     ],
+     [
+      "She has been work all day.",
+      "She has been working all day.",
+      "been + V-ING."
+     ],
+     [
+      "How long are you waiting?",
+      "How long have you been waiting?",
+      "Hozirgacha davom → PPC."
+     ],
+     [
+      "It is raining since morning.",
+      "It has been raining since morning.",
+      "since bilan Present Continuous emas."
+     ],
+     [
+      "They have been played.",
+      "They have been playing.",
+      "been + V-ing, V3 emas."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning BODY WORDS ro'yxatidan bosh va qo'l (1–20); STRONG — tana va oyoq (21–40); SUPER — ichki a'zolar va qo'shimcha.",
+     "Ustoz ko'rsatib aytadi (TPR): \"Touch your elbow!\" — tez o'yin 2 daqiqa. Har so'z bilan \"My … has been hurting since …\"."
+    ],
+    "core": [
+     [
+      "head",
+      "bosh",
+      "My head has been aching all day.",
+      "Boshim kun bo'yi og'riyapti.",
+      "hɛd"
+     ],
+     [
+      "hair",
+      "soch",
+      "She has been growing her hair for a year.",
+      "U bir yildan beri sochini o'stiryapti.",
+      "hɛr"
+     ],
+     [
+      "face",
+      "yuz",
+      "Wash your face.",
+      "Yuzingni yuv.",
+      "feɪs"
+     ],
+     [
+      "forehead",
+      "peshona",
+      "He touched his forehead — it was hot.",
+      "U peshonasini ushladi — issiq edi.",
+      "ˈfɔrhɛd"
+     ],
+     [
+      "eyebrow",
+      "qosh",
+      "She has thick eyebrows.",
+      "Uning qoshlari qalin.",
+      "ˈaɪˌbraʊ"
+     ],
+     [
+      "eyelid",
+      "qovoq",
+      "My eyelids are heavy; I've been reading too long.",
+      "Qovoqlarim og'ir; juda uzoq o'qidim.",
+      "ˈaɪˌlɪd"
+     ],
+     [
+      "eye",
+      "ko'z",
+      "My eyes have been hurting since morning.",
+      "Ko'zlarim ertalabdan beri og'riyapti.",
+      "aɪ"
+     ],
+     [
+      "ear",
+      "quloq",
+      "My left ear has been ringing.",
+      "Chap qulog'im shang'illayapti.",
+      "ɪr"
+     ],
+     [
+      "nose",
+      "burun",
+      "The baby's nose has been running all week.",
+      "Chaqaloqning burni bir haftadan beri oqyapti.",
+      "noʊz"
+     ],
+     [
+      "cheek",
+      "yanoq",
+      "Her cheeks are red — she has been running.",
+      "Yanoqlari qizil — u yugurib keldi.",
+      "ʧik"
+     ],
+     [
+      "mouth",
+      "og'iz",
+      "Open your mouth, please.",
+      "Iltimos, og'zingizni oching.",
+      "maʊθ"
+     ],
+     [
+      "lip",
+      "lab",
+      "My lips have been dry lately.",
+      "Oxirgi paytlar lablarim quruq.",
+      "lɪp"
+     ],
+     [
+      "teeth (tooth)",
+      "tishlar (tish)",
+      "My tooth has been hurting for two days.",
+      "Tishim ikki kundan beri og'riyapti.",
+      "tiθ (tuθ)"
+     ],
+     [
+      "tongue",
+      "til",
+      "Show me your tongue.",
+      "Tilingizni ko'rsating.",
+      "təŋ"
+     ],
+     [
+      "chin",
+      "iyak",
+      "He has a small chin.",
+      "Uning iyagi kichkina.",
+      "ʧɪn"
+     ],
+     [
+      "neck",
+      "bo'yin",
+      "My neck has been stiff since yesterday.",
+      "Bo'ynim kechadan beri qotib qolgan.",
+      "nɛk"
+     ],
+     [
+      "shoulder",
+      "yelka",
+      "I've been carrying a heavy bag — my shoulders hurt.",
+      "Og'ir sumka ko'tarib yurdim — yelkalarim og'riyapti.",
+      "ˈʃoʊldər"
+     ],
+     [
+      "arm",
+      "qo'l (yelkadan bilakkacha)",
+      "He broke his arm last year.",
+      "U o'tgan yili qo'lini sindirgan.",
+      "ɑrm"
+     ],
+     [
+      "elbow",
+      "tirsak",
+      "I hit my elbow on the door.",
+      "Tirsagimni eshikka urib oldim.",
+      "ˈɛlˌboʊ"
+     ],
+     [
+      "wrist",
+      "bilak (qo'l bo'g'imi)",
+      "My wrist has been aching from typing.",
+      "Yozishdan bilagim og'riyapti.",
+      "rɪst"
+     ]
+    ],
+    "strong": [
+     [
+      "hand",
+      "qo'l (kaft)",
+      "Wash your hands before eating.",
+      "Ovqatdan oldin qo'lingni yuv.",
+      "hænd"
+     ],
+     [
+      "finger",
+      "barmoq",
+      "She has been drawing all day — her fingers are blue.",
+      "U kun bo'yi rasm chizdi — barmoqlari ko'k.",
+      "ˈfɪŋgər"
+     ],
+     [
+      "thumb",
+      "bosh barmoq",
+      "He cut his thumb.",
+      "U bosh barmog'ini kesib oldi.",
+      "θəm"
+     ],
+     [
+      "index finger",
+      "ko'rsatkich barmoq",
+      "Point with your index finger.",
+      "Ko'rsatkich barmog'ing bilan ko'rsat.",
+      "ˈɪndɛks ˈfɪŋgər"
+     ],
+     [
+      "middle finger",
+      "o'rta barmoq",
+      "The middle finger is the longest.",
+      "O'rta barmoq eng uzuni.",
+      "ˈmɪdəl ˈfɪŋgər"
+     ],
+     [
+      "ring finger",
+      "nomsiz barmoq",
+      "She wears a ring on her ring finger.",
+      "U nomsiz barmog'ida uzuk taqadi.",
+      "rɪŋ ˈfɪŋgər"
+     ],
+     [
+      "little finger",
+      "jimjiloq",
+      "The baby held my little finger.",
+      "Chaqaloq jimjilog'imni ushladi.",
+      "ˈlɪtəl ˈfɪŋgər"
+     ],
+     [
+      "chest",
+      "ko'krak qafasi",
+      "My chest has been hurting when I breathe.",
+      "Nafas olsam ko'kragim og'riyapti.",
+      "ʧɛst"
+     ],
+     [
+      "back",
+      "orqa, bel (umurtqa)",
+      "I've been sitting all day; my back hurts.",
+      "Kun bo'yi o'tirdim; belim og'riyapti.",
+      "bæk"
+     ],
+     [
+      "waist",
+      "bel (kamar joyi)",
+      "This belt is too big for my waist.",
+      "Bu kamar belimga katta.",
+      "weɪst"
+     ],
+     [
+      "hip",
+      "son bo'g'imi, biqin",
+      "Grandma has been having hip pain.",
+      "Buvimning biqini og'riyapti.",
+      "hɪp"
+     ],
+     [
+      "leg",
+      "oyoq (butun)",
+      "My legs have been shaking since the run.",
+      "Yugurishdan beri oyoqlarim qaltirayapti.",
+      "lɛg"
+     ],
+     [
+      "thigh",
+      "son",
+      "Footballers have strong thighs.",
+      "Futbolchilarning sonlari kuchli.",
+      "θaɪ"
+     ],
+     [
+      "knee",
+      "tizza",
+      "I've been kneeling — my knees hurt.",
+      "Tiz cho'kib turdim — tizzalarim og'riyapti.",
+      "ni"
+     ],
+     [
+      "calf",
+      "boldir",
+      "Stretch your calf muscles.",
+      "Boldir mushaklaringni cho'z.",
+      "kæf"
+     ],
+     [
+      "ankle",
+      "to'piq",
+      "She has been walking on a sore ankle.",
+      "U og'rigan to'piq bilan yurib yuribdi.",
+      "ˈæŋkəl"
+     ],
+     [
+      "foot (feet)",
+      "oyoq panjasi (oyoqlar)",
+      "My feet have been hurting in these shoes.",
+      "Bu tuflida oyoqlarim og'riyapti.",
+      "fʊt (fit)"
+     ],
+     [
+      "toe",
+      "oyoq barmog'i",
+      "I stubbed my toe on the table.",
+      "Oyoq barmog'imni stolga urib oldim.",
+      "toʊ"
+     ],
+     [
+      "heel",
+      "tovon",
+      "These shoes rub my heel.",
+      "Bu tufli tovonimni ishqaydi.",
+      "hil"
+     ],
+     [
+      "nail",
+      "tirnoq",
+      "She has been biting her nails.",
+      "U tirnoqlarini tishlab yuribdi.",
+      "neɪl"
+     ]
+    ],
+    "super": [
+     [
+      "skull",
+      "bosh suyagi",
+      "The skull protects the brain.",
+      "Bosh suyagi miyani himoya qiladi.",
+      "skəl"
+     ],
+     [
+      "brain",
+      "miya",
+      "The brain has been working hard today.",
+      "Miya bugun qattiq ishladi.",
+      "breɪn"
+     ],
+     [
+      "heart",
+      "yurak",
+      "My heart has been beating fast.",
+      "Yuragim tez uryapti.",
+      "hɑrt"
+     ],
+     [
+      "lung",
+      "o'pka",
+      "Smoking damages the lungs.",
+      "Chekish o'pkaga zarar beradi.",
+      "ləŋ"
+     ],
+     [
+      "stomach",
+      "oshqozon; qorin",
+      "My stomach has been aching since lunch.",
+      "Tushlikdan beri qornim og'riyapti.",
+      "ˈstəmək"
+     ],
+     [
+      "bone",
+      "suyak",
+      "Milk makes bones strong.",
+      "Sut suyaklarni mustahkam qiladi.",
+      "boʊn"
+     ],
+     [
+      "muscle",
+      "mushak",
+      "He has been building muscle at the gym.",
+      "U sport zalida mushak yig'yapti.",
+      "ˈməsəl"
+     ],
+     [
+      "skin",
+      "teri",
+      "Her skin has been dry this winter.",
+      "Bu qish uning terisi quruq bo'lib qoldi.",
+      "skɪn"
+     ],
+     [
+      "blood",
+      "qon",
+      "The nurse has taken some blood.",
+      "Hamshira qon oldi.",
+      "bləd"
+     ],
+     [
+      "spine",
+      "umurtqa",
+      "Sit straight to protect your spine.",
+      "Umurtqangni asrash uchun tik o'tir.",
+      "spaɪn"
+     ],
+     [
+      "rib",
+      "qovurg'a",
+      "He broke two ribs in the accident.",
+      "U hodisada ikkita qovurg'asini sindirdi.",
+      "rɪb"
+     ],
+     [
+      "jaw",
+      "jag'",
+      "My jaw has been aching since the dentist.",
+      "Tish shifokoridan keyin jag'im og'riyapti.",
+      "ʤɔ"
+     ],
+     [
+      "throat",
+      "tomoq",
+      "I've been coughing; my throat is sore.",
+      "Yo'talib yuribman; tomog'im og'riyapti.",
+      "θroʊt"
+     ],
+     [
+      "eyelash",
+      "kiprik",
+      "She has long eyelashes.",
+      "Uning kipriklari uzun.",
+      "ˈaɪˌlæʃ"
+     ],
+     [
+      "nostril",
+      "burun teshigi",
+      "One nostril has been blocked all day.",
+      "Bitta burun teshigi kun bo'yi bitib qolgan.",
+      "ˈnɑstrɪl"
+     ],
+     [
+      "palm",
+      "kaft",
+      "He held the coin in his palm.",
+      "U tangani kaftida ushlab turdi.",
+      "pɑm"
+     ],
+     [
+      "beard",
+      "soqol",
+      "He has been growing a beard since May.",
+      "U maydan beri soqol qo'yib yuribdi.",
+      "bɪrd"
+     ],
+     [
+      "moustache",
+      "mo'ylov",
+      "My uncle has a thick moustache.",
+      "Amakimning mo'ylovi qalin.",
+      "ˈməˌstæʃ"
+     ],
+     [
+      "joint",
+      "bo'g'im",
+      "Grandad's joints have been hurting in the cold.",
+      "Sovuqda bobomning bo'g'imlari og'riyapti.",
+      "ʤɔɪnt"
+     ],
+     [
+      "ache (v/n)",
+      "og'rimoq; og'riq",
+      "My whole body has been aching.",
+      "Butun tanam og'riyapti.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "have/has been + V-ing",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni PPC'da yozing (kitob 6-dars A mashqi)",
+     "items": [
+      "I'm tired, because I ___ (work) very hard.",
+      "He ___ (write) letters all morning.",
+      "Catherina is getting fatter because she ___ (eat) too much.",
+      "Cathy ___ (attend) a cookery course since March.",
+      "How long ___ you ___ (learn) English?",
+      "Where are my glasses? I ___ (look) for them for an hour.",
+      "Elizabeth ___ (live) with Mike for three years.",
+      "It ___ (rain) for six hours."
+     ],
+     "answers": [
+      "have been working",
+      "has been writing",
+      "has been eating",
+      "has been attending",
+      "have … been learning",
+      "have been looking",
+      "has been living",
+      "has been raining"
+     ]
+    },
+    {
+     "title": "Iz — sabab",
+     "type": "write",
+     "instr": "Vaziyatga qarab \"… have/has been …ing\" bilan sabab yozing",
+     "items": [
+      "Her eyes are red. (cry)",
+      "His hands are dirty. (fix the car)",
+      "The ground is wet. (rain)",
+      "I'm out of breath. (run)",
+      "The kitchen smells nice. (Mum / cook)",
+      "Your back hurts. (sit at the computer)"
+     ],
+     "answers": [
+      "She has been crying.",
+      "He has been fixing the car.",
+      "It has been raining.",
+      "I have been running.",
+      "Mum has been cooking.",
+      "You have been sitting at the computer."
+     ]
+    },
+    {
+     "title": "How long…?",
+     "type": "question",
+     "instr": "\"How long have you been …ing?\" savolini tuzing va juftlikda javob bering",
+     "items": [
+      "learn English",
+      "live in your house",
+      "use your phone",
+      "study today",
+      "wait for the bus"
+     ],
+     "answers": [
+      "How long have you been learning English?",
+      "How long have you been living in your house?",
+      "How long have you been using your phone?",
+      "How long have you been studying today?",
+      "How long have you been waiting for the bus?"
+     ]
+    },
+    {
+     "title": "Tana a'zolari — TPR",
+     "type": "speaking",
+     "instr": "Juftlikda: A buyruq beradi (\"Touch your …\"), B bajaradi; keyin \"My … has been hurting\" gaplari",
+     "items": [
+      "elbow",
+      "forehead",
+      "ankle",
+      "wrist",
+      "chin",
+      "shoulder"
+     ],
+     "answers": [
+      "Touch your elbow!",
+      "Touch your forehead!",
+      "Touch your ankle!",
+      "Touch your wrist!",
+      "Touch your chin!",
+      "Touch your shoulder!"
+     ],
+     "note": "2 daqiqa tez; keyin har juftlik 3 ta \"My … has been hurting since/for …\" gapi aytadi."
+    },
+    {
+     "title": "Shifokorda",
+     "type": "dialog",
+     "instr": "Rollarda: bemor 3 shikoyat (PPC bilan), shifokor 3 savol (How long…?)",
+     "items": [
+      "patient 1",
+      "doctor 1",
+      "patient 2",
+      "doctor 2",
+      "patient 3",
+      "doctor 3"
+     ],
+     "answers": [
+      "My head has been aching since Monday.",
+      "How long have you been feeling like this?",
+      "I have been coughing for a week.",
+      "Have you been taking any medicine?",
+      "My knee has been hurting when I walk.",
+      "Have you been doing any sport?"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I have been knowing him since 2019.",
+      "She has been study all day.",
+      "How long are you learning English?",
+      "It has been rain since morning.",
+      "My tooths have been hurting."
+     ],
+     "answers": [
+      "I have known him since 2019.",
+      "She has been studying all day.",
+      "How long have you been learning English?",
+      "It has been raining since morning.",
+      "My teeth have been hurting."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 6 A (12 gap, PPC) — daftarga; BODY WORDS 1–40 ni 2 marta yozing",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 2–10",
+     "type": "read",
+     "instr": "Hafta davomida Topic 2–10 ni o'qing; har biridan 3 ta notanish so'z + tarjima daftarga",
+     "answers": "Ustoz daftarni tekshiradi; 10 so'zdan Kahoot savoli bo'ladi."
+    },
+    {
+     "title": "Mening haftam",
+     "type": "write",
+     "instr": "8 gap: \"I have been …ing for/since …\" (4 tasdiq, 2 inkor, 2 savol)",
+     "answers": "Erkin; been + V-ing, for/since."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men ikki soatdan beri seni kutyapman.",
+      "Ertalabdan beri yomg'ir yog'yapti.",
+      "Tishim uch kundan beri og'riyapti.",
+      "Qanchadan beri ingliz tili o'rganyapsan?",
+      "U kun bo'yi kompyuterda o'tirdi."
+     ],
+     "answers": [
+      "I have been waiting for you for two hours.",
+      "It has been raining since morning.",
+      "My tooth has been hurting for three days.",
+      "How long have you been learning English?",
+      "She/He has been sitting at the computer all day."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CORE 20 (body) — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 og'zaki 1.5 daqiqa (kitob: BODY 40 so'z yozma 5 daqiqa keyingi darsda)",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Death",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Body words yozma (kitob)",
+     "40 so'z tarjimasiga qarab inglizchasi, 5 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 1. A Restaurant for Change",
+    "text": [
+     "Jamie Oliver wants to change people's lives and he is using food to do it. Oliver, a chef, is well-known for sharing his secrets of cooking healthy food through his magazine, cookbooks, and television shows. He is also changing lives through his Italian restaurant, Fifteen.",
+     "Fifteen started in London, England, as a place to train young adults to work in a kitchen. Oliver's idea was to create a professional kitchen that can help young people get a fresh start and a chance to become professional chefs. Every September, a new group of 18- to 24-year-olds start work at Fifteen. When they start, they are usually not qualified for a restaurant job, but that will change quickly.",
+     "In the 12 months of training, the student chefs study cooking at college and get hands-on training at the restaurant. Besides learning kitchen skills, they learn the importance of using fresh ingredients and how to create their own recipes. The students also learn how to manage money and deal with difficult customers. Overall, the program encourages them to believe in themselves.",
+     "The restaurant's name, Fifteen, comes from the number of students the restaurant had when it started in 2002. Today, Oliver has three of these restaurants, and a few hundred students have finished the program. Around 90 percent of the graduates are still working in the food industry. Some own restaurants or work in some of the best kitchens around the world. Others are now starring in their own TV shows."
+    ],
+    "glossary": [
+     "chef — oshpaz",
+     "well-known — mashhur",
+     "qualified — malakali",
+     "hands-on training — amaliy mashg'ulot",
+     "ingredients — masalliqlar",
+     "recipe — retsept",
+     "deal with — bilan ishlamoq/hal qilmoq",
+     "encourage — ruhlantirmoq",
+     "graduate — bitiruvchi",
+     "food industry — oziq-ovqat sohasi"
+    ],
+    "tasks": [
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Jamie Oliver is a chef.",
+       "Fifteen started in Italy.",
+       "The training lasts 12 months.",
+       "Students only learn cooking.",
+       "Most graduates have left the food industry."
+      ],
+      "answers": [
+       "True",
+       "False (London)",
+       "True",
+       "False (money, customers too)",
+       "False (90% still working)"
+      ]
+     },
+     {
+      "title": "Savollar",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why is the restaurant called Fifteen?",
+       "Who can join the program?",
+       "How many restaurants does Oliver have now?",
+       "Name two things students learn besides cooking."
+      ],
+      "answers": [
+       "Because it had 15 students when it started (2002).",
+       "18- to 24-year-olds.",
+       "Three.",
+       "Managing money; dealing with difficult customers."
+      ]
+     },
+     {
+      "title": "Present Perfect toping",
+      "type": "find",
+      "instr": "Matndan Present Perfect / \"still\" bilan gaplarni toping va tarjima qiling",
+      "items": [
+       "have finished",
+       "still"
+      ],
+      "answers": [
+       "a few hundred students have finished the program",
+       "Around 90 percent of the graduates are still working"
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 1 (sinfda); Topic 2–10 — uyga (hafta davomida)."
+   },
+   "listening": {
+    "audios": "Audio 1 (2.0 audio fayllari hali papkada yo'q — ustoz skriptni 2 marta o'qib beradi)",
+    "intro": [
+     "Skript (ustoz o'qiydi): \"Hi, I'm Laura. I've been working at Fifteen for six months. Before that I was unemployed for a year. Every morning I've been getting up at five, because we start at six. My feet have been hurting a lot — we stand all day! But I've been learning so much: fresh ingredients, new recipes, even how to talk to angry customers. My mum has been telling everyone about me. Next year I want to open my own café.\"",
+     "1-tinglash: umumiy savol — Laura qayerda ishlaydi? 2-tinglash: topshiriqlar."
+    ],
+    "tasks": [
+     {
+      "title": "Gapni to'ldiring",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Laura has been working at Fifteen for ___.",
+       "Before that she was unemployed for ___.",
+       "She has been getting up at ___.",
+       "Her ___ have been hurting.",
+       "Next year she wants to open her own ___."
+      ],
+      "answers": [
+       "six months",
+       "a year",
+       "five",
+       "feet",
+       "café"
+      ]
+     },
+     {
+      "title": "To'g'ri / noto'g'ri",
+      "type": "tf",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Laura starts work at six.",
+       "She has not learned much.",
+       "Her mum is proud of her."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 6,
+   "title": "Present Perfect vs Present Perfect Continuous",
+   "grammar_topic": "PRESENT PERFECT vs PRESENT PERFECT CONTINUOUS (natija — jarayon)",
+   "vocab_topic": "Clothes (kiyimlar)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 1 — 1–6-darslar (Present Perfect oilasi, since/for, yet/still/already/just; narrative verbs, birth, marriage, death, body, clothes)",
+   "book_ref": "Student's book IELTS 2.0: Lesson 6 – PP vs PPC (jadval, B/C mashqlar, 40 gap); CLOTHES (26); Reading Topic 11–20.",
+   "objectives": [
+    "Present Perfect (natija, how many, tugagan) va PP Continuous (jarayon, how long, davom) farqini ajratish.",
+    "Bir vaziyat uchun ikkala zamonni to'g'ri tanlash (kitob B/C mashqlari).",
+    "Kiyim CORE 20 so'zlari bilan \"I've been wearing / I've bought\" gaplar.",
+    "Reading: Topic 20 — rasmiy xatda tajriba (I have spent / worked / completed).",
+    "Progress test 1 ga tayyorgarlik: 1–6-dars formulalari va lug'ati."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Clothes (kiyimlar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz ikki rasm: toza vanna (\"You've cleaned the bathroom!\") va tuproq qo'l (\"I've been gardening\"). Savol: qaysi birida NATIJA, qaysi birida JARAYON?"
+    ],
+    [
+     8,
+     "Kahoot — Present Perfect Continuous",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Present Perfect Continuous lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 3 juft: natija — jarayon/davomiylik; how many — how long; tugagan ish — davom etishi mumkin bo'lgan ish. Har juftni yonma-yon doskaga, o'quvchi o'zi juft tuzadi."
+    ],
+    [
+     12,
+     "Clothes (kiyimlar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "PRESENT PERFECT — NATIJA: \"You've cleaned the bathroom! It looks lovely!\" (toza — natija ko'rinadi).",
+     "PRESENT PERFECT CONTINUOUS — JARAYON va DAVOMIYLIK: \"I've been gardening. It's so nice out there.\"",
+     "\"How many?\" → Present Perfect (\"She's read ten books this summer\"); \"How long?\" → PPC (\"She's been reading that book all day\").",
+     "Tugagan ish → PP (\"I've written you an email\"); davom etishi mumkin → PPC (\"I've been writing emails\").",
+     "Holat fe'llari (know, have, be, like) — faqat PP."
+    ],
+    "formulas": [
+     [
+      "Natija",
+      "S + have/has + V3",
+      "You've cleaned the bathroom! It looks lovely!",
+      "Vannani tozalab qo'yibsiz! Juda chiroyli ko'rinyapti."
+     ],
+     [
+      "Jarayon",
+      "S + have/has + been + V-ing",
+      "I've been gardening. It's so nice out there.",
+      "Men bog'da ishlab keldim. Tashqarisi juda yaxshi."
+     ],
+     [
+      "How many",
+      "PP + son",
+      "She's read ten books this summer.",
+      "U bu yozda o'nta kitob o'qidi."
+     ],
+     [
+      "How long",
+      "PPC + for/since/all day",
+      "She's been reading that book all day.",
+      "U kuni bo'yi shu kitobni o'qiyapti."
+     ],
+     [
+      "Tugagan",
+      "PP",
+      "I've written you an email.",
+      "Men senga email yozdim."
+     ],
+     [
+      "Davom etadi",
+      "PPC",
+      "I've been writing emails (still not finished).",
+      "Men emaillar yozyapman (hali tugamagan)."
+     ]
+    ],
+    "presentation": [
+     [
+      "What have you been doing? Your hands are dirty.",
+      "I've been fixing my bike."
+     ],
+     [
+      "Have you fixed it?",
+      "Yes, I've fixed it. It works now."
+     ],
+     [
+      "How many shirts have you bought this year?",
+      "I've bought five shirts."
+     ],
+     [
+      "How long have you been wearing that jacket?",
+      "I've been wearing it since winter."
+     ],
+     [
+      "Why are you so tired?",
+      "I've been shopping all day."
+     ],
+     [
+      "Have you found a dress for the wedding?",
+      "Yes, I've found a beautiful one."
+     ],
+     [
+      "Has she finished sewing the skirt?",
+      "No, she's been sewing it for a week."
+     ],
+     [
+      "How many times have you washed these jeans?",
+      "I've washed them twice."
+     ],
+     [
+      "Have you been waiting long?",
+      "I've been waiting for twenty minutes."
+     ],
+     [
+      "Have you ever worn a suit?",
+      "Yes, I've worn a suit three times."
+     ]
+    ],
+    "notes": [
+     "Natija/son → PP; davomiylik/\"all day\"/\"how long\" → PPC.",
+     "live / work / study / teach — ikkalasi ham bo'ladi: \"I've lived here for 5 years\" = \"I've been living here for 5 years\".",
+     "PPC ba'zan norozilik: \"Who's been eating my chocolate?!\"",
+     "Progress test 1: 20 ta formula (1–6-dars) + 40 so'z (har darsdan CORE) + 10 gap tarjima."
+    ],
+    "mistakes": [
+     [
+      "I've been finishing my work.",
+      "I've finished my work.",
+      "Tugagan ish → PP."
+     ],
+     [
+      "She's read for two hours.",
+      "She's been reading for two hours.",
+      "Davomiylik → PPC."
+     ],
+     [
+      "How many pages have you been writing?",
+      "How many pages have you written?",
+      "Son → PP."
+     ],
+     [
+      "I've been having this coat for years.",
+      "I've had this coat for years.",
+      "have = ega bo'lmoq, holat fe'li."
+     ],
+     [
+      "Who has eaten my chocolate? (yarmi qolgan)",
+      "Who's been eating my chocolate?",
+      "Tugamagan jarayon → PPC."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning CLOTHES ro'yxati (1–20); STRONG — qolgan kitob so'zlari + aksessuarlar; SUPER — fe'llar va material/uslub.",
+     "Har so'zga: \"I've been wearing … since …\" yoki \"I've bought …\" — o'quvchi zamonni o'zi tanlab aytadi."
+    ],
+    "core": [
+     [
+      "shirt",
+      "ko'ylak (erkaklar)",
+      "I've ironed three shirts.",
+      "Men uchta ko'ylakni dazmolladim.",
+      "ʃərt"
+     ],
+     [
+      "T-shirt",
+      "futbolka",
+      "He's been wearing the same T-shirt all week.",
+      "U bir hafta bitta futbolkani kiyib yuribdi.",
+      "ˈtiˌsərt"
+     ],
+     [
+      "blouse",
+      "bluzka",
+      "She's bought a silk blouse.",
+      "U ipak bluzka sotib oldi.",
+      "blaʊs"
+     ],
+     [
+      "sweater",
+      "sviter",
+      "I've been looking for my sweater for an hour.",
+      "Bir soatdan beri sviterimni qidiryapman.",
+      "sˈwɛtər"
+     ],
+     [
+      "jacket",
+      "kurtka, pidjak",
+      "Where's my jacket? I've lost it.",
+      "Kurtkam qani? Yo'qotib qo'ydim.",
+      "ˈʤækɪt"
+     ],
+     [
+      "coat",
+      "palto",
+      "She's been wearing her new coat since Monday.",
+      "U dushanbadan beri yangi paltosini kiyib yuribdi.",
+      "koʊt"
+     ],
+     [
+      "dress",
+      "ko'ylak (ayollar)",
+      "Have you chosen a dress for the party?",
+      "Bazm uchun ko'ylak tanladingmi?",
+      "drɛs"
+     ],
+     [
+      "skirt",
+      "yubka",
+      "Mum has sewn a skirt for me.",
+      "Oyim menga yubka tikdi.",
+      "skərt"
+     ],
+     [
+      "trousers / pants",
+      "shim",
+      "These trousers are too long.",
+      "Bu shim juda uzun.",
+      "ˈtraʊzərz  pænts"
+     ],
+     [
+      "jeans",
+      "jinsi shim",
+      "I've washed my jeans twice this week.",
+      "Bu hafta jinsimni ikki marta yuvdim.",
+      "ʤinz"
+     ],
+     [
+      "shorts",
+      "shortik",
+      "He's been wearing shorts all summer.",
+      "U yoz bo'yi shortik kiyib yurdi.",
+      "ʃɔrts"
+     ],
+     [
+      "suit",
+      "kostyum",
+      "Dad has worn this suit to five weddings.",
+      "Dadam bu kostyumni beshta to'yga kiygan.",
+      "sut"
+     ],
+     [
+      "tie",
+      "galstuk",
+      "I've never worn a tie.",
+      "Men hech qachon galstuk taqmaganman.",
+      "taɪ"
+     ],
+     [
+      "scarf",
+      "sharf, ro'mol",
+      "She's knitted a scarf for winter.",
+      "U qishga sharf to'qidi.",
+      "skɑrf"
+     ],
+     [
+      "hat",
+      "shlyapa, bosh kiyim",
+      "He's been wearing a hat because of the sun.",
+      "Quyosh tufayli u shlyapa kiyib yuribdi.",
+      "hæt"
+     ],
+     [
+      "cap",
+      "kepka",
+      "My brother has lost his cap again.",
+      "Ukam yana kepkasini yo'qotdi.",
+      "kæp"
+     ],
+     [
+      "gloves",
+      "qo'lqoplar",
+      "I've been looking for my gloves — my hands are cold.",
+      "Qo'lqoplarimni qidiryapman — qo'llarim sovuq.",
+      "gləvz"
+     ],
+     [
+      "socks",
+      "paypoqlar",
+      "I've bought six pairs of socks.",
+      "Men olti juft paypoq oldim.",
+      "sɑks"
+     ],
+     [
+      "shoes",
+      "tufli, poyabzal",
+      "These shoes have hurt my feet all day.",
+      "Bu tufli kun bo'yi oyog'imni og'ritdi.",
+      "ʃuz"
+     ],
+     [
+      "sneakers / trainers",
+      "krossovka",
+      "He's been running in old sneakers.",
+      "U eski krossovkada yugurib yuribdi.",
+      "sˈnikərz  ˈtreɪnərz"
+     ]
+    ],
+    "strong": [
+     [
+      "boots",
+      "etik",
+      "I've cleaned my boots for the trip.",
+      "Sayohat uchun etigimni tozaladim.",
+      "buts"
+     ],
+     [
+      "sandals",
+      "sandal, shippak",
+      "She's been wearing sandals since May.",
+      "U maydan beri sandal kiyib yuribdi.",
+      "ˈsændəlz"
+     ],
+     [
+      "belt",
+      "kamar",
+      "I've lost weight — I need a new belt.",
+      "Ozdim — yangi kamar kerak.",
+      "bɛlt"
+     ],
+     [
+      "wallet",
+      "hamyon (erkaklar)",
+      "Someone has stolen my wallet.",
+      "Kimdir hamyonimni o'g'irladi.",
+      "ˈwɔlət"
+     ],
+     [
+      "handbag / purse",
+      "ayollar sumkasi",
+      "She's bought a leather handbag.",
+      "U charm sumka sotib oldi.",
+      "ˈhændˌbæg  pərs"
+     ],
+     [
+      "watch",
+      "qo'l soati",
+      "I've been wearing this watch for ten years.",
+      "Men bu soatni o'n yildan beri taqib yuraman.",
+      "wɔʧ"
+     ],
+     [
+      "uniform",
+      "forma",
+      "The students have worn uniforms since September.",
+      "O'quvchilar sentyabrdan beri forma kiyishadi.",
+      "ˈjunəˌfɔrm"
+     ],
+     [
+      "pyjamas",
+      "pijama",
+      "He's been in his pyjamas all day.",
+      "U kun bo'yi pijamada.",
+      ""
+     ],
+     [
+      "underwear",
+      "ichki kiyim",
+      "Pack enough underwear for the trip.",
+      "Sayohatga yetarli ichki kiyim ol.",
+      "ˈəndərˌwɛr"
+     ],
+     [
+      "raincoat",
+      "plash",
+      "It's been raining, so I've worn my raincoat.",
+      "Yomg'ir yog'yapti, shuning uchun plash kiydim.",
+      "ˈreɪnˌkoʊt"
+     ],
+     [
+      "hoodie",
+      "kapyushonli kofta",
+      "Teenagers have been wearing hoodies for years.",
+      "O'smirlar yillardan beri kapyushonli kofta kiyishadi.",
+      ""
+     ],
+     [
+      "cardigan",
+      "tugmali jun kofta",
+      "Grandma has knitted a cardigan.",
+      "Buvim jun kofta to'qidi.",
+      "ˈkɑrdɪgən"
+     ],
+     [
+      "tights",
+      "kolgotka",
+      "She's torn her tights.",
+      "U kolgotkasini yirtib oldi.",
+      "taɪts"
+     ],
+     [
+      "slippers",
+      "uy shippagi",
+      "I've been wearing slippers all evening.",
+      "Kechqurun bo'yi shippak kiyib o'tirdim.",
+      "sˈlɪpərz"
+     ],
+     [
+      "high heels",
+      "baland poshnali tufli",
+      "She's been standing in high heels for hours.",
+      "U soatlab baland poshnada turdi.",
+      "haɪ hilz"
+     ],
+     [
+      "sunglasses",
+      "quyosh ko'zoynagi",
+      "Have you seen my sunglasses?",
+      "Quyosh ko'zoynagimni ko'rdingmi?",
+      "ˈsənˌglæsɪz"
+     ],
+     [
+      "earrings",
+      "sirg'alar",
+      "She's lost one earring.",
+      "U bitta sirg'asini yo'qotdi.",
+      "ˈɪrɪŋz"
+     ],
+     [
+      "necklace",
+      "marjon, zanjir",
+      "He's given her a gold necklace.",
+      "U unga tilla zanjir sovg'a qildi.",
+      "ˈnɛkləs"
+     ],
+     [
+      "bracelet",
+      "bilaguzuk",
+      "I've been wearing this bracelet since my birthday.",
+      "Tug'ilgan kunimdan beri bu bilaguzukni taqib yuraman.",
+      "ˈbreɪslət"
+     ],
+     [
+      "umbrella",
+      "soyabon",
+      "I've left my umbrella on the bus.",
+      "Soyabonimni avtobusda qoldirdim.",
+      "ˈəmˌbrɛlə"
+     ]
+    ],
+    "super": [
+     [
+      "backpack",
+      "ryukzak",
+      "He's been carrying a heavy backpack all day.",
+      "U kun bo'yi og'ir ryukzak ko'tarib yurdi.",
+      "ˈbækˌpæk"
+     ],
+     [
+      "zip",
+      "zamok (chok)",
+      "The zip has broken.",
+      "Zamok buzilib qoldi.",
+      "zɪp"
+     ],
+     [
+      "button",
+      "tugma",
+      "I've sewn on a button.",
+      "Men tugma qadadim.",
+      "ˈbətən"
+     ],
+     [
+      "pocket",
+      "cho'ntak",
+      "I've been looking in every pocket for my keys.",
+      "Kalitlarimni har bir cho'ntakdan qidirdim.",
+      "ˈpɑkət"
+     ],
+     [
+      "sleeve",
+      "yeng",
+      "These sleeves are too short.",
+      "Bu yenglar juda kalta.",
+      "sliv"
+     ],
+     [
+      "collar",
+      "yoqa",
+      "He's been wearing a shirt with a white collar.",
+      "U oq yoqali ko'ylak kiyib yuribdi.",
+      "ˈkɑlər"
+     ],
+     [
+      "size",
+      "o'lcham",
+      "Have you got this in a bigger size?",
+      "Buning kattaroq o'lchami bormi?",
+      "saɪz"
+     ],
+     [
+      "fit (v)",
+      "mos kelmoq (o'lcham)",
+      "This coat doesn't fit me any more.",
+      "Bu palto endi menga to'g'ri kelmaydi.",
+      "fɪt (vi)"
+     ],
+     [
+      "try on",
+      "kiyib ko'rmoq",
+      "I've tried on five dresses.",
+      "Men beshta ko'ylakni kiyib ko'rdim.",
+      "traɪ ɔn"
+     ],
+     [
+      "put on",
+      "kiymoq (harakat)",
+      "Put on your coat — it's cold.",
+      "Paltongni kiy — sovuq.",
+      "pʊt ɔn"
+     ],
+     [
+      "take off",
+      "yechmoq",
+      "He's taken off his shoes.",
+      "U tuflisini yechdi.",
+      "teɪk ɔf"
+     ],
+     [
+      "get dressed",
+      "kiyinmoq",
+      "I've been getting dressed for half an hour.",
+      "Yarim soatdan beri kiyinyapman.",
+      "gɪt drɛst"
+     ],
+     [
+      "wear",
+      "kiyib yurmoq",
+      "She's worn that ring for years.",
+      "U o'sha uzukni yillardan beri taqib yuradi.",
+      "wɛr"
+     ],
+     [
+      "match (v) / go with",
+      "mos tushmoq (rang)",
+      "This tie goes with your shirt.",
+      "Bu galstuk ko'ylagingga mos.",
+      "mæʧ (vi)  goʊ wɪθ"
+     ],
+     [
+      "fashionable",
+      "modaga mos",
+      "Wide trousers have been fashionable this year.",
+      "Keng shim bu yil modada.",
+      "ˈfæʃənəbəl"
+     ],
+     [
+      "smart",
+      "orasta, rasmiy-chiroyli",
+      "You look smart in that suit.",
+      "Bu kostyumda orasta ko'rinasan.",
+      "smɑrt"
+     ],
+     [
+      "second-hand",
+      "ishlatilgan",
+      "I've bought a second-hand jacket.",
+      "Men ishlatilgan kurtka oldim.",
+      ""
+     ],
+     [
+      "cotton",
+      "paxta (mato)",
+      "I prefer cotton T-shirts.",
+      "Men paxta futbolkalarni yoqtiraman.",
+      "ˈkɔtən"
+     ],
+     [
+      "leather",
+      "charm",
+      "He's been wearing a leather jacket since autumn.",
+      "U kuzdan beri charm kurtka kiyib yuribdi.",
+      "ˈlɛðər"
+     ],
+     [
+      "wool",
+      "jun",
+      "This sweater is made of wool.",
+      "Bu sviter jundan qilingan.",
+      "wʊl"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "PP yoki PPC — tanlang",
+     "type": "choose",
+     "instr": "To'g'ri variantni tanlang (kitob B)",
+     "items": [
+      "I've bought / have been buying a new pair of shoes.",
+      "Have you finished / been finishing reading that book yet?",
+      "They've eaten / have been eating fruit all afternoon.",
+      "I've read / have been reading this book now, so you can have it back.",
+      "I've written / have been writing eight pages already.",
+      "Your exam paper is blank! What have you been doing / done?",
+      "No wonder your eyes hurt. You've been playing / have played computer games since breakfast.",
+      "I haven't seen / haven't been seeing you for ages.",
+      "They have danced / have been dancing for an hour.",
+      "I've finished / have been finishing my work."
+     ],
+     "answers": [
+      "have bought",
+      "Have you finished",
+      "have been eating",
+      "have read",
+      "have written",
+      "have you been doing",
+      "have been playing",
+      "haven't seen",
+      "have been dancing",
+      "have finished"
+     ]
+    },
+    {
+     "title": "Fe'lni to'g'ri shaklda",
+     "type": "gap",
+     "instr": "PP yoki PPC (kitob C)",
+     "items": [
+      "I'm tired. We ___ (walk) for over an hour.",
+      "The zoo isn't far. I ___ (walk) there many times.",
+      "She is 80 and she ___ (never / read) a book in her life.",
+      "The secretary is very tired. She ___ (type) all morning.",
+      "Tom started two hours ago and he is on page 53. He ___ (read) for two hours.",
+      "The telephone ___ (ring) four times in the last hour.",
+      "The telephone ___ (ring) for almost a minute. Why doesn't someone answer it?",
+      "My grandfather died 30 years ago. I ___ (never / meet) him."
+     ],
+     "answers": [
+      "have been walking",
+      "have walked",
+      "has never read",
+      "has been typing",
+      "has been reading",
+      "has rung",
+      "has been ringing",
+      "have never met"
+     ]
+    },
+    {
+     "title": "How many / How long",
+     "type": "question",
+     "instr": "Har vaziyatga ikki savol: \"How many…?\" (PP) va \"How long…?\" (PPC)",
+     "items": [
+      "shirts / iron",
+      "pages / write",
+      "shops / visit",
+      "dresses / try on"
+     ],
+     "answers": [
+      "How many shirts have you ironed? / How long have you been ironing?",
+      "How many pages have you written? / How long have you been writing?",
+      "How many shops have you visited? / How long have you been shopping?",
+      "How many dresses have you tried on? / How long have you been trying on dresses?"
+     ]
+    },
+    {
+     "title": "Kiyim: nima kiyganman?",
+     "type": "speaking",
+     "instr": "Juftlikda: \"What have you been wearing this week?\" — 5 kiyim, PPC bilan; keyin \"How many … have you bought this year?\"",
+     "items": [
+      "Monday",
+      "cold day",
+      "sport",
+      "wedding",
+      "this year"
+     ],
+     "answers": [
+      "I've been wearing jeans and a hoodie.",
+      "I've been wearing my coat and gloves.",
+      "I've been wearing sneakers and shorts.",
+      "I've worn a suit / a dress.",
+      "I've bought three T-shirts this year."
+     ],
+     "note": "Ustoz zamon tanlovini kuzatadi: davom → PPC, son → PP."
+    },
+    {
+     "title": "Do'konda",
+     "type": "dialog",
+     "instr": "Rollarda: xaridor va sotuvchi (try on, size, fit, go with, take off)",
+     "items": [
+      "customer 1",
+      "shop assistant 1",
+      "customer 2",
+      "shop assistant 2",
+      "customer 3"
+     ],
+     "answers": [
+      "Can I try on this jacket, please?",
+      "Of course. What size are you?",
+      "Medium. Hmm, it doesn't fit — have you got a bigger size?",
+      "Yes, here you are. This scarf goes with it very well.",
+      "I've been looking for a scarf too. I'll take both."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I've been buying five shirts.",
+      "She's worn that coat since three years.",
+      "I've been knowing him for ages.",
+      "We've been finish the test.",
+      "He's been having this watch for years."
+     ],
+     "answers": [
+      "I've bought five shirts.",
+      "She's worn that coat for three years.",
+      "I've known him for ages.",
+      "We've finished the test.",
+      "He's had this watch for years."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 6: B, C va 40 gap (PP/PPC) — daftarga",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Progress test 1 ga tayyorgarlik",
+     "type": "review",
+     "instr": "1–6-dars formulalari (20 ta) va har darsdan CORE 20 — takror; Kahoot 1–6 (jonyos.uz)",
+     "answers": "Testda 20 formula + 40 so'z + 10 tarjima."
+    },
+    {
+     "title": "Reading Topic 12–19",
+     "type": "read",
+     "instr": "Hafta davomida; Topic 12 (Study skills tips) dan 5 maslahatni o'z so'zingiz bilan yozing",
+     "answers": "Erkin; ustoz tekshiradi."
+    },
+    {
+     "title": "Mening kiyimlarim",
+     "type": "write",
+     "instr": "8 gap: 4 ta PP (\"I've bought / worn …\"), 4 ta PPC (\"I've been wearing … since …\")",
+     "answers": "Erkin; zamon tanlovi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men bu paltoni ikki yildan beri kiyib yuraman.",
+      "U beshta ko'ylak sotib oldi.",
+      "Sen qanchadan beri kutyapsan?",
+      "Biz uyni tozalab bo'ldik — u yaltirab turibdi.",
+      "Kim mening shokoladimni yeb yuribdi?!"
+     ],
+     "answers": [
+      "I've been wearing this coat for two years.",
+      "She/He has bought five shirts.",
+      "How long have you been waiting?",
+      "We've cleaned the house — it's shining.",
+      "Who's been eating my chocolate?!"
+     ]
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CLOTHES CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Body",
+     "40 so'z (kitob), 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "2 daqiqada 1 / 2 marta; 1.5 daqiqada 2 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Clothes og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 20. Three experiences I have had",
+    "text": [
+     "Dear Sir / Madam, I would like to apply for the job of tour leader for your Overland Africa tours. I have had lots of useful experience for this role.",
+     "I have spent five months backpacking around Africa. In 2018, I visited Ethiopia, Kenya and Tanzania. I used local transport and organised my own accommodation, food and visas. I enjoyed meeting local people, learning about local traditions and visiting natural parks. This trip taught me to be independent and to organise travel arrangements.",
+     "I have also worked as a leader at a children's summer camp in the south of England. I worked there in 2017. I led activities for children aged 9–12, including football, climbing and campfire songs. For this work, I received training in climbing instruction and first aid. I learned how to be helpful and positive, and how to help people make friends.",
+     "Finally, I have completed the Active Youth Challenge. I did this while I was at high school in 2016. I volunteered at a social club for the elderly, learned car mechanics by myself, and organised a four-day camping and hiking trip in the Scottish mountains. This experience taught me about camping equipment and how to deal with problems like bad weather and getting lost.",
+     "I believe I have lots of useful experience to work as an Overland Tour Guide. I would love the opportunity to tell you more about my skills at an interview. Yours faithfully, Nicholas Rigby"
+    ],
+    "glossary": [
+     "apply for — ariza bermoq",
+     "backpacking — ryukzak bilan sayohat",
+     "accommodation — turar joy",
+     "independent — mustaqil",
+     "first aid — birinchi tibbiy yordam",
+     "volunteer — ko'ngilli bo'lmoq",
+     "the elderly — keksalar",
+     "equipment — jihoz",
+     "deal with — bilan kurashmoq",
+     "opportunity — imkoniyat"
+    ],
+    "tasks": [
+     {
+      "title": "Zamonni toping",
+      "type": "find",
+      "instr": "Har tajriba ikki gap bilan berilgan: PP (umumiy) + Past Simple (tafsilot). Uchta juftni yozing",
+      "items": [
+       "Africa",
+       "camp",
+       "challenge"
+      ],
+      "answers": [
+       "I have spent five months backpacking… / In 2018, I visited Ethiopia…",
+       "I have also worked as a leader… / I worked there in 2017.",
+       "I have completed the Active Youth Challenge. / I did this … in 2016."
+      ]
+     },
+     {
+      "title": "Savollar",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "What job is Nicholas applying for?",
+       "Which countries did he visit in 2018?",
+       "What training did he receive at the camp?",
+       "Name two things he learned from the Scottish trip."
+      ],
+      "answers": [
+       "Tour leader (Overland Africa tours).",
+       "Ethiopia, Kenya and Tanzania.",
+       "Climbing instruction and first aid.",
+       "Camping equipment; dealing with bad weather / getting lost."
+      ]
+     },
+     {
+      "title": "Rasmiy xat qolipi",
+      "type": "find",
+      "instr": "Xatdagi 4 rasmiy iborani toping",
+      "items": [
+       "opening",
+       "purpose",
+       "closing",
+       "sign-off"
+      ],
+      "answers": [
+       "Dear Sir / Madam",
+       "I would like to apply for…",
+       "I would love the opportunity to…",
+       "Yours faithfully"
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 20 (sinfda); Topic 12–19 — uyga."
+   },
+   "listening": {
+    "audios": "Audio 11–20 (fayllar hali yo'q — ustoz skriptni o'qiydi)",
+    "intro": [
+     "Skript: \"Good morning, shoppers! Our winter sale has started. We've reduced the price of all coats and jackets by thirty percent. We've been selling boots for half price since Monday — only a few pairs are left! Today only: buy two sweaters and get a scarf free. Our changing rooms have been very busy, so please try on a maximum of four items. Thank you for shopping with us.\"",
+     "1-tinglash: qaysi mavsum sotuvi? 2-tinglash: raqamlar va kiyimlar."
+    ],
+    "tasks": [
+     {
+      "title": "Raqam va kiyim",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Coats and jackets are ___ percent cheaper.",
+       "Boots have been half price since ___.",
+       "Buy two ___ and get a scarf free.",
+       "You can try on a maximum of ___ items."
+      ],
+      "answers": [
+       "thirty",
+       "Monday",
+       "sweaters",
+       "four"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

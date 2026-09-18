@@ -332,8 +332,101 @@ Dinner is (22) ………… early - at 6.00 o'clock. We don't eat dinner late li
     ],
 }
 
+
+U4_IMG = "/exam-img/step1-u4/"
+PEOPLE_A_G = ["people", "man", "parents", "boy", "baby", "woman", "girl"]
+
+STEP1_UNIT4 = {
+    "level": "step1", "kind": "unit", "unit_no": 4,
+    "title": "Step 1 · Unit 4 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Not bad, thanks.", "Nice to meet you.", "It’s really nice."], "C"),
+                _c("", ["Yes, please.", "Yes, I do.", "Yes, it’s fine."], "B"),
+                _c("", ["Can I help you?", "Can I see them?", "Do you like it?"], "B"),
+                _c("", ["It’s my sister, Monica.", "Fine, thank you.", "My name’s Sophia."], "A"),
+                _c("", ["See you later!", "What’s your name?", "They’re lovely!"], "C"),
+                _c("", ["Yes, I do.", "I like it too.", "I’m good."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · People",
+            "instructions": "Read the sentences about people. What are the "
+                            "missing words? The first letter is already "
+                            "there. Write the whole word.",
+            "questions": [
+                _t("Where do you l _ _ _ , in a flat or in a house?", "live", "ive"),
+                _t("My daughters s _ _ _ _ Maths at school.", "study", "tudy"),
+                _t("Where do you w _ _ _ – in an office or in a supermarket?",
+                   "work", "ork"),
+                _t("Every day, the friends g _ to work by bus at 8.00 in the "
+                   "morning.", "go", "o"),
+                _t("The boys usually p _ _ _ football with their friends on "
+                   "Saturday afternoons.", "play", "lay"),
+                _t("My parents are from Spain - they s _ _ _ _ Spanish, and "
+                   "Italian too.", "speak", "peak"),
+            ],
+        },
+        {
+            "title": "Part 3 · People",
+            "instructions": "Choose the word to match the picture.",
+            "questions": [
+                _c("", PEOPLE_A_G, "F", image=U4_IMG + "q13.jpg"),
+                _c("", PEOPLE_A_G, "G", image=U4_IMG + "q14.jpg"),
+                _c("", PEOPLE_A_G, "B", image=U4_IMG + "q15.jpg"),
+                _c("", PEOPLE_A_G, "A", image=U4_IMG + "q16.jpg"),
+                _c("", PEOPLE_A_G, "D", image=U4_IMG + "q17.jpg"),
+                _c("", PEOPLE_A_G, "E", image=U4_IMG + "q18.jpg"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about a woman and her sister. "
+                            "Choose the best answer (A, B or C) for each "
+                            "space.",
+            "passage": """My sister, Yoko
+
+This is a photo of my sister, Yoko, and me. Yoko and I are Japanese. I live in Japan, but she lives in Paris, France. Yoko (19) ………… a lovely family. She is married to Pierre, from France. He speaks French and Japanese.
+They have two children: their son Pascal is 10 and their daughter Hana is 8. They speak two languages, too. What time (20) ………… go to school? School is at 9.00 every morning. In the afternoons, Pascal plays the guitar and Hana plays football.
+Yoko (21) ………… to work five days a week. Where (22) ………… Yoko and Pierre work? Yoko works in a big hotel in the city centre and Pierre (23) ………… maths at the university near their house. What (24) ………… like to do at the weekend? They like to meet friends and go to the cinema. When they are in Japan, I love to see them! And I love this photo, too.""",
+            "questions": [
+                _c("", ["has", "to have", "have"], "A"),
+                _c("", ["they", "do they", "they do"], "B"),
+                _c("", ["goes", "go", "going"], "A"),
+                _c("", ["does", "do", "do they"], "B"),
+                _c("", ["teach", "to teach", "teaches"], "C"),
+                _c("", ["do they", "they do", "they"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about people. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("Where ............ work?", ["are you", "you do", "do you"], "C"),
+                _c("What time ............ lunch every day?",
+                   ["do you have", "you have", "you do have"], "A"),
+                _c("When ............ at home?", ["they are", "are they", "do they"], "B"),
+                _c("Tom’s flat is big – it ............ ten rooms.",
+                   ["have", "having", "has"], "C"),
+                _c("Franco ............ his friends at the cinema every Saturday.",
+                   ["meet", "meets", "do meet"], "B"),
+                _c("My daughter ............ French with her Canadian husband.",
+                   ["speaks", "speak", "to speak"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
     ("exam_tpl_step1_unit3", STEP1_UNIT3),
+    ("exam_tpl_step1_unit4", STEP1_UNIT4),
 ]

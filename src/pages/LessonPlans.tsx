@@ -249,16 +249,16 @@ function LessonView({ course, no }: { course: string; no: number }) {
       {tab === "plan" && <PlanTab L={L} />}
       {tab === "grammar" && <GrammarTab L={L} />}
       {tab === "vocab" && <VocabTab L={L} course={course} />}
-      {tab === "class" && <ExList list={L.class_ex} />}
+      {tab === "class" && <ExList list={L.class_ex ?? []} />}
       {tab === "reading" && <ReadingTab L={L} />}
       {tab === "listening" && <ListeningTab L={L} />}
       {tab === "home" && (
         <>
-          {L.homework_intro.map((t, i) => <p key={i} className="text-sm text-slate-700 mb-3">{t}</p>)}
-          <ExList list={L.homework} />
-          <Section title="Normativ va coin">
+          {(L.homework_intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-3">{t}</p>)}
+          <ExList list={L.homework ?? []} />
+          {(L.normativ ?? []).length > 0 && <Section title="Normativ va coin">
             <Table head={["Normativ", "Shart", "Mukofot"]} rows={L.normativ} />
-          </Section>
+          </Section>}
         </>
       )}
     </div>
@@ -295,24 +295,27 @@ function PlanTab({ L }: { L: Lesson }) {
   return (
     <>
       {L.book_ref && <p className="text-xs text-slate-500 mb-3">{L.book_ref}</p>}
-      <Section title="Dars maqsadlari"><Bullets items={L.objectives} /></Section>
-      <Section title="Kerakli materiallar"><Bullets items={L.materials} /></Section>
+      <Section title="Dars maqsadlari"><Bullets items={L.objectives ?? []} /></Section>
+      <Section title="Kerakli materiallar"><Bullets items={L.materials ?? []} /></Section>
       <Section title={`Vaqt jadvali (${L.duration} daqiqa)`}>
-        <Table head={["Daq.", "Bosqich", "Nima qilinadi"]} rows={L.timeline} />
+        <Table head={["Daq.", "Bosqich", "Nima qilinadi"]} rows={L.timeline ?? []} />
       </Section>
     </>
   );
 }
 
 function GrammarTab({ L }: { L: Lesson }) {
-  const G = L.grammar;
+  // 1-dars (mindset) kabi darslarda formulalar/xatolar bo'lmasligi mumkin
+  const G = L.grammar ?? ({} as Lesson["grammar"]);
+  const intro = G.intro ?? [], formulas = G.formulas ?? [], pres = G.presentation ?? [], notes = G.notes ?? [], mistakes = G.mistakes ?? [];
   return (
     <>
-      <Section title="Tushuntirish"><Bullets items={G.intro} /></Section>
-      <Section title="Formulalar"><Table head={["Mavzu", "Formula", "Misol", "Tarjima"]} rows={G.formulas} /></Section>
-      <Section title="Ustoz–o'quvchi savol-javob"><Table head={["Ustoz", "O'quvchi"]} rows={G.presentation} /></Section>
-      {G.notes?.length > 0 && <Section title="Ustoz uchun eslatma"><Bullets items={G.notes} /></Section>}
-      <Section title="Tipik xatolar"><Table head={["Xato", "To'g'ri", "Nega"]} rows={G.mistakes} /></Section>
+      {intro.length > 0 && <Section title="Tushuntirish"><Bullets items={intro} /></Section>}
+      {formulas.length > 0 && <Section title="Formulalar"><Table head={["Mavzu", "Formula", "Misol", "Tarjima"]} rows={formulas} /></Section>}
+      {pres.length > 0 && <Section title="Ustoz–o'quvchi savol-javob"><Table head={["Ustoz", "O'quvchi"]} rows={pres} /></Section>}
+      {notes.length > 0 && <Section title="Ustoz uchun eslatma"><Bullets items={notes} /></Section>}
+      {mistakes.length > 0 && <Section title="Tipik xatolar"><Table head={["Xato", "To'g'ri", "Nega"]} rows={mistakes} /></Section>}
+      {!intro.length && !formulas.length && !pres.length && <p className="text-sm text-slate-500">Bu darsda grammatika bo'limi yo'q.</p>}
     </>
   );
 }
@@ -341,6 +344,7 @@ function VocabTab({ L, course }: { L: Lesson; course: string }) {
     catch (e) { setDlErr((e as Error).message); }
     finally { setDl(null); }
   }
+  if (!V) return <p className="text-sm text-slate-500">Bu darsda lug'at yo'q.</p>;
   const tiers: { key: "core" | "strong" | "super"; label: string; cls: string }[] = [
     { key: "core", label: "CORE 20 — hamma uchun", cls: "text-emerald-700" },
     { key: "strong", label: "STRONG +20 — kuchli o'quvchi (jami 40)", cls: "text-sky-700" },

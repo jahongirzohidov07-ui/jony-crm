@@ -273,8 +273,8 @@ export default function TeacherRun() {
           {!P && <p className="text-sm text-slate-500">Reja matni topilmadi.</p>}
           {P && tab === "grammar" && (
             <div className={`space-y-4 ${big}`}>
-              <Card title="Tushuntirish"><ul className="list-disc pl-5 space-y-1">{P.grammar.intro.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>
-              <Card title="Formulalar">
+              {(P.grammar?.intro ?? []).length > 0 && <Card title="Tushuntirish"><ul className="list-disc pl-5 space-y-1">{P.grammar.intro.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>}
+              {(P.grammar?.formulas ?? []).length > 0 && <Card title="Formulalar">
                 <table className="w-full border-collapse"><tbody>
                   {P.grammar.formulas.map((f, i) => (
                     <tr key={i} className={i % 2 ? "bg-slate-50" : ""}>
@@ -285,20 +285,21 @@ export default function TeacherRun() {
                     </tr>
                   ))}
                 </tbody></table>
-              </Card>
-              {!proj && <Card title="Ustoz–o'quvchi savol-javob"><table className="w-full"><tbody>{P.grammar.presentation.map((p, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 w-1/2">{p[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{p[1]}</td></tr>)}</tbody></table></Card>}
-              <Card title="Tipik xatolar"><table className="w-full"><tbody>{P.grammar.mistakes.map((m, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 text-rose-600 line-through">{m[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{m[1]}</td>{!proj && <td className="border border-slate-200 px-2 py-1 text-slate-500">{m[2]}</td>}</tr>)}</tbody></table></Card>
-              {!proj && P.grammar.notes?.length > 0 && <Card title="Ustoz uchun eslatma (maxfiy)"><ul className="list-disc pl-5">{P.grammar.notes.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>}
+              </Card>}
+              {!proj && (P.grammar?.presentation ?? []).length > 0 && <Card title="Ustoz–o'quvchi savol-javob"><table className="w-full"><tbody>{P.grammar.presentation.map((p, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 w-1/2">{p[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{p[1]}</td></tr>)}</tbody></table></Card>}
+              {(P.grammar?.mistakes ?? []).length > 0 && <Card title="Tipik xatolar"><table className="w-full"><tbody>{P.grammar.mistakes.map((m, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 text-rose-600 line-through">{m[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{m[1]}</td>{!proj && <td className="border border-slate-200 px-2 py-1 text-slate-500">{m[2]}</td>}</tr>)}</tbody></table></Card>}
+              {!proj && (P.grammar?.notes ?? []).length > 0 && <Card title="Ustoz uchun eslatma (maxfiy)"><ul className="list-disc pl-5">{P.grammar.notes.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>}
             </div>
           )}
           {P && tab === "vocab" && (
+            !P.vocab?.core ? <p className="text-sm text-slate-500">Bu darsda lug'at yo'q.</p> :
             <Card title={`CORE 20 — ${P.vocab_topic}`}>
               <table className={`w-full ${big}`}><thead><tr className="bg-slate-50"><th className="border border-slate-200 px-2 py-1 text-left">So'z</th><th className="border border-slate-200 px-2 py-1 text-left">O'qilishi</th><th className="border border-slate-200 px-2 py-1 text-left">Tarjima</th><th className="border border-slate-200 px-2 py-1 text-left">Misol</th></tr></thead>
                 <tbody>{P.vocab.core.map((w, i) => <tr key={i} className={i % 2 ? "bg-slate-50/60" : ""}><td className="border border-slate-200 px-2 py-1 font-semibold">{w[0]}</td><td className="border border-slate-200 px-2 py-1 text-slate-500">{w[4] ? `/${w[4]}/` : ""}</td><td className="border border-slate-200 px-2 py-1">{w[1]}</td><td className="border border-slate-200 px-2 py-1">{w[2]}{!proj && w[3] ? <span className="text-slate-400"> — {w[3]}</span> : null}</td></tr>)}</tbody>
               </table>
             </Card>
           )}
-          {P && tab === "class" && <ExList list={P.class_ex} proj={proj} show={showAns} setShow={setShowAns} prefix="c" big={big} />}
+          {P && tab === "class" && <ExList list={P.class_ex ?? []} proj={proj} show={showAns} setShow={setShowAns} prefix="c" big={big} />}
           {P && tab === "reading" && (P.reading ? (
             <div className={`space-y-4 ${big}`}>
               <Card title={P.reading.title}>{P.reading.text.map((p, i) => <p key={i} className="mb-2 leading-relaxed">{p}</p>)}
@@ -312,8 +313,8 @@ export default function TeacherRun() {
             </div>) : <p className="text-sm text-slate-500">Bu darsda listening yo'q.</p>)}
           {P && tab === "home" && (
             <div className={`space-y-4 ${big}`}>
-              {P.homework_intro.map((t, i) => <p key={i} className="text-slate-700">{t}</p>)}
-              <ExList list={P.homework} proj={proj} show={showAns} setShow={setShowAns} prefix="h" big={big} />
+              {(P.homework_intro ?? []).map((t, i) => <p key={i} className="text-slate-700">{t}</p>)}
+              <ExList list={P.homework ?? []} proj={proj} show={showAns} setShow={setShowAns} prefix="h" big={big} />
             </div>
           )}
         </main>

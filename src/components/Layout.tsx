@@ -450,6 +450,9 @@ export default function Layout() {
   // Sotuv menejerining ishi sotuv — bu bo'lim unga ko'rinmaydi.
   if (can(user?.role, ACADEMIC_VIEW) && user?.role !== "sales_manager") {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
+    // DARS REJALARI + jonli o'yin (2026-09-18, Jahongir: "saytgayam
+    // qoy ... kahoot korinishidagi oyinlar ... har bir unitda").
+    items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.

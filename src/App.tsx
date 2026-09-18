@@ -49,6 +49,10 @@ const Academic = lazy(() => import("./pages/Academic"));
 const TimetableGrid = lazy(() => import("./pages/TimetableGrid"));
 const Archive = lazy(() => import("./pages/Archive"));
 const DiscountsPage = lazy(() => import("./pages/DiscountsPage"));
+// Dars rejalari + jonli o'yin (Kahoot uslubi), 2026-09-18
+const LessonPlans = lazy(() => import("./pages/LessonPlans"));
+const LiveHost = lazy(() => import("./pages/LiveHost"));
+const Play = lazy(() => import("./pages/Play"));
 const Tasks = lazy(() => import("./pages/Tasks"));
 const Inventory = lazy(() => import("./pages/Inventory"));
 const Events = lazy(() => import("./pages/Events"));
@@ -224,6 +228,10 @@ function AppRoutes() {
             ma'lumotni bir marta yuklab, Outlet orqali beradi. */}
         {/* Ochiq ariza formasi — loginsiz (2026-08-12) */}
         <Route path="/apply" element={<Apply />} />
+        {/* Jonli o'yin — o'quvchi telefondan PIN/QR bilan, LOGINSIZ (2026-09-18) */}
+        <Route path="/play" element={<Play />} />
+        {/* Jonli o'yin — ustoz/proyektor ekrani (to'liq ekran, yon menyusiz) */}
+        <Route path="/live/:id" element={<RequireStaff><LiveHost /></RequireStaff>} />
         {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
         <Route path="/r/:code" element={<Referral />} />
         <Route path="/parent/:token" element={<Parent />}>
@@ -359,6 +367,8 @@ function AppRoutes() {
           <Route path="timetable" element={<TimetableGrid />} />
           <Route path="archive" element={<Archive />} />
           <Route path="discounts" element={<DiscountsPage />} />
+          <Route path="plans" element={<LessonPlans />} />
+          <Route path="plans/:course/:no" element={<LessonPlans />} />
           <Route path="tasks" element={<Tasks />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="events" element={<Events />} />

@@ -145,6 +145,16 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_payroll_seals_period "
         "ON payroll_seals (period)",
     ]),
+    # 2026-09-18 (Jahongir: "kahoot korinishidagi oyinlar ... har bir
+    # unitda"): jonli o'yin jadvallari (live_games, live_players,
+    # live_answers). Jadvalni create_all yaratadi — bu qator shtampni
+    # ko'taradi va tez-tez so'raladigan ustunlarga indeks qo'yadi.
+    ("0016_live_games", [
+        "CREATE INDEX IF NOT EXISTS ix_live_answers_game_q "
+        "ON live_answers (game_id, q_index)",
+        "CREATE INDEX IF NOT EXISTS ix_live_answers_player_q "
+        "ON live_answers (player_id, q_index)",
+    ]),
 ]
 
 

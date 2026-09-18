@@ -4068,3 +4068,54 @@ class Comment(Base):
     author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     author_name = Column(String, nullable=True)              # o'sha paytdagi ism
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+# ---------------------------------------------------------------
+#  JONLI O'YIN — Kahoot uslubidagi viktorina (2026-09-18, Jahongir:
+#  "kahoot korinishidagi oyinlar ... har bir unitda"). Ustoz dars
+#  rejasidan o'yin ochadi, o'quvchilar PIN/QR bilan loginsiz kiradi.
+# ---------------------------------------------------------------
+class LiveGame(Base):
+    __tablename__ = "live_games"
+
+    id = Column(Integer, primary_key=True, index=True)
+    code = Column(String, nullable=False, index=True)        # 6 xonali PIN
+    course = Column(String, nullable=False)                  # ielts_1_0
+    lesson_no = Column(Integer, nullable=False)
+    mode = Column(String, default="mixed")                   # vocab|vocab40|grammar|mixed
+    title = Column(String, nullable=True)
+    questions = Column(Text, nullable=False)                 # JSON ro'yxat
+    question_seconds = Column(Integer, default=20)
+    status = Column(String, default="lobby", index=True)     # lobby|question|reveal|ended
+    q_index = Column(Integer, default=-1)
+    q_started_at = Column(DateTime, nullable=True)
+    host_user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    ended_at = Column(DateTime, nullable=True)
+
+
+class LivePlayer(Base):
+    __tablename__ = "live_players"
+
+    id = Column(Integer, primary_key=True, index=True)
+    game_id = Column(Integer, ForeignKey("live_games.id"), nullable=False, index=True)
+    nickname = Column(String, nullable=False)
+    token = Column(String, nullable=False, index=True)       # telefon sessiyasi
+    score = Column(Integer, default=0)
+    streak = Column(Integer, default=0)
+    joined_at = Column(DateTime, default=datetime.utcnow)
+
+
+class LiveAnswer(Base):
+    __tablename__ = "live_answers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    game_id = Column(Integer, ForeignKey("live_games.id"), nullable=False, index=True)
+    player_id = Column(Integer, ForeignKey("live_players.id"), nullable=False, index=True)
+    q_index = Column(Integer, nullable=False)
+    option_index = Column(Integer, nullable=False)
+    correct = Column(Integer, default=0)
+    ms = Column(Integer, default=0)                          # savol boshidan o'tgan ms
+    points = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)

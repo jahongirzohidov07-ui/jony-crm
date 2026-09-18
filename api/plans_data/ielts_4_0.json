@@ -17087,6 +17087,1945 @@
      }
     ]
    }
+  },
+  {
+   "no": 19,
+   "title": "Phrasal verbs — LOOK",
+   "grammar_topic": "PHRASAL VERBS with LOOK — look after / for / forward to / up / up to / down on / into / out / over / around / back (on) + ajraladigan va ajralmaydigan (separable / inseparable) qoidasi",
+   "vocab_topic": "Essential Words 19 — Literature, art and creativity (adabiyot, san'at va ijod)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 19 – Phrasal verbs LOOK (jadval: 11 fe'l); Essential Words 19; Audio 96–100 (ustoz skripti); Reading — Cho'lpon (Jony Academy matni).",
+   "objectives": [
+    "LOOK bilan 11 phrasal verb ma'nosi va gapda ishlatilishi.",
+    "Ajraladigan (look up, look over) va ajralmaydigan (look after, look for, look into, look forward to, look up to, look down on) farqi; olmosh o'rtada.",
+    "look forward to + V-ing / ot.",
+    "Adabiyot va san'at Essential Words 19 bilan she'riyat, ijod va Speaking \"Art\" mavzusi."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 19 — Literature, art and creativity (adabiyot, san'at va ijod) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz \"look\" ni 5 xil davom ettiradi: look after (qaramoq), look for (qidirmoq), look up (lug'atdan), look up to (hurmat), look forward to (kutmoq) — o'quvchilar har biriga o'z gapini aytadi; ma'no zarrachadan o'zgaradi."
+    ],
+    [
+     8,
+     "Kahoot — Reported speech (imperatives)",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Reported speech (imperatives) lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali (11): look after — g'amxo'rlik qilmoq; look for — qidirmoq; look forward to — intiqlik bilan kutmoq (+ V-ing); look up — lug'atdan qidirmoq (ajraladi: look the word up); look up to — hurmat qilmoq; look down on — mensimaslik; look into — tekshirmoq; look out — ehtiyot bo'lmoq; look over — ko'zdan kechirmoq; look around — aylanib ko'rmoq; look back (on) — o'tmishga nazar solmoq. Qoida: ob'ekt olmosh bo'lsa, ajraladigan fe'lda o'rtaga: look it up (look up it — xato); 3 so'zli fe'llar (look forward to, look up to, look down on) ajralmaydi."
+    ],
+    [
+     12,
+     "Essential Words 19 — Literature, art and creativity (adabiyot, san'at va ijod) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "PHRASAL VERB = fe'l + zarracha (up, after, into…); ma'no ko'pincha so'zma-so'z emas: look up to = hurmat qilmoq.",
+     "LOOK AFTER (qaramoq, g'amxo'rlik) / LOOK FOR (qidirmoq) / LOOK INTO (tekshirmoq) — ajralmaydi, ob'ekt zarrachadan keyin: \"look after her brother\", \"look into the case\".",
+     "LOOK UP (lug'atdan qidirmoq) / LOOK OVER (ko'zdan kechirmoq) — ajraladi: \"look up the word\" = \"look the word up\"; olmosh bo'lsa FAQAT o'rtada: \"look it up\".",
+     "LOOK FORWARD TO (+ V-ing / ot), LOOK UP TO (hurmat), LOOK DOWN ON (mensimaslik) — 3 so'zli, ajralmaydi: \"I look forward to seeing you.\"",
+     "LOOK OUT! (ehtiyot bo'l!), LOOK AROUND (aylanib ko'rmoq), LOOK BACK ON (o'tmishni eslamoq)."
+    ],
+    "formulas": [
+     [
+      "look after / look for",
+      "S + look after/for + OB'EKT (ajralmaydi)",
+      "She looks after her little brother. / I'm looking for my keys.",
+      "U ukasiga g'amxo'rlik qiladi. / Kalitlarimni qidiryapman."
+     ],
+     [
+      "look forward to",
+      "S + look forward to + V-ing / ot",
+      "We look forward to the holidays. / I look forward to seeing you.",
+      "Biz ta'tilni intiqlik bilan kutyapmiz. / Sizni ko'rishni intiqlik bilan kutaman."
+     ],
+     [
+      "look up (ajraladi)",
+      "S + look up + ot / look + OT/OLMOSH + up",
+      "You can look the word up in a dictionary. / Look it up.",
+      "So'zni lug'atdan qidirsang bo'ladi. / Uni qidirib ko'r."
+     ],
+     [
+      "look up to / look down on",
+      "S + look up to / down on + KIM (ajralmaydi)",
+      "I look up to my grandfather. / Don't look down on others.",
+      "Men bobomni hurmat qilaman. / Boshqalarga past nazar bilan qarama."
+     ],
+     [
+      "look into / look over",
+      "S + look into + ISH (tekshirmoq) / look over + HUJJAT (ko'zdan kechirmoq)",
+      "The police are looking into the case. / He looked over the report quickly.",
+      "Politsiya ishni tekshiryapti. / U hisobotni tezda ko'zdan kechirdi."
+     ],
+     [
+      "look out / around / back on",
+      "Look out! / look around + JOY / look back on + O'TMISH",
+      "Look out! There's a car coming! / Let's look around the museum. / She looked back on her childhood.",
+      "Ehtiyot bo'l! Mashina kelyapti! / Muzeyni aylanib chiqaylik. / U bolaligini esladi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Who looked after Cho'lpon's poems after his death?",
+      "His readers looked after them — they hid the books for fifty years."
+     ],
+     [
+      "What are you looking for in the library?",
+      "I'm looking for a collection of Cho'lpon's poetry."
+     ],
+     [
+      "Which poet do you look up to?",
+      "I look up to Cho'lpon — he wrote the truth when it was dangerous."
+     ],
+     [
+      "Are you looking forward to the poetry evening?",
+      "Yes, I'm really looking forward to hearing \"Go'zal\" read aloud."
+     ],
+     [
+      "Can you look this word up?",
+      "Sure — I'll look it up in the dictionary."
+     ],
+     [
+      "Did the government look into his writing?",
+      "Yes, they looked into every line and called it a crime."
+     ],
+     [
+      "Did anyone look down on Uzbek poetry then?",
+      "Some officials looked down on it; the readers never did."
+     ],
+     [
+      "Did you look over my essay?",
+      "I looked it over — three mistakes, all articles."
+     ],
+     [
+      "Did you look around the museum?",
+      "We looked around for an hour; his notebook is there."
+     ],
+     [
+      "How does Uzbekistan look back on 1938?",
+      "It looks back on it with grief — and with his poems."
+     ]
+    ],
+    "notes": [
+     "Olmosh + ajraladigan fe'l: look it up / look them over (look up it — xato).",
+     "look forward to + V-ing (to — predlog, infinitive emas): \"look forward to meeting\" (to meet — xato).",
+     "look for (qidirmoq) vs look after (qaramoq) vs look at (qaramoq — ko'z bilan) — zarracha ma'noni belgilaydi.",
+     "Essential Words 19: masterpiece, verse, metaphor, censorship, imagery, inspiration, manuscript, legacy, aesthetic, portray."
+    ],
+    "mistakes": [
+     [
+      "Look up it in the dictionary.",
+      "Look it up in the dictionary.",
+      "Olmosh — o'rtada."
+     ],
+     [
+      "I look forward to meet you.",
+      "I look forward to meeting you.",
+      "to + V-ing."
+     ],
+     [
+      "She looks after for her brother.",
+      "She looks after her brother.",
+      "Bitta zarracha."
+     ],
+     [
+      "He looks up his grandfather. (hurmat)",
+      "He looks up to his grandfather.",
+      "look up TO."
+     ],
+     [
+      "Police are looking the case into.",
+      "Police are looking into the case.",
+      "look into ajralmaydi."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — adabiyot va san'at asoslari (masterpiece, verse, inspiration…); STRONG — she'riyat va tanqid atamalari; SUPER — Cho'lpon, jadidlar va Task 2 birikmalari (freedom of expression, artistic legacy).",
+     "Har so'zga LOOK phrasal verb bilan gap: \"Critics looked into every metaphor.\" / \"Young poets look up to Cho'lpon.\""
+    ],
+    "core": [
+     [
+      "literature (4.0)",
+      "adabiyot",
+      "Students look into literature to understand history.",
+      "Talabalar tarixni tushunish uchun adabiyotni o'rganadi.",
+      ""
+     ],
+     [
+      "poetry / poem (4.0)",
+      "she'riyat / she'r",
+      "I'm looking for a poem to read at the evening.",
+      "Kechada o'qish uchun she'r qidiryapman.",
+      ""
+     ],
+     [
+      "masterpiece",
+      "shoh asar",
+      "Critics look back on \"Kecha va kunduz\" as his masterpiece.",
+      "Tanqidchilar \"Kecha va kunduz\"ni uning shoh asari deb eslaydi.",
+      "ˈmæstərˌpis"
+     ],
+     [
+      "verse (literature)",
+      "misra; she'riy shakl",
+      "Look up the verse — it has two meanings.",
+      "Misrani qidirib ko'r — unda ikki ma'no bor.",
+      "vərs (ˈlɪtərəʧər)"
+     ],
+     [
+      "metaphor (literature)",
+      "metafora",
+      "Censors looked into every metaphor for hidden politics.",
+      "Senzorlar har metaforada yashirin siyosat qidirdi.",
+      "ˈmɛtəfɔr (ˈlɪtərəʧər)"
+     ],
+     [
+      "imagery",
+      "obrazlilik (tasviriylik)",
+      "His imagery — night, spring, wind — is looked up to by young poets.",
+      "Uning obrazlari — tun, bahor, shamol — yosh shoirlar uchun namuna.",
+      "ˈɪmɪʤri"
+     ],
+     [
+      "inspiration / inspire (4.0)",
+      "ilhom / ilhomlantirmoq",
+      "Poets look for inspiration in ordinary streets.",
+      "Shoirlar ilhomni oddiy ko'chalardan qidiradi.",
+      ""
+     ],
+     [
+      "creativity / creative (4.0)",
+      "ijodkorlik / ijodiy",
+      "Look after your creativity — it needs silence.",
+      "Ijodkorligingga g'amxo'rlik qil — unga sukunat kerak.",
+      ""
+     ],
+     [
+      "novel / novelist (4.0)",
+      "roman / romanchi",
+      "She looked over the novel in one night.",
+      "U romanni bir kechada ko'zdan kechirdi.",
+      ""
+     ],
+     [
+      "character (literature) (4.0)",
+      "qahramon (personaj)",
+      "Readers look up to the character Zebi.",
+      "O'quvchilar Zebi qahramonini hurmat qiladi.",
+      ""
+     ],
+     [
+      "theme (4.0)",
+      "mavzu (asar g'oyasi)",
+      "Look for the theme of freedom in every poem.",
+      "Har she'rda erkinlik mavzusini qidir.",
+      ""
+     ],
+     [
+      "symbol / symbolic (4.0)",
+      "ramz / ramziy",
+      "Spring is a symbol; look into what it stands for.",
+      "Bahor — ramz; nimani anglatishini o'rgan.",
+      ""
+     ],
+     [
+      "censorship (art) (4.0)",
+      "senzura",
+      "Censorship looked down on any poem about the past.",
+      "Senzura o'tmish haqidagi har she'rni mensimadi.",
+      ""
+     ],
+     [
+      "publish / publication (4.0)",
+      "nashr etmoq / nashr",
+      "He looked forward to the publication of his second book.",
+      "U ikkinchi kitobining nashrini intiqlik bilan kutdi.",
+      ""
+     ],
+     [
+      "critic / criticism (4.0)",
+      "tanqidchi / tanqid",
+      "Critics looked over his work and found \"nationalism\".",
+      "Tanqidchilar asarini ko'zdan kechirib \"millatchilik\" topdi.",
+      ""
+     ],
+     [
+      "translate (literature)",
+      "tarjima qilmoq",
+      "He looked up Shakespeare and translated Hamlet into Uzbek.",
+      "U Shekspirni o'rganib, Hamletni o'zbekchaga tarjima qildi.",
+      "trænzˈleɪt (ˈlɪtərəʧər)"
+     ],
+     [
+      "drama / playwright (4.0)",
+      "drama / dramaturg",
+      "Look around the theatre — the playwright's portrait is there.",
+      "Teatrni aylanib ko'r — dramaturgning portreti o'sha yerda.",
+      ""
+     ],
+     [
+      "legacy (art) (4.0)",
+      "meros (ijodiy)",
+      "Uzbekistan looks back on his legacy with pride.",
+      "O'zbekiston uning merosini faxr bilan eslaydi.",
+      ""
+     ],
+     [
+      "audience (art) (4.0)",
+      "tomoshabin / o'quvchilar",
+      "Look out for the audience's reaction — it tells the truth.",
+      "Tomoshabin reaksiyasiga e'tibor ber — u haqiqatni aytadi.",
+      ""
+     ],
+     [
+      "portray / portrait (4.0)",
+      "tasvirlamoq / portret",
+      "The novel portrays a woman looking for freedom.",
+      "Roman erkinlik izlayotgan ayolni tasvirlaydi.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "rhyme / rhythm",
+      "qofiya / ritm",
+      "Look into the rhythm before the rhyme.",
+      "Qofiyadan oldin ritmni o'rgan.",
+      "raɪm  ˈrɪðəm"
+     ],
+     [
+      "stanza",
+      "band (she'rda)",
+      "Look over each stanza for the repeated word.",
+      "Har bandni takrorlanadigan so'z uchun ko'zdan kechir.",
+      "ˈstænzə"
+     ],
+     [
+      "lyric poetry",
+      "lirik she'riyat",
+      "Cho'lpon is looked up to as the master of Uzbek lyric poetry.",
+      "Cho'lpon o'zbek lirik she'riyatining ustasi sifatida hurmat qilinadi.",
+      "ˈlɪrɪk ˈpoʊətri"
+     ],
+     [
+      "prose (literature)",
+      "nasr",
+      "He looked after both prose and verse equally.",
+      "U nasr va she'rga birdek g'amxo'rlik qildi.",
+      "proʊz (ˈlɪtərəʧər)"
+     ],
+     [
+      "narrative (4.0)",
+      "hikoya qilish (bayon)",
+      "Look for the narrative voice — who is telling the story?",
+      "Bayon ovozini qidir — hikoyani kim aytmoqda?",
+      ""
+     ],
+     [
+      "protagonist",
+      "bosh qahramon",
+      "The protagonist looks back on her village with longing.",
+      "Bosh qahramon qishlog'ini sog'inch bilan eslaydi.",
+      "proʊˈtægənəst"
+     ],
+     [
+      "satire",
+      "satira",
+      "Look out — his satire hides in polite sentences.",
+      "Ehtiyot bo'l — uning satirasi muloyim gaplarda yashiringan.",
+      "ˈsæˌtaɪər"
+     ],
+     [
+      "allegory",
+      "allegoriya (majoz)",
+      "\"Night\" is an allegory; look into what it means.",
+      "\"Kecha\" — allegoriya; ma'nosini o'rgan.",
+      "ˈæləˌgɔri"
+     ],
+     [
+      "manuscript (art)",
+      "qo'lyozma",
+      "Scholars looked for his lost manuscripts for decades.",
+      "Olimlar uning yo'qolgan qo'lyozmalarini o'n yillar qidirdi.",
+      "ˈmænjəˌskrɪpt (ɑrt)"
+     ],
+     [
+      "anthology",
+      "to'plam (antologiya)",
+      "Look up his poems in the 1991 anthology.",
+      "Uning she'rlarini 1991-yilgi to'plamdan qidir.",
+      "ænˈθɔləˌʤi"
+     ],
+     [
+      "literary movement",
+      "adabiy oqim",
+      "The Jadids were a literary movement; look into their journals.",
+      "Jadidlar — adabiy oqim; jurnallarini o'rgan.",
+      "ˈlɪtərˌɛri ˈmuvmənt"
+     ],
+     [
+      "enlightenment (Jadid)",
+      "ma'rifat (jadidchilik)",
+      "The Jadids looked forward to an enlightened nation.",
+      "Jadidlar ma'rifatli millatni intiqlik bilan kutdi.",
+      ""
+     ],
+     [
+      "persecution",
+      "ta'qib",
+      "He looked over his shoulder for years — persecution was constant.",
+      "U yillar davomida orqasiga qarab yurdi — ta'qib doimiy edi.",
+      "ˌpərsəˈkjuʃən"
+     ],
+     [
+      "rehabilitate (a writer)",
+      "oqlamoq (yozuvchini)",
+      "The state looked back and rehabilitated him in 1956.",
+      "Davlat o'tmishga nazar solib, 1956-da uni oqladi.",
+      "ˌriəˈbɪləˌteɪt (ə ˈraɪtər)"
+     ],
+     [
+      "banned / ban (4.0)",
+      "taqiqlangan / taqiqlamoq",
+      "His books were banned; readers looked after hidden copies.",
+      "Kitoblari taqiqlandi; o'quvchilar yashirin nusxalarga g'amxo'rlik qildi.",
+      ""
+     ],
+     [
+      "freedom of expression (4.0)",
+      "so'z (ifoda) erkinligi",
+      "Look into freedom of expression before judging his time.",
+      "Uning davrini baholashdan oldin so'z erkinligini o'rgan.",
+      ""
+     ],
+     [
+      "aesthetic (4.0)",
+      "estetik",
+      "Look for the aesthetic, not only the politics.",
+      "Faqat siyosatni emas, estetikani ham qidir.",
+      ""
+     ],
+     [
+      "interpret / interpretation (4.0)",
+      "talqin qilmoq / talqin",
+      "Every reader looks into a poem and finds a different interpretation.",
+      "Har o'quvchi she'rni o'rganib, boshqa talqin topadi.",
+      ""
+     ],
+     [
+      "canon (literary)",
+      "adabiy kanon (asosiy asarlar)",
+      "He is now looked up to as part of the Uzbek canon.",
+      "U endi o'zbek adabiy kanonining bir qismi sifatida hurmat qilinadi.",
+      "ˈkænən (ˈlɪtərˌɛri)"
+     ],
+     [
+      "exhibition (4.0)",
+      "ko'rgazma",
+      "Look around the exhibition — his glasses are in the last room.",
+      "Ko'rgazmani aylanib ko'r — ko'zoynagi oxirgi xonada.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "Cho'lpon (Abdulhamid Sulaymon)",
+      "Cho'lpon (Abdulhamid Sulaymon o'g'li)",
+      "Cho'lpon is looked up to as the founder of modern Uzbek poetry.",
+      "Cho'lpon zamonaviy o'zbek she'riyatining asoschisi sifatida hurmat qilinadi.",
+      ""
+     ],
+     [
+      "Andijan, 1897",
+      "Andijon, 1897",
+      "Look back on Andijan in 1897 — a merchant's son was born there.",
+      "1897-yilgi Andijonga nazar sol — u yerda savdogar o'g'li tug'ildi.",
+      ""
+     ],
+     [
+      "\"Go'zal\" (\"Beautiful\")",
+      "\"Go'zal\" (she'r)",
+      "Look up \"Go'zal\" — every Uzbek student knows its first line.",
+      "\"Go'zal\"ni qidirib ko'r — har o'zbek talaba birinchi misrasini biladi.",
+      ""
+     ],
+     [
+      "\"Kecha va kunduz\" (\"Night and Day\")",
+      "\"Kecha va kunduz\" (roman)",
+      "\"Night and Day\" looks into a girl's life under a corrupt system.",
+      "\"Kecha va kunduz\" buzuq tuzum ostidagi qiz hayotini tadqiq qiladi.",
+      ""
+     ],
+     [
+      "Zebi",
+      "Zebi (roman qahramoni)",
+      "Zebi looks for love and finds a prison.",
+      "Zebi sevgi izlaydi va qamoq topadi.",
+      ""
+     ],
+     [
+      "\"Uyg'onish\" (\"Awakening\")",
+      "\"Uyg'onish\" (birinchi to'plam)",
+      "Look over \"Awakening\", his first collection, from 1922.",
+      "1922-yilgi birinchi to'plami \"Uyg'onish\"ni ko'zdan kechir.",
+      ""
+     ],
+     [
+      "Jadid movement",
+      "jadidchilik harakati",
+      "The Jadids looked forward to schools, newspapers and theatre for Uzbeks.",
+      "Jadidlar o'zbeklar uchun maktab, gazeta va teatrni intiqlik bilan kutdi.",
+      ""
+     ],
+     [
+      "Hamlet translation",
+      "\"Hamlet\" tarjimasi",
+      "He looked into Shakespeare and translated Hamlet in 1934.",
+      "U Shekspirni o'rganib, 1934-da \"Hamlet\"ni tarjima qildi.",
+      "ˈhæmlɪt trænzˈleɪʃən"
+     ],
+     [
+      "Great Purge, 1938",
+      "Katta qatag'on, 1938",
+      "Look back on 1938: he was shot with Qodiriy and Fitrat.",
+      "1938-ga nazar sol: u Qodiriy va Fitrat bilan otib tashlandi.",
+      "greɪt pərʤ, 1938"
+     ],
+     [
+      "\"nationalist\" label",
+      "\"millatchi\" tamg'asi",
+      "Officials looked down on him and used the \"nationalist\" label.",
+      "Amaldorlar uni mensimadi va \"millatchi\" tamg'asini ishlatdi.",
+      "\"ˈnæʃənəlɪst\" ˈleɪbəl"
+     ],
+     [
+      "rehabilitated, 1956",
+      "oqlangan, 1956",
+      "The state looked into his case again and rehabilitated him in 1956.",
+      "Davlat ishini qayta ko'rib chiqib, 1956-da uni oqladi.",
+      "ˌriəˈbɪləˌteɪtɪd, 1956"
+     ],
+     [
+      "banned for 50 years",
+      "50 yil taqiqlangan",
+      "His books were banned for fifty years; families looked after hidden copies.",
+      "Kitoblari ellik yil taqiqlandi; oilalar yashirin nusxalarni asradi.",
+      "bænd fər 50 jɪrz"
+     ],
+     [
+      "Navoi State Prize, 1991",
+      "Navoiy nomidagi Davlat mukofoti, 1991",
+      "Look up 1991 — he received the Navoi Prize after his death.",
+      "1991-ni qidir — vafotidan keyin Navoiy mukofotini oldi.",
+      ""
+     ],
+     [
+      "Andijan museum",
+      "Andijon muzeyi",
+      "Look around the Cho'lpon museum in Andijan.",
+      "Andijondagi Cho'lpon muzeyini aylanib ko'r.",
+      ""
+     ],
+     [
+      "\"Kishan\" (\"Chains\")",
+      "\"Kishan\" (she'r)",
+      "\"Chains\" looks at freedom through a prisoner's eyes.",
+      "\"Kishan\" erkinlikka mahbus ko'zi bilan qaraydi.",
+      ""
+     ],
+     [
+      "symbol of night",
+      "tun ramzi",
+      "Look into his \"night\": it means the old, unfree life.",
+      "Uning \"kecha\"sini o'rgan: bu eski, erksiz hayotni anglatadi.",
+      "ˈsɪmbəl əv naɪt"
+     ],
+     [
+      "symbol of spring",
+      "bahor ramzi",
+      "Spring in his poems looks forward to a free future.",
+      "She'rlaridagi bahor erkin kelajakni intiqlik bilan kutadi.",
+      "ˈsɪmbəl əv spərɪŋ"
+     ],
+     [
+      "executed writers",
+      "qatl etilgan adiblar",
+      "Uzbekistan looks back on its executed writers every October.",
+      "O'zbekiston har oktyabrda qatl etilgan adiblarini eslaydi.",
+      "ˈɛksəˌkjutɪd ˈraɪtərz"
+     ],
+     [
+      "memory day, 31 August",
+      "xotira kuni, 31-avgust",
+      "On 31 August the nation looks back on the victims of repression.",
+      "31-avgustda xalq qatag'on qurbonlarini eslaydi.",
+      "ˈmɛməri deɪ, 31 ˈɔgəst"
+     ],
+     [
+      "\"my heart is a bird\"",
+      "\"yuragim — qush\"",
+      "Look for the bird in his poems — it is always his heart.",
+      "She'rlaridan qushni qidir — u har doim uning yuragi.",
+      "\"maɪ hɑrt ɪz ə bərd\""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Zarrachani tanlang",
+     "type": "gap",
+     "instr": "look + after / for / forward to / up / up to / down on / into / out / over / around / back on",
+     "items": [
+      "She looks ___ her little brother.",
+      "I'm looking ___ my keys.",
+      "We look ___ the holidays.",
+      "You can look the word ___ in a dictionary.",
+      "I look ___ my grandfather.",
+      "Don't look ___ others.",
+      "The police are looking ___ the case.",
+      "Look ___! There's a car coming!",
+      "He looked ___ the report quickly.",
+      "Let's look ___ the museum.",
+      "She looked ___ her childhood."
+     ],
+     "answers": [
+      "after",
+      "for",
+      "forward to",
+      "up",
+      "up to",
+      "down on",
+      "into",
+      "out",
+      "over",
+      "around",
+      "back on"
+     ]
+    },
+    {
+     "title": "Olmosh bilan",
+     "type": "rewrite",
+     "instr": "Ob'ektni olmoshga aylantiring (ajraladigan bo'lsa o'rtaga)",
+     "items": [
+      "Look up the word.",
+      "He looked over the report.",
+      "She looks after her brother.",
+      "The police looked into the case.",
+      "I look up to my grandfather."
+     ],
+     "answers": [
+      "Look it up.",
+      "He looked it over.",
+      "She looks after him.",
+      "The police looked into it.",
+      "I look up to him."
+     ]
+    },
+    {
+     "title": "Ma'noga mos fe'l",
+     "type": "match",
+     "instr": "Ta'rifga phrasal verb",
+     "items": [
+      "to take care of someone",
+      "to try to find",
+      "to respect and admire",
+      "to investigate",
+      "to wait for something with pleasure",
+      "to think about the past"
+     ],
+     "answers": [
+      "look after",
+      "look for",
+      "look up to",
+      "look into",
+      "look forward to",
+      "look back on"
+     ],
+     "box": [
+      "look after",
+      "look for",
+      "look up to",
+      "look into",
+      "look forward to",
+      "look back on"
+     ]
+    },
+    {
+     "title": "Adabiyot suhbati",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 1–2 \"A poem or book you like\" — kamida 6 LOOK phrasal verb",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I look up to Cho'lpon because he wrote the truth.",
+      "I'm looking forward to reading \"Kecha va kunduz\".",
+      "When I look back on school, I remember \"Go'zal\".",
+      "I looked up every old word in the poem.",
+      "Critics looked into his poems for politics; I look for beauty.",
+      "Nobody should look down on poetry."
+     ]
+    },
+    {
+     "title": "Adabiyot lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the best work of an artist",
+      "a word used to mean something else, for effect",
+      "the control of what may be published",
+      "a person who judges books or art",
+      "the main idea of a work",
+      "what an artist leaves for the future"
+     ],
+     "answers": [
+      "masterpiece",
+      "metaphor",
+      "censorship",
+      "critic",
+      "theme",
+      "legacy"
+     ],
+     "box": [
+      "masterpiece",
+      "metaphor",
+      "censorship",
+      "critic",
+      "theme",
+      "legacy"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Look up it in the dictionary.",
+      "I look forward to meet you.",
+      "She looks after for her brother.",
+      "He looks up his grandfather. (hurmat)",
+      "Police are looking the case into."
+     ],
+     "answers": [
+      "Look it up in the dictionary.",
+      "I look forward to meeting you.",
+      "She looks after her brother.",
+      "He looks up to his grandfather.",
+      "Police are looking into the case."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 19 jadvalini (11 fe'l) 3 marta; Essential Words 19 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "11 gap",
+     "type": "write",
+     "instr": "Har LOOK phrasal verb bilan o'z hayotingizdan 1 gap (ajraladiganlarda olmosh bilan)",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "San'at inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Governments should not censor art and literature. To what extent do you agree?\" — kamida 5 LOOK phrasal verb va 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U ukasiga g'amxo'rlik qiladi.",
+      "Biz ta'tilni intiqlik bilan kutyapmiz.",
+      "So'zni lug'atdan qidirsang bo'ladi.",
+      "Men bobomni hurmat qilaman.",
+      "Politsiya ishni tekshiryapti."
+     ],
+     "answers": [
+      "She looks after her little brother.",
+      "We look forward to the holidays.",
+      "You can look the word up in a dictionary.",
+      "I look up to my grandfather.",
+      "The police are looking into the case."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 19 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "11 phrasal verb + ma'no + gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 18",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kitob jadvali (11 fe'l) yozma",
+     "1 daqiqada hammasini to'g'ri yozish",
+     "1 coin"
+    ],
+    [
+     "Essential Words 19 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Cho'lpon — the poet whose readers looked after his books for fifty years",
+    "text": [
+     "Abdulhamid Sulaymon was born in Andijan in 1897, the son of a merchant who wrote poetry himself. The boy looked up to his father, learned Persian and Arabic at the madrasa and Russian at the Russian school, and by 17 was publishing under the name Cho'lpon — \"the morning star\". He looked around him and did not like what he saw: a nation without modern schools, newspapers or theatre. He joined the Jadids, the reformers who looked forward to an enlightened Uzbekistan, and wrote for their journals.",
+     "His first collection, \"Uyg'onish\" (\"Awakening\"), came out in 1922. Readers looked for the old rhymes of classical poetry and found something new: short lines, everyday words, and images — night, spring, wind, a bird — that meant more than they said. In \"Go'zal\", the most loved poem in the language, a man looks at a beautiful girl and looks back on everything his people have lost. Officials looked into the poem and decided that \"the beautiful one\" was not a girl at all, but the nation.",
+     "He looked over his shoulder for the rest of his life. His novel \"Kecha va kunduz\" (\"Night and Day\"), about a girl named Zebi who looks for love and finds a prison, was called nationalist; his translation of Hamlet was praised, then banned. In 1937 he was arrested, and on 4 October 1938 he was shot in Tashkent together with Abdulla Qodiriy and Fitrat. His books were banned for fifty years. Families looked after hidden copies, copied poems by hand, and taught them to their children in whispers.",
+     "In 1956 the state looked into his case again and cleared his name, but the books stayed locked away until 1991, when independent Uzbekistan gave him the Navoi State Prize. Today students look up \"Go'zal\" on their phones, and every 31 August the country looks back on the writers it lost. \"My heart is a bird,\" he wrote. It took half a century, but the bird got out."
+    ],
+    "glossary": [
+     "merchant — savdogar",
+     "madrasa — madrasa",
+     "reformer — islohotchi",
+     "enlightened — ma'rifatli",
+     "rhyme — qofiya",
+     "official — amaldor",
+     "arrest — hibsga olmoq",
+     "whisper — shivir",
+     "clear someone's name — oqlamoq",
+     "lock away — qulflab qo'ymoq"
+    ],
+    "tasks": [
+     {
+      "title": "LOOK phrasal verblarini toping",
+      "type": "find",
+      "instr": "Matndan 10 ta",
+      "items": [
+       "look up to",
+       "look around",
+       "look forward to",
+       "look for",
+       "look back on",
+       "look into",
+       "look over",
+       "look after",
+       "look up",
+       "look at"
+      ],
+      "answers": [
+       "The boy looked up to his father.",
+       "He looked around him and did not like what he saw.",
+       "Reformers who looked forward to an enlightened Uzbekistan.",
+       "Readers looked for the old rhymes. / Zebi looks for love.",
+       "Looks back on everything his people have lost. / The country looks back on the writers it lost.",
+       "Officials looked into the poem. / The state looked into his case again.",
+       "He looked over his shoulder.",
+       "Families looked after hidden copies.",
+       "Students look up \"Go'zal\" on their phones.",
+       "A man looks at a beautiful girl."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "His father was a poet too.",
+       "\"Go'zal\" is about a real girl only.",
+       "He was shot in 1938 with Qodiriy and Fitrat.",
+       "His books were published freely after 1956."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True",
+       "False (until 1991)"
+      ]
+     },
+     {
+      "title": "Adabiyot lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta adabiyot so'zi; \"night, spring, bird\" ramzlari nimani anglatadi",
+      "items": [
+       "words",
+       "symbols"
+      ],
+      "answers": [
+       "poetry, collection, rhymes, lines, images, poem, novel, translation, nationalist, banned, prize",
+       "Night = the old unfree life; spring = a free future; the bird = his heart (freedom)."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Practice test Reading — uyga."
+   },
+   "listening": {
+    "audios": "Audio 96–100 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the Cho'lpon Museum in Andijan. If you're looking for his manuscripts, they're in Room 2 — please look after them, no flash. In Room 3 you can look over his Hamlet translation, finished in 1934. Look out for the glasses in the last case: they were found in 1991. We look forward to the poetry evening at 6 — the tickets are 20,000 sums. If you want to look into his life further, the library upstairs opens at 10 and has 400 books about him.\"",
+     "1-tinglash: nechta xona? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Manuscripts: Room ___; no ___",
+       "Hamlet translation finished in ___",
+       "Poetry evening at ___; tickets ___ sums",
+       "Library opens at ___; ___ books"
+      ],
+      "answers": [
+       "2; flash",
+       "1934",
+       "6; 20,000",
+       "10; 400"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 20,
+   "title": "Phrasal verbs — GET",
+   "grammar_topic": "PHRASAL VERBS with GET — get out / in / on / off / over / through / by / back / away / along (with) / ahead / rid of / across / down to / around / together / on with / away with",
+   "vocab_topic": "Essential Words 20 — Relationships, social life and resilience (munosabatlar, ijtimoiy hayot va matonat)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 4 — 16–20-darslar (reported speech: darak, savol, buyruq; phrasal verbs LOOK, GET; Essential Words 16–20; Sample essay 7, 9)",
+   "book_ref": "Student's book IELTS 4.0: Lesson 20 – Phrasal verbs GET (jadval: 18 fe'l); Essential Words 20; Audio 101–105 (ustoz skripti); Reading — Serena Williams (Jony Academy matni).",
+   "objectives": [
+    "GET bilan 18 phrasal verb ma'nosi va gapda ishlatilishi.",
+    "Transport: get in/out of (car, taxi) vs get on/off (bus, train, plane, bike).",
+    "Ko'p ma'noli fe'llar: get on (chiqmoq / chiqishmoq), get through (o'tkazmoq / bog'lanmoq), get away (qochmoq / dam olmoq).",
+    "Munosabatlar Essential Words 20 bilan do'stlik, qiyinchilik va matonat haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 20 — Relationships, social life and resilience (munosabatlar, ijtimoiy hayot va matonat) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"I got on the bus, got off at school, got through the test and got back home.\" — bitta fe'l, to'rt yo'nalish. O'quvchilar kunini GET bilan 5 gapda aytadi."
+    ],
+    [
+     8,
+     "Kahoot — Phrasal verbs — LOOK",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Phrasal verbs — LOOK lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali (18): get out (chiqmoq), get in (kirmoq/o'tirmoq — mashina), get on (avtobusga chiqmoq; yaxshi chiqishmoq), get off (tushmoq), get over (yengib o'tmoq, tuzalmoq), get through (aloqa o'rnatmoq; o'tkazmoq), get by (kun ko'rmoq), get back (qaytmoq), get away (qochib qutulmoq; dam olishga chiqmoq), get along (with) (yaxshi chiqishmoq), get ahead (o'zib ketmoq), get rid of (qutulmoq), get across (tushuntirmoq), get down to (jiddiy kirishmoq), get around (yurib chiqmoq; chetlab o'tmoq), get together (yig'ilmoq), get on with (davom ettirmoq), get away with (jazosiz qutulmoq). Qoida: get in/out — mashina, taksi; get on/off — avtobus, poyezd, samolyot, velosiped."
+    ],
+    [
+     12,
+     "Essential Words 20 — Relationships, social life and resilience (munosabatlar, ijtimoiy hayot va matonat) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "TRANSPORT: get IN / get OUT OF — mashina, taksi (kichik); get ON / get OFF — avtobus, poyezd, samolyot, velosiped, ot (katta yoki ustiga chiqiladigan).",
+     "MUNOSABAT: get on (well) with / get along with — yaxshi chiqishmoq; get together — yig'ilmoq.",
+     "QIYINCHILIK: get over (kasallik, ayriliq — yengib o'tmoq), get through (qiyin davrdan o'tmoq; telefon — bog'lanmoq), get by (kam pul bilan kun ko'rmoq), get rid of (qutulmoq).",
+     "HARAKAT/ISH: get down to (jiddiy kirishmoq), get on with (davom ettirmoq), get ahead (o'zib ketmoq, muvaffaqiyat), get across (fikrni tushuntirmoq), get around (yurib chiqmoq; muammoni chetlab o'tmoq).",
+     "QOCHISH: get away (qochmoq; dam olishga ketmoq), get away with (yomon ish qilib jazosiz qolmoq), get back (qaytmoq)."
+    ],
+    "formulas": [
+     [
+      "Transport",
+      "get in / out of + car, taxi; get on / off + bus, train, plane",
+      "She got in the taxi and left. / He got off the train.",
+      "U taksiga o'tirdi va ketdi. / U poyezddan tushdi."
+     ],
+     [
+      "Munosabat",
+      "get on (well) with / get along with + KIM; get together",
+      "We get on well. / Do you get along with your coworkers?",
+      "Biz yaxshi chiqishamiz. / Ishdoshlaring bilan yaxshi chiqishasanmi?"
+     ],
+     [
+      "Qiyinchilik",
+      "get over + kasallik/ayriliq; get through + davr/imtihon; get by + on + pul",
+      "She got over the flu. / They get by on little money.",
+      "U grippdan tuzaldi. / Ular kam pul bilan kun ko'rishadi."
+     ],
+     [
+      "Bog'lanish / tushuntirish",
+      "get through to + KIM; get + FIKR + across",
+      "I couldn't get through to him. / He couldn't get his point across.",
+      "Unga bog'lana olmadim. / U fikrini tushuntira olmadi."
+     ],
+     [
+      "Ish",
+      "get down to + ISH; get on with + ISH; get ahead",
+      "Let's get down to business. / Get on with your work. / He wants to get ahead in his career.",
+      "Keling, ishga kirishaylik. / Ishingni davom ettir. / U ishida o'sishni xohlaydi."
+     ],
+     [
+      "Qochish / qutulish",
+      "get away (with); get rid of; get back (from)",
+      "They got away for the weekend. / We need to get rid of this old sofa. / When did you get back from Paris?",
+      "Ular dam olishga ketishdi. / Bu eski divandan qutulishimiz kerak. / Parijdan qachon qaytding?"
+     ]
+    ],
+    "presentation": [
+     [
+      "How did Serena get over her injuries?",
+      "She got over them slowly — a year of rehab each time."
+     ],
+     [
+      "Did the sisters get on well?",
+      "Yes, they got on well off the court and fought hard on it."
+     ],
+     [
+      "How did the family get by in Compton?",
+      "They got by on very little money; the courts were free."
+     ],
+     [
+      "What did she do after losing?",
+      "She got back to training the next morning."
+     ],
+     [
+      "Did anyone get away with insulting her?",
+      "No — she never let racism get past her in silence."
+     ],
+     [
+      "How did she get ahead of her rivals?",
+      "She got ahead with a serve nobody could return."
+     ],
+     [
+      "When did she get down to serious training?",
+      "She got down to it at four — her father woke them at six."
+     ],
+     [
+      "How do you get to Flushing Meadows?",
+      "Get on the subway at Times Square and get off at Mets–Willets Point."
+     ],
+     [
+      "What did she want to get rid of?",
+      "She wanted to get rid of the idea that tennis was only for rich people."
+     ],
+     [
+      "How did she get her message across?",
+      "She got it across with her results — 23 Grand Slams."
+     ]
+    ],
+    "notes": [
+     "get in the car / get on the bus — \"get in the bus\" noto'g'ri emas, lekin standart — get on.",
+     "get over + ot: \"get over the flu\" (get over from — xato).",
+     "get rid OF (of shart); get away WITH (yomon ish); get along WITH (kim bilan).",
+     "Essential Words 20: friendship, rivalry, loyalty, trust, betray, setback, comeback, support network, role model, resilience."
+    ],
+    "mistakes": [
+     [
+      "She got off the taxi.",
+      "She got out of the taxi.",
+      "Taksi → get out of."
+     ],
+     [
+      "I need to get rid this sofa.",
+      "I need to get rid of this sofa.",
+      "get rid OF."
+     ],
+     [
+      "He got over from the flu.",
+      "He got over the flu.",
+      "get over + ot."
+     ],
+     [
+      "Do you get along your coworkers?",
+      "Do you get along with your coworkers?",
+      "get along WITH."
+     ],
+     [
+      "Let's get down business.",
+      "Let's get down to business.",
+      "get down TO."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — munosabatlar va ijtimoiy hayot asoslari (friendship, trust, rivalry…); STRONG — matonat va qiyinchilik; SUPER — Serena Williams, tennis va Task 2 birikmalari (break barriers, role model).",
+     "Har so'zga GET phrasal verb bilan gap: \"True friends help you get through a setback.\""
+    ],
+    "core": [
+     [
+      "friendship (4.0)",
+      "do'stlik",
+      "A real friendship helps you get through hard times.",
+      "Haqiqiy do'stlik qiyin kunlardan o'tishga yordam beradi.",
+      ""
+     ],
+     [
+      "relationship (4.0)",
+      "munosabat",
+      "They got on well, and the relationship lasted twenty years.",
+      "Ular yaxshi chiqishdi va munosabat yigirma yil davom etdi.",
+      ""
+     ],
+     [
+      "trust (4.0)",
+      "ishonch",
+      "Trust is hard to get back once it is lost.",
+      "Ishonch bir marta yo'qolsa, qaytarish qiyin.",
+      ""
+     ],
+     [
+      "loyalty (4.0)",
+      "sadoqat",
+      "Loyalty means you don't get away when things go wrong.",
+      "Sadoqat — ishlar yomonlashganda qochmaslik.",
+      ""
+     ],
+     [
+      "rivalry (4.0)",
+      "raqobat",
+      "The sisters got along, despite the rivalry.",
+      "Raqobatga qaramay, opa-singillar yaxshi chiqishdi.",
+      ""
+     ],
+     [
+      "support (4.0)",
+      "qo'llab-quvvatlash",
+      "With her family's support she got over the defeat.",
+      "Oilasining qo'llovi bilan u mag'lubiyatni yengdi.",
+      ""
+     ],
+     [
+      "setback (4.0)",
+      "muvaffaqiyatsizlik (orqaga ketish)",
+      "Every setback is something to get over.",
+      "Har bir muvaffaqiyatsizlik — yengib o'tiladigan narsa.",
+      ""
+     ],
+     [
+      "resilience (life)",
+      "matonat",
+      "Resilience is how fast you get back up.",
+      "Matonat — qanchalik tez o'rningdan turishing.",
+      "rɪˈzɪljəns (laɪf)"
+     ],
+     [
+      "overcome (4.0)",
+      "yengmoq",
+      "She got over injuries that would overcome most players.",
+      "U ko'p o'yinchilarni yengadigan jarohatlardan o'tdi.",
+      ""
+     ],
+     [
+      "confidence (life)",
+      "ishonch (o'ziga)",
+      "She got her confidence back after the comeback.",
+      "Qaytishdan keyin u o'ziga ishonchni qaytardi.",
+      "ˈkɑnfədɛns (laɪf)"
+     ],
+     [
+      "peer pressure (life)",
+      "tengdoshlar bosimi",
+      "Some teenagers can't get away from peer pressure.",
+      "Ba'zi o'smirlar tengdoshlar bosimidan qutula olmaydi.",
+      "pɪr ˈprɛʃər (laɪf)"
+     ],
+     [
+      "community (4.0)",
+      "jamoa (mahalliy)",
+      "The community got together to build a free court.",
+      "Jamoa bepul maydon qurish uchun yig'ildi.",
+      ""
+     ],
+     [
+      "isolation / isolated (4.0)",
+      "yakkalanish / yakkalangan",
+      "Get together with friends — isolation makes stress worse.",
+      "Do'stlar bilan yig'il — yakkalanish stressni kuchaytiradi.",
+      ""
+     ],
+     [
+      "argument (4.0)",
+      "janjal (bahs)",
+      "They got over the argument in a day.",
+      "Ular janjalni bir kunda unutishdi.",
+      ""
+     ],
+     [
+      "reconcile",
+      "yarashmoq",
+      "It took years for the rivals to reconcile.",
+      "Raqiblarning yarashishi uchun yillar kerak bo'ldi.",
+      "ˈrɛkənˌsaɪl"
+     ],
+     [
+      "betray / betrayal (4.0)",
+      "xiyonat qilmoq / xiyonat",
+      "You never get over betrayal completely.",
+      "Xiyonatdan hech qachon to'liq tuzalmaysan.",
+      ""
+     ],
+     [
+      "respect (4.0)",
+      "hurmat",
+      "Respect is earned; you can't get it by asking.",
+      "Hurmat topiladi; so'rab olib bo'lmaydi.",
+      ""
+     ],
+     [
+      "empathy (life)",
+      "hamdardlik",
+      "Empathy helps you get your point across without anger.",
+      "Hamdardlik fikringni jahlsiz tushuntirishga yordam beradi.",
+      "ˈɛmpəθi (laɪf)"
+     ],
+     [
+      "independence (4.0)",
+      "mustaqillik",
+      "Getting a job helped her get by with independence.",
+      "Ish topish unga mustaqil kun ko'rishga yordam berdi.",
+      ""
+     ],
+     [
+      "social life (4.0)",
+      "ijtimoiy hayot",
+      "Athletes get little social life during the season.",
+      "Sportchilar mavsum davomida kam ijtimoiy hayotga ega.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "Grand Slam",
+      "\"Katta dubulg'a\" turniri",
+      "She got through 23 Grand Slam finals and won them.",
+      "U 23 ta \"Katta dubulg'a\" finalidan o'tib, yutdi.",
+      "grænd slæm"
+     ],
+     [
+      "serve (tennis)",
+      "podacha (tennis)",
+      "Her serve helped her get ahead in every set.",
+      "Podachasi har setda o'zib ketishga yordam berdi.",
+      "sərv (ˈtɛnɪs)"
+     ],
+     [
+      "rally (tennis)",
+      "almashinuv (to'p)",
+      "She got the long rallies back with power.",
+      "U uzoq almashinuvlarni kuch bilan qaytardi.",
+      "ˈræli (ˈtɛnɪs)"
+     ],
+     [
+      "doubles",
+      "juftlik o'yini",
+      "The sisters got on so well that they won 14 doubles titles.",
+      "Opa-singillar shunchalik yaxshi chiqishganki, 14 ta juftlik unvoni yutishdi.",
+      "ˈdəbəlz"
+     ],
+     [
+      "opponent (tennis)",
+      "raqib",
+      "No opponent got away with a weak second serve.",
+      "Hech bir raqib zaif ikkinchi podachadan jazosiz qolmadi.",
+      "əˈpoʊnənt (ˈtɛnɪs)"
+     ],
+     [
+      "racism (4.0)",
+      "irqchilik",
+      "She refused to let racism get her down.",
+      "U irqchilikka o'zini sindirishga yo'l qo'ymadi.",
+      ""
+     ],
+     [
+      "discrimination (life) (4.0)",
+      "kamsitish",
+      "She spoke out so that discrimination could not get past unnoticed.",
+      "Kamsitish sezilmay o'tmasligi uchun u ovoz chiqardi.",
+      ""
+     ],
+     [
+      "boycott",
+      "boykot",
+      "She boycotted Indian Wells for 14 years, then got back in 2015.",
+      "U 14 yil Indian Uelsni boykot qildi, keyin 2015-da qaytdi.",
+      "ˈbɔɪˌkɑt"
+     ],
+     [
+      "pay gap",
+      "maosh tafovuti",
+      "Venus fought to get rid of the pay gap at Wimbledon.",
+      "Venera Uimbldondagi maosh tafovutidan qutulish uchun kurashdi.",
+      "peɪ gæp"
+     ],
+     [
+      "equal prize money",
+      "teng mukofot puli",
+      "Equal prize money got through in 2007.",
+      "Teng mukofot puli 2007-da qabul qilindi.",
+      "ˈikwəl praɪz ˈməni"
+     ],
+     [
+      "blood clot",
+      "qon laxtasi",
+      "She nearly died from a blood clot, but she got over it.",
+      "U qon laxtasidan o'lib qolishiga oz qoldi, lekin tuzaldi.",
+      "bləd klɑt"
+     ],
+     [
+      "postpartum complications",
+      "tug'ruqdan keyingi asoratlar",
+      "After postpartum complications she got back to tennis within a year.",
+      "Tug'ruqdan keyingi asoratlardan so'ng u bir yil ichida tennisga qaytdi.",
+      ""
+     ],
+     [
+      "work ethic (life)",
+      "mehnatga munosabat",
+      "Her father's work ethic got the girls ahead.",
+      "Otasining mehnatga munosabati qizlarni oldinga olib chiqdi.",
+      "wərk ˈɛθɪk (laɪf)"
+     ],
+     [
+      "underprivileged",
+      "imkoniyati cheklangan (kambag'al)",
+      "She got underprivileged children onto free courts.",
+      "U imkoniyati cheklangan bolalarni bepul maydonlarga olib chiqdi.",
+      ""
+     ],
+     [
+      "role model (life)",
+      "ibrat namunasi",
+      "Young girls get inspiration from a role model like her.",
+      "Yosh qizlar undek ibrat namunasidan ilhom oladi.",
+      "roʊl ˈmɑdəl (laɪf)"
+     ],
+     [
+      "break barriers",
+      "to'siqlarni buzmoq",
+      "She got ahead by breaking barriers in a white sport.",
+      "U \"oq\" sportda to'siqlarni buzib oldinga chiqdi.",
+      "breɪk ˈbɛriərz"
+     ],
+     [
+      "comeback (life)",
+      "qaytish",
+      "Every comeback starts when you get back on court.",
+      "Har qaytish maydonga qaytgan zahoting boshlanadi.",
+      "ˈkəmˌbæk (laɪf)"
+     ],
+     [
+      "retire (tennis)",
+      "sportni tark etmoq",
+      "She got down to business in venture capital after she retired.",
+      "Sportni tark etgach, u venchur kapitalga jiddiy kirishdi.",
+      "ˌriˈtaɪər (ˈtɛnɪs)"
+     ],
+     [
+      "venture capital",
+      "venchur kapital",
+      "Her venture capital fund helps founders get ahead.",
+      "Uning venchur fondi asoschilarga oldinga chiqishga yordam beradi.",
+      "ˈvɛnʧər ˈkæpɪtəl"
+     ],
+     [
+      "legacy (sport)",
+      "meros",
+      "Her legacy: getting rid of the idea that tennis is for the rich.",
+      "Uning merosi: tennis boylar uchun degan fikrdan qutulish.",
+      "ˈlɛgəsi (spɔrt)"
+     ]
+    ],
+    "super": [
+     [
+      "Serena Williams",
+      "Serena Uilyams",
+      "Serena got ahead of every player of her generation.",
+      "Serena o'z avlodining har bir o'yinchisidan o'zib ketdi.",
+      "səˈrinə ˈwɪljəmz"
+     ],
+     [
+      "Venus Williams",
+      "Venera Uilyams",
+      "Venus and Serena got on well even after finals against each other.",
+      "Venera va Serena bir-biriga qarshi finallardan keyin ham yaxshi chiqishardi.",
+      "ˈvinəs ˈwɪljəmz"
+     ],
+     [
+      "Compton",
+      "Kompton (Los-Anjeles hududi)",
+      "The girls got through their childhood on public courts in Compton.",
+      "Qizlar bolaligini Komptondagi ommaviy maydonlarda o'tkazishdi.",
+      "ˈkɑmptən"
+     ],
+     [
+      "Richard Williams",
+      "Richard Uilyams (otasi)",
+      "Their father wrote a 78-page plan to get them to the top.",
+      "Otasi ularni cho'qqiga chiqarish uchun 78 sahifalik reja yozgan.",
+      "ˈrɪʧərd ˈwɪljəmz"
+     ],
+     [
+      "78-page plan",
+      "78 sahifalik reja",
+      "He got the plan down on paper before they were born.",
+      "U rejani ular tug'ilmasidan oldin qog'ozga tushirgan.",
+      ""
+     ],
+     [
+      "23 Grand Slam titles",
+      "23 ta \"Katta dubulg'a\" unvoni",
+      "She got 23 Grand Slam titles in the Open era — a record.",
+      "U Ochiq davrda 23 ta unvon oldi — rekord.",
+      "23 grænd slæm ˈtaɪtəlz"
+     ],
+     [
+      "\"Serena Slam\"",
+      "\"Serena Slem\"",
+      "She got all four majors in a row twice — the \"Serena Slam\".",
+      "U ketma-ket to'rtta asosiy turnirni ikki marta yutdi — \"Serena Slem\".",
+      "\"səˈrinə slæm\""
+     ],
+     [
+      "Australian Open 2017",
+      "2017-yilgi Avstraliya ochiq chempionati",
+      "She won the 2017 Australian Open while pregnant.",
+      "U 2017 Avstraliya ochiq chempionatini homilador holda yutdi.",
+      "ɔˈstreɪljən ˈoʊpən 2017"
+     ],
+     [
+      "pregnant",
+      "homilador",
+      "She got through seven matches while pregnant.",
+      "U homilador holda yetti o'yindan o'tdi.",
+      "ˈprɛgnənt"
+     ],
+     [
+      "Olympic gold (tennis)",
+      "Olimpiya oltini",
+      "The sisters got four Olympic gold medals.",
+      "Opa-singillar to'rtta Olimpiya oltinini olishdi.",
+      "oʊˈlɪmpɪk goʊld (ˈtɛnɪs)"
+     ],
+     [
+      "catsuit",
+      "yaxlit sport kostyumi",
+      "Officials banned her catsuit; she got around the rule with a tutu.",
+      "Rasmiylar kostyumini taqiqlashdi; u qoidani yubka bilan chetlab o'tdi.",
+      ""
+     ],
+     [
+      "\"King Richard\"",
+      "\"Qirol Richard\" (film)",
+      "\"King Richard\" shows how the family got by in Compton.",
+      "\"Qirol Richard\" oilaning Komptonda qanday kun ko'rganini ko'rsatadi.",
+      "\"kɪŋ ˈrɪʧərd\""
+     ],
+     [
+      "Yetunde (sister)",
+      "Yetunde (opasi)",
+      "They never got over the murder of their sister Yetunde in 2003.",
+      "Ular 2003-da opalari Yetunde o'ldirilganini hech unutolmadi.",
+      ""
+     ],
+     [
+      "community centre",
+      "jamoat markazi",
+      "They got together to open the Yetunde Price Resource Center.",
+      "Ular Yetunde Prays markazini ochish uchun yig'ilishdi.",
+      "kəmˈjunɪti ˈsɛntər"
+     ],
+     [
+      "Serena Ventures",
+      "Serena Ventures (investitsiya fondi)",
+      "Serena Ventures gets money to founders who are usually ignored.",
+      "Serena Ventures odatda e'tiborsiz qoladigan asoschilarga pul yetkazadi.",
+      "səˈrinə ˈvɛnʧərz"
+     ],
+     [
+      "farewell (US Open 2022)",
+      "xayrlashuv (2022 AQSh ochiq)",
+      "At her 2022 farewell, 24,000 fans got to their feet.",
+      "2022-dagi xayrlashuvida 24 000 muxlis o'rnidan turdi.",
+      "ˌfɛrˈwɛl (ˈjuˈɛs ˈoʊpən 2022"
+     ],
+     [
+      "evolve (not retire)",
+      "rivojlanmoq (tark etish emas)",
+      "She said she was not retiring but \"evolving away from tennis\".",
+      "U sportni tark etmayotganini, \"tennisdan uzoqlashib rivojlanayotganini\" aytdi.",
+      "ɪˈvɑlv (nɑt ˌriˈtaɪər)"
+     ],
+     [
+      "GOAT (greatest of all time)",
+      "barcha zamonlarning eng zo'ri",
+      "Fans got into arguments over whether she was the GOAT.",
+      "Muxlislar u barcha zamonlarning eng zo'rimi deb bahslashishdi.",
+      "goʊt (ˈgreɪtəst əv ɔl taɪm)"
+     ],
+     [
+      "mental toughness (tennis)",
+      "ruhiy mustahkamlik",
+      "Mental toughness got her through 0–5 in the final set.",
+      "Ruhiy mustahkamlik uni hal qiluvchi setda 0–5 dan olib chiqdi.",
+      "ˈmɛntəl ˈtəfnəs (ˈtɛnɪs)"
+     ],
+     [
+      "body shaming",
+      "tashqi ko'rinishni kamsitish",
+      "She got through years of body shaming and never changed.",
+      "U yillar davomida tashqi ko'rinish uchun kamsitishlardan o'tdi va o'zgarmadi.",
+      "ˈbɑdi ˈʃeɪmɪŋ"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Zarrachani tanlang",
+     "type": "gap",
+     "instr": "get + out / in / on / off / over / through / by / back / away / along / ahead / rid of / across / down to / around / together / on with / away with",
+     "items": [
+      "Get ___ of the car!",
+      "She got ___ the taxi and left.",
+      "Get ___ the bus!",
+      "He got ___ the train.",
+      "She got ___ the flu.",
+      "I couldn't get ___ to him.",
+      "They get ___ on little money.",
+      "When did you get ___ from Paris?",
+      "They got ___ for the weekend.",
+      "Do you get ___ with your coworkers?",
+      "He wants to get ___ in his career.",
+      "We need to get ___ this old sofa.",
+      "He couldn't get his point ___.",
+      "Let's get ___ business."
+     ],
+     "answers": [
+      "out",
+      "in",
+      "on",
+      "off",
+      "over",
+      "through",
+      "by",
+      "back",
+      "away",
+      "along",
+      "ahead",
+      "rid of",
+      "across",
+      "down to"
+     ]
+    },
+    {
+     "title": "Transport",
+     "type": "choose",
+     "instr": "get in/out of yoki get on/off",
+     "items": [
+      "She got into / on the taxi.",
+      "We got off / out of the bus at the market.",
+      "He got out of / off the car quickly.",
+      "Get on / in the plane — it's boarding.",
+      "I fell when I got off / out of my bike."
+     ],
+     "answers": [
+      "into",
+      "off",
+      "out of",
+      "on",
+      "off"
+     ]
+    },
+    {
+     "title": "Ta'rifga mos",
+     "type": "match",
+     "instr": "Ta'rifga GET phrasal verb",
+     "items": [
+      "to recover from an illness or a sad event",
+      "to survive with little money",
+      "to have a good relationship",
+      "to escape punishment",
+      "to meet socially",
+      "to start doing something seriously"
+     ],
+     "answers": [
+      "get over",
+      "get by",
+      "get along with",
+      "get away with",
+      "get together",
+      "get down to"
+     ],
+     "box": [
+      "get over",
+      "get by",
+      "get along with",
+      "get away with",
+      "get together",
+      "get down to"
+     ]
+    },
+    {
+     "title": "Qiyinchilik suhbati",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 2 \"Describe a difficult time you got through\" — kamida 7 GET phrasal verb",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+     ],
+     "answers": [
+      "Last year I got ill and it took a month to get over it.",
+      "My friends got together and visited me.",
+      "I got by with online lessons.",
+      "When I got back to school I had to get down to work.",
+      "I got on with my exams and got through them.",
+      "I got rid of my bad habits — less phone.",
+      "Now I get along with my classmates better."
+     ]
+    },
+    {
+     "title": "Munosabat lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "belief that someone is honest and reliable",
+      "staying faithful to a person or group",
+      "competition between two people",
+      "something that stops your progress",
+      "being disloyal to someone who trusts you",
+      "to become friends again after an argument"
+     ],
+     "answers": [
+      "trust",
+      "loyalty",
+      "rivalry",
+      "setback",
+      "betrayal",
+      "reconcile"
+     ],
+     "box": [
+      "trust",
+      "loyalty",
+      "rivalry",
+      "setback",
+      "betrayal",
+      "reconcile"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "She got off the taxi.",
+      "I need to get rid this sofa.",
+      "He got over from the flu.",
+      "Do you get along your coworkers?",
+      "Let's get down business."
+     ],
+     "answers": [
+      "She got out of the taxi.",
+      "I need to get rid of this sofa.",
+      "He got over the flu.",
+      "Do you get along with your coworkers?",
+      "Let's get down to business."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 20 jadvalini (18 fe'l) 3 marta; Essential Words 20 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Progress test 4 ga tayyorgarlik",
+     "type": "review",
+     "instr": "16–20-dars jadvallari (reported speech 3 tur, LOOK, GET); Essential Words 16–20 dan CORE 20; Sample essay 7, 9; Kahoot 16–20 (jonyos.uz)",
+     "answers": "Test: grammatika + 50 so'z + reading + Task 2."
+    },
+    {
+     "title": "Munosabat inshosi",
+     "type": "write",
+     "instr": "250 so'z: \"Some people think friends are more important than family. Discuss both views.\" — kamida 6 GET phrasal verb va 6 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U grippdan tuzaldi.",
+      "Ular kam pul bilan kun ko'rishadi.",
+      "Bu eski divandan qutulishimiz kerak.",
+      "Keling, ishga kirishaylik.",
+      "Ishdoshlaring bilan yaxshi chiqishasanmi?"
+     ],
+     "answers": [
+      "She got over the flu.",
+      "They get by on little money.",
+      "We need to get rid of this old sofa.",
+      "Let's get down to business.",
+      "Do you get along with your coworkers?"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 20 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "18 GET phrasal verb + ma'no + gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 19",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kitob jadvali (18 fe'l) yozma",
+     "1 daqiqada hammasini to'g'ri yozish",
+     "1 coin"
+    ],
+    [
+     "Essential Words 20 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Serena Williams — the girl from Compton who never let anything get her down",
+    "text": [
+     "Before his daughters were born, Richard Williams watched a tennis final on television and saw the winner get a cheque for 40,000 dollars. He got a notebook and wrote a 78-page plan to get his future children to the top of a sport he had never played. Venus was born in 1980 and Serena in 1981. The family lived in Compton, Los Angeles, where they got by on very little money. The public courts were free, cracked and sometimes dangerous; Richard got the girls out of bed at six every morning and got them onto those courts before school.",
+     "Tennis was a white, wealthy sport, and many people expected the sisters to get nowhere. They got ahead anyway. Serena's serve became the most feared shot in the women's game, and she won her first Grand Slam at 17. The sisters got on so well off the court that they won 14 doubles titles together — and played nine Grand Slam finals against each other without ever letting the rivalry get between them.",
+     "Serena got through things that would have ended most careers. In 2003 her sister Yetunde was murdered, and the family never fully got over it. In 2001, crowds at Indian Wells booed her with racist insults; she refused to return for 14 years, then got back in 2015 to a standing ovation. In 2017 she won the Australian Open while pregnant. After her daughter was born, a blood clot nearly killed her, but she got back on court within a year.",
+     "She finished with 23 Grand Slam singles titles — more than anyone in the Open era — and four Olympic gold medals. At her last US Open in 2022, 24,000 fans got to their feet. She did not say she was retiring; she said she was \"evolving\". Today her investment fund, Serena Ventures, gets money to founders who are usually ignored. \"People never expected me to get here,\" she said. \"That's exactly why I did.\""
+    ],
+    "glossary": [
+     "cheque — chek",
+     "cracked — yorilgan",
+     "wealthy — boy",
+     "feared — qo'rqinchli",
+     "murder — o'ldirmoq",
+     "boo — hushtak chalmoq (norozilik)",
+     "insult — haqorat",
+     "standing ovation — o'rnidan turib olqishlash",
+     "blood clot — qon laxtasi",
+     "investment fund — investitsiya fondi",
+     "founder — asoschi"
+    ],
+    "tasks": [
+     {
+      "title": "GET phrasal verblarini toping",
+      "type": "find",
+      "instr": "Matndan 10 ta",
+      "items": [
+       "get by",
+       "get out of",
+       "get onto",
+       "get ahead",
+       "get on",
+       "get between",
+       "get through",
+       "get over",
+       "get back",
+       "get to (+ feet) / get here"
+      ],
+      "answers": [
+       "They got by on very little money.",
+       "Richard got the girls out of bed at six.",
+       "He got them onto those courts.",
+       "They got ahead anyway.",
+       "The sisters got on so well off the court.",
+       "Without letting the rivalry get between them.",
+       "Serena got through things that would have ended most careers.",
+       "The family never fully got over it.",
+       "She got back in 2015. / She got back on court within a year.",
+       "24,000 fans got to their feet. / People never expected me to get here."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Richard Williams had played tennis professionally.",
+       "The sisters won 14 doubles titles together.",
+       "Serena returned to Indian Wells after one year.",
+       "She won the 2017 Australian Open while pregnant."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (14 years)",
+       "True"
+      ]
+     },
+     {
+      "title": "Munosabat lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta so'z (oila, raqobat, qiyinchilik); oxirgi gapdagi fikr",
+      "items": [
+       "words",
+       "idea"
+      ],
+      "answers": [
+       "daughters, family, sisters, rivalry, murdered, racist insults, pregnant, fans, founders",
+       "Low expectations from others became her reason to succeed."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 7, 9 va Practice test — uyga."
+   },
+   "listening": {
+    "audios": "Audio 101–105 (fayllar yo'q — ustoz IELTS Section 1 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Hi, I'd like to join the tennis club. — Great. Are you a beginner? — Yes. How do I get there? — Get on bus 51, get off at Chilonzor-9, then it's a five-minute walk. — What about fees? — 250,000 sums a month; students get 20 per cent off. — When do people get together to play? — Beginners on Tuesdays and Thursdays at 6. If you can't get through on the phone, write to us online. And bring your own racket — we got rid of the old club ones.\"",
+     "1-tinglash: qaysi avtobus? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Form completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Bus number: ___; get off at ___",
+       "Walk: ___ minutes",
+       "Fee: ___ sums; student discount ___ %",
+       "Beginners: ___ and ___ at ___"
+      ],
+      "answers": [
+       "51; Chilonzor-9",
+       "five",
+       "250,000; 20",
+       "Tuesdays; Thursdays; 6"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

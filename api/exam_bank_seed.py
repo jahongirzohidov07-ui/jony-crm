@@ -8,13 +8,19 @@ Manba: "Jony Academy exams. Step 1.0 Unit 1.pdf" + "Unit 1 Progress
 Test AK.pdf" (javob kaliti)."""
 
 
-def _c(q, opts, a):
-    return {"type": "choice", "q": q, "options": opts,
-            "answer": "ABCDEFGH".index(a)}
+def _c(q, opts, a, image=None):
+    d = {"type": "choice", "q": q, "options": opts,
+         "answer": "ABCDEFGH".index(a)}
+    if image:
+        d["image"] = image      # public/exam-img/… dagi rasm
+    return d
 
 
-def _t(q, *answers):
-    return {"type": "text", "q": q, "answer": list(answers)}
+def _t(q, *answers, image=None):
+    d = {"type": "text", "q": q, "answer": list(answers)}
+    if image:
+        d["image"] = image
+    return d
 
 
 STEP1_UNIT1 = {
@@ -232,7 +238,102 @@ Gabi: Oh!""",
     ],
 }
 
+
+U3_IMG = "/exam-img/step1-u3/"
+FOOD_A_G = ["cheese", "an apple", "a potato", "a tomato", "a pizza",
+            "a biscuit", "an orange"]
+
+STEP1_UNIT3 = {
+    "level": "step1", "kind": "unit", "unit_no": 3,
+    "title": "Step 1 · Unit 3 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["No, it’s not.", "Do you like vegetables?", "And ice-cream too?"], "C"),
+                _c("", ["That’s £3.50, please.", "No, thank you.", "It’s nice."], "A"),
+                _c("", ["A sandwich, please.", "So, two cups of tea.", "How are you?"], "A"),
+                _c("", ["A glass of orange juice, please.", "Of course.", "It’s 725129."], "B"),
+                _c("", ["Thank you.", "Here you are.", "And something to eat?"], "B"),
+                _c("", ["Certainly.", "Yes, please.", "It’s new."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Food and drink",
+            "instructions": "Look at the pictures. What are the missing "
+                            "letters? Some letters are already there. Write "
+                            "the whole word.",
+            "questions": [
+                _t("a f _ _ _", "fish", "ish", image=U3_IMG + "q7.jpg"),
+                _t("v _ _ _ _ _ _ _ _ _", "vegetables", "egetables",
+                   image=U3_IMG + "q8.jpg"),
+                _t("m _ _ _", "meat", "eat", image=U3_IMG + "q9.jpg"),
+                _t("r _ _ _", "rice", "ice", image=U3_IMG + "q10.jpg"),
+                _t("b _ _ _ _", "bread", "read", image=U3_IMG + "q11.jpg"),
+                _t("a glass of c _ _ _", "coke", "oke", "cola", "ola",
+                   image=U3_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Food",
+            "instructions": "Choose the word to match the picture.",
+            "questions": [
+                _c("", FOOD_A_G, "G", image=U3_IMG + "q13.jpg"),
+                _c("", FOOD_A_G, "F", image=U3_IMG + "q14.jpg"),
+                _c("", FOOD_A_G, "D", image=U3_IMG + "q15.jpg"),
+                _c("", FOOD_A_G, "B", image=U3_IMG + "q16.jpg"),
+                _c("", FOOD_A_G, "A", image=U3_IMG + "q17.jpg"),
+                _c("", FOOD_A_G, "C", image=U3_IMG + "q18.jpg"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about food and drink. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "passage": """Food in my family
+
+My name is Roz. I live in London with my family. Do we all like food? Yes, we do. We eat breakfast at 7.30. For breakfast, we (19) ………… eat eggs, or cereal with milk, but I think toast is the number one breakfast for my family. We (20) ………… a lot of toast! We drink tea or coffee or fruit juice. At 11.00 o'clock, my father likes coffee with biscuits.
+At 1.00 o'clock, we eat lunch. We (21) ………… have a sandwich, but not every day. I like cheese sandwiches, and then a piece of cake or an apple.
+Dinner is (22) ………… early - at 6.00 o'clock. We don't eat dinner late like people in Spain. We (23) ………… a big dinner with meat or fish, vegetables and potatoes. And I like ice cream, but it isn't very good for me! We never have pizza at home – my mother and father (24) ………… like it, so I eat it in restaurants.""",
+            "questions": [
+                _c("", ["lots", "never", "sometimes"], "C"),
+                _c("", ["eats", "eat", "to eat"], "B"),
+                _c("", ["usually", "always", "never"], "A"),
+                _c("", ["a lot of", "never", "always"], "C"),
+                _c("", ["has", "are", "have"], "C"),
+                _c("", ["don’t", "aren’t", "haven’t"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about what people eat and "
+                            "drink. Choose the best answer, A, B or C, for "
+                            "each space.",
+            "questions": [
+                _c("I eat lots of things – I ............ fruit and vegetables every day.",
+                   ["have", "likes", "eats"], "A"),
+                _c("............ your friends eat a lot of bread?",
+                   ["Have", "Are", "Do"], "C"),
+                _c("Alice and Ben like fish, but they ............ like meat.",
+                   ["isn’t", "don’t", "aren’t"], "B"),
+                _c("I ............ eat toast for breakfast but not every day – "
+                   "I sometimes have cereal or fruit.",
+                   ["usually", "lots", "always"], "A"),
+                _c("I ............ eat cheese – I don’t like it.",
+                   ["never", "always", "sometimes"], "A"),
+                _c("In Jan’s family, they ............ dinner at eight o’clock every night.",
+                   ["have usually", "always have", "sometimes has"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
+    ("exam_tpl_step1_unit3", STEP1_UNIT3),
 ]

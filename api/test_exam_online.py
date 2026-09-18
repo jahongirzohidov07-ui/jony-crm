@@ -114,6 +114,13 @@ TID = tpl[0]["id"]
 ck("30 ta savol", tpl[0]["q_count"], 30)
 u2 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 2]
 ck("Step 1 Unit 2 bor, 30 savol", [x["q_count"] for x in u2], [30])
+u3 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 3]
+ck("Step 1 Unit 3 bor, 30 savol", [x["q_count"] for x in u3], [30])
+t3 = client.get(f"/api/exam-templates/{u3[0]['id']}", headers=HE).json()
+q7 = t3["parts"][1]["questions"][0]
+ck("rasmli savol", q7["image"], "/exam-img/step1-u3/q7.jpg")
+ck("rasm fayli loyihada bor", os.path.exists(os.path.join(
+    os.path.dirname(HERE), "public", "exam-img", "step1-u3", "q7.jpg")), True)
 full = client.get(f"/api/exam-templates/{TID}", headers=HE).json()
 QS = [q for p in full["parts"] for q in p["questions"]]
 ck("7-savol javobi", QS[6]["answer"][0], "the USA")
@@ -292,6 +299,17 @@ r = client.post("/api/exam-templates", headers=HB, json=body)
 ck("boshliq yaratdi", r.status_code, 200)
 ck("javoblar ajratildi", r.json()["parts"][0]["questions"][1]["answer"],
    ["London", "london"])
+ext = dict(body, parts=[{"title": "P", "questions": [
+    {"type": "choice", "q": "x", "options": ["a", "b"], "answer": 0,
+     "image": "https://begona.sayt/rasm.jpg"}]}])
+ck("begona sayt rasmi rad",
+   client.post("/api/exam-templates", headers=HB, json=ext).status_code, 400)
+up = dict(body, unit_no=5, parts=[{"title": "P", "questions": [
+    {"type": "choice", "q": "x", "options": ["a", "b"], "answer": 0,
+     "image": "data:image/jpeg;base64,AAAA"}]}])
+r = client.post("/api/exam-templates", headers=HB, json=up)
+ck("yuklangan rasm saqlandi", r.json()["parts"][0]["questions"][0]["image"],
+   "data:image/jpeg;base64,AAAA")
 bad = dict(body, parts=[{"title": "P", "questions": [
     {"type": "choice", "q": "x", "options": ["a", "b"]}]}])
 ck("to'g'ri javobsiz rad",

@@ -38,6 +38,8 @@ export type OnlineSubmission = {
     type: "choice" | "text" | null;
     given_text: string | null;
     correct: string | null;
+    image?: string | null;
+    has_image?: boolean;
   }[];
 };
 type TemplateRow = {
@@ -202,7 +204,15 @@ export function AnswerSheetButton({
                         <span className={`font-semibold mr-1.5 ${d.ok ? "text-emerald-600" : "text-rose-600"}`}>
                           {d.ok ? "✓" : "✗"} {d.n}.
                         </span>
-                        {d.q || <span className="text-slate-400">(audio / matndagi bo'sh joy)</span>}
+                        {d.image && (
+                          <img src={d.image} alt="" className="inline-block h-10 rounded mr-2 align-middle" />
+                        )}
+                        {d.q ||
+                          (d.has_image ? (
+                            !d.image && <span className="text-slate-400">(rasmli savol)</span>
+                          ) : (
+                            <span className="text-slate-400">(audio / matndagi bo'sh joy)</span>
+                          ))}
                       </p>
                       <p className="mt-1 text-xs">
                         <span className="text-slate-500">Javobi: </span>

@@ -78,6 +78,23 @@ def _questions(parts: list):
             yield q
 
 
+IMAGE_MAX_CHARS = 300_000          # savol rasmi (data URL) ~220KB
+
+
+def _clean_image(v, where: str):
+    """Savol rasmi: yuklangan (data:image/…) yoki loyihadagi statik fayl
+    (/exam-img/…). Boshqa manzilga ruxsat yo'q — begona sayt rasmi
+    o'quvchi sahifasiga tushmasin."""
+    v = str(v or "").strip()
+    if not v:
+        return None
+    if v.startswith("/exam-img/") and ".." not in v:
+        return v
+    if v.startswith("data:image/") and len(v) <= IMAGE_MAX_CHARS:
+        return v
+    raise HTTPException(400, f"{where}: rasm noto'g'ri yoki juda katta")
+
+
 def clean_parts(parts) -> list:
     """Test bazasidan kelgan bo'limlarni tekshiradi va savollarni
     1 dan boshlab raqamlaydi. Xato bo'lsa 400."""
@@ -97,6 +114,9 @@ def clean_parts(parts) -> list:
                 qid = f"{qid}_{n}"
             seen.add(qid)
             item = {"id": qid, "n": n, "type": typ, "q": text}
+            img = _clean_image(q.get("image"), f"{n}-savol")
+            if img:
+                item["image"] = img
             if typ == "choice":
                 opts = [str(o).strip() for o in (q.get("options") or [])
                         if str(o).strip()]
@@ -141,7 +161,7 @@ def public_parts(parts: list) -> list:
             **{k: p.get(k) for k in ("title", "instructions", "passage",
                                      "audio_url")},
             "questions": [{k: q.get(k) for k in ("id", "n", "type", "q",
-                                                 "options")}
+                                                 "options", "image")}
                           for q in p.get("questions") or []],
         })
     return out
@@ -384,7 +404,12 @@ def _answer_sheet(detail: list, qmap: dict) -> list:
         else:
             given_text = given if given not in (None, "") else None
             correct = " / ".join(q.get("answer") or [])
+        img = q.get("image") or ""
         out.append({**d, "part": q.get("part"), "q": q.get("q") or "",
+                    # Statik rasm (manzil) javob varag'ida ham ko'rinadi;
+                    # yuklangan (data:) rasm ro'yxatni og'irlashtirmasin
+                    "image": img if img.startswith("/exam-img/") else None,
+                    "has_image": bool(img),
                     "type": q.get("type"), "given_text": given_text,
                     "correct": correct})
     return out

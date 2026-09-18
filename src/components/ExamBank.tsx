@@ -21,6 +21,7 @@ type Q = {
   q: string;
   options?: string[];
   answer: number | string[];
+  image?: string | null;
 };
 type Part = {
   title: string;
@@ -51,6 +52,28 @@ const LEVELS = (() => {
 const ONLINE_KINDS = EXAM_KINDS.filter((k) => k.key !== "mock");
 const LETTERS = "ABCDEFGH";
 const inp = "w-full rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm";
+
+/** Savol rasmi: 480px gacha kichraytirib JPEG (data URL) qiladi. */
+function imageToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 480 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * k);
+      c.height = Math.round(img.height * k);
+      const ctx = c.getContext("2d")!;
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL("image/jpeg", 0.82));
+    };
+    img.onerror = () => reject(new Error("Rasmni o'qib bo'lmadi"));
+    img.src = url;
+  });
+}
 
 function blankPart(i: number): Part {
   return { title: `Part ${i}`, instructions: "", passage: "", audio_url: null, questions: [] };
@@ -352,6 +375,33 @@ function TemplateEditor({
                                     questions: p.questions.filter((_, j) => j !== qi),
                                   })}
                                   className="text-slate-300 hover:text-red-500 pt-1.5"><X size={15} /></button>
+                        )}
+                      </div>
+                      <div className="ml-8 mt-2 flex items-center gap-2">
+                        {q.image ? (
+                          <>
+                            <img src={q.image} alt="" className="h-16 rounded border border-slate-200" />
+                            {!readOnly && (
+                              <button type="button" onClick={() => setQ(pi, qi, { image: null })}
+                                      className="text-xs text-slate-400 hover:text-red-500">rasmni olib tashlash</button>
+                            )}
+                          </>
+                        ) : (
+                          !readOnly && (
+                            <label className="text-xs text-brand-600 cursor-pointer">
+                              + rasm
+                              <input type="file" accept="image/*" className="hidden"
+                                     onChange={async (e) => {
+                                       const file = e.target.files?.[0];
+                                       if (!file) return;
+                                       try {
+                                         setQ(pi, qi, { image: await imageToDataUrl(file) });
+                                       } catch (err) {
+                                         setError(err instanceof Error ? err.message : "Xatolik");
+                                       }
+                                     }} />
+                            </label>
+                          )
                         )}
                       </div>
                       {q.type === "choice" ? (

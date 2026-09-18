@@ -19,6 +19,7 @@ type Q = {
   type: "choice" | "text";
   q: string;
   options?: string[];
+  image?: string | null;
 };
 type Part = {
   title: string;
@@ -364,6 +365,13 @@ export default function ExamTake() {
           <div className="mt-4 space-y-5">
             {p.questions.map((q) => (
               <div key={q.id}>
+                {q.image && (
+                  <img
+                    src={q.image}
+                    alt=""
+                    className="max-h-40 max-w-full rounded-lg border border-slate-200 mb-2"
+                  />
+                )}
                 <p className="text-sm text-slate-800 mb-2">
                   <span className="font-semibold text-slate-500 mr-1.5">{q.n}.</span>
                   {q.q}

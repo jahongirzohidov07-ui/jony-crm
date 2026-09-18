@@ -55,6 +55,7 @@ ENTITIES = {
     "complaint": "Shikoyat",
     "reward": "Sovg'a",
     "exam": "Imtihon",
+    "exam_template": "Test bazasi",
     "discount": "Chegirma",
     "task": "Vazifa",
     "asset": "Aktiv",

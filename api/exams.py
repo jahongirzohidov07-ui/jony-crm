@@ -238,6 +238,15 @@ def save_exam_results(
 
     Natija kiritilishi bilan test "o'tkazildi" holatiga o'tadi."""
     exam = _exam_in_scope(db, exam_id, user)
+    return _apply_exam_marks(db, exam, payload, user)
+
+
+def _apply_exam_marks(db: Session, exam: models.Exam,
+                      payload: schemas.ExamScoreBulk, user):
+    """Natijalarni yozishning O'ZAGI — foiz, coin, Telegram, XP,
+    sertifikat. Qo'lda kiritish ham, online test (link) ham shu yerdan
+    o'tadi (2026-09-18). user — xodim yoki online test uchun
+    SimpleNamespace(id=None, role="system", full_name=...)."""
     # Tasdiqlanmagan testga natija kiritilmaydi: aks holda kim nima
     # bilan baholaganini nazorat qilib bo'lmaydi.
     if (exam.status or "done") == "draft":
@@ -358,7 +367,8 @@ def save_exam_results(
     # AVTOMAT XP: natija bandi, o'sish bonusi, unit/imtihon va mock.
     # Bitta natijaga faqat bitta band qoidasi ishlaydi.
     try:
-        _xp_for_exam(db, exam, by_user=user)
+        _xp_for_exam(db, exam, by_user=(
+            user if isinstance(user, models.User) else None))
     except Exception:
         db.rollback()
 

@@ -1,0 +1,532 @@
+import { useEffect, useState } from "react";
+import { Copy, Check, Link2, Lock, Unlock, X } from "lucide-react";
+import { api } from "../lib/api";
+import { levelLabel } from "../lib/subjects";
+
+/**
+ * ONLINE TEST — guruh testining linki (2026-09-18).
+ *
+ * Jahongir: "guruhga test biriktirganda unit midterm yoki end of course
+ * link paydo bo'lsin ... ismi familyasi xato yoki yangi o'quvchilar
+ * bo'lsa qizil chiziqdan pastdan alohida ko'rinsin examiner uni
+ * to'g'irlasa o'z o'rniga tushib qolsin".
+ *
+ * ExamSheet ichida ikki joyda chiqadi: jadval ustida link kartasi
+ * (OnlineLinkCard), jadval ostida Writing/Speaking va qizil chiziqdan
+ * pastdagi natijalar (OnlineBelow). Ma'lumot useExamOnline'dan.
+ */
+
+export type OnlineSubmission = {
+  id: number;
+  student_id: number | null;
+  student_name: string | null;
+  typed_name: string | null;
+  status: "placed" | "pending" | "duplicate" | "replaced" | "rejected";
+  online_score: number;
+  online_max: number;
+  paper_score: number | null;
+  submitted_at: string | null;
+  placed_by: string | null;
+  photo: string | null;
+  detail: { id: string; n: number; ok: boolean; given: string | null }[];
+};
+type TemplateRow = {
+  id: number;
+  level: string | null;
+  kind: string;
+  unit_no: number | null;
+  title: string;
+  q_count: number;
+  paper_max: number;
+};
+export type OnlineData = {
+  online: {
+    token: string;
+    is_open: boolean;
+    template_id: number;
+    template_title: string | null;
+    online_max: number;
+    paper_max: number;
+  } | null;
+  group_level: string | null;
+  can_manage: boolean;
+  templates: TemplateRow[];
+  submissions: OnlineSubmission[];
+};
+
+export function useExamOnline(examId: number, enabled: boolean) {
+  const [data, setData] = useState<OnlineData | null>(null);
+  function reload() {
+    if (!enabled) return;
+    api.fresh<OnlineData>(`/exams/${examId}/online`).then(setData).catch(() => {});
+  }
+  useEffect(reload, [examId, enabled]);
+  // Link ochiq turganda o'quvchilar topshirib turadi — 15 soniyada
+  // bir yangilanadi (examiner sahifani qayta ochmasin)
+  const isOpen = !!data?.online?.is_open;
+  useEffect(() => {
+    if (!enabled || !isOpen) return;
+    const t = setInterval(reload, 15000);
+    return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [examId, enabled, isOpen]);
+  return { data, setData, reload };
+}
+
+function when(iso: string | null) {
+  if (!iso) return "";
+  return new Date(iso).toLocaleString("uz-UZ", {
+    day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit",
+  });
+}
+
+export function Photo({ src, size = 32 }: { src: string | null; size?: number }) {
+  const [big, setBig] = useState(false);
+  if (!src) return null;
+  return (
+    <>
+      <img
+        src={src}
+        alt=""
+        onClick={(e) => {
+          e.stopPropagation();
+          setBig(true);
+        }}
+        style={{ width: size, height: size }}
+        className="rounded-lg object-cover cursor-zoom-in inline-block"
+      />
+      {big && (
+        <div
+          className="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4"
+          onClick={() => setBig(false)}
+        >
+          <img src={src} alt="" className="max-h-[80vh] max-w-full rounded-xl" />
+        </div>
+      )}
+    </>
+  );
+}
+
+/** Link kartasi: yaratish, nusxa olish, ochish/yopish. */
+export function OnlineLinkCard({
+  examId,
+  kind,
+  data,
+  setData,
+  onChanged,
+}: {
+  examId: number;
+  kind: string;
+  data: OnlineData | null;
+  setData: (d: OnlineData) => void;
+  onChanged: () => void;
+}) {
+  const [tplId, setTplId] = useState<number | "">("");
+  const [paper, setPaper] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (data && !data.online && data.templates.length && tplId === "") {
+      const t = data.templates[0];
+      setTplId(t.id);
+      setPaper(String(t.paper_max || 0));
+    }
+  }, [data, tplId]);
+
+  if (kind === "mock" || !data) return null;
+  const o = data.online;
+  const url = o ? `${window.location.origin}/t/${o.token}` : "";
+
+  async function run(fn: () => Promise<OnlineData>) {
+    setBusy(true);
+    setError(null);
+    try {
+      setData(await fn());
+      onChanged();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (!o) {
+    if (!data.can_manage) return null;
+    return (
+      <div className="border border-dashed border-slate-300 rounded-xl p-4 mb-4 bg-white">
+        <p className="text-sm font-medium text-slate-800 flex items-center gap-2 mb-2">
+          <Link2 size={15} className="text-brand-600" /> Online test linki
+        </p>
+        {data.templates.length === 0 ? (
+          <p className="text-xs text-slate-500">
+            Test bazasida bu tur/unit uchun test yo'q. Examinerlar boshlig'i
+            Audit → Test bazasi bo'limida qo'shadi.
+          </p>
+        ) : (
+          <div className="flex flex-wrap items-end gap-2">
+            <label className="text-xs text-slate-500">
+              Test
+              <select
+                className="block mt-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white max-w-[280px]"
+                value={tplId}
+                onChange={(e) => {
+                  const t = data.templates.find((x) => x.id === Number(e.target.value));
+                  setTplId(Number(e.target.value));
+                  if (t) setPaper(String(t.paper_max || 0));
+                }}
+              >
+                {data.templates.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.title} ({t.q_count} savol
+                    {t.level ? `, ${levelLabel(t.level)}` : ""}
+                    {t.level && data.group_level && t.level !== data.group_level
+                      ? " — boshqa daraja"
+                      : ""}
+                    )
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-xs text-slate-500">
+              Writing + Speaking (qog'oz), max
+              <input
+                type="number"
+                min={0}
+                className="block mt-1 w-28 rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+                value={paper}
+                onChange={(e) => setPaper(e.target.value)}
+              />
+            </label>
+            <button
+              disabled={busy || tplId === ""}
+              onClick={() =>
+                run(() =>
+                  api.post<OnlineData>(`/exams/${examId}/online`, {
+                    template_id: tplId,
+                    paper_max: Number(paper || 0),
+                  })
+                )
+              }
+              className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60"
+            >
+              Link yaratish
+            </button>
+          </div>
+        )}
+        {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+      </div>
+    );
+  }
+
+  const placed = data.submissions.filter((s) => s.status === "placed").length;
+  return (
+    <div className="border border-slate-200 rounded-xl p-4 mb-4 bg-white">
+      <div className="flex flex-wrap items-center gap-2">
+        <Link2 size={15} className="text-brand-600" />
+        <span className="text-sm font-medium text-slate-800">
+          Online test: {o.template_title}
+        </span>
+        <span
+          className={`text-[11px] font-medium px-2 py-0.5 rounded ${
+            o.is_open ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"
+          }`}
+        >
+          {o.is_open ? "ochiq" : "yopiq"}
+        </span>
+        <span className="text-xs text-slate-500">
+          {o.online_max} savol
+          {o.paper_max > 0 ? ` + qog'oz ${o.paper_max} ball` : ""} · topshirgan: {placed}
+        </span>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 mt-3">
+        <input
+          readOnly
+          value={url}
+          onFocus={(e) => e.target.select()}
+          className="flex-1 min-w-[200px] rounded-lg border border-slate-300 px-3 py-2 text-sm bg-slate-50 text-slate-700"
+        />
+        <button
+          onClick={() => {
+            navigator.clipboard?.writeText(url).then(() => {
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1500);
+            });
+          }}
+          className="inline-flex items-center gap-1.5 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+        >
+          {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
+          {copied ? "Nusxalandi" : "Nusxa olish"}
+        </button>
+        {data.can_manage && (
+          <button
+            disabled={busy}
+            onClick={() =>
+              run(() => api.put<OnlineData>(`/exams/${examId}/online`, { is_open: !o.is_open }))
+            }
+            className="inline-flex items-center gap-1.5 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+          >
+            {o.is_open ? <Lock size={14} /> : <Unlock size={14} />}
+            {o.is_open ? "Yopish" : "Ochish"}
+          </button>
+        )}
+        {data.can_manage && data.submissions.length === 0 && (
+          <button
+            disabled={busy}
+            title="Linkni o'chirish"
+            onClick={() => {
+              if (confirm("Link o'chirilsinmi?"))
+                run(() => api.delete<OnlineData>(`/exams/${examId}/online`));
+            }}
+            className="text-slate-300 hover:text-red-500 px-1"
+          >
+            <X size={16} />
+          </button>
+        )}
+      </div>
+      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+    </div>
+  );
+}
+
+/** Jadval ostida: Writing/Speaking kiritish va qizil chiziqdan
+ *  pastdagi (aniqlanmagan) natijalar. */
+export function OnlineBelow({
+  examId,
+  data,
+  setData,
+  students,
+  onChanged,
+}: {
+  examId: number;
+  data: OnlineData | null;
+  setData: (d: OnlineData) => void;
+  students: { id: number; full_name: string }[];
+  onChanged: () => void;
+}) {
+  const [paper, setPaper] = useState<Record<number, string>>({});
+  const [pick, setPick] = useState<Record<number, string>>({});
+  const [open, setOpen] = useState<number | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!data) return;
+    const next: Record<number, string> = {};
+    for (const s of data.submissions)
+      if (s.status === "placed" && s.student_id)
+        next[s.student_id] = s.paper_score != null ? String(s.paper_score) : "";
+    setPaper(next);
+  }, [data]);
+
+  if (!data || !data.online) return null;
+  const o = data.online;
+  const placed = data.submissions.filter((s) => s.status === "placed");
+  const below = data.submissions.filter(
+    (s) => s.status === "pending" || s.status === "duplicate"
+  );
+
+  async function run(fn: () => Promise<OnlineData>) {
+    setBusy(true);
+    setError(null);
+    try {
+      setData(await fn());
+      onChanged();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function Detail({ s }: { s: OnlineSubmission }) {
+    return (
+      <div className="flex flex-wrap gap-1 mt-2">
+        {s.detail.map((d) => (
+          <span
+            key={d.id}
+            title={d.given ?? "javob yo'q"}
+            className={`text-[11px] px-1.5 py-0.5 rounded ${
+              d.ok ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-600"
+            }`}
+          >
+            {d.n}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 space-y-4">
+      {error && <p className="text-sm text-red-600">{error}</p>}
+
+      {o.paper_max > 0 && placed.length > 0 && (
+        <div className="border border-slate-200 rounded-xl bg-white overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 bg-slate-50">
+            <p className="text-sm font-medium text-slate-700">
+              Writing + Speaking (qog'oz, max {o.paper_max})
+            </p>
+            {data.can_manage && (
+              <button
+                disabled={busy}
+                onClick={() =>
+                  run(() =>
+                    api.put<OnlineData>(`/exams/${examId}/paper`, {
+                      marks: placed.map((s) => ({
+                        student_id: s.student_id,
+                        paper:
+                          (paper[s.student_id!] ?? "").trim() === ""
+                            ? null
+                            : Number(paper[s.student_id!]),
+                      })),
+                    })
+                  )
+                }
+                className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
+              >
+                Saqlash
+              </button>
+            )}
+          </div>
+          <table className="w-full text-sm">
+            <tbody>
+              {placed.map((s) => {
+                const p = paper[s.student_id!] ?? "";
+                const total = p.trim() === "" ? null : s.online_score + Number(p);
+                return (
+                  <tr key={s.id} className="border-t border-slate-100">
+                    <td className="px-4 py-2 text-slate-800">
+                      <span className="inline-flex items-center gap-2">
+                        <Photo src={s.photo} size={28} />
+                        {s.student_name}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 text-slate-500 whitespace-nowrap">
+                      online {s.online_score}/{s.online_max}
+                    </td>
+                    <td className="px-4 py-2">
+                      <input
+                        type="number"
+                        min={0}
+                        max={o.paper_max}
+                        disabled={!data.can_manage}
+                        className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm"
+                        value={p}
+                        placeholder="—"
+                        onChange={(e) =>
+                          setPaper({ ...paper, [s.student_id!]: e.target.value })
+                        }
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-right font-medium text-slate-800 whitespace-nowrap">
+                      {total != null ? (
+                        `${total} / ${o.online_max + o.paper_max}`
+                      ) : (
+                        <span className="text-amber-600 text-xs font-normal">
+                          qog'oz kutilmoqda
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {below.length > 0 && (
+        <div>
+          <div className="border-t-2 border-red-500 mb-2" />
+          <p className="text-sm font-semibold text-red-600 mb-2">
+            Aniqlanmagan natijalar ({below.length}) — o'quvchiga biriktiring
+          </p>
+          <div className="space-y-2">
+            {below.map((s) => (
+              <div
+                key={s.id}
+                className="border border-red-200 bg-red-50/40 rounded-xl px-3 py-2.5"
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <Photo src={s.photo} size={44} />
+                  <div className="min-w-[140px]">
+                    <p className="text-sm font-medium text-slate-800">
+                      {s.typed_name || s.student_name || "—"}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {s.status === "duplicate"
+                        ? `${s.student_name} qayta topshirgan`
+                        : "Ro'yxatda yo'q / ism boshqacha"}
+                      {" · "}
+                      {when(s.submitted_at)}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setOpen(open === s.id ? null : s.id)}
+                    className="text-sm font-semibold text-slate-800 underline decoration-dotted"
+                    title="Javoblarni ko'rish"
+                  >
+                    {s.online_score}/{s.online_max}
+                  </button>
+                  {data.can_manage && (
+                    <div className="flex flex-wrap items-center gap-2 ml-auto">
+                      <select
+                        className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white max-w-[200px]"
+                        value={pick[s.id] ?? (s.student_id ? String(s.student_id) : "")}
+                        onChange={(e) => setPick({ ...pick, [s.id]: e.target.value })}
+                      >
+                        <option value="">O'quvchini tanlang</option>
+                        {students.map((st) => (
+                          <option key={st.id} value={st.id}>
+                            {st.full_name}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        disabled={busy || !(pick[s.id] ?? s.student_id)}
+                        onClick={() => {
+                          const sid = Number(pick[s.id] ?? s.student_id);
+                          const has = placed.find((x) => x.student_id === sid);
+                          if (
+                            has &&
+                            !confirm(
+                              `${has.student_name}ning avvalgi natijasi (${has.online_score}/${has.online_max}) shu natija bilan almashtirilsinmi?`
+                            )
+                          )
+                            return;
+                          run(() =>
+                            api.post<OnlineData>(`/exam-submissions/${s.id}/assign`, {
+                              student_id: sid,
+                            })
+                          );
+                        }}
+                        className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-50"
+                      >
+                        Biriktirish
+                      </button>
+                      <button
+                        disabled={busy}
+                        onClick={() => {
+                          if (confirm("Bu natija rad etilsinmi?"))
+                            run(() =>
+                              api.post<OnlineData>(`/exam-submissions/${s.id}/reject`, {})
+                            );
+                        }}
+                        className="text-xs text-slate-400 hover:text-red-600"
+                      >
+                        Rad etish
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {open === s.id && <Detail s={s} />}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

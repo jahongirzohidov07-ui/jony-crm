@@ -4229,3 +4229,78 @@ class AssignmentMedia(Base):
     mime = Column(String, default="audio/webm")
     data = deferred(Column(Text, nullable=False))    # base64 data URL
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+
+# ------------------------------------------------------ ONLINE TEST (link)
+# 2026-09-18, Jahongir: "guruhga test biriktirganda unit midterm yoki end
+# of course link paydo bo'lsin shu linkni examiner telegramdan tashlab
+# bersa o'quvchilar kirib baholay olsin natijalar to'g'ridan to'g'ri
+# guruhga biriktirilgan exam natijalarga tushaversin". Writing va
+# Speaking qog'ozda qoladi — examiner ularni qo'lda qo'shadi.
+
+class ExamTemplate(Base):
+    """Test bazasi: bitta daraja + tur + unit uchun savollar to'plami.
+
+    parts — JSON: [{title, instructions, passage, audio_url,
+    questions: [{id, n, type: "choice"|"text", q, options, answer}]}].
+    choice: answer = to'g'ri variant indeksi; text: answer = qabul
+    qilinadigan javoblar ro'yxati. Har savol 1 ball."""
+    __tablename__ = "exam_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    level = Column(String, nullable=True, index=True)   # Group.level (step1…)
+    kind = Column(String, nullable=False, default="unit")
+    unit_no = Column(Integer, nullable=True)
+    title = Column(String, nullable=False)
+    parts = Column(Text, nullable=False, default="[]")
+    # Writing + Speaking (qog'ozda) maksimal bali; 0 = yo'q
+    paper_max = Column(Float, nullable=False, default=0)
+    is_active = Column(Integer, nullable=False, default=1)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class ExamOnline(Base):
+    """Guruh testining online linki. Bitta testga bitta link."""
+    __tablename__ = "exam_online"
+
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=False,
+                     unique=True, index=True)
+    template_id = Column(Integer, ForeignKey("exam_templates.id"), nullable=False)
+    token = Column(String, nullable=False, unique=True, index=True)
+    is_open = Column(Integer, nullable=False, default=1)
+    # Link ochilgan paytdagi savollar nusxasi — bazadagi test keyin
+    # tahrirlansa ham shu testni yechganlar bir xil savol oladi.
+    parts = Column(Text, nullable=False, default="[]")
+    online_max = Column(Float, nullable=False, default=0)
+    paper_max = Column(Float, nullable=False, default=0)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ExamSubmission(Base):
+    """O'quvchining link orqali topshirgan javobi.
+
+    status: placed — guruhdagi o'quvchiga biriktirilgan (natijasi o'z
+    qatorida); pending — ro'yxatda yo'q / ism xato (qizil chiziqdan
+    pastda, examiner biriktiradi); duplicate — shu o'quvchi avval ham
+    topshirgan; replaced — o'rniga boshqasi qoldirilgan; rejected."""
+    __tablename__ = "exam_submissions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
+    typed_name = Column(String, nullable=True)
+    photo = deferred(Column(Text, nullable=True))   # data:image/jpeg;base64,…
+    answers = Column(Text, nullable=True)           # JSON {qid: javob}
+    detail = Column(Text, nullable=True)            # JSON [{id, n, ok, given}]
+    online_score = Column(Float, nullable=False, default=0)
+    online_max = Column(Float, nullable=False, default=0)
+    paper_score = Column(Float, nullable=True)      # Writing + Speaking
+    status = Column(String, nullable=False, default="pending")
+    ip = Column(String, nullable=True)
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+    placed_by = Column(String, nullable=True)
+    placed_at = Column(DateTime, nullable=True)

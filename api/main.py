@@ -116,6 +116,8 @@ import content as _r_content
 import dashboard as _r_dashboard
 import examiners as _r_examiners
 import exams as _r_exams
+# Online test — link orqali (2026-09-18)
+import exam_online as _r_exam_online
 import finance as _r_finance
 import gamification as _r_gamification
 import liveplay as _r_liveplay
@@ -162,6 +164,7 @@ app.include_router(_r_content.router)
 app.include_router(_r_dashboard.router)
 app.include_router(_r_examiners.router)
 app.include_router(_r_exams.router)
+app.include_router(_r_exam_online.router)
 app.include_router(_r_finance.router)
 app.include_router(_r_gamification.router)
 app.include_router(_r_liveplay.router)
@@ -206,6 +209,7 @@ try:
     with _BS(engine) as _db2:
         _seed_brand(_db2)
         _seed_kb(_db2)
+        _r_exam_online.seed_templates(_db2)
         _link_teacher_accounts(_db2)
 except Exception:
     pass

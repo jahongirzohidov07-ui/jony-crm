@@ -71,6 +71,7 @@ const MySchedule = lazy(() => import("./pages/MySchedule"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
 const Parent = lazy(() => import("./pages/Parent"));
 const Apply = lazy(() => import("./pages/Apply"));
+const ExamTake = lazy(() => import("./pages/ExamTake"));
 // Do'st ko'radigan marketing sahifasi — loginsiz (2026-08-28)
 const Referral = lazy(() => import("./pages/Referral"));
 const ParentHome = lazy(() => import("./pages/ParentHome"));
@@ -238,6 +239,8 @@ function AppRoutes() {
         {/* Jonli o'yin — ustoz/proyektor ekrani (to'liq ekran, yon menyusiz) */}
         <Route path="/live/:id" element={<RequireStaff><LiveHost /></RequireStaff>} />
         <Route path="/teacher-run/:lessonId" element={<RequireStaff><TeacherRun /></RequireStaff>} />
+        {/* Online test — loginsiz, link orqali (2026-09-18) */}
+        <Route path="/t/:token" element={<ExamTake />} />
         {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
         <Route path="/r/:code" element={<Referral />} />
         <Route path="/parent/:token" element={<Parent />}>

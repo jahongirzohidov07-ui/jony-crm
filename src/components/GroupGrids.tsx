@@ -20,6 +20,7 @@ import {
 import { formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "./Time24Input";
+import { useExamOnline, OnlineLinkCard, OnlineBelow, Photo } from "./ExamOnline";
 
 /** Sana ustuni sarlavhasi: "01 iyul" ko'rinishida qisqa. */
 const SHORT_MONTHS = [
@@ -1182,8 +1183,24 @@ function ExamSheet({
     }
   }
 
-  function load() {
-    api.get<ExamDetail>(`/exams/${examId}`).then((d) => {
+  // ONLINE TEST (2026-09-18): link, qog'oz ballari, aniqlanmagan natijalar
+  const online = useExamOnline(examId, true);
+  const placedCount = (online.data?.submissions || []).filter(
+    (s) => s.status === "placed"
+  ).length;
+  useEffect(() => {
+    if (placedCount) load(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placedCount]);
+  const onlineBy = Object.fromEntries(
+    (online.data?.submissions || [])
+      .filter((s) => s.status === "placed" && s.student_id)
+      .map((s) => [s.student_id as number, s])
+  );
+
+  function load(fresh = false) {
+    (fresh ? api.fresh<ExamDetail>(`/exams/${examId}`)
+           : api.get<ExamDetail>(`/exams/${examId}`)).then((d) => {
       setExam(d);
       const next: Record<number, string> = {};
       for (const r of d.results) {
@@ -1194,7 +1211,7 @@ function ExamSheet({
     });
   }
 
-  useEffect(load, [examId]);
+  useEffect(() => load(), [examId]);
   if (!exam) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
 
   const isMock = exam.kind === "mock";
@@ -1261,6 +1278,17 @@ function ExamSheet({
 
       {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
 
+      <OnlineLinkCard
+        examId={examId}
+        kind={exam.kind}
+        data={online.data}
+        setData={online.setData}
+        onChanged={() => {
+          load(true);
+          onChanged();
+        }}
+      />
+
       <div className="border border-slate-200 rounded-xl bg-white overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
@@ -1280,7 +1308,23 @@ function ExamSheet({
               return (
                 <tr key={s.id} className="border-t border-slate-100">
                   <td className="px-4 py-2.5 text-slate-800">
+                    {onlineBy[s.id] && (
+                      <span className="mr-2 align-middle">
+                        <Photo src={onlineBy[s.id].photo} size={24} />
+                      </span>
+                    )}
                     {s.full_name}
+                    {onlineBy[s.id] && (
+                      <span
+                        className="ml-2 text-[10px] font-medium bg-sky-50 text-sky-700 px-1.5 py-0.5 rounded"
+                        title="Link orqali topshirgan"
+                      >
+                        online {onlineBy[s.id].online_score}/{onlineBy[s.id].online_max}
+                        {online.data?.online?.paper_max && onlineBy[s.id].paper_score == null
+                          ? " · qog'oz kutilmoqda"
+                          : ""}
+                      </span>
+                    )}
                     {r && r.counted === 0 && (
                       <span
                         className="ml-2 text-[10px] font-medium bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded"
@@ -1383,6 +1427,17 @@ function ExamSheet({
           </tbody>
         </table>
       </div>
+
+      <OnlineBelow
+        examId={examId}
+        data={online.data}
+        setData={online.setData}
+        students={exam.students}
+        onChanged={() => {
+          load(true);
+          onChanged();
+        }}
+      />
 
       <p className="text-xs text-slate-400 mt-3">
         Faqat {isMock ? "band" : "ball"} kiriting — foiz va coin o'zi

@@ -111,6 +111,14 @@ def delete_exam(
     grp = db.query(models.Group).get(exam.group_id)
     for r in exam.results:
         _drop_coin_entry(db, "exam", r.id)
+    # Online test (link) yozuvlari imtihonga bog'langan — avval ular
+    # (2026-09-18: aks holda Postgres o'chirishga yo'l bermasdi, 500)
+    db.query(models.ExamSubmission).filter(
+        models.ExamSubmission.exam_id == exam.id).delete(
+            synchronize_session=False)
+    db.query(models.ExamOnline).filter(
+        models.ExamOnline.exam_id == exam.id).delete(
+            synchronize_session=False)
     db.delete(exam)
     db.commit()
     audit.log(db, user, entity="exam", action="delete", entity_id=exam_id,

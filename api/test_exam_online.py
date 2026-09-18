@@ -30,7 +30,15 @@ from fastapi.testclient import TestClient          # noqa: E402
 import main, models, roles                          # noqa: E402
 import entry  # noqa: F401,E402
 import exam_online                                  # noqa: E402
-from database import SessionLocal                   # noqa: E402
+from database import SessionLocal, engine           # noqa: E402
+from sqlalchemy import event                        # noqa: E402
+
+
+# Saytdagi Postgres kabi bog'lanishlar (FK) tekshirilsin — aks holda
+# imtihonni o'chirishdagi 500 xato testda ko'rinmas edi (2026-09-18)
+@event.listens_for(engine, "connect")
+def _fk_on(dbapi_conn, _rec):
+    dbapi_conn.execute("PRAGMA foreign_keys=ON")
 from auth import hash_password                      # noqa: E402
 
 client = TestClient(main.app)
@@ -275,6 +283,20 @@ ck("to'g'ri javobsiz rad",
    client.post("/api/exam-templates", headers=HB, json=bad).status_code, 400)
 ck("ishlatilgan test yashiriladi",
    client.delete(f"/api/exam-templates/{TID}", headers=HB).json()["hidden"], True)
+
+print("\n=== L. ONLINE TOPSHIRILGAN IMTIHONNI O'CHIRISH ===")
+r = client.delete(f"/api/exams/{EID}", headers=HB)
+ck("o'chirildi (500 emas)", r.status_code, 200)
+d = SessionLocal()
+ck("topshiriqlar ham o'chdi", d.query(models.ExamSubmission).filter(
+    models.ExamSubmission.exam_id == EID).count(), 0)
+ck("link ham o'chdi", d.query(models.ExamOnline).filter(
+    models.ExamOnline.exam_id == EID).count(), 0)
+d.close()
+ck("eski link endi 404",
+   client.get(f"/api/public/exam/{TOKEN}").status_code, 404)
+ck("ikkinchi test joyida",
+   client.get(f"/api/exams/{EID2}", headers=H).status_code, 200)
 
 print()
 print("HAMMASI O'TDI" if not fails else f"XATOLAR: {fails}")

@@ -920,9 +920,13 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
               .filter(models.ExamPassRule.kind == o.kind).first())
         _pass = _r.percent if _r else roles.DEFAULT_EXAM_PASS.get(o.kind)
 
+    import exam_online as _eo
+    _bank = _eo.bank_max(db, db.query(models.Group).get(o.group_id),
+                         o.kind, o.unit_no)
     ex = models.Exam(
         group_id=o.group_id, kind=o.kind, unit_no=o.unit_no,
         title=roles.exam_title(o.kind, o.unit_no),
+        max_score=_bank,
         date=o.date, status="approved", pass_percent=_pass,
         approved_by=user.full_name, approved_at=roles.local_today(),
         note=f"Buyurtma {o.public_id}",

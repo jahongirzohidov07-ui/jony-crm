@@ -221,6 +221,37 @@ r = client.post(f"/api/groups/{GID}/exams", headers=H, json={
 assert r.status_code == 200, r.text
 EID = r.json()["id"]
 
+print("\n=== A2. MAKSIMAL BALL TEST BAZASIDAN ===")
+ck("yangi Unit 1 testi: 50 yozilgan, bazadan 30", r.json()["max_score"], 30)
+ck("forma uchun: Unit 2 = 30",
+   client.get(f"/api/groups/{GID}/exam-bank-max?kind=unit&unit_no=2", headers=HE)
+   .json()["max_score"], 30)
+ck("forma uchun: Mid = 45",
+   client.get(f"/api/groups/{GID}/exam-bank-max?kind=mid", headers=HE)
+   .json()["max_score"], 45)
+ck("mock uchun yo'q",
+   client.get(f"/api/groups/{GID}/exam-bank-max?kind=mock", headers=HE)
+   .json()["max_score"], None)
+# Eski imtihonlar: natijasizi yangilanadi, natijalisi o'zgarmaydi
+d = SessionLocal()
+old_empty = models.Exam(group_id=GID, kind="unit", unit_no=2, date=TODAY,
+                        max_score=50, status="approved")
+old_done = models.Exam(group_id=GID, kind="unit", unit_no=3, date=TODAY,
+                       max_score=50, status="done")
+d.add_all([old_empty, old_done])
+d.commit()
+d.add(models.ExamResult(exam_id=old_done.id, student_id=S["Aliyev Ali"],
+                        score=40, percent=80.0, counted=1))
+d.commit()
+exam_online.fill_exam_max_from_bank(d, key="test_fill_v1")
+d.refresh(old_empty)
+d.refresh(old_done)
+ck("natijasiz eski test 30 bo'ldi", old_empty.max_score, 30)
+ck("natijali eski test 50 da qoldi", old_done.max_score, 50)
+ck("ikkinchi marta ishlamaydi",
+   exam_online.fill_exam_max_from_bank(d, key="test_fill_v1"), 0)
+d.close()
+
 print("\n=== B. LINK ===")
 r = client.post(f"/api/exams/{EID}/online", headers=HT,
                 json={"template_id": TID})

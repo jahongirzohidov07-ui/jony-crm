@@ -930,6 +930,13 @@ def create_exam(
         if not payload.unit_no or not (1 <= payload.unit_no <= roles.UNIT_COUNT):
             raise HTTPException(
                 400, f"Unit raqami 1-{roles.UNIT_COUNT} oralig'ida bo'lishi kerak")
+    # Test bazasida mos test bo'lsa — maksimal ball savollar soni
+    # (2026-09-18). Aks holda qo'lda kiritilgani.
+    import exam_online as _eo
+    _bank = _eo.bank_max(db, db.query(models.Group).get(group_id),
+                         payload.kind, payload.unit_no)
+    if _bank:
+        payload.max_score = _bank
     if payload.kind != "mock" and (not payload.max_score or payload.max_score <= 0):
         raise HTTPException(400, "Maksimal ballni kiriting")
 

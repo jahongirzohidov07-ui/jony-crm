@@ -236,6 +236,28 @@ def _place(db: Session, exam, online, sub, student_id: int, user) -> None:
     _write_result(db, exam, online, sub, user)
 
 
+def bank_max(db: Session, group, kind: str, unit_no=None):
+    """Test bazasidagi mos testning maksimal bali (savollar soni +
+    qog'oz qismi). Guruh darajasi, tur va unit bo'yicha; topilmasa None.
+    (2026-09-18, Jahongir: "xamma biriktirilgan test unitlarini
+    maksimal ballini test soniga qarab o'zing belgilab chiq")"""
+    if kind not in ("unit", "mid", "end") or not group or not group.level:
+        return None
+    q = db.query(models.ExamTemplate).filter(
+        models.ExamTemplate.is_active == 1,
+        models.ExamTemplate.level == group.level,
+        models.ExamTemplate.kind == kind)
+    if kind == "unit":
+        if not unit_no:
+            return None
+        q = q.filter(models.ExamTemplate.unit_no == unit_no)
+    t = q.order_by(models.ExamTemplate.id).first()
+    if not t:
+        return None
+    n = sum(1 for _ in _questions(_load(t.parts)))
+    return float(n) + float(t.paper_max or 0)
+
+
 def _exam_open_for_results(exam: models.Exam) -> bool:
     return (exam.status or "done") in ("approved", "done")
 
@@ -448,6 +470,16 @@ def _sub_out(s: models.ExamSubmission, names: dict,
         "photo": s.photo,
         "detail": _answer_sheet(_load(s.detail), qmap or {}),
     }
+
+
+@router.get("/api/groups/{group_id}/exam-bank-max")
+def exam_bank_max(group_id: int, kind: str, unit_no: Optional[int] = None,
+                  db: Session = Depends(get_db),
+                  user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """Yangi test formasi uchun: shu guruh darajasida mos test bazada
+    bo'lsa — maksimal ball (savollar soni)."""
+    group = _get_group_in_scope(db, group_id, user)
+    return {"max_score": bank_max(db, group, kind, unit_no)}
 
 
 @router.get("/api/exams/{exam_id}/online")
@@ -839,3 +871,38 @@ def seed_templates(db: Session) -> None:
                 paper_max=tpl.get("paper_max", 0), created_by="JonyOS"))
             db.commit()
         _seed_mark(db, key)
+    fill_exam_max_from_bank(db)
+
+
+def fill_exam_max_from_bank(db: Session, key: str = "exam_max_from_bank_v1"):
+    """BIR MARTALIK: mavjud imtihonlarning maksimal balini test bazasidagi
+    savollar soniga tenglaydi. Faqat natija kiritilmagan, link ochilmagan
+    va bekor qilinmagan Unit / Mid / End testlar — natijasi borlarining
+    foizi va coini o'zgarib ketmasin."""
+    if _seed_done(db, key):
+        return 0
+    changed = 0
+    try:
+        linked = {o.exam_id for o in db.query(models.ExamOnline).all()}
+        groups = {}
+        for ex in (db.query(models.Exam)
+                   .filter(models.Exam.kind.in_(("unit", "mid", "end")))
+                   .all()):
+            if ex.status == "cancelled" or ex.id in linked:
+                continue
+            if any(not r.absent and (r.score is not None or r.band is not None)
+                   for r in ex.results):
+                continue
+            if ex.group_id not in groups:
+                groups[ex.group_id] = db.query(models.Group).get(ex.group_id)
+            mx = bank_max(db, groups[ex.group_id], ex.kind, ex.unit_no)
+            if mx and ex.max_score != mx:
+                ex.max_score = mx
+                changed += 1
+        db.commit()
+        _seed_mark(db, key)
+        print(f"[exam-bank] maksimal ball yangilandi: {changed} ta imtihon")
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[exam-bank] maksimal ball yangilanmadi: {e}")
+    return changed

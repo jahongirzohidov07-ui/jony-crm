@@ -982,6 +982,23 @@ function ExamForm({
   const passPercent = exam
     ? exam.pass_percent ?? undefined
     : passRules.find((r) => r.kind === kind)?.percent;
+  // Test bazasida mos test bo'lsa — maksimal ball savollar soniga teng
+  // va qo'lda o'zgartirilmaydi (2026-09-18)
+  const [bankMax, setBankMax] = useState<number | null>(null);
+  useEffect(() => {
+    if (exam || kind === "mock") {
+      setBankMax(null);
+      return;
+    }
+    const q = kind === "unit" ? `&unit_no=${unitNo}` : "";
+    api
+      .get<{ max_score: number | null }>(`/groups/${groupId}/exam-bank-max?kind=${kind}${q}`)
+      .then((r) => {
+        setBankMax(r.max_score);
+        if (r.max_score) setMaxScore(String(r.max_score));
+      })
+      .catch(() => setBankMax(null));
+  }, [exam, kind, unitNo, groupId]);
 
   async function save() {
     setSaving(true);
@@ -1094,10 +1111,17 @@ function ExamForm({
                 </label>
                 <input
                   type="number"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  disabled={!!bankMax}
+                  title={bankMax ? "Test bazasidagi savollar soni" : undefined}
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:bg-slate-50"
                   value={maxScore}
                   onChange={(e) => setMaxScore(e.target.value)}
                 />
+                {bankMax ? (
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Test bazasidan: {bankMax} savol
+                  </p>
+                ) : null}
               </div>
             )}
           </div>

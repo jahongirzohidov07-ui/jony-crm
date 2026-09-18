@@ -452,7 +452,11 @@ export default function Layout() {
     items = [...items, { to: "/academic", label: "O'quv bo'limi", icon: AcademicIcon }];
     // DARS REJALARI + jonli o'yin (2026-09-18, Jahongir: "saytgayam
     // qoy ... kahoot korinishidagi oyinlar ... har bir unitda").
-    items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
+    // Faqat ingliz tili ustozlariga (boshqa til ustozlariga — o'z rejasi
+    // tuzilganda). Rahbariyatga har doim.
+    if (user?.english_teacher !== false) {
+      items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
+    }
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.

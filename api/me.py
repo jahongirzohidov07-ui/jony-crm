@@ -64,6 +64,23 @@ _VOLUNTEER_HINT = ("Siz hozir Volontyor bosqichidasiz - bu tajriba "
                    "ko'rinadi.")
 
 
+ENGLISH_SUBJECTS = ("english", "kids_english")
+
+
+def is_english_teacher(db: Session, user) -> bool:
+    """Dars rejalari faqat INGLIZ TILI ustozlariga (2026-09-18, Jahongir:
+    "barcha ingliz til ustozlariga chiqsin boshqa ustozlarga chiqmasin").
+    Ustoz/support bo'lmagan xodimlar uchun cheklov yo'q. Fani yozilmagan
+    ustoz — inglizchi deb qabul qilinadi (yopib qo'ymaslik uchun)."""
+    if user.role not in (roles.TEACHER, roles.SUPPORT_TEACHER):
+        return True
+    t = _teacher_of_user(db, user)
+    subj = (getattr(t, "subject", None) or "").strip().lower()
+    if not subj:
+        return True
+    return any(x.strip() in ENGLISH_SUBJECTS for x in subj.split(","))
+
+
 def _is_volunteer(db: Session, user) -> bool:
     """Volontyor darajadagi support/examinerga oylik KO'RINMAYDI.
 
@@ -225,6 +242,8 @@ def my_identity(db: Session = Depends(get_db),
         # Hamkor markaz (Stech) rahbari — o'z markazida asoschi kabi
         # (2026-09-17). Frontend shu bo'yicha tugmalarni ochadi.
         "partner_head": _is_partner_head(user),
+        # Dars rejalari / jonli o'yin faqat ingliz tili ustozlariga
+        "english_teacher": is_english_teacher(db, user),
     }
 
 @router.get("/api/me/permissions")

@@ -3452,7 +3452,8 @@ def _teacher_exam_results(db: Session, teacher_id: int, *,
     if not gids:
         return []
     q = (db.query(models.Exam)
-         .filter(models.Exam.group_id.in_(gids), models.Exam.date >= since))
+         .filter(models.Exam.group_id.in_(gids), models.Exam.date >= since,
+                 models.Exam.kind != "kahoot"))   # o'yin — KPI emas
     if kinds:
         q = q.filter(models.Exam.kind.in_(kinds))
     exams = q.all()
@@ -4455,7 +4456,8 @@ def _my_exam_cards(db: Session, user: models.User,
                    branch_id: int | None = None) -> list:
     today = date.today()
     m_start, _e = billing.month_bounds(today.year, today.month)
-    exams = db.query(models.Exam).filter(models.Exam.date >= m_start).all()
+    exams = db.query(models.Exam).filter(models.Exam.date >= m_start,
+                                         models.Exam.kind != "kahoot").all()
     draft = [e for e in exams if (e.status or "done") == "draft"]
     done = [e for e in exams if e.status == "done"]
     return [

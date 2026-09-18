@@ -36,6 +36,9 @@ import models
 import roles
 from auth import require_role
 from database import get_db
+from me import is_english_teacher
+from common import (_get_group_in_scope, _group_students, _sync_coin_entry,
+                    _teacher_owns, scope_to_branch)
 
 router = APIRouter()
 
@@ -109,14 +112,24 @@ def _level(course: str, title: str, cefr: str) -> dict:
             "ready_count": sum(1 for L in lessons if L.get("ready"))}
 
 
+def _english_only(db, user):
+    """Ingliz tili rejalari — faqat ingliz tili ustozlariga (boshqa til
+    ustozlariga o'zlarining rejasi tuzilganda ochiladi)."""
+    if not is_english_teacher(db, user):
+        raise HTTPException(403, "Bu bo'lim hozircha faqat ingliz tili ustozlari uchun")
+
+
 @router.get("/api/plans")
-def list_plans(user=Depends(require_role(*roles.TEACHING_ACCESS))):
+def list_plans(db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    _english_only(db, user)
     return [_level(c, t, cefr) for c, t, cefr in LEVELS]
 
 
 @router.get("/api/plans/{course}/{no}")
-def get_plan(course: str, no: int,
+def get_plan(course: str, no: int, db: Session = Depends(get_db),
              user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    _english_only(db, user)
     return _lesson(course, no)
 
 
@@ -149,28 +162,34 @@ def _mk(rnd, kind, prompt, correct, distractors, explain=None, sub=None):
 
 
 def _vocab_questions(rnd, entries) -> list:
-    out = []
+    """Har so'z uchun 3 xil savol (tarjima, inglizchasi, gapdagi bo'sh joy)
+    — avval har so'zdan bittadan, keyin ikkinchi turi... Shunda 20 so'zdan
+    kamida 20 (kerak bo'lsa 40–60) savol chiqadi."""
     words = [_head(e[0]) for e in entries]
     uzs = [e[1] for e in entries]
+    per_word = []
     for e in entries:
         w, uz = _head(e[0]), e[1]
         ex, ex_uz = (e[2] if len(e) > 2 else ""), (e[3] if len(e) > 3 else "")
-        t = rnd.choice(["uz", "en", "gap"])
-        if t == "gap" and ex and re.search(r"\b" + re.escape(w) + r"\b", ex, re.I):
+        variants = []
+        d = _pick_distractors(rnd, uzs, uz)
+        if d:
+            variants.append(_mk(rnd, "vocab", f"«{w}» — tarjimasi?", uz, d))
+        d = _pick_distractors(rnd, words, w)
+        if d:
+            variants.append(_mk(rnd, "vocab", f"«{uz}» — inglizchasi?", w, d))
+        if ex and re.search(r"\b" + re.escape(w) + r"\b", ex, re.I):
             d = _pick_distractors(rnd, words, w)
             if d:
                 gap = re.sub(r"\b" + re.escape(w) + r"\b", "_____", ex, count=1, flags=re.I)
-                out.append(_mk(rnd, "vocab", gap, w, d, sub=ex_uz or None))
-                continue
-            t = "uz"
-        if t == "en":
-            d = _pick_distractors(rnd, words, w)
-            if d:
-                out.append(_mk(rnd, "vocab", f"«{uz}» — inglizchasi?", w, d))
-                continue
-        d = _pick_distractors(rnd, uzs, uz)
-        if d:
-            out.append(_mk(rnd, "vocab", f"«{w}» — tarjimasi?", uz, d))
+                variants.append(_mk(rnd, "vocab", gap, w, d, sub=ex_uz or None))
+        rnd.shuffle(variants)
+        per_word.append(variants)
+    out = []
+    for round_no in range(3):
+        layer = [v[round_no] for v in per_word if len(v) > round_no]
+        rnd.shuffle(layer)
+        out.extend(layer)
     return out
 
 
@@ -216,7 +235,6 @@ def build_questions(L: dict, mode: str, count: int, seed=None) -> list:
         voc = _vocab_questions(rnd, core + strong)
     if mode in ("grammar", "mixed"):
         gram = _grammar_questions(rnd, L)
-    rnd.shuffle(voc)
     rnd.shuffle(gram)
     if mode == "mixed":
         half = count // 2
@@ -240,14 +258,16 @@ MODES = {"vocab": "Lug'at (CORE 20)", "vocab40": "Lug'at (40 so'z)",
 class GameIn(BaseModel):
     course: str
     lesson_no: int
+    group_id: int              # ustoz O'Z guruhini tanlaydi (coin uchun)
     mode: str = "mixed"
-    count: int = 12
+    count: int = 20            # kamida 20 savol (Jahongir)
     seconds: int = 20
 
 
 class JoinIn(BaseModel):
     code: str
-    nickname: str
+    nickname: Optional[str] = None
+    student_id: Optional[int] = None   # ro'yxatdan tanlangan o'quvchi
 
 
 class AnswerIn(BaseModel):
@@ -299,7 +319,9 @@ def _leaderboard(db, g, limit=None) -> list:
         models.LivePlayer.game_id == g.id).all()
     ps.sort(key=lambda p: (-(p.score or 0), p.joined_at or _now()))
     rows = [{"id": p.id, "nickname": p.nickname, "score": p.score or 0,
-             "rank": i + 1} for i, p in enumerate(ps)]
+             "rank": i + 1, "student_id": p.student_id,
+             "coins": p.coins or 0, "correct": p.correct_count or 0}
+            for i, p in enumerate(ps)]
     return rows[:limit] if limit else rows
 
 
@@ -315,14 +337,26 @@ def _game_or_404(db, gid: int, user):
 @router.post("/api/live/games")
 def create_game(body: GameIn, db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    _english_only(db, user)
     if body.mode not in MODES:
         raise HTTPException(400, "Rejim noto'g'ri")
     L = _lesson(body.course, body.lesson_no)
-    count = max(3, min(30, int(body.count or 12)))
+    group = _get_group_in_scope(db, body.group_id, user)
+    # Kamida 20 savol (2026-09-18, Jahongir: "savollar soni kamida 20ta
+    # bo'lishi kerak"). Dars shuncha savol bermasa — lug'atning 40
+    # so'zli ro'yxatidan to'ldiriladi.
+    count = max(20, min(60, int(body.count or 20)))
     secs = max(5, min(90, int(body.seconds or 20)))
     qs = build_questions(L, body.mode, count)
+    if len(qs) < count and body.mode != "vocab40":
+        extra = build_questions(L, "vocab40", count)
+        seen = {q["prompt"] for q in qs}
+        qs += [q for q in extra if q["prompt"] not in seen][:count - len(qs)]
+    if len(qs) < 20:
+        raise HTTPException(400, "Bu dars uchun 20 ta savol tuzib bo'lmadi")
     g = models.LiveGame(
         code=_new_code(db), course=body.course, lesson_no=body.lesson_no,
+        group_id=group.id,
         mode=body.mode, title=f"Dars {L['no']} — {L['title']}",
         questions=json.dumps(qs, ensure_ascii=False), question_seconds=secs,
         status="lobby", q_index=-1, host_user_id=user.id,
@@ -332,6 +366,24 @@ def create_game(body: GameIn, db: Session = Depends(get_db),
     db.commit()
     db.refresh(g)
     return _host_state(db, g)
+
+
+@router.get("/api/live/groups")
+def my_groups(db: Session = Depends(get_db),
+              user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """O'yin ochishda tanlash uchun guruhlar: ustoz — faqat o'z
+    guruhlari, rahbariyat — filialdagi hammasi. Har guruh bilan
+    o'quvchilar ro'yxati (ism tanlash uchun)."""
+    q = scope_to_branch(db.query(models.Group), models.Group, user)
+    out = []
+    for grp in q.order_by(models.Group.name).all():
+        if user.role in tuple(roles.OWN_GROUPS_ONLY) and not _teacher_owns(db, grp, user):
+            continue
+        studs = [st for st in _group_students(db, grp.id)
+                 if (st.status or "active") in ("active", "trial")]
+        out.append({"id": grp.id, "name": grp.name,
+                    "students": [{"id": st.id, "name": st.full_name} for st in studs]})
+    return out
 
 
 @router.get("/api/live/games")
@@ -364,8 +416,11 @@ def _host_state(db, g) -> dict:
             answered += 1
             if 0 <= (a.option_index or 0) < len(counts):
                 counts[a.option_index] += 1
+    grp = db.query(models.Group).get(g.group_id) if g.group_id else None
     return {
         "id": g.id, "code": g.code, "title": g.title, "mode": g.mode,
+        "group": grp.name if grp else None, "group_id": g.group_id,
+        "exam_id": g.exam_id,
         "mode_label": MODES.get(g.mode, g.mode), "status": g.status,
         "q_index": i, "total": len(qs), "seconds": g.question_seconds,
         "elapsed_ms": _elapsed_ms(g) if g.status == "question" else None,
@@ -397,6 +452,7 @@ def next_step(gid: int, db: Session = Depends(get_db),
     elif g.status == "reveal":
         if g.q_index + 1 >= len(qs):
             g.status, g.ended_at = "ended", _now()
+            _finalize(db, g, user)
         else:
             g.q_index += 1
             g.status, g.q_started_at = "question", _now()
@@ -404,34 +460,121 @@ def next_step(gid: int, db: Session = Depends(get_db),
     return _host_state(db, g)
 
 
+def _finalize(db, g, user) -> None:
+    """O'yin tugagach: natija IMTIHONLAR bo'limiga (kind="kahoot") yoziladi
+    va coin AVTOMAT beriladi (2026-09-18, Jahongir): 100% to'g'ri —
+    hammaga 3 coin; 1-o'rin +3, 2-o'rin +2, 3-o'rin +1. Faqat ro'yxatdan
+    tanlangan (student_id bor) o'quvchilar; bir marta."""
+    if g.exam_id or not g.group_id:
+        return
+    qs = _qs(g)
+    total = len(qs)
+    board = _leaderboard(db, g)
+    players = {p.id: p for p in db.query(models.LivePlayer).filter(
+        models.LivePlayer.game_id == g.id).all()}
+    correct_by = {}
+    for a in db.query(models.LiveAnswer).filter(models.LiveAnswer.game_id == g.id).all():
+        if a.correct:
+            correct_by[a.player_id] = correct_by.get(a.player_id, 0) + 1
+    exam = models.Exam(group_id=g.group_id, kind="kahoot", title=f"Kahoot: {g.title}",
+                       date=datetime.utcnow().date(), max_score=float(total),
+                       status="done", created_by=user.full_name,
+                       note=f"Jonli o'yin, {total} savol, {len(board)} o'yinchi")
+    db.add(exam)
+    db.flush()
+    place_bonus = {1: 3, 2: 2, 3: 1}
+    used_students = set()
+    for row in board:
+        p = players.get(row["id"])
+        if not p:
+            continue
+        p.correct_count = correct_by.get(p.id, 0)
+        if not p.student_id or p.student_id in used_students:
+            continue
+        used_students.add(p.student_id)
+        pct = round(100.0 * p.correct_count / total, 1) if total else 0.0
+        coins = (3 if p.correct_count == total and total > 0 else 0) + place_bonus.get(row["rank"], 0)
+        p.coins = coins
+        res = models.ExamResult(exam_id=exam.id, student_id=p.student_id,
+                                score=float(p.correct_count), percent=pct, coins=coins,
+                                note=f"{row['rank']}-o'rin, {row['score']} ball")
+        db.add(res)
+        db.flush()
+        if coins:
+            parts = []
+            if p.correct_count == total:
+                parts.append("100% to'g'ri +3")
+            if row["rank"] in place_bonus:
+                parts.append(f"{row['rank']}-o'rin +{place_bonus[row['rank']]}")
+            _sync_coin_entry(db, student_id=p.student_id, source="kahoot", ref_id=res.id,
+                             amount=coins, note=f"Kahoot: {g.title} ({', '.join(parts)})",
+                             created_by=user.full_name)
+    g.exam_id = exam.id
+    db.commit()
+
+
 @router.post("/api/live/games/{gid}/end")
 def end_game(gid: int, db: Session = Depends(get_db),
              user=Depends(require_role(*roles.TEACHING_ACCESS))):
     g = _game_or_404(db, gid, user)
-    g.status, g.ended_at = "ended", _now()
+    if g.status != "ended":
+        g.status, g.ended_at = "ended", _now()
+        _finalize(db, g, user)
     db.commit()
     return _host_state(db, g)
 
 
 # ---- O'quvchi tomoni (loginsiz) ---------------------------------
-@router.post("/api/live/join")
-def join(body: JoinIn, db: Session = Depends(get_db)):
-    code = re.sub(r"\D", "", body.code or "")
-    nick = re.sub(r"\s+", " ", (body.nickname or "").strip())[:24]
-    if len(nick) < 2:
-        raise HTTPException(400, "Ismingizni yozing")
+def _open_game(db, code: str):
+    code = re.sub(r"\D", "", code or "")
     g = db.query(models.LiveGame).filter(models.LiveGame.code == code,
                                          models.LiveGame.status != "ended").first()
     if not g:
         raise HTTPException(404, "Bunday PIN bilan o'yin topilmadi")
+    return g
+
+
+@router.get("/api/live/lobby/{code}")
+def lobby(code: str, db: Session = Depends(get_db)):
+    """Kirishdan oldin: guruh o'quvchilari ro'yxati — o'quvchi o'z ismini
+    tanlaydi (ro'yxatda bo'lmasa — o'zi yozadi). Loginsiz."""
+    g = _open_game(db, code)
+    taken = {p.student_id for p in db.query(models.LivePlayer).filter(
+        models.LivePlayer.game_id == g.id).all() if p.student_id}
+    studs = _group_students(db, g.group_id) if g.group_id else []
+    grp = db.query(models.Group).get(g.group_id) if g.group_id else None
+    return {"title": g.title, "status": g.status, "group": grp.name if grp else None,
+            "students": [{"id": st.id, "name": st.full_name, "taken": st.id in taken}
+                         for st in studs if (st.status or "active") in ("active", "trial")]}
+
+
+@router.post("/api/live/join")
+def join(body: JoinIn, db: Session = Depends(get_db)):
+    g = _open_game(db, body.code)
     if g.status != "lobby":
         raise HTTPException(400, "O'yin allaqachon boshlangan")
-    taken = db.query(models.LivePlayer).filter(
-        models.LivePlayer.game_id == g.id,
-        models.LivePlayer.nickname.ilike(nick)).first()
-    if taken:
-        raise HTTPException(400, "Bu ism band — boshqasini yozing")
-    p = models.LivePlayer(game_id=g.id, nickname=nick, token=secrets.token_urlsafe(18),
+    student_id = None
+    if body.student_id:
+        st = db.query(models.Student).filter(models.Student.id == body.student_id,
+                                             models.Student.group_id == g.group_id).first()
+        if not st:
+            raise HTTPException(400, "Bu o'quvchi guruhda yo'q")
+        dup = db.query(models.LivePlayer).filter(models.LivePlayer.game_id == g.id,
+                                                 models.LivePlayer.student_id == st.id).first()
+        if dup:
+            raise HTTPException(400, "Bu ism allaqachon tanlangan")
+        nick, student_id = st.full_name[:40], st.id
+    else:
+        nick = re.sub(r"\s+", " ", (body.nickname or "").strip())[:24]
+        if len(nick) < 2:
+            raise HTTPException(400, "Ismingizni yozing")
+        taken = db.query(models.LivePlayer).filter(
+            models.LivePlayer.game_id == g.id,
+            models.LivePlayer.nickname.ilike(nick)).first()
+        if taken:
+            raise HTTPException(400, "Bu ism band — boshqasini yozing")
+    p = models.LivePlayer(game_id=g.id, nickname=nick, student_id=student_id,
+                          token=secrets.token_urlsafe(18),
                           score=0, streak=0, joined_at=_now())
     db.add(p)
     db.commit()
@@ -480,6 +623,9 @@ def player_state(token: str, db: Session = Depends(get_db)):
         out["top"] = board[:5]
     if g.status == "ended":
         out["top"] = board[:10]
+        out["coins"] = p.coins or 0
+        out["correct"] = p.correct_count or 0
+        out["linked"] = bool(p.student_id)
     return out
 
 

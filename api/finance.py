@@ -859,6 +859,12 @@ def reject_payment_fix(
     _close_request_tasks(db, f"To'lovni tuzatish so'rovi #{r.id}",
                          f"Rad etildi ({user.full_name})")
     db.commit()
+    # Auditga (2026-09-18, Jahongir: "hammasi auditda saqlansin") —
+    # tasdiqlash kabi rad etish ham iz qoldiradi.
+    audit.log(db, user, entity="payment", action="fix_reject",
+              entity_id=r.payment_id, entity_label=_fix_label(r),
+              field=r.kind, new_value=r.decision_note or "rad etildi",
+              commit=True)
     try:
         if r.requested_by_id:
             t = models.Task(

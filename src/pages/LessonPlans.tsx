@@ -16,6 +16,7 @@ type Summary = { no: number; title: string; grammar_topic: string; vocab_topic: 
   test_after: string; audios: string; reading: boolean; words: number; ready: boolean; writing?: string };
 type Level = { course: string; title: string; cefr: string; ready: boolean;
   ready_count: number; lessons: Summary[] };
+type LiveGroup = { id: number; name: string; students: { id: number; name: string }[] };
 
 type Ex = { title: string; type?: string; instr?: string; items?: string[];
   answers?: string[] | string; note?: string; box?: string[] };
@@ -160,20 +161,30 @@ function LessonView({ course, no }: { course: string; no: number }) {
   const [tab, setTab] = useState<Tab>("plan");
   const [err, setErr] = useState("");
   const [mode, setMode] = useState("mixed");
-  const [count, setCount] = useState(12);
+  const [count, setCount] = useState(20);
   const [secs, setSecs] = useState(20);
   const [busy, setBusy] = useState(false);
+  const [groups, setGroups] = useState<LiveGroup[]>([]);
+  const [groupId, setGroupId] = useState<number | "">("");
 
   useEffect(() => {
     setL(null);
     api.get<Lesson>(`/plans/${course}/${no}`).then(setL).catch((e) => setErr(e.message));
   }, [course, no]);
+  // Ustoz o'z guruhini tanlaydi — coin va natija shu guruhga yoziladi
+  useEffect(() => {
+    api.get<LiveGroup[]>("/live/groups").then((g) => {
+      setGroups(g);
+      if (g.length === 1) setGroupId(g[0].id);
+    }).catch(() => {});
+  }, []);
 
   async function startGame() {
+    if (!groupId) { setErr("Avval guruhni tanlang"); return; }
     setBusy(true); setErr("");
     try {
       const g = await api.post<{ id: number }>("/live/games",
-        { course, lesson_no: no, mode, count, seconds: secs });
+        { course, lesson_no: no, group_id: groupId, mode, count: Math.max(20, count), seconds: secs });
       nav(`/live/${g.id}`);
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
@@ -201,13 +212,18 @@ function LessonView({ course, no }: { course: string; no: number }) {
         </div>
         <div className="bg-gradient-to-br from-brand-600 to-indigo-700 text-white rounded-2xl p-4 w-full md:w-80 shadow">
           <div className="font-semibold flex items-center gap-2 mb-2"><Gamepad2 size={18} /> Jonli o'yin (Kahoot)</div>
+          <select value={groupId} onChange={(e) => setGroupId(e.target.value ? Number(e.target.value) : "")}
+                  className="w-full text-slate-900 bg-white rounded-lg px-2 py-1.5 text-sm mb-2">
+            <option value="">Guruhni tanlang…</option>
+            {groups.map((g) => <option key={g.id} value={g.id}>{g.name} ({g.students.length} o'quvchi)</option>)}
+          </select>
           <select value={mode} onChange={(e) => setMode(e.target.value)}
                   className="w-full text-slate-900 bg-white rounded-lg px-2 py-1.5 text-sm mb-2">
             {MODES.map((m) => <option key={m.key} value={m.key}>{m.label}</option>)}
           </select>
           <div className="grid grid-cols-2 gap-2 text-sm mb-3">
             <label className="flex flex-col gap-0.5"><span className="text-white/80 text-xs">Savollar</span>
-              <input type="number" min={3} max={30} value={count} onChange={(e) => setCount(Number(e.target.value))}
+              <input type="number" min={20} max={60} value={count} onChange={(e) => setCount(Number(e.target.value))}
                      className="text-slate-900 bg-white rounded-lg px-2 py-1" /></label>
             <label className="flex flex-col gap-0.5"><span className="text-white/80 text-xs">Soniya / savol</span>
               <input type="number" min={5} max={90} value={secs} onChange={(e) => setSecs(Number(e.target.value))}
@@ -217,7 +233,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
                   className="w-full bg-white text-brand-700 font-bold rounded-xl py-2.5 disabled:opacity-50">
             O'yin ochish → PIN + QR
           </button>
-          <div className="text-[11px] text-white/70 mt-2">O'quvchilar jonyos.uz/play sahifasidan PIN bilan kiradi. To'g'ri + tez = ko'proq ball.</div>
+          <div className="text-[11px] text-white/70 mt-2">O'quvchilar jonyos.uz/play sahifasidan PIN bilan kirib, ro'yxatdan ismini tanlaydi. Kamida 20 savol. Coin avtomat: 100% to'g'ri — 3, 1-o'rin +3, 2-o'rin +2, 3-o'rin +1. Natija guruh imtihonlarida saqlanadi.</div>
           {err && <div className="text-xs bg-rose-500/80 rounded px-2 py-1 mt-2">{err}</div>}
         </div>
       </div>

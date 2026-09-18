@@ -155,6 +155,13 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_live_answers_player_q "
         "ON live_answers (player_id, q_index)",
     ]),
+    # 2026-09-18: o'yin guruhga bog'lanadi, o'quvchi ro'yxatdan tanlanadi,
+    # coin avtomat (live_games.group_id/exam_id, live_players.student_id/
+    # correct_count/coins). Ustunlarni _ensure_new_columns qo'shadi.
+    ("0017_live_games_group_coins", [
+        "CREATE INDEX IF NOT EXISTS ix_live_players_student "
+        "ON live_players (student_id)",
+    ]),
 ]
 
 

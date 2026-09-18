@@ -4091,6 +4091,10 @@ class LiveGame(Base):
     q_started_at = Column(DateTime, nullable=True)
     host_user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    # Qaysi guruh uchun (coin va imtihon natijasi shu guruhga yoziladi)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True, index=True)
+    # Tugagach yaratilgan imtihon yozuvi (kind="kahoot") — bir marta
+    exam_id = Column(Integer, ForeignKey("exams.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     ended_at = Column(DateTime, nullable=True)
 
@@ -4101,9 +4105,13 @@ class LivePlayer(Base):
     id = Column(Integer, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("live_games.id"), nullable=False, index=True)
     nickname = Column(String, nullable=False)
+    # Ro'yxatdan tanlangan o'quvchi (coin shu yerga boradi); NULL = mehmon
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)
     token = Column(String, nullable=False, index=True)       # telefon sessiyasi
     score = Column(Integer, default=0)
     streak = Column(Integer, default=0)
+    correct_count = Column(Integer, default=0)               # yakunda hisoblanadi
+    coins = Column(Integer, default=0)                       # yakunda berilgan coin
     joined_at = Column(DateTime, default=datetime.utcnow)
 
 

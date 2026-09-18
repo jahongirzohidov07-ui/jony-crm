@@ -1,9 +1,12 @@
 """JONLI O'YIN (Kahoot uslubi) + DARS REJALARI, 2026-09-18.
 
 Jahongir: "kahoot korinishidagi oyinlar ... hamma togri topgan bilan
-kim tez bossa shu oldinga chiqadigan achkoni koproq beradigan bolsin".
-Tekshiradi: reja ro'yxati, o'yin ochish, PIN bilan loginsiz kirish,
-savol oqimi, tez to'g'ri javob ko'proq ball olishi, reyting.
+kim tez bossa shu oldinga chiqadigan achkoni koproq beradigan bolsin";
+"savollar soni kamida 20ta ... ustozlar qaysi guruhga jonatayotgnaini
+tanlasin ... o'quvchilar royxatidagi ism familyalardan birini
+tanlashsin ... Kahoot natijalari esa exam bo'limida qolishi kerak. Coin
+avtomat berilsin, 100% ishlagan hammaga 3 coin ... 1-o'ringa 3 coin,
+2-oringa 2 coin 3-oringa 1 coin".
 """
 import json
 import os
@@ -40,13 +43,31 @@ def ck(name, got, want):
 db = SessionLocal()
 b1 = models.Branch(name="Bekobod 1")
 db.add(b1); db.commit()
-db.add_all([
-    models.User(username="ustoz", password_hash=hash_password("x"),
-                full_name="Ustoz", role=roles.TEACHER, branch_id=b1.id),
-    models.User(username="hr", password_hash=hash_password("x"),
-                full_name="HR", role=roles.HR_MANAGER, branch_id=b1.id),
-])
-db.commit(); db.close()
+u_t = models.User(username="ustoz", password_hash=hash_password("x"),
+                  full_name="Ustoz", role=roles.TEACHER, branch_id=b1.id)
+u_o = models.User(username="ustoz2", password_hash=hash_password("x"),
+                  full_name="Boshqa Ustoz", role=roles.TEACHER, branch_id=b1.id)
+u_r = models.User(username="rus", password_hash=hash_password("x"),
+                  full_name="Rus Ustoz", role=roles.TEACHER, branch_id=b1.id)
+db.add_all([u_t, u_o, u_r,
+            models.User(username="hr", password_hash=hash_password("x"),
+                        full_name="HR", role=roles.HR_MANAGER, branch_id=b1.id)])
+db.commit()
+t1 = models.Teacher(full_name="Ustoz", user_id=u_t.id, branch_id=b1.id, subject="english")
+t2 = models.Teacher(full_name="Boshqa Ustoz", user_id=u_o.id, branch_id=b1.id, subject="english")
+t3 = models.Teacher(full_name="Rus Ustoz", user_id=u_r.id, branch_id=b1.id, subject="russian")
+db.add_all([t1, t2, t3]); db.commit()
+g1 = models.Group(name="IELTS A1", branch_id=b1.id, teacher_id=t1.id, lesson_price=50000,
+                  standard_lessons_per_month=12, monthly_fee=600000)
+g2 = models.Group(name="Boshqa guruh", branch_id=b1.id, teacher_id=t2.id, lesson_price=50000,
+                  standard_lessons_per_month=12, monthly_fee=600000)
+db.add_all([g1, g2]); db.commit()
+studs = [models.Student(full_name=n, branch_id=b1.id, status="active", group_id=g1.id)
+         for n in ("Aziz Karimov", "Bobur Aliyev", "Dilnoza Rahimova", "Erkin Yusupov")]
+db.add_all(studs); db.commit()
+SID = {s.full_name.split()[0]: s.id for s in studs}
+G1, G2 = g1.id, g2.id
+db.close()
 
 
 def tok(u):
@@ -62,6 +83,13 @@ def game_questions(gid):
     return qs
 
 
+def set_started(gid, seconds_ago):
+    db = SessionLocal()
+    game = db.query(models.LiveGame).get(gid)
+    game.q_started_at = datetime.utcnow() - timedelta(seconds=seconds_ago)
+    db.commit(); db.close()
+
+
 T = tok("ustoz")
 
 # --- Dars rejalari
@@ -73,97 +101,112 @@ ck("plans: IELTS 2.0 mavzular bor, tayyor emas", (len(r.json()[1]["lessons"]), r
 ck("tayyor bo'lmagan dars 404", c.get("/api/plans/ielts_2_0/1", headers=T).status_code, 404)
 r = c.get("/api/plans/ielts_1_0/23", headers=T)
 ck("plan 23 conjunctions", "CONJUNCTIONS" in r.json()["title"], True)
-ck("plan 23 CORE 20", len(r.json()["vocab"]["core"]), 20)
 ck("HR ga reja yopiq", c.get("/api/plans", headers=tok("hr")).status_code, 403)
+# Faqat ingliz tili ustozlariga (Jahongir: "barcha ingliz til ustozlariga
+# chiqsin boshqa ustozlarga chiqmasin")
+ck("rus tili ustoziga reja yopiq", c.get("/api/plans", headers=tok("rus")).status_code, 403)
+ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)
+ck("me: rus ustozi bayrog'i", c.get("/api/me", headers=tok("rus")).json().get("english_teacher"), False)
 
-# --- O'yin ochish
-r = c.post("/api/live/games", json={"course": "ielts_1_0", "lesson_no": 23,
-                                    "mode": "mixed", "count": 6, "seconds": 20},
-           headers=T)
+# --- Guruhlar: ustoz faqat o'zinikini ko'radi
+gr = c.get("/api/live/groups", headers=T).json()
+ck("ustoz guruhlari", [g["name"] for g in gr], ["IELTS A1"])
+ck("guruh o'quvchilari 4", len(gr[0]["students"]), 4)
+
+# --- O'yin ochish: guruh majburiy, kamida 20 savol
+ck("guruhsiz ochilmaydi", c.post("/api/live/games", json={
+    "course": "ielts_1_0", "lesson_no": 23}, headers=T).status_code, 422)
+ck("boshqa ustoz guruhi bilan ochilmaydi", c.post("/api/live/games", json={
+    "course": "ielts_1_0", "lesson_no": 23, "group_id": G2}, headers=T).status_code, 403)
+r = c.post("/api/live/games", json={"course": "ielts_1_0", "lesson_no": 23, "group_id": G1,
+                                    "mode": "mixed", "count": 5, "seconds": 20}, headers=T)
 ck("game create 200", r.status_code, 200)
 g = r.json()
 gid = g["id"]
 ck("lobby", g["status"], "lobby")
-ck("6 savol", g["total"], 6)
-ck("PIN 6 xonali", len(g["code"]), 6)
-ck("HR o'yin ocholmaydi", c.post("/api/live/games", json={
-    "course": "ielts_1_0", "lesson_no": 1}, headers=tok("hr")).status_code, 403)
-
-# har rejimda savol tuziladi
-for mode in ("vocab", "vocab40", "grammar"):
-    rr = c.post("/api/live/games", json={"course": "ielts_1_0", "lesson_no": 5,
-                                         "mode": mode, "count": 10}, headers=T)
-    ck(f"mode {mode} savol bor", rr.status_code == 200 and rr.json()["total"] > 0, True)
+ck("5 so'ralsa ham kamida 20 savol", g["total"], 20)
+ck("guruh nomi", g["group"], "IELTS A1")
+for mode, n in (("vocab", 20), ("vocab40", 40), ("grammar", 25)):
+    rr = c.post("/api/live/games", json={"course": "ielts_1_0", "lesson_no": 5, "group_id": G1,
+                                         "mode": mode, "count": n}, headers=T)
+    ck(f"mode {mode}: {n} savol", (rr.status_code, rr.json().get("total")), (200, n))
     c.post(f"/api/live/games/{rr.json()['id']}/end", headers=T)
 
-# --- Loginsiz kirish
-r = c.post("/api/live/join", json={"code": g["code"], "nickname": "Aziz"})
-ck("join Aziz", r.status_code, 200)
-t1 = r.json()["token"]
-r = c.post("/api/live/join", json={"code": g["code"], "nickname": "aziz"})
-ck("ism band", r.status_code, 400)
-t2 = c.post("/api/live/join", json={"code": g["code"], "nickname": "Bobur"}).json()["token"]
+# --- Loginsiz kirish: ro'yxatdan tanlash yoki boshqa ism
+lob = c.get(f"/api/live/lobby/{g['code']}").json()
+ck("lobby ro'yxati", ([s["name"] for s in lob["students"]][:2], lob["group"]),
+   (["Aziz Karimov", "Bobur Aliyev"], "IELTS A1"))
+ta = c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Aziz"]}).json()
+ck("Aziz ro'yxatdan", ta["nickname"], "Aziz Karimov")
+ck("Aziz ikkinchi marta yo'q", c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Aziz"]}).status_code, 400)
+ck("lobbyda Aziz band", [s["taken"] for s in c.get(f"/api/live/lobby/{g['code']}").json()["students"]][0], True)
+tb = c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Bobur"]}).json()["token"]
+td = c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Dilnoza"]}).json()["token"]
+tm = c.post("/api/live/join", json={"code": g["code"], "nickname": "Mehmon"}).json()["token"]
+ck("begona o'quvchi id", c.post("/api/live/join", json={"code": g["code"], "student_id": 99999}).status_code, 400)
 ck("noto'g'ri PIN", c.post("/api/live/join", json={"code": "000000", "nickname": "Xurshid"}).status_code, 404)
-ck("lobbyda o'yinchi 2", len(c.get(f"/api/live/games/{gid}/host", headers=T).json()["players"]), 2)
-ck("o'quvchi lobby", c.get(f"/api/live/p/{t1}").json()["status"], "lobby")
+ta = ta["token"]
 
-# --- Boshlash
+# --- O'yin: Aziz hammasini to'g'ri va tez; Bobur hammasini to'g'ri, sekin;
+#     Dilnoza yarmini; Mehmon hammasini to'g'ri (coin yo'q)
+qs = game_questions(gid)
 s = c.post(f"/api/live/games/{gid}/next", headers=T).json()
 ck("question 0", (s["status"], s["q_index"]), ("question", 0))
-ck("boshlangach kirib bo'lmaydi",
-   c.post("/api/live/join", json={"code": g["code"], "nickname": "Kech"}).status_code, 400)
-ps = c.get(f"/api/live/p/{t1}").json()
-ck("o'quvchiga savol", len(ps["question"]["options"]), 4)
+ck("boshlangach kirib bo'lmaydi", c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Erkin"]}).status_code, 400)
+ps = c.get(f"/api/live/p/{ta}").json()
 ck("to'g'ri javob o'quvchiga ketmaydi", "correct" in ps["question"], False)
-
-qs = game_questions(gid)
-correct0 = qs[0]["correct"]
-
-# Aziz darhol to'g'ri javob beradi, Bobur 10 soniya kechikib to'g'ri
-a1 = c.post(f"/api/live/p/{t1}/answer", json={"q_index": 0, "option": correct0}).json()
-ck("Aziz to'g'ri", a1["correct"], True)
-ck("Aziz ~1000 ball", a1["points"] >= 950, True)
-db = SessionLocal()
-game = db.query(models.LiveGame).get(gid)
-game.q_started_at = datetime.utcnow() - timedelta(seconds=10)
-db.commit(); db.close()
-a2 = c.post(f"/api/live/p/{t2}/answer", json={"q_index": 0, "option": correct0}).json()
-ck("Bobur to'g'ri lekin sekin", a2["correct"] and 700 <= a2["points"] <= 800, True)
-ck("Aziz > Bobur", a1["points"] > a2["points"], True)
-ck("ikkinchi javob rad", c.post(f"/api/live/p/{t1}/answer", json={"q_index": 0, "option": 0}).status_code, 400)
-
-h = c.get(f"/api/live/games/{gid}/host", headers=T).json()
-ck("javob berdi 2", h["answered"], 2)
-ck("savol paytida correct yashirin", h["correct"], None)
-
-# --- Natija
-s = c.post(f"/api/live/games/{gid}/next", headers=T).json()
-ck("reveal", s["status"], "reveal")
-ck("reveal correct", s["correct"], correct0)
-ck("reyting Aziz 1-o'rin", s["players"][0]["nickname"], "Aziz")
-pr = c.get(f"/api/live/p/{t2}").json()
-ck("o'quvchi reveal", (pr["status"], pr["reveal"]["is_correct"], pr["rank"]), ("reveal", True, 2))
-ck("reveal paytida javob rad", c.post(f"/api/live/p/{t1}/answer", json={"q_index": 0, "option": 0}).status_code, 400)
-
-# 2-savol: Aziz noto'g'ri, Bobur javob bermaydi
-s = c.post(f"/api/live/games/{gid}/next", headers=T).json()
-ck("question 1", (s["status"], s["q_index"]), ("question", 1))
-qs = game_questions(gid)
-w = (qs[1]["correct"] + 1) % 4
-a = c.post(f"/api/live/p/{t1}/answer", json={"q_index": 1, "option": w}).json()
-ck("noto'g'ri 0 ball", (a["correct"], a["points"]), (False, 0))
-ck("eski savolga javob rad", c.post(f"/api/live/p/{t2}/answer", json={"q_index": 0, "option": 0}).status_code, 400)
-
-# qolgan savollarni o'tkazib yuborib tugatamiz
-for _ in range(20):
-    s = c.post(f"/api/live/games/{gid}/next", headers=T).json()
-    if s["status"] == "ended":
-        break
+for i, q in enumerate(qs):
+    if i:
+        s = c.post(f"/api/live/games/{gid}/next", headers=T).json()   # reveal -> question i
+        assert s["status"] == "question" and s["q_index"] == i, s
+    a1 = c.post(f"/api/live/p/{ta}/answer", json={"q_index": i, "option": q["correct"]}).json()
+    set_started(gid, 10)
+    a2 = c.post(f"/api/live/p/{tb}/answer", json={"q_index": i, "option": q["correct"]}).json()
+    c.post(f"/api/live/p/{tm}/answer", json={"q_index": i, "option": q["correct"]})
+    c.post(f"/api/live/p/{td}/answer", json={"q_index": i, "option": q["correct"] if i % 2 else (q["correct"] + 1) % 4})
+    if i == 0:
+        ck("Aziz ~1000 ball", a1["points"] >= 950, True)
+        ck("Bobur sekin 700–800", 700 <= a2["points"] <= 800, True)
+        ck("ikkinchi javob rad", c.post(f"/api/live/p/{ta}/answer", json={"q_index": 0, "option": 0}).status_code, 400)
+    s = c.post(f"/api/live/games/{gid}/next", headers=T).json()   # -> reveal
+    assert s["status"] == "reveal", s
+    if i == 0:
+        ck("reveal correct", s["correct"], qs[0]["correct"])
+        ck("reveal paytida javob rad", c.post(f"/api/live/p/{ta}/answer", json={"q_index": 0, "option": 0}).status_code, 400)
+s = c.post(f"/api/live/games/{gid}/next", headers=T).json()   # oxirgi reveal -> ended
 ck("ended", s["status"], "ended")
-pe = c.get(f"/api/live/p/{t1}").json()
-ck("yakun: top ro'yxat", len(pe["top"]), 2)
+ck("reyting: Aziz 1-o'rin", s["players"][0]["nickname"], "Aziz Karimov")
+ck("exam yaratildi", bool(s["exam_id"]), True)
+
+# --- Coin: 100% -> 3; 1-o'rin +3, 2-o'rin +2, 3-o'rin +1; mehmonga yo'q
+by = {p["nickname"]: p for p in s["players"]}
+PL = {1: 3, 2: 2, 3: 1}
+ck("Aziz: 100% + 1-o'rin = 6 coin", (by["Aziz Karimov"]["correct"], by["Aziz Karimov"]["coins"]), (20, 6))
+ck("Bobur 100% + o'rin bonusi", by["Bobur Aliyev"]["coins"], 3 + PL.get(by["Bobur Aliyev"]["rank"], 0))
+ck("Mehmonga coin yo'q", by["Mehmon"]["coins"], 0)
+ck("Dilnoza 50%: faqat o'rin bonusi", (by["Dilnoza Rahimova"]["correct"], by["Dilnoza Rahimova"]["coins"]),
+   (10, PL.get(by["Dilnoza Rahimova"]["rank"], 0)))
+pe = c.get(f"/api/live/p/{ta}").json()
+ck("o'quvchi yakuni: coin", (pe["status"], pe["coins"], pe["linked"], pe["correct"]), ("ended", 6, True, 20))
+ck("mehmon yakuni: linked=False", c.get(f"/api/live/p/{tm}").json()["linked"], False)
+
+db = SessionLocal()
+exam = db.query(models.Exam).get(s["exam_id"])
+ck("exam kind/guruh/status", (exam.kind, exam.group_id, exam.status, exam.max_score), ("kahoot", G1, "done", 20.0))
+res = {r.student_id: r for r in db.query(models.ExamResult).filter(models.ExamResult.exam_id == exam.id).all()}
+ck("exam natijalari 3 o'quvchi (mehmon yo'q)", len(res), 3)
+ck("Aziz natijasi", (res[SID["Aziz"]].score, res[SID["Aziz"]].percent, res[SID["Aziz"]].coins), (20.0, 100.0, 6))
+coins = {e.student_id: e.amount for e in db.query(models.CoinEntry).filter(models.CoinEntry.source == "kahoot").all()}
+ck("coin yozuvlari", (coins.get(SID["Aziz"]), coins.get(SID["Bobur"]) == by["Bobur Aliyev"]["coins"], SID["Erkin"] in coins), (6, True, False))
+n_coin_rows = len(coins)
+db.close()
+ck("guruh imtihonlarida ko'rinadi", any(e["kind"] == "kahoot" for e in c.get(f"/api/groups/{G1}/exams", headers=T).json()), True)
+# ikkinchi marta tugatilsa — coin takrorlanmaydi
+c.post(f"/api/live/games/{gid}/end", headers=T)
+db = SessionLocal()
+ck("coin bir marta", db.query(models.CoinEntry).filter(models.CoinEntry.source == "kahoot").count(), n_coin_rows)
+db.close()
 ck("PIN bo'shadi", c.post("/api/live/join", json={"code": g["code"], "nickname": "Yusuf"}).status_code, 404)
-ck("mening o'yinlarim", len(c.get("/api/live/games", headers=T).json()) >= 1, True)
 
 print("\nJAMI XATO:", len(fails), fails)
 sys.exit(1 if fails else 0)

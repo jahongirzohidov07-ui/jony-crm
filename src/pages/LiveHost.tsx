@@ -15,9 +15,11 @@ import { OPT, Board } from "./Play";
  * Server 1.5 soniyada so'raladi; vaqt tugagach natija o'zi ochiladi.
  */
 
-type Top = { id: number; nickname: string; score: number; rank: number };
+type Top = { id: number; nickname: string; score: number; rank: number;
+  student_id?: number | null; coins?: number; correct?: number };
 type Host = {
   id: number; code: string; title: string; mode_label: string;
+  group?: string | null; group_id?: number | null; exam_id?: number | null;
   status: "lobby" | "question" | "reveal" | "ended";
   q_index: number; total: number; seconds: number; elapsed_ms: number | null;
   question: { index: number; total: number; prompt: string; sub?: string | null; options: string[] } | null;
@@ -103,7 +105,7 @@ export default function LiveHost() {
           <BrandIcon size={30} />
           <div>
             <div className="font-bold leading-tight">{st.title}</div>
-            <div className="text-xs text-white/70">{st.mode_label} · {st.total} savol · {st.seconds} soniya</div>
+            <div className="text-xs text-white/70">{st.group ? `${st.group} · ` : ""}{st.mode_label} · {st.total} savol · {st.seconds} soniya</div>
           </div>
         </div>
         <div className="flex items-center gap-4 text-sm">
@@ -220,7 +222,11 @@ export default function LiveHost() {
               </div>
             ) : <div key={i} />)}
           </div>
-          <div className="text-slate-900"><Board rows={st.players} /></div>
+          <div className="text-slate-900"><Board rows={st.players} showCoins /></div>
+          <div className="bg-white/10 rounded-xl px-4 py-3 mt-4 text-sm text-white/90">
+            🪙 Coinlar avtomat berildi: 100% to'g'ri — 3 coin; 1-o'rin +3, 2-o'rin +2, 3-o'rin +1.
+            {st.exam_id ? " Natija guruh imtihonlari bo'limiga yozildi." : " (Ro'yxatdan tanlanmagan mehmonlarga coin berilmaydi.)"}
+          </div>
           <div className="text-center mt-6">
             <Link to="/plans" className="bg-white text-brand-700 font-semibold rounded-xl px-6 py-3 inline-block">Dars rejalariga qaytish</Link>
           </div>

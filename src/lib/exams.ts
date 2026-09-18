@@ -10,9 +10,14 @@ export const EXAM_KINDS = [
 export const UNIT_COUNT = 12;
 export const MOCK_MAX_BAND = 9;
 
+/** Qo'lda yaratilmaydigan turlar (ro'yxatda ko'rinadi, tanlanmaydi). */
+const EXTRA_KIND_LABELS: Record<string, string> = {
+  kahoot: "Kahoot (jonli o'yin)",
+};
+
 export function examKindLabel(key?: string | null): string {
   if (!key) return "";
-  return EXAM_KINDS.find((k) => k.key === key)?.label || key;
+  return EXAM_KINDS.find((k) => k.key === key)?.label || EXTRA_KIND_LABELS[key] || key;
 }
 
 /** Ro'yxatda ko'rinadigan to'liq nom: "Unit 3" yoki "Mock test". */
@@ -29,6 +34,7 @@ export function examTitle(e: {
 export const COIN_SOURCE_LABELS: Record<string, string> = {
   daily: "Kunlik baho",
   exam: "Imtihon",
+  kahoot: "Kahoot o'yini",
   manual: "Qo'lda",
   reward: "Sovg'a",
   teacher_deduct: "Ustoz ayirdi (intizom)",

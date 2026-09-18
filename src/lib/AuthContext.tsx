@@ -28,6 +28,8 @@ interface AuthUser {
   salary_hidden?: boolean;
   /** Hamkor markaz (Stech) rahbari — o'z markazida asoschi kabi. */
   partner_head?: boolean;
+  /** Dars rejalari / jonli o'yin — faqat ingliz tili ustozlariga (2026-09-18). */
+  english_teacher?: boolean;
 }
 
 interface AuthContextValue {
@@ -82,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         roles?: AuthRole[];
         salary_hidden?: boolean;
         partner_head?: boolean;
+        english_teacher?: boolean;
       }>("/me")
       .then((r) => {
         const u = {
@@ -92,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           roles: r.roles ?? [],
           salary_hidden: r.salary_hidden ?? false,
           partner_head: r.partner_head ?? false,
+          english_teacher: r.english_teacher ?? true,
         };
         // Qaysi omborda saqlangan bo'lsa, o'shani yangilaymiz
         (localStorage.getItem("jony_crm_user")
@@ -106,7 +110,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           (prev.branches?.length ?? 0) === u.branches.length &&
           (prev.roles?.length ?? 0) === u.roles.length &&
           (prev.salary_hidden ?? false) === u.salary_hidden &&
-          (prev.partner_head ?? false) === u.partner_head
+          (prev.partner_head ?? false) === u.partner_head &&
+          (prev.english_teacher ?? true) === u.english_teacher
             ? prev
             : u,
         );

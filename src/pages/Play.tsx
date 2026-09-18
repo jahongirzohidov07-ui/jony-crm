@@ -16,7 +16,10 @@ import { BrandIcon } from "../components/BrandIcon";
 
 type Q = { index: number; total: number; kind: string; prompt: string;
   sub?: string | null; options: string[]; seconds: number };
-type Top = { id: number; nickname: string; score: number; rank: number };
+type Top = { id: number; nickname: string; score: number; rank: number;
+  student_id?: number | null; coins?: number; correct?: number };
+type Lobby = { title: string; status: string; group: string | null;
+  students: { id: number; name: string; taken: boolean }[] };
 type State = {
   status: "lobby" | "question" | "reveal" | "ended";
   title: string; nickname: string; score: number; rank: number | null;
@@ -25,6 +28,7 @@ type State = {
   reveal?: { prompt: string; options: string[]; correct: number; explain?: string | null;
     my_option: number | null; is_correct: boolean; points: number };
   top?: Top[];
+  coins?: number; correct?: number; linked?: boolean;
 };
 
 const TOKEN_KEY = "jony_live_token";
@@ -63,6 +67,8 @@ export default function Play() {
   const [busy, setBusy] = useState(false);
   const [picked, setPicked] = useState<number | null>(null);
   const [gone, setGone] = useState(0); // savol boshidan o'tgan ms
+  const [lobby, setLobby] = useState<Lobby | null>(null); // ro'yxat (ism tanlash)
+  const [other, setOther] = useState(false);              // "Boshqa ism" rejimi
   const seenQ = useRef<number>(-1);
   const startedAt = useRef<number>(0);
 
@@ -96,10 +102,24 @@ export default function Play() {
     return () => clearInterval(t);
   }, [st?.status, st?.q_index]);
 
-  async function join() {
+  // 1-qadam: PIN -> guruh o'quvchilari ro'yxati (2026-09-18, Jahongir:
+  // "o'quvchilar royxatidagi ism familyalardan birini tanlashsin agar
+  // yoq bolsa boshqa yozadigan bolishi kerak").
+  async function lookup() {
     setErr(""); setBusy(true);
     try {
-      const r = await call<{ token: string }>("/live/join", { code, nickname: nick });
+      const l = await call<Lobby>(`/live/lobby/${code}`);
+      if (l.status !== "lobby") throw new Error("O'yin allaqachon boshlangan");
+      setLobby(l); setOther(l.students.length === 0);
+    } catch (e) { setErr((e as Error).message); }
+    finally { setBusy(false); }
+  }
+
+  async function join(studentId?: number) {
+    setErr(""); setBusy(true);
+    try {
+      const r = await call<{ token: string }>("/live/join",
+        studentId ? { code, student_id: studentId } : { code, nickname: nick });
       sessionStorage.setItem(TOKEN_KEY, r.token);
       seenQ.current = -1;
       setToken(r.token);
@@ -135,15 +155,50 @@ export default function Play() {
           <input value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
                  inputMode="numeric" placeholder="123456"
                  className="w-full text-center text-3xl tracking-[0.3em] font-bold border-2 border-slate-200 rounded-xl px-3 py-3 mb-3 focus:border-brand-500 outline-none" />
-          <label className="block text-xs font-medium text-slate-600 mb-1">Ismingiz</label>
-          <input value={nick} onChange={(e) => setNick(e.target.value)} maxLength={24}
-                 placeholder="Masalan: Aziz" onKeyDown={(e) => e.key === "Enter" && join()}
-                 className="w-full text-lg border-2 border-slate-200 rounded-xl px-3 py-2.5 mb-3 focus:border-brand-500 outline-none" />
-          {err && <div className="text-sm text-rose-600 mb-2">{err}</div>}
-          <button onClick={join} disabled={busy || code.length < 6 || nick.trim().length < 2}
-                  className="w-full bg-brand-600 hover:bg-brand-500 disabled:opacity-40 text-white font-semibold rounded-xl py-3 text-lg">
-            Kirish
-          </button>
+          {!lobby ? (
+            <>
+              {err && <div className="text-sm text-rose-600 mb-2">{err}</div>}
+              <button onClick={lookup} disabled={busy || code.length < 6}
+                      className="w-full bg-brand-600 hover:bg-brand-500 disabled:opacity-40 text-white font-semibold rounded-xl py-3 text-lg">
+                Davom etish
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="text-xs text-slate-500 mb-2">{lobby.title}{lobby.group ? ` · ${lobby.group}` : ""}</div>
+              {!other && (
+                <>
+                  <label className="block text-xs font-medium text-slate-600 mb-1">Ro'yxatdan ismingizni tanlang</label>
+                  <div className="max-h-64 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 mb-2">
+                    {lobby.students.map((s) => (
+                      <button key={s.id} disabled={s.taken || busy} onClick={() => join(s.id)}
+                              className="w-full text-left px-3 py-2.5 text-sm hover:bg-brand-50 disabled:opacity-40 disabled:line-through">
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+                  <button onClick={() => setOther(true)} className="text-xs text-brand-600 underline mb-2">Ismim ro'yxatda yo'q — boshqa ism yozaman</button>
+                </>
+              )}
+              {other && (
+                <>
+                  <label className="block text-xs font-medium text-slate-600 mb-1">Ismingiz</label>
+                  <input value={nick} onChange={(e) => setNick(e.target.value)} maxLength={24}
+                         placeholder="Masalan: Aziz" onKeyDown={(e) => e.key === "Enter" && join()}
+                         className="w-full text-lg border-2 border-slate-200 rounded-xl px-3 py-2.5 mb-2 focus:border-brand-500 outline-none" />
+                  <div className="text-[11px] text-slate-400 mb-2">Eslatma: ro'yxatdan tanlanmagan ishtirokchiga coin yozilmaydi.</div>
+                  {lobby.students.length > 0 && <button onClick={() => setOther(false)} className="text-xs text-brand-600 underline mb-2">Ro'yxatga qaytish</button>}
+                </>
+              )}
+              {err && <div className="text-sm text-rose-600 mb-2">{err}</div>}
+              {other && (
+                <button onClick={() => join()} disabled={busy || nick.trim().length < 2}
+                        className="w-full bg-brand-600 hover:bg-brand-500 disabled:opacity-40 text-white font-semibold rounded-xl py-3 text-lg">
+                  Kirish
+                </button>
+              )}
+            </>
+          )}
         </div>
       </Shell>
     );
@@ -249,7 +304,12 @@ export default function Play() {
         <Card>
           <div className="text-4xl mb-1">🏆</div>
           <div className="text-2xl font-bold text-slate-900">O'yin tugadi</div>
-          <div className="text-slate-600 mt-1">{st.nickname}, siz <b>#{st.rank ?? "–"}</b> o'rindasiz — {st.score} ball</div>
+          <div className="text-slate-600 mt-1">{st.nickname}, siz <b>#{st.rank ?? "–"}</b> o'rindasiz — {st.score} ball · {st.correct ?? 0}/{st.total} to'g'ri</div>
+          {st.linked ? (
+            <div className="mt-2 text-lg font-semibold text-amber-600">🪙 +{st.coins ?? 0} coin{(st.coins ?? 0) ? " hisobingizga qo'shildi" : ""}</div>
+          ) : (
+            <div className="mt-2 text-xs text-slate-400">Coin faqat ro'yxatdan tanlangan o'quvchilarga beriladi.</div>
+          )}
         </Card>
         <Board rows={st.top ?? []} me={st.nickname} />
         <button onClick={leave} className="mt-4 w-full bg-white/90 text-slate-800 font-semibold rounded-xl py-3">
@@ -278,7 +338,7 @@ function Spinner() {
   return <div className="w-8 h-8 border-4 border-brand-100 border-t-brand-600 rounded-full animate-spin" />;
 }
 
-export function Board({ rows, me }: { rows: Top[]; me?: string }) {
+export function Board({ rows, me, showCoins }: { rows: Top[]; me?: string; showCoins?: boolean }) {
   if (!rows.length) return null;
   const medal = ["🥇", "🥈", "🥉"];
   return (
@@ -290,7 +350,7 @@ export function Board({ rows, me }: { rows: Top[]; me?: string }) {
             <span className="w-7 text-center">{medal[r.rank - 1] ?? r.rank}</span>
             {r.nickname}
           </span>
-          <span className="tabular-nums">{r.score}</span>
+          <span className="tabular-nums">{r.score}{showCoins && r.coins ? <span className="text-amber-600 text-xs ml-2">🪙 +{r.coins}</span> : null}</span>
         </div>
       ))}
     </div>

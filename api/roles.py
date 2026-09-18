@@ -750,6 +750,9 @@ EXAM_KIND_LABELS = {
     "mid": "Mid-course",
     "end": "End of course",
     "mock": "Mock test",
+    # Jonli o'yin natijasi (2026-09-18) — imtihonlar ro'yxatida turadi,
+    # lekin EXAM_KINDS ga kirmaydi: qo'lda yaratilmaydi, KPI ga kirmaydi.
+    "kahoot": "Kahoot (jonli o'yin)",
 }
 UNIT_COUNT = 12
 

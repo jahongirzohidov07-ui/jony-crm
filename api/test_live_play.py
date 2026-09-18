@@ -102,7 +102,7 @@ ck("plans: IELTS 3.0 26 dars tayyor", (len(r.json()[2]["lessons"]), r.json()[2][
 ck("plans: IELTS 4.0 qisman (ready_count < 25)", r.json()[3]["ready_count"] < 25 and r.json()[3]["ready_count"] >= 10, True)
 ck("tayyor dars 200 (2.0 1-dars)", c.get("/api/plans/ielts_2_0/1", headers=T).status_code, 200)
 ck("tayyor bo'lmagan dars 404 (4.0 25-dars)", c.get("/api/plans/ielts_4_0/25", headers=T).status_code, 404)
-ck("plans: IELTS 5.0 35 mavzu (reja PDF dan)", (len(r.json()[4]["lessons"]), r.json()[4]["lessons"][0]["title"], r.json()[4]["ready_count"]), (35, "Reading: Paraphrases", 0))
+ck("plans: IELTS 5.0 48 mavzu (Introduction 1-35 + Writing 36-48)", (len(r.json()[4]["lessons"]), r.json()[4]["lessons"][0]["title"], r.json()[4]["ready_count"]), (48, "Reading: Paraphrases", 0))
 r = c.get("/api/plans/ielts_1_0/18", headers=T)
 ck("plan 18 conjunctions (yangi tartib)", "CONJUNCTIONS" in r.json()["title"], True)
 ck("HR ga reja yopiq", c.get("/api/plans", headers=tok("hr")).status_code, 403)

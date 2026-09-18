@@ -22857,6 +22857,977 @@
      }
     ]
    }
+  },
+  {
+   "no": 25,
+   "title": "Phrasal verbs — PUT + Course revision",
+   "grammar_topic": "PHRASAL VERBS with PUT — put on / off / out / up with / up / in / through / across / aside / together / down + KURS TAKRORI (prefixes → phrasal verbs)",
+   "vocab_topic": "Essential Words 25 — Education, ambition and the future (ta'lim, maqsad va kelajak) + Essential Words 1–24 takrori",
+   "duration": 120,
+   "test_after": "FINAL TEST — IELTS 4.0 (1–25-darslar: grammatika, Essential Words 1–25, Reading, Listening, Writing Task 2 va Speaking — kitobdagi Actual Test 1–5 formatida)",
+   "book_ref": "Student's book IELTS 4.0: Lesson 25 – Phrasal verbs PUT (jadval: 11 qator); Essential Words 25; Actual Test 1–5 (Listening + Reading), Sample essays & Sample speaking; Audio 126–130 (ustoz skripti); Reading — Oybek (Jony Academy matni).",
+   "objectives": [
+    "PUT bilan 11 phrasal verb va ularning ko'p ma'nolari (put on, put off, put up, put down).",
+    "put off + V-ing; put up with (3 so'zli, ajralmaydi); take off ↔ put on qarama-qarshiligi.",
+    "4.0 kursining 7 phrasal verb guruhi va asosiy grammatika mavzularini takrorlash (prefixes, articles, reported speech, emphasis, linking verbs).",
+    "Final testga tayyorgarlik: Actual Test formati, Essential Words 1–25, Writing Task 2 va Speaking."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 25 — Education, ambition and the future (ta'lim, maqsad va kelajak) + Essential Words 1–24 takrori CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Put on your jacket — no, don't put it off — put your phone aside and put your ideas together.\" O'quvchilar 4.0 kursidagi 7 fe'lni (look, get, take, make, turn, set, put) bittadan gapda aytadi — kurs takrori boshlanadi."
+    ],
+    [
+     8,
+     "Kahoot — Phrasal verbs — SET",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Phrasal verbs — SET lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali (11): put on — kiymoq; sahnalashtirmoq; (vazn) orttirmoq; put off — kechiktirmoq; ko'nglini sovutmoq; put out — o'chirmoq (olov); bezovta qilmoq; put up with — chidamoq; put up — joylashtirmoq (plakat, mehmon), ko'tarmoq; put in — kiritmoq (mehnat, ariza, vaqt); put through — (telefonda) ulamoq; qiyin holatdan o'tkazmoq; put across — tushuntirmoq; put aside — chetga surmoq; tejab qo'ymoq; put together — yig'moq, birlashtirmoq; put down — yozib qo'ymoq; pastga qo'ymoq; kamsitmoq. Qoida: put on/off/out/up/aside/together/down — ajraladi (put it on); put up with — ajralmaydi; put off + V-ing."
+    ],
+    [
+     12,
+     "Essential Words 25 — Education, ambition and the future (ta'lim, maqsad va kelajak) + Essential Words 1–24 takrori — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "KIYIM/SAHNA: put on — kiymoq (\"He put on his jacket\"; ↔ take off), sahnalashtirmoq (\"The theatre put on a show\"), vazn olmoq (\"put on weight\").",
+     "KECHIKTIRISH/SOVUTISH: put off — kechiktirmoq (\"They put off the meeting\"; put off + V-ing: \"Stop putting off studying\"), ko'nglini sovutmoq (\"The smell put me off my food\").",
+     "CHIDASH: put up with — chidamoq, toqat qilmoq (\"I can't put up with this noise\"). put up — joylashtirmoq (\"They put me up for the night\"), osmoq (\"put up a poster\"), chodir tikmoq.",
+     "MEHNAT/ARIZA: put in — kiritmoq (\"He put in a lot of effort\"; \"put in an application\"). put together — yig'moq (\"put together a team/a plan\"). put aside — tejab qo'ymoq (\"put money aside\"). put down — yozib qo'ymoq; kamsitmoq (\"Don't put people down\").",
+     "BOSHQA: put out — o'chirmoq (olov, sigareta); put through — telefonda ulamoq; qiyinchilikdan o'tkazmoq; put across — fikrni tushuntirmoq."
+    ],
+    "formulas": [
+     [
+      "put on / put off",
+      "put on + kiyim/spektakl/vazn; put off + ish/uchrashuv / V-ing",
+      "He put on his jacket. / The theatre put on a great show. / They put off the meeting until Monday. / The smell put me off my food.",
+      "U kurtkasini kiydi. / Teatr ajoyib spektakl qo'ydi. / Uchrashuvni dushanbagacha kechiktirishdi. / Hid ishtahamni yo'qotdi."
+     ],
+     [
+      "put out / put up with",
+      "put out + olov; put up with + narsa/odam (ajralmaydi)",
+      "They put out the fire quickly. / I can't put up with this noise anymore.",
+      "Ular olovni tez o'chirishdi. / Bu shovqinga endi toqat qilolmayman."
+     ],
+     [
+      "put up / put in",
+      "put up + chodir/plakat/mehmon; put in + mehnat/ariza/vaqt",
+      "We put up a tent. / They put me up for the night. / He put in a lot of effort. / I put in a job application.",
+      "Chodir tikdik. / Meni bir kechaga joylashtirishdi. / U ko'p mehnat qildi. / Ishga ariza topshirdim."
+     ],
+     [
+      "put through / put across",
+      "put + KIM + through to + KIM; put + fikr + across",
+      "Can you put me through to the manager? / She was put through a lot during the war. / He put his ideas across clearly.",
+      "Meni rahbarga ulab bera olasizmi? / U urushda ko'p qiyinchilikdan o'tdi. / U fikrlarini aniq tushuntirdi."
+     ],
+     [
+      "put aside / together",
+      "put aside + pul/vaqt/muammo; put together + jamoa/reja",
+      "He put some money aside for his studies. / She put together a team of five.",
+      "U o'qish uchun pul tejab qo'ydi. / U besh kishilik jamoa yig'di."
+     ],
+     [
+      "put down",
+      "put down + narsa/fikr; put + KIM + down (kamsitmoq)",
+      "Put down your pens. / Put your name down on the list. / Don't put other people down.",
+      "Ruchkalarni qo'ying. / Ismingni ro'yxatga yozib qo'y. / Boshqalarni kamsitma."
+     ]
+    ],
+    "presentation": [
+     [
+      "Did Oybek put off writing when the war started?",
+      "No — he put in more hours and wrote \"Navoiy\" during the war."
+     ],
+     [
+      "What did he put together in \"Navoiy\"?",
+      "He put together history, poetry and a whole city — Herat."
+     ],
+     [
+      "Did the theatre put on his plays?",
+      "Yes, and \"Navoiy\" was put on as a film and a play."
+     ],
+     [
+      "What did he have to put up with?",
+      "He had to put up with illness and years without speech after a stroke."
+     ],
+     [
+      "Did he put his ideas across without speech?",
+      "Yes, he put them down on paper — and his wife read them aloud."
+     ],
+     [
+      "Why should you put money aside at 17?",
+      "So you can put it into your studies abroad."
+     ],
+     [
+      "Do you put off homework?",
+      "Sometimes, but putting it off only makes it harder."
+     ],
+     [
+      "Who put you through to IELTS 4.0?",
+      "My teacher put me through a hard placement test."
+     ],
+     [
+      "What will you put on for the final exam?",
+      "Something comfortable — and a watch."
+     ],
+     [
+      "What have you put in this term?",
+      "I've put in 25 lessons, 1,500 words and 20 essays."
+     ]
+    ],
+    "notes": [
+     "put on ↔ take off (kiyim); put off ≠ put out (kechiktirmoq ≠ o'chirmoq).",
+     "put off + V-ing: \"put off going\" (put off to go — xato).",
+     "KURS XULOSASI: 7 fe'l guruhi (look, get, take, make, turn, set, put) + 18 grammatika mavzusi — final testda aralash keladi.",
+     "Essential Words 25: ambition, goal, scholarship, degree, career path, lifelong learning, motivation, self-discipline, achievement, graduate."
+    ],
+    "mistakes": [
+     [
+      "Put on it.",
+      "Put it on.",
+      "Olmosh — o'rtada."
+     ],
+     [
+      "I can't put up this noise.",
+      "I can't put up with this noise.",
+      "put up WITH."
+     ],
+     [
+      "They put off to meet until Monday.",
+      "They put off meeting until Monday.",
+      "put off + V-ing."
+     ],
+     [
+      "The firefighters put off the fire.",
+      "The firefighters put out the fire.",
+      "O'chirmoq — put out."
+     ],
+     [
+      "He put on a lot of effort.",
+      "He put in a lot of effort.",
+      "Mehnat — put in."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — ta'lim va maqsad asoslari (ambition, scholarship, degree…); STRONG — kelajak va kasb; SUPER — Oybek, \"Navoiy\" va Task 2 birikmalari (lifelong learning, fulfil your potential).",
+     "Kurs takrori: har o'quvchi 7 guruhdan bittadan phrasal verb + 1 grammatika mavzusi bilan gap tuzadi."
+    ],
+    "core": [
+     [
+      "ambition / ambitious (4.0)",
+      "maqsad (intilish) / maqsadli",
+      "Ambition means you don't put off your dreams.",
+      "Maqsad — orzularingni kechiktirmaslik.",
+      ""
+     ],
+     [
+      "goal (future)",
+      "maqsad",
+      "Put your goals down on paper.",
+      "Maqsadlaringni qog'ozga yozib qo'y.",
+      "goʊl (fˈjuʧər)"
+     ],
+     [
+      "scholarship (4.0)",
+      "grant (stipendiya)",
+      "She put in an application for a scholarship.",
+      "U grantga ariza topshirdi.",
+      ""
+     ],
+     [
+      "degree (education) (4.0)",
+      "diplom (daraja)",
+      "He put aside money for a master's degree.",
+      "U magistr diplomi uchun pul tejab qo'ydi.",
+      ""
+     ],
+     [
+      "graduate (4.0)",
+      "bitiruvchi; tamomlamoq",
+      "Graduates who put in the effort find jobs faster.",
+      "Mehnat qilgan bitiruvchilar ishni tezroq topadi.",
+      ""
+     ],
+     [
+      "career path (4.0)",
+      "kasb yo'li",
+      "Put together a career path before you choose a university.",
+      "Universitet tanlashdan oldin kasb yo'lingni tuz.",
+      ""
+     ],
+     [
+      "motivation (future)",
+      "motivatsiya",
+      "Low motivation puts many students off studying.",
+      "Past motivatsiya ko'p talabalarning o'qishga ishtiyoqini so'ndiradi.",
+      "ˌmoʊtəˈveɪʃən (fˈjuʧər)"
+     ],
+     [
+      "self-discipline (4.0)",
+      "o'z-o'zini intizomlash",
+      "Self-discipline helps you put up with boring revision.",
+      "O'zini intizomlash zerikarli takrorlashga chidashga yordam beradi.",
+      ""
+     ],
+     [
+      "achievement (future)",
+      "yutuq",
+      "Put your achievements down in your CV.",
+      "Yutuqlaringni CV'ga yozib qo'y.",
+      "əˈʧivmənt (fˈjuʧər)"
+     ],
+     [
+      "lifelong learning (4.0)",
+      "umrbod o'qish",
+      "Lifelong learning means never putting your books aside.",
+      "Umrbod o'qish — kitoblarni hech qachon chetga surmaslik.",
+      ""
+     ],
+     [
+      "qualification (4.0)",
+      "malaka (hujjat)",
+      "Put your qualifications together in one folder.",
+      "Malaka hujjatlaringni bitta papkaga yig'.",
+      ""
+     ],
+     [
+      "university entrance (4.0)",
+      "universitetga kirish",
+      "Don't put off preparing for university entrance.",
+      "Universitetga kirishga tayyorlanishni kechiktirma.",
+      ""
+     ],
+     [
+      "study abroad (4.0)",
+      "chet elda o'qish",
+      "Study abroad puts you through a lot of changes.",
+      "Chet elda o'qish seni ko'p o'zgarishlardan o'tkazadi.",
+      ""
+     ],
+     [
+      "tuition fees (4.0)",
+      "o'qish to'lovi",
+      "Many families put money aside for tuition fees.",
+      "Ko'p oilalar o'qish to'lovi uchun pul tejaydi.",
+      ""
+     ],
+     [
+      "deadline (4.0)",
+      "muddat",
+      "You can't put off a deadline forever.",
+      "Muddatni abadiy kechiktirib bo'lmaydi.",
+      ""
+     ],
+     [
+      "procrastinate / procrastination",
+      "ertaga qoldirmoq / paysalga solish",
+      "Procrastination is putting off what matters.",
+      "Paysalga solish — muhim ishni kechiktirish.",
+      "prəˈkræstəˌneɪt  prəˌkræstəˈneɪʃən"
+     ],
+     [
+      "effort (4.0)",
+      "harakat (mehnat)",
+      "The more effort you put in, the higher your band.",
+      "Qancha ko'p mehnat qilsang, bandang shuncha yuqori.",
+      ""
+     ],
+     [
+      "potential (4.0)",
+      "salohiyat",
+      "Education puts your potential to work.",
+      "Ta'lim salohiyatingni ishga soladi.",
+      ""
+     ],
+     [
+      "mentor (future)",
+      "ustoz (maslahatchi)",
+      "A mentor can put you through to the right people.",
+      "Ustoz seni kerakli odamlarga ulab qo'yishi mumkin.",
+      "ˈmɛnˌtɔr (fˈjuʧər)"
+     ],
+     [
+      "future (4.0)",
+      "kelajak",
+      "Put your phone aside and put your future first.",
+      "Telefonni chetga qo'y va kelajagingni birinchi o'ringa qo'y.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "band score (4.0)",
+      "band ball (IELTS)",
+      "He put in six months and raised his band score by 1.5.",
+      "U olti oy mehnat qilib, bandini 1,5 ga ko'tardi.",
+      ""
+     ],
+     [
+      "placement test",
+      "darajani aniqlash testi",
+      "The placement test put her through to IELTS 5.0.",
+      "Daraja testi uni IELTS 5.0 ga o'tkazdi.",
+      "ˈpleɪsmənt tɛst"
+     ],
+     [
+      "revision (4.0)",
+      "takrorlash",
+      "Put together a revision plan for all 25 lessons.",
+      "25 dars uchun takrorlash rejasini tuz.",
+      ""
+     ],
+     [
+      "mock exam (4.0)",
+      "sinov imtihoni",
+      "The mock exam put me off careless mistakes forever.",
+      "Sinov imtihoni menda beparvo xatolarga ishtiyoqni butunlay so'ndirdi.",
+      ""
+     ],
+     [
+      "exam anxiety",
+      "imtihon xavotiri",
+      "Put exam anxiety aside and read the question twice.",
+      "Imtihon xavotirini chetga surib, savolni ikki marta o'qi.",
+      "ɪgˈzæm æŋˈzaɪəti"
+     ],
+     [
+      "time management (4.0)",
+      "vaqtni boshqarish",
+      "Good time management means not putting tasks off.",
+      "Yaxshi vaqt boshqaruvi — vazifalarni kechiktirmaslik.",
+      ""
+     ],
+     [
+      "personal statement",
+      "shaxsiy bayon (motivatsion xat)",
+      "Put your story across in your personal statement.",
+      "Shaxsiy bayoningda hikoyangni tushuntirib ber.",
+      "ˈpərsɪnəl ˈsteɪtmənt"
+     ],
+     [
+      "interview (education) (4.0)",
+      "suhbat (qabul)",
+      "Put on smart clothes for the university interview.",
+      "Universitet suhbatiga chiroyli kiyin.",
+      ""
+     ],
+     [
+      "reference letter",
+      "tavsiyanoma",
+      "Ask your teacher to put a reference letter together.",
+      "Ustozingdan tavsiyanoma tayyorlashni so'ra.",
+      "ˈrɛfərəns ˈlɛtər"
+     ],
+     [
+      "admission (4.0)",
+      "qabul",
+      "She put in for admission to three universities.",
+      "U uchta universitetga qabul uchun ariza berdi.",
+      ""
+     ],
+     [
+      "El-Yurt Umidi",
+      "\"El-yurt umidi\" jamg'armasi",
+      "El-Yurt Umidi puts talented students through top universities abroad.",
+      "\"El-yurt umidi\" iqtidorli talabalarni xorijdagi yetakchi universitetlarda o'qitadi.",
+      ""
+     ],
+     [
+      "vocational training (4.0)",
+      "kasbiy ta'lim",
+      "Vocational training puts skills in your hands fast.",
+      "Kasbiy ta'lim ko'nikmani tez qo'lingga beradi.",
+      ""
+     ],
+     [
+      "skills gap (4.0)",
+      "ko'nikmalar tafovuti",
+      "Schools should put together courses to close the skills gap.",
+      "Maktablar ko'nikmalar tafovutini yopish uchun kurslar tuzishi kerak.",
+      ""
+     ],
+     [
+      "online learning (4.0)",
+      "onlayn ta'lim",
+      "Online learning puts every library in your pocket.",
+      "Onlayn ta'lim har bir kutubxonani cho'ntagingga soladi.",
+      ""
+     ],
+     [
+      "artificial intelligence (future)",
+      "sun'iy intellekt",
+      "AI will put some jobs out of existence and create others.",
+      "Sun'iy intellekt ba'zi kasblarni yo'q qiladi va boshqalarini yaratadi.",
+      "ˌɑrtəˈfɪʃəl ˌɪnˈtɛləʤəns (fˈjuʧər)"
+     ],
+     [
+      "automation (4.0)",
+      "avtomatlashtirish",
+      "Automation puts routine jobs at risk.",
+      "Avtomatlashtirish oddiy ishlarni xavf ostiga qo'yadi.",
+      ""
+     ],
+     [
+      "adaptability (4.0)",
+      "moslashuvchanlik",
+      "Adaptability puts you ahead in a changing world.",
+      "Moslashuvchanlik o'zgaruvchan dunyoda seni oldinga chiqaradi.",
+      ""
+     ],
+     [
+      "work experience (4.0)",
+      "ish tajribasi",
+      "Put in a summer of work experience before university.",
+      "Universitetdan oldin bir yoz ish tajribasini orttir.",
+      ""
+     ],
+     [
+      "fulfil potential (4.0)",
+      "salohiyatni to'liq ro'yobga chiqarmoq",
+      "You fulfil your potential when you stop putting yourself down.",
+      "O'zingni kamsitmay qo'ysang, salohiyatingni ro'yobga chiqarasan.",
+      ""
+     ],
+     [
+      "next level",
+      "keyingi bosqich",
+      "After the final test, you're put through to the next level: IELTS 5.0.",
+      "Final testdan keyin keyingi bosqichga — IELTS 5.0 ga o'tasiz.",
+      "nɛkst ˈlɛvəl"
+     ]
+    ],
+    "super": [
+     [
+      "Oybek (Musa Toshmuhammad o'g'li)",
+      "Oybek (Muso Toshmuhammad o'g'li)",
+      "Oybek put together the first great Uzbek historical novel.",
+      "Oybek birinchi buyuk o'zbek tarixiy romanini yaratdi.",
+      ""
+     ],
+     [
+      "Tashkent, 1905",
+      "Toshkent, 1905",
+      "Oybek was born in Tashkent in 1905, in a weaver's family.",
+      "Oybek 1905-da Toshkentda to'quvchi oilasida tug'ilgan.",
+      "ˌtæʃˈkɛnt, 1905"
+     ],
+     [
+      "\"Navoiy\" (novel)",
+      "\"Navoiy\" (roman)",
+      "He put four years into the novel \"Navoiy\".",
+      "U \"Navoiy\" romaniga to'rt yil sarfladi.",
+      ""
+     ],
+     [
+      "Herat",
+      "Hirot",
+      "The novel puts the reader inside 15th-century Herat.",
+      "Roman o'quvchini XV asr Hirotiga olib kiradi.",
+      ""
+     ],
+     [
+      "\"Qutlug' qon\" (\"Sacred Blood\")",
+      "\"Qutlug' qon\" (roman)",
+      "\"Sacred Blood\" puts a village boy through the revolution of 1916.",
+      "\"Qutlug' qon\" qishloq yigitini 1916-yil qo'zg'olonidan o'tkazadi.",
+      ""
+     ],
+     [
+      "\"Bolalik\" (\"Childhood\")",
+      "\"Bolalik\" (qissa)",
+      "In \"Childhood\" he put down memories of old Tashkent.",
+      "\"Bolalik\"da u eski Toshkent xotiralarini yozib qoldirdi.",
+      ""
+     ],
+     [
+      "historical novel",
+      "tarixiy roman",
+      "A historical novel puts facts and imagination together.",
+      "Tarixiy roman fakt va xayolotni birlashtiradi.",
+      "hɪˈstɔrɪkəl ˈnɑvəl"
+     ],
+     [
+      "wartime writing",
+      "urush davri ijodi",
+      "He refused to put off writing during the war.",
+      "U urush davrida yozishni kechiktirishdan bosh tortdi.",
+      "ˈwɔrˌtaɪm ˈraɪtɪŋ"
+     ],
+     [
+      "State Prize, 1946",
+      "Davlat mukofoti, 1946",
+      "\"Navoiy\" was put forward for the State Prize and won it in 1946.",
+      "\"Navoiy\" Davlat mukofotiga taqdim etildi va 1946-da yutdi.",
+      "steɪt praɪz, 1946"
+     ],
+     [
+      "attacked by critics",
+      "tanqidchilar hujumi",
+      "In the early 1950s critics put him down as a \"nationalist\".",
+      "1950-yillar boshida tanqidchilar uni \"millatchi\" deb kamsitishdi.",
+      "əˈtækt baɪ ˈkrɪtɪks"
+     ],
+     [
+      "serious illness",
+      "og'ir kasallik",
+      "Illness took away his speech, but he put up with it for the rest of his life.",
+      "Kasallik uning nutqini tortib oldi, lekin u umrining oxirigacha chidadi.",
+      "ˈsɪriəs ˈɪlnəs"
+     ],
+     [
+      "Zarifa Saidnosirova",
+      "Zarifa Saidnosirova (rafiqasi)",
+      "His wife, Zarifa, put his words across to editors.",
+      "Rafiqasi Zarifa uning so'zlarini muharrirlarga yetkazdi.",
+      ""
+     ],
+     [
+      "write without speech",
+      "nutqsiz yozish",
+      "Without speech, he still put down novels and poems.",
+      "Nutqsiz ham u roman va she'rlar yozishda davom etdi.",
+      "raɪt wɪˈθaʊt spiʧ"
+     ],
+     [
+      "academician",
+      "akademik",
+      "He was elected an academician of the Uzbek Academy of Sciences.",
+      "U O'zbekiston Fanlar akademiyasi akademigi etib saylandi.",
+      "ˌækədəˈmɪʃən"
+     ],
+     [
+      "Oybek metro station",
+      "\"Oybek\" metro bekati",
+      "Tashkent put up a metro station in his name.",
+      "Toshkent uning nomiga metro bekati qurdi.",
+      ""
+     ],
+     [
+      "Oybek museum",
+      "Oybek uy-muzeyi",
+      "His house in Tashkent was put together as a museum.",
+      "Uning Toshkentdagi uyi muzeyga aylantirildi.",
+      ""
+     ],
+     [
+      "translator of Pushkin",
+      "Pushkin tarjimoni",
+      "He put Pushkin's \"Eugene Onegin\" into Uzbek.",
+      "U Pushkinning \"Yevgeniy Onegin\"ini o'zbekchaga o'girdi.",
+      "trænzˈleɪtər əv ˈpʊʃkɪn"
+     ],
+     [
+      "\"never put down the pen\"",
+      "\"qalamni hech qachon qo'ymaslik\"",
+      "His rule: never put down the pen.",
+      "Uning qoidasi: qalamni hech qachon qo'yma.",
+      "\"ˈnɛvər pʊt daʊn ðə pɛn\""
+     ],
+     [
+      "classic of Uzbek literature",
+      "o'zbek adabiyoti klassigi",
+      "Schools put \"Navoiy\" on every reading list.",
+      "Maktablar \"Navoiy\"ni har o'qish ro'yxatiga kiritadi.",
+      "ˈklæsɪk əv ˈuzbɛk ˈlɪtərəʧər"
+     ],
+     [
+      "legacy (education)",
+      "meros",
+      "Oybek's legacy puts a question to every student: what will you write?",
+      "Oybek merosi har talabaga savol qo'yadi: sen nima yozasan?",
+      "ˈlɛgəsi (ˌɛʤəˈkeɪʃən)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Zarrachani tanlang",
+     "type": "gap",
+     "instr": "put + on / off / out / up with / up / in / through / across / aside / together / down",
+     "items": [
+      "He put ___ his jacket.",
+      "They put ___ the meeting until Monday.",
+      "They put ___ the fire quickly.",
+      "I can't put ___ this noise anymore.",
+      "We put ___ a tent in the garden.",
+      "He put ___ a lot of effort.",
+      "Can you put me ___ to the manager?",
+      "He put his ideas ___ clearly.",
+      "He put some money ___ for his studies.",
+      "She put ___ a team of five.",
+      "Don't put other people ___."
+     ],
+     "answers": [
+      "on",
+      "off",
+      "out",
+      "up with",
+      "up",
+      "in",
+      "through",
+      "across",
+      "aside",
+      "together",
+      "down"
+     ]
+    },
+    {
+     "title": "4.0 kursi phrasal verblari — takror",
+     "type": "choose",
+     "instr": "To'g'ri fe'lni tanlang (look / get / take / make / turn / set / put)",
+     "items": [
+      "I ___ up to my grandfather. (hurmat)",
+      "She ___ over the flu in a week.",
+      "The plane ___ off at 3 p.m.",
+      "He worked hard to ___ up for lost time.",
+      "It ___ out to be true.",
+      "We ___ off early in the morning.",
+      "I can't ___ up with this noise.",
+      "He ___ after his father.",
+      "They ___ up a new business.",
+      "She ___ down the job offer."
+     ],
+     "answers": [
+      "look",
+      "got",
+      "took",
+      "make",
+      "turned",
+      "set",
+      "put",
+      "takes",
+      "set",
+      "turned"
+     ]
+    },
+    {
+     "title": "4.0 grammatika — takror",
+     "type": "rewrite",
+     "instr": "Belgilangan mavzu bo'yicha qayta yozing",
+     "items": [
+      "(Reported speech) \"I will call you,\" she said.",
+      "(Reported question) \"Where do you live?\" he asked.",
+      "(Reported imperative) \"Don't be late,\" the teacher said to us.",
+      "(Emphasis) Oybek wrote \"Navoiy\".",
+      "(The + comparative) You read more; you learn more.",
+      "(Had better) You should start revising now, or you'll fail."
+     ],
+     "answers": [
+      "She said she would call me.",
+      "He asked where I lived.",
+      "The teacher told us not to be late.",
+      "It was Oybek who wrote \"Navoiy\".",
+      "The more you read, the more you learn.",
+      "You had better start revising now."
+     ]
+    },
+    {
+     "title": "Final Speaking mashqi",
+     "type": "speaking",
+     "instr": "Juftlikda: Part 1–3 (Education & future) — kamida 5 PUT phrasal verb va 3 xil grammatika mavzusi",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I've put in a lot of effort this term.",
+      "I can't put up with people who put others down.",
+      "I'm putting money aside to study abroad.",
+      "What I need is a scholarship. (emphasis)",
+      "My teacher told me not to put off revision. (reported)",
+      "The harder I work, the higher my band will be. (the …, the …)"
+     ]
+    },
+    {
+     "title": "Ta'lim lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "money given to a student to pay for studies",
+      "a strong wish to achieve something",
+      "continuing to learn throughout life",
+      "delaying things you should do",
+      "the money you pay to a university",
+      "an official record of your education or skills"
+     ],
+     "answers": [
+      "scholarship",
+      "ambition",
+      "lifelong learning",
+      "procrastination",
+      "tuition fees",
+      "qualification"
+     ],
+     "box": [
+      "scholarship",
+      "ambition",
+      "lifelong learning",
+      "procrastination",
+      "tuition fees",
+      "qualification"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Put on it.",
+      "I can't put up this noise.",
+      "They put off to meet until Monday.",
+      "The firefighters put off the fire.",
+      "He put on a lot of effort."
+     ],
+     "answers": [
+      "Put it on.",
+      "I can't put up with this noise.",
+      "They put off meeting until Monday.",
+      "The firefighters put out the fire.",
+      "He put in a lot of effort."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 25 jadvalini (11 qator) 3 marta; Essential Words 25 (CORE 20 + STRONG 20) daftarga; 19–25-darslardagi 7 phrasal verb jadvali takrori",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "FINAL TESTGA TAYYORGARLIK",
+     "type": "review",
+     "instr": "Kitobdagi Actual Test 1–5 dan kamida 2 tasi (Listening + Reading, vaqt bilan); 1–25-dars jadvallari; Essential Words 1–25 dan CORE; Kahoot 21–25 va umumiy Kahoot (jonyos.uz)",
+     "answers": "Final test: grammatika + 100 so'z + Listening + Reading + Task 2 + Speaking."
+    },
+    {
+     "title": "Final Task 2",
+     "type": "write",
+     "instr": "250 so'z, 40 daqiqa: \"Some people think university education should be free for everyone. To what extent do you agree?\" — kurs davomida o'rganilgan kamida 5 grammatika mavzusi va 10 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan (TR, CC, LR, GRA)."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U kurtkasini kiydi.",
+      "Uchrashuvni dushanbagacha kechiktirishdi.",
+      "Bu shovqinga endi toqat qilolmayman.",
+      "U ko'p mehnat qildi.",
+      "U fikrlarini aniq tushuntirdi."
+     ],
+     "answers": [
+      "He put on his jacket.",
+      "They put off the meeting until Monday.",
+      "I can't put up with this noise anymore.",
+      "He put in a lot of effort.",
+      "He put his ideas across clearly."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 25 CORE 20 + Essential Words 1–24 dan eng qiyin 50 so'z — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "7 phrasal verb guruhi (look, get, take, make, turn, set, put) — har biridan 3 tadan, 3 daqiqa",
+     "answers": "3 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 24",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kitob jadvali (11 qator) yozma",
+     "1 daqiqada hammasini to'g'ri yozish",
+     "1 coin"
+    ],
+    [
+     "Kurs takrori — 7 phrasal verb guruhi",
+     "3 daqiqada 21 ta (har guruhdan 3)",
+     "3 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Oybek — the writer who never put down his pen",
+    "text": [
+     "Musa Toshmuhammad o'g'li was born in Tashkent in 1905, the son of a weaver. As a boy he listened to the old men of his mahalla recite Navoi, and he put the verses down in a notebook he kept for the rest of his life. He took the pen name Oybek — \"moon lord\" — and published his first poems in the 1920s, while he studied economics and later taught at university.",
+     "His great project began in the late 1930s. He set out to put a whole century inside one book: the Herat of Alisher Navoi, with its palaces, markets, poets and plots. He put in years of research in old manuscripts, then kept writing when the Second World War began, even though paper was scarce and many writers put their work aside. The novel \"Navoiy\" came out in 1944 and won the State Prize in 1946. For the first time, millions of readers saw Uzbek history through an Uzbek writer's eyes. He also put Pushkin's \"Eugene Onegin\" into Uzbek, and wrote \"Qutlug' qon\" (\"Sacred Blood\"), a novel about the 1916 uprising.",
+     "Then came the hardest years. In the early 1950s critics put him down as a \"nationalist\", and serious illness took away his ability to speak. Many would have given up. Oybek did not. He could no longer put his ideas across in speech, so he put them down on paper, and his wife, Zarifa Saidnosirova, helped him put the manuscripts together and bring them to editors. In those silent years he wrote \"Bolalik\" (\"Childhood\"), a warm, funny book about old Tashkent, and more novels and poems.",
+     "He died in 1968. Tashkent has put up a metro station in his name, his house is now a museum, and \"Navoiy\" is on every school reading list. When students asked how he kept going, he wrote an answer on a card: \"A writer can put off everything except the next sentence.\" It is good advice for anyone about to take a final exam."
+    ],
+    "glossary": [
+     "weaver — to'quvchi",
+     "recite — yoddan o'qimoq",
+     "pen name — taxallus",
+     "palace — saroy",
+     "plot — fitna (syujet)",
+     "manuscript — qo'lyozma",
+     "scarce — tanqis",
+     "uprising — qo'zg'olon",
+     "give up — taslim bo'lmoq",
+     "silent — sukutli"
+    ],
+    "tasks": [
+     {
+      "title": "PUT phrasal verblarini toping",
+      "type": "find",
+      "instr": "Matndan 10 ta",
+      "items": [
+       "put down (yozib qo'ymoq)",
+       "put (inside)",
+       "put in",
+       "put aside",
+       "put into (tarjima)",
+       "put down (kamsitmoq)",
+       "put across",
+       "put together",
+       "put up",
+       "put off"
+      ],
+      "answers": [
+       "He put the verses down in a notebook.",
+       "He set out to put a whole century inside one book.",
+       "He put in years of research.",
+       "Many writers put their work aside.",
+       "He put Pushkin's \"Eugene Onegin\" into Uzbek.",
+       "Critics put him down as a \"nationalist\".",
+       "He could no longer put his ideas across in speech.",
+       "His wife helped him put the manuscripts together.",
+       "Tashkent has put up a metro station in his name.",
+       "A writer can put off everything except the next sentence."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Oybek's father was a weaver.",
+       "He stopped writing during the Second World War.",
+       "\"Navoiy\" won the State Prize in 1946.",
+       "He stopped writing after losing his speech."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Kurs takrori — matndan grammatika",
+      "type": "short",
+      "instr": "Matndan toping: 1 ta passiv, 1 ta relative clause, 1 ta \"even though\", 1 ta sabab/natija bog'lovchisi",
+      "items": [
+       "passive",
+       "relative clause",
+       "even though",
+       "result"
+      ],
+      "answers": [
+       "He was born in Tashkent in 1905.",
+       "a notebook (that) he kept for the rest of his life",
+       "even though paper was scarce",
+       "so he put them down on paper"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Actual Test 1–5, Sample essays & Sample speaking — final testga tayyorgarlik (uyga)."
+   },
+   "listening": {
+    "audios": "Audio 126–130 (fayllar yo'q — ustoz IELTS Section 1 uslubida final test ma'lumotini o'qiydi)",
+    "intro": [
+     "Skript: \"Attention, IELTS 4.0 students. The final test is on Saturday at 9 a.m. in Room 12. Please don't put it off — there's no second date. Put your phones in the box at the door. The test takes 2 hours 40 minutes: Listening 30 minutes, Reading 60, Writing 40, and Speaking in pairs after lunch. Bring two pencils and an eraser. If you score 70 per cent or more, you'll be put through to IELTS 5.0 — Introduction. Results will be put up on the board on Monday.\"",
+     "1-tinglash: qachon, qayerda? 2-tinglash: vaqt va foizlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Day and time: ___ at ___ a.m.; Room ___",
+       "Total length: ___ hours ___ minutes",
+       "Listening ___ min, Reading ___ min, Writing ___ min",
+       "Pass mark to go to IELTS 5.0: ___ %; results on ___"
+      ],
+      "answers": [
+       "Saturday; 9; 12",
+       "2; 40",
+       "30; 60; 40",
+       "70; Monday"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

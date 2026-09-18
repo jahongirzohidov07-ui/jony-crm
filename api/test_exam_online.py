@@ -160,6 +160,8 @@ s210 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 10]
 ck("Step 2 Unit 10 bor, 40 savol", [x["q_count"] for x in s210], [40])
 s211 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 11]
 ck("Step 2 Unit 11 bor, 40 savol", [x["q_count"] for x in s211], [40])
+s212 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 12]
+ck("Step 2 Unit 12 bor, 40 savol", [x["q_count"] for x in s212], [40])
 t3 = client.get(f"/api/exam-templates/{u3[0]['id']}", headers=HE).json()
 q7 = t3["parts"][1]["questions"][0]
 ck("rasmli savol", q7["image"], "/exam-img/step1-u3/q7.jpg")

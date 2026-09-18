@@ -2758,6 +2758,123 @@ Melanie""",
     ],
 }
 
+
+STEP2_UNIT12 = {
+    "level": "step2", "kind": "unit", "unit_no": 12,
+    "title": "Step 2 · Unit 12 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["You're welcome!", "Really?", "I'm sorry, I can't."], "B"),
+                _c("", ["Thanks for your help.", "Oh, can you really?", "Yes, how many would you like?"], "C"),
+                _c("", ["That's a pity.", "Yes, maybe.", "It doesn't matter."], "B"),
+                _c("", ["It's 12 o'clock on the day you leave.", "Your name, please.", "No, not at all."], "B"),
+                _c("", ["Let me see.", "That’s great.", "Oh, dear."], "A"),
+                _c("", ["No, it costs six pounds.", "It's from 7.15 until 10.15 a.m.", "Is it?"], "A"),
+                _c("", ["Are you?", "That looks great.", "No, maybe not."], "A"),
+                _c("", ["I'm sorry, I can't.", "Let me see.", "Have you?"], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Travel",
+            "instructions": "Read the sentences about travel. Choose the "
+                            "missing word (A, B or C) for each space.",
+            "questions": [
+                _c("These boats take tourists to the ............ every day.",
+                   ["island", "desert", "hill"], "A"),
+                _c("I want to sit under a tree in the ............ and read my book today.",
+                   ["glacier", "waterfall", "forest"], "C"),
+                _c("Why don't we just pack a ............ and take a train somewhere?",
+                   ["bag", "hotel", "holiday"], "A"),
+                _c("Holidays are too expensive, so I'm going to ............ at home this summer.",
+                   ["get", "live", "stay"], "C"),
+                _c("I walked across that ............ today and took some photos of an old farm.",
+                   ["sea", "lake", "field"], "C"),
+                _c("When I was young we didn't ............ on holiday every year.",
+                   ["book", "make", "go"], "C"),
+                _c("To get to the hotel, turn right at the top of the ............ and go "
+                   "straight on.", ["jungle", "hill", "wood"], "B"),
+                _c("Can you ............ your plans and catch the earlier train tomorrow?",
+                   ["make", "change", "stay"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Travel",
+            "instructions": "Read the sentences about travel. What are the "
+                            "missing words? The first letter is already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("Klara doesn't want to s _ _ _ in that hotel again because the rooms "
+                   "aren't clean.", "stay", "tay"),
+                _t("I don't want to visit the d _ _ _ _ _ . It's so hot and there is no "
+                   "water anywhere.", "desert", "esert"),
+                _t("The trees in that w _ _ _ are very old and beautiful.", "wood", "ood"),
+                _t("I want to swim across the l _ _ _ but it's too far.", "lake", "ake"),
+                _t("Leo wants to b _ _ _ a hotel near the beach but they're expensive.",
+                   "book", "ook"),
+                _t("I love being in the c _ _ _ _ _ _ _ _ _ _ because it's quieter "
+                   "than the city.", "countryside", "ountryside"),
+                _t("I don't want to go b _ _ _  h _ _ _ because I'm really enjoying "
+                   "my holiday.", "back home", "ack ome"),
+                _t("Do you want to m _ _ _  p _ _ _ _ for the holiday now or can we do "
+                   "it later?", "make plans", "ake lans"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email about a college trip to a "
+                            "rainforest. Choose the best word (A, B or C) for "
+                            "each space.",
+            "passage": """Trip to the rainforest
+
+Here are details of the college trip to the rainforest next week. It's a long trip, starting at 6 a.m., so you should (25) ………… to bed early the night before. When you get there, you (26) ………… to walk through the rainforest to a waterfall. It's a beautiful place to stop for lunch. Lunch is included, but (27) ………… bring lots of water to drink. Remember that you (28) ………… carry too many things because it is very hot.
+We're sure you have lots of questions, so here are answers to some of them:
+• What time (29) ………… going to return to the hotel? Around 8 p.m.
+• How many people (30) ………… going to be on the trip? No more than 12 people.
+• (31) ………… bring any money with me? No. You aren't going anywhere you can spend money!
+• Am I going to need a camera? Yes, (32) ………… ! The rainforest is a great place to take photos.""",
+            "questions": [
+                _c("", ["go", "to go", "going"], "A"),
+                _c("", ["be going", "are going", "going"], "B"),
+                _c("", ["you shouldn’t", "you should", "should you"], "B"),
+                _c("", ["has to", "can", "shouldn’t"], "C"),
+                _c("", ["are we", "we are", "do we"], "A"),
+                _c("", ["is", "are", "be"], "B"),
+                _c("", ["Should I", "I should", "I shouldn’t"], "A"),
+                _c("", ["are you", "you are", "going to"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about travel. Choose the best "
+                            "answer (A, B or C) for each space.",
+            "questions": [
+                _c("He’s going ............ his friend at the airport.",
+                   ["meet", "meeting", "to meet"], "C"),
+                _c("To get there quickly, ............ change trains in London.",
+                   ["you should", "should you", "shouldn’t you"], "A"),
+                _c("We ............ going to take something to eat on the journey.",
+                   ["are", "be", "have"], "A"),
+                _c("How many bags should I ............ for our holiday?",
+                   ["packing", "pack", "to pack"], "B"),
+                _c("............ going to come on holiday to Spain with us?",
+                   ["Do you", "Are you", "Can you"], "B"),
+                _c("You ............ forget to take a sun hat to the beach.",
+                   ["have to", "should", "shouldn’t"], "C"),
+                _c("We ............ going to take a train to London – it’s too expensive.",
+                   ["don’t", "not", "aren’t"], "C"),
+                _c("............ buy my train tickets at the station or on the train?",
+                   ["I shouldn’t", "Should I", "I should"], "B"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2784,4 +2901,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit9", STEP2_UNIT9),
     ("exam_tpl_step2_unit10", STEP2_UNIT10),
     ("exam_tpl_step2_unit11", STEP2_UNIT11),
+    ("exam_tpl_step2_unit12", STEP2_UNIT12),
 ]

@@ -4162,3 +4162,70 @@ class LessonRun(Base):
     started_at = Column(DateTime, default=datetime.utcnow)
     finished_at = Column(DateTime, nullable=True)
     by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+
+# ---------------------------------------------------------------
+#  TOPSHIRIQLAR VA TEKSHIRISH (2026-09-18, Jahongir, 4- va 6-bandlar)
+# ---------------------------------------------------------------
+class Assignment(Base):
+    __tablename__ = "assignments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=True, index=True)   # shaxsiy bo'lsa
+    course = Column(String, nullable=False)
+    lesson_no = Column(Integer, nullable=False)
+    kind = Column(String, nullable=False)        # vocab_test|grammar_test|homework|reading|writing|speaking|free
+    skill = Column(String, nullable=True)        # vocab|grammar|reading|listening|writing|speaking
+    title = Column(String, nullable=False)
+    instr = Column(Text, nullable=True)
+    text = Column(Text, nullable=True)           # reading matni (JSON)
+    questions = Column(Text, nullable=False)     # JSON [{kind,prompt,options,answer,explain}]
+    auto = Column(Integer, default=1)            # 1 — avtomat tekshiriladi
+    rubric = Column(Text, nullable=True)         # JSON [[mezon, ball], ...]
+    max_score = Column(Float, nullable=True)
+    targets = Column(Text, nullable=True)        # JSON [student_id, ...]
+    due_at = Column(DateTime, nullable=True)
+    sent_at = Column(DateTime, default=datetime.utcnow)
+    status = Column(String, default="sent", index=True)   # sent | closed
+    created_by = Column(String, nullable=True)
+
+
+class AssignmentSubmission(Base):
+    __tablename__ = "assignment_submissions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    assignment_id = Column(Integer, ForeignKey("assignments.id"), nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False, index=True)
+    attempt = Column(Integer, default=1)
+    answers = Column(Text, nullable=True)        # JSON {"0": ..., "1": ...}
+    text = Column(Text, nullable=True)           # writing
+    transcript = Column(Text, nullable=True)     # speaking matni
+    media_id = Column(Integer, nullable=True)    # audio (assignment_media)
+    auto_score = Column(Float, nullable=True)
+    auto_max = Column(Float, nullable=True)
+    result = Column(Text, nullable=True)         # JSON avtomat natija (har savol)
+    status = Column(String, default="submitted", index=True)   # started|submitted|graded|returned
+    teacher_score = Column(Float, nullable=True)
+    rubric_scores = Column(Text, nullable=True)  # JSON {mezon: ball}
+    comment = Column(Text, nullable=True)
+    voice_media_id = Column(Integer, nullable=True)
+    ai_review = Column(Text, nullable=True)      # JSON
+    coins = Column(Integer, default=0)
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+    graded_at = Column(DateTime, nullable=True)
+    graded_by = Column(String, nullable=True)
+
+
+class AssignmentMedia(Base):
+    """Audio (speaking javobi, ustozning ovozli izohi). 30 kundan keyin o'chiriladi."""
+    __tablename__ = "assignment_media"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, nullable=True, index=True)
+    submission_id = Column(Integer, nullable=True, index=True)
+    kind = Column(String, default="audio")
+    mime = Column(String, default="audio/webm")
+    data = deferred(Column(Text, nullable=False))    # base64 data URL
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)

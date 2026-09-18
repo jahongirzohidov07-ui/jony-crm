@@ -168,6 +168,12 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_lesson_runs_lesson "
         "ON lesson_runs (lesson_id)",
     ]),
+    # 2026-09-18: topshiriqlar (assignments, assignment_submissions,
+    # assignment_media) — create_all yaratadi; shtamp ko'tariladi.
+    ("0019_assignments", [
+        "CREATE INDEX IF NOT EXISTS ix_asub_assignment_student "
+        "ON assignment_submissions (assignment_id, student_id)",
+    ]),
 ]
 
 

@@ -60,6 +60,12 @@ export default function TeacherRun() {
   const [advance, setAdvance] = useState(true);
   const [busy, setBusy] = useState(false);
   const notesTimer = useRef<number | null>(null);
+  // Topshiriq yuborish (4-band): rejadan tanlab, bir bosishda
+  const [sendOpen, setSendOpen] = useState(false);
+  const [parts, setParts] = useState<{ part: string; label: string; auto: boolean | null }[]>([]);
+  const [picked, setPicked] = useState<Record<string, boolean>>({});
+  const [dueDays, setDueDays] = useState(2);
+  const [sent, setSent] = useState("");
 
   useEffect(() => {
     api.post<Run>(`/lessons/${lessonId}/run`).then((r) => { setRun(r); setNotes(r.notes || ""); })
@@ -99,6 +105,25 @@ export default function TeacherRun() {
       const r = await api.post<{ carry: string[]; next_lesson_no: number | null }>(`/runs/${run.id}/finish`, { advance });
       alert(`Dars yakunlandi. Keyingi dars: ${r.next_lesson_no ?? "—"}-dars.` + (r.carry.length ? `\nKeyingi darsga ko'chdi: ${r.carry.join("; ")}` : ""));
       nav("/teacher");
+    } catch (e) { setErr((e as Error).message); }
+    finally { setBusy(false); }
+  }
+  async function openSend() {
+    if (!run) return;
+    setSendOpen(true);
+    try { const p = await api.get<typeof parts>(`/plans/${run.course}/${run.lesson_no}/assignable`); setParts(p); }
+    catch (e) { setErr((e as Error).message); }
+  }
+  async function sendAssignments() {
+    if (!run) return;
+    const list = Object.keys(picked).filter((k) => picked[k]);
+    if (!list.length) return;
+    setBusy(true); setSent("");
+    try {
+      const r = await api.post<{ title: string }[]>(`/groups/${run.group_id}/assignments/from-plan`,
+        { course: run.course, lesson_no: run.lesson_no, parts: list, due_days: dueDays, lesson_id: run.lesson_id });
+      setSent(`${r.length} ta topshiriq yuborildi — o'quvchilar ilovasida paydo bo'ldi.`);
+      setPicked({});
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
   }
@@ -192,7 +217,24 @@ export default function TeacherRun() {
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <Link to={`/teacher/lesson/${run.lesson_id}`} className="text-xs text-center bg-white border border-slate-200 rounded-lg py-2">Davomat / baho</Link>
                 <button onClick={kahoot} disabled={busy} className="text-xs bg-indigo-600 text-white rounded-lg py-2 flex items-center justify-center gap-1"><Gamepad2 size={14} /> Kahoot</button>
+                <button onClick={openSend} className="col-span-2 text-xs bg-emerald-600 text-white rounded-lg py-2">📤 Topshiriq yuborish (o'quvchi ilovasiga)</button>
+                <Link to="/teacher/check" className="col-span-2 text-xs text-center bg-white border border-slate-200 rounded-lg py-2">Tekshirish (writing / speaking)</Link>
               </div>
+              {sendOpen && (
+                <div className="bg-white border border-emerald-200 rounded-xl p-3 mt-2 space-y-2">
+                  <div className="text-xs font-semibold text-slate-700">Rejadan nimani yuboramiz?</div>
+                  {parts.length === 0 && <div className="text-xs text-slate-400">Yuklanmoqda…</div>}
+                  {parts.map((p) => (
+                    <label key={p.part} className="flex items-start gap-2 text-xs">
+                      <input type="checkbox" checked={!!picked[p.part]} onChange={(e) => setPicked({ ...picked, [p.part]: e.target.checked })} className="mt-0.5" />
+                      <span>{p.label} <span className={p.auto ? "text-emerald-600" : "text-violet-600"}>· {p.auto ? "avtomat" : "ustoz tekshiradi"}</span></span>
+                    </label>
+                  ))}
+                  <div className="flex items-center gap-2 text-xs">Muddat: <input type="number" min={0} max={30} value={dueDays} onChange={(e) => setDueDays(Number(e.target.value))} className="w-14 border border-slate-200 rounded px-1 py-0.5" /> kun</div>
+                  <button onClick={sendAssignments} disabled={busy} className="w-full bg-emerald-600 text-white rounded-lg py-2 text-xs font-semibold">Yuborish</button>
+                  {sent && <div className="text-xs text-emerald-700">{sent}</div>}
+                </div>
+              )}
               <div className="text-xs font-semibold text-slate-500 uppercase mt-4">Maxfiy izoh (faqat siz)</div>
               <textarea value={notes} onChange={(e) => onNotes(e.target.value)} rows={4}
                         placeholder="Kim qiynaldi, nimani keyingi darsda takrorlash kerak…"

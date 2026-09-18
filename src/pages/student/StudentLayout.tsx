@@ -2,7 +2,7 @@ import "../../student-design.css";
 import { studentTabFor } from "../../lib/studentNavigation";
 import { useEffect } from "react";
 import { Link, Outlet, Navigate, useLocation } from "react-router-dom";
-import { Home, BookOpen, Trophy, Gift, User } from "lucide-react";
+import { Home, BookOpen, Trophy, Gift, User, ClipboardList } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 import { isStudentApp } from "../../lib/appMode";
 
@@ -28,6 +28,7 @@ import { isStudentApp } from "../../lib/appMode";
 const TABS = [
   { to: "/student", icon: Home, label: "Asosiy" },
   { to: "/student/games", icon: BookOpen, label: "O'rganish" },
+  { to: "/student/lessons", icon: ClipboardList, label: "Darslar" },
   { to: "/student/leaderboard", icon: Trophy, label: "Reyting" },
   // Dizaynda (shop.png, 2026-08-20) faol "Mukofotlar" ko'k rangda -
   // do'kon ekrani bilan bir xil bo'lsin.

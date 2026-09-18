@@ -283,7 +283,9 @@ function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
           Yordam kerak: {item.help_needed.map((h) => `${h.name} (${h.why})`).join(", ")}
         </div>
       )}
-      <div className="text-[11px] text-slate-400">Tekshirishni kutayotgan writing/speaking: {item.pending_checks}</div>
+      {item.pending_checks > 0 ? (
+        <Link to="/teacher/check" className="block text-xs bg-violet-50 text-violet-700 rounded-lg px-2 py-1.5">Tekshirishni kutayotgan writing/speaking: <b>{item.pending_checks}</b> →</Link>
+      ) : <div className="text-[11px] text-slate-400">Tekshirishni kutayotgan ish yo'q</div>}
       <Link to={`/teacher-run/${lessonId}`}
             className={`block text-center rounded-xl py-3 text-base font-bold text-white ${item.run?.status === "finished" ? "bg-slate-400" : "bg-emerald-600 active:scale-[0.99]"}`}>
         {item.run ? (item.run.status === "finished" ? `Dars yakunlangan (${item.run.done}/${item.run.total})` : `Darsni davom ettirish (${item.run.done}/${item.run.total})`) : "▶ Darsni boshlash"}

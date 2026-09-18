@@ -189,7 +189,10 @@ def plan_today(day: Optional[str] = None, db: Session = Depends(get_db),
                     "done": sum(1 for s in st if s.get("done")), "total": len(st)} if run else None,
             "homework_missing": hw_missing,
             "help_needed": help_needed,
-            "pending_checks": 0,   # writing/speaking tekshiruvi — keyingi bosqich
+            "pending_checks": (db.query(models.AssignmentSubmission)
+                               .join(models.Assignment, models.AssignmentSubmission.assignment_id == models.Assignment.id)
+                               .filter(models.Assignment.group_id == g.id, models.Assignment.auto == 0,
+                                       models.AssignmentSubmission.status == "submitted").count()),
         })
     return {"date": on.isoformat(), "items": items, "english": is_english_teacher(db, user),
             "courses": [{"course": c, "title": f"{tt} ({cefr})", "total": _course_len(c)}

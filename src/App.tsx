@@ -83,6 +83,9 @@ const Settings = lazy(() => import("./pages/Settings"));
 // paneli bilan; xodimlar paneliga aralashmaydi).
 const StudentLayout = lazy(() => import("./pages/student/StudentLayout"));
 const StudentHome = lazy(() => import("./pages/student/StudentHome"));
+// Darslar / topshiriqlar (2026-09-18)
+const StudentLessons = lazy(() => import("./pages/student/StudentLessons"));
+const TeacherCheck = lazy(() => import("./pages/teacher/TeacherCheck"));
 const StudentGames = lazy(() => import("./pages/student/StudentGames"));
 const StudentIelts = lazy(() => import("./pages/student/StudentIelts"));
 const StudentExamSkills = lazy(
@@ -257,6 +260,8 @@ function AppRoutes() {
         >
           <Route index element={<StudentHome />} />
           <Route path="games" element={<StudentGames />} />
+          <Route path="lessons" element={<StudentLessons />} />
+          <Route path="lessons/:aid" element={<StudentLessons />} />
           <Route path="ielts" element={<StudentIelts />} />
           {/* 2026-08-26: har imtihon o'z ichiga kiradi */}
           <Route path="ielts/exam/:exam"
@@ -322,6 +327,8 @@ function AppRoutes() {
           <Route index element={<TeacherToday />} />
           <Route path="week" element={<TeacherWeek />} />
           <Route path="lesson/:id" element={<TeacherLesson />} />
+          <Route path="check" element={<TeacherCheck />} />
+          <Route path="check/:sid" element={<TeacherCheck />} />
           <Route path="session" element={<TeacherSession />} />
           <Route path="vocab" element={<TeacherVocab />} />
           <Route path="salary" element={<TeacherSalary />} />

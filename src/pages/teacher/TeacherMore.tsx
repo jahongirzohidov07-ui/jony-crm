@@ -25,6 +25,8 @@ const SECTIONS = [
   {
     title: "Kundalik ish",
     items: [
+      { to: "/teacher/check", label: "Tekshirish", icon: ClipboardList,
+        hint: "Writing, speaking — kutayotgan ishlar" },
       { to: "/my-groups", label: "Guruhlarim", icon: Layers,
         hint: "Davomat, baholash, imtihonlar" },
       { to: "/my-students", label: "O'quvchilarim", icon: Users,

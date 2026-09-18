@@ -2103,6 +2103,31 @@ def student_notifications(db: Session = Depends(get_db),
     s = _me(db, user)
     items = []
 
+    # 0) Topshiriqlar (2026-09-18): yangi yuborilgan / tekshirilgan
+    try:
+        import json as _json
+        for a in (db.query(models.Assignment)
+                  .filter(models.Assignment.group_id == s.group_id, models.Assignment.status == "sent")
+                  .order_by(models.Assignment.id.desc()).limit(15).all()):
+            tg = _json.loads(a.targets or "[]")
+            if (a.student_id and a.student_id != s.id) or (tg and s.id not in tg):
+                continue
+            sub = (db.query(models.AssignmentSubmission)
+                   .filter(models.AssignmentSubmission.assignment_id == a.id,
+                           models.AssignmentSubmission.student_id == s.id)
+                   .order_by(models.AssignmentSubmission.id.desc()).first())
+            if not sub:
+                items.append({"id": f"asg:{a.id}", "kind": "assignment", "title": "Yangi topshiriq",
+                              "body": a.title + (f" · muddat {a.due_at.date().isoformat()}" if a.due_at else ""),
+                              "date": (a.sent_at or datetime.utcnow()).isoformat()})
+            elif sub.status in ("graded", "returned") and sub.graded_by and sub.graded_by != "Avtomat":
+                items.append({"id": f"asg-g:{sub.id}", "kind": "assignment",
+                              "title": "Tekshirildi" if sub.status == "graded" else "Qayta topshiring",
+                              "body": f"{a.title} — {sub.teacher_score:g}/{a.max_score:g}" + (f". {sub.comment}" if sub.comment else ""),
+                              "date": (sub.graded_at or datetime.utcnow()).isoformat()})
+    except Exception:
+        pass
+
     # 1) To'lov: balans manfiy bo'lsa - to'lov vaqti kelgan
     bal = student_balance(db, s.id)
     if bal < 0:

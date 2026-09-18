@@ -1910,6 +1910,2861 @@
      }
     ]
    }
+  },
+  {
+   "no": 3,
+   "title": "Modal Verbs: ought to, be able to",
+   "grammar_topic": "MODAL FE'LLAR — OUGHT TO (kerak, maslahat) va BE ABLE TO (qila olmoq, barcha zamonlarda) + modal takrori",
+   "vocab_topic": "Essential Words 3 — Technology and innovation (texnologiya va innovatsiya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 3 – Modal verbs (ought to / able to jadvallari); Essential Words 3; Sample essay 1 (Technology has made people more social); Audio 11–15 (ustoz skripti); Reading — Bill Gates (Jony Academy matni).",
+   "objectives": [
+    "ought to (maslahat, rasmiy should) ni tasdiq, inkor va savolda tuzish.",
+    "be able to ni can o'rniga barcha zamonlarda ishlatish (will be able to, have been able to, was able to).",
+    "could vs was able to (umumiy qobiliyat vs aniq holatda uddalash) farqi.",
+    "Texnologiya Essential Words 3 bilan IELTS Sample essay 1 mavzusi (\"Technology has made people more social\") uchun til to'plash."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 3 — Technology and innovation (texnologiya va innovatsiya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"You should study. You ought to study. You must study. You have to study.\" — kuch shkalasi. Keyin: \"I can code. I was able to code at 12. I will be able to code in Python by June.\" — can'ning zamonlari."
+    ],
+    [
+     8,
+     "Kahoot — Suffixes",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Suffixes lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvallari: OUGHT TO + V1 (= should, rasmiyroq): darak / ought not to / Ought I to…?; BE ABLE TO + V1 (= can, lekin barcha zamonlarda: am/is/are/was/were/will be/have been able to). Modal takrori: must/have to/should/ought to/can/could/be able to/may/might — ma'no va zamon jadvali."
+    ],
+    [
+     12,
+     "Essential Words 3 — Technology and innovation (texnologiya va innovatsiya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "OUGHT TO + V1 — \"kerak, to'g'ri bo'ladi\" (should bilan bir xil, rasmiyroq): \"You ought to study harder.\" Inkor: ought not to (oughtn't to); savol: \"Ought I to call her?\" (kam; odatda Should I…?).",
+     "BE ABLE TO + V1 — \"qila olmoq\" — can'ning barcha zamonlardagi shakli: \"She is able to swim\" (= can), \"They weren't able to come\" (= couldn't), \"I will be able to help\" (can'ning kelajagi yo'q!), \"I have been able to finish\" (perfect).",
+     "could — o'tgandagi umumiy qobiliyat (\"I could swim at five\"); was able to — bitta aniq holatda uddaladi (\"I was able to escape\").",
+     "Modal xaritasi: majburiyat — must/have to; maslahat — should/ought to; qobiliyat — can/be able to; ruxsat — can/may; ehtimol — may/might/could."
+    ],
+    "formulas": [
+     [
+      "Ought to — darak",
+      "S + ought to + V1",
+      "You ought to study harder.",
+      "Sen ko'proq o'qishing kerak."
+     ],
+     [
+      "Ought to — inkor",
+      "S + ought not to + V1",
+      "You ought not to be rude.",
+      "Sen qo'pol bo'lmasliging kerak."
+     ],
+     [
+      "Ought to — savol",
+      "Ought + S + to + V1?",
+      "Ought I to call her now?",
+      "Hozir unga qo'ng'iroq qilishim kerakmi?"
+     ],
+     [
+      "Be able to — darak",
+      "S + am/is/are/was/were/will be + able to + V1",
+      "She is able to swim well. / I will be able to code by June.",
+      "U yaxshi suza oladi. / Iyungacha dasturlay olaman."
+     ],
+     [
+      "Be able to — inkor / savol",
+      "S + be + not + able to / Be + S + able to…?",
+      "They aren't able to come today. / Are you able to help me?",
+      "Ular bugun kela olmaydi. / Menga yordam bera olasanmi?"
+     ],
+     [
+      "Perfect / could vs was able to",
+      "have/has been able to; could (umumiy) — was able to (aniq holat)",
+      "I have been able to finish. / He could read at four; he was able to fix the bug yesterday.",
+      "Tugatishga muvaffaq bo'ldim. / U to'rt yoshida o'qiy olardi; kecha xatoni tuzata oldi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Ought I to buy a new laptop?",
+      "You ought to wait — the new model is due in May."
+     ],
+     [
+      "Were you able to fix the connection?",
+      "Yes, I was able to fix it after an hour."
+     ],
+     [
+      "Will AI be able to replace teachers?",
+      "It will be able to help, but it won't be able to replace them."
+     ],
+     [
+      "Ought companies to collect our data?",
+      "They ought not to collect more than they need."
+     ],
+     [
+      "Has technology been able to make people more social?",
+      "It has been able to connect us, but not always to make us closer."
+     ],
+     [
+      "Could Bill Gates code as a teenager?",
+      "Yes, he could code at 13, and at 20 he was able to write an operating system."
+     ],
+     [
+      "Are you able to work without your phone?",
+      "Honestly, I'm not able to concentrate without it — and I ought to change that."
+     ],
+     [
+      "Ought children to have smartphones?",
+      "They ought not to have one before twelve, in my view."
+     ],
+     [
+      "Will you be able to finish the essay tonight?",
+      "I'll be able to finish the plan, not the essay."
+     ],
+     [
+      "Should we ban social media in schools, or ought we to teach digital literacy?",
+      "We ought to teach digital literacy."
+     ]
+    ],
+    "notes": [
+     "ought to dan keyin doim to: \"ought to go\" (\"ought go\" — xato); should dan keyin to yo'q.",
+     "can — faqat Present; could — Past/muloyim; qolgan zamonlar — be able to.",
+     "\"managed to\" = was able to (aniq holatda uddaladi).",
+     "Essential Words 3: innovation, digital literacy, connectivity, social isolation, screen time, breakthrough, obsolete, user-friendly, cyberbullying."
+    ],
+    "mistakes": [
+     [
+      "You ought study more.",
+      "You ought to study more.",
+      "ought + TO."
+     ],
+     [
+      "I will can help you.",
+      "I will be able to help you.",
+      "can'ning kelajagi — be able to."
+     ],
+     [
+      "She can swim when she was five.",
+      "She could swim when she was five.",
+      "O'tgan → could."
+     ],
+     [
+      "I could escape the fire yesterday.",
+      "I was able to escape the fire yesterday.",
+      "Aniq holat → was able to."
+     ],
+     [
+      "He oughts to go.",
+      "He ought to go.",
+      "Modal -s olmaydi."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — texnologiya va ijtimoiy ta'sir so'zlari (innovation, connectivity, isolation…); STRONG — raqamli hayot so'zlari; SUPER — Task 2 uchun akademik birikmalar (technological advancement, face-to-face interaction).",
+     "Har so'zga modal gap: \"Schools ought to teach digital literacy.\" / \"Nobody is able to live without connectivity now.\""
+    ],
+    "core": [
+     [
+      "innovation (4.0)",
+      "innovatsiya",
+      "Companies ought to invest in innovation.",
+      "Kompaniyalar innovatsiyaga sarmoya kiritishi kerak.",
+      ""
+     ],
+     [
+      "technological advancement",
+      "texnologik taraqqiyot",
+      "We have been able to see rapid technological advancement.",
+      "Tez texnologik taraqqiyotni ko'ra oldik.",
+      "ˌtɛknəˈlɑʤɪkəl ədˈvænsmənt"
+     ],
+     [
+      "digital literacy",
+      "raqamli savodxonlik",
+      "Schools ought to teach digital literacy.",
+      "Maktablar raqamli savodxonlikni o'rgatishi kerak.",
+      "ˈdɪʤɪtəl ˈlɪtərəsi"
+     ],
+     [
+      "connectivity",
+      "ulanish (aloqa)",
+      "Villages weren't able to get connectivity until 2015.",
+      "Qishloqlar 2015-gacha aloqaga ulana olmadi.",
+      "kənɛkˈtɪvɪti"
+     ],
+     [
+      "social isolation",
+      "ijtimoiy yakkalanish",
+      "Screens ought not to cause social isolation.",
+      "Ekranlar ijtimoiy yakkalanishga sabab bo'lmasligi kerak.",
+      "ˈsoʊʃəl ˌaɪsəˈleɪʃən"
+     ],
+     [
+      "face-to-face interaction",
+      "yuzma-yuz muloqot",
+      "Nothing is able to replace face-to-face interaction.",
+      "Hech narsa yuzma-yuz muloqotning o'rnini bosa olmaydi.",
+      "ˈfeɪstuˈfeɪs ˌɪnərˈækʃən"
+     ],
+     [
+      "screen time",
+      "ekran vaqti",
+      "Parents ought to limit screen time.",
+      "Ota-onalar ekran vaqtini cheklashi kerak.",
+      "skrin taɪm"
+     ],
+     [
+      "breakthrough (4.0)",
+      "yutuq (burilish)",
+      "Scientists were able to make a breakthrough in 2020.",
+      "Olimlar 2020-da yutuqqa erisha oldi.",
+      ""
+     ],
+     [
+      "obsolete (4.0)",
+      "eskirgan",
+      "Old phones become obsolete in three years.",
+      "Eski telefonlar uch yilda eskiradi.",
+      ""
+     ],
+     [
+      "user-friendly (4.0)",
+      "qulay (foydalanuvchi uchun)",
+      "Apps ought to be user-friendly for the elderly.",
+      "Ilovalar keksalar uchun qulay bo'lishi kerak.",
+      ""
+     ],
+     [
+      "cyberbullying",
+      "kiberbulling",
+      "Schools ought to take cyberbullying seriously.",
+      "Maktablar kiberbullingni jiddiy qabul qilishi kerak.",
+      ""
+     ],
+     [
+      "addiction (4.0)",
+      "qaramlik",
+      "Many teenagers aren't able to control their addiction to games.",
+      "Ko'p o'smirlar o'yinga qaramligini boshqara olmaydi.",
+      ""
+     ],
+     [
+      "privacy (4.0)",
+      "maxfiylik",
+      "Users ought to protect their privacy.",
+      "Foydalanuvchilar maxfiyligini himoya qilishi kerak.",
+      ""
+     ],
+     [
+      "device (4.0)",
+      "qurilma",
+      "Are you able to work without a device?",
+      "Qurilmasiz ishlay olasanmi?",
+      ""
+     ],
+     [
+      "software / hardware (4.0)",
+      "dasturiy / apparat ta'minot",
+      "Gates was able to sell software before he had hardware.",
+      "Geyts apparat bo'lmasdan turib dastur sota oldi.",
+      ""
+     ],
+     [
+      "automation (4.0)",
+      "avtomatlashtirish",
+      "Automation will be able to do most repetitive jobs.",
+      "Avtomatlashtirish aksariyat takroriy ishlarni bajara oladi.",
+      ""
+     ],
+     [
+      "artificial intelligence (4.0)",
+      "sun'iy intellekt",
+      "AI ought to be regulated.",
+      "Sun'iy intellekt tartibga solinishi kerak.",
+      ""
+     ],
+     [
+      "information overload",
+      "ma'lumot ortiqchaligi",
+      "We aren't able to process information overload.",
+      "Ma'lumot ortiqchaligini qayta ishlay olmaymiz.",
+      "ˌɪnˌfɔrˈmeɪʃən ˈoʊvərˌloʊd"
+     ],
+     [
+      "social media (4.0)",
+      "ijtimoiy tarmoqlar",
+      "Social media has been able to connect billions.",
+      "Ijtimoiy tarmoqlar milliardlab odamni bog'lay oldi.",
+      ""
+     ],
+     [
+      "virtual (4.0)",
+      "virtual",
+      "Virtual meetings ought not to replace real ones.",
+      "Virtual uchrashuvlar realning o'rnini bosmasligi kerak.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "cutting-edge (4.0)",
+      "eng ilg'or",
+      "Only rich countries are able to afford cutting-edge technology.",
+      "Faqat boy mamlakatlar eng ilg'or texnologiyani sotib ola oladi.",
+      ""
+     ],
+     [
+      "digital divide",
+      "raqamli tafovut",
+      "Governments ought to close the digital divide.",
+      "Hukumatlar raqamli tafovutni yopishi kerak.",
+      "ˈdɪʤɪtəl dɪˈvaɪd"
+     ],
+     [
+      "online community",
+      "onlayn jamoa",
+      "People are able to find support in online communities.",
+      "Odamlar onlayn jamoalarda qo'llab-quvvatlash topa oladi.",
+      "ˈɔnˌlaɪn kəmˈjunɪti"
+     ],
+     [
+      "instant communication",
+      "bir zumda muloqot",
+      "Instant communication ought to save time, not waste it.",
+      "Bir zumdagi muloqot vaqtni isrof emas, tejashi kerak.",
+      "ˈɪnstənt kəmˌjunəˈkeɪʃən"
+     ],
+     [
+      "dependence on technology",
+      "texnologiyaga qaramlik",
+      "We ought to reduce our dependence on technology.",
+      "Texnologiyaga qaramligimizni kamaytirishimiz kerak.",
+      "dɪˈpɛndəns ɔn tɛkˈnɑləʤi"
+     ],
+     [
+      "gadget (4.0)",
+      "gadjet",
+      "Children ought not to have gadgets at the table.",
+      "Bolalar dasturxonda gadjet bilan o'tirmasligi kerak.",
+      ""
+     ],
+     [
+      "smartphone (4.0)",
+      "smartfon",
+      "Nobody was able to imagine smartphones in 1995.",
+      "1995-da hech kim smartfonlarni tasavvur qila olmasdi.",
+      ""
+     ],
+     [
+      "app (application) (4.0)",
+      "ilova",
+      "Apps ought to ask before collecting data.",
+      "Ilovalar ma'lumot yig'ishdan oldin so'rashi kerak.",
+      ""
+     ],
+     [
+      "upgrade (4.0)",
+      "yangilamoq",
+      "You ought to upgrade the software regularly.",
+      "Dasturni muntazam yangilashing kerak.",
+      ""
+     ],
+     [
+      "data protection",
+      "ma'lumotlarni himoya qilish",
+      "Companies ought to obey data protection laws.",
+      "Kompaniyalar ma'lumotlarni himoya qilish qonunlariga bo'ysunishi kerak.",
+      "ˈdætə prəˈtɛkʃən"
+     ],
+     [
+      "surveillance (4.0)",
+      "kuzatuv",
+      "Citizens ought to know about surveillance.",
+      "Fuqarolar kuzatuv haqida bilishi kerak.",
+      ""
+     ],
+     [
+      "telecommuting / remote work",
+      "masofaviy ish",
+      "Many employees are able to telecommute now.",
+      "Ko'p xodimlar endi masofadan ishlay oladi.",
+      "tɛləkəmˈjutɪŋ  rɪˈmoʊt wərk"
+     ],
+     [
+      "e-learning",
+      "elektron ta'lim",
+      "E-learning has been able to reach villages.",
+      "Elektron ta'lim qishloqlarga yetib bora oldi.",
+      ""
+     ],
+     [
+      "digital footprint",
+      "raqamli iz",
+      "Teenagers ought to think about their digital footprint.",
+      "O'smirlar raqamli izi haqida o'ylashi kerak.",
+      "ˈdɪʤɪtəl ˈfʊtˌprɪnt"
+     ],
+     [
+      "misinformation (4.0)",
+      "noto'g'ri ma'lumot",
+      "Are we able to stop misinformation?",
+      "Noto'g'ri ma'lumotni to'xtata olamizmi?",
+      ""
+     ],
+     [
+      "algorithm (4.0)",
+      "algoritm",
+      "Algorithms ought to be transparent.",
+      "Algoritmlar shaffof bo'lishi kerak.",
+      ""
+     ],
+     [
+      "attention span",
+      "diqqat davomiyligi",
+      "Screens have shortened our attention span.",
+      "Ekranlar diqqat davomiyligimizni qisqartirdi.",
+      "əˈtɛnʃən spæn"
+     ],
+     [
+      "multitasking",
+      "bir vaqtda ko'p ish qilish",
+      "Nobody is really able to multitask.",
+      "Hech kim haqiqatan bir vaqtda ko'p ish qila olmaydi.",
+      "ˈməltiˌtæskɪŋ"
+     ],
+     [
+      "philanthropy (4.0)",
+      "xayriya (yirik)",
+      "Gates was able to turn wealth into philanthropy.",
+      "Geyts boylikni xayriyaga aylantira oldi.",
+      ""
+     ],
+     [
+      "operating system",
+      "operatsion tizim",
+      "At 20 he was able to write an operating system.",
+      "20 yoshida u operatsion tizim yoza oldi.",
+      "ˈɔpərˌeɪtɪŋ ˈsɪstəm"
+     ]
+    ],
+    "super": [
+     [
+      "foster relationships",
+      "munosabatlarni rivojlantirmoq",
+      "Technology is able to foster relationships across continents.",
+      "Texnologiya qit'alar aro munosabatlarni rivojlantira oladi.",
+      "ˈfɑstər riˈleɪʃənˌʃɪps"
+     ],
+     [
+      "bridge the gap",
+      "tafovutni bartaraf etmoq",
+      "Video calls have been able to bridge the gap between generations.",
+      "Video qo'ng'iroqlar avlodlar orasidagi tafovutni bartaraf eta oldi.",
+      "brɪʤ ðə gæp"
+     ],
+     [
+      "undergo a shift",
+      "o'zgarishni boshdan kechirmoq",
+      "Communication has undergone a seismic shift.",
+      "Muloqot keskin o'zgarishni boshdan kechirdi.",
+      "ˌəndərˈgoʊ ə ʃɪft"
+     ],
+     [
+      "glued to a screen",
+      "ekranga yopishib olgan",
+      "Children ought not to be glued to screens all day.",
+      "Bolalar kun bo'yi ekranga yopishib o'tirmasligi kerak.",
+      "glud tɪ ə skrin"
+     ],
+     [
+      "emotionally absent",
+      "hissiy jihatdan yo'q",
+      "Families are physically present but emotionally absent.",
+      "Oilalar jismonan bor, lekin hissiy jihatdan yo'q.",
+      "ˈiˌmoʊʃnəli ˈæbsənt"
+     ],
+     [
+      "collective action",
+      "jamoaviy harakat",
+      "Social media is able to organise collective action.",
+      "Ijtimoiy tarmoqlar jamoaviy harakatni tashkil qila oladi.",
+      "kəˈlɛktɪv ˈækʃən"
+     ],
+     [
+      "crowdfunding",
+      "jamoaviy moliyalashtirish",
+      "Patients have been able to raise money through crowdfunding.",
+      "Bemorlar jamoaviy moliyalashtirish orqali pul yig'a oldi.",
+      ""
+     ],
+     [
+      "like-minded",
+      "hamfikr",
+      "The internet connects like-minded people.",
+      "Internet hamfikr odamlarni bog'laydi.",
+      ""
+     ],
+     [
+      "wield a tool",
+      "vositani ishlatmoq",
+      "Technology is a tool; we ought to wield it mindfully.",
+      "Texnologiya — vosita; uni ongli ishlatishimiz kerak.",
+      "wild ə tul"
+     ],
+     [
+      "mindfully",
+      "ongli ravishda",
+      "Used mindfully, phones are able to help.",
+      "Ongli ishlatilsa, telefonlar yordam bera oladi.",
+      "ˈmaɪndfəli"
+     ],
+     [
+      "open-source",
+      "ochiq kodli",
+      "Open-source software is free and improvable.",
+      "Ochiq kodli dastur bepul va takomillashtirsa bo'ladi.",
+      "ˈoʊpənˌsɔrs"
+     ],
+     [
+      "monopoly (4.0)",
+      "monopoliya",
+      "Microsoft was accused of being a monopoly.",
+      "Microsoft monopoliya deb ayblangan.",
+      ""
+     ],
+     [
+      "licence (software)",
+      "litsenziya",
+      "Gates was able to license software instead of selling it.",
+      "Geyts dasturni sotish o'rniga litsenziyalay oldi.",
+      "ˈlaɪsəns (ˈsɔfˌwɛr)"
+     ],
+     [
+      "personal computer (PC)",
+      "shaxsiy kompyuter",
+      "He predicted a PC on every desk.",
+      "U har bir stolda shaxsiy kompyuter bo'lishini bashorat qildi.",
+      "ˈpərsɪnəl kəmˈpjutər (ˈpiˈsi)"
+     ],
+     [
+      "vaccine programme",
+      "emlash dasturi",
+      "His foundation has been able to fund vaccine programmes.",
+      "Uning jamg'armasi emlash dasturlarini moliyalashtira oldi.",
+      "ˌvækˈsin ˈproʊˌgræm"
+     ],
+     [
+      "eradicate",
+      "butunlay yo'q qilmoq",
+      "We ought to be able to eradicate polio soon.",
+      "Tez orada poliomielitni butunlay yo'q qila olishimiz kerak.",
+      "ɪˈrædəˌkeɪt"
+     ],
+     [
+      "drop out (4.0, Gates)",
+      "o'qishni tashlamoq",
+      "He was able to succeed even though he dropped out.",
+      "U o'qishni tashlagan bo'lsa ham muvaffaqiyatga erisha oldi.",
+      ""
+     ],
+     [
+      "visionary (4.0)",
+      "uzoqni ko'ruvchi",
+      "A visionary is able to see what others can't.",
+      "Uzoqni ko'ruvchi boshqalar ko'ra olmaydigan narsani ko'ra oladi.",
+      ""
+     ],
+     [
+      "generosity",
+      "saxiylik",
+      "His generosity is measurable in billions.",
+      "Uning saxiyligi milliardlarda o'lchanadi.",
+      "ˌʤɛnərˈɑsəti"
+     ],
+     [
+      "digital age",
+      "raqamli asr",
+      "In the digital age, we ought to protect our attention.",
+      "Raqamli asrda diqqatimizni himoya qilishimiz kerak.",
+      "ˈdɪʤɪtəl eɪʤ"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "ought to / be able to",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos shakl (zamon!)",
+     "items": [
+      "You ___ (ought) limit your screen time.",
+      "I ___ (be able) fix the Wi-Fi yesterday.",
+      "She ___ (be able) code in Python by June.",
+      "Children ___ (ought / not) have phones before 12.",
+      "We ___ (be able) connect villages since 2015.",
+      "___ I ___ (ought) delete the app?",
+      "They ___ (be able / not) come to the meeting yesterday.",
+      "He ___ (ought) protect his privacy."
+     ],
+     "answers": [
+      "ought to",
+      "was able to",
+      "will be able to",
+      "ought not to",
+      "have been able to",
+      "Ought … to",
+      "weren't able to",
+      "ought to"
+     ]
+    },
+    {
+     "title": "could yoki was able to",
+     "type": "choose",
+     "instr": "To'g'ri shaklni tanlang",
+     "items": [
+      "Gates could / was able to code at 13. (umumiy)",
+      "After three hours he could / was able to fix the bug. (aniq holat)",
+      "My grandmother couldn't / wasn't able to use email in 2010. (umumiy)",
+      "Despite the storm, we could / were able to connect. (aniq)",
+      "I could / was able to swim at five."
+     ],
+     "answers": [
+      "could",
+      "was able to",
+      "couldn't",
+      "were able to",
+      "could"
+     ]
+    },
+    {
+     "title": "Modal xaritasi",
+     "type": "sort",
+     "instr": "Har gapga modal ma'nosini yozing (majburiyat / maslahat / qobiliyat / ehtimol)",
+     "items": [
+      "You must protect your data.",
+      "You ought to update the app.",
+      "She is able to code in three languages.",
+      "AI might replace some jobs.",
+      "Students have to submit essays online.",
+      "He should reduce his screen time."
+     ],
+     "answers": [
+      "majburiyat",
+      "maslahat",
+      "qobiliyat",
+      "ehtimol",
+      "majburiyat",
+      "maslahat"
+     ]
+    },
+    {
+     "title": "IELTS Speaking Part 3 — Technology",
+     "type": "speaking",
+     "instr": "Juftlikda: 5 savol — javobda ought to / be able to va Essential so'zlar",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "Has technology made people more social? — It has been able to connect us, but face-to-face interaction has suffered.",
+      "Ought schools to ban phones? — They ought to teach digital literacy instead.",
+      "Will AI be able to replace teachers? — It will be able to help, not replace.",
+      "Are people able to live without social media? — Few are able to; addiction is real.",
+      "What ought governments to do about misinformation? — They ought to regulate algorithms."
+     ]
+    },
+    {
+     "title": "Texnologiya lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the ability to use digital tools well",
+      "feeling alone because of less real contact",
+      "the gap between people with and without technology",
+      "no longer used because something newer exists",
+      "bullying that happens online",
+      "working from home using technology"
+     ],
+     "answers": [
+      "digital literacy",
+      "social isolation",
+      "digital divide",
+      "obsolete",
+      "cyberbullying",
+      "remote work"
+     ],
+     "box": [
+      "digital literacy",
+      "social isolation",
+      "digital divide",
+      "obsolete",
+      "cyberbullying",
+      "remote work"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "You ought study more.",
+      "I will can help you.",
+      "She can swim when she was five.",
+      "I could escape the fire yesterday.",
+      "He oughts to go."
+     ],
+     "answers": [
+      "You ought to study more.",
+      "I will be able to help you.",
+      "She could swim when she was five.",
+      "I was able to escape the fire yesterday.",
+      "He ought to go."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 3 jadvallarini 3 marta; Essential Words 3 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 1",
+     "type": "write",
+     "instr": "\"Technology has made people more social. Do you agree or disagree?\" — kitobdagi namunani tahlil qiling (tuzilma, bog'lovchilar), keyin o'zingiz 250 so'z yozing; kamida 5 modal (ought to, be able to, must…) va 8 Essential so'z",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Reading practice test — 3-passage, 20 daqiqa",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Sen ko'proq o'qishing kerak.",
+      "U yaxshi suza oladi.",
+      "Iyungacha dasturlay olaman.",
+      "Ular kecha kela olmadi.",
+      "Maktablar raqamli savodxonlikni o'rgatishi kerak."
+     ],
+     "answers": [
+      "You ought to study harder.",
+      "She is able to swim well.",
+      "I will be able to code by June.",
+      "They weren't able to come yesterday.",
+      "Schools ought to teach digital literacy."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 3 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "Modal xaritasi (9 modal + ma'no + gap), 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 2",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvallari: ought to + able to)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 3 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Bill Gates — the man who was able to put a computer on every desk",
+    "text": [
+     "Bill Gates was born in 1955 in Seattle. At 13 he was able to use a computer at school — an enormous machine that few schools had — and he ought to have been doing his homework, but instead he was writing programs. At 20 he dropped out of Harvard because he believed something that sounded impossible: that one day there would be a personal computer on every desk and in every home.",
+     "In 1975 he and Paul Allen founded Microsoft. Gates was able to see what others couldn't: hardware would become cheap, so the money was in software. He licensed the operating system MS-DOS to IBM instead of selling it — a decision that made Microsoft the most valuable company in the world by the 1990s. Windows and Office were soon on almost every computer on the planet.",
+     "Not everyone admired him. Courts ruled that Microsoft had acted as a monopoly, and critics said its products were not user-friendly. But nobody was able to deny his influence: the digital age ran on his software.",
+     "In 2000 Gates did something few billionaires have been able to do — he gave most of his fortune away. The Gates Foundation has spent more than 70 billion dollars on vaccines, clean water and education, and it has been able to help eradicate polio from almost every country. \"Technology,\" he says, \"is just a tool. People ought to use it to make lives better — that is the only measure that matters.\""
+    ],
+    "glossary": [
+     "enormous — ulkan",
+     "drop out — o'qishni tashlamoq",
+     "found — asos solmoq",
+     "licence — litsenziyalamoq",
+     "valuable — qimmatli",
+     "court — sud",
+     "rule — hukm chiqarmoq",
+     "monopoly — monopoliya",
+     "deny — inkor etmoq",
+     "fortune — boylik",
+     "eradicate — butunlay yo'q qilmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Modal fe'llarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta modal (ought to / be able to / could…)",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8"
+      ],
+      "answers": [
+       "At 13 he was able to use a computer at school.",
+       "He ought to have been doing his homework.",
+       "Gates was able to see what others couldn't.",
+       "Nobody was able to deny his influence.",
+       "Few billionaires have been able to do.",
+       "It has been able to help eradicate polio.",
+       "People ought to use it to make lives better.",
+       "(couldn't) what others couldn't (see)."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Gates finished Harvard.",
+       "He sold MS-DOS to IBM.",
+       "Courts said Microsoft was a monopoly.",
+       "The foundation has spent more than 70 billion dollars."
+      ],
+      "answers": [
+       "False",
+       "False (licensed)",
+       "True",
+       "True"
+      ]
+     },
+     {
+      "title": "Insho tayyorgarligi",
+      "type": "write",
+      "instr": "Sample essay 1 mavzusi: \"Technology has made people more social\" — matndan 2 dalil \"for\", 1 dalil \"against\" yozing",
+      "items": [
+       "for 1",
+       "for 2",
+       "against"
+      ],
+      "answers": [
+       "Software connected almost every computer on the planet.",
+       "Technology, used as a tool, makes lives better (health, education).",
+       "Critics: products were not always user-friendly; a tool can also isolate."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 1 (Technology has made people more social) — uyga."
+   },
+   "listening": {
+    "audios": "Audio 11–15 (fayllar yo'q — ustoz IELTS Section 3 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Student: I wasn't able to finish the survey on screen time. Tutor: You ought to narrow the topic — teenagers only. Student: OK. Most of them said they aren't able to sleep without their phones. Tutor: Interesting. You ought to compare that with the 2015 data, when only 30 percent said so. Student: Now it's 70. Tutor: Then your conclusion ought to be about addiction, not technology in general.\"",
+     "1-tinglash: mavzu nima? 2-tinglash: raqamlar va maslahatlar."
+    ],
+    "tasks": [
+     {
+      "title": "Multiple choice / completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "The tutor advises narrowing the topic to ___.",
+       "Students aren't able to sleep without their ___.",
+       "In 2015 the figure was ___ percent; now it is ___.",
+       "The conclusion ought to be about ___."
+      ],
+      "answers": [
+       "teenagers",
+       "phones",
+       "30, 70",
+       "addiction"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 4,
+   "title": "Other Ways of Referring to the Future",
+   "grammar_topic": "KELAJAKNI IFODALASHNING BOSHQA YO'LLARI (be going to, Present Continuous, Present Simple, be about to, be due to, be to, be bound/sure to, be likely/unlikely to)",
+   "vocab_topic": "Essential Words 4 — Work and careers (ish va karyera)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 4 – Other ways of referring to future (8 qatorli jadval); Essential Words 4; Sample essay 9 (Working longer hours); Audio 16–20 (ustoz skripti); Reading — Kylian Mbappé (Jony Academy matni).",
+   "objectives": [
+    "Sakkiz kelajak shaklini ma'no va uslub bo'yicha farqlash (reja / jadval / yaqin / rasmiy / ehtimol).",
+    "Writing Task 1–2 uchun rasmiy shakllar: is likely to, is expected to, is due to, is set to.",
+    "Kelajak haqida Speaking: karyera rejalari (I'm going to / I'm hoping to / I'm about to).",
+    "Ish va karyera Essential Words 4 bilan Sample essay 9 (\"working longer hours\") uchun til."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 4 — Work and careers (ish va karyera) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"The train leaves at 9. I'm meeting the boss at 10. I'm going to apply for the job. I'm about to send the CV. The interview is due to start at 11. I'm bound to be nervous. I'm likely to get it!\" — 7 kelajak shakli, will'siz."
+    ],
+    [
+     8,
+     "Kahoot — Modal verbs",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Modal verbs lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 8 qator: be going to (reja/dalilli bashorat), Present Continuous (kelishilgan reja), Present Simple (jadval), be about to (juda yaqin), be due to (belgilangan vaqt), be to (rasmiy reja/buyruq), be bound/sure/certain to (yuqori ishonch), be likely/unlikely to (ehtimol). IELTS Writing: \"is likely to\", \"is expected to\", \"is due to\" — rasmiy uslub."
+    ],
+    [
+     12,
+     "Essential Words 4 — Work and careers (ish va karyera) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "BE GOING TO + V1 — oldindan reja yoki dalilli bashorat: \"It's going to rain soon.\" / \"I'm going to apply.\"",
+     "PRESENT CONTINUOUS — kelishilgan, belgilangan reja: \"We're meeting them at 6 p.m.\"",
+     "PRESENT SIMPLE — jadval (transport, dars, ochilish): \"The train leaves at 9 a.m.\"",
+     "BE ABOUT TO — juda yaqin: \"She is about to leave.\" BE DUE TO — belgilangan vaqt: \"The meeting is due to start at 10.\"",
+     "BE TO + V1 — rasmiy reja/buyruq (yangiliklar): \"The President is to visit tomorrow.\"",
+     "BE BOUND/SURE/CERTAIN TO — yuqori ishonch: \"He is bound to succeed.\" BE LIKELY/UNLIKELY TO — ehtimol: \"They are likely to win.\""
+    ],
+    "formulas": [
+     [
+      "be going to",
+      "S + am/is/are going to + V1",
+      "It's going to rain soon. / I'm going to apply for the job.",
+      "Tez orada yomg'ir yog'adi. / Ishga ariza beraman (rejam)."
+     ],
+     [
+      "Present Continuous",
+      "S + am/is/are + V-ing (+ vaqt)",
+      "We're meeting them at 6 p.m.",
+      "Biz ular bilan soat 6 da uchrashamiz."
+     ],
+     [
+      "Present Simple",
+      "S + V(s) (jadval)",
+      "The train leaves at 9 a.m.",
+      "Poyezd soat 9 da jo'naydi."
+     ],
+     [
+      "be about to / be due to",
+      "S + be about to + V1 / S + be due to + V1",
+      "She is about to leave. / The meeting is due to start at 10.",
+      "U hozir ketmoqchi. / Yig'ilish 10 da boshlanishi belgilangan."
+     ],
+     [
+      "be to",
+      "S + am/is/are to + V1 (rasmiy)",
+      "The President is to visit tomorrow.",
+      "Prezident ertaga tashrif buyuradi."
+     ],
+     [
+      "be bound / likely to",
+      "S + be bound/sure/certain to + V1; S + be likely/unlikely to + V1",
+      "He is bound to succeed. / They are likely to win the match.",
+      "U albatta muvaffaqiyatga erishadi. / Ular o'yinda yutishi ehtimol."
+     ]
+    ],
+    "presentation": [
+     [
+      "What are you going to do after IELTS 4.0?",
+      "I'm going to apply for a scholarship abroad."
+     ],
+     [
+      "Are you meeting anyone about a job?",
+      "Yes, I'm meeting a recruiter on Friday."
+     ],
+     [
+      "When does the interview start?",
+      "It starts at 10; I'm about to leave now."
+     ],
+     [
+      "Is the new office due to open soon?",
+      "It's due to open in September."
+     ],
+     [
+      "Is Mbappé to sign a new contract?",
+      "According to the club, he is to sign it next week."
+     ],
+     [
+      "Is he bound to score in the final?",
+      "He's bound to try — and he's likely to succeed."
+     ],
+     [
+      "Are working hours likely to get longer?",
+      "Unfortunately, they are likely to; burnout is bound to increase."
+     ],
+     [
+      "What is the company about to announce?",
+      "It's about to announce a four-day week."
+     ],
+     [
+      "Is unemployment likely to fall next year?",
+      "It's unlikely to fall quickly."
+     ],
+     [
+      "When are you starting your new job?",
+      "I'm starting on Monday — the contract says I'm to report at 9."
+     ]
+    ],
+    "notes": [
+     "will — o'sha paytdagi qaror/va'da/bashorat; be going to — oldindan reja; Present Continuous — kelishilgan (vaqt/joy aniq).",
+     "Writing Task 1 (grafik): \"is expected to rise\", \"is projected to reach\", \"is likely to remain stable\".",
+     "be to — yangiliklar va rasmiy hujjatlar; buyruq: \"You are to be here at 8.\"",
+     "Essential Words 4: career, promotion, workload, work-life balance, burnout, recruitment, salary, self-employed, flexible hours."
+    ],
+    "mistakes": [
+     [
+      "The train is going to leave at 9. (jadval)",
+      "The train leaves at 9.",
+      "Jadval → Present Simple."
+     ],
+     [
+      "I will meet the boss tomorrow at 10. (kelishilgan)",
+      "I'm meeting the boss tomorrow at 10.",
+      "Kelishilgan reja → Present Continuous."
+     ],
+     [
+      "She is about leaving.",
+      "She is about to leave.",
+      "about TO + V1."
+     ],
+     [
+      "The meeting is due start at 10.",
+      "The meeting is due to start at 10.",
+      "due TO."
+     ],
+     [
+      "He is likely succeed.",
+      "He is likely to succeed.",
+      "likely TO."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — ish va karyera asoslari (career, promotion, workload…); STRONG — ish bozori va shartlar (recruitment, flexible hours, redundancy); SUPER — Task 2 birikmalari (strike a balance, job satisfaction, career ladder).",
+     "Har so'zga kelajak shakli: \"I'm going to ask for a promotion.\" / \"Burnout is likely to increase.\""
+    ],
+    "core": [
+     [
+      "career",
+      "karyera",
+      "I'm going to build a career in engineering.",
+      "Men muhandislikda karyera quraman.",
+      "kərɪr"
+     ],
+     [
+      "promotion (4.0)",
+      "lavozim ko'tarilishi",
+      "She is likely to get a promotion next year.",
+      "U kelasi yil lavozim ko'tarilishi ehtimol.",
+      ""
+     ],
+     [
+      "workload",
+      "ish yuki",
+      "The workload is bound to increase in December.",
+      "Dekabrda ish yuki albatta oshadi.",
+      "ˈwərˌkloʊd"
+     ],
+     [
+      "work-life balance (4.0)",
+      "ish-hayot muvozanati",
+      "Work-life balance is unlikely to improve without limits.",
+      "Cheklovlarsiz ish-hayot muvozanati yaxshilanishi ehtimoldan yiroq.",
+      ""
+     ],
+     [
+      "burnout",
+      "ruhiy-jismoniy holdan toyish",
+      "Employees working 60 hours are bound to suffer burnout.",
+      "60 soat ishlaydigan xodimlar albatta holdan toyadi.",
+      "ˈbərˌnaʊt"
+     ],
+     [
+      "recruitment (4.0)",
+      "ishga qabul",
+      "Recruitment is due to start in March.",
+      "Ishga qabul martda boshlanishi belgilangan.",
+      ""
+     ],
+     [
+      "salary / wage (4.0)",
+      "oylik / ish haqi",
+      "Salaries are likely to rise with inflation.",
+      "Oyliklar inflyatsiya bilan o'sishi ehtimol.",
+      ""
+     ],
+     [
+      "self-employed",
+      "o'zi uchun ishlaydigan",
+      "I'm going to become self-employed.",
+      "Men o'zim uchun ishlaydigan bo'laman.",
+      ""
+     ],
+     [
+      "flexible hours",
+      "moslashuvchan ish vaqti",
+      "The company is about to introduce flexible hours.",
+      "Kompaniya moslashuvchan ish vaqtini joriy etmoqchi.",
+      "ˈflɛksəbəl aʊərz"
+     ],
+     [
+      "overtime",
+      "qo'shimcha ish vaqti",
+      "Overtime is unlikely to be paid.",
+      "Qo'shimcha ish vaqti to'lanishi ehtimoldan yiroq.",
+      "ˈoʊvərˌtaɪm"
+     ],
+     [
+      "job satisfaction",
+      "ishdan qoniqish",
+      "Job satisfaction is bound to fall with long hours.",
+      "Uzoq ish soatlari bilan ishdan qoniqish albatta tushadi.",
+      "ʤɑb ˌsætɪsˈfækʃən"
+     ],
+     [
+      "employer / employee",
+      "ish beruvchi / xodim",
+      "Employers are to publish salaries from 2027.",
+      "Ish beruvchilar 2027-dan oyliklarni e'lon qilishi kerak.",
+      "ɪmˈplɔɪər  ɪmˈplɔɪi"
+     ],
+     [
+      "unemployment (4.0)",
+      "ishsizlik",
+      "Unemployment is likely to fall slowly.",
+      "Ishsizlik sekin tushishi ehtimol.",
+      ""
+     ],
+     [
+      "qualification (4.0)",
+      "malaka",
+      "Without qualifications you're unlikely to get an interview.",
+      "Malakasiz suhbatga chaqirilishing ehtimoldan yiroq.",
+      ""
+     ],
+     [
+      "CV (curriculum vitae)",
+      "rezyume",
+      "I'm about to send my CV.",
+      "Rezyumemni hozir jo'natmoqchiman.",
+      ""
+     ],
+     [
+      "interview (job)",
+      "suhbat",
+      "The interview is due to start at ten.",
+      "Suhbat o'nda boshlanishi belgilangan.",
+      "ˈɪntərvˌju (ʤɑb)"
+     ],
+     [
+      "contract (4.0)",
+      "shartnoma",
+      "Mbappé is to sign a five-year contract.",
+      "Mbappe besh yillik shartnoma imzolaydi.",
+      ""
+     ],
+     [
+      "retirement (4.0)",
+      "nafaqa",
+      "The retirement age is likely to rise.",
+      "Nafaqa yoshi ko'tarilishi ehtimol.",
+      ""
+     ],
+     [
+      "productivity (4.0)",
+      "samaradorlik",
+      "Productivity is bound to drop after ten hours.",
+      "O'n soatdan keyin samaradorlik albatta tushadi.",
+      ""
+     ],
+     [
+      "commute (4.0)",
+      "qatnov (ishga)",
+      "Remote work is going to shorten the commute.",
+      "Masofaviy ish qatnovni qisqartiradi.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "redundancy",
+      "ishdan qisqartirish",
+      "Redundancies are likely if the company merges.",
+      "Kompaniya qo'shilsa, qisqartirishlar bo'lishi ehtimol.",
+      "rɪˈdəndənsi"
+     ],
+     [
+      "resign / resignation",
+      "ishdan ketmoq / ariza",
+      "He is about to resign.",
+      "U hozir ishdan ketmoqchi.",
+      "rɪˈzaɪn  ˌrɛzɪgˈneɪʃən"
+     ],
+     [
+      "dismiss / be fired",
+      "ishdan bo'shatmoq / bo'shatilmoq",
+      "Late employees are bound to be dismissed.",
+      "Kech qoladigan xodimlar albatta bo'shatiladi.",
+      "dɪsˈmɪs  bi faɪərd"
+     ],
+     [
+      "apprenticeship",
+      "shogirdlik (ish o'rganish)",
+      "She is going to do an apprenticeship.",
+      "U shogirdlik dasturidan o'tadi.",
+      "əˈprɛntəsˌʃɪp"
+     ],
+     [
+      "internship",
+      "amaliyot (stajirovka)",
+      "The internship is due to end in August.",
+      "Amaliyot avgustda tugashi belgilangan.",
+      "ˈɪntərnˌʃɪp"
+     ],
+     [
+      "vacancy",
+      "bo'sh ish o'rni",
+      "A vacancy is about to be advertised.",
+      "Bo'sh ish o'rni hozir e'lon qilinmoqchi.",
+      "ˈveɪkənsi"
+     ],
+     [
+      "applicant / candidate",
+      "ariza beruvchi / nomzod",
+      "Fifty candidates are to be interviewed.",
+      "Ellik nomzod suhbatdan o'tkaziladi.",
+      "ˈæplɪkənt  ˈkænədɪt"
+     ],
+     [
+      "shift work",
+      "smenali ish",
+      "Shift work is likely to harm sleep.",
+      "Smenali ish uyquga zarar berishi ehtimol.",
+      "ʃɪft wərk"
+     ],
+     [
+      "deadline (4.0)",
+      "muddat",
+      "The deadline is due on Friday.",
+      "Muddat juma kuni.",
+      ""
+     ],
+     [
+      "colleague",
+      "hamkasb",
+      "I'm meeting my colleagues at 6.",
+      "Hamkasblarim bilan 6 da uchrashaman.",
+      "ˈkɑlig"
+     ],
+     [
+      "teamwork",
+      "jamoaviy ish",
+      "Teamwork is bound to matter more than talent.",
+      "Jamoaviy ish iste'doddan ko'ra muhimroq bo'lishi aniq.",
+      "ˈtimˌwərk"
+     ],
+     [
+      "leadership (4.0)",
+      "yetakchilik",
+      "Leadership training is due to start next term.",
+      "Yetakchilik treningi kelasi chorakda boshlanadi.",
+      ""
+     ],
+     [
+      "labour market (4.0)",
+      "mehnat bozori",
+      "The labour market is unlikely to recover quickly.",
+      "Mehnat bozori tez tiklanishi ehtimoldan yiroq.",
+      ""
+     ],
+     [
+      "minimum wage",
+      "minimal ish haqi",
+      "The minimum wage is to rise in January.",
+      "Minimal ish haqi yanvarda oshadi.",
+      "ˈmɪnəməm weɪʤ"
+     ],
+     [
+      "pension (4.0)",
+      "pensiya",
+      "Pensions are likely to be smaller for our generation.",
+      "Bizning avlod uchun pensiya kichikroq bo'lishi ehtimol.",
+      ""
+     ],
+     [
+      "job security",
+      "ish kafolati",
+      "Job security is going to matter more than salary.",
+      "Ish kafolati oylikdan ko'ra muhimroq bo'ladi.",
+      "ʤɑb sɪˈkjʊrəti"
+     ],
+     [
+      "perks / benefits",
+      "imtiyozlar",
+      "The company is about to cut perks.",
+      "Kompaniya imtiyozlarni qisqartirmoqchi.",
+      "pərks  ˈbɛnəfɪts"
+     ],
+     [
+      "entrepreneur (4.0)",
+      "tadbirkor",
+      "I'm going to be an entrepreneur, not an employee.",
+      "Men xodim emas, tadbirkor bo'laman.",
+      ""
+     ],
+     [
+      "transfer (sport/work)",
+      "o'tish (ishga/klubga)",
+      "The transfer is due to be completed on Monday.",
+      "O'tish dushanba kuni yakunlanishi belgilangan.",
+      ""
+     ],
+     [
+      "ambition (4.0)",
+      "katta maqsad",
+      "His ambition is bound to take him to the top.",
+      "Uning katta maqsadi uni albatta cho'qqiga olib chiqadi.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "strike a balance",
+      "muvozanat topmoq",
+      "Workers are going to have to strike a balance between work and rest.",
+      "Ishchilar ish va dam o'rtasida muvozanat topishga majbur bo'ladi.",
+      "straɪk ə ˈbæləns"
+     ],
+     [
+      "climb the career ladder",
+      "karyera zinasidan ko'tarilmoq",
+      "She is bound to climb the career ladder fast.",
+      "U karyera zinasidan albatta tez ko'tariladi.",
+      "klaɪm ðə kərɪr ˈlædər"
+     ],
+     [
+      "long working hours",
+      "uzoq ish soatlari",
+      "Long working hours are likely to damage health.",
+      "Uzoq ish soatlari sog'liqqa zarar berishi ehtimol.",
+      "lɔŋ ˈwərkɪŋ aʊərz"
+     ],
+     [
+      "job market (4.0)",
+      "ish bozori",
+      "The job market is about to change because of AI.",
+      "AI tufayli ish bozori o'zgarish arafasida.",
+      ""
+     ],
+     [
+      "work ethic",
+      "mehnat madaniyati",
+      "Mbappé's work ethic is bound to inspire teenagers.",
+      "Mbappening mehnat madaniyati o'smirlarni albatta ilhomlantiradi.",
+      "wərk ˈɛθɪk"
+     ],
+     [
+      "financial pressure",
+      "moliyaviy bosim",
+      "Financial pressure is going to push people into overtime.",
+      "Moliyaviy bosim odamlarni qo'shimcha ishga undaydi.",
+      "ˌfaɪˈnænʃəl ˈprɛʃər"
+     ],
+     [
+      "cost of living",
+      "yashash xarajatlari",
+      "The cost of living is likely to keep rising.",
+      "Yashash xarajatlari o'sishda davom etishi ehtimol.",
+      "kɔst əv ˈlɪvɪŋ"
+     ],
+     [
+      "stress-related illness",
+      "stress bilan bog'liq kasallik",
+      "Stress-related illnesses are bound to increase.",
+      "Stress bilan bog'liq kasalliklar albatta ko'payadi.",
+      ""
+     ],
+     [
+      "four-day week",
+      "to'rt kunlik ish haftasi",
+      "Several companies are about to trial a four-day week.",
+      "Bir necha kompaniya to'rt kunlik haftani sinab ko'rmoqchi.",
+      ""
+     ],
+     [
+      "paid leave",
+      "haq to'lanadigan ta'til",
+      "Paid leave is to be extended to 30 days.",
+      "Haq to'lanadigan ta'til 30 kunga uzaytiriladi.",
+      "peɪd liv"
+     ],
+     [
+      "gig economy",
+      "vaqtinchalik ish iqtisodiyoti",
+      "The gig economy is likely to grow among students.",
+      "Talabalar orasida vaqtinchalik ish iqtisodiyoti o'sishi ehtimol.",
+      "gɪg ɪˈkɑnəmi"
+     ],
+     [
+      "automation of jobs",
+      "ishlarni avtomatlashtirish",
+      "Automation is bound to replace repetitive jobs.",
+      "Avtomatlashtirish takroriy ishlarning o'rnini albatta bosadi.",
+      "ɔtəˈmeɪʃən əv ʤɑbz"
+     ],
+     [
+      "upskill / reskill",
+      "malakani oshirmoq / yangi kasb o'rganmoq",
+      "Workers are going to have to reskill every decade.",
+      "Ishchilar har o'n yilda yangi kasb o'rganishga majbur bo'ladi.",
+      ""
+     ],
+     [
+      "transferable skills",
+      "ko'chirsa bo'ladigan ko'nikmalar",
+      "Transferable skills are likely to matter most.",
+      "Ko'chirsa bo'ladigan ko'nikmalar eng muhim bo'lishi ehtimol.",
+      "trænsˈfərəbəl skɪlz"
+     ],
+     [
+      "world-class",
+      "jahon darajasidagi",
+      "He is about to become a world-class striker.",
+      "U jahon darajasidagi hujumchiga aylanish arafasida.",
+      "ˈwərldˌklæs"
+     ],
+     [
+      "prodigy (4.0)",
+      "vunderkind",
+      "A prodigy is bound to face pressure early.",
+      "Vunderkind erta bosimga duch kelishi aniq.",
+      ""
+     ],
+     [
+      "sponsorship deal",
+      "homiylik shartnomasi",
+      "A sponsorship deal is due to be signed.",
+      "Homiylik shartnomasi imzolanishi belgilangan.",
+      "ˈspɑnsərˌʃɪp dil"
+     ],
+     [
+      "release clause",
+      "(shartnomadan) chiqib ketish sharti",
+      "The release clause is to be paid in full.",
+      "Chiqib ketish sharti to'liq to'lanadi.",
+      "riˈlis klɔz"
+     ],
+     [
+      "free agent",
+      "erkin agent (shartnomasiz)",
+      "He is going to leave as a free agent.",
+      "U erkin agent sifatida ketadi.",
+      "fri ˈeɪʤənt"
+     ],
+     [
+      "legacy (4.0)",
+      "meros",
+      "His legacy is likely to be bigger than his trophies.",
+      "Uning merosi kuboklaridan kattaroq bo'lishi ehtimol.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Kelajak shaklini tanlang",
+     "type": "choose",
+     "instr": "To'g'ri variantni tanlang",
+     "items": [
+      "The train leaves / is going to leave at 9. (jadval)",
+      "I'm meeting / will meet the recruiter at 10 tomorrow. (kelishilgan)",
+      "Look at the clouds — it's going to rain / rains.",
+      "She is about to / about leave.",
+      "The meeting is due to / due start at 10.",
+      "He is bound to / bound succeed.",
+      "The President is to / is going visit tomorrow. (rasmiy)",
+      "They are likely to / likely win."
+     ],
+     "answers": [
+      "leaves",
+      "I'm meeting",
+      "it's going to rain",
+      "is about to",
+      "is due to",
+      "is bound to",
+      "is to",
+      "are likely to"
+     ]
+    },
+    {
+     "title": "Rasmiy uslub (Writing)",
+     "type": "rewrite",
+     "instr": "Gapni is likely to / is expected to / is due to / is set to bilan rasmiy yozing",
+     "items": [
+      "Unemployment will probably fall.",
+      "Experts think salaries will rise.",
+      "The report will be published on Friday (rejada).",
+      "The company will definitely open a new office.",
+      "Working hours will probably not get shorter."
+     ],
+     "answers": [
+      "Unemployment is likely to fall.",
+      "Salaries are expected to rise.",
+      "The report is due to be published on Friday.",
+      "The company is bound to open a new office.",
+      "Working hours are unlikely to get shorter."
+     ]
+    },
+    {
+     "title": "Ma'no → shakl",
+     "type": "sort",
+     "instr": "Har gapga ma'no yozing: reja / jadval / yaqin / rasmiy / ishonch / ehtimol",
+     "items": [
+      "I'm going to apply for the job.",
+      "The office opens at 8.",
+      "She's about to sign.",
+      "The minister is to speak at noon.",
+      "He is bound to score.",
+      "They are unlikely to win."
+     ],
+     "answers": [
+      "reja",
+      "jadval",
+      "yaqin",
+      "rasmiy",
+      "ishonch",
+      "ehtimol"
+     ]
+    },
+    {
+     "title": "Karyera rejalarim",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — 6 xil kelajak shakli, karyera so'zlari bilan",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I'm going to study engineering.",
+      "I'm meeting a career adviser on Thursday.",
+      "My course starts on 2 September.",
+      "I'm about to apply for an internship.",
+      "I'm bound to be nervous at the interview.",
+      "I'm likely to become self-employed one day."
+     ]
+    },
+    {
+     "title": "Ish lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "moving to a higher position at work",
+      "extreme tiredness from too much work",
+      "the amount of work you have to do",
+      "working for yourself, not a company",
+      "the balance between your job and private life",
+      "losing your job because the company cuts staff"
+     ],
+     "answers": [
+      "promotion",
+      "burnout",
+      "workload",
+      "self-employed",
+      "work-life balance",
+      "redundancy"
+     ],
+     "box": [
+      "promotion",
+      "burnout",
+      "workload",
+      "self-employed",
+      "work-life balance",
+      "redundancy"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The train is going to leave at 9. (jadval)",
+      "I will meet the boss tomorrow at 10. (kelishilgan)",
+      "She is about leaving.",
+      "The meeting is due start at 10.",
+      "He is likely succeed."
+     ],
+     "answers": [
+      "The train leaves at 9.",
+      "I'm meeting the boss tomorrow at 10.",
+      "She is about to leave.",
+      "The meeting is due to start at 10.",
+      "He is likely to succeed."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 4 jadvalini (8 shakl) 3 marta; Essential Words 4 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 9",
+     "type": "write",
+     "instr": "\"Many people are working longer hours. What are the causes, and what effects does it have?\" — namunani tahlil qiling; 250 so'z; kamida 5 rasmiy kelajak shakli (is likely to, is expected to, is bound to…)",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Reading practice test — 20 daqiqa",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Poyezd soat 9 da jo'naydi.",
+      "Biz ular bilan soat 6 da uchrashamiz. (kelishilgan)",
+      "U hozir ketmoqchi.",
+      "Yig'ilish 10 da boshlanishi belgilangan.",
+      "Ular o'yinda yutishi ehtimol."
+     ],
+     "answers": [
+      "The train leaves at 9 a.m.",
+      "We're meeting them at 6 p.m.",
+      "She is about to leave.",
+      "The meeting is due to start at 10.",
+      "They are likely to win the match."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 4 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "8 kelajak shakli + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 3",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 8 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 4 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Kylian Mbappé — a career that is bound to break records",
+    "text": [
+     "Kylian Mbappé was born in 1998 in Bondy, a suburb of Paris. His father was a football coach and his mother a professional handball player, so his career was likely to be in sport from the start. At six he was already training with adults; at fourteen every big club in Europe was going to sign him, and Real Madrid invited him to visit — a visit he still describes as the day he understood he was to become a professional.",
+     "He chose Monaco, and at 16 became the youngest player in the club's history. In 2017 Paris Saint-Germain paid 180 million euros for him — the most expensive teenager ever. A year later, at 19, he scored in the World Cup final; only Pelé had done that younger. Journalists wrote that he was bound to become the best player in the world, and for once the journalists were right.",
+     "Mbappé's work ethic is famous. He is about to turn 28 and has never missed a training session through indiscipline. He studies his own matches for hours, and he is due to finish a business degree that he started online. In 2024 he finally joined Real Madrid — as a free agent, on his own terms, with a contract that is to run until 2029.",
+     "Off the pitch he is likely to be remembered for something else: he gives all his national-team salary to charity, and his foundation is going to send a hundred children from the Paris suburbs to university every year. \"Talent gets you noticed,\" he says. \"Work is what is going to keep you there.\""
+    ],
+    "glossary": [
+     "suburb — shahar chekkasi",
+     "coach — murabbiy",
+     "sign — shartnoma tuzmoq",
+     "describe — tasvirlamoq",
+     "final — final",
+     "journalist — jurnalist",
+     "indiscipline — intizomsizlik",
+     "on one's own terms — o'z shartlari bilan",
+     "charity — xayriya",
+     "get noticed — e'tiborga tushmoq"
+    ],
+    "tasks": [
+     {
+      "title": "Kelajak shakllarini toping",
+      "type": "find",
+      "instr": "Matndan 8 ta (will'siz)",
+      "items": [
+       "likely to",
+       "going to 1",
+       "was to",
+       "bound to",
+       "about to",
+       "due to",
+       "is to",
+       "going to 2 / likely to 2"
+      ],
+      "answers": [
+       "His career was likely to be in sport.",
+       "Every big club in Europe was going to sign him.",
+       "He understood he was to become a professional.",
+       "He was bound to become the best player in the world.",
+       "He is about to turn 28.",
+       "He is due to finish a business degree.",
+       "A contract that is to run until 2029.",
+       "His foundation is going to send a hundred children… / He is likely to be remembered…"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Mbappé's mother was a footballer.",
+       "He joined Real Madrid at 14.",
+       "He scored in a World Cup final at 19.",
+       "He gives his national-team salary to charity."
+      ],
+      "answers": [
+       "False (handball)",
+       "False (visited; joined 2024)",
+       "True",
+       "True"
+      ]
+     },
+     {
+      "title": "Insho tayyorgarligi",
+      "type": "write",
+      "instr": "Sample essay 9: \"Many people are working longer hours\" — Mbappedan 1 misol (work ethic) va 2 Essential so'z bilan 3 gap",
+      "items": [
+       "1",
+       "2",
+       "3"
+      ],
+      "answers": [
+       "Mbappé's work ethic shows that long hours can build a career.",
+       "However, for most employees long hours are likely to cause burnout.",
+       "Job satisfaction, not workload, is bound to matter in the long run."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 9 (Working longer hours) — uyga."
+   },
+   "listening": {
+    "audios": "Audio 16–20 (fayllar yo'q — ustoz IELTS Section 4 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Today's lecture is about working hours. In 1970 the average British employee worked 43 hours a week; today it is 36, and it is likely to fall to 32 by 2035. Several countries are about to trial a four-day week. Productivity is expected to stay the same, while burnout is bound to decrease. The report is due to be published in June.\"",
+     "1-tinglash: mavzu? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Sentence completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "In 1970 employees worked ___ hours a week.",
+       "Today it is ___; it is likely to fall to ___ by 2035.",
+       "Several countries are about to trial a ___ week.",
+       "The report is due to be published in ___."
+      ],
+      "answers": [
+       "43",
+       "36, 32",
+       "four-day",
+       "June"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 5,
+   "title": "Adverbial Phrases",
+   "grammar_topic": "RAVISH IBORALARI — vaqt, joy, tarz, sabab, maqsad, takrorlik, daraja, shart, yon berish (in the morning / with great care / because of / in order to / despite…)",
+   "vocab_topic": "Essential Words 5 — Health and lifestyle (sog'liq va turmush tarzi)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 1 — 1–5-darslar (prefixes, suffixes, ought to / be able to, future forms, adverbial phrases; Essential Words 1–5; Sample essay 1–2 mavzulari)",
+   "book_ref": "Student's book IELTS 4.0: Lesson 5 – Adverbial phrases (9 turdagi jadval); Essential Words 5; Sample essay 3 (People are living longer); Audio 21–30 (ustoz skripti); Reading — Novak Djokovic (Jony Academy matni).",
+   "objectives": [
+    "To'qqiz turdagi ravish iborasini tanish va gapga qo'shish (savol: qachon/qayerda/qanday/nega/nima uchun/qancha/qay darajada/qanday holatda/…ga qaramay).",
+    "Ibora joyi: gap oxirida (odatiy), boshida (urg'u, vergul bilan): \"Despite the pain, he played.\"",
+    "Writing uchun: due to + ot, because of + ot, despite/in spite of + ot/V-ing, in order to + V1, to a great extent.",
+    "Sog'liq Essential Words 5 bilan Sample essay 3 (\"people are living longer\") uchun til."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 5 — Health and lifestyle (sog'liq va turmush tarzi) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz bitta gapni kengaytiradi: \"Djokovic trains.\" → \"…in the morning (vaqt) → on the court (joy) → with great care (tarz) → because of his diet (sabab) → in order to win (maqsad) → every day (takrorlik) → to a great extent (daraja) → despite injuries (yon berish).\""
+    ],
+    [
+     8,
+     "Kahoot — Other ways of referring to the future",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Other ways of referring to the future lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 9 tur: Time (in the morning, at the moment, before lunch), Place (at school, in the city centre, on the roof), Manner (with great care, in a hurry, like a professional), Reason (because of the rain, due to illness), Purpose (in order to win, for better results), Frequency (every week, once in a while), Degree (to a great extent, almost entirely), Condition (in case of fire, under pressure), Concession (despite the difficulty). Writing: \"due to\", \"to a great extent\", \"despite\" — Task 2 uchun."
+    ],
+    [
+     12,
+     "Essential Words 5 — Health and lifestyle (sog'liq va turmush tarzi) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "VAQT: in the morning, at the moment, before lunch, after the match. JOY: at school, in the city centre, on the roof, on the court.",
+     "TARZ: with great care, in a hurry, like a professional, by hand. SABAB: because of + ot, due to + ot, thanks to + ot.",
+     "MAQSAD: in order to + V1, so as to + V1, for + ot (for better results). TAKRORLIK: every week, once in a while, twice a day.",
+     "DARAJA: to a great extent, almost entirely, to some degree. SHART: in case of fire, under pressure, in the event of…",
+     "YON BERISH: despite / in spite of + ot/V-ing (despite the difficulty, despite being injured).",
+     "Joy: odatda gap oxirida (tarz → joy → vaqt); boshida vergul bilan urg'u."
+    ],
+    "formulas": [
+     [
+      "Vaqt / Joy",
+      "in the morning, at the moment, before lunch / at school, in the city centre, on the roof",
+      "He trains in the morning at the club.",
+      "U ertalab klubda mashq qiladi."
+     ],
+     [
+      "Tarz",
+      "with great care, in a hurry, like a professional",
+      "She plays like a professional.",
+      "U professionaldek o'ynaydi."
+     ],
+     [
+      "Sabab / Maqsad",
+      "because of / due to + ot; in order to + V1 / for + ot",
+      "He retired due to illness. / He trains in order to win.",
+      "U kasallik sababli sportni tark etdi. / U yutish uchun mashq qiladi."
+     ],
+     [
+      "Takrorlik / Daraja",
+      "every week, once in a while; to a great extent, almost entirely",
+      "Diet decides results to a great extent.",
+      "Ovqatlanish natijalarni katta darajada belgilaydi."
+     ],
+     [
+      "Shart",
+      "in case of + ot, under pressure",
+      "In case of injury, stop immediately.",
+      "Jarohat bo'lsa, darhol to'xtang."
+     ],
+     [
+      "Yon berish",
+      "despite / in spite of + ot/V-ing",
+      "Despite the difficulty, he won.",
+      "Qiyinchilikka qaramay, u yutdi."
+     ]
+    ],
+    "presentation": [
+     [
+      "When does Djokovic train?",
+      "In the morning, before breakfast, every single day."
+     ],
+     [
+      "Where does he prepare?",
+      "On the court and in the gym in Belgrade."
+     ],
+     [
+      "How does he eat?",
+      "With great care — a gluten-free, plant-based diet."
+     ],
+     [
+      "Why did he miss the 2022 Australian Open?",
+      "Because of his vaccine decision, he was deported."
+     ],
+     [
+      "Why does he stretch for an hour?",
+      "In order to prevent injury."
+     ],
+     [
+      "How often do you see a doctor?",
+      "Once a year, for a check-up."
+     ],
+     [
+      "To what extent does sleep affect health?",
+      "To a great extent — almost entirely, some doctors say."
+     ],
+     [
+      "What should you do in case of a heart attack?",
+      "In case of a heart attack, call an ambulance immediately."
+     ],
+     [
+      "Did he win despite the injury?",
+      "Yes, despite a torn muscle, he won the final."
+     ],
+     [
+      "How do people live longer?",
+      "Thanks to better healthcare and, to some degree, better diets."
+     ]
+    ],
+    "notes": [
+     "because of / due to / thanks to + OT (because + gap); despite / in spite of + OT yoki V-ing (although + gap).",
+     "in order to + V1; \"for + V-ing\" — maqsad emas, vazifa.",
+     "Tartib: tarz → joy → vaqt: \"He trained hard in Belgrade yesterday.\"",
+     "Essential Words 5: life expectancy, ageing population, chronic illness, healthcare system, preventive medicine, sedentary lifestyle, obesity, well-being."
+    ],
+    "mistakes": [
+     [
+      "Despite he was injured, he won.",
+      "Despite being injured, he won. / Although he was injured, he won.",
+      "despite + ot/V-ing."
+     ],
+     [
+      "Because of it rained, we stayed in.",
+      "Because of the rain, we stayed in.",
+      "because of + ot."
+     ],
+     [
+      "He trains for win.",
+      "He trains in order to win. / He trains to win.",
+      "Maqsad → in order to + V1."
+     ],
+     [
+      "He trained yesterday in Belgrade hard.",
+      "He trained hard in Belgrade yesterday.",
+      "Tarz → joy → vaqt."
+     ],
+     [
+      "In the morning he trains, at the moment.",
+      "He trains in the morning. / He is training at the moment.",
+      "Bitta vaqt iborasi, mos zamon."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — sog'liq va uzoq umr so'zlari (life expectancy, ageing population, chronic…); STRONG — tizim va odatlar (healthcare, sedentary lifestyle, preventive); SUPER — Task 2 birikmalari (place a strain on, susceptible to, demographic imbalance).",
+     "Har so'zga ravish iborasi bilan gap: \"Life expectancy has risen to a great extent due to vaccines.\""
+    ],
+    "core": [
+     [
+      "life expectancy (4.0)",
+      "o'rtacha umr",
+      "Life expectancy has risen to a great extent due to vaccines.",
+      "Emlash tufayli o'rtacha umr katta darajada oshdi.",
+      ""
+     ],
+     [
+      "ageing population",
+      "qariyotgan aholi",
+      "Japan has an ageing population, mainly because of low birth rates.",
+      "Yaponiyada asosan past tug'ilish tufayli aholi qariyapti.",
+      ""
+     ],
+     [
+      "chronic illness (4.0)",
+      "surunkali kasallik",
+      "Chronic illnesses grow with age, almost entirely.",
+      "Surunkali kasalliklar yosh bilan deyarli butunlay o'sadi.",
+      ""
+     ],
+     [
+      "healthcare system",
+      "sog'liqni saqlash tizimi",
+      "The healthcare system is under pressure in winter.",
+      "Qishda sog'liqni saqlash tizimi bosim ostida.",
+      "ˈhɛlθˌkɛr ˈsɪstəm"
+     ],
+     [
+      "preventive medicine",
+      "profilaktik tibbiyot",
+      "Preventive medicine saves money in the long run.",
+      "Profilaktik tibbiyot uzoq muddatda pul tejaydi.",
+      "prɪˈvɛnɪv ˈmɛdəsən"
+     ],
+     [
+      "sedentary lifestyle",
+      "kam harakat turmush tarzi",
+      "A sedentary lifestyle causes obesity to some degree.",
+      "Kam harakat turmush tarzi ma'lum darajada semizlikka sabab bo'ladi.",
+      "ˈsɛdənˌtɛri ˈlaɪfˌstaɪl"
+     ],
+     [
+      "obesity (4.0)",
+      "semizlik",
+      "Obesity has doubled in the last 30 years, largely due to fast food.",
+      "Semizlik so'nggi 30 yilda asosan fast-fud tufayli ikki baravar oshdi.",
+      ""
+     ],
+     [
+      "well-being (4.0)",
+      "farovonlik",
+      "Sleep improves well-being to a great extent.",
+      "Uyqu farovonlikni katta darajada yaxshilaydi.",
+      ""
+     ],
+     [
+      "mental health (4.0)",
+      "ruhiy salomatlik",
+      "In spite of the stigma, mental health is discussed openly now.",
+      "Tamg'aga qaramay, ruhiy salomatlik endi ochiq muhokama qilinadi.",
+      ""
+     ],
+     [
+      "nutrition (4.0)",
+      "oziqlanish",
+      "Djokovic changed his nutrition in 2010 with great care.",
+      "Jokovich 2010-da oziqlanishini katta ehtiyotkorlik bilan o'zgartirdi.",
+      ""
+     ],
+     [
+      "balanced diet (4.0)",
+      "muvozanatli ovqatlanish",
+      "A balanced diet works only in the long term.",
+      "Muvozanatli ovqatlanish faqat uzoq muddatda ishlaydi.",
+      ""
+     ],
+     [
+      "physical activity",
+      "jismoniy faollik",
+      "Physical activity every day prevents disease.",
+      "Har kungi jismoniy faollik kasallikning oldini oladi.",
+      "ˈfɪzɪkəl ækˈtɪvɪti"
+     ],
+     [
+      "immune system (4.0)",
+      "immunitet tizimi",
+      "Stress weakens the immune system under pressure.",
+      "Stress bosim ostida immunitet tizimini zaiflashtiradi.",
+      ""
+     ],
+     [
+      "diagnosis (4.0)",
+      "tashxis",
+      "Early diagnosis saves lives in most cases.",
+      "Ko'p hollarda erta tashxis hayotni saqlab qoladi.",
+      ""
+     ],
+     [
+      "treatment (4.0)",
+      "davolash",
+      "Treatment is expensive, especially in old age.",
+      "Davolash, ayniqsa keksalikda, qimmat.",
+      ""
+     ],
+     [
+      "elderly (the) (4.0)",
+      "keksalar",
+      "The elderly need care at home rather than in hospital.",
+      "Keksalarga kasalxonada emas, uyda parvarish kerak.",
+      ""
+     ],
+     [
+      "pension system",
+      "pensiya tizimi",
+      "The pension system is under pressure because of longer lives.",
+      "Uzoqroq umr tufayli pensiya tizimi bosim ostida.",
+      "ˈpɛnʃən ˈsɪstəm"
+     ],
+     [
+      "dementia",
+      "demensiya (aqlning susayishi)",
+      "Dementia is rising due to an ageing population.",
+      "Qariyotgan aholi tufayli demensiya o'smoqda.",
+      "dɪˈmɛnʃiə"
+     ],
+     [
+      "disease (4.0)",
+      "kasallik",
+      "Heart disease kills more people than any other, to a great extent because of diet.",
+      "Yurak kasalligi asosan ovqatlanish tufayli boshqa hamma narsadan ko'proq odam o'ldiradi.",
+      ""
+     ],
+     [
+      "recovery (4.0)",
+      "sog'ayish",
+      "Recovery is faster with rest and, to some degree, with good food.",
+      "Dam olish va ma'lum darajada yaxshi ovqat bilan sog'ayish tezroq.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "susceptible to",
+      "…ga moyil",
+      "The elderly are susceptible to infection, especially in winter.",
+      "Keksalar, ayniqsa qishda, infeksiyaga moyil.",
+      "səˈsɛptəbəl tɪ"
+     ],
+     [
+      "place a strain on",
+      "…ga og'irlik tushirmoq",
+      "Ageing places a strain on hospitals to a great extent.",
+      "Qarish kasalxonalarga katta darajada og'irlik tushiradi.",
+      "pleɪs ə streɪn ɔn"
+     ],
+     [
+      "demographic imbalance",
+      "demografik nomutanosiblik",
+      "A demographic imbalance appears because of fewer births.",
+      "Demografik nomutanosiblik kam tug'ilish tufayli paydo bo'ladi.",
+      "ˌdɛməˈgræfɪk ɪmˈbæləns"
+     ],
+     [
+      "workforce (4.0)",
+      "ishchi kuchi",
+      "The workforce shrinks due to retirement.",
+      "Nafaqa tufayli ishchi kuchi kamayadi.",
+      ""
+     ],
+     [
+      "tax burden",
+      "soliq yuki",
+      "The tax burden grows on the young in order to pay pensions.",
+      "Pensiya to'lash uchun yoshlar zimmasidagi soliq yuki o'sadi.",
+      "tæks ˈbərdən"
+     ],
+     [
+      "long-term care",
+      "uzoq muddatli parvarish",
+      "Long-term care is provided at home in most Uzbek families.",
+      "Ko'p o'zbek oilalarida uzoq muddatli parvarish uyda beriladi.",
+      "ˈlɔŋˈtərm kɛr"
+     ],
+     [
+      "quality of life",
+      "hayot sifati",
+      "Quality of life matters more than length, to a great extent.",
+      "Hayot sifati uzunligidan ko'ra katta darajada muhimroq.",
+      "kˈwɑləti əv laɪf"
+     ],
+     [
+      "intergenerational",
+      "avlodlararo",
+      "Intergenerational support works well in Uzbekistan.",
+      "Avlodlararo yordam O'zbekistonda yaxshi ishlaydi.",
+      "ˌɪntərˈʤɛnərˈeɪʃənəl"
+     ],
+     [
+      "retirement age (4.0)",
+      "nafaqa yoshi",
+      "The retirement age was raised in order to save the pension system.",
+      "Pensiya tizimini saqlash uchun nafaqa yoshi oshirildi.",
+      ""
+     ],
+     [
+      "active ageing",
+      "faol qarish",
+      "Active ageing keeps the elderly healthy in spite of their age.",
+      "Faol qarish keksalarni yoshiga qaramay sog'lom saqlaydi.",
+      ""
+     ],
+     [
+      "gluten-free / plant-based",
+      "glyutensiz / o'simlik asosidagi",
+      "Djokovic eats a gluten-free, plant-based diet with great discipline.",
+      "Jokovich katta intizom bilan glyutensiz, o'simlik asosidagi ovqat yeydi.",
+      ""
+     ],
+     [
+      "allergy / intolerance",
+      "allergiya / (oziq-ovqat) ko'tara olmaslik",
+      "He discovered a gluten intolerance almost by chance.",
+      "U glyutenni ko'tara olmasligini deyarli tasodifan bildi.",
+      "ˈælərʤi  ˌɪnˈtɑlərəns"
+     ],
+     [
+      "injury prevention",
+      "jarohatning oldini olish",
+      "Stretching is done for injury prevention every morning.",
+      "Jarohatning oldini olish uchun har ertalab cho'zilish qilinadi.",
+      "ˈɪnʤəri priˈvɛnʃən"
+     ],
+     [
+      "stamina (4.0)",
+      "chidamlilik",
+      "His stamina improved to a great extent after the diet change.",
+      "Ovqatlanishni o'zgartirgach, chidamliligi katta darajada oshdi.",
+      ""
+     ],
+     [
+      "flexibility",
+      "egiluvchanlik",
+      "Flexibility comes from yoga, practised every day.",
+      "Egiluvchanlik har kuni mashq qilinadigan yogadan keladi.",
+      "ˌflɛksəˈbɪləti"
+     ],
+     [
+      "meditation (4.0)",
+      "meditatsiya",
+      "He meditates in the morning in order to stay calm under pressure.",
+      "U bosim ostida xotirjam qolish uchun ertalab meditatsiya qiladi.",
+      ""
+     ],
+     [
+      "sleep deprivation",
+      "uyqusizlik",
+      "Sleep deprivation harms memory almost entirely.",
+      "Uyqusizlik xotiraga deyarli butunlay zarar beradi.",
+      "slip ˌdɛprəˈveɪʃən"
+     ],
+     [
+      "junk food (4.0)",
+      "zararli ovqat",
+      "Junk food is eaten in a hurry, mostly because of time pressure.",
+      "Zararli ovqat asosan vaqt tanqisligi tufayli shoshib yeyiladi.",
+      ""
+     ],
+     [
+      "addiction (health)",
+      "qaramlik",
+      "Sugar addiction develops to some degree in childhood.",
+      "Shakarga qaramlik ma'lum darajada bolalikda shakllanadi.",
+      "əˈdɪkʃən (hɛlθ)"
+     ],
+     [
+      "vaccination (4.0)",
+      "emlash",
+      "Thanks to vaccination, child mortality has fallen enormously.",
+      "Emlash tufayli bolalar o'limi keskin kamaydi.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "in the long run",
+      "uzoq muddatda",
+      "Prevention is cheaper in the long run.",
+      "Oldini olish uzoq muddatda arzonroq.",
+      "ɪn ðə lɔŋ rən"
+     ],
+     [
+      "to a large / great extent",
+      "katta darajada",
+      "Lifestyle decides health to a large extent.",
+      "Turmush tarzi sog'liqni katta darajada belgilaydi.",
+      "tɪ ə lɑrʤ  greɪt ɪkˈstɛnt"
+     ],
+     [
+      "under pressure (4.0)",
+      "bosim ostida",
+      "Champions perform under pressure.",
+      "Chempionlar bosim ostida ham natija ko'rsatadi.",
+      ""
+     ],
+     [
+      "in case of emergency",
+      "favqulodda holatda",
+      "In case of emergency, call 103.",
+      "Favqulodda holatda 103 ga qo'ng'iroq qiling.",
+      "ɪn keɪs əv ˈimərʤənsi"
+     ],
+     [
+      "by and large",
+      "umuman olganda",
+      "By and large, people are living longer.",
+      "Umuman olganda, odamlar uzoqroq yashamoqda.",
+      "baɪ ənd lɑrʤ"
+     ],
+     [
+      "on a regular basis",
+      "muntazam ravishda",
+      "Exercise on a regular basis, not once in a while.",
+      "Ba'zida emas, muntazam mashq qiling.",
+      "ɔn ə ˈrɛgjələr ˈbeɪsɪs"
+     ],
+     [
+      "at the expense of",
+      "… hisobiga (zarariga)",
+      "Long hours come at the expense of health.",
+      "Uzoq ish soatlari sog'liq hisobiga bo'ladi.",
+      "æt ðə ɪkˈspɛns əv"
+     ],
+     [
+      "with the aim of",
+      "… maqsadida",
+      "The programme was started with the aim of reducing obesity.",
+      "Dastur semizlikni kamaytirish maqsadida boshlangan.",
+      "wɪθ ðə eɪm əv"
+     ],
+     [
+      "as a result of",
+      "… natijasida",
+      "As a result of better care, mortality fell.",
+      "Yaxshiroq parvarish natijasida o'lim kamaydi.",
+      "ɛz ə rɪˈzəlt əv"
+     ],
+     [
+      "for the sake of",
+      "… uchun (manfaati uchun)",
+      "He gave up sugar for the sake of his career.",
+      "U karyerasi uchun shakardan voz kechdi.",
+      "fər ðə seɪk əv"
+     ],
+     [
+      "in the event of",
+      "… bo'lgan taqdirda",
+      "In the event of injury, the match is stopped.",
+      "Jarohat bo'lgan taqdirda o'yin to'xtatiladi.",
+      "ɪn ðə ɪˈvɛnt əv"
+     ],
+     [
+      "against all odds",
+      "barcha qiyinchiliklarga qaramay",
+      "Against all odds, he won 24 Grand Slams.",
+      "Barcha qiyinchiliklarga qaramay, u 24 ta Katta dubulg'a yutdi.",
+      "əˈgɛnst ɔl ɑdz"
+     ],
+     [
+      "Grand Slam",
+      "Katta dubulg'a (tennis)",
+      "He has won more Grand Slams than anyone in history.",
+      "U tarixda hammadan ko'p Katta dubulg'a yutgan.",
+      "grænd slæm"
+     ],
+     [
+      "world number one",
+      "dunyo birinchi raketkasi",
+      "He was world number one for a record 400 weeks.",
+      "U rekord 400 hafta dunyo birinchi raketkasi bo'lgan.",
+      "wərld ˈnəmbər wən"
+     ],
+     [
+      "deport",
+      "deportatsiya qilmoq",
+      "He was deported from Australia because of his vaccine decision.",
+      "Vaksina qarori tufayli u Avstraliyadan deportatsiya qilindi.",
+      "dɪˈpɔrt"
+     ],
+     [
+      "controversy",
+      "bahs-munozara",
+      "Despite the controversy, he returned and won.",
+      "Munozaraga qaramay, u qaytib keldi va yutdi.",
+      "ˈkɑntrəˌvərsi"
+     ],
+     [
+      "resilience (4.0)",
+      "bardosh",
+      "His resilience under pressure is legendary.",
+      "Uning bosim ostidagi bardoshi afsonaviy.",
+      ""
+     ],
+     [
+      "longevity",
+      "uzoq umr (sportda ham)",
+      "Diet explains his longevity in sport to a great extent.",
+      "Ovqatlanish uning sportdagi uzoq faoliyatini katta darajada tushuntiradi.",
+      "lɔnˈʤɛvəti"
+     ],
+     [
+      "mortality rate",
+      "o'lim darajasi",
+      "The mortality rate fell as a result of vaccines.",
+      "O'lim darajasi emlash natijasida tushdi.",
+      "mɔrˈtæləti reɪt"
+     ],
+     [
+      "strain (n)",
+      "og'irlik, zo'riqish",
+      "Longer lives put a strain on pensions in the long run.",
+      "Uzoqroq umr uzoq muddatda pensiyaga og'irlik tushiradi.",
+      "streɪn (ɛn)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Ibora turini aniqlang",
+     "type": "sort",
+     "instr": "Har iboraning turi (vaqt / joy / tarz / sabab / maqsad / takrorlik / daraja / shart / yon berish)",
+     "items": [
+      "in the morning",
+      "with great care",
+      "because of the rain",
+      "in order to win",
+      "once in a while",
+      "to a great extent",
+      "in case of fire",
+      "despite the difficulty",
+      "on the court"
+     ],
+     "answers": [
+      "vaqt",
+      "tarz",
+      "sabab",
+      "maqsad",
+      "takrorlik",
+      "daraja",
+      "shart",
+      "yon berish",
+      "joy"
+     ]
+    },
+    {
+     "title": "Iborani qo'shing",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos ravish iborasi",
+     "items": [
+      "He trains ___ (qachon: ertalab).",
+      "She plays ___ (qanday: professionaldek).",
+      "The match was cancelled ___ (nega: yomg'ir).",
+      "He stretches ___ (nima uchun: jarohatning oldini olish).",
+      "I see a doctor ___ (qancha tez-tez: yiliga bir marta).",
+      "Diet matters ___ (qay darajada: katta).",
+      "___ (yon berish: jarohat), he won.",
+      "___ (shart: yurak xuruji), call 103."
+     ],
+     "answers": [
+      "in the morning",
+      "like a professional",
+      "because of the rain",
+      "in order to prevent injury",
+      "once a year",
+      "to a great extent",
+      "Despite the injury",
+      "In case of a heart attack"
+     ]
+    },
+    {
+     "title": "Gap → ibora (Writing)",
+     "type": "rewrite",
+     "instr": "Ergash gapni ravish iborasiga aylantiring",
+     "items": [
+      "Although he was ill, he played.",
+      "Because it rained, the match stopped.",
+      "He trains so that he can win.",
+      "Because people live longer, pensions are under pressure.",
+      "Although the cost is high, treatment is free."
+     ],
+     "answers": [
+      "Despite his illness / Despite being ill, he played.",
+      "Because of the rain, the match stopped.",
+      "He trains in order to win.",
+      "Due to longer lives, pensions are under pressure.",
+      "In spite of the high cost, treatment is free."
+     ]
+    },
+    {
+     "title": "Sog'lom turmush",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — 6 xil ravish iborasi, Essential so'zlar bilan",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I do physical activity every morning.",
+      "I eat with great care because of a gluten intolerance.",
+      "I sleep eight hours in order to protect my immune system.",
+      "My grandmother, despite her age, walks 5 km a day.",
+      "Stress affects my well-being to a great extent.",
+      "In case of illness, I see a doctor immediately."
+     ]
+    },
+    {
+     "title": "Sog'liq lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the average number of years people live",
+      "a population with more and more old people",
+      "an illness that lasts for years",
+      "a lifestyle with little movement",
+      "medicine that stops illness before it starts",
+      "likely to be affected by something"
+     ],
+     "answers": [
+      "life expectancy",
+      "ageing population",
+      "chronic illness",
+      "sedentary lifestyle",
+      "preventive medicine",
+      "susceptible to"
+     ],
+     "box": [
+      "life expectancy",
+      "ageing population",
+      "chronic illness",
+      "sedentary lifestyle",
+      "preventive medicine",
+      "susceptible to"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "Despite he was injured, he won.",
+      "Because of it rained, we stayed in.",
+      "He trains for win.",
+      "He trained yesterday in Belgrade hard.",
+      "In the event to injury, stop."
+     ],
+     "answers": [
+      "Despite being injured, he won.",
+      "Because of the rain, we stayed in.",
+      "He trains in order to win.",
+      "He trained hard in Belgrade yesterday.",
+      "In the event of injury, stop."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 5 jadvalini (9 tur) 3 marta; Essential Words 5 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Progress test 1 ga tayyorgarlik",
+     "type": "review",
+     "instr": "1–5-dars jadvallari; Essential Words 1–5 dan CORE 20; Sample essay 1–3 mavzulari; Kahoot 1–5 (jonyos.uz)",
+     "answers": "Test: grammatika + 50 so'z + reading passage + Task 2 (250 so'z)."
+    },
+    {
+     "title": "Sample essay 3",
+     "type": "write",
+     "instr": "\"In many countries people are living longer. What problems does this cause, and how can they be solved?\" — namunani tahlil qiling; 250 so'z; kamida 8 ravish iborasi (due to, in order to, despite, to a great extent…)",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U ertalab katta ehtiyotkorlik bilan mashq qiladi.",
+      "Yomg'ir tufayli o'yin bekor qilindi.",
+      "U yutish uchun mashq qiladi.",
+      "Ovqatlanish sog'liqni katta darajada belgilaydi.",
+      "Jarohatga qaramay, u yutdi."
+     ],
+     "answers": [
+      "He trains in the morning with great care.",
+      "The match was cancelled because of the rain.",
+      "He trains in order to win.",
+      "Diet decides health to a great extent.",
+      "Despite the injury, he won."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 5 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "9 tur + har biriga 1 ibora va gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 4",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 9 tur)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 5 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Novak Djokovic — winning against all odds, with great care",
+    "text": [
+     "Novak Djokovic was born in 1987 in Belgrade, Serbia. As a child he practised on a tennis court in the mountains, and during the NATO bombing of 1999 he trained in an empty swimming pool in order to avoid the planes. Despite the war, he never missed a day. At 20 he won his first Grand Slam, in Australia, in 2008.",
+     "For years he was the third man behind Federer and Nadal, mainly because of his stamina: in long matches he collapsed, almost entirely due to breathing problems. In 2010 a doctor discovered a gluten intolerance almost by chance. Djokovic changed his nutrition with great care — no gluten, no dairy, no sugar — and within a year he became world number one. He has held that position for more than 400 weeks, a record, and he has won 24 Grand Slams, more than any man in history.",
+     "His lifestyle is famous for its discipline. He wakes at dawn, drinks warm water, stretches for an hour for the sake of injury prevention, and meditates in order to stay calm under pressure. In case of a bad day, he says, the routine saves him. Thanks to this, at 37 he was still winning — Olympic gold in Paris in 2024.",
+     "He is also controversial: in 2022 he was deported from Australia because of his refusal to be vaccinated, and many fans turned against him. He returned a year later and won the tournament. \"Resilience,\" he says, \"is built in the long run, on the days nobody sees.\""
+    ],
+    "glossary": [
+     "bombing — bombardimon",
+     "collapse — holdan toymoq",
+     "intolerance — ko'tara olmaslik",
+     "dairy — sut mahsulotlari",
+     "dawn — tong",
+     "routine — kundalik tartib",
+     "controversial — munozarali",
+     "refusal — rad etish",
+     "tournament — turnir",
+     "resilience — bardosh"
+    ],
+    "tasks": [
+     {
+      "title": "Ravish iboralarini toping",
+      "type": "find",
+      "instr": "Matndan 9 turga bittadan",
+      "items": [
+       "vaqt",
+       "joy",
+       "tarz",
+       "sabab",
+       "maqsad",
+       "takrorlik",
+       "daraja",
+       "shart",
+       "yon berish"
+      ],
+      "answers": [
+       "during the NATO bombing of 1999 / at dawn / within a year",
+       "on a tennis court in the mountains / in an empty swimming pool",
+       "with great care",
+       "because of his stamina / due to breathing problems / because of his refusal",
+       "in order to avoid the planes / for the sake of injury prevention / in order to stay calm",
+       "(every day — \"never missed a day\")",
+       "almost entirely / almost by chance",
+       "in case of a bad day / under pressure",
+       "despite the war / against all odds"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Djokovic trained in a swimming pool during the 1999 bombing.",
+       "He became world number one before changing his diet.",
+       "He has won 24 Grand Slams.",
+       "He never returned to Australia after 2022."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Insho tayyorgarligi",
+      "type": "write",
+      "instr": "Sample essay 3: \"People are living longer — problems and solutions\" — matndan 1 misol (lifestyle) va 2 Essential so'z bilan 3 gap",
+      "items": [
+       "1",
+       "2",
+       "3"
+      ],
+      "answers": [
+       "Djokovic shows that nutrition and routine extend a career — and, to a great extent, a life.",
+       "An ageing population places a strain on healthcare systems.",
+       "Preventive medicine and active ageing are cheaper solutions in the long run."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 3 (People are living longer) — uyga."
+   },
+   "listening": {
+    "audios": "Audio 21–30 (fayllar yo'q — ustoz IELTS Section 4 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Life expectancy in Uzbekistan rose from 67 in 1990 to 75 in 2023, largely due to better healthcare. By and large, women live four years longer than men. However, an ageing population places a strain on pensions: in 2050, one in five citizens will be over 60. In order to cope, the government plans to raise the retirement age and, to a great extent, to invest in preventive medicine.\"",
+     "1-tinglash: mavzu? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Table completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Life expectancy 1990: ___; 2023: ___",
+       "Women live ___ years longer than men.",
+       "In 2050, one in ___ citizens will be over 60.",
+       "Solutions: raise the ___ age; invest in ___ medicine."
+      ],
+      "answers": [
+       "67, 75",
+       "four",
+       "five",
+       "retirement, preventive"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

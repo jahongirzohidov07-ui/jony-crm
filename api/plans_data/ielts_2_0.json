@@ -842,6 +842,2528 @@
      "2 coin"
     ]
    ]
+  },
+  {
+   "no": 2,
+   "title": "Present Perfect vs Past Simple",
+   "grammar_topic": "PRESENT PERFECT vs PAST SIMPLE (vaqt aniqmi — natijami?)",
+   "vocab_topic": "Birth (tug'ilish, chaqaloq)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 2 – Present Perfect vs Past Simple (jadval, A–E mashqlar).",
+   "objectives": [
+    "Vaqt ko'rsatkichiga qarab Past Simple yoki Present Perfect'ni to'g'ri tanlash.",
+    "Bir vaziyatni ikki zamon bilan ifodalash (I have lost it → I lost it yesterday).",
+    "Tug'ilish mavzusidagi 20 so'z bilan oila haqida gapira olish.",
+    "Kombinatsiya: 1 daqiqada 5 marta."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Birth (tug'ilish, chaqaloq) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "\"When did you come to Jony Academy?\" (Past Simple) → \"How many lessons have you had?\" (Present Perfect). Ikkisi doskaga: qaysi birida vaqt bor?"
+    ],
+    [
+     8,
+     "Kahoot — Present Perfect",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Present Perfect lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Past Simple — vaqt aniq (two minutes ago); Present Perfect — vaqt aytilmaydi, natija hozir. Har juft gapni yonma-yon yozib, \"when?\" so'rab tekshiriladi."
+    ],
+    [
+     12,
+     "Birth (tug'ilish, chaqaloq) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     19,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Past Simple: ish O'TGANDA bo'ldi va tugadi, VAQTI aniq (yesterday, ago, last…, in 2019, when I was…).",
+     "Present Perfect: ish o'tganda bo'ldi, lekin vaqt muhim emas; natija yoki tajriba HOZIR muhim (ever, never, just, already, yet, so far, today).",
+     "Suhbat qoidasi: birinchi savol Present Perfect (\"Have you ever been to Dubai?\"), tafsilot Past Simple (\"When did you go? — I went in 2023\")."
+    ],
+    "formulas": [
+     [
+      "Past Simple",
+      "S + V2 (vaqt aniq)",
+      "I entered the room two minutes ago.",
+      "Men xonaga 2 daqiqa oldin kirdim."
+     ],
+     [
+      "Present Perfect",
+      "S + have/has + V3 (vaqt yo'q)",
+      "I have entered the room.",
+      "Men xonaga kirdim (hozir shu yerdaman)."
+     ],
+     [
+      "Tajriba → tafsilot",
+      "Have you ever…? → When did you…?",
+      "Have you ever been to Dubai? — Yes. — When did you go? — In 2023.",
+      "Dubayda bo'lganmisan? — Ha. — Qachon? — 2023-da."
+     ],
+     [
+      "Tugagan davr",
+      "yesterday / last week / ago / in 2019 → Past Simple",
+      "She called me last night.",
+      "U kecha kechqurun qo'ng'iroq qildi."
+     ],
+     [
+      "Tugamagan davr",
+      "today / this week / this year / so far → Present Perfect",
+      "She has called me twice today.",
+      "U bugun ikki marta qo'ng'iroq qildi."
+     ],
+     [
+      "Natija hozir",
+      "Present Perfect + natija gapi",
+      "I have lost my key. I can't get in.",
+      "Kalitimni yo'qotdim. Kira olmayapman."
+     ]
+    ],
+    "presentation": [
+     [
+      "Have you ever seen a newborn baby?",
+      "Yes, I have. I saw my cousin's baby last month."
+     ],
+     [
+      "When was your brother born?",
+      "He was born in 2015."
+     ],
+     [
+      "Has your aunt had her baby yet?",
+      "Yes, she has. She gave birth last week."
+     ],
+     [
+      "Did you visit them in hospital?",
+      "Yes, I visited them on Monday."
+     ],
+     [
+      "How many times have you been to a baby shower?",
+      "I have been to two."
+     ],
+     [
+      "What did you buy for the baby?",
+      "I bought a small blanket."
+     ],
+     [
+      "Have your parents chosen a name?",
+      "Yes, they have already chosen it."
+     ],
+     [
+      "Did the baby sleep well last night?",
+      "No, she cried all night."
+     ],
+     [
+      "Has the baby started walking?",
+      "Not yet. She has just started crawling."
+     ],
+     [
+      "When did you last hold a baby?",
+      "I held my nephew yesterday."
+     ]
+    ],
+    "notes": [
+     "\"ago\" faqat Past Simple bilan: two days ago — I met him two days ago.",
+     "\"just / already / yet\" — Present Perfect (Britaniya normasi). Amerikada Past Simple ham bo'ladi, imtihonda Present Perfect yozamiz.",
+     "\"today / this week\" — davr hali tugamagan → Present Perfect; \"this morning\" tushdan keyin aytilsa → Past Simple.",
+     "Savol \"When…?\" — har doim Past Simple (\"When have you…?\" bo'lmaydi)."
+    ],
+    "mistakes": [
+     [
+      "I have seen him yesterday.",
+      "I saw him yesterday.",
+      "Vaqt aniq → Past Simple."
+     ],
+     [
+      "When have you arrived?",
+      "When did you arrive?",
+      "\"When\" → Past Simple."
+     ],
+     [
+      "Did you ever eat sushi?",
+      "Have you ever eaten sushi?",
+      "Tajriba savoli → Present Perfect."
+     ],
+     [
+      "I lost my key, I can't get in.",
+      "I have lost my key. I can't get in.",
+      "Natija hozir → Present Perfect."
+     ],
+     [
+      "She has been born in 2010.",
+      "She was born in 2010.",
+      "Tug'ilish — har doim Past Simple."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning BIRTH WORDS ro'yxatidan eng zaruri. STRONG/SUPER — chaqaloq parvarishi va oila so'zlari.",
+     "Har so'z bilan: bitta Past Simple gap (\"was born in…\") va bitta Present Perfect gap."
+    ],
+    "core": [
+     [
+      "birth",
+      "tug'ilish",
+      "The birth of a child changes everything.",
+      "Bolaning tug'ilishi hamma narsani o'zgartiradi.",
+      "bərθ"
+     ],
+     [
+      "be born",
+      "tug'ilmoq",
+      "I was born in Tashkent in 2008.",
+      "Men 2008-yil Toshkentda tug'ilganman.",
+      "bi bɔrn"
+     ],
+     [
+      "baby",
+      "chaqaloq",
+      "The baby has slept for three hours.",
+      "Chaqaloq uch soat uxladi.",
+      "ˈbeɪbi"
+     ],
+     [
+      "newborn",
+      "yangi tug'ilgan",
+      "A newborn sleeps most of the day.",
+      "Yangi tug'ilgan chaqaloq kunning ko'p qismini uxlaydi.",
+      "ˈnubɔrn"
+     ],
+     [
+      "infant",
+      "go'dak",
+      "Infants need milk every few hours.",
+      "Go'daklarga har necha soatda sut kerak.",
+      "ˈɪnfənt"
+     ],
+     [
+      "pregnancy",
+      "homiladorlik",
+      "Her pregnancy lasted nine months.",
+      "Uning homiladorligi to'qqiz oy davom etdi.",
+      "ˈprɛgnənsi"
+     ],
+     [
+      "pregnant",
+      "homilador",
+      "My sister is pregnant.",
+      "Opam homilador.",
+      "ˈprɛgnənt"
+     ],
+     [
+      "give birth",
+      "tug'moq",
+      "She gave birth to twins last night.",
+      "U kecha egizak tug'di.",
+      "gɪv bərθ"
+     ],
+     [
+      "childbirth",
+      "tug'ruq",
+      "Childbirth is hard work for the mother.",
+      "Tug'ruq ona uchun og'ir mehnat.",
+      "ˈʧaɪldˌbərθ"
+     ],
+     [
+      "due date",
+      "tug'ish sanasi",
+      "The due date is 5 May.",
+      "Tug'ish sanasi — 5-may.",
+      "du deɪt"
+     ],
+     [
+      "midwife",
+      "doya, akusherka",
+      "The midwife has helped hundreds of mothers.",
+      "Doya yuzlab onalarga yordam bergan.",
+      "ˈmɪdˌwaɪf"
+     ],
+     [
+      "maternity",
+      "onalik (tug'ruq bilan bog'liq)",
+      "She is on maternity leave now.",
+      "U hozir tug'ruq ta'tilida.",
+      "məˈtərnɪti"
+     ],
+     [
+      "motherhood",
+      "onalik",
+      "Motherhood has changed her life.",
+      "Onalik uning hayotini o'zgartirdi.",
+      "ˈməðərˌhʊd"
+     ],
+     [
+      "twins",
+      "egizaklar",
+      "The twins were born in April.",
+      "Egizaklar aprelda tug'ilgan.",
+      "twɪnz"
+     ],
+     [
+      "premature",
+      "vaqtidan oldin tug'ilgan",
+      "The premature baby stayed in hospital.",
+      "Chala tug'ilgan chaqaloq kasalxonada qoldi.",
+      "ˌpriməˈʧʊr"
+     ],
+     [
+      "healthy",
+      "sog'lom",
+      "Mother and baby are healthy.",
+      "Ona va bola sog'lom.",
+      "ˈhɛlθi"
+     ],
+     [
+      "baby shower",
+      "chaqaloq kutish tadbiri",
+      "We have organised a baby shower.",
+      "Biz chaqaloq kutish tadbirini uyushtirdik.",
+      "ˈbeɪbi ʃaʊər"
+     ],
+     [
+      "It's a boy! / It's a girl!",
+      "O'g'il / qiz bo'ldi!",
+      "\"It's a girl!\" the doctor said.",
+      "\"Qiz bo'ldi!\" dedi shifokor.",
+      "ɪts ə bɔɪ!  ɪts ə gərl!"
+     ],
+     [
+      "congratulations",
+      "tabriklayman",
+      "Congratulations on the new baby!",
+      "Yangi chaqaloq bilan tabriklayman!",
+      "kənˌgræʧəˈleɪʃənz"
+     ],
+     [
+      "the miracle of life",
+      "hayot mo'jizasi",
+      "Birth is the miracle of life.",
+      "Tug'ilish — hayot mo'jizasi.",
+      "ðə ˈmɪrəkəl əv laɪf"
+     ]
+    ],
+    "strong": [
+     [
+      "nappy / diaper",
+      "tagliq (pampers)",
+      "Have you changed the nappy?",
+      "Tagliqni almashtirdingmi?",
+      ""
+     ],
+     [
+      "cradle",
+      "beshik",
+      "The baby has fallen asleep in the cradle.",
+      "Chaqaloq beshikda uxlab qoldi.",
+      "ˈkreɪdəl"
+     ],
+     [
+      "cot",
+      "bolalar karavoti",
+      "We bought a cot last week.",
+      "Biz o'tgan hafta bolalar karavoti oldik.",
+      "kɑt"
+     ],
+     [
+      "pram / stroller",
+      "bolalar aravachasi",
+      "She pushed the pram to the park.",
+      "U aravachani bog'gacha surib bordi.",
+      ""
+     ],
+     [
+      "bottle-feed",
+      "shishadan ovqatlantirmoq",
+      "They bottle-feed the baby at night.",
+      "Ular kechasi chaqaloqni shishadan ovqatlantirishadi.",
+      ""
+     ],
+     [
+      "breastfeed",
+      "ko'krak suti bilan boqmoq",
+      "She has breastfed for six months.",
+      "U olti oy ko'krak suti bilan boqdi.",
+      "ˈbrɛstfid"
+     ],
+     [
+      "lullaby",
+      "alla",
+      "Grandma sang a lullaby.",
+      "Buvim alla aytdi.",
+      "ˈlələˌbaɪ"
+     ],
+     [
+      "crawl",
+      "emaklamoq",
+      "The baby has started to crawl.",
+      "Chaqaloq emaklay boshladi.",
+      "krɔl"
+     ],
+     [
+      "first steps",
+      "ilk qadamlar",
+      "He took his first steps yesterday.",
+      "U kecha ilk qadamlarini tashladi.",
+      "fərst stɛps"
+     ],
+     [
+      "toddler",
+      "endi yurayotgan bola (1–3 yosh)",
+      "The toddler has learned ten words.",
+      "Kichkintoy o'nta so'z o'rgandi.",
+      "ˈtɑdlər"
+     ],
+     [
+      "birth certificate",
+      "tug'ilganlik guvohnomasi",
+      "We have received the birth certificate.",
+      "Biz tug'ilganlik guvohnomasini oldik.",
+      "bərθ sərˈtɪfɪkət"
+     ],
+     [
+      "birthday",
+      "tug'ilgan kun",
+      "Her first birthday was last Sunday.",
+      "Uning birinchi tug'ilgan kuni o'tgan yakshanba edi.",
+      "ˈbərθˌdeɪ"
+     ],
+     [
+      "weigh",
+      "vaznida bo'lmoq",
+      "The baby weighed 3.5 kilos at birth.",
+      "Chaqaloq tug'ilganda 3,5 kilo edi.",
+      "weɪ"
+     ],
+     [
+      "name (v)",
+      "ism qo'ymoq",
+      "They have named him Amir.",
+      "Ular unga Amir deb ism qo'yishdi.",
+      "neɪm (vi)"
+     ],
+     [
+      "godparent",
+      "ma'naviy homiy (cho'qintirgan ota/ona)",
+      "Her godparents came from London.",
+      "Uning homiylari Londondan kelishdi.",
+      ""
+     ],
+     [
+      "nursery",
+      "bolalar xonasi; bog'cha",
+      "We have painted the nursery blue.",
+      "Biz bolalar xonasini ko'kka bo'yadik.",
+      "ˈnərsəri"
+     ],
+     [
+      "expect a baby",
+      "farzand kutmoq",
+      "They are expecting a baby in June.",
+      "Ular iyunda farzand kutishmoqda.",
+      "ɪkˈspɛkt ə ˈbeɪbi"
+     ],
+     [
+      "labour",
+      "to'lg'oq",
+      "Her labour lasted six hours.",
+      "To'lg'oq olti soat davom etdi.",
+      "ˈleɪbər"
+     ],
+     [
+      "bring up",
+      "tarbiyalab o'stirmoq",
+      "Her grandmother brought her up.",
+      "Uni buvisi tarbiyalab o'stirgan.",
+      "brɪŋ əp"
+     ],
+     [
+      "raise",
+      "o'stirmoq, tarbiyalamoq",
+      "They have raised five children.",
+      "Ular beshta farzandni o'stirishgan.",
+      "reɪz"
+     ]
+    ],
+    "super": [
+     [
+      "adopt",
+      "asrab olmoq",
+      "They adopted a baby girl in 2020.",
+      "Ular 2020-da bir qizchani asrab olishdi.",
+      "əˈdɑpt"
+     ],
+     [
+      "adoption",
+      "asrab olish",
+      "The adoption took a year.",
+      "Asrab olish bir yil davom etdi.",
+      "əˈdɑpʃən"
+     ],
+     [
+      "orphan",
+      "yetim",
+      "The orphan has found a new family.",
+      "Yetim yangi oila topdi.",
+      "ˈɔrfən"
+     ],
+     [
+      "triplets",
+      "uchta egizak",
+      "Triplets are very rare.",
+      "Uchta egizak juda kam uchraydi.",
+      "ˈtrɪpləts"
+     ],
+     [
+      "natural birth",
+      "tabiiy tug'ruq",
+      "She hopes for a natural birth.",
+      "U tabiiy tug'ruqqa umid qilyapti.",
+      "ˈnæʧərəl bərθ"
+     ],
+     [
+      "safe delivery",
+      "eson-omon tug'ish",
+      "We prayed for a safe delivery.",
+      "Biz eson-omon tug'ishini so'rab duo qildik.",
+      "seɪf dɪˈlɪvəri"
+     ],
+     [
+      "generation",
+      "avlod",
+      "Three generations live in our house.",
+      "Uyimizda uch avlod yashaydi.",
+      "ˌʤɛnərˈeɪʃən"
+     ],
+     [
+      "ancestor",
+      "ajdod",
+      "My ancestors came from Bukhara.",
+      "Ajdodlarim Buxorodan kelgan.",
+      "ˈænˌsɛstər"
+     ],
+     [
+      "descendant",
+      "avlod, zurriyot",
+      "He is a descendant of a famous poet.",
+      "U mashhur shoirning avlodi.",
+      "dɪˈsɛndənt"
+     ],
+     [
+      "population growth",
+      "aholi o'sishi",
+      "Population growth has slowed down.",
+      "Aholi o'sishi sekinlashdi.",
+      "ˌpɑpjəˈleɪʃən groʊθ"
+     ],
+     [
+      "birth rate",
+      "tug'ilish darajasi",
+      "The birth rate has fallen in Europe.",
+      "Yevropada tug'ilish darajasi pasaygan.",
+      "bərθ reɪt"
+     ],
+     [
+      "newborn screening",
+      "chaqaloq tekshiruvi",
+      "Newborn screening finds problems early.",
+      "Chaqaloq tekshiruvi muammolarni erta topadi.",
+      "ˈnubɔrn ˈskrinɪŋ"
+     ],
+     [
+      "vaccination",
+      "emlash",
+      "Has the baby had her vaccinations?",
+      "Chaqaloq emlandimi?",
+      "væksəˈneɪʃən"
+     ],
+     [
+      "paediatrician",
+      "bolalar shifokori",
+      "The paediatrician has checked the baby.",
+      "Bolalar shifokori chaqaloqni tekshirdi.",
+      ""
+     ],
+     [
+      "sibling",
+      "aka-uka / opa-singil",
+      "Do you have any siblings?",
+      "Aka-uka yoki opa-singlingiz bormi?",
+      "ˈsɪblɪŋ"
+     ],
+     [
+      "only child",
+      "yolg'iz farzand",
+      "She is an only child.",
+      "U oilada yolg'iz farzand.",
+      "ˈoʊnli ʧaɪld"
+     ],
+     [
+      "come into the world",
+      "dunyoga kelmoq",
+      "A new baby has come into the world.",
+      "Yangi chaqaloq dunyoga keldi.",
+      "kəm ˈɪntu ðə wərld"
+     ],
+     [
+      "bring into the world",
+      "dunyoga keltirmoq",
+      "She has brought three children into the world.",
+      "U uchta farzandni dunyoga keltirgan.",
+      "brɪŋ ˈɪntu ðə wərld"
+     ],
+     [
+      "family tree",
+      "shajara",
+      "I have drawn my family tree.",
+      "Men shajaramni chizdim.",
+      "ˈfæməli tri"
+     ],
+     [
+      "upbringing",
+      "tarbiya",
+      "He had a strict upbringing.",
+      "U qattiq tarbiya olgan.",
+      "ˈəpˌbrɪŋɪŋ"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Past Simple yoki Present Perfect?",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni to'g'ri zamonda yozing (kitob B mashqi)",
+     "items": [
+      "___ Tim ___ (finish) his work yet?",
+      "___ he ___ (finish) it yesterday?",
+      "They ___ (just / go) out.",
+      "They ___ (go) out a minute ago.",
+      "___ you ___ (send) the letters yet?",
+      "I ___ (lose) my dictionary. I can't find it anywhere.",
+      "Jane ___ (buy) her car two weeks ago.",
+      "When we were on holiday, the weather ___ (be) terrible.",
+      "His hair looks short. He ___ (have) a haircut.",
+      "___ you ever ___ (be) in a TV studio?"
+     ],
+     "answers": [
+      "Has … finished",
+      "Did … finish",
+      "have just gone",
+      "went",
+      "Have … sent",
+      "have lost",
+      "bought",
+      "was",
+      "has had",
+      "Have … been"
+     ]
+    },
+    {
+     "title": "Vaqt so'zini toping",
+     "type": "sort",
+     "instr": "So'zlarni ikki ustunga ajrating: Past Simple / Present Perfect",
+     "items": [
+      "yesterday",
+      "ever",
+      "two years ago",
+      "just",
+      "last month",
+      "yet",
+      "in 2019",
+      "so far",
+      "already",
+      "when I was a child"
+     ],
+     "answers": [
+      "Past Simple",
+      "Present Perfect",
+      "Past Simple",
+      "Present Perfect",
+      "Past Simple",
+      "Present Perfect",
+      "Past Simple",
+      "Present Perfect",
+      "Present Perfect",
+      "Past Simple"
+     ]
+    },
+    {
+     "title": "Ikki gap — bir voqea",
+     "type": "rewrite",
+     "instr": "Gapni boshqa zamon bilan qayta yozing (kitob E)",
+     "items": [
+      "I haven't seen her for a long time.",
+      "I last met George two weeks ago.",
+      "They have been here for three months.",
+      "We started living in Istanbul 12 years ago.",
+      "I last saw my girlfriend five days ago.",
+      "She hasn't been to Rome before."
+     ],
+     "answers": [
+      "It's ages since I saw her.",
+      "I haven't met George for two weeks.",
+      "They arrived three months ago.",
+      "We have lived in Istanbul for 12 years.",
+      "I haven't seen my girlfriend for five days.",
+      "This is the first time she has been to Rome."
+     ]
+    },
+    {
+     "title": "Suhbat: tajriba → tafsilot",
+     "type": "speaking",
+     "instr": "Juftlikda: A — \"Have you ever…?\", B — \"Yes\" bo'lsa A \"When / Where / Who with?\" (Past Simple) so'raydi",
+     "items": [
+      "visit / another city",
+      "hold / a newborn baby",
+      "go / to a baby shower",
+      "lose / something important",
+      "meet / a famous person"
+     ],
+     "answers": [
+      "Have you ever visited another city? — When did you go?",
+      "Have you ever held a newborn baby? — Whose baby was it?",
+      "Have you ever been to a baby shower? — What did you bring?",
+      "Have you ever lost something important? — What was it?",
+      "Have you ever met a famous person? — Where did you meet them?"
+     ],
+     "note": "Har juftlik 3 suhbat; ustoz \"When have you…?\" xatosini ovoz chiqarib tuzatadi."
+    },
+    {
+     "title": "Lug'at: gapni to'ldiring",
+     "type": "gap",
+     "instr": "BIRTH so'zlari bilan to'ldiring",
+     "items": [
+      "My sister ___ ___ to a boy last week.",
+      "The baby was ___ in April.",
+      "A ___ baby needs special care in hospital.",
+      "The ___ helped the mother during the birth.",
+      "The ___ ___ is 12 June, so we are getting ready.",
+      "We are going to a ___ ___ for my cousin on Sunday."
+     ],
+     "answers": [
+      "gave birth",
+      "born",
+      "premature",
+      "midwife",
+      "due date",
+      "baby shower"
+     ],
+     "box": [
+      "gave birth",
+      "born",
+      "premature",
+      "midwife",
+      "due date",
+      "baby shower"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I have visited my aunt yesterday.",
+      "When have you seen the baby?",
+      "Did you ever hold a newborn?",
+      "She has been born in 2019.",
+      "They have got married two years ago."
+     ],
+     "answers": [
+      "I visited my aunt yesterday.",
+      "When did you see the baby?",
+      "Have you ever held a newborn?",
+      "She was born in 2019.",
+      "They got married two years ago."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 2: C va D mashqlari (Past Simple / Present Perfect) daftarga",
+     "answers": "Kitob javob kaliti; keyingi darsda 5 daqiqa tekshiruv."
+    },
+    {
+     "title": "Mening hayotim",
+     "type": "write",
+     "instr": "8 gap: 4 tasi Past Simple (I was born…, I started school…), 4 tasi Present Perfect (I have lived…, I have never…)",
+     "answers": "Erkin; zamon tanlovi tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men 2009-yilda tug'ilganman.",
+      "U hali chaqaloqni ko'rgani yo'q.",
+      "Opam o'tgan hafta qiz tug'di.",
+      "Sen qachondir egizaklarni ko'rganmisan?",
+      "Biz tug'ilganlik guvohnomasini kecha oldik."
+     ],
+     "answers": [
+      "I was born in 2009.",
+      "She/He hasn't seen the baby yet.",
+      "My sister gave birth to a girl last week.",
+      "Have you ever seen twins?",
+      "We got the birth certificate yesterday."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CORE 20 so'z: inglizcha / tarjima / bitta gap — Jony Student flashcard",
+     "answers": "Ilova avtomat tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 so'z + tarjima, 1.5 daqiqa — ovozli yuboring",
+     "answers": "Ustoz baholaydi (1 coin)."
+    },
+    {
+     "title": "Kahoot tayyorgarlik",
+     "type": "prep",
+     "instr": "Keyingi darsda Kahoot: Present Perfect vs Past Simple + Birth so'zlari",
+     "answers": "—"
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — narrative verbs",
+     "20 fe'l V3 + tarjima, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 5 / 6 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Birth og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 3,
+   "title": "Since vs For, Because + Present Perfect",
+   "grammar_topic": "HOW LONG? SINCE vs FOR; BECAUSE + PRESENT PERFECT",
+   "vocab_topic": "Marriage (nikoh, to'y)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 3 – How long: since vs for (jadval, mashqlar F–H, since/for 20 gap).",
+   "objectives": [
+    "since (boshlanish nuqtasi) va for (davomiylik) farqini bilish va ishlatish.",
+    "\"How long have you…?\" savolini tuzish va to'liq javob berish.",
+    "\"because + Present Perfect\" bilan hozirgi holatning sababini aytish.",
+    "Nikoh mavzusidagi 20 so'z bilan oila tarixini aytib berish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Marriage (nikoh, to'y) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "\"How long have you studied English?\" — javoblar doskaga: \"since 2024\" / \"for two years\". Qaysi biri boshlanish nuqtasi, qaysi biri davomiylik?"
+    ],
+    [
+     8,
+     "Kahoot — Present Perfect vs Past Simple",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Present Perfect vs Past Simple lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: SINCE + boshlangan vaqt, FOR + qancha davom etgani, BECAUSE + Present Perfect (sabab natija hozir), HOW LONG + have/has + S + V3."
+    ],
+    [
+     12,
+     "Marriage (nikoh, to'y) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     19,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "SINCE — qachon boshlangan: since 2012, since Monday, since I was a child (nuqta).",
+     "FOR — qancha davom etgan: for 20 years, for two hours, for a long time (davr).",
+     "Ikkalasi ham ko'pincha Present Perfect bilan: ish o'tganda boshlangan, hozir ham davom etyapti.",
+     "BECAUSE + Present Perfect: hozirgi holatning sababi o'tgan ishda — \"She can't go because she has caught a cold\"."
+    ],
+    "formulas": [
+     [
+      "Since",
+      "S + have/has + V3 + since + boshlanish nuqtasi",
+      "I have lived there since 2012.",
+      "Men 2012-yildan beri u yerda yashayman."
+     ],
+     [
+      "For",
+      "S + have/has + V3 + for + davr",
+      "I have lived there for 20 years.",
+      "Men u yerda 20 yildan beri yashayman."
+     ],
+     [
+      "How long",
+      "How long + have/has + S + V3?",
+      "How long have you known her?",
+      "Uni qanchadan beri bilasan?"
+     ],
+     [
+      "Because",
+      "natija (hozir) + because + S + have/has + V3",
+      "She can't go to the party because she has caught a cold.",
+      "U bazmga bora olmaydi, chunki shamollab qolgan."
+     ],
+     [
+      "Inkor + since/for",
+      "S + haven't/hasn't + V3 + since/for",
+      "I haven't seen him since Monday.",
+      "Uni dushanbadan beri ko'rmadim."
+     ],
+     [
+      "It's … since",
+      "It's + davr + since + Past Simple",
+      "It's two years since we got married.",
+      "Turmush qurganimizga ikki yil bo'ldi."
+     ]
+    ],
+    "presentation": [
+     [
+      "How long have you known your best friend?",
+      "I have known him since primary school."
+     ],
+     [
+      "How long have your parents been married?",
+      "They have been married for twenty years."
+     ],
+     [
+      "Why can't Ali come to the wedding?",
+      "Because he has broken his leg."
+     ],
+     [
+      "How long has your sister been engaged?",
+      "She has been engaged for three months."
+     ],
+     [
+      "Since when have you lived in this flat?",
+      "Since 2020."
+     ],
+     [
+      "Why is she so happy?",
+      "Because she has just got engaged."
+     ],
+     [
+      "How long have they been on their honeymoon?",
+      "For a week."
+     ],
+     [
+      "Why can't you open the door?",
+      "Because I have lost my key."
+     ],
+     [
+      "How long has it been since the wedding?",
+      "It's been two years since the wedding."
+     ],
+     [
+      "Why isn't he at work?",
+      "Because he has gone on holiday."
+     ]
+    ],
+    "notes": [
+     "since + nuqta (yil, kun, soat, voqea); for + raqam + davr (days, weeks, years).",
+     "\"since I was a child\" — since'dan keyin butun gap Past Simple'da keladi.",
+     "\"How long…?\" ga javob: \"for / since\" bilan; \"When…?\" ga javob: Past Simple + vaqt.",
+     "because + Present Perfect — sabab hozir ta'sir qilyapti; because + Past Simple — sabab o'tgan, tugagan."
+    ],
+    "mistakes": [
+     [
+      "I have lived here since three years.",
+      "I have lived here for three years.",
+      "Davr → for."
+     ],
+     [
+      "I have known her for 2015.",
+      "I have known her since 2015.",
+      "Nuqta → since."
+     ],
+     [
+      "How long do you know him?",
+      "How long have you known him?",
+      "Davom etayotgan ish → Present Perfect."
+     ],
+     [
+      "I live here since 2020.",
+      "I have lived here since 2020.",
+      "since/for bilan Present Simple emas."
+     ],
+     [
+      "She is tired because she works all day. (bugun)",
+      "She is tired because she has worked all day.",
+      "Sabab natija hozir → Present Perfect."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning MARRIAGE ro'yxati. STRONG — to'y jarayoni, SUPER — munosabatlar va rasmiy so'zlar.",
+     "Har so'zga \"How long…?\" savoli: \"How long have they been married?\""
+    ],
+    "core": [
+     [
+      "marriage",
+      "nikoh, turmush",
+      "Their marriage has lasted 30 years.",
+      "Ularning nikohi 30 yil davom etgan.",
+      "ˈmɛrɪʤ"
+     ],
+     [
+      "get married",
+      "turmush qurmoq",
+      "They got married in 2015.",
+      "Ular 2015-yilda turmush qurishgan.",
+      "gɪt ˈmɛrid"
+     ],
+     [
+      "be married",
+      "turmushda bo'lmoq",
+      "We have been married for ten years.",
+      "Biz o'n yildan beri turmushdamiz.",
+      "bi ˈmɛrid"
+     ],
+     [
+      "wedding",
+      "to'y",
+      "The wedding was in June.",
+      "To'y iyunda bo'ldi.",
+      "ˈwɛdɪŋ"
+     ],
+     [
+      "bride",
+      "kelin",
+      "The bride has worn a white dress.",
+      "Kelin oq ko'ylak kiygan.",
+      "braɪd"
+     ],
+     [
+      "groom",
+      "kuyov",
+      "The groom arrived early.",
+      "Kuyov erta keldi.",
+      "grum"
+     ],
+     [
+      "husband",
+      "er",
+      "Her husband has worked abroad since 2022.",
+      "Uning eri 2022-dan beri chet elda ishlaydi.",
+      "ˈhəzbənd"
+     ],
+     [
+      "wife",
+      "xotin",
+      "My wife has cooked plov for the guests.",
+      "Xotinim mehmonlarga palov pishirdi.",
+      "waɪf"
+     ],
+     [
+      "spouse",
+      "juft (er yoki xotin)",
+      "Write your spouse's name here.",
+      "Bu yerga juftingiz ismini yozing.",
+      "spaʊs"
+     ],
+     [
+      "ceremony",
+      "marosim",
+      "The ceremony has just finished.",
+      "Marosim hozirgina tugadi.",
+      "ˈsɛrəˌmoʊni"
+     ],
+     [
+      "vows",
+      "qasamyod (nikoh va'dasi)",
+      "They have written their own vows.",
+      "Ular o'z va'dalarini o'zlari yozishdi.",
+      "vaʊz"
+     ],
+     [
+      "marriage certificate",
+      "nikoh guvohnomasi",
+      "We have received the marriage certificate.",
+      "Biz nikoh guvohnomasini oldik.",
+      "ˈmɛrɪʤ sərˈtɪfɪkət"
+     ],
+     [
+      "honeymoon",
+      "asal oyi",
+      "They have been on honeymoon for a week.",
+      "Ular bir haftadan beri asal oyida.",
+      "ˈhəniˌmun"
+     ],
+     [
+      "engagement",
+      "unashtiruv",
+      "The engagement lasted six months.",
+      "Unashtiruv olti oy davom etdi.",
+      "ɛnˈgeɪʤmənt"
+     ],
+     [
+      "get engaged",
+      "unashtirilmoq",
+      "My brother has just got engaged.",
+      "Akam hozirgina unashtirildi.",
+      "gɪt ɪnˈgeɪʤd"
+     ],
+     [
+      "proposal",
+      "turmush taklifi",
+      "She said yes to his proposal.",
+      "U uning taklifiga \"ha\" dedi.",
+      "prəˈpoʊzəl"
+     ],
+     [
+      "propose",
+      "turmush taklif qilmoq",
+      "He proposed to her on the bridge.",
+      "U ko'prikda unga turmush taklif qildi.",
+      "prəˈpoʊz"
+     ],
+     [
+      "anniversary",
+      "(nikoh) yilligi",
+      "We have celebrated ten anniversaries.",
+      "Biz o'nta yillikni nishonladik.",
+      "ˌænəˈvərsəri"
+     ],
+     [
+      "commitment",
+      "sadoqat, majburiyat",
+      "Marriage is a big commitment.",
+      "Nikoh — katta majburiyat.",
+      "kəˈmɪtmənt"
+     ],
+     [
+      "couple",
+      "er-xotin, juftlik",
+      "The couple have lived here since 2019.",
+      "Er-xotin 2019-dan beri shu yerda yashaydi.",
+      "ˈkəpəl"
+     ]
+    ],
+    "strong": [
+     [
+      "fiancé / fiancée",
+      "kuyovto'ra / kelinto'ra (unashtirilgan)",
+      "Her fiancé has bought a flat.",
+      "Uning kuyovto'rasi kvartira sotib oldi.",
+      ""
+     ],
+     [
+      "best man",
+      "kuyov jo'rasi",
+      "The best man has made a speech.",
+      "Kuyov jo'rasi nutq so'zladi.",
+      "bɛst mæn"
+     ],
+     [
+      "bridesmaid",
+      "kelin dugonasi",
+      "Her sister was a bridesmaid.",
+      "Uning singlisi kelin dugonasi bo'ldi.",
+      "ˈbraɪdzˌmeɪd"
+     ],
+     [
+      "wedding ring",
+      "nikoh uzugi",
+      "He has lost his wedding ring!",
+      "U nikoh uzugini yo'qotibdi!",
+      "ˈwɛdɪŋ rɪŋ"
+     ],
+     [
+      "wedding dress",
+      "kelinlik libosi",
+      "She has chosen a wedding dress.",
+      "U kelinlik libosini tanladi.",
+      "ˈwɛdɪŋ drɛs"
+     ],
+     [
+      "reception",
+      "to'y ziyofati",
+      "The reception was in a big hall.",
+      "Ziyofat katta zalda bo'ldi.",
+      "rɪˈsɛpʃən"
+     ],
+     [
+      "guest",
+      "mehmon",
+      "Two hundred guests have come.",
+      "Ikki yuz mehmon keldi.",
+      "gɛst"
+     ],
+     [
+      "invitation",
+      "taklifnoma",
+      "Have you sent the invitations?",
+      "Taklifnomalarni jo'natdingmi?",
+      "ˌɪnvɪˈteɪʃən"
+     ],
+     [
+      "in-laws",
+      "qaynota-qaynona (turmush o'rtog'i oilasi)",
+      "My in-laws have lived with us since May.",
+      "Qaynotam-qaynonam maydan beri biz bilan yashaydi.",
+      "ˈɪn lɔːz"
+     ],
+     [
+      "mother-in-law",
+      "qaynona",
+      "My mother-in-law has cooked dinner.",
+      "Qaynonam kechki ovqat pishirdi.",
+      "ˈməðərɪnˌlɔ"
+     ],
+     [
+      "newlyweds",
+      "yangi turmush qurganlar",
+      "The newlyweds have moved to Samarkand.",
+      "Yangi kelin-kuyov Samarqandga ko'chishdi.",
+      "ˈnuliˌwɛdz"
+     ],
+     [
+      "toast",
+      "qadah so'zi",
+      "Dad made a toast at the wedding.",
+      "Dadam to'yda qadah so'zi aytdi.",
+      "toʊst"
+     ],
+     [
+      "registry office",
+      "FHDYo (nikoh qayd etish idorasi)",
+      "They signed at the registry office.",
+      "Ular FHDYoda imzo chekishdi.",
+      "ˈrɛʤɪstri ˈɔfəs"
+     ],
+     [
+      "matchmaker",
+      "sovchi",
+      "The matchmaker came on Friday.",
+      "Sovchi juma kuni keldi.",
+      "ˈmæʧˌmeɪkər"
+     ],
+     [
+      "arranged marriage",
+      "oila kelishuvi bilan nikoh",
+      "Arranged marriages are still common here.",
+      "Bu yerda kelishuv nikohlari hali ham keng tarqalgan.",
+      "əreɪnʤd ˈmɛrɪʤ"
+     ],
+     [
+      "love marriage",
+      "sevgi nikohi",
+      "Theirs was a love marriage.",
+      "Ularniki sevgi nikohi edi.",
+      "ləv ˈmɛrɪʤ"
+     ],
+     [
+      "settle down",
+      "oila qurib o'rnashmoq",
+      "He has finally settled down.",
+      "U nihoyat oila qurib o'rnashdi.",
+      "ˈsɛtəl daʊn"
+     ],
+     [
+      "fall in love",
+      "sevib qolmoq",
+      "They fell in love at university.",
+      "Ular universitetda sevib qolishgan.",
+      "fɔl ɪn ləv"
+     ],
+     [
+      "relationship",
+      "munosabat",
+      "Their relationship has grown stronger.",
+      "Ularning munosabati mustahkamlandi.",
+      "riˈleɪʃənˌʃɪp"
+     ],
+     [
+      "partner",
+      "juft, hamroh",
+      "She has lived with her partner since 2021.",
+      "U 2021-dan beri hamrohi bilan yashaydi.",
+      "ˈpɑrtnər"
+     ]
+    ],
+    "super": [
+     [
+      "union",
+      "ittifoq, birlashuv",
+      "Marriage is a union of two families.",
+      "Nikoh — ikki oilaning ittifoqi.",
+      "ˈjunjən"
+     ],
+     [
+      "faithful",
+      "sodiq",
+      "He has always been faithful to her.",
+      "U doim unga sodiq bo'lgan.",
+      "ˈfeɪθfəl"
+     ],
+     [
+      "divorce",
+      "ajrim",
+      "The divorce took a year.",
+      "Ajrim bir yil davom etdi.",
+      "dɪˈvɔrs"
+     ],
+     [
+      "get divorced",
+      "ajrashmoq",
+      "They got divorced in 2018.",
+      "Ular 2018-yilda ajrashishgan.",
+      "gɪt dɪˈvɔrst"
+     ],
+     [
+      "separate (v)",
+      "alohida yashay boshlamoq",
+      "They have separated but not divorced.",
+      "Ular alohida yashashadi, lekin ajrashmagan.",
+      "ˈsɛpərˌeɪt (vi)"
+     ],
+     [
+      "single",
+      "turmush qurmagan, yolg'iz",
+      "He has been single for two years.",
+      "U ikki yildan beri yolg'iz.",
+      "ˈsɪŋgəl"
+     ],
+     [
+      "widow",
+      "beva ayol",
+      "The widow has raised three sons alone.",
+      "Beva ayol uch o'g'ilni yolg'iz o'stirgan.",
+      "ˈwɪdoʊ"
+     ],
+     [
+      "widower",
+      "beva erkak",
+      "The widower has never married again.",
+      "Beva erkak qayta uylanmagan.",
+      "ˈwɪdoʊər"
+     ],
+     [
+      "dowry",
+      "sep, mahr",
+      "The dowry included carpets and dishes.",
+      "Sepga gilam va idishlar kirgan.",
+      "ˈdaʊri"
+     ],
+     [
+      "elope",
+      "yashirincha turmush qurmoq",
+      "They eloped to Italy.",
+      "Ular yashirincha Italiyaga ketib turmush qurishdi.",
+      "ɪˈloʊp"
+     ],
+     [
+      "argument",
+      "janjal, tortishuv",
+      "They have had an argument.",
+      "Ular janjallashib qolishdi.",
+      "ˈɑrgjəmənt"
+     ],
+     [
+      "make up",
+      "yarashmoq",
+      "Have they made up yet?",
+      "Ular yarashdimi?",
+      "meɪk əp"
+     ],
+     [
+      "go out with",
+      "uchrashib yurmoq",
+      "She has gone out with him since March.",
+      "U martdan beri u bilan uchrashib yuradi.",
+      "goʊ aʊt wɪθ"
+     ],
+     [
+      "household",
+      "xonadon, oila xo'jaligi",
+      "There are five people in our household.",
+      "Xonadonimizda besh kishi bor.",
+      "ˈhaʊsˌhoʊld"
+     ],
+     [
+      "raise a family",
+      "oila boqib o'stirmoq",
+      "They have raised a family in this house.",
+      "Ular bu uyda oila o'stirishgan.",
+      "reɪz ə ˈfæməli"
+     ],
+     [
+      "bouquet",
+      "guldasta",
+      "The bride has thrown the bouquet.",
+      "Kelin guldastani uloqtirdi.",
+      "buˈkeɪ"
+     ],
+     [
+      "veil",
+      "kelin pardasi",
+      "Her veil was very long.",
+      "Uning pardasi juda uzun edi.",
+      "veɪl"
+     ],
+     [
+      "prenuptial agreement",
+      "nikoh shartnomasi",
+      "They have signed a prenuptial agreement.",
+      "Ular nikoh shartnomasini imzolashgan.",
+      "priˈnəpʃəl əˈgrimənt"
+     ],
+     [
+      "compatible",
+      "mos, bir-biriga to'g'ri keladigan",
+      "They are very compatible.",
+      "Ular bir-biriga juda mos.",
+      "kəmˈpætəbəl"
+     ],
+     [
+      "lifelong",
+      "umrbod",
+      "Marriage is a lifelong commitment.",
+      "Nikoh — umrbod majburiyat.",
+      "ˈlaɪˈflɔŋ"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "since yoki for",
+     "type": "gap",
+     "instr": "Bo'sh joyga since / for qo'ying (kitob)",
+     "items": [
+      "They have lived in that house ___ 2015.",
+      "He hasn't eaten anything ___ breakfast.",
+      "I've known her ___ we were kids.",
+      "They've been waiting here ___ an hour.",
+      "We've been friends ___ a very long time.",
+      "She's lived in that city ___ 2010.",
+      "He's been taking piano lessons ___ two years.",
+      "It hasn't snowed here ___ December.",
+      "They've been saving money ___ their wedding.",
+      "She's been working here ___ she graduated."
+     ],
+     "answers": [
+      "since",
+      "since",
+      "since",
+      "for",
+      "for",
+      "since",
+      "for",
+      "since",
+      "for",
+      "since"
+     ]
+    },
+    {
+     "title": "How long…?",
+     "type": "question",
+     "instr": "\"How long…?\" savolini tuzing (kitob G)",
+     "items": [
+      "I know Bob.",
+      "Sue and Alan are married.",
+      "George is unemployed.",
+      "Mary is at the airport.",
+      "My sister is ill.",
+      "I have a yacht.",
+      "My parents are in London."
+     ],
+     "answers": [
+      "How long have you known Bob?",
+      "How long have Sue and Alan been married?",
+      "How long has George been unemployed?",
+      "How long has Mary been at the airport?",
+      "How long has your sister been ill?",
+      "How long have you had a yacht?",
+      "How long have your parents been in London?"
+     ]
+    },
+    {
+     "title": "Because + Present Perfect",
+     "type": "write",
+     "instr": "Sababni Present Perfect bilan yozing (kitob F)",
+     "items": [
+      "He can't walk very fast. (hurt / leg)",
+      "I can't get in. (lose / key)",
+      "I know this story very well. (see the film)",
+      "I can't post the letter. (not put / stamp / on it)",
+      "They can't go on holiday. (not save / money)",
+      "She can't get in. (he / lock the door)"
+     ],
+     "answers": [
+      "He can't walk very fast because he has hurt his leg.",
+      "I can't get in because I have lost my key.",
+      "I know this story very well because I have seen the film.",
+      "I can't post the letter because I haven't put a stamp on it.",
+      "They can't go on holiday because they haven't saved money.",
+      "She can't get in because he has locked the door."
+     ]
+    },
+    {
+     "title": "Ikki marta yozing: SINCE va FOR",
+     "type": "rewrite",
+     "instr": "Qavsdagi ikkala variant bilan (kitob H)",
+     "items": [
+      "We've been here. (an hour / 4 o'clock)",
+      "She hasn't spoken to me. (2 weeks / last week)",
+      "They've lived in this street. (1970 / a long time)",
+      "I haven't had time to do it. (last Monday / a few days)"
+     ],
+     "answers": [
+      "We've been here for an hour. / We've been here since 4 o'clock.",
+      "She hasn't spoken to me for 2 weeks. / … since last week.",
+      "They've lived in this street since 1970. / … for a long time.",
+      "I haven't had time to do it since last Monday. / … for a few days."
+     ]
+    },
+    {
+     "title": "Oila tarixi",
+     "type": "speaking",
+     "instr": "Juftlikda: 5 ta \"How long…?\" savoli — oila a'zolari haqida (married, lived, worked, known, had)",
+     "items": [
+      "parents / married",
+      "family / live in this city",
+      "you / know your best friend",
+      "father / work at his job",
+      "you / have your phone"
+     ],
+     "answers": [
+      "How long have your parents been married? — For … years.",
+      "How long has your family lived in this city? — Since …",
+      "How long have you known your best friend?",
+      "How long has your father worked at his job?",
+      "How long have you had your phone?"
+     ],
+     "note": "Javobda since/for majburiy; ustoz \"since three years\" xatosini kuzatadi."
+    },
+    {
+     "title": "Lug'at: mos so'z",
+     "type": "match",
+     "instr": "Ta'rifga so'zni toping (MARRIAGE)",
+     "items": [
+      "the woman who is getting married",
+      "the man who is getting married",
+      "a holiday after the wedding",
+      "the promise to marry, before the wedding",
+      "the words the couple say at the ceremony",
+      "the ring you wear after the wedding"
+     ],
+     "answers": [
+      "bride",
+      "groom",
+      "honeymoon",
+      "engagement",
+      "vows",
+      "wedding ring"
+     ],
+     "box": [
+      "bride",
+      "groom",
+      "honeymoon",
+      "engagement",
+      "vows",
+      "wedding ring"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 3: since/for 20 gap, F, G, H — daftarga to'liq",
+     "answers": "Kitob kaliti; keyingi darsda tekshiruv."
+    },
+    {
+     "title": "Oilam tarixi",
+     "type": "write",
+     "instr": "8 gap: since (4) va for (4) bilan oila a'zolari haqida",
+     "answers": "Erkin; since + nuqta, for + davr tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ota-onam yigirma yildan beri turmushda.",
+      "Men uni 2019-yildan beri bilaman.",
+      "U to'yga kela olmaydi, chunki kasal bo'lib qolgan.",
+      "Ular qanchadan beri unashtirilgan?",
+      "Biz bu uyda uzoq vaqtdan beri yashaymiz."
+     ],
+     "answers": [
+      "My parents have been married for twenty years.",
+      "I have known him/her since 2019.",
+      "She/He can't come to the wedding because she/he has fallen ill.",
+      "How long have they been engaged?",
+      "We have lived in this house for a long time."
+     ]
+    },
+    {
+     "title": "5 sabab",
+     "type": "write",
+     "instr": "\"… because I have …\" qolipida 5 gap (hozirgi holat + sabab)",
+     "answers": "Erkin; because + have/has + V3."
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CORE 20 (marriage) — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Birth",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Marriage og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 4,
+   "title": "Yet, Still, Already, Just",
+   "grammar_topic": "YET / STILL / ALREADY / JUST + PRESENT PERFECT",
+   "vocab_topic": "Death (o'lim, motam — hurmat bilan)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 4 – Yet, still, already, just (jadval, C–D mashqlar, DEATH WORDS).",
+   "objectives": [
+    "yet / still / already / just so'zlarining o'rni va ma'nosini bilish.",
+    "Present Perfect bilan \"hali / haligacha / allaqachon / hozirgina\" ma'nolarini ifodalash.",
+    "Motam mavzusidagi so'zlarni hurmatli ohangda ishlata olish (ta'ziya bildirish).",
+    "Kombinatsiya: 1 daqiqada 3 marta."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Death (o'lim, motam — hurmat bilan) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Have you done your homework?\" — javob variantlari doskada: \"I have ALREADY done it\" / \"I haven't done it YET\" / \"I STILL haven't done it\" / \"I have JUST done it\". Farqini his qildiring."
+    ],
+    [
+     8,
+     "Kahoot — Since vs For, Because + Present Perfect",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Since vs For, Because + Present Perfect lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: YET (inkor va savol, gap oxirida) → STILL (inkor, have'dan oldin) → ALREADY (tasdiq, have bilan V3 orasida) → JUST (hozirgina, have bilan V3 orasida). Har biriga 2 misol + tarjima."
+    ],
+    [
+     12,
+     "Death (o'lim, motam — hurmat bilan) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     19,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "YET — \"hali\": inkor va savolda, GAP OXIRIDA. She hasn't bought anything yet. Has John bought a car yet?",
+     "STILL — \"haligacha (kutilgan ish bo'lmadi)\": inkorda, HAVE'DAN OLDIN. I still haven't called Yumi. (norozilik ohangi)",
+     "ALREADY — \"allaqachon\": tasdiqda, have va V3 ORASIDA. I've already spent my salary.",
+     "JUST — \"hozirgina\": have va V3 ORASIDA. He has just gone out."
+    ],
+    "formulas": [
+     [
+      "Yet (inkor)",
+      "S + haven't/hasn't + V3 + yet",
+      "She hasn't bought anything yet.",
+      "U hali hech narsa sotib olmadi."
+     ],
+     [
+      "Yet (savol)",
+      "Have/Has + S + V3 + yet?",
+      "Has John bought a new car yet?",
+      "Jon yangi mashina sotib oldimi hali?"
+     ],
+     [
+      "Still",
+      "S + still + haven't/hasn't + V3",
+      "I still haven't called Yumi.",
+      "Men haligacha Yumiga qo'ng'iroq qilmadim."
+     ],
+     [
+      "Already",
+      "S + have/has + already + V3",
+      "I've already spent my salary.",
+      "Men allaqachon oyligimni sarflab bo'ldim."
+     ],
+     [
+      "Just",
+      "S + have/has + just + V3",
+      "He has just gone out.",
+      "U hozirgina chiqib ketdi."
+     ],
+     [
+      "Just (savol)",
+      "What + have/has + S + just + V3?",
+      "What has he just done?",
+      "U hozirgina nima qildi?"
+     ]
+    ],
+    "presentation": [
+     [
+      "Have you finished the book yet?",
+      "No, I haven't finished it yet."
+     ],
+     [
+      "Has the guest arrived yet?",
+      "Yes, he has just arrived."
+     ],
+     [
+      "Have you called your grandmother?",
+      "I still haven't called her. I'll do it tonight."
+     ],
+     [
+      "Has she sent the condolences?",
+      "Yes, she has already sent them."
+     ],
+     [
+      "What has he just said?",
+      "He has just said that the funeral is tomorrow."
+     ],
+     [
+      "Have they buried him yet?",
+      "Yes, they buried him this morning."
+     ],
+     [
+      "Have you eaten?",
+      "I have just eaten, thanks."
+     ],
+     [
+      "Has the film started yet?",
+      "It has already started. Hurry up!"
+     ],
+     [
+      "Have you told your parents the news?",
+      "Not yet. I still haven't found the right words."
+     ],
+     [
+      "Has the doctor come?",
+      "She has just come."
+     ]
+    ],
+    "notes": [
+     "yet — gap oxirida; already/just — have va V3 orasida; still — have'dan oldin (inkorda).",
+     "\"already\" savolda ham bo'ladi (hayrat): \"Have you already finished?!\" — \"Shunchalik tez tugatdingmi?!\"",
+     "\"still\" tasdiq gapda Present Simple/Continuous bilan boshqa ma'no: \"I still live here\" — hali ham yashayman.",
+     "O'lim mavzusi: ingliz tilida \"pass away\" (vafot etdi) \"die\"dan yumshoqroq; ta'ziya: \"I'm sorry for your loss\" / \"My condolences\"."
+    ],
+    "mistakes": [
+     [
+      "I haven't yet finished.",
+      "I haven't finished yet.",
+      "yet — gap oxirida."
+     ],
+     [
+      "I already have done it.",
+      "I have already done it.",
+      "already — have va V3 orasida."
+     ],
+     [
+      "He still didn't come.",
+      "He still hasn't come.",
+      "Kutilayotgan ish → Present Perfect."
+     ],
+     [
+      "She just has left.",
+      "She has just left.",
+      "just — have'dan keyin."
+     ],
+     [
+      "Did you finish yet?",
+      "Have you finished yet?",
+      "yet → Present Perfect."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitobning DEATH WORDS ro'yxati (hurmatli ohang). STRONG — marosim va his-tuyg'u, SUPER — rasmiy/huquqiy so'zlar.",
+     "Ustoz ohangga e'tibor beradi: bu so'zlar ta'ziya va yangiliklarda kerak; hazil qilinmaydi."
+    ],
+    "core": [
+     [
+      "death",
+      "o'lim",
+      "The death of a pet is hard for children.",
+      "Uy hayvonining o'limi bolalar uchun og'ir.",
+      "dɛθ"
+     ],
+     [
+      "die",
+      "o'lmoq, vafot etmoq",
+      "His grandfather died in 2019.",
+      "Uning bobosi 2019-yilda vafot etgan.",
+      "daɪ"
+     ],
+     [
+      "dead",
+      "o'lgan",
+      "The plant is dead.",
+      "O'simlik qurib qolgan.",
+      "dɛd"
+     ],
+     [
+      "pass away",
+      "olamdan o'tmoq",
+      "Her grandmother has just passed away.",
+      "Uning buvisi hozirgina olamdan o'tdi.",
+      "pæs əˈweɪ"
+     ],
+     [
+      "loss",
+      "yo'qotish, judolik",
+      "I'm sorry for your loss.",
+      "Judolik uchun hamdardman.",
+      "lɔs"
+     ],
+     [
+      "funeral",
+      "janoza, dafn marosimi",
+      "The funeral is on Friday.",
+      "Janoza juma kuni.",
+      "fˈjunərəl"
+     ],
+     [
+      "burial",
+      "dafn",
+      "The burial took place at noon.",
+      "Dafn tushda bo'ldi.",
+      "ˈbɛriəl"
+     ],
+     [
+      "grave",
+      "qabr",
+      "We have visited his grave.",
+      "Biz uning qabrini ziyorat qildik.",
+      "greɪv"
+     ],
+     [
+      "cemetery",
+      "qabriston",
+      "The cemetery is outside the city.",
+      "Qabriston shahar tashqarisida.",
+      "ˈsɛmɪˌtɛri"
+     ],
+     [
+      "mourning",
+      "motam",
+      "The family is in mourning.",
+      "Oila motamda.",
+      "ˈmɔrnɪŋ"
+     ],
+     [
+      "mourn",
+      "motam tutmoq",
+      "The whole village has mourned him.",
+      "Butun qishloq unga motam tutdi.",
+      "mɔrn"
+     ],
+     [
+      "grief",
+      "qayg'u, g'am",
+      "Grief takes time.",
+      "Qayg'u vaqt talab qiladi.",
+      "grif"
+     ],
+     [
+      "condolences",
+      "ta'ziya",
+      "Please accept my condolences.",
+      "Ta'ziyamni qabul qiling.",
+      "kənˈdoʊlənsəz"
+     ],
+     [
+      "coffin",
+      "tobut",
+      "They carried the coffin slowly.",
+      "Ular tobutni sekin ko'tarib borishdi.",
+      "ˈkɔfɪn"
+     ],
+     [
+      "tombstone",
+      "qabr toshi",
+      "The tombstone has his name on it.",
+      "Qabr toshida uning ismi bor.",
+      "ˈtumˌstoʊn"
+     ],
+     [
+      "rest in peace (RIP)",
+      "joyi jannatda bo'lsin",
+      "May he rest in peace.",
+      "Joyi jannatda bo'lsin.",
+      "rɛst ɪn pis (rɪp)"
+     ],
+     [
+      "sudden death",
+      "to'satdan o'lim",
+      "It was a sudden death; nobody expected it.",
+      "Bu to'satdan o'lim edi; hech kim kutmagan edi.",
+      "ˈsədən dɛθ"
+     ],
+     [
+      "the deceased",
+      "marhum",
+      "The deceased was 84 years old.",
+      "Marhum 84 yoshda edi.",
+      "ðə dɪˈsist"
+     ],
+     [
+      "be no longer with us",
+      "endi oramizda emas",
+      "Sadly, he is no longer with us.",
+      "Afsuski, u endi oramizda emas.",
+      "bi noʊ ˈlɔŋgər wɪθ ˈjuˈɛs"
+     ],
+     [
+      "mortality",
+      "o'lim (darajasi); o'tkinchilik",
+      "Child mortality has fallen.",
+      "Bolalar o'limi kamaygan.",
+      "mɔrˈtæləti"
+     ]
+    ],
+    "strong": [
+     [
+      "widow",
+      "beva ayol",
+      "The widow still hasn't sold the house.",
+      "Beva ayol haligacha uyni sotmadi.",
+      "ˈwɪdoʊ"
+     ],
+     [
+      "widower",
+      "beva erkak",
+      "The widower lives alone now.",
+      "Beva erkak endi yolg'iz yashaydi.",
+      "ˈwɪdoʊər"
+     ],
+     [
+      "orphan",
+      "yetim",
+      "The orphan has found a loving family.",
+      "Yetim mehribon oila topdi.",
+      "ˈɔrfən"
+     ],
+     [
+      "the late",
+      "marhum (ism oldida)",
+      "This was the late Mr Karimov's shop.",
+      "Bu marhum Karimovning do'koni edi.",
+      "ðə leɪt"
+     ],
+     [
+      "memorial",
+      "xotira (marosimi/yodgorlik)",
+      "A memorial has been built in the park.",
+      "Bog'da yodgorlik qurilgan.",
+      "məˈmɔriəl"
+     ],
+     [
+      "obituary",
+      "ta'ziyanoma (gazetada)",
+      "The obituary was in today's paper.",
+      "Ta'ziyanoma bugungi gazetada chiqdi.",
+      "oʊˈbɪʧuˌɛri"
+     ],
+     [
+      "inherit",
+      "meros olmoq",
+      "She has inherited her father's house.",
+      "U otasining uyini meros oldi.",
+      "ˌɪnˈhɛrət"
+     ],
+     [
+      "inheritance",
+      "meros",
+      "The inheritance was divided equally.",
+      "Meros teng bo'lindi.",
+      "ˌɪnˈhɛrətəns"
+     ],
+     [
+      "will",
+      "vasiyatnoma",
+      "He has already written his will.",
+      "U allaqachon vasiyatnomasini yozgan.",
+      "wɪl"
+     ],
+     [
+      "cause of death",
+      "o'lim sababi",
+      "The cause of death was a heart attack.",
+      "O'lim sababi — yurak xuruji.",
+      "kɔz əv dɛθ"
+     ],
+     [
+      "heart attack",
+      "yurak xuruji",
+      "He has just had a heart attack.",
+      "U hozirgina yurak xuruji o'tkazdi.",
+      "hɑrt əˈtæk"
+     ],
+     [
+      "illness",
+      "kasallik",
+      "After a long illness, she passed away.",
+      "Uzoq kasallikdan so'ng u olamdan o'tdi.",
+      "ˈɪlnəs"
+     ],
+     [
+      "accident",
+      "baxtsiz hodisa",
+      "He died in a car accident.",
+      "U avtohalokatda halok bo'ldi.",
+      "ˈæksədənt"
+     ],
+     [
+      "survive",
+      "omon qolmoq; kimdandir keyin yashamoq",
+      "She survived her husband by ten years.",
+      "U eridan keyin o'n yil yashadi.",
+      "sərˈvaɪv"
+     ],
+     [
+      "survivor",
+      "omon qolgan",
+      "The survivors have been taken to hospital.",
+      "Omon qolganlar kasalxonaga olib borildi.",
+      "sərˈvaɪvər"
+     ],
+     [
+      "bereavement",
+      "og'ir judolik",
+      "He took bereavement leave.",
+      "U judolik ta'tilini oldi.",
+      "bərˈivmənt"
+     ],
+     [
+      "bereaved",
+      "judo bo'lgan",
+      "We support bereaved families.",
+      "Biz judo bo'lgan oilalarni qo'llab-quvvatlaymiz.",
+      "bərˈivd"
+     ],
+     [
+      "wreath",
+      "gulchambar",
+      "They laid a wreath on the grave.",
+      "Ular qabrga gulchambar qo'yishdi.",
+      "riθ"
+     ],
+     [
+      "eulogy",
+      "marhum haqida nutq",
+      "His son gave the eulogy.",
+      "O'g'li marhum haqida nutq so'zladi.",
+      "ˈjuləʤi"
+     ],
+     [
+      "commemorate",
+      "xotirlamoq",
+      "We commemorate him every year.",
+      "Biz uni har yili xotirlaymiz.",
+      "kəˈmɛmərˌeɪt"
+     ]
+    ],
+    "super": [
+     [
+      "demise",
+      "vafot (rasmiy)",
+      "The company announced the demise of its founder.",
+      "Kompaniya asoschisining vafotini e'lon qildi.",
+      "dɪˈmaɪz"
+     ],
+     [
+      "fatality",
+      "halokat (o'lim bilan)",
+      "There were no fatalities in the crash.",
+      "Halokatda o'lim bo'lmadi.",
+      "fəˈtælɪti"
+     ],
+     [
+      "fatal",
+      "o'limga olib keluvchi",
+      "The injury was fatal.",
+      "Jarohat o'limga olib keldi.",
+      "ˈfeɪtəl"
+     ],
+     [
+      "cremation",
+      "murdani kuydirish marosimi",
+      "Cremation is common in India.",
+      "Hindistonda kuydirish marosimi keng tarqalgan.",
+      "kriˈmeɪʃən"
+     ],
+     [
+      "autopsy",
+      "murdani tekshiruv",
+      "The autopsy has not been done yet.",
+      "Tekshiruv hali o'tkazilmadi.",
+      "ˈɔˌtɑpsi"
+     ],
+     [
+      "life expectancy",
+      "o'rtacha umr ko'rish",
+      "Life expectancy has risen to 75.",
+      "O'rtacha umr 75 ga ko'tarildi.",
+      "laɪf ɪkˈspɛktənsi"
+     ],
+     [
+      "terminal illness",
+      "davolab bo'lmas kasallik",
+      "She has a terminal illness.",
+      "Unda davolab bo'lmas kasallik bor.",
+      "ˈtərmənəl ˈɪlnəs"
+     ],
+     [
+      "hospice",
+      "og'ir bemorlar uchun shifoxona",
+      "He spent his last weeks in a hospice.",
+      "U so'nggi haftalarini hospisda o'tkazdi.",
+      "ˈhɑspəs"
+     ],
+     [
+      "afterlife",
+      "narigi dunyo",
+      "Many people believe in the afterlife.",
+      "Ko'pchilik narigi dunyoga ishonadi.",
+      "ˈæftərˌlaɪf"
+     ],
+     [
+      "pray for",
+      "uchun duo qilmoq",
+      "We have prayed for him.",
+      "Biz unga duo qildik.",
+      "preɪ fər"
+     ],
+     [
+      "tragedy",
+      "fojia",
+      "The fire was a terrible tragedy.",
+      "Yong'in dahshatli fojia bo'ldi.",
+      "ˈtræʤədi"
+     ],
+     [
+      "tragic",
+      "fojiali",
+      "It was a tragic accident.",
+      "Bu fojiali hodisa edi.",
+      "ˈtræʤɪk"
+     ],
+     [
+      "comfort (v)",
+      "tasalli bermoq",
+      "Friends have comforted the family.",
+      "Do'stlar oilaga tasalli berishdi.",
+      "ˈkəmfərt (vi)"
+     ],
+     [
+      "sympathy",
+      "hamdardlik",
+      "He sent a sympathy card.",
+      "U hamdardlik kartochkasini jo'natdi.",
+      "ˈsɪmpəθi"
+     ],
+     [
+      "legacy",
+      "qoldirgan meros (ma'naviy)",
+      "His legacy still lives on.",
+      "Uning merosi hali ham yashaydi.",
+      "ˈlɛgəsi"
+     ],
+     [
+      "ancestor",
+      "ajdod",
+      "Our ancestors are buried here.",
+      "Ajdodlarimiz shu yerga dafn etilgan.",
+      "ˈænˌsɛstər"
+     ],
+     [
+      "mortal",
+      "o'ladigan, foniy",
+      "All humans are mortal.",
+      "Barcha insonlar foniy.",
+      "ˈmɔrtəl"
+     ],
+     [
+      "immortal",
+      "abadiy, o'lmas",
+      "His poems are immortal.",
+      "Uning she'rlari o'lmas.",
+      "ˌɪˈmɔrtəl"
+     ],
+     [
+      "lifetime",
+      "umr",
+      "She has helped many people in her lifetime.",
+      "U umri davomida ko'plarga yordam bergan.",
+      "ˈlaɪfˌtaɪm"
+     ],
+     [
+      "farewell",
+      "vidolashuv",
+      "They said their last farewell.",
+      "Ular so'nggi vidolashuvni aytishdi.",
+      "ˌfɛrˈwɛl"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "ALREADY bilan javob",
+     "type": "write",
+     "instr": "Namunaga qarab (kitob C): \"Bring the milk in.\" → \"I have already brought it in.\"",
+     "items": [
+      "Turn the radio down, please.",
+      "Tidy your room.",
+      "Could you post the letters, please?",
+      "Why don't you see a doctor?",
+      "Why don't you clean your shoes?",
+      "We should invite Mary to the party."
+     ],
+     "answers": [
+      "I have already turned it down.",
+      "I have already tidied it.",
+      "I have already posted them.",
+      "I have already seen a doctor.",
+      "I have already cleaned them.",
+      "I have already invited her."
+     ]
+    },
+    {
+     "title": "YET bilan davom ettiring",
+     "type": "write",
+     "instr": "Namunaga qarab (kitob D): \"…but she hasn't bought anything yet.\"",
+     "items": [
+      "I've written to them three times. (not reply)",
+      "I lent him $10 last month. (not give it back)",
+      "He lost his pen a week ago. (not find it)",
+      "She went to New York six months ago. (not return)",
+      "She went to the bus-stop half an hour ago. (the bus / not come)"
+     ],
+     "answers": [
+      "…but they haven't replied yet.",
+      "…but he hasn't given it back yet.",
+      "…but he hasn't found it yet.",
+      "…but she hasn't returned yet.",
+      "…but the bus hasn't come yet."
+     ]
+    },
+    {
+     "title": "To'g'ri so'zni qo'ying",
+     "type": "gap",
+     "instr": "yet / still / already / just",
+     "items": [
+      "Have you finished ___?",
+      "I've ___ eaten, I'm not hungry.",
+      "She ___ hasn't answered my message.",
+      "They have ___ left — the room is empty.",
+      "He hasn't called ___.",
+      "We've ___ heard the sad news.",
+      "I ___ haven't decided.",
+      "Don't tell me — I've ___ seen the film."
+     ],
+     "answers": [
+      "yet",
+      "just",
+      "still",
+      "already",
+      "yet",
+      "just",
+      "still",
+      "already"
+     ]
+    },
+    {
+     "title": "So'z tartibi",
+     "type": "order",
+     "instr": "So'zlarni to'g'ri tartibda yozing",
+     "items": [
+      "finished / haven't / yet / I",
+      "has / she / just / arrived",
+      "already / they / have / eaten",
+      "still / hasn't / he / replied",
+      "yet / the / has / started / film ?"
+     ],
+     "answers": [
+      "I haven't finished yet.",
+      "She has just arrived.",
+      "They have already eaten.",
+      "He still hasn't replied.",
+      "Has the film started yet?"
+     ]
+    },
+    {
+     "title": "Ta'ziya bildirish",
+     "type": "speaking",
+     "instr": "Juftlikda mini-dialog: biri xabar beradi, ikkinchisi hurmat bilan javob beradi (3 ibora)",
+     "items": [
+      "news",
+      "reply 1",
+      "reply 2",
+      "reply 3"
+     ],
+     "answers": [
+      "My grandfather passed away last night.",
+      "I'm so sorry for your loss.",
+      "Please accept my condolences. / My condolences to your family.",
+      "May he rest in peace. Is there anything I can do?"
+     ],
+     "note": "Ohang jiddiy; ustoz \"die\" o'rniga \"pass away\" yumshoq shaklini ko'rsatadi."
+    },
+    {
+     "title": "Lug'at: ta'rif",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a ceremony after someone dies",
+      "the place where people are buried",
+      "a woman whose husband has died",
+      "words you say to a family after a death",
+      "the box the body is put in",
+      "a polite way to say \"die\""
+     ],
+     "answers": [
+      "funeral",
+      "cemetery",
+      "widow",
+      "condolences",
+      "coffin",
+      "pass away"
+     ],
+     "box": [
+      "funeral",
+      "cemetery",
+      "widow",
+      "condolences",
+      "coffin",
+      "pass away"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 4: C (already) va D (yet) to'liq; jadvalni 3 marta yozing",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Mening kunim",
+     "type": "write",
+     "instr": "10 gap: already (3), just (3), yet (2), still (2) — bugun qilgan/qilmagan ishlar",
+     "answers": "Erkin; so'z o'rni tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men hali ovqatlanganim yo'q.",
+      "U hozirgina ketdi.",
+      "Ular allaqachon chipta sotib olishgan.",
+      "Sen haligacha unga xat yozmading.",
+      "Uning bobosi o'tgan yili olamdan o'tgan."
+     ],
+     "answers": [
+      "I haven't eaten yet.",
+      "She/He has just left.",
+      "They have already bought the tickets.",
+      "You still haven't written to him/her.",
+      "His/Her grandfather passed away last year."
+     ]
+    },
+    {
+     "title": "Ta'ziya xati",
+     "type": "write",
+     "instr": "Do'stingizga 4 gapli ta'ziya xabari (sorry for your loss, condolences, rest in peace, anything I can do)",
+     "answers": "Erkin; hurmatli ohang."
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CORE 20 (death) — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Marriage",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 1 / 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Death og'zaki",
+     "20 so'z tarjimasiga qarab inglizchasi, 3 daqiqa (kitob normativi)",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

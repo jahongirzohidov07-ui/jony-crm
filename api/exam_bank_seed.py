@@ -2311,6 +2311,115 @@ I don’t like (30) ………… in big hotels, because I think they’re boring
     ],
 }
 
+
+STEP2_UNIT8 = {
+    "level": "step2", "kind": "unit", "unit_no": 8,
+    "title": "Step 2 · Unit 8 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["You’re welcome.", "That’s all right.", "Come and sit down."], "C"),
+                _c("", ["Poor you.", "Excuse me.", "I’m sorry I can’t."], "A"),
+                _c("", ["Oh, you poor thing.", "Yes, I feel a bit sick actually.", "What’s the matter?"], "B"),
+                _c("", ["I’ve got toothache.", "I’m not surprised.", "I’m really sorry."], "A"),
+                _c("", ["Oh, dear.", "Oh, yes.", "Oh, well."], "A"),
+                _c("", ["What’s the matter?", "Can I sit down?", "I’ve got a temperature."], "A"),
+                _c("", ["Yes, my back hurts.", "No, I’ve got a really bad cold.", "Oh, you don’t look well."], "B"),
+                _c("", ["It doesn’t matter.", "I’m not sure.", "You don’t look well."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Health, fitness and appearance",
+            "instructions": "Read the sentences about health, fitness and "
+                            "appearance. Choose the missing word (A, B or C) "
+                            "for each space.",
+            "questions": [
+                _c("Harry and Joe often ............ sailing together because they both "
+                   "love being on the sea.", ["go", "play", "have"], "A"),
+                _c("Do you want to ............ badminton with us tomorrow?",
+                   ["go", "play", "make"], "B"),
+                _c("Tom ate his dinner too quickly, and now his ............ hurts.",
+                   ["back", "neck", "stomach"], "C"),
+                _c("Did you hurt your ............ when you did that last yoga exercise?",
+                   ["position", "neck", "floor"], "B"),
+                _c("Jenny was ill and now she looks quite ............ .",
+                   ["thin", "straight", "long"], "A"),
+                _c("There’s lots of ice on the river this winter, so we can ............ on it.",
+                   ["swim", "skate", "ski"], "B"),
+                _c("My brother and I both have dark hair, but my sister’s hair is ............ .",
+                   ["fair", "brown", "black"], "A"),
+                _c("My grandma ............ exercises to keep fit.", ["does", "makes", "plays"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Sport, health and the body",
+            "instructions": "Read the descriptions of some words about sport, "
+                            "health and the body. The first letter is already "
+                            "there. Write the whole word.",
+            "questions": [
+                _t("You have five of these on each hand.   f _ _ _ _ _ _", "fingers", "ingers"),
+                _t("You hit a small white ball across grass in this game.   g _ _ _",
+                   "golf", "olf"),
+                _t("You are this if you do a lot of sport and exercise.   f _ _", "fit", "it"),
+                _t("You do this sport on mountains in winter.   s _ _ _ _ _ _ _ _ _ _ _",
+                   "snowboarding", "nowboarding"),
+                _t("You have five of these on each foot.   t _ _ _", "toes", "oes"),
+                _t("You play this ball game in teams on grass.   r _ _ _ _", "rugby", "ugby"),
+                _t("In which sport can you also catch some healthy food?   f _ _ _ _ _ _",
+                   "fishing", "ishing"),
+                _t("This is another word for pretty.   a _ _ _ _ _ _ _ _ _",
+                   "attractive", "ttractive"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about a British athlete called Mo "
+                            "Farah. Choose the best answer (A, B or C) for each "
+                            "space.",
+            "passage": """Mo Farah
+
+Mo Farah was born in Somalia in East Africa. When he was eight, he moved to London. Life in Britain was hard for Mo because he could only speak a few words of English. He (25) ………… read any English or understand what people said. He (26) ………… to work very hard at school, because the lessons were difficult for him. The only thing that Mo (27) ………… do well was play football, because he could (28) ………… fast. He was good at sports, so he (29) ………… to work hard in sports lessons. Mo became a top runner, and he went to a special sports college where he had to practise very hard. Then in the 2012 Olympics he won gold twice – in the 5,000 and 10,000 metres.
+Today life is good for Mo. He (30) ………… speak perfect English and he’s a famous sportsman. He has a lot of money, so he doesn’t (31) ………… to do any work if he doesn’t want to. But he still (32) ………… to go running every day. Why? Because he wants to win gold again!""",
+            "questions": [
+                _c("", ["couldn’t", "could", "can’t"], "A"),
+                _c("", ["has", "had", "have"], "B"),
+                _c("", ["could", "can’t", "can"], "A"),
+                _c("", ["run", "ran", "running"], "A"),
+                _c("", ["don’t have", "didn’t have", "had not"], "B"),
+                _c("", ["could", "can", "couldn’t"], "B"),
+                _c("", ["have", "has", "had"], "A"),
+                _c("", ["hasn’t", "have", "has"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about sport and exercise. "
+                            "Choose the best answer (A, B or C) for each space.",
+            "questions": [
+                _c("............ to wear special shoes to play hockey?",
+                   ["You have", "Do you have", "Have you"], "B"),
+                _c("To run a marathon, you ............ to be very fit.", ["has", "haven’t", "have"], "C"),
+                _c("‘Do you have to play rugby at school?’ ‘No, we ............ .’",
+                   ["didn’t", "do", "don’t"], "C"),
+                _c("I want to join the beginners’ class because I ............ dance very well.",
+                   ["couldn’t", "could", "can’t"], "C"),
+                _c("Bill cycles to work, so he ............ have to spend hours in the gym "
+                   "every day.", ["can’t", "doesn’t", "hasn’t"], "B"),
+                _c("I ............ play volleyball last week because my back hurt.",
+                   ["can’t", "could", "couldn’t"], "C"),
+                _c("............ ski when you were a child?", ["Can you", "Could you", "You could"], "B"),
+                _c("I ............ only swim a few metres when I started school.",
+                   ["could", "can", "couldn’t"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2333,4 +2442,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit5", STEP2_UNIT5),
     ("exam_tpl_step2_unit6", STEP2_UNIT6),
     ("exam_tpl_step2_unit7", STEP2_UNIT7),
+    ("exam_tpl_step2_unit8", STEP2_UNIT8),
 ]

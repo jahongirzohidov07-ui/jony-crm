@@ -19971,6 +19971,2829 @@
      }
     ]
    }
+  },
+  {
+   "no": 23,
+   "title": "Passive Voice (Perfect)",
+   "grammar_topic": "MAJHUL NISBAT — PRESENT / PAST / FUTURE PERFECT PASSIVE (have been + V3)",
+   "vocab_topic": "On the road (yo'lda)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 23 – Passive voice perfect (jadval); ON THE ROAD WORDS (50); Reading — Baxodir Jalolov (Jony Academy matni); Audio 71–80.",
+   "objectives": [
+    "Present Perfect Passive (natija hozir), Past Perfect Passive (o'tgan nuqtagacha), Future Perfect Passive (kelajak nuqtagacha) ni tuzish.",
+    "Passive oilasini bitta jadvalda ko'rish: is built / is being built / has been built / had been built / will have been built.",
+    "\"just / already / yet / by\" bilan perfect passive.",
+    "Yo'l CORE 20 bilan yo'l hodisalari va sayohat haqida gapirish (has been closed, had been repaired)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "On the road (yo'lda) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Has the homework been checked? — Yes, it has been checked.\" Doskaga: has been + V3. \"By last Friday it had been checked.\" \"By tomorrow it will have been checked.\""
+    ],
+    [
+     8,
+     "Kahoot — Passive voice continuous",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Passive voice continuous lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Present Perfect Passive — S + have/has + been + V3 (Schools have been built); Past Perfect Passive — S + had + been + V3 (The hospital had been built by 2020); Future Perfect Passive — S + will have + been + V3 (The hotel will have been built by 2050). Uch passive oilasi jadvali: simple / continuous / perfect."
+    ],
+    [
+     12,
+     "On the road (yo'lda) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Present Perfect Passive — ish bajarilgan, natija hozir: \"The road has been closed\" (yo'l yopilgan — hozir yopiq).",
+     "Past Perfect Passive — o'tgan nuqtagacha bajarilgan edi: \"By 2020 the bridge had been built.\"",
+     "Future Perfect Passive — kelajak nuqtagacha bajarilgan bo'ladi: \"By 2050 the hotel will have been built.\"",
+     "Formula: have/has/had/will have + been + V3. \"been\" o'zgarmaydi."
+    ],
+    "formulas": [
+     [
+      "Present Perfect Passive",
+      "S + have/has + been + V3",
+      "Schools have been built.",
+      "Maktablar qurilgan (qurib bo'lingan)."
+     ],
+     [
+      "Past Perfect Passive",
+      "S + had + been + V3",
+      "The hospital had been built by 2020.",
+      "Kasalxona 2020-yilgacha qurib bo'lingan edi."
+     ],
+     [
+      "Future Perfect Passive",
+      "S + will have + been + V3",
+      "The hotel will have been built by 2050.",
+      "Mehmonxona 2050-yilgacha qurib bo'linadi."
+     ],
+     [
+      "Inkor",
+      "S + haven't/hasn't/hadn't/won't have + been + V3",
+      "The road hasn't been repaired yet.",
+      "Yo'l hali ta'mirlanmagan."
+     ],
+     [
+      "Savol",
+      "Have/Has/Had/Will + S + (have) been + V3?",
+      "Has the car been fixed?",
+      "Mashina tuzatildimi?"
+     ],
+     [
+      "Passive oilasi",
+      "is built / is being built / has been built",
+      "The bridge is built. / is being built. / has been built.",
+      "Ko'prik quriladi. / qurilyapti. / qurib bo'lingan."
+     ]
+    ],
+    "presentation": [
+     [
+      "Has the road been repaired yet?",
+      "Yes, it has just been repaired."
+     ],
+     [
+      "Had the bridge been built before you moved here?",
+      "Yes, it had been built by 2015."
+     ],
+     [
+      "Will the motorway have been finished by next year?",
+      "Yes, it will have been finished by summer."
+     ],
+     [
+      "Has your car ever been stolen?",
+      "No, it has never been stolen."
+     ],
+     [
+      "Have the road signs been changed?",
+      "Yes, new signs have been put up."
+     ],
+     [
+      "Had the tyre been checked before the trip?",
+      "No, it hadn't been checked — that's why it went flat."
+     ],
+     [
+      "Has the driver been fined?",
+      "Yes, he has been fined for speeding."
+     ],
+     [
+      "Has Jalolov been beaten in his professional career?",
+      "No, he has never been beaten."
+     ],
+     [
+      "Will all the tickets have been sold by Friday?",
+      "Yes, they will have been sold by then."
+     ],
+     [
+      "Had the accident been reported when the police came?",
+      "Yes, it had already been reported."
+     ]
+    ],
+    "notes": [
+     "already / just / yet / ever / never — have va been orasida: \"has already been done\", \"has never been beaten\".",
+     "by + vaqt → Past Perfect / Future Perfect Passive.",
+     "Modal + perfect passive: \"should have been checked\" (tekshirilishi kerak edi).",
+     "Yo'l so'zlari: traffic jam (tirbandlik), rush hour (tig'iz vaqt), breakdown (buzilish), detour (aylanma yo'l)."
+    ],
+    "mistakes": [
+     [
+      "The road has been repair.",
+      "The road has been repaired.",
+      "V3."
+     ],
+     [
+      "The road has repaired.",
+      "The road has been repaired.",
+      "been kerak."
+     ],
+     [
+      "The bridge had built by 2020.",
+      "The bridge had been built by 2020.",
+      "had been + V3."
+     ],
+     [
+      "The hotel will has been built.",
+      "The hotel will have been built.",
+      "will have been."
+     ],
+     [
+      "Has the car fixed?",
+      "Has the car been fixed?",
+      "Passive savol."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — yo'l va haydash asosiy so'zlari; STRONG — tirbandlik va hodisalar; SUPER — magistral va texnik so'zlar.",
+     "Har so'zga perfect passive gap: \"The road has been closed.\" / \"The car had been repaired before the trip.\""
+    ],
+    "core": [
+     [
+      "road",
+      "yo'l",
+      "The road has been closed for repairs.",
+      "Yo'l ta'mir uchun yopilgan.",
+      "roʊd"
+     ],
+     [
+      "highway / motorway",
+      "katta yo'l, magistral",
+      "The new highway has been opened.",
+      "Yangi magistral ochilgan.",
+      ""
+     ],
+     [
+      "traffic",
+      "yo'l harakati, transport oqimi",
+      "Traffic has been stopped by the police.",
+      "Yo'l harakati politsiya tomonidan to'xtatilgan.",
+      "ˈtræfɪk"
+     ],
+     [
+      "traffic jam",
+      "tirbandlik",
+      "We've been stuck in a traffic jam for an hour.",
+      "Bir soatdan beri tirbandlikda qolib ketganmiz.",
+      "ˈtræfɪk ʤæm"
+     ],
+     [
+      "rush hour",
+      "tig'iz vaqt",
+      "Roads are always full during rush hour.",
+      "Tig'iz vaqtda yo'llar doim to'la.",
+      "rəʃ aʊər"
+     ],
+     [
+      "lane",
+      "yo'l qatori, polosa",
+      "A new lane has been added.",
+      "Yangi qator qo'shilgan.",
+      "leɪn"
+     ],
+     [
+      "speed limit (road)",
+      "tezlik chegarasi",
+      "The speed limit has been lowered to 60.",
+      "Tezlik chegarasi 60 ga tushirilgan.",
+      "spid ˈlɪmət (roʊd)"
+     ],
+     [
+      "road sign",
+      "yo'l belgisi",
+      "New road signs have been put up.",
+      "Yangi yo'l belgilari o'rnatilgan.",
+      "roʊd saɪn"
+     ],
+     [
+      "pedestrian crossing",
+      "piyodalar o'tish joyi",
+      "A pedestrian crossing has been painted here.",
+      "Bu yerga piyodalar o'tish joyi chizilgan.",
+      "pəˈdɛstriən ˈkrɔsɪŋ"
+     ],
+     [
+      "petrol / gas station",
+      "yoqilg'i quyish shoxobchasi",
+      "The petrol station had been closed by 10.",
+      "Shoxobcha 10 gacha yopilgan edi.",
+      "ˈpɛtroʊl  gæs ˈsteɪʃən"
+     ],
+     [
+      "fill up",
+      "yoqilg'i quymoq (to'ldirmoq)",
+      "The tank has been filled up.",
+      "Bak to'ldirilgan.",
+      "fɪl əp"
+     ],
+     [
+      "run out of petrol",
+      "benzin tugab qolmoq",
+      "We ran out of petrol on the highway.",
+      "Magistralda benzinimiz tugab qoldi.",
+      "rən aʊt əv ˈpɛtroʊl"
+     ],
+     [
+      "brake",
+      "tormoz; tormoz bermoq",
+      "The brakes have been checked.",
+      "Tormozlar tekshirilgan.",
+      "breɪk"
+     ],
+     [
+      "flat tyre",
+      "teshilgan g'ildirak",
+      "The flat tyre had been changed before we left.",
+      "Ketishimizdan oldin teshilgan g'ildirak almashtirilgan edi.",
+      "flæt taɪər"
+     ],
+     [
+      "breakdown",
+      "(mashina) buzilib qolishi",
+      "The breakdown has been reported to the service.",
+      "Buzilish xizmatga xabar qilingan.",
+      "ˈbreɪkˌdaʊn"
+     ],
+     [
+      "accident (road)",
+      "avtohalokat",
+      "The accident has been caused by ice.",
+      "Halokatga muz sabab bo'lgan.",
+      "ˈæksədənt (roʊd)"
+     ],
+     [
+      "overtake",
+      "quvib o'tmoq",
+      "Overtaking has been banned on this road.",
+      "Bu yo'lda quvib o'tish taqiqlangan.",
+      "ˈoʊvərˌteɪk"
+     ],
+     [
+      "pull over",
+      "yo'l chetiga to'xtamoq",
+      "The driver has been asked to pull over.",
+      "Haydovchidan chetga to'xtash so'ralgan.",
+      "pʊl ˈoʊvər"
+     ],
+     [
+      "map / navigation",
+      "xarita / navigatsiya",
+      "The route has been planned with navigation.",
+      "Yo'nalish navigatsiya bilan rejalashtirilgan.",
+      "mæp  ˌnævəˈgeɪʃən"
+     ],
+     [
+      "detour",
+      "aylanma yo'l",
+      "A detour has been set up because of the works.",
+      "Ishlar tufayli aylanma yo'l qo'yilgan.",
+      "ˈditʊr"
+     ]
+    ],
+    "strong": [
+     [
+      "road trip",
+      "mashinada sayohat",
+      "Our road trip has been planned for months.",
+      "Mashinada sayohatimiz oylab rejalashtirilgan.",
+      "roʊd trɪp"
+     ],
+     [
+      "toll road",
+      "pullik yo'l",
+      "The toll road has been opened this year.",
+      "Pullik yo'l bu yil ochilgan.",
+      "toʊl roʊd"
+     ],
+     [
+      "service station",
+      "yo'l bo'yi xizmat shoxobchasi",
+      "The car had been repaired at the service station.",
+      "Mashina xizmat shoxobchasida tuzatilgan edi.",
+      "ˈsərvɪs ˈsteɪʃən"
+     ],
+     [
+      "pick up",
+      "olib ketmoq (mashinada)",
+      "The passengers have been picked up.",
+      "Yo'lovchilar olib ketilgan.",
+      "pɪk əp"
+     ],
+     [
+      "drop off (road)",
+      "tashlab qo'ymoq",
+      "She has been dropped off at the station.",
+      "U bekatda tashlab qo'yilgan.",
+      "drɔp ɔf (roʊd)"
+     ],
+     [
+      "set off (road)",
+      "yo'lga chiqmoq",
+      "We set off at dawn.",
+      "Biz tong saharda yo'lga chiqdik.",
+      "sɛt ɔf (roʊd)"
+     ],
+     [
+      "car rental",
+      "mashina ijarasi",
+      "The car has been rented for a week.",
+      "Mashina bir haftaga ijaraga olingan.",
+      "kɑr ˈrɛntəl"
+     ],
+     [
+      "honk",
+      "signal bermoq",
+      "Honking has been banned near hospitals.",
+      "Kasalxonalar yonida signal berish taqiqlangan.",
+      "hɔŋk"
+     ],
+     [
+      "trailer",
+      "tirkama",
+      "A trailer had been attached to the truck.",
+      "Yuk mashinasiga tirkama ulangan edi.",
+      "ˈtreɪlər"
+     ],
+     [
+      "hitchhiking",
+      "avtostop",
+      "Hitchhiking has been popular for years.",
+      "Avtostop yillar davomida mashhur bo'lib kelgan.",
+      "ˈhɪˌʧhaɪkɪŋ"
+     ],
+     [
+      "congestion",
+      "tirbandlik (jiddiy)",
+      "Congestion has been reduced by the new bridge.",
+      "Yangi ko'prik tirbandlikni kamaytirgan.",
+      "kənˈʤɛsʧən"
+     ],
+     [
+      "heavy traffic",
+      "og'ir tirbandlik",
+      "Heavy traffic has been reported downtown.",
+      "Markazda og'ir tirbandlik xabar qilingan.",
+      "ˈhɛvi ˈtræfɪk"
+     ],
+     [
+      "get stuck in traffic",
+      "tirbandlikda qolib ketmoq",
+      "We got stuck in traffic for two hours.",
+      "Ikki soat tirbandlikda qolib ketdik.",
+      "gɪt stək ɪn ˈtræfɪk"
+     ],
+     [
+      "bridge (road)",
+      "ko'prik",
+      "The bridge had been repaired before winter.",
+      "Ko'prik qishdan oldin ta'mirlangan edi.",
+      "brɪʤ (roʊd)"
+     ],
+     [
+      "tunnel",
+      "tunnel",
+      "The tunnel will have been finished by 2027.",
+      "Tunnel 2027-gacha qurib bitkaziladi.",
+      "ˈtənəl"
+     ],
+     [
+      "exit (road)",
+      "chiqish (yo'ldan)",
+      "The exit has been closed.",
+      "Chiqish yopilgan.",
+      "ˈɛksət (roʊd)"
+     ],
+     [
+      "merge",
+      "qo'shilmoq (yo'lga)",
+      "Cars merge here — be careful.",
+      "Mashinalar shu yerda qo'shiladi — ehtiyot bo'l.",
+      "mərʤ"
+     ],
+     [
+      "run over",
+      "urib ketmoq (odam/hayvon)",
+      "A dog has been run over.",
+      "Itni mashina urib ketgan.",
+      "rən ˈoʊvər"
+     ],
+     [
+      "departure",
+      "jo'nash",
+      "Departure has been delayed.",
+      "Jo'nash kechiktirilgan.",
+      "dɪˈpɑrʧər"
+     ],
+     [
+      "arrival",
+      "yetib kelish",
+      "Arrival time has been changed.",
+      "Yetib kelish vaqti o'zgartirilgan.",
+      "ərˈaɪvəl"
+     ]
+    ],
+    "super": [
+     [
+      "freeway / expressway",
+      "tezyurar magistral",
+      "The expressway has been extended to Samarkand.",
+      "Tezyurar magistral Samarqandgacha uzaytirilgan.",
+      "ˈfriˌweɪ  ɪkˈsprɛsˌweɪ"
+     ],
+     [
+      "entrance ramp",
+      "kirish yo'lagi (magistralga)",
+      "The entrance ramp had been closed for repairs.",
+      "Kirish yo'lagi ta'mir uchun yopilgan edi.",
+      "ˈɛntrəns ræmp"
+     ],
+     [
+      "camper van",
+      "sayohat furgoni",
+      "The camper van has been parked by the lake.",
+      "Furgon ko'l bo'yiga qo'yilgan.",
+      "ˈkæmpər væn"
+     ],
+     [
+      "emergency services",
+      "favqulodda xizmatlar",
+      "Emergency services have been called.",
+      "Favqulodda xizmatlar chaqirilgan.",
+      "ˈimərʤənsi ˈsərvɪsɪz"
+     ],
+     [
+      "depart",
+      "jo'nab ketmoq",
+      "The bus departs at 8.",
+      "Avtobus 8 da jo'naydi.",
+      "dɪˈpɑrt"
+     ],
+     [
+      "seatbelt",
+      "xavfsizlik kamari",
+      "Seatbelts have been made compulsory.",
+      "Kamar taqish majburiy qilingan.",
+      "ˈsitˌbɛlt"
+     ],
+     [
+      "driving licence",
+      "haydovchilik guvohnomasi",
+      "His licence has been taken away.",
+      "Uning guvohnomasi olib qo'yilgan.",
+      "ˈdraɪvɪŋ ˈlaɪsəns"
+     ],
+     [
+      "roundabout",
+      "aylanma (yo'l)",
+      "A roundabout has been built at the crossroads.",
+      "Chorrahada aylanma qurilgan.",
+      "ˈraʊndəˌbaʊt"
+     ],
+     [
+      "crossroads / intersection",
+      "chorraha",
+      "The intersection had been blocked by a truck.",
+      "Chorraha yuk mashinasi tomonidan to'silgan edi.",
+      "ˈkrɔsˌroʊdz  ˌɪntərˈsɛkʃən"
+     ],
+     [
+      "traffic lights",
+      "svetofor",
+      "The traffic lights have been fixed.",
+      "Svetofor tuzatilgan.",
+      "ˈtræfɪk laɪts"
+     ],
+     [
+      "parking",
+      "to'xtash joyi",
+      "Parking has been banned here.",
+      "Bu yerda to'xtash taqiqlangan.",
+      "ˈpɑrkɪŋ"
+     ],
+     [
+      "speeding",
+      "tezlikni oshirish",
+      "He has been fined for speeding.",
+      "U tezlikni oshirgani uchun jarimaga tortilgan.",
+      "ˈspidɪŋ"
+     ],
+     [
+      "drunk driving",
+      "mast holda haydash",
+      "Drunk driving has been punished strictly.",
+      "Mast holda haydash qattiq jazolangan.",
+      "drəŋk ˈdraɪvɪŋ"
+     ],
+     [
+      "tow away",
+      "evakuator bilan olib ketmoq",
+      "The car had been towed away by the time we returned.",
+      "Qaytganimizda mashina evakuator bilan olib ketilgan edi.",
+      "toʊ əˈweɪ"
+     ],
+     [
+      "windscreen",
+      "old oyna",
+      "The windscreen has been cracked by a stone.",
+      "Old oyna toshdan darz ketgan.",
+      ""
+     ],
+     [
+      "engine",
+      "dvigatel",
+      "The engine had been checked before the race.",
+      "Poygadan oldin dvigatel tekshirilgan edi.",
+      "ˈɪnʤən"
+     ],
+     [
+      "fuel",
+      "yoqilg'i",
+      "Fuel prices have been raised.",
+      "Yoqilg'i narxi oshirilgan.",
+      "fjuəl"
+     ],
+     [
+      "mileage",
+      "bosib o'tilgan masofa",
+      "The mileage has been recorded.",
+      "Bosib o'tilgan masofa yozib qo'yilgan.",
+      "ˈmaɪlɪʤ"
+     ],
+     [
+      "roadworks",
+      "yo'l ishlari",
+      "Roadworks have been going on for a month.",
+      "Yo'l ishlari bir oydan beri davom etyapti.",
+      ""
+     ],
+     [
+      "sat nav / GPS",
+      "navigator",
+      "The sat nav has been updated.",
+      "Navigator yangilangan.",
+      "sæt næv  ˈgipiˈɛs"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Perfect passive",
+     "type": "gap",
+     "instr": "Qavsdagi fe'l bilan (present / past / future perfect passive)",
+     "items": [
+      "The road ___ (close) — we can't drive there.",
+      "By 2020 the bridge ___ (build).",
+      "By next year the tunnel ___ (finish).",
+      "The driver ___ (fine) twice this month.",
+      "The tyre ___ (not / check) before the trip.",
+      "___ the accident ___ (report) yet?",
+      "All the tickets ___ (sell) by Friday.",
+      "New signs ___ (put up) this week."
+     ],
+     "answers": [
+      "has been closed",
+      "had been built",
+      "will have been finished",
+      "has been fined",
+      "hadn't been checked",
+      "Has … been reported",
+      "will have been sold",
+      "have been put up"
+     ]
+    },
+    {
+     "title": "Passive oilasi",
+     "type": "table",
+     "instr": "Bitta gapni 5 shaklda yozing: \"build / the bridge\"",
+     "items": [
+      "Present Simple Passive",
+      "Present Continuous Passive",
+      "Present Perfect Passive",
+      "Past Perfect Passive",
+      "Future Perfect Passive"
+     ],
+     "answers": [
+      "The bridge is built.",
+      "The bridge is being built.",
+      "The bridge has been built.",
+      "The bridge had been built.",
+      "The bridge will have been built."
+     ]
+    },
+    {
+     "title": "Active → Passive",
+     "type": "rewrite",
+     "instr": "Perfect zamonlarda",
+     "items": [
+      "They have repaired the road.",
+      "Someone had stolen the car before the police came.",
+      "They will have finished the motorway by 2027.",
+      "Nobody has beaten Jalolov as a professional.",
+      "They had changed the tyre by noon."
+     ],
+     "answers": [
+      "The road has been repaired.",
+      "The car had been stolen before the police came.",
+      "The motorway will have been finished by 2027.",
+      "Jalolov has never been beaten as a professional.",
+      "The tyre had been changed by noon."
+     ]
+    },
+    {
+     "title": "Yo'lda muammo",
+     "type": "speaking",
+     "instr": "Juftlikda: sayohatda bo'lgan muammo (5 gap, kamida 3 ta perfect passive)",
+     "items": [
+      "start",
+      "problem",
+      "help",
+      "result",
+      "end"
+     ],
+     "answers": [
+      "Last summer we drove to Khiva.",
+      "Our tyre had been damaged by a stone.",
+      "The car was towed to a service station.",
+      "By evening it had been repaired.",
+      "Now the road has been repaired too — no more stones!"
+     ]
+    },
+    {
+     "title": "Yo'l lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a lot of cars, nobody moves",
+      "the busiest time on the road",
+      "the place to buy petrol",
+      "a different way when the road is closed",
+      "when your car stops working",
+      "the fastest speed you can drive"
+     ],
+     "answers": [
+      "traffic jam",
+      "rush hour",
+      "petrol station",
+      "detour",
+      "breakdown",
+      "speed limit"
+     ],
+     "box": [
+      "traffic jam",
+      "rush hour",
+      "petrol station",
+      "detour",
+      "breakdown",
+      "speed limit"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The road has been repair.",
+      "The road has repaired.",
+      "The bridge had built by 2020.",
+      "The hotel will has been built.",
+      "Has the car fixed?"
+     ],
+     "answers": [
+      "The road has been repaired.",
+      "The road has been repaired.",
+      "The bridge had been built by 2020.",
+      "The hotel will have been built.",
+      "Has the car been fixed?"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 23 jadvalini 3 marta; ON THE ROAD 50 so'zni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 81–85 dan bittasi; 5 passive gap toping",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Sportchi biografiyasi",
+     "type": "write",
+     "instr": "8 gap: sevimli sportchi haqida — has been / had been / will have been + V3",
+     "answers": "Erkin; perfect passive."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Yo'l yopilgan.",
+      "Ko'prik 2020-yilgacha qurib bo'lingan edi.",
+      "Tunnel 2027-gacha bitkaziladi.",
+      "Jalolov hech qachon mag'lub bo'lmagan.",
+      "Mashina tuzatildimi?"
+     ],
+     "answers": [
+      "The road has been closed.",
+      "The bridge had been built by 2020.",
+      "The tunnel will have been finished by 2027.",
+      "Jalolov has never been beaten.",
+      "Has the car been fixed?"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "ON THE ROAD CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Money",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "On the road og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Bakhodir Jalolov — the Big Uzbek who has never been beaten",
+    "text": [
+     "Bakhodir Jalolov was born in 1994 in Sariosiyo, a small town in the Surkhandarya region. He is two metres tall, and his nickname is \"Big Uzbek\". Boxing has been loved in his family for generations: he was taken to the boxing gym by his father when he was a small boy, and his first fight was won at the age of 12.",
+     "By 2016, Jalolov had been chosen for the Uzbek Olympic team. In Tokyo (2021) he was given the gold medal in the super-heavyweight division, and in Paris (2024) he did it again. He has been called the best amateur boxer of his generation, and he has been given the title of \"Hero of Uzbekistan\".",
+     "Jalolov also fights as a professional. Since 2018, more than 14 professional fights have been won by him, and he has never been beaten. Most of his opponents have been knocked out in the first rounds. Boxing experts say that by 2030 he will have been recognised as a world heavyweight champion.",
+     "Outside the ring, he is quiet and modest. A sports school has been built in Sariosiyo with his help, and hundreds of boys have been trained there. \"Everything I have has been given to me by my parents and my country,\" he says. \"Now it must be given back.\""
+    ],
+    "glossary": [
+     "nickname — laqab",
+     "generation — avlod",
+     "division — vazn toifasi",
+     "amateur — havaskor",
+     "professional — professional",
+     "opponent — raqib",
+     "knock out — nokautga uchratmoq",
+     "recognise — tan olmoq",
+     "modest — kamtar",
+     "ring — ring"
+    ],
+    "tasks": [
+     {
+      "title": "Perfect passive toping",
+      "type": "find",
+      "instr": "Matndan 6 ta perfect passive gap",
+      "items": [
+       "present 1",
+       "past 1",
+       "present 2",
+       "present 3",
+       "future",
+       "present 4"
+      ],
+      "answers": [
+       "Boxing has been loved in his family for generations.",
+       "By 2016, Jalolov had been chosen for the Uzbek Olympic team.",
+       "He has been called the best amateur boxer of his generation.",
+       "He has never been beaten.",
+       "By 2030 he will have been recognised as a world heavyweight champion.",
+       "A sports school has been built in Sariosiyo with his help."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Jalolov was born in Tashkent.",
+       "He won Olympic gold twice.",
+       "He has lost two professional fights.",
+       "A sports school has been built in his town."
+      ],
+      "answers": [
+       "False (Sariosiyo, Surkhandarya)",
+       "True",
+       "False (never beaten)",
+       "True"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why is he called \"Big Uzbek\"?",
+       "Who took him to the boxing gym?",
+       "What does he want to give back?"
+      ],
+      "answers": [
+       "He is two metres tall.",
+       "His father.",
+       "Everything he has been given (by his parents and country)."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 81–85 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 71–80 (fayllar hali yo'q — ustoz radio yangiliklarini o'qiydi)",
+    "intro": [
+     "Skript: \"Traffic news. The Tashkent–Samarkand highway has been closed near Jizzakh because of an accident. Nobody has been hurt, but two cars have been damaged. A detour has been set up through the old road. The speed limit there has been lowered to 50. The highway will have been reopened by 6 pm. Drivers are asked to be careful.\"",
+     "1-tinglash: qaysi yo'l yopilgan? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Yo'l yangiliklari",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "The highway has been closed near ___.",
+       "___ cars have been damaged.",
+       "A ___ has been set up through the old road.",
+       "The speed limit has been lowered to ___.",
+       "The highway will have been reopened by ___."
+      ],
+      "answers": [
+       "Jizzakh",
+       "Two",
+       "detour",
+       "50",
+       "6 pm"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 24,
+   "title": "Adjectives -ed vs -ing",
+   "grammar_topic": "-ED va -ING SIFATLAR (bored — boring)",
+   "vocab_topic": "Transport (transport)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 24 – Adjectives -ed vs -ing (jadval); TRANSPORT WORDS (50); Reading — Diyora Keldiyorova (Jony Academy matni); Audio 81–90.",
+   "objectives": [
+    "-ed (his) va -ing (sabab/xususiyat) sifatlarini farqlash va to'g'ri tanlash.",
+    "15 ta juftni bilish va gapda ishlatish (bored/boring, excited/exciting, tired/tiring…).",
+    "Predloglar: interested IN, excited ABOUT, bored WITH, surprised AT/BY, tired OF.",
+    "Transport CORE 20 bilan qatnov va sayohat haqida gapirish (an exciting flight, a tiring journey)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Transport (transport) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz zerikkan yuz bilan: \"I am bored.\" Keyin darsga ishora qilib: \"This lesson is boring?!\" — sinf kuladi. Farq: -ed = mening hissim; -ing = narsaning xususiyati."
+    ],
+    [
+     8,
+     "Kahoot — Passive voice perfect",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Passive voice perfect lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: -ed sifatlar — his-tuyg'uni tasvirlaydi (I am bored by this movie); -ing sifatlar — odam, narsa yoki vaziyatning xususiyatini tasvirlaydi (The movie is boring). Juftlar ro'yxati: bored/boring, interested/interesting, excited/exciting, tired/tiring, surprised/surprising…"
+    ],
+    [
+     12,
+     "Transport (transport) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "-ED — odam NIMA HIS QILADI: I'm bored, tired, excited, interested, surprised.",
+     "-ING — narsa/odam QANDAY (his uyg'otadi): The film is boring, the trip is tiring, the news is exciting.",
+     "Ikkalasi odam haqida bo'lishi mumkin: \"He is bored\" (zerikkan) vs \"He is boring\" (zeriktiradigan odam!).",
+     "Predloglar: interested in, excited about, bored with, tired of, surprised at/by, worried about, frightened of."
+    ],
+    "formulas": [
+     [
+      "-ed (his)",
+      "S + be/feel + adj-ed",
+      "I am bored by this film.",
+      "Bu kino meni zeriktirdi (men zerikkanman)."
+     ],
+     [
+      "-ing (xususiyat)",
+      "S + be + adj-ing",
+      "The film is boring.",
+      "Kino zerikarli."
+     ],
+     [
+      "Odam haqida ikkalasi",
+      "He is bored. / He is boring.",
+      "He is bored (zerikkan) / He is boring (zeriktiradigan).",
+      "U zerikkan. / U zerikarli odam."
+     ],
+     [
+      "Predlog",
+      "adj-ed + in / about / with / of / at",
+      "I'm interested in trains. / I'm tired of traffic.",
+      "Poyezdlarga qiziqaman. / Tirbandlikdan charchadim."
+     ],
+     [
+      "Ot oldida",
+      "adj-ing + noun",
+      "an exciting journey, a tiring flight",
+      "hayajonli safar, charchatadigan parvoz"
+     ],
+     [
+      "Kuchaytirish",
+      "very / really / so + adj",
+      "The metro was so crowded and I was really annoyed.",
+      "Metro juda gavjum edi va men rosa asabiylashdim."
+     ]
+    ],
+    "presentation": [
+     [
+      "Are you interested in cars?",
+      "Yes, I'm very interested in electric cars."
+     ],
+     [
+      "Was the flight tiring?",
+      "Yes, it was a tiring flight — ten hours!"
+     ],
+     [
+      "Are you excited about the trip?",
+      "Yes, I'm really excited about it."
+     ],
+     [
+      "Is the metro boring or interesting?",
+      "It's interesting — the stations are beautiful."
+     ],
+     [
+      "Were you frightened on the plane?",
+      "A bit — the take-off was frightening."
+     ],
+     [
+      "Is the traffic in Tashkent annoying?",
+      "Yes, rush hour is very annoying."
+     ],
+     [
+      "Were you surprised by the ticket price?",
+      "Yes, I was surprised — it was so cheap!"
+     ],
+     [
+      "Is riding a scooter exciting?",
+      "Yes, it's exciting but a bit dangerous."
+     ],
+     [
+      "Are you tired of waiting for the bus?",
+      "Yes, I'm tired of it — let's take a taxi."
+     ],
+     [
+      "Was Diyora's final relaxing to watch?",
+      "No, it was the most exciting match of the Olympics!"
+     ]
+    ],
+    "notes": [
+     "Sabab so'raganda: \"What is boring?\" — narsa; \"Who is bored?\" — odam.",
+     "Ko'p uchraydigan juftlar: amazed/amazing, annoyed/annoying, confused/confusing, disappointed/disappointing, embarrassed/embarrassing, exhausted/exhausting, frightened/frightening, relaxed/relaxing, shocked/shocking, worried/worrying.",
+     "Transport bilan: a crowded bus, a delayed flight, an exhausting commute.",
+     "Get on/off (bus, train, plane) — get in/out of (car, taxi)."
+    ],
+    "mistakes": [
+     [
+      "I am boring in this lesson.",
+      "I am bored in this lesson.",
+      "Mening hissim → -ed."
+     ],
+     [
+      "The film was very bored.",
+      "The film was very boring.",
+      "Narsa → -ing."
+     ],
+     [
+      "I'm interesting in cars.",
+      "I'm interested in cars.",
+      "-ed + in."
+     ],
+     [
+      "It was an excited match.",
+      "It was an exciting match.",
+      "Ot oldida xususiyat → -ing."
+     ],
+     [
+      "I'm excited for the trip.",
+      "I'm excited about the trip.",
+      "excited about."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kundalik transport turlari va fe'llar; STRONG — suv va havo transporti, qatnov; SUPER — kosmik transport va texnik so'zlar.",
+     "Har so'zga -ed/-ing gap: \"The tram was crowded; I was annoyed.\" / \"A helicopter ride is exciting.\""
+    ],
+    "core": [
+     [
+      "transport / transportation",
+      "transport",
+      "Public transport in Tashkent is surprising — it's cheap.",
+      "Toshkentda jamoat transporti hayratlanarli — arzon.",
+      "ˈtrænspɔrt  ˌtrænspərˈteɪʃən"
+     ],
+     [
+      "vehicle",
+      "transport vositasi",
+      "Electric vehicles are interesting.",
+      "Elektr transport vositalari qiziqarli.",
+      "ˈviɪkəl"
+     ],
+     [
+      "car",
+      "mashina",
+      "I'm bored with driving the same car.",
+      "Bir xil mashina haydashdan zerikdim.",
+      "kɑr"
+     ],
+     [
+      "bus",
+      "avtobus",
+      "The bus was so crowded — I was annoyed.",
+      "Avtobus juda gavjum edi — asabiylashdim.",
+      "bəs"
+     ],
+     [
+      "coach",
+      "shaharlararo avtobus",
+      "The coach journey was tiring.",
+      "Shaharlararo avtobusda yo'l charchatdi.",
+      "koʊʧ"
+     ],
+     [
+      "train",
+      "poyezd",
+      "Train journeys are relaxing.",
+      "Poyezd safari dam beradi.",
+      "treɪn"
+     ],
+     [
+      "metro / underground",
+      "metro",
+      "The metro stations are amazing.",
+      "Metro bekatlari hayratlanarli.",
+      "ˈmɛˌtroʊ  ˈəndərˌgraʊnd"
+     ],
+     [
+      "tram",
+      "tramvay",
+      "I was surprised to see a tram in Samarkand.",
+      "Samarqandda tramvay ko'rib hayron bo'ldim.",
+      "træm"
+     ],
+     [
+      "trolleybus",
+      "trolleybus",
+      "Trolleybuses are disappearing — it's disappointing.",
+      "Trolleybuslar yo'qolyapti — bu afsuslanarli.",
+      ""
+     ],
+     [
+      "taxi",
+      "taksi",
+      "Waiting for a taxi is annoying.",
+      "Taksi kutish asabga tegadi.",
+      "ˈtæksi"
+     ],
+     [
+      "bicycle / bike",
+      "velosiped",
+      "Cycling to school is exciting.",
+      "Maktabga velosipedda borish hayajonli.",
+      "ˈbaɪsɪkəl  baɪk"
+     ],
+     [
+      "motorcycle",
+      "mototsikl",
+      "Motorcycles are frightening for me.",
+      "Mototsikllar meni qo'rqitadi.",
+      "ˈmoʊtərˌsaɪkəl"
+     ],
+     [
+      "scooter",
+      "skuter",
+      "I'm excited about my new electric scooter.",
+      "Yangi elektr skuterimdan hayajondaman.",
+      "ˈskutər"
+     ],
+     [
+      "plane / airplane",
+      "samolyot",
+      "The plane was delayed and everyone was exhausted.",
+      "Samolyot kechikdi va hamma holdan toydi.",
+      "pleɪn  ˈɛrˌpleɪn"
+     ],
+     [
+      "helicopter",
+      "vertolyot",
+      "A helicopter ride is thrilling.",
+      "Vertolyotda uchish hayajonli.",
+      "ˈhɛlɪˌkɑptər"
+     ],
+     [
+      "boat",
+      "qayiq",
+      "The boat trip was relaxing.",
+      "Qayiq sayohati dam berdi.",
+      "boʊt"
+     ],
+     [
+      "ship",
+      "kema",
+      "Ships are fascinating.",
+      "Kemalar maftun qiladi.",
+      "ʃɪp"
+     ],
+     [
+      "passenger",
+      "yo'lovchi",
+      "The passengers were shocked by the delay.",
+      "Yo'lovchilar kechikishdan hayratda qolishdi.",
+      "ˈpæsənʤər"
+     ],
+     [
+      "driver",
+      "haydovchi",
+      "The driver was tired after ten hours.",
+      "Haydovchi o'n soatdan keyin charchagan edi.",
+      "ˈdraɪvər"
+     ],
+     [
+      "get on / get off",
+      "(avtobus/poyezdga) chiqmoq / tushmoq",
+      "I was confused about where to get off.",
+      "Qayerda tushishni bilmay chalkashdim.",
+      "gɪt ɔn  gɪt ɔf"
+     ]
+    ],
+    "strong": [
+     [
+      "get in / get out of",
+      "(mashina/taksiga) o'tirmoq / chiqmoq",
+      "Get in — I'm excited to show you the city!",
+      "O'tir — senga shaharni ko'rsatishga hayajondaman!",
+      "gɪt ɪn  gɪt aʊt əv"
+     ],
+     [
+      "commute",
+      "ishga/o'qishga qatnamoq",
+      "My daily commute is exhausting.",
+      "Kundalik qatnovim holdan toydiradi.",
+      "kəmˈjut"
+     ],
+     [
+      "public transport",
+      "jamoat transporti",
+      "Public transport is surprisingly good here.",
+      "Bu yerda jamoat transporti hayratlanarli darajada yaxshi.",
+      "ˈpəblɪk ˈtrænspɔrt"
+     ],
+     [
+      "route (transport)",
+      "yo'nalish",
+      "The new bus route is confusing.",
+      "Yangi avtobus yo'nalishi chalkash.",
+      "rut (ˈtrænspɔrt)"
+     ],
+     [
+      "timetable (transport)",
+      "jadval",
+      "The timetable was confusing, so I was late.",
+      "Jadval chalkash edi, shuning uchun kech qoldim.",
+      "ˈtaɪmˌteɪbəl (ˈtrænspɔrt)"
+     ],
+     [
+      "ferry",
+      "parom",
+      "The ferry ride was relaxing.",
+      "Paromda suzish dam berdi.",
+      "ˈfɛri"
+     ],
+     [
+      "yacht",
+      "yaxta",
+      "Yachts are fascinating but expensive.",
+      "Yaxtalar maftunkor, lekin qimmat.",
+      "jɑt"
+     ],
+     [
+      "cruise",
+      "kruiz (dengiz sayohati)",
+      "A cruise sounds relaxing.",
+      "Kruiz dam beradigandek tuyuladi.",
+      "kruz"
+     ],
+     [
+      "sailing boat",
+      "yelkanli qayiq",
+      "Sailing is exciting in the wind.",
+      "Shamolda yelkanli qayiqda suzish hayajonli.",
+      "ˈseɪlɪŋ boʊt"
+     ],
+     [
+      "canoe / kayak",
+      "kanoe / kayak",
+      "Kayaking was tiring but fun.",
+      "Kayakda suzish charchatdi, lekin qiziq bo'ldi.",
+      "kəˈnu  kaɪæk"
+     ],
+     [
+      "jet ski",
+      "suv mototsikli",
+      "Jet skis are thrilling.",
+      "Suv mototsikllari hayajonli.",
+      "ʤɛt ski"
+     ],
+     [
+      "hot air balloon",
+      "havo shari",
+      "A balloon flight is amazing.",
+      "Havo sharida uchish hayratlanarli.",
+      "hɑt ɛr bəˈlun"
+     ],
+     [
+      "parachute",
+      "parashyut",
+      "Parachuting is frightening for most people.",
+      "Parashyutda sakrash ko'pchilik uchun qo'rqinchli.",
+      "ˈpɛrəˌʃut"
+     ],
+     [
+      "truck / lorry",
+      "yuk mashinasi",
+      "Trucks are annoying on narrow roads.",
+      "Tor yo'llarda yuk mashinalari asabga tegadi.",
+      "trək  ˈlɔri"
+     ],
+     [
+      "van",
+      "furgon",
+      "The delivery van was late — disappointing.",
+      "Yetkazib berish furgoni kechikdi — afsuslanarli.",
+      "væn"
+     ],
+     [
+      "skateboard",
+      "skeytbord",
+      "Skateboarding is exciting but I'm scared of falling.",
+      "Skeytbord hayajonli, lekin yiqilishdan qo'rqaman.",
+      "ˈskeɪtˌbɔrd"
+     ],
+     [
+      "rollerblades",
+      "rolikli konki",
+      "Rollerblading is relaxing in the park.",
+      "Bog'da rolikda uchish dam beradi.",
+      "ˈroʊlərˌbleɪdz"
+     ],
+     [
+      "segway",
+      "segvey",
+      "Segways are surprisingly easy.",
+      "Segveylar hayratlanarli darajada oson.",
+      ""
+     ],
+     [
+      "limousine",
+      "limuzin",
+      "A limousine ride was an amazing experience.",
+      "Limuzinda yurish ajoyib tajriba bo'ldi.",
+      "ˈlɪməˌzin"
+     ],
+     [
+      "flight delay",
+      "reys kechikishi",
+      "Flight delays are exhausting.",
+      "Reys kechikishlari holdan toydiradi.",
+      "flaɪt dɪˈleɪ"
+     ]
+    ],
+    "super": [
+     [
+      "rocket",
+      "raketa",
+      "Rocket launches are thrilling to watch.",
+      "Raketa uchirilishini tomosha qilish hayajonli.",
+      "ˈrɑkət"
+     ],
+     [
+      "spacecraft",
+      "kosmik kema",
+      "Spacecraft are fascinating machines.",
+      "Kosmik kemalar maftunkor mashinalar.",
+      "ˈspeɪˌskræft"
+     ],
+     [
+      "satellite",
+      "sun'iy yo'ldosh",
+      "Satellites are amazing — they give us navigation.",
+      "Sun'iy yo'ldoshlar ajoyib — ular bizga navigatsiya beradi.",
+      "ˈsætəˌlaɪt"
+     ],
+     [
+      "airport",
+      "aeroport",
+      "Airports are confusing for first-time travellers.",
+      "Aeroportlar birinchi marta uchayotganlar uchun chalkash.",
+      "ˈɛrˌpɔrt"
+     ],
+     [
+      "train station",
+      "vokzal",
+      "The train station was crowded and I was annoyed.",
+      "Vokzal gavjum edi va men asabiylashdim.",
+      "treɪn ˈsteɪʃən"
+     ],
+     [
+      "intersection (transport)",
+      "chorraha",
+      "The intersection is confusing at night.",
+      "Kechasi chorraha chalkash.",
+      "ˌɪntərˈsɛkʃən (ˈtrænspɔrt)"
+     ],
+     [
+      "driving licence (transport)",
+      "haydovchilik guvohnomasi",
+      "Getting a driving licence was exhausting.",
+      "Haydovchilik guvohnomasini olish holdan toydirdi.",
+      "ˈdraɪvɪŋ ˈlaɪsəns (ˈtrænspɔrt)"
+     ],
+     [
+      "boarding pass (transport)",
+      "bortga chiqish taloni",
+      "I was worried — I couldn't find my boarding pass.",
+      "Xavotirlandim — bort talonimni topa olmadim.",
+      "ˈbɔrdɪŋ pæs (ˈtrænspɔrt)"
+     ],
+     [
+      "moped",
+      "moped",
+      "Mopeds are annoying because they are noisy.",
+      "Mopedlar shovqinli bo'lgani uchun asabga tegadi.",
+      "ˈmoʊpɛd"
+     ],
+     [
+      "electric car",
+      "elektromobil",
+      "Electric cars are surprisingly quiet.",
+      "Elektromobillar hayratlanarli darajada jim.",
+      "ɪˈlɛktrɪk kɑr"
+     ],
+     [
+      "high-speed train",
+      "tezyurar poyezd",
+      "The Afrosiyob train is impressive.",
+      "Afrosiyob poyezdi ta'sirchan.",
+      "ˈhaɪˌspid treɪn"
+     ],
+     [
+      "carriage",
+      "vagon",
+      "The carriage was crowded and hot.",
+      "Vagon gavjum va issiq edi.",
+      "ˈkɛrəʤ"
+     ],
+     [
+      "platform",
+      "platforma, peron",
+      "Waiting on the platform was boring.",
+      "Peronda kutish zerikarli edi.",
+      "ˈplætˌfɔrm"
+     ],
+     [
+      "fare (transport)",
+      "yo'l haqi",
+      "The fare was surprisingly low.",
+      "Yo'l haqi hayratlanarli darajada past edi.",
+      "fɛr (ˈtrænspɔrt)"
+     ],
+     [
+      "traffic (transport)",
+      "transport oqimi",
+      "Traffic is frustrating in the centre.",
+      "Markazda transport oqimi asabga tegadi.",
+      "ˈtræfɪk (ˈtrænspɔrt)"
+     ],
+     [
+      "crowded",
+      "gavjum",
+      "The bus was crowded and I was exhausted.",
+      "Avtobus gavjum edi va men holdan toydim.",
+      "ˈkraʊdɪd"
+     ],
+     [
+      "delayed",
+      "kechikkan",
+      "The delayed flight was disappointing.",
+      "Kechikkan reys hafsalani pir qildi.",
+      "dɪˈleɪd"
+     ],
+     [
+      "on time",
+      "vaqtida",
+      "The train was on time — I was relieved.",
+      "Poyezd vaqtida keldi — yengil tortdim.",
+      "ɔn taɪm"
+     ],
+     [
+      "journey time",
+      "yo'l vaqti",
+      "The journey time is only two hours — amazing.",
+      "Yo'l vaqti atigi ikki soat — ajoyib.",
+      "ˈʤərni taɪm"
+     ],
+     [
+      "pedestrian",
+      "piyoda",
+      "Pedestrians are worried about scooters.",
+      "Piyodalar skuterlardan xavotirda.",
+      "pəˈdɛstriən"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "-ed yoki -ing",
+     "type": "choose",
+     "instr": "To'g'ri shaklni tanlang",
+     "items": [
+      "The journey was very tired / tiring.",
+      "I was bored / boring on the bus.",
+      "The news about the new metro is excited / exciting.",
+      "We were surprised / surprising by the low fare.",
+      "The timetable is confused / confusing.",
+      "I'm interested / interesting in electric cars.",
+      "The delay was annoyed / annoying.",
+      "She was frightened / frightening on the plane."
+     ],
+     "answers": [
+      "tiring",
+      "bored",
+      "exciting",
+      "surprised",
+      "confusing",
+      "interested",
+      "annoying",
+      "frightened"
+     ]
+    },
+    {
+     "title": "Predlog qo'shing",
+     "type": "gap",
+     "instr": "interested in / excited about / bored with / tired of / worried about",
+     "items": [
+      "I'm interested ___ old trains.",
+      "Are you excited ___ the trip?",
+      "I'm tired ___ waiting for the bus.",
+      "He's bored ___ the same route every day.",
+      "We're worried ___ the flight delay."
+     ],
+     "answers": [
+      "in",
+      "about",
+      "of",
+      "with",
+      "about"
+     ]
+    },
+    {
+     "title": "Juftlarni to'ldiring",
+     "type": "table",
+     "instr": "-ed va -ing shaklini yozing",
+     "items": [
+      "amaze",
+      "confuse",
+      "exhaust",
+      "disappoint",
+      "frighten",
+      "relax",
+      "shock",
+      "embarrass"
+     ],
+     "answers": [
+      "amazed / amazing",
+      "confused / confusing",
+      "exhausted / exhausting",
+      "disappointed / disappointing",
+      "frightened / frightening",
+      "relaxed / relaxing",
+      "shocked / shocking",
+      "embarrassed / embarrassing"
+     ]
+    },
+    {
+     "title": "Mening qatnovim",
+     "type": "speaking",
+     "instr": "Juftlikda: maktabga/kursga qanday kelasiz — 6 gap, kamida 3 ta -ed va 3 ta -ing sifat",
+     "items": [
+      "how",
+      "feeling",
+      "interesting",
+      "tired",
+      "exciting",
+      "wish"
+     ],
+     "answers": [
+      "I come by bus. It's usually crowded.",
+      "I'm annoyed when it's late.",
+      "The metro is more interesting — the stations are beautiful.",
+      "After a long day I'm exhausted.",
+      "Cycling would be exciting, but the roads are frightening.",
+      "I wish the buses were less crowded!"
+     ]
+    },
+    {
+     "title": "Diyora haqida",
+     "type": "write",
+     "instr": "Matn asosida 4 gap (-ed/-ing sifatlar bilan)",
+     "items": [
+      "final",
+      "fans",
+      "training",
+      "feeling"
+     ],
+     "answers": [
+      "The final was the most exciting match of the Games.",
+      "Uzbek fans were amazed and proud.",
+      "Her training is exhausting — six hours a day.",
+      "She said she was relieved and happy after the win."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I am boring in this lesson.",
+      "The film was very bored.",
+      "I'm interesting in cars.",
+      "It was an excited match.",
+      "I'm excited for the trip."
+     ],
+     "answers": [
+      "I am bored in this lesson.",
+      "The film was very boring.",
+      "I'm interested in cars.",
+      "It was an exciting match.",
+      "I'm excited about the trip."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 24 jadvalini 3 marta; TRANSPORT 50 so'zni ko'chiring",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 86–90 dan bittasi; 5 ta -ed/-ing sifat toping",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Mening sayohatim",
+     "type": "write",
+     "instr": "8 gap: 4 ta -ed, 4 ta -ing sifat — oxirgi sayohat yoki qatnov haqida",
+     "answers": "Erkin."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Bu kino zerikarli, men zerikdim.",
+      "Safar charchatdi.",
+      "Men elektromobillarga qiziqaman.",
+      "Yakuniy o'yin juda hayajonli edi.",
+      "Yo'lovchilar kechikishdan asabiylashdi."
+     ],
+     "answers": [
+      "This film is boring; I'm bored.",
+      "The journey was tiring.",
+      "I'm interested in electric cars.",
+      "The final was very exciting.",
+      "The passengers were annoyed by the delay."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "TRANSPORT CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — On the road",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Transport og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Diyora Keldiyorova — an amazing Olympic champion",
+    "text": [
+     "Diyora Keldiyorova was born in 1998 in Tashkent. When she was a child, she was interested in many sports, but judo was the most exciting for her. Her parents were worried at first — judo is a hard sport for a girl, they thought. But her coach was impressed by her speed, and Diyora was determined.",
+     "Her training is exhausting: six hours a day, six days a week. For years, the results were disappointing — she lost in the early rounds of big competitions. But she was never discouraged. In 2021 she was surprised to win a medal at the World Championships, and after that everything changed.",
+     "The Paris Olympics in 2024 were the most thrilling days of her life. In the final she beat the Olympic champion from Kosovo in just a few minutes. It was an astonishing result: Diyora became the first Uzbek woman to win an Olympic gold medal in any sport. Millions of Uzbeks were amazed and proud; the streets of Tashkent were full of excited fans at 2 am.",
+     "\"I was tired, but I was so relieved and happy,\" she said afterwards. Today she is an inspiring example for thousands of girls in Uzbekistan, and judo clubs are crowded with new students. Her next goal? \"The 2028 Olympics — it will be even more exciting.\""
+    ],
+    "glossary": [
+     "determined — qat'iyatli",
+     "impressed — taassurot olgan",
+     "discouraged — ruhi tushgan",
+     "round — bosqich",
+     "astonishing — hayratlanarli",
+     "relieved — yengil tortgan",
+     "inspiring — ilhomlantiruvchi",
+     "goal — maqsad"
+    ],
+    "tasks": [
+     {
+      "title": "-ed / -ing sifatlarni toping",
+      "type": "find",
+      "instr": "Matndan 5 ta -ed va 5 ta -ing sifat",
+      "items": [
+       "-ed",
+       "-ing"
+      ],
+      "answers": [
+       "interested, worried, impressed, surprised, discouraged, amazed, tired, relieved, excited",
+       "exciting, exhausting, disappointing, thrilling, astonishing, inspiring"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Her parents were happy about judo from the start.",
+       "She trains six hours a day.",
+       "She won a medal at the 2021 World Championships.",
+       "She is the second Uzbek woman with Olympic gold."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True",
+       "False (the first)"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob va fikr",
+      "items": [
+       "Why were the early results disappointing?",
+       "What happened in Tashkent at 2 am?",
+       "Who is she an example for?"
+      ],
+      "answers": [
+       "She lost in the early rounds.",
+       "The streets were full of excited fans.",
+       "Thousands of girls in Uzbekistan."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 86–90 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 81–90 (fayllar hali yo'q — ustoz aeroport e'lonini o'qiydi)",
+    "intro": [
+     "Skript: \"Attention, passengers. Flight HY 201 to Istanbul has been delayed by two hours — we are sorry for this annoying situation. Passengers who are tired can rest in the lounge on the second floor. Flight HY 305 to Dubai is boarding at gate 7 — please have your boarding passes ready. The Afrosiyob train to Samarkand departs from the station next to the airport at 8.30; the journey time is a surprising two hours. Thank you.\"",
+     "1-tinglash: qaysi reys kechikdi? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Aeroport e'loni",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Flight HY 201 to ___ has been delayed by ___ hours.",
+       "Tired passengers can rest in the lounge on the ___ floor.",
+       "Flight HY 305 to Dubai is boarding at gate ___.",
+       "The Afrosiyob train departs at ___.",
+       "The journey time is ___ hours."
+      ],
+      "answers": [
+       "Istanbul, two",
+       "second",
+       "7",
+       "8.30",
+       "two"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 25,
+   "title": "Reflexive Pronouns + Course Revision",
+   "grammar_topic": "O'ZLIK OLMOSHLARI (myself, yourself…) + IELTS 2.0 YAKUNIY TAKROR",
+   "vocab_topic": "Revision — IELTS 2.0 eng muhim 60 so'z",
+   "duration": 120,
+   "test_after": "FINAL TEST — IELTS 2.0 (20–25-darslar + butun kurs): modals, passive (simple/continuous/perfect), -ed/-ing, reflexive; 25 darsdan CORE so'zlar; reading + writing (100 so'z)",
+   "book_ref": "Student's book IELTS 2.0: Lesson 25 – Reflexive pronouns (jadval); takror — barcha jadvallar; Reading — Abu Rayhon Beruniy (Jony Academy matni); Audio 91–100.",
+   "objectives": [
+    "Sakkizta o'zlik olmoshini ega bilan to'g'ri moslash (I → myself, they → themselves).",
+    "Uch qo'llanish: ob'ekt = ega (cut herself), urg'u (did it myself), by + self (yolg'iz).",
+    "each other (bir-birini) va themselves (o'zlarini) farqini bilish; enjoy/behave/help yourself iboralari.",
+    "IELTS 2.0 kursi bo'yicha grammatika xaritasi va eng muhim 60 so'zni takrorlash; final testga tayyorlanish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Revision — IELTS 2.0 eng muhim 60 so'z CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"I taught myself to cook. Who taught you English? — Jony Academy! Did you teach yourself anything?\" — har o'quvchi \"I taught myself to …\" gapi."
+    ],
+    [
+     8,
+     "Kahoot — Adjectives -ed / -ing",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Adjectives -ed / -ing lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: myself, yourself, himself, herself, itself, ourselves, yourselves, themselves — ega va ob'ekt bir xil bo'lganda (She cut herself); urg'u (We built it ourselves); by myself = yolg'iz; each other (bir-birini) bilan farq. Keyin doskada 25 darsning grammatika xaritasi."
+    ],
+    [
+     12,
+     "Revision — IELTS 2.0 eng muhim 60 so'z — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "O'zlik olmoshi — ish egaga qaytganda: \"She cut herself while cooking\" (o'zini kesib oldi).",
+     "Urg'u: \"We built the bookshelf ourselves\" (boshqa hech kim emas, o'zimiz).",
+     "by + o'zlik olmoshi = yolg'iz, yordamsiz: \"He lives by himself.\"",
+     "each other — bir-birini: \"They help each other\" (u — unga, u — unga); \"They help themselves\" — har biri o'ziga.",
+     "Iboralar: enjoy yourself (maza qil), help yourself (o'zing ol), behave yourself (o'zingni tut), make yourself at home."
+    ],
+    "formulas": [
+     [
+      "myself / yourself",
+      "I … myself / you … yourself",
+      "I bought myself a new book. / You can help yourself to some snacks.",
+      "O'zimga yangi kitob oldim. / O'zingiz gazak oling."
+     ],
+     [
+      "himself / herself / itself",
+      "he … himself / she … herself / it … itself",
+      "He taught himself to play the guitar. / She cut herself while cooking.",
+      "U gitara chalishni o'zi o'rgandi. / U ovqat pishirayotib o'zini kesib oldi."
+     ],
+     [
+      "ourselves / yourselves / themselves",
+      "we … ourselves / you (pl) … yourselves / they … themselves",
+      "We built the bookshelf ourselves. / Please make yourselves at home.",
+      "Javonni o'zimiz yasadik. / O'zingizni uydagidek his qiling."
+     ],
+     [
+      "Urg'u",
+      "S + V + O + self (oxirida)",
+      "The president himself opened the school.",
+      "Maktabni prezidentning o'zi ochdi."
+     ],
+     [
+      "by + self",
+      "S + V + by + self",
+      "Beruni worked by himself for years.",
+      "Beruniy yillar davomida yolg'iz ishladi."
+     ],
+     [
+      "each other",
+      "S (ko'plik) + V + each other",
+      "Ibn Sina and Beruni wrote to each other.",
+      "Ibn Sino va Beruniy bir-biriga xat yozishgan."
+     ]
+    ],
+    "presentation": [
+     [
+      "Did you teach yourself English?",
+      "No, I learned it at Jony Academy — but I taught myself the alphabet."
+     ],
+     [
+      "Did she hurt herself?",
+      "Yes, she cut herself while cooking."
+     ],
+     [
+      "Do you live by yourself?",
+      "No, I live with my family."
+     ],
+     [
+      "Did they build the house themselves?",
+      "Yes, they built it themselves."
+     ],
+     [
+      "Did you enjoy yourselves at the party?",
+      "Yes, we enjoyed ourselves a lot."
+     ],
+     [
+      "Do you and your sister help each other?",
+      "Yes, we help each other with homework."
+     ],
+     [
+      "Did the teacher herself check the tests?",
+      "Yes, she checked them herself."
+     ],
+     [
+      "Can I take a cake?",
+      "Of course — help yourself!"
+     ],
+     [
+      "Did Beruni measure the Earth by himself?",
+      "Yes, he did the calculations himself."
+     ],
+     [
+      "What have you learned about yourself this course?",
+      "I've learned that I can speak English!"
+     ]
+    ],
+    "notes": [
+     "Ko'plik: yourselves (siz — ko'p), themselves, ourselves; \"theirselves / hisself\" — xato.",
+     "Ba'zi fe'llardan keyin self yo'q: relax, concentrate, feel, wash/shave/dress (odatda): \"I feel good\" (myself emas).",
+     "Final test tarkibi: 25 formula (har darsdan 1), 50 so'z (har darsdan CORE 2), 10 tarjima, reading (matn + 5 savol), writing (100 so'z: \"My plans by 2030\").",
+     "Grammatika xaritasi: Perfect oilasi (1–6, 9–13) → taqqoslash (7–8) → bog'lovchilar (11, 16) → shart (15) → savol/wish/infinitive (14, 17–19) → modal/passive (20–23) → sifat/olmosh (24–25)."
+    ],
+    "mistakes": [
+     [
+      "I taught me to swim.",
+      "I taught myself to swim.",
+      "Ega = ob'ekt → myself."
+     ],
+     [
+      "They helped theirselves.",
+      "They helped themselves.",
+      "themselves."
+     ],
+     [
+      "We looked at ourselves and smiled. (bir-biriga)",
+      "We looked at each other and smiled.",
+      "Bir-biriga → each other."
+     ],
+     [
+      "I feel myself tired.",
+      "I feel tired.",
+      "feel + self yo'q."
+     ],
+     [
+      "She did it herself alone. (yolg'iz)",
+      "She did it by herself.",
+      "Yolg'iz → by herself."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — 1–8-darslardan eng muhim so'zlar; STRONG — 9–16; SUPER — 17–24. Har so'zga o'z darsining grammatikasi bilan gap.",
+     "Final test oldidan: har o'quvchi 60 so'zdan 10 tasini \"o'zi\" tanlab, gap tuzadi (I chose these words myself)."
+    ],
+    "core": [
+     [
+      "begin – began – begun (1)",
+      "boshlamoq",
+      "I have begun to believe in myself.",
+      "O'zimga ishona boshladim.",
+      "bɪˈgɪn"
+     ],
+     [
+      "lose – lost – lost (1)",
+      "yo'qotmoq",
+      "She has lost herself in the book.",
+      "U kitobga berilib ketdi.",
+      "luz"
+     ],
+     [
+      "be born (2)",
+      "tug'ilmoq",
+      "Beruni was born in Khorezm in 973.",
+      "Beruniy 973-yilda Xorazmda tug'ilgan.",
+      "bi bɔrn 2"
+     ],
+     [
+      "give birth (2)",
+      "tug'moq",
+      "She gave birth to twins last year.",
+      "U o'tgan yili egizak tug'di.",
+      "gɪv bərθ 2"
+     ],
+     [
+      "get married (3)",
+      "turmush qurmoq",
+      "They got married in 2015 and still love each other.",
+      "Ular 2015-da turmush qurishgan va hali ham bir-birini sevishadi.",
+      "gɪt ˈmɛrid 3"
+     ],
+     [
+      "anniversary (3)",
+      "yillik",
+      "We celebrated our anniversary by ourselves.",
+      "Yilligimizni o'zimiz nishonladik.",
+      "ˌænəˈvərsəri 3"
+     ],
+     [
+      "pass away (4)",
+      "olamdan o'tmoq",
+      "His grandfather passed away last year.",
+      "Uning bobosi o'tgan yili olamdan o'tdi.",
+      "pæs əˈweɪ 4"
+     ],
+     [
+      "condolences (4)",
+      "ta'ziya",
+      "Please accept my condolences.",
+      "Ta'ziyamni qabul qiling.",
+      "kənˈdoʊlənsəz 4"
+     ],
+     [
+      "ache (5)",
+      "og'rimoq",
+      "My back has been aching all day.",
+      "Belim kun bo'yi og'riyapti.",
+      "eɪk 5"
+     ],
+     [
+      "knee (5)",
+      "tizza",
+      "He hurt his knee himself — nobody pushed him.",
+      "Tizzasini o'zi shikastladi — hech kim itarmagan.",
+      "ni 5"
+     ],
+     [
+      "try on (6)",
+      "kiyib ko'rmoq",
+      "I tried on five jackets by myself.",
+      "Beshta kurtkani o'zim kiyib ko'rdim.",
+      "traɪ ɔn 6"
+     ],
+     [
+      "suit (6)",
+      "kostyum",
+      "He bought himself a suit for the wedding.",
+      "U to'yga o'ziga kostyum oldi.",
+      "sut 6"
+     ],
+     [
+      "attractive (7)",
+      "jozibali",
+      "She is more attractive than her sister.",
+      "U singlisidan jozibaliroq.",
+      "əˈtræktɪv 7"
+     ],
+     [
+      "slim (7)",
+      "ozg'in",
+      "He keeps himself slim by running.",
+      "U yugurib o'zini ozg'in tutadi.",
+      "slɪm 7"
+     ],
+     [
+      "reliable (8)",
+      "ishonchli",
+      "She is the most reliable person I know.",
+      "U men bilgan eng ishonchli inson.",
+      "rɪˈlaɪəbəl 8"
+     ],
+     [
+      "hard-working (8)",
+      "mehnatkash",
+      "Beruni was the most hard-working scholar of his time.",
+      "Beruniy o'z davrining eng mehnatkash olimi edi.",
+      "ˌhɑrdˈwərkɪŋ 8"
+     ],
+     [
+      "recover (9)",
+      "sog'aymoq",
+      "He had recovered by himself, without medicine.",
+      "U dorisiz, o'zi sog'ayib ketgan edi.",
+      "rɪˈkəvər 9"
+     ],
+     [
+      "prescription (9)",
+      "retsept",
+      "The doctor had written a prescription.",
+      "Shifokor retsept yozgan edi.",
+      "prəˈskrɪpʃən 9"
+     ],
+     [
+      "relieved (10)",
+      "yengil tortgan",
+      "I'll be relieved when the final test has finished.",
+      "Final test tugagach yengil tortaman.",
+      "rɪˈlivd 10"
+     ],
+     [
+      "anxious (10)",
+      "xavotirda",
+      "Don't make yourself anxious before the test.",
+      "Testdan oldin o'zingni xavotirga solma.",
+      "ˈæŋʃəs 10"
+     ]
+    ],
+    "strong": [
+     [
+      "citizen (11)",
+      "fuqaro",
+      "He became a citizen after he had lived there for five years.",
+      "U besh yil yashaganidan keyin fuqaro bo'ldi.",
+      "ˈsɪtɪzən 11"
+     ],
+     [
+      "as soon as (11)",
+      "…bilanoq",
+      "I'll call you as soon as I finish.",
+      "Tugatishim bilanoq qo'ng'iroq qilaman.",
+      "ɛz sun ɛz 11"
+     ],
+     [
+      "forecast (12)",
+      "ob-havo ma'lumoti",
+      "The forecast says it had been raining for days.",
+      "Ma'lumotga ko'ra kunlab yomg'ir yog'gan.",
+      "ˈfɔrˌkæst 12"
+     ],
+     [
+      "drought (12)",
+      "qurg'oqchilik",
+      "The drought had been going on for months.",
+      "Qurg'oqchilik oylab davom etgan edi.",
+      "draʊt 12"
+     ],
+     [
+      "so far (13)",
+      "hozirgacha",
+      "We have learned 25 lessons so far.",
+      "Hozirgacha 25 dars o'rgandik.",
+      "soʊ fɑr 13"
+     ],
+     [
+      "achievement (13)",
+      "yutuq",
+      "Finishing IELTS 2.0 is an achievement in itself.",
+      "IELTS 2.0 ni tugatish — o'zi bir yutuq.",
+      "əˈʧivmənt 13"
+     ],
+     [
+      "witness (14)",
+      "guvoh",
+      "Who was the witness?",
+      "Guvoh kim edi?",
+      "ˈwɪtnəs 14"
+     ],
+     [
+      "innocent (14)",
+      "aybsiz",
+      "He proved himself innocent.",
+      "U aybsizligini o'zi isbotladi.",
+      "ˈɪnəsənt 14"
+     ],
+     [
+      "destination (15)",
+      "manzil",
+      "If I could choose any destination, I would go to Japan.",
+      "Istalgan manzilni tanlay olsam, Yaponiyaga borardim.",
+      "ˌdɛstɪˈneɪʃən 15"
+     ],
+     [
+      "accommodation (15)",
+      "turar joy",
+      "We found the accommodation ourselves.",
+      "Turar joyni o'zimiz topdik.",
+      "əˌkɑməˈdeɪʃən 15"
+     ],
+     [
+      "ingredient (16)",
+      "masalliq",
+      "Unless you have all the ingredients, don't start.",
+      "Hamma masalliq bo'lmasa, boshlama.",
+      "ˌɪnˈgridiənt 16"
+     ],
+     [
+      "dig in (16)",
+      "ovqatni boshlamoq",
+      "Help yourselves and dig in!",
+      "O'zingiz oling va boshlang!",
+      "dɪg ɪn 16"
+     ],
+     [
+      "timetable (17)",
+      "jadval",
+      "Could you tell me what the timetable is?",
+      "Jadval qanday, ayta olasizmi?",
+      "ˈtaɪmˌteɪbəl 17"
+     ],
+     [
+      "principal (17)",
+      "direktor",
+      "The principal himself welcomed us.",
+      "Bizni direktorning o'zi kutib oldi.",
+      "ˈprɪnsəpəl 17"
+     ],
+     [
+      "refund (18)",
+      "pulni qaytarish",
+      "I wish they would give me a refund.",
+      "Qaniydi pulimni qaytarishsa.",
+      "ˈriˌfənd 18"
+     ],
+     [
+      "bargain (18)",
+      "arzon xarid",
+      "I found the bargain myself.",
+      "Arzon xaridni o'zim topdim.",
+      "ˈbɑrgɪn 18"
+     ],
+     [
+      "accept / except (19)",
+      "qabul qilmoq / tashqari",
+      "Everyone accepted the offer except me.",
+      "Mendan tashqari hamma taklifni qabul qildi.",
+      "əkˈsɛpt  ɪkˈsɛpt 19"
+     ],
+     [
+      "advice / advise (19)",
+      "maslahat / maslahat bermoq",
+      "I advise you to trust yourself.",
+      "O'zingga ishonishni maslahat beraman.",
+      "ədˈvaɪs  ədˈvaɪz 19"
+     ],
+     [
+      "landlord (20)",
+      "uy egasi",
+      "You should call the landlord yourself.",
+      "Uy egasiga o'zing qo'ng'iroq qilishing kerak.",
+      "ˈlænˌdlɔrd 20"
+     ],
+     [
+      "deposit (20)",
+      "garov puli",
+      "Do I have to pay a deposit?",
+      "Garov puli to'lashim shartmi?",
+      "dɪˈpɑzət 20"
+     ]
+    ],
+    "super": [
+     [
+      "adolescence (21)",
+      "o'smirlik",
+      "Adolescence is called the most difficult stage.",
+      "O'smirlik eng qiyin bosqich deyiladi.",
+      "ˌædəˈlɛsəns 21"
+     ],
+     [
+      "be educated (21)",
+      "ta'lim olmoq",
+      "Beruni was educated in Kath, then taught himself many sciences.",
+      "Beruniy Kotda ta'lim olgan, keyin ko'p fanlarni o'zi o'rgangan.",
+      "bi ˈɛʤəˌkeɪtɪd 21"
+     ],
+     [
+      "salary (22)",
+      "oylik maosh",
+      "Salaries are being paid today.",
+      "Maoshlar bugun to'lanyapti.",
+      "ˈsæləri 22"
+     ],
+     [
+      "loan (22)",
+      "kredit",
+      "The loan is being paid off.",
+      "Kredit to'lab borilyapti.",
+      "loʊn 22"
+     ],
+     [
+      "traffic jam (23)",
+      "tirbandlik",
+      "We got stuck in a traffic jam by ourselves for an hour.",
+      "Bir soat tirbandlikda qolib ketdik.",
+      "ˈtræfɪk ʤæm 23"
+     ],
+     [
+      "detour (23)",
+      "aylanma yo'l",
+      "A detour has been set up.",
+      "Aylanma yo'l qo'yilgan.",
+      "ˈditʊr 23"
+     ],
+     [
+      "commute (24)",
+      "qatnamoq",
+      "My commute is exhausting.",
+      "Qatnovim holdan toydiradi.",
+      "kəmˈjut 24"
+     ],
+     [
+      "crowded (24)",
+      "gavjum",
+      "The bus was crowded and I was annoyed.",
+      "Avtobus gavjum edi va asabiylashdim.",
+      "ˈkraʊdɪd 24"
+     ],
+     [
+      "by myself",
+      "o'zim, yolg'iz",
+      "I did the whole test by myself.",
+      "Butun testni o'zim bajardim.",
+      "baɪ ˌmaɪˈsɛlf"
+     ],
+     [
+      "each other",
+      "bir-birini",
+      "Good classmates help each other.",
+      "Yaxshi sinfdoshlar bir-biriga yordam beradi.",
+      "iʧ ˈəðər"
+     ],
+     [
+      "enjoy yourself",
+      "maza qilmoq",
+      "Enjoy yourselves on holiday!",
+      "Ta'tilda maza qilinglar!",
+      "ˌɛnˈʤɔɪ ˈjɔrsɛlf"
+     ],
+     [
+      "help yourself",
+      "o'zi olmoq (taklif)",
+      "Help yourself to plov.",
+      "Palovdan o'zingiz oling.",
+      "hɛlp ˈjɔrsɛlf"
+     ],
+     [
+      "behave yourself",
+      "o'zini tutmoq",
+      "Behave yourself in the exam room.",
+      "Imtihon xonasida o'zingni tut.",
+      "bɪˈheɪv ˈjɔrsɛlf"
+     ],
+     [
+      "make yourself at home",
+      "o'zini uydagidek his qilmoq",
+      "Make yourselves at home.",
+      "O'zingizni uydagidek his qiling.",
+      "meɪk ˈjɔrsɛlf æt hoʊm"
+     ],
+     [
+      "introduce yourself",
+      "o'zini tanishtirmoq",
+      "Introduce yourself in English.",
+      "O'zingni ingliz tilida tanishtir.",
+      "ˌɪntrəˈdus ˈjɔrsɛlf"
+     ],
+     [
+      "believe in yourself",
+      "o'ziga ishonmoq",
+      "Believe in yourself — you have learned a lot.",
+      "O'zingga ishon — ko'p narsa o'rganding.",
+      "bɪˈliv ɪn ˈjɔrsɛlf"
+     ],
+     [
+      "scholar",
+      "olim",
+      "Beruni was a great scholar.",
+      "Beruniy buyuk olim edi.",
+      "ˈskɑlər"
+     ],
+     [
+      "measure",
+      "o'lchamoq",
+      "He measured the Earth himself.",
+      "U Yerni o'zi o'lchadi.",
+      "ˈmɛʒər"
+     ],
+     [
+      "calculation",
+      "hisob-kitob",
+      "His calculations were surprisingly accurate.",
+      "Uning hisob-kitoblari hayratlanarli darajada aniq edi.",
+      "ˌkælkjəˈleɪʃən"
+     ],
+     [
+      "polymath",
+      "ko'p sohali olim",
+      "Beruni was a polymath — he studied everything himself.",
+      "Beruniy ko'p sohali olim edi — hamma narsani o'zi o'rgangan.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "O'zlik olmoshi",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "I cut ___ while cooking.",
+      "She taught ___ to swim.",
+      "We built the bookshelf ___.",
+      "Did you enjoy ___ at the party, boys?",
+      "He lives by ___.",
+      "The cat washed ___.",
+      "They introduced ___ to the teacher.",
+      "You should believe in ___."
+     ],
+     "answers": [
+      "myself",
+      "herself",
+      "ourselves",
+      "yourselves",
+      "himself",
+      "itself",
+      "themselves",
+      "yourself"
+     ]
+    },
+    {
+     "title": "each other yoki themselves",
+     "type": "choose",
+     "instr": "To'g'risini tanlang",
+     "items": [
+      "The two friends helped each other / themselves.",
+      "The students prepared each other / themselves for the test.",
+      "Ibn Sina and Beruni wrote to each other / themselves.",
+      "They looked at each other / themselves in the mirror.",
+      "We call each other / ourselves every day."
+     ],
+     "answers": [
+      "each other",
+      "themselves",
+      "each other",
+      "themselves",
+      "each other"
+     ]
+    },
+    {
+     "title": "Kurs takrori — formulalar",
+     "type": "table",
+     "instr": "Har dars uchun bitta formula yozing (ustoz 10 tasini so'raydi)",
+     "items": [
+      "Present Perfect",
+      "Present Perfect Continuous",
+      "Past Perfect",
+      "Future Perfect",
+      "Conditional 2",
+      "Conditional 3",
+      "Passive simple",
+      "Passive continuous",
+      "Passive perfect",
+      "Wish (o'tgan)"
+     ],
+     "answers": [
+      "have/has + V3",
+      "have/has been + V-ing",
+      "had + V3",
+      "will have + V3",
+      "If + Past Simple, would + V1",
+      "If + Past Perfect, would have + V3",
+      "be + V3",
+      "be + being + V3",
+      "have/has/had been + V3",
+      "wish + Past Perfect"
+     ]
+    },
+    {
+     "title": "Kurs takrori — zamon tanlash",
+     "type": "choose",
+     "instr": "To'g'ri variantni tanlang",
+     "items": [
+      "I have lived / had lived here since 2020.",
+      "By the time you arrive, I will have finished / will finish.",
+      "If I were / was you, I would go.",
+      "The road is being repaired / is repairing now.",
+      "I wish I had / have more time.",
+      "Unless you hurry / don't hurry, you'll be late.",
+      "Could you tell me where the bank is / is the bank?",
+      "The film was boring / bored."
+     ],
+     "answers": [
+      "have lived",
+      "will have finished",
+      "were",
+      "is being repaired",
+      "had",
+      "hurry",
+      "the bank is",
+      "boring"
+     ]
+    },
+    {
+     "title": "Men o'zim",
+     "type": "speaking",
+     "instr": "Juftlikda: kurs davomida o'zingiz qilgan 6 narsa — reflexive bilan (\"I taught myself…\", \"by myself\", \"each other\")",
+     "items": [
+      "taught",
+      "by myself",
+      "each other",
+      "enjoyed",
+      "proud",
+      "next"
+     ],
+     "answers": [
+      "I taught myself 300 new words.",
+      "I did all the homework by myself.",
+      "My partner and I helped each other with speaking.",
+      "I enjoyed myself in the Kahoot games.",
+      "I'm proud of myself.",
+      "Next course I'll push myself even harder."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I taught me to swim.",
+      "They helped theirselves.",
+      "We looked at ourselves and smiled. (bir-biriga)",
+      "I feel myself tired.",
+      "She did it herself alone. (yolg'iz)"
+     ],
+     "answers": [
+      "I taught myself to swim.",
+      "They helped themselves.",
+      "We looked at each other and smiled.",
+      "I feel tired.",
+      "She did it by herself."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Final testga tayyorgarlik",
+     "type": "review",
+     "instr": "25 formula (har darsdan 1), har darsdan CORE 2 so'z, \"My plans by 2030\" (100 so'z) yozib kelish; Kahoot 20–25 (jonyos.uz)",
+     "answers": "Final test: 25 formula + 50 so'z + 10 tarjima + reading + writing."
+    },
+    {
+     "title": "Reading",
+     "type": "read",
+     "instr": "Kitob Topic 91–100 dan ikkitasi; har biriga 5 so'z + 3 gap (turli grammatika)",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Men o'zim haqimda",
+     "type": "write",
+     "instr": "8 gap reflexive bilan: taught myself, by myself, enjoy myself, each other, believe in myself…",
+     "answers": "Erkin."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men gitara chalishni o'zim o'rgandim.",
+      "U ovqat pishirayotib o'zini kesib oldi.",
+      "Biz javonni o'zimiz yasadik.",
+      "Ular bir-biriga yordam berishadi.",
+      "Beruniy Yer radiusini o'zi o'lchagan."
+     ],
+     "answers": [
+      "I taught myself to play the guitar.",
+      "She cut herself while cooking.",
+      "We built the bookshelf ourselves.",
+      "They help each other.",
+      "Beruni measured the radius of the Earth himself."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Kurs bo'yicha 60 so'z (CORE/STRONG/SUPER) — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "25 formula + har biriga 1 gap, 3 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Transport",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob: 8 olmosh + gap)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Kurs bo'yicha og'zaki",
+     "25 formula + 25 gap, 3 daqiqa",
+     "3 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Abu Rayhan Beruni — the man who measured the Earth himself",
+    "text": [
+     "Abu Rayhan Beruni was born in 973 in Kath, the old capital of Khorezm. He didn't come from a rich family, and he often said that he had taught himself most of what he knew. By the age of 17 he had already measured the position of the Sun, and by 22 he had written his first book about maps.",
+     "Beruni was a polymath: he studied astronomy, mathematics, geography, history, medicine and languages. He knew Khorezmian, Persian, Arabic, Sanskrit and Greek. He and Ibn Sina wrote letters to each other and argued about science — the two greatest minds of Central Asia, discussing physics by post!",
+     "In 1017 Beruni was taken to Ghazni (today's Afghanistan) by Sultan Mahmud, and from there he travelled to India many times. He learned Sanskrit by himself and wrote \"India\", the first scientific book about Indian culture, religion and science. Indians themselves say that nobody described their country better than this Uzbek scholar.",
+     "His most astonishing achievement was made in India. Standing on a mountain, Beruni measured the radius of the Earth himself with a simple instrument. His result was 6,339 km — the real number is 6,371 km. The difference is less than 1 percent! Europeans reached this accuracy only 600 years later.",
+     "Beruni wrote more than 150 books and died in 1048. Today a university, a district and a crater on the Moon are named after him. He believed that knowledge belongs to everybody: \"I don't do this for money or a king,\" he wrote, \"I do it for myself and for those who come after me.\""
+    ],
+    "glossary": [
+     "capital — poytaxt",
+     "position — joylashuv",
+     "polymath — ko'p sohali olim",
+     "argue — bahslashmoq",
+     "mind — aql",
+     "describe — tasvirlamoq",
+     "radius — radius",
+     "instrument — asbob",
+     "accuracy — aniqlik",
+     "district — tuman",
+     "belong to — tegishli bo'lmoq"
+    ],
+    "tasks": [
+     {
+      "title": "O'zlik olmoshlarini toping",
+      "type": "find",
+      "instr": "Matndan 5 ta reflexive / each other",
+      "items": [
+       "himself 1",
+       "each other",
+       "by himself",
+       "themselves",
+       "himself 2"
+      ],
+      "answers": [
+       "He had taught himself most of what he knew.",
+       "He and Ibn Sina wrote letters to each other.",
+       "He learned Sanskrit by himself.",
+       "Indians themselves say that nobody described their country better.",
+       "Beruni measured the radius of the Earth himself."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Beruni came from a rich family.",
+       "He wrote a book about India.",
+       "His measurement of the Earth was wrong by more than 10 percent.",
+       "A crater on the Moon is named after him."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False (less than 1%)",
+       "True"
+      ]
+     },
+     {
+      "title": "Kurs bo'yicha",
+      "type": "write",
+      "instr": "Matn asosida 5 gap — har biri boshqa grammatika bilan",
+      "items": [
+       "Past Perfect",
+       "passive",
+       "superlative",
+       "conditional 3",
+       "wish"
+      ],
+      "answers": [
+       "By 22 he had written his first book.",
+       "\"India\" was written after he had learned Sanskrit.",
+       "He was one of the greatest minds of Central Asia.",
+       "If he hadn't travelled to India, he wouldn't have written \"India\".",
+       "I wish I could read his books in the original."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 91–100 — uyga (tanlab)."
+   },
+   "listening": {
+    "audios": "Audio 91–100 (fayllar hali yo'q — ustoz kurs yakuni skriptini o'qiydi)",
+    "intro": [
+     "Skript: \"Congratulations! You have finished IELTS 2.0. Twenty-five lessons have been completed, and more than 1,500 words have been learned. Ask yourselves: what have I learned? You can now talk about the past, the present and the future; you can compare, describe and give advice. Enjoy yourselves during the holiday, but don't forget: unless you practise, you will forget. IELTS 3.0 starts next month — see you there!\"",
+     "1-tinglash: nechta dars tugatildi? 2-tinglash: raqamlar va maslahat."
+    ],
+    "tasks": [
+     {
+      "title": "Kurs yakuni",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "___ lessons have been completed.",
+       "More than ___ words have been learned.",
+       "Unless you ___, you will forget.",
+       "IELTS 3.0 starts ___."
+      ],
+      "answers": [
+       "Twenty-five",
+       "1,500",
+       "practise",
+       "next month"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

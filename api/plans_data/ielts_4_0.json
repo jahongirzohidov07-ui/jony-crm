@@ -1,0 +1,1915 @@
+{
+ "course": "ielts_4_0",
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Prefixes",
+   "grammar_topic": "PREFIKSLAR (un-, re-, in-/im-/ir-/il-, dis-, pre-, mis-, over-, under-, non-, anti-, inter-, sub-, super-, trans-, co-, auto-, semi-, bi-, mono-, multi-, de-, en-)",
+   "vocab_topic": "Essential Words 1 — Education (ta'lim, akademik so'zlar)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 1 – Prefixes (26 qatorli jadval); Essential Words 1; Sample essay 1; Audio 1–5 (fayllar yo'q — ustoz skripti); Reading — Abdurauf Fitrat (Jony Academy matni).",
+   "objectives": [
+    "26 prefiksning ma'nosini bilish va yangi so'z yasash (IELTS Reading uchun notanish so'zni taxmin qilish).",
+    "Inkor prefikslarini to'g'ri tanlash: un-/in-/im-/ir-/il-/dis-/non-.",
+    "Prefiksli so'zlarni Writing'da ishlatish (unemployment, overpopulation, international, multicultural).",
+    "Ta'lim akademik CORE 20 bilan IELTS Speaking Part 3 savollariga javob berish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 1 — Education (ta'lim, akademik so'zlar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz doskaga \"happy, write, possible, agree, national\" yozadi; o'quvchilar prefiks qo'shib yangi so'z yasaydi: unhappy, rewrite, impossible, disagree, international. Savol: prefiks so'zning qayeriga qo'shiladi va nima qiladi?"
+    ],
+    [
+     8,
+     "Kahoot — IELTS 3.0 yakuni",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — IELTS 3.0 yakuni lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 26 qator: inkor (un-, in-/im-/ir-/il-, dis-, non-), qayta (re-), oldin (pre-), noto'g'ri (mis-), ortiqcha/kam (over-/under-), qarshi (anti-), orasida (inter-), ost/ust (sub-/super-), o'tish (trans-), birga (co-), o'z-o'zidan (auto-), yarim/ikki/bir/ko'p (semi-/bi-/mono-/multi-), pastga (de-), ichkariga (en-/em-). Qoida: im- (b, m, p oldida), ir- (r), il- (l)."
+    ],
+    [
+     12,
+     "Essential Words 1 — Education (ta'lim, akademik so'zlar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Prefiks — so'z boshiga qo'shiladi, ma'noni o'zgartiradi, turkumni o'zgartirmaydi: happy (sifat) → unhappy (sifat).",
+     "INKOR: un- (unhappy), in- (invisible), im- (b/m/p oldida: impossible), ir- (r oldida: irregular), il- (l oldida: illegal), dis- (disagree), non- (nonviolent).",
+     "MA'NO: re- (qayta), pre- (oldin), mis- (noto'g'ri), over-/under- (ortiqcha/kam), anti- (qarshi), inter- (orasida), sub-/super- (ost/ust), trans- (o'tish), co- (birga), auto- (o'zi), semi-/bi-/mono-/multi- (yarim/ikki/bir/ko'p), de- (pastga, yo'qotish), en-/em- (ichkariga, sabab).",
+     "IELTS Reading: \"unprecedented\" = un + precedent + ed → ilgari bo'lmagan."
+    ],
+    "formulas": [
+     [
+      "Inkor: un- / dis- / non-",
+      "un + sifat/fe'l; dis + fe'l/sifat; non + ot/sifat",
+      "unhappy, disagree, nonviolent",
+      "baxtsiz, rozi bo'lmaslik, zo'ravonliksiz"
+     ],
+     [
+      "Inkor: in- / im- / ir- / il-",
+      "in + sifat; im (b,m,p); ir (r); il (l)",
+      "invisible, impossible, irregular, illegal",
+      "ko'rinmas, imkonsiz, tartibsiz, noqonuniy"
+     ],
+     [
+      "Qayta / oldin / noto'g'ri",
+      "re- / pre- / mis- + fe'l",
+      "rewrite, preview, misunderstand",
+      "qayta yozmoq, oldindan ko'rish, noto'g'ri tushunmoq"
+     ],
+     [
+      "Ortiqcha / kam / qarshi",
+      "over- / under- / anti-",
+      "overeat, underpaid, antisocial",
+      "haddan tashqari yemoq, kam haq to'langan, g'ayriijtimoiy"
+     ],
+     [
+      "Joy va yo'nalish",
+      "inter- / sub- / super- / trans-",
+      "international, submarine, superstar, transport",
+      "xalqaro, suvosti kemasi, superyulduz, transport"
+     ],
+     [
+      "Son va boshqa",
+      "co- / auto- / semi- / bi- / mono- / multi- / de- / en-",
+      "cooperate, automatic, semicircle, bilingual, monologue, multicultural, degrade, empower",
+      "hamkorlik qilmoq, avtomatik, yarim doira, ikki tilli, monolog, ko'p madaniyatli, qadrsizlantirmoq, kuch bermoq"
+     ]
+    ],
+    "presentation": [
+     [
+      "Is it possible to learn a language in a month?",
+      "No, it's impossible — but it's possible to learn the basics."
+     ],
+     [
+      "Did you understand the lecture?",
+      "I misunderstood one part, so I re-read my notes."
+     ],
+     [
+      "Is your school international?",
+      "Yes, it's multicultural — students from six countries."
+     ],
+     [
+      "Are some students underpaid after graduation?",
+      "Yes, many graduates are underpaid and overworked."
+     ],
+     [
+      "Is the exam schedule regular?",
+      "No, it's irregular this term."
+     ],
+     [
+      "Do you agree that homework is useless?",
+      "I disagree — but overloading students is unhelpful."
+     ],
+     [
+      "Is the library automatic?",
+      "Yes, the doors are automatic and the system is semi-digital."
+     ],
+     [
+      "Are you bilingual?",
+      "I'm bilingual now and I'm becoming trilingual."
+     ],
+     [
+      "Is cheating illegal at university?",
+      "It's not illegal, but it's unacceptable."
+     ],
+     [
+      "What does \"empower\" mean?",
+      "To give power: education empowers people."
+     ]
+    ],
+    "notes": [
+     "Prefiks turkumni o'zgartirmaydi; suffiks (2-dars) o'zgartiradi.",
+     "im- faqat b/m/p oldida: impossible, immature, imbalance; ir- faqat r: irresponsible; il- faqat l: illogical.",
+     "dis- ko'pincha fe'l bilan: disagree, disappear, dislike; un- sifat bilan: unable, unfair, unusual.",
+     "Essential Words 1 — akademik ta'lim so'zlari: curriculum, assessment, undergraduate, postgraduate, scholarship, tuition, literacy."
+    ],
+    "mistakes": [
+     [
+      "unpossible",
+      "impossible",
+      "p oldida im-."
+     ],
+     [
+      "unregular",
+      "irregular",
+      "r oldida ir-."
+     ],
+     [
+      "inlegal",
+      "illegal",
+      "l oldida il-."
+     ],
+     [
+      "disunderstand",
+      "misunderstand",
+      "Noto'g'ri → mis-."
+     ],
+     [
+      "He is unemploy.",
+      "He is unemployed.",
+      "Prefiks + to'g'ri turkum (sifat)."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — ta'limning akademik otlari (curriculum, tuition, scholarship…); STRONG — jarayon va odamlar (undergraduate, lecturer, assessment); SUPER — prefiksli akademik so'zlar (underachieve, interdisciplinary, multilingual).",
+     "Har so'zga prefiks bilan juft yasash: literate → illiterate; formal → informal; graduate → undergraduate/postgraduate."
+    ],
+    "core": [
+     [
+      "curriculum",
+      "o'quv dasturi",
+      "The new curriculum is interdisciplinary.",
+      "Yangi o'quv dasturi fanlararo.",
+      "kərˈɪkjələm"
+     ],
+     [
+      "tuition (fees)",
+      "o'qish to'lovi",
+      "Tuition fees are unaffordable for many families.",
+      "O'qish to'lovi ko'p oilalar uchun qimmat.",
+      "tjuˈɪʃən (fiz)"
+     ],
+     [
+      "scholarship",
+      "stipendiya, grant",
+      "A scholarship makes higher education possible for the underprivileged.",
+      "Grant kam ta'minlanganlar uchun oliy ta'limni mumkin qiladi.",
+      "ˈskɑlərˌʃɪp"
+     ],
+     [
+      "literacy",
+      "savodxonlik",
+      "Illiteracy is uncommon in Uzbekistan now.",
+      "O'zbekistonda savodsizlik endi kam uchraydi.",
+      "ˈlɪtərəsi"
+     ],
+     [
+      "undergraduate",
+      "bakalavr talabasi",
+      "Undergraduates often feel overworked.",
+      "Bakalavr talabalari ko'pincha o'zini haddan tashqari band his qiladi.",
+      "ˌəndərˈgræʤəwət"
+     ],
+     [
+      "postgraduate",
+      "magistr/doktorant",
+      "Postgraduate research is international.",
+      "Magistratura tadqiqoti xalqaro.",
+      ""
+     ],
+     [
+      "assessment (4.0)",
+      "baholash",
+      "Continuous assessment is unpopular with lazy students.",
+      "Doimiy baholash dangasa talabalarga yoqmaydi.",
+      ""
+     ],
+     [
+      "lecture",
+      "ma'ruza",
+      "I misunderstood half of the lecture.",
+      "Ma'ruzaning yarmini noto'g'ri tushundim.",
+      "ˈlɛkʧər"
+     ],
+     [
+      "seminar",
+      "seminar",
+      "Seminars are semi-formal discussions.",
+      "Seminarlar — yarim rasmiy muhokamalar.",
+      "ˈsɛməˌnɑr"
+     ],
+     [
+      "academic",
+      "akademik",
+      "Academic writing is impersonal.",
+      "Akademik yozuv shaxssiz.",
+      "ˌækəˈdɛmɪk"
+     ],
+     [
+      "qualification",
+      "malaka (diplom)",
+      "An unrecognised qualification is useless abroad.",
+      "Tan olinmagan malaka chet elda foydasiz.",
+      "kˌwɑləfəˈkeɪʃən"
+     ],
+     [
+      "degree (4.0)",
+      "(ilmiy) daraja, diplom",
+      "A bilingual degree is an advantage.",
+      "Ikki tilli diplom — ustunlik.",
+      ""
+     ],
+     [
+      "compulsory",
+      "majburiy",
+      "Uniforms are compulsory, not optional.",
+      "Forma majburiy, ixtiyoriy emas.",
+      "kəmˈpəlsəri"
+     ],
+     [
+      "vocational",
+      "kasb-hunar (ta'limi)",
+      "Vocational training is undervalued.",
+      "Kasb-hunar ta'limi kam qadrlanadi.",
+      "voʊˈkeɪʃənəl"
+     ],
+     [
+      "discipline (subject)",
+      "fan (soha)",
+      "Multidisciplinary courses mix disciplines.",
+      "Ko'p fanli kurslar sohalarni aralashtiradi.",
+      "ˈdɪsəplən (ˈsəbʤɪkt)"
+     ],
+     [
+      "peer",
+      "tengdosh",
+      "Peer review is irreplaceable in science.",
+      "Tengdosh taqrizi fanda o'rnini bosib bo'lmaydigan narsa.",
+      "pɪr"
+     ],
+     [
+      "mentor (4.0)",
+      "mentor, ustoz",
+      "A good mentor never discourages students.",
+      "Yaxshi mentor hech qachon talabalarning ruhini tushirmaydi.",
+      ""
+     ],
+     [
+      "motivation (4.0)",
+      "motivatsiya",
+      "Demotivation is the main reason students drop out.",
+      "Motivatsiya yo'qligi — talabalar o'qishni tashlashining asosiy sababi.",
+      ""
+     ],
+     [
+      "distance learning",
+      "masofaviy ta'lim",
+      "Distance learning is impossible without the internet.",
+      "Masofaviy ta'lim internetsiz mumkin emas.",
+      "ˈdɪstəns ˈlərnɪŋ"
+     ],
+     [
+      "enlightenment (4.0)",
+      "ma'rifat",
+      "Fitrat's enlightenment ideas were misunderstood at first.",
+      "Fitratning ma'rifat g'oyalari avvaliga noto'g'ri tushunildi.",
+      ""
+     ]
+    ],
+    "strong": [
+     [
+      "lecturer / professor",
+      "o'qituvchi (OTM) / professor",
+      "The lecturer co-wrote the textbook with a professor.",
+      "O'qituvchi darslikni professor bilan birga yozgan.",
+      "ˈlɛkʧərər  prəˈfɛsər"
+     ],
+     [
+      "faculty",
+      "fakultet",
+      "The faculty is understaffed.",
+      "Fakultetda xodim yetishmaydi.",
+      "ˈfækəlti"
+     ],
+     [
+      "enrol / enrolment",
+      "o'qishga kirmoq / qabul",
+      "Enrolment is irregular in rural areas.",
+      "Qishloqlarda qabul tartibsiz.",
+      ""
+     ],
+     [
+      "graduate (v)",
+      "bitirmoq",
+      "Undergraduates who graduate late are not unusual.",
+      "Kech bitiradigan talabalar g'ayrioddiy emas.",
+      "ˈgræʤəˌweɪt (vi)"
+     ],
+     [
+      "dissertation / thesis",
+      "dissertatsiya",
+      "A thesis is reviewed by an independent examiner.",
+      "Dissertatsiya mustaqil imtihonchi tomonidan ko'rib chiqiladi.",
+      "ˌdɪsərˈteɪʃən  ˈθiˌsɪs"
+     ],
+     [
+      "plagiarism",
+      "plagiat",
+      "Plagiarism is unacceptable and illegal.",
+      "Plagiat qabul qilib bo'lmaydigan va noqonuniy.",
+      "ˈpleɪʤərˌɪzəm"
+     ],
+     [
+      "literacy rate",
+      "savodxonlik darajasi",
+      "The literacy rate is 100% — illiteracy has disappeared.",
+      "Savodxonlik darajasi 100% — savodsizlik yo'qoldi.",
+      "ˈlɪtərəsi reɪt"
+     ],
+     [
+      "higher education",
+      "oliy ta'lim",
+      "Higher education is overcrowded in big cities.",
+      "Katta shaharlarda oliy ta'lim haddan tashqari gavjum.",
+      "haɪər ˌɛʤəˈkeɪʃən"
+     ],
+     [
+      "primary / secondary education",
+      "boshlang'ich / o'rta ta'lim",
+      "Secondary education is compulsory and non-selective.",
+      "O'rta ta'lim majburiy va tanlovsiz.",
+      "ˈpraɪˌmɛri  ˈsɛkənˌdɛri ˌɛʤəˈkeɪʃən"
+     ],
+     [
+      "private / state school",
+      "xususiy / davlat maktabi",
+      "Private schools are unaffordable for most.",
+      "Xususiy maktablar ko'pchilik uchun qimmat.",
+      "ˈpraɪvət  steɪt skul"
+     ],
+     [
+      "gap year",
+      "(o'qishdan oldingi) tanaffus yili",
+      "A gap year is unpopular with Uzbek parents.",
+      "Tanaffus yili o'zbek ota-onalariga yoqmaydi.",
+      "gæp jɪr"
+     ],
+     [
+      "extracurricular (4.0)",
+      "darsdan tashqari",
+      "Extracurricular clubs are semi-official.",
+      "Darsdan tashqari to'garaklar yarim rasmiy.",
+      ""
+     ],
+     [
+      "rote learning",
+      "quruq yodlash",
+      "Rote learning is outdated and unproductive.",
+      "Quruq yodlash eskirgan va samarasiz.",
+      "roʊt ˈlərnɪŋ"
+     ],
+     [
+      "critical thinking (4.0)",
+      "tanqidiy fikrlash",
+      "Critical thinking is undeveloped in rote systems.",
+      "Quruq yodlash tizimlarida tanqidiy fikrlash rivojlanmagan.",
+      ""
+     ],
+     [
+      "attendance",
+      "davomat",
+      "Irregular attendance is unacceptable.",
+      "Tartibsiz davomat qabul qilinmaydi.",
+      "əˈtɛndəns"
+     ],
+     [
+      "drop out (4.0)",
+      "o'qishni tashlamoq",
+      "Unmotivated students drop out.",
+      "Motivatsiyasiz talabalar o'qishni tashlaydi.",
+      ""
+     ],
+     [
+      "syllabus",
+      "fan dasturi",
+      "The syllabus is overloaded.",
+      "Fan dasturi ortiqcha yuklangan.",
+      "ˈsɪləbəs"
+     ],
+     [
+      "grant",
+      "grant (mablag')",
+      "An international grant funded the research.",
+      "Xalqaro grant tadqiqotni moliyalashtirdi.",
+      "grænt"
+     ],
+     [
+      "tutor (4.0)",
+      "repetitor, tyutor",
+      "Private tutors are unregulated.",
+      "Xususiy repetitorlar tartibga solinmagan.",
+      ""
+     ],
+     [
+      "reform (education)",
+      "islohot",
+      "The 1920s reform was pre-Soviet in spirit.",
+      "1920-yillar islohoti ruhan sovetdan oldingi edi.",
+      "rɪˈfɔrm (ˌɛʤəˈkeɪʃən)"
+     ]
+    ],
+    "super": [
+     [
+      "underachieve",
+      "past natija ko'rsatmoq",
+      "Gifted students sometimes underachieve.",
+      "Iqtidorli talabalar ba'zan past natija ko'rsatadi.",
+      ""
+     ],
+     [
+      "overestimate / underestimate",
+      "ortiqcha / kam baholamoq",
+      "Don't underestimate vocational skills.",
+      "Kasb-hunar ko'nikmalarini kam baholama.",
+      "ˌoʊvərˈɛstəˌmeɪt  ˈəndərˈɛstəˌmeɪt"
+     ],
+     [
+      "interdisciplinary",
+      "fanlararo",
+      "Interdisciplinary research connects biology and AI.",
+      "Fanlararo tadqiqot biologiya va AI ni bog'laydi.",
+      "ˌɪntərˈdɪsəpləˌnɛri"
+     ],
+     [
+      "multilingual",
+      "ko'p tilli",
+      "Multilingual schools are common in Tashkent.",
+      "Toshkentda ko'p tilli maktablar keng tarqalgan.",
+      "ˌməltiˈlɪŋwəl"
+     ],
+     [
+      "unprecedented",
+      "misli ko'rilmagan",
+      "Online learning grew at an unprecedented rate.",
+      "Onlayn ta'lim misli ko'rilmagan sur'atda o'sdi.",
+      "ənˈprɛsɪˌdɛntɪd"
+     ],
+     [
+      "irrelevant",
+      "ahamiyatsiz, aloqasiz",
+      "Half the syllabus is irrelevant to real jobs.",
+      "Fan dasturining yarmi real ishlarga aloqasiz.",
+      "ˌɪˈrɛləvənt"
+     ],
+     [
+      "inadequate",
+      "yetarli bo'lmagan",
+      "Inadequate funding closes libraries.",
+      "Yetarli bo'lmagan moliya kutubxonalarni yopadi.",
+      "ˌɪˈnædəkˌweɪt"
+     ],
+     [
+      "disadvantaged",
+      "imkoniyati cheklangan",
+      "Disadvantaged children need free tuition.",
+      "Imkoniyati cheklangan bolalarga bepul o'qish kerak.",
+      "ˌdɪsədˈvænɪʤd"
+     ],
+     [
+      "non-native",
+      "ona tili bo'lmagan",
+      "Non-native teachers can be excellent.",
+      "Ona tili bo'lmagan o'qituvchilar a'lo bo'lishi mumkin.",
+      "ˈnɑˈneɪtɪv"
+     ],
+     [
+      "pre-school",
+      "maktabgacha",
+      "Pre-school education is semi-compulsory now.",
+      "Maktabgacha ta'lim endi yarim majburiy.",
+      ""
+     ],
+     [
+      "re-sit (an exam)",
+      "(imtihonni) qayta topshirmoq",
+      "Students who fail can re-sit the exam.",
+      "Yiqilgan talabalar imtihonni qayta topshirishi mumkin.",
+      ""
+     ],
+     [
+      "misinform",
+      "noto'g'ri ma'lumot bermoq",
+      "Social media misinforms students about grants.",
+      "Ijtimoiy tarmoqlar talabalarga grantlar haqida noto'g'ri ma'lumot beradi.",
+      "mɪˌsɪnˈfɔrm"
+     ],
+     [
+      "co-educational",
+      "qo'shma (o'g'il-qiz) ta'lim",
+      "Co-educational schools are the norm.",
+      "Qo'shma ta'lim maktablari — odatiy hol.",
+      ""
+     ],
+     [
+      "self-directed (4.0)",
+      "mustaqil (o'zi boshqaradigan)",
+      "Self-directed study needs discipline.",
+      "Mustaqil o'qish intizom talab qiladi.",
+      ""
+     ],
+     [
+      "autonomous learner",
+      "mustaqil o'rganuvchi",
+      "Universities want autonomous learners.",
+      "Universitetlar mustaqil o'rganuvchilarni xohlaydi.",
+      "ɔˈtɑnəməs ˈlərnər"
+     ],
+     [
+      "decentralise",
+      "markazdan tashqariga o'tkazmoq",
+      "The ministry decentralised school budgets.",
+      "Vazirlik maktab byudjetlarini markazdan tashqariga o'tkazdi.",
+      ""
+     ],
+     [
+      "empower (4.0)",
+      "imkoniyat bermoq, kuch bermoq",
+      "Education empowers women.",
+      "Ta'lim ayollarga imkoniyat beradi.",
+      ""
+     ],
+     [
+      "transnational",
+      "transmilliy",
+      "Transnational universities open branches abroad.",
+      "Transmilliy universitetlar chet elda filial ochadi.",
+      "trænsˈnæʃənəl"
+     ],
+     [
+      "semi-skilled",
+      "yarim malakali",
+      "Semi-skilled workers need retraining.",
+      "Yarim malakali ishchilarga qayta o'qitish kerak.",
+      ""
+     ],
+     [
+      "Jadid",
+      "jadid (ma'rifatchi)",
+      "The Jadids reformed education a century ago.",
+      "Jadidlar bir asr oldin ta'limni isloh qildi.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Prefiks qo'shing",
+     "type": "gap",
+     "instr": "Inkor prefiksi (un-/in-/im-/ir-/il-/dis-/non-)",
+     "items": [
+      "___possible",
+      "___regular",
+      "___legal",
+      "___agree",
+      "___happy",
+      "___visible",
+      "___violent",
+      "___responsible"
+     ],
+     "answers": [
+      "impossible",
+      "irregular",
+      "illegal",
+      "disagree",
+      "unhappy",
+      "invisible",
+      "nonviolent",
+      "irresponsible"
+     ]
+    },
+    {
+     "title": "Ma'noga qarab prefiks",
+     "type": "choose",
+     "instr": "To'g'ri prefiksni tanlang",
+     "items": [
+      "to write again",
+      "to understand wrongly",
+      "paid too little",
+      "between nations",
+      "with many cultures",
+      "speaking two languages",
+      "against society",
+      "to see before"
+     ],
+     "answers": [
+      "rewrite",
+      "misunderstand",
+      "underpaid",
+      "international",
+      "multicultural",
+      "bilingual",
+      "antisocial",
+      "preview"
+     ]
+    },
+    {
+     "title": "Prefiksli so'zni gapga",
+     "type": "rewrite",
+     "instr": "Gapni prefiksli so'z bilan qayta yozing",
+     "items": [
+      "The exam was not fair.",
+      "He paid too much for tuition.",
+      "She read the text again.",
+      "The rule is not logical.",
+      "They work together on research.",
+      "The students were not motivated."
+     ],
+     "answers": [
+      "The exam was unfair.",
+      "He overpaid for tuition.",
+      "She reread the text.",
+      "The rule is illogical.",
+      "They cooperate on research.",
+      "The students were unmotivated."
+     ]
+    },
+    {
+     "title": "IELTS Speaking Part 3",
+     "type": "speaking",
+     "instr": "Juftlikda: 5 savol — javobda kamida 2 prefiksli so'z va 2 Essential so'z",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "Is university education overrated? — Partly; vocational training is underestimated.",
+      "Should tuition be free? — It's unaffordable for the disadvantaged, so yes.",
+      "Are exams a fair assessment? — They're impersonal but not irrelevant.",
+      "Is distance learning effective? — It's semi-effective without self-discipline.",
+      "What did the Jadids change? — They replaced rote learning with an interdisciplinary curriculum."
+     ]
+    },
+    {
+     "title": "Ta'lim lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "money given to a student to pay for study",
+      "the subjects a school teaches",
+      "a student doing a bachelor's degree",
+      "required by rules, not optional",
+      "copying someone's work as your own",
+      "learning by memorising, without understanding"
+     ],
+     "answers": [
+      "scholarship",
+      "curriculum",
+      "undergraduate",
+      "compulsory",
+      "plagiarism",
+      "rote learning"
+     ],
+     "box": [
+      "scholarship",
+      "curriculum",
+      "undergraduate",
+      "compulsory",
+      "plagiarism",
+      "rote learning"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "unpossible",
+      "unregular",
+      "inlegal",
+      "disunderstand",
+      "He is unemploy."
+     ],
+     "answers": [
+      "impossible",
+      "irregular",
+      "illegal",
+      "misunderstand",
+      "He is unemployed."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 1 jadvalini (26 prefiks) 3 marta; Essential Words 1 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 1",
+     "type": "write",
+     "instr": "Kitobdagi Sample essay 1 ni o'qing, tuzilmasini chizing; shu mavzuda o'z inshoingizni yozing (250 so'z) — kamida 8 prefiksli so'z",
+     "answers": "Ustoz IELTS Task 2 rubrikasi bilan (TR, CC, LR, GRA)."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Kitobdagi Reading practice test 1-passage — 20 daqiqada; javoblarni kalit bilan tekshiring",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Bu imkonsiz.",
+      "Men ma'ruzani noto'g'ri tushundim.",
+      "Maktabimiz ko'p madaniyatli va xalqaro.",
+      "Ko'p bitiruvchilarga kam haq to'lanadi.",
+      "Ta'lim ayollarga imkoniyat beradi."
+     ],
+     "answers": [
+      "It's impossible.",
+      "I misunderstood the lecture.",
+      "Our school is multicultural and international.",
+      "Many graduates are underpaid.",
+      "Education empowers women."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 1 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "26 prefiks + har biriga 1 so'z, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Kombinatsiya (kitob jadvali, 26 prefiks)",
+     "1.5 daqiqada 1 marta / 3 daqiqada 2 / 4 daqiqada 3",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 1 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ],
+    [
+     "Yozma normativ (keyingi dars)",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Abdurauf Fitrat — the man who rewrote Uzbek education",
+    "text": [
+     "Abdurauf Fitrat was born in 1886 in Bukhara, then an independent emirate with an unreformed, medieval education system. Boys memorised Arabic texts for years without understanding them; girls were mostly uneducated. Fitrat studied at a madrasa, but he was dissatisfied. In 1909 he went to Istanbul, where he saw modern, multilingual schools, and he returned with an unpopular idea: Bukhara had to rethink everything.",
+     "He became the leading thinker of the Jadids — the \"new-method\" reformers. In his books he wrote that a nation with an illiterate population could never be independent. He designed a new curriculum, wrote textbooks and dictionaries, and co-founded schools where children learned science, geography and languages instead of rote learning. When the emir's government misunderstood him as a revolutionary and threatened him, he continued from Tashkent.",
+     "In the 1920s Fitrat was, for a short time, the minister of education of the Bukhara republic. He reorganised the university, sent students abroad on scholarships to Germany and wrote plays, poems and the first serious works on Uzbek music and literature. His interdisciplinary mind moved between linguistics, history, drama and politics.",
+     "In 1937, during the repression, Fitrat was arrested and in October 1938 he was shot — together with Qodiriy and Cho'lpon. His books were banned for fifty years. He was rehabilitated in 1956, and today his name is on the Institute of Uzbek Language and Literature. Unprecedented for his time, his idea is now obvious: education is the precondition of independence."
+    ],
+    "glossary": [
+     "emirate — amirlik",
+     "unreformed — isloh qilinmagan",
+     "medieval — o'rta asrlarga oid",
+     "memorise — yodlamoq",
+     "dissatisfied — norozi",
+     "reformer — islohotchi",
+     "illiterate — savodsiz",
+     "co-found — birga asos solmoq",
+     "threaten — tahdid qilmoq",
+     "reorganise — qayta tashkil qilmoq",
+     "precondition — dastlabki shart"
+    ],
+    "tasks": [
+     {
+      "title": "Prefiksli so'zlarni toping",
+      "type": "find",
+      "instr": "Matndan 10 ta prefiksli so'z va prefiksning ma'nosi",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8",
+       "9",
+       "10"
+      ],
+      "answers": [
+       "independent (in- inkor)",
+       "unreformed (un- inkor)",
+       "uneducated (un- inkor)",
+       "dissatisfied (dis- inkor)",
+       "multilingual (multi- ko'p)",
+       "rethink (re- qayta)",
+       "illiterate (il- inkor)",
+       "co-founded (co- birga)",
+       "misunderstood (mis- noto'g'ri)",
+       "reorganised / interdisciplinary / unprecedented / precondition (re-, inter-, un-, pre-)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Fitrat was born in Tashkent.",
+       "He saw modern schools in Istanbul.",
+       "He was minister of education in the 1920s.",
+       "His books were never banned."
+      ],
+      "answers": [
+       "False (Bukhara)",
+       "True",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Ta'lim lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta ta'lim so'zi; Fitratning asosiy g'oyasi (1 gap)",
+      "items": [
+       "words",
+       "idea"
+      ],
+      "answers": [
+       "education system, memorised, curriculum, textbooks, schools, rote learning, university, scholarships, literacy",
+       "A nation cannot be independent without an educated, literate population."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 1 va Practice test reading — uyga."
+   },
+   "listening": {
+    "audios": "Audio 1–5 (fayllar yo'q — ustoz IELTS Section 1 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Good morning, this is the International Language Centre. Our pre-sessional course starts on 5 September and is compulsory for non-native speakers. Tuition is 400 dollars, but disadvantaged students can apply for a scholarship — the deadline is 20 August. Classes are semi-online: three days at the centre, two days on the platform. Please don't misunderstand: attendance is checked, and irregular attendance means you re-sit the course.\"",
+     "1-tinglash: kurs qachon boshlanadi? 2-tinglash: jadval (IELTS form-completion)."
+    ],
+    "tasks": [
+     {
+      "title": "Form completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha (IELTS Section 1 uslubi)",
+      "items": [
+       "Course starts: ___ September",
+       "Compulsory for: ___ speakers",
+       "Tuition: ___ dollars",
+       "Scholarship deadline: ___ August",
+       "Format: ___ days at the centre, ___ online"
+      ],
+      "answers": [
+       "5",
+       "non-native",
+       "400",
+       "20",
+       "three, two"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "no": 2,
+   "title": "Suffixes",
+   "grammar_topic": "SUFFIKSLAR — so'z turkumini yasovchi qo'shimchalar (-able, -ness, -ment, -ful, -less, -ous, -al, -er/-or, -ist, -ic, -ly, -en, -tion, -ity, -ship, -hood, -ance, -y)",
+   "vocab_topic": "Essential Words 2 — Environment (atrof-muhit)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 4.0: Lesson 2 – Suffixes (20 qatorli jadval); Essential Words 2; Sample essay 2; Audio 6–10 (ustoz skripti); Reading — Leonardo DiCaprio (Jony Academy matni).",
+   "objectives": [
+    "Suffiks bilan so'z turkumini o'zgartirish (fe'l → ot → sifat → ravish).",
+    "So'z oilalarini (word families) tuzish: develop → development → developed → developer.",
+    "IELTS Reading'da suffiksdan turkumni taxmin qilish; Writing'da ot-sifat almashtirish (LR ballari).",
+    "Atrof-muhit CORE 20 bilan iqlim, ifloslanish va barqarorlik haqida yozish/gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Essential Words 2 — Environment (atrof-muhit) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz \"pollute\" so'zini yozadi; o'quvchilar oila yasaydi: pollution (ot), polluted (sifat), polluter (odam), pollutant (modda). Keyin \"sustain\": sustainable, sustainability, sustainably."
+    ],
+    [
+     8,
+     "Kahoot — Prefixes",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Prefixes lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 20 qator: OT yasovchi (-ness, -ment, -tion/-sion, -ity, -ship, -hood, -ance/-ence, -er/-or, -ist), SIFAT yasovchi (-able/-ible, -ful, -less, -ous, -al, -ic, -y, -ed, -ing), RAVISH (-ly), FE'L (-en). IELTS Writing: so'z oilasi (word family) — bitta ildizdan 4 turkum: environment → environmental → environmentally → environmentalist."
+    ],
+    [
+     12,
+     "Essential Words 2 — Environment (atrof-muhit) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Suffiks — so'z OXIRIga qo'shiladi va TURKUMNI o'zgartiradi: happy (sifat) → happiness (ot) → happily (ravish).",
+     "OT: -ness (happiness), -ment (development), -tion/-sion (creation, decision), -ity (activity), -ship (friendship), -hood (childhood), -ance/-ence (importance, silence); ODAM: -er/-or (teacher, actor), -ist (artist, environmentalist).",
+     "SIFAT: -able/-ible (readable), -ful (beautiful), -less (hopeless), -ous (dangerous), -al (natural), -ic (poetic), -y (snowy), -ed/-ing (finished, running).",
+     "RAVISH: -ly (quickly, environmentally); FE'L: -en (widen, strengthen).",
+     "IELTS: \"sustain (v) → sustainable (adj) → sustainability (n) → sustainably (adv)\" — bitta so'z, to'rt ball."
+    ],
+    "formulas": [
+     [
+      "Ot yasovchi",
+      "-ness / -ment / -tion / -ity / -ship / -hood / -ance",
+      "happiness, development, creation, activity, friendship, childhood, importance",
+      "baxtlilik, rivojlanish, yaratish, faoliyat, do'stlik, bolalik, ahamiyat"
+     ],
+     [
+      "Odam yasovchi",
+      "-er / -or / -ist",
+      "teacher, actor, artist / environmentalist",
+      "o'qituvchi, aktyor, rassom / ekolog-faol"
+     ],
+     [
+      "Sifat yasovchi",
+      "-able / -ful / -less / -ous / -al / -ic / -y",
+      "readable, beautiful, hopeless, dangerous, natural, poetic, snowy",
+      "o'qish mumkin, go'zal, umidsiz, xavfli, tabiiy, she'riy, qorli"
+     ],
+     [
+      "Sifat: -ed / -ing",
+      "V + ed / V + ing",
+      "finished, running / polluted, polluting",
+      "tugagan, yugurayotgan / ifloslangan, ifloslantiruvchi"
+     ],
+     [
+      "Ravish / fe'l",
+      "-ly / -en",
+      "quickly, environmentally / widen, strengthen",
+      "tez, ekologik jihatdan / kengaytirmoq, kuchaytirmoq"
+     ],
+     [
+      "So'z oilasi",
+      "ildiz + suffikslar",
+      "sustain → sustainable → sustainability → sustainably",
+      "saqlamoq → barqaror → barqarorlik → barqaror tarzda"
+     ]
+    ],
+    "presentation": [
+     [
+      "What is the biggest environmental problem?",
+      "Pollution — and the carelessness of polluters."
+     ],
+     [
+      "Is plastic harmful?",
+      "Yes, it's harmful and hopelessly slow to break down."
+     ],
+     [
+      "What is sustainability?",
+      "Sustainability is the ability to continue without harming the future."
+     ],
+     [
+      "Is DiCaprio an actor or an activist?",
+      "He's an actor and an environmentalist."
+     ],
+     [
+      "Is the river drinkable?",
+      "No, it's undrinkable — dangerously polluted."
+     ],
+     [
+      "How can we strengthen environmental laws?",
+      "By toughening penalties and widening protected areas."
+     ],
+     [
+      "Is deforestation reversible?",
+      "Partly — reforestation is possible but slow."
+     ],
+     [
+      "Are electric cars environmentally friendly?",
+      "Environmentally, yes — but their production is energy-intensive."
+     ],
+     [
+      "What is your government's commitment?",
+      "A commitment to carbon neutrality by 2050."
+     ],
+     [
+      "Is the situation hopeless?",
+      "Not hopeless, but worrying."
+     ]
+    ],
+    "notes": [
+     "Imlo: happy → happiness (y → i); create → creation (e tushadi); big → bigger (undosh ikkilanadi).",
+     "-ful faqat bitta l: beautiful, careful; -fully: carefully.",
+     "-ic / -ical: historic (tarixiy ahamiyatli) / historical (tarixga oid); economic / economical.",
+     "Essential Words 2 — environment: pollution, emission, sustainability, conservation, renewable, deforestation, biodiversity, carbon footprint."
+    ],
+    "mistakes": [
+     [
+      "happyness",
+      "happiness",
+      "y → i."
+     ],
+     [
+      "beautifull",
+      "beautiful",
+      "bitta l."
+     ],
+     [
+      "environmentaly",
+      "environmentally",
+      "-al + -ly = -ally."
+     ],
+     [
+      "creatation",
+      "creation",
+      "e tushadi."
+     ],
+     [
+      "He is an environmental.",
+      "He is an environmentalist.",
+      "Odam → -ist."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — atrof-muhit so'z oilalari (pollute/pollution, sustain/sustainable…); STRONG — muammo va yechim so'zlari; SUPER — Writing Task 2 uchun akademik birikmalar.",
+     "Har so'zga oila: 3 turkum yozish (n / adj / adv) — \"conservation / conservational? → conserve (v), conservationist (n)\"."
+    ],
+    "core": [
+     [
+      "pollution / pollute / polluted",
+      "ifloslanish / ifloslantirmoq / ifloslangan",
+      "Industrial pollution has polluted the river badly.",
+      "Sanoat ifloslanishi daryoni qattiq ifloslantirdi.",
+      "pəˈluʃən  pəˈlut  pəˈlutɪd"
+     ],
+     [
+      "emission",
+      "chiqindi gaz",
+      "Carbon emissions are dangerously high.",
+      "Uglerod chiqindilari xavfli darajada yuqori.",
+      "ɪˈmɪʃən"
+     ],
+     [
+      "sustainability / sustainable",
+      "barqarorlik / barqaror",
+      "Sustainability is measurable; sustainable growth is achievable.",
+      "Barqarorlikni o'lchash mumkin; barqaror o'sishga erishish mumkin.",
+      "səˌsteɪnəˈbɪlɪti  səˈsteɪnəbəl"
+     ],
+     [
+      "conservation / conservationist",
+      "muhofaza / tabiat himoyachisi",
+      "Conservationists call for careful conservation.",
+      "Tabiat himoyachilari ehtiyotkor muhofazaga chaqiradi.",
+      "ˌkɑnsərˈveɪʃən  ˌkɑnsərˈveɪʃənɪst"
+     ],
+     [
+      "renewable",
+      "qayta tiklanuvchi",
+      "Renewable energy is endlessly available.",
+      "Qayta tiklanuvchi energiya cheksiz mavjud.",
+      "riˈnuəbəl"
+     ],
+     [
+      "deforestation",
+      "o'rmonlarni kesish",
+      "Deforestation is irreversible in some regions.",
+      "Ba'zi hududlarda o'rmon kesish qaytarib bo'lmas.",
+      "dɪˌfɔrɪˈsteɪʃən"
+     ],
+     [
+      "biodiversity (4.0)",
+      "biologik xilma-xillik",
+      "Biodiversity loss is a measurable danger.",
+      "Biologik xilma-xillik yo'qolishi — o'lchasa bo'ladigan xavf.",
+      ""
+     ],
+     [
+      "carbon footprint (4.0)",
+      "uglerod izi",
+      "Flying enlarges your carbon footprint enormously.",
+      "Uchish uglerod izingni juda kattalashtiradi.",
+      ""
+     ],
+     [
+      "climate change (4.0)",
+      "iqlim o'zgarishi",
+      "Climate change is a global, undeniable reality.",
+      "Iqlim o'zgarishi — global, inkor etib bo'lmas haqiqat.",
+      ""
+     ],
+     [
+      "global warming (4.0)",
+      "global isish",
+      "Global warming is worsening yearly.",
+      "Global isish yildan-yilga yomonlashmoqda.",
+      ""
+     ],
+     [
+      "environmentalist",
+      "ekolog-faol",
+      "An environmentalist's activism is often hopeful.",
+      "Ekolog-faolning faoliyati ko'pincha umidli.",
+      "ɪnˌvaɪrənˈmɛnəlɪst"
+     ],
+     [
+      "ecosystem (4.0)",
+      "ekotizim",
+      "A healthy ecosystem is self-sustaining.",
+      "Sog'lom ekotizim o'zini o'zi saqlaydi.",
+      ""
+     ],
+     [
+      "endangered (4.0)",
+      "yo'qolib borayotgan",
+      "Endangered species need protective laws.",
+      "Yo'qolib borayotgan turlarga himoya qonunlari kerak.",
+      ""
+     ],
+     [
+      "extinction (4.0)",
+      "yo'q bo'lish",
+      "Extinction is final and unchangeable.",
+      "Yo'q bo'lish — yakuniy va o'zgarmas.",
+      ""
+     ],
+     [
+      "waste / wasteful",
+      "chiqindi / isrofgar",
+      "Wasteful packaging creates mountains of waste.",
+      "Isrofgar qadoq chiqindi tog'larini yaratadi.",
+      "weɪst  ˈweɪstfəl"
+     ],
+     [
+      "recycle / recyclable",
+      "qayta ishlamoq / qayta ishlanadigan",
+      "Recyclable materials are collected separately.",
+      "Qayta ishlanadigan materiallar alohida yig'iladi.",
+      "riˈsaɪkəl  riˈsaɪkləbəl"
+     ],
+     [
+      "harmful / harmless",
+      "zararli / zararsiz",
+      "Some chemicals are harmless; others are extremely harmful.",
+      "Ba'zi kimyoviy moddalar zararsiz; boshqalari o'ta zararli.",
+      "ˈhɑrmfəl  ˈhɑrmləs"
+     ],
+     [
+      "natural resources (4.0)",
+      "tabiiy resurslar",
+      "Natural resources are limited, not limitless.",
+      "Tabiiy resurslar cheksiz emas, cheklangan.",
+      ""
+     ],
+     [
+      "environmentally friendly",
+      "ekologik toza",
+      "Environmentally friendly products are increasingly popular.",
+      "Ekologik toza mahsulotlar tobora mashhur.",
+      "ɪnˌvaɪrənˈmɛnəli ˈfrɛndli"
+     ],
+     [
+      "activism / activist",
+      "faollik / faol",
+      "DiCaprio's activism made him a famous environmentalist.",
+      "DiKaprio faolligi uni mashhur ekolog-faolga aylantirdi.",
+      "ˈæktɪˌvɪzəm  ˈæktɪvɪst"
+     ]
+    ],
+    "strong": [
+     [
+      "contamination / contaminate",
+      "zaharlanish / zaharlamoq",
+      "Contaminated water causes illness.",
+      "Zaharlangan suv kasallikka sabab bo'ladi.",
+      "kənˌtæməˈneɪʃən  kənˈtæməˌneɪt"
+     ],
+     [
+      "degradation / degrade",
+      "yomonlashuv / yomonlashtirmoq",
+      "Soil degradation is reversible with care.",
+      "Tuproq yomonlashuvini g'amxo'rlik bilan qaytarish mumkin.",
+      "ˌdɛgrəˈdeɪʃən  dɪˈgreɪd"
+     ],
+     [
+      "preservation / preserve",
+      "saqlash / saqlamoq",
+      "Preservation of forests is a national responsibility.",
+      "O'rmonlarni saqlash — milliy mas'uliyat.",
+      "ˌprɛzərˈveɪʃən  prɪˈzərv"
+     ],
+     [
+      "destruction / destructive",
+      "vayronagarchilik / vayron qiluvchi",
+      "Destructive fires destroyed thousands of hectares.",
+      "Vayron qiluvchi yong'inlar minglab gektarni yo'q qildi.",
+      "dɪˈstrəkʃən  dɪˈstrəktɪv"
+     ],
+     [
+      "habitat loss (4.0)",
+      "yashash muhitini yo'qotish",
+      "Habitat loss is the most harmful factor.",
+      "Yashash muhitini yo'qotish — eng zararli omil.",
+      ""
+     ],
+     [
+      "greenhouse gases (4.0)",
+      "issiqxona gazlari",
+      "Greenhouse gases are measurable and reducible.",
+      "Issiqxona gazlarini o'lchash va kamaytirish mumkin.",
+      ""
+     ],
+     [
+      "fossil fuels (4.0)",
+      "qazilma yoqilg'i",
+      "Dependence on fossil fuels is dangerous.",
+      "Qazilma yoqilg'iga qaramlik xavfli.",
+      ""
+     ],
+     [
+      "solar / wind power (4.0)",
+      "quyosh / shamol energiyasi",
+      "Solar power is affordable and reliable now.",
+      "Quyosh energiyasi endi arzon va ishonchli.",
+      ""
+     ],
+     [
+      "eco-friendly (4.0)",
+      "ekologik toza",
+      "Eco-friendly packaging is biodegradable.",
+      "Ekologik toza qadoq biologik parchalanadi.",
+      ""
+     ],
+     [
+      "biodegradable",
+      "biologik parchalanadigan",
+      "Biodegradable bags disappear naturally.",
+      "Biologik parchalanadigan paketlar tabiiy yo'qoladi.",
+      "ˌbaɪoʊdəˈgreɪdəbəl"
+     ],
+     [
+      "awareness / aware",
+      "xabardorlik / xabardor",
+      "Environmental awareness is growing noticeably.",
+      "Ekologik xabardorlik sezilarli o'smoqda.",
+      "əˈwɛrnəs  əˈwɛr"
+     ],
+     [
+      "responsibility / responsible",
+      "mas'uliyat / mas'ul",
+      "Governments are responsible for environmental responsibility.",
+      "Hukumatlar ekologik mas'uliyat uchun javobgar.",
+      "riˌspɑnsəˈbɪləti  riˈspɑnsəbəl"
+     ],
+     [
+      "regulation / regulate",
+      "tartibga solish / tartibga solmoq",
+      "Strict regulation makes factories accountable.",
+      "Qattiq tartibga solish zavodlarni javobgar qiladi.",
+      "ˌrɛgjəˈleɪʃən  ˈrɛgjəˌleɪt"
+     ],
+     [
+      "penalty",
+      "jarima, jazo",
+      "Heavy penalties discourage polluters.",
+      "Og'ir jarimalar ifloslantiruvchilarni to'xtatadi.",
+      "ˈpɛnəlti"
+     ],
+     [
+      "consumption / consume",
+      "iste'mol / iste'mol qilmoq",
+      "Excessive consumption is unsustainable.",
+      "Ortiqcha iste'mol barqaror emas.",
+      "kənˈsəmʃən  kənˈsum"
+     ],
+     [
+      "scarcity / scarce",
+      "tanqislik / kam",
+      "Water scarcity is worsening in Central Asia.",
+      "Markaziy Osiyoda suv tanqisligi yomonlashmoqda.",
+      "ˈskɛrsɪti  skɛrs"
+     ],
+     [
+      "drought / flood (4.0)",
+      "qurg'oqchilik / toshqin",
+      "Droughts and floods are increasingly frequent.",
+      "Qurg'oqchilik va toshqinlar tobora tez-tez bo'lmoqda.",
+      ""
+     ],
+     [
+      "reforestation (4.0)",
+      "o'rmonni qayta tiklash",
+      "Reforestation is hopeful but slow.",
+      "O'rmonni qayta tiklash umidli, lekin sekin.",
+      ""
+     ],
+     [
+      "carbon-neutral (4.0)",
+      "uglerod-neytral",
+      "A carbon-neutral city is achievable.",
+      "Uglerod-neytral shaharga erishish mumkin.",
+      ""
+     ],
+     [
+      "documentary (4.0)",
+      "hujjatli film",
+      "His documentary is watchable and educational.",
+      "Uning hujjatli filmi tomosha qilsa arziydi va ta'limiy.",
+      ""
+     ]
+    ],
+    "super": [
+     [
+      "irreversible damage",
+      "qaytarib bo'lmas zarar",
+      "Coral bleaching causes irreversible damage.",
+      "Marjonlarning oqarishi qaytarib bo'lmas zarar keltiradi.",
+      "ˌɪrɪˈvərsəbəl ˈdæmɪʤ"
+     ],
+     [
+      "environmental degradation",
+      "ekologik yomonlashuv",
+      "Environmental degradation threatens livelihoods.",
+      "Ekologik yomonlashuv tirikchilikka tahdid soladi.",
+      "ɪnˌvaɪrənˈmɛnəl ˌdɛgrəˈdeɪʃən"
+     ],
+     [
+      "raise awareness",
+      "xabardorlikni oshirmoq",
+      "Documentaries raise awareness effectively.",
+      "Hujjatli filmlar xabardorlikni samarali oshiradi.",
+      "reɪz əˈwɛrnəs"
+     ],
+     [
+      "impose a penalty",
+      "jarima solmoq",
+      "Governments should impose penalties on polluters.",
+      "Hukumatlar ifloslantiruvchilarga jarima solishi kerak.",
+      "ˌɪmˈpoʊz ə ˈpɛnəlti"
+     ],
+     [
+      "reduce reliance on",
+      "…ga qaramlikni kamaytirmoq",
+      "We must reduce reliance on fossil fuels.",
+      "Qazilma yoqilg'iga qaramlikni kamaytirishimiz shart.",
+      "rɪˈdus rɪˈlaɪəns ɔn"
+     ],
+     [
+      "a pressing issue",
+      "dolzarb muammo",
+      "Water scarcity is a pressing issue.",
+      "Suv tanqisligi — dolzarb muammo.",
+      "ə ˈprɛsɪŋ ˈɪʃu"
+     ],
+     [
+      "take measures",
+      "choralar ko'rmoq",
+      "Authorities took measures to limit emissions.",
+      "Hokimiyat chiqindilarni cheklash uchun choralar ko'rdi.",
+      "teɪk ˈmɛʒərz"
+     ],
+     [
+      "long-term consequences",
+      "uzoq muddatli oqibatlar",
+      "The long-term consequences are unpredictable.",
+      "Uzoq muddatli oqibatlar oldindan aytib bo'lmas.",
+      "ˈlɔŋˈtərm ˈkɑnsəkˌwɛnsəz"
+     ],
+     [
+      "ecological balance",
+      "ekologik muvozanat",
+      "Overfishing upsets the ecological balance.",
+      "Haddan tashqari baliq ovlash ekologik muvozanatni buzadi.",
+      "ɛkəˈlɑʤɪkəl ˈbæləns"
+     ],
+     [
+      "wildlife protection (4.0)",
+      "yovvoyi tabiatni himoya qilish",
+      "Wildlife protection is underfunded.",
+      "Yovvoyi tabiatni himoya qilish yetarli moliyalashtirilmagan.",
+      ""
+     ],
+     [
+      "foundation (charity)",
+      "jamg'arma",
+      "His foundation funds conservation projects.",
+      "Uning jamg'armasi muhofaza loyihalarini moliyalashtiradi.",
+      "faʊnˈdeɪʃən (ˈʧɛrɪti)"
+     ],
+     [
+      "philanthropist",
+      "xayriyachi",
+      "A philanthropist gives generously.",
+      "Xayriyachi sahiylik bilan beradi.",
+      "fɪˈlænθrəpɪst"
+     ],
+     [
+      "ocean acidification",
+      "okean kislotalanishi",
+      "Acidification is harmful to shellfish.",
+      "Kislotalanish chig'anoqlilarga zararli.",
+      "ˈoʊʃən əˌsɪdəfəˈkeɪʃən"
+     ],
+     [
+      "melting glaciers (4.0)",
+      "eriyotgan muzliklar",
+      "Melting glaciers are visibly shrinking.",
+      "Eriyotgan muzliklar ko'zga ko'rinarli kichraymoqda.",
+      ""
+     ],
+     [
+      "indigenous",
+      "mahalliy (tub)",
+      "Indigenous communities protect forests effectively.",
+      "Tub jamoalar o'rmonlarni samarali himoya qiladi.",
+      "ˌɪnˈdɪʤənəs"
+     ],
+     [
+      "environmentally conscious",
+      "ekologik ongli",
+      "Environmentally conscious consumers avoid plastic.",
+      "Ekologik ongli iste'molchilar plastikdan qochadi.",
+      "ɪnˌvaɪrənˈmɛnəli ˈkɑnʃəs"
+     ],
+     [
+      "disposable / reusable",
+      "bir martalik / qayta ishlatiladigan",
+      "Reusable bottles replace disposable ones.",
+      "Qayta ishlatiladigan shishalar bir martalikning o'rnini bosadi.",
+      "dɪˈspoʊzəbəl  riˈuzəbəl"
+     ],
+     [
+      "landfill",
+      "axlatxona (poligon)",
+      "Landfills are overflowing with non-recyclable waste.",
+      "Poligonlar qayta ishlanmaydigan chiqindi bilan to'lib ketgan.",
+      "ˈlændˌfɪl"
+     ],
+     [
+      "unsustainable",
+      "barqaror bo'lmagan",
+      "Unsustainable farming exhausts the soil.",
+      "Barqaror bo'lmagan dehqonchilik tuproqni holdan toydiradi.",
+      "ˌənsəˈsteɪnəbəl"
+     ],
+     [
+      "Aral Sea disaster",
+      "Orol fojiasi",
+      "The Aral Sea disaster is a warning to the world.",
+      "Orol fojiasi — dunyo uchun ogohlantirish.",
+      "ˈɑrɑl si dɪˈzæstər"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "So'z oilasi",
+     "type": "table",
+     "instr": "Ildizdan to'rt turkum yasang (n / adj / adv / person)",
+     "items": [
+      "pollute",
+      "sustain",
+      "environment",
+      "danger",
+      "care",
+      "develop",
+      "create",
+      "responsible"
+     ],
+     "answers": [
+      "pollution / polluted / — / polluter",
+      "sustainability / sustainable / sustainably / —",
+      "environment / environmental / environmentally / environmentalist",
+      "danger / dangerous / dangerously / —",
+      "care / careful, careless / carefully / carer",
+      "development / developed, developing / — / developer",
+      "creation / creative / creatively / creator",
+      "responsibility / responsible / responsibly / —"
+     ]
+    },
+    {
+     "title": "Suffiks tanlang",
+     "type": "gap",
+     "instr": "Qavsdagi so'zni to'g'ri turkumda yozing",
+     "items": [
+      "Plastic is ___ (harm) to sea life.",
+      "The ___ (pollute) of the river is serious.",
+      "Solar energy is ___ (renew).",
+      "We must act ___ (responsible).",
+      "She is an ___ (environment).",
+      "The ___ (destroy) of forests is irreversible.",
+      "His ___ (commit) to conservation is strong.",
+      "The soil is ___ (hope) degraded."
+     ],
+     "answers": [
+      "harmful",
+      "pollution",
+      "renewable",
+      "responsibly",
+      "environmentalist",
+      "destruction",
+      "commitment",
+      "hopelessly"
+     ]
+    },
+    {
+     "title": "Imlo",
+     "type": "correct",
+     "instr": "Xatoni tuzating",
+     "items": [
+      "happyness",
+      "beautifull",
+      "environmentaly",
+      "creatation",
+      "sustainible"
+     ],
+     "answers": [
+      "happiness",
+      "beautiful",
+      "environmentally",
+      "creation",
+      "sustainable"
+     ]
+    },
+    {
+     "title": "IELTS Speaking Part 3",
+     "type": "speaking",
+     "instr": "Juftlikda: 5 savol — javobda kamida 3 so'z oilasi (pollution/polluted, sustainable/sustainability…)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "answers": [
+      "Is pollution worse than 20 years ago? — The air is more polluted; awareness is higher.",
+      "Who is responsible for the environment? — Responsibility is shared; governments must regulate.",
+      "Are documentaries useful? — They're educational and raise awareness effectively.",
+      "Is sustainable living expensive? — Sustainability costs more now but saves later.",
+      "What happened to the Aral Sea? — Wasteful irrigation caused an irreversible disaster."
+     ]
+    },
+    {
+     "title": "Atrof-muhit lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "gases released into the air by cars and factories",
+      "able to continue without harming the future",
+      "cutting down forests",
+      "the variety of living things in an area",
+      "a person who fights to protect nature",
+      "can be broken down naturally"
+     ],
+     "answers": [
+      "emissions",
+      "sustainable",
+      "deforestation",
+      "biodiversity",
+      "environmentalist",
+      "biodegradable"
+     ],
+     "box": [
+      "emissions",
+      "sustainable",
+      "deforestation",
+      "biodiversity",
+      "environmentalist",
+      "biodegradable"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "happyness",
+      "beautifull",
+      "environmentaly",
+      "creatation",
+      "He is an environmental."
+     ],
+     "answers": [
+      "happiness",
+      "beautiful",
+      "environmentally",
+      "creation",
+      "He is an environmentalist."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 2 jadvalini (20 suffiks) 3 marta; Essential Words 2 (CORE 20 + STRONG 20) daftarga",
+     "answers": "Kitob / ro'yxat."
+    },
+    {
+     "title": "Sample essay 2",
+     "type": "write",
+     "instr": "Kitobdagi Sample essay 2 ni o'qing; shu mavzuda 250 so'z — kamida 6 so'z oilasi (n/adj/adv) va 6 Essential Words",
+     "answers": "Ustoz Task 2 rubrikasi bilan."
+    },
+    {
+     "title": "Practice test",
+     "type": "read",
+     "instr": "Kitobdagi Reading practice test 2-passage — 20 daqiqada",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Plastik dengiz hayotiga zararli.",
+      "Barqarorlikni o'lchash mumkin.",
+      "U mashhur ekolog-faol.",
+      "O'rmon kesish qaytarib bo'lmas.",
+      "Hujjatli filmlar xabardorlikni samarali oshiradi."
+     ],
+     "answers": [
+      "Plastic is harmful to sea life.",
+      "Sustainability is measurable.",
+      "He is a famous environmentalist.",
+      "Deforestation is irreversible.",
+      "Documentaries raise awareness effectively."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "Essential Words 2 CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "20 suffiks + har biriga 1 so'z, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Essential Words 1",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 20 suffiks)",
+     "1.5 daqiqada 1 / 3 daqiqada 2 / 4 daqiqada 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Essential Words 2 og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Leonardo DiCaprio — the actor whose foundation protects the planet",
+    "text": [
+     "Leonardo DiCaprio was born in 1974 in Los Angeles. His acting career started early: at 19 he received his first Oscar nomination, and \"Titanic\" (1997) made him globally famous. But his success as an actor is only half of the story. In 1998, at 24, he created the Leonardo DiCaprio Foundation, an organisation whose mission is the protection of wildlife and the environment.",
+     "His environmentalism is practical and measurable. The foundation has given more than 100 million dollars to conservation projects: the preservation of rainforests, the protection of endangered tigers and sharks, and the creation of marine reserves. His documentaries — \"The 11th Hour\" (2007) and \"Before the Flood\" (2016) — are watched by millions and are used in schools to raise awareness of climate change. In 2014 the United Nations named him Messenger of Peace for climate issues.",
+     "DiCaprio is realistic about his own carelessness: he flies a lot, and his carbon footprint is enormous. Critics call this hypocritical; he calls it a reason to give more. He has also invested in sustainable businesses — electric cars, plant-based food and reusable products — because, he says, \"activism without economics is hopeless.\"",
+     "When he finally won his Oscar in 2016 for \"The Revenant\", his speech was not about acting. It was about global warming: \"Climate change is real, it is happening right now. It is the most urgent threat facing our entire species.\" Uzbek students who admire him usually know the actor; the environmentalist is worth knowing too."
+    ],
+    "glossary": [
+     "nomination — nomzodlik",
+     "mission — vazifa (missiya)",
+     "measurable — o'lchasa bo'ladigan",
+     "marine reserve — dengiz qo'riqxonasi",
+     "raise awareness — xabardorlikni oshirmoq",
+     "carelessness — beparvolik",
+     "hypocritical — ikkiyuzlamachi",
+     "plant-based — o'simlik asosidagi",
+     "urgent — shoshilinch",
+     "species — tur"
+    ],
+    "tasks": [
+     {
+      "title": "Suffiksli so'zlarni toping",
+      "type": "find",
+      "instr": "Matndan 10 ta suffiksli so'z va turkumi",
+      "items": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8",
+       "9",
+       "10"
+      ],
+      "answers": [
+       "nomination (-tion, ot)",
+       "globally (-ly, ravish)",
+       "organisation (-tion, ot)",
+       "protection (-tion, ot)",
+       "environmentalism (-ism, ot)",
+       "measurable (-able, sifat)",
+       "preservation (-tion, ot)",
+       "carelessness (-less + -ness, ot)",
+       "hypocritical (-al, sifat)",
+       "sustainable / reusable / hopeless / realistic (-able, -able, -less, -ic)"
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "DiCaprio created his foundation at 19.",
+       "The foundation has given more than 100 million dollars.",
+       "He never flies because of his carbon footprint.",
+       "His 2016 Oscar speech was about climate change."
+      ],
+      "answers": [
+       "False (24)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Atrof-muhit lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta so'z; DiKaprio tanqidga qanday javob beradi (1 gap)",
+      "items": [
+       "words",
+       "answer"
+      ],
+      "answers": [
+       "wildlife, environment, conservation, rainforests, endangered, marine reserves, climate change, carbon footprint, sustainable, global warming",
+       "He says his big footprint is a reason to give more, and activism needs economics."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Sample essay 2 va Practice test reading — uyga."
+   },
+   "listening": {
+    "audios": "Audio 6–10 (fayllar yo'q — ustoz IELTS Section 2 uslubida skript o'qiydi)",
+    "intro": [
+     "Skript: \"Welcome to the Green City tour. Our first stop is the recycling centre, where recyclable waste is sorted into five categories. Then we visit the solar farm, which produces 40 megawatts — enough for 12,000 homes. At the wetland reserve you'll see three endangered bird species; please stay on the path, as the area is environmentally sensitive. The tour ends at the café, which is completely plastic-free and uses biodegradable packaging.\"",
+     "1-tinglash: nechta to'xtash joyi? 2-tinglash: raqamlar."
+    ],
+    "tasks": [
+     {
+      "title": "Note completion",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Recycling centre: waste sorted into ___ categories",
+       "Solar farm: ___ megawatts, enough for ___ homes",
+       "Wetland reserve: ___ endangered bird species",
+       "Café: plastic-free, ___ packaging"
+      ],
+      "answers": [
+       "five",
+       "40, 12,000",
+       "three",
+       "biodegradable"
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

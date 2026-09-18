@@ -3651,6 +3651,125 @@ Although this (29) ………… be my perfect job, I'm happy for now. It's a gre
     ],
 }
 
+
+STEP3_UNIT6 = {
+    "level": "step3", "kind": "unit", "unit_no": 6,
+    "title": "Step 3 · Unit 6 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Yes, we shouldn't do that.", "Yes, do you think I should complain?", "No, that's terrible."], "B"),
+                _c("", ["I wouldn't worry about it.", "I suppose so.", "I'm really sorry to hear that."], "A"),
+                _c("", ["Yes, I think it is.", "I think it was very good.", "I don't think I should do that."], "C"),
+                _c("", ["I'll do it for you.", "I'd use two alarms.", "I hope the classes are OK."], "B"),
+                _c("", ["I'm really sorry to hear that.", "I'm really sorry but I can't.", "I'm really sorry about last week."], "A"),
+                _c("", ["Yes, you will.", "Can I help you?", "You’re right."], "C"),
+                _c("", ["I don't think that's a good idea.", "What do you think she should do?", "I'm sorry I don't think I can."], "A"),
+                _c("", ["No, what do you think I should do?", "I don't think I should do that.", "OK, that should be right."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Feelings",
+            "instructions": "Read the sentences about feelings. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("When my brother was a child, he was really ............ of big dogs.",
+                   ["annoyed", "surprised", "frightened"], "C"),
+                _c("When I ............ all the fun we had together as kids, I feel so happy.",
+                   ["forget about", "think of", "deal with"], "B"),
+                _c("We were ............ when we heard the terrible news.",
+                   ["shocking", "shock", "shocked"], "C"),
+                _c("Susan felt very nervous when she arrived ............ the test centre.",
+                   ["at", "to", "with"], "A"),
+                _c("I was angry when Eva told me how much money she ............ on that car.",
+                   ["gave", "paid", "spent"], "C"),
+                _c("I love being a lawyer but I have to work long hours - it's a ............ job.",
+                   ["relaxing", "disappointing", "tiring"], "C"),
+                _c("I felt worried when I ............ my doctor about my health - but I'm fine!",
+                   ["asked", "talked", "listened"], "A"),
+                _c("Was Lara really ............ when she didn't get that fantastic job?",
+                   ["disappointed", "excited", "interested"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Feelings",
+            "instructions": "Read the sentences about feelings. What are the "
+                            "missing words? The first letter is already there. "
+                            "Write the whole words.",
+            "questions": [
+                _t("Our week on holiday was very r _ _ _ _ _ _ _ - we loved having no "
+                   "worries and nothing to do!", "relaxing", "elaxing"),
+                _t("Please don't worry - we can d _ _ _  w _ _ _ this problem together!",
+                   "deal with", "eal ith"),
+                _t("I was very excited - I just couldn't think or c _ _ _ _ _ _ _ _ _ _  "
+                   "o _ my work.", "concentrate on", "oncentrate n"),
+                _t("When the bill came, I didn't have enough money - it was awful; I was "
+                   "so e _ _ _ _ _ _ _ _ _ _ !", "embarrassed", "mbarrassed"),
+                _t("My boss was angry because I forgot my laptop and had to b _ _ _ _ _ "
+                   "one from him.", "borrow", "orrow"),
+                _t("I get very a _ _ _ _ _ _ when people talk during a film at the cinema.",
+                   "annoyed", "nnoyed"),
+                _t("We were very t _ _ _ _ when we arrived so we went to bed early.",
+                   "tired", "ired"),
+                _t("How do you feel when you l _ _ _  a _ old photographs of yourself?",
+                   "look at", "ook t"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read this website page giving advice about "
+                            "preparing for job interviews. Choose the best "
+                            "answer (A, B or C) for each space.",
+            "passage": """Advice for people going to interviews
+
+Before you go to a job interview, it is very important (25) ………… well for it. There are several things you can do, so what (26) ………… do first? They will probably ask you some questions about the company to find out what you know about it, so (27) ………… at the information on their website. Then you need to think about clothes and to decide what (28) ………… because it is important to look good. And don't forget to clean your shoes!
+Plan the journey to your interview very carefully because it is important (29) ………… late. You might decide (30) ………… there, but leave early because there might be a traffic jam.
+During the interview, you (31) ………… speak clearly and be relaxed. It is good to ask some questions about the job but you (32) ………… ask too many. At the end of the interview you might be surprised to find that you actually enjoyed it!""",
+            "questions": [
+                _c("", ["prepare", "to prepare", "preparing"], "B"),
+                _c("", ["should you", "you should", "you shouldn’t"], "A"),
+                _c("", ["look", "looked", "looks"], "A"),
+                _c("", ["for wearing", "to wear", "can wear"], "B"),
+                _c("", ["not to arrive", "don’t arrive", "not arriving"], "A"),
+                _c("", ["drive", "to drive", "driving"], "B"),
+                _c("", ["might", "should", "need"], "B"),
+                _c("", ["won’t", "didn’t", "shouldn’t"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("Making a mistake is an easy thing to do, so be careful.\n"
+                   "It is easy ………… a mistake, so be careful.", "to make"),
+                _t("Is it best for me to do exercise before or after work?\n"
+                   "When ………… I do exercise - before or after work?", "should", "shall"),
+                _t("I will wait for your advice - I promise.\n"
+                   "I promise ………… for your advice.", "to wait", "I will wait", "I’ll wait"),
+                _t("It's not really a good idea to drive when you're tired.\n"
+                   "You ………… really drive when you're tired.", "should not", "shouldn’t"),
+                _t("Is it a good idea to check prices online before going shopping?\n"
+                   "Before going shopping, ………… check prices online?",
+                   "should I", "should we", "should you", "should one",
+                   "shouldn’t I", "shouldn’t we", "shouldn’t you", "shouldn’t one",
+                   "shall I", "shall we"),
+                _t("Mark gave me advice about going to the airport.\n"
+                   "Mark gave me advice on how ………… to the airport.", "to go", "to get"),
+                _t("You must be on time for our meeting please.\n"
+                   "Please ………… late for our meeting.", "do not be", "don’t be"),
+                _t("I need to get some money so I'm going to the bank.\n"
+                   "I'm going to the bank ………… some money.", "to get", "to take out"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3684,4 +3803,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit3", STEP3_UNIT3),
     ("exam_tpl_step3_unit4", STEP3_UNIT4),
     ("exam_tpl_step3_unit5", STEP3_UNIT5),
+    ("exam_tpl_step3_unit6", STEP3_UNIT6),
 ]

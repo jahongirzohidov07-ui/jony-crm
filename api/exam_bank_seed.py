@@ -1980,6 +1980,120 @@ See you later. Emma""",
     ],
 }
 
+
+STEP2_UNIT5 = {
+    "level": "step2", "kind": "unit", "unit_no": 5,
+    "title": "Step 2 · Unit 5 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["A post office? No, there isn't.", "A post office? Turn left at the station.", "A post office? This is the concert hall."], "B"),
+                _c("", ["Where's the metro station?", "Are you certain?", "Is there?"], "B"),
+                _c("", ["Are you sure?", "That's right – the bank is on the left.", "Yes, go straight on, and turn into Albert Street."], "C"),
+                _c("", ["Right into Surrey Street?", "OK, turn left.", "The bank is on the right."], "A"),
+                _c("", ["Turn right at the supermarket, then left.", "Is that left into Park Street?", "So, the stadium is straight along here."], "A"),
+                _c("", ["Turn right for the supermarket.", "The cinema is on your left.", "Go straight along Black Street."], "C"),
+                _c("", ["That's right.", "Are you sure?", "Great, thanks."], "A"),
+                _c("", ["I think so.", "Is there a bank near here?", "Go straight on for about 500 metres."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · City and home",
+            "instructions": "Read the sentences about things you can find in "
+                            "the city or in your home. Choose the missing word "
+                            "(A, B or C) for each space.",
+            "questions": [
+                _c("People usually only visit a ............ when they have a problem.",
+                   ["concert hall", "football stadium", "police station"], "C"),
+                _c("Every morning I look in the ............ and think, 'Wow, I look great!'",
+                   ["lamp", "mirror", "wardrobe"], "B"),
+                _c("This is my favourite ............ where I sit and watch TV.",
+                   ["cooker", "armchair", "bookcase"], "B"),
+                _c("Every morning, I wash the dishes in the kitchen ............ .",
+                   ["washing machine", "sink", "mirror"], "B"),
+                _c("I watch football every Saturday at the ............ near my house.",
+                   ["concert hall", "stadium", "theatre"], "B"),
+                _c("Geraldo lives in a fantastic new ............ opposite the post office.",
+                   ["office", "flat", "hospital"], "B"),
+                _c("I clean the curtains in the ............ when they are very dirty.",
+                   ["cooker", "mirror", "washing machine"], "C"),
+                _c("In the centre of my city, there's a beautiful ............ with many "
+                   "interesting buildings.", ["square", "café", "flat"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · City and home",
+            "instructions": "Read the descriptions of things you can find in "
+                            "the city or in your home. The first letter is "
+                            "already there. Write the whole word.",
+            "questions": [
+                _t("This is a place where you can get some exercise.   "
+                   "s _ _ _ _ _  c _ _ _ _ _", "sports centre", "ports entre",
+                   "sports center"),
+                _t("At night, you can use this to help you see when you want to "
+                   "read.   l _ _ _", "lamp", "amp"),
+                _t("When you want to send a letter, you go to this place.   "
+                   "p _ _ _  o _ _ _ _ _", "post office", "ost ffice"),
+                _t("You can find this in the kitchen and use it to make a hot meal.   "
+                   "c _ _ _ _ _", "cooker", "ooker"),
+                _t("At home, when you want to get something to read, you can find "
+                   "something in here.   b _ _ _ _ _ _ _", "bookcase", "ookcase"),
+                _t("You can find these at a window.   c _ _ _ _ _ _ _", "curtains", "urtains"),
+                _t("There are often apartments and offices inside one of these.   "
+                   "b _ _ _ _ _ _ _", "building", "uilding"),
+                _t("People walk on this when they go over a river.   b _ _ _ _ _",
+                   "bridge", "ridge"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read this text about an unusual house. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "passage": """An Unusual House
+
+You can visit a very unusual house in Pennsylvania, in the USA. I think it's great. Like other houses, there (25) ………… a normal front door and there are normal windows, but this house is actually very different from a house like yours or (26) ………… . It's a very, very big shoe! In Shoe House, (27) ………… a living room, one bedroom and a bathroom. It's a big shoe outside, but the house is actually very small inside and (28) ………… much furniture.
+So, (29) ………… house is this? Carla Farrow and her husband Ron live there now. In the house, you can see a picture of Martin Boston, the first owner. In (30) ………… hands, of course, there is a pair of shoes!
+(31) ………… unusual houses near you? Do you live in one? If (32) ………… is unusual, email me some pictures of it.""",
+            "questions": [
+                _c("", ["is", "are", "has"], "A"),
+                _c("", ["mine", "his", "theirs"], "A"),
+                _c("", ["there are", "it is", "there's"], "C"),
+                _c("", ["there is", "there are", "there isn't"], "C"),
+                _c("", ["who", "whose", "who's"], "B"),
+                _c("", ["Martin's", "Martin", "Martins"], "A"),
+                _c("", ["Is there some", "Isn't there any", "Are there any"], "C"),
+                _c("", ["theirs", "yours", "ours"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about things you can find in "
+                            "the city or in your home. Choose the best answer "
+                            "(A, B or C) for each space.",
+            "questions": [
+                _c("There ............ three theatres in the town where I live.",
+                   ["is", "are", "has"], "B"),
+                _c("Why ............ there any milk in the fridge?", ["isn't", "aren't", "hasn’t"], "A"),
+                _c("My sister's room is next to ............ .", ["my", "your", "mine"], "C"),
+                _c("Go straight along the street and ............ a supermarket on your left.",
+                   ["there are", "there's", "this is"], "B"),
+                _c("There are ............ good places to listen to classical music in "
+                   "your town.", ["lots", "some", "any"], "B"),
+                _c("John and Sally live in New York and my apartment is next to ............ .",
+                   ["they", "their", "theirs"], "C"),
+                _c("My brother lives in London now – it's ............ favourite city.",
+                   ["his", "he", "him"], "A"),
+                _c("............ bedroom is this?", ["Whose", "Who", "Who's"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1999,4 +2113,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit2", STEP2_UNIT2),
     ("exam_tpl_step2_unit3", STEP2_UNIT3),
     ("exam_tpl_step2_unit4", STEP2_UNIT4),
+    ("exam_tpl_step2_unit5", STEP2_UNIT5),
 ]

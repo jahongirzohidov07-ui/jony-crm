@@ -882,6 +882,100 @@ The clothes in the shop are interesting and different, but (22) ………… clo
     ],
 }
 
+
+U8_IMG = "/exam-img/step1-u8/"
+FREE_TIME_A_G = ["play a computer game", "listen to music", "go shopping",
+                 "watch a football match", "read a magazine",
+                 "play the guitar", "have a drink"]
+
+STEP1_UNIT8 = {
+    "level": "step1", "kind": "unit", "unit_no": 8,
+    "title": "Step 1 · Unit 8 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Good afternoon.", "Can I help you?", "Yes, that’s a lovely idea."], "C"),
+                _c("", ["Yes, OK. Good idea.", "Can I look around?", "It’s really nice."], "A"),
+                _c("", ["Thanks, but I’m fine.", "Nice to meet you.", "I’m sorry, I can’t."], "C"),
+                _c("", ["It’s really nice.", "No, sorry, there isn’t.", "That’s a great idea."], "C"),
+                _c("", ["OK, that’s a nice idea.", "They’re lovely.", "Here you are."], "A"),
+                _c("", ["Shall we go to a party?", "OK, that’s a lovely idea.", "I’d like a piece of chocolate cake, please."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Free time",
+            "instructions": "Choose the words to match the picture.",
+            "questions": [
+                _c("", FREE_TIME_A_G, "D", image=U8_IMG + "q7.jpg"),
+                _c("", FREE_TIME_A_G, "E", image=U8_IMG + "q8.jpg"),
+                _c("", FREE_TIME_A_G, "F", image=U8_IMG + "q9.jpg"),
+                _c("", FREE_TIME_A_G, "C", image=U8_IMG + "q10.jpg"),
+                _c("", FREE_TIME_A_G, "A", image=U8_IMG + "q11.jpg"),
+                _c("", FREE_TIME_A_G, "G", image=U8_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Past time",
+            "instructions": "Read the sentences about past events. What are "
+                            "the missing words? The first letter is already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("Sam is at school today but he wasn’t at school "
+                   "y _ _ _ _ _ _ _ _ .", "yesterday", "esterday"),
+                _t("Lucy went shopping o _  W _ _ _ _ _ _ _ _ .",
+                   "on Wednesday", "n ednesday"),
+                _t("My family had a holiday in Spain two y _ _ _ _  a _ _ .",
+                   "years ago", "ears go"),
+                _t("My friends and I played a great computer game "
+                   "o _  S _ _ _ _ _ _ _ .", "on Saturday", "n aturday"),
+                _t("John is tired now because he played football "
+                   "t _ _ _  a _ _ _ _ _ _ _ _ .", "this afternoon", "his fternoon"),
+                _t("We went to a good party l _ _ _  n _ _ _ _ .",
+                   "last night", "ast ight"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about a band on tour. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "passage": """On tour with my band
+
+I play guitar in a band. Our name’s The Musicmakers. We often go away on tour. Last year we (19) ………… on the road in Spain. We (20) ………… in Madrid first and the band played at concerts in three different Spanish cities in five days: in Madrid and Bilbao on Tuesday, Wednesday and Thursday and then in Barcelona on Friday and Saturday.
+I love Spanish food – we (21) ………… to some great restaurants. They (22) ………… very expensive. We (23) ………… some interesting things in the museums. Spain has a lot of good museums – The Prado in Madrid, the Guggenheim Museum in Bilbao, and the Picasso Museum in Barcelona. It (24) ………… fun to travel there with the band.""",
+            "questions": [
+                _c("", ["be", "are", "were"], "C"),
+                _c("", ["arrive", "arrived", "arrives"], "B"),
+                _c("", ["go", "went", "goes"], "B"),
+                _c("", ["aren’t", "wasn’t", "weren’t"], "C"),
+                _c("", ["saw", "see", "sees"], "A"),
+                _c("", ["be", "was", "weren’t"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about past events. Choose the "
+                            "best answer, A, B or C, for each space.",
+            "questions": [
+                _c("Where ............ you yesterday?", ["was", "were", "are"], "B"),
+                _c("‘Were you at the café last night?’ ‘No, we ............ .’",
+                   ["isn’t", "wasn’t", "weren’t"], "C"),
+                _c("Laura ............ in the garden, but she isn’t there now.",
+                   ["is", "does", "was"], "C"),
+                _c("We usually stay at home in the evening, but last Monday we "
+                   "............ football.", ["play", "plays", "played"], "C"),
+                _c("They ............ a very nice pizza in the restaurant last night.",
+                   ["had", "have", "has"], "A"),
+                _c("I ............ to Madrid two years ago.", ["went", "go", "was"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -891,4 +985,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit6", STEP1_UNIT6),
     ("exam_tpl_step1_mid", STEP1_MID),
     ("exam_tpl_step1_unit7", STEP1_UNIT7),
+    ("exam_tpl_step1_unit8", STEP1_UNIT8),
 ]

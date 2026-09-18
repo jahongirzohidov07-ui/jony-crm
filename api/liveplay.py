@@ -94,9 +94,11 @@ LEVELS = [
     ("ielts_2_0", "IELTS 2.0", "A2"),
     ("ielts_3_0", "IELTS 3.0", "B1"),
     ("ielts_4_0", "IELTS 4.0", "B1+"),
-    ("ielts_5_0", "IELTS 5.0", "B2"),
-    ("ielts_6_0", "IELTS 6.0", "B2+"),
-    ("ielts_7_0", "IELTS 7.0", "C1"),
+    # 2026-09-18, Jahongir: "IELTS 5.0 leveli yoniga - qib turib IELTS
+    # INTRODUCTION ... keyingisiga IELTS FOUNDATION ... IELTS GRADUATION"
+    ("ielts_5_0", "IELTS 5.0 - IELTS INTRODUCTION", "B2"),
+    ("ielts_6_0", "IELTS 6.0 - IELTS FOUNDATION", "B2+"),
+    ("ielts_7_0", "IELTS 7.0 - IELTS GRADUATION", "C1"),
 ]
 
 
@@ -551,11 +553,39 @@ def lobby(code: str, db: Session = Depends(get_db)):
                          for st in studs if (st.status or "active") in ("active", "trial")]}
 
 
+def _reconnect(db, g, p):
+    """O'yin davomida chiqib ketib qayta kirgan o'quvchi (2026-09-18,
+    Jahongir: "chiqib ketib boshqattan kirganda savolga javob avtomat
+    xato bo'lsin"): yangi token beriladi, joriy savolga javob bermagan
+    bo'lsa — XATO deb yoziladi (0 ball), ketma-ketlik uziladi."""
+    p.token = secrets.token_urlsafe(18)
+    p.streak = 0
+    i = g.q_index if g.q_index is not None else -1
+    if g.status in ("question", "reveal") and i >= 0:
+        has = db.query(models.LiveAnswer).filter(models.LiveAnswer.player_id == p.id,
+                                                 models.LiveAnswer.q_index == i).first()
+        if not has:
+            db.add(models.LiveAnswer(game_id=g.id, player_id=p.id, q_index=i, option_index=-1,
+                                     correct=0, ms=_elapsed_ms(g), points=0, created_at=_now()))
+    db.commit()
+    return {"token": p.token, "game_id": g.id, "title": g.title, "nickname": p.nickname,
+            "reconnected": True}
+
+
 @router.post("/api/live/join")
 def join(body: JoinIn, db: Session = Depends(get_db)):
     g = _open_game(db, body.code)
     if g.status != "lobby":
-        raise HTTPException(400, "O'yin allaqachon boshlangan")
+        # Boshlangan o'yinga faqat avval kirgan o'yinchi qaytadi
+        q = db.query(models.LivePlayer).filter(models.LivePlayer.game_id == g.id)
+        if body.student_id:
+            p = q.filter(models.LivePlayer.student_id == body.student_id).first()
+        else:
+            nick = re.sub(r"\s+", " ", (body.nickname or "").strip())
+            p = q.filter(models.LivePlayer.nickname.ilike(nick)).first() if nick else None
+        if not p:
+            raise HTTPException(400, "O'yin allaqachon boshlangan")
+        return _reconnect(db, g, p)
     student_id = None
     if body.student_id:
         st = db.query(models.Student).filter(models.Student.id == body.student_id,

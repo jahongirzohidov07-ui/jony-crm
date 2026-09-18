@@ -122,10 +122,9 @@ function LessonList({ course }: { course: string }) {
               <div className="flex items-center gap-3 min-w-0">
                 <span className="w-9 shrink-0 text-sm font-semibold text-slate-400">{l.no}</span>
                 <div className="min-w-0">
-                  <div className={`font-medium ${l.ready ? "text-slate-900" : "text-slate-500"}`}>{l.no}-dars — {l.title}</div>
-                  <div className="text-xs text-slate-500 truncate">
-                    Lug'at: {l.vocab_topic || "—"}{l.audios ? ` · Audio ${l.audios}` : ""}{l.writing ? ` · ${l.writing}` : ""}
-                  </div>
+                  {/* Faqat "N-dars" (2026-09-18, Jahongir: "mavzular bo'lsa
+                      ko'payib ketarkan tushunarsiz") — mavzu dars ichida. */}
+                  <div className={`font-medium ${l.ready ? "text-slate-900" : "text-slate-500"}`}>{l.no}-dars</div>
                 </div>
               </div>
               <div className="flex items-center gap-2 shrink-0 text-[11px]">

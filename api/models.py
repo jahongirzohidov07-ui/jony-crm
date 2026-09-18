@@ -4127,3 +4127,38 @@ class LiveAnswer(Base):
     ms = Column(Integer, default=0)                          # savol boshidan o'tgan ms
     points = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# ---------------------------------------------------------------
+#  DARS BOSHQARUVI (2026-09-18, Jahongir): guruh ↔ reja va dars rejimi
+# ---------------------------------------------------------------
+class GroupPlan(Base):
+    """Guruh qaysi daraja rejasida va qaysi darsda turibdi."""
+    __tablename__ = "group_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False, unique=True, index=True)
+    course = Column(String, nullable=False)                  # ielts_1_0
+    next_lesson_no = Column(Integer, default=1)              # keyingi o'tiladigan dars
+    carry = Column(Text, default="[]")                       # ko'chgan bosqichlar (JSON)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+
+class LessonRun(Base):
+    """Bitta darsning o'tkazilish jarayoni: bosqichlar, taymer, izohlar."""
+    __tablename__ = "lesson_runs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lesson_id = Column(Integer, ForeignKey("lessons.id"), nullable=False, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    course = Column(String, nullable=False)
+    lesson_no = Column(Integer, nullable=False)
+    stages = Column(Text, nullable=False)                    # JSON [{title,min,desc,done,carried}]
+    current = Column(Integer, default=0)
+    stage_started_at = Column(DateTime, nullable=True)
+    notes = Column(Text, nullable=True)                      # ustozning maxfiy izohi
+    status = Column(String, default="running", index=True)  # running | finished
+    started_at = Column(DateTime, default=datetime.utcnow)
+    finished_at = Column(DateTime, nullable=True)
+    by_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)

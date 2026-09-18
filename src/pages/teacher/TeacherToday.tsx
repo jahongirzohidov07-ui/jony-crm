@@ -9,6 +9,17 @@ import { useAuth } from "../../lib/AuthContext";
 import { BrandIcon } from "../../components/BrandIcon";
 import type { LessonCard, TeacherHome } from "../../lib/teacherApi";
 
+/** Reja qatlami (2026-09-18): bugungi dars uchun mavzu, ko'chgan qismlar,
+ *  uy vazifasini bajarmaganlar, yordam kerak o'quvchilar, "Darsni boshlash". */
+type PlanItem = {
+  lesson_id: number; group_id: number; group: string;
+  plan: { course: string; course_title: string; next_lesson_no: number; total: number;
+    next_title: string | null; next_grammar: string | null; next_vocab: string | null; carry: string[] } | null;
+  run: { id: number; status: string; done: number; total: number } | null;
+  homework_missing: string[]; help_needed: { name: string; why: string }[]; pending_checks: number;
+};
+type PlanToday = { items: PlanItem[]; english: boolean; courses: { course: string; title: string; total: number }[] };
+
 /**
  * JONY TEACHER — bosh ekran: "bugun nima qilishim kerak".
  *
@@ -21,7 +32,9 @@ export default function TeacherToday() {
   const isSupport = user?.role === "support_teacher";
   const [d, setD] = useState<TeacherHome | null>(null);
   const [missed, setMissed] = useState<LessonCard[]>([]);
+  const [plan, setPlan] = useState<PlanToday | null>(null);
   const [err, setErr] = useState("");
+  const loadPlan = () => api.fresh<PlanToday>("/teacher/plan-today").then(setPlan).catch(() => {});
 
   useEffect(() => {
     api
@@ -32,6 +45,7 @@ export default function TeacherToday() {
       .get<{ missed: LessonCard[] }>("/teacher/today")
       .then((r) => setMissed(r.missed || []))
       .catch(() => {});
+    loadPlan();
   }, []);
 
   if (err)
@@ -143,11 +157,14 @@ export default function TeacherToday() {
           ) : (
             <div className="space-y-2">
               {d.today.map((l) => (
-                <LessonRow
-                  key={l.lesson_id}
-                  l={l}
-                  to={isSupport ? "/teacher/session" : undefined}
-                />
+                <div key={l.lesson_id}>
+                  <LessonRow l={l} to={isSupport ? "/teacher/session" : undefined} />
+                  {!isSupport && plan?.english !== false && (
+                    <PlanBlock item={plan?.items.find((p) => p.lesson_id === l.lesson_id)}
+                               courses={plan?.courses ?? []} groupId={l.group_id} lessonId={l.lesson_id}
+                               onChanged={loadPlan} />
+                  )}
+                </div>
               ))}
             </div>
           )}
@@ -210,6 +227,68 @@ export function LessonRow({
       </div>
       <ChevronRight size={17} className="text-slate-300 shrink-0" />
     </Link>
+  );
+}
+
+/** Dars kartasining ostidagi reja bloki + katta "Darsni boshlash". */
+function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
+  item?: PlanItem; courses: { course: string; title: string; total: number }[];
+  groupId: number; lessonId: number; onChanged: () => void;
+}) {
+  const [course, setCourse] = useState(courses[0]?.course ?? "");
+  const [no, setNo] = useState(1);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const bind = async () => {
+    if (!course) return;
+    setBusy(true); setErr("");
+    try { await api.put(`/groups/${groupId}/plan`, { course, next_lesson_no: no }); onChanged(); }
+    catch (e) { setErr((e as Error).message); }
+    finally { setBusy(false); }
+  };
+  if (!item) return null;
+  if (!item.plan) {
+    return (
+      <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 py-3 -mt-1">
+        <p className="text-xs text-slate-500 mb-2">Bu guruh hali daraja rejasiga bog'lanmagan. Tanlang:</p>
+        <div className="flex gap-2">
+          <select value={course} onChange={(e) => setCourse(e.target.value)} className="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 bg-white">
+            {courses.map((c) => <option key={c.course} value={c.course}>{c.title}</option>)}
+          </select>
+          <input type="number" min={1} value={no} onChange={(e) => setNo(Number(e.target.value))} className="w-16 text-sm border border-slate-200 rounded-lg px-2 py-1.5" title="Qaysi darsdan" />
+          <button onClick={bind} disabled={busy || !course} className="text-sm bg-brand-600 text-white rounded-lg px-3">Bog'lash</button>
+        </div>
+        {err && <p className="text-xs text-rose-600 mt-1">{err}</p>}
+      </div>
+    );
+  }
+  const p = item.plan;
+  return (
+    <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 py-3 -mt-1 space-y-2">
+      <div className="text-xs text-slate-500">{p.course_title} · {p.next_lesson_no}/{p.total}</div>
+      <div className="text-sm font-semibold text-slate-800">{p.next_lesson_no}-dars — {p.next_title ?? "…"}</div>
+      {p.next_vocab && <div className="text-xs text-slate-500">Lug'at: {p.next_vocab}</div>}
+      {p.carry.length > 0 && (
+        <div className="text-xs bg-amber-50 text-amber-800 rounded-lg px-2 py-1.5">
+          Oldingi darsdan ko'chgan: {p.carry.join("; ")}
+        </div>
+      )}
+      {item.homework_missing.length > 0 && (
+        <div className="text-xs bg-rose-50 text-rose-700 rounded-lg px-2 py-1.5">
+          Uy vazifasini bajarmagan: {item.homework_missing.join(", ")}
+        </div>
+      )}
+      {item.help_needed.length > 0 && (
+        <div className="text-xs bg-sky-50 text-sky-700 rounded-lg px-2 py-1.5">
+          Yordam kerak: {item.help_needed.map((h) => `${h.name} (${h.why})`).join(", ")}
+        </div>
+      )}
+      <div className="text-[11px] text-slate-400">Tekshirishni kutayotgan writing/speaking: {item.pending_checks}</div>
+      <Link to={`/teacher-run/${lessonId}`}
+            className={`block text-center rounded-xl py-3 text-base font-bold text-white ${item.run?.status === "finished" ? "bg-slate-400" : "bg-emerald-600 active:scale-[0.99]"}`}>
+        {item.run ? (item.run.status === "finished" ? `Dars yakunlangan (${item.run.done}/${item.run.total})` : `Darsni davom ettirish (${item.run.done}/${item.run.total})`) : "▶ Darsni boshlash"}
+      </Link>
+    </div>
   );
 }
 

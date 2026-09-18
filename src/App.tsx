@@ -163,6 +163,8 @@ const TeacherSalary = lazy(() => import("./pages/teacher/TeacherSalary"));
 const TeacherFinancePage = lazy(() => import("./pages/teacher/TeacherFinance"));
 const TeacherToday = lazy(() => import("./pages/teacher/TeacherToday"));
 const TeacherLesson = lazy(() => import("./pages/teacher/TeacherLesson"));
+// Dars rejimi — "Darsni boshlash" (2026-09-18), to'liq ekran (pastki menyusiz)
+const TeacherRun = lazy(() => import("./pages/teacher/TeacherRun"));
 const TeacherWeek = lazy(() => import("./pages/teacher/TeacherWeek"));
 const TeacherSession = lazy(() => import("./pages/teacher/TeacherSession"));
 const TeacherVocab = lazy(() => import("./pages/teacher/TeacherVocab"));
@@ -232,6 +234,7 @@ function AppRoutes() {
         <Route path="/play" element={<Play />} />
         {/* Jonli o'yin — ustoz/proyektor ekrani (to'liq ekran, yon menyusiz) */}
         <Route path="/live/:id" element={<RequireStaff><LiveHost /></RequireStaff>} />
+        <Route path="/teacher-run/:lessonId" element={<RequireStaff><TeacherRun /></RequireStaff>} />
         {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
         <Route path="/r/:code" element={<Referral />} />
         <Route path="/parent/:token" element={<Parent />}>

@@ -162,6 +162,12 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_live_players_student "
         "ON live_players (student_id)",
     ]),
+    # 2026-09-18: dars boshqaruvi — group_plans, lesson_runs (jadvalni
+    # create_all yaratadi; bu qator shtampni ko'taradi).
+    ("0018_lesson_runs", [
+        "CREATE INDEX IF NOT EXISTS ix_lesson_runs_lesson "
+        "ON lesson_runs (lesson_id)",
+    ]),
 ]
 
 

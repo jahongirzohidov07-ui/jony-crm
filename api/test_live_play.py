@@ -95,7 +95,7 @@ T = tok("ustoz")
 # --- Dars rejalari
 r = c.get("/api/plans", headers=T)
 ck("plans 200", r.status_code, 200)
-ck("plans: 7 daraja", [x["title"] for x in r.json()][::6], ["IELTS 1.0", "IELTS 7.0"])
+ck("plans: 7 daraja", [x["title"] for x in r.json()][::6], ["IELTS 1.0", "IELTS 7.0 - IELTS GRADUATION"])
 ck("plans: IELTS 1.0 28 dars", (r.json()[0]["cefr"], len(r.json()[0]["lessons"]), r.json()[0]["ready"]), ("A1", 28, True))
 ck("plans: IELTS 2.0 mavzular bor, tayyor emas", (len(r.json()[1]["lessons"]), r.json()[1]["ready"]), (25, False))
 ck("tayyor bo'lmagan dars 404", c.get("/api/plans/ielts_2_0/1", headers=T).status_code, 404)
@@ -160,6 +160,14 @@ ck("question 0", (s["status"], s["q_index"]), ("question", 0))
 ck("boshlangach kirib bo'lmaydi", c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Erkin"]}).status_code, 400)
 ps = c.get(f"/api/live/p/{ta}").json()
 ck("to'g'ri javob o'quvchiga ketmaydi", "correct" in ps["question"], False)
+# Chiqib ketib qayta kirish (Jahongir): Dilnoza 0-savol paytida qayta
+# kiradi -> yangi token, 0-savol avtomat XATO, javob berolmaydi.
+rj = c.post("/api/live/join", json={"code": g["code"], "student_id": SID["Dilnoza"]})
+ck("qayta kirish 200 + reconnected", (rj.status_code, rj.json().get("reconnected")), (200, True))
+td_old, td = td, rj.json()["token"]
+ck("eski token o'ldi", c.get(f"/api/live/p/{td_old}").status_code, 404)
+ck("joriy savol avtomat xato", c.post(f"/api/live/p/{td}/answer", json={"q_index": 0, "option": qs[0]["correct"]}).status_code, 400)
+ck("qayta kirganda answered=-1", c.get(f"/api/live/p/{td}").json()["answered"], -1)
 for i, q in enumerate(qs):
     if i:
         s = c.post(f"/api/live/games/{gid}/next", headers=T).json()   # reveal -> question i

@@ -109,7 +109,8 @@ export default function Play() {
     setErr(""); setBusy(true);
     try {
       const l = await call<Lobby>(`/live/lobby/${code}`);
-      if (l.status !== "lobby") throw new Error("O'yin allaqachon boshlangan");
+      // O'yin boshlangan bo'lsa ham ro'yxat ochiladi — faqat avval kirgan
+      // o'yinchi o'z ismini tanlab QAYTA kiradi (joriy savol xato hisoblanadi).
       setLobby(l); setOther(l.students.length === 0);
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
@@ -166,12 +167,18 @@ export default function Play() {
           ) : (
             <>
               <div className="text-xs text-slate-500 mb-2">{lobby.title}{lobby.group ? ` · ${lobby.group}` : ""}</div>
+              {lobby.status !== "lobby" && (
+                <div className="text-xs bg-amber-50 text-amber-700 rounded-lg px-3 py-2 mb-2">
+                  O'yin allaqachon boshlangan. Avval kirgan bo'lsangiz — ismingizni qayta tanlang.
+                  Diqqat: chiqib ketilgan vaqtdagi savol <b>xato</b> deb hisoblanadi.
+                </div>
+              )}
               {!other && (
                 <>
                   <label className="block text-xs font-medium text-slate-600 mb-1">Ro'yxatdan ismingizni tanlang</label>
                   <div className="max-h-64 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 mb-2">
                     {lobby.students.map((s) => (
-                      <button key={s.id} disabled={s.taken || busy} onClick={() => join(s.id)}
+                      <button key={s.id} disabled={(s.taken && lobby.status === "lobby") || busy} onClick={() => join(s.id)}
                               className="w-full text-left px-3 py-2.5 text-sm hover:bg-brand-50 disabled:opacity-40 disabled:line-through">
                         {s.name}
                       </button>

@@ -360,7 +360,46 @@ def _online_of(db: Session, exam_id: int):
         models.ExamOnline.exam_id == exam_id).first()
 
 
-def _sub_out(s: models.ExamSubmission, names: dict) -> dict:
+def _answer_sheet(detail: list, qmap: dict) -> list:
+    """Examiner uchun javob varag'i (2026-09-18, Jahongir: "ustiga
+    bossa javoblari ham ko'rinsin aynan nimada xato qilganini examiner
+    isbotlay olsin"). Savol matni va to'g'ri javob link ochilgan
+    paytdagi nusxadan olinadi — keyin bazada test tahrirlansa ham
+    o'quvchi yechgan savollar ko'rinadi."""
+    out = []
+    for d in detail:
+        q = qmap.get(d.get("id")) or {}
+        given = d.get("given")
+        opts = q.get("options") or []
+        if q.get("type") == "choice":
+            try:
+                gi = int(given) if given not in (None, "") else None
+            except (TypeError, ValueError):
+                gi = None
+            given_text = (f"{'ABCDEFGH'[gi]}) {opts[gi]}"
+                          if gi is not None and 0 <= gi < len(opts) else None)
+            a = q.get("answer")
+            correct = (f"{'ABCDEFGH'[a]}) {opts[a]}"
+                       if isinstance(a, int) and 0 <= a < len(opts) else None)
+        else:
+            given_text = given if given not in (None, "") else None
+            correct = " / ".join(q.get("answer") or [])
+        out.append({**d, "part": q.get("part"), "q": q.get("q") or "",
+                    "type": q.get("type"), "given_text": given_text,
+                    "correct": correct})
+    return out
+
+
+def _qmap(parts: list) -> dict:
+    m = {}
+    for p in parts:
+        for q in p.get("questions") or []:
+            m[q["id"]] = {**q, "part": p.get("title")}
+    return m
+
+
+def _sub_out(s: models.ExamSubmission, names: dict,
+             qmap: Optional[dict] = None) -> dict:
     return {
         "id": s.id, "student_id": s.student_id,
         "student_name": names.get(s.student_id) if s.student_id else None,
@@ -370,7 +409,7 @@ def _sub_out(s: models.ExamSubmission, names: dict) -> dict:
         "submitted_at": s.submitted_at.isoformat() if s.submitted_at else None,
         "placed_by": s.placed_by,
         "photo": s.photo,
-        "detail": _load(s.detail),
+        "detail": _answer_sheet(_load(s.detail), qmap or {}),
     }
 
 
@@ -397,6 +436,7 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
     # Guruh darajasiga moslari birinchi
     templates.sort(key=lambda t: (t["level"] != lvl, t["title"]))
     online = None
+    qmap = _qmap(_load(o.parts)) if o else {}
     if o:
         t = db.query(models.ExamTemplate).get(o.template_id)
         online = {
@@ -408,7 +448,7 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
     return {"online": online, "group_level": lvl,
             "can_manage": user.role in RESULT_ROLES,
             "templates": templates,
-            "submissions": [_sub_out(s, names) for s in subs]}
+            "submissions": [_sub_out(s, names, qmap) for s in subs]}
 
 
 @router.post("/api/exams/{exam_id}/online")

@@ -28,7 +28,17 @@ export type OnlineSubmission = {
   submitted_at: string | null;
   placed_by: string | null;
   photo: string | null;
-  detail: { id: string; n: number; ok: boolean; given: string | null }[];
+  detail: {
+    id: string;
+    n: number;
+    ok: boolean;
+    given: string | null;
+    part: string | null;
+    q: string;
+    type: "choice" | "text" | null;
+    given_text: string | null;
+    correct: string | null;
+  }[];
 };
 type TemplateRow = {
   id: number;
@@ -101,6 +111,121 @@ export function Photo({ src, size = 32 }: { src: string | null; size?: number })
           onClick={() => setBig(false)}
         >
           <img src={src} alt="" className="max-h-[80vh] max-w-full rounded-xl" />
+        </div>
+      )}
+    </>
+  );
+}
+
+/** JAVOB VARAG'I (2026-09-18, Jahongir: "ustiga bossa javoblari ham
+ *  ko'rinsin aynan nimada xato qilganini examiner isbotlay olsin").
+ *  Har savol: o'quvchi javobi, to'g'ri javob, to'g'ri/xato. */
+export function AnswerSheetButton({
+  s,
+  className,
+  children,
+}: {
+  s: OnlineSubmission;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const [onlyWrong, setOnlyWrong] = useState(false);
+  const wrong = s.detail.filter((d) => !d.ok).length;
+  const rows = onlyWrong ? s.detail.filter((d) => !d.ok) : s.detail;
+  let lastPart: string | null = null;
+  return (
+    <>
+      <button
+        type="button"
+        title="Javoblarni ko'rish"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className={className}
+      >
+        {children}
+      </button>
+      {open && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 z-50 overflow-y-auto"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="bg-white max-w-2xl mx-auto my-6 rounded-xl shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 p-4 border-b border-slate-100 sticky top-0 bg-white rounded-t-xl">
+              <Photo src={s.photo} size={44} />
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-slate-900 truncate">
+                  {s.student_name || s.typed_name || "—"}
+                </p>
+                <p className="text-xs text-slate-500">
+                  {s.online_score} / {s.online_max} · {wrong} ta xato ·{" "}
+                  {when(s.submitted_at)}
+                  {s.typed_name && s.student_name && s.typed_name !== s.student_name
+                    ? ` · o'zi yozgan ism: ${s.typed_name}`
+                    : ""}
+                </p>
+              </div>
+              <label className="text-xs text-slate-600 flex items-center gap-1.5 whitespace-nowrap">
+                <input
+                  type="checkbox"
+                  checked={onlyWrong}
+                  onChange={(e) => setOnlyWrong(e.target.checked)}
+                />
+                Faqat xatolar
+              </label>
+              <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X size={18} />
+              </button>
+            </div>
+            <div className="p-4 space-y-2">
+              {rows.map((d) => {
+                const head = d.part && d.part !== lastPart ? d.part : null;
+                lastPart = d.part;
+                return (
+                  <div key={d.id}>
+                    {head && (
+                      <p className="text-xs font-semibold text-slate-500 uppercase mt-3 mb-1">
+                        {head}
+                      </p>
+                    )}
+                    <div
+                      className={`rounded-lg border px-3 py-2 text-sm ${
+                        d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
+                      }`}
+                    >
+                      <p className="text-slate-800">
+                        <span className={`font-semibold mr-1.5 ${d.ok ? "text-emerald-600" : "text-rose-600"}`}>
+                          {d.ok ? "✓" : "✗"} {d.n}.
+                        </span>
+                        {d.q || <span className="text-slate-400">(audio / matndagi bo'sh joy)</span>}
+                      </p>
+                      <p className="mt-1 text-xs">
+                        <span className="text-slate-500">Javobi: </span>
+                        <span className={d.ok ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"}>
+                          {d.given_text ?? <i className="text-slate-400 font-normal">javob bermagan</i>}
+                        </span>
+                        {!d.ok && (
+                          <>
+                            <span className="text-slate-400 mx-1.5">·</span>
+                            <span className="text-slate-500">To'g'risi: </span>
+                            <span className="text-emerald-700 font-medium">{d.correct}</span>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+              {rows.length === 0 && (
+                <p className="text-sm text-slate-400 text-center py-6">Xato yo'q</p>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </>
@@ -307,7 +432,6 @@ export function OnlineBelow({
 }) {
   const [paper, setPaper] = useState<Record<number, string>>({});
   const [pick, setPick] = useState<Record<number, string>>({});
-  const [open, setOpen] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -340,23 +464,6 @@ export function OnlineBelow({
     }
   }
 
-  function Detail({ s }: { s: OnlineSubmission }) {
-    return (
-      <div className="flex flex-wrap gap-1 mt-2">
-        {s.detail.map((d) => (
-          <span
-            key={d.id}
-            title={d.given ?? "javob yo'q"}
-            className={`text-[11px] px-1.5 py-0.5 rounded ${
-              d.ok ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-600"
-            }`}
-          >
-            {d.n}
-          </span>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className="mt-4 space-y-4">
@@ -404,7 +511,9 @@ export function OnlineBelow({
                       </span>
                     </td>
                     <td className="px-4 py-2 text-slate-500 whitespace-nowrap">
-                      online {s.online_score}/{s.online_max}
+                      <AnswerSheetButton s={s} className="underline decoration-dotted hover:text-brand-700">
+                        online {s.online_score}/{s.online_max}
+                      </AnswerSheetButton>
                     </td>
                     <td className="px-4 py-2">
                       <input
@@ -463,13 +572,12 @@ export function OnlineBelow({
                       {when(s.submitted_at)}
                     </p>
                   </div>
-                  <button
-                    onClick={() => setOpen(open === s.id ? null : s.id)}
+                  <AnswerSheetButton
+                    s={s}
                     className="text-sm font-semibold text-slate-800 underline decoration-dotted"
-                    title="Javoblarni ko'rish"
                   >
                     {s.online_score}/{s.online_max}
-                  </button>
+                  </AnswerSheetButton>
                   {data.can_manage && (
                     <div className="flex flex-wrap items-center gap-2 ml-auto">
                       <select
@@ -521,7 +629,6 @@ export function OnlineBelow({
                     </div>
                   )}
                 </div>
-                {open === s.id && <Detail s={s} />}
               </div>
             ))}
           </div>

@@ -210,6 +210,19 @@ ck("ustoz biriktira olmaydi", r.status_code, 403)
 r = client.post(f"/api/exam-submissions/{pend[0]['id']}/assign",
                 headers=HE, json={"student_id": S["Valiyev Vali"]})
 ck("examiner biriktirdi", r.status_code, 200)
+# JAVOB VARAG'I: examiner aynan qaysi savolda xato qilganini ko'radi
+v = [x for x in r.json()["submissions"]
+     if x["student_id"] == S["Valiyev Vali"]][0]
+sheet = {d["n"]: d for d in v["detail"]}
+ck("30 qator", len(sheet), 30)
+ck("to'g'ri javob belgilangan", sheet[1]["ok"], True)
+ck("28-savol xato", sheet[28]["ok"], False)
+ck("28-savol matni", "Your teacher" in sheet[28]["q"], True)
+ck("28 to'g'risi", sheet[28]["correct"], "B) is")
+ck("28 o'quvchi javobi", sheet[28]["given_text"], "C) am")
+ck("7-savol yozma to'g'risi", sheet[7]["correct"].startswith("the USA"), True)
+ck("bo'lim nomi", sheet[19]["part"], "Part 4 · Reading")
+
 ck("Valiyev 90%", result(S["Valiyev Vali"])["percent"], 90.0)
 # Takrorni tanlash: Boboyevning ikkinchi (30/30) natijasi qoldiriladi
 r = client.post(f"/api/exam-submissions/{dup[0]['id']}/assign",

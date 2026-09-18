@@ -20,7 +20,7 @@ import {
 import { formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "./Time24Input";
-import { useExamOnline, OnlineLinkCard, OnlineBelow, Photo } from "./ExamOnline";
+import { useExamOnline, OnlineLinkCard, OnlineBelow, Photo, AnswerSheetButton } from "./ExamOnline";
 
 /** Sana ustuni sarlavhasi: "01 iyul" ko'rinishida qisqa. */
 const SHORT_MONTHS = [
@@ -1315,15 +1315,15 @@ function ExamSheet({
                     )}
                     {s.full_name}
                     {onlineBy[s.id] && (
-                      <span
-                        className="ml-2 text-[10px] font-medium bg-sky-50 text-sky-700 px-1.5 py-0.5 rounded"
-                        title="Link orqali topshirgan"
+                      <AnswerSheetButton
+                        s={onlineBy[s.id]}
+                        className="ml-2 text-[10px] font-medium bg-sky-50 text-sky-700 hover:bg-sky-100 px-1.5 py-0.5 rounded underline decoration-dotted"
                       >
                         online {onlineBy[s.id].online_score}/{onlineBy[s.id].online_max}
                         {online.data?.online?.paper_max && onlineBy[s.id].paper_score == null
                           ? " · qog'oz kutilmoqda"
                           : ""}
-                      </span>
+                      </AnswerSheetButton>
                     )}
                     {r && r.counted === 0 && (
                       <span

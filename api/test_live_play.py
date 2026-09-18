@@ -99,8 +99,8 @@ ck("plans: 7 daraja", [x["title"] for x in r.json()][::6], ["IELTS 1.0", "IELTS 
 ck("plans: IELTS 1.0 28 dars", (r.json()[0]["cefr"], len(r.json()[0]["lessons"]), r.json()[0]["ready"]), ("A1", 28, True))
 ck("plans: IELTS 2.0 mavzular bor, tayyor emas", (len(r.json()[1]["lessons"]), r.json()[1]["ready"]), (25, False))
 ck("tayyor bo'lmagan dars 404", c.get("/api/plans/ielts_2_0/1", headers=T).status_code, 404)
-r = c.get("/api/plans/ielts_1_0/23", headers=T)
-ck("plan 23 conjunctions", "CONJUNCTIONS" in r.json()["title"], True)
+r = c.get("/api/plans/ielts_1_0/18", headers=T)
+ck("plan 18 conjunctions (yangi tartib)", "CONJUNCTIONS" in r.json()["title"], True)
 ck("HR ga reja yopiq", c.get("/api/plans", headers=tok("hr")).status_code, 403)
 for tier, mn in (("20", 20), ("40", 40), ("60", 60)):
     rp = c.get(f"/api/plans/ielts_1_0/23/vocab.pdf?tier={tier}", headers=T)

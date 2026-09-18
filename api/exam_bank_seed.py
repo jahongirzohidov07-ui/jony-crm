@@ -3046,6 +3046,130 @@ Annie""",
     ],
 }
 
+
+# ------------------------------------------------------------- STEP 3
+# Manba: "Step 3.0 Unit N.pdf" + "Unit N Progress Test Answer Key.pdf"
+# (Cambridge English Empower B1 Unit Progress Test). 40 savol.
+
+STEP3_UNIT1 = {
+    "level": "step3", "kind": "unit", "unit_no": 1,
+    "title": "Step 3 · Unit 1 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Yes, long time no see!", "How about you?", "It was really nice to meet you."], "A"),
+                _c("", ["How nice of you.", "That sounds nice too.", "Nice to meet you, too."], "C"),
+                _c("", ["About six months ago.", "Not far from here.", "Let’s go."], "B"),
+                _c("", ["That’s fine.", "What a lovely surprise!", "Hi – nice to meet you."], "C"),
+                _c("", ["How silly.", "We must meet up again soon.", "How are you?"], "B"),
+                _c("", ["OK – I’ll give you a call next week.", "OK – how lovely.", "OK – and you?"], "A"),
+                _c("", ["Yes, and see you again soon.", "That sounds great.", "Nice to meet him."], "A"),
+                _c("", ["I’m John, by the way.", "Nice to meet you too.", "Robert, what a lovely surprise!"], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Meeting and communicating",
+            "instructions": "Read the sentences about meeting and "
+                            "communicating with people. Choose the missing "
+                            "word A, B or C for each space.",
+            "questions": [
+                _c("Richard thinks it's alright to finish a relationship by text but I "
+                   "think it's ............ .", ["lovely", "awful", "brilliant"], "B"),
+                _c("The girl I met yesterday was very nice but unfortunately she was "
+                   "wearing an ............ dress.", ["ugly", "excellent", "attractive"], "A"),
+                _c("My grandmother gets ............ upset if I don't phone her every week.",
+                   ["generally", "mainly", "pretty"], "C"),
+                _c("Leila's friends often text her when they're on holiday but they "
+                   "............ send her postcards.", ["rarely", "always", "ever"], "A"),
+                _c("The weather was ............ when the new students had their picnic "
+                   "in the park.", ["delicious", "serious", "perfect"], "C"),
+                _c("You should put this photo in your blog because you look ............ "
+                   "in your wedding dress.", ["light", "gorgeous", "fair"], "B"),
+                _c("My neighbour ............ loves getting letters from her grandchildren.",
+                   ["exactly", "particularly", "nearly"], "B"),
+                _c("I ............ use Facebook to say 'Happy birthday' to my friends "
+                   "because it's the best way.", ["mainly", "fairly", "slowly"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Everyday life",
+            "instructions": "Read the sentences about everyday life. What are "
+                            "the missing words? The first letter is already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("I don't want to play football in the snow – what a s _ _ _ _ idea!",
+                   "silly", "illy"),
+                _t("I h _ _ _ _ _  e _ _ _ get birthday cards these days – just messages "
+                   "on my Facebook page.", "hardly ever", "ardly ver"),
+                _t("Be polite not r _ _ _ when you speak to your boss.", "rude", "ude"),
+                _t("If people don't communicate, it can cause s _ _ _ _ _ _ problems "
+                   "such as arguments.", "serious", "erious"),
+                _t("Tom is planning to cook a really d _ _ _ _ _ _ _ _ meal when his "
+                   "girlfriend's parents come to dinner.", "delicious", "elicious"),
+                _t("Lena is f _ _ _ _ _ good at writing academic essays - she doesn't "
+                   "find it too difficult.", "fairly", "airly"),
+                _t("Jack's parents worry about him so he g _ _ _ _ _ _ _ _ calls them "
+                   "every weekend.", "generally", "enerally"),
+                _t("Our teacher a _ _ _ _ _ _ _ _ _ hates lazy students!",
+                   "absolutely", "bsolutely"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the young woman's blog about herself and her "
+                            "apartment. Choose the best answer (A, B or C) for "
+                            "each space.",
+            "passage": """Sharing an apartment
+
+My name's Claudia and I'm from Brazil. I'm living in London for a few months. Five mornings a week I go to a language school and six evenings a week I (25) ………… as a waitress in a Brazilian restaurant. The restaurant cook, Ben, (26) ………… the staff a delicious meal every evening after we (27) ………… work.
+I'm renting a nice apartment with two bedrooms but it's too expensive for me to live there by myself. My brother's with me at the moment but he (28) ………… for a long time because he has to go back to Brazil soon. Now I am looking for the right person to share my apartment. Are you interested in sharing the apartment with me? If you think you might be, send me your answers to these questions:
+What type of work or study (29) ………… ? When (30) ………… to London? (31) ………… you drive a car?
+We need to clean the apartment ourselves. (32) ………… that worry you? If I like your answers, we can meet, get to know each other and talk some more about the apartment.""",
+            "questions": [
+                _c("", ["works", "work", "working"], "B"),
+                _c("", ["is giving", "give", "gives"], "C"),
+                _c("", ["finish", "are finishing", "is finishing"], "A"),
+                _c("", ["doesn’t stay", "don’t stay", "isn’t staying"], "C"),
+                _c("", ["you do", "do you", "do you do"], "C"),
+                _c("", ["did you come", "you did come", "you came"], "A"),
+                _c("", ["Does", "Are", "Can"], "C"),
+                _c("", ["Do", "Does", "Is"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("I think it's a great party - how about you?\n"
+                   "What ………… think of the party? I think it’s great.", "do you"),
+                _t("I watch a lot of TV every evening - how about you?\n"
+                   "How much TV ………… every evening? - I watch a lot.", "do you watch"),
+                _t("Katia hates birthday cake.\n"
+                   "Katia really ………… like birthday cake.", "does not", "doesn’t"),
+                _t("Is English the only language you speak?\n"
+                   "………… any other languages than English?",
+                   "Do you speak", "Can you speak"),
+                _t("Mum needs help in the kitchen, so Magda and John are there with her.\n"
+                   "Magda and John ………… helping Mum in the kitchen.", "are"),
+                _t("Do you know how many people Anna invited to her party?\n"
+                   "How many people ………… to her party – do you know?",
+                   "did Anna invite", "did she invite"),
+                _t("Jack's terrible at singing but what about dancing?\n"
+                   "Jack can't sing but how well ………… he dance?", "can", "does"),
+                _t("Roger's taking photos with his phone, not speaking on it.\n"
+                   "Roger ………… speaking on his phone – he's taking photos with it.",
+                   "is not", "isn’t"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3074,4 +3198,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit11", STEP2_UNIT11),
     ("exam_tpl_step2_unit12", STEP2_UNIT12),
     ("exam_tpl_step2_end", STEP2_END),
+    ("exam_tpl_step3_unit1", STEP3_UNIT1),
 ]

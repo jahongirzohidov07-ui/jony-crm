@@ -376,7 +376,7 @@ export default function ExamTake() {
                     className="max-h-40 max-w-full rounded-lg border border-slate-200 mb-2"
                   />
                 )}
-                <p className="text-sm text-slate-800 mb-2">
+                <p className="text-sm text-slate-800 mb-2 whitespace-pre-line">
                   <span className="font-semibold text-slate-500 mr-1.5">{q.n}.</span>
                   {q.q}
                 </p>

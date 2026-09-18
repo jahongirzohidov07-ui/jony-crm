@@ -205,7 +205,7 @@ export function AnswerSheetButton({
                         d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
                       }`}
                     >
-                      <p className="text-slate-800">
+                      <p className="text-slate-800 whitespace-pre-line">
                         <span className={`font-semibold mr-1.5 ${d.ok ? "text-emerald-600" : "text-rose-600"}`}>
                           {d.ok ? "✓" : "✗"} {d.n}.
                         </span>

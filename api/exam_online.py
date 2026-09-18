@@ -50,6 +50,8 @@ router = APIRouter()
 # Natija kirita oladiganlar (exams.save_exam_results bilan bir xil)
 RESULT_ROLES = [r for r in roles.TEACHING_ACCESS
                 if r not in (roles.TEACHER, roles.SUPPORT_TEACHER)]
+# Natijalarni TASDIQLAYDI (e'lon qiladi) — examiner tomoni (2026-09-18)
+PUBLISH_ROLES = list(dict.fromkeys(roles.EXAM_ACCESS + roles.EXAM_EDIT))
 
 PHOTO_MAX_CHARS = 400_000          # ~300KB rasm (frontend 480px ga kichraytiradi)
 _HITS: dict = {}
@@ -205,6 +207,8 @@ def _write_result(db: Session, exam: models.Exam, online: models.ExamOnline,
     Qog'oz qismi bor, lekin hali kiritilmagan bo'lsa — kutadi."""
     if not sub.student_id or sub.status != "placed":
         return
+    if not online.published_at:
+        return          # examiner hali tasdiqlamagan
     if (online.paper_max or 0) > 0 and sub.paper_score is None:
         return
     total = (sub.online_score or 0) + (sub.paper_score or 0)
@@ -456,6 +460,11 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             .options(undefer(models.ExamSubmission.photo))
             .filter(models.ExamSubmission.exam_id == exam.id)
             .order_by(models.ExamSubmission.submitted_at).all())
+    published = bool(o and o.published_at)
+    can_see = (published or user.role in PUBLISH_ROLES
+               or user.role in RESULT_ROLES)
+    if not can_see:
+        subs = []       # ustoz: examiner tasdiqlaguncha natija ko'rinmaydi
     ids = {s.student_id for s in subs if s.student_id}
     names = {st.id: st.full_name for st in db.query(models.Student)
              .filter(models.Student.id.in_(ids)).all()} if ids else {}
@@ -477,9 +486,14 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "template_id": o.template_id,
             "template_title": t.title if t else None,
             "online_max": o.online_max, "paper_max": o.paper_max,
+            "published_at": (o.published_at.isoformat()
+                             if o.published_at else None),
+            "published_by": o.published_by,
         }
     return {"online": online, "group_level": lvl,
             "can_manage": user.role in RESULT_ROLES,
+            "can_publish": user.role in PUBLISH_ROLES,
+            "hidden": not can_see,
             "templates": templates,
             "submissions": [_sub_out(s, names, qmap) for s in subs]}
 
@@ -630,9 +644,48 @@ def save_paper(exam_id: int, payload: PaperBulk,
                 student_id=m.student_id,
                 score=(s.online_score or 0) + m.paper, absent=False))
     db.commit()
+    if marks and o.published_at:
+        _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=marks),
+                                 user)
+    return get_online(exam_id, db, user)
+
+
+@router.post("/api/exams/{exam_id}/online/publish")
+def publish_online(exam_id: int, db: Session = Depends(get_db),
+                   user=Depends(require_role(*PUBLISH_ROLES))):
+    """Examiner natijalarni TASDIQLAYDI: joyidagi barcha topshiriqlar
+    guruh testiga yoziladi — shundan keyin ustoz, o'quvchi va ota-ona
+    ko'radi, coin beriladi, Telegram xabari ketadi. Qog'oz qismi bor
+    bo'lsa, bali kiritilganlargina yoziladi (qolgani kiritilganda)."""
+    exam = _exams._exam_in_scope(db, exam_id, user)
+    o = _online_of(db, exam.id)
+    if not o:
+        raise HTTPException(404, "Link yo'q")
+    if o.published_at:
+        raise HTTPException(400, "Natijalar allaqachon tasdiqlangan")
+    if not _exam_open_for_results(exam):
+        raise HTTPException(400, "Test tasdiqlanmagan yoki bekor qilingan")
+    placed = (db.query(models.ExamSubmission)
+              .filter(models.ExamSubmission.exam_id == exam.id,
+                      models.ExamSubmission.status == "placed",
+                      models.ExamSubmission.student_id.isnot(None)).all())
+    marks = []
+    for s in placed:
+        if (o.paper_max or 0) > 0 and s.paper_score is None:
+            continue
+        marks.append(schemas.ExamScoreMark(
+            student_id=s.student_id,
+            score=(s.online_score or 0) + (s.paper_score or 0), absent=False))
+    o.published_at = datetime.utcnow()
+    o.published_by = user.full_name
+    db.commit()
     if marks:
         _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=marks),
                                  user)
+    audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
+              entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
+              field="online_publish", new_value=f"{len(marks)} ta natija",
+              commit=True)
     return get_online(exam_id, db, user)
 
 
@@ -746,8 +799,9 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
             # Masalan, maksimal ball keyin o'zgartirilgan — javob baribir
             # saqlangan, examiner ExamSheet'da ko'radi
             db.rollback()
-    return {"ok": True, "score": score, "max": total,
-            "paper_max": o.paper_max or 0,
+    # Ball o'quvchiga ko'rsatilmaydi — examiner tasdiqlagach e'lon
+    # qilinadi (2026-09-18)
+    return {"ok": True, "paper_max": o.paper_max or 0,
             "pending": status != "placed"}
 
 
@@ -756,6 +810,19 @@ def seed_templates(db: Session) -> None:
     """Jahongir yuborgan testlar (Step 1 Unit 1 …) bazaga bir marta
     yoziladi. Keyin examinerlar boshlig'i o'zi tahrirlaydi."""
     import exam_bank_seed
+    # Tasdiqlash qo'shilishidan OLDINGI linklar natijalari allaqachon
+    # guruh testida — ular tasdiqlangan hisoblanadi (bir martalik)
+    if not _seed_done(db, "exam_online_publish_legacy_v1"):
+        try:
+            (db.query(models.ExamOnline)
+             .filter(models.ExamOnline.published_at.is_(None))
+             .update({models.ExamOnline.published_at: datetime.utcnow(),
+                      models.ExamOnline.published_by: "avvalgi tartib"},
+                     synchronize_session=False))
+            db.commit()
+            _seed_mark(db, "exam_online_publish_legacy_v1")
+        except Exception:
+            db.rollback()
     for key, tpl in exam_bank_seed.TEMPLATES:
         if _seed_done(db, key):
             continue

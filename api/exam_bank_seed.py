@@ -793,6 +793,95 @@ Cathy""",
     ],
 }
 
+
+U7_IMG = "/exam-img/step1-u7/"
+THINGS_A_G = ["clock", "bag", "chair", "lamp", "glass", "cup", "plate"]
+
+STEP1_UNIT7 = {
+    "level": "step1", "kind": "unit", "unit_no": 7,
+    "title": "Step 1 · Unit 7 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear six short sentences. For each one, "
+                            "choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["They’re £2 each.", "No, sorry, they aren’t.", "I’d like four of these cups, please."], "A"),
+                _c("", ["Certainly.", "Thank you.", "Don’t worry."], "A"),
+                _c("", ["Can I help you?", "Thank you, that’s very kind.", "Of course."], "C"),
+                _c("", ["Thank you, that’s very kind.", "Here you are.", "Nice to meet you."], "B"),
+                _c("", ["Can I help you?", "That’s great, thanks.", "OK, no problem."], "C"),
+                _c("", ["No, I’m sorry. We only have two.", "That’s a good price.", "It’s three pounds for the small ones."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Things",
+            "instructions": "Choose the word to match the picture.",
+            "questions": [
+                _c("", THINGS_A_G, "E", image=U7_IMG + "q7.jpg"),
+                _c("", THINGS_A_G, "D", image=U7_IMG + "q8.jpg"),
+                _c("", THINGS_A_G, "A", image=U7_IMG + "q9.jpg"),
+                _c("", THINGS_A_G, "G", image=U7_IMG + "q10.jpg"),
+                _c("", THINGS_A_G, "B", image=U7_IMG + "q11.jpg"),
+                _c("", THINGS_A_G, "C", image=U7_IMG + "q12.jpg"),
+            ],
+        },
+        {
+            "title": "Part 3 · Clothes",
+            "instructions": "Look at the pictures of clothes. What are the "
+                            "missing letters? Some letters are already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("t _ _ _ _ _ _ _", "trousers", "rousers", image=U7_IMG + "q13.jpg"),
+                _t("a s _ _ _ _", "skirt", "kirt", image=U7_IMG + "q14.jpg"),
+                _t("a white d _ _ _ _", "dress", "ress", image=U7_IMG + "q15.jpg"),
+                _t("a g _ _ _ _  h _ _", "green hat", "reen at",
+                   image=U7_IMG + "q16.jpg"),
+                _t("a light b _ _ _  j _ _ _ _ _", "blue jacket", "lue acket",
+                   image=U7_IMG + "q17.jpg"),
+                _t("d _ _ _  brown s _ _ _ _", "dark shoes", "ark hoes",
+                   "dark brown shoes", image=U7_IMG + "q18.jpg"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read about a shop. Choose the best answer, A, B "
+                            "or C, for each space.",
+            "passage": """Fred the Fashion Man
+
+I like fashion, and on Saturdays I often work in my (19) ………… shop. His name is Fred, and the name of the shop is ‘Fred the Fashion Man’.
+(20) ………… is a good name, because the shop sells (21) ………… jeans, trousers, jackets and shirts. The clothes aren’t expensive, and a lot of young people buy them.
+The clothes in the shop are interesting and different, but (22) ………… clothes are boring. Fred always wears a black T-shirt and black trousers. Sometimes I see some jeans in the shop and I say to my brother ‘I like (23) ………… red jeans. Why don’t you wear them?’ or ‘I like (24) ………… yellow shirt. Why don’t you wear it?’ But Fred always says ‘No, I like my black T-shirt and jeans.’""",
+            "questions": [
+                _c("", ["brothers", "brother", "brother’s"], "C"),
+                _c("", ["This", "There", "These"], "A"),
+                _c("", ["men’s", "man’s", "men"], "A"),
+                _c("", ["Freds", "Freds’", "Fred’s"], "C"),
+                _c("", ["that", "those", "this"], "B"),
+                _c("", ["those", "these", "that"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about clothes. Choose the best "
+                            "answer, A, B or C, for each space.",
+            "questions": [
+                _c("I’d like one of ............ T-shirts.", ["that", "this", "these"], "C"),
+                _c("Is ............ a new coat?", ["that", "these", "those"], "A"),
+                _c("Look. ............ is my new shirt. Do you like it?",
+                   ["These", "Those", "This"], "C"),
+                _c("What colour are ............ new shoes?", ["Mark", "Mark’s", "Marks’"], "B"),
+                _c("At the school the boys have blue shirts but the ............ "
+                   "dresses are green.", ["girls’", "girl", "girl’s"], "A"),
+                _c("These new shoes are for ............ party.",
+                   ["Tom and Lucy", "Tom’s and Lucy", "Tom and Lucy’s"], "C"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -801,4 +890,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit5", STEP1_UNIT5),
     ("exam_tpl_step1_unit6", STEP1_UNIT6),
     ("exam_tpl_step1_mid", STEP1_MID),
+    ("exam_tpl_step1_unit7", STEP1_UNIT7),
 ]

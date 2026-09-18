@@ -1323,6 +1323,9 @@ function ExamSheet({
                         {online.data?.online?.paper_max && onlineBy[s.id].paper_score == null
                           ? " · qog'oz kutilmoqda"
                           : ""}
+                        {online.data?.online && !online.data.online.published_at
+                          ? " · tasdiqlanmagan"
+                          : ""}
                       </AnswerSheetButton>
                     )}
                     {r && r.counted === 0 && (

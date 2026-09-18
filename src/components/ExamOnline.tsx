@@ -59,9 +59,14 @@ export type OnlineData = {
     template_title: string | null;
     online_max: number;
     paper_max: number;
+    published_at: string | null;
+    published_by: string | null;
   } | null;
   group_level: string | null;
   can_manage: boolean;
+  can_publish: boolean;
+  /** Ustoz: examiner tasdiqlaguncha natijalar yashirin */
+  hidden: boolean;
   templates: TemplateRow[];
   submissions: OnlineSubmission[];
 };
@@ -356,8 +361,55 @@ export function OnlineLinkCard({
   }
 
   const placed = data.submissions.filter((s) => s.status === "placed").length;
+  const waiting = data.submissions.filter(
+    (s) => s.status === "pending" || s.status === "duplicate"
+  ).length;
   return (
     <div className="border border-slate-200 rounded-xl p-4 mb-4 bg-white">
+      {/* TASDIQLASH (2026-09-18): examiner tasdiqlaguncha natija guruh
+          testiga yozilmaydi — ustoz, o'quvchi va ota-ona ko'rmaydi */}
+      <div
+        className={`flex flex-wrap items-center gap-2 rounded-lg px-3 py-2 mb-3 text-sm ${
+          o.published_at
+            ? "bg-emerald-50 text-emerald-800"
+            : "bg-amber-50 text-amber-800"
+        }`}
+      >
+        {o.published_at ? (
+          <span>
+            Natijalar tasdiqlangan — {when(o.published_at)}
+            {o.published_by ? `, ${o.published_by}` : ""}. O'quvchi va ustozlarga
+            ko'rinadi.
+          </span>
+        ) : data.hidden ? (
+          <span>Natijalar examiner tasdiqlagandan keyin ko'rinadi.</span>
+        ) : (
+          <>
+            <span className="flex-1 min-w-[200px]">
+              Natijalar hali tasdiqlanmagan — o'quvchi va ustozlarga
+              ko'rinmaydi. Topshirgan: {placed}
+              {waiting ? `, aniqlanmagan: ${waiting}` : ""}.
+            </span>
+            {data.can_publish && (
+              <button
+                disabled={busy}
+                onClick={() => {
+                  if (
+                    confirm(
+                      `${placed} ta natija tasdiqlansinmi? Shundan keyin o'quvchi, ustoz va ota-onaga ko'rinadi, coin beriladi.` +
+                        (waiting ? `\n\nDiqqat: ${waiting} ta aniqlanmagan natija hali biriktirilmagan.` : "")
+                    )
+                  )
+                    run(() => api.post<OnlineData>(`/exams/${examId}/online/publish`, {}));
+                }}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
+              >
+                Natijalarni tasdiqlash
+              </button>
+            )}
+          </>
+        )}
+      </div>
       <div className="flex flex-wrap items-center gap-2">
         <Link2 size={15} className="text-brand-600" />
         <span className="text-sm font-medium text-slate-800">

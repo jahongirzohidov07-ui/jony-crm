@@ -52,6 +52,9 @@ def _ensure_new_columns(cols=None):
         # O'tish balli (2026-09-10). Eski testlarda NULL qoladi —
         # ular avvalgi chegaralarda hisoblanaveradi, tarix o'zgarmaydi.
         "ALTER TABLE exams ADD COLUMN pass_percent FLOAT",
+        # Online test natijasini examiner tasdiqlaydi (2026-09-18)
+        "ALTER TABLE exam_online ADD COLUMN published_at TIMESTAMP",
+        "ALTER TABLE exam_online ADD COLUMN published_by VARCHAR",
         # Eski imtihonlar allaqachon o'tkazilgan - ular "done".
         "UPDATE exams SET status = 'done' WHERE status IS NULL",
         "ALTER TABLE groups ADD COLUMN room_id INTEGER",

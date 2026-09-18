@@ -4278,6 +4278,11 @@ class ExamOnline(Base):
     paper_max = Column(Float, nullable=False, default=0)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    # Examiner natijalarni TASDIQLAGAN payt (2026-09-18, Jahongir: "testni
+    # examiner tasdiqlaganidan keyin o'quvchilar va ustozlarga ko'rinadigan
+    # qilib ber"). NULL — natijalar hali guruh testiga yozilmagan.
+    published_at = Column(DateTime, nullable=True)
+    published_by = Column(String, nullable=True)
 
 
 class ExamSubmission(Base):

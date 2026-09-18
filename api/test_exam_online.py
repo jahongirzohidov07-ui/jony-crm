@@ -124,6 +124,8 @@ u6 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 6]
 ck("Step 1 Unit 6 bor, 30 savol", [x["q_count"] for x in u6], [30])
 mid = [x for x in r.json() if x["level"] == "step1" and x["kind"] == "mid"]
 ck("Step 1 Mid-course bor, 45 savol", [x["q_count"] for x in mid], [45])
+u7 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 7]
+ck("Step 1 Unit 7 bor, 30 savol", [x["q_count"] for x in u7], [30])
 t3 = client.get(f"/api/exam-templates/{u3[0]['id']}", headers=HE).json()
 q7 = t3["parts"][1]["questions"][0]
 ck("rasmli savol", q7["image"], "/exam-img/step1-u3/q7.jpg")
@@ -187,21 +189,45 @@ def result(sid):
     return {x["student_id"]: x for x in d["results"]}.get(sid)
 
 
+def online_score(sid):
+    on = client.get(f"/api/exams/{EID}/online", headers=HE).json()
+    for s in on["submissions"]:
+        if s["student_id"] == sid and s["status"] == "placed":
+            return s["online_score"]
+
+
 print("\n=== D. RO'YXATDAN TANLAGAN ===")
 r = submit(student_id=S["Aliyev Ali"])
 ck("qabul qilindi", r.status_code, 200)
-ck("ball 30/30", (r.json()["score"], r.json()["max"]), (30.0, 30.0))
-rr = result(S["Aliyev Ali"])
-ck("natija o'z qatorida 100%", rr and rr["percent"], 100.0)
-ck("coin 10", rr and rr["coins"], 10)
+ck("o'quvchiga ball ko'rsatilmaydi", "score" in r.json(), False)
+ck("examiner ko'radi: 30", online_score(S["Aliyev Ali"]), 30.0)
 
-print("\n=== E. MATNLI JAVOB ===")
+print("\n=== D2. TASDIQLANGUNCHA YASHIRIN ===")
+ck("guruh testiga hali yozilmagan", result(S["Aliyev Ali"]), None)
+on_t = client.get(f"/api/exams/{EID}/online", headers=HT).json()
+ck("ustozga yashirin", (on_t["hidden"], on_t["submissions"]), (True, []))
+ck("examiner tasdiqlashi mumkin",
+   client.get(f"/api/exams/{EID}/online", headers=HE).json()["can_publish"], True)
+ck("ustoz tasdiqlay olmaydi",
+   client.post(f"/api/exams/{EID}/online/publish", headers=HT).status_code, 403)
+r = client.post(f"/api/exams/{EID}/online/publish", headers=HE)
+ck("examiner tasdiqladi", r.status_code, 200)
+ck("tasdiq vaqti bor", bool(r.json()["online"]["published_at"]), True)
+ck("qayta tasdiqlab bo'lmaydi",
+   client.post(f"/api/exams/{EID}/online/publish", headers=HE).status_code, 400)
+rr = result(S["Aliyev Ali"])
+ck("endi o'z qatorida 100%", rr and rr["percent"], 100.0)
+ck("coin 10", rr and rr["coins"], 10)
+on_t = client.get(f"/api/exams/{EID}/online", headers=HT).json()
+ck("endi ustozga ko'rinadi", (on_t["hidden"], len(on_t["submissions"])), (False, 1))
+
+print("\n=== E. MATNLI JAVOB (tasdiqdan keyin — darhol yoziladi) ===")
 ans = correct_answers(18)
 ans[QS[6]["id"]] = "the usa"
 ans[QS[7]["id"]] = "hina"
 ans[QS[12]["id"]] = "The U.K."
 r = submit(student_id=S["Boboyev Bobur"], answers=ans)
-ck("18 to'g'ri", r.json()["score"], 18.0)
+ck("18 to'g'ri", online_score(S["Boboyev Bobur"]), 18.0)
 ck("Boboyev 60%", result(S["Boboyev Bobur"])["percent"], 60.0)
 
 print("\n=== F. QAYTA TOPSHIRSA ===")
@@ -282,6 +308,14 @@ r = client.post(f"/api/public/exam/{TOK2}/submit", json={
     "student_id": S["Aliyev Ali"], "photo": PHOTO,
     "answers": correct_answers(30)})
 ck("online qabul", r.status_code, 200)
+# Tasdiqlashdan oldin qog'oz kiritilsa — faqat saqlanadi, natija yo'q
+r = client.put(f"/api/exams/{EID2}/paper", headers=HE, json={
+    "marks": [{"student_id": S["Aliyev Ali"], "paper": 10}]})
+d = client.get(f"/api/exams/{EID2}", headers=H).json()
+ck("tasdiqsiz natija yo'q (qog'oz bo'lsa ham)", len(d["results"]), 0)
+r = client.put(f"/api/exams/{EID2}/paper", headers=HE, json={
+    "marks": [{"student_id": S["Aliyev Ali"], "paper": None}]})
+client.post(f"/api/exams/{EID2}/online/publish", headers=HE)
 d = client.get(f"/api/exams/{EID2}", headers=H).json()
 ck("qog'ozsiz natija hali yo'q", len(d["results"]), 0)
 r = client.put(f"/api/exams/{EID2}/paper", headers=HE, json={

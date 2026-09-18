@@ -39,7 +39,7 @@ type PublicExam = {
   students: { id: number; name: string }[];
   parts: Part[];
 };
-type Done = { score: number; max: number; paper_max: number; pending: boolean };
+type Done = { paper_max: number; pending: boolean };
 
 const LETTERS = "ABCDEFGH";
 
@@ -156,9 +156,7 @@ export default function ExamTake() {
       );
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.detail || "Yuborib bo'lmadi");
-      const d: Done = {
-        score: j.score, max: j.max, paper_max: j.paper_max, pending: j.pending,
-      };
+      const d: Done = { paper_max: j.paper_max, pending: j.pending };
       store(`exam:${token}:done`, d);
       setDone(d);
       window.scrollTo(0, 0);
@@ -205,8 +203,10 @@ export default function ExamTake() {
       <div className={`${card} text-center`}>
         <p className="text-4xl mb-2">✅</p>
         <h1 className="text-lg font-bold text-slate-900 mb-1">Javoblaringiz qabul qilindi</h1>
-        <p className="text-3xl font-bold text-brand-700 my-3">
-          {done.score} / {done.max}
+        {/* Ball bu yerda ko'rsatilmaydi — examiner tasdiqlagach e'lon
+            qilinadi (2026-09-18, Jahongir) */}
+        <p className="text-sm text-slate-600 my-3">
+          Natijangiz examiner tekshirib tasdiqlagandan keyin e'lon qilinadi.
         </p>
         {done.paper_max > 0 && (
           <p className="text-sm text-slate-600">

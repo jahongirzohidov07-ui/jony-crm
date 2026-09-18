@@ -2420,6 +2420,120 @@ Today life is good for Mo. He (30) ………… speak perfect English and he’s
     ],
 }
 
+
+STEP2_UNIT9 = {
+    "level": "step2", "kind": "unit", "unit_no": 9,
+    "title": "Step 2 · Unit 9 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["I’ll take them.", "I’d like some trousers.", "I’m not sure – large?"], "C"),
+                _c("", ["Yes please – what colour would you like?", "Yes please – where are the fitting rooms?", "Yes please – large or extra large?"], "B"),
+                _c("", ["I’m so sorry.", "Thank you.", "Sure, no problem."], "B"),
+                _c("", ["I’d like to try this on, please.", "Size 34, please.", "I’m not sure actually."], "C"),
+                _c("", ["Why don’t you try them on?", "What are you looking for?", "What are you wearing?"], "A"),
+                _c("", ["Thanks – can I pay by card?", "Thanks – what are you looking for?", "Thanks – how much are they?"], "A"),
+                _c("", ["I’d like a watch, please.", "Yes, two please.", "No, I’m fine thanks."], "A"),
+                _c("", ["They’re brown.", "They’re size 40.", "They’re £50."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Clothes and shopping",
+            "instructions": "Read the sentences about clothes and shopping. "
+                            "Choose the missing word (A, B or C) for each "
+                            "space.",
+            "questions": [
+                _c("It’s easy to get to the shopping centre because there’s a ............ "
+                   "in the city centre.", ["chemist", "bus stop", "cash machine"], "B"),
+                _c("It’s wet today, so I really need a ............ .",
+                   ["raincoat", "dress", "necklace"], "A"),
+                _c("The shops were fantastic and we were in one ............ for three hours!",
+                   ["information desk", "entrance", "department store"], "C"),
+                _c("In the shoe shop, I bought these ............ because I play tennis a lot.",
+                   ["boots", "jeans", "trainers"], "C"),
+                _c("My new ............ keeps my neck really warm on cold days.",
+                   ["skirt", "jewellery", "scarf"], "C"),
+                _c("Ask at the ............ for something for your headache.",
+                   ["chemist", "post office", "theatre"], "A"),
+                _c("We don’t drive to the shopping centre because the ............ is "
+                   "always full.", ["information desk", "car park", "cash machine"], "B"),
+                _c("It’s a hot day, so I’m wearing ............ and a T-shirt.",
+                   ["gloves", "shorts", "earrings"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Clothes and shopping",
+            "instructions": "Read the descriptions of some words about clothes "
+                            "and shopping. The first letter is already there. "
+                            "Write the whole word.",
+            "questions": [
+                _t("You put these on your hands when it is cold.   g _ _ _ _ _",
+                   "gloves", "loves"),
+                _t("People often wear these instead of shoes in winter.   b _ _ _ _",
+                   "boots", "oots"),
+                _t("This is another way to say £.   p _ _ _ _", "pound", "ound"),
+                _t("You can buy things to read here.   b _ _ _ _ _ _ _",
+                   "bookshop", "ookshop"),
+                _t("You can wear this jewellery in your ears.   e _ _ _ _ _ _ _",
+                   "earrings", "arrings"),
+                _t("These can be long or short and you wear them on your feet.   "
+                   "s _ _ _ _", "socks", "ocks"),
+                _t("You can use these to go to the car park on top of the shopping "
+                   "centre.   s _ _ _ _ _", "stairs", "tairs"),
+                _t("When you go into a shopping centre you use this.   e _ _ _ _ _ _ _",
+                   "entrance", "ntrance", "elevator", "levator"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email from Carla to her friends. Choose "
+                            "the best word (A, B or C) for each space.",
+            "passage": """Carnival in Recife
+
+Hi everyone!
+I’m having a wonderful time here in Brazil. Today (25) ………… the last day of the carnival. I (26) ………… in Recife in the north of Brazil. Everybody (27) ………… about the carnival in Rio de Janeiro because it’s the most famous carnival in the world, but we (28) ………… having a big party here in Recife too. Right now lots of people (29) ………… in the street in special clothes. It’s fantastic.
+I (30) ………… an orange dress and big gold earrings and a mask. The weather is warm here, so I don’t need to wear a jumper or raincoat!
+At the moment (31) ………… walking to the centre of Recife with my friend. We (32) ………… going by bus because they’re all full. But that’s OK. There’s Brazilian music everywhere!""",
+            "questions": [
+                _c("", ["is being", "is", "be"], "B"),
+                _c("", ["stay", "am staying", "stayed"], "B"),
+                _c("", ["is knowing", "know", "knows"], "C"),
+                _c("", ["are", "is", "be"], "A"),
+                _c("", ["dance", "are dancing", "dances"], "B"),
+                _c("", ["are wearing", "am wearing", "is wearing"], "B"),
+                _c("", ["I", "I’ve", "I’m"], "C"),
+                _c("", ["aren’t", "not", "isn’t"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about clothes and shopping. "
+                            "Choose the best answer (A, B or C) for each space.",
+            "questions": [
+                _c("............ shorts in the summer?",
+                   ["Do you wear", "Are you wearing", "You wore"], "A"),
+                _c("Tom is not here – he ............ for us outside the bookshop.",
+                   ["are waiting", "is waiting", "am waiting"], "B"),
+                _c("Why don’t you ............ this jumper on?", ["try", "trying", "are trying"], "A"),
+                _c("They often ............ for a coffee at the shopping mall.",
+                   ["meet", "meets", "are meeting"], "A"),
+                _c("............ these gloves because they’re exactly the right size.",
+                   ["I’m not buying", "Am I buying", "I’m buying"], "C"),
+                _c("............ for a blue shirt – can you help me?",
+                   ["Do you look", "I’m looking", "I look"], "B"),
+                _c("He usually ............ for his coffee by card.", ["pay", "is paying", "pays"], "C"),
+                _c("Why ............ to the shopping centre now – it closes in thirty minutes?",
+                   ["are you going", "you are going", "you aren’t going"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2443,4 +2557,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit6", STEP2_UNIT6),
     ("exam_tpl_step2_unit7", STEP2_UNIT7),
     ("exam_tpl_step2_unit8", STEP2_UNIT8),
+    ("exam_tpl_step2_unit9", STEP2_UNIT9),
 ]

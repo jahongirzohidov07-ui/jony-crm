@@ -3531,6 +3531,126 @@ Sophie""",
     ],
 }
 
+
+STEP3_UNIT5 = {
+    "level": "step3", "kind": "unit", "unit_no": 5,
+    "title": "Step 3 · Unit 5 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Don't worry about it - it's fine!", "Of course, it's no problem.", "Yes, maybe you could."], "A"),
+                _c("", ["They'd love to do it.", "You're welcome.", "Yes, that's a good idea."], "C"),
+                _c("", ["Yes, I think that’s everything.", "Sure, we’ll take it.", "OK, that would be great."], "C"),
+                _c("", ["Do you think that will help me?", "Do you understand it?", "Do you want me to help you?"], "A"),
+                _c("", ["There's just one more thing.", "That would really help.", "Yes, I can do that for you."], "B"),
+                _c("", ["It's no problem - I'll be all right.", "Yes, that'd be great.", "Okay, it doesn't matter."], "A"),
+                _c("", ["That's OK, I'm late too.", "Don't worry about it this time.", "Let's talk about the plan on Friday."], "B"),
+                _c("", ["That's OK, if you don't mind.", "Would you like me to prepare the room?", "Will you organise tomorrow's meeting?"], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · Work and jobs",
+            "instructions": "Read the sentences about work and jobs. Choose the "
+                            "missing word A, B or C for each space.",
+            "questions": [
+                _c("I wouldn't like to be a ............ because they speak in front of "
+                   "lots of people.", ["plumber", "politician", "gardener"], "B"),
+                _c("Most electricians complete several years' ............ with a company "
+                   "before they can work alone.", ["training", "skills", "homework"], "A"),
+                _c("Many actors work ............ because that is when more people can go "
+                   "to the theatre.", ["long hours", "at weekends", "every day"], "B"),
+                _c("Receptionists do an important job but they don't usually earn a good "
+                   "............ .", ["salary", "environment", "money"], "A"),
+                _c("We took our cat to the ............ because she had a broken tooth.",
+                   ["dentist", "farmer", "vet"], "C"),
+                _c("Doctors and nurses make very important ............ about their "
+                   "patients' health.", ["problems", "qualifications", "decisions"], "C"),
+                _c("Why doesn't the company get a ............ to help with ideas for the "
+                   "new reception area?", ["plumber", "waiter", "designer"], "C"),
+                _c("The ............ worked hard in good and bad weather to complete our "
+                   "new house on time.", ["accountants", "builders", "carers"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Work and jobs",
+            "instructions": "Read the sentences about work and jobs. What are "
+                            "the missing words? The first letter is already "
+                            "there. Write the whole words.",
+            "questions": [
+                _t("To work as an a _ _ _ _ _ _ _ _ and design buildings, you need to "
+                   "pass many exams.", "architect", "rchitect"),
+                _t("Jude works from 7am to 8pm every day - very l _ _ _  h _ _ _ _ !",
+                   "long hours", "ong ours"),
+                _t("Some people prefer to work in a t _ _ _ instead of working alone.",
+                   "team", "eam"),
+                _t("You need good q _ _ _ _ _ _ _ _ _ _ _ _ _ to show that you know how "
+                   "to do certain jobs.", "qualifications", "ualifications"),
+                _t("A j _ _ _ _ _ _ _ _ _ reports the news, possibly on the radio or TV "
+                   "or in newspapers.", "journalist", "ournalist"),
+                _t("John plays the violin really well and wants to be a m _ _ _ _ _ _ _ .",
+                   "musician", "usician"),
+                _t("What time does the p _ _ _ _ _ _ usually bring the letters in the "
+                   "morning?", "postman", "ostman"),
+                _t("If money is very important to you, then you will want to earn a good "
+                   "s _ _ _ _ _ .", "salary", "alary"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the blog about someone's first job as a "
+                            "hairdresser. Choose the best answer (A, B or C) "
+                            "for each space.",
+            "passage": """My first job!
+
+I've just got my first job as a hairdresser! To apply for jobs, you have (25) ………… a qualification - I got mine last month. The job is fun but also tiring. I stand most of the day and (26) ………… only sit down for a few minutes at break times.
+Our customers are very important. There's a sign in our staff room: 'EMPLOYEES (27) ………… EVER BE RUDE TO CUSTOMERS.' It's a rule! Another rule is that we need to look nice, but we can choose our own clothes. I'm glad that we (28) ………… wear boring work clothes.
+Although this (29) ………… be my perfect job, I'm happy for now. It's a great place to work so I'm confident (30) ………… be a good start to my career. I need this experience, so I've decided that I (31) ………… change jobs for at least a year.
+(32) ………… be a safe career for the future? I think so - a computer can't cut your hair ... at least, not yet! But it might be possible in the future!""",
+            "questions": [
+                _c("", ["get", "to get", "got"], "B"),
+                _c("", ["have to", "mustn’t", "can"], "C"),
+                _c("", ["don’t have to", "don’t", "must not"], "C"),
+                _c("", ["don’t have to", "mustn’t", "can’t"], "A"),
+                _c("", ["might not", "do not", "is not"], "A"),
+                _c("", ["it is", "it will", "it might"], "B"),
+                _c("", ["aren’t", "don’t", "won’t"], "C"),
+                _c("", ["This will", "Will this", "Will I"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("You can choose to start working anytime between 8 and 10am.\n"
+                   "You ………… have to start working exactly at 8am.", "don't", "do not"),
+                _t("Those musicians are maybe going to start a new orchestra in future.\n"
+                   "Those musicians might perhaps ………… a new orchestra in future.",
+                   "start", "be starting"),
+                _t("Visitors to our company fill in a form with their details - it's a rule.\n"
+                   "Visitors to our company ………… fill in a form with their details.",
+                   "need to", "have to", "must"),
+                _t("Do you think there are definitely going to be postmen in the future?\n"
+                   "………… there definitely be postmen in the future - what do you think?",
+                   "Will"),
+                _t("It is necessary for receptionists to speak clearly on the telephone.\n"
+                   "Receptionists ………… to speak clearly on the telephone.", "need", "have"),
+                _t("It is possible that Kate will decide to change her job.\n"
+                   "Kate ………… decide to change her job.", "might", "may", "could"),
+                _t("When are they allowed to take a break at work?\n"
+                   "When ………… they take a break at work?", "can", "may"),
+                _t("Without experience, Karim is certainly not going to get an interview.\n"
+                   "Without experience, Karim certainly ………… not get an interview.", "will"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3563,4 +3683,5 @@ TEMPLATES = [
     ("exam_tpl_step3_unit2", STEP3_UNIT2),
     ("exam_tpl_step3_unit3", STEP3_UNIT3),
     ("exam_tpl_step3_unit4", STEP3_UNIT4),
+    ("exam_tpl_step3_unit5", STEP3_UNIT5),
 ]

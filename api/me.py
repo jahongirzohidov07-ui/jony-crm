@@ -71,14 +71,31 @@ def is_english_teacher(db: Session, user) -> bool:
     """Dars rejalari faqat INGLIZ TILI ustozlariga (2026-09-18, Jahongir:
     "barcha ingliz til ustozlariga chiqsin boshqa ustozlarga chiqmasin").
     Ustoz/support bo'lmagan xodimlar uchun cheklov yo'q. Fani yozilmagan
-    ustoz — inglizchi deb qabul qilinadi (yopib qo'ymaslik uchun)."""
+    ustoz — inglizchi deb qabul qilinadi (yopib qo'ymaslik uchun).
+
+    2026-09-18 (Jahongir: "Shirinabonu ko'rinmayabdi deyabdi"): fan
+    maydoni "English"/"Ingliz tili"/"IELTS" kabi erkin yozilgan yoki
+    noto'g'ri tanlangan bo'lsa ham, ustozga INGLIZ TILI GURUHI
+    biriktirilgan bo'lsa — inglizchi. Faqat boshqa fan ustozi (fani
+    aniq boshqa VA bironta ingliz guruhi yo'q) yopiladi."""
     if user.role not in (roles.TEACHER, roles.SUPPORT_TEACHER):
         return True
     t = _teacher_of_user(db, user)
+    if not t:
+        return True
     subj = (getattr(t, "subject", None) or "").strip().lower()
     if not subj:
         return True
-    return any(x.strip() in ENGLISH_SUBJECTS for x in subj.split(","))
+    for x in subj.split(","):
+        x = x.strip()
+        if x in ENGLISH_SUBJECTS or "english" in x or "ingliz" in x                 or "ielts" in x:
+            return True
+    # Fani boshqa yozilgan, lekin ingliz tili guruhi bor — inglizchi.
+    g = (db.query(models.Group.id)
+         .filter(models.Group.teacher_id == t.id,
+                 func.lower(models.Group.subject).in_(ENGLISH_SUBJECTS))
+         .first())
+    return g is not None
 
 
 def _is_volunteer(db: Session, user) -> bool:

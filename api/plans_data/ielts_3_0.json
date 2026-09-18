@@ -12873,6 +12873,4611 @@
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 81–90 — uyga (hafta davomida)."
    }
+  },
+  {
+   "no": 15,
+   "title": "Relative Clauses with Who / Which",
+   "grammar_topic": "ANIQLOVCHI ERGASH GAPLAR — WHO / WHICH / THAT (ega va to'ldiruvchi vazifasida)",
+   "vocab_topic": "Cryptocurrency (kriptovalyuta)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 15 – Relative clauses with who/which (4 qatorli jadval); CRYPTOCURRENCY (48 so'z); Reading — Satoshi Nakamoto (Jony Academy matni); kitob Topic 91–100 uyga; Writing 7: The benefits and challenges of traveling abroad.",
+   "objectives": [
+    "who (odam) / which (narsa) / that (ikkalasi) bilan ikki gapni bitta gapga birlashtirish.",
+    "Ega va to'ldiruvchi relative clause farqi; to'ldiruvchi bo'lganda olmoshni tushirish (The phone she bought).",
+    "Defining (vergulsiz, muhim ma'lumot) va non-defining (vergulli, qo'shimcha; that ishlatilmaydi).",
+    "Kripto CORE 20 bilan blokcheyn va investitsiya xavfi haqida gapirish; Writing 7 (traveling abroad)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Cryptocurrency (kriptovalyuta) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"A miner is a person. He checks transactions.\" → \"A miner is a person who checks transactions.\" \"Bitcoin is a currency. It has no bank.\" → \"Bitcoin is a currency which has no bank.\" O'quvchilar: odam → who, narsa → which."
+    ],
+    [
+     8,
+     "Kahoot — Progress test 3 natijalari + -ing/-ed clauses",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Progress test 3 natijalari + -ing/-ed clauses lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 4 qator: WHO ega (who + fe'l), WHO(M) to'ldiruvchi (who + ega + fe'l — tushirib qoldirsa bo'ladi), WHICH/THAT ega (which + fe'l), WHICH/THAT to'ldiruvchi (which + ega + fe'l — tushirsa bo'ladi). that — og'zaki, ikkalasi uchun. Defining (vergulsiz) vs non-defining (vergulli, that yo'q)."
+    ],
+    [
+     12,
+     "Cryptocurrency (kriptovalyuta) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "WHO — odam: \"The girl who called you is my cousin.\" (who = ega: who + fe'l).",
+     "WHO(M) — odam, to'ldiruvchi: \"The boy (who) you met is my friend.\" (who + ega + fe'l → tushirsa bo'ladi; whom — rasmiy).",
+     "WHICH / THAT — narsa: \"The car which broke down was expensive.\" (ega) / \"The phone (which) she bought is new.\" (to'ldiruvchi, tushirsa bo'ladi).",
+     "Non-defining: qo'shimcha ma'lumot, vergul bilan, that EMAS: \"Bitcoin, which was created in 2009, has no bank.\"",
+     "Ikki ega xatosi: \"The phone which she bought it\" — \"it\" ortiqcha."
+    ],
+    "formulas": [
+     [
+      "Who — ega",
+      "ot (odam) + who + fe'l + …",
+      "The girl who called you is my cousin.",
+      "Senga qo'ng'iroq qilgan qiz — mening amakivachcham."
+     ],
+     [
+      "Who(m) — to'ldiruvchi",
+      "ot (odam) + (who/whom) + ega + fe'l",
+      "The boy (who) you met is my friend.",
+      "Sen uchrashgan bola — mening do'stim."
+     ],
+     [
+      "Which/that — ega",
+      "ot (narsa) + which/that + fe'l",
+      "The car which broke down was expensive.",
+      "Buzilib qolgan mashina qimmat edi."
+     ],
+     [
+      "Which/that — to'ldiruvchi",
+      "ot (narsa) + (which/that) + ega + fe'l",
+      "The phone (which) she bought is new.",
+      "U sotib olgan telefon yangi."
+     ],
+     [
+      "Non-defining",
+      "ot, + who/which + …, + …",
+      "Satoshi, who invented Bitcoin, is unknown.",
+      "Bitkoinni ixtiro qilgan Satoshi noma'lum."
+     ],
+     [
+      "Predlog bilan",
+      "… which/whom … + predlog (oxirida)",
+      "The exchange (which) I trade on is safe.",
+      "Men savdo qiladigan birja xavfsiz."
+     ]
+    ],
+    "presentation": [
+     [
+      "Who is a miner?",
+      "A miner is a person who checks transactions and earns coins."
+     ],
+     [
+      "What is a blockchain?",
+      "It's a chain of blocks which stores every transaction."
+     ],
+     [
+      "Which coin did you buy?",
+      "The coin (that) I bought last year has lost half its value."
+     ],
+     [
+      "Who created Bitcoin?",
+      "It was created by someone who calls himself Satoshi Nakamoto."
+     ],
+     [
+      "What is a wallet?",
+      "A wallet is an app which keeps your private keys."
+     ],
+     [
+      "Do you know anyone who lost money in crypto?",
+      "Yes, a friend who invested in 2021 lost a lot."
+     ],
+     [
+      "What's a scam?",
+      "A scam is a project that promises profit but takes your money."
+     ],
+     [
+      "Which exchange do you use?",
+      "The exchange (which) my brother recommended."
+     ],
+     [
+      "Who is a whale?",
+      "A whale is an investor who owns a huge amount of coins."
+     ],
+     [
+      "What is volatility?",
+      "It's the reason (which) makes crypto risky: prices jump every day."
+     ]
+    ],
+    "notes": [
+     "who/which egа bo'lsa — tushirib bo'lmaydi; to'ldiruvchi bo'lsa — tushirsa bo'ladi.",
+     "Non-defining clause'da \"that\" yo'q va tushirib bo'lmaydi: \"My father, who is 60, still trades.\"",
+     "whom — faqat to'ldiruvchi, rasmiy: \"the investor whom we met\" / \"to whom\".",
+     "Crypto lug'ati: blockchain, wallet, private key, mining, exchange, volatility, bull/bear market, scam."
+    ],
+    "mistakes": [
+     [
+      "The man which sold me the coin…",
+      "The man who sold me the coin…",
+      "Odam → who."
+     ],
+     [
+      "The app who I use is free.",
+      "The app (which/that) I use is free.",
+      "Narsa → which/that."
+     ],
+     [
+      "The phone which she bought it is new.",
+      "The phone which she bought is new.",
+      "\"it\" ortiqcha."
+     ],
+     [
+      "Bitcoin, that was created in 2009, …",
+      "Bitcoin, which was created in 2009, …",
+      "Non-defining → which."
+     ],
+     [
+      "The girl called you is my cousin.",
+      "The girl who called you is my cousin.",
+      "Ega olmoshi tushirilmaydi."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kripto asosiy so'zlari (blockchain, wallet, mining…); STRONG — bozor va savdo so'zlari; SUPER — xavf va texnik atamalar.",
+     "Har so'zga relative clause: \"A miner is a person who…\" / \"A token is a coin which…\""
+    ],
+    "core": [
+     [
+      "cryptocurrency",
+      "kriptovalyuta",
+      "A cryptocurrency is money which exists only online.",
+      "Kriptovalyuta — faqat onlayn mavjud bo'lgan pul.",
+      ""
+     ],
+     [
+      "blockchain",
+      "blokcheyn",
+      "A blockchain is a list of blocks that everyone can check.",
+      "Blokcheyn — hamma tekshira oladigan bloklar ro'yxati.",
+      ""
+     ],
+     [
+      "Bitcoin",
+      "Bitkoin",
+      "Bitcoin, which appeared in 2009, was the first cryptocurrency.",
+      "2009-da paydo bo'lgan Bitkoin birinchi kriptovalyuta edi.",
+      ""
+     ],
+     [
+      "token",
+      "token",
+      "A token is a coin which is built on another blockchain.",
+      "Token — boshqa blokcheyn ustida qurilgan tanga.",
+      "ˈtoʊkən"
+     ],
+     [
+      "coin (crypto)",
+      "tanga (kripto)",
+      "The coin (that) I bought has doubled.",
+      "Men sotib olgan tanga ikki baravar oshdi.",
+      "kɔɪn (ˈkrɪptoʊ)"
+     ],
+     [
+      "digital wallet",
+      "raqamli hamyon",
+      "A digital wallet is an app that stores your keys.",
+      "Raqamli hamyon — kalitlaringni saqlaydigan ilova.",
+      "ˈdɪʤɪtəl ˈwɔlət"
+     ],
+     [
+      "private key",
+      "maxfiy kalit",
+      "The private key is a password which nobody must see.",
+      "Maxfiy kalit — hech kim ko'rmasligi kerak bo'lgan parol.",
+      "ˈpraɪvət ki"
+     ],
+     [
+      "public key",
+      "ochiq kalit",
+      "The public key is an address (which) you can share.",
+      "Ochiq kalit — ulashsa bo'ladigan manzil.",
+      "ˈpəblɪk ki"
+     ],
+     [
+      "transaction (crypto)",
+      "tranzaksiya",
+      "A transaction which is written in a block cannot be changed.",
+      "Blokka yozilgan tranzaksiyani o'zgartirib bo'lmaydi.",
+      "trænˈzækʃən (ˈkrɪptoʊ)"
+     ],
+     [
+      "mining",
+      "mayning (qazib olish)",
+      "Mining is the work that creates new coins.",
+      "Mayning — yangi tangalar yaratadigan ish.",
+      "ˈmaɪnɪŋ"
+     ],
+     [
+      "miner",
+      "mayner",
+      "A miner is a person who checks transactions.",
+      "Mayner — tranzaksiyalarni tekshiradigan odam.",
+      "ˈmaɪnər"
+     ],
+     [
+      "block",
+      "blok",
+      "Each block, which holds many transactions, links to the last one.",
+      "Ko'p tranzaksiyani saqlaydigan har bir blok oldingisiga bog'lanadi.",
+      "blɑk"
+     ],
+     [
+      "decentralized",
+      "markazlashmagan",
+      "Bitcoin is decentralized, which means no bank controls it.",
+      "Bitkoin markazlashmagan, ya'ni uni hech qaysi bank boshqarmaydi.",
+      "dɪˈsɛntrəˌlaɪzd"
+     ],
+     [
+      "exchange (crypto)",
+      "birja",
+      "An exchange is a website where you buy and sell coins.",
+      "Birja — tanga sotib olinadigan va sotiladigan sayt.",
+      "ɪksˈʧeɪnʤ (ˈkrɪptoʊ)"
+     ],
+     [
+      "trading",
+      "savdo (treyding)",
+      "Trading is an activity that needs nerves of steel.",
+      "Treyding — po'lat asab talab qiladigan faoliyat.",
+      "ˈtreɪdɪŋ"
+     ],
+     [
+      "investor (crypto)",
+      "investor",
+      "The investors who bought early became rich.",
+      "Erta sotib olgan investorlar boyib ketdi.",
+      "ˌɪnˈvɛstər (ˈkrɪptoʊ)"
+     ],
+     [
+      "volatility",
+      "narx beqarorligi",
+      "Volatility is the thing that scares beginners.",
+      "Narx beqarorligi — yangilarni qo'rqitadigan narsa.",
+      "ˌvɑləˈtɪləti"
+     ],
+     [
+      "value (crypto)",
+      "qiymat",
+      "A coin whose value falls 50% in a day is normal in crypto.",
+      "Qiymati bir kunda 50% tushadigan tanga kriptoda oddiy hol.",
+      "ˈvælju (ˈkrɪptoʊ)"
+     ],
+     [
+      "risk (crypto)",
+      "xavf, tavakkal",
+      "The risk which people forget is losing the key.",
+      "Odamlar unutadigan xavf — kalitni yo'qotish.",
+      "rɪsk (ˈkrɪptoʊ)"
+     ],
+     [
+      "scam (crypto)",
+      "firibgarlik",
+      "A scam is a project that promises 100% profit a week.",
+      "Firibgarlik — haftasiga 100% foyda va'da qiladigan loyiha.",
+      "skæm (ˈkrɪptoʊ)"
+     ]
+    ],
+    "strong": [
+     [
+      "stablecoin",
+      "steyblkoin (barqaror kripto)",
+      "A stablecoin is a coin which is tied to the dollar.",
+      "Steyblkoin — dollarga bog'langan tanga.",
+      ""
+     ],
+     [
+      "address (crypto)",
+      "manzil (hamyon)",
+      "The address (which) you send coins to must be correct.",
+      "Tanga jo'natiladigan manzil to'g'ri bo'lishi kerak.",
+      "ˈæˌdrɛs (ˈkrɪptoʊ)"
+     ],
+     [
+      "centralized",
+      "markazlashgan",
+      "A bank is a centralized system which one company controls.",
+      "Bank — bitta kompaniya boshqaradigan markazlashgan tizim.",
+      "ˈsɛntrəˌlaɪzd"
+     ],
+     [
+      "trader",
+      "treyder",
+      "A trader who panics loses money.",
+      "Vahimaga tushgan treyder pul yo'qotadi.",
+      "ˈtreɪdər"
+     ],
+     [
+      "market cap",
+      "bozor kapitalizatsiyasi",
+      "Market cap is the number that shows a coin's total value.",
+      "Bozor kapitalizatsiyasi — tanganing umumiy qiymatini ko'rsatadigan raqam.",
+      "ˈmɑrkɪt kæp"
+     ],
+     [
+      "bull market / bear market",
+      "ko'tariluvchi / tushuvchi bozor",
+      "A bull market is a period when prices rise; a bear market is the opposite.",
+      "Ko'tariluvchi bozor — narxlar o'sadigan davr; tushuvchi bozor — aksi.",
+      "bʊl ˈmɑrkɪt  bɛr ˈmɑrkɪt"
+     ],
+     [
+      "liquidity",
+      "likvidlik",
+      "Liquidity is how easily a coin (that) you own can be sold.",
+      "Likvidlik — egalik qilgan tanganing qanchalik oson sotilishi.",
+      "lɪkˈwɪdɪti"
+     ],
+     [
+      "fiat money",
+      "fiat pul (oddiy pul)",
+      "Fiat money is money which a government prints.",
+      "Fiat pul — hukumat chop etadigan pul.",
+      "faɪæt ˈməni"
+     ],
+     [
+      "smart contract",
+      "aqlli shartnoma",
+      "A smart contract is code that runs automatically.",
+      "Aqlli shartnoma — avtomatik ishlaydigan kod.",
+      "smɑrt ˈkɑnˌtrækt"
+     ],
+     [
+      "staking",
+      "steyking",
+      "Staking is a way (which) lets you earn by holding coins.",
+      "Steyking — tangalarni ushlab turib daromad olish usuli.",
+      "ˈsteɪkɪŋ"
+     ],
+     [
+      "yield",
+      "daromad (foiz)",
+      "The yield that they promised was too good to be true.",
+      "Ular va'da qilgan daromad haqiqat bo'lishi uchun juda yaxshi edi.",
+      "jild"
+     ],
+     [
+      "hack (crypto)",
+      "buzib kirish",
+      "The exchange which was hacked lost 600 million.",
+      "Buzib kirilgan birja 600 million yo'qotdi.",
+      "hæk (ˈkrɪptoʊ)"
+     ],
+     [
+      "security (crypto)",
+      "xavfsizlik",
+      "Security is the thing that matters most.",
+      "Xavfsizlik — eng muhim narsa.",
+      "sɪˈkjʊrəti (ˈkrɪptoʊ)"
+     ],
+     [
+      "anonymity",
+      "anonimlik",
+      "Anonymity is a feature which criminals also like.",
+      "Anonimlik — jinoyatchilarga ham yoqadigan xususiyat.",
+      "ˌænəˈnɪmɪti"
+     ],
+     [
+      "transparency",
+      "shaffoflik",
+      "Transparency means everyone who wants can see every transaction.",
+      "Shaffoflik — xohlagan har kim har bir tranzaksiyani ko'ra olishi.",
+      "trænˈspɛrənsi"
+     ],
+     [
+      "ban",
+      "taqiq",
+      "China, which banned crypto in 2021, still has miners.",
+      "2021-da kriptoni taqiqlagan Xitoyda hali ham maynerlar bor.",
+      "bæn"
+     ],
+     [
+      "adoption (crypto)",
+      "qabul qilinish",
+      "Adoption is growing in countries whose currencies are weak.",
+      "Valyutasi zaif mamlakatlarda qabul qilinish o'smoqda.",
+      "əˈdɑpʃən (ˈkrɪptoʊ)"
+     ],
+     [
+      "whitepaper",
+      "oq qog'oz (loyiha hujjati)",
+      "The whitepaper is the document that explains a project.",
+      "Oq qog'oz — loyihani tushuntiradigan hujjat.",
+      ""
+     ],
+     [
+      "gas fee",
+      "tranzaksiya to'lovi",
+      "The gas fee is the money (which) you pay for a transaction.",
+      "Gas to'lovi — tranzaksiya uchun to'lanadigan pul.",
+      "gæs fi"
+     ],
+     [
+      "peer-to-peer",
+      "tengdan-tengga (to'g'ridan-to'g'ri)",
+      "Peer-to-peer means two people who trade without a bank.",
+      "Tengdan-tengga — banksiz savdo qiladigan ikki odam.",
+      "ˌpɪrtoʊˈpɪr"
+     ]
+    ],
+    "super": [
+     [
+      "airdrop",
+      "erdrop (bepul tanga tarqatish)",
+      "An airdrop is a gift of coins that a project gives to users.",
+      "Erdrop — loyiha foydalanuvchilarga beradigan tanga sovg'asi.",
+      "ˈɛrdrɑp"
+     ],
+     [
+      "fork",
+      "fork (tarmoq bo'linishi)",
+      "A fork is a moment when one blockchain becomes two.",
+      "Fork — bitta blokcheyn ikkiga bo'linadigan lahza.",
+      "fɔrk"
+     ],
+     [
+      "node",
+      "tugun (tarmoq)",
+      "A node is a computer which keeps a copy of the blockchain.",
+      "Tugun — blokcheyn nusxasini saqlaydigan kompyuter.",
+      "noʊd"
+     ],
+     [
+      "bubble (crypto)",
+      "pufak (narx)",
+      "A bubble is a price that has no real value behind it.",
+      "Pufak — ortida real qiymati bo'lmagan narx.",
+      "ˈbəbəl (ˈkrɪptoʊ)"
+     ],
+     [
+      "crash",
+      "keskin tushish",
+      "The crash of 2022 hit investors who had borrowed money.",
+      "2022 yildagi keskin tushish qarz olgan investorlarga zarba berdi.",
+      "kræʃ"
+     ],
+     [
+      "whale",
+      "\"kit\" (yirik egasi)",
+      "A whale is an investor whose trades move the market.",
+      "Kit — savdolari bozorni harakatga keltiradigan investor.",
+      "weɪl"
+     ],
+     [
+      "pseudonym",
+      "taxallus",
+      "Satoshi Nakamoto is a pseudonym which hides a real person or a group.",
+      "Satoshi Nakamoto — real odam yoki guruhni yashiradigan taxallus.",
+      "ˈsudəˌnɪm"
+     ],
+     [
+      "identity",
+      "shaxs, kimlik",
+      "The identity of the person who created Bitcoin is unknown.",
+      "Bitkoinni yaratgan odamning kimligi noma'lum.",
+      "aɪˈdɛntəˌti"
+     ],
+     [
+      "ledger",
+      "daftar (hisob)",
+      "The blockchain is a ledger that nobody can erase.",
+      "Blokcheyn — hech kim o'chira olmaydigan hisob daftari.",
+      "ˈlɛʤər"
+     ],
+     [
+      "supply (crypto)",
+      "taklif (umumiy miqdor)",
+      "The supply of Bitcoin, which is limited to 21 million, cannot grow.",
+      "21 millionga cheklangan Bitkoin taklifi o'sa olmaydi.",
+      "səˈplaɪ (ˈkrɪptoʊ)"
+     ],
+     [
+      "halving",
+      "ikkiga qisqarish (mukofot)",
+      "Halving is an event that cuts miners' reward in half.",
+      "Halving — maynerlar mukofotini ikkiga qisqartiradigan hodisa.",
+      "ˈhævɪŋ"
+     ],
+     [
+      "speculation",
+      "chayqovchilik (spekulyatsiya)",
+      "Speculation is buying something (that) you hope to sell higher.",
+      "Spekulyatsiya — qimmatroq sotishni umid qilib sotib olish.",
+      "ˌspɛkjəˈleɪʃən"
+     ],
+     [
+      "regulation (crypto)",
+      "tartibga solish",
+      "Regulation is what governments which fear crypto want.",
+      "Tartibga solish — kriptodan qo'rqadigan hukumatlar xohlaydigan narsa.",
+      "ˌrɛgjəˈleɪʃən (ˈkrɪptoʊ)"
+     ],
+     [
+      "legal tender",
+      "qonuniy to'lov vositasi",
+      "El Salvador is a country which made Bitcoin legal tender.",
+      "Salvador — Bitkoinni qonuniy to'lov vositasi qilgan mamlakat.",
+      "ˈligəl ˈtɛndər"
+     ],
+     [
+      "digital gold",
+      "raqamli oltin",
+      "People who call Bitcoin \"digital gold\" see it as savings.",
+      "Bitkoinni \"raqamli oltin\" deydiganlar uni jamg'arma deb biladi.",
+      "ˈdɪʤɪtəl goʊld"
+     ],
+     [
+      "cold wallet / hot wallet",
+      "sovuq / issiq hamyon",
+      "A cold wallet is a device which is not connected to the internet.",
+      "Sovuq hamyon — internetga ulanmagan qurilma.",
+      "koʊld ˈwɔlət  hɑt ˈwɔlət"
+     ],
+     [
+      "phishing",
+      "fishing (soxta sayt orqali o'g'irlash)",
+      "Phishing is a trick which uses fake websites.",
+      "Fishing — soxta saytlardan foydalanadigan hiyla.",
+      "ˈfɪʃɪŋ"
+     ],
+     [
+      "verify",
+      "tasdiqlamoq",
+      "Miners verify every transaction that enters a block.",
+      "Maynerlar blokka kiradigan har bir tranzaksiyani tasdiqlaydi.",
+      "ˈvɛrəˌfaɪ"
+     ],
+     [
+      "encrypt",
+      "shifrlamoq",
+      "Messages which are encrypted cannot be read by others.",
+      "Shifrlangan xabarlarni boshqalar o'qiy olmaydi.",
+      "ɪnˈkrɪpt"
+     ],
+     [
+      "mystery",
+      "sir, jumboq",
+      "Satoshi is a mystery that the internet has never solved.",
+      "Satoshi — internet hech qachon yechmagan jumboq.",
+      "ˈmɪstəri"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "who / which / that",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "A miner is a person ___ checks transactions.",
+      "A wallet is an app ___ stores your keys.",
+      "The investor ___ bought early is rich now.",
+      "The coin ___ I bought has fallen.",
+      "Bitcoin, ___ appeared in 2009, was the first.",
+      "The friend ___ told me about crypto lost money.",
+      "The exchange ___ we use is Binance.",
+      "Satoshi, ___ nobody has met, wrote the whitepaper."
+     ],
+     "answers": [
+      "who",
+      "which / that",
+      "who",
+      "which / that (yoki tushiriladi)",
+      "which",
+      "who",
+      "which / that",
+      "whom / who"
+     ]
+    },
+    {
+     "title": "Ikki gapni birlashtiring",
+     "type": "rewrite",
+     "instr": "Relative clause bilan",
+     "items": [
+      "A whale is an investor. He owns a lot of coins.",
+      "Blockchain is a technology. It stores data in blocks.",
+      "I bought a token. It lost 90%.",
+      "We met a trader. He never sleeps.",
+      "Bitcoin was created in 2009. It has no central bank.",
+      "My brother works at an exchange. He is 25."
+     ],
+     "answers": [
+      "A whale is an investor who owns a lot of coins.",
+      "Blockchain is a technology which stores data in blocks.",
+      "The token (which) I bought lost 90%.",
+      "The trader (who) we met never sleeps.",
+      "Bitcoin, which was created in 2009, has no central bank.",
+      "My brother, who is 25, works at an exchange."
+     ]
+    },
+    {
+     "title": "Tushirsa bo'ladimi?",
+     "type": "choose",
+     "instr": "Olmosh ega (E — tushirilmaydi) yoki to'ldiruvchi (T — tushirsa bo'ladi)",
+     "items": [
+      "The man who created Bitcoin is unknown.",
+      "The coin which I sold is worth more now.",
+      "The app that stores keys is called a wallet.",
+      "The trader whom we met was rich.",
+      "The exchange which was hacked closed.",
+      "The advice that he gave was bad."
+     ],
+     "answers": [
+      "E",
+      "T",
+      "E",
+      "T",
+      "E",
+      "T"
+     ]
+    },
+    {
+     "title": "Kripto — ta'rif o'yini",
+     "type": "speaking",
+     "instr": "Juftlikda: A so'zni ta'riflaydi (relative clause bilan), B topadi — 6 so'z",
+     "items": [
+      "miner",
+      "wallet",
+      "scam",
+      "exchange",
+      "whale",
+      "stablecoin"
+     ],
+     "answers": [
+      "A person who checks transactions and earns coins.",
+      "An app which stores your private keys.",
+      "A project that promises impossible profit.",
+      "A website where you buy and sell coins.",
+      "An investor who owns a huge amount.",
+      "A coin which is tied to the dollar."
+     ]
+    },
+    {
+     "title": "Kripto lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a digital record of all transactions",
+      "the app where your coins are kept",
+      "big and fast changes in price",
+      "a fake project that steals money",
+      "the process that creates new coins",
+      "a coin tied to the dollar"
+     ],
+     "answers": [
+      "blockchain",
+      "digital wallet",
+      "volatility",
+      "scam",
+      "mining",
+      "stablecoin"
+     ],
+     "box": [
+      "blockchain",
+      "digital wallet",
+      "volatility",
+      "scam",
+      "mining",
+      "stablecoin"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The man which sold me the coin…",
+      "The app who I use is free.",
+      "The phone which she bought it is new.",
+      "Bitcoin, that was created in 2009, …",
+      "The girl called you is my cousin."
+     ],
+     "answers": [
+      "The man who sold me the coin…",
+      "The app (which) I use is free.",
+      "The phone which she bought is new.",
+      "Bitcoin, which was created in 2009, …",
+      "The girl who called you is my cousin."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 15 jadvalini 3 marta; CRYPTOCURRENCY 48 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 91–100",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Writing 7",
+     "type": "write",
+     "instr": "\"The benefits and challenges of traveling abroad\" — 200+ so'z; kamida 6 relative clause (who/which/that, 1 ta non-defining)",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Senga qo'ng'iroq qilgan qiz — mening amakivachcham.",
+      "Buzilib qolgan mashina qimmat edi.",
+      "U sotib olgan telefon yangi.",
+      "Mayner — tranzaksiyalarni tekshiradigan odam.",
+      "2009-da yaratilgan Bitkoinning banki yo'q."
+     ],
+     "answers": [
+      "The girl who called you is my cousin.",
+      "The car which broke down was expensive.",
+      "The phone (which) she bought is new.",
+      "A miner is a person who checks transactions.",
+      "Bitcoin, which was created in 2009, has no bank."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CRYPTO CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — AI",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 4 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Crypto og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Satoshi Nakamoto — the person who invented Bitcoin and disappeared",
+    "text": [
+     "On 31 October 2008, someone who called himself Satoshi Nakamoto posted a nine-page document on a small internet forum. It was a whitepaper which described a new kind of money: a currency that no bank, no government and no company would control. Three months later the first Bitcoin block, which is now called the \"genesis block\", was created. Inside it Satoshi wrote a newspaper headline about banks that were being rescued by the government — a message that many people read as a joke and a warning.",
+     "For two years Satoshi worked with the programmers who joined the project. He wrote thousands of messages, but he never gave an interview, never showed his face and never told anyone where he lived. Then, in April 2011, he sent his last email: \"I've moved on to other things.\" He has not been heard from since.",
+     "Who is he? Nobody knows. Some think he is a British cryptographer whose writing style matches; others think Satoshi is a group. A man who was named by a magazine in 2014 denied everything. The wallet which belongs to Satoshi holds about one million bitcoins — worth tens of billions of dollars — and not one coin has ever been moved.",
+     "Today Bitcoin is a currency (that) 500 million people own, and the blockchain which Satoshi designed is used by banks he wanted to replace. The person who started it all wanted only one thing: a system that works without trust in any single person — including himself."
+    ],
+    "glossary": [
+     "post — joylashtirmoq (internetga)",
+     "forum — forum",
+     "describe — tasvirlamoq",
+     "headline — sarlavha",
+     "rescue — qutqarmoq",
+     "warning — ogohlantirish",
+     "cryptographer — kriptograf",
+     "deny — rad etmoq",
+     "belong to — tegishli bo'lmoq",
+     "replace — o'rnini bosmoq",
+     "trust — ishonch"
+    ],
+    "tasks": [
+     {
+      "title": "Relative clause toping",
+      "type": "find",
+      "instr": "Matndan 8 ta (who / which / that / whose)",
+      "items": [
+       "who 1",
+       "which 1",
+       "that 1",
+       "which 2",
+       "who 2",
+       "whose",
+       "which 3",
+       "(that)"
+      ],
+      "answers": [
+       "Someone who called himself Satoshi Nakamoto.",
+       "A whitepaper which described a new kind of money.",
+       "A currency that no bank … would control.",
+       "The first Bitcoin block, which is now called the \"genesis block\".",
+       "The programmers who joined the project.",
+       "A British cryptographer whose writing style matches.",
+       "The wallet which belongs to Satoshi.",
+       "A currency (that) 500 million people own."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "The whitepaper was published in 2009.",
+       "Satoshi gave one interview.",
+       "His last email was in 2011.",
+       "Satoshi's coins have never been moved."
+      ],
+      "answers": [
+       "False (2008)",
+       "False",
+       "True",
+       "True"
+      ]
+     },
+     {
+      "title": "Kripto lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta kripto so'zi; Satoshining asosiy g'oyasi (1 gap)",
+      "items": [
+       "words",
+       "idea"
+      ],
+      "answers": [
+       "whitepaper, currency, block, genesis block, programmers, wallet, bitcoins, blockchain",
+       "A money system that works without trusting any single person or bank."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 91–100 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 16,
+   "title": "Relative Clauses: Which vs Where",
+   "grammar_topic": "ANIQLOVCHI ERGASH GAPLAR — WHICH vs WHERE (joy haqida: where / in which)",
+   "vocab_topic": "E-commerce (elektron tijorat)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 16 – Relative clause with which vs where (4 qatorli jadval); E-COMMERCE (60 so'z); Reading — Jack Ma (Jony Academy matni); kitob Topic 101–110 uyga.",
+   "objectives": [
+    "where (joy + u yerda sodir bo'lgan ish) va which (joy — ega/to'ldiruvchi) farqini bilish.",
+    "in which / at which / on which = where (rasmiy uslub).",
+    "Test usuli: \"which … in/at\" → \"where\"; \"which + fe'l\" → which qoladi.",
+    "E-tijorat CORE 20 bilan onlayn xarid va marketpleys haqida gapirish."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "E-commerce (elektron tijorat) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"This is the shop. I bought my phone there.\" → \"This is the shop where I bought my phone.\" \"This is the shop. It sells phones.\" → \"This is the shop which sells phones.\" Farq: where — joyda ish bo'ladi (ega+fe'l keladi); which — joy o'zi ega/to'ldiruvchi."
+    ],
+    [
+     8,
+     "Kahoot — Relative clauses with who/which",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Relative clauses with who/which lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 4 qator: WHERE — joy + where + ega + fe'l (u yerda nima bo'lgan); WHICH — joy ot sifatida + which + fe'l (uy qurilgan); IN/AT/ON WHICH = where (rasmiy). Test: where dan keyin to'liq gap keladi va predlog yo'q; which dan keyin fe'l yoki predlog kerak."
+    ],
+    [
+     12,
+     "E-commerce (elektron tijorat) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "WHERE — joy haqida qo'shimcha ma'lumot, ish o'sha joyda bo'ladi: \"The city where I was born is beautiful.\" / \"This is the café where we met.\" (where + ega + fe'l).",
+     "WHICH — joy gapning egasi/to'ldiruvchisi: \"This is the house which was built in 1920.\" (which + fe'l) / \"The shop which I like is closed.\" (which + ega + fe'l, predlogsiz).",
+     "IN/AT/ON WHICH — where'ning rasmiy shakli: \"This is the school in which I studied.\" = \"the school where I studied\" = \"the school (which) I studied at\".",
+     "Test: gapni to'liq qaytar — \"I studied IN the school\" → in bor → where / in which; \"The school was built\" → predlog yo'q → which."
+    ],
+    "formulas": [
+     [
+      "Where — joy ma'lumoti",
+      "joy + where + ega + fe'l",
+      "The city where I was born is beautiful.",
+      "Men tug'ilgan shahar go'zal."
+     ],
+     [
+      "Where — voqea joyi",
+      "joy + where + ega + fe'l",
+      "This is the café where we met.",
+      "Bu — biz uchrashgan kafe."
+     ],
+     [
+      "Which — joy ega",
+      "joy + which + fe'l",
+      "This is the house which was built in 1920.",
+      "Bu — 1920-yilda qurilgan uy."
+     ],
+     [
+      "In/at/on which",
+      "joy + in/at/on which + ega + fe'l",
+      "This is the school in which I studied.",
+      "Bu — men o'qigan maktab."
+     ],
+     [
+      "Which + predlog oxirida",
+      "joy + (which) + ega + fe'l + predlog",
+      "This is the school (which) I studied at.",
+      "Bu — men o'qigan maktab."
+     ],
+     [
+      "When / where farqi",
+      "vaqt + when; joy + where",
+      "The year when Alibaba started / the flat where it started",
+      "Alibaba boshlangan yil / boshlangan kvartira"
+     ]
+    ],
+    "presentation": [
+     [
+      "Where is the marketplace where you buy clothes?",
+      "The marketplace where I buy clothes is Uzum."
+     ],
+     [
+      "Which store sells the cheapest phones?",
+      "The store which sells the cheapest phones is online."
+     ],
+     [
+      "Is this the warehouse where orders are packed?",
+      "Yes, this is the warehouse where they pack everything."
+     ],
+     [
+      "Which app do you use?",
+      "The app which my sister recommended."
+     ],
+     [
+      "Where did Jack Ma start Alibaba?",
+      "In a flat where 17 friends met in 1999."
+     ],
+     [
+      "Is that the website which was hacked?",
+      "Yes, the website which was hacked lost customer data."
+     ],
+     [
+      "Which category has the most discounts?",
+      "The category in which I shop most — electronics."
+     ],
+     [
+      "Where do you collect your orders?",
+      "At a pick-up point where they keep parcels for three days."
+     ],
+     [
+      "Is this the checkout page which asks for a card?",
+      "Yes, the page which asks for a card is the last step."
+     ],
+     [
+      "Which country has the biggest e-commerce market?",
+      "China, where Alibaba and JD sell trillions."
+     ]
+    ],
+    "notes": [
+     "where + to'liq gap (ega + fe'l), predlogsiz: \"the shop where I work\" (work in — emas).",
+     "which egа bo'lsa fe'l keladi: \"the shop which opened yesterday\".",
+     "\"where\" = \"in/at/on which\"; \"when\" = \"on/in which\" (vaqt); \"why\" = \"for which\".",
+     "E-commerce lug'ati: marketplace, cart, checkout, delivery, refund, in stock/out of stock, conversion, target audience."
+    ],
+    "mistakes": [
+     [
+      "The city which I was born is beautiful.",
+      "The city where I was born is beautiful. / …which I was born in…",
+      "Joy + ega + fe'l → where."
+     ],
+     [
+      "This is the house where was built in 1920.",
+      "This is the house which was built in 1920.",
+      "which + fe'l."
+     ],
+     [
+      "The café where we met at…",
+      "The café where we met… / The café (which) we met at…",
+      "where bilan predlog yo'q."
+     ],
+     [
+      "The shop in where I work…",
+      "The shop where I work… / The shop in which I work…",
+      "in where — xato."
+     ],
+     [
+      "The year where Alibaba started…",
+      "The year when Alibaba started…",
+      "Vaqt → when."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — onlayn xaridning asosiy so'zlari (marketplace, cart, checkout…); STRONG — logistika va to'lov; SUPER — marketing va xavfsizlik atamalari.",
+     "Har so'zga where/which gap: \"A warehouse is a place where goods are kept.\" / \"A cart is a page which shows your items.\""
+    ],
+    "core": [
+     [
+      "e-commerce",
+      "elektron tijorat",
+      "E-commerce is a market which never closes.",
+      "Elektron tijorat — hech qachon yopilmaydigan bozor.",
+      ""
+     ],
+     [
+      "online shopping",
+      "onlayn xarid",
+      "Online shopping is easy in cities where delivery is fast.",
+      "Yetkazib berish tez bo'lgan shaharlarda onlayn xarid oson.",
+      "ˈɔnˌlaɪn ˈʃɑpɪŋ"
+     ],
+     [
+      "online store",
+      "onlayn do'kon",
+      "An online store is a website where you can buy 24 hours a day.",
+      "Onlayn do'kon — kuniga 24 soat xarid qilsa bo'ladigan sayt.",
+      "ˈɔnˌlaɪn stɔr"
+     ],
+     [
+      "marketplace",
+      "marketpleys (savdo maydonchasi)",
+      "A marketplace is a platform where many sellers sell.",
+      "Marketpleys — ko'p sotuvchi sotadigan platforma.",
+      "ˈmɑrkɪtˌpleɪs"
+     ],
+     [
+      "seller / buyer",
+      "sotuvchi / xaridor",
+      "The seller who answers fast gets more buyers.",
+      "Tez javob beradigan sotuvchi ko'proq xaridor oladi.",
+      "ˈsɛlər  baɪər"
+     ],
+     [
+      "customer (e-com)",
+      "mijoz",
+      "Customers who leave reviews help others.",
+      "Sharh qoldiradigan mijozlar boshqalarga yordam beradi.",
+      ""
+     ],
+     [
+      "product (e-com)",
+      "mahsulot",
+      "The product which I ordered arrived broken.",
+      "Men buyurgan mahsulot singan holda keldi.",
+      ""
+     ],
+     [
+      "catalogue (e-com)",
+      "katalog",
+      "The catalogue is the page where all products are listed.",
+      "Katalog — barcha mahsulotlar ro'yxati beriladigan sahifa.",
+      ""
+     ],
+     [
+      "category (e-com)",
+      "kategoriya",
+      "Electronics is the category in which I spend most.",
+      "Elektronika — men eng ko'p sarflaydigan kategoriya.",
+      ""
+     ],
+     [
+      "cart",
+      "savatcha",
+      "The cart is the page where your chosen items wait.",
+      "Savatcha — tanlangan mahsulotlar kutadigan sahifa.",
+      "kɑrt"
+     ],
+     [
+      "checkout (e-com)",
+      "to'lov bosqichi",
+      "Checkout is the step at which you pay.",
+      "To'lov bosqichi — siz to'laydigan qadam.",
+      ""
+     ],
+     [
+      "order (e-com)",
+      "buyurtma",
+      "The order which I placed yesterday has been shipped.",
+      "Kecha bergan buyurtmam jo'natildi.",
+      ""
+     ],
+     [
+      "delivery (e-com)",
+      "yetkazib berish",
+      "Delivery is fast in areas where there are pick-up points.",
+      "Olib ketish punktlari bo'lgan hududlarda yetkazib berish tez.",
+      ""
+     ],
+     [
+      "shipping (e-com)",
+      "jo'natish",
+      "Free shipping is the reason which makes me choose Uzum.",
+      "Bepul jo'natish — meni Uzumni tanlashga undaydigan sabab.",
+      ""
+     ],
+     [
+      "tracking",
+      "kuzatuv (jo'natma)",
+      "Tracking shows the city where your parcel is now.",
+      "Kuzatuv jo'natmangiz hozir qaysi shaharda ekanini ko'rsatadi.",
+      "ˈtrækɪŋ"
+     ],
+     [
+      "return (e-com)",
+      "qaytarish",
+      "Returns are accepted at the point where you collected the parcel.",
+      "Qaytarish jo'natmani olgan punktda qabul qilinadi.",
+      ""
+     ],
+     [
+      "refund (e-com)",
+      "pulni qaytarish",
+      "A refund is money which comes back to your card.",
+      "Pulni qaytarish — kartangizga qaytadigan pul.",
+      ""
+     ],
+     [
+      "payment (e-com)",
+      "to'lov",
+      "Online payment is the method which most people use now.",
+      "Onlayn to'lov — hozir ko'pchilik ishlatadigan usul.",
+      ""
+     ],
+     [
+      "discount (e-com)",
+      "chegirma",
+      "The discount which they offered was 40%.",
+      "Ular taklif qilgan chegirma 40% edi.",
+      ""
+     ],
+     [
+      "in stock / out of stock",
+      "mavjud / tugagan",
+      "The item which I wanted was out of stock.",
+      "Men xohlagan mahsulot tugagan edi.",
+      "ɪn stɑk  aʊt əv stɑk"
+     ]
+    ],
+    "strong": [
+     [
+      "warranty (e-com)",
+      "kafolat",
+      "A warranty is a promise which covers repairs.",
+      "Kafolat — ta'mirni qoplaydigan va'da.",
+      ""
+     ],
+     [
+      "receipt / invoice",
+      "chek / hisob-faktura",
+      "Keep the receipt which the courier gives you.",
+      "Kuryer beradigan chekni saqla.",
+      "rɪˈsit  ˈɪnvɔɪs"
+     ],
+     [
+      "cash on delivery",
+      "yetkazib berishda naqd to'lov",
+      "Cash on delivery is popular in towns where cards are rare.",
+      "Kartalar kam bo'lgan shaharlarda yetkazib berishda naqd to'lov mashhur.",
+      "kæʃ ɔn dɪˈlɪvəri"
+     ],
+     [
+      "coupon / promo code",
+      "kupon / promo-kod",
+      "A promo code is a word which cuts the price.",
+      "Promo-kod — narxni tushiradigan so'z.",
+      "ˈkuˌpɔn  ˈproʊˌmoʊ koʊd"
+     ],
+     [
+      "recommendation (e-com)",
+      "tavsiya",
+      "Recommendations are products which the algorithm chooses for you.",
+      "Tavsiyalar — algoritm siz uchun tanlaydigan mahsulotlar.",
+      ""
+     ],
+     [
+      "wishlist",
+      "istaklar ro'yxati",
+      "A wishlist is a list where you save items for later.",
+      "Istaklar ro'yxati — mahsulotlarni keyinga saqlaydigan ro'yxat.",
+      ""
+     ],
+     [
+      "inventory (e-com)",
+      "tovar zaxirasi",
+      "Inventory is checked in the warehouse where goods are stored.",
+      "Tovar zaxirasi mahsulotlar saqlanadigan omborda tekshiriladi.",
+      ""
+     ],
+     [
+      "warehouse (e-com)",
+      "ombor",
+      "A warehouse is a building where orders are packed.",
+      "Ombor — buyurtmalar joylanadigan bino.",
+      ""
+     ],
+     [
+      "supplier / vendor",
+      "yetkazib beruvchi / sotuvchi",
+      "A supplier is a company which sends goods to the store.",
+      "Yetkazib beruvchi — do'konga tovar jo'natadigan kompaniya.",
+      "səˈplaɪər  ˈvɛndər"
+     ],
+     [
+      "dropshipping",
+      "dropshipping",
+      "Dropshipping is a model in which the seller has no stock.",
+      "Dropshipping — sotuvchida zaxira bo'lmaydigan model.",
+      ""
+     ],
+     [
+      "logistics",
+      "logistika",
+      "Logistics is the system which moves parcels from A to B.",
+      "Logistika — jo'natmalarni A dan B ga olib boradigan tizim.",
+      "ləˈʤɪstɪks"
+     ],
+     [
+      "customer service (e-com)",
+      "mijozlarga xizmat",
+      "Customer service is the department where complaints go.",
+      "Mijozlarga xizmat — shikoyatlar boradigan bo'lim.",
+      ""
+     ],
+     [
+      "chat support",
+      "onlayn chat yordami",
+      "Chat support is the window where you ask questions.",
+      "Chat yordami — savol beriladigan oyna.",
+      "ʧæt səˈpɔrt"
+     ],
+     [
+      "account (e-com)",
+      "hisob (akkaunt)",
+      "Your account is the page where orders are saved.",
+      "Akkaunt — buyurtmalar saqlanadigan sahifa.",
+      ""
+     ],
+     [
+      "sign up / log in",
+      "ro'yxatdan o'tmoq / kirmoq",
+      "Sign up on the page where it says \"Register\".",
+      "\"Register\" deb yozilgan sahifada ro'yxatdan o't.",
+      "saɪn əp  lɔg ɪn"
+     ],
+     [
+      "password (e-com)",
+      "parol",
+      "A password which is too short is dangerous.",
+      "Juda qisqa parol xavfli.",
+      ""
+     ],
+     [
+      "fraud (e-com)",
+      "firibgarlik",
+      "Fraud happens on sites where security is weak.",
+      "Firibgarlik xavfsizlik zaif bo'lgan saytlarda sodir bo'ladi.",
+      ""
+     ],
+     [
+      "digital marketing",
+      "raqamli marketing",
+      "Digital marketing is advertising which happens online.",
+      "Raqamli marketing — onlayn bo'ladigan reklama.",
+      "ˈdɪʤɪtəl ˈmɑrkətɪŋ"
+     ],
+     [
+      "target audience",
+      "maqsadli auditoriya",
+      "The target audience is the group which the ad is made for.",
+      "Maqsadli auditoriya — reklama mo'ljallangan guruh.",
+      "ˈtərgət ˈɔdiəns"
+     ],
+     [
+      "conversion",
+      "konversiya (xaridorga aylanish)",
+      "Conversion is the percentage of visitors who buy.",
+      "Konversiya — sotib oladigan tashrif buyuruvchilar foizi.",
+      "kənˈvərʒən"
+     ]
+    ],
+    "super": [
+     [
+      "traffic (web)",
+      "sayt tashriflari",
+      "Traffic is the number of people who visit a site.",
+      "Trafik — saytga tashrif buyuradigan odamlar soni.",
+      "ˈtræfɪk (wɛb)"
+     ],
+     [
+      "SEO",
+      "SEO (qidiruv optimallashtirish)",
+      "SEO is the work which puts a site on page one of Google.",
+      "SEO — saytni Google birinchi sahifasiga chiqaradigan ish.",
+      "ˈsioʊ"
+     ],
+     [
+      "affiliate",
+      "hamkorlik dasturi",
+      "An affiliate is a person who earns by sharing links.",
+      "Affiliat — havolalar ulashib daromad qiladigan odam.",
+      "əˈfɪliˌeɪt"
+     ],
+     [
+      "banner",
+      "banner",
+      "A banner is an ad which sits at the top of a page.",
+      "Banner — sahifa tepasida turadigan reklama.",
+      "ˈbænər"
+     ],
+     [
+      "advertisement (e-com)",
+      "reklama",
+      "Advertisements are shown on pages where users spend time.",
+      "Reklamalar foydalanuvchilar vaqt o'tkazadigan sahifalarda ko'rsatiladi.",
+      ""
+     ],
+     [
+      "FAQ",
+      "ko'p so'raladigan savollar",
+      "The FAQ is the page where common questions are answered.",
+      "FAQ — ko'p so'raladigan savollarga javob beriladigan sahifa.",
+      ""
+     ],
+     [
+      "pick-up point",
+      "olib ketish punkti",
+      "A pick-up point is a place where parcels wait for you.",
+      "Olib ketish punkti — jo'natmalar sizni kutadigan joy.",
+      "ˈpɪˌkəp pɔɪnt"
+     ],
+     [
+      "courier",
+      "kuryer",
+      "The courier who delivered my parcel was very polite.",
+      "Jo'natmamni yetkazgan kuryer juda muloyim edi.",
+      "ˈkəriər"
+     ],
+     [
+      "parcel",
+      "jo'natma, posilka",
+      "The parcel which arrived today is for my mum.",
+      "Bugun kelgan jo'natma oyim uchun.",
+      "ˈpɑrsəl"
+     ],
+     [
+      "review / rating",
+      "sharh / reyting",
+      "Reviews are comments which other buyers leave.",
+      "Sharhlar — boshqa xaridorlar qoldiradigan izohlar.",
+      "ˌrivˈju  ˈreɪtɪŋ"
+     ],
+     [
+      "subscription",
+      "obuna",
+      "A subscription is a service for which you pay monthly.",
+      "Obuna — har oy to'lanadigan xizmat.",
+      "səbˈskrɪpʃən"
+     ],
+     [
+      "instalments (e-com)",
+      "bo'lib to'lash",
+      "Instalments let people buy things which they can't pay for at once.",
+      "Bo'lib to'lash odamlarga birdaniga to'lay olmaydigan narsalarni olish imkonini beradi.",
+      ""
+     ],
+     [
+      "platform (e-com)",
+      "platforma",
+      "Alibaba is a platform on which millions of sellers work.",
+      "Alibaba — millionlab sotuvchi ishlaydigan platforma.",
+      ""
+     ],
+     [
+      "small business",
+      "kichik biznes",
+      "Marketplaces help small businesses which have no shop.",
+      "Marketpleyslar do'koni yo'q kichik bizneslarga yordam beradi.",
+      "smɔl ˈbɪznɪs"
+     ],
+     [
+      "cross-border",
+      "chegaralararo",
+      "Cross-border e-commerce is trade where the buyer and seller are in different countries.",
+      "Chegaralararo e-tijorat — xaridor va sotuvchi turli mamlakatda bo'lgan savdo.",
+      ""
+     ],
+     [
+      "Singles' Day",
+      "Yolg'izlar kuni (11 noyabr, Xitoy savdo kuni)",
+      "Singles' Day is the day when Alibaba sells the most.",
+      "Yolg'izlar kuni — Alibaba eng ko'p sotadigan kun.",
+      "ˈsɪŋgəlz' deɪ"
+     ],
+     [
+      "reject (v)",
+      "rad etmoq",
+      "Jack Ma was rejected by companies where he applied for jobs.",
+      "Jek Ma ishga ariza bergan kompaniyalar tomonidan rad etilgan.",
+      "ˈriʤɛkt (vi)"
+     ],
+     [
+      "apply (job)",
+      "ariza bermoq",
+      "He applied for 30 jobs, all of which said no.",
+      "U 30 ta ishga ariza berdi, hammasi yo'q dedi.",
+      "əˈplaɪ (ʤɑb)"
+     ],
+     [
+      "found (company)",
+      "asos solmoq",
+      "The flat where he founded Alibaba is now a museum.",
+      "U Alibabaga asos solgan kvartira endi muzey.",
+      "faʊnd (ˈkəmpəˌni)"
+     ],
+     [
+      "trust (e-com)",
+      "ishonch",
+      "Trust is the thing which online shops need most.",
+      "Ishonch — onlayn do'konlarga eng kerak narsa.",
+      ""
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "which yoki where",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "This is the marketplace ___ I buy books.",
+      "The store ___ sells phones is closed today.",
+      "The warehouse ___ orders are packed is huge.",
+      "The app ___ my friend recommended is free.",
+      "Hangzhou is the city ___ Alibaba was founded.",
+      "The website ___ was hacked lost data.",
+      "The page ___ you pay is called checkout.",
+      "The parcel ___ arrived today is yours."
+     ],
+     "answers": [
+      "where",
+      "which",
+      "where",
+      "which",
+      "where",
+      "which",
+      "where",
+      "which"
+     ]
+    },
+    {
+     "title": "in which bilan",
+     "type": "rewrite",
+     "instr": "where → in/at which (rasmiy) yoki aksincha",
+     "items": [
+      "This is the school where I studied.",
+      "The flat in which Alibaba started is a museum.",
+      "The point at which you collect parcels is nearby.",
+      "The city where he was born is Hangzhou."
+     ],
+     "answers": [
+      "This is the school in which I studied.",
+      "The flat where Alibaba started is a museum.",
+      "The point where you collect parcels is nearby.",
+      "The city in which he was born is Hangzhou."
+     ]
+    },
+    {
+     "title": "Ikki gapni birlashtiring",
+     "type": "rewrite",
+     "instr": "which / where / when",
+     "items": [
+      "This is the shop. I bought my laptop there.",
+      "This is the shop. It sells laptops.",
+      "1999 was the year. Alibaba started then.",
+      "That is the warehouse. The parcels are kept there.",
+      "I use a marketplace. It has free shipping."
+     ],
+     "answers": [
+      "This is the shop where I bought my laptop.",
+      "This is the shop which sells laptops.",
+      "1999 was the year when Alibaba started.",
+      "That is the warehouse where the parcels are kept.",
+      "I use a marketplace which has free shipping."
+     ]
+    },
+    {
+     "title": "Mening onlayn xaridim",
+     "type": "speaking",
+     "instr": "Juftlikda: oxirgi onlayn xarid — 6 gap, 3 ta where, 3 ta which",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "The marketplace where I shop is Uzum.",
+      "The product which I bought was a pair of trainers.",
+      "The page where I paid asked for a code.",
+      "The parcel which arrived was in a big box.",
+      "The pick-up point where I collected it is near my house.",
+      "The review which I left was five stars."
+     ]
+    },
+    {
+     "title": "E-tijorat lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the page where your chosen items are kept",
+      "the last step, where you pay",
+      "money returned to your card",
+      "a building where goods are stored",
+      "a word that cuts the price",
+      "a site where many sellers sell"
+     ],
+     "answers": [
+      "cart",
+      "checkout",
+      "refund",
+      "warehouse",
+      "promo code",
+      "marketplace"
+     ],
+     "box": [
+      "cart",
+      "checkout",
+      "refund",
+      "warehouse",
+      "promo code",
+      "marketplace"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The city which I was born is beautiful.",
+      "This is the house where was built in 1920.",
+      "The café where we met at…",
+      "The shop in where I work…",
+      "The year where Alibaba started…"
+     ],
+     "answers": [
+      "The city where I was born is beautiful.",
+      "This is the house which was built in 1920.",
+      "The café where we met…",
+      "The shop where I work…",
+      "The year when Alibaba started…"
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 16 jadvalini 3 marta; E-COMMERCE 60 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 101–110",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Shahrimdagi joylar",
+     "type": "write",
+     "instr": "120 so'z: shahringizdagi 5 joy — har biriga where yoki which bilan ta'rif; 2 ta in which",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Men tug'ilgan shahar go'zal.",
+      "Bu — biz uchrashgan kafe.",
+      "Bu — 1920-yilda qurilgan uy.",
+      "Bu — men o'qigan maktab.",
+      "Ombor — buyurtmalar joylanadigan bino."
+     ],
+     "answers": [
+      "The city where I was born is beautiful.",
+      "This is the café where we met.",
+      "This is the house which was built in 1920.",
+      "This is the school in which I studied. / …where I studied.",
+      "A warehouse is a building where orders are packed."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "E-COMMERCE CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Cryptocurrency",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 4 qator)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "E-commerce og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Jack Ma — the teacher who built the biggest online market in the world",
+    "text": [
+     "Jack Ma was born in 1964 in Hangzhou, a city where tourists came to see the West Lake. As a boy he waited near the hotel where foreigners stayed and offered them free tours in exchange for English practice. He failed the university entrance exam twice. Later he applied for 30 jobs, including KFC, where 24 people were accepted and he was the only one rejected. So he became an English teacher, earning 12 dollars a month.",
+     "In 1995 he visited the USA, where he saw the internet for the first time. He typed \"beer\" and found results from many countries, but none from China. Back home, in 1999, he gathered 17 friends in his flat — the flat which is now a museum — and founded Alibaba, a marketplace where small Chinese factories could sell to the world.",
+     "Alibaba grew into a company which handles more sales than Amazon and eBay together. Taobao, the site where ordinary people sell to each other, has 900 million users. On Singles' Day, the shopping festival which Alibaba invented, the platform sells more in one day than most countries do in a year.",
+     "Ma retired in 2019 to return to education. \"I'm a teacher,\" he says. \"Alibaba was just a lesson.\" The lesson which he repeats most: \"Today is hard, tomorrow is harder, but the day after tomorrow is beautiful — most people give up tomorrow night.\""
+    ],
+    "glossary": [
+     "entrance exam — kirish imtihoni",
+     "in exchange for — evaziga",
+     "reject — rad etmoq",
+     "gather — to'plamoq",
+     "found — asos solmoq",
+     "handle — bajarmoq, boshqarmoq",
+     "ordinary — oddiy",
+     "festival — bayram",
+     "retire — nafaqaga chiqmoq",
+     "give up — taslim bo'lmoq"
+    ],
+    "tasks": [
+     {
+      "title": "where / which toping",
+      "type": "find",
+      "instr": "Matndan 5 ta where va 5 ta which",
+      "items": [
+       "where 1",
+       "where 2",
+       "where 3",
+       "where 4",
+       "where 5",
+       "which 1",
+       "which 2",
+       "which 3",
+       "which 4",
+       "where 6"
+      ],
+      "answers": [
+       "A city where tourists came to see the West Lake.",
+       "The hotel where foreigners stayed.",
+       "KFC, where 24 people were accepted.",
+       "The USA, where he saw the internet for the first time.",
+       "A marketplace where small Chinese factories could sell.",
+       "The flat which is now a museum.",
+       "A company which handles more sales than Amazon and eBay.",
+       "The shopping festival which Alibaba invented.",
+       "The lesson which he repeats most.",
+       "The site where ordinary people sell to each other."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Jack Ma passed the university exam the first time.",
+       "He was rejected by KFC.",
+       "Alibaba started in 1999 with 17 people.",
+       "He is still the CEO of Alibaba."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "True",
+       "False (retired 2019)"
+      ]
+     },
+     {
+      "title": "E-tijorat lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta so'z; Jek Maning \"the day after tomorrow\" gapi — o'z so'zingiz bilan",
+      "items": [
+       "words",
+       "meaning"
+      ],
+      "answers": [
+       "marketplace, factories, sales, platform, site, users, shopping festival, sell",
+       "Success comes after hard days; don't give up too early."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 101–110 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 17,
+   "title": "Relative Clauses: Whose, Why, When",
+   "grammar_topic": "ANIQLOVCHI ERGASH GAPLAR — WHOSE (egalik) / WHY (sabab) / WHEN (vaqt)",
+   "vocab_topic": "Renewable energy (qayta tiklanuvchi energiya)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 17 – Clauses (when, whose, why) (3 qatorli jadval); RENEWABLE ENERGY (52 so'z); Reading — Nikola Tesla (Jony Academy matni); kitob Topic 111–120 uyga; Writing 8: Studying abroad: benefits and challenges.",
+   "objectives": [
+    "whose bilan egalikni ifodalash (odam va narsa uchun ham).",
+    "the reason why / the day when qoliplarini tuzish; why/when ni tushirish yoki that bilan almashtirish.",
+    "Yetti relative so'zni (who, which, that, where, whose, why, when) bitta xaritada farqlash.",
+    "Qayta tiklanuvchi energiya CORE 20 bilan quyosh/shamol energiyasi haqida gapirish; Writing 8 (studying abroad)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Renewable energy (qayta tiklanuvchi energiya) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Tesla is a scientist. His inventions light our homes.\" → \"Tesla is a scientist whose inventions light our homes.\" \"1888 was the year. He sold his patents then.\" → \"…the year when he sold his patents.\" \"That's the reason. He died poor.\" → \"…the reason why he died poor.\""
+    ],
+    [
+     8,
+     "Kahoot — Relative clauses: which vs where",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Relative clauses: which vs where lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 3 qator: WHOSE — egalik (ot + whose + ot + fe'l: the man whose car was stolen); WHY — sabab (the reason why + ega + fe'l); WHEN — vaqt (the day/year/time when + ega + fe'l). 15–17-dars xaritasi: who / which / that / where / whose / why / when."
+    ],
+    [
+     12,
+     "Renewable energy (qayta tiklanuvchi energiya) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "WHOSE — egalik (\"…ning\"): \"The man whose car was stolen called the police.\" whose + ot (whose car). Narsalar uchun ham: \"a country whose energy is green\".",
+     "WHY — sabab: \"That is the reason why I left early.\" (why tushirsa bo'ladi: the reason I left).",
+     "WHEN — vaqt: \"I remember the day when we first met.\" (when tushirsa/that bilan almashtirsa bo'ladi).",
+     "Xarita: odam → who; narsa → which/that; joy → where; egalik → whose; sabab → why; vaqt → when."
+    ],
+    "formulas": [
+     [
+      "Whose",
+      "ot + whose + ot + fe'l",
+      "The man whose car was stolen called the police.",
+      "Mashinasi o'g'irlangan odam politsiyaga qo'ng'iroq qildi."
+     ],
+     [
+      "Whose (narsa)",
+      "ot + whose + ot",
+      "A country whose energy is renewable pollutes less.",
+      "Energiyasi qayta tiklanuvchi mamlakat kamroq ifloslaydi."
+     ],
+     [
+      "Why",
+      "the reason + why + ega + fe'l",
+      "That is the reason why I left early.",
+      "Bu — mening erta ketganimning sababi."
+     ],
+     [
+      "When",
+      "vaqt oti + when + ega + fe'l",
+      "I remember the day when we first met.",
+      "Biz birinchi uchrashgan kunni eslayman."
+     ],
+     [
+      "Tushirish",
+      "the reason (why) / the day (when) / the year (that)",
+      "1888 was the year (when) Tesla sold his patents.",
+      "1888 — Tesla patentlarini sotgan yil."
+     ],
+     [
+      "Non-defining",
+      "ot, + whose/when …,",
+      "Tesla, whose ideas were 100 years early, died poor.",
+      "G'oyalari 100 yil erta bo'lgan Tesla kambag'al holda vafot etdi."
+     ]
+    ],
+    "presentation": [
+     [
+      "Who is Nikola Tesla?",
+      "He's the inventor whose system brings electricity to our homes."
+     ],
+     [
+      "When was the year when he arrived in America?",
+      "1884 was the year when he arrived with four cents."
+     ],
+     [
+      "Why did he die poor?",
+      "The reason why he died poor is that he cared about ideas, not money."
+     ],
+     [
+      "Which country's energy is mostly renewable?",
+      "Iceland, whose energy is almost 100% renewable."
+     ],
+     [
+      "When is the time when solar panels work best?",
+      "Midday is the time when they produce most."
+     ],
+     [
+      "Why is coal still used?",
+      "The reason why coal is still used is its low price."
+     ],
+     [
+      "Whose company is named after Tesla?",
+      "Elon Musk's company, whose cars are electric."
+     ],
+     [
+      "When did wind turbines appear?",
+      "The 1980s was the decade when the first wind farms were built."
+     ],
+     [
+      "Why do we need batteries?",
+      "The reason why we need batteries is that the sun sets at night."
+     ],
+     [
+      "Whose idea was wireless electricity?",
+      "Tesla's — a scientist whose dreams were too early."
+     ]
+    ],
+    "notes": [
+     "whose ≠ who's (who is): \"the man whose car\" — \"the man who's here\".",
+     "the reason why → og'zakida \"the reason that\" yoki tushiriladi; \"the reason because\" — xato.",
+     "when o'rniga in/on which (rasmiy): \"the year in which he was born\".",
+     "Energy lug'ati: renewable/non-renewable, fossil fuel, solar panel, wind turbine, grid, storage, energy efficiency, carbon."
+    ],
+    "mistakes": [
+     [
+      "The man who's car was stolen…",
+      "The man whose car was stolen…",
+      "Egalik → whose."
+     ],
+     [
+      "That is the reason because I left.",
+      "That is the reason why I left.",
+      "why."
+     ],
+     [
+      "The day where we met…",
+      "The day when we met…",
+      "Vaqt → when."
+     ],
+     [
+      "The man whose he lives here…",
+      "The man who lives here…",
+      "whose + ot kerak."
+     ],
+     [
+      "I remember the day when we first met on it.",
+      "I remember the day when we first met.",
+      "\"on it\" ortiqcha."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — energiya turlari va asosiy tushunchalar (solar, wind, grid…); STRONG — texnologiya va iste'mol; SUPER — o'tish davri va yangi manbalar (hydrogen, tidal).",
+     "Har so'zga whose/why/when gap: \"A house whose roof has solar panels pays less.\" / \"Night is the time when we need storage.\""
+    ],
+    "core": [
+     [
+      "renewable energy",
+      "qayta tiklanuvchi energiya",
+      "Renewable energy is the reason why some countries have clean air.",
+      "Qayta tiklanuvchi energiya — ba'zi mamlakatlarda havo toza bo'lishining sababi.",
+      "riˈnuəbəl ˈɛnərʤi"
+     ],
+     [
+      "non-renewable",
+      "tiklanmaydigan",
+      "Coal is a non-renewable fuel whose supply will end.",
+      "Ko'mir — zaxirasi tugaydigan tiklanmaydigan yoqilg'i.",
+      "nɑnriˈnuəbəl"
+     ],
+     [
+      "fossil fuel",
+      "qazilma yoqilg'i",
+      "The 1900s was the century when fossil fuels ruled.",
+      "1900-yillar — qazilma yoqilg'i hukmronlik qilgan asr.",
+      "ˈfɑsəl fjuəl"
+     ],
+     [
+      "coal / oil",
+      "ko'mir / neft",
+      "Oil is the reason why some deserts are rich.",
+      "Neft — ba'zi cho'llar boy bo'lishining sababi.",
+      "koʊl  ɔɪl"
+     ],
+     [
+      "solar energy",
+      "quyosh energiyasi",
+      "Solar energy is the source whose price has fallen most.",
+      "Quyosh energiyasi — narxi eng ko'p tushgan manba.",
+      "ˈsoʊlər ˈɛnərʤi"
+     ],
+     [
+      "solar panel",
+      "quyosh paneli",
+      "A house whose roof has solar panels pays less.",
+      "Tomida quyosh paneli bo'lgan uy kamroq to'laydi.",
+      "ˈsoʊlər ˈpænəl"
+     ],
+     [
+      "wind energy",
+      "shamol energiyasi",
+      "Wind energy works best at times when the weather is bad.",
+      "Shamol energiyasi ob-havo yomon paytlarda eng yaxshi ishlaydi.",
+      "wɪnd ˈɛnərʤi"
+     ],
+     [
+      "wind turbine",
+      "shamol turbinasi",
+      "A wind turbine, whose blades are 80 metres long, powers 1,500 homes.",
+      "Parraklari 80 metr bo'lgan shamol turbinasi 1500 uyni ta'minlaydi.",
+      "wɪnd ˈtərbaɪn"
+     ],
+     [
+      "hydropower",
+      "gidroenergiya",
+      "Hydropower is the reason why Tajikistan has cheap electricity.",
+      "Gidroenergiya — Tojikistonda elektr arzon bo'lishining sababi.",
+      "ˈhaɪdroʊˌpaʊr"
+     ],
+     [
+      "dam",
+      "to'g'on",
+      "The dam, whose wall is 300 metres high, was built in 1980.",
+      "Devori 300 metr bo'lgan to'g'on 1980-da qurilgan.",
+      "dæm"
+     ],
+     [
+      "nuclear energy",
+      "yadro energiyasi",
+      "Nuclear energy is the source whose waste is the problem.",
+      "Yadro energiyasi — chiqindisi muammo bo'lgan manba.",
+      "ˈnukliər ˈɛnərʤi"
+     ],
+     [
+      "power plant",
+      "elektr stansiyasi",
+      "The power plant whose smoke we see burns gas.",
+      "Tutunini ko'rayotgan stansiyamiz gaz yoqadi.",
+      "paʊər plænt"
+     ],
+     [
+      "electricity",
+      "elektr",
+      "Tesla is the man whose system carries electricity to cities.",
+      "Tesla — tizimi shaharlarga elektr yetkazadigan odam.",
+      "ɪˌlɛkˈtrɪsəti"
+     ],
+     [
+      "grid",
+      "elektr tarmog'i",
+      "The grid is the network whose wires connect every house.",
+      "Tarmoq — simlari har bir uyni bog'laydigan tizim.",
+      "grɪd"
+     ],
+     [
+      "battery / storage",
+      "batareya / saqlash",
+      "Night is the time when we need storage.",
+      "Kecha — saqlash kerak bo'ladigan vaqt.",
+      "ˈbætəri  ˈstɔrɪʤ"
+     ],
+     [
+      "energy efficiency",
+      "energiya tejamkorligi",
+      "Energy efficiency is the reason why new fridges use less power.",
+      "Energiya tejamkorligi — yangi muzlatgichlar kam quvvat ishlatishining sababi.",
+      "ˈɛnərʤi ɪˈfɪʃənsi"
+     ],
+     [
+      "consumption",
+      "iste'mol",
+      "Summer is the season when consumption peaks.",
+      "Yoz — iste'mol eng yuqori bo'ladigan fasl.",
+      "kənˈsəmʃən"
+     ],
+     [
+      "clean energy",
+      "toza energiya",
+      "Clean energy is energy whose production makes no carbon.",
+      "Toza energiya — ishlab chiqarilishi uglerod chiqarmaydigan energiya.",
+      "klin ˈɛnərʤi"
+     ],
+     [
+      "carbon",
+      "uglerod",
+      "Carbon is the reason why the planet is warming.",
+      "Uglerod — sayyora isishining sababi.",
+      "ˈkɑrbən"
+     ],
+     [
+      "natural resource",
+      "tabiiy resurs",
+      "Uzbekistan is a country whose natural resources include gas and sun.",
+      "O'zbekiston — tabiiy resurslariga gaz va quyosh kiradigan mamlakat.",
+      "ˈnæʧərəl ˈrisɔrs"
+     ]
+    ],
+    "strong": [
+     [
+      "geothermal",
+      "geotermal",
+      "Iceland is a country whose heating is geothermal.",
+      "Islandiya — isitishi geotermal bo'lgan mamlakat.",
+      "ˌʤioʊˈθərməl"
+     ],
+     [
+      "biomass / biofuel",
+      "biomassa / bioyoqilg'i",
+      "Biofuel is fuel whose source is plants.",
+      "Bioyoqilg'i — manbai o'simlik bo'lgan yoqilg'i.",
+      ""
+     ],
+     [
+      "generator / turbine",
+      "generator / turbina",
+      "A turbine is the part whose movement makes electricity.",
+      "Turbina — harakati elektr hosil qiladigan qism.",
+      "ˈʤɛnərˌeɪtər  ˈtərbaɪn"
+     ],
+     [
+      "production (energy)",
+      "ishlab chiqarish",
+      "Midday is the time when solar production is highest.",
+      "Tush — quyosh energiyasi ishlab chiqarilishi eng yuqori vaqt.",
+      "pərˈdəkʃən (ˈɛnərʤi)"
+     ],
+     [
+      "green (energy)",
+      "yashil, ekologik",
+      "\"Green\" is the word which we use for clean energy.",
+      "\"Yashil\" — toza energiya uchun ishlatadigan so'zimiz.",
+      "grin (ˈɛnərʤi)"
+     ],
+     [
+      "renewable source",
+      "qayta tiklanuvchi manba",
+      "The sun is a source whose energy never ends.",
+      "Quyosh — energiyasi hech tugamaydigan manba.",
+      "riˈnuəbəl sɔrs"
+     ],
+     [
+      "sunlight",
+      "quyosh nuri",
+      "Sunlight is the reason why deserts are perfect for solar farms.",
+      "Quyosh nuri — cho'llar quyosh fermalari uchun mukammal bo'lishining sababi.",
+      "ˈsənˌlaɪt"
+     ],
+     [
+      "wind farm / solar farm",
+      "shamol / quyosh fermasi",
+      "Navoi is the region where the biggest solar farm was built.",
+      "Navoiy — eng katta quyosh fermasi qurilgan viloyat.",
+      "wɪnd fɑrm  ˈsoʊlər fɑrm"
+     ],
+     [
+      "off-grid",
+      "tarmoqdan tashqari",
+      "Off-grid villages are places whose electricity comes from panels.",
+      "Tarmoqdan tashqari qishloqlar — elektri panellardan keladigan joylar.",
+      ""
+     ],
+     [
+      "electric vehicle",
+      "elektromobil",
+      "2020 was the year when electric vehicles became popular here.",
+      "2020 — bu yerda elektromobillar mashhur bo'lgan yil.",
+      "ɪˈlɛktrɪk ˈviɪkəl"
+     ],
+     [
+      "charging station",
+      "quvvatlash stansiyasi",
+      "A charging station is a place where EVs fill up.",
+      "Quvvatlash stansiyasi — elektromobillar quvvat oladigan joy.",
+      "ˈʧɑrʤɪŋ ˈsteɪʃən"
+     ],
+     [
+      "smart grid",
+      "aqlli tarmoq",
+      "A smart grid is a network whose computers balance supply and demand.",
+      "Aqlli tarmoq — kompyuterlari taklif va talabni muvozanatlaydigan tizim.",
+      "smɑrt grɪd"
+     ],
+     [
+      "energy crisis / shortage",
+      "energiya inqirozi / tanqisligi",
+      "Winter is the time when shortages happen.",
+      "Qish — tanqislik bo'ladigan vaqt.",
+      "ˈɛnərʤi ˈkraɪsəs  ˈʃɔrtɪʤ"
+     ],
+     [
+      "transition (energy)",
+      "o'tish (energiya)",
+      "The transition is the reason why coal plants are closing.",
+      "O'tish — ko'mir stansiyalari yopilishining sababi.",
+      "trænˈzɪʃən (ˈɛnərʤi)"
+     ],
+     [
+      "alternative",
+      "muqobil",
+      "Hydrogen is an alternative whose time may come.",
+      "Vodorod — vaqti kelishi mumkin bo'lgan muqobil.",
+      "ɔlˈtərnətɪv"
+     ],
+     [
+      "hydrogen",
+      "vodorod",
+      "Hydrogen is a fuel whose only waste is water.",
+      "Vodorod — yagona chiqindisi suv bo'lgan yoqilg'i.",
+      "ˈhaɪdrəʤən"
+     ],
+     [
+      "tidal / wave energy",
+      "suv ko'tarilishi / to'lqin energiyasi",
+      "Tidal energy is the source whose timetable is the moon.",
+      "Suv ko'tarilishi energiyasi — jadvali oy bo'lgan manba.",
+      "ˈtaɪdəl  weɪv ˈɛnərʤi"
+     ],
+     [
+      "heat pump",
+      "issiqlik nasosi",
+      "A heat pump is a device whose job is heating with little power.",
+      "Issiqlik nasosi — vazifasi kam quvvat bilan isitish bo'lgan qurilma.",
+      "hit pəmp"
+     ],
+     [
+      "insulation",
+      "issiqlik izolyatsiyasi",
+      "Insulation is the reason why old houses waste heat.",
+      "Izolyatsiya (yo'qligi) — eski uylar issiqlikni isrof qilishining sababi.",
+      "ˌɪnsəˈleɪʃən"
+     ],
+     [
+      "megawatt / kilowatt",
+      "megavatt / kilovatt",
+      "A megawatt is the unit whose size powers 1,000 homes.",
+      "Megavatt — hajmi 1000 uyni ta'minlaydigan birlik.",
+      "ˈmɛgəˌwɑt  ˈkɪləˌwɑt"
+     ]
+    ],
+    "super": [
+     [
+      "alternating current (AC)",
+      "o'zgaruvchan tok",
+      "AC is the system whose inventor was Tesla.",
+      "O'zgaruvchan tok — ixtirochisi Tesla bo'lgan tizim.",
+      "ˈɔltərˌneɪtɪŋ ˈkɑrənt (ˈeɪˈsi)"
+     ],
+     [
+      "direct current (DC)",
+      "o'zgarmas tok",
+      "DC was the system whose champion was Edison.",
+      "O'zgarmas tok — himoyachisi Edison bo'lgan tizim.",
+      "dɪˈrɛkt ˈkɑrənt (ˌdiˈsi)"
+     ],
+     [
+      "patent (energy)",
+      "patent",
+      "1888 was the year when Tesla sold his patents to Westinghouse.",
+      "1888 — Tesla patentlarini Westinghouse'ga sotgan yil.",
+      "ˈpætənt (ˈɛnərʤi)"
+     ],
+     [
+      "inventor",
+      "ixtirochi",
+      "An inventor whose ideas are early often dies poor.",
+      "G'oyalari erta bo'lgan ixtirochi ko'pincha kambag'al o'ladi.",
+      "ˌɪnˈvɛntər"
+     ],
+     [
+      "invention (energy)",
+      "ixtiro",
+      "The motor is the invention whose design is still used.",
+      "Motor — dizayni hali ham ishlatiladigan ixtiro.",
+      "ˌɪnˈvɛnʃən (ˈɛnərʤi)"
+     ],
+     [
+      "wireless",
+      "simsiz",
+      "Wireless power was the dream whose time hasn't come.",
+      "Simsiz quvvat — vaqti hali kelmagan orzu.",
+      "ˈwaɪrlɪs"
+     ],
+     [
+      "voltage",
+      "kuchlanish",
+      "High voltage is the reason why power lines are dangerous.",
+      "Yuqori kuchlanish — elektr liniyalari xavfli bo'lishining sababi.",
+      "ˈvoʊltɪʤ"
+     ],
+     [
+      "current (energy)",
+      "tok",
+      "Current is the flow whose direction AC changes.",
+      "Tok — yo'nalishini o'zgaruvchan tok o'zgartiradigan oqim.",
+      "ˈkɑrənt (ˈɛnərʤi)"
+     ],
+     [
+      "fuel cell",
+      "yoqilg'i elementi",
+      "A fuel cell is a device whose input is hydrogen.",
+      "Yoqilg'i elementi — kirishi vodorod bo'lgan qurilma.",
+      "fjuəl sɛl"
+     ],
+     [
+      "emissions (energy)",
+      "chiqindi gazlar",
+      "Emissions are the reason why cities ban old cars.",
+      "Chiqindi gazlar — shaharlar eski mashinalarni taqiqlashining sababi.",
+      "ɪˈmɪʃənz (ˈɛnərʤi)"
+     ],
+     [
+      "carbon-neutral",
+      "uglerod-neytral",
+      "2050 is the year when the EU plans to be carbon-neutral.",
+      "2050 — YeI uglerod-neytral bo'lishni rejalashtirgan yil.",
+      ""
+     ],
+     [
+      "subsidy",
+      "subsidiya",
+      "Subsidies are the reason why solar became cheap.",
+      "Subsidiyalar — quyosh energiyasi arzonlashishining sababi.",
+      "ˈsəbsɪdi"
+     ],
+     [
+      "investment (energy)",
+      "sarmoya",
+      "Investment is what a country whose grid is old needs.",
+      "Sarmoya — tarmog'i eski mamlakatga kerak narsa.",
+      "ˌɪnˈvɛstmənt (ˈɛnərʤi)"
+     ],
+     [
+      "infrastructure (energy)",
+      "infratuzilma",
+      "Infrastructure is the network whose age decides reliability.",
+      "Infratuzilma — yoshi ishonchlilikni belgilaydigan tizim.",
+      "ˌɪnfrəˈstrəkʧər (ˈɛnərʤi)"
+     ],
+     [
+      "blackout",
+      "elektr uzilishi",
+      "A blackout is a time when the whole city is dark.",
+      "Elektr uzilishi — butun shahar qorong'i bo'ladigan vaqt.",
+      "ˈblæˌkaʊt"
+     ],
+     [
+      "reliable",
+      "ishonchli",
+      "A grid whose sources are mixed is more reliable.",
+      "Manbalari aralash bo'lgan tarmoq ishonchliroq.",
+      "rɪˈlaɪəbəl"
+     ],
+     [
+      "sustainable (energy)",
+      "barqaror",
+      "Sustainable energy is energy whose use doesn't harm the future.",
+      "Barqaror energiya — ishlatilishi kelajakka zarar bermaydigan energiya.",
+      "səˈsteɪnəbəl (ˈɛnərʤi)"
+     ],
+     [
+      "capacity",
+      "quvvat (sig'im)",
+      "Capacity is the number whose growth shows progress.",
+      "Quvvat — o'sishi taraqqiyotni ko'rsatadigan raqam.",
+      "kəˈpæsɪti"
+     ],
+     [
+      "laboratory (energy)",
+      "laboratoriya",
+      "Tesla's laboratory was the place where lightning was made indoors.",
+      "Tesla laboratoriyasi — chaqmoq ichkarida yaratilgan joy.",
+      "ˈlæbrəˌtɔri (ˈɛnərʤi)"
+     ],
+     [
+      "visionary (energy)",
+      "uzoqni ko'ruvchi",
+      "Tesla was a visionary whose ideas we still build.",
+      "Tesla — g'oyalarini hali ham amalga oshirayotgan uzoqni ko'ruvchi edi.",
+      "ˈvɪʒəˌnɛri (ˈɛnərʤi)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "whose / why / when",
+     "type": "gap",
+     "instr": "Bo'sh joyga mos olmosh",
+     "items": [
+      "Tesla is the inventor ___ system lights our homes.",
+      "1884 was the year ___ he arrived in America.",
+      "That is the reason ___ he died poor.",
+      "A country ___ energy is renewable pollutes less.",
+      "Night is the time ___ solar panels stop.",
+      "Price is the reason ___ coal is still used.",
+      "The engineer ___ idea won the prize is from Tashkent.",
+      "Do you remember the day ___ the lights went out?"
+     ],
+     "answers": [
+      "whose",
+      "when",
+      "why",
+      "whose",
+      "when",
+      "why",
+      "whose",
+      "when"
+     ]
+    },
+    {
+     "title": "Ikki gapni birlashtiring",
+     "type": "rewrite",
+     "instr": "whose / why / when bilan",
+     "items": [
+      "Tesla was a scientist. His ideas were too early.",
+      "I remember the day. The blackout happened then.",
+      "Coal is cheap. That's the reason people use it.",
+      "Iceland is a country. Its heating is geothermal.",
+      "2020 was the year. EVs became popular then."
+     ],
+     "answers": [
+      "Tesla was a scientist whose ideas were too early.",
+      "I remember the day when the blackout happened.",
+      "That's the reason why people use coal.",
+      "Iceland is a country whose heating is geothermal.",
+      "2020 was the year when EVs became popular."
+     ]
+    },
+    {
+     "title": "7 relative so'z",
+     "type": "sort",
+     "instr": "Har gapga mos so'z: who / which / that / where / whose / why / when",
+     "items": [
+      "The engineer ___ built the turbine is 30.",
+      "The turbine ___ stands on the hill is new.",
+      "The valley ___ the wind farm is built is windy.",
+      "The company ___ panels are cheapest is Chinese.",
+      "Midday is the time ___ panels work best.",
+      "Cost is the reason ___ people choose gas."
+     ],
+     "answers": [
+      "who",
+      "which / that",
+      "where",
+      "whose",
+      "when",
+      "why"
+     ]
+    },
+    {
+     "title": "Energiya va men",
+     "type": "speaking",
+     "instr": "Juftlikda: uyingizdagi energiya haqida 6 gap — 2 ta whose, 2 ta why, 2 ta when",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "We live in a house whose roof has no solar panels yet.",
+      "Winter is the time when our gas bill is highest.",
+      "Price is the reason why we don't have an electric car.",
+      "My uncle, whose farm is off-grid, uses solar power.",
+      "Evening is the time when the lights sometimes go out.",
+      "That's the reason why I want to study energy engineering."
+     ]
+    },
+    {
+     "title": "Energiya lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "energy from the sun, wind or water that never ends",
+      "a device on a roof that makes electricity from sunlight",
+      "the network of wires that carries electricity",
+      "coal, oil and gas",
+      "keeping electricity for later in batteries",
+      "using less energy for the same result"
+     ],
+     "answers": [
+      "renewable energy",
+      "solar panel",
+      "grid",
+      "fossil fuels",
+      "storage",
+      "energy efficiency"
+     ],
+     "box": [
+      "renewable energy",
+      "solar panel",
+      "grid",
+      "fossil fuels",
+      "storage",
+      "energy efficiency"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "The man who's car was stolen…",
+      "That is the reason because I left.",
+      "The day where we met…",
+      "The man whose he lives here…",
+      "I remember the day when we first met on it."
+     ],
+     "answers": [
+      "The man whose car was stolen…",
+      "That is the reason why I left.",
+      "The day when we met…",
+      "The man who lives here…",
+      "I remember the day when we first met."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 17 jadvalini 3 marta; RENEWABLE ENERGY 52 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 111–120",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Writing 8",
+     "type": "write",
+     "instr": "\"Studying abroad: benefits and challenges\" — 200+ so'z; kamida 6 relative clause, shu jumladan whose, why, when",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Mashinasi o'g'irlangan odam politsiyaga qo'ng'iroq qildi.",
+      "Bu — mening erta ketganimning sababi.",
+      "Biz birinchi uchrashgan kunni eslayman.",
+      "Tesla — tizimi uylarga elektr yetkazadigan ixtirochi.",
+      "Tush — quyosh panellari eng yaxshi ishlaydigan vaqt."
+     ],
+     "answers": [
+      "The man whose car was stolen called the police.",
+      "That is the reason why I left early.",
+      "I remember the day when we first met.",
+      "Tesla is the inventor whose system brings electricity to our homes.",
+      "Midday is the time when solar panels work best."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "RENEWABLE ENERGY CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "7 relative so'z + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — E-commerce",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali 15–17, 7 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Renewable energy og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Nikola Tesla — the inventor whose ideas were a century early",
+    "text": [
+     "Nikola Tesla was born in 1856 in a small village in today's Croatia, in a family whose father was a priest. As a student he could see machines in his head and test them without building them. In 1884 he arrived in New York with four cents in his pocket and a letter for Thomas Edison, whose company used direct current (DC). Tesla believed in alternating current (AC), a system whose electricity could travel hundreds of kilometres. The two men argued, and Tesla left.",
+     "1888 was the year when he sold his AC patents to George Westinghouse, and 1893 was the year when AC lit the Chicago World's Fair. Soon after, Tesla's system was used to send electricity from Niagara Falls to the city of Buffalo — the moment when the modern grid was born. Today almost every wire in the world carries the current whose design he made.",
+     "Tesla had hundreds of ideas: the electric motor, radio, remote control, neon lights and wireless electricity. In his laboratory he produced lightning indoors. But he was a scientist whose interest was ideas, not money. He tore up a contract that would have made him a billionaire, because he didn't want Westinghouse to go bankrupt. That is the reason why he died in 1943 in a hotel room, alone and poor.",
+     "His name is now on the unit of magnetic field and on the electric-car company whose founder calls him the greatest engineer ever. Renewable energy — solar, wind, hydro — all of it travels on Tesla's system."
+    ],
+    "glossary": [
+     "priest — ruhoniy",
+     "direct / alternating current — o'zgarmas / o'zgaruvchan tok",
+     "argue — bahslashmoq",
+     "patent — patent",
+     "fair — ko'rgazma",
+     "grid — tarmoq",
+     "remote control — masofadan boshqarish",
+     "tear up — yirtib tashlamoq",
+     "contract — shartnoma",
+     "go bankrupt — bankrot bo'lmoq",
+     "unit — birlik"
+    ],
+    "tasks": [
+     {
+      "title": "whose / when / why toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "whose 1",
+       "whose 2",
+       "whose 3",
+       "when 1",
+       "when 2",
+       "when 3",
+       "whose 4",
+       "why"
+      ],
+      "answers": [
+       "A family whose father was a priest.",
+       "Thomas Edison, whose company used direct current.",
+       "A system whose electricity could travel hundreds of kilometres.",
+       "1888 was the year when he sold his AC patents.",
+       "1893 was the year when AC lit the Chicago World's Fair.",
+       "The moment when the modern grid was born.",
+       "A scientist whose interest was ideas, not money.",
+       "That is the reason why he died in 1943 … alone and poor."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Tesla and Edison agreed about electricity.",
+       "He sold his patents to Westinghouse in 1888.",
+       "He became a billionaire.",
+       "A car company is named after him."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Energiya lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta energiya so'zi; Tesla nega kambag'al o'ldi (1 gap)",
+      "items": [
+       "words",
+       "why"
+      ],
+      "answers": [
+       "direct current, alternating current, electricity, grid, electric motor, wireless, renewable energy, solar, wind, hydro",
+       "Because he cared about ideas, not money, and tore up a contract worth billions."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 111–120 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 18,
+   "title": "Subject Clauses",
+   "grammar_topic": "EGA ERGASH GAPLAR (What he said is true / Whoever comes first wins / That she passed is surprising)",
+   "vocab_topic": "Financial planning (moliyaviy rejalashtirish)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 3.0: Lesson 18 – Subject clauses (that, how, whoever, whatever, whether, what) (6 qatorli jadval); FINANCIAL PLANNING (61 so'z); Reading — Warren Buffett (Jony Academy matni); kitob Topic 121–130 uyga.",
+   "objectives": [
+    "Gapni ega sifatida ishlatish: What / How / Whether / That / Whoever / Whatever + gap + birlik fe'l.",
+    "\"It is … that …\" (og'zaki) va \"That … is …\" (rasmiy) almashinuvi.",
+    "whoever / whatever (kim / nima bo'lsa ham) bilan umumiy egalar.",
+    "Moliyaviy rejalashtirish CORE 20 bilan byudjet, jamg'arma va sarmoya haqida gapirish (Buffett qoidalari)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Financial planning (moliyaviy rejalashtirish) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"What Buffett says is important. How he invests is simple. Whether you save or not is your choice.\" — savol: bu gaplarning egasi qayer? (butun bir gap!). Fe'l — birlik."
+    ],
+    [
+     8,
+     "Kahoot — Relative clauses: whose, why, when",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Relative clauses: whose, why, when lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 6 qator: HOW + gap (qanday qilib …), WHOEVER + gap (kim bo'lsa ham), WHATEVER + gap (nima bo'lsa ham), WHAT + gap (nima ekanligi), WHETHER + gap (…mi yoki yo'qmi), THAT + gap (…ligi) — hammasi EGA vazifasida, + BIRLIK fe'l. Rasmiy uslub; og'zakida \"It is surprising that…\" bilan almashtiriladi."
+    ],
+    [
+     12,
+     "Financial planning (moliyaviy rejalashtirish) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Ega ergash gap = butun gap egа o'rnida: \"[What he said] is true.\" Fe'l — BIRLIK (is).",
+     "WHAT — nima ekanligi: \"What matters is time.\" HOW — qanday qilib: \"How he solved it is amazing.\"",
+     "WHETHER — ikki imkoniyat: \"Whether she comes is unknown.\" (if — ega bo'la olmaydi!). THAT — fakt: \"That she passed the exam is surprising.\" (= It is surprising that she passed.)",
+     "WHOEVER / WHATEVER — kim/nima bo'lsa ham: \"Whoever arrives first will get a prize.\" / \"Whatever happens is your responsibility.\"",
+     "Ega ergash gap ichida so'z tartibi — gapdek (ega + fe'l), savol tartibi emas: \"What he does\" (what does he — xato)."
+    ],
+    "formulas": [
+     [
+      "How",
+      "How + ega + fe'l + birlik fe'l",
+      "How he solved the problem is amazing.",
+      "U muammoni qanday hal qilgani hayratlanarli."
+     ],
+     [
+      "Whoever",
+      "Whoever + fe'l + birlik fe'l",
+      "Whoever arrives first will get a prize.",
+      "Kim birinchi kelsa, mukofot oladi."
+     ],
+     [
+      "Whatever",
+      "Whatever + fe'l + birlik fe'l",
+      "Whatever happens is your responsibility.",
+      "Nima bo'lishidan qat'i nazar, bu sening mas'uliyating."
+     ],
+     [
+      "What",
+      "What + ega + fe'l + birlik fe'l",
+      "What he said is true.",
+      "U aytgan narsa to'g'ri."
+     ],
+     [
+      "Whether",
+      "Whether + ega + fe'l + birlik fe'l",
+      "Whether she comes is still unknown.",
+      "U keladimi-yo'qmi, hali noma'lum."
+     ],
+     [
+      "That",
+      "That + ega + fe'l + birlik fe'l (= It is … that …)",
+      "That she passed the exam is surprising. = It is surprising that she passed.",
+      "U imtihondan o'tgani ajablanarli."
+     ]
+    ],
+    "presentation": [
+     [
+      "What is the first rule of saving?",
+      "What you spend must be less than what you earn."
+     ],
+     [
+      "How did Buffett become rich?",
+      "How he became rich is simple: he bought good companies and waited."
+     ],
+     [
+      "Is it clear whether crypto is a good investment?",
+      "Whether crypto is a good investment is still unknown."
+     ],
+     [
+      "Who gets the bonus?",
+      "Whoever saves 20% of their salary gets the bonus."
+     ],
+     [
+      "What does he say about debt?",
+      "What he says is that debt is the enemy of freedom."
+     ],
+     [
+      "Is it surprising that he still lives in his old house?",
+      "That he still lives in his 1958 house is surprising to everyone."
+     ],
+     [
+      "What matters most in a budget?",
+      "What matters most is the difference between income and expenses."
+     ],
+     [
+      "Whatever you invest in, what is the rule?",
+      "Whatever you invest in must be something you understand."
+     ],
+     [
+      "How do you know if a plan works?",
+      "Whether a plan works depends on discipline."
+     ],
+     [
+      "What did you learn from this lesson?",
+      "What I learned is that time is the best investor."
+     ]
+    ],
+    "notes": [
+     "Ega ergash gap — rasmiy; og'zakida \"It is + sifat + that…\": \"It is surprising that…\"",
+     "if EGA bo'la olmaydi: \"Whether he comes is unknown\" (If he comes is… — xato).",
+     "what = \"the thing that\": \"What I need is a budget\" = \"The thing that I need is a budget\".",
+     "Finance lug'ati: budget, income/expense, savings, investment, interest, debt/loan, asset/liability, emergency fund, compound interest."
+    ],
+    "mistakes": [
+     [
+      "What does he say is true.",
+      "What he says is true.",
+      "Ega ergash gapda savol tartibi yo'q."
+     ],
+     [
+      "That she passed are surprising.",
+      "That she passed is surprising.",
+      "Birlik fe'l."
+     ],
+     [
+      "If she comes is unknown.",
+      "Whether she comes is unknown.",
+      "Ega → whether."
+     ],
+     [
+      "Whoever arrive first wins.",
+      "Whoever arrives first wins.",
+      "Birlik fe'l (-s)."
+     ],
+     [
+      "What I need it is a budget.",
+      "What I need is a budget.",
+      "\"it\" ortiqcha."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — moliyaviy rejalashtirish asoslari (budget, income, savings…); STRONG — kredit, sug'urta, soliq; SUPER — investitsiya atamalari (portfolio, dividend, compound interest).",
+     "Har so'zga ega ergash gap: \"What you save today is what you spend tomorrow.\" / \"Whether you have insurance matters.\""
+    ],
+    "core": [
+     [
+      "financial planning",
+      "moliyaviy rejalashtirish",
+      "What financial planning gives you is peace.",
+      "Moliyaviy rejalashtirish beradigan narsa — xotirjamlik.",
+      "ˌfaɪˈnænʃəl ˈplænɪŋ"
+     ],
+     [
+      "budget (finance)",
+      "byudjet",
+      "Whether you keep a budget decides your future.",
+      "Byudjet yuritasanmi-yo'qmi — kelajagingni hal qiladi.",
+      "ˈbəʤɪt (ˈfaɪˌnæns)"
+     ],
+     [
+      "income (finance)",
+      "daromad",
+      "What you do with your income matters more than its size.",
+      "Daromading bilan nima qilishing uning hajmidan muhimroq.",
+      "ˈɪnˌkəm (ˈfaɪˌnæns)"
+     ],
+     [
+      "expense",
+      "xarajat",
+      "That expenses grow with income is well known.",
+      "Xarajatlar daromad bilan o'sishi hammaga ma'lum.",
+      "ɪkˈspɛns"
+     ],
+     [
+      "salary / wage",
+      "oylik / soatbay ish haqi",
+      "Whatever your salary is, save part of it.",
+      "Oyliging qancha bo'lishidan qat'i nazar, bir qismini jamg'ar.",
+      "ˈsæləri  weɪʤ"
+     ],
+     [
+      "savings (finance)",
+      "jamg'arma",
+      "What savings give you is choice.",
+      "Jamg'arma beradigan narsa — tanlov.",
+      "ˈseɪvɪŋz (ˈfaɪˌnæns)"
+     ],
+     [
+      "save (finance)",
+      "jamg'armoq",
+      "How much you save is more important than how much you earn.",
+      "Qancha jamg'arishing qancha topishingdan muhimroq.",
+      "seɪv (ˈfaɪˌnæns)"
+     ],
+     [
+      "investment (finance)",
+      "sarmoya",
+      "What Buffett calls the best investment is yourself.",
+      "Buffett eng yaxshi sarmoya deb ataydigan narsa — o'zing.",
+      "ˌɪnˈvɛstmənt (ˈfaɪˌnæns)"
+     ],
+     [
+      "invest (finance)",
+      "sarmoya kiritmoq",
+      "Whatever you invest in must be understandable.",
+      "Nimaga sarmoya kiritsang ham, u tushunarli bo'lishi kerak.",
+      "ˌɪnˈvɛst (ˈfaɪˌnæns)"
+     ],
+     [
+      "return on investment (ROI)",
+      "sarmoya daromadi",
+      "What a 10% return means is doubling in seven years.",
+      "10% daromad degani — yetti yilda ikki baravar.",
+      "rɪˈtərn ɔn ˌɪnˈvɛstmənt (rɔɪ)"
+     ],
+     [
+      "asset / liability",
+      "aktiv / majburiyat",
+      "What makes you rich is assets, not liabilities.",
+      "Boy qiladigan narsa — majburiyatlar emas, aktivlar.",
+      "ˈæˌsɛt  ˌlaɪəˈbɪlɪti"
+     ],
+     [
+      "debt (finance)",
+      "qarz",
+      "That debt destroys plans is Buffett's warning.",
+      "Qarz rejalarni buzishi — Buffettning ogohlantirishi.",
+      "dɛt (ˈfaɪˌnæns)"
+     ],
+     [
+      "loan (finance)",
+      "kredit",
+      "Whether a loan is good depends on what it buys.",
+      "Kredit yaxshimi — u nima sotib olishiga bog'liq.",
+      "loʊn (ˈfaɪˌnæns)"
+     ],
+     [
+      "interest / interest rate",
+      "foiz / foiz stavkasi",
+      "How interest works is the first lesson in finance.",
+      "Foiz qanday ishlashi — moliyaning birinchi darsi.",
+      "ˈɪntəˌrɛst  ˈɪntəˌrɛst reɪt"
+     ],
+     [
+      "credit score (finance)",
+      "kredit reytingi",
+      "Whether you pay on time builds your credit score.",
+      "Vaqtida to'laysanmi — kredit reytingingni shakllantiradi.",
+      "ˈkrɛdɪt skɔr (ˈfaɪˌnæns)"
+     ],
+     [
+      "bank account (finance)",
+      "bank hisobi",
+      "What you keep in a bank account should cover three months.",
+      "Bank hisobida saqlagan pul uch oyni qoplashi kerak.",
+      "bæŋk əˈkaʊnt (ˈfaɪˌnæns)"
+     ],
+     [
+      "cash flow (finance)",
+      "pul oqimi",
+      "What cash flow shows is money in and money out.",
+      "Pul oqimi ko'rsatadigan narsa — kirim va chiqim.",
+      "kæʃ floʊ (ˈfaɪˌnæns)"
+     ],
+     [
+      "financial goal",
+      "moliyaviy maqsad",
+      "Whatever your financial goal is, write it down.",
+      "Moliyaviy maqsading nima bo'lishidan qat'i nazar, uni yozib qo'y.",
+      "ˌfaɪˈnænʃəl goʊl"
+     ],
+     [
+      "short-term / long-term",
+      "qisqa / uzoq muddatli",
+      "That long-term plans win is Buffett's whole philosophy.",
+      "Uzoq muddatli rejalar yutishi — Buffettning butun falsafasi.",
+      "ˌʃɔrtˈtərm  ˈlɔŋˈtərm"
+     ],
+     [
+      "emergency fund",
+      "favqulodda jamg'arma",
+      "Whether you have an emergency fund shows if you are ready.",
+      "Favqulodda jamg'armang bormi — tayyorligingni ko'rsatadi.",
+      "ˈimərʤənsi fənd"
+     ]
+    ],
+    "strong": [
+     [
+      "budgeting",
+      "byudjet tuzish",
+      "How budgeting works is simple: plan, then track.",
+      "Byudjet tuzish oddiy ishlaydi: rejalashtir, keyin kuzat.",
+      "ˈbəʤɪtɪŋ"
+     ],
+     [
+      "net worth (finance)",
+      "sof boylik",
+      "What net worth means is assets minus debts.",
+      "Sof boylik degani — aktivlar minus qarzlar.",
+      "nɛt wərθ (ˈfaɪˌnæns)"
+     ],
+     [
+      "wealth",
+      "boylik",
+      "That wealth takes decades is normal.",
+      "Boylik o'n yillar olishi — oddiy hol.",
+      "wɛlθ"
+     ],
+     [
+      "retirement / pension",
+      "nafaqa / pensiya",
+      "Whether your pension is enough depends on today's savings.",
+      "Pensiyang yetadimi — bugungi jamg'armaga bog'liq.",
+      "rɪˈtaɪərmənt  ˈpɛnʃən"
+     ],
+     [
+      "insurance (finance)",
+      "sug'urta",
+      "Whoever has insurance sleeps better.",
+      "Sug'urtasi bor odam yaxshiroq uxlaydi.",
+      "ˌɪnˈʃʊrəns (ˈfaɪˌnæns)"
+     ],
+     [
+      "health / life insurance",
+      "tibbiy / hayot sug'urtasi",
+      "That life insurance protects a family is clear.",
+      "Hayot sug'urtasi oilani himoya qilishi aniq.",
+      "hɛlθ  laɪf ˌɪnˈʃʊrəns"
+     ],
+     [
+      "tax / taxation",
+      "soliq / soliqqa tortish",
+      "What you pay in tax depends on income.",
+      "Soliqqa qancha to'lashing daromadga bog'liq.",
+      "tæks  tækˈseɪʃən"
+     ],
+     [
+      "income tax",
+      "daromad solig'i",
+      "Whether income tax is fair is a big debate.",
+      "Daromad solig'i adolatlimi — katta bahs.",
+      "ˈɪnˌkəm tæks"
+     ],
+     [
+      "deduction",
+      "(soliqdan) chegirma",
+      "What a deduction does is lower your tax.",
+      "Chegirma qiladigan narsa — soliqni kamaytirish.",
+      "dɪˈdəkʃən"
+     ],
+     [
+      "diversification",
+      "diversifikatsiya",
+      "Whatever happens to one stock, diversification protects you.",
+      "Bitta aksiyaga nima bo'lsa ham, diversifikatsiya seni himoya qiladi.",
+      "dɪˌvərsəfəˈkeɪʃən"
+     ],
+     [
+      "portfolio",
+      "investitsiya portfeli",
+      "How a portfolio is built decides its risk.",
+      "Portfel qanday qurilgani uning xavfini belgilaydi.",
+      "pɔrtˈfoʊliˌoʊ"
+     ],
+     [
+      "stock / bond",
+      "aksiya / obligatsiya",
+      "Whether stocks or bonds are better depends on your age.",
+      "Aksiya yoki obligatsiya yaxshiroqmi — yoshingga bog'liq.",
+      "stɑk  bɑnd"
+     ],
+     [
+      "mutual fund (finance)",
+      "investitsiya fondi",
+      "What a mutual fund does is invest for many people at once.",
+      "Investitsiya fondi qiladigan narsa — ko'p odam uchun birdaniga sarmoya kiritish.",
+      "mˈjuʧuəl fənd (ˈfaɪˌnæns)"
+     ],
+     [
+      "dividend",
+      "dividend",
+      "That dividends are paid twice a year is common.",
+      "Dividendlar yiliga ikki marta to'lanishi keng tarqalgan.",
+      "ˈdɪvɪˌdɛnd"
+     ],
+     [
+      "profit / loss (finance)",
+      "foyda / zarar",
+      "Whether you make a profit or a loss, learn from it.",
+      "Foyda qilasanmi, zarar qilasanmi — undan saboq ol.",
+      "ˈprɑfɪt  lɔs (ˈfaɪˌnæns)"
+     ],
+     [
+      "bankruptcy (finance)",
+      "bankrotlik",
+      "What causes bankruptcy is usually debt.",
+      "Bankrotlikka sabab bo'ladigan narsa odatda qarz.",
+      "ˈbæŋkrəptsi (ˈfaɪˌnæns)"
+     ],
+     [
+      "financial advisor",
+      "moliyaviy maslahatchi",
+      "Whoever your advisor is, understand the plan yourself.",
+      "Maslahatching kim bo'lishidan qat'i nazar, rejani o'zing tushun.",
+      "ˌfaɪˈnænʃəl ædˈvaɪzər"
+     ],
+     [
+      "accountant",
+      "buxgalter",
+      "What an accountant does is keep the numbers honest.",
+      "Buxgalter qiladigan narsa — raqamlarni halol saqlash.",
+      "əˈkaʊntənt"
+     ],
+     [
+      "broker",
+      "broker",
+      "Whether you need a broker depends on the market.",
+      "Broker kerakmi — bozorga bog'liq.",
+      "ˈbroʊkər"
+     ],
+     [
+      "compound interest",
+      "murakkab foiz",
+      "How compound interest works is Buffett's secret.",
+      "Murakkab foiz qanday ishlashi — Buffettning siri.",
+      "ˈkɑmpaʊnd ˈɪntəˌrɛst"
+     ]
+    ],
+    "super": [
+     [
+      "passive income",
+      "passiv daromad",
+      "What passive income means is money that works while you sleep.",
+      "Passiv daromad degani — sen uxlaganda ishlaydigan pul.",
+      "ˈpæsɪv ˈɪnˌkəm"
+     ],
+     [
+      "fixed income",
+      "barqaror daromad",
+      "Whether fixed income is enough depends on inflation.",
+      "Barqaror daromad yetadimi — inflyatsiyaga bog'liq.",
+      "fɪkst ˈɪnˌkəm"
+     ],
+     [
+      "estate / will",
+      "mol-mulk / vasiyatnoma",
+      "That Buffett will give away 99% of his estate is known.",
+      "Buffett mol-mulkining 99% ini xayriya qilishi ma'lum.",
+      "ɛˈsteɪt  wɪl"
+     ],
+     [
+      "bill / statement",
+      "to'lov hisobi / hisob ko'chirmasi",
+      "What the statement shows is every expense.",
+      "Ko'chirma ko'rsatadigan narsa — har bir xarajat.",
+      "bɪl  ˈsteɪtmənt"
+     ],
+     [
+      "overdraft",
+      "hisobdan ortiqcha sarf",
+      "Whoever uses an overdraft pays high interest.",
+      "Overdraft ishlatgan odam yuqori foiz to'laydi.",
+      "ˈoʊvərˌdræft"
+     ],
+     [
+      "deposit / withdrawal (finance)",
+      "omonat / pul yechish",
+      "How often you make withdrawals shows your discipline.",
+      "Qanchalik tez-tez pul yechishing intizomingni ko'rsatadi.",
+      "dɪˈpɑzət  wɪθˈdrɔəl (ˈfaɪˌnæns)"
+     ],
+     [
+      "transfer (finance)",
+      "o'tkazma",
+      "Whether the transfer arrived is not clear yet.",
+      "O'tkazma yetib keldimi — hali aniq emas.",
+      "ˈtrænsfər (ˈfaɪˌnæns)"
+     ],
+     [
+      "inflation (finance)",
+      "inflyatsiya",
+      "What inflation does is eat your savings.",
+      "Inflyatsiya qiladigan narsa — jamg'armangni yeyish.",
+      "ˌɪnˈfleɪʃən (ˈfaɪˌnæns)"
+     ],
+     [
+      "shareholder (finance)",
+      "aksiyador",
+      "Whatever the shareholders decide is final.",
+      "Aksiyadorlar nima qaror qilsa — yakuniy.",
+      "ˈʃɛˌrhoʊldər (ˈfaɪˌnæns)"
+     ],
+     [
+      "annual letter",
+      "yillik xat",
+      "What Buffett writes in his annual letter is read by millions.",
+      "Buffett yillik xatida yozgan narsani millionlar o'qiydi.",
+      "ˈænjuəl ˈlɛtər"
+     ],
+     [
+      "value investing",
+      "qiymatga asoslangan investitsiya",
+      "How value investing works is buying good companies cheaply.",
+      "Qiymat investitsiyasi qanday ishlaydi — yaxshi kompaniyalarni arzon sotib olish.",
+      "ˈvælju ˌɪnˈvɛstɪŋ"
+     ],
+     [
+      "patience (finance)",
+      "sabr",
+      "That patience beats intelligence in investing is Buffett's rule.",
+      "Investitsiyada sabr aqldan ustunligi — Buffett qoidasi.",
+      "ˈpeɪʃəns (ˈfaɪˌnæns)"
+     ],
+     [
+      "frugal",
+      "tejamkor",
+      "That a billionaire is frugal surprises people.",
+      "Milliarder tejamkor bo'lishi odamlarni hayratga soladi.",
+      "ˈfrugəl"
+     ],
+     [
+      "philanthropy",
+      "xayriya (yirik)",
+      "What philanthropy means for Buffett is giving almost everything.",
+      "Buffett uchun xayriya degani — deyarli hamma narsani berish.",
+      "fɪˈlænθrəpi"
+     ],
+     [
+      "pledge",
+      "va'da (rasmiy)",
+      "Whoever signs the Giving Pledge promises half their wealth.",
+      "Giving Pledge'ni imzolagan odam boyligining yarmini va'da qiladi.",
+      "plɛʤ"
+     ],
+     [
+      "holding company",
+      "xolding kompaniya",
+      "What Berkshire Hathaway is is a holding company.",
+      "Berkshire Hathaway nima — bu xolding kompaniya.",
+      "ˈhoʊldɪŋ ˈkəmpəˌni"
+     ],
+     [
+      "newspaper round",
+      "gazeta tarqatish (ish)",
+      "That Buffett started with a newspaper round is a famous story.",
+      "Buffett gazeta tarqatishdan boshlagani — mashhur hikoya.",
+      "ˈnuzˌpeɪpər raʊnd"
+     ],
+     [
+      "rule of thumb",
+      "amaliy qoida",
+      "What a rule of thumb gives you is a quick answer.",
+      "Amaliy qoida beradigan narsa — tez javob.",
+      "rul əv θəm"
+     ],
+     [
+      "live within your means",
+      "imkoniyatiga yarasha yashamoq",
+      "Whether you live within your means is the whole game.",
+      "Imkoniyatingga yarasha yashaysanmi — butun o'yin shu.",
+      "lɪv wɪˈθɪn jʊr minz"
+     ],
+     [
+      "pay yourself first",
+      "avval o'zingga to'la (jamg'ar)",
+      "What \"pay yourself first\" means is: save before you spend.",
+      "\"Avval o'zingga to'la\" degani — sarflashdan oldin jamg'ar.",
+      "peɪ ˈjɔrsɛlf fərst"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "Ega ergash gap tuzing",
+     "type": "rewrite",
+     "instr": "Gapni ega ergash gap bilan qayta yozing",
+     "items": [
+      "It is surprising that she passed.",
+      "It is unknown whether he will invest.",
+      "The thing that he said is true.",
+      "The way he saves money is amazing.",
+      "Anyone who arrives first gets a prize.",
+      "Anything that happens is your responsibility."
+     ],
+     "answers": [
+      "That she passed is surprising.",
+      "Whether he will invest is unknown.",
+      "What he said is true.",
+      "How he saves money is amazing.",
+      "Whoever arrives first gets a prize.",
+      "Whatever happens is your responsibility."
+     ]
+    },
+    {
+     "title": "So'zni tanlang",
+     "type": "gap",
+     "instr": "what / how / whether / that / whoever / whatever",
+     "items": [
+      "___ you spend must be less than ___ you earn.",
+      "___ he became rich is simple.",
+      "___ crypto is safe is unknown.",
+      "___ he still lives in an old house is surprising.",
+      "___ saves 20% gets the bonus.",
+      "___ you invest in must be understandable."
+     ],
+     "answers": [
+      "What / what",
+      "How",
+      "Whether",
+      "That",
+      "Whoever",
+      "Whatever"
+     ]
+    },
+    {
+     "title": "Fe'l va tartib",
+     "type": "correct",
+     "instr": "Xatoni tuzating",
+     "items": [
+      "What does he say is true.",
+      "That she passed are surprising.",
+      "If she comes is unknown.",
+      "Whoever arrive first wins.",
+      "What I need it is a budget."
+     ],
+     "answers": [
+      "What he says is true.",
+      "That she passed is surprising.",
+      "Whether she comes is unknown.",
+      "Whoever arrives first wins.",
+      "What I need is a budget."
+     ]
+    },
+    {
+     "title": "Moliyaviy qoidalarim",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 qoida — har biri ega ergash gap bilan (what / how / whether / that / whoever / whatever)",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "What I earn goes into three parts: spend, save, give.",
+      "How much I save is 20% of my pocket money.",
+      "Whether I buy something depends on a 24-hour rule.",
+      "That debt is dangerous is my first rule.",
+      "Whoever borrows from me must return it in a month.",
+      "Whatever I invest in must be something I understand."
+     ]
+    },
+    {
+     "title": "Moliya lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "a plan of income and expenses",
+      "money kept for unexpected problems",
+      "interest earned on interest",
+      "spreading money across many investments",
+      "money you owe",
+      "what you own minus what you owe"
+     ],
+     "answers": [
+      "budget",
+      "emergency fund",
+      "compound interest",
+      "diversification",
+      "debt",
+      "net worth"
+     ],
+     "box": [
+      "budget",
+      "emergency fund",
+      "compound interest",
+      "diversification",
+      "debt",
+      "net worth"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "What does he say is true.",
+      "That she passed are surprising.",
+      "If she comes is unknown.",
+      "Whoever arrive first wins.",
+      "What I need it is a budget."
+     ],
+     "answers": [
+      "What he says is true.",
+      "That she passed is surprising.",
+      "Whether she comes is unknown.",
+      "Whoever arrives first wins.",
+      "What I need is a budget."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 18 jadvalini 3 marta; FINANCIAL PLANNING 61 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 121–130",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Mening byudjetim",
+     "type": "write",
+     "instr": "150 so'z: oylik byudjet rejasi (income, expenses, savings, goal); kamida 6 ega ergash gap",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U aytgan narsa to'g'ri.",
+      "U muammoni qanday hal qilgani hayratlanarli.",
+      "U keladimi-yo'qmi, hali noma'lum.",
+      "Kim birinchi kelsa, mukofot oladi.",
+      "Sarflashdan oldin jamg'ar."
+     ],
+     "answers": [
+      "What he said is true.",
+      "How he solved the problem is amazing.",
+      "Whether she comes is still unknown.",
+      "Whoever arrives first will get a prize.",
+      "Save before you spend. (Pay yourself first.)"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "FINANCIAL PLANNING CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "6 ega ergash gap turi + har biriga 1 gap, 2 daqiqa",
+     "answers": "2 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Renewable energy",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 6 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Financial planning og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Warren Buffett — what he does with money is simple",
+    "text": [
+     "Warren Buffett was born in 1930 in Omaha, a small city in the middle of the USA. What he loved as a boy was numbers. At six he sold chewing gum door to door; at eleven he bought his first shares; at fourteen he had a newspaper round that earned more than his teachers. That a teenager could save 5,000 dollars in the 1940s was unusual — but Buffett was unusual.",
+     "How he became the most famous investor in history is surprisingly simple. He buys companies that he understands, that have honest managers and that will still exist in thirty years — and then he waits. Whether the market goes up or down next month does not interest him. \"Our favourite holding period,\" he says, \"is forever.\" What made him rich was not clever trading but compound interest and patience: 99% of his wealth came after his 50th birthday.",
+     "Whoever meets Buffett is shocked by how he lives. He still lives in the house he bought in 1958 for 31,500 dollars. He drives an old car, drinks five cans of cola a day and eats at McDonald's. What he spends on himself is tiny. What he gives away is enormous: he has pledged 99% of his fortune — more than 100 billion dollars — to charity.",
+     "Every year he writes a letter to his shareholders, and millions of ordinary people read it like a textbook. His rule for beginners is the shortest in finance: \"Rule number one: never lose money. Rule number two: never forget rule number one.\" Whatever you earn, he adds, spend less than that — and start early."
+    ],
+    "glossary": [
+     "chewing gum — saqich",
+     "door to door — eshikma-eshik",
+     "share — aksiya",
+     "newspaper round — gazeta tarqatish",
+     "holding period — ushlab turish muddati",
+     "compound interest — murakkab foiz",
+     "fortune — boylik",
+     "pledge — va'da bermoq",
+     "shareholder — aksiyador",
+     "enormous — ulkan"
+    ],
+    "tasks": [
+     {
+      "title": "Ega ergash gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "what 1",
+       "that",
+       "how",
+       "whether",
+       "what 2",
+       "whoever",
+       "what 3 / what 4",
+       "whatever"
+      ],
+      "answers": [
+       "What he loved as a boy was numbers.",
+       "That a teenager could save 5,000 dollars … was unusual.",
+       "How he became the most famous investor … is surprisingly simple.",
+       "Whether the market goes up or down … does not interest him.",
+       "What made him rich was … compound interest and patience.",
+       "Whoever meets Buffett is shocked by how he lives.",
+       "What he spends on himself is tiny. / What he gives away is enormous.",
+       "Whatever you earn, spend less than that."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Buffett bought his first shares at 14.",
+       "He likes to hold companies for a long time.",
+       "He lives in a new, expensive house.",
+       "He has promised 99% of his money to charity."
+      ],
+      "answers": [
+       "False (11)",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Moliya lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta moliya so'zi; Buffettning 1-qoidasi",
+      "items": [
+       "words",
+       "rule"
+      ],
+      "answers": [
+       "shares, investor, market, trading, compound interest, wealth, fortune, charity, shareholders",
+       "Never lose money — and never forget that rule."
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 121–130 — uyga (hafta davomida)."
+   }
+  },
+  {
+   "no": 19,
+   "title": "Object Clauses",
+   "grammar_topic": "TO'LDIRUVCHI ERGASH GAPLAR (She said that… / I don't know where… / I don't know if…)",
+   "vocab_topic": "Climate change (iqlim o'zgarishi)",
+   "duration": 120,
+   "test_after": "PROGRESS TEST 4 — 15–19-darslar (relative clauses who/which/where/whose/why/when, subject clauses, object clauses; crypto, e-commerce, renewable energy, financial planning, climate change; Writing 7–8)",
+   "book_ref": "Student's book IELTS 3.0: Lesson 19 – Object clauses (that, what, where, how) (7 qatorli jadval); CLIMATE CHANGE (51 so'z); Reading — Greta Thunberg (Jony Academy matni); kitob Topic 131–140 uyga.",
+   "objectives": [
+    "Fe'ldan keyin to'ldiruvchi ergash gap: say/think/know/explain/understand + that / wh- / whether / if + gap.",
+    "To'ldiruvchi ergash gapda so'z tartibi — gapdek; do/does/did yo'qoladi (17-dars, 2.0 bilan bog'lanadi).",
+    "18-dars (ega) va 19-dars (to'ldiruvchi) farqi: gap boshida — ega; fe'ldan keyin — to'ldiruvchi.",
+    "Iqlim o'zgarishi CORE 20 bilan sabab, oqibat va yechim haqida gapirish (IELTS Writing 2 mavzusi)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Climate change (iqlim o'zgarishi) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"Scientists say. The planet is warming.\" → \"Scientists say that the planet is warming.\" \"I don't know. Where does the ice go?\" → \"I don't know where the ice goes.\" O'quvchilar: to'ldiruvchi ergash gapda savol tartibi yo'qoladi!"
+    ],
+    [
+     8,
+     "Kahoot — Subject clauses",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Subject clauses lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 7 qator: THAT (aniq fikr: She said that she was tired), WH-so'zlar (I don't know where she lives), WHETHER / IF (…mi-yo'qmi: I don't know if she will come), WHOEVER (invite whoever you like), WHATEVER (do whatever you want), HOW (I can't explain how it works), WHY (I don't understand why she left). Hammasi fe'ldan KEYIN, gap tartibi to'g'ri (ega + fe'l)."
+    ],
+    [
+     12,
+     "Climate change (iqlim o'zgarishi) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "THAT — fikr/fakt: \"She said that she was tired.\" (that tushirsa bo'ladi: She said she was tired.)",
+     "WH-so'zlar — what/where/when/who/why/how: \"I don't know where she lives.\" (where + ega + fe'l — savol tartibi EMAS).",
+     "WHETHER / IF — ikki imkoniyat: \"I don't know if/whether she will come.\" (to'ldiruvchi bo'lganda if ham bo'ladi).",
+     "WHOEVER / WHATEVER: \"You can invite whoever you like.\" / \"You can do whatever you want.\"",
+     "Ega (18) vs to'ldiruvchi (19): \"What she said is true\" (ega) — \"I know what she said\" (to'ldiruvchi)."
+    ],
+    "formulas": [
+     [
+      "That",
+      "S + V + that + gap",
+      "She said that she was tired.",
+      "U charchaganini aytdi."
+     ],
+     [
+      "Wh-so'zlar",
+      "S + V + where/when/who/what + ega + fe'l",
+      "I don't know where she lives.",
+      "Men uning qayerda yashashini bilmayman."
+     ],
+     [
+      "Whether / if",
+      "S + V + whether/if + gap",
+      "I don't know if she will come.",
+      "U keladimi-yo'qmi, bilmayman."
+     ],
+     [
+      "Whoever / whatever",
+      "S + V + whoever/whatever + gap",
+      "You can invite whoever you like. / You can do whatever you want.",
+      "Xohlagan odamingni taklif qilishing mumkin. / Xohlagan narsangni qil."
+     ],
+     [
+      "How",
+      "S + V + how + gap",
+      "I can't explain how it works.",
+      "Bu qanday ishlashini tushuntira olmayman."
+     ],
+     [
+      "Why",
+      "S + V + why + gap",
+      "I don't understand why she left.",
+      "U nega ketganini tushunmayman."
+     ]
+    ],
+    "presentation": [
+     [
+      "What do scientists say about the climate?",
+      "They say that the planet has warmed by 1.2 degrees."
+     ],
+     [
+      "Do you know why the glaciers are melting?",
+      "I know why they are melting: greenhouse gases."
+     ],
+     [
+      "Can you explain how the greenhouse effect works?",
+      "I can explain how it works: gases keep the heat in."
+     ],
+     [
+      "Do you know whether the Aral Sea will come back?",
+      "Nobody knows if it will come back."
+     ],
+     [
+      "What did Greta say at the UN?",
+      "She said that leaders had stolen her childhood."
+     ],
+     [
+      "Do you understand what \"net zero\" means?",
+      "Yes, I understand what it means: no extra carbon."
+     ],
+     [
+      "Where does most carbon come from?",
+      "I've read that most of it comes from burning fossil fuels."
+     ],
+     [
+      "Can we choose what to do?",
+      "We can do whatever we want, but the climate will answer."
+     ],
+     [
+      "Who can join the school strike?",
+      "Whoever cares about the future can join."
+     ],
+     [
+      "Do you think that Uzbekistan is affected?",
+      "I think that the Aral Sea shows it clearly."
+     ]
+    ],
+    "notes": [
+     "that tushiriladi (og'zaki): \"I think (that) it's true\"; wh-/whether tushirilmaydi.",
+     "Reported speech: say + that + o'tgan zamon: \"She said that she was tired\" (is → was).",
+     "ask/wonder/know + if/whether; \"I wonder if…\" — muloyim savol.",
+     "Climate lug'ati: global warming, greenhouse gas, emission, carbon footprint, drought, flood, sea level, deforestation, sustainable, net zero."
+    ],
+    "mistakes": [
+     [
+      "I don't know where does she live.",
+      "I don't know where she lives.",
+      "Savol tartibi yo'q."
+     ],
+     [
+      "She said that she is tired. (o'tgan)",
+      "She said that she was tired.",
+      "Reported speech — zamon orqaga."
+     ],
+     [
+      "I don't know that she will come or not.",
+      "I don't know whether/if she will come.",
+      "Ikki imkoniyat → whether/if."
+     ],
+     [
+      "Can you explain how does it work?",
+      "Can you explain how it works?",
+      "does yo'qoladi."
+     ],
+     [
+      "I don't understand why did she leave.",
+      "I don't understand why she left.",
+      "did yo'qoladi, V2."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — iqlim o'zgarishining asosiy so'zlari (global warming, emission, drought…); STRONG — oqibat va tabiiy ofatlar; SUPER — yechim va siyosat (net zero, Paris Agreement).",
+     "Har so'zga to'ldiruvchi ergash gap: \"Scientists say that emissions must fall.\" / \"Nobody knows how fast the ice will melt.\""
+    ],
+    "core": [
+     [
+      "climate change",
+      "iqlim o'zgarishi",
+      "Scientists say that climate change is caused by humans.",
+      "Olimlar iqlim o'zgarishiga odamlar sabab bo'lganini aytadi.",
+      "ˈklaɪmɪt ʧeɪnʤ"
+     ],
+     [
+      "global warming",
+      "global isish",
+      "Everyone knows what global warming means.",
+      "Global isish nima ekanini hamma biladi.",
+      "ˈgloʊbəl ˈwɔrmɪŋ"
+     ],
+     [
+      "greenhouse effect",
+      "issiqxona effekti",
+      "Can you explain how the greenhouse effect works?",
+      "Issiqxona effekti qanday ishlashini tushuntira olasanmi?",
+      "ˈgrinˌhaʊs ˈifɛkt"
+     ],
+     [
+      "greenhouse gas",
+      "issiqxona gazi",
+      "We learned that CO2 is the main greenhouse gas.",
+      "CO2 asosiy issiqxona gazi ekanini o'rgandik.",
+      "ˈgrinˌhaʊs gæs"
+     ],
+     [
+      "carbon dioxide (CO2)",
+      "karbonat angidrid",
+      "Nobody knows exactly how much CO2 the oceans can absorb.",
+      "Okeanlar qancha CO2 yutishini hech kim aniq bilmaydi.",
+      ""
+     ],
+     [
+      "methane",
+      "metan",
+      "Farmers didn't know that cows produce methane.",
+      "Fermerlar sigirlar metan chiqarishini bilmasdi.",
+      "ˈmɛˌθeɪn"
+     ],
+     [
+      "emission",
+      "chiqindi (gaz)",
+      "The report says that emissions must fall by half.",
+      "Hisobotda chiqindilar yarmiga kamayishi kerakligi aytilgan.",
+      "ɪˈmɪʃən"
+     ],
+     [
+      "carbon footprint (climate)",
+      "uglerod izi",
+      "I don't know how big my carbon footprint is.",
+      "Uglerod izim qanchalik katta ekanini bilmayman.",
+      "ˈkɑrbən ˈfʊtˌprɪnt (ˈklaɪmɪt)"
+     ],
+     [
+      "pollution / air pollution",
+      "ifloslanish / havo ifloslanishi",
+      "Doctors say that air pollution kills millions.",
+      "Shifokorlar havo ifloslanishi millionlarni o'ldirishini aytadi.",
+      "pəˈluʃən  ɛr pəˈluʃən"
+     ],
+     [
+      "temperature (climate)",
+      "harorat",
+      "We know that the temperature has risen by 1.2 degrees.",
+      "Harorat 1,2 darajaga ko'tarilganini bilamiz.",
+      "ˈtɛmpərəʧər (ˈklaɪmɪt)"
+     ],
+     [
+      "heatwave (climate)",
+      "jazirama",
+      "Nobody can say when the next heatwave will come.",
+      "Keyingi jazirama qachon kelishini hech kim ayta olmaydi.",
+      ""
+     ],
+     [
+      "drought (climate)",
+      "qurg'oqchilik",
+      "Farmers ask whether the drought will end.",
+      "Fermerlar qurg'oqchilik tugaydimi deb so'raydi.",
+      "draʊt (ˈklaɪmɪt)"
+     ],
+     [
+      "flood (climate)",
+      "toshqin",
+      "I don't understand why floods are getting worse.",
+      "Toshqinlar nega yomonlashayotganini tushunmayman.",
+      "fləd (ˈklaɪmɪt)"
+     ],
+     [
+      "wildfire",
+      "o'rmon yong'ini",
+      "The news said that wildfires had burned a million hectares.",
+      "Yangiliklarda o'rmon yong'inlari million gektarni yoqqani aytildi.",
+      "ˈwaɪldˌfaɪər"
+     ],
+     [
+      "melting / glacier",
+      "erish / muzlik",
+      "Scientists explain how glaciers are melting faster.",
+      "Olimlar muzliklar qanday tezroq eriyotganini tushuntiradi.",
+      "ˈmɛltɪŋ  ˈgleɪʃər"
+     ],
+     [
+      "sea level",
+      "dengiz sathi",
+      "Nobody knows how much the sea level will rise.",
+      "Dengiz sathi qancha ko'tarilishini hech kim bilmaydi.",
+      "si ˈlɛvəl"
+     ],
+     [
+      "deforestation",
+      "o'rmonlarni kesish",
+      "We know that deforestation adds carbon.",
+      "O'rmon kesish uglerod qo'shishini bilamiz.",
+      "dɪˌfɔrɪˈsteɪʃən"
+     ],
+     [
+      "natural disaster",
+      "tabiiy ofat",
+      "The UN warns that natural disasters will double.",
+      "BMT tabiiy ofatlar ikki baravar oshishini ogohlantiradi.",
+      "ˈnæʧərəl dɪˈzæstər"
+     ],
+     [
+      "impact / consequence",
+      "ta'sir / oqibat",
+      "Do you know what the consequences will be?",
+      "Oqibatlari qanday bo'lishini bilasanmi?",
+      "ˌɪmˈpækt  ˈkɑnsəkwəns"
+     ],
+     [
+      "sustainable (climate)",
+      "barqaror",
+      "I think that sustainable farming is the answer.",
+      "Barqaror dehqonchilik javob deb o'ylayman.",
+      "səˈsteɪnəbəl (ˈklaɪmɪt)"
+     ]
+    ],
+    "strong": [
+     [
+      "hurricane / storm",
+      "dovul / bo'ron",
+      "Nobody can predict where the hurricane will hit.",
+      "Dovul qayerga urishini hech kim bashorat qila olmaydi.",
+      "ˈhərəˌkeɪnz  stɔrm"
+     ],
+     [
+      "ice cap",
+      "muz qatlami (qutb)",
+      "Scientists say that the ice caps are shrinking.",
+      "Olimlar muz qatlamlari kichrayayotganini aytadi.",
+      "aɪs kæp"
+     ],
+     [
+      "rising sea level",
+      "dengiz sathining ko'tarilishi",
+      "Islands ask how they will survive rising sea levels.",
+      "Orollar dengiz sathi ko'tarilishida qanday omon qolishini so'raydi.",
+      "ˈraɪzɪŋ si ˈlɛvəl"
+     ],
+     [
+      "ocean (climate)",
+      "okean",
+      "We know that the ocean absorbs heat.",
+      "Okean issiqlikni yutishini bilamiz.",
+      "ˈoʊʃən (ˈklaɪmɪt)"
+     ],
+     [
+      "coral reef",
+      "marjon rifi",
+      "Divers say that coral reefs are dying.",
+      "G'avvoslar marjon riflari o'layotganini aytadi.",
+      "ˈkɔrəl rif"
+     ],
+     [
+      "reforestation",
+      "o'rmonni qayta tiklash",
+      "Nobody doubts that reforestation helps.",
+      "O'rmonni qayta tiklash yordam berishiga hech kim shubha qilmaydi.",
+      "ˌrifɔrəˈsteɪʃən"
+     ],
+     [
+      "ozone layer",
+      "ozon qatlami",
+      "Do you know why the ozone layer recovered?",
+      "Ozon qatlami nega tiklanganini bilasanmi?",
+      "ˈoʊˌzoʊn leɪər"
+     ],
+     [
+      "catastrophe",
+      "falokat",
+      "Greta says that we are facing a catastrophe.",
+      "Greta biz falokatga yuzlanayotganimizni aytadi.",
+      "kəˈtæstrəfi"
+     ],
+     [
+      "adaptation / mitigation",
+      "moslashish / kamaytirish",
+      "Experts explain whether adaptation or mitigation is cheaper.",
+      "Mutaxassislar moslashish yoki kamaytirish arzonroqligini tushuntiradi.",
+      "ˌædəpˈteɪʃən  ˌmɪtɪˈgeɪʃən"
+     ],
+     [
+      "sustainability",
+      "barqarorlik",
+      "I don't know how sustainability can be measured.",
+      "Barqarorlik qanday o'lchanishini bilmayman.",
+      "səˌsteɪnəˈbɪlɪti"
+     ],
+     [
+      "renewable (climate)",
+      "qayta tiklanuvchi",
+      "We believe that renewable energy is the solution.",
+      "Qayta tiklanuvchi energiya yechim deb ishonamiz.",
+      "riˈnuəbəl (ˈklaɪmɪt)"
+     ],
+     [
+      "recycle / reuse / reduce",
+      "qayta ishlash / qayta foydalanish / kamaytirish",
+      "The rule says that we should reduce first, then reuse, then recycle.",
+      "Qoida avval kamaytirish, keyin qayta foydalanish, so'ng qayta ishlashni aytadi.",
+      "riˈsaɪkəl  riˈjuz  rɪˈdus"
+     ],
+     [
+      "waste (climate)",
+      "chiqindi",
+      "Nobody knows where all the waste goes.",
+      "Hamma chiqindi qayerga ketishini hech kim bilmaydi.",
+      "weɪst (ˈklaɪmɪt)"
+     ],
+     [
+      "plastic (climate)",
+      "plastik",
+      "We know that plastic lives for 500 years.",
+      "Plastik 500 yil yashashini bilamiz.",
+      "ˈplæstɪk (ˈklaɪmɪt)"
+     ],
+     [
+      "pollutant",
+      "ifloslantiruvchi modda",
+      "Scientists explain which pollutant is the most dangerous.",
+      "Olimlar qaysi ifloslantiruvchi eng xavfli ekanini tushuntiradi.",
+      "pəˈlutənt"
+     ],
+     [
+      "Paris Agreement",
+      "Parij kelishuvi",
+      "The Paris Agreement says that warming must stay under 2 degrees.",
+      "Parij kelishuvi isish 2 darajadan past qolishi kerakligini aytadi.",
+      "ˈpɛrɪs əˈgrimənt"
+     ],
+     [
+      "carbon tax",
+      "uglerod solig'i",
+      "Economists argue whether a carbon tax works.",
+      "Iqtisodchilar uglerod solig'i ishlaydimi deb bahslashadi.",
+      "ˈkɑrbən tæks"
+     ],
+     [
+      "net zero",
+      "sof nol (chiqindi)",
+      "Ask your city when it plans to reach net zero.",
+      "Shahringdan qachon sof nolga erishishni rejalashtirganini so'ra.",
+      "nɛt ˈziroʊ"
+     ],
+     [
+      "green economy",
+      "yashil iqtisodiyot",
+      "Experts say that a green economy creates jobs.",
+      "Mutaxassislar yashil iqtisodiyot ish o'rinlari yaratishini aytadi.",
+      "grin ɪˈkɑnəmi"
+     ],
+     [
+      "environment / environmental",
+      "atrof-muhit / ekologik",
+      "I wonder if environmental laws are strong enough.",
+      "Ekologik qonunlar yetarlicha kuchlimi, qiziq.",
+      "ɪnˈvaɪrənmənt  ɪnˌvaɪrənˈmɛnəl"
+     ]
+    ],
+    "super": [
+     [
+      "forecast (climate)",
+      "bashorat",
+      "Nobody knows whether the forecast is right.",
+      "Bashorat to'g'rimi — hech kim bilmaydi.",
+      "ˈfɔrˌkæst (ˈklaɪmɪt)"
+     ],
+     [
+      "Aral Sea",
+      "Orol dengizi",
+      "Every Uzbek knows what happened to the Aral Sea.",
+      "Har bir o'zbek Orol dengiziga nima bo'lganini biladi.",
+      "ˈɑrɑl si"
+     ],
+     [
+      "desertification",
+      "cho'llanish",
+      "Scientists explain how desertification spreads.",
+      "Olimlar cho'llanish qanday tarqalishini tushuntiradi.",
+      ""
+     ],
+     [
+      "water scarcity",
+      "suv tanqisligi",
+      "Experts warn that water scarcity will grow in Central Asia.",
+      "Mutaxassislar Markaziy Osiyoda suv tanqisligi o'sishini ogohlantiradi.",
+      "ˈwɔtər ˈskɛrsɪti"
+     ],
+     [
+      "irrigation",
+      "sug'orish",
+      "Farmers ask whether drip irrigation saves water.",
+      "Fermerlar tomchilatib sug'orish suv tejaydimi deb so'raydi.",
+      "ˌɪrəˈgeɪʃən"
+     ],
+     [
+      "extinction",
+      "yo'q bo'lib ketish",
+      "Biologists say that a million species face extinction.",
+      "Biologlar million tur yo'q bo'lish xavfida ekanini aytadi.",
+      "ɪkˈstɪŋʃən"
+     ],
+     [
+      "biodiversity",
+      "biologik xilma-xillik",
+      "I don't know how biodiversity is measured.",
+      "Biologik xilma-xillik qanday o'lchanishini bilmayman.",
+      "ˌbaɪoʊdaɪˈvərsəti"
+     ],
+     [
+      "ecosystem",
+      "ekotizim",
+      "We know that every ecosystem is connected.",
+      "Har bir ekotizim bog'langanini bilamiz.",
+      "ˈikoʊˌsɪstəm"
+     ],
+     [
+      "fossil fuel (climate)",
+      "qazilma yoqilg'i",
+      "Activists demand that fossil fuels stay in the ground.",
+      "Faollar qazilma yoqilg'i yer ostida qolishini talab qiladi.",
+      "ˈfɑsəl fjuəl (ˈklaɪmɪt)"
+     ],
+     [
+      "activist (climate)",
+      "faol",
+      "Greta became an activist because she understood what science said.",
+      "Greta faol bo'ldi, chunki fan nima deyayotganini tushundi.",
+      "ˈæktɪvɪst (ˈklaɪmɪt)"
+     ],
+     [
+      "school strike",
+      "maktab ish tashlashi (norozilik)",
+      "She explained why she started a school strike.",
+      "U nega maktab ish tashlashini boshlaganini tushuntirdi.",
+      "skul straɪk"
+     ],
+     [
+      "summit",
+      "sammit",
+      "Nobody knows what the summit will decide.",
+      "Sammit nima qaror qilishini hech kim bilmaydi.",
+      "ˈsəmɪt"
+     ],
+     [
+      "United Nations (UN)",
+      "Birlashgan Millatlar Tashkiloti",
+      "She told the UN that they had stolen her childhood.",
+      "U BMTga ular bolaligini o'g'irlaganini aytdi.",
+      "juˈnaɪtɪd ˈneɪʃənz (ˈjuˈɛn)"
+     ],
+     [
+      "generation (climate)",
+      "avlod",
+      "We wonder if the next generation will forgive us.",
+      "Keyingi avlod bizni kechiradimi, qiziq.",
+      "ˌʤɛnərˈeɪʃən (ˈklaɪmɪt)"
+     ],
+     [
+      "carbon-free",
+      "uglerodsiz",
+      "Cities ask how they can become carbon-free.",
+      "Shaharlar qanday uglerodsiz bo'lishni so'raydi.",
+      ""
+     ],
+     [
+      "electric (climate)",
+      "elektr (transport)",
+      "I believe that electric buses will replace diesel.",
+      "Elektr avtobuslar dizelning o'rnini bosadi deb ishonaman.",
+      "ɪˈlɛktrɪk (ˈklaɪmɪt)"
+     ],
+     [
+      "tipping point",
+      "burilish nuqtasi (qaytarib bo'lmas)",
+      "Scientists warn that we are near a tipping point.",
+      "Olimlar burilish nuqtasiga yaqinligimizni ogohlantiradi.",
+      "ˈtɪpɪŋ pɔɪnt"
+     ],
+     [
+      "climate refugee",
+      "iqlim qochqini",
+      "The UN says that climate refugees will number millions.",
+      "BMT iqlim qochqinlari millionlab bo'lishini aytadi.",
+      "ˈklaɪmɪt ˈrɛfjuʤi"
+     ],
+     [
+      "awareness (climate)",
+      "xabardorlik",
+      "Greta showed how awareness can grow in a year.",
+      "Greta xabardorlik bir yilda qanday o'sishini ko'rsatdi.",
+      "əˈwɛrnəs (ˈklaɪmɪt)"
+     ],
+     [
+      "sail (v)",
+      "yelkanli kemada suzmoq",
+      "She decided that she would sail, not fly, to New York.",
+      "U Nyu-Yorkka uchmasdan, yelkanli kemada suzishga qaror qildi.",
+      "seɪl (vi)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "To'ldiruvchi ergash gap tuzing",
+     "type": "rewrite",
+     "instr": "Ikki gapni birlashtiring",
+     "items": [
+      "Scientists say. The planet is warming.",
+      "I don't know. Where does the waste go?",
+      "Nobody knows. Will the drought end?",
+      "Can you explain? How does the greenhouse effect work?",
+      "I don't understand. Why did the ice melt so fast?",
+      "She said. \"I am angry.\""
+     ],
+     "answers": [
+      "Scientists say that the planet is warming.",
+      "I don't know where the waste goes.",
+      "Nobody knows if/whether the drought will end.",
+      "Can you explain how the greenhouse effect works?",
+      "I don't understand why the ice melted so fast.",
+      "She said that she was angry."
+     ]
+    },
+    {
+     "title": "So'z tartibi",
+     "type": "correct",
+     "instr": "Xatoni tuzating",
+     "items": [
+      "I don't know where does she live.",
+      "Can you explain how does it work?",
+      "I wonder what time is it.",
+      "Nobody knows why did the sea disappear.",
+      "Tell me if will it rain."
+     ],
+     "answers": [
+      "I don't know where she lives.",
+      "Can you explain how it works?",
+      "I wonder what time it is.",
+      "Nobody knows why the sea disappeared.",
+      "Tell me if it will rain."
+     ]
+    },
+    {
+     "title": "Ega yoki to'ldiruvchi?",
+     "type": "sort",
+     "instr": "Ergash gap ega (E) yoki to'ldiruvchi (T)?",
+     "items": [
+      "What Greta said shocked the leaders.",
+      "The leaders heard what Greta said.",
+      "Whether the ice returns is unknown.",
+      "Nobody knows whether the ice returns.",
+      "I know that emissions are rising.",
+      "That emissions are rising is a fact."
+     ],
+     "answers": [
+      "E",
+      "T",
+      "E",
+      "T",
+      "T",
+      "E"
+     ]
+    },
+    {
+     "title": "Iqlim haqida fikrim",
+     "type": "speaking",
+     "instr": "Juftlikda: 6 gap — think/know/say/wonder/explain/understand + ergash gap, iqlim so'zlari bilan",
+     "items": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ],
+     "answers": [
+      "I think that climate change is the biggest problem.",
+      "I know that the Aral Sea disappeared because of irrigation.",
+      "Scientists say that emissions must fall by half.",
+      "I wonder if Tashkent will have more heatwaves.",
+      "I can explain how the greenhouse effect works.",
+      "I don't understand why some leaders do nothing."
+     ]
+    },
+    {
+     "title": "Iqlim lug'ati",
+     "type": "match",
+     "instr": "Ta'rifga so'z",
+     "items": [
+      "the rise of the Earth's temperature",
+      "gases that trap heat in the atmosphere",
+      "a long period without rain",
+      "cutting down forests",
+      "the total carbon you cause",
+      "adding no extra carbon to the air"
+     ],
+     "answers": [
+      "global warming",
+      "greenhouse gases",
+      "drought",
+      "deforestation",
+      "carbon footprint",
+      "net zero"
+     ],
+     "box": [
+      "global warming",
+      "greenhouse gases",
+      "drought",
+      "deforestation",
+      "carbon footprint",
+      "net zero"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "I don't know where does she live.",
+      "She said that she is tired. (o'tgan)",
+      "I don't know that she will come or not.",
+      "Can you explain how does it work?",
+      "I don't understand why did she leave."
+     ],
+     "answers": [
+      "I don't know where she lives.",
+      "She said that she was tired.",
+      "I don't know whether she will come.",
+      "Can you explain how it works?",
+      "I don't understand why she left."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 19 jadvalini 3 marta; CLIMATE CHANGE 51 so'zdan CORE 20 + STRONG 20",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Progress test 4 ga tayyorgarlik",
+     "type": "review",
+     "instr": "15–19-dars jadvallari; 5 lug'atdan CORE 20; Writing 7–8; Kahoot 15–19 (jonyos.uz)",
+     "answers": "Test: formulalar, 50 so'z, 10 tarjima, reading, writing (200 so'z)."
+    },
+    {
+     "title": "Reading Topic 131–140",
+     "type": "read",
+     "instr": "Hafta davomida 10 topic; IELTS savollari; 10 notanish so'z",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Iqlim — Writing 2 uslubi",
+     "type": "write",
+     "instr": "200 so'z: \"Climate change: causes and solutions\"; kamida 6 to'ldiruvchi ergash gap (say that, know how, wonder if…) va 2 ega ergash gap",
+     "answers": "Ustoz rubrika bilan."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "U charchaganini aytdi.",
+      "Men uning qayerda yashashini bilmayman.",
+      "U keladimi-yo'qmi, bilmayman.",
+      "Bu qanday ishlashini tushuntira olmayman.",
+      "U nega ketganini tushunmayman."
+     ],
+     "answers": [
+      "She said that she was tired.",
+      "I don't know where she lives.",
+      "I don't know if/whether she will come.",
+      "I can't explain how it works.",
+      "I don't understand why she left."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "CLIMATE CHANGE CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Financial planning",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali, 7 qator)",
+     "1 daqiqada 2 / 3 / 4 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Climate change og'zaki",
+     "CORE 20 + tarjima, 1.5 daqiqa",
+     "1 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Greta Thunberg — the girl who told the world what science says",
+    "text": [
+     "Greta Thunberg was born in 2003 in Stockholm. When she was eight, a teacher showed the class what climate change was doing to the planet. Other children forgot it by lunchtime; Greta could not. She read everything she could find and understood that scientists had been saying the same thing for thirty years — and that almost nobody was listening.",
+     "In August 2018, at fifteen, she decided that she would not go to school on Fridays. Instead she sat in front of the Swedish parliament with a sign: \"School strike for the climate.\" She said that there was no point in studying for a future that adults were destroying. At first she sat alone. Within a year, millions of students in 150 countries were striking with her.",
+     "In 2019 she was invited to the United Nations in New York. Because she believes that flying produces too much carbon, she sailed across the Atlantic in a small boat for two weeks. At the UN she told the leaders that they had stolen her childhood with their empty words: \"How dare you!\" The speech was watched hundreds of millions of times. Time magazine named her Person of the Year — the youngest ever.",
+     "Greta says that she is not a scientist and that people should not listen to her, but to the science. Whether her strikes changed politics is still debated. What nobody doubts is that a teenager made the whole world talk about how fast the ice is melting."
+    ],
+    "glossary": [
+     "planet — sayyora",
+     "parliament — parlament",
+     "sign — plakat",
+     "point — ma'no, foyda",
+     "destroy — buzmoq",
+     "strike — ish tashlash",
+     "sail — yelkanli kemada suzmoq",
+     "empty words — quruq so'zlar",
+     "dare — jur'at etmoq",
+     "debate — bahslashmoq"
+    ],
+    "tasks": [
+     {
+      "title": "To'ldiruvchi ergash gaplarni toping",
+      "type": "find",
+      "instr": "Matndan 8 ta",
+      "items": [
+       "what 1",
+       "that 1",
+       "that 2",
+       "that 3",
+       "that 4",
+       "that 5",
+       "that 6",
+       "how"
+      ],
+      "answers": [
+       "A teacher showed the class what climate change was doing to the planet.",
+       "She understood that scientists had been saying the same thing…",
+       "She decided that she would not go to school on Fridays.",
+       "She said that there was no point in studying…",
+       "She believes that flying produces too much carbon.",
+       "She told the leaders that they had stolen her childhood.",
+       "Greta says that she is not a scientist…",
+       "…talk about how fast the ice is melting."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Greta started her strike at 15.",
+       "She flew to New York for the UN speech.",
+       "Within a year millions of students joined her.",
+       "She says people should listen to her, not to scientists."
+      ],
+      "answers": [
+       "True",
+       "False (sailed)",
+       "True",
+       "False"
+      ]
+     },
+     {
+      "title": "Iqlim lug'ati",
+      "type": "short",
+      "instr": "Matndan 6 ta iqlim so'zi; ega ergash gap (18-dars) bilan 1 gapni toping",
+      "items": [
+       "words",
+       "subject clause"
+      ],
+      "answers": [
+       "climate change, planet, carbon, ice, melting, scientists, strike, future",
+       "Whether her strikes changed politics is still debated. / What nobody doubts is that…"
+      ]
+     }
+    ],
+    "book_ref": "Jony Academy matni (sinfda); kitob Topic 131–140 — uyga (hafta davomida)."
+   }
   }
  ]
 }

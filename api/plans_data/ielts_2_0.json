@@ -8900,6 +8900,1868 @@
     ],
     "book_ref": "Reading book IELTS 2.0: Topic 28 (sinfda); Topic 29–30 — uyga."
    }
+  },
+  {
+   "no": 11,
+   "title": "Before, After, By the time, As soon as, Since",
+   "grammar_topic": "BOG'LOVCHILAR: BEFORE / AFTER / BY THE TIME / AS SOON AS / SINCE",
+   "vocab_topic": "Countries and nationalities (mamlakat va millatlar)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 11 – Before, after, by the time, as soon as, since (jadval, B–D mashqlar, 20 gap); NATIONALITIES (46); Reading Topic 30.",
+   "objectives": [
+    "Beshta vaqt bog'lovchisining har biri qaysi zamon juftligi bilan kelishini bilish.",
+    "Ikki gapni after/before bilan bitta gapga birlashtirish (Past Perfect + Past Simple).",
+    "by the time bilan Future Perfect va Past Perfect gaplar tuzish.",
+    "20 mamlakat va millat nomini to'g'ri yozish va aytish (bosh harf!)."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Countries and nationalities (mamlakat va millatlar) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz 3 ish aytadi: \"I woke up. I had breakfast. I came to school.\" — o'quvchilar \"before / after / as soon as\" bilan bog'laydi."
+    ],
+    [
+     8,
+     "Kahoot — Future Perfect",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Future Perfect lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali 5 qator: BEFORE (Past Simple + Past Perfect), AFTER (Past Perfect + Past Simple), BY THE TIME (Present Simple + Future Perfect / Past Simple + Past Perfect), AS SOON AS (Past Simple + Past Simple / Present Simple + will), SINCE (Past Simple + Present Perfect). Kombinatsiya: before+after birga, by the time alohida, as soon as+since birga."
+    ],
+    [
+     12,
+     "Countries and nationalities (mamlakat va millatlar) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     12,
+     "Writing / speaking mini-vazifa",
+     "Yangi grammatika bilan 5 gap (yozma) yoki 1 daqiqa og'zaki."
+    ],
+    [
+     7,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "BEFORE: Before + Past Simple, Past Perfect — \"Before he visited Japan, he had never tasted sushi.\"",
+     "AFTER: After + Past Perfect, Past Simple — \"After I had finished my work, I went for a walk.\"",
+     "BY THE TIME: By the time + Present Simple, Future Perfect (kelajak) / By the time + Past Simple, Past Perfect (o'tgan).",
+     "AS SOON AS: As soon as + Past Simple, Past Simple — \"As soon as I saw him, I ran.\" / kelajak: As soon as + Present Simple, will.",
+     "SINCE: Present Perfect + since + Past Simple — \"I haven't seen her since we graduated.\""
+    ],
+    "formulas": [
+     [
+      "Before",
+      "Before + Past Simple, S + had + V3",
+      "Before he visited Japan, he had never tasted sushi.",
+      "Yaponiyaga borishidan oldin u hech qachon sushi yemagan edi."
+     ],
+     [
+      "After",
+      "After + S + had + V3, Past Simple",
+      "After I had finished my work, I went for a walk.",
+      "Ishimni tugatganimdan keyin sayrga chiqdim."
+     ],
+     [
+      "By the time (kelajak)",
+      "By the time + Present Simple, S + will have + V3",
+      "By the time you arrive, I will have cooked dinner.",
+      "Sen kelguncha men ovqat pishirib bo'laman."
+     ],
+     [
+      "By the time (o'tgan)",
+      "By the time + Past Simple, S + had + V3",
+      "By the time we got there, the shop had closed.",
+      "Biz borguncha do'kon yopilgan edi."
+     ],
+     [
+      "As soon as",
+      "As soon as + Past Simple, Past Simple",
+      "As soon as I finished, I called you.",
+      "Tugatishim bilanoq senga qo'ng'iroq qildim."
+     ],
+     [
+      "Since",
+      "S + have/has (not) + V3 + since + Past Simple",
+      "I haven't seen her since we graduated from college.",
+      "Kollejni bitirganimizdan beri uni ko'rmadim."
+     ]
+    ],
+    "presentation": [
+     [
+      "What had you done before you came to class?",
+      "Before I came to class, I had done my homework."
+     ],
+     [
+      "What did you do after you had finished school yesterday?",
+      "After I had finished school, I went to football."
+     ],
+     [
+      "Will you have eaten by the time I arrive?",
+      "Yes, by the time you arrive, I will have eaten."
+     ],
+     [
+      "What did you do as soon as you got home?",
+      "As soon as I got home, I turned on my phone."
+     ],
+     [
+      "How long have you known Ali?",
+      "I've known him since we were in primary school."
+     ],
+     [
+      "Had the bus left by the time you got to the stop?",
+      "Yes, it had left by the time I got there."
+     ],
+     [
+      "When will you call me?",
+      "I'll call you as soon as I finish."
+     ],
+     [
+      "Had you ever been abroad before you went to Turkey?",
+      "No, I had never been abroad before that."
+     ],
+     [
+      "Have you been to Samarkand since you moved here?",
+      "Yes, I've been there twice since I moved."
+     ],
+     [
+      "What will have changed by the time you are 30?",
+      "By the time I'm 30, I will have started my own business."
+     ]
+    ],
+    "notes": [
+     "after/before dan keyin -ing ham bo'ladi: After finishing my work, I went out.",
+     "\"by the time\" — bog'lovchi; \"by\" — predlog (by 2030). Ikkalasida ham perfect zamon.",
+     "as soon as = darhol, …bilanoq; kelajakda will yo'q: as soon as it stops (raining).",
+     "Millatlar: mamlakat ham, millat ham bosh harf bilan: Japan — Japanese; tilni ham: \"She speaks Japanese\"."
+    ],
+    "mistakes": [
+     [
+      "After I finished my work, I had gone out.",
+      "After I had finished my work, I went out.",
+      "after + oldingi ish (Past Perfect), keyingi — Past Simple."
+     ],
+     [
+      "By the time you will arrive…",
+      "By the time you arrive…",
+      "by the time + Present Simple."
+     ],
+     [
+      "As soon as I will finish, I'll call.",
+      "As soon as I finish, I'll call.",
+      "as soon as + Present Simple."
+     ],
+     [
+      "I haven't seen him since 3 years.",
+      "I haven't seen him for 3 years. / since 2023.",
+      "since + nuqta; for + davr."
+     ],
+     [
+      "He is german.",
+      "He is German.",
+      "Millat — bosh harf."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitob ro'yxatidan eng kerakli mamlakat–millat juftlari; STRONG — qolgan Yevropa/Osiyo; SUPER — qit'a, til, umumiy so'zlar.",
+     "So'z shakli: \"Japan | Japanese\": o'quvchi ikkalasini aytadi. Har so'zga \"I've never been to … since …\" gapi."
+    ],
+    "core": [
+     [
+      "Uzbekistan – Uzbek",
+      "O'zbekiston – o'zbek",
+      "I'm Uzbek. I've lived in Uzbekistan since I was born.",
+      "Men o'zbekman. Tug'ilganimdan beri O'zbekistonda yashayman.",
+      "uzˈbɛkɪˌstæn"
+     ],
+     [
+      "the United Kingdom – British",
+      "Buyuk Britaniya – britaniyalik",
+      "She has been British since 2015.",
+      "U 2015-dan beri Britaniya fuqarosi.",
+      "ðə juˈnaɪtɪd ˈkɪŋdəm"
+     ],
+     [
+      "England – English",
+      "Angliya – ingliz",
+      "My English teacher is English.",
+      "Ingliz tili ustozim — ingliz.",
+      "ˈɪŋglənd"
+     ],
+     [
+      "the United States – American",
+      "AQSh – amerikalik",
+      "After he had moved to the USA, he became American.",
+      "AQShga ko'chganidan keyin u amerikalik bo'ldi.",
+      "ðə juˈnaɪtɪd steɪts"
+     ],
+     [
+      "Russia – Russian",
+      "Rossiya – rus",
+      "Russia is the biggest country in the world.",
+      "Rossiya — dunyodagi eng katta mamlakat.",
+      "ˈrəʃə"
+     ],
+     [
+      "China – Chinese",
+      "Xitoy – xitoylik",
+      "Chinese is difficult to write.",
+      "Xitoy tilida yozish qiyin.",
+      "ˈʧaɪnə"
+     ],
+     [
+      "Japan – Japanese",
+      "Yaponiya – yapon",
+      "Before he visited Japan, he had never eaten sushi.",
+      "Yaponiyaga borishidan oldin u sushi yemagan edi.",
+      "ʤəˈpæn"
+     ],
+     [
+      "Turkey – Turkish",
+      "Turkiya – turk",
+      "Turkish is similar to Uzbek.",
+      "Turk tili o'zbek tiliga o'xshash.",
+      "ˈtərki"
+     ],
+     [
+      "Germany – German",
+      "Germaniya – nemis",
+      "German cars are famous.",
+      "Nemis mashinalari mashhur.",
+      "ˈʤərməni"
+     ],
+     [
+      "France – French",
+      "Fransiya – fransuz",
+      "French food is delicious.",
+      "Fransuz taomlari mazali.",
+      "fræns"
+     ],
+     [
+      "Italy – Italian",
+      "Italiya – italyan",
+      "We had Italian pizza after we had visited Rome.",
+      "Rimga borganimizdan keyin italyan pitsasini yedik.",
+      "ˈɪtəli"
+     ],
+     [
+      "Spain – Spanish",
+      "Ispaniya – ispan",
+      "Spanish is spoken in many countries.",
+      "Ispan tili ko'p mamlakatlarda gapiriladi.",
+      "speɪn"
+     ],
+     [
+      "India – Indian",
+      "Hindiston – hind",
+      "Indian films are popular here.",
+      "Hind kinolari bu yerda mashhur.",
+      "ˈɪndiə"
+     ],
+     [
+      "Korea – Korean",
+      "Koreya – koreys",
+      "Korean music has become popular since 2015.",
+      "Koreys musiqasi 2015-dan beri mashhur bo'ldi.",
+      "ˌkɔˈriə"
+     ],
+     [
+      "Kazakhstan – Kazakh",
+      "Qozog'iston – qozoq",
+      "Kazakhstan is our neighbour.",
+      "Qozog'iston — qo'shnimiz.",
+      "ˌkɑzɑkˈstɑn"
+     ],
+     [
+      "Egypt – Egyptian",
+      "Misr – misrlik",
+      "Egyptian pyramids are 4,500 years old.",
+      "Misr piramidalari 4500 yoshda.",
+      "ˈiʤɪpt"
+     ],
+     [
+      "Brazil – Brazilian",
+      "Braziliya – braziliyalik",
+      "Brazilian football is the best.",
+      "Braziliya futboli eng zo'r.",
+      "brəˈzɪl"
+     ],
+     [
+      "Canada – Canadian",
+      "Kanada – kanadalik",
+      "Canadian winters are very cold.",
+      "Kanada qishi juda sovuq.",
+      "ˈkænədə"
+     ],
+     [
+      "Australia – Australian",
+      "Avstraliya – avstraliyalik",
+      "Australian animals are unusual.",
+      "Avstraliya hayvonlari g'ayrioddiy.",
+      "ɔˈstreɪljə"
+     ],
+     [
+      "Iran – Iranian",
+      "Eron – eronlik",
+      "Iranian carpets are beautiful.",
+      "Eron gilamlari chiroyli.",
+      "ˌɪˈrɑn"
+     ]
+    ],
+    "strong": [
+     [
+      "Scotland – Scottish",
+      "Shotlandiya – shotland",
+      "Scottish castles are old.",
+      "Shotland qal'alari qadimiy.",
+      "ˈskɑtlənd"
+     ],
+     [
+      "Ireland – Irish",
+      "Irlandiya – irland",
+      "Irish people are friendly.",
+      "Irlandlar do'stona.",
+      "ˈaɪərlənd"
+     ],
+     [
+      "Wales – Welsh",
+      "Uels – uels",
+      "Welsh is a very old language.",
+      "Uels tili juda qadimiy til.",
+      "weɪlz"
+     ],
+     [
+      "the Netherlands – Dutch",
+      "Niderlandiya – golland",
+      "Dutch cheese is famous.",
+      "Golland pishlog'i mashhur.",
+      "ðə ˈnɛðərləndz"
+     ],
+     [
+      "Switzerland – Swiss",
+      "Shveytsariya – shveytsariyalik",
+      "Swiss watches are expensive.",
+      "Shveytsariya soatlari qimmat.",
+      "sˈwɪtsərlənd"
+     ],
+     [
+      "Sweden – Swedish",
+      "Shvetsiya – shved",
+      "Swedish furniture is simple and modern.",
+      "Shved mebeli sodda va zamonaviy.",
+      "sˈwidən"
+     ],
+     [
+      "Norway – Norwegian",
+      "Norvegiya – norveg",
+      "Norwegian winters are dark.",
+      "Norvegiya qishi qorong'i.",
+      "ˈnɔrˌweɪ"
+     ],
+     [
+      "Denmark – Danish",
+      "Daniya – daniyalik",
+      "Danish people are the happiest in the world.",
+      "Daniyaliklar dunyodagi eng baxtli xalq.",
+      "ˈdɛnˌmɑrk"
+     ],
+     [
+      "Finland – Finnish",
+      "Finlyandiya – fin",
+      "Finnish schools are the best.",
+      "Fin maktablari eng yaxshi.",
+      "ˈfɪnˌlænd"
+     ],
+     [
+      "Poland – Polish",
+      "Polsha – polyak",
+      "Polish is a Slavic language.",
+      "Polyak tili — slavyan tili.",
+      "ˈpoʊlənd"
+     ],
+     [
+      "Greece – Greek",
+      "Gretsiya – yunon",
+      "Greek history is very old.",
+      "Yunon tarixi juda qadimiy.",
+      "gris"
+     ],
+     [
+      "Ukraine – Ukrainian",
+      "Ukraina – ukrain",
+      "Ukrainian bread is delicious.",
+      "Ukrain noni mazali.",
+      "juˈkreɪn"
+     ],
+     [
+      "Belgium – Belgian",
+      "Belgiya – belgiyalik",
+      "Belgian chocolate is the best.",
+      "Belgiya shokoladi eng zo'r.",
+      "ˈbɛlʤəm"
+     ],
+     [
+      "Austria – Austrian",
+      "Avstriya – avstriyalik",
+      "Austrian music: Mozart!",
+      "Avstriya musiqasi: Motsart!",
+      "ˈɔstriə"
+     ],
+     [
+      "Hungary – Hungarian",
+      "Vengriya – venger",
+      "Hungarian is a difficult language.",
+      "Venger tili qiyin til.",
+      "ˈhəŋgəri"
+     ],
+     [
+      "Mexico – Mexican",
+      "Meksika – meksikalik",
+      "Mexican food is spicy.",
+      "Meksika taomlari achchiq.",
+      "ˈmɛksəˌkoʊ"
+     ],
+     [
+      "Argentina – Argentinian",
+      "Argentina – argentinalik",
+      "Argentinian footballers are famous.",
+      "Argentina futbolchilari mashhur.",
+      "ˌɑrʤənˈtinə"
+     ],
+     [
+      "Vietnam – Vietnamese",
+      "Vetnam – vetnam",
+      "Vietnamese coffee is strong.",
+      "Vetnam kofesi kuchli.",
+      "viˌɛtˈnɑm"
+     ],
+     [
+      "Thailand – Thai",
+      "Tailand – tay",
+      "Thai beaches are beautiful.",
+      "Tailand plyajlari chiroyli.",
+      "ˈtaɪˌlænd"
+     ],
+     [
+      "Malaysia – Malaysian",
+      "Malayziya – malayziyalik",
+      "Malaysian towers are very tall.",
+      "Malayziya minoralari juda baland.",
+      "məˈleɪʒə"
+     ]
+    ],
+    "super": [
+     [
+      "Indonesia – Indonesian",
+      "Indoneziya – indoneziyalik",
+      "Indonesia has 17,000 islands.",
+      "Indoneziyada 17 000 orol bor.",
+      "ˌɪndoʊˈniʒə"
+     ],
+     [
+      "the Philippines – Filipino",
+      "Filippin – filippinlik",
+      "Filipino nurses work all over the world.",
+      "Filippinlik hamshiralar butun dunyoda ishlaydi.",
+      "ðə ˈfɪləˌpinz"
+     ],
+     [
+      "South Africa – South African",
+      "Janubiy Afrika – janubiy afrikalik",
+      "South African wildlife is amazing.",
+      "Janubiy Afrika tabiati ajoyib.",
+      "saʊθ ˈæfrɪkɑ"
+     ],
+     [
+      "Nigeria – Nigerian",
+      "Nigeriya – nigeriyalik",
+      "Nigerian films are called Nollywood.",
+      "Nigeriya kinolari Nollywood deyiladi.",
+      "naɪˈʤɪriə"
+     ],
+     [
+      "Romania – Romanian",
+      "Ruminiya – rumin",
+      "Romanian is a Latin language.",
+      "Rumin tili — lotin tili.",
+      "roʊˈmeɪniə"
+     ],
+     [
+      "Bulgaria – Bulgarian",
+      "Bolgariya – bolgar",
+      "Bulgarian yoghurt is famous.",
+      "Bolgar yogurti mashhur.",
+      "bəlˈgɛriə"
+     ],
+     [
+      "the Czech Republic – Czech",
+      "Chexiya – chex",
+      "Prague is the Czech capital.",
+      "Praga — Chexiya poytaxti.",
+      "ðə ʧɛk riˈpəblɪk"
+     ],
+     [
+      "Slovakia – Slovak",
+      "Slovakiya – slovak",
+      "Slovakia is next to the Czech Republic.",
+      "Slovakiya Chexiya yonida.",
+      "sˌloʊˈvɑˌkiə"
+     ],
+     [
+      "Latvia – Latvian",
+      "Latviya – latviyalik",
+      "Latvia is on the Baltic Sea.",
+      "Latviya Boltiq dengizi bo'yida.",
+      "ˈlætviə"
+     ],
+     [
+      "Belarus – Belarusian",
+      "Belarus – belarus",
+      "Belarus is between Poland and Russia.",
+      "Belarus Polsha va Rossiya orasida.",
+      "ˌbɛlɑˈrʊs"
+     ],
+     [
+      "continent",
+      "qit'a",
+      "Asia is the largest continent.",
+      "Osiyo — eng katta qit'a.",
+      "ˈkɑntənənt"
+     ],
+     [
+      "nationality",
+      "millat, fuqarolik",
+      "What is your nationality?",
+      "Millatingiz nima?",
+      "ˌnæʃəˈnælɪti"
+     ],
+     [
+      "citizen",
+      "fuqaro",
+      "She became a citizen after she had lived there for five years.",
+      "U besh yil yashaganidan keyin fuqaro bo'ldi.",
+      "ˈsɪtɪzən"
+     ],
+     [
+      "citizenship",
+      "fuqarolik",
+      "He applied for citizenship.",
+      "U fuqarolikka ariza berdi.",
+      "ˈsɪtɪzənˌʃɪp"
+     ],
+     [
+      "foreigner",
+      "chet ellik",
+      "Foreigners love Uzbek plov.",
+      "Chet elliklar o'zbek palovini yaxshi ko'radi.",
+      "ˈfɔrənər"
+     ],
+     [
+      "abroad",
+      "chet elda",
+      "I've never been abroad.",
+      "Men hech qachon chet elda bo'lmaganman.",
+      "əˈbrɔd"
+     ],
+     [
+      "native language / mother tongue",
+      "ona tili",
+      "Uzbek is my mother tongue.",
+      "O'zbek tili — mening ona tilim.",
+      "ˈneɪtɪv ˈlæŋgwɪʤ  ˈməðər təŋ"
+     ],
+     [
+      "bilingual",
+      "ikki tilli",
+      "My cousin is bilingual.",
+      "Amakivachcham ikki tilda gapiradi.",
+      "baɪˈlɪŋgwəl"
+     ],
+     [
+      "border",
+      "chegara",
+      "We crossed the border as soon as it opened.",
+      "Chegara ochilishi bilanoq uni kesib o'tdik.",
+      "ˈbɔrdər"
+     ],
+     [
+      "passport",
+      "pasport",
+      "Had you got your passport before you booked the flight?",
+      "Chiptani olishdan oldin pasportingni olganmiding?",
+      "ˈpæˌspɔrt"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "AFTER / BEFORE bilan birlashtiring",
+     "type": "rewrite",
+     "instr": "Ikki gapni bitta gapga (kitob B): Past Perfect + Past Simple",
+     "items": [
+      "My mother took her umbrella. She went out.",
+      "Frank called me. I went to school.",
+      "I washed the dishes. I watched TV.",
+      "She washed her hands. She had lunch.",
+      "My mother made a cake. The guests came.",
+      "I fastened my seat belt. The plane took off."
+     ],
+     "answers": [
+      "After my mother had taken her umbrella, she went out.",
+      "Before I went to school, Frank had called me.",
+      "After I had washed the dishes, I watched TV.",
+      "She washed her hands before she had lunch. / After she had washed her hands, she had lunch.",
+      "My mother had made a cake before the guests came.",
+      "I had fastened my seat belt before the plane took off."
+     ]
+    },
+    {
+     "title": "Bog'lovchini tanlang",
+     "type": "gap",
+     "instr": "before / after / by the time / as soon as / since (kitob 20 gap)",
+     "items": [
+      "___ the bell rang, the students were already in their seats.",
+      "He finished his homework ___ he went out to play.",
+      "___ she arrived, the movie had already started.",
+      "The party will begin ___ the guests arrive.",
+      "We've known each other ___ we were in elementary school.",
+      "___ she had finished the book, she returned it to the library.",
+      "He's been a chef ___ he graduated from culinary school.",
+      "They'll head home ___ the game finishes.",
+      "He had already eaten lunch ___ he met his friends for coffee.",
+      "By the time they arrived, the concert ___ already started."
+     ],
+     "answers": [
+      "By the time",
+      "before",
+      "By the time",
+      "as soon as",
+      "since",
+      "After",
+      "since",
+      "as soon as",
+      "before",
+      "had"
+     ]
+    },
+    {
+     "title": "Gapni tugating",
+     "type": "write",
+     "instr": "Zamonlarga e'tibor bering (kitob C)",
+     "items": [
+      "After I had watched that horror film, I …",
+      "She finished her homework after …",
+      "When I came home, my sister … already …",
+      "Before he went out, …",
+      "By the time you read this, I …"
+     ],
+     "answers": [
+      "…couldn't sleep all night.",
+      "…she had had dinner.",
+      "…had already gone to bed.",
+      "…he had locked the door.",
+      "…will have left the country."
+     ]
+    },
+    {
+     "title": "Matn: kulgili voqea",
+     "type": "read",
+     "instr": "Matnni o'qing va savolga javob bering (kitob D)",
+     "items": [
+      "text",
+      "When did the writer drive on to the next town?",
+      "When did he say good morning in French?",
+      "When did the young man ask \"Do you speak English?\""
+     ],
+     "answers": [
+      "After I had left a small village in France, I drove on to the next town. A young man waved and I gave him a lift. After he had got into the car, I said good morning in French and he replied in French. Neither of us spoke during the journey. I had nearly reached the town when he said slowly, \"Do you speak English?\" He was English himself!",
+      "After he had left a small village.",
+      "After the young man had got into the car.",
+      "When the writer had nearly reached the town."
+     ]
+    },
+    {
+     "title": "Mamlakat va millat",
+     "type": "speaking",
+     "instr": "Juftlikda: \"Have you ever been to …?\" — 5 mamlakat; javobda since/as soon as/by the time ishlatilsin",
+     "items": [
+      "Turkey",
+      "Japan",
+      "Germany",
+      "Russia",
+      "Korea"
+     ],
+     "answers": [
+      "Have you ever been to Turkey? — Yes, as soon as I arrived, I ate Turkish kebab.",
+      "Have you ever met a Japanese person? — Not since I finished school.",
+      "Would you like to visit Germany? — By the time I'm 25, I will have visited Germany.",
+      "Do you speak Russian? — I've spoken Russian since I was a child.",
+      "Do you like Korean music? — I've liked it since 2020."
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "After I finished, I had gone home.",
+      "By the time you will come, we will have started.",
+      "I'll call you as soon as I will arrive.",
+      "She has lived here since five years.",
+      "He is from france, he is french."
+     ],
+     "answers": [
+      "After I had finished, I went home.",
+      "By the time you come, we will have started.",
+      "…as soon as I arrive.",
+      "She has lived here for five years.",
+      "He is from France, he is French."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob mashqlari",
+     "type": "book",
+     "instr": "Lesson 11: A, B, C, D va 20 gap — daftarga; NATIONALITIES 46 ni ko'chiring",
+     "answers": "Kitob kaliti."
+    },
+    {
+     "title": "Reading Topic 31–32",
+     "type": "read",
+     "instr": "Topic 31 (Growing up poor) — Mike haqida 5 fakt; Topic 32 — 5 notanish so'z",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "Mening kunim — bog'lovchilar bilan",
+     "type": "write",
+     "instr": "8 gap: before (2), after (2), by the time (2), as soon as (1), since (1)",
+     "answers": "Erkin; zamon juftliklari tekshiriladi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Ishimni tugatganimdan keyin uyga ketdim.",
+      "Sen kelguncha men ovqat pishirib bo'laman.",
+      "Uni ko'rishim bilanoq tanidim.",
+      "Maktabni bitirganimizdan beri uni ko'rmadim.",
+      "U yaponiyalik, lekin fransuz tilida gapiradi."
+     ],
+     "answers": [
+      "After I had finished my work, I went home.",
+      "By the time you come, I will have cooked dinner.",
+      "As soon as I saw him/her, I recognised him/her.",
+      "I haven't seen him/her since we finished school.",
+      "She/He is Japanese, but she/he speaks French."
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "COUNTRIES CORE 20 (mamlakat + millat) — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 juftlik + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Emotions",
+     "20 so'z, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob: before+after birga, by the time alohida, as soon as+since birga)",
+     "1 daqiqada 1 / 2 / 3 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Nationalities yozma (kitob)",
+     "46 juftlik, 5 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 30. The Rock Garden of Chandigarh",
+    "text": [
+     "In Chandigarh, a city in northeast India, there is an amazing garden. There are tall rocks and small paths between them. There are waterfalls, pools, and hundreds of sculptures. The sculptures are surprising because they are all made from rubbish, like plastic jewellery, bottles, broken pots, sinks and pieces of electrical equipment.",
+     "The garden has a surprising history too because it was built in secret! A man called Nek Chand started building the garden in 1957. He chose some land in a forest near the city. Nobody was allowed to build here, so Nek knew that people wouldn't see him there. Then he started to collect rubbish and make the sculptures.",
+     "Nek's project was illegal, but for 18 years, nobody found it. However, in 1975, some government officials discovered it. By that time, the garden was nearly 49,000 m² in size. The government tried to destroy the garden, but when the people in the city heard about it, they wanted to keep it.",
+     "In 1976 it became a public park. After that, Nek Chand received a salary so that he could work in the garden full-time, and fifty more people were employed to work there with him. In 1990, the local government tried to build a road through the park, but local people protested, and their plan failed.",
+     "Now, a charity manages the garden. Five thousand visitors visit this special place each day. Volunteers, workers, and local children still work here. If you like, you can volunteer here too!"
+    ],
+    "glossary": [
+     "path — so'qmoq",
+     "sculpture — haykal",
+     "rubbish — axlat",
+     "in secret — yashirincha",
+     "be allowed — ruxsat berilmoq",
+     "illegal — noqonuniy",
+     "official — amaldor",
+     "destroy — buzmoq",
+     "employ — ishga olmoq",
+     "protest — norozilik bildirmoq",
+     "charity — xayriya tashkiloti"
+    ],
+    "tasks": [
+     {
+      "title": "Vaqt chizig'i",
+      "type": "order",
+      "instr": "Yillarni voqealar bilan bog'lang",
+      "items": [
+       "1957",
+       "1975",
+       "1976",
+       "1990"
+      ],
+      "answers": [
+       "Nek Chand started building the garden.",
+       "Government officials discovered it.",
+       "It became a public park.",
+       "The government tried to build a road; people protested."
+      ]
+     },
+     {
+      "title": "Bog'lovchi bilan",
+      "type": "write",
+      "instr": "Matn asosida gap tuzing",
+      "items": [
+       "by the time / 1975",
+       "after / 1976",
+       "as soon as / people heard",
+       "since / 1976"
+      ],
+      "answers": [
+       "By the time officials discovered it in 1975, Nek had worked in secret for 18 years.",
+       "After the garden had become a public park, Nek received a salary.",
+       "As soon as people heard about the plan, they protested.",
+       "The garden has been a public park since 1976."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "The sculptures are made from rubbish.",
+       "Nek Chand had permission to build the garden.",
+       "The garden was discovered after 18 years.",
+       "The road through the park was built in 1990."
+      ],
+      "answers": [
+       "True",
+       "False",
+       "True",
+       "False (the plan failed)"
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 30 (sinfda); Topic 31–32 — uyga."
+   }
+  },
+  {
+   "no": 12,
+   "title": "Past Perfect Continuous",
+   "grammar_topic": "PAST PERFECT CONTINUOUS (had been + V-ing) — o'tgan nuqtagacha davom etgan jarayon",
+   "vocab_topic": "Weather (ob-havo)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Student's book IELTS 2.0: Lesson 12 – Past Perfect Continuous (jadval); WEATHER WORDS (44); Reading Topic 31; Audio 21–30.",
+   "objectives": [
+    "had been + V-ing qolipini tasdiq, inkor va savolda tuzish.",
+    "O'tgan nuqtagacha davom etgan jarayonni for/since/how long bilan aytish.",
+    "Past Perfect (natija) va Past Perfect Continuous (jarayon) farqini ajratish.",
+    "Ob-havo CORE 20 bilan iqlim va ob-havo haqida gapirish; listening: ob-havo ma'lumoti."
+   ],
+   "materials": [
+    "Kitob jadvali (formula) — doska yoki proyektor.",
+    "Weather (ob-havo) CORE 20 varag'i.",
+    "Kahoot (jonyos.uz — dars sahifasidan)."
+   ],
+   "timeline": [
+    [
+     5,
+     "Salomlashish + kirish savoli",
+     "Ustoz: \"When I came in, you had been talking for ten minutes!\" — o'quvchilar: \"Had we?\" Doskaga vaqt chizig'i: talking (davom) → I came in."
+    ],
+    [
+     8,
+     "Kahoot — Before / after / by the time / as soon as / since",
+     "20 savol, 15 soniya; oldingi dars lug'ati + grammatikasi."
+    ],
+    [
+     6,
+     "YOZMA NORMATIV — Before / after / by the time / as soon as / since lug'ati",
+     "20 so'z tarjimasi, 5 daqiqa."
+    ],
+    [
+     20,
+     "YANGI MAVZU — savol-javob",
+     "Kitob jadvali: Positive S+had been+Ving → Negative hadn't been+Ving → Question Had+S+been+Ving. \"by the time / when / for / since / how long\" bilan. Present Perfect Continuous bilan solishtirish: has been waiting (hozirgacha) — had been waiting (o'sha paytgacha)."
+    ],
+    [
+     12,
+     "Weather (ob-havo) — CORE 20",
+     "Har so'z bilan yangi grammatika qolipida gap."
+    ],
+    [
+     8,
+     "Kombinatsiya",
+     "Kitob: formula → gap → tarjima; warm-up / normativ / coin me'yorlari."
+    ],
+    [
+     25,
+     "Sinf mashqlari 1–6",
+     "Yakka/juftlikda; speaking mashqi juftlikda."
+    ],
+    [
+     12,
+     "Reading",
+     "Sinf matni + 3 topshiriq; kitob Topic'lari uyga."
+    ],
+    [
+     10,
+     "Listening",
+     "Audio 2 marta; skript daftari."
+    ],
+    [
+     9,
+     "Xatolar ustida ishlash + takror",
+     "Ko'p uchragan xatolar doskada; STRONG lug'at kuchlilarga."
+    ],
+    [
+     5,
+     "Uyga vazifa",
+     "Kitob mashqlari, reading topic'lar, normativ."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Past Perfect Continuous — o'tgandagi bir nuqtagacha DAVOM ETGAN jarayon: \"They had been waiting for hours by the time he came.\"",
+     "Formula: had been + V-ing. Qisqa: I'd been waiting; hadn't been.",
+     "Ko'pincha: for / since / how long / all day + by the time / when / before.",
+     "Farq: Past Perfect — natija (had finished); PPC — jarayon (had been working). Present Perfect Continuous — hozirgacha; Past Perfect Continuous — o'tgan nuqtagacha."
+    ],
+    "formulas": [
+     [
+      "Tasdiq",
+      "S + had been + V-ing",
+      "They had been waiting for hours by the time he came.",
+      "U kelguncha ular soatlab kutishgan edi."
+     ],
+     [
+      "Inkor",
+      "S + hadn't been + V-ing",
+      "She hadn't been waiting for hours by the time he came.",
+      "U kelguncha u soatlab kutmagan edi."
+     ],
+     [
+      "Savol",
+      "Had + S + been + V-ing?",
+      "Had you been watching the games for an hour by the time they called?",
+      "Ular qo'ng'iroq qilguncha bir soat o'yin ko'rgan edingmi?"
+     ],
+     [
+      "How long",
+      "How long + had + S + been + V-ing?",
+      "How long had it been raining when you left?",
+      "Sen ketganingda qancha vaqtdan beri yomg'ir yog'ayotgan edi?"
+     ],
+     [
+      "Sabab (iz)",
+      "Past Simple + because + had been + V-ing",
+      "The ground was wet because it had been raining.",
+      "Yer ho'l edi, chunki yomg'ir yog'ib turgan edi."
+     ],
+     [
+      "Solishtirish",
+      "has been (hozirgacha) — had been (o'sha paytgacha)",
+      "It has been snowing since morning. / It had been snowing for hours when we left.",
+      "Ertalabdan beri qor yog'yapti. / Biz ketganimizda soatlab qor yog'ib turgan edi."
+     ]
+    ],
+    "presentation": [
+     [
+      "How long had you been waiting when the bus came?",
+      "I had been waiting for twenty minutes."
+     ],
+     [
+      "Why was the ground wet this morning?",
+      "Because it had been raining all night."
+     ],
+     [
+      "Had it been snowing for long when you left?",
+      "Yes, it had been snowing since morning."
+     ],
+     [
+      "Why were you so tired yesterday?",
+      "I had been studying for six hours."
+     ],
+     [
+      "How long had they been living in Tashkent before they moved?",
+      "They had been living there for ten years."
+     ],
+     [
+      "Why were her eyes red?",
+      "She had been crying."
+     ],
+     [
+      "Had he been working there long when he got promoted?",
+      "He had been working there for two years."
+     ],
+     [
+      "Why was the road icy?",
+      "Because it had been freezing all night."
+     ],
+     [
+      "What had you been doing before I called?",
+      "I had been watching the weather forecast."
+     ],
+     [
+      "How long had the storm been going on when the lights went out?",
+      "It had been going on for an hour."
+     ]
+    ],
+    "notes": [
+     "Holat fe'llari (know, have, be, like) — Past Perfect Simple: \"I had known him for years\".",
+     "\"when\" bilan: When I arrived, they had been waiting for an hour (jarayon oldin boshlangan).",
+     "Ob-havo gaplari: It had been raining / snowing / freezing … (it + had been + V-ing).",
+     "Forecast (prognoz) tinglaganda: sunny → rain → storm kabi ketma-ketlikka e'tibor."
+    ],
+    "mistakes": [
+     [
+      "They had been wait for hours.",
+      "They had been waiting for hours.",
+      "been + V-ING."
+     ],
+     [
+      "It had rained for hours when we left. (jarayon)",
+      "It had been raining for hours when we left.",
+      "Davomiylik → PPC."
+     ],
+     [
+      "I had been knowing him for years.",
+      "I had known him for years.",
+      "know — holat fe'li."
+     ],
+     [
+      "How long have you been waiting when the bus came?",
+      "How long had you been waiting when the bus came?",
+      "O'tgan nuqta → had."
+     ],
+     [
+      "She had been working here since three years.",
+      "…for three years.",
+      "for + davr."
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE 20 — kitob WEATHER ro'yxatidan asosiy so'zlar; STRONG — kuchli ob-havo hodisalari; SUPER — iqlim va prognoz so'zlari.",
+     "Har so'zga: \"It had been … for … when …\" gapi; ustoz bugungi ob-havoni so'raydi."
+    ],
+    "core": [
+     [
+      "weather",
+      "ob-havo",
+      "What's the weather like today?",
+      "Bugun ob-havo qanday?",
+      "ˈwɛðər"
+     ],
+     [
+      "sunny",
+      "quyoshli",
+      "It had been sunny all week before the storm.",
+      "Bo'rondan oldin bir hafta quyoshli edi.",
+      "ˈsəni"
+     ],
+     [
+      "cloudy",
+      "bulutli",
+      "It's cloudy but warm.",
+      "Bulutli, lekin iliq.",
+      "ˈklaʊdi"
+     ],
+     [
+      "rainy",
+      "yomg'irli",
+      "October is a rainy month here.",
+      "Bu yerda oktyabr — yomg'irli oy.",
+      "ˈreɪni"
+     ],
+     [
+      "windy",
+      "shamolli",
+      "It had been windy all night.",
+      "Tun bo'yi shamol esgan edi.",
+      "ˈwɪndi"
+     ],
+     [
+      "foggy",
+      "tumanli",
+      "Drive slowly — it's foggy.",
+      "Sekin hayda — tuman.",
+      "ˈfɑgi"
+     ],
+     [
+      "stormy",
+      "bo'ronli",
+      "The sea had been stormy for days.",
+      "Dengiz kunlab bo'ronli edi.",
+      "ˈstɔrmi"
+     ],
+     [
+      "snowy",
+      "qorli",
+      "We had a snowy winter.",
+      "Qishimiz qorli bo'ldi.",
+      "snoʊi"
+     ],
+     [
+      "hot",
+      "issiq",
+      "It had been hot for a month when the rain came.",
+      "Yomg'ir kelganda bir oydan beri issiq edi.",
+      "hɑt"
+     ],
+     [
+      "cold",
+      "sovuq",
+      "It's cold outside — take a coat.",
+      "Tashqari sovuq — palto ol.",
+      "koʊld"
+     ],
+     [
+      "warm",
+      "iliq",
+      "Spring is warm and green.",
+      "Bahor iliq va yam-yashil.",
+      "wɔrm"
+     ],
+     [
+      "cool",
+      "salqin",
+      "Evenings are cool in September.",
+      "Sentyabrda kechqurunlar salqin.",
+      "kul"
+     ],
+     [
+      "dry",
+      "quruq",
+      "The summer had been dry, so the plants died.",
+      "Yoz quruq bo'ldi, shuning uchun o'simliklar qurib qoldi.",
+      "draɪ"
+     ],
+     [
+      "humid",
+      "nam, dimiqqan",
+      "Humid weather is hard for me.",
+      "Nam havo men uchun og'ir.",
+      "ˈjumɪd"
+     ],
+     [
+      "mild",
+      "mo'tadil",
+      "Winters are mild in Tashkent.",
+      "Toshkentda qishlar mo'tadil.",
+      "maɪld"
+     ],
+     [
+      "temperature",
+      "harorat",
+      "The temperature had been falling all night.",
+      "Harorat tun bo'yi tushib borgan edi.",
+      "ˈtɛmpərəʧər"
+     ],
+     [
+      "degrees",
+      "daraja",
+      "It's 35 degrees today.",
+      "Bugun 35 daraja.",
+      "dɪˈgriz"
+     ],
+     [
+      "forecast",
+      "ob-havo ma'lumoti",
+      "The forecast says rain tomorrow.",
+      "Ma'lumotga ko'ra ertaga yomg'ir.",
+      "ˈfɔrˌkæst"
+     ],
+     [
+      "rain (v)",
+      "yomg'ir yog'moq",
+      "It had been raining for hours when we left.",
+      "Biz ketganimizda soatlab yomg'ir yog'ib turgan edi.",
+      "reɪn (vi)"
+     ],
+     [
+      "snow (v)",
+      "qor yog'moq",
+      "It had been snowing since morning.",
+      "Ertalabdan beri qor yog'ib turgan edi.",
+      "snoʊ (vi)"
+     ]
+    ],
+    "strong": [
+     [
+      "hail",
+      "do'l",
+      "Hail damaged the cars.",
+      "Do'l mashinalarga zarar yetkazdi.",
+      "heɪl"
+     ],
+     [
+      "overcast",
+      "to'la bulutli",
+      "The sky was overcast.",
+      "Osmon to'la bulut edi.",
+      "ˈoʊvərˌkæst"
+     ],
+     [
+      "breezy",
+      "yengil shamolli",
+      "It's breezy by the sea.",
+      "Dengiz bo'yida yengil shamol.",
+      "ˈbrizi"
+     ],
+     [
+      "thunderstorm",
+      "momaqaldiroqli jala",
+      "A thunderstorm had been coming closer all afternoon.",
+      "Tushdan keyin momaqaldiroq yaqinlashib kelgan edi.",
+      "ˈθəndərˌstɔrm"
+     ],
+     [
+      "thunder",
+      "momaqaldiroq",
+      "The thunder woke the baby.",
+      "Momaqaldiroq chaqaloqni uyg'otdi.",
+      "ˈθəndər"
+     ],
+     [
+      "lightning",
+      "chaqmoq",
+      "Lightning hit the tree.",
+      "Chaqmoq daraxtga urdi.",
+      "ˈlaɪtnɪŋ"
+     ],
+     [
+      "blizzard",
+      "qor bo'roni",
+      "The blizzard had been blowing for two days.",
+      "Qor bo'roni ikki kun esgan edi.",
+      "ˈblɪzərd"
+     ],
+     [
+      "drought",
+      "qurg'oqchilik",
+      "The drought had been going on for months.",
+      "Qurg'oqchilik oylab davom etgan edi.",
+      "draʊt"
+     ],
+     [
+      "heatwave",
+      "jazirama davri",
+      "The heatwave had lasted a week.",
+      "Jazirama bir hafta davom etgan edi.",
+      ""
+     ],
+     [
+      "chilly",
+      "salqin-sovuq",
+      "It's chilly in the morning.",
+      "Ertalab salqin-sovuq.",
+      "ˈʧɪli"
+     ],
+     [
+      "freezing",
+      "muzlatadigan sovuq",
+      "It had been freezing all night, so the road was icy.",
+      "Tun bo'yi ayoz bo'ldi, shuning uchun yo'l muz edi.",
+      "ˈfrizɪŋ"
+     ],
+     [
+      "frost",
+      "qirov, ayoz",
+      "There was frost on the grass.",
+      "O'tda qirov bor edi.",
+      "frɔst"
+     ],
+     [
+      "drizzle",
+      "shivalab yog'ayotgan yomg'ir",
+      "It had been drizzling all morning.",
+      "Ertalab bo'yi shivalab yomg'ir yoqqan edi.",
+      "ˈdrɪzəl"
+     ],
+     [
+      "downpour",
+      "jala",
+      "We got wet in the downpour.",
+      "Jalada ho'l bo'ldik.",
+      "ˈdaʊnpɔr"
+     ],
+     [
+      "rainbow",
+      "kamalak",
+      "A rainbow appeared after the rain.",
+      "Yomg'irdan keyin kamalak chiqdi.",
+      "ˈreɪnˌboʊ"
+     ],
+     [
+      "calm",
+      "sokin, shamolsiz",
+      "The sea was calm in the morning.",
+      "Ertalab dengiz sokin edi.",
+      "kɑm"
+     ],
+     [
+      "gusty",
+      "kuchli-uzuq shamolli",
+      "Gusty winds broke the umbrella.",
+      "Kuchli shamol soyabonni sindirdi.",
+      "ˈgəsti"
+     ],
+     [
+      "sleet",
+      "qor aralash yomg'ir",
+      "Sleet had been falling since noon.",
+      "Tushdan beri qor aralash yomg'ir yog'ayotgan edi.",
+      "slit"
+     ],
+     [
+      "mist",
+      "yengil tuman",
+      "Mist covered the river.",
+      "Daryoni yengil tuman qopladi.",
+      "mɪst"
+     ],
+     [
+      "muggy",
+      "dim, dimiqtiradigan",
+      "August nights are muggy.",
+      "Avgust kechalari dim.",
+      "ˈməgi"
+     ]
+    ],
+    "super": [
+     [
+      "tornado",
+      "tornado, quyun",
+      "The tornado destroyed twenty houses.",
+      "Tornado yigirma uyni vayron qildi.",
+      "tɔrˈneɪˌdoʊ"
+     ],
+     [
+      "cyclone",
+      "siklon",
+      "The cyclone had been moving towards the coast for days.",
+      "Siklon kunlab qirg'oq tomon harakatlanib kelgan edi.",
+      "sɪˈkloʊn"
+     ],
+     [
+      "gale",
+      "dovul",
+      "A gale had been blowing all night.",
+      "Tun bo'yi dovul esgan edi.",
+      "geɪl"
+     ],
+     [
+      "monsoon",
+      "musson (yomg'ir mavsumi)",
+      "The monsoon brings heavy rain.",
+      "Musson kuchli yomg'ir olib keladi.",
+      "mɑnˈsun"
+     ],
+     [
+      "squall",
+      "to'satdan kuchli shamol",
+      "A squall hit the boats.",
+      "Kuchli shamol qayiqlarga urildi.",
+      "skwɔl"
+     ],
+     [
+      "precipitation",
+      "yog'ingarchilik",
+      "Precipitation has been low this year.",
+      "Bu yil yog'ingarchilik kam bo'ldi.",
+      "prɪˌsɪpɪˈteɪʃən"
+     ],
+     [
+      "climate",
+      "iqlim",
+      "Uzbekistan has a continental climate.",
+      "O'zbekiston iqlimi kontinental.",
+      "ˈklaɪmɪt"
+     ],
+     [
+      "climate change",
+      "iqlim o'zgarishi",
+      "Climate change has made summers hotter.",
+      "Iqlim o'zgarishi yozni issiqroq qildi.",
+      "ˈklaɪmɪt ʧeɪnʤ"
+     ],
+     [
+      "seasonal",
+      "mavsumiy",
+      "Seasonal rain comes in spring.",
+      "Mavsumiy yomg'ir bahorda keladi.",
+      "ˈsizənəl"
+     ],
+     [
+      "haze",
+      "xira tuman, chang",
+      "Haze covered the city for days.",
+      "Shaharni kunlab xira tuman qopladi.",
+      "heɪz"
+     ],
+     [
+      "sunrise",
+      "quyosh chiqishi",
+      "We watched the sunrise from the hill.",
+      "Tepalikdan quyosh chiqishini tomosha qildik.",
+      "ˈsənˌraɪz"
+     ],
+     [
+      "sunset",
+      "quyosh botishi",
+      "The sunset was red and gold.",
+      "Quyosh botishi qizil va tilla rangda edi.",
+      "ˈsənˌsɛt"
+     ],
+     [
+      "raindrop",
+      "yomg'ir tomchisi",
+      "Raindrops were falling on the window.",
+      "Yomg'ir tomchilari derazaga tushardi.",
+      "ˈreɪnˌdrɑp"
+     ],
+     [
+      "weatherman / forecaster",
+      "ob-havo ma'lumotchisi",
+      "The weatherman had been warning about the storm for days.",
+      "Ma'lumotchi kunlab bo'ron haqida ogohlantirgan edi.",
+      "ˈwɛðərˌmæn  ˈfɔrˌkæstər"
+     ],
+     [
+      "flood",
+      "toshqin",
+      "The river had been rising for a week before the flood.",
+      "Toshqindan oldin daryo bir hafta ko'tarilib borgan edi.",
+      "fləd"
+     ],
+     [
+      "frosty",
+      "qirovli, ayozli",
+      "It was a frosty morning.",
+      "Ayozli tong edi.",
+      "ˈfrɔsti"
+     ],
+     [
+      "chill",
+      "sovuq havo, izg'irin",
+      "There's a chill in the air.",
+      "Havoda izg'irin bor.",
+      "ʧɪl"
+     ],
+     [
+      "heat",
+      "issiqlik, jazirama",
+      "The heat had been unbearable all week.",
+      "Bir hafta jazirama chidab bo'lmas edi.",
+      "hit"
+     ],
+     [
+      "shade",
+      "soya",
+      "Sit in the shade — it's too hot.",
+      "Soyada o'tir — juda issiq.",
+      "ʃeɪd"
+     ],
+     [
+      "umbrella (weather)",
+      "soyabon",
+      "Take an umbrella — the forecast says rain.",
+      "Soyabon ol — ma'lumotda yomg'ir.",
+      "ˈəmˌbrɛlə (ˈwɛðər)"
+     ]
+    ],
+    "normativ": [
+     "Og'zaki: CORE 20 so'z + tarjima + gap, 1.5 daqiqa — 1 coin.",
+     "Yozma (keyingi darsda): 20 so'z, 5 daqiqa — 2 coin. STRONG/SUPER — +2 / +3 coin."
+    ]
+   },
+   "class_ex": [
+    {
+     "title": "had been + V-ing",
+     "type": "gap",
+     "instr": "Qavsdagi fe'lni Past Perfect Continuous'da yozing",
+     "items": [
+      "The ground was wet because it ___ (rain) all night.",
+      "They ___ (wait) for two hours by the time the bus came.",
+      "She was tired because she ___ (work) since 6 am.",
+      "How long ___ you ___ (live) there before you moved?",
+      "It ___ (snow) for days, so the roads were closed.",
+      "He ___ (not / sleep) well, so he looked terrible.",
+      "We ___ (drive) for five hours when the storm started.",
+      "___ it ___ (freeze) long when the pipes burst?"
+     ],
+     "answers": [
+      "had been raining",
+      "had been waiting",
+      "had been working",
+      "had … been living",
+      "had been snowing",
+      "hadn't been sleeping",
+      "had been driving",
+      "Had … been freezing"
+     ]
+    },
+    {
+     "title": "Past Perfect yoki Past Perfect Continuous",
+     "type": "choose",
+     "instr": "Natija (had + V3) yoki jarayon (had been + V-ing)?",
+     "items": [
+      "By 8 o'clock she had written / had been writing three letters.",
+      "She was tired: she had written / had been writing letters all morning.",
+      "The road was icy because it had frozen / had been freezing all night.",
+      "When we arrived, the storm had stopped / had been stopping.",
+      "He had run / had been running for an hour, so he was out of breath.",
+      "They had lived / had been living there for ten years when they sold the house."
+     ],
+     "answers": [
+      "had written",
+      "had been writing",
+      "had been freezing",
+      "had stopped",
+      "had been running",
+      "had been living"
+     ]
+    },
+    {
+     "title": "Iz — sabab",
+     "type": "write",
+     "instr": "Vaziyatga qarab sabab (had been + V-ing)",
+     "items": [
+      "The children were wet. (play in the rain)",
+      "The car was dirty. (drive on muddy roads)",
+      "Her eyes were red. (cry)",
+      "The streets were white. (snow all night)",
+      "He was sunburnt. (lie in the sun)"
+     ],
+     "answers": [
+      "They had been playing in the rain.",
+      "We had been driving on muddy roads.",
+      "She had been crying.",
+      "It had been snowing all night.",
+      "He had been lying in the sun."
+     ]
+    },
+    {
+     "title": "Uch zamon",
+     "type": "compare",
+     "instr": "Bitta vaziyatni uch zamon bilan: Present Perfect Continuous / Past Perfect Continuous / Future Perfect (10-dars)",
+     "items": [
+      "rain / 3 hours",
+      "study English / 2 years",
+      "wait / 20 minutes"
+     ],
+     "answers": [
+      "It has been raining for 3 hours. / It had been raining for 3 hours when we left. / By tonight it will have rained for 10 hours.",
+      "I have been studying English for 2 years. / I had been studying for 2 years when I passed IELTS. / By 2027 I will have studied for 4 years.",
+      "I have been waiting for 20 minutes. / I had been waiting for 20 minutes when he came. / By 9 I will have waited for an hour."
+     ]
+    },
+    {
+     "title": "Ob-havo hikoyasi",
+     "type": "speaking",
+     "instr": "Juftlikda: esda qolgan ob-havo kuni haqida 5 gap; kamida 2 ta \"had been …ing\"",
+     "items": [
+      "start",
+      "before",
+      "because",
+      "what I did",
+      "end"
+     ],
+     "answers": [
+      "Last winter there was a big snowstorm.",
+      "It had been snowing for two days before the schools closed.",
+      "The roads were closed because it had been freezing all night.",
+      "We had been playing outside for hours when Mum called us.",
+      "By the evening it had stopped, and a rainbow appeared."
+     ]
+    },
+    {
+     "title": "Lug'at: ob-havo ma'lumoti",
+     "type": "match",
+     "instr": "Ta'rifga so'z (WEATHER)",
+     "items": [
+      "very light rain",
+      "very heavy, sudden rain",
+      "snow with very strong wind",
+      "a long period without rain",
+      "a long period of very hot weather",
+      "the weather report for tomorrow"
+     ],
+     "answers": [
+      "drizzle",
+      "downpour",
+      "blizzard",
+      "drought",
+      "heatwave",
+      "forecast"
+     ],
+     "box": [
+      "drizzle",
+      "downpour",
+      "blizzard",
+      "drought",
+      "heatwave",
+      "forecast"
+     ]
+    },
+    {
+     "title": "Xatoni toping",
+     "type": "correct",
+     "instr": "Har gapda 1 xato",
+     "items": [
+      "It had been rain all night.",
+      "They had been waiting since two hours.",
+      "How long have you been waiting when the bus came?",
+      "I had been knowing her for years.",
+      "The storm had been stopping when we left."
+     ],
+     "answers": [
+      "It had been raining all night.",
+      "They had been waiting for two hours.",
+      "How long had you been waiting when the bus came?",
+      "I had known her for years.",
+      "The storm had stopped when we left."
+     ]
+    }
+   ],
+   "homework_intro": [
+    "Kitobdagi shu dars mashqlari; reading topic'lar tarjimasi; lug'at normativ (ovozli)."
+   ],
+   "homework": [
+    {
+     "title": "Kitob",
+     "type": "book",
+     "instr": "Lesson 12 jadvalini 3 marta ko'chiring; WEATHER 44 so'zni yozing (kitob normativi 5 daqiqa)",
+     "answers": "Kitob."
+    },
+    {
+     "title": "Reading Topic 32–33",
+     "type": "read",
+     "instr": "Topic 33 (The Ice Hotel) — kitobdagi 4 savolga javob; Topic 32 — 5 so'z",
+     "answers": "Ustoz tekshiradi."
+    },
+    {
+     "title": "O'tgan hafta",
+     "type": "write",
+     "instr": "8 gap: \"had been …ing\" (5) + \"had + V3\" (3) — o'tgan haftadagi voqealar",
+     "answers": "Erkin; jarayon/natija farqi."
+    },
+    {
+     "title": "Tarjima",
+     "type": "translate",
+     "instr": "O'zbekchadan",
+     "items": [
+      "Biz ketganimizda uch soatdan beri yomg'ir yog'ayotgan edi.",
+      "U charchagan edi, chunki kun bo'yi ishlagan edi.",
+      "Avtobus kelguncha qancha kutgan edingiz?",
+      "Tun bo'yi ayoz bo'lgani uchun yo'l muz edi.",
+      "Ertaga ob-havo qanday bo'ladi?"
+     ],
+     "answers": [
+      "It had been raining for three hours when we left.",
+      "She/He was tired because she/he had been working all day.",
+      "How long had you been waiting when the bus came?",
+      "The road was icy because it had been freezing all night.",
+      "What will the weather be like tomorrow?"
+     ]
+    },
+    {
+     "title": "Lug'at kartochkalari",
+     "type": "vocab",
+     "instr": "WEATHER CORE 20 — Jony Student flashcard",
+     "answers": "Ilova tekshiradi."
+    },
+    {
+     "title": "Ovozli normativ",
+     "type": "voice",
+     "instr": "CORE 20 + tarjima, 1.5 daqiqa",
+     "answers": "1 coin."
+    }
+   ],
+   "normativ": [
+    [
+     "Yozma normativ — Nationalities",
+     "20 juftlik, 5 daqiqa",
+     "2 coin"
+    ],
+    [
+     "Kombinatsiya (kitob jadvali)",
+     "1 daqiqada 3 / 4 / 5 marta",
+     "warm-up / normativ / 2 coin"
+    ],
+    [
+     "Weather yozma (kitob)",
+     "44 so'z, 5 daqiqa",
+     "2 coin"
+    ]
+   ],
+   "reading": {
+    "title": "Topic 31. Growing up poor",
+    "text": [
+     "My name is Mike, and I was born in a very poor neighbourhood in Los Angeles. When I was little, my mother took care of my brother and me because my father had left before I came to this world. My mother had to work two jobs that didn't pay much. She had to work very hard so that we could have food, clothes and a place to live.",
+     "Every day, she usually arrived home very late, and she was exhausted. Still, she always cooked nice meals for us, played with us, and made sure that we did our homework. She always insisted on how important it was to get a good education. She couldn't finish school because she got pregnant with me when she was just a teenager. \"I couldn't finish school, and that's why I must work so hard now,\" she often said.",
+     "Children were very violent in my neighbourhood. There was a lot of crime and drugs. It wasn't easy to be a good student there. The other children hated you if you got good grades, so I wasn't very popular. The only positive thing about living in that place is that you needed to be very clever to survive, and that helped me later in life.",
+     "Finally, my brother and I finished high school. I went to university because I was a very good basketball player, and basketball paid for my university degree. On the day of my graduation, my mother was in tears. And she was in tears again the day I showed her our new apartment, away from the neighbourhood. Now she doesn't have to work two jobs anymore, and I take care of her."
+    ],
+    "glossary": [
+     "neighbourhood — mahalla",
+     "take care of — g'amxo'rlik qilmoq",
+     "exhausted — holdan toygan",
+     "insist — qat'iy turmoq",
+     "violent — zo'ravon",
+     "crime — jinoyat",
+     "grades — baholar",
+     "survive — omon qolmoq",
+     "degree — diplom",
+     "in tears — ko'zida yosh bilan"
+    ],
+    "tasks": [
+     {
+      "title": "Past Perfect / Continuous toping",
+      "type": "find",
+      "instr": "Matndan yoki matn asosida \"had\" bilan gaplar",
+      "items": [
+       "father",
+       "mother / work",
+       "school"
+      ],
+      "answers": [
+       "My father had left before I came to this world.",
+       "By the time Mike went to university, his mother had been working two jobs for years.",
+       "She hadn't finished school because she had got pregnant as a teenager."
+      ]
+     },
+     {
+      "title": "True / False",
+      "type": "tf",
+      "instr": "Matnga ko'ra",
+      "items": [
+       "Mike's father took care of the family.",
+       "His mother worked two jobs.",
+       "Good students were popular in his neighbourhood.",
+       "Basketball paid for his university."
+      ],
+      "answers": [
+       "False",
+       "True",
+       "False",
+       "True"
+      ]
+     },
+     {
+      "title": "Savol",
+      "type": "short",
+      "instr": "Qisqa javob",
+      "items": [
+       "Why couldn't his mother finish school?",
+       "What was the only positive thing about the neighbourhood?",
+       "What does Mike do for his mother now?"
+      ],
+      "answers": [
+       "She got pregnant as a teenager.",
+       "You needed to be very clever to survive.",
+       "He takes care of her; she doesn't work two jobs."
+      ]
+     }
+    ],
+    "book_ref": "Reading book IELTS 2.0: Topic 31 (sinfda); Topic 32–33 — uyga."
+   },
+   "listening": {
+    "audios": "Audio 21–30 (fayllar hali yo'q — ustoz ob-havo ma'lumotini o'qiydi)",
+    "intro": [
+     "Skript: \"Good evening, here is the weather. It had been raining for three days before the sun finally came out this morning. Tomorrow will be sunny and warm, around 24 degrees. But on Thursday a thunderstorm will arrive from the west with gusty winds and possible hail. Friday will be cooler and cloudy, about 15 degrees. The weekend looks calm and mild — perfect for a picnic.\"",
+     "1-tinglash: haftaning qaysi kuni eng yomon? 2-tinglash: jadval."
+    ],
+    "tasks": [
+     {
+      "title": "Ob-havo jadvali",
+      "type": "gap",
+      "instr": "Skript bo'yicha",
+      "items": [
+       "Before this morning, it had been raining for ___ days.",
+       "Tomorrow: ___ and warm, ___ degrees.",
+       "Thursday: a ___ with gusty winds and possible ___.",
+       "Friday: cooler and ___, about ___ degrees.",
+       "Weekend: ___ and mild."
+      ],
+      "answers": [
+       "three",
+       "sunny, 24",
+       "thunderstorm, hail",
+       "cloudy, 15",
+       "calm"
+      ]
+     }
+    ]
+   }
   }
  ]
 }

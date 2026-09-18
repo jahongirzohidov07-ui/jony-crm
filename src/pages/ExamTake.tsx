@@ -26,6 +26,7 @@ type Part = {
   instructions?: string;
   passage?: string;
   audio_url?: string | null;
+  image?: string | null;
   questions: Q[];
 };
 type PublicExam = {
@@ -357,6 +358,9 @@ export default function ExamTake() {
           {p.audio_url && (
             <audio controls src={p.audio_url} className="w-full mt-3" />
           )}
+          {p.image && (
+            <img src={p.image} alt="" className="mt-3 w-full max-w-xl rounded-lg border border-slate-200" />
+          )}
           {p.passage && (
             <div className="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 whitespace-pre-line leading-relaxed">
               {p.passage}
@@ -377,7 +381,14 @@ export default function ExamTake() {
                   {q.q}
                 </p>
                 {q.type === "choice" ? (
-                  <div className="grid gap-1.5">
+                  // Faqat harfli variantlar (rasmdan tanlash) — bir qatorda
+                  <div
+                    className={
+                      (q.options || []).every((o, i) => o === LETTERS[i])
+                        ? "flex flex-wrap gap-1.5"
+                        : "grid gap-1.5"
+                    }
+                  >
                     {(q.options || []).map((o, oi) => (
                       <button
                         key={oi}
@@ -389,7 +400,7 @@ export default function ExamTake() {
                         }`}
                       >
                         <span className="font-semibold mr-2">{LETTERS[oi]}</span>
-                        {o}
+                        {o !== LETTERS[oi] && o}
                       </button>
                     ))}
                   </div>

@@ -624,6 +624,175 @@ Rob: Fantastic!""",
     ],
 }
 
+
+MID_IMG = "/exam-img/step1-mid/"
+ABC = ["A", "B", "C"]
+A_G = ["A", "B", "C", "D", "E", "F", "G"]
+
+# Mid-course: Listening (1–20) + Reading (21–45) bitta testda. Reading
+# faylidagi raqamlar 20 taga surilgan — matndagi bo'sh joylar ham shunga
+# mos, o'quvchi raqamlarni adashtirmasin.
+STEP1_MID = {
+    "level": "step1", "kind": "mid", "unit_no": None,
+    "title": "Step 1 · Mid-course Test (Listening + Reading)",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Listening · Part 1",
+            "instructions": "You will hear five short conversations. For each "
+                            "question, choose the correct picture. You will "
+                            "hear each conversation twice.",
+            "questions": [
+                _c("Where does the woman have lunch?", ABC, "C", image=MID_IMG + "l1.jpg"),
+                _c("When does the woman usually have breakfast?", ABC, "B", image=MID_IMG + "l2.jpg"),
+                _c("What does the man usually have for lunch?", ABC, "C", image=MID_IMG + "l3.jpg"),
+                _c("What drink does the woman order?", ABC, "A", image=MID_IMG + "l4.jpg"),
+                _c("Who is Steve’s brother?", ABC, "A", image=MID_IMG + "l5.jpg"),
+            ],
+        },
+        {
+            "title": "Listening · Part 2",
+            "instructions": "Listen to Joe talking to Claire about his family. "
+                            "Which job does each person do? Choose a letter "
+                            "A – G. You will hear the conversation twice.",
+            "image": MID_IMG + "l_jobs.jpg",
+            "questions": [
+                _c("Jane", A_G, "D"),
+                _c("Becky", A_G, "G"),
+                _c("Sam", A_G, "E"),
+                _c("Daniel", A_G, "C"),
+                _c("Mary", A_G, "F"),
+            ],
+        },
+        {
+            "title": "Listening · Part 3",
+            "instructions": "You will hear an interview with a woman called "
+                            "Lisa Galvani talking about going to other "
+                            "countries. For each question choose the correct "
+                            "answer. You will hear the conversation twice.",
+            "questions": [
+                _c("What is Lisa’s job?",
+                   ["a waitress", "a receptionist", "a shop assistant"], "B"),
+                _c("Where does Lisa want to go first?",
+                   ["China", "Brazil", "the USA"], "A"),
+                _c("Who can go with Lisa?",
+                   ["her husband", "her brother", "her father"], "C"),
+                _c("What does Lisa take with her when she goes to another country?",
+                   ["a book", "a phone", "an umbrella"], "A"),
+                _c("When she gets back home, what does Lisa want to do first?",
+                   ["teach in a school", "study at university",
+                    "work in another country"], "B"),
+            ],
+        },
+        {
+            "title": "Listening · Part 4 · Lisa’s hotel",
+            "instructions": "You will hear a girl telling her mother about her "
+                            "news. For each question, write the correct answer "
+                            "in the gap.",
+            "questions": [
+                _t("The hotel address: 26 ____________ Road", "Station"),
+                _t("The hotel doesn’t have: ____________", "Wi-fi", "wifi"),
+                _t("The hotel phone number is: ____________", "829774"),
+                _t("The receptionist is from: ____________", "Brazil"),
+                _t("The best time to phone is: ____________",
+                   "7", "7pm", "7 pm", "7.00", "7:00", "at 7.00",
+                   "at 7 o’clock", "7 o’clock", "seven o’clock", "seven"),
+            ],
+        },
+        {
+            "title": "Reading · Part 1",
+            "instructions": "Read the sentences. Which place is it? Choose a "
+                            "letter A – G.",
+            "image": MID_IMG + "r_places.jpg",
+            "questions": [
+                _c("I have breakfast here every day before I go to school.", A_G, "F"),
+                _c("I want to go shopping, but first I need to get some money.", A_G, "E"),
+                _c("People usually sit here and look at the beautiful flowers "
+                   "and trees.", A_G, "G"),
+                _c("There are a lot of interesting old things to look at.", A_G, "A"),
+                _c("We usually go there on Saturday night to watch something.", A_G, "C"),
+            ],
+        },
+        {
+            "title": "Reading · Part 2 · Martin’s daily routine",
+            "instructions": "Read the sentences about Martin’s daily routine, "
+                            "and choose the correct answer for each gap.",
+            "questions": [
+                _c("Martin ………… quite far away, so he takes the train to work every day.",
+                   ["lives", "goes", "studies"], "A"),
+                _c("When Martin is on the train, he likes to read a ………… .",
+                   ["phone", "Wi-Fi", "newspaper"], "C"),
+                _c("Martin ………… work at 5pm.", ["gets up", "goes", "finishes"], "C"),
+                _c("After work, Martin usually goes home to have ………… with his mother.",
+                   ["breakfast", "dinner", "lunch"], "B"),
+                _c("At the weekend, he likes to play football with friends – he "
+                   "is ………… then.", ["happy", "right", "easy"], "A"),
+            ],
+        },
+        {
+            "title": "Reading · Part 3 · A Teacher’s Life",
+            "instructions": "Read the text about Janet, a teacher, and the "
+                            "questions below. For each question, choose the "
+                            "correct answer.",
+            "passage": """A Teacher’s Life
+
+I’m a teacher and I love my job. It's not an easy job – there are always problems, but it's never boring. I usually arrive at school at 7.30, and so I get up at 6.30. There is a lot of work to do before the students arrive at 8.30.
+I need to get there early because sometimes parents come to talk to me before school starts. There are 30 children in my class. When they come to school, they sometimes talk to me about why they aren't happy. I feel sad then, but they also talk about good things and sometimes they are very funny.
+Lessons begin at 9.00. Sometimes we read books or newspapers for children, but we usually use computers for reading because the children think they are good fun.
+Lunch time starts at 11.55. It's a busy time for the teachers. The children eat lunch together but the teachers stay in their classrooms eating and working because we need to think about the afternoon lessons. We don't usually have time to eat a big lunch, just fruit and a sandwich.
+In the afternoon, the children are tired and they don't want to work. We play games or we go to the park. They are happy with their friends.
+School finishes at 3.15 and the children go home. Teachers stay to work and I never go home before 5.00; usually it's 7.00. At the end of the day I'm tired but happy.""",
+            "questions": [
+                _c("Janet gets to work at", ["6.30.", "7.30.", "8.30."], "B"),
+                _c("Janet is not happy when",
+                   ["there are many children in her class.",
+                    "the children’s parents talk to her.",
+                    "the children have problems."], "C"),
+                _c("At lunchtime the teachers",
+                   ["don’t have much time.", "don’t work.", "eat a lot of food."], "A"),
+                _c("In the afternoon the children",
+                   ["don’t want to study.", "go to sleep.",
+                    "don’t play with their friends."], "A"),
+                _c("Janet’s day usually finishes at",
+                   ["a quarter past three.", "five o’clock.", "seven o’clock."], "C"),
+            ],
+        },
+        {
+            "title": "Reading · Part 4 · Bristol",
+            "instructions": "Read the text about the city of Bristol in the UK "
+                            "and choose the correct answer for each gap.",
+            "passage": """Bristol
+
+Bristol is a beautiful small city in the UK, and there are many things to see and do there. It has a lot of small shops – they sell local things. The local people (36) ………… want to shop in the big supermarkets because they (37) ………… like to spend money to help (38) ………… local businesses. (39) ………… a very nice city with lots of trees, and the parks and river are nice places to go for a walk. In many places the (40) ………… are also very old and beautiful.""",
+            "questions": [
+                _c("", ["isn’t", "aren’t", "don’t"], "C"),
+                _c("", ["never", "usually", "every day"], "B"),
+                _c("", ["their", "his", "our"], "A"),
+                _c("", ["He’s", "They’re", "It’s"], "C"),
+                _c("", ["house", "houses", "house’s"], "B"),
+            ],
+        },
+        {
+            "title": "Reading · Part 5 · Dear Phil",
+            "instructions": "Read the text. Think of the word which best fits "
+                            "each gap. Write ONE word for each gap.",
+            "passage": """Dear Phil,
+
+Hi, how are you? I am at a language school in Italy now. (41) ………… are lots of students in my class – all from different countries. There (42) ………… any other English people – only me. My teacher’s name is Sara. She is very good. The lessons are interesting but they are sometimes difficult. I speak a lot of Italian because she (43) ………… speak English in class with us. I see Sara every day because she lives near my hotel. I like the food here but Italian people usually (44) ………… dinner in restaurants very late, sometimes at 10 o’clock at night! (45) ………… you like Italian food?
+
+Best wishes,
+Cathy""",
+            "questions": [
+                _t("", "There"),
+                _t("", "aren’t", "are not"),
+                _t("", "doesn’t", "does not", "can’t", "cannot"),
+                _t("", "eat", "have"),
+                _t("", "Do"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -631,4 +800,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit4", STEP1_UNIT4),
     ("exam_tpl_step1_unit5", STEP1_UNIT5),
     ("exam_tpl_step1_unit6", STEP1_UNIT6),
+    ("exam_tpl_step1_mid", STEP1_MID),
 ]

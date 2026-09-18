@@ -146,6 +146,8 @@ def clean_parts(parts) -> list:
             "instructions": str(p.get("instructions") or "").strip(),
             "passage": str(p.get("passage") or "").strip(),
             "audio_url": (str(p.get("audio_url") or "").strip() or None),
+            # Bo'lim rasmi — masalan A–G kasblar jadvali (2026-09-18)
+            "image": _clean_image(p.get("image"), p.get("title") or "Bo'lim"),
             "questions": qs,
         })
     if n == 0:
@@ -159,7 +161,7 @@ def public_parts(parts: list) -> list:
     for p in parts:
         out.append({
             **{k: p.get(k) for k in ("title", "instructions", "passage",
-                                     "audio_url")},
+                                     "audio_url", "image")},
             "questions": [{k: q.get(k) for k in ("id", "n", "type", "q",
                                                  "options", "image")}
                           for q in p.get("questions") or []],
@@ -396,10 +398,10 @@ def _answer_sheet(detail: list, qmap: dict) -> list:
                 gi = int(given) if given not in (None, "") else None
             except (TypeError, ValueError):
                 gi = None
-            given_text = (f"{'ABCDEFGH'[gi]}) {opts[gi]}"
+            given_text = (_opt_label(opts, gi)
                           if gi is not None and 0 <= gi < len(opts) else None)
             a = q.get("answer")
-            correct = (f"{'ABCDEFGH'[a]}) {opts[a]}"
+            correct = (_opt_label(opts, a)
                        if isinstance(a, int) and 0 <= a < len(opts) else None)
         else:
             given_text = given if given not in (None, "") else None
@@ -413,6 +415,12 @@ def _answer_sheet(detail: list, qmap: dict) -> list:
                     "type": q.get("type"), "given_text": given_text,
                     "correct": correct})
     return out
+
+
+def _opt_label(opts: list, i: int) -> str:
+    """ "B) is" — variant faqat harfning o'zi bo'lsa (rasmdan tanlash) "B"."""
+    letter = "ABCDEFGH"[i]
+    return letter if opts[i] == letter else f"{letter}) {opts[i]}"
 
 
 def _qmap(parts: list) -> dict:

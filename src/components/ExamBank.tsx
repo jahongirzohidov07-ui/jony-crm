@@ -28,6 +28,7 @@ type Part = {
   instructions: string;
   passage: string;
   audio_url: string | null;
+  image?: string | null;
   questions: Q[];
 };
 type Tpl = {
@@ -348,6 +349,33 @@ function TemplateEditor({
               <input className={inp + " mt-2"} placeholder="Audio havolasi (listening uchun, ixtiyoriy)"
                      value={p.audio_url || ""}
                      onChange={(e) => setPart(pi, { audio_url: e.target.value || null })} />
+              <div className="mt-2 flex items-center gap-2">
+                {p.image ? (
+                  <>
+                    <img src={p.image} alt="" className="h-20 rounded border border-slate-200" />
+                    {!readOnly && (
+                      <button type="button" onClick={() => setPart(pi, { image: null })}
+                              className="text-xs text-slate-400 hover:text-red-500">bo'lim rasmini olib tashlash</button>
+                    )}
+                  </>
+                ) : (
+                  !readOnly && (
+                    <label className="text-xs text-brand-600 cursor-pointer">
+                      + bo'lim rasmi (masalan A–G rasmlar jadvali)
+                      <input type="file" accept="image/*" className="hidden"
+                             onChange={async (e) => {
+                               const file = e.target.files?.[0];
+                               if (!file) return;
+                               try {
+                                 setPart(pi, { image: await imageToDataUrl(file) });
+                               } catch (err) {
+                                 setError(err instanceof Error ? err.message : "Xatolik");
+                               }
+                             }} />
+                    </label>
+                  )
+                )}
+              </div>
 
               <div className="mt-3 space-y-3">
                 {p.questions.map((q, qi) => {

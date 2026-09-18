@@ -2205,6 +2205,112 @@ But I remember when it rained there was nothing to do. Then I found some books i
     ],
 }
 
+
+STEP2_UNIT7 = {
+    "level": "step2", "kind": "unit", "unit_no": 7,
+    "title": "Step 2 · Unit 7 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Great! I love it!", "That’s all right.", "Excuse me, but this is mine."], "B"),
+                _c("", ["Really? Why?", "Great! I’m going too.", "I’m sorry, I don’t know."], "A"),
+                _c("", ["Great!", "I’d like some help.", "Is it? I’m really sorry."], "C"),
+                _c("", ["Don’t worry.", "You’re welcome.", "Excuse me, please."], "A"),
+                _c("", ["No problem. They all look the same.", "That’s a pity. I don’t have one.", "Excuse me. It’s raining."], "A"),
+                _c("", ["Certainly. What’s the seat number?", "It doesn’t matter. There are lots of other seats.", "Excuse me. It’s my seat."], "B"),
+                _c("", ["Great!", "Sure, no problem.", "No, wait."], "A"),
+                _c("", ["It doesn’t matter. This is seat 42.", "That’s all right. I’m sitting here.", "I’m sorry. I didn’t see the seat number."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Transport",
+            "instructions": "Read the sentences about transport. Choose the "
+                            "missing word (A, B or C) for each space.",
+            "questions": [
+                _c("The seats in the bus are small and hard, so they’re not very ............ .",
+                   ["dangerous", "comfortable", "empty"], "B"),
+                _c("Motorbikes can be very ............ if you don’t ride them carefully.",
+                   ["dangerous", "expensive", "comfortable"], "A"),
+                _c("I don’t like helicopters because they aren’t very ............ .",
+                   ["sure", "safe", "serious"], "B"),
+                _c("I don’t travel by plane very often because it’s ............ .",
+                   ["fast", "clean", "expensive"], "C"),
+                _c("If you want to go to Cambridge, you need to ............ trains in London.",
+                   ["miss", "change", "bring"], "B"),
+                _c("We can ............ a tram to the beach from here.",
+                   ["take", "travel", "carry"], "A"),
+                _c("The bus to the station was late, so Jack ............ his train.",
+                   ["lost", "failed", "missed"], "C"),
+                _c("The bus was very hot and crowded, so I got ............ and walked home.",
+                   ["on", "off", "away"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Transport",
+            "instructions": "Read the descriptions of some words about "
+                            "transport. The first letter is already there. "
+                            "Write the whole word.",
+            "questions": [
+                _t("This goes very fast on the water.   s _ _ _ _ _ _ _ _",
+                   "speedboat", "peedboat", "speed boat"),
+                _t("You need to wash your car when it is this.   d _ _ _ _", "dirty", "irty"),
+                _t("A train is this if there are no people on it.   e _ _ _ _", "empty", "mpty"),
+                _t("You do this at the start of your train journey.   g _ _  o _",
+                   "get on", "et n"),
+                _t("A bus ticket is this when it doesn’t cost much money.   c _ _ _ _",
+                   "cheap", "heap"),
+                _t("This is a very big boat.   s _ _ _", "ship", "hip"),
+                _t("The metro is this when there are a lot of people there.   "
+                   "c _ _ _ _ _ _", "crowded", "rowded"),
+                _t("This has two wheels and it isn’t a bike.   s _ _ _ _ _ _",
+                   "scooter", "cooter"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the text about a holiday in Lisbon, in "
+                            "Portugal. Choose the best answer (A, B or C) for "
+                            "each space.",
+            "passage": """A holiday in Lisbon
+
+Last spring I had a holiday in Lisbon, in Portugal. I love walking around city streets, and I like (25) ………… photos too. Lisbon is perfect for that. I (26) ………… stay there very long – only 4 days – but it’s quite a small city, and it’s easy to get around. I usually hate (27) ………… by metro, but I didn’t mind (28) ………… the metro in Lisbon, because it’s clean and never too crowded. I didn’t (29) ………… everything in the city, but I had a great time.
+I don’t like (30) ………… in big hotels, because I think they’re boring. So I stayed with a friendly Portuguese family. I ate my breakfast there, but I didn’t (31) ………… my other meals with them because there are so many great restaurants in Lisbon. When my friends ask me ‘Why (32) ………… to Lisbon?’, the answer is easy: ‘It’s my favourite city!’""",
+            "questions": [
+                _c("", ["taking", "takes", "take"], "A"),
+                _c("", ["did", "don’t", "didn’t"], "C"),
+                _c("", ["travel", "travels", "travelling"], "C"),
+                _c("", ["using", "use", "used"], "A"),
+                _c("", ["sees", "see", "seeing"], "B"),
+                _c("", ["stay", "staying", "stayed"], "B"),
+                _c("", ["have", "had", "having"], "A"),
+                _c("", ["did you go", "you went", "you did go"], "A"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about travel. Choose the best "
+                            "answer (A, B or C) for each space.",
+            "questions": [
+                _c("My parents love ............ in the countryside.", ["cycle", "cycling", "cycled"], "B"),
+                _c("I ............ travel a lot when I was a student.", ["didn’t", "don’t", "doesn’t"], "A"),
+                _c("I hate ............ in the rain.", ["walk", "walked", "walking"], "C"),
+                _c("Where ............ get off the bus?", ["you did", "did you", "didn’t you"], "B"),
+                _c("‘Did you come by train?’ ‘Yes, I ............ .’", ["didn’t", "did", "do"], "B"),
+                _c("I don’t like ............ by metro when it’s busy.",
+                   ["travelling", "travel", "travelled"], "A"),
+                _c("Did your friend ............ to the USA on holiday?", ["went", "goes", "go"], "C"),
+                _c("Maria doesn’t like ............ because it’s so expensive.",
+                   ["flies", "fly", "flying"], "C"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2226,4 +2332,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit4", STEP2_UNIT4),
     ("exam_tpl_step2_unit5", STEP2_UNIT5),
     ("exam_tpl_step2_unit6", STEP2_UNIT6),
+    ("exam_tpl_step2_unit7", STEP2_UNIT7),
 ]

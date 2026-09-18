@@ -3285,6 +3285,126 @@ The journey to Barcelona was at night and I (29) ………… most of the way. S
     ],
 }
 
+
+STEP3_UNIT3 = {
+    "level": "step3", "kind": "unit", "unit_no": 3,
+    "title": "Step 3 · Unit 3 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["I don't agree with you.", "I'm looking for a present.", "It's half past twelve."], "B"),
+                _c("", ["How would you like to pay?", "When does it leave?", "Where do you want to go?"], "A"),
+                _c("", ["I don't mind.", "What about this?", "Thank you very much."], "C"),
+                _c("", ["Who's next, please?", "Can you enter your PIN, please?", "Would you like a necklace, perhaps?"], "C"),
+                _c("", ["Mm. What about this?", "Would you like to pay later?", "Here's your card."], "A"),
+                _c("", ["If you like.", "Something fun.", "That’s all right."], "B"),
+                _c("", ["What is it exactly?", "What has she bought?", "What sort of thing does she like?"], "C"),
+                _c("", ["It tells you the weather and the time.", "It's ready for your PIN now.", "It's very expensive."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Money",
+            "instructions": "Read the sentences about money. Choose the missing "
+                            "word A, B or C for each space.",
+            "questions": [
+                _c("James always ............ a joke about owing money, but I don't like it.",
+                   ["makes", "does", "gives"], "A"),
+                _c("David ............ something really nice for me last week - he lent me £20!",
+                   ["made", "gave", "did"], "C"),
+                _c("The Bank Manager ............ Ben pay all the money he owed.",
+                   ["gave", "got", "made"], "C"),
+                _c("Alex got a large ............ from the bank to help him start his business.",
+                   ["money", "loan", "account"], "B"),
+                _c("I love that coat but I can't ............ to buy it.",
+                   ["lend", "afford", "spend"], "B"),
+                _c("Please can you ............ me £10 until tomorrow?",
+                   ["pay", "borrow", "lend"], "C"),
+                _c("Do people usually ............ taxi drivers a tip in your country?",
+                   ["do", "give", "make"], "B"),
+                _c("How much do I ............ you for the shopping you did for me?",
+                   ["save", "buy", "owe"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Money",
+            "instructions": "Read the sentences about money. What are the "
+                            "missing words? The first letter is already there. "
+                            "Write the whole word.",
+            "questions": [
+                _t("I don't have much money in my bank a _ _ _ _ _ _ until they pay me "
+                   "next week.", "account", "ccount"),
+                _t("Excuse me, please can you give me d _ _ _ _ _ _ _ _ _ to the nearest "
+                   "bank?", "directions", "irections"),
+                _t("The supermarket has got some very good special o _ _ _ _ _ this week.",
+                   "offers", "ffers"),
+                _t("He tried to make a j _ _ _ about having no money but nobody laughed.",
+                   "joke", "oke"),
+                _t("I've just been paid so I can pay you b _ _ _ the money you lent me.",
+                   "back", "ack"),
+                _t("Jana did very w _ _ _ at maths at school so perhaps she can help you "
+                   "save money.", "well", "ell"),
+                _t("Jack is hoping to b _ _ _ _ _ some money from his parents to buy a "
+                   "new laptop.", "borrow", "orrow"),
+                _t("Don't worry about the money, it's no problem – come here – let me "
+                   "give you a big h _ _ .", "hug", "ug"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the letter from a girl to her friend. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """Dear Zuzana
+
+How are you? I hope you and your family are all well. I (25) ………… a great weekend. It was fantastic. I (26) ………… by train to visit my aunt. She lives in Scotland now. Have you ever been to Scotland? It (27) ………… my first visit and I loved it. My uncle and aunt (28) ………… there two months ago because my uncle got a job in the Bank of Scotland. My aunt's a teacher but she (29) ………… work yet. They have already bought a flat in the centre of Edinburgh, the capital city. They (30) ………… to pay a lot of money for it and it's very nice. I'd love to buy my own flat but I (31) ………… enough money yet. Do write and tell me how things are with you. I know you wanted to learn to drive. (32) ………… to have lessons?
+
+All best wishes
+Fiona""",
+            "questions": [
+                _c("", ["have already had", "have just had", "have still had"], "B"),
+                _c("", ["am going", "have gone", "went"], "C"),
+                _c("", ["is", "was", "has been"], "B"),
+                _c("", ["have moved", "are moving", "moved"], "C"),
+                _c("", ["isn’t finding", "hasn’t found", "doesn’t find"], "B"),
+                _c("", ["need", "have needed", "needed"], "C"),
+                _c("", ["haven’t saved", "am not saving", "don’t save"], "A"),
+                _c("", ["Have you already start", "Have you already started", "Are you already starting"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Sentence transformation",
+            "instructions": "Complete the second sentence so that it means the "
+                            "same as the first. Use no more than three words.",
+            "questions": [
+                _t("It is ten o'clock and Jack is still doing his homework.\n"
+                   "It is ten o'clock and Jack ………… finished his homework yet.",
+                   "hasn't", "has not"),
+                _t("I've been too busy to go shopping so we have no food.\n"
+                   "I ………… had time to go shopping so we have no food.",
+                   "haven't", "have not"),
+                _t("Our visitors are just walking up to our front door.\n"
+                   "Our visitors ………… arrived at our front door.",
+                   "have just", "have", "just"),
+                _t("I have bought so many things that I have no money now.\n"
+                   "I ………… all my money.", "have spent", "spent"),
+                _t("I love your new shoes - what did you pay for them, Sally?\n"
+                   "I love your new shoes - how much ………… cost, Sally?", "did they"),
+                _t("My parents are still in Canada.\n"
+                   "My parents ………… returned from Canada yet.", "haven't", "have not"),
+                _t("My sister often goes to Paris, but she never stays long.\n"
+                   "My sister has ………… to Paris many times, but she never stays long.",
+                   "been"),
+                _t("We're too late - the bank closed two minutes ago.\n"
+                   "We're too late - the bank has ………… closed.", "just", "already"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -3315,4 +3435,5 @@ TEMPLATES = [
     ("exam_tpl_step2_end", STEP2_END),
     ("exam_tpl_step3_unit1", STEP3_UNIT1),
     ("exam_tpl_step3_unit2", STEP3_UNIT2),
+    ("exam_tpl_step3_unit3", STEP3_UNIT3),
 ]

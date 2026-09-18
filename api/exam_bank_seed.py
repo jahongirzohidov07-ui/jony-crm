@@ -2094,6 +2094,117 @@ So, (29) ………… house is this? Carla Farrow and her husband Ron live there
     ],
 }
 
+
+STEP2_UNIT6 = {
+    "level": "step2", "kind": "unit", "unit_no": 6,
+    "title": "Step 2 · Unit 6 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["She's not here just now.", "Can I call you at work?", "Fred’ll be back soon."], "A"),
+                _c("", ["Is Carla there?", "You're welcome.", "Sure, no problem."], "C"),
+                _c("", ["Can you wait a minute?", "Hi, Lucy, it's Ben.", "Sorry, I have a meeting."], "B"),
+                _c("", ["OK, just a minute.", "OK, you can call me at work.", "OK, could he call me back?"], "C"),
+                _c("", ["He'll be back soon.", "There is Phil.", "Are you free?"], "A"),
+                _c("", ["Thanks for your help.", "Hi, Ben, it's me, Joe.", "Can we chat about it now?"], "B"),
+                _c("", ["How can I help?", "I'm not here just now.", "No, it's OK. Can she call me back?"], "C"),
+                _c("", ["OK, thanks.", "Is Annie there please?", "She's not there just now."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · People and families",
+            "instructions": "Read the sentences about people and families. "
+                            "Choose the missing word (A, B or C) for each "
+                            "space.",
+            "questions": [
+                _c("My grandfather is still alive but my ............ died in 2010 – "
+                   "she was 89 years old.", ["grandparents", "grandmother", "granddaughter"], "B"),
+                _c("My sister ............ a new computer last week.", ["bought", "spent", "cost"], "A"),
+                _c("My little brother was born ............ a Saturday.", ["in", "at", "on"], "C"),
+                _c("Sue ............ to London by car yesterday to meet her mother for lunch.",
+                   ["brought", "made", "went"], "C"),
+                _c("My grandparents moved to their house ............ 1948.", ["in", "at", "on"], "A"),
+                _c("My uncle's birthday is ............ May and we always go for a picnic "
+                   "that day.", ["on", "at", "in"], "C"),
+                _c("Adam and Joe ............ friends when they found out they both like "
+                   "football.", ["went", "got", "became"], "C"),
+                _c("My sister ............ a big cake for my birthday – she's a very good cook.",
+                   ["ate", "made", "cut"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · People and families",
+            "instructions": "Read the sentences about people and families. What "
+                            "are the missing words? The first letter is "
+                            "already there. Write the whole word.",
+            "questions": [
+                _t("Susanna's sister has three children and so Susanna is an a _ _ _ .",
+                   "aunt", "unt"),
+                _t("I s _ _ _ _ all my money on my brother's birthday present, so I've "
+                   "got no money now.", "spent", "pent"),
+                _t("I saw my c _ _ _ _ _ John and his father, my Uncle Paul, yesterday.",
+                   "cousin", "ousin"),
+                _t("My parents always wanted g _ _ _ _ _ _ _ _ _ _ _ _ , so they were "
+                   "happy when my sons, Tom and Dan were born.",
+                   "grandchildren", "randchildren"),
+                _t("My sister's new shoes c _ _ _ a lot of money.", "cost", "ost"),
+                _t("I f _ _ _ _ this old photograph of my uncle – he moved to "
+                   "Australia when he was 19.", "found", "ound"),
+                _t("As usual, our whole family a _ _ roast lamb for lunch on Sunday.",
+                   "ate", "te"),
+                _t("Eva's son, Martin, is a doctor and now Martin's daughter, Eva's "
+                   "g _ _ _ _ _ _ _ _ _ _ _ _ , is also a doctor.",
+                   "granddaughter", "randdaughter"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read a woman's story about when she was a child. "
+                            "Choose the best answer (A, B or C) for each space.",
+            "passage": """My early life
+
+When I was a child, I (25) ………… in a small village by the sea. My family had a farm. I loved playing outside in the summer holidays. My older sister (26) ………… at home then but my brothers (27) ………… , and the three of us (28) ………… ourselves. We often played by the sea. We took apples and cola with us and (29) ………… outside all day. There was always lots to do.
+But I remember when it rained there was nothing to do. Then I found some books in my parents’ bookcase and the world (30) ………… for me. I took books everywhere with me and read all the time. But my brothers (31) ………… interested in books and thought I wasn't fun anymore! (32) ………… it a good time? Yes, fantastic and I often go back to my old family house where my parents still live.""",
+            "questions": [
+                _c("", ["lives", "lived", "live"], "B"),
+                _c("", ["wasn't", "isn't", "weren't"], "A"),
+                _c("", ["weren't", "were", "was"], "B"),
+                _c("", ["to enjoy", "enjoy", "enjoyed"], "C"),
+                _c("", ["stays", "stayed", "stay"], "B"),
+                _c("", ["change", "to change", "changed"], "C"),
+                _c("", ["weren't", "were", "wasn't"], "A"),
+                _c("", ["Is", "Were", "Was"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about people and families. "
+                            "Choose the best answer (A, B or C) for each space.",
+            "questions": [
+                _c("............ at home when you called?", ["He was", "Was he", "Is he"], "B"),
+                _c("Where ............ your older sister born?", ["is", "was", "were"], "B"),
+                _c("My brother ............ hard and became a doctor last year.",
+                   ["studied", "study", "studies"], "A"),
+                _c("I ............ at the same university as my brother.",
+                   ["wasn't", "weren't", "aren't"], "A"),
+                _c("When my brother was young he ............ sport, and he was really "
+                   "good at football.", ["loves", "loved", "love"], "B"),
+                _c("When my cousin went to Canada, I ............ writing to her.",
+                   ["stops", "stop", "stopped"], "C"),
+                _c("'Were all your friends in the same class at school?' 'No, ............ .'",
+                   ["they aren't", "weren't they", "they weren't"], "C"),
+                _c("My husband usually gets home early but last night he ............ "
+                   "home very late.", ["arrived", "arrive", "arrives"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -2114,4 +2225,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit3", STEP2_UNIT3),
     ("exam_tpl_step2_unit4", STEP2_UNIT4),
     ("exam_tpl_step2_unit5", STEP2_UNIT5),
+    ("exam_tpl_step2_unit6", STEP2_UNIT6),
 ]

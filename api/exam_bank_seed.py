@@ -1872,6 +1872,114 @@ My name is Maria and I teach English in a school in London. I (25) ………… 
     ],
 }
 
+
+STEP2_UNIT4 = {
+    "level": "step2", "kind": "unit", "unit_no": 4,
+    "title": "Step 2 · Unit 4 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Yes, the name’s Dawson.", "No, wait.", "We’d love to."], "A"),
+                _c("", ["Are you ready to order?", "Where would you like to sit?", "Would you like bread with that?"], "C"),
+                _c("", ["Yes, thank you.", "This way, please.", "I’m sorry, I can’t."], "B"),
+                _c("", ["We have a reservation for two people.", "Maybe not.", "I’ll have the chicken soup."], "C"),
+                _c("", ["No problem.", "Yes, please.", "I’m sorry."], "B"),
+                _c("", ["No, I prefer tea to coffee.", "No, maybe I’ll have fish.", "No, wait - I’d like water."], "C"),
+                _c("", ["And for your main course?", "What is your name, please?", "Can we have a table outside?"], "B"),
+                _c("", ["Mm. No, maybe not.", "I’m sorry, I’m not.", "Thank you for your help."], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Food and cooking",
+            "instructions": "Read the sentences about food and cooking. Choose "
+                            "the missing word (A, B or C) for each space.",
+            "questions": [
+                _c("To make ............ eggs, cook them in a little oil for three minutes.",
+                   ["boiled", "grilled", "fried"], "C"),
+                _c("Can you open this ............ of soup for me, please?", ["bar", "can", "bag"], "B"),
+                _c("Can I have a piece of ............ to put in my tea, please?",
+                   ["steak", "bean", "lemon"], "C"),
+                _c("I want ............ soup for my starter, please.",
+                   ["salad", "mushroom", "pear"], "B"),
+                _c("This ............ steak is nice and brown on both sides.",
+                   ["grilled", "boiled", "baked"], "A"),
+                _c("My favourite meat is ............ but I also like chicken.",
+                   ["mushroom", "steak", "onion"], "B"),
+                _c("Would you like ............ or boiled vegetables with your chicken?",
+                   ["cooked", "hot", "roasted"], "C"),
+                _c("Would you like a tomato ............ or hot vegetables with your meal?",
+                   ["salt", "sugar", "salad"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · Food and cooking",
+            "instructions": "Read the sentences about food and cooking. What "
+                            "are the missing words? The first letter is "
+                            "already there. Write the whole word.",
+            "questions": [
+                _t("I think that c _ _ _ _ _ _ are my favourite orange vegetable.",
+                   "carrots", "arrots"),
+                _t("Put the meat in the oven and r _ _ _ _ it for an hour and a half.",
+                   "roast", "oast"),
+                _t("We always make our own bread, because we like eating it when it "
+                   "is freshly b _ _ _ _ .", "baked", "aked"),
+                _t("I’d like to buy a small b _ _ _ _ _ of water, please.", "bottle", "ottle"),
+                _t("My favourite vegetable is fried o _ _ _ _ , especially with burgers.",
+                   "onion", "nion"),
+                _t("I have a bowl of c _ _ _ _ _ with fruit and yoghurt for breakfast "
+                   "every morning.", "cereal", "ereal"),
+                _t("Put the potatoes in water in a pan and b _ _ _ them for 20 minutes.",
+                   "boil", "oil"),
+                _t("My favourite meat is roasted c _ _ _ _ _ _ .", "chicken", "hicken"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the email from a wife to her husband. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "passage": """Supermarket
+
+Hi Tom,
+Can you go to the supermarket after work, please? Can you buy (25) ………… fruit? I'd like to make a fruit salad. We've got (26) ………… of bananas but we haven't got (27) ………… grapes or apples. I also want to roast a chicken, so could you get us one, please. We also need (28) ………… butter - we've got a little but not very (29) ………… . Oh, and we've only got (30) ………… potatoes, so please get a bag of those too. Don't get (31) ………… onions or carrots - we've already got a lot of them. One last thing - we haven't got (32) ………… coffee, so please get us a big packet.
+Thanks very much.
+See you later. Emma""",
+            "questions": [
+                _c("", ["some", "a", "any"], "A"),
+                _c("", ["many", "a lot", "much"], "B"),
+                _c("", ["some", "any", "the"], "B"),
+                _c("", ["a", "any", "some"], "C"),
+                _c("", ["much", "many", "a lot"], "A"),
+                _c("", ["not many", "a little", "a few"], "C"),
+                _c("", ["any", "an", "some"], "A"),
+                _c("", ["a few", "much", "many"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about food and cooking. Choose "
+                            "the best answer (A, B or C) for each space.",
+            "questions": [
+                _c("I need some lamb and ............ onion because I want to make "
+                   "curry for dinner.", ["a", "any", "an"], "C"),
+                _c("I’d like ............ pasta, please.", ["some", "a", "an"], "A"),
+                _c("How ............ milk do the children usually have with their cereal?",
+                   ["much", "many", "few"], "A"),
+                _c("There are ............ beans in the fridge.", ["any", "a", "some"], "C"),
+                _c("How ............ lemons do you want?", ["much", "little", "many"], "C"),
+                _c("We haven’t got ............ big onions.", ["some", "a", "any"], "C"),
+                _c("We haven’t got ............ ice cream.", ["much", "a lot", "many"], "A"),
+                _c("There are only ............ tomatoes in the fridge.",
+                   ["a few", "many", "a lot of"], "A"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1890,4 +1998,5 @@ TEMPLATES = [
     ("exam_tpl_step2_unit1", STEP2_UNIT1),
     ("exam_tpl_step2_unit2", STEP2_UNIT2),
     ("exam_tpl_step2_unit3", STEP2_UNIT3),
+    ("exam_tpl_step2_unit4", STEP2_UNIT4),
 ]

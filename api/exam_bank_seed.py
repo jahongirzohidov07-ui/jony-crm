@@ -1650,6 +1650,122 @@ Manuel and I love football and like to go to matches when we can. This photo is 
     ],
 }
 
+
+STEP2_UNIT2 = {
+    "level": "step2", "kind": "unit", "unit_no": 2,
+    "title": "Step 2 · Unit 2 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["Sure, no problem.", "I don’t want it.", "It’s at 1:30."], "A"),
+                _c("", ["Can I have two coffees, please?", "Sure, no problem.", "What do you want?"], "A"),
+                _c("", ["Where do you travel?", "I’m sorry about that.", "Yes, at what time?"], "C"),
+                _c("", ["OK, can I phone you this afternoon?", "OK, can I have tea please?", "OK, can I start work?"], "A"),
+                _c("", ["Can I have a coffee?", "Certainly. Small or large?", "Please drink it."], "B"),
+                _c("", ["Thank you very much.", "OK, no problem.", "You’re welcome."], "B"),
+                _c("", ["Can you spell that?", "Certainly, no problem.", "Thanks for your time."], "B"),
+                _c("", ["Of course.", "It doesn’t matter.", "How can I help?"], "A"),
+            ],
+        },
+        {
+            "title": "Part 2 · Jobs and study",
+            "instructions": "Read the sentences about jobs. Choose the missing "
+                            "word (A, B or C) for each space.",
+            "questions": [
+                _c("Chris works as a ............ in a hospital – he looks after "
+                   "people when they aren't well.", ["chef", "manager", "nurse"], "C"),
+                _c("I study every day because I want to ............ a good mark in "
+                   "this exam.", ["get", "pass", "take"], "A"),
+                _c("Ben wants to be a ............ because he likes to work with cars "
+                   "and machines.", ["mechanic", "secretary", "manager"], "A"),
+                _c("I take ............ when I study because they help me to remember "
+                   "important information.", ["marks", "notes", "terms"], "B"),
+                _c("I'd like to be a ............ one day because I love travel and planes.",
+                   ["cleaner", "secretary", "pilot"], "C"),
+                _c("Lucy usually gets good ............ in her tests at school.",
+                   ["habits", "notes", "marks"], "C"),
+                _c("Can you look at the school ............ and tell me when we have "
+                   "an English class?", ["teacher", "timetable", "team"], "B"),
+                _c("My brother's an amazing ............ and so he works in the "
+                   "kitchen of a big hotel.", ["chef", "farmer", "actor"], "A"),
+            ],
+        },
+        {
+            "title": "Part 3 · Work and study",
+            "instructions": "Read the descriptions of some words about work and "
+                            "study. The first letter is already there. Write "
+                            "the whole word.",
+            "questions": [
+                _t("You have this when you stop your studies or your work for a "
+                   "short time.   b _ _ _ _", "break", "reak"),
+                _t("This person takes you from one place to another by car and you "
+                   "pay him money.   t _ _ _  d _ _ _ _ _", "taxi driver", "axi river"),
+                _t("This person answers the telephone, writes letters and plans "
+                   "meetings in an office.   s _ _ _ _ _ _ _ _", "secretary", "ecretary"),
+                _t("If you have a problem with your teeth, you go to this person.   "
+                   "d _ _ _ _ _ _", "dentist", "entist"),
+                _t("Sometimes you do an e _ _ _ at the end of a course to check "
+                   "what you learned.", "exam", "xam"),
+                _t("I want to ask the s _ _ _  a _ _ _ _ _ _ _ _ how much this bag is.",
+                   "shop assistant", "hop ssistant"),
+                _t("People who enjoy their s _ _ _ _ _ _ sometimes get better marks "
+                   "in their tests.", "studies", "tudies"),
+                _t("The teachers are very good here and the students never "
+                   "f _ _ _ their exams.", "fail", "ail"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read Priya's blog about her family and their jobs "
+                            "and studies. Choose the best answer (A, B or C) "
+                            "for each space.",
+            "passage": """Priya's family
+
+I live with my parents and my brother and sister. I work in an office but I (25) ………… want to work there all my life. I'd like to work in another country.
+My parents both work in a hospital. My mother is a doctor and my father is a hospital manager. My mother (26) ………… her job is hard but interesting. She (27) ………… much free time. She begins work at 8 o'clock in the morning and finishes at seven o'clock in the evening. My father and I (28) ………… home at 6 o'clock so we cook dinner. When do we eat dinner? After our favourite TV programme!
+My sister and brother are students. They want to be doctors like our mother. My sister studies hard but she hates tests. I often say to her, 'Do you (29) ………… good marks?' And she always replies, 'Yes, (30) ………… !' So why (31) ………… she worry? When I ask my brother, 'Do you enjoy your studies?', he always replies, 'No, I (32) ………… . I prefer football!'""",
+            "questions": [
+                _c("", ["do", "don't", "doesn't"], "B"),
+                _c("", ["says", "say", "saying"], "A"),
+                _c("", ["not have", "don't have", "doesn't have"], "C"),
+                _c("", ["come", "comes", "doesn't come"], "A"),
+                _c("", ["get", "gets", "getting"], "A"),
+                _c("", ["I don't", "I do", "do I"], "B"),
+                _c("", ["don't", "do", "does"], "C"),
+                _c("", ["doesn't", "do", "don't"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about everyday life. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "questions": [
+                _c("My brother works in a bank but he ............ enjoy his job.",
+                   ["don't", "doesn't", "isn't"], "B"),
+                _c("How many hours a week ............ study French?",
+                   ["you do", "you don't", "do you"], "C"),
+                _c("My friend and I ............ swimming lessons every Friday after work.",
+                   ["have", "has", "having"], "A"),
+                _c("Larry's a good businessman but does ............ a lot of money?",
+                   ["he makes", "he make", "make"], "B"),
+                _c("I ............ my car to the office – I go by bus.",
+                   ["drive", "don't drive", "doesn't drive"], "B"),
+                _c("'Do classes start at 9 o'clock?' 'No, they ............ . They "
+                   "start at 8.30.'", ["don't", "do", "doesn’t"], "A"),
+                _c("You ............ all the answers so please help me with my homework.",
+                   ["knows", "knowing", "know"], "C"),
+                _c("'Does Marisa work in a hotel?' 'Yes, she ............ . She's a "
+                   "receptionist.'", ["do", "doesn't", "does"], "C"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1666,4 +1782,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit12", STEP1_UNIT12),
     ("exam_tpl_step1_end", STEP1_END),
     ("exam_tpl_step2_unit1", STEP2_UNIT1),
+    ("exam_tpl_step2_unit2", STEP2_UNIT2),
 ]

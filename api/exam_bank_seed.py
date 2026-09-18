@@ -1540,6 +1540,116 @@ Susan""",
     ],
 }
 
+
+# ------------------------------------------------------------- STEP 2
+# Manba: "Step 2.0 Unit N.pdf" + "unit N - IELTS 2.0 keys.pdf"
+# (Empower 2nd Edition A2 Unit Progress Test). 40 savol.
+
+STEP2_UNIT1 = {
+    "level": "step2", "kind": "unit", "unit_no": 1,
+    "title": "Step 2 · Unit 1 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["It’s at 10.30.", "I’d like to do a fitness class.", "You’re welcome."], "B"),
+                _c("", ["OK. What’s your name?", "OK. Is it a big group?", "OK. Can I book a place?"], "A"),
+                _c("", ["James Park.", "My father isn’t here.", "It’s P-A-R-K."], "C"),
+                _c("", ["It’s in Room 108.", "It’s at 9.15.", "It’s 22 Station Road."], "C"),
+                _c("", ["You’re welcome.", "Can I help you?", "That’s right."], "A"),
+                _c("", ["Can you spell that?", "That’s right.", "No problem."], "B"),
+                _c("", ["Yes, it is.", "See you tomorrow.", "In Green Street."], "C"),
+                _c("", ["Yes, thank you.", "Yes, it’s at 9.30.", "No, you’re welcome."], "B"),
+            ],
+        },
+        {
+            "title": "Part 2 · People and countries",
+            "instructions": "Read the sentences about people and countries. "
+                            "Choose the missing word (A, B or C) for each "
+                            "space.",
+            "questions": [
+                _c("My mother’s not from Russia – she’s ............ .",
+                   ["Polish", "Poland", "Russian"], "A"),
+                _c("Thank you for your help today, you are really ………… to me.",
+                   ["famous", "busy", "kind"], "C"),
+                _c("He says he’s a ............ football player but he’s not very good.",
+                   ["quiet", "well-known", "first"], "B"),
+                _c("Ahmed’s ............ but he lives in Hamburg in Germany.",
+                   ["German", "Australia", "Australian"], "C"),
+                _c("My family is from ............ but now we live in the USA.",
+                   ["French", "France", "American"], "B"),
+                _c("My new computer is Chinese – it’s from ............ .",
+                   ["Canadian", "Canada", "China"], "C"),
+                _c("Veronica has a big car and a very big house, so I think she "
+                   "is ............ .", ["warm", "modern", "rich"], "C"),
+                _c("Sam is a nice person, so he’s always very ............ to "
+                   "other people.", ["modern", "rich", "pleasant"], "C"),
+            ],
+        },
+        {
+            "title": "Part 3 · People",
+            "instructions": "Read the sentences about people. What are the "
+                            "missing words? The first letter is already "
+                            "there. Write the whole word.",
+            "questions": [
+                _t("Joe is from the USA – he is A _ _ _ _ _ _ _ .", "American", "merican"),
+                _t("Rose has lots of friends – she’s very p _ _ _ _ _ _ .", "popular", "opular"),
+                _t("Aranya is Thai, she comes from Bangkok in T _ _ _ _ _ _ _ .",
+                   "Thailand", "hailand"),
+                _t("Claire is from Britain – she is B _ _ _ _ _ _ .", "British", "ritish"),
+                _t("I like my job – my colleagues are f _ _ _ _ _ _ _ _ !",
+                   "fantastic", "antastic"),
+                _t("Maria is Irish; she is from I _ _ _ _ _ _ .", "Ireland", "reland"),
+                _t("My sister does not talk much and I am also q _ _ _ _ .", "quiet", "uiet"),
+                _t("I like my new class because the teacher is good and the "
+                   "students are nice and f _ _ _ _ _ _ _ .", "friendly", "riendly"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read this blog about Robert and Manuel. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "passage": """Two good friends
+
+My name’s Robert. In this photo I am with my best friend, Manuel. I’m British, but is Manuel British? No, (25) ………… . Manuel’s parents come from Spain but now they live in Britain. I’m not in the same class as Manuel, but we like to have lunch and walk to college together. Manuel (26) ………… very friendly, and popular with all the teachers and students at our college. Some students in our college are British and others (27) ………… . They come from different countries – this is great because we all study together and learn about different places and languages.
+Manuel and I love football and like to go to matches when we can. This photo is after a football match in London. Are we happy in this photo? Yes, (28) ………… . At football matches, the weather’s often really cold and the match (29) ………… very good, but for us (30) ………… all great fun. Manuel’s team has great players – really fantastic and well-known. (31) ………… the name of his team? It’s Barcelona! (32) ………… the best players in the world? It’s possible!""",
+            "questions": [
+                _c("", ["he isn’t", "you aren’t", "I’m not"], "A"),
+                _c("", ["am", "are", "is"], "C"),
+                _c("", ["isn’t", "aren’t", "are"], "B"),
+                _c("", ["he is", "I am", "we are"], "C"),
+                _c("", ["am not", "aren’t", "isn’t"], "C"),
+                _c("", ["it’s", "he’s", "we’re"], "A"),
+                _c("", ["What’s", "What are", "Where’s"], "A"),
+                _c("", ["Is he", "Are they", "Are you"], "B"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about people. Choose the best "
+                            "answer (A, B or C) for each space.",
+            "questions": [
+                _c("My house ............ here, behind the school.", ["am", "is", "are"], "B"),
+                _c("Paulo and Jorge speak Spanish but they ............ from Spain – "
+                   "they’re Colombian.", ["are", "is not", "aren’t"], "C"),
+                _c("............ our teacher’s name?", ["What are", "What is", "What am"], "B"),
+                _c("I play football but ............ good at it.", ["he isn’t", "am I", "I’m not"], "C"),
+                _c("Kenji’s a brilliant student – ............ he from?",
+                   ["where is", "what is", "where are"], "A"),
+                _c("............ quiet? No, I like to talk a lot.", ["Is it", "Are they", "Am I"], "C"),
+                _c("Our home town ............ Paris – it’s Calais, a small French city "
+                   "by the sea.", ["is not", "am not", "are not"], "A"),
+                _c("............ your friend James on holiday in New Zealand?",
+                   ["Are", "Be", "Is"], "C"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1555,4 +1665,5 @@ TEMPLATES = [
     ("exam_tpl_step1_unit11", STEP1_UNIT11),
     ("exam_tpl_step1_unit12", STEP1_UNIT12),
     ("exam_tpl_step1_end", STEP1_END),
+    ("exam_tpl_step2_unit1", STEP2_UNIT1),
 ]

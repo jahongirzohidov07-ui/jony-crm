@@ -124,6 +124,7 @@ import liveplay as _r_liveplay
 import vocab_pdf as _r_vocab_pdf
 import lesson_run as _r_lesson_run
 import assignments as _r_assignments
+import mastery as _r_mastery
 import groups_lessons as _r_groups_lessons
 import hr as _r_hr
 import hr_ats as _r_hr_ats
@@ -171,6 +172,7 @@ app.include_router(_r_liveplay.router)
 app.include_router(_r_vocab_pdf.router)
 app.include_router(_r_lesson_run.router)
 app.include_router(_r_assignments.router)
+app.include_router(_r_mastery.router)
 app.include_router(_r_groups_lessons.router)
 app.include_router(_r_hr.router)
 app.include_router(_r_hr_ats.router)

@@ -144,5 +144,21 @@ r = c.post("/api/student/assignments/missed-test", headers=S)
 ck("missed-test shaxsiy", (r.status_code, r.json()["student_id"] == S1, r.json()["lesson_no"]), (200, True, 6))
 ck("Boburga ko'rinmaydi", any(i["id"] == r.json()["id"] for i in c.get("/api/student/assignments", headers=B).json()["items"]), False)
 
+# --- O'ZLASHTIRISH XARITASI (5-band) va RAHBAR HISOBOTI (8-band)
+m = c.get(f"/api/groups/{G1}/mastery", headers=T).json()
+ck("xarita: o'quvchilar va darslar", (len(m["students"]), [l["no"] for l in m["lessons"]][-1]), (2, 7))
+cellA = m["cells"][f"{S1}:7"]
+ck("Aziz 7-dars: lug'at/grammatika/speaking o'zlashtirdi (9/10)", (cellA["vocab"]["status"], cellA["grammar"]["status"], cellA["speaking"]["status"]), ("mastered", "mastered", "mastered"))
+ck("Aziz 7-dars writing — hali tekshirilmagan (bilmaydi emas)", cellA["writing"]["status"], "unchecked")
+ck("6-dars — hech kim tekshirilmagan", m["cells"][f"{S1}:6"]["vocab"]["status"], "unchecked")
+sB = next(x for x in m["summary"] if x["name"] == "Bobur Aliyev")
+ck("Bobur xulosa: so'zlarni biladi", "so'zlarni biladi" in sB["text"], True)
+r = c.post(f"/api/groups/{G1}/mastery/practice", json={"student_ids": [S1], "lesson_no": 7, "skill": "grammar"}, headers=T).json()
+ck("bir bosishda qo'shimcha mashq (shaxsiy)", (r["sent"], r["items"][0]["student_id"] == S1, r["items"][0]["kind"]), (1, True, "grammar_test"))
+rep = c.get("/api/reports/learning", headers=T).json()
+g = rep["groups"][0]
+ck("hisobot: guruh reja 7/28, topshiriqlar", (g["plan"]["next_lesson_no"], g["plan"]["total"], g["assignments"]["sent"] >= 4), (7, 28, True))
+ck("hisobot: kutayotgan tekshiruv 0 (baholangan)", rep["pending_checks"], 0)
+
 print("\nJAMI XATO:", len(fails), fails)
 sys.exit(1 if fails else 0)

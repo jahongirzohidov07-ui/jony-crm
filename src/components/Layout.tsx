@@ -456,6 +456,8 @@ export default function Layout() {
     // tuzilganda). Rahbariyatga har doim.
     if (user?.english_teacher !== false) {
       items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
+      // O'quv hisoboti + o'zlashtirish xaritasi (2026-09-18, 5/8-bandlar)
+      items = [...items, { to: "/learning", label: "O'quv hisoboti", icon: BarChart3 }];
     }
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu

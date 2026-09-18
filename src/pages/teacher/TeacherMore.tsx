@@ -27,6 +27,8 @@ const SECTIONS = [
     items: [
       { to: "/teacher/check", label: "Tekshirish", icon: ClipboardList,
         hint: "Writing, speaking — kutayotgan ishlar" },
+      { to: "/learning", label: "O'zlashtirish xaritasi", icon: BookMarked,
+        hint: "Kim nimani o'zlashtirdi, kimga mashq kerak" },
       { to: "/my-groups", label: "Guruhlarim", icon: Layers,
         hint: "Davomat, baholash, imtihonlar" },
       { to: "/my-students", label: "O'quvchilarim", icon: Users,

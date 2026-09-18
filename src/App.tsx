@@ -87,6 +87,7 @@ const StudentHome = lazy(() => import("./pages/student/StudentHome"));
 // Darslar / topshiriqlar (2026-09-18)
 const StudentLessons = lazy(() => import("./pages/student/StudentLessons"));
 const TeacherCheck = lazy(() => import("./pages/teacher/TeacherCheck"));
+const LearningReport = lazy(() => import("./pages/LearningReport"));
 const StudentGames = lazy(() => import("./pages/student/StudentGames"));
 const StudentIelts = lazy(() => import("./pages/student/StudentIelts"));
 const StudentExamSkills = lazy(
@@ -381,6 +382,7 @@ function AppRoutes() {
           <Route path="archive" element={<Archive />} />
           <Route path="discounts" element={<DiscountsPage />} />
           <Route path="plans" element={<LessonPlans />} />
+          <Route path="learning" element={<LearningReport />} />
           <Route path="plans/:course" element={<LessonPlans />} />
           <Route path="plans/:course/:no" element={<LessonPlans />} />
           <Route path="tasks" element={<Tasks />} />

@@ -1766,6 +1766,112 @@ My sister and brother are students. They want to be doctors like our mother. My 
     ],
 }
 
+
+STEP2_UNIT3 = {
+    "level": "step2", "kind": "unit", "unit_no": 3,
+    "title": "Step 2 · Unit 3 Progress Test",
+    "paper_max": 0,
+    "parts": [
+        {
+            "title": "Part 1 · Listening",
+            "instructions": "You will hear eight short sentences. For each "
+                            "one, choose the best reply. You will hear each "
+                            "sentence twice.",
+            "questions": [
+                _c("", ["How can I help?", "OK, you can come here.", "Yes, that's a good idea."], "C"),
+                _c("", ["You're welcome.", "That's a pity.", "I'd love to."], "C"),
+                _c("", ["That'd be great.", "You're welcome.", "Yes, I can."], "A"),
+                _c("", ["How often do you go there?", "So, what do you think of this idea?", "OK, when are you free?"], "C"),
+                _c("", ["How about 3.30?", "Yes, that's fine.", "Why don't you try it?"], "B"),
+                _c("", ["Thanks for your help.", "Yes, Friday's fine.", "I'm sorry, I can't."], "C"),
+                _c("", ["OK, Monday's fine.", "Let me see.", "Well, sometimes."], "B"),
+                _c("", ["I'm fine, thanks.", "That's a pity.", "Mm, possibly."], "C"),
+            ],
+        },
+        {
+            "title": "Part 2 · Everyday life",
+            "instructions": "Read the sentences about everyday life. Choose the "
+                            "missing word (A, B or C) for each space.",
+            "questions": [
+                _c("In the summer, I like to play football ............ a week.",
+                   ["once", "always", "every"], "A"),
+                _c("Does the shop in the hotel ............ postcards?", ["sell", "buy", "find"], "A"),
+                _c("I can write emails on my ............ when I'm on the train.",
+                   ["video", "timetable", "smartphone"], "C"),
+                _c("Do you ............ in a hotel when you go on holiday?",
+                   ["stay", "prefer", "decide"], "A"),
+                _c("Business people need to have a ............ so that they can work "
+                   "when they travel.", ["speaker", "text", "laptop"], "C"),
+                _c("My brother uses his ............ to check emails when he is not in "
+                   "the office.", ["tablet", "keyboard", "speaker"], "A"),
+                _c("Can you help me ............ which laptop to buy?",
+                   ["meet", "prefer", "decide"], "C"),
+                _c("We take a small ............ on holiday with us so we can listen "
+                   "to music.", ["camera", "speaker", "keyboard"], "B"),
+            ],
+        },
+        {
+            "title": "Part 3 · Daily life",
+            "instructions": "Read the sentences about daily life. What are the "
+                            "missing words? The first letter is already there. "
+                            "Write the whole word.",
+            "questions": [
+                _t("I go to the cinema three or four t _ _ _ _ a month.", "times", "imes"),
+                _t("I need to buy more paper for the p _ _ _ _ _ _ at home.",
+                   "printer", "rinter"),
+                _t("How much does this computer c _ _ _ please?", "cost", "ost"),
+                _t("I don't like using my computer k _ _ _ _ _ _ _ because it's very small.",
+                   "keyboard", "eyboard"),
+                _t("Which do you p _ _ _ _ _ – tea or coffee?", "prefer", "refer"),
+                _t("My brother likes to use h _ _ _ _ _ _ _ _ _ when he listens to music.",
+                   "headphones", "eadphones"),
+                _t("My grandparents go to the cinema t _ _ _ _ a week – on Tuesdays "
+                   "and Saturdays.", "twice", "wice"),
+                _t("I wear a s _ _ _ _ _ _ _ _ _ to check the time and do lots of "
+                   "other things.", "smartwatch", "martwatch"),
+            ],
+        },
+        {
+            "title": "Part 4 · Reading",
+            "instructions": "Read the blog about a teacher's life. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "passage": """A teacher's life
+
+My name is Maria and I teach English in a school in London. I (25) ………… at 7 o'clock. I always go to work by bus because it's too far to walk and I (26) ………… a car. It's a large school in a lovely new building. The school (27) ………… a very nice cafe and so I (28) ………… breakfast there. Lessons start at 9 o'clock. We stop for lunch at half past twelve. In the lunch break (29) ………… the newspaper and talk to the other teachers. Lessons start again at 2 and finish at 4. After school we teachers (30) ………… have a lot of work to do because we're very busy all the time. But when I haven't got work to do, I go to the cinema or visit friends. I (31) ………… a good friend in the next street. She (32) ………… a big garden and we like to sit there in the evenings in summer.""",
+            "questions": [
+                _c("", ["get up usually", "usually get up", "usually gets up"], "B"),
+                _c("", ["hasn't got", "haven't got", "don't get"], "B"),
+                _c("", ["have got", "got", "has got"], "C"),
+                _c("", ["sometimes have", "have sometimes got", "have sometimes"], "A"),
+                _c("", ["usually I read", "I read usually", "I usually read"], "C"),
+                _c("", ["always", "never", "sometimes"], "A"),
+                _c("", ["get", "has got", "have got"], "C"),
+                _c("", ["have got", "do get", "has got"], "C"),
+            ],
+        },
+        {
+            "title": "Part 5 · Grammar",
+            "instructions": "Read the sentences about everyday life. Choose the "
+                            "best answer (A, B or C) for each space.",
+            "questions": [
+                _c("............ often do you go to the gym every week?", ["How", "What", "When"], "A"),
+                _c("Why ............ late?",
+                   ["James is always", "is James always", "James always is"], "B"),
+                _c("Have both of the children got a laptop? Yes, they ............ .",
+                   ["are", "can", "have"], "C"),
+                _c("There's no milk again – you ............ remember to buy any!",
+                   ["often", "never", "always"], "B"),
+                _c("We ............ got a printer at home.", ["aren't", "don't", "haven't"], "C"),
+                _c("............ Paul got a new camera?", ["Does", "Has", "Is"], "B"),
+                _c("I often leave work at 5.30, but I ............ need to stay in the "
+                   "office until 7 pm.", ["always", "usually", "sometimes"], "C"),
+                _c("My mother ............ got a great new satnav in her car.",
+                   ["have", "is", "has"], "C"),
+            ],
+        },
+    ],
+}
+
 TEMPLATES = [
     ("exam_tpl_step1_unit1", STEP1_UNIT1),
     ("exam_tpl_step1_unit2", STEP1_UNIT2),
@@ -1783,4 +1889,5 @@ TEMPLATES = [
     ("exam_tpl_step1_end", STEP1_END),
     ("exam_tpl_step2_unit1", STEP2_UNIT1),
     ("exam_tpl_step2_unit2", STEP2_UNIT2),
+    ("exam_tpl_step2_unit3", STEP2_UNIT3),
 ]

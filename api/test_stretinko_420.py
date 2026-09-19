@@ -111,7 +111,13 @@ rg2 = c.post("/api/groups", headers=T, json={"name": "Asosiy yangi", "branch_id"
 ck("asosiy filial yangi guruhi o'zgarmaydi", rg2.json().get("lesson_price"), 40000)
 
 # --- Qoplonbek
-ck("Qoplonbek yo'q — hech narsa", grant_qoplonbek_stretinko(db).get("found"), 0)
+from courses import undo_student_qoplonbek                 # noqa: E402
+u_s = models.User(username="qoplonbek_st", password_hash=hash_password("x"),
+                  full_name="Qoplonbek", role=roles.STUDENT, branch_id=main_b.id)
+db.add(u_s); db.commit()
+db.add(models.UserBranch(user_id=u_s.id, branch_id=st_b.id)); db.commit()
+ck("o'quvchi Qoplonbek hisobga olinmaydi", grant_qoplonbek_stretinko(db).get("found"), 0)
+ck("o'quvchidagi xato filial olib tashlandi", undo_student_qoplonbek(db), [u_s.id])
 u_q = models.User(username="qoplonbek", password_hash=hash_password("x"),
                   full_name="Qoplonbek Karimov", role=roles.SALES_MANAGER,
                   branch_id=main_b.id)

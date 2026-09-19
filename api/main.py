@@ -1266,11 +1266,16 @@ try:
             _r34 = _fx34(_db34)
             print(f"[seed] stretinko 420: { {k: v for k, v in _r34.items() if k != 'rows'} }")
             _sm34(_db34, "stretinko_420_v1")
-        if not _sd34(_db34, "qoplonbek_stretinko_v1"):
+        # v1 o'quvchi "Qoplonbek"ni topib olgan edi — v2 faqat xodimlar.
+        if not _sd34(_db34, "qoplonbek_undo_student_v1"):
+            from courses import undo_student_qoplonbek as _uq34
+            print(f"[seed] qoplonbek: o'quvchidan olib tashlandi {_uq34(_db34)}")
+            _sm34(_db34, "qoplonbek_undo_student_v1")
+        if not _sd34(_db34, "qoplonbek_stretinko_v2"):
             from courses import grant_qoplonbek_stretinko as _gq34
             _q34 = _gq34(_db34)
-            print(f"[seed] qoplonbek stretinko: {_q34}")
+            print(f"[seed] qoplonbek stretinko v2: {_q34}")
             if _q34.get("user_id"):
-                _sm34(_db34, "qoplonbek_stretinko_v1")
+                _sm34(_db34, "qoplonbek_stretinko_v2")
 except Exception as _e34:
     print(f"[seed] stretinko 420 / qoplonbek xato: {_e34}")

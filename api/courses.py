@@ -693,19 +693,55 @@ def fix_stretinko_420(db: Session, apply: bool = True) -> dict:
     return out
 
 
+_QOPLON_PATTERNS = ("qoplon", "koplon", "qaplon", "kaplon", "kaplan",
+                    "qo'plon", "qo‘plon", "коплон", "қоплон")
+
+
+def qoplonbek_candidates(db: Session) -> list:
+    """Ismi Qoplonbek'ka o'xshash XODIMLAR (o'quvchi/ota-ona emas)."""
+    from sqlalchemy import func, or_
+    conds = []
+    for pat in _QOPLON_PATTERNS:
+        conds.append(func.lower(models.User.full_name).like(f"%{pat}%"))
+        conds.append(func.lower(models.User.username).like(f"%{pat}%"))
+    us = db.query(models.User).filter(or_(*conds)).all()
+    return [u for u in us
+            if u.role not in (roles.STUDENT, roles.PARENT)
+            and getattr(u, "is_active", 1) not in (0, False)]
+
+
+def undo_student_qoplonbek(db: Session) -> list:
+    """2026-09-19 birinchi urinishda o'quvchi "Qoplonbek" hisobiga
+    Stretinko qo'shimcha filiali yozilib qolgan — olib tashlanadi."""
+    bids = stretinko_branch_ids(db)
+    removed = []
+    rows = (db.query(models.UserBranch, models.User)
+            .join(models.User, models.User.id == models.UserBranch.user_id)
+            .filter(models.UserBranch.branch_id.in_(bids or [-1]),
+                    models.User.role.in_([roles.STUDENT, roles.PARENT])).all())
+    for ub, u in rows:
+        name = (u.full_name or "").lower()
+        if not any(p in name for p in _QOPLON_PATTERNS):
+            continue
+        audit.log(db, None, entity="user", action="update", entity_id=u.id,
+                  entity_label=u.full_name, field="branches",
+                  old_value=ub.branch_id, new_value=None,
+                  note="Xato biriktirilgan (o'quvchi) — olib tashlandi",
+                  branch_id=ub.branch_id)
+        db.delete(ub)
+        removed.append(u.id)
+    db.commit()
+    return removed
+
+
 def grant_qoplonbek_stretinko(db: Session) -> dict:
     """Qoplonbek'ka Stretinko filial(lar)ini qo'shimcha filial qilib
-    biriktiradi (2026-09-19). Ismi bo'yicha AYNAN BITTA faol xodim
+    biriktiradi (2026-09-19). Ismi bo'yicha AYNAN BITTA faol XODIM
     topilsagina ishlaydi — adashib boshqa odamga ochilmasin."""
-    from sqlalchemy import func, or_
-    us = (db.query(models.User)
-          .filter(or_(func.lower(models.User.full_name).like("%qoplonbek%"),
-                      func.lower(models.User.full_name).like("%koplonbek%"),
-                      func.lower(models.User.username).like("%qoplonbek%")))
-          .all())
-    us = [u for u in us if getattr(u, "is_active", 1) not in (0, False)]
+    us = qoplonbek_candidates(db)
     if len(us) != 1:
-        return {"found": len(us)}
+        return {"found": len(us),
+                "candidates": [(u.id, u.full_name, u.role) for u in us]}
     u = us[0]
     have = {ub.branch_id for ub in db.query(models.UserBranch)
             .filter(models.UserBranch.user_id == u.id).all()}

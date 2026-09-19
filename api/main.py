@@ -1363,3 +1363,21 @@ try:
             _sm36(_db36, "stretinko_diag_v2")
 except Exception as _e36:
     print(f"[diag2] xato: {_e36}")
+
+
+try:
+    from sqlalchemy.orm import Session as _VS37
+    from common import _seed_done as _sd37, _seed_mark as _sm37
+    with _VS37(engine) as _db37:
+        if not _sd37(_db37, "stretinko_diag_v3"):
+            print("[diag3] undiscounted_v1 done=" + str(_sd37(_db37, "stretinko_undiscounted_v1")))
+            for _p in (_db37.query(models.Payment)
+                       .filter(models.Payment.student_id == 3184,
+                               models.Payment.kind == "charge").all()):
+                print(f"[diag3] s3184 {_p.period}|{_p.amount}|{(_p.note or '')[-70:]}")
+            _n = (_db37.query(models.AuditLog)
+                  .filter(models.AuditLog.note.like("Stretinko%")).count())
+            print(f"[diag3] stretinko audit yozuvlari: {_n}")
+            _sm37(_db37, "stretinko_diag_v3")
+except Exception as _e37:
+    print(f"[diag3] xato: {_e37}")

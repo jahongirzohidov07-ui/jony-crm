@@ -1279,3 +1279,52 @@ try:
                 _sm34(_db34, "qoplonbek_stretinko_v2")
 except Exception as _e34:
     print(f"[seed] stretinko 420 / qoplonbek xato: {_e34}")
+
+
+# DIAGNOSTIKA (2026-09-19) — faqat o'qiydi (+ o'quvchi 873 dagi xato
+# Stretinko filialini aniq id bo'yicha olib tashlaydi). Bir marta.
+try:
+    from sqlalchemy.orm import Session as _VS35
+    from common import _seed_done as _sd35, _seed_mark as _sm35
+    from courses import stretinko_branch_ids as _sb35
+    with _VS35(engine) as _db35:
+        if not _sd35(_db35, "stretinko_diag_v1"):
+            _bids = _sb35(_db35)
+            _u873 = _db35.query(models.User).get(873)
+            _ubs = (_db35.query(models.UserBranch)
+                    .filter(models.UserBranch.user_id == 873).all())
+            print(f"[diag] u873 role={getattr(_u873, 'role', None)} "
+                  f"branches={[ub.branch_id for ub in _ubs]} stretinko={_bids}")
+            if _u873 is not None and _u873.role in (roles.STUDENT, roles.PARENT):
+                for ub in _ubs:
+                    if ub.branch_id in _bids:
+                        _db35.delete(ub)
+                _db35.commit()
+            _mgr = (_db35.query(models.User)
+                    .filter(models.User.role.notin_((roles.STUDENT, roles.PARENT)),
+                            models.User.role.in_(("branch_manager", "sales_manager",
+                                                  "sales_head", "administrator",
+                                                  "academic_head")))
+                    .order_by(models.User.full_name).all())
+            print("[diag] managers: " + "; ".join(
+                f"{u.id}|{u.full_name}|{u.role}|b{u.branch_id}" for u in _mgr))
+            for _g in (_db35.query(models.Group)
+                       .filter(models.Group.branch_id.in_(_bids or [-1])).all()):
+                print(f"[diag] st-group {_g.id}|{_g.name}|lp={_g.lesson_price}"
+                      f"|mf={_g.monthly_fee}|std={_g.standard_lessons_per_month}"
+                      f"|course={_g.course_id}|manual={_g.price_manual}")
+            _ds = (_db35.query(models.Discount, models.Student)
+                   .join(models.Student, models.Student.id == models.Discount.student_id)
+                   .filter(models.Student.branch_id.in_(_bids or [-1]),
+                           models.Discount.status.in_(("active", "pending"))).all())
+            for _d, _s in _ds[:60]:
+                _ch = (_db35.query(models.Payment)
+                       .filter(models.Payment.student_id == _s.id,
+                               models.Payment.kind == "charge")
+                       .order_by(models.Payment.id.desc()).limit(2).all())
+                print(f"[diag] st-disc s{_s.id}|g{_s.group_id}|{_d.kind}|{_d.status}"
+                      f"|p={_d.percent}|a={_d.amount}|lock={_s.locked_lesson_price}"
+                      f"|charges={[(c.period, c.amount) for c in _ch]}")
+            _sm35(_db35, "stretinko_diag_v1")
+except Exception as _e35:
+    print(f"[diag] xato: {_e35}")

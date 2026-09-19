@@ -1244,3 +1244,33 @@ try:
             print(f"[seed] sentabr 2026 narx qoidasi: {_r33}")
 except Exception:
     pass
+
+
+# ---------------------------------------------------------------------------
+# STRETINKO 420 000 + QOPLONBEK (2026-09-19) — bir martalik
+#
+# Jahongir: "Qoplonbek Stretinko filialining ham barcha ishlarini
+# menejerga ochib ber va stretinkoda narxlar 420 bolgani bilan 10% skidka
+# 480mingdan hisoblanyabdi ekan shunaqami togrla".
+#   1) courses.fix_stretinko_420 — narx/qulf/hisoblarni 420 000 ga;
+#   2) Qoplonbek (ismi bo'yicha AYNAN BITTA xodim topilsa) — Stretinko
+#      filial(lar)i qo'shimcha filial sifatida biriktiriladi.
+# Natija audit jurnalida va logda.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS34
+    from common import _seed_done as _sd34, _seed_mark as _sm34
+    from courses import fix_stretinko_420 as _fx34
+    with _VS34(engine) as _db34:
+        if not _sd34(_db34, "stretinko_420_v1"):
+            _r34 = _fx34(_db34)
+            print(f"[seed] stretinko 420: { {k: v for k, v in _r34.items() if k != 'rows'} }")
+            _sm34(_db34, "stretinko_420_v1")
+        if not _sd34(_db34, "qoplonbek_stretinko_v1"):
+            from courses import grant_qoplonbek_stretinko as _gq34
+            _q34 = _gq34(_db34)
+            print(f"[seed] qoplonbek stretinko: {_q34}")
+            if _q34.get("user_id"):
+                _sm34(_db34, "qoplonbek_stretinko_v1")
+except Exception as _e34:
+    print(f"[seed] stretinko 420 / qoplonbek xato: {_e34}")

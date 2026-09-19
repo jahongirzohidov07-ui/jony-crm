@@ -580,3 +580,145 @@ def apply_sept_2026_pricing(db: Session, today: date = None) -> dict:
             out["fixed_new"] += 1
     db.commit()
     return out
+
+
+# ---------------------------------------------------------------------------
+# STRETINKO: CHEGIRMA 420 000 DAN (2026-09-19)
+#
+# Jahongir: "stretinkoda narxlar 420 bolgani bilan 10% skidka 480mingdan
+# hisoblanyabdi ekan shunaqami togrla".
+#
+# Sabab: sentabr qoidasi (apply_sept_2026_pricing, 3-bosqich) CHEGIRMASI
+# BOR o'quvchilarning sentabr hisobiga tegmagan edi, avtomat chegirma
+# tuzatgich (entry.fix_discount_charges) esa faqat "to'liq narxga teng"
+# qatorni ko'radi. Natijada Stretinko'da chegirmali o'quvchi
+# 480 000 - 10% = 432 000 to'lab qoldi (to'g'risi 420 000 - 10% = 378 000).
+# Yana: kurssiz ochilgan yangi guruh standart 40 000 narx bilan
+# ochilardi, yoki eski narx qulfi (40 000) qolgan bo'lishi mumkin.
+#
+# Faqat ANIQ holatlar tuzatiladi (o'quvchi foydasiga), hammasi auditda:
+#   1) Stretinko kurslari va guruhlari: 40 000 -> 35 000 (12 dars = 420 000);
+#   2) Stretinko o'quvchisidagi 40 000 qulf olib tashlanadi;
+#   3) 2026-09 dan boshlab oylik hisob: |summa| = 40 000 x dars x (1 - chegirma)
+#      bo'lsa -> 35 000 x dars x (1 - chegirma).
+# ---------------------------------------------------------------------------
+def stretinko_branch_ids(db: Session) -> list:
+    return [b.id for b in db.query(models.Branch).all()
+            if _branch_kind(b.name) == "stretinko"]
+
+
+def is_stretinko_branch(db: Session, branch_id) -> bool:
+    return bool(branch_id) and branch_id in stretinko_branch_ids(db)
+
+
+def fix_stretinko_420(db: Session, apply: bool = True) -> dict:
+    from common import _student_discount_percent
+    out = {"courses": 0, "groups": 0, "unlocked": 0, "charges": 0,
+           "back_sum": 0.0, "rows": []}
+    bids = stretinko_branch_ids(db)
+    if not bids:
+        return out
+    old, new = SEPT_2026_OLD_UNIT, SEPT_2026_STRETINKO_UNIT
+    for c in (db.query(models.Course)
+              .filter(models.Course.branch_id.in_(bids)).all()):
+        if round(c.lesson_price or 0) == old:
+            audit.log(db, None, entity="course", action="update",
+                      entity_id=c.id, entity_label=c.name,
+                      field="lesson_price", old_value=old, new_value=new,
+                      note="Stretinko: barcha 420 000", branch_id=c.branch_id)
+            c.lesson_price = new
+            out["courses"] += 1
+    for g in (db.query(models.Group)
+              .filter(models.Group.branch_id.in_(bids)).all()):
+        if round(g.lesson_price or 0) == old:
+            audit.log(db, None, entity="group", action="update",
+                      entity_id=g.id, entity_label=g.name,
+                      field="lesson_price", old_value=old, new_value=new,
+                      note="Stretinko: barcha 420 000", branch_id=g.branch_id)
+            g.lesson_price = new
+            g.monthly_fee = new * (g.standard_lessons_per_month or 12)
+            out["groups"] += 1
+    db.flush()
+    studs = (db.query(models.Student)
+             .join(models.Group, models.Student.group_id == models.Group.id)
+             .filter(models.Group.branch_id.in_(bids)).all())
+    for st in studs:
+        if st.locked_lesson_price is not None \
+                and round(st.locked_lesson_price) == old:
+            audit.log(db, None, entity="student", action="update",
+                      entity_id=st.id, entity_label=st.full_name,
+                      field="locked_lesson_price", old_value=old,
+                      new_value=None, note="Stretinko: barcha 420 000",
+                      branch_id=st.branch_id)
+            st.locked_lesson_price = None
+            out["unlocked"] += 1
+    db.flush()
+    sids = {st.id: st for st in studs}
+    if sids:
+        charges = (db.query(models.Payment)
+                   .filter(models.Payment.kind == "charge",
+                           models.Payment.period >= SEPT_2026_PERIOD,
+                           models.Payment.student_id.in_(list(sids))).all())
+        for p in charges:
+            st = sids[p.student_id]
+            g = st.group
+            std = int((g.standard_lessons_per_month if g else 12) or 12) or 12
+            try:
+                d = float(_student_discount_percent(db, st) or 0)
+            except Exception:
+                continue
+            k = 1 - min(max(d, 0.0), 100.0) / 100.0
+            bad = roles.money(old * std * k)
+            want = roles.money(new * std * k)
+            if abs(abs(p.amount) - bad) > 1 or want >= bad:
+                continue
+            out["charges"] += 1
+            out["back_sum"] = roles.money(out["back_sum"] + bad - want)
+            out["rows"].append({"student": st.full_name, "period": p.period,
+                                "old": bad, "new": want, "discount": d})
+            if not apply:
+                continue
+            audit.log(db, None, entity="payment", action="update",
+                      entity_id=p.id, entity_label=st.full_name,
+                      field="amount", old_value=p.amount, new_value=-want,
+                      note=(f"Stretinko 420 000: chegirma {d:g}% 480 000 dan "
+                            f"emas, 420 000 dan"), branch_id=st.branch_id)
+            p.amount = -want
+            p.note = ((p.note or "") + f" · Stretinko 420 000 ({d:g}%): "
+                      f"{int(bad):,} -> {int(want):,}").replace(",", " ")
+    if apply:
+        db.commit()
+    else:
+        db.rollback()
+    return out
+
+
+def grant_qoplonbek_stretinko(db: Session) -> dict:
+    """Qoplonbek'ka Stretinko filial(lar)ini qo'shimcha filial qilib
+    biriktiradi (2026-09-19). Ismi bo'yicha AYNAN BITTA faol xodim
+    topilsagina ishlaydi — adashib boshqa odamga ochilmasin."""
+    from sqlalchemy import func, or_
+    us = (db.query(models.User)
+          .filter(or_(func.lower(models.User.full_name).like("%qoplonbek%"),
+                      func.lower(models.User.full_name).like("%koplonbek%"),
+                      func.lower(models.User.username).like("%qoplonbek%")))
+          .all())
+    us = [u for u in us if getattr(u, "is_active", 1) not in (0, False)]
+    if len(us) != 1:
+        return {"found": len(us)}
+    u = us[0]
+    have = {ub.branch_id for ub in db.query(models.UserBranch)
+            .filter(models.UserBranch.user_id == u.id).all()}
+    added = []
+    for bid in stretinko_branch_ids(db):
+        if bid != u.branch_id and bid not in have:
+            db.add(models.UserBranch(user_id=u.id, branch_id=bid))
+            audit.log(db, None, entity="user", action="update",
+                      entity_id=u.id, entity_label=u.full_name,
+                      field="branches", new_value=bid,
+                      note="Stretinko filiali qo'shildi (Jahongir so'rovi)",
+                      branch_id=bid)
+            added.append(bid)
+    db.commit()
+    return {"found": 1, "user_id": u.id, "name": u.full_name,
+            "role": u.role, "added": added}

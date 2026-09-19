@@ -1099,6 +1099,20 @@ def create_group(
     _resolve_group_rate(db, data)
     data["price_manual"] = 1 if data.get("price_manual") else 0
     _apply_course_price(db, data)
+    # Stretinko'da barcha narx 420 000 (35 000 x 12). Kurssiz va qo'lda
+    # narx yozilmagan guruh standart 40 000 bilan ochilib qolmasin
+    # (2026-09-19, "10% skidka 480mingdan hisoblanyabdi").
+    try:
+        from courses import (is_stretinko_branch, SEPT_2026_OLD_UNIT,
+                             SEPT_2026_STRETINKO_UNIT)
+        if (not data.get("course_id") and not data.get("price_manual")
+                and round(data.get("lesson_price") or 0) == SEPT_2026_OLD_UNIT
+                and is_stretinko_branch(db, data.get("branch_id"))):
+            data["lesson_price"] = SEPT_2026_STRETINKO_UNIT
+            data["monthly_fee"] = SEPT_2026_STRETINKO_UNIT * (
+                data.get("standard_lessons_per_month") or 12)
+    except Exception:
+        pass
     group = models.Group(**data)
     db.add(group)
     db.commit()

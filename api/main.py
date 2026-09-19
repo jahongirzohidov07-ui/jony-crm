@@ -1328,3 +1328,33 @@ try:
             _sm35(_db35, "stretinko_diag_v1")
 except Exception as _e35:
     print(f"[diag] xato: {_e35}")
+
+
+try:
+    from sqlalchemy.orm import Session as _VS36
+    from common import _seed_done as _sd36, _seed_mark as _sm36
+    from courses import stretinko_branch_ids as _sb36
+    with _VS36(engine) as _db36:
+        if not _sd36(_db36, "stretinko_diag_v2"):
+            _bids = _sb36(_db36)
+            for _p in (_db36.query(models.Payment)
+                       .filter(models.Payment.student_id == 3184)
+                       .order_by(models.Payment.id).all()):
+                print(f"[diag2] s3184 {_p.id}|{_p.period}|{_p.kind}|{_p.amount}"
+                      f"|{_p.created_by}|{(_p.note or '')[:90]}")
+            for _d in (_db36.query(models.Discount)
+                       .filter(models.Discount.student_id == 3184).all()):
+                print(f"[diag2] s3184 disc {_d.id}|{_d.kind}|{_d.status}|p={_d.percent}"
+                      f"|a={_d.amount}|{_d.start_date}|{_d.end_date}|{(_d.reason or '')[:60]}")
+            _rows = (_db36.query(models.Payment, models.Student)
+                     .join(models.Student, models.Student.id == models.Payment.student_id)
+                     .filter(models.Student.branch_id.in_(_bids or [-1]),
+                             models.Payment.kind == "discount",
+                             models.Payment.period >= "2026-09").all())
+            for _p, _s in _rows[:40]:
+                print(f"[diag2] st-discpay s{_s.id}|{_p.period}|{_p.amount}"
+                      f"|{_p.created_by}|{(_p.note or '')[:80]}")
+            print(f"[diag2] st-discpay jami: {len(_rows)}")
+            _sm36(_db36, "stretinko_diag_v2")
+except Exception as _e36:
+    print(f"[diag2] xato: {_e36}")

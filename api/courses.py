@@ -758,3 +758,70 @@ def grant_qoplonbek_stretinko(db: Session) -> dict:
     db.commit()
     return {"found": 1, "user_id": u.id, "name": u.full_name,
             "role": u.role, "added": added}
+
+
+
+def fix_stretinko_undiscounted(db: Session, apply: bool = True) -> dict:
+    """Stretinko: faol chegirmasi bor, lekin 2026-09 dan keyingi hisobi
+    TO'LIQ 420 000 (chegirmasiz) qolgan o'quvchilar (2026-09-19).
+    Sabab: hisob faollashtirishda yozilgan, chegirma esa keyin yoqilgan.
+    Faqat aniq holat: bitta hisob, summasi aynan to'liq oy, o'sha oyda
+    alohida "discount" yozuvi yo'q."""
+    from common import _student_discount_percent
+    out = {"charges": 0, "back_sum": 0.0, "rows": []}
+    bids = stretinko_branch_ids(db)
+    if not bids:
+        return out
+    studs = (db.query(models.Student)
+             .join(models.Group, models.Student.group_id == models.Group.id)
+             .filter(models.Group.branch_id.in_(bids)).all())
+    for st in studs:
+        try:
+            d = float(_student_discount_percent(db, st) or 0)
+        except Exception:
+            continue
+        if d <= 0:
+            continue
+        g = st.group
+        std = int((g.standard_lessons_per_month if g else 12) or 12) or 12
+        price = float(st.locked_lesson_price or (g.lesson_price if g else 0) or 0)
+        full = roles.money(price * std)
+        want = roles.money(full * (1 - min(d, 100.0) / 100.0))
+        rows = (db.query(models.Payment)
+                .filter(models.Payment.student_id == st.id,
+                        models.Payment.kind == "charge",
+                        models.Payment.period >= SEPT_2026_PERIOD).all())
+        by_period: dict = {}
+        for p in rows:
+            by_period.setdefault(p.period, []).append(p)
+        for period, ps in by_period.items():
+            if len(ps) != 1:
+                continue
+            p = ps[0]
+            if abs(abs(p.amount) - full) > 0.5 or want >= full:
+                continue
+            has_disc = (db.query(models.Payment)
+                        .filter(models.Payment.student_id == st.id,
+                                models.Payment.period == period,
+                                models.Payment.kind == "discount").first())
+            if has_disc is not None:
+                continue
+            out["charges"] += 1
+            out["back_sum"] = roles.money(out["back_sum"] + full - want)
+            out["rows"].append({"student": st.id, "period": period,
+                                "old": full, "new": want, "discount": d})
+            if not apply:
+                continue
+            audit.log(db, None, entity="payment", action="update",
+                      entity_id=p.id, entity_label=st.full_name,
+                      field="amount", old_value=p.amount, new_value=-want,
+                      note=f"Stretinko: {d:g}% chegirma hisobga qo'llanmagan edi",
+                      branch_id=st.branch_id)
+            p.amount = -want
+            p.note = ((p.note or "") + f" · chegirma {d:g}% qo'llandi: "
+                      f"{int(full):,} -> {int(want):,}").replace(",", " ")
+    if apply:
+        db.commit()
+    else:
+        db.rollback()
+    return out

@@ -1374,16 +1374,24 @@ def _recharge_current_month(db: Session, st: models.Student) -> bool:
     g = st.group
     if g is None:
         return False
-    p = (db.query(models.Payment)
-         .filter(models.Payment.student_id == st.id,
-                 models.Payment.period == period,
-                 models.Payment.kind == "charge",
-                 models.Payment.created_by == getattr(_E, "_MC_BY", ""))
-         .first())
-    if p is None:
-        return False
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.student_id == st.id,
+                    models.Payment.period == period,
+                    models.Payment.kind == "charge").all())
     std = int(g.standard_lessons_per_month or 12) or 12
     want = _E._mc_expected(db, st, g, std)
+    full = roles.money(_E._billing.student_lesson_price(st, g) * std)
+    # Avtomat oylik qator — avvalgidek. Qo'shimcha (2026-09-19,
+    # Stretinko: "10% skidka ..."): FAOLLASHTIRISHDA yoki qo'lda yozilgan
+    # TO'LIQ standart oy (summa aynan to'liq narx) ham to'g'rilanadi —
+    # chegirma faollashtirilgandan KEYIN tasdiqlansa, u hisob chegirmasiz
+    # qolib ketardi. Qisman oy yoki boshqa summaga tegilmaydi.
+    mc = getattr(_E, "_MC_BY", "")
+    p = next((r for r in rows if r.created_by == mc), None)
+    if p is None and len(rows) == 1             and abs(abs(rows[0].amount) - full) <= 0.5:
+        p = rows[0]
+    if p is None:
+        return False
     if want >= abs(p.amount) - 0.5:
         return False
     old_amt = p.amount

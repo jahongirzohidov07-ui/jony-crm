@@ -2757,6 +2757,19 @@ def _activate_referrals(db: Session, student_id: int) -> int:
         d.approved_by = "Tizim (do'sti to'lov qildi)"
         d.approved_at = datetime.utcnow()
         n += 1
+    # Referal chegirmasi yoqilganda taklif qilgan o'quvchining SHU OY
+    # hisobi ham darrov to'g'rilanadi (2026-09-19) — qo'lda tasdiqdagi
+    # kabi. Ilgari status "active" bo'lardi-yu, hisob to'liq qolardi.
+    if n:
+        try:
+            db.flush()
+            from finance import _recharge_current_month
+            for d in rows:
+                ref = db.query(models.Student).get(d.student_id)
+                if ref is not None:
+                    _recharge_current_month(db, ref)
+        except Exception:
+            pass
     return n
 
 @router.post("/api/students/{student_id}/link-account")

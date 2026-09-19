@@ -98,6 +98,39 @@ ck("avgust hisobiga tegilmadi", db.query(models.Payment).get(aug.id).amount, -43
 ck("qaytgan summa", r["back_sum"], 54000 + 60000)
 ck("ikkinchi marta — o'zgarish yo'q", fix_stretinko_420(db)["charges"], 0)
 
+# --- Faollashtirishda to'liq 420 000 yozilgan, chegirma keyin yoqilgan
+from courses import fix_stretinko_undiscounted            # noqa: E402
+from finance import _recharge_current_month               # noqa: E402
+s_ref = stud("Referal Stretinko", g_st, st_b)
+p_ref = models.Payment(student_id=s_ref.id, amount=-420000, kind="charge",
+                       period="2026-09", created_by="Asoschi",
+                       note="Stretinko A — 2026-09: faollashgandan 12 dars (standart oy)")
+db.add(p_ref); db.commit()
+db.add(models.Discount(student_id=s_ref.id, kind="referral", percent=10,
+                       reason="do'st", status="active")); db.commit()
+ck("chegirmasiz 420 000 topildi (sinov)", fix_stretinko_undiscounted(db, apply=False)["charges"], 1)
+fix_stretinko_undiscounted(db)
+db.expire_all()
+ck("referal: 420 000 -> 378 000", db.query(models.Payment).get(p_ref.id).amount, -378000)
+ck("chegirmali 378 000 ga qayta tegilmaydi", db.query(models.Payment).get(p_disc.id).amount, -378000)
+
+# Joriy oy: faollashtirishdagi to'liq hisob chegirma tasdiqlanganda tushadi
+from datetime import date as _d
+_t = roles.local_today(); _per = f"{_t.year:04d}-{_t.month:02d}"
+s_new = stud("Yangi faollashgan", g_st, st_b)
+p_new = models.Payment(student_id=s_new.id, amount=-420000, kind="charge",
+                       period=_per, created_by="Menejer")
+db.add(p_new); db.commit()
+db.add(models.Discount(student_id=s_new.id, kind="individual", percent=10,
+                       reason="t", status="active")); db.commit()
+ck("tasdiqda faollashtirish hisobi ham tushadi", _recharge_current_month(db, db.query(models.Student).get(s_new.id)), True)
+db.expire_all()
+ck("joriy oy: 420 000 -> 378 000", db.query(models.Payment).get(p_new.id).amount, -378000)
+p_part = models.Payment(student_id=s_man.id, amount=-210000, kind="charge",
+                        period=_per, created_by="Menejer")
+db.add(p_part); db.commit()
+ck("qisman oyga tegilmaydi", _recharge_current_month(db, db.query(models.Student).get(s_man.id)), False)
+
 # --- Yangi guruh: Stretinko'da kurssiz 40 000 bilan ochilmaydi
 u_f = models.User(username="boss", password_hash=hash_password("x"),
                   full_name="Asoschi", role=roles.FOUNDER, branch_id=main_b.id)

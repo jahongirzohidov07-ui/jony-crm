@@ -1266,6 +1266,11 @@ try:
             _r34 = _fx34(_db34)
             print(f"[seed] stretinko 420: { {k: v for k, v in _r34.items() if k != 'rows'} }")
             _sm34(_db34, "stretinko_420_v1")
+        if not _sd34(_db34, "stretinko_undiscounted_v1"):
+            from courses import fix_stretinko_undiscounted as _fu34
+            _u34 = _fu34(_db34)
+            print(f"[seed] stretinko chegirmasiz hisoblar: {_u34}")
+            _sm34(_db34, "stretinko_undiscounted_v1")
         # v1 o'quvchi "Qoplonbek"ni topib olgan edi — v2 faqat xodimlar.
         if not _sd34(_db34, "qoplonbek_undo_student_v1"):
             from courses import undo_student_qoplonbek as _uq34

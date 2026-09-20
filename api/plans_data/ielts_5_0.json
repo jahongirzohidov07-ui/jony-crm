@@ -1,0 +1,700 @@
+{
+ "course": "ielts_5_0",
+ "title": "IELTS 5.0 - IELTS INTRODUCTION",
+ "cefr": "B2",
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Reading: Paraphrases",
+   "grammar_topic": "Paraphrase — savoldagi so'z matnda boshqacha aytiladi",
+   "vocab_topic": "Great places to be (shaharlar) — Unit 1",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 1 \"Great places to be\", Reading 1 (Table completion), 8–9-betlar. Workbook: Unit 1, Reading 1 (Table completion), 6-bet. Kitob matnlari mualliflik huquqi bilan himoyalangan — bu yerda faqat topshiriq havolasi, javoblar va izoh beriladi; matnni kitobdan o'qing.",
+   "objectives": [
+    "IELTS Readingda javob deyarli hech qachon savoldagi so'z bilan yozilmasligini tushunish: matn boshqa so'z bilan aytadi (paraphrase).",
+    "Savoldagi kalit so'zni (key word) topib, uning matndagi sinonimini izlashni o'rganish.",
+    "Table completion topshirig'ida javobni MATNDAGI SO'Z bilan, o'zgartirmasdan yozish qoidasini bajarish.",
+    "4 xil paraphrase turini tanish: sinonim, so'z turkumi o'zgarishi, antonim + inkor, umumlashtirish.",
+    "Band 4–5 darajadagi 3 ta matnda mustaqil ishlash va har javobni \"nega shunday\" deb izohlay olish."
+   ],
+   "materials": [
+    "Coursebook 8–9-betlar (Reading 1) va Workbook 6-bet (Reading 1) — har o'quvchida",
+    "Bu rejadagi 3 ta qo'shimcha matn (chop etiladi yoki ekranda)",
+    "Xatolar daftari: \"savoldagi so'z — matndagi so'z\" ustunlari",
+    "Sekundomer (har matnga 8 daqiqa)"
+   ],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "IELTS Reading matnni ko'chirib yozishni emas, MA'NONI tanishni tekshiradi. Shuning uchun savolda bir so'z, matnda esa uning sinonimi turadi. Bu — paraphrase.",
+     "Misol: savolda \"friendly inhabitants\", matnda \"friendlier populations\". \"Inhabitants\" va \"populations\" — bir ma'no, boshqa so'z.",
+     "Qoida: SAVOLNI o'zgartirmang, MATNNI qidiring. Avval savoldan kalit so'zni belgilang (ot, fe'l, raqam, ism), keyin matndan o'sha ma'noni qidiring.",
+     "Javobni yozganda esa aksincha: javob MATNDAGI so'z bilan yoziladi. O'zingizning sinonimingiz — noto'g'ri javob.",
+     "4 xil paraphrase: 1) sinonim (money — cash); 2) so'z turkumi o'zgaradi (relaxed lifestyle — a relaxed way of life); 3) antonim + inkor (have less money — don't have so much money); 4) umumiy so'z (Rio, Lilongwe — cities).",
+     "Ism, raqam, sana va joy nomlari paraphrase qilinmaydi — ular matnda xuddi o'sha holda turadi. Shuning uchun ular eng tez topiladigan \"langar\" (anchor) hisoblanadi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Savolni o'qing, kalit so'zni belgilang",
+      "\"People don't have so much ___\" — kalit: don't have so much",
+      "Bo'sh joydan oldingi va keyingi so'zga qarang"
+     ],
+     [
+      "2-bosqich",
+      "Kalit so'zning sinonimini o'ylang",
+      "don't have so much = have less",
+      "Bir nechta variant o'ylang"
+     ],
+     [
+      "3-bosqich",
+      "Matndan langar so'zni toping",
+      "Rio de Janeiro, 93 percent — ism va raqam o'zgarmaydi",
+      "Skanerlab qidiring, o'qimang"
+     ],
+     [
+      "4-bosqich",
+      "Gapni to'liq o'qing",
+      "\"cities where people have less money\"",
+      "Faqat bir so'zni emas, butun gapni"
+     ],
+     [
+      "5-bosqich",
+      "Javobni matndagi so'z bilan yozing",
+      "money",
+      "So'z shaklini o'zgartirmang"
+     ],
+     [
+      "6-bosqich",
+      "So'z chegarasini tekshiring",
+      "ONE WORD = bitta so'z",
+      "\"Two words\" yozsangiz — 0 ball"
+     ]
+    ],
+    "presentation": [
+     [
+      "Savolda \"friendly inhabitants\" bor, matnda bu so'z yo'q. Nima qilaman?",
+      "Sinonimini qidiraman: \"friendlier populations\". Inhabitants = populations."
+     ],
+     [
+      "Javobni o'z so'zim bilan yozsam bo'ladimi?",
+      "Yo'q. Table completion javobi matndagi so'z bilan, xuddi o'sha shaklda yoziladi."
+     ],
+     [
+      "Matnda \"relaxed way of life\", savolda \"relaxed ___ lifestyle\" — qaysi biri javob?",
+      "Javob — matndagi so'z: bu yerda savolga \"lifestyle\" mos keladi, chunki \"way of life\" = lifestyle."
+     ],
+     [
+      "Ism va raqamlarni ham paraphrase qilishadimi?",
+      "Yo'q. Rio, Amsterdam, 93% — o'zgarmaydi. Shuning uchun ulardan boshlab qidiring."
+     ],
+     [
+      "Bir so'z so'ralganda \"a lot of money\" deb yozsam?",
+      "Noto'g'ri. ONE WORD ONLY — faqat \"money\"."
+     ],
+     [
+      "Matnni boshidan oxirigacha o'qiymanmi?",
+      "Yo'q. Table completion javoblari matnda TARTIB bilan keladi — savol tartibida qidiring."
+     ]
+    ],
+    "notes": [
+     "Bu birinchi dars: o'quvchilarga \"IELTSda javob matnda turadi, faqat boshqa so'z bilan\" degan fikrni mahkam o'rnating.",
+     "Har javobdan keyin SO'RANG: \"matndagi qaysi so'z savoldagi so'zga teng?\" — javobni emas, yo'lni tekshiring.",
+     "Xatolar daftarining birinchi sahifasi shu darsda ochiladi: chap ustun \"savolda\", o'ng ustun \"matnda\".",
+     "Vaqt: har qo'shimcha matnga 8 daqiqa (IELTSda 1 passage ≈ 20 daqiqa, bu qisqartirilgan mashq)."
+    ],
+    "mistakes": [
+     [
+      "Javobni o'z sinonimi bilan yozish (matn \"money\", o'quvchi \"cash\")",
+      "Matndagi so'z: money",
+      "Table completion javobi matndan ko'chiriladi"
+     ],
+     [
+      "So'z chegarasini buzish (\"so much money\" — 2 so'z)",
+      "money",
+      "ONE WORD ONLY yozuvi savol ustida turadi"
+     ],
+     [
+      "Faqat kalit so'zni ko'rib, gapni o'qimaslik",
+      "Butun gapni o'qish",
+      "Bir so'z bir nechta joyda uchraydi, ma'no gapda ochiladi"
+     ],
+     [
+      "Savoldagi so'zni matndan aynan qidirish",
+      "Sinonimini qidirish",
+      "Matn deyarli har doim boshqa so'z ishlatadi"
+     ],
+     [
+      "Grammatikani o'zgartirish (matnda \"inhabitants\", javobda \"inhabitant\")",
+      "inhabitants",
+      "Ko'plik/birlik matndagidek qoladi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Kitob: Reading 1, \"The world's friendliest city\" (Table completion)",
+     "type": "Coursebook 8–9-bet, 5–6-mashq",
+     "instr": "Kitobdagi jadvalni to'ldiring. Bu yerda faqat javob va izoh — matn kitobda.",
+     "items": [
+      "1 more ___ lifestyle (Rio, ijobiy tomoni)",
+      "2 People don't have so much ___ (Rio, salbiy tomoni)",
+      "3 Has reputation for ___ (Rio)",
+      "4 People have little ___ (Amsterdam va Nyu-York)",
+      "5 don't pay attention to ___"
+     ],
+     "answers": [
+      "relaxed",
+      "money",
+      "crime",
+      "time",
+      "strangers"
+     ],
+     "why": [
+      "Matnda \"a more relaxed way of life\" bor. \"Way of life\" = lifestyle, shuning uchun bo'sh joyga sifat — relaxed — tushadi.",
+      "Matnda \"cities where people have less money\". \"Have less\" = \"don't have so much\" — antonim + inkor orqali paraphrase.",
+      "Matnda \"often known for its crime\". \"Be known for\" = \"have a reputation for\".",
+      "Matnda \"people tend to be short of time\". \"Be short of\" = \"have little\".",
+      "Matnda \"ignore strangers\". \"Ignore\" = \"don't pay attention to\"."
+     ],
+     "note": "Har javobdan keyin o'quvchidan matndagi ANIQ so'zni ko'rsatishni so'rang. Javobni topgan bo'lsa ham, paraphrase juftini ayta olmasa — yarim ish."
+    },
+    {
+     "title": "Kitobdagi paraphrase juftlari (5-mashq)",
+     "type": "Coursebook 9-bet",
+     "instr": "Jadvaldagi kursiv so'zlarni matndagi kursiv so'zlar bilan moslang.",
+     "items": [
+      "inhabitants",
+      "don't have so much money",
+      "has reputation for",
+      "lifestyle",
+      "have little time",
+      "don't pay attention to"
+     ],
+     "answers": [
+      "populations",
+      "have less money",
+      "is often known for",
+      "way of life",
+      "be short of time",
+      "ignore"
+     ],
+     "why": [
+      "Ikkalasi ham \"shahar aholisi\". Ot–ot sinonimi.",
+      "Inkor + \"so much\" = \"less\". Ma'no bir xil.",
+      "Ot birikmasi fe'l birikmasiga aylanadi (so'z turkumi o'zgaradi).",
+      "Bitta so'z uch so'zli birikmaga teng.",
+      "\"Little\" = \"short of\" — kamlikni bildiradi.",
+      "Uzun inkor birikma bitta fe'lga teng."
+     ]
+    },
+    {
+     "title": "Workbook: Unit 1, Reading 1 (Table completion)",
+     "type": "Workbook 6-bet",
+     "instr": "Shahar hayoti haqidagi matn: jadvalni to'ldiring. Javoblar va izohlar quyida, matn kitobda.",
+     "items": [
+      "Ishlash tartibi: avval jadvaldagi bo'sh joy oldidagi so'zni belgilang",
+      "Keyin matndan langar so'zni toping",
+      "Javob yozilgach, so'z sonini sanang",
+      "Tekshirishda har javob uchun paraphrase juftini ayting"
+     ],
+     "answers": [
+      "kalit so'z",
+      "ism, raqam, joy nomi",
+      "1 yoki 2 so'z",
+      "\"savolda X — matnda Y\""
+     ],
+     "why": [
+      "Bo'sh joydan oldingi so'z javobning so'z turkumini aytadi (ot? sifat?).",
+      "Bular paraphrase qilinmaydi, shuning uchun tez topiladi.",
+      "Ko'rsatma \"NO MORE THAN TWO WORDS\" bo'lsa, 3 so'z — 0 ball.",
+      "Ustoz shu javobni qabul qiladi."
+     ],
+     "note": "Workbook javoblari kitobning o'z kalitida bor. Ustoz o'quvchiga javobni emas, \"qaysi so'z qaysi so'zga teng\" savolini beradi."
+    },
+    {
+     "title": "Paraphrase mashqi: 10 juft",
+     "type": "Og'zaki, juftlikda",
+     "instr": "Ustoz chap ustunni o'qiydi, o'quvchi sinonimini aytadi.",
+     "items": [
+      "a lot of people",
+      "cheap",
+      "began",
+      "well-known",
+      "the price went up",
+      "children",
+      "difficult",
+      "almost all",
+      "help",
+      "quickly"
+     ],
+     "answers": [
+      "many people / a large population",
+      "not expensive / low-cost",
+      "started",
+      "famous",
+      "the cost increased / rose",
+      "young people / kids",
+      "hard / not easy",
+      "the majority / nearly every",
+      "assist / support",
+      "rapidly / fast"
+     ],
+     "why": [
+      "Sinonim almashtirish.",
+      "Antonim + inkor.",
+      "Oddiy fe'l sinonimi.",
+      "Sifat sinonimi.",
+      "Fe'l + ot juftligi almashadi.",
+      "Umumiylashtirish.",
+      "Ikki xil yo'l: sinonim va inkor.",
+      "Miqdor paraphrase.",
+      "Rasmiy sinonim.",
+      "Ravish sinonimi."
+     ]
+    }
+   ],
+   "readings": [
+    {
+     "title": "The city that pays you to live there",
+     "qtype": "Table completion",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In 2019, the small town of Candela in southern Italy had a problem. Young people were leaving for the big cities, and only about 2,700 residents remained. Shops closed, the school lost half its pupils, and the streets were quiet even in summer. So the mayor tried something unusual: he offered money to anyone who moved there. A single person received 800 euros, a couple 1,200 euros, and a family with children up to 2,000 euros. The only conditions were that newcomers had to rent or buy a house in the town and find work that paid at least 7,500 euros a year.",
+      "The idea worked better than anyone expected. Within a year, more than fifty families had applied, and the town hall received phone calls from as far away as Brazil. Candela is not rich, but it is safe, the air is clean, and a two-bedroom flat costs less than a parking space in Milan. For families with small children, that difference matters more than a high salary.",
+      "Other places have copied the plan. In Japan, the government of a mountain village gives free land to anyone who builds a house and stays for ten years. In Spain, the village of Ponga pays 3,000 euros to each couple who moves in, plus 3,000 more for every baby born there. Officials in these places say the aim is not tourism but population: a village without children has no future.",
+      "Not everyone is convinced. Critics point out that money brings people for a year or two, but only jobs keep them. In Candela, about a third of the new arrivals left again when their contracts ended. The mayor agrees, but he says the town is still better off than before: the school has reopened its second class, and two cafés now stay open until midnight."
+     ],
+     "paraphrases": [
+      [
+       "residents",
+       "people who live there"
+      ],
+      [
+       "newcomers",
+       "people who move in"
+      ],
+      [
+       "conditions",
+       "rules that must be followed"
+      ],
+      [
+       "applied",
+       "sent a request"
+      ],
+      [
+       "costs less than",
+       "is cheaper than"
+      ],
+      [
+       "the aim",
+       "the purpose"
+      ],
+      [
+       "about a third",
+       "roughly 33 per cent"
+      ],
+      [
+       "left again",
+       "did not stay"
+      ]
+     ],
+     "glossary": [
+      "mayor — hokim",
+      "resident — yashovchi",
+      "newcomer — yangi kelgan",
+      "condition — shart",
+      "apply — ariza bermoq",
+      "contract — shartnoma",
+      "convinced — ishongan"
+     ],
+     "tasks": [
+      {
+       "title": "Table completion",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Jadvalni matndan olingan so'z bilan to'ldiring.",
+       "items": [
+        "Candela: number of residents in 2019 — about ___",
+        "Candela: payment to a single person — ___ euros",
+        "Candela: payment to a family — up to ___ euros",
+        "Candela: newcomers must find work paying at least ___ a year",
+        "Japan: the government gives free ___",
+        "Ponga (Spain): payment for each baby born — ___ euros",
+        "Candela: share of new arrivals who left — about a ___"
+       ],
+       "answers": [
+        "2,700",
+        "800",
+        "2,000",
+        "7,500 euros",
+        "land",
+        "3,000",
+        "third"
+       ],
+       "why": [
+        "Raqam paraphrase qilinmaydi. \"Only about 2,700 residents remained\" — to'g'ridan-to'g'ri.",
+        "\"A single person received 800 euros\". \"Single person\" savolda ham, matnda ham bir xil — langar.",
+        "\"A family with children up to 2,000 euros\". \"Up to\" saqlanadi.",
+        "\"Find work that paid at least 7,500 euros a year\". \"At least\" = eng kami.",
+        "\"Gives free land to anyone who builds a house\". Bir so'z — land.",
+        "\"Plus 3,000 more for every baby born there\". \"Every baby\" = \"each baby\".",
+        "\"About a third of the new arrivals left again\". Bitta so'z kerak — third."
+       ]
+      },
+      {
+       "title": "Paraphrase topish",
+       "type": "Qidiruv",
+       "instr": "Matndan quyidagi ma'nodagi so'zni toping.",
+       "items": [
+        "\"odamlar yashaydigan joyni tark etishdi\"",
+        "\"ariza yuborishdi\"",
+        "\"maqsad\"",
+        "\"ishonmaydiganlar bor\"",
+        "\"shartnomasi tugaganda\""
+       ],
+       "answers": [
+        "were leaving",
+        "applied",
+        "the aim",
+        "Not everyone is convinced",
+        "when their contracts ended"
+       ],
+       "why": [
+        "Birinchi xatboshi: \"Young people were leaving for the big cities\".",
+        "\"More than fifty families had applied\".",
+        "\"Officials say the aim is not tourism but population\".",
+        "To'rtinchi xatboshining boshi.",
+        "Oxirgi xatboshi."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Where the streets have no cars",
+     "qtype": "Table completion",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Pontevedra is a medium-sized city in the north-west of Spain. Thirty years ago its narrow streets were full of traffic: about 14,000 cars passed through the old centre every day, the air was dirty, and between 1990 and 1996 thirty people died in road accidents. In 1999 a new mayor, who had worked as a doctor, decided that the centre belonged to people rather than to vehicles. Cars were not banned, but parking in the middle of the city was removed, speed limits were cut to 30 kilometres an hour, and pavements were widened.",
+      "The results surprised the rest of Europe. Traffic in the centre fell by around 90 per cent, and carbon dioxide emissions dropped by two thirds. Since 2011 nobody has been killed in a traffic accident inside the city. Shops, which had been afraid of losing customers, now report more visitors, because people who walk stop more often than people who drive.",
+      "The city also changed the way children travel to school. A scheme called \"Metrominuto\" gives every family a map that looks like an underground railway map, but the coloured lines show walking routes and the time each journey takes: eight minutes from the market to the town hall, twelve minutes from the station to the park. Today about seven out of ten children walk to school without an adult, a figure almost unknown in other European cities.",
+      "Pontevedra is not perfect. Some older residents complain that deliveries are slower, and drivers from nearby villages say they must park far from the shops. Yet the population of the centre has grown by 12,000 since the changes began, while many other Spanish old towns have emptied."
+     ],
+     "paraphrases": [
+      [
+       "narrow streets",
+       "small streets"
+      ],
+      [
+       "were full of traffic",
+       "had a lot of cars"
+      ],
+      [
+       "banned",
+       "not allowed"
+      ],
+      [
+       "removed",
+       "taken away"
+      ],
+      [
+       "cut to",
+       "reduced to"
+      ],
+      [
+       "fell by",
+       "dropped by"
+      ],
+      [
+       "complain",
+       "say they are not happy"
+      ],
+      [
+       "has grown",
+       "has increased"
+      ]
+     ],
+     "glossary": [
+      "traffic — transport oqimi",
+      "emissions — chiqindi gaz",
+      "pavement — piyoda yo'lka",
+      "scheme — dastur",
+      "delivery — yetkazib berish",
+      "figure — raqam"
+     ],
+     "tasks": [
+      {
+       "title": "Table completion",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Jadvalni to'ldiring.",
+       "items": [
+        "Before the changes: cars through the old centre each day — about ___",
+        "Before the changes: deaths in road accidents 1990–1996 — ___",
+        "Changes: new speed limit — ___ kilometres an hour",
+        "Results: fall in traffic — about ___ per cent",
+        "Results: fall in CO2 — by ___",
+        "Children: proportion who walk to school alone — about ___ out of ten",
+        "Population of the centre: increase — ___ people"
+       ],
+       "answers": [
+        "14,000",
+        "thirty / 30",
+        "30",
+        "90",
+        "two thirds",
+        "seven",
+        "12,000"
+       ],
+       "why": [
+        "\"About 14,000 cars passed through the old centre every day\".",
+        "\"Thirty people died in road accidents\". Raqamni so'z bilan ham yozish mumkin.",
+        "\"Speed limits were cut to 30 kilometres an hour\".",
+        "\"Traffic in the centre fell by around 90 per cent\". \"Around\" = \"about\".",
+        "\"Carbon dioxide emissions dropped by two thirds\" — ikki so'z.",
+        "\"About seven out of ten children walk to school without an adult\".",
+        "\"The population of the centre has grown by 12,000\"."
+       ]
+      },
+      {
+       "title": "Nega bu javob emas?",
+       "type": "Tahlil",
+       "instr": "Har savolda tipik xato berilgan. Nega noto'g'ri ekanini ayting.",
+       "items": [
+        "Traffic fell by \"two thirds\" deb yozish",
+        "Speed limit uchun \"30 kilometres an hour\" deb yozish",
+        "Deaths uchun \"thirty people\" deb yozish",
+        "1999 sanasini \"when traffic fell\" javobi deb olish"
+       ],
+       "answers": [
+        "noto'g'ri",
+        "noto'g'ri",
+        "noto'g'ri",
+        "noto'g'ri"
+       ],
+       "why": [
+        "\"Two thirds\" — CO2 haqida. Traffic uchun 90 per cent. Ikkalasi bir xatboshida turadi, shuning uchun gapni oxirigacha o'qish kerak.",
+        "Jadvalda \"___ kilometres an hour\" allaqachon yozilgan, faqat raqam kerak: 30.",
+        "\"People\" so'zi jadvalda bor; ortiqcha so'z qo'shilsa, so'z chegarasi buziladi.",
+        "1999 — hokim saylangan yil, natijalar keyin kelgan."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The quietest city in the world",
+     "qtype": "Table completion",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "Noise is not only unpleasant; it is dangerous. The World Health Organization says that long periods of loud sound raise blood pressure, damage sleep and, in European cities, shorten thousands of lives every year. Anything above 65 decibels during the day is considered harmful. A busy road reaches about 80 decibels, and a motorcycle passing close by reaches 95.",
+      "For this reason a number of cities now measure noise as carefully as they measure air pollution. Zurich, in Switzerland, is usually named the quietest large city in Europe. Its trams run on rubber-covered rails, rubbish is collected before seven in the morning only in the outer districts, and building work must stop at eight in the evening. Residents can report noise through a mobile application, and the city answers within 48 hours.",
+      "The opposite example is often said to be Dhaka, the capital of Bangladesh, where the average street noise reaches 119 decibels — louder than a rock concert. Most of it comes from car horns. Drivers use the horn as a greeting, a warning and a complaint, sometimes more than a thousand times an hour on a single street. In 2020 the government tried a \"no horn\" day; the noise fell by only 5 per cent, because most drivers ignored it.",
+      "Solutions do exist, and they are cheaper than people expect. Trees along a road cut noise by up to 10 decibels. Rubber road surfaces cut it by 5. In South Korea, some flats now have \"quiet floors\" made of thick material, after complaints between neighbours became one of the most common reasons for arguments in the whole country."
+     ],
+     "paraphrases": [
+      [
+       "unpleasant",
+       "not nice"
+      ],
+      [
+       "raise",
+       "increase"
+      ],
+      [
+       "harmful",
+       "bad for health"
+      ],
+      [
+       "measure",
+       "check the level of"
+      ],
+      [
+       "report",
+       "tell the authorities about"
+      ],
+      [
+       "the opposite example",
+       "the example that shows the other side"
+      ],
+      [
+       "ignored",
+       "did not obey"
+      ],
+      [
+       "cut noise",
+       "reduce noise"
+      ]
+     ],
+     "glossary": [
+      "blood pressure — qon bosimi",
+      "decibel — detsibel (ovoz o'lchovi)",
+      "tram — tramvay",
+      "horn — signal",
+      "surface — qoplama",
+      "complaint — shikoyat"
+     ],
+     "tasks": [
+      {
+       "title": "Table completion",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Uyda mustaqil bajaring (8 daqiqa).",
+       "items": [
+        "Harmful daytime noise: above ___ decibels",
+        "A busy road: about ___ decibels",
+        "Zurich: building work must stop at ___",
+        "Zurich: the city answers noise reports within ___",
+        "Dhaka: average street noise — ___ decibels",
+        "Dhaka: main source of noise — ___",
+        "Dhaka: fall in noise on \"no horn\" day — ___ per cent",
+        "Solutions: trees cut noise by up to ___ decibels"
+       ],
+       "answers": [
+        "65",
+        "80",
+        "eight in the evening / 8 p.m.",
+        "48 hours",
+        "119",
+        "car horns",
+        "5",
+        "10"
+       ],
+       "why": [
+        "\"Anything above 65 decibels during the day is considered harmful\".",
+        "\"A busy road reaches about 80 decibels\".",
+        "\"Building work must stop at eight in the evening\".",
+        "\"The city answers within 48 hours\".",
+        "\"The average street noise reaches 119 decibels\".",
+        "\"Most of it comes from car horns\" — ikki so'z.",
+        "\"The noise fell by only 5 per cent\".",
+        "\"Trees along a road cut noise by up to 10 decibels\"."
+       ]
+      },
+      {
+       "title": "Paraphrase daftari",
+       "type": "Yozma",
+       "instr": "Matndan 5 juft yozing: savolda qanday aytilishi mumkin — matnda qanday aytilgan.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "\"bad for health\" — \"harmful\"",
+        "\"the loudest\" — \"louder than a rock concert\"",
+        "\"did not obey\" — \"ignored\"",
+        "\"reduce\" — \"cut\"",
+        "\"people living nearby\" — \"neighbours\""
+       ],
+       "why": [
+        "Sifat sinonimi.",
+        "Taqqoslash orqali.",
+        "Inkor birikma bitta fe'lga teng.",
+        "Fe'l sinonimi.",
+        "Umumlashtirish."
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-matn: \"The quietest city in the world\"",
+     "type": "Reading",
+     "instr": "Uyda 8 daqiqada bajaring, keyin javoblarni izoh bilan tekshiring (yuqorida).",
+     "answers": "Javoblar darsning Reading bo'limida."
+    },
+    {
+     "title": "Kitob: Workbook Unit 1, Reading 2 (Note completion)",
+     "type": "Workbook 7-bet",
+     "instr": "Matnni o'qib, note completion topshirig'ini bajaring va har javob uchun paraphrase juftini yozing.",
+     "answers": "Kitob kaliti bilan tekshiriladi; ustoz paraphrase juftlarini so'raydi."
+    },
+    {
+     "title": "Paraphrase daftari",
+     "type": "Yozma",
+     "instr": "20 juft: chap ustun — savolda bo'lishi mumkin bo'lgan so'z, o'ng ustun — matndagi so'z. Bugungi 3 matndan oling.",
+     "answers": "Ustoz tekshiradi: juftlar haqiqatan matndan bo'lishi kerak."
+    },
+    {
+     "title": "Kichik yozma test",
+     "type": "10 savol",
+     "instr": "Ustoz bergan 10 ta so'zning sinonimini yozing (dars oxirida berilgan ro'yxat).",
+     "answers": "Keyingi darsda 5 daqiqada tekshiriladi."
+    }
+   ],
+   "normativ": [
+    [
+     "Paraphrase juftlari",
+     "20 juft to'g'ri yozilsa",
+     "2 coin"
+    ],
+    [
+     "Qo'shimcha matn (uyga)",
+     "8 ta javobdan 7 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Og'zaki sinonim",
+     "10 so'zdan 9 tasiga sinonim",
+     "1 coin"
+    ]
+   ]
+  }
+ ]
+}

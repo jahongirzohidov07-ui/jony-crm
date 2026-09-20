@@ -19,7 +19,14 @@ type Level = { course: string; title: string; cefr: string; ready: boolean;
 type LiveGroup = { id: number; name: string; students: { id: number; name: string }[] };
 
 type Ex = { title: string; type?: string; instr?: string; items?: string[];
-  answers?: string[] | string; note?: string; box?: string[] };
+  answers?: string[] | string; note?: string; box?: string[]; why?: string[] };
+/** IELTS 5.0 (Introduction): bitta darsda bir nechta reading/listening,
+ * har birida savol turi, paraphrase ro'yxati, javob izohi va transkript
+ * (2026-09-20, Jahongir so'rovi). */
+type Reading = { title: string; qtype?: string; source?: string; book_ref?: string;
+  text?: string[]; paraphrases?: [string, string][]; glossary?: string[]; tasks?: Ex[] };
+type Listen = { title: string; qtype?: string; audios?: string; intro?: string[];
+  transcript?: string[]; tasks?: Ex[] };
 type Lesson = {
   no: number; title: string; grammar_topic: string; vocab_topic: string; duration: number;
   test_after?: string; book_ref?: string; objectives: string[]; materials: string[];
@@ -30,6 +37,8 @@ type Lesson = {
   class_ex: Ex[];
   reading?: { book_ref?: string; title: string; text: string[]; glossary: string[]; tasks: Ex[] };
   listening?: { audios: string; intro: string[]; tasks: Ex[] };
+  readings?: Reading[];
+  listenings?: Listen[];
   homework_intro: string[]; homework: Ex[]; normativ: [string, string, string][];
 };
 
@@ -432,7 +441,13 @@ function ExList({ list }: { list: Ex[] }) {
             <ol className="list-decimal pl-5 text-sm text-slate-800 mt-2 space-y-0.5">
               {ex.items.map((it, j) => {
                 const ans = show[i] && Array.isArray(ex.answers) ? ex.answers[j] : undefined;
-                return <li key={j}>{ans !== undefined ? fillBlank(it, ans) : it}</li>;
+                const why = show[i] && ex.why ? ex.why[j] : undefined;
+                return (
+                  <li key={j}>
+                    {ans !== undefined ? fillBlank(it, ans) : it}
+                    {why && <div className="text-xs text-slate-500 mt-0.5">Nega: {why}</div>}
+                  </li>
+                );
               })}
             </ol>
           )}
@@ -448,9 +463,52 @@ function ExList({ list }: { list: Ex[] }) {
   );
 }
 
+function Paraphrases({ rows }: { rows: [string, string][] }) {
+  return (
+    <Section title="Paraphrase — matndagi va savoldagi so'zlar">
+      <Table head={["Matnda (passage)", "Savolda / javobda"]} rows={rows} />
+    </Section>
+  );
+}
+
+function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
+  const [open, setOpen] = useState(idx === 0);
+  return (
+    <div className="mb-5">
+      <button onClick={() => setOpen(!open)}
+              className="w-full flex items-center justify-between gap-3 bg-white rounded-xl border border-slate-200 px-4 py-3 text-left">
+        <span>
+          <span className="font-semibold text-slate-800">{idx + 1}. {R.title}</span>
+          {R.qtype && <span className="ml-2 text-xs bg-brand-50 text-brand-700 rounded px-2 py-0.5">{R.qtype}</span>}
+          {R.source && <span className="ml-2 text-xs text-slate-500">{R.source}</span>}
+        </span>
+        {open ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+      </button>
+      {open && (
+        <div className="mt-3">
+          {R.book_ref && <p className="text-xs text-slate-500 mb-2">{R.book_ref}</p>}
+          {(R.text ?? []).length > 0 && (
+            <Section title="Matn">
+              <div className="flex items-center gap-1 text-xs text-slate-400 mb-2"><FileText size={13} /> Sinfda o'qish uchun</div>
+              {R.text!.map((t, i) => <p key={i} className="text-sm text-slate-800 mb-2 leading-relaxed">{t}</p>)}
+              {(R.glossary ?? []).length > 0 && (
+                <div className="text-xs text-slate-600 bg-slate-50 rounded px-3 py-2 mt-2">{R.glossary!.join(" · ")}</div>
+              )}
+            </Section>
+          )}
+          {(R.paraphrases ?? []).length > 0 && <Paraphrases rows={R.paraphrases!} />}
+          <ExList list={R.tasks ?? []} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ReadingTab({ L }: { L: Lesson }) {
   const R = L.reading;
-  if (!R) return <p className="text-sm text-slate-500">Bu darsda reading matni yo'q (6-darsdan boshlanadi).</p>;
+  const many = L.readings ?? [];
+  if (many.length > 0) return <>{many.map((r, i) => <ReadingBlock key={i} R={r} idx={i} />)}</>;
+  if (!R) return <p className="text-sm text-slate-500">Bu darsda reading matni yo'q.</p>;
   return (
     <>
       {R.book_ref && <p className="text-xs text-slate-500 mb-3">{R.book_ref}</p>}
@@ -466,8 +524,42 @@ function ReadingTab({ L }: { L: Lesson }) {
   );
 }
 
+function ListenBlock({ S, idx }: { S: Listen; idx: number }) {
+  const [open, setOpen] = useState(idx === 0);
+  const [tr, setTr] = useState(false);
+  return (
+    <div className="mb-5">
+      <button onClick={() => setOpen(!open)}
+              className="w-full flex items-center justify-between gap-3 bg-white rounded-xl border border-slate-200 px-4 py-3 text-left">
+        <span>
+          <span className="font-semibold text-slate-800">{idx + 1}. {S.title}</span>
+          {S.qtype && <span className="ml-2 text-xs bg-brand-50 text-brand-700 rounded px-2 py-0.5">{S.qtype}</span>}
+          {S.audios && <span className="ml-2 text-xs text-slate-500">{S.audios}</span>}
+        </span>
+        {open ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+      </button>
+      {open && (
+        <div className="mt-3">
+          {(S.intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-2">{t}</p>)}
+          <ExList list={S.tasks ?? []} />
+          {(S.transcript ?? []).length > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <button onClick={() => setTr(!tr)} className="text-sm font-semibold text-slate-800 flex items-center gap-2">
+                <Headphones size={15} className="text-brand-600" /> Transkript {tr ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+              </button>
+              {tr && <div className="mt-2">{S.transcript!.map((t, i) => <p key={i} className="text-sm text-slate-800 mb-1.5 leading-relaxed">{t}</p>)}</div>}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ListeningTab({ L }: { L: Lesson }) {
   const S = L.listening;
+  const many = L.listenings ?? [];
+  if (many.length > 0) return <>{many.map((x, i) => <ListenBlock key={i} S={x} idx={i} />)}</>;
   if (!S) return <p className="text-sm text-slate-500">Bu darsda listening yo'q.</p>;
   return (
     <>

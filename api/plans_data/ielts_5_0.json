@@ -3901,6 +3901,1180 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 7,
+   "title": "Reading: Diagram Labelling",
+   "grammar_topic": "Diagram labelling — chizma va rasmni belgilash",
+   "vocab_topic": "It was all new once — mexanizm va qurilma (Unit 3)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 3 reading (diagram labelling) topshirig'i. Workbook (MAXIMISER): Labelling a diagram, 45–47-betlar (Example 8) va Tip 7. Matnlar kitobda; bu yerda qoida, izohlar va 3 ta mustaqil matn.",
+   "objectives": [
+    "Chizmadagi belgini matndagi tavsif bilan bog'lash: qism nomi, joylashuvi, vazifasi.",
+    "Joy va yo'nalish predloglarini o'qish: above, below, beneath, at the top, on either side, through, into.",
+    "Diagram labelling javoblari ham matn tartibida kelishini bilish va shu tartibdan foydalanish.",
+    "Chizma turini farqlash: qurilma sxemasi, jarayon sxemasi, joy rejasi.",
+    "3 ta Band 4–5 matnda mustaqil ishlash va har javobni izohlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Diagram labelling — matndagi tavsifni rasmga ko'chirish. Javob deyarli har doim OT (qism nomi) bo'ladi.",
+     "Avval chizmaga qarang: nima tasvirlangan, qaysi qismlar allaqachon nomlangan? Nomlangan qismlar — langar.",
+     "Keyin matndan o'sha nomlangan qismni toping. Javob shu jumlaning yonida turadi.",
+     "Joy predloglari eng muhim: above (ustida), below/beneath (ostida), inside (ichida), on either side (ikki yonida), at the base (tagida), through (orqali).",
+     "Yo'nalish so'zlari jarayon sxemasida keladi: enters, passes, flows into, is carried to, comes out of.",
+     "Javob so'z chegarasidan oshmasin: \"ONE WORD ONLY\" bo'lsa, \"metal ring\" emas, \"ring\".",
+     "Diagram labelling savollari matn tartibida joylashadi, shuning uchun topilgan javobdan keyin qidiring."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Chizma sarlavhasini o'qing",
+      "\"Parts of a wind turbine\"",
+      "Matndagi qismni topasiz"
+     ],
+     [
+      "2-bosqich",
+      "Nomlangan qismlarni belgilang",
+      "tower, blade",
+      "Ular langar bo'ladi"
+     ],
+     [
+      "3-bosqich",
+      "Bo'sh belgilar turini aniqlang",
+      "ot (qism nomi)",
+      "Deyarli har doim ot"
+     ],
+     [
+      "4-bosqich",
+      "Matndan langar so'zni toping",
+      "\"the tower\"",
+      "Javob shu atrofda"
+     ],
+     [
+      "5-bosqich",
+      "Predloglarni kuzating",
+      "above, inside, at the base",
+      "Joylashuvni belgilaydi"
+     ],
+     [
+      "6-bosqich",
+      "Javobni ko'chiring",
+      "matndagi so'z bilan",
+      "Chegarani tekshiring"
+     ]
+    ],
+    "presentation": [
+     [
+      "Javob qanday so'z turkumi bo'ladi?",
+      "Deyarli har doim ot: qism nomi."
+     ],
+     [
+      "Chizmada allaqachon yozilgan so'zlar nega kerak?",
+      "Ular langar — matndan joyni topishga yordam beradi."
+     ],
+     [
+      "\"Above\" va \"below\" ni chalkashtirsam?",
+      "Rasmga qarab tekshiring: matn nima ustida, nima ostida deyapti."
+     ],
+     [
+      "Javoblar tartibdami?",
+      "Ha, diagram labelling odatda matn tartibida keladi."
+     ],
+     [
+      "Ikki so'zli javob yozsam bo'ladimi?",
+      "Faqat ko'rsatma ruxsat bersa: \"NO MORE THAN TWO WORDS\"."
+     ],
+     [
+      "Matnda qism boshqacha atalgan bo'lsa?",
+      "Paraphrase bo'lishi mumkin: \"blade\" — \"the long arm\"."
+     ]
+    ],
+    "notes": [
+     "Ustoz doskaga oddiy chizma chizadi (masalan, velosiped) va o'quvchilar qismlarni ingliz tilida aytadi — predloglar bilan.",
+     "MAXIMISER 45–47-betlardagi namuna (Example 8) sinfda birga bajariladi.",
+     "Har javobdan keyin predlogni so'rang: \"bu qism qayerda turadi?\" — javob matndan ko'chiriladi.",
+     "Kuchsiz o'quvchilarga: avval faqat nomlangan qismlarni matndan topish mashqi."
+    ],
+    "mistakes": [
+     [
+      "Fe'l yozish (javob ot bo'lishi kerak)",
+      "ot yozish",
+      "Chizma qismlari otlar bilan nomlanadi"
+     ],
+     [
+      "Predlogni e'tiborsiz qoldirish",
+      "above/below ni belgilash",
+      "Joylashuv javobni belgilaydi"
+     ],
+     [
+      "Chizmadagi mavjud so'zni takrorlash",
+      "faqat yangi so'z",
+      "Ortiqcha so'z chegarani buzadi"
+     ],
+     [
+      "Tartibni e'tiborsiz qoldirish",
+      "ketma-ket qidirish",
+      "Diagram savollari tartibda keladi"
+     ],
+     [
+      "Umumiy bilim bilan to'ldirish",
+      "matndan olish",
+      "Rasm tanish bo'lsa ham, javob matnda"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Predlog mashqi",
+     "type": "Og'zaki, doskadagi chizma bilan",
+     "instr": "Ustoz oddiy chizma chizadi; o'quvchilar qismlarni predlog bilan tasvirlaydi.",
+     "items": [
+      "The seat is ___ the frame.",
+      "The chain runs ___ the two wheels.",
+      "The lamp is fixed ___ the handlebars.",
+      "Air enters ___ a small valve.",
+      "The motor sits ___ the seat.",
+      "Two mirrors are fitted on ___ side."
+     ],
+     "answers": [
+      "on",
+      "between",
+      "to",
+      "through",
+      "beneath / below",
+      "either"
+     ],
+     "why": [
+      "Ustida turadi.",
+      "Ikki narsa orasida.",
+      "Biror narsaga mahkamlanadi.",
+      "Ichidan o'tish.",
+      "Ostida.",
+      "Ikki yonida."
+     ],
+     "note": "Har gapni o'quvchi chizmani ko'rsatib aytsin — so'z va rasm bog'lanadi."
+    },
+    {
+     "title": "Kitob: Unit 3 reading (Diagram labelling)",
+     "type": "Coursebook, Unit 3",
+     "instr": "Chizmani to'ldiring; quyida ishlash tartibi.",
+     "items": [
+      "Chizmadagi nomlangan qismlarni belgilang",
+      "Har bo'sh belgi uchun \"bu qism qayerda?\" deb yozing",
+      "Matndan tartib bo'yicha qidiring",
+      "Javobni ko'chirib, chegarani tekshiring"
+     ],
+     "answers": [
+      "langar so'zlar",
+      "ustida / ichida / tagida",
+      "1, 2, 3",
+      "ONE WORD bo'lsa bitta"
+     ],
+     "why": [
+      "Matndan joyni tez topasiz.",
+      "Predlog javobni tasdiqlaydi.",
+      "Diagram savollari tartibda.",
+      "Ortiqcha so'z 0 ball."
+     ]
+    },
+    {
+     "title": "Workbook (MAXIMISER): Labelling a diagram",
+     "type": "45–47-betlar, Example 8",
+     "instr": "Namunani bajaring va predloglarni belgilang.",
+     "items": [
+      "Namunadagi chizmani o'z daftaringizga ko'chiring",
+      "Har javob yoniga predlogni yozing",
+      "Tip 7 ni eslang"
+     ],
+     "answers": [
+      "qo'l bilan",
+      "\"at the top of\", \"inside\"",
+      "javoblar har doim tartibda emas"
+     ],
+     "why": [
+      "Chizish esda qolishni oshiradi.",
+      "Bog'lanish ko'rinadi.",
+      "Boshqa turlarda tartib buzilishi mumkin."
+     ]
+    }
+   ],
+   "readings": [
+    {
+     "title": "Inside a wind turbine",
+     "qtype": "Diagram labelling",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A modern wind turbine looks simple from a distance, but it contains more than eight thousand parts. The structure stands on a concrete base, sometimes twenty metres across, which is buried under the ground. Above this rises the tower, a hollow steel tube with a ladder and, in larger machines, a small lift inside.",
+      "At the top of the tower sits a box about the size of a bus. This box is called the nacelle, and it holds the working parts of the machine. Attached to the front of the nacelle is the hub, and three blades are fixed to the hub. Each blade is made of glass fibre and can be longer than eighty metres — longer than the wing of a large aircraft.",
+      "Inside the nacelle, the slow turning of the blades, about fifteen times a minute, is passed to a gearbox, which increases the speed to around 1,500 turns a minute. The fast shaft then drives the generator, where movement becomes electricity. Behind the generator, at the back of the nacelle, a small weather station measures wind speed and direction; a motor called the yaw drive turns the whole nacelle so that the blades always face the wind.",
+      "The electricity travels down cables inside the tower to a transformer at the base, which raises the voltage so that the power can be carried along the grid. A single large turbine produces enough electricity for about two thousand homes, and modern machines start working in a wind of only three metres a second."
+     ],
+     "paraphrases": [
+      [
+       "buried",
+       "placed under the ground"
+      ],
+      [
+       "hollow",
+       "empty inside"
+      ],
+      [
+       "sits",
+       "is located"
+      ],
+      [
+       "attached to",
+       "fixed to"
+      ],
+      [
+       "passed to",
+       "transferred to"
+      ],
+      [
+       "drives",
+       "makes something work"
+      ],
+      [
+       "raises",
+       "increases"
+      ],
+      [
+       "carried",
+       "transported"
+      ]
+     ],
+     "glossary": [
+      "concrete — beton",
+      "tower — minora",
+      "nacelle — gondola (yuqoridagi quti)",
+      "hub — o'rta qism",
+      "blade — parrak",
+      "gearbox — reduktor",
+      "shaft — val",
+      "generator — generator",
+      "transformer — transformator",
+      "grid — elektr tarmog'i"
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Shamol turbinasi chizmasidagi belgilarni to'ldiring.",
+       "items": [
+        "1 Structure under the ground: concrete ___",
+        "2 Hollow steel part with a ladder inside: the ___",
+        "3 Box at the top of the tower: the ___",
+        "4 Part at the front where blades are fixed: the ___",
+        "5 Long parts made of glass fibre: ___",
+        "6 Part that increases the speed: the ___",
+        "7 Part that turns movement into electricity: the ___",
+        "8 Motor that turns the nacelle into the wind: the ___ drive",
+        "9 Equipment at the base that raises voltage: the ___"
+       ],
+       "answers": [
+        "base",
+        "tower",
+        "nacelle",
+        "hub",
+        "blades",
+        "gearbox",
+        "generator",
+        "yaw",
+        "transformer"
+       ],
+       "why": [
+        "\"Stands on a concrete base ... buried under the ground\".",
+        "\"Above this rises the tower, a hollow steel tube with a ladder\".",
+        "\"At the top of the tower sits a box ... called the nacelle\".",
+        "\"Attached to the front of the nacelle is the hub\".",
+        "\"Three blades are fixed to the hub\".",
+        "\"Passed to a gearbox, which increases the speed\".",
+        "\"Drives the generator, where movement becomes electricity\".",
+        "\"A motor called the yaw drive turns the whole nacelle\".",
+        "\"Cables ... to a transformer at the base, which raises the voltage\"."
+       ]
+      },
+      {
+       "title": "Joylashuv izohi",
+       "type": "Tahlil",
+       "instr": "Har qism qayerda turadi? Matndagi predlog bilan javob bering.",
+       "items": [
+        "nacelle",
+        "hub",
+        "weather station",
+        "transformer"
+       ],
+       "answers": [
+        "at the top of the tower",
+        "at the front of the nacelle",
+        "at the back of the nacelle",
+        "at the base"
+       ],
+       "why": [
+        "Predlog joyni aniq beradi.",
+        "\"Attached to the front\".",
+        "\"Behind the generator, at the back\".",
+        "\"A transformer at the base\"."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "How a vacuum flask keeps drinks hot",
+     "qtype": "Diagram labelling",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "The vacuum flask was invented in 1892 by the Scottish scientist James Dewar, who needed to store extremely cold gases in his laboratory. He never patented it; a German company began selling flasks for tea and coffee eleven years later.",
+      "The flask works by stopping the three ways in which heat moves. Its heart is a glass or steel bottle with double walls. The air between the two walls is removed, leaving a vacuum. Because heat cannot travel through empty space by conduction, very little warmth escapes through the sides.",
+      "The inner surface of both walls is covered with a thin layer of silver, which acts like a mirror and reflects heat back into the liquid. This stops radiation. At the bottom of the inner bottle there is a small glass point, sealed after the air was taken out; this is the weakest part, so the bottle sits on a soft pad of rubber or foam inside the outer case.",
+      "The outer case, usually plastic or metal, protects the fragile bottle and stays cool to touch. At the top, a tight stopper made of plastic or cork closes the neck; this prevents convection, the movement of warm air upwards and out. Many modern flasks add a cup, which screws over the stopper and serves as a lid. Together these parts can keep a drink hot for up to twenty-four hours, though every time the flask is opened it loses several degrees."
+     ],
+     "paraphrases": [
+      [
+       "extremely cold",
+       "very low temperature"
+      ],
+      [
+       "removed",
+       "taken out"
+      ],
+      [
+       "escapes",
+       "gets out"
+      ],
+      [
+       "reflects",
+       "sends back"
+      ],
+      [
+       "sealed",
+       "closed tightly"
+      ],
+      [
+       "fragile",
+       "easily broken"
+      ],
+      [
+       "prevents",
+       "stops"
+      ],
+      [
+       "serves as",
+       "is used as"
+      ]
+     ],
+     "glossary": [
+      "vacuum — vakuum",
+      "conduction — issiqlik o'tkazish",
+      "radiation — nurlanish",
+      "convection — konveksiya",
+      "stopper — tiqin",
+      "pad — yostiqcha",
+      "case — korpus"
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Termos kesimi chizmasini to'ldiring.",
+       "items": [
+        "1 Space between the two walls: the ___",
+        "2 Thin shiny layer on the walls: the ___",
+        "3 Weak part at the bottom of the inner bottle: the glass ___",
+        "4 Soft material under the bottle: the ___",
+        "5 Outer part that protects the bottle: the ___",
+        "6 Part that closes the neck: the ___",
+        "7 Part that screws on top and can be drunk from: the ___"
+       ],
+       "answers": [
+        "vacuum",
+        "silver",
+        "point",
+        "pad",
+        "case",
+        "stopper",
+        "cup"
+       ],
+       "why": [
+        "\"The air between the two walls is removed, leaving a vacuum\".",
+        "\"Covered with a thin layer of silver, which acts like a mirror\".",
+        "\"There is a small glass point, sealed after the air was taken out\".",
+        "\"The bottle sits on a soft pad of rubber or foam\".",
+        "\"The outer case ... protects the fragile bottle\".",
+        "\"A tight stopper ... closes the neck\".",
+        "\"Many modern flasks add a cup, which screws over the stopper\"."
+       ]
+      },
+      {
+       "title": "Uch yo'l",
+       "type": "Tahlil",
+       "instr": "Har qism qaysi issiqlik yo'lini to'xtatadi?",
+       "items": [
+        "vacuum",
+        "silver layer",
+        "stopper",
+        "case"
+       ],
+       "answers": [
+        "conduction",
+        "radiation",
+        "convection",
+        "himoya (issiqlik emas)"
+       ],
+       "why": [
+        "\"Heat cannot travel through empty space by conduction\".",
+        "\"Reflects heat back into the liquid. This stops radiation\".",
+        "\"This prevents convection, the movement of warm air upwards\".",
+        "Korpus mo'rt shishani himoya qiladi."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The parts of a traditional water mill",
+     "qtype": "Diagram labelling",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "Water mills have ground grain into flour for more than two thousand years, and a few still work in Central Asia and Europe today. The building is usually placed beside a fast stream. Water is taken from the stream further upriver and carried along a narrow channel, called the leat, which runs almost level so that the water arrives above the height of the wheel.",
+      "At the end of the leat the water passes through a wooden gate, the sluice, which the miller opens and closes to control the flow. From there it falls onto the wheel. In an overshot mill the water lands in buckets at the top of the wheel and turns it by weight; in an undershot mill the water pushes the bottom of the wheel instead, and less power is produced.",
+      "The wheel turns a horizontal beam, the axle, which passes through the wall into the building. Inside, a large wooden gearwheel, the pit wheel, changes the direction of the movement from horizontal to vertical. A vertical shaft then carries the movement upwards to the millstones on the floor above.",
+      "There are always two millstones. The lower one, the bed stone, never moves. The upper one, the runner stone, turns just above it, leaving a gap thinner than a sheet of paper. Grain falls into the centre of the runner stone from a wooden box called the hopper, moves outwards between the stones, and leaves the edge as flour, which slides down a wooden chute into sacks on the floor below."
+     ],
+     "paraphrases": [
+      [
+       "ground",
+       "crushed into powder"
+      ],
+      [
+       "beside",
+       "next to"
+      ],
+      [
+       "carried along",
+       "transported through"
+      ],
+      [
+       "control the flow",
+       "manage how much water passes"
+      ],
+      [
+       "by weight",
+       "because it is heavy"
+      ],
+      [
+       "changes the direction",
+       "turns movement another way"
+      ],
+      [
+       "never moves",
+       "stays still"
+      ],
+      [
+       "leaves the edge",
+       "comes out at the side"
+      ]
+     ],
+     "glossary": [
+      "mill — tegirmon",
+      "grain — don",
+      "flour — un",
+      "leat — suv ariqchasi",
+      "sluice — suv darvozasi",
+      "bucket — chelak",
+      "axle — o'q",
+      "millstone — tegirmon toshi",
+      "hopper — don qutisi",
+      "chute — tarnov"
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Tegirmon chizmasini to'ldiring.",
+       "items": [
+        "1 Narrow channel that brings water: the ___",
+        "2 Wooden gate controlling the water: the ___",
+        "3 Containers on an overshot wheel: ___",
+        "4 Horizontal beam turned by the wheel: the ___",
+        "5 Gearwheel that changes direction: the ___ wheel",
+        "6 Lower stone that does not move: the ___ stone",
+        "7 Upper stone that turns: the ___ stone",
+        "8 Box that holds the grain: the ___",
+        "9 Slide that takes flour to the sacks: the ___"
+       ],
+       "answers": [
+        "leat",
+        "sluice",
+        "buckets",
+        "axle",
+        "pit",
+        "bed",
+        "runner",
+        "hopper",
+        "chute"
+       ],
+       "why": [
+        "\"Carried along a narrow channel, called the leat\".",
+        "\"The water passes through a wooden gate, the sluice\".",
+        "\"The water lands in buckets at the top of the wheel\".",
+        "\"The wheel turns a horizontal beam, the axle\".",
+        "\"A large wooden gearwheel, the pit wheel, changes the direction\".",
+        "\"The lower one, the bed stone, never moves\".",
+        "\"The upper one, the runner stone, turns just above it\".",
+        "\"From a wooden box called the hopper\".",
+        "\"Slides down a wooden chute into sacks\"."
+       ]
+      },
+      {
+       "title": "Ikki tur g'ildirak",
+       "type": "Tahlil",
+       "instr": "Farqni matndan ayting.",
+       "items": [
+        "Overshot mill",
+        "Undershot mill",
+        "Qaysi biri kuchliroq?",
+        "Toshlar orasidagi oraliq"
+       ],
+       "answers": [
+        "water lands at the top, turns the wheel by weight",
+        "water pushes the bottom of the wheel",
+        "overshot",
+        "thinner than a sheet of paper"
+       ],
+       "why": [
+        "Suv tepaga tushadi.",
+        "Suv pastdan turtadi.",
+        "\"Less power is produced\" undershot haqida aytilgan.",
+        "Qog'ozdan ingichka."
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-matn: \"The parts of a traditional water mill\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar Reading bo'limida izoh bilan.",
+     "answers": "Ustoz har javob uchun predlog/joylashuvni so'raydi."
+    },
+    {
+     "title": "Workbook (MAXIMISER): Labelling a diagram",
+     "type": "45–47-betlar",
+     "instr": "Qolgan namunalarni bajaring va har javob yoniga predlogni yozing.",
+     "answers": "Kitob kaliti bilan."
+    },
+    {
+     "title": "O'z chizmangiz",
+     "type": "Yozma",
+     "instr": "Uydagi bir qurilmani (choynak, velosiped, fen) chizing va 8 qismini ingliz tilida belgilang; har biriga joylashuv gapini yozing.",
+     "answers": "Kamida 6 ta joy predlogi ishlatilsin."
+    },
+    {
+     "title": "Predlog testi",
+     "type": "Yozma",
+     "instr": "15 ta gapdagi bo'sh joyga predlog qo'ying: above, below, inside, through, between, at the top of, at the base of.",
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+    }
+   ],
+   "normativ": [
+    [
+     "Diagram labelling (uyga)",
+     "9 javobdan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "O'z chizmangiz",
+     "8 qism, 6 predlog",
+     "2 coin"
+    ],
+    [
+     "Predlog testi",
+     "15 dan 13 tasi",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 8,
+   "title": "Listening: Diagram Labelling",
+   "grammar_topic": "Diagram labelling (listening) — chizma va sxemani eshitib belgilash",
+   "vocab_topic": "Qurilma tavsifi, ekskursiya, jarayon (Unit 3–4)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 3/4 listening (diagram labelling) topshirig'i va audiosi. Workbook (MAXIMISER): Labelling a diagram bo'limi (o'xshash mantiq). Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "objectives": [
+    "Eshitib turib chizmadagi qismlarni belgilash: nom, joylashuv, vazifa.",
+    "Ketma-ketlik va joy so'zlarini eshitishda kuzatish: first, next, on the left, at the top, in the middle.",
+    "Chizmadagi langar (allaqachon nomlangan) qismlardan foydalanib, so'zlovchini \"kuzatib borish\".",
+    "Chalg'ituvchi tavsiflarni tanish: so'zlovchi avval boshqa qismni aytadi, keyin kerakligiga o'tadi.",
+    "Javobni so'z chegarasida va to'g'ri imloda yozish."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Listeningdagi diagram labelling — reading bilan bir xil mantiq, lekin BIR MARTA eshitiladi, shuning uchun chizmani oldindan o'qish shart.",
+     "So'zlovchi chizma bo'ylab TARTIB bilan yuradi: odatda yuqoridan pastga yoki chapdan o'ngga. Shu tartibni kuting.",
+     "Joy iboralari javobni belgilaydi: \"on the left\", \"at the far end\", \"just above\", \"in the middle\", \"next to\", \"opposite\".",
+     "Chalg'ituvchi: \"The office used to be near the entrance, but now it's opposite the café.\" Javob — hozirgi holat.",
+     "Javob deyarli har doim ot: part, room, machine nomlari.",
+     "Eshitayotganda chizmaga qalam bilan belgi qo'ying; javobni keyin to'liq yozasiz."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Chizmani o'qing",
+      "sarlavha va nomlangan qismlar",
+      "20–30 soniya"
+     ],
+     [
+      "2-bosqich",
+      "Yo'nalishni taxmin qiling",
+      "yuqoridan pastga?",
+      "So'zlovchi shu tartibda yuradi"
+     ],
+     [
+      "3-bosqich",
+      "Langarlarni belgilang",
+      "entrance, café",
+      "Ular bilan joyni topasiz"
+     ],
+     [
+      "4-bosqich",
+      "Joy iboralarini eshiting",
+      "opposite, next to",
+      "Javob shu atrofda"
+     ],
+     [
+      "5-bosqich",
+      "Qisqa belgi qo'ying",
+      "\"gen.\"",
+      "Keyin to'liq yoziladi"
+     ],
+     [
+      "6-bosqich",
+      "Imlo va chegarani tekshiring",
+      "ONE WORD",
+      "Ortiqcha so'z 0 ball"
+     ]
+    ],
+    "presentation": [
+     [
+      "Chizmani qachon o'qiyman?",
+      "Audio boshlanishidan oldin beriladigan 20–30 soniyada."
+     ],
+     [
+      "So'zlovchi qaysi tartibda yuradi?",
+      "Odatda chizma bo'ylab: yuqoridan pastga yoki chapdan o'ngga."
+     ],
+     [
+      "\"Opposite the café\" nimani bildiradi?",
+      "Kafening ro'parasi — chizmada qarama-qarshi tomon."
+     ],
+     [
+      "Eski va yangi joy aytilsa?",
+      "Hozirgi holatni oling: \"used to be ... but now\"."
+     ],
+     [
+      "Javobni eshitib ulgurmasam?",
+      "Belgi qo'yib, keyingisiga o'ting; oxirida to'ldirasiz."
+     ],
+     [
+      "Javob fe'l bo'lishi mumkinmi?",
+      "Kam. Diagram labelling javoblari deyarli har doim ot."
+     ]
+    ],
+    "notes": [
+     "Ustoz avval chizmani doskaga chizadi va o'quvchilardan \"qaysi tartibda aytiladi?\" deb so'raydi.",
+     "Skriptni birinchi marta to'liq o'qing; ikkinchi marta faqat tekshirish uchun bo'laklab o'qing.",
+     "Transkriptni tarqatgandan keyin joy iboralarini marker bilan belgilatish foydali.",
+     "Har skriptdan keyin: \"qaysi so'z javobni ochdi?\" — signal so'zni toping."
+    ],
+    "mistakes": [
+     [
+      "Chizmani o'qimasdan tinglash",
+      "Avval o'qish",
+      "Tayyorgarliksiz javob topilmaydi"
+     ],
+     [
+      "Eski holatni yozish",
+      "Hozirgi holatni olish",
+      "\"Used to\" — o'tgan zamon"
+     ],
+     [
+      "Imlo xatosi",
+      "To'g'ri yozish",
+      "Imlo xatosi = 0 ball"
+     ],
+     [
+      "Ikki so'z yozish (ONE WORD bo'lsa)",
+      "Bitta so'z",
+      "Chegarani tekshiring"
+     ],
+     [
+      "Belgi qo'ymay, xotiraga ishonish",
+      "Qisqa belgi qo'yish",
+      "Audio bir marta qo'yiladi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Joy iboralari mashqi",
+     "type": "Og'zaki",
+     "instr": "Ustoz aytadi, o'quvchi chizmada ko'rsatadi.",
+     "items": [
+      "\"It's opposite the entrance.\"",
+      "\"Just above the handle.\"",
+      "\"At the far end of the corridor.\"",
+      "\"On your left as you come in.\"",
+      "\"Between the pump and the tank.\"",
+      "\"Running along the back wall.\""
+     ],
+     "answers": [
+      "kirish ro'parasi",
+      "dastaning ustida",
+      "koridor oxirida",
+      "kirganda chap tomonda",
+      "nasos bilan idish orasida",
+      "orqa devor bo'ylab"
+     ],
+     "why": [
+      "Qarama-qarshi tomon.",
+      "\"Just\" — juda yaqin.",
+      "\"Far end\" — eng narigi uchi.",
+      "Yo'nalish kirish nuqtasidan.",
+      "Ikki narsa orasida.",
+      "Uzunasiga joylashgan."
+     ],
+     "note": "Har iborani o'quvchi chizmada barmog'i bilan ko'rsatsin — so'z va joy bog'lanadi."
+    },
+    {
+     "title": "Kitob: Unit 3/4 listening (Diagram labelling)",
+     "type": "Coursebook, tegishli topshiriq va audio",
+     "instr": "Chizmani to'ldiring; quyida ishlash tartibi.",
+     "items": [
+      "Chizmani 30 soniyada o'qing va nomlangan qismlarni belgilang",
+      "So'zlovchi yo'nalishini taxmin qiling",
+      "Eshitayotganda qisqa belgi qo'ying",
+      "Oxirida to'liq yozing va imloni tekshiring"
+     ],
+     "answers": [
+      "langarlar",
+      "yuqoridan pastga / chapdan o'ngga",
+      "bosh harf yoki 2 harf",
+      "nom otlari"
+     ],
+     "why": [
+      "Ular yo'l ko'rsatadi.",
+      "Tartib javob topishni osonlashtiradi.",
+      "Tez yozish uchun.",
+      "Imlo xatosi ball yo'qotadi."
+     ]
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Guided tour of a small factory",
+     "qtype": "Diagram labelling",
+     "audios": "Jony Academy skripti",
+     "intro": [
+      "Kichik shokolad fabrikasi bo'ylab ekskursiya. Chizmada zal rejasi bor. BIR MARTA tinglang."
+     ],
+     "transcript": [
+      "GUIDE: Welcome to Brookfield Chocolate. Before we go in, let me show you the plan of the building, so you know where everything is.",
+      "GUIDE: We're standing at the main entrance, at the bottom of the plan. As you come in, on your left there's the reception desk, and behind that a small shop where you can buy our products at the end of the tour.",
+      "GUIDE: Directly opposite the entrance, at the far end of the corridor, is the tasting room. That's where we finish, so remember the way.",
+      "GUIDE: Now, the working area. On the right of the corridor, the first door leads to the store room, where the cocoa beans arrive in large sacks. Next to the store room, going up the plan, is the roasting area — you'll smell it before you see it.",
+      "GUIDE: Above the roasting area, in the top right corner, is the grinding room. The nibs are ground there into a thick liquid. Please don't touch the machines; they are hot.",
+      "GUIDE: In the middle of the building, between the grinding room and the tasting room, you'll find the mixing hall. Sugar and milk powder are added there. The large silver tanks you can see through the window are in that hall.",
+      "GUIDE: The last production area, in the top left corner, is the moulding section, where liquid chocolate is poured into shapes and cooled. It's kept at eighteen degrees, so take a jacket if you feel the cold.",
+      "GUIDE: Finally, next to the shop, there's the packing area. It used to be upstairs, but we moved it down last year so that visitors can watch through the glass. Any questions before we start?"
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Reja chizmasidagi belgilarni to'ldiring.",
+       "items": [
+        "1 On the left as you enter: the ___ desk",
+        "2 Behind the reception: the ___",
+        "3 At the far end, opposite the entrance: the ___ room",
+        "4 First door on the right: the ___ room",
+        "5 Next to the store room: the ___ area",
+        "6 Top right corner: the ___ room",
+        "7 In the middle of the building: the ___ hall",
+        "8 Top left corner: the ___ section",
+        "9 Next to the shop: the ___ area"
+       ],
+       "answers": [
+        "reception",
+        "shop",
+        "tasting",
+        "store",
+        "roasting",
+        "grinding",
+        "mixing",
+        "moulding",
+        "packing"
+       ],
+       "why": [
+        "\"On your left there's the reception desk\".",
+        "\"Behind that a small shop\".",
+        "\"Directly opposite the entrance ... is the tasting room\".",
+        "\"The first door leads to the store room\".",
+        "\"Next to the store room ... is the roasting area\".",
+        "\"Above the roasting area, in the top right corner, is the grinding room\".",
+        "\"In the middle of the building ... the mixing hall\".",
+        "\"In the top left corner, is the moulding section\".",
+        "\"Next to the shop, there's the packing area\"."
+       ]
+      },
+      {
+       "title": "Signal iboralar",
+       "type": "Tahlil",
+       "instr": "Qaysi ibora joyni aniqladi?",
+       "items": [
+        "tasting room",
+        "grinding room",
+        "packing area",
+        "moulding section"
+       ],
+       "answers": [
+        "\"directly opposite the entrance, at the far end\"",
+        "\"above the roasting area, in the top right corner\"",
+        "\"next to the shop ... we moved it down last year\"",
+        "\"in the top left corner\""
+       ],
+       "why": [
+        "Ikki ibora bir joyni ko'rsatadi.",
+        "Ikki bosqichli ko'rsatma.",
+        "Eski joy (upstairs) — chalg'ituvchi.",
+        "Burchak nomi aniq beriladi."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "How a rainwater system works",
+     "qtype": "Diagram labelling",
+     "audios": "Jony Academy skripti",
+     "intro": [
+      "Uy uchun yomg'ir suvini yig'ish tizimi haqida ma'ruza. Chizmada tizim kesimi. BIR MARTA tinglang."
+     ],
+     "transcript": [
+      "SPEAKER: Right, let's look at how a domestic rainwater system actually works. I'll follow the water from the roof down to the tap.",
+      "SPEAKER: Rain falls on the roof and runs into the gutter along the edge. Nothing unusual so far. The gutter takes the water to a vertical pipe at the corner of the house — that's the downpipe.",
+      "SPEAKER: At the bottom of the downpipe, before anything else, there's a leaf filter. It's a simple mesh basket. Most people forget to clean it, and that's the commonest cause of problems.",
+      "SPEAKER: After the filter the water reaches the first flush device. The idea is simple: the first few litres carry dust and bird droppings, so they are sent away and not stored. Once that small chamber is full, the clean water passes on.",
+      "SPEAKER: The water then enters the tank, which is usually underground, where the temperature stays low and the water keeps better. A typical family tank holds five thousand litres.",
+      "SPEAKER: Inside the tank, notice that the inlet pipe has a smooth curve at the end, called a calmed inlet. It slows the water so that the dirt at the bottom is not stirred up.",
+      "SPEAKER: The pump sits either in the tank or beside it; in our diagram it's outside, in the small chamber on the right. It sends water to the house through the supply line.",
+      "SPEAKER: Near the top of the tank there's an overflow, which takes extra water away in heavy rain. And finally, at the house end, there's a backflow valve, which makes sure rainwater can never enter the drinking water pipes."
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Tizim chizmasini to'ldiring.",
+       "items": [
+        "1 Channel along the edge of the roof: the ___",
+        "2 Vertical pipe at the corner: the ___",
+        "3 Mesh basket that catches leaves: the leaf ___",
+        "4 Device that removes the dirtiest water: the first ___ device",
+        "5 Underground container: the ___",
+        "6 Curved pipe end inside the tank: the calmed ___",
+        "7 Equipment in the chamber on the right: the ___",
+        "8 Pipe near the top for extra water: the ___",
+        "9 Part that protects drinking water: the backflow ___"
+       ],
+       "answers": [
+        "gutter",
+        "downpipe",
+        "filter",
+        "flush",
+        "tank",
+        "inlet",
+        "pump",
+        "overflow",
+        "valve"
+       ],
+       "why": [
+        "\"Runs into the gutter along the edge\".",
+        "\"A vertical pipe at the corner of the house — that's the downpipe\".",
+        "\"There's a leaf filter. It's a simple mesh basket\".",
+        "\"The water reaches the first flush device\".",
+        "\"The water then enters the tank, which is usually underground\".",
+        "\"The inlet pipe has a smooth curve at the end, called a calmed inlet\".",
+        "\"The pump sits ... in our diagram it's outside, in the small chamber on the right\".",
+        "\"Near the top of the tank there's an overflow\".",
+        "\"There's a backflow valve, which makes sure rainwater can never enter the drinking water pipes\"."
+       ]
+      },
+      {
+       "title": "Vazifa va joy",
+       "type": "Tahlil",
+       "instr": "Har qism nima qiladi va qayerda?",
+       "items": [
+        "leaf filter",
+        "first flush device",
+        "calmed inlet",
+        "overflow"
+       ],
+       "answers": [
+        "barglarni ushlaydi; downpipe tagida",
+        "birinchi iflos suvni chetga chiqaradi",
+        "tubdagi loyqani ko'tarmaydi",
+        "ortiqcha suvni chiqaradi; tank tepasida"
+       ],
+       "why": [
+        "\"At the bottom of the downpipe\".",
+        "\"They are sent away and not stored\".",
+        "\"Slows the water so that the dirt ... is not stirred up\".",
+        "\"Near the top of the tank\"."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The new library building",
+     "qtype": "Diagram labelling (map)",
+     "audios": "Jony Academy skripti — uyga vazifa",
+     "intro": [
+      "Yangi kutubxona binosining rejasi tanishtiriladi. Uyda bir marta tinglang."
+     ],
+     "transcript": [
+      "LIBRARIAN: Good afternoon, everyone. I'd like to explain the layout of the new building, because it's quite different from the old one.",
+      "LIBRARIAN: You come in from Park Street, through the main doors at the bottom of the plan. Straight in front of you is the help desk; if you're lost, that's where to go.",
+      "LIBRARIAN: To the right of the help desk is the self-service area, with four machines for borrowing and returning books. To the left, behind the glass wall, is the children's section. It has its own small entrance from the garden, so families don't have to walk through the quiet areas.",
+      "LIBRARIAN: Now, the ground floor. Along the whole of the left-hand wall are the study rooms — six of them, bookable online for up to two hours. Opposite them, on the right-hand side, you'll find the newspaper corner and, beyond it, the café. The café has a separate door to the street, so it stays open after the library closes.",
+      "LIBRARIAN: At the back, in the middle, is the lift, with the stairs immediately to its left.",
+      "LIBRARIAN: Upstairs, the plan is simpler. The whole front half is the reading hall, with sixty desks. Behind it, on the right, is the computer room — twenty machines, no food or drink. And in the far left corner, next to the window, is the local history collection. That used to be in the basement, but the damp damaged some books, so we moved it up.",
+      "LIBRARIAN: Finally, the toilets are on both floors, next to the lift."
+     ],
+     "tasks": [
+      {
+       "title": "Diagram labelling",
+       "type": "ONE WORD ONLY",
+       "instr": "Kutubxona rejasini to'ldiring.",
+       "items": [
+        "1 Straight ahead as you enter: the help ___",
+        "2 To the right of the help desk: the ___ area",
+        "3 Behind the glass wall on the left: the ___ section",
+        "4 Along the left-hand wall: the ___ rooms",
+        "5 On the right-hand side, before the café: the ___ corner",
+        "6 At the back in the middle: the ___",
+        "7 Upstairs, the whole front half: the ___ hall",
+        "8 Upstairs on the right, behind the hall: the ___ room",
+        "9 Far left corner upstairs: the local ___ collection"
+       ],
+       "answers": [
+        "desk",
+        "self-service",
+        "children's",
+        "study",
+        "newspaper",
+        "lift",
+        "reading",
+        "computer",
+        "history"
+       ],
+       "why": [
+        "\"Straight in front of you is the help desk\".",
+        "\"To the right of the help desk is the self-service area\".",
+        "\"To the left, behind the glass wall, is the children's section\".",
+        "\"Along the whole of the left-hand wall are the study rooms\".",
+        "\"You'll find the newspaper corner and, beyond it, the café\".",
+        "\"At the back, in the middle, is the lift\".",
+        "\"The whole front half is the reading hall\".",
+        "\"Behind it, on the right, is the computer room\".",
+        "\"In the far left corner ... is the local history collection\"."
+       ]
+      },
+      {
+       "title": "Chalg'ituvchilar",
+       "type": "Tahlil",
+       "instr": "Nega bu javoblar noto'g'ri?",
+       "items": [
+        "local history collection: basement",
+        "stairs: at the back in the middle",
+        "café: next to the help desk",
+        "children's section: main entrance"
+       ],
+       "answers": [
+        "noto'g'ri",
+        "noto'g'ri",
+        "noto'g'ri",
+        "noto'g'ri"
+       ],
+       "why": [
+        "\"That used to be in the basement ... so we moved it up\" — eski joy.",
+        "O'rtada lift; zinapoya uning chap tomonida.",
+        "Kafe gazeta burchagidan keyin, o'ng tomonda.",
+        "Uning bog'dan alohida kirishi bor."
+       ]
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-skript: \"The new library building\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang (yoki o'qitib eshiting), rejani to'ldiring, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida izoh bilan."
+    },
+    {
+     "title": "Kitob: Unit 3/4 listening (diagram labelling)",
+     "type": "Coursebook",
+     "instr": "Qayta tinglang va har javob uchun joy iborasini yozing.",
+     "answers": "Kitob kaliti bilan."
+    },
+    {
+     "title": "Joy iboralari lug'ati",
+     "type": "Yozma",
+     "instr": "20 ta joy iborasini tarjimasi bilan yozing: opposite, next to, beyond, along, at the far end, in the corner, behind, in front of, between, above.",
+     "answers": "Har ibora uchun o'z gapingiz bo'lsin."
+    },
+    {
+     "title": "O'z rejangiz",
+     "type": "Og'zaki yozuv",
+     "instr": "Uyingiz yoki maktabingiz rejasini chizing va 1 daqiqada ingliz tilida tasvirlang (kamida 8 joy iborasi).",
+     "answers": "Ovozli yozuv ustozga yuboriladi."
+    }
+   ],
+   "normativ": [
+    [
+     "Diagram labelling (uyga)",
+     "9 javobdan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Joy iboralari",
+     "20 ibora, har biriga gap",
+     "2 coin"
+    ],
+    [
+     "O'z rejangiz (ovozli)",
+     "1 daqiqa, 8 ibora",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

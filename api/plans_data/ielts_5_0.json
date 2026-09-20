@@ -5075,6 +5075,1158 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 9,
+   "title": "Listening: Multiple Choice",
+   "grammar_topic": "Multiple choice — uch variantdan bittasini tanlash",
+   "vocab_topic": "Kundalik suhbat va ma'ruza (Unit 4)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 4 listening (multiple choice) topshirig'i va audiosi. Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "objectives": [
+    "Savol va uchta variantni audio boshlanishidan oldin o'qib ulgurish.",
+    "Uchala variant ham audioda eshitilishini bilish: eshitilgani emas, MOS kelgani tanlanadi.",
+    "Chalg'ituvchi turlarini tanish: eski ma'lumot, boshqa odamning fikri, qisman to'g'ri variant.",
+    "Variantni o'chirib borish usuli bilan ishlash (elimination).",
+    "Javobni belgilab, keyingi savolga o'tishda kechikmaslik."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Multiple choice — eng ko'p vaqt oladigan tur, chunki o'qish kerak: savol + 3 variant.",
+     "Oltin qoida: audioda uchala variant ham aytiladi. Faqat bittasi savolga to'liq mos keladi.",
+     "Chalg'ituvchi 1 — ESKI ma'lumot: \"It used to be on Mondays, but now it's on Thursdays.\"",
+     "Chalg'ituvchi 2 — BOSHQA odamning fikri: \"My friend liked the food, but I thought the service was better.\"",
+     "Chalg'ituvchi 3 — QISMAN to'g'ri: variantda ikkita narsa aytiladi, audio faqat bittasini tasdiqlaydi.",
+     "Savolni o'qiyotganda kalit so'zni belgilang; variantlarni qisqa belgilab qo'ying (masalan: A = tez, B = arzon, C = yaqin).",
+     "Javob topilgach darhol belgilang va keyingi savolga qarang: audio to'xtamaydi.",
+     "Ishonchingiz komil bo'lmasa, eng ehtimolli variantni belgilang — bo'sh javob har doim 0."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Savolni o'qing",
+      "nima so'ralyapti?",
+      "Kalit so'zni belgilang"
+     ],
+     [
+      "2-bosqich",
+      "Variantlarni qisqartiring",
+      "A tez / B arzon / C yaqin",
+      "Ko'z bilan tez qamrab olish uchun"
+     ],
+     [
+      "3-bosqich",
+      "Eshitayotganda variantlarni o'chiring",
+      "A ✗",
+      "Eshitilgan, lekin mos emas"
+     ],
+     [
+      "4-bosqich",
+      "Signal so'zlarni kuting",
+      "but, however, actually",
+      "Javob ko'pincha shundan keyin"
+     ],
+     [
+      "5-bosqich",
+      "Javobni belgilang",
+      "A / B / C",
+      "Ikkilansangiz — eng ehtimollisi"
+     ],
+     [
+      "6-bosqich",
+      "Keyingi savolga o'ting",
+      "darhol",
+      "Audio kutmaydi"
+     ]
+    ],
+    "presentation": [
+     [
+      "Uchala variant ham eshitildi. Qaysi biri javob?",
+      "Savolga TO'LIQ mos kelgani. Qolganlari chalg'ituvchi."
+     ],
+     [
+      "\"It used to be...\" degan gap eshitildi. Bu javobmi?",
+      "Yo'q, bu eski ma'lumot. Hozirgi holatni kuting."
+     ],
+     [
+      "Do'stining fikri aytildi, javob shumi?",
+      "Savol kimning fikrini so'rayotganiga qarang."
+     ],
+     [
+      "Savolni o'qishga ulgurmadim.",
+      "Variantlarning faqat farqli so'zini o'qing: tez / arzon / yaqin."
+     ],
+     [
+      "Ikkita variant to'g'ridek.",
+      "Savolning aniq so'ziga qayting: \"main reason\", \"most\", \"first\"."
+     ],
+     [
+      "Javobni o'zgartirsam bo'ladimi?",
+      "Ha, lekin faqat aniq yangi ma'lumot eshitilsa."
+     ]
+    ],
+    "notes": [
+     "Ustoz skriptni o'qishdan oldin 45 soniya beradi: savol va variantlarni o'qish uchun.",
+     "Tekshirishda har chalg'ituvchi uchun \"nega noto'g'ri\" izohi aytilsin — bu darsning asosiy ishi.",
+     "Transkriptda javob joyini va chalg'ituvchi joyini ikki xil rangda belgilang.",
+     "Kuchsiz o'quvchilarga: avval faqat 3 savol, keyin 6 savol."
+    ],
+    "mistakes": [
+     [
+      "Eshitilgan so'zga qarab tanlash",
+      "Ma'noga qarab tanlash",
+      "Uchala variant ham eshitiladi"
+     ],
+     [
+      "Eski ma'lumotni tanlash",
+      "Hozirgi holatni olish",
+      "\"used to\", \"before\", \"last year\""
+     ],
+     [
+      "Boshqa odamning fikrini olish",
+      "Savoldagi shaxsni tekshirish",
+      "\"My friend thinks...\" — boshqa fikr"
+     ],
+     [
+      "Savolni o'qimasdan tinglash",
+      "Avval o'qish",
+      "Savolsiz eshitish foydasiz"
+     ],
+     [
+      "Bo'sh qoldirish",
+      "Taxmin qilib belgilash",
+      "Bo'sh javob = 0"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Chalg'ituvchi turlari",
+     "type": "Og'zaki",
+     "instr": "Ustoz gap o'qiydi, o'quvchi chalg'ituvchi turini aytadi.",
+     "items": [
+      "\"The course was on Mondays last year, but now it's on Thursdays.\"",
+      "\"My sister found it easy; I struggled with the writing.\"",
+      "\"The hotel was clean and quiet, though the food was poor.\"",
+      "\"We wanted to go by train, but in the end we drove.\"",
+      "\"It's not the price that matters, it's the time.\"",
+      "\"Almost everyone said yes — only two people disagreed.\""
+     ],
+     "answers": [
+      "eski ma'lumot",
+      "boshqa odamning fikri",
+      "qisman to'g'ri",
+      "reja va natija",
+      "inkor bilan ajratish",
+      "deyarli hamma"
+     ],
+     "why": [
+      "Javob — Thursdays.",
+      "Savol kim haqida ekanini tekshiring.",
+      "Variantda \"clean and good food\" bo'lsa — noto'g'ri.",
+      "Javob — mashina.",
+      "Javob — vaqt.",
+      "\"Hamma\" emas."
+     ],
+     "note": "Har misolda \"signal so'z\" ni ayting: but, though, in the end, only, not ... it's."
+    },
+    {
+     "title": "Kitob: Unit 4 listening (Multiple choice)",
+     "type": "Coursebook, Unit 4",
+     "instr": "Topshiriqni bajaring; quyida ishlash tartibi.",
+     "items": [
+      "Savol va variantlarni 45 soniyada o'qing",
+      "Variantlarni bitta so'z bilan qisqartiring",
+      "Eshitayotganda o'chirib boring",
+      "Tekshirishda har chalg'ituvchi uchun izoh ayting"
+     ],
+     "answers": [
+      "kalit so'zlarni belgilang",
+      "A tez / B arzon / C yaqin",
+      "A ✗, B ✗",
+      "nega noto'g'ri"
+     ],
+     "why": [
+      "Vaqt cheklangan.",
+      "Tez qamrab olish uchun.",
+      "Qolgan variant javob bo'ladi.",
+      "Ustozning talabi."
+     ]
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Choosing a part-time job",
+     "qtype": "Multiple choice",
+     "audios": "Jony Academy skripti",
+     "intro": [
+      "Ikki talaba yarim kunlik ish haqida gaplashmoqda. BIR MARTA tinglang, har savolda A, B yoki C ni tanlang."
+     ],
+     "transcript": [
+      "MAYA: Have you found a job yet, Tom?",
+      "TOM: I've got two offers, actually. One is in the university café, and the other is at the bookshop in town.",
+      "MAYA: The café pays well, doesn't it?",
+      "TOM: It's nine pounds an hour, and the bookshop is eight fifty. But the café shifts start at seven in the morning, and I have lectures at nine, so I'd be running across town every day.",
+      "MAYA: So you'll take the bookshop?",
+      "TOM: I think so. It's not the money — half an hour of sleep matters more to me right now.",
+      "MAYA: Fair enough. How many hours a week?",
+      "TOM: The bookshop wants twelve, but they said ten is possible during exams. The café wanted sixteen, which is too many.",
+      "MAYA: My job is only eight hours, but I work every Saturday, and I hate that.",
+      "TOM: Yes, weekends are the problem. The bookshop is closed on Sundays, and they rotate Saturdays, so I'd work two Saturdays a month.",
+      "MAYA: That's better than mine. What about the people?",
+      "TOM: I met the manager. She seemed strict — she talked a lot about being on time — but the other staff said she's fair, and she lets people swap shifts.",
+      "MAYA: My manager is friendly but hopeless at organising. Last week nobody knew who was working.",
+      "TOM: That sounds worse. Oh, and the bookshop gives a staff discount — thirty per cent on books.",
+      "MAYA: Thirty? That's dangerous for you.",
+      "TOM: I know. I'll probably spend my wages there."
+     ],
+     "tasks": [
+      {
+       "title": "Multiple choice",
+       "type": "A, B yoki C",
+       "instr": "To'g'ri javobni tanlang.",
+       "items": [
+        "1 Why does Tom prefer the bookshop? A) It pays more B) The hours suit him better C) It is nearer his home",
+        "2 How many hours a week will Tom probably work? A) eight B) ten C) twelve",
+        "3 What does Tom say about Saturdays? A) He will work every Saturday B) He will work two a month C) He will never work Saturdays",
+        "4 What do the staff say about the manager? A) She is fair B) She is disorganised C) She is unfriendly",
+        "5 What extra benefit does the bookshop offer? A) free meals B) a discount C) transport"
+       ],
+       "answers": [
+        "B",
+        "C",
+        "B",
+        "A",
+        "B"
+       ],
+       "why": [
+        "\"The café shifts start at seven ... I have lectures at nine\". A noto'g'ri: kafe ko'proq to'laydi.",
+        "Do'kon 12 soat so'radi; 10 faqat imtihon paytida. 8 — Mayaning ishi.",
+        "\"They rotate Saturdays, so I'd work two Saturdays a month\".",
+        "\"The other staff said she's fair\". Tartibsizlik — Mayaning menejeri.",
+        "\"A staff discount — thirty per cent on books\"."
+       ]
+      },
+      {
+       "title": "Chalg'ituvchi izohi",
+       "type": "Tahlil",
+       "instr": "Har savolda nega boshqa variant noto'g'ri?",
+       "items": [
+        "1-savol A varianti",
+        "2-savol A varianti",
+        "3-savol A varianti",
+        "4-savol B varianti"
+       ],
+       "answers": [
+        "kafe 9 funt, do'kon 8.50",
+        "8 soat — Mayaning ishi",
+        "\"every Saturday\" — Mayaning holati",
+        "menejer emas, Mayaning rahbari tartibsiz"
+       ],
+       "why": [
+        "Pul ko'proq, lekin Tom pulni tanlamadi.",
+        "Boshqa odam haqida.",
+        "\"I work every Saturday\" deb u aytdi.",
+        "Boshqa odamning fikri."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "A talk about the city bike scheme",
+     "qtype": "Multiple choice",
+     "audios": "Jony Academy skripti",
+     "intro": [
+      "Shahar velosiped tizimi haqida qisqa ma'ruza. BIR MARTA tinglang."
+     ],
+     "transcript": [
+      "SPEAKER: Good evening. I'm here to explain how the city bike scheme works, and to answer the question everyone asks: is it actually cheaper than the bus?",
+      "SPEAKER: The scheme opened three years ago with 200 bikes at 20 stations. Today there are 1,400 bikes at 130 stations, and we add about ten stations a year.",
+      "SPEAKER: Now, prices. A single ride of up to thirty minutes costs one pound fifty. A day pass is five pounds, and an annual membership is sixty. For most people the annual pass pays for itself after about six weeks of daily use.",
+      "SPEAKER: The most common complaint is not price, though — it's finding an empty space to leave the bike. In the morning everybody cycles towards the centre, so the central stations fill up. We move bikes back out by van at night, but the vans themselves are unpopular with residents.",
+      "SPEAKER: We are testing a solution: users who return a bike to an empty station in the centre get a free ride credit. In the trial, this cut the number of full stations by about a third, which is better than we expected.",
+      "SPEAKER: Safety. Helmets are not provided — we know some cities do this, but hygiene rules make it difficult. Instead we spend the money on lights, which are now fitted to every bike and switch on automatically.",
+      "SPEAKER: Finally, who uses the bikes? You might expect students, but our data shows that the largest group is people aged between thirty and forty-five, travelling to work. Students actually prefer walking, because the campus is close to the centre."
+     ],
+     "tasks": [
+      {
+       "title": "Multiple choice",
+       "type": "A, B yoki C",
+       "instr": "To'g'ri javobni tanlang.",
+       "items": [
+        "1 How many stations are there now? A) 20 B) 130 C) 1,400",
+        "2 An annual pass becomes cheaper than daily rides after about: A) six weeks B) thirty minutes C) three years",
+        "3 What do users complain about most? A) the price B) nowhere to park the bike C) the vans",
+        "4 What was the result of the trial? A) worse than expected B) as expected C) better than expected",
+        "5 Why are helmets not provided? A) they are too expensive B) for hygiene reasons C) they are not needed",
+        "6 Who uses the bikes most? A) students B) people aged 30–45 C) tourists"
+       ],
+       "answers": [
+        "B",
+        "A",
+        "B",
+        "C",
+        "B",
+        "B"
+       ],
+       "why": [
+        "\"1,400 bikes at 130 stations\". 20 — boshlang'ich, 1,400 — velosiped soni.",
+        "\"Pays for itself after about six weeks of daily use\".",
+        "\"The most common complaint ... it's finding an empty space to leave the bike\".",
+        "\"Which is better than we expected\".",
+        "\"Hygiene rules make it difficult\".",
+        "\"The largest group is people aged between thirty and forty-five\"."
+       ]
+      },
+      {
+       "title": "Chalg'ituvchi izohi",
+       "type": "Tahlil",
+       "instr": "Nega boshqa variantlar noto'g'ri?",
+       "items": [
+        "1-savol C varianti",
+        "3-savol A va C",
+        "5-savol A varianti",
+        "6-savol A varianti"
+       ],
+       "answers": [
+        "1,400 — velosipedlar soni",
+        "narx eng ko'p shikoyat emas; furgonlar aholiga yoqmaydi",
+        "pul boshqa narsaga (chiroqlarga) sarflanadi",
+        "talabalar piyoda yurishni afzal ko'radi"
+       ],
+       "why": [
+        "Savol stansiyalar haqida.",
+        "\"Not price, though\".",
+        "Sabab — gigiyena.",
+        "\"Students actually prefer walking\"."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tutorial: choosing a project topic",
+     "qtype": "Multiple choice",
+     "audios": "Jony Academy skripti — uyga vazifa",
+     "intro": [
+      "Talaba va ustoz loyiha mavzusi haqida gaplashmoqda. Uyda bir marta tinglang."
+     ],
+     "transcript": [
+      "TUTOR: So, Leyla, you wanted to talk about your project topic.",
+      "LEYLA: Yes. I had three ideas: school uniforms, screen time in children, and food waste in supermarkets.",
+      "TUTOR: Which one attracts you most?",
+      "LEYLA: Screen time, I think. But I'm worried there's too much written about it already.",
+      "TUTOR: That's a real risk. The uniform topic is narrower, but honestly, students write about it every year and the tutors get tired of it. Food waste is the one I'd choose in your place — you can collect your own data locally.",
+      "LEYLA: Collect it how?",
+      "TUTOR: Two supermarkets near campus have agreed to talk to students this term. You could interview a manager and count what goes into the bins for a week.",
+      "LEYLA: That sounds like a lot of work.",
+      "TUTOR: It is, but it's original. And your mark comes mostly from method, not from the amount of reading.",
+      "LEYLA: How long should the project be?",
+      "TUTOR: Four thousand words. Some students hand in six and lose marks for going over.",
+      "LEYLA: And the deadline is in May?",
+      "TUTOR: The 12th of May for the written part. But there's an outline due much earlier — the 3rd of March. That's only two pages, but it's compulsory; without it we can't approve your topic.",
+      "LEYLA: Should I start with the reading or the interviews?",
+      "TUTOR: The interviews, definitely. Managers change jobs, and if you wait until April they may say no. Do the reading while you wait for their replies.",
+      "LEYLA: All right. One more thing — can I work with Dmitri? He's doing something similar.",
+      "TUTOR: You can share the data collection, but the writing must be completely separate. Two identical projects fail, even if the data is the same."
+     ],
+     "tasks": [
+      {
+       "title": "Multiple choice",
+       "type": "A, B yoki C",
+       "instr": "To'g'ri javobni tanlang.",
+       "items": [
+        "1 Which topic does the tutor recommend? A) school uniforms B) screen time C) food waste",
+        "2 Why does the tutor not recommend uniforms? A) it is too narrow B) tutors are tired of it C) there is no data",
+        "3 What gives most of the mark? A) the method B) the reading C) the length",
+        "4 What is the length of the project? A) two pages B) four thousand words C) six thousand words",
+        "5 What must Leyla do by 3 March? A) hand in the outline B) finish the interviews C) submit the project",
+        "6 What does the tutor say about working with Dmitri? A) it is not allowed B) they may share data only C) they may write together"
+       ],
+       "answers": [
+        "C",
+        "B",
+        "A",
+        "B",
+        "A",
+        "B"
+       ],
+       "why": [
+        "\"Food waste is the one I'd choose in your place\".",
+        "\"Students write about it every year and the tutors get tired of it\".",
+        "\"Your mark comes mostly from method, not from the amount of reading\".",
+        "\"Four thousand words\". 6,000 — ball yo'qotadiganlar; 2 bet — reja.",
+        "\"There's an outline due much earlier — the 3rd of March\".",
+        "\"You can share the data collection, but the writing must be completely separate\"."
+       ]
+      },
+      {
+       "title": "Signal so'zlar",
+       "type": "Tahlil",
+       "instr": "Javobni ochgan so'zni ayting.",
+       "items": [
+        "1-savol",
+        "2-savol",
+        "3-savol",
+        "5-savol"
+       ],
+       "answers": [
+        "\"I'd choose in your place\"",
+        "\"honestly ... get tired of it\"",
+        "\"mostly from method, not from\"",
+        "\"much earlier ... compulsory\""
+       ],
+       "why": [
+        "Tavsiya signali.",
+        "Sabab aytiladi.",
+        "Qarama-qarshi qo'yish.",
+        "Muddat va majburiylik."
+       ]
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-skript: \"Tutorial: choosing a project topic\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang, javoblarni belgilang, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida izoh bilan."
+    },
+    {
+     "title": "Kitob: Unit 4 listening (multiple choice)",
+     "type": "Coursebook",
+     "instr": "Qayta tinglang va har noto'g'ri variant uchun \"nega noto'g'ri\" izohini yozing.",
+     "answers": "Kitob kaliti bilan."
+    },
+    {
+     "title": "Chalg'ituvchi daftari",
+     "type": "Yozma",
+     "instr": "Bugungi 3 skriptdan 12 ta chalg'ituvchini yozing va turini belgilang: eski ma'lumot / boshqa odam / qisman to'g'ri.",
+     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi."
+    },
+    {
+     "title": "Tez o'qish mashqi",
+     "type": "Yozma",
+     "instr": "10 ta savol va variant berilgan: 45 soniyada kalit so'zlarni belgilang va variantlarni bitta so'z bilan qisqartiring.",
+     "answers": "Ustoz sekundomer bilan tekshiradi."
+    }
+   ],
+   "normativ": [
+    [
+     "Multiple choice (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Chalg'ituvchi daftari",
+     "12 qator, turi bilan",
+     "2 coin"
+    ],
+    [
+     "Tez o'qish",
+     "10 savol 45 soniyada",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 10,
+   "title": "Reading: Matching Headings",
+   "grammar_topic": "Matching headings — xatboshiga sarlavha tanlash",
+   "vocab_topic": "Animal world / Being human (Unit 5–6)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 5 \"Animal world\" reading (matching headings) topshirig'i. Workbook (MAXIMISER): Paragraph headings, 63–66-betlar (Example 1–2) va Tip 7 (46-bet). Matnlar kitobda; bu yerda qoida, izohlar va 3 ta mustaqil matn.",
+   "objectives": [
+    "Xatboshining ASOSIY g'oyasini bir gapda aytish va unga mos sarlavhani tanlash.",
+    "Asosiy g'oya va tafsilot farqini ajratish: sarlavha butun xatboshiga tegishli bo'lishi kerak.",
+    "Bu turda javoblar TARTIBSIZ ekanini bilish va shunga mos strategiya qo'llash.",
+    "Bir-biriga o'xshash sarlavhalarni farqlash: farqli so'zni topish.",
+    "3 ta Band 4–5 matnda ishlash va har tanlovni izohlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Matching headings — matnning har xatboshisiga ro'yxatdan sarlavha tanlanadi. Sarlavhalar soni xatboshidan ko'p bo'ladi: ortiqchalari ishlatilmaydi.",
+     "Bu tur TARTIBSIZ: i, ii, iii raqamlari matn tartibida kelmaydi. Shuning uchun har xatboshi alohida o'qiladi.",
+     "Ishlash yo'li: avval xatboshini o'qing, asosiy g'oyani O'Z so'zingiz bilan bir gapda ayting, keyingina sarlavhalar ro'yxatiga qarang.",
+     "Aksincha qilsangiz (avval sarlavhalarni o'qisangiz), ko'zingiz matndan o'sha so'zni qidiradi va tuzoqqa tushasiz.",
+     "Asosiy g'oya odatda birinchi yoki oxirgi gapda bo'ladi, lekin har doim emas: butun xatboshini qamrab oluvchi fikrni qidiring.",
+     "Tafsilot tuzog'i: sarlavha faqat bitta gapga mos kelsa — noto'g'ri. Sarlavha butun xatboshiga mos kelishi kerak.",
+     "O'xshash sarlavhalarni yonma-yon qo'ying va FARQLI so'zini belgilang: \"problems of X\" va \"solutions to X\".",
+     "Oson xatboshilardan boshlang, qiyinlarini oxiriga qoldiring va ishlatilgan sarlavhani o'chirib boring."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Xatboshini o'qing",
+      "butun matnni emas",
+      "Bir xatboshi — bir javob"
+     ],
+     [
+      "2-bosqich",
+      "Asosiy g'oyani ayting",
+      "\"bu xatboshi ... haqida\"",
+      "O'z so'zingiz bilan"
+     ],
+     [
+      "3-bosqich",
+      "Sarlavhalarga qarang",
+      "mos kelganini tanlang",
+      "Faqat shundan keyin"
+     ],
+     [
+      "4-bosqich",
+      "Tafsilotni tekshiring",
+      "butun xatboshimi?",
+      "Bir gapga mos sarlavha — tuzoq"
+     ],
+     [
+      "5-bosqich",
+      "O'xshashlarni solishtiring",
+      "farqli so'z",
+      "problems / solutions / history"
+     ],
+     [
+      "6-bosqich",
+      "Ishlatilganini o'chiring",
+      "ro'yxatdan",
+      "Xato takrorlanmaydi"
+     ]
+    ],
+    "presentation": [
+     [
+      "Qaysi tartibda ishlayman?",
+      "Xatboshi → o'z gapingiz → sarlavhalar ro'yxati."
+     ],
+     [
+      "Sarlavhalar tartibdami?",
+      "Yo'q, bu turda tartib yo'q."
+     ],
+     [
+      "Sarlavha faqat birinchi gapga mos keladi. Olamanmi?",
+      "Yo'q, bu tafsilot tuzog'i. Sarlavha butun xatboshiga mos bo'lsin."
+     ],
+     [
+      "Ikkita sarlavha o'xshash. Nima qilaman?",
+      "Farqli so'zini belgilang va xatboshidan shu so'zni qidiring."
+     ],
+     [
+      "Ortiqcha sarlavhalar nega beriladi?",
+      "Tuzoq uchun. Hamma sarlavha ishlatilmaydi."
+     ],
+     [
+      "Vaqtim kam. Nimadan boshlayman?",
+      "Eng oson va aniq xatboshidan; qiyinlari oxirida qoladi."
+     ]
+    ],
+    "notes": [
+     "Bu tur o'quvchilarni eng ko'p qiynaydi: ustoz har xatboshi uchun \"bir gapda nima haqida?\" savolini majburiy qilsin.",
+     "Doskada ikki ustun: \"asosiy g'oya\" va \"tafsilot\" — o'quvchilar gaplarni ajratadi.",
+     "MAXIMISER 63–66-betlardagi namunalar sinfda birga bajariladi.",
+     "Vaqt: har xatboshiga 1.5 daqiqa; 6 xatboshi — 9 daqiqa."
+    ],
+    "mistakes": [
+     [
+      "Avval sarlavhalarni o'qish",
+      "Avval xatboshini",
+      "So'z qidirish tuzoqqa olib boradi"
+     ],
+     [
+      "Tafsilotga qarab tanlash",
+      "Butun xatboshiga mos sarlavha",
+      "Bitta gap yetarli emas"
+     ],
+     [
+      "Bir xil so'z bor deb tanlash",
+      "Ma'noga qarash",
+      "Sarlavhada matn so'zi bo'lmasligi mumkin"
+     ],
+     [
+      "Tartibda deb o'ylash",
+      "Har xatboshi alohida",
+      "Bu tur tartibsiz"
+     ],
+     [
+      "Ishlatilgan sarlavhani qayta ishlatish",
+      "O'chirib borish",
+      "Har sarlavha bir marta"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Asosiy g'oya yoki tafsilot?",
+     "type": "Og'zaki",
+     "instr": "Ustoz gap o'qiydi; o'quvchi \"asosiy g'oya\" yoki \"tafsilot\" deb javob beradi.",
+     "items": [
+      "\"Cities around the world are trying different ways to reduce traffic.\"",
+      "\"In Pontevedra, the speed limit is 30 kilometres an hour.\"",
+      "\"There are three main reasons why bees are disappearing.\"",
+      "\"One study counted 12,000 insects in a single field.\"",
+      "\"The invention changed how people cooked at home.\"",
+      "\"Spencer sent for a bag of popcorn.\""
+     ],
+     "answers": [
+      "asosiy g'oya",
+      "tafsilot",
+      "asosiy g'oya",
+      "tafsilot",
+      "asosiy g'oya",
+      "tafsilot"
+     ],
+     "why": [
+      "Umumiy fikr, butun xatboshini qamraydi.",
+      "Bitta misol.",
+      "Ro'yxat e'lon qilinmoqda.",
+      "Aniq raqam — misol.",
+      "Ta'sir haqida umumiy xulosa.",
+      "Bitta voqea."
+     ],
+     "note": "Har javobdan keyin \"nega?\" deb so'rang — o'quvchi umumiylik darajasini tushunsin."
+    },
+    {
+     "title": "Kitob: Unit 5 reading (Matching headings)",
+     "type": "Coursebook, Unit 5",
+     "instr": "Topshiriqni bajaring; quyida ishlash tartibi.",
+     "items": [
+      "Har xatboshini o'qib, o'z gapingizni chetiga yozing",
+      "Keyin ro'yxatdan mos sarlavhani toping",
+      "O'xshash sarlavhalarni yonma-yon qo'ying",
+      "Ishlatilgan sarlavhani o'chiring"
+     ],
+     "answers": [
+      "\"bu xatboshi ... haqida\"",
+      "faqat shundan keyin",
+      "farqli so'zni belgilang",
+      "takror bo'lmasin"
+     ],
+     "why": [
+      "Sarlavhaga qaramasdan.",
+      "Tuzoqdan saqlaydi.",
+      "problems / solutions.",
+      "Har sarlavha bir marta."
+     ]
+    },
+    {
+     "title": "Workbook (MAXIMISER): Paragraph headings",
+     "type": "63–66-betlar, Example 1–2",
+     "instr": "Namunalarni bajaring, keyin tuzoqlarni ajrating.",
+     "items": [
+      "Har noto'g'ri sarlavha uchun sababni yozing",
+      "Tip 7 ni eslang",
+      "Vaqt bilan ishlang"
+     ],
+     "answers": [
+      "tafsilot / boshqa xatboshi / umuman yo'q",
+      "bu turda tartib yo'q",
+      "har xatboshiga 1.5 daqiqa"
+     ],
+     "why": [
+      "Uch xil tuzoq.",
+      "Har xatboshi mustaqil.",
+      "IELTS tezligi."
+     ]
+    }
+   ],
+   "readings": [
+    {
+     "title": "Why city birds sing differently",
+     "qtype": "Matching headings",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. Anyone who has walked in a park at dawn knows that birds are noisy in the morning. What fewer people notice is that the same species sounds different in the city and in the countryside. Over the last twenty years biologists in Europe, Asia and North America have recorded thousands of hours of birdsong and found the same pattern almost everywhere.",
+      "B. The pattern is simple: city birds sing higher and louder. Traffic produces a deep, low noise, and a low song disappears inside it, like a voice in a busy room. By raising the pitch, a bird lifts its song above the traffic. Great tits in Amsterdam, for example, sing about two hundred hertz higher than great tits in nearby woods.",
+      "C. Singing higher solves one problem and creates another. Female birds usually prefer deep songs, which show that a male is large and strong. A male who sings high may be heard, but he may also be judged as weak. Researchers in Germany found that city females took longer to choose a partner, and some pairs produced fewer eggs.",
+      "D. Time of day matters as well. In quiet villages, birds begin singing at first light. In cities they often start up to two hours earlier, using the only period when the streets are silent. Street lighting adds to this: under bright lamps, robins sometimes sing through the night, which is exhausting for them.",
+      "E. Not every bird can adapt. Species that sing naturally low, such as pigeons, cannot raise their pitch, and they are disappearing from the noisiest districts. Species with flexible voices, like blackbirds and sparrows, are doing well. Over time this changes which birds live around us — noise acts like a filter.",
+      "F. Some cities are now responding. Planting trees along busy roads reduces noise by several decibels, and quiet surfaces on roads help too. In one Dutch experiment, after a road was resurfaced, the local great tits lowered their songs again within two years — proof that the change is behaviour, not evolution."
+     ],
+     "paraphrases": [
+      [
+       "noisy",
+       "making a lot of sound"
+      ],
+      [
+       "pattern",
+       "regular feature that repeats"
+      ],
+      [
+       "raising the pitch",
+       "singing higher"
+      ],
+      [
+       "judged as",
+       "thought to be"
+      ],
+      [
+       "first light",
+       "dawn"
+      ],
+      [
+       "exhausting",
+       "very tiring"
+      ],
+      [
+       "adapt",
+       "change to fit new conditions"
+      ],
+      [
+       "responding",
+       "taking action"
+      ]
+     ],
+     "glossary": [
+      "species — tur",
+      "birdsong — qush sayrashi",
+      "pitch — ovoz balandligi",
+      "hertz — gerts",
+      "female — urg'ochi",
+      "robin — zarg'aldoq",
+      "blackbird — qora qush",
+      "resurface — qoplamani yangilamoq"
+     ],
+     "tasks": [
+      {
+       "title": "Matching headings",
+       "type": "i–ix",
+       "instr": "Har xatboshiga (A–F) mos sarlavhani tanlang. Ortiqcha sarlavhalar bor.",
+       "items": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+       ],
+       "answers": [
+        "iii A widespread discovery",
+        "i How traffic changes a song",
+        "vi An unexpected cost",
+        "viii Singing at the wrong time",
+        "ii Winners and losers",
+        "v Making the city quieter"
+       ],
+       "why": [
+        "Xatboshi butun dunyoda o'tkazilgan kuzatuv va topilgan umumiy qonuniyat haqida.",
+        "Asosiy g'oya: past shovqin ustida eshitilish uchun ovoz ko'tariladi.",
+        "Balandroq sayrash juftlik tanlashga salbiy ta'sir qiladi.",
+        "Vaqt haqida: erta boshlash va tun bo'yi sayrash.",
+        "Ba'zi turlar moslasha oladi, ba'zilari yo'qoladi.",
+        "Shaharlarning javobi: daraxt va yo'l qoplamasi."
+       ],
+       "note": "Ishlatilmagan sarlavhalar (masalan \"iv The history of birdwatching\", \"vii Birds in danger of extinction\", \"ix Teaching birds to sing\") — tuzoq."
+      },
+      {
+       "title": "Tuzoq izohi",
+       "type": "Tahlil",
+       "instr": "Nega bu sarlavhalar mos emas?",
+       "items": [
+        "\"Birds in danger of extinction\" (E uchun)",
+        "\"The history of birdwatching\" (A uchun)",
+        "\"Teaching birds to sing\"",
+        "\"How traffic changes a song\" (A uchun)"
+       ],
+       "answers": [
+        "juda kuchli",
+        "mavzu boshqa",
+        "matnda yo'q",
+        "tafsilot tuzog'i"
+       ],
+       "why": [
+        "Matn yo'qolib ketish emas, shovqinli tumanlardan ketish haqida.",
+        "Matn tadqiqot natijasi haqida, tarix emas.",
+        "Hech bir xatboshi bunday demaydi.",
+        "Bu B xatboshining g'oyasi."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The return of the wolf",
+     "qtype": "Matching headings",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. A hundred years ago wolves had disappeared from most of Western Europe. Farmers had hunted them, governments had paid rewards for dead animals, and the forests they needed had been cut down. By 1970 only a few hundred survived, mainly in Italy, Spain and Poland.",
+      "B. Then the law changed. In 1979 European countries signed an agreement that made killing wolves illegal, and at the same time millions of people were leaving the countryside for the cities. Fields returned to forest, deer and wild boar multiplied, and the wolves followed the food. Today there are more than twenty thousand wolves in Europe, and packs have been photographed within fifty kilometres of Paris and Berlin.",
+      "C. Scientists were especially interested in what happened in one American park, where wolves were reintroduced in 1995. Deer had eaten so many young trees that the riverbanks were bare. With wolves present, the deer moved more often and stopped feeding in open valleys; trees grew back, birds returned, and even the rivers changed shape because the banks became stronger.",
+      "D. Farmers see the story from another side. A single wolf pack can kill sheep, and in some mountain regions attacks have risen sharply. Governments pay compensation, but the money arrives late and does not cover the fear of losing animals that a family has raised for years. In several countries this has become a political question, not a scientific one.",
+      "E. Protection that works is usually old-fashioned. Electric fences help, but the most effective tool is a large guard dog that lives with the flock from birth. In Portugal, farms with such dogs report up to 90 per cent fewer attacks. The problem is cost: a trained dog is expensive, and small farms cannot always afford one.",
+      "F. The debate is likely to continue, because both sides are partly right. Wolves make forests healthier, and they are protected by law; but the people who lose animals are real, and telling them that a predator is \"good for the ecosystem\" solves nothing. Most experts now argue for money and training rather than for new laws."
+     ],
+     "paraphrases": [
+      [
+       "disappeared",
+       "were no longer found"
+      ],
+      [
+       "rewards",
+       "money paid for doing something"
+      ],
+      [
+       "multiplied",
+       "increased in number"
+      ],
+      [
+       "reintroduced",
+       "brought back"
+      ],
+      [
+       "bare",
+       "with nothing growing"
+      ],
+      [
+       "compensation",
+       "money paid for a loss"
+      ],
+      [
+       "effective",
+       "working well"
+      ],
+      [
+       "predator",
+       "animal that hunts others"
+      ]
+     ],
+     "glossary": [
+      "pack — to'da",
+      "deer — kiyik",
+      "wild boar — yovvoyi to'ng'iz",
+      "riverbank — daryo qirg'og'i",
+      "flock — suruv",
+      "guard dog — qo'riqchi it",
+      "fence — panjara"
+     ],
+     "tasks": [
+      {
+       "title": "Matching headings",
+       "type": "i–ix",
+       "instr": "Har xatboshiga mos sarlavhani tanlang.",
+       "items": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+       ],
+       "answers": [
+        "iv A century of decline",
+        "i Why the numbers grew again",
+        "vii Effects on a whole landscape",
+        "ii The farmers' view",
+        "v Tools that reduce attacks",
+        "viii No easy answer"
+       ],
+       "why": [
+        "Yo'q bo'lib ketish sabablari va 1970-yilgi eng past son.",
+        "Qonun va qishloqdan ko'chish — qaytish sabablari.",
+        "Bir bog'dagi zanjirli o'zgarish: daraxt, qush, daryo.",
+        "Yo'qotish, tovon va siyosiy masala.",
+        "Panjara va qo'riqchi it, narx muammosi.",
+        "Ikki tomon ham qisman haq; pul va o'qitish tavsiya qilinadi."
+       ],
+       "note": "Ishlatilmagan sarlavhalar: \"iii Wolves in mythology\", \"vi How wolves hunt\", \"ix A ban that failed\" — tuzoq."
+      },
+      {
+       "title": "Tuzoq izohi",
+       "type": "Tahlil",
+       "instr": "Nega bu sarlavhalar mos emas?",
+       "items": [
+        "\"A ban that failed\" (B uchun)",
+        "\"How wolves hunt\" (C uchun)",
+        "\"Wolves in mythology\"",
+        "\"The farmers' view\" (E uchun)"
+       ],
+       "answers": [
+        "teskari ma'no",
+        "tafsilot yo'q",
+        "matnda yo'q",
+        "noto'g'ri xatboshi"
+       ],
+       "why": [
+        "Taqiq ishladi: son o'sdi.",
+        "Matn ov usuli haqida emas, ta'sir haqida.",
+        "Hech bir xatboshi afsona haqida emas.",
+        "E — himoya vositalari haqida, fermer nuqtai nazari D da."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Sleep and the teenage brain",
+     "qtype": "Matching headings",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "A. Parents often complain that teenagers cannot get up in the morning and will not go to bed at night. For a long time this was treated as laziness. Sleep research over the past thirty years suggests something different: the teenage body clock really does move.",
+      "B. The clock is controlled by a hormone called melatonin, which tells the body that it is time to sleep. In children, melatonin is released at about nine in the evening. In teenagers it appears one to three hours later, and it also disappears later in the morning. A fifteen-year-old asked to sleep at ten is being asked to sleep while their body is still in \"day\" mode.",
+      "C. The effects of missing sleep are easy to measure. Teenagers who sleep fewer than seven hours make more mistakes in tests of attention, remember less of what they studied, and report more arguments at home. Some studies also link short sleep to weight gain, because tiredness changes the hormones that control hunger.",
+      "D. Screens make the situation worse, though perhaps not for the reason most people think. The blue light of a phone does delay melatonin a little, but the bigger problem is what the phone contains: messages that demand an answer and videos designed never to end. A book in bed rarely keeps a teenager awake until two in the morning.",
+      "E. Some schools have tried the obvious experiment. In one English town, lessons began at ten instead of nine for two years. Attendance improved, and the number of top grades rose by about twelve per cent. However, parents who started work at eight found the new times difficult, and after the study ended the school returned to the old timetable.",
+      "F. Researchers suggest small changes that families can make: the same bedtime every day, including weekends; no screens for an hour before sleep; bright light in the morning to reset the clock. These are less dramatic than changing the school day, but they are free, and every family can try them tonight."
+     ],
+     "paraphrases": [
+      [
+       "complain",
+       "say they are not happy about"
+      ],
+      [
+       "laziness",
+       "not wanting to work"
+      ],
+      [
+       "released",
+       "let out into the body"
+      ],
+      [
+       "missing sleep",
+       "not sleeping enough"
+      ],
+      [
+       "demand",
+       "require"
+      ],
+      [
+       "attendance",
+       "coming to school"
+      ],
+      [
+       "reset",
+       "set again"
+      ],
+      [
+       "dramatic",
+       "big and noticeable"
+      ]
+     ],
+     "glossary": [
+      "hormone — gormon",
+      "melatonin — melatonin",
+      "attention — diqqat",
+      "weight gain — vazn ortishi",
+      "grade — baho",
+      "timetable — dars jadvali"
+     ],
+     "tasks": [
+      {
+       "title": "Matching headings",
+       "type": "i–ix",
+       "instr": "Uyda bajaring (10 daqiqa).",
+       "items": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+       ],
+       "answers": [
+        "ii Not simply bad behaviour",
+        "v The body's own timing",
+        "vii What happens without enough sleep",
+        "i The real problem with phones",
+        "viii A school that changed its hours",
+        "iv Advice for families"
+       ],
+       "why": [
+        "Dangasalik emas, biologik sabab borligi aytiladi.",
+        "Melatonin va soatning siljishi.",
+        "Diqqat, xotira, janjal, vazn.",
+        "Ko'k nur emas, kontent asosiy sabab.",
+        "Tajriba va natijalar, keyin eski jadvalga qaytish.",
+        "Arzon va oddiy tavsiyalar."
+       ],
+       "note": "Ishlatilmagan sarlavhalar: \"iii How melatonin was discovered\", \"vi Teenagers and exercise\", \"ix Why exams should be abolished\"."
+      },
+      {
+       "title": "O'z gapingiz",
+       "type": "Yozma",
+       "instr": "Har xatboshi uchun \"bu xatboshi ... haqida\" gapini yozing (6 gap).",
+       "items": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+       ],
+       "answers": [
+        "o'smirlar uyqusi dangasalik emasligi haqida",
+        "tananing ichki soati va melatonin haqida",
+        "uyqu yetishmasligining oqibatlari haqida",
+        "telefonning asl muammosi haqida",
+        "maktab jadvalini o'zgartirgan tajriba haqida",
+        "oilalar qila oladigan oddiy o'zgarishlar haqida"
+       ],
+       "why": [
+        "Asosiy g'oya birinchi va oxirgi gapda.",
+        "Butun xatboshi shu haqda.",
+        "Uch xil oqibat sanaladi.",
+        "Ko'k nur emas, kontent.",
+        "Natija va qiyinchilik.",
+        "Uchta tavsiya."
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-matn: \"Sleep and the teenage brain\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz \"o'z gapingiz\" yozuvlarini tekshiradi."
+    },
+    {
+     "title": "Workbook (MAXIMISER): Paragraph headings",
+     "type": "63–66-betlar",
+     "instr": "Qolgan namunalarni bajaring; har noto'g'ri sarlavha uchun tuzoq turini yozing.",
+     "answers": "Kitob kaliti bilan."
+    },
+    {
+     "title": "Asosiy g'oya mashqi",
+     "type": "Yozma",
+     "instr": "Har qanday gazeta maqolasidan 6 xatboshi oling va har biriga o'z sarlavhangizni yozing (4 so'zdan oshmasin).",
+     "answers": "Sarlavha butun xatboshiga mos bo'lishi kerak."
+    },
+    {
+     "title": "Tuzoq daftari",
+     "type": "Yozma",
+     "instr": "Bugungi 3 matndan 9 ta ishlatilmagan sarlavhani yozing va nega mos emasligini tushuntiring.",
+     "answers": "Sababsiz qator qabul qilinmaydi."
+    }
+   ],
+   "normativ": [
+    [
+     "Matching headings (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "\"O'z gapingiz\" yozuvlari",
+     "6 xatboshi uchun aniq gap",
+     "2 coin"
+    ],
+    [
+     "Tuzoq daftari",
+     "9 qator, sabab bilan",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

@@ -1247,14 +1247,12 @@ except Exception:
 
 
 # ---------------------------------------------------------------------------
-# STRETINKO 420 000 + QOPLONBEK (2026-09-19) — bir martalik
+# STRETINKO 420 000 (2026-09-19) — bir martalik
 #
-# Jahongir: "Qoplonbek Stretinko filialining ham barcha ishlarini
-# menejerga ochib ber va stretinkoda narxlar 420 bolgani bilan 10% skidka
-# 480mingdan hisoblanyabdi ekan shunaqami togrla".
+# Jahongir: "stretinkoda narxlar 420 bolgani bilan 10% skidka 480mingdan
+# hisoblanyabdi ekan shunaqami togrla".
 #   1) courses.fix_stretinko_420 — narx/qulf/hisoblarni 420 000 ga;
-#   2) Qoplonbek (ismi bo'yicha AYNAN BITTA xodim topilsa) — Stretinko
-#      filial(lar)i qo'shimcha filial sifatida biriktiriladi.
+#   2) courses.fix_stretinko_undiscounted — chegirmasiz qolgan hisoblar.
 # Natija audit jurnalida va logda.
 # ---------------------------------------------------------------------------
 try:
@@ -1271,17 +1269,6 @@ try:
             _u34 = _fu34(_db34)
             print(f"[seed] stretinko chegirmasiz hisoblar: {_u34}")
             _sm34(_db34, "stretinko_undiscounted_v1")
-        # v1 o'quvchi "Qoplonbek"ni topib olgan edi — v2 faqat xodimlar.
-        if not _sd34(_db34, "qoplonbek_undo_student_v1"):
-            from courses import undo_student_qoplonbek as _uq34
-            print(f"[seed] qoplonbek: o'quvchidan olib tashlandi {_uq34(_db34)}")
-            _sm34(_db34, "qoplonbek_undo_student_v1")
-        if not _sd34(_db34, "qoplonbek_stretinko_v2"):
-            from courses import grant_qoplonbek_stretinko as _gq34
-            _q34 = _gq34(_db34)
-            print(f"[seed] qoplonbek stretinko v2: {_q34}")
-            if _q34.get("user_id"):
-                _sm34(_db34, "qoplonbek_stretinko_v2")
 except Exception as _e34:
-    print(f"[seed] stretinko 420 / qoplonbek xato: {_e34}")
+    print(f"[seed] stretinko 420 xato: {_e34}")
 

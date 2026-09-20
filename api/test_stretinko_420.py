@@ -1,7 +1,6 @@
-"""STRETINKO 420 000 + QOPLONBEK (2026-09-19).
+"""STRETINKO 420 000 (2026-09-19).
 
-Jahongir: "Qoplonbek Stretinko filialining ham barcha ishlarini menejerga
-ochib ber va stretinkoda narxlar 420 bolgani bilan 10% skidka 480mingdan
+Jahongir: "stretinkoda narxlar 420 bolgani bilan 10% skidka 480mingdan
 hisoblanyabdi ekan shunaqami togrla".
 """
 import os
@@ -22,8 +21,7 @@ import main, models, roles                         # noqa: E402
 import entry                                       # noqa: E402,F401
 from database import SessionLocal                  # noqa: E402
 from auth import hash_password                     # noqa: E402
-from courses import fix_stretinko_420, grant_qoplonbek_stretinko  # noqa: E402
-from common import _user_branch_ids                # noqa: E402
+from courses import fix_stretinko_420               # noqa: E402
 
 c = TestClient(main.app)
 fails = []
@@ -142,28 +140,6 @@ ck("yangi Stretinko guruhi 200", rg.status_code, 200)
 ck("yangi Stretinko guruhi 35 000", rg.json().get("lesson_price"), 35000)
 rg2 = c.post("/api/groups", headers=T, json={"name": "Asosiy yangi", "branch_id": main_b.id})
 ck("asosiy filial yangi guruhi o'zgarmaydi", rg2.json().get("lesson_price"), 40000)
-
-# --- Qoplonbek
-from courses import undo_student_qoplonbek                 # noqa: E402
-u_s = models.User(username="qoplonbek_st", password_hash=hash_password("x"),
-                  full_name="Qoplonbek", role=roles.STUDENT, branch_id=main_b.id)
-db.add(u_s); db.commit()
-db.add(models.UserBranch(user_id=u_s.id, branch_id=st_b.id)); db.commit()
-ck("o'quvchi Qoplonbek hisobga olinmaydi", grant_qoplonbek_stretinko(db).get("found"), 0)
-ck("o'quvchidagi xato filial olib tashlandi", undo_student_qoplonbek(db), [u_s.id])
-u_q = models.User(username="qoplonbek", password_hash=hash_password("x"),
-                  full_name="Qoplonbek Karimov", role=roles.SALES_MANAGER,
-                  branch_id=main_b.id)
-db.add(u_q); db.commit()
-q = grant_qoplonbek_stretinko(db)
-ck("Qoplonbek topildi va Stretinko qo'shildi", q.get("added"), [st_b.id])
-u_q = db.query(models.User).get(u_q.id)
-ck("Qoplonbek filiallari", sorted(_user_branch_ids(db, u_q)), sorted([main_b.id, st_b.id]))
-ck("qayta chaqirilsa takrorlanmaydi", grant_qoplonbek_stretinko(db).get("added"), [])
-TQ = {"Authorization": "Bearer " + c.post("/api/auth/login", json={
-    "username": "qoplonbek", "password": "x"}).json()["access_token"]}
-rs = c.get(f"/api/students?branch_id={st_b.id}", headers=TQ)
-ck("Qoplonbek Stretinko o'quvchilarini ko'radi", rs.status_code, 200)
 
 db.close()
 print("\nJAMI XATO:", len(fails), fails)

@@ -695,6 +695,1290 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 2,
+   "title": "Reading: Parosat usuli (javobni oldindan bashorat qilish)",
+   "grammar_topic": "Note completion + javobni oldindan aytish (prediction)",
+   "vocab_topic": "Great places to be — baxt va turmush darajasi (Unit 1)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 1, Reading 2 (Note completion), \"The happiest country in the world\", 11-bet. Workbook: Unit 1, Reading 2 (Note completion), 7-bet. Matnlar kitobda — bu yerda topshiriq havolasi, javoblar va izoh.",
+   "objectives": [
+    "Matnga qaramasdan turib, bo'sh joyga QANDAY javob kerakligini aytish: raqammi, sanami, otmi, sifatmi.",
+    "Bo'sh joy atrofidagi grammatikadan foydalanib, noto'g'ri javoblarni chiqarib tashlash.",
+    "Note completion topshirig'ida javob tartibi har doim ham matn tartibida emasligini bilish.",
+    "Bashoratni matn bilan tekshirish: \"kutgan turim to'g'ri keldimi?\" degan odatni shakllantirish.",
+    "3 ta Band 4–5 matnda mustaqil ishlab, har javobni izohlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "\"Parosat usuli\" — javobni topishdan OLDIN uni bashorat qilish. Ko'z matnni qidirganda miya nimani izlayotganini bilishi kerak.",
+     "Har bo'sh joyda uch savolga javob bering: 1) So'z turkumi qanday (ot, sifat, fe'l, raqam)? 2) Ma'no turi qanday (yil, miqdor, joy, odam)? 3) Ko'plikmi yoki birlik?",
+     "Misol: \"Year started: ___\" — javob faqat YIL bo'ladi (2008). \"Number of countries: ___\" — faqat RAQAM (143). Bu ikkalasi matndan eng tez topiladi.",
+     "Grammatika yordam beradi: \"the ___ of the population\" — \"the\" va \"of\" orasida OT turadi. Sifat yoki fe'l bo'lishi mumkin emas.",
+     "Bashorat noto'g'ri chiqsa ham foyda: siz qidirayotgan narsani aniq bilasiz, shuning uchun matnni tez skanerlaysiz.",
+     "Note completion'da javoblar matn tartibida bo'lmasligi mumkin (kitobning o'z eslatmasi shuni aytadi) — shuning uchun sarlavha va kalit so'z bilan joyni topish kerak."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Sarlavhani o'qing",
+      "\"The Happy Planet Index\"",
+      "Sarlavha matndagi qaysi qismga borishni aytadi"
+     ],
+     [
+      "2-bosqich",
+      "Har bo'sh joy uchun turini yozing",
+      "1 = yil, 2 = raqam, 3 = ot",
+      "Qalam bilan chetiga yozib qo'ying"
+     ],
+     [
+      "3-bosqich",
+      "Grammatik chegarani aniqlang",
+      "\"the ___ of\" — ot",
+      "Artikl va predloglar javob turkumini aytadi"
+     ],
+     [
+      "4-bosqich",
+      "Langar so'zni matndan toping",
+      "Index, 2008, 143",
+      "Raqam va ism o'zgarmaydi"
+     ],
+     [
+      "5-bosqich",
+      "Bashoratni tekshiring",
+      "kutganim yil — topganim 2008",
+      "Mos kelsa, javob to'g'ri bo'lishi ehtimoli yuqori"
+     ],
+     [
+      "6-bosqich",
+      "So'z sonini tekshiring",
+      "ONE WORD OR A NUMBER",
+      "Ikki so'z yozsangiz — 0 ball"
+     ]
+    ],
+    "presentation": [
+     [
+      "\"Year started: ___\" — javob qanday bo'ladi?",
+      "Faqat yil: 2008. Boshqa hech narsa kerak emas."
+     ],
+     [
+      "\"the ___ of the population\" — qanday so'z?",
+      "Ot. Chunki \"the\" bilan \"of\" orasida ot turadi."
+     ],
+     [
+      "Bashoratim noto'g'ri chiqsa-chi?",
+      "Muammo yo'q. Bashorat qidiruvni tezlashtiradi, javobni matn beradi."
+     ],
+     [
+      "Note completion javoblari matn tartibida keladimi?",
+      "Har doim emas. Shuning uchun sarlavha va kalit so'zga qarab joyni topasiz."
+     ],
+     [
+      "Matnda \"consumes\", savolda \"uses\" bor. Bu xatomi?",
+      "Yo'q, bu paraphrase. Ma'no bir xil."
+     ],
+     [
+      "Javobga \"the environment\" deb yozsam bo'ladimi?",
+      "ONE WORD bo'lsa, \"environment\" yoziladi. \"The\" ortiqcha so'z."
+     ]
+    ],
+    "notes": [
+     "Bu dars 1-darsning davomi: u yerda so'zlar (paraphrase), bu yerda javob TURI o'rganiladi.",
+     "Ustoz har bo'sh joyni matnga qaramay bashorat qilishni so'rasin; faqat keyin matn ochiladi.",
+     "Kuchli o'quvchilarga: bashoratni 10 soniyada yozish, keyin 60 soniyada javob topish.",
+     "Xatolar daftariga yangi ustun: \"kutgan turim — chiqqan javob\"."
+    ],
+    "mistakes": [
+     [
+      "Matnni boshidan oxirigacha o'qib chiqish",
+      "Sarlavha va kalit so'z bilan joyni topish",
+      "Vaqt yetmay qoladi"
+     ],
+     [
+      "Bo'sh joyga ortiqcha so'z yozish (\"the environment\")",
+      "environment",
+      "Artikl ko'pincha ortiqcha hisoblanadi"
+     ],
+     [
+      "Bashoratni matnga moslab o'zgartirish",
+      "Matndagi so'zni yozish",
+      "Javob matndan olinadi, taxmindan emas"
+     ],
+     [
+      "Ko'plik/birlikni o'zgartirish (\"citizen\")",
+      "citizens",
+      "Matndagi shakl saqlanadi"
+     ],
+     [
+      "Note completion javoblari tartibda deb o'ylash",
+      "Sarlavha bo'yicha qidirish",
+      "Tartib buzilishi mumkin"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Bashorat mashqi (matnsiz)",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Kitobdagi izohlarga (11-bet) qaramasdan har bo'sh joy uchun javob TURINI ayting.",
+     "items": [
+      "Year started: ___",
+      "Number of countries it lists: ___",
+      "its effect on the ___",
+      "the quantity of the Earth's ___ that it uses",
+      "the ___ of the population",
+      "how happy its ___ are"
+     ],
+     "answers": [
+      "yil (4 raqamli son)",
+      "son",
+      "ot",
+      "ot (ko'plik bo'lishi mumkin)",
+      "ot",
+      "ot (ko'plik)"
+     ],
+     "why": [
+      "\"Year\" so'zi javob turini to'g'ridan-to'g'ri aytadi.",
+      "\"Number of\" — miqdor so'raladi.",
+      "\"on the\" dan keyin ot keladi.",
+      "\"the Earth's\" — egalik, keyin ot.",
+      "\"the ... of\" orasida ot turadi.",
+      "\"are\" fe'li ko'plik otni talab qiladi."
+     ]
+    },
+    {
+     "title": "Kitob: Reading 2, \"The happiest country in the world\" (Note completion)",
+     "type": "Coursebook 11-bet, 3–4-mashq",
+     "instr": "Javoblar va nega shundayligi. Matn kitobda.",
+     "items": [
+      "1 Year started",
+      "2 Number of countries it lists",
+      "3 its effect on the ___",
+      "4 the quantity of the Earth's ___ that it uses",
+      "5 the ___ of the population",
+      "6 how happy its ___ are"
+     ],
+     "answers": [
+      "2008",
+      "143",
+      "environment",
+      "resources",
+      "health",
+      "citizens"
+     ],
+     "why": [
+      "Matnda \"Created in 2008, the Happy Planet Index...\". \"Started\" = \"created\" — paraphrase.",
+      "\"ranks 143 countries\". \"Lists\" = \"ranks\".",
+      "\"their impact on the environment\". \"Effect\" = \"impact\".",
+      "\"how much of the planet's resources each country consumes\". \"Quantity\" = \"how much\", \"Earth's\" = \"planet's\", \"uses\" = \"consumes\".",
+      "\"how long they live (which reflects their health)\". Izohdagi \"how long people live\" sog'liqqa ishora qiladi.",
+      "\"their citizens' happiness\". Ko'plik shakl saqlanadi."
+     ],
+     "note": "Har javobda o'quvchidan ikki narsani so'rang: bashorat turi to'g'ri keldimi va matndagi paraphrase qaysi."
+    },
+    {
+     "title": "Workbook: Unit 1, Reading 2 (Note completion)",
+     "type": "Workbook 7-bet",
+     "instr": "Shahar so'rovnomasi haqidagi matn. Quyida ishlash tartibi va tekshirish mezonlari.",
+     "items": [
+      "Avval notes sarlavhasini o'qing",
+      "Har bo'sh joy turini chetiga yozing",
+      "Javobni topgach, matndagi so'zni ko'chiring",
+      "So'z sonini tekshiring",
+      "Tekshirishda paraphrase juftini ayting"
+     ],
+     "answers": [
+      "matnning qaysi qismi kerakligini aniqlang",
+      "raqam / ot / sifat",
+      "o'z so'zingizni emas",
+      "ONE WORD ONLY bo'lsa bitta",
+      "\"savolda X — matnda Y\""
+     ],
+     "why": [
+      "Sarlavha — qidiruv xaritasi.",
+      "Bashorat bosqichi.",
+      "Note completion — matndan ko'chirish.",
+      "Ko'rsatmaga qarang.",
+      "Ustozning qabul mezoni."
+     ]
+    }
+   ],
+   "readings": [
+    {
+     "title": "The country that measures happiness instead of money",
+     "qtype": "Note completion",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Most governments judge success by one number: how much the economy grows each year. Bhutan, a small kingdom in the Himalayas with about 780,000 people, does something different. Since 1972 it has used a measure called Gross National Happiness, and in 2008 this idea was written into the country's new constitution.",
+      "The measure has four main parts: fair economic development, protection of the environment, care for culture, and good government. Every few years officials visit homes across the country and ask each family a long list of questions. The survey takes around three hours per household and covers thirty-three indicators, from sleep and health to trust in neighbours.",
+      "The environmental rule is the strictest in the world. The constitution says that at least 60 per cent of the land must stay under forest for ever; today the real figure is about 71 per cent. Because the forests absorb more carbon than the country produces, Bhutan is one of the few carbon-negative nations on Earth.",
+      "The system has problems too. Young people leave for Australia and India, where salaries are five or six times higher, and unemployment among graduates reached 29 per cent in 2022. Critics say happiness is difficult to measure and easy to use in advertising. Officials answer that no number is perfect, but a country that counts only money will protect only money."
+     ],
+     "paraphrases": [
+      [
+       "judge success by",
+       "measure how well it is doing using"
+      ],
+      [
+       "about 780,000 people",
+       "a population of roughly 780,000"
+      ],
+      [
+       "written into",
+       "included in"
+      ],
+      [
+       "officials visit homes",
+       "government workers go to houses"
+      ],
+      [
+       "covers",
+       "includes"
+      ],
+      [
+       "the strictest",
+       "the toughest"
+      ],
+      [
+       "for ever",
+       "permanently"
+      ],
+      [
+       "salaries are higher",
+       "people earn more"
+      ]
+     ],
+     "glossary": [
+      "kingdom — qirollik",
+      "constitution — konstitutsiya",
+      "survey — so'rovnoma",
+      "household — xonadon",
+      "indicator — ko'rsatkich",
+      "absorb — yutmoq",
+      "graduate — bitiruvchi"
+     ],
+     "tasks": [
+      {
+       "title": "Note completion",
+       "type": "ONE WORD OR A NUMBER",
+       "instr": "Bo'sh joylarni to'ldiring.",
+       "items": [
+        "Population of Bhutan: about ___",
+        "Gross National Happiness used since ___",
+        "Idea added to the ___ in 2008",
+        "Number of parts in the measure: ___",
+        "Length of the survey per household: about ___ hours",
+        "Number of indicators: ___",
+        "Minimum forest cover required: ___ per cent",
+        "Graduate unemployment in 2022: ___ per cent"
+       ],
+       "answers": [
+        "780,000",
+        "1972",
+        "constitution",
+        "four",
+        "three",
+        "thirty-three / 33",
+        "60",
+        "29"
+       ],
+       "why": [
+        "\"A small kingdom ... with about 780,000 people\". Raqam o'zgarmaydi.",
+        "\"Since 1972 it has used a measure called Gross National Happiness\".",
+        "\"In 2008 this idea was written into the country's new constitution\".",
+        "\"The measure has four main parts\".",
+        "\"The survey takes around three hours per household\". \"Around\" = \"about\".",
+        "\"Covers thirty-three indicators\".",
+        "\"At least 60 per cent of the land must stay under forest\".",
+        "\"Unemployment among graduates reached 29 per cent in 2022\"."
+       ]
+      },
+      {
+       "title": "Bashorat tekshiruvi",
+       "type": "Tahlil",
+       "instr": "Har savol uchun kutilgan tur va chiqqan javobni solishtiring.",
+       "items": [
+        "\"Population of Bhutan: about ___\" — kutilgan tur?",
+        "\"added to the ___ in 2008\" — kutilgan tur?",
+        "\"Length of the survey: about ___ hours\" — kutilgan tur?",
+        "\"Minimum forest cover: ___ per cent\" — kutilgan tur?"
+       ],
+       "answers": [
+        "son",
+        "ot",
+        "son",
+        "son"
+       ],
+       "why": [
+        "\"Population\" miqdor so'raydi; javob 780,000.",
+        "\"the ... in\" orasida ot; javob constitution.",
+        "\"hours\" oldida son turadi; javob three.",
+        "\"per cent\" oldida son; javob 60. Diqqat: matnda 71 ham bor, lekin u hozirgi holat, talab emas."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The library that lends everything except books",
+     "qtype": "Note completion",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In the Canadian city of Toronto there is a library where the shelves hold no novels. Instead, members borrow tools: drills, ladders, sewing machines, tents and even musical instruments. The Toronto Tool Library opened in 2013 with 150 tools donated by local families. Today it holds more than 10,000 items and has about 5,000 members, who pay a yearly fee of 50 dollars.",
+      "The idea is simple. An electric drill is used, on average, for only thirteen minutes in its entire life, yet almost every household owns one. Sharing a single drill among fifty families saves money and space, and it also cuts waste: fewer machines are built, and fewer are thrown away.",
+      "Similar libraries have opened in more than 500 cities worldwide. In Berlin, one branch lends camping equipment; in Melbourne, another lends party supplies such as tables and lights. The most popular item almost everywhere is the pressure washer, which is expensive to buy and needed perhaps twice a year.",
+      "Running such a library is harder than it looks. Tools break, and repairs take up a quarter of the budget. Some members keep items too long, so most branches now charge a small fine for every day an item is late. Staff also teach short courses — how to fix a bicycle, how to use a saw safely — and these classes bring in nearly half of the income at the Toronto branch."
+     ],
+     "paraphrases": [
+      [
+       "lends",
+       "allows people to borrow"
+      ],
+      [
+       "members",
+       "people who have joined"
+      ],
+      [
+       "donated",
+       "given for free"
+      ],
+      [
+       "yearly fee",
+       "annual payment"
+      ],
+      [
+       "on average",
+       "typically"
+      ],
+      [
+       "cuts waste",
+       "reduces rubbish"
+      ],
+      [
+       "take up",
+       "use"
+      ],
+      [
+       "bring in",
+       "earn"
+      ]
+     ],
+     "glossary": [
+      "shelf — javon",
+      "drill — parma",
+      "ladder — narvon",
+      "sewing machine — tikuv mashinasi",
+      "pressure washer — bosimli yuvgich",
+      "fine — jarima",
+      "income — daromad"
+     ],
+     "tasks": [
+      {
+       "title": "Note completion",
+       "type": "ONE WORD OR A NUMBER",
+       "instr": "Bo'sh joylarni to'ldiring.",
+       "items": [
+        "Toronto Tool Library opened in ___",
+        "Number of tools at the start: ___",
+        "Number of items today: more than ___",
+        "Yearly fee: ___ dollars",
+        "Average lifetime use of a drill: ___ minutes",
+        "Number of cities with similar libraries: more than ___",
+        "Most popular item everywhere: the ___",
+        "Share of budget spent on repairs: a ___"
+       ],
+       "answers": [
+        "2013",
+        "150",
+        "10,000",
+        "50",
+        "thirteen / 13",
+        "500",
+        "pressure washer",
+        "quarter"
+       ],
+       "why": [
+        "\"The Toronto Tool Library opened in 2013\".",
+        "\"With 150 tools donated by local families\".",
+        "\"Today it holds more than 10,000 items\".",
+        "\"Who pay a yearly fee of 50 dollars\".",
+        "\"Used, on average, for only thirteen minutes in its entire life\".",
+        "\"Similar libraries have opened in more than 500 cities worldwide\".",
+        "\"The most popular item almost everywhere is the pressure washer\" — ikki so'z.",
+        "\"Repairs take up a quarter of the budget\"."
+       ]
+      },
+      {
+       "title": "Tuzoqlar",
+       "type": "Tahlil",
+       "instr": "Nega bu javoblar noto'g'ri?",
+       "items": [
+        "\"Number of items today: 150\"",
+        "\"Yearly fee: 50\" o'rniga \"50 dollars a year\"",
+        "\"Most popular item: washer\"",
+        "\"Share of budget: half\""
+       ],
+       "answers": [
+        "noto'g'ri",
+        "noto'g'ri",
+        "to'liq emas",
+        "noto'g'ri"
+       ],
+       "why": [
+        "150 — ochilgandagi soni; bugungisi 10,000. Sana bilan bog'lab o'qish kerak.",
+        "Bo'sh joydan keyin \"dollars\" allaqachon bor; faqat raqam kerak.",
+        "Matnda \"pressure washer\"; ikkala so'z ham kerak, chegara ruxsat beradi.",
+        "\"Half\" — kurslardan keladigan daromad ulushi, ta'mirlash emas."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Living on a floating island",
+     "qtype": "Note completion",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "Lake Titicaca lies between Peru and Bolivia, 3,812 metres above sea level. On the Peruvian side live the Uros people, whose homes stand on about 120 artificial islands made entirely of totora, a reed that grows in the shallow water near the shore.",
+      "Building an island takes a community around one year. First, blocks of root and soil are cut from the lake bed and tied together with rope; these blocks float because they contain gas. Reeds are then laid on top in layers, each layer crossing the one below. A finished island is roughly two metres thick, but the surface reed rots quickly, so fresh reeds must be added every two weeks in the rainy season.",
+      "Life on the islands has changed. Fifty years ago most families lived by fishing and hunting birds. Today around 2,000 people live on the islands and most income comes from tourism: nearly 200,000 visitors arrive each year, and many islands now have solar panels, which power lights and a television. The largest island has a school, a small hospital and a radio station.",
+      "There are worries. Young Uros often move to the city of Puno for work or study, and the reed beds are shrinking because of warmer water and pollution. A local guide explains the problem simply: the islands survive only while somebody keeps adding reeds."
+     ],
+     "paraphrases": [
+      [
+       "lies between",
+       "is situated between"
+      ],
+      [
+       "artificial",
+       "man-made"
+      ],
+      [
+       "shallow",
+       "not deep"
+      ],
+      [
+       "takes around one year",
+       "lasts about twelve months"
+      ],
+      [
+       "rots",
+       "decays"
+      ],
+      [
+       "most income comes from",
+       "the main source of money is"
+      ],
+      [
+       "shrinking",
+       "getting smaller"
+      ],
+      [
+       "survive",
+       "continue to exist"
+      ]
+     ],
+     "glossary": [
+      "reed — qamish",
+      "root — ildiz",
+      "rope — arqon",
+      "layer — qatlam",
+      "rot — chirimoq",
+      "solar panel — quyosh paneli",
+      "guide — gid"
+     ],
+     "tasks": [
+      {
+       "title": "Note completion",
+       "type": "ONE WORD OR A NUMBER",
+       "instr": "Uyda 8 daqiqada bajaring.",
+       "items": [
+        "Height of Lake Titicaca above sea level: ___ metres",
+        "Number of islands: about ___",
+        "Islands are made of a reed called ___",
+        "Time needed to build an island: about ___",
+        "Thickness of a finished island: roughly ___ metres",
+        "New reeds added every ___ in the rainy season",
+        "Number of people living on the islands: around ___",
+        "Annual visitors: nearly ___"
+       ],
+       "answers": [
+        "3,812",
+        "120",
+        "totora",
+        "one year",
+        "two",
+        "two weeks",
+        "2,000",
+        "200,000"
+       ],
+       "why": [
+        "\"3,812 metres above sea level\".",
+        "\"About 120 artificial islands\".",
+        "\"Made entirely of totora, a reed that grows...\".",
+        "\"Takes a community around one year\".",
+        "\"A finished island is roughly two metres thick\".",
+        "\"Fresh reeds must be added every two weeks in the rainy season\".",
+        "\"Today around 2,000 people live on the islands\".",
+        "\"Nearly 200,000 visitors arrive each year\"."
+       ]
+      },
+      {
+       "title": "Paraphrase daftari",
+       "type": "Yozma",
+       "instr": "Matndan 5 juft toping va yozing.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "\"man-made\" — \"artificial\"",
+        "\"not deep\" — \"shallow\"",
+        "\"the main source of money\" — \"most income comes from\"",
+        "\"getting smaller\" — \"shrinking\"",
+        "\"continue to exist\" — \"survive\""
+       ],
+       "why": [
+        "Sifat sinonimi.",
+        "Inkor birikma bitta sifatga teng.",
+        "Ot birikmasi fe'l birikmasiga aylanadi.",
+        "Uzun ibora bitta fe'lga teng.",
+        "Rasmiy fe'l sinonimi."
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-matn: \"Living on a floating island\"",
+     "type": "Reading",
+     "instr": "Uyda 8 daqiqada; javoblar Reading bo'limida izoh bilan.",
+     "answers": "Ustoz keyingi darsda paraphrase juftlarini so'raydi."
+    },
+    {
+     "title": "Kitob: Workbook Unit 1, Reading 2 (Note completion)",
+     "type": "Workbook 7-bet",
+     "instr": "Bajaring va har javob uchun bashorat turini (raqam/ot/sifat) chetiga yozing.",
+     "answers": "Workbook kaliti bilan tekshiriladi."
+    },
+    {
+     "title": "Bashorat mashqi",
+     "type": "Yozma",
+     "instr": "12 ta bo'sh joy berilgan (ustoz beradi): matnsiz, faqat javob TURINI yozing.",
+     "answers": "12 dan 10 tasi to'g'ri bo'lsa — bajarilgan."
+    },
+    {
+     "title": "Xatolar daftari",
+     "type": "Yozma",
+     "instr": "Bugungi 3 matndan xato qilgan har javobni yozing: savol, xato javob, to'g'ri javob, sabab.",
+     "answers": "Ustoz ko'radi; xato sababi yozilmagan qator qabul qilinmaydi."
+    }
+   ],
+   "normativ": [
+    [
+     "Bashorat turi",
+     "12 bo'sh joydan 10 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Note completion (uyga)",
+     "8 javobdan 7 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Paraphrase juftlari",
+     "5 juft to'g'ri",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 3,
+   "title": "Listening: Form Completion (Section 1)",
+   "grammar_topic": "Form completion — ariza/blank to'ldirish (1-bo'lim)",
+   "vocab_topic": "Turar joy, ro'yxatdan o'tish, buyurtma (Unit 1)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Coursebook: Unit 1, Listening (Form completion), 10-bet, 1–5-mashqlar, Audio 01–03 (\"Dubai Palm Apartments\"). Workbook: Unit 1, Listening (Form completion), 8-bet. Kitob audiosi va skripti kitobda — bu yerda uchta mustaqil skript to'liq transkripti bilan berilgan.",
+   "objectives": [
+    "Section 1 dagi formani to'ldirishda javob turini oldindan aniqlash (ism, raqam, sana, narx).",
+    "Harflab aytilgan ism va familiyani (spelling) va telefon raqamini xatosiz yozish.",
+    "Raqam, sana, pul va vaqtni IELTS qoidasi bo'yicha yozish.",
+    "\"Tuzatish\" (correction) holatini eshitish: so'zlovchi javobni o'zgartirganda oxirgisini olish.",
+    "So'z chegarasini bajarish: NO MORE THAN TWO WORDS AND/OR A NUMBER."
+   ],
+   "materials": [
+    "Coursebook 10-bet (Listening 1–5) va Workbook 8-bet",
+    "Bu rejadagi 3 ta skript: ustoz o'qiydi yoki audio qo'yiladi",
+    "Har o'quvchida forma nusxasi va qalam",
+    "Harflar jadvali: shunga o'xshash tovushlar (B/P, M/N, S/F, G/J, I/E)"
+   ],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Kitob bilan namuna",
+     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Workbook mashqi",
+     "Qo'shimcha mashq va javob izohlari"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Section 1 — telefon suhbati yoki ro'yxatdan o'tish. Javoblar deyarli har doim: ism, familiya, manzil, telefon, sana, narx, vaqt.",
+     "Formani eshitishdan OLDIN o'qing va har bo'sh joy ustiga turini yozing: N (name), NUM (number), D (date), $ (price), T (time).",
+     "Ism va manzil harflab aytiladi. Faqat harflarni yozing, keyin so'zga aylantiring. B–P, M–N, S–F, G–J, I–E — eng ko'p adashtiradigan juftlar.",
+     "Telefon raqamida \"double\" = ikkita bir xil raqam (double four = 44), \"oh\" yoki \"zero\" = 0.",
+     "Javob TUZATILISHI mumkin: \"It's 15 Park Road — sorry, 50 Park Road\". To'g'ri javob — oxirgisi.",
+     "So'z chegarasi: \"TWO WORDS AND/OR A NUMBER\" bo'lsa, \"50 Park Road\" (2 so'z + raqam) mumkin, \"the 50 Park Road\" — yo'q.",
+     "Audio BIR MARTA qo'yiladi. Javobni yozib, darhol keyingi bo'sh joyga o'ting; orqaga qaytish yo'q."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Formani o'qing",
+      "Name, Address, Telephone, Date",
+      "20–30 soniya vaqt beriladi"
+     ],
+     [
+      "2-bosqich",
+      "Har bo'sh joy turini belgilang",
+      "N / NUM / D / $ / T",
+      "Chetiga yozing"
+     ],
+     [
+      "3-bosqich",
+      "Namunaga qarang",
+      "Enquiry taken by: Amanda",
+      "Namuna javob formatni ko'rsatadi"
+     ],
+     [
+      "4-bosqich",
+      "Eshitayotganda qisqa yozing",
+      "tel: 07726...",
+      "To'liq gap yozmang"
+     ],
+     [
+      "5-bosqich",
+      "Tuzatishni kuting",
+      "\"sorry, make that...\"",
+      "Oxirgi aytilgan javobni oling"
+     ],
+     [
+      "6-bosqich",
+      "Oxirida ko'chiring",
+      "imlo va bosh harf",
+      "Ism bosh harf bilan yoziladi"
+     ]
+    ],
+    "presentation": [
+     [
+      "\"Double seven two six\" — qanday yoziladi?",
+      "7726. \"Double\" ikkita bir xil raqamni bildiradi."
+     ],
+     [
+      "So'zlovchi \"B for Bravo\" desa?",
+      "Bu harfni aniqlashtirish. Faqat B harfini yozasiz."
+     ],
+     [
+      "Sana qanday yoziladi?",
+      "9 January, 9th January yoki January 9 — hammasi qabul qilinadi."
+     ],
+     [
+      "Narx \"maximum 60 euros\" bo'lsa, javobga nima yoziladi?",
+      "Formada \"euros\" bo'lsa, faqat 60. Aks holda \"60 euros\"."
+     ],
+     [
+      "Javobni eshitib ulgurmadim, nima qilay?",
+      "Bo'sh qoldiring va keyingisiga o'ting. Bitta javob uchun ikkitasini yo'qotmang."
+     ],
+     [
+      "\"Fifteen\" va \"fifty\" ni qanday farqlayman?",
+      "Urg'uga qarang: FIFteen (boshida), fifTY (oxirida). Shubha bo'lsa, kontekst yordam beradi."
+     ]
+    ],
+    "notes": [
+     "Kitob audiosi (01–03) bo'lsa — avval o'sha, keyin bu yerdagi skriptlar. Audio bo'lmasa, ustoz skriptni tabiiy tezlikda BIR MARTA o'qiydi.",
+     "Ustoz o'qiyotganda transkriptni o'quvchilarga ko'rsatmaydi; tekshiruvdan keyin ochiladi.",
+     "Har skriptdan keyin: \"qaysi so'z javobga olib keldi?\" — signal so'zni toping (so, that's, let me repeat).",
+     "Imlo xatosi = 0 ball. Shuning uchun harflab yozish mashqi har darsda 2 daqiqa takrorlanadi."
+    ],
+    "mistakes": [
+     [
+      "\"fifteen\" o'rniga \"fifty\" yozish",
+      "Urg'uni eshitish",
+      "Ikkala son ham tez-tez beriladi"
+     ],
+     [
+      "Tuzatishdan oldingi javobni yozish",
+      "Oxirgi javobni olish",
+      "\"Sorry\", \"actually\", \"make that\" — signal so'zlar"
+     ],
+     [
+      "Ismni kichik harf bilan yozish",
+      "Bosh harf bilan",
+      "Ism har doim bosh harf bilan"
+     ],
+     [
+      "Formadagi mavjud so'zni takrorlash (\"60 euros\" bo'lsa \"euros\" yozish)",
+      "Faqat 60",
+      "Ortiqcha so'z chegarani buzadi"
+     ],
+     [
+      "Telefon raqamini bo'lib yozish (077 26 05791)",
+      "07726 05791",
+      "Eshitilgandek, oraliqsiz yoziladi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Kitob: Listening 1–2 (harf va raqam)",
+     "type": "Coursebook 10-bet, Audio 01–02",
+     "instr": "Ismlar to'g'ri yozilganmi (✓/✗), keyin juftlikda harflab ayting.",
+     "items": [
+      "Ishlash tartibi: har ismni eshitib, yozilganiga solishtiring",
+      "Raqamlarda \"double\" va \"oh\" ni belgilang",
+      "Juftlikda o'z ismingizni harflab ayting"
+     ],
+     "answers": [
+      "farqni harf darajasida belgilang",
+      "0726 05791 kabi",
+      "sherigingiz yozadi"
+     ],
+     "why": [
+      "Xato ko'pincha bitta harfda bo'ladi (Bragg/Brag).",
+      "Telefon raqami guruh-guruh aytiladi.",
+      "Keyin almashasiz."
+     ],
+     "note": "Bu mashqning maqsadi — javob topish emas, IMLO. Har xato harf alohida yoziladi."
+    },
+    {
+     "title": "Kitob: Listening 4 (bashorat)",
+     "type": "Coursebook 10-bet",
+     "instr": "Formaga qarab, qaysi bo'sh joyga raqam, qaysisiga so'z kerakligini ayting.",
+     "items": [
+      "Name: ___",
+      "Address: 37 ___ , Vienna",
+      "Telephone number: ___",
+      "Starting date: ___ January",
+      "Length of stay: ___",
+      "Price per day: maximum ___ euros",
+      "Other requirements: fully equipped ___ / view of ___ / air conditioning must be ___ / ___ for car"
+     ],
+     "answers": [
+      "harflab aytiladigan ism",
+      "ko'cha nomi",
+      "raqamlar ketma-ketligi",
+      "sana (son)",
+      "muddat (masalan, two weeks)",
+      "son",
+      "ot yoki sifat"
+     ],
+     "why": [
+      "Section 1 da ism deyarli har doim harflab aytiladi.",
+      "Raqam allaqachon bor, demak so'z kerak.",
+      "\"Double\" so'zini kuting.",
+      "Oy allaqachon yozilgan.",
+      "Son + davr so'zi.",
+      "\"Euros\" formada bor — faqat son.",
+      "Har biri qisqa: kitchen, sea, included, parking kabi."
+     ],
+     "note": "Bashoratni yozmasdan audioni qo'ymang — bu darsning asosiy ko'nikmasi."
+    },
+    {
+     "title": "Kitob: Listening 5 (forma) va Workbook 8-bet",
+     "type": "Coursebook 10-bet Audio 03; Workbook 8-bet",
+     "instr": "To'ldiring, keyin javoblarni kitob kaliti bilan tekshiring.",
+     "items": [
+      "Tekshirishda har javob uchun signal so'zni ayting",
+      "Xato javoblarni turga ajrating",
+      "Workbook formasida \"Call taken by\" namunasi bor"
+     ],
+     "answers": [
+      "\"so that's...\", \"let me repeat\"",
+      "imlo / raqam / tuzatish / chegara",
+      "namuna format beradi"
+     ],
+     "why": [
+      "Signal so'z javobdan oldin keladi.",
+      "Xato turi keyingi mashqni belgilaydi.",
+      "Namunaga qarab javob uzunligini tushunasiz."
+     ]
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Student accommodation office",
+     "qtype": "Form completion (Section 1)",
+     "audios": "Jony Academy skripti — ustoz o'qiydi yoki yozib olinadi",
+     "intro": [
+      "Ariza formasi: talaba turar joy so'rab qo'ng'iroq qilmoqda. BIR MARTA tinglang.",
+      "Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
+     ],
+     "transcript": [
+      "OFFICER: Good morning, City College Accommodation Office. How can I help you?",
+      "STUDENT: Hello. I'd like to find a room for the next semester, please.",
+      "OFFICER: Of course. Can I take your name?",
+      "STUDENT: Yes, it's Daniela Oster.",
+      "OFFICER: Could you spell the surname for me?",
+      "STUDENT: O-S-T-E-R. Oster.",
+      "OFFICER: Thank you. And where are you from, Daniela?",
+      "STUDENT: I'm from Austria, from Graz.",
+      "OFFICER: Lovely. What are you studying?",
+      "STUDENT: Architecture. It's a two-year master's course.",
+      "OFFICER: And your student number?",
+      "STUDENT: It's 4-0-double 2-7. Four zero two two seven.",
+      "OFFICER: 40227, thank you. Now, what kind of accommodation are you looking for?",
+      "STUDENT: A single room, if possible. I shared last year and I couldn't study.",
+      "OFFICER: Right, a single room. And when would you like to move in?",
+      "STUDENT: The 3rd of September. Actually, sorry — make that the 10th of September. My flight changed.",
+      "OFFICER: The 10th of September. How long do you want the room for?",
+      "STUDENT: Nine months, until June.",
+      "OFFICER: And your budget? Rooms start at about 400 pounds a month.",
+      "STUDENT: I can pay up to 550 a month, but not more.",
+      "OFFICER: That's fine. Any special requirements?",
+      "STUDENT: Two things. I'd like a room with a desk — a proper one, not a small table. And I need somewhere close to the library, because I work late.",
+      "OFFICER: Near the library, noted. Do you need parking?",
+      "STUDENT: No, I don't drive. But I have a bicycle, so somewhere to keep it would help.",
+      "OFFICER: We have bike storage at most buildings. Finally, a contact number?",
+      "STUDENT: My mobile is 07-double 4-9 3-1-5-2-6.",
+      "OFFICER: 07449 31526. I'll email you three options this afternoon."
+     ],
+     "tasks": [
+      {
+       "title": "Form completion",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Formani to'ldiring.",
+       "items": [
+        "Name: Daniela ___",
+        "Country: ___",
+        "Course: ___",
+        "Student number: ___",
+        "Type of room: ___",
+        "Move-in date: ___ September",
+        "Length of stay: ___ months",
+        "Maximum rent: ___ a month",
+        "Room must have a ___",
+        "Must be close to the ___",
+        "Storage needed for a ___",
+        "Mobile: ___"
+       ],
+       "answers": [
+        "Oster",
+        "Austria",
+        "Architecture",
+        "40227",
+        "single",
+        "10th / 10",
+        "nine / 9",
+        "550 pounds / £550",
+        "desk",
+        "library",
+        "bicycle / bike",
+        "07449 31526"
+       ],
+       "why": [
+        "Familiya harflab aytiladi: O-S-T-E-R.",
+        "\"I'm from Austria, from Graz\". Mamlakat so'ralgan, shahar emas.",
+        "\"Architecture. It's a two-year master's course\".",
+        "\"4-0-double 2-7\" — double 2 = 22.",
+        "\"A single room, if possible\". Bitta so'z yetarli.",
+        "Avval 3-sentabr aytilgan, keyin tuzatilgan: \"make that the 10th\".",
+        "\"Nine months, until June\".",
+        "\"I can pay up to 550 a month\". 400 — eng past narx, talab emas.",
+        "\"I'd like a room with a desk\".",
+        "\"Somewhere close to the library\".",
+        "\"I have a bicycle, so somewhere to keep it\".",
+        "\"07-double 4-9 3-1-5-2-6\" — double 4 = 44."
+       ]
+      },
+      {
+       "title": "Signal so'zlar",
+       "type": "Tahlil",
+       "instr": "Qaysi so'z javob kelishini bildirdi?",
+       "items": [
+        "Tuzatish signali",
+        "Tasdiqlash signali",
+        "Chalg'ituvchi raqam",
+        "Chalg'ituvchi joy nomi"
+       ],
+       "answers": [
+        "\"Actually, sorry — make that...\"",
+        "\"40227, thank you\" / \"07449 31526\"",
+        "\"Rooms start at about 400 pounds\"",
+        "\"from Graz\""
+       ],
+       "why": [
+        "Oxirgi javob olinadi (10 September).",
+        "Xodim raqamni takrorlaydi — tekshirish imkoni.",
+        "400 — boshlanish narxi, talabaning budjeti emas.",
+        "Savolda mamlakat so'ralgan."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Sports centre membership",
+     "qtype": "Form completion (Section 1)",
+     "audios": "Jony Academy skripti",
+     "intro": [
+      "Sport markaziga a'zo bo'lish uchun qo'ng'iroq. BIR MARTA tinglang, keyin transkript bilan tekshiring."
+     ],
+     "transcript": [
+      "RECEPTIONIST: Riverside Sports Centre, good afternoon.",
+      "CALLER: Hi. I'd like to join the centre, please.",
+      "RECEPTIONIST: Certainly. I'll take a few details. Your full name?",
+      "CALLER: Peter Vaughan.",
+      "RECEPTIONIST: How do you spell Vaughan?",
+      "CALLER: V-A-U-G-H-A-N.",
+      "RECEPTIONIST: Thank you. And your address?",
+      "CALLER: It's 16 Ashgrove Lane — that's A-S-H-G-R-O-V-E — in Newport.",
+      "RECEPTIONIST: 16 Ashgrove Lane, Newport. Postcode?",
+      "CALLER: NP19 7TB.",
+      "RECEPTIONIST: And your date of birth?",
+      "CALLER: The 12th of March, 1996.",
+      "RECEPTIONIST: Which membership would you like? We have standard, which is gym only, and full, which includes the pool and all classes.",
+      "CALLER: What's the difference in price?",
+      "RECEPTIONIST: Standard is 28 pounds a month; full is 41.",
+      "CALLER: I'll take the full one. I mainly want to swim.",
+      "RECEPTIONIST: Good choice. Students get 20 per cent off, by the way. Are you a student?",
+      "CALLER: Not any more, I finished in June.",
+      "RECEPTIONIST: Fine. Which day would you like to start?",
+      "CALLER: Can I start on Monday the 1st?",
+      "RECEPTIONIST: Yes, the 1st of October is fine. Do you have any medical conditions we should know about?",
+      "CALLER: I had a knee operation two years ago, so no running classes for me.",
+      "RECEPTIONIST: I'll note that. And how did you hear about us?",
+      "CALLER: A friend at work recommended you. Actually, I also saw your advert on the radio.",
+      "RECEPTIONIST: I'll put \"friend\". Last thing: an emergency contact.",
+      "CALLER: My sister, Karen. Her number is 0-7-8-double 3-1-4-2-9.",
+      "RECEPTIONIST: 07883 1429... sorry, could you repeat the last four?",
+      "CALLER: One four two nine.",
+      "RECEPTIONIST: Got it. Your card will be ready on Thursday."
+     ],
+     "tasks": [
+      {
+       "title": "Form completion",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Formani to'ldiring.",
+       "items": [
+        "Name: Peter ___",
+        "Address: 16 ___ Lane, Newport",
+        "Postcode: ___",
+        "Date of birth: ___ March 1996",
+        "Membership type: ___",
+        "Monthly price: ___ pounds",
+        "Start date: ___ October",
+        "Medical note: no ___ classes",
+        "Heard about the centre from a ___",
+        "Emergency contact: ___",
+        "Emergency number: ___"
+       ],
+       "answers": [
+        "Vaughan",
+        "Ashgrove",
+        "NP19 7TB",
+        "12th / 12",
+        "full",
+        "41",
+        "1st / 1",
+        "running",
+        "friend",
+        "Karen",
+        "07883 1429"
+       ],
+       "why": [
+        "Harflab aytilgan: V-A-U-G-H-A-N. Imlo xatosi 0 ball.",
+        "\"A-S-H-G-R-O-V-E\".",
+        "Harf va raqam aralash — eshitilgandek yoziladi.",
+        "\"The 12th of March, 1996\".",
+        "\"I'll take the full one\".",
+        "To'liq a'zolik 41; 28 — standart narx (chalg'ituvchi).",
+        "\"Can I start on Monday the 1st?\" — xodim \"1st of October\" deb tasdiqlaydi.",
+        "\"No running classes for me\" — tizza operatsiyasi sababli.",
+        "Xodim \"I'll put friend\" deydi; radio reklama — qo'shimcha.",
+        "\"My sister, Karen\".",
+        "\"0-7-8-double 3-1-4-2-9\" — double 3 = 33."
+       ]
+      },
+      {
+       "title": "Xato ovi",
+       "type": "Tahlil",
+       "instr": "Nega bu javoblar noto'g'ri?",
+       "items": [
+        "Monthly price: 28",
+        "Heard about us: radio",
+        "Date of birth: 1996",
+        "Emergency number: 07883 1129"
+       ],
+       "answers": [
+        "noto'g'ri",
+        "noto'g'ri",
+        "to'liq emas",
+        "noto'g'ri"
+       ],
+       "why": [
+        "28 — standart a'zolik; u \"full\" ni tanladi (41).",
+        "Xodim yozgan javob \"friend\"; radio keyin aytilgan qo'shimcha.",
+        "Formada \"March 1996\" bor; kun kerak — 12th.",
+        "\"One four two nine\" — 1429. Takrorlashni tinglash kerak."
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Taxi booking for the airport",
+     "qtype": "Form completion (Section 1)",
+     "audios": "Jony Academy skripti — uyga vazifa",
+     "intro": [
+      "Taksi buyurtmasi. Uyda bir marta tinglang (yoki oila a'zosi o'qib bersin), keyin transkript bilan tekshiring."
+     ],
+     "transcript": [
+      "OPERATOR: Blue Line Taxis, how can I help?",
+      "CUSTOMER: I'd like to book a taxi to the airport, please.",
+      "OPERATOR: Certainly. Which airport?",
+      "CUSTOMER: Stansted.",
+      "OPERATOR: And the pick-up address?",
+      "CUSTOMER: 8 Chandler Street. C-H-A-N-D-L-E-R.",
+      "OPERATOR: 8 Chandler Street. What date do you need it?",
+      "CUSTOMER: The 23rd of April, next Tuesday.",
+      "OPERATOR: And what time?",
+      "CUSTOMER: My flight is at 9.40 in the morning, so I should leave at about half past five.",
+      "OPERATOR: We recommend leaving three and a half hours before, so 6.10 would be enough. But if you prefer 5.30, that's fine.",
+      "CUSTOMER: Let's say 5.45, in the middle.",
+      "OPERATOR: 5.45 it is. How many passengers?",
+      "CUSTOMER: Three adults and one child.",
+      "OPERATOR: Any luggage?",
+      "CUSTOMER: Four large suitcases, so we'll need the big car.",
+      "OPERATOR: That's the estate, which costs 65 pounds to Stansted. The normal car is 48, but it won't take four cases.",
+      "CUSTOMER: The estate, then.",
+      "OPERATOR: Do you want to pay by card now or cash on the day?",
+      "CUSTOMER: Card, please. Actually no — cash is easier, I'll pay the driver.",
+      "OPERATOR: Cash it is. Your name and mobile?",
+      "CUSTOMER: Amira Haddad. H-A-double D-A-D. And my number is 07-9-double 6-2-0-1-3-4.",
+      "OPERATOR: 07996 20134, thank you. The driver will text you ten minutes before he arrives."
+     ],
+     "tasks": [
+      {
+       "title": "Form completion",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Uyda bajaring.",
+       "items": [
+        "Airport: ___",
+        "Pick-up address: 8 ___ Street",
+        "Date: ___ April",
+        "Pick-up time: ___",
+        "Number of passengers: ___ adults and one child",
+        "Luggage: four large ___",
+        "Type of car: ___",
+        "Price: ___ pounds",
+        "Payment method: ___",
+        "Surname: ___",
+        "Mobile: ___"
+       ],
+       "answers": [
+        "Stansted",
+        "Chandler",
+        "23rd / 23",
+        "5.45",
+        "three / 3",
+        "suitcases",
+        "estate",
+        "65",
+        "cash",
+        "Haddad",
+        "07996 20134"
+       ],
+       "why": [
+        "\"Which airport? — Stansted\".",
+        "Harflab aytilgan: C-H-A-N-D-L-E-R.",
+        "\"The 23rd of April, next Tuesday\".",
+        "Avval 5.30 va 6.10 muhokama qilindi; kelishilgani — 5.45.",
+        "\"Three adults and one child\".",
+        "\"Four large suitcases\".",
+        "\"That's the estate... The estate, then\".",
+        "Estate 65; 48 — oddiy mashina narxi (chalg'ituvchi).",
+        "Avval karta aytildi, keyin tuzatildi: \"cash is easier\".",
+        "\"H-A-double D-A-D\" — double D = DD.",
+        "\"07-9-double 6-2-0-1-3-4\" — double 6 = 66."
+       ]
+      },
+      {
+       "title": "Raqam va tuzatish",
+       "type": "Tahlil",
+       "instr": "Har bandda nega shu javob?",
+       "items": [
+        "Vaqt uchta aytildi (5.30, 6.10, 5.45)",
+        "To'lov ikki marta aytildi",
+        "Narx ikkita",
+        "\"Double D\" nimani bildiradi"
+       ],
+       "answers": [
+        "5.45",
+        "cash",
+        "65",
+        "DD"
+       ],
+       "why": [
+        "Mijoz va operator kelishgan oxirgi vaqt.",
+        "\"Actually no\" — tuzatish signali.",
+        "Tanlangan mashina turiga bog'liq.",
+        "Ismlarda ham \"double\" ishlatiladi."
+       ]
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-skript: \"Taxi booking for the airport\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang/o'qitib eshiting, formani to'ldiring, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida izoh bilan."
+    },
+    {
+     "title": "Kitob: Workbook Unit 1 Listening (Form completion)",
+     "type": "Workbook 8-bet",
+     "instr": "Bajaring va xato turini yozing: imlo, raqam, tuzatish yoki so'z chegarasi.",
+     "answers": "Workbook kaliti bilan tekshiriladi."
+    },
+    {
+     "title": "Imlo mashqi",
+     "type": "Yozma",
+     "instr": "20 ta ism va ko'cha nomini harflab yozib, o'zingizni tekshiring (juftlik bilan telefon orqali).",
+     "answers": "Har xato harf alohida yoziladi."
+    },
+    {
+     "title": "Raqam diktanti",
+     "type": "Yozma",
+     "instr": "15 ta telefon raqami va narx (ustoz o'qiydi yoki audio): \"double\", \"oh\", 13/30, 15/50 juftlari.",
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+    }
+   ],
+   "normativ": [
+    [
+     "Imlo (harflab yozish)",
+     "20 so'zdan 18 tasi xatosiz",
+     "2 coin"
+    ],
+    [
+     "Form completion (uyga)",
+     "11 javobdan 9 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Raqam diktanti",
+     "15 dan 13 tasi",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

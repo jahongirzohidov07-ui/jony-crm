@@ -157,13 +157,26 @@ function LessonList({ course }: { course: string }) {
   );
 }
 
-const TABS = [
-  { key: "plan", label: "Reja" }, { key: "grammar", label: "Grammatika" },
-  { key: "vocab", label: "Lug'at 20/40/60" }, { key: "class", label: "Sinf mashqlari" },
-  { key: "reading", label: "Reading" }, { key: "listening", label: "Listening" },
-  { key: "home", label: "Uyga vazifa" },
-] as const;
-type Tab = typeof TABS[number]["key"];
+type Tab = "plan" | "grammar" | "vocab" | "class" | "reading" | "listening" | "home";
+
+/** Dars qaysi bo'limlarga ega — shular ko'rinadi. Skill darslarida
+ * (IELTS 5.0) grammatika/lug'at yo'q, o'rniga "Savol turi" turadi. */
+function tabsFor(L: Lesson): { key: Tab; label: string }[] {
+  const G = L.grammar ?? ({} as Lesson["grammar"]);
+  const V = L.vocab ?? ({} as Lesson["vocab"]);
+  const words = (V.core ?? []).length + (V.strong ?? []).length + (V.super ?? []).length;
+  const skill = words === 0;
+  const out: { key: Tab; label: string }[] = [{ key: "plan", label: "Reja" }];
+  if ((G.intro ?? []).length || (G.formulas ?? []).length || (G.presentation ?? []).length) {
+    out.push({ key: "grammar", label: skill ? "Savol turi" : "Grammatika" });
+  }
+  if (!skill) out.push({ key: "vocab", label: "Lug'at 20/40/60" });
+  if ((L.class_ex ?? []).length) out.push({ key: "class", label: "Sinf mashqlari" });
+  if (L.reading || (L.readings ?? []).length) out.push({ key: "reading", label: "Reading" });
+  if (L.listening || (L.listenings ?? []).length) out.push({ key: "listening", label: "Listening" });
+  out.push({ key: "home", label: "Uyga vazifa" });
+  return out;
+}
 
 function LessonView({ course, no }: { course: string; no: number }) {
   const nav = useNavigate();
@@ -202,6 +215,9 @@ function LessonView({ course, no }: { course: string; no: number }) {
 
   if (err && !L) return <div className="p-8 text-rose-600">{err}</div>;
   if (!L) return <div className="p-8 text-slate-500">Yuklanmoqda…</div>;
+  const tabs = tabsFor(L);
+  const hasVocab = tabs.some((t) => t.key === "vocab");
+  const active: Tab = tabs.some((t) => t.key === tab) ? tab : "plan";
 
   return (
     <div className="p-6 md:p-8 max-w-6xl">
@@ -212,7 +228,9 @@ function LessonView({ course, no }: { course: string; no: number }) {
           </Link>
           <h1 className="text-xl font-semibold text-slate-900">Dars {L.no} — {L.title}</h1>
           <div className="text-sm text-slate-500 mt-1">
-            Grammatika: {L.grammar_topic} · Lug'at: {L.vocab_topic} · {L.duration} daqiqa
+            {hasVocab
+              ? <>Grammatika: {L.grammar_topic} · Lug'at: {L.vocab_topic}</>
+              : <>Savol turi: {L.grammar_topic}{L.vocab_topic ? ` · Mavzu: ${L.vocab_topic}` : ""}</>} · {L.duration} daqiqa
             {L.test_after ? ` · keyin: ${L.test_after}` : ""}
           </div>
           <div className="flex gap-3 mt-2">
@@ -220,7 +238,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
             <Link to={`/plans/${course}/${no + 1}`} className="text-xs text-brand-600">Dars {no + 1} →</Link>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-brand-600 to-indigo-700 text-white rounded-2xl p-4 w-full md:w-80 shadow">
+        {hasVocab && <div className="bg-gradient-to-br from-brand-600 to-indigo-700 text-white rounded-2xl p-4 w-full md:w-80 shadow">
           <div className="font-semibold flex items-center gap-2 mb-2"><Gamepad2 size={18} /> Jonli o'yin (Kahoot)</div>
           <select value={groupId} onChange={(e) => setGroupId(e.target.value ? Number(e.target.value) : "")}
                   className="w-full text-slate-900 bg-white rounded-lg px-2 py-1.5 text-sm mb-2">
@@ -245,25 +263,25 @@ function LessonView({ course, no }: { course: string; no: number }) {
           </button>
           <div className="text-[11px] text-white/70 mt-2">O'quvchilar jonyos.uz/play sahifasidan PIN bilan kirib, ro'yxatdan ismini tanlaydi. Kamida 20 savol. Coin avtomat: 100% to'g'ri — 3, 1-o'rin +3, 2-o'rin +2, 3-o'rin +1. Natija guruh imtihonlarida saqlanadi.</div>
           {err && <div className="text-xs bg-rose-500/80 rounded px-2 py-1 mt-2">{err}</div>}
-        </div>
+        </div>}
       </div>
 
       <div className="flex gap-1 border-b border-slate-200 mb-4 overflow-x-auto">
-        {TABS.map((t) => (
+        {tabs.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
-                  className={`px-3 py-2 text-sm whitespace-nowrap border-b-2 -mb-px ${tab === t.key ? "border-brand-600 text-brand-700 font-medium" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+                  className={`px-3 py-2 text-sm whitespace-nowrap border-b-2 -mb-px ${active === t.key ? "border-brand-600 text-brand-700 font-medium" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
             {t.label}
           </button>
         ))}
       </div>
 
-      {tab === "plan" && <PlanTab L={L} />}
-      {tab === "grammar" && <GrammarTab L={L} />}
-      {tab === "vocab" && <VocabTab L={L} course={course} />}
-      {tab === "class" && <ExList list={L.class_ex ?? []} />}
-      {tab === "reading" && <ReadingTab L={L} />}
-      {tab === "listening" && <ListeningTab L={L} />}
-      {tab === "home" && (
+      {active === "plan" && <PlanTab L={L} />}
+      {active === "grammar" && <GrammarTab L={L} />}
+      {active === "vocab" && <VocabTab L={L} course={course} />}
+      {active === "class" && <ExList list={L.class_ex ?? []} />}
+      {active === "reading" && <ReadingTab L={L} />}
+      {active === "listening" && <ListeningTab L={L} />}
+      {active === "home" && (
         <>
           {(L.homework_intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-3">{t}</p>)}
           <ExList list={L.homework ?? []} />

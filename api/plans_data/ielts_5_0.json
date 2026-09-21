@@ -6194,7 +6194,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — ustoz bergan audio va chizma (Track 17 Ferry facilities) va 3 ta mualliflik skripti.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audio va chizmalar (Track 17 Ferry facilities; Track 08 Sunshine Express — eng qiyin, oxirida) va 3 ta mualliflik skripti.",
    "objectives": [
     "Eshitib turib chizmadagi qismlarni belgilash: nom, joylashuv, vazifa.",
     "Ketma-ketlik va joy so'zlarini eshitishda kuzatish: first, next, on the left, at the top, in the middle.",
@@ -6723,6 +6723,80 @@
        "layout": "qa"
       }
      ]
+    },
+    {
+     "title": "Track 08. The Sunshine Express — train facilities",
+     "qtype": "Diagram labelling (1–5) — eng qiyin, oxirgi mashq",
+     "audios": "Ustoz bergan audio (Track 08)",
+     "audio": "ielts5_08_train.mp3",
+     "image": "ielts5_08_train.png",
+     "intro": [
+      "Poyezd menejeri Jane Sharpe yo'lovchilarga e'lon qilmoqda. Chizmada \"Observation deck: you are here\" — boshlanish nuqtasi. Avval har vagon qaysi tomonda ekanini (oldinda — lokomotiv, orqada — oxirgi vagon) aniqlang.",
+      "Ko'rsatma: Write ONE WORD ONLY for each answer. Bu mashq qiyinroq: yo'nalish so'zlari (below us, at the front, behind, at the back) tez-tez almashadi."
+     ],
+     "transcript": [
+      "Hello, everyone, and welcome aboard the Sunshine Express on our journey from London to Naples. I'm Jane Sharpe, the train manager, and I hope you'll all enjoy the trip.",
+      "Before we depart, I'd like to tell you a bit about the train and its facilities. Now, we're here on the observation deck, which is where you'll probably spend most of your trip, as it offers the best views, and directly below us is a, well, we call it our leisure centre. There are some games machines, a television, a small library and so on. If you've brought a laptop or computer with you, you can also get onto the Internet here, as it has full wi-fi capability. There's also a small bar where you can get tea, coffee and light meals. For lunch and dinner, you'll use the restaurant car, which is at the front of the train. You'll have breakfast in your cabins, by the way, which will be brought to you by your steward.",
+      "The two cars behind the restaurant are where you'll find the second-class cabins. Each cabin has seats which are changed into beds at night. You'll also find a simple basin for washing, and a small fold-down table. First-class passengers, your cabins are at the back of the train. To get to them, you'll need to pass through the lounge. This can be used by everyone during the day, but is exclusive to first-class passengers after 6 p.m.",
+      "Right at the back of the train, basically as far as you can go, is my office. If anyone needs to see me, though, please use the phone in your cabin rather than coming to the office. Just press one and you'll get me. If I'm not there, tell your steward you need to see the manager, and he or she will look for me."
+     ],
+     "tasks": [
+      {
+       "title": "Sunshine Express — label the diagram (1–5)",
+       "type": "ONE WORD ONLY",
+       "instr": "Chizmaga qarab bo'sh joylarni to'ldiring. Faqat BIR so'z!",
+       "items": [
+        "1 Leisure centre has access to ___",
+        "2 ___ car for midday and evening meals",
+        "3 Second-class cabins with basic ___ facilities",
+        "4 ___ for first-class passengers only in the evening",
+        "5 Contact ___ by phone if you need her"
+       ],
+       "answers": [
+        "Internet",
+        "restaurant",
+        "washing",
+        "lounge",
+        "manager"
+       ],
+       "why": [
+        "\"You can also get onto the Internet here, as it has full wi-fi capability\". Access to = get onto. Tuzoq: \"a television\", \"a small library\" — ular ham leisure centre'da, lekin \"access to\" Internet uchun ishlatiladi.",
+        "\"For lunch and dinner, you'll use the restaurant car, which is at the front of the train\". Midday and evening meals = lunch and dinner. Tuzoq: breakfast — kabinada.",
+        "\"A simple basin for washing\". Basic = simple. Tuzoq: \"beds\" va \"fold-down table\" — ular ham kabinada, lekin \"___ facilities\" = washing.",
+        "\"Pass through the lounge ... exclusive to first-class passengers after 6 p.m.\" Only = exclusive; in the evening = after 6 p.m.",
+        "\"Use the phone in your cabin ... you'll get me\" — \"me\" = Jane Sharpe, the train manager. \"Her\" — ayol. Tuzoq: \"steward\" — menejer bo'lmasa stewardga aytiladi; lekin chizma \"her\"ni so'raydi."
+       ],
+       "note": "Kitob kaliti: 1 Internet 2 Restaurant 3 washing 4 Lounge 5 manager. Bu mashq Ferry (Track 17) dan qiyinroq: yo'nalishlar ko'p (below us, at the front, behind the restaurant, at the back) va har bo'sh joyda 2–3 chalg'ituvchi narsa tilga olinadi.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Yo'nalish xaritasi",
+       "type": "Tahlil",
+       "instr": "E'lon bo'yicha poyezdni oldindan orqaga chizing.",
+       "items": [
+        "directly below us",
+        "at the front of the train",
+        "the two cars behind the restaurant",
+        "at the back of the train (pass through the lounge)",
+        "right at the back, as far as you can go"
+       ],
+       "answers": [
+        "leisure centre",
+        "restaurant car",
+        "second-class cabins",
+        "first-class cabins",
+        "manager's office"
+       ],
+       "why": [
+        "Observation deck ostida.",
+        "Lokomotivdan keyin.",
+        "Restorandan keyingi ikki vagon.",
+        "Lounge orqali o'tiladi.",
+        "Eng oxirgi vagon."
+       ],
+       "layout": "qa"
+      }
+     ]
     }
    ],
    "homework_intro": [],
@@ -6774,7 +6848,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — ustoz bergan audio (Track 18 Ferry — further details) va 3 ta mualliflik skripti.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 18 Ferry — further details; Track 09 Sunshine Express) va 3 ta mualliflik skripti.",
    "objectives": [
     "Savol va uchta variantni audio boshlanishidan oldin o'qib ulgurish.",
     "Uchala variant ham audioda eshitilishini bilish: eshitilgani emas, MOS kelgani tanlanadi.",
@@ -7047,6 +7121,78 @@
         "Narx aytildi, chegirma emas.",
         "Joy boshqa.",
         "Sovrin — kemadagi voqea emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 09. The Sunshine Express — trip information",
+     "qtype": "Multiple choice (1–5) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 09)",
+     "audio": "ielts5_09_train_trip.mp3",
+     "intro": [
+      "London — Neapol poyezdi haqida e'lonning davomi (8-darsdagi Track 08 dan keyin). Avval savollarni o'qing va kalit so'zlarni tagiga chizing: how long, passports, dinner, Italian border, NOT do.",
+      "Ko'rsatma: Choose the correct letter, A, B or C. 5-savolda \"NOT\" bor — nima QILMASLIK kerakligini qidiring."
+     ],
+     "transcript": [
+      "Right, let me give you a bit more information about the trip. The first part of our journey is from London to Paris, going through the Channel Tunnel. It will take us just over an hour to get to the Tunnel, including a short stop before we get there to pick up some more passengers. From there, it'll be another three hours to Paris, so we're looking at four hours altogether, give or take a few minutes.",
+      "A quick bit of advice about passports. You won't need these until we get to the Italian border, so I suggest you keep them in the safe which you'll find in your cabin. Ask your steward – that's the person in charge of your carriage – for a key. That way, you won't need to carry them with you all the time.",
+      "Now, meals. As I said earlier, breakfast tomorrow morning will be in your cabins, and this will be served at about 7.30, 7.45, so you'll be able to enjoy it as we travel along the southern French coast. Lunch is at 1 o'clock in the restaurant car, and dinner is at 8 o'clock, although we'd like you all to be at your table about fifteen minutes earlier, at a quarter to, if you could.",
+      "When we get to the Italian border tomorrow morning, our train will change engines, and we'll also be getting a new crew. We'll be taking advantage of the stop to have a look around. I've arranged a visit to the local market, a museum and a castle. This will take about four hours, with a break for coffee in a local café, and we'll be back on the train in time for lunch.",
+      "A few quick rules. Some of you might have brought your own food or drink on board. That's fine, but could we ask that you consume it in your cabins and not in the restaurant or lounge? Could we also ask you to make sure your cabin windows are closed when you're not in your cabin? And whatever you do, don't get off the train until we reach the Italian border. Apart from the border and one or two other places, which I'll tell you about, any stops we make will only be for a few minutes. I'd hate to leave anyone behind.",
+      "All right, so, moving on from the Italian border, we'll be heading ... [fade]"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Choose the correct letter, A, B or C",
+       "type": "Multiple choice",
+       "instr": "Savollar audio tartibida. Har savolda uchala variant ham eshitiladi.",
+       "items": [
+        "1 How long will it take to get to Paris? A) about one hour B) about three hours C) about four hours",
+        "2 What should passengers do with their passports? A) leave them with their steward B) lock them away C) carry them at all times",
+        "3 When should passengers be in the restaurant car for dinner? A) 7.45 p.m. B) 8.00 p.m. C) 8.15 p.m.",
+        "4 What will the passengers do when the train gets to the Italian border? A) change trains B) go on a tour C) have lunch in a local café",
+        "5 What should passengers NOT do? A) eat their own food on the train B) open their cabin window C) leave the train before it gets to Italy"
+       ],
+       "answers": [
+        "C",
+        "B",
+        "A",
+        "B",
+        "C"
+       ],
+       "why": [
+        "\"We're looking at four hours altogether\". A tuzoq: \"just over an hour to get to the Tunnel\" — birinchi qism. B tuzoq: \"another three hours to Paris\" — ikkinchi qism. Jami: 1 + 3 = 4.",
+        "\"Keep them in the safe which you'll find in your cabin\" — safe = qulflanadi. A tuzoq: stewarddan faqat KALIT so'raladi. C teskari: \"you won't need to carry them with you all the time\".",
+        "\"Dinner is at 8 o'clock, although we'd like you all to be at your table about fifteen minutes earlier, at a quarter to\" — 7.45. B tuzoq: rasmiy vaqt. 7.45 nonushta vaqti sifatida ham eshitiladi (7.30, 7.45) — ehtiyot bo'ling.",
+        "\"I've arranged a visit to the local market, a museum and a castle\" — bu tur (tour). A tuzoq: poyezd emas, \"change ENGINES\". C tuzoq: kafeda QAHVA, tushlik esa poyezdda.",
+        "\"Whatever you do, don't get off the train until we reach the Italian border\". A tuzoq: o'z ovqatini yeyish mumkin — faqat kabinada. B tuzoq: oyna kabinada YO'Q bo'lganda yopiq bo'lsin — ochish umuman taqiqlanmagan."
+       ],
+       "note": "Kitob kaliti: 1 C 2 B 3 A 4 B 5 C. 1 va 3-savollar — hisoblash tuzog'i: javob to'g'ridan-to'g'ri aytilmaydi (1 + 3 soat; 8 dan 15 daqiqa oldin).",
+       "layout": "mcq"
+      },
+      {
+       "title": "Tuzoq turlari",
+       "type": "Tahlil",
+       "instr": "Har tuzoq turini ayting.",
+       "items": [
+        "1-savol A/B",
+        "3-savol B",
+        "4-savol A",
+        "5-savol A, B"
+       ],
+       "answers": [
+        "qism, butun emas",
+        "rasmiy vaqt vs talab",
+        "o'xshash so'z",
+        "shartli ruxsat"
+       ],
+       "why": [
+        "Yo'lning bir qismi vaqti.",
+        "\"Be at your table ... at a quarter to\".",
+        "change engines ≠ change trains.",
+        "\"fine, but in your cabins\"; \"closed when you're not in your cabin\"."
        ],
        "layout": "qa"
       }

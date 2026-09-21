@@ -11064,6 +11064,1635 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 19,
+   "title": "Reading: Yes / No / Not Given",
+   "grammar_topic": "Yes / No / Not Given — muallif FIKRI bilan solishtirish",
+   "vocab_topic": "Odatlar, o'zgarish va inson xulqi",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (#23, #24) va mualliflik matnlari.",
+   "objectives": [
+    "YES / NO / NOT GIVEN va TRUE / FALSE / NOT GIVEN farqini tushunish: biri fikr, biri fakt.",
+    "Muallif fikrini bildiruvchi so'zlarni topish: \"in an act of kindness\", \"the truth is\", \"better off\", \"not good news\".",
+    "NO (muallif qarshi) va NOT GIVEN (muallif bu haqda fikr bildirmagan) ni ajratish.",
+    "Gapdagi kuchli so'zlarni (many, most, only, more than) matn bilan solishtirish.",
+    "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Yes / No / Not Given — 6-darsdagi True / False / Not Given ning \"fikr\" varianti. Savol faktni emas, MUALLIF NIMA DEB O'YLASHINI so'raydi.",
+     "YES — gap muallif fikriga mos. NO — gap muallif fikriga qarshi. NOT GIVEN — muallif bu haqda fikr bildirmagan (balki umuman gapirmagan).",
+     "Muallif fikri odatda baho so'zlari bilan beriladi: kindness, unusual, better off, the truth is, not good news, should. Shu so'zlarni belgilang.",
+     "Tuzoq 1 — gapda baho bor, matnda yo'q: \"Into the Wild is a GOOD title\" — muallif nom haqida baho bermagan → NOT GIVEN.",
+     "Tuzoq 2 — miqdor: \"MANY young people make the same decisions\" — matn \"most would not do the same thing\" deydi → NO.",
+     "Tuzoq 3 — taqqoslash: \"more adventurous THAN OTHERS\" — matn \"more conventional than others\" deydi → NO.",
+     "Savollar matn tartibida keladi (ALWAYS). NOT GIVEN javobi ham ikki qo'shni javob orasidagi joyda qidiriladi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Savol turini aniqlang",
+      "YES/NO/NG — fikr",
+      "Muallif nima deydi?"
+     ],
+     [
+      "2-bosqich",
+      "Gapdagi kalit va baho so'zlarini belgilang",
+      "generous, good, more",
+      "Shu so'zlar tekshiriladi"
+     ],
+     [
+      "3-bosqich",
+      "Matndan joyni toping",
+      "tartib bo'yicha",
+      "Oldingi javobdan keyin"
+     ],
+     [
+      "4-bosqich",
+      "Muallif fikrini toping",
+      "\"in an act of kindness\"",
+      "Baho so'zi"
+     ],
+     [
+      "5-bosqich",
+      "Solishtiring",
+      "mos / qarshi / fikr yo'q",
+      "YES / NO / NG"
+     ],
+     [
+      "6-bosqich",
+      "Isbot gapini ko'rsating",
+      "matndan iqtibos",
+      "NG uchun: \"nima aytilmagan?\""
+     ]
+    ],
+    "presentation": [
+     [
+      "TRUE/FALSE bilan farqi nima?",
+      "T/F/NG — matndagi FAKT bilan; Y/N/NG — muallif FIKRI bilan solishtiriladi. Yechish usuli bir xil."
+     ],
+     [
+      "Matnda mavzu bor, lekin fikr yo'q. Javob?",
+      "NOT GIVEN. Mavzu borligi yetarli emas — muallif baho berishi kerak."
+     ],
+     [
+      "\"Many\" va \"most would not\" — javob?",
+      "NO. Muallif ko'pchilik bunday qilmaydi deydi."
+     ],
+     [
+      "NO va NOT GIVEN ni qanday ajrataman?",
+      "NO uchun matnda QARAMA-QARSHI gap bo'lishi kerak. Faqat \"yo'q\" bo'lsa — NOT GIVEN."
+     ],
+     [
+      "Savollar tartibdami?",
+      "Ha, ALWAYS matn tartibida."
+     ],
+     [
+      "Muallif boshqa odam fikrini keltirsa-chi?",
+      "\"Psychologists argue...\" — muallif bu fikrni qabul qilib keltirsa, odatda uning fikri sifatida olinadi."
+     ]
+    ],
+    "notes": [
+     "6-dars (T/F/NG) ni eslating va farqni doskada ikki ustunda yozing: FAKT | FIKR.",
+     "Har javobdan keyin so'rang: \"muallifning qaysi so'zi shunday deyishga majbur qildi?\"",
+     "Making a change matnidagi 3-savol (\"good title\") — NOT GIVEN ning eng toza misoli.",
+     "Asl savollardagi imlo xatolari tuzatildi: \"Grandparent\" → \"Grandparents\", \"tolders ... activitive\" → \"toddlers ... activities\"."
+    ],
+    "mistakes": [
+     [
+      "O'z fikrini javob qilish (\"yaxshi nom-ku\")",
+      "Muallif fikrini qidirish",
+      "Shaxsiy fikr hisobga olinmaydi"
+     ],
+     [
+      "Mavzu bor — YES deb o'ylash",
+      "Baho so'zini tekshirish",
+      "Mavzu ≠ fikr"
+     ],
+     [
+      "Miqdorni tekshirmaslik (many / most)",
+      "Gapdagi miqdorni belgilash",
+      "Miqdor javobni o'zgartiradi"
+     ],
+     [
+      "Taqqoslashni o'tkazib yuborish (more ... than)",
+      "Ikki tomonni tekshirish",
+      "Kim bilan solishtirilgan?"
+     ],
+     [
+      "NO va NG ni aralashtirish",
+      "Qarama-qarshi gap bormi?",
+      "Yo'q bo'lsa — NG"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Fakt yoki fikr?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz gap o'qiydi; o'quvchi \"fakt\" yoki \"fikr\" deydi va fikr bildiruvchi so'zni aytadi.",
+     "items": [
+      "In 1990, Christopher McCandless went to Alaska.",
+      "In an act of kindness, he donated all his savings.",
+      "His decisions were so unusual for his age.",
+      "The volunteers were shown several pictures.",
+      "This is not good news for people with bad habits.",
+      "You are better off making a new start today."
+     ],
+     "answers": [
+      "fakt",
+      "fikr (kindness)",
+      "fikr (unusual)",
+      "fakt",
+      "fikr (not good news)",
+      "fikr / maslahat (better off)"
+     ],
+     "why": [
+      "Sana va voqea — baho yo'q.",
+      "Muallif harakatni \"kindness\" deb baholaydi.",
+      "Baho so'zi.",
+      "Tadqiqot tavsifi.",
+      "Muallif xulosasi.",
+      "Muallif tavsiyasi."
+     ],
+     "note": "Fikr bildiruvchi so'zlar ro'yxati doskada qoladi: kindness, unusual, the truth is, better off, not good news, should.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #23. Making a change",
+     "qtype": "Yes / No / Not Given (1–9)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "How easy is it for us to change our lives – and why?",
+      "In 1990, a young American named Christopher McCandless gave up his career plans, left behind everyone he knew, including his family, and went off on an adventure. He was 22 at the time. _In an act of kindness_, he donated all his savings to the famous charity, Oxfam International, and hitchhiked his way through America to Alaska. His decisions were so unusual for his age that Jon Krakauer wrote a book about them called Into the Wild, and Sean Penn directed a film that had the same title.",
+      "Of course, this is an unusual story. _Most college graduates would not do quite the same thing._ However, studies do show that _in teenage years, people are more likely to try out new experiences_. Instead of following the family career path, for example, and working his way up the same organization like his grandfather did, a 15-year-old may dream about becoming a traveller - only to find _in his early 20s that this fascination with new places is declining_ and change is less attractive. This age-related trend can be observed in all cultures.",
+      "The reason why people all over the world become less keen to change as they get older may be because people's lives generally _follow similar patterns and involve similar demands_. Most people, _wherever they are_, aim to find a job and a partner. As they get older, they may have young children to look after and possibly elderly family members. These responsibilities cannot be achieved without some degree of consistency, which means that new experiences and ideas may not have a place in the person's life. New experiences may bring excitement but also insecurity, and so most people prefer to stay with the familiar.",
+      "However, not every individual is the same. One toddler may want to play a different game every day and _get fed up if nothing changes_ at the nursery. Another may seek out and play with the same children and toys on every visit. _Young children who avoid new experiences will grow up to be more conventional than others._ Psychologists argue that those who have more open personalities as children are more open than others might be when they are older. They also suggest that young men have a greater interest in novelty than women, although, as they age, this desire for new experiences fades more quickly than it does in women.",
+      "The truth is that, as we get older, we prefer the things we know. We tend to order the same meals in restaurants, sit on the same side of the train when we commute to work, go on holiday to the same places and construct our day in the same way. If you are older than 20, remember that your openness to new experiences is slowly declining. So _you are better off making a new start today than postponing it until later_."
+     ],
+     "paraphrases": [
+      [
+       "generous",
+       "in an act of kindness"
+      ],
+      [
+       "many young people make the same decisions",
+       "most college graduates would not do the same thing"
+      ],
+      [
+       "teenagers",
+       "in teenage years"
+      ],
+      [
+       "more ready to have new experiences",
+       "more likely to try out new experiences"
+      ],
+      [
+       "young adults",
+       "in his early 20s"
+      ],
+      [
+       "life demands are different",
+       "(lives) involve similar demands"
+      ],
+      [
+       "depending on which country",
+       "wherever they are / in all cultures"
+      ],
+      [
+       "toddlers",
+       "young children at the nursery"
+      ],
+      [
+       "find repetitive activities boring",
+       "get fed up if nothing changes"
+      ],
+      [
+       "dislike new experiences",
+       "avoid new experiences"
+      ],
+      [
+       "more adventurous",
+       "(opposite of) more conventional"
+      ],
+      [
+       "avoid delay",
+       "better off ... than postponing it"
+      ]
+     ],
+     "glossary": [
+      "career — kasb yo'li",
+      "donate — xayriya qilmoq",
+      "charity — xayriya tashkiloti",
+      "hitchhike — yo'lovchi mashinada tekin yurmoq",
+      "consistency — barqarorlik",
+      "insecurity — ishonchsizlik",
+      "toddler — 1–3 yoshli bola",
+      "conventional — odatiy, an'anaviy",
+      "novelty — yangilik",
+      "postpone — kechiktirmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–9: YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "YES — muallif fikriga mos; NO — muallif fikriga qarshi; NOT GIVEN — muallif bu haqda fikr bildirmagan.",
+       "items": [
+        "Christopher McCandless was generous to give his money to Oxfam International.",
+        "Many young people make the same decisions as Christopher McCandless.",
+        "Into the Wild is a good title for Jon Krakauer's book.",
+        "Teenagers are more ready to have new experiences than young adults.",
+        "Grandparents usually encourage their grandchildren to get a well-paid job.",
+        "Life demands are different depending on which country you live in.",
+        "Some toddlers find repetitive activities boring.",
+        "Children who dislike new experiences become more adventurous than others as adults.",
+        "If you want to change something in your life, you should avoid delay."
+       ],
+       "answers": [
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "YES",
+        "NOT GIVEN",
+        "NO",
+        "YES",
+        "NO",
+        "YES"
+       ],
+       "why": [
+        "\"In an act of kindness, he donated all his savings\". Kindness = generous — muallifning bahosi.",
+        "\"Most college graduates would not do quite the same thing\". \"Many do\" ↔ \"most would not\" — qarama-qarshi.",
+        "Kitob nomi aytilgan, lekin muallif nom yaxshi yoki yomonligi haqida baho bermagan. Tuzoq: o'quvchining shaxsiy fikri.",
+        "\"In teenage years, people are more likely to try out new experiences\" va \"in his early 20s ... this fascination with new places is declining\".",
+        "Bobo faqat misolda: \"working his way up the same organization like his grandfather did\". Nevaralarni undashi yoki maosh haqida hech narsa yo'q.",
+        "\"Lives generally follow similar patterns and involve similar demands. Most people, wherever they are...\" — o'xshash, farqli emas.",
+        "\"One toddler may ... get fed up if nothing changes at the nursery\". Fed up = bored; nothing changes = repetitive; \"one toddler\" = some.",
+        "\"Young children who avoid new experiences will grow up to be more conventional than others\". Conventional — adventurous ning teskarisi.",
+        "\"You are better off making a new start today than postponing it until later\". Postponing = delay."
+       ],
+       "note": "3 va 5-savollar NOT GIVEN ning ikki turi: 3 — mavzu bor, baho yo'q; 5 — so'z (grandfather) bor, lekin gapdagi fikr umuman yo'q.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Gapdagi so'zning matndagi juftini toping.",
+       "items": [
+        "generous (1)",
+        "repetitive activities boring (7)",
+        "more adventurous (8)",
+        "avoid delay (9)"
+       ],
+       "answers": [
+        "in an act of kindness",
+        "get fed up if nothing changes",
+        "more conventional (teskari)",
+        "better off ... than postponing"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "4-xatboshi.",
+        "4-xatboshi.",
+        "Oxirgi gap."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #24. Breaking the habit",
+     "qtype": "Yes / No / Not Given (1–7) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "We all think we can break our bad habits — but they can stay with us for life",
+      "What is a bad habit? The most common definition is that it is something that we do regularly, almost without thinking about it, and which has some sort of negative consequence. This consequence could affect those around us, or it could affect us personally. Those who deny having bad habits are probably lying. Bad habits are part of what makes us human.",
+      "Many early habits, like sucking our thumb, are _broken when we are very young_. We are either _told to stop doing it by our parents, or_ we consciously or subconsciously _observe that others do not have the same habit_, and we gradually grow out of it. It is when we intentionally or unintentionally _pick up new habits in our later childhood or early adulthood_ that it becomes a problem. Unless we can break that habit early on, it becomes a part of our life, and becomes 'programmed' into our brain.",
+      "A recent study of human memory suggests that no matter how hard we try to change our habits, it is the old ways that tend to win, especially in situations where we are _rushed, stressed or overworked_. Habits that we thought we had got rid of can _suddenly come back_. During the study programme, the researchers showed a group of volunteers several pictures, and gave them words to associate with them (for example, see a picture of tea, and associate it with 'breakfast'). They then showed the volunteers the same pictures again, and gave them new words to associate with them (see a picture of tea, and say 'afternoon').",
+      "A few days later, the volunteers were given a test. The researchers showed them the pictures, and told them to respond with one of the words they had been given for each one. _It came as no surprise_ that their answers were split between the first set of words and the second. Two weeks later, they were given the same test again. This time, most of them only gave the first set of words. They appeared to have completely forgotten the second set. The study confirms that _the responses we learn first are those that remain strongest over time_. We may try to change our ways, but after a while, the response that comes to mind first is usually the first one we learned. The more that response is used, the more automatic it becomes and the harder it becomes to respond in any other way.",
+      "The study therefore suggests that over time, our bad habits also become automatic, learned behaviour. This is _not good news for people who picked up bad habits early in life and now want to change or break them_. Even when we try to put new, good intentions into practice, those previously learned habits remain stronger in more automatic, unconscious forms of memory."
+     ],
+     "paraphrases": [
+      [
+       "develop bad habits",
+       "pick up new habits"
+      ],
+      [
+       "when we are very young",
+       "(early habits) broken when we are very young"
+      ],
+      [
+       "only if people tell us",
+       "told by parents OR observe others"
+      ],
+      [
+       "under pressure",
+       "rushed, stressed or overworked"
+      ],
+      [
+       "return",
+       "suddenly come back"
+      ],
+      [
+       "were surprised",
+       "(opposite of) it came as no surprise"
+      ],
+      [
+       "things learnt when young",
+       "the responses we learn first"
+      ],
+      [
+       "harder to get rid of",
+       "not good news ... want to change or break them"
+      ]
+     ],
+     "glossary": [
+      "consequence — oqibat",
+      "deny — inkor qilmoq",
+      "subconsciously — ongsiz ravishda",
+      "grow out of — o'sib tashlab ketmoq",
+      "associate — bog'lamoq",
+      "overworked — haddan tashqari charchagan",
+      "intention — niyat"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Har javob uchun muallifning so'zini ko'rsating.",
+       "items": [
+        "We usually develop bad habits when we are very young.",
+        "We can only break bad habits if people tell us to do so.",
+        "Bad habits may return when we are under pressure.",
+        "Researchers were surprised by the answers that the volunteers gave in the first test.",
+        "The volunteers found the test more difficult when they did it the second time.",
+        "People find it more difficult to remember things they learnt when they were young.",
+        "If we develop bad habits early in life, they are harder to get rid of."
+       ],
+       "answers": [
+        "NO",
+        "NO",
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "NO",
+        "YES"
+       ],
+       "why": [
+        "Juda yoshlikdagi odatlar \"are broken when we are very young\". Muammo — \"later childhood or early adulthood\" da orttirilgan odatlar.",
+        "\"Told to stop ... by our parents, OR we ... observe that others do not have the same habit\". Ikkinchi yo'l ham bor — \"only\" noto'g'ri.",
+        "\"Especially in situations where we are rushed, stressed or overworked. Habits ... can suddenly come back\".",
+        "\"It came as no surprise that their answers were split\".",
+        "Ikkinchi testda birinchi so'zlarni aytgani yozilgan, lekin test qiyinroq bo'lgani haqida hech narsa yo'q.",
+        "\"The responses we learn first are those that remain strongest over time\" — birinchi o'rganilgan narsa yaxshiroq eslanadi.",
+        "\"This is not good news for people who picked up bad habits early in life and now want to change or break them\"."
+       ],
+       "note": "2-savol — \"only\" tuzog'i: matnda ikki yo'l bor, shuning uchun NO. 5-savol — \"test\" so'zi bor, lekin \"qiyinlik\" haqida fikr yo'q → NOT GIVEN.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Xato turi",
+       "type": "Tahlil",
+       "instr": "Nega bu javob NO yoki NOT GIVEN?",
+       "items": [
+        "2-savol",
+        "4-savol",
+        "5-savol",
+        "6-savol"
+       ],
+       "answers": [
+        "cheklovchi so'z (only)",
+        "teskari",
+        "ma'lumot yo'q",
+        "teskari"
+       ],
+       "why": [
+        "Matnda ikkinchi yo'l ham bor.",
+        "\"No surprise\".",
+        "Qiyinlik aytilmagan.",
+        "Birinchi o'rganilgan narsa kuchliroq."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Should every child learn to code?",
+     "qtype": "Yes / No / Not Given (1–7)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In the last ten years, many governments have added computer programming to the school curriculum, sometimes for children as young as five. Supporters say that coding is the new literacy: just as every child learns to read and write, every child should learn to give instructions to a computer. I think this comparison is only partly true.",
+      "There are real benefits. Writing a program teaches children to break a large problem into small steps, to test their ideas and to accept that mistakes are normal. These are valuable habits, and they are useful far outside computer science. A child who has learnt to find the error in ten lines of code has also learnt patience.",
+      "However, I do not believe that every child needs to become a programmer. Most adults will never write code at work, and the programming languages taught today may look very different in twenty years' time. What will last is not the language but the way of thinking behind it — and that can also be taught through mathematics, science and even music.",
+      "My main concern is time. The school day is not getting longer, and every new subject pushes another one out. In some schools, coding lessons have replaced art or physical education, which I consider a serious mistake. Children need to move and create as much as they need to calculate.",
+      "The best approach, in my view, is to teach the ideas of programming inside other subjects, and to offer coding as an option for those who enjoy it. That way, every child meets the key skills, and nobody loses the subjects that make school a complete education."
+     ],
+     "paraphrases": [
+      [
+       "added to the curriculum",
+       "made part of school lessons"
+      ],
+      [
+       "supporters",
+       "people who agree with an idea"
+      ],
+      [
+       "only partly true",
+       "not completely correct"
+      ],
+      [
+       "break into small steps",
+       "divide into parts"
+      ],
+      [
+       "valuable",
+       "very useful"
+      ],
+      [
+       "concern",
+       "worry"
+      ],
+      [
+       "replaced",
+       "took the place of"
+      ],
+      [
+       "option",
+       "choice"
+      ]
+     ],
+     "glossary": [
+      "curriculum — o'quv dasturi",
+      "literacy — savodxonlik",
+      "instruction — ko'rsatma",
+      "patience — sabr",
+      "physical education — jismoniy tarbiya",
+      "approach — yondashuv"
+     ],
+     "tasks": [
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikrini toping.",
+       "items": [
+        "The writer fully agrees that coding is the new literacy.",
+        "Learning to code helps children accept mistakes.",
+        "Coding is more difficult for girls than for boys.",
+        "Today's programming languages will still be used in twenty years.",
+        "The skills behind coding can be learnt in other subjects.",
+        "Replacing art with coding is a sensible decision.",
+        "Coding should be an optional subject for interested children."
+       ],
+       "answers": [
+        "NO",
+        "YES",
+        "NOT GIVEN",
+        "NO",
+        "YES",
+        "NO",
+        "YES"
+       ],
+       "why": [
+        "\"I think this comparison is only partly true\". Fully ↔ only partly.",
+        "\"To accept that mistakes are normal\".",
+        "Qizlar va o'g'il bolalar haqida hech narsa yo'q.",
+        "\"May look very different in twenty years' time\".",
+        "\"Can also be taught through mathematics, science and even music\".",
+        "\"Which I consider a serious mistake\".",
+        "\"Offer coding as an option for those who enjoy it\"."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "Fikr so'zlari",
+       "type": "Tahlil",
+       "instr": "Muallif fikrini bildirgan so'zni toping.",
+       "items": [
+        "1-savol",
+        "6-savol",
+        "7-savol"
+       ],
+       "answers": [
+        "only partly true",
+        "a serious mistake",
+        "the best approach, in my view"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "4-xatboshi.",
+        "Oxirgi xatboshi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "In praise of boredom",
+     "qtype": "Yes / No / Not Given (1–7)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Most of us now carry a device that means we never have to be bored. In a queue, on a bus or in a waiting room, we take out a phone and fill every empty minute. This seems harmless, but I believe we are losing something valuable.",
+      "Boredom is uncomfortable, and that is exactly why it is useful. When the mind has nothing to do, it begins to wander, and wandering thoughts often lead to new ideas. In one well-known experiment, people who first completed a dull task, copying numbers from a telephone book, later produced more creative answers in a problem-solving test than people who had not been bored.",
+      "Children, in particular, benefit from unstructured time. Parents today often fill every afternoon with lessons, clubs and screens, sometimes because they fear their children will fall behind. In my opinion, this is a mistake. A child who is left alone with nothing to do will eventually invent a game, build something or start a story — and learn that they can create their own entertainment.",
+      "I am not suggesting that phones are evil or that every moment should be empty. Technology gives us information and connection, and I use it every day. But I think we should protect a few moments each day when we allow ourselves to be bored — a walk without headphones, a journey without a screen.",
+      "It may feel strange at first. After a week, however, many people who try this say that they notice more around them and think more clearly. Boredom, it seems, is not a problem to be solved, but a space in which our best ideas can grow."
+     ],
+     "paraphrases": [
+      [
+       "device",
+       "machine, gadget"
+      ],
+      [
+       "harmless",
+       "not dangerous"
+      ],
+      [
+       "wander",
+       "move freely"
+      ],
+      [
+       "dull",
+       "boring"
+      ],
+      [
+       "unstructured time",
+       "free time without a plan"
+      ],
+      [
+       "fall behind",
+       "do worse than others"
+      ],
+      [
+       "evil",
+       "very bad"
+      ],
+      [
+       "think more clearly",
+       "have clearer thoughts"
+      ]
+     ],
+     "glossary": [
+      "queue — navbat",
+      "boredom — zerikish",
+      "creative — ijodiy",
+      "eventually — oxir-oqibat",
+      "entertainment — ko'ngilochar narsa",
+      "headphones — quloqchin"
+     ],
+     "tasks": [
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikrini toping.",
+       "items": [
+        "Using a phone to fill empty time has a hidden cost.",
+        "People who were bored in the experiment did worse in the later test.",
+        "The experiment was repeated in several countries.",
+        "Parents are wrong to fill all their children's free time.",
+        "The writer thinks people should stop using phones completely.",
+        "Walking without headphones is better for your health.",
+        "People who try being bored for a week often notice more around them."
+       ],
+       "answers": [
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "YES"
+       ],
+       "why": [
+        "\"This seems harmless, but I believe we are losing something valuable\".",
+        "\"Later produced more creative answers\" — yaxshiroq.",
+        "Takrorlangani haqida hech narsa yo'q.",
+        "\"In my opinion, this is a mistake\".",
+        "\"I am not suggesting that phones are evil ... I use it every day\".",
+        "Quloqchinsiz yurish tavsiya qilingan, lekin sog'liq haqida emas.",
+        "\"Many people who try this say that they notice more around them\"."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "Fikr so'zlari",
+       "type": "Tahlil",
+       "instr": "Muallif fikrini bildirgan so'zni toping.",
+       "items": [
+        "1-savol",
+        "4-savol",
+        "5-savol"
+       ],
+       "answers": [
+        "I believe we are losing something valuable",
+        "in my opinion, this is a mistake",
+        "I am not suggesting"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "3-xatboshi.",
+        "4-xatboshi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Why we should walk more",
+     "qtype": "Yes / No / Not Given (1–7)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "For most of human history, walking was simply how people got from one place to another. Today, many of us walk less than a thousand steps a day, moving from the house to the car and from the car to the office. I believe this change has cost us more than we realise.",
+      "The health benefits of walking are well known. Regular walking strengthens the heart, helps control weight and improves sleep. What is less often mentioned is its effect on the mind. A study at Stanford University found that people produced more creative ideas while walking than while sitting, and the effect continued for a short time after they sat down.",
+      "Walking also changes the way we see a city. From a car window, streets are something to get through as quickly as possible. On foot, we notice small shops, trees and faces, and we are more likely to talk to neighbours. In my experience, neighbourhoods where people walk feel safer and friendlier.",
+      "Of course, not every journey can be made on foot, and it would be unfair to blame people who live far from their workplace. The real responsibility lies with city planners. Too many cities have been designed for cars, with wide roads, few pavements and long distances between homes and shops.",
+      "Cities that have made walking easier, by widening pavements and closing some streets to traffic, have often seen local shops do better, not worse. Changing a city takes years, but individuals can start today: get off the bus one stop early, or take the stairs instead of the lift."
+     ],
+     "paraphrases": [
+      [
+       "realise",
+       "understand"
+      ],
+      [
+       "strengthens",
+       "makes stronger"
+      ],
+      [
+       "less often mentioned",
+       "not talked about as much"
+      ],
+      [
+       "creative ideas",
+       "new ideas"
+      ],
+      [
+       "on foot",
+       "walking"
+      ],
+      [
+       "blame",
+       "say it is someone's fault"
+      ],
+      [
+       "responsibility",
+       "duty"
+      ],
+      [
+       "widening",
+       "making wider"
+      ]
+     ],
+     "glossary": [
+      "step — qadam",
+      "weight — vazn",
+      "neighbourhood — mahalla",
+      "city planner — shahar rejalashtiruvchisi",
+      "pavement — piyodalar yo'lagi",
+      "lift — lift"
+     ],
+     "tasks": [
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Uyda 10 daqiqada bajaring.",
+       "items": [
+        "Walking less has had a bigger effect on us than people think.",
+        "The effect of walking on the mind is widely discussed.",
+        "The Stanford study took place over several years.",
+        "Areas where people walk seem safer to the writer.",
+        "People who live far from work are mainly to blame for the problem.",
+        "Closing streets to traffic usually harms local shops.",
+        "Walking to work is cheaper than driving."
+       ],
+       "answers": [
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "YES",
+        "NO",
+        "NO",
+        "NOT GIVEN"
+       ],
+       "why": [
+        "\"This change has cost us more than we realise\".",
+        "\"What is less often mentioned is its effect on the mind\".",
+        "Tadqiqot davomiyligi aytilmagan.",
+        "\"In my experience, neighbourhoods where people walk feel safer and friendlier\".",
+        "\"It would be unfair to blame people who live far from their workplace. The real responsibility lies with city planners\".",
+        "\"Have often seen local shops do better, not worse\".",
+        "Narx haqida hech narsa yo'q."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "NOT GIVEN daftari",
+       "type": "Yozma",
+       "instr": "Har NOT GIVEN uchun matn nimani aytmaganini yozing.",
+       "items": [
+        "3-savol",
+        "7-savol"
+       ],
+       "answers": [
+        "davomiylik aytilmagan",
+        "narx aytilmagan"
+       ],
+       "why": [
+        "Faqat natija bor.",
+        "Matn sog'liq, fikr va shahar haqida."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"Why we should walk more\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz har javob uchun muallifning so'zini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Fakt yoki fikr",
+     "type": "Yozma",
+     "instr": "Making a change va Breaking the habit matnlaridan 5 ta fakt va 5 ta fikr gapini yozing; fikr gapida baho so'zini belgilang.",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "NO yoki NOT GIVEN",
+     "type": "Yozma",
+     "instr": "Bugungi matnlardan 6 ta NO va NOT GIVEN javobni oling va har biri uchun farqni bir gapda tushuntiring.",
+     "answers": "\"Qarama-qarshi gap bor / yo'q\" izohi bo'lishi shart.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Yes / No / Not Given (uyga)",
+     "7 javobdan 6 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Fakt yoki fikr",
+     "10 gap, baho so'zi bilan",
+     "2 coin"
+    ],
+    [
+     "NO yoki NOT GIVEN",
+     "6 izoh",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 20,
+   "title": "Reading: Summary Completion with a Box",
+   "grammar_topic": "Summary completion (box) — xulosani ro'yxatdagi so'zlar bilan to'ldirish",
+   "vocab_topic": "Inson ongi, xotira va qo'rquv",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (Reducing errors in memory, #26) va mualliflik matnlari.",
+   "objectives": [
+    "Box (A–J ro'yxat) bilan ishlashda ortiqcha so'zlarni o'chirib borish.",
+    "Bo'sh joy grammatikasini aniqlab, ro'yxatdagi so'zlarni turiga ko'ra guruhlash (son, sifat, fe'l, ot).",
+    "Box so'zi matnda boshqa shaklda yoki teskari ma'noda berilishini tanish (\"fewer incorrect\" = \"more correctly\").",
+    "Inkor tuzoqlarini ajratish: \"did not move very ___\" + \"started very slowly\" = quickly.",
+    "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Summary with a box — xulosa va 8–10 ta so'zdan iborat ro'yxat (A–J) beriladi. Bo'sh joylar 5 ta, demak kamida 3–5 ta so'z ortiqcha.",
+     "Javob sifatida HARF yoziladi (G, C, H...), so'z emas. Ko'rsatmani o'qing: \"Write the correct letter, A–J\".",
+     "Birinchi qadam — ro'yxatni guruhlang: sonlar (12, six, ten, three, twelve), sifatlar (different, complex, the same), miqdor (more, less, fewer). Bo'sh joy qaysi guruhni talab qiladi — faqat shu guruhdan tanlaysiz.",
+     "Box so'zlari matnda deyarli hech qachon aynan bo'lmaydi: \"observed\" = \"just looked at it\"; \"different times\" = \"10 a.m. ... at night\".",
+     "Eng xavfli tuzoq — inkor va teskari: \"did not have as many problems ... chose fewer incorrect words\" → \"remembered MORE words correctly\". \"Fewer\" ro'yxatda bor, lekin gap mantiqiga to'g'ri kelmaydi.",
+     "Ikkinchi tuzoq — raqamlar: matnda bir nechta son bo'ladi (twelve sessions, three-month period, six hours). Qaysi son nimaga tegishli ekanini tekshiring.",
+     "Xulosa odatda matn tartibida boradi (USUALLY), lekin ba'zan bir xatboshini qisqa qilib aytadi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Xulosa sarlavhasini o'qing",
+      "\"Fenn's Memory Experiments\"",
+      "Matndagi qismni toping"
+     ],
+     [
+      "2-bosqich",
+      "Ro'yxatni guruhlang",
+      "son / sifat / ot / fe'l",
+      "Har bo'sh joyga guruh"
+     ],
+     [
+      "3-bosqich",
+      "Bo'sh joy turini aniqlang",
+      "\"at ___ times\" — sifat",
+      "Parosat usuli"
+     ],
+     [
+      "4-bosqich",
+      "Matndan ma'noni toping",
+      "\"10 a.m. / at night\" = different",
+      "Paraphrase"
+     ],
+     [
+      "5-bosqich",
+      "Inkor va taqqoslashni tekshiring",
+      "did not / fewer / more",
+      "Mantiq"
+     ],
+     [
+      "6-bosqich",
+      "Harfni yozing va ro'yxatdan o'chiring",
+      "G",
+      "Bir harf — bir marta"
+     ]
+    ],
+    "presentation": [
+     [
+      "Javobga so'zni yozsam bo'ladimi?",
+      "Ko'rsatma \"letter\" desa — faqat harf. So'z yozilsa ball berilmasligi mumkin."
+     ],
+     [
+      "Bitta so'zni ikki marta ishlatsam bo'ladimi?",
+      "Odatda yo'q — har harf bir marta."
+     ],
+     [
+      "Ro'yxatdagi so'z matnda yo'q.",
+      "Ma'nosini qidiring: \"observed\" = \"looked at\"."
+     ],
+     [
+      "Ikki so'z ham mos keladi (quickly / slowly).",
+      "Gapdagi inkorni tekshiring: \"did not move very ___\"."
+     ],
+     [
+      "Raqamlar ko'p, qaysi biri?",
+      "Bo'sh joydan keyingi so'zga qarang: \"___ months\" — oylar soni, sessiyalar emas."
+     ],
+     [
+      "Summary matn tartibidami?",
+      "Odatda ha (USUALLY)."
+     ]
+    ],
+    "notes": [
+     "14-dars (summary completion, 2-tur) davomi. U yerda bitta box matni bor edi, bu darsda asosiy e'tibor box turiga.",
+     "Ro'yxatni guruhlash mashqini har matnda doskada bajaring — o'quvchilar 3 ta guruhni birinchi 1 daqiqada ajratishi kerak.",
+     "Memory matnidagi 5-savol (more / fewer) — darsning eng muhim tuzoq misoli."
+    ],
+    "mistakes": [
+     [
+      "Matndagi so'zni aynan qidirish",
+      "Ma'noni qidirish",
+      "Box so'zi paraphrase bo'ladi"
+     ],
+     [
+      "Inkorni o'tkazib yuborish (did not move very)",
+      "quickly",
+      "\"Not very quickly\" = sekin"
+     ],
+     [
+      "Raqamlarni aralashtirish (twelve sessions)",
+      "three months",
+      "Son nimaga tegishli?"
+     ],
+     [
+      "Ro'yxatdagi so'zni gap mantiqisiz tanlash (fewer)",
+      "more",
+      "Gapni to'liq o'qing"
+     ],
+     [
+      "Harf o'rniga so'z yozish",
+      "G",
+      "Ko'rsatmaga amal qiling"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Ro'yxatni guruhlang",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz \"Reducing errors in memory\" ro'yxatini doskaga yozadi; o'quvchilar matnni ko'rmasdan guruhlaydi.",
+     "items": [
+      "A more, E less, I fewer",
+      "C 12, D six, F ten",
+      "B complex, G different, J the same",
+      "H no",
+      "\"at ___ times of the day\" qaysi guruh?"
+     ],
+     "answers": [
+      "miqdor / taqqoslash",
+      "son",
+      "sifat",
+      "aniqlovchi (inkor)",
+      "sifat (G / J / B)"
+     ],
+     "why": [
+      "\"remembered ___ words than\" — shu guruh.",
+      "\"After ___ hours\" — shu guruh.",
+      "\"at ___ times\", \"the results were ___\".",
+      "\"had ___ sleep\".",
+      "Keyin matndan tekshiriladi."
+     ],
+     "note": "Guruhlash bir bo'sh joy uchun 10 ta variantni 2–3 taga qisqartiradi.",
+     "layout": "list"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #25. Reducing errors in memory",
+     "qtype": "Summary completion with a box (1–5)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "Sleep may reduce mistakes in memory, according to a first-of-its-kind study led by a scientist at Michigan State University.",
+      "The findings, which appear in the September issue of the journal Learning & Memory, have practical implications for many people, from students doing multiple-choice tests to elderly people confusing their medicine, says Kimberly Fenn, principal investigator and assistant professor of psychology.",
+      "'It's easy to muddle things in your mind,' Fenn says. 'This research suggests that after sleep, you're better able to pick out the incorrect parts of that memory.' Fenn and colleagues from the University of Chicago and Washington University in St Louis studied the presence of incorrect or false memory in groups of college students. While previous research has shown that sleep improves memory, this study is the first one that looks at errors in memory, she said.",
+      "Study participants were 'trained' by being shown or listening to lists of words. Then, _twelve hours later_, they were shown individual words and asked to identify which words they had seen or heard in the earlier session. One group of students was trained _at 10 a.m._ and tested at 10 p.m. _after the course of a normal sleepless day_. Another group was trained _at night_ and tested twelve hours later in the morning, after about six hours of sleep. _Three experiments were conducted. In each experiment_, the results showed that students who had slept _did not have as many problems_ with false memory and _chose fewer incorrect words_.",
+      "How does sleep help? The answer isn't known, Fenn said, but she suspects it may be due to sleep strengthening the source of the memory. The source, or context in which the information is acquired, is a vital element of the memory process. In other words, it may be easier to remember something if you can also remember where you first heard or saw it. Or perhaps the people who didn't sleep as much during the study received so much other information during the day that this affected their memory ability, Fenn said.",
+      "Further research is needed, she said, adding that she plans to study different population groups, particularly the elderly. 'We know older individuals generally have worse memory performance than younger individuals. We also know from other research that elderly individuals tend to be more prone to false memories,' Fenn said. 'Given the work we've done, it's possible that sleep may actually help them to reject this false information. And potentially this could help to improve their quality of life.'"
+     ],
+     "paraphrases": [
+      [
+       "different times of the day",
+       "at 10 a.m. / at night"
+      ],
+      [
+       "after 12 hours",
+       "twelve hours later"
+      ],
+      [
+       "had no sleep",
+       "after a normal sleepless day"
+      ],
+      [
+       "the results were the same",
+       "in each experiment, the results showed"
+      ],
+      [
+       "remembered more words correctly",
+       "chose fewer incorrect words"
+      ],
+      [
+       "muddle",
+       "confuse"
+      ],
+      [
+       "identify",
+       "pick out"
+      ],
+      [
+       "prone to",
+       "likely to have"
+      ]
+     ],
+     "glossary": [
+      "implication — oqibat, ahamiyat",
+      "muddle — chalkashtirmoq",
+      "false memory — soxta xotira",
+      "participant — ishtirokchi",
+      "context — vaziyat, sharoit",
+      "acquire — egallamoq",
+      "elderly — keksa",
+      "prone to — moyil"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Complete the summary using the list A–J",
+       "type": "Summary completion — box",
+       "instr": "Fenn's Memory Experiments. Harfni yozing. Ro'yxatda 5 ta ortiqcha so'z bor.",
+       "items": [
+        "The groups in the study saw or heard lists of words at (1) ___ times of the day.",
+        "After (2) ___ hours, the groups tried to identify these words correctly in a test.",
+        "Before the test, one group had (3) ___ sleep and chose the words in the evening.",
+        "In three experiments, the results were (4) ___.",
+        "The groups that had slept during the experiment remembered (5) ___ words correctly than the other groups."
+       ],
+       "answers": [
+        "G different",
+        "C 12",
+        "H no",
+        "J the same",
+        "A more"
+       ],
+       "why": [
+        "Bir guruh \"at 10 a.m.\", ikkinchisi \"at night\" o'rgangan — har xil vaqt. J \"the same\" teskari.",
+        "\"Then, twelve hours later, they were shown individual words\". D six tuzoq: olti soat — uyqu vaqti.",
+        "\"Tested at 10 p.m. after the course of a normal sleepless day\" — sleepless = no sleep.",
+        "\"In each experiment, the results showed...\" — har uchala tajribada natija bir xil.",
+        "\"Chose fewer incorrect words\" = \"remembered more words correctly\". I fewer tuzoq: matnda bor, lekin \"noto'g'ri so'zlar\" haqida; gap \"correctly\" deydi."
+       ],
+       "note": "Ortiqcha so'zlar: B complex, D six (uyqu soatlari), E less, F ten, I fewer (teskari tuzoq). 5-savol — darsning eng muhim misoli: matndagi so'z (fewer) ro'yxatda bor, lekin javob uning teskarisi (more).",
+       "box": [
+        "A more",
+        "B complex",
+        "C 12",
+        "D six",
+        "E less",
+        "F ten",
+        "G different",
+        "H no",
+        "I fewer",
+        "J the same"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Xulosadagi so'zning matndagi juftini toping.",
+       "items": [
+        "different times (1)",
+        "had no sleep (3)",
+        "the results were the same (4)",
+        "remembered more words correctly (5)"
+       ],
+       "answers": [
+        "at 10 a.m. / at night",
+        "after a normal sleepless day",
+        "in each experiment, the results showed",
+        "chose fewer incorrect words"
+       ],
+       "why": [
+        "4-xatboshi.",
+        "4-xatboshi.",
+        "4-xatboshi.",
+        "4-xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #26. Fighting fear using virtual reality",
+     "qtype": "Summary completion with a box (1–5) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Computers are not just for entertainment, shopping or research purposes - as one woman found out when she tried to cure her fears",
+      "Most people have at least one thing they are afraid of. A fear of things like snakes, spiders, dogs, heights or open spaces affects over 90% of the population. In extreme cases, a fear can develop into a phobia, where the fear of something is so powerful it can affect the way the sufferer lives their life. About 10% of people suffer from a phobia. Most sufferers never seek treatment, because the most common type of cure - 'exposure therapy' - involves them being exposed to the object of their fear, and this is the last thing many of them are prepared to do.",
+      "There is now a new cure for phobias, using something called virtual reality exposure therapy (VRET). The concept is simple. The person with the phobia wears a virtual reality headset. A computer, controlled by a therapist, then simulates a variety of situations in which the sufferer is gradually exposed to the object of their fear, which they view on the headset's screen. At the same time, the therapist explains why they should not be afraid of it. The technique is surprisingly successful, as this case demonstrates.",
+      "Sara Considine had a serious spider phobia, and had developed several spider-related behaviour patterns. Before going to bed, for example, she would check her room for spiders, then seal the windows with tape so none could get in. She had frightening dreams about spiders every night. Eventually, she decided to get treatment.",
+      "During twelve one-hour virtual reality sessions over a _three-month period_, Ms Considine _started very slowly_. First, she stood a long way from the virtual spider and _just looked at it_. Slowly, she moved a little closer. The therapist controlling the computer programme then made the virtual spider move. After just two sessions, Ms Considine reported that although she still saw spiders in her dreams, they were _no longer frightening_, and she had even managed to have an amusing 'conversation' with one of them. A few sessions later, the therapist encouraged her to hold the virtual spider in her virtual hand, and put it in places where the presence of a real spider would cause her fear. The next stage was to _introduce touch_. A large toy spider was placed next to her. Ms Considine then reached out to touch the virtual spider she could see on the screen, and at the same time her real hand touched the toy spider.",
+      "After her sessions were over, Sara Considine was able to stop her spider-related behaviour. She even took up camping, something she would never have considered before therapy. More recently she has appeared on a television nature programme, where for the first time she was able to hold a real spider in her hands."
+     ],
+     "paraphrases": [
+      [
+       "lasted for three months",
+       "over a three-month period"
+      ],
+      [
+       "did not move very quickly",
+       "started very slowly"
+      ],
+      [
+       "observed",
+       "just looked at it"
+      ],
+      [
+       "stop being afraid of",
+       "no longer frightening"
+      ],
+      [
+       "making physical contact",
+       "introduce touch / her real hand touched"
+      ],
+      [
+       "phobia",
+       "very strong fear"
+      ],
+      [
+       "seek treatment",
+       "try to get help"
+      ],
+      [
+       "gradually",
+       "step by step"
+      ]
+     ],
+     "glossary": [
+      "phobia — kuchli qo'rquv (fobiya)",
+      "sufferer — azob chekuvchi",
+      "exposure — duch keltirish",
+      "headset — VR ko'zoynak",
+      "simulate — sun'iy yaratmoq",
+      "therapist — terapevt",
+      "seal — mahkam yopmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Complete the summary using the list A–J",
+       "type": "Summary completion — box",
+       "instr": "Treating a phobia using VRET. Harfni yozing.",
+       "items": [
+        "Sara Considine's programme of treatments lasted for (1) ___ months.",
+        "At first, the sessions did not move very (2) ___.",
+        "... as she just (3) ___ the virtual spider through her headset.",
+        "It only took two sessions for her to stop being (4) ___ the spiders in her dreams.",
+        "The next stage involved making physical (5) ___ with a toy spider."
+       ],
+       "answers": [
+        "I three",
+        "F quickly",
+        "E observed",
+        "A afraid of",
+        "C contact"
+       ],
+       "why": [
+        "\"Over a three-month period\". J twelve tuzoq: 12 — mashg'ulotlar soni, oylar emas.",
+        "\"Started very slowly\" = \"did not move very quickly\". G slowly tuzoq: inkor bilan gap teskari ma'no beradi.",
+        "\"Just looked at it\" = \"observed\". D held tuzoq: ushlash keyinroq bo'lgan.",
+        "\"They were no longer frightening\". B amused by tuzoq: \"amusing conversation\" bor, lekin \"stop being amused\" ma'nosi teskari.",
+        "\"The next stage was to introduce touch ... her real hand touched the toy spider\". \"Make physical contact\" — tabiiy birikma; H touch grammatikaga to'g'ri kelmaydi (\"make physical touch\" deyilmaydi)."
+       ],
+       "note": "2-savol inkor tuzog'i: \"did not move very ___\" + matnda \"very slowly\" → javob \"quickly\". Ro'yxatda ikkalasi ham bor — faqat gap mantiqini tekshirgan o'quvchi topadi.",
+       "box": [
+        "A afraid of",
+        "B amused by",
+        "C contact",
+        "D held",
+        "E observed",
+        "F quickly",
+        "G slowly",
+        "H touch",
+        "I three",
+        "J twelve"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Tuzoq turlari",
+       "type": "Tahlil",
+       "instr": "Nega bu so'zlar noto'g'ri?",
+       "items": [
+        "1-savol J twelve",
+        "2-savol G slowly",
+        "4-savol B amused by",
+        "5-savol H touch"
+       ],
+       "answers": [
+        "boshqa son",
+        "inkor tuzog'i",
+        "teskari mantiq",
+        "grammatika"
+       ],
+       "why": [
+        "Sessiyalar soni.",
+        "\"did not move very slowly\" — matnga qarshi.",
+        "U endi qo'rqmaydi, \"zavqlanmay qo'ydi\" emas.",
+        "\"make physical contact\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "The power of a short nap",
+     "qtype": "Summary completion with a box (1–5)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In many countries, sleeping during the working day is seen as a sign of laziness. Yet a growing amount of research suggests that a short sleep in the afternoon can make people more alert, more accurate and even more creative.",
+      "One of the best-known studies was carried out by NASA in the 1990s. Pilots on long flights were divided into two groups. One group was allowed to rest in their seats for forty minutes, while the other group stayed awake as usual. The pilots who rested slept for an average of twenty-six minutes. Afterwards, their performance was about a third better than that of the other group, and their alertness had improved by more than half.",
+      "The length of the nap is important. Experts recommend between ten and thirty minutes. A longer sleep allows the brain to enter deep sleep, and a person who wakes up from deep sleep often feels heavy and confused for some time. This feeling, called sleep inertia, can last for half an hour.",
+      "The timing also matters. Most people feel a natural drop in energy in the early afternoon, between about one and three o'clock, and this is the easiest time to fall asleep quickly. A nap taken late in the evening, on the other hand, can make it harder to sleep well at night.",
+      "Some companies have started to take this seriously, providing quiet rooms or special chairs where employees can rest. Critics say the evidence is still limited, and that a nap cannot replace a full night's sleep. Even so, for people who are short of sleep, twenty minutes with their eyes closed may be one of the cheapest ways to work better."
+     ],
+     "paraphrases": [
+      [
+       "laziness",
+       "not wanting to work"
+      ],
+      [
+       "alert",
+       "awake and attentive"
+      ],
+      [
+       "divided into",
+       "separated into"
+      ],
+      [
+       "about a third",
+       "around 33 per cent"
+      ],
+      [
+       "more than half",
+       "over 50 per cent"
+      ],
+      [
+       "confused",
+       "not thinking clearly"
+      ],
+      [
+       "drop in energy",
+       "feeling tired"
+      ],
+      [
+       "limited",
+       "not enough"
+      ]
+     ],
+     "glossary": [
+      "nap — qisqa uyqu",
+      "alert — hushyor",
+      "accurate — aniq",
+      "pilot — uchuvchi",
+      "deep sleep — chuqur uyqu",
+      "inertia — sustlik",
+      "employee — xodim",
+      "critic — tanqidchi"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary using the list A–J",
+       "type": "Summary completion — box",
+       "instr": "Harfni yozing. Ro'yxatni avval guruhlang.",
+       "items": [
+        "In a NASA study, pilots who rested slept for about (1) ___ minutes.",
+        "Their performance improved by around (2) ___.",
+        "After a long sleep, people may feel (3) ___.",
+        "The best time for a nap is in the early (4) ___.",
+        "For tired people, a short nap may be a (5) ___ way to work better."
+       ],
+       "answers": [
+        "B twenty-six",
+        "C a third",
+        "F confused",
+        "G afternoon",
+        "I cheap"
+       ],
+       "why": [
+        "\"Slept for an average of twenty-six minutes\". A forty tuzoq: dam olishga berilgan vaqt.",
+        "\"About a third better\". D half — hushyorlik haqida.",
+        "\"Feels heavy and confused for some time\".",
+        "\"Between about one and three o'clock\". H evening teskari: kechki uyqu tunda uxlashga xalaqit beradi.",
+        "\"One of the cheapest ways to work better\"."
+       ],
+       "note": "Ortiqcha so'zlar: A forty, D half, E worse, H evening, J expensive.",
+       "box": [
+        "A forty",
+        "B twenty-six",
+        "C a third",
+        "D half",
+        "E worse",
+        "F confused",
+        "G afternoon",
+        "H evening",
+        "I cheap",
+        "J expensive"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
+     "title": "How the Rosetta Stone was read",
+     "qtype": "Summary completion with a box (1–5)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In 1799, French soldiers who were rebuilding a fort near the town of Rashid, in Egypt, found a large broken stone covered in writing. Known today as the Rosetta Stone, it became one of the most important discoveries in the history of language.",
+      "The stone carries the same official message in three kinds of writing: ancient Egyptian hieroglyphs, a later Egyptian script called Demotic, and ancient Greek. Scholars could already read Greek, so for the first time they had a real chance to understand hieroglyphs, which nobody had been able to read for more than a thousand years.",
+      "The work was slow. The English scientist Thomas Young made important early progress, showing that some hieroglyphs inside oval shapes spelled the names of rulers such as Ptolemy. But it was the French scholar Jean-François Champollion who solved the problem. He realised that hieroglyphs were not simply pictures of ideas: many of them also represented sounds. In 1822, he announced that he could read the system.",
+      "Champollion's success depended partly on his knowledge of Coptic, a late form of the Egyptian language that was still used in some churches. By comparing Coptic words with the sounds of the hieroglyphs, he was able to read whole sentences.",
+      "After the French were defeated in Egypt, the stone was taken by the British, and it has been displayed in the British Museum in London since 1802. It is one of the most visited objects in the museum, and Egypt has asked several times for it to be returned."
+     ],
+     "paraphrases": [
+      [
+       "found",
+       "discovered"
+      ],
+      [
+       "carries",
+       "shows"
+      ],
+      [
+       "kinds of writing",
+       "scripts"
+      ],
+      [
+       "nobody had been able to read",
+       "could not be understood"
+      ],
+      [
+       "made progress",
+       "moved forward"
+      ],
+      [
+       "represented sounds",
+       "stood for sounds"
+      ],
+      [
+       "announced",
+       "told the public"
+      ],
+      [
+       "displayed",
+       "shown"
+      ]
+     ],
+     "glossary": [
+      "fort — qal'a",
+      "hieroglyph — ierogliflar",
+      "script — yozuv",
+      "scholar — olim",
+      "ruler — hukmdor",
+      "Coptic — kopt tili",
+      "defeat — mag'lub qilmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary using the list A–J",
+       "type": "Summary completion — box",
+       "instr": "Harfni yozing.",
+       "items": [
+        "The Rosetta Stone was discovered by (1) ___ in 1799.",
+        "It has the same text in (2) ___ types of writing.",
+        "Researchers could understand the (3) ___ part of the text.",
+        "Champollion discovered that many hieroglyphs stood for (4) ___.",
+        "He was helped by his knowledge of (5) ___."
+       ],
+       "answers": [
+        "A soldiers",
+        "C three",
+        "G Greek",
+        "F sounds",
+        "H Coptic"
+       ],
+       "why": [
+        "\"French soldiers who were rebuilding a fort ... found\".",
+        "\"In three kinds of writing\".",
+        "\"Scholars could already read Greek\".",
+        "\"Many of them also represented sounds\". E pictures tuzoq: \"not simply pictures of ideas\".",
+        "\"His success depended partly on his knowledge of Coptic\"."
+       ],
+       "note": "Ortiqcha so'zlar: B scholars, D two, E pictures (teskari), I 1802 (muzey), J 1822 (e'lon yili — xulosada so'ralmagan).",
+       "box": [
+        "A soldiers",
+        "B scholars",
+        "C three",
+        "D two",
+        "E pictures",
+        "F sounds",
+        "G Greek",
+        "H Coptic",
+        "I 1802",
+        "J 1822"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
+     "title": "Why the Leaning Tower leans",
+     "qtype": "Summary completion with a box (1–5)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "The bell tower of Pisa cathedral, in Italy, is famous for one reason: it is not straight. Few visitors realise, however, that it began to lean while it was still being built, and that the problem is hidden under the ground.",
+      "Construction began in 1173. Five years later, when the builders reached the second floor, the tower started to sink on its south side. The ground there is soft, made of clay, sand and shells, and the foundations were only three metres deep — far too shallow for such a heavy building.",
+      "The tower was then left unfinished for almost a century, because Pisa was involved in wars with neighbouring cities. This long pause turned out to be lucky: it gave the soil time to become firmer. Without it, experts believe, the tower would almost certainly have fallen. When work continued, the builders tried to correct the lean by making the upper floors slightly taller on one side, which is why the tower is actually a little curved.",
+      "The tower was completed in the fourteenth century, but the lean continued to increase slowly. By 1990 it was so dangerous that the tower was closed to the public. Engineers carefully removed soil from under the north side, allowing the building to settle back by more than forty centimetres. It reopened in 2001.",
+      "Today the tower is considered safe for at least two hundred years. The engineers were careful not to make it straight: without its lean, Pisa would lose its most famous attraction."
+     ],
+     "paraphrases": [
+      [
+       "lean",
+       "not straight"
+      ],
+      [
+       "sink",
+       "go down"
+      ],
+      [
+       "soft",
+       "not firm"
+      ],
+      [
+       "shallow",
+       "not deep"
+      ],
+      [
+       "pause",
+       "stop"
+      ],
+      [
+       "turned out to be",
+       "was found to be"
+      ],
+      [
+       "removed",
+       "took away"
+      ],
+      [
+       "attraction",
+       "place tourists visit"
+      ]
+     ],
+     "glossary": [
+      "cathedral — sobor",
+      "clay — loy",
+      "shell — chig'anoq",
+      "foundation — poydevor",
+      "soil — tuproq",
+      "curved — egilgan",
+      "engineer — muhandis"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary using the list A–J",
+       "type": "Summary completion — box",
+       "instr": "Uyda 10 daqiqada bajaring.",
+       "items": [
+        "The tower began to lean because the ground was (1) ___.",
+        "The foundations were also too (2) ___.",
+        "Building stopped for almost a hundred years because of (3) ___.",
+        "This long break was (4) ___ for the tower.",
+        "Engineers took soil from under the (5) ___ side."
+       ],
+       "answers": [
+        "A soft",
+        "D shallow",
+        "E wars",
+        "G lucky",
+        "I north"
+       ],
+       "why": [
+        "\"The ground there is soft, made of clay, sand and shells\".",
+        "\"Only three metres deep — far too shallow\".",
+        "\"Pisa was involved in wars with neighbouring cities\". F money aytilmagan.",
+        "\"This long pause turned out to be lucky\". H dangerous — 1990-yil holati.",
+        "\"Removed soil from under the north side\". J south tuzoq: minora janubga egilgan."
+       ],
+       "note": "Ortiqcha so'zlar: B hard, C deep, F money, H dangerous, J south.",
+       "box": [
+        "A soft",
+        "B hard",
+        "C deep",
+        "D shallow",
+        "E wars",
+        "F money",
+        "G lucky",
+        "H dangerous",
+        "I north",
+        "J south"
+       ],
+       "layout": "match"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"Why the Leaning Tower leans\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz har ortiqcha so'z nega mos emasligini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Ro'yxatni guruhlash",
+     "type": "Yozma",
+     "instr": "Bugungi 5 ta box ro'yxatini son / sifat / ot / fe'l guruhlariga ajrating va har bo'sh joy qaysi guruhni talab qilishini yozing.",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "Tuzoq daftari",
+     "type": "Yozma",
+     "instr": "Har matndan bittadan eng yaxshi tuzoqni yozing (masalan: fewer → more, slowly → quickly) va nega tuzoq ekanini tushuntiring.",
+     "answers": "5 ta tuzoq, izoh bilan.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Summary box (uyga)",
+     "5 javobdan 4 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Ro'yxatni guruhlash",
+     "5 ro'yxat, to'liq",
+     "2 coin"
+    ],
+    [
+     "Tuzoq daftari",
+     "5 tuzoq, izoh bilan",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }
